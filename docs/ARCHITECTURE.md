@@ -1,7 +1,7 @@
 # Architecture
 
-> Status: **provisional.** The editing engine is chosen by the Step 0 prototypes (D-014).
-> This file describes the intended structure and is updated as decisions land.
+> Status: editing engine decided: **controlled editing** (D-017). This file describes the
+> intended structure and is updated as decisions land.
 
 ## Principles
 

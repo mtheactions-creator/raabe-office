@@ -22,6 +22,7 @@ reversed, add a new entry that supersedes it and mark the old one `Superseded by
 | D-014 | 2026-10-13 | Editing-engine choice decided by the feel prototypes (Step 0) |
 | D-015 | 2026-10-13 | Updates only on explicit user request; code signing later |
 | D-016 | 2026-10-13 | Claude is the maintainer; the repository is the project's memory |
+| D-017 | 2026-10-13 | Editing engine: controlled editing (prototype B); Tauri 2 confirmed |
 
 ---
 
@@ -107,7 +108,7 @@ scrolling and dragging, a catalogue of micro-behaviours recorded from Word, layo
 fidelity (line and page breaks) and start/load times. See `docs/FEEL.md`. The final
 check is real use by a pilot class.
 
-### D-014 Editing engine chosen by prototypes
+### D-014 Editing engine chosen by prototypes (decided in D-017)
 Before writing product code we build two small editor prototypes with different
 architectures, measure both with the D-013 harness, and pick the winner. Recorded as a
 new decision when done.
@@ -122,3 +123,15 @@ Claude maintains the code. Claude does not remember earlier sessions, so everyth
 needed to continue must live in this repository: `CLAUDE.md`, this decision log, the
 architecture notes, and automated tests. Any session must be able to pick up the work
 from the repository alone.
+
+### D-017 Editing engine: controlled editing
+Result of D-014, agreed by the project owner after the
+[Step 0 report](reports/2026-10-13-step0-feel.md). Our own text model, line breaking,
+pagination, caret and selection (prototype B); the browser only renders text and
+delivers raw input through a hidden textarea. B matched Word in 50/50 behaviours,
+2,000/2,000 line breaks and 50/50 page breaks, at Word's keystroke latency. Native
+`contenteditable` (prototype A) matched only 31/50 behaviours and cannot paginate.
+The same engine will serve text in RaabeCalc cells and RaabePresent text boxes.
+Tauri 2 (D-006) is confirmed; it is no longer provisional.
+**Consequence:** we build IME handling, accessibility (screen readers) and spell-check
+underlines ourselves.
