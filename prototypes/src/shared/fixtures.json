@@ -1,0 +1,37 @@
+{
+  "base": [
+    {
+      "style": "h1",
+      "text": "Die Photosynthese – ein Überblick"
+    },
+    {
+      "style": "normal",
+      "text": "Pflanzen, Algen und einige Bakterien sind in der Lage, aus Lichtenergie chemische Energie zu gewinnen. Diesen Vorgang nennt man Photosynthese. Er findet in den Chloroplasten statt, kleinen grünen Zellbestandteilen, die vor allem in den Blättern vorkommen."
+    },
+    {
+      "style": "normal",
+      "text": "Für die Photosynthese benötigt die Pflanze Wasser, Kohlenstoffdioxid und Licht. Das Wasser nimmt sie über die Wurzeln auf, das Kohlenstoffdioxid gelangt durch die Spaltöffnungen in das Blatt. Als Produkte entstehen Traubenzucker (Glucose) und Sauerstoff."
+    },
+    {
+      "style": "normal",
+      "text": "Die Gesamtgleichung lautet: 6 CO2 + 6 H2O → C6H12O6 + 6 O2. Sie fasst jedoch zahlreiche Einzelschritte zusammen, die man in zwei Abschnitte gliedert: die lichtabhängigen Reaktionen und den Calvin-Zyklus."
+    },
+    {
+      "style": "normal",
+      "text": "In den lichtabhängigen Reaktionen wird Wasser gespalten. Dabei wird Sauerstoff frei, und es entstehen die energiereichen Verbindungen ATP und NADPH. Diese werden im Calvin-Zyklus genutzt, um aus Kohlenstoffdioxid schrittweise Zucker aufzubauen."
+    },
+    {
+      "style": "normal",
+      "text": "Wie stark eine Pflanze Photosynthese betreibt, hängt von mehreren Faktoren ab: Lichtintensität, Temperatur und Kohlenstoffdioxid-Konzentration. Der Faktor, der am knappsten ist, begrenzt die Geschwindigkeit des gesamten Prozesses („Minimumfaktor“)."
+    },
+    {
+      "style": "normal",
+      "text": "Aufgabe 1: Beschreibe mit eigenen Worten, woher die Pflanze die Ausgangsstoffe der Photosynthese bezieht."
+    },
+    {
+      "style": "normal",
+      "text": "Aufgabe 2: Erkläre, warum ein Aquarium mit Wasserpflanzen ohne Licht nach einigen Tagen zu wenig Sauerstoff enthält."
+    }
+  ],
+  "longMinParagraphs": 800
+}

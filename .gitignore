@@ -7,3 +7,4 @@ __pycache__/
 gen/schemas/
 .vite/
 tools/feel-lab/captures/
+.claude/settings.local.json

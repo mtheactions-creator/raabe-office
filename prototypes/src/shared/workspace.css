@@ -1,0 +1,56 @@
+/* Shared window chrome for both prototypes: a plain title strip, Word's grey workspace
+   with centred pages, and a status bar. No ribbon: the prototypes test editing only. */
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  font: 12px "Segoe UI", sans-serif;
+  color: #262626;
+  background: #e6e6e6;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+#titlebar {
+  flex: none;
+  height: 32px;
+  line-height: 32px;
+  padding-inline: 12px;
+  background: #ed1c24;
+  color: #fff;
+}
+
+#workspace {
+  flex: 1;
+  overflow: auto;
+  position: relative;
+  outline: none;
+}
+
+#statusbar {
+  flex: none;
+  height: 22px;
+  line-height: 22px;
+  padding-inline: 12px;
+  display: flex;
+  gap: 24px;
+  background: #f3f3f3;
+  border-top: 1px solid #e1e1e1;
+}
+
+.page {
+  position: relative;
+  margin: 16px auto;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.16);
+}
+
+/* Word renders without kerning or ligatures for our test documents; match it. */
+.page, .page * {
+  font-kerning: none;
+  font-variant-ligatures: none;
+}

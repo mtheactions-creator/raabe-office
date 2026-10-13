@@ -1,0 +1,125 @@
+{
+  "meta": {
+    "date": "2026-10-13T10:16:31",
+    "test": "fidelity"
+  },
+  "results": {
+    "short": {
+      "word": {
+        "lines": 20,
+        "pages": 1
+      },
+      "proto-a": {
+        "lines": {
+          "reference": 20,
+          "candidate": 20,
+          "identical": 20,
+          "percent": 100.0,
+          "first_differences": []
+        },
+        "pages": {
+          "reference": 1,
+          "candidate": 1,
+          "identical": 1,
+          "percent": 100.0,
+          "first_differences": []
+        }
+      },
+      "proto-b": {
+        "lines": {
+          "reference": 20,
+          "candidate": 20,
+          "identical": 20,
+          "percent": 100.0,
+          "first_differences": []
+        },
+        "pages": {
+          "reference": 1,
+          "candidate": 1,
+          "identical": 1,
+          "percent": 100.0,
+          "first_differences": []
+        }
+      }
+    },
+    "long": {
+      "word": {
+        "lines": 1000,
+        "pages": 25
+      },
+      "proto-a": {
+        "lines": {
+          "reference": 1000,
+          "candidate": 1000,
+          "identical": 1000,
+          "percent": 100.0,
+          "first_differences": []
+        },
+        "pages": {
+          "reference": 25,
+          "candidate": 1,
+          "identical": 1,
+          "percent": 4.0,
+          "first_differences": [
+            {
+              "offset": 2938,
+              "where": "only in Word",
+              "context": "enig Sauerstoff enthält.\n|3. Die Photosynthese – ei"
+            },
+            {
+              "offset": 5876,
+              "where": "only in Word",
+              "context": "enig Sauerstoff enthält.\n|5. Die Photosynthese – ei"
+            },
+            {
+              "offset": 8814,
+              "where": "only in Word",
+              "context": "enig Sauerstoff enthält.\n|7. Die Photosynthese – ei"
+            },
+            {
+              "offset": 11752,
+              "where": "only in Word",
+              "context": "enig Sauerstoff enthält.\n|9. Die Photosynthese – ei"
+            },
+            {
+              "offset": 14691,
+              "where": "only in Word",
+              "context": "enig Sauerstoff enthält.\n|11. Die Photosynthese – e"
+            },
+            {
+              "offset": 17631,
+              "where": "only in Word",
+              "context": "enig Sauerstoff enthält.\n|13. Die Photosynthese – e"
+            },
+            {
+              "offset": 20571,
+              "where": "only in Word",
+              "context": "enig Sauerstoff enthält.\n|15. Die Photosynthese – e"
+            },
+            {
+              "offset": 23511,
+              "where": "only in Word",
+              "context": "enig Sauerstoff enthält.\n|17. Die Photosynthese – e"
+            }
+          ]
+        }
+      },
+      "proto-b": {
+        "lines": {
+          "reference": 1000,
+          "candidate": 1000,
+          "identical": 1000,
+          "percent": 100.0,
+          "first_differences": []
+        },
+        "pages": {
+          "reference": 25,
+          "candidate": 25,
+          "identical": 25,
+          "percent": 100.0,
+          "first_differences": []
+        }
+      }
+    }
+  }
+}
