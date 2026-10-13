@@ -24,6 +24,9 @@ export {
 export { AUTHOR_COLORS, HIGHLIGHT, MIN_ZOOM, MAX_ZOOM, imageUrl, storyIdOf, type TextMark } from "./view";
 export { countWords } from "./words";
 export { fromHtml, toHtml } from "./html";
+export * as Revisions from "./revisions";
+export * as Edits from "./edits";
+export * as School from "./school";
 export { installProbe, type EngineProbe, type LineBox, type ProbeFormat } from "./probe";
 
 import type { Editor } from "./editor";

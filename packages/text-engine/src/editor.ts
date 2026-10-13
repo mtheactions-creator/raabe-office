@@ -8,13 +8,15 @@ import { layoutDocument, type Layout } from "./flow";
 import { Layouter, type LayoutContext } from "./layout";
 import { markInputHandled } from "./probe";
 import {
-  EMPTY, LINE_BREAK, OBJ, PAGE_BREAK, insertionProps, intern, makePara, type Align, type CharProps, type LineRule,
+  EMPTY, LINE_BREAK, OBJ, PAGE_BREAK, insertionProps, intern, makePara, propsAt, type Align, type CharProps, type LineRule,
   type Para, type ParaProps, type Section,
 } from "./model";
 import { builtinStyle, type ResolvedChar, type ResolvedPara } from "./styles";
 import { View, storyIdOf, type Selection, type TextMark } from "./view";
 import * as E from "./edits";
 import { fromHtml, toHtml } from "./html";
+import * as R from "./revisions";
+import * as S from "./school";
 import { COLUMN_BREAK, type CellDef, type ImageData, type RowDef, type TableDef } from "./model";
 import { addList, bulletLevels as bulletLevelsOf, numberLevels as numberLevelsOf, numberingOf, restartList } from "./numbering";
 import type { BorderSpec, Borders, FloatObject, InlineObject, NumLevel } from "./model";
@@ -133,12 +135,12 @@ export class Editor {
     this.input.addEventListener("paste", (e) => this.onPaste(e));
     workspace.addEventListener("mousedown", (e) => this.onMouseDown(e));
     workspace.addEventListener("mousemove", (e) => { if (!e.buttons) this.hoverCursor(e); });
-    workspace.addEventListener("contextmenu", (e) => this.onContext(e));
+    workspace.addEventListener("contextmenu", (e) => { if (!this.view.markupLayer.contains(e.target as Node)) this.onContext(e); });
     this.update();
   }
 
   private context(): LayoutContext {
-    return { styles: this.doc.styles, fonts: this.fonts, defaultTab: this.doc.settings.defaultTab, measureMath: this.measureMath };
+    return { styles: this.doc.styles, fonts: this.fonts, defaultTab: this.doc.settings.defaultTab, measureMath: this.measureMath, markup: this.markupMode };
   }
 
   /** Asks the platform for metrics of every font the document uses. */
@@ -161,6 +163,77 @@ export class Editor {
   relayout(): void {
     this.layouter.setContext(this.context());
     this.update();
+  }
+
+  // ----- equations ------------------------------------------------------------------------
+
+  /** How the host measures (points) and draws equations; MathML in Cambria Math in the app. */
+  useMath(measure: NonNullable<LayoutContext["measureMath"]>, render: (latex: string, sizePx: number, display: boolean) => HTMLElement): void {
+    this.measureMath = measure;
+    this.view.measureMath = measure;
+    this.view.renderMath = render;
+    this.relayout();
+  }
+
+  /** Called when the user clicks into an equation or moves the caret into one (host opens its editor). */
+  onEditMath: ((pos: Pos, enter: "start" | "end" | "click") => void) | null = null;
+
+  /** Formel einfügen: a new equation at the caret; returns where it is. */
+  insertMath(latex = ""): Pos | null {
+    if (this.inBlock()) return null;
+    this.snapshot();
+    this.typing = false;
+    const [from, to] = this.range();
+    const props = intern({ ...typedProps(this.doc.paras[from.p], from.o), rev: undefined });
+    const obj: InlineObject = { kind: "math", data: undefined, display: "", latex };
+    const piece: Para = { text: OBJ, runs: [{ len: 1, props }], props: {}, mark: EMPTY, objects: [obj] };
+    const end = this.replaceTracked(from, to, [piece]);
+    this.setSel(end, end);
+    this.update({ scroll: true });
+    return { p: end.p, o: end.o - 1 };
+  }
+
+  /** The equation at a position (its object character), if any. */
+  mathAt(pos: Pos): InlineObject | null {
+    const p = this.doc.paras[pos.p];
+    if (!p || p.text[pos.o] !== OBJ) return null;
+    const o = this.objectAt(p, pos.o);
+    return o?.kind === "math" ? o : null;
+  }
+
+  /** Changes an equation; an empty one is removed. `record` adds an undo step. */
+  setMathLatex(pos: Pos, latex: string, record = true): void {
+    const o = this.mathAt(pos);
+    if (!o || (o.latex === latex && latex)) return;
+    if (record) this.snapshot();
+    if (!latex.trim()) {
+      this.doc.delete(pos, { p: pos.p, o: pos.o + 1 });
+      this.setSel(pos, pos);
+    } else this.replaceObject(pos.p, pos.o, { ...o, latex, data: undefined, display: "", width: undefined, height: undefined, depth: undefined });
+    this.update();
+  }
+
+  /** Where an object is, in the view's container coordinates (unzoomed). */
+  objectBox(pos: Pos): { x: number; y: number; w: number; h: number; baseline: number; size: number } | null {
+    if (this.doc.paras[pos.p]?.text[pos.o] !== OBJ) return null;
+    const { pl } = this.view.placedFor(pos, false);
+    if (!pl) return null;
+    const line = this.view.lineOf(pl);
+    const i = pos.o - line.start;
+    if (i < 0 || i >= line.end - line.start) return null;
+    const x = this.view.pageLeft(pl.page) + pl.x + line.x0 + line.charX[i];
+    const w = line.charX[i + 1] - line.charX[i];
+    const top = this.view.pageTop(pl.page) + pl.y;
+    const rp = this.view.storyLayout().paras[pos.p]?.rp;
+    const size = this.doc.styles.resolveChar(rp?.style, propsAt(this.doc.paras[pos.p], pos.o)).size;
+    return { x, y: top, w, h: line.height, baseline: top + line.baseline, size };
+  }
+
+  /** Puts the caret before or after an object (leaving the equation editor). */
+  caretAt(pos: Pos): void {
+    this.setSel(pos, pos);
+    this.update({ scroll: true });
+    this.focus();
   }
 
   onChange(listener: (e: ChangeEvent) => void): () => void {
@@ -226,7 +299,7 @@ export class Editor {
 
   update(opts: { scroll?: boolean; inputTs?: number } = {}): void {
     const ctx = this.layouter.context;
-    if (ctx.styles !== this.doc.styles || ctx.defaultTab !== this.doc.settings.defaultTab || ctx.measureMath !== this.measureMath) {
+    if (ctx.styles !== this.doc.styles || ctx.defaultTab !== this.doc.settings.defaultTab || ctx.measureMath !== this.measureMath || ctx.markup !== this.markupMode) {
       this.layouter.setContext(this.context());
     }
     this.layout = layoutDocument(this.layouter, {
@@ -446,13 +519,23 @@ export class Editor {
 
   private replaceSelection(text: string, inputTs?: number, continueTyping = false, props?: CharProps): void {
     if (this.inBlock()) return;
-    if (!(continueTyping && this.typing)) this.snapshot();
+    const continuing = continueTyping && this.typing;
+    if (!continuing) this.snapshot();
     const [from, to] = this.range();
-    const fmt = props ?? this.pending ?? (cmp(from, to) !== 0
+    let fmt = props ?? this.pending ?? (cmp(from, to) !== 0
       ? (from.o < this.doc.paras[from.p].text.length ? this.doc.charPropsAt(from) : typedProps(this.doc.paras[from.p], from.o))
       : typedProps(this.doc.paras[from.p], from.o));
     const pending = this.pending;
-    const end = this.doc.insertText(from, to, text, fmt);
+    // Tracked changes: new text is an insertion of this author; what it replaces stays as a
+    // deletion before it. Without tracking, typed text never inherits a revision.
+    const tracking = !!this.doc.settings.trackChanges;
+    if (tracking && (!continuing || !this.insRev)) this.insRev = R.newRevision("ins", this.author);
+    fmt = intern({ ...fmt, rev: tracking ? this.insRev! : undefined });
+    let end: Pos;
+    if (tracking && cmp(from, to) !== 0) {
+      end = this.doc.insertText(to, to, text, fmt);
+      end = this.keepPos(end, () => R.markDeleted(this.doc, from, to, R.newRevision("del", this.author)));
+    } else end = this.doc.insertText(from, to, text, fmt);
     this.setSel(end, end);
     // Formatting chosen at the caret applies to what is typed next; Enter drops it (Word: the
     // new paragraph takes its formatting from the paragraph mark).
@@ -509,13 +592,50 @@ export class Editor {
     this.sel = head ? { ...this.sel, head: trimmed } : { ...this.sel, anchor: trimmed };
   }
 
-  private deleteRange(from: Pos, to: Pos, inputTs?: number): void {
+  private deleteRange(from: Pos, to: Pos, inputTs?: number, forward = false): void {
     if (cmp(from, to) === 0) return;
     this.snapshot();
-    this.doc.delete(from, to);
-    this.setSel(from, from);
+    if (this.doc.settings.trackChanges) {
+      // The text stays, marked deleted; the caret moves over it (Entf: to its end).
+      const count = this.doc.paras.length, before = this.doc.paras[to.p].text.length;
+      R.markDeleted(this.doc, from, to, R.newRevision("del", this.author));
+      const kept = this.doc.paras.length === count && this.doc.paras[to.p].text.length === before;
+      const at = forward && kept ? to : from;
+      this.setSel(at, at);
+    } else {
+      this.doc.delete(from, to);
+      this.setSel(from, from);
+    }
+    this.insRev = null;
     this.update({ scroll: true, inputTs });
   }
+
+  /** Replaces [a, b) by pieces; with tracking the pieces are insertions and [a, b) stays deleted. */
+  private replaceTracked(a: Pos, b: Pos, pieces: Para[]): Pos {
+    if (!this.doc.settings.trackChanges) return this.doc.replace(a, b, pieces);
+    const rev = R.newRevision("ins", this.author);
+    const mark = (props: CharProps) => intern({ ...props, rev });
+    const tracked = pieces.map((p, i) => ({
+      ...p, runs: p.runs.map((r) => ({ ...r, props: mark(r.props) })),
+      // The last piece's mark is the target paragraph's own (not inserted).
+      mark: i < pieces.length - 1 ? mark(p.mark) : p.mark,
+    }));
+    const end = this.doc.replace(b, b, tracked);
+    return cmp(a, b) === 0 ? end : this.keepPos(end, () => R.markDeleted(this.doc, a, b, R.newRevision("del", this.author)));
+  }
+
+  /** Runs a change that only touches text before `pos`; returns where `pos` is afterwards. */
+  private keepPos(pos: Pos, change: () => void): Pos {
+    const fromEnd = this.doc.paras.length - pos.p, tail = this.doc.paras[pos.p].text.length - pos.o;
+    change();
+    const p = Math.max(0, this.doc.paras.length - fromEnd);
+    return { p, o: Math.max(0, this.doc.paras[p].text.length - tail) };
+  }
+
+  /** Author of tracked changes and comments (Optionen > Benutzername). */
+  author = "Benutzer";
+  authorInitials = "B";
+  private insRev: import("./model").Revision | null = null;
 
   private deleteBackward(word: boolean, inputTs: number): void {
     const [from, to] = this.range();
@@ -577,7 +697,7 @@ export class Editor {
           return;
         }
       }
-      return this.deleteRange(h, { p: h.p + 1, o: 0 }, inputTs);
+      return this.deleteRange(h, { p: h.p + 1, o: 0 }, inputTs, true);
     }
     let end = h.o + 1;
     if (word) {
@@ -588,7 +708,7 @@ export class Editor {
         while (end < text.length && isWordChar(text[end])) end++;
       }
     }
-    this.deleteRange(h, { p: h.p, o: end }, inputTs);
+    this.deleteRange(h, { p: h.p, o: end }, inputTs, true);
   }
 
   // ----- commands for the shell -----------------------------------------------------------
@@ -673,9 +793,18 @@ export class Editor {
       const pieces = frag.paras.map((p) => (frag.source === this ? { ...p } : this.adopt(p, frag.source)));
       // The last piece merges into the target paragraph and takes its formatting (as in Word).
       if (pieces.length > 1) pieces[pieces.length - 1] = { ...pieces[pieces.length - 1], props: this.doc.paras[b.p].props };
-      let at = a;
-      if (smartSpace) at = this.doc.insertText(a, b, " ", typedProps(this.doc.paras[a.p], a.o));
-      const end = this.doc.replace(at, smartSpace ? at : b, pieces);
+      let end: Pos;
+      if (this.trackChanges) {
+        // Inserted after the text it replaces, which stays as a deletion.
+        let at = b;
+        if (smartSpace) at = this.doc.insertText(b, b, " ", intern({ ...typedProps(this.doc.paras[b.p], b.o), rev: R.newRevision("ins", this.author) }));
+        end = this.replaceTracked(at, at, pieces);
+        if (cmp(a, b) !== 0) end = this.keepPos(end, () => R.markDeleted(this.doc, a, b, R.newRevision("del", this.author)));
+      } else {
+        let at = a;
+        if (smartSpace) at = this.doc.insertText(a, b, " ", typedProps(this.doc.paras[a.p], a.o));
+        end = this.doc.replace(at, smartSpace ? at : b, pieces);
+      }
       this.setSel(end, end);
       this.requireFonts();
       this.update({ scroll: true });
@@ -1583,9 +1712,35 @@ export class Editor {
   extraMarks: ((story: string, para: Para) => readonly TextMark[] | undefined) | null = null;
   private mergedMarks = new WeakMap<Para, { f?: readonly TextMark[]; x?: readonly TextMark[]; out: readonly TextMark[] }>();
 
+  private commentMarks: { main: Para[]; active: string | null; map: WeakMap<Para, TextMark[]> } | null = null;
+
+  /** Commented text (light), the comment at the caret (darker), per paragraph. */
+  private commentMarksFor(para: Para): TextMark[] | undefined {
+    if (!this.doc.comments.size) return undefined;
+    const active = this.focusedComment ?? this.commentAtCaret();
+    if (!this.commentMarks || this.commentMarks.main !== this.doc.main || this.commentMarks.active !== active) {
+      const map = new WeakMap<Para, TextMark[]>();
+      for (const r of S.commentRanges(this.doc)) {
+        if (this.doc.comments.get(r.id)?.parent) continue;
+        for (let p = r.start.p; p <= r.end.p; p++) {
+          const para2 = this.doc.main[p];
+          const a = p === r.start.p ? r.start.o : 0, b = p === r.end.p ? r.end.o : para2.text.length;
+          if (b <= a) continue;
+          const list = map.get(para2) ?? [];
+          list.push({ start: a, end: b, kind: r.id === active ? "commentActive" : "comment" });
+          map.set(para2, list);
+        }
+      }
+      this.commentMarks = { main: this.doc.main, active, map };
+    }
+    return this.commentMarks.map.get(para);
+  }
+
   private installMarks(): void {
     this.view.marksFor = (story, para) => {
-      const f = story === this.doc.activeStory || (story === "main" && this.doc.activeStory === MAIN) ? this.findMarks?.get(para) : undefined;
+      const f0 = story === this.doc.activeStory || (story === "main" && this.doc.activeStory === MAIN) ? this.findMarks?.get(para) : undefined;
+      const cm = story === "main" ? this.commentMarksFor(para) : undefined;
+      const f = cm && f0 ? [...cm, ...f0] : cm ?? f0;
       const x = this.extraMarks?.(story, para);
       if (!f) return x;
       if (!x) return f;
@@ -1631,6 +1786,7 @@ export class Editor {
 
   /** Selects a match and scrolls to it. */
   selectRange(p: number, a: number, b: number): void {
+    if (this.doc.activeStory !== MAIN) this.switchStory(MAIN, MAIN);
     this.setSel({ p, o: a }, { p, o: b });
     this.update({ scroll: true });
   }
@@ -1667,14 +1823,22 @@ export class Editor {
   }
 
   /** Headings of the main text (Navigationsbereich > Überschriften). */
-  headings(): { p: number; level: number; text: string }[] {
-    const out: { p: number; level: number; text: string }[] = [];
+  headings(): { p: number; level: number; text: string; label?: string }[] {
+    const out: { p: number; level: number; text: string; label?: string }[] = [];
     this.doc.main.forEach((para, p) => {
       const rp = this.doc.styles.resolvePara(para.props);
       const lvl = para.props.outline ?? this.doc.styles.outlineLevel(rp.style);
-      if (lvl !== undefined && lvl < 9 && para.text.trim()) out.push({ p, level: lvl + 1, text: para.text.replace(/[\u000b\ufffc]/g, " ").trim() });
+      if (lvl === undefined || lvl >= 9 || !para.text.trim()) return;
+      const label = this.layout?.paras[p]?.lines[0]?.label?.text.replace(/\.$/, "");
+      out.push({ p, level: lvl + 1, text: para.text.replace(/[\u000b\ufffc]/g, " ").trim(), label: label || undefined });
     });
     return out;
+  }
+
+  /** Forgets undo history and marks the content as the saved state (new document from a template). */
+  clearHistory(): void {
+    this.undoStack = [];
+    this.redoStack = [];
   }
 
   /** Puts the caret at the start of a main-text paragraph and scrolls there. */
@@ -1696,6 +1860,338 @@ export class Editor {
     this.view.scrollToPage(page);
     this.update();
   }
+
+  // ----- foot- and endnotes ------------------------------------------------------------------
+
+  /** Fußnote einfügen (Strg+Alt+F) / Endnote einfügen (Strg+Alt+D): the caret goes into the note. */
+  insertNote(kind: "fn" | "en"): void {
+    if (this.doc.activeStory !== MAIN) return;
+    this.snapshot();
+    const refStyle = this.styleId(kind === "fn" ? "footnote reference" : "endnote reference");
+    const textStyle = this.styleId(kind === "fn" ? "footnote text" : "endnote text");
+    this.ensureStyle(refStyle);
+    this.ensureStyle(textStyle);
+    const [from, to] = this.range();
+    const at = cmp(from, to) !== 0 ? to : from;
+    const { id } = S.insertNote(this.doc, at, kind, refStyle, textStyle);
+    this.requireFonts();
+    this.update();
+    this.switchStory(id, id, { anchor: { p: 0, o: 2 }, head: { p: 0, o: 2 }, headUpstream: false });
+    this.update({ scroll: true });
+  }
+
+  /** Nächste/Vorherige Fuß- oder Endnote: to the next reference in the text. */
+  nextNote(dir: 1 | -1, kind: "fn" | "en" = "fn"): void {
+    if (this.doc.activeStory !== MAIN) this.switchStory(MAIN, MAIN);
+    const h = this.sel.head;
+    const refs: Pos[] = [];
+    this.doc.main.forEach((p, i) => {
+      let k = 0;
+      for (let o = 0; o < p.text.length; o++) {
+        if (p.text[o] !== OBJ) continue;
+        if (p.objects?.[k++]?.note?.startsWith(`${kind}:`)) refs.push({ p: i, o });
+      }
+    });
+    const next = dir > 0 ? refs.find((r) => cmp(r, h) > 0) : [...refs].reverse().find((r) => cmp(r, h) < 0);
+    if (next) this.selectRange(next.p, next.o, next.o);
+  }
+
+  // ----- table of contents ----------------------------------------------------------------------
+
+  private tocWidth(): number {
+    const s = this.section().page;
+    return s.width - s.marginLeft - s.marginRight - s.gutter;
+  }
+
+  private pageNumberOf = (p: number): string => {
+    const i = this.layout.firstPlaced[p];
+    const pl = i !== undefined && i >= 0 ? this.layout.placed[i] : undefined;
+    return pl ? this.layout.pages[pl.page].numberText : "1";
+  };
+
+  /**
+   * Inhaltsverzeichnis einfügen ("Automatische Tabelle 1/2"): a heading and one linked entry
+   * per Überschrift 1-3, page numbers from the layout (laid out twice, so the numbers count
+   * the table itself).
+   */
+  insertToc(title = "Inhalt"): void {
+    if (this.doc.activeStory !== MAIN || this.inTable()) return;
+    this.snapshot();
+    const styles = [1, 2, 3].map((k) => { const id = this.styleId(`toc ${k}`); this.ensureStyle(id); return id; });
+    const head = this.styleId("TOC Heading");
+    this.ensureStyle(head);
+    const h = this.sel.head;
+    // At the start of a new paragraph before the caret's.
+    const at = { p: h.p, o: 0 };
+    const entries = this.headings().filter((x) => x.level <= 3);
+    // numId 0: the heading keeps no number when the headings are numbered.
+    const heading: Para = makePara(title, { style: head, numId: 0 });
+    const paras = S.tocParagraphs(this.doc, entries, () => "1", styles, this.tocWidth());
+    this.doc.splice(at.p, at.p - 1, [heading, ...paras]);
+    this.update();
+    this.refreshToc(S.tocFields(this.doc).find((f) => f.a === at.p + 1)?.id);
+    this.setSel({ p: at.p, o: 0 }, { p: at.p, o: 0 });
+    this.update({ scroll: true });
+  }
+
+  /** Replaces paragraph `p` by a table of contents (the heading above stays as it is). */
+  insertTocAt(p: number): void {
+    if (p < 0 || p >= this.doc.main.length) return;
+    const styles = [1, 2, 3].map((k) => { const id = this.styleId(`toc ${k}`); this.ensureStyle(id); return id; });
+    this.snapshot();
+    const entries = this.headings().filter((x) => x.level <= 3 && x.p !== p);
+    this.doc.splice(p, p, S.tocParagraphs(this.doc, entries, () => "1", styles, this.tocWidth()));
+    this.update();
+    this.refreshToc(S.tocFields(this.doc).find((f) => f.a === p)?.id);
+    this.update();
+  }
+
+  hasToc(): boolean {
+    return S.tocFields(this.doc).length > 0;
+  }
+
+  /**
+   * Tabelle aktualisieren: "Nur Seitenzahlen aktualisieren" keeps the entries and corrects
+   * their numbers; otherwise the whole table is rebuilt from the headings.
+   */
+  updateToc(pagesOnly = false): void {
+    if (!S.tocFields(this.doc).length) return;
+    this.snapshot();
+    if (pagesOnly) this.refreshTocPages(); else this.refreshToc();
+    this.update({ scroll: true });
+  }
+
+  private refreshTocPages(): void {
+    const where = new Map<string, number>();
+    this.doc.main.forEach((p, i) => { for (const a of p.anchors ?? []) if (a.bookmark) where.set(a.bookmark, i); });
+    const main = [...this.doc.main];
+    let changed = false;
+    for (const f of S.tocFields(this.doc)) {
+      for (let i = f.a; i <= f.b; i++) {
+        const p = main[i];
+        if (!p.objects?.length) continue;
+        const objects = p.objects.map((o) => {
+          const m = o.kind === "field" ? /^\s*PAGEREF\s+(\S+)/i.exec(o.instr ?? "") : null;
+          const at = m ? where.get(m[1]) : undefined;
+          if (at === undefined) return o;
+          const display = this.pageNumberOf(at);
+          return display === o.display ? o : { ...o, display, data: undefined };
+        });
+        if (objects.some((o, k) => o !== p.objects![k])) { main[i] = { ...p, objects }; changed = true; }
+      }
+    }
+    if (changed) this.doc.setStory(MAIN, main);
+  }
+
+  /**
+   * Rebuilds tables of contents until their page numbers are stable (a longer table can push
+   * headings to later pages).
+   */
+  private refreshToc(only?: string): void {
+    const styles = [1, 2, 3].map((k) => { const id = this.styleId(`toc ${k}`); this.ensureStyle(id); return id; });
+    const sig = (ps: readonly Para[]) => ps.map((p) => p.text + (p.objects?.map((o) => o.display).join() ?? "")).join("|");
+    const ids = S.tocFields(this.doc).map((f) => f.id).filter((id) => !only || id === only);
+    for (let pass = 0; pass < 4; pass++) {
+      let changed = false;
+      for (const id of ids) {
+        const f = S.tocFields(this.doc).find((x) => x.id === id);
+        if (!f) continue;
+        const entries = this.headings().filter((x) => x.level <= 3 && (x.p < f.a || x.p > f.b));
+        const before = sig(this.doc.main.slice(f.a, f.b + 1));
+        const paras = S.tocParagraphs(this.doc, entries, this.pageNumberOf, styles, this.tocWidth(), f.id);
+        if (sig(paras) === before) continue;
+        changed = true;
+        S.stripTocTail(this.doc, f);
+        this.doc.splice(f.a, f.b, paras);
+      }
+      if (!changed) break;
+      this.update();
+    }
+  }
+
+  removeToc(): void {
+    const fields = S.tocFields(this.doc);
+    if (!fields.length) return;
+    this.snapshot();
+    for (const f of [...fields].reverse()) {
+      // The heading Word puts above (Inhaltsverzeichnisüberschrift) goes too.
+      const headStyle = this.styleId("TOC Heading");
+      const a = f.a > 0 && this.doc.main[f.a - 1].props.style === headStyle ? f.a - 1 : f.a;
+      S.stripTocTail(this.doc, f);
+      const main = [...this.doc.main];
+      main.splice(a, f.b - a + 1);
+      this.doc.setStory(MAIN, main.length ? main : [makePara("")]);
+    }
+    this.clampSelection();
+    this.update({ scroll: true });
+  }
+
+  // ----- comments ---------------------------------------------------------------------------------
+
+  /** Neuer Kommentar (Strg+Alt+K) on the selection or the word at the caret; returns its id. */
+  addComment(text = ""): string | null {
+    if (this.doc.activeStory !== MAIN) return null;
+    let [from, to] = this.range();
+    if (cmp(from, to) === 0) {
+      const w = this.wordAt(from);
+      if (w) { from = { p: w.p, o: w.a }; to = { p: w.p, o: w.b }; }
+    }
+    this.snapshot();
+    const textStyle = this.styleId("annotation text"), refStyle = this.styleId("annotation reference");
+    this.ensureStyle(textStyle);
+    this.ensureStyle(refStyle);
+    const id = S.addComment(this.doc, from, to, { author: this.author, initials: this.authorInitials, date: new Date().toISOString().replace(/\.\d+Z$/, "Z") }, textStyle, refStyle, text);
+    this.update();
+    return id;
+  }
+
+  /** Every comment with its text and where it is (for the comment pane). */
+  comments(): { id: string; author: string; initials: string; date: string; text: string; parent?: string; done?: boolean; start: Pos; end: Pos }[] {
+    const ranges = S.commentRanges(this.doc);
+    return ranges.map((r) => {
+      const m = this.doc.comments.get(r.id);
+      return { id: r.id, author: m?.author ?? "", initials: m?.initials ?? "", date: m?.date ?? "", text: S.commentText(this.doc, r.id), parent: m?.parent, done: m?.done, start: r.start, end: r.end };
+    });
+  }
+
+  setCommentText(id: string, text: string): void {
+    if (S.commentText(this.doc, id) === text) return;
+    this.snapshot();
+    S.setCommentText(this.doc, id, text, this.styleId("annotation text"), this.styleId("annotation reference"));
+    this.update();
+  }
+
+  deleteComment(id: string): void {
+    this.snapshot();
+    S.deleteComment(this.doc, id);
+    this.update();
+  }
+
+  replyComment(id: string, text: string): string {
+    this.snapshot();
+    const r = S.addReply(this.doc, id, { author: this.author, initials: this.authorInitials, date: new Date().toISOString().replace(/\.\d+Z$/, "Z") }, text,
+      this.styleId("annotation text"), this.styleId("annotation reference"));
+    this.update();
+    return r;
+  }
+
+  /** Erledigt / wieder öffnen. */
+  setCommentDone(id: string, done: boolean): void {
+    const m = this.doc.comments.get(id);
+    if (!m) return;
+    this.snapshot();
+    this.doc.setComment({ ...m, done: done || undefined }, id);
+    this.update();
+  }
+
+  /** Selects a comment's text (Zurück/Weiter, a click on its card). */
+  selectComment(id: string): void {
+    const r = S.commentRanges(this.doc).find((x) => x.id === id);
+    if (!r) return;
+    if (this.doc.activeStory !== MAIN) this.switchStory(MAIN, MAIN);
+    this.setSel(r.start, r.end);
+    this.update({ scroll: true });
+  }
+
+  /** A comment card the user clicked: shown active until the caret moves in the text. */
+  private focusedComment: string | null = null;
+
+  focusComment(id: string | null): void {
+    this.focusedComment = id;
+    this.update();
+  }
+
+  /** The comment shown active: a clicked card, else the one around the caret. */
+  activeComment(): string | null {
+    return this.focusedComment ?? this.commentAtCaret();
+  }
+
+  private revCache: { main: Para[]; has: boolean } | null = null;
+
+  /** Whether the main text has tracked changes (Annehmen/Ablehnen enabled). */
+  hasRevisions(): boolean {
+    const main = this.doc.main;
+    if (this.revCache?.main !== main) this.revCache = { main, has: R.findRevision(main, { p: 0, o: -1 }, 1) !== null };
+    return this.revCache.has;
+  }
+
+  /** The comment at the caret (its text contains the caret). */
+  commentAtCaret(): string | null {
+    if (this.doc.activeStory !== MAIN) return null;
+    const h = this.sel.head;
+    const hit = S.commentRanges(this.doc).filter((r) => cmp(r.start, h) <= 0 && cmp(h, r.end) <= 0);
+    return hit.length ? hit[hit.length - 1].id : null;
+  }
+
+  /** Where each comment's text starts, in the view's container coordinates (for the cards). */
+  commentTops(): Map<string, number> {
+    const out = new Map<string, number>();
+    for (const r of S.commentRanges(this.doc)) out.set(r.id, this.view.mainLineTop(r.start));
+    return out;
+  }
+
+  /** The markup area right of the pages (comment cards); `width` 0 removes it. */
+  get markupLayer(): HTMLElement {
+    return this.view.markupLayer;
+  }
+
+  setMarkupWidth(width: number): void {
+    this.view.setMarkupWidth(width);
+  }
+
+  // ----- tracked changes -------------------------------------------------------------------------
+
+  get trackChanges(): boolean {
+    return !!this.doc.settings.trackChanges;
+  }
+
+  /** Änderungen nachverfolgen (Strg+Umschalt+E). */
+  setTrackChanges(on: boolean): void {
+    this.doc.setSettings({ ...this.doc.settings, trackChanges: on || undefined });
+    this.insRev = null;
+    this.emit(true);
+  }
+
+  /** Annehmen / Ablehnen: the selection's changes, the change at the caret, or all. */
+  resolveChanges(accept: boolean, scope: "selection" | "all" | "next" = "selection"): void {
+    const paras = this.doc.paras;
+    let [from, to] = this.range();
+    if (scope === "all") { from = { p: 0, o: 0 }; to = this.doc.end(); }
+    else if (cmp(from, to) === 0) {
+      // The change at the caret (or the next one).
+      const prev = R.findRevision(paras, { p: from.p, o: from.o + 1 }, -1);
+      const span = prev && cmp(prev.from, from) <= 0 && cmp(from, prev.to) <= 0 ? prev : R.findRevision(paras, from, 1);
+      if (!span) return;
+      [from, to] = [span.from, span.to];
+    }
+    if (!R.hasRevisions(paras, from, to)) return;
+    this.snapshot();
+    R.resolveRevisions(this.doc, from, to, accept);
+    const at = this.fixPos(from);
+    this.setSel(at, at);
+    this.update({ scroll: true });
+    if (scope === "next") this.nextChange(1);
+  }
+
+  /** Zurück / Weiter: selects the previous or next change. */
+  nextChange(dir: 1 | -1): boolean {
+    const h = dir > 0 ? maxPos(this.sel.anchor, this.sel.head) : minPos(this.sel.anchor, this.sel.head);
+    const span = R.findRevision(this.doc.paras, dir > 0 ? { p: h.p, o: h.o - 1 } : h, dir);
+    if (!span) return false;
+    this.setSel(span.from, span.to);
+    this.update({ scroll: true });
+    return true;
+  }
+
+  /** Markup anzeigen: all changes marked, the result without marks, or the original. */
+  setMarkup(markup: "all" | "simple" | "none" | "original"): void {
+    this.markupMode = markup;
+    this.view.markupMode = markup;
+    this.layouter.setContext(this.context());
+    this.update();
+  }
+
+  markupMode: "all" | "simple" | "none" | "original" = "all";
 
   // ----- format painter -------------------------------------------------------------------
 
@@ -1875,6 +2371,8 @@ export class Editor {
   private onBeforeInput(e: InputEvent): void {
     if (e.inputType === "insertCompositionText") return; // let the IME work in the textarea
     e.preventDefault();
+    // Typing in the text ends the focus on a clicked comment card.
+    this.focusedComment = null;
     if (e.inputType === "insertText" && e.data) this.insertText(e.data, e.timeStamp);
   }
 
@@ -1890,6 +2388,15 @@ export class Editor {
     const ts = e.timeStamp;
     const h = this.sel.head;
     let handled = true;
+    // The arrow keys enter an equation next to the caret, as in Word.
+    if ((e.key === "ArrowLeft" || e.key === "ArrowRight") && !shift && !ctrl && !e.altKey && this.onEditMath && !this.hasSelection) {
+      const at = e.key === "ArrowRight" ? h : { p: h.p, o: h.o - 1 };
+      if (at.o >= 0 && this.mathAt(at)) {
+        e.preventDefault();
+        this.onEditMath(at, e.key === "ArrowRight" ? "start" : "end");
+        return;
+      }
+    }
     switch (e.key) {
       case "ArrowLeft":
         this.collapseOrMove(shift, ctrl ? this.wordLeft(h) : this.charLeft(h), "start"); break;
@@ -2034,7 +2541,7 @@ export class Editor {
       // No tables inside table cells: their text comes in as paragraphs.
       for (let i = 0; i < pieces.length; i++) pieces[i] = { ...pieces[i], cell: undefined };
     }
-    const end = this.doc.replace(a, b, pieces);
+    const end = this.replaceTracked(a, b, pieces);
     this.setSel(end, end);
     this.requireFonts();
     this.update({ scroll: true });
@@ -2056,6 +2563,9 @@ export class Editor {
 
   private onMouseDown(e: MouseEvent): void {
     if (e.button !== 0) return;
+    // Comment cards handle their own clicks.
+    if (this.view.markupLayer.contains(e.target as Node)) return;
+    this.focusedComment = null;
     const ws = this.workspace;
     if (e.target === ws && (e.offsetX >= ws.clientWidth || e.offsetY >= ws.clientHeight)) return; // scrollbar
     e.preventDefault();
@@ -2102,6 +2612,12 @@ export class Editor {
       const [a, b] = sentenceAt(this.doc.paras[under.p].text, under.o);
       this.setSel({ p: under.p, o: a }, { p: under.p, o: b });
       this.drag = null;
+    } else if (this.onEditMath && this.mathAt(under) && this.overObject(hit.index, hit.x, under)) {
+      // A click on an equation opens it for editing.
+      this.setSel(under, { p: under.p, o: under.o + 1 });
+      this.update();
+      this.onEditMath(under, "click");
+      return;
     } else if (this.isImageAt(under) && this.overObject(hit.index, hit.x, under)) {
       // A click on a picture in the text selects it.
       this.setSel(under, { p: under.p, o: under.o + 1 });

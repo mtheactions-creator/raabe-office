@@ -672,6 +672,59 @@ def notes(app) -> None:
     d.Close(0)
 
 
+def step4(app) -> None:
+    """Step 4: Word's own table of contents, foot- and endnotes, a comment and equations
+    (inline and display, built up from Word's linear format)."""
+    d = base_doc(app)
+    b = Builder(d)
+    b.para("Photosynthese", -1)
+    heads = [("Einleitung", -2), ("Grundlagen", -2), ("Licht", -3), ("Wasser", -3), ("Rechnungen", -2), ("Ausblick", -2)]
+    eq = {}
+    for i, (title, style) in enumerate(heads):
+        b.para(title, style)
+        b.para(f"{title}: " + FILL)
+        if title == "Rechnungen":
+            b.para("Die Energie eines Photons ist ")
+            b.para("#quad")
+            b.para("Für die Summe gilt")
+            b.para("#sum")
+            b.para("Und das Integral:")
+            b.para("#int")
+            b.para("Eine Matrix: ")
+        b.para(FILL[:180])
+    # Equations from linear format (Word builds them up as it would after typing). A display
+    # equation replaces its marker paragraph's text; an inline one goes at the paragraph end.
+    def build(par, linear, display, after=""):
+        r = par.Range
+        start = r.Start if display else r.End - 1
+        d.Range(start, r.End - 1).Text = linear + after
+        m = d.OMaths.Add(d.Range(start, start + len(linear)))
+        m.OMaths(1).BuildUp()
+    build(find_para(d, "Die Energie eines Photons ist "), "E=h\u2009f", False, " und sehr klein.")
+    build(find_para(d, "#quad"), "x=(-b\u00b1\u221a(b^2-4ac))/(2a)", True)
+    build(find_para(d, "#sum"), "\u2211_(k=1)^n k=(n(n+1))/2", True)
+    build(find_para(d, "#int"), "\u222b_0^1 x^2 dx=1/3", True)
+    build(find_para(d, "Eine Matrix: "), "A=(\u25a0(1&2@3&4))", False, " mit vier Einträgen.")
+    # Notes and a comment.
+    for title, text in [("Einleitung", "Vgl. Biologiebuch, S. 42."), ("Licht", "Vor allem rotes und blaues Licht.")]:
+        r = find_para(d, f"{title}: " + FILL).Range.Duplicate
+        assert r.Find.Execute(FindText="Blätter")
+        d.Footnotes.Add(Range=d.Range(r.End, r.End), Text=text)
+    r = find_para(d, "Ausblick: " + FILL).Range.Duplicate
+    assert r.Find.Execute(FindText="Sauerstoff")
+    d.Endnotes.Add(Range=d.Range(r.End, r.End), Text="Der Sauerstoff stammt aus dem Wasser.")
+    r = find_para(d, "Grundlagen: " + FILL).Range.Duplicate
+    assert r.Find.Execute(FindText="Wurzeln")
+    d.Comments.Add(r, "Genauer erklären.")
+    # The table of contents (Automatische Tabelle: TOC \o "1-3" \h \z \u) after the title.
+    d.Paragraphs(1).Range.InsertParagraphAfter()
+    toc_par = d.Paragraphs(2)
+    d.TablesOfContents.Add(toc_par.Range, True, 1, 3, False, "", True, True, "", True, True, True)
+    d.TablesOfContents(1).Update()
+    d.SaveAs2(str(OUT / "word-step4.docx"), 16)
+    d.Close(0)
+
+
 def borders(app) -> None:
     d = base_doc(app)
     b = Builder(d)
@@ -781,7 +834,7 @@ def main() -> None:
         if only:
             for name in only:
                 {"layout": layout, "fonts": fonts, "breaks": breaks, "top": top, "formatting": formatting, "rich": rich,
-                 "lists": lists, "tables": tables, "sections": sections, "notes": notes, "borders": borders, "images": images}[name](app)
+                 "lists": lists, "tables": tables, "sections": sections, "notes": notes, "borders": borders, "images": images, "step4": step4}[name](app)
         else:
             formatting(app)
             rich(app)

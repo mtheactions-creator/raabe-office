@@ -25,6 +25,20 @@ export interface LayoutContext {
   readonly defaultTab: number;
   /** Measures an equation given as LaTeX (points); provided by the host page. */
   readonly measureMath?: (latex: string, size: number, display: boolean) => { width: number; height: number; depth: number };
+  /** Markup anzeigen: "simple" and "none" hide deleted text, "original" hides inserted text. */
+  readonly markup?: "all" | "simple" | "none" | "original";
+}
+
+const hiddenVariant = new WeakMap<ResolvedChar, ResolvedChar>();
+const plainVariant = new WeakMap<ResolvedChar, ResolvedChar>();
+/** Formatting of tracked text as the markup mode shows it (hidden, or without marks). */
+function forMarkup(c: ResolvedChar, markup: LayoutContext["markup"]): ResolvedChar {
+  if (!c.rev || !markup || markup === "all") return c;
+  const hide = ((markup === "none" || markup === "simple") && c.rev.kind === "del") || (markup === "original" && c.rev.kind === "ins");
+  const cache = hide ? hiddenVariant : plainVariant;
+  let v = cache.get(c);
+  if (!v) { v = hide ? { ...c, hidden: true } : { ...c, rev: undefined }; cache.set(c, v); }
+  return v;
 }
 
 export type SegmentKind = "text" | "tab" | "object" | "break";
@@ -105,6 +119,8 @@ interface CharInfo {
   kind: SegmentKind;
   run: number;
   display?: string;
+  /** Equation size (points). */
+  math?: { width: number; height: number; depth: number };
 }
 
 /** The field type of a field code ("PAGE \* MERGEFORMAT" → "PAGE"). */
@@ -157,7 +173,7 @@ export class Layouter {
     const width = env.width;
     const bt = rp.borders?.top && rp.borders.top.style !== "nil" && rp.borders.top.style !== "none" ? (rp.borders.top.size + rp.borders.top.space) * PT : 0;
     const bb = rp.borders?.bottom && rp.borders.bottom.style !== "nil" && rp.borders.bottom.style !== "none" ? (rp.borders.bottom.size + rp.borders.bottom.space) * PT : 0;
-    const charOf = (props: CharProps) => styles.resolveChar(rp.style, props, env.tableRPr);
+    const charOf = (props: CharProps) => forMarkup(styles.resolveChar(rp.style, props, env.tableRPr), this.ctx.markup);
     if (para.block) {
       const h = Math.max(para.block.height * PT, 10);
       const c = charOf(para.mark);
@@ -174,6 +190,10 @@ export class Layouter {
     const infos: CharInfo[] = new Array(text.length);
     let objIndex = 0;
     const objs: (InlineObject | undefined)[] = new Array(text.length);
+    // Equations: measured size (points). One alone in its paragraph is a display equation,
+    // centred and set in display style, as Word does.
+    const mathDims: ({ width: number; height: number; depth: number } | undefined)[] = [];
+    const displayMath = text === OBJ && para.objects?.[0]?.kind === "math";
     let pos = 0;
     para.runs.forEach((run, ri) => {
       const c = charOf(run.props);
@@ -194,7 +214,8 @@ export class Layouter {
           }
           if (o?.note && env.notes?.has(o.note)) display = env.notes.get(o.note);
           if (o?.kind === "math" && o.latex !== undefined && this.ctx.measureMath && o.width === undefined) {
-            const m = this.ctx.measureMath(o.latex, c.size, false);
+            const m = this.ctx.measureMath(o.latex, c.size, displayMath);
+            mathDims[i] = m;
             w = m.width * PT;
           } else if (o?.width !== undefined) w = o.width * PT;
           else if (o) for (const oc of display ?? o.display) w += fonts.advance(c, oc);
@@ -204,7 +225,7 @@ export class Layouter {
           w = fonts.advance(c, ch);
           if (i > pos) w += fonts.kerning(c, text[i - 1], ch);
         }
-        infos[i] = { w, c, kind, run: ri, display };
+        infos[i] = { w, c, kind, run: ri, display, math: mathDims[i] };
       }
       pos += run.len;
     });
@@ -353,9 +374,10 @@ export class Layouter {
     let anyText = false;
     for (let i = start; i < end; i++) {
       const o = objs[i];
-      if (infos[i].kind === "object" && o?.height !== undefined) {
-        const d = (o.depth ?? 0) * PT;
-        objAsc = Math.max(objAsc, o.height * PT - d);
+      const md = infos[i].math;
+      if (infos[i].kind === "object" && (md || o?.height !== undefined)) {
+        const d = (md ? md.depth : o!.depth ?? 0) * PT;
+        objAsc = Math.max(objAsc, (md ? md.height : o!.height!) * PT - d);
         objDesc = Math.max(objDesc, d);
         continue;
       }
@@ -378,7 +400,7 @@ export class Layouter {
     // Alignment.
     let x0 = lineLeft;
     let spaceExtra = 0;
-    if (rp.align === "center") x0 += (avail - width) / 2;
+    if (rp.align === "center" || (text === OBJ && objs[0]?.kind === "math")) x0 += (avail - width) / 2;
     else if (rp.align === "right") x0 += avail - width;
     else if (rp.align === "both") {
       // Spaces widen to fill the line (not on the last line) or narrow when the line was

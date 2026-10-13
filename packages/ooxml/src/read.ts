@@ -10,6 +10,7 @@ import {
   type HeaderRefs, type ImageData, type InlineObject, type Numbering, type Para, type ParaGroup, type ParaProps, type Revision,
   type RowDef, type Run, type Section, type StyleDef, type StyleType, type TableDef, type TableStyleDef, type TableStylePart,
 } from "@raabe/text-engine";
+import { ommlToLatex } from "./math";
 import { readNumbering } from "./numbering";
 import { REL, Rels, mimeOf, relsPath, resolveTarget } from "./package";
 import { readBorders, readPPr, readRPr, readShading, type RevisionOf } from "./props";
@@ -453,9 +454,14 @@ class PartReader {
         case "smartTag": case "customXml":
           this.inline(kids(el).filter((c) => c.localName !== "smartTagPr" && c.localName !== "customXmlPr"), b, rev);
           break;
-        case "oMath": case "oMathPara":
-          b.addObject({ kind: "math", data: { raw: outer(el) }, display: mathText(el) }, intern({ ...this.firstRunProps(el, rev), italic: true }));
-          this.r.partial.add(LABEL.math);
+        case "oMath": case "oMathPara": {
+          // Editable as LaTeX when every part converts; the XML is written back unchanged
+          // as long as the equation is not edited.
+          const latex = ommlToLatex(el) ?? undefined;
+          b.addObject({ kind: "math", data: { raw: outer(el) }, display: mathText(el), latex }, intern({ ...this.firstRunProps(el, rev), italic: true }));
+          if (latex === undefined) this.r.partial.add(LABEL.math);
+          break;
+        }
           break;
         case "sdt": {
           const content = child(el, "sdtContent");

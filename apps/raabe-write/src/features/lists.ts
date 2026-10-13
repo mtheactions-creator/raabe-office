@@ -47,7 +47,7 @@ const outline = (formats: string[], suffix: string): NumLevel[] => Array.from({ 
   pPr: { indLeft: 18 * (i + 1), indFirst: -18 }, rPr: {},
 }));
 
-const headingLevels = (): NumLevel[] => Array.from({ length: 9 }, (_, i) => ({
+export const headingLevels = (): NumLevel[] => Array.from({ length: 9 }, (_, i) => ({
   start: 1, format: "decimal", text: Array.from({ length: i + 1 }, (_, k) => `%${k + 1}`).join("."), align: "left", suffix: "tab",
   pPr: { indLeft: [21.6, 28.8, 36, 43.2, 50.4, 57.6, 64.8, 72, 79.2][i], indFirst: -[21.6, 28.8, 36, 43.2, 50.4, 57.6, 64.8, 72, 79.2][i] }, rPr: {},
 }));

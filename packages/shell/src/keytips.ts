@@ -43,8 +43,9 @@ export class Keytips {
       return;
     }
     if (!this.active) {
-      // Alt+letter pressed together jumps straight to that tab.
-      if (e.altKey && !e.ctrlKey && norm(e.key)) {
+      // Alt+letter pressed together jumps straight to that tab (Alt+Umschalt+… are shortcuts,
+      // such as Alt+Umschalt+0 for a new equation).
+      if (e.altKey && !e.ctrlKey && !e.shiftKey && norm(e.key)) {
         this.altAlone = false;
         e.preventDefault();
         e.stopPropagation();

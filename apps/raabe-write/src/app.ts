@@ -15,12 +15,37 @@ import { findFeature, FIND_COMMANDS } from "./features/find";
 import { listsFeature } from "./features/lists";
 import { pageSetupFeature, PAGE_COMMANDS } from "./features/pagesetup";
 import { picturesFeature, PICTURE_COMMANDS } from "./features/pictures";
+import { mathFeature, MATH_COMMANDS } from "./features/math";
+import { referencesFeature, REFERENCE_COMMANDS } from "./features/references";
+import { reviewFeature, REVIEW_COMMANDS } from "./features/review";
 import { spellFeature } from "./features/spell";
 import { tablesFeature, TABLE_COMMANDS } from "./features/tables";
 import { GALLERY, ribbonTabs, type RibbonContext } from "./ribbon-def";
+import { TEMPLATES, finishTemplate, templateState, type TemplateId } from "./templates";
 import { addRecent, loadRecent, loadSettings, removeRecent, saveSettings, setPinned, type Settings } from "./store";
 import appIconUrl from "../../../branding/raabe-write-small.svg?url";
 import logoUrl from "../../../branding/raabe-write.svg?url";
+
+/** A sketch of a template's first page for the Neu gallery. */
+function templateThumb(t: TemplateId): HTMLElement {
+  const bar = (w: number, color = "#c8c8c8", hgt = 3, mt = 5, ml = 0) =>
+    h("div", { style: `width:${w}%;height:${hgt}px;background:${color};margin:${mt}px 0 0 ${ml}%` });
+  const red = "#c4161c", blue = "#2f5496";
+  const box = () => h("div", { style: "flex:1;height:9px;border:1px solid #bdbdbd" });
+  const row = (...kids: HTMLElement[]) => h("div", { style: "display:flex;gap:2px;margin-top:5px" }, ...kids);
+  const parts: Record<TemplateId, HTMLElement[]> = {
+    arbeitsblatt: [row(box(), box(), box()), bar(70, "#404040", 6, 9), bar(45, "#9e9e9e", 3, 4), bar(30, blue, 4, 9), bar(95), bar(80),
+      bar(30, blue, 4, 10), bar(95), bar(60), bar(30, blue, 4, 10), bar(90)],
+    facharbeit: [bar(40, "#404040", 4, 14, 30), bar(60, "#9e9e9e", 3, 6, 20), bar(80, red, 6, 22, 10), bar(50, "#9e9e9e", 3, 6, 25),
+      bar(45, "#c8c8c8", 3, 26), bar(40), bar(50), bar(35)],
+    versuchsprotokoll: [bar(80, "#404040", 6, 4), row(box(), box()), row(box(), box()), bar(35, blue, 4, 9), bar(90), bar(35, blue, 4, 8), bar(60),
+      bar(35, blue, 4, 8), bar(50, "#c8c8c8", 3, 4, 8), bar(50, "#c8c8c8", 3, 3, 8)],
+    handout: [bar(75, "#404040", 6, 4), bar(60, "#9e9e9e", 3, 4), bar(30, blue, 4, 9), bar(60, "#c8c8c8", 3, 4, 8), bar(55, "#c8c8c8", 3, 3, 8),
+      bar(40, blue, 4, 8), row(box(), box()), row(box(), box()), bar(35, blue, 4, 8), bar(70, "#c8c8c8", 3, 4, 8)],
+  };
+  return h("div", { class: "thumb", style: "flex-direction:column;align-items:stretch;justify-content:flex-start;padding:10px 11px;box-sizing:border-box;position:relative" },
+    ...parts[t], h("img", { src: logoUrl, width: 14, alt: "", style: "position:absolute;right:6px;bottom:6px;opacity:.85" }));
+}
 
 interface Doc {
   id: string;
@@ -68,13 +93,16 @@ export class WriteApp {
   private lastPainterClick = 0;
   private lastShading = "FFFF00";
   private features!: ReturnType<WriteApp["makeFeatures"]>;
+  /** Kommentare pane (right of the document). */
+  private readonly commentPane = h("div", { class: "cpane", hidden: true });
   private find!: ReturnType<typeof findFeature>;
 
   constructor(private platform: Platform, initial?: Partial<DocState>) {
     this.fonts = new Fonts((families) => platform.fontMetrics(families));
     this.fonts.onChange(() => { for (const d of this.docs) d.editor.relayout(); });
     void platform.listFonts().then((f) => { this.fontList = f; }).catch(() => {});
-    this.commands.register(...COMMANDS, ...TABLE_COMMANDS, ...PAGE_COMMANDS, ...HEADER_COMMANDS, ...PICTURE_COMMANDS, ...FIND_COMMANDS);
+    this.commands.register(...COMMANDS, ...TABLE_COMMANDS, ...PAGE_COMMANDS, ...HEADER_COMMANDS, ...PICTURE_COMMANDS, ...FIND_COMMANDS,
+      ...REFERENCE_COMMANDS, ...REVIEW_COMMANDS, ...MATH_COMMANDS);
     this.implementCommands();
     this.features = this.makeFeatures();
 
@@ -90,16 +118,17 @@ export class WriteApp {
       onNewDoc: () => this.newDoc(),
       onSearchDone: () => this.active?.editor.focus(),
     });
-    const comments = h("button", { class: "pill", disabled: true, "data-tip": "Kommentare\nNoch nicht verfügbar" }, icon("comment"), "Kommentare");
+    const comments = h("button", { class: "pill", "data-tip": "Kommentare\nKommentare in diesem Dokument anzeigen und bearbeiten.",
+      onclick: () => this.features.review.togglePane() }, icon("comment"), "Kommentare");
     this.ribbon = new Ribbon(this.commands, ribbonTabs(this.ribbonContext()), {
       onFile: () => this.openBackstage("home"),
-      onDone: () => this.active?.editor.focus(),
+      onDone: () => this.focusDoc(),
       tabRowRight: [comments],
     });
     this.statusBar = new StatusBar(this.commands, (z) => this.setZoom(z), [{ cmd: "view.readMode" }, { cmd: "view.printLayout" }], "view.zoomDialog");
     this.backstage = new Backstage(this.commands, this.backstageEntries());
     this.backstage.onClose(() => this.active?.editor.focus());
-    this.docArea = h("div", { class: "docarea" });
+    this.docArea = h("div", { class: "docarea" }, this.commentPane);
     this.find = findFeature(this.api(), this.docArea);
     this.infobarSlot = h("div");
     this.printRoot = h("div", { id: "print-root" });
@@ -137,10 +166,16 @@ export class WriteApp {
     return {
       commands: this.commands, platform: this.platform,
       editor: () => this.active?.editor,
-      focus: () => this.active?.editor.focus(),
+      focus: () => this.focusDoc(),
       refresh: () => this.updateChrome(false),
       selectTab: (id) => { this.updateContextualTabs(); this.ribbon?.select(id); },
     };
+  }
+
+  /** Back to the document: the equation being edited, else the text. */
+  private focusDoc(): void {
+    if (this.features?.math.editing()) this.features.math.focus();
+    else this.active?.editor.focus();
   }
 
   private makeFeatures() {
@@ -152,6 +187,9 @@ export class WriteApp {
       hf: headerFooterFeature(api),
       pictures: picturesFeature(api),
       spell: spellFeature(api),
+      refs: referencesFeature(api),
+      math: mathFeature(api),
+      review: reviewFeature(api, () => this.settings.userName, this.commentPane),
     };
   }
 
@@ -163,6 +201,7 @@ export class WriteApp {
     if (e.isHeaderFooter()) tabs.push(this.features.hf.tab);
     if (e.inTable()) tabs.push(this.features.tables.designTab, this.features.tables.layoutTab);
     if (e.selectedImage()) tabs.push(this.features.pictures.tab);
+    if (this.features.math.editing()) tabs.push(this.features.math.tab);
     const wasHf = this.contextualKey.includes("headerFooter");
     this.ribbon.setContextual(tabs);
     this.contextualKey = tabs.map((t) => t.id).join(",");
@@ -179,6 +218,8 @@ export class WriteApp {
     this.docArea.append(ws);
     const editor = new Editor(ws, state ?? {}, this.fonts);
     this.features.spell.attach(editor);
+    this.features.review.attach(editor);
+    this.features.math.attach(editor);
     const doc: Doc = {
       id: crypto.randomUUID(), name, path, editor, ws, saved: editor.contentStamp(), recoverySaved: null, pkg, partial,
       lastSaved: null,
@@ -209,6 +250,7 @@ export class WriteApp {
     for (const d of this.docs) d.ws.hidden = d !== doc;
     doc.editor.update();
     doc.editor.focus();
+    this.features.review.render();
     this.renderInfobar();
     this.updateStatus(doc, true);
     this.updateChrome(false);
@@ -562,11 +604,20 @@ export class WriteApp {
   private templates(): HTMLElement {
     const blank = h("button", { class: "template", onclick: () => { this.backstage.close(); this.newDoc(); } },
       h("div", { class: "thumb" }), "Leeres Dokument");
-    const school = h("div", { class: "template", style: "opacity:.55", "data-tip": "Raabeschule-Vorlagen\nFolgen in einem späteren Schritt." },
-      h("div", { class: "thumb" }, h("img", { src: logoUrl, width: 48, alt: "" })), "Arbeitsblatt (Raabeschule)");
-    const facharbeit = h("div", { class: "template", style: "opacity:.55", "data-tip": "Raabeschule-Vorlagen\nFolgen in einem späteren Schritt." },
-      h("div", { class: "thumb" }, h("img", { src: logoUrl, width: 48, alt: "" })), "Facharbeit (Raabeschule)");
-    return h("div", { class: "templates" }, blank, school, facharbeit);
+    const school = TEMPLATES.map((t) => h("button", {
+      class: "template", "data-tip": `${t.name} (Raabeschule)\n${t.desc}`, onclick: () => this.newFromTemplate(t.id),
+    }, templateThumb(t.id), t.name));
+    return h("div", { class: "templates" }, blank, ...school);
+  }
+
+  /** A new document from a Raabeschule template; it counts as unchanged until edited. */
+  newFromTemplate(t: TemplateId): void {
+    this.backstage.close();
+    const doc = this.newDoc(templateState(t));
+    finishTemplate(t, doc.editor);
+    doc.saved = doc.editor.contentStamp();
+    this.lastTabsKey = "";
+    this.updateChrome(false);
   }
 
   private backstageEntries(): BackstageEntry[] {
@@ -899,8 +950,21 @@ export class WriteApp {
         get footer() { return self.features.hf.footerMenu; },
         get pageNumber() { return self.features.hf.pageNumberMenu; },
         get pictures() { return self.features.pictures.insertMenu; },
+        get toc() { return self.features.refs.tocMenu; },
+        get equation() { return self.features.math.insertMenu; },
+        get addText() { return self.features.refs.addTextMenu; },
+        get nextNote() { return self.features.refs.nextNoteMenu; },
+        get track() { return self.features.review.trackMenu; },
+        get deleteComment() { return self.features.review.deleteMenu; },
+        get accept() { return self.features.review.acceptMenu; },
+        get reject() { return self.features.review.rejectMenu; },
         borders: ["bottom", "top", "left", "right", "none", "all", "outside", "inside"].map((k) => ({ cmd: `border.${k}` })),
         wrap: ["picture.wrapInline", "picture.wrapSquare", "picture.wrapTight", "picture.wrapThrough", "picture.wrapTopBottom", "picture.wrapBehind", "picture.wrapFront"].map((cmd) => ({ cmd })),
+      },
+      markup: {
+        value: () => self.features.review.markup.value(),
+        set: (v) => self.features.review.markup.set(v),
+        options: () => self.features.review.markup.options(),
       },
       stepSpacing: (which, dir) => {
         const r = ed()?.paraState();
@@ -1073,6 +1137,7 @@ export class WriteApp {
           f: "font.bold", k: "font.italic", u: "font.underline", d: "underline.double", g: "font.allCaps", n: "style.normal",
           m: "para.indentDec", v: "edit.pasteText", a: "font.name", p: "font.size",
         } as Record<string, string>)[k] ?? cmd;
+        if (k === "e") cmd = "review.trackChanges";
         if (k === "q") { e.preventDefault(); ed?.toggleChar("smallCaps"); return; }
         if (k === "h") { e.preventDefault(); ed?.toggleChar("hidden"); return; }
         if (k === "w") { e.preventDefault(); ed?.setUnderline("words"); return; }
@@ -1083,6 +1148,9 @@ export class WriteApp {
         if (vk === 56) cmd = "para.showMarks";             // Strg+* (Umschalt+8)
       }
       if (ctrl && alt && !shift) {
+        if (k === "f" && vk === 70) cmd = "ref.footnote";
+        if (k === "d" && vk === 68) cmd = "ref.endnote";
+        if (k === "k" && vk === 75) cmd = "review.newComment";
         if (k === "1") cmd = "style.h1";
         if (k === "2") cmd = "style.h2";
         if (k === "3") cmd = "style.h3";
@@ -1091,6 +1159,7 @@ export class WriteApp {
         if (k === "v" && vk === 86) { e.preventDefault(); if (ed && this.copiedFormat) ed.pasteFormat(this.copiedFormat); return; }
       }
       if (!ctrl && !alt && k === "F12") cmd = "file.saveAs";
+      if (alt && shift && !ctrl && vk === 48) cmd = "insert.equation";             // Alt+Umschalt+0
       if (!ctrl && !alt && shift && k === "F7") cmd = "review.thesaurus";
       if (!ctrl && !alt && shift && k === "F3") { e.preventDefault(); ed?.changeCase("cycle"); return; }
       if (ctrl && (k === "Tab" || k === "F6") && this.docs.length > 1 && this.active) {
@@ -1111,7 +1180,7 @@ export class WriteApp {
     addEventListener("mousedown", (e) => {
       const t = e.target as Element;
       if (t.closest("input, select, textarea")) return;
-      if (t.closest(".ribbon-card, .qat, .tabrow, .statusbar, .group-popup, .menu")) e.preventDefault();
+      if (t.closest(".ribbon-card, .qat, .tabrow, .statusbar, .group-popup, .menu, .rpanel")) e.preventDefault();
     }, true);
   }
 
@@ -1132,6 +1201,7 @@ export class WriteApp {
       run: (id: string) => this.commands.run(id),
       enabled: (id: string) => this.commands.isEnabled(id),
       newDoc: () => { this.newDoc(); },
+      newFromTemplate: (t: TemplateId) => this.newFromTemplate(t),
       activeRibbonTab: () => this.ribbon.activeTab,
       infobar: () => this.infobarSlot.textContent,
       /** The active editor, for tests that call its commands directly. */

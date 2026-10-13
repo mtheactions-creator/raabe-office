@@ -315,7 +315,7 @@ button {
 .backstage h1 { font-size: 26px; font-weight: 600; margin: 4px 0 20px; }
 .backstage h2 { font-size: 18px; font-weight: 600; margin: 24px 0 12px; }
 .backstage .templates { display: flex; flex-wrap: wrap; gap: 24px; }
-.backstage .template { width: 140px; display: flex; flex-direction: column; align-items: center; gap: 8px; font-weight: 600; text-align: center; }
+.backstage .template { width: 140px; display: flex; flex-direction: column; align-items: center; gap: 8px; font-weight: 600; text-align: center; padding: 0; background: none; border: 0; }
 .backstage .template .thumb { width: 104px; height: 134px; background: #fff; box-shadow: 0 0 0 1px #d6d6d6; display: flex; align-items: center; justify-content: center; color: var(--text-2); font-weight: 400; }
 .backstage .template:hover .thumb { box-shadow: 0 0 0 2px var(--accent); }
 .backstage .filelist { width: 100%; max-width: 1100px; border-collapse: collapse; }
@@ -434,3 +434,55 @@ body.touch .qat button { height: 36px; min-width: 36px; }
 .navpane .nav-list button.active { background: #fde7e7; }
 .navpane .nav-empty { padding: 12px; color: #616161; }
 .dialog.floating { position: fixed; right: 40px; top: 140px; z-index: 80; }
+
+/* ----- comments (Überprüfen) ------------------------------------------------------------ */
+
+.ccard { position: absolute; left: 0; width: 100%; box-sizing: border-box; padding: 10px 12px; background: var(--card); border-radius: 6px;
+  box-shadow: 0 1.6px 3.6px rgba(0,0,0,.13), 0 .3px .9px rgba(0,0,0,.11); font: 14px var(--font); color: var(--text); cursor: default; transition: transform .1s; }
+.ccard.active { transform: translateX(-10px); box-shadow: 0 6.4px 14.4px rgba(0,0,0,.13), 0 1.2px 3.6px rgba(0,0,0,.11); }
+.ccard.done { opacity: .75; }
+.ccard .centry + .centry { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
+.ccard .chead { display: flex; align-items: center; gap: 8px; }
+.ccard .avatar { flex: none; width: 28px; height: 28px; border-radius: 50%; color: #fff; font-size: 11px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; }
+.ccard .cwho { flex: 1; min-width: 0; }
+.ccard .cname { font-weight: 600; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ccard .cdate { font-size: 11px; color: var(--text-2); }
+.ccard .cmore { width: 28px; height: 28px; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; opacity: 0; }
+.ccard:hover .cmore, .ccard.active .cmore { opacity: 1; }
+.ccard .cmore:hover { background: var(--hover); }
+.ccard .ctext { margin-top: 6px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.ccard .cstate { margin-top: 8px; display: flex; align-items: center; gap: 4px; font-size: 12px; color: #107c10; }
+.ccard .cedit { margin-top: 8px; display: flex; align-items: flex-end; gap: 4px; border: 1px solid #c7c7c7; border-radius: 4px; padding: 4px 4px 4px 8px; background: var(--card); }
+.ccard .cedit:focus-within { border-color: var(--text-2); }
+.ccard .cinput { flex: 1; min-height: 20px; border: 0; outline: none; resize: none; font: 14px var(--font); padding: 2px 0; background: transparent; overflow: hidden; }
+.ccard .cbtns { display: flex; gap: 2px; }
+.ccard .cbtns button { width: 28px; height: 28px; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; }
+.ccard .cbtns button:hover { background: var(--hover); }
+.ccard .csend { color: var(--accent-text); }
+
+.cpane { position: absolute; right: 0; top: 0; bottom: 0; width: 340px; background: var(--chrome); border-left: 1px solid var(--border); display: flex; flex-direction: column; z-index: 5; font-size: 13px; }
+.cpane[hidden] { display: none; }
+.cpane .cpane-head { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px 6px; font-size: 16px; }
+.cpane .cpane-head button { height: 28px; min-width: 28px; padding: 0 6px; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; gap: 4px; font-size: 13px; }
+.cpane .cpane-head button:hover { background: var(--hover); }
+.cpane .cpane-list { flex: 1; overflow: auto; padding: 4px 12px 12px; display: flex; flex-direction: column; gap: 10px; }
+.cpane .ccard { position: relative; }
+.cpane .ccard.active { transform: none; outline: 2px solid var(--text-2); }
+.cpane .cempty { color: var(--text-2); padding: 20px 8px; text-align: center; line-height: 1.5; }
+
+/* ----- equations (Formel) ------------------------------------------------------------------ */
+
+math-field.math-edit { position: absolute; z-index: 6; padding: 0 3px; border: 0; border-radius: 2px; background: #f2f2f2;
+  outline: 1px solid #c8c8c8; box-shadow: 0 1px 3px rgba(0,0,0,.12); --caret-color: #000; --selection-background-color: #c8dcf5;
+  --contains-highlight-background-color: transparent; --placeholder-color: #7a7a7a; --smart-fence-color: #7a7a7a; }
+math-field.math-edit::part(virtual-keyboard-toggle), math-field.math-edit::part(menu-toggle) { display: none; }
+.rpanel.mathpanel { max-width: 460px; max-height: 70vh; overflow: auto; }
+.rpanel.mathpanel .title { margin-top: 4px; padding: 4px 6px; background: #f3f3f3; font-weight: 600; font-size: 12px; }
+.rpanel .mgrid { display: flex; flex-wrap: wrap; gap: 4px; padding: 6px 2px; }
+.rpanel .mtile { min-width: 64px; height: 56px; padding: 4px 8px; border: 1px solid transparent; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; }
+.rpanel .mtile:hover, .rpanel .msym:hover, .rpanel .mbuilt:hover { background: var(--hover); border-color: var(--border); }
+.rpanel .msyms { display: grid; grid-template-columns: repeat(12, 30px); gap: 2px; padding: 6px 2px; }
+.rpanel .msym { width: 30px; height: 30px; border: 1px solid transparent; border-radius: 3px; font: 17px 'Cambria Math', serif; }
+.rpanel .mbuilt { display: block; width: 100%; text-align: left; padding: 6px 8px; border: 1px solid transparent; border-radius: 4px; }
+.rpanel .mbuilt .mname { font-size: 12px; font-weight: 600; margin-bottom: 4px; }
+.mprev { padding: 4px 0; overflow: hidden; }

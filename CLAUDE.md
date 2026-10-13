@@ -78,6 +78,14 @@ Display: 4K at 150 % scaling, currently 30 Hz.
   (`fonts.rs` `find_face`).
 - A WebView2 window that is hidden or covered stops `requestAnimationFrame`; the browser
   pane of the desktop app does too while it is hidden, so ribbon state there may look stale.
+  In the off-screen harness window rAF callbacks run late: a deferred focus change must check
+  that the focus has not moved meanwhile (comment reply box, D-034).
+- Word's COM positions include hidden field codes (TOC, hyperlinks, PAGEREF) and every
+  character inside an equation; `Content.Text` leaves the codes out. `docx_fidelity.py` maps
+  them; documents with fields or equations need `lines_by_position`.
+- MathLive takes settings such as `menuItems` only once the field is in the page. The CSS
+  generic `math` font falls back to Times for digits: name "Cambria Math" explicitly.
+- Alt+letter is a keytip, Alt+Umschalt+… a shortcut (Alt+Umschalt+0 Formel).
 
 ## Conventions
 - Internal docs and code comments in English; UI strings in German.

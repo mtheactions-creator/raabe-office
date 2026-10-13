@@ -25,7 +25,7 @@
 | UI | TypeScript, no heavy framework in the editing hot path | Predictable latency; the ribbon and dialogs may use a small component layer |
 | File formats | Own OOXML reader/writer (zip + XML), in TypeScript | Full control over fidelity and preservation of unknown parts |
 | Spell check | Hunspell dictionaries (igerman98, en_US/en_GB) checked in Rust (`spellbook`) | Offline, open licences, fast (D-031) |
-| Formula editor | MathLive (MIT) for input, MathML ↔ OMML conversion | |
+| Formula editor | MathLive (MIT) for editing; own LaTeX ↔ OMML conversion and MathML display in Cambria Math | D-036 |
 | Charts | Own renderer (shared by RaabeCalc and RaabePresent) | Must match Excel chart look |
 | Fonts | System fonts, metrics read from the font files (Rust fontdb + ttf-parser); Carlito/Caladea/Liberation as metric-compatible fallbacks | D-011, D-027 |
 
@@ -38,7 +38,8 @@ apps/
   raabe-write/        RaabeWrite: app.ts (documents, files, backstage pages), command-list.ts
                       (every command with Word's label), ribbon-def.ts (tabs and groups),
                       features/ (lists, tables, page setup, headers/footers, pictures, find,
-                      spelling: their commands, galleries, dialogs and contextual tabs),
+                      spelling, references, review, math: their commands, galleries, dialogs
+                      and contextual tabs), templates.ts (Raabeschule templates, D-035),
                       src-tauri/ (Rust: file access, AutoRecover, PDF, single instance, fonts,
                       spell checking)
   raabe-calc/         later
@@ -48,12 +49,15 @@ packages/
                       sheet and resolution), fonts.ts (metrics, measuring), layout.ts (line
                       breaking, D-025), flow.ts (pages, D-029), numbering.ts (list labels),
                       doc.ts (stories and edits), edits.ts (list, table, section operations),
+                      school.ts (notes, tables of contents, comments), revisions.ts (tracked
+                      changes, D-034),
                       html.ts (clipboard HTML), view.ts (DOM rendering, caret, selection),
                       editor.ts (input and commands, D-026), probe.ts (feel-lab)
   shell/              commands, ribbon, keytips, title bar (QAT, document tabs, search),
                       backstage, status bar, dialogs, popups, platform layer, theme.css,
                       icons.gen.ts (generated from Fluent UI System Icons, MIT)
-  ooxml/              .docx reading and writing; everything not edited is kept verbatim (D-024)
+  ooxml/              .docx reading and writing; everything not edited is kept verbatim (D-024);
+                      math.ts: LaTeX ↔ OMML and MathML for equations (D-036)
   (planned) spell/, charts/
 branding/             logos (excluded from the GPL, see branding/README.md)
 docs/                 decisions, scope, architecture, feel metrics, roadmap, reports
@@ -103,6 +107,9 @@ controls and files opened from Explorer. `platform-tauri.ts` implements it for T
 - `tools/feel-lab/smoke_step3.py`: Step 3 in the real app (lists, tables, sections, headers
   and footers, pictures, find and replace, spelling, clipboard HTML, print preview), files
   checked with Word.
+- `tools/feel-lab/smoke_step4.py`: Step 4 in the real app (notes, table of contents,
+  comments, tracked changes, equations, templates); Word checks the files and updates the
+  table of contents to compare page numbers. `capture_step4.py` takes screenshots (local).
 - `tools/feel-lab/docx_word_check.py`: edits and saves Word-made documents with rich content
   and has Word confirm nothing was lost.
 - `tools/feel-lab/run.py`: the feel metrics against Word (docs/FEEL.md), including layout

@@ -23,6 +23,7 @@
     "@tauri-apps/plugin-dialog": "^2.8.2",
     "dictionary-de": "^3.0.0",
     "dictionary-en": "^4.0.0",
-    "dictionary-en-gb": "^3.0.0"
+    "dictionary-en-gb": "^3.0.0",
+    "mathlive": "^0.111.1"
   }
 }

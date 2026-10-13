@@ -302,7 +302,7 @@ Measured on 2026-10-13 with six more test documents built by Word (`make_fixture
 - Footnotes stand at the page bottom under a 2-inch separator line; a line whose note does
   not fit moves to the next page. Paragraph borders and shading take the border width plus
   its distance above and below the text.
-Result: 690/690 line starts and every page break identical in ten Word documents, baselines
+Result: 632/632 line starts (first reported as 690, a summing error corrected in Step 4) and every page break identical in ten Word documents, baselines
 within 0.18 pt. The harness now finds Word's lines by position (Word's own line navigation
 moves between table cells), maps table, section and picture characters between Word and
 RaabeWrite, and reads baselines from the PDFs by position.
@@ -338,3 +338,56 @@ Checked with Word's own commands through COM where no real input was needed:
   text closes them; the text is dimmed meanwhile.
 - Copy and paste with other programs use HTML; content copied inside RaabeWrite keeps its
   full formatting.
+
+### D-034 Comments and tracked changes (Step 4)
+Comments are markers in the text (range start, end, reference) plus a story per comment, as
+in the file; replies and "erledigt" are Word 2013+ data (commentsExtended.xml). They are shown
+as Word 365's modern cards right of the page: the page moves left to make room, each card
+sits at the height of its text and is pushed down when the one above is in the way; the
+Kommentare button opens the list instead. Author and initials come from the user name in
+Optionen ("Benutzer" when none is set).
+Tracked changes are a property of the text (each run and paragraph mark can carry one
+revision: insertion or deletion, author, time), so layout, saving and undo need nothing
+extra. With tracking on, typed and pasted text is an insertion, deletions only mark text,
+and the caret moves over deleted text as in Word; deleting one's own tracked insertion
+removes it for real. Simplification: a deletion of another author's insertion becomes a
+plain deletion (Word keeps both); rejecting it keeps the text. Markup modes as in Word:
+Einfaches Markup (result, red change bars), Alle Markups (struck and underlined in the
+author's colour, grey bars), Kein Markup, Original.
+
+### D-035 Raabeschule templates
+Our own designs, made of ordinary Word formatting (styles, lists, tables, header/footer
+fields, an equation, a table of contents), so files from them work in Word: Arbeitsblatt,
+Facharbeit, Versuchsprotokoll, Handout. Placeholders are bracketed text ("[Thema]") that is
+typed over; no content controls. The Facharbeit follows common requirements in
+Niedersachsen: title page without page number, Inhaltsverzeichnis, numbered chapters,
+Literaturverzeichnis, Anhang and Erklärung unnumbered, Times New Roman 12 pt, 1,5-zeilig,
+Blocksatz, margins 2,5 cm with a 4 cm correction margin on the right. The school can replace
+the wording later without code changes beyond `apps/raabe-write/src/templates.ts`.
+
+### D-036 Equations
+- In the file: Office Math (OMML). Read equations are converted to LaTeX
+  (`packages/ooxml/src/math.ts`) and become editable; their XML is written back unchanged
+  until they are edited. Unknown OMML elements keep the equation read-only.
+- Editing: MathLive (MIT) in place over the equation, loaded only when an equation is first
+  edited (keeps start-up and memory as before). Its own MathML writes limits beside the sum
+  even in display equations, so RaabeWrite does not use it for display.
+- Display: MathML built from the same parse as the OMML, drawn by the WebView with Cambria
+  Math (named explicitly: the generic `math` font falls back to Times for digits) and laid
+  out with the font's MATH table, as Word does. An equation alone in its paragraph is a
+  display equation (centred, display style, m:oMathPara), as in Word. Measured against Word
+  (`word-step4.docx`): matrix rows 0.3ex padding, 0.08 em extra above and below display sums
+  and integrals; text after five equations within 0.8 pt of Word.
+- Input: Word's Formel tab (Strukturen galleries insert LaTeX templates with placeholders),
+  Alt+Umschalt+0, arrow keys enter and leave equations, Esc or Enter leaves.
+
+### D-037 Notes and tables of contents
+- Endnotes follow the document text under a separator line ("Ende des Dokuments", Word's
+  default), numbered i, ii, iii. Notes whose reference was deleted are left out on saving.
+- The table of contents is a TOC field (\o "1-3" \h \z \u) whose entries are ordinary
+  paragraphs (Verzeichnis 1-3) with hyperlinks to _Toc bookmarks and PAGEREF fields, the
+  structure Word writes, so Word can update it. Page numbers come from RaabeWrite's layout;
+  the table is laid out again until they no longer change. Word often ends the field at the
+  start of the first heading; that paragraph is not part of the table and is kept on
+  updates. Numbered headings appear with their number and a tab.
+- Alt+Umschalt+… are shortcuts, not keytips (Alt+letter still jumps to a tab).

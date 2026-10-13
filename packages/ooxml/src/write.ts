@@ -7,6 +7,7 @@ import {
   COLUMN_BREAK, LINE_BREAK, OBJ, PAGE_BREAK, type CommentMeta, type DocState, type FloatObject, type InlineObject,
   type Para, type Revision, type Section, type StyleDef, type TableDef,
 } from "@raabe/text-engine";
+import { latexToOmml, M_NS } from "./math";
 import { writeNumbering } from "./numbering";
 import { CT, PackageWriter, REL, relink } from "./package";
 import type { DocxPackage, ObjectData } from "./read";
@@ -23,7 +24,9 @@ const W14 = "http://schemas.microsoft.com/office/word/2010/wordml";
 const W15 = "http://schemas.microsoft.com/office/word/2012/wordml";
 
 const XML_HEAD = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n';
-const DEFAULT_ROOT = (tag: string) => `<w:${tag} xmlns:w="${W}" xmlns:r="${R}" xmlns:wp="${NS_WP}" xmlns:w14="${W14}">`;
+const DEFAULT_ROOT = (tag: string) => `<w:${tag} xmlns:w="${W}" xmlns:r="${R}" xmlns:wp="${NS_WP}" xmlns:w14="${W14}" xmlns:m="${M_NS}">`;
+/** Declares the math namespace on a part's root element when its content uses it. */
+const withMath = (root: string, body: string) => (body.includes("<m:") && !root.includes("xmlns:m=") ? root.replace(/>$/, ` xmlns:m="${M_NS}">`) : root);
 
 function splitExtra(list: readonly unknown[] | undefined): { name: string; xml: string }[] {
   return (list ?? []).map((x) => {
@@ -151,7 +154,7 @@ class DocWriter {
         if (ch === OBJ) {
           flushRun();
           openRev(run.props.rev);
-          const xml = this.object(p.objects?.[objIdx++], rPr, part);
+          const xml = this.object(p.objects?.[objIdx++], rPr, part, p.text === OBJ);
           out += del ? asDeleted(xml) : xml;
           continue;
         }
@@ -193,7 +196,7 @@ class DocWriter {
     return undefined;
   }
 
-  private object(o: InlineObject | undefined, rPr: string, part: string): string {
+  private object(o: InlineObject | undefined, rPr: string, part: string, alone = false): string {
     if (!o) return "";
     const d = o.data;
     if (typeof d === "string") return d;
@@ -204,6 +207,8 @@ class DocWriter {
     }
     // Content created in RaabeWrite.
     if (o.kind === "image" && o.image) return `<w:r>${rPr}${this.newDrawing(o, part)}</w:r>`;
+    // An equation alone in its paragraph is a display equation (m:oMathPara), as in Word.
+    if (o.kind === "math" && o.latex !== undefined) return latexToOmml(o.latex, alone);
     if (o.kind === "note" && o.note) {
       const [kind, n] = o.note.split(":");
       const tag = kind === "en" ? "endnote" : "footnote";
@@ -381,7 +386,8 @@ class DocWriter {
       if (orig && this.pkg?.originalStories?.get(id) === paras) continue;
       const tag = id.startsWith("hdr:") ? "hdr" : "ftr";
       const root = orig?.rootTag ?? DEFAULT_ROOT(tag);
-      this.pw.setPart(path, `${XML_HEAD}${root}${this.blocks(paras, path)}</w:${tag}>`, tag === "hdr" ? CT.header : CT.footer);
+      const xml = this.blocks(paras, path);
+      this.pw.setPart(path, `${XML_HEAD}${withMath(root, xml)}${xml}</w:${tag}>`, tag === "hdr" ? CT.header : CT.footer);
     }
   }
 
@@ -389,7 +395,10 @@ class DocWriter {
   writeNotes(kind: "fn" | "en"): void {
     const name = kind === "fn" ? "footnotes" : "endnotes";
     const tag = kind === "fn" ? "footnote" : "endnote";
-    const ids = [...(this.state.stories?.keys() ?? [])].filter((k) => k.startsWith(`${kind}:`));
+    // Notes whose reference was deleted are left out (as Word does).
+    const referenced = new Set<string>();
+    for (const p of this.state.paras) for (const o of p.objects ?? []) if (o.note) referenced.add(o.note);
+    const ids = [...(this.state.stories?.keys() ?? [])].filter((k) => k.startsWith(`${kind}:`) && referenced.has(k));
     const orig = this.pkg?.notes[name];
     const origIds = [...(this.pkg?.originalStories?.keys() ?? [])].filter((k) => k.startsWith(`${kind}:`));
     const unchanged = ids.length === origIds.length && ids.every((k) => this.pkg?.originalStories?.get(k) === this.state.stories?.get(k));
@@ -402,7 +411,7 @@ class DocWriter {
     ];
     const notes = ids.sort((a, b) => Number(a.slice(3)) - Number(b.slice(3)))
       .map((id) => `<w:${tag} w:id="${esc(id.slice(3))}">${this.blocks(this.state.stories!.get(id)!, path)}</w:${tag}>`);
-    this.pw.setPart(path, `${XML_HEAD}${root}${special.join("")}${notes.join("")}</w:${name}>`, kind === "fn" ? CT.footnotes : CT.endnotes);
+    this.pw.setPart(path, `${XML_HEAD}${withMath(root, notes.join(""))}${special.join("")}${notes.join("")}</w:${name}>`, kind === "fn" ? CT.footnotes : CT.endnotes);
     this.pw.link("word/document.xml", kind === "fn" ? REL.footnotes : REL.endnotes, path);
   }
 
@@ -602,7 +611,7 @@ export function writeDocx(state: DocState, pkg: DocxPackage | null, options: { a
   const body = w.blocks(state.paras, "word/document.xml");
   const trailing = (pkg?.trailing ?? []).join("");
   const sect = w.section(state.settings.section, "word/document.xml");
-  pw.setPart("word/document.xml", `${XML_HEAD}${pkg?.rootTag ?? DEFAULT_ROOT("document")}<w:body>${body}${trailing}${sect}</w:body></w:document>`);
+  pw.setPart("word/document.xml", `${XML_HEAD}${withMath(pkg?.rootTag ?? DEFAULT_ROOT("document"), body)}<w:body>${body}${trailing}${sect}</w:body></w:document>`);
   w.writeHeaders();
   w.writeNotes("fn");
   w.writeNotes("en");

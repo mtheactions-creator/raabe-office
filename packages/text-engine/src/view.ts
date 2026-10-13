@@ -8,7 +8,7 @@
 
 import { Fonts, PT } from "./fonts";
 import { cmp, type Doc, type Pos } from "./doc";
-import { COLUMN_BREAK, LINE_BREAK, PAGE_BREAK, type ImageData, type Para } from "./model";
+import { COLUMN_BREAK, LINE_BREAK, OBJ, PAGE_BREAK, type ImageData, type Para } from "./model";
 import type { Line, Segment } from "./layout";
 import type { Deco, Frame, Layout, PageLayout, PlacedLine, StoryLayout } from "./flow";
 import type { ResolvedChar } from "./styles";
@@ -104,6 +104,23 @@ export function imageUrl(img: ImageData): string {
   return url;
 }
 
+export type MarkupMode = "all" | "simple" | "none" | "original";
+const MAIN_KEY = "main";
+
+/** Whether a line shows tracked changes (its text, or the paragraph mark on the last line). */
+function lineHasRevision(para: Para, line: Line, isLast: boolean): boolean {
+  if (isLast && para.mark.rev) return true;
+  let pos = 0;
+  for (const r of para.runs) {
+    const a = pos;
+    pos += r.len;
+    if (pos <= line.start) continue;
+    if (a >= line.end) break;
+    if (r.props.rev) return true;
+  }
+  return false;
+}
+
 /** Doc story id of a layout key ("hdr:1@3" → "hdr:1"). */
 export const storyIdOf = (key: string) => (key.includes("@") ? key.slice(0, key.lastIndexOf("@")) : key);
 
@@ -125,10 +142,18 @@ export class View {
   private marks = false;
   /** Highlighted ranges per paragraph (spelling, search hits …), from the host. */
   marksFor: ((story: string, para: Para) => readonly TextMark[] | undefined) | null = null;
+  /** Measures an equation (points), the same function the layout uses; from the host. */
+  measureMath: ((latex: string, size: number, display: boolean) => { width: number; height: number; depth: number }) | null = null;
   /** Renders an equation (LaTeX) at a font size in px; from the host. */
-  renderMath: ((latex: string, sizePx: number) => HTMLElement) | null = null;
+  renderMath: ((latex: string, sizePx: number, display: boolean) => HTMLElement) | null = null;
   /** Author colours for tracked changes. */
   private authors = new Map<string, string>();
+  /** Markup für Überarbeitung anzeigen; decides the change bars in the margin. */
+  markupMode: MarkupMode = "all";
+  /** Room right of the pages for comment cards (px at 100 %); 0 without comments. */
+  private markupW = 0;
+  /** Where the host puts comment cards: right of the pages, scrolled and zoomed with them. */
+  readonly markupLayer: HTMLDivElement;
   /** Gitternetzlinien anzeigen: dashed cell edges on screen (on by default, as in Word). */
   showGridlines = true;
   private printing = false;
@@ -139,6 +164,9 @@ export class View {
     this.container = document.createElement("div");
     this.container.style.cssText = "position:absolute;left:0;top:0;transform-origin:0 0";
     this.sizer.append(this.container);
+    this.markupLayer = document.createElement("div");
+    this.markupLayer.style.cssText = "position:absolute;top:0;display:none";
+    this.container.append(this.markupLayer);
     workspace.append(this.sizer);
     this.caret = document.createElement("div");
     this.caret.style.cssText = "position:absolute;z-index:5;pointer-events:none;background:#000";
@@ -198,9 +226,23 @@ export class View {
     return Math.min(this.pageWidthZoom(), (this.workspace.clientHeight - 2 * GAP) / h);
   }
 
+  /** Makes room for the markup area (comment cards) right of the pages, as Word does. */
+  setMarkupWidth(w: number): void {
+    if (w === this.markupW) return;
+    this.markupW = w;
+    this.applySize();
+  }
+
+  get markupWidth(): number {
+    return this.markupW;
+  }
+
   private applySize(): void {
     const z = this.zoomFactor;
-    const w = this.maxW + 2 * GAP;
+    const w = this.maxW + 2 * GAP + this.markupW;
+    this.markupLayer.style.display = this.markupW ? "" : "none";
+    this.markupLayer.style.left = `${GAP + this.maxW + 12}px`;
+    this.markupLayer.style.width = `${Math.max(0, this.markupW - 24)}px`;
     const n = this.pages.length;
     const h = n ? this.pageTop(n - 1) + this.pages[n - 1].h + GAP : 2 * GAP;
     this.container.style.transform = z === 1 ? "" : `scale(${z})`;
@@ -339,12 +381,15 @@ export class View {
     const add = (key: string | undefined) => {
       if (!key) return;
       const s = layout.stories.get(key);
-      if (s) for (const pl of s.placed) if (!pl.hide) items.push({ key, story: s, pl });
+      if (s) for (const pl of s.placed) if (!pl.hide && pl.page === page.index) items.push({ key, story: s, pl });
     };
     add(page.headerKey);
     for (const pl of mainLines) if (!pl.hide) items.push({ key: "main", story: layout.main, pl });
     add(page.footerKey);
-    for (const id of page.notes) add(id);
+    // Foot- and endnotes: the stories of the note frames on this page.
+    const notes = new Set<string>();
+    for (const id of page.frames) { const f = layout.frames[id]; if (f.kind === "note") notes.add(f.story); }
+    for (const id of notes) add(id);
     for (let k = 0; k < items.length; k++) {
       const { key, story, pl } = items[k];
       const paras = key === "main" ? doc.main : this.storyParas(key);
@@ -355,7 +400,7 @@ export class View {
       const isLast = pl.line === pll.lines.length - 1;
       const marks = this.marksFor?.(key === "main" ? "main" : storyIdOf(key), para);
       const dim = this.dimmed(key);
-      const lineKey = `${idOf(line)}|${pl.x}|${pl.y}|${this.marks}|${isLast}|${dim}|${idOf(marks)}|${idOf(para)}`;
+      const lineKey = `${idOf(line)}|${pl.x}|${pl.y}|${this.marks}|${isLast}|${dim}|${idOf(marks)}|${idOf(para)}|${this.markupMode}`;
       if (pv.lineKeys[k] === lineKey) continue;
       let el = pv.lineEls[k];
       if (!el) {
@@ -366,6 +411,13 @@ export class View {
       }
       el.style.opacity = dim ? "0.45" : "";
       el.replaceChildren(...this.lineContent(para, line, pl.x + line.x0, pl.y, isLast, marks));
+      // Geänderte Zeilen: a bar in the left margin next to lines with tracked changes.
+      if ((this.markupMode === "all" || this.markupMode === "simple") && !this.printing && lineHasRevision(para, line, isLast)) {
+        const bar = document.createElement("div");
+        bar.style.cssText = `position:absolute;left:${page.setup.marginLeft * PT - 14}px;top:${pl.y}px;width:0;height:${line.height}px;` +
+          `border-left:1px solid ${this.markupMode === "simple" ? "#d13438" : "#7f7f7f"};pointer-events:none`;
+        el.append(bar);
+      }
       pv.lineKeys[k] = lineKey;
     }
     while (pv.lineEls.length > items.length) {
@@ -654,8 +706,10 @@ export class View {
         return out;
       }
       if (o?.kind === "math" && o.latex !== undefined && this.renderMath) {
-        const el = this.renderMath(o.latex, c.size * PT);
-        const h = (o.height ?? c.size) * PT, d = (o.depth ?? 0) * PT;
+        const display = para.text === OBJ;
+        const el = this.renderMath(o.latex, c.size * PT, display);
+        const m = this.measureMath?.(o.latex, c.size, display);
+        const h = (m?.height ?? o.height ?? c.size) * PT, d = (m?.depth ?? o.depth ?? 0) * PT;
         el.style.position = "absolute";
         el.style.left = `${x}px`;
         el.style.top = `${baseline - (h - d)}px`;
@@ -829,8 +883,14 @@ export class View {
   // ----- geometry -----------------------------------------------------------------------
 
   /** The placed line holding a position of the active story. */
-  placedFor(pos: Pos, upstream = false): { pl: PlacedLine; index: number } {
-    const story = this.storyLayout();
+  /** Top of the main-text line holding `pos`, in container coordinates (comment cards). */
+  mainLineTop(pos: Pos): number {
+    const { pl } = this.placedFor(pos, false, MAIN_KEY);
+    return pl ? this.pageTop(pl.page) + pl.y : 0;
+  }
+
+  placedFor(pos: Pos, upstream = false, key = this.opts.active): { pl: PlacedLine; index: number } {
+    const story = this.storyLayout(key);
     const pll = story.paras[pos.p];
     const lines = pll?.lines ?? [];
     let j = 0;
@@ -887,9 +947,9 @@ export class View {
     const layout = this.layoutRef!;
     const { page, x, y } = this.pointAt(clientX, clientY);
     const pg = layout.pages[page];
-    for (const id of pg.notes) {
-      const fr = layout.frames.find((f) => f.page === page && f.story === id);
-      if (fr && y >= fr.y && y <= fr.y + fr.h && x >= fr.x - 20 && x <= fr.x + fr.w) return { page, kind: "note", key: id };
+    for (const fid of pg.frames) {
+      const fr = layout.frames[fid];
+      if (fr.kind === "note" && y >= fr.y && y <= fr.y + fr.h && x >= fr.x - 20 && x <= fr.x + fr.w) return { page, kind: "note", key: fr.story };
     }
     if (y < pg.bodyTop) return { page, kind: "header", key: pg.headerKey };
     if (y > pg.bodyBottom) return { page, kind: "footer", key: pg.footerKey };

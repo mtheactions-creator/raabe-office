@@ -246,13 +246,58 @@ class Flow {
   run(): void {
     // Two passes when a header or footer shows NUMPAGES: the first finds the page count.
     this.flowMain();
+    this.placeEndnotes();
     const total = String(this.pages.length);
     if (total !== this.totalPages && this.usesPageCount()) {
       this.totalPages = total;
       this.reset();
       this.flowMain();
+      this.placeEndnotes();
     }
     for (const page of this.pages) this.finishPage(page);
+  }
+
+  /**
+   * Endnotes follow the text of the document (Word's default "Ende des Dokuments"), under a
+   * separator line like footnotes, and continue on new pages when needed.
+   */
+  private placeEndnotes(): void {
+    const ids = [...this.noteNumbers.keys()].filter((k) => k.startsWith("en:") && this.input.stories.has(k));
+    if (!ids.length) return;
+    const si = this.sections.length - 1;
+    const sep = this.separatorHeight();
+    this.y += this.prev ? this.prev.after : 0;
+    if (this.room() < sep * 2) this.nextColumn(si);
+    const lineY = this.cur.y + this.y + sep / 2;
+    this.page.deco.push({ kind: "line", story: "notes", x1: this.cur.x, y1: lineY, x2: this.cur.x + 144 * PT, y2: lineY, width: 0.5 * PT, color: "#000000", style: "single" });
+    this.y += sep;
+    this.prev = null;
+    this.fresh = false;
+    for (const id of ids) {
+      const paras = this.input.stories.get(id)!;
+      const layout = newStory(paras.length);
+      let prev: ParaLayout | null = null;
+      let fr: Frame | null = null;
+      paras.forEach((para, i) => {
+        const pl = this.lt.paragraph(para, { width: this.cur.w, notes: this.noteNumbers });
+        layout.paras[i] = pl;
+        const gap = prev ? this.gapBetween(prev, pl) : pl.before;
+        if (pl.lines[0] && gap + pl.lines[0].height > this.room() + 0.01) { this.nextColumn(si); fr = null; }
+        else this.y += gap;
+        layout.firstPlaced[i] = layout.placed.length;
+        for (let k = 0; k < pl.lines.length; k++) {
+          const line = pl.lines[k];
+          if (line.height > this.room() + 0.01 && this.y > 0) { this.nextColumn(si); fr = null; }
+          if (!fr || fr.page !== this.page.index) fr = this.frame({ page: this.page.index, story: id, kind: "note", x: this.cur.x, y: this.cur.y + this.y, w: this.cur.w, h: 0 });
+          layout.placed.push({ para: i, line: k, page: this.page.index, x: this.cur.x, y: this.cur.y + this.y, frame: fr.id });
+          this.y += line.height;
+          fr.h = this.cur.y + this.y - fr.y;
+        }
+        prev = pl;
+      });
+      if (prev) this.y += (prev as ParaLayout).after;
+      this.stories.set(id, layout);
+    }
   }
 
   private usesPageCount(): boolean {

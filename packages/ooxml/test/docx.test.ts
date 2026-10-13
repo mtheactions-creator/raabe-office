@@ -114,7 +114,10 @@ describe("documents saved by Microsoft Word", () => {
     expect(state.stories?.get("cmt:1")?.[0].text).toBe("Bitte genau lesen.");
     expect(state.comments?.get("cmt:1")?.initials).toBe("RT");
     expect(state.settings.section.headers.default && state.stories?.get(state.settings.section.headers.default)?.[0].text).toBe("Raabeschule – Biologie");
-    expect(partial).toEqual(expect.arrayContaining(["Formeln", "Textfelder und Formen"]));
+    // Word's equation converts to LaTeX (editable since Step 4); text boxes stay preserved only.
+    expect(partial).toEqual(["Textfelder und Formen"]);
+    const math = state.paras.flatMap((p) => p.objects ?? []).find((o) => o.kind === "math");
+    expect(math?.latex).toBe("a^{2}+b^{2}=c^{2}");
   });
 
   it("word-rich.docx: typing next to preserved content keeps it", () => {

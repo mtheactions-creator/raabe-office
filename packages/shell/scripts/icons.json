@@ -193,5 +193,20 @@
   "math": "math_formula",
   "close-x": "dismiss",
   "remove": "delete",
-  "first-page": "document_one_page"
+  "first-page": "document_one_page",
+  "send": "send",
+  "more": "more_horizontal",
+  "math-fraction": "custom:fraction",
+  "math-script": "custom:script",
+  "math-radical": "custom:radical",
+  "math-integral": "custom:integral",
+  "math-nary": "custom:nary",
+  "math-bracket": "custom:bracket",
+  "math-function": "custom:function",
+  "math-accent": "custom:accent",
+  "math-limit": "custom:limit",
+  "math-operator": "custom:operator",
+  "math-matrix": "custom:matrix",
+  "math-symbols": "custom:symbols",
+  "math-normal-text": "custom:normal-text"
 }

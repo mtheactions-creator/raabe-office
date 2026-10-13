@@ -1,24 +1,24 @@
 {
   "meta": {
-    "date": "2026-10-13T20:10:39",
+    "date": "2026-10-13T21:53:16",
     "test": "memory"
   },
   "results": {
     "document": "word-tables.docx",
     "raabe_start": {
       "processes": 7,
-      "working_set_mb": 326.8,
-      "private_mb": 215.2
+      "working_set_mb": 327.3,
+      "private_mb": 221.1
     },
     "raabe_document": {
       "processes": 7,
-      "working_set_mb": 344.5,
-      "private_mb": 246.4
+      "working_set_mb": 346.2,
+      "private_mb": 254.5
     },
     "word_document": {
       "processes": 2,
-      "working_set_mb": 299.6,
-      "private_mb": 201.4
+      "working_set_mb": 302.2,
+      "private_mb": 202.6
     }
   }
 }

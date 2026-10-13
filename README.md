@@ -18,10 +18,12 @@ weiter nutzen können.
 - **Für die Schule gemacht:** nur die Funktionen, die im Schulalltag gebraucht werden.
 - **Windows und iPad.**
 
-> **Stand:** Schritt 3 abgeschlossen. RaabeWrite kann Text formatieren, Listen, Tabellen,
-> Bilder, Kopf- und Fußzeilen mit Seitenzahlen, Abschnitte, Spalten und Fußnoten darstellen
-> und bearbeiten, Rechtschreibung prüfen (Deutsch, Englisch), suchen und ersetzen, drucken und
-> als PDF speichern. Zeilen und Seiten brechen genau wie in Word um. Was RaabeWrite noch nicht
+> **Stand:** Schritt 4 abgeschlossen. RaabeWrite kann Text formatieren, Listen, Tabellen,
+> Bilder, Kopf- und Fußzeilen mit Seitenzahlen, Abschnitte, Spalten, Fuß- und Endnoten,
+> Inhaltsverzeichnisse, Kommentare, Änderungen nachverfolgen und Formeln darstellen und
+> bearbeiten, Rechtschreibung prüfen (Deutsch, Englisch), suchen und ersetzen, drucken und als
+> PDF speichern. Vorlagen der Raabeschule: Arbeitsblatt, Facharbeit, Versuchsprotokoll,
+> Handout. Zeilen und Seiten brechen genau wie in Word um. Was RaabeWrite noch nicht
 > bearbeiten kann, bleibt beim Speichern unverändert erhalten. Fahrplan:
 > [docs/ROADMAP.md](docs/ROADMAP.md).
 
@@ -44,8 +46,9 @@ The source code is licensed under GPL-3.0. The Raabeschule name and logos in `br
 are **not** covered by that licence; forks must use their own branding.
 
 Verwendete Bausteine / third-party components: Tauri (MIT/Apache-2.0), Fluent UI System
-Icons (MIT), fflate (MIT), fontdb und ttf-parser (MIT), spellbook (MPL-2.0), Wörterbücher:
-igerman98 (GPL-2.0 oder GPL-3.0), SCOWL en-US/en-GB (MIT und BSD).
+Icons (MIT), fflate (MIT), fontdb und ttf-parser (MIT), spellbook (MPL-2.0), MathLive (MIT,
+mit den KaTeX-Schriften für den Formeleditor), Wörterbücher: igerman98 (GPL-2.0 oder
+GPL-3.0), SCOWL en-US/en-GB (MIT und BSD).
 
 Microsoft, Word, Excel, PowerPoint and Microsoft 365 are trademarks of the Microsoft
 group of companies. This project is not affiliated with or endorsed by Microsoft.

@@ -417,7 +417,7 @@ export class Doc {
     if (lines.length === 1) {
       const atEnd = to.o >= this.paras[to.p].text.length;
       const end = this.replace(from, to, [textPiece(text, props)]);
-      if (atEnd && text) this.paras[end.p] = { ...this.paras[end.p], mark: intern(props) };
+      if (atEnd && text) this.paras[end.p] = { ...this.paras[end.p], mark: intern({ ...props, rev: this.paras[end.p].mark.rev }) };
       return end;
     }
     const src = this.paras[from.p];
@@ -439,7 +439,7 @@ export class Doc {
     }));
     // The section break stays with the last paragraph (it belongs to the original mark).
     const end = this.replace(from, to, pieces);
-    if (atEnd && lines[lines.length - 1]) this.paras[end.p] = { ...this.paras[end.p], mark: intern(props) };
+    if (atEnd && lines[lines.length - 1]) this.paras[end.p] = { ...this.paras[end.p], mark: intern({ ...props, rev: this.paras[end.p].mark.rev }) };
     return end;
   }
 

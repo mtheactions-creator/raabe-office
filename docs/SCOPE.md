@@ -16,7 +16,7 @@ What each app does, ordered by priority. **M** = first usable version (MVP),
 | AutoSave every 30 s + crash recovery | M | Local only |
 | Document tabs in one window | M | D-010 |
 | Recent files list, pinned files | M | |
-| Templates gallery (Neu) incl. Raabeschule templates | M | Material from the school, later |
+| Templates gallery (Neu) incl. Raabeschule templates | M | Done in Step 4: Arbeitsblatt, Facharbeit, Versuchsprotokoll, Handout (D-035); school material can replace them |
 | Search box "Suchen" (Alt+M) that finds and runs commands | M | Done in Step 1 |
 | Keytips (Alt shortcuts) with Word's German letters | M | Done in Step 1 |
 | Dark mode | L | After the pilot (agreed) |
@@ -47,12 +47,12 @@ What each app does, ordered by priority. **M** = first usable version (MVP),
 | Shapes and text boxes | M | Basic set |
 | Header, footer, page numbers | M | Done in Step 3 |
 | Page setup: margins, orientation, size, columns, page/section breaks | M | Done in Step 3 |
-| Footnotes | M | Facharbeit |
-| Table of contents (automatic, from headings) | M | Facharbeit |
-| Cover page / title page | M | Via templates |
-| Comments | M | D-012 |
-| Track changes (Änderungen nachverfolgen) | M | D-012 |
-| Formula editor | M | D-012, high priority; MathLive input, OMML in .docx |
+| Footnotes | M | Done in Steps 3 and 4: foot- and endnotes, Nächste Fußnote |
+| Table of contents (automatic, from headings) | M | Done in Step 4: Automatische Tabelle 1/2, Text hinzufügen, Tabelle aktualisieren (D-037) |
+| Cover page / title page | M | Via templates (Facharbeit, Step 4) |
+| Comments | M | Done in Step 4: cards beside the page, replies, erledigt, Kommentare pane (D-034) |
+| Track changes (Änderungen nachverfolgen) | M | Done in Step 4: insertions, deletions, paragraph marks, Annehmen/Ablehnen, Markup modes (D-034) |
+| Formula editor | M | Done in Step 4: Formel tab with all Strukturen, MathLive input, Cambria Math display, OMML in .docx (D-036) |
 | Word count, character count | M | |
 | AutoCorrect (basic), smart quotes „…“ | M | German quotation marks |
 | Symbols and special characters | M | |

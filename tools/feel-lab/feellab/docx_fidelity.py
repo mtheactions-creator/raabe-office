@@ -43,25 +43,54 @@ class WordDocument:
         """The main text as RaabeWrite's probe shows it: paragraphs (and table cells) joined by
         "\n". Word's end-of-row marks have no counterpart and are left out; section breaks
         end a paragraph. Builds the map between Word's positions and these offsets."""
-        raw = self.doc.Content.Text
-        # Floating pictures have an anchor character that Range.Text leaves out.
-        self.hidden = sorted({self.doc.Shapes(k).Anchor.Start for k in range(1, self.doc.Shapes.Count + 1)})
-        hidden = set(self.hidden)
-        # Word positions of cell/row marks ("\r\x07" is one position).
-        marks: list[int] = []
+        # Positions RaabeWrite has no character for: anchors of floating pictures, field codes
+        # (begin mark, code, separator, end mark; Content.Text leaves them out), and all but the
+        # first position of a field result or equation that RaabeWrite holds as one object.
+        hidden: set[int] = {self.doc.Shapes(k).Anchor.Start for k in range(1, self.doc.Shapes.Count + 1)}
+        objects: set[int] = set()
+        for k in range(1, self.doc.Fields.Count + 1):
+            f = self.doc.Fields(k)
+            hidden.update(range(f.Code.Start - 1, f.Result.Start))
+            hidden.add(f.Result.End)
+            # TOC and hyperlinks are markers around ordinary text in RaabeWrite; other fields
+            # (PAGEREF, PAGE …) are objects showing their result.
+            if f.Type not in (13, 88) and f.Result.End > f.Result.Start:
+                objects.add(f.Result.Start)
+                hidden.update(range(f.Result.Start + 1, f.Result.End))
+        for k in range(1, self.doc.OMaths.Count + 1):
+            r = self.doc.OMaths(k).Range
+            objects.add(r.Start)
+            hidden.update(range(r.Start + 1, r.End))
+        hidden -= objects
+        self.hidden = sorted(hidden)
+        # The text between hidden ranges, position by position.
+        end = self.doc.Content.End
         chars: list[tuple[int, str]] = []
-        i = pos = 0
-        while i < len(raw):
-            while pos in hidden:
+        marks: list[int] = []
+        pos = 0
+        while pos < end:
+            if pos in hidden:
                 pos += 1
-            if raw.startswith(CELL_MARK, i):
-                marks.append(pos)
-                chars.append((pos, CELL_MARK))
-                i += 2
-            else:
-                chars.append((pos, raw[i]))
-                i += 1
-            pos += 1
+                continue
+            if pos in objects:
+                chars.append((pos, "\ufffc"))
+                pos += 1
+                continue
+            stop = pos
+            while stop < end and stop not in hidden and stop not in objects:
+                stop += 1
+            seg = self.doc.Range(pos, stop).Text
+            i, q = 0, pos
+            while i < len(seg) and q < stop:
+                if seg.startswith(CELL_MARK, i):
+                    marks.append(q)
+                    chars.append((q, CELL_MARK))
+                    i += 2
+                else:
+                    chars.append((q, seg[i]))
+                    i += 1
+                q += 1
+            pos = stop
         # End-of-row marks (Information(31): wdAtEndOfRowMarker); the others end cells,
         # including the hidden ones of vertically merged cells.
         self.row_ends = [m for m in marks if self.doc.Range(m, m).Information(31)]
@@ -85,10 +114,13 @@ class WordDocument:
         return t[:-1] if t.endswith("\n") else t
 
     def skipped(self) -> list[int]:
-        return sorted(set(self.row_ends) | set(self.hidden))
+        if getattr(self, "_skipped", None) is None:
+            self._skipped = sorted(set(self.row_ends) | set(self.hidden))
+        return self._skipped
 
     def to_ours(self, pos: int) -> int:
-        return pos - sum(1 for r in self.skipped() if r < pos)
+        import bisect
+        return pos - bisect.bisect_left(self.skipped(), pos)
 
     def to_word(self, offset: int) -> int:
         pos = offset
@@ -100,9 +132,9 @@ class WordDocument:
         return pos
 
     def needs_positions(self) -> bool:
-        """Tables, several sections or columns: line starts found from positions (Word's
-        MoveDown moves between table cells, not lines)."""
-        if self.doc.Tables.Count or self.doc.Sections.Count > 1:
+        """Tables, several sections, columns, fields or equations: line starts found from
+        positions (Word's MoveDown moves between table cells and gets stuck in fields)."""
+        if self.doc.Tables.Count or self.doc.Sections.Count > 1 or self.doc.Fields.Count or self.doc.OMaths.Count:
             return True
         return any(self.doc.Sections(k).PageSetup.TextColumns.Count > 1 for k in range(1, self.doc.Sections.Count + 1))
 
@@ -114,6 +146,9 @@ class WordDocument:
             return int(r.Information(3)), round(float(r.Information(6)), 1)
         starts: list[int] = []
         row_set = set(self.row_ends)
+        # Only positions RaabeWrite has a character for (not field codes, not the inside of an
+        # equation, whose parts sit at different heights).
+        hidden = set(getattr(self, "hidden", []))
         for para in self.doc.Paragraphs:
             a, e = para.Range.Start, para.Range.End - 1
             if a in row_set:
@@ -122,20 +157,22 @@ class WordDocument:
                 self.win.GetPoint(0, 0, 0, 0, self.doc.Range(a, a))
             except Exception:
                 continue  # not shown (the text of a vertically merged cell)
-            cur = a
-            starts.append(cur)
-            k = key(cur)
-            while cur < e and key(e) != k:
-                lo, hi = cur, e  # key(lo) == k, key(hi) != k
+            vis = [q for q in range(a, e + 1) if q not in hidden] or [a]
+            i = 0
+            starts.append(vis[0] if a in hidden else a)
+            k = key(vis[0])
+            last = len(vis) - 1
+            while i < last and key(vis[last]) != k:
+                lo, hi = i, last  # key(vis[lo]) == k, key(vis[hi]) != k
                 while hi - lo > 1:
                     mid = (lo + hi) // 2
-                    if key(mid) == k:
+                    if key(vis[mid]) == k:
                         lo = mid
                     else:
                         hi = mid
-                cur = hi
-                starts.append(cur)
-                k = key(cur)
+                i = hi
+                starts.append(vis[i])
+                k = key(vis[i])
         return starts
 
     def lines(self) -> list[int]:
@@ -223,7 +260,7 @@ def open_in_raabe(target: WebViewTarget, path: Path, timeout: float = 20) -> Non
         docs = target.js("__app.docs()") or []
         if any(d["active"] and d["path"] and Path(d["path"]) == path for d in docs):
             # Font metrics arrive asynchronously (the font database loads after start-up).
-            while time.perf_counter() < deadline and not target.js("__probe.settled()"):
+            while time.perf_counter() < deadline and not target.js("__probe.settled() && !window.__mathPending"):
                 time.sleep(0.1)
             time.sleep(0.2)
             return

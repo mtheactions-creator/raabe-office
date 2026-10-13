@@ -30,7 +30,11 @@ export interface RibbonContext {
     bullets: Popup; numbers: Popup; multilevel: Popup; insertTable: Popup; margins: Popup; size: Popup;
     columns: MenuEntry[]; breaks: MenuEntry[]; header: MenuEntry[]; footer: MenuEntry[]; pageNumber: MenuEntry[];
     pictures: MenuEntry[]; borders: MenuEntry[]; wrap: MenuEntry[];
+    toc: MenuEntry[]; addText: MenuEntry[]; nextNote: MenuEntry[]; equation: MenuEntry[];
+    track: MenuEntry[]; deleteComment: MenuEntry[]; accept: MenuEntry[]; reject: MenuEntry[];
   };
+  /** Markup für Überarbeitung anzeigen (Einfaches Markup, Alle Markups …). */
+  markup: { value(): string; set(v: string): void; options(): { heading?: string; items: string[] }[] };
 }
 
 type Popup = (close: () => void) => HTMLElement;
@@ -156,7 +160,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
         { id: "text", label: "Text", key: "ZT", icon: "text-box",
           controls: [dd("insert.textBox", "X", "large"), stack(b("insert.dateTime", "D"))] },
         { id: "symbols", label: "Symbole", key: "ZS", icon: "equation",
-          controls: [stack(split("insert.equation", "A", "medium"), dd("insert.symbol", "SY", "medium"))] },
+          controls: [stack(split("insert.equation", "A", "medium", ctx.panels.equation), dd("insert.symbol", "SY", "medium"))] },
       ],
     },
     {
@@ -201,9 +205,10 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
       shrink: ["captions", "citations", "toc", "footnotes"],
       groups: [
         { id: "toc", label: "Inhaltsverzeichnis", key: "ZI", icon: "toc",
-          controls: [dd("ref.toc", "I", "large"), stack(dd("ref.addText", "X", "medium"), b("ref.updateToc", "H", "medium", "Tabelle aktualisieren"))] },
+          controls: [dd("ref.toc", "I", "large", undefined, ctx.panels.toc),
+            stack(dd("ref.addText", "X", "medium", undefined, ctx.panels.addText), b("ref.updateToc", "H", "medium", "Tabelle aktualisieren"))] },
         { id: "footnotes", label: "Fußnoten", key: "ZF", icon: "footnote", launcher: { cmd: "ref.footnoteDialog", key: "O" },
-          controls: [b("ref.footnote", "P", "large"), stack(b("ref.endnote", "N", "medium"), split("ref.nextFootnote", "Ä", "medium"))] },
+          controls: [b("ref.footnote", "P", "large"), stack(b("ref.endnote", "N", "medium"), split("ref.nextFootnote", "Ä", "medium", ctx.panels.nextNote))] },
         { id: "citations", label: "Zitate und Literaturverzeichnis", key: "ZA", icon: "citation",
           controls: [dd("ref.citation", "Ü", "large"), stack(b("ref.sources", "V", "medium"), dd("ref.bibliography", "L", "medium"))] },
         { id: "captions", label: "Beschriftungen", key: "ZB", icon: "caption",
@@ -220,11 +225,13 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
         { id: "language", label: "Sprache", key: "ZL", icon: "translate",
           controls: [dd("review.translate", "Ü", "large"), dd("review.language", "SP", "large")] },
         { id: "comments", label: "Kommentare", key: "ZC", icon: "comment",
-          controls: [b("review.newComment", "N", "large"), split("review.deleteComment", "L", "large"),
+          controls: [b("review.newComment", "N", "large"), split("review.deleteComment", "L", "large", ctx.panels.deleteComment),
             b("review.prevComment", "Q", "large"), b("review.nextComment", "ß", "large")] },
         { id: "tracking", label: "Nachverfolgung", key: "ZT", icon: "track-changes", launcher: { cmd: "review.trackOptions", key: "C" },
-          controls: [split("review.trackChanges", "DN", "large"), stack(dd("review.showMarkup", "G", "medium")),
-            split("review.accept", "AA", "large"), split("review.reject", "FB", "large"),
+          controls: [split("review.trackChanges", "DN", "large", ctx.panels.track),
+            stack({ type: "combo", cmd: "review.markupMode", width: 140, key: "TD", value: ctx.markup.value, options: ctx.markup.options, commit: ctx.markup.set },
+              dd("review.showMarkup", "G", "medium")),
+            split("review.accept", "AA", "large", ctx.panels.accept), split("review.reject", "FB", "large", ctx.panels.reject),
             stack(b("review.prevChange", "U", "medium"), b("review.nextChange", "Ä", "medium"))] },
       ],
     },

@@ -64,7 +64,7 @@ Date: 2026-10-13 · Measured with `tools/feel-lab` (see `docs/FEEL.md`) · Raw d
 | word-borders.docx | boxed, shaded and grouped paragraphs, bottom rule, indented box | 23/23 | 1/1 | within 0.10 pt |
 | word-images.docx | an inline picture in a line, a picture right with square wrapping, a picture with "oben und unten" | 32/32 | 1/1 | within 0.13 pt |
 
-**690/690 line starts and every page break identical, all baselines within 0.18 pt.** The
+**632/632 line starts and every page break identical, all baselines within 0.18 pt.** (Corrected in Step 4: this sentence first said 690, which does not match the table above.) The
 measurements that got there are D-030: list label fonts, table border widths in rows and
 cells, how rows break, line spacing on picture lines, continuous section breaks and column
 breaks. The harness was extended for this: Word's lines are found by position (its line
