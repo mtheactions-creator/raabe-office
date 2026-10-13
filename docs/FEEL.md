@@ -39,7 +39,8 @@ samples, so we can track regressions over time. Reports that interpret them live
 |---|---|---|---|
 | 2026-10-13 | F1 36 ms · F5 1185 ms | F1 32 ms · F3 50/50 · F4 2000/2000 lines, 50/50 pages · F5 526 ms | [Step 0](reports/2026-10-13-step0-feel.md) |
 | 2026-10-13 | F1 34-36 ms · F5 1215 ms (opening a .docx) | RaabeWrite 0.1.0 with full shell: F1 32 ms (9/120 late) · F3 49/50 (the 50th a Word glitch) · F4 2000/2000 lines, 50/50 pages · F5 603 ms · smoke test 32/32 | Step 1 |
-| 2026-10-13 | | RaabeWrite with formatting: F3b 44/44 · F4b 256/256 line starts, 15/15 page breaks, baselines ≤ 0.18 pt, word positions ≤ 0.25 pt on 246/249 lines · smoke test 41/41 (F1/F3 re-check pending) | [Step 2](reports/2026-10-13-step2-formatting.md) |
+| 2026-10-13 | | RaabeWrite with formatting: F3b 44/44 · F4b 256/256 line starts, 15/15 page breaks, baselines ≤ 0.18 pt, word positions ≤ 0.25 pt on 246/249 lines · smoke test 41/41 | [Step 2](reports/2026-10-13-step2-formatting.md) |
+| 2026-10-13 | F1 66.1 ms (both apps two frames today; Step 1: one) · 0/120 late beyond that | RaabeWrite Step 2, real input: F1 66.3 ms, but 8/120 keystrokes two frames later than Word's worst (JS ≤ 4 ms per keystroke; the delay is in presentation, open) · F3 49/50 (the 50th the known Word glitch) · keyboard toggles 9/9 · mouse on palettes, lists, menus, gallery, dialogs, painter 13/13 | Step 2 |
 
 ## Running the harness
 
@@ -52,6 +53,8 @@ cd tools/feel-lab
 .venv/Scripts/python.exe run.py startup       # opens and closes windows
 .venv/Scripts/python.exe run.py latency       # takes over keyboard and screen
 .venv/Scripts/python.exe run.py behaviour     # takes over keyboard, mouse and screen
+.venv/Scripts/python.exe keys_check.py        # takes over keyboard and screen (alignment toggles)
+.venv/Scripts/python.exe ui_check.py          # takes over mouse and screen (ribbon controls, dialogs)
 .venv/Scripts/python.exe show_docx.py         # per-line table of the last docx run
 ```
 

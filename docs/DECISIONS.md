@@ -229,6 +229,8 @@ Measured with Word's own commands (`tools/feel-lab/run.py formatting`, 44 cases)
   caret for the first paragraph; the original mark moves on with the new paragraph, whose
   text then takes the mark's formatting.
 - Schriftgrad vergrößern/verkleinern use Word's steps without 10.5 (11 → 10).
+- Alignment shortcuts toggle (real keystrokes, `keys_check.py`): the active alignment again
+  returns to left, and Strg+L on a left-aligned paragraph switches to Blocksatz.
 - Shortcuts are the ones Word reports on the development PC (`Application.FindKey`, German
   keyboard): Strg+Umschalt+F/K/U/D, Strg+Umschalt+G = Großbuchstaben (formatting, not a case
   change), Strg+< / Strg+Umschalt+<, Strg+8 / Strg+9, Strg+# = tiefgestellt,

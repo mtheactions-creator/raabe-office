@@ -730,9 +730,10 @@ export class Editor {
   }
 
   setAlign(align: Align): void {
-    // Clicking the active alignment again returns to left (as Word's toggle buttons do).
+    // Word's toggles (real keystrokes, keys_check.py): the active alignment again returns to
+    // left, and left again switches to Blocksatz.
     const cur = this.paraState().align;
-    this.setParaProps({ align: cur === align && align !== "left" ? "left" : align });
+    this.setParaProps({ align: cur !== align ? align : align === "left" ? "both" : "left" });
   }
 
   /** Einzug vergrößern/verkleinern: to the next/previous multiple of the default tab stop. */

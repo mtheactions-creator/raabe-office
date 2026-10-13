@@ -103,11 +103,23 @@ The rules are recorded in D-025 and D-026. The ones that were not obvious:
 - Kerning at large sizes differs slightly from Word (up to 0.7 pt over a 36 pt line).
 - Borders and shading of paragraphs, lists, tables and images are Step 3.
 
-## Still to measure with real input (needs the PC for about 10 minutes)
+## Real-input session (same day, PC handed over by the owner)
 
-- F1 latency and F3 behaviour on the Step 2 build (last measured in Step 1: 32 ms vs Word
-  34-36 ms, 49/50), including the open question of occasional late frames.
-- Keyboard behaviour that Word's commands do not show through COM, such as Strg+E pressed
-  twice: RaabeWrite toggles back to left alignment, the COM command does not, and only real
-  keystrokes in Word can tell which is right.
-- Mouse use of the new palettes, menus and dialogs, and the format painter brush.
+| Check | Word | RaabeWrite |
+|---|---|---|
+| F1 keystroke → screen, median (end of short doc / page 12 of 50) | 66.1 / 66.2 ms | 66.3 / 66.0 ms |
+| F1 keystrokes ≥ 4 frames | 0 / 120 | 8 / 120 |
+| F3 behaviours (50 cases, real mouse and keys) | reference | 49 / 50 ¹ |
+| Alignment shortcuts pressed once, twice, mixed (`keys_check.py`) | reference | 9 / 9 |
+| Mouse on palettes, font and size lists, underline menu, gallery, Absatz and Schriftart dialogs, format painter (`ui_check.py`) | | 13 / 13 |
+
+¹ The miss is the known Word glitch from Step 1: Word did not react to that double-click.
+
+- Both apps needed two display frames today where they needed one in Step 1, so the
+  screen pipeline itself was slower; the medians are equal.
+- RaabeWrite has a tail Word does not have. A CPU profile while typing in the 50-page
+  document shows about 3.5 ms of our code per keystroke and the frame request answered
+  within one refresh, so the delay arises after our code, in composition or presentation.
+  **Open:** trace WebView2's GPU process to find it.
+- Real keystrokes showed one more Word rule: Strg+L on a left-aligned paragraph switches
+  to Blocksatz (fixed; the COM command does not do this).
