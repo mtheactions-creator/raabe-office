@@ -24,7 +24,7 @@
 | App shell | Tauri 2 (Rust) | ~10 MB installers, fast start, WebView2 on Windows, iOS support |
 | UI | TypeScript, no heavy framework in the editing hot path | Predictable latency; the ribbon and dialogs may use a small component layer |
 | File formats | Own OOXML reader/writer (zip + XML), in TypeScript | Full control over fidelity and preservation of unknown parts |
-| Spell check | Hunspell dictionaries (igerman98, en_US/en_GB) via WebAssembly | Offline, open licences |
+| Spell check | Hunspell dictionaries (igerman98, en_US/en_GB) checked in Rust (`spellbook`) | Offline, open licences, fast (D-031) |
 | Formula editor | MathLive (MIT) for input, MathML ↔ OMML conversion | |
 | Charts | Own renderer (shared by RaabeCalc and RaabePresent) | Must match Excel chart look |
 | Fonts | System fonts, metrics read from the font files (Rust fontdb + ttf-parser); Carlito/Caladea/Liberation as metric-compatible fallbacks | D-011, D-027 |
@@ -37,14 +37,18 @@ npm workspaces; TypeScript packages are consumed as source (no build step betwee
 apps/
   raabe-write/        RaabeWrite: app.ts (documents, files, backstage pages), command-list.ts
                       (every command with Word's label), ribbon-def.ts (tabs and groups),
-                      src-tauri/ (Rust: file access, AutoRecover, PDF, single instance)
+                      features/ (lists, tables, page setup, headers/footers, pictures, find,
+                      spelling: their commands, galleries, dialogs and contextual tabs),
+                      src-tauri/ (Rust: file access, AutoRecover, PDF, single instance, fonts,
+                      spell checking)
   raabe-calc/         later
   raabe-present/      later
 packages/
   text-engine/        model.ts (paragraphs, runs, objects, tables, sections), styles.ts (style
                       sheet and resolution), fonts.ts (metrics, measuring), layout.ts (line
                       breaking, D-025), flow.ts (pages, D-029), numbering.ts (list labels),
-                      doc.ts (stories and edits), view.ts (DOM rendering, caret, selection),
+                      doc.ts (stories and edits), edits.ts (list, table, section operations),
+                      html.ts (clipboard HTML), view.ts (DOM rendering, caret, selection),
                       editor.ts (input and commands, D-026), probe.ts (feel-lab)
   shell/              commands, ribbon, keytips, title bar (QAT, document tabs, search),
                       backstage, status bar, dialogs, popups, platform layer, theme.css,
@@ -96,6 +100,9 @@ controls and files opened from Explorer. `platform-tauri.ts` implements it for T
   protocol (no real input) and checks files with Word: typing, undo, styles, formatting
   shortcuts, save, Word round trip of formatting and of a table kept verbatim, keytips,
   search, backstage, PDF, AutoRecover after a crash, close prompts, ribbon collapsing.
+- `tools/feel-lab/smoke_step3.py`: Step 3 in the real app (lists, tables, sections, headers
+  and footers, pictures, find and replace, spelling, clipboard HTML, print preview), files
+  checked with Word.
 - `tools/feel-lab/docx_word_check.py`: edits and saves Word-made documents with rich content
   and has Word confirm nothing was lost.
 - `tools/feel-lab/run.py`: the feel metrics against Word (docs/FEEL.md), including layout

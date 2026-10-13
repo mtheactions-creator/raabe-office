@@ -20,10 +20,10 @@ What each app does, ordered by priority. **M** = first usable version (MVP),
 | Search box "Suchen" (Alt+M) that finds and runs commands | M | Done in Step 1 |
 | Keytips (Alt shortcuts) with Word's German letters | M | Done in Step 1 |
 | Dark mode | L | After the pilot (agreed) |
-| Spell check German + English (Hunspell dictionaries) | M | |
-| Find and replace | M | |
+| Spell check German + English (Hunspell dictionaries) | M | Done in Step 3 (D-031) |
+| Find and replace | M | Done in Step 3: Navigationsbereich, Suchen und Ersetzen, Gehe zu |
 | Zoom slider and view buttons in the status bar | M | |
-| Print with preview | M | |
+| Print with preview | M | Done in Step 3 |
 | Optionen dialog | M | A handful of settings only |
 | Read aloud (Vorlesen) with offline OS voices | L | Helpful for students with dyslexia (LRS) |
 | Translator (offline, Firefox Translations / Bergamot models) | L | de, en, fr, es; no Latin |
@@ -39,14 +39,14 @@ What each app does, ordered by priority. **M** = first usable version (MVP),
 | Feature | Prio | Notes |
 |---|---|---|
 | Character formatting (font, size, bold/italic/underline, colour, highlight, super/subscript, strikethrough) | M | Done in Step 2, incl. Schriftart dialog, Format übertragen, Groß-/Kleinschreibung |
-| Paragraph formatting (alignment, indents, line and paragraph spacing, borders, shading) | M | Done in Step 2 except borders and shading (Absatz dialog, tabs, page-break options) |
-| Bulleted and numbered lists, multilevel lists | M | Incl. Word's auto-list on "1. " / "- " |
+| Paragraph formatting (alignment, indents, line and paragraph spacing, borders, shading) | M | Done in Steps 2 and 3 (Absatz dialog, tabs, page-break options, Rahmen, Schattierung) |
+| Bulleted and numbered lists, multilevel lists | M | Done in Step 3, incl. Word's auto-list on "1. " / "- " and heading numbering |
 | Styles (Formatvorlagen): Standard, Überschrift 1-3, Titel, Zitat … | M | Style gallery in Start tab; done in Step 2 (Word 2016-2019 set) |
-| Tables: insert, resize, merge/split, borders, shading, header row | M | Table design/layout tabs, reduced |
-| Images: insert, resize, rotate, crop, text wrapping (inline, square, tight, behind, in front) | M | |
+| Tables: insert, resize, merge/split, borders, shading, header row | M | Done in Step 3 (Tabellenentwurf, Layout) |
+| Images: insert, resize, rotate, crop, text wrapping (inline, square, tight, behind, in front) | M | Done in Step 3 except rotate and crop |
 | Shapes and text boxes | M | Basic set |
-| Header, footer, page numbers | M | |
-| Page setup: margins, orientation, size, columns, page/section breaks | M | |
+| Header, footer, page numbers | M | Done in Step 3 |
+| Page setup: margins, orientation, size, columns, page/section breaks | M | Done in Step 3 |
 | Footnotes | M | Facharbeit |
 | Table of contents (automatic, from headings) | M | Facharbeit |
 | Cover page / title page | M | Via templates |

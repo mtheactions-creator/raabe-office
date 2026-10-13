@@ -38,11 +38,65 @@ fn with_dict<T>(lang: &str, f: impl FnOnce(&Dictionary) -> T) -> Option<T> {
     map.get(k).map(f)
 }
 
+fn capitalize(s: &str) -> String {
+    let mut c = s.chars();
+    match c.next() {
+        Some(f) => f.to_uppercase().collect::<String>() + c.as_str(),
+        None => String::new(),
+    }
+}
+
+/// German compounds the dictionary does not list (Krautschicht, Waldbodenlebewesen…): a word
+/// is right when it splits into known words, each later part a noun, with the usual linking
+/// letters (Arbeit-s-blatt, Sonne-n-licht) on the parts before.
+fn compound_ok(d: &Dictionary, word: &str, depth: usize) -> bool {
+    if depth > 3 {
+        return false;
+    }
+    let chars: Vec<char> = word.chars().collect();
+    if chars.len() < 6 {
+        return false;
+    }
+    let known_head = |h: &str| {
+        if h.chars().count() < 3 {
+            return false;
+        }
+        if d.check(h) {
+            return true;
+        }
+        for link in ["s", "es", "n", "en", "e", "er"] {
+            if let Some(base) = h.strip_suffix(link) {
+                if base.chars().count() >= 3 && d.check(base) {
+                    return true;
+                }
+            }
+        }
+        false
+    };
+    for i in (3..=chars.len() - 3).rev() {
+        let head: String = chars[..i].iter().collect();
+        if !known_head(&head) {
+            continue;
+        }
+        // Nouns continue with a noun (Kraut-schicht → Schicht), adjectives with a word as written (gras-grün).
+        let tail: String = chars[i..].iter().collect();
+        let rest = if chars[0].is_uppercase() { capitalize(&tail) } else { tail };
+        if d.check(&rest) || compound_ok(d, &rest, depth + 1) {
+            return true;
+        }
+    }
+    false
+}
+
 /// For each word: true when it is spelled correctly (or the language has no dictionary).
 #[tauri::command]
 pub async fn spell_check(lang: String, words: Vec<String>) -> Vec<bool> {
+    let german = key(&lang) == Some("de");
     tauri::async_runtime::spawn_blocking(move || {
-        with_dict(&lang, |d| words.iter().map(|w| d.check(w)).collect::<Vec<_>>()).unwrap_or_else(|| vec![true; words.len()])
+        with_dict(&lang, |d| {
+            words.iter().map(|w| d.check(w) || (german && w.chars().count() >= 7 && compound_ok(d, w, 0))).collect::<Vec<_>>()
+        })
+        .unwrap_or_else(|| vec![true; words.len()])
     })
     .await
     .unwrap_or_default()

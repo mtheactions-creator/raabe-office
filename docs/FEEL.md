@@ -16,7 +16,8 @@ The harness lives in `tools/feel-lab/`.
 | F4 | **Layout fidelity** | Same document in Word and in our app; compare where every line and page breaks. Word's line breaks come from its COM interface. | ≥ 99 % identical line breaks for documents in our supported subset |
 | F4b | **Layout fidelity on .docx files** | The same Word-made file opened in both. Line and page starts (COM), left edge of every line and the x of every word start (COM at 400 % zoom), and the baseline of every line from Word's PDF export (exact glyph positions, read by `feellab/pdftext.py`). | 100 % identical line and page starts; baselines within 0.2 pt |
 | F5 | **Start and load time** | Process launch → window shows a ready document; open a 30-page .docx. | Start < 1 s, open < 1 s |
-| F6 | **Text rendering** | Screenshot comparison of identical text at the same zoom (sharpness, glyph positions). | No visible blur compared with Word |
+| F6 | **Text rendering** | The same lines in Word and our app at 100 %, captured from the screen (`run.py rendering`): edge sharpness, ink, colour fringes (ClearType) and the horizontal ink profile of each line. | Sharpness ≥ 95 % of Word's, same smoothing, profile correlation ≥ 0.95 |
+| F7 | **Memory** | Working set of the whole process tree with the same document open (`run.py memory`). | Not far above Word |
 
 ## Conditions
 
@@ -40,6 +41,7 @@ samples, so we can track regressions over time. Reports that interpret them live
 | 2026-10-13 | F1 36 ms · F5 1185 ms | F1 32 ms · F3 50/50 · F4 2000/2000 lines, 50/50 pages · F5 526 ms | [Step 0](reports/2026-10-13-step0-feel.md) |
 | 2026-10-13 | F1 34-36 ms · F5 1215 ms (opening a .docx) | RaabeWrite 0.1.0 with full shell: F1 32 ms (9/120 late) · F3 49/50 (the 50th a Word glitch) · F4 2000/2000 lines, 50/50 pages · F5 603 ms · smoke test 32/32 | Step 1 |
 | 2026-10-13 | | RaabeWrite with formatting: F3b 44/44 · F4b 256/256 line starts, 15/15 page breaks, baselines ≤ 0.18 pt, word positions ≤ 0.25 pt on 246/249 lines · smoke test 41/41 | [Step 2](reports/2026-10-13-step2-formatting.md) |
+| 2026-10-13 | F1 35.3 ms · F7 300 MB | RaabeWrite with lists, tables, sections, notes, pictures: F4b 690/690 line starts in ten documents, every page break, baselines ≤ 0.18 pt · F6 sharpness 97 %, fringes 3.4 vs 3.7, correlation 0.97 · F1 31.7 ms · F7 345 MB · smoke tests 28/28 and 41/41 | [Step 3](reports/2026-10-13-step3-documents.md) |
 | 2026-10-13 | F1 66.1 ms (both apps two frames today; Step 1: one) · 0/120 late beyond that | RaabeWrite Step 2, real input: F1 66.3 ms, but 8/120 keystrokes two frames later than Word's worst (JS ≤ 4 ms per keystroke; the delay is in presentation, open) · F3 49/50 (the 50th the known Word glitch) · keyboard toggles 9/9 · mouse on palettes, lists, menus, gallery, dialogs, painter 13/13 | Step 2 |
 
 ## Running the harness

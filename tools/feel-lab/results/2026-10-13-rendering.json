@@ -1,0 +1,49 @@
+{
+  "meta": {
+    "date": "2026-10-13T20:23:27",
+    "test": "rendering"
+  },
+  "results": {
+    "word": {
+      "ink_pixels": 40986,
+      "sharpness": 138.02,
+      "stem_darkness": 255.0,
+      "colour_fringe": 3.66
+    },
+    "ours": {
+      "ink_pixels": 40326,
+      "sharpness": 133.64,
+      "stem_darkness": 255.0,
+      "colour_fringe": 3.38
+    },
+    "sharpness_ratio": 0.968,
+    "ink_ratio": 0.984,
+    "lines": [
+      {
+        "correlation": 0.9928,
+        "shift_px": -1
+      },
+      {
+        "correlation": 0.9828,
+        "shift_px": -1
+      },
+      {
+        "correlation": 0.9659,
+        "shift_px": -1
+      },
+      {
+        "correlation": 0.8882,
+        "shift_px": -1
+      },
+      {
+        "correlation": 0.9214,
+        "shift_px": -1
+      },
+      {
+        "correlation": 0.9801,
+        "shift_px": -1
+      }
+    ],
+    "median_line_correlation": 0.973
+  }
+}

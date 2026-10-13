@@ -6,6 +6,8 @@
     python run.py latency             # F1, takes over keyboard and screen
     python run.py behaviour           # F3, takes over keyboard, mouse and screen
     python run.py formatting          # F3b, formatting commands vs Word, no input needed
+    python run.py rendering [file]    # F6, text rendering vs Word (shows both windows)
+    python run.py memory              # memory of RaabeWrite and Word with the same document
 
 Results are written to results/<date>-<test>.json.
 """
@@ -85,6 +87,17 @@ def main(argv: list[str]) -> None:
             word.close()
         print("saved to", save(test, data))
         return
+    elif test == "rendering":
+        from feellab import rendering
+        path = Path(argv[2]).resolve() if len(argv) > 2 else targets.ROOT / "packages/ooxml/test/fixtures/word-layout.docx"
+        raabe = targets.raabe_write("short", port=9333)
+        try:
+            data = rendering.run(raabe, path)
+        finally:
+            raabe.close()
+    elif test == "memory":
+        from feellab import memory
+        data = memory.run()
     elif test == "behaviour":
         from feellab import behaviour
         data = with_targets(lambda w, ps: behaviour.run([w, *ps]))

@@ -18,7 +18,8 @@ const USER_DICT = "raabe.userDictionary";
 /** The words of a paragraph with their language (runs' lang, else the document default). */
 function words(p: Para, fallback: string): Word[] {
   const out: Word[] = [];
-  const re = /[\p{L}\p{M}]+(?:['’-][\p{L}\p{M}]+)*/gu;
+  // Soft hyphens (\u00ad) belong to the word they divide.
+  const re = /[\p{L}\p{M}\u00ad]+(?:['’\u2011-][\p{L}\p{M}\u00ad]+)*/gu;
   const langAt: string[] = [];
   let pos = 0;
   for (const r of p.runs) {
@@ -35,7 +36,7 @@ function words(p: Para, fallback: string): Word[] {
     if (/:\/\/|^www\.|@/i.test(p.text.slice(s0, e0))) continue;
     if (/\p{N}/u.test(p.text[a - 1] ?? "") || /\p{N}/u.test(p.text[b] ?? "")) continue;
     if (m[0].length < 2 || m[0] === m[0].toLocaleUpperCase("de-DE")) continue;
-    out.push({ a, b, text: m[0], lang: langAt[a] ?? fallback });
+    out.push({ a, b, text: m[0].replace(/\u00ad/g, "").replace(/\u2011/g, "-"), lang: langAt[a] ?? fallback });
   }
   return out;
 }

@@ -18,11 +18,12 @@ weiter nutzen können.
 - **Für die Schule gemacht:** nur die Funktionen, die im Schulalltag gebraucht werden.
 - **Windows und iPad.**
 
-> **Stand:** Schritt 2 abgeschlossen. RaabeWrite kann Text formatieren (Schriftart, -grad,
-> fett, kursiv, Farben, Ausrichtung, Einzüge, Abstände, Formatvorlagen) und bricht Zeilen und
-> Seiten genau wie Word um. Was RaabeWrite noch nicht bearbeiten kann (Tabellen, Bilder …),
-> bleibt beim Speichern unverändert erhalten. Listen, Tabellen und Bilder folgen in Schritt 3.
-> Fahrplan: [docs/ROADMAP.md](docs/ROADMAP.md).
+> **Stand:** Schritt 3 abgeschlossen. RaabeWrite kann Text formatieren, Listen, Tabellen,
+> Bilder, Kopf- und Fußzeilen mit Seitenzahlen, Abschnitte, Spalten und Fußnoten darstellen
+> und bearbeiten, Rechtschreibung prüfen (Deutsch, Englisch), suchen und ersetzen, drucken und
+> als PDF speichern. Zeilen und Seiten brechen genau wie in Word um. Was RaabeWrite noch nicht
+> bearbeiten kann, bleibt beim Speichern unverändert erhalten. Fahrplan:
+> [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## English summary
 
@@ -41,6 +42,10 @@ Programmlogos im Ordner [`branding/`](branding/README.md). Wer das Projekt weite
 
 The source code is licensed under GPL-3.0. The Raabeschule name and logos in `branding/`
 are **not** covered by that licence; forks must use their own branding.
+
+Verwendete Bausteine / third-party components: Tauri (MIT/Apache-2.0), Fluent UI System
+Icons (MIT), fflate (MIT), fontdb und ttf-parser (MIT), spellbook (MPL-2.0), Wörterbücher:
+igerman98 (GPL-2.0 oder GPL-3.0), SCOWL en-US/en-GB (MIT und BSD).
 
 Microsoft, Word, Excel, PowerPoint and Microsoft 365 are trademarks of the Microsoft
 group of companies. This project is not affiliated with or endorsed by Microsoft.

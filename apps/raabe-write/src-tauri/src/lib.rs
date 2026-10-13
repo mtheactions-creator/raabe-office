@@ -233,6 +233,8 @@ async fn print_to_pdf_windows(window: WebviewWindow, path: String) -> Result<(),
 
 // ----- app ------------------------------------------------------------------------------------
 
+const BROWSER_ARGS: &str = "--disable-features=msWebOOUI,msPdfOOUI,msSmartScreenProtection --disable-lcd-text";
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     let args: Vec<String> = std::env::args().skip(1).collect();
@@ -261,7 +263,11 @@ pub fn run() {
                 .decorations(false)
                 .shadow(true)
                 .background_color(Color(240, 240, 240, 255))
-                .disable_drag_drop_handler();
+                .disable_drag_drop_handler()
+                // Word 365 draws document text with grayscale smoothing, not ClearType colour
+                // fringes (measured, F6); WebView2 follows with LCD text off. Tauri's own default
+                // flags are repeated because these arguments replace them.
+                .additional_browser_args(BROWSER_ARGS);
             // feel-lab runs (see docs/FEEL.md): with RAABE_FEEL_DEBUG_PORT set, the DevTools
             // protocol is opened on that port and `--feel <fixture>` loads a test document.
             if let Ok(port) = std::env::var("RAABE_FEEL_DEBUG_PORT").map(|p| p.parse::<u16>()) {
@@ -272,7 +278,7 @@ pub fn run() {
                     window = window
                         .data_directory(std::env::temp_dir().join(format!("raabe-write-feel-{port}")))
                         .additional_browser_args(&format!(
-                            "--disable-features=msWebOOUI,msPdfOOUI,msSmartScreenProtection,CalculateNativeWinOcclusion --remote-debugging-port={port} {extra}"
+                            "--disable-features=msWebOOUI,msPdfOOUI,msSmartScreenProtection,CalculateNativeWinOcclusion --disable-lcd-text --remote-debugging-port={port} {extra}"
                         ));
                     // Runs that need no real input stay off screen and never take the focus, so
                     // they can run while someone works at the PC.

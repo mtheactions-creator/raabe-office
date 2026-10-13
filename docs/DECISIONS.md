@@ -306,3 +306,35 @@ Result: 690/690 line starts and every page break identical in ten Word documents
 within 0.18 pt. The harness now finds Word's lines by position (Word's own line navigation
 moves between table cells), maps table, section and picture characters between Word and
 RaabeWrite, and reads baselines from the PDFs by position.
+
+### D-031 Spell checking
+Hunspell dictionaries checked in Rust with `spellbook` (MPL-2.0): German (igerman98, GPL-2.0
+or GPL-3.0), US and British English (SCOWL, MIT and BSD), taken from the npm packages
+`dictionary-de`, `dictionary-en` and `dictionary-en-gb` and compiled into the program, so
+checking works offline and nothing extra is installed. The language comes from the text
+(Korrekturhilfesprache), else the document default. As in Word: words in capitals, words
+next to digits and Internet/e-mail addresses are ignored, and the word being typed is not
+marked until the caret leaves it. German compounds the dictionary lacks are accepted when
+they split into known words with the usual linking letters (Krautschicht,
+Waldbodenlebewesengemeinschaft; found with F6, where Word accepted them). "Alle ignorieren"
+lasts for the session; "Zum Wörterbuch hinzufügen" keeps words on this computer.
+
+### D-032 Text rendering
+Measured with `run.py rendering` (F6): Word 365 draws document text with grayscale
+smoothing, not ClearType colour fringes. RaabeWrite turns LCD text off in WebView2
+(`--disable-lcd-text`). Result: colour fringes 3.4 against Word's 3.7 (74 before), sharpness
+97 % of Word's, glyph positions correlate at 0.97.
+
+### D-033 Step 3 behaviour taken from Word
+Checked with Word's own commands through COM where no real input was needed:
+- The Aufzählungszeichen and Nummerierung buttons give Standard paragraphs the style
+  Listenabsatz and the level's indents; lists made like the ribbon makes them have nine
+  levels (Tab changes the level).
+- Changing the orientation rotates the margins (landscape top = portrait right, bottom =
+  left, left = top, right = bottom).
+- Contextual tabs as in Word 365: Tabellenentwurf and Layout in tables, Kopf- und Fußzeile
+  while a header or footer is edited (selected automatically), Bildformat for a picture.
+- Header and footer editing: double click in their area opens them, a double click in the
+  text closes them; the text is dimmed meanwhile.
+- Copy and paste with other programs use HTML; content copied inside RaabeWrite keeps its
+  full formatting.
