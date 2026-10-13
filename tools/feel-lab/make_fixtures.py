@@ -434,6 +434,310 @@ def top(app) -> None:
     d.Close(0)
 
 
+# ----- Step 3 documents ------------------------------------------------------------------
+
+FILL = ("Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser "
+        "aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her, und als "
+        "Nebenprodukt entsteht Sauerstoff, den Menschen und Tiere zum Atmen brauchen.")
+
+
+def base_doc(app):
+    """A4 with Word's German default margins, Calibri 11 like the other fixtures."""
+    d = app.Documents.Add()
+    ps = d.PageSetup
+    ps.PageWidth, ps.PageHeight = 595.3, 841.9
+    ps.TopMargin, ps.BottomMargin, ps.LeftMargin, ps.RightMargin = 70.85, 56.7, 70.85, 70.85
+    n = d.Styles(-1)
+    n.Font.Name, n.Font.Size = "Calibri", 11
+    n.ParagraphFormat.SpaceAfter, n.ParagraphFormat.LineSpacingRule, n.ParagraphFormat.LineSpacing = 8, 5, 12 * 1.08
+    for sid in (-2, -3):
+        d.Styles(sid).Font.Name = "Calibri Light"
+    return d
+
+
+class Builder:
+    """Appends paragraphs, tables and breaks at the end of a document."""
+
+    def __init__(self, d):
+        self.d = d
+        self.fresh = True  # the last paragraph is empty and can take text
+
+    def last(self):
+        return self.d.Paragraphs(self.d.Paragraphs.Count)
+
+    def para(self, text: str, style: int | None = None):
+        d = self.d
+        if not self.fresh:
+            d.Content.InsertParagraphAfter()
+        p = self.last()
+        p.Style = d.Styles(style if style is not None else -1)
+        p.Range.ParagraphFormat.Reset()
+        p.Range.Font.Reset()
+        p.Range.InsertBefore(text)
+        self.fresh = False
+        return self.last()
+
+    def table(self, rows: int, cols: int, texts=None, style=True):
+        d = self.d
+        if not self.fresh:
+            d.Content.InsertParagraphAfter()
+        p = self.last()
+        p.Style = d.Styles(-1)
+        p.Range.ParagraphFormat.Reset()
+        t = d.Tables.Add(p.Range, rows, cols, 1 if style else 0, 0)
+        for (r, c), text in (texts or {}).items():
+            t.Cell(r, c).Range.Text = text
+        self.fresh = True
+        return t
+
+    def brk(self, kind: int):
+        """Inserts a break (7 page, 8 column, 2 section next page, 3 section continuous) at the end."""
+        d = self.d
+        r = d.Range(d.Content.End - 1, d.Content.End - 1)
+        r.InsertBreak(kind)
+        # A section break ends the paragraph; a page or column break stays inside it.
+        self.fresh = kind in (2, 3, 4, 5)
+
+
+def find_para(d, start: str):
+    """The paragraph with the text `start` (COM paragraph objects grow while a
+    document is built, so they are looked up afterwards)."""
+    for i in range(1, d.Paragraphs.Count + 1):
+        if d.Paragraphs(i).Range.Text.rstrip("\r") == start:
+            return d.Paragraphs(i)
+    raise KeyError(start)
+
+
+def lists(app) -> None:
+    d = base_doc(app)
+    b = Builder(d)
+    b.para("Listen im Test", -2)
+    b.para("Materialien für das Experiment:")
+    bullets = [
+        ("Ein Becherglas mit 250 ml Wasser", 1),
+        ("Zwei Esslöffel Salz, die nach und nach eingerührt werden, bis sich nichts mehr löst und am Boden kleine Kristalle liegen bleiben.", 1),
+        ("Unterpunkt auf der zweiten Ebene", 2),
+        ("Noch ein Unterpunkt mit genug Text, damit auch er über das Zeilenende hinaus läuft und umbricht.", 2),
+        ("Ein Thermometer", 1),
+    ]
+    steps = [
+        ("Fülle das Becherglas mit Wasser.", 1),
+        ("Rühre das Salz ein. Beobachte dabei genau, was passiert, und notiere deine Beobachtungen in der Tabelle auf dem Arbeitsblatt.", 1),
+        ("Erste Beobachtung", 2), ("Zweite Beobachtung", 2),
+        ("Miss die Temperatur.", 1), ("Warte fünf Minuten.", 1), ("Miss die Temperatur noch einmal.", 1),
+        ("Vergleiche beide Werte.", 1), ("Schreibe einen Satz zum Ergebnis.", 1), ("Räume den Platz auf.", 1),
+        ("Wasche das Becherglas aus.", 1), ("Gib das Thermometer zurück.", 1),
+    ]
+    outline = [
+        ("Einleitung", 1), ("Fragestellung", 2), ("Hypothese", 2), ("Begründung der Hypothese mit etwas längerem Text, der über das Ende der Zeile hinaus umbrechen soll", 3),
+        ("Durchführung", 1), ("Material", 2), ("Ergebnisse", 1),
+    ]
+    for t, _ in bullets:
+        b.para(t)
+    b.para("Arbeitsschritte:")
+    for t, _ in steps:
+        b.para(t)
+    b.para("Gliederung der Facharbeit:")
+    for t, _ in outline:
+        b.para(t)
+    b.para("Ein Absatz nach den Listen.")
+
+    def span(items):
+        return d.Range(find_para(d, items[0][0]).Range.Start, find_para(d, items[-1][0]).Range.End)
+
+    # DefaultListBehavior 2 (wdWord10ListBehavior) makes the nine-level lists the ribbon's
+    # Aufzählungszeichen/Nummerierung buttons create; the API's default has one level only.
+    def apply(items, gallery, template):
+        span(items).ListFormat.ApplyListTemplate(ListTemplate=app.ListGalleries(gallery).ListTemplates(template),
+                                                 ContinuePreviousList=False, ApplyTo=0, DefaultListBehavior=2)
+    apply(bullets, 1, 1)
+    apply(steps, 2, 1)
+    apply(outline, 3, 2)
+    for items in (bullets, steps, outline):
+        for t, lv in items:
+            if lv > 1:
+                find_para(d, t).Range.ListFormat.ListLevelNumber = lv
+    d.SaveAs2(str(OUT / "word-lists.docx"), 16)
+    d.Close(0)
+
+
+def tables(app) -> None:
+    d = base_doc(app)
+    b = Builder(d)
+    b.para("Tabellen im Test", -2)
+    b.para("Eine einfache Tabelle mit Rahmen:")
+    b.table(3, 3, {(1, 1): "Stoff", (1, 2): "Menge", (1, 3): "Bemerkung",
+                   (2, 1): "Wasser", (2, 2): "250 ml", (2, 3): "Leitungswasser reicht aus, destilliertes Wasser ist nicht nötig.",
+                   (3, 1): "Salz", (3, 2): "2 EL", (3, 3): "Kochsalz"})
+    b.para("Text zwischen zwei Tabellen.")
+    t = b.table(3, 4, {(1, 1): "Verbundene Kopfzelle", (2, 1): "a", (2, 2): "b", (2, 3): "c", (3, 1): "d", (3, 2): "e", (3, 3): "f", (2, 4): "Senkrecht verbunden"})
+    t.Cell(2, 4).Merge(t.Cell(3, 4))
+    t.Cell(1, 1).Merge(t.Cell(1, 2))
+    b.para("Eine zentrierte Tabelle mit Mindesthöhe und vertikal zentriertem Text:")
+    t = b.table(2, 2, {(1, 1): "Oben", (1, 2): "Mitte", (2, 1): "Zweite Zeile", (2, 2): "Zelle"})
+    t.Rows.Alignment = 1
+    t.Rows(1).HeightRule, t.Rows(1).Height = 1, 36
+    t.Cell(1, 2).VerticalAlignment = 1
+    t.Cell(1, 1).Shading.BackgroundPatternColor = 0xE6D8BD
+    t.PreferredWidthType, t.PreferredWidth = 3, 240
+    for c in range(1, 3):
+        t.Columns(c).Width = 120
+    b.para("Eine lange Tabelle mit Überschriftszeile, die über die Seite hinausgeht:")
+    rows = 32
+    texts = {(1, 1): "Nr.", (1, 2): "Beobachtung", (1, 3): "Uhrzeit"}
+    for r in range(2, rows + 1):
+        texts[(r, 1)] = str(r - 1)
+        texts[(r, 2)] = FILL if r % 7 == 0 else f"Messung {r - 1}: die Lösung ist klar."
+        texts[(r, 3)] = f"{8 + r // 6}:{(r * 7) % 60:02d}"
+    t = b.table(rows, 3, texts)
+    t.Rows(1).HeadingFormat = True
+    t.Rows(1).Range.Font.Bold = True
+    t.Columns(1).Width, t.Columns(2).Width, t.Columns(3).Width = 40, 330, 83
+    b.para("Text nach der langen Tabelle.")
+    d.SaveAs2(str(OUT / "word-tables.docx"), 16)
+    d.Close(0)
+
+
+def sections(app) -> None:
+    d = base_doc(app)
+    b = Builder(d)
+    b.para("Abschnitte, Kopf- und Fußzeilen", -2)
+    for _ in range(7):
+        b.para(FILL + " " + FILL)
+    b.para("Ende des ersten Abschnitts.")
+    b.brk(2)
+    b.para("Querformat", -3)
+    for _ in range(3):
+        b.para(FILL + " " + FILL + " " + FILL)
+    b.brk(2)
+    b.para("Zwei Spalten", -3)
+    b.brk(3)
+    for _ in range(3):
+        b.para(FILL)
+    b.para("Dieser Absatz endet mit einem Spaltenumbruch.")
+    b.brk(8)
+    b.para("Text in der zweiten Spalte nach dem Spaltenumbruch.")
+    b.para(FILL)
+    b.brk(3)
+    b.para("Wieder einspaltig nach einem fortlaufenden Abschnittswechsel.")
+    b.para(FILL)
+    secs = d.Sections
+    secs(2).PageSetup.Orientation = 1
+    secs(3).PageSetup.Orientation = 0
+    secs(4).PageSetup.TextColumns.SetCount(2)
+    secs(4).PageSetup.TextColumns.LineBetween = True
+    # Headers and footers: a first-page header, page numbers "Seite X von Y" centred.
+    secs(1).PageSetup.DifferentFirstPageHeaderFooter = True
+    secs(1).Headers(2).Range.Text = "Deckblatt"
+    h = secs(1).Headers(1).Range
+    h.Text = "Raabeschule · Biologie\tKlasse 7b"
+    f = secs(1).Footers(1)
+    f.Range.Text = "Seite "
+    r = f.Range
+    r.SetRange(r.End - 1, r.End - 1)
+    d.Fields.Add(r, 33)
+    r = f.Range
+    r.SetRange(r.End - 1, r.End - 1)
+    r.InsertAfter(" von ")
+    r = f.Range
+    r.SetRange(r.End - 1, r.End - 1)
+    d.Fields.Add(r, 26)
+    f.Range.ParagraphFormat.Alignment = 1
+    secs(1).Footers(2).Range.Text = "Erste Seite"
+    secs(3).PageSetup.DifferentFirstPageHeaderFooter = False
+    secs(3).Headers(1).LinkToPrevious = False
+    secs(3).Headers(1).Range.Text = "Dritter Abschnitt mit eigener Kopfzeile"
+    d.SaveAs2(str(OUT / "word-sections.docx"), 16)
+    d.Close(0)
+
+
+def notes(app) -> None:
+    d = base_doc(app)
+    b = Builder(d)
+    b.para("Fußnoten im Test", -2)
+    paras = []
+    for i in range(14):
+        paras.append(b.para(f"Absatz {i + 1}. " + FILL))
+    def note_after(para_, word, text):
+        r = para_.Range.Duplicate
+        assert r.Find.Execute(FindText=word)
+        d.Footnotes.Add(Range=d.Range(r.End, r.End), Text=text)
+    note_after(paras[0], "Blätter", "Die Spaltöffnungen liegen meist auf der Blattunterseite.")
+    note_after(paras[1], "Wurzeln", "Über die Wurzelhaare, die die Oberfläche stark vergrößern.")
+    note_after(paras[3], "Sonnenlichts", "Genauer: des sichtbaren Lichts, vor allem im roten und blauen Bereich. " + FILL)
+    note_after(paras[9], "Sauerstoff", "Der Sauerstoff stammt aus dem Wasser, nicht aus dem Kohlenstoffdioxid.")
+    note_after(paras[11], "Traubenzucker", "Auch Glucose genannt.")
+    note_after(paras[12], "Atmen", "Zellatmung.")
+    d.SaveAs2(str(OUT / "word-notes.docx"), 16)
+    d.Close(0)
+
+
+def borders(app) -> None:
+    d = base_doc(app)
+    b = Builder(d)
+    b.para("Rahmen und Schattierung", -2)
+    b.para("Ein Absatz ohne Rahmen. " + FILL)
+    p = b.para("Ein Absatz mit Rahmen rundherum. " + FILL)
+    p.Borders.Enable = True
+    p = b.para("Ein grau schattierter Absatz. " + FILL)
+    p.Shading.BackgroundPatternColor = 0xD9D9D9
+    p1 = b.para("Zwei Absätze in einem gemeinsamen Rahmen: der erste.")
+    p2 = b.para("Und der zweite Absatz im selben Rahmen.")
+    d.Range(p1.Range.Start, p2.Range.End).Borders.Enable = True
+    p = b.para("Nur eine Linie unten, etwas dicker.")
+    p.Borders(-3).LineStyle = 1
+    p.Borders(-3).LineWidth = 12
+    p = b.para("Rahmen mit Schattierung und Einzug links. " + FILL)
+    p.LeftIndent = 28.35
+    p.Borders.Enable = True
+    p.Shading.BackgroundPatternColor = 0xF2E6DA
+    b.para("Ein Absatz danach. " + FILL)
+    d.SaveAs2(str(OUT / "word-borders.docx"), 16)
+    d.Close(0)
+
+
+def images(app) -> None:
+    import tempfile
+    png = Path(tempfile.gettempdir()) / "raabe-fixture-leaf.png"
+    img = Image.new("RGB", (480, 320), (235, 245, 230))
+    dr = ImageDraw.Draw(img)
+    dr.ellipse((60, 40, 420, 280), fill=(90, 160, 70), outline=(40, 90, 30), width=6)
+    dr.line((80, 260, 400, 60), fill=(40, 90, 30), width=6)
+    img.save(png)
+    d = base_doc(app)
+    b = Builder(d)
+    b.para("Bilder im Test", -2)
+    p = b.para("Ein Bild in der Zeile: ")
+    r = d.Range(p.Range.End - 1, p.Range.End - 1)
+    s = d.InlineShapes.AddPicture(str(png), False, True, r)
+    s.Width, s.Height = 90, 60
+    r = d.Range(p.Range.End - 1, p.Range.End - 1)
+    r.InsertAfter(" und danach geht der Text weiter, bis die Zeile voll ist und umbricht.")
+    p = b.para("Ein Bild rechts, vom Text umflossen. " + FILL + " " + FILL + " " + FILL)
+    il = d.InlineShapes.AddPicture(str(png), False, True, d.Range(p.Range.Start, p.Range.Start))
+    il.Width, il.Height = 150, 100
+    sh = il.ConvertToShape()  # anchored to this paragraph (AddPicture re-anchors by position)
+    sh.WrapFormat.Type = 0
+    sh.RelativeHorizontalPosition = 0
+    sh.Left = -999996
+    sh.RelativeVerticalPosition = 2
+    sh.Top = 0
+    b.para(FILL + " " + FILL)
+    p = b.para("Ein Bild oben und unten frei. " + FILL)
+    il = d.InlineShapes.AddPicture(str(png), False, True, d.Range(p.Range.Start, p.Range.Start))
+    il.Width, il.Height = 120, 80
+    sh = il.ConvertToShape()  # anchored to this paragraph (AddPicture re-anchors by position)
+    sh.WrapFormat.Type = 4
+    sh.RelativeHorizontalPosition = 0
+    sh.Left = -999995
+    sh.RelativeVerticalPosition = 2
+    sh.Top = 30
+    b.para(FILL + " " + FILL)
+    b.para("Letzter Absatz.")
+    d.SaveAs2(str(OUT / "word-images.docx"), 16)
+    d.Close(0)
+
+
 TEST_AUTHOR = "Raabe Office Test"
 
 
@@ -476,7 +780,8 @@ def main() -> None:
         only = [a[2:] for a in sys.argv[1:] if a.startswith("--")]
         if only:
             for name in only:
-                {"layout": layout, "fonts": fonts, "breaks": breaks, "top": top, "formatting": formatting, "rich": rich}[name](app)
+                {"layout": layout, "fonts": fonts, "breaks": breaks, "top": top, "formatting": formatting, "rich": rich,
+                 "lists": lists, "tables": tables, "sections": sections, "notes": notes, "borders": borders, "images": images}[name](app)
         else:
             formatting(app)
             rich(app)

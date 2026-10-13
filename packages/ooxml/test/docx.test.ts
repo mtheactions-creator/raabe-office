@@ -71,7 +71,8 @@ describe("documents saved by Microsoft Word", () => {
     expect(state.paras.every(validPara)).toBe(true);
   });
 
-  for (const name of ["word-short.docx", "word-formatting.docx", "word-rich.docx", "word-layout.docx", "word-fonts.docx", "word-breaks.docx", "word-top.docx"]) {
+  for (const name of ["word-short.docx", "word-formatting.docx", "word-rich.docx", "word-layout.docx", "word-fonts.docx", "word-breaks.docx", "word-top.docx",
+    "word-lists.docx", "word-tables.docx", "word-sections.docx", "word-notes.docx", "word-borders.docx", "word-images.docx"]) {
     it(`${name}: writing back keeps every part and every element`, () => {
       const bytes = fixture(name);
       const first = readDocx(bytes);

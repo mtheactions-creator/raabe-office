@@ -145,6 +145,7 @@ export class Editor {
     };
     scan(this.doc.main);
     for (const paras of this.doc.stories.values()) scan(paras);
+    for (const a of this.doc.numbering.abstracts.values()) for (const l of a.levels) if (l?.rPr.font) families.add(l.rPr.font);
     this.fonts.require(families);
   }
 

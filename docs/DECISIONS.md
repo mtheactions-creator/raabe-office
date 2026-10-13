@@ -280,3 +280,29 @@ simple:
   sections with page size and columns, headers and footers per page, tables (rows split at
   line boundaries, header rows repeated, vertical merges), footnotes at the page bottom,
   floating pictures with text wrapping, balanced columns before continuous section breaks.
+
+### D-030 Page layout follows Word's measured rules (Step 3)
+Measured on 2026-10-13 with six more test documents built by Word (`make_fixtures.py
+--lists --tables --sections --notes --borders --images`) and `run.py docx`:
+- Lists: the label stands at the first-line indent and is followed by its tab, space or
+  nothing; the label's own font (Symbol for "•") raises the line if it is taller, but never
+  deepens it.
+- Tables: a cell's text starts after half the width of its left border plus the cell margin
+  (0.19 cm); every row is as tall as its content plus the full width of its top border (the
+  last row also its bottom border); a row height set in Word is the height between the
+  borders. A row breaks across pages only when every cell can start on the page (with widow
+  and orphan control in each cell); otherwise it moves whole. Header rows repeat.
+- Pictures in a line stand on the baseline; "Mehrfach" line spacing adds its extra space for
+  the text only, not for the picture. Text flows around pictures with square wrapping on the
+  side with more room, and below pictures set to "Oben und unten".
+- Continuous section breaks: the new section starts below the longest column, counting the
+  "after" of a paragraph that ends there; columns are balanced unless a column break is in
+  them. After a column break the paragraph mark starts the next column (unlike a page
+  break, after which it stays on the line).
+- Footnotes stand at the page bottom under a 2-inch separator line; a line whose note does
+  not fit moves to the next page. Paragraph borders and shading take the border width plus
+  its distance above and below the text.
+Result: 690/690 line starts and every page break identical in ten Word documents, baselines
+within 0.18 pt. The harness now finds Word's lines by position (Word's own line navigation
+moves between table cells), maps table, section and picture characters between Word and
+RaabeWrite, and reads baselines from the PDFs by position.

@@ -16,8 +16,10 @@ from pathlib import Path
 from . import pdftext
 from .targets import WebViewTarget
 
-# Word writes optional and non-breaking hyphens as control characters in Range.Text.
-WORD_CHARS = {"\x1f": "\u00ad", "\x1e": "\u2011"}
+# Word writes optional and non-breaking hyphens as control characters in Range.Text;
+# inline pictures and note references are one character each, as objects are in RaabeWrite.
+WORD_CHARS = {"\x1f": "\u00ad", "\x1e": "\u2011", "\x01": "\ufffc", "\x02": "\ufffc"}
+CELL_MARK = "\r\x07"
 
 
 class WordDocument:
@@ -38,12 +40,103 @@ class WordDocument:
             raise
 
     def text(self) -> str:
-        t = self.doc.Content.Text
-        if t.endswith("\r"):
-            t = t[:-1]
-        for a, b in WORD_CHARS.items():
-            t = t.replace(a, b)
-        return t.replace("\r", "\n")
+        """The main text as RaabeWrite's probe shows it: paragraphs (and table cells) joined by
+        "\n". Word's end-of-row marks have no counterpart and are left out; section breaks
+        end a paragraph. Builds the map between Word's positions and these offsets."""
+        raw = self.doc.Content.Text
+        # Floating pictures have an anchor character that Range.Text leaves out.
+        self.hidden = sorted({self.doc.Shapes(k).Anchor.Start for k in range(1, self.doc.Shapes.Count + 1)})
+        hidden = set(self.hidden)
+        # Word positions of cell/row marks ("\r\x07" is one position).
+        marks: list[int] = []
+        chars: list[tuple[int, str]] = []
+        i = pos = 0
+        while i < len(raw):
+            while pos in hidden:
+                pos += 1
+            if raw.startswith(CELL_MARK, i):
+                marks.append(pos)
+                chars.append((pos, CELL_MARK))
+                i += 2
+            else:
+                chars.append((pos, raw[i]))
+                i += 1
+            pos += 1
+        # End-of-row marks (Information(31): wdAtEndOfRowMarker); the others end cells,
+        # including the hidden ones of vertically merged cells.
+        self.row_ends = [m for m in marks if self.doc.Range(m, m).Information(31)]
+        pictures = {self.doc.InlineShapes(k).Range.Start for k in range(1, self.doc.InlineShapes.Count + 1)}
+        sections = {self.doc.Sections(k).Range.End - 1 for k in range(1, self.doc.Sections.Count)}
+        row_set = set(self.row_ends)
+        out = []
+        for pos, ch in chars:
+            if ch == CELL_MARK:
+                if pos not in row_set:
+                    out.append("\n")
+            elif ch == "\x0c" and pos in sections:
+                out.append("\n")
+            elif ch == "\r":
+                out.append("\n")
+            elif pos in pictures:
+                out.append("\ufffc")
+            else:
+                out.append(WORD_CHARS.get(ch, ch))
+        t = "".join(out)
+        return t[:-1] if t.endswith("\n") else t
+
+    def skipped(self) -> list[int]:
+        return sorted(set(self.row_ends) | set(self.hidden))
+
+    def to_ours(self, pos: int) -> int:
+        return pos - sum(1 for r in self.skipped() if r < pos)
+
+    def to_word(self, offset: int) -> int:
+        pos = offset
+        for r in self.skipped():
+            if r <= pos:
+                pos += 1
+            else:
+                break
+        return pos
+
+    def needs_positions(self) -> bool:
+        """Tables, several sections or columns: line starts found from positions (Word's
+        MoveDown moves between table cells, not lines)."""
+        if self.doc.Tables.Count or self.doc.Sections.Count > 1:
+            return True
+        return any(self.doc.Sections(k).PageSetup.TextColumns.Count > 1 for k in range(1, self.doc.Sections.Count + 1))
+
+    def lines_by_position(self) -> list[int]:
+        """Line starts: within each paragraph, where the line's page or vertical position
+        changes (binary search over positions)."""
+        def key(pos: int):
+            r = self.doc.Range(pos, pos)
+            return int(r.Information(3)), round(float(r.Information(6)), 1)
+        starts: list[int] = []
+        row_set = set(self.row_ends)
+        for para in self.doc.Paragraphs:
+            a, e = para.Range.Start, para.Range.End - 1
+            if a in row_set:
+                continue
+            try:
+                self.win.GetPoint(0, 0, 0, 0, self.doc.Range(a, a))
+            except Exception:
+                continue  # not shown (the text of a vertically merged cell)
+            cur = a
+            starts.append(cur)
+            k = key(cur)
+            while cur < e and key(e) != k:
+                lo, hi = cur, e  # key(lo) == k, key(hi) != k
+                while hi - lo > 1:
+                    mid = (lo + hi) // 2
+                    if key(mid) == k:
+                        lo = mid
+                    else:
+                        hi = mid
+                cur = hi
+                starts.append(cur)
+                k = key(cur)
+        return starts
 
     def lines(self) -> list[int]:
         s = self.app.Selection
@@ -139,16 +232,32 @@ def open_in_raabe(target: WebViewTarget, path: Path, timeout: float = 20) -> Non
 
 
 def pdf_baselines(path: Path, boxes: list[dict]) -> dict[int, float]:
-    """Baseline of each line (by start offset) from a PDF, matching lines page by page in
-    order. Pages whose line count differs are left out (reported as None)."""
+    """Baseline of each line (by start offset) from a PDF. Every text run goes to the line
+    box it lies in: vertically inside the box, and the box starting nearest to its left
+    (table cells and columns side by side). Text outside the boxes (headers, footers,
+    footnotes, list labels left of the text) is ignored."""
     pages = pdftext.read(path)
     out: dict[int, float] = {}
     for page, pdf_page in enumerate(pages):
         lines = [b for b in boxes if b["page"] == page]
-        found = pdftext.baselines(pdf_page)
-        if len(found) == len(lines):
-            for b, f in zip(lines, found):
-                out[b["start"]] = f["y"]
+        got: dict[int, list] = {}
+        for r in pdf_page.runs:
+            if not r.chars or r.size <= 0:
+                continue
+            cands = [b for b in lines if b["y"] - 0.5 <= r.y <= b["y"] + b["h"] + 0.5 and b["x"] <= r.x + 1.5]
+            if not cands:
+                continue
+            best = max(cands, key=lambda b: (round(b["x"], 0), -abs(b["y"] + 0.8 * b["h"] - r.y)))
+            got.setdefault(best["start"], []).append(r)
+        for start, runs in got.items():
+            # The baseline most characters sit on (raised or lowered characters do not count).
+            groups: dict[float, int] = {}
+            for r in runs:
+                key = next((k for k in groups if abs(k - r.y) <= 0.3), r.y)
+                groups[key] = groups.get(key, 0) + max(1, int(r.chars) if not isinstance(r.chars, str) else len(r.chars))
+            best = max(groups, key=lambda k: groups[k])
+            main = [r for r in runs if abs(r.y - best) <= 0.3]
+            out[start] = round(sum(r.y for r in main) / len(main), 2)
     return out
 
 
@@ -256,11 +365,14 @@ def run(raabe: WebViewTarget, files: list[Path]) -> dict:
         word_pdf = tmp / f"{path.stem}-word.pdf"
         try:
             text = word.text()
-            starts = word.lines()
-            wboxes = word.boxes(starts)
+            wstarts = word.lines_by_position() if word.needs_positions() else word.lines()
+            wboxes = word.boxes(wstarts)
+            for b in wboxes:
+                b["start"] = word.to_ours(b["start"])
+            starts = [b["start"] for b in wboxes]
             groups = word_offsets(starts, text)
             all_offsets = sorted({o for offs in groups.values() for o in offs} | set(groups))
-            word_x = dict(zip(all_offsets, word.xs(all_offsets)))
+            word_x = dict(zip(all_offsets, word.xs([word.to_word(o) for o in all_offsets])))
             word.export_pdf(word_pdf)
         finally:
             word.close()

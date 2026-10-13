@@ -232,6 +232,8 @@ export class Layouter {
     // The list label on the first line: number at the first-line indent, then its suffix.
     let label: Line["label"];
     let labelEnd = 0;
+    /** Formatting the label's line height comes from (the level's own font, e.g. Symbol). */
+    let labelMetrics: ResolvedChar | undefined;
     if (env.label && env.label.text !== undefined) {
       const lc = charOf(env.label.props);
       const bullet = env.label.level.format === "bullet";
@@ -245,6 +247,7 @@ export class Layouter {
       const suffix = env.label.level.suffix;
       labelEnd = suffix === "nothing" ? end : suffix === "space" ? end + fonts.advance(c, " ") : tabStop(end, true).stop;
       label = { text: shown.text, x: lx, c, font: shown.font };
+      labelMetrics = lc;
     }
 
     while (true) {
@@ -308,13 +311,15 @@ export class Layouter {
       }
       // A soft hyphen at a line end shows a hyphen.
       if (!forcedEnd && end < text.length && text[end - 1] === "\u00ad") infos[end - 1].w = fonts.advance(infos[end - 1].c, "-");
-      const line = this.buildLine(text, infos, objs, start, end, lineLeft, avail, rp, markC, forcedEnd || end >= text.length, pageBreakAfter, push);
+      const line = this.buildLine(text, infos, objs, start, end, lineLeft, avail, rp, markC, forcedEnd || end >= text.length, pageBreakAfter, push,
+        first && labelMetrics ? labelMetrics : undefined);
       lines.push(columnBreakAfter || (first && label) ? { ...line, columnBreakAfter: columnBreakAfter || undefined, label: first ? label : undefined } : line);
       top += line.height;
       first = false;
       if (end >= text.length) {
-        // A trailing line break still produces an (empty) last line, as in Word.
-        if (forcedEnd && text.length && text[text.length - 1] === LINE_BREAK) {
+        // A trailing line or column break still produces an (empty) last line, as in Word
+        // (after a column break it starts the next column; a page break keeps the mark on its line).
+        if (forcedEnd && text.length && (text[text.length - 1] === LINE_BREAK || text[text.length - 1] === COLUMN_BREAK)) {
           lines.push(this.buildLine(text, infos, objs, text.length, text.length, rp.indLeft * PT, width - rp.indLeft * PT - rp.indRight * PT, rp, markC, true, false, 0));
         }
         break;
@@ -325,7 +330,8 @@ export class Layouter {
   }
 
   private buildLine(text: string, infos: CharInfo[], objs: (InlineObject | undefined)[], start: number, end: number,
-    lineLeft: number, avail: number, rp: ResolvedPara, markC: ResolvedChar, last: boolean, pageBreakAfter: boolean, push: number): Line {
+    lineLeft: number, avail: number, rp: ResolvedPara, markC: ResolvedChar, last: boolean, pageBreakAfter: boolean, push: number,
+    label?: ResolvedChar): Line {
     const { fonts } = this.ctx;
     // Content end without trailing spaces and break characters.
     let contentEnd = end;
@@ -333,35 +339,39 @@ export class Layouter {
     let width = 0;
     for (let i = start; i < contentEnd; i++) width += infos[i].w;
 
-    // Vertical metrics: the largest font on the line (nominal size; super/subscript do not grow lines).
-    let asc = 0, desc = 0;
+    // Vertical metrics: the largest font on the line (nominal size; super/subscript do not grow
+    // lines). Pictures and equations stand on the baseline. Measured: "Mehrfach" adds its extra
+    // space for the text only (a 60 pt picture in an 1.08 line adds 8 % of the font's height,
+    // not of the picture's), and a list label's font raises the line but does not deepen it.
+    let asc = 0, desc = 0, objAsc = 0, objDesc = 0;
     const consider = (c: ResolvedChar) => {
       const h = fonts.lineHeight(c.font, c.size) * PT;
       const a = fonts.ascent(c.font, c.size) * PT;
       asc = Math.max(asc, a);
       desc = Math.max(desc, h - a);
     };
-    let any = false;
+    let anyText = false;
     for (let i = start; i < end; i++) {
       const o = objs[i];
       if (infos[i].kind === "object" && o?.height !== undefined) {
         const d = (o.depth ?? 0) * PT;
-        asc = Math.max(asc, o.height * PT - d);
-        desc = Math.max(desc, d);
-        any = true;
+        objAsc = Math.max(objAsc, o.height * PT - d);
+        objDesc = Math.max(objDesc, d);
         continue;
       }
       if (infos[i].c.hidden) continue;
       consider(infos[i].c);
-      any = true;
+      anyText = true;
     }
-    if (!any) consider(markC);
-    const natural = asc + desc;
-    let height = natural, baseline = asc;
-    if (rp.lineRule === "auto") height = natural * rp.line;
+    if (!anyText) consider(markC);
+    if (label) asc = Math.max(asc, fonts.ascent(label.font, label.size) * PT);
+    const textNatural = asc + desc;
+    const natural = Math.max(asc, objAsc) + Math.max(desc, objDesc);
+    let height = natural, baseline = Math.max(asc, objAsc);
+    if (rp.lineRule === "auto") height = natural + textNatural * (rp.line - 1);
     // "Genau": Word puts the baseline at 80 % of the line, whatever the font.
     else if (rp.lineRule === "exact") { height = rp.line * PT; baseline = height * 0.8; }
-    else { height = Math.max(rp.line * PT, natural); baseline = asc + (height - natural); }
+    else { height = Math.max(rp.line * PT, natural); baseline = Math.max(asc, objAsc) + (height - natural); }
     height += push;
     baseline += push;
 

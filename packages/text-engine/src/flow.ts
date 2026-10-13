@@ -141,18 +141,31 @@ interface CellGeom {
   readonly need: number;
   readonly vMerge?: "restart" | "continue";
   readonly shading: string | null;
-  readonly borders: Borders;
+  /** The borders this cell draws: its top, left, and (last row/column) bottom and right. */
+  readonly edges: Edges;
   readonly vAlign: "top" | "center" | "bottom";
   /** Rows a restart cell spans (vertical merge). */
   span: number;
 }
 
+interface Edges {
+  readonly top?: BorderSpec;
+  readonly bottom?: BorderSpec;
+  readonly left?: BorderSpec;
+  readonly right?: BorderSpec;
+}
+
 interface RowGeom {
   readonly cells: CellGeom[];
   height: number;
+  /** Width of the row's top border (and of the table's bottom border on the last row), px. */
+  topW: number;
+  bottomW: number;
   readonly header: boolean;
   readonly cantSplit: boolean;
 }
+
+const borderW = (b: BorderSpec | undefined) => (visibleBorder(b) ? b.size * PT : 0);
 
 interface TableGeom {
   readonly def: TableDef;
@@ -348,16 +361,33 @@ class Flow {
     this.newPage(si, false);
   }
 
-  /** Content bottom of the current page's columns (px). */
-  private columnsBottom(): number {
-    let bottom = this.cur.y + this.y;
+  /**
+   * Where a continuous section break puts the next section: below the longest column,
+   * counting the "after" of a paragraph that ends in that column (measured: a paragraph that
+   * continues in the next column adds nothing). Returns the bottom and the "after" in it.
+   */
+  private columnsBottom(): { bottom: number; after: number } {
+    let bottom = this.cur.y + this.y, after = 0;
     for (let i = this.sectionStart; i < this.main.placed.length; i++) {
       const pl = this.main.placed[i];
       if (pl.page !== this.page.index) continue;
-      bottom = Math.max(bottom, pl.y + this.main.paras[pl.para].lines[pl.line].height);
+      const pll = this.main.paras[pl.para];
+      const last = pl.line === pll.lines.length - 1;
+      const a = last ? pll.after : 0;
+      const b = pl.y + pll.lines[pl.line].height + a;
+      if (b > bottom + 0.01 || (Math.abs(b - bottom) <= 0.01 && a > after)) { bottom = b; after = a; }
     }
-    return bottom;
+    return { bottom, after };
   }
+
+  /** Style of tables that name none (the document's default table style). */
+  private get defaultTableStyle(): string | undefined {
+    for (const st of this.styles.styles.values()) if (st.type === "table" && st.isDefault) return st.id;
+    return undefined;
+  }
+
+  /** "After" already counted at the top of a continuous section (see columnsBottom). */
+  private carried: number | null = null;
 
   /**
    * Before a continuous section break: spreads the section's lines on this page evenly over
@@ -368,6 +398,8 @@ class Flow {
     const lines = this.main.placed.slice(this.sectionStart).map((pl, k) => ({ pl, k: this.sectionStart + k }))
       .filter(({ pl }) => pl.page === this.page.index);
     if (lines.length < 2 || lines.some(({ pl }) => this.frames[pl.frame].kind !== "body")) return;
+    // A manual column break decides the columns itself (measured: Word does not balance then).
+    if (lines.some(({ pl }) => this.main.paras[pl.para].lines[pl.line].columnBreakAfter)) return;
     const height = (pl: PlacedLine) => this.main.paras[pl.para].lines[pl.line].height;
     // Lines as a stream: gaps between lines of one column kept, column tops dropped.
     const items = lines.map(({ pl }, j) => {
@@ -481,13 +513,15 @@ class Flow {
         if (start === "continuous") {
           // Same page: the previous section's columns are balanced, the new ones start below.
           this.balance();
-          const top = this.columnsBottom();
-          if (top >= this.page.bodyBottom - this.page.notesHeight - 1) this.newPage(si, false);
+          const { bottom, after } = this.columnsBottom();
+          if (bottom >= this.page.bodyBottom - this.page.notesHeight - 1) this.newPage(si, false);
           else {
+            // Every column of the new section starts below the old one's spacing (measured).
             this.sectionStart = this.main.placed.length;
-            this.startColumns(si, top);
+            this.startColumns(si, bottom);
             this.fresh = false;
             this.prev = null;
+            this.carried = after;
           }
         } else if (start === "nextColumn" && this.col < this.cols.length - 1) {
           this.col++; this.y = 0; this.fresh = true; this.prev = null;
@@ -610,7 +644,8 @@ class Flow {
     }
     // "Before" counts at the top of the document but is dropped at the top of every later page
     // and column, whatever started it (measured: natural, manual and "page break before").
-    const gapFor = (p: ParaLayout) => (this.y === 0 && this.fresh ? (this.docTop ? p.before : 0) : this.gapBetween(this.prev, p)) + p.borderTop;
+    const gapFor = (p: ParaLayout) => p.borderTop + (this.y === 0 && this.fresh ? (this.docTop ? p.before : 0)
+      : this.y === 0 && this.carried !== null ? Math.max(0, p.before - this.carried) : this.gapBetween(this.prev, p));
     let gap = gapFor(pl);
     const n0 = pl.lines.length;
     let k = this.fitting(pl, 0, this.room() - gap);
@@ -634,6 +669,7 @@ class Flow {
     this.y += gap;
     this.fresh = false;
     this.docTop = false;
+    this.carried = null;
     this.main.paras[i] = pl;
     this.main.firstPlaced[i] = this.main.placed.length;
     let pieceTop = this.cur.y + this.y - pl.borderTop;
@@ -791,7 +827,7 @@ class Flow {
   private tableGeom(paras: readonly Para[], a: number, b: number, frameX: number, frameW: number,
     labels: (ListLabel | undefined)[], fields?: Record<string, string>): TableGeom {
     const def = paras[a].cell!.table;
-    const style = this.styles.tableStyle(def.style);
+    const style = this.styles.tableStyle(def.style ?? this.defaultTableStyle);
     const gridW = def.grid.map((g) => g * PT);
     const total = gridW.reduce((s, x) => s + x, 0);
     let x = frameX + (def.indent ?? 0) * PT;
@@ -817,8 +853,20 @@ class Flow {
         const pPr = mergeParts(style?.pPr, conds.map((p) => p.pPr));
         const rPr = mergeChars(style?.rPr, conds.map((p) => p.rPr));
         const shading = fillOf(cd.shading) ?? [...conds].reverse().map((p) => fillOf(p.shading)).find((v) => v) ?? fillOf(def.shading) ?? fillOf(style?.shading) ?? null;
-        const borders: Borders = Object.assign({}, style?.borders ?? {}, ...conds.map((p) => p.borders ?? {}), def.borders ?? {}, cd.borders ?? {});
-        const contentW = Math.max(4, cw - (m.left + m.right) * PT);
+        // Table borders (style, conditional formats, the table's own); the cell's own win.
+        const tb: Borders = Object.assign({}, style?.borders ?? {}, ...conds.map((p) => p.borders ?? {}), def.borders ?? {});
+        const own = cd.borders ?? {};
+        const lastCol = gx + span >= gridW.length;
+        const edges: Edges = {
+          top: cd.vMerge === "continue" ? undefined : own.top ?? (r === 0 ? tb.top : tb.insideH ?? tb.top),
+          bottom: own.bottom ?? (r === nRows - 1 ? tb.bottom : tb.insideH ?? tb.bottom),
+          left: own.left ?? (gx === 0 ? tb.left : tb.insideV ?? tb.left),
+          right: own.right ?? (lastCol ? tb.right : tb.insideV ?? tb.right),
+        };
+        // Measured: text starts after the left border's right half, and rows grow by the
+        // full width of their top border.
+        const lw = borderW(edges.left) / 2, rw = lastCol ? borderW(edges.right) / 2 : 0;
+        const contentW = Math.max(4, cw - (m.left + m.right) * PT - lw - rw);
         const ids = byCell.get(`${def.id}:${r}:${c}`) ?? [];
         const layouts: ParaLayout[] = [];
         let h = 0;
@@ -833,11 +881,13 @@ class Flow {
         if (prev) h += prev.after;
         gx += span;
         return {
-          x: cx, w: cw, contentX: cx + m.left * PT, contentW, margins: m, paras: ids, layouts, need: h + (m.top + m.bottom) * PT,
-          vMerge: cd.vMerge, shading, borders, vAlign: cd.vAlign ?? "top", span: 1,
+          x: cx, w: cw, contentX: cx + lw + m.left * PT, contentW, margins: m, paras: ids, layouts, need: h + (m.top + m.bottom) * PT,
+          vMerge: cd.vMerge, shading, edges, vAlign: cd.vAlign ?? "top", span: 1,
         };
       });
-      return { cells, height: 0, header: !!row.header, cantSplit: !!row.cantSplit };
+      const topW = Math.max(0, ...cells.map((c) => borderW(c.edges.top)));
+      const bottomW = r === nRows - 1 ? Math.max(0, ...cells.map((c) => borderW(c.edges.bottom))) : 0;
+      return { cells, height: 0, topW, bottomW, header: !!row.header, cantSplit: !!row.cantSplit };
     });
     // Vertically merged cells: a restart cell spans the following "continue" cells below it.
     rows.forEach((row, r) => {
@@ -852,8 +902,9 @@ class Flow {
       let h = 0;
       for (const c of row.cells) if (c.vMerge !== "continue" && c.span === 1) h = Math.max(h, c.need);
       const rd = def.rows[r];
+      // A row height set in Word is the height between the borders (measured).
       if (rd.height !== undefined) h = rd.heightRule === "exact" ? rd.height * PT : Math.max(h, rd.height * PT);
-      row.height = h;
+      row.height = h + row.topW + row.bottomW;
     });
     // A merged cell taller than the rows it spans makes the last of them taller.
     rows.forEach((row, r) => {
@@ -898,9 +949,9 @@ class Flow {
       const fr = this.frame({ page: page.index, story, kind: "cell", x: cell.x, y: top, w: cell.w, h: cellH, cell: cell.paras.length ? cellKey(paras[cell.paras[0]].cell!) : undefined });
       if (!merged && cell.shading) page.deco.push({ kind: "rect", story, x: cell.x, y: top, w: cell.w, h: cellH, fill: cell.shading });
       // Content, vertically aligned in the cell.
-      let y = top + cell.margins.top * PT;
+      let y = top + row.topW + cell.margins.top * PT;
       if (cell.vAlign !== "top" && !split) {
-        const free = cellH - cell.need;
+        const free = cellH - cell.need - row.topW - (cell.span > 1 ? g.rows[r + cell.span - 1].bottomW : row.bottomW);
         if (free > 0) y += cell.vAlign === "center" ? free / 2 : free;
       }
       let prev: ParaLayout | null = null;
@@ -926,29 +977,31 @@ class Flow {
         if (end > start) this.paraDeco(page, story, pl, cell.contentX, boxTop, y - boxTop, end === pl.lines.length ? paras[cell.paras[k + 1]] ?? null : null, start > 0, end < pl.lines.length);
         prev = pl;
       });
-      if (!merged) this.cellBorders(page, story, g, r, cell, top, cellH, !!opt.from);
+      if (!merged) this.cellBorders(page, story, g, r, cell, top, cellH);
     }
   }
 
-  private cellBorders(pg: PageLayout, story: string, g: TableGeom, r: number, cell: CellGeom, top: number, h: number, continued: boolean): void {
-    const b = cell.borders;
-    const firstRow = r === 0 || continued, lastRow = r + cell.span >= g.rows.length;
-    const firstCol = Math.abs(cell.x - g.x) < 0.5, lastCol = Math.abs(cell.x + cell.w - (g.x + g.w)) < 0.5;
-    const pick = (outer: BorderSpec | undefined, inner: BorderSpec | undefined, isOuter: boolean) => (isOuter ? outer : inner ?? outer);
+  private cellBorders(pg: PageLayout, story: string, g: TableGeom, r: number, cell: CellGeom, top: number, h: number): void {
+    const e = cell.edges;
+    const lastRow = r + cell.span >= g.rows.length;
+    const lastCol = Math.abs(cell.x + cell.w - (g.x + g.w)) < 0.5;
     const line = (spec: BorderSpec | undefined, x1: number, y1: number, x2: number, y2: number) => {
       if (visibleBorder(spec)) pg.deco.push({ kind: "line", story, x1, y1, x2, y2, width: spec.size * PT, color: colorOf(spec.color), style: spec.style });
     };
-    // Each edge is drawn once: tops by every row, bottoms by the last row (and at page
-    // breaks), lefts by every cell, rights by the last cell.
-    line(pick(b.top, b.insideH, firstRow), cell.x, top, cell.x + cell.w, top);
-    if (lastRow) line(b.bottom, cell.x, top + h, cell.x + cell.w, top + h);
-    line(pick(b.left, b.insideV, firstCol), cell.x, top, cell.x, top + h);
-    if (lastCol) line(b.right, cell.x + cell.w, top, cell.x + cell.w, top + h);
+    // Each edge is drawn once: tops by every row (inside the row's top), bottoms by the last
+    // row (and at page breaks), lefts by every cell (centred on the cell's edge), rights by the
+    // last cell.
+    const tw = borderW(e.top);
+    line(e.top, cell.x, top + tw / 2, cell.x + cell.w, top + tw / 2);
+    if (lastRow) { const bw = borderW(e.bottom); line(e.bottom, cell.x, top + h - bw / 2, cell.x + cell.w, top + h - bw / 2); }
+    line(e.left, cell.x, top, cell.x, top + h);
+    if (lastCol) line(e.right, cell.x + cell.w, top, cell.x + cell.w, top + h);
   }
 
   private placeTable(si: number, a: number, b: number): void {
     const paras = this.input.main;
     if (!(this.y === 0 && this.fresh)) this.y += this.prev ? this.prev.after : 0;
+    this.carried = null;
     this.fresh = false;
     this.docTop = false;
     const g = this.tableGeom(paras, a, b, this.cur.x, this.cur.w, this.labels);
@@ -984,36 +1037,43 @@ class Flow {
     if (r === 0) return;
     const y = this.cur.y + this.y;
     for (const cell of g.rows[r - 1].cells) {
-      const spec = cell.borders.bottom;
+      const spec = cell.edges.bottom;
       if (visibleBorder(spec)) this.page.deco.push({ kind: "line", story: "main", x1: cell.x, y1: y, x2: cell.x + cell.w, y2: y, width: spec.size * PT, color: colorOf(spec.color), style: spec.style });
     }
   }
 
   /** Breaks a row at line boundaries: what fits stays here. Returns false if no line fits. */
   private splitRow(si: number, g: TableGeom, row: RowGeom, repeatHeaders: (() => void) | null): boolean {
-    const room = this.room() - 0.01;
+    // The part on this page ends with a border line (the row's bottom edge).
+    const reserve = Math.max(0, ...row.cells.map((c) => borderW(c.edges.bottom)));
+    const room = this.room() - reserve - 0.01;
     const cut = new Map<number, number>();
-    let any = false;
+    // Measured: a row breaks only when every cell can start on this page (with widow and
+    // orphan control in each cell); otherwise the whole row moves to the next page.
     for (const cell of row.cells) {
-      if (cell.vMerge === "continue") continue;
-      let y = cell.margins.top * PT;
+      if (cell.vMerge === "continue" || !cell.paras.length) continue;
+      let y = row.topW + cell.margins.top * PT;
       let prev: ParaLayout | null = null;
       let full = false;
+      let first = true;
+      let ok = true;
       cell.paras.forEach((pi, k) => {
         const pl = cell.layouts[k];
         let n = 0;
         if (!full) {
           y += (prev ? this.gapBetween(prev, pl) : pl.before) + pl.borderTop;
-          for (const l of pl.lines) { if (y + l.height > room) break; y += l.height; n++; }
+          n = this.fitting(pl, 0, room - y);
+          for (let ln = 0; ln < n; ln++) y += pl.lines[ln].height;
           if (n < pl.lines.length) full = true;
           y += pl.borderBottom;
+          if (first && n === 0) ok = false;
         }
+        first = false;
         cut.set(pi, n);
-        if (n > 0) any = true;
         prev = pl;
       });
+      if (!ok) return false;
     }
-    if (!any) return false;
     const top = this.cur.y + this.y;
     this.placeRow(g, row, this.page, top, this.room(), "main", this.main, this.input.main, { ghost: false, to: cut });
     this.y = this.page.bodyBottom - this.page.notesHeight - this.cur.y;
@@ -1023,7 +1083,7 @@ class Flow {
     // The rest of the row on the next page.
     let restH = 0;
     for (const cell of row.cells) {
-      let h = cell.margins.top * PT;
+      let h = row.topW + cell.margins.top * PT;
       cell.paras.forEach((pi, k) => {
         const pl = cell.layouts[k];
         const from = cut.get(pi) ?? 0;
