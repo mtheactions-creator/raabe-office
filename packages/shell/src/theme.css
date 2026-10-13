@@ -237,6 +237,31 @@ button {
 .menu button:hover:not(:disabled) { background: var(--hover); }
 .menu button:disabled { color: var(--text-disabled); }
 .menu hr { border: 0; border-top: 1px solid var(--border); margin: 4px 0; }
+.menu .menu-heading { padding: 6px 10px 2px; font-size: 12px; font-weight: 600; color: var(--text-secondary, #616161); background: var(--chrome); border-radius: 4px; margin: 2px 0; }
+.menu button.with-preview { height: auto; min-height: 30px; padding: 4px 10px; }
+.menu button.checked { background: var(--selected, #e1dfdd); }
+
+/* Contextual tabs (Tabellenentwurf, Kopf- und Fußzeile …) in the accent colour, as in Word. */
+.tabrow .tab.contextual { color: var(--accent); }
+.tabrow .ctx-start { width: 0; }
+
+/* Dropdowns with own content: grids and galleries. */
+.rpanel { position: fixed; z-index: 70; background: var(--card); border-radius: 6px; padding: 6px; box-shadow: 0 8px 16px rgba(0,0,0,.14), 0 0 2px rgba(0,0,0,.12); font-size: 13px; }
+.rpanel .title { padding: 2px 4px 6px; font-weight: 600; }
+.rpanel .grid { display: grid; gap: 2px; }
+.rpanel .grid .cell { width: 16px; height: 16px; border: 1px solid #bdbdbd; background: #fff; }
+.rpanel .grid .cell.on { border-color: var(--accent); background: #fde7e7; }
+.rpanel .tiles { display: grid; grid-template-columns: repeat(3, auto); gap: 6px; }
+.rpanel .tile { width: 74px; height: 74px; border: 1px solid var(--border); border-radius: 4px; background: #fff; display: flex; align-items: center; justify-content: center; }
+.rpanel .tile:hover { border-color: var(--accent); }
+.rpanel .tile.on { outline: 2px solid var(--accent); }
+.rpanel .wide { display: flex; flex-direction: column; gap: 2px; min-width: 260px; }
+.rpanel .wide button { display: flex; gap: 10px; align-items: center; text-align: left; padding: 6px 8px; border-radius: 4px; }
+.rpanel .wide button:hover { background: var(--hover); }
+.rpanel .wide .desc { color: #616161; font-size: 12px; white-space: pre-line; }
+.rpanel hr { border: 0; border-top: 1px solid var(--border); margin: 6px 0; }
+.rpanel .link { display: block; width: 100%; text-align: left; padding: 6px 8px; border-radius: 4px; }
+.rpanel .link:hover { background: var(--hover); }
 
 .tooltip { position: fixed; z-index: 90; max-width: 320px; padding: 6px 8px; background: var(--card); border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,.16), 0 0 2px rgba(0,0,0,.12); white-space: pre-line; pointer-events: none; font-size: 12px; }
 .tooltip b { display: block; font-weight: 600; margin-bottom: 2px; }

@@ -11,6 +11,7 @@ import type { FileInfo, Platform, RecoveryEntry } from "./platform";
 const FILTERS = {
   docx: [{ name: "Word-Dokument", extensions: ["docx"] }],
   pdf: [{ name: "PDF", extensions: ["pdf"] }],
+  image: [{ name: "Alle Bilder", extensions: ["png", "jpg", "jpeg", "gif", "bmp", "svg", "webp"] }],
 };
 
 export function tauriPlatform(): Platform {
@@ -19,6 +20,10 @@ export function tauriPlatform(): Platform {
     kind: "tauri",
     async openFileDialog() {
       const r = await open({ multiple: false, directory: false, filters: FILTERS.docx, title: "Öffnen" });
+      return typeof r === "string" ? r : null;
+    },
+    async openImageDialog() {
+      const r = await open({ multiple: false, directory: false, filters: FILTERS.image, title: "Grafik einfügen" });
       return typeof r === "string" ? r : null;
     },
     async saveFileDialog(defaultName, kind) {

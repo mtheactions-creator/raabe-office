@@ -23,6 +23,8 @@ export interface FileInfo {
 export interface Platform {
   readonly kind: "tauri" | "browser";
   openFileDialog(): Promise<string | null>;
+  /** Chooses a picture file (Einfügen > Bilder > Dieses Gerät). */
+  openImageDialog(): Promise<string | null>;
   saveFileDialog(defaultName: string, kind: "docx" | "pdf"): Promise<string | null>;
   readFile(path: string): Promise<Uint8Array>;
   writeFile(path: string, bytes: Uint8Array): Promise<void>;

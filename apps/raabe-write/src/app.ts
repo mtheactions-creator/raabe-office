@@ -9,6 +9,12 @@ import {
   showDialog, showFontColors, type BackstageEntry, type Platform,
 } from "@raabe/shell";
 import { COMMANDS } from "./command-list";
+import type { AppApi } from "./features/api";
+import { headerFooterFeature, HEADER_COMMANDS } from "./features/headerfooter";
+import { listsFeature } from "./features/lists";
+import { pageSetupFeature, PAGE_COMMANDS } from "./features/pagesetup";
+import { picturesFeature, PICTURE_COMMANDS } from "./features/pictures";
+import { tablesFeature, TABLE_COMMANDS } from "./features/tables";
 import { GALLERY, ribbonTabs, type RibbonContext } from "./ribbon-def";
 import { addRecent, loadRecent, loadSettings, removeRecent, saveSettings, setPinned, type Settings } from "./store";
 import appIconUrl from "../../../branding/raabe-write-small.svg?url";
@@ -20,9 +26,9 @@ interface Doc {
   path: string | null;
   editor: Editor;
   ws: HTMLElement;
-  /** Paragraph array at the last save; the document is dirty when the editor's differs. */
-  saved: readonly Para[];
-  recoverySaved: readonly Para[] | null;
+  /** Content at the last save (all stories, styles, settings); dirty when the editor's differs. */
+  saved: readonly unknown[];
+  recoverySaved: readonly unknown[] | null;
   /** The original file's package (all its parts), for lossless saving. */
   pkg: DocxPackage | null;
   /** Content RaabeWrite shows only partly (German labels); it is saved unchanged. */
@@ -58,13 +64,16 @@ export class WriteApp {
   /** Strg+Alt+C (Format kopieren), shared by all documents as in Word. */
   private copiedFormat: CopiedFormat | null = null;
   private lastPainterClick = 0;
+  private lastShading = "FFFF00";
+  private features!: ReturnType<WriteApp["makeFeatures"]>;
 
   constructor(private platform: Platform, initial?: Partial<DocState>) {
     this.fonts = new Fonts((families) => platform.fontMetrics(families));
     this.fonts.onChange(() => { for (const d of this.docs) d.editor.relayout(); });
     void platform.listFonts().then((f) => { this.fontList = f; }).catch(() => {});
-    this.commands.register(...COMMANDS);
+    this.commands.register(...COMMANDS, ...TABLE_COMMANDS, ...PAGE_COMMANDS, ...HEADER_COMMANDS, ...PICTURE_COMMANDS);
     this.implementCommands();
+    this.features = this.makeFeatures();
 
     this.titleBar = new TitleBar(this.commands, platform, {
       appIcon: appIconUrl,
@@ -118,6 +127,46 @@ export class WriteApp {
     platform.onOpenFiles((paths) => { for (const p of paths) void this.openPath(p); });
   }
 
+  // ----- features (Step 3) --------------------------------------------------------------
+
+  private api(): AppApi {
+    return {
+      commands: this.commands, platform: this.platform,
+      editor: () => this.active?.editor,
+      focus: () => this.active?.editor.focus(),
+      refresh: () => this.updateChrome(false),
+      selectTab: (id) => { this.updateContextualTabs(); this.ribbon?.select(id); },
+    };
+  }
+
+  private makeFeatures() {
+    const api = this.api();
+    return {
+      lists: listsFeature(api),
+      tables: tablesFeature(api),
+      pages: pageSetupFeature(api),
+      hf: headerFooterFeature(api),
+      pictures: picturesFeature(api),
+    };
+  }
+
+  /** Contextual tabs for where the caret is: table, header/footer, picture. */
+  private updateContextualTabs(): void {
+    const e = this.active?.editor;
+    if (!this.ribbon || !e) return;
+    const tabs = [];
+    if (e.isHeaderFooter()) tabs.push(this.features.hf.tab);
+    if (e.inTable()) tabs.push(this.features.tables.designTab, this.features.tables.layoutTab);
+    if (e.selectedImage()) tabs.push(this.features.pictures.tab);
+    const wasHf = this.contextualKey.includes("headerFooter");
+    this.ribbon.setContextual(tabs);
+    this.contextualKey = tabs.map((t) => t.id).join(",");
+    // Opening a header or footer switches to its tab, as in Word; a new picture shows Bildformat.
+    if (!wasHf && e.isHeaderFooter()) this.ribbon.select("headerFooter");
+  }
+
+  private contextualKey = "";
+
   // ----- documents ----------------------------------------------------------------------
 
   private createDoc(name: string, path: string | null, state: Partial<DocState> | undefined, pkg: DocxPackage | null = null, partial: string[] = []): Doc {
@@ -125,7 +174,7 @@ export class WriteApp {
     this.docArea.append(ws);
     const editor = new Editor(ws, state ?? {}, this.fonts);
     const doc: Doc = {
-      id: crypto.randomUUID(), name, path, editor, ws, saved: editor.paragraphs(), recoverySaved: null, pkg, partial,
+      id: crypto.randomUUID(), name, path, editor, ws, saved: editor.contentStamp(), recoverySaved: null, pkg, partial,
       lastSaved: null,
     };
     editor.onChange((e) => this.onEditorChange(doc, e.content));
@@ -140,7 +189,8 @@ export class WriteApp {
   }
 
   private isDirty(d: Doc): boolean {
-    return d.editor.paragraphs() !== d.saved;
+    const now = d.editor.contentStamp();
+    return now.length !== d.saved.length || now.some((x, i) => x !== d.saved[i]);
   }
 
   private isPristine(d: Doc): boolean {
@@ -175,6 +225,7 @@ export class WriteApp {
       this.platform.window.setTitle(`${d.name} - RaabeWrite`);
     }
     this.updateStatus(d);
+    this.updateContextualTabs();
     if (countWords && this.wordCache?.paras !== d.editor.paragraphs()) {
       // Counting runs after a short pause in typing, not on every key.
       clearTimeout(this.wordTimer);
@@ -258,7 +309,7 @@ export class WriteApp {
   }
 
   private async writeTo(d: Doc, path: string): Promise<boolean> {
-    const paras = d.editor.paragraphs();
+    const stamp = d.editor.contentStamp();
     try {
       await this.platform.writeFile(path, writeDocx(d.editor.doc.state(), d.pkg, { author: this.settings.userName }));
     } catch (e) {
@@ -268,7 +319,7 @@ export class WriteApp {
     }
     d.path = path;
     d.name = stripExt(baseName(path));
-    d.saved = paras;
+    d.saved = stamp;
     d.lastSaved = Date.now();
     addRecent(path, baseName(path));
     void this.platform.deleteRecovery(d.id).catch(() => {});
@@ -323,12 +374,12 @@ export class WriteApp {
 
   private async autoRecover(): Promise<void> {
     for (const d of this.docs) {
-      const paras = d.editor.paragraphs();
-      if (!this.isDirty(d) || paras === d.recoverySaved) continue;
+      const stamp = d.editor.contentStamp();
+      if (!this.isDirty(d) || (d.recoverySaved && stamp.every((x, i) => x === d.recoverySaved![i]))) continue;
       try {
         await this.platform.saveRecovery({ id: d.id, title: d.name, path: d.path, savedAt: Date.now() },
           writeDocx(d.editor.doc.state(), d.pkg, { author: this.settings.userName }));
-        d.recoverySaved = paras;
+        d.recoverySaved = stamp;
       } catch {
         // Recovery is best effort; the next interval tries again.
       }
@@ -643,6 +694,8 @@ export class WriteApp {
     run("para.indentInc", (e) => e.indent(1));
     run("para.indentDec", (e) => e.indent(-1));
     run("para.showMarks", (e) => { const on = !e.showMarks; for (const d of this.docs) d.editor.setShowMarks(on); }, (e) => e.showMarks);
+    run("para.shading", (e) => e.paragraphShading(this.lastShading));
+    run("para.borders", (e) => (e.inTable() ? void this.commands.run("border.all") : e.paragraphBorders("bottom")));
     run("para.dialog", () => void this.paragraphDialog());
     const line = (rule: LineRule, v: number) => (e: Editor) => e.setLineSpacing(rule, v);
     const isLine = (v: number) => (e: Editor) => { const r = e.paraState(); return r.lineRule === "auto" && Math.abs(r.line - v) < 0.005; };
@@ -709,6 +762,8 @@ export class WriteApp {
 
   private ribbonContext(): RibbonContext {
     const ed = () => this.active?.editor;
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const self = this;
     const de = (n: number, digits = 2) => n.toLocaleString("de-DE", { maximumFractionDigits: digits });
     const parseNum = (v: string) => Number(v.replace(/[^\d,.-]/g, "").replace(",", "."));
     const theme = () => ed()?.doc.styles.theme;
@@ -765,6 +820,24 @@ export class WriteApp {
         const n = parseNum(v);
         if (!Number.isFinite(n) || n < 0) return;
         ed()?.setSpacing(which === "before" ? n : undefined, which === "after" ? n : undefined);
+      },
+      shading: () => this.lastShading,
+      setShading: (hex) => { if (hex !== "auto") this.lastShading = hex; ed()?.paragraphShading(hex); },
+      panels: {
+        bullets: (close) => this.features.lists.bullets(close),
+        numbers: (close) => this.features.lists.numbers(close),
+        multilevel: (close) => this.features.lists.multilevel(close),
+        insertTable: (close) => this.features.tables.insertPanel(close),
+        margins: (close) => this.features.pages.marginsPanel(close),
+        size: (close) => this.features.pages.sizePanel(close),
+        get columns() { return self.features.pages.columnsMenu; },
+        get breaks() { return self.features.pages.breaksMenu; },
+        get header() { return self.features.hf.headerMenu; },
+        get footer() { return self.features.hf.footerMenu; },
+        get pageNumber() { return self.features.hf.pageNumberMenu; },
+        get pictures() { return self.features.pictures.insertMenu; },
+        borders: ["bottom", "top", "left", "right", "none", "all", "outside", "inside"].map((k) => ({ cmd: `border.${k}` })),
+        wrap: ["picture.wrapInline", "picture.wrapSquare", "picture.wrapTight", "picture.wrapThrough", "picture.wrapTopBottom", "picture.wrapBehind", "picture.wrapFront"].map((cmd) => ({ cmd })),
       },
       stepSpacing: (which, dir) => {
         const r = ed()?.paraState();

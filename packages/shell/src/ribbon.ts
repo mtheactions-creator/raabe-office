@@ -11,8 +11,12 @@ export type Size = "large" | "medium" | "small";
 
 export type Control =
   | { type: "button"; cmd: string; size?: Size; key?: string; label?: string }
-  | { type: "split"; cmd: string; size?: Size; key?: string; label?: string; menu: MenuEntry[] }
-  | { type: "dropdown"; cmd: string; size?: Size; key?: string; label?: string; menu: MenuEntry[] }
+  | { type: "split"; cmd: string; size?: Size; key?: string; label?: string; menu: MenuEntry[]; popup?: (close: () => void) => HTMLElement }
+  | {
+      type: "dropdown"; cmd: string; size?: Size; key?: string; label?: string; menu: MenuEntry[];
+      /** Own content instead of a menu (the table grid, galleries …); `close` closes it. */
+      popup?: (close: () => void) => HTMLElement;
+    }
   | {
       type: "combo"; cmd: string; width: number; key?: string; value: () => string;
       /** Entries of the dropdown list, grouped under headings. */
@@ -48,6 +52,8 @@ export interface Tab {
   groups: Group[];
   /** Group ids in the order Word collapses them as the window narrows. */
   shrink: string[];
+  /** Shown only in a context (table, header, picture …), after the other tabs. */
+  contextual?: boolean;
 }
 
 type Updater = () => void;
@@ -73,6 +79,8 @@ export class Ribbon {
   private naturalWidths = new Map<string, number[]>();
   private collapsedGroups = new Set<string>();
   private minimized = false;
+  private contextual: Tab[] = [];
+  private contextStart: HTMLElement;
 
   constructor(private commands: Commands, private tabs: Tab[], private opts: RibbonOptions) {
     this.current = tabs[0];
@@ -90,7 +98,8 @@ export class Ribbon {
       this.tabButtons.set(t.id, b);
       this.tabRow.append(b);
     }
-    this.tabRow.append(h("div", { class: "tabrow-right" }, ...(opts.tabRowRight ?? [])));
+    this.contextStart = h("span", { class: "ctx-start" });
+    this.tabRow.append(this.contextStart, h("div", { class: "tabrow-right" }, ...(opts.tabRowRight ?? [])));
     this.card = h("div", { class: "ribbon-card" });
     commands.onRefresh(() => this.refresh());
     new ResizeObserver(() => this.fit()).observe(this.card);
@@ -101,8 +110,36 @@ export class Ribbon {
     return this.current.id;
   }
 
+  /**
+   * Shows the contextual tabs for where the caret is (Tabellenentwurf, Kopf- und Fußzeile …).
+   * Tabs that disappear while selected hand back to Start.
+   */
+  setContextual(tabs: Tab[]): void {
+    const key = tabs.map((t) => t.id).join(",");
+    if (key === this.contextual.map((t) => t.id).join(",")) {
+      // Same tabs: refresh their definitions (values) without re-rendering.
+      this.contextual = tabs;
+      return;
+    }
+    for (const t of this.contextual) { this.tabButtons.get(t.id)?.remove(); this.tabButtons.delete(t.id); }
+    this.contextual = tabs;
+    for (const t of tabs) {
+      const b = h("button", {
+        class: "tab contextual", role: "tab", "data-keytip": t.key, "data-keytip-scope": "root",
+        onclick: () => this.select(t.id),
+        ondblclick: () => this.toggleMinimized(),
+      }, t.label);
+      this.tabButtons.set(t.id, b);
+      this.tabRow.insertBefore(b, this.contextStart.nextSibling);
+    }
+    // Keep their order: insertBefore above reverses, so put them back in sequence.
+    let at: ChildNode = this.contextStart;
+    for (const t of tabs) { const b = this.tabButtons.get(t.id)!; at.after(b); at = b; }
+    if (this.current.contextual && !tabs.some((t) => t.id === this.current.id)) this.select(this.tabs[0].id);
+  }
+
   select(id: string): void {
-    const tab = this.tabs.find((t) => t.id === id);
+    const tab = this.tabs.find((t) => t.id === id) ?? this.contextual.find((t) => t.id === id);
     if (!tab) return;
     this.current = tab;
     for (const [tid, b] of this.tabButtons) {
@@ -224,12 +261,15 @@ export class Ribbon {
         const b = this.button(c.cmd, c.size ?? "small", c.key, c.label, true);
         // A dropdown's command is enabled when anything in its menu is.
         this.updaters.push(() => {
-          const any = c.menu.some((e) => e !== "-" && ("cmd" in e ? this.commands.isEnabled(e.cmd) : !e.disabled));
+          const any = c.popup ? this.commands.isEnabled(c.cmd) : c.menu.some((e) => e !== "-" && ("cmd" in e ? this.commands.isEnabled(e.cmd) : "run" in e && !e.disabled));
           b.disabled = !any;
           b.classList.toggle("disabled", !any);
           b.dataset.tip = this.commands.tooltip(c.cmd, any);
         });
-        b.onclick = () => showMenu(this.commands, c.menu, b.getBoundingClientRect());
+        b.onclick = () => {
+          if (c.popup) showPopup(c.popup(closePopup), b.getBoundingClientRect(), () => this.opts.onDone?.());
+          else showMenu(this.commands, c.menu, b.getBoundingClientRect());
+        };
         return b;
       }
       case "split": {
@@ -245,10 +285,13 @@ export class Ribbon {
           "data-keytip": c.key, "data-keytip-scope": this.scope(),
         }, ...arrowParts);
         this.updaters.push(() => {
-          const any = c.menu.some((e) => e !== "-" && ("cmd" in e ? this.commands.isEnabled(e.cmd) : !e.disabled));
+          const any = c.menu.some((e) => e !== "-" && ("cmd" in e ? this.commands.isEnabled(e.cmd) : "run" in e && !e.disabled));
           arrow.disabled = !any && !this.commands.isEnabled(c.cmd);
         });
-        arrow.onclick = () => showMenu(this.commands, c.menu, arrow.getBoundingClientRect());
+        arrow.onclick = () => {
+          if (c.popup) showPopup(c.popup(closePopup), arrow.getBoundingClientRect(), () => this.opts.onDone?.());
+          else showMenu(this.commands, c.menu, arrow.getBoundingClientRect());
+        };
         return h("div", { class: `rsplit${size === "large" ? " rsplit-large" : ""}` }, main, arrow);
       }
       case "combo": {

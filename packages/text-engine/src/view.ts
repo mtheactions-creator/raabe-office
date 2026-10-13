@@ -32,7 +32,12 @@ export interface RenderOptions {
   readonly active: string;
   /** Cells selected as a whole (cellKey), drawn filled. */
   readonly cells?: ReadonlySet<string>;
+  /** A selected picture: its box gets Word's eight sizing handles. */
+  readonly image?: { readonly page: number; readonly x: number; readonly y: number; readonly w: number; readonly h: number };
 }
+
+export type Handle = "nw" | "n" | "ne" | "e" | "se" | "s" | "sw" | "w";
+const HANDLES: Handle[] = ["nw", "n", "ne", "e", "se", "s", "sw", "w"];
 
 interface PageView {
   el: HTMLDivElement;
@@ -124,6 +129,9 @@ export class View {
   renderMath: ((latex: string, sizePx: number) => HTMLElement) | null = null;
   /** Author colours for tracked changes. */
   private authors = new Map<string, string>();
+  /** Gitternetzlinien anzeigen: dashed cell edges on screen (on by default, as in Word). */
+  showGridlines = true;
+  private printing = false;
 
   constructor(readonly workspace: HTMLElement, private fonts: Fonts) {
     this.sizer = document.createElement("div");
@@ -369,7 +377,10 @@ export class View {
   }
 
   private renderDeco(pv: PageView, page: PageLayout): void {
-    const key = page.deco.map((d) => {
+    const layout = this.layoutRef!;
+    const grid = this.showGridlines && !this.printing
+      ? page.frames.map((id) => layout.frames[id]).filter((f) => f.kind === "cell") : [];
+    const key = grid.map((f) => `g${f.x},${f.y},${f.w},${f.h}`).join(";") + "|" + page.deco.map((d) => {
       if (d.kind === "rect") return `r${d.x},${d.y},${d.w},${d.h},${d.fill},${this.dimmed(d.story)}`;
       if (d.kind === "line") return `l${d.x1},${d.y1},${d.x2},${d.y2},${d.width},${d.color},${d.style},${this.dimmed(d.story)}`;
       return `i${d.x},${d.y},${d.w},${d.h},${idOf(d.image)},${d.behind},${this.dimmed(d.story)}`;
@@ -377,6 +388,12 @@ export class View {
     if (key === pv.decoKey) return;
     pv.decoKey = key;
     const back: HTMLElement[] = [], front: HTMLElement[] = [];
+    for (const f of grid) {
+      const el = document.createElement("div");
+      el.style.cssText = `position:absolute;left:${f.x}px;top:${f.y}px;width:${f.w}px;height:${f.h}px;box-sizing:border-box;` +
+        "border:1px dashed #a6c3e8;pointer-events:none";
+      back.push(el);
+    }
     for (const d of page.deco) {
       const el = this.decoElement(d);
       if (this.dimmed(d.story)) el.style.opacity = "0.45";
@@ -420,14 +437,25 @@ export class View {
     const a = this.opts.active;
     const editing = a.startsWith("hdr:") || a.startsWith("ftr:");
     const sections = new Set(layout.pages.map((p) => p.section)).size;
-    const key = editing ? `${page.bodyTop}|${page.bodyBottom}|${page.section}|${sections}|${pv.w}` : "";
+    const img = this.opts.image && this.opts.image.page === page.index ? this.opts.image : null;
+    const key = (editing ? `${page.bodyTop}|${page.bodyBottom}|${page.section}|${sections}|${pv.w}` : "") +
+      (img ? `|img${img.x},${img.y},${img.w},${img.h}` : "");
     if (key === pv.overlayKey) return;
     pv.overlayKey = key;
-    if (!editing) { pv.overlay.replaceChildren(); return; }
+    const handles: HTMLElement[] = [];
+    if (img) {
+      const frame = document.createElement("div");
+      frame.style.cssText = `position:absolute;left:${img.x}px;top:${img.y}px;width:${img.w}px;height:${img.h}px;box-sizing:border-box;border:1px solid #6f8db9`;
+      handles.push(frame);
+      for (const hd of HANDLES) {
+        const { x, y } = this.handlePos(img, hd);
+        const el = document.createElement("div");
+        el.style.cssText = `position:absolute;left:${x - 4}px;top:${y - 4}px;width:8px;height:8px;box-sizing:border-box;border:1px solid #6f8db9;background:#fff;border-radius:${hd.length === 2 ? "50%" : "1px"}`;
+        handles.push(el);
+      }
+    }
+    if (!editing) { pv.overlay.replaceChildren(...handles); return; }
     const sect = sections > 1 ? ` -Abschnitt ${page.section + 1}-` : "";
-    const first = page.section !== layout.pages[page.index - 1]?.section;
-    const sectDef = page.index >= 0 ? layout.pages[page.index] : page;
-    void sectDef;
     const label = (text: string, y: number, above: boolean) => {
       const line = document.createElement("div");
       line.style.cssText = `position:absolute;left:0;width:${pv.w}px;top:${y}px;border-top:1px dashed #2b579a`;
@@ -437,11 +465,48 @@ export class View {
       tag.textContent = text;
       return [line, tag];
     };
-    const hdrName = first && page.header === undefined ? "Kopfzeile" : "Kopfzeile";
     pv.overlay.replaceChildren(
-      ...label(`${hdrName}${sect}`, page.bodyTop - 2, false),
+      ...label(`Kopfzeile${sect}`, page.bodyTop - 2, false),
       ...label(`Fußzeile${sect}`, page.bodyBottom + 2, true),
+      ...handles,
     );
+  }
+
+  private handlePos(b: { x: number; y: number; w: number; h: number }, hd: Handle): { x: number; y: number } {
+    const x = hd.includes("w") ? b.x : hd.includes("e") ? b.x + b.w : b.x + b.w / 2;
+    const y = hd.startsWith("n") ? b.y : hd.startsWith("s") ? b.y + b.h : b.y + b.h / 2;
+    return { x, y };
+  }
+
+  /** The sizing handle of the selected picture under a client point. */
+  handleAt(clientX: number, clientY: number): Handle | null {
+    const img = this.opts.image;
+    if (!img) return null;
+    const pt = this.pointAt(clientX, clientY);
+    if (pt.page !== img.page) return null;
+    const tol = 6 / this.zoomFactor;
+    for (const hd of HANDLES) {
+      const p = this.handlePos(img, hd);
+      if (Math.abs(pt.x - p.x) <= tol && Math.abs(pt.y - p.y) <= tol) return hd;
+    }
+    return null;
+  }
+
+  /** A column border of a table under a client point (for dragging it): the cell left of it. */
+  cellBorderAt(clientX: number, clientY: number): { cell: string; x: number } | null {
+    const layout = this.layoutRef;
+    if (!layout || this.opts.active !== "main") return null;
+    const pt = this.pointAt(clientX, clientY);
+    const pg = layout.pages[pt.page];
+    if (!pg) return null;
+    const tol = 3 / this.zoomFactor;
+    for (const id of pg.frames) {
+      const f = layout.frames[id];
+      if (f.kind !== "cell" || !f.cell || f.story !== "main") continue;
+      if (pt.y < f.y || pt.y > f.y + f.h) continue;
+      if (Math.abs(pt.x - (f.x + f.w)) <= tol) return { cell: f.cell, x: f.x + f.w };
+    }
+    return null;
   }
 
   private authorColor(author: string): string {
@@ -652,6 +717,7 @@ export class View {
     this.marks = false;
     this.opts = { active: "main" };
     this.marksFor = null;
+    this.printing = true;
     target.replaceChildren();
     // Named pages carry each page's size to the printer (sections may change orientation).
     const sizes = new Map<string, string>();
@@ -678,6 +744,7 @@ export class View {
     this.marks = marks;
     this.opts = opts;
     this.marksFor = marksFor;
+    this.printing = false;
   }
 
   renderSelection(): void {

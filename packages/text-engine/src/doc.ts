@@ -151,11 +151,13 @@ export class Doc {
 
   restore(s: DocSnapshot): void {
     this.mainParas = s.main;
-    this.stories = new Map(s.stories);
+    // Maps are never changed in place (edits make new ones), so the snapshot's can be shared;
+    // keeping their identity lets "undo back to the saved state" count as unchanged.
+    this.stories = s.stories as Map<string, Para[]>;
     this.styles = s.styles;
     this.settings = s.settings;
     this.numbering = s.numbering;
-    this.comments = new Map(s.comments);
+    this.comments = s.comments as Map<string, CommentMeta>;
     if (this.activeStory !== MAIN && !this.stories.has(this.activeStory)) this.activeStory = MAIN;
     this.changed();
   }

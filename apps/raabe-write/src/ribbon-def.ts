@@ -22,14 +22,27 @@ export interface RibbonContext {
   spacing(which: "before" | "after"): string;
   setSpacing(which: "before" | "after", value: string): void;
   stepSpacing(which: "before" | "after", dir: 1 | -1): void;
+  /** Schattierung (paragraph or cells). */
+  shading(): string;
+  setShading(hex: string): void;
+  /** Galleries and menus of the Step 3 features. */
+  panels: {
+    bullets: Popup; numbers: Popup; multilevel: Popup; insertTable: Popup; margins: Popup; size: Popup;
+    columns: MenuEntry[]; breaks: MenuEntry[]; header: MenuEntry[]; footer: MenuEntry[]; pageNumber: MenuEntry[];
+    pictures: MenuEntry[]; borders: MenuEntry[]; wrap: MenuEntry[];
+  };
 }
+
+type Popup = (close: () => void) => HTMLElement;
 
 const b = (cmd: string, key: string, size: "large" | "medium" | "small" = "small", label?: string): Control =>
   ({ type: "button", cmd, key, size, label });
 const dd = (cmd: string, key: string, size: "large" | "medium" | "small" = "small", label?: string, menu?: MenuEntry[]): Control =>
   ({ type: "dropdown", cmd, key, size, label, menu: menu ?? [{ cmd }] });
-const split = (cmd: string, key: string, size: "large" | "medium" | "small" = "small", menu: MenuEntry[] = [{ cmd }], label?: string): Control =>
-  ({ type: "split", cmd, key, size, menu, label });
+const split = (cmd: string, key: string, size: "large" | "medium" | "small" = "small", menu: MenuEntry[] = [{ cmd }], label?: string, popup?: Popup): Control =>
+  ({ type: "split", cmd, key, size, menu, label, popup });
+const panel = (cmd: string, key: string, size: "large" | "medium" | "small", popup: Popup): Control =>
+  ({ type: "dropdown", cmd, key, size, menu: [], popup });
 const stack = (...items: Control[]): Control => ({ type: "stack", items });
 
 /** Gallery entries in Word's order: built-in style name, command, preview CSS. */
@@ -93,14 +106,16 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
           launcher: { cmd: "para.dialog", key: "BB" },
           controls: [{
             type: "rows", rows: [
-              [split("para.bullets", "AA"), split("para.numbering", "GN"), dd("para.multilevel", "TL"), "gap",
+              [split("para.bullets", "AA", "small", [], undefined, ctx.panels.bullets), split("para.numbering", "GN", "small", [], undefined, ctx.panels.numbers),
+                panel("para.multilevel", "TL", "small", ctx.panels.multilevel), "gap",
                 b("para.indentDec", "ÖI"), b("para.indentInc", "PI")],
               [b("para.alignLeft", "II"), b("para.alignCenter", "RZ"), b("para.alignRight", "RE"), b("para.justify", "OL"), "gap",
                 dd("para.lineSpacing", "NZ", "small", undefined, [
                   { cmd: "spacing.1" }, { cmd: "spacing.1.15" }, { cmd: "spacing.1.5" }, { cmd: "spacing.2" }, { cmd: "spacing.2.5" }, { cmd: "spacing.3" }, "-",
                   { cmd: "para.dialog", label: "Zeilenabstandsoptionen..." }, "-",
                   { cmd: "spacing.toggleBefore" }, { cmd: "spacing.toggleAfter" }])],
-              [split("para.shading", "NC"), split("para.borders", "MR"), "gap", b("para.sort", "J"), b("para.showMarks", "8")],
+              [{ type: "color", cmd: "para.shading", key: "NC", palette: "font", current: ctx.shading, pick: ctx.setShading },
+                split("para.borders", "MR", "small", ctx.panels.borders), "gap", b("para.sort", "J"), b("para.showMarks", "8")],
             ],
           }],
         },
@@ -129,14 +144,15 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
       groups: [
         { id: "pages", label: "Seiten", key: "ZP", icon: "cover-page",
           controls: [stack(dd("insert.coverPage", "EE", "medium"), b("insert.blankPage", "EL", "medium"), b("insert.pageBreak", "SU", "medium"))] },
-        { id: "tables", label: "Tabellen", key: "ZB", icon: "table", controls: [dd("insert.table", "LA", "large")] },
+        { id: "tables", label: "Tabellen", key: "ZB", icon: "table", controls: [panel("insert.table", "LA", "large", ctx.panels.insertTable)] },
         { id: "illustrations", label: "Illustrationen", key: "ZI", icon: "picture",
-          controls: [dd("insert.pictures", "B1", "large"), stack(dd("insert.shapes", "2", "medium"), b("insert.chart", "I", "medium"))] },
+          controls: [dd("insert.pictures", "B1", "large", undefined, ctx.panels.pictures), stack(dd("insert.shapes", "2", "medium"), b("insert.chart", "I", "medium"))] },
         { id: "links", label: "Links", key: "ZL", icon: "link",
           controls: [stack(split("insert.link", "H", "medium"), b("insert.bookmark", "K", "medium"), b("insert.crossRef", "Q", "medium"))] },
         { id: "comments", label: "Kommentare", key: "Z1", icon: "comment", controls: [b("insert.comment", "N", "large")] },
         { id: "headerFooter", label: "Kopf- und Fußzeile", key: "ZH", icon: "header",
-          controls: [stack(dd("insert.header", "OK", "medium"), dd("insert.footer", "LF", "medium"), dd("insert.pageNumber", "T", "medium"))] },
+          controls: [stack(dd("insert.header", "OK", "medium", undefined, ctx.panels.header), dd("insert.footer", "LF", "medium", undefined, ctx.panels.footer),
+            dd("insert.pageNumber", "T", "medium", undefined, ctx.panels.pageNumber))] },
         { id: "text", label: "Text", key: "ZT", icon: "text-box",
           controls: [dd("insert.textBox", "X", "large"), stack(b("insert.dateTime", "D"))] },
         { id: "symbols", label: "Symbole", key: "ZS", icon: "equation",
@@ -159,10 +175,11 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
       shrink: ["arrange", "paragraph", "pageSetup"],
       groups: [
         { id: "pageSetup", label: "Seite einrichten", key: "ZS", icon: "margins", launcher: { cmd: "layout.pageSetup", key: "T" },
-          controls: [dd("layout.margins", "8", "large"), dd("layout.orientation", "4", "large"), dd("layout.size", "R", "large"),
-            dd("layout.columns", "HS", "large"),
-            stack(dd("layout.breaks", "U", "medium", undefined, [{ cmd: "insert.pageBreak", label: "Seite" }, { cmd: "insert.lineBreak", label: "Textumbruch" }]),
-              dd("layout.hyphenation", "I", "medium"))] },
+          controls: [panel("layout.margins", "8", "large", ctx.panels.margins),
+            dd("layout.orientation", "4", "large", undefined, [{ cmd: "orientation.portrait" }, { cmd: "orientation.landscape" }]),
+            panel("layout.size", "R", "large", ctx.panels.size),
+            dd("layout.columns", "HS", "large", undefined, ctx.panels.columns),
+            stack(dd("layout.breaks", "U", "medium", undefined, ctx.panels.breaks), dd("layout.hyphenation", "I", "medium"))] },
         { id: "paragraph", label: "Absatz", key: "ZG", icon: "line-spacing", launcher: { cmd: "para.dialog", key: "BB" },
           controls: [
             stack({ type: "spinner", cmd: "layout.indentLeft", label: "Links:", icon: "indent-increase", key: "L",
@@ -175,7 +192,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
               value: () => ctx.spacing("after"), commit: (v) => ctx.setSpacing("after", v), step: (d) => ctx.stepSpacing("after", d) }),
           ] },
         { id: "arrange", label: "Anordnen", key: "ZA", icon: "position",
-          controls: [dd("layout.position", "PP", "large"), dd("layout.wrapText", "J", "large"), split("layout.bringForward", "GE", "large"),
+          controls: [dd("layout.position", "PP", "large"), dd("layout.wrapText", "J", "large", undefined, ctx.panels.wrap), split("layout.bringForward", "GE", "large"),
             split("layout.sendBackward", "GH", "large"), stack(dd("layout.align", "DA", "medium"), dd("layout.rotate", "DR", "medium"))] },
       ],
     },

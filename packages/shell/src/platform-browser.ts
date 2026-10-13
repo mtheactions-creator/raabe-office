@@ -20,6 +20,18 @@ export function browserPlatform(): Platform {
       };
       input.click();
     }),
+    openImageDialog: () => new Promise((resolve) => {
+      const input = document.createElement("input");
+      input.type = "file";
+      input.accept = "image/*";
+      input.onchange = async () => {
+        const f = input.files?.[0];
+        if (!f) return resolve(null);
+        files.set(f.name, new Uint8Array(await f.arrayBuffer()));
+        resolve(f.name);
+      };
+      input.click();
+    }),
     saveFileDialog: async (name) => name,
     readFile: async (path) => {
       const f = files.get(path);

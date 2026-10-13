@@ -3,7 +3,7 @@
 // public commands below and listens for changes with onChange().
 
 import { Doc, MAIN, cmp, maxPos, minPos, type DocSnapshot, type DocState, type Pos } from "./doc";
-import { Fonts } from "./fonts";
+import { Fonts, PT } from "./fonts";
 import { layoutDocument, type Layout } from "./flow";
 import { Layouter, type LayoutContext } from "./layout";
 import { markInputHandled } from "./probe";
@@ -13,6 +13,10 @@ import {
 } from "./model";
 import { builtinStyle, type ResolvedChar, type ResolvedPara } from "./styles";
 import { View, storyIdOf, type Selection } from "./view";
+import * as E from "./edits";
+import { COLUMN_BREAK, type CellDef, type ImageData, type RowDef, type TableDef } from "./model";
+import { addList, numberingOf, restartList } from "./numbering";
+import type { BorderSpec, Borders, FloatObject, InlineObject, NumLevel } from "./model";
 import { countWords, isWordChar, nextTokenStart, prevTokenStart, sentenceAt, tokenAt } from "./words";
 
 /** Formatting text typed at a position gets: as in Word, never hidden (hidden text is not shown). */
@@ -126,6 +130,7 @@ export class Editor {
     this.input.addEventListener("cut", (e) => this.onCopy(e, true));
     this.input.addEventListener("paste", (e) => this.onPaste(e));
     workspace.addEventListener("mousedown", (e) => this.onMouseDown(e));
+    workspace.addEventListener("mousemove", (e) => { if (!e.buttons) this.hoverCursor(e); });
     this.update();
   }
 
@@ -160,8 +165,15 @@ export class Editor {
     return () => { this.listeners = this.listeners.filter((l) => l !== listener); };
   }
 
+  /** The main text's paragraphs (word count, file name suggestions). */
   paragraphs(): readonly Para[] {
-    return this.doc.paras;
+    return this.doc.main;
+  }
+
+  /** Identity of the whole content: changes whenever any story, style or setting does. */
+  contentStamp(): readonly unknown[] {
+    const d = this.doc;
+    return [d.main, d.stories, d.styles, d.settings, d.numbering, d.comments];
   }
 
   stats(): EditorStats {
@@ -219,7 +231,7 @@ export class Editor {
     });
     this.fixStoryKey();
     this.clampSelection();
-    const ropts = { active: this.storyKey, cells: this.selectedCells() };
+    const ropts = { active: this.storyKey, cells: this.selectedCells(), image: this.imageBox() ?? undefined };
     this.view.render(this.doc, this.layout, this.sel, ropts);
     if (opts.scroll) {
       this.view.scrollIntoView(this.sel.head, this.sel.headUpstream);
@@ -298,6 +310,7 @@ export class Editor {
 
   private setSel(anchor: Pos, head: Pos, upstream = false, keepGoal = false): void {
     this.sel = { anchor, head, headUpstream: upstream };
+    this.floatSel = null;
     if (!keepGoal) this.goalX = null;
     this.typing = false;
     this.pending = null;
@@ -448,6 +461,34 @@ export class Editor {
   insertText(text: string, inputTs?: number): void {
     this.smartTrimSelection();
     this.replaceSelection(text, inputTs, true);
+    if (text === " " || text === "\t") this.autoList();
+  }
+
+  /**
+   * AutoFormat während der Eingabe: "1. ", "a) ", "* " or "- " typed at the start of a
+   * paragraph turn it into a list item (Strg+Z brings the typed text back).
+   */
+  private autoList(): void {
+    const h = this.sel.head;
+    const para = this.doc.paras[h.p];
+    if (para.block || numberingOf(para.props, this.doc.styles) || h.o < 2 || h.o > 5) return;
+    const prefix = para.text.slice(0, h.o - 1);
+    if (para.text.slice(h.o - 1, h.o) !== " " && para.text.slice(h.o - 1, h.o) !== "\t") return;
+    const auto = E.autoListLevels(prefix);
+    if (!auto) return;
+    this.snapshot();
+    this.typing = false;
+    this.doc.delete({ p: h.p, o: 0 }, { p: h.p, o: h.o });
+    // Continue a list just above with the same kind of label, else start a new one.
+    E.toggleList(this.doc, h.p, h.p, auto.levels[0].format === "bullet" ? "bullet" : "number", this.listStyleId(), auto.levels);
+    this.setSel({ p: h.p, o: 0 }, { p: h.p, o: 0 });
+    this.update({ scroll: true });
+  }
+
+  private listStyleId(): string {
+    const id = this.styleId("List Paragraph");
+    this.ensureStyle(id);
+    return id;
   }
 
   /** Word's smart cut and paste: replacing whole words keeps their trailing space. */
@@ -478,7 +519,32 @@ export class Editor {
     if (cmp(from, to) !== 0) return this.deleteRange(from, to, inputTs);
     const h = this.sel.head;
     if (h.o === 0) {
-      if (h.p === 0 || this.doc.paras[h.p - 1].block || this.doc.paras[h.p].block) return;
+      const paras = this.doc.paras;
+      // At the start of a list item the number goes first (the text stays indented).
+      if (numberingOf(paras[h.p].props, this.doc.styles) && !paras[h.p].block) {
+        this.edit(() => E.dropListLabel(this.doc, h.p));
+        return;
+      }
+      if (h.p === 0 || paras[h.p - 1].block || paras[h.p].block) return;
+      const cur = paras[h.p].cell, prev = paras[h.p - 1].cell;
+      if (cur || prev) {
+        const same = cur && prev && cur.table.id === prev.table.id && cur.row === prev.row && cur.col === prev.col;
+        if (!same) {
+          // Paragraphs of different cells never merge (Word). After a table, an empty paragraph goes.
+          if (!cur && prev && !paras[h.p].text.length && h.p < paras.length - 1) {
+            this.snapshot();
+            this.doc.splice(h.p, h.p, []);
+            const end = { p: h.p - 1, o: this.doc.paras[h.p - 1].text.length };
+            this.setSel(end, end);
+            this.update({ scroll: true, inputTs });
+          } else if (!cur && prev) {
+            const end = { p: h.p - 1, o: paras[h.p - 1].text.length };
+            this.setSel(end, end);
+            this.update({ scroll: true, inputTs });
+          }
+          return;
+        }
+      }
       return this.deleteRange({ p: h.p - 1, o: this.doc.paras[h.p - 1].text.length }, h, inputTs);
     }
     const text = this.doc.paras[h.p].text;
@@ -492,7 +558,22 @@ export class Editor {
     const h = this.sel.head;
     const text = this.doc.paras[h.p].text;
     if (h.o === text.length) {
-      if (h.p === this.doc.paras.length - 1 || this.doc.paras[h.p + 1].block || this.doc.paras[h.p].block) return;
+      const paras = this.doc.paras;
+      if (h.p === paras.length - 1 || paras[h.p + 1].block || paras[h.p].block) return;
+      const cur = paras[h.p].cell, next = paras[h.p + 1].cell;
+      if (cur || next) {
+        const same = cur && next && cur.table.id === next.table.id && cur.row === next.row && cur.col === next.col;
+        if (!same) {
+          // An empty paragraph before a table goes; otherwise nothing happens (Word).
+          if (!cur && next && !text.length) {
+            this.snapshot();
+            this.doc.splice(h.p, h.p, []);
+            this.setSel({ p: h.p, o: 0 }, { p: h.p, o: 0 });
+            this.update({ scroll: true, inputTs });
+          }
+          return;
+        }
+      }
       return this.deleteRange(h, { p: h.p + 1, o: 0 }, inputTs);
     }
     let end = h.o + 1;
@@ -600,10 +681,265 @@ export class Editor {
     this.replaceSelection(smartSpace ? ` ${text}` : text);
   }
 
-  /** Inserts a line break (Umschalt+Eingabe) or page break (Strg+Eingabe). */
-  insertBreak(kind: "line" | "page"): void {
+  /** Inserts a line break (Umschalt+Eingabe), page break (Strg+Eingabe) or column break. */
+  insertBreak(kind: "line" | "page" | "column"): void {
     this.typing = false;
-    this.replaceSelection(kind === "line" ? LINE_BREAK : PAGE_BREAK);
+    this.replaceSelection(kind === "line" ? LINE_BREAK : kind === "page" ? PAGE_BREAK : COLUMN_BREAK);
+  }
+
+  /**
+   * Tab: in a table to the next cell (its text selected; a new row after the last cell),
+   * at the start of a list item one level deeper. Umschalt+Tab goes back. Returns false when
+   * a tab character should be typed instead.
+   */
+  private tabKey(back: boolean): boolean {
+    const h = this.sel.head;
+    const paras = this.doc.paras;
+    if (paras[h.p].cell) {
+      let next = E.adjacentCell(this.doc, h.p, back ? -1 : 1);
+      if (!next && !back) {
+        this.snapshot();
+        const pos = E.insertRows(this.doc, h.p, h.p, "below");
+        if (pos) next = E.cellRange(this.doc, pos.p);
+      }
+      if (next) {
+        const a = { p: next[0], o: 0 }, b = { p: next[1], o: this.doc.paras[next[1]].text.length };
+        this.setSel(a, b);
+        this.update({ scroll: true });
+      }
+      return true;
+    }
+    const [from, to] = this.range();
+    const atStart = from.o === 0 && (from.p !== to.p || to.o === 0 || to.o === paras[to.p].text.length);
+    if (atStart && numberingOf(paras[from.p].props, this.doc.styles)) {
+      this.snapshot();
+      if (!E.changeListLevel(this.doc, from.p, to.p, back ? -1 : 1)) this.undoStack.pop();
+      this.update({ scroll: true });
+      return true;
+    }
+    return false;
+  }
+
+  // ----- lists ------------------------------------------------------------------------------
+
+  /** Aufzählungszeichen, Nummerierung, Liste mit mehreren Ebenen (with optional levels). */
+  toggleList(kind: E.ListKind, levels?: import("./model").NumLevel[]): void {
+    const [a, b] = this.paraRangeIdx();
+    this.edit(() => E.toggleList(this.doc, a, b, kind, this.listStyleId(), levels), false);
+  }
+
+  listKind(): E.ListKind | null {
+    return E.listKind(this.doc, this.doc.paras[this.sel.head.p]);
+  }
+
+  changeListLevel(delta: 1 | -1): void {
+    const [a, b] = this.paraRangeIdx();
+    this.edit(() => E.changeListLevel(this.doc, a, b, delta), false);
+  }
+
+  // ----- tables ------------------------------------------------------------------------------
+
+  /** Width of the text area at the caret (points), for new tables. */
+  private textWidth(): number {
+    const pl = this.view.placedFor(this.sel.head, this.sel.headUpstream).pl;
+    const fr = this.layout.frames[pl.frame];
+    return (fr ? fr.w : 453.6 * PT) / PT;
+  }
+
+  inTable(): boolean {
+    return !!this.doc.paras[this.sel.head.p]?.cell;
+  }
+
+  /** The table definition at the caret. */
+  tableDef(): TableDef | undefined {
+    return this.doc.paras[this.sel.head.p]?.cell?.table;
+  }
+
+  /** The cell definition at the caret. */
+  cellDef(): CellDef | undefined {
+    const c = this.doc.paras[this.sel.head.p]?.cell;
+    return c ? c.table.rows[c.row].cells[c.col] : undefined;
+  }
+
+  rowDef(): RowDef | undefined {
+    const c = this.doc.paras[this.sel.head.p]?.cell;
+    return c ? c.table.rows[c.row] : undefined;
+  }
+
+  /** Tabelle einfügen: rows × cols in "Tabellenraster", caret in the first cell. */
+  insertTable(rows: number, cols: number): void {
+    if (this.inTable()) return;
+    this.snapshot();
+    const style = this.styleId("Table Grid");
+    this.ensureStyle(style);
+    const [from, to] = this.range();
+    if (cmp(from, to) !== 0) this.doc.delete(from, to);
+    const at = E.insertTable(this.doc, from, rows, cols, this.textWidth(), style, this.typingProps());
+    this.setSel(at, at);
+    this.requireFonts();
+    this.update({ scroll: true });
+  }
+
+  /** Runs a table operation as one undo step; it returns where the caret goes. */
+  private tableOp(fn: (p: number, q: number) => Pos | null | void): void {
+    const [from, to] = this.range();
+    if (!this.doc.paras[from.p]?.cell) return;
+    this.snapshot();
+    const pos = fn(from.p, to.p);
+    if (pos) this.setSel(pos, pos);
+    this.update({ scroll: true });
+  }
+
+  insertRows(where: E.RowWhere): void { this.tableOp((p, q) => E.insertRows(this.doc, p, q, where)); }
+  insertColumns(where: E.ColWhere): void { this.tableOp((p, q) => E.insertColumns(this.doc, p, q, where)); }
+  deleteRows(): void { this.tableOp((p, q) => E.deleteRows(this.doc, p, q)); }
+  deleteColumns(): void { this.tableOp((p, q) => E.deleteColumns(this.doc, p, q)); }
+  deleteTable(): void { this.tableOp((p) => E.deleteTable(this.doc, p)); }
+  mergeCells(): void { this.tableOp((p, q) => E.mergeCells(this.doc, p, q)); }
+  splitCell(n: number): void { this.tableOp((p) => E.splitCell(this.doc, p, n)); }
+  distributeColumns(): void { this.tableOp((p) => { E.distributeColumns(this.doc, p); }); }
+
+  /** Changes the selected cells' definitions (Schattierung, Rahmen, Ausrichtung). */
+  updateCells(change: (c: CellDef, row: number, col: number) => CellDef): void {
+    const keep = this.sel;
+    this.tableOp((p, q) => { E.updateCells(this.doc, p, q, change); });
+    this.sel = keep;
+    this.update();
+  }
+
+  updateRows(change: (r: RowDef) => RowDef): void {
+    const keep = this.sel;
+    this.tableOp((p, q) => { E.updateRows(this.doc, p, q, change); });
+    this.sel = keep;
+    this.update();
+  }
+
+  updateTable(change: (def: TableDef) => TableDef): void {
+    const keep = this.sel;
+    this.tableOp((p) => { E.updateTable(this.doc, p, change); });
+    this.sel = keep;
+    this.requireFonts();
+    this.update();
+  }
+
+  /** Selects the whole table / the current row / column / cell ("Auswählen"). */
+  selectTablePart(part: "table" | "row" | "column" | "cell"): void {
+    const h = this.sel.head;
+    const t = E.tableAt(this.doc, h.p);
+    if (!t) return;
+    const c = this.doc.paras[h.p].cell!;
+    let a = t.a, b = t.b;
+    if (part === "cell") [a, b] = E.cellRange(this.doc, h.p);
+    else if (part === "row") {
+      a = t.b; b = t.a;
+      for (let i = t.a; i <= t.b; i++) if (this.doc.paras[i].cell!.row === c.row) { a = Math.min(a, i); b = Math.max(b, i); }
+    } else if (part === "column") {
+      a = t.b; b = t.a;
+      for (let i = t.a; i <= t.b; i++) if (this.doc.paras[i].cell!.col === c.col) { a = Math.min(a, i); b = Math.max(b, i); }
+    }
+    this.setSel({ p: a, o: 0 }, { p: b, o: this.doc.paras[b].text.length });
+    this.update();
+  }
+
+  /** Moves a column border by dx points (dragging it with the mouse). */
+  resizeColumn(p: number, g: number, dx: number, snapshot: boolean): void {
+    if (snapshot) this.snapshot();
+    E.resizeColumn(this.doc, p, g, dx);
+    this.update();
+  }
+
+  // ----- sections, fields, pictures --------------------------------------------------------------
+
+  /** Abschnittsumbrüche: Nächste Seite, Fortlaufend, Gerade Seite, Ungerade Seite. */
+  insertSectionBreak(start: import("./model").Section["start"]): void {
+    if (this.doc.activeStory !== MAIN || this.inTable()) return;
+    this.snapshot();
+    const [from, to] = this.range();
+    if (cmp(from, to) !== 0) this.doc.delete(from, to);
+    const at = E.insertSectionBreak(this.doc, from, start, this.typingProps());
+    this.setSel(at, at);
+    this.update({ scroll: true });
+  }
+
+  /** The section of the caret (main text) or of the page shown (header/footer). */
+  sectionIndex(): number {
+    if (this.doc.activeStory === MAIN) return E.sectionIndex(this.doc, this.sel.head.p);
+    const page = Number(this.storyKey.split("@")[1] ?? 0);
+    return this.layout.pages[page]?.section ?? 0;
+  }
+
+  sectionCount(): number {
+    return E.sectionCount(this.doc);
+  }
+
+  /** The current section's properties. */
+  section(): import("./model").Section {
+    const si = this.sectionIndex();
+    let k = 0;
+    const main = this.doc.main;
+    for (let i = 0; i < main.length - 1; i++) {
+      if (!main[i].sect) continue;
+      if (k === si) return main[i].sect!;
+      k++;
+    }
+    return this.doc.settings.section;
+  }
+
+  /** Seite einrichten: changes the current section, or all sections. */
+  changeSections(change: (s: import("./model").Section) => import("./model").Section, all: boolean): void {
+    this.snapshot();
+    if (all) for (let si = 0; si < this.sectionCount(); si++) this.updateSection(si, change);
+    else this.updateSection(this.sectionIndex(), change);
+    this.update({ scroll: true });
+  }
+
+  /** Erste Seite anders / Untersch. gerade und ungerade Seiten. */
+  setTitlePage(on: boolean): void {
+    this.changeSections((s) => ({ ...s, titlePage: on }), false);
+  }
+
+  setEvenOdd(on: boolean): void {
+    this.snapshot();
+    this.doc.setSettings({ ...this.doc.settings, evenOdd: on || undefined });
+    this.update();
+  }
+
+  /** Inserts a field (Seitenzahl, Seitenanzahl, Datum …) at the caret. */
+  insertField(instr: string, display: string): void {
+    this.snapshot();
+    const [from, to] = this.range();
+    const end = E.insertObject(this.doc, from, to, E.fieldObject(instr, display), this.typingProps());
+    this.setSel(end, end);
+    this.update({ scroll: true });
+  }
+
+  /** Inserts a picture in the line at the caret, scaled down to fit the text width. */
+  insertImage(image: ImageData, width: number, height: number): void {
+    this.snapshot();
+    const max = this.textWidth();
+    const k = width > max ? max / width : 1;
+    const [from, to] = this.range();
+    const end = E.insertObject(this.doc, from, to, E.imageObject(image, width * k, height * k), this.typingProps());
+    this.setSel({ p: end.p, o: end.o - 1 }, end);
+    this.update({ scroll: true });
+  }
+
+  /** Header/footer story of the current page, created when missing, as Word's gallery does. */
+  ensureHeaderFooter(kind: "header" | "footer"): string {
+    const page = this.isHeaderFooter() ? Number(this.storyKey.split("@")[1] ?? 0) : this.view.caretBox(this.sel.head).page;
+    const pg = this.layout.pages[page];
+    const existing = kind === "header" ? pg.header : pg.footer;
+    if (existing) return existing;
+    this.snapshot();
+    return this.newHeaderFooter(pg.section, kind, page);
+  }
+
+  /** Replaces a header's or footer's text (gallery entries, Seitenzahlen). */
+  setStoryParas(id: string, paras: Para[]): void {
+    this.snapshot();
+    this.doc.setStory(id, paras);
+    this.requireFonts();
+    this.update();
   }
 
   /** Renders all pages into `target` for printing. */
@@ -839,11 +1175,15 @@ export class Editor {
     this.setParaProps(patch);
   }
 
-  /** Adds a built-in style the document lacks (e.g. "Überschrift 2" in an old file). */
-  private ensureStyle(id: string): void {
-    if (this.doc.styles.get(id)) return;
-    const builtin = builtinStyle(BUILTIN_NAME_BY_ID[id] ?? id);
-    if (builtin) this.doc.setStyles(this.doc.styles.withStyle(builtin));
+  /** Adds a built-in style the document lacks (e.g. "Überschrift 2" in an old file), with its base styles. */
+  ensureStyle(id: string): void {
+    for (let cur: string | undefined = id, guard = 0; cur && guard < 10; guard++) {
+      if (this.doc.styles.get(cur)) { cur = this.doc.styles.get(cur)!.basedOn; continue; }
+      const builtin = builtinStyle(BUILTIN_NAME_BY_ID[cur] ?? cur);
+      if (!builtin) break;
+      this.doc.setStyles(this.doc.styles.withStyle(builtin));
+      cur = builtin.basedOn;
+    }
   }
 
   /** Style id in this document for a built-in style name ("heading 1"). */
@@ -876,6 +1216,339 @@ export class Editor {
       if (r) this.doc.mapChars(r[0], r[1], (old) => intern({ lang: old.lang, extra: old.extra }));
       this.doc.mapParas(a, b, (old) => ({ style: this.doc.styles.defaultParagraphStyle, extra: old.extra }));
     }, false);
+  }
+
+  // ----- more list, table and paragraph commands -------------------------------------------
+
+  /** Überschriften nummerieren: a list linked to Überschrift 1-3 (1 / 1.1 / 1.1.1). */
+  numberHeadings(levels: NumLevel[]): void {
+    this.snapshot();
+    const made = addList(this.doc.numbering, levels);
+    this.doc.setNumbering(made.numbering);
+    for (let k = 1; k <= 3; k++) {
+      const id = this.styleId(`heading ${k}`);
+      this.ensureStyle(id);
+      const def = this.doc.styles.get(id);
+      if (def) this.doc.setStyles(this.doc.styles.withStyle({ ...def, pPr: { ...def.pPr, numId: made.numId, ilvl: k - 1 }, data: undefined }));
+    }
+    this.layouter.invalidate();
+    this.update({ scroll: true });
+  }
+
+  /** Neu beginnen mit 1: the list item at the caret and the rest of its list start again. */
+  restartNumbering(): void {
+    const h = this.sel.head;
+    const n = numberingOf(this.doc.paras[h.p].props, this.doc.styles);
+    if (!n) return;
+    this.snapshot();
+    const made = restartList(this.doc.numbering, n.numId, n.ilvl, 1);
+    this.doc.setNumbering(made.numbering);
+    this.doc.mapParas(h.p, this.doc.paras.length - 1, (old, para) =>
+      numberingOf(para.props, this.doc.styles)?.numId === n.numId ? { ...old, numId: made.numId, ilvl: old.ilvl ?? n.ilvl } : old);
+    this.update({ scroll: true });
+  }
+
+  /** The selected block of cells (cell indices), when the selection is in one table. */
+  cellBlock(): { r1: number; r2: number; c1: number; c2: number; multi: boolean } | null {
+    const a = this.doc.paras[this.sel.anchor.p]?.cell, b = this.doc.paras[this.sel.head.p]?.cell;
+    if (!a || !b || a.table.id !== b.table.id) return null;
+    const r1 = Math.min(a.row, b.row), r2 = Math.max(a.row, b.row), c1 = Math.min(a.col, b.col), c2 = Math.max(a.col, b.col);
+    return { r1, r2, c1, c2, multi: r1 !== r2 || c1 !== c2 };
+  }
+
+  get showGridlines(): boolean {
+    return this.view.showGridlines;
+  }
+
+  setShowGridlines(on: boolean): void {
+    this.view.showGridlines = on;
+    this.view.refresh();
+    this.emit(false);
+  }
+
+  /** Width of the caret's cell (points). */
+  cellWidth(): number {
+    const c = this.doc.paras[this.sel.head.p]?.cell;
+    if (!c) return 0;
+    const row = c.table.rows[c.row];
+    let gx = 0;
+    for (let i = 0; i < c.col; i++) gx += Math.max(1, row.cells[i].span);
+    return c.table.grid.slice(gx, gx + Math.max(1, row.cells[c.col].span)).reduce((s, x) => s + x, 0);
+  }
+
+  /** Breite: the caret's column gets this width (the table gets wider or narrower). */
+  setCellWidth(pt: number): void {
+    const c = this.doc.paras[this.sel.head.p]?.cell;
+    if (!c) return;
+    const row = c.table.rows[c.row];
+    let gx = 0;
+    for (let i = 0; i < c.col; i++) gx += Math.max(1, row.cells[i].span);
+    const span = Math.max(1, row.cells[c.col].span);
+    const cur = this.cellWidth();
+    const k = pt / (cur || pt);
+    this.updateTable((def) => ({
+      ...def, grid: def.grid.map((g, i) => (i >= gx && i < gx + span ? g * k : g)),
+      rows: def.rows.map((r) => ({ ...r, cells: r.cells.map((cell) => ({ ...cell, width: undefined })) })),
+    }));
+  }
+
+  /** Rahmen for paragraphs: one side toggles, "all"/"outside" draw a box, "inside" the lines between. */
+  paragraphBorders(kind: string): void {
+    const [a, b] = this.paraRangeIdx();
+    const line = (space: number): BorderSpec => ({ style: "single", size: 0.5, color: "auto", space });
+    const sides = (kind === "all" || kind === "outside" ? ["top", "bottom", "left", "right"] : kind === "inside" ? ["between"] : [kind]) as (keyof Borders)[];
+    const rps = this.doc.paras.slice(a, b + 1).map((p) => this.doc.styles.resolvePara(p.props));
+    const allOn = kind !== "none" && sides.every((side) => rps.every((rp) => rp.borders?.[side] && rp.borders[side]!.style !== "nil"));
+    this.setParaProps((rp) => {
+      if (kind === "none") return { borders: undefined };
+      const next: Record<string, BorderSpec | undefined> = { ...(rp.borders ?? {}) };
+      for (const side of sides) next[side] = allOn && kind !== "all" && kind !== "outside" ? undefined : line(side === "left" || side === "right" ? 4 : 1);
+      return { borders: Object.values(next).some((v) => v) ? next as Borders : undefined };
+    });
+  }
+
+  /** Schattierung for paragraphs (or the selected cells in a table). */
+  paragraphShading(fill: string): void {
+    if (this.inTable()) {
+      this.updateCells((cd) => ({ ...cd, shading: fill === "auto" ? undefined : { fill, val: "clear", color: "auto" } }));
+      return;
+    }
+    this.setParaProps({ shading: fill === "auto" ? undefined : { fill, val: "clear", color: "auto" } });
+  }
+
+  // ----- headers and footers: contents -------------------------------------------------------
+
+  /** The page the caret is on (or the header/footer instance being edited). */
+  private currentPage(): number {
+    return this.isHeaderFooter() ? Number(this.storyKey.split("@")[1] ?? 0) : this.view.caretBox(this.sel.head, this.sel.headUpstream).page;
+  }
+
+  /** Opens the header or footer of the current page for editing. */
+  editHeaderFooter(kind: "header" | "footer"): void {
+    this.openHeaderFooter(this.currentPage(), kind);
+  }
+
+  /**
+   * Replaces the header or footer of the current page with one paragraph of text and fields
+   * (Word's gallery entries and Seitenzahlen) and opens it, caret at the end.
+   */
+  setHeaderFooterContent(kind: "header" | "footer", align: Align, parts: (string | { field: string; display: string })[]): void {
+    const page = this.currentPage();
+    const before = this.undoStack.length;
+    const id = this.ensureHeaderFooter(kind);
+    if (this.undoStack.length === before) this.snapshot();
+    const style = this.styleId(kind);
+    this.ensureStyle(style);
+    let text = "";
+    const objects: InlineObject[] = [];
+    for (const part of parts) {
+      if (typeof part === "string") text += part;
+      else { text += OBJ; objects.push(E.fieldObject(part.field, part.display)); }
+    }
+    const para: Para = { ...makePara(text, { style, align: align === "left" ? undefined : align }), objects: objects.length ? objects : undefined };
+    this.doc.setStory(id, [para]);
+    this.requireFonts();
+    this.update();
+    const end = { p: 0, o: text.includes("[Hier eingeben]") ? 0 : text.length };
+    this.switchStory(id, `${id}@${page}`, { anchor: end, head: text.includes("[Hier eingeben]") ? { p: 0, o: 15 } : end, headUpstream: false });
+    this.emit(true);
+  }
+
+  /** Kopfzeile/Fußzeile entfernen: its text goes (the section keeps an empty one). */
+  removeHeaderFooter(kind: "header" | "footer"): void {
+    const page = this.currentPage();
+    const pg = this.layout.pages[page];
+    const id = kind === "header" ? pg?.header : pg?.footer;
+    if (!id) return;
+    this.snapshot();
+    const style = this.styleId(kind);
+    this.doc.setStory(id, [makePara("", { style })]);
+    if (this.isHeaderFooter() && storyIdOf(this.storyKey) === id) this.sel = { anchor: { p: 0, o: 0 }, head: { p: 0, o: 0 }, headUpstream: false };
+    this.update();
+  }
+
+  /** Seitenzahlen entfernen: page number fields leave every header and footer. */
+  removePageNumbers(): void {
+    this.snapshot();
+    for (const [id, paras] of this.doc.stories) {
+      if (!id.startsWith("hdr:") && !id.startsWith("ftr:")) continue;
+      const next = paras.map((p) => {
+        if (!p.objects?.some((o) => o.kind === "field" && /^(PAGE|NUMPAGES|SECTIONPAGES)\b/i.test((o.instr ?? "").trim()))) return p;
+        let text = "", k = 0;
+        const objects: InlineObject[] = [];
+        for (const ch of p.text) {
+          if (ch !== OBJ) { text += ch; continue; }
+          const o = p.objects![k++];
+          if (o.kind === "field" && /^(PAGE|NUMPAGES|SECTIONPAGES)\b/i.test((o.instr ?? "").trim())) continue;
+          text += OBJ; objects.push(o);
+        }
+        if (/^\s*(Seite\s*(von\s*)?)?\s*$/.test(text)) { text = ""; objects.length = 0; }
+        return { ...p, text, runs: text ? [{ len: text.length, props: p.runs[0]?.props ?? EMPTY }] : [], objects: objects.length ? objects : undefined };
+      });
+      this.doc.setStory(id, next);
+    }
+    if (this.isHeaderFooter()) this.clampSelection();
+    this.update();
+  }
+
+  // ----- pictures ---------------------------------------------------------------------------
+
+  /** A selected floating picture: its paragraph (main text) and index. */
+  private floatSel: { p: number; index: number } | null = null;
+
+  /** The selected picture: an inline one (one object selected) or a floating one. */
+  selectedImage(): { kind: "inline"; p: number; o: number; obj: InlineObject } | { kind: "float"; p: number; index: number; obj: FloatObject } | null {
+    if (this.floatSel && this.doc.activeStory === MAIN) {
+      const f = this.doc.main[this.floatSel.p]?.floats?.[this.floatSel.index];
+      if (f) return { kind: "float", p: this.floatSel.p, index: this.floatSel.index, obj: f };
+    }
+    const [from, to] = this.range();
+    if (from.p !== to.p || to.o - from.o !== 1) return null;
+    const para = this.doc.paras[from.p];
+    if (para.text[from.o] !== OBJ) return null;
+    const obj = this.objectAt(para, from.o);
+    return obj?.kind === "image" ? { kind: "inline", p: from.p, o: from.o, obj } : null;
+  }
+
+  private objectAt(p: Para, o: number): InlineObject | undefined {
+    let k = 0;
+    for (let i = 0; i < o; i++) if (p.text[i] === OBJ) k++;
+    return p.objects?.[k];
+  }
+
+  private replaceObject(p: number, o: number, obj: InlineObject): void {
+    const para = this.doc.paras[p];
+    let k = 0;
+    for (let i = 0; i < o; i++) if (para.text[i] === OBJ) k++;
+    const objects = [...(para.objects ?? [])];
+    objects[k] = obj;
+    const next = [...this.doc.paras];
+    next[p] = { ...para, objects };
+    this.doc.paras = next;
+  }
+
+  private replaceFloat(p: number, index: number, f: FloatObject | null): void {
+    const para = this.doc.main[p];
+    const floats = [...(para.floats ?? [])];
+    if (f) floats[index] = f; else floats.splice(index, 1);
+    const next = [...this.doc.main];
+    next[p] = { ...para, floats: floats.length ? floats : undefined };
+    this.doc.setStory(MAIN, next);
+  }
+
+  /** Größe: width and height of the selected picture (points). */
+  setImageSize(width: number, height: number, snapshot = true): void {
+    const img = this.selectedImage();
+    if (!img || !(width > 2) || !(height > 2)) return;
+    if (snapshot) this.snapshot();
+    if (img.kind === "inline") this.replaceObject(img.p, img.o, { ...img.obj, width, height });
+    else this.replaceFloat(img.p, img.index, { ...img.obj, width, height });
+    this.update();
+  }
+
+  /** Where the selected picture is drawn (page px), from the layout. */
+  imageBox(): { page: number; x: number; y: number; w: number; h: number } | null {
+    const img = this.selectedImage();
+    if (!img) return null;
+    if (img.kind === "float") {
+      for (const pg of this.layout.pages) {
+        for (const d of pg.deco) if (d.kind === "image" && d.story === "main" && d.para === img.p && d.index === img.index) return { page: pg.index, x: d.x, y: d.y, w: d.w, h: d.h };
+      }
+      return null;
+    }
+    const a = this.view.caretBox({ p: img.p, o: img.o }), b = this.view.caretBox({ p: img.p, o: img.o + 1 });
+    const { pl } = this.view.placedFor({ p: img.p, o: img.o });
+    const line = this.view.lineOf(pl);
+    const w = (img.obj.width ?? 0) * PT, hh = (img.obj.height ?? 0) * PT;
+    void b;
+    return { page: a.page, x: a.x, y: pl.y + line.baseline - hh, w, h: hh };
+  }
+
+  /**
+   * Textumbruch of the selected picture: "inline" (Mit Text in Zeile), "square" (Quadrat),
+   * "tight", "through", "topAndBottom" (Oben und unten), "behind" (Hinter den Text),
+   * "front" (Vor den Text). A picture leaving the line keeps its place on the page.
+   */
+  setImageWrap(wrap: string): void {
+    const img = this.selectedImage();
+    if (!img || this.doc.activeStory !== MAIN) return;
+    const box = this.imageBox();
+    this.snapshot();
+    if (img.kind === "inline") {
+      if (wrap === "inline") return;
+      const { pl } = this.view.placedFor({ p: img.p, o: img.o });
+      const fr = this.layout.frames[pl.frame];
+      const paraTop = this.layout.placed[this.layout.firstPlaced[img.p]]?.y ?? pl.y;
+      const f: FloatObject = {
+        at: img.o, data: undefined, width: img.obj.width ?? 50, height: img.obj.height ?? 50, image: img.obj.image,
+        x: { rel: "column", offset: box && fr ? (box.x - fr.x) / PT : 0 },
+        y: { rel: "paragraph", offset: box ? (box.y - paraTop) / PT : 0 },
+        wrap, side: "bothSides", dist: [0, 0, 9, 9],
+      };
+      this.doc.delete({ p: img.p, o: img.o }, { p: img.p, o: img.o + 1 });
+      const para = this.doc.main[img.p];
+      const next = [...this.doc.main];
+      next[img.p] = { ...para, floats: [...(para.floats ?? []), f] };
+      this.doc.setStory(MAIN, next);
+      this.floatSel = { p: img.p, index: (para.floats ?? []).length };
+      this.setSelKeepFloat({ p: img.p, o: img.o });
+    } else if (wrap === "inline") {
+      const f = img.obj;
+      this.replaceFloat(img.p, img.index, null);
+      const at = { p: img.p, o: Math.min(f.at, this.doc.main[img.p].text.length) };
+      const obj: InlineObject = { kind: "image", data: undefined, display: "", width: f.width, height: f.height, image: f.image };
+      E.insertObject(this.doc, at, at, obj, this.typingPropsAt(at));
+      this.floatSel = null;
+      this.setSel(at, { p: at.p, o: at.o + 1 });
+    } else {
+      this.replaceFloat(img.p, img.index, { ...img.obj, wrap, data: img.obj.image ? undefined : img.obj.data });
+    }
+    this.update({ scroll: true });
+  }
+
+  private typingPropsAt(at: Pos): CharProps {
+    return typedProps(this.doc.paras[at.p], at.o);
+  }
+
+  private setSelKeepFloat(pos: Pos): void {
+    const keep = this.floatSel;
+    this.setSel(pos, pos);
+    this.floatSel = keep;
+  }
+
+  /** Moves the selected floating picture by dx, dy points. */
+  moveFloat(dx: number, dy: number, snapshot = true): void {
+    const img = this.selectedImage();
+    const box = this.imageBox();
+    if (!img || img.kind !== "float" || !box) return;
+    if (snapshot) this.snapshot();
+    const f = img.obj;
+    const pg = this.layout.pages[box.page];
+    const firstLine = this.layout.placed[this.layout.firstPlaced[img.p]];
+    const fr = firstLine ? this.layout.frames[firstLine.frame] : undefined;
+    const baseX = f.x.rel === "page" ? 0 : f.x.rel === "column" && fr ? fr.x : pg.setup.marginLeft * PT;
+    const baseY = f.y.rel === "page" ? 0 : f.y.rel === "margin" ? pg.setup.marginTop * PT : firstLine?.y ?? 0;
+    const x = { rel: f.x.rel === "character" ? "column" : f.x.rel, offset: (box.x - baseX) / PT + dx };
+    const y = { rel: f.y.rel === "line" ? "paragraph" : f.y.rel, offset: (box.y - baseY) / PT + dy };
+    this.replaceFloat(img.p, img.index, { ...f, x, y, data: f.image ? undefined : f.data });
+    this.update();
+  }
+
+  /** Deletes the selected floating picture. */
+  deleteFloat(): boolean {
+    const img = this.selectedImage();
+    if (!img || img.kind !== "float") return false;
+    this.snapshot();
+    this.replaceFloat(img.p, img.index, null);
+    this.floatSel = null;
+    this.update();
+    return true;
+  }
+
+  selectFloat(p: number, index: number): void {
+    this.floatSel = { p, index };
+    this.sel = { anchor: { p, o: 0 }, head: { p, o: 0 }, headUpstream: false };
+    this.update();
   }
 
   // ----- format painter -------------------------------------------------------------------
@@ -1100,18 +1773,30 @@ export class Editor {
       }
       case "PageUp": this.page(-1, shift); break;
       case "PageDown": this.page(1, shift); break;
-      case "Backspace": this.deleteBackward(ctrl, ts); return void e.preventDefault();
-      case "Delete": this.deleteForward(ctrl, ts); return void e.preventDefault();
+      case "Backspace": if (!this.deleteFloat()) this.deleteBackward(ctrl, ts); return void e.preventDefault();
+      case "Delete": if (!this.deleteFloat()) this.deleteForward(ctrl, ts); return void e.preventDefault();
       case "Enter":
         e.preventDefault();
         this.typing = false;
         if (shift && !e.ctrlKey) this.insertBreak("line");
         else if (ctrl && !shift) this.insertBreak("page");
-        else if (!e.ctrlKey) this.replaceSelection("\n", ts);
+        else if (e.ctrlKey && shift) this.insertBreak("column");
+        else if (!e.ctrlKey) {
+          // Enter in an empty list item ends the list (Word).
+          const p = this.doc.paras[h.p];
+          if (!this.hasSelection && !p.text.length && numberingOf(p.props, this.doc.styles)) {
+            this.edit(() => E.removeList(this.doc, h.p, h.p, this.styleId("List Paragraph")));
+            return;
+          }
+          this.replaceSelection("\n", ts);
+        }
         return;
       case "Tab":
         e.preventDefault();
-        if (!e.ctrlKey && !e.altKey) this.replaceSelection("\t", ts);
+        if (e.altKey) return;
+        if (e.ctrlKey) { if (this.doc.paras[h.p].cell) this.replaceSelection("\t", ts); return; }
+        if (this.tabKey(shift)) return;
+        this.replaceSelection("\t", ts);
         return;
       case "Escape":
         if (this.painter) { this.stopPainter(); return void e.preventDefault(); }
@@ -1172,6 +1857,15 @@ export class Editor {
     if (e.target === ws && (e.offsetX >= ws.clientWidth || e.offsetY >= ws.clientHeight)) return; // scrollbar
     e.preventDefault();
     this.focus();
+    if (this.storyKey === MAIN && !e.shiftKey && e.detail < 2) {
+      // Pictures and table borders take the click before the text.
+      const handle = this.view.handleAt(e.clientX, e.clientY);
+      if (handle) { this.dragImage(e, handle); return; }
+      const border = this.view.cellBorderAt(e.clientX, e.clientY);
+      if (border) { this.dragColumn(e, border.cell); return; }
+      const deco = this.view.imageAt(e.clientX, e.clientY);
+      if (deco) { this.selectFloat(deco.para, deco.index); this.dragImage(e, null); return; }
+    }
     if (!this.chooseStory(e)) return;
     const hit = this.view.hitLine(e.clientX, e.clientY);
     const at = this.view.posInLine(hit.index, hit.x);
@@ -1204,6 +1898,10 @@ export class Editor {
     } else if (e.ctrlKey) {
       const [a, b] = sentenceAt(this.doc.paras[under.p].text, under.o);
       this.setSel({ p: under.p, o: a }, { p: under.p, o: b });
+      this.drag = null;
+    } else if (this.isImageAt(under) && this.overObject(hit.index, hit.x, under)) {
+      // A click on a picture in the text selects it.
+      this.setSel(under, { p: under.p, o: under.o + 1 });
       this.drag = null;
     } else {
       this.setSel(at.pos, at.pos, at.upstream);
@@ -1346,6 +2044,88 @@ export class Editor {
       k++;
     }
     this.doc.setSettings({ ...this.doc.settings, section: change(this.doc.settings.section) });
+  }
+
+  private isImageAt(pos: Pos): boolean {
+    const para = this.doc.paras[pos.p];
+    return para?.text[pos.o] === OBJ && this.objectAt(para, pos.o)?.kind === "image";
+  }
+
+  /** Whether x (page px) is horizontally over the object at pos in the line `index`. */
+  private overObject(index: number, x: number, pos: Pos): boolean {
+    const pl = this.view.storyLayout().placed[index];
+    if (!pl || pl.para !== pos.p) return false;
+    const line = this.view.lineOf(pl);
+    const a = pl.x + line.x0 + line.charX[pos.o - line.start], b = pl.x + line.x0 + line.charX[pos.o + 1 - line.start];
+    return x >= a && x <= b;
+  }
+
+  /** Resizes (from a handle) or moves (floating pictures) the selected picture with the mouse. */
+  private dragImage(e: MouseEvent, handle: string | null): void {
+    const box0 = this.imageBox();
+    if (!box0) return;
+    const start = { x: e.clientX, y: e.clientY };
+    let first = true, lastDx = 0, lastDy = 0;
+    const w0 = box0.w / PT, h0 = box0.h / PT;
+    const move = (ev: MouseEvent) => {
+      const z = this.view.zoom;
+      const dx = (ev.clientX - start.x) / z / PT, dy = (ev.clientY - start.y) / z / PT;
+      if (Math.abs(dx) + Math.abs(dy) < 0.5 && first) return;
+      if (handle) {
+        let w = w0, hh = h0;
+        if (handle.includes("e")) w += dx;
+        if (handle.includes("w")) w -= dx;
+        if (handle.startsWith("s")) hh += dy;
+        if (handle.startsWith("n")) hh -= dy;
+        // Corner handles keep the picture's proportions (as in Word).
+        if (handle.length === 2) { const k = Math.max(w / w0, hh / h0); w = w0 * k; hh = h0 * k; }
+        this.setImageSize(Math.max(6, w), Math.max(6, hh), first);
+      } else {
+        this.moveFloat(dx - lastDx, dy - lastDy, first);
+        lastDx = dx; lastDy = dy;
+      }
+      first = false;
+    };
+    const up = () => { removeEventListener("mousemove", move, true); removeEventListener("mouseup", up, true); this.emit(true); };
+    addEventListener("mousemove", move, true);
+    addEventListener("mouseup", up, true);
+    this.update();
+  }
+
+  /** Drags a table's column border (the one right of `cellKey`'s cell). */
+  private dragColumn(e: MouseEvent, cellKey: string): void {
+    const [tid, row, col] = cellKey.split(":").map(Number);
+    const p = this.doc.paras.findIndex((x) => x.cell && x.cell.table.id === tid && x.cell.row === row && x.cell.col === col);
+    if (p < 0) return;
+    const def = this.doc.paras[p].cell!.table;
+    const r = def.rows[row];
+    let g = -1;
+    for (let i = 0; i <= col; i++) g += Math.max(1, r.cells[i].span);
+    const start = e.clientX;
+    let first = true, last = 0;
+    const move = (ev: MouseEvent) => {
+      const dx = (ev.clientX - start) / this.view.zoom / PT;
+      if (Math.abs(dx - last) < 0.1) return;
+      this.resizeColumn(p, g, dx - last, first);
+      first = false;
+      last = dx;
+    };
+    const up = () => { removeEventListener("mousemove", move, true); removeEventListener("mouseup", up, true); this.emit(true); };
+    addEventListener("mousemove", move, true);
+    addEventListener("mouseup", up, true);
+  }
+
+  /** Mouse pointer over pictures, handles and table borders. */
+  private hoverCursor(e: MouseEvent): void {
+    if (this.painter) return;
+    let cursor = "";
+    if (this.storyKey === MAIN) {
+      const hd = this.view.handleAt(e.clientX, e.clientY);
+      if (hd) cursor = hd === "n" || hd === "s" ? "ns-resize" : hd === "e" || hd === "w" ? "ew-resize" : hd === "nw" || hd === "se" ? "nwse-resize" : "nesw-resize";
+      else if (this.view.cellBorderAt(e.clientX, e.clientY)) cursor = "col-resize";
+      else if (this.view.imageAt(e.clientX, e.clientY)) cursor = "move";
+    }
+    if (this.workspace.style.cursor !== cursor) this.workspace.style.cursor = cursor;
   }
 
   private dragTo(clientX: number, clientY: number, ts?: number): void {

@@ -332,6 +332,12 @@ function c(id: string, name: string, rPr: CharProps, uiPriority: number): StyleD
   return { id, name, type: "character", basedOn: "Absatz-Standardschriftart", uiPriority, qFormat: true, pPr: {}, rPr };
 }
 
+/** A style that only appears in the gallery once used (w:semiHidden, w:unhideWhenUsed). */
+const hidden = (d: StyleDef): StyleDef => ({ ...d, semiHidden: true, qFormat: false });
+
+const GRID_LINE = { style: "single", size: 0.5, color: "auto", space: 0 };
+const GRID_BORDERS = { top: GRID_LINE, left: GRID_LINE, bottom: GRID_LINE, right: GRID_LINE, insideH: GRID_LINE, insideV: GRID_LINE };
+
 const heading = (n: number, before: number, size: number, color: string): StyleDef =>
   p(`berschrift${n}`, `heading ${n}`, { keepNext: true, keepLines: true, before, after: 0, outline: n - 1 },
     { fontTheme: "majorHAnsi", size, color }, { uiPriority: 9, link: `berschrift${n}Zchn` });
@@ -357,6 +363,30 @@ export function defaultStyleSheet(): StyleSheet {
     c("SchwacherVerweis", "Subtle Reference", { smallCaps: true, color: SUB }, 31),
     c("IntensiverVerweis", "Intense Reference", { bold: true, smallCaps: true, color: ACCENT, spacing: 0.25 }, 32),
     c("Buchtitel", "Book Title", { bold: true, italic: true, spacing: 0.25 }, 33),
+    // Styles Word adds when the feature is first used (headers, notes, tables, contents …).
+    hidden(p("Kopfzeile", "header", { after: 0, line: 1, lineRule: "auto", tabs: [{ pos: 226.8, align: "center" }, { pos: 453.6, align: "right" }] }, {}, { uiPriority: 99, next: undefined })),
+    hidden(p("Fuzeile", "footer", { after: 0, line: 1, lineRule: "auto", tabs: [{ pos: 226.8, align: "center" }, { pos: 453.6, align: "right" }] }, {}, { uiPriority: 99, next: undefined })),
+    hidden(p("Funotentext", "footnote text", { after: 0, line: 1, lineRule: "auto" }, { size: 10 }, { uiPriority: 99, next: undefined })),
+    hidden(c("Funotenzeichen", "footnote reference", { vertAlign: "superscript" }, 99)),
+    hidden(p("Endnotentext", "endnote text", { after: 0, line: 1, lineRule: "auto" }, { size: 10 }, { uiPriority: 99, next: undefined })),
+    hidden(c("Endnotenzeichen", "endnote reference", { vertAlign: "superscript" }, 99)),
+    hidden(p("Kommentartext", "annotation text", { line: 1, lineRule: "auto" }, { size: 10 }, { uiPriority: 99, next: undefined })),
+    hidden(c("Kommentarzeichen", "annotation reference", { size: 8 }, 99)),
+    p("Inhaltsverzeichnisberschrift", "TOC Heading", { outline: 9 }, {}, { uiPriority: 39, basedOn: "berschrift1", next: "Standard" }),
+    hidden(p("Verzeichnis1", "toc 1", { after: 5 }, {}, { uiPriority: 39, next: "Standard" })),
+    hidden(p("Verzeichnis2", "toc 2", { after: 5, indLeft: 11 }, {}, { uiPriority: 39, next: "Standard" })),
+    hidden(p("Verzeichnis3", "toc 3", { after: 5, indLeft: 22 }, {}, { uiPriority: 39, next: "Standard" })),
+    hidden(c("Hyperlink", "Hyperlink", { color: "0563C1", underline: "single" }, 99)),
+    p("Beschriftung", "caption", { after: 10, line: 1, lineRule: "auto" }, { italic: true, color: "44546A", size: 9 }, { uiPriority: 35, qFormat: true }),
+    {
+      id: "NormaleTabelle", name: "Normal Table", type: "table", isDefault: true, uiPriority: 99, semiHidden: true, pPr: {}, rPr: {},
+      table: { cellMargins: { left: 5.4, right: 5.4, top: 0, bottom: 0 } },
+    },
+    {
+      id: "Tabellenraster", name: "Table Grid", type: "table", basedOn: "NormaleTabelle", uiPriority: 39,
+      pPr: { after: 0, line: 1, lineRule: "auto" }, rPr: {},
+      table: { borders: GRID_BORDERS },
+    },
   ];
   return new StyleSheet(
     new Map(defs.map((d) => [d.id, d])),

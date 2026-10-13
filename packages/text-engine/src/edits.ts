@@ -1,0 +1,569 @@
+// Document operations behind Step 3's commands: lists, tables, section breaks, fields and
+// pictures. They work on the active story of a Doc and replace paragraph objects (never
+// mutate them), so the editor can take an undo snapshot before calling them.
+
+import { Doc, nextTableId, type Pos } from "./doc";
+import {
+  EMPTY, OBJ, intern, makePara, type CellDef, type CellRef, type CharProps, type ImageData, type InlineObject, type NumLevel,
+  type Numbering, type Para, type ParaProps, type RowDef, type Section, type TableDef,
+} from "./model";
+import { addList, bulletLevels, levelOf, multilevelLevels, numberLevels, numberingOf } from "./numbering";
+
+// ----- lists ---------------------------------------------------------------------------------
+
+export type ListKind = "bullet" | "number" | "multilevel";
+
+/** What kind of list a paragraph is in, or null. */
+export function listKind(doc: Doc, p: Para): ListKind | null {
+  const n = numberingOf(p.props, doc.styles);
+  if (!n) return null;
+  const found = levelOf(doc.numbering, n.numId, n.ilvl);
+  if (!found) return null;
+  if (found.level.format === "bullet") return "bullet";
+  const lvl1 = found.abstract.levels[1];
+  return lvl1 && /%1/.test(lvl1.text) ? "multilevel" : "number";
+}
+
+/**
+ * Aufzählungszeichen / Nummerierung / Liste mit mehreren Ebenen. As in Word: paragraphs that
+ * are all in such a list already leave it; otherwise they join the list of the paragraph
+ * before (when it is the same kind) or start a new one, and Standard paragraphs get the
+ * Listenabsatz style (measured with Word's FormatBulletDefault).
+ */
+export function toggleList(doc: Doc, a: number, b: number, kind: ListKind, listStyle: string, levels?: NumLevel[]): void {
+  const paras = doc.paras;
+  const all = paras.slice(a, b + 1).filter((p) => !p.block);
+  if (!levels && all.length && all.every((p) => listKind(doc, p) === kind)) { removeList(doc, a, b, listStyle); return; }
+  let numId: number | undefined;
+  const prev = paras[a - 1];
+  if (!levels && prev && listKind(doc, prev) === kind) numId = numberingOf(prev.props, doc.styles)!.numId;
+  if (numId === undefined) {
+    const made = addList(doc.numbering, levels ?? (kind === "bullet" ? bulletLevels() : kind === "number" ? numberLevels() : multilevelLevels()));
+    doc.setNumbering(made.numbering);
+    numId = made.numId;
+  }
+  const normal = doc.styles.defaultParagraphStyle;
+  doc.mapParas(a, b, (old) => {
+    const style = old.style ?? normal;
+    // The level's indents apply (direct indents go, as in Word).
+    const { indLeft: _l, indFirst: _f, ...rest } = old;
+    return { ...rest, style: style === normal ? listStyle : style, numId, ilvl: old.ilvl ?? 0 };
+  });
+}
+
+/** Removes numbering from paragraphs a..b (the Listenabsatz style returns to Standard). */
+export function removeList(doc: Doc, a: number, b: number, listStyle?: string): void {
+  const normal = doc.styles.defaultParagraphStyle;
+  doc.mapParas(a, b, (old) => {
+    const viaStyle = old.numId === undefined && !!doc.styles.numberingOfStyle(old.style ?? normal);
+    const { numId: _n, ilvl: _i, indLeft: _l, indFirst: _f, ...rest } = old;
+    const style = listStyle && old.style === listStyle ? undefined : old.style;
+    return viaStyle ? { ...rest, style, numId: 0 } : { ...rest, style };
+  });
+}
+
+/** Tab / Umschalt+Tab at the start of a list item: one level deeper or higher. */
+export function changeListLevel(doc: Doc, a: number, b: number, delta: 1 | -1): boolean {
+  let changed = false;
+  doc.mapParas(a, b, (old, p) => {
+    const n = numberingOf(p.props, doc.styles);
+    if (!n) return old;
+    const ilvl = Math.max(0, Math.min(8, n.ilvl + delta));
+    if (ilvl === n.ilvl) return old;
+    changed = true;
+    return { ...old, numId: old.numId ?? n.numId, ilvl };
+  });
+  return changed;
+}
+
+/**
+ * Backspace at the start of a list item: the number goes, the text stays where it was (the
+ * paragraph keeps the level's indent).
+ */
+export function dropListLabel(doc: Doc, p: number): void {
+  const para = doc.paras[p];
+  const n = numberingOf(para.props, doc.styles);
+  if (!n) return;
+  const lvl = levelOf(doc.numbering, n.numId, n.ilvl)?.level;
+  const left = lvl?.pPr.indLeft ?? doc.styles.resolvePara(para.props).indLeft;
+  doc.mapParas(p, p, (old) => ({ ...old, numId: 0, ilvl: undefined, indLeft: left, indFirst: 0 }));
+}
+
+/** AutoFormat beim Eingeben: "1. ", "a) ", "- ", "* " at a paragraph start begin a list. */
+export function autoListLevels(prefix: string): { levels: NumLevel[]; start: number } | null {
+  const lvl = (format: string, text: string, font?: string): NumLevel => ({
+    start: 1, format, text, align: "left", suffix: "tab", pPr: { indLeft: 36, indFirst: -18 }, rPr: font ? { font } : {},
+  });
+  const with9 = (first: NumLevel, start: number) => {
+    const base = first.format === "bullet" ? bulletLevels() : numberLevels();
+    return { levels: [{ ...first, start }, ...base.slice(1)], start };
+  };
+  if (prefix === "*") return with9(lvl("bullet", "\uf0b7", "Symbol"), 1);
+  if (prefix === "-") return with9(lvl("bullet", "–", "Calibri"), 1);
+  if (prefix === ">") return with9(lvl("bullet", "\uf0d8", "Wingdings"), 1);
+  let m = /^(\d{1,3})([.)])$/.exec(prefix);
+  if (m) return with9(lvl("decimal", `%1${m[2]}`), Number(m[1]));
+  m = /^([a-z])([.)])$/.exec(prefix);
+  if (m) return with9(lvl("lowerLetter", `%1${m[2]}`), m[1].charCodeAt(0) - 96);
+  m = /^([A-Z])([.)])$/.exec(prefix);
+  if (m && !/^[IVX]$/.test(m[1])) return with9(lvl("upperLetter", `%1${m[2]}`), m[1].charCodeAt(0) - 64);
+  m = /^([IVX]{1,4})\.$/.exec(prefix);
+  if (m) {
+    const roman: Record<string, number> = { I: 1, II: 2, III: 3, IV: 4, V: 5, VI: 6, VII: 7, VIII: 8, IX: 9, X: 10 };
+    if (roman[m[1]]) return with9(lvl("upperRoman", "%1."), roman[m[1]]);
+  }
+  return null;
+}
+
+// ----- tables ---------------------------------------------------------------------------------
+
+/** The table around paragraph p: its range and definition. */
+export function tableAt(doc: Doc, p: number): { a: number; b: number; def: TableDef } | null {
+  const cell = doc.paras[p]?.cell;
+  if (!cell) return null;
+  const r = doc.tableRange(p, cell.table);
+  return r ? { a: r[0], b: r[1], def: cell.table } : null;
+}
+
+type CellParas = Para[][][];
+
+/** The paragraphs of each cell (rows × cells), without their cell references. */
+function cellParas(doc: Doc, a: number, b: number, def: TableDef): CellParas {
+  const out: CellParas = def.rows.map((row) => row.cells.map(() => []));
+  for (let i = a; i <= b; i++) {
+    const p = doc.paras[i];
+    const c = p.cell!;
+    out[c.row]?.[c.col]?.push({ ...p, cell: undefined });
+  }
+  for (const row of out) for (let c = 0; c < row.length; c++) if (!row[c].length) row[c] = [makePara("")];
+  return out;
+}
+
+/** Replaces the table a..b with `def` and its cells' paragraphs. */
+function rebuild(doc: Doc, a: number, b: number, def: TableDef, cells: CellParas): void {
+  const paras: Para[] = [];
+  cells.forEach((row, r) => row.forEach((list, c) => {
+    const ref: CellRef = { table: def, row: r, col: c };
+    for (const p of list.length ? list : [makePara("")]) paras.push({ ...p, cell: ref });
+  }));
+  doc.splice(a, b, paras);
+}
+
+/** An empty paragraph like the first one of a cell (same style, same mark). */
+const emptyLike = (list: Para[]): Para => {
+  const p = list[0];
+  return p ? { ...makePara("", { style: p.props.style }, EMPTY, p.mark) } : makePara("");
+};
+
+const gridStart = (row: RowDef, col: number) => row.cells.slice(0, col).reduce((s, c) => s + Math.max(1, c.span), 0);
+
+/** Index of the cell of `row` that covers grid column gx. */
+function cellAtGrid(row: RowDef, gx: number): number {
+  let x = 0;
+  for (let c = 0; c < row.cells.length; c++) {
+    const span = Math.max(1, row.cells[c].span);
+    if (gx >= x && gx < x + span) return c;
+    x += span;
+  }
+  return row.cells.length - 1;
+}
+
+/**
+ * Inserts a rows × cols table at the caret ("Tabelle einfügen"): before the paragraph when the
+ * caret is at its start, else after splitting it. Returns the position in the first cell.
+ */
+export function insertTable(doc: Doc, at: Pos, rows: number, cols: number, width: number, style: string | undefined, mark: CharProps): Pos {
+  const paras = doc.paras;
+  const src = paras[at.p];
+  if (src.cell || src.block) return at;
+  const w = width / cols;
+  const def: TableDef = {
+    id: nextTableId(), grid: Array.from({ length: cols }, () => w), style,
+    rows: Array.from({ length: rows }, (): RowDef => ({ cells: Array.from({ length: cols }, (): CellDef => ({ span: 1, width: w })) })),
+    look: { firstRow: true, lastRow: false, firstColumn: true, lastColumn: false, noHBand: false, noVBand: true },
+  };
+  const cells: CellParas = def.rows.map((row) => row.cells.map(() => [makePara("", {}, EMPTY, mark)]));
+  const table: Para[] = [];
+  cells.forEach((row, r) => row.forEach((list, c) => { for (const p of list) table.push({ ...p, cell: { table: def, row: r, col: c } }); }));
+  let insertAt = at.p;
+  if (at.o > 0) {
+    // Split the paragraph: its first part stays before the table.
+    doc.insertText(at, at, "\n", mark);
+    insertAt = at.p + 1;
+  }
+  doc.splice(insertAt, insertAt - 1, table);
+  return { p: insertAt, o: 0 };
+}
+
+export type RowWhere = "above" | "below";
+export type ColWhere = "left" | "right";
+
+/** Zeilen darüber/darunter einfügen (one per selected row, as Word). */
+export function insertRows(doc: Doc, p: number, q: number, where: RowWhere): Pos | null {
+  const t = tableAt(doc, p);
+  if (!t) return null;
+  const r1 = doc.paras[p].cell!.row, r2 = doc.paras[q]?.cell?.table.id === t.def.id ? doc.paras[q].cell!.row : r1;
+  const lo = Math.min(r1, r2), hi = Math.max(r1, r2);
+  const count = hi - lo + 1;
+  const cells = cellParas(doc, t.a, t.b, t.def);
+  const base = where === "above" ? lo : hi;
+  const at = where === "above" ? lo : hi + 1;
+  const tmpl = t.def.rows[base];
+  const below = t.def.rows[at];
+  const newRows: RowDef[] = [], newCells: Para[][][] = [];
+  for (let k = 0; k < count; k++) {
+    newRows.push({
+      ...tmpl, header: where === "above" ? tmpl.header : undefined,
+      cells: tmpl.cells.map((c, ci) => {
+        // Inside a vertical merge the new cell continues it.
+        const gx = gridStart(tmpl, ci);
+        const nb = below ? below.cells[cellAtGrid(below, gx)] : undefined;
+        const inside = c.vMerge && nb?.vMerge === "continue" && where === "below" ? "continue" as const : c.vMerge === "continue" && where === "above" ? "continue" as const : undefined;
+        return { ...c, vMerge: inside };
+      }),
+    });
+    newCells.push(tmpl.cells.map((_, ci) => [emptyLike(cells[base][ci])]));
+  }
+  const rows = [...t.def.rows.slice(0, at), ...newRows, ...t.def.rows.slice(at)];
+  const all = [...cells.slice(0, at), ...newCells, ...cells.slice(at)];
+  const def: TableDef = { ...t.def, rows };
+  rebuild(doc, t.a, t.b, def, all);
+  return firstOfCell(doc, t.a, at, 0);
+}
+
+/** Spalten links/rechts einfügen; the table keeps its width (columns share it). */
+export function insertColumns(doc: Doc, p: number, q: number, where: ColWhere): Pos | null {
+  const t = tableAt(doc, p);
+  if (!t) return null;
+  const c1 = doc.paras[p].cell!, c2 = doc.paras[q]?.cell?.table.id === t.def.id ? doc.paras[q].cell! : c1;
+  const g1 = gridStart(t.def.rows[c1.row], c1.col), g2 = gridStart(t.def.rows[c2.row], c2.col);
+  const lo = Math.min(g1, g2);
+  const hiCell = g1 >= g2 ? c1 : c2;
+  const hi = gridStart(t.def.rows[hiCell.row], hiCell.col) + Math.max(1, t.def.rows[hiCell.row].cells[hiCell.col].span) - 1;
+  const count = hi - lo + 1;
+  const gi = where === "left" ? lo : hi + 1;
+  const cells = cellParas(doc, t.a, t.b, t.def);
+  const total = t.def.grid.reduce((s, x) => s + x, 0);
+  const added = Array.from({ length: count }, (_, k) => t.def.grid[Math.min(t.def.grid.length - 1, (where === "left" ? lo : hi - count + 1) + k)]);
+  const grid0 = [...t.def.grid.slice(0, gi), ...added, ...t.def.grid.slice(gi)];
+  const scale = total / grid0.reduce((s, x) => s + x, 0);
+  const grid = grid0.map((x) => x * scale);
+  const rows = t.def.rows.map((row, r) => {
+    let x = 0;
+    const out: CellDef[] = [];
+    const outCells: Para[][] = [];
+    let inserted = false;
+    row.cells.forEach((c, ci) => {
+      const span = Math.max(1, c.span);
+      if (!inserted && x === gi) {
+        for (let k = 0; k < count; k++) { out.push({ span: 1 }); outCells.push([emptyLike(cells[r][ci])]); }
+        inserted = true;
+      }
+      if (!inserted && gi > x && gi < x + span) { out.push({ ...c, span: span + count, width: undefined }); outCells.push(cells[r][ci]); inserted = true; }
+      else { out.push({ ...c, width: undefined }); outCells.push(cells[r][ci]); }
+      x += span;
+    });
+    if (!inserted) for (let k = 0; k < count; k++) { out.push({ span: 1 }); outCells.push([emptyLike(cells[r][row.cells.length - 1])]); }
+    cells[r] = outCells;
+    return { ...row, cells: out };
+  });
+  rebuild(doc, t.a, t.b, { ...t.def, grid, rows }, cells);
+  const r0 = c1.row;
+  return firstOfCell(doc, t.a, r0, cellAtGrid(rows[r0], gi));
+}
+
+/** Zeilen löschen: the rows from p's to q's. Returns where the caret goes. */
+export function deleteRows(doc: Doc, p: number, q: number): Pos | null {
+  const t = tableAt(doc, p);
+  if (!t) return null;
+  const r1 = doc.paras[p].cell!.row, r2 = doc.paras[q]?.cell?.table.id === t.def.id ? doc.paras[q].cell!.row : r1;
+  const lo = Math.min(r1, r2), hi = Math.max(r1, r2);
+  if (lo === 0 && hi === t.def.rows.length - 1) return deleteTable(doc, p);
+  const cells = cellParas(doc, t.a, t.b, t.def);
+  // A merge that starts in a deleted row restarts in the first remaining row.
+  const rows = t.def.rows.map((row, r) => {
+    if (r !== hi + 1) return row;
+    return { ...row, cells: row.cells.map((c, ci) => {
+      if (c.vMerge !== "continue") return c;
+      const gx = gridStart(row, ci);
+      const above = lo > 0 ? t.def.rows[lo - 1] : undefined;
+      const a = above ? above.cells[cellAtGrid(above, gx)] : undefined;
+      return a?.vMerge ? c : { ...c, vMerge: "restart" as const };
+    }) };
+  }).filter((_, r) => r < lo || r > hi);
+  const all = cells.filter((_, r) => r < lo || r > hi);
+  rebuild(doc, t.a, t.b, { ...t.def, rows }, all);
+  return firstOfCell(doc, t.a, Math.min(lo, rows.length - 1), 0);
+}
+
+/** Spalten löschen: the grid columns covered by p's and q's cells. */
+export function deleteColumns(doc: Doc, p: number, q: number): Pos | null {
+  const t = tableAt(doc, p);
+  if (!t) return null;
+  const c1 = doc.paras[p].cell!, c2 = doc.paras[q]?.cell?.table.id === t.def.id ? doc.paras[q].cell! : c1;
+  const range = (c: CellRef) => { const g = gridStart(t.def.rows[c.row], c.col); return [g, g + Math.max(1, t.def.rows[c.row].cells[c.col].span) - 1]; };
+  const [a1, b1] = range(c1), [a2, b2] = range(c2);
+  const lo = Math.min(a1, a2), hi = Math.max(b1, b2);
+  if (lo === 0 && hi === t.def.grid.length - 1) return deleteTable(doc, p);
+  const cells = cellParas(doc, t.a, t.b, t.def);
+  const rows: RowDef[] = t.def.rows.map((row, r) => {
+    let x = 0;
+    const out: CellDef[] = [], outCells: Para[][] = [];
+    row.cells.forEach((c, ci) => {
+      const span = Math.max(1, c.span);
+      const from = Math.max(x, lo), to = Math.min(x + span - 1, hi);
+      const removed = to >= from ? to - from + 1 : 0;
+      if (removed < span) { out.push({ ...c, span: span - removed, width: undefined }); outCells.push(cells[r][ci]); }
+      x += span;
+    });
+    if (!out.length) { out.push({ span: 1 }); outCells.push([makePara("")]); }
+    cells[r] = outCells;
+    return { ...row, cells: out };
+  });
+  const grid = t.def.grid.filter((_, g) => g < lo || g > hi);
+  rebuild(doc, t.a, t.b, { ...t.def, grid, rows }, cells);
+  return firstOfCell(doc, t.a, c1.row, Math.min(cellAtGrid(rows[c1.row], Math.min(lo, grid.length - 1)), rows[c1.row].cells.length - 1));
+}
+
+/** Tabelle löschen. */
+export function deleteTable(doc: Doc, p: number): Pos | null {
+  const t = tableAt(doc, p);
+  if (!t) return null;
+  doc.splice(t.a, t.b, []);
+  return { p: Math.min(t.a, doc.paras.length - 1), o: 0 };
+}
+
+/** Zellen verbinden: the cells between p's and q's cell become one. */
+export function mergeCells(doc: Doc, p: number, q: number): Pos | null {
+  const t = tableAt(doc, p);
+  if (!t || doc.paras[q]?.cell?.table.id !== t.def.id) return null;
+  const c1 = doc.paras[p].cell!, c2 = doc.paras[q].cell!;
+  const r1 = Math.min(c1.row, c2.row), r2 = Math.max(c1.row, c2.row);
+  const g1 = gridStart(t.def.rows[c1.row], c1.col), g2 = gridStart(t.def.rows[c2.row], c2.col);
+  const lo = Math.min(g1, g2);
+  const hiC = g1 >= g2 ? c1 : c2;
+  const hi = gridStart(t.def.rows[hiC.row], hiC.col) + Math.max(1, t.def.rows[hiC.row].cells[hiC.col].span) - 1;
+  const cells = cellParas(doc, t.a, t.b, t.def);
+  const content: Para[] = [];
+  const keep = (list: Para[]) => { for (const x of list) if (x.text.length || x.block) content.push(x); };
+  const rows = t.def.rows.map((row, r) => {
+    if (r < r1 || r > r2) return row;
+    let x = 0;
+    const out: CellDef[] = [], outCells: Para[][] = [];
+    let merged = false;
+    row.cells.forEach((c, ci) => {
+      const span = Math.max(1, c.span);
+      if (x >= lo && x + span - 1 <= hi) {
+        keep(cells[r][ci]);
+        if (!merged) {
+          out.push({ ...c, span: hi - lo + 1, width: undefined, vMerge: r2 > r1 ? (r === r1 ? "restart" : "continue") : c.vMerge });
+          outCells.push(r === r1 ? [] : [emptyLike(cells[r][ci])]);
+          merged = true;
+        }
+      } else { out.push(c); outCells.push(cells[r][ci]); }
+      x += span;
+    });
+    cells[r] = outCells;
+    return { ...row, cells: out };
+  });
+  const firstIdx = cellAtGrid(rows[r1], lo);
+  cells[r1][firstIdx] = content.length ? content : [emptyLike(cells[r1][firstIdx] ?? [])];
+  rebuild(doc, t.a, t.b, { ...t.def, rows }, cells);
+  return firstOfCell(doc, t.a, r1, firstIdx);
+}
+
+/** Zellen teilen: a cell into n columns (the grid column is divided, other rows span it). */
+export function splitCell(doc: Doc, p: number, n: number): Pos | null {
+  const t = tableAt(doc, p);
+  if (!t || n < 2) return null;
+  const c = doc.paras[p].cell!;
+  const row0 = t.def.rows[c.row];
+  const gx = gridStart(row0, c.col);
+  const span = Math.max(1, row0.cells[c.col].span);
+  const cells = cellParas(doc, t.a, t.b, t.def);
+  let grid = [...t.def.grid];
+  let rows = [...t.def.rows];
+  if (span >= n) {
+    // Enough grid columns already: just divide the spans.
+    const parts = Array.from({ length: n }, (_, k) => Math.floor(span / n) + (k < span % n ? 1 : 0));
+    rows = rows.map((row, r) => r !== c.row ? row : { ...row, cells: [...row.cells.slice(0, c.col), ...parts.map((s, k) => ({ ...row.cells[c.col], span: s, vMerge: undefined, width: undefined, ...(k ? {} : {}) })), ...row.cells.slice(c.col + 1)] });
+    cells[c.row] = [...cells[c.row].slice(0, c.col), cells[c.row][c.col], ...parts.slice(1).map(() => [emptyLike(cells[c.row][c.col])]), ...cells[c.row].slice(c.col + 1)];
+  } else {
+    // Divide the cell's last grid column into n - span + 1 columns.
+    const extra = n - span;
+    const g = gx + span - 1;
+    const w = grid[g] / (extra + 1);
+    grid = [...grid.slice(0, g), ...Array.from({ length: extra + 1 }, () => w), ...grid.slice(g + 1)];
+    rows = rows.map((row, r) => {
+      if (r === c.row) {
+        return { ...row, cells: [...row.cells.slice(0, c.col), ...Array.from({ length: n }, (_, k) => ({ ...row.cells[c.col], span: k < span - 1 ? 1 : 1, vMerge: undefined, width: undefined })), ...row.cells.slice(c.col + 1)] };
+      }
+      const ci = cellAtGrid(row, g);
+      return { ...row, cells: row.cells.map((cc, k) => (k === ci ? { ...cc, span: Math.max(1, cc.span) + extra, width: undefined } : cc)) };
+    });
+    cells[c.row] = [...cells[c.row].slice(0, c.col), cells[c.row][c.col], ...Array.from({ length: n - 1 }, () => [emptyLike(cells[c.row][c.col])]), ...cells[c.row].slice(c.col + 1)];
+  }
+  rebuild(doc, t.a, t.b, { ...t.def, grid, rows }, cells);
+  return firstOfCell(doc, t.a, c.row, c.col);
+}
+
+/** Changes the table definition (style, borders, look, widths …) keeping all content. */
+export function updateTable(doc: Doc, p: number, change: (def: TableDef) => TableDef): void {
+  const t = tableAt(doc, p);
+  if (!t) return;
+  rebuild(doc, t.a, t.b, change(t.def), cellParas(doc, t.a, t.b, t.def));
+}
+
+/** Changes the definitions of the cells between p's and q's cell (shading, borders, alignment). */
+export function updateCells(doc: Doc, p: number, q: number, change: (c: CellDef, row: number, col: number) => CellDef): void {
+  const t = tableAt(doc, p);
+  if (!t) return;
+  const c1 = doc.paras[p].cell!, c2 = doc.paras[q]?.cell?.table.id === t.def.id ? doc.paras[q].cell! : c1;
+  const r1 = Math.min(c1.row, c2.row), r2 = Math.max(c1.row, c2.row);
+  const g1 = gridStart(t.def.rows[c1.row], c1.col), g2 = gridStart(t.def.rows[c2.row], c2.col);
+  const lo = Math.min(g1, g2), hi = Math.max(g1, g2);
+  const rows = t.def.rows.map((row, r) => (r < r1 || r > r2 ? row : {
+    ...row, cells: row.cells.map((c, ci) => { const gx = gridStart(row, ci); return gx + Math.max(1, c.span) - 1 >= lo && gx <= hi ? change(c, r, ci) : c; }),
+  }));
+  updateTable(doc, p, (def) => ({ ...def, rows }));
+}
+
+/** Changes the rows between p's and q's row (height, header row, may break). */
+export function updateRows(doc: Doc, p: number, q: number, change: (r: RowDef) => RowDef): void {
+  const t = tableAt(doc, p);
+  if (!t) return;
+  const r1 = doc.paras[p].cell!.row, r2 = doc.paras[q]?.cell?.table.id === t.def.id ? doc.paras[q].cell!.row : r1;
+  const lo = Math.min(r1, r2), hi = Math.max(r1, r2);
+  updateTable(doc, p, (def) => ({ ...def, rows: def.rows.map((r, i) => (i >= lo && i <= hi ? change(r) : r)) }));
+}
+
+/** Spalten gleichmäßig verteilen. */
+export function distributeColumns(doc: Doc, p: number): void {
+  updateTable(doc, p, (def) => {
+    const total = def.grid.reduce((s, x) => s + x, 0);
+    return { ...def, grid: def.grid.map(() => total / def.grid.length), rows: def.rows.map((r) => ({ ...r, cells: r.cells.map((c) => ({ ...c, width: undefined })) })) };
+  });
+}
+
+/** Moves the boundary after grid column g by dx points (dragging a column border). */
+export function resizeColumn(doc: Doc, p: number, g: number, dx: number): void {
+  updateTable(doc, p, (def) => {
+    const grid = [...def.grid];
+    const min = 12;
+    if (g + 1 < grid.length) {
+      const d = Math.max(min - grid[g], Math.min(grid[g + 1] - min, dx));
+      grid[g] += d;
+      grid[g + 1] -= d;
+    } else grid[g] = Math.max(min, grid[g] + dx);
+    return { ...def, grid, rows: def.rows.map((r) => ({ ...r, cells: r.cells.map((c) => ({ ...c, width: undefined })) })) };
+  });
+}
+
+/** Position in the first paragraph of cell (row, col) of the table starting at paragraph a. */
+export function firstOfCell(doc: Doc, a: number, row: number, col: number): Pos {
+  const paras = doc.paras;
+  const id = paras[a]?.cell?.table.id;
+  for (let i = a; i < paras.length && paras[i].cell?.table.id === id; i++) {
+    const c = paras[i].cell!;
+    if (c.row === row && c.col === col) return { p: i, o: 0 };
+  }
+  return { p: a, o: 0 };
+}
+
+/** The paragraphs of the cell of paragraph p: first and last index. */
+export function cellRange(doc: Doc, p: number): [number, number] {
+  const paras = doc.paras;
+  const c = paras[p].cell;
+  if (!c) return [p, p];
+  const same = (i: number) => { const x = paras[i]?.cell; return !!x && x.table.id === c.table.id && x.row === c.row && x.col === c.col; };
+  let a = p, b = p;
+  while (a > 0 && same(a - 1)) a--;
+  while (b < paras.length - 1 && same(b + 1)) b++;
+  return [a, b];
+}
+
+/** Next (or previous) cell in reading order, skipping merged-away cells; null at the end. */
+export function adjacentCell(doc: Doc, p: number, dir: 1 | -1): [number, number] | null {
+  const paras = doc.paras;
+  const [a, b] = cellRange(doc, p);
+  const id = paras[p].cell!.table.id;
+  let i = dir > 0 ? b + 1 : a - 1;
+  while (i >= 0 && i < paras.length && paras[i].cell?.table.id === id) {
+    const c = paras[i].cell!;
+    if (c.table.rows[c.row].cells[c.col].vMerge !== "continue") return cellRange(doc, i);
+    i = dir > 0 ? cellRange(doc, i)[1] + 1 : cellRange(doc, i)[0] - 1;
+  }
+  return null;
+}
+
+// ----- sections -------------------------------------------------------------------------------
+
+/** Index of the section paragraph p of the main text belongs to. */
+export function sectionIndex(doc: Doc, p: number): number {
+  let k = 0;
+  const main = doc.main;
+  for (let i = 0; i < Math.min(p, main.length - 1); i++) if (main[i].sect) k++;
+  return k;
+}
+
+/** Number of sections. */
+export function sectionCount(doc: Doc): number {
+  return doc.main.slice(0, -1).filter((p) => p.sect).length + 1;
+}
+
+/**
+ * Abschnittsumbruch at the caret: the text before it ends a section with the current
+ * section's properties; the new section starts as `start` with the same properties.
+ */
+export function insertSectionBreak(doc: Doc, at: Pos, start: Section["start"], mark: CharProps): Pos {
+  if (doc.activeStory !== "main") return at;
+  const cur = doc.sectionOf(at.p);
+  doc.insertText(at, at, "\n", mark);
+  const paras = doc.paras;
+  // The paragraph that now ends before the break carries the section that ends there; the
+  // following section (whose properties are stored at its own end) starts with `start`.
+  const next = [...paras];
+  next[at.p] = { ...paras[at.p], sect: { ...cur } };
+  doc.paras = next;
+  setSectionStart(doc, at.p + 1, start);
+  return { p: at.p + 1, o: 0 };
+}
+
+/** Sets how the section of paragraph p starts. */
+function setSectionStart(doc: Doc, p: number, start: Section["start"]): void {
+  const main = doc.main;
+  for (let i = p; i < main.length - 1; i++) {
+    if (main[i].sect) {
+      const next = [...main];
+      next[i] = { ...main[i], sect: { ...main[i].sect!, start } };
+      doc.setStory("main", next);
+      return;
+    }
+  }
+  doc.setSettings({ ...doc.settings, section: { ...doc.settings.section, start } });
+}
+
+// ----- fields and objects -----------------------------------------------------------------
+
+/** A field object (Seitenzahl, Anzahl der Seiten, Datum …) created in RaabeWrite. */
+export function fieldObject(instr: string, display: string): InlineObject {
+  return { kind: "field", data: undefined, display, instr };
+}
+
+/** An inline picture created in RaabeWrite (size in points). */
+export function imageObject(image: ImageData, width: number, height: number): InlineObject {
+  return { kind: "image", data: undefined, display: "", width, height, image };
+}
+
+/** Inserts objects (with the formatting `props`) at the caret, replacing [from, to). */
+export function insertObject(doc: Doc, from: Pos, to: Pos, obj: InlineObject, props: CharProps): Pos {
+  const piece: Para = { text: OBJ, runs: [{ len: 1, props: intern(props) }], props: {}, mark: EMPTY, objects: [obj] };
+  return doc.replace(from, to, [piece]);
+}
+
+/** Numbering used by a paragraph style list or direct numbering, for exports. */
+export function numberingOfPara(p: ParaProps, doc: Doc): ReturnType<typeof numberingOf> {
+  return numberingOf(p, doc.styles);
+}
+
+export type { Numbering };

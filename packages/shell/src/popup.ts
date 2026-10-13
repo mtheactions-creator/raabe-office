@@ -46,12 +46,17 @@ export function isPopupOpen(): boolean {
   return open !== null;
 }
 
-export type MenuEntry = { cmd: string; label?: string } | { label: string; icon?: string; run: () => void; disabled?: boolean } | "-";
+export type MenuEntry =
+  | { cmd: string; label?: string }
+  | { label: string; icon?: string; run: () => void; disabled?: boolean; checked?: boolean; preview?: HTMLElement }
+  | { heading: string }
+  | "-";
 
 export function showMenu(commands: Commands, entries: MenuEntry[], anchor: DOMRect): void {
   const menu = h("div", { class: "menu", role: "menu" });
   for (const e of entries) {
     if (e === "-") { menu.append(h("hr")); continue; }
+    if ("heading" in e) { menu.append(h("div", { class: "menu-heading" }, e.heading)); continue; }
     if ("cmd" in e) {
       const c = commands.get(e.cmd);
       menu.append(h("button", {
@@ -60,9 +65,9 @@ export function showMenu(commands: Commands, entries: MenuEntry[], anchor: DOMRe
       }, icon(c.icon), e.label ?? c.label));
     } else {
       menu.append(h("button", {
-        role: "menuitem", disabled: !!e.disabled,
+        role: "menuitem", disabled: !!e.disabled, class: e.preview ? "with-preview" : e.checked ? "checked" : "",
         onclick: () => { closePopup(); e.run(); },
-      }, icon(e.icon), e.label));
+      }, e.preview ?? icon(e.checked ? "check" : e.icon), e.preview ? h("span", null, e.label) : e.label));
     }
   }
   showPopup(menu, anchor);
