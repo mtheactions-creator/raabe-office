@@ -49,6 +49,8 @@ export function tauriPlatform(): Platform {
     printToPdf: (path) => invoke("print_to_pdf", { path }),
     listFonts: () => invoke<string[]>("list_fonts"),
     fontMetrics: (families) => invoke("font_metrics", { families }),
+    spellCheck: (lang, words) => invoke<boolean[]>("spell_check", { lang, words }),
+    spellSuggest: (lang, word) => invoke<string[]>("spell_suggest", { lang, word }),
     onOpenFiles(handler) {
       void invoke<string[]>("startup_files").then((paths) => { if (paths.length) handler(paths); });
       void listen<string[]>("open-files", (e) => handler(e.payload));

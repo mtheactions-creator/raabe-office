@@ -49,6 +49,9 @@ export function browserPlatform(): Platform {
     printToPdf: async () => { print(); },
     listFonts: async () => ["Arial", "Calibri", "Calibri Light", "Cambria", "Comic Sans MS", "Courier New", "Georgia", "Segoe UI", "Times New Roman", "Verdana"],
     fontMetrics: async () => ({}),
+    // The development platform has no dictionaries: every word counts as correct.
+    spellCheck: async (_lang, words) => words.map(() => true),
+    spellSuggest: async () => [],
     onOpenFiles: () => {},
     window: {
       minimize() {},

@@ -195,6 +195,13 @@ export class StyleSheet {
     return r;
   }
 
+  /** Outline level (0 = Überschrift 1) a paragraph style gives, from its chain. */
+  outlineLevel(id: string): number | undefined {
+    let lvl: number | undefined;
+    for (const s of this.chain(id)) if (s.pPr.outline !== undefined) lvl = s.pPr.outline;
+    return lvl;
+  }
+
   /** Numbering a paragraph style carries (e.g. "Aufzählungszeichen"), from its chain. */
   numberingOfStyle(id: string): { numId: number; ilvl: number } | null {
     let numId: number | undefined, ilvl: number | undefined;
@@ -353,8 +360,8 @@ export function defaultStyleSheet(): StyleSheet {
     p("Untertitel", "Subtitle", {}, { color: SUB, spacing: 0.75 }, { uiPriority: 11 }),
     p("Zitat", "Quote", { before: 10, align: "center", indLeft: 43.2, indRight: 43.2 }, { italic: true, color: GREY_TEXT }, { uiPriority: 29 }),
     p("IntensivesZitat", "Intense Quote", { before: 18, after: 18, align: "center", indLeft: 43.2, indRight: 43.2 }, { italic: true, color: ACCENT }, { uiPriority: 30 }),
-    p("KeinLeerraum", "No Spacing", { after: 0, line: 1, lineRule: "auto" }, {}, { uiPriority: 1, basedOn: undefined }),
-    p("Listenabsatz", "List Paragraph", { indLeft: 36, contextual: true }, {}, { uiPriority: 34 }),
+    p("KeinLeerraum", "No Spacing", { after: 0, line: 1, lineRule: "auto" }, {}, { uiPriority: 1, basedOn: undefined, next: undefined }),
+    p("Listenabsatz", "List Paragraph", { indLeft: 36, contextual: true }, {}, { uiPriority: 34, next: undefined }),
     { id: "Absatz-Standardschriftart", name: "Default Paragraph Font", type: "character", isDefault: true, uiPriority: 1, semiHidden: true, pPr: {}, rPr: {} },
     c("SchwacheHervorhebung", "Subtle Emphasis", { italic: true, color: GREY_TEXT }, 19),
     c("Hervorhebung", "Emphasis", { italic: true }, 20),

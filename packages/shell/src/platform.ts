@@ -40,6 +40,10 @@ export interface Platform {
   listFonts(): Promise<string[]>;
   /** Vertical font metrics from the font files (hhea table), keyed by family name. */
   fontMetrics(families: string[]): Promise<Record<string, { found: boolean; unitsPerEm: number; ascender: number; descender: number; lineGap: number; winAscent?: number; winDescent?: number; math?: boolean }>>;
+  /** Spelling: for each word whether it is correct in `lang` ("de-DE", "en-US", "en-GB"). */
+  spellCheck(lang: string, words: string[]): Promise<boolean[]>;
+  /** Suggestions for a misspelled word. */
+  spellSuggest(lang: string, word: string): Promise<string[]>;
   /** Files passed on the command line (double-click in Explorer) at start and later. */
   onOpenFiles(handler: (paths: string[]) => void): void;
   window: {

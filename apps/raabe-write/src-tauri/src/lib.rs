@@ -3,6 +3,7 @@
 //! tab in the running window. Everything else lives in the web frontend.
 
 mod fonts;
+mod spell;
 
 use std::fs;
 use std::path::{Path, PathBuf};
@@ -236,6 +237,7 @@ async fn print_to_pdf_windows(window: WebviewWindow, path: String) -> Result<(),
 pub fn run() {
     let args: Vec<String> = std::env::args().skip(1).collect();
     fonts::preload();
+    spell::preload();
     tauri::Builder::default()
         .plugin(tauri_plugin_single_instance::init(|app, argv, cwd| {
             let files = docx_args(argv.into_iter().skip(1), Some(&cwd));
@@ -289,7 +291,7 @@ pub fn run() {
         })
         .invoke_handler(tauri::generate_handler![
             read_file, write_file, file_info, save_recovery, list_recovery, read_recovery, delete_recovery,
-            startup_files, print_to_pdf, fonts::list_fonts, fonts::font_metrics
+            startup_files, print_to_pdf, fonts::list_fonts, fonts::font_metrics, spell::spell_check, spell::spell_suggest
         ])
         .run(tauri::generate_context!())
         .expect("error while running RaabeWrite");

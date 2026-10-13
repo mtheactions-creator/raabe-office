@@ -12,10 +12,11 @@ import {
   type Para, type ParaProps, type Section,
 } from "./model";
 import { builtinStyle, type ResolvedChar, type ResolvedPara } from "./styles";
-import { View, storyIdOf, type Selection } from "./view";
+import { View, storyIdOf, type Selection, type TextMark } from "./view";
 import * as E from "./edits";
+import { fromHtml, toHtml } from "./html";
 import { COLUMN_BREAK, type CellDef, type ImageData, type RowDef, type TableDef } from "./model";
-import { addList, numberingOf, restartList } from "./numbering";
+import { addList, bulletLevels as bulletLevelsOf, numberLevels as numberLevelsOf, numberingOf, restartList } from "./numbering";
 import type { BorderSpec, Borders, FloatObject, InlineObject, NumLevel } from "./model";
 import { countWords, isWordChar, nextTokenStart, prevTokenStart, sentenceAt, tokenAt } from "./words";
 
@@ -113,6 +114,7 @@ export class Editor {
     this.sel = { anchor: { p: 0, o: 0 }, head: { p: 0, o: 0 }, headUpstream: false };
     this.layouter = new Layouter(this.context());
     this.view = new View(workspace, fonts);
+    this.installMarks();
     this.requireFonts();
 
     this.input = document.createElement("textarea");
@@ -131,6 +133,7 @@ export class Editor {
     this.input.addEventListener("paste", (e) => this.onPaste(e));
     workspace.addEventListener("mousedown", (e) => this.onMouseDown(e));
     workspace.addEventListener("mousemove", (e) => { if (!e.buttons) this.hoverCursor(e); });
+    workspace.addEventListener("contextmenu", (e) => this.onContext(e));
     this.update();
   }
 
@@ -942,9 +945,9 @@ export class Editor {
     this.update();
   }
 
-  /** Renders all pages into `target` for printing. */
-  renderForPrint(target: HTMLElement): void {
-    this.view.renderForPrint(target);
+  /** Renders pages (all, or the given zero-based ones) into `target` for printing. */
+  renderForPrint(target: HTMLElement, pages?: readonly number[]): void {
+    this.view.renderForPrint(target, pages);
   }
 
   // ----- character formatting -------------------------------------------------------------
@@ -1056,6 +1059,28 @@ export class Editor {
   setColor(hex: string): void {
     this.setCharProp("colorTheme", undefined);
     this.setCharProp("color", hex);
+  }
+
+  /** Language of the text at the caret (Korrekturhilfesprache), when set directly. */
+  charLang(): string | undefined {
+    return this.typingProps().lang;
+  }
+
+  /** Marks the selection (or what is typed next) as being in a language ("de-DE", "en-GB" …). */
+  setLang(lang: string): void {
+    this.setCharPropKeepAll("lang", lang);
+  }
+
+  /** Sets a property as direct formatting on the selection, or for the next typed text. */
+  private setCharPropKeepAll<K extends keyof CharProps>(key: K, value: CharProps[K]): void {
+    if (!this.hasSelection) {
+      const h = this.sel.head;
+      this.pending = intern({ ...(this.pending ?? typedProps(this.doc.paras[h.p], h.o)), [key]: value });
+      this.emit(false);
+      return;
+    }
+    const [from, to] = this.range();
+    this.edit(() => this.doc.mapChars(from, to, (old) => ({ ...old, [key]: value })), false);
   }
 
   setHighlight(name: string): void {
@@ -1551,6 +1576,127 @@ export class Editor {
     this.update();
   }
 
+  // ----- find and replace ------------------------------------------------------------------
+
+  private findMarks: WeakMap<Para, TextMark[]> | null = null;
+  /** Extra marks from the host (spelling errors), by story and paragraph. */
+  extraMarks: ((story: string, para: Para) => readonly TextMark[] | undefined) | null = null;
+  private mergedMarks = new WeakMap<Para, { f?: readonly TextMark[]; x?: readonly TextMark[]; out: readonly TextMark[] }>();
+
+  private installMarks(): void {
+    this.view.marksFor = (story, para) => {
+      const f = story === this.doc.activeStory || (story === "main" && this.doc.activeStory === MAIN) ? this.findMarks?.get(para) : undefined;
+      const x = this.extraMarks?.(story, para);
+      if (!f) return x;
+      if (!x) return f;
+      const hit = this.mergedMarks.get(para);
+      if (hit && hit.f === f && hit.x === x) return hit.out;
+      const out = [...x, ...f];
+      this.mergedMarks.set(para, { f, x, out });
+      return out;
+    };
+  }
+
+  /** All matches of `query` in the story with the caret (paragraph, start, end). */
+  findAll(query: string, opts: { matchCase?: boolean; wholeWord?: boolean } = {}): { p: number; a: number; b: number }[] {
+    const out: { p: number; a: number; b: number }[] = [];
+    if (!query) return out;
+    const q = opts.matchCase ? query : query.toLocaleLowerCase("de-DE");
+    this.doc.paras.forEach((para, p) => {
+      if (para.block) return;
+      const text = opts.matchCase ? para.text : para.text.toLocaleLowerCase("de-DE");
+      if (text.length !== para.text.length) return;
+      for (let i = text.indexOf(q); i >= 0; i = text.indexOf(q, i + Math.max(1, q.length))) {
+        if (opts.wholeWord && (isWordChar(para.text[i - 1]) || isWordChar(para.text[i + q.length]))) continue;
+        out.push({ p, a: i, b: i + q.length });
+      }
+    });
+    return out;
+  }
+
+  /** Highlights matches (Navigationsbereich: all in yellow, the current one darker). */
+  showFindMarks(matches: { p: number; a: number; b: number }[] | null, current?: { p: number; a: number }): void {
+    if (!matches) { this.findMarks = null; this.view.refresh(); return; }
+    const map = new WeakMap<Para, TextMark[]>();
+    const byPara = new Map<number, TextMark[]>();
+    for (const m of matches) {
+      const list = byPara.get(m.p) ?? [];
+      list.push({ start: m.a, end: m.b, kind: current && current.p === m.p && current.a === m.a ? "findCurrent" : "find" });
+      byPara.set(m.p, list);
+    }
+    for (const [p, list] of byPara) map.set(this.doc.paras[p], list);
+    this.findMarks = map;
+    this.view.refresh();
+  }
+
+  /** Selects a match and scrolls to it. */
+  selectRange(p: number, a: number, b: number): void {
+    this.setSel({ p, o: a }, { p, o: b });
+    this.update({ scroll: true });
+  }
+
+  /** Replaces [a, b) of paragraph p with text in the formatting of its first character. */
+  replaceRange(p: number, a: number, b: number, text: string): void {
+    this.snapshot();
+    const props = this.doc.charPropsAt({ p, o: a });
+    const end = this.doc.insertText({ p, o: a }, { p, o: b }, text, props);
+    this.setSel(end, end);
+    this.update({ scroll: true });
+  }
+
+  /** Alle ersetzen: one undo step; returns the number of replacements. */
+  replaceAll(query: string, text: string, opts: { matchCase?: boolean; wholeWord?: boolean } = {}): number {
+    const matches = this.findAll(query, opts);
+    if (!matches.length) return 0;
+    this.snapshot();
+    // From the end, so earlier offsets stay valid.
+    for (let i = matches.length - 1; i >= 0; i--) {
+      const m = matches[i];
+      const props = this.doc.charPropsAt({ p: m.p, o: m.a });
+      this.doc.insertText({ p: m.p, o: m.a }, { p: m.p, o: m.b }, text, props);
+    }
+    const h = this.sel.head;
+    this.setSel(this.fixPos(h), this.fixPos(h));
+    this.update({ scroll: true });
+    return matches.length;
+  }
+
+  private fixPos(p: Pos): Pos {
+    const pi = Math.min(p.p, this.doc.paras.length - 1);
+    return { p: pi, o: Math.min(p.o, this.doc.paras[pi].text.length) };
+  }
+
+  /** Headings of the main text (Navigationsbereich > Überschriften). */
+  headings(): { p: number; level: number; text: string }[] {
+    const out: { p: number; level: number; text: string }[] = [];
+    this.doc.main.forEach((para, p) => {
+      const rp = this.doc.styles.resolvePara(para.props);
+      const lvl = para.props.outline ?? this.doc.styles.outlineLevel(rp.style);
+      if (lvl !== undefined && lvl < 9 && para.text.trim()) out.push({ p, level: lvl + 1, text: para.text.replace(/[\u000b\ufffc]/g, " ").trim() });
+    });
+    return out;
+  }
+
+  /** Puts the caret at the start of a main-text paragraph and scrolls there. */
+  goToParagraph(p: number): void {
+    if (this.doc.activeStory !== MAIN) this.switchStory(MAIN, MAIN);
+    this.setSel({ p, o: 0 }, { p, o: 0 });
+    this.update({ scroll: true });
+  }
+
+  /** Gehe zu Seite n (1-based). */
+  goToPage(n: number): void {
+    const page = Math.max(0, Math.min(this.layout.pageCount - 1, n - 1));
+    const i = this.layout.placed.findIndex((pl) => pl.page === page && !pl.ghost && !pl.hide);
+    if (i < 0) return;
+    const pl = this.layout.placed[i];
+    if (this.doc.activeStory !== MAIN) this.switchStory(MAIN, MAIN);
+    const line = this.layout.paras[pl.para].lines[pl.line];
+    this.setSel({ p: pl.para, o: line.start }, { p: pl.para, o: line.start });
+    this.view.scrollToPage(page);
+    this.update();
+  }
+
   // ----- format painter -------------------------------------------------------------------
 
   copyFormat(): CopiedFormat {
@@ -1825,6 +1971,8 @@ export class Editor {
     if (!this.hasSelection) return;
     const text = this.copySelection();
     e.clipboardData?.setData("text/plain", text.replace(/\n/g, "\r\n"));
+    // Formatting for Word and other programs.
+    e.clipboardData?.setData("text/html", this.selectionHtml());
     if (cut) {
       const [from, to] = this.range();
       this.deleteRange(from, to);
@@ -1833,8 +1981,63 @@ export class Editor {
 
   private onPaste(e: ClipboardEvent): void {
     e.preventDefault();
-    const text = e.clipboardData?.getData("text/plain");
-    if (text) this.pasteText(text);
+    const text = e.clipboardData?.getData("text/plain") ?? "";
+    const html = e.clipboardData?.getData("text/html") ?? "";
+    this.paste(text, html);
+  }
+
+  /** The selection as HTML (for the clipboard). */
+  selectionHtml(): string {
+    const [from, to] = this.range();
+    return toHtml(this.doc.fragment(from, to), this.doc.styles);
+  }
+
+  /**
+   * Einfügen: content copied in RaabeWrite keeps all its formatting; HTML from other programs
+   * (Word, browsers) keeps character formatting, headings, lists and tables; otherwise text.
+   */
+  paste(text: string, html: string): void {
+    const frag = clipboardFragment;
+    const t = text.replace(/\r\n?/g, "\n");
+    if (frag && frag.text === t) return this.pasteText(t);
+    if (html && !this.inBlock()) { this.pasteHtml(html); return; }
+    if (t) this.pasteText(t);
+  }
+
+  /** Inserts HTML from another program. */
+  pasteHtml(html: string): void {
+    const style = (name: string) => { const id = this.styleId(name); this.ensureStyle(id); return id; };
+    const { paras } = fromHtml(html, style);
+    if (!paras.length) return;
+    // Lists: one numbering per run of list paragraphs of the same kind.
+    let numbering = this.doc.numbering;
+    let curKind: string | undefined, curNum = 0;
+    const listStyle = this.listStyleId();
+    const pieces: Para[] = paras.map((p) => {
+      const { list, level, ...para } = p;
+      if (!list) { curKind = undefined; return para; }
+      if (list !== curKind) {
+        const made = addList(numbering, list === "bullet" ? bulletLevelsOf() : numberLevelsOf());
+        numbering = made.numbering;
+        curNum = made.numId;
+        curKind = list;
+      }
+      return { ...para, props: { ...para.props, style: para.props.style ?? listStyle, numId: curNum, ilvl: level ?? 0 } };
+    });
+    // A pasted table needs a paragraph before and after it inside the insertion.
+    if (pieces[0].cell) pieces.unshift(makePara(""));
+    if (pieces[pieces.length - 1].cell) pieces.push(makePara(""));
+    this.snapshot();
+    this.doc.setNumbering(numbering);
+    const [a, b] = this.range();
+    if (this.doc.paras[a.p].cell && pieces.some((x) => x.cell)) {
+      // No tables inside table cells: their text comes in as paragraphs.
+      for (let i = 0; i < pieces.length; i++) pieces[i] = { ...pieces[i], cell: undefined };
+    }
+    const end = this.doc.replace(a, b, pieces);
+    this.setSel(end, end);
+    this.requireFonts();
+    this.update({ scroll: true });
   }
 
   // ----- mouse --------------------------------------------------------------------------
@@ -2113,6 +2316,38 @@ export class Editor {
     const up = () => { removeEventListener("mousemove", move, true); removeEventListener("mouseup", up, true); this.emit(true); };
     addEventListener("mousemove", move, true);
     addEventListener("mouseup", up, true);
+  }
+
+  /** The host's context menu (right click or the menu key), at a client point and text position. */
+  onContextMenu: ((clientX: number, clientY: number, pos: Pos) => void) | null = null;
+
+  private onContext(e: MouseEvent): void {
+    e.preventDefault();
+    if (!this.onContextMenu) return;
+    const hit = this.view.hitLine(e.clientX, e.clientY);
+    const under = this.view.posInLine(hit.index, hit.x, true).pos;
+    const [from, to] = this.range();
+    // A right click outside the selection moves the caret there (Word).
+    const inside = cmp(under, from) >= 0 && cmp(under, to) < 0;
+    if (!inside) {
+      const at = this.view.posInLine(hit.index, hit.x);
+      this.setSel(at.pos, at.pos, at.upstream);
+      this.update();
+    }
+    this.onContextMenu(e.clientX, e.clientY, under);
+  }
+
+  /** The word at a position (letters, digits, inner hyphens and apostrophes). */
+  wordAt(pos: Pos): { p: number; a: number; b: number; text: string } | null {
+    const text = this.doc.paras[pos.p]?.text ?? "";
+    const isW = (ch: string | undefined) => !!ch && /[\p{L}\p{N}'’-]/u.test(ch);
+    if (!isW(text[pos.o]) && !isW(text[pos.o - 1])) return null;
+    let a = pos.o, b = pos.o;
+    while (a > 0 && isW(text[a - 1])) a--;
+    while (b < text.length && isW(text[b])) b++;
+    while (a < b && /['’-]/.test(text[a])) a++;
+    while (b > a && /['’-]/.test(text[b - 1])) b--;
+    return b > a ? { p: pos.p, a, b, text: text.slice(a, b) } : null;
   }
 
   /** Mouse pointer over pictures, handles and table borders. */

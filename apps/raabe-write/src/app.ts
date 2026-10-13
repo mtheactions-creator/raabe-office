@@ -11,9 +11,11 @@ import {
 import { COMMANDS } from "./command-list";
 import type { AppApi } from "./features/api";
 import { headerFooterFeature, HEADER_COMMANDS } from "./features/headerfooter";
+import { findFeature, FIND_COMMANDS } from "./features/find";
 import { listsFeature } from "./features/lists";
 import { pageSetupFeature, PAGE_COMMANDS } from "./features/pagesetup";
 import { picturesFeature, PICTURE_COMMANDS } from "./features/pictures";
+import { spellFeature } from "./features/spell";
 import { tablesFeature, TABLE_COMMANDS } from "./features/tables";
 import { GALLERY, ribbonTabs, type RibbonContext } from "./ribbon-def";
 import { addRecent, loadRecent, loadSettings, removeRecent, saveSettings, setPinned, type Settings } from "./store";
@@ -66,12 +68,13 @@ export class WriteApp {
   private lastPainterClick = 0;
   private lastShading = "FFFF00";
   private features!: ReturnType<WriteApp["makeFeatures"]>;
+  private find!: ReturnType<typeof findFeature>;
 
   constructor(private platform: Platform, initial?: Partial<DocState>) {
     this.fonts = new Fonts((families) => platform.fontMetrics(families));
     this.fonts.onChange(() => { for (const d of this.docs) d.editor.relayout(); });
     void platform.listFonts().then((f) => { this.fontList = f; }).catch(() => {});
-    this.commands.register(...COMMANDS, ...TABLE_COMMANDS, ...PAGE_COMMANDS, ...HEADER_COMMANDS, ...PICTURE_COMMANDS);
+    this.commands.register(...COMMANDS, ...TABLE_COMMANDS, ...PAGE_COMMANDS, ...HEADER_COMMANDS, ...PICTURE_COMMANDS, ...FIND_COMMANDS);
     this.implementCommands();
     this.features = this.makeFeatures();
 
@@ -97,6 +100,7 @@ export class WriteApp {
     this.backstage = new Backstage(this.commands, this.backstageEntries());
     this.backstage.onClose(() => this.active?.editor.focus());
     this.docArea = h("div", { class: "docarea" });
+    this.find = findFeature(this.api(), this.docArea);
     this.infobarSlot = h("div");
     this.printRoot = h("div", { id: "print-root" });
 
@@ -147,6 +151,7 @@ export class WriteApp {
       pages: pageSetupFeature(api),
       hf: headerFooterFeature(api),
       pictures: picturesFeature(api),
+      spell: spellFeature(api),
     };
   }
 
@@ -173,6 +178,7 @@ export class WriteApp {
     const ws = h("div", { class: "workspace", tabIndex: -1 });
     this.docArea.append(ws);
     const editor = new Editor(ws, state ?? {}, this.fonts);
+    this.features.spell.attach(editor);
     const doc: Doc = {
       id: crypto.randomUUID(), name, path, editor, ws, saved: editor.contentStamp(), recoverySaved: null, pkg, partial,
       lastSaved: null,
@@ -226,6 +232,7 @@ export class WriteApp {
     }
     this.updateStatus(d);
     this.updateContextualTabs();
+    if (countWords) this.find?.refresh();
     if (countWords && this.wordCache?.paras !== d.editor.paragraphs()) {
       // Counting runs after a short pause in typing, not on every key.
       clearTimeout(this.wordTimer);
@@ -416,10 +423,10 @@ export class WriteApp {
 
   // ----- printing and PDF ---------------------------------------------------------------
 
-  private async print(): Promise<void> {
+  private async print(pages?: number[]): Promise<void> {
     if (!this.active) return;
     this.backstage.close();
-    this.active.editor.renderForPrint(this.printRoot);
+    this.active.editor.renderForPrint(this.printRoot, pages);
     await new Promise(requestAnimationFrame);
     print();
   }
@@ -601,25 +608,62 @@ export class WriteApp {
       d.partial.length ? h("p", { class: "warn" }, `Noch nicht vollständig angezeigt (bleibt beim Speichern erhalten): ${d.partial.join(", ")}.`) : null);
   }
 
+  /** Datei > Drucken: settings on the left, the page preview with page navigation on the right. */
   private printPage(): HTMLElement {
+    const ed = this.active?.editor;
+    const count = ed?.stats().pageCount ?? 0;
+    let page = Math.min(ed?.stats().caretPage ?? 0, Math.max(0, count - 1));
     const preview = h("div", { class: "print-preview" });
-    const holder = h("div");
-    this.active?.editor.renderForPrint(holder);
-    const first = holder.firstElementChild as HTMLElement | null;
-    if (first) {
-      const scale = 0.55;
-      first.classList.add("sheet");
-      first.style.transform = `scale(${scale})`;
-      const pg = this.active!.editor.layout.pages[0].setup;
-      preview.append(h("div", { style: `width:${pg.width * PT * scale}px;height:${pg.height * PT * scale}px` }, first));
-    }
-    const pages = this.active?.editor.stats().pageCount ?? 0;
+    const pageNo = h("input", { type: "text", value: String(page + 1), style: "width:40px;text-align:center" });
+    const showPage = () => {
+      preview.replaceChildren();
+      if (!ed || !count) return;
+      const holder = h("div");
+      ed.renderForPrint(holder, [page]);
+      const sheet = holder.querySelector<HTMLElement>(".print-page");
+      if (!sheet) return;
+      const setup = ed.layout.pages[page].setup;
+      const w = setup.width * PT, hh = setup.height * PT;
+      const scale = Math.min(0.75, (innerHeight - 260) / hh, 560 / w);
+      sheet.classList.add("sheet");
+      sheet.style.transform = `scale(${scale})`;
+      sheet.style.transformOrigin = "top left";
+      preview.append(h("div", { style: `width:${w * scale}px;height:${hh * scale}px;overflow:hidden` }, sheet));
+      pageNo.value = String(page + 1);
+    };
+    const nav = (d: number) => { page = Math.max(0, Math.min(count - 1, page + d)); showPage(); };
+    pageNo.addEventListener("change", () => { const n = Number(pageNo.value); if (Number.isFinite(n)) { page = Math.max(0, Math.min(count - 1, n - 1)); showPage(); } });
+    const which = h("select", { style: "width:100%" },
+      h("option", { value: "all" }, "Alle Seiten drucken"), h("option", { value: "current" }, "Aktuelle Seite drucken"), h("option", { value: "custom" }, "Benutzerdefinierter Druck"));
+    const range = h("input", { type: "text", placeholder: "z. B. 1-3, 5", style: "width:100%" });
+    range.addEventListener("input", () => { which.value = "custom"; });
+    const pagesToPrint = (): number[] | undefined => {
+      if (which.value === "current") return [page];
+      if (which.value !== "custom" || !range.value.trim()) return undefined;
+      const out = new Set<number>();
+      for (const part of range.value.split(/[,;]/)) {
+        const m = /^\s*(\d+)\s*(?:-\s*(\d+))?\s*$/.exec(part);
+        if (!m) continue;
+        const a = Number(m[1]), b = m[2] ? Number(m[2]) : a;
+        for (let i = Math.min(a, b); i <= Math.max(a, b); i++) if (i >= 1 && i <= count) out.add(i - 1);
+      }
+      return out.size ? [...out].sort((x, y) => x - y) : undefined;
+    };
+    const setup = ed?.layout.pages[page]?.setup;
+    const fmt = setup ? `${(Math.min(setup.width, setup.height) / 28.3465).toLocaleString("de-DE", { maximumFractionDigits: 1 })} x ${(Math.max(setup.width, setup.height) / 28.3465).toLocaleString("de-DE", { maximumFractionDigits: 1 })} cm` : "";
+    showPage();
     return h("div", null, h("h1", null, "Drucken"),
       h("div", { class: "print-layout" },
-        h("div", { style: "display:flex;flex-direction:column;gap:12px;width:220px" },
-          h("button", { class: "bigbtn", onclick: () => void this.print() }, icon("print", "l"), "Drucken"),
-          h("p", { class: "muted" }, `${pages} ${pages === 1 ? "Seite" : "Seiten"}, A4. Drucker, Exemplare und Seitenauswahl wählen Sie im nächsten Fenster.`)),
-        preview));
+        h("div", { style: "display:flex;flex-direction:column;gap:12px;width:260px" },
+          h("button", { class: "bigbtn", onclick: () => void this.print(pagesToPrint()) }, icon("print", "l"), "Drucken"),
+          h("div", { class: "muted" }, "Drucker und Exemplare wählen Sie im nächsten Fenster."),
+          h("h3", { style: "margin:8px 0 0" }, "Einstellungen"), which, h("label", { class: "field" }, "Seiten:", range),
+          h("div", { class: "muted" }, setup ? `${setup.width > setup.height ? "Querformat" : "Hochformat"}, ${fmt}` : ""),
+          h("div", { class: "muted" }, `${count} ${count === 1 ? "Seite" : "Seiten"}`)),
+        h("div", { style: "flex:1;display:flex;flex-direction:column;gap:8px;align-items:center" }, preview,
+          h("div", { class: "print-nav" },
+            h("button", { "aria-label": "Vorherige Seite", onclick: () => nav(-1) }, icon("back")), pageNo, h("span", null, `von ${count}`),
+            h("button", { "aria-label": "Nächste Seite", onclick: () => nav(1), style: "transform:scaleX(-1)" }, icon("back"))))));
   }
 
   // ----- commands -----------------------------------------------------------------------
@@ -644,9 +688,28 @@ export class WriteApp {
     // Clipboard. The text goes to the system clipboard; the formatted copy stays inside RaabeWrite.
     c.implement("edit.undo", { run: () => ed()?.undo(), enabled: () => !!ed()?.canUndo });
     c.implement("edit.redo", { run: () => ed()?.redo(), enabled: () => !!ed()?.canRedo });
-    c.implement("edit.copy", { run: async () => { const e = ed(); if (e) await this.platform.clipboardWrite(e.copySelection().replace(/\n/g, "\r\n")); }, enabled: () => !!ed()?.hasSelection });
-    c.implement("edit.cut", { run: async () => { const e = ed(); if (e) await this.platform.clipboardWrite(e.cutSelection().replace(/\n/g, "\r\n")); }, enabled: () => !!ed()?.hasSelection });
-    const paste = (plain: boolean) => async () => { const t = await this.platform.clipboardRead().catch(() => ""); if (t) ed()?.pasteText(t, plain); };
+    // Text and HTML (formatting for Word); the system clipboard API first, the platform's text as fallback.
+    const write = async (e: Editor, cut: boolean) => {
+      const html = e.selectionHtml();
+      const text = (cut ? e.cutSelection() : e.copySelection()).replace(/\n/g, "\r\n");
+      try {
+        await navigator.clipboard.write([new ClipboardItem({ "text/plain": new Blob([text], { type: "text/plain" }), "text/html": new Blob([html], { type: "text/html" }) })]);
+      } catch {
+        await this.platform.clipboardWrite(text);
+      }
+    };
+    c.implement("edit.copy", { run: async () => { const e = ed(); if (e) await write(e, false); }, enabled: () => !!ed()?.hasSelection });
+    c.implement("edit.cut", { run: async () => { const e = ed(); if (e) await write(e, true); }, enabled: () => !!ed()?.hasSelection });
+    const paste = (plain: boolean) => async () => {
+      let html = "";
+      if (!plain) {
+        try {
+          for (const item of await navigator.clipboard.read()) if (item.types.includes("text/html")) html = await (await item.getType("text/html")).text();
+        } catch { /* no HTML access: text only */ }
+      }
+      const t = await this.platform.clipboardRead().catch(() => "");
+      if (plain) { if (t) ed()?.pasteText(t, true); } else ed()?.paste(t, html);
+    };
     c.implement("edit.paste", { run: paste(false), enabled: has });
     c.implement("edit.pasteText", { run: paste(true), enabled: has });
     c.implement("edit.selectAll", { run: () => ed()?.selectAll(), enabled: has });
@@ -989,6 +1052,7 @@ export class WriteApp {
       if (ctrl && !alt && !shift) {
         cmd = ({
           n: "file.new", o: "file.open", s: "file.save", p: "file.print", w: "file.close", l: "para.alignLeft", e: "para.alignCenter",
+          f: "edit.find", h: "edit.replace", g: "edit.goto",
           r: "para.alignRight", b: "para.justify", m: "para.indentInc", d: "font.dialog", q: "", "1": "spacing.1", "2": "spacing.2",
           "5": "spacing.1.5", "0": "view.zoom100", "9": "", "8": "",
         } as Record<string, string>)[k] ?? null;
@@ -1070,6 +1134,22 @@ export class WriteApp {
       newDoc: () => { this.newDoc(); },
       activeRibbonTab: () => this.ribbon.activeTab,
       infobar: () => this.infobarSlot.textContent,
+      /** The active editor, for tests that call its commands directly. */
+      editor: () => this.active?.editor,
+      /** The main text's structure: style, list, cell and section of each paragraph. */
+      docInfo: () => {
+        const e = this.active?.editor;
+        if (!e) return null;
+        return {
+          paras: e.doc.main.map((p) => ({
+            text: p.text, style: e.doc.styles.resolvePara(p.props).style, numId: p.props.numId, ilvl: p.props.ilvl,
+            cell: p.cell ? [p.cell.row, p.cell.col] : null, sect: !!p.sect,
+          })),
+          stories: [...e.doc.stories.keys()],
+          pages: e.layout.pageCount,
+          story: e.storyKey,
+        };
+      },
     };
   }
 }
