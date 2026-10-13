@@ -119,7 +119,32 @@ The rules are recorded in D-025 and D-026. The ones that were not obvious:
   screen pipeline itself was slower; the medians are equal.
 - RaabeWrite has a tail Word does not have. A CPU profile while typing in the 50-page
   document shows about 3.5 ms of our code per keystroke and the frame request answered
-  within one refresh, so the delay arises after our code, in composition or presentation.
-  **Open:** trace WebView2's GPU process to find it.
+  within one refresh, so the delay arises after our code.
+
+### Investigation of the late keystrokes (second real-input run)
+
+Each keystroke was measured three ways at once: on screen (as before), by the browser
+itself (Event Timing: event → presented frame) and in a trace of WebView2's drawing
+pipeline. Word and three RaabeWrite variants were compared.
+
+| Variant (60 keystrokes per scenario) | short doc: frames 1/2/3/4+ | page 12 of 50: frames 1/2/3/4+ |
+|---|---|---|
+| Word | 60/0/0/0 | 20/40/0/0 |
+| RaabeWrite | 54/5/1/0 | 15/36/1/8 |
+| RaabeWrite, no DirectComposition | 9/41/4/6 | 13/39/2/6 |
+| RaabeWrite, vsync off (diagnostic only) | 19/38/0/3 | 15/43/0/2 |
+
+- The trace shows every keystroke presented by the browser within at most two refreshes
+  (worst 64 ms at 30 Hz), the same pattern as Word on screen; the browser reports most of
+  the four-frame cases as presented within 16 ms. The extra frames therefore arise after
+  WebView2 has handed the frame to Windows, in desktop composition.
+- The machine itself switched between a fast state (Word one frame) and a slow state
+  (Word two frames) within the same run; the four-frame cases appear mainly in the slow
+  state.
+- Neither alternative presentation path helps; the default stays.
+- Conclusion: nothing to fix in RaabeWrite's code. Whether the effect exists at all on a
+  school laptop at 60 Hz is the next data point (a single `run.py latency` there). It is
+  also possible that screen capture via BitBlt sees composed WebView2 content later than
+  GDI content; a capture through the Desktop Duplication API would settle that.
 - Real keystrokes showed one more Word rule: Strg+L on a left-aligned paragraph switches
   to Blocksatz (fixed; the COM command does not do this).

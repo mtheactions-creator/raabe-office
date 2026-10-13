@@ -265,10 +265,12 @@ pub fn run() {
             if let Ok(port) = std::env::var("RAABE_FEEL_DEBUG_PORT").map(|p| p.parse::<u16>()) {
                 if let Ok(port) = port {
                     // Occlusion tracking would pause rendering whenever the window is covered.
+                    // RAABE_FEEL_BROWSER_ARGS adds experimental flags (latency investigations).
+                    let extra = std::env::var("RAABE_FEEL_BROWSER_ARGS").unwrap_or_default();
                     window = window
                         .data_directory(std::env::temp_dir().join(format!("raabe-write-feel-{port}")))
                         .additional_browser_args(&format!(
-                            "--disable-features=msWebOOUI,msPdfOOUI,msSmartScreenProtection,CalculateNativeWinOcclusion --remote-debugging-port={port}"
+                            "--disable-features=msWebOOUI,msPdfOOUI,msSmartScreenProtection,CalculateNativeWinOcclusion --remote-debugging-port={port} {extra}"
                         ));
                     // Runs that need no real input stay off screen and never take the focus, so
                     // they can run while someone works at the PC.

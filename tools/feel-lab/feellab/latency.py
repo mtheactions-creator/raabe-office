@@ -17,6 +17,18 @@ from .targets import Target, WebViewTarget, WordTarget, raabe_write
 SAMPLES = 60
 VK_N = 0x4E
 
+# In the app: every keydown's timestamp, and the browser's own report of the time from the
+# event to the presented frame (Event Timing; only reported above 16 ms, 8 ms resolution).
+OBSERVE = """
+window.__kd = []; window.__et = {};
+addEventListener('keydown', (e) => __kd.push(e.timeStamp), {capture: true});
+new PerformanceObserver((l) => { for (const e of l.getEntries()) if (e.name === 'keydown') __et[e.startTime.toFixed(1)] = e.duration; })
+  .observe({type: 'event', durationThreshold: 16});
+true
+"""
+TRACE_CATEGORIES = ["benchmark", "latencyInfo", "viz", "gpu", "cc", "input", "devtools.timeline",
+                    "disabled-by-default-devtools.timeline.frame"]
+
 
 def _stats(values: list[float]) -> dict:
     v = sorted(values)
@@ -32,7 +44,12 @@ def _stats(values: list[float]) -> dict:
     }
 
 
-def measure(target: Target, caret_offset: int, samples: int = SAMPLES) -> dict:
+def measure(target: Target, caret_offset: int, samples: int = SAMPLES, trace: str | None = None) -> dict:
+    app = isinstance(target, WebViewTarget)
+    if app:
+        target.js(OBSERVE)
+        if trace:
+            target.cdp("Tracing.start", {"traceConfig": {"includedCategories": TRACE_CATEGORIES}, "transferMode": "ReturnAsStream"})
     target.set_selection(caret_offset, caret_offset)
     target.ensure_visible(caret_offset)
     target.activate()
@@ -59,7 +76,15 @@ def measure(target: Target, caret_offset: int, samples: int = SAMPLES) -> dict:
                 results.append((detected - t0) / 1e6)
     finally:
         grabber.close()
-    return {**_stats(results), "timeouts": timeouts, "samples_ms": [round(r, 2) for r in results]}
+    out = {**_stats(results), "timeouts": timeouts, "samples_ms": [round(r, 2) for r in results]}
+    if app:
+        kd, et = target.js("__kd"), target.js("__et")
+        # Browser-reported event → presented frame for each keystroke (≤ 16 means "under 16").
+        out["browser_present_ms"] = [et.get(f"{k:.1f}", 16) for k in kd[-len(results):]] if kd else []
+        if trace:
+            from .presentation import _save_trace
+            _save_trace(target, trace)
+    return out
 
 
 def _wrapped_line_start(t: Target, after: int) -> int:
@@ -67,7 +92,8 @@ def _wrapped_line_start(t: Target, after: int) -> int:
     return next(s for s in t.lines() if s > after and text[s - 1] == " ")
 
 
-def run() -> dict:
+def run(trace_dir=None, variants: dict[str, str] | None = None) -> dict:
+    """`variants`: extra WebView2 flags per name; each runs as its own RaabeWrite target."""
     out: dict = {}
     scenarios = {
         # Empty paragraph at the end of a one-page document.
@@ -80,6 +106,8 @@ def run() -> dict:
         "word": lambda fx: WordTarget(fx),
         "raabe-write": lambda fx: raabe_write(fx, port=9340),
     }
+    for name, flags in (variants or {}).items():
+        makers[f"raabe-write {name}"] = lambda fx, flags=flags: raabe_write(fx, port=9340, browser_args=flags)
     for scenario, (fx, where) in scenarios.items():
         out[scenario] = {}
         for name, make in makers.items():
@@ -92,7 +120,8 @@ def run() -> dict:
                     winapi.press("enter")
                     offset += 1
                     time.sleep(0.3)
-                res = measure(t, offset)
+                trace = str(trace_dir / f"trace-{scenario}-{name.replace(' ', '_')}.json") if trace_dir and isinstance(t, WebViewTarget) else None
+                res = measure(t, offset, trace=trace)
                 if isinstance(t, WebViewTarget):
                     inside = t.js("__probe.latency.take()")
                     res["in_app_event_to_frame"] = _stats(inside)

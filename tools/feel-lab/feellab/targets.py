@@ -214,22 +214,25 @@ def clear_feel_recovery() -> None:
 
 
 def raabe_write(fixture_name: str = "short", port: int = 9370, extra: list[str] | None = None,
-                keep_recovery: bool = False, background: bool = False) -> "WebViewTarget":
+                keep_recovery: bool = False, background: bool = False, browser_args: str = "") -> "WebViewTarget":
     """`background`: off screen and never focused, for runs that need no real input."""
     if not keep_recovery:
         clear_feel_recovery()
     return WebViewTarget("raabe-write", fixture_name, port, exe=RAABE_WRITE_EXE,
-                         args=["--feel", fixture_name, *(extra or [])], title_suffix=" - RaabeWrite", background=background)
+                         args=["--feel", fixture_name, *(extra or [])], title_suffix=" - RaabeWrite", background=background,
+                         browser_args=browser_args)
 
 class WebViewTarget(Target):
     def __init__(self, engine: str, fixture_name: str = "short", port: int = 9333,
                  exe: Path | None = None, args: list[str] | None = None, title_suffix: str | None = None,
-                 background: bool = False):
+                 background: bool = False, browser_args: str = ""):
         self.name = f"proto-{engine}" if exe is None else engine
         self.engine = engine
         env = dict(os.environ, RAABE_FEEL_DEBUG_PORT=str(port))
         if background:
             env["RAABE_FEEL_BACKGROUND"] = "1"
+        if browser_args:
+            env["RAABE_FEEL_BROWSER_ARGS"] = browser_args
         self.started = time.perf_counter()
         self.proc = subprocess.Popen([str(exe or PROTOTYPE_EXE), *(args if args is not None else [engine, fixture_name])], env=env)
         if title_suffix is None:

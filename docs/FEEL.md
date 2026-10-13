@@ -86,3 +86,9 @@ is screenshotted at the same window size and compared side by side.
   formatting test reads spaces one by one.
 - Fonts arrive asynchronously (the font database loads after start-up): wait for
   `__probe.settled()` before measuring a freshly opened document.
+- To split screen latency into "browser late" and "Windows late", `run.py latency --trace`
+  also records the browser's Event Timing report per keystroke and a pipeline trace
+  (`captures/traces/`); `--variants` adds RaabeWrite runs with other WebView2 presentation
+  flags. `python -m feellab.presentation` measures event → presented frame without real
+  input. On 2026-10-13 the browser presented every keystroke within two refreshes; the
+  occasional four-frame delays seen on screen arise in Windows' composition.

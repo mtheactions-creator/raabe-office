@@ -54,7 +54,13 @@ def main(argv: list[str]) -> None:
         data = startup.run()
     elif test == "latency":
         from feellab import latency
-        data = latency.run()
+        traces = Path(__file__).parent / "captures" / "traces"
+        traces.mkdir(parents=True, exist_ok=True)
+        variants = {
+            "no-dcomp": "--disable-direct-composition",
+            "no-vsync": "--disable-gpu-vsync",
+        } if "--variants" in argv else None
+        data = latency.run(traces if "--trace" in argv else None, variants)
     elif test == "docx":
         from feellab import docx_fidelity
         fixtures = targets.ROOT / "packages/ooxml/test/fixtures"
