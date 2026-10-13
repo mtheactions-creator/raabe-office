@@ -221,6 +221,11 @@ def place(hwnd: int, x: int, y: int, w: int, h: int) -> None:
     user32.SetWindowPos(hwnd, 0, x, y, w, h, 0x0004 | 0x0010)  # NOZORDER | NOACTIVATE
 
 
+def place_quietly(hwnd: int, x: int, y: int, w: int, h: int) -> None:
+    """Moves and sizes a window without showing or activating it (background runs)."""
+    user32.SetWindowPos(hwnd, 0, x, y, w, h, 0x0004 | 0x0010)  # NOZORDER | NOACTIVATE
+
+
 def activate(hwnd: int, settle: float = 0.15) -> None:
     """Brings a window to the foreground despite Windows' foreground-lock rules.
     With settle=0 it returns immediately without verifying (for timing measurements)."""

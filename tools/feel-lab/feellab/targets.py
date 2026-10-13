@@ -76,22 +76,24 @@ WD_STYLE_NORMAL, WD_STYLE_HEADING1 = -1, -2
 class WordTarget(Target):
     name = "word"
 
-    def __init__(self, fixture_name: str = "short"):
+    def __init__(self, fixture_name: str = "short", visible: bool = True):
+        """`visible=False` for runs without real input (Word stays invisible)."""
         import win32com.client
         # A separate Word process, so the harness never touches the user's own documents.
         self.app = win32com.client.gencache.EnsureDispatch(win32com.client.DispatchEx("Word.Application"))
         try:
-            self.app.Visible = True
+            self.app.Visible = visible
             self.doc = self.app.Documents.Add()
             self.doc.ShowSpellingErrors = False
             self.doc.ShowGrammaticalErrors = False
             self._setup_styles()
-            win = self.app.ActiveWindow
+            win = self.doc.Windows(1)
             win.View.Type = 3  # print layout
             win.View.Zoom.Percentage = 100
             win.View.ShowAll = False
             self.hwnd = win.Hwnd
-            winapi.place(self.hwnd, *WINDOW_RECT)
+            if visible:
+                winapi.place(self.hwnd, *WINDOW_RECT)
             self.load(fixture_name)
         except Exception:
             self.app.Quit(0)
@@ -104,7 +106,7 @@ class WordTarget(Target):
         ps.TopMargin, ps.BottomMargin, ps.LeftMargin, ps.RightMargin = 70.85, 56.7, 70.85, 70.85
         multiple = 12 * 1.08  # "multiple 1.08" is stored as points of a 12 pt line
         for sid, font, size, color, before, after, keep in (
-            (WD_STYLE_NORMAL, "Calibri", 11, 0, 0, 8, False),
+            (WD_STYLE_NORMAL, "Calibri", 11, -16777216, 0, 8, False),  # automatic colour
             (WD_STYLE_HEADING1, "Calibri Light", 16, 0x96542F, 12, 0, True),
         ):
             s = d.Styles(sid)
@@ -118,20 +120,31 @@ class WordTarget(Target):
     def load(self, name: str) -> None:
         paras = fixture(name)
         self.doc.Content.Text = "\r".join(p["text"] for p in paras)
+        # Formatting from a previous case must not survive the text replacement.
+        self.doc.Content.Font.Reset()
+        self.doc.Content.ParagraphFormat.Reset()
         self.doc.Content.Style = WD_STYLE_NORMAL
         for i, p in enumerate(paras, start=1):
             if p["style"] == "h1":
                 self.doc.Paragraphs(i).Style = WD_STYLE_HEADING1
         self.doc.UndoClear()
         self.set_selection(0, 0)
-        self.app.ActiveWindow.ScrollIntoView(self.doc.Range(0, 0), True)
-        self.app.ActiveWindow.VerticalPercentScrolled = 0
+        self.doc.Windows(1).ScrollIntoView(self.doc.Range(0, 0), True)
+        self.doc.Windows(1).VerticalPercentScrolled = 0
 
     def text(self) -> str:
-        t = self.doc.Content.Text
+        r = self.doc.Content
+        r.TextRetrievalMode.IncludeHiddenText = True  # hidden text is part of the document
+        t = r.Text
         if t.endswith("\r"):
             t = t[:-1]
         return t.replace("\r", "\n")
+
+    def wb(self, command: str) -> None:
+        """Runs a built-in Word command by name (the one a shortcut is bound to)."""
+        import pythoncom
+        o = self.app.WordBasic._oleobj_
+        o.Invoke(o.GetIDsOfNames(command), 0, pythoncom.DISPATCH_METHOD, False)
 
     def selection(self) -> tuple[int, int]:
         s = self.app.Selection
@@ -146,7 +159,7 @@ class WordTarget(Target):
 
     def point_at(self, offset: int) -> tuple[float, float, float]:
         rng = self.doc.Range(offset, offset)
-        left, top, width, height = self.app.ActiveWindow.GetPoint(0, 0, 0, 0, rng)
+        left, top, width, height = self.doc.Windows(1).GetPoint(0, 0, 0, 0, rng)
         return float(left), float(top), float(height)
 
     def lines(self) -> list[int]:
@@ -173,7 +186,7 @@ class WordTarget(Target):
         return out
 
     def ensure_visible(self, offset: int) -> None:
-        self.app.ActiveWindow.ScrollIntoView(self.doc.Range(offset, offset), True)
+        self.doc.Windows(1).ScrollIntoView(self.doc.Range(offset, offset), True)
 
     def close(self) -> None:
         self.doc.Close(0)
@@ -201,18 +214,22 @@ def clear_feel_recovery() -> None:
 
 
 def raabe_write(fixture_name: str = "short", port: int = 9370, extra: list[str] | None = None,
-                keep_recovery: bool = False) -> "WebViewTarget":
+                keep_recovery: bool = False, background: bool = False) -> "WebViewTarget":
+    """`background`: off screen and never focused, for runs that need no real input."""
     if not keep_recovery:
         clear_feel_recovery()
     return WebViewTarget("raabe-write", fixture_name, port, exe=RAABE_WRITE_EXE,
-                         args=["--feel", fixture_name, *(extra or [])], title_suffix=" - RaabeWrite")
+                         args=["--feel", fixture_name, *(extra or [])], title_suffix=" - RaabeWrite", background=background)
 
 class WebViewTarget(Target):
     def __init__(self, engine: str, fixture_name: str = "short", port: int = 9333,
-                 exe: Path | None = None, args: list[str] | None = None, title_suffix: str | None = None):
+                 exe: Path | None = None, args: list[str] | None = None, title_suffix: str | None = None,
+                 background: bool = False):
         self.name = f"proto-{engine}" if exe is None else engine
         self.engine = engine
         env = dict(os.environ, RAABE_FEEL_DEBUG_PORT=str(port))
+        if background:
+            env["RAABE_FEEL_BACKGROUND"] = "1"
         self.started = time.perf_counter()
         self.proc = subprocess.Popen([str(exe or PROTOTYPE_EXE), *(args if args is not None else [engine, fixture_name])], env=env)
         if title_suffix is None:
@@ -222,7 +239,8 @@ class WebViewTarget(Target):
             match = lambda h: winapi.window_title(h).endswith(title_suffix) and _pid(h) == self.proc.pid
         self.hwnd = winapi.wait_for_window(match)
         self.window_shown = time.perf_counter()
-        winapi.place(self.hwnd, *WINDOW_RECT)
+        if not background:
+            winapi.place(self.hwnd, *WINDOW_RECT)
         self.ws = self._connect(port)
         self._id = 0
         while not self.js("typeof window.__probe === 'object'"):
@@ -263,9 +281,10 @@ class WebViewTarget(Target):
             self.cdp("Input.dispatchKeyEvent", {"type": "keyDown", "text": ch, "key": ch, "unmodifiedText": ch})
             self.cdp("Input.dispatchKeyEvent", {"type": "keyUp", "key": ch})
 
-    def send_key(self, key: str, ctrl: bool = False, shift: bool = False, alt: bool = False) -> None:
+    def send_key(self, key: str, ctrl: bool = False, shift: bool = False, alt: bool = False, vk: int | None = None) -> None:
+        """`vk` overrides the virtual-key code (keys such as < or # on a German keyboard)."""
         mods = (1 if alt else 0) | (2 if ctrl else 0) | (8 if shift else 0)
-        vk = self.KEYS.get(key, ord(key.upper()) if len(key) == 1 else 0)
+        vk = vk if vk is not None else self.KEYS.get(key, ord(key.upper()) if len(key) == 1 else 0)
         code = key if len(key) > 1 else f"Key{key.upper()}" if key.isalpha() else f"Digit{key}"
         base = {"key": key, "code": code, "windowsVirtualKeyCode": vk, "nativeVirtualKeyCode": vk, "modifiers": mods}
         self.cdp("Input.dispatchKeyEvent", {"type": "rawKeyDown", **base})

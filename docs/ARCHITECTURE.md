@@ -27,7 +27,7 @@
 | Spell check | Hunspell dictionaries (igerman98, en_US/en_GB) via WebAssembly | Offline, open licences |
 | Formula editor | MathLive (MIT) for input, MathML ↔ OMML conversion | |
 | Charts | Own renderer (shared by RaabeCalc and RaabePresent) | Must match Excel chart look |
-| Fonts | System fonts; Carlito/Caladea/Liberation bundled as metric-compatible fallbacks | D-011 |
+| Fonts | System fonts, metrics read from the font files (Rust fontdb + ttf-parser); Carlito/Caladea/Liberation as metric-compatible fallbacks | D-011, D-027 |
 
 ## Repository layout
 
@@ -41,11 +41,14 @@ apps/
   raabe-calc/         later
   raabe-present/      later
 packages/
-  text-engine/        model, line breaking, pagination, view, editor (D-017)
+  text-engine/        model.ts (paragraphs, runs, objects), styles.ts (style sheet and
+                      resolution), fonts.ts (metrics, measuring), layout.ts (line breaking and
+                      pagination, D-025), doc.ts (edits), view.ts (DOM rendering, caret,
+                      selection), editor.ts (input and commands, D-026), probe.ts (feel-lab)
   shell/              commands, ribbon, keytips, title bar (QAT, document tabs, search),
                       backstage, status bar, dialogs, popups, platform layer, theme.css,
                       icons.gen.ts (generated from Fluent UI System Icons, MIT)
-  ooxml/              .docx reading/writing for the supported subset + detection of the rest
+  ooxml/              .docx reading and writing; everything not edited is kept verbatim (D-024)
   (planned) spell/, charts/
 branding/             logos (excluded from the GPL, see branding/README.md)
 docs/                 decisions, scope, architecture, feel metrics, roadmap, reports
@@ -61,15 +64,33 @@ controls and files opened from Explorer. `platform-tauri.ts` implements it for T
 (Windows now, iPadOS later); `platform-browser.ts` is a development fallback for
 `npm run dev:write` in a normal browser.
 
+## Documents and formatting (Step 2)
+
+- A paragraph is text plus runs of character properties (`CharProps`), paragraph properties
+  (`ParaProps`) and the formatting of its paragraph mark. Objects the engine does not edit
+  (fields, links, images, notes, revisions, equations) sit in the text as U+FFFC with their
+  original XML; bookmarks and comment ranges are zero-width anchors; tables and other blocks
+  are read-only placeholder paragraphs. Unknown property elements are kept as raw XML and
+  written back in schema order.
+- Formatting is resolved through the style sheet (document defaults → paragraph style chain
+  → character style → direct formatting), cached per object.
+- Layout measures characters with the canvas at a large size (design widths) and takes
+  vertical metrics from the platform (`fontMetrics`), so it matches both Word and the DOM.
+  Lines are rendered as absolutely positioned spans whose baselines are placed exactly.
+
 ## Testing
 
 - `npm test`: unit tests (Vitest + jsdom) for the text engine and .docx package, including a
   document saved by Word itself.
-- `tools/feel-lab/smoke_write.py`: drives the real app through the DevTools protocol
-  (no real input) and checks files with Word: typing, undo, styles, save, Word round trip,
-  protection of unsupported content, keytips, search, backstage, PDF, AutoRecover after a
-  crash, close prompts, ribbon collapsing.
-- `tools/feel-lab/run.py`: the feel metrics against Word (docs/FEEL.md).
+- `tools/feel-lab/smoke_write.py`: drives the real app off screen through the DevTools
+  protocol (no real input) and checks files with Word: typing, undo, styles, formatting
+  shortcuts, save, Word round trip of formatting and of a table kept verbatim, keytips,
+  search, backstage, PDF, AutoRecover after a crash, close prompts, ribbon collapsing.
+- `tools/feel-lab/docx_word_check.py`: edits and saves Word-made documents with rich content
+  and has Word confirm nothing was lost.
+- `tools/feel-lab/run.py`: the feel metrics against Word (docs/FEEL.md), including layout
+  fidelity on .docx files (`docx`) and formatting behaviour (`formatting`).
+- `python tools/check-chars.py`: finds invisible characters in sources (see CLAUDE.md).
 
 ## Editing engine candidates (Step 0)
 

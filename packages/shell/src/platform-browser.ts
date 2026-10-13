@@ -35,6 +35,8 @@ export function browserPlatform(): Platform {
     clipboardRead: () => navigator.clipboard.readText(),
     clipboardWrite: (t) => navigator.clipboard.writeText(t),
     printToPdf: async () => { print(); },
+    listFonts: async () => ["Arial", "Calibri", "Calibri Light", "Cambria", "Comic Sans MS", "Courier New", "Georgia", "Segoe UI", "Times New Roman", "Verdana"],
+    fontMetrics: async () => ({}),
     onOpenFiles: () => {},
     window: {
       minimize() {},

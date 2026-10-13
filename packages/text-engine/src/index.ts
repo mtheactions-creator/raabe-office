@@ -1,18 +1,43 @@
 // Public API of the text engine (decision D-017: controlled editing).
 
-export { Editor, type ChangeEvent, type EditorStats } from "./editor";
-export { Doc, type Para, type Pos } from "./doc";
-export { PAGE, PT, STYLES, type StyleId, type ParaStyle } from "./geometry";
-export { MIN_ZOOM, MAX_ZOOM } from "./view";
+export { Editor, FONT_STEPS, type ChangeEvent, type EditorStats, type CharState, type CaseMode, type CopiedFormat } from "./editor";
+export { Doc, cmp, type Pos, type DocState, type DocSettings } from "./doc";
+export { Fonts, PT, type FontMetrics, type MetricsProvider } from "./fonts";
+export { A4, Layouter, type Layout, type PageSetup } from "./layout";
+export {
+  EMPTY, LINE_BREAK, OBJ, PAGE_BREAK, intern, makePara, validPara,
+  type Align, type Anchor, type BlockObject, type CharProps, type InlineObject, type LineRule, type Para, type ParaProps,
+  type Run, type TabStop, type Underline,
+} from "./model";
+export {
+  GERMAN_NAMES, StyleSheet, builtinStyle, defaultStyleSheet,
+  type ResolvedChar, type ResolvedPara, type StyleDef, type StyleType, type Theme,
+} from "./styles";
+export { HIGHLIGHT, MIN_ZOOM, MAX_ZOOM } from "./view";
 export { countWords } from "./words";
-export { installProbe, type EngineProbe } from "./probe";
+export { installProbe, type EngineProbe, type LineBox, type ProbeFormat } from "./probe";
 
 import type { Editor } from "./editor";
-import type { EngineProbe } from "./probe";
-import type { Para } from "./doc";
+import type { EngineProbe, ProbeFormat } from "./probe";
+import type { DocState } from "./doc";
+import { propsAt, type CharProps } from "./model";
+import { PT } from "./fonts";
 
 /** Adapts an editor to the feel-lab measurement interface (see docs/FEEL.md). */
-export function probeFor(getEditor: () => Editor, load: (name: string) => Para[]): EngineProbe {
+export function probeFor(getEditor: () => Editor, load: (name: string) => Partial<DocState>): EngineProbe {
+  const lineStart = (e: Editor, para: number, line: number) =>
+    e.doc.toOffset({ p: para, o: e.layout.paras[para].lines[line].start });
+  const format = (e: Editor, para: number, props: CharProps): ProbeFormat => {
+    const s = e.doc.styles;
+    const rp = s.resolvePara(e.doc.paras[para].props);
+    const c = s.resolveChar(rp.style, props);
+    return {
+      font: c.font, size: c.size, bold: c.bold, italic: c.italic, underline: c.underline, strike: c.strike,
+      vertAlign: c.vertAlign, color: c.color, highlight: c.highlight, caps: c.caps, smallCaps: c.smallCaps, hidden: c.hidden,
+      dstrike: c.dstrike, style: s.displayName(rp.style), align: rp.align, indLeft: rp.indLeft, indFirst: rp.indFirst,
+      before: rp.before, after: rp.after, line: rp.line, lineRule: rp.lineRule,
+    };
+  };
   return {
     engine: "b",
     text: () => getEditor().doc.text(),
@@ -27,7 +52,7 @@ export function probeFor(getEditor: () => Editor, load: (name: string) => Para[]
     pointAt: (offset) => getEditor().view.clientPoint(getEditor().doc.fromOffset(offset)),
     lines() {
       const e = getEditor();
-      return e.layout.placed.map((pl) => e.doc.toOffset({ p: pl.para, o: e.layout.lines[pl.para][pl.line].start }));
+      return e.layout.placed.map((pl) => lineStart(e, pl.para, pl.line));
     },
     pages() {
       const e = getEditor();
@@ -36,11 +61,45 @@ export function probeFor(getEditor: () => Editor, load: (name: string) => Para[]
       for (const pl of e.layout.placed) {
         if (pl.page !== page) {
           page = pl.page;
-          out.push(e.doc.toOffset({ p: pl.para, o: e.layout.lines[pl.para][pl.line].start }));
+          out.push(lineStart(e, pl.para, pl.line));
         }
       }
       return out;
     },
+    lineBoxes() {
+      const e = getEditor();
+      const pg = e.layout.page;
+      const r = (v: number) => Math.round(v * 100) / 100;
+      return e.layout.placed.map((pl) => {
+        const l = e.layout.paras[pl.para].lines[pl.line];
+        return {
+          start: lineStart(e, pl.para, pl.line), page: pl.page,
+          x: r(pg.marginLeft + l.x0 / PT), y: r(pg.marginTop + pl.y / PT), h: r(l.height / PT), base: r(l.baseline / PT),
+        };
+      });
+    },
+    xs(offsets) {
+      const e = getEditor();
+      const pg = e.layout.page;
+      return offsets.map((offset) => {
+        const pos = e.doc.fromOffset(offset);
+        const pl = e.layout.paras[pos.p];
+        const line = pl.lines.find((l, i) => pos.o >= l.start && (pos.o < l.end || i === pl.lines.length - 1)) ?? pl.lines[0];
+        const k = Math.min(pos.o - line.start, line.charX.length - 1);
+        return Math.round((pg.marginLeft + (line.x0 + line.charX[Math.max(0, k)]) / PT) * 100) / 100;
+      });
+    },
+    formatAt(offset) {
+      const e = getEditor();
+      const pos = e.doc.fromOffset(offset);
+      const p = e.doc.paras[pos.p];
+      return format(e, pos.p, pos.o < p.text.length ? propsAt(p, pos.o) : p.mark);
+    },
+    typingFormat() {
+      const e = getEditor();
+      return format(e, e.sel.head.p, e.typingProps());
+    },
+    settled: () => getEditor().fonts.pendingCount === 0,
     load: (name) => getEditor().load(load(name)),
     focus: () => getEditor().focus(),
     reveal(offset) {

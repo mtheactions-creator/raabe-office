@@ -18,9 +18,11 @@ weiter nutzen können.
 - **Für die Schule gemacht:** nur die Funktionen, die im Schulalltag gebraucht werden.
 - **Windows und iPad.**
 
-> **Stand:** Schritt 1 abgeschlossen. Erste Testversion von RaabeWrite: Menüband, Datei-Menü,
-> Dokument-Tabs, Speichern als .docx, PDF-Export und automatische Wiederherstellung.
-> Formatierungen (fett, Listen, Tabellen …) folgen ab Schritt 2. Fahrplan: [docs/ROADMAP.md](docs/ROADMAP.md).
+> **Stand:** Schritt 2 abgeschlossen. RaabeWrite kann Text formatieren (Schriftart, -grad,
+> fett, kursiv, Farben, Ausrichtung, Einzüge, Abstände, Formatvorlagen) und bricht Zeilen und
+> Seiten genau wie Word um. Was RaabeWrite noch nicht bearbeiten kann (Tabellen, Bilder …),
+> bleibt beim Speichern unverändert erhalten. Listen, Tabellen und Bilder folgen in Schritt 3.
+> Fahrplan: [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## English summary
 

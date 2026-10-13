@@ -34,6 +34,10 @@ export interface Platform {
   clipboardRead(): Promise<string>;
   clipboardWrite(text: string): Promise<void>;
   printToPdf(path: string): Promise<void>;
+  /** Installed font families (for the Schriftart box). */
+  listFonts(): Promise<string[]>;
+  /** Vertical font metrics from the font files (hhea table), keyed by family name. */
+  fontMetrics(families: string[]): Promise<Record<string, { found: boolean; unitsPerEm: number; ascender: number; descender: number; lineGap: number; winAscent?: number; winDescent?: number; math?: boolean }>>;
   /** Files passed on the command line (double-click in Explorer) at start and later. */
   onOpenFiles(handler: (paths: string[]) => void): void;
   window: {

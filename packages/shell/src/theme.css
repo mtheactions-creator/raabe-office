@@ -208,7 +208,6 @@ button {
 
 .rspinner { display: flex; align-items: center; gap: 6px; height: 24px; }
 .rspinner .lbl { width: 58px; }
-.rspinner input { width: 60px; height: 22px; border: 1px solid #c7c7c7; border-radius: 4px; font: 12px var(--font); padding: 0 4px; color: var(--text-disabled); background: var(--card); }
 
 .rcheck { display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 4px; border-radius: 4px; }
 .rcheck .box { width: 14px; height: 14px; border: 1px solid #8a8a8a; border-radius: 3px; display: inline-flex; align-items: center; justify-content: center; }
@@ -357,3 +356,32 @@ body.touch .qat button { height: 36px; min-width: 36px; }
   #print-root { display: block; }
   .print-page { break-after: page; page-break-after: always; }
 }
+
+/* ----- Step 2: inputs, colour pickers ---------------------------------------------------- */
+
+.rcombo input:not([readonly]) { cursor: text; }
+.combo-list { max-height: 420px; overflow-y: auto; }
+.combo-list button { height: 26px; font-size: 13px; }
+.palette { padding: 6px; min-width: 0; }
+.palette-title { font-size: 11px; font-weight: 600; color: var(--text-2); padding: 6px 6px 4px; }
+.swatches { display: grid; gap: 2px; padding: 0 4px 4px; }
+.swatches .swatch { width: 18px; height: 18px; border: 1px solid rgba(0,0,0,.15); border-radius: 0; padding: 0; }
+.swatches .swatch:hover { outline: 2px solid #f29436; outline-offset: -1px; }
+.auto-swatch { width: 16px; height: 16px; background: #000; border: 1px solid #c7c7c7; display: inline-block; }
+.color-main { flex-direction: column; justify-content: flex-start !important; padding-top: 2px; }
+.color-main .ico-s { width: 14px; height: 14px; }
+.colorbar { display: block; width: 16px; height: 4px; margin-top: 1px; }
+.rspinner .spinbox { display: inline-flex; align-items: stretch; border: 1px solid #c7c7c7; border-radius: 4px; background: var(--card); height: 22px; }
+.rspinner .spinbox input { width: 58px; height: 20px; border: 0; color: var(--text); padding: 0 4px; font: 12px var(--font); outline: none; }
+.rspinner .spinbox input:disabled { color: var(--text-disabled); background: transparent; }
+.rspinner .spin { display: flex; flex-direction: column; width: 14px; }
+.rspinner .spin button { flex: 1; display: inline-flex; align-items: center; justify-content: center; }
+.rspinner .spin .ico-s { width: 8px; height: 8px; }
+.rspinner .spin button:hover:not(:disabled) { background: var(--hover); }
+.dialog .tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--border); margin-bottom: 12px; }
+.dialog .tabs button { padding: 6px 12px; border-bottom: 2px solid transparent; }
+.dialog .tabs button.active { border-bottom-color: var(--accent); font-weight: 600; }
+.dialog fieldset { border: 0; border-top: 1px solid var(--border); padding: 8px 0 4px; margin: 6px 0; }
+.dialog legend { font-weight: 600; padding-right: 8px; }
+.dialog .grid2 { display: grid; grid-template-columns: auto 1fr auto 1fr; gap: 6px 10px; align-items: center; }
+.dialog .preview { border: 1px solid var(--border); background: #fff; height: 64px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-top: 8px; }

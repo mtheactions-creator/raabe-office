@@ -1,1 +1,2 @@
-export { readDocx, writeDocx, type DocxParagraph, type ParagraphStyle, type ReadResult } from "./docx";
+export { readDocx, type DocxPackage, type ReadResult } from "./read";
+export { writeDocx, styleXml } from "./write";

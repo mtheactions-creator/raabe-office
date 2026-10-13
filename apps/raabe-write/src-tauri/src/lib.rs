@@ -2,6 +2,8 @@
 //! through WebView2, and single-instance handling so a double-clicked .docx opens as a new
 //! tab in the running window. Everything else lives in the web frontend.
 
+mod fonts;
+
 use std::fs;
 use std::path::{Path, PathBuf};
 use std::sync::Mutex;
@@ -233,6 +235,7 @@ async fn print_to_pdf_windows(window: WebviewWindow, path: String) -> Result<(),
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     let args: Vec<String> = std::env::args().skip(1).collect();
+    fonts::preload();
     tauri::Builder::default()
         .plugin(tauri_plugin_single_instance::init(|app, argv, cwd| {
             let files = docx_args(argv.into_iter().skip(1), Some(&cwd));
@@ -261,11 +264,17 @@ pub fn run() {
             // protocol is opened on that port and `--feel <fixture>` loads a test document.
             if let Ok(port) = std::env::var("RAABE_FEEL_DEBUG_PORT").map(|p| p.parse::<u16>()) {
                 if let Ok(port) = port {
+                    // Occlusion tracking would pause rendering whenever the window is covered.
                     window = window
                         .data_directory(std::env::temp_dir().join(format!("raabe-write-feel-{port}")))
                         .additional_browser_args(&format!(
-                            "--disable-features=msWebOOUI,msPdfOOUI,msSmartScreenProtection --remote-debugging-port={port}"
+                            "--disable-features=msWebOOUI,msPdfOOUI,msSmartScreenProtection,CalculateNativeWinOcclusion --remote-debugging-port={port}"
                         ));
+                    // Runs that need no real input stay off screen and never take the focus, so
+                    // they can run while someone works at the PC.
+                    if std::env::var("RAABE_FEEL_BACKGROUND").is_ok() {
+                        window = window.position(-4000.0, 0.0).focused(false).skip_taskbar(true);
+                    }
                     if let Some(i) = args.iter().position(|a| a == "--feel") {
                         let fixture: String = args.get(i + 1).cloned().unwrap_or_else(|| "short".into())
                             .chars().filter(|c| c.is_ascii_alphanumeric()).collect();
@@ -278,7 +287,7 @@ pub fn run() {
         })
         .invoke_handler(tauri::generate_handler![
             read_file, write_file, file_info, save_recovery, list_recovery, read_recovery, delete_recovery,
-            startup_files, print_to_pdf
+            startup_files, print_to_pdf, fonts::list_fonts, fonts::font_metrics
         ])
         .run(tauri::generate_context!())
         .expect("error while running RaabeWrite");

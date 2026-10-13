@@ -14,10 +14,57 @@ export interface EngineProbe {
   lines(): number[];
   /** Offsets at which each page starts. */
   pages(): number[];
+  /** Every visual line: start offset, zero-based page, and its box in points from the page's top left. */
+  lineBoxes(): LineBox[];
+  /** x (points from the page's left edge) of the caret before each offset. */
+  xs(offsets: number[]): number[];
+  /** Resolved formatting of the character at `offset` (at a paragraph end: its paragraph mark). */
+  formatAt(offset: number): ProbeFormat;
+  /** Formatting the next typed character would get (Word: Selection.Font with no selection). */
+  typingFormat(): ProbeFormat;
   load(name: string): void;
   focus(): void;
   /** Scrolls so that `offset` is visible, without changing the selection. */
   reveal(offset: number): void;
+  settled(): boolean;
+}
+
+export interface LineBox {
+  start: number;
+  page: number;
+  /** Left edge of the first character. */
+  x: number;
+  /** Top of the line box. */
+  y: number;
+  h: number;
+  /** Baseline below the top. */
+  base: number;
+}
+
+/** Formatting as the harness compares it with Word (colour: "auto" or RRGGBB, sizes in points). */
+export interface ProbeFormat {
+  font: string;
+  size: number;
+  bold: boolean;
+  italic: boolean;
+  underline: string;
+  strike: boolean;
+  vertAlign: string;
+  color: string;
+  highlight: string;
+  caps: boolean;
+  smallCaps: boolean;
+  hidden: boolean;
+  dstrike: boolean;
+  style: string;
+  align: string;
+  /** Paragraph indents, spacing (points) and line spacing (a multiple, or points). */
+  indLeft: number;
+  indFirst: number;
+  before: number;
+  after: number;
+  line: number;
+  lineRule: string;
 }
 
 let pendingInput: number | null = null;
@@ -81,9 +128,15 @@ export function installProbe(engine: EngineProbe): void {
     pointAt: (o: number) => engine.pointAt(o),
     lines: () => engine.lines(),
     pages: () => engine.pages(),
+    lineBoxes: () => engine.lineBoxes(),
+    xs: (offsets: number[]) => engine.xs(offsets),
+    formatAt: (o: number) => engine.formatAt(o),
+    typingFormat: () => engine.typingFormat(),
     load: (n: string) => engine.load(n),
     focus: () => engine.focus(),
     reveal: (o: number) => engine.reveal(o),
+    /** True once no font metrics are outstanding (the layout will not change by itself). */
+    settled: () => engine.settled(),
     /** Screen origin of the client area in CSS px (from the last mouse move), plus DPR. */
     mouseOrigin: () => (origin ? { ...origin, dpr: devicePixelRatio } : null),
     frames: frameRecorder(),

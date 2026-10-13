@@ -85,11 +85,12 @@ export class Commands {
     this.listeners.add(l);
   }
 
-  tooltip(id: string): string {
+  /** `available` overrides whether the command works (a menu button works when its menu does). */
+  tooltip(id: string, available?: boolean): string {
     const c = this.get(id);
     let t = c.tip ?? c.label;
     if (c.shortcut) t += ` (${c.shortcut})`;
-    if (!c.run) t += "\nNoch nicht verfügbar";
+    if (!(available ?? !!c.run)) t += "\nNoch nicht verfügbar";
     return t;
   }
 }

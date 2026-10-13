@@ -5,6 +5,7 @@
 import { h, icon } from "./dom";
 import type { Commands } from "./commands";
 import { closePopup, showMenu, showPopup, type MenuEntry } from "./popup";
+import { highlightHex, showFontColors, showHighlights } from "./palette";
 
 export type Size = "large" | "medium" | "small";
 
@@ -12,9 +13,20 @@ export type Control =
   | { type: "button"; cmd: string; size?: Size; key?: string; label?: string }
   | { type: "split"; cmd: string; size?: Size; key?: string; label?: string; menu: MenuEntry[] }
   | { type: "dropdown"; cmd: string; size?: Size; key?: string; label?: string; menu: MenuEntry[] }
-  | { type: "combo"; cmd: string; width: number; key?: string; value: () => string }
+  | {
+      type: "combo"; cmd: string; width: number; key?: string; value: () => string;
+      /** Entries of the dropdown list, grouped under headings. */
+      options?: () => { heading?: string; items: string[] }[];
+      /** CSS for an entry (e.g. the font itself for "Schriftart"). */
+      optionStyle?: (o: string) => string;
+      commit?: (v: string) => void;
+    }
   | { type: "gallery"; key?: string; items: { cmd: string; preview: string }[]; visible: number }
-  | { type: "spinner"; cmd: string; label: string; icon?: string; key?: string; value?: string }
+  | {
+      type: "spinner"; cmd: string; label: string; icon?: string; key?: string;
+      value?: () => string; commit?: (v: string) => void; step?: (dir: 1 | -1) => void;
+    }
+  | { type: "color"; cmd: string; key?: string; palette: "font" | "highlight"; current: () => string; pick: (c: string) => void }
   | { type: "check"; cmd: string; key?: string }
   | { type: "rows"; rows: (Control | "gap")[][] }
   | { type: "stack"; items: Control[] };
@@ -46,6 +58,8 @@ const LAUNCHER_SVG = '<svg viewBox="0 0 10 10" width="10" height="10" aria-hidde
 
 export interface RibbonOptions {
   onFile: () => void;
+  /** Called after a ribbon input (font box, spinner …) is done, to give focus back to the document. */
+  onDone?: () => void;
   /** Extra controls at the right end of the tab row (e.g. "Kommentare"). */
   tabRowRight?: HTMLElement[];
 }
@@ -60,7 +74,7 @@ export class Ribbon {
   private collapsedGroups = new Set<string>();
   private minimized = false;
 
-  constructor(private commands: Commands, private tabs: Tab[], opts: RibbonOptions) {
+  constructor(private commands: Commands, private tabs: Tab[], private opts: RibbonOptions) {
     this.current = tabs[0];
     const file = h("button", {
       class: "tab", "data-keytip": "D", "data-keytip-scope": "root", "data-tip": "Datei\nDateien öffnen, speichern, drucken und mehr.",
@@ -213,6 +227,7 @@ export class Ribbon {
           const any = c.menu.some((e) => e !== "-" && ("cmd" in e ? this.commands.isEnabled(e.cmd) : !e.disabled));
           b.disabled = !any;
           b.classList.toggle("disabled", !any);
+          b.dataset.tip = this.commands.tooltip(c.cmd, any);
         });
         b.onclick = () => showMenu(this.commands, c.menu, b.getBoundingClientRect());
         return b;
@@ -237,14 +252,43 @@ export class Ribbon {
         return h("div", { class: `rsplit${size === "large" ? " rsplit-large" : ""}` }, main, arrow);
       }
       case "combo": {
-        const input = h("input", { type: "text", readOnly: true, "aria-label": this.commands.get(c.cmd).label });
+        const c2 = c;
+        const input = h("input", { type: "text", "aria-label": this.commands.get(c.cmd).label, spellcheck: false });
+        const done = () => this.opts.onDone?.();
+        const commit = () => { if (c2.commit && input.value.trim()) c2.commit(input.value.trim()); done(); };
+        input.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") { e.preventDefault(); commit(); }
+          else if (e.key === "Escape") { e.preventDefault(); input.value = c2.value(); done(); }
+          e.stopPropagation();
+        });
+        input.addEventListener("focus", () => input.select());
+        const openList = () => {
+          const groups = c2.options?.() ?? [];
+          const list = h("div", { class: "menu combo-list", style: `min-width:${Math.max(c2.width, 180)}px` });
+          for (const g of groups) {
+            if (g.heading) list.append(h("div", { class: "palette-title" }, g.heading));
+            for (const item of g.items) {
+              list.append(h("button", {
+                style: c2.optionStyle?.(item) ?? "",
+                onclick: () => { closePopup(); input.value = item; commit(); },
+              }, item));
+            }
+          }
+          showPopup(list, wrap.getBoundingClientRect());
+          list.querySelector<HTMLElement>("button")?.scrollIntoView({ block: "nearest" });
+        };
+        const arrow = h("button", { tabIndex: -1, "aria-label": "Öffnen", onclick: () => openList() }, icon("chevron-down"));
         const wrap = h("div", {
           class: "rcombo", style: `width:${c.width}px`, "data-tip": this.commands.tooltip(c.cmd),
           "data-keytip": c.key, "data-keytip-scope": this.scope(),
-        }, input, h("button", { tabIndex: -1 }, icon("chevron-down")));
+          onclick: (e: MouseEvent) => { if (e.target === wrap) input.focus(); },
+        }, input, arrow);
         this.updaters.push(() => {
-          input.value = c.value();
-          wrap.classList.toggle("disabled", !this.commands.isEnabled(c.cmd));
+          if (document.activeElement !== input) input.value = c2.value();
+          const on = this.commands.isEnabled(c2.cmd);
+          wrap.classList.toggle("disabled", !on);
+          input.readOnly = !on || !c2.commit;
+          arrow.disabled = !on || !c2.options;
         });
         return wrap;
       }
@@ -264,11 +308,53 @@ export class Ribbon {
           h("div", { class: "scroll" }, h("button", { disabled: true }, icon("chevron-up")), more));
       }
       case "spinner": {
-        const input = h("input", { type: "text", value: c.value ?? "", readOnly: true, "aria-label": c.label });
+        const c2 = c;
+        const input = h("input", { type: "text", "aria-label": c.label, spellcheck: false });
+        const done = () => this.opts.onDone?.();
+        input.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") { e.preventDefault(); c2.commit?.(input.value); done(); }
+          else if (e.key === "Escape") { e.preventDefault(); done(); }
+          else if (e.key === "ArrowUp" || e.key === "ArrowDown") { e.preventDefault(); c2.step?.(e.key === "ArrowUp" ? 1 : -1); }
+          e.stopPropagation();
+        });
+        input.addEventListener("focus", () => input.select());
+        const arrows = h("span", { class: "spin" },
+          h("button", { tabIndex: -1, "aria-label": "Mehr", onclick: () => c2.step?.(1) }, icon("chevron-up")),
+          h("button", { tabIndex: -1, "aria-label": "Weniger", onclick: () => c2.step?.(-1) }, icon("chevron-down")));
         const el = h("div", { class: "rspinner", "data-tip": this.commands.tooltip(c.cmd), "data-keytip": c.key, "data-keytip-scope": this.scope() },
-          icon(c.icon), h("span", { class: "lbl" }, c.label), input);
-        this.updaters.push(() => { input.disabled = !this.commands.isEnabled(c.cmd); });
+          icon(c.icon), h("span", { class: "lbl" }, c.label), h("span", { class: "spinbox" }, input, arrows));
+        this.updaters.push(() => {
+          const on = this.commands.isEnabled(c2.cmd);
+          input.disabled = !on;
+          arrows.querySelectorAll("button").forEach((b) => { b.disabled = !on; });
+          if (document.activeElement !== input && c2.value) input.value = c2.value();
+        });
         return el;
+      }
+      case "color": {
+        const c2 = c;
+        const cmdDef = this.commands.get(c.cmd);
+        const bar = h("span", { class: "colorbar" });
+        const main = h("button", {
+          class: "rb rb-small color-main", "data-tip": this.commands.tooltip(c.cmd), "aria-label": cmdDef.label,
+          onclick: () => { if (this.commands.isEnabled(c2.cmd)) { c2.pick(c2.current()); this.opts.onDone?.(); } },
+        }, icon(cmdDef.icon), bar);
+        const arrow = h("button", {
+          class: "rb rb-small arrow", "aria-label": "Weitere Optionen", "data-keytip": c.key, "data-keytip-scope": this.scope(),
+          onclick: () => {
+            const pick = (v: string) => { c2.pick(v); this.opts.onDone?.(); };
+            if (c2.palette === "font") showFontColors(arrow.getBoundingClientRect(), pick);
+            else showHighlights(arrow.getBoundingClientRect(), pick);
+          },
+        }, h("span", { class: "chev" }, icon("chevron-down")));
+        this.updaters.push(() => {
+          const on = this.commands.isEnabled(c2.cmd);
+          main.disabled = !on; arrow.disabled = !on;
+          const cur = c2.current();
+          const hex = c2.palette === "highlight" ? highlightHex(cur) : cur === "auto" ? "000000" : cur;
+          bar.style.background = cur === "none" ? "transparent" : `#${hex}`;
+        });
+        return h("div", { class: "rsplit" }, main, arrow);
       }
       case "check": {
         const box = h("span", { class: "box" });

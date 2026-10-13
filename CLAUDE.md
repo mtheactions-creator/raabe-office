@@ -16,8 +16,10 @@ Windows first, iPad close behind (new students all use iPads). Open source, GPL-
 - The owner writes in English; the apps' UI is German, using Microsoft's exact German
   labels and shortcuts.
 - Feel is judged by measurement against real Word (`docs/FEEL.md`), not by asking the
-  owner to test consciously. Running the harness takes over keyboard and screen: tell
-  the owner first and only run it when they are not using the PC.
+  owner to test consciously. Only `run.py latency` and `run.py behaviour` take over
+  keyboard, mouse and screen: tell the owner first and only run them when they are not
+  using the PC. Everything else (`docx`, `formatting`, `fidelity`, `smoke_write.py`) runs
+  invisibly in the background (D-028).
 
 ## Where things are
 - Repository: https://github.com/mtheactions-creator/raabe-office (public, branch `main`).
@@ -54,12 +56,28 @@ Display: 4K at 150 % scaling, currently 30 Hz.
   (not on Git Bash's PATH: `export PATH="$HOME/.cargo/bin:$PATH"`).
 - Icons: edit `packages/shell/scripts/icons.json`, then `node packages/shell/scripts/build-icons.mjs`.
 - After any frontend change, rebuild the exe before running feel-lab or the smoke test.
+- Test documents for layout are built by Word itself: `tools/feel-lab/make_fixtures.py`
+  (`--layout`, `--fonts`, `--breaks`, `--top`, ...) writes them to `packages/ooxml/test/fixtures/`.
 
 ## Pitfalls seen so far
-- Backslash escapes (`\r`, `\u00a0`) get mangled when patching files through shell heredocs
-  or inline Python. Write patch scripts as files, and use `String.fromCharCode(...)` for
-  invisible characters in source code.
+- Backslash escapes get mangled on the way into files: the Bash tool turns `\\n` inside
+  heredocs and `sed` expressions into real line breaks, and the Write/Edit tools turn
+  printable `\uXXXX` escapes (`\u00ad`, `\u00a0`, `\ufffc`) into the invisible characters.
+  Write patch scripts with the Write tool as files (no heredoc), prefer `chr(10)` /
+  `String.fromCharCode(...)` for special characters, and run `python tools/check-chars.py`
+  (`--fix` rewrites them as escapes) before committing.
 - Python's `write_text` writes CRLF on Windows; pass `newline="\n"`.
+- Word's COM reports are coarse: `Information(5/6)` and `GetPoint` are in screen pixels,
+  `Information(5)` ignores alignment, a range's `Font` ignores spaces when deciding whether
+  it is uniform, and `Range.Text` shows "all caps" text in capitals and leaves out hidden
+  text unless `TextRetrievalMode.IncludeHiddenText` is set. For exact positions read Word's
+  PDF export (`feellab/pdftext.py`).
+- The canvas returns hinted whole-pixel widths for some fonts at small sizes (Cambria);
+  measure at a large size and scale (`Fonts.measureFont`).
+- `fontdb`'s query matches family names case-sensitively; the engine asks in lower case
+  (`fonts.rs` `find_face`).
+- A WebView2 window that is hidden or covered stops `requestAnimationFrame`; the browser
+  pane of the desktop app does too while it is hidden, so ribbon state there may look stale.
 
 ## Conventions
 - Internal docs and code comments in English; UI strings in German.

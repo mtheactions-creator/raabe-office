@@ -1,15 +1,15 @@
 // RaabeWrite: wires the shell (title bar, ribbon, backstage, status bar) to documents.
-// Each open document is a tab with its own editor. Files are .docx (D-004); content we
-// cannot keep yet is detected on open and the original file is never overwritten.
+// Each open document is a tab with its own editor. Files are .docx (D-004); content the
+// editor cannot change yet is preserved verbatim and written back unchanged (D-024).
 
-import { Editor, PAGE, type Para } from "@raabe/text-engine";
-import { readDocx, writeDocx } from "@raabe/ooxml";
+import { Editor, Fonts, PT, type CopiedFormat, type DocState, type LineRule, type Para } from "@raabe/text-engine";
+import { readDocx, writeDocx, type DocxPackage } from "@raabe/ooxml";
 import {
   Backstage, Commands, Keytips, Ribbon, StatusBar, TitleBar, baseName, dirName, h, icon, installTooltips, messageBox,
-  showDialog, type BackstageEntry, type Platform,
+  showDialog, showFontColors, type BackstageEntry, type Platform,
 } from "@raabe/shell";
 import { COMMANDS } from "./command-list";
-import { ribbonTabs } from "./ribbon-def";
+import { GALLERY, ribbonTabs, type RibbonContext } from "./ribbon-def";
 import { addRecent, loadRecent, loadSettings, removeRecent, saveSettings, setPinned, type Settings } from "./store";
 import appIconUrl from "../../../branding/raabe-write-small.svg?url";
 import logoUrl from "../../../branding/raabe-write.svg?url";
@@ -23,8 +23,10 @@ interface Doc {
   /** Paragraph array at the last save; the document is dirty when the editor's differs. */
   saved: readonly Para[];
   recoverySaved: readonly Para[] | null;
-  /** Content found in the file that RaabeWrite cannot keep (German labels). */
-  unsupported: string[];
+  /** The original file's package (all its parts), for lossless saving. */
+  pkg: DocxPackage | null;
+  /** Content RaabeWrite shows only partly (German labels); it is saved unchanged. */
+  partial: string[];
   lastSaved: number | null;
 }
 
@@ -48,8 +50,19 @@ export class WriteApp {
   private wordTimer = 0;
   private refreshTimer = 0;
   private lastTabsKey = "";
+  private readonly fonts: Fonts;
+  private fontList: string[] = [];
+  private recentFonts: string[] = [];
+  private lastFontColor = "FF0000";
+  private lastHighlight = "yellow";
+  /** Strg+Alt+C (Format kopieren), shared by all documents as in Word. */
+  private copiedFormat: CopiedFormat | null = null;
+  private lastPainterClick = 0;
 
-  constructor(private platform: Platform, initialParas?: Para[]) {
+  constructor(private platform: Platform, initial?: Partial<DocState>) {
+    this.fonts = new Fonts((families) => platform.fontMetrics(families));
+    this.fonts.onChange(() => { for (const d of this.docs) d.editor.relayout(); });
+    void platform.listFonts().then((f) => { this.fontList = f; }).catch(() => {});
     this.commands.register(...COMMANDS);
     this.implementCommands();
 
@@ -66,8 +79,9 @@ export class WriteApp {
       onSearchDone: () => this.active?.editor.focus(),
     });
     const comments = h("button", { class: "pill", disabled: true, "data-tip": "Kommentare\nNoch nicht verfügbar" }, icon("comment"), "Kommentare");
-    this.ribbon = new Ribbon(this.commands, ribbonTabs(() => this.active?.editor ?? null), {
+    this.ribbon = new Ribbon(this.commands, ribbonTabs(this.ribbonContext()), {
       onFile: () => this.openBackstage("home"),
+      onDone: () => this.active?.editor.focus(),
       tabRowRight: [comments],
     });
     this.statusBar = new StatusBar(this.commands, (z) => this.setZoom(z), [{ cmd: "view.readMode" }, { cmd: "view.printLayout" }], "view.zoomDialog");
@@ -99,19 +113,19 @@ export class WriteApp {
     platform.window.onCloseRequested(() => this.confirmQuit());
     setInterval(() => void this.autoRecover(), Math.max(10, this.settings.autoRecoverSeconds) * 1000);
 
-    this.newDoc(initialParas);
+    this.newDoc(initial);
     void this.offerRecovery();
     platform.onOpenFiles((paths) => { for (const p of paths) void this.openPath(p); });
   }
 
   // ----- documents ----------------------------------------------------------------------
 
-  private createDoc(name: string, path: string | null, paras: Para[] | undefined, unsupported: string[] = []): Doc {
+  private createDoc(name: string, path: string | null, state: Partial<DocState> | undefined, pkg: DocxPackage | null = null, partial: string[] = []): Doc {
     const ws = h("div", { class: "workspace", tabIndex: -1 });
     this.docArea.append(ws);
-    const editor = new Editor(ws, paras ?? [{ style: "normal", text: "" }]);
+    const editor = new Editor(ws, state ?? {}, this.fonts);
     const doc: Doc = {
-      id: crypto.randomUUID(), name, path, editor, ws, saved: editor.paragraphs(), recoverySaved: null, unsupported,
+      id: crypto.randomUUID(), name, path, editor, ws, saved: editor.paragraphs(), recoverySaved: null, pkg, partial,
       lastSaved: null,
     };
     editor.onChange((e) => this.onEditorChange(doc, e.content));
@@ -120,9 +134,9 @@ export class WriteApp {
     return doc;
   }
 
-  newDoc(paras?: Para[]): Doc {
+  newDoc(state?: Partial<DocState>): Doc {
     this.untitled++;
-    return this.createDoc(`Dokument${this.untitled}`, null, paras);
+    return this.createDoc(`Dokument${this.untitled}`, null, state);
   }
 
   private isDirty(d: Doc): boolean {
@@ -183,12 +197,13 @@ export class WriteApp {
   private renderInfobar(): void {
     this.infobarSlot.replaceChildren();
     const d = this.active;
-    if (!d || !d.unsupported.length) return;
-    this.infobarSlot.append(h("div", { class: "infobar", role: "alert" },
+    if (!d || !d.partial.length) return;
+    const close = h("button", { onclick: () => { d.partial = []; this.renderInfobar(); } }, "Schließen");
+    this.infobarSlot.append(h("div", { class: "infobar", role: "status" },
       icon("info"),
-      h("span", { class: "msg" }, `Dieses Dokument enthält Inhalte, die RaabeWrite noch nicht darstellen kann: ${d.unsupported.join(", ")}. ` +
-        "Sie fehlen in der Ansicht. Damit sie im Original erhalten bleiben, speichern Sie Änderungen unter einem neuen Namen."),
-      h("button", { onclick: () => void this.saveAs(d) }, "Speichern unter...")));
+      h("span", { class: "msg" }, `RaabeWrite zeigt einige Inhalte dieses Dokuments noch nicht vollständig an: ${d.partial.join(", ")}. ` +
+        "Sie bleiben beim Speichern unverändert erhalten."),
+      close));
   }
 
   async openPath(path: string): Promise<void> {
@@ -209,7 +224,7 @@ export class WriteApp {
       return;
     }
     const pristine = this.docs.length === 1 && this.isPristine(this.docs[0]) ? this.docs[0] : null;
-    this.createDoc(stripExt(baseName(path)), path, result.paragraphs.map((p) => ({ style: p.style, text: p.text })), result.unsupported);
+    this.createDoc(stripExt(baseName(path)), path, result.state, result.pkg, result.partial);
     if (pristine) this.removeDoc(pristine);
     addRecent(path, baseName(path));
     this.backstage.close();
@@ -227,28 +242,13 @@ export class WriteApp {
   }
 
   async save(d: Doc): Promise<boolean> {
-    if (d.path && !d.unsupported.length) return this.writeTo(d, d.path);
-    if (d.path && d.unsupported.length) {
-      const choice = await showDialog({
-        title: "RaabeWrite",
-        body: `„${d.name}“ enthält Inhalte, die RaabeWrite noch nicht unterstützt (${d.unsupported.join(", ")}). ` +
-          "Beim Speichern in die Originaldatei gingen sie verloren. Speichern Sie deshalb unter einem neuen Namen.",
-        buttons: [{ label: "Speichern unter...", value: "saveAs", primary: true }, { label: "Abbrechen", value: "cancel" }],
-        cancel: "cancel",
-      });
-      if (choice !== "saveAs") return false;
-    }
-    return this.saveAs(d);
+    return d.path ? this.writeTo(d, d.path) : this.saveAs(d);
   }
 
   async saveAs(d: Doc): Promise<boolean> {
     let path = await this.platform.saveFileDialog(this.suggestedName(d), "docx");
     if (!path) return false;
     if (!/\.docx$/i.test(path)) path += ".docx";
-    if (d.unsupported.length && d.path && samePath(path, d.path)) {
-      await messageBox("RaabeWrite", "Bitte wählen Sie einen anderen Namen, damit die Originaldatei mit allen Inhalten erhalten bleibt.");
-      return false;
-    }
     const other = this.docs.find((x) => x !== d && x.path && samePath(x.path, path!));
     if (other) {
       await messageBox("RaabeWrite", `„${baseName(path)}“ ist bereits in einem anderen Tab geöffnet. Schließen Sie es zuerst.`);
@@ -260,7 +260,7 @@ export class WriteApp {
   private async writeTo(d: Doc, path: string): Promise<boolean> {
     const paras = d.editor.paragraphs();
     try {
-      await this.platform.writeFile(path, writeDocx(paras.map((p) => ({ style: p.style, text: p.text })), { author: this.settings.userName }));
+      await this.platform.writeFile(path, writeDocx(d.editor.doc.state(), d.pkg, { author: this.settings.userName }));
     } catch (e) {
       await messageBox("RaabeWrite", `Das Dokument konnte nicht unter „${path}“ gespeichert werden. ` +
         `Vielleicht ist die Datei in einem anderen Programm geöffnet.\n\n${String(e)}`);
@@ -269,7 +269,6 @@ export class WriteApp {
     d.path = path;
     d.name = stripExt(baseName(path));
     d.saved = paras;
-    d.unsupported = [];
     d.lastSaved = Date.now();
     addRecent(path, baseName(path));
     void this.platform.deleteRecovery(d.id).catch(() => {});
@@ -328,7 +327,7 @@ export class WriteApp {
       if (!this.isDirty(d) || paras === d.recoverySaved) continue;
       try {
         await this.platform.saveRecovery({ id: d.id, title: d.name, path: d.path, savedAt: Date.now() },
-          writeDocx(paras.map((p) => ({ style: p.style, text: p.text })), { author: this.settings.userName }));
+          writeDocx(d.editor.doc.state(), d.pkg, { author: this.settings.userName }));
         d.recoverySaved = paras;
       } catch {
         // Recovery is best effort; the next interval tries again.
@@ -354,7 +353,7 @@ export class WriteApp {
         try {
           const r = readDocx(await this.platform.readRecovery(e.id));
           const pristine = this.docs.length === 1 && this.isPristine(this.docs[0]) ? this.docs[0] : null;
-          const d = this.createDoc(`${e.title} (Wiederhergestellt)`, e.path, r.paragraphs.map((p) => ({ style: p.style, text: p.text })));
+          const d = this.createDoc(`${e.title} (Wiederhergestellt)`, e.path, r.state, r.pkg, r.partial);
           d.saved = [];
           if (pristine) this.removeDoc(pristine);
           this.updateChrome(true);
@@ -548,7 +547,7 @@ export class WriteApp {
       h("tr", null, h("td", null, "Zuletzt gespeichert"), h("td", null, d.lastSaved ? new Date(d.lastSaved).toLocaleString("de-DE") : "–")),
       h("tr", null, h("td", null, "Autor"), h("td", null, this.settings.userName || "– (unter Optionen festlegen)")));
     return h("div", null, h("h1", null, "Informationen"), h("h2", { style: "margin-top:0" }, d.name), props,
-      d.unsupported.length ? h("p", { class: "warn" }, `Nicht unterstützte Inhalte in der Originaldatei: ${d.unsupported.join(", ")}.`) : null);
+      d.partial.length ? h("p", { class: "warn" }, `Noch nicht vollständig angezeigt (bleibt beim Speichern erhalten): ${d.partial.join(", ")}.`) : null);
   }
 
   private printPage(): HTMLElement {
@@ -560,7 +559,8 @@ export class WriteApp {
       const scale = 0.55;
       first.classList.add("sheet");
       first.style.transform = `scale(${scale})`;
-      preview.append(h("div", { style: `width:${PAGE.width * scale}px;height:${PAGE.height * scale}px` }, first));
+      const pg = this.active!.editor.doc.settings.page;
+      preview.append(h("div", { style: `width:${pg.width * PT * scale}px;height:${pg.height * PT * scale}px` }, first));
     }
     const pages = this.active?.editor.stats().pageCount ?? 0;
     return h("div", null, h("h1", null, "Drucken"),
@@ -577,6 +577,9 @@ export class WriteApp {
     const c = this.commands;
     const ed = () => this.active?.editor;
     const has = () => !!this.active;
+    const run = (id: string, fn: (e: Editor) => void, checked?: (e: Editor) => boolean) =>
+      c.implement(id, { run: () => { const e = ed(); if (e) fn(e); }, enabled: has, checked: checked ? () => { const e = ed(); return !!e && checked(e); } : undefined });
+
     c.implement("file.new", { run: () => { this.backstage.close(); this.newDoc(); } });
     c.implement("file.open", { run: () => this.openBackstage("open") });
     c.implement("file.save", { run: async () => { if (this.active) { this.backstage.close(); await this.save(this.active); } }, enabled: has });
@@ -587,19 +590,98 @@ export class WriteApp {
     c.implement("file.options", { run: () => this.optionsDialog() });
     c.implement("file.info", { run: () => this.openBackstage("info") });
 
+    // Clipboard. The text goes to the system clipboard; the formatted copy stays inside RaabeWrite.
     c.implement("edit.undo", { run: () => ed()?.undo(), enabled: () => !!ed()?.canUndo });
     c.implement("edit.redo", { run: () => ed()?.redo(), enabled: () => !!ed()?.canRedo });
-    c.implement("edit.copy", { run: async () => { const e = ed(); if (e) await this.platform.clipboardWrite(e.selectedText().replace(/\n/g, "\r\n")); }, enabled: () => !!ed()?.hasSelection });
+    c.implement("edit.copy", { run: async () => { const e = ed(); if (e) await this.platform.clipboardWrite(e.copySelection().replace(/\n/g, "\r\n")); }, enabled: () => !!ed()?.hasSelection });
     c.implement("edit.cut", { run: async () => { const e = ed(); if (e) await this.platform.clipboardWrite(e.cutSelection().replace(/\n/g, "\r\n")); }, enabled: () => !!ed()?.hasSelection });
-    const paste = async () => { const t = await this.platform.clipboardRead().catch(() => ""); if (t) ed()?.pasteText(t); };
-    c.implement("edit.paste", { run: paste, enabled: has });
-    c.implement("edit.pasteText", { run: paste, enabled: has });
+    const paste = (plain: boolean) => async () => { const t = await this.platform.clipboardRead().catch(() => ""); if (t) ed()?.pasteText(t, plain); };
+    c.implement("edit.paste", { run: paste(false), enabled: has });
+    c.implement("edit.pasteText", { run: paste(true), enabled: has });
     c.implement("edit.selectAll", { run: () => ed()?.selectAll(), enabled: has });
+    c.implement("edit.formatPainter", {
+      run: () => {
+        const e = ed();
+        if (!e) return;
+        const now = Date.now();
+        const double = now - this.lastPainterClick < 450;
+        this.lastPainterClick = now;
+        if (e.painterActive && !double) e.stopPainter();
+        else e.startPainter(double);
+      },
+      enabled: has, checked: () => !!ed()?.painterActive,
+    });
 
-    c.implement("style.normal", { run: () => ed()?.setParagraphStyle("normal"), checked: () => ed()?.currentStyle() === "normal", enabled: has });
-    c.implement("style.h1", { run: () => ed()?.setParagraphStyle("h1"), checked: () => ed()?.currentStyle() === "h1", enabled: has });
-    c.get("style.normal").shortcut = "Strg+Umschalt+N";
+    // Character formatting.
+    const st = () => ed()?.charState();
+    run("font.bold", (e) => e.toggleChar("bold"), () => !!st()?.bold);
+    run("font.italic", (e) => e.toggleChar("italic"), () => !!st()?.italic);
+    run("font.underline", (e) => e.setUnderline(), () => !!st()?.underline && st()?.underline !== "none");
+    for (const kind of ["single", "double", "thick", "dotted", "dash", "wave"]) {
+      run(`underline.${kind}`, (e) => e.setUnderline(kind), () => st()?.underline === kind);
+    }
+    run("font.strike", (e) => e.toggleChar("strike"), () => !!st()?.strike);
+    run("font.allCaps", (e) => e.toggleChar("caps"), () => !!st()?.caps);
+    run("font.subscript", (e) => e.toggleVertAlign("subscript"), () => !!st()?.subscript);
+    run("font.superscript", (e) => e.toggleVertAlign("superscript"), () => !!st()?.superscript);
+    run("font.grow", (e) => e.growFont(1));
+    run("font.shrink", (e) => e.growFont(-1));
+    run("font.clear", (e) => e.clearAllFormatting());
+    run("font.color", (e) => { e.setColor(this.lastFontColor); });
+    run("font.highlight", (e) => { e.setHighlight(this.lastHighlight); });
+    run("font.name", () => this.focusRibbonInput("font.name"));
+    run("font.size", () => this.focusRibbonInput("font.size"));
+    run("font.dialog", () => void this.fontDialog());
+    for (const m of ["sentence", "lower", "upper", "title", "toggle"] as const) run(`case.${m}`, (e) => e.changeCase(m));
 
+    // Paragraph formatting.
+    const ps = () => ed()?.paraState();
+    run("para.alignLeft", (e) => e.setAlign("left"), () => ps()?.align === "left");
+    run("para.alignCenter", (e) => e.setAlign("center"), () => ps()?.align === "center");
+    run("para.alignRight", (e) => e.setAlign("right"), () => ps()?.align === "right");
+    run("para.justify", (e) => e.setAlign("both"), () => ps()?.align === "both");
+    run("para.indentInc", (e) => e.indent(1));
+    run("para.indentDec", (e) => e.indent(-1));
+    run("para.showMarks", (e) => { const on = !e.showMarks; for (const d of this.docs) d.editor.setShowMarks(on); }, (e) => e.showMarks);
+    run("para.dialog", () => void this.paragraphDialog());
+    const line = (rule: LineRule, v: number) => (e: Editor) => e.setLineSpacing(rule, v);
+    const isLine = (v: number) => (e: Editor) => { const r = e.paraState(); return r.lineRule === "auto" && Math.abs(r.line - v) < 0.005; };
+    run("spacing.1", line("auto", 1), isLine(1));
+    run("spacing.1.15", line("auto", 1.15), isLine(1.15));
+    run("spacing.1.5", line("auto", 1.5), isLine(1.5));
+    run("spacing.2", line("auto", 2), isLine(2));
+    run("spacing.2.5", line("auto", 2.5), isLine(2.5));
+    run("spacing.3", line("auto", 3), isLine(3));
+    run("spacing.toggleBefore", (e) => e.setSpacing(e.paraState().before > 0 ? 0 : 12));
+    run("spacing.toggleAfter", (e) => e.setSpacing(undefined, e.paraState().after > 0 ? 0 : 12));
+    c.onRefresh(() => {
+      const r = ps();
+      c.get("spacing.toggleBefore").label = r && r.before > 0 ? "Abstand vor Absatz entfernen" : "Abstand vor Absatz hinzufügen";
+      c.get("spacing.toggleAfter").label = r && r.after > 0 ? "Abstand nach Absatz entfernen" : "Abstand nach Absatz hinzufügen";
+    });
+
+    // Styles: paragraph styles replace the paragraph's style, character styles apply to the selection.
+    for (const g of GALLERY) {
+      run(g.cmd, (e) => {
+        const id = e.styleId(g.name);
+        const type = e.doc.styles.get(id)?.type ?? (/(emphasis|strong|reference|book title)/i.test(g.name) ? "character" : "paragraph");
+        if (type === "character") e.applyCharStyle(id); else e.applyParaStyle(id);
+      }, (e) => {
+        const id = e.styleId(g.name);
+        return e.doc.styles.get(id)?.type === "character" ? e.charState().charStyle === id : e.currentStyle() === id;
+      });
+    }
+    run("style.h3", (e) => e.applyParaStyle(e.styleId("heading 3")));
+
+    // Layout.
+    const layoutOn = (id: string) => c.implement(id, { run: () => this.focusRibbonInput(id), enabled: has });
+    for (const id of ["layout.indentLeft", "layout.indentRight", "layout.spaceBefore", "layout.spaceAfter"]) layoutOn(id);
+    run("insert.pageBreak", (e) => e.insertBreak("page"));
+    run("insert.lineBreak", (e) => e.insertBreak("line"));
+    run("insert.blankPage", (e) => { e.insertBreak("page"); e.insertBreak("page"); });
+    c.implement("layout.breaks", { run: () => {}, enabled: has });
+
+    // View.
     c.implement("view.printLayout", { run: () => {}, checked: () => true });
     c.implement("view.zoom100", { run: () => this.setZoom(1), enabled: has });
     c.implement("view.onePage", { run: () => { const e = ed(); if (e) this.setZoom(e.view.onePageZoom()); }, enabled: has });
@@ -613,22 +695,267 @@ export class WriteApp {
     c.implement("review.wordCount", { run: () => this.wordCountDialog(), enabled: has });
   }
 
+  /** Puts the keyboard focus into a ribbon box (Strg+Umschalt+A for the font, Layout fields …). */
+  private focusRibbonInput(cmd: string): void {
+    const tab = cmd.startsWith("layout.") ? "layout" : "start";
+    if (this.ribbon.activeTab !== tab) this.ribbon.select(tab);
+    requestAnimationFrame(() => {
+      const el = this.ribbon.card.querySelector<HTMLInputElement>(`[data-tip^="${this.commands.get(cmd).label}"] input`);
+      el?.focus();
+    });
+  }
+
+  // ----- ribbon values --------------------------------------------------------------------
+
+  private ribbonContext(): RibbonContext {
+    const ed = () => this.active?.editor;
+    const de = (n: number, digits = 2) => n.toLocaleString("de-DE", { maximumFractionDigits: digits });
+    const parseNum = (v: string) => Number(v.replace(/[^\d,.-]/g, "").replace(",", "."));
+    const theme = () => ed()?.doc.styles.theme;
+    return {
+      fontName: () => {
+        const s = ed()?.charState();
+        if (!s?.font) return "";
+        const t = theme();
+        if (t && s.font === t.minorFont) return `${s.font} (Textkörper)`;
+        if (t && s.font === t.majorFont) return `${s.font} (Überschriften)`;
+        return s.font;
+      },
+      fontSize: () => { const s = ed()?.charState().size; return s === undefined ? "" : de(s, 1); },
+      fontOptions: () => {
+        const t = theme();
+        const groups: { heading?: string; items: string[] }[] = [];
+        if (t) groups.push({ heading: "Designschriftarten", items: [`${t.majorFont} (Überschriften)`, `${t.minorFont} (Textkörper)`] });
+        if (this.recentFonts.length) groups.push({ heading: "Zuletzt verwendete Schriftarten", items: this.recentFonts });
+        groups.push({ heading: "Alle Schriftarten", items: this.fontList.length ? this.fontList : ["Arial", "Calibri", "Cambria", "Times New Roman"] });
+        return groups;
+      },
+      setFont: (name) => {
+        const clean = name.replace(/ \((Textkörper|Überschriften)\)$/, "");
+        ed()?.setFont(clean);
+        this.recentFonts = [clean, ...this.recentFonts.filter((f) => f !== clean)].slice(0, 5);
+      },
+      setSize: (v) => { const n = parseNum(v); if (n > 0) ed()?.setSize(n); },
+      fontColor: () => this.lastFontColor,
+      setFontColor: (hex) => { if (hex !== "auto") this.lastFontColor = hex; ed()?.setColor(hex); },
+      highlight: () => this.lastHighlight,
+      setHighlight: (name) => { if (name !== "none") this.lastHighlight = name; ed()?.setHighlight(name); },
+      indent: (which) => {
+        const r = ed()?.paraState();
+        if (!r) return "";
+        return `${de((which === "left" ? r.indLeft : r.indRight) / 28.3465, 2)} cm`;
+      },
+      setIndent: (which, v) => {
+        const cm = parseNum(v);
+        if (!Number.isFinite(cm)) return;
+        ed()?.setParaProps(which === "left" ? { indLeft: cm * 28.3465 } : { indRight: cm * 28.3465 });
+      },
+      stepIndent: (which, dir) => {
+        const r = ed()?.paraState();
+        if (!r) return;
+        const cur = (which === "left" ? r.indLeft : r.indRight) / 28.3465;
+        const next = Math.round((cur + dir * 0.1) * 10) / 10;
+        ed()?.setParaProps(which === "left" ? { indLeft: next * 28.3465 } : { indRight: next * 28.3465 });
+      },
+      spacing: (which) => {
+        const r = ed()?.paraState();
+        return r ? `${de(which === "before" ? r.before : r.after, 1)} Pt.` : "";
+      },
+      setSpacing: (which, v) => {
+        const n = parseNum(v);
+        if (!Number.isFinite(n) || n < 0) return;
+        ed()?.setSpacing(which === "before" ? n : undefined, which === "after" ? n : undefined);
+      },
+      stepSpacing: (which, dir) => {
+        const r = ed()?.paraState();
+        if (!r) return;
+        const cur = which === "before" ? r.before : r.after;
+        // Word steps in 6 pt.
+        const next = Math.max(0, dir > 0 ? Math.floor(cur / 6 + 1e-6) * 6 + 6 : Math.ceil(cur / 6 - 1e-6) * 6 - 6);
+        ed()?.setSpacing(which === "before" ? next : undefined, which === "after" ? next : undefined);
+      },
+    };
+  }
+
+  // ----- Schriftart and Absatz dialogs ---------------------------------------------------
+
+  private async fontDialog(): Promise<void> {
+    const e = this.active?.editor;
+    if (!e) return;
+    const s = e.charState();
+    const fonts = this.fontList.length ? this.fontList : ["Arial", "Calibri", "Cambria", "Times New Roman"];
+    const fontInput = h("input", { type: "text", value: s.font ?? "", style: "width:100%", list: "rw-fonts" });
+    const datalist = h("datalist", { id: "rw-fonts" }, ...fonts.map((f) => h("option", { value: f })));
+    const styleSel = h("select", null, ...["Standard", "Kursiv", "Fett", "Fett Kursiv"].map((x) => h("option", null, x)));
+    styleSel.selectedIndex = (s.bold ? 2 : 0) + (s.italic ? 1 : 0);
+    const sizeInput = h("input", { type: "text", value: s.size === undefined ? "" : String(s.size).replace(".", ","), style: "width:70px" });
+    const underlineSel = h("select", null, ...[["none", "(ohne)"], ["single", "Einfach"], ["double", "Doppelt"], ["thick", "Dick"], ["dotted", "Gepunktet"], ["dash", "Gestrichelt"], ["wave", "Wellenlinie"]]
+      .map(([v, l]) => h("option", { value: v }, l)));
+    underlineSel.value = s.underline ?? "none";
+    let color = s.color ?? "auto";
+    const colorBtn = h("button", { style: "min-width:120px;height:28px;border:1px solid #c7c7c7;border-radius:4px;display:inline-flex;align-items:center;gap:6px;padding:0 8px" });
+    // Like Word: a colour bar, with the word "Automatisch" only for the automatic colour.
+    const paintColor = () => colorBtn.replaceChildren(
+      h("span", { style: `width:${color === "auto" ? 28 : 84}px;height:12px;background:${color === "auto" ? "#000" : `#${color}`}` }),
+      color === "auto" ? "Automatisch" : "", icon("chevron-down"));
+    paintColor();
+    colorBtn.onclick = () => showFontColors(colorBtn.getBoundingClientRect(), (c) => { color = c; paintColor(); update(); });
+    const box = (label: string, on: boolean | undefined) => {
+      const cb = h("input", { type: "checkbox", checked: !!on });
+      return { cb, el: h("label", { class: "check", style: "margin:4px 0" }, cb, label) };
+    };
+    const fx = {
+      strike: box("Durchgestrichen", s.strike), dstrike: box("Doppelt durchgestrichen", s.dstrike),
+      superscript: box("Hochgestellt", s.superscript), subscript: box("Tiefgestellt", s.subscript),
+      smallCaps: box("Kapitälchen", s.smallCaps), caps: box("Großbuchstaben", s.caps), hidden: box("Ausgeblendet", s.hidden),
+    };
+    const preview = h("div", { class: "preview" }, "Beispieltext");
+    const update = () => {
+      const ital = styleSel.selectedIndex % 2 === 1, bold = styleSel.selectedIndex >= 2;
+      preview.style.cssText = `font-family:"${fontInput.value}";font-size:${Math.min(36, Number(sizeInput.value.replace(",", ".")) || 11) * 4 / 3}px;` +
+        `font-weight:${bold ? 700 : 400};font-style:${ital ? "italic" : "normal"};color:${color === "auto" ? "#000" : `#${color}`};` +
+        `text-decoration:${underlineSel.value !== "none" ? "underline" : ""} ${fx.strike.cb.checked || fx.dstrike.cb.checked ? "line-through" : ""};` +
+        `font-variant:${fx.smallCaps.cb.checked ? "small-caps" : "normal"};text-transform:${fx.caps.cb.checked ? "uppercase" : "none"}`;
+    };
+    for (const el of [fontInput, sizeInput, styleSel, underlineSel, ...Object.values(fx).map((x) => x.cb)]) el.addEventListener("input", update);
+    update();
+    const body = h("div", { style: "width:520px" },
+      h("div", { class: "grid2", style: "grid-template-columns:2fr 1fr 80px" },
+        h("label", { class: "field" }, "Schriftart:", fontInput, datalist),
+        h("label", { class: "field" }, "Schriftschnitt:", styleSel),
+        h("label", { class: "field" }, "Schriftgrad:", sizeInput)),
+      h("div", { style: "display:flex;gap:24px;margin:8px 0" },
+        h("label", { class: "field" }, "Schriftfarbe:", colorBtn),
+        h("label", { class: "field" }, "Unterstreichung:", underlineSel)),
+      h("fieldset", null, h("legend", null, "Effekte"),
+        h("div", { style: "display:grid;grid-template-columns:1fr 1fr;gap:0 24px" }, ...Object.values(fx).map((x) => x.el))),
+      h("fieldset", null, h("legend", null, "Vorschau"), preview));
+    const ok = await showDialog({ title: "Schriftart", body, buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
+    if (!ok) return;
+    const changed = <T>(a: T | undefined, b: T) => a !== b;
+    if (fontInput.value && changed(s.font, fontInput.value)) e.setFont(fontInput.value);
+    const size = Number(sizeInput.value.replace(",", "."));
+    if (size > 0 && changed(s.size, size)) e.setSize(size);
+    const ital = styleSel.selectedIndex % 2 === 1, bold = styleSel.selectedIndex >= 2;
+    if (changed(!!s.bold, bold)) e.toggleChar("bold");
+    if (changed(!!s.italic, ital)) e.toggleChar("italic");
+    if (changed(s.underline ?? "none", underlineSel.value)) e.setUnderline(underlineSel.value);
+    if (changed(s.color ?? "auto", color)) e.setColor(color);
+    for (const k of ["strike", "dstrike", "smallCaps", "caps", "hidden"] as const) if (changed(!!s[k], fx[k].cb.checked)) e.toggleChar(k);
+    if (changed(!!s.superscript, fx.superscript.cb.checked)) e.toggleVertAlign("superscript");
+    if (changed(!!s.subscript, fx.subscript.cb.checked)) e.toggleVertAlign("subscript");
+  }
+
+  private async paragraphDialog(): Promise<void> {
+    const e = this.active?.editor;
+    if (!e) return;
+    const r = e.paraState();
+    const cm = (pt: number) => (pt / 28.3465).toLocaleString("de-DE", { maximumFractionDigits: 2 }) + " cm";
+    const pt = (v: number) => v.toLocaleString("de-DE", { maximumFractionDigits: 1 }) + " Pt.";
+    const num = (v: string) => Number(v.replace(/[^\d,.-]/g, "").replace(",", "."));
+    const input = (value: string) => h("input", { type: "text", value, style: "width:90px" });
+    const select = (opts: [string, string][], value: string) => {
+      const sel = h("select", null, ...opts.map(([v, l]) => h("option", { value: v }, l)));
+      sel.value = value;
+      return sel;
+    };
+    const align = select([["left", "Links"], ["center", "Zentriert"], ["right", "Rechts"], ["both", "Blocksatz"]], r.align);
+    const left = input(cm(r.indLeft)), right = input(cm(r.indRight));
+    const special = select([["none", "(ohne)"], ["first", "Erste Zeile"], ["hanging", "Hängend"]], r.indFirst > 0 ? "first" : r.indFirst < 0 ? "hanging" : "none");
+    const by = input(r.indFirst ? cm(Math.abs(r.indFirst)) : "");
+    const before = input(pt(r.before)), after = input(pt(r.after));
+    const lineKind = r.lineRule === "exact" ? "exact" : r.lineRule === "atLeast" ? "atLeast" :
+      Math.abs(r.line - 1) < 0.01 ? "single" : Math.abs(r.line - 1.5) < 0.01 ? "1.5" : Math.abs(r.line - 2) < 0.01 ? "double" : "multiple";
+    const lineSel = select([["single", "Einfach"], ["1.5", "1,5 Zeilen"], ["double", "Doppelt"], ["atLeast", "Mindestens"], ["exact", "Genau"], ["multiple", "Mehrfach"]], lineKind);
+    const lineVal = input(r.lineRule === "auto" ? r.line.toLocaleString("de-DE", { maximumFractionDigits: 2 }) : pt(r.line));
+    const check = (label: string, on: boolean) => { const cb = h("input", { type: "checkbox", checked: on }); return { cb, el: h("label", { class: "check" }, cb, label) }; };
+    const contextual = check("Keinen Abstand zwischen Absätzen gleicher Formatvorlage einfügen", r.contextual);
+    const widow = check("Absatzkontrolle", r.widow), keepNext = check("Nicht vom nächsten Absatz trennen", r.keepNext);
+    const keepLines = check("Diesen Absatz zusammenhalten", r.keepLines), pageBefore = check("Seitenumbruch oberhalb", r.pageBreakBefore);
+    const page1 = h("div", null,
+      h("fieldset", null, h("legend", null, "Allgemein"), h("label", { class: "field", style: "flex-direction:row;align-items:center;gap:8px" }, "Ausrichtung:", align)),
+      h("fieldset", null, h("legend", null, "Einzug"),
+        h("div", { class: "grid2" }, "Links:", left, "Sondereinzug:", special, "Rechts:", right, "Um:", by)),
+      h("fieldset", null, h("legend", null, "Abstand"),
+        h("div", { class: "grid2" }, "Vor:", before, "Zeilenabstand:", lineSel, "Nach:", after, "Maß:", lineVal), contextual.el));
+    const page2 = h("div", { hidden: true }, h("fieldset", null, h("legend", null, "Paginierung"), widow.el, keepNext.el, keepLines.el, pageBefore.el));
+    const tabs = h("div", { class: "tabs" });
+    const tab = (label: string, pg: HTMLElement) => h("button", {
+      class: pg === page1 ? "active" : "",
+      onclick: (ev: MouseEvent) => { page1.hidden = pg !== page1; page2.hidden = pg !== page2; tabs.querySelectorAll("button").forEach((b) => b.classList.toggle("active", b === ev.currentTarget)); },
+    }, label);
+    tabs.append(tab("Einzüge und Abstände", page1), tab("Zeilen- und Seitenumbruch", page2));
+    const ok = await showDialog({ title: "Absatz", body: h("div", { style: "width:520px" }, tabs, page1, page2), buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
+    if (!ok) return;
+    const firstAbs = num(by.value) * 28.3465 || 0;
+    const kind = lineSel.value;
+    const lineRule: LineRule = kind === "exact" ? "exact" : kind === "atLeast" ? "atLeast" : "auto";
+    const lineValue = kind === "single" ? 1 : kind === "1.5" ? 1.5 : kind === "double" ? 2 : num(lineVal.value) || (lineRule === "auto" ? 1 : 12);
+    e.setParaProps({
+      align: align.value as "left" | "center" | "right" | "both",
+      indLeft: num(left.value) * 28.3465 || 0,
+      indRight: num(right.value) * 28.3465 || 0,
+      indFirst: special.value === "first" ? firstAbs : special.value === "hanging" ? -firstAbs : 0,
+      before: num(before.value) || 0,
+      after: num(after.value) || 0,
+      lineRule, line: lineValue,
+      contextual: contextual.cb.checked, widow: widow.cb.checked, keepNext: keepNext.cb.checked,
+      keepLines: keepLines.cb.checked, pageBreakBefore: pageBefore.cb.checked,
+    });
+  }
+
   private installKeyboard(): void {
     addEventListener("keydown", (e) => {
       if (e.defaultPrevented || e.isComposing) return;
       const ctrl = e.ctrlKey, shift = e.shiftKey, alt = e.altKey;
       const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+      // Word binds some shortcuts to keys, not characters (German layout: # < + - 8).
+      const vk = e.keyCode;
       let cmd: string | null = null;
+      const ed = this.active?.editor;
       if (ctrl && !alt && !shift) {
-        cmd = ({ n: "file.new", o: "file.open", s: "file.save", p: "file.print", w: "file.close" } as Record<string, string>)[k] ?? null;
+        cmd = ({
+          n: "file.new", o: "file.open", s: "file.save", p: "file.print", w: "file.close", l: "para.alignLeft", e: "para.alignCenter",
+          r: "para.alignRight", b: "para.justify", m: "para.indentInc", d: "font.dialog", q: "", "1": "spacing.1", "2": "spacing.2",
+          "5": "spacing.1.5", "0": "view.zoom100", "9": "", "8": "",
+        } as Record<string, string>)[k] ?? null;
+        if (k === "q") { e.preventDefault(); ed?.resetPara(); return; }
+        if (k === "t") { e.preventDefault(); ed?.hanging(1); return; }
+        if (k === "9" || k === "8") { e.preventDefault(); ed?.growFont(k === "9" ? 1 : -1, true); return; }
+        if (k === " ") { e.preventDefault(); ed?.resetChar(); return; }
+        if (vk === 191) cmd = "font.subscript";            // Strg+#
+        if (vk === 226) cmd = "font.shrink";               // Strg+<
+        if (vk === 187) { e.preventDefault(); this.setZoom(Math.min(5, (ed?.zoom ?? 1) + 0.1)); return; } // Strg++
+        if (vk === 189) { e.preventDefault(); this.setZoom(Math.max(0.1, (ed?.zoom ?? 1) - 0.1)); return; } // Strg+-
         if (k === "F4") cmd = "file.close";
         if (k === "F12") { e.preventDefault(); void this.openDialog(); return; }
         if (k === "F1") cmd = "view.ribbon";
       }
+      if (ctrl && shift && !alt) {
+        cmd = ({
+          f: "font.bold", k: "font.italic", u: "font.underline", d: "underline.double", g: "font.allCaps", n: "style.normal",
+          m: "para.indentDec", v: "edit.pasteText", a: "font.name", p: "font.size",
+        } as Record<string, string>)[k] ?? cmd;
+        if (k === "q") { e.preventDefault(); ed?.toggleChar("smallCaps"); return; }
+        if (k === "h") { e.preventDefault(); ed?.toggleChar("hidden"); return; }
+        if (k === "w") { e.preventDefault(); ed?.setUnderline("words"); return; }
+        if (k === "z") { e.preventDefault(); ed?.resetChar(); return; }
+        if (k === "t") { e.preventDefault(); ed?.hanging(-1); return; }
+        if (vk === 226) cmd = "font.grow";                 // Strg+> (Umschalt+<)
+        if (vk === 189) cmd = "font.subscript";            // Strg+Umschalt+-
+        if (vk === 56) cmd = "para.showMarks";             // Strg+* (Umschalt+8)
+      }
+      if (ctrl && alt && !shift) {
+        if (k === "1") cmd = "style.h1";
+        if (k === "2") cmd = "style.h2";
+        if (k === "3") cmd = "style.h3";
+        // Word: CopyFormat / PasteFormat (the painter brush is the ribbon button).
+        if (k === "c" && vk === 67) { e.preventDefault(); if (ed) this.copiedFormat = ed.copyFormat(); return; }
+        if (k === "v" && vk === 86) { e.preventDefault(); if (ed && this.copiedFormat) ed.pasteFormat(this.copiedFormat); return; }
+      }
       if (!ctrl && !alt && k === "F12") cmd = "file.saveAs";
       if (!ctrl && !alt && shift && k === "F7") cmd = "review.thesaurus";
-      if (ctrl && alt && !shift && k === "1") cmd = "style.h1";
-      if (ctrl && shift && !alt && k === "n") cmd = "style.normal";
+      if (!ctrl && !alt && shift && k === "F3") { e.preventDefault(); ed?.changeCase("cycle"); return; }
       if (ctrl && (k === "Tab" || k === "F6") && this.docs.length > 1 && this.active) {
         e.preventDefault();
         const i = this.docs.indexOf(this.active);
@@ -659,7 +986,7 @@ export class WriteApp {
   /** Test hooks for feel-lab runs only (no file dialogs; see tools/feel-lab/smoke_write.py). */
   testApi() {
     return {
-      docs: () => this.docs.map((d) => ({ name: d.name, path: d.path, dirty: this.isDirty(d), unsupported: d.unsupported, active: d === this.active })),
+      docs: () => this.docs.map((d) => ({ name: d.name, path: d.path, dirty: this.isDirty(d), unsupported: d.partial, active: d === this.active })),
       openPath: (path: string) => this.openPath(path),
       saveTo: (path: string) => (this.active ? this.writeTo(this.active, path) : Promise.resolve(false)),
       save: () => (this.active ? this.save(this.active) : Promise.resolve(false)),

@@ -1,8 +1,9 @@
-"""Functional smoke test of the real RaabeWrite app (Step 1 shell).
+"""Functional smoke test of the real RaabeWrite app (Step 1 shell, Step 2 formatting).
 
 Drives the app through the DevTools protocol (input goes into the page only, the real
 keyboard and mouse are never used) and checks files with Microsoft Word through COM in a
-separate, invisible Word instance. Windows appear on screen while it runs.
+separate, invisible Word instance. The app runs off screen and never takes the focus, so
+the test can run while someone works at the PC.
 
     .venv/Scripts/python.exe smoke_write.py
 """
@@ -22,6 +23,7 @@ from feellab import targets, winapi
 RESULTS: list[tuple[str, bool, str]] = []
 TMP = Path(tempfile.mkdtemp(prefix="raabe-smoke-"))
 RECOVERY = Path(tempfile.gettempdir()) / "raabe-write-feel-recovery"  # test mode's own folder
+OFF = -4000  # x of the off-screen window
 
 
 def check(name: str, ok: bool, detail: str = "") -> None:
@@ -60,7 +62,11 @@ def word_read(path: Path) -> dict:
     try:
         d = app.Documents.Open(str(path), ReadOnly=True, AddToRecentFiles=False)
         paras = [(p.Range.Text.rstrip("\r"), p.Style.NameLocal) for p in d.Paragraphs]
-        info = {"paras": paras, "compat": d.CompatibilityMode, "pages": d.ComputeStatistics(2)}
+        info = {"paras": paras, "compat": d.CompatibilityMode, "pages": d.ComputeStatistics(2),
+                "tables": d.Tables.Count, "cell": d.Tables(1).Cell(1, 1).Range.Text[:-2] if d.Tables.Count else None,
+                "bold": [bool(d.Range(i, i + 1).Font.Bold) for i in range(min(40, d.Content.End - 1))],
+                "color": [d.Range(i, i + 1).Font.Color for i in range(min(40, d.Content.End - 1))],
+                "size": [d.Range(i, i + 1).Font.Size for i in range(min(40, d.Content.End - 1))]}
         d.Close(0)
         return info
     finally:
@@ -69,9 +75,9 @@ def word_read(path: Path) -> dict:
 
 def main() -> None:
     before_recovery = set(RECOVERY.glob("*")) if RECOVERY.exists() else set()
-    t = targets.raabe_write("short")
+    t = targets.raabe_write("short", background=True)
     try:
-        winapi.place(t.hwnd, 0, 0, 2000, 2050)
+        winapi.place_quietly(t.hwnd, OFF, 0, 2000, 2050)
         api = "window.__app"
         docs = t.js(f"{api}.docs()")
         check("starts with one document", len(docs) == 1 and docs[0]["name"] == "Dokument1", json.dumps(docs))
@@ -109,7 +115,46 @@ def main() -> None:
         check("Word sees the heading style", info["paras"][0][1] == "Überschrift 1", info["paras"][0][1])
         check("Word opens it in current mode (not compatibility mode)", info["compat"] == 15, str(info["compat"]))
 
-        # A document Word made with a table and bold text must not be overwritten.
+        # Formatting (Step 2): Strg+Umschalt+F in a word, colour and size; Word reads it back.
+        t.js(f"{api}.newDoc()")
+        t.js("__probe.focus()")
+        sample = "Ein fettes Wort und roter Text."
+        t.send_text(sample)
+        t.set_selection(6, 6)  # inside "fettes"
+        t.send_key("F", ctrl=True, shift=True)
+        bold = [t.js(f"__probe.formatAt({i}).bold") for i in range(len(sample))]
+        check("Strg+Umschalt+F formats the whole word at the caret", bold == [4 <= i < 10 for i in range(len(sample))], str(bold))
+        t.set_selection(6, 6)
+        t.send_key("C", ctrl=True, alt=True)  # Format kopieren
+        w = sample.index("Wort")
+        t.set_selection(w, w + 4)
+        t.send_key("V", ctrl=True, alt=True)  # Format einfügen
+        check("Strg+Alt+C / Strg+Alt+V copy formatting", t.js(f"__probe.formatAt({w + 1}).bold"))
+        bold = [t.js(f"__probe.formatAt({i}).bold") for i in range(len(sample))]
+        red = sample.index("roter Text")
+        t.set_selection(red, len(sample))
+        t.js(f"{api}.run('font.color')")
+        t.send_key("<", ctrl=True, shift=True, vk=226)  # Strg+Umschalt+< (German keyboard)
+        fmt = t.js(f"__probe.formatAt({red + 2})")
+        check("Schriftfarbe applies red", fmt["color"] == "FF0000", json.dumps(fmt))
+        check("Strg+Umschalt+< grows 11 pt to 12 pt", fmt["size"] == 12, json.dumps(fmt))
+        t.set_selection(len(sample), len(sample))
+        t.send_key("Enter")
+        t.send_text("Weiter")
+        # Word: the new paragraph takes the paragraph mark's formatting, and the selection did
+        # not include the mark.
+        check("Enter takes the formatting of the paragraph mark", t.js("__probe.typingFormat().color") == "auto")
+        fmt_file = TMP / "formatierung.docx"
+        t.js(f"{api}.saveTo({json.dumps(str(fmt_file))})")
+        winfo = word_read(fmt_file)
+        check("Word reads the bold word", winfo["bold"][:len(sample)] == bold, str(winfo["bold"][:len(sample)]))
+        check("Word reads red 12 pt text", winfo["color"][red] == 0x0000FF and winfo["size"][red] == 12,
+              f"{winfo['color'][red]} {winfo['size'][red]}")
+        t.js(f"{api}.run('file.close')")
+        time.sleep(0.3)
+
+        # A document Word made with a table and bold text: the table is kept as it is, and
+        # saving goes to the original (D-024).
         rich = TMP / "mit-tabelle.docx"
         def build(d):
             d.Content.Text = "Arbeitsblatt"
@@ -117,19 +162,26 @@ def main() -> None:
             r = d.Content
             r.InsertParagraphAfter()
             d.Tables.Add(d.Paragraphs(2).Range, 2, 2)
+            d.Tables(1).Cell(1, 1).Range.Text = "Zelle"
         word_doc(rich, build)
         t.js(f"{api}.openPath({json.dumps(str(rich))})")
-        docs = wait(t, f"{api}.docs().length === 2 && {api}.docs()")
+        docs = wait(t, f"{api}.docs().some(d => d.name === 'mit-tabelle') && {api}.docs()")
         active = [d for d in docs if d["active"]][0] if docs else {}
-        check("opens a Word document with unsupported content in a new tab", active.get("name") == "mit-tabelle", json.dumps(docs))
-        check("lists the unsupported content", "Tabellen" in active.get("unsupported", []), json.dumps(active.get("unsupported")))
-        check("shows the warning bar", "Tabellen" in (t.js(f"{api}.infobar()") or ""))
+        check("opens a Word document with a table in a new tab", active.get("name") == "mit-tabelle", json.dumps(docs))
+        check("lists the content it keeps unchanged", "Tabellen" in active.get("unsupported", []), json.dumps(active.get("unsupported")))
+        bar = t.js(f"{api}.infobar()") or ""
+        check("the bar says it stays unchanged", "Tabellen" in bar and "unverändert erhalten" in bar, bar)
+        check("reads the bold heading", t.js("__probe.formatAt(0).bold"))
         mtime = rich.stat().st_mtime
-        t.js(f"void {api}.save()")
-        dlg = wait(t, "document.querySelector('.dialog .dlg-body')?.textContent")
-        check("refuses to overwrite the original and asks for a new name", dlg and "neuen Namen" in dlg, str(dlg))
-        t.send_key("Escape")
-        check("original file untouched", rich.stat().st_mtime == mtime)
+        t.set_selection(len("Arbeitsblatt"), len("Arbeitsblatt"))
+        t.js("__probe.focus()")
+        t.send_text(" 1")
+        ok = t.js(f"{api}.save()")
+        check("saves over the original", ok and rich.stat().st_mtime != mtime)
+        rinfo = word_read(rich)
+        check("Word: edited heading, still bold", rinfo["paras"][0][0] == "Arbeitsblatt 1" and all(rinfo["bold"][:14]),
+              str(rinfo["paras"][:1]))
+        check("Word: the table is still there", rinfo["tables"] == 1 and rinfo["cell"] == "Zelle", f"{rinfo['tables']} {rinfo['cell']!r}")
 
         # Keytips (Alt), then Ansicht (F) and 100 % (0).
         t.js(f"{api}.run('view.pageWidth')")
@@ -175,7 +227,7 @@ def main() -> None:
 
         # Ribbon shrinking at a narrow window.
         t.js("document.querySelectorAll('.tabrow .tab')[1].click()")
-        winapi.place(t.hwnd, 0, 0, 1100, 1400)
+        winapi.place_quietly(t.hwnd, OFF, 0, 1100, 1400)
         time.sleep(0.8)
         collapsed = t.js("Array.from(document.querySelectorAll('.ribbon-card .rgroup.collapsed')).map(g => g.dataset.group)")
         order = ["styles", "voice", "editing", "font", "paragraph", "clipboard"]
@@ -183,7 +235,7 @@ def main() -> None:
               collapsed and set(collapsed) == set(order[:len(collapsed)]), str(collapsed))
         overflow = t.js("(() => { const c = document.querySelector('.ribbon-card'); return c.scrollWidth - c.clientWidth; })()")
         check("ribbon fits the narrow window", overflow <= 1, str(overflow))
-        winapi.place(t.hwnd, 0, 0, 2000, 2050)
+        winapi.place_quietly(t.hwnd, OFF, 0, 2000, 2050)
 
         # AutoRecover: change, back up, crash, restart.
         t.send_text("Absturztest ")
@@ -194,7 +246,7 @@ def main() -> None:
         t.proc.kill()
         t.proc.wait(5)
         t.ws.close()
-        t = targets.raabe_write("short", port=9371, keep_recovery=True)
+        t = targets.raabe_write("short", port=9371, keep_recovery=True, background=True)
         body = wait(t, "document.querySelector('.dialog .dlg-body')?.textContent", 8)
         check("after a crash, recovery is offered", body and "nicht ordnungsgemäß beendet" in body, str(body))
         t.js("document.querySelector('.dialog .dlg-buttons .primary').click()")

@@ -38,10 +38,10 @@ What each app does, ordered by priority. **M** = first usable version (MVP),
 
 | Feature | Prio | Notes |
 |---|---|---|
-| Character formatting (font, size, bold/italic/underline, colour, highlight, super/subscript, strikethrough) | M | |
-| Paragraph formatting (alignment, indents, line and paragraph spacing, borders, shading) | M | |
+| Character formatting (font, size, bold/italic/underline, colour, highlight, super/subscript, strikethrough) | M | Done in Step 2, incl. Schriftart dialog, Format übertragen, Groß-/Kleinschreibung |
+| Paragraph formatting (alignment, indents, line and paragraph spacing, borders, shading) | M | Done in Step 2 except borders and shading (Absatz dialog, tabs, page-break options) |
 | Bulleted and numbered lists, multilevel lists | M | Incl. Word's auto-list on "1. " / "- " |
-| Styles (Formatvorlagen): Standard, Überschrift 1-3, Titel, Zitat … | M | Style gallery in Start tab |
+| Styles (Formatvorlagen): Standard, Überschrift 1-3, Titel, Zitat … | M | Style gallery in Start tab; done in Step 2 (Word 2016-2019 set) |
 | Tables: insert, resize, merge/split, borders, shading, header row | M | Table design/layout tabs, reduced |
 | Images: insert, resize, rotate, crop, text wrapping (inline, square, tight, behind, in front) | M | |
 | Shapes and text boxes | M | Basic set |

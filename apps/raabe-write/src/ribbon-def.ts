@@ -3,20 +3,56 @@
 // Left out on purpose: Sendungen, Entwicklertools, Hilfe, and groups for features we do not
 // plan (cloud, add-ins, SmartArt, 3D models, macros ...). See docs/SCOPE.md.
 
-import type { Control, Tab } from "@raabe/shell";
-import type { Editor } from "@raabe/text-engine";
+import type { Control, MenuEntry, Tab } from "@raabe/shell";
+
+/** What the ribbon needs from the app to show values and apply changes. */
+export interface RibbonContext {
+  fontName(): string;
+  fontSize(): string;
+  fontOptions(): { heading?: string; items: string[] }[];
+  setFont(name: string): void;
+  setSize(value: string): void;
+  fontColor(): string;
+  setFontColor(hex: string): void;
+  highlight(): string;
+  setHighlight(name: string): void;
+  indent(which: "left" | "right"): string;
+  setIndent(which: "left" | "right", value: string): void;
+  stepIndent(which: "left" | "right", dir: 1 | -1): void;
+  spacing(which: "before" | "after"): string;
+  setSpacing(which: "before" | "after", value: string): void;
+  stepSpacing(which: "before" | "after", dir: 1 | -1): void;
+}
 
 const b = (cmd: string, key: string, size: "large" | "medium" | "small" = "small", label?: string): Control =>
   ({ type: "button", cmd, key, size, label });
-const dd = (cmd: string, key: string, size: "large" | "medium" | "small" = "small", label?: string): Control =>
-  ({ type: "dropdown", cmd, key, size, label, menu: [{ cmd }] });
-const split = (cmd: string, key: string, size: "large" | "medium" | "small" = "small", menu: { cmd: string }[] = [{ cmd }], label?: string): Control =>
+const dd = (cmd: string, key: string, size: "large" | "medium" | "small" = "small", label?: string, menu?: MenuEntry[]): Control =>
+  ({ type: "dropdown", cmd, key, size, label, menu: menu ?? [{ cmd }] });
+const split = (cmd: string, key: string, size: "large" | "medium" | "small" = "small", menu: MenuEntry[] = [{ cmd }], label?: string): Control =>
   ({ type: "split", cmd, key, size, menu, label });
 const stack = (...items: Control[]): Control => ({ type: "stack", items });
 
-export function ribbonTabs(active: () => Editor | null): Tab[] {
-  const font = () => (active()?.currentStyle() === "h1" ? "Calibri Light" : "Calibri (Textkörper)");
-  const size = () => (active()?.currentStyle() === "h1" ? "16" : "11");
+/** Gallery entries in Word's order: built-in style name, command, preview CSS. */
+export const GALLERY: { name: string; cmd: string; preview: string }[] = [
+  { name: "Normal", cmd: "style.normal", preview: "font:14.667px Calibri,Carlito,sans-serif" },
+  { name: "No Spacing", cmd: "style.noSpacing", preview: "font:14.667px Calibri,Carlito,sans-serif" },
+  { name: "heading 1", cmd: "style.h1", preview: "font:21.333px 'Calibri Light',Carlito,sans-serif;color:#2f5496" },
+  { name: "heading 2", cmd: "style.h2", preview: "font:17.333px 'Calibri Light',Carlito,sans-serif;color:#2f5496" },
+  { name: "Title", cmd: "style.title", preview: "font:28px 'Calibri Light',Carlito,sans-serif;letter-spacing:-0.5px" },
+  { name: "Subtitle", cmd: "style.subtitle", preview: "font:14.667px Calibri,Carlito,sans-serif;color:#5a5a5a;letter-spacing:1px" },
+  { name: "Subtle Emphasis", cmd: "style.subtleEmphasis", preview: "font:italic 14.667px Calibri,Carlito,sans-serif;color:#404040" },
+  { name: "Emphasis", cmd: "style.emphasis", preview: "font:italic 14.667px Calibri,Carlito,sans-serif" },
+  { name: "Intense Emphasis", cmd: "style.intenseEmphasis", preview: "font:italic 14.667px Calibri,Carlito,sans-serif;color:#4472c4" },
+  { name: "Strong", cmd: "style.strong", preview: "font:bold 14.667px Calibri,Carlito,sans-serif" },
+  { name: "Quote", cmd: "style.quote", preview: "font:italic 14.667px Calibri,Carlito,sans-serif;color:#404040" },
+  { name: "Intense Quote", cmd: "style.intenseQuote", preview: "font:italic 14.667px Calibri,Carlito,sans-serif;color:#4472c4" },
+  { name: "Subtle Reference", cmd: "style.subtleReference", preview: "font:14.667px Calibri,Carlito,sans-serif;font-variant:small-caps;color:#5a5a5a" },
+  { name: "Intense Reference", cmd: "style.intenseReference", preview: "font:bold 14.667px Calibri,Carlito,sans-serif;font-variant:small-caps;color:#4472c4" },
+  { name: "Book Title", cmd: "style.bookTitle", preview: "font:bold italic 14.667px Calibri,Carlito,sans-serif" },
+  { name: "List Paragraph", cmd: "style.listParagraph", preview: "font:14.667px Calibri,Carlito,sans-serif" },
+];
+
+export function ribbonTabs(ctx: RibbonContext): Tab[] {
   return [
     {
       id: "start", label: "Start", key: "R",
@@ -26,7 +62,7 @@ export function ribbonTabs(active: () => Editor | null): Tab[] {
           id: "clipboard", label: "Zwischenablage", key: "ZL", icon: "paste",
           launcher: { cmd: "edit.clipboardPane", key: "WF" },
           controls: [
-            split("edit.paste", "V", "large", [{ cmd: "edit.paste" }, { cmd: "edit.pasteText" }]),
+            split("edit.paste", "V", "large", [{ cmd: "edit.paste", label: "Ursprüngliche Formatierung beibehalten" }, { cmd: "edit.pasteText" }]),
             stack(b("edit.cut", "X"), b("edit.copy", "C"), b("edit.formatPainter", "FO")),
           ],
         },
@@ -35,11 +71,19 @@ export function ribbonTabs(active: () => Editor | null): Tab[] {
           launcher: { cmd: "font.dialog", key: "ÄC" },
           controls: [{
             type: "rows", rows: [
-              [{ type: "combo", cmd: "font.name", width: 153, key: "SC", value: font },
-                { type: "combo", cmd: "font.size", width: 63, key: "HC", value: size }],
-              [b("font.bold", "1"), b("font.italic", "2"), split("font.underline", "3"), b("font.strike", "4"),
-                b("font.subscript", "S1"), b("font.superscript", "6"), "gap", b("font.clear", "Q")],
-              [dd("font.effects", "D1"), split("font.highlight", "GE"), split("font.color", "AC"), dd("font.case", "7"),
+              [{ type: "combo", cmd: "font.name", width: 153, key: "SC", value: ctx.fontName, options: ctx.fontOptions,
+                optionStyle: (f) => `font-family:"${f.replace(/ \(.*\)$/, "")}";font-size:14px`, commit: ctx.setFont },
+                { type: "combo", cmd: "font.size", width: 63, key: "HC", value: ctx.fontSize,
+                  options: () => [{ items: ["8", "9", "10", "10,5", "11", "12", "14", "16", "18", "20", "22", "24", "26", "28", "36", "48", "72"] }],
+                  commit: ctx.setSize }],
+              [b("font.bold", "1"), b("font.italic", "2"),
+                split("font.underline", "3", "small", [{ cmd: "underline.single" }, { cmd: "underline.double" }, { cmd: "underline.thick" },
+                  { cmd: "underline.dotted" }, { cmd: "underline.dash" }, { cmd: "underline.wave" }]),
+                b("font.strike", "4"), b("font.subscript", "S1"), b("font.superscript", "6"), "gap", b("font.clear", "Q")],
+              [dd("font.effects", "D1"),
+                { type: "color", cmd: "font.highlight", key: "GE", palette: "highlight", current: ctx.highlight, pick: ctx.setHighlight },
+                { type: "color", cmd: "font.color", key: "AC", palette: "font", current: ctx.fontColor, pick: ctx.setFontColor },
+                dd("font.case", "7", "small", undefined, [{ cmd: "case.sentence" }, { cmd: "case.lower" }, { cmd: "case.upper" }, { cmd: "case.title" }, { cmd: "case.toggle" }]),
                 "gap", b("font.grow", "SV"), b("font.shrink", "HS")],
             ],
           }],
@@ -52,7 +96,10 @@ export function ribbonTabs(active: () => Editor | null): Tab[] {
               [split("para.bullets", "AA"), split("para.numbering", "GN"), dd("para.multilevel", "TL"), "gap",
                 b("para.indentDec", "ÖI"), b("para.indentInc", "PI")],
               [b("para.alignLeft", "II"), b("para.alignCenter", "RZ"), b("para.alignRight", "RE"), b("para.justify", "OL"), "gap",
-                dd("para.lineSpacing", "NZ")],
+                dd("para.lineSpacing", "NZ", "small", undefined, [
+                  { cmd: "spacing.1" }, { cmd: "spacing.1.15" }, { cmd: "spacing.1.5" }, { cmd: "spacing.2" }, { cmd: "spacing.2.5" }, { cmd: "spacing.3" }, "-",
+                  { cmd: "para.dialog", label: "Zeilenabstandsoptionen..." }, "-",
+                  { cmd: "spacing.toggleBefore" }, { cmd: "spacing.toggleAfter" }])],
               [split("para.shading", "NC"), split("para.borders", "MR"), "gap", b("para.sort", "J"), b("para.showMarks", "8")],
             ],
           }],
@@ -60,17 +107,7 @@ export function ribbonTabs(active: () => Editor | null): Tab[] {
         {
           id: "styles", label: "Formatvorlagen", key: "ZS", icon: "fonts",
           launcher: { cmd: "style.pane", key: "RF" },
-          controls: [{
-            type: "gallery", key: "K", visible: 4, items: [
-              { cmd: "style.normal", preview: "font:14.667px Calibri,Carlito,sans-serif" },
-              { cmd: "style.noSpacing", preview: "font:14.667px Calibri,Carlito,sans-serif" },
-              { cmd: "style.h1", preview: "font:21.333px 'Calibri Light',Carlito,sans-serif;color:#2f5496" },
-              { cmd: "style.h2", preview: "font:17.333px 'Calibri Light',Carlito,sans-serif;color:#2f5496" },
-              { cmd: "style.title", preview: "font:28px 'Calibri Light',Carlito,sans-serif" },
-              { cmd: "style.subtitle", preview: "font:14.667px Calibri,Carlito,sans-serif;color:#5a5a5a" },
-              { cmd: "style.quote", preview: "font:italic 14.667px Calibri,Carlito,sans-serif;color:#404040" },
-            ],
-          }],
+          controls: [{ type: "gallery", key: "K", visible: 4, items: GALLERY.map((g) => ({ cmd: g.cmd, preview: g.preview })) }],
         },
         {
           id: "editing", label: "Bearbeiten", key: "ZN", icon: "find",
@@ -123,13 +160,19 @@ export function ribbonTabs(active: () => Editor | null): Tab[] {
       groups: [
         { id: "pageSetup", label: "Seite einrichten", key: "ZS", icon: "margins", launcher: { cmd: "layout.pageSetup", key: "T" },
           controls: [dd("layout.margins", "8", "large"), dd("layout.orientation", "4", "large"), dd("layout.size", "R", "large"),
-            dd("layout.columns", "HS", "large"), stack(dd("layout.breaks", "U", "medium"), dd("layout.hyphenation", "I", "medium"))] },
+            dd("layout.columns", "HS", "large"),
+            stack(dd("layout.breaks", "U", "medium", undefined, [{ cmd: "insert.pageBreak", label: "Seite" }, { cmd: "insert.lineBreak", label: "Textumbruch" }]),
+              dd("layout.hyphenation", "I", "medium"))] },
         { id: "paragraph", label: "Absatz", key: "ZG", icon: "line-spacing", launcher: { cmd: "para.dialog", key: "BB" },
           controls: [
-            stack({ type: "spinner", cmd: "layout.indentLeft", label: "Links:", icon: "indent-increase", key: "L", value: "0 cm" },
-              { type: "spinner", cmd: "layout.indentRight", label: "Rechts:", icon: "indent-decrease", key: "C", value: "0 cm" }),
-            stack({ type: "spinner", cmd: "layout.spaceBefore", label: "Vor:", icon: "line-spacing", key: "V", value: "0 Pt." },
-              { type: "spinner", cmd: "layout.spaceAfter", label: "Nach:", icon: "line-spacing", key: "N", value: "8 Pt." }),
+            stack({ type: "spinner", cmd: "layout.indentLeft", label: "Links:", icon: "indent-increase", key: "L",
+              value: () => ctx.indent("left"), commit: (v) => ctx.setIndent("left", v), step: (d) => ctx.stepIndent("left", d) },
+            { type: "spinner", cmd: "layout.indentRight", label: "Rechts:", icon: "indent-decrease", key: "C",
+              value: () => ctx.indent("right"), commit: (v) => ctx.setIndent("right", v), step: (d) => ctx.stepIndent("right", d) }),
+            stack({ type: "spinner", cmd: "layout.spaceBefore", label: "Vor:", icon: "line-spacing", key: "V",
+              value: () => ctx.spacing("before"), commit: (v) => ctx.setSpacing("before", v), step: (d) => ctx.stepSpacing("before", d) },
+            { type: "spinner", cmd: "layout.spaceAfter", label: "Nach:", icon: "line-spacing", key: "N",
+              value: () => ctx.spacing("after"), commit: (v) => ctx.setSpacing("after", v), step: (d) => ctx.stepSpacing("after", d) }),
           ] },
         { id: "arrange", label: "Anordnen", key: "ZA", icon: "position",
           controls: [dd("layout.position", "PP", "large"), dd("layout.wrapText", "J", "large"), split("layout.bringForward", "GE", "large"),

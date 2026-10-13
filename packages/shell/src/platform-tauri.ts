@@ -42,6 +42,8 @@ export function tauriPlatform(): Platform {
     clipboardRead: async () => (await readText()) ?? "",
     clipboardWrite: (text) => writeText(text),
     printToPdf: (path) => invoke("print_to_pdf", { path }),
+    listFonts: () => invoke<string[]>("list_fonts"),
+    fontMetrics: (families) => invoke("font_metrics", { families }),
     onOpenFiles(handler) {
       void invoke<string[]>("startup_files").then((paths) => { if (paths.length) handler(paths); });
       void listen<string[]>("open-files", (e) => handler(e.payload));

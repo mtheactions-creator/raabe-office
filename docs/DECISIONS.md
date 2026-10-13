@@ -174,7 +174,7 @@ very wide screens, where small buttons gain text labels.
 - Closing the last document tab closes the window, like Word's X button.
 - A .docx double-clicked in Explorer opens as a new tab in the running window.
 
-### D-022 Unsupported content is protected
+### D-022 Unsupported content is protected (superseded by D-024)
 When a file contains content RaabeWrite cannot keep yet (tables, images, character
 formatting, lists, fields, comments ...), it is listed in a yellow bar above the document
 and in "Informationen". Saving into the original file is refused; the user is asked to
@@ -185,3 +185,69 @@ period before full round-trip preservation exists.
 Agreed with the project owner: during development the ribbon shows every planned command;
 those not built yet are greyed out with the tooltip "Noch nicht verfügbar". The pilot build
 for students will show only working commands.
+
+### D-024 Unsupported content is kept verbatim; saving to the original is allowed
+Replaces D-022 (Step 2). The .docx layer now keeps everything it does not edit exactly as
+Word wrote it: unknown paragraph and run properties, inline objects (fields, hyperlinks,
+images, footnote references, revisions, equations, content controls) with their original
+XML, anchors (bookmarks, comment ranges, floating drawings), whole blocks (tables, tables of
+contents) as read-only placeholders, and every other package part byte for byte. Word
+itself confirms the round trip (`tools/feel-lab/docx_word_check.py`: tables, images,
+shapes, footnotes, comments, hyperlinks, revisions, equations, fields, bookmarks, lists and
+headers survive an edit-and-save unchanged). So the yellow bar now only informs ("... bleiben
+beim Speichern unverändert erhalten") and Speichern writes the original file. If the owner
+prefers the old protection for the pilot, it is a small change in `apps/raabe-write/src/app.ts`.
+
+### D-025 Layout follows Word's measured rules
+Measured on 2026-10-13 against Word's own PDF output (exact glyph baselines) and its COM
+interface, for twelve fonts and four test documents built by Word
+(`tools/feel-lab/run.py docx`):
+- Line height per font: the larger of the hhea sum (ascender + |descender| + line gap)
+  and the Windows sum (winAscent + winDescent); math fonts (Cambria Math) use hhea only.
+  winDescent lies below the baseline, the rest above it. A line spans the largest ascent
+  and the largest descent of its fonts.
+- "Mehrfach" multiplies and puts the extra space below the text, "Mindestens" puts it
+  above, "Genau" places the baseline at 80 % of the line.
+- The gap between paragraphs is the larger of "Abstand nach" and "Abstand vor".
+  "Abstand vor" counts on the first page and is dropped at the top of every later page,
+  whatever the break (natural, manual, "Seitenumbruch oberhalb").
+- Characters advance by their design widths (not hinted pixel widths); the engine measures
+  them at a large size and scales down, which is also what the DOM renders.
+- Super- and subscript are drawn at 65 % of the size, rounded to half points.
+- "Blocksatz": a line may overflow by up to 25 % of the total width of its spaces; the
+  spaces are then narrowed (measured for 14-30 spaces per line, also on the last line).
+Result: 256/256 line starts and 15/15 page breaks identical, baselines within 0.18 pt, and
+horizontal positions within 0.25 pt on 246 of 249 lines.
+
+### D-026 Formatting commands behave like Word's
+Measured with Word's own commands (`tools/feel-lab/run.py formatting`, 44 cases):
+- Character commands with the caret inside a word format the whole word (without the space
+  after it; "Ausgeblendet" includes it). At a word boundary they set the formatting for
+  what is typed next. Toggles on a mixed selection switch on.
+- The paragraph mark changes only when the selection includes it. Text typed at the end of
+  a paragraph also formats the mark. Enter inserts a new mark with the formatting at the
+  caret for the first paragraph; the original mark moves on with the new paragraph, whose
+  text then takes the mark's formatting.
+- Schriftgrad vergrößern/verkleinern use Word's steps without 10.5 (11 → 10).
+- Shortcuts are the ones Word reports on the development PC (`Application.FindKey`, German
+  keyboard): Strg+Umschalt+F/K/U/D, Strg+Umschalt+G = Großbuchstaben (formatting, not a case
+  change), Strg+< / Strg+Umschalt+<, Strg+8 / Strg+9, Strg+# = tiefgestellt,
+  Strg+Leertaste, Strg+Q, Strg+L/E/R/B, Strg+M, Strg+T, Strg+1/2/5, Umschalt+F3, Strg+Alt+1-3.
+- Styles: Word 2016-2019's built-in set with German names. Applying a paragraph style
+  removes direct paragraph formatting, and character styles toggle bold/italic/caps against
+  the paragraph style (the OOXML rules; not yet checked against Word by the harness).
+
+### D-027 Fonts
+Installed fonts and their metrics come from the font files (Rust `fontdb` + `ttf-parser`;
+the browser does not expose hhea/OS/2 values). Family names match without regard to case,
+as in Word. A missing font falls back to a metric-compatible open font where one exists
+(Calibri → Carlito, Cambria → Caladea, Arial/Times/Courier → Liberation). Known gap:
+Aptos, the default of documents made with current Microsoft 365 templates, is only a cloud
+font of Office (not installed in Windows) and has no metric-compatible substitute, so such
+documents break lines differently. New RaabeWrite documents use Calibri 11 (D-011).
+
+### D-028 Measurements without taking over the PC
+The harness no longer needs the PC to itself except for latency (F1) and real-input
+behaviour (F3): Word runs invisibly (its own process) and RaabeWrite runs off screen without
+ever taking the focus (`RAABE_FEEL_BACKGROUND`), driven through the DevTools protocol.
+Layout, formatting behaviour and the smoke test can therefore run while the owner works.

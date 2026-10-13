@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { countWords, nextTokenStart, prevTokenStart, sentenceAt, tokenAt } from "../src/words";
 import { Doc } from "../src/doc";
+import { makePara, validPara } from "../src/model";
 
 const t = "Pflanzen, Algen und (Glucose) geht's.";
 
@@ -36,18 +37,35 @@ describe("word count", () => {
   });
 });
 
+const NL = String.fromCharCode(10);
+
 describe("Doc", () => {
+  const plain = (d: Doc) => d.paras.map((p) => ({ style: p.props.style ?? "Standard", text: p.text }));
   it("splits and joins paragraphs, and Enter after a heading continues with Standard", () => {
-    const d = new Doc([{ style: "h1", text: "Titel" }]);
-    const end = d.replace({ p: 0, o: 5 }, { p: 0, o: 5 }, "\nText");
-    expect(d.paras).toEqual([{ style: "h1", text: "Titel" }, { style: "normal", text: "Text" }]);
+    const d = new Doc({ paras: [makePara("Titel", { style: "berschrift1" })] });
+    const end = d.insertText({ p: 0, o: 5 }, { p: 0, o: 5 }, NL + "Text", {});
+    expect(plain(d)).toEqual([{ style: "berschrift1", text: "Titel" }, { style: "Standard", text: "Text" }]);
     expect(end).toEqual({ p: 1, o: 4 });
-    d.replace({ p: 0, o: 5 }, { p: 1, o: 0 }, "");
+    d.delete({ p: 0, o: 5 }, { p: 1, o: 0 });
     expect(d.text()).toBe("TitelText");
+    expect(d.paras.every(validPara)).toBe(true);
+  });
+  it("splitting in the middle keeps the style in both halves", () => {
+    const d = new Doc({ paras: [makePara("AbcDef", { style: "berschrift1" })] });
+    d.insertText({ p: 0, o: 3 }, { p: 0, o: 3 }, NL, {});
+    expect(plain(d)).toEqual([{ style: "berschrift1", text: "Abc" }, { style: "berschrift1", text: "Def" }]);
   });
   it("maps offsets to positions and back", () => {
-    const d = new Doc([{ style: "normal", text: "ab" }, { style: "normal", text: "cde" }]);
+    const d = new Doc({ paras: [makePara("ab"), makePara("cde")] });
     expect(d.fromOffset(4)).toEqual({ p: 1, o: 1 });
     expect(d.toOffset({ p: 1, o: 1 })).toBe(4);
+  });
+  it("formats runs and merges equal neighbours", () => {
+    const d = new Doc({ paras: [makePara("Ein fettes Wort")] });
+    d.mapChars({ p: 0, o: 4 }, { p: 0, o: 10 }, (o) => ({ ...o, bold: true }));
+    expect(d.paras[0].runs.map((r) => [r.len, !!r.props.bold])).toEqual([[4, false], [6, true], [5, false]]);
+    d.mapChars({ p: 0, o: 0 }, { p: 0, o: 15 }, (o) => ({ ...o, bold: undefined }));
+    expect(d.paras[0].runs.length).toBe(1);
+    expect(d.paras.every(validPara)).toBe(true);
   });
 });
