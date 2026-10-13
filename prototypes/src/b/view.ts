@@ -30,7 +30,7 @@ export class View {
   readonly container: HTMLDivElement;
   readonly caret: HTMLDivElement;
   private pages: PageView[] = [];
-  private caretAnim: Animation;
+  private blinkTimer = 0;
   private layoutRef: Layout | null = null;
   private docRef: Doc | null = null;
   private selRef: Selection | null = null;
@@ -46,10 +46,6 @@ export class View {
     const dpr = devicePixelRatio || 1;
     this.caret.style.cssText = `position:absolute;z-index:3;pointer-events:none;background:#000;` +
       `width:${Math.max(1, Math.round(dpr)) / dpr}px`;
-    this.caretAnim = this.caret.animate(
-      [{ opacity: 1 }, { opacity: 1, offset: 0.5 }, { opacity: 0, offset: 0.5 }, { opacity: 0 }],
-      { duration: 1060, iterations: Infinity },
-    );
     workspace.addEventListener("scroll", () => this.onScroll(), { passive: true });
     addEventListener("resize", () => this.onScroll());
   }
@@ -163,7 +159,10 @@ export class View {
     if (!layout || !doc || !sel) return;
     const [from, to] = cmp(sel.anchor, sel.head) <= 0 ? [sel.anchor, sel.head] : [sel.head, sel.anchor];
     const empty = cmp(from, to) === 0;
-    for (let i = this.visibleFrom; i <= this.visibleTo; i++) this.pages[i]?.selLayer.replaceChildren();
+    for (let i = this.visibleFrom; i <= this.visibleTo; i++) {
+      const layer = this.pages[i]?.selLayer;
+      if (layer?.firstChild) layer.replaceChildren();
+    }
     if (!empty) {
       for (let p = from.p; p <= to.p; p++) {
         const para = doc.paras[p];
@@ -205,7 +204,22 @@ export class View {
     this.caret.style.left = `${Math.round(c.x * dpr) / dpr}px`;
     this.caret.style.top = `${c.y}px`;
     this.caret.style.height = `${c.h}px`;
-    this.caretAnim.currentTime = 0;
+    this.restartBlink();
+  }
+
+  /**
+   * Windows' caret blink (530 ms on, 530 ms off), restarted on every move. A plain timer:
+   * restarting a CSS/Web animation on every keystroke delayed the frame by one refresh
+   * (measured: 66 ms instead of 33 ms keystroke-to-screen).
+   */
+  private restartBlink(): void {
+    clearInterval(this.blinkTimer);
+    this.caret.style.visibility = "visible";
+    let on = true;
+    this.blinkTimer = window.setInterval(() => {
+      on = !on;
+      this.caret.style.visibility = on ? "visible" : "hidden";
+    }, 530);
   }
 
   // ----- geometry -----------------------------------------------------------------------
@@ -264,11 +278,12 @@ export class View {
       const mid = (lo + hi) >> 1;
       if (layout.placed[mid].page < page) lo = mid + 1; else hi = mid;
     }
+    // A point between two lines (in paragraph spacing) belongs to the line below, as in Word.
     let best = lo;
     for (let i = lo; i < layout.placed.length && layout.placed[i].page === page; i++) {
       const pl = layout.placed[i];
-      if (pl.y <= y) best = i;
       const lh = lineHeightPx(styleOf(doc.paras[pl.para].style));
+      best = i;
       if (y < pl.y + lh) break;
     }
     return { index: best, x, inLeftMargin: x < -4 };

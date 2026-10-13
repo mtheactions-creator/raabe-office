@@ -7,6 +7,10 @@ type CharClass = typeof SPACE | typeof WORD | typeof PUNCT;
 
 const WORD_CHAR = /[\p{L}\p{N}\p{M}_]/u;
 
+export function isWordChar(ch: string | undefined): boolean {
+  return ch !== undefined && WORD_CHAR.test(ch);
+}
+
 function classify(text: string, i: number): CharClass {
   const ch = text[i];
   if (ch === " " || ch === " " || ch === "\t") return SPACE;

@@ -24,7 +24,16 @@ export function fixture(name: string): FixturePara[] {
   return name === "long" ? long() : BASE.map((p) => ({ ...p }));
 }
 
-export function fixtureName(): string {
+function rawName(): string {
   const fromShell = (window as unknown as { __FIXTURE?: string }).__FIXTURE;
   return fromShell ?? new URLSearchParams(location.search).get("doc") ?? "short";
+}
+
+export function fixtureName(): string {
+  return rawName().split("--")[0];
+}
+
+/** Experiment switches appended to the fixture name, e.g. "short--noanim". */
+export function flag(name: string): boolean {
+  return rawName().split("--").slice(1).includes(name);
 }

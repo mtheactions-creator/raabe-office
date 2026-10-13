@@ -62,13 +62,19 @@ def measure(target: Target, caret_offset: int, samples: int = SAMPLES) -> dict:
     return {**_stats(results), "timeouts": timeouts, "samples_ms": [round(r, 2) for r in results]}
 
 
+def _wrapped_line_start(t: Target, after: int) -> int:
+    text = t.text()
+    return next(s for s in t.lines() if s > after and text[s - 1] == " ")
+
+
 def run() -> dict:
     out: dict = {}
     scenarios = {
         # Empty paragraph at the end of a one-page document.
         "short_end": ("short", lambda t: len(t.text())),
-        # Middle of a paragraph on page ~12 of the 50-page document: every key reflows.
-        "long_middle": ("long", lambda t: t.find("Lichtenergie", len(t.text()) // 4) + 5),
+        # Start of a wrapped line inside a paragraph on page ~12 of the 50-page document:
+        # every key reflows the paragraph, and the typed text stays on this line.
+        "long_middle": ("long", lambda t: _wrapped_line_start(t, len(t.text()) // 4)),
     }
     makers = {
         "word": lambda fx: WordTarget(fx),

@@ -15,8 +15,7 @@ installProbe({
     head: editor.doc.toOffset(editor.sel.head),
   }),
   setSelection(anchor, head) {
-    editor.sel = { anchor: editor.doc.fromOffset(anchor), head: editor.doc.fromOffset(head), headUpstream: false };
-    editor.update({ scroll: true });
+    editor.select(editor.doc.fromOffset(anchor), editor.doc.fromOffset(head));
   },
   pointAt(offset) {
     return editor.view.clientPoint(editor.doc.fromOffset(offset));
@@ -47,3 +46,4 @@ installProbe({
 });
 
 editor.focus();
+

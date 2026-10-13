@@ -6,7 +6,7 @@ import { markInputHandled } from "../shared/probe";
 import { Doc, cmp, maxPos, minPos, type Para, type Pos } from "./doc";
 import { layout, type Layout } from "./layout";
 import { View, type Selection } from "./view";
-import { countWords, nextTokenStart, prevTokenStart, sentenceAt, tokenAt } from "./words";
+import { countWords, isWordChar, nextTokenStart, prevTokenStart, sentenceAt, tokenAt } from "./words";
 
 type Granularity = "char" | "word" | "para";
 
@@ -100,6 +100,11 @@ export class Editor {
     }, 300);
   }
 
+  select(anchor: Pos, head: Pos): void {
+    this.setSel(anchor, head);
+    this.update({ scroll: true });
+  }
+
   private setSel(anchor: Pos, head: Pos, upstream = false, keepGoal = false): void {
     this.sel = { anchor, head, headUpstream: upstream };
     if (!keepGoal) this.goalX = null;
@@ -133,9 +138,27 @@ export class Editor {
   }
 
   insertText(text: string, inputTs?: number): void {
-    // Consecutive typing forms one undo step until a word ends.
+    // Consecutive typing forms one undo step, like Word's "Eingabe".
+    this.smartTrimSelection();
     this.replaceSelection(text, inputTs, true);
-    if (text === " ") this.typing = false;
+  }
+
+  /**
+   * Word's smart cut and paste: when whole words with their trailing space are replaced,
+   * the space survives ("Algen " replaced by typing "Moose" gives "Moose ").
+   */
+  private smartTrimSelection(): void {
+    const [from, to] = this.range();
+    if (from.p !== to.p || cmp(from, to) === 0) return;
+    const text = this.doc.paras[from.p].text;
+    const wholeWords = tokenAt(text, from.o)[0] === from.o && (to.o === text.length || tokenAt(text, to.o)[0] === to.o);
+    if (!wholeWords || text[to.o - 1] !== " ") return;
+    let end = to.o;
+    while (end > from.o && text[end - 1] === " ") end--;
+    if (end === from.o) return;
+    const head = cmp(this.sel.head, this.sel.anchor) >= 0;
+    const trimmed = { p: to.p, o: end };
+    this.sel = head ? { ...this.sel, head: trimmed } : { ...this.sel, anchor: trimmed };
   }
 
   private deleteRange(from: Pos, to: Pos, inputTs?: number): void {
@@ -168,7 +191,15 @@ export class Editor {
       if (h.p === this.doc.paras.length - 1) return;
       return this.deleteRange(h, { p: h.p + 1, o: 0 }, inputTs);
     }
-    const end = word ? nextTokenStart(text, h.o) : h.o + 1;
+    let end = h.o + 1;
+    if (word) {
+      // Inside a word, Strg+Entf deletes only the rest of the word, not the space after it.
+      end = nextTokenStart(text, h.o);
+      if (isWordChar(text[h.o - 1]) && isWordChar(text[h.o])) {
+        end = h.o;
+        while (end < text.length && isWordChar(text[end])) end++;
+      }
+    }
     this.deleteRange(h, { p: h.p, o: end }, inputTs);
   }
 
@@ -340,10 +371,14 @@ export class Editor {
 
   private onPaste(e: ClipboardEvent): void {
     e.preventDefault();
-    const text = e.clipboardData?.getData("text/plain");
+    let text = e.clipboardData?.getData("text/plain")?.replace(/\r\n?/g, "\n");
     if (!text) return;
     this.typing = false;
-    this.replaceSelection(text.replace(/\r\n?/g, "\n"));
+    // Smart paste: a word pasted directly after a letter gets a separating space.
+    const [from] = this.range();
+    const before = this.doc.paras[from.p].text[from.o - 1];
+    if (isWordChar(before) && isWordChar(text[0])) text = " " + text;
+    this.replaceSelection(text);
   }
 
   // ----- mouse --------------------------------------------------------------------------

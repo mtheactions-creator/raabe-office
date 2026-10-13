@@ -129,6 +129,7 @@ def perform(t: Target, steps: list) -> dict:
     lines = t.lines()
     t.activate()
     time.sleep(0.7)  # longer than the double-click time, so clicks never merge across cases
+    points = []
     for step in steps:
         op = step[0]
         if op == "sel":
@@ -137,6 +138,7 @@ def perform(t: Target, steps: list) -> dict:
             t.set_selection(min(a, h), max(a, h))
         elif op == "click":
             x, y = _point(t, text, lines, step[1])
+            points.append((round(x), round(y)))
             winapi.click(x, y, count=step[2], modifiers=step[3] if len(step) > 3 else "")
         elif op == "drag":
             x1, y1 = _point(t, text, lines, step[1])
@@ -152,7 +154,7 @@ def perform(t: Target, steps: list) -> dict:
     time.sleep(0.3)
     result_text = t.text()
     anchor, head = t.selection()
-    return {"text": result_text, "anchor": anchor, "head": head}
+    return {"text": result_text, "anchor": anchor, "head": head, "points": points}
 
 
 def _diff(a: str, b: str) -> str:
@@ -169,7 +171,7 @@ def run(targets: list[Target]) -> dict:
     summary = {t.name: 0 for t in targets[1:]}
     for name, _ in CASES:
         w = ref[name]
-        row = {"case": name, "word": {"sel": [min(w["anchor"], w["head"]), max(w["anchor"], w["head"])], "head": w["head"],
+        row = {"case": name, "word": {"sel": [min(w["anchor"], w["head"]), max(w["anchor"], w["head"])], "head": w["head"], "points": w["points"],
                                       "selected": w["text"][min(w["anchor"], w["head"]):max(w["anchor"], w["head"])]}}
         for t in targets[1:]:
             r = raw[t.name][name]
