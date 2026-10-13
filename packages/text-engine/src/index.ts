@@ -1,19 +1,27 @@
 // Public API of the text engine (decision D-017: controlled editing).
 
 export { Editor, FONT_STEPS, type ChangeEvent, type EditorStats, type CharState, type CaseMode, type CopiedFormat } from "./editor";
-export { Doc, cmp, type Pos, type DocState, type DocSettings } from "./doc";
+export { Doc, MAIN, cmp, nextTableId, type Pos, type DocState, type DocSettings, type DocSnapshot } from "./doc";
 export { Fonts, PT, type FontMetrics, type MetricsProvider } from "./fonts";
-export { A4, Layouter, type Layout, type PageSetup } from "./layout";
+export { Layouter, fieldType, type LayoutContext } from "./layout";
+export { DEFAULT_CELL_MARGINS, layoutDocument, type Deco, type Frame, type Layout, type PageLayout, type PlacedLine, type StoryLayout } from "./flow";
 export {
-  EMPTY, LINE_BREAK, OBJ, PAGE_BREAK, intern, makePara, validPara,
-  type Align, type Anchor, type BlockObject, type CharProps, type InlineObject, type LineRule, type Para, type ParaProps,
-  type Run, type TabStop, type Underline,
+  A4, COLUMN_BREAK, DEFAULT_SECTION, EMPTY, EMPTY_NUMBERING, LINE_BREAK, OBJ, ONE_COLUMN, PAGE_BREAK, cellKey, intern, makePara, validPara,
+  type AbstractNum, type Align, type Anchor, type BlockObject, type BorderSpec, type Borders, type CellDef, type CellMargins,
+  type CellRef, type CharProps, type Columns, type CommentMeta, type FloatObject, type HeaderRefs, type ImageData,
+  type InlineObject, type LineRule, type NumInstance, type NumLevel, type Numbering, type PageSetup, type Para,
+  type ParaGroup, type ParaProps, type Revision, type RowDef, type Run, type Section, type Shading, type TabStop,
+  type TableDef, type Underline,
 } from "./model";
 export {
+  addList, bulletLevels, displayBullet, formatNumber, levelOf, listLabels, multilevelLevels, numberLevels, numberingOf,
+  restartList, type ListLabel,
+} from "./numbering";
+export {
   GERMAN_NAMES, StyleSheet, builtinStyle, defaultStyleSheet,
-  type ResolvedChar, type ResolvedPara, type StyleDef, type StyleType, type Theme,
+  type ResolvedChar, type ResolvedPara, type StyleDef, type StyleType, type TableStyleDef, type TableStylePart, type Theme,
 } from "./styles";
-export { HIGHLIGHT, MIN_ZOOM, MAX_ZOOM } from "./view";
+export { AUTHOR_COLORS, HIGHLIGHT, MIN_ZOOM, MAX_ZOOM, imageUrl, storyIdOf, type TextMark } from "./view";
 export { countWords } from "./words";
 export { installProbe, type EngineProbe, type LineBox, type ProbeFormat } from "./probe";
 
@@ -52,13 +60,14 @@ export function probeFor(getEditor: () => Editor, load: (name: string) => Partia
     pointAt: (offset) => getEditor().view.clientPoint(getEditor().doc.fromOffset(offset)),
     lines() {
       const e = getEditor();
-      return e.layout.placed.map((pl) => lineStart(e, pl.para, pl.line));
+      return e.layout.placed.filter((pl) => !pl.ghost && !pl.hide).map((pl) => lineStart(e, pl.para, pl.line));
     },
     pages() {
       const e = getEditor();
       const out: number[] = [];
       let page = -1;
       for (const pl of e.layout.placed) {
+        if (pl.ghost || pl.hide) continue;
         if (pl.page !== page) {
           page = pl.page;
           out.push(lineStart(e, pl.para, pl.line));
@@ -68,25 +77,25 @@ export function probeFor(getEditor: () => Editor, load: (name: string) => Partia
     },
     lineBoxes() {
       const e = getEditor();
-      const pg = e.layout.page;
       const r = (v: number) => Math.round(v * 100) / 100;
-      return e.layout.placed.map((pl) => {
+      return e.layout.placed.filter((pl) => !pl.ghost && !pl.hide).map((pl) => {
         const l = e.layout.paras[pl.para].lines[pl.line];
         return {
           start: lineStart(e, pl.para, pl.line), page: pl.page,
-          x: r(pg.marginLeft + l.x0 / PT), y: r(pg.marginTop + pl.y / PT), h: r(l.height / PT), base: r(l.baseline / PT),
+          x: r((pl.x + l.x0) / PT), y: r(pl.y / PT), h: r(l.height / PT), base: r(l.baseline / PT),
         };
       });
     },
     xs(offsets) {
       const e = getEditor();
-      const pg = e.layout.page;
       return offsets.map((offset) => {
         const pos = e.doc.fromOffset(offset);
         const pl = e.layout.paras[pos.p];
-        const line = pl.lines.find((l, i) => pos.o >= l.start && (pos.o < l.end || i === pl.lines.length - 1)) ?? pl.lines[0];
+        const j = Math.max(0, pl.lines.findIndex((l, i) => pos.o >= l.start && (pos.o < l.end || i === pl.lines.length - 1)));
+        const line = pl.lines[j];
+        const placed = e.layout.placed[e.layout.main.index[pos.p]?.[j] ?? e.layout.firstPlaced[pos.p]];
         const k = Math.min(pos.o - line.start, line.charX.length - 1);
-        return Math.round((pg.marginLeft + (line.x0 + line.charX[Math.max(0, k)]) / PT) * 100) / 100;
+        return Math.round(((placed?.x ?? 0) + line.x0 + line.charX[Math.max(0, k)]) / PT * 100) / 100;
       });
     },
     formatAt(offset) {

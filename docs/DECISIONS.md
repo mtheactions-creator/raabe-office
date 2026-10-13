@@ -253,3 +253,30 @@ The harness no longer needs the PC to itself except for latency (F1) and real-in
 behaviour (F3): Word runs invisibly (its own process) and RaabeWrite runs off screen without
 ever taking the focus (`RAABE_FEEL_BACKGROUND`), driven through the DevTools protocol.
 Layout, formatting behaviour and the smoke test can therefore run while the owner works.
+
+### D-029 Document structure for Step 3 and 4
+The model follows Word's own (WordprocessingML), so editing, undo and the file format stay
+simple:
+- A document is a set of *stories*: the main text, each header and footer, each foot- and
+  endnote and each comment. Editing works on the story with the caret; one undo step holds
+  all stories.
+- Tables are not nested objects: their cells' paragraphs are ordinary paragraphs of the
+  story in row order, each pointing to its cell (table, row, cell). Caret, selection,
+  search and spell check therefore work in tables unchanged. A selection across cells
+  selects whole cells, as in Word. Nested tables are kept verbatim and shown read-only.
+- A section ends at a paragraph (the paragraph carries the section's properties, as the
+  paragraph mark does in Word); the last section belongs to the document.
+- Lists are Word's numbering definitions (numbering.xml) referenced by paragraphs; labels
+  are computed during layout.
+- Fields that span paragraphs (Inhaltsverzeichnis) become start/end markers around ordinary
+  text, hyperlinks become start/end markers around their text, tracked changes become a
+  property of the text, comment ranges are markers. The file layer writes only complete
+  pairs, so editing can never produce invalid XML.
+- Pictures keep their original XML and relationship; when they are copied into another part
+  the relationships are rewritten. Parts whose stories did not change are written back byte
+  for byte.
+- Layout is split: `layout.ts` breaks one paragraph into lines for a given width (with list
+  label, page fields and room around pictures); `flow.ts` places paragraphs on pages:
+  sections with page size and columns, headers and footers per page, tables (rows split at
+  line boundaries, header rows repeated, vertical merges), footnotes at the page bottom,
+  floating pictures with text wrapping, balanced columns before continuous section breaks.

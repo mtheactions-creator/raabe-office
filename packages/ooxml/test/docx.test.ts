@@ -93,13 +93,27 @@ describe("documents saved by Microsoft Word", () => {
     });
   }
 
-  it("word-rich.docx: shows placeholders for what it cannot edit yet", () => {
+  it("word-rich.docx: reads tables, lists, notes, comments, headers, fields and changes", () => {
     const { state, partial } = readDocx(fixture("word-rich.docx"));
-    expect(state.paras.some((p) => p.block?.kind === "table")).toBe(true);
-    expect(state.paras.some((p) => p.block?.kind === "field" && p.block.label === "Inhaltsverzeichnis")).toBe(true);
+    const cells = state.paras.filter((p) => p.cell);
+    expect(cells.map((p) => p.text)).toEqual(["Stoff", "Menge", "Wasser", "100 ml", "Licht", "viel"]);
+    expect(cells[3].cell).toMatchObject({ row: 1, col: 1 });
+    expect(cells[0].cell!.table.grid.length).toBe(2);
+    // The table of contents is a field whose result is ordinary text.
+    const toc = state.paras.find((p) => p.anchors?.some((a) => a.field?.edge === "start"));
+    expect(toc?.anchors?.find((a) => a.field)?.field?.instr).toMatch(/^TOC/);
+    expect(state.paras.some((p) => p.anchors?.some((a) => a.field?.edge === "end"))).toBe(true);
     const kinds = state.paras.flatMap((p) => p.objects?.map((o) => o.kind) ?? []);
-    for (const k of ["note", "link", "image", "revision"]) expect(kinds).toContain(k);
-    expect(partial).toEqual(expect.arrayContaining(["Tabellen", "Fußnoten", "Kommentare", "Bilder und Formen", "Aufzählungen und Nummerierungen", "Kopf- und Fußzeilen", "Formeln"]));
+    for (const k of ["note", "image", "math"]) expect(kinds).toContain(k);
+    expect(state.paras.filter((p) => p.props.numId !== undefined).length).toBe(4);
+    expect(state.numbering?.nums.size).toBe(2);
+    expect(state.paras.some((p) => p.runs.some((r) => r.props.rev?.kind === "ins")) && state.paras.some((p) => p.runs.some((r) => r.props.rev?.kind === "del"))).toBe(true);
+    expect(state.paras.some((p) => p.floats?.length)).toBe(true);
+    expect(state.stories?.get("fn:1")?.[0].text).toContain("Biologiebuch");
+    expect(state.stories?.get("cmt:1")?.[0].text).toBe("Bitte genau lesen.");
+    expect(state.comments?.get("cmt:1")?.initials).toBe("RT");
+    expect(state.settings.section.headers.default && state.stories?.get(state.settings.section.headers.default)?.[0].text).toBe("Raabeschule – Biologie");
+    expect(partial).toEqual(expect.arrayContaining(["Formeln", "Textfelder und Formen"]));
   });
 
   it("word-rich.docx: typing next to preserved content keeps it", () => {

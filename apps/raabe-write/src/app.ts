@@ -559,7 +559,7 @@ export class WriteApp {
       const scale = 0.55;
       first.classList.add("sheet");
       first.style.transform = `scale(${scale})`;
-      const pg = this.active!.editor.doc.settings.page;
+      const pg = this.active!.editor.layout.pages[0].setup;
       preview.append(h("div", { style: `width:${pg.width * PT * scale}px;height:${pg.height * PT * scale}px` }, first));
     }
     const pages = this.active?.editor.stats().pageCount ?? 0;

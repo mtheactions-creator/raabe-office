@@ -37,10 +37,267 @@ export interface CharProps {
   readonly rStyle?: string;
   /** Run properties the engine does not interpret, kept for writing back. */
   readonly extra?: readonly unknown[];
+  /** Tracked change this text belongs to (Änderungen nachverfolgen). */
+  readonly rev?: Revision;
+}
+
+/** A tracked insertion or deletion. Shared objects: runs of one change point to the same one. */
+export interface Revision {
+  readonly kind: "ins" | "del";
+  readonly author: string;
+  /** ISO date as in the file ("2026-10-13T10:00:00Z"); may be empty. */
+  readonly date: string;
+  readonly id: number;
 }
 
 export type Align = "left" | "center" | "right" | "both";
 export type LineRule = "auto" | "exact" | "atLeast";
+
+/** One border line (paragraph, cell, table, page). Lengths in points. */
+export interface BorderSpec {
+  /** OOXML border style: "single", "double", "dotted", "dashed", "thick", "nil", "none" … */
+  readonly style: string;
+  /** Line width in points (w:sz is eighths of a point). */
+  readonly size: number;
+  /** "RRGGBB" or "auto". */
+  readonly color: string;
+  /** Distance to the text in points. */
+  readonly space: number;
+}
+
+export interface Borders {
+  readonly top?: BorderSpec;
+  readonly bottom?: BorderSpec;
+  readonly left?: BorderSpec;
+  readonly right?: BorderSpec;
+  /** Between paragraphs of a bordered group, or between table rows. */
+  readonly between?: BorderSpec;
+  readonly insideH?: BorderSpec;
+  readonly insideV?: BorderSpec;
+}
+
+/** Background shading; `fill` is "RRGGBB" or "auto" (none). */
+export interface Shading {
+  readonly fill: string;
+  /** Pattern and pattern colour, kept for writing back. */
+  readonly val?: string;
+  readonly color?: string;
+}
+
+// ----- sections ------------------------------------------------------------------------------
+
+/** Page geometry. Points. */
+export interface PageSetup {
+  readonly width: number;
+  readonly height: number;
+  readonly marginTop: number;
+  readonly marginBottom: number;
+  readonly marginLeft: number;
+  readonly marginRight: number;
+  /** Distance of the header from the top edge and of the footer from the bottom edge. */
+  readonly header: number;
+  readonly footer: number;
+  readonly gutter: number;
+}
+
+export const A4: PageSetup = {
+  width: 595.3, height: 841.9, marginTop: 70.85, marginBottom: 56.7, marginLeft: 70.85, marginRight: 70.85,
+  header: 35.4, footer: 35.4, gutter: 0,
+};
+
+export interface Columns {
+  readonly count: number;
+  /** Space between columns (equal columns), points. */
+  readonly space: number;
+  /** Vertical line between columns. */
+  readonly sep: boolean;
+  /** Individual widths when the columns are not equal. */
+  readonly cols?: readonly { readonly width: number; readonly space: number }[];
+}
+
+/** Story ids of the headers or footers of a section. */
+export interface HeaderRefs {
+  readonly default?: string;
+  readonly first?: string;
+  readonly even?: string;
+}
+
+/** A section: page geometry, columns, headers and footers, page numbering. */
+export interface Section {
+  readonly page: PageSetup;
+  readonly columns: Columns;
+  /** How the section starts (the type stored on the section that begins here). */
+  readonly start: "nextPage" | "continuous" | "evenPage" | "oddPage" | "nextColumn";
+  /** Different first page header/footer ("Erste Seite anders"). */
+  readonly titlePage: boolean;
+  readonly headers: HeaderRefs;
+  readonly footers: HeaderRefs;
+  /** Page number to restart at, and its format ("decimal", "upperRoman", "lowerRoman" …). */
+  readonly pageStart?: number;
+  readonly pageFormat?: string;
+  /** Other sectPr children, kept as XML for writing back. */
+  readonly extra?: readonly unknown[];
+}
+
+export const ONE_COLUMN: Columns = { count: 1, space: 35.4, sep: false };
+
+export const DEFAULT_SECTION: Section = {
+  page: A4, columns: ONE_COLUMN, start: "nextPage", titlePage: false, headers: {}, footers: {},
+};
+
+// ----- tables --------------------------------------------------------------------------------
+
+export interface CellMargins {
+  readonly left: number;
+  readonly right: number;
+  readonly top: number;
+  readonly bottom: number;
+}
+
+export interface CellDef {
+  /** Grid columns this cell spans (w:gridSpan). */
+  readonly span: number;
+  readonly vMerge?: "restart" | "continue";
+  /** Preferred width in points (w:tcW, dxa); undefined = from the grid. */
+  readonly width?: number;
+  readonly shading?: Shading;
+  readonly borders?: Borders;
+  readonly vAlign?: "top" | "center" | "bottom";
+  readonly margins?: Partial<CellMargins>;
+  /** Other tcPr children (XML). */
+  readonly extra?: readonly unknown[];
+}
+
+export interface RowDef {
+  readonly cells: readonly CellDef[];
+  /** Row height in points with its rule; undefined = automatic. */
+  readonly height?: number;
+  readonly heightRule?: "atLeast" | "exact";
+  /** Repeat as header row on every page (Überschrift wiederholen). */
+  readonly header?: boolean;
+  /** Row may not break across pages. */
+  readonly cantSplit?: boolean;
+  /** Other trPr / tblPrEx content (XML). */
+  readonly extra?: readonly unknown[];
+}
+
+/**
+ * A table. Its cells' paragraphs are ordinary paragraphs of the story, in row-major order,
+ * each pointing to the cell it belongs to (Para.cell). Like Word's own model, the text stays
+ * one sequence, so caret, selection, undo and search work unchanged.
+ */
+export interface TableDef {
+  /** Distinguishes adjacent tables. */
+  readonly id: number;
+  /** Grid column widths in points (w:tblGrid). */
+  readonly grid: readonly number[];
+  readonly rows: readonly RowDef[];
+  readonly style?: string;
+  readonly align?: "left" | "center" | "right";
+  /** Indent from the margin in points (w:tblInd). */
+  readonly indent?: number;
+  readonly borders?: Borders;
+  readonly shading?: Shading;
+  readonly cellMargins?: Partial<CellMargins>;
+  /** w:tblLook flags (first row, banded rows …), as hex or attributes. */
+  readonly look?: { firstRow: boolean; lastRow: boolean; firstColumn: boolean; lastColumn: boolean; noHBand: boolean; noVBand: boolean };
+  /** Preferred table width in points; undefined = automatic. */
+  readonly width?: number;
+  readonly fixed?: boolean;
+  /** Other tblPr children (XML). */
+  readonly extra?: readonly unknown[];
+}
+
+export interface CellRef {
+  readonly table: TableDef;
+  readonly row: number;
+  /** Index of the cell within its row (not the grid column). */
+  readonly col: number;
+}
+
+// ----- numbering -----------------------------------------------------------------------------
+
+export interface NumLevel {
+  readonly start: number;
+  /** "decimal", "lowerLetter", "upperLetter", "lowerRoman", "upperRoman", "bullet", "none" … */
+  readonly format: string;
+  /** Level text with %1…%9 placeholders ("%1.", "%1.%2"), or the bullet character. */
+  readonly text: string;
+  readonly align: "left" | "center" | "right";
+  readonly suffix: "tab" | "space" | "nothing";
+  readonly pPr: ParaProps;
+  readonly rPr: CharProps;
+  /** Restart after this level (1-based; 0 = never); undefined = after any higher level. */
+  readonly restart?: number;
+  /** Show all levels as arabic numbers (w:isLgl). */
+  readonly legal?: boolean;
+  /** Original w:lvl XML. */
+  readonly data?: unknown;
+}
+
+export interface AbstractNum {
+  readonly id: number;
+  readonly levels: readonly NumLevel[];
+  /** Original XML, written back unless the definition changed. */
+  readonly data?: unknown;
+}
+
+export interface NumInstance {
+  readonly id: number;
+  readonly abstractId: number;
+  /** Per level: restart value and/or replaced level definition. */
+  readonly overrides?: ReadonlyMap<number, { readonly start?: number; readonly level?: NumLevel }>;
+  readonly data?: unknown;
+}
+
+export interface Numbering {
+  readonly abstracts: ReadonlyMap<number, AbstractNum>;
+  readonly nums: ReadonlyMap<number, NumInstance>;
+  /** Parts of numbering.xml the model does not cover (picture bullets …), kept as XML. */
+  readonly extra?: readonly unknown[];
+}
+
+export const EMPTY_NUMBERING: Numbering = { abstracts: new Map(), nums: new Map() };
+
+// ----- floating objects and comments ---------------------------------------------------------
+
+/** A picture or shape anchored to a paragraph and positioned on the page (wp:anchor). */
+export interface FloatObject {
+  /** Offset in the paragraph the object is anchored at. */
+  readonly at: number;
+  /** Original XML (w:r with w:drawing …), written back unchanged unless edited. */
+  readonly data: unknown;
+  /** Size in points. */
+  readonly width: number;
+  readonly height: number;
+  readonly image?: ImageData;
+  readonly x: { readonly rel: string; readonly align?: string; readonly offset: number };
+  readonly y: { readonly rel: string; readonly align?: string; readonly offset: number };
+  /** "front", "behind", "square", "tight", "through", "topAndBottom". */
+  readonly wrap: string;
+  /** "bothSides", "left", "right", "largest". */
+  readonly side: string;
+  /** Distance from the text: top, bottom, left, right (points). */
+  readonly dist: readonly [number, number, number, number];
+}
+
+export interface ImageData {
+  readonly bytes: Uint8Array;
+  /** MIME type ("image/png" …). */
+  readonly type: string;
+}
+
+export interface CommentMeta {
+  readonly id: string;
+  readonly author: string;
+  readonly initials: string;
+  readonly date: string;
+  /** Id of the comment this one replies to. */
+  readonly parent?: string;
+  /** Marked as resolved (erledigt). */
+  readonly done?: boolean;
+  readonly data?: unknown;
+}
 
 export interface TabStop {
   /** Position in points from the left margin. */
@@ -71,7 +328,12 @@ export interface ParaProps {
   readonly pageBreakBefore?: boolean;
   readonly tabs?: readonly TabStop[];
   readonly outline?: number;
-  /** Paragraph properties the engine does not interpret (numbering, borders …). */
+  /** List: numbering instance (0 = explicitly none) and level (0-based). */
+  readonly numId?: number;
+  readonly ilvl?: number;
+  readonly borders?: Borders;
+  readonly shading?: Shading;
+  /** Paragraph properties the engine does not interpret, kept for writing back. */
   readonly extra?: readonly unknown[];
 }
 
@@ -82,20 +344,41 @@ export interface Run {
 
 /** Something inline the engine shows but does not edit inside: a field, a link, an image … */
 export interface InlineObject {
-  readonly kind: "field" | "link" | "image" | "note" | "revision" | "other";
+  readonly kind: "field" | "link" | "image" | "note" | "revision" | "math" | "other";
   /** Opaque payload for the file format layer. */
   readonly data: unknown;
   /** Text shown in place of the object (field result, link text …). */
   readonly display: string;
-  /** Size of a placeholder box (images), in points. */
+  /** Size in points (images, equations). */
   readonly width?: number;
   readonly height?: number;
+  /** Depth below the baseline in points (equations). */
+  readonly depth?: number;
+  readonly image?: ImageData;
+  /** Field code ("PAGE", "NUMPAGES", "TOC \\o …"): page fields are shown per page. */
+  readonly instr?: string;
+  /** Foot- or endnote reference: the note's story id ("fn:2", "en:1"). */
+  readonly note?: string;
+  /** Equation as LaTeX (for display and editing). */
+  readonly latex?: string;
+  /** Link target (hyperlinks). */
+  readonly href?: string;
 }
 
 /** A zero-width marker kept at an offset (bookmark, comment range …). */
 export interface Anchor {
   readonly at: number;
   readonly data: unknown;
+  /** Comment ranges: which edge of which comment. */
+  readonly comment?: { readonly id: string; readonly edge: "start" | "end" | "ref" };
+  /**
+   * Start and end of a field whose result spans paragraphs (Inhaltsverzeichnis) or of a
+   * hyperlink; the file format layer writes only complete pairs.
+   */
+  readonly field?: { readonly id: string; readonly edge: "start" | "end"; readonly instr?: string };
+  readonly link?: { readonly id: string; readonly edge: "start" | "end" };
+  /** Bookmark name (bookmarkStart), for cross references and the table of contents. */
+  readonly bookmark?: string;
 }
 
 /** A block the engine does not edit (table, multi-paragraph field …), shown as a placeholder. */
@@ -124,11 +407,32 @@ export interface Para {
   readonly block?: BlockObject;
   /** Opaque content that preceded this paragraph in the file (body-level bookmarks …). */
   readonly leading?: readonly unknown[];
+  /** The section that ends with this paragraph (Abschnittswechsel). */
+  readonly sect?: Section;
+  /** The table cell this paragraph is in. */
+  readonly cell?: CellRef;
+  /** Pictures and shapes anchored to this paragraph. */
+  readonly floats?: readonly FloatObject[];
+  /** The content control (block-level w:sdt) the paragraph is in: shared by its paragraphs. */
+  readonly group?: ParaGroup;
+  /** The multi-paragraph field (Inhaltsverzeichnis) whose result this paragraph is part of. */
+  readonly field?: string;
+}
+
+/** Paragraphs wrapped together in the file (a content control around a table of contents …). */
+export interface ParaGroup {
+  readonly id: number;
+  readonly kind: "sdt";
+  /** XML before the first and after the last paragraph. */
+  readonly open: unknown;
+  readonly close: unknown;
 }
 
 export const OBJ = "\ufffc";
 export const LINE_BREAK = "\u000b";
 export const PAGE_BREAK = "\u000c";
+/** Column break (Spaltenumbruch); a control character Word does not use in text. */
+export const COLUMN_BREAK = "\u000e";
 export const EMPTY: CharProps = Object.freeze({});
 
 // ----- interning --------------------------------------------------------------------------
@@ -139,6 +443,7 @@ function propsKey(p: CharProps): string {
   const keys = Object.keys(p).filter((k) => (p as Record<string, unknown>)[k] !== undefined).sort();
   return keys.map((k) => {
     const v = (p as Record<string, unknown>)[k];
+    if (k === "rev") { const r = v as Revision; return `rev=${r.kind}:${r.id}:${r.author}:${r.date}`; }
     return `${k}=${k === "extra" ? (v as unknown[]).map(String).join("\u0001") : String(v)}`;
   }).join("|");
 }
@@ -213,18 +518,27 @@ function countObj(text: string, from: number, to: number): number {
   return n;
 }
 
-/** The part [from, to) of a paragraph, keeping runs, objects and anchors aligned. */
-export function slicePara(p: Para, from: number, to: number): Para {
+/**
+ * The part [from, to) of a paragraph, keeping runs, objects and anchors aligned. Anchors at
+ * `to` belong to the piece only at the paragraph end or with `inclusiveEnd` (a head piece
+ * keeps the markers at the cut, the tail piece does not repeat them).
+ */
+export function slicePara(p: Para, from: number, to: number, inclusiveEnd = false, exclusiveStart = false): Para {
   const before = countObj(p.text, 0, from);
   const inside = countObj(p.text, from, to);
   const objects = p.objects?.slice(before, before + inside);
-  const anchors = p.anchors?.filter((a) => a.at >= from && a.at <= to).map((a) => ({ at: a.at - from, data: a.data }));
+  const anchors = p.anchors?.filter((a) => (exclusiveStart ? a.at > from : a.at >= from) && (a.at < to || (a.at === to && (inclusiveEnd || to === p.text.length))))
+    .map((a) => ({ ...a, at: a.at - from }));
+  const floats = p.floats?.filter((f) => f.at >= from && (f.at < to || (f.at === to && to === p.text.length))).map((f) => ({ ...f, at: f.at - from }));
   return {
     ...p,
     text: p.text.slice(from, to),
     runs: sliceRuns(p.runs, from, to),
     objects: objects?.length ? objects : undefined,
     anchors: anchors?.length ? anchors : undefined,
+    floats: floats?.length ? floats : undefined,
+    // The section break belongs to the paragraph mark, which only the end piece keeps.
+    sect: to >= p.text.length ? p.sect : undefined,
   };
 }
 
@@ -232,7 +546,8 @@ export function slicePara(p: Para, from: number, to: number): Para {
 export function joinParas(a: Para, b: Para): Para {
   const shift = a.text.length;
   const objects = [...(a.objects ?? []), ...(b.objects ?? [])];
-  const anchors = [...(a.anchors ?? []), ...(b.anchors ?? []).map((x) => ({ at: x.at + shift, data: x.data }))];
+  const anchors = [...(a.anchors ?? []), ...(b.anchors ?? []).map((x) => ({ ...x, at: x.at + shift }))];
+  const floats = [...(a.floats ?? []), ...(b.floats ?? []).map((x) => ({ ...x, at: x.at + shift }))];
   return {
     ...a,
     text: a.text + b.text,
@@ -240,12 +555,20 @@ export function joinParas(a: Para, b: Para): Para {
     mark: b.mark,
     objects: objects.length ? objects : undefined,
     anchors: anchors.length ? anchors : undefined,
+    floats: floats.length ? floats : undefined,
+    // Joining removes a's paragraph mark; the section break of b's mark survives (Word).
+    sect: b.sect,
   };
 }
 
 /** Text with one formatting, as a paragraph piece (for inserting). */
 export function textPiece(text: string, props: CharProps): Para {
   return { text, runs: text ? [{ len: text.length, props: intern(props) }] : [], props: {}, mark: EMPTY };
+}
+
+/** Visits every paragraph of a story with its index (helper for numbering and tables). */
+export function cellKey(c: CellRef): string {
+  return `${c.table.id}:${c.row}:${c.col}`;
 }
 
 /** Changes character properties on [from, to) with `change(old) => new`. */

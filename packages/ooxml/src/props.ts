@@ -2,11 +2,11 @@
 // Elements the model does not interpret are kept as XML strings and written back in the
 // position the schema requires, so files stay valid and nothing is lost.
 
-import type { CharProps, ParaProps, TabStop } from "@raabe/text-engine";
+import type { BorderSpec, Borders, CharProps, ParaProps, Revision, Shading, TabStop } from "@raabe/text-engine";
 import { attr, child, esc, kids, num, onOff, outer, W } from "./xml";
 
 // Child order required by the schema (ECMA-376 CT_RPr / CT_PPr).
-const RPR_ORDER = ["rStyle", "rFonts", "b", "bCs", "i", "iCs", "caps", "smallCaps", "strike", "dstrike", "outline", "shadow",
+const RPR_ORDER = ["ins", "del", "moveFrom", "moveTo", "rStyle", "rFonts", "b", "bCs", "i", "iCs", "caps", "smallCaps", "strike", "dstrike", "outline", "shadow",
   "emboss", "imprint", "noProof", "snapToGrid", "vanish", "webHidden", "color", "spacing", "w", "kern", "position", "sz", "szCs",
   "highlight", "u", "effect", "bdr", "shd", "fitText", "vertAlign", "rtl", "cs", "em", "lang", "eastAsianLayout", "specVanish", "oMath"];
 const PPR_ORDER = ["pStyle", "keepNext", "keepLines", "pageBreakBefore", "framePr", "widowControl", "numPr", "suppressLineNumbers",
@@ -15,7 +15,63 @@ const PPR_ORDER = ["pStyle", "keepNext", "keepLines", "pageBreakBefore", "frameP
   "textDirection", "textAlignment", "textboxTightWrap", "outlineLvl", "divId", "cnfStyle", "rPr", "sectPr", "pPrChange"];
 
 const RPR_KNOWN = new Set(["rStyle", "rFonts", "b", "i", "caps", "smallCaps", "strike", "dstrike", "vanish", "color", "spacing", "kern", "sz", "highlight", "u", "vertAlign", "lang"]);
-const PPR_KNOWN = new Set(["pStyle", "keepNext", "keepLines", "pageBreakBefore", "widowControl", "tabs", "spacing", "ind", "contextualSpacing", "jc", "outlineLvl", "rPr"]);
+const PPR_KNOWN = new Set(["pStyle", "keepNext", "keepLines", "pageBreakBefore", "widowControl", "tabs", "spacing", "ind", "contextualSpacing", "jc", "outlineLvl", "rPr",
+  "numPr", "pBdr", "shd", "sectPr"]);
+
+// ----- borders and shading ----------------------------------------------------------------
+
+/** Reads one border element (w:top, w:left …): size in eighths of a point. */
+export function readBorder(el: Element | null): BorderSpec | undefined {
+  if (!el) return undefined;
+  return {
+    style: attr(el, "val") ?? "single",
+    size: (num(attr(el, "sz")) ?? 4) / 8,
+    color: attr(el, "color") ?? "auto",
+    space: num(attr(el, "space")) ?? 0,
+  };
+}
+
+/** Reads a border group (w:pBdr, w:tblBorders, w:tcBorders). */
+export function readBorders(el: Element | null): Borders | undefined {
+  if (!el) return undefined;
+  const pick = (...names: string[]) => { for (const n of names) { const c = child(el, n); if (c) return readBorder(c); } return undefined; };
+  const b: Borders = {
+    top: pick("top"), bottom: pick("bottom"), left: pick("left", "start"), right: pick("right", "end"),
+    between: pick("between"), insideH: pick("insideH"), insideV: pick("insideV"),
+  };
+  return Object.values(b).some((x) => x) ? b : undefined;
+}
+
+export function borderXml(name: string, b: BorderSpec | undefined): string {
+  if (!b) return "";
+  return `<w:${name} w:val="${esc(b.style)}" w:sz="${Math.round(b.size * 8)}" w:space="${Math.round(b.space)}" w:color="${esc(b.color)}"/>`;
+}
+
+/** Writes a border group with its children in schema order. */
+export function bordersXml(tag: string, b: Borders | undefined, kind: "para" | "table"): string {
+  if (!b) return "";
+  const inner = kind === "para"
+    ? borderXml("top", b.top) + borderXml("left", b.left) + borderXml("bottom", b.bottom) + borderXml("right", b.right) + borderXml("between", b.between)
+    : borderXml("top", b.top) + borderXml("left", b.left) + borderXml("bottom", b.bottom) + borderXml("right", b.right) + borderXml("insideH", b.insideH) + borderXml("insideV", b.insideV);
+  return inner ? `<w:${tag}>${inner}</w:${tag}>` : "";
+}
+
+export function readShading(el: Element | null): Shading | undefined {
+  if (!el) return undefined;
+  return { fill: attr(el, "fill") ?? "auto", val: attr(el, "val") ?? undefined, color: attr(el, "color") ?? undefined };
+}
+
+export function shadingXml(s: Shading | undefined): string {
+  if (!s) return "";
+  return `<w:shd w:val="${esc(s.val ?? "clear")}" w:color="${esc(s.color ?? "auto")}" w:fill="${esc(s.fill)}"/>`;
+}
+
+/** Revision marks (w:ins, w:del) share one object per change id. */
+export type RevisionOf = (el: Element, kind: "ins" | "del") => Revision;
+
+export function revisionAttrs(r: Revision): string {
+  return `w:id="${r.id}" w:author="${esc(r.author)}"${r.date ? ` w:date="${esc(r.date)}"` : ""}`;
+}
 
 /** A preserved element: its local name (for ordering) and XML. */
 export interface Extra {
@@ -32,11 +88,12 @@ const ptToTwips = (pt: number) => String(Math.round(pt * 20));
 
 // ----- reading --------------------------------------------------------------------------
 
-export function readRPr(el: Element | null): CharProps {
+export function readRPr(el: Element | null, rev?: RevisionOf): CharProps {
   if (!el) return {};
   const p: Record<string, unknown> = {};
   const extra: Extra[] = [];
   for (const c of kids(el)) {
+    if (rev && c.namespaceURI === W && (c.localName === "ins" || c.localName === "del")) { p.rev = rev(c, c.localName); continue; }
     if (c.namespaceURI !== W || !RPR_KNOWN.has(c.localName)) { extra.push({ name: c.localName, xml: outer(c) }); continue; }
     switch (c.localName) {
       case "rStyle": p.rStyle = attr(c, "val") ?? undefined; break;
@@ -87,11 +144,12 @@ function tabs(el: Element): TabStop[] {
   }));
 }
 
-export function readPPr(el: Element | null): { props: ParaProps; mark: CharProps } {
-  if (!el) return { props: {}, mark: {} };
+export function readPPr(el: Element | null, rev?: RevisionOf): { props: ParaProps; mark: CharProps; sect: Element | null } {
+  if (!el) return { props: {}, mark: {}, sect: null };
   const p: Record<string, unknown> = {};
   const extra: string[] = [];
   let mark: CharProps = {};
+  let sect: Element | null = null;
   for (const c of kids(el)) {
     if (c.namespaceURI !== W || !PPR_KNOWN.has(c.localName)) { extra.push(`${c.localName}\u0000${outer(c)}`); continue; }
     switch (c.localName) {
@@ -135,11 +193,24 @@ export function readPPr(el: Element | null): { props: ParaProps; mark: CharProps
         if (keep.length) extra.push(`indOther\u0000${keep.map((a) => `w:${a}="${esc(attr(c, a)!)}"`).join(" ")}`);
         break;
       }
-      case "rPr": mark = readRPr(c); break;
+      case "rPr": mark = readRPr(c, rev); break;
+      case "numPr": {
+        p.numId = num(attr(child(c, "numId"), "val"));
+        p.ilvl = num(attr(child(c, "ilvl"), "val"));
+        if (p.numId === undefined && p.ilvl === undefined) extra.push(`numPr\u0000${outer(c)}`);
+        break;
+      }
+      case "pBdr": {
+        p.borders = readBorders(c);
+        if (child(c, "bar")) extra.push(`pBdrBar\u0000${outer(child(c, "bar")!)}`);
+        break;
+      }
+      case "shd": p.shading = readShading(c); break;
+      case "sectPr": sect = c; break;
     }
   }
   if (extra.length) p.extra = extra;
-  return { props: p as ParaProps, mark };
+  return { props: p as ParaProps, mark, sect };
 }
 
 // ----- writing --------------------------------------------------------------------------
@@ -164,12 +235,16 @@ export interface WriteOptions {
   themeFonts?: { major: string; minor: string };
   /** The package has a theme part, so theme references may be written. */
   hasTheme: boolean;
+  /** Write revision marks of paragraph marks (set while writing a paragraph's own w:rPr). */
+  markRevisions?: boolean;
 }
 
 export function writeRPr(p: CharProps, opts: WriteOptions, tag = "rPr"): string {
   const parts: { name: string; xml: string }[] = [];
   const extra = splitExtra(p.extra);
   const add = (name: string, xml: string | null) => { if (xml) parts.push({ name, xml }); };
+  // Only a paragraph mark carries its revision inside its properties.
+  if (p.rev && tag === "rPr" && opts.markRevisions) add(p.rev.kind, `<w:${p.rev.kind} ${revisionAttrs(p.rev)}/>`);
   if (p.rStyle) add("rStyle", `<w:rStyle w:val="${esc(p.rStyle)}"/>`);
   const fontsOther = extra.find((e) => e.name === "rFontsOther")?.xml;
   if (p.font || p.fontTheme || fontsOther) {
@@ -202,7 +277,7 @@ export function writeRPr(p: CharProps, opts: WriteOptions, tag = "rPr"): string 
   return body ? `<w:${tag}>${body}</w:${tag}>` : "";
 }
 
-export function writePPr(p: ParaProps, mark: CharProps, opts: WriteOptions): string {
+export function writePPr(p: ParaProps, mark: CharProps, opts: WriteOptions, sectXml = ""): string {
   const parts: { name: string; xml: string }[] = [];
   const extra = splitExtra(p.extra);
   const add = (name: string, xml: string | null) => { if (xml) parts.push({ name, xml }); };
@@ -211,6 +286,15 @@ export function writePPr(p: ParaProps, mark: CharProps, opts: WriteOptions): str
   add("keepLines", flag("keepLines", p.keepLines));
   add("pageBreakBefore", flag("pageBreakBefore", p.pageBreakBefore));
   add("widowControl", flag("widowControl", p.widow));
+  if (p.numId !== undefined || p.ilvl !== undefined) {
+    add("numPr", `<w:numPr>${p.ilvl !== undefined ? `<w:ilvl w:val="${p.ilvl}"/>` : ""}${p.numId !== undefined ? `<w:numId w:val="${p.numId}"/>` : ""}</w:numPr>`);
+  }
+  const bar = extra.find((e) => e.name === "pBdrBar")?.xml ?? "";
+  if (p.borders || bar) {
+    const b = bordersXml("pBdr", p.borders, "para");
+    add("pBdr", bar ? (b ? b.replace("</w:pBdr>", `${bar}</w:pBdr>`) : `<w:pBdr>${bar}</w:pBdr>`) : b);
+  }
+  if (p.shading) add("shd", shadingXml(p.shading));
   if (p.tabs?.length) {
     add("tabs", `<w:tabs>${p.tabs.map((t) => `<w:tab w:val="${esc(t.align)}"${t.leader && t.leader !== "none" ? ` w:leader="${esc(t.leader)}"` : ""} w:pos="${ptToTwips(t.pos)}"/>`).join("")}</w:tabs>`);
   }
@@ -240,8 +324,9 @@ export function writePPr(p: ParaProps, mark: CharProps, opts: WriteOptions): str
   add("contextualSpacing", flag("contextualSpacing", p.contextual));
   if (p.align) add("jc", `<w:jc w:val="${p.align}"/>`);
   if (p.outline !== undefined) add("outlineLvl", `<w:outlineLvl w:val="${p.outline}"/>`);
-  add("rPr", writeRPr(mark, opts) || null);
-  for (const e of extra) if (e.name !== "spacingOther" && e.name !== "indOther") parts.push(e);
+  add("rPr", writeRPr(mark, { ...opts, markRevisions: true }) || null);
+  if (sectXml) add("sectPr", sectXml);
+  for (const e of extra) if (e.name !== "spacingOther" && e.name !== "indOther" && e.name !== "pBdrBar") parts.push(e);
   const body = ordered(parts, PPR_ORDER);
   return body ? `<w:pPr>${body}</w:pPr>` : "";
 }

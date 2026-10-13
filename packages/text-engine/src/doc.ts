@@ -1,10 +1,14 @@
-// A document: paragraphs plus styles, page setup and settings. All edits go through these
-// methods and replace paragraph objects (never mutate them).
+// A document: its stories (main text, headers and footers, foot- and endnotes, comments),
+// styles, numbering definitions and settings. All edits go through these methods and
+// replace paragraph objects (never mutate them), so a snapshot of the state is an undo step.
+//
+// The editing methods work on the *active* story (`paras`), which is the main text unless
+// the caret is in a header, footnote or comment.
 
-import { A4, type PageSetup } from "./layout";
 import {
-  EMPTY, OBJ, intern, joinParas, makePara, mapRuns, normalizeRuns, propsAt, slicePara, textPiece,
-  type CharProps, type Para, type ParaProps,
+  DEFAULT_SECTION, EMPTY, EMPTY_NUMBERING, OBJ, intern, joinParas, makePara, mapRuns, normalizeRuns, propsAt, slicePara,
+  textPiece, type CellRef, type CharProps, type CommentMeta, type Numbering, type Para, type ParaProps, type Section,
+  type TableDef,
 } from "./model";
 import { defaultStyleSheet, type StyleSheet } from "./styles";
 
@@ -18,32 +22,149 @@ export const minPos = (a: Pos, b: Pos): Pos => (cmp(a, b) <= 0 ? a : b);
 export const maxPos = (a: Pos, b: Pos): Pos => (cmp(a, b) <= 0 ? b : a);
 
 export interface DocSettings {
-  page: PageSetup;
+  /** The last section (w:body/w:sectPr); earlier sections end at paragraphs (Para.sect). */
+  section: Section;
   /** Points. */
   defaultTab: number;
+  /** Different headers on even and odd pages (w:evenAndOddHeaders). */
+  evenOdd?: boolean;
+  /** Änderungen nachverfolgen is on (w:trackRevisions). */
+  trackChanges?: boolean;
 }
+
+export const MAIN = "main";
 
 /** What the file-format layer hands over and gets back. */
 export interface DocState {
   paras: Para[];
   styles: StyleSheet;
   settings: DocSettings;
+  /** Header/footer ("hdr:…", "ftr:…"), note ("fn:…", "en:…") and comment ("cmt:…") texts. */
+  stories?: ReadonlyMap<string, Para[]>;
+  numbering?: Numbering;
+  comments?: ReadonlyMap<string, CommentMeta>;
 }
 
-export class Doc {
-  paras: Para[];
+/** Everything an undo step restores. */
+export interface DocSnapshot {
+  main: Para[];
+  stories: ReadonlyMap<string, Para[]>;
   styles: StyleSheet;
   settings: DocSettings;
+  numbering: Numbering;
+  comments: ReadonlyMap<string, CommentMeta>;
+}
+
+let tableSeq = 1;
+/** A fresh table id (ids only need to tell adjacent tables apart). */
+export function nextTableId(): number {
+  return tableSeq++;
+}
+
+const sameCell = (a: CellRef | undefined, b: CellRef | undefined) =>
+  a === b || (!!a && !!b && a.table.id === b.table.id && a.row === b.row && a.col === b.col);
+
+export class Doc {
+  private mainParas: Para[];
+  stories: Map<string, Para[]>;
+  styles: StyleSheet;
+  settings: DocSettings;
+  numbering: Numbering;
+  comments: Map<string, CommentMeta>;
+  /** The story the editing methods work on. */
+  activeStory = MAIN;
   private starts: number[] | null = null;
 
   constructor(state: Partial<DocState> = {}) {
-    this.paras = state.paras?.length ? state.paras : [makePara("")];
+    this.mainParas = state.paras?.length ? state.paras : [makePara("")];
+    this.stories = new Map(state.stories ?? []);
     this.styles = state.styles ?? defaultStyleSheet();
-    this.settings = state.settings ?? { page: A4, defaultTab: 35.4 };
+    this.settings = state.settings ?? { section: DEFAULT_SECTION, defaultTab: 35.4 };
+    this.numbering = state.numbering ?? EMPTY_NUMBERING;
+    this.comments = new Map(state.comments ?? []);
+  }
+
+  /** Paragraphs of the active story. */
+  get paras(): Para[] {
+    return this.activeStory === MAIN ? this.mainParas : (this.stories.get(this.activeStory) ?? this.mainParas);
+  }
+
+  set paras(v: Para[]) {
+    if (this.activeStory === MAIN) this.mainParas = v;
+    else {
+      const next = new Map(this.stories);
+      next.set(this.activeStory, v);
+      this.stories = next;
+    }
+  }
+
+  /** The main text, whatever story is active. */
+  get main(): Para[] {
+    return this.mainParas;
+  }
+
+  story(id: string): Para[] | undefined {
+    return id === MAIN ? this.mainParas : this.stories.get(id);
+  }
+
+  /** Makes `id` the story the editing methods work on (creating it if needed). */
+  setActive(id: string): void {
+    if (id !== MAIN && !this.stories.has(id)) {
+      const next = new Map(this.stories);
+      next.set(id, [makePara("")]);
+      this.stories = next;
+    }
+    this.activeStory = id;
+    this.changed();
+  }
+
+  setStory(id: string, paras: Para[]): void {
+    if (id === MAIN) { this.mainParas = paras; this.changed(); return; }
+    const next = new Map(this.stories);
+    next.set(id, paras);
+    this.stories = next;
+    this.changed();
+  }
+
+  deleteStory(id: string): void {
+    if (!this.stories.has(id)) return;
+    const next = new Map(this.stories);
+    next.delete(id);
+    this.stories = next;
+    if (this.activeStory === id) this.activeStory = MAIN;
+    this.changed();
   }
 
   state(): DocState {
-    return { paras: this.paras, styles: this.styles, settings: this.settings };
+    return {
+      paras: this.mainParas, styles: this.styles, settings: this.settings, stories: this.stories,
+      numbering: this.numbering, comments: this.comments,
+    };
+  }
+
+  snapshot(): DocSnapshot {
+    return {
+      main: this.mainParas, stories: this.stories, styles: this.styles, settings: this.settings,
+      numbering: this.numbering, comments: this.comments,
+    };
+  }
+
+  restore(s: DocSnapshot): void {
+    this.mainParas = s.main;
+    this.stories = new Map(s.stories);
+    this.styles = s.styles;
+    this.settings = s.settings;
+    this.numbering = s.numbering;
+    this.comments = new Map(s.comments);
+    if (this.activeStory !== MAIN && !this.stories.has(this.activeStory)) this.activeStory = MAIN;
+    this.changed();
+  }
+
+  /** The section each main paragraph belongs to. */
+  sectionOf(p: number): Section {
+    const paras = this.mainParas;
+    for (let i = p; i < paras.length; i++) if (paras[i].sect) return paras[i].sect!;
+    return this.settings.section;
   }
 
   end(): Pos {
@@ -57,11 +178,12 @@ export class Doc {
 
   private offsets(): number[] {
     if (!this.starts) {
-      this.starts = new Array(this.paras.length);
+      const paras = this.paras;
+      this.starts = new Array(paras.length);
       let acc = 0;
-      for (let i = 0; i < this.paras.length; i++) {
+      for (let i = 0; i < paras.length; i++) {
         this.starts[i] = acc;
-        acc += this.paras[i].text.length + 1;
+        acc += paras[i].text.length + 1;
       }
     }
     return this.starts;
@@ -93,35 +215,83 @@ export class Doc {
       for (let i = 0; i < p.text.length && i < b; i++) {
         const ch = p.text[i];
         if (ch === OBJ) { if (i >= a) out += p.objects?.[obj]?.display ?? ""; obj++; }
-        else if (i >= a) out += ch === "\u000b" ? "\n" : ch === "\u000c" ? "" : ch;
+        else if (i >= a) out += ch === "\u000b" ? "\n" : ch === "\u000c" || ch === "\u000e" ? "" : ch;
       }
       return out;
     };
-    if (from.p === to.p) return display(this.paras[from.p], from.o, to.o);
-    const parts = [display(this.paras[from.p], from.o, this.paras[from.p].text.length)];
-    for (let i = from.p + 1; i < to.p; i++) parts.push(display(this.paras[i], 0, this.paras[i].text.length));
-    parts.push(display(this.paras[to.p], 0, to.o));
+    const paras = this.paras;
+    if (from.p === to.p) return display(paras[from.p], from.o, to.o);
+    const parts = [display(paras[from.p], from.o, paras[from.p].text.length)];
+    for (let i = from.p + 1; i < to.p; i++) {
+      // Cells of one row are separated by tabs when copied as text, rows by line breaks.
+      parts.push(display(paras[i], 0, paras[i].text.length));
+    }
+    parts.push(display(paras[to.p], 0, to.o));
     return parts.join("\n");
   }
 
-  /** Paragraphs covering [from, to) as pieces (for copying formatted content). */
+  /**
+   * Paragraphs covering [from, to) as pieces (for copying formatted content). Tables that
+   * are copied completely stay tables (as a new table); cells of partly copied tables become
+   * plain paragraphs.
+   */
   fragment(from: Pos, to: Pos): Para[] {
-    if (from.p === to.p) return [slicePara(this.paras[from.p], from.o, to.o)];
-    const out = [slicePara(this.paras[from.p], from.o, this.paras[from.p].text.length)];
-    for (let i = from.p + 1; i < to.p; i++) out.push(this.paras[i]);
-    out.push(slicePara(this.paras[to.p], 0, to.o));
-    return out;
+    const paras = this.paras;
+    const out: Para[] = from.p === to.p
+      ? [slicePara(paras[from.p], from.o, to.o)]
+      : [slicePara(paras[from.p], from.o, paras[from.p].text.length), ...paras.slice(from.p + 1, to.p), slicePara(paras[to.p], 0, to.o)];
+    const whole = new Map<number, TableDef>();
+    for (const t of new Set(out.map((p) => p.cell?.table).filter((t): t is TableDef => !!t))) {
+      const range = this.tableRange(from.p, t);
+      if (range && range[0] >= from.p && range[1] <= to.p && (range[0] > from.p || from.o === 0) &&
+          (range[1] < to.p || to.o >= paras[range[1]].text.length)) {
+        whole.set(t.id, { ...t, id: nextTableId() });
+      }
+    }
+    return out.map((p) => {
+      if (!p.cell) return p;
+      const t = whole.get(p.cell.table.id);
+      return t ? { ...p, cell: { ...p.cell, table: t } } : { ...p, cell: undefined };
+    });
+  }
+
+  /** First and last paragraph index of the table `t` (searching around `near`). */
+  tableRange(near: number, t: TableDef): [number, number] | null {
+    const paras = this.paras;
+    let i = Math.min(near, paras.length - 1);
+    // Find any paragraph of the table, then its ends.
+    let hit = -1;
+    for (let d = 0; d < paras.length; d++) {
+      if (i - d >= 0 && paras[i - d].cell?.table.id === t.id) { hit = i - d; break; }
+      if (i + d < paras.length && paras[i + d].cell?.table.id === t.id) { hit = i + d; break; }
+    }
+    if (hit < 0) return null;
+    i = hit;
+    let a = i, b = i;
+    while (a > 0 && paras[a - 1].cell?.table.id === t.id) a--;
+    while (b < paras.length - 1 && paras[b + 1].cell?.table.id === t.id) b++;
+    return [a, b];
   }
 
   /**
    * Replaces [from, to) with `pieces`: the first piece joins the text before, the last
    * piece joins the text after, pieces in between become whole paragraphs. Returns the
    * position after the inserted content.
+   *
+   * Inside one table cell (or in plain text) this is a simple splice. A range that crosses
+   * cell or table boundaries follows Word: tables covered completely are removed, covered
+   * cells of other tables are emptied, and paragraphs of different cells never merge.
    */
   replace(from: Pos, to: Pos, pieces: Para[]): Pos {
-    const head = slicePara(this.paras[from.p], 0, from.o);
-    const tailSrc = this.paras[to.p];
-    const tail = slicePara(tailSrc, to.o, tailSrc.text.length);
+    const paras = this.paras;
+    const fromCell = paras[from.p].cell, toCell = paras[to.p].cell;
+    let crosses = !sameCell(fromCell, toCell);
+    if (!crosses && !fromCell) for (let i = from.p + 1; i < to.p && !crosses; i++) crosses = !!paras[i].cell;
+    if (crosses) return this.replaceAcross(from, to, pieces);
+    // Markers at the cut stay before inserted text, and none is lost or doubled.
+    const head = slicePara(paras[from.p], 0, from.o, true);
+    const tailSrc = paras[to.p];
+    const tail = slicePara(tailSrc, to.o, tailSrc.text.length, false, from.p === to.p && from.o === to.o);
     // joinParas(a, b) keeps a's paragraph properties and b's paragraph mark, so: the first
     // paragraph keeps the original's properties and gets the first piece's mark; the last
     // gets the last piece's properties and the original tail's mark.
@@ -134,10 +304,104 @@ export class Doc {
       for (let i = 1; i < pieces.length - 1; i++) created.push(pieces[i]);
       created.push(joinParas(pieces[pieces.length - 1], tail));
     }
-    this.paras = [...this.paras.slice(0, from.p), ...created, ...this.paras.slice(to.p + 1)];
+    // New paragraphs stay in the cell they were typed in; inserted whole tables keep theirs.
+    const placed = created.map((p, i) => {
+      if (fromCell) return { ...p, cell: fromCell };
+      if (i === 0 || i === created.length - 1) return { ...p, cell: undefined };
+      return p;
+    });
+    // A pasted table must not end up as the last thing in a story (Word needs a paragraph after it).
+    this.paras = [...paras.slice(0, from.p), ...placed, ...paras.slice(to.p + 1)];
+    this.ensureParagraphAfterTables();
     this.changed();
     const last = pieces.length ? pieces[pieces.length - 1] : textPiece("", EMPTY);
     return pieces.length <= 1 ? { p: from.p, o: from.o + last.text.length } : { p: from.p + pieces.length - 1, o: last.text.length };
+  }
+
+  private replaceAcross(from: Pos, to: Pos, pieces: Para[]): Pos {
+    const paras = this.paras;
+    // Group the covered paragraphs: runs of plain paragraphs and runs of one table.
+    type Group = { a: number; b: number; table?: TableDef };
+    const groups: Group[] = [];
+    for (let i = from.p; i <= to.p; i++) {
+      const t = paras[i].cell?.table;
+      const g = groups[groups.length - 1];
+      if (g && (g.table?.id ?? -1) === (t?.id ?? -1)) g.b = i;
+      else groups.push({ a: i, b: i, table: t });
+    }
+    // Items of the result for the covered range, in order.
+    type Item = { kind: "head" | "tail" | "cell"; para: Para };
+    const items: Item[] = [];
+    groups.forEach((g, gi) => {
+      if (!g.table) {
+        if (gi === 0) items.push({ kind: "head", para: slicePara(paras[g.a], 0, from.o) });
+        if (gi === groups.length - 1) items.push({ kind: "tail", para: slicePara(paras[g.b], to.o, paras[g.b].text.length) });
+        return;
+      }
+      const [ta, tb] = this.tableRange(g.a, g.table)!;
+      const coversStart = ta > from.p || (ta === from.p && from.o === 0);
+      const coversEnd = tb < to.p || (tb === to.p && to.o >= paras[tb].text.length);
+      if (coversStart && coversEnd) return; // the whole table goes
+      // Every covered cell keeps one empty paragraph (Word empties selected cells).
+      let last: CellRef | undefined;
+      for (let i = g.a; i <= g.b; i++) {
+        const c = paras[i].cell!;
+        if (sameCell(c, last)) continue;
+        last = c;
+        items.push({ kind: "cell", para: { ...makePara("", paras[i].props, EMPTY, paras[i].mark), cell: c } });
+      }
+    });
+    // Join head and tail when nothing remains between them; insert the pieces after the head,
+    // or into the first emptied cell when the range began in a table.
+    const out: Para[] = [];
+    let caret: Pos | null = null;
+    const base = from.p;
+    for (let k = 0; k < items.length; k++) {
+      const it = items[k];
+      if (it.kind === "head") {
+        const next = items[k + 1];
+        const tail = next?.kind === "tail" ? next.para : textPiece("", EMPTY);
+        const joined = this.withPieces(it.para, pieces, tail);
+        if (next?.kind !== "tail") joined.paras[joined.paras.length - 1] = { ...joined.paras[joined.paras.length - 1], mark: paras[from.p].mark };
+        caret = { p: base + out.length + joined.caret.p, o: joined.caret.o };
+        out.push(...joined.paras);
+        if (next?.kind === "tail") k++;
+        continue;
+      }
+      if (it.kind === "cell" && caret === null && pieces.length) {
+        const joined = this.withPieces(it.para, pieces, textPiece("", EMPTY));
+        caret = { p: base + out.length + joined.caret.p, o: joined.caret.o };
+        out.push(...joined.paras.map((x) => ({ ...x, cell: it.para.cell })));
+        continue;
+      }
+      if (caret === null) caret = { p: base + out.length, o: 0 };
+      out.push(it.para);
+    }
+    const result = [...paras.slice(0, from.p), ...out, ...paras.slice(to.p + 1)];
+    if (!result.length) result.push(makePara(""));
+    this.paras = result;
+    this.ensureParagraphAfterTables();
+    this.changed();
+    const c = caret ?? { p: Math.min(from.p, this.paras.length - 1), o: 0 };
+    return { p: Math.min(c.p, this.paras.length - 1), o: c.o };
+  }
+
+  /** head + pieces + tail as paragraphs, with the caret after the pieces. */
+  private withPieces(head: Para, pieces: Para[], tail: Para): { paras: Para[]; caret: Pos } {
+    if (pieces.length <= 1) {
+      const mid = pieces[0] ?? textPiece("", EMPTY);
+      return { paras: [{ ...joinParas(joinParas(head, mid), tail), cell: undefined }], caret: { p: 0, o: head.text.length + mid.text.length } };
+    }
+    const out = [{ ...joinParas(head, pieces[0]), cell: undefined }, ...pieces.slice(1, -1), { ...joinParas(pieces[pieces.length - 1], tail), cell: undefined }];
+    return { paras: out, caret: { p: out.length - 1, o: pieces[pieces.length - 1].text.length } };
+  }
+
+  /** Word keeps a paragraph after a table at the end of a story or cell-less region. */
+  private ensureParagraphAfterTables(): void {
+    const paras = this.paras;
+    if (paras.length && paras[paras.length - 1].cell) {
+      this.paras = [...paras, makePara("")];
+    }
   }
 
   /**
@@ -158,10 +422,12 @@ export class Doc {
     const atEnd = to.p === from.p ? to.o >= src.text.length : to.o >= this.paras[to.p].text.length;
     // Enter at the end of a paragraph continues with the style's "next" style (heading →
     // Standard), dropping direct paragraph formatting of the heading; elsewhere both halves
-    // keep the paragraph's formatting.
+    // keep the paragraph's formatting. Numbering continues (Word copies numPr).
     const style = this.styles.resolvePara(src.props).style;
     const next = this.styles.get(style)?.next;
-    const nextProps: ParaProps = atEnd && next && next !== style ? { style: next } : src.props;
+    const nextProps: ParaProps = atEnd && next && next !== style
+      ? { style: next, numId: src.props.numId, ilvl: src.props.ilvl }
+      : src.props;
     // Inserted marks take the inserted formatting; the last paragraph keeps the original mark
     // (replace() joins it with the tail), unless text typed at its end formats it.
     const pieces: Para[] = lines.map((line, i) => ({
@@ -169,6 +435,7 @@ export class Doc {
       props: i === 0 ? src.props : nextProps,
       mark: intern(props),
     }));
+    // The section break stays with the last paragraph (it belongs to the original mark).
     const end = this.replace(from, to, pieces);
     if (atEnd && lines[lines.length - 1]) this.paras[end.p] = { ...this.paras[end.p], mark: intern(props) };
     return end;
@@ -203,6 +470,15 @@ export class Doc {
     this.changed();
   }
 
+  /** Replaces whole paragraphs from..to with `next` (table and list operations). */
+  splice(from: number, to: number, next: Para[]): void {
+    const paras = this.paras;
+    this.paras = [...paras.slice(0, from), ...next, ...paras.slice(to + 1)];
+    if (!this.paras.length) this.paras = [makePara("")];
+    this.ensureParagraphAfterTables();
+    this.changed();
+  }
+
   /** Replaces same-length text (change case) keeping formatting. */
   mapText(from: Pos, to: Pos, change: (s: string) => string): void {
     const out = [...this.paras];
@@ -223,10 +499,18 @@ export class Doc {
     this.styles = styles;
   }
 
-  restore(state: { paras: Para[]; styles: StyleSheet }): void {
-    this.paras = state.paras;
-    this.styles = state.styles;
-    this.changed();
+  setSettings(settings: DocSettings): void {
+    this.settings = settings;
+  }
+
+  setNumbering(n: Numbering): void {
+    this.numbering = n;
+  }
+
+  setComment(meta: CommentMeta | null, id: string): void {
+    const next = new Map(this.comments);
+    if (meta) next.set(id, meta); else next.delete(id);
+    this.comments = next;
   }
 
   /** Formatting that new text takes at a position. */

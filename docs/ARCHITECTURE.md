@@ -41,10 +41,11 @@ apps/
   raabe-calc/         later
   raabe-present/      later
 packages/
-  text-engine/        model.ts (paragraphs, runs, objects), styles.ts (style sheet and
-                      resolution), fonts.ts (metrics, measuring), layout.ts (line breaking and
-                      pagination, D-025), doc.ts (edits), view.ts (DOM rendering, caret,
-                      selection), editor.ts (input and commands, D-026), probe.ts (feel-lab)
+  text-engine/        model.ts (paragraphs, runs, objects, tables, sections), styles.ts (style
+                      sheet and resolution), fonts.ts (metrics, measuring), layout.ts (line
+                      breaking, D-025), flow.ts (pages, D-029), numbering.ts (list labels),
+                      doc.ts (stories and edits), view.ts (DOM rendering, caret, selection),
+                      editor.ts (input and commands, D-026), probe.ts (feel-lab)
   shell/              commands, ribbon, keytips, title bar (QAT, document tabs, search),
                       backstage, status bar, dialogs, popups, platform layer, theme.css,
                       icons.gen.ts (generated from Fluent UI System Icons, MIT)
@@ -64,19 +65,28 @@ controls and files opened from Explorer. `platform-tauri.ts` implements it for T
 (Windows now, iPadOS later); `platform-browser.ts` is a development fallback for
 `npm run dev:write` in a normal browser.
 
-## Documents and formatting (Step 2)
+## Documents (Steps 2-4)
 
-- A paragraph is text plus runs of character properties (`CharProps`), paragraph properties
-  (`ParaProps`) and the formatting of its paragraph mark. Objects the engine does not edit
-  (fields, links, images, notes, revisions, equations) sit in the text as U+FFFC with their
-  original XML; bookmarks and comment ranges are zero-width anchors; tables and other blocks
-  are read-only placeholder paragraphs. Unknown property elements are kept as raw XML and
-  written back in schema order.
-- Formatting is resolved through the style sheet (document defaults → paragraph style chain
-  → character style → direct formatting), cached per object.
-- Layout measures characters with the canvas at a large size (design widths) and takes
-  vertical metrics from the platform (`fontMetrics`), so it matches both Word and the DOM.
-  Lines are rendered as absolutely positioned spans whose baselines are placed exactly.
+- A document holds stories (main text, headers, footers, notes, comments), styles, list
+  definitions, sections and comment data (`doc.ts`, D-029). A paragraph is text plus runs of
+  character properties (`CharProps`), paragraph properties (`ParaProps`) and the formatting of
+  its paragraph mark; it may belong to a table cell, end a section, carry floating pictures
+  and markers (bookmarks, comment ranges, field and hyperlink edges). Objects in the text
+  (fields, pictures, note references, equations) are U+FFFC with their original XML.
+  Unknown property elements are kept as raw XML and written back in schema order.
+- Formatting is resolved through the style sheet (document defaults → table style →
+  paragraph style chain → list level → character style → direct formatting), cached per
+  object.
+- `layout.ts` breaks one paragraph into lines for a width: characters are measured with the
+  canvas at a large size (design widths), vertical metrics come from the platform
+  (`fontMetrics`). `flow.ts` places paragraphs on pages (sections, columns, tables, headers
+  and footers, footnotes, floating pictures); every line gets page coordinates and a frame
+  (column, cell, header …) used for drawing and hit testing. `view.ts` renders lines as
+  absolutely positioned spans whose baselines are placed exactly, plus borders, shading and
+  pictures.
+- `packages/ooxml`: `read.ts` (all parts into the model), `write.ts` (model back into the
+  package; unchanged parts stay byte for byte), `package.ts` (relationships, content types,
+  media), `props.ts` (run/paragraph properties, borders, shading), `numbering.ts`.
 
 ## Testing
 

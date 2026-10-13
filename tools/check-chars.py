@@ -20,7 +20,8 @@ SPECIAL = {0xA0, 0xAD, 0x2011, 0x200B, 0x200C, 0x200D, 0x2060, 0xFEFF, 0xFFFC}
 
 def bad(c: str) -> bool:
     o = ord(c)
-    return o in SPECIAL or (o < 32 and c not in "\n\r\t")
+    # Private-use characters (symbol-font bullets) are invisible in most editors too.
+    return o in SPECIAL or (o < 32 and c not in "\n\r\t") or 0xE000 <= o <= 0xF8FF
 
 
 def files() -> list[Path]:

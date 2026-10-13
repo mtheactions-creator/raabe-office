@@ -2,16 +2,17 @@
 // Word's selection rules, and all edits go through the document model. The shell calls the
 // public commands below and listens for changes with onChange().
 
-import { Doc, cmp, maxPos, minPos, type DocState, type Pos } from "./doc";
-import { Fonts, PT } from "./fonts";
-import { Layouter, type Layout } from "./layout";
+import { Doc, MAIN, cmp, maxPos, minPos, type DocSnapshot, type DocState, type Pos } from "./doc";
+import { Fonts } from "./fonts";
+import { layoutDocument, type Layout } from "./flow";
+import { Layouter, type LayoutContext } from "./layout";
 import { markInputHandled } from "./probe";
 import {
-  LINE_BREAK, OBJ, PAGE_BREAK, insertionProps, intern, type Align, type CharProps, type LineRule,
-  type Para, type ParaProps,
+  EMPTY, LINE_BREAK, OBJ, PAGE_BREAK, insertionProps, intern, makePara, type Align, type CharProps, type LineRule,
+  type Para, type ParaProps, type Section,
 } from "./model";
 import { builtinStyle, type ResolvedChar, type ResolvedPara } from "./styles";
-import { View, type Selection } from "./view";
+import { View, storyIdOf, type Selection } from "./view";
 import { countWords, isWordChar, nextTokenStart, prevTokenStart, sentenceAt, tokenAt } from "./words";
 
 /** Formatting text typed at a position gets: as in Word, never hidden (hidden text is not shown). */
@@ -23,7 +24,10 @@ function typedProps(p: Para, o: number): CharProps {
 type Granularity = "char" | "word" | "para";
 
 interface Snapshot {
-  state: { paras: Para[]; styles: Doc["styles"] };
+  state: DocSnapshot;
+  /** Story with the caret and its layout key. */
+  story: string;
+  key: string;
   anchor: Pos;
   head: Pos;
 }
@@ -91,6 +95,11 @@ export class Editor {
   private drag: { granularity: Granularity; origin: [Pos, Pos] } | null = null;
   private listeners: ((e: ChangeEvent) => void)[] = [];
   private lastParas: Para[] | null = null;
+  private lastStories: ReadonlyMap<string, Para[]> | null = null;
+  /** Layout key of the story with the caret ("main", "fn:1", "hdr:2@0" …). */
+  storyKey = MAIN;
+  /** Measures equations (LaTeX → points); set by the host page. */
+  measureMath: LayoutContext["measureMath"];
   /** Formatting for the next typed text at a collapsed caret (e.g. after Strg+Umschalt+F). */
   private pending: CharProps | null = null;
   private painter: { fmt: CopiedFormat; sticky: boolean } | null = null;
@@ -120,18 +129,22 @@ export class Editor {
     this.update();
   }
 
-  private context() {
-    return { styles: this.doc.styles, fonts: this.fonts, page: this.doc.settings.page, defaultTab: this.doc.settings.defaultTab };
+  private context(): LayoutContext {
+    return { styles: this.doc.styles, fonts: this.fonts, defaultTab: this.doc.settings.defaultTab, measureMath: this.measureMath };
   }
 
   /** Asks the platform for metrics of every font the document uses. */
   private requireFonts(): void {
     const families = new Set<string>([this.doc.styles.theme.minorFont, this.doc.styles.theme.majorFont]);
-    for (const p of this.doc.paras) {
-      const rp = this.doc.styles.resolvePara(p.props);
-      for (const r of p.runs) families.add(this.doc.styles.resolveChar(rp.style, r.props).font);
-      families.add(this.doc.styles.resolveChar(rp.style, p.mark).font);
-    }
+    const scan = (paras: readonly Para[]) => {
+      for (const p of paras) {
+        const rp = this.doc.styles.resolvePara(p.props);
+        for (const r of p.runs) families.add(this.doc.styles.resolveChar(rp.style, r.props).font);
+        families.add(this.doc.styles.resolveChar(rp.style, p.mark).font);
+      }
+    };
+    scan(this.doc.main);
+    for (const paras of this.doc.stories.values()) scan(paras);
     this.fonts.require(families);
   }
 
@@ -178,6 +191,7 @@ export class Editor {
   /** Replaces the whole document (open file, feel-lab fixture). */
   load(state: Partial<DocState>): void {
     this.doc = new Doc(state);
+    this.storyKey = MAIN;
     this.sel = { anchor: { p: 0, o: 0 }, head: { p: 0, o: 0 }, headUpstream: false };
     this.undoStack = [];
     this.redoStack = [];
@@ -195,20 +209,70 @@ export class Editor {
   // ----- state updates ------------------------------------------------------------------
 
   update(opts: { scroll?: boolean; inputTs?: number } = {}): void {
-    if (this.layouter.context.styles !== this.doc.styles || this.layouter.context.page !== this.doc.settings.page) {
+    const ctx = this.layouter.context;
+    if (ctx.styles !== this.doc.styles || ctx.defaultTab !== this.doc.settings.defaultTab || ctx.measureMath !== this.measureMath) {
       this.layouter.setContext(this.context());
     }
-    this.layout = this.layouter.layout(this.doc.paras);
-    this.view.render(this.doc, this.layout, this.sel);
+    this.layout = layoutDocument(this.layouter, {
+      main: this.doc.main, stories: this.doc.stories, settings: this.doc.settings, numbering: this.doc.numbering,
+    });
+    this.fixStoryKey();
+    this.clampSelection();
+    const ropts = { active: this.storyKey, cells: this.selectedCells() };
+    this.view.render(this.doc, this.layout, this.sel, ropts);
     if (opts.scroll) {
       this.view.scrollIntoView(this.sel.head, this.sel.headUpstream);
-      this.view.render(this.doc, this.layout, this.sel);
+      this.view.render(this.doc, this.layout, this.sel, ropts);
     }
     this.placeInput();
     if (opts.inputTs !== undefined) markInputHandled(opts.inputTs);
-    const content = this.doc.paras !== this.lastParas;
-    this.lastParas = this.doc.paras;
+    const content = this.doc.main !== this.lastParas || this.doc.stories !== this.lastStories;
+    this.lastParas = this.doc.main;
+    this.lastStories = this.doc.stories;
     this.emit(content);
+  }
+
+  /**
+   * The layout key of the story with the caret: a header or footer is shown once per page,
+   * so the caret sits in one of its instances. When that instance is gone (fewer pages, a
+   * different header), another one is used, or the main text.
+   */
+  private fixStoryKey(): void {
+    const id = this.doc.activeStory;
+    if (id === MAIN) { this.storyKey = MAIN; return; }
+    if (this.layout.stories.has(this.storyKey) && storyIdOf(this.storyKey) === id) return;
+    const prefix = `${id}@`;
+    for (const k of this.layout.stories.keys()) {
+      if (k === id || k.startsWith(prefix)) { this.storyKey = k; return; }
+    }
+    // Not shown anywhere (e.g. a header of a page that no longer exists): back to the text.
+    this.doc.setActive(MAIN);
+    this.storyKey = MAIN;
+    this.sel = { anchor: { p: 0, o: 0 }, head: { p: 0, o: 0 }, headUpstream: false };
+  }
+
+  private clampSelection(): void {
+    const n = this.doc.paras.length;
+    const fix = (p: Pos): Pos => {
+      const pi = Math.min(Math.max(0, p.p), n - 1);
+      return { p: pi, o: Math.min(Math.max(0, p.o), this.doc.paras[pi].text.length) };
+    };
+    const a = fix(this.sel.anchor), h = fix(this.sel.head);
+    if (cmp(a, this.sel.anchor) || cmp(h, this.sel.head)) this.sel = { ...this.sel, anchor: a, head: h };
+  }
+
+  /** Cells selected as a whole: when a selection spans cells (Word selects whole cells). */
+  private selectedCells(): Set<string> | undefined {
+    const [from, to] = this.range();
+    const a = this.doc.paras[from.p]?.cell, b = this.doc.paras[to.p]?.cell;
+    if (from.p === to.p || (!a && !b)) return undefined;
+    if (a && b && a.table.id === b.table.id && a.row === b.row && a.col === b.col) return undefined;
+    const out = new Set<string>();
+    for (let i = from.p; i <= to.p; i++) {
+      const c = this.doc.paras[i].cell;
+      if (c) out.add(`${c.table.id}:${c.row}:${c.col}`);
+    }
+    return out.size ? out : undefined;
   }
 
   private emit(content: boolean): void {
@@ -217,7 +281,7 @@ export class Editor {
 
   private placeInput(): void {
     const c = this.view.caretBox(this.sel.head, this.sel.headUpstream);
-    this.input.style.left = `${16 + c.x}px`;
+    this.input.style.left = `${this.view.pageLeft(c.page) + c.x}px`;
     this.input.style.top = `${this.view.pageTop(c.page) + c.y}px`;
     // Keep the selected text in the textarea so the browser's copy/cut events fire.
     const selected = this.hasSelection ? this.selectedText() : "";
@@ -316,28 +380,36 @@ export class Editor {
 
   // ----- undo ---------------------------------------------------------------------------
 
+  private current(): Snapshot {
+    return { state: this.doc.snapshot(), story: this.doc.activeStory, key: this.storyKey, anchor: this.sel.anchor, head: this.sel.head };
+  }
+
   private snapshot(): void {
-    this.undoStack.push({ state: { paras: this.doc.paras, styles: this.doc.styles }, anchor: this.sel.anchor, head: this.sel.head });
+    this.undoStack.push(this.current());
     if (this.undoStack.length > 500) this.undoStack.shift();
     this.redoStack = [];
+  }
+
+  private restoreSnapshot(s: Snapshot): void {
+    this.doc.restore(s.state);
+    this.doc.activeStory = s.story === MAIN || this.doc.stories.has(s.story) ? s.story : MAIN;
+    this.storyKey = this.doc.activeStory === MAIN ? MAIN : s.key;
+    this.setSel(s.anchor, s.head);
+    this.update({ scroll: true });
   }
 
   undo(): void {
     const s = this.undoStack.pop();
     if (!s) return;
-    this.redoStack.push({ state: { paras: this.doc.paras, styles: this.doc.styles }, anchor: this.sel.anchor, head: this.sel.head });
-    this.doc.restore(s.state);
-    this.setSel(s.anchor, s.head);
-    this.update({ scroll: true });
+    this.redoStack.push(this.current());
+    this.restoreSnapshot(s);
   }
 
   redo(): void {
     const s = this.redoStack.pop();
     if (!s) return;
-    this.undoStack.push({ state: { paras: this.doc.paras, styles: this.doc.styles }, anchor: this.sel.anchor, head: this.sel.head });
-    this.doc.restore(s.state);
-    this.setSel(s.anchor, s.head);
-    this.update({ scroll: true });
+    this.undoStack.push(this.current());
+    this.restoreSnapshot(s);
   }
 
   /** Runs a formatting change as one undo step. */
@@ -862,22 +934,91 @@ export class Editor {
   }
 
   private vertical(dir: -1 | 1, extend: boolean): void {
-    const { index } = this.view.placedFor(this.sel.head, this.sel.headUpstream);
     const caret = this.view.caretBox(this.sel.head, this.sel.headUpstream);
-    const marginLeft = this.doc.settings.page.marginLeft * PT;
     const goal = this.goalX ?? caret.x;
-    const target = index + dir;
+    const { pl } = this.view.placedFor(this.sel.head, this.sel.headUpstream);
+    const target = this.lineNeighbour(pl.para, pl.line, dir, goal);
     let res: { pos: Pos; upstream: boolean };
-    if (target < 0) res = { pos: { p: 0, o: 0 }, upstream: false };
-    else if (target >= this.layout.placed.length) res = { pos: this.doc.end(), upstream: false };
-    else res = this.view.posInLine(target, goal - marginLeft);
+    if (target === null) res = dir < 0 ? { pos: { p: 0, o: 0 }, upstream: false } : { pos: this.doc.end(), upstream: false };
+    else res = this.view.posInLine(target, goal);
     this.setSel(extend ? this.sel.anchor : res.pos, res.pos, res.upstream, true);
     this.goalX = goal;
   }
 
+  /** Placed index of a paragraph's first (`last` false) or last line, skipping hidden text. */
+  private lineIndex(p: number, last: boolean): number | null {
+    const idx = this.view.storyLayout().index[p];
+    if (!idx?.length) return null;
+    const i = last ? idx[idx.length - 1] : idx[0];
+    return this.view.storyLayout().placed[i]?.hide ? null : i;
+  }
+
+  /**
+   * The line above or below a line, as Word moves with the arrow keys: in text order, but
+   * from a table cell to the cell above or below (in the column under the caret), and into
+   * a table at the cell under the caret.
+   */
+  private lineNeighbour(p: number, line: number, dir: -1 | 1, goal: number): number | null {
+    const story = this.view.storyLayout();
+    const paras = this.doc.paras;
+    const idx = story.index[p] ?? [];
+    if (idx[line + dir] !== undefined) return idx[line + dir];
+    const cell = paras[p].cell;
+    let q = p + dir;
+    while (q >= 0 && q < paras.length && this.lineIndex(q, dir < 0) === null) q += dir;
+    if (q < 0 || q >= paras.length) return null;
+    const next = paras[q].cell;
+    if (cell && next && next.table.id === cell.table.id && next.row === cell.row && next.col === cell.col) return this.lineIndex(q, dir < 0);
+    if (cell) {
+      // Leaving a cell: the cell above/below in the same column, else out of the table.
+      const t = cell.table;
+      const range = this.doc.tableRange(p, t)!;
+      let row = cell.row + dir;
+      while (row >= 0 && row < t.rows.length) {
+        const target = this.cellAt(range, t.id, row, goal);
+        if (target !== null) return this.lineIndex(target[dir < 0 ? target.length - 1 : 0], dir < 0);
+        row += dir;
+      }
+      const out = dir > 0 ? range[1] + 1 : range[0] - 1;
+      return out >= 0 && out < paras.length ? this.lineIndex(out, dir < 0) : null;
+    }
+    if (next) {
+      // Entering a table: the first or last row, at the cell under the caret.
+      const t = next.table;
+      const range = this.doc.tableRange(q, t)!;
+      const rows = dir > 0 ? Array.from(t.rows.keys()) : Array.from(t.rows.keys()).reverse();
+      for (const row of rows) {
+        const target = this.cellAt(range, t.id, row, goal);
+        if (target !== null) return this.lineIndex(target[dir < 0 ? target.length - 1 : 0], dir < 0);
+      }
+    }
+    return this.lineIndex(q, dir < 0);
+  }
+
+  /** Paragraphs of the visible cell of a row under x (page px), or null. */
+  private cellAt(range: [number, number], table: number, row: number, x: number): number[] | null {
+    const story = this.view.storyLayout();
+    let best: { col: number; d: number } | null = null;
+    for (const fr of this.layout.frames) {
+      if (fr.kind !== "cell" || !fr.cell || fr.story !== this.storyKey) continue;
+      const [tid, r, c] = fr.cell.split(":").map(Number);
+      if (tid !== table || r !== row) continue;
+      const d = x < fr.x ? fr.x - x : x > fr.x + fr.w ? x - (fr.x + fr.w) : 0;
+      if (!best || d < best.d) best = { col: c, d };
+    }
+    if (!best) return null;
+    const out: number[] = [];
+    for (let i = range[0]; i <= range[1]; i++) {
+      const c = this.doc.paras[i].cell;
+      if (c && c.row === row && c.col === best.col) out.push(i);
+    }
+    if (!out.length || out.every((i) => story.placed[story.index[i]?.[0] ?? -1]?.hide)) return null;
+    return out;
+  }
+
   private lineEdge(end: boolean): { pos: Pos; upstream: boolean } {
     const { pl } = this.view.placedFor(this.sel.head, this.sel.headUpstream);
-    const lines = this.layout.paras[pl.para].lines;
+    const lines = this.view.storyLayout().paras[pl.para].lines;
     const ln = lines[pl.line];
     if (!end) return { pos: { p: pl.para, o: ln.start }, upstream: false };
     const isLast = pl.line === lines.length - 1;
@@ -973,6 +1114,7 @@ export class Editor {
         return;
       case "Escape":
         if (this.painter) { this.stopPainter(); return void e.preventDefault(); }
+        if (this.isHeaderFooter()) { this.closeHeaderFooter(); return void e.preventDefault(); }
         handled = false;
         break;
       default:
@@ -1029,17 +1171,18 @@ export class Editor {
     if (e.target === ws && (e.offsetX >= ws.clientWidth || e.offsetY >= ws.clientHeight)) return; // scrollbar
     e.preventDefault();
     this.focus();
+    if (!this.chooseStory(e)) return;
     const hit = this.view.hitLine(e.clientX, e.clientY);
     const at = this.view.posInLine(hit.index, hit.x);
     const under = this.view.posInLine(hit.index, hit.x, true).pos;
-    const pl = this.layout.placed[hit.index];
+    const pl = this.view.storyLayout().placed[hit.index];
 
     if (hit.inLeftMargin) {
       // Selection bar: line, paragraph, whole document.
       if (e.detail >= 3) this.setSel({ p: 0, o: 0 }, this.doc.end());
       else if (e.detail === 2) { const [a, b] = this.paraRange(pl.para); this.setSel(a, b); }
       else {
-        const lines = this.layout.paras[pl.para].lines;
+        const lines = this.view.storyLayout().paras[pl.para].lines;
         const ln = lines[pl.line];
         const last = pl.line === lines.length - 1;
         const end = last ? this.paraRange(pl.para)[1] : { p: pl.para, o: ln.end };
@@ -1093,6 +1236,115 @@ export class Editor {
     addEventListener("mousemove", move, true);
     addEventListener("mouseup", up, true);
     raf = requestAnimationFrame(autoScroll);
+  }
+
+  /**
+   * Switches the story a click goes to, as Word does: a double click in the header or footer
+   * area opens it for editing and a double click on the body closes it again (single clicks
+   * on the dimmed body are ignored); footnotes are edited directly. Returns false when the
+   * click should do nothing else.
+   */
+  private chooseStory(e: MouseEvent): boolean {
+    const region = this.view.regionAt(e.clientX, e.clientY);
+    const inHf = this.isHeaderFooter();
+    if (inHf) {
+      if (region.kind === "header" || region.kind === "footer") {
+        this.openHeaderFooter(region.page, region.kind);
+        return true;
+      }
+      if (e.detail >= 2) { this.closeHeaderFooter(); return true; }
+      return false;
+    }
+    if ((region.kind === "header" || region.kind === "footer") && e.detail >= 2) {
+      this.openHeaderFooter(region.page, region.kind);
+      return true;
+    }
+    if (region.kind === "note" && region.key && this.storyKey !== region.key) {
+      this.switchStory(region.key, region.key);
+    } else if (region.kind !== "note" && this.storyKey !== MAIN && !inHf) {
+      this.switchStory(MAIN, MAIN);
+    }
+    return true;
+  }
+
+  /** True while a header or footer is being edited. */
+  isHeaderFooter(): boolean {
+    return this.storyKey.startsWith("hdr:") || this.storyKey.startsWith("ftr:");
+  }
+
+  /** Where the caret was in the body before a header/footer or note was opened. */
+  private bodySel: Selection | null = null;
+
+  private switchStory(id: string, key: string, sel?: Selection): void {
+    if (this.doc.activeStory === MAIN && id !== MAIN) this.bodySel = this.sel;
+    this.doc.setActive(id);
+    this.storyKey = key;
+    const restore = id === MAIN ? this.bodySel : null;
+    this.sel = sel ?? restore ?? { anchor: { p: 0, o: 0 }, head: { p: 0, o: 0 }, headUpstream: false };
+    if (id === MAIN) this.bodySel = null;
+    this.pending = null;
+    this.goalX = null;
+    this.update();
+  }
+
+  /**
+   * Opens the header or footer of a page for editing, creating it (for the page's section)
+   * when the document has none yet.
+   */
+  openHeaderFooter(page: number, kind: "header" | "footer"): void {
+    const pg = this.layout.pages[page];
+    if (!pg) return;
+    let id = kind === "header" ? pg.header : pg.footer;
+    if (!id) {
+      this.snapshot();
+      id = this.newHeaderFooter(pg.section, kind, pg.index);
+    }
+    this.switchStory(id, `${id}@${page}`, { anchor: { p: 0, o: 0 }, head: { p: 0, o: 0 }, headUpstream: false });
+    this.emit(false);
+  }
+
+  closeHeaderFooter(): void {
+    if (!this.isHeaderFooter()) return;
+    this.switchStory(MAIN, MAIN);
+    this.emit(false);
+  }
+
+  /** A new empty header/footer story referenced by section `si` for its pages. */
+  private newHeaderFooter(si: number, kind: "header" | "footer", pageIndex: number): string {
+    const prefix = kind === "header" ? "hdr:" : "ftr:";
+    let n = 1;
+    while (this.doc.stories.has(`${prefix}${n}`)) n++;
+    const id = `${prefix}${n}`;
+    const style = this.styleId(kind);
+    this.ensureStyle(style);
+    this.doc.setStory(id, [{ ...makePara("", { style }), mark: EMPTY }]);
+    // Which slot: the section's first page, even pages or the default.
+    const page = this.layout.pages[pageIndex];
+    const first = this.layout.pages.findIndex((x) => x.section === si) === pageIndex;
+    this.updateSection(si, (sect) => {
+      const refs = { ...(kind === "header" ? sect.headers : sect.footers) };
+      const slot = first && sect.titlePage ? "first" : this.doc.settings.evenOdd && page.number % 2 === 0 ? "even" : "default";
+      refs[slot] = id;
+      return kind === "header" ? { ...sect, headers: refs } : { ...sect, footers: refs };
+    });
+    return id;
+  }
+
+  /** Changes section `si` (counted in the main text; the last one lives in the settings). */
+  updateSection(si: number, change: (s: Section) => Section): void {
+    const main = this.doc.main;
+    let k = 0;
+    for (let i = 0; i < main.length - 1; i++) {
+      if (!main[i].sect) continue;
+      if (k === si) {
+        const next = [...main];
+        next[i] = { ...main[i], sect: change(main[i].sect!) };
+        this.doc.setStory(MAIN, next);
+        return;
+      }
+      k++;
+    }
+    this.doc.setSettings({ ...this.doc.settings, section: change(this.doc.settings.section) });
   }
 
   private dragTo(clientX: number, clientY: number, ts?: number): void {

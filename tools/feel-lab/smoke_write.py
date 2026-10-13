@@ -153,8 +153,8 @@ def main() -> None:
         t.js(f"{api}.run('file.close')")
         time.sleep(0.3)
 
-        # A document Word made with a table and bold text: the table is kept as it is, and
-        # saving goes to the original (D-024).
+        # A document Word made with a table and bold text: the table's cells are edited like
+        # any text, and saving goes to the original (D-024).
         rich = TMP / "mit-tabelle.docx"
         def build(d):
             d.Content.Text = "Arbeitsblatt"
@@ -168,20 +168,23 @@ def main() -> None:
         docs = wait(t, f"{api}.docs().some(d => d.name === 'mit-tabelle') && {api}.docs()")
         active = [d for d in docs if d["active"]][0] if docs else {}
         check("opens a Word document with a table in a new tab", active.get("name") == "mit-tabelle", json.dumps(docs))
-        check("lists the content it keeps unchanged", "Tabellen" in active.get("unsupported", []), json.dumps(active.get("unsupported")))
-        bar = t.js(f"{api}.infobar()") or ""
-        check("the bar says it stays unchanged", "Tabellen" in bar and "unverändert erhalten" in bar, bar)
+        check("shows the table as cells (nothing left unsupported)", not active.get("unsupported"), json.dumps(active.get("unsupported")))
+        text = t.js("__probe.text()") or ""
+        check("the cell text is part of the document", "\nZelle\n" in text, repr(text))
         check("reads the bold heading", t.js("__probe.formatAt(0).bold"))
         mtime = rich.stat().st_mtime
-        t.set_selection(len("Arbeitsblatt"), len("Arbeitsblatt"))
+        cell_end = text.index("Zelle") + len("Zelle")
+        t.set_selection(cell_end, cell_end)
         t.js("__probe.focus()")
+        t.send_text("n")
+        t.set_selection(len("Arbeitsblatt"), len("Arbeitsblatt"))
         t.send_text(" 1")
         ok = t.js(f"{api}.save()")
         check("saves over the original", ok and rich.stat().st_mtime != mtime)
         rinfo = word_read(rich)
         check("Word: edited heading, still bold", rinfo["paras"][0][0] == "Arbeitsblatt 1" and all(rinfo["bold"][:14]),
               str(rinfo["paras"][:1]))
-        check("Word: the table is still there", rinfo["tables"] == 1 and rinfo["cell"] == "Zelle", f"{rinfo['tables']} {rinfo['cell']!r}")
+        check("Word: the table is still there, with the typed cell text", rinfo["tables"] == 1 and rinfo["cell"] == "Zellen", f"{rinfo['tables']} {rinfo['cell']!r}")
 
         # Keytips (Alt), then Ansicht (F) and 100 % (0).
         t.js(f"{api}.run('view.pageWidth')")

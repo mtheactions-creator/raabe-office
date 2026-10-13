@@ -1,10 +1,10 @@
 // Styles: definitions with inheritance (basedOn), document defaults and theme fonts, and the
 // resolution of a run's or paragraph's effective formatting the way Word does it:
-// defaults → paragraph style chain → character style chain → direct formatting. Toggle
-// properties (bold, italic, caps …) set by both the paragraph and the character style
-// cancel out (ECMA-376 §17.7.3).
+// defaults → table style (in tables) → paragraph style chain → numbering level → character
+// style chain → direct formatting. Toggle properties (bold, italic, caps …) set by both the
+// paragraph and the character style cancel out (ECMA-376 §17.7.3).
 
-import type { Align, CharProps, LineRule, ParaProps, TabStop } from "./model";
+import type { Align, Borders, CellMargins, CharProps, LineRule, ParaProps, Revision, Shading, TabStop } from "./model";
 
 export type StyleType = "paragraph" | "character" | "table" | "numbering";
 
@@ -24,6 +24,23 @@ export interface StyleDef {
   readonly rPr: CharProps;
   /** Original definition from the file, written back unchanged. */
   readonly data?: unknown;
+  /** Table styles: table-wide properties and conditional formats (firstRow, band1Horz …). */
+  readonly table?: TableStyleDef;
+}
+
+export interface TableStylePart {
+  readonly pPr?: ParaProps;
+  readonly rPr?: CharProps;
+  readonly borders?: Borders;
+  readonly shading?: Shading;
+}
+
+export interface TableStyleDef extends TableStylePart {
+  readonly cellMargins?: Partial<CellMargins>;
+  /** Rows/columns per band (w:tblStyleRowBandSize / ColBandSize). */
+  readonly rowBand?: number;
+  readonly colBand?: number;
+  readonly cond?: Readonly<Record<string, TableStylePart>>;
 }
 
 export interface Theme {
@@ -47,6 +64,8 @@ export interface ResolvedChar {
   readonly hidden: boolean;
   readonly spacing: number;
   readonly kern: number;
+  /** Tracked change the text belongs to (direct formatting only). */
+  readonly rev?: Revision;
 }
 
 export interface ResolvedPara {
@@ -65,6 +84,10 @@ export interface ResolvedPara {
   readonly widow: boolean;
   readonly pageBreakBefore: boolean;
   readonly tabs: readonly TabStop[];
+  readonly numId?: number;
+  readonly ilvl?: number;
+  readonly borders?: Borders;
+  readonly shading?: Shading;
 }
 
 const TOGGLES = ["bold", "italic", "caps", "smallCaps", "strike", "dstrike", "hidden"] as const;
@@ -106,9 +129,20 @@ function mergeTabs(base: readonly TabStop[], over: readonly TabStop[] | undefine
   return out.sort((a, b) => a.pos - b.pos);
 }
 
+let objSeq = 0;
+const objIds = new WeakMap<object, number>();
+/** A small id per object identity (for cache keys). */
+function oid(o: object | undefined): number {
+  if (!o) return 0;
+  let id = objIds.get(o);
+  if (id === undefined) { id = ++objSeq; objIds.set(o, id); }
+  return id;
+}
+
 export class StyleSheet {
-  private paraCache = new WeakMap<ParaProps, ResolvedPara>();
+  private paraCache = new WeakMap<ParaProps, Map<string, ResolvedPara>>();
   private charCache = new Map<string, Map<CharProps, ResolvedChar>>();
+  private tableCache = new Map<string, TableStyleDef>();
   readonly defaultParagraphStyle: string;
 
   constructor(
@@ -161,18 +195,38 @@ export class StyleSheet {
     return r;
   }
 
-  resolvePara(p: ParaProps): ResolvedPara {
-    let hit = this.paraCache.get(p);
+  /** Numbering a paragraph style carries (e.g. "Aufzählungszeichen"), from its chain. */
+  numberingOfStyle(id: string): { numId: number; ilvl: number } | null {
+    let numId: number | undefined, ilvl: number | undefined;
+    for (const s of this.chain(id)) {
+      if (s.pPr.numId !== undefined) numId = s.pPr.numId;
+      if (s.pPr.ilvl !== undefined) ilvl = s.pPr.ilvl;
+    }
+    return numId === undefined ? null : { numId, ilvl: ilvl ?? 0 };
+  }
+
+  /**
+   * Effective paragraph formatting. `extra.table` is the table style's paragraph formatting
+   * (it sits between the defaults and the paragraph style), `extra.level` the numbering
+   * level's (between the paragraph style and direct formatting).
+   */
+  resolvePara(p: ParaProps, extra?: { table?: ParaProps; level?: ParaProps }): ResolvedPara {
+    const key = extra ? `${oid(extra.table)}:${oid(extra.level)}` : "";
+    let byKey = this.paraCache.get(p);
+    let hit = byKey?.get(key);
     if (hit) return hit;
     const styleId = p.style ?? this.defaultParagraphStyle;
     let acc: ParaProps = { ...this.defaultsP };
     let tabs: TabStop[] = [...(this.defaultsP.tabs ?? [])];
-    for (const s of this.chain(styleId)) {
-      acc = merge(acc, s.pPr);
-      tabs = mergeTabs(tabs, s.pPr.tabs);
-    }
-    acc = merge(acc, p);
-    tabs = mergeTabs(tabs, p.tabs);
+    const layer = (x: ParaProps | undefined) => {
+      if (!x) return;
+      acc = merge(acc, x);
+      tabs = mergeTabs(tabs, x.tabs);
+    };
+    layer(extra?.table);
+    for (const s of this.chain(styleId)) layer(s.pPr);
+    layer(extra?.level);
+    layer(p);
     hit = {
       style: styleId,
       align: acc.align ?? "left",
@@ -189,19 +243,49 @@ export class StyleSheet {
       widow: acc.widow ?? true,
       pageBreakBefore: acc.pageBreakBefore ?? false,
       tabs,
+      numId: acc.numId,
+      ilvl: acc.ilvl,
+      borders: acc.borders,
+      shading: acc.shading,
     };
-    this.paraCache.set(p, hit);
+    if (!byKey) { byKey = new Map(); this.paraCache.set(p, byKey); }
+    byKey.set(key, hit);
     return hit;
   }
 
-  /** Effective formatting of a run (or a paragraph mark) in a paragraph with `paraStyle`. */
-  resolveChar(paraStyle: string | undefined, r: CharProps): ResolvedChar {
-    const key = paraStyle ?? this.defaultParagraphStyle;
+  /** A table style with its basedOn chain merged (conditional formats merged per type). */
+  tableStyle(id: string | undefined): TableStyleDef | undefined {
+    if (!id) return undefined;
+    const hit = this.tableCache.get(id);
+    if (hit) return hit;
+    let out: TableStyleDef | undefined;
+    for (const s of this.chain(id)) {
+      const t: TableStyleDef = { ...(s.table ?? {}), pPr: s.pPr, rPr: s.rPr };
+      if (!out) { out = t; continue; }
+      const cond: Record<string, TableStylePart> = { ...(out.cond ?? {}) };
+      for (const [k, v] of Object.entries(t.cond ?? {})) cond[k] = { ...(cond[k] ?? {}), ...v };
+      out = {
+        ...out, ...Object.fromEntries(Object.entries(t).filter(([, v]) => v !== undefined)),
+        pPr: merge(out.pPr ?? {}, t.pPr), rPr: mergeR(out.rPr ?? {}, t.rPr),
+        borders: { ...(out.borders ?? {}), ...(t.borders ?? {}) }, cond,
+      };
+    }
+    if (out) this.tableCache.set(id, out);
+    return out;
+  }
+
+  /**
+   * Effective formatting of a run (or a paragraph mark) in a paragraph with `paraStyle`;
+   * `table` is the table style's run formatting for paragraphs in tables.
+   */
+  resolveChar(paraStyle: string | undefined, r: CharProps, table?: CharProps): ResolvedChar {
+    const styleKey = paraStyle ?? this.defaultParagraphStyle;
+    const key = table ? `${styleKey}\u0001${oid(table)}` : styleKey;
     let byStyle = this.charCache.get(key);
     if (!byStyle) { byStyle = new Map(); this.charCache.set(key, byStyle); }
     let hit = byStyle.get(r);
     if (hit) return hit;
-    const fromPara = mergeR({ ...this.defaultsR }, this.styleRPr(key));
+    const fromPara = mergeR(mergeR({ ...this.defaultsR }, table), this.styleRPr(styleKey));
     let acc: Record<string, unknown> = { ...fromPara };
     if (r.rStyle) {
       const fromChar = this.styleRPr(r.rStyle);
@@ -229,6 +313,7 @@ export class StyleSheet {
       hidden: !!c.hidden,
       spacing: c.spacing ?? 0,
       kern: c.kern ?? 0,
+      rev: r.rev,
     };
     byStyle.set(r, hit);
     return hit;
