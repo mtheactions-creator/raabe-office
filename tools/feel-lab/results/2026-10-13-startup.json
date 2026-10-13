@@ -1,0 +1,86 @@
+{
+  "meta": {
+    "date": "2026-10-13T10:27:15",
+    "test": "startup"
+  },
+  "results": {
+    "word": {
+      "window_visible": {
+        "median_ms": 1090,
+        "min_ms": 1080,
+        "max_ms": 1112,
+        "runs_ms": [
+          1090,
+          1112,
+          1085,
+          1080,
+          1099
+        ]
+      },
+      "text_painted": {
+        "median_ms": 1185,
+        "min_ms": 1169,
+        "max_ms": 1187,
+        "runs_ms": [
+          1186,
+          1185,
+          1187,
+          1178,
+          1169
+        ]
+      }
+    },
+    "proto-a": {
+      "window_visible": {
+        "median_ms": 49,
+        "min_ms": 41,
+        "max_ms": 56,
+        "runs_ms": [
+          52,
+          42,
+          41,
+          56,
+          49
+        ]
+      },
+      "text_painted": {
+        "median_ms": 549,
+        "min_ms": 318,
+        "max_ms": 638,
+        "runs_ms": [
+          549,
+          318,
+          526,
+          638,
+          550
+        ]
+      }
+    },
+    "proto-b": {
+      "window_visible": {
+        "median_ms": 42,
+        "min_ms": 36,
+        "max_ms": 77,
+        "runs_ms": [
+          37,
+          36,
+          77,
+          42,
+          44
+        ]
+      },
+      "text_painted": {
+        "median_ms": 526,
+        "min_ms": 330,
+        "max_ms": 553,
+        "runs_ms": [
+          526,
+          330,
+          553,
+          521,
+          538
+        ]
+      }
+    }
+  }
+}

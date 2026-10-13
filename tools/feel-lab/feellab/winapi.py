@@ -221,8 +221,9 @@ def place(hwnd: int, x: int, y: int, w: int, h: int) -> None:
     user32.SetWindowPos(hwnd, 0, x, y, w, h, 0x0004 | 0x0010)  # NOZORDER | NOACTIVATE
 
 
-def activate(hwnd: int) -> None:
-    """Brings a window to the foreground despite Windows' foreground-lock rules."""
+def activate(hwnd: int, settle: float = 0.15) -> None:
+    """Brings a window to the foreground despite Windows' foreground-lock rules.
+    With settle=0 it returns immediately without verifying (for timing measurements)."""
     if user32.GetForegroundWindow() == hwnd:
         return
     fg = user32.GetForegroundWindow()
@@ -234,7 +235,9 @@ def activate(hwnd: int) -> None:
         user32.SetForegroundWindow(hwnd)
     finally:
         user32.AttachThreadInput(me, fg_thread, False)
-    time.sleep(0.15)
+    if not settle:
+        return
+    time.sleep(settle)
     if user32.GetForegroundWindow() != hwnd:
         raise RuntimeError("could not activate the target window")
 
@@ -253,6 +256,11 @@ def client_origin(hwnd: int) -> tuple[int, int]:
     return pt.x, pt.y
 
 
+def dpi_scale(hwnd: int) -> float:
+    """Physical pixels per CSS/DIP pixel for the monitor the window is on."""
+    return user32.GetDpiForWindow(hwnd) / 96
+
+
 def window_rect(hwnd: int) -> tuple[int, int, int, int]:
     r = RECT()
     user32.GetWindowRect(hwnd, ctypes.byref(r))
@@ -269,8 +277,14 @@ class BITMAPINFOHEADER(ctypes.Structure):
 
 
 gdi32.CreateCompatibleBitmap.restype = wintypes.HBITMAP
+gdi32.CreateCompatibleBitmap.argtypes = (wintypes.HDC, ctypes.c_int, ctypes.c_int)
 gdi32.CreateCompatibleDC.restype = wintypes.HDC
+gdi32.CreateCompatibleDC.argtypes = (wintypes.HDC,)
+gdi32.DeleteObject.argtypes = (wintypes.HGDIOBJ,)
+gdi32.DeleteDC.argtypes = (wintypes.HDC,)
 user32.GetDC.restype = wintypes.HDC
+user32.GetDC.argtypes = (wintypes.HWND,)
+user32.ReleaseDC.argtypes = (wintypes.HWND, wintypes.HDC)
 gdi32.SelectObject.argtypes = (wintypes.HDC, wintypes.HGDIOBJ)
 gdi32.BitBlt.argtypes = (wintypes.HDC, ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_int,
                          wintypes.HDC, ctypes.c_int, ctypes.c_int, wintypes.DWORD)

@@ -1,6 +1,6 @@
 {
   "meta": {
-    "date": "2026-10-13T10:16:31",
+    "date": "2026-10-13T10:33:43",
     "test": "fidelity"
   },
   "results": {
@@ -44,22 +44,22 @@
     },
     "long": {
       "word": {
-        "lines": 1000,
-        "pages": 25
+        "lines": 2000,
+        "pages": 50
       },
       "proto-a": {
         "lines": {
-          "reference": 1000,
-          "candidate": 1000,
-          "identical": 1000,
+          "reference": 2000,
+          "candidate": 2000,
+          "identical": 2000,
           "percent": 100.0,
           "first_differences": []
         },
         "pages": {
-          "reference": 25,
+          "reference": 50,
           "candidate": 1,
           "identical": 1,
-          "percent": 4.0,
+          "percent": 2.0,
           "first_differences": [
             {
               "offset": 2938,
@@ -106,16 +106,16 @@
       },
       "proto-b": {
         "lines": {
-          "reference": 1000,
-          "candidate": 1000,
-          "identical": 1000,
+          "reference": 2000,
+          "candidate": 2000,
+          "identical": 2000,
           "percent": 100.0,
           "first_differences": []
         },
         "pages": {
-          "reference": 25,
-          "candidate": 25,
-          "identical": 25,
+          "reference": 50,
+          "candidate": 50,
+          "identical": 50,
           "percent": 100.0,
           "first_differences": []
         }
