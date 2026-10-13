@@ -29,4 +29,29 @@ The harness lives in `tools/feel-lab/`.
 ## Reference values
 
 Measured results are recorded in `tools/feel-lab/results/` with date, versions and raw
-samples, so we can track regressions over time.
+samples, so we can track regressions over time. Reports that interpret them live in
+`docs/reports/`.
+
+| Date | Word | Prototype B | Report |
+|---|---|---|---|
+| 2026-10-13 | F1 36 ms · F5 1185 ms | F1 32 ms · F3 50/50 · F4 2000/2000 lines, 50/50 pages · F5 526 ms | [Step 0](reports/2026-10-13-step0-feel.md) |
+
+## Running the harness
+
+```
+cd tools/feel-lab
+.venv/Scripts/python.exe run.py fidelity    # no input needed
+.venv/Scripts/python.exe run.py startup     # opens and closes windows
+.venv/Scripts/python.exe run.py latency     # takes over keyboard and screen
+.venv/Scripts/python.exe run.py behaviour   # takes over keyboard, mouse and screen
+```
+
+Rebuild the prototype app after any frontend change (`npx tauri build --no-bundle` in
+`prototypes/`), otherwise the harness measures the old build.
+
+## Lessons
+
+- Never restart a CSS/Web animation on every keystroke: it delayed the frame by one
+  refresh. The caret blinks with a timer.
+- A test is only valid if the pixels belong to the window under test: an earlier
+  start-time run measured a window that was still open behind it.

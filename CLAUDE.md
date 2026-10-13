@@ -34,6 +34,14 @@ Windows 10 Pro, PowerShell + Git Bash, Node 24, Rust (stable, MSVC), Python 3.14
 Visual Studio 2022 C++ tools, WebView2, Microsoft Word 365 (COM: `Word.Application`).
 Display: 4K at 150 % scaling, currently 30 Hz.
 
+## Harness safety
+- The harness always starts its **own** Word process (`DispatchEx`, `WINWORD.EXE /x`) and
+  closes only what it opened. Never attach to the owner's running Word
+  (`GetActiveObject`/`Dispatch`) and never close documents you did not create; the
+  owner may have unsaved work open.
+- After a failed run, check for leftover `WINWORD.EXE` / `raabe-feel.exe` processes and
+  windows of the test document, and close only those.
+
 ## Conventions
 - Internal docs and code comments in English; UI strings in German.
 - Commit messages in English, imperative mood.
