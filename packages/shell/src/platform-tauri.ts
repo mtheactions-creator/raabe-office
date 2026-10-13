@@ -1,0 +1,65 @@
+// Platform implementation for Tauri (Windows now, iPadOS later). File access goes through
+// our own Rust commands (see apps/*/src-tauri/src/lib.rs) so saving is atomic.
+
+import { invoke } from "@tauri-apps/api/core";
+import { listen } from "@tauri-apps/api/event";
+import { getCurrentWindow } from "@tauri-apps/api/window";
+import { open, save } from "@tauri-apps/plugin-dialog";
+import { readText, writeText } from "@tauri-apps/plugin-clipboard-manager";
+import type { FileInfo, Platform, RecoveryEntry } from "./platform";
+
+const FILTERS = {
+  docx: [{ name: "Word-Dokument", extensions: ["docx"] }],
+  pdf: [{ name: "PDF", extensions: ["pdf"] }],
+};
+
+export function tauriPlatform(): Platform {
+  const win = getCurrentWindow();
+  return {
+    kind: "tauri",
+    async openFileDialog() {
+      const r = await open({ multiple: false, directory: false, filters: FILTERS.docx, title: "Öffnen" });
+      return typeof r === "string" ? r : null;
+    },
+    async saveFileDialog(defaultName, kind) {
+      return (await save({ defaultPath: defaultName, filters: FILTERS[kind], title: kind === "pdf" ? "Als PDF exportieren" : "Speichern unter" })) ?? null;
+    },
+    async readFile(path) {
+      return new Uint8Array(await invoke<ArrayBuffer>("read_file", { path }));
+    },
+    async writeFile(path, bytes) {
+      await invoke("write_file", bytes, { headers: { path: encodeURIComponent(path) } });
+    },
+    fileInfo: (path) => invoke<FileInfo>("file_info", { path }),
+    async saveRecovery(entry, bytes) {
+      await invoke("save_recovery", bytes, { headers: { meta: encodeURIComponent(JSON.stringify(entry)) } });
+    },
+    listRecovery: () => invoke<RecoveryEntry[]>("list_recovery"),
+    async readRecovery(id) {
+      return new Uint8Array(await invoke<ArrayBuffer>("read_recovery", { id }));
+    },
+    deleteRecovery: (id) => invoke("delete_recovery", { id }),
+    clipboardRead: async () => (await readText()) ?? "",
+    clipboardWrite: (text) => writeText(text),
+    printToPdf: (path) => invoke("print_to_pdf", { path }),
+    onOpenFiles(handler) {
+      void invoke<string[]>("startup_files").then((paths) => { if (paths.length) handler(paths); });
+      void listen<string[]>("open-files", (e) => handler(e.payload));
+    },
+    window: {
+      minimize: () => void win.minimize(),
+      toggleMaximize: () => void win.toggleMaximize(),
+      close: () => void win.close(),
+      isMaximized: () => win.isMaximized(),
+      onResized: (h) => void win.onResized(() => h()),
+      setTitle: (t) => void win.setTitle(t),
+      onCloseRequested(handler) {
+        void win.onCloseRequested(async (e) => {
+          e.preventDefault();
+          if (await handler()) void win.destroy();
+        });
+      },
+      destroy: () => void win.destroy(),
+    },
+  };
+}

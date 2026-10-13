@@ -1,0 +1,15 @@
+{
+  "name": "raabe-office",
+  "private": true,
+  "version": "0.1.0",
+  "description": "RaabeWrite, RaabeCalc, RaabePresent: a lean, offline office suite for the Raabeschule.",
+  "license": "GPL-3.0-only",
+  "type": "module",
+  "workspaces": ["packages/*", "apps/*"],
+  "scripts": {
+    "dev:write": "npm run dev -w @raabe/write",
+    "build:write": "npm run tauri -w @raabe/write -- build",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run"
+  }
+}

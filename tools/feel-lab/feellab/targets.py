@@ -180,17 +180,36 @@ class WordTarget(Target):
         self.app.Quit(0)
 
 
-# ----- prototypes -----------------------------------------------------------------------
+# ----- prototypes and apps -----------------------------------------------------------------
+
+RAABE_WRITE_EXE = ROOT / "apps/raabe-write/src-tauri/target/release/raabe-write.exe"
+
+
+def _pid(hwnd: int) -> int:
+    import ctypes
+    pid = ctypes.c_ulong()
+    winapi.user32.GetWindowThreadProcessId(hwnd, ctypes.byref(pid))
+    return pid.value
+
+
+def raabe_write(fixture_name: str = "short", port: int = 9370, extra: list[str] | None = None) -> "WebViewTarget":
+    return WebViewTarget("raabe-write", fixture_name, port, exe=RAABE_WRITE_EXE,
+                         args=["--feel", fixture_name, *(extra or [])], title_suffix=" - RaabeWrite")
 
 class WebViewTarget(Target):
-    def __init__(self, engine: str, fixture_name: str = "short", port: int = 9333):
-        self.name = f"proto-{engine}"
+    def __init__(self, engine: str, fixture_name: str = "short", port: int = 9333,
+                 exe: Path | None = None, args: list[str] | None = None, title_suffix: str | None = None):
+        self.name = f"proto-{engine}" if exe is None else engine
         self.engine = engine
         env = dict(os.environ, RAABE_FEEL_DEBUG_PORT=str(port))
         self.started = time.perf_counter()
-        self.proc = subprocess.Popen([str(PROTOTYPE_EXE), engine, fixture_name], env=env)
-        title = f"Feel-Prototyp {engine.upper()}"
-        self.hwnd = winapi.wait_for_window(lambda h: winapi.window_title(h) == title)
+        self.proc = subprocess.Popen([str(exe or PROTOTYPE_EXE), *(args if args is not None else [engine, fixture_name])], env=env)
+        if title_suffix is None:
+            title = f"Feel-Prototyp {engine.upper()}"
+            match = lambda h: winapi.window_title(h) == title
+        else:
+            match = lambda h: winapi.window_title(h).endswith(title_suffix) and _pid(h) == self.proc.pid
+        self.hwnd = winapi.wait_for_window(match)
         self.window_shown = time.perf_counter()
         winapi.place(self.hwnd, *WINDOW_RECT)
         self.ws = self._connect(port)
@@ -212,6 +231,34 @@ class WebViewTarget(Target):
             if time.perf_counter() > deadline:
                 raise TimeoutError("DevTools endpoint not reachable")
             time.sleep(0.05)
+
+    def cdp(self, method: str, params: dict | None = None):
+        self._id += 1
+        self.ws.send(json.dumps({"id": self._id, "method": method, "params": params or {}}))
+        while True:
+            msg = json.loads(self.ws.recv())
+            if msg.get("id") == self._id:
+                if "error" in msg:
+                    raise RuntimeError(msg["error"])
+                return msg.get("result")
+
+    # Input through the DevTools protocol goes straight into the page: it never touches the
+    # real keyboard or mouse, so these helpers can run while someone uses the PC.
+    KEYS = {"Enter": 13, "Backspace": 8, "Tab": 9, "Escape": 27, "Delete": 46, "Home": 36, "End": 35,
+            "ArrowLeft": 37, "ArrowUp": 38, "ArrowRight": 39, "ArrowDown": 40, "F1": 112, "F10": 121, "F12": 123, "Alt": 18}
+
+    def send_text(self, text: str) -> None:
+        for ch in text:
+            self.cdp("Input.dispatchKeyEvent", {"type": "keyDown", "text": ch, "key": ch, "unmodifiedText": ch})
+            self.cdp("Input.dispatchKeyEvent", {"type": "keyUp", "key": ch})
+
+    def send_key(self, key: str, ctrl: bool = False, shift: bool = False, alt: bool = False) -> None:
+        mods = (1 if alt else 0) | (2 if ctrl else 0) | (8 if shift else 0)
+        vk = self.KEYS.get(key, ord(key.upper()) if len(key) == 1 else 0)
+        code = key if len(key) > 1 else f"Key{key.upper()}" if key.isalpha() else f"Digit{key}"
+        base = {"key": key, "code": code, "windowsVirtualKeyCode": vk, "nativeVirtualKeyCode": vk, "modifiers": mods}
+        self.cdp("Input.dispatchKeyEvent", {"type": "rawKeyDown", **base})
+        self.cdp("Input.dispatchKeyEvent", {"type": "keyUp", **base})
 
     def js(self, expression: str):
         self._id += 1
