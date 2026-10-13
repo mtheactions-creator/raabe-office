@@ -20,6 +20,8 @@ Windows first, iPad close behind (new students all use iPads). Open source, GPL-
   the owner first and only run it when they are not using the PC.
 
 ## Where things are
+- Repository: https://github.com/mtheactions-creator/raabe-office (public, branch `main`).
+  `gh` lives at `C:\Program Files\GitHub CLI\gh.exe` if it is not on PATH.
 - `docs/DECISIONS.md`: every decision with its reasoning. Add an entry for each new one.
 - `docs/SCOPE.md`: what each app does (MVP / later / out of scope).
 - `docs/ARCHITECTURE.md`: technology and structure.
