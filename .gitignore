@@ -1,0 +1,9 @@
+node_modules/
+dist/
+target/
+.venv/
+__pycache__/
+*.pyc
+gen/schemas/
+.vite/
+tools/feel-lab/captures/

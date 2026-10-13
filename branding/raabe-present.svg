@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 642 627">
+  <title>RaabePresent</title>
+  <defs><clipPath id="capband"><rect x="300" y="384" width="300" height="147"/></clipPath></defs>
+  <g fill="#ED1C24"><path d="M547.1 81.3A329.4 329.4 0 1 0 165.9 614.3A328.5 328.5 0 0 1 547.1 81.3Z"/><circle cx="382.5" cy="367.6" r="259.2"/></g>
+  <g fill="#231F20" color="#231F20" transform="translate(11 12)"><path d="M261 195H342V241C358 214 388 190 425 189C450 189 468 195 477 204L449 281C436 270 422 266 408 266C390 266 373 276 365 290C355 307 350 330 349 360L348 395V531H261Z"/><rect x="400" y="384" width="41" height="147" fill="currentColor"/><path fill="none" stroke="currentColor" stroke-width="41" d="M420 404.5H470A30 30 0 0 1 470 464.5H420"/></g>
+  <g fill="#FFFFFF" color="#FFFFFF"><path d="M261 195H342V241C358 214 388 190 425 189C450 189 468 195 477 204L449 281C436 270 422 266 408 266C390 266 373 276 365 290C355 307 350 330 349 360L348 395V531H261Z"/><rect x="400" y="384" width="41" height="147" fill="currentColor"/><path fill="none" stroke="currentColor" stroke-width="41" d="M420 404.5H470A30 30 0 0 1 470 464.5H420"/></g>
+</svg>

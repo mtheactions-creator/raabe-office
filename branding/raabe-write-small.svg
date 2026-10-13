@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 684 684">
+  <title>RaabeWrite</title>
+  <defs><clipPath id="bigband"><rect x="0" y="185" width="684" height="300"/></clipPath></defs>
+  <circle cx="342" cy="342" r="342" fill="#ED1C24"/>
+  <path clip-path="url(#bigband)" fill="none" stroke="#FFFFFF" stroke-width="64" stroke-miterlimit="10" d="M222 140L276 520L342 330L408 520L462 140"/>
+</svg>
