@@ -15,7 +15,7 @@ const split = (cmd: string, key: string, size: "large" | "medium" | "small" = "s
 const stack = (...items: Control[]): Control => ({ type: "stack", items });
 
 export function ribbonTabs(active: () => Editor | null): Tab[] {
-  const font = () => (active()?.currentStyle() === "h1" ? "Calibri Light (Überschriften)" : "Calibri (Textkörper)");
+  const font = () => (active()?.currentStyle() === "h1" ? "Calibri Light" : "Calibri (Textkörper)");
   const size = () => (active()?.currentStyle() === "h1" ? "16" : "11");
   return [
     {

@@ -29,25 +29,47 @@
 | Charts | Own renderer (shared by RaabeCalc and RaabePresent) | Must match Excel chart look |
 | Fonts | System fonts; Carlito/Caladea/Liberation bundled as metric-compatible fallbacks | D-011 |
 
-## Repository layout (planned)
+## Repository layout
+
+npm workspaces; TypeScript packages are consumed as source (no build step between them).
 
 ```
 apps/
-  raabe-write/        Tauri app: Word
-  raabe-calc/         Tauri app: Excel
-  raabe-present/      Tauri app: PowerPoint
+  raabe-write/        RaabeWrite: app.ts (documents, files, backstage pages), command-list.ts
+                      (every command with Word's label), ribbon-def.ts (tabs and groups),
+                      src-tauri/ (Rust: file access, AutoRecover, PDF, single instance)
+  raabe-calc/         later
+  raabe-present/      later
 packages/
-  shell/              ribbon, backstage, dialogs, tabs, status bar, theming
-  ooxml/              zip + XML reading/writing, preservation of unknown parts
-  text-engine/        text model, line layout, pagination, selection, input
-  spell/              Hunspell (WASM) + dictionaries
-  charts/             chart model and renderer
-  icons/              icon set
+  text-engine/        model, line breaking, pagination, view, editor (D-017)
+  shell/              commands, ribbon, keytips, title bar (QAT, document tabs, search),
+                      backstage, status bar, dialogs, popups, platform layer, theme.css,
+                      icons.gen.ts (generated from Fluent UI System Icons, MIT)
+  ooxml/              .docx reading/writing for the supported subset + detection of the rest
+  (planned) spell/, charts/
 branding/             logos (excluded from the GPL, see branding/README.md)
-docs/                 decisions, scope, architecture, feel metrics, roadmap
-prototypes/           Step 0 feel prototypes (throwaway)
-tools/feel-lab/       measurement harness against Microsoft Word
+docs/                 decisions, scope, architecture, feel metrics, roadmap, reports
+prototypes/           Step 0 feel prototypes (kept for reference; the harness uses the real app)
+tools/feel-lab/       measurement harness against Microsoft Word, Word UI capture, smoke test
 ```
+
+## Platform layer
+
+`packages/shell/src/platform.ts` is the only place that touches the operating system: file
+dialogs, reading and writing files, AutoRecover storage, clipboard, PDF export, window
+controls and files opened from Explorer. `platform-tauri.ts` implements it for Tauri
+(Windows now, iPadOS later); `platform-browser.ts` is a development fallback for
+`npm run dev:write` in a normal browser.
+
+## Testing
+
+- `npm test`: unit tests (Vitest + jsdom) for the text engine and .docx package, including a
+  document saved by Word itself.
+- `tools/feel-lab/smoke_write.py`: drives the real app through the DevTools protocol
+  (no real input) and checks files with Word: typing, undo, styles, save, Word round trip,
+  protection of unsupported content, keytips, search, backstage, PDF, AutoRecover after a
+  crash, close prompts, ribbon collapsing.
+- `tools/feel-lab/run.py`: the feel metrics against Word (docs/FEEL.md).
 
 ## Editing engine candidates (Step 0)
 

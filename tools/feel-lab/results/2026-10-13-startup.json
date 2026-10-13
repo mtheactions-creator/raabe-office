@@ -1,84 +1,58 @@
 {
   "meta": {
-    "date": "2026-10-13T10:27:15",
+    "date": "2026-10-13T12:07:07",
     "test": "startup"
   },
   "results": {
     "word": {
       "window_visible": {
-        "median_ms": 1090,
-        "min_ms": 1080,
-        "max_ms": 1112,
+        "median_ms": 1134,
+        "min_ms": 1104,
+        "max_ms": 1165,
         "runs_ms": [
-          1090,
-          1112,
-          1085,
-          1080,
-          1099
+          1162,
+          1134,
+          1165,
+          1109,
+          1104
         ]
       },
       "text_painted": {
-        "median_ms": 1185,
-        "min_ms": 1169,
-        "max_ms": 1187,
+        "median_ms": 1215,
+        "min_ms": 1171,
+        "max_ms": 1288,
         "runs_ms": [
-          1186,
-          1185,
-          1187,
-          1178,
-          1169
+          1288,
+          1215,
+          1275,
+          1188,
+          1171
         ]
       }
     },
-    "proto-a": {
+    "raabe-write": {
       "window_visible": {
-        "median_ms": 49,
-        "min_ms": 41,
-        "max_ms": 56,
+        "median_ms": 45,
+        "min_ms": 40,
+        "max_ms": 75,
         "runs_ms": [
+          75,
+          40,
           52,
-          42,
-          41,
-          56,
-          49
+          45,
+          41
         ]
       },
       "text_painted": {
-        "median_ms": 549,
-        "min_ms": 318,
-        "max_ms": 638,
+        "median_ms": 603,
+        "min_ms": 583,
+        "max_ms": 660,
         "runs_ms": [
-          549,
-          318,
-          526,
-          638,
-          550
-        ]
-      }
-    },
-    "proto-b": {
-      "window_visible": {
-        "median_ms": 42,
-        "min_ms": 36,
-        "max_ms": 77,
-        "runs_ms": [
-          37,
-          36,
-          77,
-          42,
-          44
-        ]
-      },
-      "text_painted": {
-        "median_ms": 526,
-        "min_ms": 330,
-        "max_ms": 553,
-        "runs_ms": [
-          526,
-          330,
-          553,
-          521,
-          538
+          660,
+          583,
+          603,
+          605,
+          593
         ]
       }
     }

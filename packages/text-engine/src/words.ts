@@ -3,6 +3,11 @@
 // Spaces at the very start of a paragraph form a token of their own.
 
 const SPACE = 0, WORD = 1, PUNCT = 2;
+
+// Written as char codes so no invisible characters hide in the source.
+const NBSP = String.fromCharCode(0xa0);
+const EN_DASH = String.fromCharCode(0x2013);
+const EM_DASH = String.fromCharCode(0x2014);
 type CharClass = typeof SPACE | typeof WORD | typeof PUNCT;
 
 const WORD_CHAR = /[\p{L}\p{N}\p{M}_]/u;
@@ -13,7 +18,7 @@ export function isWordChar(ch: string | undefined): boolean {
 
 function classify(text: string, i: number): CharClass {
   const ch = text[i];
-  if (ch === " " || ch === " " || ch === "\t") return SPACE;
+  if (ch === " " || ch === NBSP || ch === "\t") return SPACE;
   if (WORD_CHAR.test(ch)) return WORD;
   // An apostrophe between two word characters belongs to the word ("geht's").
   if ((ch === "'" || ch === "’") && i > 0 && i < text.length - 1 &&
@@ -68,14 +73,23 @@ export function sentenceAt(text: string, i: number): [number, number] {
   return [start, end];
 }
 
+/** Word's count: runs of non-space characters, except runs made only of dashes (– —). */
 export function countWords(texts: readonly string[]): number {
   let n = 0;
   for (const t of texts) {
     let inWord = false;
-    for (let i = 0; i < t.length; i++) {
-      const space = t[i] === " " || t[i] === "\t" || t[i] === " ";
-      if (!space && !inWord) n++;
-      inWord = !space;
+    let onlyDashes = true;
+    for (let i = 0; i <= t.length; i++) {
+      const ch = t[i];
+      const space = ch === undefined || ch === " " || ch === "\t" || ch === NBSP;
+      if (space) {
+        if (inWord && !onlyDashes) n++;
+        inWord = false;
+      } else {
+        if (!inWord) onlyDashes = true;
+        inWord = true;
+        if (ch !== EN_DASH && ch !== EM_DASH) onlyDashes = false;
+      }
     }
   }
   return n;

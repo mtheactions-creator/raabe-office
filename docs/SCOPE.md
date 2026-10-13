@@ -17,6 +17,9 @@ What each app does, ordered by priority. **M** = first usable version (MVP),
 | Document tabs in one window | M | D-010 |
 | Recent files list, pinned files | M | |
 | Templates gallery (Neu) incl. Raabeschule templates | M | Material from the school, later |
+| Search box "Suchen" (Alt+M) that finds and runs commands | M | Done in Step 1 |
+| Keytips (Alt shortcuts) with Word's German letters | M | Done in Step 1 |
+| Dark mode | L | After the pilot (agreed) |
 | Spell check German + English (Hunspell dictionaries) | M | |
 | Find and replace | M | |
 | Zoom slider and view buttons in the status bar | M | |
@@ -59,6 +62,9 @@ What each app does, ordered by priority. **M** = first usable version (MVP),
 | Mailings (Sendungen), envelopes, labels | X | |
 | SmartArt | X | Preserved in files, shown as image placeholder |
 | Fields beyond page number / TOC / date | X | Preserved |
+| Entwurf tab: Designs, Farben, Schriftarten, Absatzabstand | L | Theme support |
+| Entwurf tab: Wasserzeichen, Seitenfarbe, Seitenränder | L | |
+| Word count exactly like Word (standalone dashes are not words) | M | Done in Step 1 |
 
 ## RaabeCalc (Excel)
 

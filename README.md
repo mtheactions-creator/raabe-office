@@ -18,8 +18,9 @@ weiter nutzen können.
 - **Für die Schule gemacht:** nur die Funktionen, die im Schulalltag gebraucht werden.
 - **Windows und iPad.**
 
-> **Stand:** Projektbeginn (Schritt 0). Noch keine nutzbare Version.
-> Den Fahrplan gibt es in [docs/ROADMAP.md](docs/ROADMAP.md).
+> **Stand:** Schritt 1 abgeschlossen. Erste Testversion von RaabeWrite: Menüband, Datei-Menü,
+> Dokument-Tabs, Speichern als .docx, PDF-Export und automatische Wiederherstellung.
+> Formatierungen (fett, Listen, Tabellen …) folgen ab Schritt 2. Fahrplan: [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## English summary
 

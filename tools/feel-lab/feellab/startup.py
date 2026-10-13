@@ -12,7 +12,7 @@ import time
 from pathlib import Path
 
 from . import winapi
-from .targets import PROTOTYPE_EXE, WINDOW_RECT, WordTarget
+from .targets import PROTOTYPE_EXE, RAABE_WRITE_EXE, WINDOW_RECT, WordTarget
 
 WINWORD = Path(r"C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE")
 RUNS = 5
@@ -105,10 +105,24 @@ def prototype_once(engine: str) -> tuple[float, float]:
     return (shown - t0) * 1000, (painted - t0) * 1000
 
 
+def raabe_write_once() -> tuple[float, float]:
+    """RaabeWrite opening the same test document as Word (startup file argument)."""
+    t0 = time.perf_counter()
+    proc = subprocess.Popen([str(RAABE_WRITE_EXE), str(DOCX)])
+    hwnd = winapi.wait_for_window(lambda h: winapi.window_title(h).endswith("RaabeWrite") and _pid(h) == proc.pid)
+    shown = time.perf_counter()
+    winapi.place(hwnd, *WINDOW_RECT)
+    winapi.activate(hwnd, settle=0)
+    painted = _text_painted(hwnd, DOCX.parent / "startup-raabe-write.png")
+    proc.terminate()
+    proc.wait(10)
+    return (shown - t0) * 1000, (painted - t0) * 1000
+
+
 def run() -> dict:
     _ensure_docx()
     out = {}
-    for name, fn in (("word", word_once), ("proto-a", lambda: prototype_once("a")), ("proto-b", lambda: prototype_once("b"))):
+    for name, fn in (("word", word_once), ("raabe-write", raabe_write_once)):
         shown, painted = [], []
         for _ in range(RUNS):
             s, p = fn()

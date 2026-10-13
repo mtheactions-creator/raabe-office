@@ -12,7 +12,7 @@ import statistics
 import time
 
 from . import winapi
-from .targets import Target, WebViewTarget, WordTarget
+from .targets import Target, WebViewTarget, WordTarget, raabe_write
 
 SAMPLES = 60
 VK_N = 0x4E
@@ -78,8 +78,7 @@ def run() -> dict:
     }
     makers = {
         "word": lambda fx: WordTarget(fx),
-        "proto-a": lambda fx: WebViewTarget("a", fx, port=9340),
-        "proto-b": lambda fx: WebViewTarget("b", fx, port=9341),
+        "raabe-write": lambda fx: raabe_write(fx, port=9340),
     }
     for scenario, (fx, where) in scenarios.items():
         out[scenario] = {}

@@ -23,6 +23,12 @@ reversed, add a new entry that supersedes it and mark the old one `Superseded by
 | D-015 | 2026-10-13 | Updates only on explicit user request; code signing later |
 | D-016 | 2026-10-13 | Claude is the maintainer; the repository is the project's memory |
 | D-017 | 2026-10-13 | Editing engine: controlled editing (prototype B); Tauri 2 confirmed |
+| D-018 | 2026-10-13 | Window frame: Microsoft 365's light chrome, Raabe red as the accent |
+| D-019 | 2026-10-13 | Shell built without a UI framework; one command registry for everything |
+| D-020 | 2026-10-13 | Ribbon reference is Word at ~1330 CSS px; groups collapse in Word's order |
+| D-021 | 2026-10-13 | Files: simplified saving, AutoRecover every 30 s, last tab closes the window |
+| D-022 | 2026-10-13 | Originals with unsupported content are never overwritten |
+| D-023 | 2026-10-13 | Development builds show planned commands greyed out |
 
 ---
 
@@ -135,3 +141,47 @@ The same engine will serve text in RaabeCalc cells and RaabePresent text boxes.
 Tauri 2 (D-006) is confirmed; it is no longer provisional.
 **Consequence:** we build IME handling, accessibility (screen readers) and spell-check
 underlines ourselves.
+
+### D-018 Window frame: light chrome, red accent
+Current Microsoft 365 no longer paints the title bar in the app colour: the frame is light
+grey (#F0F0F0), the ribbon a white card, and Word's blue appears only as an accent (active
+tab underline, window border, links). Students know this look, so we copy it and replace
+the blue accent with Raabe red (D-008). Colours and sizes were measured from Word on the
+development PC (`tools/feel-lab/capture_word_ui.py`). A red title bar would be a one-line
+change in `packages/shell/src/theme.css` if the school prefers it.
+
+### D-019 Shell without a UI framework
+Title bar, ribbon, backstage, status bar and dialogs are plain DOM built from data
+(`packages/shell`). Every action is a command in one registry (`Commands`) with Word's
+German label, icon, shortcut and state; ribbon buttons, the Quick Access Toolbar, keyboard
+shortcuts, keytips and the search box all run commands by id. No framework sits in the
+input path (D-001: feel first).
+
+### D-020 Ribbon reference width
+The ribbon is defined as Word shows it in a window of about 1330 CSS px (a 2000 px window at
+150 % scaling, typical for school laptops). Narrower windows collapse groups to single
+buttons in Word's order (captured at several widths). Not yet done: Word's extra step on
+very wide screens, where small buttons gain text labels.
+
+### D-021 File handling
+- "Speichern unter" (F12) opens the Windows dialog directly; Word's extra location page is
+  dropped. Strg+O opens the backstage "Öffnen" page with the recent files, as in Word;
+  Strg+F12 opens the Windows dialog directly.
+- A new document is saved under its first line as the suggested file name, as in Word.
+- AutoRecover backs up changed documents every 30 seconds (configurable in Optionen) to the
+  app's local data folder; after a crash RaabeWrite offers to restore them.
+- Saving is atomic (temporary file, then rename), so a failure never leaves a broken file.
+- Closing the last document tab closes the window, like Word's X button.
+- A .docx double-clicked in Explorer opens as a new tab in the running window.
+
+### D-022 Unsupported content is protected
+When a file contains content RaabeWrite cannot keep yet (tables, images, character
+formatting, lists, fields, comments ...), it is listed in a yellow bar above the document
+and in "Informationen". Saving into the original file is refused; the user is asked to
+save under a new name, so the original keeps everything. This is the D-004 rule in the
+period before full round-trip preservation exists.
+
+### D-023 Planned commands are visible
+Agreed with the project owner: during development the ribbon shows every planned command;
+those not built yet are greyed out with the tooltip "Noch nicht verfügbar". The pilot build
+for students will show only working commands.

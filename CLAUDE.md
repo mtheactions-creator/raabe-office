@@ -44,6 +44,23 @@ Display: 4K at 150 % scaling, currently 30 Hz.
 - After a failed run, check for leftover `WINWORD.EXE` / `raabe-feel.exe` processes and
   windows of the test document, and close only those.
 
+## Building and running
+- `npm install` at the repo root (workspaces). `npm test` runs the unit tests,
+  `npm run typecheck` the type check.
+- `npm run dev:write` starts RaabeWrite in a browser (development fallback platform).
+- Real app: `npx tauri build --no-bundle` in `apps/raabe-write` (release exe in
+  `src-tauri/target/release/raabe-write.exe`); `npx tauri build` also makes the per-user
+  NSIS installer in `src-tauri/target/release/bundle/nsis/`. Cargo is in `~/.cargo/bin`
+  (not on Git Bash's PATH: `export PATH="$HOME/.cargo/bin:$PATH"`).
+- Icons: edit `packages/shell/scripts/icons.json`, then `node packages/shell/scripts/build-icons.mjs`.
+- After any frontend change, rebuild the exe before running feel-lab or the smoke test.
+
+## Pitfalls seen so far
+- Backslash escapes (`\r`, `\u00a0`) get mangled when patching files through shell heredocs
+  or inline Python. Write patch scripts as files, and use `String.fromCharCode(...)` for
+  invisible characters in source code.
+- Python's `write_text` writes CRLF on Windows; pass `newline="\n"`.
+
 ## Conventions
 - Internal docs and code comments in English; UI strings in German.
 - Commit messages in English, imperative mood.

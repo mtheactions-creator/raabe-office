@@ -35,6 +35,7 @@ samples, so we can track regressions over time. Reports that interpret them live
 | Date | Word | Prototype B | Report |
 |---|---|---|---|
 | 2026-10-13 | F1 36 ms · F5 1185 ms | F1 32 ms · F3 50/50 · F4 2000/2000 lines, 50/50 pages · F5 526 ms | [Step 0](reports/2026-10-13-step0-feel.md) |
+| 2026-10-13 | F5 1215 ms (opening a .docx) | RaabeWrite 0.1.0 with full shell: F4 2000/2000 lines, 50/50 pages · F5 603 ms (opening the same .docx) · smoke test 32/32 | Step 1 |
 
 ## Running the harness
 
@@ -48,6 +49,13 @@ cd tools/feel-lab
 
 Rebuild the prototype app after any frontend change (`npx tauri build --no-bundle` in
 `prototypes/`), otherwise the harness measures the old build.
+
+## Interface fidelity
+
+`capture_word_ui.py` reads Word's ribbon, backstage and status bar through UI Automation
+(names, sizes, positions, keytips) and takes screenshots; the results stay local in
+`captures/` because they show Microsoft's interface and the owner's recent files. RaabeWrite
+is screenshotted at the same window size and compared side by side.
 
 ## Lessons
 

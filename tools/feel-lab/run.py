@@ -28,12 +28,12 @@ def save(test: str, data: dict) -> Path:
     return path
 
 
-def with_targets(fn, engines=("a", "b"), fixture="short"):
+def with_targets(fn, fixture="short"):
+    """Word as the reference plus the real RaabeWrite app (the Step 0 prototypes are retired)."""
     word = targets.WordTarget(fixture)
     protos = []
     try:
-        for i, e in enumerate(engines):
-            protos.append(targets.WebViewTarget(e, fixture, port=9333 + i))
+        protos.append(targets.raabe_write(fixture, port=9333))
         return fn(word, protos)
     finally:
         for p in protos:

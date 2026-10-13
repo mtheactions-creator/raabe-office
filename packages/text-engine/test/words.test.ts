@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { nextTokenStart, prevTokenStart, sentenceAt, tokenAt } from "../src/words";
+import { countWords, nextTokenStart, prevTokenStart, sentenceAt, tokenAt } from "../src/words";
 import { Doc } from "../src/doc";
 
 const t = "Pflanzen, Algen und (Glucose) geht's.";
@@ -25,6 +25,14 @@ describe("Word's word rules", () => {
   it("Strg+Klick selects the sentence with trailing spaces", () => {
     const s = "Erster Satz. Zweiter Satz! Dritter.";
     expect(s.slice(...sentenceAt(s, s.indexOf("Zweiter") + 3))).toBe("Zweiter Satz! ");
+  });
+});
+
+describe("word count", () => {
+  it("counts like Word: standalone dashes are not words, other symbols are", () => {
+    expect(countWords(["a – b", "a — b"])).toBe(4);
+    expect(countWords(["a - b", "a + b", "a → b", "6 CO2"])).toBe(11);
+    expect(countWords(["", "  ", "Wort"])).toBe(1);
   });
 });
 

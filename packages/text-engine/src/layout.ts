@@ -61,7 +61,7 @@ export function styleOf(id: StyleId): ParaStyle {
 const lineCache = new WeakMap<Para, Line[]>();
 
 function isSpace(ch: string): boolean {
-  return ch === " " || ch === " ";
+  return ch === " " || ch === String.fromCharCode(0xa0);
 }
 
 function breakLines(para: Para): Line[] {

@@ -1,6 +1,6 @@
 {
   "meta": {
-    "date": "2026-10-13T10:33:43",
+    "date": "2026-10-13T12:12:05",
     "test": "fidelity"
   },
   "results": {
@@ -9,23 +9,7 @@
         "lines": 20,
         "pages": 1
       },
-      "proto-a": {
-        "lines": {
-          "reference": 20,
-          "candidate": 20,
-          "identical": 20,
-          "percent": 100.0,
-          "first_differences": []
-        },
-        "pages": {
-          "reference": 1,
-          "candidate": 1,
-          "identical": 1,
-          "percent": 100.0,
-          "first_differences": []
-        }
-      },
-      "proto-b": {
+      "raabe-write": {
         "lines": {
           "reference": 20,
           "candidate": 20,
@@ -47,64 +31,7 @@
         "lines": 2000,
         "pages": 50
       },
-      "proto-a": {
-        "lines": {
-          "reference": 2000,
-          "candidate": 2000,
-          "identical": 2000,
-          "percent": 100.0,
-          "first_differences": []
-        },
-        "pages": {
-          "reference": 50,
-          "candidate": 1,
-          "identical": 1,
-          "percent": 2.0,
-          "first_differences": [
-            {
-              "offset": 2938,
-              "where": "only in Word",
-              "context": "enig Sauerstoff enthält.\n|3. Die Photosynthese – ei"
-            },
-            {
-              "offset": 5876,
-              "where": "only in Word",
-              "context": "enig Sauerstoff enthält.\n|5. Die Photosynthese – ei"
-            },
-            {
-              "offset": 8814,
-              "where": "only in Word",
-              "context": "enig Sauerstoff enthält.\n|7. Die Photosynthese – ei"
-            },
-            {
-              "offset": 11752,
-              "where": "only in Word",
-              "context": "enig Sauerstoff enthält.\n|9. Die Photosynthese – ei"
-            },
-            {
-              "offset": 14691,
-              "where": "only in Word",
-              "context": "enig Sauerstoff enthält.\n|11. Die Photosynthese – e"
-            },
-            {
-              "offset": 17631,
-              "where": "only in Word",
-              "context": "enig Sauerstoff enthält.\n|13. Die Photosynthese – e"
-            },
-            {
-              "offset": 20571,
-              "where": "only in Word",
-              "context": "enig Sauerstoff enthält.\n|15. Die Photosynthese – e"
-            },
-            {
-              "offset": 23511,
-              "where": "only in Word",
-              "context": "enig Sauerstoff enthält.\n|17. Die Photosynthese – e"
-            }
-          ]
-        }
-      },
-      "proto-b": {
+      "raabe-write": {
         "lines": {
           "reference": 2000,
           "candidate": 2000,
