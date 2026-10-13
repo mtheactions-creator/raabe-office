@@ -21,7 +21,7 @@ from feellab import targets, winapi
 
 RESULTS: list[tuple[str, bool, str]] = []
 TMP = Path(tempfile.mkdtemp(prefix="raabe-smoke-"))
-RECOVERY = Path(os.environ["LOCALAPPDATA"]) / "de.raabeschule.write" / "recovery"
+RECOVERY = Path(tempfile.gettempdir()) / "raabe-write-feel-recovery"  # test mode's own folder
 
 
 def check(name: str, ok: bool, detail: str = "") -> None:
@@ -194,7 +194,7 @@ def main() -> None:
         t.proc.kill()
         t.proc.wait(5)
         t.ws.close()
-        t = targets.raabe_write("short", port=9371)
+        t = targets.raabe_write("short", port=9371, keep_recovery=True)
         body = wait(t, "document.querySelector('.dialog .dlg-body')?.textContent", 8)
         check("after a crash, recovery is offered", body and "nicht ordnungsgemäß beendet" in body, str(body))
         t.js("document.querySelector('.dialog .dlg-buttons .primary').click()")

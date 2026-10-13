@@ -82,7 +82,12 @@ struct RecoveryEntry {
 }
 
 fn recovery_dir(app: &AppHandle) -> Result<PathBuf, String> {
-    let dir = app.path().app_local_data_dir().map_err(|e| e.to_string())?.join("recovery");
+    // feel-lab runs use their own folder so tests never touch the user's real backups.
+    let dir = if std::env::var("RAABE_FEEL_DEBUG_PORT").is_ok() {
+        std::env::temp_dir().join("raabe-write-feel-recovery")
+    } else {
+        app.path().app_local_data_dir().map_err(|e| e.to_string())?.join("recovery")
+    };
     fs::create_dir_all(&dir).map_err(|e| e.to_string())?;
     Ok(dir)
 }

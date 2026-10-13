@@ -164,8 +164,24 @@ def _diff(a: str, b: str) -> str:
     return f"@{i}: word={a[max(0, i - 15):i + 25]!r} other={b[max(0, i - 15):i + 25]!r}"
 
 
+def _key(r: dict) -> tuple:
+    return (r["text"], r["anchor"], r["head"])
+
+
+def reference(t: Target, steps: list) -> dict:
+    """Word now and then ignores a click (seen twice on a double-click). Run each case twice and,
+    if the results differ, a third time and keep the majority."""
+    a, b = perform(t, steps), perform(t, steps)
+    if _key(a) == _key(b):
+        return a
+    c = perform(t, steps)
+    return b if _key(b) == _key(c) else a
+
+
 def run(targets: list[Target]) -> dict:
-    raw = {t.name: {name: perform(t, steps) for name, steps in CASES} for t in targets}
+    raw = {targets[0].name: {name: reference(targets[0], steps) for name, steps in CASES}}
+    for t in targets[1:]:
+        raw[t.name] = {name: perform(t, steps) for name, steps in CASES}
     ref = raw[targets[0].name]
     cases = []
     summary = {t.name: 0 for t in targets[1:]}

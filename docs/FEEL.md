@@ -35,7 +35,7 @@ samples, so we can track regressions over time. Reports that interpret them live
 | Date | Word | Prototype B | Report |
 |---|---|---|---|
 | 2026-10-13 | F1 36 ms · F5 1185 ms | F1 32 ms · F3 50/50 · F4 2000/2000 lines, 50/50 pages · F5 526 ms | [Step 0](reports/2026-10-13-step0-feel.md) |
-| 2026-10-13 | F5 1215 ms (opening a .docx) | RaabeWrite 0.1.0 with full shell: F4 2000/2000 lines, 50/50 pages · F5 603 ms (opening the same .docx) · smoke test 32/32 | Step 1 |
+| 2026-10-13 | F1 34-36 ms · F5 1215 ms (opening a .docx) | RaabeWrite 0.1.0 with full shell: F1 32 ms (9/120 late) · F3 49/50 (the 50th a Word glitch) · F4 2000/2000 lines, 50/50 pages · F5 603 ms · smoke test 32/32 | Step 1 |
 
 ## Running the harness
 
@@ -63,3 +63,8 @@ is screenshotted at the same window size and compared side by side.
   refresh. The caret blinks with a timer.
 - A test is only valid if the pixels belong to the window under test: an earlier
   start-time run measured a window that was still open behind it.
+- Test runs end the app abruptly, which leaves AutoRecover backups. The next run then opens
+  with the recovery dialog over the document and every click lands on it. Test mode
+  therefore uses its own recovery folder, cleared before each run.
+- Word occasionally ignores a click; the behaviour test runs each Word case twice (three
+  times on disagreement) and keeps the majority.

@@ -1,12 +1,11 @@
 {
   "meta": {
-    "date": "2026-10-13T10:59:23",
+    "date": "2026-10-13T12:28:54",
     "test": "behaviour"
   },
   "results": {
     "summary": {
-      "proto-a": "31/50",
-      "proto-b": "49/50"
+      "raabe-write": "49/50"
     },
     "cases": [
       {
@@ -25,15 +24,7 @@
           ],
           "selected": "Lichtenergie "
         },
-        "proto-a": {
-          "ok": true,
-          "sel": [
-            93,
-            106
-          ],
-          "head": 106
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             93,
@@ -58,15 +49,7 @@
           ],
           "selected": "Pflanzen"
         },
-        "proto-a": {
-          "ok": true,
-          "sel": [
-            34,
-            42
-          ],
-          "head": 42
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             34,
@@ -91,15 +74,7 @@
           ],
           "selected": ", "
         },
-        "proto-a": {
-          "ok": true,
-          "sel": [
-            42,
-            44
-          ],
-          "head": 44
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             42,
@@ -124,16 +99,7 @@
           ],
           "selected": "und "
         },
-        "proto-a": {
-          "ok": false,
-          "sel": [
-            54,
-            61
-          ],
-          "head": 61,
-          "selected": "einige "
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             50,
@@ -158,15 +124,7 @@
           ],
           "selected": "vorkommen"
         },
-        "proto-a": {
-          "ok": true,
-          "sel": [
-            279,
-            288
-          ],
-          "head": 288
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             279,
@@ -191,15 +149,7 @@
           ],
           "selected": "CO2 "
         },
-        "proto-a": {
-          "ok": true,
-          "sel": [
-            575,
-            579
-          ],
-          "head": 579
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             575,
@@ -224,15 +174,7 @@
           ],
           "selected": "Calvin"
         },
-        "proto-a": {
-          "ok": true,
-          "sel": [
-            734,
-            740
-          ],
-          "head": 740
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             734,
@@ -257,16 +199,7 @@
           ],
           "selected": ""
         },
-        "proto-a": {
-          "ok": false,
-          "sel": [
-            520,
-            527
-          ],
-          "head": 527,
-          "selected": "Glucose"
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": false,
           "sel": [
             520,
@@ -292,15 +225,7 @@
           ],
           "selected": "Minimumfaktor"
         },
-        "proto-a": {
-          "ok": true,
-          "sel": [
-            1226,
-            1239
-          ],
-          "head": 1239
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             1226,
@@ -325,15 +250,7 @@
           ],
           "selected": "Überblick"
         },
-        "proto-a": {
-          "ok": true,
-          "sel": [
-            24,
-            33
-          ],
-          "head": 33
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             24,
@@ -358,16 +275,7 @@
           ],
           "selected": "Für die Photosynthese benötigt die Pflanze Wasser, Kohlenstoffdioxid und Licht. Das Wasser nimmt sie über die Wurzeln auf, das Kohlenstoffdioxid gelangt durch die Spaltöffnungen in das Blatt. Als Produkte entstehen Traubenzucker (Glucose) und Sauerstoff.\n"
         },
-        "proto-a": {
-          "ok": false,
-          "sel": [
-            290,
-            544
-          ],
-          "head": 544,
-          "selected": "Für die Photosynthese benötigt die Pflanze Wasser, Kohlenstoffdioxid und Licht. Das Wasser nimmt sie über die Wurzeln auf, das Kohlenstoffdioxid gelangt durch die Spaltöffnungen in das Blatt. Als Produkte entstehen Traubenzucker (Glucose) und Sauerstoff."
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             290,
@@ -392,16 +300,7 @@
           ],
           "selected": "Diesen Vorgang nennt man Photosynthese. "
         },
-        "proto-a": {
-          "ok": false,
-          "sel": [
-            34,
-            290
-          ],
-          "head": 290,
-          "selected": "Pflanzen, Algen und einige Bakterien sind in der Lage, aus Lichtenergie chemische Energie zu gewinnen. Diesen Vorgang nennt man Photosynthese. Er findet in den Chloroplasten statt, kleinen grünen Zellbestandteilen, die vor allem in den Blättern vorkommen.\n"
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             137,
@@ -426,16 +325,7 @@
           ],
           "selected": ""
         },
-        "proto-a": {
-          "ok": false,
-          "sel": [
-            0,
-            0
-          ],
-          "head": 0,
-          "selected": ""
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             127,
@@ -460,17 +350,7 @@
           ],
           "selected": ""
         },
-        "proto-a": {
-          "ok": false,
-          "sel": [
-            0,
-            0
-          ],
-          "head": 0,
-          "text_diff": "@127: word='che Energie zu Xgewinnen. Diesen Vorgang' other='che Energie zu gewinnen. Diesen Vorgang '",
-          "selected": ""
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             128,
@@ -495,16 +375,7 @@
           ],
           "selected": ""
         },
-        "proto-a": {
-          "ok": false,
-          "sel": [
-            0,
-            0
-          ],
-          "head": 0,
-          "selected": ""
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             289,
@@ -529,15 +400,7 @@
           ],
           "selected": ""
         },
-        "proto-a": {
-          "ok": true,
-          "sel": [
-            353,
-            353
-          ],
-          "head": 353
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             353,
@@ -562,16 +425,7 @@
           ],
           "selected": "Pflanzen, Algen und einige Bakterien sind in der Lage, aus Lichtenergie chemische Energie zu "
         },
-        "proto-a": {
-          "ok": false,
-          "sel": [
-            0,
-            0
-          ],
-          "head": 0,
-          "selected": ""
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             34,
@@ -596,16 +450,7 @@
           ],
           "selected": "Pflanzen, Algen und einige Bakterien sind in der Lage, aus Lichtenergie chemische Energie zu gewinnen. Diesen Vorgang nennt man Photosynthese. Er findet in den Chloroplasten statt, kleinen grünen Zellbestandteilen, die vor allem in den Blättern vorkommen.\n"
         },
-        "proto-a": {
-          "ok": false,
-          "sel": [
-            0,
-            0
-          ],
-          "head": 0,
-          "selected": ""
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             34,
@@ -634,15 +479,7 @@
           ],
           "selected": "Algen und einige Bakt"
         },
-        "proto-a": {
-          "ok": true,
-          "sel": [
-            44,
-            65
-          ],
-          "head": 65
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             44,
@@ -662,15 +499,7 @@
           "points": [],
           "selected": "chtene"
         },
-        "proto-a": {
-          "ok": true,
-          "sel": [
-            95,
-            101
-          ],
-          "head": 101
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             95,
@@ -690,16 +519,7 @@
           "points": [],
           "selected": "chemische Energie "
         },
-        "proto-a": {
-          "ok": false,
-          "sel": [
-            109,
-            119
-          ],
-          "head": 119,
-          "selected": "mische Ene"
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             106,
@@ -719,16 +539,7 @@
           "points": [],
           "selected": "chemische Energie "
         },
-        "proto-a": {
-          "ok": false,
-          "sel": [
-            109,
-            119
-          ],
-          "head": 109,
-          "selected": "mische Ene"
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             106,
@@ -748,16 +559,7 @@
           "points": [],
           "selected": "Diesen Vorgang nennt man Photosynthese. Er findet in den Chloroplasten statt, kleinen grünen Zellbestandteilen, die vor allem in den Blättern vorkommen.\nFür die Photosynthese benötigt "
         },
-        "proto-a": {
-          "ok": false,
-          "sel": [
-            139,
-            315
-          ],
-          "head": 315,
-          "selected": "esen Vorgang nennt man Photosynthese. Er findet in den Chloroplasten statt, kleinen grünen Zellbestandteilen, die vor allem in den Blättern vorkommen.\nFür die Photosynthese ben"
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             137,
@@ -777,16 +579,7 @@
           "points": [],
           "selected": "Algen und einige "
         },
-        "proto-a": {
-          "ok": false,
-          "sel": [
-            44,
-            60
-          ],
-          "head": 60,
-          "selected": "Algen und einige"
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             44,
@@ -806,15 +599,7 @@
           "points": [],
           "selected": ""
         },
-        "proto-a": {
-          "ok": true,
-          "sel": [
-            106,
-            106
-          ],
-          "head": 106
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             106,
@@ -834,15 +619,7 @@
           "points": [],
           "selected": ""
         },
-        "proto-a": {
-          "ok": true,
-          "sel": [
-            54,
-            54
-          ],
-          "head": 54
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             54,
@@ -862,15 +639,7 @@
           "points": [],
           "selected": ""
         },
-        "proto-a": {
-          "ok": true,
-          "sel": [
-            54,
-            54
-          ],
-          "head": 54
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             54,
@@ -890,15 +659,7 @@
           "points": [],
           "selected": "Algen und "
         },
-        "proto-a": {
-          "ok": true,
-          "sel": [
-            44,
-            54
-          ],
-          "head": 54
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             44,
@@ -918,15 +679,7 @@
           "points": [],
           "selected": ""
         },
-        "proto-a": {
-          "ok": true,
-          "sel": [
-            290,
-            290
-          ],
-          "head": 290
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             290,
@@ -946,15 +699,7 @@
           "points": [],
           "selected": ""
         },
-        "proto-a": {
-          "ok": true,
-          "sel": [
-            527,
-            527
-          ],
-          "head": 527
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             527,
@@ -974,15 +719,7 @@
           "points": [],
           "selected": ""
         },
-        "proto-a": {
-          "ok": true,
-          "sel": [
-            128,
-            128
-          ],
-          "head": 128
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             128,
@@ -1002,15 +739,7 @@
           "points": [],
           "selected": ""
         },
-        "proto-a": {
-          "ok": true,
-          "sel": [
-            34,
-            34
-          ],
-          "head": 34
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             34,
@@ -1030,15 +759,7 @@
           "points": [],
           "selected": "Algen und einige Bakterien sind in der Lage, aus Lichtenergie chemische Energie zu "
         },
-        "proto-a": {
-          "ok": true,
-          "sel": [
-            44,
-            127
-          ],
-          "head": 127
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             44,
@@ -1058,15 +779,7 @@
           "points": [],
           "selected": "Al"
         },
-        "proto-a": {
-          "ok": true,
-          "sel": [
-            44,
-            46
-          ],
-          "head": 46
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             44,
@@ -1086,16 +799,7 @@
           "points": [],
           "selected": ""
         },
-        "proto-a": {
-          "ok": false,
-          "sel": [
-            366,
-            366
-          ],
-          "head": 366,
-          "selected": ""
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             365,
@@ -1115,15 +819,7 @@
           "points": [],
           "selected": ""
         },
-        "proto-a": {
-          "ok": true,
-          "sel": [
-            1253,
-            1253
-          ],
-          "head": 1253
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             1253,
@@ -1143,15 +839,7 @@
           "points": [],
           "selected": "Algen und einige Bakterien sind in der Lage, aus Lichtenergie chemische Energie zu gewinnen"
         },
-        "proto-a": {
-          "ok": true,
-          "sel": [
-            44,
-            135
-          ],
-          "head": 135
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             44,
@@ -1171,16 +859,7 @@
           "points": [],
           "selected": ""
         },
-        "proto-a": {
-          "ok": false,
-          "sel": [
-            553,
-            553
-          ],
-          "head": 553,
-          "selected": ""
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             545,
@@ -1200,16 +879,7 @@
           "points": [],
           "selected": ""
         },
-        "proto-a": {
-          "ok": false,
-          "sel": [
-            6,
-            6
-          ],
-          "head": 6,
-          "selected": ""
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             34,
@@ -1229,15 +899,7 @@
           "points": [],
           "selected": ""
         },
-        "proto-a": {
-          "ok": true,
-          "sel": [
-            44,
-            44
-          ],
-          "head": 44
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             44,
@@ -1257,15 +919,7 @@
           "points": [],
           "selected": ""
         },
-        "proto-a": {
-          "ok": true,
-          "sel": [
-            49,
-            49
-          ],
-          "head": 49
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             49,
@@ -1285,15 +939,7 @@
           "points": [],
           "selected": "Die Photosynthese – ein Überblick\nPflanzen, Algen und einige Bakterien sind in der Lage, aus Lichtenergie chemische Energie zu gewinnen. Diesen Vorgang nennt man Photosynthese. Er findet in den Chloroplasten statt, kleinen grünen Zellbestandteilen, die vor allem in den Blättern vorkommen.\nFür die Photosynthese benötigt die Pflanze Wasser, Kohlenstoffdioxid und Licht. Das Wasser nimmt sie über die Wurzeln auf, das Kohlenstoffdioxid gelangt durch die Spaltöffnungen in das Blatt. Als Produkte entstehen Traubenzucker (Glucose) und Sauerstoff.\nDie Gesamtgleichung lautet: 6 CO2 + 6 H2O → C6H12O6 + 6 O2. Sie fasst jedoch zahlreiche Einzelschritte zusammen, die man in zwei Abschnitte gliedert: die lichtabhängigen Reaktionen und den Calvin-Zyklus.\nIn den lichtabhängigen Reaktionen wird Wasser gespalten. Dabei wird Sauerstoff frei, und es entstehen die energiereichen Verbindungen ATP und NADPH. Diese werden im Calvin-Zyklus genutzt, um aus Kohlenstoffdioxid schrittweise Zucker aufzubauen.\nWie stark eine Pflanze Photosynthese betreibt, hängt von mehreren Faktoren ab: Lichtintensität, Temperatur und Kohlenstoffdioxid-Konzentration. Der Faktor, der am knappsten ist, begrenzt die Geschwindigkeit des gesamten Prozesses („Minimumfaktor“).\nAufgabe 1: Beschreibe mit eigenen Worten, woher die Pflanze die Ausgangsstoffe der Photosynthese bezieht.\nAufgabe 2: Erkläre, warum ein Aquarium mit Wasserpflanzen ohne Licht nach einigen Tagen zu wenig Sauerstoff enthält."
         },
-        "proto-a": {
-          "ok": true,
-          "sel": [
-            0,
-            1465
-          ],
-          "head": 1465
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             0,
@@ -1313,15 +959,7 @@
           "points": [],
           "selected": ""
         },
-        "proto-a": {
-          "ok": true,
-          "sel": [
-            93,
-            93
-          ],
-          "head": 93
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             93,
@@ -1341,15 +979,7 @@
           "points": [],
           "selected": ""
         },
-        "proto-a": {
-          "ok": true,
-          "sel": [
-            44,
-            44
-          ],
-          "head": 44
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             44,
@@ -1369,16 +999,7 @@
           "points": [],
           "selected": ""
         },
-        "proto-a": {
-          "ok": false,
-          "sel": [
-            46,
-            46
-          ],
-          "head": 46,
-          "text_diff": "@46: word='ck\\nPflanzen, Al und einige Bakterien sin' other='ck\\nPflanzen, Alund einige Bakterien sind'"
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             46,
@@ -1398,15 +1019,7 @@
           "points": [],
           "selected": ""
         },
-        "proto-a": {
-          "ok": true,
-          "sel": [
-            289,
-            289
-          ],
-          "head": 289
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             289,
@@ -1426,15 +1039,7 @@
           "points": [],
           "selected": ""
         },
-        "proto-a": {
-          "ok": true,
-          "sel": [
-            139,
-            139
-          ],
-          "head": 139
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             139,
@@ -1459,16 +1064,7 @@
           ],
           "selected": ""
         },
-        "proto-a": {
-          "ok": false,
-          "sel": [
-            49,
-            49
-          ],
-          "head": 49,
-          "text_diff": "@49: word='Pflanzen, Moose und einige Bakterien sin' other='Pflanzen, Mooseund einige Bakterien sind'"
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             49,
@@ -1497,17 +1093,7 @@
           ],
           "selected": ""
         },
-        "proto-a": {
-          "ok": false,
-          "sel": [
-            67,
-            67
-          ],
-          "head": 67,
-          "text_diff": "@61: word='d einige Bakter Algen ien sind in der La' other='d einige BakterAlgen ien sind in der Lag'",
-          "selected": ""
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             68,
@@ -1527,15 +1113,7 @@
           "points": [],
           "selected": ""
         },
-        "proto-a": {
-          "ok": true,
-          "sel": [
-            44,
-            44
-          ],
-          "head": 44
-        },
-        "proto-b": {
+        "raabe-write": {
           "ok": true,
           "sel": [
             44,

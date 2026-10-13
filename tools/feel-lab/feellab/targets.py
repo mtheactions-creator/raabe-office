@@ -192,7 +192,18 @@ def _pid(hwnd: int) -> int:
     return pid.value
 
 
-def raabe_write(fixture_name: str = "short", port: int = 9370, extra: list[str] | None = None) -> "WebViewTarget":
+def clear_feel_recovery() -> None:
+    """Test runs end the app abruptly; their AutoRecover backups must not reach the next run."""
+    import tempfile
+    d = Path(tempfile.gettempdir()) / "raabe-write-feel-recovery"
+    for f in d.glob("*") if d.exists() else []:
+        f.unlink(missing_ok=True)
+
+
+def raabe_write(fixture_name: str = "short", port: int = 9370, extra: list[str] | None = None,
+                keep_recovery: bool = False) -> "WebViewTarget":
+    if not keep_recovery:
+        clear_feel_recovery()
     return WebViewTarget("raabe-write", fixture_name, port, exe=RAABE_WRITE_EXE,
                          args=["--feel", fixture_name, *(extra or [])], title_suffix=" - RaabeWrite")
 
