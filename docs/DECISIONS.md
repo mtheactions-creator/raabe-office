@@ -632,3 +632,19 @@ built with Word's labels and behaviour.
   the pane is open, with Word's three options), Alle einfügen, Alle löschen.
 - Task panes dock beside the document as in Word, several side by side (Navigation,
   Zwischenablage, Überarbeitungen left; Formatvorlagen, Auswahl, Kommentare right).
+- **Ansicht** (Word's views captured with `probe_word_views.py`): pages stand side by side
+  whenever several fit at the zoom, as in Word; Mehrere Seiten picks the zoom for two.
+  Weblayout lays the text out on one page as wide as the window and as tall as the text (no
+  headers, footers or page breaks; footnotes follow the text). Lesemodus lays it out on
+  screen-sized pages side by side (columns of Word's Schmal/Standard/Breit widths), hides the
+  ribbon for Datei / Extras / Ansicht (Spaltenbreite, Seitenfarbe Keine/Sepia/Umkehren, Layout
+  Spalten-/Papierlayout), turns screens with the arrows and keys, is read-only, shows
+  "Bildschirm 1 von 6" and ends with Esc. Lineal: Word's horizontal and vertical rulers (cm
+  from the margin, margins grey, indent markers, tab stops, default stops, the tab selector);
+  dragging snaps to 0.25 cm (Alt: free). Gitternetzlinien: Word's drawing grid, 9 pt from the
+  margins over the text area (read from Word: GridDistance 9 pt, every line).
+- **Zeilennummern**: w:lnNumType as Word writes it (start 0-based, distance in twips, restart
+  newPage by default), w:suppressLineNumbers; numbers right-aligned 0.25" (columns 0.13") left
+  of the text in the style Zeilennummer, lines of tables not counted; Word's menu and dialog.
+- **Notizen anzeigen**: from the text to the note at or after the caret, from a note back to
+  its reference; with foot- and endnotes Word's question which area to show.

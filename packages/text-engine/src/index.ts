@@ -9,7 +9,7 @@ export {
   A4, COLUMN_BREAK, DEFAULT_SECTION, DEFAULT_SHAPE_BODY, EMPTY, EMPTY_NUMBERING, LINE_BREAK, OBJ, ONE_COLUMN, PAGE_BREAK, cellKey, intern, makePara, validPara,
   type AltText, type ShapeBody, type ShapeInfo,
   type AbstractNum, type Align, type Anchor, type BlockObject, type BorderSpec, type Borders, type CellDef, type CellMargins,
-  type CellRef, type CharProps, type Columns, type CommentMeta, type FloatObject, type HeaderRefs, type ImageData,
+  type CellRef, type CharProps, type Columns, type CommentMeta, type LineNumbers, type FloatObject, type HeaderRefs, type ImageData,
   type InlineObject, type LineRule, type NumInstance, type NumLevel, type Numbering, type PageSetup, type Para,
   type ParaGroup, type ParaProps, type Revision, type RowDef, type Run, type Section, type Shading, type TabStop,
   type TableDef, type Underline,

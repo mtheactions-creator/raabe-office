@@ -851,6 +851,7 @@ class PartReader {
     let start: Section["start"] = "nextPage";
     let titlePage = false;
     let pageStart: number | undefined, pageFormat: string | undefined;
+    let lineNumbers: Section["lineNumbers"];
     for (const c of kids(el)) {
       switch (c.localName) {
         case "headerReference": case "footerReference": {
@@ -888,6 +889,14 @@ class PartReader {
           break;
         }
         case "titlePg": titlePage = onOff(c) ?? false; break;
+        case "lnNumType": {
+          const by = num(attr(c, "countBy")) ?? 0;
+          const r = attr(c, "restart");
+          if (by > 0) lineNumbers = { countBy: by, start: (num(attr(c, "start")) ?? 0) + 1, distance: attr(c, "distance") ? twips(attr(c, "distance"), 0) : undefined,
+            restart: r === "newSection" || r === "continuous" ? r : "newPage" };
+          else extra.push(`${c.localName}\u0000${outer(c)}`);
+          break;
+        }
         case "pgNumType":
           pageStart = num(attr(c, "start"));
           pageFormat = attr(c, "fmt") ?? undefined;
@@ -899,6 +908,7 @@ class PartReader {
     }
     return {
       page, columns, start, titlePage, headers: headers as HeaderRefs, footers: footers as HeaderRefs, pageStart, pageFormat,
+      ...(lineNumbers ? { lineNumbers } : {}),
       extra: extra.length ? extra : undefined,
     };
   }

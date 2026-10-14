@@ -4,7 +4,7 @@
 
 import { DEFAULT_MATH, Doc, MAIN, cmp, maxPos, minPos, type DocSettings, type DocSnapshot, type DocState, type MathSettings, type Pos } from "./doc";
 import { Fonts, PT } from "./fonts";
-import { layoutDocument, type Layout } from "./flow";
+import { layoutDocument, type FlowInput, type Layout } from "./flow";
 import { Layouter, type LayoutContext } from "./layout";
 import { markInputHandled } from "./probe";
 import {
@@ -822,7 +822,91 @@ export class Editor {
 
   setZoom(z: number): void {
     this.view.setZoom(z);
+    // Weblayout and Lesemodus reflow to the window at the new zoom.
+    if (this.viewMode !== "print" && this.computeOverride()) this.update();
     this.emit(false);
+  }
+
+  // ----- Ansicht: Drucklayout, Weblayout, Lesemodus ----------------------------------------------
+
+  /** The view: Drucklayout (pages), Weblayout (text as wide as the window) or Lesemodus. */
+  viewMode: "print" | "web" | "read" = "print";
+  /** Lesemodus > Ansicht: Spaltenbreite and Layout (Spaltenlayout or Papierlayout). */
+  readOptions: { column: "narrow" | "standard" | "wide"; paper: boolean } = { column: "standard", paper: false };
+  private pageOverride: FlowInput["pageOverride"] = undefined;
+  private overrideKey = "";
+  private resizeWatch: ResizeObserver | null = null;
+  private resizeTimer = 0;
+
+  /** Lesemodus: reading, selecting and copying only. */
+  get readOnly(): boolean {
+    return this.viewMode === "read";
+  }
+
+  setViewMode(mode: Editor["viewMode"]): void {
+    if (mode !== "print" && this.doc.activeStory !== MAIN) this.switchStory(MAIN, MAIN);
+    this.viewMode = mode;
+    this.view.setArrangement(mode === "web" ? "flat" : mode === "read" ? "row" : "pages");
+    if (mode !== "print" && !this.resizeWatch && typeof ResizeObserver !== "undefined") {
+      this.resizeWatch = new ResizeObserver(() => {
+        clearTimeout(this.resizeTimer);
+        this.resizeTimer = window.setTimeout(() => { if (this.viewMode !== "print" && this.computeOverride()) this.update(); }, 80);
+      });
+      this.resizeWatch.observe(this.workspace);
+    }
+    this.computeOverride();
+    this.update({ scroll: true });
+    if (mode === "read") this.view.showScreen(this.view.screenInfo().page);
+    this.emit(false);
+  }
+
+  setReadOptions(o: Partial<Editor["readOptions"]>): void {
+    this.readOptions = { ...this.readOptions, ...o };
+    this.view.setArrangement(this.viewMode === "read" ? "row" : this.view.arrangement);
+    if (this.computeOverride() || this.viewMode === "read") this.update({ scroll: true });
+  }
+
+  /** Lesemodus: pages per screen and the screen shown. */
+  readScreens(): { page: number; count: number; perScreen: number } {
+    const info = this.view.screenInfo();
+    return { ...info, perScreen: this.perScreen };
+  }
+
+  /** Lesemodus: the next or previous screen. */
+  turnScreen(dir: 1 | -1): void {
+    const { page } = this.view.screenInfo();
+    const per = this.perScreen;
+    this.view.showScreen(Math.floor(page / per) * per + dir * per);
+    this.emit(false);
+  }
+
+  private perScreen = 1;
+
+  /** The page Weblayout and Lesemodus lay out on, from the window and zoom; true when it changed. */
+  private computeOverride(): boolean {
+    const ws = this.workspace;
+    const z = this.view.zoom;
+    let o: FlowInput["pageOverride"];
+    this.perScreen = 1;
+    if (this.viewMode === "web") {
+      const w = Math.max(144, (ws.clientWidth - 4) / z / PT);
+      o = { page: { width: w, height: 100000, marginLeft: 14.4, marginRight: 14.4, marginTop: 14.4, marginBottom: 14.4, header: 0, footer: 0, gutter: 0 }, fitHeight: true };
+    } else if (this.viewMode === "read" && !this.readOptions.paper) {
+      // Columns of about Word's widths (Schmal, Standard, Breit), as many as fit on a screen.
+      // A screen shows `per` pages and their gaps exactly (px at 100 %, the view scales them).
+      const gap = 16;
+      const col = { narrow: 330, standard: 470, wide: 650 }[this.readOptions.column];
+      const W = Math.max(300, ws.clientWidth) / z, H = Math.max(300, ws.offsetHeight - 18) / z;
+      const per = Math.max(1, Math.floor(W / PT / (col + 24)));
+      this.perScreen = per;
+      const w = ((W - gap) / per - gap) / PT, hgt = (H - 2 * gap - 2) / PT;
+      o = { page: { width: w, height: hgt, marginLeft: 28, marginRight: 28, marginTop: 24, marginBottom: 24, header: 0, footer: 0, gutter: 0 } };
+    }
+    const key = JSON.stringify(o ?? null);
+    if (key === this.overrideKey) return false;
+    this.overrideKey = key;
+    this.pageOverride = o;
+    return true;
   }
 
   setShowMarks(on: boolean): void {
@@ -858,6 +942,7 @@ export class Editor {
     }
     this.layout = layoutDocument(this.layouter, {
       main: this.doc.main, stories: this.doc.stories, settings: this.doc.settings, numbering: this.doc.numbering,
+      pageOverride: this.pageOverride,
     });
     this.fixStoryKey();
     this.clampSelection();
@@ -4015,6 +4100,52 @@ cropFill(fit: boolean): void {
   }
 
   /** Nächste/Vorherige Fuß- oder Endnote: to the next reference in the text. */
+  /** The note references of the main text, in order. */
+  private noteRefs(kind?: "fn" | "en"): { at: Pos; id: string }[] {
+    const out: { at: Pos; id: string }[] = [];
+    this.doc.main.forEach((p, i) => {
+      if (!p.objects?.some((x) => x.note)) return;
+      let k = 0;
+      for (let o = p.text.indexOf(OBJ); o >= 0; o = p.text.indexOf(OBJ, o + 1)) {
+        const id = p.objects[k++]?.note;
+        if (id && (!kind || id.startsWith(`${kind}:`)) && this.doc.stories.has(id)) out.push({ at: { p: i, o }, id });
+      }
+    });
+    return out;
+  }
+
+  /** Which kinds of notes the document has (Notizen anzeigen). */
+  noteKinds(): { fn: boolean; en: boolean } {
+    const refs = this.noteRefs();
+    return { fn: refs.some((r) => r.id.startsWith("fn:")), en: refs.some((r) => r.id.startsWith("en:")) };
+  }
+
+  /**
+   * Referenzen > Notizen anzeigen: from a note's text back to its reference; from the text to
+   * the notes area (the note at or after the caret, else the last one before it).
+   */
+  showNotes(kind: "fn" | "en" = "fn"): boolean {
+    const story = this.doc.activeStory;
+    if (story.startsWith("fn:") || story.startsWith("en:")) {
+      const ref = this.noteRefs().find((r) => r.id === story);
+      this.switchStory(MAIN, MAIN);
+      if (ref) this.selectRange(ref.at.p, ref.at.o + 1, ref.at.o + 1);
+      return true;
+    }
+    if (story !== MAIN) this.switchStory(MAIN, MAIN);
+    const refs = this.noteRefs(kind);
+    if (!refs.length) return false;
+    const h = this.sel.head;
+    const ref = refs.find((r) => cmp(r.at, h) >= 0) ?? refs[refs.length - 1];
+    const paras = this.doc.stories.get(ref.id)!;
+    const first = paras[0]?.text ?? "";
+    // After the note's own number and its space, as Word puts the caret.
+    const o = first[0] === OBJ ? (first[1] === " " ? 2 : 1) : 0;
+    this.switchStory(ref.id, ref.id, { anchor: { p: 0, o }, head: { p: 0, o }, headUpstream: false });
+    this.update({ scroll: true });
+    return true;
+  }
+
   nextNote(dir: 1 | -1, kind: "fn" | "en" = "fn"): void {
     if (this.doc.activeStory !== MAIN) this.switchStory(MAIN, MAIN);
     const h = this.sel.head;
@@ -4608,8 +4739,9 @@ cropFill(fit: boolean): void {
   // ----- keyboard -----------------------------------------------------------------------
 
   private onBeforeInput(e: InputEvent): void {
-    if (e.inputType === "insertCompositionText") return; // let the IME work in the textarea
+    if (e.inputType === "insertCompositionText" && !this.readOnly) return; // let the IME work in the textarea
     e.preventDefault();
+    if (this.readOnly) return;
     if (e.inputType === "insertText" && e.data && this.interceptText?.(e.data)) return;
     // Typing in the text ends the focus on a clicked comment card.
     this.focusedComment = null;
@@ -4625,6 +4757,17 @@ cropFill(fit: boolean): void {
   private onKeyDown(e: KeyboardEvent): void {
     if (e.isComposing) return;
     if (this.interceptKey?.(e)) { e.preventDefault(); return; }
+    // Lesemodus: moving, selecting and copying only; the arrows and Bild ab/auf turn screens.
+    if (this.readOnly) {
+      const nav = /^(Arrow|Home$|End$|Page)/.test(e.key);
+      const keep = (e.ctrlKey && /^[acf]$/i.test(e.key)) || e.key === "Escape" || /^F\d+$/.test(e.key);
+      if (!e.shiftKey && !e.ctrlKey && (e.key === "ArrowRight" || e.key === "ArrowLeft" || e.key === "PageDown" || e.key === "PageUp") && !this.hasSelection) {
+        e.preventDefault();
+        this.turnScreen(e.key === "ArrowRight" || e.key === "PageDown" ? 1 : -1);
+        return;
+      }
+      if (!nav && !keep) { e.preventDefault(); return; }
+    }
     this.capsLock = !!e.getModifierState?.("CapsLock");
     const ctrl = e.ctrlKey && !e.altKey;
     const shift = e.shiftKey;
@@ -4766,7 +4909,7 @@ cropFill(fit: boolean): void {
       // Formatting for Word and other programs.
       e.clipboardData?.setData("text/html", html);
     }
-    if (cut) {
+    if (cut && !this.readOnly) {
       const [from, to] = this.smartRange(...this.range());
       this.deleteRange(from, to);
     }
@@ -4774,6 +4917,7 @@ cropFill(fit: boolean): void {
 
   private onPaste(e: ClipboardEvent): void {
     e.preventDefault();
+    if (this.readOnly) return;
     const dt = e.clipboardData;
     const text = dt?.getData("text/plain") ?? "";
     const html = dt?.getData("text/html") ?? "";
@@ -4963,7 +5107,7 @@ cropFill(fit: boolean): void {
       const inside = box && pt.page === box.page && pt.x >= box.x - 3 && pt.x <= box.x + box.w + 3 && pt.y >= box.y - 3 && pt.y <= box.y + box.h + 3;
       if (!inside || this.view.handleAt(e.clientX, e.clientY)) this.leaveShapeText(!!inside);
     }
-    if (this.storyKey === MAIN && !e.shiftKey && e.detail < 2) {
+    if (this.storyKey === MAIN && !e.shiftKey && e.detail < 2 && !this.readOnly) {
       const th = this.view.tableHandleAt(e.clientX, e.clientY);
       if (th) { this.dragTableHandle(e, th.kind, th.table); return; }
       // Pictures and table borders take the click before the text.
@@ -4999,7 +5143,7 @@ cropFill(fit: boolean): void {
     }
     // Objekte auswählen: clicks pick objects only, the text stays as it is.
     if (this.objectSelect && this.storyKey === MAIN) { if (this.floatSel) { this.floatSel = null; this.update(); } return; }
-    if (this.storyKey === MAIN && e.detail === 2) {
+    if (this.storyKey === MAIN && e.detail === 2 && !this.readOnly) {
       const deco = this.view.imageAt(e.clientX, e.clientY);
       if (deco?.shape && deco.shape.kind !== "connector") { this.editShapeText(deco.para, deco.index, "end"); return; }
     }

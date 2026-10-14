@@ -110,3 +110,20 @@ describe("Überarbeitungsbereich", () => {
     expect(list.map((x) => [x.rev.kind, x.text])).toEqual([["ins", "Welt\nneu"], ["del", "alt"]]);
   });
 });
+
+describe("Zeilennummern", () => {
+  it("reads and writes w:lnNumType as Word does (start 0-based, distance in twips)", () => {
+    const r = readDocx(fixture("word-short.docx"));
+    const sect = r.state.settings.section;
+    const paras = [...r.state.paras];
+    paras[0] = { ...paras[0], props: { ...paras[0].props, suppressLineNumbers: true } };
+    const state = { ...r.state, paras, settings: { ...r.state.settings, section: { ...sect, lineNumbers: { countBy: 2, start: 5, distance: 36, restart: "continuous" as const } } } };
+    const out = writeDocx(state, r.pkg);
+    const xml = part(out, "word/document.xml");
+    expect(xml).toContain('<w:lnNumType w:countBy="2" w:start="4" w:distance="720" w:restart="continuous"/>');
+    expect(xml).toContain("<w:suppressLineNumbers/>");
+    const back = readDocx(out).state;
+    expect(back.settings.section.lineNumbers).toEqual({ countBy: 2, start: 5, distance: 36, restart: "continuous" });
+    expect(back.paras[0].props.suppressLineNumbers).toBe(true);
+  });
+});

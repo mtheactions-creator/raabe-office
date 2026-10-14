@@ -99,5 +99,29 @@ export function notesDialogFeature(api: AppApi) {
   };
 
   api.commands.implement("ref.footnoteDialog", { run: dialog, enabled: () => !!ed() });
+
+  // Notizen anzeigen: with both kinds in the document, Word asks which area to show.
+  const showNotes = () => {
+    const e = ed();
+    if (!e) return;
+    const story = e.doc.activeStory;
+    const k = e.noteKinds();
+    if (story.startsWith("fn:") || story.startsWith("en:") || !(k.fn && k.en)) {
+      e.showNotes(k.fn ? "fn" : "en");
+      api.refresh();
+      api.focus();
+      return;
+    }
+    const fn = h("input", { type: "radio", name: "shownotes", checked: true }) as HTMLInputElement;
+    const en = h("input", { type: "radio", name: "shownotes" }) as HTMLInputElement;
+    openModal("Notizen anzeigen", h("div", {},
+      h("p", { style: "margin:0 0 8px" }, "Das Dokument enthält Fußnoten und Endnoten."),
+      h("label", { class: "check" }, fn, "Fußnotenbereich anzeigen"),
+      h("label", { class: "check" }, en, "Endnotenbereich anzeigen")), [
+      { label: "OK", primary: true, run: () => { e.showNotes(fn.checked ? "fn" : "en"); api.refresh(); api.focus(); return true; } },
+      { label: "Abbrechen", run: () => true },
+    ], { width: 360 });
+  };
+  api.commands.implement("ref.showNotes", { run: showNotes, enabled: () => { const k = ed()?.noteKinds(); return !!k && (k.fn || k.en); } });
   return { dialog };
 }

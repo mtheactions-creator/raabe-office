@@ -26,6 +26,8 @@ import { selectionPaneFeature } from "./features/selection-pane";
 import { stylesPaneFeature } from "./features/styles-pane";
 import { clipboardPaneFeature } from "./features/clipboard-pane";
 import { makeDock } from "./features/dock";
+import { viewsFeature } from "./features/views";
+import { rulerFeature } from "./features/ruler";
 import { referencesFeature, REFERENCE_COMMANDS } from "./features/references";
 import { reviewFeature, REVIEW_COMMANDS } from "./features/review";
 import { spellFeature } from "./features/spell";
@@ -141,7 +143,7 @@ export class WriteApp {
       onDone: () => this.focusDoc(),
       tabRowRight: [comments],
     });
-    this.statusBar = new StatusBar(this.commands, (z) => this.setZoom(z), [{ cmd: "view.readMode" }, { cmd: "view.printLayout" }], "view.zoomDialog");
+    this.statusBar = new StatusBar(this.commands, (z) => this.setZoom(z), [{ cmd: "view.readMode" }, { cmd: "view.printLayout" }, { cmd: "view.webLayout" }], "view.zoomDialog");
     this.backstage = new Backstage(this.commands, this.backstageEntries());
     this.backstage.onClose(() => this.active?.editor.focus());
     this.find = findFeature(this.api(), this.docArea);
@@ -256,6 +258,11 @@ export class WriteApp {
       styles: stylesPaneFeature(api, this.docArea),
       review: reviewFeature(api, () => this.settings.userName, this.commentPane, this.docArea, () => void this.optionsDialog(), this.dock),
       clipboard: clipboardPaneFeature(api, this.docArea),
+      ruler: rulerFeature(api, this.docArea, this.dock),
+      views: viewsFeature(api, {
+        titleBar: () => this.titleBar.el, docArea: this.docArea,
+        openBackstage: () => this.openBackstage("info"), setZoom: (z) => this.setZoom(z),
+      }),
     };
   }
 
@@ -356,6 +363,7 @@ export class WriteApp {
     if (countWords) this.find?.refresh();
     this.features.selection.render();
     this.features.styles.render();
+    this.features.ruler.refresh();
     if (countWords && this.wordCache?.paras !== d.editor.paragraphs()) {
       // Counting runs after a short pause in typing, not on every key.
       clearTimeout(this.wordTimer);
@@ -372,7 +380,7 @@ export class WriteApp {
       this.wordCache = { paras, words: d.editor.countWords() };
     }
     const s = d.editor.stats();
-    this.statusBar.update({ page: s.caretPage + 1, pages: s.pageCount, words: this.wordCache.words, zoom: d.editor.zoom });
+    this.statusBar.update({ page: s.caretPage + 1, pages: s.pageCount, words: this.wordCache.words, zoom: d.editor.zoom, pageLabel: this.features.views.statusLabel() });
   }
 
   private renderInfobar(): void {
@@ -933,8 +941,8 @@ export class WriteApp {
     c.implement("layout.breaks", { run: () => {}, enabled: has });
 
     // View.
-    c.implement("view.printLayout", { run: () => {}, checked: () => true });
     c.implement("view.zoom100", { run: () => this.setZoom(1), enabled: has });
+    c.implement("view.gridlines", { run: () => { const e = ed(); if (e) e.view.setDrawingGrid(!e.view.drawingGrid); }, enabled: has, checked: () => !!ed()?.view.drawingGrid });
     c.implement("view.onePage", { run: () => { const e = ed(); if (e) this.setZoom(e.view.onePageZoom()); }, enabled: has });
     c.implement("view.pageWidth", { run: () => { const e = ed(); if (e) this.setZoom(e.view.pageWidthZoom()); }, enabled: has });
     c.implement("view.zoomDialog", { run: () => this.zoomDialog(), enabled: has });
@@ -1035,6 +1043,7 @@ export class WriteApp {
         size: (close) => this.features.pages.sizePanel(close),
         get columns() { return self.features.pages.columnsMenu; },
         get breaks() { return self.features.pages.breaksMenu; },
+        get lineNumbers() { return self.features.pages.lineNumbersMenu; },
         get header() { return self.features.hf.headerMenu; },
         get footer() { return self.features.hf.footerMenu; },
         get pageNumber() { return self.features.hf.pageNumberMenu; },
@@ -1228,6 +1237,8 @@ export class WriteApp {
   private installKeyboard(): void {
     addEventListener("keydown", (e) => {
       if (e.defaultPrevented || e.isComposing) return;
+      // Esc ends the Lesemodus (Word).
+      if (e.key === "Escape" && this.features.views.isReading() && !document.querySelector(".dialog-layer, .menu")) { e.preventDefault(); this.features.views.leave(); return; }
       const ctrl = e.ctrlKey, shift = e.shiftKey, alt = e.altKey;
       const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
       // Word binds some shortcuts to keys, not characters (German layout: # < + - 8).

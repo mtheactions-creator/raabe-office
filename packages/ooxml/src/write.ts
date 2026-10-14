@@ -456,6 +456,11 @@ class DocWriter {
     if (!extra.some((e) => e.name === "pgNumType") && (s.pageStart !== undefined || s.pageFormat)) {
       add("pgNumType", `<w:pgNumType${s.pageFormat ? ` w:fmt="${esc(s.pageFormat)}"` : ""}${s.pageStart !== undefined ? ` w:start="${s.pageStart}"` : ""}/>`);
     }
+    const ln = s.lineNumbers;
+    if (ln && !extra.some((e) => e.name === "lnNumType")) {
+      add("lnNumType", `<w:lnNumType w:countBy="${Math.max(1, Math.round(ln.countBy))}"${ln.start > 1 ? ` w:start="${Math.round(ln.start) - 1}"` : ""}` +
+        `${ln.distance !== undefined ? ` w:distance="${tw(ln.distance)}"` : ""}${ln.restart !== "newPage" ? ` w:restart="${ln.restart}"` : ""}/>`);
+    }
     const c = s.columns;
     const cols = c.cols ? c.cols.map((x) => `<w:col w:w="${tw(x.width)}" w:space="${tw(x.space)}"/>`).join("") : "";
     add("cols", `<w:cols${c.count > 1 ? ` w:num="${c.count}"` : ""} w:space="${tw(c.space)}"${c.sep ? ' w:sep="1"' : ""}${c.cols ? ' w:equalWidth="0"' : ""}${cols ? `>${cols}</w:cols>` : "/>"}`);

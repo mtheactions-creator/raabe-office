@@ -15,7 +15,7 @@ const PPR_ORDER = ["pStyle", "keepNext", "keepLines", "pageBreakBefore", "frameP
   "textDirection", "textAlignment", "textboxTightWrap", "outlineLvl", "divId", "cnfStyle", "rPr", "sectPr", "pPrChange"];
 
 const RPR_KNOWN = new Set(["rStyle", "rFonts", "b", "i", "caps", "smallCaps", "strike", "dstrike", "vanish", "color", "spacing", "kern", "sz", "highlight", "u", "vertAlign", "lang"]);
-const PPR_KNOWN = new Set(["pStyle", "keepNext", "keepLines", "pageBreakBefore", "widowControl", "tabs", "spacing", "ind", "contextualSpacing", "jc", "outlineLvl", "rPr",
+const PPR_KNOWN = new Set(["pStyle", "keepNext", "keepLines", "pageBreakBefore", "widowControl", "suppressLineNumbers", "tabs", "spacing", "ind", "contextualSpacing", "jc", "outlineLvl", "rPr",
   "numPr", "pBdr", "shd", "sectPr"]);
 
 // ----- borders and shading ----------------------------------------------------------------
@@ -157,6 +157,7 @@ export function readPPr(el: Element | null, rev?: RevisionOf): { props: ParaProp
       case "keepNext": p.keepNext = onOff(c); break;
       case "keepLines": p.keepLines = onOff(c); break;
       case "pageBreakBefore": p.pageBreakBefore = onOff(c); break;
+      case "suppressLineNumbers": p.suppressLineNumbers = onOff(c); break;
       case "widowControl": p.widow = onOff(c); break;
       case "contextualSpacing": p.contextual = onOff(c); break;
       case "outlineLvl": p.outline = num(attr(c, "val")); break;
@@ -286,6 +287,7 @@ export function writePPr(p: ParaProps, mark: CharProps, opts: WriteOptions, sect
   add("keepLines", flag("keepLines", p.keepLines));
   add("pageBreakBefore", flag("pageBreakBefore", p.pageBreakBefore));
   add("widowControl", flag("widowControl", p.widow));
+  add("suppressLineNumbers", flag("suppressLineNumbers", p.suppressLineNumbers));
   if (p.numId !== undefined || p.ilvl !== undefined) {
     add("numPr", `<w:numPr>${p.ilvl !== undefined ? `<w:ilvl w:val="${p.ilvl}"/>` : ""}${p.numId !== undefined ? `<w:numId w:val="${p.numId}"/>` : ""}</w:numPr>`);
   }

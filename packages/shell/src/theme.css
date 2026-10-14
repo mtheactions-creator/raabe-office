@@ -300,9 +300,45 @@ button {
 /* ----- document area and status bar ----------------------------------------------------- */
 
 .docarea { flex: 1; position: relative; min-height: 0; }
-.docarea .workspace { position: absolute; top: 0; left: var(--dock-l, 0px); right: var(--dock-r, 0px); bottom: var(--dock-b, 0px); overflow: auto; outline: none; background: var(--chrome); }
+.docarea .workspace { position: absolute; top: var(--dock-t, 0px); left: var(--dock-l, 0px); right: var(--dock-r, 0px); bottom: var(--dock-b, 0px); overflow: auto; outline: none; background: var(--chrome); }
 .docarea .workspace[hidden] { display: none; }
 .page { background: #fff; box-shadow: 0 0 0 1px rgba(0,0,0,.05), 0 1px 3px rgba(0,0,0,.16); }
+/* Gitternetzlinien: Word's drawing grid, 9 pt (12 px) squares over the text area. */
+.workspace.drawgrid .page::before { content: ""; position: absolute; left: var(--ml); top: var(--mt); right: var(--mr); bottom: var(--mb); pointer-events: none;
+  background-image: linear-gradient(to right, #c4c4c4 1px, transparent 1px), linear-gradient(to bottom, #c4c4c4 1px, transparent 1px); background-size: 12px 12px; }
+/* Lineal (Word 365, measured 2026-10-14). */
+.hruler { position: absolute; top: 0; height: 22px; display: flex; background: var(--chrome); border-bottom: 1px solid #e1e1e1; z-index: 4; }
+.hruler[hidden], .vruler[hidden] { display: none; }
+.hruler .rul-corner { width: 22px; height: 22px; flex: none; display: inline-flex; align-items: center; justify-content: center; color: #444; border-radius: 2px; }
+.hruler .rul-corner:hover { background: var(--hover); }
+.hruler .rul-track { position: relative; flex: 1; overflow: hidden; cursor: default; }
+.vruler { position: absolute; width: 22px; background: var(--chrome); border-right: 1px solid #e1e1e1; z-index: 4; overflow: hidden; }
+.rul-canvas { position: absolute; left: 0; top: 0; }
+.rul-marks { position: absolute; inset: 0; }
+.rul-m { position: absolute; transform: translateX(-5px); width: 10px; line-height: 0; cursor: default; }
+.rul-m.rul-leftbox { top: 16px; }
+.rul-tab { position: absolute; top: 12px; transform: translateX(-2px); color: #222; line-height: 0; cursor: default; }
+.rul-edge.h { position: absolute; top: 4px; bottom: 4px; width: 6px; transform: translateX(-3px); cursor: ew-resize; }
+.rul-edge.v { position: absolute; left: 4px; right: 4px; height: 6px; transform: translateY(-3px); cursor: ns-resize; }
+.rul-guide { position: absolute; z-index: 7; pointer-events: none; }
+.rul-guide.h { top: 0; bottom: 0; width: 0; border-left: 1px dotted #000; }
+.rul-guide.v { left: 0; right: 0; height: 0; border-top: 1px dotted #000; }
+/* Weblayout: one page as wide as the window; Lesemodus: screens on white (Word 365). */
+.workspace.flatpages, .workspace.rowpages { background: #fff; }
+.workspace.flatpages .page, .workspace.rowpages .page { box-shadow: none; }
+.docarea.read-sepia .workspace, .docarea.read-sepia .page { background: #f8f1e3; }
+.docarea.read-invert .workspace { background: #000; }
+.docarea.read-invert .page { filter: invert(1) hue-rotate(180deg); }
+body.readmode .tabrow, body.readmode .ribbon-card { display: none; }
+body.readmode .titlebar .qat, body.readmode .titlebar .search, body.readmode .titlebar .doctabs { display: none; }
+.readbar { display: flex; align-items: center; gap: 2px; margin-left: 6px; flex: 1; }
+.readbar .readmenu { padding: 4px 10px; border-radius: 3px; font-size: 12px; }
+.readbar .readmenu:hover { background: var(--hover); }
+.readbar .readtitle { margin-left: 8px; font-size: 12px; color: #424242; }
+.readarrow { position: absolute; top: 50%; transform: translateY(-50%); width: 30px; height: 30px; border-radius: 50%; border: 1px solid #c8c8c8; background: #fff; color: #707070; z-index: 6; display: flex; align-items: center; justify-content: center; }
+.readarrow:hover { background: var(--hover); color: #333; }
+.readarrow.prev { left: calc(var(--dock-l, 0px) + 6px); }
+.readarrow.next { right: calc(var(--dock-r, 0px) + 22px); }
 .page, .page * { font-kerning: none; font-variant-ligatures: none; }
 
 .infobar { flex: none; display: flex; align-items: center; gap: 12px; min-height: 36px; padding: 4px 12px; margin: 0 9px 6px; background: #fff4ce; border-radius: 6px; font-size: 13px; }

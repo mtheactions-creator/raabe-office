@@ -17,11 +17,11 @@ import { shapeTextRect } from "./shape";
 import { PT } from "./fonts";
 import { fieldType, type Layouter, type Line, type ParaEnv, type ParaLayout } from "./layout";
 import {
-  DEFAULT_SECTION, EMPTY, OBJ, cellKey, type BorderSpec, type Borders, type CellMargins, type CharProps, type FloatObject,
+  DEFAULT_SECTION, EMPTY, OBJ, ONE_COLUMN, cellKey, type BorderSpec, type Borders, type CellMargins, type CharProps, type FloatObject,
   type ImageData, type Numbering, type PageSetup, type Para, type ParaProps, type Section, type Shading, type ShapeInfo, type TableDef,
 } from "./model";
 import { formatNumber, listLabels, type ListLabel } from "./numbering";
-import type { StyleSheet, TableStyleDef, TableStylePart } from "./styles";
+import type { ResolvedChar, StyleSheet, TableStyleDef, TableStylePart } from "./styles";
 import type { DocSettings } from "./doc";
 
 // ----- results -------------------------------------------------------------------------------
@@ -38,6 +38,15 @@ export interface Frame {
   h: number;
   /** For cells: which cell (cellKey). */
   readonly cell?: string;
+}
+
+/** A line number on a page: right edge x and baseline y (px), and its font. */
+export interface LineNumberMark {
+  readonly x: number;
+  readonly y: number;
+  readonly text: string;
+  /** The "line number" style (Zeilennummer) over the document defaults. */
+  readonly c: ResolvedChar;
 }
 
 export interface PlacedLine {
@@ -92,6 +101,8 @@ export interface PageLayout {
   /** Note story ids shown at the bottom of this page. */
   readonly notes: string[];
   notesHeight: number;
+  /** Zeilennummern on this page. */
+  lineNumbers?: LineNumberMark[];
 }
 
 export interface Layout {
@@ -116,6 +127,12 @@ export interface FlowInput {
   readonly numbering: Numbering;
   /** Note numbers decided by a first layout (notes numbered per page). */
   readonly noteNumbers?: ReadonlyMap<string, string>;
+  /**
+   * Weblayout and Lesemodus: every section gets this page (size, margins), one column, no
+   * headers or footers, and sections run on; footnotes follow the text. `fitHeight` makes
+   * each page as tall as its content (Weblayout).
+   */
+  readonly pageOverride?: { readonly page: Partial<PageSetup>; readonly fitHeight?: boolean };
 }
 
 /** A note number in Word's formats (chicago: *, †, ‡, §, then doubled). */
@@ -253,11 +270,47 @@ class Flow {
     }
   }
 
+  /**
+   * Zeilennummern: the main text's lines outside tables, counted per page, section or
+   * throughout; every countBy-th gets its number right-aligned left of its column (Auto: 0.25"
+   * from the text, 0.13" with columns, as in Word). Paragraphs may suppress them.
+   */
+  numberLines(): void {
+    if (!this.sections.some((s) => s.sect.lineNumbers) || this.input.pageOverride) return;
+    const styles = this.styles;
+    const id = styles.idForName("line number");
+    const c = styles.resolveChar(styles.defaultParagraphStyle, id ? { rStyle: id } : {});
+    let n = 0, lastPage = -1, lastSect = -1;
+    for (const pl of this.main.placed) {
+      if (pl.ghost || pl.hide) continue;
+      const page = this.pages[pl.page];
+      const ln = this.sections[page.section]?.sect.lineNumbers;
+      if (!ln) { lastSect = page.section; continue; }
+      if (page.section !== lastSect) { if (ln.restart !== "continuous" || lastSect < 0) n = ln.start - 1; lastSect = page.section; lastPage = pl.page; }
+      if (pl.page !== lastPage) { if (ln.restart === "newPage") n = ln.start - 1; lastPage = pl.page; }
+      const para = this.input.main[pl.para];
+      const lay = this.main.paras[pl.para];
+      if (para.cell || para.block || lay.rp.suppressLineNumbers) continue;
+      n++;
+      if (n % Math.max(1, ln.countBy) !== 0) continue;
+      const line = lay.lines[pl.line];
+      if (!line) continue;
+      const cols = this.sections[page.section].sect.columns.count;
+      const dist = (ln.distance ?? (cols > 1 ? 9.36 : 18)) * PT;
+      (page.lineNumbers ??= []).push({ x: pl.x - dist, y: pl.y + line.baseline, text: String(n), c });
+    }
+  }
+
   private splitSections(): void {
     const paras = this.input.main;
     let a = 0;
     let headers: Section["headers"] = {}, footers: Section["footers"] = {};
-    const push = (sect: Section, b: number) => {
+    const over = this.input.pageOverride;
+    const push = (orig: Section, b: number) => {
+      const sect: Section = over ? {
+        ...orig, page: { ...orig.page, ...over.page }, columns: ONE_COLUMN, titlePage: false, headers: {}, footers: {},
+        start: this.sections.length ? "continuous" : orig.start,
+      } : orig;
       // Missing header/footer references are inherited from the previous section (Word).
       headers = { ...headers, ...defined(sect.headers) };
       footers = { ...footers, ...defined(sect.footers) };
@@ -1223,7 +1276,7 @@ class Flow {
     const x = s.marginLeft * PT, w = (s.width - s.marginLeft - s.marginRight) * PT;
     // "Unterhalb des Texts": the notes follow the page's last line instead of its bottom.
     let y = page.bodyBottom - page.notesHeight;
-    if (this.input.settings.notes?.footnote?.pos === "beneathText") {
+    if (this.input.settings.notes?.footnote?.pos === "beneathText" || this.input.pageOverride) {
       const lines = this.main.placed.filter((pl) => pl.page === page.index);
       const last = lines[lines.length - 1];
       if (last) y = Math.min(y, last.y + this.main.paras[last.para].lines[last.line].height);
@@ -1325,6 +1378,21 @@ export function layoutDocument(lt: Layouter, input: FlowInput): Layout {
       flow.run();
     }
   }
+  // Weblayout: each page as tall as what is on it.
+  if (input.pageOverride?.fitHeight) {
+    for (const page of flow.pages) {
+      let bottom = page.bodyTop;
+      const reach = (s: StoryLayout) => {
+        for (const pl of s.placed) if (pl.page === page.index && !pl.hide) bottom = Math.max(bottom, pl.y + (s.paras[pl.para]?.lines[pl.line]?.height ?? 0));
+      };
+      reach(flow.main);
+      for (const s of flow.stories.values()) reach(s);
+      const h = bottom / PT + page.setup.marginBottom;
+      (page as { setup: PageSetup }).setup = { ...page.setup, height: h };
+      (page as { bodyBottom: number }).bodyBottom = bottom;
+    }
+  }
+  flow.numberLines();
   buildIndex(flow.main);
   for (const s of flow.stories.values()) buildIndex(s);
   return {

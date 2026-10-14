@@ -2,9 +2,10 @@
 // "Seite einrichten" dialog. Changes apply to the section with the caret (with one section:
 // the whole document), as in Word.
 
-import type { Columns, PageSetup, Section } from "@raabe/text-engine";
+import type { Columns, LineNumbers, PageSetup, Section } from "@raabe/text-engine";
 import { h, showDialog, type Command, type MenuEntry } from "@raabe/shell";
 import { CM, fmtCm, parseNum, type AppApi } from "./api";
+import { openModal } from "./modal";
 
 const cmd = (id: string, label: string, icon?: string, extra: Partial<Command> = {}): Command => ({ id, label, icon, ...extra });
 
@@ -170,7 +171,11 @@ export function pageSetupFeature(api: AppApi) {
       paper: h("div", null, h("fieldset", null, h("legend", null, "Papierformat"), sizeSel, h("div", { class: "grid2", style: "margin-top:8px" }, "Breite:", width, "Höhe:", height))),
       layout: h("div", null,
         h("fieldset", null, h("legend", null, "Kopf- und Fußzeilen"), h("label", { class: "check" }, evenOdd, "Gerade/ungerade anders"), h("label", { class: "check" }, titlePage, "Erste Seite anders"),
-          h("div", { class: "grid2", style: "margin-top:8px" }, "Kopfzeile vom Seitenrand:", hdr, "Fußzeile vom Seitenrand:", ftr))),
+          h("div", { class: "grid2", style: "margin-top:8px" }, "Kopfzeile vom Seitenrand:", hdr, "Fußzeile vom Seitenrand:", ftr)),
+        h("fieldset", null, h("legend", null, "Vorschau"),
+          h("div", { class: "row", style: "gap:8px" },
+            h("button", { onclick: () => lineNumbersDialog() }, "Zeilennummern..."),
+            h("button", { onclick: () => void api.commands.run("design.pageBorders") }, "Rahmen...")))),
     };
     const tabs = h("div", { class: "tabs" });
     const show = (k: string) => {
@@ -199,5 +204,57 @@ export function pageSetupFeature(api: AppApi) {
     api.focus();
   };
 
-  return { marginsPanel, sizePanel, columnsMenu, breaksMenu };
+  // ----- Zeilennummern (Word's menu, recorded 2026-10-14, and dialog) -----------------------------
+  const setLineNumbers = (ln: LineNumbers | undefined) => {
+    const e = ed();
+    if (!e) return;
+    e.changeSections((s) => ({ ...s, lineNumbers: ln }), false);
+    api.focus();
+  };
+  const current = () => ed()?.section().lineNumbers;
+  const withRestart = (restart: LineNumbers["restart"]): LineNumbers => ({ countBy: 1, start: 1, ...(current() ?? {}), restart });
+  const lineNumbersMenu: MenuEntry[] = [
+    { label: "Keine", get checked() { return !current(); }, run: () => setLineNumbers(undefined) },
+    { label: "Fortlaufend", get checked() { return current()?.restart === "continuous"; }, run: () => setLineNumbers(withRestart("continuous")) },
+    { label: "Jede Seite neu beginnen", get checked() { return current()?.restart === "newPage"; }, run: () => setLineNumbers(withRestart("newPage")) },
+    { label: "Jeden Abschnitt neu beginnen", get checked() { return current()?.restart === "newSection"; }, run: () => setLineNumbers(withRestart("newSection")) },
+    { label: "Für aktuellen Absatz unterdrücken", get checked() { return !!ed()?.paraState().suppressLineNumbers; },
+      run: () => { const e = ed(); if (e) { e.setParaProps({ suppressLineNumbers: !e.paraState().suppressLineNumbers || undefined }); api.focus(); } } },
+    "-",
+    { label: "Zeilennummerierungsoptionen...", run: () => void pageDialog("layout") },
+  ];
+  c.implement("layout.lineNumbers", { run: () => {}, enabled: has });
+
+  const lineNumbersDialog = () => {
+    const ln = current();
+    const add = h("input", { type: "checkbox", checked: !!ln }) as HTMLInputElement;
+    const start = h("input", { type: "number", min: "1", max: "32767", value: String(ln?.start ?? 1), style: "width:80px" }) as HTMLInputElement;
+    const dist = h("input", { type: "text", value: ln?.distance !== undefined ? fmtCm(ln.distance) : "Auto", style: "width:80px" }) as HTMLInputElement;
+    const by = h("input", { type: "number", min: "1", max: "100", value: String(ln?.countBy ?? 1), style: "width:80px" }) as HTMLInputElement;
+    const radio = (label: string, v: LineNumbers["restart"]) => {
+      const r = h("input", { type: "radio", name: "lnrestart", checked: (ln?.restart ?? "newPage") === v, "data-v": v }) as HTMLInputElement;
+      return { r, el: h("label", { class: "check" }, r, label) };
+    };
+    const modes = [radio("Jede Seite neu beginnen", "newPage"), radio("Jeden Abschnitt neu beginnen", "newSection"), radio("Fortlaufend", "continuous")];
+    const fields = [start, dist, by, ...modes.map((m) => m.r)];
+    const sync = () => { for (const f of fields) f.disabled = !add.checked; };
+    add.onchange = sync;
+    sync();
+    openModal("Zeilennummern", h("div", { class: "lndlg" },
+      h("label", { class: "check" }, add, "Zeilennummern hinzufügen"),
+      h("div", { class: "grid2" }, "Beginnen mit:", start, "Abstand vom Text:", dist, "Zählintervall:", by),
+      h("fieldset", null, h("legend", null, "Nummerierung"), ...modes.map((m) => m.el))), [
+      { label: "OK", primary: true, run: () => {
+        if (!add.checked) { setLineNumbers(undefined); return true; }
+        const d = dist.value.trim().toLowerCase() === "auto" || !dist.value.trim() ? undefined : parseNum(dist.value) * CM;
+        const restart = (modes.find((m) => m.r.checked)?.r.dataset.v ?? "newPage") as LineNumbers["restart"];
+        setLineNumbers({ countBy: Math.max(1, Math.round(Number(by.value) || 1)), start: Math.max(1, Math.round(Number(start.value) || 1)),
+          distance: d !== undefined && Number.isFinite(d) ? d : undefined, restart });
+        return true;
+      } },
+      { label: "Abbrechen", run: () => true },
+    ], { width: 380 });
+  };
+
+  return { marginsPanel, sizePanel, columnsMenu, breaksMenu, lineNumbersMenu };
 }

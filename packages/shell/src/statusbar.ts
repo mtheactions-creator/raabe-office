@@ -9,6 +9,8 @@ export interface StatusInfo {
   pages: number;
   words: number | null;
   zoom: number;
+  /** Replaces "Seite 1 von 3" (Lesemodus: "Bildschirm 1 von 6"). */
+  pageLabel?: string;
 }
 
 function sliderToZoom(v: number): number {
@@ -54,7 +56,7 @@ export class StatusBar {
   }
 
   update(s: StatusInfo): void {
-    this.page.textContent = `Seite ${s.page} von ${s.pages}`;
+    this.page.textContent = s.pageLabel ?? `Seite ${s.page} von ${s.pages}`;
     this.words.textContent = s.words === null ? "" : `${s.words.toLocaleString("de-DE")} ${s.words === 1 ? "Wort" : "Wörter"}`;
     if (document.activeElement !== this.slider) this.slider.value = String(zoomToSlider(s.zoom));
     this.pct.textContent = `${Math.round(s.zoom * 100)} %`;

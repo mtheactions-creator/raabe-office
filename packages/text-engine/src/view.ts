@@ -160,7 +160,19 @@ export class View {
   readonly caret: HTMLDivElement;
   private pages: PageView[] = [];
   private tops: number[] = [];
+  private lefts: number[] = [];
   private maxW = 0;
+  /** Width and height of all pages as placed (px at 100 %). */
+  private areaW = 0;
+  private areaH = 0;
+  /**
+   * How pages stand: "pages" (Drucklayout: one below the other, side by side when several fit,
+   * as in Word), "flat" (Weblayout: one page without gap or shadow), "row" (Lesemodus: screens
+   * side by side, turned horizontally).
+   */
+  arrangement: "pages" | "flat" | "row" = "pages";
+  /** Pages per row as last placed. */
+  private perRow = 1;
   private blinkTimer = 0;
   private layoutRef: Layout | null = null;
   private docRef: Doc | null = null;
@@ -204,15 +216,56 @@ export class View {
     addEventListener("blur", () => { this.windowActive = false; this.caret.style.display = "none"; this.stopBlink(); });
     addEventListener("focus", () => { this.windowActive = true; if (this.caretWanted) this.renderCaret(true); });
     addEventListener("resize", () => this.onScroll());
+    if (typeof ResizeObserver !== "undefined") new ResizeObserver(() => this.resized()).observe(workspace);
   }
 
   pageTop(i: number): number {
-    return this.tops[i] ?? GAP;
+    return this.tops[i] ?? this.gap;
   }
 
   pageLeft(i: number): number {
-    const w = this.pages[i]?.w ?? this.maxW;
-    return GAP + (this.maxW - w) / 2;
+    return this.lefts[i] ?? this.gap + (this.maxW - (this.pages[i]?.w ?? this.maxW)) / 2;
+  }
+
+  private get gap(): number {
+    return this.arrangement === "flat" ? 0 : GAP;
+  }
+
+  /** Ansicht > Gitternetzlinien: Word's drawing grid (9 pt from the margins) over the text area. */
+  get drawingGrid(): boolean {
+    return this.workspace.classList.contains("drawgrid");
+  }
+
+  setDrawingGrid(on: boolean): void {
+    this.workspace.classList.toggle("drawgrid", on);
+  }
+
+  /** Changes how pages stand (Drucklayout, Weblayout, Lesemodus). */
+  setArrangement(a: View["arrangement"]): void {
+    if (a === this.arrangement) return;
+    this.arrangement = a;
+    this.workspace.classList.toggle("flatpages", a === "flat");
+    this.workspace.classList.toggle("rowpages", a === "row");
+    this.placePages(true);
+  }
+
+  /** Mehrere Seiten: the zoom at which `n` pages stand side by side in the window. */
+  multiplePagesZoom(n = 2): number {
+    return (this.workspace.clientWidth - (n + 1) * GAP - 8) / (n * (this.maxW || 794));
+  }
+
+  /** Lesemodus: the page shown at the left of the window, and the number of pages. */
+  screenInfo(): { page: number; count: number } {
+    const x = this.workspace.scrollLeft / this.zoomFactor + this.gap + 4;
+    let page = 0;
+    for (let i = 0; i < this.lefts.length; i++) if (this.lefts[i] <= x) page = i;
+    return { page, count: this.pages.length };
+  }
+
+  /** Lesemodus: turns to a page (the window shows it at its left). */
+  showScreen(page: number): void {
+    const i = Math.max(0, Math.min(this.pages.length - 1, page));
+    this.workspace.scrollLeft = (this.pageLeft(i) - this.gap) * this.zoomFactor;
   }
 
   get zoom(): number {
@@ -242,15 +295,68 @@ export class View {
   setZoom(z: number): void {
     z = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, z));
     const ws = this.workspace;
-    const anchor = ws.scrollTop / this.zoomFactor;
+    // The page at the top of the window stays there (pages may move into rows).
+    const y = ws.scrollTop / this.zoomFactor;
+    const page = this.pageAtY(y);
+    const within = y - this.pageTop(page);
     this.zoomFactor = z;
-    this.applySize();
-    ws.scrollTop = anchor * z;
+    // Pages side by side depend on the zoom.
+    if (!this.placePages(false)) this.applySize();
+    ws.scrollTop = Math.max(0, (this.pageTop(page) + within) * z);
     this.onScroll(true);
+  }
+
+  /**
+   * Places the pages (tops and lefts) for the arrangement, zoom and window width. Returns
+   * whether anything moved.
+   */
+  private placePages(force: boolean): boolean {
+    const gap = this.gap;
+    const n = this.pages.length;
+    const z = this.zoomFactor;
+    // Several pages per row once they fit (not while comment cards need the room beside them).
+    const fit = Math.floor((this.workspace.clientWidth / z - gap) / ((this.maxW || 794) + gap));
+    const perRow = this.arrangement === "row" ? Math.max(1, n) : this.arrangement === "flat" || this.markupW ? 1 : Math.max(1, Math.min(n, fit));
+    const tops: number[] = [], lefts: number[] = [];
+    let top = gap, areaW = 0;
+    for (let r = 0; r * perRow < n; r++) {
+      const from = r * perRow, to = Math.min(n, from + perRow);
+      let rowH = 0, x = gap;
+      for (let i = from; i < to; i++) {
+        const pv = this.pages[i];
+        // One column: pages centred on the widest; in rows each takes its own width.
+        lefts[i] = perRow === 1 ? gap + (this.maxW - pv.w) / 2 : x;
+        tops[i] = top;
+        x += (perRow === 1 ? this.maxW : pv.w) + gap;
+        rowH = Math.max(rowH, pv.h);
+      }
+      areaW = Math.max(areaW, x);
+      top += rowH + gap;
+    }
+    const changed = force || perRow !== this.perRow || tops.some((t, i) => t !== this.tops[i]) || lefts.some((l, i) => l !== this.lefts[i]) || n !== this.tops.length;
+    this.perRow = perRow;
+    this.tops = tops;
+    this.lefts = lefts;
+    this.areaW = n ? areaW : this.maxW + 2 * gap;
+    this.areaH = n ? top : 2 * gap;
+    if (!changed) return false;
+    this.pages.forEach((pv, i) => {
+      pv.el.style.left = `${lefts[i]}px`;
+      pv.el.style.top = `${tops[i]}px`;
+      pv.el.style.width = `${pv.w}px`;
+      pv.el.style.height = `${pv.h}px`;
+    });
+    this.applySize();
+    return true;
   }
 
   pageWidthZoom(): number {
     return (this.workspace.clientWidth - 2 * GAP - 4) / (this.maxW || 794);
+  }
+
+  /** Called when the window changes size: pages side by side follow. */
+  resized(): void {
+    if (this.placePages(false)) this.onScroll(true);
   }
 
   onePageZoom(): number {
@@ -262,7 +368,7 @@ export class View {
   setMarkupWidth(w: number): void {
     if (w === this.markupW) return;
     this.markupW = w;
-    this.applySize();
+    if (!this.placePages(false)) this.applySize();
   }
 
   get markupWidth(): number {
@@ -271,12 +377,11 @@ export class View {
 
   private applySize(): void {
     const z = this.zoomFactor;
-    const w = this.maxW + 2 * GAP + this.markupW;
+    const w = Math.max(this.areaW, this.maxW + 2 * this.gap) + this.markupW;
     this.markupLayer.style.display = this.markupW ? "" : "none";
     this.markupLayer.style.left = `${GAP + this.maxW + 12}px`;
     this.markupLayer.style.width = `${Math.max(0, this.markupW - 24)}px`;
-    const n = this.pages.length;
-    const h = n ? this.pageTop(n - 1) + this.pages[n - 1].h + GAP : 2 * GAP;
+    const h = this.areaH || 2 * this.gap;
     this.container.style.transform = z === 1 ? "" : `scale(${z})`;
     this.container.style.width = `${w}px`;
     this.container.style.height = `${h}px`;
@@ -340,44 +445,58 @@ export class View {
     let maxW = 0;
     for (const p of pages) maxW = Math.max(maxW, p.setup.width * PT);
     if (maxW !== this.maxW) { this.maxW = maxW; changed = true; }
-    let top = GAP;
     pages.forEach((p, i) => {
       const pv = this.pages[i];
       const w = p.setup.width * PT, h = p.setup.height * PT;
-      if (pv.w !== w || pv.h !== h || this.tops[i] !== top) changed = true;
+      if (pv.w !== w || pv.h !== h) changed = true;
       pv.w = w; pv.h = h;
-      this.tops[i] = top;
-      top += h + GAP;
+      // Gitternetzlinien cover the text area (CSS on .drawgrid).
+      const st = pv.el.style;
+      const ml = `${p.setup.marginLeft * PT}px`, mt = `${p.setup.marginTop * PT}px`, mr = `${p.setup.marginRight * PT}px`, mb = `${p.setup.marginBottom * PT}px`;
+      if (st.getPropertyValue("--ml") !== ml) { st.setProperty("--ml", ml); st.setProperty("--mt", mt); st.setProperty("--mr", mr); st.setProperty("--mb", mb); }
     });
-    this.tops.length = pages.length;
-    if (changed || !this.sizer.style.height) {
-      this.pages.forEach((pv, i) => {
-        pv.el.style.left = `${this.pageLeft(i)}px`;
-        pv.el.style.top = `${this.tops[i]}px`;
-        pv.el.style.width = `${pv.w}px`;
-        pv.el.style.height = `${pv.h}px`;
-      });
-      this.applySize();
-    }
+    if (!this.placePages(changed || !this.sizer.style.height) && changed) this.applySize();
   }
 
-  private pageAtY(y: number): number {
+  /** The page at a point of the page area (px at 100 %): by row, then by column. */
+  private pageAt(x: number, y: number): number {
     const n = this.tops.length;
+    if (!n) return 0;
     let lo = 0, hi = n - 1;
     while (lo < hi) {
       const mid = (lo + hi + 1) >> 1;
       if (this.tops[mid] - GAP / 2 <= y) lo = mid; else hi = mid - 1;
     }
-    return Math.max(0, lo);
+    // lo is the last page of its row; the row's pages share its top.
+    const top = this.tops[lo];
+    let first = lo;
+    while (first > 0 && this.tops[first - 1] === top) first--;
+    let page = first;
+    for (let i = first; i <= lo; i++) if (this.lefts[i] - GAP / 2 <= x) page = i;
+    return page;
+  }
+
+  private pageAtY(y: number): number {
+    return this.pageAt(0, y);
   }
 
   private computeVisible(): void {
     const z = this.zoomFactor;
-    const top = this.workspace.scrollTop / z;
-    const bottom = top + this.workspace.clientHeight / z;
+    const ws = this.workspace;
+    const top = ws.scrollTop / z, bottom = top + ws.clientHeight / z;
+    const left = ws.scrollLeft / z, right = left + ws.clientWidth / z;
     const n = this.pages.length;
-    this.visibleFrom = Math.max(0, this.pageAtY(top) - 1);
-    this.visibleTo = Math.min(n - 1, this.pageAtY(bottom) + 1);
+    let from = -1, to = -1;
+    for (let i = 0; i < n; i++) {
+      const pv = this.pages[i];
+      const t = this.tops[i], l = this.lefts[i] ?? 0;
+      if (t + pv.h >= top && t <= bottom && l + pv.w >= left && l <= right) { if (from < 0) from = i; to = i; }
+    }
+    if (from < 0) { from = Math.max(0, this.pageAtY(top)); to = from; }
+    // One page more on each side (a row more when pages stand side by side).
+    const extra = this.arrangement === "row" ? 1 : this.perRow;
+    this.visibleFrom = Math.max(0, from - extra);
+    this.visibleTo = Math.min(n - 1, to + extra);
   }
 
   private onScroll(force = false): void {
@@ -471,10 +590,19 @@ export class View {
       if (d.kind === "line") return `l${d.x1},${d.y1},${d.x2},${d.y2},${d.width},${d.color},${d.style},${this.dimmed(d.story)}`;
       const text = d.shape?.story ? this.shapeTextKey(d.shape.story, page.index) : "";
       return `i${d.x},${d.y},${d.w},${d.h},${idOf(d.image)},${d.behind},${this.dimmed(d.story)},${d.z ?? 0},${d.pic ? JSON.stringify(d.pic) : ""},${d.shape ? idOf(d.shape) : ""},${text}`;
-    }).join(";");
+    }).join(";") + "|" + (page.lineNumbers ?? []).map((n) => `${n.x},${n.y},${n.text}`).join(";");
     if (key === pv.decoKey) return;
     pv.decoKey = key;
     const back: HTMLElement[] = [], front: HTMLElement[] = [];
+    // Zeilennummern: right-aligned at their x, on the line's baseline.
+    for (const n of page.lineNumbers ?? []) {
+      const el = document.createElement("span");
+      el.textContent = n.text;
+      const lh = this.fonts.lineHeight(n.c.font, Fonts.renderSize(n.c)) * PT;
+      el.style.cssText = `position:absolute;white-space:pre;right:${pv.w - n.x}px;top:${n.y - this.fonts.baselineOffset(n.c, lh)}px;font:${this.fonts.cssFont(n.c)};` +
+        `line-height:${lh}px;color:${n.c.color === "auto" ? "#000" : `#${n.c.color}`};pointer-events:none`;
+      back.push(el);
+    }
     // Gitternetzlinien only where a cell edge has no border of its own (as in Word).
     const borders = page.deco.filter((d): d is Extract<Deco, { kind: "line" }> => d.kind === "line");
     const covered = (x1: number, y1: number, x2: number, y2: number) => borders.some((l) => {
@@ -1240,9 +1368,9 @@ export class View {
   pointAt(clientX: number, clientY: number): { page: number; x: number; y: number } {
     const rect = this.sizer.getBoundingClientRect();
     const z = this.zoomFactor;
-    const cy = (clientY - rect.top) / z;
-    const page = Math.min(this.pages.length - 1, this.pageAtY(cy));
-    return { page, x: (clientX - rect.left) / z - this.pageLeft(page), y: cy - this.pageTop(page) };
+    const cy = (clientY - rect.top) / z, cx = (clientX - rect.left) / z;
+    const page = Math.min(this.pages.length - 1, this.pageAt(cx, cy));
+    return { page, x: cx - this.pageLeft(page), y: cy - this.pageTop(page) };
   }
 
   /** What part of a page a client point is in. */
@@ -1382,10 +1510,17 @@ export class View {
     const margin = 40;
     if (top < ws.scrollTop + margin) ws.scrollTop = top - margin;
     else if (top + h > ws.scrollTop + ws.clientHeight - margin) ws.scrollTop = top + h - ws.clientHeight + margin;
+    // Pages side by side (Lesemodus): the caret's page comes into view.
+    const left = (this.pageLeft(c.page) + c.x) * z;
+    if (left < ws.scrollLeft || left > ws.scrollLeft + ws.clientWidth - 8) {
+      if (this.arrangement === "row") this.showScreen(c.page);
+      else ws.scrollLeft = Math.max(0, left - ws.clientWidth / 2);
+    }
   }
 
   /** Scrolls a page to the top of the window (navigation pane, Gehe zu). */
   scrollToPage(page: number): void {
+    if (this.arrangement === "row") { this.showScreen(page); return; }
     this.workspace.scrollTop = (this.pageTop(page) - GAP / 2) * this.zoomFactor;
   }
 }

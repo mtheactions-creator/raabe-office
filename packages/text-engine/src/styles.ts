@@ -89,6 +89,7 @@ export interface ResolvedPara {
   readonly keepLines: boolean;
   readonly widow: boolean;
   readonly pageBreakBefore: boolean;
+  readonly suppressLineNumbers: boolean;
   readonly tabs: readonly TabStop[];
   readonly numId?: number;
   readonly ilvl?: number;
@@ -272,6 +273,7 @@ export class StyleSheet {
       keepLines: acc.keepLines ?? false,
       widow: acc.widow ?? true,
       pageBreakBefore: acc.pageBreakBefore ?? false,
+      suppressLineNumbers: acc.suppressLineNumbers ?? false,
       tabs,
       numId: acc.numId,
       ilvl: acc.ilvl,

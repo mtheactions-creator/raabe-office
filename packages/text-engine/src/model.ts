@@ -137,8 +137,20 @@ export interface Section {
   /** Page number to restart at, and its format ("decimal", "upperRoman", "lowerRoman" …). */
   readonly pageStart?: number;
   readonly pageFormat?: string;
+  /** Layout > Zeilennummern (w:lnNumType): every countBy-th line numbered from `start`. */
+  readonly lineNumbers?: LineNumbers;
   /** Other sectPr children, kept as XML for writing back. */
   readonly extra?: readonly unknown[];
+}
+
+/** Zeilennummern of a section (Word's dialog Zeilennummern). */
+export interface LineNumbers {
+  readonly countBy: number;
+  /** Beginnen mit (1-based; the file stores it 0-based). */
+  readonly start: number;
+  /** Abstand vom Text in points; undefined = Auto. */
+  readonly distance?: number;
+  readonly restart: "newPage" | "newSection" | "continuous";
 }
 
 export const ONE_COLUMN: Columns = { count: 1, space: 35.4, sep: false };
@@ -376,6 +388,8 @@ export interface ParaProps {
   readonly keepLines?: boolean;
   readonly widow?: boolean;
   readonly pageBreakBefore?: boolean;
+  /** Zeilennummern: Für aktuellen Absatz unterdrücken. */
+  readonly suppressLineNumbers?: boolean;
   readonly tabs?: readonly TabStop[];
   readonly outline?: number;
   /** List: numbering instance (0 = explicitly none) and level (0-based). */

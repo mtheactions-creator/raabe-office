@@ -47,7 +47,7 @@ def pane_named(w: Word, name: str):
 
 
 def close_pane(w: Word, pane) -> None:
-    btn = uia.find(pane, lambda d: d["type"] == "Button" and d["name"] in ("Schließen", "Aufgabenbereich schließen", "Close"), max_depth=8)
+    btn = uia.find(pane, lambda d: d["type"] == "Button" and d["name"] in ("Bereich schließen", "Schließen", "Aufgabenbereich schließen", "Close"), max_depth=8)
     if btn is not None:
         r = uia.describe(btn)["rect"]
         winapi.click(r[0] + r[2] / 2, r[1] + r[3] / 2)
