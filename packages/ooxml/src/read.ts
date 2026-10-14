@@ -1181,12 +1181,19 @@ export function readDocx(bytes: Uint8Array): ReadResult {
   const settingsXml = r.text("word/settings.xml");
   let defaultTab = 36;
   let evenOdd = false;
+  let hyphenation: DocState["settings"]["hyphenation"];
   let trackChanges = false;
   if (settingsXml) {
     const s = parse(settingsXml).documentElement;
     defaultTab = twips(attr(child(s, "defaultTabStop"), "val"), 36);
     evenOdd = onOff(child(s, "evenAndOddHeaders")) ?? false;
     trackChanges = onOff(child(s, "trackRevisions")) ?? false;
+    // Layout > Silbentrennung.
+    const auto = onOff(child(s, "autoHyphenation")) ?? false;
+    const limit = num(attr(child(s, "consecutiveHyphenLimit"), "val")) ?? 0;
+    const zone = num(attr(child(s, "hyphenationZone"), "val"));
+    const caps = !(onOff(child(s, "doNotHyphenateCaps")) ?? false);
+    if (auto || limit || !caps) hyphenation = { auto, caps, limit, ...(zone !== undefined ? { zone: zone / 20 } : {}) };
     r.mathSettings = readMathPr(s);
     r.noteSettings = readNoteSettings(s);
   }
@@ -1234,7 +1241,7 @@ export function readDocx(bytes: Uint8Array): ReadResult {
   linkChains(paras, r.chainStories);
   return {
     state: {
-      paras, styles, settings: { section, defaultTab, evenOdd: evenOdd || undefined, trackChanges: trackChanges || undefined, math: r.mathSettings, bibliography: bibliography?.read, notes: r.noteSettings, watermark: r.watermark, background }, stories: r.stories, numbering,
+      paras, styles, settings: { section, defaultTab, evenOdd: evenOdd || undefined, trackChanges: trackChanges || undefined, hyphenation, math: r.mathSettings, bibliography: bibliography?.read, notes: r.noteSettings, watermark: r.watermark, background }, stories: r.stories, numbering,
       comments: cm?.meta,
     },
     pkg: {

@@ -7,6 +7,10 @@ compact files the app ships). All files come from LibreOffice's dictionaries rep
 - Hyphenation patterns (Hyphen format): German (LGPL-2+, from TeX's dehyphn), English US and
   GB (BSD-style), French (LGPL-2.1+, from hyph-fr, MIT), Spanish (LGPL/GPL/MPL).
 
+For the grammar checker (D-040): LanguageTool's German rules (grammar.xml, disambiguation.xml
+and word lists, LGPL-2.1+) from its GitHub repository and Daniel Naber's German POS lexicon
+(german-pos-dict, CC-BY-SA-4.0) from Maven Central.
+
     python tools/lang-data/fetch.py
 """
 from __future__ import annotations
@@ -24,6 +28,17 @@ FILES = [
     "fr_FR/dictionaries/hyph_fr.dic", "fr_FR/dictionaries/README_hyph_fr.txt",
     "es/th_es_v2.dat", "es/README_th_es.txt", "es/hyph_es.dic", "es/README_hyph_es.txt", "es/LICENSE.md",
 ]
+LT = "https://raw.githubusercontent.com/languagetool-org/languagetool/master/languagetool-language-modules/"
+LT_FILES = [
+    "de/src/main/resources/org/languagetool/rules/de/grammar.xml",
+    "de/src/main/resources/org/languagetool/resource/de/disambiguation.xml",
+    "de/src/main/resources/org/languagetool/resource/de/tagset.txt",
+    "de/src/main/resources/org/languagetool/resource/de/added.txt",
+    "de/src/main/resources/org/languagetool/resource/de/removed.txt",
+    "de/src/main/resources/org/languagetool/rules/de/replace.txt",
+    "de/src/main/resources/org/languagetool/resource/de/case_rule_exceptions.txt",
+]
+MAVEN = {"german-pos-dict-1.2.4.jar": "https://repo1.maven.org/maven2/de/danielnaber/german-pos-dict/1.2.4/german-pos-dict-1.2.4.jar"}
 SRC = Path(__file__).parent / "src"
 
 
@@ -36,7 +51,17 @@ def main() -> None:
         print("fetch", f, flush=True)
         with urllib.request.urlopen(BASE + f, timeout=120) as r:
             dest.write_bytes(r.read())
-    print("ok", sum((SRC / f.replace("/", "__")).stat().st_size for f in FILES), "bytes")
+    urls = [(BASE + f, f.replace("/", "__")) for f in FILES]
+    urls += [(LT + f, "lt__" + f.split("/")[0] + "__" + f.rsplit("/", 1)[1]) for f in LT_FILES]
+    urls += [(u, n) for n, u in MAVEN.items()]
+    for url, name in urls[len(FILES):]:
+        dest = SRC / name
+        if dest.exists() and dest.stat().st_size > 0:
+            continue
+        print("fetch", url, flush=True)
+        with urllib.request.urlopen(url, timeout=180) as r:
+            dest.write_bytes(r.read())
+    print("ok", sum((SRC / n).stat().st_size for _, n in urls), "bytes")
 
 
 if __name__ == "__main__":

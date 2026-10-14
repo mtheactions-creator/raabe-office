@@ -15,6 +15,7 @@ import { Fonts, PT } from "./fonts";
 import { COLUMN_BREAK, LINE_BREAK, OBJ, PAGE_BREAK, type CharProps, type InlineObject, type Para, type ParaProps } from "./model";
 import { displayBullet, type ListLabel } from "./numbering";
 import type { ResolvedChar, ResolvedPara, StyleSheet } from "./styles";
+import { hyphenatorFor } from "./hyphen";
 
 export { A4, type PageSetup } from "./model";
 
@@ -29,6 +30,8 @@ export interface LayoutContext {
   readonly markup?: "all" | "simple" | "none" | "original";
   /** Formeloptionen > Ausrichtung: where display equations stand (default centred). */
   readonly mathJc?: "left" | "right" | "center" | "centerGroup";
+  /** Automatische Silbentrennung (absent when off): words in capitals too, the most lines in a row ending with a hyphen (0: no limit). */
+  readonly hyphenation?: { readonly caps: boolean; readonly limit: number };
 }
 
 const hiddenVariant = new WeakMap<ResolvedChar, ResolvedChar>();
@@ -79,6 +82,8 @@ export interface Line {
   readonly charX: Float64Array;
   /** The list label, on a paragraph's first line: x relative to the frame. */
   readonly label?: { readonly text: string; readonly x: number; readonly c: ResolvedChar; readonly font?: string };
+  /** The line ends inside a word divided by automatic hyphenation (a hyphen is drawn after it). */
+  readonly hyphen?: boolean;
 }
 
 export interface ParaLayout {
@@ -277,6 +282,8 @@ export class Layouter {
       labelMetrics = lc;
     }
 
+    /** Lines in a row ending with a hyphen (Aufeinanderfolgende Trennstriche). */
+    let hyphenRun = 0;
     while (true) {
       let lineLeft = label && first ? labelEnd : (rp.indLeft + (first ? rp.indFirst : 0)) * PT;
       let lineRight = width - rp.indRight * PT;
@@ -299,6 +306,7 @@ export class Layouter {
       let columnBreakAfter = false;
       const squeeze = rp.align === "both" ? 0.25 : 0;
       let spaceW = 0;
+      let hyphenW = 0;
       for (let i = start; i < text.length; i++) {
         const ch = text[i];
         const info = infos[i];
@@ -331,6 +339,9 @@ export class Layouter {
         if (isSpace(ch)) { x += info.w; spaceW += info.w; lastBreak = i + 1; continue; }
         if (x + info.w > avail + 0.01 + squeeze * spaceW && i > start) {
           end = lastBreak > start ? lastBreak : i;
+          // Automatische Silbentrennung: as much of the word as fits, with a hyphen.
+          const hy = this.hyphenBreak(text, infos, start, i, x, avail + 0.01 + squeeze * spaceW, lastBreak, rp, hyphenRun);
+          if (hy) { end = hy.at; hyphenW = hy.w; }
           break;
         }
         x += info.w;
@@ -339,7 +350,8 @@ export class Layouter {
       // A soft hyphen at a line end shows a hyphen.
       if (!forcedEnd && end < text.length && text[end - 1] === "\u00ad") infos[end - 1].w = fonts.advance(infos[end - 1].c, "-");
       const line = this.buildLine(text, infos, objs, start, end, lineLeft, avail, rp, markC, forcedEnd || end >= text.length, pageBreakAfter, push,
-        first && labelMetrics ? labelMetrics : undefined);
+        first && labelMetrics ? labelMetrics : undefined, hyphenW);
+      hyphenRun = hyphenW || (!forcedEnd && end < text.length && text[end - 1] === "\u00ad") ? hyphenRun + 1 : 0;
       lines.push(columnBreakAfter || (first && label) ? { ...line, columnBreakAfter: columnBreakAfter || undefined, label: first ? label : undefined } : line);
       top += line.height;
       first = false;
@@ -356,14 +368,45 @@ export class Layouter {
     return { rp, lines, before, after, width, borderTop: bt, borderBottom: bb };
   }
 
+  /**
+   * Where automatic hyphenation divides the word that overflows at `i`: the last hyphenation
+   * point whose part, with its hyphen, still fits (null when the word cannot be divided).
+   */
+  private hyphenBreak(text: string, infos: CharInfo[], start: number, i: number, x: number, limit: number, lastBreak: number,
+    rp: ResolvedPara, run: number): { at: number; w: number } | null {
+    const h = this.ctx.hyphenation;
+    if (!h || rp.suppressAutoHyphens || (h.limit > 0 && run >= h.limit) || !isLetter(text[i])) return null;
+    let a = i, b = i;
+    while (a > start && isLetter(text[a - 1])) a--;
+    while (b < text.length && isLetter(text[b])) b++;
+    // Words next to digits (3D-Drucker's "3D") or inside other characters are not divided.
+    if (a < lastBreak || b - a < 4 || /\p{N}/u.test(text[a - 1] ?? "") || /\p{N}/u.test(text[b] ?? "")) return null;
+    const word = text.slice(a, b);
+    const c = infos[a].c;
+    if (c.hidden || (!h.caps && word === word.toLocaleUpperCase())) return null;
+    const hy = hyphenatorFor(c.lang);
+    if (!hy) return null;
+    // No Silbentrennzone: Word 2013 and later divide words right up to the margin (measured).
+    const points = hy.hyphenate(word);
+    for (let n = points.length - 1; n >= 0; n--) {
+      const k = a + points[n];
+      if (k > i || k <= start) continue;
+      let w = x;
+      for (let j = k; j < i; j++) w -= infos[j].w;
+      const hw = this.ctx.fonts.advance(infos[k - 1].c, "-");
+      if (w + hw <= limit) return { at: k, w: hw };
+    }
+    return null;
+  }
+
   private buildLine(text: string, infos: CharInfo[], objs: (InlineObject | undefined)[], start: number, end: number,
     lineLeft: number, avail: number, rp: ResolvedPara, markC: ResolvedChar, last: boolean, pageBreakAfter: boolean, push: number,
-    label?: ResolvedChar): Line {
+    label?: ResolvedChar, hyphenW = 0): Line {
     const { fonts } = this.ctx;
     // Content end without trailing spaces and break characters.
     let contentEnd = end;
     while (contentEnd > start && (isSpace(text[contentEnd - 1]) || infos[contentEnd - 1].kind === "break")) contentEnd--;
-    let width = 0;
+    let width = hyphenW;
     for (let i = start; i < contentEnd; i++) width += infos[i].w;
 
     // Vertical metrics: the largest font on the line (nominal size; super/subscript do not grow
@@ -447,8 +490,14 @@ export class Layouter {
     }
     flush(end);
     charX[end - start] = x;
-    return { start, end, x0, width: rp.align === "both" && spaceExtra ? avail : width, height, baseline, segments, spaceExtra, pageBreakAfter, charX };
+    return { start, end, x0, width: rp.align === "both" && spaceExtra ? avail : width, height, baseline, segments, spaceExtra, pageBreakAfter, charX,
+      ...(hyphenW ? { hyphen: true } : {}) };
   }
+}
+
+/** A letter (or combining mark) of a word that hyphenation may divide. */
+function isLetter(ch: string | undefined): boolean {
+  return !!ch && /[\p{L}\p{M}]/u.test(ch);
 }
 
 let objSeq = 0;

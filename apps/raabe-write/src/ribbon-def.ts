@@ -4,6 +4,7 @@
 // plan (cloud, add-ins, SmartArt, 3D models, macros ...). See docs/SCOPE.md.
 
 import { GROUP_MENU } from "./features/groups";
+import { HYPHENATION_MENU } from "./features/hyphenation";
 import type { Control, MenuEntry, Tab } from "@raabe/shell";
 
 /** What the ribbon needs from the app to show values and apply changes. */
@@ -280,11 +281,11 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
             dd("layout.orientation", "4", "large", undefined, [{ cmd: "orientation.portrait" }, { cmd: "orientation.landscape" }]),
             panel("layout.size", "R", "large", ctx.panels.size),
             dd("layout.columns", "HS", "large", undefined, ctx.panels.columns),
-            stack(dd("layout.breaks", "U", "medium", undefined, ctx.panels.breaks), dd("layout.lineNumbers", "LN", "medium", undefined, ctx.panels.lineNumbers), dd("layout.hyphenation", "I", "medium"))],
+            stack(dd("layout.breaks", "U", "medium", undefined, ctx.panels.breaks), dd("layout.lineNumbers", "LN", "medium", undefined, ctx.panels.lineNumbers), dd("layout.hyphenation", "I", "medium", undefined, HYPHENATION_MENU))],
           smaller: [[panelL("layout.margins", "8", "Seiten-\nränder", ctx.panels.margins),
             stack(dd("layout.orientation", "4", "medium", undefined, [{ cmd: "orientation.portrait" }, { cmd: "orientation.landscape" }]),
               panel("layout.size", "R", "medium", ctx.panels.size), dd("layout.columns", "HS", "medium", undefined, ctx.panels.columns)),
-            stack(dd("layout.breaks", "U", "medium", undefined, ctx.panels.breaks), dd("layout.lineNumbers", "LN", "medium", undefined, ctx.panels.lineNumbers), dd("layout.hyphenation", "I", "medium"))]] },
+            stack(dd("layout.breaks", "U", "medium", undefined, ctx.panels.breaks), dd("layout.lineNumbers", "LN", "medium", undefined, ctx.panels.lineNumbers), dd("layout.hyphenation", "I", "medium", undefined, HYPHENATION_MENU))]] },
         { id: "paragraph", label: "Absatz", key: "ZG", icon: "line-spacing", launcher: { cmd: "para.dialog", key: "BB" },
           controls: [spinners("Einzug", indentLeft, indentRight), spinners("Abstand", spaceBefore, spaceAfter)] },
         { id: "arrange", label: "Anordnen", key: "ZA", icon: "position",

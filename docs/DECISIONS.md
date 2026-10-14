@@ -727,3 +727,24 @@ does with typed French, Spanish and English sentences).
   überprüfen) and Sprache (the editing languages, the preferred one). Wiederholte Wörter are
   marked as in Word (Wiederholtes Wort löschen).
 
+### D-050 Silbentrennung as Word divides words
+- **Patterns**: LibreOffice's Hyphen files (German two-level: compound boundaries, then
+  syllables; English US/GB, French, Spanish; LGPL/BSD/MIT) become modules of the engine
+  (`tools/lang-data/build.py`, `packages/text-engine/src/hyph/`), loaded on first use, and
+  Liang's algorithm finds the places (`hyphen.ts`). Compound parts keep two letters
+  (LibreOffice's "ent1eile" would give "Pflanzent-eile").
+- **Line breaking**: a word that overflows is divided at the last place whose part and hyphen
+  still fit; justified lines first use their allowed squeeze (Word kept "Algen" whole there).
+  Measured with Word-built files (`make_fixtures.py --hyphenation`, three files, 125 lines):
+  Word leaves at least three letters on the next line ("Inhaltsan-gabe", "seine" whole) and
+  two before the hyphen ("Al-gen", "zu-rück"); it ignores the Silbentrennzone (a 0.75 cm zone
+  would have kept "ei-nen" and "Er-eignissen" whole, which Word divides), as its greyed field
+  says. 120 of 125 line starts are Word's; the rest are differences of Word's own hyphenation
+  lexicon ("transpor-tation" where TeX's patterns have "trans-porta-tion").
+- **Settings** as Word writes them: w:autoHyphenation, w:consecutiveHyphenLimit,
+  w:doNotHyphenateCaps (Wörter in Großbuchstaben trennen), w:hyphenationZone kept;
+  w:suppressAutoHyphens as Absatz > Keine Silbentrennung (with Zeilennummern unterdrücken).
+- **Menu and dialogs**: Keine, Automatisch, Manuell, Silbentrennungsoptionen (Word's labels;
+  the zone greyed). Manuelle Silbentrennung shows every syllable ("mit-hil-fe"), proposes the
+  last place that fits and inserts an optional hyphen (Ja), as Word does.
+

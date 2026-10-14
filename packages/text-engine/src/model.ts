@@ -433,6 +433,8 @@ export interface ParaProps {
   readonly pageBreakBefore?: boolean;
   /** Zeilennummern: Für aktuellen Absatz unterdrücken. */
   readonly suppressLineNumbers?: boolean;
+  /** Absatz > Zeilen- und Seitenumbruch: Keine Silbentrennung (w:suppressAutoHyphens). */
+  readonly suppressAutoHyphens?: boolean;
   readonly tabs?: readonly TabStop[];
   readonly outline?: number;
   /** List: numbering instance (0 = explicitly none) and level (0-based). */

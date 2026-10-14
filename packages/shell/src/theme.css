@@ -1019,3 +1019,12 @@ body.touch .qat button { height: 36px; min-width: 36px; }
 .langpref:hover { background: var(--hover); }
 .dictdlg { width: 320px; display: flex; flex-direction: column; gap: 6px; }
 .dictdlg .row { display: flex; gap: 6px; }
+.hydlg { width: 520px; }
+.hydlg .row { display: flex; align-items: center; gap: 12px; }
+.hy-word { flex: 1; border: 1px solid #8a8a8a; padding: 4px 6px; font-size: 14px; outline: none; }
+.hy-word:focus { border-color: #2b579a; }
+.hy-point { cursor: pointer; }
+.hy-point.on { background: #2b579a; color: #fff; }
+.hy-point.off { cursor: default; color: #8a8a8a; }
+.hyopts { width: 380px; display: flex; flex-direction: column; gap: 8px; }
+.hyopts .grid2 { display: grid; grid-template-columns: 1fr auto; gap: 8px 12px; align-items: center; margin-top: 6px; }

@@ -40,6 +40,19 @@ export interface DocSettings {
   notes?: { readonly footnote?: NoteProps; readonly endnote?: NoteProps };
   /** Zitate und Literaturverzeichnis: the document's sources and citation style (customXml b:Sources). */
   bibliography?: import("./bibliography").Bibliography;
+  /** Layout > Silbentrennung (w:autoHyphenation, w:doNotHyphenateCaps, w:consecutiveHyphenLimit, w:hyphenationZone). */
+  hyphenation?: Hyphenation;
+}
+
+/** Silbentrennungsoptionen. */
+export interface Hyphenation {
+  readonly auto: boolean;
+  /** Wörter in Großbuchstaben trennen (Word's default: on). */
+  readonly caps: boolean;
+  /** Aufeinanderfolgende Trennstriche: 0 = unbegrenzt. */
+  readonly limit: number;
+  /** Silbentrennzone in points (kept; Word 2013 and later do not use it). */
+  readonly zone?: number;
 }
 
 /**

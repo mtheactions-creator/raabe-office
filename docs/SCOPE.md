@@ -65,7 +65,7 @@ What each app does, ordered by priority. **M** = first usable version (MVP),
 | Fields beyond page number / TOC / date | X | Preserved |
 | Entwurf tab: Designs, Farben, Schriftarten, Absatzabstand | M | Step 4b |
 | Entwurf tab: Wasserzeichen, Seitenfarbe, Seitenränder | M | Step 4b |
-| Hyphenation (Silbentrennung), Thesaurus | M | Step 4b, de/en/fr/es; Thesaurus done (D-049) |
+| Hyphenation (Silbentrennung), Thesaurus | M | Done in Step 4b, de/en/fr/es (D-049, D-050) |
 | Word count exactly like Word (standalone dashes are not words) | M | Done in Step 1 |
 
 ## RaabeCalc (Excel)

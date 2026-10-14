@@ -33,6 +33,7 @@ import { coverPageFeature } from "./features/cover-page";
 import { bordersFeature } from "./features/borders";
 import { textEffectsFeature } from "./features/text-effects";
 import { groupsFeature, GROUP_COMMANDS } from "./features/groups";
+import { hyphenationFeature, HYPHENATION_COMMANDS } from "./features/hyphenation";
 import { rulerFeature } from "./features/ruler";
 import { referencesFeature, REFERENCE_COMMANDS } from "./features/references";
 import { reviewFeature, REVIEW_COMMANDS } from "./features/review";
@@ -125,7 +126,7 @@ export class WriteApp {
     this.fonts.onChange(() => { for (const d of this.docs) d.editor.relayout(); });
     void platform.listFonts().then((f) => { this.fontList = f; }).catch(() => {});
     this.commands.register(...COMMANDS, ...TABLE_COMMANDS, ...PAGE_COMMANDS, ...HEADER_COMMANDS, ...PICTURE_COMMANDS, ...FIND_COMMANDS,
-      ...REFERENCE_COMMANDS, ...REVIEW_COMMANDS, ...MATH_COMMANDS, ...CONTEXT_COMMANDS, ...LIST_COMMANDS, ...PICTURE_TAB_COMMANDS, ...SHAPE_COMMANDS, ...GROUP_COMMANDS);
+      ...REFERENCE_COMMANDS, ...REVIEW_COMMANDS, ...MATH_COMMANDS, ...CONTEXT_COMMANDS, ...LIST_COMMANDS, ...PICTURE_TAB_COMMANDS, ...SHAPE_COMMANDS, ...GROUP_COMMANDS, ...HYPHENATION_COMMANDS);
     this.implementCommands();
     this.features = this.makeFeatures();
     // Formformat's Anordnen uses Bildformat's panels.
@@ -286,6 +287,7 @@ export class WriteApp {
       textEffects: textEffectsFeature(api, this.docArea, this.dock),
       groups: groupsFeature(api),
       cover: coverPageFeature(api),
+      hyphenation: hyphenationFeature(api),
       views: viewsFeature(api, {
         titleBar: () => this.titleBar.el, docArea: this.docArea,
         openBackstage: () => this.openBackstage("info"), setZoom: (z) => this.setZoom(z),
@@ -1252,13 +1254,15 @@ export class WriteApp {
     const contextual = check("Keinen Abstand zwischen Absätzen gleicher Formatvorlage einfügen", r.contextual);
     const widow = check("Absatzkontrolle", r.widow), keepNext = check("Nicht vom nächsten Absatz trennen", r.keepNext);
     const keepLines = check("Diesen Absatz zusammenhalten", r.keepLines), pageBefore = check("Seitenumbruch oberhalb", r.pageBreakBefore);
+    const noNumbers = check("Zeilennummern unterdrücken", r.suppressLineNumbers), noHyphens = check("Keine Silbentrennung", r.suppressAutoHyphens);
     const page1 = h("div", null,
       h("fieldset", null, h("legend", null, "Allgemein"), h("label", { class: "field", style: "flex-direction:row;align-items:center;gap:8px" }, "Ausrichtung:", align)),
       h("fieldset", null, h("legend", null, "Einzug"),
         h("div", { class: "grid2" }, "Links:", left, "Sondereinzug:", special, "Rechts:", right, "Um:", by)),
       h("fieldset", null, h("legend", null, "Abstand"),
         h("div", { class: "grid2" }, "Vor:", before, "Zeilenabstand:", lineSel, "Nach:", after, "Maß:", lineVal), contextual.el));
-    const page2 = h("div", { hidden: true }, h("fieldset", null, h("legend", null, "Paginierung"), widow.el, keepNext.el, keepLines.el, pageBefore.el));
+    const page2 = h("div", { hidden: true }, h("fieldset", null, h("legend", null, "Paginierung"), widow.el, keepNext.el, keepLines.el, pageBefore.el),
+      h("fieldset", null, h("legend", null, "Formatierungsausnahmen"), noNumbers.el, noHyphens.el));
     const tabs = h("div", { class: "tabs" });
     const tab = (label: string, pg: HTMLElement) => h("button", {
       class: pg === page1 ? "active" : "",
@@ -1281,6 +1285,7 @@ export class WriteApp {
       lineRule, line: lineValue,
       contextual: contextual.cb.checked, widow: widow.cb.checked, keepNext: keepNext.cb.checked,
       keepLines: keepLines.cb.checked, pageBreakBefore: pageBefore.cb.checked,
+      suppressLineNumbers: noNumbers.cb.checked || undefined, suppressAutoHyphens: noHyphens.cb.checked || undefined,
     });
   }
 

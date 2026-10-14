@@ -887,6 +887,112 @@ def shapes(app) -> None:
 TEST_AUTHOR = "Raabe Office Test"
 
 
+HYPHEN_DE = [
+    "Die Fotosynthese ist ein biochemischer Vorgang, bei dem Pflanzen, Algen und manche Bakterien mithilfe von "
+    "Lichtenergie aus Kohlenstoffdioxid und Wasser energiereiche Kohlenhydrate herstellen. Dabei entsteht als "
+    "Nebenprodukt Sauerstoff, den fast alle Lebewesen zum Atmen brauchen.",
+    "Die Waldbodenlebewesengemeinschaft zersetzt abgestorbene Pflanzenteile. Regenwürmer, Springschwänze, "
+    "Asseln und unzählige Mikroorganismen verwandeln Laubstreu in nährstoffreichen Humus, der wiederum das "
+    "Wachstum der Bäume, Sträucher und Kräuter ermöglicht.",
+    "Bei der Untersuchung des Gewässers bestimmten die Schülerinnen und Schüler die Wassertemperatur, den "
+    "Sauerstoffgehalt, die Leitfähigkeit und den pH-Wert. Anschließend verglichen sie ihre Messergebnisse mit "
+    "den Grenzwerten der Gewässergüteklassen und dokumentierten alles im Versuchsprotokoll.",
+    "Selbstverständlich gehören zur Bundesrepublik Deutschland sechzehn Bundesländer mit Landesregierungen, "
+    "Landtagen und Verwaltungsbehörden; die Zuständigkeiten sind im Grundgesetz geregelt.",
+]
+HYPHEN_EN = ("Photosynthesis is the biological process by which plants, algae and certain bacteria convert light energy "
+             "into chemical energy, producing oxygen and carbohydrates that sustain nearly all ecosystems on Earth.")
+HYPHEN_FR = ("La photosynthèse est le processus bioénergétique qui permet aux plantes, aux algues et à certaines bactéries "
+             "de synthétiser de la matière organique en utilisant la lumière du soleil et le dioxyde de carbone.")
+
+
+HYPHEN_LONG_DE = [
+    "Im Mittelalter lebten die meisten Menschen auf dem Land. Sie bewirtschafteten die Felder ihrer Grundherren "
+    "und mussten einen Teil ihrer Ernte als Abgabe leisten. Die Dreifelderwirtschaft sorgte dafür, dass sich der "
+    "Boden regelmäßig erholen konnte.",
+    "Die Erdatmosphäre besteht hauptsächlich aus Stickstoff und Sauerstoff. Treibhausgase wie Kohlenstoffdioxid, "
+    "Methan und Distickstoffmonoxid halten einen Teil der Wärmestrahlung zurück und beeinflussen dadurch das Klima.",
+    "Beim Experimentieren im Chemieunterricht tragen alle Schutzbrillen. Die Versuchsdurchführung wird sorgfältig "
+    "beschrieben, die Beobachtungen werden notiert und die Ergebnisse anschließend gemeinsam ausgewertet.",
+    "Die Gewaltenteilung verteilt die staatliche Macht auf Gesetzgebung, Regierung und Rechtsprechung. Dadurch "
+    "kontrollieren sich die Verfassungsorgane gegenseitig, und niemand kann seine Befugnisse missbrauchen.",
+    "Elektrische Energie wird in Kraftwerken erzeugt und über Hochspannungsleitungen zu den Verbrauchern "
+    "transportiert. Transformatoren verringern die Spannung, bevor der Strom in die Haushalte gelangt.",
+    "Gedichtinterpretationen beginnen meist mit einer Inhaltsangabe. Danach werden der formale Aufbau, die "
+    "sprachlichen Mittel und ihre Wirkung untersucht, bevor eine abschließende Deutung formuliert wird.",
+    "Die Zellatmung findet in den Mitochondrien statt. Traubenzucker wird dabei mithilfe von Sauerstoff abgebaut, "
+    "und die freigesetzte Energie wird in Form von Adenosintriphosphat gespeichert.",
+    "Wahrscheinlichkeitsrechnung beschäftigt sich mit zufälligen Ereignissen. Mit Baumdiagrammen und Vierfeldertafeln "
+    "lassen sich zusammengesetzte Wahrscheinlichkeiten übersichtlich darstellen und berechnen.",
+    "Während der Industrialisierung zogen viele Menschen in die Städte, um in den Fabriken zu arbeiten. Die "
+    "Arbeitsbedingungen waren hart, und Kinderarbeit war weit verbreitet.",
+    "Der Wasserkreislauf umfasst Verdunstung, Kondensation, Niederschlag und Versickerung. Grundwasservorkommen "
+    "sind für die Trinkwasserversorgung besonders wichtig und müssen geschützt werden.",
+]
+HYPHEN_LONG_EN = [
+    "The industrial revolution transformed manufacturing, transportation and communication, creating unprecedented "
+    "opportunities as well as considerable environmental and social challenges for growing urban populations.",
+    "Scientists investigate biodiversity by observing ecosystems, classifying organisms and analysing how environmental "
+    "conditions influence the distribution of species across continents.",
+]
+HYPHEN_LONG_FR = [
+    "La Révolution française a profondément transformé la société, en abolissant les privilèges et en proclamant "
+    "l'égalité des citoyens devant la loi, ce qui a inspiré de nombreux mouvements démocratiques.",
+    "Les élèves participent régulièrement à des expériences scientifiques passionnantes, développant ainsi leur "
+    "curiosité intellectuelle et leurs compétences méthodologiques.",
+]
+
+
+def hyphenation(app) -> None:
+    """Automatische Silbentrennung (Step 4b F): German, English and French paragraphs, left
+    aligned and justified, in a narrow text column so that many lines end in a word; a second
+    file with at most two hyphens in a row and words in capitals not divided."""
+    for name, limit, caps in (("word-hyphen.docx", 0, True), ("word-hyphen-limit.docx", 2, False)):
+        d = app.Documents.Add()
+        ps = d.PageSetup
+        ps.PageWidth, ps.PageHeight = 595.3, 841.9
+        ps.TopMargin, ps.BottomMargin, ps.LeftMargin, ps.RightMargin = 70.85, 56.7, 70.85, 200
+        s = d.Styles(-1)
+        s.Font.Name, s.Font.Size = "Calibri", 11
+        s.ParagraphFormat.SpaceAfter, s.ParagraphFormat.LineSpacingRule, s.ParagraphFormat.LineSpacing = 8, 5, 12 * 1.08
+        texts = HYPHEN_DE + [t.upper() if not caps else t for t in HYPHEN_DE[:1]] + [HYPHEN_EN, HYPHEN_FR] + HYPHEN_DE[:2]
+        d.Content.Text = "\r".join(texts)
+        d.Content.LanguageID = 1031
+        P = d.Paragraphs
+        P(len(HYPHEN_DE) + 2).Range.LanguageID = 1033
+        P(len(HYPHEN_DE) + 3).Range.LanguageID = 1036
+        for i in range(len(texts) - 1, len(texts) + 1):
+            P(i).Alignment = 3  # Blocksatz
+        P(2).Alignment = 3
+        d.AutoHyphenation = True
+        d.HyphenateCaps = caps
+        d.ConsecutiveHyphensLimit = limit
+        d.SaveAs2(str(OUT / name), 16)
+        d.Close(0)
+    # A longer one for measuring: about 150 line ends in three languages.
+    d = app.Documents.Add()
+    ps = d.PageSetup
+    ps.PageWidth, ps.PageHeight = 595.3, 841.9
+    ps.TopMargin, ps.BottomMargin, ps.LeftMargin, ps.RightMargin = 56.7, 56.7, 70.85, 240
+    st = d.Styles(-1)
+    st.Font.Name, st.Font.Size = "Calibri", 11
+    st.ParagraphFormat.SpaceAfter, st.ParagraphFormat.LineSpacingRule, st.ParagraphFormat.LineSpacing = 6, 5, 12 * 1.08
+    texts = HYPHEN_LONG_DE + HYPHEN_LONG_EN + HYPHEN_LONG_FR
+    d.Content.Text = "\r".join(texts)
+    d.Content.LanguageID = 1031
+    P = d.Paragraphs
+    n = len(HYPHEN_LONG_DE)
+    for i in range(n + 1, n + len(HYPHEN_LONG_EN) + 1):
+        P(i).Range.LanguageID = 1033
+    for i in range(n + len(HYPHEN_LONG_EN) + 1, len(texts) + 1):
+        P(i).Range.LanguageID = 1036
+    for i in range(2, len(texts) + 1, 3):
+        P(i).Alignment = 3
+    d.AutoHyphenation = True
+    d.SaveAs2(str(OUT / "word-hyphen-long.docx"), 16)
+    d.Close(0)
+
+
 def anonymize(path: Path) -> None:
     """The repository is public: replace the Office user's name, initials and account id that
     Word writes into documents (core properties, comments, revisions, people.xml)."""
@@ -927,7 +1033,7 @@ def main() -> None:
         if only:
             for name in only:
                 {"layout": layout, "fonts": fonts, "breaks": breaks, "top": top, "formatting": formatting, "rich": rich,
-                 "lists": lists, "tables": tables, "sections": sections, "notes": notes, "borders": borders, "images": images, "step4": step4, "shapes": shapes, "math": math}[name](app)
+                 "lists": lists, "tables": tables, "sections": sections, "notes": notes, "borders": borders, "images": images, "step4": step4, "shapes": shapes, "math": math, "hyphenation": hyphenation}[name](app)
         else:
             formatting(app)
             rich(app)

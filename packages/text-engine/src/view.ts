@@ -1217,7 +1217,7 @@ export class View {
     el.style.cssText = style;
     let text = para.text.slice(seg.start, seg.end);
     if (c.hidden) text = "";
-    el.textContent = text.replace(/\u00ad/g, (_m, i: number) => (seg.start + i === line.end - 1 ? "-" : ""));
+    el.textContent = text.replace(/\u00ad/g, (_m, i: number) => (seg.start + i === line.end - 1 ? "-" : "")) + (line.hyphen && seg.end === line.end ? "-" : "");
     out.push(el);
     if (this.marks) {
       // Middle dots on spaces.

@@ -821,11 +821,25 @@ function setFlag(xml: string, name: string, on: boolean, before: string[]): stri
   if (!on) return xml.replace(re, "");
   let pos = -1;
   for (const b of before) {
-    const m = new RegExp(`<w:${b}[\\s/>][\\s\\S]*?(?:</w:${b}>|/>)`).exec(xml);
+    const m = new RegExp(`<w:${b}(?:\\s[^>]*?)?(?:/>|>[\\s\\S]*?</w:${b}>)`).exec(xml);
     if (m) pos = Math.max(pos, m.index + m[0].length);
   }
   if (pos < 0) pos = xml.indexOf(">", xml.indexOf("<w:settings")) + 1;
   return `${xml.slice(0, pos)}<w:${name}/>${xml.slice(pos)}`;
+}
+
+/** Sets (or with null removes) an element with a w:val in settings.xml, at its place in the schema. */
+function setValue(xml: string, name: string, val: string | null, before: string[]): string {
+  const re = new RegExp(`<w:${name}(\\s[^>]*)?/>`);
+  xml = xml.replace(re, "");
+  if (val === null) return xml;
+  let pos = -1;
+  for (const b of before) {
+    const m = new RegExp(`<w:${b}(?:\\s[^>]*?)?(?:/>|>[\\s\\S]*?</w:${b}>)`).exec(xml);
+    if (m) pos = Math.max(pos, m.index + m[0].length);
+  }
+  if (pos < 0) pos = xml.indexOf(">", xml.indexOf("<w:settings")) + 1;
+  return `${xml.slice(0, pos)}<w:${name} w:val="${val}"/>${xml.slice(pos)}`;
 }
 
 function settingsXml(state: DocState, base: string | null): string {
@@ -833,6 +847,11 @@ function settingsXml(state: DocState, base: string | null): string {
     '<w:characterSpacingControl w:val="doNotCompress"/><w:compat><w:compatSetting w:name="compatibilityMode" w:uri="http://schemas.microsoft.com/office/word" w:val="15"/></w:compat></w:settings>';
   xml = setFlag(xml, "evenAndOddHeaders", !!state.settings.evenOdd, BEFORE_EVEN_ODD);
   xml = setFlag(xml, "trackRevisions", !!state.settings.trackChanges, BEFORE_TRACK);
+  // Layout > Silbentrennung: as Word writes it (the zone stays as the file has it).
+  const hy = state.settings.hyphenation;
+  xml = setFlag(xml, "autoHyphenation", !!hy?.auto, BEFORE_EVEN_ODD.slice(0, BEFORE_EVEN_ODD.indexOf("autoHyphenation")));
+  xml = setValue(xml, "consecutiveHyphenLimit", hy?.limit ? String(hy.limit) : null, BEFORE_EVEN_ODD.slice(0, BEFORE_EVEN_ODD.indexOf("consecutiveHyphenLimit")));
+  xml = setFlag(xml, "doNotHyphenateCaps", !!hy && !hy.caps, BEFORE_EVEN_ODD.slice(0, BEFORE_EVEN_ODD.indexOf("doNotHyphenateCaps")));
   // Fuß- und Endnote: the numbering and place of notes, kept with the separators Word lists there.
   const notes = state.settings.notes;
   if (notes && !(base && JSON.stringify(readNoteSettings(parse(base).documentElement) ?? {}) === JSON.stringify(notes))) {

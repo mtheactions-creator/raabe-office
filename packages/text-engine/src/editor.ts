@@ -2,7 +2,8 @@
 // Word's selection rules, and all edits go through the document model. The shell calls the
 // public commands below and listens for changes with onChange().
 
-import { DEFAULT_MATH, Doc, MAIN, cmp, maxPos, minPos, type DocSettings, type DocSnapshot, type DocState, type MathSettings, type Pos } from "./doc";
+import { DEFAULT_MATH, Doc, MAIN, cmp, maxPos, minPos, type DocSettings, type DocSnapshot, type DocState, type Hyphenation, type MathSettings, type Pos } from "./doc";
+import { hyphenatorFor, onHyphenationReady } from "./hyphen";
 import { Fonts, PT } from "./fonts";
 import { layoutDocument, type FlowInput, type Layout } from "./flow";
 import { Layouter, type LayoutContext } from "./layout";
@@ -212,6 +213,9 @@ export class Editor {
     this.view = new View(workspace, fonts);
     this.installMarks();
     this.requireFonts();
+    // Hyphenation patterns load on first use; the text is laid out again once they are there.
+    const self = new WeakRef(this);
+    const off = onHyphenationReady(() => { const e = self.deref(); if (!e) off(); else if (e.doc.settings.hyphenation?.auto) e.relayout(); });
 
     this.input = document.createElement("textarea");
     this.input.setAttribute("autocomplete", "off");
@@ -237,6 +241,7 @@ export class Editor {
     return {
       styles: this.doc.styles, fonts: this.fonts, defaultTab: this.doc.settings.defaultTab, measureMath: this.measureMath, markup: this.markupMode,
       mathJc: this.doc.settings.math?.defJc,
+      ...(this.doc.settings.hyphenation?.auto ? { hyphenation: { caps: this.doc.settings.hyphenation.caps, limit: this.doc.settings.hyphenation.limit } } : {}),
     };
   }
 
@@ -2667,6 +2672,50 @@ export class Editor {
   }
 
   /** Seitenfarbe: the page colour (undefined: Keine Farbe). */
+  /** Layout > Silbentrennung: the document's settings (Word's defaults when it has none). */
+  get hyphenation(): Hyphenation {
+    return this.doc.settings.hyphenation ?? { auto: false, caps: true, limit: 0 };
+  }
+
+  /** Keine / Automatisch and the Silbentrennungsoptionen. */
+  setHyphenation(h: Hyphenation): void {
+    this.snapshot();
+    this.doc.setSettings({ ...this.doc.settings, hyphenation: h });
+    this.relayout();
+    this.emit(true);
+  }
+
+  /**
+   * Manuelle Silbentrennung: the next word (from a position in the main text) that automatic
+   * hyphenation would divide at a line end, with its hyphenation points and the one proposed.
+   */
+  hyphenationProposal(from: Pos): { p: number; a: number; b: number; word: string; points: readonly number[]; at: number } | null {
+    if (this.doc.activeStory !== MAIN) return null;
+    const story = this.layout.main;
+    const ctx = { ...this.context(), hyphenation: { caps: this.hyphenation.caps, limit: 0 } };
+    const probe = new Layouter(ctx);
+    const paras = this.doc.main;
+    for (let p = from.p; p < paras.length; p++) {
+      const para = paras[p];
+      const pl = story.paras[p];
+      if (!pl || para.block || !para.text || this.doc.styles.resolvePara(para.props).suppressAutoHyphens) continue;
+      const lay = probe.paragraph(para, { width: pl.width });
+      for (const line of lay.lines) {
+        if (!line.hyphen) continue;
+        let a = line.end, b = line.end;
+        while (a > 0 && /[\p{L}\p{M}]/u.test(para.text[a - 1])) a--;
+        while (b < para.text.length && /[\p{L}\p{M}]/u.test(para.text[b])) b++;
+        if (p === from.p && a < from.o) continue;
+        const word = para.text.slice(a, b);
+        const rc = this.doc.styles.resolveChar(para.props.style, this.doc.charPropsAt({ p, o: a }));
+        // The dialog shows every syllable, as Word's does ("mit-hil-fe").
+        const points = hyphenatorFor(rc.lang)?.hyphenate(word, 2, 2) ?? [];
+        return { p, a, b, word, points, at: line.end - a };
+      }
+    }
+    return null;
+  }
+
   setBackground(bg: DocSettings["background"]): void {
     this.snapshot();
     this.doc.setSettings({ ...this.doc.settings, background: bg });

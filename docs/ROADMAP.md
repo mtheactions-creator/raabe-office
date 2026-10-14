@@ -52,7 +52,8 @@ Entwurf tab and Rahmen und Schattierung done; E done 2026-10-14 with Texteffekte
 verknüpfte Textfelder and Deckblatt (every non-deferred ribbon command now works; Silbentrennung
 and Thesaurus come with the languages in F). F in progress (D-049): French and Spanish spelling, Sprache
 automatisch erkennen, Word's dialog Sprache, Thesaurus pane and Synonyme, the Editor pane (F7)
-and the options Dokumentprüfung and Sprache done.
+and the options Dokumentprüfung and Sprache done. Silbentrennung done (D-050: Word's breaks on 120
+of 125 measured lines).
 
 Order: A, B, C, D, E, F. A comes first because its tools find the differences nobody has
 reported yet; the behaviour catalogue grows with each package. F is last and the largest
