@@ -826,6 +826,8 @@ class Flow {
     column: { x: number; w: number }, wrap: boolean): void {
     const s = page.setup;
     floats.forEach((f, index) => {
+      // Ausgeblendet in the Auswahlbereich: neither drawn nor in the text's way.
+      if (f.alt?.hidden) return;
       const w = f.width * PT, h = f.height * PT;
       const relX = (rel: string): [number, number] => {
         if (rel === "page") return [0, s.width * PT];

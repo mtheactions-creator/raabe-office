@@ -48,6 +48,10 @@ export interface Theme {
   readonly minorFont: string;
   /** The theme's colours (dk1 … accent6), for pictures and shapes. */
   readonly colors?: Readonly<Record<string, string>>;
+  /** Names Word shows (Entwurf > Designs, Farben, Schriftarten) and writes into theme1.xml. */
+  readonly name?: string;
+  readonly colorName?: string;
+  readonly fontName?: string;
 }
 
 export interface ResolvedChar {
@@ -179,6 +183,23 @@ export class StyleSheet {
     const map = new Map(this.styles);
     map.set(def.id, def);
     return new StyleSheet(map, this.defaultsR, this.defaultsP, this.theme);
+  }
+
+  /** Returns a sheet without a style (Formatvorlage löschen). */
+  without(id: string): StyleSheet {
+    const map = new Map(this.styles);
+    map.delete(id);
+    return new StyleSheet(map, this.defaultsR, this.defaultsP, this.theme);
+  }
+
+  /** Returns a sheet with other document defaults (Absatzabstand, Als Standard festlegen). */
+  withDefaults(r: CharProps, p: ParaProps): StyleSheet {
+    return new StyleSheet(this.styles, r, p, this.theme);
+  }
+
+  /** Returns a sheet with another theme (Entwurf > Designs, Farben, Schriftarten). */
+  withTheme(theme: Theme): StyleSheet {
+    return new StyleSheet(this.styles, this.defaultsR, this.defaultsP, theme);
   }
 
   private chain(id: string | undefined): StyleDef[] {
@@ -381,12 +402,13 @@ export function defaultStyleSheet(): StyleSheet {
     hidden(c("Endnotenzeichen", "endnote reference", { vertAlign: "superscript" }, 99)),
     hidden(p("Kommentartext", "annotation text", { line: 1, lineRule: "auto" }, { size: 10 }, { uiPriority: 99, next: undefined })),
     hidden(c("Kommentarzeichen", "annotation reference", { size: 8 }, 99)),
-    p("Inhaltsverzeichnisberschrift", "TOC Heading", { outline: 9 }, {}, { uiPriority: 39, basedOn: "berschrift1", next: "Standard" }),
+    p("Inhaltsverzeichnisberschrift", "TOC Heading", { outline: 9 }, {}, { uiPriority: 39, basedOn: "berschrift1", next: "Standard", semiHidden: true }),
     hidden(p("Verzeichnis1", "toc 1", { after: 5 }, {}, { uiPriority: 39, next: "Standard" })),
     hidden(p("Verzeichnis2", "toc 2", { after: 5, indLeft: 11 }, {}, { uiPriority: 39, next: "Standard" })),
     hidden(p("Verzeichnis3", "toc 3", { after: 5, indLeft: 22 }, {}, { uiPriority: 39, next: "Standard" })),
     hidden(c("Hyperlink", "Hyperlink", { color: "0563C1", underline: "single" }, 99)),
-    p("Beschriftung", "caption", { after: 10, line: 1, lineRule: "auto" }, { italic: true, color: "44546A", size: 9 }, { uiPriority: 35, qFormat: true }),
+    // Hidden until used, as in Word's latent styles (w:semiHidden, w:unhideWhenUsed, w:qFormat).
+    p("Beschriftung", "caption", { after: 10, line: 1, lineRule: "auto" }, { italic: true, color: "44546A", size: 9 }, { uiPriority: 35, qFormat: true, semiHidden: true }),
     hidden(p("Abbildungsverzeichnis", "table of figures", { after: 0 }, {}, { uiPriority: 99, next: "Standard" })),
     hidden(p("Literaturverzeichnis", "Bibliography", {}, {}, { uiPriority: 37, next: "Standard" })),
     {

@@ -35,7 +35,7 @@ export interface RibbonContext {
     position: Popup; align: Popup; rotate: MenuEntry[]; forward: MenuEntry[]; backward: MenuEntry[];
     toc: MenuEntry[]; addText: MenuEntry[]; nextNote: MenuEntry[]; equation: Popup; symbol: Popup; citation: MenuEntry[]; bibliography: Popup;
     track: MenuEntry[]; deleteComment: MenuEntry[]; accept: MenuEntry[]; reject: MenuEntry[];
-    showComments: MenuEntry[]; filterMarkup: MenuEntry[];
+    showComments: MenuEntry[]; filterMarkup: MenuEntry[]; reviewingPane: MenuEntry[];
   };
   /** Markup für Überarbeitung anzeigen (Einfaches Markup, Alle Markups …). */
   markup: { value(): string; set(v: string): void; options(): { heading?: string; items: string[] }[] };
@@ -148,7 +148,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
   const borders = split("para.borders", "MR", "small", ctx.panels.borders);
   const paste = split("edit.paste", "V", "large", [{ cmd: "edit.paste", label: "Ursprüngliche Formatierung beibehalten" }, { cmd: "edit.pasteText" }]);
   const find = (size: "medium" | "small") => split("edit.find", "UU", size, [{ cmd: "edit.find" }, { cmd: "edit.goto" }]);
-  const select: Control = { type: "dropdown", cmd: "edit.selectMenu", key: "ß", size: "medium", menu: [{ cmd: "edit.selectAll" }] };
+  const select: Control = { type: "dropdown", cmd: "edit.selectMenu", key: "ß", size: "medium", menu: [{ cmd: "edit.selectAll" }, { cmd: "edit.selectObjects" }, { cmd: "edit.selectSimilar" }, { cmd: "layout.selectionPane", label: "Auswahlbereich..." }] };
   const spinners = (title: string, a: Control, b2: Control): Control => ({ type: "stack", title, items: [a, b2] });
   const indentLeft: Control = { type: "spinner", cmd: "layout.indentLeft", label: "Links:", icon: "indent-increase", key: "L",
     value: () => ctx.indent("left"), commit: (v) => ctx.setIndent("left", v), step: (d) => ctx.stepIndent("left", d) };
@@ -331,7 +331,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
             stack(b("review.nextComment", "ß", "medium"), split("review.showComments", "KA", "medium", ctx.panels.showComments))]] },
         { id: "markup", label: "Markup", key: "ZM", icon: "markup", launcher: { cmd: "review.trackOptions", key: "C" },
           controls: [dd("review.filterMarkup", "F1", "large", undefined, ctx.panels.filterMarkup),
-            stack(markupMode, dd("review.showMarkup", "G", "medium", undefined, ctx.panels.filterMarkup), split("review.reviewingPane", "U1", "medium"))] },
+            stack(markupMode, dd("review.showMarkup", "G", "medium", undefined, ctx.panels.filterMarkup), split("review.reviewingPane", "U1", "medium", ctx.panels.reviewingPane))] },
         { id: "tracking", label: "Nachverfolgung", key: "ZT", icon: "track-changes",
           controls: [split("review.trackChanges", "DN", "large", ctx.panels.track),
             split("review.accept", "AA", "large", ctx.panels.accept), split("review.reject", "FB", "large", ctx.panels.reject),

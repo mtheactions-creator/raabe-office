@@ -1,13 +1,18 @@
 // Überprüfen: Kommentare (cards right of the page, as Word's modern comments, and the
-// Kommentare pane) and Nachverfolgung (Änderungen nachverfolgen, Markup, Annehmen/Ablehnen).
+// Kommentare pane), Nachverfolgung (Änderungen nachverfolgen, Markup, Annehmen/Ablehnen), the
+// Überarbeitungsbereich (vertical or horizontal) and Optionen zum Nachverfolgen von Änderungen.
 
-import type { Editor } from "@raabe/text-engine";
+import type { Editor, Pos } from "@raabe/text-engine";
 import { h, icon, showMenu, type Command, type MenuEntry } from "@raabe/shell";
 import type { AppApi } from "./api";
+import type { Dock } from "./dock";
+import { openModal } from "./modal";
 
 const cmd = (id: string, label: string, icon?: string, extra: Partial<Command> = {}): Command => ({ id, label, icon, ...extra });
 
 export const REVIEW_COMMANDS: Command[] = [
+  cmd("review.reviewingPaneVertical", "Überarbeitungsbereich vertikal...", "reviewing-pane"),
+  cmd("review.reviewingPaneHorizontal", "Überarbeitungsbereich horizontal...", "reviewing-pane"),
   cmd("review.deleteAllComments", "Alle Kommentare im Dokument löschen", "comment-delete"),
   cmd("review.markupMode", "Markup für Überarbeitung anzeigen", "markup",
     { tip: "Markup für Überarbeitung anzeigen\nWählen Sie aus, wie Änderungen im Dokument angezeigt werden sollen." }),
@@ -64,7 +69,7 @@ interface CardState {
   commentsShown: boolean;
 }
 
-export function reviewFeature(api: AppApi, userName: () => string, pane: HTMLElement) {
+export function reviewFeature(api: AppApi, userName: () => string, pane: HTMLElement, docArea: HTMLElement, options: () => void, dock: Dock) {
   const ed = () => api.editor();
   const c = api.commands;
   const has = () => !!ed();
@@ -257,6 +262,7 @@ export function reviewFeature(api: AppApi, userName: () => string, pane: HTMLEle
       });
     }
     renderPane(e, list);
+    renderRev();
   };
 
   const renderPane = (e: Editor, list: ReturnType<typeof threads>) => {
@@ -319,13 +325,124 @@ export function reviewFeature(api: AppApi, userName: () => string, pane: HTMLEle
     { label: "Formatierung", run: () => {}, disabled: true },
   ];
 
+  // ----- Überarbeitungsbereich ----------------------------------------------------------------
+  // Word's pane (measured 2026-10-14): "Überarbeitungen", the count with a detailed summary,
+  // then each change as "<Autor> Hinzugefügt" / "hat gelöscht" / "hat kommentiert" and its text.
+  let revMode: "off" | "vertical" | "horizontal" = "off";
+  let revDetails = false;
+  const revPane = h("div", { class: "revpane", hidden: true, role: "complementary", "aria-label": "Überarbeitungen" });
+  docArea.append(revPane);
+  const setRevPane = (mode: typeof revMode) => {
+    revMode = mode;
+    revPane.hidden = mode === "off";
+    revPane.classList.toggle("horizontal", mode === "horizontal");
+    dock.add(revPane, mode === "horizontal" ? "bottom" : "left", mode === "horizontal" ? 220 : 270);
+    revKey = "";
+    renderRev();
+    api.refresh();
+    if (mode === "off") api.focus();
+  };
+  let revKey = "";
+  const renderRev = () => {
+    if (revMode === "off") return;
+    const e = ed();
+    type Item = { at: Pos; who: string; what: string; text: string; go: () => void };
+    const items: Item[] = [];
+    const count = { ins: 0, del: 0, comments: 0 };
+    if (e) {
+      for (const r of e.revisionList()) {
+        count[r.kind]++;
+        items.push({ at: r.from, who: r.author || "Unbekannter Autor", what: r.kind === "ins" ? "Hinzugefügt" : "hat gelöscht", text: r.text, go: () => e.select(r.from, r.to) });
+      }
+      for (const t of threads(e)) {
+        count.comments++;
+        items.push({ at: t[0].start, who: t[0].author, what: "hat kommentiert", text: t[0].text, go: () => e.selectComment(t[0].id) });
+      }
+      items.sort((a, b) => a.at.p - b.at.p || a.at.o - b.at.o);
+    }
+    const key = JSON.stringify([revMode, revDetails, items.map((x) => [x.at, x.who, x.what, x.text])]);
+    if (key === revKey) return;
+    revKey = key;
+    const n = items.length;
+    const head = h("div", { class: "rev-head" }, h("span", null, "Überarbeitungen"),
+      h("div", null,
+        h("button", { "aria-label": "Optionen für den Aufgabenbereich", "data-tip": "Optionen für den Aufgabenbereich",
+          onclick: (ev: MouseEvent) => showMenu(c, [{ label: "Schließen", run: () => setRevPane("off") }], (ev.currentTarget as HTMLElement).getBoundingClientRect()) }, icon("chevron-down")),
+        h("button", { "aria-label": "Bereich schließen", "data-tip": "Bereich schließen", onclick: () => setRevPane("off") }, icon("close"))));
+    const summary = h("div", { class: "rev-count" },
+      h("button", { class: "rev-toggle", "aria-expanded": String(revDetails), "data-tip": revDetails ? "Detaillierte Zusammenfassung ausblenden" : "Detaillierte Zusammenfassung anzeigen",
+        onclick: () => { revDetails = !revDetails; revKey = ""; renderRev(); } }, icon(revDetails ? "chevron-down" : "chevron-up")),
+      h("b", null, n === 1 ? "1 Überarbeitung" : `${n} Überarbeitungen`),
+      h("button", { class: "rev-refresh", "aria-label": "Aktualisieren", "data-tip": "Aktualisieren", onclick: () => { revKey = ""; renderRev(); } }, icon("update")));
+    const details = revDetails ? h("div", { class: "rev-details" },
+      ...([["Einfügungen", count.ins], ["Löschungen", count.del], ["Verschiebungen", 0], ["Formatierung", 0], ["Kommentare", count.comments]] as const)
+        .map(([k, v]) => h("div", null, `${k}: ${v}`))) : null;
+    const list = h("div", { class: "rev-list" });
+    for (const x of items) {
+      const el = h("button", { class: "rev-item" }, h("div", { class: "rev-who" }, `${x.who} ${x.what}`), h("div", { class: `rev-text${x.what === "hat gelöscht" ? " del" : ""}` }, x.text.replace(/\n$/, "").replace(/[\x00-\x08\x0b-\x1f]/g, " ") || " "));
+      el.onclick = () => { x.go(); api.focus(); };
+      list.append(el);
+    }
+    revPane.replaceChildren(head, summary, ...(details ? [details] : []), list);
+  };
+  c.implement("review.reviewingPane", { run: () => setRevPane(revMode === "off" ? "vertical" : "off"), enabled: has, checked: () => revMode !== "off" });
+  c.implement("review.reviewingPaneVertical", { run: () => setRevPane("vertical"), enabled: has, checked: () => revMode === "vertical" });
+  c.implement("review.reviewingPaneHorizontal", { run: () => setRevPane("horizontal"), enabled: has, checked: () => revMode === "horizontal" });
+  const reviewingPaneMenu: MenuEntry[] = [{ cmd: "review.reviewingPaneVertical" }, { cmd: "review.reviewingPaneHorizontal" }];
+
+  // ----- Optionen zum Nachverfolgen von Änderungen -----------------------------------------------
+  // Word's dialog (recorded 2026-10-14). What RaabeWrite does not track (ink, formatting) is shown
+  // as Word shows it, greyed where it cannot change anything.
+  const trackOptions = () => {
+    const e = ed();
+    if (!e) return;
+    const check = (label: string, checked: boolean, disabled = false, tip?: string) => {
+      const box = h("input", { type: "checkbox", checked, disabled }) as HTMLInputElement;
+      return { box, el: h("label", { class: `check${disabled ? " disabled" : ""}`, ...(tip ? { "data-tip": tip } : {}) }, box, label) };
+    };
+    const ink = check("Freihand", true, true, "RaabeWrite hat keine Freihandeingaben.");
+    const insDel = check("Einfügungen und Löschungen", e.markupMode !== "none");
+    const format = check("Formatierung", true, true, "RaabeWrite verfolgt Formatierungsänderungen nicht nach.");
+    const updates = check("Aktualisierungen hervorheben", true, true);
+    const others = check("Andere Autoren", true, true);
+    const balloons = h("select", {},
+      h("option", { value: "revisions", disabled: true }, "Überarbeitungen"),
+      h("option", { value: "comments" }, "Kommentare und Formatierungen"),
+      h("option", { value: "none" }, "Nichts")) as HTMLSelectElement;
+    balloons.value = st.commentsShown || st.pane ? "comments" : "none";
+    const paneSel = h("select", {}, h("option", { value: "off" }, "Aus"), h("option", { value: "vertical" }, "Vertikal"), h("option", { value: "horizontal" }, "Horizontal")) as HTMLSelectElement;
+    paneSel.value = revMode;
+    const body = h("div", { class: "trackopts" },
+      h("fieldset", {}, h("legend", {}, "Anzeigen"),
+        h("div", { class: "grid2" }, ink.el, updates.el, insDel.el, others.el, format.el)),
+      h("div", { class: "grid2 wide" },
+        h("span", null, "In Sprechblasen in der Ansicht \"Markup: alle\" anzeigen:"), balloons,
+        h("span", null, "Überarbeitungsbereich:"), paneSel),
+      h("div", { class: "row" },
+        h("button", { disabled: true, "data-tip": "Erweiterte Optionen\nFarben und Markierungen der Änderungen sind in RaabeWrite fest." }, "Erweiterte Optionen..."),
+        h("button", { onclick: () => { m.close(); options(); } }, "Benutzernamen ändern...")));
+    const m = openModal("Optionen zum Nachverfolgen von Änderungen", body, [
+      { label: "OK", primary: true, run: () => {
+        if (insDel.box.checked !== (e.markupMode !== "none")) setInsDel(insDel.box.checked);
+        const show = balloons.value === "comments";
+        if (show !== (st.commentsShown || st.pane)) { st.commentsShown = show; if (!show) st.pane = false; }
+        lastKey = "";
+        render(e);
+        if (paneSel.value !== revMode) setRevPane(paneSel.value as typeof revMode);
+        return true;
+      } },
+      { label: "Abbrechen", run: () => true },
+    ], { width: 620 });
+  };
+  c.implement("review.trackOptions", { run: trackOptions, enabled: has });
+
   const trackMenu: MenuEntry[] = [{ cmd: "review.trackChanges" }];
   const deleteMenu: MenuEntry[] = [{ cmd: "review.deleteComment" }, { cmd: "review.deleteAllComments" }];
   const acceptMenu: MenuEntry[] = [{ cmd: "accept.next" }, { cmd: "accept.this" }, { cmd: "accept.all" }, { cmd: "accept.allStop" }];
   const rejectMenu: MenuEntry[] = [{ cmd: "reject.next" }, { cmd: "reject.this" }, { cmd: "reject.all" }, { cmd: "reject.allStop" }];
   return {
     attach, render: () => { const e = ed(); if (e) { lastKey = ""; render(e); } }, togglePane,
-    trackMenu, deleteMenu, acceptMenu, rejectMenu, showCommentsMenu, filterMenu,
+    trackMenu, deleteMenu, acceptMenu, rejectMenu, showCommentsMenu, filterMenu, reviewingPaneMenu,
     markup: { value: markupValue, set: setMarkup, options: () => [{ items: MARKUP_MODES.map(([, l]) => l) }] },
   };
 }

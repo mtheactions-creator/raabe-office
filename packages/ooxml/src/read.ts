@@ -9,7 +9,7 @@ import { strFromU8, unzipSync } from "fflate";
 import {
   A4, COLUMN_BREAK, DEFAULT_SECTION, LINE_BREAK, OBJ, ONE_COLUMN, PAGE_BREAK, StyleSheet, defaultStyleSheet, intern, nextTableId, plainPicture, seqToLatex,
   type Anchor, type BlockObject, type CellDef, type CellRef, type CharProps, type CommentMeta, type DocState, type FloatObject,
-  type DocSettings, type HeaderRefs, type ImageData, type InlineObject, type MathSettings, type NoteProps, type Numbering, type Para, type ParaGroup, type ParaProps, type PictureFormat, type Revision, type ShapeInfo,
+  type AltText, type DocSettings, type HeaderRefs, type ImageData, type InlineObject, type MathSettings, type NoteProps, type Numbering, type Para, type ParaGroup, type ParaProps, type PictureFormat, type Revision, type ShapeInfo,
   type RowDef, type Run, type Section, type StyleDef, type StyleType, type TableDef, type TableStyleDef, type TableStylePart,
 } from "@raabe/text-engine";
 import { mathParaJc, ommlToSeq, readMathPr } from "./math";
@@ -36,6 +36,9 @@ export interface DocxPackage {
   stylesXml: string | null;
   styleIds: Set<string>;
   hasTheme: boolean;
+  /** The theme and the document defaults as read (JSON): changed ones are written. */
+  themeRead?: string;
+  defaultsRead?: string;
   /** Header/footer stories: their part and the part's root start tag. */
   storyParts: Map<string, { path: string; rootTag: string }>;
   /** Numbering as read (written back unchanged while it is the same object). */
@@ -73,7 +76,7 @@ const EMU = 12700;
 /** Preserved inline content: complete XML, run content to wrap in a run, or a picture. */
 export type ObjectData = { raw: string } | { inner: string } | { drawing: string; part: string; picRead?: string };
 
-function themeFonts(xml: string | null): { major: string; minor: string } {
+function themeFonts(xml: string | null): { major: string; minor: string; name?: string; colorName?: string; fontName?: string } {
   if (!xml) return { major: "Calibri Light", minor: "Calibri" };
   const doc = parse(xml);
   const pick = (tag: string, fallback: string) => {
@@ -81,7 +84,9 @@ function themeFonts(xml: string | null): { major: string; minor: string } {
     const latin = el ? Array.from(el.children).find((c) => c.localName === "latin") : undefined;
     return latin?.getAttribute("typeface") || fallback;
   };
-  return { major: pick("majorFont", "Calibri Light"), minor: pick("minorFont", "Calibri") };
+  // The names Entwurf shows for the theme, its colours and its fonts.
+  const nameOf = (tag: string) => doc.getElementsByTagNameNS(A, tag)[0]?.getAttribute("name") || undefined;
+  return { major: pick("majorFont", "Calibri Light"), minor: pick("minorFont", "Calibri"), name: nameOf("theme"), colorName: nameOf("clrScheme"), fontName: nameOf("fontScheme") };
 }
 
 function cellMargins(el: Element | null): Partial<{ left: number; right: number; top: number; bottom: number }> | undefined {
@@ -120,7 +125,7 @@ function readTableStyle(s: Element): TableStyleDef {
   };
 }
 
-function readStyles(xml: string | null, theme: { major: string; minor: string; colors?: Record<string, string> }): StyleSheet {
+function readStyles(xml: string | null, theme: { major: string; minor: string; colors?: Record<string, string>; name?: string; colorName?: string; fontName?: string }): StyleSheet {
   if (!xml) return defaultStyleSheet();
   const doc = parse(xml);
   const root = doc.documentElement;
@@ -151,7 +156,8 @@ function readStyles(xml: string | null, theme: { major: string; minor: string; c
       table: type === "table" ? readTableStyle(s) : undefined,
     });
   }
-  return new StyleSheet(styles, defaultsR, defaultsP, { majorFont: theme.major, minorFont: theme.minor, colors: theme.colors });
+  const names = { ...(theme.name ? { name: theme.name } : {}), ...(theme.colorName ? { colorName: theme.colorName } : {}), ...(theme.fontName ? { fontName: theme.fontName } : {}) };
+  return new StyleSheet(styles, defaultsR, defaultsP, { majorFont: theme.major, minorFont: theme.minor, colors: theme.colors, ...names });
 }
 
 // ----- fields -------------------------------------------------------------------------------
@@ -682,7 +688,7 @@ class PartReader {
     const docPr = c.getElementsByTagNameNS(WP, "docPr")[0];
     const descr = docPr?.getAttribute("descr") ?? undefined, title = docPr?.getAttribute("title") ?? undefined;
     const decorative = !!docPr?.getElementsByTagNameNS("http://schemas.microsoft.com/office/drawing/2017/decorative", "decorative")[0];
-    const alt = descr || title || decorative ? { descr: descr || undefined, title: title || undefined, decorative: decorative || undefined } : undefined;
+    const alt = docPrAlt(docPr, { descr: descr || undefined, title: title || undefined, decorative: decorative || undefined });
     const data: ObjectData = { drawing: outer(c), part: this.part, picRead: JSON.stringify({ pic, alt }) };
     const ext = (el: Element) => {
       const e = Array.from(el.children).find((x) => x.localName === "extent");
@@ -721,7 +727,7 @@ class PartReader {
     const { pic, shape } = this.shapeOf(wsp);
     const docPr = c.getElementsByTagNameNS(WP, "docPr")[0];
     const descr = docPr?.getAttribute("descr") ?? undefined, title = docPr?.getAttribute("title") ?? undefined;
-    const alt = descr || title ? { descr: descr || undefined, title: title || undefined } : undefined;
+    const alt = docPrAlt(docPr, { descr: descr || undefined, title: title || undefined });
     // The XML is written back unchanged unless the shape changes (snapshot without the story).
     const data: ObjectData = { drawing: outer(c), part: this.part, picRead: JSON.stringify({ pic, alt, shape: { ...shape, story: undefined } }) };
     const holder = inline ?? anchor!;
@@ -946,6 +952,15 @@ function readComments(r: Reader, path: string, extPath: string | null): { rootTa
 
 // ----- the package --------------------------------------------------------------------------
 
+/** Alternativtext plus the drawing's name and Ausblenden (wp:docPr), or undefined when empty. */
+function docPrAlt(docPr: Element | undefined, alt: AltText): AltText | undefined {
+  const name = docPr?.getAttribute("name") || undefined;
+  const h = docPr?.getAttribute("hidden");
+  const out: AltText = { ...alt, ...(name ? { name } : {}), ...(h === "1" || h === "true" ? { hidden: true } : {}) };
+  const clean = Object.fromEntries(Object.entries(out).filter(([, v]) => v !== undefined)) as AltText;
+  return Object.keys(clean).length ? clean : undefined;
+}
+
 /** w:footnotePr and w:endnotePr of settings.xml (only what the dialog Fuß- und Endnote sets). */
 export function readNoteSettings(settings: Element): DocSettings["notes"] {
   const one = (name: string): NoteProps | undefined => {
@@ -1030,6 +1045,7 @@ export function readDocx(bytes: Uint8Array): ReadResult {
     },
     pkg: {
       files, rootTag: rootTagOf(root), trailing, stylesXml, styleIds, hasTheme: !!themeXml, storyParts: r.storyParts,
+      themeRead: JSON.stringify(styles.theme), defaultsRead: JSON.stringify([styles.defaultsR, styles.defaultsP]),
       numbering, numberingRoot: numberingXml ? rootTagOf(parse(numberingXml).documentElement) : null, notes,
       comments: cm && cmPath ? { path: cmPath, rootTag: cm.rootTag } : null, settingsXml,
       originalStories: new Map(r.stories), originalComments: cm?.meta ?? null, bibliography,

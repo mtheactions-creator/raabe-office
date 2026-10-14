@@ -11,7 +11,7 @@ import {
   EMPTY, LINE_BREAK, OBJ, PAGE_BREAK, insertionProps, intern, joinParas, makePara, propsAt, type Align, type CharProps, type LineRule,
   type Para, type ParaProps, type Section,
 } from "./model";
-import { builtinStyle, type ResolvedChar, type ResolvedPara } from "./styles";
+import { GERMAN_NAMES, builtinStyle, defaultStyleSheet, type ResolvedChar, type ResolvedPara, type StyleDef } from "./styles";
 import { View, imageUrl, storyIdOf, type RenderOptions, type Selection, type TextMark } from "./view";
 import * as E from "./edits";
 import { fromHtml, toHtml } from "./html";
@@ -58,10 +58,11 @@ import { INSTANT_TRIGGERS, TRIGGERS, borderLine, instantFix, smartQuote, wordFix
 import * as S from "./school";
 import * as Refs from "./refs";
 import * as Bib from "./bibliography";
+import { sortOrder, type SortSpec } from "./sort";
 import { COLUMN_BREAK, type CellDef, type ImageData, type RowDef, type TableDef } from "./model";
 import { addList, bulletLevels as bulletLevelsOf, levelOf, listLabels, numberLevels as numberLevelsOf, numberingOf, restartList } from "./numbering";
 import { DEFAULT_SHAPE_BODY, type AltText, type BorderSpec, type Borders, type FloatObject, type InlineObject, type NumLevel, type ShapeInfo } from "./model";
-import { shadeLinear, shapeElement, shapeGeometry, shapeTextRect } from "./shape";
+import { SHAPE_NAMES, shadeLinear, shapeElement, shapeGeometry, shapeTextRect } from "./shape";
 import { parseLatex, seqToLatex, type Seq } from "./math/ast";
 import { presetAdjust, presetGeometry } from "./geometry";
 import { effectExtent, type PictureFormat } from "./picture";
@@ -1812,6 +1813,82 @@ export class Editor {
     this.update();
   }
 
+  /**
+   * Start > Sortieren: the selected paragraphs (all of the text without a selection) or, in a
+   * table, its rows (the selected ones, else all). Section breaks stay where they are.
+   * Returns why nothing was sorted, or null.
+   */
+  /**
+   * What Sortieren would sort, for the dialog: table rows or paragraphs, each as
+   * [whole text, field 1, …]; `headerRow` when the table's first row repeats as a heading.
+   */
+  sortPreview(separator = "\t"): { table: boolean; entries: string[][]; headerRow: boolean } {
+    const [from, to] = this.range();
+    const paras = this.doc.paras;
+    if (paras[from.p]?.cell) {
+      const t = E.tableAt(this.doc, from.p);
+      if (!t) return { table: true, entries: [], headerRow: false };
+      const r1 = paras[from.p].cell!.row, r2 = paras[to.p]?.cell?.table.id === t.def.id ? paras[to.p].cell!.row : r1;
+      const [lo, hi] = r1 === r2 ? [0, t.def.rows.length - 1] : [Math.min(r1, r2), Math.max(r1, r2)];
+      const entries = E.tableRowTexts(this.doc, from.p).slice(lo, hi + 1).map((cells) => [cells.join(" "), ...cells]);
+      return { table: true, entries, headerRow: lo === 0 && !!t.def.rows[0]?.header };
+    }
+    let a = from.p, b = to.p;
+    if (cmp(from, to) === 0) { a = 0; b = paras.length - 1; }
+    else if (to.o === 0 && b > a) b--;
+    return { table: false, entries: paras.slice(a, b + 1).filter((p) => !p.cell && !p.block).map((p) => [p.text, ...p.text.split(separator)]), headerRow: false };
+  }
+
+  sortText(spec: SortSpec): string | null {
+    const [from, to] = this.range();
+    const paras = this.doc.paras;
+    const sep = spec.separator || "\t";
+    if (paras[from.p]?.cell) {
+      const t = E.tableAt(this.doc, from.p);
+      if (!t) return null;
+      if (t.def.rows.some((r) => r.cells.some((c) => c.vMerge))) return "Tabellen mit vertikal verbundenen Zellen können nicht sortiert werden.";
+      const r1 = paras[from.p].cell!.row, r2 = paras[to.p]?.cell?.table.id === t.def.id ? paras[to.p].cell!.row : r1;
+      const [lo, hi] = r1 === r2 ? [0, t.def.rows.length - 1] : [Math.min(r1, r2), Math.max(r1, r2)];
+      const texts = E.tableRowTexts(this.doc, from.p).slice(lo, hi + 1);
+      const order = sortOrder(texts.map((cells) => [cells.join(" "), ...cells]), spec);
+      if (order.every((x, i) => x === i)) return null;
+      this.snapshot();
+      E.reorderRows(this.doc, from.p, lo, order);
+      const pos = E.firstOfCell(this.doc, t.a, lo, 0);
+      this.setSel(pos, pos);
+      this.update({ scroll: true });
+      return null;
+    }
+    let a = from.p, b = to.p;
+    if (cmp(from, to) === 0) { a = 0; b = paras.length - 1; }
+    else if (to.o === 0 && b > a) b--;
+    for (let i = a; i <= b; i++) {
+      if (paras[i].cell || paras[i].block) return "Die Markierung enthält eine Tabelle. Markieren Sie nur Absätze oder nur Zeilen einer Tabelle.";
+    }
+    const list = paras.slice(a, b + 1);
+    const order = sortOrder(list.map((p) => [p.text, ...p.text.split(sep)]), spec);
+    if (order.every((x, i) => x === i)) return null;
+    this.snapshot();
+    // Sections end where they ended: the breaks stay at their places.
+    const sects = list.map((p) => p.sect);
+    this.doc.splice(a, b, order.map((src, i) => {
+      const { sect: _s, ...rest } = list[src];
+      return sects[i] ? { ...rest, sect: sects[i] } : rest;
+    }));
+    this.setSel({ p: a, o: 0 }, { p: b, o: this.doc.paras[b].text.length });
+    this.update({ scroll: true });
+    return null;
+  }
+
+  /** Start > Markieren > Objekte auswählen: the pointer selects objects (also behind the text) only; Esc ends it. */
+  objectSelect = false;
+
+  setObjectSelect(on: boolean): void {
+    this.objectSelect = on;
+    this.workspace.classList.toggle("objselect", on);
+    this.emit(false);
+  }
+
   /** Selects the whole table / the current row / column / cell ("Auswählen"). */
   selectTablePart(part: "table" | "row" | "column" | "cell"): void {
     const h = this.sel.head;
@@ -2228,6 +2305,163 @@ export class Editor {
     this.update({ scroll: true });
   }
 
+  // ----- Formatvorlagen (pane, Formatvorlage ändern, Neue Formatvorlage) ------------------------
+
+  /**
+   * The styles the Formatvorlagen pane lists: the document's and Word's built-ins it lacks,
+   * with type, whether text uses them, Word's recommendation (priority) and the linked flag.
+   */
+  styleCatalog(): { id: string; name: string; type: StyleDef["type"]; inUse: boolean; recommended: boolean; builtin: boolean; priority: number; linked: boolean; qFormat: boolean }[] {
+    const sheet = this.doc.styles;
+    const builtins = defaultStyleSheet();
+    const used = new Set<string>([sheet.defaultParagraphStyle]);
+    const scan = (paras: readonly Para[]) => {
+      for (const p of paras) {
+        if (p.props.style) used.add(p.props.style);
+        for (const r of p.runs) if (r.props.rStyle) used.add(r.props.rStyle);
+      }
+    };
+    scan(this.doc.main);
+    for (const ps of this.doc.stories.values()) scan(ps);
+    const out = new Map<string, ReturnType<Editor["styleCatalog"]>[number]>();
+    const add = (s: StyleDef, inDoc: boolean) => {
+      if (s.type === "numbering" as string || out.has(s.id)) return;
+      const builtin = !!builtins.idForName(s.name) || !!GERMAN_NAMES[s.name.toLowerCase()];
+      out.set(s.id, {
+        id: s.id, name: inDoc ? sheet.displayName(s.id) : builtins.displayName(s.id), type: s.type, inUse: inDoc && used.has(s.id),
+        recommended: !s.semiHidden || used.has(s.id), builtin, priority: s.uiPriority ?? (s.isDefault ? 0 : builtin ? 99 : 100), linked: !!s.link && s.type === "paragraph", qFormat: !!s.qFormat,
+      });
+    };
+    for (const s of sheet.styles.values()) add(s, true);
+    for (const s of builtins.styles.values()) if (!sheet.idForName(s.name) && !sheet.get(s.id)) add(s, false);
+    return [...out.values()];
+  }
+
+  /** A style's definition (a built-in one when the document lacks it). */
+  styleDef(id: string): StyleDef | undefined {
+    return this.doc.styles.get(id) ?? defaultStyleSheet().get(id);
+  }
+
+  /** What a style looks like: its paragraph and character formatting, resolved. */
+  styleLook(id: string): { para: ResolvedPara; char: ResolvedChar } {
+    this.ensureStyleQuietly(id);
+    const sheet = this.doc.styles;
+    const def = this.styleDef(id);
+    if (def?.type === "character") {
+      const para = sheet.resolvePara({ style: sheet.defaultParagraphStyle } as ParaProps);
+      return { para, char: sheet.resolveChar(sheet.defaultParagraphStyle, { rStyle: id }) };
+    }
+    return { para: sheet.resolvePara({ style: id } as ParaProps), char: sheet.resolveChar(id, {}) };
+  }
+
+  /** The look of a style being edited (Formatvorlage ändern's preview), before it is stored. */
+  styleLookOf(def: StyleDef): { para: ResolvedPara; char: ResolvedChar } {
+    if (def.basedOn) this.ensureStyleQuietly(def.basedOn);
+    const sheet = this.doc.styles.withStyle({ ...def, data: undefined });
+    if (def.type === "character") {
+      return { para: sheet.resolvePara({ style: sheet.defaultParagraphStyle } as ParaProps), char: sheet.resolveChar(sheet.defaultParagraphStyle, { rStyle: def.id }) };
+    }
+    return { para: sheet.resolvePara({ style: def.id } as ParaProps), char: sheet.resolveChar(def.id, {}) };
+  }
+
+  /** Formatvorlageninspektor: the caret paragraph's style and direct formatting, and its character's. */
+  directFormatting(): { paraStyle: string; para: ParaProps; charStyle?: string; char: CharProps } {
+    const p = this.doc.paras[this.sel.head.p];
+    const { style, extra: _e, ...para } = p.props;
+    const o = Math.max(0, Math.min(this.sel.head.o - (this.sel.head.o > 0 ? 1 : 0), p.text.length - 1));
+    const run = propsAt(p, Math.max(0, o));
+    const { rStyle, rev: _r, extra: _x, lang: _l, ...char } = run;
+    return { paraStyle: style ?? this.doc.styles.defaultParagraphStyle, para, charStyle: rStyle, char };
+  }
+
+  /** Formatvorlageninspektor: removes the caret paragraph's direct paragraph or character formatting. */
+  clearDirect(kind: "para" | "char"): void {
+    const [a, b] = this.paraRangeIdx();
+    if (kind === "para") { this.resetPara(); return; }
+    this.edit(() => this.doc.mapChars({ p: a, o: 0 }, { p: b, o: this.doc.paras[b].text.length }, (old) => intern({ lang: old.lang, extra: old.extra, rStyle: old.rStyle, rev: old.rev })), false);
+  }
+
+  private ensureStyleQuietly(id: string): void {
+    if (!this.doc.styles.get(id) && defaultStyleSheet().get(id)) this.ensureStyle(id);
+  }
+
+  /**
+   * Formatvorlage ändern / Neue Formatvorlage: stores a style (written from the model from now
+   * on). `apply` gives the selection the new style.
+   */
+  defineStyle(def: StyleDef, apply = false): void {
+    this.snapshot();
+    if (def.basedOn) this.ensureStyle(def.basedOn);
+    this.doc.setStyles(this.doc.styles.withStyle({ ...def, data: undefined }));
+    if (apply) {
+      if (def.type === "character") this.doc.mapChars(...this.range(), (old) => intern({ ...old, rStyle: def.id }));
+      else { const [a, b] = this.paraRangeIdx(); this.doc.mapParas(a, b, (old) => ({ style: def.id, extra: old.extra, numId: old.numId, ilvl: old.ilvl })); }
+    }
+    this.requireFonts();
+    this.relayout();
+  }
+
+  /** A free style id for a new style's name ("Meine Formatvorlage" → "MeineFormatvorlage"). */
+  newStyleId(name: string): string {
+    const base = name.replace(/[^A-Za-z0-9ÄÖÜäöüß]/g, "") || "Formatvorlage";
+    let id = base;
+    for (let n = 2; this.doc.styles.get(id); n++) id = `${base}${n}`;
+    return id;
+  }
+
+  /** Formatvorlage löschen: text in it gets the style it was based on (Standard). */
+  removeStyle(id: string): void {
+    const def = this.doc.styles.get(id);
+    if (!def || def.isDefault) return;
+    this.snapshot();
+    const to = def.type === "paragraph" ? (def.basedOn && this.doc.styles.get(def.basedOn) ? def.basedOn : this.doc.styles.defaultParagraphStyle) : undefined;
+    const fix = (paras: readonly Para[]): Para[] => paras.map((p) => {
+      const runs = p.runs.some((r) => r.props.rStyle === id) ? p.runs.map((r) => (r.props.rStyle === id ? { ...r, props: intern({ ...r.props, rStyle: undefined }) } : r)) : p.runs;
+      const props = p.props.style === id ? { ...p.props, style: to } : p.props;
+      return runs === p.runs && props === p.props ? p : { ...p, runs, props };
+    });
+    const story = this.doc.activeStory;
+    this.doc.setStory(MAIN, fix(this.doc.main));
+    for (const [k, ps] of this.doc.stories) this.doc.setStory(k, fix(ps));
+    this.doc.activeStory = story;
+    // Styles based on it inherit what it was based on.
+    let sheet = this.doc.styles.without(id);
+    for (const s of sheet.styles.values()) {
+      if (s.basedOn === id || s.next === id) sheet = sheet.withStyle({ ...s, basedOn: s.basedOn === id ? def.basedOn : s.basedOn, next: s.next === id ? undefined : s.next, data: undefined });
+    }
+    if (def.link) { const l = sheet.get(def.link); if (l) sheet = sheet.without(def.link); }
+    this.doc.setStyles(sheet);
+    this.relayout();
+  }
+
+  /**
+   * Aktualisieren, um der Auswahl zu entsprechen: the style takes the caret paragraph's direct
+   * formatting (and its first character's), which then is no longer direct.
+   */
+  matchStyleToSelection(id: string): void {
+    this.ensureStyle(id);
+    const def = this.doc.styles.get(id);
+    if (!def) return;
+    const p = this.doc.paras[this.sel.head.p];
+    const { style: _s, numId: _n, ilvl: _i, extra: _e, ...direct } = p.props as ParaProps & { numId?: number; ilvl?: number };
+    const run = p.runs.find((r) => r.len > 0)?.props ?? {};
+    const { rStyle: _r, rev: _v, extra: _x, lang: _l, ...rdirect } = run;
+    this.snapshot();
+    const clean = <T extends object>(o: T) => Object.fromEntries(Object.entries(o).filter(([, v]) => v !== undefined)) as T;
+    const next: StyleDef = def.type === "character"
+      ? { ...def, rPr: clean({ ...def.rPr, ...rdirect }), data: undefined }
+      : { ...def, pPr: clean({ ...def.pPr, ...direct }), rPr: clean({ ...def.rPr, ...rdirect }), data: undefined };
+    this.doc.setStyles(this.doc.styles.withStyle(next));
+    const [a, b] = this.paraRangeIdx();
+    if (def.type === "paragraph") {
+      this.doc.mapParas(a, b, (old) => ({ style: id, extra: old.extra, numId: (old as { numId?: number }).numId, ilvl: (old as { ilvl?: number }).ilvl } as ParaProps));
+      const end = this.doc.paras[b].text.length;
+      this.doc.mapChars({ p: a, o: 0 }, { p: b, o: end }, (old) => intern({ lang: old.lang, extra: old.extra, rStyle: old.rStyle, rev: old.rev }));
+    }
+    this.requireFonts();
+    this.relayout();
+  }
+
   /** Strg+Q: removes direct paragraph formatting. */
   resetPara(): void {
     const [a, b] = this.paraRangeIdx();
@@ -2582,7 +2816,10 @@ export class Editor {
     const img = this.selectedImage();
     if (!img) return;
     this.snapshot();
-    const clean = alt.descr || alt.title || alt.decorative ? alt : undefined;
+    // The name and Ausblenden (Auswahlbereich) stay.
+    const keep = { name: img.obj.alt?.name, hidden: img.obj.alt?.hidden };
+    const merged = Object.fromEntries(Object.entries({ ...alt, ...keep }).filter(([, v]) => v !== undefined && v !== "")) as AltText;
+    const clean = Object.keys(merged).length ? merged : undefined;
     if (img.kind === "inline") this.replaceObject(img.p, img.o, { ...img.obj, alt: clean });
     else this.replaceFloat(img.p, img.index, { ...img.obj, alt: clean });
     this.update();
@@ -2783,6 +3020,44 @@ export class Editor {
     else { const n = [...others].reverse().find((v) => v < cur); z = n !== undefined ? Math.max(1, n - 1) : cur; }
     this.snapshot();
     this.replaceFloat(img.p, img.index, { ...img.obj, z });
+    this.update();
+  }
+
+  /**
+   * Auswahlbereich: the main text's floating objects, front first, with their names (Word's
+   * "Grafik 1", "Rechteck 2" … for objects without one) and whether they are hidden.
+   */
+  floatList(): { p: number; index: number; name: string; hidden: boolean; selected: boolean }[] {
+    const all: { p: number; index: number; f: FloatObject }[] = [];
+    this.doc.main.forEach((para, p) => (para.floats ?? []).forEach((f, index) => all.push({ p, index, f })));
+    const sel = this.floatSel;
+    let n = 0;
+    const named = all.map((x) => {
+      n++;
+      const base = x.f.shape ? (x.f.shape.kind === "textbox" ? "Textfeld" : x.f.shape.kind === "connector" ? "Gerade Verbindung" : "Form") : "Grafik";
+      return { p: x.p, index: x.index, z: x.f.z ?? x.index + 1, name: x.f.alt?.name ?? `${base} ${n}`, hidden: !!x.f.alt?.hidden, selected: !!sel && sel.p === x.p && sel.index === x.index };
+    });
+    return named.sort((a, b) => b.z - a.z).map(({ z: _z, ...rest }) => rest);
+  }
+
+  /** Word's name for a new drawing: the kind and the next number in the document ("Rechteck 3"). */
+  private newObjectName(base: string): string {
+    let n = 0;
+    for (const p of this.doc.main) {
+      n += p.floats?.length ?? 0;
+      for (const o of p.objects ?? []) if (o.kind === "image") n++;
+    }
+    return `${base} ${n + 1}`;
+  }
+
+  /** Auswahlbereich: renames or hides/shows a floating object. */
+  setFloatAlt(p: number, index: number, change: { name?: string; hidden?: boolean }): void {
+    const f = this.doc.main[p]?.floats?.[index];
+    if (!f) return;
+    this.snapshot();
+    const alt = Object.fromEntries(Object.entries({ ...f.alt, ...change }).filter(([, v]) => v !== undefined && v !== false && v !== "")) as AltText;
+    this.replaceFloat(p, index, { ...f, alt: Object.keys(alt).length ? alt : undefined });
+    if (change.hidden && this.floatSel?.p === p && this.floatSel.index === index) this.floatSel = null;
     this.update();
   }
 
@@ -3259,7 +3534,7 @@ cropFill(fit: boolean): void {
    * paragraph next to its top, in front of the text, with Word's default style.
    */
   insertShape(geometry: string, kind: ShapeInfo["kind"], page: number, x: number, y: number, w: number, h: number,
-    extra?: { pic?: PictureFormat; adjust?: Record<string, number>; text?: string; custom?: string; line?: boolean }): void {
+    extra?: { pic?: PictureFormat; adjust?: Record<string, number>; text?: string; custom?: string; line?: boolean; name?: string }): void {
     if (this.doc.activeStory !== MAIN) this.leaveShapeText(false);
     const pg = this.layout.pages[page];
     if (!pg) return;
@@ -3294,6 +3569,7 @@ cropFill(fit: boolean): void {
       at: 0, data: undefined, width: w / PT, height: h / PT,
       x: { rel: "column", offset: (x - colX) / PT }, y: { rel: "paragraph", offset: (y - paraTop) / PT },
       wrap: "front", side: "bothSides", dist: [0, 0, 9, 9], pic: pic && Object.keys(pic).length ? pic : undefined, shape, z,
+      alt: { name: this.newObjectName(extra?.name ?? (kind === "textbox" ? "Textfeld" : SHAPE_NAMES[geometry] ?? "Form")) },
     };
     this.snapshot();
     const para = this.doc.main[anchor];
@@ -4093,6 +4369,11 @@ cropFill(fit: boolean): void {
     return true;
   }
 
+  /** Überarbeitungsbereich: the main text's tracked changes in order (author, kind, text). */
+  revisionList(): { from: Pos; to: Pos; kind: "ins" | "del"; author: string; date: string; text: string }[] {
+    return R.listRevisions(this.doc.main).map((s) => ({ from: s.from, to: s.to, kind: s.rev.kind, author: s.rev.author, date: s.rev.date, text: s.text }));
+  }
+
   /** Markup anzeigen: all changes marked, the result without marks, or the original. */
   setMarkup(markup: "all" | "simple" | "none" | "original"): void {
     this.markupMode = markup;
@@ -4432,6 +4713,7 @@ cropFill(fit: boolean): void {
         if (this.drawTool) { this.cancelDrawing(); return void e.preventDefault(); }
         if (this.cropping) { this.endCrop(); return void e.preventDefault(); }
         if (this.painter) { this.stopPainter(); return void e.preventDefault(); }
+        if (this.objectSelect) { this.setObjectSelect(false); return void e.preventDefault(); }
         if (this.isHeaderFooter()) { this.closeHeaderFooter(); return void e.preventDefault(); }
         if (this.inShapeText) { this.leaveShapeText(true); return void e.preventDefault(); }
         if (this.floatSel) { this.floatSel = null; this.update(); return void e.preventDefault(); }
@@ -4461,18 +4743,23 @@ cropFill(fit: boolean): void {
    */
   clipboardHost: { readHtml(): Promise<string>; readImage?(): Promise<Blob | null>; write(text: string, html: string): Promise<void> } | null = null;
 
+  /** Each copy or cut (the Office-Zwischenablage collects them): text, HTML, or an object. */
+  onCopied: ((text: string, html: string, object: boolean) => void) | null = null;
+
   private onCopy(e: ClipboardEvent, cut: boolean): void {
     e.preventDefault();
     // A selected floating picture or shape is copied as itself.
     if (this.floatSel && this.copyFloat()) {
       if (this.clipboardHost) void this.clipboardHost.write("", "").catch(() => undefined);
       else e.clipboardData?.setData("text/plain", "");
+      this.onCopied?.("", "", true);
       if (cut) this.deleteFloat();
       return;
     }
     if (!this.hasSelection) return;
     const html = this.selectionHtml();
     const text = this.copySelection().replace(/\n/g, "\r\n");
+    this.onCopied?.(text, html, false);
     if (this.clipboardHost) void this.clipboardHost.write(text, html).catch(() => undefined);
     else {
       e.clipboardData?.setData("text/plain", text);
@@ -4701,7 +4988,7 @@ cropFill(fit: boolean): void {
       const deco = this.view.imageAt(e.clientX, e.clientY);
       if (deco) {
         const pt = this.view.pointAt(e.clientX, e.clientY);
-        if (deco.shape && this.inShapeTextArea(deco.para, deco.index, pt.page, pt.x, pt.y)) {
+        if (deco.shape && !this.objectSelect && this.inShapeTextArea(deco.para, deco.index, pt.page, pt.x, pt.y)) {
           this.editShapeText(deco.para, deco.index, { clientX: e.clientX, clientY: e.clientY });
           return;
         }
@@ -4710,6 +4997,8 @@ cropFill(fit: boolean): void {
         return;
       }
     }
+    // Objekte auswählen: clicks pick objects only, the text stays as it is.
+    if (this.objectSelect && this.storyKey === MAIN) { if (this.floatSel) { this.floatSel = null; this.update(); } return; }
     if (this.storyKey === MAIN && e.detail === 2) {
       const deco = this.view.imageAt(e.clientX, e.clientY);
       if (deco?.shape && deco.shape.kind !== "connector") { this.editShapeText(deco.para, deco.index, "end"); return; }

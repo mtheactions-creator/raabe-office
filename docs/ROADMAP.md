@@ -43,7 +43,10 @@ Bildformat tab (D-045), Formen and Textfeld with the Formformat tab and Layout >
 2026-10-14: our own formula editor replaces MathLive (D-047): 114 recorded Word cases replayed
 like Word, the Formel tab with Word's galleries (231 entries) and symbols (8 categories) as
 Word inserts them, Word's context menus, Konvertierungen and Formeloptionen; Word's 24
-equations of `word-math.docx` written back with Word's structure.
+equations of `word-math.docx` written back with Word's structure. E in progress (D-048): Symbol, Link,
+Textmarke, Querverweis, Beschriftung, Abbildungsverzeichnis, Zitate, Literaturverzeichnis,
+Fuß- und Endnote, Optionen zum Nachverfolgen, Überarbeitungsbereich, Sortieren, Markieren,
+Auswahlbereich, Formatvorlagen pane with Formatvorlage ändern, Zwischenablage done.
 
 Order: A, B, C, D, E, F. A comes first because its tools find the differences nobody has
 reported yet; the behaviour catalogue grows with each package. F is last and the largest

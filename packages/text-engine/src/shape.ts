@@ -241,3 +241,12 @@ export function shapeTextRect(f: PictureFormat | undefined, s: ShapeInfo, w: num
   const x = r.l + s.body.l * px, y = r.t + s.body.t * px;
   return { x, y, w: Math.max(1, r.r - s.body.r * px - x), h: Math.max(0, r.b - s.body.b * px - y) };
 }
+
+/** Word's names for new shapes (wp:docPr name before the number), by preset geometry. */
+export const SHAPE_NAMES: Record<string, string> = {
+  rect: "Rechteck", roundRect: "Rechteck: abgerundete Ecken", ellipse: "Ellipse", triangle: "Gleichschenkliges Dreieck", rtTriangle: "Rechtwinkliges Dreieck",
+  line: "Gerader Verbinder", straightConnector1: "Gerade Verbindung mit Pfeil", bentConnector3: "Verbinder: gewinkelt", curvedConnector3: "Verbinder: gekrümmt",
+  rightArrow: "Pfeil: nach rechts", leftArrow: "Pfeil: nach links", upArrow: "Pfeil: nach oben", downArrow: "Pfeil: nach unten", star5: "Stern: 5 Zacken",
+  wedgeRectCallout: "Sprechblase: rechteckig", wedgeRoundRectCallout: "Sprechblase: rechteckig mit abgerundeten Ecken", wedgeEllipseCallout: "Sprechblase: oval",
+  cloudCallout: "Denkblase: wolkenförmig", cloud: "Wolke", heart: "Herz", smileyFace: "Smiley", diamond: "Raute", pentagon: "Fünfeck", hexagon: "Sechseck",
+};

@@ -8,6 +8,8 @@ export interface ModalButton {
   label: string;
   primary?: boolean;
   disabled?: boolean;
+  /** Stands at the left of the button row (Optionen... in Text sortieren). */
+  left?: boolean;
   run: () => boolean | void | Promise<boolean | void>;
 }
 
@@ -19,7 +21,7 @@ export interface Modal {
 
 export function openModal(title: string, body: HTMLElement, buttons: ModalButton[], opts: { width?: number; onClose?: () => void; cls?: string } = {}): Modal {
   const btns = buttons.map((b) => {
-    const el = h("button", { class: b.primary ? "primary" : "", disabled: !!b.disabled }, b.label) as HTMLButtonElement;
+    const el = h("button", { class: b.primary ? "primary" : "", disabled: !!b.disabled, style: b.left ? "margin-right:auto" : "" }, b.label) as HTMLButtonElement;
     el.onclick = async () => { if ((await b.run()) === true) close(); };
     return el;
   });

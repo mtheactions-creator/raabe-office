@@ -27,7 +27,7 @@ export { countWords } from "./words";
 export { imageInfo, naturalSizePt, type ImageInfo } from "./images";
 export { effectExtent, pictureElement, plainPicture, type Fill, type LineEnd, type PictureFormat, type PictureShadow } from "./picture";
 export { customGeometry, flattenPath, hasPreset, presetAdjust, presetGeometry, presetNames, type GeomHandle, type GeomPath, type Geometry } from "./geometry";
-export { shadeColor, shadeLinear, shapeElement, shapeGeometry, shapeLook, shapeTextRect } from "./shape";
+export { SHAPE_NAMES, shadeColor, shadeLinear, shapeElement, shapeGeometry, shapeLook, shapeTextRect } from "./shape";
 export { fromHtml, toHtml } from "./html";
 export * as Revisions from "./revisions";
 export * as Edits from "./edits";
@@ -130,6 +130,7 @@ export function probeFor(getEditor: () => Editor, load: (name: string) => Partia
 export * from "./math/ast";
 export { latexToMathml as mathmlFromLatex, lines, seqToMathml } from "./math/mathml";
 export { mathElements } from "./view";
+export { sortDate, sortNumber, sortOrder, type SortKey, type SortSpec, type SortType } from "./sort";
 export { MathEditor, buildLinear, explode, getSlot, implode, mathAutoCorrect, slotsOf, type MathPos, type MathRange, type MathSignal, type MathStep } from "./math/edit";
 export { seqToLinear } from "./math/linear";
 export * from "./bibliography";

@@ -150,6 +150,41 @@ export function resolveRevisions(doc: Doc, from: Pos, to: Pos, accept: boolean):
   }
 }
 
+/** One tracked change as the Überarbeitungsbereich lists it: its range and text (line break for ¶). */
+export interface RevisionSpan {
+  from: Pos;
+  to: Pos;
+  readonly rev: Revision;
+  text: string;
+}
+
+/** All tracked changes in document order; a change over several paragraphs is one entry. */
+export function listRevisions(paras: readonly Para[]): RevisionSpan[] {
+  const out: RevisionSpan[] = [];
+  let cur: RevisionSpan | null = null;
+  const OBJ = String.fromCharCode(0xfffc);
+  paras.forEach((p, i) => {
+    let pos = 0;
+    for (const r of p.runs) {
+      const ra = pos, rb = pos + r.len;
+      pos = rb;
+      const rev = r.props.rev;
+      const text = p.text.slice(ra, rb).split(OBJ).join("");
+      if (rev && cur && cur.rev === rev && cur.to.p === i && cur.to.o === ra) { cur.to = { p: i, o: rb }; cur.text += text; continue; }
+      if (cur) out.push(cur);
+      cur = rev ? { from: { p: i, o: ra }, to: { p: i, o: rb }, rev, text } : null;
+    }
+    const m = p.mark.rev;
+    if (m && cur && cur.rev === m && cur.to.p === i && cur.to.o === p.text.length) { cur.to = { p: i + 1, o: 0 }; cur.text += "\n"; }
+    else if (m) { if (cur) out.push(cur); cur = { from: { p: i, o: p.text.length }, to: { p: i + 1, o: 0 }, rev: m, text: "\n" }; }
+    else if (cur) { out.push(cur); cur = null; }
+  });
+  if (cur) out.push(cur);
+  // The last paragraph has no paragraph after it.
+  for (const s of out) if (s.to.p >= paras.length) s.to = { p: paras.length - 1, o: paras[paras.length - 1].text.length };
+  return out;
+}
+
 /** The next (or previous) revision after (before) a position: its range. */
 export function findRevision(paras: readonly Para[], at: Pos, dir: 1 | -1): { from: Pos; to: Pos } | null {
   const spans: { from: Pos; to: Pos }[] = [];

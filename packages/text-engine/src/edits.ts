@@ -513,6 +513,23 @@ export function resizeColumn(doc: Doc, p: number, g: number, dx: number): void {
   });
 }
 
+/** Sortieren in a table: each row's cell texts (a cell's paragraphs joined by spaces). */
+export function tableRowTexts(doc: Doc, p: number): string[][] {
+  const t = tableAt(doc, p);
+  if (!t) return [];
+  return cellParas(doc, t.a, t.b, t.def).map((row) => row.map((list) => list.map((q) => q.text).join(" ")));
+}
+
+/** Puts rows lo … lo + order.length − 1 in the given order (indices relative to lo). */
+export function reorderRows(doc: Doc, p: number, lo: number, order: readonly number[]): void {
+  const t = tableAt(doc, p);
+  if (!t) return;
+  const cells = cellParas(doc, t.a, t.b, t.def);
+  const rows = [...t.def.rows], all = [...cells];
+  order.forEach((src, i) => { rows[lo + i] = t.def.rows[lo + src]; all[lo + i] = cells[lo + src]; });
+  rebuild(doc, t.a, t.b, { ...t.def, rows }, all);
+}
+
 /** Position in the first paragraph of cell (row, col) of the table starting at paragraph a. */
 export function firstOfCell(doc: Doc, a: number, row: number, col: number): Pos {
   const paras = doc.paras;

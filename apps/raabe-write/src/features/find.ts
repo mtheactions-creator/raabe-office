@@ -36,7 +36,6 @@ export function findFeature(api: AppApi, docArea: HTMLElement) {
   const setOpen = (on: boolean) => {
     open = on;
     pane.hidden = !on;
-    docArea.classList.toggle("with-nav", on);
     if (!on) { ed()?.showFindMarks(null); matches = []; api.focus(); }
     api.refresh();
   };

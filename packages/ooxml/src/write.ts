@@ -6,7 +6,7 @@ import { blipEffectsXml, imgEffectsXml, shapePropsXml } from "./drawingml";
 import { DEFAULT_LINE_STYLE, DEFAULT_SHAPE_STYLE, NS_WPS, OFFICE_FMT_SCHEME, bodyXml, custGeomXml, shapeSpPr } from "./shapes";
 import { strFromU8, strToU8, zipSync } from "fflate";
 import {
-  B_NS, COLUMN_BREAK, DEFAULT_MATH, LINE_BREAK, sourcesXml, OBJ, OFFICE_2013_COLORS, PAGE_BREAK, effectExtent, type AltText, type CommentMeta, type PictureFormat, type DocState, type FloatObject, type InlineObject,
+  B_NS, COLUMN_BREAK, DEFAULT_MATH, LINE_BREAK, SHAPE_NAMES, sourcesXml, OBJ, OFFICE_2013_COLORS, PAGE_BREAK, effectExtent, type AltText, type CommentMeta, type PictureFormat, type DocState, type FloatObject, type InlineObject,
   type Para, type Revision, type Section, type ShapeInfo, type StyleDef, type TableDef, type Theme,
 } from "@raabe/text-engine";
 import { latexToOmml, M_NS, mathPrXml, readMathPr, seqToOmml } from "./math";
@@ -285,13 +285,7 @@ class DocWriter {
     const ex = effectExtent(f, Number(ext?.[2] ?? 0) / 12700);
     const emu = (x: number) => Math.round(x * 12700);
     out = out.replace(/<wp:effectExtent [^>]*\/>/, `<wp:effectExtent l="${emu(ex.l)}" t="${emu(ex.t)}" r="${emu(ex.r)}" b="${emu(ex.b)}"/>`);
-    out = out.replace(/<wp:docPr ([^>]*?)(\/?)>/, (_m, attrs: string, close: string) => {
-      let a = attrs.replace(/\s*(descr|title)="[^"]*"/g, "");
-      if (o.alt?.descr) a += ` descr="${esc(o.alt.descr)}"`;
-      if (o.alt?.title) a += ` title="${esc(o.alt.title)}"`;
-      return `<wp:docPr ${a.trim()}${close}>`;
-    });
-    return out;
+    return this.altText(out, o.alt);
   }
 
   /** Updates the size in a picture's XML when it was resized. */
@@ -324,7 +318,7 @@ class DocWriter {
       `<pic:spPr>${shapePropsXml(f, cx, cy)}</pic:spPr></pic:pic></a:graphicData></a:graphic>`;
     const ex = effectExtent(f, (o.height ?? 0));
     const common = `<wp:extent cx="${cx}" cy="${cy}"/><wp:effectExtent l="${Math.round(ex.l * EMU)}" t="${Math.round(ex.t * EMU)}" r="${Math.round(ex.r * EMU)}" b="${Math.round(ex.b * EMU)}"/>`;
-    const docPr = `<wp:docPr id="${id}" name="Grafik ${id}"${o.alt?.descr ? ` descr="${esc(o.alt.descr)}"` : ""}${o.alt?.title ? ` title="${esc(o.alt.title)}"` : ""}/><wp:cNvGraphicFramePr><a:graphicFrameLocks xmlns:a="${NS_A}" noChangeAspect="1"/></wp:cNvGraphicFramePr>`;
+    const docPr = `<wp:docPr id="${id}" name="${esc(o.alt?.name ?? `Grafik ${id}`)}"${o.alt?.descr ? ` descr="${esc(o.alt.descr)}"` : ""}${o.alt?.hidden ? ' hidden="1"' : ""}${o.alt?.title ? ` title="${esc(o.alt.title)}"` : ""}/><wp:cNvGraphicFramePr><a:graphicFrameLocks xmlns:a="${NS_A}" noChangeAspect="1"/></wp:cNvGraphicFramePr>`;
     if (!anchor) return `<w:drawing><wp:inline distT="0" distB="0" distL="0" distR="0" xmlns:wp="${NS_WP}">${common}${docPr}${graphic}</wp:inline></w:drawing>`;
     const e = (pt: number) => Math.round(pt * EMU);
     const pos = (tag: string, p: FloatObject["x"]) => `<wp:${tag} relativeFrom="${esc(p.rel)}">${p.align ? `<wp:align>${esc(p.align)}</wp:align>` : `<wp:posOffset>${e(p.offset)}</wp:posOffset>`}</wp:${tag}>`;
@@ -381,10 +375,13 @@ class DocWriter {
     return this.altText(out, o.alt);
   }
 
+  /** docPr: Alternativtext, and the name and Ausblenden from the Auswahlbereich. */
   private altText(xml: string, alt: AltText | undefined): string {
     return xml.replace(/<wp:docPr ([^>]*?)(\/?)>/, (_m, attrs: string, close: string) => {
-      let a = attrs.replace(/\s*(descr|title)="[^"]*"/g, "");
+      let a = attrs.replace(/\s*(descr|title|hidden)="[^"]*"/g, "");
+      if (alt?.name) a = a.replace(/\s*name="[^"]*"/, "") + ` name="${esc(alt.name)}"`;
       if (alt?.descr) a += ` descr="${esc(alt.descr)}"`;
+      if (alt?.hidden) a += ' hidden="1"';
       if (alt?.title) a += ` title="${esc(alt.title)}"`;
       return `<wp:docPr ${a.trim()}${close}>`;
     });
@@ -403,7 +400,7 @@ class DocWriter {
     const graphic = `<a:graphic xmlns:a="${NS_A}"><a:graphicData uri="${NS_WPS}">${wsp}</a:graphicData></a:graphic>`;
     const lw = Math.round((o.pic?.line?.width ?? (s.kind === "connector" ? 0.5 : 1)) * EMU);
     const common = `<wp:extent cx="${cx}" cy="${cy}"/><wp:effectExtent l="0" t="0" r="${Math.max(19050, lw)}" b="${Math.max(19050, lw)}"/>`;
-    const docPr = `<wp:docPr id="${id}" name="${esc(name)} ${id}"${o.alt?.descr ? ` descr="${esc(o.alt.descr)}"` : ""}${o.alt?.title ? ` title="${esc(o.alt.title)}"` : ""}/><wp:cNvGraphicFramePr/>`;
+    const docPr = `<wp:docPr id="${id}" name="${esc(o.alt?.name ?? `${name} ${id}`)}"${o.alt?.descr ? ` descr="${esc(o.alt.descr)}"` : ""}${o.alt?.hidden ? ' hidden="1"' : ""}${o.alt?.title ? ` title="${esc(o.alt.title)}"` : ""}/><wp:cNvGraphicFramePr/>`;
     if (!anchor) return `<w:drawing><wp:inline distT="0" distB="0" distL="0" distR="0" xmlns:wp="${NS_WP}">${common}${docPr}${graphic}</wp:inline></w:drawing>`;
     const e = (pt: number) => Math.round(pt * EMU);
     const pos = (tag: string, p: FloatObject["x"]) => `<wp:${tag} relativeFrom="${esc(p.rel)}">${p.align ? `<wp:align>${esc(p.align)}</wp:align>` : `<wp:posOffset>${e(p.offset)}</wp:posOffset>`}</wp:${tag}>`;
@@ -657,14 +654,45 @@ function stylesXml(state: DocState, opts: WriteOptions): string {
     `<w:pPrDefault>${writePPr(st.defaultsP, {}, opts) || "<w:pPr/>"}</w:pPrDefault></w:docDefaults>${defs}</w:styles>`;
 }
 
-/** The original styles.xml plus definitions for styles the document now uses but lacked. */
+/**
+ * The original styles.xml with the styles changed in RaabeWrite (Formatvorlage ändern: no XML
+ * as read any more) written from the model, deleted ones removed, changed document defaults
+ * (Absatzabstand, Als Standard festlegen) and the styles the document now uses but lacked.
+ */
 function mergedStyles(state: DocState, pkg: DocxPackage, opts: WriteOptions): string | null {
   if (!pkg.stylesXml) return null;
-  const added = [...state.styles.styles.values()].filter((s) => !pkg.styleIds.has(s.id));
-  if (!added.length) return pkg.stylesXml;
-  const i = pkg.stylesXml.lastIndexOf("</w:styles>");
-  if (i < 0) return pkg.stylesXml;
-  return pkg.stylesXml.slice(0, i) + added.map((s) => styleXml(s, opts)).join("") + pkg.stylesXml.slice(i);
+  const sheet = state.styles;
+  const unesc = (v: string) => v.replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
+  let xml = pkg.stylesXml.replace(/<w:style\b[^>]*?w:styleId="([^"]*)"[^>]*>[\s\S]*?<\/w:style>/g, (m, raw: string) => {
+    const id = unesc(raw);
+    if (!pkg.styleIds.has(id)) return m;
+    const s = sheet.styles.get(id);
+    if (!s) return "";
+    return typeof s.data === "string" ? m : styleXml(s, opts);
+  });
+  if (pkg.defaultsRead !== undefined && JSON.stringify([sheet.defaultsR, sheet.defaultsP]) !== pkg.defaultsRead) {
+    const defaults = `<w:docDefaults><w:rPrDefault>${writeRPr(sheet.defaultsR, opts) || "<w:rPr/>"}</w:rPrDefault>` +
+      `<w:pPrDefault>${writePPr(sheet.defaultsP, {}, opts) || "<w:pPr/>"}</w:pPrDefault></w:docDefaults>`;
+    xml = /<w:docDefaults\b/.test(xml) ? xml.replace(/<w:docDefaults\b[\s\S]*?<\/w:docDefaults>|<w:docDefaults\/>/, defaults) : xml.replace(/(<w:styles\b[^>]*>)/, `$1${defaults}`);
+  }
+  const added = [...sheet.styles.values()].filter((s) => !pkg.styleIds.has(s.id));
+  const i = xml.lastIndexOf("</w:styles>");
+  if (!added.length || i < 0) return xml;
+  return xml.slice(0, i) + added.map((s) => styleXml(s, opts)).join("") + xml.slice(i);
+}
+
+/** An existing theme part with the colours and fonts chosen in Entwurf (the rest stays). */
+function patchedTheme(xml: string, t: Theme): string {
+  const c: Record<string, string> = { ...OFFICE_2013_COLORS, ...(t.colors ?? {}) };
+  const clr = (name: string) => name === "dk1" ? `<a:sysClr val="windowText" lastClr="${c.dk1}"/>` : name === "lt1" ? `<a:sysClr val="window" lastClr="${c.lt1}"/>` : `<a:srgbClr val="${c[name]}"/>`;
+  const names = ["dk1", "lt1", "dk2", "lt2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6", "hlink", "folHlink"];
+  let out = xml.replace(/<a:clrScheme\b[^>]*>[\s\S]*?<\/a:clrScheme>/, () =>
+    `<a:clrScheme name="${esc(t.colorName ?? "Office")}">${names.map((n) => `<a:${n}>${clr(n)}</a:${n}>`).join("")}</a:clrScheme>`);
+  out = out.replace(/(<a:majorFont>\s*<a:latin typeface=")[^"]*"/, (_m, a: string) => `${a}${esc(t.majorFont)}"`);
+  out = out.replace(/(<a:minorFont>\s*<a:latin typeface=")[^"]*"/, (_m, a: string) => `${a}${esc(t.minorFont)}"`);
+  if (t.fontName) out = out.replace(/<a:fontScheme name="[^"]*"/, `<a:fontScheme name="${esc(t.fontName)}"`);
+  if (t.name) out = out.replace(/<a:theme ([^>]*?)name="[^"]*"/, (_m, a: string) => `<a:theme ${a}name="${esc(t.name!)}"`);
+  return out;
 }
 
 // ----- settings -----------------------------------------------------------------------------
@@ -795,19 +823,10 @@ function themeXml(t: Theme): string {
   const clr = (name: string) => name === "dk1" ? `<a:sysClr val="windowText" lastClr="${c.dk1}"/>` : name === "lt1" ? `<a:sysClr val="window" lastClr="${c.lt1}"/>` : `<a:srgbClr val="${c[name]}"/>`;
   const names = ["dk1", "lt1", "dk2", "lt2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6", "hlink", "folHlink"];
   const font = (face: string) => `<a:latin typeface="${esc(face)}"/><a:ea typeface=""/><a:cs typeface=""/>`;
-  return `${XML_HEAD}<a:theme xmlns:a="${NS_A}" name="Office"><a:themeElements><a:clrScheme name="Office 2013 - 2022">${names.map((n) => `<a:${n}>${clr(n)}</a:${n}>`).join("")}</a:clrScheme>` +
-    `<a:fontScheme name="Office 2013 - 2022"><a:majorFont>${font(t.majorFont)}</a:majorFont><a:minorFont>${font(t.minorFont)}</a:minorFont></a:fontScheme>` +
+  return `${XML_HEAD}<a:theme xmlns:a="${NS_A}" name="${esc(t.name ?? "Office")}"><a:themeElements><a:clrScheme name="${esc(t.colorName ?? "Office 2013 - 2022")}">${names.map((n) => `<a:${n}>${clr(n)}</a:${n}>`).join("")}</a:clrScheme>` +
+    `<a:fontScheme name="${esc(t.fontName ?? "Office 2013 - 2022")}"><a:majorFont>${font(t.majorFont)}</a:majorFont><a:minorFont>${font(t.minorFont)}</a:minorFont></a:fontScheme>` +
     `${OFFICE_FMT_SCHEME}</a:themeElements><a:objectDefaults/><a:extraClrSchemeLst/></a:theme>`;
 }
-
-/** Word's names for new shapes (docPr name), by preset. */
-const SHAPE_NAMES: Record<string, string> = {
-  rect: "Rechteck", roundRect: "Rechteck: abgerundete Ecken", ellipse: "Ellipse", triangle: "Gleichschenkliges Dreieck", rtTriangle: "Rechtwinkliges Dreieck",
-  line: "Gerader Verbinder", straightConnector1: "Gerade Verbindung mit Pfeil", bentConnector3: "Verbinder: gewinkelt", curvedConnector3: "Verbinder: gekrümmt",
-  rightArrow: "Pfeil: nach rechts", leftArrow: "Pfeil: nach links", upArrow: "Pfeil: nach oben", downArrow: "Pfeil: nach unten", star5: "Stern: 5 Zacken",
-  wedgeRectCallout: "Sprechblase: rechteckig", wedgeRoundRectCallout: "Sprechblase: rechteckig mit abgerundeten Ecken", wedgeEllipseCallout: "Sprechblase: oval",
-  cloudCallout: "Denkblase: wolkenförmig", cloud: "Wolke", heart: "Herz", smileyFace: "Smiley", diamond: "Raute", pentagon: "Fünfeck", hexagon: "Sechseck",
-};
 
 function coreXml(author: string, now: Date): string {
   const t = now.toISOString().replace(/\.\d+Z$/, "Z");
@@ -860,6 +879,11 @@ export function writeDocx(state: DocState, pkg: DocxPackage | null, options: { a
     if (styles && styles !== pkg.stylesXml) pw.setPart("word/styles.xml", styles);
     const settings = settingsXml(state, pkg.settingsXml);
     if (settings !== pkg.settingsXml) pw.setPart("word/settings.xml", settings);
+    // Entwurf > Designs, Farben, Schriftarten: the theme part follows.
+    const themePath = "word/theme/theme1.xml";
+    if (pkg.themeRead !== undefined && JSON.stringify(state.styles.theme) !== pkg.themeRead && pw.files[themePath]) {
+      pw.setPart(themePath, patchedTheme(strFromU8(pw.files[themePath]), state.styles.theme));
+    }
     if (pw.files["docProps/core.xml"]) pw.files["docProps/core.xml"] = strToU8(touchCore(strFromU8(pw.files["docProps/core.xml"]), author, now));
   } else {
     pw.setPart("word/styles.xml", stylesXml(state, opts));

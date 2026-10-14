@@ -1,6 +1,6 @@
 // What a feature module (lists, tables, page setup …) needs from the app.
 
-import type { Editor } from "@raabe/text-engine";
+import type { CharProps, CharState, Editor, ParaProps, ResolvedPara } from "@raabe/text-engine";
 import type { Commands, Platform } from "@raabe/shell";
 
 export interface AppApi {
@@ -22,6 +22,22 @@ export interface AppApi {
   createEmptyDocument(path: string, open: boolean): Promise<void>;
   /** What the clipboard holds: text, HTML (formatting) and a picture. */
   clipboard(): Promise<{ text: string; html: string; image: Blob | null }>;
+  /** The dialogs Schriftart and Absatz for a style's formatting (Formatvorlage ändern > Format). */
+  fontDialog(target: FontTarget): Promise<void>;
+  paragraphDialog(target: ParaTarget): Promise<void>;
+  /** The fonts installed on this computer. */
+  fontList(): readonly string[];
+}
+
+/** What Schriftart edits when it is not the selection: shown values and where changes go. */
+export interface FontTarget {
+  readonly state: CharState;
+  apply(changes: CharProps): void;
+}
+
+export interface ParaTarget {
+  readonly state: ResolvedPara;
+  apply(changes: Partial<ParaProps>): void;
 }
 
 /** "2,5 cm" ↔ points. */

@@ -434,6 +434,10 @@ export interface AltText {
   readonly descr?: string;
   readonly title?: string;
   readonly decorative?: boolean;
+  /** The object's name (wp:docPr name: "Rechteck 3", "Grafik 1"), shown in the Auswahlbereich. */
+  readonly name?: string;
+  /** Hidden in the Auswahlbereich (wp:docPr hidden): not drawn, text flows as without it. */
+  readonly hidden?: boolean;
 }
 
 /** A zero-width marker kept at an offset (bookmark, comment range …). */

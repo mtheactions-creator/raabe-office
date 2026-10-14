@@ -8146,7 +8146,38 @@
   ]
  },
  "clipboard pane": {
-  "error": "nothing opened"
+  "rect": [
+   10,
+   276,
+   384,
+   42
+  ],
+  "items": [
+   {
+    "type": "MenuItem",
+    "name": "Optionen für den Aufgabenbereich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     294,
+     6,
+     36,
+     36
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Bereich schließen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     342,
+     6,
+     36,
+     36
+    ]
+   }
+  ]
  },
  "view tab": [
   {
@@ -14050,5 +14081,963 @@
    "Empfohlenes Feld",
    "Tagname"
   ]
+ },
+ "reviewing pane": {
+  "rect": [
+   10,
+   276,
+   389,
+   42
+  ],
+  "items": [
+   {
+    "type": "MenuItem",
+    "name": "Optionen für den Aufgabenbereich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     299,
+     6,
+     36,
+     36
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Bereich schließen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     347,
+     6,
+     36,
+     36
+    ]
+   }
+  ]
+ },
+ "reviewing pane menu": {
+  "window": "Net UI Tool Window",
+  "size": [
+   368,
+   92
+  ],
+  "items": [
+   {
+    "type": "Button",
+    "name": "Überarbeitungsbereich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     -36,
+     229,
+     36
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Optionen",
+    "key": "Alt, P, B 2",
+    "enabled": true,
+    "rect": [
+     229,
+     -36,
+     35,
+     36
+    ]
+   },
+   {
+    "type": "Menu",
+    "name": "Überarbeitungsbereich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     0,
+     368,
+     92
+    ]
+   },
+   {
+    "type": "Group",
+    "name": " ",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     2,
+     364,
+     88
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Überarbeitungsbereich vertikal...",
+    "key": "Alt, P, B 2, V",
+    "enabled": true,
+    "rect": [
+     2,
+     2,
+     364,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Überarbeitungsbereich horizontal...",
+    "key": "Alt, P, B 2, H",
+    "enabled": true,
+    "rect": [
+     2,
+     46,
+     364,
+     44
+    ]
+   }
+  ]
+ },
+ "reviewing pane horizontal": {
+  "rect": [
+   10,
+   1613,
+   1980,
+   42
+  ],
+  "items": [
+   {
+    "type": "MenuItem",
+    "name": "Optionen für den Aufgabenbereich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     1890,
+     6,
+     36,
+     36
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Bereich schließen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     1938,
+     6,
+     36,
+     36
+    ]
+   }
+  ]
+ },
+ "styles pane": {
+  "rect": [
+   1676,
+   161,
+   284,
+   42
+  ],
+  "items": [
+   {
+    "type": "MenuItem",
+    "name": "Optionen für den Aufgabenbereich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     194,
+     6,
+     36,
+     36
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Bereich schließen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     6,
+     36,
+     36
+    ]
+   }
+  ]
+ },
+ "selection pane": {
+  "rect": [
+   1631,
+   276,
+   359,
+   42
+  ],
+  "items": [
+   {
+    "type": "MenuItem",
+    "name": "Optionen für den Aufgabenbereich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     269,
+     6,
+     36,
+     36
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Bereich schließen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     317,
+     6,
+     36,
+     36
+    ]
+   }
+  ]
+ },
+ "line numbers menu": {
+  "window": "Net UI Tool Window",
+  "size": [
+   361,
+   271
+  ],
+  "items": [
+   {
+    "type": "Menu",
+    "name": "Zeilennummern",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     0,
+     361,
+     271
+    ]
+   },
+   {
+    "type": "Group",
+    "name": " ",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     2,
+     357,
+     220
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Keine",
+    "key": "Alt, S, E, N",
+    "enabled": true,
+    "rect": [
+     2,
+     2,
+     357,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Fortlaufend",
+    "key": "Alt, S, E, F",
+    "enabled": true,
+    "rect": [
+     2,
+     46,
+     357,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Jede Seite neu beginnen",
+    "key": "Alt, S, E, J",
+    "enabled": true,
+    "rect": [
+     2,
+     90,
+     357,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Jeden Abschnitt neu beginnen",
+    "key": "Alt, S, E, E",
+    "enabled": true,
+    "rect": [
+     2,
+     134,
+     357,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Für aktuellen Absatz unterdrücken",
+    "key": "Alt, S, E, S",
+    "enabled": true,
+    "rect": [
+     2,
+     178,
+     357,
+     44
+    ]
+   },
+   {
+    "type": "Group",
+    "name": " ",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     222,
+     357,
+     47
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Zeilennummerierungsoptionen...",
+    "key": "Alt, S, E, I",
+    "enabled": true,
+    "rect": [
+     2,
+     225,
+     357,
+     44
+    ]
+   }
+  ]
+ },
+ "case menu": {
+  "window": "Net UI Tool Window",
+  "size": [
+   407,
+   214
+  ],
+  "items": [
+   {
+    "type": "Menu",
+    "name": "Groß-/Kleinschreibung",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     0,
+     407,
+     214
+    ]
+   },
+   {
+    "type": "Menu",
+    "name": "Groß-/Kleinschreibung",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     0,
+     407,
+     214
+    ]
+   },
+   {
+    "type": "Group",
+    "name": " ",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     2,
+     403,
+     210
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Ersten Buchstaben im Satz großschreiben.",
+    "key": "ALT+E",
+    "enabled": true,
+    "rect": [
+     2,
+     2,
+     403,
+     42
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "kleinbuchstaben",
+    "key": "ALT+l",
+    "enabled": true,
+    "rect": [
+     2,
+     44,
+     403,
+     42
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "GROSSBUCHSTABEN",
+    "key": "ALT+G",
+    "enabled": true,
+    "rect": [
+     2,
+     86,
+     403,
+     42
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Ersten Buchstaben Im Wort Großschreiben",
+    "key": "ALT+c",
+    "enabled": true,
+    "rect": [
+     2,
+     128,
+     403,
+     42
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "gROSS-/kLEINSCHREIBUNG umkehren",
+    "key": "ALT+R",
+    "enabled": true,
+    "rect": [
+     2,
+     170,
+     403,
+     42
+    ]
+   }
+  ]
+ },
+ "line spacing menu": {
+  "window": "Net UI Tool Window",
+  "size": [
+   321,
+   385
+  ],
+  "items": [
+   {
+    "type": "Menu",
+    "name": "Zeilen- und Absatzabstand",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     0,
+     321,
+     385
+    ]
+   },
+   {
+    "type": "Menu",
+    "name": "Zeilen- und Absatzabstand",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     0,
+     321,
+     385
+    ]
+   },
+   {
+    "type": "Group",
+    "name": " ",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     2,
+     317,
+     294
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "1,0",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     2,
+     317,
+     42
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "1,15",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     44,
+     317,
+     42
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "1,5",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     86,
+     317,
+     42
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "2,0",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     128,
+     317,
+     42
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "2,5",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     170,
+     317,
+     42
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "3,0",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     212,
+     317,
+     42
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Zeilenabstandsoptionen…",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     254,
+     317,
+     42
+    ]
+   },
+   {
+    "type": "Group",
+    "name": " ",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     296,
+     317,
+     87
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Abstand vor Absatz entfernen",
+    "key": "ALT+e",
+    "enabled": true,
+    "rect": [
+     2,
+     299,
+     317,
+     42
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Abstand nach Absatz entfernen",
+    "key": "ALT+e",
+    "enabled": true,
+    "rect": [
+     2,
+     341,
+     317,
+     42
+    ]
+   }
+  ]
+ },
+ "cover page gallery": {
+  "window": "Net UI Tool Window",
+  "size": [
+   642,
+   1266
+  ],
+  "items": [
+   {
+    "type": "Menu",
+    "name": "Deckblatt",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     0,
+     642,
+     1266
+    ]
+   },
+   {
+    "type": "Menu",
+    "name": "Deckblatt",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     0,
+     642,
+     1266
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Integriert",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     2,
+     612,
+     1663
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Austin",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     45,
+     204,
+     268
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Bewegung",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     206,
+     45,
+     204,
+     268
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Facette",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     410,
+     45,
+     204,
+     268
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Filigran",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     313,
+     204,
+     268
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Gebändert",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     206,
+     313,
+     204,
+     268
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Integral",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     410,
+     313,
+     204,
+     268
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Ion (dunkel)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     581,
+     204,
+     268
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Ion (hell)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     206,
+     581,
+     204,
+     268
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Pfiff",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     410,
+     581,
+     204,
+     268
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Randlinie",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     849,
+     204,
+     268
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Raster",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     206,
+     849,
+     204,
+     268
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Rückblick",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     410,
+     849,
+     204,
+     268
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Segment (dunkel)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     1117,
+     204,
+     268
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Segment (hell)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     206,
+     1117,
+     204,
+     268
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Semaphor",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     410,
+     1117,
+     204,
+     268
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "ViewMaster",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     1385,
+     204,
+     268
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Zeile nach oben",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     614,
+     2,
+     26,
+     26
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Seite nach oben",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -32,
+     -161,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "Thumb",
+    "name": "Position",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     614,
+     28,
+     26,
+     728
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Seite nach unten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     614,
+     756,
+     26,
+     347
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Zeile nach unten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     614,
+     1103,
+     26,
+     26
+    ]
+   },
+   {
+    "type": "Group",
+    "name": " ",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     1132,
+     638,
+     132
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Deckblätter von Office.com",
+    "key": "Alt, I, E E, D",
+    "enabled": true,
+    "rect": [
+     2,
+     1132,
+     638,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Aktuelles Deckblatt entfernen",
+    "key": "Alt, I, E E, A",
+    "enabled": true,
+    "rect": [
+     2,
+     1176,
+     638,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Auswahl im Deckblattkatalog speichern...",
+    "key": "Alt, I, E E, S",
+    "enabled": false,
+    "rect": [
+     2,
+     1220,
+     638,
+     44
+    ]
+   }
+  ]
+ },
+ "styles pane entry menu": {
+  "window": "Net UI Tool Window",
+  "title": "",
+  "size": [
+   557,
+   274
+  ],
+  "items": []
  }
 }

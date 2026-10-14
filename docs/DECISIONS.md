@@ -599,8 +599,7 @@ built with Word's labels and behaviour.
 - **Textmarke, Querverweis, Beschriftung, Abbildungsverzeichnis**: bookmarks as Word writes
   them; cross references are REF/PAGEREF/NOTEREF fields to hidden _Ref bookmarks; captions use
   SEQ fields (formats 1, a, A, i, I); a table of figures is a TOC \c field rebuilt from the
-  captions. Felder aktualisieren (F9) computes SEQ, REF (text, 
- number, \p oben/unten),
+  captions. Felder aktualisieren (F9) computes SEQ, REF (text, \n number, \p oben/unten),
   PAGEREF ("auf Seite 3") and NOTEREF results.
 - **Zitate und Literaturverzeichnis**: sources in Word's customXml b:Sources part (Word reads
   ours, we read Word's), CITATION fields and a BIBLIOGRAPHY field; Word's twelve styles with
@@ -609,3 +608,27 @@ built with Word's labels and behaviour.
   bearbeiten, Platzhalter, Quellen-Manager with a Masterliste for this user.
 - **Fuß- und Endnote**: position, number format, start, restart (per section, and per page from
   a second layout), Konvertieren; w:footnotePr/w:endnotePr in settings.xml.
+- **Überprüfen**: Optionen zum Nachverfolgen von Änderungen as Word's dialog (what RaabeWrite
+  does not track, ink and formatting, greyed); the Überarbeitungsbereich vertical (left) or
+  horizontal (bottom) as Word's pane: the count with a detailed summary, each change as
+  "<Autor> Hinzugefügt", "hat gelöscht", "hat kommentiert" with its text; a click selects it.
+- **Start**: Word 365's labels in Groß-/Kleinschreibung and Zeilen- und Absatzabstand; Text
+  sortieren (paragraphs or table rows, three keys as text, number or date, Überschrift,
+  Trennzeichen, Groß-/Kleinschreibung, Sortiersprache; section breaks stay in place); Markieren
+  with Objekte auswählen (the pointer picks objects, also behind the text; Esc ends it) and
+  Auswahlbereich.
+- **Auswahlbereich**: the floating objects front first with Word's names ("Rechteck 1",
+  "Textfeld 2", now also given to new shapes and written as wp:docPr name), Ausblenden
+  (wp:docPr hidden: not drawn, no text wrap), renaming, Alle anzeigen/ausblenden, order.
+- **Formatvorlagen pane**: Word's list (Empfohlen by priority, Überschrift n once n - 1 is
+  used; In Verwendung, Im aktuellen Dokument, Alle; five sort orders), type marks, Vorschau
+  anzeigen, each entry's menu (aktualisieren, um der Auswahl zu entsprechen; Ändern...;
+  löschen; Formatvorlagenkatalog), Formatvorlage ändern / Neue Formatvorlage von Formatierung
+  erstellen with Word's controls, preview and description and Format > Zeichen, Absatz,
+  Sprache; the Formatvorlageninspektor. Changed styles are written from the model into the
+  file's styles.xml (others keep their XML), deleted ones removed; changed document defaults
+  and theme colours/fonts are written too.
+- **Zwischenablage**: Word's pane as RaabeWrite's Office clipboard (24 items, collected while
+  the pane is open, with Word's three options), Alle einfügen, Alle löschen.
+- Task panes dock beside the document as in Word, several side by side (Navigation,
+  Zwischenablage, Überarbeitungen left; Formatvorlagen, Auswahl, Kommentare right).

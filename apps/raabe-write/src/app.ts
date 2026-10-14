@@ -2,14 +2,14 @@
 // Each open document is a tab with its own editor. Files are .docx (D-004); content the
 // editor cannot change yet is preserved verbatim and written back unchanged (D-024).
 
-import { Doc as TextDoc, Editor, Fonts, PT, type CopiedFormat, type DocState, type LineRule, type Para } from "@raabe/text-engine";
+import { Doc as TextDoc, Editor, Fonts, PT, type CharProps, type CopiedFormat, type DocState, type LineRule, type Para, type ParaProps } from "@raabe/text-engine";
 import { readDocx, writeDocx, type DocxPackage } from "@raabe/ooxml";
 import {
   Backstage, Commands, Keytips, Ribbon, StatusBar, TitleBar, baseName, dirName, h, icon, installTooltips, messageBox,
   showDialog, showFontColors, type BackstageEntry, type Platform,
 } from "@raabe/shell";
 import { COMMANDS } from "./command-list";
-import type { AppApi } from "./features/api";
+import type { AppApi, FontTarget, ParaTarget } from "./features/api";
 import { headerFooterFeature, HEADER_COMMANDS } from "./features/headerfooter";
 import { findFeature, FIND_COMMANDS } from "./features/find";
 import { listsFeature, LIST_COMMANDS } from "./features/lists";
@@ -21,6 +21,11 @@ import { linksFeature } from "./features/links";
 import { captionsFeature } from "./features/captions";
 import { citationsFeature } from "./features/citations";
 import { notesDialogFeature } from "./features/notes-dialog";
+import { sortFeature } from "./features/sort";
+import { selectionPaneFeature } from "./features/selection-pane";
+import { stylesPaneFeature } from "./features/styles-pane";
+import { clipboardPaneFeature } from "./features/clipboard-pane";
+import { makeDock } from "./features/dock";
 import { referencesFeature, REFERENCE_COMMANDS } from "./features/references";
 import { reviewFeature, REVIEW_COMMANDS } from "./features/review";
 import { spellFeature } from "./features/spell";
@@ -84,7 +89,6 @@ export class WriteApp {
   private ribbon: Ribbon;
   private statusBar: StatusBar;
   private backstage: Backstage;
-  private docArea: HTMLElement;
   private infobarSlot: HTMLElement;
   private printRoot: HTMLElement;
   private wordTimer = 0;
@@ -102,6 +106,8 @@ export class WriteApp {
   private features!: ReturnType<WriteApp["makeFeatures"]>;
   /** Kommentare pane (right of the document). */
   private readonly commentPane = h("div", { class: "cpane", hidden: true });
+  private readonly docArea: HTMLElement = h("div", { class: "docarea" }, this.commentPane);
+  private readonly dock = makeDock(this.docArea);
   private find!: ReturnType<typeof findFeature>;
 
   constructor(private platform: Platform, initial?: Partial<DocState>) {
@@ -138,8 +144,13 @@ export class WriteApp {
     this.statusBar = new StatusBar(this.commands, (z) => this.setZoom(z), [{ cmd: "view.readMode" }, { cmd: "view.printLayout" }], "view.zoomDialog");
     this.backstage = new Backstage(this.commands, this.backstageEntries());
     this.backstage.onClose(() => this.active?.editor.focus());
-    this.docArea = h("div", { class: "docarea" }, this.commentPane);
     this.find = findFeature(this.api(), this.docArea);
+    // Task panes: left Navigation, Zwischenablage; right Formatvorlagen, Auswahl, Kommentare.
+    const pane = (sel: string) => this.docArea.querySelector<HTMLElement>(sel);
+    for (const [sel, side, size] of [[".navpane", "left", 300], [".clippane", "left", 270], [".stylepane", "right", 260], [".selpane", "right", 240], [".cpane", "right", 340]] as const) {
+      const el = pane(sel);
+      if (el) this.dock.add(el, side, size);
+    }
     this.infobarSlot = h("div");
     this.printRoot = h("div", { id: "print-root" });
 
@@ -180,6 +191,9 @@ export class WriteApp {
       refresh: () => this.updateChrome(false),
       selectTab: (id) => { this.updateContextualTabs(); this.ribbon?.select(id); },
       clipboard: () => this.readClipboard(false),
+      fontDialog: (target) => this.fontDialog(target),
+      paragraphDialog: (target) => this.paragraphDialog(target),
+      fontList: () => (this.fontList.length ? this.fontList : ["Arial", "Calibri", "Calibri Light", "Cambria", "Times New Roman"]),
       documentPath: () => this.active?.path ?? null,
       createEmptyDocument: async (path, open) => {
         await this.platform.writeFile(path, writeDocx(new TextDoc({}).state(), null));
@@ -237,7 +251,11 @@ export class WriteApp {
       captions: captionsFeature(api),
       citations: citationsFeature(api),
       notesDialog: notesDialogFeature(api),
-      review: reviewFeature(api, () => this.settings.userName, this.commentPane),
+      sort: sortFeature(api),
+      selection: selectionPaneFeature(api, this.docArea),
+      styles: stylesPaneFeature(api, this.docArea),
+      review: reviewFeature(api, () => this.settings.userName, this.commentPane, this.docArea, () => void this.optionsDialog(), this.dock),
+      clipboard: clipboardPaneFeature(api, this.docArea),
     };
   }
 
@@ -278,6 +296,7 @@ export class WriteApp {
       };
     }
     this.features.review.attach(editor);
+    editor.onCopied = (text, html, object) => this.features.clipboard.collect(text, html, object);
     this.features.math.attach(editor, !path && !pkg);
     this.features.links.attach(editor);
     const doc: Doc = {
@@ -335,6 +354,8 @@ export class WriteApp {
     this.updateStatus(d);
     this.updateContextualTabs();
     if (countWords) this.find?.refresh();
+    this.features.selection.render();
+    this.features.styles.render();
     if (countWords && this.wordCache?.paras !== d.editor.paragraphs()) {
       // Counting runs after a short pause in typing, not on every key.
       clearTimeout(this.wordTimer);
@@ -821,6 +842,9 @@ export class WriteApp {
     c.implement("edit.paste", { run: paste(false), enabled: has });
     c.implement("edit.pasteText", { run: paste(true), enabled: has });
     c.implement("edit.selectAll", { run: () => ed()?.selectAll(), enabled: has });
+    c.implement("edit.selectMenu", { run: () => {}, enabled: has });
+    c.implement("edit.selectObjects", { run: () => { const e = ed(); if (e) e.setObjectSelect(!e.objectSelect); this.focusDoc(); }, enabled: has, checked: () => !!ed()?.objectSelect });
+    c.implement("edit.selectSimilar", { run: () => {}, enabled: () => false });
     c.implement("edit.formatPainter", {
       run: () => {
         const e = ed();
@@ -876,6 +900,9 @@ export class WriteApp {
     run("spacing.2", line("auto", 2), isLine(2));
     run("spacing.2.5", line("auto", 2.5), isLine(2.5));
     run("spacing.3", line("auto", 3), isLine(3));
+    // Dropdown buttons whose menu does the work.
+    c.implement("font.case", { run: () => {}, enabled: has });
+    c.implement("para.lineSpacing", { run: () => {}, enabled: has });
     run("spacing.toggleBefore", (e) => e.setSpacing(e.paraState().before > 0 ? 0 : 12));
     run("spacing.toggleAfter", (e) => e.setSpacing(undefined, e.paraState().after > 0 ? 0 : 12));
     c.onRefresh(() => {
@@ -1032,6 +1059,7 @@ export class WriteApp {
         get reject() { return self.features.review.rejectMenu; },
         get showComments() { return self.features.review.showCommentsMenu; },
         get filterMarkup() { return self.features.review.filterMenu; },
+        get reviewingPane() { return self.features.review.reviewingPaneMenu; },
         borders: ["bottom", "top", "left", "right", "none", "all", "outside", "inside"].map((k) => ({ cmd: `border.${k}` })),
         wrap: ["picture.wrapInline", "picture.wrapSquare", "picture.wrapTight", "picture.wrapThrough", "picture.wrapTopBottom", "picture.wrapBehind", "picture.wrapFront"].map((cmd) => ({ cmd })),
       },
@@ -1053,10 +1081,11 @@ export class WriteApp {
 
   // ----- Schriftart and Absatz dialogs ---------------------------------------------------
 
-  private async fontDialog(): Promise<void> {
+  /** Schriftart (Strg+D); with a target it edits a style's formatting (Formatvorlage ändern > Format > Zeichen). */
+  private async fontDialog(target?: FontTarget): Promise<void> {
     const e = this.active?.editor;
-    if (!e) return;
-    const s = e.charState();
+    if (!e && !target) return;
+    const s = target?.state ?? e!.charState();
     const fonts = this.fontList.length ? this.fontList : ["Arial", "Calibri", "Cambria", "Times New Roman"];
     const fontInput = h("input", { type: "text", value: s.font ?? "", style: "width:100%", list: "rw-fonts" });
     const datalist = h("datalist", { id: "rw-fonts" }, ...fonts.map((f) => h("option", { value: f })));
@@ -1107,6 +1136,23 @@ export class WriteApp {
     const ok = await showDialog({ title: "Schriftart", body, buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
     if (!ok) return;
     const changed = <T>(a: T | undefined, b: T) => a !== b;
+    if (target) {
+      const ital = styleSel.selectedIndex % 2 === 1, bold = styleSel.selectedIndex >= 2;
+      const size = Number(sizeInput.value.replace(",", "."));
+      const out: Record<string, unknown> = {};
+      if (fontInput.value && changed(s.font, fontInput.value)) out.font = fontInput.value;
+      if (size > 0 && changed(s.size, size)) out.size = size;
+      if (changed(!!s.bold, bold)) out.bold = bold;
+      if (changed(!!s.italic, ital)) out.italic = ital;
+      if (changed(s.underline ?? "none", underlineSel.value)) out.underline = underlineSel.value;
+      if (changed(s.color ?? "auto", color)) out.color = color;
+      for (const k of ["strike", "dstrike", "smallCaps", "caps", "hidden"] as const) if (changed(!!s[k], fx[k].cb.checked)) out[k] = fx[k].cb.checked;
+      const va = fx.superscript.cb.checked ? "superscript" : fx.subscript.cb.checked ? "subscript" : "baseline";
+      if (changed(s.superscript ? "superscript" : s.subscript ? "subscript" : "baseline", va)) out.vertAlign = va;
+      target.apply(out as CharProps);
+      return;
+    }
+    if (!e) return;
     if (fontInput.value && changed(s.font, fontInput.value)) e.setFont(fontInput.value);
     const size = Number(sizeInput.value.replace(",", "."));
     if (size > 0 && changed(s.size, size)) e.setSize(size);
@@ -1120,10 +1166,11 @@ export class WriteApp {
     if (changed(!!s.subscript, fx.subscript.cb.checked)) e.toggleVertAlign("subscript");
   }
 
-  private async paragraphDialog(): Promise<void> {
+  /** Absatz; with a target it edits a style's formatting (Formatvorlage ändern > Format > Absatz). */
+  private async paragraphDialog(target?: ParaTarget): Promise<void> {
     const e = this.active?.editor;
-    if (!e) return;
-    const r = e.paraState();
+    if (!e && !target) return;
+    const r = target?.state ?? e!.paraState();
     const cm = (pt: number) => (pt / 28.3465).toLocaleString("de-DE", { maximumFractionDigits: 2 }) + " cm";
     const pt = (v: number) => v.toLocaleString("de-DE", { maximumFractionDigits: 1 }) + " Pt.";
     const num = (v: string) => Number(v.replace(/[^\d,.-]/g, "").replace(",", "."));
@@ -1165,7 +1212,7 @@ export class WriteApp {
     const kind = lineSel.value;
     const lineRule: LineRule = kind === "exact" ? "exact" : kind === "atLeast" ? "atLeast" : "auto";
     const lineValue = kind === "single" ? 1 : kind === "1.5" ? 1.5 : kind === "double" ? 2 : num(lineVal.value) || (lineRule === "auto" ? 1 : 12);
-    e.setParaProps({
+    (target ? target.apply : (pp: Partial<ParaProps>) => e!.setParaProps(pp))({
       align: align.value as "left" | "center" | "right" | "both",
       indLeft: num(left.value) * 28.3465 || 0,
       indRight: num(right.value) * 28.3465 || 0,
@@ -1285,6 +1332,21 @@ export class WriteApp {
       /** Einfügen > Bilder > Dieses Gerät without the file dialog. */
       insertPicture: (path: string) => this.features.pictures.insertFromPath(path),
       activeRibbonTab: () => this.ribbon.activeTab,
+      /** Ribbon commands (all tabs, contextual ones too) that do nothing yet and are not deferred. */
+      unimplemented: () => {
+        const ids = new Set<string>();
+        const walk = (x: unknown): void => {
+          if (!x || typeof x !== "object") return;
+          if (Array.isArray(x)) { x.forEach(walk); return; }
+          const o = x as Record<string, unknown>;
+          if (typeof o.cmd === "string") ids.add(o.cmd);
+          if (o.launcher) walk(o.launcher);
+          for (const k of ["controls", "items", "rows", "menu", "smaller", "groups"]) if (k in o) { try { walk(o[k]); } catch { /* getters needing a document */ } }
+        };
+        const f = this.features;
+        walk([...ribbonTabs(this.ribbonContext()), f.hf.tab, f.tables.designTab, f.tables.layoutTab, f.shapes.tab, f.pictures.tab, f.math.tab]);
+        return [...ids].filter((id) => this.commands.has?.(id) !== false && !this.commands.isImplemented(id) && !this.commands.get(id).deferred).sort();
+      },
       infobar: () => this.infobarSlot.textContent,
       /** The active editor, for tests that call its commands directly. */
       editor: () => this.active?.editor,
