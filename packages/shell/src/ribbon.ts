@@ -40,7 +40,7 @@ export type Control =
    * `key` changes when the tiles must be drawn again; `panel` is the full gallery.
    */
   | {
-      type: "tiles"; cmd: string; key?: string; count: number; visible: number; fill?: boolean; size: [number, number];
+      type: "tiles"; cmd: string; key?: string; count: number; visible: number; fill?: boolean; size: [number, number]; cls?: string;
       render: (i: number) => HTMLElement | null; tip: (i: number) => string; pick: (i: number) => void;
       hover?: (i: number | null) => void; current?: () => number | undefined; redraw: () => string; panel: (close: () => void) => HTMLElement;
     }
@@ -484,7 +484,7 @@ export class Ribbon {
         });
         const more = h("button", { "aria-label": "Weitere", "data-keytip": c.key, "data-keytip-scope": this.scope() }, icon("chevron-down"));
         more.onclick = () => showPopup(c.panel(closePopup), more.getBoundingClientRect(), () => this.opts.onDone?.());
-        return h("div", { class: `rgallery tiles${c.fill ? " fill" : ""}`, role: "listbox", "data-min": String(c.visible) }, items,
+        return h("div", { class: `rgallery tiles${c.fill ? " fill" : ""}${c.cls ? ` ${c.cls}` : ""}`, role: "listbox", "data-min": String(c.visible) }, items,
           h("div", { class: "scroll" }, h("button", { disabled: true }, icon("chevron-up")), more));
       }
       case "spinner": {

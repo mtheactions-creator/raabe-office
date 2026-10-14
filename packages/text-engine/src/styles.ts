@@ -46,7 +46,7 @@ export interface TableStyleDef extends TableStylePart {
 export interface Theme {
   readonly majorFont: string;
   readonly minorFont: string;
-  /** The theme's colours (dk1 … accent6), for pictures and shapes; Office 2013 when absent. */
+  /** The theme's colours (dk1 … accent6), for pictures and shapes. */
   readonly colors?: Readonly<Record<string, string>>;
 }
 
@@ -401,9 +401,15 @@ export function defaultStyleSheet(): StyleSheet {
     new Map(defs.map((d) => [d.id, d])),
     { fontTheme: "minorHAnsi", size: 11, lang: "de-DE" },
     { after: 8, line: 1.08, lineRule: "auto", widow: true },
-    { majorFont: "Calibri Light", minorFont: "Calibri" },
+    { majorFont: "Calibri Light", minorFont: "Calibri", colors: OFFICE_2013_COLORS },
   );
 }
+
+/** Office 2013–2022 theme colours: those of new RaabeWrite documents (Calibri, D-011). */
+export const OFFICE_2013_COLORS: Readonly<Record<string, string>> = {
+  dk1: "000000", lt1: "FFFFFF", dk2: "44546A", lt2: "E7E6E6", accent1: "4472C4", accent2: "ED7D31", accent3: "A5A5A5",
+  accent4: "FFC000", accent5: "5B9BD5", accent6: "70AD47", hlink: "0563C1", folHlink: "954F72",
+};
 
 /** The built-in definition for a name (to add to documents that lack it). */
 export function builtinStyle(name: string): StyleDef | undefined {

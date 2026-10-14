@@ -63,6 +63,10 @@ cd tools/feel-lab
 .venv/Scripts/python.exe clipboard_roundtrip.py  # clipboard with Word both ways (RaabeWrite window)
 .venv/Scripts/python.exe compare_ui.py [--hover] # takes over mouse and screen (ribbon side by side)
 .venv/Scripts/python.exe check_tables.py      # takes over mouse and screen (table handles, row heights)
+.venv/Scripts/python.exe check_pictures.py    # takes over mouse, keyboard and clipboard (pictures)
+.venv/Scripts/python.exe check_shapes.py      # invisible: every preset shape against Word's PDF (D-046)
+.venv/Scripts/python.exe check_shapes_render.py  # RaabeWrite's drawing of Word's shapes against Word's (PDF)
+.venv/Scripts/python.exe check_shapes_ui.py   # takes over mouse and keyboard (drawing, typing into shapes, Word reads it)
 .venv/Scripts/python.exe show_docx.py         # per-line table of the last docx run
 ```
 

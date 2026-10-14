@@ -3,12 +3,13 @@
 // changes as the model describes them. Everything RaabeWrite does not interpret is kept as
 // its original XML in place, so writing back loses nothing (D-004).
 
-import { readExtent, readPicture, themeColors } from "./drawingml";
+import { readExtent, readPicture, readShapeProps, themeColors } from "./drawingml";
+import { NS_WPS, custGeomDef, formatMatrix, readAdjust, readBody, resolveStyle, type FormatMatrix } from "./shapes";
 import { strFromU8, unzipSync } from "fflate";
 import {
   A4, COLUMN_BREAK, DEFAULT_SECTION, LINE_BREAK, OBJ, ONE_COLUMN, PAGE_BREAK, StyleSheet, defaultStyleSheet, intern, nextTableId, plainPicture,
   type Anchor, type BlockObject, type CellDef, type CellRef, type CharProps, type CommentMeta, type DocState, type FloatObject,
-  type HeaderRefs, type ImageData, type InlineObject, type Numbering, type Para, type ParaGroup, type ParaProps, type Revision,
+  type HeaderRefs, type ImageData, type InlineObject, type Numbering, type Para, type ParaGroup, type ParaProps, type PictureFormat, type Revision, type ShapeInfo,
   type RowDef, type Run, type Section, type StyleDef, type StyleType, type TableDef, type TableStyleDef, type TableStylePart,
 } from "@raabe/text-engine";
 import { ommlToLatex } from "./math";
@@ -244,7 +245,15 @@ class Reader {
   readonly partial = new Set<string>();
   /** The document theme's colours (for pictures and shapes). */
   themeColors: Record<string, string> = themeColors(null);
+  /** The theme's format matrix, which shape styles refer to. */
+  matrix: FormatMatrix | null = null;
   readonly stories = new Map<string, Para[]>();
+  private textboxSeq = 0;
+
+  /** A new text box story id ("tx:1" …). */
+  nextTextbox(): string {
+    return `tx:${++this.textboxSeq}`;
+  }
   readonly storyParts = new Map<string, { path: string; rootTag: string }>();
   private readonly storyOfPath = new Map<string, string>();
   private readonly revisions = new Map<string, Revision>();
@@ -610,10 +619,43 @@ class PartReader {
     flush();
   }
 
-  /** A picture: inline (an object in the text) or anchored (positioned on the page). */
+  /** A shape or text box (wps:wsp): its look, its style, its text frame and its text. */
+  private shapeOf(wsp: Element): { pic: PictureFormat | undefined; shape: ShapeInfo } {
+    const theme = this.r.themeColors;
+    const sp = kids(wsp).find((x) => x.localName === "spPr");
+    const styleEl = kids(wsp).find((x) => x.localName === "style");
+    this.r.matrix ??= formatMatrix(null);
+    const styled = resolveStyle(styleEl, theme, this.r.matrix);
+    const read = sp ? readShapeProps(sp, theme, styled.styleLine) : {};
+    const pic = Object.values(read).some((v) => v !== undefined) ? read : undefined;
+    const cnv = kids(wsp).find((x) => x.localName === "cNvSpPr" || x.localName === "cNvCnPr");
+    const kind = cnv?.localName === "cNvCnPr" ? "connector" : cnv?.getAttribute("txBox") === "1" ? "textbox" : "shape";
+    const prst = sp ? kids(sp).find((x) => x.localName === "prstGeom") : undefined;
+    const cust = sp ? kids(sp).find((x) => x.localName === "custGeom") : undefined;
+    const txbx = kids(wsp).find((x) => x.localName === "txbx");
+    const content = txbx ? kids(txbx).find((x) => x.localName === "txbxContent") : undefined;
+    let story: string | undefined;
+    if (content) {
+      story = this.r.nextTextbox();
+      this.r.stories.set(story, ensurePara(new PartReader(this.r, this.part).blocks(kids(content))));
+    }
+    const shape: ShapeInfo = {
+      kind, adjust: readAdjust(prst), ...styled,
+      story, body: readBody(kids(wsp).find((x) => x.localName === "bodyPr"), kind === "textbox"),
+      styleXml: styleEl ? outer(styleEl) : undefined, custom: cust ? custGeomDef(cust) : undefined,
+    };
+    return { pic, shape: Object.fromEntries(Object.entries(shape).filter(([, v]) => v !== undefined)) as unknown as ShapeInfo };
+  }
+
+  /** A picture or shape: inline (an object in the text) or anchored (positioned on the page). */
   private drawing(c: Element, b: ParaBuilder, props: CharProps): void {
     const inline = c.getElementsByTagNameNS(WP, "inline")[0];
     const anchor = c.getElementsByTagNameNS(WP, "anchor")[0];
+    const wsp = c.getElementsByTagNameNS(NS_WPS, "wsp")[0];
+    if (wsp && (inline || anchor)) {
+      this.shapeDrawing(c, wsp, b, props, inline, anchor);
+      return;
+    }
     const blip = c.getElementsByTagNameNS(A, "blip")[0];
     const image = blip ? this.r.image(this.part, this.rels, blip.getAttributeNS(RNS, "embed")) : undefined;
     // Bildformat settings and Alternativtext; the XML is only rewritten when they change.
@@ -658,6 +700,41 @@ class PartReader {
       x: pos("positionH"), y: pos("positionV"), wrap, side: wrapEl?.getAttribute("wrapText") ?? "bothSides",
       dist: [d("distT"), d("distB"), d("distL"), d("distR")], pic, alt,
       z: Number(anchor.getAttribute("relativeHeight") ?? 0) || undefined,
+    });
+  }
+
+  private shapeDrawing(c: Element, wsp: Element, b: ParaBuilder, props: CharProps, inline: Element | undefined, anchor: Element | undefined): void {
+    const { pic, shape } = this.shapeOf(wsp);
+    const docPr = c.getElementsByTagNameNS(WP, "docPr")[0];
+    const descr = docPr?.getAttribute("descr") ?? undefined, title = docPr?.getAttribute("title") ?? undefined;
+    const alt = descr || title ? { descr: descr || undefined, title: title || undefined } : undefined;
+    // The XML is written back unchanged unless the shape changes (snapshot without the story).
+    const data: ObjectData = { drawing: outer(c), part: this.part, picRead: JSON.stringify({ pic, alt, shape: { ...shape, story: undefined } }) };
+    const holder = inline ?? anchor!;
+    const e = Array.from(holder.children).find((x) => x.localName === "extent");
+    const size = { width: Number(e?.getAttribute("cx") ?? 0) / EMU, height: Number(e?.getAttribute("cy") ?? 0) / EMU };
+    if (inline) {
+      b.addObject({ kind: "image", data, display: "", width: size.width, height: size.height, pic, alt, shape }, props);
+      return;
+    }
+    const a = anchor!;
+    const pos = (tag: string) => {
+      const el = Array.from(a.children).find((x) => x.localName === tag);
+      const align = el ? Array.from(el.children).find((x) => x.localName === "align")?.textContent ?? undefined : undefined;
+      const off = el ? Array.from(el.children).find((x) => x.localName === "posOffset")?.textContent : undefined;
+      return { rel: el?.getAttribute("relativeFrom") ?? "column", align, offset: Number(off ?? 0) / EMU };
+    };
+    const wrapEl = Array.from(a.children).find((x) => x.localName.startsWith("wrap"));
+    const wrapName = wrapEl?.localName ?? "wrapNone";
+    const behind = a.getAttribute("behindDoc") === "1";
+    const wrap = wrapName === "wrapNone" ? (behind ? "behind" : "front")
+      : wrapName === "wrapSquare" ? "square" : wrapName === "wrapTight" ? "tight" : wrapName === "wrapThrough" ? "through" : "topAndBottom";
+    const d = (n: string) => Number(a.getAttribute(n) ?? 0) / EMU;
+    b.floats.push({
+      at: b.text.length, data, width: size.width, height: size.height,
+      x: pos("positionH"), y: pos("positionV"), wrap, side: wrapEl?.getAttribute("wrapText") ?? "bothSides",
+      dist: [d("distT"), d("distB"), d("distL"), d("distR")], pic, alt, shape,
+      z: Number(a.getAttribute("relativeHeight") ?? 0) || undefined,
     });
   }
 
@@ -862,6 +939,7 @@ export function readDocx(bytes: Uint8Array): ReadResult {
   if (!main) throw new Error("Die Datei ist kein Word-Dokument (word/document.xml fehlt).");
   const themeXml = r.text("word/theme/theme1.xml");
   r.themeColors = themeColors(themeXml ? parse(themeXml) : null);
+  r.matrix = formatMatrix(themeXml ? parse(themeXml) : null);
   const theme = { ...themeFonts(themeXml), colors: r.themeColors };
   const stylesXml = r.text("word/styles.xml");
   const styles = readStyles(stylesXml, theme);

@@ -259,5 +259,22 @@
   "flip-v": "flip_vertical",
   "flip-h": "flip_horizontal",
   "crop-fill": "arrow_maximize",
-  "crop-fit": "zoom_fit"
+  "crop-fit": "zoom_fit",
+  "edit-shape": "shape_union",
+  "draw-text-box": "draw_text",
+  "shape-fill": "paint_bucket",
+  "shape-outline": "pen",
+  "shape-effects": "square_hint_sparkles",
+  "text-fill": "text_color",
+  "text-outline": "line_style",
+  "wordart": "text_effects",
+  "text-align-top": "align_top",
+  "text-align-middle": "align_center_vertical",
+  "text-align-bottom": "align_bottom",
+  "create-link": "link_square",
+  "shape-height": "arrow_autofit_height",
+  "shape-width": "arrow_autofit_width",
+  "line-weight": "line_thickness",
+  "line-dash": "line_horizontal_1_dashes",
+  "line-arrows": "arrow_up_left"
 }

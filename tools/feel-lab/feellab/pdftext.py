@@ -325,3 +325,77 @@ def baselines(page: Page, tolerance: float = 4.0) -> list[dict]:
         main = [r for r in g if r.size >= big - 0.01]
         out.append({"y": round(sum(r.y for r in main) / len(main), 2), "x": round(min(r.x for r in g), 2), "size": big})
     return out
+
+
+def paths(content: bytes, height: float) -> list[dict]:
+    """Every painted path of a content stream: its segments in points from the page's top left
+    ("M", "L", "C" with points, "Z") and how it was painted ("stroke", "fill", "both"), with
+    the line width (scaled by the transformation). Shapes and borders come out as Word drew
+    them, which is what shape geometry is compared against."""
+    I = (1.0, 0.0, 0.0, 1.0, 0.0, 0.0)
+    ctm, stack, lw, lw_stack = I, [], 1.0, []
+    fill, fill_stack = None, []
+    stroke_c, stroke_stack = None, []
+    nums: list[float] = []
+    cur: list = []
+    out: list[dict] = []
+
+    def pt(x: float, y: float) -> list[float]:
+        return [round(x * ctm[0] + y * ctm[2] + ctm[4], 3), round(height - (x * ctm[1] + y * ctm[3] + ctm[5]), 3)]
+
+    for kind, v in _tokens(content):
+        if kind == "num":
+            nums.append(v)
+            continue
+        if kind != "op":
+            nums = []
+            continue
+        n = nums
+        if v == b"q":
+            stack.append(ctm)
+            lw_stack.append(lw)
+            fill_stack.append(fill)
+            stroke_stack.append(stroke_c)
+        elif v == b"Q":
+            ctm = stack.pop() if stack else I
+            lw = lw_stack.pop() if lw_stack else 1.0
+            fill = fill_stack.pop() if fill_stack else None
+            stroke_c = stroke_stack.pop() if stroke_stack else None
+        elif v == b"cm" and len(n) >= 6:
+            ctm = _mul(tuple(n[-6:]), ctm)
+        elif v in (b"rg", b"sc", b"scn") and len(n) >= 3:
+            fill = "".join(f"{round(c * 255):02X}" for c in n[-3:])
+        elif v in (b"RG", b"SC", b"SCN") and len(n) >= 3:
+            stroke_c = "".join(f"{round(c * 255):02X}" for c in n[-3:])
+        elif v == b"G" and n:
+            stroke_c = f"{round(n[-1] * 255):02X}" * 3
+        elif v == b"g" and n:
+            fill = f"{round(n[-1] * 255):02X}" * 3
+        elif v == b"w" and n:
+            lw = n[-1]
+        elif v == b"m" and len(n) >= 2:
+            cur.append(["M", *pt(n[-2], n[-1])])
+        elif v == b"l" and len(n) >= 2:
+            cur.append(["L", *pt(n[-2], n[-1])])
+        elif v == b"c" and len(n) >= 6:
+            cur.append(["C", *pt(n[-6], n[-5]), *pt(n[-4], n[-3]), *pt(n[-2], n[-1])])
+        elif v == b"v" and len(n) >= 4:
+            last = cur[-1][-2:] if cur else [0, 0]
+            cur.append(["C", *last, *pt(n[-4], n[-3]), *pt(n[-2], n[-1])])
+        elif v == b"y" and len(n) >= 4:
+            cur.append(["C", *pt(n[-4], n[-3]), *pt(n[-2], n[-1]), *pt(n[-2], n[-1])])
+        elif v == b"h":
+            cur.append(["Z"])
+        elif v == b"re" and len(n) >= 4:
+            x, y, w, h = n[-4:]
+            cur += [["M", *pt(x, y)], ["L", *pt(x + w, y)], ["L", *pt(x + w, y + h)], ["L", *pt(x, y + h)], ["Z"]]
+        elif v in (b"S", b"s", b"f", b"F", b"f*", b"B", b"B*", b"b", b"b*", b"n"):
+            if v in (b"s", b"b", b"b*"):
+                cur.append(["Z"])
+            paint = {b"S": "stroke", b"s": "stroke", b"n": "none"}.get(v, "fill" if v in (b"f", b"F", b"f*") else "both")
+            if cur and paint != "none":
+                scale = (abs(ctm[0] * ctm[3] - ctm[1] * ctm[2])) ** 0.5
+                out.append({"paint": paint, "width": round(lw * scale, 3), "d": cur, "fill": fill if paint != "stroke" else None, "stroke": stroke_c if paint != "fill" else None})
+            cur = []
+        nums = []
+    return out

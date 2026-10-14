@@ -3,14 +3,17 @@
 // engine's PictureFormat and written back the way Word writes them (recorded with
 // tools/feel-lab/probe_word_picture.py).
 
-import type { PictureFormat, PictureShadow } from "@raabe/text-engine";
+import type { Fill, LineEnd, PictureFormat, PictureShadow } from "@raabe/text-engine";
 
 export const NS_A14 = "http://schemas.microsoft.com/office/drawing/2010/main";
 
-/** Office 2013-2022 theme colours, used when a document has no theme. */
+/**
+ * The colours Word 365 uses for a document without a theme part (its 2023 Office theme).
+ * New RaabeWrite documents carry an Office 2013–2022 theme part instead (D-046).
+ */
 export const DEFAULT_THEME_COLORS: Readonly<Record<string, string>> = {
-  dk1: "000000", lt1: "FFFFFF", dk2: "44546A", lt2: "E7E6E6", accent1: "4472C4", accent2: "ED7D31", accent3: "A5A5A5",
-  accent4: "FFC000", accent5: "5B9BD5", accent6: "70AD47", hlink: "0563C1", folHlink: "954F72",
+  dk1: "000000", lt1: "FFFFFF", dk2: "0E2841", lt2: "E8E8E8", accent1: "156082", accent2: "E97132", accent3: "196B24",
+  accent4: "0F9ED5", accent5: "A02B93", accent6: "4EA72E", hlink: "467886", folHlink: "96607D",
 };
 
 const PRESET: Record<string, string> = {
@@ -59,6 +62,9 @@ function hslToRgb(h: number, s: number, l: number): [number, number, number] {
   return [f(h + 1 / 3), f(h), f(h - 1 / 3)];
 }
 
+const toLinear = (c: number) => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
+const toSrgb = (c: number) => (c <= 0.0031308 ? c * 12.92 : 1.055 * Math.max(0, c) ** (1 / 2.4) - 0.055);
+
 const toHex = (r: number, g: number, b: number) =>
   [r, g, b].map((x) => Math.round(Math.max(0, Math.min(1, x)) * 255).toString(16).padStart(2, "0")).join("").toUpperCase();
 
@@ -89,8 +95,9 @@ export function readColor(parent: Element | undefined, theme: Record<string, str
       const [h, s, l] = rgbToHsl(r, g, b);
       const next = m.localName === "lumMod" ? [h, s, l * val] : m.localName === "lumOff" ? [h, s, l + val] : [h, Math.min(1, s * val), l];
       [r, g, b] = hslToRgb(next[0], next[1], Math.max(0, Math.min(1, next[2])));
-    } else if (m.localName === "tint") [r, g, b] = [r, g, b].map((x) => x + (1 - x) * (1 - val));
-    else if (m.localName === "shade") [r, g, b] = [r, g, b].map((x) => x * val);
+    } else if (m.localName === "tint") [r, g, b] = [r, g, b].map((x) => toSrgb(1 - (1 - toLinear(x)) * val));
+    // Shade and tint work in linear light: accent1 4472C4 shaded to 15 % is Word's 172C51.
+    else if (m.localName === "shade") [r, g, b] = [r, g, b].map((x) => toSrgb(toLinear(x) * val));
   }
   return { hex: toHex(r, g, b), transparency: 1 - alpha };
 }
@@ -153,69 +160,123 @@ export function readPicture(pic: Element, theme: Record<string, string>): Pictur
     if (l || t || r || b) out.crop = { l, t, r, b };
   }
   const sp = kids(pic).find((c) => c.localName === "spPr");
-  if (sp) {
-    const xfrm = kid(sp, "xfrm");
-    if (xfrm) {
-      const rot = num(xfrm, "rot");
-      if (rot) out.rotation = rot / 60000;
-      if (xfrm.getAttribute("flipH") === "1") out.flipH = true;
-      if (xfrm.getAttribute("flipV") === "1") out.flipV = true;
+  if (sp) Object.assign(out, readShapeProps(sp, theme));
+  return out as PictureFormat;
+}
+
+/** A fill element (a:solidFill, a:gradFill, a:noFill …) as the engine's Fill. */
+export function readFill(el: Element | undefined, theme: Record<string, string>): Fill | undefined {
+  if (!el) return undefined;
+  switch (el.localName) {
+    case "noFill": return { kind: "none" };
+    case "solidFill": {
+      const c = readColor(el, theme);
+      return c ? { kind: "solid", color: c.hex, transparency: c.transparency || undefined } : { kind: "solid", color: "000000" };
     }
-    const prst = kid(sp, "prstGeom");
-    const geom = prst?.getAttribute("prst");
-    if (geom && geom !== "rect") out.geometry = geom;
-    const av = kid(prst, "avLst");
-    if (av && av.children.length) out.geometryAdj = Array.from(av.children).map((x) => new XMLSerializer().serializeToString(x)).join("");
-    const ser = (x: Element | undefined) => (x ? new XMLSerializer().serializeToString(x) : undefined);
-    const fill = kids(sp).find((x) => ["solidFill", "gradFill", "pattFill", "noFill", "blipFill"].includes(x.localName));
-    if (fill) out.fillXml = ser(fill);
-    if (kid(sp, "scene3d")) out.scene3dXml = ser(kid(sp, "scene3d"));
-    if (kid(sp, "sp3d")) out.sp3dXml = ser(kid(sp, "sp3d"));
-    const ln = kid(sp, "ln");
-    if (ln) {
-      if (kid(ln, "noFill")) out.line = null;
-      else {
-        const fill = kid(ln, "solidFill");
-        const color = readColor(fill, theme);
-        const w = (num(ln, "w") ?? 9525) / EMU;
-        const dash = kid(ln, "prstDash")?.getAttribute("val") ?? undefined;
-        const compound = ln.getAttribute("cmpd") ?? undefined;
-        if (color) {
-          out.line = {
-            color: color.hex, width: w, dash: dash ?? undefined, compound: compound && compound !== "sng" ? compound : undefined,
-            cap: ln.getAttribute("cap") ?? undefined, miter: kid(ln, "miter") ? true : undefined,
-          };
-        }
-      }
+    case "gradFill": {
+      const stops = kids(kid(el, "gsLst") ?? el).filter((g) => g.localName === "gs").map((g) => {
+        const c = readColor(g, theme) ?? { hex: "000000", transparency: 0 };
+        return { pos: (num(g, "pos") ?? 0) / 100000, color: c.hex, transparency: c.transparency || undefined };
+      });
+      const lin = kid(el, "lin"), path = kid(el, "path");
+      return { kind: "gradient", stops, angle: lin ? (num(lin, "ang") ?? 0) / 60000 : undefined, path: path?.getAttribute("path") ?? undefined };
     }
-    const fx = kid(sp, "effectLst");
-    if (fx) {
-      for (const e of kids(fx)) {
-        if (e.localName === "outerShdw" || e.localName === "innerShdw") {
-          const color = readColor(e, theme) ?? { hex: "000000", transparency: 0.6 };
-          const shadow: PictureShadow = {
-            kind: e.localName === "outerShdw" ? "outer" : "inner", color: color.hex, transparency: color.transparency,
-            blur: (num(e, "blurRad") ?? 0) / EMU, dist: (num(e, "dist") ?? 0) / EMU, dir: (num(e, "dir") ?? 0) / 60000,
-            sx: pctOf(num(e, "sx")), sy: pctOf(num(e, "sy")),
-            kx: num(e, "kx") !== undefined ? num(e, "kx")! / 60000 : undefined, ky: num(e, "ky") !== undefined ? num(e, "ky")! / 60000 : undefined,
-            algn: e.getAttribute("algn") ?? undefined,
-            rotWithShape: e.hasAttribute("rotWithShape") ? e.getAttribute("rotWithShape") === "1" : undefined,
-          };
-          out.shadow = shadow;
-        } else if (e.localName === "reflection") {
-          out.reflection = {
-            size: pctOf(num(e, "endPos")) ?? 0.9, dist: (num(e, "dist") ?? 0) / EMU, transparency: 1 - (pctOf(num(e, "stA")) ?? 0.5),
-            blur: (num(e, "blurRad") ?? 0) / EMU, endA: pctOf(num(e, "endA")),
-          };
-        } else if (e.localName === "glow") {
-          const color = readColor(e, theme) ?? { hex: "4472C4", transparency: 0.6 };
-          out.glow = { color: color.hex, radius: (num(e, "rad") ?? 0) / EMU, transparency: color.transparency };
-        } else if (e.localName === "softEdge") out.softEdge = (num(e, "rad") ?? 0) / EMU;
-      }
-    }
-    const bevel = kid(kid(sp, "sp3d"), "bevelT");
-    if (bevel) out.bevel = { kind: bevel.getAttribute("prst") ?? "circle", w: (num(bevel, "w") ?? 76200) / EMU, h: (num(bevel, "h") ?? 76200) / EMU };
+    case "pattFill": return { kind: "other", color: readColor(kid(el, "fgClr"), theme)?.hex ?? "000000" };
+    case "blipFill": return { kind: "other", color: "BFBFBF" };
+    case "grpFill": return { kind: "none" };
+    default: return undefined;
   }
+}
+
+const FILLS = ["solidFill", "gradFill", "pattFill", "noFill", "blipFill", "grpFill"];
+const END_TYPES = new Set(["triangle", "stealth", "diamond", "oval", "arrow"]);
+
+/** An outline (a:ln) as the engine's line; null when it has no fill. */
+export function readLine(ln: Element, theme: Record<string, string>, style?: { color: string; width: number }): PictureFormat["line"] {
+  if (kid(ln, "noFill")) return null;
+  const fill = kids(ln).find((x) => FILLS.includes(x.localName));
+  const f = readFill(fill, theme);
+  // Without a fill of its own the outline takes the shape style's colour (and width).
+  const color = f?.kind === "solid" ? { hex: f.color, transparency: f.transparency ?? 0 } : f?.kind === "gradient" ? { hex: f.stops[0]?.color ?? "000000", transparency: 0 }
+    : style ? { hex: style.color, transparency: 0 } : null;
+  if (!color) return undefined;
+  const end = (name: string): LineEnd | undefined => {
+    const e = kid(ln, name);
+    const type = e?.getAttribute("type");
+    if (!e || !type || !END_TYPES.has(type)) return undefined;
+    return { type: type as LineEnd["type"], w: (e.getAttribute("w") ?? undefined) as LineEnd["w"], len: (e.getAttribute("len") ?? undefined) as LineEnd["len"] };
+  };
+  const compound = ln.getAttribute("cmpd") ?? undefined;
+  const join = kid(ln, "round") ? "round" : kid(ln, "bevel") ? "bevel" : kid(ln, "miter") ? "miter" : undefined;
+  return {
+    color: color.hex, width: num(ln, "w") !== undefined ? num(ln, "w")! / EMU : style?.width ?? 0.75, dash: kid(ln, "prstDash")?.getAttribute("val") ?? undefined,
+    compound: compound && compound !== "sng" ? compound : undefined, cap: ln.getAttribute("cap") ?? undefined,
+    miter: join === "miter" ? true : undefined, join: join && join !== "miter" ? join : undefined,
+    transparency: color.transparency || undefined, head: end("headEnd"), tail: end("tailEnd"),
+  };
+}
+
+/** An effect list (a:effectLst): shadow, reflection, glow, soft edges. */
+export function readEffects(fx: Element, theme: Record<string, string>): Partial<PictureFormat> {
+  const out: Record<string, unknown> = {};
+  for (const e of kids(fx)) {
+    if (e.localName === "outerShdw" || e.localName === "innerShdw") {
+      const color = readColor(e, theme) ?? { hex: "000000", transparency: 0.6 };
+      const shadow: PictureShadow = {
+        kind: e.localName === "outerShdw" ? "outer" : "inner", color: color.hex, transparency: color.transparency,
+        blur: (num(e, "blurRad") ?? 0) / EMU, dist: (num(e, "dist") ?? 0) / EMU, dir: (num(e, "dir") ?? 0) / 60000,
+        sx: pctOf(num(e, "sx")), sy: pctOf(num(e, "sy")),
+        kx: num(e, "kx") !== undefined ? num(e, "kx")! / 60000 : undefined, ky: num(e, "ky") !== undefined ? num(e, "ky")! / 60000 : undefined,
+        algn: e.getAttribute("algn") ?? undefined,
+        rotWithShape: e.hasAttribute("rotWithShape") ? e.getAttribute("rotWithShape") === "1" : undefined,
+      };
+      out.shadow = shadow;
+    } else if (e.localName === "reflection") {
+      out.reflection = {
+        size: pctOf(num(e, "endPos")) ?? 0.9, dist: (num(e, "dist") ?? 0) / EMU, transparency: 1 - (pctOf(num(e, "stA")) ?? 0.5),
+        blur: (num(e, "blurRad") ?? 0) / EMU, endA: pctOf(num(e, "endA")),
+      };
+    } else if (e.localName === "glow") {
+      const color = readColor(e, theme) ?? { hex: "4472C4", transparency: 0.6 };
+      out.glow = { color: color.hex, radius: (num(e, "rad") ?? 0) / EMU, transparency: color.transparency };
+    } else if (e.localName === "softEdge") out.softEdge = (num(e, "rad") ?? 0) / EMU;
+  }
+  return out as Partial<PictureFormat>;
+}
+
+/** Shape properties (pic:spPr, wps:spPr): transform, geometry, fill, outline, effects, 3D. */
+export function readShapeProps(sp: Element, theme: Record<string, string>, styleLine?: { color: string; width: number }): PictureFormat {
+  const out: Record<string, unknown> = {};
+  const xfrm = kid(sp, "xfrm");
+  if (xfrm) {
+    const rot = num(xfrm, "rot");
+    if (rot) out.rotation = rot / 60000;
+    if (xfrm.getAttribute("flipH") === "1") out.flipH = true;
+    if (xfrm.getAttribute("flipV") === "1") out.flipV = true;
+  }
+  const prst = kid(sp, "prstGeom");
+  const geom = prst?.getAttribute("prst");
+  if (geom && geom !== "rect") out.geometry = geom;
+  if (kid(sp, "custGeom")) out.geometry = "custom";
+  const av = kid(prst, "avLst");
+  if (av && av.children.length) out.geometryAdj = Array.from(av.children).map((x) => new XMLSerializer().serializeToString(x)).join("");
+  const ser = (x: Element | undefined) => (x ? new XMLSerializer().serializeToString(x) : undefined);
+  const fill = kids(sp).find((x) => FILLS.includes(x.localName));
+  if (fill) {
+    out.fillXml = ser(fill);
+    out.fill = readFill(fill, theme);
+  }
+  if (kid(sp, "scene3d")) out.scene3dXml = ser(kid(sp, "scene3d"));
+  if (kid(sp, "sp3d")) out.sp3dXml = ser(kid(sp, "sp3d"));
+  const ln = kid(sp, "ln");
+  if (ln) {
+    const line = readLine(ln, theme, styleLine);
+    if (line !== undefined) out.line = line;
+  }
+  const fx = kid(sp, "effectLst");
+  if (fx) Object.assign(out, readEffects(fx, theme));
+  const bevel = kid(kid(sp, "sp3d"), "bevelT");
+  if (bevel) out.bevel = { kind: bevel.getAttribute("prst") ?? "circle", w: (num(bevel, "w") ?? 76200) / EMU, h: (num(bevel, "h") ?? 76200) / EMU };
   return out as PictureFormat;
 }
 
@@ -274,8 +335,9 @@ export function shapePropsXml(f: PictureFormat, cx: number, cy: number): string 
   if (f.line === null) out += "<a:ln><a:noFill/></a:ln>";
   else if (f.line) {
     const l = f.line;
-    out += `<a:ln w="${e(l.width)}"${l.cap ? ` cap="${l.cap}"` : ""}${l.compound ? ` cmpd="${l.compound}"` : ""}><a:solidFill>${colorXml(l.color)}</a:solidFill>` +
-      `${l.dash ? `<a:prstDash val="${l.dash}"/>` : ""}${l.miter ? '<a:miter lim="800000"/>' : ""}</a:ln>`;
+    const end = (tag: string, x: LineEnd | undefined) => (x ? `<a:${tag} type="${x.type}"${x.w ? ` w="${x.w}"` : ""}${x.len ? ` len="${x.len}"` : ""}/>` : "");
+    out += `<a:ln${l.width >= 0 ? ` w="${e(l.width)}"` : ""}${l.cap ? ` cap="${l.cap}"` : ""}${l.compound ? ` cmpd="${l.compound}"` : ""}>${l.color ? `<a:solidFill>${colorXml(l.color, l.transparency ?? 0)}</a:solidFill>` : ""}` +
+      `${l.dash ? `<a:prstDash val="${l.dash}"/>` : ""}${l.join === "round" ? "<a:round/>" : l.join === "bevel" ? "<a:bevel/>" : l.miter ? '<a:miter lim="800000"/>' : ""}${end("headEnd", l.head)}${end("tailEnd", l.tail)}</a:ln>`;
   }
   const fx: string[] = [];
   if (f.glow) fx.push(`<a:glow rad="${e(f.glow.radius)}">${colorXml(f.glow.color, f.glow.transparency)}</a:glow>`);

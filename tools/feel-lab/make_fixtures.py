@@ -791,6 +791,57 @@ def images(app) -> None:
     d.Close(0)
 
 
+def shapes(app) -> None:
+    """Shapes and text boxes as Word makes them (Office 2013-2022 theme, like new RaabeWrite
+    documents): a default rectangle with text, a text box, an arrow, a gradient, a shadow, a
+    speech bubble, a dashed ellipse, a rotated shape and a text box the text flows around."""
+    d = base_doc(app)
+    d.ApplyDocumentTheme(str(Path("C:/Program Files/Microsoft Office/root/Document Themes 16/Office 2013 - 2022 Theme.thmx")))
+    b = Builder(d)
+    b.para("Formen im Test", -2)
+    for _ in range(3):
+        b.para(FILL + " " + FILL)
+    anchor = d.Paragraphs(2).Range
+
+    def at(shape, left, top):
+        shape.RelativeHorizontalPosition = 1  # page
+        shape.RelativeVerticalPosition = 1
+        shape.Left, shape.Top = left, top
+        return shape
+
+    r = at(d.Shapes.AddShape(1, 0, 0, 120, 60, anchor), 80, 330)
+    r.TextFrame.TextRange.Text = "Rechteck mit Text"
+    t = at(d.Shapes.AddTextbox(1, 0, 0, 150, 70, anchor), 230, 330)
+    t.TextFrame.TextRange.Text = "Ein Textfeld" + chr(13) + "mit zwei Absätzen."
+    ln = at(d.Shapes.AddLine(0, 0, 100, 40, anchor), 410, 340)
+    ln.Line.EndArrowheadStyle = 2
+    g = at(d.Shapes.AddShape(5, 0, 0, 110, 60, anchor), 80, 420)
+    g.Fill.TwoColorGradient(1, 1)
+    g.Fill.ForeColor.RGB = 0x00C0FF
+    g.Fill.BackColor.RGB = 0xFF8000
+    st = at(d.Shapes.AddShape(92, 0, 0, 70, 70, anchor), 230, 410)
+    st.Shadow.Visible = True
+    st.Shadow.OffsetX, st.Shadow.OffsetY = 4, 4
+    c = at(d.Shapes.AddShape(106, 0, 0, 130, 60, anchor), 340, 420)
+    c.TextFrame.TextRange.Text = "Sprechblase"
+    e = at(d.Shapes.AddShape(9, 0, 0, 100, 50, anchor), 80, 520)
+    e.Fill.Visible = False
+    e.Line.DashStyle = 4
+    e.Line.Weight = 2
+    e.Line.ForeColor.RGB = 0x0000C0
+    rot = at(d.Shapes.AddShape(33, 0, 0, 100, 40, anchor), 230, 530)
+    rot.Rotation = 30
+    w = d.Shapes.AddTextbox(1, 0, 0, 140, 60, d.Paragraphs(4).Range)
+    w.TextFrame.TextRange.Text = "Umflossenes Textfeld"
+    w.WrapFormat.Type = 0  # square
+    w.RelativeHorizontalPosition = 0  # margin
+    w.Left = -999996  # right
+    w.RelativeVerticalPosition = 2  # paragraph
+    w.Top = 10
+    d.SaveAs2(str(OUT / "word-shapes.docx"), 16)
+    d.Close(0)
+
+
 TEST_AUTHOR = "Raabe Office Test"
 
 
@@ -834,7 +885,7 @@ def main() -> None:
         if only:
             for name in only:
                 {"layout": layout, "fonts": fonts, "breaks": breaks, "top": top, "formatting": formatting, "rich": rich,
-                 "lists": lists, "tables": tables, "sections": sections, "notes": notes, "borders": borders, "images": images, "step4": step4}[name](app)
+                 "lists": lists, "tables": tables, "sections": sections, "notes": notes, "borders": borders, "images": images, "step4": step4, "shapes": shapes}[name](app)
         else:
             formatting(app)
             rich(app)

@@ -1,0 +1,762 @@
+{
+ "line": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "straightConnector1": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "bentConnector2": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "bentConnector3": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "curvedConnector3": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "rect": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "roundRect": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "snip1Rect": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "snip2SameRect": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "snip2DiagRect": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "snipRoundRect": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "round1Rect": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "round2SameRect": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "round2DiagRect": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "ellipse": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "triangle": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "rtTriangle": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "parallelogram": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "trapezoid": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "diamond": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "pentagon": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "hexagon": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "heptagon": {
+  "wide": 0.0,
+  "tall": 0.01,
+  "adjusted": 0.0
+ },
+ "octagon": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "decagon": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "dodecagon": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "pie": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.28
+ },
+ "chord": {
+  "wide": 0.28,
+  "tall": 0.29,
+  "adjusted": 0.27
+ },
+ "teardrop": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.29
+ },
+ "frame": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "halfFrame": {
+  "wide": 0.01,
+  "tall": 0.01,
+  "adjusted": 0.0
+ },
+ "corner": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "diagStripe": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "plus": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "plaque": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "can": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "cube": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "bevel": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "donut": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "noSmoking": {
+  "wide": 0.27,
+  "tall": 0.26,
+  "adjusted": 0.25
+ },
+ "blockArc": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.3
+ },
+ "foldedCorner": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "smileyFace": {
+  "wide": 0.24,
+  "tall": 0.24,
+  "adjusted": 0.24
+ },
+ "heart": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "lightningBolt": {
+  "wide": 0.27,
+  "tall": 0.0,
+  "adjusted": 0.27
+ },
+ "sun": {
+  "wide": 0.01,
+  "tall": 0.01,
+  "adjusted": 0.01
+ },
+ "moon": {
+  "wide": 0.35,
+  "tall": 0.25,
+  "adjusted": 0.35
+ },
+ "cloud": {
+  "wide": 0.27,
+  "tall": 0.32,
+  "adjusted": 0.27
+ },
+ "arc": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "bracketPair": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "bracePair": {
+  "wide": 0.01,
+  "tall": 0.01,
+  "adjusted": 0.0
+ },
+ "leftBracket": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "rightBracket": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "leftBrace": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "rightBrace": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "rightArrow": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "leftArrow": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "upArrow": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "downArrow": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "leftRightArrow": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "upDownArrow": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "quadArrow": {
+  "wide": 0.01,
+  "tall": 0.01,
+  "adjusted": 0.01
+ },
+ "leftRightUpArrow": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "bentArrow": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "uturnArrow": {
+  "wide": 0.25,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "leftUpArrow": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "bentUpArrow": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "curvedRightArrow": {
+  "wide": 0.29,
+  "tall": 0.25,
+  "adjusted": 0.3
+ },
+ "curvedLeftArrow": {
+  "wide": 0.3,
+  "tall": 0.0,
+  "adjusted": 0.3
+ },
+ "curvedUpArrow": {
+  "wide": 0.25,
+  "tall": 0.35,
+  "adjusted": 0.01
+ },
+ "curvedDownArrow": {
+  "wide": 0.28,
+  "tall": 0.35,
+  "adjusted": 0.27
+ },
+ "stripedRightArrow": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "notchedRightArrow": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "homePlate": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "chevron": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "rightArrowCallout": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "leftArrowCallout": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "upArrowCallout": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "downArrowCallout": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "leftRightArrowCallout": {
+  "wide": 0.25,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "upDownArrowCallout": {
+  "wide": 0.0,
+  "tall": 0.25,
+  "adjusted": 0.0
+ },
+ "quadArrowCallout": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.01
+ },
+ "mathPlus": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "mathMinus": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "mathMultiply": {
+  "wide": 0.01,
+  "tall": 0.0,
+  "adjusted": 0.01
+ },
+ "mathDivide": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "mathEqual": {
+  "wide": 0.0,
+  "tall": 0.01,
+  "adjusted": 0.01
+ },
+ "mathNotEqual": {
+  "wide": 0.0,
+  "tall": 0.01,
+  "adjusted": 0.01
+ },
+ "flowChartProcess": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "flowChartAlternateProcess": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "flowChartDecision": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "flowChartInputOutput": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "flowChartPredefinedProcess": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "flowChartInternalStorage": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "flowChartDocument": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "flowChartMultidocument": {
+  "wide": 0.01,
+  "tall": 0.01,
+  "adjusted": 0.01
+ },
+ "flowChartTerminator": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "flowChartPreparation": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "flowChartManualInput": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "flowChartManualOperation": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "flowChartConnector": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "flowChartOffpageConnector": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "flowChartPunchedCard": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "flowChartPunchedTape": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "flowChartSummingJunction": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "flowChartOr": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "flowChartCollate": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "flowChartSort": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "flowChartExtract": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "flowChartMerge": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "flowChartOnlineStorage": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "flowChartDelay": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "flowChartMagneticTape": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "flowChartMagneticDisk": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "flowChartMagneticDrum": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "flowChartDisplay": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "irregularSeal1": {
+  "wide": 0.01,
+  "tall": 0.0,
+  "adjusted": 0.01
+ },
+ "irregularSeal2": {
+  "wide": 0.01,
+  "tall": 0.26,
+  "adjusted": 0.01
+ },
+ "star4": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "star5": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.25
+ },
+ "star6": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "star7": {
+  "wide": 0.0,
+  "tall": 0.01,
+  "adjusted": 0.0
+ },
+ "star8": {
+  "wide": 0.01,
+  "tall": 0.01,
+  "adjusted": 0.0
+ },
+ "star10": {
+  "wide": 0.01,
+  "tall": 0.0,
+  "adjusted": 0.01
+ },
+ "star12": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.01
+ },
+ "star16": {
+  "wide": 0.01,
+  "tall": 0.01,
+  "adjusted": 0.01
+ },
+ "star24": {
+  "wide": 0.01,
+  "tall": 0.01,
+  "adjusted": 0.01
+ },
+ "star32": {
+  "wide": 0.01,
+  "tall": 0.01,
+  "adjusted": 0.01
+ },
+ "ribbon": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "ribbon2": {
+  "wide": 0.0,
+  "tall": 0.01,
+  "adjusted": 0.0
+ },
+ "ellipseRibbon": {
+  "wide": 0.0,
+  "tall": 0.24,
+  "adjusted": 0.0
+ },
+ "ellipseRibbon2": {
+  "wide": 0.0,
+  "tall": 0.24,
+  "adjusted": 0.0
+ },
+ "verticalScroll": {
+  "wide": 0.25,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "horizontalScroll": {
+  "wide": 0.25,
+  "tall": 0.25,
+  "adjusted": 0.01
+ },
+ "wave": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "doubleWave": {
+  "wide": 0.01,
+  "tall": 0.0,
+  "adjusted": 0.01
+ },
+ "wedgeRectCallout": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.26
+ },
+ "wedgeRoundRectCallout": {
+  "wide": 0.27,
+  "tall": 0.0,
+  "adjusted": 0.26
+ },
+ "wedgeEllipseCallout": {
+  "wide": 0.27,
+  "tall": 0.27,
+  "adjusted": 0.27
+ },
+ "cloudCallout": {
+  "wide": 0.27,
+  "tall": 0.32,
+  "adjusted": 0.27
+ },
+ "callout1": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "callout2": {
+  "wide": 0.01,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "callout3": {
+  "wide": 0.01,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "accentCallout1": {
+  "wide": 0.01,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "accentCallout2": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "accentCallout3": {
+  "wide": 0.01,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "borderCallout1": {
+  "wide": 0.01,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "borderCallout2": {
+  "wide": 0.01,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "borderCallout3": {
+  "wide": 0.0,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "accentBorderCallout1": {
+  "wide": 0.01,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "accentBorderCallout2": {
+  "wide": 0.01,
+  "tall": 0.0,
+  "adjusted": 0.0
+ },
+ "accentBorderCallout3": {
+  "wide": 0.01,
+  "tall": 0.0,
+  "adjusted": 0.0
+ }
+}

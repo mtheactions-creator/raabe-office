@@ -1,0 +1,1707 @@
+{
+ "names": {
+  "1": {
+   "name": "Rechteck 1",
+   "auto": 1,
+   "adj": [],
+   "prst": "rect",
+   "av": []
+  },
+  "2": {
+   "name": "Parallelogramm 2",
+   "auto": 2,
+   "adj": [
+    0.25
+   ],
+   "prst": "parallelogram",
+   "av": []
+  },
+  "3": {
+   "name": "Trapezoid 3",
+   "auto": 3,
+   "adj": [
+    0.25
+   ],
+   "prst": "trapezoid",
+   "av": []
+  },
+  "4": {
+   "name": "Raute 4",
+   "auto": 4,
+   "adj": [],
+   "prst": "diamond",
+   "av": []
+  },
+  "5": {
+   "name": "Rechteck: abgerundete Ecken 5",
+   "auto": 5,
+   "adj": [
+    0.16667
+   ],
+   "prst": "roundRect",
+   "av": []
+  },
+  "6": {
+   "name": "Achteck 6",
+   "auto": 6,
+   "adj": [
+    0.29289
+   ],
+   "prst": "octagon",
+   "av": []
+  },
+  "7": {
+   "name": "Gleichschenkliges Dreieck 7",
+   "auto": 7,
+   "adj": [
+    0.5
+   ],
+   "prst": "triangle",
+   "av": []
+  },
+  "8": {
+   "name": "Rechtwinkliges Dreieck 8",
+   "auto": 8,
+   "adj": [],
+   "prst": "rtTriangle",
+   "av": []
+  },
+  "9": {
+   "name": "Ellipse 9",
+   "auto": 9,
+   "adj": [],
+   "prst": "ellipse",
+   "av": []
+  },
+  "10": {
+   "name": "Sechseck 10",
+   "auto": 10,
+   "adj": [
+    0.25,
+    1.1547
+   ],
+   "prst": "hexagon",
+   "av": []
+  },
+  "11": {
+   "name": "Kreuz 11",
+   "auto": 11,
+   "adj": [
+    0.25
+   ],
+   "prst": "plus",
+   "av": []
+  },
+  "12": {
+   "name": "Fünfeck 12",
+   "auto": 12,
+   "adj": [
+    1.05146,
+    1.10557
+   ],
+   "prst": "pentagon",
+   "av": []
+  },
+  "13": {
+   "name": "Zylinder 13",
+   "auto": 13,
+   "adj": [
+    0.25
+   ],
+   "prst": "can",
+   "av": []
+  },
+  "14": {
+   "name": "Würfel 14",
+   "auto": 14,
+   "adj": [
+    0.25
+   ],
+   "prst": "cube",
+   "av": []
+  },
+  "15": {
+   "name": "Rechteck: abgeschrägt 15",
+   "auto": 15,
+   "adj": [
+    0.125
+   ],
+   "prst": "bevel",
+   "av": []
+  },
+  "16": {
+   "name": "Rechteck: gefaltete Ecke 16",
+   "auto": 16,
+   "adj": [
+    0.16667
+   ],
+   "prst": "foldedCorner",
+   "av": []
+  },
+  "17": {
+   "name": "Smiley 17",
+   "auto": 17,
+   "adj": [
+    0.04653
+   ],
+   "prst": "smileyFace",
+   "av": []
+  },
+  "18": {
+   "name": "Kreis: nicht ausgefüllt 18",
+   "auto": 18,
+   "adj": [
+    0.25
+   ],
+   "prst": "donut",
+   "av": []
+  },
+  "19": {
+   "name": "Verbotsymbol 19",
+   "auto": 19,
+   "adj": [
+    0.1875
+   ],
+   "prst": "noSmoking",
+   "av": []
+  },
+  "20": {
+   "name": "Halbbogen 20",
+   "auto": 20,
+   "adj": [
+    180.0,
+    0.0,
+    0.25
+   ],
+   "prst": "blockArc",
+   "av": []
+  },
+  "21": {
+   "name": "Herz 21",
+   "auto": 21,
+   "adj": [],
+   "prst": "heart",
+   "av": []
+  },
+  "22": {
+   "name": "Gewitterblitz 22",
+   "auto": 22,
+   "adj": [],
+   "prst": "lightningBolt",
+   "av": []
+  },
+  "23": {
+   "name": "Sonne 23",
+   "auto": 23,
+   "adj": [
+    0.25
+   ],
+   "prst": "sun",
+   "av": []
+  },
+  "24": {
+   "name": "Mond 24",
+   "auto": 24,
+   "adj": [
+    0.5
+   ],
+   "prst": "moon",
+   "av": []
+  },
+  "25": {
+   "name": "Bogen 25",
+   "auto": 25,
+   "adj": [
+    -90.0,
+    0.0
+   ],
+   "prst": "arc",
+   "av": []
+  },
+  "26": {
+   "name": "Runde Klammer links/rechts 26",
+   "auto": 26,
+   "adj": [
+    0.16667
+   ],
+   "prst": "bracketPair",
+   "av": []
+  },
+  "27": {
+   "name": "Geschweifte Klammer links/rechts 27",
+   "auto": 27,
+   "adj": [
+    0.08333
+   ],
+   "prst": "bracePair",
+   "av": []
+  },
+  "28": {
+   "name": "Zierrahmen 28",
+   "auto": 28,
+   "adj": [
+    0.16667
+   ],
+   "prst": "plaque",
+   "av": []
+  },
+  "29": {
+   "name": "Eckige Klammer links 29",
+   "auto": 29,
+   "adj": [
+    0.08333
+   ],
+   "prst": "leftBracket",
+   "av": []
+  },
+  "30": {
+   "name": "Eckige Klammer rechts 30",
+   "auto": 30,
+   "adj": [
+    0.08333
+   ],
+   "prst": "rightBracket",
+   "av": []
+  },
+  "31": {
+   "name": "Geschweifte Klammer links 31",
+   "auto": 31,
+   "adj": [
+    0.08333,
+    0.5
+   ],
+   "prst": "leftBrace",
+   "av": []
+  },
+  "32": {
+   "name": "Geschweifte Klammer rechts 32",
+   "auto": 32,
+   "adj": [
+    0.08333,
+    0.5
+   ],
+   "prst": "rightBrace",
+   "av": []
+  },
+  "33": {
+   "name": "Pfeil: nach rechts 33",
+   "auto": 33,
+   "adj": [
+    0.5,
+    0.5
+   ],
+   "prst": "rightArrow",
+   "av": []
+  },
+  "34": {
+   "name": "Pfeil: nach links 34",
+   "auto": 34,
+   "adj": [
+    0.5,
+    0.5
+   ],
+   "prst": "leftArrow",
+   "av": []
+  },
+  "35": {
+   "name": "Pfeil: nach oben 35",
+   "auto": 35,
+   "adj": [
+    0.5,
+    0.5
+   ],
+   "prst": "upArrow",
+   "av": []
+  },
+  "36": {
+   "name": "Pfeil: nach unten 36",
+   "auto": 36,
+   "adj": [
+    0.5,
+    0.5
+   ],
+   "prst": "downArrow",
+   "av": []
+  },
+  "37": {
+   "name": "Pfeil: nach links und rechts 37",
+   "auto": 37,
+   "adj": [
+    0.5,
+    0.5
+   ],
+   "prst": "leftRightArrow",
+   "av": []
+  },
+  "38": {
+   "name": "Pfeil: nach oben und unten 38",
+   "auto": 38,
+   "adj": [
+    0.5,
+    0.5
+   ],
+   "prst": "upDownArrow",
+   "av": []
+  },
+  "39": {
+   "name": "Pfeil: in vier Richtungen 39",
+   "auto": 39,
+   "adj": [
+    0.225,
+    0.225,
+    0.225
+   ],
+   "prst": "quadArrow",
+   "av": []
+  },
+  "40": {
+   "name": "Pfeil: nach links, rechts und oben 40",
+   "auto": 40,
+   "adj": [
+    0.25,
+    0.25,
+    0.25
+   ],
+   "prst": "leftRightUpArrow",
+   "av": []
+  },
+  "41": {
+   "name": "Pfeil: gebogen 41",
+   "auto": 41,
+   "adj": [
+    0.25,
+    0.25,
+    0.25,
+    0.4375
+   ],
+   "prst": "bentArrow",
+   "av": []
+  },
+  "42": {
+   "name": "Pfeil: 180-Grad 42",
+   "auto": 42,
+   "adj": [
+    0.25,
+    0.25,
+    0.25,
+    0.4375,
+    0.75
+   ],
+   "prst": "uturnArrow",
+   "av": []
+  },
+  "43": {
+   "name": "Pfeil: nach links und oben 43",
+   "auto": 43,
+   "adj": [
+    0.25,
+    0.25,
+    0.25
+   ],
+   "prst": "leftUpArrow",
+   "av": []
+  },
+  "44": {
+   "name": "Pfeil: nach oben gebogen 44",
+   "auto": 44,
+   "adj": [
+    0.25,
+    0.25,
+    0.25
+   ],
+   "prst": "bentUpArrow",
+   "av": []
+  },
+  "45": {
+   "name": "Pfeil: nach rechts gekrümmt 45",
+   "auto": 45,
+   "adj": [
+    0.25,
+    0.5,
+    0.25
+   ],
+   "prst": "curvedRightArrow",
+   "av": []
+  },
+  "46": {
+   "name": "Pfeil: nach links gekrümmt 46",
+   "auto": 46,
+   "adj": [
+    0.25,
+    0.5,
+    0.25
+   ],
+   "prst": "curvedLeftArrow",
+   "av": []
+  },
+  "47": {
+   "name": "Pfeil: nach oben gekrümmt 47",
+   "auto": 47,
+   "adj": [
+    0.25,
+    0.5,
+    0.25
+   ],
+   "prst": "curvedUpArrow",
+   "av": []
+  },
+  "48": {
+   "name": "Pfeil: nach unten gekrümmt 48",
+   "auto": 48,
+   "adj": [
+    0.25,
+    0.5,
+    0.25
+   ],
+   "prst": "curvedDownArrow",
+   "av": []
+  },
+  "49": {
+   "name": "Pfeil: gestreift nach rechts 49",
+   "auto": 49,
+   "adj": [
+    0.5,
+    0.5
+   ],
+   "prst": "stripedRightArrow",
+   "av": []
+  },
+  "50": {
+   "name": "Pfeil: eingekerbt nach rechts 50",
+   "auto": 50,
+   "adj": [
+    0.5,
+    0.5
+   ],
+   "prst": "notchedRightArrow",
+   "av": []
+  },
+  "51": {
+   "name": "Pfeil: Fünfeck 51",
+   "auto": 51,
+   "adj": [
+    0.5
+   ],
+   "prst": "homePlate",
+   "av": []
+  },
+  "52": {
+   "name": "Pfeil: Chevron 52",
+   "auto": 52,
+   "adj": [
+    0.5
+   ],
+   "prst": "chevron",
+   "av": []
+  },
+  "53": {
+   "name": "Legende: mit Pfeil nach rechts 53",
+   "auto": 53,
+   "adj": [
+    0.25,
+    0.25,
+    0.25,
+    0.64977
+   ],
+   "prst": "rightArrowCallout",
+   "av": []
+  },
+  "54": {
+   "name": "Legende: mit Pfeil nach links 54",
+   "auto": 54,
+   "adj": [
+    0.25,
+    0.25,
+    0.25,
+    0.64977
+   ],
+   "prst": "leftArrowCallout",
+   "av": []
+  },
+  "55": {
+   "name": "Legende: mit Pfeil nach oben 55",
+   "auto": 55,
+   "adj": [
+    0.25,
+    0.25,
+    0.25,
+    0.64977
+   ],
+   "prst": "upArrowCallout",
+   "av": []
+  },
+  "56": {
+   "name": "Legende: mit Pfeil nach unten 56",
+   "auto": 56,
+   "adj": [
+    0.25,
+    0.25,
+    0.25,
+    0.64977
+   ],
+   "prst": "downArrowCallout",
+   "av": []
+  },
+  "57": {
+   "name": "Legende: mit Pfeil nach links und rechts 57",
+   "auto": 57,
+   "adj": [
+    0.25,
+    0.25,
+    0.25,
+    0.48123
+   ],
+   "prst": "leftRightArrowCallout",
+   "av": []
+  },
+  "58": {
+   "name": "Legende: mit Pfeil nach oben und unten 58",
+   "auto": 58,
+   "adj": [
+    0.25,
+    0.25,
+    0.25,
+    0.48123
+   ],
+   "prst": "upDownArrowCallout",
+   "av": []
+  },
+  "59": {
+   "name": "Legende: mit Pfeil in vier Richtungen 59",
+   "auto": 59,
+   "adj": [
+    0.18515,
+    0.18515,
+    0.18515,
+    0.48123
+   ],
+   "prst": "quadArrowCallout",
+   "av": []
+  },
+  "60": {
+   "name": "Pfeil: gebogen 60",
+   "auto": 60,
+   "adj": [
+    0.125,
+    19.03865,
+    -19.03865,
+    180.0,
+    0.125
+   ],
+   "prst": "circularArrow",
+   "av": []
+  },
+  "61": {
+   "name": "Flussdiagramm: Prozess 61",
+   "auto": 61,
+   "adj": [],
+   "prst": "flowChartProcess",
+   "av": []
+  },
+  "62": {
+   "name": "Flussdiagramm: Alternativer Prozess 62",
+   "auto": 62,
+   "adj": [],
+   "prst": "flowChartAlternateProcess",
+   "av": []
+  },
+  "63": {
+   "name": "Flussdiagramm: Verzweigung 63",
+   "auto": 63,
+   "adj": [],
+   "prst": "flowChartDecision",
+   "av": []
+  },
+  "64": {
+   "name": "Flussdiagramm: Daten 64",
+   "auto": 64,
+   "adj": [],
+   "prst": "flowChartInputOutput",
+   "av": []
+  },
+  "65": {
+   "name": "Flussdiagramm: Vordefinierter Prozess 65",
+   "auto": 65,
+   "adj": [],
+   "prst": "flowChartPredefinedProcess",
+   "av": []
+  },
+  "66": {
+   "name": "Flussdiagramm: Zentralspeicher 66",
+   "auto": 66,
+   "adj": [],
+   "prst": "flowChartInternalStorage",
+   "av": []
+  },
+  "67": {
+   "name": "Flussdiagramm: Dokument 67",
+   "auto": 67,
+   "adj": [],
+   "prst": "flowChartDocument",
+   "av": []
+  },
+  "68": {
+   "name": "Flussdiagramm: Mehrere Dokumente 68",
+   "auto": 68,
+   "adj": [],
+   "prst": "flowChartMultidocument",
+   "av": []
+  },
+  "69": {
+   "name": "Flussdiagramm: Grenzstelle 69",
+   "auto": 69,
+   "adj": [],
+   "prst": "flowChartTerminator",
+   "av": []
+  },
+  "70": {
+   "name": "Flussdiagramm: Vorbereitung 70",
+   "auto": 70,
+   "adj": [],
+   "prst": "flowChartPreparation",
+   "av": []
+  },
+  "71": {
+   "name": "Flussdiagramm: Manuelle Eingabe 71",
+   "auto": 71,
+   "adj": [],
+   "prst": "flowChartManualInput",
+   "av": []
+  },
+  "72": {
+   "name": "Flussdiagramm: Manuelle Verarbeitung 72",
+   "auto": 72,
+   "adj": [],
+   "prst": "flowChartManualOperation",
+   "av": []
+  },
+  "73": {
+   "name": "Flussdiagramm: Verbinder 73",
+   "auto": 73,
+   "adj": [],
+   "prst": "flowChartConnector",
+   "av": []
+  },
+  "74": {
+   "name": "Flussdiagramm: Verbinder zu einer anderen Seite 74",
+   "auto": 74,
+   "adj": [],
+   "prst": "flowChartOffpageConnector",
+   "av": []
+  },
+  "75": {
+   "name": "Flussdiagramm: Karte 75",
+   "auto": 75,
+   "adj": [],
+   "prst": "flowChartPunchedCard",
+   "av": []
+  },
+  "76": {
+   "name": "Flussdiagramm: Lochstreifen 76",
+   "auto": 76,
+   "adj": [],
+   "prst": "flowChartPunchedTape",
+   "av": []
+  },
+  "77": {
+   "name": "Flussdiagramm: Zusammenführung 77",
+   "auto": 77,
+   "adj": [],
+   "prst": "flowChartSummingJunction",
+   "av": []
+  },
+  "78": {
+   "name": "Flussdiagramm: Oder 78",
+   "auto": 78,
+   "adj": [],
+   "prst": "flowChartOr",
+   "av": []
+  },
+  "79": {
+   "name": "Flussdiagramm: Zusammenstellen 79",
+   "auto": 79,
+   "adj": [],
+   "prst": "flowChartCollate",
+   "av": []
+  },
+  "80": {
+   "name": "Flussdiagramm: Sortieren 80",
+   "auto": 80,
+   "adj": [],
+   "prst": "flowChartSort",
+   "av": []
+  },
+  "81": {
+   "name": "Flussdiagramm: Auszug 81",
+   "auto": 81,
+   "adj": [],
+   "prst": "flowChartExtract",
+   "av": []
+  },
+  "82": {
+   "name": "Flussdiagramm: Zusammenführen 82",
+   "auto": 82,
+   "adj": [],
+   "prst": "flowChartMerge",
+   "av": []
+  },
+  "83": {
+   "name": "Flussdiagramm: Gespeicherte Daten 83",
+   "auto": 83,
+   "adj": [],
+   "prst": "flowChartOnlineStorage",
+   "av": []
+  },
+  "84": {
+   "name": "Flussdiagramm: Verzögerung 84",
+   "auto": 84,
+   "adj": [],
+   "prst": "flowChartDelay",
+   "av": []
+  },
+  "85": {
+   "name": "Flussdiagramm: Datenträger mit sequenziellem Zugriff 85",
+   "auto": 85,
+   "adj": [],
+   "prst": "flowChartMagneticTape",
+   "av": []
+  },
+  "86": {
+   "name": "Flussdiagramm: Magnetplattenspeicher 86",
+   "auto": 86,
+   "adj": [],
+   "prst": "flowChartMagneticDisk",
+   "av": []
+  },
+  "87": {
+   "name": "Flussdiagramm: Datenträger mit direktem Zugriff 87",
+   "auto": 87,
+   "adj": [],
+   "prst": "flowChartMagneticDrum",
+   "av": []
+  },
+  "88": {
+   "name": "Flussdiagramm: Anzeige 88",
+   "auto": 88,
+   "adj": [],
+   "prst": "flowChartDisplay",
+   "av": []
+  },
+  "89": {
+   "name": "Explosion: 8 Zacken 89",
+   "auto": 89,
+   "adj": [],
+   "prst": "irregularSeal1",
+   "av": []
+  },
+  "90": {
+   "name": "Explosion: 14 Zacken 90",
+   "auto": 90,
+   "adj": [],
+   "prst": "irregularSeal2",
+   "av": []
+  },
+  "91": {
+   "name": "Stern: 4 Zacken 91",
+   "auto": 91,
+   "adj": [
+    0.125
+   ],
+   "prst": "star4",
+   "av": []
+  },
+  "92": {
+   "name": "Stern: 5 Zacken 92",
+   "auto": 92,
+   "adj": [
+    0.19098,
+    1.05146,
+    1.10557
+   ],
+   "prst": "star5",
+   "av": []
+  },
+  "93": {
+   "name": "Stern: 8 Zacken 93",
+   "auto": 93,
+   "adj": [
+    0.375
+   ],
+   "prst": "star8",
+   "av": []
+  },
+  "94": {
+   "name": "Stern: 16 Zacken 94",
+   "auto": 94,
+   "adj": [
+    0.375
+   ],
+   "prst": "star16",
+   "av": []
+  },
+  "95": {
+   "name": "Stern: 24 Zacken 95",
+   "auto": 95,
+   "adj": [
+    0.375
+   ],
+   "prst": "star24",
+   "av": []
+  },
+  "96": {
+   "name": "Stern: 32 Zacken 96",
+   "auto": 96,
+   "adj": [
+    0.375
+   ],
+   "prst": "star32",
+   "av": []
+  },
+  "97": {
+   "name": "Band: nach oben gekippt 97",
+   "auto": 97,
+   "adj": [
+    0.16667,
+    0.5
+   ],
+   "prst": "ribbon2",
+   "av": []
+  },
+  "98": {
+   "name": "Band: nach unten gekippt 98",
+   "auto": 98,
+   "adj": [
+    0.16667,
+    0.5
+   ],
+   "prst": "ribbon",
+   "av": []
+  },
+  "99": {
+   "name": "Band: nach oben gekrümmt und gekippt 99",
+   "auto": 99,
+   "adj": [
+    0.25,
+    0.5,
+    0.125
+   ],
+   "prst": "ellipseRibbon2",
+   "av": []
+  },
+  "100": {
+   "name": "Band: nach unten gekrümmt und gekippt 100",
+   "auto": 100,
+   "adj": [
+    0.25,
+    0.5,
+    0.125
+   ],
+   "prst": "ellipseRibbon",
+   "av": []
+  },
+  "101": {
+   "name": "Scrollen: vertikal 101",
+   "auto": 101,
+   "adj": [
+    0.125
+   ],
+   "prst": "verticalScroll",
+   "av": []
+  },
+  "102": {
+   "name": "Scrollen: horizontal 102",
+   "auto": 102,
+   "adj": [
+    0.125
+   ],
+   "prst": "horizontalScroll",
+   "av": []
+  },
+  "103": {
+   "name": "Welle 103",
+   "auto": 103,
+   "adj": [
+    0.125,
+    0.0
+   ],
+   "prst": "wave",
+   "av": []
+  },
+  "104": {
+   "name": "Doppelte Welle 104",
+   "auto": 104,
+   "adj": [
+    0.0625,
+    0.0
+   ],
+   "prst": "doubleWave",
+   "av": []
+  },
+  "105": {
+   "name": "Sprechblase: rechteckig 105",
+   "auto": 105,
+   "adj": [
+    -0.20833,
+    0.625
+   ],
+   "prst": "wedgeRectCallout",
+   "av": []
+  },
+  "106": {
+   "name": "Sprechblase: rechteckig mit abgerundeten Ecken 106",
+   "auto": 106,
+   "adj": [
+    -0.20833,
+    0.625,
+    0.16667
+   ],
+   "prst": "wedgeRoundRectCallout",
+   "av": []
+  },
+  "107": {
+   "name": "Sprechblase: oval 107",
+   "auto": 107,
+   "adj": [
+    -0.20833,
+    0.625
+   ],
+   "prst": "wedgeEllipseCallout",
+   "av": []
+  },
+  "108": {
+   "name": "Denkblase: wolkenförmig 108",
+   "auto": 108,
+   "adj": [
+    -0.20833,
+    0.625
+   ],
+   "prst": "cloudCallout",
+   "av": []
+  },
+  "109": {
+   "name": "Legende: Linie 109",
+   "auto": 109,
+   "adj": [
+    0.1875,
+    -0.08333,
+    1.125,
+    -0.38333
+   ],
+   "prst": "borderCallout1",
+   "av": []
+  },
+  "110": {
+   "name": "Legende: Linie 110",
+   "auto": 109,
+   "adj": [
+    0.1875,
+    -0.08333,
+    1.125,
+    -0.38333
+   ],
+   "prst": "borderCallout1",
+   "av": []
+  },
+  "111": {
+   "name": "Legende: mit gebogener Linie 111",
+   "auto": 111,
+   "adj": [
+    0.1875,
+    -0.08333,
+    0.1875,
+    -0.16667,
+    1.125,
+    -0.46667
+   ],
+   "prst": "borderCallout2",
+   "av": []
+  },
+  "112": {
+   "name": "Legende: mit gebogener Doppellinie 112",
+   "auto": 112,
+   "adj": [
+    0.1875,
+    -0.08333,
+    0.1875,
+    -0.16667,
+    1.0,
+    -0.16667,
+    1.12963,
+    -0.08333
+   ],
+   "prst": "borderCallout3",
+   "av": []
+  },
+  "113": {
+   "name": "Legende: mit Linie ohne Rahmen 113",
+   "auto": 113,
+   "adj": [
+    0.1875,
+    -0.08333,
+    1.125,
+    -0.38333
+   ],
+   "prst": "callout1",
+   "av": []
+  },
+  "114": {
+   "name": "Legende: mit Linie mit Akzentuierungsbalken 114",
+   "auto": 114,
+   "adj": [
+    0.1875,
+    -0.08333,
+    1.125,
+    -0.38333
+   ],
+   "prst": "accentCallout1",
+   "av": []
+  },
+  "115": {
+   "name": "Legende: mit gebogener Linie mit Akzentuierungsbalken 115",
+   "auto": 115,
+   "adj": [
+    0.1875,
+    -0.08333,
+    0.1875,
+    -0.16667,
+    1.125,
+    -0.46667
+   ],
+   "prst": "accentCallout2",
+   "av": []
+  },
+  "116": {
+   "name": "Legende: mit gebogener Doppellinie mit Akzentuierungsbalken 116",
+   "auto": 116,
+   "adj": [
+    0.1875,
+    -0.08333,
+    0.1875,
+    -0.16667,
+    1.0,
+    -0.16667,
+    1.12963,
+    -0.08333
+   ],
+   "prst": "accentCallout3",
+   "av": []
+  },
+  "117": {
+   "name": "Legende: mit Linie ohne Rahmen 117",
+   "auto": 113,
+   "adj": [
+    0.1875,
+    -0.08333,
+    1.125,
+    -0.38333
+   ],
+   "prst": "callout1",
+   "av": []
+  },
+  "118": {
+   "name": "Legende: mit Linie ohne Rahmen 118",
+   "auto": 113,
+   "adj": [
+    0.1875,
+    -0.08333,
+    1.125,
+    -0.38333
+   ],
+   "prst": "callout1",
+   "av": []
+  },
+  "119": {
+   "name": "Legende: mit gebogener Linie ohne Rahmen 119",
+   "auto": 119,
+   "adj": [
+    0.1875,
+    -0.08333,
+    0.1875,
+    -0.16667,
+    1.125,
+    -0.46667
+   ],
+   "prst": "callout2",
+   "av": []
+  },
+  "120": {
+   "name": "Legende: mit gebogener Doppellinie ohne Rahmen 120",
+   "auto": 120,
+   "adj": [
+    0.1875,
+    -0.08333,
+    0.1875,
+    -0.16667,
+    1.0,
+    -0.16667,
+    1.12963,
+    -0.08333
+   ],
+   "prst": "callout3",
+   "av": []
+  },
+  "121": {
+   "name": "Legende: Linie 121",
+   "auto": 109,
+   "adj": [
+    0.1875,
+    -0.08333,
+    1.125,
+    -0.38333
+   ],
+   "prst": "borderCallout1",
+   "av": []
+  },
+  "122": {
+   "name": "Legende: mit Linie mit Rahmen und Akzentuierungsbalken 122",
+   "auto": 122,
+   "adj": [
+    0.1875,
+    -0.08333,
+    1.125,
+    -0.38333
+   ],
+   "prst": "accentBorderCallout1",
+   "av": []
+  },
+  "123": {
+   "name": "Legende: mit gebogener Linie mit Rahmen und Akzentuierungsbalken 123",
+   "auto": 123,
+   "adj": [
+    0.1875,
+    -0.08333,
+    0.1875,
+    -0.16667,
+    1.125,
+    -0.46667
+   ],
+   "prst": "accentBorderCallout2",
+   "av": []
+  },
+  "124": {
+   "name": "Legende: mit gebogener Doppellinie mit Rahmen und Akzentuierungsbalken 124",
+   "auto": 124,
+   "adj": [
+    0.1875,
+    -0.08333,
+    0.1875,
+    -0.16667,
+    1.0,
+    -0.16667,
+    1.12963,
+    -0.08333
+   ],
+   "prst": "accentBorderCallout3",
+   "av": []
+  },
+  "125": {
+   "name": "Interaktive Schaltfläche: Leer 125",
+   "auto": 125,
+   "adj": [],
+   "prst": "actionButtonBlank",
+   "av": []
+  },
+  "126": {
+   "name": "Interaktive Schaltfläche: Zur Startseite wechseln 126",
+   "auto": 126,
+   "adj": [],
+   "prst": "actionButtonHome",
+   "av": []
+  },
+  "127": {
+   "name": "Interaktive Schaltfläche: Hilfe 127",
+   "auto": 127,
+   "adj": [],
+   "prst": "actionButtonHelp",
+   "av": []
+  },
+  "128": {
+   "name": "Interaktive Schaltfläche: Informationen abrufen 128",
+   "auto": 128,
+   "adj": [],
+   "prst": "actionButtonInformation",
+   "av": []
+  },
+  "129": {
+   "name": "Interaktive Schaltfläche: Zurück oder Vorherige(r) 129",
+   "auto": 129,
+   "adj": [],
+   "prst": "actionButtonBackPrevious",
+   "av": []
+  },
+  "130": {
+   "name": "Interaktive Schaltfläche: Nächste(r) oder Weiter 130",
+   "auto": 130,
+   "adj": [],
+   "prst": "actionButtonForwardNext",
+   "av": []
+  },
+  "131": {
+   "name": "Interaktive Schaltfläche: Zum Anfang wechseln 131",
+   "auto": 131,
+   "adj": [],
+   "prst": "actionButtonBeginning",
+   "av": []
+  },
+  "132": {
+   "name": "Interaktive Schaltfläche: Zum Ende wechseln 132",
+   "auto": 132,
+   "adj": [],
+   "prst": "actionButtonEnd",
+   "av": []
+  },
+  "133": {
+   "name": "Interaktive Schaltfläche: Zurückkehren 133",
+   "auto": 133,
+   "adj": [],
+   "prst": "actionButtonReturn",
+   "av": []
+  },
+  "134": {
+   "name": "Interaktive Schaltfläche: Dokument 134",
+   "auto": 134,
+   "adj": [],
+   "prst": "actionButtonDocument",
+   "av": []
+  },
+  "135": {
+   "name": "Interaktive Schaltfläche: Sound 135",
+   "auto": 135,
+   "adj": [],
+   "prst": "actionButtonSound",
+   "av": []
+  },
+  "136": {
+   "name": "Interaktive Schaltfläche: Video 136",
+   "auto": 136,
+   "adj": [],
+   "prst": "actionButtonMovie",
+   "av": []
+  },
+  "137": {
+   "name": "Sprechblase: rechteckig mit abgerundeten Ecken 137",
+   "auto": 106,
+   "adj": [
+    -0.20833,
+    0.625,
+    0.16667
+   ],
+   "prst": "wedgeRoundRectCallout",
+   "av": []
+  },
+  "139": {
+   "name": " 138",
+   "auto": 139,
+   "adj": [],
+   "prst": "flowChartOfflineStorage",
+   "av": []
+  },
+  "140": {
+   "name": "Form 139",
+   "auto": 140,
+   "adj": [
+    0.5,
+    0.5,
+    0.16667
+   ],
+   "prst": "leftRightRibbon",
+   "av": []
+  },
+  "141": {
+   "name": "Diagonaler Streifen 140",
+   "auto": 141,
+   "adj": [
+    0.5
+   ],
+   "prst": "diagStripe",
+   "av": []
+  },
+  "142": {
+   "name": "Teilkreis 141",
+   "auto": 142,
+   "adj": [
+    0.0,
+    -90.0
+   ],
+   "prst": "pie",
+   "av": []
+  },
+  "143": {
+   "name": "Form 142",
+   "auto": 143,
+   "adj": [
+    0.25,
+    0.25
+   ],
+   "prst": "nonIsoscelesTrapezoid",
+   "av": []
+  },
+  "144": {
+   "name": "Zehneck 143",
+   "auto": 144,
+   "adj": [
+    1.05146
+   ],
+   "prst": "decagon",
+   "av": []
+  },
+  "145": {
+   "name": "Siebeneck 144",
+   "auto": 145,
+   "adj": [
+    1.02572,
+    1.0521
+   ],
+   "prst": "heptagon",
+   "av": []
+  },
+  "146": {
+   "name": "Zwölfeck 145",
+   "auto": 146,
+   "adj": [],
+   "prst": "dodecagon",
+   "av": []
+  },
+  "147": {
+   "name": "Stern: 6 Zacken 146",
+   "auto": 147,
+   "adj": [
+    0.28868,
+    1.1547
+   ],
+   "prst": "star6",
+   "av": []
+  },
+  "148": {
+   "name": "Stern: 7 Zacken 147",
+   "auto": 148,
+   "adj": [
+    0.34601,
+    1.02572,
+    1.0521
+   ],
+   "prst": "star7",
+   "av": []
+  },
+  "149": {
+   "name": "Stern: 10 Zacken 148",
+   "auto": 149,
+   "adj": [
+    0.42533,
+    1.05146
+   ],
+   "prst": "star10",
+   "av": []
+  },
+  "150": {
+   "name": "Stern: 12 Zacken 149",
+   "auto": 150,
+   "adj": [
+    0.375
+   ],
+   "prst": "star12",
+   "av": []
+  },
+  "151": {
+   "name": "Rechteck: eine Ecke abgerundet 150",
+   "auto": 151,
+   "adj": [
+    0.16667
+   ],
+   "prst": "round1Rect",
+   "av": []
+  },
+  "152": {
+   "name": "Rechteck: obere Ecken abgerundet 151",
+   "auto": 152,
+   "adj": [
+    0.16667,
+    0.0
+   ],
+   "prst": "round2SameRect",
+   "av": []
+  },
+  "153": {
+   "name": "Rechteck: diagonal liegende Ecken abgerundet 152",
+   "auto": 153,
+   "adj": [
+    0.16667,
+    0.0
+   ],
+   "prst": "round2DiagRect",
+   "av": []
+  },
+  "154": {
+   "name": "Rechteck: obere Ecken, eine abgerundet, eine abgeschnitten 153",
+   "auto": 154,
+   "adj": [
+    0.16667,
+    0.16667
+   ],
+   "prst": "snipRoundRect",
+   "av": []
+  },
+  "155": {
+   "name": "Rechteck: eine Ecke abgeschnitten 154",
+   "auto": 155,
+   "adj": [
+    0.16667
+   ],
+   "prst": "snip1Rect",
+   "av": []
+  },
+  "156": {
+   "name": "Rechteck: obere Ecken abgeschnitten 155",
+   "auto": 156,
+   "adj": [
+    0.16667,
+    0.0
+   ],
+   "prst": "snip2SameRect",
+   "av": []
+  },
+  "157": {
+   "name": "Rechteck: diagonal liegende Ecken abgeschnitten 156",
+   "auto": 157,
+   "adj": [
+    0.0,
+    0.16667
+   ],
+   "prst": "snip2DiagRect",
+   "av": []
+  },
+  "158": {
+   "name": "Rahmen 157",
+   "auto": 158,
+   "adj": [
+    0.125
+   ],
+   "prst": "frame",
+   "av": []
+  },
+  "159": {
+   "name": "Halber Rahmen 158",
+   "auto": 159,
+   "adj": [
+    0.33333,
+    0.33333
+   ],
+   "prst": "halfFrame",
+   "av": []
+  },
+  "160": {
+   "name": "Träne 159",
+   "auto": 160,
+   "adj": [
+    1.0
+   ],
+   "prst": "teardrop",
+   "av": []
+  },
+  "161": {
+   "name": "Sehne 160",
+   "auto": 161,
+   "adj": [
+    45.0,
+    -90.0
+   ],
+   "prst": "chord",
+   "av": []
+  },
+  "162": {
+   "name": "L-Form 161",
+   "auto": 162,
+   "adj": [
+    0.5,
+    0.5
+   ],
+   "prst": "corner",
+   "av": []
+  },
+  "163": {
+   "name": "Additionszeichen 162",
+   "auto": 163,
+   "adj": [
+    0.2352
+   ],
+   "prst": "mathPlus",
+   "av": []
+  },
+  "164": {
+   "name": "Minuszeichen 163",
+   "auto": 164,
+   "adj": [
+    0.2352
+   ],
+   "prst": "mathMinus",
+   "av": []
+  },
+  "165": {
+   "name": "Multiplikationszeichen 164",
+   "auto": 165,
+   "adj": [
+    0.2352
+   ],
+   "prst": "mathMultiply",
+   "av": []
+  },
+  "166": {
+   "name": "Divisionszeichen 165",
+   "auto": 166,
+   "adj": [
+    0.2352,
+    0.0588,
+    0.1176
+   ],
+   "prst": "mathDivide",
+   "av": []
+  },
+  "167": {
+   "name": "Gleich 166",
+   "auto": 167,
+   "adj": [
+    0.2352,
+    0.1176
+   ],
+   "prst": "mathEqual",
+   "av": []
+  },
+  "168": {
+   "name": "Ungleich 167",
+   "auto": 168,
+   "adj": [
+    0.2352,
+    110.0,
+    0.1176
+   ],
+   "prst": "mathNotEqual",
+   "av": []
+  },
+  "169": {
+   "name": " 168",
+   "auto": 169,
+   "adj": [],
+   "prst": "cornerTabs",
+   "av": []
+  },
+  "170": {
+   "name": " 169",
+   "auto": 170,
+   "adj": [],
+   "prst": "squareTabs",
+   "av": []
+  },
+  "171": {
+   "name": " 170",
+   "auto": 171,
+   "adj": [],
+   "prst": "plaqueTabs",
+   "av": []
+  },
+  "172": {
+   "name": "Form 171",
+   "auto": 172,
+   "adj": [
+    0.15,
+    0.03526
+   ],
+   "prst": "gear6",
+   "av": []
+  },
+  "173": {
+   "name": "Form 172",
+   "auto": 173,
+   "adj": [
+    0.1,
+    0.01763
+   ],
+   "prst": "gear9",
+   "av": []
+  },
+  "174": {
+   "name": "Form 173",
+   "auto": 174,
+   "adj": [],
+   "prst": "funnel",
+   "av": []
+  },
+  "175": {
+   "name": "Teilkreis 174",
+   "auto": 175,
+   "adj": [],
+   "prst": "pieWedge",
+   "av": []
+  },
+  "176": {
+   "name": "Form 175",
+   "auto": 176,
+   "adj": [
+    0.125,
+    -19.03865,
+    19.03865,
+    180.0,
+    0.125
+   ],
+   "prst": "leftCircularArrow",
+   "av": []
+  },
+  "177": {
+   "name": "Form 176",
+   "auto": 177,
+   "adj": [
+    0.125,
+    19.03865,
+    -19.03865,
+    -160.96135,
+    0.125
+   ],
+   "prst": "leftRightCircularArrow",
+   "av": []
+  },
+  "178": {
+   "name": "Form 177",
+   "auto": 178,
+   "adj": [
+    0.25,
+    0.16667
+   ],
+   "prst": "swooshArrow",
+   "av": []
+  },
+  "179": {
+   "name": "Wolke 178",
+   "auto": 179,
+   "adj": [],
+   "prst": "cloud",
+   "av": []
+  },
+  "180": {
+   "name": " 179",
+   "auto": 180,
+   "adj": [],
+   "prst": "chartX",
+   "av": []
+  },
+  "181": {
+   "name": " 180",
+   "auto": 181,
+   "adj": [],
+   "prst": "chartStar",
+   "av": []
+  },
+  "182": {
+   "name": " 181",
+   "auto": 182,
+   "adj": [],
+   "prst": "chartPlus",
+   "av": []
+  },
+  "183": {
+   "name": "Gerader Verbinder 182",
+   "auto": 183,
+   "adj": [],
+   "prst": "lineInv",
+   "av": []
+  }
+ }
+}

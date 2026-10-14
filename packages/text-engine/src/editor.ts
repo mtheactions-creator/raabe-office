@@ -58,7 +58,9 @@ import { INSTANT_TRIGGERS, TRIGGERS, borderLine, instantFix, smartQuote, wordFix
 import * as S from "./school";
 import { COLUMN_BREAK, type CellDef, type ImageData, type RowDef, type TableDef } from "./model";
 import { addList, bulletLevels as bulletLevelsOf, levelOf, listLabels, numberLevels as numberLevelsOf, numberingOf, restartList } from "./numbering";
-import type { AltText, BorderSpec, Borders, FloatObject, InlineObject, NumLevel } from "./model";
+import { DEFAULT_SHAPE_BODY, type AltText, type BorderSpec, type Borders, type FloatObject, type InlineObject, type NumLevel, type ShapeInfo } from "./model";
+import { shadeLinear, shapeElement, shapeGeometry, shapeTextRect } from "./shape";
+import { presetAdjust, presetGeometry } from "./geometry";
 import { effectExtent, type PictureFormat } from "./picture";
 import { countWords, isWordChar, nextTokenStart, prevTokenStart, sentenceAt, tokenAt } from "./words";
 
@@ -132,7 +134,11 @@ export const FONT_STEPS = [8, 9, 10, 10.5, 11, 12, 14, 16, 18, 20, 22, 24, 26, 2
 /** Schriftgrad vergrößern/verkleinern skip 10.5 (measured: 11 shrinks to 10). */
 const GROW_STEPS = FONT_STEPS.filter((x) => x !== 10.5);
 
-let clipboardFragment: { text: string; paras: Para[]; source: Editor } | null = null;
+let clipboardFragment: {
+  text: string; paras: Para[]; source: Editor;
+  /** A copied floating picture or shape, with the text stories of its shapes. */
+  float?: { obj: FloatObject; stories: Map<string, Para[]> };
+} | null = null;
 
 /**
  * Word's pointer in the selection bar (left margin): the Windows arrow, mirrored so it points
@@ -149,6 +155,28 @@ const MIRRORED_ARROW = (() => {
 const BRUSH_CURSOR = `url("data:image/svg+xml,${encodeURIComponent(
   '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="24"><path d="M2 2v20M2 2h3M2 22h3" stroke="black" stroke-width="1.5" fill="none"/>' +
   '<path d="M8 4h9v5H8z" fill="white" stroke="black"/><path d="M12 9v4h1v6" stroke="black" fill="none"/></svg>')}") 2 12, text`;
+
+/** A tool of the Formen gallery: preset geometry (or a freeform tool) and what it starts with. */
+export interface DrawTool {
+  readonly geometry: string;
+  readonly kind: ShapeInfo["kind"];
+  readonly pic?: PictureFormat;
+  readonly adjust?: Record<string, number>;
+  /** Kurve, Freihandform: Form, Freihand: Skizze. */
+  readonly freeform?: "curve" | "polygon" | "scribble";
+}
+
+/** SVG path data through points: straight segments, or a smooth curve (Catmull-Rom). */
+function freeformPath(pts: readonly [number, number][], smooth: boolean): string {
+  if (!pts.length) return "";
+  let d = `M${pts[0][0]} ${pts[0][1]}`;
+  for (let i = 1; i < pts.length; i++) {
+    if (!smooth) { d += ` L${pts[i][0]} ${pts[i][1]}`; continue; }
+    const p0 = pts[Math.max(0, i - 2)], p1 = pts[i - 1], p2 = pts[i], p3 = pts[Math.min(pts.length - 1, i + 1)];
+    d += ` C${p1[0] + (p2[0] - p0[0]) / 6} ${p1[1] + (p2[1] - p0[1]) / 6} ${p2[0] - (p3[0] - p1[0]) / 6} ${p2[1] - (p3[1] - p1[1]) / 6} ${p2[0]} ${p2[1]}`;
+  }
+  return d;
+}
 
 export class Editor {
   doc: Doc;
@@ -628,6 +656,10 @@ export class Editor {
   }
 
   insertText(text: string, inputTs?: number): void {
+    const shape = this.selectedShape();
+    if (shape && !shape.editing && shape.obj.shape?.kind !== "connector" && (shape.obj.pic?.geometry ?? "rect") !== "line") {
+      this.editShapeText(shape.p, shape.index, "end");
+    }
     this.smartTrimSelection();
     this.replaceSelection(text, inputTs, true);
     if (text === " " || text === "\t") this.autoList();
@@ -1902,7 +1934,8 @@ export class Editor {
   // ----- headers and footers: contents -------------------------------------------------------
 
   /** The page the caret is on (or the header/footer instance being edited). */
-  private currentPage(): number {
+  /** The page with the caret (or the header/footer being edited). */
+  currentPage(): number {
     return this.isHeaderFooter() ? Number(this.storyKey.split("@")[1] ?? 0) : this.view.caretBox(this.sel.head, this.sel.headUpstream).page;
   }
 
@@ -2022,7 +2055,9 @@ export class Editor {
   /** Größe: width and height of the selected picture (points). */
   setImageSize(width: number, height: number, snapshot = true): void {
     const img = this.selectedImage();
-    if (!img || !(width > 2) || !(height > 2)) return;
+    // Lines may be flat (no height or no width); pictures need a few points.
+    const min = img?.obj.shape ? 0 : 2;
+    if (!img || !(width > min || (min === 0 && width >= 0)) || !(height > min || (min === 0 && height >= 0))) return;
     if (snapshot) this.snapshot();
     if (img.kind === "inline") this.replaceObject(img.p, img.o, { ...img.obj, width, height });
     else this.replaceFloat(img.p, img.index, { ...img.obj, width, height });
@@ -2105,10 +2140,19 @@ export class Editor {
 
   /** The selected picture's overlay: its frame, and in Zuschneiden the whole picture. */
   private imageOverlay(): RenderOptions["image"] {
+    const se = this.selectedShape();
+    if (se?.editing) {
+      const b = this.floatBox(se.p, se.index);
+      return b ? { ...b, picture: true, editing: true } : undefined;
+    }
     const box = this.imageBox();
     if (!box) { this.cropping = false; return undefined; }
     const img = this.selectedImage();
     const isPicture = img?.obj.image !== undefined;
+    if (img?.obj.shape) {
+      const ends = this.lineEnds(img.obj, box);
+      return ends ? { ...box, picture: false, adjust: this.adjustHandles(img.obj, box), ends } : { ...box, picture: true, adjust: this.adjustHandles(img.obj, box) };
+    }
     if (!this.cropping || !img?.obj.image) return { ...box, picture: isPicture };
     const c = img.obj.pic?.crop ?? { l: 0, t: 0, r: 0, b: 0 };
     const fw = box.w / Math.max(0.01, 1 - c.l - c.r), fh = box.h / Math.max(0.01, 1 - c.t - c.b);
@@ -2410,12 +2454,58 @@ cropFill(fit: boolean): void {
     this.update();
   }
 
+  /** Copies the selected floating picture or shape (to paste it with Strg+V). */
+  copyFloat(): boolean {
+    const img = this.selectedImage();
+    if (!img || img.kind !== "float") return false;
+    const stories = new Map<string, Para[]>();
+    const story = img.obj.shape?.story;
+    if (story && this.doc.stories.has(story)) stories.set(story, this.doc.stories.get(story)!);
+    clipboardFragment = { text: "", paras: [], source: this, float: { obj: img.obj, stories } };
+    return true;
+  }
+
+  /**
+   * Pastes a copied floating picture or shape at the same place, anchored to the paragraph
+   * with the caret; a shape's text becomes a story of its own.
+   */
+  pasteFloat(): void {
+    const frag = clipboardFragment?.float;
+    if (!frag) return;
+    if (this.inShapeText) this.leaveShapeText(false);
+    this.snapshot();
+    let obj: FloatObject = { ...frag.obj, data: frag.obj.image ? undefined : frag.obj.data };
+    if (obj.shape) {
+      // A new drawing (the old XML has the source's ids), with its own text.
+      obj = { ...obj, data: undefined };
+      const story = obj.shape!.story;
+      if (story) {
+        const id = this.newShapeStory();
+        this.doc.setStory(id, frag.stories.get(story) ?? [{ ...makePara(""), mark: EMPTY }]);
+        obj = { ...obj, shape: { ...obj.shape!, story: id } };
+      }
+    }
+    let z = 251659264;
+    for (const q of this.doc.main) for (const f of q.floats ?? []) z = Math.max(z, (f.z ?? 0) + 1024);
+    obj = { ...obj, z };
+    const p = this.floatSel ? this.floatSel.p : Math.min(this.sel.head.p, this.doc.main.length - 1);
+    const para = this.doc.main[p];
+    const floats = [...(para.floats ?? []), obj];
+    const next = [...this.doc.main];
+    next[p] = { ...para, floats };
+    this.doc.setStory(MAIN, next);
+    this.floatSel = { p, index: floats.length - 1 };
+    this.update({ scroll: true });
+    this.emit(true);
+  }
+
   /** Deletes the selected floating picture. */
   deleteFloat(): boolean {
     const img = this.selectedImage();
     if (!img || img.kind !== "float") return false;
     this.snapshot();
     this.replaceFloat(img.p, img.index, null);
+    if (img.obj.shape?.story) this.doc.deleteStory(img.obj.shape.story);
     this.floatSel = null;
     this.update();
     return true;
@@ -2425,6 +2515,501 @@ cropFill(fit: boolean): void {
     this.floatSel = { p, index };
     this.sel = { anchor: { p, o: 0 }, head: { p, o: 0 }, headUpstream: false };
     this.update();
+  }
+
+
+  // ----- shapes and text boxes ------------------------------------------------------------
+
+  /** Arrow keys are moving a float (one undo step for a run of them). */
+  private nudging = false;
+
+  /** The shape whose text is being edited (its float in the main text). */
+  private shapeEdit: { p: number; index: number } | null = null;
+
+  /** The selected shape, or the one whose text is being edited. */
+  selectedShape(): { p: number; index: number; obj: FloatObject; editing: boolean } | null {
+    const img = this.selectedImage();
+    if (img?.kind === "float" && img.obj.shape) return { p: img.p, index: img.index, obj: img.obj, editing: false };
+    const se = this.shapeEdit;
+    if (se && this.doc.activeStory !== MAIN) {
+      const f = this.doc.main[se.p]?.floats?.[se.index];
+      if (f?.shape && f.shape.story === this.doc.activeStory) return { p: se.p, index: se.index, obj: f, editing: true };
+    }
+    return null;
+  }
+
+  /** True while the caret is in the text of a shape or text box. */
+  get inShapeText(): boolean {
+    return this.selectedShape()?.editing ?? false;
+  }
+
+  /** Changes the selected shape (or the one being edited); one undo step. */
+  setShape(change: Partial<ShapeInfo> | ((s: ShapeInfo) => ShapeInfo), snapshot = true): void {
+    const s = this.selectedShape();
+    if (!s) return;
+    const old = s.obj.shape!;
+    const next = typeof change === "function" ? change(old) : { ...old, ...change };
+    if (snapshot) this.snapshot();
+    this.replaceFloat(s.p, s.index, { ...s.obj, shape: next });
+    this.update();
+  }
+
+  /** Changes the look (spPr: geometry, fill, outline, effects) of the selected shape. */
+  setShapeFormat(change: PictureFormat | ((f: PictureFormat) => PictureFormat), snapshot = true): void {
+    const s = this.selectedShape();
+    if (!s) return;
+    const old = s.obj.pic ?? {};
+    const merged = typeof change === "function" ? change(old) : { ...old, ...change };
+    const clean = Object.fromEntries(Object.entries(merged).filter(([, v]) => v !== undefined)) as PictureFormat;
+    if (snapshot) this.snapshot();
+    this.replaceFloat(s.p, s.index, { ...s.obj, pic: Object.keys(clean).length ? clean : undefined });
+    this.update();
+  }
+
+  /** A new story id for a shape's text ("tx:…"). */
+  private newShapeStory(): string {
+    let n = 1;
+    while (this.doc.stories.has(`tx:${n}`)) n++;
+    return `tx:${n}`;
+  }
+
+  /**
+   * Puts the caret into a shape's text (creating the text when the shape has none), at the
+   * end or at a client point.
+   */
+  editShapeText(p: number, index: number, at?: { clientX: number; clientY: number } | "end", snapshot = true): void {
+    const f = this.doc.main[p]?.floats?.[index];
+    if (!f?.shape) return;
+    let story = f.shape.story;
+    if (!story || !this.doc.stories.has(story)) {
+      if (snapshot) this.snapshot();
+      story = this.newShapeStory();
+      // Text typed into a shape is centred (Word); a text box starts like the body text.
+      const props = f.shape.kind === "textbox" ? {} : { align: "center" as const };
+      this.doc.setStory(story, [{ ...makePara("", props), mark: EMPTY }]);
+      this.replaceFloat(p, index, { ...f, shape: { ...f.shape, story } });
+    }
+    this.floatSel = null;
+    this.switchStory(story, story);
+    this.shapeEdit = { p, index };
+    if (at && at !== "end") {
+      const hit = this.view.hitLine(at.clientX, at.clientY);
+      const pos = this.view.posInLine(hit.index, hit.x);
+      this.sel = { anchor: pos.pos, head: pos.pos, headUpstream: pos.upstream };
+    } else {
+      const end = this.doc.end();
+      this.sel = { anchor: end, head: end, headUpstream: false };
+    }
+    this.update();
+    this.emit(false);
+  }
+
+  /** Leaves a shape's text; with `select`, the shape stays selected (Esc in Word). */
+  leaveShapeText(select: boolean): void {
+    const se = this.shapeEdit;
+    if (!se || this.doc.activeStory === MAIN) { this.shapeEdit = null; return; }
+    this.switchStory(MAIN, MAIN);
+    this.shapeEdit = null;
+    if (select) this.floatSel = { p: se.p, index: se.index };
+    this.update();
+    this.emit(false);
+  }
+
+  /** Positions (page px) of a shape's yellow handles; rotation and flips applied. */
+  private adjustHandles(f: FloatObject | InlineObject, box: { x: number; y: number; w: number; h: number }): { x: number; y: number }[] {
+    if (!f.shape) return [];
+    const g = shapeGeometry(f.pic, f.shape, box.w, box.h);
+    return (g?.handles ?? []).map((hd) => this.fromShape(f.pic, box, hd.x, hd.y));
+  }
+
+  /** The two ends of a line or connector (page px), or null for other shapes. */
+  private lineEnds(f: FloatObject | InlineObject, box: { x: number; y: number; w: number; h: number }): [{ x: number; y: number }, { x: number; y: number }] | null {
+    const s = f.shape;
+    const geom = f.pic?.geometry ?? "rect";
+    if (!s || !(s.kind === "connector" || geom === "line" || geom === "straightConnector1" || geom.endsWith("Connector2") || geom.endsWith("Connector3") || geom.endsWith("Connector4") || geom.endsWith("Connector5"))) return null;
+    return [this.fromShape(f.pic, box, 0, 0), this.fromShape(f.pic, box, box.w, box.h)];
+  }
+
+  /** Drags one end of a line: the other stays, the box and flips follow (as in Word). */
+  private dragLineEnd(which: 0 | 1): void {
+    const s = this.selectedShape();
+    const box = s ? this.floatBox(s.p, s.index) : null;
+    if (!s || !box) return;
+    const ends = this.lineEnds(s.obj, box);
+    if (!ends) return;
+    const fixed = ends[1 - which];
+    let first = true;
+    const move = (ev: MouseEvent) => {
+      const pt = this.view.pointAt(ev.clientX, ev.clientY);
+      let mx = pt.x, my = pt.y;
+      // Umschalt: multiples of 45°.
+      if (ev.shiftKey) {
+        const len = Math.hypot(mx - fixed.x, my - fixed.y), a = Math.round(Math.atan2(my - fixed.y, mx - fixed.x) / (Math.PI / 4)) * (Math.PI / 4);
+        mx = fixed.x + len * Math.cos(a); my = fixed.y + len * Math.sin(a);
+      }
+      const start = which === 0 ? { x: mx, y: my } : fixed, end = which === 0 ? fixed : { x: mx, y: my };
+      const cur = this.floatBox(s.p, s.index);
+      if (!cur) return;
+      const nx = Math.min(start.x, end.x), ny = Math.min(start.y, end.y);
+      if (first) this.snapshot();
+      this.moveFloat((nx - cur.x) / PT, (ny - cur.y) / PT, false);
+      this.setImageSize(Math.abs(end.x - start.x) / PT, Math.abs(end.y - start.y) / PT, false);
+      this.setShapeFormat((f) => ({ ...f, rotation: undefined, flipH: end.x < start.x ? true : undefined, flipV: end.y < start.y ? true : undefined }), false);
+      first = false;
+    };
+    const up = () => {
+      removeEventListener("mousemove", move, true);
+      removeEventListener("mouseup", up, true);
+      this.emit(true);
+    };
+    addEventListener("mousemove", move, true);
+    addEventListener("mouseup", up, true);
+  }
+
+  /** A point in shape coordinates (px) to page px, with the shape's rotation and flips. */
+  private fromShape(pic: PictureFormat | undefined, box: { x: number; y: number; w: number; h: number }, x: number, y: number): { x: number; y: number } {
+    let dx = x - box.w / 2, dy = y - box.h / 2;
+    if (pic?.flipH) dx = -dx;
+    if (pic?.flipV) dy = -dy;
+    const a = ((pic?.rotation ?? 0) * Math.PI) / 180;
+    return { x: box.x + box.w / 2 + dx * Math.cos(a) - dy * Math.sin(a), y: box.y + box.h / 2 + dx * Math.sin(a) + dy * Math.cos(a) };
+  }
+
+  private toShape(pic: PictureFormat | undefined, box: { x: number; y: number; w: number; h: number }, x: number, y: number): { x: number; y: number } {
+    const a = (-(pic?.rotation ?? 0) * Math.PI) / 180;
+    const ox = x - box.x - box.w / 2, oy = y - box.y - box.h / 2;
+    let dx = ox * Math.cos(a) - oy * Math.sin(a), dy = ox * Math.sin(a) + oy * Math.cos(a);
+    if (pic?.flipH) dx = -dx;
+    if (pic?.flipV) dy = -dy;
+    return { x: dx + box.w / 2, y: dy + box.h / 2 };
+  }
+
+  /**
+   * Drags a yellow handle: the adjust value whose handle lands nearest the mouse (searched
+   * in the evaluated geometry, so every preset behaves as its formulas say).
+   */
+  private dragAdjust(i: number): void {
+    const s = this.selectedShape();
+    const box = s ? this.floatBox(s.p, s.index) : null;
+    if (!s || !box) return;
+    const f = s.obj;
+    const shape = f.shape!;
+    const base = { ...presetAdjust(f.pic?.geometry ?? "rect"), ...(shape.adjust ?? {}) };
+    const g0 = shapeGeometry(f.pic, shape, box.w, box.h);
+    const hd = g0?.handles[i];
+    if (!hd) return;
+    let first = true;
+    const search = (adj: Record<string, number>, key: string, lo: number, hi: number, pos: (a: Record<string, number>) => number, target: number) => {
+      // Coarse samples, then a finer look around the best one.
+      let best = adj[key] ?? lo, bestD = Infinity;
+      const steps = 48;
+      let a = Math.min(lo, hi), b = Math.max(lo, hi);
+      for (let round = 0; round < 3; round++) {
+        for (let k = 0; k <= steps; k++) {
+          const v = a + ((b - a) * k) / steps;
+          const d = Math.abs(pos({ ...adj, [key]: v }) - target);
+          if (d < bestD) { bestD = d; best = v; }
+        }
+        const span = (b - a) / steps;
+        a = Math.max(Math.min(lo, hi), best - span);
+        b = Math.min(Math.max(lo, hi), best + span);
+      }
+      return Math.round(best);
+    };
+    const move = (ev: MouseEvent) => {
+      const pt = this.view.pointAt(ev.clientX, ev.clientY);
+      const q = this.toShape(f.pic, box, pt.x, pt.y);
+      const adj: Record<string, number> = { ...base };
+      const at = (a: Record<string, number>) => presetGeometry(f.pic?.geometry ?? "rect", box.w, box.h, a)?.handles[i];
+      if (hd.kind === "polar") {
+        // gdX is the radius, gdY the angle (60000ths of a degree).
+        if (hd.gdY) {
+          let ang = (Math.atan2(q.y - box.h / 2, q.x - box.w / 2) * 180) / Math.PI;
+          if (ang < 0) ang += 360;
+          adj[hd.gdY] = Math.max(hd.minY ?? 0, Math.min(hd.maxY ?? 21599999, Math.round(ang * 60000)));
+        }
+        if (hd.gdX) {
+          const r = Math.hypot(q.x - box.w / 2, q.y - box.h / 2);
+          adj[hd.gdX] = search(adj, hd.gdX, hd.minX ?? 0, hd.maxX ?? 50000, (a) => { const h = at(a); return h ? Math.hypot(h.x - box.w / 2, h.y - box.h / 2) : 0; }, r);
+        }
+      } else {
+        const big = (v: number | undefined, fallback: number) => (v === undefined || Math.abs(v) > 1e8 ? fallback : v);
+        if (hd.gdX) adj[hd.gdX] = search(adj, hd.gdX, big(hd.minX, -400000), big(hd.maxX, 400000), (a) => at(a)?.x ?? 0, q.x);
+        if (hd.gdY) adj[hd.gdY] = search(adj, hd.gdY, big(hd.minY, -400000), big(hd.maxY, 400000), (a) => at(a)?.y ?? 0, q.y);
+      }
+      this.setShape((sh) => ({ ...sh, adjust: adj }), first);
+      first = false;
+    };
+    const up = () => {
+      removeEventListener("mousemove", move, true);
+      removeEventListener("mouseup", up, true);
+      this.emit(true);
+    };
+    addEventListener("mousemove", move, true);
+    addEventListener("mouseup", up, true);
+  }
+
+  /** The page box of a float (px), from the layout. */
+  private floatBox(p: number, index: number): { page: number; x: number; y: number; w: number; h: number } | null {
+    for (const pg of this.layout.pages) {
+      for (const d of pg.deco) if (d.kind === "image" && d.story === "main" && d.para === p && d.index === index) return { page: pg.index, x: d.x, y: d.y, w: d.w, h: d.h };
+    }
+    return null;
+  }
+
+  /** True when a page point lies in a shape's text area (where a click edits its text). */
+  private inShapeTextArea(p: number, index: number, page: number, x: number, y: number): boolean {
+    const f = this.doc.main[p]?.floats?.[index];
+    const box = this.floatBox(p, index);
+    if (!f?.shape || !box || box.page !== page) return false;
+    if (f.shape.kind === "connector" || (f.pic?.geometry ?? "rect") === "line") return false;
+    const tr = shapeTextRect(f.pic, f.shape, box.w, box.h);
+    const inRect = x >= box.x + tr.x && x <= box.x + tr.x + tr.w && y >= box.y + tr.y - 2 && y <= box.y + tr.y + tr.h + 2;
+    if (!inRect) return false;
+    // Text boxes take every click inside; other shapes only clicks on their text.
+    if (f.shape.kind === "textbox") return true;
+    const story = f.shape.story ? this.layout.stories.get(f.shape.story) : undefined;
+    const paras = f.shape.story ? this.doc.stories.get(f.shape.story) : undefined;
+    if (!story || !paras || !paras.some((q) => q.text.length)) return false;
+    return story.placed.some((pl) => {
+      const ln = story.paras[pl.para]?.lines[pl.line];
+      return ln && pl.page === page && y >= pl.y && y <= pl.y + ln.height && x >= pl.x + ln.x0 - 4 && x <= pl.x + ln.x0 + ln.width + 4;
+    });
+  }
+
+  /**
+   * Einfügen > Formen / Textfeld: a new shape at a page rectangle (px), anchored to the
+   * paragraph next to its top, in front of the text, with Word's default style.
+   */
+  insertShape(geometry: string, kind: ShapeInfo["kind"], page: number, x: number, y: number, w: number, h: number,
+    extra?: { pic?: PictureFormat; adjust?: Record<string, number>; text?: string; custom?: string; line?: boolean }): void {
+    if (this.doc.activeStory !== MAIN) this.leaveShapeText(false);
+    const pg = this.layout.pages[page];
+    if (!pg) return;
+    // The paragraph whose line is nearest above the shape's top on that page.
+    let anchor = -1;
+    for (const pl of this.layout.placed) {
+      if (pl.page !== page || pl.ghost || pl.hide || this.doc.main[pl.para]?.cell) continue;
+      if (pl.y <= y || anchor < 0) anchor = pl.para;
+    }
+    if (anchor < 0) anchor = Math.max(0, this.doc.main.length - 1);
+    const firstLine = this.layout.placed[this.layout.firstPlaced[anchor]];
+    const fr = firstLine ? this.layout.frames[firstLine.frame] : undefined;
+    const colX = fr ? fr.x : pg.setup.marginLeft * PT;
+    const paraTop = firstLine?.y ?? pg.setup.marginTop * PT;
+    const theme = this.doc.styles.theme.colors ?? {};
+    const accent = theme.accent1 ?? "4472C4";
+    const line = kind === "connector" || geometry === "line" || !!extra?.line;
+    const shape: ShapeInfo = {
+      kind, adjust: extra?.adjust, custom: extra?.custom,
+      ...(kind === "textbox" ? {} : line
+        ? { styleLine: { color: accent, width: 0.5 }, fontColor: theme.dk1 ?? "000000" }
+        : { styleFill: { kind: "solid", color: accent }, styleLine: { color: shadeLinear(accent, 0.15), width: 1 }, fontColor: theme.lt1 ?? "FFFFFF" }),
+      body: kind === "textbox" ? { ...DEFAULT_SHAPE_BODY, anchor: "t" } : DEFAULT_SHAPE_BODY,
+    };
+    // Word's text box: white with a thin black outline.
+    const pic: PictureFormat | undefined = kind === "textbox"
+      ? { fill: { kind: "solid", color: theme.lt1 ?? "FFFFFF" }, fillXml: '<a:solidFill><a:schemeClr val="lt1"/></a:solidFill>', line: { color: "000000", width: 0.5 }, ...(extra?.pic ?? {}) }
+      : geometry === "rect" && !extra?.pic ? undefined : { geometry: geometry === "rect" ? undefined : geometry, ...(extra?.pic ?? {}) };
+    let z = 251659264;
+    for (const q of this.doc.main) for (const f of q.floats ?? []) z = Math.max(z, (f.z ?? 0) + 1024);
+    const f: FloatObject = {
+      at: 0, data: undefined, width: w / PT, height: h / PT,
+      x: { rel: "column", offset: (x - colX) / PT }, y: { rel: "paragraph", offset: (y - paraTop) / PT },
+      wrap: "front", side: "bothSides", dist: [0, 0, 9, 9], pic: pic && Object.keys(pic).length ? pic : undefined, shape, z,
+    };
+    this.snapshot();
+    const para = this.doc.main[anchor];
+    const floats = [...(para.floats ?? []), f];
+    const next = [...this.doc.main];
+    next[anchor] = { ...para, floats };
+    this.doc.setStory(MAIN, next);
+    this.floatSel = { p: anchor, index: floats.length - 1 };
+    this.sel = { anchor: { p: anchor, o: 0 }, head: { p: anchor, o: 0 }, headUpstream: false };
+    // A text box is ready for typing; other shapes stay selected.
+    if (kind === "textbox" || extra?.text !== undefined) {
+      this.editShapeText(anchor, floats.length - 1, "end", false);
+      if (extra?.text) this.insertText(extra.text);
+    } else this.update({ scroll: true });
+    this.emit(true);
+  }
+
+
+  // ----- drawing shapes (Einfügen > Formen) ---------------------------------------------------
+
+  /** The shape tool chosen in the Formen gallery: the next drag on a page draws it. */
+  private drawTool: DrawTool | null = null;
+  /** Called when a drawing ends (inserted or cancelled). */
+  onDrawEnd: (() => void) | null = null;
+
+  /** Einfügen > Formen: the next drag (or click) on a page draws the shape; Esc cancels. */
+  startDrawing(tool: DrawTool): void {
+    if (this.inShapeText) this.leaveShapeText(false);
+    this.drawTool = tool;
+    this.workspace.style.cursor = "crosshair";
+    this.focus();
+  }
+
+  get drawing(): boolean {
+    return this.drawTool !== null;
+  }
+
+  cancelDrawing(): void {
+    if (!this.drawTool) return;
+    this.drawTool = null;
+    this.workspace.style.cursor = "";
+    this.view.setDraft(null);
+    this.onDrawEnd?.();
+  }
+
+  /** A drag on a page with a shape tool: the rubber band, then the new shape. */
+  private drawShape(e: MouseEvent): void {
+    const tool = this.drawTool!;
+    if (tool.freeform) { this.drawFreeform(e, tool); return; }
+    const start = this.view.pointAt(e.clientX, e.clientY);
+    const line = tool.kind === "connector" || tool.geometry === "line";
+    let end = { x: start.x, y: start.y };
+    const rect = (shift: boolean) => {
+      let dx = end.x - start.x, dy = end.y - start.y;
+      if (shift && line) {
+        // Lines snap to multiples of 45°.
+        const len = Math.hypot(dx, dy), a = Math.round(Math.atan2(dy, dx) / (Math.PI / 4)) * (Math.PI / 4);
+        dx = len * Math.cos(a); dy = len * Math.sin(a);
+      } else if (shift) {
+        const s = Math.max(Math.abs(dx), Math.abs(dy));
+        dx = Math.sign(dx || 1) * s; dy = Math.sign(dy || 1) * s;
+      }
+      return { x: Math.min(start.x, start.x + dx), y: Math.min(start.y, start.y + dy), w: Math.abs(dx), h: Math.abs(dy), flipH: dx < 0, flipV: dy < 0 };
+    };
+    const preview = (shift: boolean) => {
+      const r = rect(shift);
+      const look: PictureFormat = { ...(tool.pic ?? {}), geometry: tool.geometry === "rect" ? undefined : tool.geometry, flipH: line && r.flipH ? true : undefined, flipV: line && r.flipV ? true : undefined };
+      const info: ShapeInfo = { kind: tool.kind, adjust: tool.adjust, body: DEFAULT_SHAPE_BODY, styleLine: { color: "6F8DB9", width: 0.75 }, styleFill: line ? undefined : { kind: "solid", color: "DEE6F2", transparency: 0.4 } };
+      const el = shapeElement(Math.max(r.w, 1), Math.max(r.h, 1), look, info);
+      el.style.left = `${r.x}px`;
+      el.style.top = `${r.y}px`;
+      this.view.setDraft({ page: start.page, el });
+    };
+    const move = (ev: MouseEvent) => {
+      const p = this.view.pointAt(ev.clientX, ev.clientY);
+      end = { x: p.x, y: p.y };
+      preview(ev.shiftKey);
+    };
+    const up = (ev: MouseEvent) => {
+      removeEventListener("mousemove", move, true);
+      removeEventListener("mouseup", up, true);
+      this.view.setDraft(null);
+      this.drawTool = null;
+      this.workspace.style.cursor = "";
+      let r = rect(ev.shiftKey);
+      // A click without dragging: Word's default size (2.54 cm, lines 2.54 cm long).
+      if (r.w < 3 && r.h < 3) r = { x: start.x, y: start.y, w: 72 * PT, h: line ? 0 : 72 * PT, flipH: false, flipV: false };
+      const pic: PictureFormat = { ...(tool.pic ?? {}), flipH: line && r.flipH ? true : undefined, flipV: line && r.flipV ? true : undefined };
+      this.insertShape(tool.geometry, tool.kind, start.page, r.x, r.y, r.w, r.h, { pic, adjust: tool.adjust });
+      this.onDrawEnd?.();
+    };
+    addEventListener("mousemove", move, true);
+    addEventListener("mouseup", up, true);
+  }
+
+  /**
+   * Kurve (clicked points, smoothed), Freihandform: Form (clicked corners; dragging draws
+   * freehand), Freihand: Skizze (one drag). A double click (or a click on the first point)
+   * ends; a shape that ends where it began is closed and filled.
+   */
+  private drawFreeform(e: MouseEvent, tool: DrawTool): void {
+    const page = this.view.pointAt(e.clientX, e.clientY).page;
+    const pts: [number, number][] = [];
+    const at = (ev: MouseEvent): [number, number] => { const p = this.view.pointAt(ev.clientX, ev.clientY); return [p.x, p.y]; };
+    pts.push(at(e));
+    let hover: [number, number] | null = null;
+    let down = true;
+    const preview = () => {
+      const list = hover ? [...pts, hover] : pts;
+      const d = freeformPath(list, tool.freeform === "curve");
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.setAttribute("style", "position:absolute;left:0;top:0;width:1px;height:1px;overflow:visible");
+      svg.innerHTML = `<path d="${d}" fill="none" stroke="#6F8DB9" stroke-width="1.5"/>`;
+      const holder = document.createElement("div");
+      holder.style.cssText = "position:absolute;left:0;top:0";
+      holder.append(svg);
+      this.view.setDraft({ page, el: holder });
+    };
+    const finish = () => {
+      removeEventListener("mousemove", move, true);
+      removeEventListener("mouseup", up, true);
+      removeEventListener("mousedown", next, true);
+      removeEventListener("dblclick", dbl, true);
+      removeEventListener("keydown", key, true);
+      this.view.setDraft(null);
+      this.drawTool = null;
+      this.workspace.style.cursor = "";
+      const clean = pts.filter((p, i) => i === 0 || Math.hypot(p[0] - pts[i - 1][0], p[1] - pts[i - 1][1]) > 0.5);
+      if (clean.length < 2) { this.onDrawEnd?.(); return; }
+      const first = clean[0], last = clean[clean.length - 1];
+      const closed = clean.length > 2 && Math.hypot(first[0] - last[0], first[1] - last[1]) < 6;
+      if (closed) clean[clean.length - 1] = first;
+      const xs = clean.map((p) => p[0]), ys = clean.map((p) => p[1]);
+      const x = Math.min(...xs), y = Math.min(...ys), w = Math.max(1, Math.max(...xs) - x), h = Math.max(1, Math.max(...ys) - y);
+      const local = clean.map(([px, py]) => [px - x, py - y] as [number, number]);
+      this.insertFreeform(page, x, y, w, h, local, tool.freeform === "curve", closed);
+      this.onDrawEnd?.();
+    };
+    const move = (ev: MouseEvent) => {
+      const p = at(ev);
+      // Dragging adds points (Skizze always, Form while the button is down).
+      if (down && tool.freeform !== "curve") {
+        const lastP = pts[pts.length - 1];
+        if (Math.hypot(p[0] - lastP[0], p[1] - lastP[1]) > 2) pts.push(p);
+        hover = null;
+      } else hover = p;
+      preview();
+    };
+    const up = () => {
+      down = false;
+      if (tool.freeform === "scribble") finish();
+    };
+    const next = (ev: MouseEvent) => {
+      if (ev.button !== 0) return;
+      ev.preventDefault();
+      ev.stopPropagation();
+      const p = at(ev);
+      // A click on the first point closes the shape.
+      if (pts.length > 2 && Math.hypot(p[0] - pts[0][0], p[1] - pts[0][1]) < 6) { pts.push(pts[0]); finish(); return; }
+      pts.push(p);
+      down = true;
+    };
+    const dbl = (ev: MouseEvent) => { ev.preventDefault(); ev.stopPropagation(); finish(); };
+    const key = (ev: KeyboardEvent) => {
+      if (ev.key === "Escape" || ev.key === "Enter") { ev.preventDefault(); ev.stopPropagation(); finish(); }
+    };
+    addEventListener("mousemove", move, true);
+    addEventListener("mouseup", up, true);
+    if (tool.freeform !== "scribble") {
+      setTimeout(() => addEventListener("mousedown", next, true), 0);
+      addEventListener("dblclick", dbl, true);
+      addEventListener("keydown", key, true);
+    }
+  }
+
+  /** A freeform shape (custGeom) from points in its own box (px). */
+  private insertFreeform(page: number, x: number, y: number, w: number, h: number, pts: [number, number][], smooth: boolean, closed: boolean): void {
+    // In EMU-like units of the box, as Word writes custom geometry (path w/h = the shape's size).
+    const W = Math.round((w / PT) * 12700), H = Math.round((h / PT) * 12700);
+    const sx = W / w, sy = H / h;
+    const q = pts.map(([px, py]) => [Math.round(px * sx), Math.round(py * sy)] as [number, number]);
+    let cmds = `M ${q[0][0]} ${q[0][1]}`;
+    if (smooth) {
+      for (let i = 0; i < q.length - 1; i++) {
+        const p0 = q[Math.max(0, i - 1)], p1 = q[i], p2 = q[i + 1], p3 = q[Math.min(q.length - 1, i + 2)];
+        const c1 = [Math.round(p1[0] + (p2[0] - p0[0]) / 6), Math.round(p1[1] + (p2[1] - p0[1]) / 6)];
+        const c2 = [Math.round(p2[0] - (p3[0] - p1[0]) / 6), Math.round(p2[1] - (p3[1] - p1[1]) / 6)];
+        cmds += ` C ${c1[0]} ${c1[1]} ${c2[0]} ${c2[1]} ${p2[0]} ${p2[1]}`;
+      }
+    } else for (const p of q.slice(1)) cmds += ` L ${p[0]} ${p[1]}`;
+    if (closed) cmds += " Z";
+    const custom = `rect l t r b\npath w=${W} h=${H}${closed ? "" : " fill=none"}: ${cmds}`;
+    this.insertShape("rect", "shape", page, x, y, w, h, { custom, line: !closed });
   }
 
   // ----- find and replace ------------------------------------------------------------------
@@ -3168,6 +3753,17 @@ cropFill(fit: boolean): void {
         return;
       }
     }
+    // A selected floating picture or shape moves with the arrow keys (0.35 pt, measured in Word).
+    if (this.floatSel && !shift && e.key.startsWith("Arrow")) {
+      const step = 0.35;
+      const d = e.key === "ArrowLeft" ? [-step, 0] : e.key === "ArrowRight" ? [step, 0] : e.key === "ArrowUp" ? [0, -step] : [0, step];
+      e.preventDefault();
+      this.moveFloat(d[0], d[1], !this.nudging);
+      this.nudging = true;
+      this.emit(true);
+      return;
+    }
+    this.nudging = false;
     switch (e.key) {
       case "ArrowLeft":
         this.collapseOrMove(shift, ctrl ? this.wordLeft(h) : this.charLeft(h), "start"); break;
@@ -3227,9 +3823,12 @@ cropFill(fit: boolean): void {
         this.autoCorrect("\t");
         return;
       case "Escape":
+        if (this.drawTool) { this.cancelDrawing(); return void e.preventDefault(); }
         if (this.cropping) { this.endCrop(); return void e.preventDefault(); }
         if (this.painter) { this.stopPainter(); return void e.preventDefault(); }
         if (this.isHeaderFooter()) { this.closeHeaderFooter(); return void e.preventDefault(); }
+        if (this.inShapeText) { this.leaveShapeText(true); return void e.preventDefault(); }
+        if (this.floatSel) { this.floatSel = null; this.update(); return void e.preventDefault(); }
         handled = false;
         break;
       default:
@@ -3258,6 +3857,13 @@ cropFill(fit: boolean): void {
 
   private onCopy(e: ClipboardEvent, cut: boolean): void {
     e.preventDefault();
+    // A selected floating picture or shape is copied as itself.
+    if (this.floatSel && this.copyFloat()) {
+      if (this.clipboardHost) void this.clipboardHost.write("", "").catch(() => undefined);
+      else e.clipboardData?.setData("text/plain", "");
+      if (cut) this.deleteFloat();
+      return;
+    }
     if (!this.hasSelection) return;
     const html = this.selectionHtml();
     const text = this.copySelection().replace(/\n/g, "\r\n");
@@ -3334,6 +3940,7 @@ cropFill(fit: boolean): void {
   paste(text: string, html: string, image: Blob | null = null): void {
     const frag = clipboardFragment;
     const t = text.replace(/\r\n?/g, "\n");
+    if (frag?.float && !t.trim() && !image && !(html && htmlText(html).trim())) { this.pasteFloat(); return; }
     // Only a picture (no text around it): it goes in as a picture.
     if (image && !this.inBlock() && !t.trim() && !(html && htmlText(html).trim())) { void this.pasteImage(image, html); return; }
     if (frag && frag.text === t) return this.pasteText(t);
@@ -3445,6 +4052,8 @@ cropFill(fit: boolean): void {
 
   private onMouseDown(e: MouseEvent): void {
     if (e.button !== 0) return;
+    // Einfügen > Formen: the drag draws the chosen shape.
+    if (this.drawTool) { e.preventDefault(); this.focus(); this.drawShape(e); return; }
     // Comment cards handle their own clicks.
     if (this.view.markupLayer.contains(e.target as Node)) return;
     this.focusedComment = null;
@@ -3452,12 +4061,22 @@ cropFill(fit: boolean): void {
     if (e.target === ws && (e.offsetX >= ws.clientWidth || e.offsetY >= ws.clientHeight)) return; // scrollbar
     e.preventDefault();
     this.focus();
+    // In a shape's text: clicks inside the shape stay there, others leave it.
+    const se = this.selectedShape();
+    if (se?.editing) {
+      const pt = this.view.pointAt(e.clientX, e.clientY);
+      const box = this.floatBox(se.p, se.index);
+      const inside = box && pt.page === box.page && pt.x >= box.x - 3 && pt.x <= box.x + box.w + 3 && pt.y >= box.y - 3 && pt.y <= box.y + box.h + 3;
+      if (!inside || this.view.handleAt(e.clientX, e.clientY)) this.leaveShapeText(!!inside);
+    }
     if (this.storyKey === MAIN && !e.shiftKey && e.detail < 2) {
       const th = this.view.tableHandleAt(e.clientX, e.clientY);
       if (th) { this.dragTableHandle(e, th.kind, th.table); return; }
       // Pictures and table borders take the click before the text.
       const handle = this.view.handleAt(e.clientX, e.clientY);
       if (handle === "rot") { this.dragRotate(); return; }
+      if (handle?.startsWith("adj-")) { this.dragAdjust(Number(handle.slice(4))); return; }
+      if (handle === "end-0" || handle === "end-1") { this.dragLineEnd(handle === "end-1" ? 1 : 0); return; }
       if (handle === "layout") { const r = this.view.layoutButtonRect(); if (r) this.onLayoutOptions?.(r); return; }
       if (handle?.startsWith("crop-")) { this.dragCrop(e, handle.slice(5)); return; }
       if (this.cropping) {
@@ -3473,9 +4092,22 @@ cropFill(fit: boolean): void {
       const rowBorder = this.view.rowBorderAt(e.clientX, e.clientY);
       if (rowBorder) { this.dragRow(e, rowBorder.cell, rowBorder.h); return; }
       const deco = this.view.imageAt(e.clientX, e.clientY);
-      if (deco) { this.selectFloat(deco.para, deco.index); this.dragImage(e, null); return; }
+      if (deco) {
+        const pt = this.view.pointAt(e.clientX, e.clientY);
+        if (deco.shape && this.inShapeTextArea(deco.para, deco.index, pt.page, pt.x, pt.y)) {
+          this.editShapeText(deco.para, deco.index, { clientX: e.clientX, clientY: e.clientY });
+          return;
+        }
+        this.selectFloat(deco.para, deco.index);
+        this.dragImage(e, null);
+        return;
+      }
     }
-    if (!this.chooseStory(e)) return;
+    if (this.storyKey === MAIN && e.detail === 2) {
+      const deco = this.view.imageAt(e.clientX, e.clientY);
+      if (deco?.shape && deco.shape.kind !== "connector") { this.editShapeText(deco.para, deco.index, "end"); return; }
+    }
+    if (!this.storyKey.startsWith("tx:") && !this.chooseStory(e)) return;
     const hit = this.view.hitLine(e.clientX, e.clientY);
     const at = this.view.posInLine(hit.index, hit.x);
     const under = this.view.posInLine(hit.index, hit.x, true).pos;
@@ -3590,6 +4222,7 @@ cropFill(fit: boolean): void {
   private bodySel: Selection | null = null;
 
   private switchStory(id: string, key: string, sel?: Selection): void {
+    if (!id.startsWith("tx:")) this.shapeEdit = null;
     if (this.doc.activeStory === MAIN && id !== MAIN) this.bodySel = this.sel;
     this.doc.setActive(id);
     this.storyKey = key;
@@ -3682,6 +4315,9 @@ cropFill(fit: boolean): void {
     const start = { x: e.clientX, y: e.clientY };
     let first = true, lastDx = 0, lastDy = 0;
     const w0 = box0.w / PT, h0 = box0.h / PT;
+    const sel0 = this.selectedImage();
+    const isShape = !!sel0?.obj.shape, floating = sel0?.kind === "float";
+    let movedX = 0, movedY = 0;
     const move = (ev: MouseEvent) => {
       const z = this.view.zoom;
       const dx = (ev.clientX - start.x) / z / PT, dy = (ev.clientY - start.y) / z / PT;
@@ -3692,9 +4328,16 @@ cropFill(fit: boolean): void {
         if (handle.includes("w")) w -= dx;
         if (handle.startsWith("s")) hh += dy;
         if (handle.startsWith("n")) hh -= dy;
-        // Corner handles keep the picture's proportions (as in Word).
-        if (handle.length === 2) { const k = Math.max(w / w0, hh / h0); w = w0 * k; hh = h0 * k; }
-        this.setImageSize(Math.max(6, w), Math.max(6, hh), first);
+        // Corner handles keep a picture's proportions; a shape's only with Umschalt (Word).
+        if (handle.length === 2 && isShape === ev.shiftKey) { const k = Math.max(w / w0, hh / h0); w = w0 * k; hh = h0 * k; }
+        w = Math.max(isShape ? 1 : 6, w);
+        hh = Math.max(isShape ? 1 : 6, hh);
+        this.setImageSize(w, hh, first);
+        // A floating object keeps the opposite edge where it was.
+        if (floating) {
+          const mx = handle.includes("w") ? w0 - w : 0, my = handle.startsWith("n") ? h0 - hh : 0;
+          if (mx !== movedX || my !== movedY) { this.moveFloat(mx - movedX, my - movedY, false); movedX = mx; movedY = my; }
+        }
       } else {
         this.moveFloat(dx - lastDx, dy - lastDy, first);
         lastDx = dx; lastDy = dy;

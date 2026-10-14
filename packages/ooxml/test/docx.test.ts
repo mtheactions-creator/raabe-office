@@ -114,8 +114,10 @@ describe("documents saved by Microsoft Word", () => {
     expect(state.stories?.get("cmt:1")?.[0].text).toBe("Bitte genau lesen.");
     expect(state.comments?.get("cmt:1")?.initials).toBe("RT");
     expect(state.settings.section.headers.default && state.stories?.get(state.settings.section.headers.default)?.[0].text).toBe("Raabeschule – Biologie");
-    // Word's equation converts to LaTeX (editable since Step 4); text boxes stay preserved only.
-    expect(partial).toEqual(["Textfelder und Formen"]);
+    // Word's equation converts to LaTeX (editable since Step 4), the text box to a shape with its story (4b).
+    expect(partial).toEqual([]);
+    const box = state.paras.flatMap((p) => p.floats ?? []).find((f) => f.shape?.kind === "textbox");
+    expect(box?.shape?.story && state.stories?.get(box.shape.story)?.[0].text).toBe("Merke: Licht ist nötig.");
     const math = state.paras.flatMap((p) => p.objects ?? []).find((o) => o.kind === "math");
     expect(math?.latex).toBe("a^{2}+b^{2}=c^{2}");
   });

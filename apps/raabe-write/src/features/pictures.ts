@@ -104,7 +104,7 @@ export function picturesFeature(api: AppApi) {
   c.implement("picture.width", { run: () => {}, enabled: picked });
 
   // The Bildformat tab (picture-tab.ts) and Word's layout options button beside a picture.
-  const { tab } = pictureTab(api, insertFromPath);
+  const { tab, arrange } = pictureTab(api, insertFromPath);
   const layoutOptions = (rect: DOMRect) => {
     const s0 = sel();
     if (!s0) return;
@@ -161,5 +161,12 @@ export function picturesFeature(api: AppApi) {
   };
   c.implement("insert.dateTime", { run: dateTime, enabled: has });
 
-  return { tab, insertMenu: [{ cmd: "picture.fromFile" }] as MenuEntry[], insertFromPath, attach };
+  // Layout > Anordnen: the same as on Bildformat and Formformat, for the selected object.
+  const objectPicked = () => picked() && ed()!.doc.activeStory === "main";
+  c.implement("layout.position", { run: () => {}, enabled: objectPicked });
+  c.implement("layout.bringForward", { run: () => c.run("picture.bringForward"), enabled: () => sel()?.kind === "float" });
+  c.implement("layout.sendBackward", { run: () => c.run("picture.sendBackward"), enabled: () => sel()?.kind === "float" });
+  c.implement("layout.align", { run: () => {}, enabled: picked });
+  c.implement("layout.rotate", { run: () => {}, enabled: picked });
+  return { tab, insertMenu: [{ cmd: "picture.fromFile" }] as MenuEntry[], insertFromPath, attach, arrange };
 }

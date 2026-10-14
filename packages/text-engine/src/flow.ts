@@ -13,11 +13,12 @@
 // drawing and hit testing.
 
 import type { PictureFormat } from "./picture";
+import { shapeTextRect } from "./shape";
 import { PT } from "./fonts";
 import { fieldType, type Layouter, type Line, type ParaEnv, type ParaLayout } from "./layout";
 import {
   DEFAULT_SECTION, EMPTY, OBJ, cellKey, type BorderSpec, type Borders, type CellMargins, type CharProps, type FloatObject,
-  type ImageData, type Numbering, type PageSetup, type Para, type ParaProps, type Section, type Shading, type TableDef,
+  type ImageData, type Numbering, type PageSetup, type Para, type ParaProps, type Section, type Shading, type ShapeInfo, type TableDef,
 } from "./model";
 import { formatNumber, listLabels, type ListLabel } from "./numbering";
 import type { StyleSheet, TableStyleDef, TableStylePart } from "./styles";
@@ -30,7 +31,7 @@ export interface Frame {
   readonly page: number;
   /** Layout key of the story: "main", a note id, or a header/footer instance ("hdr:2@3"). */
   readonly story: string;
-  readonly kind: "body" | "cell" | "header" | "footer" | "note";
+  readonly kind: "body" | "cell" | "header" | "footer" | "note" | "textbox";
   readonly x: number;
   readonly y: number;
   readonly w: number;
@@ -65,7 +66,12 @@ export interface StoryLayout {
 export type Deco =
   | { readonly kind: "rect"; readonly story: string; readonly x: number; readonly y: number; readonly w: number; readonly h: number; readonly fill: string }
   | { readonly kind: "line"; readonly story: string; readonly x1: number; readonly y1: number; readonly x2: number; readonly y2: number; readonly width: number; readonly color: string; readonly style: string }
-  | { readonly kind: "image"; readonly story: string; readonly x: number; readonly y: number; readonly w: number; readonly h: number; readonly image?: ImageData; readonly behind: boolean; readonly para: number; readonly index: number; readonly pic?: PictureFormat; readonly z?: number };
+  | {
+    readonly kind: "image"; readonly story: string; readonly x: number; readonly y: number; readonly w: number; readonly h: number; readonly image?: ImageData; readonly behind: boolean;
+    readonly para: number; readonly index: number; readonly pic?: PictureFormat; readonly z?: number;
+    /** Shapes: what to draw (with `pic`); their text is the story `shape.story`. */
+    readonly shape?: ShapeInfo;
+  };
 
 export interface PageLayout {
   readonly index: number;
@@ -825,7 +831,9 @@ class Flow {
       const y = f.y.align && yh > 0
         ? (f.y.align === "center" ? y0 + (yh - h) / 2 : f.y.align === "bottom" || f.y.align === "outside" ? y0 + yh - h : y0)
         : y0 + f.y.offset * PT;
-      page.deco.push({ kind: "image", story, x, y, w, h, image: f.image, behind: f.wrap === "behind", para: i, index, pic: f.pic, z: f.z });
+      let hh = h;
+      if (f.shape?.story) hh = this.placeShapeText(page, f.shape, f.pic, x, y, w, h);
+      page.deco.push({ kind: "image", story, x, y, w, h: hh, image: f.image, behind: f.wrap === "behind", para: i, index, pic: f.pic, z: f.z, shape: f.shape });
       if (wrap && f.wrap !== "front" && f.wrap !== "behind" && f.wrap !== "none") {
         const [dt, db, dl, dr] = f.dist.map((d) => d * PT);
         const list = this.excl.get(page.index) ?? [];
@@ -833,6 +841,49 @@ class Flow {
         this.excl.set(page.index, list);
       }
     });
+  }
+
+  /**
+   * The text of a shape: its story laid out in the shape's text rectangle (insets, vertical
+   * anchor) as a "textbox" frame. Returns the shape's height, grown to fit the text when the
+   * shape is set to Form dem Text anpassen.
+   */
+  private placeShapeText(page: PageLayout, s: ShapeInfo, pic: PictureFormat | undefined, x: number, y: number, w: number, h: number): number {
+    const id = s.story!;
+    const paras = this.input.stories.get(id);
+    if (!paras) return h;
+    const tr = shapeTextRect(pic, s, w, h);
+    // Vertical text (Gesamten Text um 90°/270° drehen) runs along the rectangle's height; the
+    // view turns it, around the rectangle's centre.
+    const vert = s.body.vert === "vert" || s.body.vert === "vert270" || s.body.vert === "eaVert";
+    const boxW = vert ? tr.h : tr.w, boxH = vert ? tr.w : tr.h;
+    const width = s.body.wrap ? boxW : 20000;
+    const labels = listLabels(paras, this.input.numbering, this.styles);
+    const layout = newStory(paras.length);
+    const offsets: number[][] = [];
+    let yy = 0;
+    let prev: ParaLayout | null = null;
+    paras.forEach((para, i) => {
+      const pl = this.lt.paragraph(para, { width, label: labels[i], notes: this.noteNumbers });
+      layout.paras[i] = pl;
+      yy += prev ? this.gapBetween(prev, pl) : pl.before;
+      offsets[i] = pl.lines.map((ln) => { const at = yy; yy += ln.height; return at; });
+      prev = pl;
+    });
+    if (prev) yy += (prev as ParaLayout).after;
+    let height = h;
+    if (s.body.autofit === "shape" && !vert) height = Math.max(h, yy + tr.y + (h - tr.y - tr.h));
+    const room = boxH + (height - h);
+    const cx = x + tr.x + tr.w / 2, cy = y + tr.y + tr.h / 2 + (height - h) / 2;
+    const left = cx - boxW / 2;
+    const top = cy - room / 2 + (s.body.anchor === "ctr" ? (room - yy) / 2 : s.body.anchor === "b" ? room - yy : 0);
+    const fr = this.frame({ page: page.index, story: id, kind: "textbox", x: left, y: top, w: boxW, h: yy });
+    paras.forEach((_, i) => {
+      layout.firstPlaced[i] = layout.placed.length;
+      offsets[i].forEach((dy, k) => layout.placed.push({ para: i, line: k, page: page.index, x: left, y: top + dy, frame: fr.id }));
+    });
+    this.stories.set(id, layout);
+    return height;
   }
 
   /** Lays out a paragraph against the current page's pictures, or null when none is near. */

@@ -20,6 +20,7 @@ import { referencesFeature, REFERENCE_COMMANDS } from "./features/references";
 import { reviewFeature, REVIEW_COMMANDS } from "./features/review";
 import { spellFeature } from "./features/spell";
 import { contextFeature, CONTEXT_COMMANDS } from "./features/context";
+import { shapesFeature, SHAPE_COMMANDS } from "./features/shapes";
 import { tablesFeature, TABLE_COMMANDS } from "./features/tables";
 import { GALLERY, miniToolbar, ribbonTabs, type RibbonContext } from "./ribbon-def";
 import { TEMPLATES, finishTemplate, templateState, type TemplateId } from "./templates";
@@ -103,9 +104,12 @@ export class WriteApp {
     this.fonts.onChange(() => { for (const d of this.docs) d.editor.relayout(); });
     void platform.listFonts().then((f) => { this.fontList = f; }).catch(() => {});
     this.commands.register(...COMMANDS, ...TABLE_COMMANDS, ...PAGE_COMMANDS, ...HEADER_COMMANDS, ...PICTURE_COMMANDS, ...FIND_COMMANDS,
-      ...REFERENCE_COMMANDS, ...REVIEW_COMMANDS, ...MATH_COMMANDS, ...CONTEXT_COMMANDS, ...LIST_COMMANDS, ...PICTURE_TAB_COMMANDS);
+      ...REFERENCE_COMMANDS, ...REVIEW_COMMANDS, ...MATH_COMMANDS, ...CONTEXT_COMMANDS, ...LIST_COMMANDS, ...PICTURE_TAB_COMMANDS, ...SHAPE_COMMANDS);
     this.implementCommands();
     this.features = this.makeFeatures();
+    // Formformat's Anordnen uses Bildformat's panels.
+    this.features.shapes.layoutCommands.setPositionPanel(this.features.pictures.arrange.positionPanel);
+    this.features.shapes.layoutCommands.setAlignPanel(this.features.pictures.arrange.alignPanel);
 
     this.titleBar = new TitleBar(this.commands, platform, {
       appIcon: appIconUrl,
@@ -212,6 +216,7 @@ export class WriteApp {
       pages: pageSetupFeature(api),
       hf: headerFooterFeature(api),
       pictures: picturesFeature(api),
+      shapes: shapesFeature(api),
       spell,
       refs: referencesFeature(api),
       math: mathFeature(api),
@@ -226,7 +231,9 @@ export class WriteApp {
     const tabs = [];
     if (e.isHeaderFooter()) tabs.push(this.features.hf.tab);
     if (e.inTable()) tabs.push(this.features.tables.designTab, this.features.tables.layoutTab);
-    if (e.selectedImage()) tabs.push(this.features.pictures.tab);
+    // A shape (also while its text is edited) shows Formformat, a picture Bildformat.
+    if (e.selectedShape()) tabs.push(this.features.shapes.tab);
+    else if (e.selectedImage()) tabs.push(this.features.pictures.tab);
     if (this.features.math.editing()) tabs.push(this.features.math.tab);
     const wasHf = this.contextualKey.includes("headerFooter");
     this.ribbon.setContextual(tabs);
@@ -982,6 +989,13 @@ export class WriteApp {
         get footer() { return self.features.hf.footerMenu; },
         get pageNumber() { return self.features.hf.pageNumberMenu; },
         get pictures() { return self.features.pictures.insertMenu; },
+        shapes: (close) => this.features.shapes.galleryPanel(close),
+        position: (close) => this.features.pictures.arrange.positionPanel(close),
+        align: (close) => this.features.pictures.arrange.alignPanel(close),
+        get rotate() { return self.features.pictures.arrange.rotateMenu; },
+        forward: [{ cmd: "picture.bringForward" }, { cmd: "picture.bringToFront" }, { cmd: "picture.bringInFrontOfText" }],
+        backward: [{ cmd: "picture.sendBackward" }, { cmd: "picture.sendToBack" }, { cmd: "picture.sendBehindText" }],
+        get textBox() { return self.features.shapes.textBoxMenu; },
         get toc() { return self.features.refs.tocMenu; },
         get equation() { return self.features.math.insertMenu; },
         get addText() { return self.features.refs.addTextMenu; },
@@ -1226,6 +1240,11 @@ export class WriteApp {
     return {
       docs: () => this.docs.map((d) => ({ name: d.name, path: d.path, dirty: this.isDirty(d), unsupported: d.partial, active: d === this.active })),
       openPath: (path: string) => this.openPath(path),
+      /** Opens a document from bytes (development platform, which has no file system). */
+      openBytes: (name: string, bytes: Uint8Array) => {
+        const result = readDocx(bytes);
+        this.createDoc(stripExt(name), null, result.state, result.pkg, result.partial);
+      },
       saveTo: (path: string) => (this.active ? this.writeTo(this.active, path) : Promise.resolve(false)),
       save: () => (this.active ? this.save(this.active) : Promise.resolve(false)),
       exportPdfTo: (path: string) => this.exportPdf(path),

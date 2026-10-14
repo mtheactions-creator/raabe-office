@@ -461,7 +461,11 @@ export function pictureTab(api: AppApi, insertFromPath: (path: string) => Promis
         controls: sizeControls, smaller: [sizeControls] },
     ],
   };
-  return { tab };
+  // Shared with the Formformat and Layout tabs (Anordnen).
+  const arrange = {
+    positionPanel, alignPanel: (close: () => void) => menuPanel(alignMenu(), close), rotateMenu, wrapMenu,
+  };
+  return { tab, arrange };
 
   /** A menu shown inside a dropdown popup (entries computed when it opens). */
   function menuPanel(entries: MenuEntry[], close: () => void): HTMLElement {

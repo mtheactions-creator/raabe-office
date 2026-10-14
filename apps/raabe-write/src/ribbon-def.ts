@@ -29,7 +29,8 @@ export interface RibbonContext {
   panels: {
     bullets: Popup; numbers: Popup; multilevel: Popup; insertTable: Popup; margins: Popup; size: Popup;
     columns: MenuEntry[]; breaks: MenuEntry[]; header: MenuEntry[]; footer: MenuEntry[]; pageNumber: MenuEntry[];
-    pictures: MenuEntry[]; borders: MenuEntry[]; wrap: MenuEntry[];
+    pictures: MenuEntry[]; borders: MenuEntry[]; wrap: MenuEntry[]; shapes: Popup; textBox: MenuEntry[];
+    position: Popup; align: Popup; rotate: MenuEntry[]; forward: MenuEntry[]; backward: MenuEntry[];
     toc: MenuEntry[]; addText: MenuEntry[]; nextNote: MenuEntry[]; equation: MenuEntry[];
     track: MenuEntry[]; deleteComment: MenuEntry[]; accept: MenuEntry[]; reject: MenuEntry[];
     showComments: MenuEntry[]; filterMarkup: MenuEntry[];
@@ -232,10 +233,10 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
           smaller: [[stack(dd("insert.coverPage", "EE", "medium"), b("insert.blankPage", "EL", "medium"), b("insert.pageBreak", "SU", "medium"))]] },
         { id: "tables", label: "Tabellen", key: "ZB", icon: "table", controls: [panel("insert.table", "LA", "large", ctx.panels.insertTable)] },
         { id: "illustrations", label: "Illustrationen", key: "ZI", icon: "picture",
-          controls: [dd("insert.pictures", "B1", "large", undefined, ctx.panels.pictures), dd("insert.shapes", "2", "large"), b("insert.chart", "I", "large")],
+          controls: [dd("insert.pictures", "B1", "large", undefined, ctx.panels.pictures), panel("insert.shapes", "2", "large", ctx.panels.shapes), b("insert.chart", "I", "large")],
           smaller: [
-            [dd("insert.pictures", "B1", "large", undefined, ctx.panels.pictures), stack(dd("insert.shapes", "2", "medium"), b("insert.chart", "I", "medium"))],
-            [dd("insert.pictures", "B1", "large", undefined, ctx.panels.pictures), stack(dd("insert.shapes", "2", "medium"), b("insert.chart", "I"))],
+            [dd("insert.pictures", "B1", "large", undefined, ctx.panels.pictures), stack(panel("insert.shapes", "2", "medium", ctx.panels.shapes), b("insert.chart", "I", "medium"))],
+            [dd("insert.pictures", "B1", "large", undefined, ctx.panels.pictures), stack(panel("insert.shapes", "2", "medium", ctx.panels.shapes), b("insert.chart", "I"))],
           ] },
         { id: "links", label: "Links", key: "ZL", icon: "link",
           controls: [split("insert.link", "H", "large"), b("insert.bookmark", "K", "large"), b("insert.crossRef", "Q", "large")],
@@ -247,8 +248,8 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
           smaller: [[stack(dd("insert.header", "OK", "medium", undefined, ctx.panels.header), dd("insert.footer", "LF", "medium", undefined, ctx.panels.footer),
             dd("insert.pageNumber", "T", "medium", undefined, ctx.panels.pageNumber))]] },
         { id: "text", label: "Text", key: "ZT", icon: "text-box",
-          controls: [dd("insert.textBox", "X", "large"), stack(b("insert.dateTime", "D", "medium"))],
-          smaller: [[dd("insert.textBox", "X", "large"), stack(b("insert.dateTime", "D"))]] },
+          controls: [dd("insert.textBox", "X", "large", undefined, ctx.panels.textBox), stack(b("insert.dateTime", "D", "medium"))],
+          smaller: [[dd("insert.textBox", "X", "large", undefined, ctx.panels.textBox), stack(b("insert.dateTime", "D"))]] },
         { id: "symbols", label: "Symbole", key: "ZS", icon: "equation",
           controls: [split("insert.equation", "A", "large", ctx.panels.equation), dd("insert.symbol", "SY", "large")],
           smaller: [[stack(split("insert.equation", "A", "medium", ctx.panels.equation), dd("insert.symbol", "SY", "medium"))]] },
@@ -282,12 +283,12 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
         { id: "paragraph", label: "Absatz", key: "ZG", icon: "line-spacing", launcher: { cmd: "para.dialog", key: "BB" },
           controls: [spinners("Einzug", indentLeft, indentRight), spinners("Abstand", spaceBefore, spaceAfter)] },
         { id: "arrange", label: "Anordnen", key: "ZA", icon: "position",
-          controls: [dd("layout.position", "PP", "large"), dd("layout.wrapText", "J", "large", undefined, ctx.panels.wrap), split("layout.bringForward", "GE", "large"),
-            split("layout.sendBackward", "GH", "large"), b("layout.selectionPane", "AP", "large"),
-            stack(dd("layout.align", "DA", "medium"), dd("layout.group", "GG", "medium"), dd("layout.rotate", "DR", "medium"))],
-          smaller: [[dd("layout.position", "PP", "large"), dd("layout.wrapText", "J", "large", undefined, ctx.panels.wrap),
-            stack(split("layout.bringForward", "GE", "medium"), split("layout.sendBackward", "GH", "medium"), b("layout.selectionPane", "AP", "medium")),
-            stack(dd("layout.align", "DA", "medium"), dd("layout.group", "GG", "medium"), dd("layout.rotate", "DR", "medium"))]] },
+          controls: [panel("layout.position", "PP", "large", ctx.panels.position), dd("layout.wrapText", "J", "large", undefined, ctx.panels.wrap),
+            split("layout.bringForward", "GE", "large", ctx.panels.forward), split("layout.sendBackward", "GH", "large", ctx.panels.backward), b("layout.selectionPane", "AP", "large"),
+            stack(panel("layout.align", "DA", "medium", ctx.panels.align), dd("layout.group", "GG", "medium"), dd("layout.rotate", "DR", "medium", undefined, ctx.panels.rotate))],
+          smaller: [[panel("layout.position", "PP", "large", ctx.panels.position), dd("layout.wrapText", "J", "large", undefined, ctx.panels.wrap),
+            stack(split("layout.bringForward", "GE", "medium", ctx.panels.forward), split("layout.sendBackward", "GH", "medium", ctx.panels.backward), b("layout.selectionPane", "AP", "medium")),
+            stack(panel("layout.align", "DA", "medium", ctx.panels.align), dd("layout.group", "GG", "medium"), dd("layout.rotate", "DR", "medium", undefined, ctx.panels.rotate))]] },
       ],
     },
     {

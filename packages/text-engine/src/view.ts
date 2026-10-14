@@ -7,6 +7,8 @@
 // CSS transform; all geometry is computed at 100 %, in px from each page's top left.
 
 import { pictureElement } from "./picture";
+import { shapeElement, shapeGeometry, shapeTextRect } from "./shape";
+import { flattenPath } from "./geometry";
 import { Fonts, PT } from "./fonts";
 import { cmp, type Doc, type Pos } from "./doc";
 import { COLUMN_BREAK, LINE_BREAK, OBJ, PAGE_BREAK, type ImageData, type Para } from "./model";
@@ -40,6 +42,12 @@ export interface RenderOptions {
     readonly crop?: { readonly x: number; readonly y: number; readonly w: number; readonly h: number; readonly url: string };
     /** Pictures get the rotation handle and Word's layout options button. */
     readonly picture?: boolean;
+    /** A shape whose text is being edited: its frame is dashed. */
+    readonly editing?: boolean;
+    /** Shapes: the yellow adjust handles (page px). */
+    readonly adjust?: readonly { readonly x: number; readonly y: number }[];
+    /** Lines and connectors: their two ends (page px), shown instead of the frame. */
+    readonly ends?: readonly [{ readonly x: number; readonly y: number }, { readonly x: number; readonly y: number }];
   };
   /** The table (id) that shows Word's move and resize handles (caret or mouse in it). */
   readonly table?: number;
@@ -53,13 +61,15 @@ const LAYOUT_SVG = '<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden=
 const MOVE_HANDLE_SVG = '<svg viewBox="0 0 11 11" width="11" height="11" aria-hidden="true"><path d="M5.5 1.5v8M1.5 5.5h8" stroke="#000" stroke-width="1"/>' +
   '<path d="M5.5 0.8 4 2.6h3zM5.5 10.2 4 8.4h3zM0.8 5.5 2.6 4v3zM10.2 5.5 8.4 4v3z" fill="#000"/></svg>';
 
-export type Handle = "nw" | "n" | "ne" | "e" | "se" | "s" | "sw" | "w" | "rot" | "layout" | `crop-${"nw" | "n" | "ne" | "e" | "se" | "s" | "sw" | "w"}`;
+export type Handle = "nw" | "n" | "ne" | "e" | "se" | "s" | "sw" | "w" | "rot" | "layout" | `crop-${"nw" | "n" | "ne" | "e" | "se" | "s" | "sw" | "w"}` | `adj-${number}` | "end-0" | "end-1";
 const HANDLES: Handle[] = ["nw", "n", "ne", "e", "se", "s", "sw", "w"];
 
 interface PageView {
   el: HTMLDivElement;
   back: HTMLDivElement;
   selLayer: HTMLDivElement;
+  /** Selection in a shape's text: above the shapes (the front layer). */
+  selTop: HTMLDivElement;
   textLayer: HTMLDivElement;
   front: HTMLDivElement;
   overlay: HTMLDivElement;
@@ -316,11 +326,12 @@ export class View {
         d.style.cssText = `position:absolute;inset:0;z-index:${z}`;
         return d;
       };
-      const back = layer(0), selLayer = layer(1), textLayer = layer(2), front = layer(3), overlay = layer(4);
+      const back = layer(0), selLayer = layer(1), textLayer = layer(2), front = layer(3), selTop = layer(3), overlay = layer(4);
       overlay.style.pointerEvents = "none";
-      el.append(back, selLayer, textLayer, front, overlay);
+      selTop.style.pointerEvents = "none";
+      el.append(back, selLayer, textLayer, front, selTop, overlay);
       this.container.append(el);
-      this.pages.push({ el, back, selLayer, textLayer, front, overlay, lineEls: [], lineKeys: [], decoKey: "", overlayKey: "", live: false, w: 0, h: 0 });
+      this.pages.push({ el, back, selLayer, selTop, textLayer, front, overlay, lineEls: [], lineKeys: [], decoKey: "", overlayKey: "", live: false, w: 0, h: 0 });
     }
     while (this.pages.length > pages.length) this.pages.pop()!.el.remove();
     let maxW = 0;
@@ -376,6 +387,7 @@ export class View {
   private clearPage(pv: PageView): void {
     pv.textLayer.replaceChildren();
     pv.selLayer.replaceChildren();
+    pv.selTop.replaceChildren();
     pv.back.replaceChildren();
     pv.front.replaceChildren();
     pv.overlay.replaceChildren();
@@ -454,7 +466,8 @@ export class View {
     const key = grid.map((f) => `g${f.x},${f.y},${f.w},${f.h}`).join(";") + "|" + page.deco.map((d) => {
       if (d.kind === "rect") return `r${d.x},${d.y},${d.w},${d.h},${d.fill},${this.dimmed(d.story)}`;
       if (d.kind === "line") return `l${d.x1},${d.y1},${d.x2},${d.y2},${d.width},${d.color},${d.style},${this.dimmed(d.story)}`;
-      return `i${d.x},${d.y},${d.w},${d.h},${idOf(d.image)},${d.behind},${this.dimmed(d.story)},${d.z ?? 0},${d.pic ? JSON.stringify(d.pic) : ""}`;
+      const text = d.shape?.story ? this.shapeTextKey(d.shape.story, page.index) : "";
+      return `i${d.x},${d.y},${d.w},${d.h},${idOf(d.image)},${d.behind},${this.dimmed(d.story)},${d.z ?? 0},${d.pic ? JSON.stringify(d.pic) : ""},${d.shape ? idOf(d.shape) : ""},${text}`;
     }).join(";");
     if (key === pv.decoKey) return;
     pv.decoKey = key;
@@ -488,7 +501,61 @@ export class View {
     pv.front.replaceChildren(...front);
   }
 
+  /** What a shape's text looks like on a page (for redrawing only when it changed). */
+  private shapeTextKey(story: string, page: number): string {
+    const sl = this.layoutRef?.stories.get(story);
+    const paras = this.storyParas(story);
+    if (!sl) return "";
+    return `${sl.placed.filter((pl) => pl.page === page).map((pl) => `${idOf(sl.paras[pl.para]?.lines[pl.line])}@${pl.x},${pl.y}`).join(";")}|${paras.map(idOf).join(",")}|${this.marks}|${this.opts.active === story}`;
+  }
+
+  /** A shape with its text (in page coordinates, so the lines sit where the layout put them). */
+  private shapeDeco(d: Extract<Deco, { kind: "image" }>): HTMLElement {
+    const wrap = document.createElement("div");
+    wrap.style.cssText = "position:absolute;left:0;top:0;width:0;height:0";
+    const shape = shapeElement(d.w, d.h, d.pic, d.shape!);
+    shape.style.left = `${d.x}px`;
+    shape.style.top = `${d.y}px`;
+    const rot = shape.style.transform;
+    wrap.append(shape);
+    const story = d.shape!.story;
+    const sl = story ? this.layoutRef?.stories.get(story) : undefined;
+    if (story && sl) {
+      const paras = this.storyParas(story);
+      const text = document.createElement("div");
+      text.style.cssText = "position:absolute;left:0;top:0;width:0;height:0";
+      // Vertical text is turned (not while it is edited, so the caret matches the lines).
+      const vert = d.shape!.body.vert;
+      const turn = vert && this.opts.active !== story ? (vert === "vert270" ? "rotate(-90deg)" : "rotate(90deg)") : "";
+      const tr = shapeTextRect(d.pic, d.shape!, d.w, d.h);
+      const tf = [rot, turn].filter(Boolean).join(" ");
+      if (tf) { text.style.transform = tf; text.style.transformOrigin = turn && !rot ? `${d.x + tr.x + tr.w / 2}px ${d.y + tr.y + tr.h / 2}px` : `${d.x + d.w / 2}px ${d.y + d.h / 2}px`; }
+      const page = this.layoutRef!.pages.findIndex((pg) => pg.deco.includes(d));
+      const prevColor = this.autoColor;
+      this.autoColor = d.shape!.fontColor ? `#${d.shape!.fontColor}` : "#000";
+      for (const pl of sl.placed) {
+        if (pl.page !== page || pl.hide) continue;
+        const para = paras[pl.para];
+        const pll = sl.paras[pl.para];
+        const line = pll?.lines[pl.line];
+        if (!para || !line) continue;
+        const marks = this.marksFor?.(story, para);
+        const holder = document.createElement("div");
+        holder.style.cssText = "position:absolute;left:0;top:0;width:0;height:0";
+        holder.append(...this.lineContent(para, line, pl.x + line.x0, pl.y, pl.line === pll.lines.length - 1, marks));
+        text.append(holder);
+      }
+      this.autoColor = prevColor;
+      // Text boxes cut off text below their bottom edge, as in Word.
+      if (d.shape!.kind === "textbox") text.style.clipPath = `inset(${d.y}px calc(100% - ${d.x + d.w}px) calc(100% - ${d.y + d.h}px) ${d.x}px)`;
+      wrap.append(text);
+    }
+    wrap.style.pointerEvents = "none";
+    return wrap;
+  }
+
   private decoElement(d: Deco): HTMLElement {
+    if (d.kind === "image" && d.shape) return this.shapeDeco(d);
     const el = document.createElement("div");
     if (d.kind === "rect") {
       el.style.cssText = `position:absolute;left:${d.x}px;top:${d.y}px;width:${d.w}px;height:${d.h}px;background:${d.fill}`;
@@ -521,7 +588,7 @@ export class View {
     const img = this.opts.image && this.opts.image.page === page.index ? this.opts.image : null;
     const tb = this.opts.table !== undefined ? this.tableBounds(page, this.opts.table) : null;
     const key = (editing ? `${page.bodyTop}|${page.bodyBottom}|${page.section}|${sections}|${pv.w}` : "") +
-      (img ? `|img${img.x},${img.y},${img.w},${img.h},${img.crop ? `${img.crop.x},${img.crop.y},${img.crop.w},${img.crop.h}` : ""},${img.picture}` : "") + (tb ? `|tb${tb.x},${tb.y},${tb.w},${tb.h},${tb.first},${tb.last}` : "");
+      (img ? `|img${img.x},${img.y},${img.w},${img.h},${img.crop ? `${img.crop.x},${img.crop.y},${img.crop.w},${img.crop.h}` : ""},${img.picture},${img.editing},${(img.adjust ?? []).map((a) => `${a.x},${a.y}`).join(";")},${(img.ends ?? []).map((a) => `${a.x},${a.y}`).join(";")}` : "") + (tb ? `|tb${tb.x},${tb.y},${tb.w},${tb.h},${tb.first},${tb.last}` : "");
     if (key === pv.overlayKey) return;
     pv.overlayKey = key;
     const handles: HTMLElement[] = [];
@@ -550,9 +617,21 @@ export class View {
         else el.style.cssText = `position:absolute;left:${x - th / 2}px;top:${y - 8}px;width:${th}px;height:16px;background:#000`;
         handles.push(el);
       }
+    } else if (img?.ends) {
+      // Lines: Word's two round handles at the ends (and yellow ones of connectors).
+      for (const p of img.ends) {
+        const el = document.createElement("div");
+        el.style.cssText = `position:absolute;left:${p.x - 4.5}px;top:${p.y - 4.5}px;width:9px;height:9px;box-sizing:border-box;border:1px solid #5f5f5f;background:#fff;border-radius:50%`;
+        handles.push(el);
+      }
+      for (const a of img.adjust ?? []) {
+        const el = document.createElement("div");
+        el.style.cssText = `position:absolute;left:${a.x - 4.5}px;top:${a.y - 4.5}px;width:9px;height:9px;box-sizing:border-box;border:1px solid #5f5f5f;background:#ffd200;border-radius:50%`;
+        handles.push(el);
+      }
     } else if (img) {
       const frame = document.createElement("div");
-      frame.style.cssText = `position:absolute;left:${img.x}px;top:${img.y}px;width:${img.w}px;height:${img.h}px;box-sizing:border-box;border:1px solid #6f8db9`;
+      frame.style.cssText = `position:absolute;left:${img.x}px;top:${img.y}px;width:${img.w}px;height:${img.h}px;box-sizing:border-box;border:1px ${img.editing ? "dashed" : "solid"} #6f8db9`;
       handles.push(frame);
       // Word 365: eight round handles; pictures also get the rotation handle and the layout button.
       for (const hd of HANDLES) {
@@ -571,6 +650,12 @@ export class View {
         lb.innerHTML = LAYOUT_SVG;
         lb.title = "Layoutoptionen";
         handles.push(lb);
+      }
+      // Shapes: Word's yellow handles that change the shape (corner radius, arrow head …).
+      for (const a of img.adjust ?? []) {
+        const el = document.createElement("div");
+        el.style.cssText = `position:absolute;left:${a.x - 4.5}px;top:${a.y - 4.5}px;width:9px;height:9px;box-sizing:border-box;border:1px solid #5f5f5f;background:#ffd200;border-radius:50%`;
+        handles.push(el);
       }
     }
     if (tb && !this.printing) {
@@ -662,6 +747,13 @@ export class View {
     const pt = this.pointAt(clientX, clientY);
     if (pt.page !== img.page) return null;
     const tol = (img.crop ? 9 : 6) / this.zoomFactor;
+    // The yellow handles sit inside the shape and win over the frame's.
+    const adj = img.adjust ?? [];
+    for (let i = 0; i < adj.length; i++) if (Math.abs(pt.x - adj[i].x) <= tol && Math.abs(pt.y - adj[i].y) <= tol) return `adj-${i}`;
+    if (img.ends) {
+      for (let i = 0; i < 2; i++) if (Math.abs(pt.x - img.ends[i].x) <= tol && Math.abs(pt.y - img.ends[i].y) <= tol) return i ? "end-1" : "end-0";
+      return null;
+    }
     for (const hd of HANDLES) {
       const p = this.handlePos(img, hd);
       if (Math.abs(pt.x - p.x) <= tol && Math.abs(pt.y - p.y) <= tol) return img.crop ? `crop-${hd}` as Handle : hd;
@@ -723,12 +815,15 @@ export class View {
     return c;
   }
 
+  /** Colour of "auto" text: black, or the text colour of the shape being drawn. */
+  private autoColor = "#000";
+
   private spanStyle(c: ResolvedChar): string {
     const size = Fonts.renderSize(c) * PT;
     const lh = this.fonts.lineHeight(c.font, Fonts.renderSize(c)) * PT;
     const rev = c.rev ? this.authorColor(c.rev.author) : null;
     let s = `position:absolute;white-space:pre;font:${this.fonts.cssFont(c)};line-height:${lh}px;` +
-      `color:${rev ?? (c.color === "auto" ? "#000" : `#${c.color}`)};font-kerning:${c.kern && c.size >= c.kern ? "normal" : "none"};font-variant-ligatures:none`;
+      `color:${rev ?? (c.color === "auto" ? this.autoColor : `#${c.color}`)};font-kerning:${c.kern && c.size >= c.kern ? "normal" : "none"};font-variant-ligatures:none`;
     if (c.spacing) s += `;letter-spacing:${c.spacing * PT}px`;
     if (c.caps) s += ";text-transform:uppercase";
     if (c.smallCaps) s += ";font-variant-caps:small-caps";
@@ -852,6 +947,11 @@ export class View {
           img.style.left = `${x + (ex ? ex.l * PT : 0)}px`;
           img.style.top = `${baseline - h - (ex ? ex.b * PT : 0)}px`;
           out.push(img);
+        } else if (o.shape) {
+          const el = shapeElement(w, h, o.pic, o.shape);
+          el.style.left = `${x}px`;
+          el.style.top = `${baseline - h}px`;
+          out.push(el);
         } else {
           const box = document.createElement("div");
           box.style.cssText = `position:absolute;left:${x}px;top:${baseline - h}px;width:${w}px;height:${h}px;` +
@@ -943,7 +1043,7 @@ export class View {
       el.className = "print-page";
       el.style.cssText = `position:relative;width:${w * PT}px;height:${h * PT}px;overflow:hidden;break-after:page;page:${name}`;
       const pv: PageView = {
-        el, back: document.createElement("div"), selLayer: document.createElement("div"), textLayer: document.createElement("div"),
+        el, back: document.createElement("div"), selLayer: document.createElement("div"), selTop: document.createElement("div"), textLayer: document.createElement("div"),
         front: document.createElement("div"), overlay: document.createElement("div"), lineEls: [], lineKeys: [], decoKey: "", overlayKey: "x",
         live: false, w: w * PT, h: h * PT,
       };
@@ -964,9 +1064,9 @@ export class View {
     const [from, to] = cmp(sel.anchor, sel.head) <= 0 ? [sel.anchor, sel.head] : [sel.head, sel.anchor];
     const empty = cmp(from, to) === 0;
     for (let i = this.visibleFrom; i <= this.visibleTo; i++) {
-      const layer = this.pages[i]?.selLayer;
-      if (layer?.firstChild) layer.replaceChildren();
+      for (const layer of [this.pages[i]?.selLayer, this.pages[i]?.selTop]) if (layer?.firstChild) layer.replaceChildren();
     }
+    const inShape = this.opts.active.startsWith("tx:");
     // A selected picture shows its frame and handles, not a text highlight (Word).
     if (this.opts.image?.picture && !empty && from.p === to.p && to.o - from.o === 1) return;
     const story = this.storyLayout();
@@ -998,7 +1098,8 @@ export class View {
           if (includesBreak) x2 += 7;
           const r = document.createElement("div");
           r.style.cssText = `position:absolute;background:${SELECTION_COLOR};left:${pl.x + ln.x0 + x1}px;top:${pl.y}px;width:${Math.max(0, x2 - x1)}px;height:${ln.height}px`;
-          this.pages[pl.page].selLayer.append(r);
+          if (inShape) r.style.mixBlendMode = "multiply";
+          (inShape ? this.pages[pl.page].selTop : this.pages[pl.page].selLayer).append(r);
         }
       }
     }
@@ -1198,14 +1299,46 @@ export class View {
     return { pos: { p: pl.para, o }, upstream: !isLast && o === line.end };
   }
 
+  private draft: { page: number; el: HTMLElement } | null = null;
+
+  /** A shape being drawn (Einfügen > Formen), shown above everything on its page. */
+  setDraft(d: { page: number; el: HTMLElement } | null): void {
+    this.draft?.el.remove();
+    this.draft = d;
+    if (!d) return;
+    const pv = this.pages[d.page];
+    if (!pv) return;
+    d.el.style.zIndex = "6";
+    d.el.style.pointerEvents = "none";
+    pv.el.append(d.el);
+  }
+
   /** Image decoration under a client point (floating pictures), for selection. */
   imageAt(clientX: number, clientY: number): Extract<Deco, { kind: "image" }> | null {
     const { page, x, y } = this.pointAt(clientX, clientY);
     const pg = this.layoutRef?.pages[page];
     if (!pg) return null;
-    for (let i = pg.deco.length - 1; i >= 0; i--) {
-      const d = pg.deco[i];
-      if (d.kind === "image" && x >= d.x && x <= d.x + d.w && y >= d.y && y <= d.y + d.h && d.story === "main") return d;
+    // Topmost first (stacking order), lines within a few pixels of their stroke.
+    const tol = 4 / this.zoomFactor;
+    const hits = pg.deco.filter((d): d is Extract<Deco, { kind: "image" }> => d.kind === "image" && d.story === "main" &&
+      x >= d.x - tol && x <= d.x + d.w + tol && y >= d.y - tol && y <= d.y + d.h + tol);
+    hits.sort((a, b) => (b.z ?? 0) - (a.z ?? 0));
+    for (const d of hits) {
+      if (!d.shape) { if (x >= d.x && x <= d.x + d.w && y >= d.y && y <= d.y + d.h) return d; continue; }
+      const g = shapeGeometry(d.pic, d.shape, d.w, d.h);
+      const open = g?.paths.filter((p) => p.fill === "none" || d.shape!.kind === "connector") ?? [];
+      const filled = g?.paths.some((p) => p.fill !== "none") && d.shape.kind !== "connector";
+      if (filled && x >= d.x && x <= d.x + d.w && y >= d.y && y <= d.y + d.h) return d;
+      // Lines and outlines: near the stroke.
+      for (const p of open) {
+        const pts = flattenPath(p.d, 8);
+        for (let k = 1; k < pts.length; k++) {
+          const [ax, ay] = pts[k - 1], [bx, by] = pts[k];
+          const L = Math.hypot(bx - ax, by - ay) || 1;
+          const t = Math.max(0, Math.min(1, ((x - d.x - ax) * (bx - ax) + (y - d.y - ay) * (by - ay)) / (L * L)));
+          if (Math.hypot(x - d.x - (ax + t * (bx - ax)), y - d.y - (ay + t * (by - ay))) <= tol + 2) return d;
+        }
+      }
     }
     return null;
   }

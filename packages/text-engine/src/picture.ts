@@ -23,6 +23,25 @@ export interface PictureShadow {
   readonly rotWithShape?: boolean;
 }
 
+/** A fill (shapes; the background of pictures): solid, gradient or none. */
+export type Fill =
+  | { readonly kind: "none" }
+  | { readonly kind: "solid"; readonly color: string; readonly transparency?: number }
+  | {
+    readonly kind: "gradient"; readonly stops: readonly { readonly pos: number; readonly color: string; readonly transparency?: number }[];
+    /** Linear: angle in degrees (0 = left to right, 90 = top to bottom); path: "circle", "rect" or "shape". */
+    readonly angle?: number; readonly path?: string;
+  }
+  /** Picture, texture or pattern fills: drawn in their main colour. */
+  | { readonly kind: "other"; readonly color: string };
+
+/** An arrowhead at the start (head) or end (tail) of a line (a:headEnd, a:tailEnd). */
+export interface LineEnd {
+  readonly type: "triangle" | "stealth" | "diamond" | "oval" | "arrow";
+  readonly w?: "sm" | "med" | "lg";
+  readonly len?: "sm" | "med" | "lg";
+}
+
 export interface PictureFormat {
   /** Helligkeit and Kontrast, −1…1 (0 = unchanged). */
   readonly brightness?: number;
@@ -55,7 +74,15 @@ export interface PictureFormat {
     readonly color: string; readonly width: number; readonly dash?: string; readonly compound?: string;
     /** Line ends ("sq", "rnd") and mitred corners, as Word's picture styles set them. */
     readonly cap?: string; readonly miter?: boolean;
+    /**
+     * Shapes: line transparency, corner join ("round", "bevel", "miter"), arrowheads. A colour
+     * "" or a width of -1 means the shape style's (as Word writes arrow lines: only the ends).
+     */
+    readonly transparency?: number; readonly join?: string;
+    readonly head?: LineEnd; readonly tail?: LineEnd;
   } | null;
+  /** Shapes: the fill as read (fillXml keeps it for writing back unchanged). */
+  readonly fill?: Fill;
   /** Older brightness/contrast (a:lum), which Word uses for "Ausgewaschen". */
   readonly lum?: { readonly bright: number; readonly contrast: number };
   /** Fill behind the picture, 3D scene and shape (a:solidFill, a:scene3d, a:sp3d), as XML. */

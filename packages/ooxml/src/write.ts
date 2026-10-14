@@ -3,10 +3,11 @@
 // goes back in its place, and new content gets new parts and relationships.
 
 import { blipEffectsXml, imgEffectsXml, shapePropsXml } from "./drawingml";
+import { DEFAULT_LINE_STYLE, DEFAULT_SHAPE_STYLE, NS_WPS, OFFICE_FMT_SCHEME, bodyXml, custGeomXml, shapeSpPr } from "./shapes";
 import { strFromU8, strToU8, zipSync } from "fflate";
 import {
-  COLUMN_BREAK, LINE_BREAK, OBJ, PAGE_BREAK, effectExtent, type AltText, type CommentMeta, type PictureFormat, type DocState, type FloatObject, type InlineObject,
-  type Para, type Revision, type Section, type StyleDef, type TableDef,
+  COLUMN_BREAK, LINE_BREAK, OBJ, OFFICE_2013_COLORS, PAGE_BREAK, effectExtent, type AltText, type CommentMeta, type PictureFormat, type DocState, type FloatObject, type InlineObject,
+  type Para, type Revision, type Section, type ShapeInfo, type StyleDef, type TableDef, type Theme,
 } from "@raabe/text-engine";
 import { latexToOmml, M_NS } from "./math";
 import { writeNumbering } from "./numbering";
@@ -224,9 +225,11 @@ class DocWriter {
     if (isData(d)) {
       if ("raw" in d) return d.raw;
       if ("inner" in d) return `<w:r>${rPr}${d.inner}</w:r>`;
+      if (o.shape) return `<w:r>${rPr}${relink(this.reshaped(this.resized(d.drawing, o.width, o.height), o, o.shape, d.picRead, part), d.part, part, this.pw)}</w:r>`;
       return `<w:r>${rPr}${relink(this.repictured(this.resized(d.drawing, o.width, o.height), o, d.picRead), d.part, part, this.pw)}</w:r>`;
     }
     // Content created in RaabeWrite.
+    if (o.kind === "image" && o.shape) return `<w:r>${rPr}${this.newShape(o, o.shape, part)}</w:r>`;
     if (o.kind === "image" && o.image) return `<w:r>${rPr}${this.newDrawing(o, part)}</w:r>`;
     // An equation alone in its paragraph is a display equation (m:oMathPara), as in Word.
     if (o.kind === "math" && o.latex !== undefined) return latexToOmml(o.latex, alone);
@@ -286,8 +289,10 @@ class DocWriter {
     const m = /<wp:extent cx="(\d+)" cy="(\d+)"/.exec(xml);
     if (!m || (Math.abs(Number(m[1]) - cx) <= 1 && Math.abs(Number(m[2]) - cy) <= 1)) return xml;
     let out = xml.replace(/<wp:extent cx="\d+" cy="\d+"/, `<wp:extent cx="${cx}" cy="${cy}"`);
-    const sp = out.indexOf("<pic:spPr");
-    if (sp >= 0) out = out.slice(0, sp) + out.slice(sp).replace(/<a:ext cx="\d+" cy="\d+"/, `<a:ext cx="${cx}" cy="${cy}"`);
+    for (const tag of ["<pic:spPr", "<wps:spPr"]) {
+      const sp = out.indexOf(tag);
+      if (sp >= 0) out = out.slice(0, sp) + out.slice(sp).replace(/<a:ext cx="\d+" cy="\d+"/, `<a:ext cx="${cx}" cy="${cy}"`);
+    }
     return out;
   }
 
@@ -321,10 +326,83 @@ class DocWriter {
 
   private floatXml(f: FloatObject, part: string): string {
     const d = f.data;
-    if (isData(d) && "drawing" in d) return relink(this.repictured(this.repositioned(this.resized(d.drawing, f.width, f.height), f), f, d.picRead), d.part, part, this.pw);
+    if (isData(d) && "drawing" in d) {
+      const xml = this.repositioned(this.resized(d.drawing, f.width, f.height), f);
+      return relink(f.shape ? this.reshaped(xml, f, f.shape, d.picRead, part) : this.repictured(xml, f, d.picRead), d.part, part, this.pw);
+    }
     if (typeof d === "string") return d;
+    if (f.shape) return this.newShape(f, f.shape, part, f);
     if (f.image) return this.newDrawing(f, part, f);
     return "";
+  }
+
+  /** The text of a text box (w:txbxContent), from its story. */
+  private textboxXml(s: ShapeInfo, part: string): string {
+    const paras = s.story ? this.state.stories?.get(s.story) : undefined;
+    return paras ? `<wps:txbx><w:txbxContent>${this.blocks(paras, part)}</w:txbxContent></wps:txbx>` : "";
+  }
+
+  /**
+   * A shape read from a file: unchanged shapes without text keep their XML; otherwise the
+   * drawing (Word's mc:Choice, without the VML fallback) gets a new wps:wsp from the model.
+   */
+  private reshaped(xml: string, o: { pic?: PictureFormat; alt?: AltText; width?: number; height?: number }, s: ShapeInfo, read: string | undefined, part: string): string {
+    const same = JSON.stringify({ pic: o.pic, alt: o.alt, shape: { ...s, story: undefined } }) === (read ?? "{}");
+    if (same && !s.story) return xml;
+    // The drawing inside mc:AlternateContent (the fallback would show old text).
+    const m = /<w:drawing>[\s\S]*?<\/w:drawing>/.exec(xml);
+    let out = m ? m[0] : xml;
+    const prev = read ? (JSON.parse(read) as { pic?: PictureFormat; shape?: ShapeInfo }) : {};
+    out = out.replace(/<wps:wsp( [^>]*)?>([\s\S]*)<\/wps:wsp>/, (_all, attrs: string | undefined, inner: string) => {
+      const nv = /^\s*(<wps:cNv(?:Sp|Cn)Pr[^>]*?\/>|<wps:cNv(?:Sp|Cn)Pr[^>]*>[\s\S]*?<\/wps:cNv(?:Sp|Cn)Pr>)/.exec(inner)?.[1] ?? "<wps:cNvSpPr/>";
+      const spPr = /<wps:spPr[^>]*>[\s\S]*?<\/wps:spPr>|<wps:spPr\/>/.exec(inner)?.[0] ?? "<wps:spPr/>";
+      const ext = /<a:ext cx="(\d+)" cy="(\d+)"/.exec(spPr);
+      const cx = Number(ext?.[1] ?? Math.round((o.width ?? 0) * EMU)), cy = Number(ext?.[2] ?? Math.round((o.height ?? 0) * EMU));
+      const lookSame = JSON.stringify(o.pic) === JSON.stringify(prev.pic) && JSON.stringify(s.adjust) === JSON.stringify(prev.shape?.adjust) && s.custom === prev.shape?.custom;
+      const cust = /<a:custGeom[\s\S]*?<\/a:custGeom>/.exec(spPr)?.[0];
+      const newSpPr = lookSame ? spPr : `<wps:spPr>${shapeSpPr(o.pic ?? {}, s, cx, cy, s.custom ? cust ?? custGeomXml(s.custom) : undefined)}</wps:spPr>`;
+      const body = /<wps:bodyPr[^>]*\/>|<wps:bodyPr[^>]*>[\s\S]*?<\/wps:bodyPr>/.exec(inner)?.[0];
+      const keep = (inner.match(/<wps:(?:linkedTxbx|extLst)[\s\S]*?<\/wps:(?:linkedTxbx|extLst)>/g) ?? []).join("");
+      const bodyOrig = body?.endsWith("/>") ? body.replace(/\/>$/, "></wps:bodyPr>") : body;
+      return `<wps:wsp${attrs ?? ""}>${nv}${newSpPr}${s.styleXml ?? ""}${this.textboxXml(s, part)}${keep}${bodyXml(s.body, bodyOrig)}</wps:wsp>`;
+    });
+    return this.altText(out, o.alt);
+  }
+
+  private altText(xml: string, alt: AltText | undefined): string {
+    return xml.replace(/<wp:docPr ([^>]*?)(\/?)>/, (_m, attrs: string, close: string) => {
+      let a = attrs.replace(/\s*(descr|title)="[^"]*"/g, "");
+      if (alt?.descr) a += ` descr="${esc(alt.descr)}"`;
+      if (alt?.title) a += ` title="${esc(alt.title)}"`;
+      return `<wp:docPr ${a.trim()}${close}>`;
+    });
+  }
+
+  /** A shape or text box created in RaabeWrite, as Word writes one. */
+  private newShape(o: { width?: number; height?: number; pic?: PictureFormat; alt?: AltText }, s: ShapeInfo, part: string, anchor?: FloatObject): string {
+    const cx = Math.round((o.width ?? 72) * EMU), cy = Math.round((o.height ?? 72) * EMU);
+    const id = this.docPrId++;
+    const geometry = o.pic?.geometry ?? "rect";
+    const name = s.kind === "textbox" ? "Textfeld" : SHAPE_NAMES[geometry] ?? "Form";
+    const nv = s.kind === "connector" ? "<wps:cNvCnPr/>" : s.kind === "textbox" ? '<wps:cNvSpPr txBox="1"/>' : "<wps:cNvSpPr/>";
+    const lineLike = s.kind === "connector" || geometry === "line" || (!!s.custom && !s.styleFill);
+    const style = s.styleXml ?? (s.kind === "textbox" ? "" : lineLike ? DEFAULT_LINE_STYLE : DEFAULT_SHAPE_STYLE);
+    const wsp = `<wps:wsp xmlns:wps="${NS_WPS}">${nv}<wps:spPr>${shapeSpPr(o.pic ?? {}, s, cx, cy, s.custom ? custGeomXml(s.custom) : undefined)}</wps:spPr>${style}${this.textboxXml(s, part)}${bodyXml(s.body)}</wps:wsp>`;
+    const graphic = `<a:graphic xmlns:a="${NS_A}"><a:graphicData uri="${NS_WPS}">${wsp}</a:graphicData></a:graphic>`;
+    const lw = Math.round((o.pic?.line?.width ?? (s.kind === "connector" ? 0.5 : 1)) * EMU);
+    const common = `<wp:extent cx="${cx}" cy="${cy}"/><wp:effectExtent l="0" t="0" r="${Math.max(19050, lw)}" b="${Math.max(19050, lw)}"/>`;
+    const docPr = `<wp:docPr id="${id}" name="${esc(name)} ${id}"${o.alt?.descr ? ` descr="${esc(o.alt.descr)}"` : ""}${o.alt?.title ? ` title="${esc(o.alt.title)}"` : ""}/><wp:cNvGraphicFramePr/>`;
+    if (!anchor) return `<w:drawing><wp:inline distT="0" distB="0" distL="0" distR="0" xmlns:wp="${NS_WP}">${common}${docPr}${graphic}</wp:inline></w:drawing>`;
+    const e = (pt: number) => Math.round(pt * EMU);
+    const pos = (tag: string, p: FloatObject["x"]) => `<wp:${tag} relativeFrom="${esc(p.rel)}">${p.align ? `<wp:align>${esc(p.align)}</wp:align>` : `<wp:posOffset>${e(p.offset)}</wp:posOffset>`}</wp:${tag}>`;
+    const poly = '<wp:wrapPolygon edited="0"><wp:start x="0" y="0"/><wp:lineTo x="0" y="21600"/><wp:lineTo x="21600" y="21600"/><wp:lineTo x="21600" y="0"/><wp:lineTo x="0" y="0"/></wp:wrapPolygon>';
+    const wrap = anchor.wrap === "front" || anchor.wrap === "behind" || anchor.wrap === "none" ? "<wp:wrapNone/>"
+      : anchor.wrap === "topAndBottom" ? "<wp:wrapTopAndBottom/>"
+      : anchor.wrap === "square" ? `<wp:wrapSquare wrapText="${esc(anchor.side)}"/>`
+      : `<wp:wrap${anchor.wrap === "tight" ? "Tight" : "Through"} wrapText="${esc(anchor.side)}">${poly}</wp:wrap${anchor.wrap === "tight" ? "Tight" : "Through"}>`;
+    const [t, b, l, r] = anchor.dist.map(e);
+    return `<w:drawing><wp:anchor distT="${t}" distB="${b}" distL="${l}" distR="${r}" simplePos="0" relativeHeight="${anchor.z ?? 251659264 + id}" behindDoc="${anchor.wrap === "behind" ? 1 : 0}" locked="0" layoutInCell="1" allowOverlap="1" xmlns:wp="${NS_WP}">` +
+      `<wp:simplePos x="0" y="0"/>${pos("positionH", anchor.x)}${pos("positionV", anchor.y)}${common}${wrap}${docPr}${graphic}</wp:anchor></w:drawing>`;
   }
 
   /** Updates the offsets of a floating picture that was moved. */
@@ -621,6 +699,7 @@ const CONTENT_TYPES = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>
 <Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/>
 <Override PartName="/word/settings.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml"/>
+<Override PartName="/word/theme/theme1.xml" ContentType="application/vnd.openxmlformats-officedocument.theme+xml"/>
 <Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml"/>
 <Override PartName="/docProps/app.xml" ContentType="application/vnd.openxmlformats-officedocument.extended-properties+xml"/>
 </Types>`;
@@ -636,7 +715,28 @@ const DOCUMENT_RELS = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
 <Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>
 <Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings" Target="settings.xml"/>
+<Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme" Target="theme/theme1.xml"/>
 </Relationships>`;
+
+/** A theme part: the document's colours and fonts with Office's format matrix. */
+function themeXml(t: Theme): string {
+  const c: Record<string, string> = { ...OFFICE_2013_COLORS, ...(t.colors ?? {}) };
+  const clr = (name: string) => name === "dk1" ? `<a:sysClr val="windowText" lastClr="${c.dk1}"/>` : name === "lt1" ? `<a:sysClr val="window" lastClr="${c.lt1}"/>` : `<a:srgbClr val="${c[name]}"/>`;
+  const names = ["dk1", "lt1", "dk2", "lt2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6", "hlink", "folHlink"];
+  const font = (face: string) => `<a:latin typeface="${esc(face)}"/><a:ea typeface=""/><a:cs typeface=""/>`;
+  return `${XML_HEAD}<a:theme xmlns:a="${NS_A}" name="Office"><a:themeElements><a:clrScheme name="Office 2013 - 2022">${names.map((n) => `<a:${n}>${clr(n)}</a:${n}>`).join("")}</a:clrScheme>` +
+    `<a:fontScheme name="Office 2013 - 2022"><a:majorFont>${font(t.majorFont)}</a:majorFont><a:minorFont>${font(t.minorFont)}</a:minorFont></a:fontScheme>` +
+    `${OFFICE_FMT_SCHEME}</a:themeElements><a:objectDefaults/><a:extraClrSchemeLst/></a:theme>`;
+}
+
+/** Word's names for new shapes (docPr name), by preset. */
+const SHAPE_NAMES: Record<string, string> = {
+  rect: "Rechteck", roundRect: "Rechteck: abgerundete Ecken", ellipse: "Ellipse", triangle: "Gleichschenkliges Dreieck", rtTriangle: "Rechtwinkliges Dreieck",
+  line: "Gerader Verbinder", straightConnector1: "Gerade Verbindung mit Pfeil", bentConnector3: "Verbinder: gewinkelt", curvedConnector3: "Verbinder: gekrümmt",
+  rightArrow: "Pfeil: nach rechts", leftArrow: "Pfeil: nach links", upArrow: "Pfeil: nach oben", downArrow: "Pfeil: nach unten", star5: "Stern: 5 Zacken",
+  wedgeRectCallout: "Sprechblase: rechteckig", wedgeRoundRectCallout: "Sprechblase: rechteckig mit abgerundeten Ecken", wedgeEllipseCallout: "Sprechblase: oval",
+  cloudCallout: "Denkblase: wolkenförmig", cloud: "Wolke", heart: "Herz", smileyFace: "Smiley", diamond: "Raute", pentagon: "Fünfeck", hexagon: "Sechseck",
+};
 
 function coreXml(author: string, now: Date): string {
   const t = now.toISOString().replace(/\.\d+Z$/, "Z");
@@ -692,6 +792,8 @@ export function writeDocx(state: DocState, pkg: DocxPackage | null, options: { a
   } else {
     pw.setPart("word/styles.xml", stylesXml(state, opts));
     pw.setPart("word/settings.xml", settingsXml(state, null));
+    // Office 2013-2022 theme, so Word shows theme colours (shapes, pictures) as RaabeWrite does.
+    pw.setPart("word/theme/theme1.xml", themeXml(state.styles.theme));
   }
   return zipSync(pw.finish(), { level: 6 });
 }

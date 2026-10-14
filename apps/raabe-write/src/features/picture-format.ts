@@ -4,7 +4,7 @@
 // Word's galleries do; hovering a tile previews it in the document (Livevorschau).
 
 import { closePopup, h, type MenuEntry } from "@raabe/shell";
-import { pictureElement, type Editor, type PictureFormat } from "@raabe/text-engine";
+import { pictureElement, shapeElement, type Editor, type PictureFormat } from "@raabe/text-engine";
 import { imageUrl } from "@raabe/text-engine";
 
 export interface GalleryItem {
@@ -64,6 +64,7 @@ function current(f: PictureFormat, item: GalleryItem): boolean {
 export function galleryPanel(e: Editor, sections: GallerySection[], links: MenuEntry[], close: () => void, apply: (item: GalleryItem) => void): HTMLElement {
   const sel = e.selectedImage();
   const image = sel?.obj.image;
+  const shape = sel?.obj.shape;
   const base = e.pictureFormat() ?? {};
   const panel = h("div", { class: "rpanel picture-gallery" });
   let previewing = false;
@@ -81,6 +82,12 @@ export function galleryPanel(e: Editor, sections: GallerySection[], links: MenuE
       if (image) {
         const el = pictureElement(imageUrl(image), w, hh, withItem(base, item));
         el.style.position = "relative";
+        tile.append(el);
+      } else if (shape) {
+        // A shape's tiles show a small rectangle-ish preview of its own geometry.
+        const el = shapeElement(w * 0.75, hh * 0.75, withItem(base, item), shape);
+        el.style.position = "relative";
+        el.style.margin = `${hh * 0.125}px ${w * 0.125}px`;
         tile.append(el);
       }
       tile.addEventListener("mouseenter", () => { e.setPictureFormat(withItem(base, item), false); previewing = true; });

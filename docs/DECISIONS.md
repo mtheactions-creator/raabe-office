@@ -492,3 +492,43 @@ out of scope, so it stays greyed out. Pictures insert at their file's resolution
 does (a 500 dpi PNG is small), in table cells at most as wide as the cell. The CSP allowed
 only data: images, so pictures inserted in the app never showed: blob: is allowed now.
 
+
+### D-046 Formen and Textfeld as Word does them
+**Geometry.** Word's preset shapes are the formulas of ECMA-376 (presetShapeDefinitions):
+guides, adjust values, paths with arcs. `geometry.ts` evaluates them in a compact form of
+the standard's syntax (`geometry-presets.ts`); every one of the 152 presets (all of Word's
+Formen gallery, connectors and callouts) was compared with Word's own drawing, read from its
+PDF export (`check_shapes.py`: wide, tall and with adjust values moved; all within 0.5 pt,
+and the shaded parts in Word's colours). Measured on the way: arc angles are visual angles
+in the path's own coordinates; a speech bubble whose tail point lies inside it has its point
+moved to the edge (the tail vanishes); shaded sub-paths are darken ×0.6, darkenLess ×0.8,
+lighten +40 % white, lightenLess +20 %; arrowheads are 2/3/5 (klein/mittel/groß) times the
+line width but at least times 2 pt (`probe_word_arrows.py`); DrawingML shade and tint work in
+linear light (accent1 shaded to 15 % is Word's 172C51); the arrow keys move a selected shape
+0.35 pt.
+**Theme.** Word fills shapes from the theme (fillRef, lnRef, effectRef into the format
+matrix). A document without a theme part is shown by Word 365 in its 2023 colours, while new
+RaabeWrite documents use Calibri and the 2013-2022 palette (D-011): they now carry an
+Office 2013-2022 theme part, written by us, so Word and RaabeWrite agree; files without one
+read with Word's 2023 colours, as Word shows them.
+**Model.** A shape is a floating object with the picture's shape properties (geometry,
+fill, outline, effects) and a `ShapeInfo` (kind, adjust values, the style resolved for
+drawing and kept as XML, the text frame of wps:bodyPr, custom geometry). Its text is a story
+of its own (`tx:N`), laid out in the shape's text rectangle (insets, top/middle/bottom,
+Form dem Text anpassen) and drawn above the shape; a click on the text or typing into a
+selected shape edits it, Esc selects the shape again. Unchanged shapes keep Word's XML (with
+the VML fallback); changed shapes and shapes with text get a new wps:wsp inside Word's
+drawing, new ones the XML Word writes. Word renders our round trip of its own shapes
+identically (PDF outlines, deviation 0.0).
+**Interaction.** Einfügen > Formen with Word's gallery (order and names recorded from Word),
+drawing by dragging (Umschalt: square, 45° lines), a click inserts 2.54 cm; Kurve,
+Freihandform and Skizze make custom geometry; the eight handles, rotation, the yellow
+adjust handles (any preset: the adjust value whose handle lands nearest the mouse) and two
+end handles for lines; copy and paste of floating objects. The Formformat tab has Word's
+groups, layouts and reduction order (captured at 2560-800 px); its Formenarten gallery has
+all 77 entries as Word writes them (`probe_word_shapes_ui.py applylist`, `shape-presets.ts`).
+Einfügen > Textfeld offers our own designs (Word's built-in text boxes are Microsoft's
+content): Einfaches Textfeld, Randleiste rechts, Merkkasten, Zitat, and Textfeld erstellen.
+**Moved to package E:** the WordArt-Formate (they are Word's text effects, E's Texteffekte),
+Verknüpfung erstellen (linked text boxes), Gruppieren, Auswahlbereich, Punkte bearbeiten,
+Neuer Zeichenbereich, picture and texture fills.

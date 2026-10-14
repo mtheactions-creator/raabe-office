@@ -1,13 +1,13 @@
 // Public API of the text engine (decision D-017: controlled editing).
 
-export { Editor, FONT_STEPS, type ChangeEvent, type EditorStats, type CharState, type CaseMode, type CopiedFormat } from "./editor";
+export { Editor, FONT_STEPS, type ChangeEvent, type EditorStats, type CharState, type CaseMode, type CopiedFormat, type DrawTool } from "./editor";
 export { Doc, MAIN, cmp, nextTableId, type Pos, type DocState, type DocSettings, type DocSnapshot } from "./doc";
 export { Fonts, PT, type FontMetrics, type MetricsProvider } from "./fonts";
 export { Layouter, fieldType, type LayoutContext } from "./layout";
 export { DEFAULT_CELL_MARGINS, layoutDocument, type Deco, type Frame, type Layout, type PageLayout, type PlacedLine, type StoryLayout } from "./flow";
 export {
-  A4, COLUMN_BREAK, DEFAULT_SECTION, EMPTY, EMPTY_NUMBERING, LINE_BREAK, OBJ, ONE_COLUMN, PAGE_BREAK, cellKey, intern, makePara, validPara,
-  type AltText,
+  A4, COLUMN_BREAK, DEFAULT_SECTION, DEFAULT_SHAPE_BODY, EMPTY, EMPTY_NUMBERING, LINE_BREAK, OBJ, ONE_COLUMN, PAGE_BREAK, cellKey, intern, makePara, validPara,
+  type AltText, type ShapeBody, type ShapeInfo,
   type AbstractNum, type Align, type Anchor, type BlockObject, type BorderSpec, type Borders, type CellDef, type CellMargins,
   type CellRef, type CharProps, type Columns, type CommentMeta, type FloatObject, type HeaderRefs, type ImageData,
   type InlineObject, type LineRule, type NumInstance, type NumLevel, type Numbering, type PageSetup, type Para,
@@ -19,13 +19,15 @@ export {
   restartList, type ListLabel,
 } from "./numbering";
 export {
-  GERMAN_NAMES, StyleSheet, builtinStyle, defaultStyleSheet,
+  GERMAN_NAMES, OFFICE_2013_COLORS, StyleSheet, builtinStyle, defaultStyleSheet,
   type ResolvedChar, type ResolvedPara, type StyleDef, type StyleType, type TableStyleDef, type TableStylePart, type Theme,
 } from "./styles";
 export { AUTHOR_COLORS, HIGHLIGHT, MIN_ZOOM, MAX_ZOOM, imageUrl, storyIdOf, type TextMark } from "./view";
 export { countWords } from "./words";
 export { imageInfo, naturalSizePt, type ImageInfo } from "./images";
-export { effectExtent, pictureElement, plainPicture, type PictureFormat, type PictureShadow } from "./picture";
+export { effectExtent, pictureElement, plainPicture, type Fill, type LineEnd, type PictureFormat, type PictureShadow } from "./picture";
+export { customGeometry, flattenPath, hasPreset, presetAdjust, presetGeometry, presetNames, type GeomHandle, type GeomPath, type Geometry } from "./geometry";
+export { shadeColor, shadeLinear, shapeElement, shapeGeometry, shapeLook, shapeTextRect } from "./shape";
 export { fromHtml, toHtml } from "./html";
 export * as Revisions from "./revisions";
 export * as Edits from "./edits";

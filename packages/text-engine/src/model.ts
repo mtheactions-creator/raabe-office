@@ -287,7 +287,48 @@ export interface FloatObject {
   readonly moveWithText?: boolean;
   /** Stacking order among floating objects (wp:anchor relativeHeight); higher is in front. */
   readonly z?: number;
+  /** Shapes and text boxes (wps:wsp); their outline, fill and effects are in `pic`. */
+  readonly shape?: ShapeInfo;
 }
+
+/** A shape's text frame (wps:bodyPr): insets in points, vertical anchor, wrapping, autofit. */
+export interface ShapeBody {
+  readonly l: number;
+  readonly t: number;
+  readonly r: number;
+  readonly b: number;
+  readonly anchor: "t" | "ctr" | "b";
+  readonly wrap: boolean;
+  /** "shape": Form dem Text anpassen (spAutoFit); "normal": shrink text (normAutofit). */
+  readonly autofit: "none" | "shape" | "normal";
+  /** Textrichtung: "horz", "vert" (270°: "vert270"), as DrawingML. */
+  readonly vert?: string;
+}
+
+/**
+ * A shape or text box: what DrawingML's shape style (wps:style) gives it, resolved against the
+ * document theme, and its text. Geometry, fill, outline and effects set on the shape itself
+ * are in the float's `pic`; where those are missing the style's apply.
+ */
+export interface ShapeInfo {
+  readonly kind: "shape" | "textbox" | "connector";
+  /** Adjust values of the preset geometry (a:avLst), by name. */
+  readonly adjust?: Readonly<Record<string, number>>;
+  readonly styleFill?: import("./picture").Fill;
+  readonly styleLine?: { readonly color: string; readonly width: number };
+  readonly styleShadow?: import("./picture").PictureShadow;
+  /** Text colour the style gives (fontRef), e.g. white on Word's blue default shape. */
+  readonly fontColor?: string;
+  /** The text story ("tx:3"), when the shape has text. */
+  readonly story?: string;
+  readonly body: ShapeBody;
+  /** wps:style as XML, written back unless a Formenart replaced it. */
+  readonly styleXml?: string;
+  /** Custom geometry (Freihandform, a:custGeom) in the definition syntax of geometry.ts. */
+  readonly custom?: string;
+}
+
+export const DEFAULT_SHAPE_BODY: ShapeBody = { l: 7.2, t: 3.6, r: 7.2, b: 3.6, anchor: "ctr", wrap: true, autofit: "none" };
 
 export interface ImageData {
   readonly bytes: Uint8Array;
@@ -378,6 +419,8 @@ export interface InlineObject {
   readonly pic?: PictureFormat;
   /** Pictures: Alternativtext. */
   readonly alt?: AltText;
+  /** Shapes in line with the text (wps:wsp in wp:inline). */
+  readonly shape?: ShapeInfo;
 }
 
 /** Alternativtext of a picture or shape (wp:docPr descr/title, decorative). */

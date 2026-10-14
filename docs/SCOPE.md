@@ -44,6 +44,7 @@ What each app does, ordered by priority. **M** = first usable version (MVP),
 | Styles (Formatvorlagen): Standard, Überschrift 1-3, Titel, Zitat … | M | Style gallery in Start tab; done in Step 2 (Word 2016-2019 set) |
 | Tables: insert, resize, merge/split, borders, shading, header row | M | Done in Step 3 (Tabellenentwurf, Layout) |
 | Images: insert, resize, rotate, crop, text wrapping (inline, square, tight, behind, in front) | M | Done: Step 3, and in Step 4b the full Bildformat tab (D-045), paste, pictures in tables, sizes from the file's resolution |
+| Shapes and text boxes: Word's Formen gallery, drawing, text in shapes, Formformat tab, Formenarten, adjust handles, freeform shapes | M | Done in Step 4b (D-046); WordArt styles, linked text boxes, grouping and the selection pane follow in package E |
 | Shapes and text boxes | M | Basic set, Step 4b |
 | Header, footer, page numbers | M | Done in Step 3 |
 | Page setup: margins, orientation, size, columns, page/section breaks | M | Done in Step 3 |
