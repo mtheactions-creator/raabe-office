@@ -8,7 +8,7 @@
 import {
   DEFAULT_SECTION, EMPTY, EMPTY_NUMBERING, OBJ, intern, joinParas, makePara, mapRuns, normalizeRuns, propsAt, slicePara,
   textPiece, type CellRef, type CharProps, type CommentMeta, type Numbering, type Para, type ParaProps, type Section,
-  type TableDef,
+  type TableDef, type ImageData,
 } from "./model";
 import { defaultStyleSheet, type StyleSheet } from "./styles";
 
@@ -32,11 +32,24 @@ export interface DocSettings {
   trackChanges?: boolean;
   /** Formeloptionen (m:mathPr); Word's defaults when absent. */
   math?: MathSettings;
+  /** Entwurf > Wasserzeichen: VML in every header, as Word writes it. */
+  watermark?: Watermark;
+  /** Entwurf > Seitenfarbe (w:background). */
+  background?: { readonly color: string; readonly colorTheme?: string };
   /** Fuß- und Endnote: where notes go and how they are numbered (w:footnotePr, w:endnotePr). */
   notes?: { readonly footnote?: NoteProps; readonly endnote?: NoteProps };
   /** Zitate und Literaturverzeichnis: the document's sources and citation style (customXml b:Sources). */
   bibliography?: import("./bibliography").Bibliography;
 }
+
+/**
+ * A watermark (Wasserzeichen): text as WordArt or a picture, centred on the margins behind the
+ * text of every page; size in points as the shape has it.
+ */
+export type Watermark =
+  | { readonly kind: "text"; readonly text: string; readonly font: string; readonly size?: number; readonly color: string; readonly semi: boolean;
+      readonly diagonal: boolean; readonly width: number; readonly height: number }
+  | { readonly kind: "picture"; readonly image: ImageData; readonly scale?: number; readonly washout: boolean; readonly width: number; readonly height: number };
 
 /** Numbering and place of foot- or endnotes (Word's dialog Fuß- und Endnote). */
 export interface NoteProps {

@@ -11,7 +11,7 @@ import {
   EMPTY, LINE_BREAK, OBJ, PAGE_BREAK, insertionProps, intern, joinParas, makePara, propsAt, type Align, type CharProps, type LineRule,
   type Para, type ParaProps, type Section,
 } from "./model";
-import { GERMAN_NAMES, builtinStyle, defaultStyleSheet, type ResolvedChar, type ResolvedPara, type StyleDef } from "./styles";
+import { GERMAN_NAMES, builtinStyle, defaultStyleSheet, type ResolvedChar, type ResolvedPara, type StyleDef, type Theme } from "./styles";
 import { View, imageUrl, storyIdOf, type RenderOptions, type Selection, type TextMark } from "./view";
 import * as E from "./edits";
 import { fromHtml, toHtml } from "./html";
@@ -2545,6 +2545,92 @@ export class Editor {
     }
     this.requireFonts();
     this.relayout();
+  }
+
+  // ----- Entwurf: Designs, Formatvorlagensatz, Farben, Schriftarten, Absatzabstand ---------------
+
+  /** The document's theme (colours, fonts, names). */
+  get theme(): Theme {
+    return this.doc.styles.theme;
+  }
+
+  /** Designs / Farben / Schriftarten: a new theme; theme fonts and colours follow it. */
+  setTheme(theme: Theme): void {
+    this.snapshot();
+    this.doc.setStyles(this.doc.styles.withTheme(theme));
+    this.requireFonts();
+    this.relayout();
+  }
+
+  /**
+   * Formatvorlagensatz: the set's document defaults and styles replace the document's (by
+   * their English names; styles the set lacks stay). The language of the text stays.
+   */
+  applyStyleSet(set: { defaultsR: CharProps; defaultsP: ParaProps; styles: Readonly<Record<string, { type: string; basedOn?: string; next?: string; pPr: ParaProps; rPr: CharProps }>> }): void {
+    this.snapshot();
+    let sheet = this.doc.styles;
+    sheet = sheet.withDefaults({ ...set.defaultsR, lang: sheet.defaultsR.lang }, set.defaultsP);
+    const idOf = (name: string | undefined) => (name ? sheet.idForName(name) ?? builtinStyle(name)?.id : undefined);
+    for (const [name, s] of Object.entries(set.styles)) {
+      const id = idOf(name);
+      const cur = (id ? sheet.get(id) : undefined) ?? builtinStyle(name);
+      if (!cur) continue;
+      for (const n of [s.basedOn, s.next]) if (n && !sheet.idForName(n)) { const b = builtinStyle(n); if (b) sheet = sheet.withStyle(b); }
+      sheet = sheet.withStyle({ ...cur, pPr: s.pPr, rPr: s.rPr, basedOn: s.basedOn ? sheet.idForName(s.basedOn) ?? cur.basedOn : undefined, next: s.next ? sheet.idForName(s.next) ?? cur.next : cur.next, data: undefined });
+    }
+    this.doc.setStyles(sheet);
+    this.requireFonts();
+    this.relayout();
+  }
+
+  /**
+   * Absatzabstand: spacing of the document defaults (the Standard style keeps none of its
+   * own), as Word's presets do.
+   */
+  setParagraphSpacing(sp: { before: number; after: number; line: number; lineRule: LineRule }): void {
+    this.snapshot();
+    let sheet = this.doc.styles;
+    sheet = sheet.withDefaults(sheet.defaultsR, { ...sheet.defaultsP, before: sp.before, after: sp.after, line: sp.line, lineRule: sp.lineRule });
+    const normal = sheet.get(sheet.defaultParagraphStyle);
+    if (normal) {
+      const { before: _b, after: _a, line: _l, lineRule: _r, ...pPr } = normal.pPr;
+      sheet = sheet.withStyle({ ...normal, pPr, data: undefined });
+    }
+    this.doc.setStyles(sheet);
+    this.relayout();
+  }
+
+  /** Wasserzeichen: set or remove; every section gets headers to carry it, as in Word. */
+  setWatermark(wm: DocSettings["watermark"]): void {
+    this.snapshot();
+    if (wm) {
+      // The first section needs its own headers (later ones inherit them).
+      const firstSect = this.doc.main.slice(0, -1).find((p) => p.sect)?.sect ?? this.doc.settings.section;
+      const need: ("default" | "first" | "even")[] = ["default", ...(firstSect.titlePage ? ["first" as const] : []), ...(this.doc.settings.evenOdd ? ["even" as const] : [])];
+      const missing = need.filter((slot) => !firstSect.headers[slot] || !this.doc.stories.has(firstSect.headers[slot]!));
+      if (missing.length) {
+        const style = this.styleId("header");
+        this.ensureStyle(style);
+        const refs = { ...firstSect.headers };
+        for (const slot of missing) {
+          let n = 1;
+          while (this.doc.stories.has(`hdr:${n}`)) n++;
+          const id = `hdr:${n}`;
+          this.doc.setStory(id, [{ ...makePara("", { style }), mark: EMPTY }]);
+          refs[slot] = id;
+        }
+        this.updateSection(0, (s) => ({ ...s, headers: refs }));
+      }
+    }
+    this.doc.setSettings({ ...this.doc.settings, watermark: wm });
+    this.update();
+  }
+
+  /** Seitenfarbe: the page colour (undefined: Keine Farbe). */
+  setBackground(bg: DocSettings["background"]): void {
+    this.snapshot();
+    this.doc.setSettings({ ...this.doc.settings, background: bg });
+    this.update();
   }
 
   /** Strg+Q: removes direct paragraph formatting. */

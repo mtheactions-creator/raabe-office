@@ -47,7 +47,8 @@ equations of `word-math.docx` written back with Word's structure. E in progress 
 Textmarke, Querverweis, Beschriftung, Abbildungsverzeichnis, Zitate, Literaturverzeichnis,
 Fuß- und Endnote, Optionen zum Nachverfolgen, Überarbeitungsbereich, Sortieren, Markieren,
 Auswahlbereich, Formatvorlagen pane with Formatvorlage ändern, Zwischenablage, Lineal,
-Gitternetzlinien, Mehrere Seiten, Weblayout, Lesemodus, Zeilennummern, Notizen anzeigen done.
+Gitternetzlinien, Mehrere Seiten, Weblayout, Lesemodus, Zeilennummern, Notizen anzeigen, the
+Entwurf tab and Rahmen und Schattierung done.
 
 Order: A, B, C, D, E, F. A comes first because its tools find the differences nobody has
 reported yet; the behaviour catalogue grows with each package. F is last and the largest

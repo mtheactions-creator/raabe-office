@@ -1,7 +1,7 @@
 // Public API of the text engine (decision D-017: controlled editing).
 
 export { Editor, FONT_STEPS, type ChangeEvent, type EditorStats, type CharState, type CaseMode, type CopiedFormat, type DrawTool } from "./editor";
-export { DEFAULT_MATH, Doc, MAIN, cmp, nextTableId, type Pos, type DocState, type DocSettings, type DocSnapshot, type MathSettings, type NoteProps } from "./doc";
+export { DEFAULT_MATH, Doc, MAIN, cmp, nextTableId, type Pos, type DocState, type DocSettings, type DocSnapshot, type MathSettings, type NoteProps, type Watermark } from "./doc";
 export { Fonts, PT, type FontMetrics, type MetricsProvider } from "./fonts";
 export { Layouter, fieldType, type LayoutContext } from "./layout";
 export { DEFAULT_CELL_MARGINS, layoutDocument, type Deco, type Frame, type Layout, type PageLayout, type PlacedLine, type StoryLayout } from "./flow";
@@ -9,7 +9,7 @@ export {
   A4, COLUMN_BREAK, DEFAULT_SECTION, DEFAULT_SHAPE_BODY, EMPTY, EMPTY_NUMBERING, LINE_BREAK, OBJ, ONE_COLUMN, PAGE_BREAK, cellKey, intern, makePara, validPara,
   type AltText, type ShapeBody, type ShapeInfo,
   type AbstractNum, type Align, type Anchor, type BlockObject, type BorderSpec, type Borders, type CellDef, type CellMargins,
-  type CellRef, type CharProps, type Columns, type CommentMeta, type LineNumbers, type FloatObject, type HeaderRefs, type ImageData,
+  type CellRef, type CharProps, type Columns, type CommentMeta, type LineNumbers, type PageBorders, type FloatObject, type HeaderRefs, type ImageData,
   type InlineObject, type LineRule, type NumInstance, type NumLevel, type Numbering, type PageSetup, type Para,
   type ParaGroup, type ParaProps, type Revision, type RowDef, type Run, type Section, type Shading, type TabStop,
   type TableDef, type Underline,
@@ -19,6 +19,7 @@ export {
   restartList, type ListLabel,
 } from "./numbering";
 export {
+  themeColor,
   GERMAN_NAMES, OFFICE_2013_COLORS, StyleSheet, builtinStyle, defaultStyleSheet,
   type ResolvedChar, type ResolvedPara, type StyleDef, type StyleType, type TableStyleDef, type TableStylePart, type Theme,
 } from "./styles";

@@ -9,7 +9,7 @@ import { strFromU8, unzipSync } from "fflate";
 import {
   A4, COLUMN_BREAK, DEFAULT_SECTION, LINE_BREAK, OBJ, ONE_COLUMN, PAGE_BREAK, StyleSheet, defaultStyleSheet, intern, nextTableId, plainPicture, seqToLatex,
   type Anchor, type BlockObject, type CellDef, type CellRef, type CharProps, type CommentMeta, type DocState, type FloatObject,
-  type AltText, type DocSettings, type HeaderRefs, type ImageData, type InlineObject, type MathSettings, type NoteProps, type Numbering, type Para, type ParaGroup, type ParaProps, type PictureFormat, type Revision, type ShapeInfo,
+  type AltText, type DocSettings, type HeaderRefs, type Watermark, type ImageData, type InlineObject, type MathSettings, type NoteProps, type Numbering, type Para, type ParaGroup, type ParaProps, type PictureFormat, type Revision, type ShapeInfo,
   type RowDef, type Run, type Section, type StyleDef, type StyleType, type TableDef, type TableStyleDef, type TableStylePart,
 } from "@raabe/text-engine";
 import { mathParaJc, ommlToSeq, readMathPr } from "./math";
@@ -39,6 +39,9 @@ export interface DocxPackage {
   /** The theme and the document defaults as read (JSON): changed ones are written. */
   themeRead?: string;
   defaultsRead?: string;
+  /** The watermark as read (JSON) and w:background as read: headers and the background are rewritten when they change. */
+  watermarkRead?: string;
+  backgroundXml?: string | null;
   /** Header/footer stories: their part and the part's root start tag. */
   storyParts: Map<string, { path: string; rootTag: string }>;
   /** Numbering as read (written back unchanged while it is the same object). */
@@ -260,6 +263,8 @@ class Reader {
   mathSettings: MathSettings | undefined;
   /** Fuß- und Endnote settings (w:footnotePr, w:endnotePr in settings.xml). */
   noteSettings: DocSettings["notes"];
+  /** The watermark found in a header (Word puts it into every header). */
+  watermark: Watermark | undefined;
   readonly stories = new Map<string, Para[]>();
   private textboxSeq = 0;
 
@@ -328,7 +333,13 @@ class Reader {
     this.storyOfPath.set(part, id);
     const root = parse(xml).documentElement;
     const pr = new PartReader(this, part);
-    this.stories.set(id, ensurePara(pr.blocks(kids(root))));
+    // Word's watermark (an sdt from the Watermarks gallery) becomes the document's setting.
+    const els = kids(root).filter((el) => {
+      if (el.localName !== "sdt" || !/docPartGallery w:val="Watermarks"/.test(outer(child(el, "sdtPr") ?? el))) return true;
+      this.watermark ??= readWatermark(el, (rid) => this.image(part, pr.rels, rid));
+      return !this.watermark;
+    });
+    this.stories.set(id, ensurePara(pr.blocks(els)));
     this.storyParts.set(id, { path: part, rootTag: rootTagOf(root) });
     return id;
   }
@@ -852,6 +863,7 @@ class PartReader {
     let titlePage = false;
     let pageStart: number | undefined, pageFormat: string | undefined;
     let lineNumbers: Section["lineNumbers"];
+    let pageBorders: Section["pageBorders"];
     for (const c of kids(el)) {
       switch (c.localName) {
         case "headerReference": case "footerReference": {
@@ -889,6 +901,16 @@ class PartReader {
           break;
         }
         case "titlePg": titlePage = onOff(c) ?? false; break;
+        case "pgBorders": {
+          const b = readBorders(c);
+          const disp = attr(c, "display");
+          pageBorders = {
+            top: b?.top, left: b?.left, bottom: b?.bottom, right: b?.right, offsetFrom: attr(c, "offsetFrom") === "page" ? "page" : "text",
+            ...(disp === "firstPage" || disp === "notFirstPage" ? { display: disp } : {}),
+          };
+          if (attr(c, "zOrder")) extra.push(`pgBordersZ\u0000${attr(c, "zOrder")}`);
+          break;
+        }
         case "lnNumType": {
           const by = num(attr(c, "countBy")) ?? 0;
           const r = attr(c, "restart");
@@ -909,6 +931,7 @@ class PartReader {
     return {
       page, columns, start, titlePage, headers: headers as HeaderRefs, footers: footers as HeaderRefs, pageStart, pageFormat,
       ...(lineNumbers ? { lineNumbers } : {}),
+      ...(pageBorders ? { pageBorders } : {}),
       extra: extra.length ? extra : undefined,
     };
   }
@@ -962,6 +985,39 @@ function readComments(r: Reader, path: string, extPath: string | null): { rootTa
 
 // ----- the package --------------------------------------------------------------------------
 
+/**
+ * Word's watermark: VML WordArt (v:textpath, PowerPlusWaterMarkObject) or a picture
+ * (v:imagedata, WordPictureWatermark) inside the header's Watermarks sdt.
+ */
+function readWatermark(sdt: Element, image: (rid: string) => ImageData | undefined): Watermark | undefined {
+  const xml = outer(sdt);
+  const shape = /<v:shape\b([^>]*)>([\s\S]*?)<\/v:shape>/.exec(xml);
+  if (!shape) return undefined;
+  const attrs = shape[1], inner = shape[2];
+  const style = /style="([^"]*)"/.exec(attrs)?.[1] ?? "";
+  const css = (k: string) => new RegExp(`(?:^|;)${k}:([^;]*)`).exec(style)?.[1];
+  const pt = (v: string | undefined) => (v ? parseFloat(v) * (v.endsWith("in") ? 72 : v.endsWith("cm") ? 28.3465 : 1) : 0);
+  const width = pt(css("width")), height = pt(css("height"));
+  const textpath = /<v:textpath\b([^>]*)\/?>/.exec(inner);
+  if (textpath) {
+    const tp = textpath[1];
+    const text = (/string="([^"]*)"/.exec(tp)?.[1] ?? "").replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
+    const tstyle = (/style="([^"]*)"/.exec(tp)?.[1] ?? "").replace(/&quot;/g, '"');
+    const font = /font-family:"?([^";]*)"?/.exec(tstyle)?.[1] ?? "Calibri";
+    const fsize = parseFloat(/font-size:([\d.]+)pt/.exec(tstyle)?.[1] ?? "1");
+    const fill = /fillcolor="([^"]*)"/.exec(attrs)?.[1] ?? "silver";
+    const named: Record<string, string> = { silver: "C0C0C0", gray: "808080", black: "000000", red: "FF0000", blue: "0000FF", white: "FFFFFF" };
+    const color = fill.startsWith("#") ? fill.slice(1).toUpperCase() : named[fill] ?? "C0C0C0";
+    const semi = /<v:fill\b[^>]*opacity="([^"]*)"/.test(inner);
+    return { kind: "text", text, font, ...(fsize > 1 ? { size: fsize } : {}), color, semi, diagonal: /rotation:315/.test(style), width, height };
+  }
+  const data = /<v:imagedata\b([^>]*)\/?>/.exec(inner);
+  const rid = data ? /r:id="([^"]*)"/.exec(data[1])?.[1] : undefined;
+  const img = rid ? image(rid) : undefined;
+  if (!img) return undefined;
+  return { kind: "picture", image: img, washout: !!data && /gain=/.test(data[1]), width, height };
+}
+
 /** Alternativtext plus the drawing's name and Ausblenden (wp:docPr), or undefined when empty. */
 function docPrAlt(docPr: Element | undefined, alt: AltText): AltText | undefined {
   const name = docPr?.getAttribute("name") || undefined;
@@ -969,6 +1025,37 @@ function docPrAlt(docPr: Element | undefined, alt: AltText): AltText | undefined
   const out: AltText = { ...alt, ...(name ? { name } : {}), ...(h === "1" || h === "true" ? { hidden: true } : {}) };
   const clean = Object.fromEntries(Object.entries(out).filter(([, v]) => v !== undefined)) as AltText;
   return Object.keys(clean).length ? clean : undefined;
+}
+
+/**
+ * Entwurf > Designs > Nach Designs suchen: a theme file (.thmx: its theme1.xml), or Word's
+ * colour or font scheme files (.xml: a:clrScheme, a:fontScheme). What it does not contain is
+ * left out.
+ */
+export function readThemeFile(bytes: Uint8Array): { colors?: Record<string, string>; colorName?: string; major?: string; minor?: string; fontName?: string; name?: string } | null {
+  let xml: string | null = null;
+  try {
+    if (bytes[0] === 0x50 && bytes[1] === 0x4b) {
+      const files = unzipSync(bytes);
+      const path = Object.keys(files).find((f) => /theme\/theme\/theme\d*\.xml$/.test(f)) ?? Object.keys(files).find((f) => /theme\d*\.xml$/.test(f));
+      xml = path ? strFromU8(files[path]) : null;
+    } else xml = strFromU8(bytes);
+  } catch { return null; }
+  if (!xml) return null;
+  const doc = parse(xml);
+  const A_NS = "http://schemas.openxmlformats.org/drawingml/2006/main";
+  const scheme = doc.getElementsByTagNameNS(A_NS, "clrScheme")[0];
+  const fonts = doc.getElementsByTagNameNS(A_NS, "fontScheme")[0];
+  const latin = (tag: string) => {
+    const el = fonts ? Array.from(fonts.getElementsByTagNameNS(A_NS, tag))[0] : undefined;
+    return el ? Array.from(el.children).find((c) => c.localName === "latin")?.getAttribute("typeface") || undefined : undefined;
+  };
+  const out = {
+    ...(scheme ? { colors: themeColors(doc), colorName: scheme.getAttribute("name") || undefined } : {}),
+    ...(fonts ? { major: latin("majorFont"), minor: latin("minorFont"), fontName: fonts.getAttribute("name") || undefined } : {}),
+    ...(doc.documentElement.localName === "theme" ? { name: doc.documentElement.getAttribute("name") || undefined } : {}),
+  };
+  return Object.keys(out).length ? out : null;
 }
 
 /** w:footnotePr and w:endnotePr of settings.xml (only what the dialog Fuß- und Endnote sets). */
@@ -1041,6 +1128,11 @@ export function readDocx(bytes: Uint8Array): ReadResult {
   const doc = parse(main);
   const root = doc.documentElement;
   const body = child(root, "body");
+  // Seitenfarbe.
+  const bgEl = child(root, "background");
+  const bgColor = bgEl ? attr(bgEl, "color") : null;
+  const bgTheme = bgEl ? ["themeColor", "themeShade", "themeTint"].filter((a) => attr(bgEl, a) !== null).map((a) => `w:${a}="${attr(bgEl, a)}"`).join(" ") : "";
+  const background = bgColor && bgColor !== "auto" ? { color: bgColor.toUpperCase(), ...(bgTheme ? { colorTheme: bgTheme } : {}) } : undefined;
   const pr = new PartReader(r, "word/document.xml");
   const paras = pr.blocks(body ? kids(body) : []);
   const trailing = pr.leading;
@@ -1050,12 +1142,13 @@ export function readDocx(bytes: Uint8Array): ReadResult {
   const styleIds = new Set<string>(styles.styles.keys());
   return {
     state: {
-      paras, styles, settings: { section, defaultTab, evenOdd: evenOdd || undefined, trackChanges: trackChanges || undefined, math: r.mathSettings, bibliography: bibliography?.read, notes: r.noteSettings }, stories: r.stories, numbering,
+      paras, styles, settings: { section, defaultTab, evenOdd: evenOdd || undefined, trackChanges: trackChanges || undefined, math: r.mathSettings, bibliography: bibliography?.read, notes: r.noteSettings, watermark: r.watermark, background }, stories: r.stories, numbering,
       comments: cm?.meta,
     },
     pkg: {
       files, rootTag: rootTagOf(root), trailing, stylesXml, styleIds, hasTheme: !!themeXml, storyParts: r.storyParts,
       themeRead: JSON.stringify(styles.theme), defaultsRead: JSON.stringify([styles.defaultsR, styles.defaultsP]),
+      watermarkRead: JSON.stringify(r.watermark ?? null), backgroundXml: bgEl ? outer(bgEl) : null,
       numbering, numberingRoot: numberingXml ? rootTagOf(parse(numberingXml).documentElement) : null, notes,
       comments: cm && cmPath ? { path: cmPath, rootTag: cm.rootTag } : null, settingsXml,
       originalStories: new Map(r.stories), originalComments: cm?.meta ?? null, bibliography,

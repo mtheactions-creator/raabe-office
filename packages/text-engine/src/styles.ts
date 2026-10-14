@@ -119,11 +119,48 @@ function merge<T extends object>(base: T, over: object | undefined): T {
   return out as T;
 }
 
-/** Character merge: a font name given at a level replaces an inherited theme font (as in Word). */
+/** Character merge: a font name or colour given at a level replaces an inherited theme font or colour (as in Word). */
 function mergeR(base: CharProps, over: CharProps | undefined): CharProps {
   const out = merge(base, over);
   if (over?.font !== undefined && over.fontTheme === undefined) delete (out as { fontTheme?: string }).fontTheme;
+  if (over?.color !== undefined && over.colorTheme === undefined) delete (out as { colorTheme?: string }).colorTheme;
   return out;
+}
+
+const THEME_KEYS: Record<string, string> = {
+  dark1: "dk1", text1: "dk1", light1: "lt1", background1: "lt1", dark2: "dk2", text2: "dk2", light2: "lt2", background2: "lt2",
+  accent1: "accent1", accent2: "accent2", accent3: "accent3", accent4: "accent4", accent5: "accent5", accent6: "accent6",
+  hyperlink: "hlink", followedHyperlink: "folHlink",
+};
+
+/**
+ * A theme colour as WordprocessingML gives it (w:themeColor, w:themeShade, w:themeTint as an
+ * attribute string), from the theme's colours: shade and tint change the HSL lightness, as
+ * Word does (accent1 4472C4 with shade BF is 2F5496). Undefined when it cannot be resolved.
+ */
+export function themeColor(spec: string, colors: Readonly<Record<string, string>> | undefined): string | undefined {
+  const get = (a: string) => new RegExp(`w:${a}="([^"]*)"`).exec(spec)?.[1];
+  const name = get("themeColor");
+  const base = name ? colors?.[THEME_KEYS[name] ?? name] : undefined;
+  if (!base || !/^[0-9A-Fa-f]{6}$/.test(base)) return undefined;
+  const shade = get("themeShade"), tint = get("themeTint");
+  if (!shade && !tint) return base.toUpperCase();
+  const n = parseInt(base, 16);
+  const r = ((n >> 16) & 255) / 255, g = ((n >> 8) & 255) / 255, b = (n & 255) / 255;
+  const max = Math.max(r, g, b), min = Math.min(r, g, b);
+  let l = (max + min) / 2;
+  const d = max - min;
+  const s = d === 0 ? 0 : d / (1 - Math.abs(2 * l - 1));
+  let h = 0;
+  if (d) h = max === r ? ((g - b) / d) % 6 : max === g ? (b - r) / d + 2 : (r - g) / d + 4;
+  h *= 60;
+  if (h < 0) h += 360;
+  if (shade) l *= parseInt(shade, 16) / 255;
+  if (tint) { const t = parseInt(tint, 16) / 255; l = l * t + (1 - t); }
+  const c = (1 - Math.abs(2 * l - 1)) * s, x = c * (1 - Math.abs(((h / 60) % 2) - 1)), m = l - c / 2;
+  const [r1, g1, b1] = h < 60 ? [c, x, 0] : h < 120 ? [x, c, 0] : h < 180 ? [0, c, x] : h < 240 ? [0, x, c] : h < 300 ? [x, 0, c] : [c, 0, x];
+  const hex = (v: number) => Math.round(Math.max(0, Math.min(1, v + m)) * 255).toString(16).padStart(2, "0");
+  return (hex(r1) + hex(g1) + hex(b1)).toUpperCase();
 }
 
 function mergeTabs(base: readonly TabStop[], over: readonly TabStop[] | undefined): TabStop[] {
@@ -338,7 +375,8 @@ export class StyleSheet {
       strike: !!c.strike,
       dstrike: !!c.dstrike,
       vertAlign: c.vertAlign ?? "baseline",
-      color: c.color ?? "auto",
+      // Theme colours follow the theme (Entwurf > Farben), as in Word.
+      color: (c.colorTheme ? themeColor(c.colorTheme, this.theme.colors) : undefined) ?? c.color ?? "auto",
       highlight: c.highlight ?? "none",
       caps: !!c.caps,
       smallCaps: !!c.smallCaps,
@@ -370,30 +408,33 @@ const hidden = (d: StyleDef): StyleDef => ({ ...d, semiHidden: true, qFormat: fa
 const GRID_LINE = { style: "single", size: 0.5, color: "auto", space: 0 };
 const GRID_BORDERS = { top: GRID_LINE, left: GRID_LINE, bottom: GRID_LINE, right: GRID_LINE, insideH: GRID_LINE, insideV: GRID_LINE };
 
-const heading = (n: number, before: number, size: number, color: string): StyleDef =>
+const heading = (n: number, before: number, size: number, color: string, colorTheme: string): StyleDef =>
   p(`berschrift${n}`, `heading ${n}`, { keepNext: true, keepLines: true, before, after: 0, outline: n - 1 },
-    { fontTheme: "majorHAnsi", size, color }, { uiPriority: 9, link: `berschrift${n}Zchn` });
+    { fontTheme: "majorHAnsi", size, color, colorTheme }, { uiPriority: 9, link: `berschrift${n}Zchn` });
+
+/** Word 2013's theme colours of its styles (w:themeColor with shade or tint). */
+const T = (name: string, mod = "") => `w:themeColor="${name}"${mod}`;
 
 /** Word 2016–2019 defaults (Calibri 11, D-011) with the style ids German Word writes. */
 export function defaultStyleSheet(): StyleSheet {
   const defs: StyleDef[] = [
     { id: "Standard", name: "Normal", type: "paragraph", isDefault: true, qFormat: true, pPr: {}, rPr: {} },
-    heading(1, 12, 16, BLUE),
-    heading(2, 2, 13, BLUE),
-    heading(3, 2, 12, DARK_BLUE),
+    heading(1, 12, 16, BLUE, T("accent1", ' w:themeShade="BF"')),
+    heading(2, 2, 13, BLUE, T("accent1", ' w:themeShade="BF"')),
+    heading(3, 2, 12, DARK_BLUE, T("accent1", ' w:themeShade="7F"')),
     p("Titel", "Title", { after: 0, line: 1, lineRule: "auto", contextual: true }, { fontTheme: "majorHAnsi", size: 28, spacing: -0.5, kern: 14 }, { uiPriority: 10 }),
-    p("Untertitel", "Subtitle", {}, { color: SUB, spacing: 0.75 }, { uiPriority: 11 }),
-    p("Zitat", "Quote", { before: 10, align: "center", indLeft: 43.2, indRight: 43.2 }, { italic: true, color: GREY_TEXT }, { uiPriority: 29 }),
-    p("IntensivesZitat", "Intense Quote", { before: 18, after: 18, align: "center", indLeft: 43.2, indRight: 43.2 }, { italic: true, color: ACCENT }, { uiPriority: 30 }),
+    p("Untertitel", "Subtitle", {}, { color: SUB, colorTheme: T("text1", ' w:themeTint="A5"'), spacing: 0.75 }, { uiPriority: 11 }),
+    p("Zitat", "Quote", { before: 10, align: "center", indLeft: 43.2, indRight: 43.2 }, { italic: true, color: GREY_TEXT, colorTheme: T("text1", ' w:themeTint="BF"') }, { uiPriority: 29 }),
+    p("IntensivesZitat", "Intense Quote", { before: 18, after: 18, align: "center", indLeft: 43.2, indRight: 43.2 }, { italic: true, color: ACCENT, colorTheme: T("accent1") }, { uiPriority: 30 }),
     p("KeinLeerraum", "No Spacing", { after: 0, line: 1, lineRule: "auto" }, {}, { uiPriority: 1, basedOn: undefined, next: undefined }),
     p("Listenabsatz", "List Paragraph", { indLeft: 36, contextual: true }, {}, { uiPriority: 34, next: undefined }),
     { id: "Absatz-Standardschriftart", name: "Default Paragraph Font", type: "character", isDefault: true, uiPriority: 1, semiHidden: true, pPr: {}, rPr: {} },
-    c("SchwacheHervorhebung", "Subtle Emphasis", { italic: true, color: GREY_TEXT }, 19),
+    c("SchwacheHervorhebung", "Subtle Emphasis", { italic: true, color: GREY_TEXT, colorTheme: T("text1", ' w:themeTint="BF"') }, 19),
     c("Hervorhebung", "Emphasis", { italic: true }, 20),
-    c("IntensiveHervorhebung", "Intense Emphasis", { italic: true, color: ACCENT }, 21),
+    c("IntensiveHervorhebung", "Intense Emphasis", { italic: true, color: ACCENT, colorTheme: T("accent1") }, 21),
     c("Fett", "Strong", { bold: true }, 22),
-    c("SchwacherVerweis", "Subtle Reference", { smallCaps: true, color: SUB }, 31),
-    c("IntensiverVerweis", "Intense Reference", { bold: true, smallCaps: true, color: ACCENT, spacing: 0.25 }, 32),
+    c("SchwacherVerweis", "Subtle Reference", { smallCaps: true, color: SUB, colorTheme: T("text1", ' w:themeTint="A5"') }, 31),
+    c("IntensiverVerweis", "Intense Reference", { bold: true, smallCaps: true, color: ACCENT, colorTheme: T("accent1"), spacing: 0.25 }, 32),
     c("Buchtitel", "Book Title", { bold: true, italic: true, spacing: 0.25 }, 33),
     // Styles Word adds when the feature is first used (headers, notes, tables, contents …).
     hidden(p("Kopfzeile", "header", { after: 0, line: 1, lineRule: "auto", tabs: [{ pos: 226.8, align: "center" }, { pos: 453.6, align: "right" }] }, {}, { uiPriority: 99, next: undefined })),
@@ -410,7 +451,7 @@ export function defaultStyleSheet(): StyleSheet {
     hidden(p("Verzeichnis3", "toc 3", { after: 5, indLeft: 22 }, {}, { uiPriority: 39, next: "Standard" })),
     hidden(c("Hyperlink", "Hyperlink", { color: "0563C1", underline: "single" }, 99)),
     // Hidden until used, as in Word's latent styles (w:semiHidden, w:unhideWhenUsed, w:qFormat).
-    p("Beschriftung", "caption", { after: 10, line: 1, lineRule: "auto" }, { italic: true, color: "44546A", size: 9 }, { uiPriority: 35, qFormat: true, semiHidden: true }),
+    p("Beschriftung", "caption", { after: 10, line: 1, lineRule: "auto" }, { italic: true, color: "44546A", colorTheme: T("text2"), size: 9 }, { uiPriority: 35, qFormat: true, semiHidden: true }),
     hidden(p("Abbildungsverzeichnis", "table of figures", { after: 0 }, {}, { uiPriority: 99, next: "Standard" })),
     hidden(p("Literaturverzeichnis", "Bibliography", {}, {}, { uiPriority: 37, next: "Standard" })),
     {

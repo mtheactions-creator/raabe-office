@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { strFromU8, unzipSync } from "fflate";
-import { Revisions, sortDate, sortNumber, sortOrder, type StyleDef } from "@raabe/text-engine";
+import { OFFICE_2013_COLORS, Revisions, sortDate, sortNumber, sortOrder, themeColor, type StyleDef } from "@raabe/text-engine";
 import { readDocx, writeDocx } from "../src";
 
 const fixture = (name: string) => new Uint8Array(readFileSync(join(__dirname, "fixtures", name)));
@@ -125,5 +125,51 @@ describe("Zeilennummern", () => {
     const back = readDocx(out).state;
     expect(back.settings.section.lineNumbers).toEqual({ countBy: 2, start: 5, distance: 36, restart: "continuous" });
     expect(back.paras[0].props.suppressLineNumbers).toBe(true);
+  });
+});
+
+describe("Designfarben", () => {
+  it("resolve shades and tints as Word does", () => {
+    expect(themeColor('w:themeColor="accent1" w:themeShade="BF"', OFFICE_2013_COLORS)).toBe("2F5496");
+    // Word: 1F3763; within one step per channel (Word rounds in its own 8-bit HSL).
+    const dark = themeColor('w:themeColor="accent1" w:themeShade="7F"', OFFICE_2013_COLORS)!;
+    for (const [i, want] of [[0, 0x1f], [2, 0x37], [4, 0x63]]) expect(Math.abs(parseInt(dark.slice(i, i + 2), 16) - want)).toBeLessThanOrEqual(1);
+    expect(themeColor('w:themeColor="text1" w:themeTint="A5"', OFFICE_2013_COLORS)).toBe("5A5A5A");
+    expect(themeColor('w:themeColor="text1" w:themeTint="BF"', OFFICE_2013_COLORS)).toBe("404040");
+    expect(themeColor('w:themeColor="accent1"', { ...OFFICE_2013_COLORS, accent1: "FF0000" })).toBe("FF0000");
+  });
+});
+
+describe("Seitenhintergrund", () => {
+  it("writes Word's watermark into every header and reads it back", () => {
+    const r = readDocx(fixture("word-short.docx"));
+    const wm = { kind: "text" as const, text: "ENTWURF", font: "Calibri", color: "C0C0C0", semi: true, diagonal: true, width: 412.41, height: 247.44 };
+    // A document without headers gets one (the editor adds it; here by hand).
+    const stories = new Map(r.state.stories ?? []);
+    stories.set("hdr:9", [{ text: "", runs: [], props: {}, mark: {} } as never]);
+    const sect = { ...r.state.settings.section, headers: { default: "hdr:9" } };
+    const out = writeDocx({ ...r.state, stories, settings: { ...r.state.settings, section: sect, watermark: wm } }, r.pkg);
+    const files = unzipSync(out);
+    const hdr = Object.keys(files).filter((f) => /word\/header\d+\.xml$/.test(f)).map((f) => strFromU8(files[f]));
+    expect(hdr.some((x) => x.includes('<w:docPartGallery w:val="Watermarks"/>') && x.includes('string="ENTWURF"') && x.includes("rotation:315") && x.includes('xmlns:v="urn:schemas-microsoft-com:vml"'))).toBe(true);
+    const back = readDocx(out).state;
+    expect(back.settings.watermark).toEqual(wm);
+    // The header's own text is not the watermark.
+    const h = back.stories?.get(back.settings.section.headers.default!);
+    expect(h?.every((p) => !p.objects?.length)).toBe(true);
+  });
+
+  it("writes w:background with its theme colour and w:pgBorders", () => {
+    const r = readDocx(fixture("word-short.docx"));
+    const line = { style: "single", size: 1.5, color: "FF0000", space: 24 };
+    const sect = { ...r.state.settings.section, pageBorders: { top: line, left: line, bottom: line, right: line, offsetFrom: "page" as const } };
+    const out = writeDocx({ ...r.state, settings: { ...r.state.settings, section: sect, background: { color: "FAE2D5", colorTheme: 'w:themeColor="accent2" w:themeTint="33"' } } }, r.pkg);
+    const xml = part(out, "word/document.xml");
+    expect(xml).toContain('<w:background w:color="FAE2D5" w:themeColor="accent2" w:themeTint="33"/><w:body>');
+    expect(xml).toMatch(/<w:pgBorders w:offsetFrom="page"><w:top w:val="single" w:sz="12" w:space="24" w:color="FF0000"\/>/);
+    const back = readDocx(out).state.settings;
+    expect(back.background).toEqual({ color: "FAE2D5", colorTheme: 'w:themeColor="accent2" w:themeTint="33"' });
+    expect(back.section.pageBorders?.offsetFrom).toBe("page");
+    expect(back.section.pageBorders?.left?.size).toBe(1.5);
   });
 });

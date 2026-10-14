@@ -18,6 +18,10 @@ export function tauriPlatform(): Platform {
   const win = getCurrentWindow();
   return {
     kind: "tauri",
+    async openAnyDialog(title, filters) {
+      const r = await open({ multiple: false, directory: false, filters, title });
+      return typeof r === "string" ? r : null;
+    },
     async openFileDialog() {
       const r = await open({ multiple: false, directory: false, filters: FILTERS.docx, title: "Öffnen" });
       return typeof r === "string" ? r : null;

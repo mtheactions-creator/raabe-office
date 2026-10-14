@@ -63,6 +63,27 @@ function variants(hex: string): { hex: string; label: string }[] {
   return [lighter(0.8), lighter(0.6), lighter(0.4), darker(0.25), darker(0.5)];
 }
 
+/** The palette's theme colours: Word's order (lt1, dk1, lt2, dk2, accent1 … accent6) and its theme names. */
+const ORDER: [string, string, string][] = [["lt1", "background1", "Hintergrund 1"], ["dk1", "text1", "Text 1"], ["lt2", "background2", "Hintergrund 2"], ["dk2", "text2", "Text 2"],
+  ...[1, 2, 3, 4, 5, 6].map((i): [string, string, string] => [`accent${i}`, `accent${i}`, `Akzent ${i}`])];
+
+/**
+ * Theme colours with their labels and WordprocessingML references: the Office 2013–2022 names
+ * for that theme, otherwise "Text 1", "Akzent 2" … (Word names colours of other themes by hue).
+ */
+function themeEntries(theme?: Readonly<Record<string, string>>): { hex: string; label: string; ref: string }[] {
+  const office = !theme || ORDER.every(([k], i) => (theme[k] ?? "").toUpperCase() === THEME[i][0]);
+  return ORDER.map(([k, ref, name], i) => ({ hex: office ? THEME[i][0] : (theme![k] ?? THEME[i][0]).toUpperCase(), label: office ? THEME[i][1] : name, ref }));
+}
+
+/** w:themeTint / w:themeShade for a palette variant ("heller 80 %" is tint 33, "dunkler 25 %" shade BF). */
+function variantRef(ref: string, label: string): string {
+  const m = /(heller|dunkler) (\d+) %/.exec(label);
+  if (!m) return `w:themeColor="${ref}"`;
+  const v = Math.round((1 - Number(m[2]) / 100) * 255).toString(16).toUpperCase().padStart(2, "0");
+  return `w:themeColor="${ref}" w:${m[1] === "heller" ? "themeTint" : "themeShade"}="${v}"`;
+}
+
 function swatch(hex: string, label: string, pick: () => void): HTMLElement {
   return h("button", {
     class: "swatch", style: `background:#${hex}`, "aria-label": label, "data-tip": label,
@@ -70,15 +91,19 @@ function swatch(hex: string, label: string, pick: () => void): HTMLElement {
   });
 }
 
-/** Word's colour grid (Designfarben with tints and shades, Standardfarben), for other menus. */
-export function colorGrid(pick: (hex: string) => void): HTMLElement[] {
+/**
+ * Word's colour grid (Designfarben with tints and shades, Standardfarben), for other menus;
+ * with a theme its colours, and `pick` also gets the theme reference (w:themeColor …).
+ */
+export function colorGrid(pick: (hex: string, themeRef?: string) => void, theme?: Readonly<Record<string, string>>): HTMLElement[] {
   const grid = h("div", { class: "swatches", style: "grid-template-columns:repeat(10, 18px)" });
-  for (const [hex, label] of THEME) grid.append(swatch(hex, label, () => pick(hex)));
-  const vars = THEME.map(([hex]) => variants(hex));
+  const entries = themeEntries(theme);
+  for (const t of entries) grid.append(swatch(t.hex, t.label, () => pick(t.hex, `w:themeColor="${t.ref}"`)));
+  const vars = entries.map((t) => variants(t.hex));
   for (let row = 0; row < 5; row++) {
-    for (let col = 0; col < THEME.length; col++) {
+    for (let col = 0; col < entries.length; col++) {
       const v = vars[col][row];
-      grid.append(swatch(v.hex, `${THEME[col][1]}, ${v.label}`, () => pick(v.hex)));
+      grid.append(swatch(v.hex, `${entries[col].label}, ${v.label}`, () => pick(v.hex, variantRef(entries[col].ref, v.label))));
     }
   }
   const std = h("div", { class: "swatches", style: "grid-template-columns:repeat(10, 18px)" },

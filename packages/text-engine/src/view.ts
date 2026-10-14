@@ -13,11 +13,11 @@ import { shapeElement, shapeGeometry, shapeTextRect } from "./shape";
 export const mathElements = new WeakMap<Element, { para: Para; o: number }>();
 import { flattenPath } from "./geometry";
 import { Fonts, PT } from "./fonts";
-import { cmp, type Doc, type Pos } from "./doc";
+import { cmp, type Doc, type DocSettings, type Pos } from "./doc";
 import { COLUMN_BREAK, LINE_BREAK, OBJ, PAGE_BREAK, type ImageData, type InlineObject, type Para } from "./model";
 import type { Line, Segment } from "./layout";
 import type { Deco, Frame, Layout, PageLayout, PlacedLine, StoryLayout } from "./flow";
-import type { ResolvedChar } from "./styles";
+import { themeColor, type ResolvedChar } from "./styles";
 
 export interface Selection {
   anchor: Pos;
@@ -529,6 +529,10 @@ export class View {
 
   private renderPage(pv: PageView, page: PageLayout, mainLines: PlacedLine[], doc: Doc, layout: Layout): void {
     pv.live = true;
+    // Seitenfarbe (not printed, as in Word's default).
+    const bg = doc.settings.background;
+    const color = bg && !this.printing ? `#${(bg.colorTheme ? themeColor(bg.colorTheme, doc.styles.theme.colors) : undefined) ?? bg.color}` : "";
+    if (pv.el.style.background !== color) pv.el.style.background = color;
     // Lines of every story on this page: header, body, footer, notes.
     const items: { key: string; story: StoryLayout; pl: PlacedLine }[] = [];
     const add = (key: string | undefined) => {
@@ -590,10 +594,13 @@ export class View {
       if (d.kind === "line") return `l${d.x1},${d.y1},${d.x2},${d.y2},${d.width},${d.color},${d.style},${this.dimmed(d.story)}`;
       const text = d.shape?.story ? this.shapeTextKey(d.shape.story, page.index) : "";
       return `i${d.x},${d.y},${d.w},${d.h},${idOf(d.image)},${d.behind},${this.dimmed(d.story)},${d.z ?? 0},${d.pic ? JSON.stringify(d.pic) : ""},${d.shape ? idOf(d.shape) : ""},${text}`;
-    }).join(";") + "|" + (page.lineNumbers ?? []).map((n) => `${n.x},${n.y},${n.text}`).join(";");
+    }).join(";") + "|" + (page.lineNumbers ?? []).map((n) => `${n.x},${n.y},${n.text}`).join(";") + "|" + this.watermarkKey();
     if (key === pv.decoKey) return;
     pv.decoKey = key;
     const back: HTMLElement[] = [], front: HTMLElement[] = [];
+    // Wasserzeichen: behind everything, centred on the margins.
+    const wm = this.docRef?.settings.watermark;
+    if (wm) back.push(this.watermarkElement(wm, page));
     // Zeilennummern: right-aligned at their x, on the line's baseline.
     for (const n of page.lineNumbers ?? []) {
       const el = document.createElement("span");
@@ -631,6 +638,57 @@ export class View {
     pv.back.replaceChildren(...back);
     pv.front.replaceChildren(...front);
   }
+
+  private watermarkKey(): string {
+    const wm = this.docRef?.settings.watermark;
+    if (!wm) return "";
+    return wm.kind === "text" ? JSON.stringify(wm) : `p${idOf(wm.image)},${wm.width},${wm.height},${wm.washout}`;
+  }
+
+  /**
+   * A watermark as Word draws it: WordArt text stretched to fill its shape (VML fitshape),
+   * turned by 315° when diagonal, half transparent; or a picture, washed out.
+   */
+  private watermarkElement(wm: NonNullable<DocSettings["watermark"]>, page: PageLayout): HTMLElement {
+    const s = page.setup;
+    const w = wm.width * PT, h = wm.height * PT;
+    const cx = (s.marginLeft + (s.width - s.marginLeft - s.marginRight) / 2) * PT, cy = (s.marginTop + (s.height - s.marginTop - s.marginBottom) / 2) * PT;
+    const box = document.createElement("div");
+    box.style.cssText = `position:absolute;left:${cx - w / 2}px;top:${cy - h / 2}px;width:${w}px;height:${h}px;pointer-events:none;` +
+      (wm.kind === "text" && wm.diagonal ? "transform:rotate(-45deg);" : "");
+    if (wm.kind === "picture") {
+      const img = document.createElement("img");
+      img.src = imageUrl(wm.image);
+      img.style.cssText = `width:100%;height:100%;${wm.washout ? "filter:brightness(1.55) contrast(0.32);" : ""}`;
+      box.append(img);
+      return box;
+    }
+    // The glyphs' own box fills the shape, as VML's fitshape does.
+    const g = (View.measureCtx ??= document.createElement("canvas").getContext("2d")!);
+    g.font = `100px "${wm.font}"`;
+    const m = g.measureText(wm.text);
+    const asc = m.actualBoundingBoxAscent || 72, desc = m.actualBoundingBoxDescent || 0;
+    const left = m.actualBoundingBoxLeft || 0, width = (m.actualBoundingBoxRight || m.width) + left;
+    const ns = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(ns, "svg");
+    svg.setAttribute("viewBox", `${-left} ${-asc} ${width} ${asc + desc}`);
+    svg.setAttribute("preserveAspectRatio", "none");
+    svg.setAttribute("width", String(w));
+    svg.setAttribute("height", String(h));
+    const t = document.createElementNS(ns, "text");
+    t.setAttribute("x", "0");
+    t.setAttribute("y", "0");
+    t.setAttribute("font-family", wm.font);
+    t.setAttribute("font-size", "100");
+    t.setAttribute("fill", `#${wm.color}`);
+    if (wm.semi) t.setAttribute("fill-opacity", "0.5");
+    t.textContent = wm.text;
+    svg.append(t);
+    box.append(svg);
+    return box;
+  }
+
+  private static measureCtx: CanvasRenderingContext2D | null = null;
 
   /** What a shape's text looks like on a page (for redrawing only when it changed). */
   private shapeTextKey(story: string, page: number): string {

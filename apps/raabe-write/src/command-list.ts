@@ -141,6 +141,7 @@ export const COMMANDS: Command[] = [
   cmd("design.watermark", "Wasserzeichen", "watermark"),
   cmd("design.pageColor", "Seitenfarbe", "page-color"),
   cmd("design.pageBorders", "Seitenränder", "page-borders", { keywords: ["Seitenrahmen"] }),
+  cmd("border.dialog", "Rahmen und Schattierung...", "borders", { keywords: ["Rahmen", "Schattierung"] }),
 
   // ----- Layout ---------------------------------------------------------------------------
   cmd("layout.margins", "Seitenränder", "margins"),

@@ -648,3 +648,24 @@ built with Word's labels and behaviour.
   of the text in the style Zeilennummer, lines of tables not counted; Word's menu and dialog.
 - **Notizen anzeigen**: from the text to the note at or after the caret, from a note back to
   its reference; with foot- and endnotes Word's question which area to show.
+- **Entwurf** (`probe_word_design.py` applied every gallery entry in Word and read the result):
+  Designs (Word's 31 themes: colours and fonts), Farben (24 schemes) and Schriftarten (26
+  pairs) with Farben/Schriftarten anpassen and Nach Designs suchen (.thmx, colour and font
+  scheme files); theme colours now follow the theme (w:themeColor with shade/tint resolved in
+  HSL as Word does; the default style set uses theme colours like Word 2013's), so headings
+  change colour with the theme. Formatvorlagensatz: Word's 18 style sets, read with our reader
+  from Office's QuickStyles files and matched to the German gallery names by the formatting
+  Word showed. Absatzabstand: Word's presets (document defaults). Effekte: only Office's own
+  effects are included (the others are Microsoft's designs). Als Standard festlegen keeps the
+  theme, defaults and main styles for new blank documents. Changed themes go into the file's
+  theme part (format matrix kept), changed styles and defaults into styles.xml. The gallery
+  thumbnails are RaabeWrite's own.
+- **Seitenhintergrund** (`probe_word_background.py`): Wasserzeichen as Word writes them (VML
+  WordArt or picture in a Watermarks sdt in every header; the first section gets headers if it
+  has none); Word's 12 gallery entries have fixed proportions (diagonal: width + height 659.85
+  pt, horizontal: 468 pt wide), the dialog Gedrucktes Wasserzeichen sizes custom ones; drawn
+  behind the text, stretched to the shape like VML's fitshape. Seitenfarbe: w:background with
+  its theme colour, shown on screen but not printed (Word's default); Fülleffekte are not
+  included. Seitenränder: w:pgBorders (from the page edge or the text, all/first/other pages)
+  in Word's dialog Rahmen und Schattierung, which also sets paragraph borders and shading.
+  Word opens all of it as its own (checked through COM).

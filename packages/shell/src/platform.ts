@@ -25,6 +25,8 @@ export interface Platform {
   openFileDialog(): Promise<string | null>;
   /** Chooses a picture file (Einfügen > Bilder > Dieses Gerät). */
   openImageDialog(): Promise<string | null>;
+  /** Chooses a file of the given kinds (Entwurf > Designs > Nach Designs suchen …). */
+  openAnyDialog?(title: string, filters: { name: string; extensions: string[] }[]): Promise<string | null>;
   saveFileDialog(defaultName: string, kind: "docx" | "pdf"): Promise<string | null>;
   readFile(path: string): Promise<Uint8Array>;
   writeFile(path: string, bytes: Uint8Array): Promise<void>;

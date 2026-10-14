@@ -27,6 +27,9 @@ import { stylesPaneFeature } from "./features/styles-pane";
 import { clipboardPaneFeature } from "./features/clipboard-pane";
 import { makeDock } from "./features/dock";
 import { viewsFeature } from "./features/views";
+import { designFeature, newDocumentStyles } from "./features/design";
+import { backgroundFeature } from "./features/background";
+import { bordersFeature } from "./features/borders";
 import { rulerFeature } from "./features/ruler";
 import { referencesFeature, REFERENCE_COMMANDS } from "./features/references";
 import { reviewFeature, REVIEW_COMMANDS } from "./features/review";
@@ -259,6 +262,9 @@ export class WriteApp {
       review: reviewFeature(api, () => this.settings.userName, this.commentPane, this.docArea, () => void this.optionsDialog(), this.dock),
       clipboard: clipboardPaneFeature(api, this.docArea),
       ruler: rulerFeature(api, this.docArea, this.dock),
+      design: designFeature(api),
+      background: backgroundFeature(api),
+      borders: bordersFeature(api),
       views: viewsFeature(api, {
         titleBar: () => this.titleBar.el, docArea: this.docArea,
         openBackstage: () => this.openBackstage("info"), setZoom: (z) => this.setZoom(z),
@@ -318,7 +324,9 @@ export class WriteApp {
 
   newDoc(state?: Partial<DocState>): Doc {
     this.untitled++;
-    return this.createDoc(`Dokument${this.untitled}`, null, state);
+    // A blank document takes what Entwurf > Als Standard festlegen kept.
+    const styles = state ? undefined : newDocumentStyles();
+    return this.createDoc(`Dokument${this.untitled}`, null, styles ? { styles } : state);
   }
 
   private isDirty(d: Doc): boolean {
@@ -1069,7 +1077,15 @@ export class WriteApp {
         get showComments() { return self.features.review.showCommentsMenu; },
         get filterMarkup() { return self.features.review.filterMenu; },
         get reviewingPane() { return self.features.review.reviewingPaneMenu; },
-        borders: ["bottom", "top", "left", "right", "none", "all", "outside", "inside"].map((k) => ({ cmd: `border.${k}` })),
+        borders: [...["bottom", "top", "left", "right", "none", "all", "outside", "inside"].map((k) => ({ cmd: `border.${k}` })), "-", { cmd: "border.dialog" }],
+        themes: (close) => this.features.design.themesPanel(close),
+        styleSet: (close) => this.features.design.styleSetPanel(close),
+        colors: (close) => this.features.design.colorsPanel(close),
+        fonts: (close) => this.features.design.fontsPanel(close),
+        effects: (close) => this.features.design.effectsPanel(close),
+        get paragraphSpacing() { return self.features.design.spacingMenu; },
+        watermark: (close) => this.features.background.watermarkPanel(close),
+        pageColor: (close) => this.features.background.pageColorPanel(close),
         wrap: ["picture.wrapInline", "picture.wrapSquare", "picture.wrapTight", "picture.wrapThrough", "picture.wrapTopBottom", "picture.wrapBehind", "picture.wrapFront"].map((cmd) => ({ cmd })),
       },
       markup: {

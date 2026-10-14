@@ -139,8 +139,22 @@ export interface Section {
   readonly pageFormat?: string;
   /** Layout > Zeilennummern (w:lnNumType): every countBy-th line numbered from `start`. */
   readonly lineNumbers?: LineNumbers;
+  /** Entwurf > Seitenränder (w:pgBorders). */
+  readonly pageBorders?: PageBorders;
   /** Other sectPr children, kept as XML for writing back. */
   readonly extra?: readonly unknown[];
+}
+
+/** Seitenränder (page borders) of a section; `space` of each side is its distance in points. */
+export interface PageBorders {
+  readonly top?: BorderSpec;
+  readonly left?: BorderSpec;
+  readonly bottom?: BorderSpec;
+  readonly right?: BorderSpec;
+  /** Gemessen von: Seitenrand (page edge) or Text. */
+  readonly offsetFrom: "page" | "text";
+  /** Übernehmen für: all pages, only the first, all but the first. */
+  readonly display?: "allPages" | "firstPage" | "notFirstPage";
 }
 
 /** Zeilennummern of a section (Word's dialog Zeilennummern). */

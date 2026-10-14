@@ -431,6 +431,7 @@ class Flow {
     };
     page.header = pick(sr.headers);
     page.footer = pick(sr.footers);
+    this.pageBorders(page, sect, firstOfSection);
     const hdrH = page.header ? this.headerFooter(page, page.header, "header") : 0;
     const ftrH = page.footer ? this.headerFooter(page, page.footer, "footer") : 0;
     page.bodyTop = Math.max(setup.marginTop * PT, setup.header * PT + hdrH);
@@ -439,6 +440,32 @@ class Flow {
     this.startColumns(si, page.bodyTop);
     this.fresh = true;
     this.prev = null;
+  }
+
+  /**
+   * Seitenränder: the section's page borders as lines on the page, measured from the page
+   * edge or around the text area, on all pages or only (not) the section's first.
+   */
+  private pageBorders(page: PageLayout, sect: Section, first: boolean): void {
+    const pb = sect.pageBorders;
+    if (!pb || (pb.display === "firstPage" && !first) || (pb.display === "notFirstPage" && first)) return;
+    const s = page.setup;
+    const W = s.width * PT, H = s.height * PT;
+    const sp = (b: BorderSpec | undefined) => (b ? b.space * PT : 0);
+    const half = (b: BorderSpec | undefined) => (b ? (b.size * PT) / 2 : 0);
+    const top = pb.offsetFrom === "page" ? sp(pb.top) + half(pb.top) : s.marginTop * PT - sp(pb.top) - half(pb.top);
+    const bottom = pb.offsetFrom === "page" ? H - sp(pb.bottom) - half(pb.bottom) : H - s.marginBottom * PT + sp(pb.bottom) + half(pb.bottom);
+    const left = pb.offsetFrom === "page" ? sp(pb.left) + half(pb.left) : s.marginLeft * PT - sp(pb.left) - half(pb.left);
+    const right = pb.offsetFrom === "page" ? W - sp(pb.right) - half(pb.right) : W - s.marginRight * PT + sp(pb.right) + half(pb.right);
+    const line = (b: BorderSpec | undefined, x1: number, y1: number, x2: number, y2: number) => {
+      if (!b || b.style === "nil" || b.style === "none") return;
+      page.deco.push({ kind: "line", story: "main", x1, y1, x2, y2, width: b.size * PT, color: colorOf(b.color), style: b.style });
+    };
+    const lt = left - half(pb.left), rt = right + half(pb.right), tp = top - half(pb.top), bt = bottom + half(pb.bottom);
+    line(pb.top, lt, top, rt, top);
+    line(pb.bottom, lt, bottom, rt, bottom);
+    line(pb.left, left, tp, left, bt);
+    line(pb.right, right, tp, right, bt);
   }
 
   /** Column frames of section `si` from `top` (px) to the bottom of the body. */

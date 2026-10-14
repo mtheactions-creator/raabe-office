@@ -7,13 +7,13 @@ import { DEFAULT_LINE_STYLE, DEFAULT_SHAPE_STYLE, NS_WPS, OFFICE_FMT_SCHEME, bod
 import { strFromU8, strToU8, zipSync } from "fflate";
 import {
   B_NS, COLUMN_BREAK, DEFAULT_MATH, LINE_BREAK, SHAPE_NAMES, sourcesXml, OBJ, OFFICE_2013_COLORS, PAGE_BREAK, effectExtent, type AltText, type CommentMeta, type PictureFormat, type DocState, type FloatObject, type InlineObject,
-  type Para, type Revision, type Section, type ShapeInfo, type StyleDef, type TableDef, type Theme,
+  type Para, type Revision, type Section, type ShapeInfo, type StyleDef, type TableDef, type Theme, type Watermark,
 } from "@raabe/text-engine";
 import { latexToOmml, M_NS, mathPrXml, readMathPr, seqToOmml } from "./math";
 import { writeNumbering } from "./numbering";
 import { CT, PackageWriter, REL, relink } from "./package";
 import { readNoteSettings, type DocxPackage, type ObjectData } from "./read";
-import { bordersXml, revisionAttrs, shadingXml, writePPr, writeRPr, type WriteOptions } from "./props";
+import { borderXml, bordersXml, revisionAttrs, shadingXml, writePPr, writeRPr, type WriteOptions } from "./props";
 import { esc, parse, R, W } from "./xml";
 
 const NBHYPHEN = String.fromCharCode(0x2011);
@@ -30,6 +30,10 @@ const DEFAULT_ROOT = (tag: string) => `<w:${tag} xmlns:w="${W}" xmlns:r="${R}" x
 /** Declares the math namespace on a part's root element when its content uses it. */
 const withMath = (root: string, body: string) => {
   if (body.includes("<m:") && !root.includes("xmlns:m=")) root = root.replace(/>$/, ` xmlns:m="${M_NS}">`);
+  // VML (watermarks): v, o and w10 as Word declares them.
+  if (body.includes("<v:") && !root.includes("xmlns:v=")) root = root.replace(/>$/, ' xmlns:v="urn:schemas-microsoft-com:vml">');
+  if (body.includes("o:") && body.includes("<v:") && !root.includes("xmlns:o=")) root = root.replace(/>$/, ' xmlns:o="urn:schemas-microsoft-com:office:office">');
+  if (body.includes("<w10:") && !root.includes("xmlns:w10=")) root = root.replace(/>$/, ' xmlns:w10="urn:schemas-microsoft-com:office:word">');
   // Emoji (w16se:symEx inside mc:AlternateContent).
   if (body.includes("<w16se:")) {
     if (!root.includes("xmlns:mc=")) root = root.replace(/>$/, ' xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">');
@@ -456,6 +460,12 @@ class DocWriter {
     if (!extra.some((e) => e.name === "pgNumType") && (s.pageStart !== undefined || s.pageFormat)) {
       add("pgNumType", `<w:pgNumType${s.pageFormat ? ` w:fmt="${esc(s.pageFormat)}"` : ""}${s.pageStart !== undefined ? ` w:start="${s.pageStart}"` : ""}/>`);
     }
+    const pb = s.pageBorders;
+    if (pb && !extra.some((e) => e.name === "pgBorders")) {
+      const z = extra.find((e) => e.name === "pgBordersZ")?.xml;
+      const inner = borderXml("top", pb.top) + borderXml("left", pb.left) + borderXml("bottom", pb.bottom) + borderXml("right", pb.right);
+      if (inner) add("pgBorders", `<w:pgBorders${pb.offsetFrom === "page" ? ' w:offsetFrom="page"' : ""}${pb.display ? ` w:display="${pb.display}"` : ""}${z ? ` w:zOrder="${esc(z)}"` : ""}>${inner}</w:pgBorders>`);
+    }
     const ln = s.lineNumbers;
     if (ln && !extra.some((e) => e.name === "lnNumType")) {
       add("lnNumType", `<w:lnNumType w:countBy="${Math.max(1, Math.round(ln.countBy))}"${ln.start > 1 ? ` w:start="${Math.round(ln.start) - 1}"` : ""}` +
@@ -465,7 +475,7 @@ class DocWriter {
     const cols = c.cols ? c.cols.map((x) => `<w:col w:w="${tw(x.width)}" w:space="${tw(x.space)}"/>`).join("") : "";
     add("cols", `<w:cols${c.count > 1 ? ` w:num="${c.count}"` : ""} w:space="${tw(c.space)}"${c.sep ? ' w:sep="1"' : ""}${c.cols ? ' w:equalWidth="0"' : ""}${cols ? `>${cols}</w:cols>` : "/>"}`);
     if (s.titlePage) add("titlePg", "<w:titlePg/>");
-    for (const e of extra) if (e.name !== "pgSzOrient" && e.name !== "pgSzCode") parts.push(e);
+    for (const e of extra) if (e.name !== "pgSzOrient" && e.name !== "pgSzCode" && e.name !== "pgBordersZ") parts.push(e);
     return `<w:sectPr>${ordered(parts, SECT_ORDER)}</w:sectPr>`;
   }
 
@@ -537,16 +547,45 @@ class DocWriter {
 
   /** Headers and footers: changed or new stories get (new) parts. */
   writeHeaders(): void {
+    const wm = this.state.settings.watermark;
+    // A changed watermark rewrites every header (Word keeps it in each of them).
+    const wmChanged = JSON.stringify(wm ?? null) !== (this.pkg?.watermarkRead ?? "null");
     for (const [id, paras] of this.state.stories ?? []) {
       if (!id.startsWith("hdr:") && !id.startsWith("ftr:")) continue;
       const orig = this.pkg?.storyParts.get(id);
       const path = this.storyPath(id);
-      if (orig && this.pkg?.originalStories?.get(id) === paras) continue;
       const tag = id.startsWith("hdr:") ? "hdr" : "ftr";
+      if (orig && this.pkg?.originalStories?.get(id) === paras && !(tag === "hdr" && wmChanged)) continue;
       const root = orig?.rootTag ?? DEFAULT_ROOT(tag);
-      const xml = this.blocks(paras, path);
+      const xml = (tag === "hdr" && wm ? this.watermarkXml(wm, path) : "") + this.blocks(paras, path);
       this.pw.setPart(path, `${XML_HEAD}${withMath(root, xml)}${xml}</w:${tag}>`, tag === "hdr" ? CT.header : CT.footer);
     }
+  }
+
+  private watermarkSeq = 357476642;
+
+  /** Word's watermark as it writes it: a Watermarks sdt with a VML WordArt or picture shape. */
+  private watermarkXml(wm: Watermark, part: string): string {
+    const id = this.watermarkSeq++;
+    const pos = `position:absolute;margin-left:0;margin-top:0;width:${fmt(wm.width)}pt;height:${fmt(wm.height)}pt;` +
+      `${wm.kind === "text" && wm.diagonal ? "rotation:315;" : ""}z-index:-251657216;mso-position-horizontal:center;mso-position-horizontal-relative:margin;mso-position-vertical:center;mso-position-vertical-relative:margin`;
+    let shape: string;
+    if (wm.kind === "text") {
+      shape = `${TEXTPATH_SHAPETYPE}<v:shape id="PowerPlusWaterMarkObject${id}" o:spid="_x0000_s${2049 + (id % 1000)}" type="#_x0000_t136" style="${pos}" o:allowincell="f" fillcolor="#${esc(wm.color)}" stroked="f">` +
+        `${wm.semi ? '<v:fill opacity=".5"/>' : ""}<v:textpath style="font-family:&quot;${esc(wm.font)}&quot;;font-size:${wm.size ? fmt(wm.size) : "1"}pt" string="${esc(wm.text)}"/><w10:wrap anchorx="margin" anchory="margin"/></v:shape>`;
+    } else {
+      const media = this.pw.addMedia(wm.image.bytes, wm.image.type);
+      const rid = this.pw.link(part, REL.image, media);
+      shape = `<v:shapetype id="_x0000_t75" coordsize="21600,21600" o:spt="75" o:preferrelative="t" path="m@4@5l@4@11@9@11@9@5xe" filled="f" stroked="f"><v:stroke joinstyle="miter"/><v:path o:extrusionok="f" gradientshapeok="t" o:connecttype="rect"/><o:lock v:ext="edit" aspectratio="t"/></v:shapetype>` +
+        `<v:shape id="WordPictureWatermark${id}" o:spid="_x0000_s${2049 + (id % 1000)}" type="#_x0000_t75" style="${pos}" o:allowincell="f"><v:imagedata r:id="${rid}" o:title=""${wm.washout ? ' gain="19661f" blacklevel="22938f"' : ""}/><w10:wrap anchorx="margin" anchory="margin"/></v:shape>`;
+    }
+    return `<w:sdt><w:sdtPr><w:id w:val="${-(id % 1000000000)}"/><w:docPartObj><w:docPartGallery w:val="Watermarks"/><w:docPartUnique/></w:docPartObj></w:sdtPr>` +
+      `<w:sdtContent><w:p><w:pPr><w:pStyle w:val="${esc(this.headerStyle)}"/></w:pPr><w:r><w:rPr><w:noProof/></w:rPr><w:pict>${shape}</w:pict></w:r></w:p></w:sdtContent></w:sdt>`;
+  }
+
+  /** The style id of headers in this document (Kopfzeile). */
+  private get headerStyle(): string {
+    return this.state.styles.idForName("header") ?? "Kopfzeile";
   }
 
   /** Foot- and endnotes: the part is rewritten when a note changed, was added or removed. */
@@ -833,6 +872,16 @@ function themeXml(t: Theme): string {
     `${OFFICE_FMT_SCHEME}</a:themeElements><a:objectDefaults/><a:extraClrSchemeLst/></a:theme>`;
 }
 
+/** Word's WordArt shape type for watermarks (VML), as it writes it. */
+const TEXTPATH_SHAPETYPE = '<v:shapetype id="_x0000_t136" coordsize="21600,21600" o:spt="136" adj="10800" path="m@7,l@8,m@5,21600l@6,21600e"><v:formulas>' +
+  '<v:f eqn="sum #0 0 10800"/><v:f eqn="prod #0 2 1"/><v:f eqn="sum 21600 0 @1"/><v:f eqn="sum 0 0 @2"/><v:f eqn="sum 21600 0 @3"/><v:f eqn="if @0 @3 0"/>' +
+  '<v:f eqn="if @0 21600 @1"/><v:f eqn="if @0 0 @2"/><v:f eqn="if @0 @4 21600"/><v:f eqn="mid @5 @6"/><v:f eqn="mid @8 @5"/><v:f eqn="mid @7 @8"/>' +
+  '<v:f eqn="mid @6 @7"/><v:f eqn="sum @6 0 @5"/></v:formulas><v:path textpathok="t" o:connecttype="custom" o:connectlocs="@9,0;@10,10800;@11,21600;@12,10800" ' +
+  'o:connectangles="270,180,90,0"/><v:textpath on="t" fitshape="t"/><v:handles><v:h position="#0,bottomRight" xrange="6629,14971"/></v:handles>' +
+  '<o:lock v:ext="edit" text="t" shapetype="t"/></v:shapetype>';
+
+const fmt = (n: number) => String(Math.round(n * 100) / 100);
+
 function coreXml(author: string, now: Date): string {
   const t = now.toISOString().replace(/\.\d+Z$/, "Z");
   return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -872,7 +921,11 @@ export function writeDocx(state: DocState, pkg: DocxPackage | null, options: { a
   const body = w.blocks(state.paras, "word/document.xml");
   const trailing = (pkg?.trailing ?? []).join("");
   const sect = w.section(state.settings.section, "word/document.xml");
-  pw.setPart("word/document.xml", `${XML_HEAD}${withMath(pkg?.rootTag ?? DEFAULT_ROOT("document"), body)}<w:body>${body}${trailing}${sect}</w:body></w:document>`);
+  // Seitenfarbe: w:background before the body (as read when unchanged).
+  const bg = state.settings.background;
+  const bgXml = !bg ? "" : pkg?.backgroundXml && /w:color="([^"]*)"/.exec(pkg.backgroundXml)?.[1]?.toUpperCase() === bg.color ? pkg.backgroundXml
+    : `<w:background w:color="${esc(bg.color)}"${bg.colorTheme ? ` ${bg.colorTheme}` : ""}/>`;
+  pw.setPart("word/document.xml", `${XML_HEAD}${withMath(pkg?.rootTag ?? DEFAULT_ROOT("document"), body)}${bgXml}<w:body>${body}${trailing}${sect}</w:body></w:document>`);
   w.writeHeaders();
   w.writeNotes("fn");
   w.writeNotes("en");

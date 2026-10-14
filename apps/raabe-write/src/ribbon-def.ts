@@ -36,6 +36,7 @@ export interface RibbonContext {
     toc: MenuEntry[]; addText: MenuEntry[]; nextNote: MenuEntry[]; equation: Popup; symbol: Popup; citation: MenuEntry[]; bibliography: Popup;
     track: MenuEntry[]; deleteComment: MenuEntry[]; accept: MenuEntry[]; reject: MenuEntry[];
     showComments: MenuEntry[]; filterMarkup: MenuEntry[]; reviewingPane: MenuEntry[];
+    themes: Popup; styleSet: Popup; colors: Popup; fonts: Popup; effects: Popup; paragraphSpacing: MenuEntry[]; watermark: Popup; pageColor: Popup;
   };
   /** Markup für Überarbeitung anzeigen (Einfaches Markup, Alle Markups …). */
   markup: { value(): string; set(v: string): void; options(): { heading?: string; items: string[] }[] };
@@ -262,10 +263,11 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
       shrink: ["docFormat", "pageBackground"],
       groups: [
         { id: "docFormat", label: "Dokumentformatierung", key: "Z1", icon: "themes",
-          controls: [dd("design.themes", "N", "large"), dd("design.styleSet", "J", "large"), dd("design.colors", "F", "large"), dd("design.fonts", "6", "large"),
-            stack(dd("design.paragraphSpacing", "BA", "medium"), dd("design.effects", "E", "medium"), b("design.setDefault", "S", "medium"))] },
+          controls: [panel("design.themes", "N", "large", ctx.panels.themes), panel("design.styleSet", "J", "large", ctx.panels.styleSet),
+            panel("design.colors", "F", "large", ctx.panels.colors), panel("design.fonts", "6", "large", ctx.panels.fonts),
+            stack(dd("design.paragraphSpacing", "BA", "medium", undefined, ctx.panels.paragraphSpacing), panel("design.effects", "E", "medium", ctx.panels.effects), b("design.setDefault", "S", "medium"))] },
         { id: "pageBackground", label: "Seitenhintergrund", key: "ZB", icon: "page-color",
-          controls: [dd("design.watermark", "W", "large"), dd("design.pageColor", "PC", "large"), b("design.pageBorders", "T", "large")] },
+          controls: [panel("design.watermark", "W", "large", ctx.panels.watermark), panel("design.pageColor", "PC", "large", ctx.panels.pageColor), b("design.pageBorders", "T", "large")] },
       ],
     },
     {
