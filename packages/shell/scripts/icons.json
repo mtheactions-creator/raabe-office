@@ -276,5 +276,10 @@
   "shape-width": "arrow_autofit_width",
   "line-weight": "line_thickness",
   "line-dash": "line_horizontal_1_dashes",
-  "line-arrows": "arrow_up_left"
+  "line-arrows": "arrow_up_left",
+  "math-convert": "custom:convert",
+  "math-unicode": "custom:unicode",
+  "math-latex": "custom:latex",
+  "ink-equation": "inking_tool",
+  "math-linear": "custom:linear"
 }

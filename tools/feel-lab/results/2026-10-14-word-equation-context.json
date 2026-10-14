@@ -1,0 +1,469 @@
+{
+ "plain": [
+  [
+   "Ausschneiden",
+   "Kopieren",
+   "Einfügen",
+   "Copy Link to Location...",
+   "Professionell",
+   "Linear",
+   "Als neue Formel speichern...",
+   "Schriftart...",
+   "Absatz..."
+  ],
+  [
+   "Ausschneiden",
+   "Kopieren",
+   "Einfügen",
+   "Copy Link to Location...",
+   "Professionell",
+   "Linear",
+   "Als neue Formel speichern...",
+   "Manuellen Umbruch einfügen",
+   "An diesem Zeichen ausrichten",
+   "Schriftart...",
+   "Absatz..."
+  ]
+ ],
+ "fraction": [
+  [
+   "Ausschneiden",
+   "Kopieren",
+   "Einfügen",
+   "Copy Link to Location...",
+   "Professionell",
+   "Linear",
+   "Als neue Formel speichern...",
+   "In 'Versetzter Bruch mit schrägem Bruchstrich' ändern",
+   "In 'Bruch mit schrägem Bruchstrich' ändern",
+   "Bruchstrich entfernen",
+   "Schriftart...",
+   "Absatz..."
+  ]
+ ],
+ "superscript": [
+  [
+   "Ausschneiden",
+   "Kopieren",
+   "Einfügen",
+   "Copy Link to Location...",
+   "Professionell",
+   "Linear",
+   "Als neue Formel speichern...",
+   "Schriftart...",
+   "Absatz..."
+  ]
+ ],
+ "subscript": [
+  [
+   "Ausschneiden",
+   "Kopieren",
+   "Einfügen",
+   "Copy Link to Location...",
+   "Professionell",
+   "Linear",
+   "Als neue Formel speichern...",
+   "Tiefstellung entfernen",
+   "Schriftart...",
+   "Absatz..."
+  ],
+  [
+   "Ausschneiden",
+   "Kopieren",
+   "Einfügen",
+   "Copy Link to Location...",
+   "Professionell",
+   "Linear",
+   "Als neue Formel speichern...",
+   "Tiefstellung entfernen",
+   "Argumentgröße erhöhen",
+   "Argumentgröße reduzieren",
+   "Schriftart...",
+   "Absatz..."
+  ]
+ ],
+ "root": [
+  [
+   "Ausschneiden",
+   "Kopieren",
+   "Einfügen",
+   "Copy Link to Location...",
+   "Professionell",
+   "Linear",
+   "Als neue Formel speichern...",
+   "Wurzel entfernen",
+   "Grad anzeigen",
+   "Schriftart...",
+   "Absatz..."
+  ]
+ ],
+ "sum": [
+  [
+   "Ausschneiden",
+   "Kopieren",
+   "Einfügen",
+   "Copy Link to Location...",
+   "Professionell",
+   "Linear",
+   "Als neue Formel speichern...",
+   "Positionen von Grenzwert ändern",
+   "N-ären Operator dehnen",
+   "Argumentgröße erhöhen",
+   "Argumentgröße reduzieren",
+   "Schriftart...",
+   "Absatz..."
+  ],
+  [
+   "Ausschneiden",
+   "Kopieren",
+   "Einfügen",
+   "Copy Link to Location...",
+   "Professionell",
+   "Linear",
+   "Als neue Formel speichern...",
+   "Positionen von Grenzwert ändern",
+   "N-ären Operator dehnen",
+   "Argumentgröße erhöhen",
+   "Argumentgröße reduzieren",
+   "An diesem Zeichen ausrichten",
+   "Schriftart...",
+   "Absatz..."
+  ],
+  [
+   "Ausschneiden",
+   "Kopieren",
+   "Einfügen",
+   "Copy Link to Location...",
+   "Professionell",
+   "Linear",
+   "Als neue Formel speichern...",
+   "Positionen von Grenzwert ändern",
+   "N-ären Operator dehnen",
+   "Schriftart...",
+   "Absatz..."
+  ]
+ ],
+ "integral": [
+  [
+   "Ausschneiden",
+   "Kopieren",
+   "Einfügen",
+   "Copy Link to Location...",
+   "Professionell",
+   "Linear",
+   "Als neue Formel speichern...",
+   "Positionen von Grenzwert ändern",
+   "N-ären Operator dehnen",
+   "Argumentgröße erhöhen",
+   "Argumentgröße reduzieren",
+   "Schriftart...",
+   "Absatz..."
+  ],
+  [
+   "Ausschneiden",
+   "Kopieren",
+   "Einfügen",
+   "Copy Link to Location...",
+   "Professionell",
+   "Linear",
+   "Als neue Formel speichern...",
+   "Positionen von Grenzwert ändern",
+   "N-ären Operator dehnen",
+   "Schriftart...",
+   "Absatz..."
+  ]
+ ],
+ "brackets": [
+  [
+   "Ausschneiden",
+   "Kopieren",
+   "Einfügen",
+   "Copy Link to Location...",
+   "Professionell",
+   "Linear",
+   "Als neue Formel speichern...",
+   "Argument davor einfügen",
+   "Argument dahinter einfügen",
+   "Einschlusszeichen entfernen",
+   "Öffnende eckige Klammer entfernen",
+   "Schließende eckige Klammer entfernen",
+   "Eckige Klammern dehnen",
+   "Eckige Klammern an Argumenthöhe anpassen",
+   "Manuellen Umbruch einfügen",
+   "An diesem Zeichen ausrichten",
+   "Schriftart...",
+   "Absatz..."
+  ],
+  [
+   "Ausschneiden",
+   "Kopieren",
+   "Einfügen",
+   "Copy Link to Location...",
+   "Professionell",
+   "Linear",
+   "Als neue Formel speichern...",
+   "Argument davor einfügen",
+   "Argument dahinter einfügen",
+   "Einschlusszeichen entfernen",
+   "Öffnende eckige Klammer entfernen",
+   "Schließende eckige Klammer entfernen",
+   "Eckige Klammern dehnen",
+   "Eckige Klammern an Argumenthöhe anpassen",
+   "Schriftart...",
+   "Absatz..."
+  ]
+ ],
+ "matrix": [
+  [
+   "Ausschneiden",
+   "Kopieren",
+   "Einfügen",
+   "Copy Link to Location...",
+   "Professionell",
+   "Linear",
+   "Als neue Formel speichern...",
+   "Platzhalter ausblenden",
+   "Einfügen",
+   "Löschen",
+   "Matrixabstand...",
+   "Matrixausrichtung",
+   "Spaltenausrichtung",
+   "Schriftart...",
+   "Absatz..."
+  ]
+ ],
+ "function": [
+  [
+   "Ausschneiden",
+   "Kopieren",
+   "Einfügen",
+   "Copy Link to Location...",
+   "Professionell",
+   "Linear",
+   "Als neue Formel speichern...",
+   "Schriftart...",
+   "Absatz..."
+  ]
+ ],
+ "accent": [
+  [
+   "Ausschneiden",
+   "Kopieren",
+   "Einfügen",
+   "Copy Link to Location...",
+   "Professionell",
+   "Linear",
+   "Als neue Formel speichern...",
+   "Schriftart...",
+   "Absatz..."
+  ]
+ ],
+ "limit": [
+  [
+   "Ausschneiden",
+   "Kopieren",
+   "Einfügen",
+   "Copy Link to Location...",
+   "Professionell",
+   "Linear",
+   "Als neue Formel speichern...",
+   "Grenzwert über Basis platzieren",
+   "Grenzwert entfernen",
+   "Schriftart...",
+   "Absatz..."
+  ],
+  [
+   "Ausschneiden",
+   "Kopieren",
+   "Einfügen",
+   "Copy Link to Location...",
+   "Professionell",
+   "Linear",
+   "Als neue Formel speichern...",
+   "Schriftart...",
+   "Absatz..."
+  ]
+ ],
+ "Formeloptionen": [
+  {
+   "type": "MenuItem",
+   "name": "Als neue Formel speichern...",
+   "enabled": true,
+   "rect": [
+    2,
+    2,
+    308,
+    44
+   ]
+  },
+  {
+   "type": "MenuItem",
+   "name": "Professionell",
+   "enabled": true,
+   "rect": [
+    2,
+    46,
+    308,
+    44
+   ]
+  },
+  {
+   "type": "MenuItem",
+   "name": "Linear",
+   "enabled": true,
+   "rect": [
+    2,
+    90,
+    308,
+    44
+   ]
+  },
+  {
+   "type": "MenuItem",
+   "name": "Alle – Professionell",
+   "enabled": true,
+   "rect": [
+    2,
+    134,
+    308,
+    44
+   ]
+  },
+  {
+   "type": "MenuItem",
+   "name": "Alle – Linear",
+   "enabled": true,
+   "rect": [
+    2,
+    178,
+    308,
+    44
+   ]
+  },
+  {
+   "type": "MenuItem",
+   "name": "In 'Inline' ändern",
+   "enabled": true,
+   "rect": [
+    2,
+    222,
+    308,
+    44
+   ]
+  },
+  {
+   "type": "MenuItem",
+   "name": "Ausrichtung",
+   "enabled": true,
+   "rect": [
+    2,
+    266,
+    308,
+    44
+   ]
+  }
+ ],
+ "box display": {
+  "equation": [
+   979,
+   486,
+   16,
+   82
+  ],
+  "options": [
+   1002,
+   486,
+   21,
+   83
+  ],
+  "handle": [
+   960,
+   486,
+   13,
+   21
+  ]
+ },
+ "box inline": {
+  "equation": [
+   452,
+   486,
+   13,
+   69
+  ],
+  "options": [
+   472,
+   486,
+   21,
+   70
+  ],
+  "handle": [
+   433,
+   486,
+   13,
+   21
+  ]
+ },
+ "grid superscript": [
+  [
+   "Hochstellung entfernen"
+  ],
+  [
+   "Hochstellung entfernen",
+   "Argumentgröße erhöhen",
+   "Argumentgröße reduzieren"
+  ]
+ ],
+ "grid accent": [],
+ "grid function": [],
+ "grid subsup": [
+  [
+   "Skripts vor Basis platzieren",
+   "Tiefstellung entfernen",
+   "Hochstellung entfernen",
+   "Skripts ausrichten"
+  ],
+  [
+   "Skripts vor Basis platzieren",
+   "Tiefstellung entfernen",
+   "Hochstellung entfernen",
+   "Skripts ausrichten",
+   "Argumentgröße erhöhen",
+   "Argumentgröße reduzieren"
+  ]
+ ],
+ "grid matrix": [
+  [
+   "Platzhalter ausblenden",
+   "Löschen",
+   "Matrixabstand...",
+   "Matrixausrichtung",
+   "Spaltenausrichtung"
+  ]
+ ],
+ "matrix Einfügen": [
+  "Zeile vorher einfügen",
+  "Zeile danach einfügen",
+  "Spalte vorher einfügen",
+  "Spalte nachher einfügen"
+ ],
+ "matrix Löschen": [
+  "Zeile löschen",
+  "Spalte löschen"
+ ],
+ "matrix Matrixausrichtung": [
+  "Oben",
+  "Zentriert",
+  "Unten"
+ ],
+ "matrix Spaltenausrichtung": [
+  "Links",
+  "Zentriert",
+  "Rechts"
+ ],
+ "Formeloptionen Ausrichtung": [
+  "Links",
+  "Rechts",
+  "Zentriert",
+  "Zentriert als Gruppe"
+ ]
+}

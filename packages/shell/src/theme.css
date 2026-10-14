@@ -500,20 +500,56 @@ body.touch .qat button { height: 36px; min-width: 36px; }
 
 /* ----- equations (Formel) ------------------------------------------------------------------ */
 
-math-field.math-edit { position: absolute; z-index: 6; padding: 0 3px; border: 0; border-radius: 2px; background: #f2f2f2;
-  outline: 1px solid #c8c8c8; box-shadow: 0 1px 3px rgba(0,0,0,.12); --caret-color: #000; --selection-background-color: #c8dcf5;
-  --contains-highlight-background-color: transparent; --placeholder-color: #7a7a7a; --smart-fence-color: #7a7a7a; }
-math-field.math-edit::part(virtual-keyboard-toggle), math-field.math-edit::part(menu-toggle) { display: none; }
-.rpanel.mathpanel { max-width: 460px; max-height: 70vh; overflow: auto; }
-.rpanel.mathpanel .title { margin-top: 4px; padding: 4px 6px; background: #f3f3f3; font-weight: 600; font-size: 12px; }
-.rpanel .mgrid { display: flex; flex-wrap: wrap; gap: 4px; padding: 6px 2px; }
-.rpanel .mtile { min-width: 64px; height: 56px; padding: 4px 8px; border: 1px solid transparent; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; }
-.rpanel .mtile:hover, .rpanel .msym:hover, .rpanel .mbuilt:hover { background: var(--hover); border-color: var(--border); }
-.rpanel .msyms { display: grid; grid-template-columns: repeat(12, 30px); gap: 2px; padding: 6px 2px; }
-.rpanel .msym { width: 30px; height: 30px; border: 1px solid transparent; border-radius: 3px; font: 17px 'Cambria Math', serif; }
-.rpanel .mbuilt { display: block; width: 100%; text-align: left; padding: 6px 8px; border: 1px solid transparent; border-radius: 4px; }
-.rpanel .mbuilt .mname { font-size: 12px; font-weight: 600; margin-bottom: 4px; }
+/* Formel: Word's equation box while an equation is edited (frame, move handle, options arrow). */
+.math-session { position: absolute; inset: 0; pointer-events: none; }
+.math-session.back { z-index: 1; }
+.math-session.front { z-index: 5; }
+.math-session .math-box { position: absolute; box-sizing: border-box; border: 1px solid #939393; background: #fff; }
+.math-session .math-sel { position: absolute; background: #c6c6c6; }
+.math-session .math-handle { position: absolute; width: 8px; box-sizing: border-box; border: 1px solid #939393; border-right: 0; cursor: move;
+  background: radial-gradient(circle, #777 0.75px, transparent 1px) 1px 1px / 3px 3.5px, #e1e1e1; }
+.math-session .math-options { position: absolute; width: 15px; box-sizing: border-box; padding: 0 0 4px; border: 1px solid #939393;
+  background: #e1e1e1; pointer-events: auto; display: flex; align-items: flex-end; justify-content: center; }
+.math-session .math-options:hover { background: #cdcdcd; }
+.math-session .math-options .tri { width: 0; height: 0; border-left: 3.5px solid transparent; border-right: 3.5px solid transparent; border-top: 4px solid #444; }
+/* Formel tab: the structure galleries (Word's tiles with a frame), symbols and built-in equations. */
+.rpanel.mathpanel { max-width: 520px; max-height: 70vh; overflow: auto; padding: 2px 0 6px; }
+.rpanel.mathpanel .title { padding: 8px 12px 2px; font-weight: 700; font-size: 13px; }
+.rpanel.mathpanel .title:not(:first-child) { margin-top: 6px; border-top: 1px solid #e1e1e1; padding-top: 10px; }
+.rpanel .mgrid { display: flex; flex-wrap: wrap; padding: 4px 4px; }
+.rpanel .mtile { margin: 4px; box-sizing: border-box; border: 1px solid #a6a6a6; background: #fff; display: inline-flex; align-items: center; justify-content: center; overflow: hidden; }
+.rpanel .mtile:hover { background: var(--hover); border-color: #7a7a7a; }
+.rpanel .msympanel { width: 323px; }
+.rpanel .mfilterrow { position: relative; display: flex; justify-content: flex-end; border-bottom: 1px solid #e1e1e1; padding: 2px 4px; }
+.rpanel .mfilter { display: inline-flex; align-items: center; gap: 4px; padding: 3px 6px; font-size: 13px; border: 1px solid transparent; border-radius: 3px; }
+.rpanel .mfilter:hover { background: var(--hover); }
+.rpanel .mcatlist { position: absolute; right: 4px; top: 100%; z-index: 2; }
+.rpanel .mcatlist button.on { font-weight: 600; }
+.rpanel .msyms { display: flex; flex-wrap: wrap; padding: 4px 6px; }
+.rpanel .msym, .msymtile { box-sizing: border-box; width: 25px; height: 25px; margin: 2px; border: 1px solid #8f8f8f; background: #fff;
+  font: 15px 'Cambria Math', 'STIX Two Math', serif; display: inline-flex; align-items: center; justify-content: center; padding: 0; }
+.rpanel .msym:hover { background: var(--hover); }
+.rgallery.msymtiles .items { display: grid; grid-template-columns: repeat(10, 26px); grid-auto-rows: 26px; }
+.rgallery.msymtiles .item { width: 26px !important; height: 26px !important; padding: 0; }
+.rgallery.msymtiles .msymtile { width: 22px; height: 22px; margin: 0; font-size: 14px; }
+.rpanel .mbuilt { display: block; width: 100%; text-align: left; padding: 6px 12px; border: 1px solid transparent; }
+.rpanel .mbuilt:hover { background: var(--hover); }
+.rpanel .mbuilt .mname { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+.rpanel .mbuilt .mprev { border: 1px solid #a6a6a6; border-right: 0; padding: 6px 4px; min-height: 48px; }
 .mprev { padding: 4px 0; overflow: hidden; }
+/* Formeloptionen (Word's dialog) and its lists. */
+.dialog .mathoptions label.check, .dialog .mathoptions label.field { margin: 4px 0; }
+.dialog .mathoptions .field.row, .dialog .mathoptions .row { display: flex; flex-direction: row; align-items: center; gap: 8px; }
+.dialog .mathoptions .row.end { justify-content: flex-end; margin: 6px 0; }
+.dialog .mathoptions .row.end button { height: 28px; padding: 0 12px; border: 1px solid #c7c7c7; border-radius: 4px; background: var(--card); }
+.dialog .mathoptions .indent { margin-left: 28px; }
+.dialog .mathoptions .note { margin: 4px 0; }
+.dialog .mathoptions .disabled { color: #a0a0a0; }
+.dialog .mlistbox { width: 420px; max-height: 360px; overflow: auto; border: 1px solid #c7c7c7; }
+.dialog table.mlist { width: 100%; border-collapse: collapse; }
+.dialog table.mlist th { position: sticky; top: 0; background: #f3f3f3; text-align: left; padding: 3px 8px; font-weight: 600; }
+.dialog table.mlist td { padding: 2px 8px; border-top: 1px solid #eee; }
+.dialog table.mlist td + td { font-family: 'Cambria Math', serif; }
 
 /* Bildformat galleries: each tile shows the selected picture with the entry (as in Word). */
 .picture-gallery { max-height: 80vh; overflow: auto; }

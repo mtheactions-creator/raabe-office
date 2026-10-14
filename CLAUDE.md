@@ -86,6 +86,11 @@ Display: 4K at 150 % scaling, currently 30 Hz.
 - MathLive takes settings such as `menuItems` only once the field is in the page. The CSS
   generic `math` font falls back to Times for digits: name "Cambria Math" explicitly.
 - Alt+letter is a keytip, Alt+Umschalt+… a shortcut (Alt+Umschalt+0 Formel).
+- Office dropdowns: UI Automation shows a gallery's entries below the expanded ribbon control
+  in the window's tree, not in the popup window; nested menus (Katalogfilter, context
+  submenus) only via `ElementFromPoint`. Submenus open on click, not reliably on hover.
+- pywin32 out parameters: `Window.GetPoint(0, 0, 0, 0, range)`. `Range.Text` of an equation
+  gives math italic letters (𝑥, 𝜃); `winapi.press(combo, hold)` takes a hold time, not a count.
 
 ## Conventions
 - Internal docs and code comments in English; UI strings in German.

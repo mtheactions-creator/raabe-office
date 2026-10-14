@@ -1,0 +1,328 @@
+{
+ "new": {
+  "eqs": [
+   {
+    "para": 0,
+    "latex": "",
+    "inline": false
+   }
+  ],
+  "texts": [
+   "[F]"
+  ],
+  "editing": true,
+  "caret": [
+   556,
+   298,
+   11
+  ],
+  "math": [
+   555,
+   298,
+   193,
+   11
+  ],
+  "box": true,
+  "sel": false,
+  "tab": "equation"
+ },
+ "typed": {
+  "eqs": [
+   {
+    "para": 0,
+    "latex": "\\frac{a}{b}",
+    "inline": false
+   }
+  ],
+  "texts": [
+   "[F]"
+  ],
+  "editing": true,
+  "caret": [
+   657,
+   295,
+   28
+  ],
+  "math": [
+   647,
+   295,
+   10,
+   28
+  ],
+  "box": true,
+  "sel": false,
+  "tab": "equation"
+ },
+ "numerator": {
+  "eqs": [
+   {
+    "para": 0,
+    "latex": "\\frac{ax}{b}",
+    "inline": false
+   }
+  ],
+  "texts": [
+   "[F]"
+  ],
+  "editing": true,
+  "caret": [
+   660,
+   295,
+   7
+  ],
+  "math": [
+   643,
+   295,
+   18,
+   28
+  ],
+  "box": true,
+  "sel": false,
+  "tab": "equation"
+ },
+ "selected": {
+  "eqs": [
+   {
+    "para": 0,
+    "latex": "\\frac{ax}{b}",
+    "inline": false
+   }
+  ],
+  "texts": [
+   "[F]"
+  ],
+  "editing": true,
+  "caret": [
+   255,
+   201,
+   0
+  ],
+  "math": [
+   643,
+   295,
+   18,
+   28
+  ],
+  "box": true,
+  "sel": true,
+  "tab": "equation"
+ },
+ "root": {
+  "eqs": [
+   {
+    "para": 0,
+    "latex": "\\frac{a\\sqrt{x}}{b}",
+    "inline": false
+   }
+  ],
+  "texts": [
+   "[F]"
+  ],
+  "editing": true,
+  "caret": [
+   666,
+   295,
+   15
+  ],
+  "math": [
+   637,
+   295,
+   29,
+   32
+  ],
+  "box": true,
+  "sel": false,
+  "tab": "equation"
+ },
+ "symbol": {
+  "eqs": [
+   {
+    "para": 0,
+    "latex": "\\frac{a\\sqrt{x}}{b}\\infty ",
+    "inline": false
+   }
+  ],
+  "texts": [
+   "[F]"
+  ],
+  "editing": true,
+  "caret": [
+   673,
+   295,
+   32
+  ],
+  "math": [
+   631,
+   295,
+   42,
+   32
+  ],
+  "box": true,
+  "sel": false,
+  "tab": "equation"
+ },
+ "context": [
+  "Ausschneiden",
+  "Kopieren",
+  "exProfessionell",
+  "e^xLinear",
+  "Als neue Formel speichern...",
+  "In 'Versetzter Bruch mit schrägem Bruchstrich' ändern",
+  "In 'Bruch mit schrägem Bruchstrich' ändern",
+  "Bruchstrich entfernen",
+  "Schriftart...",
+  "Absatz..."
+ ],
+ "linear": {
+  "eqs": [
+   {
+    "para": 0,
+    "latex": "(a√x)/b\\infty ",
+    "inline": false
+   }
+  ],
+  "texts": [
+   "[F]"
+  ],
+  "editing": true,
+  "caret": [
+   694,
+   295,
+   25
+  ],
+  "math": [
+   610,
+   295,
+   84,
+   25
+  ],
+  "box": true,
+  "sel": false,
+  "tab": "equation"
+ },
+ "professional": {
+  "eqs": [
+   {
+    "para": 0,
+    "latex": "\\frac{a\\sqrt{x}}{b}\\infty ",
+    "inline": false
+   }
+  ],
+  "texts": [
+   "[F]"
+  ],
+  "editing": true,
+  "caret": [
+   673,
+   295,
+   32
+  ],
+  "math": [
+   631,
+   295,
+   42,
+   32
+  ],
+  "box": true,
+  "sel": false,
+  "tab": "equation"
+ },
+ "round trip": true,
+ "enter": {
+  "eqs": [
+   {
+    "para": 0,
+    "latex": "\\frac{a\\sqrt{x}}{b}\\infty ",
+    "inline": false
+   }
+  ],
+  "texts": [
+   "[F]",
+   "Text"
+  ],
+  "editing": false,
+  "caret": [
+   375,
+   339,
+   18
+  ],
+  "math": [
+   631,
+   295,
+   42,
+   32
+  ],
+  "box": false,
+  "sel": false,
+  "tab": "start"
+ },
+ "click back": {
+  "eqs": [
+   {
+    "para": 0,
+    "latex": "\\frac{a\\sqrt{x}}{b}\\infty ",
+    "inline": false
+   }
+  ],
+  "texts": [
+   "[F]",
+   "Text"
+  ],
+  "editing": true,
+  "caret": [
+   642,
+   316,
+   11
+  ],
+  "math": [
+   631,
+   295,
+   42,
+   32
+  ],
+  "box": true,
+  "sel": false,
+  "tab": "start"
+ },
+ "box menu": [
+  "Als neue Formel speichern...",
+  "exProfessionell",
+  "e^xLinear",
+  "exAlle – Professionell",
+  "e^xAlle – Linear",
+  "In 'Inline' ändern",
+  "Ausrichtung"
+ ],
+ "inline": {
+  "eqs": [
+   {
+    "para": 0,
+    "latex": "\\frac{a\\sqrt{x}}{b}\\infty ",
+    "inline": true
+   }
+  ],
+  "texts": [
+   "[F]",
+   "Text"
+  ],
+  "editing": true,
+  "caret": [
+   358,
+   312,
+   7
+  ],
+  "math": [
+   350,
+   295,
+   34,
+   24
+  ],
+  "box": true,
+  "sel": false,
+  "tab": "start"
+ },
+ "word": {
+  "omaths": 1,
+  "text": "\r𝑎\r𝑥\r\r𝑏\r∞\rText\r"
+ }
+}

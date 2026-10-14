@@ -44,6 +44,7 @@ samples, so we can track regressions over time. Reports that interpret them live
 | 2026-10-13 | F1 35.3 ms · F7 300 MB | RaabeWrite with lists, tables, sections, notes, pictures: F4b 632/632 line starts in ten documents (first reported as 690: a summing error), every page break, baselines ≤ 0.18 pt · F6 sharpness 97 %, fringes 3.4 vs 3.7, correlation 0.97 · F1 31.7 ms · F7 345 MB · smoke tests 28/28 and 41/41 | [Step 3](reports/2026-10-13-step3-documents.md) |
 | 2026-10-13 | F1 36.8/34.3 ms · F7 302 MB | RaabeWrite with notes, tables of contents, comments, tracked changes, equations, templates: F4b 682/682 line starts in eleven documents, every page break (text after equations within 0.8 pt) · F1 31.6/32.0 ms · F7 346 MB · smoke tests 43/43, 28/28 and 41/41 | [Step 4](reports/2026-10-13-step4-school.md) |
 | 2026-10-14 | | RaabeWrite Step 4b A/B, real input: F3 behaviour catalogue 193/193 (typing and AutoCorrect, AutoFormat lists, keys, mouse, delete, lists, tables, styles, breaks, formatting, undo, clipboard; first run 134/161) · clipboard with Word 0 differences both ways (lists, levels, indents, column widths) | Step 4b |
+| 2026-10-14 | | RaabeWrite Step 4b D, real input: formula editor 114/114 recorded Word cases (build-up, Math AutoCorrect, arrows, Up/Down, Home/End, Strg+arrows, Backspace/Entf, selection, Enter) · formula UI check (mouse, galleries, symbols, context menu, Konvertieren, box menu, Word reads the file) · word-math.docx 73/73 line starts, 3/3 pages (equation heights: D-047) · Word's 24 equations written back with Word's OMML structure | Step 4b |
 | 2026-10-13 | F1 66.1 ms (both apps two frames today; Step 1: one) · 0/120 late beyond that | RaabeWrite Step 2, real input: F1 66.3 ms, but 8/120 keystrokes two frames later than Word's worst (JS ≤ 4 ms per keystroke; the delay is in presentation, open) · F3 49/50 (the 50th the known Word glitch) · keyboard toggles 9/9 · mouse on palettes, lists, menus, gallery, dialogs, painter 13/13 | Step 2 |
 
 ## Running the harness
@@ -60,6 +61,8 @@ cd tools/feel-lab
 .venv/Scripts/python.exe keys_check.py        # takes over keyboard and screen (alignment toggles)
 .venv/Scripts/python.exe ui_check.py          # takes over mouse and screen (ribbon controls, dialogs)
 .venv/Scripts/python.exe catalogue.py [area]  # takes over keyboard, mouse and screen (behaviour catalogue, F3)
+.venv/Scripts/python.exe catalogue_math.py [--word-only | --ours-only]  # keyboard and screen (formula editor vs Word)
+.venv/Scripts/python.exe check_math_ui.py    # takes over mouse and keyboard (formula editor UI)
 .venv/Scripts/python.exe clipboard_roundtrip.py  # clipboard with Word both ways (RaabeWrite window)
 .venv/Scripts/python.exe compare_ui.py [--hover] # takes over mouse and screen (ribbon side by side)
 .venv/Scripts/python.exe check_tables.py      # takes over mouse and screen (table handles, row heights)

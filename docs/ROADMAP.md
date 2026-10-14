@@ -39,7 +39,11 @@ screen comparison; the catalogue found 27 differences, all fixed, D-042). B done
 (gridlines, context menus and mini toolbar D-044, row heights, handles, Word's list libraries
 and AutoFormat prefixes, clipboard D-043). C done 2026-10-14 apart from what moved to E: the
 Bildformat tab (D-045), Formen and Textfeld with the Formformat tab and Layout > Anordnen
-(D-046: all 152 preset shapes checked against Word's drawing, Word's 77 Formenarten).
+(D-046: all 152 preset shapes checked against Word's drawing, Word's 77 Formenarten). D done
+2026-10-14: our own formula editor replaces MathLive (D-047): 114 recorded Word cases replayed
+like Word, the Formel tab with Word's galleries (231 entries) and symbols (8 categories) as
+Word inserts them, Word's context menus, Konvertierungen and Formeloptionen; Word's 24
+equations of `word-math.docx` written back with Word's structure.
 
 Order: A, B, C, D, E, F. A comes first because its tools find the differences nobody has
 reported yet; the behaviour catalogue grows with each package. F is last and the largest

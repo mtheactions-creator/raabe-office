@@ -8,10 +8,13 @@
 
 import { pictureElement } from "./picture";
 import { shapeElement, shapeGeometry, shapeTextRect } from "./shape";
+
+/** Where each drawn equation belongs (its paragraph and offset), for the formula editor. */
+export const mathElements = new WeakMap<Element, { para: Para; o: number }>();
 import { flattenPath } from "./geometry";
 import { Fonts, PT } from "./fonts";
 import { cmp, type Doc, type Pos } from "./doc";
-import { COLUMN_BREAK, LINE_BREAK, OBJ, PAGE_BREAK, type ImageData, type Para } from "./model";
+import { COLUMN_BREAK, LINE_BREAK, OBJ, PAGE_BREAK, type ImageData, type InlineObject, type Para } from "./model";
 import type { Line, Segment } from "./layout";
 import type { Deco, Frame, Layout, PageLayout, PlacedLine, StoryLayout } from "./flow";
 import type { ResolvedChar } from "./styles";
@@ -170,9 +173,9 @@ export class View {
   /** Highlighted ranges per paragraph (spelling, search hits …), from the host. */
   marksFor: ((story: string, para: Para) => readonly TextMark[] | undefined) | null = null;
   /** Measures an equation (points), the same function the layout uses; from the host. */
-  measureMath: ((latex: string, size: number, display: boolean) => { width: number; height: number; depth: number }) | null = null;
+  measureMath: ((o: InlineObject, size: number, display: boolean) => { width: number; height: number; depth: number }) | null = null;
   /** Renders an equation (LaTeX) at a font size in px; from the host. */
-  renderMath: ((latex: string, sizePx: number, display: boolean) => HTMLElement) | null = null;
+  renderMath: ((o: InlineObject, sizePx: number, display: boolean) => HTMLElement) | null = null;
   /** Author colours for tracked changes. */
   private authors = new Map<string, string>();
   /** Markup für Überarbeitung anzeigen; decides the change bars in the margin. */
@@ -962,9 +965,11 @@ export class View {
         return out;
       }
       if (o?.kind === "math" && o.latex !== undefined && this.renderMath) {
-        const display = para.text === OBJ;
-        const el = this.renderMath(o.latex, c.size * PT, display);
-        const m = this.measureMath?.(o.latex, c.size, display);
+        const display = para.text === OBJ && !o.mathInline;
+        const el = this.renderMath(o, c.size * PT, display);
+        const m = this.measureMath?.(o, c.size, display);
+        // The editor finds an equation's drawing by its paragraph and offset.
+        mathElements.set(el, { para, o: seg.start });
         const h = (m?.height ?? o.height ?? c.size) * PT, d = (m?.depth ?? o.depth ?? 0) * PT;
         el.style.position = "absolute";
         el.style.left = `${x}px`;
@@ -1110,11 +1115,36 @@ export class View {
   private windowActive = typeof document === "undefined" || document.hasFocus();
   private caretWanted = false;
 
+  /** The formula editor's caret (page px): drawn instead of the text caret while set. */
+  caretOverride: { page: number; x: number; y: number; h: number } | null = null;
+
+  /** A page's element (for the formula editor's selection and box). */
+  pageElement(i: number): HTMLElement | null {
+    return this.pages[i]?.el ?? null;
+  }
+
+  /** The drawn element of the equation at offset `o` of a paragraph, and its page. */
+  mathElementFor(para: Para, o: number): { el: Element; page: number } | null {
+    for (let i = 0; i < this.pages.length; i++) {
+      for (const el of Array.from(this.pages[i].textLayer.querySelectorAll("math"))) {
+        const m = mathElements.get(el);
+        if (m && m.para === para && m.o === o) return { el, page: i };
+      }
+    }
+    return null;
+  }
+
+  /** Redraws the caret (after the formula editor moved its own). */
+  refreshCaret(): void {
+    this.renderCaret(this.caretWanted || this.caretOverride !== null);
+  }
+
   private renderCaret(visible: boolean): void {
     if (!this.layoutRef || !this.docRef || !this.selRef) return;
+    if (this.caretOverride) visible = true;
     this.caretWanted = visible;
     if (!visible || !this.windowActive) { this.caret.style.display = "none"; this.stopBlink(); return; }
-    const c = this.caretBox(this.selRef.head, this.selRef.headUpstream);
+    const c = this.caretOverride ?? this.caretBox(this.selRef.head, this.selRef.headUpstream);
     const pv = this.pages[c.page];
     if (!pv) return;
     if (pv.el !== this.caret.parentElement) pv.el.append(this.caret);

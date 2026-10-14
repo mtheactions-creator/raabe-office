@@ -197,13 +197,18 @@ export class Ribbon {
     // Keep their order: insertBefore above reverses, so put them back in sequence.
     let at: ChildNode = this.contextStart;
     for (const t of tabs) { const b = this.tabButtons.get(t.id)!; at.after(b); at = b; }
-    if (this.current.contextual && !tabs.some((t) => t.id === this.current.id)) this.select(this.tabs[0].id);
+    // A contextual tab that goes returns to the tab that was open before it (Word).
+    if (this.current.contextual && !tabs.some((t) => t.id === this.current.id)) this.select(this.tabs.some((t) => t.id === this.lastPlain) ? this.lastPlain : this.tabs[0].id);
   }
+
+  /** The last ordinary (not contextual) tab selected. */
+  private lastPlain = "";
 
   select(id: string): void {
     const tab = this.tabs.find((t) => t.id === id) ?? this.contextual.find((t) => t.id === id);
     if (!tab) return;
     this.current = tab;
+    if (!tab.contextual) this.lastPlain = id;
     for (const [tid, b] of this.tabButtons) {
       b.classList.toggle("active", tid === id);
       b.setAttribute("aria-selected", String(tid === id));

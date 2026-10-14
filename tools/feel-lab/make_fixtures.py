@@ -725,6 +725,48 @@ def step4(app) -> None:
     d.Close(0)
 
 
+def math(app) -> None:
+    """Equations of school mathematics, display and inline, each followed by text, built up by
+    Word from its linear format: the layout of the formula editor's MathML against Word's."""
+    U = chr
+    frac_nested = "1/(1+1/x)"
+    formulas = [
+        frac_nested,
+        U(0x2211) + "_(k=1)^n k^2=(n(n+1)(2n+1))/6",
+        U(0x221A) + "(x^2+y^2)",
+        U(0x222B) + "_0^" + U(0x221E) + " e^(-x^2) dx=" + U(0x221A) + U(0x03C0) + "/2",
+        "lim" + U(0x252C) + "(n" + U(0x2192) + U(0x221E) + ")" + U(0x2061) + "(1+1/n)^n=e",
+        "A=(" + U(0x25A0) + "(a&b@c&d))",
+        "x_(1,2)=-p/2" + U(0x00B1) + U(0x221A) + "((p/2)^2-q)",
+        "(a+b)^2=a^2+2ab+b^2",
+        "sin^2" + U(0x2061) + U(0x03B1) + "+cos^2" + U(0x2061) + U(0x03B1) + "=1",
+        U(0x220F) + "_(i=1)^n x_i",
+        U(0x221B) + "27=3",
+        "a/b+(c/d)/(e/f)",
+    ]
+    d = base_doc(app)
+    b = Builder(d)
+    b.para("Formeln", -2)
+    for i, f in enumerate(formulas):
+        b.para(f"#d{i}")
+        b.para(f"Text nach Formel {i + 1}: " + FILL[:120])
+        b.para(f"Inline {i + 1}: ")
+        b.para("Text nach der Zeile: " + FILL[:120])
+
+    def build(par, linear, display, after=""):
+        r = par.Range
+        start = r.Start if display else r.End - 1
+        d.Range(start, r.End - 1).Text = linear + after
+        m = d.OMaths.Add(d.Range(start, start + len(linear)))
+        m.OMaths(1).BuildUp()
+
+    for i, f in enumerate(formulas):
+        build(find_para(d, f"#d{i}"), f, True)
+        build(find_para(d, f"Inline {i + 1}: "), f, False, " und weiter.")
+    d.SaveAs2(str(OUT / "word-math.docx"), 16)
+    d.Close(0)
+
+
 def borders(app) -> None:
     d = base_doc(app)
     b = Builder(d)
@@ -885,7 +927,7 @@ def main() -> None:
         if only:
             for name in only:
                 {"layout": layout, "fonts": fonts, "breaks": breaks, "top": top, "formatting": formatting, "rich": rich,
-                 "lists": lists, "tables": tables, "sections": sections, "notes": notes, "borders": borders, "images": images, "step4": step4, "shapes": shapes}[name](app)
+                 "lists": lists, "tables": tables, "sections": sections, "notes": notes, "borders": borders, "images": images, "step4": step4, "shapes": shapes, "math": math}[name](app)
         else:
             formatting(app)
             rich(app)

@@ -209,8 +209,10 @@ export class WriteApp {
   private makeFeatures() {
     const api = this.api();
     const spell = spellFeature(api);
+    const math = mathFeature(api);
     return {
-      context: contextFeature(api, spell.spellEntries, (kind) => this.ribbon?.toolbar(miniToolbar(this.ribbonContext(), kind)).el ?? null),
+      context: contextFeature(api, spell.spellEntries, (kind) => this.ribbon?.toolbar(miniToolbar(this.ribbonContext(), kind)).el ?? null,
+        (x, y) => math.contextMenu(x, y)),
       lists: listsFeature(api),
       tables: tablesFeature(api),
       pages: pageSetupFeature(api),
@@ -219,7 +221,7 @@ export class WriteApp {
       shapes: shapesFeature(api),
       spell,
       refs: referencesFeature(api),
-      math: mathFeature(api),
+      math,
       review: reviewFeature(api, () => this.settings.userName, this.commentPane),
     };
   }
@@ -261,7 +263,7 @@ export class WriteApp {
       };
     }
     this.features.review.attach(editor);
-    this.features.math.attach(editor);
+    this.features.math.attach(editor, !path && !pkg);
     const doc: Doc = {
       id: crypto.randomUUID(), name, path, editor, ws, saved: editor.contentStamp(), recoverySaved: null, pkg, partial,
       lastSaved: null,
@@ -997,7 +999,7 @@ export class WriteApp {
         backward: [{ cmd: "picture.sendBackward" }, { cmd: "picture.sendToBack" }, { cmd: "picture.sendBehindText" }],
         get textBox() { return self.features.shapes.textBoxMenu; },
         get toc() { return self.features.refs.tocMenu; },
-        get equation() { return self.features.math.insertMenu; },
+        equation: (close) => this.features.math.insertPanel(close),
         get addText() { return self.features.refs.addTextMenu; },
         get nextNote() { return self.features.refs.nextNoteMenu; },
         get track() { return self.features.review.trackMenu; },

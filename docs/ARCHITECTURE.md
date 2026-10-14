@@ -25,7 +25,7 @@
 | UI | TypeScript, no heavy framework in the editing hot path | Predictable latency; the ribbon and dialogs may use a small component layer |
 | File formats | Own OOXML reader/writer (zip + XML), in TypeScript | Full control over fidelity and preservation of unknown parts |
 | Spell check | Hunspell dictionaries (igerman98, en_US/en_GB) checked in Rust (`spellbook`) | Offline, open licences, fast (D-031) |
-| Formula editor | MathLive (MIT) for editing; own LaTeX ↔ OMML conversion and MathML display in Cambria Math | D-036 |
+| Formula editor | Own editor on the equation tree that is saved as OMML (Word's behaviour recorded from Word), MathML display in Cambria Math | D-036, D-039, D-047 |
 | Charts | Own renderer (shared by RaabeCalc and RaabePresent) | Must match Excel chart look |
 | Fonts | System fonts, metrics read from the font files (Rust fontdb + ttf-parser); Carlito/Caladea/Liberation as metric-compatible fallbacks | D-011, D-027 |
 

@@ -371,7 +371,8 @@ the wording later without code changes beyond `apps/raabe-write/src/templates.ts
   until they are edited. Unknown OMML elements keep the equation read-only.
 - Editing: MathLive (MIT) in place over the equation, loaded only when an equation is first
   edited (keeps start-up and memory as before). Its own MathML writes limits beside the sum
-  even in display equations, so RaabeWrite does not use it for display.
+  even in display equations, so RaabeWrite does not use it for display. Replaced in Step 4b by
+  our own editor (D-039, D-047); read equations are trees now, LaTeX is only a cache key.
 - Display: MathML built from the same parse as the OMML, drawn by the WebView with Cambria
   Math (named explicitly: the generic `math` font falls back to Times for digits) and laid
   out with the font's MATH table, as Word does. An equation alone in its paragraph is a
@@ -532,3 +533,51 @@ content): Einfaches Textfeld, Randleiste rechts, Merkkasten, Zitat, and Textfeld
 **Moved to package E:** the WordArt-Formate (they are Word's text effects, E's Texteffekte),
 Verknüpfung erstellen (linked text boxes), Gruppieren, Auswahlbereich, Punkte bearbeiten,
 Neuer Zeichenbereich, picture and texture fills.
+
+### D-047 The formula editor as Word's
+**Specification first.** Word's behaviour was recorded before the editor was written:
+`catalogue_math.py` types 114 cases into a new equation in our own Word instance (real
+keystrokes: build-up, Math AutoCorrect, arrows, Up/Down, Home/End, Strg+arrows, Backspace,
+Delete, Umschalt+arrows, Enter) and compares the saved OMML, normalised to what changes the
+look. The editor (`packages/text-engine/src/math/edit.ts`) replays all 114 like Word
+(`math-editor.test.ts`). Recorded rules include: build-up on a space or an operator, scripts
+on the last letter, brackets kept around a script's base but removed around fraction and
+script arguments, `lim_(n→∞)` as a function with its limit below, capital Greek from
+\Delta upright, Up from a subscript to the base, nothing above or below a sum's operand.
+**Galleries and symbols from Word.** `probe_word_equation_ui.py` read the Formel tab (groups,
+labels, keytips) and `probe_word_equation_gallery.py` inserted every entry of every gallery
+(231) and every symbol of the eight categories into an empty equation and recorded what Word
+wrote; `math-gallery.ts` is generated from that (as trees, exact) with Word's headings, entry
+names and tile sizes. Word's labels differ from older versions: Hoch/Tief, Wurzel, Eckige
+Klammer, and the group Konvertierungen (Unicode, LaTeX, Text, Konvertieren).
+**In the app.** No overlay: the equation stays in the line, drawn as MathML whose atoms carry
+their place in the tree (`data-a`, `data-s`); caret, selection (structures whole), Word's box
+with the move handle and the Formeloptionen arrow are drawn from that. Every change goes into
+the document at once (one undo step per edit). Konvertierungen: the linear format
+(UnicodeMath, `linear.ts`) and LaTeX both ways, Text for plain text in an equation.
+Formeloptionen is Word's dialog; the document's settings are m:mathPr in settings.xml (kept
+as the file has them unless changed, Word's defaults in new documents) and decide where new
+limits go and how limLoc is written; display equations keep their own alignment (m:jc).
+Display fractions stay full size when nested (Word's default "Größe von verschachtelten
+Brüchen reduzieren" off). MathLive is removed (D-039).
+**Menus from Word.** `probe_word_equation_context.py` right-clicked every character of twelve
+equations in Word and recorded each menu: the common entries (Ausschneiden, Kopieren,
+Einfügeoptionen, Professionell, Linear, Als neue Formel speichern, Schriftart, Absatz) and
+each structure's own (fractions: the other two fraction kinds and Bruchstrich entfernen;
+scripts: Skripts vor Basis platzieren, Tief-/Hochstellung entfernen, Skripts ausrichten;
+roots; sums and integrals; brackets: arguments, remove, Eckige Klammern dehnen, an
+Argumenthöhe anpassen; matrices: Platzhalter ausblenden, rows and columns, alignment; limits;
+operators: Manuellen Umbruch einfügen, An diesem Zeichen ausrichten) and the box's arrow menu
+(In 'Inline' ändern, Ausrichtung). The structure properties they set are kept in the tree and
+in OMML (grow, shp, plcHide, baseJc, mcJc, alnScr; pre-scripts are m:sPre). Left out: Word's
+"Copy Link to Location" (cloud documents), Argumentgröße erhöhen/reduzieren and
+Matrixabstand (sizes and spacing the tree does not hold).
+**Measured.** Real keystrokes in RaabeWrite: 114/114 cases as in Word (`catalogue_math.py
+--ours-only`; the last three were Up/Down on the only line, where Word stays in the equation).
+`check_math_ui.py`: typing, a click into the numerator, a gallery entry around the selection,
+a ribbon symbol, the fraction's context menu, Konvertieren both ways, Enter, a click back,
+the arrow menu and In 'Inline' ändern, and Word reading the file. Layout against Word
+(`word-math.docx`, 12 equations display and inline): every line start and page as in Word;
+heights per equation within about 2 pt, except matrices in brackets (6-7 pt taller: Cambria
+Math's next bracket size is chosen where Word stays smaller) and nested display fractions
+(2.3-2.6 pt taller); open for a later step.

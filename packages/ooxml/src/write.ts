@@ -6,15 +6,15 @@ import { blipEffectsXml, imgEffectsXml, shapePropsXml } from "./drawingml";
 import { DEFAULT_LINE_STYLE, DEFAULT_SHAPE_STYLE, NS_WPS, OFFICE_FMT_SCHEME, bodyXml, custGeomXml, shapeSpPr } from "./shapes";
 import { strFromU8, strToU8, zipSync } from "fflate";
 import {
-  COLUMN_BREAK, LINE_BREAK, OBJ, OFFICE_2013_COLORS, PAGE_BREAK, effectExtent, type AltText, type CommentMeta, type PictureFormat, type DocState, type FloatObject, type InlineObject,
+  COLUMN_BREAK, DEFAULT_MATH, LINE_BREAK, OBJ, OFFICE_2013_COLORS, PAGE_BREAK, effectExtent, type AltText, type CommentMeta, type PictureFormat, type DocState, type FloatObject, type InlineObject,
   type Para, type Revision, type Section, type ShapeInfo, type StyleDef, type TableDef, type Theme,
 } from "@raabe/text-engine";
-import { latexToOmml, M_NS } from "./math";
+import { latexToOmml, M_NS, mathPrXml, readMathPr, seqToOmml } from "./math";
 import { writeNumbering } from "./numbering";
 import { CT, PackageWriter, REL, relink } from "./package";
 import type { DocxPackage, ObjectData } from "./read";
 import { bordersXml, revisionAttrs, shadingXml, writePPr, writeRPr, type WriteOptions } from "./props";
-import { esc, R, W } from "./xml";
+import { esc, parse, R, W } from "./xml";
 
 const NBHYPHEN = String.fromCharCode(0x2011);
 const SOFTHYPHEN = String.fromCharCode(0xad);
@@ -232,7 +232,11 @@ class DocWriter {
     if (o.kind === "image" && o.shape) return `<w:r>${rPr}${this.newShape(o, o.shape, part)}</w:r>`;
     if (o.kind === "image" && o.image) return `<w:r>${rPr}${this.newDrawing(o, part)}</w:r>`;
     // An equation alone in its paragraph is a display equation (m:oMathPara), as in Word.
-    if (o.kind === "math" && o.latex !== undefined) return latexToOmml(o.latex, alone);
+    if (o.kind === "math" && o.math) {
+      const m = this.state.settings.math;
+      return seqToOmml(o.math, alone && !o.mathInline, { intLim: m?.intLim, naryLim: m?.naryLim, jc: o.mathJc });
+    }
+    if (o.kind === "math" && o.latex !== undefined) return latexToOmml(o.latex, alone && !o.mathInline);
     if (o.kind === "note" && o.note) {
       const [kind, n] = o.note.split(":");
       const tag = kind === "en" ? "endnote" : "footnote";
@@ -667,6 +671,9 @@ const BEFORE_EVEN_ODD = ["writeProtection", "view", "zoom", "removePersonalInfor
   "styleLockTheme", "styleLockQFSet", "defaultTabStop", "autoHyphenation", "consecutiveHyphenLimit", "hyphenationZone",
   "doNotHyphenateCaps", "showEnvelope", "summaryLength", "clickAndTypeStyle", "defaultTableStyle"];
 const BEFORE_TRACK = BEFORE_EVEN_ODD.slice(0, BEFORE_EVEN_ODD.indexOf("trackRevisions"));
+/** Elements that follow m:mathPr in CT_Settings. */
+const AFTER_MATH_PR = ["attachedSchema", "themeFontLang", "clrSchemeMapping", "doNotIncludeSubdocsInStats", "doNotAutoCompressPictures",
+  "forceUpgrade", "captions", "readModeInkLockDown", "smartTagType", "schemaLibrary", "shapeDefaults", "doNotEmbedSmartTags", "decimalSymbol", "listSeparator"];
 
 /** Sets or removes an on/off element in settings.xml, at its place in the schema. */
 function setFlag(xml: string, name: string, on: boolean, before: string[]): string {
@@ -687,6 +694,19 @@ function settingsXml(state: DocState, base: string | null): string {
     '<w:characterSpacingControl w:val="doNotCompress"/><w:compat><w:compatSetting w:name="compatibilityMode" w:uri="http://schemas.microsoft.com/office/word" w:val="15"/></w:compat></w:settings>';
   xml = setFlag(xml, "evenAndOddHeaders", !!state.settings.evenOdd, BEFORE_EVEN_ODD);
   xml = setFlag(xml, "trackRevisions", !!state.settings.trackChanges, BEFORE_TRACK);
+  // Formeloptionen: Word's defaults in a new document, changed ones replace the file's.
+  const math = state.settings.math ?? (base ? null : DEFAULT_MATH);
+  const unchanged = base && math && JSON.stringify(readMathPr(parse(base).documentElement)) === JSON.stringify(math);
+  if (math && !unchanged) {
+    const pr = mathPrXml(math);
+    const old = /<m:mathPr[\s>][\s\S]*?<\/m:mathPr>|<m:mathPr\/>/;
+    if (old.test(xml)) xml = xml.replace(old, pr);
+    else {
+      const after = AFTER_MATH_PR.map((n) => xml.search(new RegExp(`<w:${n}[\\s/>]`))).filter((i) => i >= 0);
+      const at = after.length ? Math.min(...after) : xml.lastIndexOf("</w:settings>");
+      xml = `${xml.slice(0, at)}${pr}${xml.slice(at)}`;
+    }
+  }
   return xml;
 }
 

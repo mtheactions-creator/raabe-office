@@ -409,8 +409,14 @@ export interface InlineObject {
   readonly instr?: string;
   /** Foot- or endnote reference: the note's story id ("fn:2", "en:1"). */
   readonly note?: string;
-  /** Equation as LaTeX (for display and editing). */
+  /** Equation as LaTeX: derived from `math` (a key for caches) or read from a template. */
   readonly latex?: string;
+  /** Equation: its tree (what is edited and written as OMML). */
+  readonly math?: import("./math/ast").Seq;
+  /** An equation alone in its paragraph shown inline (an m:oMath without m:oMathPara). */
+  readonly mathInline?: boolean;
+  /** Display equation: its own alignment (m:oMathParaPr/m:jc); else the document's. */
+  readonly mathJc?: "left" | "right" | "center" | "centerGroup";
   /** Link target (hyperlinks). */
   readonly href?: string;
   /** Font of a symbol object (w:sym, e.g. Wingdings); its display is in that font. */

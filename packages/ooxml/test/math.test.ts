@@ -1,6 +1,8 @@
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { Doc, OBJ, makePara } from "@raabe/text-engine";
-import { latexToOmml, ommlToLatex } from "../src/math";
+import { DEFAULT_MATH, Doc, OBJ, makePara, parseLatex } from "@raabe/text-engine";
+import { latexToOmml, ommlToLatex, ommlToSeq, readMathPr, seqToOmml } from "../src/math";
+import { KEEP_ALL, M_NS, norm } from "./omml-norm";
 import { readDocx, writeDocx } from "../src";
 import { strFromU8, unzipSync } from "fflate";
 
@@ -32,10 +34,11 @@ describe("LaTeX → OMML", () => {
   it("sums, integrals and functions take their operand", () => {
     const sum = roundTrip("\\sum_{k=0}^{n}\\binom{n}{k}x^ka^{n-k}", true).omml;
     expect(sum).toContain("<m:oMathPara>");
-    expect(sum).toContain('<m:chr m:val="∑"/><m:limLoc m:val="undOvr"/>');
+    // As Word writes it: limLoc only where it differs from the default (here: none).
+    expect(sum).toContain('<m:naryPr><m:chr m:val="∑"/></m:naryPr>');
     expect(sum).toContain('<m:type m:val="noBar"/>');
     const int = roundTrip("\\int_0^1 x^2\\,dx=\\frac{1}{3}").omml;
-    expect(int).toMatch(/<m:nary><m:naryPr><m:limLoc m:val="subSup"\/><\/m:naryPr><m:sub>.*<\/m:sub><m:sup>.*<\/m:sup><m:e>.*dx.*<\/m:e><\/m:nary><m:r>.*=/);
+    expect(int).toMatch(/<m:nary><m:naryPr><\/m:naryPr><m:sub>.*<\/m:sub><m:sup>.*<\/m:sup><m:e>.*dx.*<\/m:e><\/m:nary><m:r>.*=/);
     const sin = roundTrip("\\sin^2\\alpha+\\cos^2\\alpha=1").omml;
     expect((sin.match(/<m:func>/g) ?? []).length).toBe(2);
     expect(sin).toContain('<m:fName><m:sSup><m:e><m:r><m:rPr><m:sty m:val="p"/></m:rPr>');
@@ -95,5 +98,47 @@ describe("equations in .docx", () => {
     expect(back.partial).not.toContain("Formeln");
     const objs = back.state.paras.flatMap((p) => p.objects ?? []);
     expect(objs.map((o) => o.latex)).toEqual(["a^{2}+b^{2}=c^{2}", "A=\\pi r^{2}"]);
+  });
+});
+
+describe("Formeloptionen (m:mathPr)", () => {
+  it("a new document carries Word's defaults; changed ones are read back and decide limLoc", () => {
+    const sum = parseLatex("\\sum_{i=1}^{n}i");
+    const d = new Doc({ paras: [{ ...makePara(OBJ), objects: [{ kind: "math", data: undefined, display: "", math: sum }] }] });
+    const first = unzipSync(writeDocx(d.state(), null));
+    expect(strFromU8(first["word/settings.xml"])).toContain('<m:naryLim m:val="undOvr"/>');
+    expect(readDocx(writeDocx(d.state(), null)).state.settings.math).toEqual(DEFAULT_MATH);
+    // Limits beside sums by default: a sum with limits above and below now says so.
+    d.setSettings({ ...d.settings, math: { ...DEFAULT_MATH, naryLim: "subSup", defJc: "left" } });
+    const bytes = writeDocx(d.state(), null);
+    const x = strFromU8(unzipSync(bytes)["word/document.xml"]);
+    expect(x).toContain('<m:limLoc m:val="undOvr"/>');
+    expect(strFromU8(unzipSync(bytes)["word/settings.xml"])).toContain('<m:defJc m:val="left"/>');
+    const back = readDocx(bytes).state;
+    expect(back.settings.math?.naryLim).toBe("subSup");
+    expect(back.paras[0].objects?.[0].math?.[0]).toMatchObject({ k: "nary", und: true });
+  });
+});
+
+describe("Word's equations written back (word-math.docx)", () => {
+  it("every equation reads editable and is written with Word's structure", () => {
+    const bytes = new Uint8Array(readFileSync("packages/ooxml/test/fixtures/word-math.docx"));
+    const files = unzipSync(bytes);
+    const settings = new DOMParser().parseFromString(strFromU8(files["word/settings.xml"]), "application/xml").documentElement;
+    const opts = readMathPr(settings) ?? {};
+    const doc = new DOMParser().parseFromString(strFromU8(files["word/document.xml"]), "application/xml");
+    const maths = [...Array.from(doc.getElementsByTagNameNS(M_NS, "oMathPara")),
+      ...Array.from(doc.getElementsByTagNameNS(M_NS, "oMath")).filter((m) => m.parentElement?.localName !== "oMathPara")];
+    expect(maths.length).toBe(24);
+    const diffs: string[] = [];
+    for (const el of maths) {
+      const seq = ommlToSeq(el, opts);
+      if (!seq) { diffs.push(`unreadable: ${norm(el, KEEP_ALL)}`); continue; }
+      const xml = seqToOmml(seq, el.localName === "oMathPara", opts);
+      const back = new DOMParser().parseFromString(`<r xmlns:m="${M_NS}" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">${xml}</r>`, "application/xml").documentElement.firstElementChild!;
+      const want = norm(el, KEEP_ALL), got = norm(back, KEEP_ALL);
+      if (want !== got) diffs.push(`word: ${want}\nours: ${got}`);
+    }
+    expect(diffs.join("\n\n")).toBe("");
   });
 });

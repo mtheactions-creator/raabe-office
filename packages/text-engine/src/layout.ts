@@ -24,9 +24,11 @@ export interface LayoutContext {
   /** Default tab stop distance in points (Word: 35.4 pt = 1.25 cm). */
   readonly defaultTab: number;
   /** Measures an equation given as LaTeX (points); provided by the host page. */
-  readonly measureMath?: (latex: string, size: number, display: boolean) => { width: number; height: number; depth: number };
+  readonly measureMath?: (o: InlineObject, size: number, display: boolean) => { width: number; height: number; depth: number };
   /** Markup anzeigen: "simple" and "none" hide deleted text, "original" hides inserted text. */
   readonly markup?: "all" | "simple" | "none" | "original";
+  /** Formeloptionen > Ausrichtung: where display equations stand (default centred). */
+  readonly mathJc?: "left" | "right" | "center" | "centerGroup";
 }
 
 const hiddenVariant = new WeakMap<ResolvedChar, ResolvedChar>();
@@ -193,7 +195,7 @@ export class Layouter {
     // Equations: measured size (points). One alone in its paragraph is a display equation,
     // centred and set in display style, as Word does.
     const mathDims: ({ width: number; height: number; depth: number } | undefined)[] = [];
-    const displayMath = text === OBJ && para.objects?.[0]?.kind === "math";
+    const displayMath = text === OBJ && para.objects?.[0]?.kind === "math" && !para.objects[0].mathInline;
     let pos = 0;
     para.runs.forEach((run, ri) => {
       const c = charOf(run.props);
@@ -214,7 +216,7 @@ export class Layouter {
           }
           if (o?.note && env.notes?.has(o.note)) display = env.notes.get(o.note);
           if (o?.kind === "math" && o.latex !== undefined && this.ctx.measureMath && o.width === undefined) {
-            const m = this.ctx.measureMath(o.latex, c.size, displayMath);
+            const m = this.ctx.measureMath(o, c.size, displayMath);
             mathDims[i] = m;
             w = m.width * PT;
           } else if (o?.width !== undefined) {
@@ -405,7 +407,10 @@ export class Layouter {
     // Alignment.
     let x0 = lineLeft;
     let spaceExtra = 0;
-    if (rp.align === "center" || (text === OBJ && objs[0]?.kind === "math")) x0 += (avail - width) / 2;
+    const mathJc = text === OBJ && objs[0]?.kind === "math" && !objs[0].mathInline ? objs[0].mathJc ?? this.ctx.mathJc ?? "centerGroup" : null;
+    if (mathJc === "left") { /* at the left margin */ }
+    else if (mathJc === "right") x0 += avail - width;
+    else if (rp.align === "center" || mathJc) x0 += (avail - width) / 2;
     else if (rp.align === "right") x0 += avail - width;
     else if (rp.align === "both") {
       // Spaces widen to fill the line (not on the last line) or narrow when the line was

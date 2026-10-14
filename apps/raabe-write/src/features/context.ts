@@ -27,7 +27,9 @@ export const CONTEXT_COMMANDS: Command[] = [
 const cmds = (...ids: string[]): MenuEntry[] => ids.map((id) => (id === "-" ? "-" : { cmd: id }));
 
 export function contextFeature(api: AppApi, spellEntries: (e: Editor, pos: Pos) => Promise<MenuEntry[]>,
-  toolbar: (kind: "text" | "table" | "picture") => HTMLElement | null) {
+  toolbar: (kind: "text" | "table" | "picture") => HTMLElement | null,
+  /** Word's menu inside an equation being edited (null outside one). */
+  mathEntries: (x: number, y: number) => MenuEntry[] | null = () => null) {
   const c = api.commands;
   const ed = () => api.editor();
   const has = () => !!ed();
@@ -189,6 +191,8 @@ export function contextFeature(api: AppApi, spellEntries: (e: Editor, pos: Pos) 
   };
 
   const show = async (e: Editor, x: number, y: number, pos: Pos) => {
+    const math = mathEntries(x, y);
+    if (math) { open(math, new DOMRect(x, y, 0, 0), "", toolbar("text")); return; }
     const spell = await spellEntries(e, pos);
     const kind = e.selectedImage() ? "picture" : e.inTable() ? "table" : "text";
     open([...spell, ...entriesFor(e)], new DOMRect(x, y, 0, 0), "", toolbar(kind));

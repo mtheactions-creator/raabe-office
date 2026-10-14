@@ -53,7 +53,7 @@ What each app does, ordered by priority. **M** = first usable version (MVP),
 | Cover page / title page | M | Via templates (Facharbeit, Step 4) |
 | Comments | M | Done in Step 4: cards beside the page, replies, erledigt, Kommentare pane (D-034) |
 | Track changes (Änderungen nachverfolgen) | M | Done in Step 4: insertions, deletions, paragraph marks, Annehmen/Ablehnen, Markup modes (D-034) |
-| Formula editor | M | Done in Step 4: Formel tab with all Strukturen, MathLive input, Cambria Math display, OMML in .docx (D-036) |
+| Formula editor | M | Done in Step 4 (D-036); our own editor in Step 4b with Word's typing, navigation and selection, the Formel tab with Word's galleries and symbols, Konvertierungen and Formeloptionen (D-039, D-047) |
 | Word count, character count | M | |
 | AutoCorrect (basic), smart quotes „…“ | M | German quotation marks |
 | Symbols and special characters | M | |

@@ -1,0 +1,1619 @@
+[
+{
+"name": "plain letters",
+"steps": [
+[
+"type",
+"abc"
+]
+],
+"area": "type"
+},
+{
+"name": "letters and digits",
+"steps": [
+[
+"type",
+"x+2y=3"
+]
+],
+"area": "type"
+},
+{
+"name": "space between letters",
+"steps": [
+[
+"type",
+"a b"
+]
+],
+"area": "type"
+},
+{
+"name": "power without space",
+"steps": [
+[
+"type",
+"x^2"
+]
+],
+"area": "buildup"
+},
+{
+"name": "power with space",
+"steps": [
+[
+"type",
+"x^2 "
+]
+],
+"area": "buildup"
+},
+{
+"name": "power then operator",
+"steps": [
+[
+"type",
+"x^2+1"
+]
+],
+"area": "buildup"
+},
+{
+"name": "subscript",
+"steps": [
+[
+"type",
+"x_1 "
+]
+],
+"area": "buildup"
+},
+{
+"name": "sub and sup",
+"steps": [
+[
+"type",
+"x_1^2 "
+]
+],
+"area": "buildup"
+},
+{
+"name": "fraction",
+"steps": [
+[
+"type",
+"a/b "
+]
+],
+"area": "buildup"
+},
+{
+"name": "fraction of numbers",
+"steps": [
+[
+"type",
+"1/2 "
+]
+],
+"area": "buildup"
+},
+{
+"name": "fraction with brackets",
+"steps": [
+[
+"type",
+"(a+b)/c "
+]
+],
+"area": "buildup"
+},
+{
+"name": "fraction then text",
+"steps": [
+[
+"type",
+"a/b+c "
+]
+],
+"area": "buildup"
+},
+{
+"name": "power in brackets",
+"steps": [
+[
+"type",
+"x^(2n) "
+]
+],
+"area": "buildup"
+},
+{
+"name": "negative exponent",
+"steps": [
+[
+"type",
+"e^-x "
+]
+],
+"area": "buildup"
+},
+{
+"name": "alpha",
+"steps": [
+[
+"type",
+"\\alpha "
+]
+],
+"area": "autocorrect"
+},
+{
+"name": "pi r squared",
+"steps": [
+[
+"type",
+"\\pi r^2 "
+]
+],
+"area": "autocorrect"
+},
+{
+"name": "cdot",
+"steps": [
+[
+"type",
+"a\\cdot b"
+]
+],
+"area": "autocorrect"
+},
+{
+"name": "cdot space",
+"steps": [
+[
+"type",
+"a\\cdot b "
+]
+],
+"area": "autocorrect"
+},
+{
+"name": "less or equal",
+"steps": [
+[
+"type",
+"x<=y "
+]
+],
+"area": "autocorrect"
+},
+{
+"name": "not equal",
+"steps": [
+[
+"type",
+"a/=b "
+]
+],
+"area": "autocorrect"
+},
+{
+"name": "arrow",
+"steps": [
+[
+"type",
+"a->b "
+]
+],
+"area": "autocorrect"
+},
+{
+"name": "infinity",
+"steps": [
+[
+"type",
+"\\infty "
+]
+],
+"area": "autocorrect"
+},
+{
+"name": "times",
+"steps": [
+[
+"type",
+"a\\times b "
+]
+],
+"area": "autocorrect"
+},
+{
+"name": "square root",
+"steps": [
+[
+"type",
+"\\sqrt(x) "
+]
+],
+"area": "buildup"
+},
+{
+"name": "square root of number",
+"steps": [
+[
+"type",
+"\\sqrt 2 "
+]
+],
+"area": "buildup"
+},
+{
+"name": "integral",
+"steps": [
+[
+"type",
+"\\int_0^1 x dx "
+]
+],
+"area": "buildup"
+},
+{
+"name": "sum",
+"steps": [
+[
+"type",
+"\\sum_(i=1)^n i "
+]
+],
+"area": "buildup"
+},
+{
+"name": "sin x",
+"steps": [
+[
+"type",
+"sin x "
+]
+],
+"area": "buildup"
+},
+{
+"name": "brackets",
+"steps": [
+[
+"type",
+"(a+b) "
+]
+],
+"area": "buildup"
+},
+{
+"name": "absolute value",
+"steps": [
+[
+"type",
+"|x| "
+]
+],
+"area": "buildup"
+},
+{
+"name": "matrix",
+"steps": [
+[
+"type",
+"\\matrix(a&b@c&d) "
+]
+],
+"area": "buildup"
+},
+{
+"name": "bar accent",
+"steps": [
+[
+"type",
+"x\\bar "
+]
+],
+"area": "buildup"
+},
+{
+"name": "degree",
+"steps": [
+[
+"type",
+"90\\degree "
+]
+],
+"area": "autocorrect"
+},
+{
+"name": "fraction left x1",
+"steps": [
+[
+"type",
+"a/b "
+],
+[
+"keys",
+"left",
+1
+]
+],
+"area": "navigate"
+},
+{
+"name": "fraction left x2",
+"steps": [
+[
+"type",
+"a/b "
+],
+[
+"keys",
+"left",
+2
+]
+],
+"area": "navigate"
+},
+{
+"name": "fraction left x3",
+"steps": [
+[
+"type",
+"a/b "
+],
+[
+"keys",
+"left",
+3
+]
+],
+"area": "navigate"
+},
+{
+"name": "fraction left x4",
+"steps": [
+[
+"type",
+"a/b "
+],
+[
+"keys",
+"left",
+4
+]
+],
+"area": "navigate"
+},
+{
+"name": "fraction left x5",
+"steps": [
+[
+"type",
+"a/b "
+],
+[
+"keys",
+"left",
+5
+]
+],
+"area": "navigate"
+},
+{
+"name": "fraction left x6",
+"steps": [
+[
+"type",
+"a/b "
+],
+[
+"keys",
+"left",
+6
+]
+],
+"area": "navigate"
+},
+{
+"name": "power left x1",
+"steps": [
+[
+"type",
+"x^2 "
+],
+[
+"keys",
+"left",
+1
+]
+],
+"area": "navigate"
+},
+{
+"name": "power left x2",
+"steps": [
+[
+"type",
+"x^2 "
+],
+[
+"keys",
+"left",
+2
+]
+],
+"area": "navigate"
+},
+{
+"name": "power left x3",
+"steps": [
+[
+"type",
+"x^2 "
+],
+[
+"keys",
+"left",
+3
+]
+],
+"area": "navigate"
+},
+{
+"name": "power left x4",
+"steps": [
+[
+"type",
+"x^2 "
+],
+[
+"keys",
+"left",
+4
+]
+],
+"area": "navigate"
+},
+{
+"name": "power left x5",
+"steps": [
+[
+"type",
+"x^2 "
+],
+[
+"keys",
+"left",
+5
+]
+],
+"area": "navigate"
+},
+{
+"name": "root left x1",
+"steps": [
+[
+"type",
+"\\sqrt(x) "
+],
+[
+"keys",
+"left",
+1
+]
+],
+"area": "navigate"
+},
+{
+"name": "root left x2",
+"steps": [
+[
+"type",
+"\\sqrt(x) "
+],
+[
+"keys",
+"left",
+2
+]
+],
+"area": "navigate"
+},
+{
+"name": "root left x3",
+"steps": [
+[
+"type",
+"\\sqrt(x) "
+],
+[
+"keys",
+"left",
+3
+]
+],
+"area": "navigate"
+},
+{
+"name": "root left x4",
+"steps": [
+[
+"type",
+"\\sqrt(x) "
+],
+[
+"keys",
+"left",
+4
+]
+],
+"area": "navigate"
+},
+{
+"name": "sub sup left x1",
+"steps": [
+[
+"type",
+"x_1^2 "
+],
+[
+"keys",
+"left",
+1
+]
+],
+"area": "navigate"
+},
+{
+"name": "sub sup left x2",
+"steps": [
+[
+"type",
+"x_1^2 "
+],
+[
+"keys",
+"left",
+2
+]
+],
+"area": "navigate"
+},
+{
+"name": "sub sup left x3",
+"steps": [
+[
+"type",
+"x_1^2 "
+],
+[
+"keys",
+"left",
+3
+]
+],
+"area": "navigate"
+},
+{
+"name": "sub sup left x4",
+"steps": [
+[
+"type",
+"x_1^2 "
+],
+[
+"keys",
+"left",
+4
+]
+],
+"area": "navigate"
+},
+{
+"name": "sub sup left x5",
+"steps": [
+[
+"type",
+"x_1^2 "
+],
+[
+"keys",
+"left",
+5
+]
+],
+"area": "navigate"
+},
+{
+"name": "sub sup left x6",
+"steps": [
+[
+"type",
+"x_1^2 "
+],
+[
+"keys",
+"left",
+6
+]
+],
+"area": "navigate"
+},
+{
+"name": "sub sup left x7",
+"steps": [
+[
+"type",
+"x_1^2 "
+],
+[
+"keys",
+"left",
+7
+]
+],
+"area": "navigate"
+},
+{
+"name": "fraction home",
+"steps": [
+[
+"type",
+"a/b "
+],
+[
+"keys",
+"home",
+1
+]
+],
+"area": "navigate"
+},
+{
+"name": "fraction end",
+"steps": [
+[
+"type",
+"a/b "
+],
+[
+"keys",
+"home",
+1
+],
+[
+"keys",
+"end",
+1
+]
+],
+"area": "navigate"
+},
+{
+"name": "fraction up from denominator",
+"steps": [
+[
+"type",
+"a/b "
+],
+[
+"keys",
+"left",
+1
+],
+[
+"keys",
+"up",
+1
+]
+],
+"area": "navigate"
+},
+{
+"name": "fraction down from numerator",
+"steps": [
+[
+"type",
+"a/b "
+],
+[
+"keys",
+"left",
+3
+],
+[
+"keys",
+"down",
+1
+]
+],
+"area": "navigate"
+},
+{
+"name": "right after home",
+"steps": [
+[
+"type",
+"a/b "
+],
+[
+"keys",
+"home",
+1
+],
+[
+"keys",
+"right",
+1
+]
+],
+"area": "navigate"
+},
+{
+"name": "right x2 after home",
+"steps": [
+[
+"type",
+"a/b "
+],
+[
+"keys",
+"home",
+1
+],
+[
+"keys",
+"right",
+2
+]
+],
+"area": "navigate"
+},
+{
+"name": "right x3 after home",
+"steps": [
+[
+"type",
+"a/b "
+],
+[
+"keys",
+"home",
+1
+],
+[
+"keys",
+"right",
+3
+]
+],
+"area": "navigate"
+},
+{
+"name": "leave equation right",
+"steps": [
+[
+"type",
+"x "
+],
+[
+"keys",
+"right",
+1
+]
+],
+"area": "navigate"
+},
+{
+"name": "leave equation left",
+"steps": [
+[
+"type",
+"x "
+],
+[
+"keys",
+"home",
+1
+],
+[
+"keys",
+"left",
+1
+]
+],
+"area": "navigate"
+},
+{
+"name": "ctrl right",
+"steps": [
+[
+"type",
+"ab+cd "
+],
+[
+"keys",
+"home",
+1
+],
+[
+"keys",
+"ctrl+right",
+1
+]
+],
+"area": "navigate"
+},
+{
+"name": "backspace after fraction",
+"steps": [
+[
+"type",
+"a/b "
+],
+[
+"keys",
+"backspace",
+1
+]
+],
+"area": "delete"
+},
+{
+"name": "backspace twice after fraction",
+"steps": [
+[
+"type",
+"a/b "
+],
+[
+"keys",
+"backspace",
+2
+]
+],
+"area": "delete"
+},
+{
+"name": "backspace after power",
+"steps": [
+[
+"type",
+"x^2 "
+],
+[
+"keys",
+"backspace",
+1
+]
+],
+"area": "delete"
+},
+{
+"name": "backspace twice after power",
+"steps": [
+[
+"type",
+"x^2 "
+],
+[
+"keys",
+"backspace",
+2
+]
+],
+"area": "delete"
+},
+{
+"name": "backspace in denominator start",
+"steps": [
+[
+"type",
+"a/b "
+],
+[
+"keys",
+"left",
+2
+],
+[
+"keys",
+"backspace",
+1
+]
+],
+"area": "delete"
+},
+{
+"name": "backspace in empty numerator",
+"steps": [
+[
+"type",
+"a/b "
+],
+[
+"keys",
+"left",
+3
+],
+[
+"keys",
+"backspace",
+1
+],
+[
+"keys",
+"backspace",
+1
+]
+],
+"area": "delete"
+},
+{
+"name": "delete before fraction",
+"steps": [
+[
+"type",
+"a/b "
+],
+[
+"keys",
+"home",
+1
+],
+[
+"keys",
+"delete",
+1
+]
+],
+"area": "delete"
+},
+{
+"name": "delete twice before fraction",
+"steps": [
+[
+"type",
+"a/b "
+],
+[
+"keys",
+"home",
+1
+],
+[
+"keys",
+"delete",
+2
+]
+],
+"area": "delete"
+},
+{
+"name": "backspace letter",
+"steps": [
+[
+"type",
+"abc"
+],
+[
+"keys",
+"backspace",
+1
+]
+],
+"area": "delete"
+},
+{
+"name": "shift left over fraction",
+"steps": [
+[
+"type",
+"a/b "
+],
+[
+"keys",
+"shift+left",
+1
+]
+],
+"area": "select"
+},
+{
+"name": "shift left twice",
+"steps": [
+[
+"type",
+"x+a/b "
+],
+[
+"keys",
+"shift+left",
+2
+]
+],
+"area": "select"
+},
+{
+"name": "shift home",
+"steps": [
+[
+"type",
+"x+a/b "
+],
+[
+"keys",
+"shift+home",
+1
+]
+],
+"area": "select"
+},
+{
+"name": "shift right in numerator",
+"steps": [
+[
+"type",
+"ab/c "
+],
+[
+"keys",
+"left",
+4
+],
+[
+"keys",
+"shift+right",
+1
+]
+],
+"area": "select"
+},
+{
+"name": "shift right out of numerator",
+"steps": [
+[
+"type",
+"ab/c "
+],
+[
+"keys",
+"left",
+4
+],
+[
+"keys",
+"shift+right",
+3
+]
+],
+"area": "select"
+},
+{
+"name": "enter in equation",
+"steps": [
+[
+"type",
+"x=1"
+],
+[
+"keys",
+"enter",
+1
+]
+],
+"area": "enter"
+},
+{
+"name": "shift enter in equation",
+"steps": [
+[
+"type",
+"x=1"
+],
+[
+"keys",
+"shift+enter",
+1
+]
+],
+"area": "enter"
+},
+{
+"name": "nth root",
+"steps": [
+[
+"type",
+"\\sqrt(3&x) "
+]
+],
+"area": "buildup"
+},
+{
+"name": "abs then power",
+"steps": [
+[
+"type",
+"|x|^2 "
+]
+],
+"area": "buildup"
+},
+{
+"name": "power of fraction",
+"steps": [
+[
+"type",
+"(a/b)^2 "
+]
+],
+"area": "buildup"
+},
+{
+"name": "fraction of power",
+"steps": [
+[
+"type",
+"a^2/b "
+]
+],
+"area": "buildup"
+},
+{
+"name": "root in fraction",
+"steps": [
+[
+"type",
+"\\sqrt(x)/2 "
+]
+],
+"area": "buildup"
+},
+{
+"name": "product",
+"steps": [
+[
+"type",
+"\\prod_(k=1)^n k "
+]
+],
+"area": "buildup"
+},
+{
+"name": "limit",
+"steps": [
+[
+"type",
+"lim_(n->\\infty) a_n "
+]
+],
+"area": "buildup"
+},
+{
+"name": "vector accent",
+"steps": [
+[
+"type",
+"v\\vec "
+]
+],
+"area": "buildup"
+},
+{
+"name": "hat accent",
+"steps": [
+[
+"type",
+"x\\hat "
+]
+],
+"area": "buildup"
+},
+{
+"name": "double integral",
+"steps": [
+[
+"type",
+"\\iint_D f dA "
+]
+],
+"area": "buildup"
+},
+{
+"name": "plus minus",
+"steps": [
+[
+"type",
+"x=+-1 "
+]
+],
+"area": "autocorrect"
+},
+{
+"name": "capital delta",
+"steps": [
+[
+"type",
+"\\Delta x "
+]
+],
+"area": "autocorrect"
+},
+{
+"name": "dots",
+"steps": [
+[
+"type",
+"1,2,...,n "
+]
+],
+"area": "autocorrect"
+},
+{
+"name": "cos of fraction",
+"steps": [
+[
+"type",
+"cos x/2 "
+]
+],
+"area": "buildup"
+},
+{
+"name": "power down to base",
+"steps": [
+[
+"type",
+"x^2 "
+],
+[
+"keys",
+"left",
+1
+],
+[
+"keys",
+"down",
+1
+]
+],
+"area": "navigate"
+},
+{
+"name": "power up from base",
+"steps": [
+[
+"type",
+"x^2 "
+],
+[
+"keys",
+"left",
+2
+],
+[
+"keys",
+"up",
+1
+]
+],
+"area": "navigate"
+},
+{
+"name": "sub sup up",
+"steps": [
+[
+"type",
+"x_1^2 "
+],
+[
+"keys",
+"left",
+3
+],
+[
+"keys",
+"up",
+1
+]
+],
+"area": "navigate"
+},
+{
+"name": "sub sup down",
+"steps": [
+[
+"type",
+"x_1^2 "
+],
+[
+"keys",
+"left",
+1
+],
+[
+"keys",
+"down",
+1
+]
+],
+"area": "navigate"
+},
+{
+"name": "sum up from body",
+"steps": [
+[
+"type",
+"\\sum_(i=1)^n i "
+],
+[
+"keys",
+"up",
+1
+]
+],
+"area": "navigate"
+},
+{
+"name": "sum down from body",
+"steps": [
+[
+"type",
+"\\sum_(i=1)^n i "
+],
+[
+"keys",
+"down",
+1
+]
+],
+"area": "navigate"
+},
+{
+"name": "sum left x3",
+"steps": [
+[
+"type",
+"\\sum_(i=1)^n i "
+],
+[
+"keys",
+"left",
+3
+]
+],
+"area": "navigate"
+},
+{
+"name": "matrix right x3",
+"steps": [
+[
+"type",
+"\\matrix(a&b@c&d) "
+],
+[
+"keys",
+"home",
+1
+],
+[
+"keys",
+"right",
+3
+]
+],
+"area": "navigate"
+},
+{
+"name": "matrix down",
+"steps": [
+[
+"type",
+"\\matrix(a&b@c&d) "
+],
+[
+"keys",
+"home",
+1
+],
+[
+"keys",
+"right",
+2
+],
+[
+"keys",
+"down",
+1
+]
+],
+"area": "navigate"
+},
+{
+"name": "brackets left x2",
+"steps": [
+[
+"type",
+"(a+b) "
+],
+[
+"keys",
+"left",
+2
+]
+],
+"area": "navigate"
+},
+{
+"name": "ctrl left",
+"steps": [
+[
+"type",
+"ab+cd "
+],
+[
+"keys",
+"ctrl+left",
+1
+]
+],
+"area": "navigate"
+},
+{
+"name": "type after fraction",
+"steps": [
+[
+"type",
+"a/b "
+],
+[
+"keys",
+"left",
+1
+],
+[
+"type",
+"c"
+]
+],
+"area": "type"
+},
+{
+"name": "type into numerator",
+"steps": [
+[
+"type",
+"a/b "
+],
+[
+"keys",
+"left",
+3
+],
+[
+"type",
+"x"
+]
+],
+"area": "type"
+},
+{
+"name": "type over selection",
+"steps": [
+[
+"type",
+"abc"
+],
+[
+"keys",
+"shift+left",
+2
+],
+[
+"type",
+"x"
+]
+],
+"area": "select"
+},
+{
+"name": "shift end",
+"steps": [
+[
+"type",
+"a+b"
+],
+[
+"keys",
+"home",
+1
+],
+[
+"keys",
+"shift+end",
+1
+]
+],
+"area": "select"
+},
+{
+"name": "shift right over fraction",
+"steps": [
+[
+"type",
+"x+a/b "
+],
+[
+"keys",
+"home",
+1
+],
+[
+"keys",
+"shift+right",
+3
+]
+],
+"area": "select"
+},
+{
+"name": "delete in middle",
+"steps": [
+[
+"type",
+"abc"
+],
+[
+"keys",
+"left",
+2
+],
+[
+"keys",
+"delete",
+1
+]
+],
+"area": "delete"
+},
+{
+"name": "backspace after sum",
+"steps": [
+[
+"type",
+"\\sum_(i=1)^n i "
+],
+[
+"keys",
+"right",
+1
+],
+[
+"keys",
+"backspace",
+1
+]
+],
+"area": "delete"
+},
+{
+"name": "backspace into root",
+"steps": [
+[
+"type",
+"\\sqrt(x) "
+],
+[
+"keys",
+"backspace",
+1
+]
+],
+"area": "delete"
+}
+]

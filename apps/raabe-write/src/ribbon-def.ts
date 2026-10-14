@@ -31,7 +31,7 @@ export interface RibbonContext {
     columns: MenuEntry[]; breaks: MenuEntry[]; header: MenuEntry[]; footer: MenuEntry[]; pageNumber: MenuEntry[];
     pictures: MenuEntry[]; borders: MenuEntry[]; wrap: MenuEntry[]; shapes: Popup; textBox: MenuEntry[];
     position: Popup; align: Popup; rotate: MenuEntry[]; forward: MenuEntry[]; backward: MenuEntry[];
-    toc: MenuEntry[]; addText: MenuEntry[]; nextNote: MenuEntry[]; equation: MenuEntry[];
+    toc: MenuEntry[]; addText: MenuEntry[]; nextNote: MenuEntry[]; equation: Popup;
     track: MenuEntry[]; deleteComment: MenuEntry[]; accept: MenuEntry[]; reject: MenuEntry[];
     showComments: MenuEntry[]; filterMarkup: MenuEntry[];
   };
@@ -251,8 +251,8 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
           controls: [dd("insert.textBox", "X", "large", undefined, ctx.panels.textBox), stack(b("insert.dateTime", "D", "medium"))],
           smaller: [[dd("insert.textBox", "X", "large", undefined, ctx.panels.textBox), stack(b("insert.dateTime", "D"))]] },
         { id: "symbols", label: "Symbole", key: "ZS", icon: "equation",
-          controls: [split("insert.equation", "A", "large", ctx.panels.equation), dd("insert.symbol", "SY", "large")],
-          smaller: [[stack(split("insert.equation", "A", "medium", ctx.panels.equation), dd("insert.symbol", "SY", "medium"))]] },
+          controls: [split("insert.equation", "A", "large", [], undefined, ctx.panels.equation), dd("insert.symbol", "SY", "large")],
+          smaller: [[stack(split("insert.equation", "A", "medium", [], undefined, ctx.panels.equation), dd("insert.symbol", "SY", "medium"))]] },
       ],
     },
     {

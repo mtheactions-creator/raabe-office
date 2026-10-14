@@ -2,7 +2,7 @@
 // Word's selection rules, and all edits go through the document model. The shell calls the
 // public commands below and listens for changes with onChange().
 
-import { Doc, MAIN, cmp, maxPos, minPos, type DocSnapshot, type DocState, type Pos } from "./doc";
+import { DEFAULT_MATH, Doc, MAIN, cmp, maxPos, minPos, type DocSnapshot, type DocState, type MathSettings, type Pos } from "./doc";
 import { Fonts, PT } from "./fonts";
 import { layoutDocument, type Layout } from "./flow";
 import { Layouter, type LayoutContext } from "./layout";
@@ -60,6 +60,7 @@ import { COLUMN_BREAK, type CellDef, type ImageData, type RowDef, type TableDef 
 import { addList, bulletLevels as bulletLevelsOf, levelOf, listLabels, numberLevels as numberLevelsOf, numberingOf, restartList } from "./numbering";
 import { DEFAULT_SHAPE_BODY, type AltText, type BorderSpec, type Borders, type FloatObject, type InlineObject, type NumLevel, type ShapeInfo } from "./model";
 import { shadeLinear, shapeElement, shapeGeometry, shapeTextRect } from "./shape";
+import { parseLatex, seqToLatex, type Seq } from "./math/ast";
 import { presetAdjust, presetGeometry } from "./geometry";
 import { effectExtent, type PictureFormat } from "./picture";
 import { countWords, isWordChar, nextTokenStart, prevTokenStart, sentenceAt, tokenAt } from "./words";
@@ -230,7 +231,10 @@ export class Editor {
   }
 
   private context(): LayoutContext {
-    return { styles: this.doc.styles, fonts: this.fonts, defaultTab: this.doc.settings.defaultTab, measureMath: this.measureMath, markup: this.markupMode };
+    return {
+      styles: this.doc.styles, fonts: this.fonts, defaultTab: this.doc.settings.defaultTab, measureMath: this.measureMath, markup: this.markupMode,
+      mathJc: this.doc.settings.math?.defJc,
+    };
   }
 
   /** Asks the platform for metrics of every font the document uses. */
@@ -258,7 +262,7 @@ export class Editor {
   // ----- equations ------------------------------------------------------------------------
 
   /** How the host measures (points) and draws equations; MathML in Cambria Math in the app. */
-  useMath(measure: NonNullable<LayoutContext["measureMath"]>, render: (latex: string, sizePx: number, display: boolean) => HTMLElement): void {
+  useMath(measure: NonNullable<LayoutContext["measureMath"]>, render: (o: InlineObject, sizePx: number, display: boolean) => HTMLElement): void {
     this.measureMath = measure;
     this.view.measureMath = measure;
     this.view.renderMath = render;
@@ -266,16 +270,22 @@ export class Editor {
   }
 
   /** Called when the user clicks into an equation or moves the caret into one (host opens its editor). */
-  onEditMath: ((pos: Pos, enter: "start" | "end" | "click") => void) | null = null;
+  onEditMath: ((pos: Pos, enter: "start" | "end" | "click", point?: { x: number; y: number }) => void) | null = null;
+
+  /** The formula editor takes keys, typed text and mouse presses first while it is open. */
+  interceptKey: ((e: KeyboardEvent) => boolean) | null = null;
+  interceptText: ((text: string) => boolean) | null = null;
+  interceptMouse: ((e: MouseEvent) => boolean) | null = null;
 
   /** Formel einfügen: a new equation at the caret; returns where it is. */
-  insertMath(latex = ""): Pos | null {
+  insertMath(latex = "", seq?: Seq): Pos | null {
     if (this.inBlock()) return null;
     this.snapshot();
     this.typing = false;
     const [from, to] = this.range();
     const props = intern({ ...typedProps(this.doc.paras[from.p], from.o), rev: undefined });
-    const obj: InlineObject = { kind: "math", data: undefined, display: "", latex };
+    const math = seq ?? parseLatex(latex);
+    const obj: InlineObject = { kind: "math", data: undefined, display: "", latex: seqToLatex(math), math };
     const piece: Para = { text: OBJ, runs: [{ len: 1, props }], props: {}, mark: EMPTY, objects: [obj] };
     const end = this.replaceTracked(from, to, [piece]);
     this.setSel(end, end);
@@ -293,13 +303,49 @@ export class Editor {
 
   /** Changes an equation; an empty one is removed. `record` adds an undo step. */
   setMathLatex(pos: Pos, latex: string, record = true): void {
+    this.setMath(pos, latex.trim() ? parseLatex(latex) : [], record);
+  }
+
+  /** Changes an equation's tree; an empty one is removed. `record` adds an undo step. */
+  setMath(pos: Pos, seq: Seq, record = true, keepEmpty = false): void {
     const o = this.mathAt(pos);
-    if (!o || (o.latex === latex && latex)) return;
+    if (!o) return;
+    const latex = seqToLatex(seq);
+    if (o.latex === latex && JSON.stringify(o.math) === JSON.stringify(seq) && (latex || keepEmpty)) return;
     if (record) this.snapshot();
-    if (!latex.trim()) {
+    if (!seq.length && !keepEmpty) {
       this.doc.delete(pos, { p: pos.p, o: pos.o + 1 });
       this.setSel(pos, pos);
-    } else this.replaceObject(pos.p, pos.o, { ...o, latex, data: undefined, display: "", width: undefined, height: undefined, depth: undefined });
+    } else this.replaceObject(pos.p, pos.o, { ...o, latex, math: seq, data: undefined, display: "", width: undefined, height: undefined, depth: undefined });
+    this.update();
+  }
+
+  /** Formel > Konvertieren > Alle: changes every equation of the document (one undo step). */
+  mapAllMath(fn: (seq: Seq) => Seq): void {
+    const mapParas = (paras: readonly Para[]): Para[] | null => {
+      let out: Para[] | null = null;
+      paras.forEach((para, i) => {
+        if (!para.objects?.some((o) => o.kind === "math")) return;
+        const objects = para.objects.map((o) => {
+          if (o.kind !== "math") return o;
+          const seq = fn(o.math ?? parseLatex(o.latex ?? ""));
+          const latex = seqToLatex(seq);
+          if (latex === o.latex) return o;
+          return { ...o, latex, math: seq, data: undefined, display: "", width: undefined, height: undefined, depth: undefined };
+        });
+        if (objects.every((o, k) => o === para.objects![k])) return;
+        out ??= [...paras];
+        out[i] = { ...para, objects };
+      });
+      return out;
+    };
+    const updates: [string, Para[]][] = [];
+    const m = mapParas(this.doc.main);
+    if (m) updates.push([MAIN, m]);
+    for (const [id, paras] of this.doc.stories) { const r = mapParas(paras); if (r) updates.push([id, r]); }
+    if (!updates.length) return;
+    this.snapshot();
+    for (const [id, paras] of updates) this.doc.setStory(id, paras);
     this.update();
   }
 
@@ -317,6 +363,78 @@ export class Editor {
     const rp = this.view.storyLayout().paras[pos.p]?.rp;
     const size = this.doc.styles.resolveChar(rp?.style, propsAt(this.doc.paras[pos.p], pos.o)).size;
     return { x, y: top, w, h: line.height, baseline: top + line.baseline, size };
+  }
+
+  /** The drawn equation at a position (the formula editor reads its geometry) and its page. */
+  mathElement(pos: Pos): { el: Element; page: number } | null {
+    const para = this.doc.paras[pos.p];
+    return para ? this.view.mathElementFor(para, pos.o) : null;
+  }
+
+  /**
+   * Formeloptionen > In 'Inline' ändern / In 'Anzeige' ändern: a display equation is shown inline
+   * in its paragraph; an inline one gets a paragraph of its own. Returns where it is then.
+   */
+  setMathDisplay(pos: Pos, display: boolean): Pos | null {
+    const o = this.mathAt(pos);
+    if (!o?.math || this.inBlock()) return null;
+    this.snapshot();
+    this.typing = false;
+    const p0 = this.doc.paras[pos.p];
+    const blank = (): Para => ({ text: "", runs: [], props: p0.props, mark: p0.mark });
+    let at = pos;
+    if (display && p0.text !== OBJ) {
+      if (pos.o + 1 < p0.text.length) this.doc.replace({ p: pos.p, o: pos.o + 1 }, { p: pos.p, o: pos.o + 1 }, [blank(), blank()]);
+      if (pos.o > 0) { this.doc.replace(pos, pos, [blank(), blank()]); at = { p: pos.p + 1, o: 0 }; }
+    }
+    this.replaceObject(at.p, at.o, { ...o, mathInline: display ? undefined : true, data: undefined, width: undefined, height: undefined, depth: undefined });
+    this.setSel({ p: at.p, o: at.o + 1 }, { p: at.p, o: at.o + 1 });
+    this.update({ scroll: true });
+    return at;
+  }
+
+  /** Formeloptionen > Ausrichtung of a display equation (one undo step). */
+  setMathJc(pos: Pos, jc: "left" | "right" | "center" | "centerGroup"): void {
+    const o = this.mathAt(pos);
+    if (!o?.math || o.mathJc === jc) return;
+    this.snapshot();
+    this.replaceObject(pos.p, pos.o, { ...o, mathJc: jc, data: undefined });
+    this.update();
+  }
+
+  /** Whether the line holding a position is the first or the last of its story (Up/Down cannot leave it). */
+  lineEdges(pos: Pos): { first: boolean; last: boolean } {
+    const { index } = this.view.placedFor(pos, false);
+    const n = this.view.storyLayout().placed.length;
+    return { first: index <= 0, last: index >= n - 1 };
+  }
+
+  /** The text position under a client point (where something dragged would go). */
+  posAtPoint(clientX: number, clientY: number): Pos {
+    const hit = this.view.hitLine(clientX, clientY);
+    return this.view.posInLine(hit.index, hit.x).pos;
+  }
+
+  /**
+   * The equation's move handle (Feld zum Verschieben): the object at `from` goes to `to`
+   * (one undo step). Returns its new position.
+   */
+  moveObject(from: Pos, to: Pos): Pos | null {
+    const para = this.doc.paras[from.p];
+    if (!para || para.text[from.o] !== OBJ || this.inBlock()) return null;
+    if (to.p === from.p && (to.o === from.o || to.o === from.o + 1)) return from;
+    const obj = this.objectAt(para, from.o);
+    if (!obj) return null;
+    const props = propsAt(para, from.o);
+    this.snapshot();
+    this.typing = false;
+    this.doc.delete(from, { p: from.p, o: from.o + 1 });
+    const at = to.p === from.p && to.o > from.o ? { p: to.p, o: to.o - 1 } : to;
+    const piece: Para = { text: OBJ, runs: [{ len: 1, props }], props: {}, mark: EMPTY, objects: [obj] };
+    const end = this.replaceTracked(at, at, [piece]);
+    this.setSel(end, end);
+    this.update({ scroll: true });
+    return { p: end.p, o: end.o - 1 };
   }
 
   /** Puts the caret before or after an object (leaving the equation editor). */
@@ -389,7 +507,8 @@ export class Editor {
 
   update(opts: { scroll?: boolean; inputTs?: number } = {}): void {
     const ctx = this.layouter.context;
-    if (ctx.styles !== this.doc.styles || ctx.defaultTab !== this.doc.settings.defaultTab || ctx.measureMath !== this.measureMath || ctx.markup !== this.markupMode) {
+    if (ctx.styles !== this.doc.styles || ctx.defaultTab !== this.doc.settings.defaultTab || ctx.measureMath !== this.measureMath || ctx.markup !== this.markupMode ||
+      ctx.mathJc !== this.doc.settings.math?.defJc) {
       this.layouter.setContext(this.context());
     }
     this.layout = layoutDocument(this.layouter, {
@@ -1423,6 +1542,20 @@ export class Editor {
   /** Erste Seite anders / Untersch. gerade und ungerade Seiten. */
   setTitlePage(on: boolean): void {
     this.changeSections((s) => ({ ...s, titlePage: on }), false);
+  }
+
+  /** Formeloptionen of the document (Word's defaults when the file has none). */
+  mathSettings(): MathSettings {
+    return this.doc.settings.math ?? DEFAULT_MATH;
+  }
+
+  setMathSettings(math: MathSettings, record = true): void {
+    const before = this.mathSettings();
+    if (record) this.snapshot();
+    this.doc.setSettings({ ...this.doc.settings, math });
+    // Nested fractions drawn smaller or not: every equation is measured again.
+    if (before.smallFrac !== math.smallFrac) this.relayout();
+    else this.update();
   }
 
   setEvenOdd(on: boolean): void {
@@ -3726,6 +3859,7 @@ cropFill(fit: boolean): void {
   private onBeforeInput(e: InputEvent): void {
     if (e.inputType === "insertCompositionText") return; // let the IME work in the textarea
     e.preventDefault();
+    if (e.inputType === "insertText" && e.data && this.interceptText?.(e.data)) return;
     // Typing in the text ends the focus on a clicked comment card.
     this.focusedComment = null;
     if (e.inputType === "insertText" && e.data) this.insertText(e.data, e.timeStamp);
@@ -3733,11 +3867,13 @@ cropFill(fit: boolean): void {
 
   private onCompositionEnd(e: CompositionEvent): void {
     this.input.value = "";
+    if (e.data && this.interceptText?.(e.data)) return;
     if (e.data) this.insertText(e.data, e.timeStamp);
   }
 
   private onKeyDown(e: KeyboardEvent): void {
     if (e.isComposing) return;
+    if (this.interceptKey?.(e)) { e.preventDefault(); return; }
     this.capsLock = !!e.getModifierState?.("CapsLock");
     const ctrl = e.ctrlKey && !e.altKey;
     const shift = e.shiftKey;
@@ -4052,6 +4188,7 @@ cropFill(fit: boolean): void {
 
   private onMouseDown(e: MouseEvent): void {
     if (e.button !== 0) return;
+    if (this.interceptMouse?.(e)) { e.preventDefault(); return; }
     // Einfügen > Formen: the drag draws the chosen shape.
     if (this.drawTool) { e.preventDefault(); this.focus(); this.drawShape(e); return; }
     // Comment cards handle their own clicks.
@@ -4144,7 +4281,7 @@ cropFill(fit: boolean): void {
       // A click on an equation opens it for editing.
       this.setSel(under, { p: under.p, o: under.o + 1 });
       this.update();
-      this.onEditMath(under, "click");
+      this.onEditMath(under, "click", { x: e.clientX, y: e.clientY });
       return;
     } else if (this.isImageAt(under) && this.overObject(hit.index, hit.x, under)) {
       // A click on a picture in the text selects it.

@@ -30,7 +30,38 @@ export interface DocSettings {
   evenOdd?: boolean;
   /** Änderungen nachverfolgen is on (w:trackRevisions). */
   trackChanges?: boolean;
+  /** Formeloptionen (m:mathPr); Word's defaults when absent. */
+  math?: MathSettings;
 }
+
+/** Formeloptionen of a document (m:mathPr in settings.xml). Lengths in points. */
+export interface MathSettings {
+  readonly font: string;
+  /** Größe von verschachtelten Brüchen für Anzeigeformeln reduzieren. */
+  readonly smallFrac: boolean;
+  /** Zeilen mit binären und relationalen Operatoren umbrechen: vor, nach, doppelt. */
+  readonly brkBin: "before" | "after" | "repeat";
+  /** Operatoren für die Subtraktion duplizieren als. */
+  readonly brkBinSub: "--" | "-+" | "+-";
+  /** Die folgenden Einstellungen für Mathematik in einer eigenen Zeile verwenden. */
+  readonly dispDef: boolean;
+  readonly lMargin: number;
+  readonly rMargin: number;
+  /** Ausrichtung of display equations. */
+  readonly defJc: "left" | "right" | "center" | "centerGroup";
+  /** Einzug für umbrochene Zeilen, or wrapped lines right-aligned. */
+  readonly wrapIndent: number;
+  readonly wrapRight: boolean;
+  /** Integralgrenzwerte / N-äre Grenzwerte: beside (subSup) or above and below (undOvr). */
+  readonly intLim: "subSup" | "undOvr";
+  readonly naryLim: "subSup" | "undOvr";
+}
+
+/** What Word's Normal template sets (a new document). */
+export const DEFAULT_MATH: MathSettings = {
+  font: "Cambria Math", smallFrac: false, brkBin: "before", brkBinSub: "--", dispDef: true, lMargin: 0, rMargin: 0,
+  defJc: "centerGroup", wrapIndent: 72, wrapRight: false, intLim: "subSup", naryLim: "undOvr",
+};
 
 export const MAIN = "main";
 

@@ -7,12 +7,12 @@ import { readExtent, readPicture, readShapeProps, themeColors } from "./drawingm
 import { NS_WPS, custGeomDef, formatMatrix, readAdjust, readBody, resolveStyle, type FormatMatrix } from "./shapes";
 import { strFromU8, unzipSync } from "fflate";
 import {
-  A4, COLUMN_BREAK, DEFAULT_SECTION, LINE_BREAK, OBJ, ONE_COLUMN, PAGE_BREAK, StyleSheet, defaultStyleSheet, intern, nextTableId, plainPicture,
+  A4, COLUMN_BREAK, DEFAULT_SECTION, LINE_BREAK, OBJ, ONE_COLUMN, PAGE_BREAK, StyleSheet, defaultStyleSheet, intern, nextTableId, plainPicture, seqToLatex,
   type Anchor, type BlockObject, type CellDef, type CellRef, type CharProps, type CommentMeta, type DocState, type FloatObject,
-  type HeaderRefs, type ImageData, type InlineObject, type Numbering, type Para, type ParaGroup, type ParaProps, type PictureFormat, type Revision, type ShapeInfo,
+  type HeaderRefs, type ImageData, type InlineObject, type MathSettings, type Numbering, type Para, type ParaGroup, type ParaProps, type PictureFormat, type Revision, type ShapeInfo,
   type RowDef, type Run, type Section, type StyleDef, type StyleType, type TableDef, type TableStyleDef, type TableStylePart,
 } from "@raabe/text-engine";
-import { ommlToLatex } from "./math";
+import { mathParaJc, ommlToSeq, readMathPr } from "./math";
 import { readNumbering } from "./numbering";
 import { REL, Rels, mimeOf, relsPath, resolveTarget } from "./package";
 import { readBorders, readPPr, readRPr, readShading, type RevisionOf } from "./props";
@@ -247,6 +247,8 @@ class Reader {
   themeColors: Record<string, string> = themeColors(null);
   /** The theme's format matrix, which shape styles refer to. */
   matrix: FormatMatrix | null = null;
+  /** Formeloptionen of the document (m:mathPr). */
+  mathSettings: MathSettings | undefined;
   readonly stories = new Map<string, Para[]>();
   private textboxSeq = 0;
 
@@ -470,8 +472,12 @@ class PartReader {
         case "oMath": case "oMathPara": {
           // Editable as LaTeX when every part converts; the XML is written back unchanged
           // as long as the equation is not edited.
-          const latex = ommlToLatex(el) ?? undefined;
-          b.addObject({ kind: "math", data: { raw: outer(el) }, display: mathText(el), latex }, intern({ ...this.firstRunProps(el, rev), italic: true }));
+          const math = ommlToSeq(el, this.r.mathSettings ?? {}) ?? undefined;
+          const latex = math ? seqToLatex(math) : undefined;
+          const mathJc = mathParaJc(el);
+          // An m:oMath (not in m:oMathPara) is shown inline even alone in its paragraph.
+          const mathInline = el.localName === "oMath" || undefined;
+          b.addObject({ kind: "math", data: { raw: outer(el) }, display: mathText(el), latex, math, mathJc, mathInline }, intern({ ...this.firstRunProps(el, rev), italic: true }));
           if (latex === undefined) this.r.partial.add(LABEL.math);
           break;
         }
@@ -952,6 +958,7 @@ export function readDocx(bytes: Uint8Array): ReadResult {
     defaultTab = twips(attr(child(s, "defaultTabStop"), "val"), 36);
     evenOdd = onOff(child(s, "evenAndOddHeaders")) ?? false;
     trackChanges = onOff(child(s, "trackRevisions")) ?? false;
+    r.mathSettings = readMathPr(s);
   }
   const docRels = r.rels("word/document.xml");
   const partOf = (type: string) => {
@@ -984,7 +991,7 @@ export function readDocx(bytes: Uint8Array): ReadResult {
   const styleIds = new Set<string>(styles.styles.keys());
   return {
     state: {
-      paras, styles, settings: { section, defaultTab, evenOdd: evenOdd || undefined, trackChanges: trackChanges || undefined }, stories: r.stories, numbering,
+      paras, styles, settings: { section, defaultTab, evenOdd: evenOdd || undefined, trackChanges: trackChanges || undefined, math: r.mathSettings }, stories: r.stories, numbering,
       comments: cm?.meta,
     },
     pkg: {

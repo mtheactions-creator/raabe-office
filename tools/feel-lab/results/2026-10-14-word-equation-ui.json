@@ -1,0 +1,8771 @@
+{
+ "tab": [
+  {
+   "depth": 0,
+   "type": "Group",
+   "name": "Tools",
+   "key": "Alt, J E, Z T",
+   "enabled": true,
+   "rect": [
+    20,
+    122,
+    219,
+    144
+   ]
+  },
+  {
+   "depth": 1,
+   "type": "MenuItem",
+   "name": "Formel",
+   "key": "Alt, J E, A",
+   "enabled": true,
+   "rect": [
+    32,
+    125,
+    122,
+    36
+   ]
+  },
+  {
+   "depth": 1,
+   "type": "Button",
+   "name": "Freihandgleichung",
+   "key": "Alt, J E, H",
+   "enabled": true,
+   "rect": [
+    32,
+    164,
+    195,
+    36
+   ]
+  },
+  {
+   "depth": 0,
+   "type": "Group",
+   "name": "Konvertierungen",
+   "key": "Alt, J E, Z 1",
+   "enabled": true,
+   "rect": [
+    239,
+    122,
+    249,
+    144
+   ]
+  },
+  {
+   "depth": 1,
+   "type": "Button",
+   "name": "Unicode",
+   "key": "Alt, J E, U F",
+   "enabled": true,
+   "rect": [
+    251,
+    125,
+    115,
+    36
+   ]
+  },
+  {
+   "depth": 1,
+   "type": "Button",
+   "name": "LaTeX",
+   "key": "Alt, J E, T X",
+   "enabled": true,
+   "rect": [
+    251,
+    164,
+    94,
+    36
+   ]
+  },
+  {
+   "depth": 1,
+   "type": "Button",
+   "name": "Text",
+   "key": "Alt, J E, N",
+   "enabled": true,
+   "rect": [
+    251,
+    203,
+    80,
+    36
+   ]
+  },
+  {
+   "depth": 1,
+   "type": "SplitButton",
+   "name": "Konvertieren",
+   "key": "Alt, J E, K 1",
+   "enabled": true,
+   "rect": [
+    369,
+    125,
+    107,
+    114
+   ]
+  },
+  {
+   "depth": 2,
+   "type": "Button",
+   "name": "Konvertieren",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    369,
+    125,
+    107,
+    57
+   ]
+  },
+  {
+   "depth": 2,
+   "type": "MenuItem",
+   "name": "Weitere Optionen",
+   "key": "Alt, J E, K 1",
+   "enabled": true,
+   "rect": [
+    369,
+    182,
+    107,
+    57
+   ]
+  },
+  {
+   "depth": 1,
+   "type": "Button",
+   "name": "Formeloptionen...",
+   "key": "Alt, J E, F",
+   "enabled": true,
+   "rect": [
+    464,
+    242,
+    24,
+    24
+   ]
+  },
+  {
+   "depth": 0,
+   "type": "Group",
+   "name": "Symbole",
+   "key": "Alt, J E, Z S",
+   "enabled": true,
+   "rect": [
+    488,
+    122,
+    508,
+    144
+   ]
+  },
+  {
+   "depth": 1,
+   "type": "Group",
+   "name": "Formelsymbole",
+   "key": "Alt, J E, O",
+   "enabled": true,
+   "rect": [
+    500,
+    132,
+    484,
+    97
+   ]
+  },
+  {
+   "depth": 2,
+   "type": "MenuItem",
+   "name": "",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    500,
+    136,
+    484,
+    93
+   ]
+  },
+  {
+   "depth": 3,
+   "type": "Pane",
+   "name": "Formelsymbole",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    502,
+    138,
+    442,
+    88
+   ]
+  },
+  {
+   "depth": 4,
+   "type": "DataGrid",
+   "name": "Formelsymbole",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    503,
+    138,
+    440,
+    352
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Plus Minus",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    503,
+    138,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Unendlich",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    547,
+    138,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Gleich",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    591,
+    138,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Nicht gleich",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    635,
+    138,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Ungefähr",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    679,
+    138,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Multiplikationszeichen",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    723,
+    138,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Divisionszeichen",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    767,
+    138,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Faktoriell",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    811,
+    138,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Proportional zu",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    855,
+    138,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Kleiner als",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    899,
+    138,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Viel kleiner als",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    503,
+    182,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Größer als",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    547,
+    182,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Viel größer als",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    591,
+    182,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Kleiner oder gleich",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    635,
+    182,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Größer oder gleich",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    679,
+    182,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Minus Plus",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    723,
+    182,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Ungefähr gleich",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    767,
+    182,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Fast gleich (asymptotisch zu)",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    811,
+    182,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Identisch mit",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    855,
+    182,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Für alle",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    899,
+    182,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Komplement",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    503,
+    226,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Partielles Differenzial",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    547,
+    226,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Wurzelzeichen",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    591,
+    226,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Kubikwurzel",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    635,
+    226,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Vierte Wurzel",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    679,
+    226,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Vereinigung",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    723,
+    226,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Schnittmenge",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    767,
+    226,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Leere Menge",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    811,
+    226,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Prozentsatz",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    855,
+    226,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Grad",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    899,
+    226,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Grad Fahrenheit",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    503,
+    270,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Grad Celsius",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    547,
+    270,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Erhöhung",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    591,
+    270,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Nabla",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    635,
+    270,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Es gibt",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    679,
+    270,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Es gibt nicht",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    723,
+    270,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Element von",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    767,
+    270,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Enthält als Element",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    811,
+    270,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Pfeil nach links",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    855,
+    270,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Pfeil nach oben",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    899,
+    270,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Pfeil nach rechts",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    503,
+    314,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Pfeil nach unten",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    547,
+    314,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Pfeil nach links und rechts",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    591,
+    314,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Folglich",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    635,
+    314,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Plus",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    679,
+    314,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Minus",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    723,
+    314,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol NICHT-Zeichen",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    767,
+    314,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Alpha",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    811,
+    314,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Beta",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    855,
+    314,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Gamma",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    899,
+    314,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Delta",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    503,
+    358,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Epsilon",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    547,
+    358,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Epsilon Variant",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    591,
+    358,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Theta",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    635,
+    358,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Theta Variant",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    679,
+    358,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Mu",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    723,
+    358,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Pi",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    767,
+    358,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Rho",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    811,
+    358,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Sigma",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    855,
+    358,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Tau",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    899,
+    358,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Phi",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    503,
+    402,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Omega",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    547,
+    402,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Sternchenoperator",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    591,
+    402,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Aufzählungsoperator",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    635,
+    402,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Vertikale Ellipse",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    679,
+    402,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Horizontale Ellipse (Mittellinie)",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    723,
+    402,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Diagonale Ellipse nach oben rechts",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    767,
+    402,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Diagonale Ellipse nach unten rechts",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    811,
+    402,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Alef",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    855,
+    402,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Bet",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    899,
+    402,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 5,
+   "type": "ListItem",
+   "name": "Formelsymbol Ende des Beweises (Q.E.D.)",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    503,
+    446,
+    44,
+    44
+   ]
+  },
+  {
+   "depth": 3,
+   "type": "Button",
+   "name": "Formelsymbole",
+   "key": "Alt, J E, O",
+   "enabled": true,
+   "rect": [
+    944,
+    136,
+    36,
+    93
+   ]
+  },
+  {
+   "depth": 4,
+   "type": "Image",
+   "name": "",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    956,
+    176,
+    12,
+    12
+   ]
+  },
+  {
+   "depth": 0,
+   "type": "Group",
+   "name": "Strukturen",
+   "key": "Alt, J E, Z U",
+   "enabled": true,
+   "rect": [
+    996,
+    122,
+    905,
+    144
+   ]
+  },
+  {
+   "depth": 1,
+   "type": "MenuItem",
+   "name": "Bruch",
+   "key": "Alt, J E, B",
+   "enabled": true,
+   "rect": [
+    1008,
+    125,
+    62,
+    114
+   ]
+  },
+  {
+   "depth": 1,
+   "type": "MenuItem",
+   "name": "Hoch/Tief",
+   "key": "Alt, J E, T 1",
+   "enabled": true,
+   "rect": [
+    1073,
+    125,
+    62,
+    114
+   ]
+  },
+  {
+   "depth": 1,
+   "type": "MenuItem",
+   "name": "Wurzel",
+   "key": "Alt, J E, W",
+   "enabled": true,
+   "rect": [
+    1138,
+    125,
+    62,
+    114
+   ]
+  },
+  {
+   "depth": 1,
+   "type": "MenuItem",
+   "name": "Integral",
+   "key": "Alt, J E, I",
+   "enabled": true,
+   "rect": [
+    1203,
+    125,
+    68,
+    114
+   ]
+  },
+  {
+   "depth": 1,
+   "type": "MenuItem",
+   "name": "Großer Operator",
+   "key": "Alt, J E, R",
+   "enabled": true,
+   "rect": [
+    1274,
+    125,
+    97,
+    114
+   ]
+  },
+  {
+   "depth": 1,
+   "type": "MenuItem",
+   "name": "Eckige Klammer",
+   "key": "Alt, J E, C",
+   "enabled": true,
+   "rect": [
+    1374,
+    125,
+    95,
+    114
+   ]
+  },
+  {
+   "depth": 1,
+   "type": "MenuItem",
+   "name": "Funktion",
+   "key": "Alt, J E, U 1",
+   "enabled": true,
+   "rect": [
+    1472,
+    125,
+    77,
+    114
+   ]
+  },
+  {
+   "depth": 1,
+   "type": "MenuItem",
+   "name": "Akzent",
+   "key": "Alt, J E, K 2",
+   "enabled": true,
+   "rect": [
+    1552,
+    125,
+    62,
+    114
+   ]
+  },
+  {
+   "depth": 1,
+   "type": "MenuItem",
+   "name": "Grenzwert und Logarithmus",
+   "key": "Alt, J E, G",
+   "enabled": true,
+   "rect": [
+    1617,
+    125,
+    124,
+    114
+   ]
+  },
+  {
+   "depth": 1,
+   "type": "MenuItem",
+   "name": "Operator",
+   "key": "Alt, J E, E",
+   "enabled": true,
+   "rect": [
+    1744,
+    125,
+    80,
+    114
+   ]
+  },
+  {
+   "depth": 1,
+   "type": "MenuItem",
+   "name": "Matrix",
+   "key": "Alt, J E, M",
+   "enabled": true,
+   "rect": [
+    1827,
+    125,
+    62,
+    114
+   ]
+  }
+ ],
+ "popups": {
+  "Formel": [
+   {
+    "type": "Group",
+    "name": "Tools",
+    "key": "Alt, J E, Z T",
+    "enabled": true,
+    "rect": [
+     -12,
+     -39,
+     219,
+     144
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Formel",
+    "key": "Alt, J E, A",
+    "enabled": true,
+    "rect": [
+     0,
+     -36,
+     122,
+     36
+    ]
+   },
+   {
+    "type": "Menu",
+    "name": "Formel",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     0,
+     633,
+     1335
+    ]
+   },
+   {
+    "type": "Menu",
+    "name": "Formel",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     0,
+     633,
+     1335
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Integriert",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     2,
+     603,
+     1582
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Binomischer Lehrsatz",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     45,
+     603,
+     171
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Erweiterung einer Summe",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     216,
+     603,
+     171
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Fourierreihe ",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     387,
+     603,
+     171
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Kreisoberfläche",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     558,
+     603,
+     171
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Quadratische Gleichung",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     729,
+     603,
+     171
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Satz des Pythagoras",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     900,
+     603,
+     171
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Taylorentwicklung",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     1071,
+     603,
+     171
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Trig. Identität 1",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     1242,
+     603,
+     171
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Trig. Identität 2",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     1413,
+     603,
+     171
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Zeile nach oben",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     605,
+     2,
+     26,
+     26
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Seite nach oben",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -32,
+     -161,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "Thumb",
+    "name": "Position",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     605,
+     28,
+     26,
+     931
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Seite nach unten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     605,
+     959,
+     26,
+     257
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Zeile nach unten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     605,
+     1216,
+     26,
+     26
+    ]
+   },
+   {
+    "type": "Group",
+    "name": " ",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     1245,
+     629,
+     88
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Formeln von Office.com",
+    "key": "Alt, J E, A, F",
+    "enabled": true,
+    "rect": [
+     2,
+     1245,
+     629,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Auswahl im Formelkatalog speichern...",
+    "key": "Alt, J E, A, S",
+    "enabled": true,
+    "rect": [
+     2,
+     1289,
+     629,
+     44
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Freihandgleichung",
+    "key": "Alt, J E, H",
+    "enabled": true,
+    "rect": [
+     0,
+     3,
+     195,
+     36
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Konvertierungen",
+    "key": "Alt, J E, Z 1",
+    "enabled": true,
+    "rect": [
+     207,
+     -39,
+     249,
+     144
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Unicode",
+    "key": "Alt, J E, U F",
+    "enabled": true,
+    "rect": [
+     219,
+     -36,
+     115,
+     36
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "LaTeX",
+    "key": "Alt, J E, T X",
+    "enabled": true,
+    "rect": [
+     219,
+     3,
+     94,
+     36
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Text",
+    "key": "Alt, J E, N",
+    "enabled": true,
+    "rect": [
+     219,
+     42,
+     80,
+     36
+    ]
+   },
+   {
+    "type": "SplitButton",
+    "name": "Konvertieren",
+    "key": "Alt, J E, K 1",
+    "enabled": true,
+    "rect": [
+     337,
+     -36,
+     107,
+     114
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Konvertieren",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     337,
+     -36,
+     107,
+     57
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Optionen",
+    "key": "Alt, J E, K 1",
+    "enabled": true,
+    "rect": [
+     337,
+     21,
+     107,
+     57
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Formeloptionen...",
+    "key": "Alt, J E, F",
+    "enabled": true,
+    "rect": [
+     432,
+     81,
+     24,
+     24
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Symbole",
+    "key": "Alt, J E, Z S",
+    "enabled": true,
+    "rect": [
+     456,
+     -39,
+     508,
+     144
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Formelsymbole",
+    "key": "Alt, J E, O",
+    "enabled": true,
+    "rect": [
+     468,
+     -29,
+     484,
+     97
+    ]
+   },
+   {
+    "type": "Pane",
+    "name": "Formelsymbole",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     470,
+     -23,
+     442,
+     88
+    ]
+   },
+   {
+    "type": "DataGrid",
+    "name": "Formelsymbole",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     471,
+     -23,
+     440,
+     352
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Plus Minus",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     471,
+     -23,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Unendlich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     515,
+     -23,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Gleich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     559,
+     -23,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Nicht gleich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     603,
+     -23,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Ungefähr",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     647,
+     -23,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Multiplikationszeichen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     691,
+     -23,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Divisionszeichen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     735,
+     -23,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Faktoriell",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     779,
+     -23,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Proportional zu",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     823,
+     -23,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Kleiner als",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     867,
+     -23,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Viel kleiner als",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     471,
+     21,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Größer als",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     515,
+     21,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Viel größer als",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     559,
+     21,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Kleiner oder gleich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     603,
+     21,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Größer oder gleich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     647,
+     21,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Minus Plus",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     691,
+     21,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Ungefähr gleich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     735,
+     21,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Fast gleich (asymptotisch zu)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     779,
+     21,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Identisch mit",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     823,
+     21,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Für alle",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     867,
+     21,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Komplement",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     471,
+     65,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Partielles Differenzial",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     515,
+     65,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Wurzelzeichen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     559,
+     65,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Kubikwurzel",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     603,
+     65,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Vierte Wurzel",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     647,
+     65,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Vereinigung",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     691,
+     65,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Schnittmenge",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     735,
+     65,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Leere Menge",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     779,
+     65,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Prozentsatz",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     823,
+     65,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Grad",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     867,
+     65,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Grad Fahrenheit",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     471,
+     109,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Grad Celsius",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     515,
+     109,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Erhöhung",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     559,
+     109,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Nabla",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     603,
+     109,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Es gibt",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     647,
+     109,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Es gibt nicht",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     691,
+     109,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Element von",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     735,
+     109,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Enthält als Element",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     779,
+     109,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Pfeil nach links",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     823,
+     109,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Pfeil nach oben",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     867,
+     109,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Pfeil nach rechts",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     471,
+     153,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Pfeil nach unten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     515,
+     153,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Pfeil nach links und rechts",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     559,
+     153,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Folglich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     603,
+     153,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Plus",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     647,
+     153,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Minus",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     691,
+     153,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol NICHT-Zeichen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     735,
+     153,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Alpha",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     779,
+     153,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Beta",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     823,
+     153,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Gamma",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     867,
+     153,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Delta",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     471,
+     197,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Epsilon",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     515,
+     197,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Epsilon Variant",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     559,
+     197,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Theta",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     603,
+     197,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Theta Variant",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     647,
+     197,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Mu",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     691,
+     197,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Pi",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     735,
+     197,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Rho",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     779,
+     197,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Sigma",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     823,
+     197,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Tau",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     867,
+     197,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Phi",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     471,
+     241,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Omega",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     515,
+     241,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Sternchenoperator",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     559,
+     241,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Aufzählungsoperator",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     603,
+     241,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Vertikale Ellipse",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     647,
+     241,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Horizontale Ellipse (Mittellinie)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     691,
+     241,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Diagonale Ellipse nach oben rechts",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     735,
+     241,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Diagonale Ellipse nach unten rechts",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     779,
+     241,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Alef",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     823,
+     241,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Bet",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     867,
+     241,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Ende des Beweises (Q.E.D.)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     471,
+     285,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Formelsymbole",
+    "key": "Alt, J E, O",
+    "enabled": true,
+    "rect": [
+     912,
+     -25,
+     36,
+     93
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Strukturen",
+    "key": "Alt, J E, Z U",
+    "enabled": true,
+    "rect": [
+     964,
+     -39,
+     905,
+     144
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Bruch",
+    "key": "Alt, J E, B",
+    "enabled": true,
+    "rect": [
+     976,
+     -36,
+     62,
+     114
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Hoch/Tief",
+    "key": "Alt, J E, T 1",
+    "enabled": true,
+    "rect": [
+     1041,
+     -36,
+     62,
+     114
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Wurzel",
+    "key": "Alt, J E, W",
+    "enabled": true,
+    "rect": [
+     1106,
+     -36,
+     62,
+     114
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Integral",
+    "key": "Alt, J E, I",
+    "enabled": true,
+    "rect": [
+     1171,
+     -36,
+     68,
+     114
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Großer Operator",
+    "key": "Alt, J E, R",
+    "enabled": true,
+    "rect": [
+     1242,
+     -36,
+     97,
+     114
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Eckige Klammer",
+    "key": "Alt, J E, C",
+    "enabled": true,
+    "rect": [
+     1342,
+     -36,
+     95,
+     114
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Funktion",
+    "key": "Alt, J E, U 1",
+    "enabled": true,
+    "rect": [
+     1440,
+     -36,
+     77,
+     114
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Akzent",
+    "key": "Alt, J E, K 2",
+    "enabled": true,
+    "rect": [
+     1520,
+     -36,
+     62,
+     114
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Grenzwert und Logarithmus",
+    "key": "Alt, J E, G",
+    "enabled": true,
+    "rect": [
+     1585,
+     -36,
+     124,
+     114
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Operator",
+    "key": "Alt, J E, E",
+    "enabled": true,
+    "rect": [
+     1712,
+     -36,
+     80,
+     114
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Matrix",
+    "key": "Alt, J E, M",
+    "enabled": true,
+    "rect": [
+     1795,
+     -36,
+     62,
+     114
+    ]
+   }
+  ],
+  "Konvertieren": [],
+  "Weitere Optionen": [],
+  "Formelsymbole": [
+   {
+    "type": "Pane",
+    "name": "Formelsymbole",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     2,
+     442,
+     88
+    ]
+   },
+   {
+    "type": "DataGrid",
+    "name": "Formelsymbole",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     3,
+     2,
+     440,
+     352
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Plus Minus",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     3,
+     2,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Unendlich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     47,
+     2,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Gleich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     91,
+     2,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Nicht gleich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     135,
+     2,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Ungefähr",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     179,
+     2,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Multiplikationszeichen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     223,
+     2,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Divisionszeichen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     267,
+     2,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Faktoriell",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     311,
+     2,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Proportional zu",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     355,
+     2,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Kleiner als",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     399,
+     2,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Viel kleiner als",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     3,
+     46,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Größer als",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     47,
+     46,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Viel größer als",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     91,
+     46,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Kleiner oder gleich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     135,
+     46,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Größer oder gleich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     179,
+     46,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Minus Plus",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     223,
+     46,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Ungefähr gleich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     267,
+     46,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Fast gleich (asymptotisch zu)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     311,
+     46,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Identisch mit",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     355,
+     46,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Für alle",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     399,
+     46,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Komplement",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     3,
+     90,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Partielles Differenzial",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     47,
+     90,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Wurzelzeichen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     91,
+     90,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Kubikwurzel",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     135,
+     90,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Vierte Wurzel",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     179,
+     90,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Vereinigung",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     223,
+     90,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Schnittmenge",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     267,
+     90,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Leere Menge",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     311,
+     90,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Prozentsatz",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     355,
+     90,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Grad",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     399,
+     90,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Grad Fahrenheit",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     3,
+     134,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Grad Celsius",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     47,
+     134,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Erhöhung",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     91,
+     134,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Nabla",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     135,
+     134,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Es gibt",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     179,
+     134,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Es gibt nicht",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     223,
+     134,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Element von",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     267,
+     134,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Enthält als Element",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     311,
+     134,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Pfeil nach links",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     355,
+     134,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Pfeil nach oben",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     399,
+     134,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Pfeil nach rechts",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     3,
+     178,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Pfeil nach unten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     47,
+     178,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Pfeil nach links und rechts",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     91,
+     178,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Folglich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     135,
+     178,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Plus",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     179,
+     178,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Minus",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     223,
+     178,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol NICHT-Zeichen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     267,
+     178,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Alpha",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     311,
+     178,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Beta",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     355,
+     178,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Gamma",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     399,
+     178,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Delta",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     3,
+     222,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Epsilon",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     47,
+     222,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Epsilon Variant",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     91,
+     222,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Theta",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     135,
+     222,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Theta Variant",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     179,
+     222,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Mu",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     223,
+     222,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Pi",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     267,
+     222,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Rho",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     311,
+     222,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Sigma",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     355,
+     222,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Tau",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     399,
+     222,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Phi",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     3,
+     266,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Omega",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     47,
+     266,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Sternchenoperator",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     91,
+     266,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Aufzählungsoperator",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     135,
+     266,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Vertikale Ellipse",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     179,
+     266,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Horizontale Ellipse (Mittellinie)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     223,
+     266,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Diagonale Ellipse nach oben rechts",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     267,
+     266,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Diagonale Ellipse nach unten rechts",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     311,
+     266,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Alef",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     355,
+     266,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Bet",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     399,
+     266,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Ende des Beweises (Q.E.D.)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     3,
+     310,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Formelsymbole",
+    "key": "Alt, J E, O",
+    "enabled": true,
+    "rect": [
+     444,
+     0,
+     36,
+     93
+    ]
+   },
+   {
+    "type": "Menu",
+    "name": "Formelsymbole",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     0,
+     484,
+     468
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Katalogfilter",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     2,
+     480,
+     42
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Grundlegende Mathematik",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     240,
+     2,
+     242,
+     39
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Katalogfilter",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     240,
+     2,
+     242,
+     39
+    ]
+   },
+   {
+    "type": "Text",
+    "name": "Grundlegende Mathematik",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     250,
+     9,
+     213,
+     25
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Grundlegende Mathematik",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     44,
+     454,
+     407
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Plus Minus",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     87,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Unendlich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     46,
+     87,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Gleich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     90,
+     87,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Nicht gleich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     134,
+     87,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Ungefähr",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     178,
+     87,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Multiplikationszeichen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     222,
+     87,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Divisionszeichen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     266,
+     87,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Faktoriell",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     310,
+     87,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Proportional zu",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     354,
+     87,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Kleiner als",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     398,
+     87,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Viel kleiner als",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     131,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Größer als",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     46,
+     131,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Viel größer als",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     90,
+     131,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Kleiner oder gleich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     134,
+     131,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Größer oder gleich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     178,
+     131,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Minus Plus",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     222,
+     131,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Ungefähr gleich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     266,
+     131,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Fast gleich (asymptotisch zu)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     310,
+     131,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Identisch mit",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     354,
+     131,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Für alle",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     398,
+     131,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Komplement",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     175,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Partielles Differenzial",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     46,
+     175,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Wurzelzeichen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     90,
+     175,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Kubikwurzel",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     134,
+     175,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Vierte Wurzel",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     178,
+     175,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Vereinigung",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     222,
+     175,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Schnittmenge",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     266,
+     175,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Leere Menge",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     310,
+     175,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Prozentsatz",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     354,
+     175,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Grad",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     398,
+     175,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Grad Fahrenheit",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     219,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Grad Celsius",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     46,
+     219,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Erhöhung",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     90,
+     219,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Nabla",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     134,
+     219,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Es gibt",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     178,
+     219,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Es gibt nicht",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     222,
+     219,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Element von",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     266,
+     219,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Enthält als Element",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     310,
+     219,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Pfeil nach links",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     354,
+     219,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Pfeil nach oben",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     398,
+     219,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Pfeil nach rechts",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     263,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Pfeil nach unten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     46,
+     263,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Pfeil nach links und rechts",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     90,
+     263,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Folglich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     134,
+     263,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Plus",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     178,
+     263,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Minus",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     222,
+     263,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol NICHT-Zeichen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     266,
+     263,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Alpha",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     310,
+     263,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Beta",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     354,
+     263,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Gamma",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     398,
+     263,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Delta",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     307,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Epsilon",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     46,
+     307,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Epsilon Variant",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     90,
+     307,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Theta",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     134,
+     307,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Theta Variant",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     178,
+     307,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Mu",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     222,
+     307,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Pi",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     266,
+     307,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Rho",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     310,
+     307,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Sigma",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     354,
+     307,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Tau",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     398,
+     307,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Phi",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     351,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Omega",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     46,
+     351,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Sternchenoperator",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     90,
+     351,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Aufzählungsoperator",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     134,
+     351,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Vertikale Ellipse",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     178,
+     351,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Horizontale Ellipse (Mittellinie)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     222,
+     351,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Diagonale Ellipse nach oben rechts",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     266,
+     351,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Diagonale Ellipse nach unten rechts",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     310,
+     351,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Alef",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     354,
+     351,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Bet",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     398,
+     351,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelsymbol Ende des Beweises (Q.E.D.)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     395,
+     44,
+     44
+    ]
+   },
+   {
+    "type": "Thumb",
+    "name": "Größenfeld",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     467,
+     451,
+     15,
+     15
+    ]
+   }
+  ],
+  "Bruch": [
+   {
+    "type": "Menu",
+    "name": "Bruch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     0,
+     510,
+     600
+    ]
+   },
+   {
+    "type": "Menu",
+    "name": "Bruch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     0,
+     510,
+     600
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Bruch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     2,
+     480,
+     211
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Bruch mit waagerechtem Bruchstrich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     45,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Versetzter Bruch mit schrägem Bruchstrich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     45,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Bruch mit schrägem Bruchstrich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     45,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Kleine Bruchzahl",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     362,
+     45,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Allgemeiner Bruch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     213,
+     480,
+     370
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur dy über dx",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     259,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Großes Delta y über großem Delta x",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     259,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur partielles y über partiellem x",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     259,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Delta y über Delta x",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     362,
+     259,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Pi Über 2",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     415,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "Thumb",
+    "name": "Größenfeld",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     493,
+     583,
+     15,
+     15
+    ]
+   }
+  ],
+  "Hoch/Tief": [
+   {
+    "type": "Menu",
+    "name": "Hoch/Tief",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     0,
+     510,
+     444
+    ]
+   },
+   {
+    "type": "Menu",
+    "name": "Hoch/Tief",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     0,
+     510,
+     444
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Tief- und Hochstellungen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     2,
+     480,
+     211
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Hochgestellt",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     45,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Tiefgestellt",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     45,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Tiefgestellt-hochgestellt",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     45,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Links tiefgestellt-hochgestellt",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     362,
+     45,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Allgemeine Tief- und Hochstellungen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     213,
+     480,
+     214
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur x tiefgestellt y quadriert",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     259,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur e bis Minus i Omega t",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     259,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur x hoch 2",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     259,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Y links hochgestellt n links tiefgestellt eins",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     362,
+     259,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "Thumb",
+    "name": "Größenfeld",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     493,
+     427,
+     15,
+     15
+    ]
+   }
+  ],
+  "Wurzel": [
+   {
+    "type": "Menu",
+    "name": "Wurzel",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     0,
+     510,
+     444
+    ]
+   },
+   {
+    "type": "Menu",
+    "name": "Wurzel",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     0,
+     510,
+     444
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Wurzeln",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     2,
+     480,
+     211
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Quadratwurzel",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     45,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur n-te Wurzel",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     45,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Quadratwurzel",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     45,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Kubikwurzel",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     362,
+     45,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Allgemeine Wurzeln",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     213,
+     480,
+     214
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Rechte Seite einer quadratischen Gleichung",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     259,
+     240,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Quadratwurzel aus a hoch 2 plus b hoch 2",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     259,
+     240,
+     156
+    ]
+   },
+   {
+    "type": "Thumb",
+    "name": "Größenfeld",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     493,
+     427,
+     15,
+     15
+    ]
+   }
+  ],
+  "Integral": [
+   {
+    "type": "Menu",
+    "name": "Integral",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     0,
+     390,
+     1282
+    ]
+   },
+   {
+    "type": "Menu",
+    "name": "Integral",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     0,
+     390,
+     1282
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Integrale",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     2,
+     360,
+     523
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Integral",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     45,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Integral mit Grenzwerten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     45,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Integral mit gestapelten Grenzwerten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     45,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Doppelintegral",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     201,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Doppelintegral mit Grenzwerten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     201,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Doppelintegral mit gestapelten Grenzwerten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     201,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Dreifachintegral",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     357,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Dreifachintegral mit Grenzwerten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     357,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Dreifachintegral mit gestapelten Grenzwerten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     357,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Konturenintegrale",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     525,
+     360,
+     526
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Konturenintegral",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     571,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Konturenintegral mit Grenzwerten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     571,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Konturenintegral mit gestapelten Grenzwerten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     571,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Oberflächenintegral",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     727,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Oberflächenintegral mit Grenzwerten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     727,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Oberflächenintegral mit gestapelten Grenzwerten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     727,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Volumenintegral",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     883,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Volumenintegral mit Grenzwerten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     883,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Volumenintegral mit gestapelten Grenzwerten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     883,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Differenziale",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     1051,
+     360,
+     214
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Differenzial x",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     1097,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Differenzial y",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     1097,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Differenzial θ",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     1097,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "Thumb",
+    "name": "Größenfeld",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     373,
+     1265,
+     15,
+     15
+    ]
+   }
+  ],
+  "Großer Operator": [
+   {
+    "type": "Menu",
+    "name": "Großer Operator",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     0,
+     630,
+     1554
+    ]
+   },
+   {
+    "type": "Menu",
+    "name": "Großer Operator",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     0,
+     630,
+     1554
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Summenbildungen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     2,
+     600,
+     211
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Summenbildung",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     45,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Addition mit Grenzwerten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     45,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Addition mit tiefgestellten/hochgestellten Grenzwerten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     45,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Addition mit unterem Grenzwert",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     362,
+     45,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Addition mit tiefgestelltem unterem Grenzwert",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     482,
+     45,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Produkte und Koprodukte",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     213,
+     600,
+     370
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Produkt",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     259,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Produkt mit Grenzwerten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     259,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Produkt mit tiefgestellten/hochgestellten Grenzwerten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     259,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Produkt mit unterem Grenzwert",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     362,
+     259,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Produkt mit tiefgestelltem unterem Grenzwert",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     482,
+     259,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Koprodukt",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     415,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Koprodukt mit Grenzwerten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     415,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Koprodukt mit tiefgestellten/hochgestellten Grenzwerten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     415,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Koprodukt mit unterem Grenzwert",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     362,
+     415,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Koprodukt mit tiefgestelltem unterem Grenzwert",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     482,
+     415,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Vereinigungs- und Schnittmengen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     583,
+     600,
+     370
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Vereinigung",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     629,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Vereinigungsmenge mit Grenzwerten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     629,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Vereinigungsmenge mit tiefgestellten/hochgestellten Grenzwerten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     629,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Vereinigungsmenge mit unterem Grenzwert",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     362,
+     629,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Vereinigungsmenge mit tiefgestelltem unterem Grenzwert",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     482,
+     629,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Schnittmenge",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     785,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Schnittmenge mit Grenzwerten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     785,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Schnittmenge mit tiefgestellten/hochgestellten Grenzwerten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     785,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Schnittmenge mit unterem Grenzwert",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     362,
+     785,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Schnittmenge mit tiefgestelltem unterem Grenzwert",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     482,
+     785,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Andere große Operatoren",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     953,
+     600,
+     370
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Logisches Oder",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     999,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Logisches Oder mit Grenzwerten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     999,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Logisches Oder mit tiefgestellten/hochgestellten Grenzwerten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     999,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Logisches Oder mit unterem Grenzwert",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     362,
+     999,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Logisches Oder mit tiefgestelltem unterem Grenzwert",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     482,
+     999,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Logisches Und",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     1155,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Logisches Und mit Grenzwerten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     1155,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Logisches Und mit tiefgestellten/hochgestellten Grenzwerten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     1155,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Logisches Und mit unterem Grenzwert",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     362,
+     1155,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Logisches Und mit tiefgestelltem unterem Grenzwert",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     482,
+     1155,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Allgemeine große Operatoren",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     1323,
+     600,
+     370
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Addition über k von n über k",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     1369,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Addition von i gleich null bis n",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     1369,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Additionsbeispiel unter Verwendung zweier Indizes",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     1369,
+     240,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Produktbeispiel",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     482,
+     1369,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Vereinigungsmengenbeispiel",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     1525,
+     240,
+     156
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Zeile nach oben",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     602,
+     2,
+     26,
+     26
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Seite nach oben",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -1274,
+     -239,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "Thumb",
+    "name": "Position",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     602,
+     28,
+     26,
+     1346
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Seite nach unten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     602,
+     1374,
+     26,
+     137
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Zeile nach unten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     602,
+     1511,
+     26,
+     26
+    ]
+   },
+   {
+    "type": "Thumb",
+    "name": "Größenfeld",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     613,
+     1537,
+     15,
+     15
+    ]
+   }
+  ],
+  "Eckige Klammer": [
+   {
+    "type": "Menu",
+    "name": "Eckige Klammer",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     0,
+     510,
+     1438
+    ]
+   },
+   {
+    "type": "Menu",
+    "name": "Eckige Klammer",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     0,
+     510,
+     1438
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Klammern",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     2,
+     480,
+     523
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Klammern",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     45,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Eckige Klammern",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     45,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Geschweifte Klammern",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     45,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Spitze Klammern",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     362,
+     45,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Untergrenzenklammern (halbe eckige Klammern)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     201,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Obergrenzenklammern (Quine Corners)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     201,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Vertikale Balken",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     201,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Doppelte vertikale Balken",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     362,
+     201,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Platzhalter zwischen zwei linken eckigen Klammern",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     357,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Platzhalter zwischen zwei rechten eckigen Klammern",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     357,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Umgekehrte eckige Klammern",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     357,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Doppelte eckige Klammern",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     362,
+     357,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Eckige Klammern mit Trennlinien",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     525,
+     480,
+     214
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Eckige Klammern mit Trennlinien",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     571,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Geschweifte Klammern mit Trennzeichen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     571,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Spitze Klammern mit Trennzeichen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     571,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Spitze Klammern mit zwei Trennzeichen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     362,
+     571,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Einzelne eckige Klammern",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     739,
+     480,
+     838
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Nur linke Klammer",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     785,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Nur runde Klammer rechts",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     785,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Nur eckige Klammer links",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     785,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Nur eckige Klammer rechts",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     362,
+     785,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Nur geschweifte Klammer links",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     941,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Nur geschweifte Klammer rechts",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     941,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Nur spitze Klammer links",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     941,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Nur spitze Klammer rechts",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     362,
+     941,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Nur Untergrenzenklammer links",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     1097,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Nur Untergrenzenklammer rechts",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     1097,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Nur Obergrenzenklammer links",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     1097,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Nur Obergrenzenklammer rechts",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     362,
+     1097,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Nur vertikaler Balken links",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     1253,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Nur vertikaler Balken rechts",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     1253,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Nur doppelter vertikaler Balken links",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     1253,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Nur doppelter vertikaler Balken rechts",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     362,
+     1253,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Doppelte eckige Klammer links",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     1409,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Nur doppelte eckige Klammer rechts",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     1409,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Fälle und Stapel",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     1577,
+     480,
+     214
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Fälle (zwei Bedingungen)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     1623,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Fälle (drei Bedingungen)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     1623,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Stapelobjekt",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     1623,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Stapelobjekt in Klammern",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     362,
+     1623,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Allgemeine eckige Klammern",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     1791,
+     480,
+     214
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Beispielgleichung mit Fällen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     1837,
+     240,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Binomialkoeffizient",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     1837,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Binomialkoeffizient in spitzen Klammern",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     362,
+     1837,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Zeile nach oben",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     482,
+     2,
+     26,
+     26
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Seite nach oben",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -1374,
+     -239,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "Thumb",
+    "name": "Position",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     482,
+     28,
+     26,
+     968
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Seite nach unten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     482,
+     996,
+     26,
+     399
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Zeile nach unten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     482,
+     1395,
+     26,
+     26
+    ]
+   },
+   {
+    "type": "Thumb",
+    "name": "Größenfeld",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     493,
+     1421,
+     15,
+     15
+    ]
+   }
+  ],
+  "Funktion": [
+   {
+    "type": "Menu",
+    "name": "Funktion",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     0,
+     390,
+     1496
+    ]
+   },
+   {
+    "type": "Menu",
+    "name": "Funktion",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     0,
+     390,
+     1496
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Trigonometrische Funktionen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     2,
+     360,
+     367
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Sinusfunktion",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     45,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Kosinusfunktion",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     45,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Tangensfunktion",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     45,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Kosekansfunktion",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     201,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Sekansfunktion",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     201,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Kotangensfunktion",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     201,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Umgekehrte Funktionen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     369,
+     360,
+     370
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Umgekehrte Sinusfunktion",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     415,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Umgekehrte Kosinusfunktion",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     415,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Umgekehrte Tangensfunktion",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     415,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Umgekehrte Kosekansfunktion",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     571,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Umgekehrte Sekansfunktion",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     571,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Umgekehrte Kotangensfunktion",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     571,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Hyperbolische Funktionen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     739,
+     360,
+     370
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Hyperbolische Sinusfunktion",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     785,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Hyperbolische Kosinusfunktion",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     785,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Hyperbolische Tangensfunktion",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     785,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Hyperbolische Kosekansfunktion",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     941,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Hyperbolische Sekansfunktion",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     941,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Hyperbolische Kotangensfunktion",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     941,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Umgekehrte hyperbolische Funktionen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     1109,
+     360,
+     370
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Umgekehrte hyperbolische Sinusfunktion",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     1155,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Umgekehrte hyperbolische Kosinusfunktion",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     1155,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Umgekehrte hyperbolische Tangensfunktion",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     1155,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Umgekehrte hyperbolische Kosekansfunktion",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     1311,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Umgekehrte hyperbolische Sekansfunktion",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     1311,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Umgekehrte hyperbolische Kotangensfunktion",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     1311,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Allgemeine Funktionen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     1479,
+     360,
+     370
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Sinus θ",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     1525,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Kosinus 2x",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     1525,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Tangensformel",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     1681,
+     240,
+     156
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Zeile nach oben",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     362,
+     2,
+     26,
+     26
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Seite nach oben",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -1472,
+     -239,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "Thumb",
+    "name": "Position",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     362,
+     28,
+     26,
+     1139
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Seite nach unten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     362,
+     1167,
+     26,
+     286
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Zeile nach unten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     362,
+     1453,
+     26,
+     26
+    ]
+   },
+   {
+    "type": "Thumb",
+    "name": "Größenfeld",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     373,
+     1479,
+     15,
+     15
+    ]
+   }
+  ],
+  "Akzent": [
+   {
+    "type": "Menu",
+    "name": "Akzent",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     0,
+     366,
+     1208
+    ]
+   },
+   {
+    "type": "Menu",
+    "name": "Akzent",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     0,
+     366,
+     1208
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Akzente",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     2,
+     336,
+     655
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Punkt",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     45,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Doppelter Punkt",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     86,
+     45,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Dreifacher Punkt",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     170,
+     45,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Dach",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     254,
+     45,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Häkchen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     165,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Akut",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     86,
+     165,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Gravis",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     170,
+     165,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Brevis",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     254,
+     165,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Tilde",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     285,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Strich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     86,
+     285,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Doppelter Überstrich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     170,
+     285,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Horizontale geschweifte Klammer (oben)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     254,
+     285,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Horizontale geschweifte Klammer (unten)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     405,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Gruppierungszeichen oben",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     86,
+     405,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Gruppierungszeichen unten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     170,
+     405,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Pfeil nach links oben",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     254,
+     405,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Pfeil nach rechts oben",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     525,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Pfeil nach links und rechts oben",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     86,
+     525,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Harpune nach links oben",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     170,
+     525,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Harpune nach rechts oben",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     254,
+     525,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Geschachtelte Formeln",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     657,
+     336,
+     178
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Geschachtelte Formel (mit Platzhalter)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     703,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Geschachtelte Formel (Beispiel)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     86,
+     703,
+     246,
+     120
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Unterstriche und Überstriche",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     835,
+     336,
+     178
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Überstrich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     881,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Unterstrich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     86,
+     881,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Allgemeine Akzentobjekte",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     1013,
+     336,
+     178
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Vektor A",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     1059,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur ABC mit Überstrich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     86,
+     1059,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur x XOR y mit Überstrich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     170,
+     1059,
+     162,
+     120
+    ]
+   },
+   {
+    "type": "Thumb",
+    "name": "Größenfeld",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     349,
+     1191,
+     15,
+     15
+    ]
+   }
+  ],
+  "Grenzwert und Logarithmus": [
+   {
+    "type": "Menu",
+    "name": "Grenzwert und Logarithmus",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     0,
+     390,
+     600
+    ]
+   },
+   {
+    "type": "Menu",
+    "name": "Grenzwert und Logarithmus",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     0,
+     390,
+     600
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Funktionen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     2,
+     360,
+     367
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Logarithmus mit leerer Basis",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     45,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Logarithmus ohne Basis",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     45,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Grenzwert",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     45,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Minimum",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     201,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Maximum",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     201,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Natürlicher Logarithmus",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     201,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Allgemeine Funktionen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     369,
+     360,
+     214
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Beispiel für Grenzwert",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     415,
+     192,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Beispiel für Maximum",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     194,
+     415,
+     168,
+     156
+    ]
+   },
+   {
+    "type": "Thumb",
+    "name": "Größenfeld",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     373,
+     583,
+     15,
+     15
+    ]
+   }
+  ],
+  "Operator": [
+   {
+    "type": "Menu",
+    "name": "Operator",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     0,
+     366,
+     910
+    ]
+   },
+   {
+    "type": "Menu",
+    "name": "Operator",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     0,
+     366,
+     910
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Grundlegende Operatoren",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     2,
+     336,
+     295
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Doppelpunkt Gleich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     45,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Gleich Gleich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     86,
+     45,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Plus Gleich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     170,
+     45,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Minus Gleich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     254,
+     45,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Gleich gemäß Definition",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     165,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Gemessen mit",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     86,
+     165,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Delta gleich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     170,
+     165,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Operatorstrukturen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     297,
+     336,
+     418
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Pfeil nach links oben",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     343,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Pfeil nach rechts oben",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     86,
+     343,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Pfeil nach links unten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     170,
+     343,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Pfeil nach rechts unten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     254,
+     343,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Doppelpfeil nach links oben",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     463,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Doppelpfeil nach rechts oben",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     86,
+     463,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Doppelpfeil nach links unten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     170,
+     463,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Doppelpfeil nach rechts unten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     254,
+     463,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Pfeil nach links und rechts oben",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     583,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Pfeil nach links und rechts unten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     86,
+     583,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Doppelpfeil nach links und rechts oben",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     170,
+     583,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Doppelpfeil nach links und rechts unten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     254,
+     583,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Allgemeine Operatorstrukturen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     715,
+     336,
+     178
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Ergibt",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     761,
+     156,
+     120
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Delta Ergibt",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     158,
+     761,
+     84,
+     120
+    ]
+   },
+   {
+    "type": "Thumb",
+    "name": "Größenfeld",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     349,
+     893,
+     15,
+     15
+    ]
+   }
+  ],
+  "Matrix": [
+   {
+    "type": "Menu",
+    "name": "Matrix",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     0,
+     510,
+     1242
+    ]
+   },
+   {
+    "type": "Menu",
+    "name": "Matrix",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     0,
+     510,
+     1242
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Leere Matrizen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     2,
+     480,
+     367
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur 1x2 Leere Matrix",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     45,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur 2x1 Leere Matrix",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     45,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur 1x3 Leere Matrix",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     45,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur 3x1 Leere Matrix",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     362,
+     45,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur 2x2 Leere Matrix",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     201,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur 2x3 Leere Matrix",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     201,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur 3x2 Leere Matrix",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     201,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur 3x3 Leere Matrix",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     362,
+     201,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Punkte",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     369,
+     480,
+     214
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Mittellinienpunkte",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     415,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Grundlinienpunkte",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     415,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Vertikale Punkte",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     415,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Diagonale Punkte",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     362,
+     415,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Identitätsmatrizen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     583,
+     480,
+     214
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur 2x2 Identitätsmatrix mit Nullen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     629,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur 2x2 Identitätsmatrix mit leeren Außerdiagonalzellen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     629,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur 3x3 Identitätsmatrix mit Nullen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     629,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur 3x3 Identitätsmatrix mit leeren Außerdiagonalzellen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     362,
+     629,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Matrizen mit Klammern",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     797,
+     480,
+     214
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Leere 2x2-Matrix in Klammern",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     843,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Leere 2x2-Matrix in eckigen Klammern",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     122,
+     843,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Leere 2x2-Determinante",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     843,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Leere 2x2-Matrix in doppelten vertikalen Balken",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     362,
+     843,
+     120,
+     156
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Spärliche Matrizen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     1011,
+     480,
+     214
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Spärliche Matrix in Klammern",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     2,
+     1057,
+     240,
+     156
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "Formelstruktur Spärliche Matrix in eckigen Klammern",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     1057,
+     240,
+     156
+    ]
+   },
+   {
+    "type": "Thumb",
+    "name": "Größenfeld",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     493,
+     1225,
+     15,
+     15
+    ]
+   }
+  ]
+ },
+ "dialog Formeloptionen": [
+  [
+   "Window",
+   "Formeloptionen",
+   "",
+   11,
+   45
+  ],
+  [
+   "Group",
+   "Allgemein",
+   "",
+   20,
+   56
+  ],
+  [
+   "Text",
+   "Allgemein",
+   "",
+   29,
+   56
+  ],
+  [
+   "Text",
+   "Standardschriftart für mathematische Bereiche",
+   "ALT+f",
+   37,
+   91
+  ],
+  [
+   "ComboBox",
+   "Standardschriftart für mathematische Bereiche",
+   "ALT+f",
+   378,
+   88
+  ],
+  [
+   "Button",
+   "Öffnen",
+   "Alt+Pfeil nach unten",
+   482,
+   89
+  ],
+  [
+   "CheckBox",
+   "Ausdrücke automatisch in professionelles Format konvertieren",
+   "",
+   37,
+   120
+  ],
+  [
+   "CheckBox",
+   "Größe von verschachtelten Brüchen für Anzeigeformeln reduzieren",
+   "ALT+v",
+   37,
+   151
+  ],
+  [
+   "Text",
+   "Beim Kopieren einer Formel",
+   "",
+   37,
+   177
+  ],
+  [
+   "RadioButton",
+   "MathML als Nur-Text in die Zwischenablage kopieren",
+   "ALT+p",
+   65,
+   203
+  ],
+  [
+   "RadioButton",
+   "Lineares Format als Nur-Text in die Zwischenablage kopieren",
+   "ALT+n",
+   65,
+   234
+  ],
+  [
+   "Text",
+   "Zeilen mit binären und relationalen Operatoren umbrechen",
+   "ALT+b",
+   37,
+   268
+  ],
+  [
+   "ComboBox",
+   "Zeilen mit binären und relationalen Operatoren umbrechen",
+   "ALT+b",
+   466,
+   265
+  ],
+  [
+   "Button",
+   "Öffnen",
+   "Alt+Pfeil nach unten",
+   529,
+   266
+  ],
+  [
+   "Text",
+   "Operatoren für die Subtraktion duplizieren als",
+   "",
+   65,
+   300
+  ],
+  [
+   "ComboBox",
+   "Operatoren für die Subtraktion duplizieren als",
+   "",
+   402,
+   297
+  ],
+  [
+   "Button",
+   "Öffnen",
+   "Alt+Pfeil nach unten",
+   424,
+   298
+  ],
+  [
+   "Button",
+   "Math. Autokorrektur...",
+   "ALT+M",
+   235,
+   329
+  ],
+  [
+   "Button",
+   "Erkannte Funktionen...",
+   "ALT+E",
+   427,
+   329
+  ],
+  [
+   "Group",
+   "Mathematik anzeigen",
+   "",
+   20,
+   379
+  ],
+  [
+   "Text",
+   "Mathematik anzeigen",
+   "",
+   29,
+   379
+  ],
+  [
+   "Text",
+   "Beim Erstellen von Integralen",
+   "",
+   37,
+   411
+  ],
+  [
+   "RadioButton",
+   "Integralgrenzwerte seitlich platzieren",
+   "ALT+s",
+   65,
+   437
+  ],
+  [
+   "RadioButton",
+   "Integralgrenzwerte zentriert oberhalb und unterhalb platzieren ",
+   "ALT+w",
+   65,
+   468
+  ],
+  [
+   "Text",
+   "Beim Erstellen von anderen n-ären Operatoren",
+   "",
+   37,
+   494
+  ],
+  [
+   "RadioButton",
+   "N-äre Grenzwerte seitlich platzieren",
+   "ALT+t",
+   65,
+   520
+  ],
+  [
+   "RadioButton",
+   "N-äre Grenzwerte direkt oberhalb und unterhalb platzieren",
+   "ALT+G",
+   65,
+   551
+  ],
+  [
+   "CheckBox",
+   "Die folgenden Einstellungen für Mathematik in einer eigenen Zeile verwenden",
+   "ALT+u",
+   37,
+   582
+  ],
+  [
+   "Text",
+   "Linker Rand",
+   "ALT+L",
+   65,
+   617
+  ],
+  [
+   "Spinner",
+   "Linker Rand",
+   "",
+   167,
+   613
+  ],
+  [
+   "Edit",
+   "Linker Rand",
+   "ALT+L",
+   168,
+   614
+  ],
+  [
+   "Button",
+   "Mehr",
+   "",
+   226,
+   614
+  ],
+  [
+   "Button",
+   "Weniger",
+   "",
+   226,
+   628
+  ],
+  [
+   "Text",
+   "Rechter Rand",
+   "ALT+R",
+   320,
+   617
+  ],
+  [
+   "Spinner",
+   "Rechter Rand",
+   "",
+   432,
+   613
+  ],
+  [
+   "Edit",
+   "Rechter Rand",
+   "ALT+R",
+   433,
+   614
+  ],
+  [
+   "Button",
+   "Mehr",
+   "",
+   491,
+   614
+  ],
+  [
+   "Button",
+   "Weniger",
+   "",
+   491,
+   628
+  ],
+  [
+   "Text",
+   "Mathematische Ränder werden Absatzrändern hinzugefügt.",
+   "",
+   65,
+   648
+  ],
+  [
+   "Text",
+   "Ausrichtung",
+   "ALT+A",
+   65,
+   677
+  ],
+  [
+   "ComboBox",
+   "Ausrichtung",
+   "ALT+A",
+   168,
+   674
+  ],
+  [
+   "Button",
+   "Öffnen",
+   "Alt+Pfeil nach unten",
+   312,
+   675
+  ],
+  [
+   "Text",
+   "Für Mathematik mit Umbruch in eine neue Zeile",
+   "",
+   65,
+   706
+  ],
+  [
+   "RadioButton",
+   "Einzug für umbrochene Zeilen",
+   "ALT+i",
+   93,
+   732
+  ],
+  [
+   "RadioButton",
+   "Umbrochene Zeilen rechtsbündig ausrichten",
+   "ALT+h",
+   93,
+   763
+  ],
+  [
+   "Spinner",
+   "Einzug für umbrochene Zeilen",
+   "",
+   432,
+   732
+  ],
+  [
+   "Edit",
+   "Einzug für umbrochene Zeilen",
+   "",
+   433,
+   733
+  ],
+  [
+   "Button",
+   "Mehr",
+   "",
+   491,
+   733
+  ],
+  [
+   "Button",
+   "Weniger",
+   "",
+   491,
+   747
+  ],
+  [
+   "Button",
+   "Standardwerte ...",
+   "ALT+d",
+   20,
+   808
+  ],
+  [
+   "Button",
+   "OK",
+   "",
+   384,
+   808
+  ],
+  [
+   "Button",
+   "Abbrechen",
+   "",
+   511,
+   808
+  ],
+  [
+   "Button",
+   "Direkthilfe",
+   "",
+   492,
+   1
+  ],
+  [
+   "Button",
+   "Schließen",
+   "",
+   563,
+   1
+  ]
+ ]
+}
