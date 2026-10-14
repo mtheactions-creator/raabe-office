@@ -9,3 +9,4 @@ gen/schemas/
 tools/feel-lab/captures/
 .claude/settings.local.json
 tools/lang-data/src/
+tools/lang-data/work/
