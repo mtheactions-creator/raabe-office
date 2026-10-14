@@ -74,7 +74,7 @@ export function bordersFeature(api: AppApi) {
         setting("none", "Ohne", () => { for (const s of SIDES) set[s] = undefined; }),
         setting("box", "Kontur", () => { for (const s of SIDES) set[s] = spec(s); }),
         setting("shadow", "Schatten", null, "Schatten\nRaabeWrite zeichnet Rahmen ohne Schatten."),
-        setting("3d", "3D", null, "3D\nRaabeWrite zeichnet Rahmen ohne 3D-Effekt."),
+        setting("three-d", "3D", null, "3D\nRaabeWrite zeichnet Rahmen ohne 3D-Effekt."),
         setting("custom", kind === "page" ? "Anpassen" : "Benutzerdefiniert", () => {}));
       const applyTo = kind === "page"
         ? h("select", {}, h("option", { value: "all" }, "Gesamtes Dokument"), h("option", { value: "section" }, "Diesen Abschnitt"),

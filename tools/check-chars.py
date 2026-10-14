@@ -13,7 +13,8 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-PATTERNS = ["packages/*/src/**/*.ts", "packages/*/test/**/*.ts", "apps/*/src/**/*.ts", "tools/**/*.py", "branding/*.py"]
+PATTERNS = ["packages/*/src/**/*.ts", "packages/*/test/**/*.ts", "apps/*/src/**/*.ts", "tools/**/*.py", "branding/*.py",
+            "packages/*/src/**/*.css", "apps/*/src/**/*.css"]
 # Visible-looking but special characters that must be written as escapes.
 SPECIAL = {0xA0, 0xAD, 0x2011, 0x200B, 0x200C, 0x200D, 0x2060, 0xFEFF, 0xFFFC}
 
@@ -42,7 +43,9 @@ def main() -> int:
         problems += 1
         lines = sorted({text.count("\n", 0, i) + 1 for i in found})
         print(f"{f.relative_to(ROOT)}: {len(found)} character(s), lines {lines[:8]}")
-        if fix:
+        if fix and f.suffix == ".css":
+            print("  CSS has no such escapes: fix by hand")
+        elif fix:
             f.write_text("".join(f"\\u{ord(c):04x}" if bad(c) else c for c in text), encoding="utf-8", newline="\n")
             print("  fixed")
     return 1 if problems and not fix else 0

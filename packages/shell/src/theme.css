@@ -904,7 +904,7 @@ body.touch .qat button { height: 36px; min-width: 36px; }
 .bddlg .bd-setting .bd-icon { width: 34px; height: 34px; border: 1px solid #a6a6a6; background: repeating-linear-gradient(#fff 0 4px, #b4b4b4 4px 5px); flex: none; }
 .bddlg .bd-setting .bd-icon.box { box-shadow: inset 0 0 0 2px #000; }
 .bddlg .bd-setting .bd-icon.shadow { box-shadow: inset 0 0 0 1px #000, 3px 3px 0 #000; }
-.bddlg .bd-setting .bd-icon. d { box-shadow: inset 0 0 0 3px #000; }
+.bddlg .bd-setting .bd-icon.three-d { box-shadow: inset 0 0 0 3px #000; }
 .bddlg .bd-setting.active .bd-icon { outline: 2px solid #2b579a; outline-offset: 1px; }
 .bddlg .bd-setting:disabled { color: #8a8a8a; }
 .bddlg .bd-styles { height: 128px; overflow: auto; border: 1px solid #a6a6a6; background: #fff; display: flex; flex-direction: column; }
