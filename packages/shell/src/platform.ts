@@ -37,6 +37,8 @@ export interface Platform {
   clipboardWrite(text: string): Promise<void>;
   /** The clipboard's whole HTML document (with Word's list definitions); "" when none. */
   clipboardReadHtml?(): Promise<string>;
+  /** A picture on the clipboard (PNG or BMP file bytes); null when there is none. */
+  clipboardReadImage?(): Promise<Uint8Array | null>;
   /** Puts HTML and its plain text on the clipboard, the HTML as it is. */
   clipboardWriteHtml?(html: string, text: string): Promise<void>;
   printToPdf(path: string): Promise<void>;

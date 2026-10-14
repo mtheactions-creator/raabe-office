@@ -35,6 +35,15 @@ export type Control =
       value?: () => string; commit?: (v: string) => void; step?: (dir: 1 | -1) => void;
     }
   | { type: "color"; cmd: string; key?: string; palette: "font" | "highlight"; current: () => string; pick: (c: string) => void }
+  /**
+   * A gallery of drawn tiles (Bildformatvorlagen: the selected picture in each style).
+   * `key` changes when the tiles must be drawn again; `panel` is the full gallery.
+   */
+  | {
+      type: "tiles"; cmd: string; key?: string; count: number; visible: number; fill?: boolean; size: [number, number];
+      render: (i: number) => HTMLElement | null; tip: (i: number) => string; pick: (i: number) => void;
+      hover?: (i: number | null) => void; current?: () => number | undefined; redraw: () => string; panel: (close: () => void) => HTMLElement;
+    }
   | { type: "check"; cmd: string; key?: string }
   | { type: "rows"; rows: (Control | "gap")[][] }
   /** A column of controls; `title` is a small heading above it (Layout > Absatz: "Einzug"). */
@@ -300,6 +309,15 @@ export class Ribbon {
     return this.current.id;
   }
 
+  /** A menu entry that does something now (a command, an action or a submenu). */
+  private entryEnabled(e: MenuEntry): boolean {
+    if (e === "-" || "heading" in e) return false;
+    if ("cmd" in e) return this.commands.isEnabled(e.cmd);
+    if ("submenu" in e || "flyout" in e) return !e.disabled;
+    if ("icons" in e) return e.icons.some((i) => !i.disabled);
+    return !e.disabled;
+  }
+
   private bind(el: HTMLElement & { disabled?: boolean }, cmd: string): void {
     const c = this.commands;
     this.updaters.push(() => {
@@ -340,7 +358,7 @@ export class Ribbon {
         const b = this.button(c.cmd, c.size ?? "small", c.key, c.label, true);
         // A dropdown's command is enabled when anything in its menu is.
         this.updaters.push(() => {
-          const any = c.popup ? this.commands.isEnabled(c.cmd) : c.menu.some((e) => e !== "-" && ("cmd" in e ? this.commands.isEnabled(e.cmd) : "run" in e && !e.disabled));
+          const any = c.popup ? this.commands.isEnabled(c.cmd) : c.menu.some((e) => this.entryEnabled(e));
           b.disabled = !any;
           b.classList.toggle("disabled", !any);
           b.dataset.tip = this.commands.tooltip(c.cmd, any);
@@ -362,7 +380,7 @@ export class Ribbon {
           "data-keytip": c.key, "data-keytip-scope": this.scope(),
         }, ...arrowParts);
         this.updaters.push(() => {
-          const any = c.menu.some((e) => e !== "-" && ("cmd" in e ? this.commands.isEnabled(e.cmd) : "run" in e && !e.disabled));
+          const any = c.menu.some((e) => this.entryEnabled(e));
           arrow.disabled = !any && !this.commands.isEnabled(c.cmd);
         });
         arrow.onclick = () => {
@@ -438,6 +456,36 @@ export class Ribbon {
           }
         }
         return el;
+      }
+      case "tiles": {
+        const items = h("div", { class: "items" });
+        const buttons: HTMLButtonElement[] = [];
+        for (let i = 0; i < c.count; i++) {
+          const b = h("button", {
+            class: `item tile-item${i >= c.visible ? " extra" : ""}`, style: `width:${c.size[0] + 8}px;height:${c.size[1] + 8}px${i >= c.visible && c.fill ? ";display:none" : ""}`,
+            "data-tip": c.tip(i), onclick: () => { c.hover?.(null); c.pick(i); },
+          }) as HTMLButtonElement;
+          b.addEventListener("mouseenter", () => c.hover?.(i));
+          b.addEventListener("mouseleave", () => c.hover?.(null));
+          if (i < c.visible || c.fill) items.append(b);
+          buttons.push(b);
+        }
+        let drawn = "";
+        this.updaters.push(() => {
+          const enabled = this.commands.isEnabled(c.cmd);
+          for (const b of buttons) b.disabled = !enabled;
+          const key = c.redraw();
+          if (key !== drawn) {
+            drawn = key;
+            buttons.forEach((b, i) => { const el = c.render(i); b.replaceChildren(...(el ? [el] : [])); });
+          }
+          const cur = c.current?.();
+          buttons.forEach((b, i) => b.classList.toggle("on", cur === i));
+        });
+        const more = h("button", { "aria-label": "Weitere", "data-keytip": c.key, "data-keytip-scope": this.scope() }, icon("chevron-down"));
+        more.onclick = () => showPopup(c.panel(closePopup), more.getBoundingClientRect(), () => this.opts.onDone?.());
+        return h("div", { class: `rgallery tiles${c.fill ? " fill" : ""}`, role: "listbox", "data-min": String(c.visible) }, items,
+          h("div", { class: "scroll" }, h("button", { disabled: true }, icon("chevron-up")), more));
       }
       case "spinner": {
         const c2 = c;

@@ -5,6 +5,8 @@
 // without loss (D-004). All values are immutable: edits create new paragraph objects, which
 // keeps undo cheap and lets the layout cache per paragraph object.
 
+import type { PictureFormat } from "./picture";
+
 export type Underline = "single" | "double" | "thick" | "dotted" | "dash" | "wave" | "words" | "none" | string;
 
 /** Character formatting. `undefined` means "inherit from styles". Sizes in points. */
@@ -279,6 +281,12 @@ export interface FloatObject {
   readonly side: string;
   /** Distance from the text: top, bottom, left, right (points). */
   readonly dist: readonly [number, number, number, number];
+  readonly pic?: PictureFormat;
+  readonly alt?: AltText;
+  /** Mit Text verschieben (false: Position auf Seite fixieren). */
+  readonly moveWithText?: boolean;
+  /** Stacking order among floating objects (wp:anchor relativeHeight); higher is in front. */
+  readonly z?: number;
 }
 
 export interface ImageData {
@@ -366,6 +374,17 @@ export interface InlineObject {
   readonly href?: string;
   /** Font of a symbol object (w:sym, e.g. Wingdings); its display is in that font. */
   readonly font?: string;
+  /** Pictures: Bildformat settings (corrections, colour, crop, border, effects …). */
+  readonly pic?: PictureFormat;
+  /** Pictures: Alternativtext. */
+  readonly alt?: AltText;
+}
+
+/** Alternativtext of a picture or shape (wp:docPr descr/title, decorative). */
+export interface AltText {
+  readonly descr?: string;
+  readonly title?: string;
+  readonly decorative?: boolean;
 }
 
 /** A zero-width marker kept at an offset (bookmark, comment range …). */

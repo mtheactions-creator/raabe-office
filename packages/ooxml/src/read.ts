@@ -3,9 +3,10 @@
 // changes as the model describes them. Everything RaabeWrite does not interpret is kept as
 // its original XML in place, so writing back loses nothing (D-004).
 
+import { readExtent, readPicture, themeColors } from "./drawingml";
 import { strFromU8, unzipSync } from "fflate";
 import {
-  A4, COLUMN_BREAK, DEFAULT_SECTION, LINE_BREAK, OBJ, ONE_COLUMN, PAGE_BREAK, StyleSheet, defaultStyleSheet, intern, nextTableId,
+  A4, COLUMN_BREAK, DEFAULT_SECTION, LINE_BREAK, OBJ, ONE_COLUMN, PAGE_BREAK, StyleSheet, defaultStyleSheet, intern, nextTableId, plainPicture,
   type Anchor, type BlockObject, type CellDef, type CellRef, type CharProps, type CommentMeta, type DocState, type FloatObject,
   type HeaderRefs, type ImageData, type InlineObject, type Numbering, type Para, type ParaGroup, type ParaProps, type Revision,
   type RowDef, type Run, type Section, type StyleDef, type StyleType, type TableDef, type TableStyleDef, type TableStylePart,
@@ -66,7 +67,7 @@ const twips = (v: string | null, fallback: number) => (num(v) ?? fallback * 20) 
 const EMU = 12700;
 
 /** Preserved inline content: complete XML, run content to wrap in a run, or a picture. */
-export type ObjectData = { raw: string } | { inner: string } | { drawing: string; part: string };
+export type ObjectData = { raw: string } | { inner: string } | { drawing: string; part: string; picRead?: string };
 
 function themeFonts(xml: string | null): { major: string; minor: string } {
   if (!xml) return { major: "Calibri Light", minor: "Calibri" };
@@ -115,7 +116,7 @@ function readTableStyle(s: Element): TableStyleDef {
   };
 }
 
-function readStyles(xml: string | null, theme: { major: string; minor: string }): StyleSheet {
+function readStyles(xml: string | null, theme: { major: string; minor: string; colors?: Record<string, string> }): StyleSheet {
   if (!xml) return defaultStyleSheet();
   const doc = parse(xml);
   const root = doc.documentElement;
@@ -146,7 +147,7 @@ function readStyles(xml: string | null, theme: { major: string; minor: string })
       table: type === "table" ? readTableStyle(s) : undefined,
     });
   }
-  return new StyleSheet(styles, defaultsR, defaultsP, { majorFont: theme.major, minorFont: theme.minor });
+  return new StyleSheet(styles, defaultsR, defaultsP, { majorFont: theme.major, minorFont: theme.minor, colors: theme.colors });
 }
 
 // ----- fields -------------------------------------------------------------------------------
@@ -241,6 +242,8 @@ function tableBlock(tbl: Element, label: string): BlockObject {
 /** Shared state while reading a package. */
 class Reader {
   readonly partial = new Set<string>();
+  /** The document theme's colours (for pictures and shapes). */
+  themeColors: Record<string, string> = themeColors(null);
   readonly stories = new Map<string, Para[]>();
   readonly storyParts = new Map<string, { path: string; rootTag: string }>();
   private readonly storyOfPath = new Map<string, string>();
@@ -613,7 +616,18 @@ class PartReader {
     const anchor = c.getElementsByTagNameNS(WP, "anchor")[0];
     const blip = c.getElementsByTagNameNS(A, "blip")[0];
     const image = blip ? this.r.image(this.part, this.rels, blip.getAttributeNS(RNS, "embed")) : undefined;
-    const data: ObjectData = { drawing: outer(c), part: this.part };
+    // Bildformat settings and Alternativtext; the XML is only rewritten when they change.
+    const picEl = c.getElementsByTagNameNS("http://schemas.openxmlformats.org/drawingml/2006/picture", "pic")[0];
+    const holder = inline ?? anchor;
+    const extentEl = holder ? Array.from(holder.children).find((x) => x.localName === "effectExtent") : undefined;
+    const extent = readExtent(extentEl);
+    const read = picEl ? { ...readPicture(picEl, this.r.themeColors), extent } : undefined;
+    const pic = read && !plainPicture(read) ? read : undefined;
+    const docPr = c.getElementsByTagNameNS(WP, "docPr")[0];
+    const descr = docPr?.getAttribute("descr") ?? undefined, title = docPr?.getAttribute("title") ?? undefined;
+    const decorative = !!docPr?.getElementsByTagNameNS("http://schemas.microsoft.com/office/drawing/2017/decorative", "decorative")[0];
+    const alt = descr || title || decorative ? { descr: descr || undefined, title: title || undefined, decorative: decorative || undefined } : undefined;
+    const data: ObjectData = { drawing: outer(c), part: this.part, picRead: JSON.stringify({ pic, alt }) };
     const ext = (el: Element) => {
       const e = Array.from(el.children).find((x) => x.localName === "extent");
       return { width: Number(e?.getAttribute("cx") ?? 0) / EMU, height: Number(e?.getAttribute("cy") ?? 0) / EMU };
@@ -623,7 +637,7 @@ class PartReader {
     }
     if (inline || !anchor) {
       const size = inline ? ext(inline) : { width: 0, height: 0 };
-      b.addObject({ kind: "image", data, display: "", width: size.width, height: size.height, image }, props);
+      b.addObject({ kind: "image", data, display: "", width: size.width, height: size.height, image, pic, alt }, props);
       return;
     }
     const size = ext(anchor);
@@ -642,7 +656,8 @@ class PartReader {
     b.floats.push({
       at: b.text.length, data, width: size.width, height: size.height, image,
       x: pos("positionH"), y: pos("positionV"), wrap, side: wrapEl?.getAttribute("wrapText") ?? "bothSides",
-      dist: [d("distT"), d("distB"), d("distL"), d("distR")],
+      dist: [d("distT"), d("distB"), d("distL"), d("distR")], pic, alt,
+      z: Number(anchor.getAttribute("relativeHeight") ?? 0) || undefined,
     });
   }
 
@@ -846,7 +861,8 @@ export function readDocx(bytes: Uint8Array): ReadResult {
   const main = r.text("word/document.xml");
   if (!main) throw new Error("Die Datei ist kein Word-Dokument (word/document.xml fehlt).");
   const themeXml = r.text("word/theme/theme1.xml");
-  const theme = themeFonts(themeXml);
+  r.themeColors = themeColors(themeXml ? parse(themeXml) : null);
+  const theme = { ...themeFonts(themeXml), colors: r.themeColors };
   const stylesXml = r.text("word/styles.xml");
   const styles = readStyles(stylesXml, theme);
   const settingsXml = r.text("word/settings.xml");

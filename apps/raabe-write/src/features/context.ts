@@ -171,7 +171,7 @@ export function contextFeature(api: AppApi, spellEntries: (e: Editor, pos: Pos) 
   };
 
   const flat = (list: MenuEntry[]): MenuEntry[] => list.flatMap((x) => {
-    if (x === "-" || "heading" in x || "icons" in x) return [];
+    if (x === "-" || "heading" in x || "icons" in x || "flyout" in x) return [];
     if ("submenu" in x) return flat(typeof x.submenu === "function" ? x.submenu() : x.submenu);
     return [x];
   });

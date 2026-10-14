@@ -1,9 +1,23 @@
 // Bilder: Einfügen > Bilder > Dieses Gerät, and the contextual tab "Bildformat" with
 // Textumbruch and Größe. Datum und Uhrzeit lives here too (Einfügen > Text).
 
-import { h, showDialog, messageBox, baseName, type Command, type Control, type MenuEntry, type Tab } from "@raabe/shell";
+import { closePopup, h, showDialog, showPopup, messageBox, baseName, type Command, type MenuEntry } from "@raabe/shell";
 import { imageInfo, naturalSizePt } from "@raabe/text-engine";
-import { CM, fmtCm, parseNum, type AppApi } from "./api";
+import type { AppApi } from "./api";
+import { pictureTab, PICTURE_TAB_COMMANDS } from "./picture-tab";
+
+export { PICTURE_TAB_COMMANDS };
+
+/** A small icon of a wrapping style (text lines and a picture), for the layout options. */
+function wrapIcon(wrap: string): HTMLElement {
+  const box = h("div", { style: "position:relative;width:26px;height:26px" });
+  const lines = wrap === "inline" ? [6, 18] : [2, 7, 12, 17, 22];
+  for (const y of lines) box.append(h("div", { style: `position:absolute;left:0;right:0;top:${y}px;height:2px;background:#9e9e9e` }));
+  const pic = h("div", { style: `position:absolute;left:8px;top:${wrap === "inline" ? 9 : 7}px;width:10px;height:10px;background:${wrap === "behind" ? "rgba(91,155,213,.5)" : "#5b9bd5"}` });
+  if (wrap === "front") pic.style.zIndex = "1";
+  box.append(pic);
+  return box;
+}
 
 const cmd = (id: string, label: string, icon?: string, extra: Partial<Command> = {}): Command => ({ id, label, icon, ...extra });
 
@@ -57,11 +71,14 @@ export function picturesFeature(api: AppApi) {
 
   const fromFile = async () => {
     const path = await api.platform.openImageDialog();
-    if (!path) return;
+    if (path) await insertFromPath(path);
+  };
+  const insertFromPath = async (path: string) => {
     try {
       const bytes = await api.platform.readFile(path);
       const ext = baseName(path).split(".").pop()?.toLowerCase() ?? "";
-      const type = MIME[ext] ?? "image/png";
+      // The file's own header decides (a ".png" may well be a JPEG).
+      const type = imageInfo(bytes)?.type ?? MIME[ext] ?? "image/png";
       const size = await naturalSize(bytes, type);
       ed()?.insertImage({ bytes, type }, size.w, size.h);
       api.selectTab("pictureFormat");
@@ -83,33 +100,30 @@ export function picturesFeature(api: AppApi) {
   }
   c.implement("layout.wrapText", { run: () => {}, enabled: () => picked() && ed()!.doc.activeStory === "main" });
 
-  // Größe: changing one side keeps the proportions (Seitenverhältnis sperren, Word's default).
-  const size = () => { const s = sel(); return s ? { w: s.obj.width ?? 0, h: s.obj.height ?? 0 } : null; };
-  const setSide = (side: "w" | "h", pt: number) => {
-    const s = size();
-    if (!s || !(pt > 1) || !s.w || !s.h) return;
-    const k = side === "w" ? pt / s.w : pt / s.h;
-    ed()?.setImageSize(s.w * k, s.h * k);
-  };
   c.implement("picture.height", { run: () => {}, enabled: picked });
   c.implement("picture.width", { run: () => {}, enabled: picked });
-  const spinner = (id: string, label: string, key: string, side: "w" | "h"): Control => ({
-    type: "spinner", cmd: id, label, key,
-    value: () => { const s = size(); return s ? fmtCm(side === "w" ? s.w : s.h) : ""; },
-    commit: (v) => setSide(side, parseNum(v) * CM),
-    step: (d) => { const s = size(); if (s) setSide(side, (side === "w" ? s.w : s.h) + d * 0.1 * CM); },
-  });
 
-  const wrapMenu: MenuEntry[] = wraps.map(([id]) => ({ cmd: id }));
-  const tab: Tab = {
-    id: "pictureFormat", label: "Bildformat", key: "JP", contextual: true, shrink: ["size", "arrange"],
-    groups: [
-      { id: "arrange", label: "Anordnen", key: "ZA", icon: "wrap-text",
-        controls: [{ type: "dropdown", cmd: "layout.wrapText", key: "TW", size: "large", menu: wrapMenu }] },
-      { id: "size", label: "Größe", key: "ZG", icon: "image-size",
-        controls: [{ type: "stack", items: [spinner("picture.height", "Höhe:", "H", "h"), spinner("picture.width", "Breite:", "W", "w")] }] },
-    ],
+  // The Bildformat tab (picture-tab.ts) and Word's layout options button beside a picture.
+  const { tab } = pictureTab(api, insertFromPath);
+  const layoutOptions = (rect: DOMRect) => {
+    const s0 = sel();
+    if (!s0) return;
+    const icon = (id: string, wrap: string) => {
+      const cur = currentWrap() === wrap;
+      return h("button", { class: `tile${cur ? " on" : ""}`, "data-tip": c.get(id).label, style: "width:40px;height:40px", onclick: () => { closePopup(); void c.run(id); } }, wrapIcon(wrap));
+    };
+    const panel = h("div", { class: "rpanel layout-options", style: "width:220px" },
+      h("div", { class: "title" }, "Layoutoptionen"),
+      h("div", { class: "subtitle" }, "Mit Text in Zeile"), h("div", { class: "tiles" }, icon("picture.wrapInline", "inline")),
+      h("div", { class: "subtitle" }, "Mit Textumbruch"),
+      h("div", { class: "tiles", style: "grid-template-columns:repeat(4, auto)" }, ...wraps.slice(1).map(([id, w]) => icon(id, w))),
+      h("hr"),
+      h("label", { class: "check" }, h("input", { type: "radio", name: "lo-move", checked: s0.kind === "float" && s0.obj.moveWithText !== false, disabled: s0.kind !== "float", onchange: () => { ed()?.setPictureMoveWithText(true); } }), "Mit Text verschieben"),
+      h("label", { class: "check" }, h("input", { type: "radio", name: "lo-move", checked: s0.kind === "float" && s0.obj.moveWithText === false, disabled: s0.kind !== "float", onchange: () => { ed()?.setPictureMoveWithText(false); } }), "Position auf der Seite fixieren"),
+      h("button", { class: "link", onclick: () => { closePopup(); void c.run("picture.moreLayout"); } }, "Mehr anzeigen"));
+    showPopup(panel, new DOMRect(rect.left, rect.bottom, 0, 0));
   };
+  const attach = (e: import("@raabe/text-engine").Editor) => { e.onLayoutOptions = layoutOptions; };
 
   // ----- Datum und Uhrzeit --------------------------------------------------------------
   const dateTime = async () => {
@@ -147,5 +161,5 @@ export function picturesFeature(api: AppApi) {
   };
   c.implement("insert.dateTime", { run: dateTime, enabled: has });
 
-  return { tab, insertMenu: [{ cmd: "picture.fromFile" }] as MenuEntry[] };
+  return { tab, insertMenu: [{ cmd: "picture.fromFile" }] as MenuEntry[], insertFromPath, attach };
 }

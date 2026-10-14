@@ -3,7 +3,10 @@ window widths, the UI Automation tree of the ribbon, reduced to groups and contr
 their size class (large / medium / small), row and column. RaabeWrite's ribbon definition
 takes its layouts from this. Own Word instance; Word's window is resized, nothing is typed.
 
-    .venv/Scripts/python.exe capture_ribbon_widths.py
+    .venv/Scripts/python.exe capture_ribbon_widths.py [tab …]
+
+Contextual tabs: "Bildformat" (a picture is inserted and selected first), "Formformat"
+(a rectangle).
 
 Output: captures/word-ribbon/<tab>-<width>.json and a text summary per tab (local only).
 """
@@ -11,6 +14,8 @@ Output: captures/word-ribbon/<tab>-<width>.json and a text summary per tab (loca
 from __future__ import annotations
 
 import json
+import sys
+import tempfile
 import time
 from pathlib import Path
 
@@ -84,11 +89,21 @@ def outline(groups: list[dict]) -> str:
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     w = targets.WordTarget("short")
+    tabs = sys.argv[1:] or TABS
     try:
         winapi.activate(w.hwnd)
         scale = winapi.dpi_scale(w.hwnd)
         root = uia.element_for(w.hwnd)
-        for tab in TABS:
+        if "Bildformat" in tabs:
+            from probe_word_picture import make_png
+            png = Path(tempfile.gettempdir()) / "raabe-ribbon-picture.png"
+            make_png(png)
+            w.doc.Paragraphs(1).Range.InlineShapes.AddPicture(str(png), False, True).Select()
+            time.sleep(0.8)
+        if "Formformat" in tabs:
+            w.doc.Shapes.AddShape(1, 100, 100, 120, 80).Select()
+            time.sleep(0.8)
+        for tab in tabs:
             el = uia.find(root, lambda d, t=tab: d["type"] == "TabItem" and d["name"] == t)
             uia.select(el)
             time.sleep(0.8)

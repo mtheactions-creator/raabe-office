@@ -52,6 +52,8 @@ export type MenuEntry =
   | { heading: string }
   /** A submenu opening to the right (Word's "Einfügen ▸" in a table's context menu). */
   | { label: string; icon?: string; submenu: MenuEntry[] | (() => MenuEntry[]); disabled?: boolean }
+  /** A submenu with own content (a gallery of tiles: Bildeffekte > Schatten). */
+  | { label: string; icon?: string; flyout: () => HTMLElement; disabled?: boolean }
   /** A row of icon buttons under a label (Word's "Einfügeoptionen:"). */
   | { label: string; icons: { icon: string; tip: string; run: () => void; disabled?: boolean }[] }
   | "-";
@@ -73,7 +75,7 @@ function buildMenu(commands: Commands, entries: MenuEntry[], root: HTMLElement, 
       menu.append(h("div", { class: "menu-icons-label" }, icon(undefined), e.label), row);
       continue;
     }
-    if ("submenu" in e) {
+    if ("submenu" in e || "flyout" in e) {
       const item = h("button", { role: "menuitem", class: "has-sub", disabled: !!e.disabled, "aria-haspopup": "true" }, icon(e.icon), e.label);
       const chev = h("span", { class: "sub-chev" });
       chev.innerHTML = SUB_CHEVRON;
@@ -81,8 +83,13 @@ function buildMenu(commands: Commands, entries: MenuEntry[], root: HTMLElement, 
       const open = () => {
         if (e.disabled) return;
         closeSub();
-        const items = typeof e.submenu === "function" ? e.submenu() : e.submenu;
-        const sub = buildMenu(commands, items, root, level + 1);
+        let sub: HTMLElement;
+        if ("flyout" in e) {
+          sub = h("div", { class: "menu submenu flyout" }, e.flyout());
+        } else {
+          const items = typeof e.submenu === "function" ? e.submenu() : e.submenu;
+          sub = buildMenu(commands, items, root, level + 1);
+        }
         root.append(sub);
         const r = item.getBoundingClientRect();
         sub.style.left = `${r.right - 2}px`;

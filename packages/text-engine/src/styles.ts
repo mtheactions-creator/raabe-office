@@ -46,6 +46,8 @@ export interface TableStyleDef extends TableStylePart {
 export interface Theme {
   readonly majorFont: string;
   readonly minorFont: string;
+  /** The theme's colours (dk1 … accent6), for pictures and shapes; Office 2013 when absent. */
+  readonly colors?: Readonly<Record<string, string>>;
 }
 
 export interface ResolvedChar {

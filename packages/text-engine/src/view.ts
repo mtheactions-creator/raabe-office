@@ -6,6 +6,7 @@
 // Pages may differ in size (orientation per section). Zoom scales the page container with a
 // CSS transform; all geometry is computed at 100 %, in px from each page's top left.
 
+import { pictureElement } from "./picture";
 import { Fonts, PT } from "./fonts";
 import { cmp, type Doc, type Pos } from "./doc";
 import { COLUMN_BREAK, LINE_BREAK, OBJ, PAGE_BREAK, type ImageData, type Para } from "./model";
@@ -33,16 +34,26 @@ export interface RenderOptions {
   /** Cells selected as a whole (cellKey), drawn filled. */
   readonly cells?: ReadonlySet<string>;
   /** A selected picture: its box gets Word's eight sizing handles. */
-  readonly image?: { readonly page: number; readonly x: number; readonly y: number; readonly w: number; readonly h: number };
+  readonly image?: {
+    readonly page: number; readonly x: number; readonly y: number; readonly w: number; readonly h: number;
+    /** Zuschneiden: the whole picture (page px) and its address, shown dimmed around the frame. */
+    readonly crop?: { readonly x: number; readonly y: number; readonly w: number; readonly h: number; readonly url: string };
+    /** Pictures get the rotation handle and Word's layout options button. */
+    readonly picture?: boolean;
+  };
   /** The table (id) that shows Word's move and resize handles (caret or mouse in it). */
   readonly table?: number;
 }
+
+/** Word's rotation handle (a circular arrow) and the layout options button's icon. */
+const ROTATE_SVG = '<svg viewBox="0 0 18 18" width="18" height="18" aria-hidden="true"><path d="M13.5 6.2A5.5 5.5 0 1 0 14.5 10" fill="none" stroke="#5f5f5f" stroke-width="1.6" stroke-linecap="round"/><path d="M14.6 2.8v4h-4" fill="none" stroke="#5f5f5f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const LAYOUT_SVG = '<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M1 3h14M1 13h14M1 8h3M12 8h3" stroke="#2b579a" stroke-width="1.2"/><path d="M5 10.5a3 3 0 0 1 6 0z" fill="#2b579a"/></svg>';
 
 /** Word's table move handle: a small box with a four-way arrow. */
 const MOVE_HANDLE_SVG = '<svg viewBox="0 0 11 11" width="11" height="11" aria-hidden="true"><path d="M5.5 1.5v8M1.5 5.5h8" stroke="#000" stroke-width="1"/>' +
   '<path d="M5.5 0.8 4 2.6h3zM5.5 10.2 4 8.4h3zM0.8 5.5 2.6 4v3zM10.2 5.5 8.4 4v3z" fill="#000"/></svg>';
 
-export type Handle = "nw" | "n" | "ne" | "e" | "se" | "s" | "sw" | "w";
+export type Handle = "nw" | "n" | "ne" | "e" | "se" | "s" | "sw" | "w" | "rot" | "layout" | `crop-${"nw" | "n" | "ne" | "e" | "se" | "s" | "sw" | "w"}`;
 const HANDLES: Handle[] = ["nw", "n", "ne", "e", "se", "s", "sw", "w"];
 
 interface PageView {
@@ -443,7 +454,7 @@ export class View {
     const key = grid.map((f) => `g${f.x},${f.y},${f.w},${f.h}`).join(";") + "|" + page.deco.map((d) => {
       if (d.kind === "rect") return `r${d.x},${d.y},${d.w},${d.h},${d.fill},${this.dimmed(d.story)}`;
       if (d.kind === "line") return `l${d.x1},${d.y1},${d.x2},${d.y2},${d.width},${d.color},${d.style},${this.dimmed(d.story)}`;
-      return `i${d.x},${d.y},${d.w},${d.h},${idOf(d.image)},${d.behind},${this.dimmed(d.story)}`;
+      return `i${d.x},${d.y},${d.w},${d.h},${idOf(d.image)},${d.behind},${this.dimmed(d.story)},${d.z ?? 0},${d.pic ? JSON.stringify(d.pic) : ""}`;
     }).join(";");
     if (key === pv.decoKey) return;
     pv.decoKey = key;
@@ -466,7 +477,9 @@ export class View {
         edges.map(([side, on]) => `border-${side}:1px ${on ? "dashed #a6c3e8" : "solid transparent"}`).join(";");
       back.push(el);
     }
-    for (const d of page.deco) {
+    // Floating pictures in their stacking order (relativeHeight).
+    const ordered = [...page.deco].sort((x, y) => (x.kind === "image" ? x.z ?? 0 : -1e9) - (y.kind === "image" ? y.z ?? 0 : -1e9));
+    for (const d of ordered) {
       const el = this.decoElement(d);
       if (this.dimmed(d.story)) el.style.opacity = "0.45";
       (d.kind === "image" && !d.behind ? front : back).push(el);
@@ -491,11 +504,7 @@ export class View {
     } else {
       el.style.cssText = `position:absolute;left:${d.x}px;top:${d.y}px;width:${d.w}px;height:${d.h}px`;
       if (d.image) {
-        const img = document.createElement("img");
-        img.src = imageUrl(d.image);
-        img.draggable = false;
-        img.style.cssText = "width:100%;height:100%;display:block";
-        el.append(img);
+        el.append(pictureElement(imageUrl(d.image), d.w, d.h, d.pic));
       } else {
         el.style.cssText += ";box-sizing:border-box;border:1px dashed #9e9e9e;background:#f3f3f3";
       }
@@ -512,19 +521,56 @@ export class View {
     const img = this.opts.image && this.opts.image.page === page.index ? this.opts.image : null;
     const tb = this.opts.table !== undefined ? this.tableBounds(page, this.opts.table) : null;
     const key = (editing ? `${page.bodyTop}|${page.bodyBottom}|${page.section}|${sections}|${pv.w}` : "") +
-      (img ? `|img${img.x},${img.y},${img.w},${img.h}` : "") + (tb ? `|tb${tb.x},${tb.y},${tb.w},${tb.h},${tb.first},${tb.last}` : "");
+      (img ? `|img${img.x},${img.y},${img.w},${img.h},${img.crop ? `${img.crop.x},${img.crop.y},${img.crop.w},${img.crop.h}` : ""},${img.picture}` : "") + (tb ? `|tb${tb.x},${tb.y},${tb.w},${tb.h},${tb.first},${tb.last}` : "");
     if (key === pv.overlayKey) return;
     pv.overlayKey = key;
     const handles: HTMLElement[] = [];
-    if (img) {
+    if (img && img.crop) {
+      // Zuschneiden: the whole picture dimmed, the frame with Word's black crop marks.
+      const ghost = document.createElement("img");
+      ghost.src = img.crop.url;
+      ghost.style.cssText = `position:absolute;left:${img.crop.x}px;top:${img.crop.y}px;width:${img.crop.w}px;height:${img.crop.h}px;opacity:0.45;max-width:none`;
+      handles.push(ghost);
+      const outline = document.createElement("div");
+      outline.style.cssText = `position:absolute;left:${img.crop.x}px;top:${img.crop.y}px;width:${img.crop.w}px;height:${img.crop.h}px;box-sizing:border-box;border:1px solid #9e9e9e`;
+      handles.push(outline);
       const frame = document.createElement("div");
-      frame.style.cssText = `position:absolute;left:${img.x}px;top:${img.y}px;width:${img.w}px;height:${img.h}px;box-sizing:border-box;border:1px solid #6f8db9`;
+      frame.style.cssText = `position:absolute;left:${img.x}px;top:${img.y}px;width:${img.w}px;height:${img.h}px;box-sizing:border-box;border:1px solid #000`;
       handles.push(frame);
       for (const hd of HANDLES) {
         const { x, y } = this.handlePos(img, hd);
         const el = document.createElement("div");
-        el.style.cssText = `position:absolute;left:${x - 4}px;top:${y - 4}px;width:8px;height:8px;box-sizing:border-box;border:1px solid #6f8db9;background:#fff;border-radius:${hd.length === 2 ? "50%" : "1px"}`;
+        const corner = hd.length === 2;
+        const len = 12, th = 4;
+        if (corner) {
+          const sx = hd.includes("w") ? 0 : -len + th, sy = hd.startsWith("n") ? 0 : -len + th;
+          el.style.cssText = `position:absolute;left:${x + sx - (hd.includes("w") ? th / 2 : th / 2)}px;top:${y + sy - th / 2}px;width:${len}px;height:${len}px;` +
+            `border-${hd.startsWith("n") ? "top" : "bottom"}:${th}px solid #000;border-${hd.includes("w") ? "left" : "right"}:${th}px solid #000;box-sizing:border-box`;
+        } else if (hd === "n" || hd === "s") el.style.cssText = `position:absolute;left:${x - 8}px;top:${y - th / 2}px;width:16px;height:${th}px;background:#000`;
+        else el.style.cssText = `position:absolute;left:${x - th / 2}px;top:${y - 8}px;width:${th}px;height:16px;background:#000`;
         handles.push(el);
+      }
+    } else if (img) {
+      const frame = document.createElement("div");
+      frame.style.cssText = `position:absolute;left:${img.x}px;top:${img.y}px;width:${img.w}px;height:${img.h}px;box-sizing:border-box;border:1px solid #6f8db9`;
+      handles.push(frame);
+      // Word 365: eight round handles; pictures also get the rotation handle and the layout button.
+      for (const hd of HANDLES) {
+        const { x, y } = this.handlePos(img, hd);
+        const el = document.createElement("div");
+        el.style.cssText = `position:absolute;left:${x - 4.5}px;top:${y - 4.5}px;width:9px;height:9px;box-sizing:border-box;border:1px solid #5f5f5f;background:#fff;border-radius:50%`;
+        handles.push(el);
+      }
+      if (img.picture) {
+        const rot = document.createElement("div");
+        rot.style.cssText = `position:absolute;left:${img.x + img.w / 2 - 9}px;top:${img.y - 26}px;width:18px;height:18px`;
+        rot.innerHTML = ROTATE_SVG;
+        handles.push(rot);
+        const lb = document.createElement("div");
+        lb.style.cssText = `position:absolute;left:${img.x + img.w + 10}px;top:${img.y}px;width:22px;height:22px;box-sizing:border-box;border:1px solid #9e9e9e;background:#fff;display:flex;align-items:center;justify-content:center`;
+        lb.innerHTML = LAYOUT_SVG;
+        lb.title = "Layoutoptionen";
+        handles.push(lb);
       }
     }
     if (tb && !this.printing) {
@@ -615,12 +661,26 @@ export class View {
     if (!img) return null;
     const pt = this.pointAt(clientX, clientY);
     if (pt.page !== img.page) return null;
-    const tol = 6 / this.zoomFactor;
+    const tol = (img.crop ? 9 : 6) / this.zoomFactor;
     for (const hd of HANDLES) {
       const p = this.handlePos(img, hd);
-      if (Math.abs(pt.x - p.x) <= tol && Math.abs(pt.y - p.y) <= tol) return hd;
+      if (Math.abs(pt.x - p.x) <= tol && Math.abs(pt.y - p.y) <= tol) return img.crop ? `crop-${hd}` as Handle : hd;
+    }
+    if (img.picture && !img.crop) {
+      if (Math.abs(pt.x - (img.x + img.w / 2)) <= 10 && Math.abs(pt.y - (img.y - 17)) <= 10) return "rot";
+      if (pt.x >= img.x + img.w + 10 && pt.x <= img.x + img.w + 32 && pt.y >= img.y && pt.y <= img.y + 22) return "layout";
     }
     return null;
+  }
+
+  /** Client rectangle of the layout options button of the selected picture. */
+  layoutButtonRect(): DOMRect | null {
+    const img = this.opts.image;
+    if (!img) return null;
+    const left = this.pageLeft(img.page) + img.x + img.w + 10, top = this.pageTop(img.page) + img.y;
+    const ws = this.workspace.getBoundingClientRect();
+    const z = this.zoomFactor;
+    return new DOMRect(ws.left + left * z - this.workspace.scrollLeft, ws.top + top * z - this.workspace.scrollTop, 22 * z, 22 * z);
   }
 
   /** A column border of a table under a client point (for dragging it): the cell left of it. */
@@ -787,10 +847,10 @@ export class View {
       if (o?.kind === "image" && o.width !== undefined && o.height !== undefined) {
         const w = o.width * PT, h = o.height * PT;
         if (o.image) {
-          const img = document.createElement("img");
-          img.src = imageUrl(o.image);
-          img.draggable = false;
-          img.style.cssText = `position:absolute;left:${x}px;top:${baseline - h}px;width:${w}px;height:${h}px`;
+          const img = pictureElement(imageUrl(o.image), w, h, o.pic);
+          const ex = o.pic?.extent;
+          img.style.left = `${x + (ex ? ex.l * PT : 0)}px`;
+          img.style.top = `${baseline - h - (ex ? ex.b * PT : 0)}px`;
           out.push(img);
         } else {
           const box = document.createElement("div");
@@ -907,6 +967,8 @@ export class View {
       const layer = this.pages[i]?.selLayer;
       if (layer?.firstChild) layer.replaceChildren();
     }
+    // A selected picture shows its frame and handles, not a text highlight (Word).
+    if (this.opts.image?.picture && !empty && from.p === to.p && to.o - from.o === 1) return;
     const story = this.storyLayout();
     const cells = this.opts.cells;
     if (cells?.size) {

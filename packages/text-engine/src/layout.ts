@@ -217,7 +217,11 @@ export class Layouter {
             const m = this.ctx.measureMath(o.latex, c.size, displayMath);
             mathDims[i] = m;
             w = m.width * PT;
-          } else if (o?.width !== undefined) w = o.width * PT;
+          } else if (o?.width !== undefined) {
+            // A picture's effects (shadow, frame …) take space beside it, as in Word.
+            const ex = o.kind === "image" ? o.pic?.extent : undefined;
+            w = (o.width + (ex ? ex.l + ex.r : 0)) * PT;
+          }
           else if (o) { const oc2 = o.font ? { ...c, font: o.font } : c; for (const oc of display ?? o.display) w += fonts.advance(oc2, oc); }
         } else if (c.hidden || ch === "\u00ad") {
           w = 0;
@@ -377,7 +381,8 @@ export class Layouter {
       const md = infos[i].math;
       if (infos[i].kind === "object" && (md || o?.height !== undefined)) {
         const d = (md ? md.depth : o!.depth ?? 0) * PT;
-        objAsc = Math.max(objAsc, (md ? md.height : o!.height!) * PT - d);
+        const ex = o?.kind === "image" ? o.pic?.extent : undefined;
+        objAsc = Math.max(objAsc, (md ? md.height : o!.height! + (ex ? ex.t + ex.b : 0)) * PT - d);
         objDesc = Math.max(objDesc, d);
         continue;
       }

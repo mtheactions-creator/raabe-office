@@ -12,6 +12,7 @@
 // it belongs to (text column, table cell, header, footer, note), which the view uses for
 // drawing and hit testing.
 
+import type { PictureFormat } from "./picture";
 import { PT } from "./fonts";
 import { fieldType, type Layouter, type Line, type ParaEnv, type ParaLayout } from "./layout";
 import {
@@ -64,7 +65,7 @@ export interface StoryLayout {
 export type Deco =
   | { readonly kind: "rect"; readonly story: string; readonly x: number; readonly y: number; readonly w: number; readonly h: number; readonly fill: string }
   | { readonly kind: "line"; readonly story: string; readonly x1: number; readonly y1: number; readonly x2: number; readonly y2: number; readonly width: number; readonly color: string; readonly style: string }
-  | { readonly kind: "image"; readonly story: string; readonly x: number; readonly y: number; readonly w: number; readonly h: number; readonly image?: ImageData; readonly behind: boolean; readonly para: number; readonly index: number };
+  | { readonly kind: "image"; readonly story: string; readonly x: number; readonly y: number; readonly w: number; readonly h: number; readonly image?: ImageData; readonly behind: boolean; readonly para: number; readonly index: number; readonly pic?: PictureFormat; readonly z?: number };
 
 export interface PageLayout {
   readonly index: number;
@@ -824,7 +825,7 @@ class Flow {
       const y = f.y.align && yh > 0
         ? (f.y.align === "center" ? y0 + (yh - h) / 2 : f.y.align === "bottom" || f.y.align === "outside" ? y0 + yh - h : y0)
         : y0 + f.y.offset * PT;
-      page.deco.push({ kind: "image", story, x, y, w, h, image: f.image, behind: f.wrap === "behind", para: i, index });
+      page.deco.push({ kind: "image", story, x, y, w, h, image: f.image, behind: f.wrap === "behind", para: i, index, pic: f.pic, z: f.z });
       if (wrap && f.wrap !== "front" && f.wrap !== "behind" && f.wrap !== "none") {
         const [dt, db, dl, dr] = f.dist.map((d) => d * PT);
         const list = this.excl.get(page.index) ?? [];

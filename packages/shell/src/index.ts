@@ -11,7 +11,7 @@ export { Backstage, type BackstageEntry } from "./backstage";
 export { Keytips } from "./keytips";
 export { showDialog, messageBox, type DialogButton } from "./dialog";
 export { showMenu, showPopup, closePopup, installTooltips, type MenuEntry } from "./popup";
-export { showFontColors, showHighlights, highlightHex, HIGHLIGHTS } from "./palette";
+export { colorGrid, showFontColors, showHighlights, highlightHex, HIGHLIGHTS } from "./palette";
 export { baseName, dirName, type Platform, type RecoveryEntry, type FileInfo } from "./platform";
 export { tauriPlatform } from "./platform-tauri";
 export { browserPlatform } from "./platform-browser";

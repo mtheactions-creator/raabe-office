@@ -70,6 +70,22 @@ function swatch(hex: string, label: string, pick: () => void): HTMLElement {
   });
 }
 
+/** Word's colour grid (Designfarben with tints and shades, Standardfarben), for other menus. */
+export function colorGrid(pick: (hex: string) => void): HTMLElement[] {
+  const grid = h("div", { class: "swatches", style: "grid-template-columns:repeat(10, 18px)" });
+  for (const [hex, label] of THEME) grid.append(swatch(hex, label, () => pick(hex)));
+  const vars = THEME.map(([hex]) => variants(hex));
+  for (let row = 0; row < 5; row++) {
+    for (let col = 0; col < THEME.length; col++) {
+      const v = vars[col][row];
+      grid.append(swatch(v.hex, `${THEME[col][1]}, ${v.label}`, () => pick(v.hex)));
+    }
+  }
+  const std = h("div", { class: "swatches", style: "grid-template-columns:repeat(10, 18px)" },
+    ...STANDARD.map(([hex, label]) => swatch(hex, label, () => pick(hex))));
+  return [h("div", { class: "palette-title" }, "Designfarben"), grid, h("div", { class: "palette-title" }, "Standardfarben"), std];
+}
+
 export function showFontColors(anchor: DOMRect, pick: (hex: string) => void): void {
   const grid = h("div", { class: "swatches", style: "grid-template-columns:repeat(10, 18px)" });
   for (const [hex, label] of THEME) grid.append(swatch(hex, label, () => pick(hex)));

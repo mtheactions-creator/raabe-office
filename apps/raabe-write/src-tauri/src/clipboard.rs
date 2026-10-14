@@ -61,6 +61,56 @@ pub fn clipboard_write_html(html: String, text: String) -> Result<(), String> {
     raw::set_without_clear(format.get(), &envelope(&html)).map_err(|e| e.to_string())
 }
 
+/// A picture on the clipboard: the "PNG" format as it is (screenshots, Word, browsers), else
+/// the device-independent bitmap as a BMP file. Empty when there is none.
+#[cfg(windows)]
+#[tauri::command]
+pub fn clipboard_read_image() -> Result<tauri::ipc::Response, String> {
+    let _open = Clipboard::new_attempts(10).map_err(|e| e.to_string())?;
+    if let Some(png) = register_format("PNG") {
+        if raw::is_format_avail(png.get()) {
+            let mut data = Vec::new();
+            raw::get_vec(png.get(), &mut data).map_err(|e| e.to_string())?;
+            return Ok(tauri::ipc::Response::new(data));
+        }
+    }
+    let dib = clipboard_win::formats::CF_DIB;
+    if !raw::is_format_avail(dib) {
+        return Ok(tauri::ipc::Response::new(Vec::new()));
+    }
+    let mut data = Vec::new();
+    raw::get_vec(dib, &mut data).map_err(|e| e.to_string())?;
+    Ok(tauri::ipc::Response::new(bmp_file(&data)))
+}
+
+/// A BMP file from a packed DIB (BITMAPINFOHEADER, colour table, pixels).
+fn bmp_file(dib: &[u8]) -> Vec<u8> {
+    if dib.len() < 40 {
+        return Vec::new();
+    }
+    let header = u32::from_le_bytes([dib[0], dib[1], dib[2], dib[3]]) as usize;
+    let bits = u16::from_le_bytes([dib[14], dib[15]]) as usize;
+    let compression = u32::from_le_bytes([dib[16], dib[17], dib[18], dib[19]]);
+    let used = u32::from_le_bytes([dib[32], dib[33], dib[34], dib[35]]) as usize;
+    let colors = if bits <= 8 { if used > 0 { used } else { 1 << bits } } else { 0 };
+    let masks = if compression == 3 && header == 40 { 12 } else { 0 };
+    let offset = 14 + header + masks + colors * 4;
+    let size = 14 + dib.len();
+    let mut out = Vec::with_capacity(size);
+    out.extend_from_slice(b"BM");
+    out.extend_from_slice(&(size as u32).to_le_bytes());
+    out.extend_from_slice(&[0, 0, 0, 0]);
+    out.extend_from_slice(&(offset as u32).to_le_bytes());
+    out.extend_from_slice(dib);
+    out
+}
+
+#[cfg(not(windows))]
+#[tauri::command]
+pub fn clipboard_read_image() -> Result<tauri::ipc::Response, String> {
+    Ok(tauri::ipc::Response::new(Vec::new()))
+}
+
 #[cfg(not(windows))]
 #[tauri::command]
 pub fn clipboard_read_html() -> Result<String, String> {

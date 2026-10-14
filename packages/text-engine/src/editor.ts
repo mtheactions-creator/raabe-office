@@ -12,10 +12,42 @@ import {
   type Para, type ParaProps, type Section,
 } from "./model";
 import { builtinStyle, type ResolvedChar, type ResolvedPara } from "./styles";
-import { View, storyIdOf, type Selection, type TextMark } from "./view";
+import { View, imageUrl, storyIdOf, type RenderOptions, type Selection, type TextMark } from "./view";
 import * as E from "./edits";
 import { fromHtml, toHtml } from "./html";
 import { imageInfo, naturalSizePt } from "./images";
+
+/**
+ * A picture scaled down to `ppi` at its size on the page (points), optionally with its
+ * cropped parts removed; null when nothing would change.
+ */
+async function resample(image: ImageData, w: number, h: number, ppi: number, cut?: { l: number; t: number; r: number; b: number }, crop?: { l: number; t: number; r: number; b: number }): Promise<ImageData | null> {
+  const url = URL.createObjectURL(new Blob([image.bytes as BlobPart], { type: image.type }));
+  try {
+    const el = await new Promise<HTMLImageElement>((resolve, reject) => { const i = new Image(); i.onload = () => resolve(i); i.onerror = reject; i.src = url; });
+    const c = crop ?? { l: 0, t: 0, r: 0, b: 0 };
+    const k = cut ?? { l: 0, t: 0, r: 0, b: 0 };
+    // The whole picture's size on the page.
+    const fullW = w / Math.max(0.01, 1 - c.l - c.r), fullH = h / Math.max(0.01, 1 - c.t - c.b);
+    const sx = Math.max(0, k.l) * el.naturalWidth, sy = Math.max(0, k.t) * el.naturalHeight;
+    const sw = el.naturalWidth * (1 - Math.max(0, k.l) - Math.max(0, k.r)), sh = el.naturalHeight * (1 - Math.max(0, k.t) - Math.max(0, k.b));
+    const showW = cut ? w : fullW, showH = cut ? h : fullH;
+    const tw = Math.round(Math.min(sw, (showW / 72) * ppi)), th = Math.round(Math.min(sh, (showH / 72) * ppi));
+    if (!cut && tw >= el.naturalWidth - 1) return null;
+    const cv = document.createElement("canvas");
+    cv.width = Math.max(1, tw); cv.height = Math.max(1, th);
+    const g = cv.getContext("2d")!;
+    g.imageSmoothingQuality = "high";
+    g.drawImage(el, sx, sy, sw, sh, 0, 0, cv.width, cv.height);
+    const type = image.type === "image/jpeg" ? "image/jpeg" : "image/png";
+    const blob = await new Promise<Blob | null>((resolve) => cv.toBlob(resolve, type, 0.9));
+    return blob ? { bytes: new Uint8Array(await blob.arrayBuffer()), type } : null;
+  } catch {
+    return null;
+  } finally {
+    URL.revokeObjectURL(url);
+  }
+}
 
 /** The visible text of an HTML fragment. */
 function htmlText(html: string): string {
@@ -26,7 +58,8 @@ import { INSTANT_TRIGGERS, TRIGGERS, borderLine, instantFix, smartQuote, wordFix
 import * as S from "./school";
 import { COLUMN_BREAK, type CellDef, type ImageData, type RowDef, type TableDef } from "./model";
 import { addList, bulletLevels as bulletLevelsOf, levelOf, listLabels, numberLevels as numberLevelsOf, numberingOf, restartList } from "./numbering";
-import type { BorderSpec, Borders, FloatObject, InlineObject, NumLevel } from "./model";
+import type { AltText, BorderSpec, Borders, FloatObject, InlineObject, NumLevel } from "./model";
+import { effectExtent, type PictureFormat } from "./picture";
 import { countWords, isWordChar, nextTokenStart, prevTokenStart, sentenceAt, tokenAt } from "./words";
 
 /** Formatting text typed at a position gets: as in Word, never hidden (hidden text is not shown). */
@@ -336,8 +369,11 @@ export class Editor {
     });
     this.fixStoryKey();
     this.clampSelection();
-    const ropts = { active: this.storyKey, cells: this.selectedCells(), image: this.imageBox() ?? undefined, table: this.handleTable() };
+    const ropts = { active: this.storyKey, cells: this.selectedCells(), image: this.imageOverlay(), table: this.handleTable() };
     this.view.render(this.doc, this.layout, this.sel, ropts);
+    // The picture's frame comes from the view's new layout: draw it again when it moved.
+    const image = this.imageOverlay();
+    if (JSON.stringify(image) !== JSON.stringify(ropts.image)) { ropts.image = image; this.view.render(this.doc, this.layout, this.sel, ropts); }
     if (opts.scroll) {
       this.view.scrollIntoView(this.sel.head, this.sel.headUpstream);
       this.view.render(this.doc, this.layout, this.sel, ropts);
@@ -1993,7 +2029,299 @@ export class Editor {
     this.update();
   }
 
-  /** Where the selected picture is drawn (page px), from the layout. */
+  /** Bildformat settings of the selected picture ({} when none are set). */
+  pictureFormat(): PictureFormat | null {
+    const img = this.selectedImage();
+    return img ? img.obj.pic ?? {} : null;
+  }
+
+  /**
+   * Changes the selected picture's Bildformat settings: `change` gives new values (undefined
+   * removes one) or maps the old settings. One undo step.
+   */
+  setPictureFormat(change: PictureFormat | ((f: PictureFormat) => PictureFormat), snapshot = true): void {
+    const img = this.selectedImage();
+    if (!img) return;
+    const old = img.obj.pic ?? {};
+    let merged: PictureFormat = typeof change === "function" ? change(old) : { ...old, ...change };
+    // Changed effects take new room beside the picture (wp:effectExtent).
+    const effects = ["line", "shadow", "glow", "reflection", "softEdge", "bevel", "preset", "rotation"] as const;
+    if (typeof change !== "function" && !("extent" in change) && effects.some((k) => k in change)) {
+      merged = { ...merged, extent: undefined };
+      const ex = effectExtent(merged, img.obj.height ?? 0);
+      if (ex.l || ex.t || ex.r || ex.b) merged = { ...merged, extent: ex };
+    }
+    const clean = Object.fromEntries(Object.entries(merged).filter(([, v]) => v !== undefined)) as PictureFormat;
+    const pic = Object.keys(clean).length ? clean : undefined;
+    if (snapshot) this.snapshot();
+    this.typing = false;
+    if (img.kind === "inline") this.replaceObject(img.p, img.o, { ...img.obj, pic });
+    else this.replaceFloat(img.p, img.index, { ...img.obj, pic });
+    this.update();
+  }
+
+  /** Alternativtext of the selected picture. */
+  pictureAlt(): AltText | null {
+    const img = this.selectedImage();
+    return img ? img.obj.alt ?? {} : null;
+  }
+
+  setPictureAlt(alt: AltText): void {
+    const img = this.selectedImage();
+    if (!img) return;
+    this.snapshot();
+    const clean = alt.descr || alt.title || alt.decorative ? alt : undefined;
+    if (img.kind === "inline") this.replaceObject(img.p, img.o, { ...img.obj, alt: clean });
+    else this.replaceFloat(img.p, img.index, { ...img.obj, alt: clean });
+    this.update();
+  }
+
+  /**
+   * Bild ändern: another picture in the place of the selected one, at the old width (Word
+   * keeps the width and the new picture's proportions); settings except cropping stay.
+   */
+  replacePicture(image: ImageData, naturalW: number, naturalH: number): void {
+    const img = this.selectedImage();
+    if (!img) return;
+    const w = (img.kind === "inline" ? img.obj.width : img.obj.width) ?? naturalW;
+    const h = naturalW > 0 ? (w * naturalH) / naturalW : naturalH;
+    const pic = img.obj.pic ? { ...img.obj.pic, crop: undefined } : undefined;
+    this.snapshot();
+    if (img.kind === "inline") this.replaceObject(img.p, img.o, { ...img.obj, image, width: w, height: h, pic, data: undefined });
+    else this.replaceFloat(img.p, img.index, { ...img.obj, image, width: w, height: h, pic, data: undefined });
+    this.update();
+  }
+
+  /** Bild zurücksetzen (settings) or Bild und Größe zurücksetzen (also the natural size). */
+  resetPicture(naturalSize?: { w: number; h: number }): void {
+    const img = this.selectedImage();
+    if (!img) return;
+    this.snapshot();
+    const size = naturalSize ? { width: naturalSize.w, height: naturalSize.h } : {};
+    if (img.kind === "inline") this.replaceObject(img.p, img.o, { ...img.obj, pic: undefined, ...size });
+    else this.replaceFloat(img.p, img.index, { ...img.obj, pic: undefined, ...size });
+    this.update();
+  }
+
+  /** The selected picture's overlay: its frame, and in Zuschneiden the whole picture. */
+  private imageOverlay(): RenderOptions["image"] {
+    const box = this.imageBox();
+    if (!box) { this.cropping = false; return undefined; }
+    const img = this.selectedImage();
+    const isPicture = img?.obj.image !== undefined;
+    if (!this.cropping || !img?.obj.image) return { ...box, picture: isPicture };
+    const c = img.obj.pic?.crop ?? { l: 0, t: 0, r: 0, b: 0 };
+    const fw = box.w / Math.max(0.01, 1 - c.l - c.r), fh = box.h / Math.max(0.01, 1 - c.t - c.b);
+    return { ...box, picture: true, crop: { x: box.x - c.l * fw, y: box.y - c.t * fh, w: fw, h: fh, url: imageUrl(img.obj.image) } };
+  }
+
+  /** Zuschneiden: the crop marks are shown until Esc, Enter or a click elsewhere. */
+  private cropping = false;
+
+  startCrop(): void {
+    if (!this.selectedImage()?.obj.image) return;
+    this.cropping = !this.cropping;
+    this.update();
+  }
+
+  get isCropping(): boolean {
+    return this.cropping;
+  }
+
+  endCrop(): void {
+    if (!this.cropping) return;
+    this.cropping = false;
+    this.update();
+  }
+
+  /** Dragging a crop mark (or the picture inside the frame, `null`) while cropping. */
+  private dragCrop(e: MouseEvent, handle: string | null): void {
+    const img = this.selectedImage();
+    const box0 = this.imageBox();
+    if (!img || !box0) return;
+    const f0 = img.obj.pic ?? {};
+    const c0 = f0.crop ?? { l: 0, t: 0, r: 0, b: 0 };
+    const w0 = (img.obj.width ?? 0), h0 = (img.obj.height ?? 0);
+    const fw = w0 / Math.max(0.01, 1 - c0.l - c0.r), fh = h0 / Math.max(0.01, 1 - c0.t - c0.b);
+    const start = { x: e.clientX, y: e.clientY };
+    let first = true;
+    const move = (ev: MouseEvent) => {
+      const z = this.view.zoom;
+      const dx = (ev.clientX - start.x) / z / PT, dy = (ev.clientY - start.y) / z / PT;
+      const c = { ...c0 };
+      if (handle) {
+        if (handle.includes("w")) c.l = Math.min(c0.l + dx / fw, 1 - c.r - 0.02);
+        if (handle.includes("e")) c.r = Math.min(c0.r - dx / fw, 1 - c.l - 0.02);
+        if (handle.startsWith("n")) c.t = Math.min(c0.t + dy / fh, 1 - c.b - 0.02);
+        if (handle.startsWith("s")) c.b = Math.min(c0.b - dy / fh, 1 - c.t - 0.02);
+      } else {
+        // The picture moves under the frame.
+        c.l = c0.l - dx / fw; c.r = c0.r + dx / fw; c.t = c0.t - dy / fh; c.b = c0.b + dy / fh;
+      }
+      const w = fw * (1 - c.l - c.r), h = fh * (1 - c.t - c.b);
+      if (first) this.snapshot();
+      first = false;
+      const pic = { ...f0, crop: c.l || c.t || c.r || c.b ? c : undefined };
+      if (img.kind === "inline") this.replaceObject(img.p, img.o, { ...img.obj, width: w, height: h, pic });
+      else this.replaceFloat(img.p, img.index, { ...img.obj, width: w, height: h, pic });
+      this.update();
+    };
+    const up = () => { removeEventListener("mousemove", move, true); removeEventListener("mouseup", up, true); this.emit(true); };
+    addEventListener("mousemove", move, true);
+    addEventListener("mouseup", up, true);
+  }
+
+  /** The rotation handle: drag around the picture's centre (Umschalt: 15° steps). */
+  private dragRotate(): void {
+    const box = this.imageBox();
+    if (!box) return;
+    const ws = this.workspace.getBoundingClientRect();
+    const z = this.view.zoom;
+    const cx = ws.left + (this.view.pageLeft(box.page) + box.x + box.w / 2) * z - this.workspace.scrollLeft;
+    const cy = ws.top + (this.view.pageTop(box.page) + box.y + box.h / 2) * z - this.workspace.scrollTop;
+    let first = true;
+    const move = (ev: MouseEvent) => {
+      let a = (Math.atan2(ev.clientY - cy, ev.clientX - cx) * 180) / Math.PI + 90;
+      if (ev.shiftKey) a = Math.round(a / 15) * 15;
+      a = ((Math.round(a) % 360) + 360) % 360;
+      this.setPictureFormat({ rotation: a || undefined }, first);
+      first = false;
+    };
+    const up = () => { removeEventListener("mousemove", move, true); removeEventListener("mouseup", up, true); this.emit(true); };
+    addEventListener("mousemove", move, true);
+    addEventListener("mouseup", up, true);
+  }
+
+  /** The host shows Word's layout options (wrapping) next to the picture. */
+  onLayoutOptions: ((rect: DOMRect) => void) | null = null;
+
+  /** New picture data in place of the selected picture's (Freistellen, Bilder komprimieren). */
+  replaceImageData(image: ImageData, snapshot = true): void {
+    const img = this.selectedImage();
+    if (!img) return;
+    if (snapshot) this.snapshot();
+    if (img.kind === "inline") this.replaceObject(img.p, img.o, { ...img.obj, image, data: undefined });
+    else this.replaceFloat(img.p, img.index, { ...img.obj, image, data: undefined });
+    this.update();
+  }
+
+  /**
+   * Bilder komprimieren: pictures larger than `ppi` at their size on the page are scaled down;
+   * cropped parts can go. Only the selected picture or all of the main text's pictures.
+   */
+  async compressPictures(ppi: number, deleteCropped: boolean, onlySelected: boolean): Promise<void> {
+    const sel = this.selectedImage();
+    const targets: { p: number; o?: number; index?: number }[] = [];
+    if (onlySelected && sel) targets.push(sel.kind === "inline" ? { p: sel.p, o: sel.o } : { p: sel.p, index: sel.index });
+    else {
+      this.doc.main.forEach((para, p) => {
+        for (let o = 0; o < para.text.length; o++) if (para.text[o] === OBJ && this.objectAt(para, o)?.kind === "image") targets.push({ p, o });
+        (para.floats ?? []).forEach((f, index) => { if (f.image) targets.push({ p, index }); });
+      });
+    }
+    let snap = true;
+    for (const t of targets) {
+      const para = this.doc.main[t.p];
+      const obj = t.o !== undefined ? this.objectAt(para, t.o) : para.floats?.[t.index!];
+      if (!obj?.image || !obj.width || !obj.height) continue;
+      const crop = deleteCropped ? obj.pic?.crop : undefined;
+      const out = await resample(obj.image, obj.width, obj.height, ppi, crop, obj.pic?.crop);
+      if (!out) continue;
+      if (snap) { this.snapshot(); snap = false; }
+      const pic = crop && obj.pic ? { ...obj.pic, crop: undefined } : obj.pic;
+      if (t.o !== undefined) this.replaceObject(t.p, t.o, { ...(obj as InlineObject), image: out, pic, data: undefined });
+      else this.replaceFloat(t.p, t.index!, { ...(obj as FloatObject), image: out, pic, data: undefined });
+    }
+    this.update();
+  }
+
+  /** Position: the picture floats at one of nine places of the page margins, Quadrat wrapping. */
+  positionPicture(x: "left" | "center" | "right", y: "top" | "center" | "bottom"): void {
+    let img = this.selectedImage();
+    if (!img || this.doc.activeStory !== MAIN) return;
+    if (img.kind === "inline") { this.setImageWrap("square"); img = this.selectedImage(); }
+    else this.snapshot();
+    if (!img || img.kind !== "float") return;
+    this.replaceFloat(img.p, img.index, { ...img.obj, x: { rel: "margin", align: x, offset: 0 }, y: { rel: "margin", align: y, offset: 0 }, wrap: img.obj.wrap === "inline" ? "square" : img.obj.wrap, data: img.obj.image ? undefined : img.obj.data });
+    this.update({ scroll: true });
+  }
+
+  /** Ebene nach vorne / hinten, In den Vorder- / Hintergrund, Vor / Hinter den Text. */
+  pictureLayer(dir: "forward" | "front" | "frontText" | "backward" | "back" | "behindText"): void {
+    const img = this.selectedImage();
+    if (!img || img.kind !== "float") return;
+    if (dir === "frontText" || dir === "behindText") { this.setImageWrap(dir === "frontText" ? "front" : "behind"); return; }
+    const zs: number[] = [];
+    this.doc.main.forEach((para) => (para.floats ?? []).forEach((f, i) => zs.push(f.z ?? i + 1)));
+    const cur = img.obj.z ?? img.index + 1;
+    const others = zs.filter((z) => z !== cur).sort((a, b) => a - b);
+    let z = cur;
+    if (dir === "front") z = (others[others.length - 1] ?? cur) + 1;
+    else if (dir === "back") z = Math.max(1, (others[0] ?? cur) - 1);
+    else if (dir === "forward") { const n = others.find((v) => v > cur); z = n !== undefined ? n + 1 : cur; }
+    else { const n = [...others].reverse().find((v) => v < cur); z = n !== undefined ? Math.max(1, n - 1) : cur; }
+    this.snapshot();
+    this.replaceFloat(img.p, img.index, { ...img.obj, z });
+    this.update();
+  }
+
+  /** Ausrichten: a floating picture to the margin's (or page's) left, centre, right, top … */
+  alignPicture(x: "left" | "center" | "right" | undefined, y: "top" | "center" | "bottom" | undefined, toPage: boolean): void {
+    const img = this.selectedImage();
+    if (!img || img.kind !== "float") return;
+    this.snapshot();
+    const rel = toPage ? "page" : "margin";
+    this.replaceFloat(img.p, img.index, {
+      ...img.obj, x: x ? { rel, align: x, offset: 0 } : img.obj.x, y: y ? { rel, align: y, offset: 0 } : img.obj.y,
+    });
+    this.update();
+  }
+
+  /** Mit Text verschieben, or Position auf Seite fixieren (the picture keeps its place). */
+  setPictureMoveWithText(withText: boolean): void {
+    const img = this.selectedImage();
+    const box = this.imageBox();
+    if (!img || img.kind !== "float" || !box) return;
+    this.snapshot();
+    const firstLine = this.layout.placed[this.layout.firstPlaced[img.p]];
+    const y = withText ? { rel: "paragraph", offset: (box.y - (firstLine?.y ?? 0)) / PT } : { rel: "page", offset: box.y / PT };
+    this.replaceFloat(img.p, img.index, { ...img.obj, y, moveWithText: withText ? undefined : false });
+    this.update();
+  }
+
+  /** Seitenverhältnis: the largest frame of that ratio in the picture, centred; then Zuschneiden. */
+  cropToRatio(ratio: number): void {
+    const img = this.selectedImage();
+    if (!img?.obj.image) return;
+    const f = img.obj.pic ?? {};
+    const c = f.crop ?? { l: 0, t: 0, r: 0, b: 0 };
+    const fw = (img.obj.width ?? 0) / Math.max(0.01, 1 - c.l - c.r), fh = (img.obj.height ?? 0) / Math.max(0.01, 1 - c.t - c.b);
+    let w = fw, h = fw / ratio;
+    if (h > fh) { h = fh; w = fh * ratio; }
+    const cl = (fw - w) / 2 / fw, ct = (fh - h) / 2 / fh;
+    const crop = cl || ct ? { l: cl, t: ct, r: cl, b: ct } : undefined;
+    this.snapshot();
+    if (img.kind === "inline") this.replaceObject(img.p, img.o, { ...img.obj, width: w, height: h, pic: { ...f, crop } });
+    else this.replaceFloat(img.p, img.index, { ...img.obj, width: w, height: h, pic: { ...f, crop } });
+    this.cropping = true;
+    this.update();
+  }
+
+  /** Ausfüllen (the picture covers the frame) or Einpassen (the whole picture in the frame). */
+cropFill(fit: boolean): void {
+    const img = this.selectedImage();
+    if (!img?.obj.image) return;
+    const info = imageInfo(img.obj.image.bytes);
+    if (!info) return;
+    const a = info.px.w / info.px.h;
+    const F = (img.obj.width ?? 1) / (img.obj.height ?? 1);
+    const side = (1 - F / a) / 2, topBottom = (1 - a / F) / 2;
+    // Ausfüllen cuts the longer side, Einpassen pads the shorter one (negative crop).
+    const crop = (a > F) !== fit ? { l: side, t: 0, r: side, b: 0 } : { l: 0, t: topBottom, r: 0, b: topBottom };
+    this.setPictureFormat({ crop: Math.abs(side) < 1e-6 && Math.abs(topBottom) < 1e-6 ? undefined : crop });
+  }
+
+    /** Where the selected picture is drawn (page px), from the layout. */
   imageBox(): { page: number; x: number; y: number; w: number; h: number } | null {
     const img = this.selectedImage();
     if (!img) return null;
@@ -2008,7 +2336,8 @@ export class Editor {
     const line = this.view.lineOf(pl);
     const w = (img.obj.width ?? 0) * PT, hh = (img.obj.height ?? 0) * PT;
     void b;
-    return { page: a.page, x: a.x, y: pl.y + line.baseline - hh, w, h: hh };
+    const ex = img.obj.pic?.extent;
+    return { page: a.page, x: a.x + (ex ? ex.l * PT : 0), y: pl.y + line.baseline - hh - (ex ? ex.b * PT : 0), w, h: hh };
   }
 
   /**
@@ -2030,7 +2359,7 @@ export class Editor {
         at: img.o, data: undefined, width: img.obj.width ?? 50, height: img.obj.height ?? 50, image: img.obj.image,
         x: { rel: "column", offset: box && fr ? (box.x - fr.x) / PT : 0 },
         y: { rel: "paragraph", offset: box ? (box.y - paraTop) / PT : 0 },
-        wrap, side: "bothSides", dist: [0, 0, 9, 9],
+        wrap, side: "bothSides", dist: [0, 0, 9, 9], pic: img.obj.pic, alt: img.obj.alt,
       };
       this.doc.delete({ p: img.p, o: img.o }, { p: img.p, o: img.o + 1 });
       const para = this.doc.main[img.p];
@@ -2043,7 +2372,7 @@ export class Editor {
       const f = img.obj;
       this.replaceFloat(img.p, img.index, null);
       const at = { p: img.p, o: Math.min(f.at, this.doc.main[img.p].text.length) };
-      const obj: InlineObject = { kind: "image", data: undefined, display: "", width: f.width, height: f.height, image: f.image };
+      const obj: InlineObject = { kind: "image", data: undefined, display: "", width: f.width, height: f.height, image: f.image, pic: f.pic, alt: f.alt };
       E.insertObject(this.doc, at, at, obj, this.typingPropsAt(at));
       this.floatSel = null;
       this.setSel(at, { p: at.p, o: at.o + 1 });
@@ -2898,6 +3227,7 @@ export class Editor {
         this.autoCorrect("\t");
         return;
       case "Escape":
+        if (this.cropping) { this.endCrop(); return void e.preventDefault(); }
         if (this.painter) { this.stopPainter(); return void e.preventDefault(); }
         if (this.isHeaderFooter()) { this.closeHeaderFooter(); return void e.preventDefault(); }
         handled = false;
@@ -2924,7 +3254,7 @@ export class Editor {
    * list definitions and RaabeWrite's arrive intact. Without it the browser's clipboard events
    * are used.
    */
-  clipboardHost: { readHtml(): Promise<string>; write(text: string, html: string): Promise<void> } | null = null;
+  clipboardHost: { readHtml(): Promise<string>; readImage?(): Promise<Blob | null>; write(text: string, html: string): Promise<void> } | null = null;
 
   private onCopy(e: ClipboardEvent, cut: boolean): void {
     e.preventDefault();
@@ -2950,8 +3280,14 @@ export class Editor {
     const html = dt?.getData("text/html") ?? "";
     const item = Array.from(dt?.items ?? []).find((i) => i.kind === "file" && i.type.startsWith("image/"));
     const image = item?.getAsFile() ?? null;
-    if (this.clipboardHost && html) {
-      void this.clipboardHost.readHtml().then((full) => this.paste(text, full || html, image), () => this.paste(text, html, image));
+    const host = this.clipboardHost;
+    if (host && (html || (!image && !text.trim() && host.readImage))) {
+      void (async () => {
+        const full = html ? await host.readHtml().catch(() => "") : "";
+        // Pictures the web view does not hand out (Word's, the "PNG" format) come from the host.
+        const picture = image ?? (!text.trim() && host.readImage ? await host.readImage().catch(() => null) : null);
+        this.paste(text, full || html, picture);
+      })();
       return;
     }
     this.paste(text, html, image);
@@ -2962,9 +3298,20 @@ export class Editor {
    * the size the HTML gives it, else its own (resolution as in the file, else 96 dpi).
    */
   async pasteImage(blob: Blob, html = ""): Promise<boolean> {
-    const bytes = new Uint8Array(await blob.arrayBuffer());
-    const info = imageInfo(bytes);
+    let bytes = new Uint8Array(await blob.arrayBuffer());
+    let info = imageInfo(bytes);
     if (!info) return false;
+    // A bitmap from the clipboard is kept as PNG (smaller, and what Word does).
+    if (info.type === "image/bmp") {
+      try {
+        const bmp = await createImageBitmap(new Blob([bytes as BlobPart], { type: "image/bmp" }));
+        const cv = new OffscreenCanvas(bmp.width, bmp.height);
+        cv.getContext("2d")!.drawImage(bmp, 0, 0);
+        const png = new Uint8Array(await (await cv.convertToBlob({ type: "image/png" })).arrayBuffer());
+        const pinfo = imageInfo(png);
+        if (pinfo) { bytes = png; info = { ...pinfo, dpi: info.dpi }; }
+      } catch { /* keep the bitmap */ }
+    }
     let { w, h } = naturalSizePt(info);
     const img = html ? new DOMParser().parseFromString(html, "text/html").querySelector("img") : null;
     const hw = Number(img?.getAttribute("width")), hh = Number(img?.getAttribute("height"));
@@ -3110,6 +3457,16 @@ export class Editor {
       if (th) { this.dragTableHandle(e, th.kind, th.table); return; }
       // Pictures and table borders take the click before the text.
       const handle = this.view.handleAt(e.clientX, e.clientY);
+      if (handle === "rot") { this.dragRotate(); return; }
+      if (handle === "layout") { const r = this.view.layoutButtonRect(); if (r) this.onLayoutOptions?.(r); return; }
+      if (handle?.startsWith("crop-")) { this.dragCrop(e, handle.slice(5)); return; }
+      if (this.cropping) {
+        const box = this.imageOverlay();
+        const pt = this.view.pointAt(e.clientX, e.clientY);
+        const inside = box?.crop && pt.page === box.page && pt.x >= box.crop.x && pt.x <= box.crop.x + box.crop.w && pt.y >= box.crop.y && pt.y <= box.crop.y + box.crop.h;
+        if (inside) { this.dragCrop(e, null); return; }
+        this.cropping = false;
+      }
       if (handle) { this.dragImage(e, handle); return; }
       const border = this.view.cellBorderAt(e.clientX, e.clientY);
       if (border) { this.dragColumn(e, border.cell); return; }
@@ -3452,7 +3809,7 @@ export class Editor {
     let cursor = "default";
     // Word shows the table handles while the mouse is over a table.
     const tableNow = this.storyKey === MAIN ? this.view.tableAt(e.clientX, e.clientY) : null;
-    if (tableNow !== this.hoverTable) { this.hoverTable = tableNow; this.view.render(this.doc, this.layout, this.sel, { active: this.storyKey, cells: this.selectedCells(), image: this.imageBox() ?? undefined, table: this.handleTable() }); }
+    if (tableNow !== this.hoverTable) { this.hoverTable = tableNow; this.view.render(this.doc, this.layout, this.sel, { active: this.storyKey, cells: this.selectedCells(), image: this.imageOverlay(), table: this.handleTable() }); }
     const th = this.storyKey === MAIN ? this.view.tableHandleAt(e.clientX, e.clientY) : null;
     if (th) { const c = th.kind === "move" ? "move" : "nwse-resize"; if (this.workspace.style.cursor !== c) this.workspace.style.cursor = c; return; }
     if (this.view.pageIndexAt(e.clientX, e.clientY) >= 0) {

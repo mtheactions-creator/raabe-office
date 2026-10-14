@@ -2,9 +2,10 @@
 // change (headers, notes, numbering …) are written back byte for byte, all preserved XML
 // goes back in its place, and new content gets new parts and relationships.
 
+import { blipEffectsXml, imgEffectsXml, shapePropsXml } from "./drawingml";
 import { strFromU8, strToU8, zipSync } from "fflate";
 import {
-  COLUMN_BREAK, LINE_BREAK, OBJ, PAGE_BREAK, type CommentMeta, type DocState, type FloatObject, type InlineObject,
+  COLUMN_BREAK, LINE_BREAK, OBJ, PAGE_BREAK, effectExtent, type AltText, type CommentMeta, type PictureFormat, type DocState, type FloatObject, type InlineObject,
   type Para, type Revision, type Section, type StyleDef, type TableDef,
 } from "@raabe/text-engine";
 import { latexToOmml, M_NS } from "./math";
@@ -223,7 +224,7 @@ class DocWriter {
     if (isData(d)) {
       if ("raw" in d) return d.raw;
       if ("inner" in d) return `<w:r>${rPr}${d.inner}</w:r>`;
-      return `<w:r>${rPr}${relink(this.resized(d.drawing, o.width, o.height), d.part, part, this.pw)}</w:r>`;
+      return `<w:r>${rPr}${relink(this.repictured(this.resized(d.drawing, o.width, o.height), o, d.picRead), d.part, part, this.pw)}</w:r>`;
     }
     // Content created in RaabeWrite.
     if (o.kind === "image" && o.image) return `<w:r>${rPr}${this.newDrawing(o, part)}</w:r>`;
@@ -242,6 +243,42 @@ class DocWriter {
     return o.display ? `<w:r>${rPr}<w:t xml:space="preserve">${esc(o.display)}</w:t></w:r>` : "";
   }
 
+  /**
+   * Writes changed Bildformat settings and Alternativtext into a picture's XML (blip effects,
+   * cropping, shape properties, docPr); unchanged pictures keep their XML as read.
+   */
+  private repictured(xml: string, o: { pic?: PictureFormat; alt?: AltText }, read: string | undefined): string {
+    if (JSON.stringify({ pic: o.pic, alt: o.alt }) === (read ?? "{}")) return xml;
+    const f = o.pic ?? {};
+    let out = xml.replace(/<a:blip ([^>]*?)(?:\/>|>([\s\S]*?)<\/a:blip>)/, (_m, attrs: string, inner: string | undefined) => {
+      const exts = (inner ?? "").match(/<a:ext uri="[^"]*">[\s\S]*?<\/a:ext>/g) ?? [];
+      const kept = exts.filter((x) => !x.includes("{BEBA8EAE-BF5A-486C-A8C5-ECC9F3942E4B}")).join("");
+      const ext = kept + imgEffectsXml(f);
+      return `<a:blip ${attrs}>${blipEffectsXml(f)}${ext ? `<a:extLst>${ext}</a:extLst>` : ""}</a:blip>`;
+    });
+    out = out.replace(/<a:srcRect[^>]*\/>/, "");
+    const c = f.crop;
+    if (c && (c.l || c.t || c.r || c.b)) {
+      const v = (x: number) => Math.round(x * 100000);
+      out = out.replace(/(<\/a:blip>)/, `$1<a:srcRect${c.l ? ` l="${v(c.l)}"` : ""}${c.t ? ` t="${v(c.t)}"` : ""}${c.r ? ` r="${v(c.r)}"` : ""}${c.b ? ` b="${v(c.b)}"` : ""}/>`);
+    }
+    out = out.replace(/<pic:spPr([^>]*)>([\s\S]*?)<\/pic:spPr>/, (_m, attrs: string, inner: string) => {
+      const ext = /<a:ext cx="(\d+)" cy="(\d+)"/.exec(inner);
+      return `<pic:spPr${attrs}>${shapePropsXml(f, Number(ext?.[1] ?? 0), Number(ext?.[2] ?? 0))}</pic:spPr>`;
+    });
+    const ext = /<wp:extent cx="(\d+)" cy="(\d+)"/.exec(out);
+    const ex = effectExtent(f, Number(ext?.[2] ?? 0) / 12700);
+    const emu = (x: number) => Math.round(x * 12700);
+    out = out.replace(/<wp:effectExtent [^>]*\/>/, `<wp:effectExtent l="${emu(ex.l)}" t="${emu(ex.t)}" r="${emu(ex.r)}" b="${emu(ex.b)}"/>`);
+    out = out.replace(/<wp:docPr ([^>]*?)(\/?)>/, (_m, attrs: string, close: string) => {
+      let a = attrs.replace(/\s*(descr|title)="[^"]*"/g, "");
+      if (o.alt?.descr) a += ` descr="${esc(o.alt.descr)}"`;
+      if (o.alt?.title) a += ` title="${esc(o.alt.title)}"`;
+      return `<wp:docPr ${a.trim()}${close}>`;
+    });
+    return out;
+  }
+
   /** Updates the size in a picture's XML when it was resized. */
   private resized(xml: string, width: number | undefined, height: number | undefined): string {
     if (width === undefined || height === undefined) return xml;
@@ -254,17 +291,23 @@ class DocWriter {
     return out;
   }
 
-  private newDrawing(o: { image?: InlineObject["image"]; width?: number; height?: number }, part: string, anchor?: FloatObject): string {
+  private newDrawing(o: { image?: InlineObject["image"]; width?: number; height?: number; pic?: PictureFormat; alt?: AltText }, part: string, anchor?: FloatObject): string {
     const img = o.image!;
     const media = this.pw.addMedia(img.bytes, img.type);
     const rid = this.pw.link(part, REL.image, media);
     const cx = Math.round((o.width ?? 100) * EMU), cy = Math.round((o.height ?? 100) * EMU);
     const id = this.docPrId++;
+    const f = o.pic ?? {};
+    const fx = imgEffectsXml(f);
+    const crop = f.crop && (f.crop.l || f.crop.t || f.crop.r || f.crop.b)
+      ? `<a:srcRect l="${Math.round(f.crop.l * 100000)}" t="${Math.round(f.crop.t * 100000)}" r="${Math.round(f.crop.r * 100000)}" b="${Math.round(f.crop.b * 100000)}"/>` : "";
     const graphic = `<a:graphic xmlns:a="${NS_A}"><a:graphicData uri="${NS_PIC}"><pic:pic xmlns:pic="${NS_PIC}">` +
-      `<pic:nvPicPr><pic:cNvPr id="0" name="Bild ${id}"/><pic:cNvPicPr/></pic:nvPicPr><pic:blipFill><a:blip r:embed="${rid}"/><a:stretch><a:fillRect/></a:stretch></pic:blipFill>` +
-      `<pic:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="${cx}" cy="${cy}"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></pic:spPr></pic:pic></a:graphicData></a:graphic>`;
-    const common = `<wp:extent cx="${cx}" cy="${cy}"/><wp:effectExtent l="0" t="0" r="0" b="0"/>`;
-    const docPr = `<wp:docPr id="${id}" name="Grafik ${id}"/><wp:cNvGraphicFramePr><a:graphicFrameLocks xmlns:a="${NS_A}" noChangeAspect="1"/></wp:cNvGraphicFramePr>`;
+      `<pic:nvPicPr><pic:cNvPr id="0" name="Bild ${id}"${o.alt?.descr ? ` descr="${esc(o.alt.descr)}"` : ""}/><pic:cNvPicPr/></pic:nvPicPr>` +
+      `<pic:blipFill><a:blip r:embed="${rid}">${blipEffectsXml(f)}${fx ? `<a:extLst>${fx}</a:extLst>` : ""}</a:blip>${crop}<a:stretch><a:fillRect/></a:stretch></pic:blipFill>` +
+      `<pic:spPr>${shapePropsXml(f, cx, cy)}</pic:spPr></pic:pic></a:graphicData></a:graphic>`;
+    const ex = effectExtent(f, (o.height ?? 0));
+    const common = `<wp:extent cx="${cx}" cy="${cy}"/><wp:effectExtent l="${Math.round(ex.l * EMU)}" t="${Math.round(ex.t * EMU)}" r="${Math.round(ex.r * EMU)}" b="${Math.round(ex.b * EMU)}"/>`;
+    const docPr = `<wp:docPr id="${id}" name="Grafik ${id}"${o.alt?.descr ? ` descr="${esc(o.alt.descr)}"` : ""}${o.alt?.title ? ` title="${esc(o.alt.title)}"` : ""}/><wp:cNvGraphicFramePr><a:graphicFrameLocks xmlns:a="${NS_A}" noChangeAspect="1"/></wp:cNvGraphicFramePr>`;
     if (!anchor) return `<w:drawing><wp:inline distT="0" distB="0" distL="0" distR="0" xmlns:wp="${NS_WP}">${common}${docPr}${graphic}</wp:inline></w:drawing>`;
     const e = (pt: number) => Math.round(pt * EMU);
     const pos = (tag: string, p: FloatObject["x"]) => `<wp:${tag} relativeFrom="${esc(p.rel)}">${p.align ? `<wp:align>${esc(p.align)}</wp:align>` : `<wp:posOffset>${e(p.offset)}</wp:posOffset>`}</wp:${tag}>`;
@@ -272,13 +315,13 @@ class DocWriter {
       : anchor.wrap === "topAndBottom" ? "<wp:wrapTopAndBottom/>"
       : `<wp:wrap${anchor.wrap === "tight" ? "Tight" : anchor.wrap === "through" ? "Through" : "Square"} wrapText="${esc(anchor.side)}"${anchor.wrap === "square" ? "" : "><wp:wrapPolygon edited=\"0\"><wp:start x=\"0\" y=\"0\"/><wp:lineTo x=\"0\" y=\"21600\"/><wp:lineTo x=\"21600\" y=\"21600\"/><wp:lineTo x=\"21600\" y=\"0\"/><wp:lineTo x=\"0\" y=\"0\"/></wp:wrapPolygon></wp:wrap" + (anchor.wrap === "tight" ? "Tight" : "Through")}/>`;
     const [t, b, l, r] = anchor.dist.map(e);
-    return `<w:drawing><wp:anchor distT="${t}" distB="${b}" distL="${l}" distR="${r}" simplePos="0" relativeHeight="${id}" behindDoc="${anchor.wrap === "behind" ? 1 : 0}" locked="0" layoutInCell="1" allowOverlap="1" xmlns:wp="${NS_WP}">` +
+    return `<w:drawing><wp:anchor distT="${t}" distB="${b}" distL="${l}" distR="${r}" simplePos="0" relativeHeight="${anchor.z ?? id}" behindDoc="${anchor.wrap === "behind" ? 1 : 0}" locked="0" layoutInCell="1" allowOverlap="1" xmlns:wp="${NS_WP}">` +
       `<wp:simplePos x="0" y="0"/>${pos("positionH", anchor.x)}${pos("positionV", anchor.y)}${common}${wrap}${docPr}${graphic}</wp:anchor></w:drawing>`;
   }
 
   private floatXml(f: FloatObject, part: string): string {
     const d = f.data;
-    if (isData(d) && "drawing" in d) return relink(this.repositioned(this.resized(d.drawing, f.width, f.height), f), d.part, part, this.pw);
+    if (isData(d) && "drawing" in d) return relink(this.repictured(this.repositioned(this.resized(d.drawing, f.width, f.height), f), f, d.picRead), d.part, part, this.pw);
     if (typeof d === "string") return d;
     if (f.image) return this.newDrawing(f, part, f);
     return "";
@@ -287,6 +330,9 @@ class DocWriter {
   /** Updates the offsets of a floating picture that was moved. */
   private repositioned(xml: string, f: FloatObject): string {
     let out = xml;
+    if (f.z !== undefined) out = out.replace(/(<wp:anchor [^>]*?relativeHeight=")\d+(")/, `$1${f.z}$2`);
+    const behind = f.wrap === "behind" ? "1" : "0";
+    out = out.replace(/(<wp:anchor [^>]*?behindDoc=")[01](")/, `$1${behind}$2`);
     for (const [tag, p] of [["positionH", f.x], ["positionV", f.y]] as const) {
       if (p.align) continue;
       const re = new RegExp(`(<wp:${tag}[^>]*>\\s*<wp:posOffset>)(-?\\d+)(</wp:posOffset>)`);

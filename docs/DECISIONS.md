@@ -473,3 +473,22 @@ konvertieren", which Word shows greyed out for pictures. Word's bullet library h
 bullet of its own; RaabeWrite has no picture bullets, so the library shows the six symbol
 bullets. The numbering library is Word's: 1. 1) I. (1) a) a. i.
 
+### D-045 Bildformat as Word does it
+Word's galleries were recorded with real clicks in an own Word instance
+(`probe_word_picture.py`, the XML Word writes for every entry and its tooltip name):
+Korrekturen, Farbe, Transparenz, the 28 Bildformatvorlagen and the presets of Bildeffekte
+(Voreinstellung, Schatten, Spiegelung, Leuchteffekt, Weiche Kanten, Abschrägung,
+3D-Drehung). The presets are kept as Word's DrawingML (`picture-presets.ts`, generated) and
+read and written without loss (test: every preset comes back as Word wrote it). Pictures
+carry their settings in the model (`PictureFormat`: a14 image effects, blip colour changes,
+cropping, frame shape, line, effects, 3D as XML, effect extent); unchanged pictures keep
+their XML as read. The view draws them with CSS and SVG filters, 3D rotation approximated
+with CSS perspective. Gallery tiles show the selected picture with the entry and preview it
+in the document on hover. Ribbon layouts and reduction order follow Word at 2560-800 px.
+Freistellen removes the background connected to the edges in about the edge colour (Word's
+interactive mode with marking is not rebuilt); Künstlerische Effekte stay deferred (Word's
+23 artistic filters cannot be drawn close enough); Bildlayout converts to SmartArt, which is
+out of scope, so it stays greyed out. Pictures insert at their file's resolution as Word
+does (a 500 dpi PNG is small), in table cells at most as wide as the cell. The CSP allowed
+only data: images, so pictures inserted in the app never showed: blob: is allowed now.
+

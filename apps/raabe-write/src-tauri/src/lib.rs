@@ -299,7 +299,7 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             read_file, write_file, file_info, save_recovery, list_recovery, read_recovery, delete_recovery,
             startup_files, print_to_pdf, fonts::list_fonts, fonts::font_metrics, spell::spell_check, spell::spell_suggest,
-            clipboard::clipboard_read_html, clipboard::clipboard_write_html
+            clipboard::clipboard_read_html, clipboard::clipboard_write_html, clipboard::clipboard_read_image
         ])
         .run(tauri::generate_context!())
         .expect("error while running RaabeWrite");

@@ -14,7 +14,7 @@ import { headerFooterFeature, HEADER_COMMANDS } from "./features/headerfooter";
 import { findFeature, FIND_COMMANDS } from "./features/find";
 import { listsFeature, LIST_COMMANDS } from "./features/lists";
 import { pageSetupFeature, PAGE_COMMANDS } from "./features/pagesetup";
-import { picturesFeature, PICTURE_COMMANDS } from "./features/pictures";
+import { picturesFeature, PICTURE_COMMANDS, PICTURE_TAB_COMMANDS } from "./features/pictures";
 import { mathFeature, MATH_COMMANDS } from "./features/math";
 import { referencesFeature, REFERENCE_COMMANDS } from "./features/references";
 import { reviewFeature, REVIEW_COMMANDS } from "./features/review";
@@ -103,7 +103,7 @@ export class WriteApp {
     this.fonts.onChange(() => { for (const d of this.docs) d.editor.relayout(); });
     void platform.listFonts().then((f) => { this.fontList = f; }).catch(() => {});
     this.commands.register(...COMMANDS, ...TABLE_COMMANDS, ...PAGE_COMMANDS, ...HEADER_COMMANDS, ...PICTURE_COMMANDS, ...FIND_COMMANDS,
-      ...REFERENCE_COMMANDS, ...REVIEW_COMMANDS, ...MATH_COMMANDS, ...CONTEXT_COMMANDS, ...LIST_COMMANDS);
+      ...REFERENCE_COMMANDS, ...REVIEW_COMMANDS, ...MATH_COMMANDS, ...CONTEXT_COMMANDS, ...LIST_COMMANDS, ...PICTURE_TAB_COMMANDS);
     this.implementCommands();
     this.features = this.makeFeatures();
 
@@ -189,6 +189,10 @@ export class WriteApp {
       } catch { /* no HTML access: text only */ }
     }
     const text = await this.platform.clipboardRead().catch(() => "");
+    if (!image && !plain && this.platform.clipboardReadImage) {
+      const b = await this.platform.clipboardReadImage().catch(() => null);
+      if (b) image = new Blob([b as BlobPart]);
+    }
     return { text, html, image };
   }
 
@@ -241,9 +245,13 @@ export class WriteApp {
     const editor = new Editor(ws, state ?? {}, this.fonts);
     this.features.spell.attach(editor);
     this.features.context.attach(editor);
+    this.features.pictures.attach(editor);
     const pf = this.platform;
     if (pf.clipboardReadHtml && pf.clipboardWriteHtml) {
-      editor.clipboardHost = { readHtml: () => pf.clipboardReadHtml!(), write: (text, html) => pf.clipboardWriteHtml!(html, text) };
+      editor.clipboardHost = {
+        readHtml: () => pf.clipboardReadHtml!(), write: (text, html) => pf.clipboardWriteHtml!(html, text),
+        readImage: async () => { const b = await pf.clipboardReadImage?.(); return b ? new Blob([b as BlobPart]) : null; },
+      };
     }
     this.features.review.attach(editor);
     this.features.math.attach(editor);
@@ -1228,6 +1236,8 @@ export class WriteApp {
       newFromTemplate: (t: TemplateId) => this.newFromTemplate(t),
       /** Closes every document except the active one, discarding changes (catalogue runs). */
       closeOthers: () => { for (const d of [...this.docs]) if (d !== this.active) this.removeDoc(d); },
+      /** Einfügen > Bilder > Dieses Gerät without the file dialog. */
+      insertPicture: (path: string) => this.features.pictures.insertFromPath(path),
       activeRibbonTab: () => this.ribbon.activeTab,
       infobar: () => this.infobarSlot.textContent,
       /** The active editor, for tests that call its commands directly. */

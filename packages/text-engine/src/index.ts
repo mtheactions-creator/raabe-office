@@ -7,6 +7,7 @@ export { Layouter, fieldType, type LayoutContext } from "./layout";
 export { DEFAULT_CELL_MARGINS, layoutDocument, type Deco, type Frame, type Layout, type PageLayout, type PlacedLine, type StoryLayout } from "./flow";
 export {
   A4, COLUMN_BREAK, DEFAULT_SECTION, EMPTY, EMPTY_NUMBERING, LINE_BREAK, OBJ, ONE_COLUMN, PAGE_BREAK, cellKey, intern, makePara, validPara,
+  type AltText,
   type AbstractNum, type Align, type Anchor, type BlockObject, type BorderSpec, type Borders, type CellDef, type CellMargins,
   type CellRef, type CharProps, type Columns, type CommentMeta, type FloatObject, type HeaderRefs, type ImageData,
   type InlineObject, type LineRule, type NumInstance, type NumLevel, type Numbering, type PageSetup, type Para,
@@ -24,6 +25,7 @@ export {
 export { AUTHOR_COLORS, HIGHLIGHT, MIN_ZOOM, MAX_ZOOM, imageUrl, storyIdOf, type TextMark } from "./view";
 export { countWords } from "./words";
 export { imageInfo, naturalSizePt, type ImageInfo } from "./images";
+export { effectExtent, pictureElement, plainPicture, type PictureFormat, type PictureShadow } from "./picture";
 export { fromHtml, toHtml } from "./html";
 export * as Revisions from "./revisions";
 export * as Edits from "./edits";
