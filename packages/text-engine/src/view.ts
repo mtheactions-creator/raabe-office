@@ -34,7 +34,13 @@ export interface RenderOptions {
   readonly cells?: ReadonlySet<string>;
   /** A selected picture: its box gets Word's eight sizing handles. */
   readonly image?: { readonly page: number; readonly x: number; readonly y: number; readonly w: number; readonly h: number };
+  /** The table (id) that shows Word's move and resize handles (caret or mouse in it). */
+  readonly table?: number;
 }
+
+/** Word's table move handle: a small box with a four-way arrow. */
+const MOVE_HANDLE_SVG = '<svg viewBox="0 0 11 11" width="11" height="11" aria-hidden="true"><path d="M5.5 1.5v8M1.5 5.5h8" stroke="#000" stroke-width="1"/>' +
+  '<path d="M5.5 0.8 4 2.6h3zM5.5 10.2 4 8.4h3zM0.8 5.5 2.6 4v3zM10.2 5.5 8.4 4v3z" fill="#000"/></svg>';
 
 export type Handle = "nw" | "n" | "ne" | "e" | "se" | "s" | "sw" | "w";
 const HANDLES: Handle[] = ["nw", "n", "ne", "e", "se", "s", "sw", "w"];
@@ -171,6 +177,8 @@ export class View {
     this.caret = document.createElement("div");
     this.caret.style.cssText = "position:absolute;z-index:5;pointer-events:none;background:#000";
     workspace.addEventListener("scroll", () => this.onScroll(), { passive: true });
+    addEventListener("blur", () => { this.windowActive = false; this.caret.style.display = "none"; this.stopBlink(); });
+    addEventListener("focus", () => { this.windowActive = true; if (this.caretWanted) this.renderCaret(true); });
     addEventListener("resize", () => this.onScroll());
   }
 
@@ -440,10 +448,22 @@ export class View {
     if (key === pv.decoKey) return;
     pv.decoKey = key;
     const back: HTMLElement[] = [], front: HTMLElement[] = [];
+    // Gitternetzlinien only where a cell edge has no border of its own (as in Word).
+    const borders = page.deco.filter((d): d is Extract<Deco, { kind: "line" }> => d.kind === "line");
+    const covered = (x1: number, y1: number, x2: number, y2: number) => borders.some((l) => {
+      const tol = Math.max(1.5, l.width);
+      if (y1 === y2) return Math.abs(l.y1 - l.y2) < 0.5 && Math.abs(l.y1 - y1) <= tol && Math.min(l.x1, l.x2) <= x1 + tol && Math.max(l.x1, l.x2) >= x2 - tol;
+      return Math.abs(l.x1 - l.x2) < 0.5 && Math.abs(l.x1 - x1) <= tol && Math.min(l.y1, l.y2) <= y1 + tol && Math.max(l.y1, l.y2) >= y2 - tol;
+    });
     for (const f of grid) {
+      const edges: [string, boolean][] = [
+        ["top", !covered(f.x, f.y, f.x + f.w, f.y)], ["bottom", !covered(f.x, f.y + f.h, f.x + f.w, f.y + f.h)],
+        ["left", !covered(f.x, f.y, f.x, f.y + f.h)], ["right", !covered(f.x + f.w, f.y, f.x + f.w, f.y + f.h)],
+      ];
+      if (!edges.some(([, on]) => on)) continue;
       const el = document.createElement("div");
-      el.style.cssText = `position:absolute;left:${f.x}px;top:${f.y}px;width:${f.w}px;height:${f.h}px;box-sizing:border-box;` +
-        "border:1px dashed #a6c3e8;pointer-events:none";
+      el.style.cssText = `position:absolute;left:${f.x}px;top:${f.y}px;width:${f.w}px;height:${f.h}px;box-sizing:border-box;pointer-events:none;` +
+        edges.map(([side, on]) => `border-${side}:1px ${on ? "dashed #a6c3e8" : "solid transparent"}`).join(";");
       back.push(el);
     }
     for (const d of page.deco) {
@@ -490,8 +510,9 @@ export class View {
     const editing = a.startsWith("hdr:") || a.startsWith("ftr:");
     const sections = new Set(layout.pages.map((p) => p.section)).size;
     const img = this.opts.image && this.opts.image.page === page.index ? this.opts.image : null;
+    const tb = this.opts.table !== undefined ? this.tableBounds(page, this.opts.table) : null;
     const key = (editing ? `${page.bodyTop}|${page.bodyBottom}|${page.section}|${sections}|${pv.w}` : "") +
-      (img ? `|img${img.x},${img.y},${img.w},${img.h}` : "");
+      (img ? `|img${img.x},${img.y},${img.w},${img.h}` : "") + (tb ? `|tb${tb.x},${tb.y},${tb.w},${tb.h},${tb.first},${tb.last}` : "");
     if (key === pv.overlayKey) return;
     pv.overlayKey = key;
     const handles: HTMLElement[] = [];
@@ -504,6 +525,22 @@ export class View {
         const el = document.createElement("div");
         el.style.cssText = `position:absolute;left:${x - 4}px;top:${y - 4}px;width:8px;height:8px;box-sizing:border-box;border:1px solid #6f8db9;background:#fff;border-radius:${hd.length === 2 ? "50%" : "1px"}`;
         handles.push(el);
+      }
+    }
+    if (tb && !this.printing) {
+      // Word's handles: the move handle above the table's top-left corner on the page it starts,
+      // the sizing handle below its bottom-right corner on the page it ends.
+      if (tb.first) {
+        const mh = document.createElement("div");
+        mh.style.cssText = `position:absolute;left:${tb.x - 15}px;top:${tb.y - 15}px;width:13px;height:13px;box-sizing:border-box;` +
+          "border:1px solid #a0a0a0;background:#fff;display:flex;align-items:center;justify-content:center";
+        mh.innerHTML = MOVE_HANDLE_SVG;
+        handles.push(mh);
+      }
+      if (tb.last) {
+        const rh = document.createElement("div");
+        rh.style.cssText = `position:absolute;left:${tb.x + tb.w + 2}px;top:${tb.y + tb.h + 2}px;width:7px;height:7px;box-sizing:border-box;border:1px solid #a0a0a0;background:#fff`;
+        handles.push(rh);
       }
     }
     if (!editing) { pv.overlay.replaceChildren(...handles); return; }
@@ -531,6 +568,48 @@ export class View {
   }
 
   /** The sizing handle of the selected picture under a client point. */
+  /** A table's cells on a page: bounding box, whether the table starts and ends on it. */
+  tableBounds(page: PageLayout, tid: number): { x: number; y: number; w: number; h: number; first: boolean; last: boolean } | null {
+    const layout = this.layoutRef!;
+    let x1 = Infinity, y1 = Infinity, x2 = -Infinity, y2 = -Infinity;
+    for (const id of page.frames) {
+      const f = layout.frames[id];
+      if (f.kind !== "cell" || f.story !== "main" || !f.cell || Number(f.cell.split(":")[0]) !== tid) continue;
+      x1 = Math.min(x1, f.x); y1 = Math.min(y1, f.y); x2 = Math.max(x2, f.x + f.w); y2 = Math.max(y2, f.y + f.h);
+    }
+    if (x1 === Infinity) return null;
+    const pagesWith = layout.pages.filter((pg) => pg.frames.some((id) => { const f = layout.frames[id]; return f.kind === "cell" && f.cell && Number(f.cell.split(":")[0]) === tid; }));
+    return { x: x1, y: y1, w: x2 - x1, h: y2 - y1, first: pagesWith[0]?.index === page.index, last: pagesWith[pagesWith.length - 1]?.index === page.index };
+  }
+
+  /** The table whose cells (or handles) are under a client point. */
+  tableAt(clientX: number, clientY: number): number | null {
+    const layout = this.layoutRef;
+    if (!layout) return null;
+    const pt = this.pointAt(clientX, clientY);
+    const pg = layout.pages[pt.page];
+    if (!pg) return null;
+    for (const id of pg.frames) {
+      const f = layout.frames[id];
+      if (f.kind !== "cell" || f.story !== "main" || !f.cell) continue;
+      if (pt.x >= f.x - 18 && pt.x <= f.x + f.w + 12 && pt.y >= f.y - 18 && pt.y <= f.y + f.h + 12) return Number(f.cell.split(":")[0]);
+    }
+    return null;
+  }
+
+  /** Word's table move or sizing handle under a client point. */
+  tableHandleAt(clientX: number, clientY: number): { kind: "move" | "size"; table: number } | null {
+    const tid = this.opts.table;
+    if (tid === undefined || !this.layoutRef) return null;
+    const pt = this.pointAt(clientX, clientY);
+    const pg = this.layoutRef.pages[pt.page];
+    const tb = pg ? this.tableBounds(pg, tid) : null;
+    if (!tb) return null;
+    if (tb.first && pt.x >= tb.x - 16 && pt.x <= tb.x - 1 && pt.y >= tb.y - 16 && pt.y <= tb.y - 1) return { kind: "move", table: tid };
+    if (tb.last && pt.x >= tb.x + tb.w + 1 && pt.x <= tb.x + tb.w + 11 && pt.y >= tb.y + tb.h + 1 && pt.y <= tb.y + tb.h + 11) return { kind: "size", table: tid };
+    return null;
+  }
+
   handleAt(clientX: number, clientY: number): Handle | null {
     const img = this.opts.image;
     if (!img) return null;
@@ -557,6 +636,23 @@ export class View {
       if (f.kind !== "cell" || !f.cell || f.story !== "main") continue;
       if (pt.y < f.y || pt.y > f.y + f.h) continue;
       if (Math.abs(pt.x - (f.x + f.w)) <= tol) return { cell: f.cell, x: f.x + f.w };
+    }
+    return null;
+  }
+
+  /** The bottom border of a table row under a client point (row heights are dragged there). */
+  rowBorderAt(clientX: number, clientY: number): { cell: string; y: number; h: number } | null {
+    const layout = this.layoutRef;
+    if (!layout || this.opts.active !== "main") return null;
+    const pt = this.pointAt(clientX, clientY);
+    const pg = layout.pages[pt.page];
+    if (!pg) return null;
+    const tol = 3 / this.zoomFactor;
+    for (const id of pg.frames) {
+      const f = layout.frames[id];
+      if (f.kind !== "cell" || !f.cell || f.story !== "main") continue;
+      if (pt.x < f.x || pt.x > f.x + f.w) continue;
+      if (Math.abs(pt.y - (f.y + f.h)) <= tol) return { cell: f.cell, y: f.y + f.h, h: f.h };
     }
     return null;
   }
@@ -722,6 +818,7 @@ export class View {
       const el = document.createElement("span");
       el.style.cssText = this.spanStyle(c) + `;left:${x}px;top:${y}px` + (o?.href ? ";color:#0563c1;text-decoration:underline" : "");
       el.textContent = seg.display ?? o?.display ?? "";
+      if (o?.font) el.style.fontFamily = `"${o.font}"`;
       out.push(el);
       return out;
     }
@@ -846,9 +943,14 @@ export class View {
     this.renderCaret(empty && !cells?.size);
   }
 
+  /** Word shows no caret while its window is not the active one. */
+  private windowActive = typeof document === "undefined" || document.hasFocus();
+  private caretWanted = false;
+
   private renderCaret(visible: boolean): void {
     if (!this.layoutRef || !this.docRef || !this.selRef) return;
-    if (!visible) { this.caret.style.display = "none"; return; }
+    this.caretWanted = visible;
+    if (!visible || !this.windowActive) { this.caret.style.display = "none"; this.stopBlink(); return; }
     const c = this.caretBox(this.selRef.head, this.selRef.headUpstream);
     const pv = this.pages[c.page];
     if (!pv) return;
@@ -934,6 +1036,14 @@ export class View {
   }
 
   /** Page under a client point and the point in that page's coordinates. */
+  /** The page under a client point, or -1 between and beside the pages. */
+  pageIndexAt(clientX: number, clientY: number): number {
+    if (!this.pages.length) return -1;
+    const { page, x, y } = this.pointAt(clientX, clientY);
+    const pv = this.pages[page];
+    return pv && x >= 0 && y >= 0 && x <= pv.w && y <= pv.h ? page : -1;
+  }
+
   pointAt(clientX: number, clientY: number): { page: number; x: number; y: number } {
     const rect = this.sizer.getBoundingClientRect();
     const z = this.zoomFactor;

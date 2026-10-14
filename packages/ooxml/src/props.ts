@@ -139,7 +139,7 @@ export function readRPr(el: Element | null, rev?: RevisionOf): CharProps {
 function tabs(el: Element): TabStop[] {
   return kids(el).filter((t) => t.localName === "tab").map((t) => ({
     pos: (num(attr(t, "pos")) ?? 0) / 20,
-    align: (({ start: "left", end: "right", num: "left" } as Record<string, string>)[attr(t, "val") ?? "left"] ?? attr(t, "val") ?? "left") as TabStop["align"],
+    align: (({ start: "left", end: "right" } as Record<string, string>)[attr(t, "val") ?? "left"] ?? attr(t, "val") ?? "left") as TabStop["align"],
     leader: (attr(t, "leader") ?? undefined) as TabStop["leader"],
   }));
 }

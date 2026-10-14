@@ -427,3 +427,49 @@ grammar check. A language is switched on once its false-alarm rate is close to W
 The ribbon keeps Word's layout. Commands deferred by agreement (SCOPE) stay greyed out with
 "Zurückgestellt" in their tooltip, so they cannot be mistaken for overlooked ones; every
 other command must work.
+
+### D-042 AutoCorrect and AutoFormat as Word 365 does them
+Measured with real typing in an own Word instance (`probe_word_typing.py`, the behaviour
+catalogue). Word's settings are its defaults; the lists of abbreviations and typing slips
+are our own (Word's AutoCorrect list is Microsoft's data), Word's symbol entries are facts
+and copied: (c) (r) (tm) (e) ... --> <-- ==> <== <=> and the smileys, which Word 365 now
+replaces by emoji in Segoe UI Emoji (written as w16se:symEx like Word). These entries are
+replaced as soon as their last character is typed ("Text(c)" → "Text©"); words are corrected
+when they end. Other rules found by measuring: a period after a number ends a sentence
+("Am 1. januar" → "Januar"); "hALLO" is only corrected while Caps Lock is on; German "geht's"
+gets ’ once the word ends; list labels ("a)") are not capitalised. AutoFormat makes lists
+only from the first value (1, a, A, i, I with "." ")" "-" or brackets) and from "*", "-",
+"–", "—", ">", "->", "=>", after a space or a Tab; roman numerals get 1.27 cm hanging at
+1.9 cm. Word 365's Markdown is followed too: "# " to "###### " make headings, **text** bold,
+~~text~~ struck through (*text* and _text_ stay). Backspace at a paragraph start removes a
+first-line indent, then the left indent back to the previous paragraph's text or number
+position (a "Listenabsatz" becomes "Standard"), then joins; Tab at a list's first item moves
+the whole list to the next stop (default tab stops and 0.635 cm after each). Deleting or
+replacing whole words also removes the doubled space; a pasted trailing space before
+punctuation goes. A selection that reaches another cell covers whole cells, one leaving the
+table whole rows. Strg+Alt+1/2/3 do nothing in German Word (AltGr), so RaabeWrite does not
+bind them either.
+
+### D-043 Clipboard with Word: the whole HTML document
+The web view's clipboard API hands out only the copied fragment, without the style sheet in
+which Word defines its lists (`@list l0:level1 {mso-level-text:…; font-family:Symbol}`) and
+classes (margin-left of MsoListParagraph). A small Rust command (clipboard-win, already part
+of the build through Tauri's clipboard plugin) reads and writes the clipboard's "HTML Format"
+as a whole. RaabeWrite reads Word's list definitions, paragraph indents, column widths, row
+heights, shading and merged cells, and writes lists and tables the way Word writes them
+(mso-list paragraphs with @list definitions, table cells with widths), so both directions
+keep bullets, numbers, levels, indents and widths (`clipboard_roundtrip.py`: 0 differences).
+Pictures on the clipboard (screenshots, copied pictures) are pasted as pictures.
+
+### D-044 Context menus and mini toolbar as in Word
+Recorded with `probe_word_context.py` (UI Automation and screenshots of Word's popups):
+search box, Ausschneiden/Kopieren, the three paste options, then entries for text, list
+items (bullets: Separate Liste, Mit vorheriger Liste verknüpfen; numbers: Neu beginnen mit
+1, Nummerierung fortsetzen, Nummerierungswert festlegen), a table cell, several cells and
+pictures, with Word's submenus, and the mini toolbar above. Left out: entries for Microsoft's
+online services (Copy Link to Location, Mit Copilot bearbeiten, Auswahl im Editor
+überprüfen, Bild ändern aus Archiv-/Onlinebildern und Piktogrammen) and "In Office Math
+konvertieren", which Word shows greyed out for pictures. Word's bullet library has a picture
+bullet of its own; RaabeWrite has no picture bullets, so the library shows the six symbol
+bullets. The numbering library is Word's: 1. 1) I. (1) a) a. i.
+

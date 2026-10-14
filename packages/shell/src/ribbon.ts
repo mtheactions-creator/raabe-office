@@ -25,7 +25,11 @@ export type Control =
       optionStyle?: (o: string) => string;
       commit?: (v: string) => void;
     }
-  | { type: "gallery"; key?: string; items: { cmd: string; preview: string }[]; visible: number }
+  | {
+      type: "gallery"; key?: string; items: { cmd: string; preview: string }[];
+      /** Items shown at least; with `fill` the gallery grows into free width, as Word's does. */
+      visible: number; fill?: boolean;
+    }
   | {
       type: "spinner"; cmd: string; label: string; icon?: string; key?: string;
       value?: () => string; commit?: (v: string) => void; step?: (dir: 1 | -1) => void;
@@ -33,7 +37,8 @@ export type Control =
   | { type: "color"; cmd: string; key?: string; palette: "font" | "highlight"; current: () => string; pick: (c: string) => void }
   | { type: "check"; cmd: string; key?: string }
   | { type: "rows"; rows: (Control | "gap")[][] }
-  | { type: "stack"; items: Control[] };
+  /** A column of controls; `title` is a small heading above it (Layout > Absatz: "Einzug"). */
+  | { type: "stack"; items: Control[]; title?: string };
 
 export interface Group {
   id: string;
@@ -42,7 +47,10 @@ export interface Group {
   key?: string;
   icon: string;
   launcher?: { cmd: string; key?: string };
+  /** The largest layout (Word's at a wide window). */
   controls: Control[];
+  /** Word's smaller layouts of the group, in the order it switches to them as the window narrows. */
+  smaller?: Control[][];
 }
 
 export interface Tab {
@@ -50,13 +58,54 @@ export interface Tab {
   label: string;
   key: string;
   groups: Group[];
-  /** Group ids in the order Word collapses them as the window narrows. */
+  /**
+   * Word's reduction sequence as the window narrows: each entry steps that group down one
+   * layout (`smaller`), and after its smallest one collapses it to a single button.
+   */
   shrink: string[];
   /** Shown only in a context (table, header, picture …), after the other tabs. */
   contextual?: boolean;
 }
 
 type Updater = () => void;
+
+/** Office's small chevron next to and below ribbon controls (8 x 5 px at 100 %, measured). */
+const CHEVRON_SVG = '<svg viewBox="0 0 8 5" width="8" height="5" aria-hidden="true"><path d="M.75.75 4 4.25 7.25.75" fill="none" ' +
+  'stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+function chev(): HTMLElement {
+  const span = h("span", { class: "chev" });
+  span.innerHTML = CHEVRON_SVG;
+  return span;
+}
+
+/**
+ * Word's large-button labels: two words go on two lines, split where the lines are most even;
+ * a long hyphenated word breaks after the hyphen ("3D-" / "Modelle"). The chevron of a menu
+ * button follows the second line, or stands on its own line under a one-line label.
+ */
+function largeLabel(text: string, withChevron: boolean): Node[] {
+  let lines = text.includes("\n") ? text.split("\n") : [text];
+  if (lines.length === 1) {
+    const words = text.split(" ");
+    if (words.length > 1) {
+      let best = 1, score = Infinity;
+      for (let i = 1; i < words.length; i++) {
+        const a = words.slice(0, i).join(" ").length, b = words.slice(i).join(" ").length;
+        // On a tie Word puts more on the first line ("Ebene nach" / "vorne").
+        if (Math.max(a, b) <= score) { score = Math.max(a, b); best = i; }
+      }
+      lines = [words.slice(0, best).join(" "), words.slice(best).join(" ")];
+    } else if (text.length > 8 && text.indexOf("-") > 0 && text.indexOf("-") < text.length - 1) {
+      const i = text.indexOf("-") + 1;
+      lines = [text.slice(0, i), text.slice(i)];
+    }
+  }
+  const txt = h("span", { class: "txt" }, lines.join("\n"));
+  if (!withChevron) return [txt];
+  if (lines.length > 1) { txt.append(chev()); return [txt]; }
+  return [txt, chev()];
+}
 
 /** Office's dialog launcher: a corner with a diagonal arrow (drawn here; no Fluent equivalent). */
 const LAUNCHER_SVG = '<svg viewBox="0 0 10 10" width="10" height="10" aria-hidden="true"><path d="M1 1v8h8" fill="none" ' +
@@ -76,8 +125,12 @@ export class Ribbon {
   private current: Tab;
   private updaters: Updater[] = [];
   private tabButtons = new Map<string, HTMLElement>();
-  private naturalWidths = new Map<string, number[]>();
-  private collapsedGroups = new Set<string>();
+  /** Layout per group of the current tab: 0 = largest, smaller ones after, then collapsed. */
+  private levels = new Map<string, number>();
+  /** Measured group widths: "tab|group|level" → px. */
+  private widths = new Map<string, number>();
+  /** Free width the style gallery may grow into. */
+  private galleryRoom = 0;
   private minimized = false;
   private contextual: Tab[] = [];
   private contextStart: HTMLElement;
@@ -156,7 +209,7 @@ export class Ribbon {
       };
       setTimeout(() => addEventListener("mousedown", away, true));
     }
-    this.collapsedGroups.clear();
+    this.levels = new Map();
     this.render();
     this.fit();
   }
@@ -182,7 +235,9 @@ export class Ribbon {
     this.updaters = [];
     this.card.replaceChildren();
     for (const g of this.current.groups) {
-      this.card.append(this.collapsedGroups.has(g.id) ? this.renderCollapsed(g) : this.renderGroup(g));
+      const layouts = this.layoutsOf(g);
+      const level = this.levels.get(g.id) ?? 0;
+      this.card.append(level >= layouts.length ? this.renderCollapsed(g) : this.renderGroup(g, layouts[level]));
     }
     this.card.append(h("button", {
       class: "ribbon-collapse", "data-tip": "Menüband reduzieren (Strg+F1)", onclick: () => this.toggleMinimized(),
@@ -190,8 +245,27 @@ export class Ribbon {
     this.refresh();
   }
 
-  private renderGroup(g: Group): HTMLElement {
-    const content = h("div", { class: "content" }, ...g.controls.map((c) => this.renderControl(c)));
+  /**
+   * Controls outside the ribbon (Word's mini toolbar), bound to the commands like the
+   * ribbon's own; `refresh` updates their state.
+   */
+  toolbar(controls: Control[]): { el: HTMLElement; refresh: () => void } {
+    const saved = this.updaters;
+    this.updaters = [];
+    const el = h("div", { class: "mini-toolbar", role: "toolbar" }, ...controls.map((c) => this.renderControl(c)));
+    const own = this.updaters;
+    this.updaters = saved;
+    const refresh = () => { for (const u of own) u(); };
+    refresh();
+    return { el, refresh };
+  }
+
+  private layoutsOf(g: Group): Control[][] {
+    return [g.controls, ...(g.smaller ?? [])];
+  }
+
+  private renderGroup(g: Group, controls: Control[] = g.controls): HTMLElement {
+    const content = h("div", { class: "content" }, ...controls.map((c) => this.renderControl(c)));
     const label = h("div", { class: "label" }, g.label);
     if (g.launcher) {
       const cmd = g.launcher.cmd;
@@ -211,9 +285,11 @@ export class Ribbon {
     const btn = h("button", {
       class: "rb rb-large", style: "height:92px", "data-keytip": g.key, "data-keytip-scope": this.current.id,
       "data-tip": g.label,
-    }, icon(g.icon, "l"), h("span", { class: "txt" }, g.label), h("span", { class: "chev" }, icon("chevron-down")));
+    }, icon(g.icon, "l"), ...largeLabel(g.label, true));
     btn.onclick = () => {
-      const popup = h("div", { class: "group-popup" }, this.renderGroup(g));
+      // Word's popup shows the group in its smallest layout.
+      const layouts = this.layoutsOf(g);
+      const popup = h("div", { class: "group-popup" }, this.renderGroup(g, layouts[layouts.length - 1]));
       showPopup(popup, btn.getBoundingClientRect(), () => this.refresh());
       this.refresh();
     };
@@ -239,10 +315,13 @@ export class Ribbon {
     const c = this.commands.get(cmd);
     const text = label ?? c.label;
     const parts: Node[] = [icon(c.icon, size === "large" ? "l" : "s")];
-    if (size !== "small") parts.push(h("span", { class: "txt" }, text));
-    if (chevron) parts.push(h("span", { class: "chev" }, icon("chevron-down")));
+    if (size === "large") parts.push(...largeLabel(text, chevron));
+    else {
+      if (size !== "small") parts.push(h("span", { class: "txt" }, text));
+      if (chevron) parts.push(chev());
+    }
     const b = h("button", {
-      class: `rb rb-${size}`, "data-tip": this.commands.tooltip(cmd), "aria-label": c.label,
+      class: `rb rb-${size}${chevron ? " has-chev" : ""}`, "data-tip": this.commands.tooltip(cmd), "aria-label": c.label,
       "data-keytip": key, "data-keytip-scope": this.scope(),
     }, ...parts);
     this.bind(b, cmd);
@@ -277,9 +356,7 @@ export class Ribbon {
         const main = this.button(c.cmd, size, undefined, c.label);
         main.onclick = () => void this.commands.run(c.cmd);
         if (size === "large") main.querySelector(".txt")?.remove();
-        const arrowParts: Node[] = [];
-        if (size === "large") arrowParts.push(h("span", { class: "txt" }, c.label ?? this.commands.get(c.cmd).label));
-        arrowParts.push(h("span", { class: "chev" }, icon("chevron-down")));
+        const arrowParts: Node[] = size === "large" ? largeLabel(c.label ?? this.commands.get(c.cmd).label, true) : [chev()];
         const arrow = h("button", {
           class: `rb rb-${size === "large" ? "large" : "small"} arrow`, "aria-label": "Weitere Optionen",
           "data-keytip": c.key, "data-keytip-scope": this.scope(),
@@ -347,8 +424,20 @@ export class Ribbon {
         }
         const more = h("button", { "aria-label": "Weitere", "data-keytip": c.key, "data-keytip-scope": this.scope() }, icon("chevron-down"));
         more.onclick = () => showMenu(this.commands, c.items.map((i) => ({ cmd: i.cmd })), more.getBoundingClientRect());
-        return h("div", { class: "rgallery", role: "listbox" }, items,
+        const el = h("div", { class: `rgallery${c.fill ? " fill" : ""}`, role: "listbox", "data-min": String(c.visible) }, items,
           h("div", { class: "scroll" }, h("button", { disabled: true }, icon("chevron-up")), more));
+        if (c.fill) {
+          // All items are there; fitGallery() shows as many as the free width allows.
+          for (const it of c.items.slice(c.visible)) {
+            const b = h("button", {
+              class: "item extra", "data-tip": this.commands.tooltip(it.cmd), style: "display:none",
+              onclick: () => void this.commands.run(it.cmd),
+            }, h("span", { style: it.preview }, this.commands.get(it.cmd).label));
+            this.bind(b, it.cmd);
+            items.append(b);
+          }
+        }
+        return el;
       }
       case "spinner": {
         const c2 = c;
@@ -389,7 +478,7 @@ export class Ribbon {
             if (c2.palette === "font") showFontColors(arrow.getBoundingClientRect(), pick);
             else showHighlights(arrow.getBoundingClientRect(), pick);
           },
-        }, h("span", { class: "chev" }, icon("chevron-down")));
+        }, chev());
         this.updaters.push(() => {
           const on = this.commands.isEnabled(c2.cmd);
           main.disabled = !on; arrow.disabled = !on;
@@ -410,41 +499,79 @@ export class Ribbon {
         return el;
       }
       case "rows":
-        return h("div", { class: "rrows" }, ...c.rows.map((row) => h("div", { class: "rrow" }, ...row.map((x) => this.renderControl(x)))));
+        // Two rows (Word's wide Schriftart and Absatz) stand apart; three are packed.
+        return h("div", { class: `rrows${c.rows.length === 2 ? " rrows-2" : ""}` },
+          ...c.rows.map((row) => h("div", { class: "rrow" }, ...row.map((x) => this.renderControl(x)))));
       case "stack":
-        return h("div", { class: "rstack" }, ...c.items.map((x) => this.renderControl(x)));
+        return h("div", { class: `rstack${c.title ? " titled" : ""}` }, ...(c.title ? [h("div", { class: "rstack-title" }, c.title)] : []),
+          ...c.items.map((x) => this.renderControl(x)));
     }
   }
 
   // ----- shrinking ----------------------------------------------------------------------
 
-  /** Collapses groups in Word's order until the tab fits the window. */
+  /** Forget measured widths (touch mode and other size changes). */
+  invalidate(): void {
+    this.widths.clear();
+    this.fit();
+  }
+
+  /** Group widths for these layouts; renders the groups once when a width is not known yet. */
+  private measure(tab: Tab, levels: Map<string, number>): number[] {
+    const key = (g: Group) => `${tab.id}|${g.id}|${levels.get(g.id) ?? 0}`;
+    if (tab.groups.some((g) => !this.widths.has(key(g)))) {
+      this.levels = new Map(levels);
+      this.galleryRoom = 0;
+      this.render();
+      const els = Array.from(this.card.querySelectorAll<HTMLElement>(":scope > .rgroup"));
+      if (els.length !== tab.groups.length || els[0].offsetWidth === 0) return [];
+      tab.groups.forEach((g, i) => this.widths.set(key(g), els[i].offsetWidth));
+    }
+    return tab.groups.map((g) => this.widths.get(key(g)) ?? 0);
+  }
+
+  /** Steps groups down in Word's order until the tab fits the window. */
   private fit(): void {
     if (this.minimized || !this.card.isConnected) return;
     const tab = this.current;
-    let widths = this.naturalWidths.get(tab.id);
-    if (!widths) {
-      if (this.collapsedGroups.size) { this.collapsedGroups.clear(); this.render(); }
-      const groups = Array.from(this.card.querySelectorAll<HTMLElement>(":scope > .rgroup"));
-      if (!groups.length || groups[0].offsetWidth === 0) return;
-      widths = groups.map((g) => g.offsetWidth);
-      this.naturalWidths.set(tab.id, widths);
-    }
     const available = this.card.clientWidth - 34;
-    const collapsedWidth = 72;
-    const want = new Set<string>();
+    if (available <= 0) return;
+    const levels = new Map(tab.groups.map((g) => [g.id, 0]));
+    // Word's sequence, then everything still open from the right (a fallback for narrow windows).
+    const steps = [...tab.shrink, ...tab.groups.map((g) => g.id).reverse(), ...tab.groups.map((g) => g.id).reverse()];
+    let widths = this.measure(tab, levels);
+    if (!widths.length) return;
     let total = widths.reduce((a, b) => a + b, 0);
-    for (const id of tab.shrink) {
-      if (total <= available) break;
-      const i = tab.groups.findIndex((g) => g.id === id);
-      if (i < 0) continue;
-      want.add(id);
-      total -= widths[i] - collapsedWidth;
+    while (total > available && steps.length) {
+      const id = steps.shift()!;
+      const g = tab.groups.find((x) => x.id === id);
+      if (!g) continue;
+      const lv = levels.get(id)!;
+      if (lv >= this.layoutsOf(g).length) continue;
+      levels.set(id, lv + 1);
+      widths = this.measure(tab, levels);
+      if (!widths.length) return;
+      total = widths.reduce((a, b) => a + b, 0);
     }
-    const same = want.size === this.collapsedGroups.size && [...want].every((x) => this.collapsedGroups.has(x));
+    const room = Math.max(0, available - total);
+    const same = tab.groups.every((g) => (this.levels.get(g.id) ?? 0) === levels.get(g.id));
     if (!same) {
-      this.collapsedGroups = want;
+      this.levels = levels;
       this.render();
+    }
+    this.galleryRoom = room;
+    this.fitGallery();
+  }
+
+  /** Word's style gallery shows as many styles as the free width allows. */
+  private fitGallery(): void {
+    for (const gal of Array.from(this.card.querySelectorAll<HTMLElement>(".rgallery.fill"))) {
+      const items = Array.from(gal.querySelectorAll<HTMLElement>(".item"));
+      const min = Number(gal.dataset.min) || 1;
+      const itemW = items[0]?.offsetWidth || 108;
+      const extra = Math.max(0, Math.floor(this.galleryRoom / itemW));
+      items.forEach((it, i) => { it.style.display = i < min + extra ? "" : "none"; });
     }
   }
 }
+

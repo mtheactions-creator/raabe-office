@@ -23,6 +23,7 @@ export {
 } from "./styles";
 export { AUTHOR_COLORS, HIGHLIGHT, MIN_ZOOM, MAX_ZOOM, imageUrl, storyIdOf, type TextMark } from "./view";
 export { countWords } from "./words";
+export { imageInfo, naturalSizePt, type ImageInfo } from "./images";
 export { fromHtml, toHtml } from "./html";
 export * as Revisions from "./revisions";
 export * as Edits from "./edits";

@@ -14,6 +14,8 @@ export interface AppApi {
   refresh(): void;
   /** Selects a ribbon tab (contextual tabs included). */
   selectTab(id: string): void;
+  /** What the clipboard holds: text, HTML (formatting) and a picture. */
+  clipboard(): Promise<{ text: string; html: string; image: Blob | null }>;
 }
 
 /** "2,5 cm" ↔ points. */

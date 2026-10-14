@@ -2,6 +2,7 @@
 //! through WebView2, and single-instance handling so a double-clicked .docx opens as a new
 //! tab in the running window. Everything else lives in the web frontend.
 
+mod clipboard;
 mod fonts;
 mod spell;
 
@@ -297,7 +298,8 @@ pub fn run() {
         })
         .invoke_handler(tauri::generate_handler![
             read_file, write_file, file_info, save_recovery, list_recovery, read_recovery, delete_recovery,
-            startup_files, print_to_pdf, fonts::list_fonts, fonts::font_metrics, spell::spell_check, spell::spell_suggest
+            startup_files, print_to_pdf, fonts::list_fonts, fonts::font_metrics, spell::spell_check, spell::spell_suggest,
+            clipboard::clipboard_read_html, clipboard::clipboard_write_html
         ])
         .run(tauri::generate_context!())
         .expect("error while running RaabeWrite");

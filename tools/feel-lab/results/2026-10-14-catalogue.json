@@ -1,0 +1,3884 @@
+{
+ "meta": {
+  "date": "2026-10-14T13:08:36"
+ },
+ "results": {
+  "summary": "193/193",
+  "by_area": {
+   "typing": "42/42",
+   "autolist": "21/21",
+   "keys": "25/25",
+   "mouse": "12/12",
+   "delete": "9/9",
+   "lists": "21/21",
+   "tables": "17/17",
+   "styles": "7/7",
+   "breaks": "6/6",
+   "format": "20/20",
+   "undo": "8/8",
+   "clipboard": "5/5"
+  },
+  "cases": {
+   "type plain text": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Hallo Welt",
+      "offset": 10,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Hallo Welt",
+      "offset": 10,
+      "selected": ""
+     }
+    }
+   },
+   "German quotation marks": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Er sagte „Hallo“ zu mir.",
+      "offset": 24,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Er sagte „Hallo“ zu mir.",
+      "offset": 24,
+      "selected": ""
+     }
+    }
+   },
+   "single quotes": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Er sagte ‚ja‘ dazu.",
+      "offset": 19,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Er sagte ‚ja‘ dazu.",
+      "offset": 19,
+      "selected": ""
+     }
+    }
+   },
+   "capitalise sentence start": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Der test. Das ist gut",
+      "offset": 21,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Der test. Das ist gut",
+      "offset": 21,
+      "selected": ""
+     }
+    }
+   },
+   "capitalise first word on Enter": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "x",
+      "offset": 1,
+      "selected": ""
+     },
+     "ours": {
+      "para": "x",
+      "offset": 1,
+      "selected": ""
+     }
+    }
+   },
+   "two initial capitals": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Zwei Wörter ",
+      "offset": 12,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Zwei Wörter ",
+      "offset": 12,
+      "selected": ""
+     }
+    }
+   },
+   "copyright sign": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "© 2026 ",
+      "offset": 7,
+      "selected": ""
+     },
+     "ours": {
+      "para": "© 2026 ",
+      "offset": 7,
+      "selected": ""
+     }
+    }
+   },
+   "fraction one half": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "½ Liter ",
+      "offset": 8,
+      "selected": ""
+     },
+     "ours": {
+      "para": "½ Liter ",
+      "offset": 8,
+      "selected": ""
+     }
+    }
+   },
+   "en dash between words": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Haus – Garten ",
+      "offset": 14,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Haus – Garten ",
+      "offset": 14,
+      "selected": ""
+     }
+    }
+   },
+   "em dash from two hyphens": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Haus—Garten ",
+      "offset": 12,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Haus—Garten ",
+      "offset": 12,
+      "selected": ""
+     }
+    }
+   },
+   "arrow from -->": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "A ( B ",
+      "offset": 6,
+      "selected": ""
+     },
+     "ours": {
+      "para": "A ￼ B ",
+      "offset": 6,
+      "selected": ""
+     }
+    }
+   },
+   "*bold* AutoFormat": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Das ist *wichtig* hier",
+      "offset": 22,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Das ist *wichtig* hier",
+      "offset": 22,
+      "selected": ""
+     }
+    }
+   },
+   "_italic_ AutoFormat": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Das ist _wichtig_ hier",
+      "offset": 22,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Das ist _wichtig_ hier",
+      "offset": 22,
+      "selected": ""
+     }
+    }
+   },
+   "ordinal 1. not a list mid line": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Am 1. Mai",
+      "offset": 9,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Am 1. Mai",
+      "offset": 9,
+      "selected": ""
+     }
+    }
+   },
+   "apostrophe in word": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Wie geht’s dir",
+      "offset": 14,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Wie geht’s dir",
+      "offset": 14,
+      "selected": ""
+     }
+    }
+   },
+   "smiley": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Gut 12 ",
+      "offset": 7,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Gut 😊 ",
+      "offset": 7,
+      "selected": ""
+     }
+    }
+   },
+   "copyright then Enter": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "",
+      "offset": 0,
+      "selected": ""
+     },
+     "ours": {
+      "para": "",
+      "offset": 0,
+      "selected": ""
+     }
+    }
+   },
+   "ellipsis after word": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Und dann… ",
+      "offset": 10,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Und dann… ",
+      "offset": 10,
+      "selected": ""
+     }
+    }
+   },
+   "weekday capitalised": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Am Montag ",
+      "offset": 10,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Am Montag ",
+      "offset": 10,
+      "selected": ""
+     }
+    }
+   },
+   "caps lock corrected": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Ein hALLO ",
+      "offset": 10,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Ein hALLO ",
+      "offset": 10,
+      "selected": ""
+     }
+    }
+   },
+   "abbreviation keeps lower case": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Wir nehmen z.B. das ",
+      "offset": 20,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Wir nehmen z.B. das ",
+      "offset": 20,
+      "selected": ""
+     }
+    }
+   },
+   "ordinal keeps lower case": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Am 1. Tag ",
+      "offset": 10,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Am 1. Tag ",
+      "offset": 10,
+      "selected": ""
+     }
+    }
+   },
+   "typo corrected": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Und die Katze ",
+      "offset": 14,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Und die Katze ",
+      "offset": 14,
+      "selected": ""
+     }
+    }
+   },
+   "border line from ---": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Text",
+      "offset": 4,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Text",
+      "offset": 4,
+      "selected": ""
+     }
+    }
+   },
+   "double border from ===": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "",
+      "offset": 0,
+      "selected": ""
+     },
+     "ours": {
+      "para": "",
+      "offset": 0,
+      "selected": ""
+     }
+    }
+   },
+   "Tab at paragraph start indents first line": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Das Wasser nimmt die Pflanze über die Wurzeln auf.",
+      "offset": 0,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Das Wasser nimmt die Pflanze über die Wurzeln auf.",
+      "offset": 0,
+      "selected": ""
+     }
+    }
+   },
+   "Tab twice at paragraph start": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Das Wasser nimmt die Pflanze über die Wurzeln auf.",
+      "offset": 0,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Das Wasser nimmt die Pflanze über die Wurzeln auf.",
+      "offset": 0,
+      "selected": ""
+     }
+    }
+   },
+   "Tab in empty paragraph types a tab": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "\tx",
+      "offset": 2,
+      "selected": ""
+     },
+     "ours": {
+      "para": "\tx",
+      "offset": 2,
+      "selected": ""
+     }
+    }
+   },
+   "capital in table cell": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Neu ",
+      "offset": 4,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Neu ",
+      "offset": 4,
+      "selected": ""
+     }
+    }
+   },
+   "typing over selection": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Bäume nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 5,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Bäume nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 5,
+      "selected": ""
+     }
+    }
+   },
+   "typing after double click keeps space": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Bäume nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 5,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Bäume nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 5,
+      "selected": ""
+     }
+    }
+   },
+   "(c) without space": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Text©",
+      "offset": 5,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Text©",
+      "offset": 5,
+      "selected": ""
+     }
+    }
+   },
+   "--> then text": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "A (B",
+      "offset": 4,
+      "selected": ""
+     },
+     "ours": {
+      "para": "A ￼B",
+      "offset": 4,
+      "selected": ""
+     }
+    }
+   },
+   "... then letter": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Und…so",
+      "offset": 6,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Und…so",
+      "offset": 6,
+      "selected": ""
+     }
+    }
+   },
+   ":) then text": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Gut 12 ja",
+      "offset": 9,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Gut 😊 ja",
+      "offset": 9,
+      "selected": ""
+     }
+    }
+   },
+   "apostrophe at word end": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Peters‘ Haus",
+      "offset": 12,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Peters‘ Haus",
+      "offset": 12,
+      "selected": ""
+     }
+    }
+   },
+   "capital after ordinal date": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Am 1. Januar ",
+      "offset": 13,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Am 1. Januar ",
+      "offset": 13,
+      "selected": ""
+     }
+    }
+   },
+   "**bold** Markdown": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Ein fettes Wort",
+      "offset": 15,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Ein fettes Wort",
+      "offset": 15,
+      "selected": ""
+     }
+    }
+   },
+   "~~strike~~ Markdown": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Ein altes Wort",
+      "offset": 14,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Ein altes Wort",
+      "offset": 14,
+      "selected": ""
+     }
+    }
+   },
+   "# heading Markdown": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Text",
+      "offset": 4,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Text",
+      "offset": 4,
+      "selected": ""
+     }
+    }
+   },
+   "### heading Markdown": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Titel",
+      "offset": 5,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Titel",
+      "offset": 5,
+      "selected": ""
+     }
+    }
+   },
+   "##### heading Markdown": {
+    "area": "typing",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Titel",
+      "offset": 5,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Titel",
+      "offset": 5,
+      "selected": ""
+     }
+    }
+   },
+   "autolist 1.": {
+    "area": "autolist",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Zweiter",
+      "offset": 7,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Zweiter",
+      "offset": 7,
+      "selected": ""
+     }
+    }
+   },
+   "autolist dash": {
+    "area": "autolist",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Zweiter",
+      "offset": 7,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Zweiter",
+      "offset": 7,
+      "selected": ""
+     }
+    }
+   },
+   "autolist asterisk": {
+    "area": "autolist",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Zweiter",
+      "offset": 7,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Zweiter",
+      "offset": 7,
+      "selected": ""
+     }
+    }
+   },
+   "autolist a)": {
+    "area": "autolist",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Zweiter",
+      "offset": 7,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Zweiter",
+      "offset": 7,
+      "selected": ""
+     }
+    }
+   },
+   "autolist 1)": {
+    "area": "autolist",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Zweiter",
+      "offset": 7,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Zweiter",
+      "offset": 7,
+      "selected": ""
+     }
+    }
+   },
+   "autolist I.": {
+    "area": "autolist",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Zweiter",
+      "offset": 7,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Zweiter",
+      "offset": 7,
+      "selected": ""
+     }
+    }
+   },
+   "autolist >": {
+    "area": "autolist",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Zweiter",
+      "offset": 7,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Zweiter",
+      "offset": 7,
+      "selected": ""
+     }
+    }
+   },
+   "autolist tab instead of space": {
+    "area": "autolist",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Erster",
+      "offset": 6,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Erster",
+      "offset": 6,
+      "selected": ""
+     }
+    }
+   },
+   "autolist ends with two Enters": {
+    "area": "autolist",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Text",
+      "offset": 4,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Text",
+      "offset": 4,
+      "selected": ""
+     }
+    }
+   },
+   "autolist Tab makes level 2": {
+    "area": "autolist",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Unterpunkt",
+      "offset": 10,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Unterpunkt",
+      "offset": 10,
+      "selected": ""
+     }
+    }
+   },
+   "autolist undo keeps text": {
+    "area": "autolist",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "1. x",
+      "offset": 4,
+      "selected": ""
+     },
+     "ours": {
+      "para": "1. x",
+      "offset": 4,
+      "selected": ""
+     }
+    }
+   },
+   "autolist (1)": {
+    "area": "autolist",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Zweiter",
+      "offset": 7,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Zweiter",
+      "offset": 7,
+      "selected": ""
+     }
+    }
+   },
+   "autolist 1-": {
+    "area": "autolist",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Erster",
+      "offset": 6,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Erster",
+      "offset": 6,
+      "selected": ""
+     }
+    }
+   },
+   "autolist ->": {
+    "area": "autolist",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Erster",
+      "offset": 6,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Erster",
+      "offset": 6,
+      "selected": ""
+     }
+    }
+   },
+   "autolist =>": {
+    "area": "autolist",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Erster",
+      "offset": 6,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Erster",
+      "offset": 6,
+      "selected": ""
+     }
+    }
+   },
+   "autolist en dash": {
+    "area": "autolist",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Erster",
+      "offset": 6,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Erster",
+      "offset": 6,
+      "selected": ""
+     }
+    }
+   },
+   "autolist i)": {
+    "area": "autolist",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Erster",
+      "offset": 6,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Erster",
+      "offset": 6,
+      "selected": ""
+     }
+    }
+   },
+   "autolist 2. stays text": {
+    "area": "autolist",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "2. Erster",
+      "offset": 9,
+      "selected": ""
+     },
+     "ours": {
+      "para": "2. Erster",
+      "offset": 9,
+      "selected": ""
+     }
+    }
+   },
+   "autolist c) stays text": {
+    "area": "autolist",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "c) Erster",
+      "offset": 9,
+      "selected": ""
+     },
+     "ours": {
+      "para": "c) Erster",
+      "offset": 9,
+      "selected": ""
+     }
+    }
+   },
+   "autolist * then Tab": {
+    "area": "autolist",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Erster",
+      "offset": 6,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Erster",
+      "offset": 6,
+      "selected": ""
+     }
+    }
+   },
+   "autolist a) capital after": {
+    "area": "autolist",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Erster ",
+      "offset": 7,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Erster ",
+      "offset": 7,
+      "selected": ""
+     }
+    }
+   },
+   "shift+right x3": {
+    "area": "keys",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 3,
+      "selected": "Pfl"
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 3,
+      "selected": "Pfl"
+     }
+    }
+   },
+   "ctrl+shift+right x2": {
+    "area": "keys",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 16,
+      "selected": "Pflanzen nehmen "
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 16,
+      "selected": "Pflanzen nehmen "
+     }
+    }
+   },
+   "ctrl+shift+left from mid word": {
+    "area": "keys",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 34,
+      "selected": "Kohle"
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 34,
+      "selected": "Kohle"
+     }
+    }
+   },
+   "shift+end": {
+    "area": "keys",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 97,
+      "selected": "Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser "
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 97,
+      "selected": "Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser "
+     }
+    }
+   },
+   "shift+home": {
+    "area": "keys",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 0,
+      "selected": "Pflanzen nehmen über ihre Blä"
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 0,
+      "selected": "Pflanzen nehmen über ihre Blä"
+     }
+    }
+   },
+   "shift+down": {
+    "area": "keys",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 122,
+      "selected": "Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der En"
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 122,
+      "selected": "Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der En"
+     }
+    }
+   },
+   "shift+up": {
+    "area": "keys",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 67,
+      "selected": "f und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus "
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 67,
+      "selected": "f und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus "
+     }
+    }
+   },
+   "ctrl+shift+end": {
+    "area": "keys",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Letzter Absatz.",
+      "offset": 15,
+      "selected": "Wurzeln auf.\rLetzter Absatz.\r"
+     },
+     "ours": {
+      "para": "Letzter Absatz.",
+      "offset": 15,
+      "selected": "Wurzeln auf.\rLetzter Absatz."
+     }
+    }
+   },
+   "ctrl+shift+home": {
+    "area": "keys",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Photosynthese",
+      "offset": 0,
+      "selected": "Photosynthese\rPflanzen nehmen über ihre "
+     },
+     "ours": {
+      "para": "Photosynthese",
+      "offset": 0,
+      "selected": "Photosynthese\rPflanzen nehmen über ihre "
+     }
+    }
+   },
+   "ctrl+shift+down": {
+    "area": "keys",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Das Wasser nimmt die Pflanze über die Wurzeln auf.",
+      "offset": 0,
+      "selected": "Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.\r"
+     },
+     "ours": {
+      "para": "Das Wasser nimmt die Pflanze über die Wurzeln auf.",
+      "offset": 0,
+      "selected": "Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.\r"
+     }
+    }
+   },
+   "ctrl+right x5": {
+    "area": "keys",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 34,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 34,
+      "selected": ""
+     }
+    }
+   },
+   "ctrl+left x3": {
+    "area": "keys",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 90,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 90,
+      "selected": ""
+     }
+    }
+   },
+   "ctrl+right over period": {
+    "area": "keys",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 112,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 112,
+      "selected": ""
+     }
+    }
+   },
+   "home end": {
+    "area": "keys",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser Xaus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 98,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser Xaus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 98,
+      "selected": ""
+     }
+    }
+   },
+   "ctrl+home": {
+    "area": "keys",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "XPhotosynthese",
+      "offset": 1,
+      "selected": ""
+     },
+     "ours": {
+      "para": "XPhotosynthese",
+      "offset": 1,
+      "selected": ""
+     }
+    }
+   },
+   "ctrl+end": {
+    "area": "keys",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Letzter Absatz.X",
+      "offset": 16,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Letzter Absatz.X",
+      "offset": 16,
+      "selected": ""
+     }
+    }
+   },
+   "down x2 keeps column": {
+    "area": "keys",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Das Wasser nimmt die Pflanze über die XWurzeln auf.",
+      "offset": 39,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Das Wasser nimmt die Pflanze über die XWurzeln auf.",
+      "offset": 39,
+      "selected": ""
+     }
+    }
+   },
+   "up from first line of paragraph": {
+    "area": "keys",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus demX Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 105,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus demX Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 105,
+      "selected": ""
+     }
+    }
+   },
+   "ctrl+down": {
+    "area": "keys",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "XDas Wasser nimmt die Pflanze über die Wurzeln auf.",
+      "offset": 1,
+      "selected": ""
+     },
+     "ours": {
+      "para": "XDas Wasser nimmt die Pflanze über die Wurzeln auf.",
+      "offset": 1,
+      "selected": ""
+     }
+    }
+   },
+   "ctrl+up mid paragraph": {
+    "area": "keys",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "XPflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 1,
+      "selected": ""
+     },
+     "ours": {
+      "para": "XPflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 1,
+      "selected": ""
+     }
+    }
+   },
+   "right collapses selection": {
+    "area": "keys",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre BlätXter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 31,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre BlätXter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 31,
+      "selected": ""
+     }
+    }
+   },
+   "left collapses selection": {
+    "area": "keys",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre XBlätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 27,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre XBlätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 27,
+      "selected": ""
+     }
+    }
+   },
+   "ctrl+a": {
+    "area": "keys",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Letzter Absatz.",
+      "offset": 15,
+      "selected": "Photosynthese\rPflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.\rDas Wasser nimmt die Pflanze über die Wurzeln auf.\rLetzter Absatz.\r"
+     },
+     "ours": {
+      "para": "Letzter Absatz.",
+      "offset": 15,
+      "selected": "Photosynthese\rPflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.\rDas Wasser nimmt die Pflanze über die Wurzeln auf.\rLetzter Absatz."
+     }
+    }
+   },
+   "shift+f3 cycles case": {
+    "area": "keys",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre BLÄTTER Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 33,
+      "selected": "BLÄTTER"
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre BLÄTTER Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 33,
+      "selected": "BLÄTTER"
+     }
+    }
+   },
+   "shift+f3 twice": {
+    "area": "keys",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 33,
+      "selected": "blätter"
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 33,
+      "selected": "blätter"
+     }
+    }
+   },
+   "double click word": {
+    "area": "mouse",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 52,
+      "selected": "Kohlenstoffdioxid "
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 52,
+      "selected": "Kohlenstoffdioxid "
+     }
+    }
+   },
+   "double click word before period": {
+    "area": "mouse",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 110,
+      "selected": "Boden"
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 110,
+      "selected": "Boden"
+     }
+    }
+   },
+   "triple click paragraph": {
+    "area": "mouse",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Das Wasser nimmt die Pflanze über die Wurzeln auf.",
+      "offset": 0,
+      "selected": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.\r"
+     },
+     "ours": {
+      "para": "Das Wasser nimmt die Pflanze über die Wurzeln auf.",
+      "offset": 0,
+      "selected": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.\r"
+     }
+    }
+   },
+   "ctrl+click sentence": {
+    "area": "mouse",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 182,
+      "selected": "Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her."
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 182,
+      "selected": "Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her."
+     }
+    }
+   },
+   "click left margin selects line": {
+    "area": "mouse",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 97,
+      "selected": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser "
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 97,
+      "selected": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser "
+     }
+    }
+   },
+   "double click left margin selects paragraph": {
+    "area": "mouse",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Das Wasser nimmt die Pflanze über die Wurzeln auf.",
+      "offset": 0,
+      "selected": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.\r"
+     },
+     "ours": {
+      "para": "Das Wasser nimmt die Pflanze über die Wurzeln auf.",
+      "offset": 0,
+      "selected": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.\r"
+     }
+    }
+   },
+   "triple click left margin selects all": {
+    "area": "mouse",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Letzter Absatz.",
+      "offset": 15,
+      "selected": "Photosynthese\rPflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.\rDas Wasser nimmt die Pflanze über die Wurzeln auf.\rLetzter Absatz.\r"
+     },
+     "ours": {
+      "para": "Letzter Absatz.",
+      "offset": 15,
+      "selected": "Photosynthese\rPflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.\rDas Wasser nimmt die Pflanze über die Wurzeln auf.\rLetzter Absatz."
+     }
+    }
+   },
+   "shift+click extends": {
+    "area": "mouse",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 90,
+      "selected": "Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln "
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 90,
+      "selected": "Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln "
+     }
+    }
+   },
+   "drag across words snaps to words": {
+    "area": "mouse",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 52,
+      "selected": "Blätter Kohlenstoffdioxid "
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 52,
+      "selected": "Blätter Kohlenstoffdioxid "
+     }
+    }
+   },
+   "drag inside one word": {
+    "area": "mouse",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 42,
+      "selected": "hlenst"
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 42,
+      "selected": "hlenst"
+     }
+    }
+   },
+   "drag backwards": {
+    "area": "mouse",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 26,
+      "selected": "Blätter Kohlenstoffdioxid aus der Luft "
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 26,
+      "selected": "Blätter Kohlenstoffdioxid aus der Luft "
+     }
+    }
+   },
+   "click then type": {
+    "area": "mouse",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre grünen Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 33,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre grünen Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 33,
+      "selected": ""
+     }
+    }
+   },
+   "backspace at start of paragraph": {
+    "area": "delete",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.Das Wasser nimmt die Pflanze über die Wurzeln auf.",
+      "offset": 182,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.Das Wasser nimmt die Pflanze über die Wurzeln auf.",
+      "offset": 182,
+      "selected": ""
+     }
+    }
+   },
+   "backspace after heading joins": {
+    "area": "delete",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "PhotosynthesePflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 13,
+      "selected": ""
+     },
+     "ours": {
+      "para": "PhotosynthesePflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 13,
+      "selected": ""
+     }
+    }
+   },
+   "delete at end of heading": {
+    "area": "delete",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "PhotosynthesePflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 13,
+      "selected": ""
+     },
+     "ours": {
+      "para": "PhotosynthesePflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 13,
+      "selected": ""
+     }
+    }
+   },
+   "ctrl+backspace mid word": {
+    "area": "delete",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter stoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 34,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter stoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 34,
+      "selected": ""
+     }
+    }
+   },
+   "ctrl+backspace after word": {
+    "area": "delete",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 21,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 21,
+      "selected": ""
+     }
+    }
+   },
+   "ctrl+delete mid word": {
+    "area": "delete",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlen aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 40,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlen aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 40,
+      "selected": ""
+     }
+    }
+   },
+   "ctrl+delete at word start": {
+    "area": "delete",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 34,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 34,
+      "selected": ""
+     }
+    }
+   },
+   "delete double-clicked word": {
+    "area": "delete",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 34,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 34,
+      "selected": ""
+     }
+    }
+   },
+   "backspace on selection": {
+    "area": "delete",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 52,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 52,
+      "selected": ""
+     }
+    }
+   },
+   "list Enter adds item": {
+    "area": "lists",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Löffel",
+      "offset": 6,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Löffel",
+      "offset": 6,
+      "selected": ""
+     }
+    }
+   },
+   "list Enter splits item": {
+    "area": "lists",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": " zugeben",
+      "offset": 0,
+      "selected": ""
+     },
+     "ours": {
+      "para": " zugeben",
+      "offset": 0,
+      "selected": ""
+     }
+    }
+   },
+   "list Enter at item start": {
+    "area": "lists",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Salz zugeben",
+      "offset": 0,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Salz zugeben",
+      "offset": 0,
+      "selected": ""
+     }
+    }
+   },
+   "list Enter on empty item ends list": {
+    "area": "lists",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Danach",
+      "offset": 6,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Danach",
+      "offset": 6,
+      "selected": ""
+     }
+    }
+   },
+   "list backspace removes bullet": {
+    "area": "lists",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Becherglas",
+      "offset": 0,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Becherglas",
+      "offset": 0,
+      "selected": ""
+     }
+    }
+   },
+   "list backspace twice": {
+    "area": "lists",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Becherglas",
+      "offset": 0,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Becherglas",
+      "offset": 0,
+      "selected": ""
+     }
+    }
+   },
+   "list backspace three times": {
+    "area": "lists",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "MaterialBecherglas",
+      "offset": 8,
+      "selected": ""
+     },
+     "ours": {
+      "para": "MaterialBecherglas",
+      "offset": 8,
+      "selected": ""
+     }
+    }
+   },
+   "list Tab demotes": {
+    "area": "lists",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Salz",
+      "offset": 0,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Salz",
+      "offset": 0,
+      "selected": ""
+     }
+    }
+   },
+   "list shift+Tab promotes": {
+    "area": "lists",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Leitungswasser",
+      "offset": 0,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Leitungswasser",
+      "offset": 0,
+      "selected": ""
+     }
+    }
+   },
+   "list Tab at first item": {
+    "area": "lists",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Becherglas",
+      "offset": 0,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Becherglas",
+      "offset": 0,
+      "selected": ""
+     }
+    }
+   },
+   "list Tab mid item types tab": {
+    "area": "lists",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Bech\terglas",
+      "offset": 5,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Bech\terglas",
+      "offset": 5,
+      "selected": ""
+     }
+    }
+   },
+   "list Tab at first item twice": {
+    "area": "lists",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Becherglas",
+      "offset": 0,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Becherglas",
+      "offset": 0,
+      "selected": ""
+     }
+    }
+   },
+   "list shift+Tab at first item": {
+    "area": "lists",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Becherglas",
+      "offset": 0,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Becherglas",
+      "offset": 0,
+      "selected": ""
+     }
+    }
+   },
+   "list backspace twice on second item": {
+    "area": "lists",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Wasser",
+      "offset": 0,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Wasser",
+      "offset": 0,
+      "selected": ""
+     }
+    }
+   },
+   "list backspace three times on second item": {
+    "area": "lists",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Wasser",
+      "offset": 0,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Wasser",
+      "offset": 0,
+      "selected": ""
+     }
+    }
+   },
+   "indent backspace": {
+    "area": "lists",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Das Wasser nimmt die Pflanze über die Wurzeln auf.",
+      "offset": 0,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Das Wasser nimmt die Pflanze über die Wurzeln auf.",
+      "offset": 0,
+      "selected": ""
+     }
+    }
+   },
+   "first-line indent backspace": {
+    "area": "lists",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Das Wasser nimmt die Pflanze über die Wurzeln auf.",
+      "offset": 0,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Das Wasser nimmt die Pflanze über die Wurzeln auf.",
+      "offset": 0,
+      "selected": ""
+     }
+    }
+   },
+   "hanging indent backspace": {
+    "area": "lists",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Das Wasser nimmt die Pflanze über die Wurzeln auf.",
+      "offset": 0,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Das Wasser nimmt die Pflanze über die Wurzeln auf.",
+      "offset": 0,
+      "selected": ""
+     }
+    }
+   },
+   "numbered list Enter continues": {
+    "area": "lists",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Warten",
+      "offset": 6,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Warten",
+      "offset": 6,
+      "selected": ""
+     }
+    }
+   },
+   "ctrl+shift+n removes list": {
+    "area": "lists",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Salz zugeben",
+      "offset": 2,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Salz zugeben",
+      "offset": 2,
+      "selected": ""
+     }
+    }
+   },
+   "delete at end of last item joins": {
+    "area": "lists",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "UmrührenEnde",
+      "offset": 8,
+      "selected": ""
+     },
+     "ours": {
+      "para": "UmrührenEnde",
+      "offset": 8,
+      "selected": ""
+     }
+    }
+   },
+   "table Tab to next cell": {
+    "area": "tables",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "X",
+      "offset": 1,
+      "selected": ""
+     },
+     "ours": {
+      "para": "X",
+      "offset": 1,
+      "selected": ""
+     }
+    }
+   },
+   "table shift+Tab": {
+    "area": "tables",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "X",
+      "offset": 1,
+      "selected": ""
+     },
+     "ours": {
+      "para": "X",
+      "offset": 1,
+      "selected": ""
+     }
+    }
+   },
+   "table Tab in last cell adds row": {
+    "area": "tables",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Neu",
+      "offset": 3,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Neu",
+      "offset": 3,
+      "selected": ""
+     }
+    }
+   },
+   "table Enter in cell": {
+    "area": "tables",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "X",
+      "offset": 1,
+      "selected": ""
+     },
+     "ours": {
+      "para": "X",
+      "offset": 1,
+      "selected": ""
+     }
+    }
+   },
+   "table backspace at cell start": {
+    "area": "tables",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "XZ2S1",
+      "offset": 1,
+      "selected": ""
+     },
+     "ours": {
+      "para": "XZ2S1",
+      "offset": 1,
+      "selected": ""
+     }
+    }
+   },
+   "table down from last row": {
+    "area": "tables",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Nach der TabelleX",
+      "offset": 17,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Nach der TabelleX",
+      "offset": 17,
+      "selected": ""
+     }
+    }
+   },
+   "table up into last row": {
+    "area": "tables",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Z3XS1",
+      "offset": 3,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Z3XS1",
+      "offset": 3,
+      "selected": ""
+     }
+    }
+   },
+   "table right at cell end": {
+    "area": "tables",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "XZ1S2",
+      "offset": 1,
+      "selected": ""
+     },
+     "ours": {
+      "para": "XZ1S2",
+      "offset": 1,
+      "selected": ""
+     }
+    }
+   },
+   "table delete before table": {
+    "area": "tables",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Vor der TabelleZ1S1",
+      "offset": 15,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Vor der TabelleZ1S1",
+      "offset": 15,
+      "selected": ""
+     }
+    }
+   },
+   "table delete cell text": {
+    "area": "tables",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "",
+      "offset": 0,
+      "selected": ""
+     },
+     "ours": {
+      "para": "",
+      "offset": 0,
+      "selected": ""
+     }
+    }
+   },
+   "table select row and delete": {
+    "area": "tables",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "",
+      "offset": 0,
+      "selected": ""
+     },
+     "ours": {
+      "para": "",
+      "offset": 0,
+      "selected": ""
+     }
+    }
+   },
+   "table shift+right across cells": {
+    "area": "tables",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Z1S3",
+      "offset": 0,
+      "selected": "Z1S1\r\u0007Z1S2\r\u0007"
+     },
+     "ours": {
+      "para": "Z1S3",
+      "offset": 0,
+      "selected": "Z1S1\rZ1S2\r"
+     }
+    }
+   },
+   "table ctrl+a in cell": {
+    "area": "tables",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Nach der Tabelle",
+      "offset": 16,
+      "selected": "Vor der Tabelle\rZ1S1\r\u0007Z1S2\r\u0007Z1S3\r\u0007\r\u0007Z2S1\r\u0007Z2S2\r\u0007Z2S3\r\u0007\r\u0007Z3S1\r\u0007Z3S2\r\u0007Z3S3\r\u0007\r\u0007Nach der Tabelle\r"
+     },
+     "ours": {
+      "para": "Nach der Tabelle",
+      "offset": 16,
+      "selected": "Vor der Tabelle\rZ1S1\rZ1S2\rZ1S3\rZ2S1\rZ2S2\rZ2S3\rZ3S1\rZ3S2\rZ3S3\rNach der Tabelle"
+     }
+    }
+   },
+   "table shift+right to cell end": {
+    "area": "tables",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Z1S2",
+      "offset": 0,
+      "selected": "Z1S1\r\u0007"
+     },
+     "ours": {
+      "para": "Z1S2",
+      "offset": 0,
+      "selected": "Z1S1\r"
+     }
+    }
+   },
+   "table shift+right then back": {
+    "area": "tables",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Z1S1",
+      "offset": 0,
+      "selected": "Z1S1\r\u0007"
+     },
+     "ours": {
+      "para": "Z1S2",
+      "offset": 0,
+      "selected": "Z1S1\r"
+     }
+    }
+   },
+   "table shift+left across cells": {
+    "area": "tables",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Vor der Tabelle",
+      "offset": 15,
+      "selected": "\rZ1S1\r\u0007Z1S2\r\u0007Z1S3\r\u0007\r\u0007"
+     },
+     "ours": {
+      "para": "Vor der Tabelle",
+      "offset": 15,
+      "selected": "\rZ1S1\rZ1S2\rZ1S3\r"
+     }
+    }
+   },
+   "table shift+down": {
+    "area": "tables",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Z2S3",
+      "offset": 0,
+      "selected": "Z1S2\r\u0007"
+     },
+     "ours": {
+      "para": "Z2S3",
+      "offset": 0,
+      "selected": "Z1S2\rZ1S3\rZ2S1\rZ2S2\r"
+     }
+    }
+   },
+   "Enter at end of heading": {
+    "area": "styles",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Text",
+      "offset": 4,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Text",
+      "offset": 4,
+      "selected": ""
+     }
+    }
+   },
+   "Enter at start of heading": {
+    "area": "styles",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "XPhotosynthese",
+      "offset": 1,
+      "selected": ""
+     },
+     "ours": {
+      "para": "XPhotosynthese",
+      "offset": 1,
+      "selected": ""
+     }
+    }
+   },
+   "Enter in middle of heading": {
+    "area": "styles",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "synthese",
+      "offset": 0,
+      "selected": ""
+     },
+     "ours": {
+      "para": "synthese",
+      "offset": 0,
+      "selected": ""
+     }
+    }
+   },
+   "ctrl+alt+1 heading 1": {
+    "area": "styles",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Letzter Absatz.",
+      "offset": 0,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Letzter Absatz.",
+      "offset": 0,
+      "selected": ""
+     }
+    }
+   },
+   "ctrl+alt+2 heading 2": {
+    "area": "styles",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "²Letzter Absatz.",
+      "offset": 1,
+      "selected": ""
+     },
+     "ours": {
+      "para": "²Letzter Absatz.",
+      "offset": 1,
+      "selected": ""
+     }
+    }
+   },
+   "ctrl+shift+n on heading": {
+    "area": "styles",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Photosynthese",
+      "offset": 3,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Photosynthese",
+      "offset": 3,
+      "selected": ""
+     }
+    }
+   },
+   "ctrl+shift+l bullet style": {
+    "area": "styles",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Letzter Absatz.",
+      "offset": 0,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Letzter Absatz.",
+      "offset": 0,
+      "selected": ""
+     }
+    }
+   },
+   "page break mid paragraph": {
+    "area": "breaks",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "XWasser nimmt die Pflanze über die Wurzeln auf.",
+      "offset": 1,
+      "selected": ""
+     },
+     "ours": {
+      "para": "XWasser nimmt die Pflanze über die Wurzeln auf.",
+      "offset": 1,
+      "selected": ""
+     }
+    }
+   },
+   "page break at paragraph end": {
+    "area": "breaks",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "X",
+      "offset": 1,
+      "selected": ""
+     },
+     "ours": {
+      "para": "X",
+      "offset": 1,
+      "selected": ""
+     }
+    }
+   },
+   "page break at paragraph start": {
+    "area": "breaks",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "XDas Wasser nimmt die Pflanze über die Wurzeln auf.",
+      "offset": 1,
+      "selected": ""
+     },
+     "ours": {
+      "para": "XDas Wasser nimmt die Pflanze über die Wurzeln auf.",
+      "offset": 1,
+      "selected": ""
+     }
+    }
+   },
+   "line break": {
+    "area": "breaks",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Das \u000bXWasser nimmt die Pflanze über die Wurzeln auf.",
+      "offset": 6,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Das \u000bXWasser nimmt die Pflanze über die Wurzeln auf.",
+      "offset": 6,
+      "selected": ""
+     }
+    }
+   },
+   "column break": {
+    "area": "breaks",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "\u000eXWasser nimmt die Pflanze über die Wurzeln auf.",
+      "offset": 2,
+      "selected": ""
+     },
+     "ours": {
+      "para": "\u000eXWasser nimmt die Pflanze über die Wurzeln auf.",
+      "offset": 2,
+      "selected": ""
+     }
+    }
+   },
+   "backspace after page break": {
+    "area": "breaks",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "\fWasser nimmt die Pflanze über die Wurzeln auf.",
+      "offset": 1,
+      "selected": ""
+     },
+     "ours": {
+      "para": "\fWasser nimmt die Pflanze über die Wurzeln auf.",
+      "offset": 1,
+      "selected": ""
+     }
+    }
+   },
+   "bold inside word applies to word": {
+    "area": "format",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 38,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 38,
+      "selected": ""
+     }
+    }
+   },
+   "bold at word end then type": {
+    "area": "format",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre BlätterX Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 34,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre BlätterX Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 34,
+      "selected": ""
+     }
+    }
+   },
+   "italic inside word": {
+    "area": "format",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 38,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 38,
+      "selected": ""
+     }
+    }
+   },
+   "underline selection": {
+    "area": "format",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Ein fettes Wort, ein kursives Wort und ein unterstrichenes Wort.",
+      "offset": 34,
+      "selected": "kursives Wort"
+     },
+     "ours": {
+      "para": "Ein fettes Wort, ein kursives Wort und ein unterstrichenes Wort.",
+      "offset": 34,
+      "selected": "kursives Wort"
+     }
+    }
+   },
+   "toggle bold off": {
+    "area": "format",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Ein fettes Wort, ein kursives Wort und ein unterstrichenes Wort.",
+      "offset": 11,
+      "selected": "fettes "
+     },
+     "ours": {
+      "para": "Ein fettes Wort, ein kursives Wort und ein unterstrichenes Wort.",
+      "offset": 11,
+      "selected": "fettes "
+     }
+    }
+   },
+   "ctrl+space resets word": {
+    "area": "format",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Ein fettes Wort, ein kursives Wort und ein unterstrichenes Wort.",
+      "offset": 6,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Ein fettes Wort, ein kursives Wort und ein unterstrichenes Wort.",
+      "offset": 6,
+      "selected": ""
+     }
+    }
+   },
+   "ctrl+e centre": {
+    "area": "format",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 26,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 26,
+      "selected": ""
+     }
+    }
+   },
+   "ctrl+r right": {
+    "area": "format",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 26,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 26,
+      "selected": ""
+     }
+    }
+   },
+   "ctrl+b justify": {
+    "area": "format",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 26,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 26,
+      "selected": ""
+     }
+    }
+   },
+   "ctrl+m indent": {
+    "area": "format",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 26,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 26,
+      "selected": ""
+     }
+    }
+   },
+   "ctrl+m twice, ctrl+shift+m": {
+    "area": "format",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 26,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 26,
+      "selected": ""
+     }
+    }
+   },
+   "ctrl+t hanging indent": {
+    "area": "format",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 26,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 26,
+      "selected": ""
+     }
+    }
+   },
+   "ctrl+q resets paragraph": {
+    "area": "format",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 26,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 26,
+      "selected": ""
+     }
+    }
+   },
+   "ctrl+2 double spacing": {
+    "area": "format",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 26,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 26,
+      "selected": ""
+     }
+    }
+   },
+   "ctrl+5 1.5 spacing": {
+    "area": "format",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 26,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 26,
+      "selected": ""
+     }
+    }
+   },
+   "grow font": {
+    "area": "format",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 33,
+      "selected": "Blätter"
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 33,
+      "selected": "Blätter"
+     }
+    }
+   },
+   "shrink font": {
+    "area": "format",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 33,
+      "selected": "Blätter"
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 33,
+      "selected": "Blätter"
+     }
+    }
+   },
+   "subscript ctrl+#": {
+    "area": "format",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 33,
+      "selected": "Blätter"
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 33,
+      "selected": "Blätter"
+     }
+    }
+   },
+   "superscript ctrl+plus": {
+    "area": "format",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 33,
+      "selected": "Blätter"
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 33,
+      "selected": "Blätter"
+     }
+    }
+   },
+   "caps ctrl+shift+g": {
+    "area": "format",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre BLÄTTER Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 33,
+      "selected": "BLÄTTER"
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 33,
+      "selected": "Blätter"
+     }
+    }
+   },
+   "undo typing two words": {
+    "area": "undo",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 26,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 26,
+      "selected": ""
+     }
+    }
+   },
+   "undo typing three words twice": {
+    "area": "undo",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 26,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 26,
+      "selected": ""
+     }
+    }
+   },
+   "undo AutoCorrect": {
+    "area": "undo",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "©",
+      "offset": 1,
+      "selected": ""
+     },
+     "ours": {
+      "para": "©",
+      "offset": 1,
+      "selected": ""
+     }
+    }
+   },
+   "undo quotes": {
+    "area": "undo",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Er \"",
+      "offset": 4,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Er \"",
+      "offset": 4,
+      "selected": ""
+     }
+    }
+   },
+   "undo delete word": {
+    "area": "undo",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 52,
+      "selected": "Kohlenstoffdioxid "
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 52,
+      "selected": "Kohlenstoffdioxid "
+     }
+    }
+   },
+   "redo after undo": {
+    "area": "undo",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre rote Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 31,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre rote Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 31,
+      "selected": ""
+     }
+    }
+   },
+   "undo formatting": {
+    "area": "undo",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 33,
+      "selected": "Blätter"
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 33,
+      "selected": "Blätter"
+     }
+    }
+   },
+   "undo Enter": {
+    "area": "undo",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 26,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 26,
+      "selected": ""
+     }
+    }
+   },
+   "copy and paste a word": {
+    "area": "clipboard",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Das Kohlenstoffdioxid Wasser nimmt die Pflanze über die Wurzeln auf.",
+      "offset": 22,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Das Kohlenstoffdioxid Wasser nimmt die Pflanze über die Wurzeln auf.",
+      "offset": 22,
+      "selected": ""
+     }
+    }
+   },
+   "cut and paste with smart spaces": {
+    "area": "clipboard",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Kohlenstoffdioxid Traubenzucker her.",
+      "offset": 164,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter aus der Luft auf und über die Wurzeln Wasser aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Kohlenstoffdioxid Traubenzucker her.",
+      "offset": 164,
+      "selected": ""
+     }
+    }
+   },
+   "cut and paste keeps bold": {
+    "area": "clipboard",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Ein Wort, ein kursives Wort und ein unterstrichenes fettes Wort.",
+      "offset": 59,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Ein Wort, ein kursives Wort und ein unterstrichenes fettes Wort.",
+      "offset": 59,
+      "selected": ""
+     }
+    }
+   },
+   "paste over selection": {
+    "area": "clipboard",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Luft. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 109,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Wasser aus dem Luft. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 109,
+      "selected": ""
+     }
+    }
+   },
+   "paste paragraph": {
+    "area": "clipboard",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Photosynthese",
+      "offset": 0,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Photosynthese",
+      "offset": 0,
+      "selected": ""
+     }
+    }
+   }
+  }
+ }
+}

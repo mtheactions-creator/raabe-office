@@ -21,8 +21,9 @@ export const REVIEW_COMMANDS: Command[] = [
   cmd("reject.allStop", "Alle Änderungen ablehnen und Nachverfolgung beenden", "reject"),
 ];
 
+// Word 365's entries (measured 2026-10-14).
 export const MARKUP_MODES = [
-  ["simple", "Einfaches Markup"], ["all", "Alle Markups"], ["none", "Kein Markup"], ["original", "Original"],
+  ["simple", "Einfaches Markup"], ["all", "Markup: alle"], ["none", "Markup: keine"], ["original", "Original"],
 ] as const;
 type Mode = (typeof MARKUP_MODES)[number][0];
 
@@ -59,13 +60,15 @@ interface CardState {
   editing: string | null;
   /** Kommentare pane (list) instead of the cards beside the page. */
   pane: boolean;
+  /** Kommentare anzeigen: the cards beside the page are shown. */
+  commentsShown: boolean;
 }
 
 export function reviewFeature(api: AppApi, userName: () => string, pane: HTMLElement) {
   const ed = () => api.editor();
   const c = api.commands;
   const has = () => !!ed();
-  const st: CardState = { editing: null, pane: false };
+  const st: CardState = { editing: null, pane: false, commentsShown: true };
   const author = (e: Editor) => {
     const name = userName().trim() || "Benutzer";
     e.author = name;
@@ -234,7 +237,7 @@ export function reviewFeature(api: AppApi, userName: () => string, pane: HTMLEle
     author(e);
     const list = threads(e);
     const show = e.markupMode === "all" || e.markupMode === "simple";
-    const rail = list.length > 0 && show && !st.pane;
+    const rail = list.length > 0 && show && !st.pane && st.commentsShown;
     e.setMarkupWidth(rail ? RAIL : 0);
     const tops = rail ? e.commentTops() : new Map<string, number>();
     const key = JSON.stringify([list.map((t) => t.map((x) => [x.id, x.text, x.done, x.date])), [...tops], st, e.activeComment(), e.markupMode, e.zoom]);
@@ -290,13 +293,39 @@ export function reviewFeature(api: AppApi, userName: () => string, pane: HTMLEle
     });
   };
 
+  // Kommentare anzeigen: on/off; the menu chooses Word's two views (cards beside the text, or the list).
+  c.implement("review.showComments", {
+    run: () => { st.commentsShown = !st.commentsShown; if (!st.commentsShown) st.pane = false; lastKey = ""; const e = ed(); if (e) render(e); },
+    enabled: has, checked: () => st.commentsShown || st.pane,
+  });
+  const showCommentsMenu: MenuEntry[] = [
+    { label: "Kontextbezogen", run: () => { st.commentsShown = true; togglePane(false); }, get checked() { return st.commentsShown && !st.pane; } },
+    { label: "Liste", run: () => togglePane(true), get checked() { return st.pane; } },
+  ];
+  // Markup anzeigen / Sämtliches Markup filtern: what the markup shows.
+  let lastMarkup: Mode = "all";
+  const setInsDel = (on: boolean) => {
+    const e = ed();
+    if (!e) return;
+    if (!on && e.markupMode !== "none") { lastMarkup = e.markupMode as Mode; e.setMarkup("none"); }
+    else if (on && e.markupMode === "none") e.setMarkup(lastMarkup === "none" ? "all" : lastMarkup);
+    lastKey = "";
+    render(e);
+  };
+  c.implement("review.filterMarkup", { run: () => {}, enabled: has });
+  const filterMenu: MenuEntry[] = [
+    { label: "Kommentare", run: () => { st.commentsShown = !st.commentsShown; lastKey = ""; const e = ed(); if (e) render(e); }, get checked() { return st.commentsShown; } },
+    { label: "Einfügungen und Löschungen", run: () => setInsDel(ed()?.markupMode === "none"), get checked() { return ed()?.markupMode !== "none"; } },
+    { label: "Formatierung", run: () => {}, disabled: true },
+  ];
+
   const trackMenu: MenuEntry[] = [{ cmd: "review.trackChanges" }];
   const deleteMenu: MenuEntry[] = [{ cmd: "review.deleteComment" }, { cmd: "review.deleteAllComments" }];
   const acceptMenu: MenuEntry[] = [{ cmd: "accept.next" }, { cmd: "accept.this" }, { cmd: "accept.all" }, { cmd: "accept.allStop" }];
   const rejectMenu: MenuEntry[] = [{ cmd: "reject.next" }, { cmd: "reject.this" }, { cmd: "reject.all" }, { cmd: "reject.allStop" }];
   return {
     attach, render: () => { const e = ed(); if (e) { lastKey = ""; render(e); } }, togglePane,
-    trackMenu, deleteMenu, acceptMenu, rejectMenu,
+    trackMenu, deleteMenu, acceptMenu, rejectMenu, showCommentsMenu, filterMenu,
     markup: { value: markupValue, set: setMarkup, options: () => [{ items: MARKUP_MODES.map(([, l]) => l) }] },
   };
 }

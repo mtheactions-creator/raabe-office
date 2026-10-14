@@ -32,6 +32,7 @@ export interface RibbonContext {
     pictures: MenuEntry[]; borders: MenuEntry[]; wrap: MenuEntry[];
     toc: MenuEntry[]; addText: MenuEntry[]; nextNote: MenuEntry[]; equation: MenuEntry[];
     track: MenuEntry[]; deleteComment: MenuEntry[]; accept: MenuEntry[]; reject: MenuEntry[];
+    showComments: MenuEntry[]; filterMarkup: MenuEntry[];
   };
   /** Markup für Überarbeitung anzeigen (Einfaches Markup, Alle Markups …). */
   markup: { value(): string; set(v: string): void; options(): { heading?: string; items: string[] }[] };
@@ -48,6 +49,8 @@ const split = (cmd: string, key: string, size: "large" | "medium" | "small" = "s
 const panel = (cmd: string, key: string, size: "large" | "medium" | "small", popup: Popup): Control =>
   ({ type: "dropdown", cmd, key, size, menu: [], popup });
 const stack = (...items: Control[]): Control => ({ type: "stack", items });
+const panelL = (cmd: string, key: string, label: string, popup: Popup): Control =>
+  ({ type: "dropdown", cmd, key, size: "large", label, menu: [], popup });
 
 /** Gallery entries in Word's order: built-in style name, command, preview CSS. */
 export const GALLERY: { name: string; cmd: string; preview: string }[] = [
@@ -69,72 +72,150 @@ export const GALLERY: { name: string; cmd: string; preview: string }[] = [
   { name: "List Paragraph", cmd: "style.listParagraph", preview: "font:14.667px Calibri,Carlito,sans-serif" },
 ];
 
+/**
+ * Word's mini toolbar above the context menu (recorded 2026-10-14): font, size, bigger and
+ * smaller, format painter, bold, italic, underline, colours and lists; in a table Einfügen and
+ * Löschen; for a picture its styles and cropping.
+ */
+export function miniToolbar(ctx: RibbonContext, kind: "text" | "table" | "picture"): Control[] {
+  if (kind === "picture") return [dd("picture.styles", "", "large", "Formatvorlage"), b("picture.crop", "", "large")];
+  const fontName: Control = {
+    type: "combo", cmd: "font.name", width: 104, value: ctx.fontName, options: ctx.fontOptions,
+    optionStyle: (f) => `font-family:"${f.replace(/ \(.*\)$/, "")}";font-size:14px`, commit: ctx.setFont,
+  };
+  const fontSize: Control = {
+    type: "combo", cmd: "font.size", width: 50, value: ctx.fontSize,
+    options: () => [{ items: ["8", "9", "10", "10,5", "11", "12", "14", "16", "18", "20", "22", "24", "26", "28", "36", "48", "72"] }],
+    commit: ctx.setSize,
+  };
+  const highlight: Control = { type: "color", cmd: "font.highlight", palette: "highlight", current: ctx.highlight, pick: ctx.setHighlight };
+  const fontColor: Control = { type: "color", cmd: "font.color", palette: "font", current: ctx.fontColor, pick: ctx.setFontColor };
+  const bullets = split("para.bullets", "", "small", [], undefined, ctx.panels.bullets);
+  const numbering = split("para.numbering", "", "small", [], undefined, ctx.panels.numbers);
+  const comment = b("review.newComment", "", "large");
+  if (kind === "table") {
+    const shading: Control = { type: "color", cmd: "para.shading", palette: "font", current: ctx.shading, pick: ctx.setShading };
+    return [
+      { type: "rows", rows: [
+        [fontName, fontSize, b("font.grow", ""), b("font.shrink", ""), bullets, numbering],
+        [b("font.bold", ""), b("font.italic", ""), b("para.alignCenter", ""), highlight, fontColor, shading, split("para.borders", "", "small", ctx.panels.borders), b("edit.formatPainter", "")],
+      ] },
+      dd("mini.tableInsert", "", "large", "Einfügen", [
+        { cmd: "table.insertAbove", label: "Oberhalb einfügen" }, { cmd: "table.insertBelow", label: "Unterhalb einfügen" },
+        { cmd: "table.insertLeft", label: "Links einfügen" }, { cmd: "table.insertRight", label: "Rechts einfügen" }]),
+      dd("mini.tableDelete", "", "large", "Löschen", [
+        { cmd: "table.deleteCells", label: "Zellen löschen..." }, { cmd: "table.deleteColumns" }, { cmd: "table.deleteRows" }, { cmd: "table.deleteTable" }]),
+      comment,
+    ];
+  }
+  return [
+    { type: "rows", rows: [
+      [fontName, fontSize, b("font.grow", ""), b("font.shrink", ""), b("edit.formatPainter", "")],
+      [b("font.bold", ""), b("font.italic", ""), b("font.underline", ""), highlight, fontColor, bullets, numbering],
+    ] },
+    dd("mini.styles", "", "large", "Formatvorlagen", GALLERY.map((g) => ({ cmd: g.cmd }))),
+    comment,
+  ];
+}
+
 export function ribbonTabs(ctx: RibbonContext): Tab[] {
+  // ----- shared controls ------------------------------------------------------------------
+  const fontName = (width: number): Control => ({
+    type: "combo", cmd: "font.name", width, key: "SC", value: ctx.fontName, options: ctx.fontOptions,
+    optionStyle: (f) => `font-family:"${f.replace(/ \(.*\)$/, "")}";font-size:14px`, commit: ctx.setFont,
+  });
+  const fontSize: Control = {
+    type: "combo", cmd: "font.size", width: 63, key: "HC", value: ctx.fontSize,
+    options: () => [{ items: ["8", "9", "10", "10,5", "11", "12", "14", "16", "18", "20", "22", "24", "26", "28", "36", "48", "72"] }],
+    commit: ctx.setSize,
+  };
+  const underline = split("font.underline", "3", "small", [{ cmd: "underline.single" }, { cmd: "underline.double" }, { cmd: "underline.thick" },
+    { cmd: "underline.dotted" }, { cmd: "underline.dash" }, { cmd: "underline.wave" }]);
+  const highlight: Control = { type: "color", cmd: "font.highlight", key: "GE", palette: "highlight", current: ctx.highlight, pick: ctx.setHighlight };
+  const fontColor: Control = { type: "color", cmd: "font.color", key: "AC", palette: "font", current: ctx.fontColor, pick: ctx.setFontColor };
+  const fontCase = dd("font.case", "7", "small", undefined, [{ cmd: "case.sentence" }, { cmd: "case.lower" }, { cmd: "case.upper" }, { cmd: "case.title" }, { cmd: "case.toggle" }]);
+  const bullets = split("para.bullets", "AA", "small", [], undefined, ctx.panels.bullets);
+  const numbering = split("para.numbering", "GN", "small", [], undefined, ctx.panels.numbers);
+  const multilevel = panel("para.multilevel", "TL", "small", ctx.panels.multilevel);
+  const lineSpacing = dd("para.lineSpacing", "NZ", "small", undefined, [
+    { cmd: "spacing.1" }, { cmd: "spacing.1.15" }, { cmd: "spacing.1.5" }, { cmd: "spacing.2" }, { cmd: "spacing.2.5" }, { cmd: "spacing.3" }, "-",
+    { cmd: "para.dialog", label: "Zeilenabstandsoptionen..." }, "-",
+    { cmd: "spacing.toggleBefore" }, { cmd: "spacing.toggleAfter" }]);
+  const shading: Control = { type: "color", cmd: "para.shading", key: "NC", palette: "font", current: ctx.shading, pick: ctx.setShading };
+  const borders = split("para.borders", "MR", "small", ctx.panels.borders);
+  const paste = split("edit.paste", "V", "large", [{ cmd: "edit.paste", label: "Ursprüngliche Formatierung beibehalten" }, { cmd: "edit.pasteText" }]);
+  const find = (size: "medium" | "small") => split("edit.find", "UU", size, [{ cmd: "edit.find" }, { cmd: "edit.goto" }]);
+  const select: Control = { type: "dropdown", cmd: "edit.selectMenu", key: "ß", size: "medium", menu: [{ cmd: "edit.selectAll" }] };
+  const spinners = (title: string, a: Control, b2: Control): Control => ({ type: "stack", title, items: [a, b2] });
+  const indentLeft: Control = { type: "spinner", cmd: "layout.indentLeft", label: "Links:", icon: "indent-increase", key: "L",
+    value: () => ctx.indent("left"), commit: (v) => ctx.setIndent("left", v), step: (d) => ctx.stepIndent("left", d) };
+  const indentRight: Control = { type: "spinner", cmd: "layout.indentRight", label: "Rechts:", icon: "indent-decrease", key: "C",
+    value: () => ctx.indent("right"), commit: (v) => ctx.setIndent("right", v), step: (d) => ctx.stepIndent("right", d) };
+  const spaceBefore: Control = { type: "spinner", cmd: "layout.spaceBefore", label: "Vor:", icon: "line-spacing", key: "V",
+    value: () => ctx.spacing("before"), commit: (v) => ctx.setSpacing("before", v), step: (d) => ctx.stepSpacing("before", d) };
+  const spaceAfter: Control = { type: "spinner", cmd: "layout.spaceAfter", label: "Nach:", icon: "line-spacing", key: "N",
+    value: () => ctx.spacing("after"), commit: (v) => ctx.setSpacing("after", v), step: (d) => ctx.stepSpacing("after", d) };
+  const markupMode: Control = { type: "combo", cmd: "review.markupMode", width: 155, key: "TD", value: ctx.markup.value, options: ctx.markup.options, commit: ctx.markup.set };
+  const showComments = split("review.showComments", "KA", "large", ctx.panels.showComments);
+  const styleMenu: MenuEntry[] = GALLERY.map((g) => ({ cmd: g.cmd }));
+
+  // Layouts and reduction sequences follow Word 365 at window widths from 2560 down to 800 px
+  // (tools/feel-lab/capture_ribbon_widths.py, ribbon_variants.py; D-038).
   return [
     {
       id: "start", label: "Start", key: "R",
-      shrink: ["styles", "voice", "editing", "font", "paragraph", "clipboard"],
+      shrink: ["clipboard", "font", "paragraph", "editing", "styles", "paragraph", "font", "voice"],
       groups: [
         {
           id: "clipboard", label: "Zwischenablage", key: "ZL", icon: "paste",
           launcher: { cmd: "edit.clipboardPane", key: "WF" },
-          controls: [
-            split("edit.paste", "V", "large", [{ cmd: "edit.paste", label: "Ursprüngliche Formatierung beibehalten" }, { cmd: "edit.pasteText" }]),
-            stack(b("edit.cut", "X"), b("edit.copy", "C"), b("edit.formatPainter", "FO")),
-          ],
+          controls: [paste, stack(b("edit.cut", "X", "medium"), b("edit.copy", "C", "medium"), b("edit.formatPainter", "FO", "medium"))],
+          smaller: [[paste, stack(b("edit.cut", "X"), b("edit.copy", "C"), b("edit.formatPainter", "FO"))]],
         },
         {
           id: "font", label: "Schriftart", key: "ZF", icon: "fonts",
           launcher: { cmd: "font.dialog", key: "ÄC" },
           controls: [{
             type: "rows", rows: [
-              [{ type: "combo", cmd: "font.name", width: 153, key: "SC", value: ctx.fontName, options: ctx.fontOptions,
-                optionStyle: (f) => `font-family:"${f.replace(/ \(.*\)$/, "")}";font-size:14px`, commit: ctx.setFont },
-                { type: "combo", cmd: "font.size", width: 63, key: "HC", value: ctx.fontSize,
-                  options: () => [{ items: ["8", "9", "10", "10,5", "11", "12", "14", "16", "18", "20", "22", "24", "26", "28", "36", "48", "72"] }],
-                  commit: ctx.setSize }],
-              [b("font.bold", "1"), b("font.italic", "2"),
-                split("font.underline", "3", "small", [{ cmd: "underline.single" }, { cmd: "underline.double" }, { cmd: "underline.thick" },
-                  { cmd: "underline.dotted" }, { cmd: "underline.dash" }, { cmd: "underline.wave" }]),
-                b("font.strike", "4"), b("font.subscript", "S1"), b("font.superscript", "6"), "gap", b("font.clear", "Q")],
-              [dd("font.effects", "D1"),
-                { type: "color", cmd: "font.highlight", key: "GE", palette: "highlight", current: ctx.highlight, pick: ctx.setHighlight },
-                { type: "color", cmd: "font.color", key: "AC", palette: "font", current: ctx.fontColor, pick: ctx.setFontColor },
-                dd("font.case", "7", "small", undefined, [{ cmd: "case.sentence" }, { cmd: "case.lower" }, { cmd: "case.upper" }, { cmd: "case.title" }, { cmd: "case.toggle" }]),
-                "gap", b("font.grow", "SV"), b("font.shrink", "HS")],
+              [fontName(104), fontSize, "gap", b("font.grow", "SV"), b("font.shrink", "HS"), "gap", fontCase, "gap", b("font.clear", "Q")],
+              [b("font.bold", "1"), b("font.italic", "2"), underline, b("font.strike", "4"), b("font.subscript", "S1"), b("font.superscript", "6"), "gap",
+                dd("font.effects", "D1"), highlight, fontColor],
             ],
           }],
+          smaller: [[{
+            type: "rows", rows: [
+              [fontName(153), fontSize],
+              [b("font.bold", "1"), b("font.italic", "2"), underline, b("font.strike", "4"), b("font.subscript", "S1"), b("font.superscript", "6"), "gap", b("font.clear", "Q")],
+              [dd("font.effects", "D1"), highlight, fontColor, fontCase, "gap", b("font.grow", "SV"), b("font.shrink", "HS")],
+            ],
+          }]],
         },
         {
           id: "paragraph", label: "Absatz", key: "ZP", icon: "align-left",
           launcher: { cmd: "para.dialog", key: "BB" },
           controls: [{
             type: "rows", rows: [
-              [split("para.bullets", "AA", "small", [], undefined, ctx.panels.bullets), split("para.numbering", "GN", "small", [], undefined, ctx.panels.numbers),
-                panel("para.multilevel", "TL", "small", ctx.panels.multilevel), "gap",
-                b("para.indentDec", "ÖI"), b("para.indentInc", "PI")],
-              [b("para.alignLeft", "II"), b("para.alignCenter", "RZ"), b("para.alignRight", "RE"), b("para.justify", "OL"), "gap",
-                dd("para.lineSpacing", "NZ", "small", undefined, [
-                  { cmd: "spacing.1" }, { cmd: "spacing.1.15" }, { cmd: "spacing.1.5" }, { cmd: "spacing.2" }, { cmd: "spacing.2.5" }, { cmd: "spacing.3" }, "-",
-                  { cmd: "para.dialog", label: "Zeilenabstandsoptionen..." }, "-",
-                  { cmd: "spacing.toggleBefore" }, { cmd: "spacing.toggleAfter" }])],
-              [{ type: "color", cmd: "para.shading", key: "NC", palette: "font", current: ctx.shading, pick: ctx.setShading },
-                split("para.borders", "MR", "small", ctx.panels.borders), "gap", b("para.sort", "J"), b("para.showMarks", "8")],
+              [bullets, numbering, multilevel, "gap", b("para.indentDec", "ÖI"), b("para.indentInc", "PI"), "gap", b("para.sort", "J"), "gap", b("para.showMarks", "8")],
+              [b("para.alignLeft", "II"), b("para.alignCenter", "RZ"), b("para.alignRight", "RE"), b("para.justify", "OL"), "gap", lineSpacing, "gap", shading, borders],
             ],
           }],
+          smaller: [[{
+            type: "rows", rows: [
+              [bullets, numbering, multilevel, "gap", b("para.indentDec", "ÖI"), b("para.indentInc", "PI")],
+              [b("para.alignLeft", "II"), b("para.alignCenter", "RZ"), b("para.alignRight", "RE"), b("para.justify", "OL"), "gap", lineSpacing],
+              [shading, borders, "gap", b("para.sort", "J"), b("para.showMarks", "8")],
+            ],
+          }]],
         },
         {
           id: "styles", label: "Formatvorlagen", key: "ZS", icon: "fonts",
           launcher: { cmd: "style.pane", key: "RF" },
-          controls: [{ type: "gallery", key: "K", visible: 4, items: GALLERY.map((g) => ({ cmd: g.cmd, preview: g.preview })) }],
+          controls: [{ type: "gallery", key: "K", visible: 4, fill: true, items: GALLERY.map((g) => ({ cmd: g.cmd, preview: g.preview })) }],
+          smaller: [[{ type: "dropdown", cmd: "style.pane", key: "K", size: "large", label: "Formatvorlagen", menu: styleMenu }]],
         },
         {
           id: "editing", label: "Bearbeiten", key: "ZN", icon: "find",
-          controls: [stack(
-            split("edit.find", "UU", "medium", [{ cmd: "edit.find" }, { cmd: "edit.goto" }]),
-            b("edit.replace", "TR", "medium", "Ersetzen"),
-            { type: "dropdown", cmd: "edit.selectMenu", key: "ß", size: "medium", menu: [{ cmd: "edit.selectAll" }] },
-          )],
+          controls: [stack(find("medium"), b("edit.replace", "TR", "medium", "Ersetzen"), select)],
         },
         {
           id: "voice", label: "Sprache", key: "Z2", icon: "dictate",
@@ -144,23 +225,33 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
     },
     {
       id: "insert", label: "Einfügen", key: "I",
-      shrink: ["text", "links", "headerFooter", "symbols", "illustrations", "pages", "comments", "tables"],
+      shrink: ["pages", "links", "symbols", "illustrations", "headerFooter", "text", "pages", "links", "illustrations", "symbols", "headerFooter", "text", "illustrations"],
       groups: [
         { id: "pages", label: "Seiten", key: "ZP", icon: "cover-page",
-          controls: [stack(dd("insert.coverPage", "EE", "medium"), b("insert.blankPage", "EL", "medium"), b("insert.pageBreak", "SU", "medium"))] },
+          controls: [dd("insert.coverPage", "EE", "large"), b("insert.blankPage", "EL", "large"), b("insert.pageBreak", "SU", "large")],
+          smaller: [[stack(dd("insert.coverPage", "EE", "medium"), b("insert.blankPage", "EL", "medium"), b("insert.pageBreak", "SU", "medium"))]] },
         { id: "tables", label: "Tabellen", key: "ZB", icon: "table", controls: [panel("insert.table", "LA", "large", ctx.panels.insertTable)] },
         { id: "illustrations", label: "Illustrationen", key: "ZI", icon: "picture",
-          controls: [dd("insert.pictures", "B1", "large", undefined, ctx.panels.pictures), stack(dd("insert.shapes", "2", "medium"), b("insert.chart", "I", "medium"))] },
+          controls: [dd("insert.pictures", "B1", "large", undefined, ctx.panels.pictures), dd("insert.shapes", "2", "large"), b("insert.chart", "I", "large")],
+          smaller: [
+            [dd("insert.pictures", "B1", "large", undefined, ctx.panels.pictures), stack(dd("insert.shapes", "2", "medium"), b("insert.chart", "I", "medium"))],
+            [dd("insert.pictures", "B1", "large", undefined, ctx.panels.pictures), stack(dd("insert.shapes", "2", "medium"), b("insert.chart", "I"))],
+          ] },
         { id: "links", label: "Links", key: "ZL", icon: "link",
-          controls: [stack(split("insert.link", "H", "medium"), b("insert.bookmark", "K", "medium"), b("insert.crossRef", "Q", "medium"))] },
+          controls: [split("insert.link", "H", "large"), b("insert.bookmark", "K", "large"), b("insert.crossRef", "Q", "large")],
+          smaller: [[stack(split("insert.link", "H", "medium"), b("insert.bookmark", "K", "medium"), b("insert.crossRef", "Q", "medium"))]] },
         { id: "comments", label: "Kommentare", key: "Z1", icon: "comment", controls: [b("insert.comment", "N", "large")] },
         { id: "headerFooter", label: "Kopf- und Fußzeile", key: "ZH", icon: "header",
-          controls: [stack(dd("insert.header", "OK", "medium", undefined, ctx.panels.header), dd("insert.footer", "LF", "medium", undefined, ctx.panels.footer),
-            dd("insert.pageNumber", "T", "medium", undefined, ctx.panels.pageNumber))] },
+          controls: [dd("insert.header", "OK", "large", undefined, ctx.panels.header), dd("insert.footer", "LF", "large", undefined, ctx.panels.footer),
+            dd("insert.pageNumber", "T", "large", undefined, ctx.panels.pageNumber)],
+          smaller: [[stack(dd("insert.header", "OK", "medium", undefined, ctx.panels.header), dd("insert.footer", "LF", "medium", undefined, ctx.panels.footer),
+            dd("insert.pageNumber", "T", "medium", undefined, ctx.panels.pageNumber))]] },
         { id: "text", label: "Text", key: "ZT", icon: "text-box",
-          controls: [dd("insert.textBox", "X", "large"), stack(b("insert.dateTime", "D"))] },
+          controls: [dd("insert.textBox", "X", "large"), stack(b("insert.dateTime", "D", "medium"))],
+          smaller: [[dd("insert.textBox", "X", "large"), stack(b("insert.dateTime", "D"))]] },
         { id: "symbols", label: "Symbole", key: "ZS", icon: "equation",
-          controls: [stack(split("insert.equation", "A", "medium", ctx.panels.equation), dd("insert.symbol", "SY", "medium"))] },
+          controls: [split("insert.equation", "A", "large", ctx.panels.equation), dd("insert.symbol", "SY", "large")],
+          smaller: [[stack(split("insert.equation", "A", "medium", ctx.panels.equation), dd("insert.symbol", "SY", "medium"))]] },
       ],
     },
     {
@@ -168,84 +259,92 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
       shrink: ["docFormat", "pageBackground"],
       groups: [
         { id: "docFormat", label: "Dokumentformatierung", key: "Z1", icon: "themes",
-          controls: [dd("design.themes", "N", "large"), dd("design.colors", "F", "large"), dd("design.fonts", "6", "large"),
-            stack(dd("design.paragraphSpacing", "BA", "medium"))] },
+          controls: [dd("design.themes", "N", "large"), dd("design.styleSet", "J", "large"), dd("design.colors", "F", "large"), dd("design.fonts", "6", "large"),
+            stack(dd("design.paragraphSpacing", "BA", "medium"), dd("design.effects", "E", "medium"), b("design.setDefault", "S", "medium"))] },
         { id: "pageBackground", label: "Seitenhintergrund", key: "ZB", icon: "page-color",
           controls: [dd("design.watermark", "W", "large"), dd("design.pageColor", "PC", "large"), b("design.pageBorders", "T", "large")] },
       ],
     },
     {
       id: "layout", label: "Layout", key: "S",
-      shrink: ["arrange", "paragraph", "pageSetup"],
+      shrink: ["pageSetup", "arrange", "arrange", "paragraph", "pageSetup"],
       groups: [
         { id: "pageSetup", label: "Seite einrichten", key: "ZS", icon: "margins", launcher: { cmd: "layout.pageSetup", key: "T" },
-          controls: [panel("layout.margins", "8", "large", ctx.panels.margins),
+          controls: [panelL("layout.margins", "8", "Seiten-\nränder", ctx.panels.margins),
             dd("layout.orientation", "4", "large", undefined, [{ cmd: "orientation.portrait" }, { cmd: "orientation.landscape" }]),
             panel("layout.size", "R", "large", ctx.panels.size),
             dd("layout.columns", "HS", "large", undefined, ctx.panels.columns),
-            stack(dd("layout.breaks", "U", "medium", undefined, ctx.panels.breaks), dd("layout.hyphenation", "I", "medium"))] },
+            stack(dd("layout.breaks", "U", "medium", undefined, ctx.panels.breaks), dd("layout.lineNumbers", "LN", "medium"), dd("layout.hyphenation", "I", "medium"))],
+          smaller: [[panelL("layout.margins", "8", "Seiten-\nränder", ctx.panels.margins),
+            stack(dd("layout.orientation", "4", "medium", undefined, [{ cmd: "orientation.portrait" }, { cmd: "orientation.landscape" }]),
+              panel("layout.size", "R", "medium", ctx.panels.size), dd("layout.columns", "HS", "medium", undefined, ctx.panels.columns)),
+            stack(dd("layout.breaks", "U", "medium", undefined, ctx.panels.breaks), dd("layout.lineNumbers", "LN", "medium"), dd("layout.hyphenation", "I", "medium"))]] },
         { id: "paragraph", label: "Absatz", key: "ZG", icon: "line-spacing", launcher: { cmd: "para.dialog", key: "BB" },
-          controls: [
-            stack({ type: "spinner", cmd: "layout.indentLeft", label: "Links:", icon: "indent-increase", key: "L",
-              value: () => ctx.indent("left"), commit: (v) => ctx.setIndent("left", v), step: (d) => ctx.stepIndent("left", d) },
-            { type: "spinner", cmd: "layout.indentRight", label: "Rechts:", icon: "indent-decrease", key: "C",
-              value: () => ctx.indent("right"), commit: (v) => ctx.setIndent("right", v), step: (d) => ctx.stepIndent("right", d) }),
-            stack({ type: "spinner", cmd: "layout.spaceBefore", label: "Vor:", icon: "line-spacing", key: "V",
-              value: () => ctx.spacing("before"), commit: (v) => ctx.setSpacing("before", v), step: (d) => ctx.stepSpacing("before", d) },
-            { type: "spinner", cmd: "layout.spaceAfter", label: "Nach:", icon: "line-spacing", key: "N",
-              value: () => ctx.spacing("after"), commit: (v) => ctx.setSpacing("after", v), step: (d) => ctx.stepSpacing("after", d) }),
-          ] },
+          controls: [spinners("Einzug", indentLeft, indentRight), spinners("Abstand", spaceBefore, spaceAfter)] },
         { id: "arrange", label: "Anordnen", key: "ZA", icon: "position",
           controls: [dd("layout.position", "PP", "large"), dd("layout.wrapText", "J", "large", undefined, ctx.panels.wrap), split("layout.bringForward", "GE", "large"),
-            split("layout.sendBackward", "GH", "large"), stack(dd("layout.align", "DA", "medium"), dd("layout.rotate", "DR", "medium"))] },
+            split("layout.sendBackward", "GH", "large"), b("layout.selectionPane", "AP", "large"),
+            stack(dd("layout.align", "DA", "medium"), dd("layout.group", "GG", "medium"), dd("layout.rotate", "DR", "medium"))],
+          smaller: [[dd("layout.position", "PP", "large"), dd("layout.wrapText", "J", "large", undefined, ctx.panels.wrap),
+            stack(split("layout.bringForward", "GE", "medium"), split("layout.sendBackward", "GH", "medium"), b("layout.selectionPane", "AP", "medium")),
+            stack(dd("layout.align", "DA", "medium"), dd("layout.group", "GG", "medium"), dd("layout.rotate", "DR", "medium"))]] },
       ],
     },
     {
       id: "references", label: "Referenzen", key: "C",
-      shrink: ["captions", "citations", "toc", "footnotes"],
+      shrink: ["captions", "toc", "footnotes", "citations", "captions", "toc", "footnotes"],
       groups: [
         { id: "toc", label: "Inhaltsverzeichnis", key: "ZI", icon: "toc",
-          controls: [dd("ref.toc", "I", "large", undefined, ctx.panels.toc),
-            stack(dd("ref.addText", "X", "medium", undefined, ctx.panels.addText), b("ref.updateToc", "H", "medium", "Tabelle aktualisieren"))] },
+          controls: [dd("ref.toc", "I", "large", "Inhalts-\nverzeichnis", ctx.panels.toc),
+            stack(dd("ref.addText", "X", "medium", undefined, ctx.panels.addText), b("ref.updateToc", "H", "medium"))],
+          smaller: [[dd("ref.toc", "I", "large", "Inhalts-\nverzeichnis", ctx.panels.toc), stack(dd("ref.addText", "X", "medium", undefined, ctx.panels.addText), b("ref.updateToc", "H"))]] },
         { id: "footnotes", label: "Fußnoten", key: "ZF", icon: "footnote", launcher: { cmd: "ref.footnoteDialog", key: "O" },
-          controls: [b("ref.footnote", "P", "large"), stack(b("ref.endnote", "N", "medium"), split("ref.nextFootnote", "Ä", "medium", ctx.panels.nextNote))] },
+          controls: [b("ref.footnote", "P", "large"), stack(b("ref.endnote", "N", "medium"), split("ref.nextFootnote", "Ä", "medium", ctx.panels.nextNote), b("ref.showNotes", "H", "medium"))],
+          smaller: [[b("ref.footnote", "P", "large"), stack(b("ref.endnote", "N"), split("ref.nextFootnote", "Ä", "medium", ctx.panels.nextNote), b("ref.showNotes", "H"))]] },
         { id: "citations", label: "Zitate und Literaturverzeichnis", key: "ZA", icon: "citation",
-          controls: [dd("ref.citation", "Ü", "large"), stack(b("ref.sources", "V", "medium"), dd("ref.bibliography", "L", "medium"))] },
+          controls: [dd("ref.citation", "Ü", "large"), stack(b("ref.sources", "V", "medium"), dd("ref.citationStyle", "L1", "medium"), dd("ref.bibliography", "L", "medium"))] },
         { id: "captions", label: "Beschriftungen", key: "ZB", icon: "caption",
-          controls: [b("ref.caption", "C", "large"), stack(b("ref.crossRef", "Q", "medium"))] },
+          controls: [b("ref.caption", "C", "large"), stack(b("ref.tableOfFigures", "G", "medium"), b("ref.updateTableOfFigures", "V1", "medium"), b("ref.crossRef", "Q", "medium"))],
+          smaller: [[b("ref.caption", "C", "large"), stack(b("ref.tableOfFigures", "G"), b("ref.updateTableOfFigures", "V1"), b("ref.crossRef", "Q"))]] },
       ],
     },
     {
       id: "review", label: "Überprüfen", key: "P",
-      shrink: ["tracking", "comments", "language", "speech", "proofing"],
+      shrink: ["proofing", "language", "comments", "tracking", "comments", "markup", "proofing", "speech"],
       groups: [
         { id: "proofing", label: "Rechtschreibung", key: "ZP", icon: "spelling",
-          controls: [split("review.spelling", "S1", "large"), stack(b("review.thesaurus", "T", "medium"), b("review.wordCount", "W", "medium"))] },
+          controls: [split("review.spelling", "S1", "large"), b("review.thesaurus", "T", "large"), b("review.wordCount", "W", "large")],
+          smaller: [[stack(split("review.spelling", "S1", "medium"), b("review.thesaurus", "T", "medium"), b("review.wordCount", "W", "medium"))]] },
         { id: "speech", label: "Sprache", key: "Z1", icon: "read-aloud", controls: [b("review.readAloud", "V1", "large")] },
         { id: "language", label: "Sprache", key: "ZL", icon: "translate",
           controls: [dd("review.translate", "Ü", "large"), dd("review.language", "SP", "large")] },
         { id: "comments", label: "Kommentare", key: "ZC", icon: "comment",
           controls: [b("review.newComment", "N", "large"), split("review.deleteComment", "L", "large", ctx.panels.deleteComment),
-            b("review.prevComment", "Q", "large"), b("review.nextComment", "ß", "large")] },
-        { id: "tracking", label: "Nachverfolgung", key: "ZT", icon: "track-changes", launcher: { cmd: "review.trackOptions", key: "C" },
+            b("review.prevComment", "Q", "large"), b("review.nextComment", "ß", "large"), showComments],
+          smaller: [[stack(b("review.newComment", "N", "medium"), split("review.deleteComment", "L", "medium", ctx.panels.deleteComment), b("review.prevComment", "Q", "medium")),
+            stack(b("review.nextComment", "ß", "medium"), split("review.showComments", "KA", "medium", ctx.panels.showComments))]] },
+        { id: "markup", label: "Markup", key: "ZM", icon: "markup", launcher: { cmd: "review.trackOptions", key: "C" },
+          controls: [dd("review.filterMarkup", "F1", "large", undefined, ctx.panels.filterMarkup),
+            stack(markupMode, dd("review.showMarkup", "G", "medium", undefined, ctx.panels.filterMarkup), split("review.reviewingPane", "U1", "medium"))] },
+        { id: "tracking", label: "Nachverfolgung", key: "ZT", icon: "track-changes",
           controls: [split("review.trackChanges", "DN", "large", ctx.panels.track),
-            stack({ type: "combo", cmd: "review.markupMode", width: 140, key: "TD", value: ctx.markup.value, options: ctx.markup.options, commit: ctx.markup.set },
-              dd("review.showMarkup", "G", "medium")),
             split("review.accept", "AA", "large", ctx.panels.accept), split("review.reject", "FB", "large", ctx.panels.reject),
             stack(b("review.prevChange", "U", "medium"), b("review.nextChange", "Ä", "medium"))] },
       ],
     },
     {
       id: "view", label: "Ansicht", key: "F",
-      shrink: ["show", "zoom", "views"],
+      shrink: ["zoom", "show", "zoom", "views"],
       groups: [
         { id: "views", label: "Ansichten", key: "ZV", icon: "print-layout",
-          controls: [b("view.readMode", "E", "large"), b("view.printLayout", "D1", "large")] },
+          controls: [b("view.readMode", "E", "large"), b("view.printLayout", "D1", "large"), b("view.webLayout", "W1", "large")] },
         { id: "show", label: "Anzeigen", key: "ZS", icon: "ruler",
-          controls: [stack({ type: "check", cmd: "view.ruler", key: "L2" }, { type: "check", cmd: "view.navPane", key: "V2" })] },
+          controls: [stack({ type: "check", cmd: "view.ruler", key: "L2" }, { type: "check", cmd: "view.gridlines", key: "G1" }, { type: "check", cmd: "view.navPane", key: "V2" })] },
         { id: "zoom", label: "Zoom", key: "ZZ", icon: "zoom",
           controls: [b("view.zoomDialog", "DO", "large"), b("view.zoom100", "0", "large"),
-            stack(b("view.onePage", "1", "medium"), b("view.multiplePages", "2", "medium"), b("view.pageWidth", "Ö", "medium"))] },
+            stack(b("view.onePage", "1", "medium"), b("view.multiplePages", "2", "medium"), b("view.pageWidth", "Ö", "medium"))],
+          smaller: [[b("view.zoomDialog", "DO", "large"), b("view.zoom100", "0", "large"),
+            stack(b("view.onePage", "1"), b("view.multiplePages", "2"), b("view.pageWidth", "Ö"))]] },
       ],
     },
   ];

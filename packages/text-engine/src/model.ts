@@ -302,7 +302,8 @@ export interface CommentMeta {
 export interface TabStop {
   /** Position in points from the left margin. */
   readonly pos: number;
-  readonly align: "left" | "center" | "right" | "decimal" | "bar" | "clear";
+  /** "num": the tab stop a list level sets after its number (acts like "left"). */
+  readonly align: "left" | "center" | "right" | "decimal" | "bar" | "clear" | "num";
   readonly leader?: "none" | "dot" | "hyphen" | "underscore" | "heavy" | "middleDot";
 }
 
@@ -363,6 +364,8 @@ export interface InlineObject {
   readonly latex?: string;
   /** Link target (hyperlinks). */
   readonly href?: string;
+  /** Font of a symbol object (w:sym, e.g. Wingdings); its display is in that font. */
+  readonly font?: string;
 }
 
 /** A zero-width marker kept at an offset (bookmark, comment range …). */

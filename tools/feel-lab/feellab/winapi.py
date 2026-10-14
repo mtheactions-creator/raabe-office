@@ -55,6 +55,9 @@ VK = {
     "backspace": 0x08, "tab": 0x09, "enter": 0x0D, "shift": 0x10, "ctrl": 0x11, "alt": 0x12,
     "esc": 0x1B, "space": 0x20, "pageup": 0x21, "pagedown": 0x22, "end": 0x23, "home": 0x24,
     "left": 0x25, "up": 0x26, "right": 0x27, "down": 0x28, "delete": 0x2E,
+    **{f"f{i}": 0x6F + i for i in range(1, 13)},
+    # German keyboard: + # - . , < (VK_OEM_PLUS, VK_OEM_2, VK_OEM_MINUS, VK_OEM_PERIOD, VK_OEM_COMMA, VK_OEM_102).
+    "plus": 0xBB, "hash": 0xBF, "minus": 0xBD, "period": 0xBE, "comma": 0xBC, "lt": 0xE2,
 }
 EXTENDED = {0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27, 0x28, 0x2E}
 
@@ -131,6 +134,14 @@ def mouse_down(x: float, y: float) -> None:
 
 def mouse_up(x: float, y: float) -> None:
     _send(_mouse(x, y, MOUSEEVENTF_LEFTUP))
+
+
+def right_click(x: float, y: float) -> None:
+    move(x, y)
+    time.sleep(0.05)
+    _send(_mouse(x, y, 0x0008))  # MOUSEEVENTF_RIGHTDOWN
+    time.sleep(0.03)
+    _send(_mouse(x, y, 0x0010))  # MOUSEEVENTF_RIGHTUP
 
 
 def click(x: float, y: float, count: int = 1, modifiers: str = "") -> None:

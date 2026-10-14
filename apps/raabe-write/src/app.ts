@@ -12,15 +12,16 @@ import { COMMANDS } from "./command-list";
 import type { AppApi } from "./features/api";
 import { headerFooterFeature, HEADER_COMMANDS } from "./features/headerfooter";
 import { findFeature, FIND_COMMANDS } from "./features/find";
-import { listsFeature } from "./features/lists";
+import { listsFeature, LIST_COMMANDS } from "./features/lists";
 import { pageSetupFeature, PAGE_COMMANDS } from "./features/pagesetup";
 import { picturesFeature, PICTURE_COMMANDS } from "./features/pictures";
 import { mathFeature, MATH_COMMANDS } from "./features/math";
 import { referencesFeature, REFERENCE_COMMANDS } from "./features/references";
 import { reviewFeature, REVIEW_COMMANDS } from "./features/review";
 import { spellFeature } from "./features/spell";
+import { contextFeature, CONTEXT_COMMANDS } from "./features/context";
 import { tablesFeature, TABLE_COMMANDS } from "./features/tables";
-import { GALLERY, ribbonTabs, type RibbonContext } from "./ribbon-def";
+import { GALLERY, miniToolbar, ribbonTabs, type RibbonContext } from "./ribbon-def";
 import { TEMPLATES, finishTemplate, templateState, type TemplateId } from "./templates";
 import { addRecent, loadRecent, loadSettings, removeRecent, saveSettings, setPinned, type Settings } from "./store";
 import appIconUrl from "../../../branding/raabe-write-small.svg?url";
@@ -102,7 +103,7 @@ export class WriteApp {
     this.fonts.onChange(() => { for (const d of this.docs) d.editor.relayout(); });
     void platform.listFonts().then((f) => { this.fontList = f; }).catch(() => {});
     this.commands.register(...COMMANDS, ...TABLE_COMMANDS, ...PAGE_COMMANDS, ...HEADER_COMMANDS, ...PICTURE_COMMANDS, ...FIND_COMMANDS,
-      ...REFERENCE_COMMANDS, ...REVIEW_COMMANDS, ...MATH_COMMANDS);
+      ...REFERENCE_COMMANDS, ...REVIEW_COMMANDS, ...MATH_COMMANDS, ...CONTEXT_COMMANDS, ...LIST_COMMANDS);
     this.implementCommands();
     this.features = this.makeFeatures();
 
@@ -169,7 +170,26 @@ export class WriteApp {
       focus: () => this.focusDoc(),
       refresh: () => this.updateChrome(false),
       selectTab: (id) => { this.updateContextualTabs(); this.ribbon?.select(id); },
+      clipboard: () => this.readClipboard(false),
     };
+  }
+
+  /** Text, HTML and a picture from the system clipboard (the platform's text as fallback). */
+  private async readClipboard(plain: boolean): Promise<{ text: string; html: string; image: Blob | null }> {
+    let html = "";
+    let image: Blob | null = null;
+    if (!plain) {
+      try { if (this.platform.clipboardReadHtml) html = await this.platform.clipboardReadHtml(); } catch { /* the browser's API below */ }
+      try {
+        for (const item of await navigator.clipboard.read()) {
+          if (item.types.includes("text/html") && !html) html = await (await item.getType("text/html")).text();
+          const type = item.types.find((t) => t.startsWith("image/"));
+          if (type && !image) image = await item.getType(type);
+        }
+      } catch { /* no HTML access: text only */ }
+    }
+    const text = await this.platform.clipboardRead().catch(() => "");
+    return { text, html, image };
   }
 
   /** Back to the document: the equation being edited, else the text. */
@@ -180,13 +200,15 @@ export class WriteApp {
 
   private makeFeatures() {
     const api = this.api();
+    const spell = spellFeature(api);
     return {
+      context: contextFeature(api, spell.spellEntries, (kind) => this.ribbon?.toolbar(miniToolbar(this.ribbonContext(), kind)).el ?? null),
       lists: listsFeature(api),
       tables: tablesFeature(api),
       pages: pageSetupFeature(api),
       hf: headerFooterFeature(api),
       pictures: picturesFeature(api),
-      spell: spellFeature(api),
+      spell,
       refs: referencesFeature(api),
       math: mathFeature(api),
       review: reviewFeature(api, () => this.settings.userName, this.commentPane),
@@ -218,6 +240,11 @@ export class WriteApp {
     this.docArea.append(ws);
     const editor = new Editor(ws, state ?? {}, this.fonts);
     this.features.spell.attach(editor);
+    this.features.context.attach(editor);
+    const pf = this.platform;
+    if (pf.clipboardReadHtml && pf.clipboardWriteHtml) {
+      editor.clipboardHost = { readHtml: () => pf.clipboardReadHtml!(), write: (text, html) => pf.clipboardWriteHtml!(html, text) };
+    }
     this.features.review.attach(editor);
     this.features.math.attach(editor);
     const doc: Doc = {
@@ -743,6 +770,9 @@ export class WriteApp {
     const write = async (e: Editor, cut: boolean) => {
       const html = e.selectionHtml();
       const text = (cut ? e.cutSelection() : e.copySelection()).replace(/\n/g, "\r\n");
+      if (this.platform.clipboardWriteHtml) {
+        try { await this.platform.clipboardWriteHtml(html, text); return; } catch { /* the browser's API below */ }
+      }
       try {
         await navigator.clipboard.write([new ClipboardItem({ "text/plain": new Blob([text], { type: "text/plain" }), "text/html": new Blob([html], { type: "text/html" }) })]);
       } catch {
@@ -752,14 +782,8 @@ export class WriteApp {
     c.implement("edit.copy", { run: async () => { const e = ed(); if (e) await write(e, false); }, enabled: () => !!ed()?.hasSelection });
     c.implement("edit.cut", { run: async () => { const e = ed(); if (e) await write(e, true); }, enabled: () => !!ed()?.hasSelection });
     const paste = (plain: boolean) => async () => {
-      let html = "";
-      if (!plain) {
-        try {
-          for (const item of await navigator.clipboard.read()) if (item.types.includes("text/html")) html = await (await item.getType("text/html")).text();
-        } catch { /* no HTML access: text only */ }
-      }
-      const t = await this.platform.clipboardRead().catch(() => "");
-      if (plain) { if (t) ed()?.pasteText(t, true); } else ed()?.paste(t, html);
+      const { text: t, html, image } = await this.readClipboard(plain);
+      if (plain) { if (t) ed()?.pasteText(t, true); } else ed()?.paste(t, html, image);
     };
     c.implement("edit.paste", { run: paste(false), enabled: has });
     c.implement("edit.pasteText", { run: paste(true), enabled: has });
@@ -958,6 +982,8 @@ export class WriteApp {
         get deleteComment() { return self.features.review.deleteMenu; },
         get accept() { return self.features.review.acceptMenu; },
         get reject() { return self.features.review.rejectMenu; },
+        get showComments() { return self.features.review.showCommentsMenu; },
+        get filterMarkup() { return self.features.review.filterMenu; },
         borders: ["bottom", "top", "left", "right", "none", "all", "outside", "inside"].map((k) => ({ cmd: `border.${k}` })),
         wrap: ["picture.wrapInline", "picture.wrapSquare", "picture.wrapTight", "picture.wrapThrough", "picture.wrapTopBottom", "picture.wrapBehind", "picture.wrapFront"].map((cmd) => ({ cmd })),
       },
@@ -1143,6 +1169,7 @@ export class WriteApp {
         if (k === "w") { e.preventDefault(); ed?.setUnderline("words"); return; }
         if (k === "z") { e.preventDefault(); ed?.resetChar(); return; }
         if (k === "t") { e.preventDefault(); ed?.hanging(-1); return; }
+        if (k === "l") { e.preventDefault(); ed?.applyListBullet(); return; }
         if (vk === 226) cmd = "font.grow";                 // Strg+> (Umschalt+<)
         if (vk === 189) cmd = "font.subscript";            // Strg+Umschalt+-
         if (vk === 56) cmd = "para.showMarks";             // Strg+* (Umschalt+8)
@@ -1151,9 +1178,6 @@ export class WriteApp {
         if (k === "f" && vk === 70) cmd = "ref.footnote";
         if (k === "d" && vk === 68) cmd = "ref.endnote";
         if (k === "k" && vk === 75) cmd = "review.newComment";
-        if (k === "1") cmd = "style.h1";
-        if (k === "2") cmd = "style.h2";
-        if (k === "3") cmd = "style.h3";
         // Word: CopyFormat / PasteFormat (the painter brush is the ribbon button).
         if (k === "c" && vk === 67) { e.preventDefault(); if (ed) this.copiedFormat = ed.copyFormat(); return; }
         if (k === "v" && vk === 86) { e.preventDefault(); if (ed && this.copiedFormat) ed.pasteFormat(this.copiedFormat); return; }
@@ -1202,6 +1226,8 @@ export class WriteApp {
       enabled: (id: string) => this.commands.isEnabled(id),
       newDoc: () => { this.newDoc(); },
       newFromTemplate: (t: TemplateId) => this.newFromTemplate(t),
+      /** Closes every document except the active one, discarding changes (catalogue runs). */
+      closeOthers: () => { for (const d of [...this.docs]) if (d !== this.active) this.removeDoc(d); },
       activeRibbonTab: () => this.ribbon.activeTab,
       infobar: () => this.infobarSlot.textContent,
       /** The active editor, for tests that call its commands directly. */

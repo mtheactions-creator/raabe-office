@@ -46,6 +46,8 @@ export function tauriPlatform(): Platform {
     deleteRecovery: (id) => invoke("delete_recovery", { id }),
     clipboardRead: async () => (await readText()) ?? "",
     clipboardWrite: (text) => writeText(text),
+    clipboardReadHtml: () => invoke<string>("clipboard_read_html"),
+    clipboardWriteHtml: (html, text) => invoke("clipboard_write_html", { html, text }),
     printToPdf: (path) => invoke("print_to_pdf", { path }),
     listFonts: () => invoke<string[]>("list_fonts"),
     fontMetrics: (families) => invoke("font_metrics", { families }),

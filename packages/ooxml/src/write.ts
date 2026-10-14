@@ -26,7 +26,18 @@ const W15 = "http://schemas.microsoft.com/office/word/2012/wordml";
 const XML_HEAD = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n';
 const DEFAULT_ROOT = (tag: string) => `<w:${tag} xmlns:w="${W}" xmlns:r="${R}" xmlns:wp="${NS_WP}" xmlns:w14="${W14}" xmlns:m="${M_NS}">`;
 /** Declares the math namespace on a part's root element when its content uses it. */
-const withMath = (root: string, body: string) => (body.includes("<m:") && !root.includes("xmlns:m=") ? root.replace(/>$/, ` xmlns:m="${M_NS}">`) : root);
+const withMath = (root: string, body: string) => {
+  if (body.includes("<m:") && !root.includes("xmlns:m=")) root = root.replace(/>$/, ` xmlns:m="${M_NS}">`);
+  // Emoji (w16se:symEx inside mc:AlternateContent).
+  if (body.includes("<w16se:")) {
+    if (!root.includes("xmlns:mc=")) root = root.replace(/>$/, ' xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">');
+    if (!root.includes("xmlns:w16se=")) root = root.replace(/>$/, ' xmlns:w16se="http://schemas.microsoft.com/office/word/2015/wordml/symex">');
+    const ign = /mc:Ignorable="([^"]*)"/.exec(root);
+    if (!ign) root = root.replace(/>$/, ' mc:Ignorable="w16se">');
+    else if (!ign[1].split(/\s+/).includes("w16se")) root = root.replace(ign[0], `mc:Ignorable="${ign[1]} w16se"`);
+  }
+  return root;
+};
 
 function splitExtra(list: readonly unknown[] | undefined): { name: string; xml: string }[] {
   return (list ?? []).map((x) => {
@@ -164,6 +175,15 @@ class DocWriter {
         else if (ch === COLUMN_BREAK) { flushText(); inner += '<w:br w:type="column"/>'; }
         else if (ch === NBHYPHEN) { flushText(); inner += "<w:noBreakHyphen/>"; }
         else if (ch === SOFTHYPHEN) { flushText(); inner += "<w:softHyphen/>"; }
+        else if (run.props.font === "Segoe UI Emoji" && !del && (p.text.codePointAt(i) ?? 0) >= 0x2600) {
+          // Emoji the way Word writes them, so Word treats them as its own symbols.
+          flushText();
+          const cp = p.text.codePointAt(i)!;
+          const str = String.fromCodePoint(cp);
+          inner += `<mc:AlternateContent><mc:Choice Requires="w16se"><w16se:symEx w16se:font="Segoe UI Emoji" w16se:char="${cp.toString(16).toUpperCase()}"/></mc:Choice>` +
+            `<mc:Fallback><w:t>${str}</w:t></mc:Fallback></mc:AlternateContent>`;
+          if (str.length === 2) i++;
+        }
         else text += ch;
       }
       flushRun();
@@ -437,7 +457,7 @@ class DocWriter {
         `${this.blocks(paras, path, attrs)}</w:comment>`;
     });
     const rootWith14 = root.includes("xmlns:w14=") ? root : root.replace(/>$/, ` xmlns:w14="${W14}">`);
-    this.pw.setPart(path, `${XML_HEAD}${rootWith14}${body.join("")}</w:comments>`, CT.comments);
+    this.pw.setPart(path, `${XML_HEAD}${withMath(rootWith14, body.join(""))}${body.join("")}</w:comments>`, CT.comments);
     this.pw.link("word/document.xml", REL.comments, path);
     // Replies and resolved comments (Word 2013+): commentsExtended.xml.
     if ([...meta.values()].some((m) => m.parent || m.done)) {

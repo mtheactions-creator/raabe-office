@@ -83,7 +83,15 @@ describe("lists", () => {
 
   it("recognises AutoFormat prefixes", () => {
     expect(E.autoListLevels("1.")?.levels[0].text).toBe("%1.");
-    expect(E.autoListLevels("3)")?.start).toBe(3);
+    // Word starts lists only from the first value (measured): "3)" stays text.
+    expect(E.autoListLevels("3)")).toBeNull();
+    expect(E.autoListLevels("(1)")?.levels[0].text).toBe("(%1)");
+    expect(E.autoListLevels("1)")?.levels[0].text).toBe("%1)");
+    expect(E.autoListLevels("1-")?.levels[0].text).toBe("%1-");
+    expect(E.autoListLevels("I.")?.levels[0].pPr).toEqual({ indLeft: 54, indFirst: -36 });
+    expect(E.autoListLevels("-", "Arial")?.levels[0]).toMatchObject({ text: "-", rPr: { font: "Arial" } });
+    expect(E.autoListLevels("->")?.levels[0].text).toBe("\uf0e8");
+    expect(E.autoListLevels("(1.")).toBeNull();
     expect(E.autoListLevels("a)")?.levels[0].format).toBe("lowerLetter");
     expect(E.autoListLevels("*")?.levels[0].format).toBe("bullet");
     expect(E.autoListLevels("Hallo")).toBeNull();

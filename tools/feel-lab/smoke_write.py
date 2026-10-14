@@ -233,9 +233,10 @@ def main() -> None:
         winapi.place_quietly(t.hwnd, OFF, 0, 1100, 1400)
         time.sleep(0.8)
         collapsed = t.js("Array.from(document.querySelectorAll('.ribbon-card .rgroup.collapsed')).map(g => g.dataset.group)")
-        order = ["styles", "voice", "editing", "font", "paragraph", "clipboard"]
-        check("narrow window collapses groups in Word's order",
-              collapsed and set(collapsed) == set(order[:len(collapsed)]), str(collapsed))
+        # Word 365 at this width (captures/word-ribbon/Start-800.json, D-038): Schriftart,
+        # Absatz and Bearbeiten collapse; Formatvorlagen and Sprache stay.
+        check("narrow window collapses groups as Word does",
+              collapsed and set(collapsed) == {"font", "paragraph", "editing"}, str(collapsed))
         overflow = t.js("(() => { const c = document.querySelector('.ribbon-card'); return c.scrollWidth - c.clientWidth; })()")
         check("ribbon fits the narrow window", overflow <= 1, str(overflow))
         winapi.place_quietly(t.hwnd, OFF, 0, 2000, 2050)

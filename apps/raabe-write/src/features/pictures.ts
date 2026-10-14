@@ -2,6 +2,7 @@
 // Textumbruch and Größe. Datum und Uhrzeit lives here too (Einfügen > Text).
 
 import { h, showDialog, messageBox, baseName, type Command, type Control, type MenuEntry, type Tab } from "@raabe/shell";
+import { imageInfo, naturalSizePt } from "@raabe/text-engine";
 import { CM, fmtCm, parseNum, type AppApi } from "./api";
 
 const cmd = (id: string, label: string, icon?: string, extra: Partial<Command> = {}): Command => ({ id, label, icon, ...extra });
@@ -10,19 +11,34 @@ export const PICTURE_COMMANDS: Command[] = [
   cmd("picture.fromFile", "Dieses Gerät...", "image-add", { keywords: ["Bild einfügen", "Grafik", "Foto"] }),
   cmd("picture.wrapInline", "Mit Text in Zeile", "wrap-text"),
   cmd("picture.wrapSquare", "Quadrat", "wrap-text"),
-  cmd("picture.wrapTight", "Passend", "wrap-text"),
+  cmd("picture.wrapTight", "Eng", "wrap-text"),
   cmd("picture.wrapThrough", "Transparent", "wrap-text"),
   cmd("picture.wrapTopBottom", "Oben und unten", "wrap-text"),
   cmd("picture.wrapBehind", "Hinter den Text", "send-backward"),
   cmd("picture.wrapFront", "Vor den Text", "bring-forward"),
   cmd("picture.height", "Höhe der Form", undefined),
   cmd("picture.width", "Breite der Form", undefined),
+  cmd("picture.changeFromFile", "Bild ändern", "change-picture"),
+  cmd("picture.changeFromClipboard", "Aus Zwischenablage...", "change-picture"),
+  cmd("picture.saveAs", "Als Grafik speichern...", "save-picture"),
+  cmd("picture.moreLayout", "Weitere Layoutoptionen...", "size-position"),
+  cmd("picture.setDefaultLayout", "Als Standardlayout festlegen"),
+  cmd("picture.altText", "Alternativtext", "alt-text"),
+  cmd("picture.sizePosition", "Größe und Position...", "size-position"),
+  cmd("picture.formatPane", "Grafik formatieren...", "format-picture"),
+  cmd("picture.styles", "Bildformatvorlagen", "picture-styles"),
+  cmd("picture.crop", "Zuschneiden", "crop"),
 ];
 
 const MIME: Record<string, string> = { png: "image/png", jpg: "image/jpeg", jpeg: "image/jpeg", gif: "image/gif", bmp: "image/bmp", svg: "image/svg+xml", webp: "image/webp" };
 
-/** Natural size of a picture in points (96 dpi pixels, as Word assumes without dpi data). */
+/**
+ * Natural size of a picture in points: from the file's resolution as Word does (a 500 dpi
+ * PNG comes in small), 96 dpi without one; other formats from the decoded picture.
+ */
 function naturalSize(bytes: Uint8Array, type: string): Promise<{ w: number; h: number }> {
+  const info = imageInfo(bytes);
+  if (info) return Promise.resolve(naturalSizePt(info));
   return new Promise((resolve, reject) => {
     const url = URL.createObjectURL(new Blob([bytes as BlobPart], { type }));
     const img = new Image();

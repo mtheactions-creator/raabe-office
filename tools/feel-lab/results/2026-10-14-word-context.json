@@ -1,0 +1,1146 @@
+[
+ {
+  "kind": "text",
+  "items": [
+   {
+    "type": "Edit",
+    "name": "Geben Sie etwas ein, um danach zu suchen, und verwenden Sie die NACH-OBEN- und NACH-UNTEN-TASTEN zum Navigieren.",
+    "enabled": true,
+    "rect": [
+     698,
+     473,
+     284,
+     28
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Ausschneiden",
+    "enabled": false,
+    "rect": [
+     691,
+     512,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Kopieren",
+    "enabled": false,
+    "rect": [
+     691,
+     556,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Copy Link to Location...",
+    "enabled": true,
+    "rect": [
+     691,
+     697,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Schriftart...",
+    "enabled": true,
+    "rect": [
+     691,
+     744,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Absatz...",
+    "enabled": true,
+    "rect": [
+     691,
+     788,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Synonyme",
+    "enabled": true,
+    "rect": [
+     691,
+     835,
+     330,
+     44
+    ],
+    "submenu": []
+   },
+   {
+    "type": "MenuItem",
+    "name": "Laut vorlesen",
+    "enabled": true,
+    "rect": [
+     691,
+     879,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Übersetzen",
+    "enabled": true,
+    "rect": [
+     691,
+     923,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "SplitButton",
+    "name": "Link",
+    "enabled": true,
+    "rect": [
+     691,
+     970,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Neuer Kommentar",
+    "enabled": true,
+    "rect": [
+     691,
+     1014,
+     330,
+     44
+    ]
+   }
+  ],
+  "toolbar": [
+   {
+    "type": "Button",
+    "name": "Mit Copilot bearbeiten ",
+    "enabled": false
+   },
+   {
+    "type": "MenuItem",
+    "name": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Neuer Kommentar",
+    "enabled": true
+   },
+   {
+    "type": "ComboBox",
+    "name": "",
+    "enabled": true
+   },
+   {
+    "type": "ComboBox",
+    "name": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Schriftart vergrößern",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Schriftart verkleinern",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Format übertragen",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Fett",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Kursiv",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Unterstreichen",
+    "enabled": true
+   },
+   {
+    "type": "SplitButton",
+    "name": "Texthervorhebungsfarbe",
+    "enabled": true
+   },
+   {
+    "type": "SplitButton",
+    "name": "Schriftfarbe",
+    "enabled": true
+   },
+   {
+    "type": "SplitButton",
+    "name": "Aufzählungszeichen",
+    "enabled": true
+   },
+   {
+    "type": "SplitButton",
+    "name": "Nummerierung",
+    "enabled": true
+   }
+  ]
+ },
+ {
+  "kind": "list",
+  "items": [
+   {
+    "type": "Edit",
+    "name": "Geben Sie etwas ein, um danach zu suchen, und verwenden Sie die NACH-OBEN- und NACH-UNTEN-TASTEN zum Navigieren.",
+    "enabled": true,
+    "rect": [
+     645,
+     549,
+     289,
+     28
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Ausschneiden",
+    "enabled": false,
+    "rect": [
+     638,
+     588,
+     335,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Kopieren",
+    "enabled": false,
+    "rect": [
+     638,
+     632,
+     335,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Copy Link to Location...",
+    "enabled": true,
+    "rect": [
+     638,
+     773,
+     335,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Listeneinzug anpassen...",
+    "enabled": true,
+    "rect": [
+     638,
+     820,
+     335,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Separate Liste",
+    "enabled": true,
+    "rect": [
+     638,
+     864,
+     335,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Mit vorheriger Liste verknüpfen",
+    "enabled": false,
+    "rect": [
+     638,
+     908,
+     335,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Schriftart...",
+    "enabled": true,
+    "rect": [
+     638,
+     955,
+     335,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Absatz...",
+    "enabled": true,
+    "rect": [
+     638,
+     999,
+     335,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Synonyme",
+    "enabled": true,
+    "rect": [
+     638,
+     1046,
+     335,
+     44
+    ],
+    "submenu": []
+   },
+   {
+    "type": "MenuItem",
+    "name": "Laut vorlesen",
+    "enabled": true,
+    "rect": [
+     638,
+     1090,
+     335,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Übersetzen",
+    "enabled": true,
+    "rect": [
+     638,
+     1134,
+     335,
+     44
+    ]
+   },
+   {
+    "type": "SplitButton",
+    "name": "Link",
+    "enabled": true,
+    "rect": [
+     638,
+     1181,
+     335,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Neuer Kommentar",
+    "enabled": true,
+    "rect": [
+     638,
+     1225,
+     335,
+     44
+    ]
+   }
+  ],
+  "toolbar": [
+   {
+    "type": "Button",
+    "name": "Mit Copilot bearbeiten ",
+    "enabled": false
+   },
+   {
+    "type": "MenuItem",
+    "name": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Neuer Kommentar",
+    "enabled": true
+   },
+   {
+    "type": "ComboBox",
+    "name": "",
+    "enabled": true
+   },
+   {
+    "type": "ComboBox",
+    "name": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Schriftart vergrößern",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Schriftart verkleinern",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Format übertragen",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Fett",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Kursiv",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Unterstreichen",
+    "enabled": true
+   },
+   {
+    "type": "SplitButton",
+    "name": "Texthervorhebungsfarbe",
+    "enabled": true
+   },
+   {
+    "type": "SplitButton",
+    "name": "Schriftfarbe",
+    "enabled": true
+   },
+   {
+    "type": "SplitButton",
+    "name": "Aufzählungszeichen",
+    "enabled": true
+   },
+   {
+    "type": "SplitButton",
+    "name": "Nummerierung",
+    "enabled": true
+   }
+  ]
+ },
+ {
+  "kind": "table",
+  "items": [
+   {
+    "type": "Edit",
+    "name": "Geben Sie etwas ein, um danach zu suchen, und verwenden Sie die NACH-OBEN- und NACH-UNTEN-TASTEN zum Navigieren.",
+    "enabled": true,
+    "rect": [
+     1033,
+     631,
+     284,
+     28
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Ausschneiden",
+    "enabled": false,
+    "rect": [
+     1026,
+     670,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Kopieren",
+    "enabled": false,
+    "rect": [
+     1026,
+     714,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Copy Link to Location...",
+    "enabled": true,
+    "rect": [
+     1026,
+     855,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Synonyme",
+    "enabled": true,
+    "rect": [
+     1026,
+     902,
+     330,
+     44
+    ],
+    "submenu": []
+   },
+   {
+    "type": "MenuItem",
+    "name": "Laut vorlesen",
+    "enabled": true,
+    "rect": [
+     1026,
+     946,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Übersetzen",
+    "enabled": true,
+    "rect": [
+     1026,
+     990,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Einfügen",
+    "enabled": true,
+    "rect": [
+     1026,
+     1037,
+     330,
+     44
+    ],
+    "submenu": []
+   },
+   {
+    "type": "MenuItem",
+    "name": "Zellen löschen...",
+    "enabled": true,
+    "rect": [
+     1026,
+     1081,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Zellen teilen...",
+    "enabled": true,
+    "rect": [
+     1026,
+     1125,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "SplitButton",
+    "name": "Rahmenarten",
+    "enabled": true,
+    "rect": [
+     1026,
+     1172,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Textrichtung...",
+    "enabled": true,
+    "rect": [
+     1026,
+     1216,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Tabelleneigenschaften...",
+    "enabled": true,
+    "rect": [
+     1026,
+     1260,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "SplitButton",
+    "name": "Link",
+    "enabled": true,
+    "rect": [
+     1026,
+     1307,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Neuer Kommentar",
+    "enabled": true,
+    "rect": [
+     1026,
+     1351,
+     330,
+     44
+    ]
+   }
+  ],
+  "toolbar": [
+   {
+    "type": "Button",
+    "name": "Mit Copilot bearbeiten ",
+    "enabled": false
+   },
+   {
+    "type": "MenuItem",
+    "name": "",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Neuer Kommentar",
+    "enabled": true
+   },
+   {
+    "type": "ComboBox",
+    "name": "",
+    "enabled": true
+   },
+   {
+    "type": "ComboBox",
+    "name": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Schriftart vergrößern",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Schriftart verkleinern",
+    "enabled": true
+   },
+   {
+    "type": "SplitButton",
+    "name": "Aufzählungszeichen",
+    "enabled": true
+   },
+   {
+    "type": "SplitButton",
+    "name": "Nummerierung",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Fett",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Kursiv",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Zentriert",
+    "enabled": true
+   },
+   {
+    "type": "SplitButton",
+    "name": "Texthervorhebungsfarbe",
+    "enabled": true
+   },
+   {
+    "type": "SplitButton",
+    "name": "Schriftfarbe",
+    "enabled": true
+   },
+   {
+    "type": "SplitButton",
+    "name": "Schattierung",
+    "enabled": true
+   },
+   {
+    "type": "SplitButton",
+    "name": "Rahmen",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Format übertragen",
+    "enabled": true
+   }
+  ]
+ },
+ {
+  "kind": "table-cells",
+  "items": [
+   {
+    "type": "Edit",
+    "name": "Geben Sie etwas ein, um danach zu suchen, und verwenden Sie die NACH-OBEN- und NACH-UNTEN-TASTEN zum Navigieren.",
+    "enabled": true,
+    "rect": [
+     580,
+     659,
+     284,
+     28
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Auswahl im Editor überprüfen",
+    "enabled": true,
+    "rect": [
+     573,
+     698,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Ausschneiden",
+    "enabled": true,
+    "rect": [
+     573,
+     745,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Kopieren",
+    "enabled": true,
+    "rect": [
+     573,
+     789,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Einfügen",
+    "enabled": true,
+    "rect": [
+     573,
+     930,
+     330,
+     44
+    ],
+    "submenu": []
+   },
+   {
+    "type": "MenuItem",
+    "name": "Tabelle löschen",
+    "enabled": true,
+    "rect": [
+     573,
+     974,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Zeilen gleichmäßig verteilen",
+    "enabled": true,
+    "rect": [
+     573,
+     1018,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Spalten gleichmäßig verteilen",
+    "enabled": true,
+    "rect": [
+     573,
+     1062,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "SplitButton",
+    "name": "Rahmenarten",
+    "enabled": true,
+    "rect": [
+     573,
+     1109,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "AutoAnpassen",
+    "enabled": true,
+    "rect": [
+     573,
+     1153,
+     330,
+     44
+    ],
+    "submenu": []
+   },
+   {
+    "type": "MenuItem",
+    "name": "Textrichtung...",
+    "enabled": true,
+    "rect": [
+     573,
+     1197,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Beschriftung einfügen...",
+    "enabled": true,
+    "rect": [
+     573,
+     1241,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Tabelleneigenschaften...",
+    "enabled": true,
+    "rect": [
+     573,
+     1285,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Neuer Kommentar",
+    "enabled": true,
+    "rect": [
+     573,
+     1332,
+     330,
+     44
+    ]
+   }
+  ],
+  "toolbar": [
+   {
+    "type": "MenuItem",
+    "name": "",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "",
+    "enabled": true
+   },
+   {
+    "type": "ComboBox",
+    "name": "",
+    "enabled": true
+   },
+   {
+    "type": "ComboBox",
+    "name": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Schriftart vergrößern",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Schriftart verkleinern",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Format übertragen",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Fett",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Kursiv",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Zentriert",
+    "enabled": true
+   },
+   {
+    "type": "SplitButton",
+    "name": "Texthervorhebungsfarbe",
+    "enabled": true
+   },
+   {
+    "type": "SplitButton",
+    "name": "Schriftfarbe",
+    "enabled": true
+   },
+   {
+    "type": "SplitButton",
+    "name": "Schattierung",
+    "enabled": true
+   },
+   {
+    "type": "SplitButton",
+    "name": "Rahmen",
+    "enabled": true
+   }
+  ]
+ },
+ {
+  "kind": "picture",
+  "items": [
+   {
+    "type": "Edit",
+    "name": "Geben Sie etwas ein, um danach zu suchen, und verwenden Sie die NACH-OBEN- und NACH-UNTEN-TASTEN zum Navigieren.",
+    "enabled": true,
+    "rect": [
+     634,
+     788,
+     292,
+     28
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Ausschneiden",
+    "enabled": true,
+    "rect": [
+     627,
+     827,
+     338,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Kopieren",
+    "enabled": true,
+    "rect": [
+     627,
+     871,
+     338,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "In Office Math konvertieren",
+    "enabled": false,
+    "rect": [
+     627,
+     1012,
+     338,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Alle in Office Math konvertieren",
+    "enabled": false,
+    "rect": [
+     627,
+     1056,
+     338,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Bild bearbeiten",
+    "enabled": false,
+    "rect": [
+     627,
+     1103,
+     338,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Bild ändern",
+    "enabled": true,
+    "rect": [
+     627,
+     1147,
+     338,
+     44
+    ],
+    "submenu": []
+   },
+   {
+    "type": "MenuItem",
+    "name": "Gruppieren",
+    "enabled": false,
+    "rect": [
+     627,
+     1194,
+     338,
+     44
+    ]
+   },
+   {
+    "type": "SplitButton",
+    "name": "In den Vordergrund",
+    "enabled": false,
+    "rect": [
+     627,
+     1238,
+     338,
+     44
+    ]
+   },
+   {
+    "type": "SplitButton",
+    "name": "In den Hintergrund",
+    "enabled": false,
+    "rect": [
+     627,
+     1282,
+     338,
+     44
+    ]
+   },
+   {
+    "type": "SplitButton",
+    "name": "Link",
+    "enabled": true,
+    "rect": [
+     627,
+     1329,
+     338,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Als Grafik speichern...",
+    "enabled": true,
+    "rect": [
+     627,
+     1376,
+     338,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Beschriftung einfügen...",
+    "enabled": true,
+    "rect": [
+     627,
+     1423,
+     338,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Textumbruch",
+    "enabled": true,
+    "rect": [
+     627,
+     1467,
+     338,
+     44
+    ],
+    "submenu": []
+   },
+   {
+    "type": "MenuItem",
+    "name": "Alternativtext anzeigen...",
+    "enabled": true,
+    "rect": [
+     627,
+     1514,
+     338,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Größe und Position...",
+    "enabled": true,
+    "rect": [
+     627,
+     1558,
+     338,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Grafik formatieren...",
+    "enabled": true,
+    "rect": [
+     627,
+     1602,
+     338,
+     44
+    ]
+   }
+  ],
+  "toolbar": [
+   {
+    "type": "MenuItem",
+    "name": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Zuschneiden",
+    "enabled": true
+   }
+  ]
+ }
+]

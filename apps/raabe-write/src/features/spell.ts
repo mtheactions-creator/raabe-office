@@ -5,7 +5,7 @@
 // is not marked until the caret leaves it.
 
 import type { Editor, Para, TextMark } from "@raabe/text-engine";
-import { closePopup, h, icon, messageBox, showDialog, showPopup } from "@raabe/shell";
+import { h, messageBox, showDialog, type MenuEntry } from "@raabe/shell";
 import type { AppApi } from "./api";
 
 interface Word { a: number; b: number; text: string; lang: string }
@@ -116,7 +116,6 @@ export function spellFeature(api: AppApi) {
     if (editors.has(e)) return;
     editors.add(e);
     e.extraMarks = (story, para) => marksFor(e, story, para);
-    e.onContextMenu = (x, y, pos) => void contextMenu(e, x, y, pos);
   };
 
   const misspelled = (e: Editor, p: number, a: number): Word | null => {
@@ -131,42 +130,16 @@ export function spellFeature(api: AppApi) {
     api.editor()?.view.refresh();
   };
 
-  // ----- context menu ------------------------------------------------------------------------
-  const contextMenu = async (e: Editor, x: number, y: number, pos: { p: number; o: number }) => {
-    const c = api.commands;
-    const menu = h("div", { class: "menu", role: "menu" });
-    const item = (label: string, run: () => void, ic?: string, disabled = false) => {
-      menu.append(h("button", { role: "menuitem", disabled, onclick: () => { closePopup(); run(); api.focus(); } }, icon(ic), label));
-    };
-    const cmdItem = (id: string, label?: string) => {
-      const d = c.get(id);
-      menu.append(h("button", { role: "menuitem", disabled: !c.isEnabled(id), onclick: () => { closePopup(); void c.run(id); } }, icon(d.icon), label ?? d.label));
-    };
+  // ----- context menu: suggestions for a misspelled word -------------------------------------
+  const spellEntries = async (e: Editor, pos: { p: number; o: number }): Promise<MenuEntry[]> => {
     const w = misspelled(e, pos.p, pos.o);
-    if (w) {
-      const sugg = await api.platform.spellSuggest(w.lang, w.text).catch(() => [] as string[]);
-      for (const s of sugg.slice(0, 5)) {
-        menu.append(h("button", { role: "menuitem", style: "font-weight:600", onclick: () => { closePopup(); e.replaceRange(pos.p, w.a, w.b, s); api.focus(); } }, icon(undefined), s));
-      }
-      if (!sugg.length) menu.append(h("button", { role: "menuitem", disabled: true }, icon(undefined), "(Keine Vorschläge)"));
-      menu.append(h("hr"));
-      item("Alle ignorieren", () => { ignored.add(w.text); e.view.refresh(); });
-      item("Zum Wörterbuch hinzufügen", () => addToDictionary(w.text));
-      menu.append(h("hr"));
-    }
-    cmdItem("edit.cut"); cmdItem("edit.copy"); cmdItem("edit.paste", "Einfügen");
-    menu.append(h("hr"));
-    if (e.inTable()) {
-      cmdItem("table.insertAbove", "Zeilen oberhalb einfügen"); cmdItem("table.insertBelow", "Zeilen unterhalb einfügen");
-      cmdItem("table.insertLeft", "Spalten links einfügen"); cmdItem("table.insertRight", "Spalten rechts einfügen");
-      cmdItem("table.deleteRows", "Zeilen löschen"); cmdItem("table.deleteColumns", "Spalten löschen");
-      if (e.cellBlock()?.multi) cmdItem("table.merge");
-      menu.append(h("hr"));
-    }
-    if (e.selectedImage()) { cmdItem("layout.wrapText", "Textumbruch"); menu.append(h("hr")); }
-    cmdItem("font.dialog", "Schriftart..."); cmdItem("para.dialog", "Absatz...");
-    if (c.has("insert.comment")) cmdItem("insert.comment", "Neuer Kommentar");
-    showPopup(menu, new DOMRect(x, y, 0, 0));
+    if (!w) return [];
+    const sugg = await api.platform.spellSuggest(w.lang, w.text).catch(() => [] as string[]);
+    const out: MenuEntry[] = sugg.slice(0, 5).map((s) => ({ label: s, bold: true, run: () => { e.replaceRange(pos.p, w.a, w.b, s); api.focus(); } }));
+    if (!sugg.length) out.push({ label: "(Keine Vorschläge)", run: () => {}, disabled: true });
+    out.push("-", { label: "Alle ignorieren", run: () => { ignored.add(w.text); e.view.refresh(); } },
+      { label: "Zum Wörterbuch hinzufügen", run: () => addToDictionary(w.text) }, "-");
+    return out;
   };
 
   // ----- F7: Rechtschreibung und Grammatik -------------------------------------------------
@@ -260,5 +233,5 @@ export function spellFeature(api: AppApi) {
   };
   c.implement("review.language", { run: languageDialog, enabled: () => !!api.editor() });
 
-  return { attach, languageName };
+  return { attach, languageName, spellEntries };
 }

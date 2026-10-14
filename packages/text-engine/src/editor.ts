@@ -8,17 +8,24 @@ import { layoutDocument, type Layout } from "./flow";
 import { Layouter, type LayoutContext } from "./layout";
 import { markInputHandled } from "./probe";
 import {
-  EMPTY, LINE_BREAK, OBJ, PAGE_BREAK, insertionProps, intern, makePara, propsAt, type Align, type CharProps, type LineRule,
+  EMPTY, LINE_BREAK, OBJ, PAGE_BREAK, insertionProps, intern, joinParas, makePara, propsAt, type Align, type CharProps, type LineRule,
   type Para, type ParaProps, type Section,
 } from "./model";
 import { builtinStyle, type ResolvedChar, type ResolvedPara } from "./styles";
 import { View, storyIdOf, type Selection, type TextMark } from "./view";
 import * as E from "./edits";
 import { fromHtml, toHtml } from "./html";
+import { imageInfo, naturalSizePt } from "./images";
+
+/** The visible text of an HTML fragment. */
+function htmlText(html: string): string {
+  return new DOMParser().parseFromString(html, "text/html").body.textContent ?? "";
+}
 import * as R from "./revisions";
+import { INSTANT_TRIGGERS, TRIGGERS, borderLine, instantFix, smartQuote, wordFixes, type Fix } from "./autocorrect";
 import * as S from "./school";
 import { COLUMN_BREAK, type CellDef, type ImageData, type RowDef, type TableDef } from "./model";
-import { addList, bulletLevels as bulletLevelsOf, numberLevels as numberLevelsOf, numberingOf, restartList } from "./numbering";
+import { addList, bulletLevels as bulletLevelsOf, levelOf, listLabels, numberLevels as numberLevelsOf, numberingOf, restartList } from "./numbering";
 import type { BorderSpec, Borders, FloatObject, InlineObject, NumLevel } from "./model";
 import { countWords, isWordChar, nextTokenStart, prevTokenStart, sentenceAt, tokenAt } from "./words";
 
@@ -29,6 +36,16 @@ function typedProps(p: Para, o: number): CharProps {
 }
 
 type Granularity = "char" | "word" | "para";
+
+/** Length of the character before / after an offset: 2 for an emoji's surrogate pair. */
+function charBefore(text: string, o: number): number {
+  const lo = text.charCodeAt(o - 1), hi = text.charCodeAt(o - 2);
+  return lo >= 0xdc00 && lo <= 0xdfff && hi >= 0xd800 && hi <= 0xdbff ? 2 : 1;
+}
+function charAfter(text: string, o: number): number {
+  const hi = text.charCodeAt(o), lo = text.charCodeAt(o + 1);
+  return hi >= 0xd800 && hi <= 0xdbff && lo >= 0xdc00 && lo <= 0xdfff ? 2 : 1;
+}
 
 interface Snapshot {
   state: DocSnapshot;
@@ -83,6 +100,18 @@ export const FONT_STEPS = [8, 9, 10, 10.5, 11, 12, 14, 16, 18, 20, 22, 24, 26, 2
 const GROW_STEPS = FONT_STEPS.filter((x) => x !== 10.5);
 
 let clipboardFragment: { text: string; paras: Para[]; source: Editor } | null = null;
+
+/**
+ * Word's pointer in the selection bar (left margin): the Windows arrow, mirrored so it points
+ * up and to the right. Drawn at the display's scale so it is as sharp as the system cursors.
+ */
+const MIRRORED_ARROW = (() => {
+  const svg = (px: number) => `url("data:image/svg+xml,${encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${px}" height="${px}" viewBox="0 0 32 32">` +
+    '<path d="M19.5 1.5V18.5L15.5 14.5L12.5 21.5L10 20.5L13 13.5H7.5Z" fill="white" stroke="black" stroke-width="1" stroke-linejoin="round"/></svg>')}")`;
+  const set = `image-set(${svg(32)} 1x, ${svg(48)} 1.5x, ${svg(64)} 2x) 19 1, default`;
+  return typeof CSS !== "undefined" && CSS.supports("cursor", set) ? set : `${svg(32)} 19 1, default`;
+})();
 
 const BRUSH_CURSOR = `url("data:image/svg+xml,${encodeURIComponent(
   '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="24"><path d="M2 2v20M2 2h3M2 22h3" stroke="black" stroke-width="1.5" fill="none"/>' +
@@ -307,7 +336,7 @@ export class Editor {
     });
     this.fixStoryKey();
     this.clampSelection();
-    const ropts = { active: this.storyKey, cells: this.selectedCells(), image: this.imageBox() ?? undefined };
+    const ropts = { active: this.storyKey, cells: this.selectedCells(), image: this.imageBox() ?? undefined, table: this.handleTable() };
     this.view.render(this.doc, this.layout, this.sel, ropts);
     if (opts.scroll) {
       this.view.scrollIntoView(this.sel.head, this.sel.headUpstream);
@@ -352,10 +381,24 @@ export class Editor {
 
   /** Cells selected as a whole: when a selection spans cells (Word selects whole cells). */
   private selectedCells(): Set<string> | undefined {
-    const [from, to] = this.range();
-    const a = this.doc.paras[from.p]?.cell, b = this.doc.paras[to.p]?.cell;
+    const [from, to0] = this.range();
+    const paras = this.doc.paras;
+    // A selection that ends at the start of a cell ends after the cell before it.
+    let to = to0;
+    const tc = paras[to.p]?.cell, fc = paras[from.p]?.cell;
+    if (to.o === 0 && tc && to.p > from.p && !(fc && fc.table.id === tc.table.id && fc.row === tc.row && fc.col === tc.col)) {
+      to = { p: to.p - 1, o: paras[to.p - 1].text.length };
+    }
+    const a = paras[from.p]?.cell, b = paras[to.p]?.cell;
     if (from.p === to.p || (!a && !b)) return undefined;
     if (a && b && a.table.id === b.table.id && a.row === b.row && a.col === b.col) return undefined;
+    if (a && b && a.table.id === b.table.id) {
+      // Word selects a block: the rows and columns between the two cells.
+      const r1 = Math.min(a.row, b.row), r2 = Math.max(a.row, b.row), c1 = Math.min(a.col, b.col), c2 = Math.max(a.col, b.col);
+      const block = new Set<string>();
+      for (let r = r1; r <= r2; r++) for (let c = c1; c <= Math.min(c2, a.table.rows[r].cells.length - 1); c++) block.add(`${a.table.id}:${r}:${c}`);
+      return block;
+    }
     const out = new Set<string>();
     for (let i = from.p; i <= to.p; i++) {
       const c = this.doc.paras[i].cell;
@@ -386,6 +429,7 @@ export class Editor {
 
   private setSel(anchor: Pos, head: Pos, upstream = false, keepGoal = false): void {
     this.sel = { anchor, head, headUpstream: upstream };
+    this.cellAnchor = null;
     this.floatSel = null;
     if (!keepGoal) this.goalX = null;
     this.typing = false;
@@ -415,7 +459,7 @@ export class Editor {
 
   /** Formatting shown in the ribbon (font box, Fett button …). */
   charState(): CharState {
-    const list: { c: ResolvedChar; raw: CharProps }[] = [];
+    const list: { c: ResolvedChar; raw: CharProps; space?: boolean }[] = [];
     if (!this.hasSelection) {
       const h = this.sel.head;
       const raw = this.pending ?? typedProps(this.doc.paras[h.p], h.o);
@@ -430,14 +474,17 @@ export class Editor {
           const a = pos, b = pos + r.len;
           pos = b;
           if ((i === from.p && b <= from.o) || (i === to.p && a >= to.o)) continue;
-          list.push({ c: this.resolvedAt(i, r.props), raw: r.props });
+          const lo = i === from.p ? Math.max(a, from.o) : a, hi = i === to.p ? Math.min(b, to.o) : b;
+          list.push({ c: this.resolvedAt(i, r.props), raw: r.props, space: !p.text.slice(lo, hi).trim() });
         }
       }
       if (!list.length) list.push({ c: this.resolvedAt(from.p, this.doc.paras[from.p].mark), raw: this.doc.paras[from.p].mark });
     }
+    // As in Word, spaces do not count when deciding whether a selection is uniform.
+    const counted = list.some((x) => !x.space) ? list.filter((x) => !x.space) : list;
     const same = <T>(f: (x: { c: ResolvedChar; raw: CharProps }) => T): T | undefined => {
-      const v = f(list[0]);
-      return list.every((x) => f(x) === v) ? v : undefined;
+      const v = f(counted[0]);
+      return counted.every((x) => f(x) === v) ? v : undefined;
     };
     return {
       font: same((x) => x.c.font),
@@ -548,6 +595,124 @@ export class Editor {
     this.smartTrimSelection();
     this.replaceSelection(text, inputTs, true);
     if (text === " " || text === "\t") this.autoList();
+    // Entries such as (c), --> and :) are replaced as soon as their last character is typed.
+    if (text.length === 1 && INSTANT_TRIGGERS.has(text) && this.instantCorrect()) return;
+    if (text.length === 1 && TRIGGERS.has(text)) this.autoCorrect(text);
+    if (text === "*" || text === "~") this.markdownInline(text);
+  }
+
+  /** Caps Lock state from the last key event (Word corrects "hALLO" only while it is on). */
+  private capsLock = false;
+
+  private instantCorrect(): boolean {
+    if (!this.autoCorrectOn || this.hasSelection) return false;
+    const h = this.sel.head;
+    const para = this.doc.paras[h.p];
+    if (!para || para.block) return false;
+    const f = instantFix(para.text, h.o);
+    if (!f || para.text.slice(f.a, f.b).includes(OBJ)) return false;
+    this.applyFixes(h.p, [f]);
+    return true;
+  }
+
+  /**
+   * Word 365's Markdown while typing: **text** becomes bold and ~~text~~ struck through when
+   * the closing marks are typed (measured 2026-10-14; *text* and _text_ stay as typed).
+   */
+  private markdownInline(mark: string): void {
+    if (!this.autoCorrectOn || this.hasSelection) return;
+    const h = this.sel.head;
+    const para = this.doc.paras[h.p];
+    if (!para || para.block) return;
+    const before = para.text.slice(0, h.o);
+    const re = mark === "*" ? /(^|[\s(„“"'‚])\*\*([^*\s](?:[^*]*[^*\s])?)\*\*$/u : /(^|[\s(„“"'‚])~~([^~\s](?:[^~]*[^~\s])?)~~$/u;
+    const m = re.exec(before);
+    if (!m || m[2].includes(OBJ)) return;
+    const a = h.o - m[2].length - 4;
+    this.snapshot();
+    this.typing = false;
+    const props = typedProps(para, h.o);
+    this.doc.delete({ p: h.p, o: h.o - 2 }, { p: h.p, o: h.o });
+    this.doc.delete({ p: h.p, o: a }, { p: h.p, o: a + 2 });
+    const end = { p: h.p, o: a + m[2].length };
+    this.doc.mapChars({ p: h.p, o: a }, end, (old) => intern(mark === "*" ? { ...old, bold: true } : { ...old, strike: true }));
+    this.setSel(end, end);
+    this.pending = props;
+    this.update({ scroll: true });
+  }
+
+  /** AutoKorrektur ein (Word's defaults); a setting so tests and future options can turn it off. */
+  autoCorrectOn = true;
+
+  /** Language of the text at the caret, for quotes and word rules. */
+  private langAt(pos: Pos): string {
+    const para = this.doc.paras[pos.p];
+    return propsAt(para, Math.max(0, pos.o - 1)).lang ?? this.doc.styles.defaultsR.lang ?? "de-DE";
+  }
+
+  /**
+   * After a typed word end (space, punctuation, quote …): Word's corrections of the word just
+   * finished, and typographic quotes. Each correction is its own undo step.
+   */
+  private autoCorrect(trigger: string): void {
+    if (!this.autoCorrectOn || this.hasSelection) return;
+    const h = this.sel.head;
+    const para = this.doc.paras[h.p];
+    if (!para || para.block) return;
+    const lang = this.langAt(h);
+    const fixes: Fix[] = [...wordFixes(para.text, h.o - 1, lang, { cellStart: !!para.cell, capsLock: this.capsLock })];
+    if (trigger === "\"" || trigger === "'") {
+      const q = smartQuote(para.text, h.o, lang);
+      if (q) fixes.push(q);
+    }
+    this.applyFixes(h.p, fixes);
+  }
+
+  /** Before Enter splits the paragraph: corrections of the last word, border lines ("---"). */
+  private autoCorrectEnter(): boolean {
+    if (!this.autoCorrectOn || this.hasSelection) return false;
+    const h = this.sel.head;
+    const para = this.doc.paras[h.p];
+    if (!para || para.block) return false;
+    if (h.o === para.text.length && !para.cell) {
+      const line = borderLine(para.text);
+      if (line) {
+        // AutoFormat: the characters go, the paragraph gets a bottom border.
+        this.snapshot();
+        this.doc.delete({ p: h.p, o: 0 }, { p: h.p, o: para.text.length });
+        this.doc.mapParas(h.p, h.p, (old) => ({ ...old, borders: { ...old.borders, bottom: { style: line.style, size: line.width, space: 1, color: "auto" } } }));
+        this.setSel({ p: h.p, o: 0 }, { p: h.p, o: 0 });
+        this.update();
+        return true;
+      }
+    }
+    this.applyFixes(h.p, wordFixes(para.text, h.o, this.langAt(h), { cellStart: !!para.cell, capsLock: this.capsLock }));
+    return false;
+  }
+
+  private applyFixes(p: number, fixes: Fix[]): void {
+    if (!fixes.length) return;
+    this.snapshot();
+    this.typing = false;
+    const caret = { ...this.sel.head };
+    let after: CharProps | null = null;
+    for (const f of [...fixes].sort((x, y) => y.a - x.a)) {
+      const para = this.doc.paras[p];
+      const props = propsAt(para, f.a);
+      // Text typed after a symbol or emoji is in the text's font again.
+      if ((f.symbol || f.font) && caret.p === p && caret.o === f.b) after = props;
+      let len = f.text.length;
+      if (f.symbol) {
+        const obj: InlineObject = { kind: "other", data: { inner: `<w:sym w:font="${f.symbol.font}" w:char="${f.symbol.char.toString(16).toUpperCase()}"/>` },
+          display: String.fromCharCode(f.symbol.char), font: f.symbol.font };
+        this.doc.replace({ p, o: f.a }, { p, o: f.b }, [{ text: OBJ, runs: [{ len: 1, props: intern({ ...props, font: f.symbol.font, fontTheme: undefined }) }], props: {}, mark: EMPTY, objects: [obj] }]);
+        len = 1;
+      } else this.doc.insertText({ p, o: f.a }, { p, o: f.b }, f.text, f.font ? intern({ ...props, font: f.font, fontTheme: undefined }) : props);
+      if (caret.p === p && caret.o >= f.b) caret.o += len - (f.b - f.a);
+    }
+    this.setSel(caret, caret);
+    if (after) this.pending = after;
+    this.update({ scroll: true });
   }
 
   /**
@@ -555,12 +720,27 @@ export class Editor {
    * paragraph turn it into a list item (Strg+Z brings the typed text back).
    */
   private autoList(): void {
+    if (!this.autoCorrectOn) return;
     const h = this.sel.head;
     const para = this.doc.paras[h.p];
-    if (para.block || numberingOf(para.props, this.doc.styles) || h.o < 2 || h.o > 5) return;
+    if (para.block || numberingOf(para.props, this.doc.styles) || h.o < 2 || h.o > 7) return;
     const prefix = para.text.slice(0, h.o - 1);
     if (para.text.slice(h.o - 1, h.o) !== " " && para.text.slice(h.o - 1, h.o) !== "\t") return;
-    const auto = E.autoListLevels(prefix);
+    // Markdown: "# " … "###### " make the paragraph a heading (Word 365).
+    if (/^#{1,6}$/.test(prefix) && para.text.slice(h.o - 1, h.o) === " " && !para.cell) {
+      this.snapshot();
+      this.typing = false;
+      this.doc.delete({ p: h.p, o: 0 }, { p: h.p, o: h.o });
+      const id = this.styleId(`heading ${prefix.length}`);
+      this.ensureStyle(id);
+      this.doc.mapParas(h.p, h.p, (old) => ({ style: id, extra: old.extra }));
+      this.setSel({ p: h.p, o: 0 }, { p: h.p, o: 0 });
+      this.requireFonts();
+      this.update({ scroll: true });
+      return;
+    }
+    const font = this.resolvedAt(h.p, propsAt(para, 0)).font;
+    const auto = E.autoListLevels(prefix, font);
     if (!auto) return;
     this.snapshot();
     this.typing = false;
@@ -637,9 +817,24 @@ export class Editor {
   authorInitials = "B";
   private insRev: import("./model").Revision | null = null;
 
+  /**
+   * Word's smart cut: deleting whole words also removes the space that would be left doubled
+   * (or a space before punctuation).
+   */
+  private smartRange(from: Pos, to: Pos): [Pos, Pos] {
+    if (from.p !== to.p || cmp(from, to) === 0) return [from, to];
+    const text = this.doc.paras[from.p].text;
+    const startsWord = from.o === 0 || !isWordChar(text[from.o - 1]);
+    const endsWord = to.o === text.length || !isWordChar(text[to.o]);
+    if (!startsWord || !endsWord || !isWordChar(text[from.o]) || !isWordChar(text[to.o - 1])) return [from, to];
+    if (text[from.o - 1] === " " && text[to.o] === " ") return [from, { p: to.p, o: to.o + 1 }];
+    if (text[from.o - 1] === " " && /[.,;:!?)\]]/.test(text[to.o] ?? "")) return [{ p: from.p, o: from.o - 1 }, to];
+    return [from, to];
+  }
+
   private deleteBackward(word: boolean, inputTs: number): void {
     const [from, to] = this.range();
-    if (cmp(from, to) !== 0) return this.deleteRange(from, to, inputTs);
+    if (cmp(from, to) !== 0) { const [a, b] = this.smartRange(from, to); return this.deleteRange(a, b, inputTs); }
     const h = this.sel.head;
     if (h.o === 0) {
       const paras = this.doc.paras;
@@ -648,6 +843,7 @@ export class Editor {
         this.edit(() => E.dropListLabel(this.doc, h.p));
         return;
       }
+      if (this.backspaceIndent(h.p)) return;
       if (h.p === 0 || paras[h.p - 1].block || paras[h.p].block) return;
       const cur = paras[h.p].cell, prev = paras[h.p - 1].cell;
       if (cur || prev) {
@@ -671,13 +867,53 @@ export class Editor {
       return this.deleteRange({ p: h.p - 1, o: this.doc.paras[h.p - 1].text.length }, h, inputTs);
     }
     const text = this.doc.paras[h.p].text;
-    const start = word ? prevTokenStart(text, h.o) : h.o - 1;
+    const start = word ? prevTokenStart(text, h.o) : h.o - charBefore(text, h.o);
     this.deleteRange({ p: h.p, o: start }, h, inputTs);
+  }
+
+  /** Effective paragraph formatting including the list level's indents. */
+  private effectivePara(p: number): ResolvedPara {
+    const para = this.doc.paras[p];
+    const n = numberingOf(para.props, this.doc.styles);
+    const lvl = n ? levelOf(this.doc.numbering, n.numId, n.ilvl)?.level : undefined;
+    return this.doc.styles.resolvePara(para.props, lvl ? { level: lvl.pPr } : undefined);
+  }
+
+  /**
+   * Rücktaste at the start of an indented paragraph (Word 365, measured): a first-line indent
+   * goes first; then the left indent goes back to the previous paragraph's text or number
+   * position below it, else to 0 (a "Listenabsatz" becomes "Standard"); only then do the
+   * paragraphs join.
+   */
+  private backspaceIndent(p: number): boolean {
+    if (!this.autoCorrectOn || this.hasSelection) return false;
+    const para = this.doc.paras[p];
+    if (para.block || this.doc.settings.trackChanges) return false;
+    const rp = this.doc.styles.resolvePara(para.props);
+    if (rp.indFirst > 0.01) {
+      this.edit(() => this.doc.mapParas(p, p, (old) => ({ ...old, indFirst: 0 })));
+      return true;
+    }
+    if (rp.indLeft <= 0.01 && rp.indFirst >= -0.01) return false;
+    let left = 0;
+    const prev = p > 0 ? this.doc.paras[p - 1] : null;
+    if (prev && !prev.block && !!prev.cell === !!para.cell) {
+      const pr = this.effectivePara(p - 1);
+      const stops = [pr.indLeft, pr.indLeft + Math.min(0, pr.indFirst)].filter((x) => x >= 0 && x < rp.indLeft - 0.05);
+      if (stops.length) left = Math.max(...stops);
+    }
+    const listPara = para.props.style === this.styleId("List Paragraph");
+    this.edit(() => this.doc.mapParas(p, p, (old) => {
+      const next = { ...old, style: listPara ? undefined : old.style, indLeft: undefined, indFirst: undefined };
+      const base = this.doc.styles.resolvePara(next);
+      return { ...next, indLeft: Math.abs(base.indLeft - left) > 0.01 ? left : undefined, indFirst: Math.abs(base.indFirst) > 0.01 ? 0 : undefined };
+    }));
+    return true;
   }
 
   private deleteForward(word: boolean, inputTs: number): void {
     const [from, to] = this.range();
-    if (cmp(from, to) !== 0) return this.deleteRange(from, to, inputTs);
+    if (cmp(from, to) !== 0) { const [a, b] = this.smartRange(from, to); return this.deleteRange(a, b, inputTs); }
     const h = this.sel.head;
     const text = this.doc.paras[h.p].text;
     if (h.o === text.length) {
@@ -687,11 +923,19 @@ export class Editor {
       if (cur || next) {
         const same = cur && next && cur.table.id === next.table.id && cur.row === next.row && cur.col === next.col;
         if (!same) {
-          // An empty paragraph before a table goes; otherwise nothing happens (Word).
+          // An empty paragraph before a table goes; otherwise its text moves into the first
+          // cell, in front of the cell's text (Word 365, measured).
           if (!cur && next && !text.length) {
             this.snapshot();
             this.doc.splice(h.p, h.p, []);
             this.setSel({ p: h.p, o: 0 }, { p: h.p, o: 0 });
+            this.update({ scroll: true, inputTs });
+          } else if (!cur && next && !this.doc.settings.trackChanges) {
+            this.snapshot();
+            const b = paras[h.p + 1];
+            const merged = { ...joinParas(paras[h.p], b), props: b.props, cell: b.cell, mark: b.mark };
+            this.doc.splice(h.p, h.p + 1, [merged]);
+            this.setSel({ p: h.p, o: text.length }, { p: h.p, o: text.length });
             this.update({ scroll: true, inputTs });
           }
           return;
@@ -699,7 +943,7 @@ export class Editor {
       }
       return this.deleteRange(h, { p: h.p + 1, o: 0 }, inputTs, true);
     }
-    let end = h.o + 1;
+    let end = h.o + charAfter(text, h.o);
     if (word) {
       // Inside a word, Strg+Entf deletes only the rest of the word, not the space after it.
       end = nextTokenStart(text, h.o);
@@ -721,8 +965,15 @@ export class Editor {
   /** Puts the selection on the internal clipboard (with formatting) and returns its text. */
   copySelection(): string {
     const [from, to] = this.range();
-    const text = this.selectedText();
+    let text = this.selectedText();
     const paras = this.doc.fragment(from, to).map((p) => this.portable(p));
+    // Whole paragraphs up to the end of the text: Word copies the last paragraph mark too, so
+    // pasting makes them paragraphs of their own.
+    const end = this.doc.end();
+    if (from.o === 0 && cmp(to, end) === 0 && this.doc.paras[to.p].text.length && !this.doc.paras[to.p].cell) {
+      paras.push({ ...makePara(""), props: {}, mark: this.doc.paras[to.p].mark });
+      text += "\n";
+    }
     clipboardFragment = { text, paras, source: this };
     return text;
   }
@@ -773,7 +1024,7 @@ export class Editor {
   /** Removes the selection and returns its text (for Ausschneiden). */
   cutSelection(): string {
     const text = this.copySelection();
-    const [from, to] = this.range();
+    const [from, to] = this.smartRange(...this.range());
     this.deleteRange(from, to);
     return text;
   }
@@ -793,6 +1044,7 @@ export class Editor {
       const pieces = frag.paras.map((p) => (frag.source === this ? { ...p } : this.adopt(p, frag.source)));
       // The last piece merges into the target paragraph and takes its formatting (as in Word).
       if (pieces.length > 1) pieces[pieces.length - 1] = { ...pieces[pieces.length - 1], props: this.doc.paras[b.p].props };
+      const ownFirst = a.o === 0 && pieces.length > 1 ? pieces[0].props : null;
       let end: Pos;
       if (this.trackChanges) {
         // Inserted after the text it replaces, which stays as a deletion.
@@ -805,18 +1057,60 @@ export class Editor {
         if (smartSpace) at = this.doc.insertText(a, b, " ", typedProps(this.doc.paras[a.p], a.o));
         end = this.doc.replace(at, smartSpace ? at : b, pieces);
       }
+      // Pasted at a paragraph start, the first pasted paragraph keeps its own formatting.
+      if (ownFirst) this.doc.mapParas(a.p, a.p, () => ownFirst);
+      end = this.smartPasteEnd(end);
       this.setSel(end, end);
       this.requireFonts();
       this.update({ scroll: true });
       return;
     }
     this.replaceSelection(smartSpace ? ` ${text}` : text);
+    const fixed = this.smartPasteEnd(this.sel.head);
+    if (cmp(fixed, this.sel.head) !== 0) { this.setSel(fixed, fixed); this.update({ scroll: true }); }
   }
 
-  /** Inserts a line break (Umschalt+Eingabe), page break (Strg+Eingabe) or column break. */
+  /** Smart paste: a pasted trailing space before punctuation or another space goes (Word). */
+  private smartPasteEnd(end: Pos): Pos {
+    const text = this.doc.paras[end.p]?.text ?? "";
+    if (end.o > 0 && text[end.o - 1] === " " && /^[ .,;:!?)\]]/.test(text[end.o] ?? "") && !this.doc.settings.trackChanges) {
+      this.doc.delete({ p: end.p, o: end.o - 1 }, end);
+      return { p: end.p, o: end.o - 1 };
+    }
+    return end;
+  }
+
+  /**
+   * Inserts a line break (Umschalt+Eingabe), page break (Strg+Eingabe) or column break
+   * (Strg+Umschalt+Eingabe), as Word 365 does (measured): a page break stands in a paragraph
+   * of its own and the caret goes to the start of the text after it, on the next page; a
+   * column break starts the paragraph after the caret, the caret behind it.
+   */
   insertBreak(kind: "line" | "page" | "column"): void {
     this.typing = false;
-    this.replaceSelection(kind === "line" ? LINE_BREAK : kind === "page" ? PAGE_BREAK : COLUMN_BREAK);
+    if (kind === "line") { this.replaceSelection(LINE_BREAK); return; }
+    const atStart = this.range()[0].o === 0;
+    if (kind === "page") this.replaceSelection(atStart ? `${PAGE_BREAK}\n` : `\n${PAGE_BREAK}\n`);
+    else this.replaceSelection(atStart ? COLUMN_BREAK : `\n${COLUMN_BREAK}`);
+  }
+
+  /**
+   * AutoFormat "Absatzeinzug mit Tab- und Rücktaste festlegen": Tab at the start of a
+   * paragraph that has text indents its first line by one default tab stop instead of
+   * typing a tab; again, the whole paragraph.
+   */
+  private firstIndentTab(): boolean {
+    if (!this.autoCorrectOn || this.hasSelection) return false;
+    const h = this.sel.head;
+    const para = this.doc.paras[h.p];
+    if (h.o !== 0 || !para.text.length || para.cell || para.block || numberingOf(para.props, this.doc.styles)) return false;
+    const rp = this.doc.styles.resolvePara(para.props);
+    const step = this.doc.settings.defaultTab;
+    this.snapshot();
+    if (rp.indFirst < step - 0.01) this.doc.mapParas(h.p, h.p, (old) => ({ ...old, indFirst: step }));
+    else this.doc.mapParas(h.p, h.p, (old) => ({ ...old, indLeft: rp.indLeft + step }));
+    this.update({ scroll: true });
+    return true;
   }
 
   /**
@@ -845,7 +1139,9 @@ export class Editor {
     const atStart = from.o === 0 && (from.p !== to.p || to.o === 0 || to.o === paras[to.p].text.length);
     if (atStart && numberingOf(paras[from.p].props, this.doc.styles)) {
       this.snapshot();
-      if (!E.changeListLevel(this.doc, from.p, to.p, back ? -1 : 1)) this.undoStack.pop();
+      // At the list's first item Word moves the whole list instead of changing the level.
+      const moved = from.p === to.p && E.firstOfList(this.doc, from.p) ? E.shiftList(this.doc, from.p, back) : E.changeListLevel(this.doc, from.p, to.p, back ? -1 : 1);
+      if (!moved) this.undoStack.pop();
       this.update({ scroll: true });
       return true;
     }
@@ -860,8 +1156,39 @@ export class Editor {
     this.edit(() => E.toggleList(this.doc, a, b, kind, this.listStyleId(), levels), false);
   }
 
+  /**
+   * Strg+Umschalt+L: the style "Aufzählungszeichen" (List Bullet), with the single-level
+   * bullet numbering Word gives it (Symbol bullet, 0.63 cm hanging).
+   */
+  applyListBullet(): void {
+    const [a, b] = this.paraRangeIdx();
+    this.snapshot();
+    this.typing = false;
+    const id = this.styleId("List Bullet");
+    let def = this.doc.styles.get(id);
+    let numId = def?.pPr.numId;
+    if (!def || numId === undefined || !this.doc.numbering.nums.has(numId)) {
+      const made = addList(this.doc.numbering, [{ start: 1, format: "bullet", text: "\uf0b7", align: "left", suffix: "tab", pPr: { indLeft: 18, indFirst: -18, tabs: [{ pos: 18, align: "num" }] }, rPr: { font: "Symbol" } }]);
+      this.doc.setNumbering(made.numbering);
+      numId = made.numId;
+      def = { id, name: "List Bullet", type: "paragraph", basedOn: this.styleId("Normal"), uiPriority: 99, pPr: { ...(def?.pPr ?? {}), numId, contextual: true }, rPr: def?.rPr ?? {} };
+      this.doc.setStyles(this.doc.styles.withStyle(def));
+    }
+    this.doc.mapParas(a, b, (old) => ({ style: id, extra: old.extra }));
+    this.update({ scroll: true });
+  }
+
   listKind(): E.ListKind | null {
     return E.listKind(this.doc, this.doc.paras[this.sel.head.p]);
+  }
+
+  /** Listenebene ändern: the selected list items go to level `ilvl` (0-8). */
+  setListLevel(ilvl: number): void {
+    const [a, b] = this.paraRangeIdx();
+    this.edit(() => this.doc.mapParas(a, b, (old, para) => {
+      const n = numberingOf(para.props, this.doc.styles);
+      return n ? { ...old, numId: old.numId ?? n.numId, ilvl: Math.max(0, Math.min(8, ilvl)) } : old;
+    }), false);
   }
 
   changeListLevel(delta: 1 | -1): void {
@@ -1389,17 +1716,83 @@ export class Editor {
     this.update({ scroll: true });
   }
 
-  /** Neu beginnen mit 1: the list item at the caret and the rest of its list start again. */
-  restartNumbering(): void {
+  /** Neu beginnen mit 1 / Separate Liste: the item at the caret and the rest of its list start again. */
+  restartNumbering(start = 1): void {
     const h = this.sel.head;
     const n = numberingOf(this.doc.paras[h.p].props, this.doc.styles);
     if (!n) return;
     this.snapshot();
-    const made = restartList(this.doc.numbering, n.numId, n.ilvl, 1);
+    const made = restartList(this.doc.numbering, n.numId, n.ilvl, start);
     this.doc.setNumbering(made.numbering);
     this.doc.mapParas(h.p, this.doc.paras.length - 1, (old, para) =>
       numberingOf(para.props, this.doc.styles)?.numId === n.numId ? { ...old, numId: made.numId, ilvl: old.ilvl ?? n.ilvl } : old);
     this.update({ scroll: true });
+  }
+
+  /** The list paragraph before the caret's list (of the same kind), for "Nummerierung fortsetzen". */
+  private previousList(): { from: number; numId: number; prevNum: number } | null {
+    const h = this.sel.head;
+    const paras = this.doc.paras;
+    const n = numberingOf(paras[h.p].props, this.doc.styles);
+    if (!n) return null;
+    const kind = E.listKind(this.doc, paras[h.p]);
+    let i = h.p;
+    while (i > 0 && numberingOf(paras[i - 1].props, this.doc.styles)?.numId === n.numId) i--;
+    for (let k = i - 1; k >= 0; k--) {
+      const m = numberingOf(paras[k].props, this.doc.styles);
+      if (m && m.numId !== n.numId && E.listKind(this.doc, paras[k]) === kind) return { from: h.p, numId: n.numId, prevNum: m.numId };
+    }
+    return null;
+  }
+
+  /** Mit vorheriger Liste verknüpfen / Nummerierung fortsetzen. */
+  canContinueNumbering(): boolean {
+    return !!this.previousList();
+  }
+
+  continueNumbering(): void {
+    const prev = this.previousList();
+    if (!prev) return;
+    this.edit(() => this.doc.mapParas(prev.from, this.doc.paras.length - 1, (old, para) =>
+      numberingOf(para.props, this.doc.styles)?.numId === prev.numId ? { ...old, numId: prev.prevNum } : old));
+  }
+
+  /** The caret's list level: number position, text indent (points) and what follows the number. */
+  listLevelIndent(): { numberPos: number; textIndent: number; suffix: "tab" | "space" | "nothing"; bullet: boolean } | null {
+    const para = this.doc.paras[this.sel.head.p];
+    const n = numberingOf(para.props, this.doc.styles);
+    const found = n ? levelOf(this.doc.numbering, n.numId, n.ilvl) : null;
+    if (!found) return null;
+    const left = found.level.pPr.indLeft ?? 0, first = found.level.pPr.indFirst ?? 0;
+    return { numberPos: left + first, textIndent: left, suffix: found.level.suffix, bullet: found.level.format === "bullet" };
+  }
+
+  /** Listeneinzug anpassen: changes the caret's list level (all items of that level). */
+  setListLevelIndent(numberPos: number, textIndent: number, suffix: "tab" | "space" | "nothing"): void {
+    const para = this.doc.paras[this.sel.head.p];
+    const n = numberingOf(para.props, this.doc.styles);
+    const found = n ? levelOf(this.doc.numbering, n.numId, n.ilvl) : null;
+    if (!n || !found) return;
+    this.edit(() => {
+      const abs = found.abstract;
+      const levels = abs.levels.map((l, i) => (i === n.ilvl ? { ...l, suffix, pPr: { ...l.pPr, indLeft: textIndent, indFirst: numberPos - textIndent }, data: undefined } : l));
+      const abstracts = new Map(this.doc.numbering.abstracts);
+      abstracts.set(abs.id, { ...abs, levels, data: undefined });
+      this.doc.setNumbering({ ...this.doc.numbering, abstracts });
+      // Items of the level with their own indent follow the new one.
+      this.doc.mapParas(0, this.doc.paras.length - 1, (old, q) => {
+        const m = numberingOf(q.props, this.doc.styles);
+        return m && m.numId === n.numId && m.ilvl === n.ilvl && (old.indLeft !== undefined || old.indFirst !== undefined) ? { ...old, indLeft: undefined, indFirst: undefined } : old;
+      });
+    });
+  }
+
+  /** The selection covers every cell of its table. */
+  wholeTableSelected(): boolean {
+    const b = this.cellBlock();
+    const def = this.doc.paras[this.sel.head.p]?.cell?.table;
+    if (!b || !def) return false;
+    return b.r1 === 0 && b.c1 === 0 && b.r2 === def.rows.length - 1 && b.c2 >= Math.max(...def.rows.map((r) => r.cells.length)) - 1;
   }
 
   /** The selected block of cells (cell indices), when the selection is in one table. */
@@ -2229,12 +2622,13 @@ export class Editor {
   // ----- caret movement -----------------------------------------------------------------
 
   private charLeft(p: Pos): Pos {
-    if (p.o > 0) return { p: p.p, o: p.o - 1 };
+    if (p.o > 0) return { p: p.p, o: p.o - charBefore(this.doc.paras[p.p].text, p.o) };
     return p.p > 0 ? { p: p.p - 1, o: this.doc.paras[p.p - 1].text.length } : p;
   }
 
   private charRight(p: Pos): Pos {
-    if (p.o < this.doc.paras[p.p].text.length) return { p: p.p, o: p.o + 1 };
+    const text = this.doc.paras[p.p].text;
+    if (p.o < text.length) return { p: p.p, o: p.o + charAfter(text, p.o) };
     return p.p < this.doc.paras.length - 1 ? { p: p.p + 1, o: 0 } : p;
   }
 
@@ -2257,7 +2651,8 @@ export class Editor {
     let res: { pos: Pos; upstream: boolean };
     if (target === null) res = dir < 0 ? { pos: { p: 0, o: 0 }, upstream: false } : { pos: this.doc.end(), upstream: false };
     else res = this.view.posInLine(target, goal);
-    this.setSel(extend ? this.sel.anchor : res.pos, res.pos, res.upstream, true);
+    if (extend && (this.doc.paras[res.pos.p]?.cell || this.doc.paras[(this.cellAnchor ?? this.sel.anchor).p]?.cell)) this.extendTo(res.pos, dir > 0);
+    else this.setSel(extend ? this.sel.anchor : res.pos, res.pos, res.upstream, true);
     this.goalX = goal;
   }
 
@@ -2361,9 +2756,55 @@ export class Editor {
     if (!extend && cmp(from, to) !== 0) {
       const p = collapseTo === "start" ? from : to;
       this.setSel(p, p);
+    } else if (extend) {
+      this.extendTo(moved, cmp(moved, this.sel.head) > 0);
     } else {
-      this.setSel(extend ? this.sel.anchor : moved, moved);
+      this.setSel(moved, moved);
     }
+  }
+
+  /** The anchor a keyboard selection had before it was widened to whole cells. */
+  private cellAnchor: Pos | null = null;
+
+  /**
+   * Extends the selection; once it reaches another cell of the same table it covers whole
+   * cells, as in Word (the end then sits at the start of the cell after the last one).
+   */
+  private extendTo(moved: Pos, forward: boolean): void {
+    const anchor = this.cellAnchor ?? this.sel.anchor;
+    const paras = this.doc.paras;
+    const ac = paras[anchor.p]?.cell, hc = paras[moved.p]?.cell;
+    type C = NonNullable<typeof ac>;
+    const sameCell = (i: number, c: C) => { const x = paras[i]?.cell; return !!x && x.table.id === c.table.id && x.row === c.row && x.col === c.col; };
+    const sameRow = (i: number, c: C) => { const x = paras[i]?.cell; return !!x && x.table.id === c.table.id && x.row === c.row; };
+    const first = (i: number, same: (i: number, c: C) => boolean): Pos => { const c = paras[i].cell!; while (i > 0 && same(i - 1, c)) i--; return { p: i, o: 0 }; };
+    const after = (i: number, same: (i: number, c: C) => boolean): Pos => {
+      const c = paras[i].cell!;
+      while (i + 1 < paras.length && same(i + 1, c)) i++;
+      return i + 1 < paras.length ? { p: i + 1, o: 0 } : { p: i, o: paras[i].text.length };
+    };
+    const down = cmp(moved, anchor) > 0;
+    const set = (a: Pos, h: Pos) => { this.setSel(a, h); this.cellAnchor = anchor; };
+    if (ac && hc && ac.table.id === hc.table.id && !(ac.row === hc.row && ac.col === hc.col)) {
+      // Whole cells. Reaching a cell's start going forward ends the selection after the cell before.
+      const a = down ? first(anchor.p, sameCell) : after(anchor.p, sameCell);
+      const atCellStart = moved.o === 0 && cmp(first(moved.p, sameCell), moved) === 0;
+      const h = forward ? (atCellStart ? moved : after(moved.p, sameCell)) : first(moved.p, sameCell);
+      set(a, h);
+      return;
+    }
+    if (ac && (!hc || hc.table.id !== ac.table.id)) {
+      // From a cell out of the table: whole rows from the anchor's row.
+      set(down ? first(anchor.p, sameRow) : after(anchor.p, sameRow), moved);
+      return;
+    }
+    if (!ac && hc) {
+      // From outside into a table: whole rows up to the head's row.
+      set(anchor, down ? after(moved.p, sameRow) : first(moved.p, sameRow));
+      return;
+    }
+    this.setSel(anchor, moved);
+    this.cellAnchor = null;
   }
 
   // ----- keyboard -----------------------------------------------------------------------
@@ -2383,6 +2824,7 @@ export class Editor {
 
   private onKeyDown(e: KeyboardEvent): void {
     if (e.isComposing) return;
+    this.capsLock = !!e.getModifierState?.("CapsLock");
     const ctrl = e.ctrlKey && !e.altKey;
     const shift = e.shiftKey;
     const ts = e.timeStamp;
@@ -2441,6 +2883,7 @@ export class Editor {
             this.edit(() => E.removeList(this.doc, h.p, h.p, this.styleId("List Paragraph")));
             return;
           }
+          this.autoCorrectEnter();
           this.replaceSelection("\n", ts);
         }
         return;
@@ -2449,7 +2892,10 @@ export class Editor {
         if (e.altKey) return;
         if (e.ctrlKey) { if (this.doc.paras[h.p].cell) this.replaceSelection("\t", ts); return; }
         if (this.tabKey(shift)) return;
+        if (!shift && this.firstIndentTab()) return;
         this.replaceSelection("\t", ts);
+        this.autoList();
+        this.autoCorrect("\t");
         return;
       case "Escape":
         if (this.painter) { this.stopPainter(); return void e.preventDefault(); }
@@ -2473,62 +2919,151 @@ export class Editor {
 
   // ----- clipboard ----------------------------------------------------------------------
 
+  /**
+   * The host's clipboard access (the desktop app): the whole HTML document both ways, so Word's
+   * list definitions and RaabeWrite's arrive intact. Without it the browser's clipboard events
+   * are used.
+   */
+  clipboardHost: { readHtml(): Promise<string>; write(text: string, html: string): Promise<void> } | null = null;
+
   private onCopy(e: ClipboardEvent, cut: boolean): void {
     e.preventDefault();
     if (!this.hasSelection) return;
-    const text = this.copySelection();
-    e.clipboardData?.setData("text/plain", text.replace(/\n/g, "\r\n"));
-    // Formatting for Word and other programs.
-    e.clipboardData?.setData("text/html", this.selectionHtml());
+    const html = this.selectionHtml();
+    const text = this.copySelection().replace(/\n/g, "\r\n");
+    if (this.clipboardHost) void this.clipboardHost.write(text, html).catch(() => undefined);
+    else {
+      e.clipboardData?.setData("text/plain", text);
+      // Formatting for Word and other programs.
+      e.clipboardData?.setData("text/html", html);
+    }
     if (cut) {
-      const [from, to] = this.range();
+      const [from, to] = this.smartRange(...this.range());
       this.deleteRange(from, to);
     }
   }
 
   private onPaste(e: ClipboardEvent): void {
     e.preventDefault();
-    const text = e.clipboardData?.getData("text/plain") ?? "";
-    const html = e.clipboardData?.getData("text/html") ?? "";
-    this.paste(text, html);
+    const dt = e.clipboardData;
+    const text = dt?.getData("text/plain") ?? "";
+    const html = dt?.getData("text/html") ?? "";
+    const item = Array.from(dt?.items ?? []).find((i) => i.kind === "file" && i.type.startsWith("image/"));
+    const image = item?.getAsFile() ?? null;
+    if (this.clipboardHost && html) {
+      void this.clipboardHost.readHtml().then((full) => this.paste(text, full || html, image), () => this.paste(text, html, image));
+      return;
+    }
+    this.paste(text, html, image);
+  }
+
+  /**
+   * A picture from the clipboard (a screenshot, a picture copied in Word or a browser), at
+   * the size the HTML gives it, else its own (resolution as in the file, else 96 dpi).
+   */
+  async pasteImage(blob: Blob, html = ""): Promise<boolean> {
+    const bytes = new Uint8Array(await blob.arrayBuffer());
+    const info = imageInfo(bytes);
+    if (!info) return false;
+    let { w, h } = naturalSizePt(info);
+    const img = html ? new DOMParser().parseFromString(html, "text/html").querySelector("img") : null;
+    const hw = Number(img?.getAttribute("width")), hh = Number(img?.getAttribute("height"));
+    if (hw > 0 && hh > 0) { w = hw * 0.75; h = hh * 0.75; }
+    this.insertImage({ bytes, type: info.type }, w, h);
+    return true;
   }
 
   /** The selection as HTML (for the clipboard). */
   selectionHtml(): string {
     const [from, to] = this.range();
-    return toHtml(this.doc.fragment(from, to), this.doc.styles);
+    const labels = listLabels(this.doc.paras, this.doc.numbering, this.doc.styles).slice(from.p, to.p + 1);
+    return toHtml(this.doc.fragment(from, to), this.doc.styles, this.doc.numbering, labels);
   }
 
   /**
    * Einfügen: content copied in RaabeWrite keeps all its formatting; HTML from other programs
    * (Word, browsers) keeps character formatting, headings, lists and tables; otherwise text.
    */
-  paste(text: string, html: string): void {
+  paste(text: string, html: string, image: Blob | null = null): void {
     const frag = clipboardFragment;
     const t = text.replace(/\r\n?/g, "\n");
+    // Only a picture (no text around it): it goes in as a picture.
+    if (image && !this.inBlock() && !t.trim() && !(html && htmlText(html).trim())) { void this.pasteImage(image, html); return; }
     if (frag && frag.text === t) return this.pasteText(t);
     if (html && !this.inBlock()) { this.pasteHtml(html); return; }
     if (t) this.pasteText(t);
   }
 
+  /**
+   * Einfügeoptionen > Formatierung zusammenführen: the pasted text takes the formatting at the
+   * caret and the target paragraph's style; bold, italic, underlining and super-/subscript of
+   * the source stay (Word).
+   */
+  pasteMerged(text: string, html: string): void {
+    if (this.inBlock()) return;
+    const t = text.replace(/\r\n?/g, "\n");
+    const frag = clipboardFragment;
+    let pieces: Para[] | null = null;
+    if (frag && frag.text === t) pieces = frag.paras.map((x) => this.portable(x, (k) => k === "field" || k === "link"));
+    else if (html) {
+      const style = (name: string) => { const id = this.styleId(name); this.ensureStyle(id); return id; };
+      pieces = fromHtml(html, style).paras.map(({ list: _l, level: _v, listKey: _k, ...x }) => x);
+    }
+    if (!pieces?.length) { if (t) this.pasteText(t, true); return; }
+    const [a, b] = this.range();
+    const base = typedProps(this.doc.paras[a.p], a.o);
+    const keep = (r: CharProps) => intern({ ...base, bold: r.bold, italic: r.italic, underline: r.underline, strike: r.strike, vertAlign: r.vertAlign, rev: undefined });
+    const target = this.doc.paras[a.p].props;
+    const merged = pieces.map((x) => ({
+      ...x, cell: undefined, block: undefined, props: { style: target.style }, mark: keep(x.mark),
+      runs: x.runs.map((r) => ({ ...r, props: keep(r.props) })),
+    }));
+    this.snapshot();
+    this.typing = false;
+    let end = this.replaceTracked(a, b, merged);
+    end = this.smartPasteEnd(end);
+    this.setSel(end, end);
+    this.update({ scroll: true });
+  }
+
   /** Inserts HTML from another program. */
   pasteHtml(html: string): void {
     const style = (name: string) => { const id = this.styleId(name); this.ensureStyle(id); return id; };
-    const { paras } = fromHtml(html, style);
+    const { paras, lists } = fromHtml(html, style);
     if (!paras.length) return;
-    // Lists: one numbering per run of list paragraphs of the same kind.
+    // Lists: Word's own definitions (symbols, fonts, indents) where the HTML has them, else one
+    // numbering per run of list paragraphs of the same kind.
     let numbering = this.doc.numbering;
     let curKind: string | undefined, curNum = 0;
+    const byKey = new Map<string, number>();
     const listStyle = this.listStyleId();
+    const levelsFor = (kind: "bullet" | "number", key?: string): NumLevel[] => {
+      const base = kind === "bullet" ? bulletLevelsOf() : numberLevelsOf();
+      const defs = key ? lists.get(key) : undefined;
+      if (!defs) return base;
+      return base.map((b, i) => {
+        const d = defs[i];
+        if (!d) return b;
+        const format = d.format ?? b.format;
+        return {
+          ...b, format, text: d.text ?? (format === "bullet" ? b.text : `%${i + 1}.`), start: d.start ?? 1, align: d.align ?? b.align,
+          suffix: d.suffix ?? b.suffix,
+          pPr: { ...b.pPr, indLeft: d.indLeft ?? b.pPr.indLeft, indFirst: d.indFirst ?? b.pPr.indFirst },
+          rPr: d.font ? { ...b.rPr, font: d.font } : format === "bullet" ? b.rPr : {},
+        };
+      });
+    };
     const pieces: Para[] = paras.map((p) => {
-      const { list, level, ...para } = p;
+      const { list, level, listKey, ...para } = p;
       if (!list) { curKind = undefined; return para; }
-      if (list !== curKind) {
-        const made = addList(numbering, list === "bullet" ? bulletLevelsOf() : numberLevelsOf());
+      if (listKey && byKey.has(listKey)) curNum = byKey.get(listKey)!;
+      else if (listKey || list !== curKind) {
+        const made = addList(numbering, levelsFor(list, listKey));
         numbering = made.numbering;
         curNum = made.numId;
-        curKind = list;
+        if (listKey) byKey.set(listKey, curNum);
       }
+      curKind = list;
       return { ...para, props: { ...para.props, style: para.props.style ?? listStyle, numId: curNum, ilvl: level ?? 0 } };
     });
     // A pasted table needs a paragraph before and after it inside the insertion.
@@ -2571,11 +3106,15 @@ export class Editor {
     e.preventDefault();
     this.focus();
     if (this.storyKey === MAIN && !e.shiftKey && e.detail < 2) {
+      const th = this.view.tableHandleAt(e.clientX, e.clientY);
+      if (th) { this.dragTableHandle(e, th.kind, th.table); return; }
       // Pictures and table borders take the click before the text.
       const handle = this.view.handleAt(e.clientX, e.clientY);
       if (handle) { this.dragImage(e, handle); return; }
       const border = this.view.cellBorderAt(e.clientX, e.clientY);
       if (border) { this.dragColumn(e, border.cell); return; }
+      const rowBorder = this.view.rowBorderAt(e.clientX, e.clientY);
+      if (rowBorder) { this.dragRow(e, rowBorder.cell, rowBorder.h); return; }
       const deco = this.view.imageAt(e.clientX, e.clientY);
       if (deco) { this.selectFloat(deco.para, deco.index); this.dragImage(e, null); return; }
     }
@@ -2834,6 +3373,30 @@ export class Editor {
     addEventListener("mouseup", up, true);
   }
 
+  /**
+   * Zeilenhöhe by dragging the row's bottom border: the row gets at least that height
+   * ("Mindestens"), as Word sets it; one undo step for the whole drag.
+   */
+  private dragRow(e: MouseEvent, cellKey: string, heightPx: number): void {
+    const [tid, row, col] = cellKey.split(":").map(Number);
+    const p = this.doc.paras.findIndex((x) => x.cell && x.cell.table.id === tid && x.cell.row === row && x.cell.col === col);
+    if (p < 0) return;
+    const start = e.clientY;
+    let first = true;
+    const move = (ev: MouseEvent) => {
+      const h = Math.max(4, (heightPx + (ev.clientY - start) / this.view.zoom) / PT);
+      if (first) this.snapshot();
+      first = false;
+      const at = this.doc.paras.findIndex((x) => x.cell && x.cell.table.id === tid && x.cell.row === row);
+      if (at < 0) return;
+      E.updateRows(this.doc, at, at, (r) => ({ ...r, height: Math.round(h * 20) / 20, heightRule: "atLeast" }));
+      this.update();
+    };
+    const up = () => { removeEventListener("mousemove", move, true); removeEventListener("mouseup", up, true); this.emit(true); };
+    addEventListener("mousemove", move, true);
+    addEventListener("mouseup", up, true);
+  }
+
   /** The host's context menu (right click or the menu key), at a client point and text position. */
   onContextMenu: ((clientX: number, clientY: number, pos: Pos) => void) | null = null;
 
@@ -2842,6 +3405,19 @@ export class Editor {
     if (!this.onContextMenu) return;
     const hit = this.view.hitLine(e.clientX, e.clientY);
     const under = this.view.posInLine(hit.index, hit.x, true).pos;
+    const deco = this.storyKey === MAIN ? this.view.imageAt(e.clientX, e.clientY) : null;
+    if (deco) {
+      this.selectFloat(deco.para, deco.index);
+      this.onContextMenu(e.clientX, e.clientY, under);
+      return;
+    }
+    const para = this.doc.paras[under.p];
+    if (para?.text[under.o] === OBJ && this.objectAt(para, under.o)?.kind === "image") {
+      this.setSel(under, { p: under.p, o: under.o + 1 });
+      this.update();
+      this.onContextMenu(e.clientX, e.clientY, under);
+      return;
+    }
     const [from, to] = this.range();
     // A right click outside the selection moves the caret there (Word).
     const inside = cmp(under, from) >= 0 && cmp(under, to) < 0;
@@ -2866,17 +3442,103 @@ export class Editor {
     return b > a ? { p: pos.p, a, b, text: text.slice(a, b) } : null;
   }
 
-  /** Mouse pointer over pictures, handles and table borders. */
+  /**
+   * Mouse pointer as in Word: the I-beam over the page, the mirrored arrow in the selection
+   * bar, the arrow over selected text (it can be dragged) and outside the pages, resize and
+   * move pointers on pictures, handles and table borders.
+   */
   private hoverCursor(e: MouseEvent): void {
     if (this.painter) return;
-    let cursor = "";
-    if (this.storyKey === MAIN) {
-      const hd = this.view.handleAt(e.clientX, e.clientY);
+    let cursor = "default";
+    // Word shows the table handles while the mouse is over a table.
+    const tableNow = this.storyKey === MAIN ? this.view.tableAt(e.clientX, e.clientY) : null;
+    if (tableNow !== this.hoverTable) { this.hoverTable = tableNow; this.view.render(this.doc, this.layout, this.sel, { active: this.storyKey, cells: this.selectedCells(), image: this.imageBox() ?? undefined, table: this.handleTable() }); }
+    const th = this.storyKey === MAIN ? this.view.tableHandleAt(e.clientX, e.clientY) : null;
+    if (th) { const c = th.kind === "move" ? "move" : "nwse-resize"; if (this.workspace.style.cursor !== c) this.workspace.style.cursor = c; return; }
+    if (this.view.pageIndexAt(e.clientX, e.clientY) >= 0) {
+      cursor = "text";
+      const hd = this.storyKey === MAIN ? this.view.handleAt(e.clientX, e.clientY) : null;
       if (hd) cursor = hd === "n" || hd === "s" ? "ns-resize" : hd === "e" || hd === "w" ? "ew-resize" : hd === "nw" || hd === "se" ? "nwse-resize" : "nesw-resize";
-      else if (this.view.cellBorderAt(e.clientX, e.clientY)) cursor = "col-resize";
-      else if (this.view.imageAt(e.clientX, e.clientY)) cursor = "move";
+      else if (this.storyKey === MAIN && this.view.cellBorderAt(e.clientX, e.clientY)) cursor = "col-resize";
+      else if (this.storyKey === MAIN && this.view.rowBorderAt(e.clientX, e.clientY)) cursor = "row-resize";
+      else if (this.storyKey === MAIN && this.view.imageAt(e.clientX, e.clientY)) cursor = "move";
+      else {
+        const hit = this.view.hitLine(e.clientX, e.clientY);
+        if (hit.inLeftMargin) cursor = MIRRORED_ARROW;
+        else if (this.hasSelection) {
+          const at = this.view.posInLine(hit.index, hit.x, true).pos;
+          const [a, b] = this.range();
+          if (cmp(a, at) <= 0 && cmp(at, b) < 0) cursor = "default";
+        }
+      }
     }
     if (this.workspace.style.cursor !== cursor) this.workspace.style.cursor = cursor;
+  }
+
+  /** Mouse over a table (Word shows its handles then, and while the caret is in it). */
+  private hoverTable: number | null = null;
+
+  private handleTable(): number | undefined {
+    if (this.storyKey !== MAIN) return undefined;
+    const cell = this.doc.paras[this.sel.head.p]?.cell;
+    return cell ? cell.table.id : this.hoverTable ?? undefined;
+  }
+
+  private paraOfTable(tid: number): number {
+    return this.doc.paras.findIndex((x) => x.cell && x.cell.table.id === tid);
+  }
+
+  /**
+   * The table handles: a click on the move handle selects the table, dragging it moves the
+   * table sideways (its indent); the sizing handle scales columns and rows together.
+   */
+  private dragTableHandle(e: MouseEvent, kind: "move" | "size", tid: number): void {
+    const p = this.paraOfTable(tid);
+    if (p < 0) return;
+    if (kind === "move") {
+      this.setSel({ p, o: 0 }, { p, o: 0 });
+      this.selectTablePart("table");
+    }
+    const def0 = this.doc.paras[p].cell!.table;
+    const width0 = def0.grid.reduce((a, b) => a + b, 0);
+    const pl = this.layout.placed[this.layout.firstPlaced[p]];
+    const pageH = pl ? this.view.tableBounds(this.layout.pages[pl.page], tid) : null;
+    const height0 = pageH ? pageH.h / PT : 0;
+    const sx = e.clientX, sy = e.clientY;
+    let started = false;
+    const move = (ev: MouseEvent) => {
+      const dx = (ev.clientX - sx) / this.view.zoom / PT, dy = (ev.clientY - sy) / this.view.zoom / PT;
+      if (!started && Math.abs(dx) < 1 && Math.abs(dy) < 1) return;
+      if (!started) { this.snapshot(); started = true; }
+      const at = this.paraOfTable(tid);
+      if (at < 0) return;
+      if (kind === "move") {
+        E.updateTable(this.doc, at, (d) => ({ ...d, indent: Math.round(((def0.indent ?? 0) + dx) * 20) / 20 }));
+      } else {
+        const fx = Math.max(0.1, (width0 + dx) / width0);
+        const fy = height0 > 0 ? Math.max(0.1, (height0 + dy) / height0) : 1;
+        E.updateTable(this.doc, at, (d) => ({
+          ...d, grid: def0.grid.map((g) => g * fx),
+          rows: def0.rows.map((r, i) => ({
+            ...r, cells: r.cells.map((c) => (c.width !== undefined ? { ...c, width: c.width * fx } : c)),
+            height: fy !== 1 ? Math.max(4, ((r.height ?? 0) || this.rowHeightPt(tid, i)) * fy) : r.height,
+            heightRule: fy !== 1 ? (r.heightRule ?? "atLeast") : r.heightRule,
+          })),
+        }));
+      }
+      this.update();
+    };
+    const up = () => { removeEventListener("mousemove", move, true); removeEventListener("mouseup", up, true); this.emit(true); };
+    addEventListener("mousemove", move, true);
+    addEventListener("mouseup", up, true);
+  }
+
+  /** A row's laid-out height in points (from its first cell's frame). */
+  private rowHeightPt(tid: number, row: number): number {
+    for (const f of this.layout.frames) {
+      if (f.kind === "cell" && f.cell?.startsWith(`${tid}:${row}:`)) return f.h / PT;
+    }
+    return 14;
   }
 
   private dragTo(clientX: number, clientY: number, ts?: number): void {

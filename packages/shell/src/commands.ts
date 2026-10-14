@@ -19,6 +19,8 @@ export interface Command {
   hidden?: boolean;
   /** Extra search terms ("Inhaltsverzeichnis" for "toc"). */
   keywords?: string[];
+  /** Deliberately postponed (SCOPE, D-041): shown greyed out and marked in the tooltip. */
+  deferred?: boolean;
 }
 
 type Listener = () => void;
@@ -90,7 +92,8 @@ export class Commands {
     const c = this.get(id);
     let t = c.tip ?? c.label;
     if (c.shortcut) t += ` (${c.shortcut})`;
-    if (!(available ?? !!c.run)) t += "\nNoch nicht verfügbar";
+    if (c.deferred) t += "\nZurückgestellt: bewusst auf eine spätere Version verschoben";
+    else if (!(available ?? !!c.run)) t += "\nNoch nicht verfügbar";
     return t;
   }
 }

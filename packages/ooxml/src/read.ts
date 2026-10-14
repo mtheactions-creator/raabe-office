@@ -21,6 +21,7 @@ const A = "http://schemas.openxmlformats.org/drawingml/2006/main";
 const RNS = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
 const W14 = "http://schemas.microsoft.com/office/word/2010/wordml";
 const W15 = "http://schemas.microsoft.com/office/word/2012/wordml";
+const W16SE = "http://schemas.microsoft.com/office/word/2015/wordml/symex";
 
 /** Everything needed to write the file back: original parts and wrappers. */
 export interface DocxPackage {
@@ -564,7 +565,23 @@ class PartReader {
           flush();
           b.addAnchor({ data: { raw: `<w:r>${rPrXml}${outer(c)}</w:r>` } });
           break;
-        case "drawing": case "AlternateContent":
+        case "AlternateContent": {
+          // Emoji as Word writes them (w16se:symEx, the character as fallback text).
+          const sym = c.getElementsByTagNameNS(W16SE, "symEx")[0];
+          if (sym) {
+            const code = parseInt(sym.getAttributeNS(W16SE, "char") ?? "", 16);
+            if (Number.isFinite(code)) {
+              flush();
+              const font = sym.getAttributeNS(W16SE, "font") || undefined;
+              b.addText(String.fromCodePoint(code), font ? intern({ ...props, font, fontTheme: undefined }) : props);
+              break;
+            }
+          }
+          flush();
+          this.drawing(c, b, props);
+          break;
+        }
+        case "drawing":
           flush();
           this.drawing(c, b, props);
           break;
@@ -575,8 +592,9 @@ class PartReader {
           break;
         case "sym": {
           const code = parseInt(attr(c, "char") ?? "", 16);
-          const ch = Number.isFinite(code) ? String.fromCharCode(code >= 0xf000 ? code - 0xf000 : code) : "?";
-          obj({ kind: "other", data: { inner: outer(c) }, display: ch });
+          // Symbol fonts map their characters to U+F000-U+F0FF; the font is the sym's own.
+          const ch = Number.isFinite(code) ? String.fromCharCode(code < 0x100 ? code + 0xf000 : code) : "?";
+          obj({ kind: "other", data: { inner: outer(c) }, display: ch, font: attr(c, "font") ?? undefined });
           break;
         }
         case "ptab":

@@ -1,0 +1,1624 @@
+{
+ "apostrophe typed": {
+  "paras": [
+   {
+    "text": "Geht<2018>",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [],
+  "caret": 5
+ },
+ "apostrophe then letter": {
+  "paras": [
+   {
+    "text": "Geht<2018>s",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [],
+  "caret": 6
+ },
+ "apostrophe at start": {
+  "paras": [
+   {
+    "text": "<201A>s Leben",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [],
+  "caret": 8
+ },
+ "quote after space": {
+  "paras": [
+   {
+    "text": "Er sagte <201A>",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [],
+  "caret": 10
+ },
+ "closing single then space": {
+  "paras": [
+   {
+    "text": "Er sagte <201A>ja<2018> ",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [],
+  "caret": 14
+ },
+ "(c) no space": {
+  "paras": [
+   {
+    "text": "<00A9>",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [],
+  "caret": 1
+ },
+ "(c) after word": {
+  "paras": [
+   {
+    "text": "Text<00A9>",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [],
+  "caret": 5
+ },
+ "--> no space": {
+  "paras": [
+   {
+    "text": "A (",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [],
+  "caret": 3
+ },
+ "... no space": {
+  "paras": [
+   {
+    "text": "Und<2026>",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [],
+  "caret": 4
+ },
+ "... then letter": {
+  "paras": [
+   {
+    "text": "Und<2026>so",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [],
+  "caret": 6
+ },
+ ":) no space": {
+  "paras": [
+   {
+    "text": "Gut 12",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [],
+  "caret": 6
+ },
+ "ordinal date": {
+  "paras": [
+   {
+    "text": "Am 1. Januar ",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [],
+  "caret": 13
+ },
+ "number period mid sentence": {
+  "paras": [
+   {
+    "text": "Es gibt 3. Die ",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [],
+  "caret": 15
+ },
+ "a) text capital": {
+  "paras": [
+   {
+    "text": "Erster ",
+    "style": "Listenabsatz",
+    "left": 36.0,
+    "first": -18.0,
+    "list": "a)",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"lowerLetter\"/><w:lvlText w:val=\"%1)\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"720\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"lowerLetter\"/><w:lvlText w:val=\"%2.\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"lowerRoman\"/><w:lvlText w:val=\"%3.\"/><w:lvlJc w:val=\"right\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"180\"/></w:pPr>"
+  ],
+  "caret": 7
+ },
+ "indent backspace": {
+  "paras": [
+   {
+    "text": "Absatz",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [],
+  "caret": 0
+ },
+ "indent backspace twice": {
+  "paras": [
+   {
+    "text": "Absatz",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [],
+  "caret": 0
+ },
+ "first-line tab backspace": {
+  "paras": [
+   {
+    "text": "Absatz",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [],
+  "caret": 0
+ },
+ "first-line tab twice backspace": {
+  "paras": [
+   {
+    "text": "Absatz",
+    "style": "Standard",
+    "left": 35.4,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [],
+  "caret": 0
+ },
+ "hanging backspace": {
+  "paras": [
+   {
+    "text": "Absatz",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [],
+  "caret": 0
+ },
+ "list item backspace x3": {
+  "paras": [
+   {
+    "text": "Eins",
+    "style": "Listenabsatz",
+    "left": 36.0,
+    "first": -18.0,
+    "list": "",
+    "level": 1
+   },
+   {
+    "text": "Zwei",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"<F0B7>\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"720\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Symbol\" w:eastAsiaTheme=\"minorHAnsi\" w:hAnsi=\"Symbol\" w:cstheme=\"minorBidi\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"o\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Courier New\" w:hAnsi=\"Courier New\" w:cs=\"Courier New\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"<F0A7>\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Wingdings\" w:hAnsi=\"Wingdings\" w:hint=\"default\"/></w:rPr>"
+  ],
+  "caret": 0
+ },
+ "list first item tab": {
+  "paras": [
+   {
+    "text": "Eins",
+    "style": "Listenabsatz",
+    "left": 53.4,
+    "first": -18.0,
+    "list": "",
+    "level": 1
+   },
+   {
+    "text": "Zwei",
+    "style": "Listenabsatz",
+    "left": 53.4,
+    "first": -18.0,
+    "list": "",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1068\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Symbol\" w:eastAsiaTheme=\"minorHAnsi\" w:hAnsi=\"Symbol\" w:cstheme=\"minorBidi\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"o\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1788\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Courier New\" w:hAnsi=\"Courier New\" w:cs=\"Courier New\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"2508\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Wingdings\" w:hAnsi=\"Wingdings\" w:hint=\"default\"/></w:rPr>"
+  ],
+  "caret": 0
+ },
+ "list first item tab twice": {
+  "paras": [
+   {
+    "text": "Eins",
+    "style": "Listenabsatz",
+    "left": 71.4,
+    "first": -18.0,
+    "list": "",
+    "level": 1
+   },
+   {
+    "text": "Zwei",
+    "style": "Listenabsatz",
+    "left": 71.4,
+    "first": -18.0,
+    "list": "",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1428\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Symbol\" w:eastAsiaTheme=\"minorHAnsi\" w:hAnsi=\"Symbol\" w:cstheme=\"minorBidi\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"o\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"2148\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Courier New\" w:hAnsi=\"Courier New\" w:cs=\"Courier New\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"2868\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Wingdings\" w:hAnsi=\"Wingdings\" w:hint=\"default\"/></w:rPr>"
+  ],
+  "caret": 0
+ },
+ "list first item shift+tab": {
+  "paras": [
+   {
+    "text": "Eins",
+    "style": "Listenabsatz",
+    "left": 18.0,
+    "first": -18.0,
+    "list": "",
+    "level": 1
+   },
+   {
+    "text": "Zwei",
+    "style": "Listenabsatz",
+    "left": 18.0,
+    "first": -18.0,
+    "list": "",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"360\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Symbol\" w:eastAsiaTheme=\"minorHAnsi\" w:hAnsi=\"Symbol\" w:cstheme=\"minorBidi\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"o\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1080\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Courier New\" w:hAnsi=\"Courier New\" w:cs=\"Courier New\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1800\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Wingdings\" w:hAnsi=\"Wingdings\" w:hint=\"default\"/></w:rPr>"
+  ],
+  "caret": 0
+ },
+ "numbered first item tab": {
+  "paras": [
+   {
+    "text": "Eins",
+    "style": "Listenabsatz",
+    "left": 53.4,
+    "first": -18.0,
+    "list": "1.",
+    "level": 1
+   },
+   {
+    "text": "Zwei",
+    "style": "Listenabsatz",
+    "left": 53.4,
+    "first": -18.0,
+    "list": "2.",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"decimal\"/><w:lvlText w:val=\"%1.\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1068\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"lowerLetter\"/><w:lvlText w:val=\"%2.\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1788\" w:hanging=\"360\"/></w:pPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"lowerRoman\"/><w:lvlText w:val=\"%3.\"/><w:lvlJc w:val=\"right\"/><w:pPr><w:ind w:left=\"2508\" w:hanging=\"180\"/></w:pPr>"
+  ],
+  "caret": 0
+ },
+ "list second item tab": {
+  "paras": [
+   {
+    "text": "Eins",
+    "style": "Listenabsatz",
+    "left": 36.0,
+    "first": -18.0,
+    "list": "1.",
+    "level": 1
+   },
+   {
+    "text": "Zwei",
+    "style": "Listenabsatz",
+    "left": 72.0,
+    "first": -18.0,
+    "list": "a.",
+    "level": 2
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"decimal\"/><w:lvlText w:val=\"%1.\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"720\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"lowerLetter\"/><w:lvlText w:val=\"%2.\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"lowerRoman\"/><w:lvlText w:val=\"%3.\"/><w:lvlJc w:val=\"right\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"180\"/></w:pPr>"
+  ],
+  "caret": 0
+ },
+ "1. tab": {
+  "paras": [
+   {
+    "text": "Eins",
+    "style": "Listenabsatz",
+    "left": 36.0,
+    "first": -18.0,
+    "list": "1.",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"decimal\"/><w:lvlText w:val=\"%1.\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"720\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"lowerLetter\"/><w:lvlText w:val=\"%2.\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"lowerRoman\"/><w:lvlText w:val=\"%3.\"/><w:lvlJc w:val=\"right\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"180\"/></w:pPr>"
+  ],
+  "caret": 4
+ },
+ "* tab": {
+  "paras": [
+   {
+    "text": "Eins",
+    "style": "Listenabsatz",
+    "left": 36.0,
+    "first": -18.0,
+    "list": "",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"720\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Symbol\" w:eastAsiaTheme=\"minorHAnsi\" w:hAnsi=\"Symbol\" w:cstheme=\"minorBidi\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"o\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Courier New\" w:hAnsi=\"Courier New\" w:cs=\"Courier New\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Wingdings\" w:hAnsi=\"Wingdings\" w:hint=\"default\"/></w:rPr>"
+  ],
+  "caret": 4
+ },
+ "prefix *": {
+  "paras": [
+   {
+    "text": "Erster",
+    "style": "Listenabsatz",
+    "left": 36.0,
+    "first": -18.0,
+    "list": "",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"<F0B7>\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"720\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Symbol\" w:eastAsiaTheme=\"minorHAnsi\" w:hAnsi=\"Symbol\" w:cstheme=\"minorBidi\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"o\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Courier New\" w:hAnsi=\"Courier New\" w:cs=\"Courier New\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"<F0A7>\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Wingdings\" w:hAnsi=\"Wingdings\" w:hint=\"default\"/></w:rPr>"
+  ],
+  "caret": 6
+ },
+ "prefix -": {
+  "paras": [
+   {
+    "text": "Erster",
+    "style": "Listenabsatz",
+    "left": 36.0,
+    "first": -18.0,
+    "list": "-",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"-\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"720\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Calibri\" w:eastAsiaTheme=\"minorHAnsi\" w:hAnsi=\"Calibri\" w:cs=\"Calibri\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"o\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Courier New\" w:hAnsi=\"Courier New\" w:cs=\"Courier New\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"<F0A7>\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Wingdings\" w:hAnsi=\"Wingdings\" w:hint=\"default\"/></w:rPr>"
+  ],
+  "caret": 6
+ },
+ "prefix >": {
+  "paras": [
+   {
+    "text": "Erster",
+    "style": "Listenabsatz",
+    "left": 36.0,
+    "first": -18.0,
+    "list": "",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"<F0D8>\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"720\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Wingdings\" w:eastAsiaTheme=\"minorHAnsi\" w:hAnsi=\"Wingdings\" w:cstheme=\"minorBidi\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"o\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Courier New\" w:hAnsi=\"Courier New\" w:cs=\"Courier New\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"<F0A7>\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Wingdings\" w:hAnsi=\"Wingdings\" w:hint=\"default\"/></w:rPr>"
+  ],
+  "caret": 6
+ },
+ "prefix ->": {
+  "paras": [
+   {
+    "text": "Erster",
+    "style": "Listenabsatz",
+    "left": 36.0,
+    "first": -18.0,
+    "list": "",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"<F0E8>\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"720\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Wingdings\" w:eastAsiaTheme=\"minorHAnsi\" w:hAnsi=\"Wingdings\" w:cstheme=\"minorBidi\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"o\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Courier New\" w:hAnsi=\"Courier New\" w:cs=\"Courier New\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"<F0A7>\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Wingdings\" w:hAnsi=\"Wingdings\" w:hint=\"default\"/></w:rPr>"
+  ],
+  "caret": 6
+ },
+ "prefix =>": {
+  "paras": [
+   {
+    "text": "Erster",
+    "style": "Listenabsatz",
+    "left": 36.0,
+    "first": -18.0,
+    "list": "",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"<F0F0>\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"720\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Wingdings\" w:eastAsiaTheme=\"minorHAnsi\" w:hAnsi=\"Wingdings\" w:cstheme=\"minorBidi\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"o\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Courier New\" w:hAnsi=\"Courier New\" w:cs=\"Courier New\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"<F0A7>\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Wingdings\" w:hAnsi=\"Wingdings\" w:hint=\"default\"/></w:rPr>"
+  ],
+  "caret": 6
+ },
+ "prefix o": {
+  "paras": [
+   {
+    "text": "O Erster",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [],
+  "caret": 8
+ },
+ "prefix 1.": {
+  "paras": [
+   {
+    "text": "Erster",
+    "style": "Listenabsatz",
+    "left": 36.0,
+    "first": -18.0,
+    "list": "1.",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"decimal\"/><w:lvlText w:val=\"%1.\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"720\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"lowerLetter\"/><w:lvlText w:val=\"%2.\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"lowerRoman\"/><w:lvlText w:val=\"%3.\"/><w:lvlJc w:val=\"right\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"180\"/></w:pPr>"
+  ],
+  "caret": 6
+ },
+ "prefix 1)": {
+  "paras": [
+   {
+    "text": "Erster",
+    "style": "Listenabsatz",
+    "left": 36.0,
+    "first": -18.0,
+    "list": "1)",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"decimal\"/><w:lvlText w:val=\"%1)\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"720\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"lowerLetter\"/><w:lvlText w:val=\"%2.\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"lowerRoman\"/><w:lvlText w:val=\"%3.\"/><w:lvlJc w:val=\"right\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"180\"/></w:pPr>"
+  ],
+  "caret": 6
+ },
+ "prefix (1)": {
+  "paras": [
+   {
+    "text": "Erster",
+    "style": "Listenabsatz",
+    "left": 36.0,
+    "first": -18.0,
+    "list": "(1)",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"decimal\"/><w:lvlText w:val=\"(%1)\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"720\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"lowerLetter\"/><w:lvlText w:val=\"%2.\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"lowerRoman\"/><w:lvlText w:val=\"%3.\"/><w:lvlJc w:val=\"right\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"180\"/></w:pPr>"
+  ],
+  "caret": 6
+ },
+ "prefix a.": {
+  "paras": [
+   {
+    "text": "Erster",
+    "style": "Listenabsatz",
+    "left": 36.0,
+    "first": -18.0,
+    "list": "a.",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"lowerLetter\"/><w:lvlText w:val=\"%1.\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"720\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"lowerLetter\"/><w:lvlText w:val=\"%2.\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"lowerRoman\"/><w:lvlText w:val=\"%3.\"/><w:lvlJc w:val=\"right\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"180\"/></w:pPr>"
+  ],
+  "caret": 6
+ },
+ "prefix a)": {
+  "paras": [
+   {
+    "text": "Erster",
+    "style": "Listenabsatz",
+    "left": 36.0,
+    "first": -18.0,
+    "list": "a)",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"lowerLetter\"/><w:lvlText w:val=\"%1)\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"720\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"lowerLetter\"/><w:lvlText w:val=\"%2.\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"lowerRoman\"/><w:lvlText w:val=\"%3.\"/><w:lvlJc w:val=\"right\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"180\"/></w:pPr>"
+  ],
+  "caret": 6
+ },
+ "prefix (a)": {
+  "paras": [
+   {
+    "text": "Erster",
+    "style": "Listenabsatz",
+    "left": 36.0,
+    "first": -18.0,
+    "list": "(a)",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"lowerLetter\"/><w:lvlText w:val=\"(%1)\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"720\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"lowerLetter\"/><w:lvlText w:val=\"%2.\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"lowerRoman\"/><w:lvlText w:val=\"%3.\"/><w:lvlJc w:val=\"right\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"180\"/></w:pPr>"
+  ],
+  "caret": 6
+ },
+ "prefix A.": {
+  "paras": [
+   {
+    "text": "Erster",
+    "style": "Listenabsatz",
+    "left": 36.0,
+    "first": -18.0,
+    "list": "A.",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"upperLetter\"/><w:lvlText w:val=\"%1.\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"720\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"lowerLetter\"/><w:lvlText w:val=\"%2.\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"lowerRoman\"/><w:lvlText w:val=\"%3.\"/><w:lvlJc w:val=\"right\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"180\"/></w:pPr>"
+  ],
+  "caret": 6
+ },
+ "prefix A)": {
+  "paras": [
+   {
+    "text": "Erster",
+    "style": "Listenabsatz",
+    "left": 36.0,
+    "first": -18.0,
+    "list": "A)",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"upperLetter\"/><w:lvlText w:val=\"%1)\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"720\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"lowerLetter\"/><w:lvlText w:val=\"%2.\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"lowerRoman\"/><w:lvlText w:val=\"%3.\"/><w:lvlJc w:val=\"right\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"180\"/></w:pPr>"
+  ],
+  "caret": 6
+ },
+ "prefix i.": {
+  "paras": [
+   {
+    "text": "Erster",
+    "style": "Listenabsatz",
+    "left": 54.0,
+    "first": -36.0,
+    "list": "i.",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"lowerRoman\"/><w:lvlText w:val=\"%1.\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1080\" w:hanging=\"720\"/></w:pPr><w:rPr><w:rFonts w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"lowerLetter\"/><w:lvlText w:val=\"%2.\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"lowerRoman\"/><w:lvlText w:val=\"%3.\"/><w:lvlJc w:val=\"right\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"180\"/></w:pPr>"
+  ],
+  "caret": 6
+ },
+ "prefix i)": {
+  "paras": [
+   {
+    "text": "Erster",
+    "style": "Listenabsatz",
+    "left": 54.0,
+    "first": -36.0,
+    "list": "i)",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"lowerRoman\"/><w:lvlText w:val=\"%1)\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1080\" w:hanging=\"720\"/></w:pPr><w:rPr><w:rFonts w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"lowerLetter\"/><w:lvlText w:val=\"%2.\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"lowerRoman\"/><w:lvlText w:val=\"%3.\"/><w:lvlJc w:val=\"right\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"180\"/></w:pPr>"
+  ],
+  "caret": 6
+ },
+ "prefix I.": {
+  "paras": [
+   {
+    "text": "Erster",
+    "style": "Listenabsatz",
+    "left": 54.0,
+    "first": -36.0,
+    "list": "I.",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"upperRoman\"/><w:lvlText w:val=\"%1.\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1080\" w:hanging=\"720\"/></w:pPr><w:rPr><w:rFonts w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"lowerLetter\"/><w:lvlText w:val=\"%2.\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"lowerRoman\"/><w:lvlText w:val=\"%3.\"/><w:lvlJc w:val=\"right\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"180\"/></w:pPr>"
+  ],
+  "caret": 6
+ },
+ "prefix I)": {
+  "paras": [
+   {
+    "text": "Erster",
+    "style": "Listenabsatz",
+    "left": 54.0,
+    "first": -36.0,
+    "list": "I)",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"upperRoman\"/><w:lvlText w:val=\"%1)\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1080\" w:hanging=\"720\"/></w:pPr><w:rPr><w:rFonts w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"lowerLetter\"/><w:lvlText w:val=\"%2.\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"lowerRoman\"/><w:lvlText w:val=\"%3.\"/><w:lvlJc w:val=\"right\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"180\"/></w:pPr>"
+  ],
+  "caret": 6
+ },
+ "prefix 1.1": {
+  "paras": [
+   {
+    "text": "1.1 Erster",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [],
+  "caret": 10
+ },
+ "prefix §": {
+  "paras": [
+   {
+    "text": "<00A7> Erster",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [],
+  "caret": 8
+ },
+ "prefix +": {
+  "paras": [
+   {
+    "text": "+ Erster",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [],
+  "caret": 8
+ },
+ "prefix •": {
+  "paras": [
+   {
+    "text": "<2022> Erster",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [],
+  "caret": 8
+ },
+ "prefix –": {
+  "paras": [
+   {
+    "text": "Erster",
+    "style": "Listenabsatz",
+    "left": 36.0,
+    "first": -18.0,
+    "list": "–",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"<2013>\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"720\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Calibri\" w:eastAsiaTheme=\"minorHAnsi\" w:hAnsi=\"Calibri\" w:cs=\"Calibri\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"o\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Courier New\" w:hAnsi=\"Courier New\" w:cs=\"Courier New\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"<F0A7>\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Wingdings\" w:hAnsi=\"Wingdings\" w:hint=\"default\"/></w:rPr>"
+  ],
+  "caret": 6
+ },
+ "prefix 2.": {
+  "paras": [
+   {
+    "text": "2. Erster",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [],
+  "caret": 9
+ },
+ "prefix c)": {
+  "paras": [
+   {
+    "text": "c) Erster",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [],
+  "caret": 9
+ },
+ "prefix IV.": {
+  "paras": [
+   {
+    "text": "IV. Erster",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [],
+  "caret": 10
+ },
+ "list first item tab x3": {
+  "paras": [
+   {
+    "text": "Eins",
+    "style": "Listenabsatz",
+    "left": 88.8,
+    "first": -18.0,
+    "list": "",
+    "level": 1
+   },
+   {
+    "text": "Zwei",
+    "style": "Listenabsatz",
+    "left": 88.8,
+    "first": -18.0,
+    "list": "",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"<F0B7>\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1776\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Symbol\" w:eastAsiaTheme=\"minorHAnsi\" w:hAnsi=\"Symbol\" w:cstheme=\"minorBidi\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"o\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"2496\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Courier New\" w:hAnsi=\"Courier New\" w:cs=\"Courier New\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"<F0A7>\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"3216\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Wingdings\" w:hAnsi=\"Wingdings\" w:hint=\"default\"/></w:rPr>"
+  ],
+  "caret": 0
+ },
+ "list first item tab x4": {
+  "paras": [
+   {
+    "text": "Eins",
+    "style": "Listenabsatz",
+    "left": 106.8,
+    "first": -18.0,
+    "list": "",
+    "level": 1
+   },
+   {
+    "text": "Zwei",
+    "style": "Listenabsatz",
+    "left": 106.8,
+    "first": -18.0,
+    "list": "",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"<F0B7>\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"2136\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Symbol\" w:eastAsiaTheme=\"minorHAnsi\" w:hAnsi=\"Symbol\" w:cstheme=\"minorBidi\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"o\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"2856\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Courier New\" w:hAnsi=\"Courier New\" w:cs=\"Courier New\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"<F0A7>\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"3576\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Wingdings\" w:hAnsi=\"Wingdings\" w:hint=\"default\"/></w:rPr>"
+  ],
+  "caret": 0
+ },
+ "list first item tab x5": {
+  "paras": [
+   {
+    "text": "Eins",
+    "style": "Listenabsatz",
+    "left": 124.2,
+    "first": -18.0,
+    "list": "",
+    "level": 1
+   },
+   {
+    "text": "Zwei",
+    "style": "Listenabsatz",
+    "left": 124.2,
+    "first": -18.0,
+    "list": "",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"<F0B7>\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"2484\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Symbol\" w:eastAsiaTheme=\"minorHAnsi\" w:hAnsi=\"Symbol\" w:cstheme=\"minorBidi\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"o\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"3204\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Courier New\" w:hAnsi=\"Courier New\" w:cs=\"Courier New\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"<F0A7>\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"3924\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Wingdings\" w:hAnsi=\"Wingdings\" w:hint=\"default\"/></w:rPr>"
+  ],
+  "caret": 0
+ },
+ "list first item tab then shift+tab": {
+  "paras": [
+   {
+    "text": "Eins",
+    "style": "Listenabsatz",
+    "left": 18.0,
+    "first": -18.0,
+    "list": "",
+    "level": 1
+   },
+   {
+    "text": "Zwei",
+    "style": "Listenabsatz",
+    "left": 18.0,
+    "first": -18.0,
+    "list": "",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"<F0B7>\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"360\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Symbol\" w:eastAsiaTheme=\"minorHAnsi\" w:hAnsi=\"Symbol\" w:cstheme=\"minorBidi\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"o\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1080\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Courier New\" w:hAnsi=\"Courier New\" w:cs=\"Courier New\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"<F0A7>\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1800\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Wingdings\" w:hAnsi=\"Wingdings\" w:hint=\"default\"/></w:rPr>"
+  ],
+  "caret": 0
+ },
+ "list item backspace x1": {
+  "paras": [
+   {
+    "text": "Eins",
+    "style": "Listenabsatz",
+    "left": 36.0,
+    "first": -18.0,
+    "list": "",
+    "level": 1
+   },
+   {
+    "text": "Zwei",
+    "style": "Listenabsatz",
+    "left": 36.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"<F0B7>\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"720\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Symbol\" w:eastAsiaTheme=\"minorHAnsi\" w:hAnsi=\"Symbol\" w:cstheme=\"minorBidi\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"o\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Courier New\" w:hAnsi=\"Courier New\" w:cs=\"Courier New\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"<F0A7>\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Wingdings\" w:hAnsi=\"Wingdings\" w:hint=\"default\"/></w:rPr>"
+  ],
+  "caret": 0
+ },
+ "list item backspace x2": {
+  "paras": [
+   {
+    "text": "Eins",
+    "style": "Listenabsatz",
+    "left": 36.0,
+    "first": -18.0,
+    "list": "",
+    "level": 1
+   },
+   {
+    "text": "Zwei",
+    "style": "Standard",
+    "left": 18.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"<F0B7>\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"720\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Symbol\" w:eastAsiaTheme=\"minorHAnsi\" w:hAnsi=\"Symbol\" w:cstheme=\"minorBidi\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"o\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Courier New\" w:hAnsi=\"Courier New\" w:cs=\"Courier New\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"<F0A7>\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Wingdings\" w:hAnsi=\"Wingdings\" w:hint=\"default\"/></w:rPr>"
+  ],
+  "caret": 0
+ },
+ "list item backspace x4": {
+  "paras": [
+   {
+    "text": "EinsZwei",
+    "style": "Listenabsatz",
+    "left": 36.0,
+    "first": -18.0,
+    "list": "",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"<F0B7>\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"720\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Symbol\" w:eastAsiaTheme=\"minorHAnsi\" w:hAnsi=\"Symbol\" w:cstheme=\"minorBidi\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"o\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Courier New\" w:hAnsi=\"Courier New\" w:cs=\"Courier New\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"<F0A7>\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Wingdings\" w:hAnsi=\"Wingdings\" w:hint=\"default\"/></w:rPr>"
+  ],
+  "caret": 4
+ },
+ "list first item backspace x1": {
+  "paras": [
+   {
+    "text": "Vorher",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   },
+   {
+    "text": "Eins",
+    "style": "Listenabsatz",
+    "left": 36.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   },
+   {
+    "text": "Zwei",
+    "style": "Listenabsatz",
+    "left": 36.0,
+    "first": -18.0,
+    "list": "",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"<F0B7>\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"720\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Symbol\" w:eastAsiaTheme=\"minorHAnsi\" w:hAnsi=\"Symbol\" w:cstheme=\"minorBidi\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"o\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Courier New\" w:hAnsi=\"Courier New\" w:cs=\"Courier New\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"<F0A7>\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Wingdings\" w:hAnsi=\"Wingdings\" w:hint=\"default\"/></w:rPr>"
+  ],
+  "caret": 0
+ },
+ "list first item backspace x2": {
+  "paras": [
+   {
+    "text": "Vorher",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   },
+   {
+    "text": "Eins",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   },
+   {
+    "text": "Zwei",
+    "style": "Listenabsatz",
+    "left": 36.0,
+    "first": -18.0,
+    "list": "",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"<F0B7>\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"720\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Symbol\" w:eastAsiaTheme=\"minorHAnsi\" w:hAnsi=\"Symbol\" w:cstheme=\"minorBidi\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"o\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Courier New\" w:hAnsi=\"Courier New\" w:cs=\"Courier New\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"<F0A7>\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Wingdings\" w:hAnsi=\"Wingdings\" w:hint=\"default\"/></w:rPr>"
+  ],
+  "caret": 0
+ },
+ "list first item backspace x3": {
+  "paras": [
+   {
+    "text": "VorherEins",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   },
+   {
+    "text": "Zwei",
+    "style": "Listenabsatz",
+    "left": 36.0,
+    "first": -18.0,
+    "list": "",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"<F0B7>\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"720\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Symbol\" w:eastAsiaTheme=\"minorHAnsi\" w:hAnsi=\"Symbol\" w:cstheme=\"minorBidi\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"o\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Courier New\" w:hAnsi=\"Courier New\" w:cs=\"Courier New\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"<F0A7>\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Wingdings\" w:hAnsi=\"Wingdings\" w:hint=\"default\"/></w:rPr>"
+  ],
+  "caret": 6
+ },
+ "indent backspace then join": {
+  "paras": [
+   {
+    "text": "VorherAbsatz",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [],
+  "caret": 6
+ },
+ "first-line tab twice backspace twice": {
+  "paras": [
+   {
+    "text": "Absatz",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [],
+  "caret": 0
+ },
+ "apostrophe word then space": {
+  "paras": [
+   {
+    "text": "Geht<2019>s ",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [],
+  "caret": 7
+ },
+ "apostrophe end then space": {
+  "paras": [
+   {
+    "text": "Peters<2018> ",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [],
+  "caret": 8
+ },
+ "prefix (A)": {
+  "paras": [
+   {
+    "text": "Erster",
+    "style": "Listenabsatz",
+    "left": 36.0,
+    "first": -18.0,
+    "list": "(A)",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"upperLetter\"/><w:lvlText w:val=\"(%1)\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"720\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"lowerLetter\"/><w:lvlText w:val=\"%2.\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"lowerRoman\"/><w:lvlText w:val=\"%3.\"/><w:lvlJc w:val=\"right\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"180\"/></w:pPr>"
+  ],
+  "caret": 6
+ },
+ "prefix (i)": {
+  "paras": [
+   {
+    "text": "Erster",
+    "style": "Listenabsatz",
+    "left": 54.0,
+    "first": -36.0,
+    "list": "(i)",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"lowerRoman\"/><w:lvlText w:val=\"(%1)\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1080\" w:hanging=\"720\"/></w:pPr><w:rPr><w:rFonts w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"lowerLetter\"/><w:lvlText w:val=\"%2.\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"lowerRoman\"/><w:lvlText w:val=\"%3.\"/><w:lvlJc w:val=\"right\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"180\"/></w:pPr>"
+  ],
+  "caret": 6
+ },
+ "prefix (I)": {
+  "paras": [
+   {
+    "text": "Erster",
+    "style": "Listenabsatz",
+    "left": 54.0,
+    "first": -36.0,
+    "list": "(I)",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"upperRoman\"/><w:lvlText w:val=\"(%1)\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1080\" w:hanging=\"720\"/></w:pPr><w:rPr><w:rFonts w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"lowerLetter\"/><w:lvlText w:val=\"%2.\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"lowerRoman\"/><w:lvlText w:val=\"%3.\"/><w:lvlJc w:val=\"right\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"180\"/></w:pPr>"
+  ],
+  "caret": 6
+ },
+ "prefix 1-": {
+  "paras": [
+   {
+    "text": "Erster",
+    "style": "Listenabsatz",
+    "left": 36.0,
+    "first": -18.0,
+    "list": "1-",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"decimal\"/><w:lvlText w:val=\"%1-\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"720\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"lowerLetter\"/><w:lvlText w:val=\"%2.\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"lowerRoman\"/><w:lvlText w:val=\"%3.\"/><w:lvlJc w:val=\"right\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"180\"/></w:pPr>"
+  ],
+  "caret": 6
+ },
+ "prefix a-": {
+  "paras": [
+   {
+    "text": "Erster",
+    "style": "Listenabsatz",
+    "left": 36.0,
+    "first": -18.0,
+    "list": "a-",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"lowerLetter\"/><w:lvlText w:val=\"%1-\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"720\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"lowerLetter\"/><w:lvlText w:val=\"%2.\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"lowerRoman\"/><w:lvlText w:val=\"%3.\"/><w:lvlJc w:val=\"right\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"180\"/></w:pPr>"
+  ],
+  "caret": 6
+ },
+ "prefix 1:": {
+  "paras": [
+   {
+    "text": "1: Erster",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [],
+  "caret": 9
+ },
+ "prefix #": {
+  "paras": [
+   {
+    "text": "Erster",
+    "style": "Überschrift 1",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [],
+  "caret": 6
+ },
+ "prefix =": {
+  "paras": [
+   {
+    "text": "= Erster",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [],
+  "caret": 8
+ },
+ "prefix —": {
+  "paras": [
+   {
+    "text": "Erster",
+    "style": "Listenabsatz",
+    "left": 36.0,
+    "first": -18.0,
+    "list": "—",
+    "level": 1
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"<2014>\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"720\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Calibri\" w:eastAsiaTheme=\"minorHAnsi\" w:hAnsi=\"Calibri\" w:cs=\"Calibri\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"o\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Courier New\" w:hAnsi=\"Courier New\" w:cs=\"Courier New\" w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"bullet\"/><w:lvlText w:val=\"<F0A7>\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Wingdings\" w:hAnsi=\"Wingdings\" w:hint=\"default\"/></w:rPr>"
+  ],
+  "caret": 6
+ },
+ "prefix ~": {
+  "paras": [
+   {
+    "text": "~ Erster",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0
+   }
+  ],
+  "numbering": [],
+  "caret": 8
+ },
+ "md ##": {
+  "paras": [
+   {
+    "text": "Erster",
+    "style": "Überschrift 2",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0,
+    "fmt": "",
+    "fonts": [
+     "Aptos Display"
+    ]
+   }
+  ],
+  "numbering": [],
+  "caret": 6
+ },
+ "md ###": {
+  "paras": [
+   {
+    "text": "Erster",
+    "style": "Überschrift 3",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0,
+    "fmt": "",
+    "fonts": [
+     "Aptos"
+    ]
+   }
+  ],
+  "numbering": [],
+  "caret": 6
+ },
+ "md ####": {
+  "paras": [
+   {
+    "text": "Erster",
+    "style": "Überschrift 4",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0,
+    "fmt": "",
+    "fonts": [
+     "Aptos"
+    ]
+   }
+  ],
+  "numbering": [],
+  "caret": 6
+ },
+ "md bold": {
+  "paras": [
+   {
+    "text": "Ein fettes Wort ",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0,
+    "fmt": "Bold:fettes ",
+    "fonts": [
+     "Calibri"
+    ]
+   }
+  ],
+  "numbering": [],
+  "caret": 16
+ },
+ "md italic star": {
+  "paras": [
+   {
+    "text": "Ein *kursives* Wort ",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0,
+    "fmt": "",
+    "fonts": [
+     "Calibri"
+    ]
+   }
+  ],
+  "numbering": [],
+  "caret": 20
+ },
+ "md italic underscore": {
+  "paras": [
+   {
+    "text": "Ein _kursives_ Wort ",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0,
+    "fmt": "",
+    "fonts": [
+     "Calibri"
+    ]
+   }
+  ],
+  "numbering": [],
+  "caret": 20
+ },
+ "md strike": {
+  "paras": [
+   {
+    "text": "Ein altes Wort ",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0,
+    "fmt": "StrikeThrough:altes ",
+    "fonts": [
+     "Calibri"
+    ]
+   }
+  ],
+  "numbering": [],
+  "caret": 15
+ },
+ "md code": {
+  "paras": [
+   {
+    "text": "Ein `code` Wort ",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0,
+    "fmt": "",
+    "fonts": [
+     "Calibri"
+    ]
+   }
+  ],
+  "numbering": [],
+  "caret": 16
+ },
+ "md # mid": {
+  "paras": [
+   {
+    "text": "Text # Erster",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0,
+    "fmt": "",
+    "fonts": [
+     "Calibri"
+    ]
+   }
+  ],
+  "numbering": [],
+  "caret": 13
+ },
+ "md # then enter": {
+  "paras": [
+   {
+    "text": "Titel",
+    "style": "Überschrift 1",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0,
+    "fmt": "",
+    "fonts": [
+     "Calibri Light"
+    ]
+   },
+   {
+    "text": "Text",
+    "style": "Standard",
+    "left": 0.0,
+    "first": 0.0,
+    "list": "",
+    "level": 0,
+    "fmt": "",
+    "fonts": [
+     "Calibri"
+    ]
+   }
+  ],
+  "numbering": [],
+  "caret": 4
+ },
+ "i- prefix": {
+  "paras": [
+   {
+    "text": "Erster",
+    "style": "Listenabsatz",
+    "left": 54.0,
+    "first": -36.0,
+    "list": "i-",
+    "level": 1,
+    "fmt": "",
+    "fonts": [
+     "Calibri"
+    ]
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"lowerRoman\"/><w:lvlText w:val=\"%1-\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1080\" w:hanging=\"720\"/></w:pPr><w:rPr><w:rFonts w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"lowerLetter\"/><w:lvlText w:val=\"%2.\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"lowerRoman\"/><w:lvlText w:val=\"%3.\"/><w:lvlJc w:val=\"right\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"180\"/></w:pPr>"
+  ],
+  "caret": 6
+ },
+ "A- prefix": {
+  "paras": [
+   {
+    "text": "Erster",
+    "style": "Listenabsatz",
+    "left": 36.0,
+    "first": -18.0,
+    "list": "A-",
+    "level": 1,
+    "fmt": "",
+    "fonts": [
+     "Calibri"
+    ]
+   }
+  ],
+  "numbering": [
+   "abs0 lvl0: <w:numFmt w:val=\"upperLetter\"/><w:lvlText w:val=\"%1-\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"720\" w:hanging=\"360\"/></w:pPr><w:rPr><w:rFonts w:hint=\"default\"/></w:rPr>",
+   "abs0 lvl1: <w:numFmt w:val=\"lowerLetter\"/><w:lvlText w:val=\"%2.\"/><w:lvlJc w:val=\"left\"/><w:pPr><w:ind w:left=\"1440\" w:hanging=\"360\"/></w:pPr>",
+   "abs0 lvl2: <w:numFmt w:val=\"lowerRoman\"/><w:lvlText w:val=\"%3.\"/><w:lvlJc w:val=\"right\"/><w:pPr><w:ind w:left=\"2160\" w:hanging=\"180\"/></w:pPr>"
+  ],
+  "caret": 6
+ }
+}

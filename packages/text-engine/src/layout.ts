@@ -218,7 +218,7 @@ export class Layouter {
             mathDims[i] = m;
             w = m.width * PT;
           } else if (o?.width !== undefined) w = o.width * PT;
-          else if (o) for (const oc of display ?? o.display) w += fonts.advance(c, oc);
+          else if (o) { const oc2 = o.font ? { ...c, font: o.font } : c; for (const oc of display ?? o.display) w += fonts.advance(oc2, oc); }
         } else if (c.hidden || ch === "\u00ad") {
           w = 0;
         } else {

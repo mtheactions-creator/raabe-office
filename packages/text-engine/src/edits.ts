@@ -89,30 +89,84 @@ export function dropListLabel(doc: Doc, p: number): void {
   doc.mapParas(p, p, (old) => ({ ...old, numId: 0, ilvl: undefined, indLeft: left, indFirst: 0 }));
 }
 
-/** AutoFormat beim Eingeben: "1. ", "a) ", "- ", "* " at a paragraph start begin a list. */
-export function autoListLevels(prefix: string): { levels: NumLevel[]; start: number } | null {
-  const lvl = (format: string, text: string, font?: string): NumLevel => ({
-    start: 1, format, text, align: "left", suffix: "tab", pPr: { indLeft: 36, indFirst: -18 }, rPr: font ? { font } : {},
+/**
+ * AutoFormat beim Eingeben: a label typed at a paragraph start (and a space or Tab) begins a
+ * list. Measured in Word 365 (2026-10-14): bullets from "*" (Symbol), ">" "->" "=>"
+ * (Wingdings) and the dashes "-" "–" "—" (the typed character in the text's font); numbers
+ * only from the first value (1, a, A, i, I) followed by "." ")" "-" or in brackets "(1)".
+ * Roman numerals get a wider hanging indent (1.27 cm at 1.9 cm).
+ */
+export function autoListLevels(prefix: string, textFont?: string): { levels: NumLevel[]; start: number } | null {
+  const lvl = (format: string, text: string, font?: string, wide = false): NumLevel => ({
+    start: 1, format, text, align: "left", suffix: "tab", pPr: wide ? { indLeft: 54, indFirst: -36 } : { indLeft: 36, indFirst: -18 }, rPr: font ? { font } : {},
   });
-  const with9 = (first: NumLevel, start: number) => {
+  const with9 = (first: NumLevel) => {
     const base = first.format === "bullet" ? bulletLevels() : numberLevels();
-    return { levels: [{ ...first, start }, ...base.slice(1)], start };
+    return { levels: [first, ...base.slice(1)], start: 1 };
   };
-  if (prefix === "*") return with9(lvl("bullet", "\uf0b7", "Symbol"), 1);
-  if (prefix === "-") return with9(lvl("bullet", "–", "Calibri"), 1);
-  if (prefix === ">") return with9(lvl("bullet", "\uf0d8", "Wingdings"), 1);
-  let m = /^(\d{1,3})([.)])$/.exec(prefix);
-  if (m) return with9(lvl("decimal", `%1${m[2]}`), Number(m[1]));
-  m = /^([a-z])([.)])$/.exec(prefix);
-  if (m) return with9(lvl("lowerLetter", `%1${m[2]}`), m[1].charCodeAt(0) - 96);
-  m = /^([A-Z])([.)])$/.exec(prefix);
-  if (m && !/^[IVX]$/.test(m[1])) return with9(lvl("upperLetter", `%1${m[2]}`), m[1].charCodeAt(0) - 64);
-  m = /^([IVX]{1,4})\.$/.exec(prefix);
-  if (m) {
-    const roman: Record<string, number> = { I: 1, II: 2, III: 3, IV: 4, V: 5, VI: 6, VII: 7, VIII: 8, IX: 9, X: 10 };
-    if (roman[m[1]]) return with9(lvl("upperRoman", "%1."), roman[m[1]]);
+  const bullets: Record<string, [string, string]> = {
+    "*": ["\uf0b7", "Symbol"], ">": ["\uf0d8", "Wingdings"], "->": ["\uf0e8", "Wingdings"], "=>": ["\uf0f0", "Wingdings"],
+  };
+  if (bullets[prefix]) return with9(lvl("bullet", bullets[prefix][0], bullets[prefix][1]));
+  if (prefix === "-" || prefix === "\u2013" || prefix === "\u2014") return with9(lvl("bullet", prefix, textFont ?? "Calibri"));
+  const m = /^(\()?(1|a|A|i|I)(?:(\))|([.)-]))$/.exec(prefix);
+  if (!m) return null;
+  const v = m[2];
+  const format = v === "1" ? "decimal" : v === "a" ? "lowerLetter" : v === "A" ? "upperLetter" : v === "i" ? "lowerRoman" : "upperRoman";
+  const text = m[1] ? "(%1)" : `%1${m[3] ?? m[4]}`;
+  if (m[1] && !m[3]) return null;
+  return with9(lvl(format, text, undefined, v === "i" || v === "I"));
+}
+
+/**
+ * Tab (Umschalt+Tab) at the start of a list's first item moves the whole list: the number
+ * goes to the next (previous) stop, stops being the default tab stops and 0.635 cm after
+ * each (Word 365, measured: 0.63 → 1.25 → 1.88 → 2.5 cm). All levels move by as much.
+ */
+export function shiftList(doc: Doc, p: number, back: boolean): boolean {
+  const para = doc.paras[p];
+  const n = numberingOf(para.props, doc.styles);
+  if (!n) return false;
+  const found = levelOf(doc.numbering, n.numId, n.ilvl);
+  if (!found) return false;
+  const rp = doc.styles.resolvePara(para.props, { level: found.level.pPr });
+  const tw = (x: number) => Math.round(x * 20);
+  const pos = tw(rp.indLeft + Math.min(0, rp.indFirst));
+  const step = Math.max(1, tw(doc.settings.defaultTab));
+  let next: number | null = null;
+  for (let k = 0; k * step <= pos + 2 * step + 720; k++) {
+    for (const s of [k * step, k * step + 360]) {
+      if (!back && s > pos && (next === null || s < next)) next = s;
+      if (back && s < pos && s >= 0 && (next === null || s > next)) next = s;
+    }
   }
-  return null;
+  if (next === null) return false;
+  const delta = (next - pos) / 20;
+  const abs = found.abstract;
+  const levels = abs.levels.map((l) => ({ ...l, pPr: { ...l.pPr, indLeft: Math.max(0, (l.pPr.indLeft ?? 0) + delta) }, data: undefined }));
+  const abstracts = new Map(doc.numbering.abstracts);
+  abstracts.set(abs.id, { ...abs, levels, data: undefined });
+  doc.setNumbering({ ...doc.numbering, abstracts });
+  // Paragraphs of the list with their own indent move along.
+  for (let i = 0; i < doc.paras.length; i++) {
+    const q = doc.paras[i];
+    if (q.props.indLeft === undefined) continue;
+    const m = numberingOf(q.props, doc.styles);
+    if (!m || levelOf(doc.numbering, m.numId, m.ilvl)?.abstract.id !== abs.id) continue;
+    doc.mapParas(i, i, (old) => ({ ...old, indLeft: Math.max(0, (old.indLeft ?? 0) + delta) }));
+  }
+  return true;
+}
+
+/** True when no paragraph before p belongs to p's list (p is its first item). */
+export function firstOfList(doc: Doc, p: number): boolean {
+  const n = numberingOf(doc.paras[p].props, doc.styles);
+  if (!n) return false;
+  for (let i = p - 1; i >= 0; i--) {
+    const m = numberingOf(doc.paras[i].props, doc.styles);
+    if (m && m.numId === n.numId) return false;
+  }
+  return true;
 }
 
 // ----- tables ---------------------------------------------------------------------------------

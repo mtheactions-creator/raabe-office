@@ -169,8 +169,9 @@ button {
 .rgroup .launcher:hover:not(:disabled) { background: var(--hover); }
 .rgroup .launcher:disabled { color: var(--text-disabled); }
 
+/* Hover and split-button outline as measured in Word 365 (compare_ui.py): fill #f5f5f5, outline #c7c7c7. */
 .rb { border-radius: 4px; position: relative; }
-.rb:hover:not(:disabled) { background: var(--hover); }
+.rb:hover:not(:disabled) { background: #f5f5f5; }
 .rb:active:not(:disabled) { background: var(--pressed); }
 .rb.checked { background: var(--checked); box-shadow: inset 0 0 0 1px var(--checked-border); }
 .rb:disabled, .rb.disabled { color: var(--text-disabled); }
@@ -178,26 +179,33 @@ button {
 
 .rb-large { width: auto; min-width: 44px; height: 76px; display: flex; flex-direction: column; align-items: center; padding: 4px 4px 0; gap: 2px; }
 .rb-large .ico-l { width: 32px; height: 32px; margin-bottom: 2px; }
-.rb-large .txt { font-size: 12px; text-align: center; line-height: 15px; white-space: pre-line; max-width: 90px; }
-.rb-large .chev { width: 8px; height: 8px; }
+.rb-large .txt { font-size: 12px; text-align: center; line-height: 15px; white-space: pre-line; max-width: 120px; }
+.rb-large .txt .chev { margin-left: 4px; vertical-align: 2px; }
+.rb-large > .chev { margin-top: 3px; }
 .rb-medium { height: 24px; display: inline-flex; align-items: center; gap: 4px; padding: 0 4px; white-space: nowrap; }
 .rb-small { width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; }
-.rb .chev svg { width: 100%; height: 100%; }
-.rb-medium .chev, .rb-small .chev { width: 8px; height: 8px; }
+.rb .chev { display: inline-flex; width: 8px; height: 5px; flex: none; }
+.rb .chev svg { display: block; }
+.rb-medium .chev { margin-left: 2px; }
+.rb-small.has-chev { width: auto; padding: 0 4px 0 2px; gap: 4px; }
 
 .rsplit { display: inline-flex; border-radius: 4px; }
-.rsplit:hover .rb:not(:disabled) { box-shadow: inset 0 0 0 1px var(--border); }
+.rsplit:hover:has(.rb:not(:disabled)) { outline: 1px solid #c7c7c7; outline-offset: -1px; }
+.rsplit:hover > .rb.arrow:not(:disabled) { box-shadow: inset 1px 0 0 #c7c7c7; }
+.rsplit-large:hover > .rb.arrow:not(:disabled) { box-shadow: inset 0 1px 0 #c7c7c7; }
 .rsplit > .rb + .rb { border-top-left-radius: 0; border-bottom-left-radius: 0; }
 .rsplit > .rb:first-child:not(:only-child) { border-top-right-radius: 0; border-bottom-right-radius: 0; }
-.rsplit .arrow { width: 14px; padding: 0; justify-content: center; }
+.rsplit .arrow { width: 15px; padding: 0; justify-content: center; }
 .rsplit-large { flex-direction: column; }
 .rsplit-large > .rb:first-child { height: 46px; padding-top: 4px; border-radius: 4px 4px 0 0; }
 .rsplit-large > .rb.arrow { width: auto; height: 30px; border-radius: 0 0 4px 4px; flex-direction: column; justify-content: flex-start; padding-top: 0; }
 
 .rrows { display: flex; flex-direction: column; gap: 2px; }
+.rrows-2 { gap: 8px; margin-top: 9px; }
 .rrow { display: flex; align-items: center; gap: 2px; height: 24px; }
 .rrow .gap { width: 6px; }
 .rstack { display: flex; flex-direction: column; gap: 2px; }
+.rstack-title { height: 22px; line-height: 22px; padding-left: 2px; color: var(--text); }
 
 .rcombo { height: 24px; display: inline-flex; align-items: center; border: 1px solid #c7c7c7; border-radius: 4px; background: var(--card); }
 .rcombo input { border: 0; outline: 0; height: 22px; padding: 0 4px; font: 12px var(--font); color: var(--text); background: transparent; min-width: 0; flex: 1; }
@@ -237,6 +245,26 @@ button {
 .menu button:hover:not(:disabled) { background: var(--hover); }
 .menu button:disabled { color: var(--text-disabled); }
 .menu hr { border: 0; border-top: 1px solid var(--border); margin: 4px 0; }
+.menu-root { position: fixed; z-index: 70; display: flex; flex-direction: column; gap: 4px; }
+.menu-root > .menu { position: static; align-self: flex-start; min-width: 220px; }
+.menu.submenu { position: fixed; z-index: 71; }
+.menu button.has-sub { padding-right: 8px; }
+.menu .sub-chev { margin-left: auto; padding-left: 16px; display: inline-flex; }
+.menu-icons-label { display: flex; align-items: center; gap: 10px; height: 26px; padding: 0 10px; color: var(--text); }
+.menu-icons { display: flex; gap: 2px; padding: 0 10px 4px 38px; }
+.menu .menu-icons button.menu-icon { width: 32px; height: 32px; padding: 0; justify-content: center; }
+.menu .menu-icons button.menu-icon svg { width: 24px; height: 24px; }
+/* Word's context menu: a search box on top, the label of the paste options in bold. */
+.menu-search-row { padding: 4px 4px 6px; }
+.menu-search { width: 100%; height: 26px; box-sizing: border-box; border: 1px solid #c7c7c7; border-radius: 2px; padding: 0 6px; font: inherit; color: var(--text); background: var(--card); }
+.menu-search::placeholder { color: #707070; }
+.menu-search:focus { outline: none; border-color: var(--accent); }
+.menu-icons-label { font-weight: 600; }
+/* Word's mini toolbar above the context menu. */
+.mini-toolbar { display: flex; align-items: stretch; gap: 2px; align-self: flex-start; background: var(--card); border-radius: 4px; padding: 4px 6px;
+  box-shadow: 0 4px 10px rgba(0,0,0,.14), 0 0 2px rgba(0,0,0,.12); }
+.mini-toolbar .rrows { margin-top: 0; }
+.mini-toolbar .rb-large { height: 66px; }
 .menu .menu-heading { padding: 6px 10px 2px; font-size: 12px; font-weight: 600; color: var(--text-secondary, #616161); background: var(--chrome); border-radius: 4px; margin: 2px 0; }
 .menu button.with-preview { height: auto; min-height: 30px; padding: 4px 10px; }
 .menu button.checked { background: var(--selected, #e1dfdd); }

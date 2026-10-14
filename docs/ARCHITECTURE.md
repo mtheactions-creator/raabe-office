@@ -50,8 +50,10 @@ packages/
                       breaking, D-025), flow.ts (pages, D-029), numbering.ts (list labels),
                       doc.ts (stories and edits), edits.ts (list, table, section operations),
                       school.ts (notes, tables of contents, comments), revisions.ts (tracked
-                      changes, D-034),
-                      html.ts (clipboard HTML), view.ts (DOM rendering, caret, selection),
+                      changes, D-034), autocorrect.ts (AutoKorrektur, D-042), images.ts
+                      (picture sizes and resolution),
+                      html.ts (clipboard HTML as Word writes it, D-043), view.ts (DOM
+                      rendering, caret, selection),
                       editor.ts (input and commands, D-026), probe.ts (feel-lab)
   shell/              commands, ribbon, keytips, title bar (QAT, document tabs, search),
                       backstage, status bar, dialogs, popups, platform layer, theme.css,
@@ -68,7 +70,8 @@ tools/feel-lab/       measurement harness against Microsoft Word, Word UI captur
 ## Platform layer
 
 `packages/shell/src/platform.ts` is the only place that touches the operating system: file
-dialogs, reading and writing files, AutoRecover storage, clipboard, PDF export, window
+dialogs, reading and writing files, AutoRecover storage, clipboard (on Windows the whole
+"HTML Format" document through `src-tauri/src/clipboard.rs`, D-043), PDF export, window
 controls and files opened from Explorer. `platform-tauri.ts` implements it for Tauri
 (Windows now, iPadOS later); `platform-browser.ts` is a development fallback for
 `npm run dev:write` in a normal browser.

@@ -35,6 +35,10 @@ export interface Platform {
   deleteRecovery(id: string): Promise<void>;
   clipboardRead(): Promise<string>;
   clipboardWrite(text: string): Promise<void>;
+  /** The clipboard's whole HTML document (with Word's list definitions); "" when none. */
+  clipboardReadHtml?(): Promise<string>;
+  /** Puts HTML and its plain text on the clipboard, the HTML as it is. */
+  clipboardWriteHtml?(html: string, text: string): Promise<void>;
   printToPdf(path: string): Promise<void>;
   /** Installed font families (for the Schriftart box). */
   listFonts(): Promise<string[]>;

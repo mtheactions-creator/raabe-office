@@ -1,0 +1,1853 @@
+{
+ "meta": {
+  "date": "2026-10-14T11:21:34"
+ },
+ "results": {
+  "Entwurf": {
+   "matched": [
+    {
+     "name": "Designs",
+     "group": "Dokumentformatierung",
+     "word": [
+      32,
+      125,
+      71,
+      114
+     ],
+     "ours": [
+      38,
+      123,
+      74,
+      114
+     ],
+     "dx": 6,
+     "dy": -2,
+     "dw": 3,
+     "dh": 0,
+     "word_type": "MenuItem",
+     "our_type": "Button"
+    },
+    {
+     "name": "Formatvorlagensatz",
+     "group": "Formatvorlagensatz",
+     "word": [
+      2054,
+      136,
+      36,
+      90
+     ],
+     "ours": [
+      116,
+      123,
+      169,
+      114
+     ],
+     "dx": -1938,
+     "dy": -13,
+     "dw": 133,
+     "dh": 24,
+     "word_type": "Button",
+     "our_type": "Button"
+    },
+    {
+     "name": "Farben",
+     "group": "Dokumentformatierung",
+     "word": [
+      2097,
+      125,
+      62,
+      114
+     ],
+     "ours": [
+      290,
+      123,
+      66,
+      114
+     ],
+     "dx": -1807,
+     "dy": -2,
+     "dw": 4,
+     "dh": 0,
+     "word_type": "MenuItem",
+     "our_type": "Button"
+    },
+    {
+     "name": "Schriftarten",
+     "group": "Dokumentformatierung",
+     "word": [
+      2162,
+      125,
+      98,
+      114
+     ],
+     "ours": [
+      360,
+      123,
+      104,
+      114
+     ],
+     "dx": -1802,
+     "dy": -2,
+     "dw": 6,
+     "dh": 0,
+     "word_type": "MenuItem",
+     "our_type": "Button"
+    },
+    {
+     "name": "Absatzabstand",
+     "group": "Dokumentformatierung",
+     "word": [
+      2263,
+      125,
+      185,
+      36
+     ],
+     "ours": [
+      468,
+      123,
+      219,
+      36
+     ],
+     "dx": -1795,
+     "dy": -2,
+     "dw": 34,
+     "dh": 0,
+     "word_type": "MenuItem",
+     "our_type": "Button"
+    },
+    {
+     "name": "Effekte",
+     "group": "Dokumentformatierung",
+     "word": [
+      2263,
+      164,
+      121,
+      36
+     ],
+     "ours": [
+      468,
+      162,
+      219,
+      36
+     ],
+     "dx": -1795,
+     "dy": -2,
+     "dw": 98,
+     "dh": 0,
+     "word_type": "MenuItem",
+     "our_type": "Button"
+    },
+    {
+     "name": "Als Standard festlegen",
+     "group": "Dokumentformatierung",
+     "word": [
+      2263,
+      203,
+      227,
+      36
+     ],
+     "ours": [
+      468,
+      201,
+      219,
+      36
+     ],
+     "dx": -1795,
+     "dy": -2,
+     "dw": -8,
+     "dh": 0,
+     "word_type": "Button",
+     "our_type": "Button"
+    },
+    {
+     "name": "Wasserzeichen",
+     "group": "Seitenhintergrund",
+     "word": [
+      2514,
+      125,
+      122,
+      114
+     ],
+     "ours": [
+      705,
+      123,
+      128,
+      114
+     ],
+     "dx": -1809,
+     "dy": -2,
+     "dw": 6,
+     "dh": 0,
+     "word_type": "MenuItem",
+     "our_type": "Button"
+    },
+    {
+     "name": "Seitenfarbe",
+     "group": "Seitenhintergrund",
+     "word": [
+      2639,
+      125,
+      97,
+      114
+     ],
+     "ours": [
+      838,
+      123,
+      102,
+      114
+     ],
+     "dx": -1801,
+     "dy": -2,
+     "dw": 5,
+     "dh": 0,
+     "word_type": "MenuItem",
+     "our_type": "Button"
+    },
+    {
+     "name": "Seitenränder...",
+     "group": "Seitenhintergrund",
+     "word": [
+      2739,
+      125,
+      107,
+      114
+     ],
+     "ours": [
+      945,
+      123,
+      113,
+      114
+     ],
+     "dx": -1794,
+     "dy": -2,
+     "dw": 6,
+     "dh": 0,
+     "word_type": "Button",
+     "our_type": "Button"
+    }
+   ],
+   "only_word": [
+    {
+     "name": "Dokument",
+     "group": "Formatvorlagensatz",
+     "type": "ListItem"
+    },
+    {
+     "name": "Informell",
+     "group": "Formatvorlagensatz",
+     "type": "ListItem"
+    },
+    {
+     "name": "Linien (einfach)",
+     "group": "Formatvorlagensatz",
+     "type": "ListItem"
+    },
+    {
+     "name": "Linien (markant)",
+     "group": "Formatvorlagensatz",
+     "type": "ListItem"
+    },
+    {
+     "name": "Linien (modisch)",
+     "group": "Formatvorlagensatz",
+     "type": "ListItem"
+    },
+    {
+     "name": "Minimalistisch",
+     "group": "Formatvorlagensatz",
+     "type": "ListItem"
+    },
+    {
+     "name": "Schattiert",
+     "group": "Formatvorlagensatz",
+     "type": "ListItem"
+    },
+    {
+     "name": "Schwarzweiß (Großbuchstaben)",
+     "group": "Formatvorlagensatz",
+     "type": "ListItem"
+    },
+    {
+     "name": "Schwarzweiß (klassisch)",
+     "group": "Formatvorlagensatz",
+     "type": "ListItem"
+    },
+    {
+     "name": "Schwarzweiß (nummeriert)",
+     "group": "Formatvorlagensatz",
+     "type": "ListItem"
+    },
+    {
+     "name": "Schwarzweiß (Word 2013)",
+     "group": "Formatvorlagensatz",
+     "type": "ListItem"
+    },
+    {
+     "name": "Standard (einfach)",
+     "group": "Formatvorlagensatz",
+     "type": "ListItem"
+    },
+    {
+     "name": "Standard (elegant)",
+     "group": "Formatvorlagensatz",
+     "type": "ListItem"
+    },
+    {
+     "name": "Standard (modisch)",
+     "group": "Formatvorlagensatz",
+     "type": "ListItem"
+    },
+    {
+     "name": "Word",
+     "group": "Formatvorlagensatz",
+     "type": "ListItem"
+    },
+    {
+     "name": "Word 2003",
+     "group": "Formatvorlagensatz",
+     "type": "ListItem"
+    },
+    {
+     "name": "Word 2010",
+     "group": "Formatvorlagensatz",
+     "type": "ListItem"
+    },
+    {
+     "name": "Word 2013",
+     "group": "Formatvorlagensatz",
+     "type": "ListItem"
+    },
+    {
+     "name": "Zentriert",
+     "group": "Formatvorlagensatz",
+     "type": "ListItem"
+    }
+   ],
+   "only_ours": []
+  },
+  "Layout": {
+   "matched": [
+    {
+     "name": "Seitenränder",
+     "group": "Seite einrichten",
+     "word": [
+      32,
+      125,
+      76,
+      114
+     ],
+     "ours": [
+      38,
+      123,
+      113,
+      114
+     ],
+     "dx": 6,
+     "dy": -2,
+     "dw": 37,
+     "dh": 0,
+     "word_type": "MenuItem",
+     "our_type": "Button"
+    },
+    {
+     "name": "Ausrichtung",
+     "group": "Seite einrichten",
+     "word": [
+      111,
+      125,
+      103,
+      114
+     ],
+     "ours": [
+      155,
+      123,
+      108,
+      114
+     ],
+     "dx": 44,
+     "dy": -2,
+     "dw": 5,
+     "dh": 0,
+     "word_type": "MenuItem",
+     "our_type": "Button"
+    },
+    {
+     "name": "Format",
+     "group": "Seite einrichten",
+     "word": [
+      217,
+      125,
+      65,
+      114
+     ],
+     "ours": [
+      267,
+      123,
+      68,
+      114
+     ],
+     "dx": 50,
+     "dy": -2,
+     "dw": 3,
+     "dh": 0,
+     "word_type": "MenuItem",
+     "our_type": "Button"
+    },
+    {
+     "name": "Spalten",
+     "group": "Seite einrichten",
+     "word": [
+      285,
+      125,
+      67,
+      114
+     ],
+     "ours": [
+      340,
+      123,
+      71,
+      114
+     ],
+     "dx": 55,
+     "dy": -2,
+     "dw": 4,
+     "dh": 0,
+     "word_type": "MenuItem",
+     "our_type": "Button"
+    },
+    {
+     "name": "Umbrüche",
+     "group": "Seite einrichten",
+     "word": [
+      355,
+      125,
+      149,
+      36
+     ],
+     "ours": [
+      416,
+      123,
+      188,
+      36
+     ],
+     "dx": 61,
+     "dy": -2,
+     "dw": 39,
+     "dh": 0,
+     "word_type": "MenuItem",
+     "our_type": "Button"
+    },
+    {
+     "name": "Zeilennummern",
+     "group": "Seite einrichten",
+     "word": [
+      355,
+      164,
+      190,
+      36
+     ],
+     "ours": [
+      416,
+      162,
+      188,
+      36
+     ],
+     "dx": 61,
+     "dy": -2,
+     "dw": -2,
+     "dh": 0,
+     "word_type": "MenuItem",
+     "our_type": "Button"
+    },
+    {
+     "name": "Silbentrennung",
+     "group": "Seite einrichten",
+     "word": [
+      355,
+      203,
+      187,
+      36
+     ],
+     "ours": [
+      416,
+      201,
+      188,
+      36
+     ],
+     "dx": 61,
+     "dy": -2,
+     "dw": 1,
+     "dh": 0,
+     "word_type": "MenuItem",
+     "our_type": "Button"
+    },
+    {
+     "name": "Position",
+     "group": "Anordnen",
+     "word": [
+      999,
+      125,
+      71,
+      114
+     ],
+     "ours": [
+      1123,
+      123,
+      75,
+      114
+     ],
+     "dx": 124,
+     "dy": -2,
+     "dw": 4,
+     "dh": 0,
+     "word_type": "MenuItem",
+     "our_type": "Button"
+    },
+    {
+     "name": "Textumbruch",
+     "group": "Anordnen",
+     "word": [
+      1073,
+      125,
+      109,
+      114
+     ],
+     "ours": [
+      1202,
+      123,
+      115,
+      114
+     ],
+     "dx": 129,
+     "dy": -2,
+     "dw": 6,
+     "dh": 0,
+     "word_type": "MenuItem",
+     "our_type": "Button"
+    },
+    {
+     "name": "Ebene nach vorne",
+     "group": "Anordnen",
+     "word": [
+      1185,
+      125,
+      98,
+      114
+     ],
+     "ours": [
+      1321,
+      123,
+      106,
+      114
+     ],
+     "dx": 136,
+     "dy": -2,
+     "dw": 8,
+     "dh": 0,
+     "word_type": "SplitButton",
+     "our_type": "SplitButton"
+    },
+    {
+     "name": "Ebene nach hinten",
+     "group": "Anordnen",
+     "word": [
+      1286,
+      125,
+      98,
+      114
+     ],
+     "ours": [
+      1432,
+      123,
+      91,
+      114
+     ],
+     "dx": 146,
+     "dy": -2,
+     "dw": -7,
+     "dh": 0,
+     "word_type": "SplitButton",
+     "our_type": "SplitButton"
+    },
+    {
+     "name": "Auswahlbereich...",
+     "group": "Anordnen",
+     "word": [
+      1387,
+      125,
+      131,
+      114
+     ],
+     "ours": [
+      1528,
+      123,
+      137,
+      114
+     ],
+     "dx": 141,
+     "dy": -2,
+     "dw": 6,
+     "dh": 0,
+     "word_type": "Button",
+     "our_type": "Button"
+    },
+    {
+     "name": "Ausrichten",
+     "group": "Anordnen",
+     "word": [
+      1521,
+      125,
+      150,
+      36
+     ],
+     "ours": [
+      1669,
+      123,
+      153,
+      36
+     ],
+     "dx": 148,
+     "dy": -2,
+     "dw": 3,
+     "dh": 0,
+     "word_type": "MenuItem",
+     "our_type": "Button"
+    },
+    {
+     "name": "Gruppieren",
+     "group": "Anordnen",
+     "word": [
+      1521,
+      164,
+      155,
+      36
+     ],
+     "ours": [
+      1669,
+      162,
+      153,
+      36
+     ],
+     "dx": 148,
+     "dy": -2,
+     "dw": -2,
+     "dh": 0,
+     "word_type": "MenuItem",
+     "our_type": "Button"
+    },
+    {
+     "name": "Drehen",
+     "group": "Anordnen",
+     "word": [
+      1521,
+      203,
+      124,
+      36
+     ],
+     "ours": [
+      1669,
+      201,
+      153,
+      36
+     ],
+     "dx": 148,
+     "dy": -2,
+     "dw": 29,
+     "dh": 0,
+     "word_type": "MenuItem",
+     "our_type": "Button"
+    }
+   ],
+   "only_word": [
+    {
+     "name": "Seite einrichten...",
+     "group": "Seite einrichten",
+     "type": "Button"
+    },
+    {
+     "name": "Mehr",
+     "group": "Absatz",
+     "type": "Button"
+    },
+    {
+     "name": "Weniger",
+     "group": "Absatz",
+     "type": "Button"
+    },
+    {
+     "name": "Mehr",
+     "group": "Absatz",
+     "type": "Button"
+    },
+    {
+     "name": "Weniger",
+     "group": "Absatz",
+     "type": "Button"
+    },
+    {
+     "name": "Mehr",
+     "group": "Absatz",
+     "type": "Button"
+    },
+    {
+     "name": "Weniger",
+     "group": "Absatz",
+     "type": "Button"
+    },
+    {
+     "name": "Mehr",
+     "group": "Absatz",
+     "type": "Button"
+    },
+    {
+     "name": "Weniger",
+     "group": "Absatz",
+     "type": "Button"
+    },
+    {
+     "name": "Absatz...",
+     "group": "Absatz",
+     "type": "Button"
+    }
+   ],
+   "only_ours": [
+    {
+     "name": "Einzug links",
+     "group": "Absatz"
+    },
+    {
+     "name": "Einzug rechts",
+     "group": "Absatz"
+    },
+    {
+     "name": "Abstand vor",
+     "group": "Absatz"
+    },
+    {
+     "name": "Abstand nach",
+     "group": "Absatz"
+    }
+   ]
+  },
+  "Referenzen": {
+   "matched": [
+    {
+     "name": "Inhaltsverzeichnis",
+     "group": "Inhaltsverzeichnis",
+     "word": [
+      32,
+      125,
+      110,
+      114
+     ],
+     "ours": [
+      38,
+      123,
+      151,
+      114
+     ],
+     "dx": 6,
+     "dy": -2,
+     "dw": 41,
+     "dh": 0,
+     "word_type": "MenuItem",
+     "our_type": "Button"
+    },
+    {
+     "name": "Text hinzufügen",
+     "group": "Inhaltsverzeichnis",
+     "word": [
+      145,
+      125,
+      190,
+      36
+     ],
+     "ours": [
+      193,
+      123,
+      201,
+      36
+     ],
+     "dx": 48,
+     "dy": -2,
+     "dw": 11,
+     "dh": 0,
+     "word_type": "MenuItem",
+     "our_type": "Button"
+    },
+    {
+     "name": "Inhaltsverzeichnis aktualisieren...",
+     "group": "Inhaltsverzeichnis",
+     "word": [
+      145,
+      164,
+      289,
+      36
+     ],
+     "ours": [
+      193,
+      162,
+      201,
+      36
+     ],
+     "dx": 48,
+     "dy": -2,
+     "dw": -88,
+     "dh": 0,
+     "word_type": "Button",
+     "our_type": "Button"
+    },
+    {
+     "name": "Fußnote einfügen",
+     "group": "Fußnoten",
+     "word": [
+      458,
+      125,
+      77,
+      114
+     ],
+     "ours": [
+      412,
+      123,
+      82,
+      114
+     ],
+     "dx": -46,
+     "dy": -2,
+     "dw": 5,
+     "dh": 0,
+     "word_type": "Button",
+     "our_type": "Button"
+    },
+    {
+     "name": "Endnote einfügen",
+     "group": "Fußnoten",
+     "word": [
+      538,
+      125,
+      190,
+      36
+     ],
+     "ours": [
+      499,
+      123,
+      199,
+      36
+     ],
+     "dx": -39,
+     "dy": -2,
+     "dw": 9,
+     "dh": 0,
+     "word_type": "Button",
+     "our_type": "Button"
+    },
+    {
+     "name": "Nächste Fußnote",
+     "group": "Fußnoten",
+     "word": [
+      538,
+      164,
+      218,
+      36
+     ],
+     "ours": [
+      499,
+      162,
+      199,
+      36
+     ],
+     "dx": -39,
+     "dy": -2,
+     "dw": -19,
+     "dh": 0,
+     "word_type": "SplitButton",
+     "our_type": "SplitButton"
+    },
+    {
+     "name": "Notizen anzeigen",
+     "group": "Fußnoten",
+     "word": [
+      538,
+      203,
+      186,
+      36
+     ],
+     "ours": [
+      499,
+      201,
+      199,
+      36
+     ],
+     "dx": -39,
+     "dy": -2,
+     "dw": 13,
+     "dh": 0,
+     "word_type": "Button",
+     "our_type": "Button"
+    },
+    {
+     "name": "Zitat einfügen",
+     "group": "Zitate und Literaturverzeichnis",
+     "word": [
+      780,
+      125,
+      94,
+      114
+     ],
+     "ours": [
+      716,
+      123,
+      100,
+      114
+     ],
+     "dx": -64,
+     "dy": -2,
+     "dw": 6,
+     "dh": 0,
+     "word_type": "MenuItem",
+     "our_type": "Button"
+    },
+    {
+     "name": "Quellen verwalten...",
+     "group": "Zitate und Literaturverzeichnis",
+     "word": [
+      877,
+      125,
+      190,
+      36
+     ],
+     "ours": [
+      820,
+      123,
+      216,
+      36
+     ],
+     "dx": -57,
+     "dy": -2,
+     "dw": 26,
+     "dh": 0,
+     "word_type": "Button",
+     "our_type": "Button"
+    },
+    {
+     "name": "Formatvorlage",
+     "group": "Zitate und Literaturverzeichnis",
+     "word": [
+      1036,
+      164,
+      89,
+      36
+     ],
+     "ours": [
+      820,
+      162,
+      216,
+      36
+     ],
+     "dx": -216,
+     "dy": -2,
+     "dw": 127,
+     "dh": 0,
+     "word_type": "ComboBox",
+     "our_type": "Button"
+    },
+    {
+     "name": "Literaturverzeichnis",
+     "group": "Zitate und Literaturverzeichnis",
+     "word": [
+      877,
+      203,
+      216,
+      36
+     ],
+     "ours": [
+      820,
+      201,
+      216,
+      36
+     ],
+     "dx": -57,
+     "dy": -2,
+     "dw": 0,
+     "dh": 0,
+     "word_type": "MenuItem",
+     "our_type": "Button"
+    },
+    {
+     "name": "Beschriftung einfügen...",
+     "group": "Beschriftungen",
+     "word": [
+      1232,
+      125,
+      106,
+      115
+     ],
+     "ours": [
+      1054,
+      123,
+      111,
+      114
+     ],
+     "dx": -178,
+     "dy": -2,
+     "dw": 5,
+     "dh": -1,
+     "word_type": "Button",
+     "our_type": "Button"
+    },
+    {
+     "name": "Abbildungsverzeichnis einfügen...",
+     "group": "Beschriftungen",
+     "word": [
+      1341,
+      125,
+      301,
+      36
+     ],
+     "ours": [
+      1170,
+      123,
+      324,
+      36
+     ],
+     "dx": -171,
+     "dy": -2,
+     "dw": 23,
+     "dh": 0,
+     "word_type": "Button",
+     "our_type": "Button"
+    },
+    {
+     "name": "Abbildungsverzeichnis aktualisieren",
+     "group": "Beschriftungen",
+     "word": [
+      1341,
+      164,
+      329,
+      36
+     ],
+     "ours": [
+      1170,
+      162,
+      324,
+      36
+     ],
+     "dx": -171,
+     "dy": -2,
+     "dw": -5,
+     "dh": 0,
+     "word_type": "Button",
+     "our_type": "Button"
+    },
+    {
+     "name": "Querverweis...",
+     "group": "Beschriftungen",
+     "word": [
+      1341,
+      203,
+      147,
+      36
+     ],
+     "ours": [
+      1170,
+      201,
+      324,
+      36
+     ],
+     "dx": -171,
+     "dy": -2,
+     "dw": 177,
+     "dh": 0,
+     "word_type": "Button",
+     "our_type": "Button"
+    }
+   ],
+   "only_word": [
+    {
+     "name": "Dialogfeld 'Fuß- und Endnote'...",
+     "group": "Fußnoten",
+     "type": "Button"
+    },
+    {
+     "name": "Anbieter ändern",
+     "group": "Zitate und Literaturverzeichnis",
+     "type": "MenuItem"
+    },
+    {
+     "name": "Eintrag markieren...",
+     "group": "Index",
+     "type": "Button"
+    },
+    {
+     "name": "Index einfügen...",
+     "group": "Index",
+     "type": "Button"
+    },
+    {
+     "name": "Index aktualisieren",
+     "group": "Index",
+     "type": "Button"
+    },
+    {
+     "name": "Zitat markieren...",
+     "group": "Rechtsgrundlagenverzeichnis",
+     "type": "Button"
+    },
+    {
+     "name": "Rechtsgrundlagenverzeichnis einfügen...",
+     "group": "Rechtsgrundlagenverzeichnis",
+     "type": "Button"
+    },
+    {
+     "name": "Rechtsgrundlagenverzeichnis aktualisieren",
+     "group": "Rechtsgrundlagenverzeichnis",
+     "type": "Button"
+    }
+   ],
+   "only_ours": []
+  },
+  "Überprüfen": {
+   "matched": [
+    {
+     "name": "Rechtschreibung und Grammatik",
+     "group": "Rechtschreibung",
+     "word": [
+      97,
+      125,
+      148,
+      115
+     ],
+     "ours": [
+      38,
+      123,
+      141,
+      114
+     ],
+     "dx": -59,
+     "dy": -2,
+     "dw": -7,
+     "dh": -1,
+     "word_type": "SplitButton",
+     "our_type": "SplitButton"
+    },
+    {
+     "name": "Thesaurus...",
+     "group": "Rechtschreibung",
+     "word": [
+      248,
+      125,
+      87,
+      115
+     ],
+     "ours": [
+      183,
+      123,
+      92,
+      114
+     ],
+     "dx": -65,
+     "dy": -2,
+     "dw": 5,
+     "dh": -1,
+     "word_type": "Button",
+     "our_type": "Button"
+    },
+    {
+     "name": "Wörter zählen",
+     "group": "Rechtschreibung",
+     "word": [
+      338,
+      125,
+      62,
+      115
+     ],
+     "ours": [
+      280,
+      123,
+      67,
+      114
+     ],
+     "dx": -58,
+     "dy": -2,
+     "dw": 5,
+     "dh": -1,
+     "word_type": "Button",
+     "our_type": "Button"
+    },
+    {
+     "name": "Laut vorlesen",
+     "group": "Sprache",
+     "word": [
+      424,
+      125,
+      74,
+      114
+     ],
+     "ours": [
+      365,
+      123,
+      78,
+      114
+     ],
+     "dx": -59,
+     "dy": -2,
+     "dw": 4,
+     "dh": 0,
+     "word_type": "Button",
+     "our_type": "Button"
+    },
+    {
+     "name": "Übersetzen",
+     "group": "Sprache",
+     "word": [
+      667,
+      125,
+      96,
+      114
+     ],
+     "ours": [
+      493,
+      123,
+      102,
+      114
+     ],
+     "dx": -174,
+     "dy": -2,
+     "dw": 6,
+     "dh": 0,
+     "word_type": "MenuItem",
+     "our_type": "Button"
+    },
+    {
+     "name": "Sprache",
+     "group": "Sprache",
+     "word": [
+      766,
+      125,
+      71,
+      114
+     ],
+     "ours": [
+      599,
+      123,
+      75,
+      114
+     ],
+     "dx": -167,
+     "dy": -2,
+     "dw": 4,
+     "dh": 0,
+     "word_type": "MenuItem",
+     "our_type": "Button"
+    },
+    {
+     "name": "Neuer Kommentar",
+     "group": "Kommentare",
+     "word": [
+      861,
+      125,
+      101,
+      114
+     ],
+     "ours": [
+      692,
+      123,
+      105,
+      114
+     ],
+     "dx": -169,
+     "dy": -2,
+     "dw": 4,
+     "dh": 0,
+     "word_type": "Button",
+     "our_type": "Button"
+    },
+    {
+     "name": "Löschen",
+     "group": "Kommentare",
+     "word": [
+      965,
+      125,
+      72,
+      114
+     ],
+     "ours": [
+      802,
+      123,
+      66,
+      114
+     ],
+     "dx": -163,
+     "dy": -2,
+     "dw": -6,
+     "dh": 0,
+     "word_type": "SplitButton",
+     "our_type": "SplitButton"
+    },
+    {
+     "name": "Zurück",
+     "group": "Kommentare",
+     "word": [
+      1040,
+      125,
+      62,
+      114
+     ],
+     "ours": [
+      872,
+      123,
+      66,
+      114
+     ],
+     "dx": -168,
+     "dy": -2,
+     "dw": 4,
+     "dh": 0,
+     "word_type": "Button",
+     "our_type": "Button"
+    },
+    {
+     "name": "Weiter",
+     "group": "Kommentare",
+     "word": [
+      1105,
+      125,
+      62,
+      114
+     ],
+     "ours": [
+      943,
+      123,
+      66,
+      114
+     ],
+     "dx": -162,
+     "dy": -2,
+     "dw": 4,
+     "dh": 0,
+     "word_type": "Button",
+     "our_type": "Button"
+    },
+    {
+     "name": "Kommentare anzeigen",
+     "group": "Kommentare",
+     "word": [
+      1170,
+      125,
+      110,
+      114
+     ],
+     "ours": [
+      1013,
+      123,
+      102,
+      114
+     ],
+     "dx": -157,
+     "dy": -2,
+     "dw": -8,
+     "dh": 0,
+     "word_type": "SplitButton",
+     "our_type": "SplitButton"
+    },
+    {
+     "name": "Sämtliches Markup filtern",
+     "group": "Markup",
+     "word": [
+      1304,
+      125,
+      136,
+      114
+     ],
+     "ours": [
+      1133,
+      123,
+      143,
+      114
+     ],
+     "dx": -171,
+     "dy": -2,
+     "dw": 7,
+     "dh": 0,
+     "word_type": "MenuItem",
+     "our_type": "Button"
+    },
+    {
+     "name": "Markup anzeigen",
+     "group": "Markup",
+     "word": [
+      1443,
+      164,
+      203,
+      36
+     ],
+     "ours": [
+      1280,
+      162,
+      246,
+      36
+     ],
+     "dx": -163,
+     "dy": -2,
+     "dw": 43,
+     "dh": 0,
+     "word_type": "MenuItem",
+     "our_type": "Button"
+    },
+    {
+     "name": "Überarbeitungsbereich",
+     "group": "Markup",
+     "word": [
+      1443,
+      203,
+      264,
+      36
+     ],
+     "ours": [
+      1280,
+      201,
+      246,
+      36
+     ],
+     "dx": -163,
+     "dy": -2,
+     "dw": -18,
+     "dh": 0,
+     "word_type": "SplitButton",
+     "our_type": "SplitButton"
+    },
+    {
+     "name": "Änderungen nachverfolgen",
+     "group": "Nachverfolgung",
+     "word": [
+      1731,
+      125,
+      137,
+      114
+     ],
+     "ours": [
+      1545,
+      123,
+      131,
+      114
+     ],
+     "dx": -186,
+     "dy": -2,
+     "dw": -6,
+     "dh": 0,
+     "word_type": "SplitButton",
+     "our_type": "SplitButton"
+    },
+    {
+     "name": "Annehmen",
+     "group": "Nachverfolgung",
+     "word": [
+      1871,
+      125,
+      94,
+      114
+     ],
+     "ours": [
+      1680,
+      123,
+      87,
+      114
+     ],
+     "dx": -191,
+     "dy": -2,
+     "dw": -7,
+     "dh": 0,
+     "word_type": "SplitButton",
+     "our_type": "SplitButton"
+    },
+    {
+     "name": "Ablehnen",
+     "group": "Nachverfolgung",
+     "word": [
+      1968,
+      125,
+      83,
+      114
+     ],
+     "ours": [
+      1771,
+      123,
+      76,
+      114
+     ],
+     "dx": -197,
+     "dy": -2,
+     "dw": -7,
+     "dh": 0,
+     "word_type": "SplitButton",
+     "our_type": "SplitButton"
+    },
+    {
+     "name": "Zurück",
+     "group": "Nachverfolgung",
+     "word": [
+      2054,
+      125,
+      103,
+      36
+     ],
+     "ours": [
+      1852,
+      123,
+      96,
+      36
+     ],
+     "dx": -202,
+     "dy": -2,
+     "dw": -7,
+     "dh": 0,
+     "word_type": "Button",
+     "our_type": "Button"
+    },
+    {
+     "name": "Weiter",
+     "group": "Nachverfolgung",
+     "word": [
+      2054,
+      164,
+      100,
+      36
+     ],
+     "ours": [
+      1852,
+      162,
+      96,
+      36
+     ],
+     "dx": -202,
+     "dy": -2,
+     "dw": -4,
+     "dh": 0,
+     "word_type": "Button",
+     "our_type": "Button"
+    }
+   ],
+   "only_word": [
+    {
+     "name": "Editor",
+     "group": "Rechtschreibung",
+     "type": "Button"
+    },
+    {
+     "name": "Barrierefreiheit überprüfen",
+     "group": "Barrierefreiheit",
+     "type": "SplitButton"
+    },
+    {
+     "name": "Anzeige zur Überarbeitung",
+     "group": "Markup",
+     "type": "ComboBox"
+    },
+    {
+     "name": "Optionen zum Nachverfolgen von Änderungen...",
+     "group": "Markup",
+     "type": "Button"
+    },
+    {
+     "name": "Vergleichen",
+     "group": "Vergleichen",
+     "type": "MenuItem"
+    },
+    {
+     "name": "Autoren blockieren",
+     "group": "Schützen",
+     "type": "SplitButton"
+    },
+    {
+     "name": "Bearbeitung einschr.",
+     "group": "Schützen",
+     "type": "Button"
+    },
+    {
+     "name": "Freihand ausblenden",
+     "group": "Freihand",
+     "type": "SplitButton"
+    }
+   ],
+   "only_ours": [
+    {
+     "name": "Markup für Überarbeitung anzeigen",
+     "group": "Markup"
+    }
+   ]
+  },
+  "Ansicht": {
+   "matched": [
+    {
+     "name": "Lesemodus",
+     "group": "Ansichten",
+     "word": [
+      32,
+      125,
+      98,
+      114
+     ],
+     "ours": [
+      38,
+      123,
+      101,
+      114
+     ],
+     "dx": 6,
+     "dy": -2,
+     "dw": 3,
+     "dh": 0,
+     "word_type": "Button",
+     "our_type": "Button"
+    },
+    {
+     "name": "Drucklayout",
+     "group": "Ansichten",
+     "word": [
+      133,
+      125,
+      103,
+      114
+     ],
+     "ours": [
+      143,
+      123,
+      107,
+      114
+     ],
+     "dx": 10,
+     "dy": -2,
+     "dw": 4,
+     "dh": 0,
+     "word_type": "Button",
+     "our_type": "Button"
+    },
+    {
+     "name": "Weblayout",
+     "group": "Ansichten",
+     "word": [
+      239,
+      125,
+      93,
+      114
+     ],
+     "ours": [
+      255,
+      123,
+      97,
+      114
+     ],
+     "dx": 16,
+     "dy": -2,
+     "dw": 4,
+     "dh": 0,
+     "word_type": "Button",
+     "our_type": "Button"
+    },
+    {
+     "name": "Zoom...",
+     "group": "Zoom",
+     "word": [
+      1081,
+      125,
+      62,
+      114
+     ],
+     "ours": [
+      583,
+      123,
+      66,
+      114
+     ],
+     "dx": -498,
+     "dy": -2,
+     "dw": 4,
+     "dh": 0,
+     "word_type": "Button",
+     "our_type": "Button"
+    },
+    {
+     "name": "100%",
+     "group": "Zoom",
+     "word": [
+      1146,
+      125,
+      62,
+      114
+     ],
+     "ours": [
+      654,
+      123,
+      66,
+      114
+     ],
+     "dx": -492,
+     "dy": -2,
+     "dw": 4,
+     "dh": 0,
+     "word_type": "Button",
+     "our_type": "Button"
+    },
+    {
+     "name": "Eine Seite",
+     "group": "Zoom",
+     "word": [
+      1211,
+      125,
+      125,
+      36
+     ],
+     "ours": [
+      724,
+      123,
+      163,
+      36
+     ],
+     "dx": -487,
+     "dy": -2,
+     "dw": 38,
+     "dh": 0,
+     "word_type": "Button",
+     "our_type": "Button"
+    },
+    {
+     "name": "Mehrere Seiten",
+     "group": "Zoom",
+     "word": [
+      1211,
+      164,
+      168,
+      36
+     ],
+     "ours": [
+      724,
+      162,
+      163,
+      36
+     ],
+     "dx": -487,
+     "dy": -2,
+     "dw": -5,
+     "dh": 0,
+     "word_type": "Button",
+     "our_type": "Button"
+    },
+    {
+     "name": "Seitenbreite",
+     "group": "Zoom",
+     "word": [
+      1211,
+      203,
+      143,
+      36
+     ],
+     "ours": [
+      724,
+      201,
+      163,
+      36
+     ],
+     "dx": -487,
+     "dy": -2,
+     "dw": 20,
+     "dh": 0,
+     "word_type": "Button",
+     "our_type": "Button"
+    }
+   ],
+   "only_word": [
+    {
+     "name": "Gliederung",
+     "group": "Ansichten",
+     "type": "Button"
+    },
+    {
+     "name": "Entwurf",
+     "group": "Ansichten",
+     "type": "Button"
+    },
+    {
+     "name": "Fokus",
+     "group": "Plastisch",
+     "type": "Button"
+    },
+    {
+     "name": "Plastischer Reader",
+     "group": "Plastisch",
+     "type": "Button"
+    },
+    {
+     "name": "Vertikal",
+     "group": "Seitenbewegung",
+     "type": "Button"
+    },
+    {
+     "name": "Seitenweise",
+     "group": "Seitenbewegung",
+     "type": "Button"
+    },
+    {
+     "name": "Lineal",
+     "group": "Anzeigen",
+     "type": "CheckBox"
+    },
+    {
+     "name": "Gitternetzlinien",
+     "group": "Anzeigen",
+     "type": "CheckBox"
+    },
+    {
+     "name": "Navigationsbereich",
+     "group": "Anzeigen",
+     "type": "CheckBox"
+    },
+    {
+     "name": "Neues Fenster",
+     "group": "Fenster",
+     "type": "Button"
+    },
+    {
+     "name": "Alle anordnen",
+     "group": "Fenster",
+     "type": "Button"
+    },
+    {
+     "name": "Teilen",
+     "group": "Fenster",
+     "type": "Button"
+    },
+    {
+     "name": "Nebeneinander anzeigen",
+     "group": "Fenster",
+     "type": "Button"
+    },
+    {
+     "name": "Synchrones Scrollen",
+     "group": "Fenster",
+     "type": "Button"
+    },
+    {
+     "name": "Fensterposition zurücksetzen",
+     "group": "Fenster",
+     "type": "Button"
+    },
+    {
+     "name": "Fenster wechseln",
+     "group": "Fenster",
+     "type": "MenuItem"
+    },
+    {
+     "name": "Makros",
+     "group": "Makros",
+     "type": "SplitButton"
+    },
+    {
+     "name": "Eigenschaften",
+     "group": "SharePoint",
+     "type": "Button"
+    }
+   ],
+   "only_ours": []
+  }
+ }
+}
