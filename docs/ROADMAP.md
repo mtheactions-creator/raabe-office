@@ -10,8 +10,30 @@ owner's explicit go-ahead.
 | 2 | RaabeWrite core: text model, layout, pagination, selection, character/paragraph formatting, styles, undo/redo, .docx read/write for that subset | done 2026-10-13 ([report](reports/2026-10-13-step2-formatting.md)): layout identical to Word in four test documents, formatting behaviour vs Word's own commands, lossless .docx; real-input re-check done (F1 tail: Windows composition, see report) |
 | 3 | RaabeWrite documents: lists, tables, images, header/footer, page numbers, page setup, spell check, find/replace, print, PDF | done 2026-10-13 ([report](reports/2026-10-13-step3-documents.md)): layout identical to Word in ten test documents (632/632 lines), text rendering like Word (F6), smoke tests 28/28 and 41/41 |
 | 4 | RaabeWrite school features: footnotes, table of contents, comments, track changes, formula editor, Raabeschule templates | done 2026-10-13 ([report](reports/2026-10-13-step4-school.md)): Word updates our tables of contents to the same page numbers, layout identical to Word in eleven documents (682/682 lines), smoke tests 43/43, 28/28, 41/41 |
+| 4b | Word parity for RaabeWrite (D-038): feel basics and audit tools, tables/lists/clipboard, pictures and shapes, own formula editor, all remaining non-deferred ribbon commands, French and Spanish, own grammar checker | planned, agreed 2026-10-14; starts on the owner's go |
 | 5 | Pilot: one class uses RaabeWrite in lessons; fix what real use reveals | |
 | 6 | iPad build of RaabeWrite (touch polish, Files app integration, distribution) | |
 | 7 | RaabeCalc | |
 | 8 | RaabePresent | |
 | 9 | Optional features: read aloud, translator, dictation, ink | |
+
+## Step 4b: Word parity (plan)
+
+Agreed with the owner on 2026-10-14 after trying Step 4. Goal: RaabeWrite behaves and looks
+like Word wherever a student or teacher would notice, before the pilot. The owner leaves the
+PC for the whole step, so real-input measurements (mouse, hover, clipboard, typing in Word)
+are allowed throughout. Every package ends with measurements against Word and an updated
+report.
+
+| Package | Content |
+|---|---|
+| A. Basics and audit tools | Mouse cursors as in Word (I-beam over text, mirrored arrow in the selection bar, move/resize cursors on pictures, table borders and handles); caret hidden while the window is inactive; caret to the next page after a page break; deferred commands marked in their tooltip (D-041). Two audit tools used by every later package: a **behaviour catalogue** (hundreds of scripted interactions run in Word and RaabeWrite, comparing document and caret) and a **screen comparison** of every ribbon tab, menu and dialog, normal and on hover (icons, chevrons, split buttons). |
+| B. Tables, lists, clipboard | Gridlines only where a cell edge has no border, default as in Word; Word's table context menu; row heights by dragging; the move handle (top left) and resize handle (bottom right); list gallery entries and AutoFormat prefixes ("- ", "* ", "1. ", "a) " …) 1:1 with Word (symbol, font, size, indent, tab); copy and paste of lists and tables to and from Word keeping indents and levels. |
+| C. Pictures and drawing | Fix inserting the reported PNG, paste pictures (Strg+V), pictures in table cells; the full Bildformat tab except Künstlerische Effekte (Korrekturen, Farbe, Transparenz, Bildformatvorlagen with frames and shadows, Zuschneiden, Drehen, Position, Ausrichten, Vorder-/Hintergrund, Alternativtext, the layout-options button); Formen and Textfeld with the Formformat tab; Anordnen in the Layout tab. Künstlerische Effekte last, if worth it. |
+| D. Formula editor | Our own editor replaces MathLive (D-039): editing in the text line without an overlay, Word's slot navigation and selection with the mouse, the two handles, Word's Backspace and size rules (inline/display), Word's Math AutoCorrect (\cdot + space …), the Formel tab exactly as in Word except Freihandgleichung. Word's behaviour is recorded first as a specification (real keystrokes in our own invisible Word instance). |
+| E. Remaining commands | Every ribbon command that is not deferred: Symbol, Link, Textmarke, Querverweis, Beschriftung, Zitat einfügen, Quellen verwalten, Literaturverzeichnis, Fuß- und Endnote dialog, Optionen zum Nachverfolgen, Entwurf tab (Designs, Farben, Schriftarten, Absatzabstand, Wasserzeichen, Seitenfarbe, Seitenränder), Silbentrennung (measured against Word's line breaks), Lineal, Lesemodus, Mehrere Seiten, Zwischenablage pane, Texteffekte, Sortieren, Markieren menu. |
+| F. Languages and grammar | French and Spanish spelling, hyphenation and Thesaurus (also German and English); our own grammar checker in Rust (D-040): engine, then German, English, French, Spanish, each switched on once its measurements are good. |
+
+Order: A, B, C, D, E, F. A comes first because its tools find the differences nobody has
+reported yet; the behaviour catalogue grows with each package. F is last and the largest
+open-ended part; German grammar first.

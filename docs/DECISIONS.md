@@ -391,3 +391,39 @@ the wording later without code changes beyond `apps/raabe-write/src/templates.ts
   start of the first heading; that paragraph is not part of the table and is kept on
   updates. Numbered headings appear with their number and a tab.
 - Alt+Umschalt+… are shortcuts, not keytips (Alt+letter still jumps to a tab).
+
+### D-038 Word parity before the pilot (Step 4b)
+After trying Step 4 the owner listed differences from Word (cursor, icons, tables, lists,
+formulas, pictures, behaviour) and asked for all ribbon commands to work. Instead of fixing
+reports one by one, Step 4b adds two audit tools (a behaviour catalogue run in Word and
+RaabeWrite, a screen comparison of ribbon, menus and dialogs, normal and on hover) and works
+through six packages (ROADMAP). The owner contributes no material; everything is measured
+against Word on this PC, with real input allowed for the whole step.
+
+### D-039 Own formula editor instead of MathLive
+MathLive's editing model is TeX-like: its own caret rules, fonts and an overlay over the
+line, which caused shifting formulas, wrong arrow-key navigation, no mouse selection and no
+handles. The editor becomes our own, working on the same formula structure that is saved as
+OMML and shown as MathML in Cambria Math (D-036), with Word's navigation, selection,
+Backspace, sizing and Math AutoCorrect recorded from Word first. MathLive is removed when
+the new editor passes the behaviour catalogue.
+
+### D-040 Own grammar checker
+Options measured on this PC (2026-10-14): RaabeWrite is 8.2 MB, Microsoft Office 4.6 GB
+(Word's proofing tools 131 MB). LanguageTool offline would add about 250-320 MB (30
+languages, a Java runtime; 8 GB more for its statistics) and cannot run on iPadOS. Decision:
+our own checker in Rust, estimated 10-30 MB for four languages and runnable on Windows and
+iPad. It reuses public material: LanguageTool's XML rules and lexicons (LGPL and open
+licences, checked per file), Grammalecte for French (GPL-3.0), ideas from nlprule
+(MIT/Apache). LanguageTool's Java rules for German (agreement, capitalisation, commas) are
+rewritten in Rust; own rules cover typical school confusions (das/dass, seid/seit,
+wieder/wider, als/wie, Standart). No student texts are used (data protection). Measured
+instead with LanguageTool's example sentences (recall), clean open texts such as Klexikon
+and Wikipedia (false alarms), the same texts with generated typical errors (recall per error
+type) and public learner corpora where their licences allow, always against Word's offline
+grammar check. A language is switched on once its false-alarm rate is close to Word's.
+
+### D-041 Deferred commands stay visible
+The ribbon keeps Word's layout. Commands deferred by agreement (SCOPE) stay greyed out with
+"Zurückgestellt" in their tooltip, so they cannot be mistaken for overlooked ones; every
+other command must work.

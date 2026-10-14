@@ -20,15 +20,15 @@ What each app does, ordered by priority. **M** = first usable version (MVP),
 | Search box "Suchen" (Alt+M) that finds and runs commands | M | Done in Step 1 |
 | Keytips (Alt shortcuts) with Word's German letters | M | Done in Step 1 |
 | Dark mode | L | After the pilot (agreed) |
-| Spell check German + English (Hunspell dictionaries) | M | Done in Step 3 (D-031) |
+| Spell check German + English (Hunspell dictionaries) | M | Done in Step 3 (D-031); French and Spanish in Step 4b |
 | Find and replace | M | Done in Step 3: Navigationsbereich, Suchen und Ersetzen, Gehe zu |
 | Zoom slider and view buttons in the status bar | M | |
 | Print with preview | M | Done in Step 3 |
 | Optionen dialog | M | A handful of settings only |
-| Read aloud (Vorlesen) with offline OS voices | L | Helpful for students with dyslexia (LRS) |
-| Translator (offline, Firefox Translations / Bergamot models) | L | de, en, fr, es; no Latin |
-| Dictation (offline, whisper.cpp) | L | Optional download, needs good hardware |
-| Grammar check | L | LanguageTool is heavy; evaluate later |
+| Read aloud (Vorlesen) with offline OS voices | L | Helpful for students with dyslexia (LRS); deferred, marked in the tooltip (D-041) |
+| Translator (offline, Firefox Translations / Bergamot models) | L | de, en, fr, es; no Latin; deferred (D-041) |
+| Dictation (offline, whisper.cpp) | L | Optional download, needs good hardware; deferred (D-041) |
+| Grammar check | M | Own checker in Rust from public rules, de/en/fr/es, German first (D-040, Step 4b) |
 | Apple Pencil ink (Zeichnen tab) | L | Architecture must allow it from day one |
 | Accounts, cloud, sharing, co-authoring, version history | X | D-005 |
 | Copilot, Designer, online pictures, stock images | X | Replaced by templates and a bundled icon set |
@@ -43,8 +43,8 @@ What each app does, ordered by priority. **M** = first usable version (MVP),
 | Bulleted and numbered lists, multilevel lists | M | Done in Step 3, incl. Word's auto-list on "1. " / "- " and heading numbering |
 | Styles (Formatvorlagen): Standard, Überschrift 1-3, Titel, Zitat … | M | Style gallery in Start tab; done in Step 2 (Word 2016-2019 set) |
 | Tables: insert, resize, merge/split, borders, shading, header row | M | Done in Step 3 (Tabellenentwurf, Layout) |
-| Images: insert, resize, rotate, crop, text wrapping (inline, square, tight, behind, in front) | M | Done in Step 3 except rotate and crop |
-| Shapes and text boxes | M | Basic set |
+| Images: insert, resize, rotate, crop, text wrapping (inline, square, tight, behind, in front) | M | Done in Step 3 except rotate and crop; full Bildformat tab, paste and pictures in tables in Step 4b |
+| Shapes and text boxes | M | Basic set, Step 4b |
 | Header, footer, page numbers | M | Done in Step 3 |
 | Page setup: margins, orientation, size, columns, page/section breaks | M | Done in Step 3 |
 | Footnotes | M | Done in Steps 3 and 4: foot- and endnotes, Nächste Fußnote |
@@ -57,13 +57,14 @@ What each app does, ordered by priority. **M** = first usable version (MVP),
 | AutoCorrect (basic), smart quotes „…“ | M | German quotation marks |
 | Symbols and special characters | M | |
 | Hyperlinks | M | |
-| Captions, cross-references | L | |
-| Citations and bibliography | L | Schools teach this manually; maybe a simple version |
+| Captions, cross-references | M | Step 4b (ribbon commands that are not deferred all work, D-041) |
+| Citations and bibliography | M | Step 4b: Zitat einfügen, Quellen verwalten, Literaturverzeichnis |
 | Mailings (Sendungen), envelopes, labels | X | |
 | SmartArt | X | Preserved in files, shown as image placeholder |
 | Fields beyond page number / TOC / date | X | Preserved |
-| Entwurf tab: Designs, Farben, Schriftarten, Absatzabstand | L | Theme support |
-| Entwurf tab: Wasserzeichen, Seitenfarbe, Seitenränder | L | |
+| Entwurf tab: Designs, Farben, Schriftarten, Absatzabstand | M | Step 4b |
+| Entwurf tab: Wasserzeichen, Seitenfarbe, Seitenränder | M | Step 4b |
+| Hyphenation (Silbentrennung), Thesaurus | M | Step 4b, de/en/fr/es |
 | Word count exactly like Word (standalone dashes are not words) | M | Done in Step 1 |
 
 ## RaabeCalc (Excel)
@@ -125,3 +126,9 @@ BINOM.VERT/BINOM.DIST, NORM.VERT/NORM.DIST.
 | Slide master editing | L | |
 | Recording, live captions, rehearse timings | X | |
 | SmartArt, 3D models | X | Preserved in files |
+
+## Deferred commands shown in the ribbon
+
+Shown as in Word, greyed out, with "Zurückgestellt" in the tooltip (D-041): Laut vorlesen,
+Übersetzen, Diktieren, Diagramm (comes with the chart engine of RaabeCalc), Freihandgleichung,
+Künstlerische Effekte until package C decides otherwise.
