@@ -1,0 +1,98 @@
+# Typical errors in school texts (written for RaabeWrite's grammar measurement, D-040; no
+# student texts). One sentence per line: the error type, a tab, the sentence.
+das/dass	Ich glaube, das er morgen kommt.
+das/dass	Sie hofft, das die Arbeit gut wird.
+das/dass	Es ist wichtig, das wir pünktlich sind.
+das/dass	Der Lehrer sagte, das wir leise sein sollen.
+das/dass	Ich weiß, das du recht hast.
+das/dass	Das Buch, dass ich gelesen habe, war spannend.
+das/dass	Das Haus, dass dort steht, ist alt.
+das/dass	Er meint, dass Problem sei gelöst.
+das/dass	Wir wussten nicht, das es so spät war.
+das/dass	Schade, das du nicht kommen kannst.
+komma	Er bleibt zu Hause weil er krank ist.
+komma	Ich komme mit wenn du willst.
+komma	Sie lernt viel obwohl sie müde ist.
+komma	Ich weiß dass du recht hast.
+komma	Wir gehen raus sobald es aufhört zu regnen.
+komma	Der Mann der dort steht ist mein Onkel.
+komma	Das Buch das ich lese ist spannend.
+komma	Er fragte ob ich Zeit habe.
+komma	Sie sagte sie komme später.
+komma	Ich lerne damit ich die Prüfung bestehe.
+komma	Nachdem wir gegessen hatten gingen wir spazieren.
+komma	Als ich nach Hause kam war niemand da.
+komma	Er ist klug aber er ist faul.
+komma	Ich habe keine Zeit denn ich muss lernen.
+komma	Wenn es regnet bleiben wir drinnen.
+seid/seit	Wir seid gestern angekommen.
+seid/seit	Ich warte seid zwei Stunden.
+seid/seit	Seit ihr schon fertig?
+seid/seit	Seid wann wohnst du hier?
+wider/wieder	Ich komme morgen wider.
+wider/wieder	Das ist wieder die Natur.
+als/wie	Das ist größer wie ich dachte.
+als/wie	Sie ist älter wie ihr Bruder.
+als/wie	Er läuft schneller wie ich.
+als/wie	Das Wetter ist besser wie gestern.
+gross	Ich bin am lesen.
+gross	Beim schwimmen habe ich mich verletzt.
+gross	Wir haben viel spaß gehabt.
+gross	Das lesen macht mir Freude.
+gross	Er hat angst vor Hunden.
+gross	Zum lernen brauche ich Ruhe.
+gross	Das ist etwas schönes.
+gross	Wir wünschen dir alles gute.
+gross	Ich habe nichts neues erfahren.
+gross	Am besten Fragst du deine Lehrerin.
+klein	Wir treffen uns Morgen um acht Uhr.
+klein	Er ist Schuld an dem Unfall.
+klein	Sie kommt Heute später.
+klein	Das finde ich Gut.
+kongruenz	Die Kinder spielt im Garten.
+kongruenz	Meine Freundin und ich geht ins Kino.
+kongruenz	Die Schüler hat ihre Hausaufgaben gemacht.
+kongruenz	Der Hund bellen laut.
+kongruenz	Wir hat keine Zeit.
+kongruenz	Du kommt zu spät.
+kongruenz	Ich habe einen schönes Haus gekauft.
+kongruenz	Das ist ein großer Erfolg für der Schule.
+kongruenz	Wir fahren mit dem Fahrrad zu die Schule.
+kongruenz	Ich sehe den kleinen Mädchen.
+kongruenz	Er gibt der Frau ein Blume.
+kongruenz	Das ist die Haus meiner Eltern.
+kongruenz	Die Lehrer erklärt die Aufgabe.
+kongruenz	Viele Leute glaubt das nicht.
+fall	Wegen dem Regen bleiben wir zu Hause.
+fall	Trotz dem schlechten Wetter gingen wir los.
+fall	Wir helfen den Mann.
+fall	Ich gebe das Buch meinem Bruder und meine Schwester.
+fall	Er wartet auf seinen Freund und seinem Bruder.
+verb	Er hat das Buch gelest.
+verb	Wir sind gestern gelauft.
+verb	Ich habe ihn gekennt.
+verb	Sie ist um acht Uhr aufgestanden worden.
+verb	Ich würde gerne kommen, wenn ich Zeit hätte würde.
+apostroph	Peter's Fahrrad ist kaputt.
+apostroph	Das ist Annas's Buch.
+apostroph	Wir gehen in's Kino.
+getrennt	Wir müssen zusammen arbeiten an diesem Projekt.
+getrennt	Er ist garnicht gekommen.
+getrennt	Das ist zuviel.
+getrennt	Ich habe mich Gestern Abend verlaufen.
+getrennt	Sie hat es nicht so gemeint, im gegenteil.
+wort	Das ist der einzigste Weg.
+wort	Ich habe das Standart-Modell gekauft.
+wort	Er ist Tod müde.
+wort	Das war das Selbe wie gestern.
+wort	Er hat sich nicht entschuldigt, trotzdem dass er schuld war.
+wort	Ich bin mir nicht sicher, ob das stimmt oder nicht stimmt.
+doppel	Ich habe habe das schon gemacht.
+doppel	Wir gehen heute heute ins Kino.
+leer	Das ist ein Haus .
+leer	Ich gehe heute  ins Kino.
+leer	Er kam,sah und siegte.
+leer	Wie geht es dir ?
+zeichen	Er sagte: "Ich komme morgen".
+zeichen	Was machst du heute.
+zeichen	Das ist toll!!

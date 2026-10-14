@@ -20,6 +20,17 @@ export interface FileInfo {
   modified: number | null;
 }
 
+/** A grammar finding of RaabeWrite's checker (D-051). */
+export interface GrammarIssue {
+  start: number;
+  end: number;
+  rule: string;
+  category: string;
+  message: string;
+  short: string;
+  suggestions: string[];
+}
+
 /** A thesaurus lookup: the word found and its meanings ("Adj." …; antonyms start with "!"). */
 export interface ThesaurusResult {
   word: string;
@@ -66,6 +77,8 @@ export interface Platform {
   spellCheck(lang: string, words: string[]): Promise<boolean[]>;
   /** Suggestions for a misspelled word. */
   spellSuggest(lang: string, word: string): Promise<string[]>;
+  /** Grammar: the findings of each paragraph (UTF-16 offsets); none for languages without rules. */
+  grammarCheck(lang: string, paragraphs: string[]): Promise<GrammarIssue[][]>;
   /** Thesaurus: the meanings of a word (or of its base form), null when there are none. */
   thesaurus(lang: string, word: string): Promise<ThesaurusResult | null>;
   /** Files passed on the command line (double-click in Explorer) at start and later. */

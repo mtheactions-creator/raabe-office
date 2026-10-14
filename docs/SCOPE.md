@@ -28,7 +28,7 @@ What each app does, ordered by priority. **M** = first usable version (MVP),
 | Read aloud (Vorlesen) with offline OS voices | L | Helpful for students with dyslexia (LRS); deferred, marked in the tooltip (D-041) |
 | Translator (offline, Firefox Translations / Bergamot models) | L | de, en, fr, es; no Latin; deferred (D-041) |
 | Dictation (offline, whisper.cpp) | L | Optional download, needs good hardware; deferred (D-041) |
-| Grammar check | M | Own checker in Rust from public rules, de/en/fr/es, German first (D-040, Step 4b) |
+| Grammar check | M | Own checker in Rust from public rules (D-040); German done in Step 4b (D-051), en/fr/es once they measure as well |
 | Apple Pencil ink (Zeichnen tab) | L | Architecture must allow it from day one |
 | Accounts, cloud, sharing, co-authoring, version history | X | D-005 |
 | Copilot, Designer, online pictures, stock images | X | Replaced by templates and a bundled icon set |

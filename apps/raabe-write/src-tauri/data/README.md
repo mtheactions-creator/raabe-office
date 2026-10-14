@@ -26,3 +26,15 @@ The spelling dictionaries come from the npm packages `dictionary-de` (igerman98,
 GPL-3.0), `dictionary-en` and `dictionary-en-gb` (SCOWL, MIT and BSD), `dictionary-fr`
 (Dicollecte, MPL-2.0) and `dictionary-es` (RLA-ES, GPL-3.0 or LGPL-3.0 or MPL-1.1); they are
 compiled in from `node_modules` (`src/spell.rs`).
+
+## Grammar checker (D-051)
+
+| File | Source | Licence |
+|---|---|---|
+| `german.dict`, `german_synth.dict` | german-pos-dict 1.2.4 by Daniel Naber (Morfologik automata, from Morphy data) | CC-BY-SA-4.0 |
+| `german-added.txt.gz`, `german-removed.txt.gz` | LanguageTool's additions to and removals from that lexicon | LGPL-2.1 or later |
+| `grammar-de.json.gz` | LanguageTool's German rules (grammar.xml) and disambiguation (disambiguation.xml), compiled by `tools/lang-data/build_grammar.py` | LGPL-2.1 or later |
+
+LanguageTool: © LanguageTool contributors, https://languagetool.org, https://github.com/languagetool-org/languagetool.
+german-pos-dict: https://github.com/languagetool-org/german-pos-dict.
+

@@ -748,3 +748,43 @@ does with typed French, Spanish and English sentences).
   the zone greyed). Manuelle Silbentrennung shows every syllable ("mit-hil-fe"), proposes the
   last place that fits and inserts an optional hyphen (Ja), as Word does.
 
+### D-051 The grammar checker: our engine, LanguageTool's open rules, measured against Word
+Built as D-040 planned, in Rust (`src-tauri/src/grammar/`), compiled into the program:
+- **Material**: LanguageTool's German XML rules and disambiguation (LGPL-2.1+) compiled by
+  `tools/lang-data/build_grammar.py` into 0.35 MB of JSON (4,490 rules, 382 disambiguation
+  rules); Daniel Naber's German POS lexicon and synthesis lexicon (german-pos-dict,
+  CC-BY-SA-4.0; Morfologik automata, 2.5 MB) with LanguageTool's added/removed lists. Rules
+  that need LanguageTool's Java filters are left out; LanguageTool's purely typographic advice
+  (protected spaces in "z. B.", typographic apostrophes and ellipses) too, since Word never gives
+  it and it fires on most correct texts.
+- **Engine**: Morfologik reader (`fsa.rs`), tokenizer and sentence splitter (`text.rs`), tagger
+  with compounds by their last part when the first part is a word (`tagger.rs`), and the pattern
+  engine (`rules.rs`) with LanguageTool's semantics as its source code defines them: conditions
+  per reading (negations included), exceptions for the token, the next and the previous token,
+  skips, repetitions, back-references (counted from 0 in patterns), markers, antipatterns,
+  unification of number, case and gender (which also drives disambiguation: "eine klassische
+  Zangenbewegung" loses the verb "einen"), immunization, messages and suggestions with case
+  conversion and regular-expression replacement.
+- **Own rules** (`de_rules.rs`) for what LanguageTool checks in Java and for school errors:
+  spaces around punctuation, "größer wie", subject and verb (pronouns, noun phrases,
+  "Meine Freundin und ich"), article–adjective–noun agreement with corrected articles from the
+  synthesis lexicon, the case after für/gegen/ohne and mit/nach/bei/von/zu/seit, nominalised
+  infinitives, capitalised verbs, the genitive apostrophe, the comma before aber/denn/sondern
+  and "das" for "dass" after verbs and adjectives. Each is cautious (object-first sentences,
+  copulas, titles, names, foreign words, particles are left alone).
+- **Measured** (`tools/lang-data/grammar_measure.py`, Word in its own invisible instance through
+  Range.GrammaticalErrors per paragraph, its options untouched; sentence level). German:
+  | Corpus | RaabeWrite | Word |
+  |---|---|---|
+  | 96 typical school errors (written for this, `school-errors-de.txt`) | 63 found | 46 found |
+  | 400 of LanguageTool's incorrect examples | 392 | 72 |
+  | 500 paragraphs of German Wikipedia on school topics (false alarms) | 31 flagged | 50 flagged |
+  | 400 of LanguageTool's correct examples (false alarms) | 36 | 28 |
+  The false-alarm rate is close to Word's (lower on Wikipedia, where many of ours are real
+  errors or old spelling in quotes), so German is switched on (D-040). Speed: about 2.5 ms per
+  sentence; paragraphs are checked in the background after typing pauses.
+- **In the app**: Word's blue double underline, the suggestions and Einmal ignorieren in the
+  context menu, the findings in the Editor pane (F7) under Word's headings (Grammatik,
+  Zeichensetzung, Groß-/Kleinschreibung …), Grammatikfehler während der Eingabe markieren in
+  the options. English, French and Spanish follow once their measurements are as good.
+

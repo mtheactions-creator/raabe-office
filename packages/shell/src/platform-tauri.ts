@@ -6,7 +6,7 @@ import { listen } from "@tauri-apps/api/event";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { open, save } from "@tauri-apps/plugin-dialog";
 import { readText, writeText } from "@tauri-apps/plugin-clipboard-manager";
-import type { FileInfo, Platform, RecoveryEntry, ThesaurusResult } from "./platform";
+import type { FileInfo, GrammarIssue, Platform, RecoveryEntry, ThesaurusResult } from "./platform";
 
 const FILTERS = {
   docx: [{ name: "Word-Dokument", extensions: ["docx"] }],
@@ -66,6 +66,7 @@ export function tauriPlatform(): Platform {
     spellCheck: (lang, words) => invoke<boolean[]>("spell_check", { lang, words }),
     spellSuggest: (lang, word) => invoke<string[]>("spell_suggest", { lang, word }),
     thesaurus: (lang, word) => invoke<ThesaurusResult | null>("thesaurus_lookup", { lang, word }),
+    grammarCheck: (lang, paragraphs) => invoke<GrammarIssue[][]>("grammar_check", { lang, paragraphs }),
     onOpenFiles(handler) {
       void invoke<string[]>("startup_files").then((paths) => { if (paths.length) handler(paths); });
       void listen<string[]>("open-files", (e) => handler(e.payload));

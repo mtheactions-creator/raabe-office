@@ -53,7 +53,9 @@ verknüpfte Textfelder and Deckblatt (every non-deferred ribbon command now work
 and Thesaurus come with the languages in F). F in progress (D-049): French and Spanish spelling, Sprache
 automatisch erkennen, Word's dialog Sprache, Thesaurus pane and Synonyme, the Editor pane (F7)
 and the options Dokumentprüfung and Sprache done. Silbentrennung done (D-050: Word's breaks on 120
-of 125 measured lines).
+of 125 measured lines). Our own grammar checker in Rust done for German
+(D-051: 63 of 96 school errors found where Word finds 46, false alarms on clean texts as low as
+Word's), switched on.
 
 Order: A, B, C, D, E, F. A comes first because its tools find the differences nobody has
 reported yet; the behaviour catalogue grows with each package. F is last and the largest

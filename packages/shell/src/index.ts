@@ -12,7 +12,7 @@ export { Keytips } from "./keytips";
 export { showDialog, messageBox, type DialogButton } from "./dialog";
 export { showMenu, showPopup, closePopup, installTooltips, type MenuEntry } from "./popup";
 export { colorGrid, showFontColors, showHighlights, highlightHex, HIGHLIGHTS } from "./palette";
-export { baseName, dirName, type Platform, type RecoveryEntry, type FileInfo, type ThesaurusResult } from "./platform";
+export { baseName, dirName, type Platform, type RecoveryEntry, type FileInfo, type GrammarIssue, type ThesaurusResult } from "./platform";
 export { tauriPlatform } from "./platform-tauri";
 export { browserPlatform } from "./platform-browser";
 

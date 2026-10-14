@@ -24,7 +24,9 @@
 | App shell | Tauri 2 (Rust) | ~10 MB installers, fast start, WebView2 on Windows, iOS support |
 | UI | TypeScript, no heavy framework in the editing hot path | Predictable latency; the ribbon and dialogs may use a small component layer |
 | File formats | Own OOXML reader/writer (zip + XML), in TypeScript | Full control over fidelity and preservation of unknown parts |
-| Spell check | Hunspell dictionaries (igerman98, en_US/en_GB) checked in Rust (`spellbook`) | Offline, open licences, fast (D-031) |
+| Spell check | Hunspell dictionaries (German, English US/GB, French, Spanish) checked in Rust (`spellbook`) | Offline, open licences, fast (D-031, D-049) |
+| Thesaurus, hyphenation | LibreOffice's open thesauri (Rust lookup) and Hyphen patterns (Liang's algorithm in the layout engine) | D-049, D-050 |
+| Grammar check | Own Rust engine running LanguageTool's open German rules on Naber's POS lexicon, plus own rules | D-040, D-051 |
 | Formula editor | Own editor on the equation tree that is saved as OMML (Word's behaviour recorded from Word), MathML display in Cambria Math | D-036, D-039, D-047 |
 | Charts | Own renderer (shared by RaabeCalc and RaabePresent) | Must match Excel chart look |
 | Fonts | System fonts, metrics read from the font files (Rust fontdb + ttf-parser); Carlito/Caladea/Liberation as metric-compatible fallbacks | D-011, D-027 |
@@ -41,7 +43,8 @@ apps/
                       spelling, references, review, math: their commands, galleries, dialogs
                       and contextual tabs), templates.ts (Raabeschule templates, D-035),
                       src-tauri/ (Rust: file access, AutoRecover, PDF, single instance, fonts,
-                      spell checking)
+                      spell checking, thesaurus, grammar/ (the grammar checker, D-051);
+                      data/: the compiled language data and its licences)
   raabe-calc/         later
   raabe-present/      later
 packages/
@@ -50,7 +53,8 @@ packages/
                       breaking, D-025), flow.ts (pages, D-029), numbering.ts (list labels),
                       doc.ts (stories and edits), edits.ts (list, table, section operations),
                       school.ts (notes, tables of contents, comments), revisions.ts (tracked
-                      changes, D-034), autocorrect.ts (AutoKorrektur, D-042), images.ts
+                      changes, D-034), autocorrect.ts (AutoKorrektur, D-042), hyphen.ts and
+                      hyph/ (Silbentrennung, D-050), images.ts
                       (picture sizes and resolution),
                       html.ts (clipboard HTML as Word writes it, D-043), view.ts (DOM
                       rendering, caret, selection),
@@ -65,6 +69,8 @@ branding/             logos (excluded from the GPL, see branding/README.md)
 docs/                 decisions, scope, architecture, feel metrics, roadmap, reports
 prototypes/           Step 0 feel prototypes (kept for reference; the harness uses the real app)
 tools/feel-lab/       measurement harness against Microsoft Word, Word UI capture, smoke test
+tools/lang-data/      fetches and builds the language data (thesauri, hyphenation, grammar rules,
+                      lexicons) and measures the grammar checker against Word
 ```
 
 ## Platform layer

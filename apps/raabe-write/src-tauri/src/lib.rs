@@ -4,6 +4,7 @@
 
 mod clipboard;
 mod fonts;
+mod grammar;
 mod spell;
 mod thesaurus;
 
@@ -294,6 +295,7 @@ pub fn run() {
     let args: Vec<String> = std::env::args().skip(1).collect();
     fonts::preload();
     spell::preload();
+    grammar::preload();
     tauri::Builder::default()
         .plugin(tauri_plugin_single_instance::init(|app, argv, cwd| {
             let files = docx_args(argv.into_iter().skip(1), Some(&cwd));
@@ -351,7 +353,7 @@ pub fn run() {
         })
         .invoke_handler(tauri::generate_handler![
             read_file, write_file, file_info, list_dir, documents_dir, open_external, save_recovery, list_recovery, read_recovery, delete_recovery,
-            startup_files, print_to_pdf, fonts::list_fonts, fonts::font_metrics, fonts::font_chars, spell::spell_check, spell::spell_suggest, thesaurus::thesaurus_lookup,
+            startup_files, print_to_pdf, fonts::list_fonts, fonts::font_metrics, fonts::font_chars, spell::spell_check, spell::spell_suggest, thesaurus::thesaurus_lookup, grammar::grammar_check,
             clipboard::clipboard_read_html, clipboard::clipboard_write_html, clipboard::clipboard_read_image
         ])
         .run(tauri::generate_context!())

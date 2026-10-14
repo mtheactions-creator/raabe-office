@@ -1112,9 +1112,13 @@ export class View {
       if (b <= a) continue;
       const x1 = left + line.charX[a - line.start], x2 = left + line.charX[b - line.start];
       const el = document.createElement("div");
-      if (m.kind === "spell" || m.kind === "grammar") {
+      if (m.kind === "spell") {
         el.style.cssText = `position:absolute;left:${x1}px;top:${baseline + 1.5}px;width:${x2 - x1}px;height:3px;` +
-          `background:${SQUIGGLE(m.kind === "spell" ? "#e81123" : "#2b579a")} repeat-x;pointer-events:none;z-index:1`;
+          `background:${SQUIGGLE("#e81123")} repeat-x;pointer-events:none;z-index:1`;
+      } else if (m.kind === "grammar") {
+        // Grammar: Word's blue double underline.
+        el.style.cssText = `position:absolute;left:${x1}px;top:${baseline + 1.5}px;width:${x2 - x1}px;height:1px;` +
+          `border-top:1px solid #2f5fb3;border-bottom:1px solid #2f5fb3;pointer-events:none;z-index:1`;
       } else {
         const color = m.kind === "find" ? "#ffff00" : m.kind === "findCurrent" ? "#ffc000" : m.kind === "comment" ? "#f8e3c4" : "#f5c58c";
         el.style.cssText = `position:absolute;left:${x1}px;top:${top}px;width:${x2 - x1}px;height:${line.height}px;background:${color};pointer-events:none;z-index:-1`;

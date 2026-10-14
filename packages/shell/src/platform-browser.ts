@@ -65,6 +65,7 @@ export function browserPlatform(): Platform {
     spellCheck: async (_lang, words) => words.map(() => true),
     spellSuggest: async () => [],
     thesaurus: async () => null,
+    grammarCheck: async (_lang, paragraphs) => paragraphs.map(() => []),
     onOpenFiles: () => {},
     window: {
       minimize() {},

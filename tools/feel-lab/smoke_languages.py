@@ -1,5 +1,5 @@
 """Smoke test of Step 4b F's languages in the real RaabeWrite app: French and Spanish
-spelling, Sprache automatisch erkennen, the Thesaurus pane and Synonyme menu, the Editor pane
+spelling, Sprache automatisch erkennen, the Thesaurus pane and Synonyme menu, grammar marks, the Editor pane
 (F7), Sprache / Rechtschreibung nicht prüfen written as Word reads them (checked through COM
 in a separate, invisible Word instance). Drives the app through the DevTools protocol; the
 app runs off screen, so this runs in the background.
@@ -136,6 +136,33 @@ def main() -> None:
         nxt = wait(t, "document.querySelector('.edpane .ed-word')?.textContent === 'plaia'", 6)
         check("Einmal ignorieren goes on to the next error", nxt, str(t.js("document.querySelector('.edpane .ed-word')?.textContent")))
         t.js("document.querySelector('.edpane .tp-head button[aria-label=\"Bereich schließen\"]')?.click()")
+
+        # ----- Grammatik (D-051): blue double underline, suggestions, Editor pane -----------------------
+        t.js(f"(() => {{ const e = {ED}; const n = e.doc.main.length - 1; e.selectRange(n, e.doc.main[n].text.length, e.doc.main[n].text.length); }})()")
+        t.js("__probe.focus()")
+        t.send_key("Enter")
+        t.send_text("Ich glaube, das er morgen kommt. Die Kinder spielt im Garten.")
+        g = t.js(f"{ED}.doc.main.length - 1")
+        expr = (f"(() => {{ const e = {ED}; const para = e.doc.main[{g}]; e.selectRange({g}, 0, 0); const m = e.extraMarks('main', para) || []; "
+                f"return m.filter(x => x.kind === 'grammar').map(x => para.text.slice(x.start, x.end)); }})()")
+        found = wait(t, f"{expr}.length >= 2 ? {expr} : null", 10)
+        check("grammar errors are marked", bool(found) and "das" in found and "spielt" in found,
+              json.dumps([t.js(expr), t.js(f"{ED}.doc.main.map(p => p.text)"), t.js(f"{ED}.doc.main[{g}].runs.map(r => r.props.lang)")], ensure_ascii=False))
+        menu = t.js(f"""(async () => {{
+            const e = {ED}; e.selectRange({g}, 13, 13);
+            e.onContextMenu(400, 300, {{ p: {g}, o: 13 }});
+            await new Promise(r => setTimeout(r, 800));
+            const menus = [...document.querySelectorAll('.menu')];
+            return menus.length ? menus[menus.length - 1].innerText.split('\\n').map(s => s.trim()).filter(Boolean).slice(0, 4) : null;
+        }})()""")
+        check("the context menu suggests 'dass'", bool(menu) and menu[0] == "dass", json.dumps(menu, ensure_ascii=False))
+        t.send_key("Escape")
+        t.js(f"{ED}.selectRange({g}, 0, 0)")
+        t.js(f"{API}.run('review.spelling')")
+        title = wait(t, "document.querySelector('.edpane .ed-title')?.textContent", 10)
+        check("the Editor pane shows the grammar finding", title == "Grammatik", str(title))
+        t.js("document.querySelector('.edpane .tp-head button[aria-label=\"Bereich schließen\"]')?.click()")
+        t.js(f"{ED}.replaceRange({g}, 0, {ED}.doc.main[{g}].text.length, '')")
 
         # ----- Sprache: marked text in a language, nicht prüfen; Word reads both ------------------
         t.js(f"(() => {{ const e = {ED}; e.selectRange(2, 0, e.doc.main[2].text.length); e.setProofing('es-ES', false); e.selectRange(3, 0, 0); }})()")

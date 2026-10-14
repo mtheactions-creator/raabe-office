@@ -1,0 +1,1113 @@
+{
+ "date": "2026-10-15",
+ "corpora": {
+  "school errors": {
+   "items": 96,
+   "ours": 63,
+   "word": 46,
+   "both": 41,
+   "our rules": [
+    [
+     "KOMMA_ZWISCHEN_HAUPT_UND_NEBENSATZ_2[2]",
+     6
+    ],
+    [
+     "RELATIVPRONOMEN_STATT_DASS[0]",
+     5
+    ],
+    [
+     "RAABE_DAS_DASS",
+     5
+    ],
+    [
+     "RAABE_SUBJEKT_VERB",
+     5
+    ],
+    [
+     "SUBJUNKTION_KOMMA[0]",
+     4
+    ],
+    [
+     "RAABE_KOMPARATIV_ALS",
+     4
+    ],
+    [
+     "RAABE_NOMINALISIERUNG",
+     3
+    ],
+    [
+     "RAABE_KONGRUENZ",
+     3
+    ],
+    [
+     "RAABE_APOSTROPH",
+     3
+    ],
+    [
+     "KOMMA_ZWISCHEN_HAUPT_UND_NEBENSATZ_2[3]",
+     2
+    ],
+    [
+     "RAABE_KOMMA_KONJUNKTION",
+     2
+    ],
+    [
+     "PRAEP_PLUS_VERB[0]",
+     2
+    ],
+    [
+     "ETWAS_GUTES[0]",
+     2
+    ],
+    [
+     "RAABE_PRAEPOSITION_FALL",
+     2
+    ],
+    [
+     "PRAEP_GEN[1]",
+     2
+    ],
+    [
+     "RAABE_LEERZEICHEN_VOR_SATZZEICHEN",
+     2
+    ],
+    [
+     "DASS_STATT_DAS_RELATIVPRONOMEN[0]",
+     1
+    ],
+    [
+     "INDIREKTE_FRAGE[0]",
+     1
+    ],
+    [
+     "INDIREKTE_FRAGE[2]",
+     1
+    ],
+    [
+     "ICH_GLAUBE_FUER_EUCH[8]",
+     1
+    ],
+    [
+     "SUBJUNKTION_KOMMA_2",
+     1
+    ],
+    [
+     "SEIT_VS_SEID[18]",
+     1
+    ],
+    [
+     "SEIN_MONATEN_SPELLING_RULE",
+     1
+    ],
+    [
+     "SEIT_VS_SEID[24]",
+     1
+    ],
+    [
+     "SEID_VS_SEIT[9]",
+     1
+    ],
+    [
+     "SEIT_VS_SEID[16]",
+     1
+    ],
+    [
+     "WIEDER_EINMAL_SPELLING_RULE[1]",
+     1
+    ],
+    [
+     "ICH_BIN_AM_UEBERLEGEN[0]",
+     1
+    ],
+    [
+     "AM_KLEINES_NOMEN",
+     1
+    ],
+    [
+     "AM_VERB_KLEIN",
+     1
+    ],
+    [
+     "ANGST_CASE",
+     1
+    ],
+    [
+     "ANGST_SUBST[0]",
+     1
+    ],
+    [
+     "ALLES_GUTE[1]",
+     1
+    ],
+    [
+     "ALLES_MOEGLICHE[0]",
+     1
+    ],
+    [
+     "RAABE_GROSS_MITTEN",
+     1
+    ],
+    [
+     "SCHULD_SEIN[0]",
+     1
+    ],
+    [
+     "PRAEP_DAT[12]",
+     1
+    ],
+    [
+     "PRAEP_DAT[14]",
+     1
+    ],
+    [
+     "PRAEP_GEN[8]",
+     1
+    ],
+    [
+     "PRAEP_GEN[11]",
+     1
+    ]
+   ],
+   "by kind": {
+    "das/dass": {
+     "of": 10,
+     "ours": 8,
+     "word": 8
+    },
+    "komma": {
+     "of": 15,
+     "ours": 12,
+     "word": 12
+    },
+    "seid/seit": {
+     "of": 4,
+     "ours": 4,
+     "word": 3
+    },
+    "wider/wieder": {
+     "of": 2,
+     "ours": 1,
+     "word": 1
+    },
+    "als/wie": {
+     "of": 4,
+     "ours": 4,
+     "word": 4
+    },
+    "gross": {
+     "of": 10,
+     "ours": 9,
+     "word": 7
+    },
+    "klein": {
+     "of": 4,
+     "ours": 1,
+     "word": 1
+    },
+    "kongruenz": {
+     "of": 14,
+     "ours": 9,
+     "word": 3
+    },
+    "fall": {
+     "of": 5,
+     "ours": 2,
+     "word": 0
+    },
+    "verb": {
+     "of": 5,
+     "ours": 1,
+     "word": 1
+    },
+    "apostroph": {
+     "of": 3,
+     "ours": 3,
+     "word": 3
+    },
+    "getrennt": {
+     "of": 5,
+     "ours": 1,
+     "word": 0
+    },
+    "wort": {
+     "of": 6,
+     "ours": 1,
+     "word": 2
+    },
+    "doppel": {
+     "of": 2,
+     "ours": 1,
+     "word": 0
+    },
+    "leer": {
+     "of": 4,
+     "ours": 4,
+     "word": 0
+    },
+    "zeichen": {
+     "of": 3,
+     "ours": 2,
+     "word": 1
+    }
+   },
+   "missed by us": [
+    "Das Buch, dass ich gelesen habe, war spannend.",
+    "Er meint, dass Problem sei gelöst.",
+    "Der Mann der dort steht ist mein Onkel.",
+    "Das Buch das ich lese ist spannend.",
+    "Ich lerne damit ich die Prüfung bestehe.",
+    "Das ist wieder die Natur.",
+    "Wir haben viel spaß gehabt.",
+    "Wir treffen uns Morgen um acht Uhr.",
+    "Sie kommt Heute später.",
+    "Das finde ich Gut.",
+    "Die Schüler hat ihre Hausaufgaben gemacht.",
+    "Der Hund bellen laut.",
+    "Ich sehe den kleinen Mädchen.",
+    "Die Lehrer erklärt die Aufgabe.",
+    "Viele Leute glaubt das nicht.",
+    "Wir helfen den Mann.",
+    "Ich gebe das Buch meinem Bruder und meine Schwester.",
+    "Er wartet auf seinen Freund und seinem Bruder.",
+    "Er hat das Buch gelest.",
+    "Wir sind gestern gelauft.",
+    "Ich habe ihn gekennt.",
+    "Sie ist um acht Uhr aufgestanden worden.",
+    "Wir müssen zusammen arbeiten an diesem Projekt.",
+    "Er ist garnicht gekommen.",
+    "Ich habe mich Gestern Abend verlaufen.",
+    "Sie hat es nicht so gemeint, im gegenteil.",
+    "Das ist der einzigste Weg.",
+    "Ich habe das Standart-Modell gekauft.",
+    "Er ist Tod müde.",
+    "Er hat sich nicht entschuldigt, trotzdem dass er schuld war.",
+    "Ich bin mir nicht sicher, ob das stimmt oder nicht stimmt.",
+    "Wir gehen heute heute ins Kino.",
+    "Er sagte: \"Ich komme morgen\"."
+   ],
+   "word found, we did not": [
+    "Er meint, dass Problem sei gelöst.",
+    "Der Mann der dort steht ist mein Onkel.",
+    "Das Buch das ich lese ist spannend.",
+    "Der Hund bellen laut.",
+    "Das ist der einzigste Weg."
+   ]
+  },
+  "LT incorrect examples": {
+   "items": 400,
+   "ours": 392,
+   "word": 72,
+   "both": 72,
+   "our rules": [
+    [
+     "VERB_FEM_SUBST[0]",
+     11
+    ],
+    [
+     "ZUR_ABBITTE_ETC",
+     5
+    ],
+    [
+     "ART_KLEINES_NOMEN",
+     5
+    ],
+    [
+     "IM_SITZEN",
+     4
+    ],
+    [
+     "RAABE_KONGRUENZ",
+     4
+    ],
+    [
+     "PRAEP_GEN[11]",
+     3
+    ],
+    [
+     "PRAEP_GEN[0]",
+     3
+    ],
+    [
+     "PRAEP_GEN[1]",
+     3
+    ],
+    [
+     "BEI_VERB[1]",
+     3
+    ],
+    [
+     "BEDARF_SUBST[0]",
+     3
+    ],
+    [
+     "PUNKT_NACH_ORDINALZAHL[2]",
+     3
+    ],
+    [
+     "NOMEN_KLEIN[0]",
+     3
+    ],
+    [
+     "IM_IHM_SPELLING_RULE[0]",
+     3
+    ],
+    [
+     "MEIN_KLEIN_HAUS[9]",
+     2
+    ],
+    [
+     "VERB_FEM_SUBST[1]",
+     2
+    ],
+    [
+     "DEN_DEM[6]",
+     2
+    ],
+    [
+     "HOCH_SUBST[0]",
+     2
+    ],
+    [
+     "NOMEN_KLEIN[20]",
+     2
+    ],
+    [
+     "PRAEP_DAT[36]",
+     2
+    ],
+    [
+     "PRAEP_DAT[8]",
+     2
+    ],
+    [
+     "HAUTE_COUTURE[0]",
+     2
+    ],
+    [
+     "KOMMA_KONJ_ADV[2]",
+     2
+    ],
+    [
+     "INNERES_SUBST[0]",
+     2
+    ],
+    [
+     "REFLEKTION",
+     2
+    ],
+    [
+     "OEKONOMISCH_OEKUMENISCH[1]",
+     2
+    ],
+    [
+     "BEI_ANDEREN_SUB",
+     2
+    ],
+    [
+     "KARDINALZAHLEN[1]",
+     2
+    ],
+    [
+     "GROSSSCHREIBUNG_MEHRTEILIGE_NAMEN[37]",
+     2
+    ],
+    [
+     "SUBSTANTIVIERTES_ADJEKTIV[1]",
+     2
+    ],
+    [
+     "SAGT_RUFT[0]",
+     2
+    ],
+    [
+     "FEHLERHAFTES_KOMMA_ALLG[0]",
+     2
+    ],
+    [
+     "MEIN_KLEIN_HAUS[5]",
+     2
+    ],
+    [
+     "MEIN_KLEIN_HAUS[10]",
+     2
+    ],
+    [
+     "LOG_IN",
+     2
+    ],
+    [
+     "PUNKT_NACH_ORDINALZAHL[0]",
+     2
+    ],
+    [
+     "LIEBE_LEIBE[1]",
+     2
+    ],
+    [
+     "WAS_GIBT_ES_NEUES[4]",
+     1
+    ],
+    [
+     "SODASS[0]",
+     1
+    ],
+    [
+     "EHE_SUBST[1]",
+     1
+    ],
+    [
+     "DER_ABGEORDNETER[0]",
+     1
+    ]
+   ]
+  },
+  "Wikipedia": {
+   "items": 500,
+   "ours": 31,
+   "word": 50,
+   "both": 8,
+   "our rules": [
+    [
+     "RAABE_KONGRUENZ",
+     4
+    ],
+    [
+     "RAABE_APOSTROPH",
+     3
+    ],
+    [
+     "FEHLERHAFTES_KOMMA_ALLG[0]",
+     3
+    ],
+    [
+     "RAABE_DOPPELTES_LEERZEICHEN",
+     3
+    ],
+    [
+     "KOMMA_ZWISCHEN_HAUPT_UND_NEBENSATZ_2[2]",
+     3
+    ],
+    [
+     "ZEICHENSETZUNG_DIREKTE_REDE[6]",
+     2
+    ],
+    [
+     "DOPPELPUNKT_GROSS[0]",
+     2
+    ],
+    [
+     "ZU_UNRECHT[2]",
+     1
+    ],
+    [
+     "KOMMA_VOR_WIE[0]",
+     1
+    ],
+    [
+     "KOMMA_INFINITIVGRUPPEN[0]",
+     1
+    ],
+    [
+     "KOMMAFEHLER[1]",
+     1
+    ],
+    [
+     "PRAEP_DAT[31]",
+     1
+    ],
+    [
+     "VON_BIS[3]",
+     1
+    ],
+    [
+     "INFINITIV_MIT_ZU[0]",
+     1
+    ],
+    [
+     "DER_ERSTE[0]",
+     1
+    ],
+    [
+     "DE_PHRASE_REPETITION[0]",
+     1
+    ],
+    [
+     "ALLE",
+     1
+    ],
+    [
+     "STRASBURG[0]",
+     1
+    ],
+    [
+     "RELATIVPRONOMEN_STATT_DASS[0]",
+     1
+    ],
+    [
+     "KLEIN_NACH_PUNKT[1]",
+     1
+    ],
+    [
+     "WEIS_ICH[2]",
+     1
+    ],
+    [
+     "WEIS_ICH[3]",
+     1
+    ],
+    [
+     "KOMMA_INFINITIVGRUPPEN[1]",
+     1
+    ],
+    [
+     "ZEICHENSETZUNG_DIREKTE_REDE[5]",
+     1
+    ],
+    [
+     "LEERZEICHEN_VOR_AUSRUFEZEICHEN_ETC",
+     1
+    ],
+    [
+     "RAABE_LEERZEICHEN_VOR_SATZZEICHEN",
+     1
+    ]
+   ],
+   "our false alarms": [
+    {
+     "rule": "ZU_UNRECHT[2]",
+     "message": "„Unrecht“ scheint wird als Nomen benutzt zu werden und wird dann großgeschrieben."
+    },
+    {
+     "rule": "ZEICHENSETZUNG_DIREKTE_REDE[6]",
+     "message": "Folgt nach dem angeführten Satz (direkte Rede) der Begleitsatz oder ein Teil von ihm, so setzt man nach dem abschließenden Anführungszeichen ein Komma. Falls ein neuer Satz beginnt, schreiben Sie groß weiter."
+    },
+    {
+     "rule": "KOMMA_VOR_WIE[0]",
+     "message": "Wird hier ein Nebensatz eingeleitet, muss dieser durch ein Komma abgetrennt werden. Meinten Sie „, wie“?"
+    },
+    {
+     "rule": "RAABE_APOSTROPH",
+     "message": "Der Genitiv von Namen wird ohne Apostroph geschrieben (Peters Fahrrad)."
+    },
+    {
+     "rule": "KOMMA_INFINITIVGRUPPEN[0]",
+     "message": "Wenn es sich hier um eine Infinitivgruppe ('zu' + Grundform) handelt, muss in der Regel ein Komma gesetzt werden."
+    },
+    {
+     "rule": "KOMMAFEHLER[1]",
+     "message": "Vor einer nachgestellten Erläuterung steht üblicherweise ein Komma."
+    },
+    {
+     "rule": "PRAEP_DAT[31]",
+     "message": "Die Präposition 'mit' erfordert in der Regel den Dativ."
+    },
+    {
+     "rule": "VON_BIS[3]",
+     "message": "Bitte schreiben Sie 'bis' bei vorhergehendem 'von' aus."
+    },
+    {
+     "rule": "INFINITIV_MIT_ZU[0]",
+     "message": "Bitte prüfen Sie die Getrenntschreibung: Meinten Sie „fernzuhalten“?"
+    },
+    {
+     "rule": "DER_ERSTE[0]",
+     "message": "Bitte prüfen Sie, ob „Erste“ hier als Nomen gebraucht wird und daher großgeschrieben werden muss."
+    },
+    {
+     "rule": "DE_PHRASE_REPETITION[0]",
+     "message": "Hier werden zwei Wörter wiederholt. Meinten Sie „\\ \\“?"
+    },
+    {
+     "rule": "RAABE_KONGRUENZ",
+     "message": "Artikel, Adjektiv und Nomen passen nicht zusammen (Fall, Zahl oder Geschlecht)."
+    },
+    {
+     "rule": "RAABE_KONGRUENZ",
+     "message": "Artikel, Adjektiv und Nomen passen nicht zusammen (Fall, Zahl oder Geschlecht)."
+    },
+    {
+     "rule": "ALLE",
+     "message": "Außer in der Redewendung \"Ein und Alles\" wird dieses Wort immer kleingeschrieben."
+    },
+    {
+     "rule": "FEHLERHAFTES_KOMMA_ALLG[0]",
+     "message": "Wenn es sich hier um keinen Haupt- und Nebensatz handelt, wird in der Regel kein Komma gesetzt."
+    },
+    {
+     "rule": "DOPPELPUNKT_GROSS[0]",
+     "message": "Folgt nach dem Doppelpunkt ein vollständiger Hauptsatz, schreibt man danach groß weiter."
+    },
+    {
+     "rule": "STRASBURG[0]",
+     "message": "Bitte beachten Sie, dass \"Strasburg\" (mit \"s\") eine Stadt in der nördlichen Uckermark bezeichnet. Es ist jedoch auch eine verbreitete Falschschreibung für  (Stadt in Frankreich, frz. Schreibweise: Strasbourg)."
+    },
+    {
+     "rule": "RAABE_KONGRUENZ",
+     "message": "Artikel, Adjektiv und Nomen passen nicht zusammen (Fall, Zahl oder Geschlecht)."
+    },
+    {
+     "rule": "RAABE_APOSTROPH",
+     "message": "Der Genitiv von Namen wird ohne Apostroph geschrieben (Peters Fahrrad)."
+    },
+    {
+     "rule": "RAABE_KONGRUENZ",
+     "message": "Artikel, Adjektiv und Nomen passen nicht zusammen (Fall, Zahl oder Geschlecht)."
+    },
+    {
+     "rule": "RELATIVPRONOMEN_STATT_DASS[0]",
+     "message": "Meinten Sie „dass“ (Konjunktion)?"
+    },
+    {
+     "rule": "KLEIN_NACH_PUNKT[1]",
+     "message": "Hier scheint ein Leerzeichen zu fehlen. Wenn ein neuer Satz beginnt, muss das Wort großgeschrieben werden."
+    },
+    {
+     "rule": "RAABE_DOPPELTES_LEERZEICHEN",
+     "message": "Hier stehen zwei Leerzeichen hintereinander."
+    },
+    {
+     "rule": "WEIS_ICH[2]",
+     "message": "Meinten Sie „weiß“, die Form des Verbs 'wissen'?"
+    },
+    {
+     "rule": "WEIS_ICH[3]",
+     "message": "Meinten Sie „weiß“, die Form des Verbs 'wissen'? 'weis' ist die Befehlsform von 'weisen' (z.B. 'weis mich darauf hin')."
+    },
+    {
+     "rule": "KOMMA_INFINITIVGRUPPEN[1]",
+     "message": "Wenn eine Infinitivgruppe ('zu' + Grundform) mit 'um' eingeleitet wird, muss ein Komma gesetzt werden."
+    },
+    {
+     "rule": "ZEICHENSETZUNG_DIREKTE_REDE[5]",
+     "message": "Bei einem Zitat steht das Komma zum Abtrennen des Begleitsatzes hinter dem Anführungszeichen."
+    },
+    {
+     "rule": "ZEICHENSETZUNG_DIREKTE_REDE[6]",
+     "message": "Folgt nach dem angeführten Satz (direkte Rede) der Begleitsatz oder ein Teil von ihm, so setzt man nach dem abschließenden Anführungszeichen ein Komma. Falls ein neuer Satz beginnt, schreiben Sie groß weiter."
+    },
+    {
+     "rule": "FEHLERHAFTES_KOMMA_ALLG[0]",
+     "message": "Wenn es sich hier um keinen Haupt- und Nebensatz handelt, wird in der Regel kein Komma gesetzt."
+    },
+    {
+     "rule": "DOPPELPUNKT_GROSS[0]",
+     "message": "Folgt nach dem Doppelpunkt ein vollständiger Hauptsatz, schreibt man danach groß weiter."
+    },
+    {
+     "rule": "RAABE_APOSTROPH",
+     "message": "Der Genitiv von Namen wird ohne Apostroph geschrieben (Peters Fahrrad)."
+    },
+    {
+     "rule": "FEHLERHAFTES_KOMMA_ALLG[0]",
+     "message": "Wenn es sich hier um keinen Haupt- und Nebensatz handelt, wird in der Regel kein Komma gesetzt."
+    },
+    {
+     "rule": "KOMMA_ZWISCHEN_HAUPT_UND_NEBENSATZ_2[2]",
+     "message": "Hier sollte ein Komma eingefügt werden, wenn es sich um einen Haupt- und Nebensatz oder zwei Hauptsätze handelt."
+    },
+    {
+     "rule": "KOMMA_ZWISCHEN_HAUPT_UND_NEBENSATZ_2[2]",
+     "message": "Hier sollte ein Komma eingefügt werden, wenn es sich um einen Haupt- und Nebensatz oder zwei Hauptsätze handelt."
+    },
+    {
+     "rule": "LEERZEICHEN_VOR_AUSRUFEZEICHEN_ETC",
+     "message": "Vor Satzzeichen steht kein Leerzeichen (dahinter allerdings schon)."
+    },
+    {
+     "rule": "RAABE_LEERZEICHEN_VOR_SATZZEICHEN",
+     "message": "Vor einem Satzzeichen steht kein Leerzeichen."
+    },
+    {
+     "rule": "RAABE_DOPPELTES_LEERZEICHEN",
+     "message": "Hier stehen zwei Leerzeichen hintereinander."
+    },
+    {
+     "rule": "KOMMA_ZWISCHEN_HAUPT_UND_NEBENSATZ_2[2]",
+     "message": "Hier sollte ein Komma eingefügt werden, wenn es sich um einen Haupt- und Nebensatz oder zwei Hauptsätze handelt."
+    },
+    {
+     "rule": "RAABE_DOPPELTES_LEERZEICHEN",
+     "message": "Hier stehen zwei Leerzeichen hintereinander."
+    }
+   ]
+  },
+  "LT correct examples": {
+   "items": 400,
+   "ours": 36,
+   "word": 28,
+   "both": 7,
+   "our rules": [
+    [
+     "RAABE_KONGRUENZ",
+     7
+    ],
+    [
+     "ART_ADJ_SOL[1]",
+     2
+    ],
+    [
+     "PRAEP_GEN[8]",
+     2
+    ],
+    [
+     "SUBJUNKTION_KOMMA_2",
+     2
+    ],
+    [
+     "FALSCHES_ANFUEHRUNGSZEICHEN[4]",
+     2
+    ],
+    [
+     "DE_PHRASE_REPETITION[0]",
+     2
+    ],
+    [
+     "BISSTRICH[0]",
+     2
+    ],
+    [
+     "COVID_19[2]",
+     1
+    ],
+    [
+     "PRAEP_PLUS_VERB[0]",
+     1
+    ],
+    [
+     "RAABE_PRAEPOSITION_FALL",
+     1
+    ],
+    [
+     "PRAEP_GEN[9]",
+     1
+    ],
+    [
+     "KOMMA_ZWISCHEN_HAUPT_UND_NEBENSATZ_2[2]",
+     1
+    ],
+    [
+     "SUBJUNKTION_KOMMA[0]",
+     1
+    ],
+    [
+     "FUER_DAS_REAGIEREN[3]",
+     1
+    ],
+    [
+     "AKZENT_STATT_APOSTROPH[1]",
+     1
+    ],
+    [
+     "WO_DENKST_DU_SIND_KOMMA[2]",
+     1
+    ],
+    [
+     "DER_ABGEORDNETER[0]",
+     1
+    ],
+    [
+     "FALSCHES_ANFUEHRUNGSZEICHEN[5]",
+     1
+    ],
+    [
+     "FALSCHES_ANFUEHRUNGSZEICHEN[7]",
+     1
+    ],
+    [
+     "FALSCHES_ANFUEHRUNGSZEICHEN[3]",
+     1
+    ],
+    [
+     "FALSCHES_ANFUEHRUNGSZEICHEN[12]",
+     1
+    ],
+    [
+     "ICH_GLAUBE_FUER_EUCH[8]",
+     1
+    ],
+    [
+     "LEERZEICHEN_NACH_VOR_ANFUEHRUNGSZEICHEN[4]",
+     1
+    ],
+    [
+     "FALSCHES_ANFUEHRUNGSZEICHEN[9]",
+     1
+    ],
+    [
+     "FALSCHES_ANFUEHRUNGSZEICHEN[14]",
+     1
+    ],
+    [
+     "FALSCHES_ANFUEHRUNGSZEICHEN[18]",
+     1
+    ],
+    [
+     "GESTERN_MIT_PRAESENS[0]",
+     1
+    ],
+    [
+     "ACHTMALVIER[0]",
+     1
+    ],
+    [
+     "GROSSSCHREIBUNG_MAL[0]",
+     1
+    ],
+    [
+     "PRAEP_GEN[10]",
+     1
+    ],
+    [
+     "RAABE_LEERZEICHEN_VOR_SATZZEICHEN",
+     1
+    ],
+    [
+     "DA_DURCH[1]",
+     1
+    ],
+    [
+     "SUBSTANTIVIERUNG_NACH_DURCH",
+     1
+    ],
+    [
+     "PRAEP_DAT[15]",
+     1
+    ],
+    [
+     "DEN_DEM[4]",
+     1
+    ],
+    [
+     "DEN_DEM[6]",
+     1
+    ],
+    [
+     "KOMMA_ZWISCHEN_HAUPT_UND_NEBENSATZ_2[4]",
+     1
+    ],
+    [
+     "DOPPELTE_SATZZEICHEN[0]",
+     1
+    ],
+    [
+     "RAABE_GROSS_MITTEN",
+     1
+    ],
+    [
+     "ZUM_FEM_NOMEN[1]",
+     1
+    ]
+   ],
+   "our false alarms": [
+    {
+     "rule": "ART_ADJ_SOL[1]",
+     "message": "Nach einem Artikel steht in der Regel kein stark oder gemischt flektiertes Adjektiv (Beispiel: 'im heißem Ofen' statt korrekt 'im heißen Ofen'). Oder fehlt vielleicht ein Komma vor dem Artikel?"
+    },
+    {
+     "rule": "COVID_19[2]",
+     "message": "Der Begriff „Coronavirus“ (= Viruserkrankung) wird als ein Wort geschrieben."
+    },
+    {
+     "rule": "RAABE_KONGRUENZ",
+     "message": "Artikel, Adjektiv und Nomen passen nicht zusammen (Fall, Zahl oder Geschlecht)."
+    },
+    {
+     "rule": "PRAEP_PLUS_VERB[0]",
+     "message": "Das Verb „Kommen“ scheint hier nominalisiert verwendet zu werden und muss dann großgeschrieben werden."
+    },
+    {
+     "rule": "RAABE_PRAEPOSITION_FALL",
+     "message": "Nach „von“ steht der Dativ."
+    },
+    {
+     "rule": "PRAEP_GEN[8]",
+     "message": "Die Präposition 'dem' erfordert in der Regel den Genitiv."
+    },
+    {
+     "rule": "PRAEP_GEN[9]",
+     "message": "Die Präposition 'wegen' erfordert in der Regel den Genitiv."
+    },
+    {
+     "rule": "KOMMA_ZWISCHEN_HAUPT_UND_NEBENSATZ_2[2]",
+     "message": "Hier sollte ein Komma eingefügt werden, wenn es sich um einen Haupt- und Nebensatz oder zwei Hauptsätze handelt."
+    },
+    {
+     "rule": "SUBJUNKTION_KOMMA[0]",
+     "message": "Der von 'dass' eingeleitete Nebensatz muss in der Regel mit einem Komma vom Hauptsatz getrennt werden."
+    },
+    {
+     "rule": "FUER_DAS_REAGIEREN[3]",
+     "message": "Hier wird das Verb „Nachfragen“ nominalisiert und sollte daher großgeschrieben werden."
+    },
+    {
+     "rule": "AKZENT_STATT_APOSTROPH[1]",
+     "message": "Typografisch korrekt sollte hier ein Apostroph verwendet werden."
+    },
+    {
+     "rule": "SUBJUNKTION_KOMMA_2",
+     "message": "Der von 'wenn' eingeleitete Nebensatz muss in der Regel mit einem Komma vom Hauptsatz getrennt werden."
+    },
+    {
+     "rule": "RAABE_KONGRUENZ",
+     "message": "Artikel, Adjektiv und Nomen passen nicht zusammen (Fall, Zahl oder Geschlecht)."
+    },
+    {
+     "rule": "WO_DENKST_DU_SIND_KOMMA[2]",
+     "message": "Hier scheint ein Komma zu fehlen."
+    },
+    {
+     "rule": "RAABE_KONGRUENZ",
+     "message": "Artikel, Adjektiv und Nomen passen nicht zusammen (Fall, Zahl oder Geschlecht)."
+    },
+    {
+     "rule": "DER_ABGEORDNETER[0]",
+     "message": "Artikel und Nomen stimmen grammatikalisch nicht überein. Meinten Sie „Abgeordnete“?"
+    },
+    {
+     "rule": "FALSCHES_ANFUEHRUNGSZEICHEN[5]",
+     "message": "Möchten Sie ein öffnendes typografisches Anführungszeichen verwenden?"
+    },
+    {
+     "rule": "FALSCHES_ANFUEHRUNGSZEICHEN[7]",
+     "message": "Möchten Sie ein öffnendes typografisches Anführungszeichen verwenden?"
+    },
+    {
+     "rule": "FALSCHES_ANFUEHRUNGSZEICHEN[3]",
+     "message": "Möchten Sie, anstatt der englischen, die deutschen typografischen Anführungszeichen verwenden?"
+    },
+    {
+     "rule": "FALSCHES_ANFUEHRUNGSZEICHEN[12]",
+     "message": "Möchten Sie ein schließendes typografisches Anführungszeichen verwenden?"
+    },
+    {
+     "rule": "ICH_GLAUBE_FUER_EUCH[8]",
+     "message": "Hier scheint ein Komma zu fehlen."
+    },
+    {
+     "rule": "FALSCHES_ANFUEHRUNGSZEICHEN[4]",
+     "message": "Möchten Sie ein schließendes typografisches Anführungszeichen verwenden?"
+    },
+    {
+     "rule": "LEERZEICHEN_NACH_VOR_ANFUEHRUNGSZEICHEN[4]",
+     "message": "Eines der beiden Leerzeichen scheint überflüssig zu sein oder ist womöglich falsch platziert."
+    },
+    {
+     "rule": "FALSCHES_ANFUEHRUNGSZEICHEN[4]",
+     "message": "Möchten Sie ein schließendes typografisches Anführungszeichen verwenden?"
+    },
+    {
+     "rule": "FALSCHES_ANFUEHRUNGSZEICHEN[9]",
+     "message": "Möchten Sie ein schließendes typografisches Anführungszeichen verwenden?"
+    },
+    {
+     "rule": "FALSCHES_ANFUEHRUNGSZEICHEN[14]",
+     "message": "Möchten Sie ein schließendes typografisches Anführungszeichen verwenden?"
+    },
+    {
+     "rule": "FALSCHES_ANFUEHRUNGSZEICHEN[18]",
+     "message": "Möchten Sie ein schließendes typografisches Anführungszeichen verwenden?"
+    },
+    {
+     "rule": "GESTERN_MIT_PRAESENS[0]",
+     "message": "Falsche Zeitform? Meinten Sie ?"
+    },
+    {
+     "rule": "ACHTMALVIER[0]",
+     "message": "Bitte prüfen Sie die Getrenntschreibung: Außer man möchte \"Mal\" besonders betonen (Großschreibung), sollte „30mal“ zusammengeschrieben werden."
+    },
+    {
+     "rule": "GROSSSCHREIBUNG_MAL[0]",
+     "message": "Wenn „Mal“ hier ein Nomen (das Mal, die Male) oder eine Zähleinheit (ein einziges Mal) ist, wird dieses großgeschrieben."
+    },
+    {
+     "rule": "PRAEP_GEN[10]",
+     "message": "Die Präposition 'seitlich' erfordert in der Regel den Genitiv."
+    },
+    {
+     "rule": "RAABE_LEERZEICHEN_VOR_SATZZEICHEN",
+     "message": "Vor einem Satzzeichen steht kein Leerzeichen."
+    },
+    {
+     "rule": "DA_DURCH[1]",
+     "message": "Das Adverb „dadurch“ wird in der Regel zusammengeschrieben."
+    },
+    {
+     "rule": "SUBSTANTIVIERUNG_NACH_DURCH",
+     "message": "Falls „Steigen“ hier nominalisiert gebraucht wird, muss man es großschreiben."
+    },
+    {
+     "rule": "DE_PHRASE_REPETITION[0]",
+     "message": "Hier werden zwei Wörter wiederholt. Meinten Sie „Geschwind ,“?"
+    },
+    {
+     "rule": "DE_PHRASE_REPETITION[0]",
+     "message": "Hier werden zwei Wörter wiederholt. Meinten Sie „Kind um“?"
+    },
+    {
+     "rule": "PRAEP_GEN[8]",
+     "message": "Die Präposition 'dem' erfordert in der Regel den Genitiv."
+    },
+    {
+     "rule": "RAABE_KONGRUENZ",
+     "message": "Artikel, Adjektiv und Nomen passen nicht zusammen (Fall, Zahl oder Geschlecht)."
+    },
+    {
+     "rule": "RAABE_KONGRUENZ",
+     "message": "Artikel, Adjektiv und Nomen passen nicht zusammen (Fall, Zahl oder Geschlecht)."
+    },
+    {
+     "rule": "RAABE_KONGRUENZ",
+     "message": "Artikel, Adjektiv und Nomen passen nicht zusammen (Fall, Zahl oder Geschlecht)."
+    },
+    {
+     "rule": "PRAEP_DAT[15]",
+     "message": "Die Präposition 'Bei' erfordert in der Regel den Dativ."
+    },
+    {
+     "rule": "DEN_DEM[4]",
+     "message": "Meinten Sie „dem“? (Alternativ prüfen Sie, ob 'Bei' ersetzt werden muss.)"
+    },
+    {
+     "rule": "DEN_DEM[6]",
+     "message": "Meinten Sie „dem“?"
+    },
+    {
+     "rule": "KOMMA_ZWISCHEN_HAUPT_UND_NEBENSATZ_2[4]",
+     "message": "Wenn die Konjunktion 'wenn' hier einen Nebensatz einleitet, wird auch ein schließendes Komma gesetzt."
+    },
+    {
+     "rule": "SUBJUNKTION_KOMMA_2",
+     "message": "Der von 'wenn' eingeleitete Nebensatz muss in der Regel mit einem Komma vom Hauptsatz getrennt werden."
+    },
+    {
+     "rule": "RAABE_KONGRUENZ",
+     "message": "Artikel, Adjektiv und Nomen passen nicht zusammen (Fall, Zahl oder Geschlecht)."
+    },
+    {
+     "rule": "ART_ADJ_SOL[1]",
+     "message": "Nach einem Artikel steht in der Regel kein stark oder gemischt flektiertes Adjektiv (Beispiel: 'im heißem Ofen' statt korrekt 'im heißen Ofen'). Oder fehlt vielleicht ein Komma vor dem Artikel?"
+    },
+    {
+     "rule": "DOPPELTE_SATZZEICHEN[0]",
+     "message": "Sollte hier nur ein Satzzeichen stehen?"
+    },
+    {
+     "rule": "RAABE_GROSS_MITTEN",
+     "message": "Dieses Wort ist kein Nomen und wird kleingeschrieben."
+    },
+    {
+     "rule": "ZUM_FEM_NOMEN[1]",
+     "message": "Meinten Sie „zur“?"
+    },
+    {
+     "rule": "BISSTRICH[0]",
+     "message": "Als Bis-Strich wird gewöhnlich der Gedankenstrich verwendet. Zur Unterteilung von Zifferngruppen (ISBN u.ä.) ist der Bindestrich jedoch korrekt."
+    },
+    {
+     "rule": "BISSTRICH[0]",
+     "message": "Als Bis-Strich wird gewöhnlich der Gedankenstrich verwendet. Zur Unterteilung von Zifferngruppen (ISBN u.ä.) ist der Bindestrich jedoch korrekt."
+    }
+   ]
+  }
+ }
+}

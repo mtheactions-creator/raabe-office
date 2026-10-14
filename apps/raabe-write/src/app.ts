@@ -40,6 +40,7 @@ import { reviewFeature, REVIEW_COMMANDS } from "./features/review";
 import { spellFeature, type Word as SpellWord } from "./features/spell";
 import { thesaurusFeature } from "./features/thesaurus";
 import { editorPaneFeature, type Issue } from "./features/editor-pane";
+import { grammarFeature } from "./features/grammar";
 import { contextFeature, CONTEXT_COMMANDS } from "./features/context";
 import { shapesFeature, SHAPE_COMMANDS } from "./features/shapes";
 import { tablesFeature, TABLE_COMMANDS } from "./features/tables";
@@ -246,6 +247,7 @@ export class WriteApp {
     const spell = spellFeature(api);
     const math = mathFeature(api);
     const thesaurus = thesaurusFeature(api, this.docArea, this.dock);
+    const grammar = grammarFeature(api, spell);
     const asWord = (i: Issue): SpellWord => ({ a: i.a, b: i.b, text: i.text, lang: i.lang, repeat: i.kind === "repeat" });
     const editorPane = editorPaneFeature(api, this.docArea, this.dock, [{
       prepare: (e) => spell.checkAll(e),
@@ -255,12 +257,14 @@ export class WriteApp {
       ignoreAll: (_e, i) => spell.ignoreAll(i.text),
       add: (i) => spell.addToDictionary(i.text),
       apply: (e, i, s) => { if (i.kind !== "repeat" || s) return false; spell.deleteRepeat(e, i.p, asWord(i)); return true; },
-    }], () => void this.optionsDialog("Dokumentprüfung"));
+    }, grammar.source], () => void this.optionsDialog("Dokumentprüfung"));
     return {
-      context: contextFeature(api, spell.spellEntries, (kind) => this.ribbon?.toolbar(miniToolbar(this.ribbonContext(), kind)).el ?? null,
+      context: contextFeature(api, async (e, pos) => { const s = await spell.spellEntries(e, pos); return s.length ? s : grammar.entries(e, pos); },
+        (kind) => this.ribbon?.toolbar(miniToolbar(this.ribbonContext(), kind)).el ?? null,
         (x, y) => math.contextMenu(x, y), thesaurus.synonymEntries),
       thesaurus,
       editorPane,
+      grammar,
       lists: listsFeature(api),
       tables: tablesFeature(api),
       pages: pageSetupFeature(api),
@@ -322,6 +326,7 @@ export class WriteApp {
     this.docArea.append(ws);
     const editor = new Editor(ws, state ?? {}, this.fonts);
     this.features.spell.attach(editor);
+    this.features.grammar.attach(editor);
     this.features.context.attach(editor);
     this.features.pictures.attach(editor);
     const pf = this.platform;

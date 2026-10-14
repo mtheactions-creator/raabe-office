@@ -392,5 +392,5 @@ export function spellFeature(api: AppApi) {
   };
 
   return { attach, languageName, spellEntries, checkAll, issues, suggest, ignoreAll, ignoreOnce, addToDictionary, deleteRepeat, optionPages,
-    statusLanguage, options: () => options, languageDialog };
+    statusLanguage, options: () => options, languageDialog, langAt };
 }
