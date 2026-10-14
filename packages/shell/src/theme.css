@@ -481,6 +481,7 @@ body.touch .qat button { height: 36px; min-width: 36px; }
 /* ----- Navigationsbereich and floating dialogs ------------------------------------------ */
 
 .workspace.objselect, .workspace.objselect * { cursor: default !important; }
+.workspace.linking, .workspace.linking * { cursor: copy !important; }
 /* Formatvorlagen pane (Word 365, measured 2026-10-14), left of the Auswahlbereich when both are open. */
 .stylepane { position: absolute; right: 0; top: 0; bottom: 0; width: 260px; background: var(--card); border-left: 1px solid var(--border); display: flex; flex-direction: column; z-index: 6; font-size: 13px; }
 .stylepane[hidden] { display: none; }
@@ -921,3 +922,34 @@ body.touch .qat button { height: 36px; min-width: 36px; }
 .bddlg .bd-preview { height: 150px; margin: 4px 10px; padding: 12px; display: flex; flex-direction: column; gap: 5px; cursor: pointer; background: #fff; }
 .bddlg .bd-preview i { display: block; height: 5px; background: #c8c8c8; }
 .bddlg .row.end { display: flex; justify-content: flex-end; margin-top: 8px; }
+
+/* Texteffekte und Typografie, WordArt-Formate, Texteffekte formatieren. */
+.fx-presets { display: grid; grid-template-columns: repeat(5, 54px); gap: 4px; padding: 6px 8px; }
+.fx-tile { width: 54px; height: 54px; border: 1px solid transparent; background: #fff; display: inline-flex; align-items: center; justify-content: center; }
+.fx-tile:hover { border-color: #8a8a8a; background: var(--hover); }
+.fx-tile span { font: 700 34px Calibri, "Segoe UI", sans-serif; line-height: 1; }
+.fx-gallery { padding: 2px 4px 6px; max-height: 70vh; overflow: auto; }
+.fx-grid { display: grid; gap: 4px; padding: 4px 6px; }
+.fx-cmd { display: flex; align-items: center; gap: 8px; width: 100%; text-align: left; padding: 6px 10px; background: none; border-top: 1px solid #e1e1e1; }
+.fx-cmd:hover { background: var(--hover); }
+.fx-palette { padding: 4px 8px; }
+.rpanel.fx-wordart { padding: 2px; }
+.fxpane { position: absolute; right: 0; top: 0; bottom: 0; width: 300px; background: var(--card); border-left: 1px solid var(--border); display: flex; flex-direction: column; z-index: 6; font-size: 13px; }
+.fxpane[hidden] { display: none; }
+.fxpane .fx-head { display: flex; align-items: center; justify-content: space-between; padding: 8px 8px 4px 12px; font-size: 15px; }
+.fxpane .fx-head button { width: 26px; height: 26px; border-radius: 3px; display: inline-flex; align-items: center; justify-content: center; }
+.fxpane .fx-tabs { display: flex; gap: 6px; padding: 2px 12px 8px; border-bottom: 1px solid var(--border); }
+.fxpane .fx-tabs button { width: 34px; height: 30px; border-radius: 3px; display: inline-flex; align-items: center; justify-content: center; border-bottom: 2px solid transparent; }
+.fxpane .fx-tabs button.active { border-bottom-color: #2b579a; background: #e6eef8; }
+.fxpane .fx-body { flex: 1; overflow: auto; padding: 4px 12px 12px; }
+.fxpane .fx-sec { border-bottom: 1px solid #e1e1e1; padding: 6px 0; }
+.fxpane .fx-sec summary { font-weight: 600; cursor: default; padding: 4px 0; }
+.fxpane label.check { display: flex; align-items: center; gap: 6px; margin: 4px 0 4px 12px; }
+.fxpane .fx-field { display: grid; grid-template-columns: 96px 1fr auto; align-items: center; gap: 6px; margin: 5px 0 5px 12px; }
+.fxpane .fx-field select { grid-column: 2 / span 2; }
+.fxpane .fx-num { display: inline-flex; align-items: center; gap: 3px; font-size: 12px; }
+.fxpane .fx-colorbtn { width: 60px; height: 22px; border: 1px solid #8a8a8a; }
+.fx-floatpal { position: fixed; z-index: 1000; }
+.cover .cp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 6px 12px; }
+.cp-page { box-sizing: border-box; display: block; overflow: hidden; border: 1px solid #8a8a8a; background: #fff; text-align: left; }
+.cp-para { display: block; white-space: pre; overflow: hidden; text-overflow: clip; }

@@ -11,6 +11,8 @@ import { CM, fmtCm, parseNum, type AppApi } from "./api";
 import { galleryPanel as pictureGallery, type GalleryItem, type GallerySection } from "./picture-format";
 import * as P from "./picture-presets";
 import { SHAPE_STYLES } from "./shape-presets";
+import { WORDART } from "./text-effects";
+import { GROUP_MENU } from "./groups";
 
 const cmd = (id: string, label: string, icon?: string, extra: Partial<Command> = {}): Command => ({ id, label, icon, ...extra });
 
@@ -288,6 +290,8 @@ export function shapeTab(api: AppApi, galleryPanel: (close: () => void) => HTMLE
   const B = (cmdId: string, key: string, size: "large" | "medium" | "small", label?: string): Control => ({ type: "button", cmd: cmdId, key, size, label });
   const D = (cmdId: string, key: string, size: "large" | "medium" | "small", menu: MenuEntry[], label?: string): Control => ({ type: "dropdown", cmd: cmdId, key, size, menu, label });
   const PD = (cmdId: string, key: string, size: "large" | "medium" | "small", popup: (close: () => void) => HTMLElement, label?: string): Control => ({ type: "dropdown", cmd: cmdId, key, size, menu: [], popup, label });
+  /** WordArt-Formate menus (text-effects.ts fills them in). */
+  const WD = (cmdId: string, key: string, size: "large" | "medium" | "small", get: () => MenuEntry[]): Control => ({ type: "dropdown", cmd: cmdId, key, size, get menu() { return get(); } });
   const SP = (cmdId: string, key: string, size: "medium" | "small", popup: (close: () => void) => HTMLElement): Control => ({ type: "split", cmd: cmdId, key, size, menu: [], popup });
   const stack = (...items: Control[]): Control => ({ type: "stack", items });
   const shapesTiles: Control = {
@@ -309,7 +313,7 @@ export function shapeTab(api: AppApi, galleryPanel: (close: () => void) => HTMLE
     { type: "button", cmd: "layout.selectionPane", key: "AP", size }];
   const arrangeTools = (size: "medium" | "small"): Control => stack(
     { type: "dropdown", cmd: "picture.align", key: "AA", size, menu: [], popup: (close) => alignObjects(close) },
-    { type: "dropdown", cmd: "layout.group", key: "GG", size, menu: [] },
+    { type: "dropdown", cmd: "layout.group", key: "GG", size, menu: GROUP_MENU },
     { type: "dropdown", cmd: "picture.rotate", key: "AY", size, menu: [{ cmd: "picture.rotateRight" }, { cmd: "picture.rotateLeft" }, { cmd: "picture.flipV" }, { cmd: "picture.flipH" }, "-", { cmd: "picture.sizeDialog", label: "Weitere Drehungsoptionen..." }] });
   let alignObjects: (close: () => void) => HTMLElement = () => h("div");
   const pos: Control = { type: "dropdown", cmd: "picture.position", key: "PO", size: "large", menu: [], popup: (close) => positionPanel(close) };
@@ -326,10 +330,10 @@ export function shapeTab(api: AppApi, galleryPanel: (close: () => void) => HTMLE
       { id: "styles", label: "Formenarten", key: "ZS", icon: "shape-fill", launcher: { cmd: "shape.formatPane", key: "Ü" },
         controls: [styleTiles(7), styleTools("medium")], smaller: [[styleTiles(3), styleTools("medium")], [styleTiles(3), styleTools("small")]] },
       { id: "wordart", label: "WordArt-Formate", key: "ZW", icon: "wordart", launcher: { cmd: "text.effectsPane", key: "Ö" },
-        controls: [PD("wordart.styles", "Q", "large", () => h("div"), "Schnellformatvorlagen"), stack(D("text.fill", "TI", "medium", []), D("text.outline", "TO", "medium", []), D("text.effects", "TX", "medium", []))],
+        controls: [PD("wordart.styles", "Q", "large", (close) => WORDART.styles(close), "Schnellformatvorlagen"), stack(WD("text.fill", "TI", "medium", () => WORDART.fill()), WD("text.outline", "TO", "medium", () => WORDART.outline()), WD("text.effects", "TX", "medium", () => WORDART.effects()))],
         // Word: icons at 1700 px, the large button at 1500 px, collapsed at 800 px.
-        smaller: [[PD("wordart.styles", "Q", "large", () => h("div"), "Schnellformatvorlagen"), stack(D("text.fill", "TI", "small", []), D("text.outline", "TO", "small", []), D("text.effects", "TX", "small", []))],
-          [PD("wordart.styles", "Q", "large", () => h("div"), "Schnellformatvorlagen"), stack(D("text.fill", "TI", "small", []), D("text.outline", "TO", "small", []), D("text.effects", "TX", "small", []))]] },
+        smaller: [[PD("wordart.styles", "Q", "large", (close) => WORDART.styles(close), "Schnellformatvorlagen"), stack(WD("text.fill", "TI", "small", () => WORDART.fill()), WD("text.outline", "TO", "small", () => WORDART.outline()), WD("text.effects", "TX", "small", () => WORDART.effects()))],
+          [PD("wordart.styles", "Q", "large", (close) => WORDART.styles(close), "Schnellformatvorlagen"), stack(WD("text.fill", "TI", "small", () => WORDART.fill()), WD("text.outline", "TO", "small", () => WORDART.outline()), WD("text.effects", "TX", "small", () => WORDART.effects()))]] },
       { id: "text", label: "Text", key: "ZT", icon: "text-direction", controls: [...textTools("large"), B("shape.createLink", "C", "large")], smaller: [[stack(...textTools("medium"), B("shape.createLink", "C", "medium"))]] },
       { id: "access", label: "Barrierefreiheit", key: "ZB", icon: "alt-text", controls: [B("picture.altText", "AT", "large", "Alternativtext")] },
       { id: "arrange", label: "Anordnen", key: "ZA", icon: "wrap-text",

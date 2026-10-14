@@ -6,7 +6,7 @@ import { blipEffectsXml, imgEffectsXml, shapePropsXml } from "./drawingml";
 import { DEFAULT_LINE_STYLE, DEFAULT_SHAPE_STYLE, NS_WPS, OFFICE_FMT_SCHEME, bodyXml, custGeomXml, shapeSpPr } from "./shapes";
 import { strFromU8, strToU8, zipSync } from "fflate";
 import {
-  B_NS, COLUMN_BREAK, DEFAULT_MATH, LINE_BREAK, SHAPE_NAMES, sourcesXml, OBJ, OFFICE_2013_COLORS, PAGE_BREAK, effectExtent, type AltText, type CommentMeta, type PictureFormat, type DocState, type FloatObject, type InlineObject,
+  B_NS, COLUMN_BREAK, DEFAULT_MATH, LINE_BREAK, SHAPE_NAMES, sourcesXml, OBJ, OFFICE_2013_COLORS, PAGE_BREAK, effectExtent, type AltText, type CommentMeta, type PictureFormat, type DocState, type FloatObject, type GroupMember, type InlineObject,
   type Para, type Revision, type Section, type ShapeInfo, type StyleDef, type TableDef, type Theme, type Watermark,
 } from "@raabe/text-engine";
 import { latexToOmml, M_NS, mathPrXml, readMathPr, seqToOmml } from "./math";
@@ -22,6 +22,7 @@ const EMU = 12700;
 const NS_WP = "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing";
 const NS_A = "http://schemas.openxmlformats.org/drawingml/2006/main";
 const NS_PIC = "http://schemas.openxmlformats.org/drawingml/2006/picture";
+const NS_WPG = "http://schemas.microsoft.com/office/word/2010/wordprocessingGroup";
 const W14 = "http://schemas.microsoft.com/office/word/2010/wordml";
 const W15 = "http://schemas.microsoft.com/office/word/2012/wordml";
 
@@ -335,6 +336,7 @@ class DocWriter {
   }
 
   private floatXml(f: FloatObject, part: string): string {
+    if (f.group) return this.groupXml(f, part);
     const d = f.data;
     if (isData(d) && "drawing" in d) {
       const xml = this.repositioned(this.resized(d.drawing, f.width, f.height), f);
@@ -346,9 +348,66 @@ class DocWriter {
     return "";
   }
 
-  /** The text of a text box (w:txbxContent), from its story. */
+  /**
+   * A group (Gruppieren) as Word writes it: wpg:wgp in the object's anchor, each member's XML
+   * (as read, or as it was as a single object; from the model when it changed) at its place.
+   * An unchanged group without text is written as read.
+   */
+  private groupXml(f: FloatObject, part: string): string {
+    const g = f.group!;
+    const d = f.data;
+    const snapshot = JSON.stringify({ alt: f.alt, members: g.members.map(({ data: _d, shape, ...m }) => ({ ...m, shape: shape ? { ...shape, story: undefined } : undefined })) });
+    if (isData(d) && "drawing" in d && d.picRead === snapshot && !g.members.some((m) => m.shape?.story)) {
+      return relink(this.repositioned(this.resized(d.drawing, f.width, f.height), f), d.part, part, this.pw);
+    }
+    const emu = (pt: number) => Math.round(pt * EMU);
+    const cx = emu(f.width), cy = emu(f.height);
+    const children = g.members.map((m, i) => this.memberXml(m, part, i + 1)).join("");
+    const graphic = `<a:graphic xmlns:a="${NS_A}"><a:graphicData uri="${NS_WPG}"><wpg:wgp xmlns:wpg="${NS_WPG}"><wpg:cNvGrpSpPr/><wpg:grpSpPr>` +
+      `<a:xfrm><a:off x="0" y="0"/><a:ext cx="${cx}" cy="${cy}"/><a:chOff x="0" y="0"/><a:chExt cx="${cx}" cy="${cy}"/></a:xfrm></wpg:grpSpPr>${children}</wpg:wgp></a:graphicData></a:graphic>`;
+    const id = this.docPrId++;
+    const docPr = `<wp:docPr id="${id}" name="${esc(f.alt?.name ?? `Gruppieren ${id}`)}"${f.alt?.descr ? ` descr="${esc(f.alt.descr)}"` : ""}${f.alt?.hidden ? ' hidden="1"' : ""}${f.alt?.title ? ` title="${esc(f.alt.title)}"` : ""}/><wp:cNvGraphicFramePr/>`;
+    const pos = (tag: string, p: FloatObject["x"]) => `<wp:${tag} relativeFrom="${esc(p.rel)}">${p.align ? `<wp:align>${esc(p.align)}</wp:align>` : `<wp:posOffset>${emu(p.offset)}</wp:posOffset>`}</wp:${tag}>`;
+    const wrap = f.wrap === "front" || f.wrap === "behind" || f.wrap === "none" ? "<wp:wrapNone/>"
+      : f.wrap === "topAndBottom" ? "<wp:wrapTopAndBottom/>" : `<wp:wrapSquare wrapText="${esc(f.side)}"/>`;
+    const [t, b, l, r] = f.dist.map(emu);
+    const xml = `<w:drawing><wp:anchor distT="${t}" distB="${b}" distL="${l}" distR="${r}" simplePos="0" relativeHeight="${f.z ?? 251659264 + id}" behindDoc="${f.wrap === "behind" ? 1 : 0}" locked="0" layoutInCell="1" allowOverlap="1" xmlns:wp="${NS_WP}">` +
+      `<wp:simplePos x="0" y="0"/>${pos("positionH", f.x)}${pos("positionV", f.y)}<wp:extent cx="${cx}" cy="${cy}"/><wp:effectExtent l="0" t="0" r="0" b="0"/>${wrap}${docPr}${graphic}</wp:anchor></w:drawing>`;
+    return isData(d) && "drawing" in d ? relink(xml, d.part, part, this.pw) : xml;
+  }
+
+  /** One member of a group: its XML (or the model's) placed at its offset, with its text. */
+  private memberXml(m: GroupMember, part: string, n: number): string {
+    const emu = (pt: number) => Math.round(pt * EMU);
+    const kind = m.shape ? "wsp" : "pic";
+    const now = JSON.stringify(m.shape ? { pic: m.pic, alt: m.alt, shape: { ...m.shape, story: undefined } } : { pic: m.pic, alt: m.alt });
+    const d = m.data as { xml?: string; read?: string; drawing?: string; picRead?: string } | undefined;
+    // As read inside a group, or the drawing it had as a single object.
+    let xml = d?.xml && d.read === now ? d.xml
+      : d?.drawing && d.picRead === now ? new RegExp(`<${kind === "wsp" ? "wps:wsp" : "pic:pic"}\\b[\\s\\S]*?</${kind === "wsp" ? "wps:wsp" : "pic:pic"}>`).exec(d.drawing)?.[0] ?? "" : "";
+    if (!xml) {
+      const single = m.shape ? this.newShape({ width: m.width, height: m.height, pic: m.pic, alt: m.alt }, m.shape, part)
+        : m.image ? this.newDrawing({ image: m.image, width: m.width, height: m.height, pic: m.pic, alt: m.alt }, part) : "";
+      xml = (m.shape ? /<wps:wsp\b[\s\S]*<\/wps:wsp>/ : /<pic:pic\b[\s\S]*<\/pic:pic>/).exec(single)?.[0] ?? "";
+    }
+    if (!xml) return "";
+    // Its place in the group (child coordinates equal the group's).
+    xml = xml.replace(/<a:off x="-?\d+" y="-?\d+"\/>/, `<a:off x="${emu(m.x)}" y="${emu(m.y)}"/>`).replace(/<a:ext cx="\d+" cy="\d+"\/>/, `<a:ext cx="${emu(m.width)}" cy="${emu(m.height)}"/>`);
+    if (kind === "wsp") {
+      if (!/<wps:cNvPr\b/.test(xml)) xml = xml.replace(/^(<wps:wsp\b[^>]*>)/, `$1<wps:cNvPr id="${n + 1}" name="${esc(m.alt?.name ?? `Form ${n}`)}"/>`);
+      if (m.shape?.story) {
+        const txbx = this.textboxXml(m.shape, part);
+        xml = /<wps:txbx\b[\s\S]*?<\/wps:txbx>/.test(xml) ? xml.replace(/<wps:txbx\b[\s\S]*?<\/wps:txbx>/, txbx) : xml.replace(/<wps:bodyPr\b/, `${txbx}<wps:bodyPr`);
+      }
+    }
+    return xml;
+  }
+
+  /** The text of a text box (w:txbxContent), from its story; a linked box's place in its chain. */
   private textboxXml(s: ShapeInfo, part: string): string {
+    if (s.chain && s.chain.seq > 0) return `<wps:linkedTxbx id="${s.chain.id}" seq="${s.chain.seq}"/>`;
     const paras = s.story ? this.state.stories?.get(s.story) : undefined;
+    if (paras && s.chain) return `<wps:txbx id="${s.chain.id}"><w:txbxContent>${this.blocks(paras, part)}</w:txbxContent></wps:txbx>`;
     return paras ? `<wps:txbx><w:txbxContent>${this.blocks(paras, part)}</w:txbxContent></wps:txbx>` : "";
   }
 
@@ -357,7 +416,7 @@ class DocWriter {
    * drawing (Word's mc:Choice, without the VML fallback) gets a new wps:wsp from the model.
    */
   private reshaped(xml: string, o: { pic?: PictureFormat; alt?: AltText; width?: number; height?: number }, s: ShapeInfo, read: string | undefined, part: string): string {
-    const same = JSON.stringify({ pic: o.pic, alt: o.alt, shape: { ...s, story: undefined } }) === (read ?? "{}");
+    const same = JSON.stringify({ pic: o.pic, alt: o.alt, shape: { ...s, story: undefined, chain: s.chain ? { id: s.chain.id, seq: s.chain.seq } : undefined } }) === (read ?? "{}");
     if (same && !s.story) return xml;
     // The drawing inside mc:AlternateContent (the fallback would show old text).
     const m = /<w:drawing>[\s\S]*?<\/w:drawing>/.exec(xml);
@@ -372,7 +431,7 @@ class DocWriter {
       const cust = /<a:custGeom[\s\S]*?<\/a:custGeom>/.exec(spPr)?.[0];
       const newSpPr = lookSame ? spPr : `<wps:spPr>${shapeSpPr(o.pic ?? {}, s, cx, cy, s.custom ? cust ?? custGeomXml(s.custom) : undefined)}</wps:spPr>`;
       const body = /<wps:bodyPr[^>]*\/>|<wps:bodyPr[^>]*>[\s\S]*?<\/wps:bodyPr>/.exec(inner)?.[0];
-      const keep = (inner.match(/<wps:(?:linkedTxbx|extLst)[\s\S]*?<\/wps:(?:linkedTxbx|extLst)>/g) ?? []).join("");
+      const keep = (inner.match(/<wps:extLst[\s\S]*?<\/wps:extLst>/g) ?? []).join("");
       const bodyOrig = body?.endsWith("/>") ? body.replace(/\/>$/, "></wps:bodyPr>") : body;
       return `<wps:wsp${attrs ?? ""}>${nv}${newSpPr}${s.styleXml ?? ""}${this.textboxXml(s, part)}${keep}${bodyXml(s.body, bodyOrig)}</wps:wsp>`;
     });

@@ -9,7 +9,7 @@ import { Layouter, type LayoutContext } from "./layout";
 import { markInputHandled } from "./probe";
 import {
   EMPTY, LINE_BREAK, OBJ, PAGE_BREAK, insertionProps, intern, joinParas, makePara, propsAt, type Align, type CharProps, type LineRule,
-  type Para, type ParaProps, type Section,
+  type Para, type ParaGroup, type ParaProps, type Section,
 } from "./model";
 import { GERMAN_NAMES, builtinStyle, defaultStyleSheet, type ResolvedChar, type ResolvedPara, type StyleDef, type Theme } from "./styles";
 import { View, imageUrl, storyIdOf, type RenderOptions, type Selection, type TextMark } from "./view";
@@ -61,7 +61,7 @@ import * as Bib from "./bibliography";
 import { sortOrder, type SortSpec } from "./sort";
 import { COLUMN_BREAK, type CellDef, type ImageData, type RowDef, type TableDef } from "./model";
 import { addList, bulletLevels as bulletLevelsOf, levelOf, listLabels, numberLevels as numberLevelsOf, numberingOf, restartList } from "./numbering";
-import { DEFAULT_SHAPE_BODY, type AltText, type BorderSpec, type Borders, type FloatObject, type InlineObject, type NumLevel, type ShapeInfo } from "./model";
+import { DEFAULT_SHAPE_BODY, type AltText, type BorderSpec, type Borders, type FloatObject, type GroupMember, type InlineObject, type NumLevel, type ShapeInfo } from "./model";
 import { SHAPE_NAMES, shadeLinear, shapeElement, shapeGeometry, shapeTextRect } from "./shape";
 import { parseLatex, seqToLatex, type Seq } from "./math/ast";
 import { presetAdjust, presetGeometry } from "./geometry";
@@ -946,7 +946,8 @@ export class Editor {
     });
     this.fixStoryKey();
     this.clampSelection();
-    const ropts = { active: this.storyKey, cells: this.selectedCells(), image: this.imageOverlay(), table: this.handleTable() };
+    const others = this.floatMulti.map((x) => this.floatBox(x.p, x.index)).filter((b): b is NonNullable<typeof b> => !!b);
+    const ropts = { active: this.storyKey, cells: this.selectedCells(), image: this.imageOverlay(), table: this.handleTable(), others };
     this.view.render(this.doc, this.layout, this.sel, ropts);
     // The picture's frame comes from the view's new layout: draw it again when it moved.
     const image = this.imageOverlay();
@@ -1044,6 +1045,7 @@ export class Editor {
     this.sel = { anchor, head, headUpstream: upstream };
     this.cellAnchor = null;
     this.floatSel = null;
+    this.floatMulti = [];
     if (!keepGoal) this.goalX = null;
     this.typing = false;
     this.pending = null;
@@ -2633,6 +2635,47 @@ export class Editor {
     this.update();
   }
 
+  // ----- Texteffekte und Typografie, WordArt -----------------------------------------------------
+
+  /** The text effects at the caret (or the start of the selection, or the selected shape's text). */
+  textFxAt(): string | undefined {
+    const s = this.selectedShape();
+    if (s && !s.editing && s.obj.shape?.story) {
+      const paras = this.doc.stories.get(s.obj.shape.story);
+      const r = paras?.find((p) => p.runs.length)?.runs[0];
+      return r?.props.textFx;
+    }
+    return this.typingProps().textFx;
+  }
+
+  /**
+   * Texteffekte: changes the selected text's w14 effects (the word at the caret, the typed text,
+   * or with a shape selected all of its text, as Word does for WordArt).
+   */
+  setTextFx(change: (fx: string | undefined) => string | undefined, color?: { color?: string; colorTheme?: string }): void {
+    const apply = (old: CharProps): CharProps => intern({ ...old, textFx: change(old.textFx), ...(color ? { color: color.color, colorTheme: color.colorTheme } : {}) });
+    const s = this.selectedShape();
+    if (s && !s.editing && s.obj.shape?.story && this.doc.stories.has(s.obj.shape.story)) {
+      const story = s.obj.shape.story;
+      this.edit(() => {
+        const prev = this.doc.activeStory;
+        this.doc.setActive(story);
+        const paras = this.doc.paras;
+        this.doc.mapChars({ p: 0, o: 0 }, { p: paras.length - 1, o: paras[paras.length - 1].text.length }, (old) => apply(old));
+        this.doc.setActive(prev);
+      }, false);
+      return;
+    }
+    const r = this.formatRange();
+    if (!r) {
+      const h = this.sel.head;
+      this.pending = apply(this.pending ?? typedProps(this.doc.paras[h.p], h.o));
+      this.emit(false);
+      return;
+    }
+    this.edit(() => this.doc.mapChars(r[0], r[1], (old) => apply(old)), false);
+  }
+
   /** Strg+Q: removes direct paragraph formatting. */
   resetPara(): void {
     const [a, b] = this.paraRangeIdx();
@@ -2942,7 +2985,13 @@ export class Editor {
     if (!img || !(width > min || (min === 0 && width >= 0)) || !(height > min || (min === 0 && height >= 0))) return;
     if (snapshot) this.snapshot();
     if (img.kind === "inline") this.replaceObject(img.p, img.o, { ...img.obj, width, height });
-    else this.replaceFloat(img.p, img.index, { ...img.obj, width, height });
+    else {
+      // A group grows and shrinks with its members.
+      const g = img.obj.group;
+      const kx = img.obj.width ? width / img.obj.width : 1, ky = img.obj.height ? height / img.obj.height : 1;
+      const group = g ? { members: g.members.map((m) => ({ ...m, x: m.x * kx, y: m.y * ky, width: m.width * kx, height: m.height * ky })) } : undefined;
+      this.replaceFloat(img.p, img.index, { ...img.obj, width, height, ...(group ? { group } : {}) });
+    }
     this.update();
   }
 
@@ -3028,6 +3077,10 @@ export class Editor {
     const se = this.selectedShape();
     if (se?.editing) {
       const b = this.floatBox(se.p, se.index);
+      if (b && se.member !== undefined) {
+        const m = this.doc.main[se.p]?.floats?.[se.index]?.group?.members[se.member];
+        if (m) return { page: b.page, x: b.x + m.x * PT, y: b.y + m.y * PT, w: m.width * PT, h: m.height * PT, picture: true, editing: true };
+      }
       return b ? { ...b, picture: true, editing: true } : undefined;
     }
     const box = this.imageBox();
@@ -3436,6 +3489,7 @@ cropFill(fit: boolean): void {
 
   selectFloat(p: number, index: number): void {
     this.floatSel = { p, index };
+    this.floatMulti = [];
     this.sel = { anchor: { p, o: 0 }, head: { p, o: 0 }, headUpstream: false };
     this.update();
   }
@@ -3446,19 +3500,35 @@ cropFill(fit: boolean): void {
   /** Arrow keys are moving a float (one undo step for a run of them). */
   private nudging = false;
 
-  /** The shape whose text is being edited (its float in the main text). */
-  private shapeEdit: { p: number; index: number } | null = null;
+  /** The shape whose text is being edited (its float in the main text; a group's member). */
+  private shapeEdit: { p: number; index: number; member?: number } | null = null;
 
-  /** The selected shape, or the one whose text is being edited. */
-  selectedShape(): { p: number; index: number; obj: FloatObject; editing: boolean } | null {
+  /**
+   * The selected shape, or the one whose text is being edited (inside a group: the member,
+   * as an object of its own size with `member` set).
+   */
+  selectedShape(): { p: number; index: number; obj: FloatObject; editing: boolean; member?: number } | null {
     const img = this.selectedImage();
     if (img?.kind === "float" && img.obj.shape) return { p: img.p, index: img.index, obj: img.obj, editing: false };
     const se = this.shapeEdit;
     if (se && this.doc.activeStory !== MAIN) {
       const f = this.doc.main[se.p]?.floats?.[se.index];
-      if (f?.shape && f.shape.story === this.doc.activeStory) return { p: se.p, index: se.index, obj: f, editing: true };
+      if (se.member !== undefined && f?.group) {
+        const m = f.group.members[se.member];
+        if (m?.shape && m.shape.story === this.doc.activeStory) {
+          return { p: se.p, index: se.index, obj: { ...f, shape: m.shape, pic: m.pic, width: m.width, height: m.height, group: undefined }, editing: true, member: se.member };
+        }
+      }
+      if (f?.shape && (f.shape.story ?? f.shape.chain?.story) === this.doc.activeStory) return { p: se.p, index: se.index, obj: f, editing: true };
     }
     return null;
+  }
+
+  /** Writes a changed member back into its group. */
+  private replaceMember(p: number, index: number, member: number, change: (m: GroupMember) => GroupMember): void {
+    const f = this.doc.main[p]?.floats?.[index];
+    if (!f?.group) return;
+    this.replaceFloat(p, index, { ...f, group: { members: f.group.members.map((m, i) => (i === member ? change(m) : m)) } });
   }
 
   /** True while the caret is in the text of a shape or text box. */
@@ -3473,7 +3543,8 @@ cropFill(fit: boolean): void {
     const old = s.obj.shape!;
     const next = typeof change === "function" ? change(old) : { ...old, ...change };
     if (snapshot) this.snapshot();
-    this.replaceFloat(s.p, s.index, { ...s.obj, shape: next });
+    if (s.member !== undefined) this.replaceMember(s.p, s.index, s.member, (m) => ({ ...m, shape: next }));
+    else this.replaceFloat(s.p, s.index, { ...s.obj, shape: next });
     this.update();
   }
 
@@ -3485,7 +3556,9 @@ cropFill(fit: boolean): void {
     const merged = typeof change === "function" ? change(old) : { ...old, ...change };
     const clean = Object.fromEntries(Object.entries(merged).filter(([, v]) => v !== undefined)) as PictureFormat;
     if (snapshot) this.snapshot();
-    this.replaceFloat(s.p, s.index, { ...s.obj, pic: Object.keys(clean).length ? clean : undefined });
+    const pic = Object.keys(clean).length ? clean : undefined;
+    if (s.member !== undefined) this.replaceMember(s.p, s.index, s.member, (m) => ({ ...m, pic }));
+    else this.replaceFloat(s.p, s.index, { ...s.obj, pic });
     this.update();
   }
 
@@ -3503,7 +3576,8 @@ cropFill(fit: boolean): void {
   editShapeText(p: number, index: number, at?: { clientX: number; clientY: number } | "end", snapshot = true): void {
     const f = this.doc.main[p]?.floats?.[index];
     if (!f?.shape) return;
-    let story = f.shape.story;
+    // A linked box continues its chain's text.
+    let story = f.shape.story ?? (f.shape.chain && f.shape.chain.seq > 0 ? f.shape.chain.story : undefined);
     if (!story || !this.doc.stories.has(story)) {
       if (snapshot) this.snapshot();
       story = this.newShapeStory();
@@ -3525,6 +3599,281 @@ cropFill(fit: boolean): void {
     }
     this.update();
     this.emit(false);
+  }
+
+  /** Puts the caret into the text of a group's member (a text box or shape inside the group). */
+  editMemberText(p: number, index: number, member: number, at?: { clientX: number; clientY: number } | "end"): void {
+    const f = this.doc.main[p]?.floats?.[index];
+    const m = f?.group?.members[member];
+    if (!m?.shape) return;
+    let story = m.shape.story;
+    if (!story || !this.doc.stories.has(story)) {
+      this.snapshot();
+      story = this.newShapeStory();
+      this.doc.setStory(story, [{ ...makePara("", m.shape.kind === "textbox" ? {} : { align: "center" as const }), mark: EMPTY }]);
+      this.replaceMember(p, index, member, (x) => ({ ...x, shape: { ...x.shape!, story } }));
+    }
+    this.floatSel = null;
+    this.floatMulti = [];
+    this.switchStory(story, story);
+    this.shapeEdit = { p, index, member };
+    if (at && at !== "end") {
+      const hit = this.view.hitLine(at.clientX, at.clientY);
+      const pos = this.view.posInLine(hit.index, hit.x);
+      this.sel = { anchor: pos.pos, head: pos.pos, headUpstream: pos.upstream };
+    } else {
+      const end = this.doc.end();
+      this.sel = { anchor: end, head: end, headUpstream: false };
+    }
+    this.update();
+    this.emit(false);
+  }
+
+  // ----- Deckblatt ----------------------------------------------------------------------------------
+
+  private static coverMark = 'w:docPartGallery w:val="Cover Pages"';
+
+  /** Whether the document starts with a cover page (Word's Cover Pages sdt). */
+  hasCoverPage(): boolean {
+    const g = this.doc.main[0]?.group;
+    return !!g && typeof g.open === "string" && g.open.includes(Editor.coverMark);
+  }
+
+  /** The paragraphs of the cover page at the start (0 when there is none). */
+  private coverLength(): number {
+    if (!this.hasCoverPage()) return 0;
+    const id = this.doc.main[0].group!.id;
+    let n = 0;
+    while (n < this.doc.main.length - 1 && this.doc.main[n].group?.id === id) n++;
+    return n;
+  }
+
+  /**
+   * Einfügen > Deckblatt: a cover page at the start of the document (an existing one is
+   * replaced), as Word stores it: the Cover Pages sdt around its paragraphs, ending with a page
+   * break. The first placeholder ("[…]") is selected, so typing replaces it.
+   */
+  insertCoverPage(paras: Para[]): void {
+    if (this.doc.activeStory !== MAIN) this.switchStory(MAIN, MAIN);
+    this.snapshot();
+    const old = this.coverLength();
+    for (const p of paras) if (p.props.style) this.ensureStyle(p.props.style);
+    let gid = 0;
+    for (const p of this.doc.main) gid = Math.max(gid, p.group?.id ?? 0);
+    const group: ParaGroup = {
+      id: gid + 1, kind: "sdt",
+      open: `<w:sdt><w:sdtPr><w:id w:val="${-((Date.now() % 2000000000) | 0)}"/><w:docPartObj><w:docPartGallery w:val="Cover Pages"/><w:docPartUnique/></w:docPartObj></w:sdtPr><w:sdtContent>`,
+      close: "</w:sdtContent></w:sdt>",
+    };
+    const list = [...paras.map((p) => ({ ...p, group })), { ...makePara(PAGE_BREAK), group }];
+    if (old) this.doc.splice(0, old - 1, list);
+    else this.doc.splice(0, -1, list);
+    // The first placeholder is selected.
+    const at = list.findIndex((p) => /\[[^\]]+\]/.test(p.text));
+    if (at >= 0) {
+      const m = /\[[^\]]+\]/.exec(list[at].text)!;
+      this.setSel({ p: at, o: m.index }, { p: at, o: m.index + m[0].length });
+    } else this.setSel({ p: 0, o: 0 }, { p: 0, o: 0 });
+    this.requireFonts();
+    this.update({ scroll: true });
+  }
+
+  /** Aktuelles Deckblatt entfernen. */
+  removeCoverPage(): void {
+    const n = this.coverLength();
+    if (!n) return;
+    this.snapshot();
+    this.doc.splice(0, n - 1, []);
+    this.setSel({ p: 0, o: 0 }, { p: 0, o: 0 });
+    this.update({ scroll: true });
+  }
+
+  // ----- Verknüpfte Textfelder (Verknüpfung erstellen / aufheben) ------------------------------------
+
+  /** Verknüpfung erstellen: the box whose text is to flow on; the next click picks the next box. */
+  private linkFrom: { p: number; index: number } | null = null;
+  /** Called when the box clicked cannot take the text (it has text of its own, or is linked). */
+  onLinkRefused: ((reason: string) => void) | null = null;
+
+  get linking(): boolean {
+    return this.linkFrom !== null;
+  }
+
+  /** Whether the selected text box passes its text on to another box (Verknüpfung aufheben). */
+  linksOn(): boolean {
+    const s = this.selectedShape();
+    const c = s?.obj.shape?.chain;
+    return !!c && this.doc.main.some((p) => (p.floats ?? []).some((f) => f.shape?.chain?.id === c.id && f.shape.chain.seq === c.seq + 1));
+  }
+
+  startLink(): boolean {
+    const s = this.selectedShape();
+    if (!s || s.member !== undefined || !s.obj.shape || s.obj.shape.kind === "connector" || this.linksOn()) return false;
+    if (s.editing) this.leaveShapeText(true);
+    this.linkFrom = { p: s.p, index: s.index };
+    this.workspace.classList.add("linking");
+    this.emit(false);
+    return true;
+  }
+
+  cancelLink(): void {
+    this.linkFrom = null;
+    this.workspace.classList.remove("linking");
+    this.emit(false);
+  }
+
+  /** The box clicked in linking mode takes the chain's text (it must be empty, as in Word). */
+  private linkTo(p: number, index: number): void {
+    const from = this.linkFrom;
+    this.cancelLink();
+    if (!from || (from.p === p && from.index === index)) return;
+    const src = this.doc.main[from.p]?.floats?.[from.index];
+    const dst = this.doc.main[p]?.floats?.[index];
+    if (!src?.shape || !dst?.shape || dst.shape.kind === "connector") return;
+    const text = dst.shape.story ? (this.doc.stories.get(dst.shape.story) ?? []).some((q) => q.text.length) : false;
+    if (text || dst.shape.chain) { this.onLinkRefused?.(text ? "Das Textfeld, mit dem Sie eine Verknüpfung herstellen möchten, ist nicht leer." : "Das Textfeld ist bereits verknüpft."); return; }
+    this.snapshot();
+    let ids = 0;
+    for (const q of this.doc.main) for (const f of q.floats ?? []) ids = Math.max(ids, f.shape?.chain?.id ?? 0);
+    let story = src.shape.story ?? src.shape.chain?.story;
+    if (!story) {
+      story = this.newShapeStory();
+      this.doc.setStory(story, [{ ...makePara(""), mark: EMPTY }]);
+    }
+    const chain = src.shape.chain ?? { id: ids + 1, seq: 0 };
+    this.replaceFloat(from.p, from.index, { ...src, shape: { ...src.shape, ...(chain.seq === 0 ? { story } : {}), chain } });
+    const target = this.doc.main[p].floats![index];
+    this.replaceFloat(p, index, { ...target, shape: { ...target.shape!, story: undefined, chain: { id: chain.id, seq: chain.seq + 1, story } } });
+    this.floatSel = { p, index };
+    this.update();
+    this.emit(true);
+  }
+
+  /** Verknüpfung aufheben: the text stops in the selected box; the boxes after it are empty again. */
+  breakLink(): void {
+    const s = this.selectedShape();
+    const c = s?.obj.shape?.chain;
+    if (!s || !c) return;
+    this.snapshot();
+    const next = this.doc.main.map((para) => {
+      if (!para.floats?.some((f) => f.shape?.chain?.id === c.id)) return para;
+      return { ...para, floats: para.floats.map((f) => {
+        const fc = f.shape?.chain;
+        if (!fc || fc.id !== c.id) return f;
+        if (fc.seq > c.seq) return { ...f, shape: { ...f.shape!, chain: undefined, story: undefined } };
+        // A first box without others keeps its text but no chain.
+        if (fc.seq === 0 && c.seq === 0) return { ...f, shape: { ...f.shape!, chain: undefined } };
+        return f;
+      }) };
+    });
+    this.doc.setStory(MAIN, next);
+    this.update();
+    this.emit(true);
+  }
+
+  // ----- Gruppieren --------------------------------------------------------------------------------
+
+  /** Further objects selected with Umschalt- or Strg+Klick. */
+  private floatMulti: { p: number; index: number }[] = [];
+  /** The objects of the group taken apart last (Gruppierung wiederherstellen). */
+  private lastUngroup: { p: number; ids: unknown[] } | null = null;
+
+  /** All selected floating objects. */
+  selectedFloats(): { p: number; index: number; obj: FloatObject }[] {
+    const out: { p: number; index: number; obj: FloatObject }[] = [];
+    const add = (s: { p: number; index: number }) => {
+      const f = this.doc.main[s.p]?.floats?.[s.index];
+      if (f && !out.some((x) => x.p === s.p && x.index === s.index)) out.push({ ...s, obj: f });
+    };
+    if (this.floatSel) add(this.floatSel);
+    for (const s of this.floatMulti) add(s);
+    return out;
+  }
+
+  /** The selected group (Gruppierung aufheben), if one is selected. */
+  selectedGroup(): { p: number; index: number; obj: FloatObject } | null {
+    const all = this.selectedFloats();
+    return all.length === 1 && all[0].obj.group ? all[0] : null;
+  }
+
+  /**
+   * Gruppieren: the selected objects (on one page) become one group in their bounding box,
+   * anchored where the first is, in front of the others' places; groups inside are opened up.
+   */
+  groupFloats(): boolean {
+    const list = this.selectedFloats().map((x) => ({ ...x, box: this.floatBox(x.p, x.index) }));
+    if (list.length < 2 || list.some((x) => !x.box) || new Set(list.map((x) => x.box!.page)).size > 1) return false;
+    const L = Math.min(...list.map((x) => x.box!.x)), T = Math.min(...list.map((x) => x.box!.y));
+    const R = Math.max(...list.map((x) => x.box!.x + x.box!.w)), B = Math.max(...list.map((x) => x.box!.y + x.box!.h));
+    const byZ = [...list].sort((a, b) => (a.obj.z ?? a.index + 1) - (b.obj.z ?? b.index + 1));
+    const members: GroupMember[] = byZ.flatMap((x) => {
+      const dx = (x.box!.x - L) / PT, dy = (x.box!.y - T) / PT;
+      if (x.obj.group) return x.obj.group.members.map((m) => ({ ...m, x: m.x + dx, y: m.y + dy }));
+      return [{ x: dx, y: dy, width: x.obj.width, height: x.obj.height, shape: x.obj.shape, pic: x.obj.pic, image: x.obj.image, alt: x.obj.alt, data: x.obj.data }];
+    });
+    const first = [...list].sort((a, b) => a.p - b.p || a.index - b.index)[0];
+    const group: FloatObject = {
+      at: first.obj.at, data: undefined, width: (R - L) / PT, height: (B - T) / PT,
+      x: { rel: "page", offset: L / PT }, y: { rel: "page", offset: T / PT }, wrap: first.obj.wrap, side: first.obj.side, dist: first.obj.dist,
+      z: Math.max(...list.map((x) => x.obj.z ?? 0)) || undefined, alt: { name: this.newObjectName("Gruppieren") }, group: { members },
+    };
+    this.snapshot();
+    const drop = new Set(list.map((x) => `${x.p}:${x.index}`));
+    const next = this.doc.main.map((para, p) => {
+      if (!para.floats?.some((_, i) => drop.has(`${p}:${i}`)) && p !== first.p) return para;
+      const floats = (para.floats ?? []).filter((_, i) => !drop.has(`${p}:${i}`));
+      if (p === first.p) floats.push(group);
+      return { ...para, floats: floats.length ? floats : undefined };
+    });
+    this.doc.setStory(MAIN, next);
+    this.floatSel = { p: first.p, index: (next[first.p].floats ?? []).length - 1 };
+    this.floatMulti = [];
+    this.lastUngroup = null;
+    this.update();
+    this.emit(true);
+    return true;
+  }
+
+  /** Gruppierung aufheben: the group's members become objects of their own, where they are. */
+  ungroupFloat(): boolean {
+    const g = this.selectedGroup();
+    const box = g ? this.floatBox(g.p, g.index) : null;
+    if (!g || !box) return false;
+    const members = g.obj.group!.members;
+    const floats: FloatObject[] = members.map((m, i) => ({
+      at: g.obj.at, data: m.data && typeof m.data === "object" && "drawing" in (m.data as object) ? m.data : undefined, width: m.width, height: m.height,
+      x: { rel: "page", offset: box.x / PT + m.x }, y: { rel: "page", offset: box.y / PT + m.y }, wrap: g.obj.wrap, side: g.obj.side, dist: g.obj.dist,
+      z: (g.obj.z ?? 251659264) + i, shape: m.shape, pic: m.pic, image: m.image, alt: m.alt,
+    }));
+    this.snapshot();
+    const para = this.doc.main[g.p];
+    const list = [...(para.floats ?? [])];
+    list.splice(g.index, 1, ...floats);
+    const next = [...this.doc.main];
+    next[g.p] = { ...para, floats: list };
+    this.doc.setStory(MAIN, next);
+    this.floatSel = { p: g.p, index: g.index };
+    this.floatMulti = floats.slice(1).map((_, i) => ({ p: g.p, index: g.index + 1 + i }));
+    this.lastUngroup = { p: g.p, ids: floats.map((f) => f.shape ?? f.image ?? f.pic) };
+    this.update();
+    this.emit(true);
+    return true;
+  }
+
+  /** Gruppierung wiederherstellen: the objects of the group taken apart last, grouped again. */
+  canRegroup(): boolean {
+    const u = this.lastUngroup;
+    return !!u && u.ids.every((id) => (this.doc.main[u.p]?.floats ?? []).some((f) => (f.shape ?? f.image ?? f.pic) === id));
+  }
+
+  regroup(): boolean {
+    const u = this.lastUngroup;
+    if (!u || !this.canRegroup()) return false;
+    const floats = this.doc.main[u.p].floats ?? [];
+    const idx = u.ids.map((id) => floats.findIndex((f) => (f.shape ?? f.image ?? f.pic) === id));
+    this.floatSel = { p: u.p, index: idx[0] };
+    this.floatMulti = idx.slice(1).map((index) => ({ p: u.p, index }));
+    return this.groupFloats();
   }
 
   /** Leaves a shape's text; with `select`, the shape stays selected (Esc in Word). */
@@ -4943,6 +5292,7 @@ cropFill(fit: boolean): void {
         if (this.cropping) { this.endCrop(); return void e.preventDefault(); }
         if (this.painter) { this.stopPainter(); return void e.preventDefault(); }
         if (this.objectSelect) { this.setObjectSelect(false); return void e.preventDefault(); }
+        if (this.linkFrom) { this.cancelLink(); return void e.preventDefault(); }
         if (this.isHeaderFooter()) { this.closeHeaderFooter(); return void e.preventDefault(); }
         if (this.inShapeText) { this.leaveShapeText(true); return void e.preventDefault(); }
         if (this.floatSel) { this.floatSel = null; this.update(); return void e.preventDefault(); }
@@ -5180,6 +5530,13 @@ cropFill(fit: boolean): void {
     if (this.drawTool) { e.preventDefault(); this.focus(); this.drawShape(e); return; }
     // Comment cards handle their own clicks.
     if (this.view.markupLayer.contains(e.target as Node)) return;
+    // Verknüpfung erstellen: the click picks the box the text flows on to.
+    if (this.linkFrom) {
+      e.preventDefault();
+      const deco = this.view.imageAt(e.clientX, e.clientY);
+      if (deco) this.linkTo(deco.para, deco.index); else this.cancelLink();
+      return;
+    }
     this.focusedComment = null;
     const ws = this.workspace;
     if (e.target === ws && (e.offsetX >= ws.clientWidth || e.offsetY >= ws.clientHeight)) return; // scrollbar
@@ -5192,6 +5549,17 @@ cropFill(fit: boolean): void {
       const box = this.floatBox(se.p, se.index);
       const inside = box && pt.page === box.page && pt.x >= box.x - 3 && pt.x <= box.x + box.w + 3 && pt.y >= box.y - 3 && pt.y <= box.y + box.h + 3;
       if (!inside || this.view.handleAt(e.clientX, e.clientY)) this.leaveShapeText(!!inside);
+    }
+    // Umschalt- or Strg+Klick on another object adds it to the selection (Gruppieren).
+    if (this.storyKey === MAIN && (e.shiftKey || e.ctrlKey) && this.floatSel && !this.readOnly && e.detail < 2) {
+      const deco = this.view.imageAt(e.clientX, e.clientY);
+      if (deco && !(deco.para === this.floatSel.p && deco.index === this.floatSel.index)) {
+        const i = this.floatMulti.findIndex((x) => x.p === deco.para && x.index === deco.index);
+        if (i >= 0) this.floatMulti.splice(i, 1); else this.floatMulti.push({ p: deco.para, index: deco.index });
+        this.update();
+        this.emit(false);
+        return;
+      }
     }
     if (this.storyKey === MAIN && !e.shiftKey && e.detail < 2 && !this.readOnly) {
       const th = this.view.tableHandleAt(e.clientX, e.clientY);
@@ -5229,6 +5597,17 @@ cropFill(fit: boolean): void {
     }
     // Objekte auswählen: clicks pick objects only, the text stays as it is.
     if (this.objectSelect && this.storyKey === MAIN) { if (this.floatSel) { this.floatSel = null; this.update(); } return; }
+    if (this.storyKey === MAIN && e.detail === 2 && !this.readOnly) {
+      const g = this.view.imageAt(e.clientX, e.clientY);
+      const gf = g ? this.doc.main[g.para]?.floats?.[g.index] : undefined;
+      if (g && gf?.group) {
+        const box = this.floatBox(g.para, g.index);
+        const pt = this.view.pointAt(e.clientX, e.clientY);
+        const mi = box ? gf.group.members.findIndex((m) => m.shape && m.shape.kind !== "connector" && pt.x >= box.x + m.x * PT && pt.x <= box.x + (m.x + m.width) * PT &&
+          pt.y >= box.y + m.y * PT && pt.y <= box.y + (m.y + m.height) * PT) : -1;
+        if (mi >= 0) { this.editMemberText(g.para, g.index, mi, { clientX: e.clientX, clientY: e.clientY }); return; }
+      }
+    }
     if (this.storyKey === MAIN && e.detail === 2 && !this.readOnly) {
       const deco = this.view.imageAt(e.clientX, e.clientY);
       if (deco?.shape && deco.shape.kind !== "connector") { this.editShapeText(deco.para, deco.index, "end"); return; }

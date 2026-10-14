@@ -10,7 +10,7 @@ owner's explicit go-ahead.
 | 2 | RaabeWrite core: text model, layout, pagination, selection, character/paragraph formatting, styles, undo/redo, .docx read/write for that subset | done 2026-10-13 ([report](reports/2026-10-13-step2-formatting.md)): layout identical to Word in four test documents, formatting behaviour vs Word's own commands, lossless .docx; real-input re-check done (F1 tail: Windows composition, see report) |
 | 3 | RaabeWrite documents: lists, tables, images, header/footer, page numbers, page setup, spell check, find/replace, print, PDF | done 2026-10-13 ([report](reports/2026-10-13-step3-documents.md)): layout identical to Word in ten test documents (632/632 lines), text rendering like Word (F6), smoke tests 28/28 and 41/41 |
 | 4 | RaabeWrite school features: footnotes, table of contents, comments, track changes, formula editor, Raabeschule templates | done 2026-10-13 ([report](reports/2026-10-13-step4-school.md)): Word updates our tables of contents to the same page numbers, layout identical to Word in eleven documents (682/682 lines), smoke tests 43/43, 28/28, 41/41 |
-| 4b | Word parity for RaabeWrite (D-038): feel basics and audit tools, tables/lists/clipboard, pictures and shapes, own formula editor, all remaining non-deferred ribbon commands, French and Spanish, own grammar checker | in progress since 2026-10-14: A, B and C done (behaviour catalogue 193/193, clipboard with Word both ways without differences, 152 shapes as Word draws them) |
+| 4b | Word parity for RaabeWrite (D-038): feel basics and audit tools, tables/lists/clipboard, pictures and shapes, own formula editor, all remaining non-deferred ribbon commands, French and Spanish, own grammar checker | in progress since 2026-10-14: A, B, C, D and E done (behaviour catalogue 193/193, clipboard with Word both ways without differences, 152 shapes as Word draws them) |
 | 5 | Pilot: one class uses RaabeWrite in lessons; fix what real use reveals | |
 | 6 | iPad build of RaabeWrite (touch polish, Files app integration, distribution) | |
 | 7 | RaabeCalc | |
@@ -48,7 +48,9 @@ Textmarke, Querverweis, Beschriftung, Abbildungsverzeichnis, Zitate, Literaturve
 Fuß- und Endnote, Optionen zum Nachverfolgen, Überarbeitungsbereich, Sortieren, Markieren,
 Auswahlbereich, Formatvorlagen pane with Formatvorlage ändern, Zwischenablage, Lineal,
 Gitternetzlinien, Mehrere Seiten, Weblayout, Lesemodus, Zeilennummern, Notizen anzeigen, the
-Entwurf tab and Rahmen und Schattierung done.
+Entwurf tab and Rahmen und Schattierung done; E done 2026-10-14 with Texteffekte, Gruppieren,
+verknüpfte Textfelder and Deckblatt (every non-deferred ribbon command now works; Silbentrennung
+and Thesaurus come with the languages in F).
 
 Order: A, B, C, D, E, F. A comes first because its tools find the differences nobody has
 reported yet; the behaviour catalogue grows with each package. F is last and the largest

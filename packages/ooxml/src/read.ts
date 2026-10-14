@@ -9,7 +9,7 @@ import { strFromU8, unzipSync } from "fflate";
 import {
   A4, COLUMN_BREAK, DEFAULT_SECTION, LINE_BREAK, OBJ, ONE_COLUMN, PAGE_BREAK, StyleSheet, defaultStyleSheet, intern, nextTableId, plainPicture, seqToLatex,
   type Anchor, type BlockObject, type CellDef, type CellRef, type CharProps, type CommentMeta, type DocState, type FloatObject,
-  type AltText, type DocSettings, type HeaderRefs, type Watermark, type ImageData, type InlineObject, type MathSettings, type NoteProps, type Numbering, type Para, type ParaGroup, type ParaProps, type PictureFormat, type Revision, type ShapeInfo,
+  type AltText, type DocSettings, type GroupMember, type HeaderRefs, type Watermark, type ImageData, type InlineObject, type MathSettings, type NoteProps, type Numbering, type Para, type ParaGroup, type ParaProps, type PictureFormat, type Revision, type ShapeInfo,
   type RowDef, type Run, type Section, type StyleDef, type StyleType, type TableDef, type TableStyleDef, type TableStylePart,
 } from "@raabe/text-engine";
 import { mathParaJc, ommlToSeq, readMathPr } from "./math";
@@ -21,6 +21,7 @@ import { attr, child, kids, num, onOff, outer, parse, textOf, W } from "./xml";
 
 const WP = "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing";
 const A = "http://schemas.openxmlformats.org/drawingml/2006/main";
+const NS_WPG = "http://schemas.microsoft.com/office/word/2010/wordprocessingGroup";
 const RNS = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
 const W14 = "http://schemas.microsoft.com/office/word/2010/wordml";
 const W15 = "http://schemas.microsoft.com/office/word/2012/wordml";
@@ -265,6 +266,8 @@ class Reader {
   noteSettings: DocSettings["notes"];
   /** The watermark found in a header (Word puts it into every header). */
   watermark: Watermark | undefined;
+  /** Linked text boxes: the story of each chain (its first box's text). */
+  readonly chainStories = new Map<number, string>();
   readonly stories = new Map<string, Para[]>();
   private textboxSeq = 0;
 
@@ -670,8 +673,13 @@ class PartReader {
       story = this.r.nextTextbox();
       this.r.stories.set(story, ensurePara(new PartReader(this.r, this.part).blocks(kids(content))));
     }
+    // Verknüpfte Textfelder: the first box's txbx has the chain's id, the others wps:linkedTxbx.
+    const linked = kids(wsp).find((x) => x.localName === "linkedTxbx");
+    const chainId = txbx?.getAttribute("id") ?? linked?.getAttribute("id");
+    const chain = chainId !== null && chainId !== undefined && chainId !== "" ? { id: Number(chainId), seq: linked ? Number(linked.getAttribute("seq") ?? 1) : 0 } : undefined;
+    if (chain && story && chain.seq === 0) this.r.chainStories.set(chain.id, story);
     const shape: ShapeInfo = {
-      kind, adjust: readAdjust(prst), ...styled,
+      kind, adjust: readAdjust(prst), ...styled, chain,
       story, body: readBody(kids(wsp).find((x) => x.localName === "bodyPr"), kind === "textbox"),
       styleXml: styleEl ? outer(styleEl) : undefined, custom: cust ? custGeomDef(cust) : undefined,
     };
@@ -682,7 +690,13 @@ class PartReader {
   private drawing(c: Element, b: ParaBuilder, props: CharProps): void {
     const inline = c.getElementsByTagNameNS(WP, "inline")[0];
     const anchor = c.getElementsByTagNameNS(WP, "anchor")[0];
-    const wsp = c.getElementsByTagNameNS(NS_WPS, "wsp")[0];
+    // A group (wpg:wgp) is one object with its shapes and pictures inside.
+    const wgp = c.getElementsByTagNameNS(NS_WPG, "wgp")[0];
+    if (wgp && anchor) {
+      this.groupDrawing(c, wgp, b, anchor);
+      return;
+    }
+    const wsp = wgp ? undefined : c.getElementsByTagNameNS(NS_WPS, "wsp")[0];
     if (wsp && (inline || anchor)) {
       this.shapeDrawing(c, wsp, b, props, inline, anchor);
       return;
@@ -734,13 +748,80 @@ class PartReader {
     });
   }
 
+  /**
+   * Word's group: the members' places come from the group's child coordinates (a:chOff,
+   * a:chExt) scaled into its box, nested groups included; each member keeps its XML.
+   */
+  private groupDrawing(c: Element, wgp: Element, b: ParaBuilder, a: Element): void {
+    const members: GroupMember[] = [];
+    const num = (el: Element | undefined, n: string) => Number(el?.getAttribute(n) ?? 0);
+    const xf = (el: Element | undefined) => {
+      const x = el ? Array.from(el.children).find((k) => k.localName === "xfrm") : undefined;
+      const k = (n: string) => (x ? Array.from(x.children).find((e) => e.localName === n) : undefined);
+      return { off: [num(k("off"), "x"), num(k("off"), "y")], ext: [num(k("ext"), "cx"), num(k("ext"), "cy")], chOff: [num(k("chOff"), "x"), num(k("chOff"), "y")], chExt: [num(k("chExt"), "cx"), num(k("chExt"), "cy")] };
+    };
+    type Map = (x: number, y: number, w: number, h: number) => [number, number, number, number];
+    const walk = (grp: Element, outerMap: Map) => {
+      const g = xf(kids(grp).find((k) => k.localName === "grpSpPr"));
+      const sx = g.chExt[0] ? g.ext[0] / g.chExt[0] : 1, sy = g.chExt[1] ? g.ext[1] / g.chExt[1] : 1;
+      const map: Map = (x, y, w, h) => outerMap(g.off[0] + (x - g.chOff[0]) * sx, g.off[1] + (y - g.chOff[1]) * sy, w * sx, h * sy);
+      for (const k of kids(grp)) {
+        if (k.localName === "grpSp") { walk(k, map); continue; }
+        if (k.localName !== "wsp" && k.localName !== "pic") continue;
+        const sp = kids(k).find((e) => e.localName === "spPr");
+        const t = xf(sp);
+        const [mx, my, mw, mh] = map(t.off[0], t.off[1], t.ext[0], t.ext[1]);
+        const cnv = kids(k).find((e) => e.localName === "cNvPr") ?? (k.localName === "pic" ? kids(kids(k).find((e) => e.localName === "nvPicPr") ?? k).find((e) => e.localName === "cNvPr") : undefined);
+        const name = cnv?.getAttribute("name") || undefined, descr = cnv?.getAttribute("descr") || undefined;
+        const alt = name || descr ? { ...(name ? { name } : {}), ...(descr ? { descr } : {}) } : undefined;
+        const pos = { x: mx / EMU, y: my / EMU, width: mw / EMU, height: mh / EMU };
+        if (k.localName === "wsp") {
+          const { pic, shape } = this.shapeOf(k);
+          members.push({ ...pos, shape, pic, alt, data: { xml: outer(k), read: JSON.stringify({ pic, alt, shape: { ...shape, story: undefined } }) } });
+        } else {
+          const blip = k.getElementsByTagNameNS(A, "blip")[0];
+          const image = blip ? this.r.image(this.part, this.rels, blip.getAttributeNS(RNS, "embed")) : undefined;
+          const read = readPicture(k, this.r.themeColors);
+          const p2 = plainPicture(read) ? undefined : read;
+          members.push({ ...pos, image, pic: p2, alt, data: { xml: outer(k), read: JSON.stringify({ pic: p2, alt }) } });
+        }
+      }
+    };
+    // The root group's own offset is the object's box (0, 0 within it).
+    const root = xf(kids(wgp).find((k) => k.localName === "grpSpPr"));
+    walk(wgp, (x, y, w, h) => [x - root.off[0], y - root.off[1], w, h]);
+    const docPr = c.getElementsByTagNameNS(WP, "docPr")[0];
+    const alt = docPrAlt(docPr, { descr: docPr?.getAttribute("descr") || undefined, title: docPr?.getAttribute("title") || undefined });
+    const snapshot = members.map(({ data: _d, shape, ...m }) => ({ ...m, shape: shape ? { ...shape, story: undefined } : undefined }));
+    const data: ObjectData = { drawing: outer(c), part: this.part, picRead: JSON.stringify({ alt, members: snapshot }) };
+    const e = Array.from(a.children).find((x) => x.localName === "extent");
+    const pos = (tag: string) => {
+      const el = Array.from(a.children).find((x) => x.localName === tag);
+      const align = el ? Array.from(el.children).find((x) => x.localName === "align")?.textContent ?? undefined : undefined;
+      const off = el ? Array.from(el.children).find((x) => x.localName === "posOffset")?.textContent : undefined;
+      return { rel: el?.getAttribute("relativeFrom") ?? "column", align, offset: Number(off ?? 0) / EMU };
+    };
+    const wrapEl = Array.from(a.children).find((x) => x.localName.startsWith("wrap"));
+    const wrapName = wrapEl?.localName ?? "wrapNone";
+    const behind = a.getAttribute("behindDoc") === "1";
+    const wrap = wrapName === "wrapNone" ? (behind ? "behind" : "front")
+      : wrapName === "wrapSquare" ? "square" : wrapName === "wrapTight" ? "tight" : wrapName === "wrapThrough" ? "through" : "topAndBottom";
+    const d = (n: string) => Number(a.getAttribute(n) ?? 0) / EMU;
+    b.floats.push({
+      at: b.text.length, data, width: Number(e?.getAttribute("cx") ?? 0) / EMU, height: Number(e?.getAttribute("cy") ?? 0) / EMU,
+      x: pos("positionH"), y: pos("positionV"), wrap, side: wrapEl?.getAttribute("wrapText") ?? "bothSides",
+      dist: [d("distT"), d("distB"), d("distL"), d("distR")], alt, z: Number(a.getAttribute("relativeHeight") ?? 0) || undefined,
+      group: { members },
+    });
+  }
+
   private shapeDrawing(c: Element, wsp: Element, b: ParaBuilder, props: CharProps, inline: Element | undefined, anchor: Element | undefined): void {
     const { pic, shape } = this.shapeOf(wsp);
     const docPr = c.getElementsByTagNameNS(WP, "docPr")[0];
     const descr = docPr?.getAttribute("descr") ?? undefined, title = docPr?.getAttribute("title") ?? undefined;
     const alt = docPrAlt(docPr, { descr: descr || undefined, title: title || undefined });
     // The XML is written back unchanged unless the shape changes (snapshot without the story).
-    const data: ObjectData = { drawing: outer(c), part: this.part, picRead: JSON.stringify({ pic, alt, shape: { ...shape, story: undefined } }) };
+    const data: ObjectData = { drawing: outer(c), part: this.part, picRead: JSON.stringify({ pic, alt, shape: { ...shape, story: undefined, chain: shape.chain ? { id: shape.chain.id, seq: shape.chain.seq } : undefined } }) };
     const holder = inline ?? anchor!;
     const e = Array.from(holder.children).find((x) => x.localName === "extent");
     const size = { width: Number(e?.getAttribute("cx") ?? 0) / EMU, height: Number(e?.getAttribute("cy") ?? 0) / EMU };
@@ -1058,6 +1139,16 @@ export function readThemeFile(bytes: Uint8Array): { colors?: Record<string, stri
   return Object.keys(out).length ? out : null;
 }
 
+/** Linked text boxes after their first box: the chain's story, so the text flows through them. */
+function linkChains(paras: Para[], stories: ReadonlyMap<number, string>): void {
+  if (!stories.size) return;
+  const fix = (s: ShapeInfo | undefined) => (s?.chain && s.chain.seq > 0 && stories.has(s.chain.id) ? { ...s, chain: { ...s.chain, story: stories.get(s.chain.id) } } : s);
+  paras.forEach((p, i) => {
+    if (!p.floats?.some((f) => f.shape?.chain || f.group)) return;
+    paras[i] = { ...p, floats: p.floats.map((f) => ({ ...f, shape: fix(f.shape), ...(f.group ? { group: { members: f.group.members.map((m) => ({ ...m, shape: fix(m.shape) })) } } : {}) })) };
+  });
+}
+
 /** w:footnotePr and w:endnotePr of settings.xml (only what the dialog Fuß- und Endnote sets). */
 export function readNoteSettings(settings: Element): DocSettings["notes"] {
   const one = (name: string): NoteProps | undefined => {
@@ -1140,6 +1231,7 @@ export function readDocx(bytes: Uint8Array): ReadResult {
   const section = pr.finalSect ?? DEFAULT_SECTION;
 
   const styleIds = new Set<string>(styles.styles.keys());
+  linkChains(paras, r.chainStories);
   return {
     state: {
       paras, styles, settings: { section, defaultTab, evenOdd: evenOdd || undefined, trackChanges: trackChanges || undefined, math: r.mathSettings, bibliography: bibliography?.read, notes: r.noteSettings, watermark: r.watermark, background }, stories: r.stories, numbering,

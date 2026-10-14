@@ -3,6 +3,7 @@
 // Left out on purpose: Sendungen, Entwicklertools, Hilfe, and groups for features we do not
 // plan (cloud, add-ins, SmartArt, 3D models, macros ...). See docs/SCOPE.md.
 
+import { GROUP_MENU } from "./features/groups";
 import type { Control, MenuEntry, Tab } from "@raabe/shell";
 
 /** What the ribbon needs from the app to show values and apply changes. */
@@ -36,7 +37,7 @@ export interface RibbonContext {
     toc: MenuEntry[]; addText: MenuEntry[]; nextNote: MenuEntry[]; equation: Popup; symbol: Popup; citation: MenuEntry[]; bibliography: Popup;
     track: MenuEntry[]; deleteComment: MenuEntry[]; accept: MenuEntry[]; reject: MenuEntry[];
     showComments: MenuEntry[]; filterMarkup: MenuEntry[]; reviewingPane: MenuEntry[];
-    themes: Popup; styleSet: Popup; colors: Popup; fonts: Popup; effects: Popup; paragraphSpacing: MenuEntry[]; watermark: Popup; pageColor: Popup;
+    fontEffects: MenuEntry[]; themes: Popup; styleSet: Popup; colors: Popup; fonts: Popup; effects: Popup; paragraphSpacing: MenuEntry[]; watermark: Popup; pageColor: Popup; coverPage: Popup;
   };
   /** Markup für Überarbeitung anzeigen (Einfaches Markup, Alle Markups …). */
   markup: { value(): string; set(v: string): void; options(): { heading?: string; items: string[] }[] };
@@ -183,14 +184,14 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
             type: "rows", rows: [
               [fontName(104), fontSize, "gap", b("font.grow", "SV"), b("font.shrink", "HS"), "gap", fontCase, "gap", b("font.clear", "Q")],
               [b("font.bold", "1"), b("font.italic", "2"), underline, b("font.strike", "4"), b("font.subscript", "S1"), b("font.superscript", "6"), "gap",
-                dd("font.effects", "D1"), highlight, fontColor],
+                dd("font.effects", "D1", "small", undefined, ctx.panels.fontEffects), highlight, fontColor],
             ],
           }],
           smaller: [[{
             type: "rows", rows: [
               [fontName(153), fontSize],
               [b("font.bold", "1"), b("font.italic", "2"), underline, b("font.strike", "4"), b("font.subscript", "S1"), b("font.superscript", "6"), "gap", b("font.clear", "Q")],
-              [dd("font.effects", "D1"), highlight, fontColor, fontCase, "gap", b("font.grow", "SV"), b("font.shrink", "HS")],
+              [dd("font.effects", "D1", "small", undefined, ctx.panels.fontEffects), highlight, fontColor, fontCase, "gap", b("font.grow", "SV"), b("font.shrink", "HS")],
             ],
           }]],
         },
@@ -232,8 +233,8 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
       shrink: ["pages", "links", "symbols", "illustrations", "headerFooter", "text", "pages", "links", "illustrations", "symbols", "headerFooter", "text", "illustrations"],
       groups: [
         { id: "pages", label: "Seiten", key: "ZP", icon: "cover-page",
-          controls: [dd("insert.coverPage", "EE", "large"), b("insert.blankPage", "EL", "large"), b("insert.pageBreak", "SU", "large")],
-          smaller: [[stack(dd("insert.coverPage", "EE", "medium"), b("insert.blankPage", "EL", "medium"), b("insert.pageBreak", "SU", "medium"))]] },
+          controls: [panel("insert.coverPage", "EE", "large", ctx.panels.coverPage), b("insert.blankPage", "EL", "large"), b("insert.pageBreak", "SU", "large")],
+          smaller: [[stack(panel("insert.coverPage", "EE", "medium", ctx.panels.coverPage), b("insert.blankPage", "EL", "medium"), b("insert.pageBreak", "SU", "medium"))]] },
         { id: "tables", label: "Tabellen", key: "ZB", icon: "table", controls: [panel("insert.table", "LA", "large", ctx.panels.insertTable)] },
         { id: "illustrations", label: "Illustrationen", key: "ZI", icon: "picture",
           controls: [dd("insert.pictures", "B1", "large", undefined, ctx.panels.pictures), panel("insert.shapes", "2", "large", ctx.panels.shapes), b("insert.chart", "I", "large")],
@@ -289,10 +290,10 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
         { id: "arrange", label: "Anordnen", key: "ZA", icon: "position",
           controls: [panel("layout.position", "PP", "large", ctx.panels.position), dd("layout.wrapText", "J", "large", undefined, ctx.panels.wrap),
             split("layout.bringForward", "GE", "large", ctx.panels.forward), split("layout.sendBackward", "GH", "large", ctx.panels.backward), b("layout.selectionPane", "AP", "large"),
-            stack(panel("layout.align", "DA", "medium", ctx.panels.align), dd("layout.group", "GG", "medium"), dd("layout.rotate", "DR", "medium", undefined, ctx.panels.rotate))],
+            stack(panel("layout.align", "DA", "medium", ctx.panels.align), dd("layout.group", "GG", "medium", undefined, GROUP_MENU), dd("layout.rotate", "DR", "medium", undefined, ctx.panels.rotate))],
           smaller: [[panel("layout.position", "PP", "large", ctx.panels.position), dd("layout.wrapText", "J", "large", undefined, ctx.panels.wrap),
             stack(split("layout.bringForward", "GE", "medium", ctx.panels.forward), split("layout.sendBackward", "GH", "medium", ctx.panels.backward), b("layout.selectionPane", "AP", "medium")),
-            stack(panel("layout.align", "DA", "medium", ctx.panels.align), dd("layout.group", "GG", "medium"), dd("layout.rotate", "DR", "medium", undefined, ctx.panels.rotate))]] },
+            stack(panel("layout.align", "DA", "medium", ctx.panels.align), dd("layout.group", "GG", "medium", undefined, GROUP_MENU), dd("layout.rotate", "DR", "medium", undefined, ctx.panels.rotate))]] },
       ],
     },
     {

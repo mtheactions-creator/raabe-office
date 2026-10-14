@@ -2,7 +2,7 @@
 // Elements the model does not interpret are kept as XML strings and written back in the
 // position the schema requires, so files stay valid and nothing is lost.
 
-import type { BorderSpec, Borders, CharProps, ParaProps, Revision, Shading, TabStop } from "@raabe/text-engine";
+import { TEXTFX_ORDER, W14_NS, type BorderSpec, type Borders, type CharProps, type ParaProps, type Revision, type Shading, type TabStop } from "@raabe/text-engine";
 import { attr, child, esc, kids, num, onOff, outer, W } from "./xml";
 
 // Child order required by the schema (ECMA-376 CT_RPr / CT_PPr).
@@ -94,6 +94,8 @@ export function readRPr(el: Element | null, rev?: RevisionOf): CharProps {
   const extra: Extra[] = [];
   for (const c of kids(el)) {
     if (rev && c.namespaceURI === W && (c.localName === "ins" || c.localName === "del")) { p.rev = rev(c, c.localName); continue; }
+    // Texteffekte und Typografie (w14): kept together as Word's XML.
+    if (c.namespaceURI === W14_NS && (TEXTFX_ORDER as readonly string[]).includes(c.localName)) { p.textFx = `${(p.textFx as string | undefined) ?? ""}${outer(c).replace(/ xmlns:w14="[^"]*"/g, "")}`; continue; }
     if (c.namespaceURI !== W || !RPR_KNOWN.has(c.localName)) { extra.push({ name: c.localName, xml: outer(c) }); continue; }
     switch (c.localName) {
       case "rStyle": p.rStyle = attr(c, "val") ?? undefined; break;
@@ -274,7 +276,8 @@ export function writeRPr(p: CharProps, opts: WriteOptions, tag = "rPr"): string 
   const langOther = extra.find((e) => e.name === "langOther")?.xml;
   if (p.lang || langOther) add("lang", `<w:lang${p.lang ? ` w:val="${esc(p.lang)}"` : ""}${langOther ? ` ${langOther}` : ""}/>`);
   for (const e of extra) if (e.name !== "rFontsOther" && e.name !== "langOther") parts.push(e);
-  const body = ordered(parts, RPR_ORDER);
+  // The w14 elements come last, as Word writes them.
+  const body = ordered(parts, RPR_ORDER) + (p.textFx ?? "");
   return body ? `<w:${tag}>${body}</w:${tag}>` : "";
 }
 

@@ -8,6 +8,7 @@ import { closePopup, colorGrid, h, showDialog, showMenu, type Command, type Cont
 import { imageInfo, imageUrl, naturalSizePt, pictureElement, type PictureFormat } from "@raabe/text-engine";
 import { DEFAULT_THEME_COLORS, pictureFromSpPr } from "@raabe/ooxml";
 import { CM, fmtCm, parseNum, type AppApi } from "./api";
+import { GROUP_MENU } from "./groups";
 import {
   BRIGHT_CONTRAST, SATURATION, SHARPEN, TEMPERATURE, TRANSPARENCY, galleryPanel, withItem, type GalleryItem, type GallerySection,
 } from "./picture-format";
@@ -428,7 +429,7 @@ export function pictureTab(api: AppApi, insertFromPath: (path: string) => Promis
     { type: "button", cmd: "layout.selectionPane", key: "AP", size }];
   const arrangeTools = (size: "medium" | "small"): Control => ({ type: "stack", items: [
     { type: "dropdown", cmd: "picture.align", key: "AA", size, menu: [], popup: (close) => menuPanel(alignMenu(), close) },
-    { type: "dropdown", cmd: "layout.group", key: "GG", size, menu: [] },
+    { type: "dropdown", cmd: "layout.group", key: "GG", size, menu: GROUP_MENU },
     S("picture.rotate", "AY", rotateMenu)] });
   const sizeControls: Control[] = [{ type: "split", cmd: "picture.crop", key: "C", size: "large", menu: cropMenu },
     { type: "stack", items: [spinner("picture.height", "Höhe:", "H", "h"), spinner("picture.width", "Breite:", "W", "w")] }];

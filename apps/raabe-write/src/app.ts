@@ -29,7 +29,10 @@ import { makeDock } from "./features/dock";
 import { viewsFeature } from "./features/views";
 import { designFeature, newDocumentStyles } from "./features/design";
 import { backgroundFeature } from "./features/background";
+import { coverPageFeature } from "./features/cover-page";
 import { bordersFeature } from "./features/borders";
+import { textEffectsFeature } from "./features/text-effects";
+import { groupsFeature, GROUP_COMMANDS } from "./features/groups";
 import { rulerFeature } from "./features/ruler";
 import { referencesFeature, REFERENCE_COMMANDS } from "./features/references";
 import { reviewFeature, REVIEW_COMMANDS } from "./features/review";
@@ -120,7 +123,7 @@ export class WriteApp {
     this.fonts.onChange(() => { for (const d of this.docs) d.editor.relayout(); });
     void platform.listFonts().then((f) => { this.fontList = f; }).catch(() => {});
     this.commands.register(...COMMANDS, ...TABLE_COMMANDS, ...PAGE_COMMANDS, ...HEADER_COMMANDS, ...PICTURE_COMMANDS, ...FIND_COMMANDS,
-      ...REFERENCE_COMMANDS, ...REVIEW_COMMANDS, ...MATH_COMMANDS, ...CONTEXT_COMMANDS, ...LIST_COMMANDS, ...PICTURE_TAB_COMMANDS, ...SHAPE_COMMANDS);
+      ...REFERENCE_COMMANDS, ...REVIEW_COMMANDS, ...MATH_COMMANDS, ...CONTEXT_COMMANDS, ...LIST_COMMANDS, ...PICTURE_TAB_COMMANDS, ...SHAPE_COMMANDS, ...GROUP_COMMANDS);
     this.implementCommands();
     this.features = this.makeFeatures();
     // Formformat's Anordnen uses Bildformat's panels.
@@ -265,6 +268,9 @@ export class WriteApp {
       design: designFeature(api),
       background: backgroundFeature(api),
       borders: bordersFeature(api),
+      textEffects: textEffectsFeature(api, this.docArea, this.dock),
+      groups: groupsFeature(api),
+      cover: coverPageFeature(api),
       views: viewsFeature(api, {
         titleBar: () => this.titleBar.el, docArea: this.docArea,
         openBackstage: () => this.openBackstage("info"), setZoom: (z) => this.setZoom(z),
@@ -280,7 +286,7 @@ export class WriteApp {
     if (e.isHeaderFooter()) tabs.push(this.features.hf.tab);
     if (e.inTable()) tabs.push(this.features.tables.designTab, this.features.tables.layoutTab);
     // A shape (also while its text is edited) shows Formformat, a picture Bildformat.
-    if (e.selectedShape()) tabs.push(this.features.shapes.tab);
+    if (e.selectedShape() || e.selectedGroup()) tabs.push(this.features.shapes.tab);
     else if (e.selectedImage()) tabs.push(this.features.pictures.tab);
     if (this.features.math.editing()) tabs.push(this.features.math.tab);
     const wasHf = this.contextualKey.includes("headerFooter");
@@ -372,6 +378,7 @@ export class WriteApp {
     this.features.selection.render();
     this.features.styles.render();
     this.features.ruler.refresh();
+    this.features.textEffects.refresh();
     if (countWords && this.wordCache?.paras !== d.editor.paragraphs()) {
       // Counting runs after a short pause in typing, not on every key.
       clearTimeout(this.wordTimer);
@@ -1086,6 +1093,8 @@ export class WriteApp {
         get paragraphSpacing() { return self.features.design.spacingMenu; },
         watermark: (close) => this.features.background.watermarkPanel(close),
         pageColor: (close) => this.features.background.pageColorPanel(close),
+        coverPage: (close) => this.features.cover.panel(close),
+        get fontEffects() { return self.features.textEffects.fontEffectsMenu; },
         wrap: ["picture.wrapInline", "picture.wrapSquare", "picture.wrapTight", "picture.wrapThrough", "picture.wrapTopBottom", "picture.wrapBehind", "picture.wrapFront"].map((cmd) => ({ cmd })),
       },
       markup: {

@@ -669,3 +669,23 @@ built with Word's labels and behaviour.
   included. Seitenränder: w:pgBorders (from the page edge or the text, all/first/other pages)
   in Word's dialog Rahmen und Schattierung, which also sets paragraph borders and shading.
   Word opens all of it as its own (checked through COM).
+- **Texteffekte und Typografie** (`probe_word_texteffects.py` applied every gallery entry in
+  Word and read the w14 XML it wrote): Word's 15 presets, Kontur, Schatten, Spiegelung and
+  Leuchten galleries with their names, Zahlenformatvorlagen, Ligaturen and Stil-Sets; kept as
+  Word's w14 elements in the run properties (written back in Word's order) and drawn with CSS
+  (shadows, outline, gradient fill, reflection, glow, OpenType features). The WordArt-Formate
+  of the Formformat tab and the pane Texteffekte formatieren use the same data. Abschrägung,
+  3D-Drehung and Transformieren are not included (greyed).
+- **Gruppieren**: objects selected with Umschalt/Strg+Klick become one floating object with
+  members placed inside it, written as Word's wpg:wgp (Word opens ours, we read Word's);
+  Gruppierung aufheben and wiederherstellen, member text editable, resizing scales members.
+- **Verknüpfte Textfelder**: Verknüpfung erstellen (the next click picks an empty text box, Word's
+  messages otherwise) and aufheben; the text flows through the boxes in order and is written as
+  Word writes it (wps:txbx id, wps:linkedTxbx id/seq). Word reads our chains (checked via COM).
+- **Deckblatt**: Word's gallery layout and entries; the designs are RaabeWrite's own for school
+  work (Schlicht, Facharbeit, Referat, Seitenleiste, Rahmen, Farbfläche, Linie; Word's designs
+  are Microsoft's building blocks), in the theme's accent colour, with bracketed placeholders
+  (the first is selected). Stored as Word stores its own: a Cover Pages sdt at the start of the
+  document ending with a page break, so inserting again replaces it, Aktuelles Deckblatt
+  entfernen removes it, and Word treats ours as its cover page.
+- Silbentrennung moves to F, where the hyphenation patterns come with the languages.

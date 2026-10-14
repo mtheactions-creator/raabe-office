@@ -2,10 +2,10 @@
 // defaults, the Auswahlbereich's names and Ausblenden (wp:docPr).
 
 import { describe, expect, it } from "vitest";
-import { readFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { strFromU8, unzipSync } from "fflate";
-import { OFFICE_2013_COLORS, Revisions, sortDate, sortNumber, sortOrder, themeColor, type StyleDef } from "@raabe/text-engine";
+import { DEFAULT_SHAPE_BODY, Doc, OFFICE_2013_COLORS, Revisions, makePara, sortDate, sortNumber, sortOrder, themeColor, type FloatObject, type StyleDef } from "@raabe/text-engine";
 import { readDocx, writeDocx } from "../src";
 
 const fixture = (name: string) => new Uint8Array(readFileSync(join(__dirname, "fixtures", name)));
@@ -171,5 +171,59 @@ describe("Seitenhintergrund", () => {
     expect(back.background).toEqual({ color: "FAE2D5", colorTheme: 'w:themeColor="accent2" w:themeTint="33"' });
     expect(back.section.pageBorders?.offsetFrom).toBe("page");
     expect(back.section.pageBorders?.left?.size).toBe(1.5);
+  });
+});
+
+describe("Gruppieren", () => {
+  it("writes a group as Word's wpg and reads its members back in place", () => {
+    const shape = (geometry: string) => ({ kind: "shape" as const, body: DEFAULT_SHAPE_BODY, styleFill: { kind: "solid" as const, color: "4472C4" }, styleLine: { color: "2F528F", width: 1 }, fontColor: "FFFFFF", _g: geometry });
+    const members = [
+      { x: 0, y: 0, width: 120, height: 60, shape: shape("rect"), alt: { name: "Rechteck 1" } },
+      { x: 160, y: 40, width: 100, height: 80, shape: shape("ellipse"), pic: { geometry: "ellipse" }, alt: { name: "Ellipse 2" } },
+    ].map(({ shape: { _g: _x, ...sh }, ...m }) => ({ ...m, shape: sh }));
+    const group: FloatObject = { at: 0, data: undefined, width: 260, height: 120, x: { rel: "column", offset: 29 }, y: { rel: "paragraph", offset: 49 }, wrap: "front", side: "bothSides",
+      dist: [0, 0, 9, 9], alt: { name: "Gruppieren 3" }, group: { members } };
+    const d = new Doc({ paras: [{ ...makePara("Absatz mit Gruppe"), floats: [group] }] });
+    const out = writeDocx(d.state(), null);
+    const xml = part(out, "word/document.xml");
+    expect(xml).toContain('<a:graphicData uri="http://schemas.microsoft.com/office/word/2010/wordprocessingGroup">');
+    expect(xml).toContain('<wps:cNvPr id="3" name="Ellipse 2"/>');
+    const back = readDocx(out).state.paras[0].floats![0];
+    expect(back.alt?.name).toBe("Gruppieren 3");
+    expect(back.group?.members.map((m) => [m.x, m.y, m.width, m.height, m.alt?.name])).toEqual([[0, 0, 120, 60, "Rechteck 1"], [160, 40, 100, 80, "Ellipse 2"]]);
+    expect(back.group?.members[1].pic?.geometry).toBe("ellipse");
+  });
+});
+
+describe("Verknüpfte Textfelder", () => {
+  it("write the chain as Word's txbx id and linkedTxbx and read it back", () => {
+    const box = (seq: number, x: number, y: number): FloatObject => ({ at: 0, data: undefined, width: 120, height: 50, x: { rel: "column", offset: x }, y: { rel: "paragraph", offset: y },
+      wrap: "front", side: "bothSides", dist: [0, 0, 9, 9],
+      shape: { kind: "textbox", body: { ...DEFAULT_SHAPE_BODY, anchor: "t" }, ...(seq === 0 ? { story: "tx:1" } : {}), chain: { id: 1, seq, ...(seq ? { story: "tx:1" } : {}) } } });
+    const d = new Doc({ paras: [{ ...makePara("Absatz"), floats: [box(0, 10, 20), box(1, 200, 120)] }] });
+    d.setStory("tx:1", [makePara("Erster Absatz im Textfeld."), makePara("Zweiter Absatz.")]);
+    const out = writeDocx(d.state(), null);
+    const xml = part(out, "word/document.xml");
+    expect(xml).toContain('<wps:txbx id="1"><w:txbxContent>');
+    expect(xml).toContain('<wps:linkedTxbx id="1" seq="1"/>');
+    const back = readDocx(out).state.paras[0].floats!;
+    expect(back.map((f) => f.shape?.chain)).toEqual([{ id: 1, seq: 0 }, { id: 1, seq: 1, story: back[0].shape!.story }]);
+  });
+});
+
+describe("Deckblatt", () => {
+  it("writes the cover page as Word's Cover Pages sdt and reads it back", () => {
+    const group = { id: 1, kind: "sdt" as const, open: '<w:sdt><w:sdtPr><w:id w:val="-1234"/><w:docPartObj><w:docPartGallery w:val="Cover Pages"/><w:docPartUnique/></w:docPartObj></w:sdtPr><w:sdtContent>', close: "</w:sdtContent></w:sdt>" };
+    const cover = [makePara("[Dokumenttitel]", { style: "Titel", align: "center", before: 190 }), makePara("[Datum]", { align: "center" }), makePara(String.fromCharCode(12))].map((p) => ({ ...p, group }));
+    const d = new Doc({ paras: [...cover, makePara("Einleitung")] });
+    const out = writeDocx(d.state(), null);
+    if (process.env.COVER_OUT) writeFileSync(process.env.COVER_OUT, out);
+    const xml = part(out, "word/document.xml");
+    expect(xml).toMatch(/<w:body><w:sdt><w:sdtPr><w:id w:val="-1234"\/><w:docPartObj><w:docPartGallery w:val="Cover Pages"\/><w:docPartUnique\/><\/w:docPartObj><\/w:sdtPr><w:sdtContent><w:p>/);
+    expect(xml).toMatch(/<w:br w:type="page"\/><\/w:r><\/w:p><\/w:sdtContent><\/w:sdt><w:p>/);
+    const back = readDocx(out).state.paras;
+    expect(back.map((p) => p.text)).toEqual(["[Dokumenttitel]", "[Datum]", String.fromCharCode(12), "Einleitung"]);
+    expect(back.slice(0, 3).every((p) => String(p.group?.open ?? "").includes('w:docPartGallery w:val="Cover Pages"'))).toBe(true);
+    expect(back[3].group).toBeUndefined();
   });
 });

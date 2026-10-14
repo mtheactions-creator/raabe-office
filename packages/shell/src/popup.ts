@@ -54,6 +54,8 @@ export type MenuEntry =
   | { label: string; icon?: string; submenu: MenuEntry[] | (() => MenuEntry[]); disabled?: boolean }
   /** A submenu with own content (a gallery of tiles: Bildeffekte > Schatten). */
   | { label: string; icon?: string; flyout: () => HTMLElement; disabled?: boolean }
+  /** Own content inside the menu (the presets gallery at the top of Word's Texteffekte menu). */
+  | { block: () => HTMLElement }
   /** A row of icon buttons under a label (Word's "Einfügeoptionen:"). */
   | { label: string; icons: { icon: string; tip: string; run: () => void; disabled?: boolean }[] }
   | "-";
@@ -67,6 +69,7 @@ function buildMenu(commands: Commands, entries: MenuEntry[], root: HTMLElement, 
   for (const e of entries) {
     if (e === "-") { menu.append(h("hr")); continue; }
     if ("heading" in e) { menu.append(h("div", { class: "menu-heading" }, e.heading)); continue; }
+    if ("block" in e) { menu.append(e.block()); continue; }
     if ("icons" in e) {
       const row = h("div", { class: "menu-icons" }, ...e.icons.map((ic) => h("button", {
         class: "menu-icon", "data-tip": ic.tip, "aria-label": ic.tip, disabled: !!ic.disabled,

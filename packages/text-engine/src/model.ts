@@ -39,6 +39,8 @@ export interface CharProps {
   readonly rStyle?: string;
   /** Run properties the engine does not interpret, kept for writing back. */
   readonly extra?: readonly unknown[];
+  /** Texteffekte und Typografie: Word's w14 elements (glow, shadow, textOutline …) as XML. */
+  readonly textFx?: string;
   /** Tracked change this text belongs to (Änderungen nachverfolgen). */
   readonly rev?: Revision;
 }
@@ -315,6 +317,26 @@ export interface FloatObject {
   readonly z?: number;
   /** Shapes and text boxes (wps:wsp); their outline, fill and effects are in `pic`. */
   readonly shape?: ShapeInfo;
+  /** A group (Gruppieren, wpg:wgp): its shapes and pictures inside the object's box. */
+  readonly group?: GroupInfo;
+}
+
+/** A shape, text box or picture of a group; position and size in points within the group's box. */
+export interface GroupMember {
+  readonly x: number;
+  readonly y: number;
+  readonly width: number;
+  readonly height: number;
+  readonly shape?: ShapeInfo;
+  readonly pic?: PictureFormat;
+  readonly image?: ImageData;
+  readonly alt?: AltText;
+  /** The member's XML as read or as it was a single object (wps:wsp or pic:pic). */
+  readonly data?: unknown;
+}
+
+export interface GroupInfo {
+  readonly members: readonly GroupMember[];
 }
 
 /** A shape's text frame (wps:bodyPr): insets in points, vertical anchor, wrapping, autofit. */
@@ -347,6 +369,11 @@ export interface ShapeInfo {
   readonly fontColor?: string;
   /** The text story ("tx:3"), when the shape has text. */
   readonly story?: string;
+  /**
+   * Verknüpfte Textfelder: the chain's id and this box's place in it (0: the first, which owns
+   * the text); later boxes name the chain's story, through which the text flows on.
+   */
+  readonly chain?: { readonly id: number; readonly seq: number; readonly story?: string };
   readonly body: ShapeBody;
   /** wps:style as XML, written back unless a Formenart replaced it. */
   readonly styleXml?: string;

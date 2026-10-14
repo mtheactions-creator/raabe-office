@@ -70,6 +70,8 @@ export interface ResolvedChar {
   readonly hidden: boolean;
   readonly spacing: number;
   readonly kern: number;
+  /** Texteffekte (w14 XML), drawn by the view. */
+  readonly textFx?: string;
   /** Tracked change the text belongs to (direct formatting only). */
   readonly rev?: Revision;
 }
@@ -383,6 +385,7 @@ export class StyleSheet {
       hidden: !!c.hidden,
       spacing: c.spacing ?? 0,
       kern: c.kern ?? 0,
+      ...(c.textFx ? { textFx: c.textFx } : {}),
       rev: r.rev,
     };
     byStyle.set(r, hit);

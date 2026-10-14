@@ -318,7 +318,7 @@ export class Ribbon {
 
   /** A menu entry that does something now (a command, an action or a submenu). */
   private entryEnabled(e: MenuEntry): boolean {
-    if (e === "-" || "heading" in e) return false;
+    if (e === "-" || "heading" in e || "block" in e) return false;
     if ("cmd" in e) return this.commands.isEnabled(e.cmd);
     if ("submenu" in e || "flyout" in e) return !e.disabled;
     if ("icons" in e) return e.icons.some((i) => !i.disabled);

@@ -18,7 +18,7 @@ import { PT } from "./fonts";
 import { fieldType, type Layouter, type Line, type ParaEnv, type ParaLayout } from "./layout";
 import {
   DEFAULT_SECTION, EMPTY, OBJ, ONE_COLUMN, cellKey, type BorderSpec, type Borders, type CellMargins, type CharProps, type FloatObject,
-  type ImageData, type Numbering, type PageSetup, type Para, type ParaProps, type Section, type Shading, type ShapeInfo, type TableDef,
+  type GroupInfo, type ImageData, type Numbering, type PageSetup, type Para, type ParaProps, type Section, type Shading, type ShapeInfo, type TableDef,
 } from "./model";
 import { formatNumber, listLabels, type ListLabel } from "./numbering";
 import type { ResolvedChar, StyleSheet, TableStyleDef, TableStylePart } from "./styles";
@@ -80,6 +80,8 @@ export type Deco =
     readonly para: number; readonly index: number; readonly pic?: PictureFormat; readonly z?: number;
     /** Shapes: what to draw (with `pic`); their text is the story `shape.story`. */
     readonly shape?: ShapeInfo;
+    /** A group: its members, drawn inside the box. */
+    readonly group?: GroupInfo;
   };
 
 export interface PageLayout {
@@ -267,6 +269,48 @@ class Flow {
         if (f.numRestart === "eachSect") fn = (f.numStart ?? 1) - 1;
         if (e.numRestart === "eachSect") en = (e.numStart ?? 1) - 1;
       }
+    }
+  }
+
+  private readonly chainBoxes: { shape: ShapeInfo; pic: PictureFormat | undefined; page: number; x: number; y: number; w: number; h: number }[] = [];
+
+  /**
+   * Verknüpfte Textfelder: each chain's story laid out at the first box's width and its lines
+   * distributed through the boxes in order; what does not fit into the last one is hidden.
+   */
+  placeChains(): void {
+    const by = new Map<number, typeof this.chainBoxes>();
+    for (const b of this.chainBoxes) by.set(b.shape.chain!.id, [...(by.get(b.shape.chain!.id) ?? []), b]);
+    for (const list of by.values()) {
+      list.sort((a, b) => a.shape.chain!.seq - b.shape.chain!.seq);
+      const head = list.find((b) => b.shape.chain!.seq === 0 && b.shape.story);
+      const id = head?.shape.story;
+      const paras = id ? this.input.stories.get(id) : undefined;
+      if (!head || !id || !paras) continue;
+      const boxes = list.filter((b) => b === head || b.shape.chain!.seq > 0);
+      const rects = boxes.map((b) => { const tr = shapeTextRect(b.pic, b.shape, b.w, b.h); return { page: b.page, x: b.x + tr.x, y: b.y + tr.y, w: tr.w, h: tr.h }; });
+      const frames = rects.map((r) => this.frame({ page: r.page, story: id, kind: "textbox", x: r.x, y: r.y, w: r.w, h: r.h }).id);
+      const width = head.shape.body.wrap ? rects[0].w : 20000;
+      const labels = listLabels(paras, this.input.numbering, this.styles);
+      const layout = newStory(paras.length);
+      let bi = 0, yy = 0;
+      let prev: ParaLayout | null = null;
+      paras.forEach((para, i) => {
+        const pl = this.lt.paragraph(para, { width, label: labels[i], notes: this.noteNumbers });
+        layout.paras[i] = pl;
+        layout.firstPlaced[i] = layout.placed.length;
+        yy += prev ? this.gapBetween(prev, pl) : pl.before;
+        pl.lines.forEach((ln, k) => {
+          // A line that does not fit goes on in the next box.
+          while (bi < rects.length - 1 && yy > 0 && yy + ln.height > rects[bi].h + 0.5) { bi++; yy = 0; }
+          const r = rects[bi];
+          const hide = yy + ln.height > r.h + 0.5 && bi === rects.length - 1 && yy > 0;
+          layout.placed.push({ para: i, line: k, page: r.page, x: r.x, y: r.y + yy, frame: frames[bi], ...(hide ? { hide: true } : {}) });
+          yy += ln.height;
+        });
+        prev = pl;
+      });
+      this.stories.set(id, layout);
     }
   }
 
@@ -932,8 +976,12 @@ class Flow {
         ? (f.y.align === "center" ? y0 + (yh - h) / 2 : f.y.align === "bottom" || f.y.align === "outside" ? y0 + yh - h : y0)
         : y0 + f.y.offset * PT;
       let hh = h;
-      if (f.shape?.story) hh = this.placeShapeText(page, f.shape, f.pic, x, y, w, h);
-      page.deco.push({ kind: "image", story, x, y, w, h: hh, image: f.image, behind: f.wrap === "behind", para: i, index, pic: f.pic, z: f.z, shape: f.shape });
+      // Linked text boxes get their text once all boxes of the chain have their places.
+      if (f.shape?.chain) this.chainBoxes.push({ shape: f.shape, pic: f.pic, page: page.index, x, y, w, h });
+      else if (f.shape?.story) hh = this.placeShapeText(page, f.shape, f.pic, x, y, w, h);
+      // A group: the text of its text boxes and shapes, each in its own place.
+      for (const m of f.group?.members ?? []) if (m.shape?.story) this.placeShapeText(page, m.shape, m.pic, x + m.x * PT, y + m.y * PT, m.width * PT, m.height * PT);
+      page.deco.push({ kind: "image", story, x, y, w, h: hh, image: f.image, behind: f.wrap === "behind", para: i, index, pic: f.pic, z: f.z, shape: f.shape, group: f.group });
       if (wrap && f.wrap !== "front" && f.wrap !== "behind" && f.wrap !== "none") {
         const [dt, db, dl, dr] = f.dist.map((d) => d * PT);
         const list = this.excl.get(page.index) ?? [];
@@ -1419,6 +1467,7 @@ export function layoutDocument(lt: Layouter, input: FlowInput): Layout {
       (page as { bodyBottom: number }).bodyBottom = bottom;
     }
   }
+  flow.placeChains();
   flow.numberLines();
   buildIndex(flow.main);
   for (const s of flow.stories.values()) buildIndex(s);

@@ -18,6 +18,7 @@ import { COLUMN_BREAK, LINE_BREAK, OBJ, PAGE_BREAK, type ImageData, type InlineO
 import type { Line, Segment } from "./layout";
 import type { Deco, Frame, Layout, PageLayout, PlacedLine, StoryLayout } from "./flow";
 import { themeColor, type ResolvedChar } from "./styles";
+import { textFxCss } from "./textfx";
 
 export interface Selection {
   anchor: Pos;
@@ -38,6 +39,8 @@ export interface RenderOptions {
   readonly active: string;
   /** Cells selected as a whole (cellKey), drawn filled. */
   readonly cells?: ReadonlySet<string>;
+  /** Further selected objects (Umschalt+Klick): their frames (page px). */
+  readonly others?: readonly { readonly page: number; readonly x: number; readonly y: number; readonly w: number; readonly h: number }[];
   /** A selected picture: its box gets Word's eight sizing handles. */
   readonly image?: {
     readonly page: number; readonly x: number; readonly y: number; readonly w: number; readonly h: number;
@@ -592,7 +595,8 @@ export class View {
     const key = grid.map((f) => `g${f.x},${f.y},${f.w},${f.h}`).join(";") + "|" + page.deco.map((d) => {
       if (d.kind === "rect") return `r${d.x},${d.y},${d.w},${d.h},${d.fill},${this.dimmed(d.story)}`;
       if (d.kind === "line") return `l${d.x1},${d.y1},${d.x2},${d.y2},${d.width},${d.color},${d.style},${this.dimmed(d.story)}`;
-      const text = d.shape?.story ? this.shapeTextKey(d.shape.story, page.index) : "";
+      const text = (d.shape?.story ? this.shapeTextKey(d.shape.story, page.index) : "") +
+        (d.group ? `g${idOf(d.group)}:${d.group.members.map((m) => (m.shape?.story ? this.shapeTextKey(m.shape.story, page.index) : "")).join("/")}` : "");
       return `i${d.x},${d.y},${d.w},${d.h},${idOf(d.image)},${d.behind},${this.dimmed(d.story)},${d.z ?? 0},${d.pic ? JSON.stringify(d.pic) : ""},${d.shape ? idOf(d.shape) : ""},${text}`;
     }).join(";") + "|" + (page.lineNumbers ?? []).map((n) => `${n.x},${n.y},${n.text}`).join(";") + "|" + this.watermarkKey();
     if (key === pv.decoKey) return;
@@ -699,7 +703,25 @@ export class View {
   }
 
   /** A shape with its text (in page coordinates, so the lines sit where the layout put them). */
-  private shapeDeco(d: Extract<Deco, { kind: "image" }>): HTMLElement {
+  /** A group: its shapes (with their text) and pictures inside the group's box. */
+  private groupDeco(d: Extract<Deco, { kind: "image" }>): HTMLElement {
+    const wrap = document.createElement("div");
+    wrap.style.cssText = "position:absolute;left:0;top:0;width:0;height:0;pointer-events:none";
+    const page = this.layoutRef!.pages.findIndex((pg) => pg.deco.includes(d));
+    for (const m of d.group!.members) {
+      const md = { ...d, x: d.x + m.x * PT, y: d.y + m.y * PT, w: m.width * PT, h: m.height * PT, shape: m.shape, pic: m.pic, image: m.image, group: undefined };
+      if (m.shape) wrap.append(this.shapeDeco(md, page));
+      else if (m.image) {
+        const el = document.createElement("div");
+        el.style.cssText = `position:absolute;left:${md.x}px;top:${md.y}px;width:${md.w}px;height:${md.h}px`;
+        el.append(pictureElement(imageUrl(m.image), md.w, md.h, m.pic));
+        wrap.append(el);
+      }
+    }
+    return wrap;
+  }
+
+  private shapeDeco(d: Extract<Deco, { kind: "image" }>, pageIndex?: number): HTMLElement {
     const wrap = document.createElement("div");
     wrap.style.cssText = "position:absolute;left:0;top:0;width:0;height:0";
     const shape = shapeElement(d.w, d.h, d.pic, d.shape!);
@@ -707,7 +729,8 @@ export class View {
     shape.style.top = `${d.y}px`;
     const rot = shape.style.transform;
     wrap.append(shape);
-    const story = d.shape!.story;
+    const chain = d.shape!.chain;
+    const story = d.shape!.story ?? chain?.story;
     const sl = story ? this.layoutRef?.stories.get(story) : undefined;
     if (story && sl) {
       const paras = this.storyParas(story);
@@ -719,11 +742,13 @@ export class View {
       const tr = shapeTextRect(d.pic, d.shape!, d.w, d.h);
       const tf = [rot, turn].filter(Boolean).join(" ");
       if (tf) { text.style.transform = tf; text.style.transformOrigin = turn && !rot ? `${d.x + tr.x + tr.w / 2}px ${d.y + tr.y + tr.h / 2}px` : `${d.x + d.w / 2}px ${d.y + d.h / 2}px`; }
-      const page = this.layoutRef!.pages.findIndex((pg) => pg.deco.includes(d));
+      const page = pageIndex ?? this.layoutRef!.pages.findIndex((pg) => pg.deco.includes(d));
       const prevColor = this.autoColor;
       this.autoColor = d.shape!.fontColor ? `#${d.shape!.fontColor}` : "#000";
       for (const pl of sl.placed) {
         if (pl.page !== page || pl.hide) continue;
+        // Linked boxes: only the lines that flowed into this box.
+        if (chain && (pl.x < d.x - 1 || pl.x > d.x + d.w + 1 || pl.y < d.y - 1 || pl.y > d.y + d.h + 1)) continue;
         const para = paras[pl.para];
         const pll = sl.paras[pl.para];
         const line = pll?.lines[pl.line];
@@ -736,7 +761,7 @@ export class View {
       }
       this.autoColor = prevColor;
       // Text boxes cut off text below their bottom edge, as in Word.
-      if (d.shape!.kind === "textbox") text.style.clipPath = `inset(${d.y}px calc(100% - ${d.x + d.w}px) calc(100% - ${d.y + d.h}px) ${d.x}px)`;
+      if (d.shape!.kind === "textbox" && !chain) text.style.clipPath = `inset(${d.y}px calc(100% - ${d.x + d.w}px) calc(100% - ${d.y + d.h}px) ${d.x}px)`;
       wrap.append(text);
     }
     wrap.style.pointerEvents = "none";
@@ -744,6 +769,7 @@ export class View {
   }
 
   private decoElement(d: Deco): HTMLElement {
+    if (d.kind === "image" && d.group) return this.groupDeco(d);
     if (d.kind === "image" && d.shape) return this.shapeDeco(d);
     const el = document.createElement("div");
     if (d.kind === "rect") {
@@ -776,11 +802,22 @@ export class View {
     const sections = new Set(layout.pages.map((p) => p.section)).size;
     const img = this.opts.image && this.opts.image.page === page.index ? this.opts.image : null;
     const tb = this.opts.table !== undefined ? this.tableBounds(page, this.opts.table) : null;
-    const key = (editing ? `${page.bodyTop}|${page.bodyBottom}|${page.section}|${sections}|${pv.w}` : "") +
+    const others = (this.opts.others ?? []).filter((o) => o.page === page.index);
+    const key = others.map((o) => `o${o.x},${o.y},${o.w},${o.h}`).join("") + (editing ? `${page.bodyTop}|${page.bodyBottom}|${page.section}|${sections}|${pv.w}` : "") +
       (img ? `|img${img.x},${img.y},${img.w},${img.h},${img.crop ? `${img.crop.x},${img.crop.y},${img.crop.w},${img.crop.h}` : ""},${img.picture},${img.editing},${(img.adjust ?? []).map((a) => `${a.x},${a.y}`).join(";")},${(img.ends ?? []).map((a) => `${a.x},${a.y}`).join(";")}` : "") + (tb ? `|tb${tb.x},${tb.y},${tb.w},${tb.h},${tb.first},${tb.last}` : "");
     if (key === pv.overlayKey) return;
     pv.overlayKey = key;
     const handles: HTMLElement[] = [];
+    for (const o of others) {
+      const fr = document.createElement("div");
+      fr.style.cssText = `position:absolute;left:${o.x}px;top:${o.y}px;width:${o.w}px;height:${o.h}px;box-sizing:border-box;border:1px solid #6f8db9;pointer-events:none`;
+      for (const [hx, hy] of [[0, 0], [0.5, 0], [1, 0], [0, 0.5], [1, 0.5], [0, 1], [0.5, 1], [1, 1]]) {
+        const d = document.createElement("div");
+        d.style.cssText = `position:absolute;left:${hx * o.w - 4}px;top:${hy * o.h - 4}px;width:7px;height:7px;border-radius:50%;background:#fff;border:1px solid #6f8db9`;
+        fr.append(d);
+      }
+      handles.push(fr);
+    }
     if (img && img.crop) {
       // Zuschneiden: the whole picture dimmed, the frame with Word's black crop marks.
       const ghost = document.createElement("img");
@@ -1014,6 +1051,7 @@ export class View {
     let s = `position:absolute;white-space:pre;font:${this.fonts.cssFont(c)};line-height:${lh}px;` +
       `color:${rev ?? (c.color === "auto" ? this.autoColor : `#${c.color}`)};font-kerning:${c.kern && c.size >= c.kern ? "normal" : "none"};font-variant-ligatures:none`;
     if (c.spacing) s += `;letter-spacing:${c.spacing * PT}px`;
+    if (c.textFx) s += `;${textFxCss(c.textFx, this.docRef?.styles.theme.colors)}`;
     if (c.caps) s += ";text-transform:uppercase";
     if (c.smallCaps) s += ";font-variant-caps:small-caps";
     const deco: string[] = [];
