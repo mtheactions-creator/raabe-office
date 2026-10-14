@@ -582,3 +582,106 @@ body.touch .qat button { height: 36px; min-width: 36px; }
 .rpanel .shape-style-tile { position: relative; padding: 0; width: 76px; height: 46px; border: 1px solid transparent; background: transparent; }
 .rpanel .shape-style-tile:hover { border-color: #c7c7c7; background: #f5f5f5; }
 .rpanel .shape-style-tile .abc { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font: 11px "Segoe UI", sans-serif; pointer-events: none; }
+
+/* Einfügen > Symbol (Word: 5 x 4 recent symbols, then Weitere Symbole...). */
+.rpanel.sympanel { padding: 2px; width: 160px; }
+.rpanel.sympanel .symgrid { display: grid; grid-template-columns: repeat(5, 29px); grid-auto-rows: 29px; justify-content: center; }
+.rpanel.sympanel .symcell { font-size: 17px; border: 1px solid transparent; padding: 0; }
+.rpanel.sympanel .symcell:hover { background: var(--hover); border-color: var(--border); }
+.rpanel.sympanel hr { margin: 2px 0; }
+.rpanel.sympanel .menu-like { display: flex; align-items: center; gap: 8px; width: 100%; padding: 6px 8px; text-align: left; }
+.rpanel.sympanel .menu-like:hover { background: var(--hover); }
+/* The Symbol dialog. */
+.dialog.symdialog { width: 640px; }
+.symdialog .sympage .row { display: flex; align-items: center; gap: 16px; margin: 6px 0; }
+.symdialog label.field.row { display: flex; flex-direction: row; align-items: center; gap: 6px; margin: 0; }
+.symdialog .sympage .row button { height: 28px; padding: 0 12px; border: 1px solid #c7c7c7; border-radius: 4px; background: var(--card); }
+.symdialog .sympage .row button:disabled { color: #a0a0a0; }
+.symdialog .symfont { width: 200px; }
+.symdialog .symsubset { width: 220px; }
+.symdialog .symgridwrap { border: 1px solid #a0a0a0; }
+.symdialog .symscroll { position: relative; height: 217px; overflow-y: scroll; outline: none; background:
+  linear-gradient(to right, #a0a0a0 1px, transparent 1px) 0 0 / calc(100% / 16) 31px, linear-gradient(to bottom, #a0a0a0 1px, transparent 1px) 0 0 / 100% 31px; background-attachment: local; }
+.symdialog .syminner { position: relative; }
+.symdialog .symcellg { position: absolute; width: calc(100% / 16); height: 31px; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: default; box-sizing: border-box; }
+.symdialog .symcellg.on { background: #0078d7; color: #fff; }
+.symdialog .symlabel { margin-top: 8px; }
+.symdialog .symrecent { display: grid; grid-template-columns: repeat(27, 1fr); border: 1px solid #a0a0a0; height: 31px; }
+.symdialog .symrecentcell { display: flex; align-items: center; justify-content: center; border-right: 1px solid #a0a0a0; font-size: 15px; overflow: hidden; }
+.symdialog .symbottom { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 8px; }
+.symdialog .symname { min-height: 20px; }
+.symdialog .symcode { width: 60px; }
+.symdialog .symvon { width: 150px; }
+.symdialog .symspecial { height: 330px; overflow-y: auto; border: 1px solid #a0a0a0; outline: none; }
+.symdialog .symspecialhead, .symdialog .symspecialrow { display: grid; grid-template-columns: 60px 1fr 200px; padding: 2px 6px; }
+.symdialog .symspecialhead { font-weight: 600; background: #f3f3f3; }
+.symdialog .symspecialrow.on { background: #0078d7; color: #fff; }
+.symdialog .symspecialrow .ch { text-align: center; }
+
+/* List boxes in dialogs (Word's list controls). */
+.dialog .lb { border: 1px solid #a0a0a0; background: #fff; overflow-y: auto; outline: none; user-select: none; }
+.dialog .lb .lbi { padding: 2px 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: default; }
+.dialog .lb .lbi.on { background: #0078d7; color: #fff; }
+.dialog .lb .lbi.head { font-weight: 600; }
+.dialog .row { display: flex; align-items: center; gap: 10px; margin: 6px 0; }
+.dialog .row.two > * { flex: 1; }
+.dialog label.field.row { flex-direction: row; align-items: center; gap: 8px; }
+.dialog .disabled { color: #a0a0a0; }
+.dialog .iconbtn { width: 30px; height: 28px; border: 1px solid #c7c7c7; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; }
+.dialog .dlg-body button:not(.lbi) { min-height: 28px; padding: 0 12px; border: 1px solid #c7c7c7; border-radius: 4px; background: var(--card); }
+.dialog .dlg-body button:disabled { color: #a0a0a0; }
+/* Link einfügen. */
+.linkdlg .lkdialog { display: grid; grid-template-columns: 110px 1fr 120px; gap: 12px; min-height: 360px; }
+.linkdlg .lkside { border: 1px solid #a0a0a0; background: #fff; display: flex; flex-direction: column; }
+.linkdlg .lkside .lkhead { text-align: center; padding: 6px 0; }
+.linkdlg .lkside button { border: 0 !important; border-radius: 0 !important; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 10px 4px !important; text-align: center; }
+.linkdlg .lkside button.on { background: #cce4f7; }
+.linkdlg .lkmain input[type=text] { flex: 1; }
+.linkdlg .lkpage { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+.linkdlg .lkfolderbox { flex: 1; display: flex; align-items: center; gap: 6px; border: 1px solid #c7c7c7; height: 28px; padding: 0 8px; background: #fff; }
+.linkdlg .lkbrowse { display: grid; grid-template-columns: 100px 1fr; border: 1px solid #a0a0a0; height: 230px; }
+.linkdlg .lkviews { display: flex; flex-direction: column; background: #f3f3f3; }
+.linkdlg .lkviews button { flex: 1; border: 0 !important; border-radius: 0 !important; white-space: normal; }
+.linkdlg .lkviews button.on { background: #cce4f7; }
+.linkdlg .lkfiles { border: 0; height: 230px; }
+.linkdlg .lkplaces, .bmdlg .bmlist, .xrdlg .xrlist { height: 240px; }
+.linkdlg .lkmails { height: 160px; }
+.linkdlg .lkbuttons { display: flex; flex-direction: column; gap: 8px; }
+.linkdlg .lkpath { color: #444; word-break: break-all; }
+.bmdlg .bmdialog .bmleft { display: flex; flex-direction: column; gap: 6px; }
+.bmdlg .dlg-buttons { flex-wrap: wrap; }
+/* Beschriftung and Abbildungsverzeichnis. */
+.capdlg .capline { display: flex; align-items: center; border: 1px solid #a0a0a0; background: #fff; height: 30px; padding: 0 6px; font-style: italic; font-size: 15px; }
+.capdlg .capline .captext { flex: 1; border: 0 !important; height: 26px; font: inherit; outline: none; }
+.capdlg .capfixed { white-space: pre; margin-right: 2px; }
+.capdlg fieldset label.field.row select { flex: 1; }
+.tofdlg .toftabs { border-bottom: 1px solid var(--border); margin-bottom: 10px; }
+.tofdlg .toftabs span { display: inline-block; padding: 6px 12px; border-bottom: 2px solid var(--accent); font-weight: 600; }
+.tofdlg .tofcols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.tofdlg .tofpreview { height: 150px; border: 1px solid #a0a0a0; background: #fff; overflow: hidden; padding: 4px 6px; font: 14px Calibri, sans-serif; }
+.tofdlg .tofline { display: flex; white-space: nowrap; overflow: hidden; margin: 8px 0; }
+.tofdlg .tofline .lead { flex: 1; overflow: hidden; }
+.tofdlg .tofpreview.web div { margin: 8px 0; }
+.tofdlg .tofweb { color: #0563c1; text-decoration: underline; }
+.rcombo-labelled { display: inline-flex; align-items: center; gap: 4px; height: 24px; padding: 0 2px; }
+.rcombo-labelled .rcombo-label { white-space: nowrap; }
+.rcombo-labelled.disabled { color: #a0a0a0; }
+/* Zitate und Literaturverzeichnis. */
+.srcdlg .srcfields { display: grid; grid-template-columns: 180px 1fr auto; gap: 6px 10px; align-items: center; }
+.srcdlg .srclabel { text-align: right; }
+.srcdlg fieldset { border: 1px solid #d0d0d0 !important; padding: 8px 12px !important; }
+.srcdlg .srcfields input[type=text] { width: 100%; box-sizing: border-box; }
+.srcmgr .srccols { display: grid; grid-template-columns: 1fr 130px 1fr; gap: 12px; margin-top: 10px; }
+.srcmgr .srclist { height: 220px; }
+.srcmgr .srcmid { display: flex; flex-direction: column; gap: 8px; padding-top: 48px; }
+.srcmgr .srcmark { display: inline-block; width: 16px; }
+.srcmgr .srclegend { margin-top: 8px; color: #444; }
+.srcmgr .srcpreview { height: 110px; border: 1px solid #a0a0a0; background: #fff; padding: 6px 8px; overflow: auto; }
+.srcmgr .srcentry { padding-left: 36px; text-indent: -36px; }
+.namedialog .srcnames { height: 110px; }
+.bibgallery { width: 420px; }
+.bibgallery .bibprev { border: 1px solid #a6a6a6; border-right: 0; padding: 6px 8px; font: 10px Calibri, sans-serif; max-height: 110px; overflow: hidden; }
+.bibgallery .bibhead { font: 16px "Calibri Light", sans-serif; color: #2f5496; margin-bottom: 6px; }
+.bibgallery .bibline { margin: 3px 0; }
+.notedlg .grid2 { grid-template-columns: auto 1fr; }
+.notedlg .row.end { justify-content: flex-end; }

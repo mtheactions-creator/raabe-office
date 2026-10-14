@@ -447,7 +447,8 @@ export interface Anchor {
    * hyperlink; the file format layer writes only complete pairs.
    */
   readonly field?: { readonly id: string; readonly edge: "start" | "end"; readonly instr?: string };
-  readonly link?: { readonly id: string; readonly edge: "start" | "end" };
+  /** A hyperlink's edges; the start says where it goes (web address, file, mailto:, or a bookmark in the document). */
+  readonly link?: { readonly id: string; readonly edge: "start" | "end"; readonly href?: string; readonly anchor?: string; readonly tip?: string; readonly frame?: string };
   /** Bookmark name (bookmarkStart), for cross references and the table of contents. */
   readonly bookmark?: string;
 }

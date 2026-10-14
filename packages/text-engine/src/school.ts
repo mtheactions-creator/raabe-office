@@ -58,7 +58,7 @@ let tocSeq = 1;
 let bookmarkSeq = 900000;
 
 /** Adds a _Toc bookmark around a heading (or finds its existing one); returns its name. */
-function tocBookmark(doc: Doc, p: number): string {
+export function tocBookmark(doc: Doc, p: number): string {
   const para = doc.main[p];
   const existing = para.anchors?.find((a) => a.bookmark?.startsWith("_Toc"));
   if (existing?.bookmark) return existing.bookmark;
@@ -80,15 +80,25 @@ function tocBookmark(doc: Doc, p: number): string {
  * in Word), with a dotted tab to the page number. The paragraphs carry the field's start and
  * end markers (TOC \o "1-3" \h \z \u), so Word sees an ordinary table of contents.
  */
-export function tocParagraphs(doc: Doc, entries: TocEntry[], pageOf: (p: number) => string, styles: string[], width: number, field?: string): Para[] {
+/** How entries look (Abbildungsverzeichnis dialog): page numbers, right-aligned with a leader, links. */
+export interface TocLook {
+  pageNumbers?: boolean;
+  rightAlign?: boolean;
+  leader?: "dot" | "hyphen" | "underscore" | "none";
+  links?: boolean;
+}
+
+export function tocParagraphs(doc: Doc, entries: TocEntry[], pageOf: (p: number) => string, styles: string[], width: number, field?: string,
+  instr = 'TOC \\o "1-3" \\h \\z \\u', look: TocLook = {}): Para[] {
+  const numbers = look.pageNumbers !== false, right = look.rightAlign !== false, links = look.links !== false;
+  const leader = look.leader ?? "dot";
   const id = field ?? `toc${tocSeq++}`;
   const out: Para[] = [];
-  const instr = 'TOC \\o "1-3" \\h \\z \\u';
   const r = (inner: string) => `<w:r>${inner}</w:r>`;
   const start = r('<w:fldChar w:fldCharType="begin"/>') + r(`<w:instrText xml:space="preserve"> ${instr} </w:instrText>`) + r('<w:fldChar w:fldCharType="separate"/>');
   if (!entries.length) {
     // Word's message when there are no headings.
-    const msg = "Keine Einträge für das Inhaltsverzeichnis gefunden.";
+    const msg = /\\c\b/.test(instr) ? "Es wurden keine Einträge für ein Abbildungsverzeichnis gefunden." : "Keine Einträge für das Inhaltsverzeichnis gefunden.";
     const p: Para = { ...makePara(msg), field: id,
       anchors: [{ at: 0, data: { raw: start }, field: { id, edge: "start", instr } }, { at: msg.length, data: { raw: r('<w:fldChar w:fldCharType="end"/>') }, field: { id, edge: "end" } }] };
     return [p];
@@ -96,19 +106,21 @@ export function tocParagraphs(doc: Doc, entries: TocEntry[], pageOf: (p: number)
   entries.forEach((e, i) => {
     const bm = tocBookmark(doc, e.p);
     // Numbered headings: the number, a tab, the text (Word: left tab at 22 pt per level).
-    const text = e.label ? `${e.label}\t${e.text}\t${OBJ}` : `${e.text}\t${OBJ}`;
+    const head = e.label ? `${e.label}\t${e.text}` : e.text;
+    const text = numbers ? `${head}${right ? "\t" : " "}${OBJ}` : head;
     const numTab = e.label ? [{ pos: 22 * Math.min(3, e.level), align: "left" as const }] : [];
     const page: InlineObject = { kind: "field", data: undefined, display: pageOf(e.p), instr: `PAGEREF ${bm} \\h` };
     const linkId = `${id}-${i}`;
-    const anchors: Anchor[] = [
-      { at: 0, data: { raw: `<w:hyperlink w:anchor="${bm}" w:history="1">` }, link: { id: linkId, edge: "start" } },
+    // Strg+Klick on an entry goes to the heading (the link carries its bookmark).
+    const anchors: Anchor[] = links ? [
+      { at: 0, data: { raw: `<w:hyperlink w:anchor="${bm}" w:history="1">` }, link: { id: linkId, edge: "start", anchor: bm } },
       { at: text.length, data: { raw: "</w:hyperlink>" }, link: { id: linkId, edge: "end" } },
-    ];
+    ] : [];
     if (i === 0) anchors.unshift({ at: 0, data: { raw: start }, field: { id, edge: "start", instr } });
     if (i === entries.length - 1) anchors.push({ at: text.length, data: { raw: r('<w:fldChar w:fldCharType="end"/>') }, field: { id, edge: "end" } });
     out.push({
-      text, runs: [{ len: text.length, props: EMPTY }], mark: EMPTY, objects: [page], anchors, field: id,
-      props: { style: styles[Math.min(styles.length, e.level) - 1], tabs: [...numTab, { pos: width, align: "right", leader: "dot" }] },
+      text, runs: [{ len: text.length, props: EMPTY }], mark: EMPTY, objects: numbers ? [page] : [], anchors, field: id,
+      props: { style: styles[Math.min(styles.length, e.level) - 1], tabs: [...numTab, ...(numbers && right ? [{ pos: width, align: "right" as const, leader }] : [])] },
     });
   });
   return out;
@@ -119,14 +131,15 @@ export function tocParagraphs(doc: Doc, entries: TocEntry[], pageOf: (p: number)
  * Word often ends the field at the start of the paragraph after the entries (the first
  * heading); that paragraph is `tail` and not part of the table.
  */
-export function tocFields(doc: Doc): { id: string; a: number; b: number; tail?: number }[] {
-  const out: { id: string; a: number; b: number; tail?: number }[] = [];
+export function tocFields(doc: Doc, kind: RegExp = /^\s*TOC\b/i): { id: string; a: number; b: number; tail?: number; instr: string }[] {
+  const out: { id: string; a: number; b: number; tail?: number; instr: string }[] = [];
   doc.main.forEach((p, i) => {
     if (!p.field) return;
-    const isToc = doc.main.some((q) => q.anchors?.some((a) => !!a.field && a.field.id === p.field && a.field.edge === "start" && /^\s*TOC\b/i.test(a.field.instr ?? "")));
-    if (!isToc) return;
+    let instr: string | undefined;
+    for (const q of doc.main) for (const a of q.anchors ?? []) if (a.field?.id === p.field && a.field.edge === "start" && kind.test(a.field.instr ?? "")) instr = a.field.instr;
+    if (instr === undefined) return;
     const cur = out.find((x) => x.id === p.field);
-    if (cur) cur.b = i; else out.push({ id: p.field, a: i, b: i });
+    if (cur) cur.b = i; else out.push({ id: p.field, a: i, b: i, instr });
   });
   for (const f of out) {
     const last = doc.main[f.b];
@@ -134,6 +147,27 @@ export function tocFields(doc: Doc): { id: string; a: number; b: number; tail?: 
     if (f.b > f.a && end && end.at === 0 && last.text.length > 0) { f.tail = f.b; f.b--; }
   }
   return out;
+}
+
+/**
+ * The paragraphs of a Literaturverzeichnis (BIBLIOGRAPHY field): one per source, formatted,
+ * with the hanging indent Word uses; "Keine Quellen" when the document cites none.
+ */
+export function bibliographyParagraphs(entries: { text: string; italic?: boolean }[][], style: string, field?: string): Para[] {
+  const id = field ?? `bib${tocSeq++}`;
+  const instr = " BIBLIOGRAPHY ";
+  const r = (inner: string) => `<w:r>${inner}</w:r>`;
+  const start = r('<w:fldChar w:fldCharType="begin"/>') + r(`<w:instrText xml:space="preserve">${instr}</w:instrText>`) + r('<w:fldChar w:fldCharType="separate"/>');
+  const list = entries.length ? entries : [[{ text: "Im aktuellen Dokument sind keine Quellen vorhanden." }]];
+  return list.map((pieces, i) => {
+    const text = pieces.map((x) => x.text).join("");
+    const runs = pieces.filter((x) => x.text).map((x) => ({ len: x.text.length, props: x.italic ? intern({ italic: true }) : EMPTY }));
+    const anchors: Anchor[] = [];
+    if (i === 0) anchors.push({ at: 0, data: { raw: start }, field: { id, edge: "start", instr } });
+    if (i === list.length - 1) anchors.push({ at: text.length, data: { raw: r('<w:fldChar w:fldCharType="end"/>') }, field: { id, edge: "end" } });
+    return { text, runs: runs.length ? runs : [{ len: 0, props: EMPTY }], mark: EMPTY, anchors, field: id,
+      props: { style, ...(entries.length ? { indLeft: 36, indFirst: -36 } : {}) } };
+  });
 }
 
 /** Removes a field's markers from the paragraph after a table of contents (see tocFields). */
@@ -147,7 +181,7 @@ export function stripTocTail(doc: Doc, f: { id: string; tail?: number }): void {
 
 // ----- comments -----------------------------------------------------------------------------
 
-function withAnchor(p: Para, a: Anchor): Para {
+export function withAnchor(p: Para, a: Anchor): Para {
   return { ...p, anchors: [...(p.anchors ?? []), a].sort((x, y) => x.at - y.at) };
 }
 

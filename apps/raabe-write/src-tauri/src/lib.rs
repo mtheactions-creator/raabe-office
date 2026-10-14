@@ -54,6 +54,58 @@ fn write_file(request: Request) -> Result<(), String> {
 }
 
 #[derive(Serialize)]
+struct DirEntry {
+    name: String,
+    dir: bool,
+}
+
+/// Link einfügen > Aktueller Ordner: the folders and files of a folder (folders first).
+#[tauri::command]
+fn list_dir(path: String) -> Result<Vec<DirEntry>, String> {
+    let mut out: Vec<DirEntry> = fs::read_dir(&path)
+        .map_err(|e| e.to_string())?
+        .filter_map(|e| e.ok())
+        .filter_map(|e| {
+            let name = e.file_name().to_string_lossy().to_string();
+            if name.starts_with('.') || name.starts_with('~') {
+                return None;
+            }
+            Some(DirEntry { dir: e.file_type().map(|t| t.is_dir()).unwrap_or(false), name })
+        })
+        .collect();
+    out.sort_by(|a, b| b.dir.cmp(&a.dir).then_with(|| a.name.to_lowercase().cmp(&b.name.to_lowercase())));
+    Ok(out)
+}
+
+/// The user's Documents folder (where the Link dialog starts without a saved document).
+#[tauri::command]
+fn documents_dir() -> String {
+    std::env::var("USERPROFILE").map(|h| format!("{h}\\Documents")).unwrap_or_default()
+}
+
+/// A link followed with Strg+Klick: web addresses, mail and files open with Windows' program for them.
+#[tauri::command]
+fn open_external(target: String) -> Result<(), String> {
+    let lower = target.to_lowercase();
+    let allowed = lower.starts_with("http://") || lower.starts_with("https://") || lower.starts_with("mailto:")
+        || Path::new(&target).exists();
+    if !allowed {
+        return Err("not a web address, mail address or file".into());
+    }
+    #[cfg(windows)]
+    {
+        use std::os::windows::process::CommandExt;
+        // rundll32 url.dll hands the target to its program without a console window or shell parsing.
+        std::process::Command::new("rundll32")
+            .args(["url.dll,FileProtocolHandler", &target])
+            .creation_flags(0x0800_0000)
+            .spawn()
+            .map_err(|e| e.to_string())?;
+    }
+    Ok(())
+}
+
+#[derive(Serialize)]
 struct FileInfo {
     exists: bool,
     modified: Option<u128>,
@@ -297,8 +349,8 @@ pub fn run() {
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
-            read_file, write_file, file_info, save_recovery, list_recovery, read_recovery, delete_recovery,
-            startup_files, print_to_pdf, fonts::list_fonts, fonts::font_metrics, spell::spell_check, spell::spell_suggest,
+            read_file, write_file, file_info, list_dir, documents_dir, open_external, save_recovery, list_recovery, read_recovery, delete_recovery,
+            startup_files, print_to_pdf, fonts::list_fonts, fonts::font_metrics, fonts::font_chars, spell::spell_check, spell::spell_suggest,
             clipboard::clipboard_read_html, clipboard::clipboard_write_html, clipboard::clipboard_read_image
         ])
         .run(tauri::generate_context!())

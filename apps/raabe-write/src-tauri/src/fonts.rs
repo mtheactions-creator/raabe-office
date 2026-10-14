@@ -101,3 +101,51 @@ pub fn font_metrics(families: Vec<String>) -> HashMap<String, Metrics> {
         })
         .collect()
 }
+
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct FontChars {
+    found: bool,
+    /// A symbol font (cmap 3,0: Symbol, Wingdings): its characters are U+F020-U+F0FF.
+    symbol: bool,
+    /// Ranges of code points the font has a glyph for, as [first, last] pairs.
+    ranges: Vec<[u32; 2]>,
+}
+
+/// Einfügen > Symbol: the characters a font has (its cmap), for the dialog's grid.
+#[tauri::command]
+pub fn font_chars(family: String) -> FontChars {
+    let db = db();
+    let none = FontChars { found: false, symbol: false, ranges: Vec::new() };
+    let Some(id) = find_face(db, &family) else { return none };
+    db.with_face_data(id, |data, index| {
+        let face = ttf_parser::Face::parse(data, index).ok()?;
+        let cmap = face.tables().cmap?;
+        let mut codes: Vec<u32> = Vec::new();
+        let mut symbol = false;
+        for sub in cmap.subtables {
+            if sub.platform_id == ttf_parser::PlatformId::Windows && sub.encoding_id == 0 {
+                symbol = true;
+            }
+            if sub.is_unicode() || (sub.platform_id == ttf_parser::PlatformId::Windows && sub.encoding_id == 0) {
+                sub.codepoints(|c| {
+                    if sub.glyph_index(c).is_some_and(|g| g.0 != 0) {
+                        codes.push(c);
+                    }
+                });
+            }
+        }
+        codes.sort_unstable();
+        codes.dedup();
+        let mut ranges: Vec<[u32; 2]> = Vec::new();
+        for c in codes {
+            match ranges.last_mut() {
+                Some(r) if r[1] + 1 == c => r[1] = c,
+                _ => ranges.push([c, c]),
+            }
+        }
+        Some(FontChars { found: true, symbol, ranges })
+    })
+    .flatten()
+    .unwrap_or(none)
+}

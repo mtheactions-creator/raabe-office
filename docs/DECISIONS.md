@@ -581,3 +581,31 @@ the arrow menu and In 'Inline' ändern, and Word reading the file. Layout agains
 heights per equation within about 2 pt, except matrices in brackets (6-7 pt taller: Cambria
 Math's next bracket size is chosen where Word stays smaller) and nested display fractions
 (2.3-2.6 pt taller); open for a later step.
+
+### D-048 The remaining commands (Step 4b E), recorded from Word
+Every dialog and menu is first read from Word (`probe_word_dialogs.py`, `probe_word_symbol_dialog.py`,
+`probe_word_source_dialog.py`: names, access keys, positions, screenshots kept locally), then
+built with Word's labels and behaviour.
+- **Symbol**: Word's menu of the 20 symbols used last (tooltips are Unicode's English names,
+  as in Word; names generated from Python's unicodedata, loaded with the dialog) and the
+  dialog: Schriftart and Word's 47 Subset names, the font's characters (read from its cmap),
+  Zuletzt verwendete Symbole, Zeichencode with "von:", Sonderzeichen with Word's names and
+  shortcuts; Einfügen keeps the dialog open. Symbol fonts are written as w:sym.
+- **Links**: w:hyperlink with an external relationship or w:anchor, the Hyperlink style; the
+  dialog with Datei oder Webseite (folder list, recent files, visited pages), Aktuelles Dokument
+  (headings via hidden _Toc bookmarks, Textmarken), Neues Dokument erstellen, E-Mail-Adresse,
+  QuickInfo and Zielframe; Link bearbeiten/entfernen; Strg+Klick follows a link (Windows opens
+  web addresses, mail and files; only those).
+- **Textmarke, Querverweis, Beschriftung, Abbildungsverzeichnis**: bookmarks as Word writes
+  them; cross references are REF/PAGEREF/NOTEREF fields to hidden _Ref bookmarks; captions use
+  SEQ fields (formats 1, a, A, i, I); a table of figures is a TOC \c field rebuilt from the
+  captions. Felder aktualisieren (F9) computes SEQ, REF (text, 
+ number, \p oben/unten),
+  PAGEREF ("auf Seite 3") and NOTEREF results.
+- **Zitate und Literaturverzeichnis**: sources in Word's customXml b:Sources part (Word reads
+  ours, we read Word's), CITATION fields and a BIBLIOGRAPHY field; Word's twelve styles with
+  their patterns (APA 6, MLA 7, Chicago 15, Harvard - Anglia, IEEE, ISO 690 both, Turabian,
+  GB7714, GOST both, SIST02); Quelle erstellen with Word's fields for all 17 types, Name
+  bearbeiten, Platzhalter, Quellen-Manager with a Masterliste for this user.
+- **Fuß- und Endnote**: position, number format, start, restart (per section, and per page from
+  a second layout), Konvertieren; w:footnotePr/w:endnotePr in settings.xml.

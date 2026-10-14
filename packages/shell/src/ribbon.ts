@@ -19,6 +19,8 @@ export type Control =
     }
   | {
       type: "combo"; cmd: string; width: number; key?: string; value: () => string;
+      /** A label (and icon) before the box, as Word's "Formatvorlage:" in Referenzen. */
+      label?: string; icon?: string;
       /** Entries of the dropdown list, grouped under headings. */
       options?: () => { heading?: string; items: string[] }[];
       /** CSS for an entry (e.g. the font itself for "Schriftart"). */
@@ -426,14 +428,16 @@ export class Ribbon {
           "data-keytip": c.key, "data-keytip-scope": this.scope(),
           onclick: (e: MouseEvent) => { if (e.target === wrap) input.focus(); },
         }, input, arrow);
+        const labelled = c.label ? h("div", { class: "rcombo-labelled" }, ...(c.icon ? [icon(c.icon)] : []), h("span", { class: "rcombo-label" }, c.label), wrap) : null;
         this.updaters.push(() => {
           if (document.activeElement !== input) input.value = c2.value();
           const on = this.commands.isEnabled(c2.cmd);
           wrap.classList.toggle("disabled", !on);
           input.readOnly = !on || !c2.commit;
           arrow.disabled = !on || !c2.options;
+          labelled?.classList.toggle("disabled", !on);
         });
-        return wrap;
+        return labelled ?? wrap;
       }
       case "gallery": {
         const items = h("div", { class: "items" });

@@ -1,7 +1,7 @@
 // Public API of the text engine (decision D-017: controlled editing).
 
 export { Editor, FONT_STEPS, type ChangeEvent, type EditorStats, type CharState, type CaseMode, type CopiedFormat, type DrawTool } from "./editor";
-export { DEFAULT_MATH, Doc, MAIN, cmp, nextTableId, type Pos, type DocState, type DocSettings, type DocSnapshot, type MathSettings } from "./doc";
+export { DEFAULT_MATH, Doc, MAIN, cmp, nextTableId, type Pos, type DocState, type DocSettings, type DocSnapshot, type MathSettings, type NoteProps } from "./doc";
 export { Fonts, PT, type FontMetrics, type MetricsProvider } from "./fonts";
 export { Layouter, fieldType, type LayoutContext } from "./layout";
 export { DEFAULT_CELL_MARGINS, layoutDocument, type Deco, type Frame, type Layout, type PageLayout, type PlacedLine, type StoryLayout } from "./flow";
@@ -132,3 +132,4 @@ export { latexToMathml as mathmlFromLatex, lines, seqToMathml } from "./math/mat
 export { mathElements } from "./view";
 export { MathEditor, buildLinear, explode, getSlot, implode, mathAutoCorrect, slotsOf, type MathPos, type MathRange, type MathSignal, type MathStep } from "./math/edit";
 export { seqToLinear } from "./math/linear";
+export * from "./bibliography";

@@ -2,7 +2,7 @@
 // Each open document is a tab with its own editor. Files are .docx (D-004); content the
 // editor cannot change yet is preserved verbatim and written back unchanged (D-024).
 
-import { Editor, Fonts, PT, type CopiedFormat, type DocState, type LineRule, type Para } from "@raabe/text-engine";
+import { Doc as TextDoc, Editor, Fonts, PT, type CopiedFormat, type DocState, type LineRule, type Para } from "@raabe/text-engine";
 import { readDocx, writeDocx, type DocxPackage } from "@raabe/ooxml";
 import {
   Backstage, Commands, Keytips, Ribbon, StatusBar, TitleBar, baseName, dirName, h, icon, installTooltips, messageBox,
@@ -16,6 +16,11 @@ import { listsFeature, LIST_COMMANDS } from "./features/lists";
 import { pageSetupFeature, PAGE_COMMANDS } from "./features/pagesetup";
 import { picturesFeature, PICTURE_COMMANDS, PICTURE_TAB_COMMANDS } from "./features/pictures";
 import { mathFeature, MATH_COMMANDS } from "./features/math";
+import { symbolsFeature } from "./features/symbols";
+import { linksFeature } from "./features/links";
+import { captionsFeature } from "./features/captions";
+import { citationsFeature } from "./features/citations";
+import { notesDialogFeature } from "./features/notes-dialog";
 import { referencesFeature, REFERENCE_COMMANDS } from "./features/references";
 import { reviewFeature, REVIEW_COMMANDS } from "./features/review";
 import { spellFeature } from "./features/spell";
@@ -175,6 +180,11 @@ export class WriteApp {
       refresh: () => this.updateChrome(false),
       selectTab: (id) => { this.updateContextualTabs(); this.ribbon?.select(id); },
       clipboard: () => this.readClipboard(false),
+      documentPath: () => this.active?.path ?? null,
+      createEmptyDocument: async (path, open) => {
+        await this.platform.writeFile(path, writeDocx(new TextDoc({}).state(), null));
+        if (open) await this.openPath(path);
+      },
     };
   }
 
@@ -222,6 +232,11 @@ export class WriteApp {
       spell,
       refs: referencesFeature(api),
       math,
+      symbols: symbolsFeature(api),
+      links: linksFeature(api),
+      captions: captionsFeature(api),
+      citations: citationsFeature(api),
+      notesDialog: notesDialogFeature(api),
       review: reviewFeature(api, () => this.settings.userName, this.commentPane),
     };
   }
@@ -264,6 +279,7 @@ export class WriteApp {
     }
     this.features.review.attach(editor);
     this.features.math.attach(editor, !path && !pkg);
+    this.features.links.attach(editor);
     const doc: Doc = {
       id: crypto.randomUUID(), name, path, editor, ws, saved: editor.contentStamp(), recoverySaved: null, pkg, partial,
       lastSaved: null,
@@ -923,6 +939,11 @@ export class WriteApp {
     const parseNum = (v: string) => Number(v.replace(/[^\d,.-]/g, "").replace(",", "."));
     const theme = () => ed()?.doc.styles.theme;
     return {
+      citationStyle: {
+        value: () => this.features.citations.style.value(),
+        options: () => this.features.citations.style.options(),
+        commit: (v: string) => this.features.citations.style.commit(v),
+      },
       fontName: () => {
         const s = ed()?.charState();
         if (!s?.font) return "";
@@ -1000,6 +1021,9 @@ export class WriteApp {
         get textBox() { return self.features.shapes.textBoxMenu; },
         get toc() { return self.features.refs.tocMenu; },
         equation: (close) => this.features.math.insertPanel(close),
+        symbol: (close) => this.features.symbols.menuPanel(close),
+        get citation() { return self.features.citations.citationMenu(); },
+        bibliography: (close) => this.features.citations.bibliographyPanel(close),
         get addText() { return self.features.refs.addTextMenu; },
         get nextNote() { return self.features.refs.nextNoteMenu; },
         get track() { return self.features.review.trackMenu; },
@@ -1166,7 +1190,7 @@ export class WriteApp {
       if (ctrl && !alt && !shift) {
         cmd = ({
           n: "file.new", o: "file.open", s: "file.save", p: "file.print", w: "file.close", l: "para.alignLeft", e: "para.alignCenter",
-          f: "edit.find", h: "edit.replace", g: "edit.goto",
+          f: "edit.find", h: "edit.replace", g: "edit.goto", k: "insert.link",
           r: "para.alignRight", b: "para.justify", m: "para.indentInc", d: "font.dialog", q: "", "1": "spacing.1", "2": "spacing.2",
           "5": "spacing.1.5", "0": "view.zoom100", "9": "", "8": "",
         } as Record<string, string>)[k] ?? null;
@@ -1182,6 +1206,7 @@ export class WriteApp {
         if (k === "F12") { e.preventDefault(); void this.openDialog(); return; }
         if (k === "F1") cmd = "view.ribbon";
       }
+      if (!ctrl && !shift && !alt && k === "F9") { e.preventDefault(); this.features.captions.updateFields(); return; }
       if (ctrl && shift && !alt) {
         cmd = ({
           f: "font.bold", k: "font.italic", u: "font.underline", d: "underline.double", g: "font.allCaps", n: "style.normal",

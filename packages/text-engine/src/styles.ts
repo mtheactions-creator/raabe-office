@@ -100,7 +100,7 @@ export const GERMAN_NAMES: Record<string, string> = {
   "quote": "Zitat", "intense quote": "Intensives Zitat", "list paragraph": "Listenabsatz",
   "subtle emphasis": "Schwache Hervorhebung", "emphasis": "Hervorhebung", "intense emphasis": "Intensive Hervorhebung",
   "strong": "Fett", "subtle reference": "Schwacher Verweis", "intense reference": "Intensiver Verweis",
-  "book title": "Buchtitel", "caption": "Beschriftung", "hyperlink": "Hyperlink",
+  "book title": "Buchtitel", "caption": "Beschriftung", "hyperlink": "Hyperlink", "table of figures": "Abbildungsverzeichnis", "bibliography": "Literaturverzeichnis",
   "default paragraph font": "Absatz-Standardschriftart", "footnote text": "Fußnotentext", "footnote reference": "Fußnotenzeichen",
   "header": "Kopfzeile", "footer": "Fußzeile", "toc heading": "Inhaltsverzeichnisüberschrift",
   ...Object.fromEntries(Array.from({ length: 9 }, (_, i) => [`heading ${i + 1}`, `Überschrift ${i + 1}`])),
@@ -387,6 +387,8 @@ export function defaultStyleSheet(): StyleSheet {
     hidden(p("Verzeichnis3", "toc 3", { after: 5, indLeft: 22 }, {}, { uiPriority: 39, next: "Standard" })),
     hidden(c("Hyperlink", "Hyperlink", { color: "0563C1", underline: "single" }, 99)),
     p("Beschriftung", "caption", { after: 10, line: 1, lineRule: "auto" }, { italic: true, color: "44546A", size: 9 }, { uiPriority: 35, qFormat: true }),
+    hidden(p("Abbildungsverzeichnis", "table of figures", { after: 0 }, {}, { uiPriority: 99, next: "Standard" })),
+    hidden(p("Literaturverzeichnis", "Bibliography", {}, {}, { uiPriority: 37, next: "Standard" })),
     {
       id: "NormaleTabelle", name: "Normal Table", type: "table", isDefault: true, uiPriority: 99, semiHidden: true, pPr: {}, rPr: {},
       table: { cellMargins: { left: 5.4, right: 5.4, top: 0, bottom: 0 } },

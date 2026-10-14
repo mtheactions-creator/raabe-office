@@ -7,6 +7,8 @@ import type { Control, MenuEntry, Tab } from "@raabe/shell";
 
 /** What the ribbon needs from the app to show values and apply changes. */
 export interface RibbonContext {
+  /** Referenzen > Formatvorlage (the document's citation style). */
+  citationStyle: { value(): string; options(): { heading?: string; items: string[] }[]; commit(v: string): void };
   fontName(): string;
   fontSize(): string;
   fontOptions(): { heading?: string; items: string[] }[];
@@ -31,7 +33,7 @@ export interface RibbonContext {
     columns: MenuEntry[]; breaks: MenuEntry[]; header: MenuEntry[]; footer: MenuEntry[]; pageNumber: MenuEntry[];
     pictures: MenuEntry[]; borders: MenuEntry[]; wrap: MenuEntry[]; shapes: Popup; textBox: MenuEntry[];
     position: Popup; align: Popup; rotate: MenuEntry[]; forward: MenuEntry[]; backward: MenuEntry[];
-    toc: MenuEntry[]; addText: MenuEntry[]; nextNote: MenuEntry[]; equation: Popup;
+    toc: MenuEntry[]; addText: MenuEntry[]; nextNote: MenuEntry[]; equation: Popup; symbol: Popup; citation: MenuEntry[]; bibliography: Popup;
     track: MenuEntry[]; deleteComment: MenuEntry[]; accept: MenuEntry[]; reject: MenuEntry[];
     showComments: MenuEntry[]; filterMarkup: MenuEntry[];
   };
@@ -251,8 +253,8 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
           controls: [dd("insert.textBox", "X", "large", undefined, ctx.panels.textBox), stack(b("insert.dateTime", "D", "medium"))],
           smaller: [[dd("insert.textBox", "X", "large", undefined, ctx.panels.textBox), stack(b("insert.dateTime", "D"))]] },
         { id: "symbols", label: "Symbole", key: "ZS", icon: "equation",
-          controls: [split("insert.equation", "A", "large", [], undefined, ctx.panels.equation), dd("insert.symbol", "SY", "large")],
-          smaller: [[stack(split("insert.equation", "A", "medium", [], undefined, ctx.panels.equation), dd("insert.symbol", "SY", "medium"))]] },
+          controls: [split("insert.equation", "A", "large", [], undefined, ctx.panels.equation), panel("insert.symbol", "SY", "large", ctx.panels.symbol)],
+          smaller: [[stack(split("insert.equation", "A", "medium", [], undefined, ctx.panels.equation), panel("insert.symbol", "SY", "medium", ctx.panels.symbol))]] },
       ],
     },
     {
@@ -303,7 +305,10 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
           controls: [b("ref.footnote", "P", "large"), stack(b("ref.endnote", "N", "medium"), split("ref.nextFootnote", "Ä", "medium", ctx.panels.nextNote), b("ref.showNotes", "H", "medium"))],
           smaller: [[b("ref.footnote", "P", "large"), stack(b("ref.endnote", "N"), split("ref.nextFootnote", "Ä", "medium", ctx.panels.nextNote), b("ref.showNotes", "H"))]] },
         { id: "citations", label: "Zitate und Literaturverzeichnis", key: "ZA", icon: "citation",
-          controls: [dd("ref.citation", "Ü", "large"), stack(b("ref.sources", "V", "medium"), dd("ref.citationStyle", "L1", "medium"), dd("ref.bibliography", "L", "medium"))] },
+          controls: [{ type: "dropdown", cmd: "ref.citation", key: "Ü", size: "large", get menu() { return ctx.panels.citation; } },
+            stack(b("ref.sources", "V", "medium"),
+              { type: "combo", cmd: "ref.citationStyle", width: 80, key: "L1", label: "Formatvorlage:", icon: "citation-style", value: ctx.citationStyle.value, options: ctx.citationStyle.options, commit: ctx.citationStyle.commit },
+              panel("ref.bibliography", "L", "medium", ctx.panels.bibliography))] },
         { id: "captions", label: "Beschriftungen", key: "ZB", icon: "caption",
           controls: [b("ref.caption", "C", "large"), stack(b("ref.tableOfFigures", "G", "medium"), b("ref.updateTableOfFigures", "V1", "medium"), b("ref.crossRef", "Q", "medium"))],
           smaller: [[b("ref.caption", "C", "large"), stack(b("ref.tableOfFigures", "G"), b("ref.updateTableOfFigures", "V1"), b("ref.crossRef", "Q"))]] },

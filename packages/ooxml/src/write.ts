@@ -6,13 +6,13 @@ import { blipEffectsXml, imgEffectsXml, shapePropsXml } from "./drawingml";
 import { DEFAULT_LINE_STYLE, DEFAULT_SHAPE_STYLE, NS_WPS, OFFICE_FMT_SCHEME, bodyXml, custGeomXml, shapeSpPr } from "./shapes";
 import { strFromU8, strToU8, zipSync } from "fflate";
 import {
-  COLUMN_BREAK, DEFAULT_MATH, LINE_BREAK, OBJ, OFFICE_2013_COLORS, PAGE_BREAK, effectExtent, type AltText, type CommentMeta, type PictureFormat, type DocState, type FloatObject, type InlineObject,
+  B_NS, COLUMN_BREAK, DEFAULT_MATH, LINE_BREAK, sourcesXml, OBJ, OFFICE_2013_COLORS, PAGE_BREAK, effectExtent, type AltText, type CommentMeta, type PictureFormat, type DocState, type FloatObject, type InlineObject,
   type Para, type Revision, type Section, type ShapeInfo, type StyleDef, type TableDef, type Theme,
 } from "@raabe/text-engine";
 import { latexToOmml, M_NS, mathPrXml, readMathPr, seqToOmml } from "./math";
 import { writeNumbering } from "./numbering";
 import { CT, PackageWriter, REL, relink } from "./package";
-import type { DocxPackage, ObjectData } from "./read";
+import { readNoteSettings, type DocxPackage, type ObjectData } from "./read";
 import { bordersXml, revisionAttrs, shadingXml, writePPr, writeRPr, type WriteOptions } from "./props";
 import { esc, parse, R, W } from "./xml";
 
@@ -148,7 +148,7 @@ class DocWriter {
     };
     const markers = (i: number, rPr: string) => {
       let s = "";
-      while (ai < anchors.length && anchors[ai].at <= i) s += this.anchor(anchors[ai++], fields, links);
+      while (ai < anchors.length && anchors[ai].at <= i) s += this.anchor(anchors[ai++], fields, links, part);
       while (fi < floats.length && floats[fi].at <= i) s += `<w:r>${rPr}${this.floatXml(floats[fi++], part)}</w:r>`;
       if (s) { closeRev(); out += s; }
     };
@@ -196,12 +196,20 @@ class DocWriter {
     return out;
   }
 
-  private anchor(a: NonNullable<Para["anchors"]>[number], fields: Set<string>, links: Map<string, number>): string {
+  private anchor(a: NonNullable<Para["anchors"]>[number], fields: Set<string>, links: Map<string, number>, part: string): string {
     if (a.field && !fields.has(a.field.id)) return "";
     if (a.link && links.get(a.link.id) !== 2) return "";
     if (a.comment && !this.state.stories?.has(a.comment.id)) return "";
     const d = a.data;
     if (isData(d) && "raw" in d) return d.raw;
+    // A link made in RaabeWrite: an external relationship, or a bookmark in the document.
+    if (a.link?.edge === "start" && (a.link.href || a.link.anchor)) {
+      const tip = (a.link.frame ? ` w:tgtFrame="${esc(a.link.frame)}"` : "") + (a.link.tip ? ` w:tooltip="${esc(a.link.tip)}"` : "");
+      if (a.link.anchor && !a.link.href) return `<w:hyperlink w:anchor="${esc(a.link.anchor)}"${tip} w:history="1">`;
+      const rid = this.pw.relsOf(part).ensure(REL.hyperlink, a.link.href!, true);
+      return `<w:hyperlink r:id="${rid}"${a.link.anchor ? ` w:anchor="${esc(a.link.anchor)}"` : ""}${tip} w:history="1">`;
+    }
+    if (a.link?.edge === "end") return "</w:hyperlink>";
     if (typeof d === "string") return d;
     if (a.comment) {
       const n = a.comment.id.slice(4);
@@ -694,6 +702,27 @@ function settingsXml(state: DocState, base: string | null): string {
     '<w:characterSpacingControl w:val="doNotCompress"/><w:compat><w:compatSetting w:name="compatibilityMode" w:uri="http://schemas.microsoft.com/office/word" w:val="15"/></w:compat></w:settings>';
   xml = setFlag(xml, "evenAndOddHeaders", !!state.settings.evenOdd, BEFORE_EVEN_ODD);
   xml = setFlag(xml, "trackRevisions", !!state.settings.trackChanges, BEFORE_TRACK);
+  // Fuß- und Endnote: the numbering and place of notes, kept with the separators Word lists there.
+  const notes = state.settings.notes;
+  if (notes && !(base && JSON.stringify(readNoteSettings(parse(base).documentElement) ?? {}) === JSON.stringify(notes))) {
+    for (const [kind, props] of [["footnotePr", notes.footnote], ["endnotePr", notes.endnote]] as const) {
+      if (!props) continue;
+      const inner = (props.pos ? `<w:pos w:val="${props.pos}"/>` : "") + (props.numFmt ? `<w:numFmt w:val="${props.numFmt}"/>` : "") +
+        (props.numStart && props.numStart !== 1 ? `<w:numStart w:val="${props.numStart}"/>` : "") + (props.numRestart && props.numRestart !== "continuous" ? `<w:numRestart w:val="${props.numRestart}"/>` : "");
+      const re = new RegExp(`<w:${kind}>([\\s\\S]*?)</w:${kind}>|<w:${kind}/>`);
+      const m = re.exec(xml);
+      if (m) {
+        // Keep the separator references (w:footnote w:id="-1" …), replace the rest.
+        const keep = (m[1] ?? "").replace(/<w:(?:pos|numFmt|numStart|numRestart)\b[^>]*\/>/g, "");
+        xml = xml.replace(m[0], `<w:${kind}>${inner}${keep}</w:${kind}>`);
+      } else {
+        const at = ["compat", "docVars", "rsids", "mathPr", "attachedSchema", "themeFontLang", "clrSchemeMapping", "decimalSymbol", "listSeparator"]
+          .map((n) => xml.search(new RegExp(`<(?:w|m):${n}[\\s/>]`))).filter((i) => i >= 0);
+        const pos = kind === "endnotePr" && xml.includes("</w:footnotePr>") ? xml.indexOf("</w:footnotePr>") + "</w:footnotePr>".length : at.length ? Math.min(...at) : xml.lastIndexOf("</w:settings>");
+        xml = `${xml.slice(0, pos)}<w:${kind}>${inner}</w:${kind}>${xml.slice(pos)}`;
+      }
+    }
+  }
   // Formeloptionen: Word's defaults in a new document, changed ones replace the file's.
   const math = state.settings.math ?? (base ? null : DEFAULT_MATH);
   const unchanged = base && math && JSON.stringify(readMathPr(parse(base).documentElement)) === JSON.stringify(math);
@@ -708,6 +737,28 @@ function settingsXml(state: DocState, base: string | null): string {
     }
   }
   return xml;
+}
+
+// ----- Zitate und Literaturverzeichnis -------------------------------------------------------
+
+/**
+ * The document's sources as Word keeps them: b:Sources in a customXml part with its item
+ * properties, related from the document. Kept as the file has it while unchanged.
+ */
+function writeBibliography(pw: PackageWriter, state: DocState, pkg: DocxPackage | null): void {
+  const b = state.settings.bibliography;
+  if (!b || (pkg?.bibliography && pkg.bibliography.read === b)) return;
+  const xml = sourcesXml({ ...b, sources: b.sources.filter((x) => !x.placeholder) });
+  if (pkg?.bibliography) { pw.setPart(pkg.bibliography.path, xml); return; }
+  const path = pw.freeName("customXml/item");
+  const n = /item(\d+)\.xml$/.exec(path)?.[1] ?? "1";
+  const props = `customXml/itemProps${n}.xml`;
+  const id = `{${crypto.randomUUID().toUpperCase()}}`;
+  pw.setPart(path, xml);
+  pw.setPart(props, `${XML_HEAD}<ds:datastoreItem ds:itemID="${id}" xmlns:ds="http://schemas.openxmlformats.org/officeDocument/2006/customXml"><ds:schemaRefs><ds:schemaRef ds:uri="${B_NS}"/></ds:schemaRefs></ds:datastoreItem>`,
+    "application/vnd.openxmlformats-officedocument.customXmlProperties+xml");
+  pw.relsOf(path).ensure("http://schemas.openxmlformats.org/officeDocument/2006/relationships/customXmlProps", `itemProps${n}.xml`);
+  pw.link("word/document.xml", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/customXml", path);
 }
 
 // ----- the package --------------------------------------------------------------------------
@@ -803,6 +854,7 @@ export function writeDocx(state: DocState, pkg: DocxPackage | null, options: { a
   w.writeNotes("en");
   w.writeComments();
   w.writeNumbering();
+  writeBibliography(pw, state, pkg);
   if (pkg) {
     const styles = mergedStyles(state, pkg, opts);
     if (styles && styles !== pkg.stylesXml) pw.setPart("word/styles.xml", styles);

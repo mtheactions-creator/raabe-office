@@ -2,7 +2,7 @@
 // Word's selection rules, and all edits go through the document model. The shell calls the
 // public commands below and listens for changes with onChange().
 
-import { DEFAULT_MATH, Doc, MAIN, cmp, maxPos, minPos, type DocSnapshot, type DocState, type MathSettings, type Pos } from "./doc";
+import { DEFAULT_MATH, Doc, MAIN, cmp, maxPos, minPos, type DocSettings, type DocSnapshot, type DocState, type MathSettings, type Pos } from "./doc";
 import { Fonts, PT } from "./fonts";
 import { layoutDocument, type Layout } from "./flow";
 import { Layouter, type LayoutContext } from "./layout";
@@ -56,6 +56,8 @@ function htmlText(html: string): string {
 import * as R from "./revisions";
 import { INSTANT_TRIGGERS, TRIGGERS, borderLine, instantFix, smartQuote, wordFixes, type Fix } from "./autocorrect";
 import * as S from "./school";
+import * as Refs from "./refs";
+import * as Bib from "./bibliography";
 import { COLUMN_BREAK, type CellDef, type ImageData, type RowDef, type TableDef } from "./model";
 import { addList, bulletLevels as bulletLevelsOf, levelOf, listLabels, numberLevels as numberLevelsOf, numberingOf, restartList } from "./numbering";
 import { DEFAULT_SHAPE_BODY, type AltText, type BorderSpec, type Borders, type FloatObject, type InlineObject, type NumLevel, type ShapeInfo } from "./model";
@@ -276,6 +278,348 @@ export class Editor {
   interceptKey: ((e: KeyboardEvent) => boolean) | null = null;
   interceptText: ((text: string) => boolean) | null = null;
   interceptMouse: ((e: MouseEvent) => boolean) | null = null;
+
+  // ----- bookmarks, cross references, captions, fields ------------------------------------
+
+  /** Einfügen > Textmarke: the document's bookmarks (hidden ones start with "_"). */
+  bookmarks(): Refs.Bookmark[] {
+    return Refs.bookmarks(this.doc);
+  }
+
+  /** Textmarke > Hinzufügen: a bookmark over the selection (main text). */
+  addBookmark(name: string): boolean {
+    if (this.storyKey !== MAIN || !Refs.validBookmarkName(name)) return false;
+    const [from, to] = this.range();
+    this.snapshot();
+    Refs.addBookmark(this.doc, name, from, to);
+    this.update();
+    return true;
+  }
+
+  deleteBookmark(name: string): void {
+    this.snapshot();
+    Refs.deleteBookmark(this.doc, name);
+    this.update();
+  }
+
+  /** Textmarke > Gehe zu: the bookmark's text is selected. */
+  goToBookmark(name: string): void {
+    const b = Refs.bookmarks(this.doc).find((x) => x.name === name);
+    if (!b) return;
+    this.setSel(b.start, b.end);
+    this.update({ scroll: true });
+  }
+
+  /** What a cross reference can point to (Querverweis > Verweistyp). */
+  referenceTargets(kind: "heading" | "bookmark" | "footnote" | "endnote" | "numbered" | { caption: string }): { label: string; key: string; level?: number }[] {
+    const labels = listLabels(this.doc.main, this.doc.numbering, this.doc.styles);
+    if (kind === "heading") {
+      return this.doc.main.flatMap((p, i) => {
+        const level = p.props.outline ?? this.doc.styles.outlineLevel(this.doc.styles.resolvePara(p.props).style);
+        if (level === undefined || level > 8 || !p.text.trim()) return [];
+        const label = labels[i]?.text ? `${labels[i]!.text} ` : "";
+        return [{ label: `${label}${p.text.replace(/\ufffc/g, "")}`, key: String(i), level: level + 1 }];
+      });
+    }
+    if (kind === "numbered") {
+      return this.doc.main.flatMap((p, i) => (labels[i]?.text && p.text.trim() ? [{ label: `${labels[i]!.text} ${p.text.replace(/\ufffc/g, "")}`, key: String(i) }] : []));
+    }
+    if (kind === "bookmark") return Refs.bookmarks(this.doc).filter((b) => !b.name.startsWith("_")).map((b) => ({ label: b.name, key: b.name }));
+    if (kind === "footnote" || kind === "endnote") {
+      const out: { label: string; key: string }[] = [];
+      this.doc.main.forEach((p, i) => {
+        let k = 0;
+        for (let o = 0; o < p.text.length; o++) {
+          if (p.text[o] !== OBJ) continue;
+          const obj = p.objects?.[k++];
+          if (!obj?.note || !obj.note.startsWith(kind === "footnote" ? "fn:" : "en:")) continue;
+          const text = (this.doc.stories.get(obj.note) ?? []).map((x) => x.text).join(" ").replace(/\ufffc/g, "").trim();
+          out.push({ label: `${this.layout.noteNumbers.get(obj.note) ?? ""} ${text}`, key: `${i}:${o}` });
+        }
+      });
+      return out;
+    }
+    return Refs.captions(this.doc, kind.caption).map((c) => ({ label: c.text, key: String(c.p) }));
+  }
+
+  /**
+   * Querverweis einfügen: a REF, PAGEREF or NOTEREF field to a hidden _Ref bookmark around the
+   * target, with Word's result. `what`: text, page, number, aboveBelow, noteNumber; for
+   * captions whole, labelNumber, captionText.
+   */
+  insertCrossReference(kind: Parameters<Editor["referenceTargets"]>[0], key: string, what: string, asLink: boolean, aboveBelow: boolean): void {
+    if (this.storyKey !== MAIN) return;
+    this.snapshot();
+    let from: Pos, to: Pos;
+    if (kind === "bookmark") {
+      const b = Refs.bookmarks(this.doc).find((x) => x.name === key);
+      if (!b) return;
+      from = b.start; to = b.end;
+    } else if (kind === "footnote" || kind === "endnote") {
+      const [p, o] = key.split(":").map(Number);
+      from = { p, o }; to = { p, o: o + 1 };
+    } else {
+      const p = Number(key);
+      const para = this.doc.main[p];
+      from = { p, o: 0 }; to = { p, o: para.text.length };
+      if (typeof kind === "object") {
+        const seq = Refs.seqFields(this.doc, kind.caption).find((x) => x.p === p);
+        if (seq && what === "labelNumber") to = { p, o: seq.o + 1 };
+        if (seq && what === "captionText") {
+          const rest = para.text.slice(seq.o + 1);
+          const skip = /^[\s:.\-–—]*/.exec(rest)?.[0].length ?? 0;
+          from = { p, o: seq.o + 1 + skip };
+        }
+      }
+    }
+    const name = kind === "bookmark" ? key : Refs.refBookmark(this.doc, from, to);
+    const sw = `${asLink ? " \\h" : ""}${aboveBelow ? " \\p" : ""}`;
+    const instr = what === "page" ? `PAGEREF ${name}${sw}` : what === "noteNumber" ? `NOTEREF ${name}${sw}`
+      : what === "number" ? `REF ${name} \\r${sw}` : what === "aboveBelow" ? `REF ${name} \\p${asLink ? " \\h" : ""}` : `REF ${name}${sw}`;
+    const [a, b] = this.range();
+    const end = E.insertObject(this.doc, a, b, E.fieldObject(instr, ""), this.typingProps());
+    this.setSel(end, end);
+    this.update();
+    this.refreshFields();
+    this.update({ scroll: true });
+  }
+
+  /**
+   * Beschriftung einfügen: "Abbildung 1: Text" in the style Beschriftung, the number a SEQ
+   * field, as its own paragraph above or below the selected picture/table (else at the caret's
+   * paragraph). Numbers of all captions of the label are updated.
+   */
+  insertCaption(label: string, text: string, below = true, withoutLabel = false, format = "ARABIC"): void {
+    if (this.storyKey !== MAIN) return;
+    this.snapshot();
+    this.typing = false;
+    const style = this.styleId("caption");
+    this.ensureStyle(style);
+    const at = this.sel.head;
+    const paras = [...this.doc.main];
+    const p = Math.min(at.p, paras.length - 1);
+    const lead = withoutLabel ? "" : `${label} `;
+    const tail = text ? (text.startsWith(":") || text.startsWith(" ") ? text : `: ${text}`) : "";
+    const textAll = `${lead}${OBJ}${tail}`;
+    const caption: Para = {
+      text: textAll, runs: [{ len: textAll.length, props: EMPTY }], props: { style }, mark: EMPTY,
+      objects: [E.fieldObject(`SEQ ${label} \\* ${format}`, "1")],
+    };
+    paras.splice(below ? p + 1 : p, 0, caption);
+    this.doc.setStory(MAIN, paras);
+    const cp = below ? p + 1 : p;
+    this.setSel({ p: cp, o: textAll.length }, { p: cp, o: textAll.length });
+    this.refreshFields();
+    this.update({ scroll: true });
+  }
+
+  /** Felder aktualisieren (F9): SEQ numbers, cross references, page references. */
+  updateAllFields(): boolean {
+    this.snapshot();
+    const changed = this.refreshFields();
+    this.refreshCitations();
+    this.update();
+    return changed;
+  }
+
+  private refreshFields(): boolean {
+    this.update();
+    const labels = listLabels(this.doc.main, this.doc.numbering, this.doc.styles);
+    return Refs.updateFields(this.doc, this.pageNumberOf, (story) => this.layout.noteNumbers.get(story) ?? null, (p) => labels[p]?.text ?? "");
+  }
+
+  // ----- Zitate und Literaturverzeichnis ---------------------------------------------------
+
+  /** The document's sources and citation style (APA when it has none). */
+  bibliography(): Bib.Bibliography {
+    return this.doc.settings.bibliography ?? { sources: [], style: "APA" };
+  }
+
+  /** Quellen verwalten, Formatvorlage: new sources or style; citations and lists follow. */
+  setBibliography(b: Bib.Bibliography): void {
+    this.snapshot();
+    this.doc.setSettings({ ...this.doc.settings, bibliography: b });
+    this.refreshCitations();
+    this.update();
+  }
+
+  /** The tags cited in the main text, in order of first citation. */
+  citedTags(): string[] {
+    const out: string[] = [];
+    for (const p of this.doc.main) for (const o of p.objects ?? []) {
+      const m = o.kind === "field" ? /^\s*CITATION\s+(\S+)/i.exec(o.instr ?? "") : null;
+      if (m && !out.includes(m[1])) out.push(m[1]);
+    }
+    return out;
+  }
+
+  /** Zitat einfügen: a CITATION field for a source (\\l 1031: German), with Word's text. */
+  insertCitation(tag: string, pages = ""): void {
+    if (this.inBlock()) return;
+    this.snapshot();
+    const instr = `CITATION ${tag} \\l 1031${pages ? ` \\p ${pages}` : ""}`;
+    const [from, to] = this.range();
+    const end = E.insertObject(this.doc, from, to, E.fieldObject(instr, `(${tag})`), this.typingProps());
+    this.setSel(end, end);
+    this.refreshCitations();
+    this.update({ scroll: true });
+  }
+
+  /**
+   * Literaturverzeichnis: a heading ("Literaturverzeichnis", "Verweise", or none) and a
+   * BIBLIOGRAPHY field with the cited sources, formatted in the document's style.
+   */
+  insertBibliography(heading = ""): void {
+    if (this.doc.activeStory !== MAIN || this.inTable()) return;
+    this.snapshot();
+    const style = this.styleId("Bibliography");
+    this.ensureStyle(style);
+    const h1 = this.styleId("heading 1");
+    this.ensureStyle(h1);
+    // An empty paragraph at the caret is used; otherwise the list goes after the caret's paragraph.
+    const cur = this.sel.head.p;
+    const empty = !this.doc.main[cur]?.text.length;
+    const at = empty ? cur : cur + 1;
+    const paras: Para[] = [...(heading ? [makePara(heading, { style: h1 })] : []), ...S.bibliographyParagraphs([], style)];
+    this.doc.splice(at, empty ? at : at - 1, paras);
+    this.refreshCitations();
+    this.setSel({ p: at, o: 0 }, { p: at, o: 0 });
+    this.update({ scroll: true });
+  }
+
+  /** Zitate and Literaturverzeichnisse in the document's style, numbered by first citation. */
+  private refreshCitations(): void {
+    const b = this.bibliography();
+    const cited = this.citedTags();
+    const byTag = new Map(b.sources.map((x) => [x.tag, x]));
+    const main = this.doc.main.map((p) => {
+      if (!p.objects?.some((o) => o.kind === "field" && /^\s*CITATION\b/i.test(o.instr ?? ""))) return p;
+      const objects = p.objects.map((o) => {
+        const m = o.kind === "field" ? /^\s*CITATION\s+(\S+)(?:.*?\\p\s+(\S+))?/i.exec(o.instr ?? "") : null;
+        if (!m) return o;
+        const display = Bib.formatCitation(byTag.get(m[1]), m[1], b.style, cited.indexOf(m[1]) + 1, m[2] ?? "");
+        return display === o.display ? o : { ...o, display, data: undefined };
+      });
+      return { ...p, objects };
+    });
+    this.doc.setStory(MAIN, main);
+    const style = this.styleId("Bibliography");
+    for (const f of S.tocFields(this.doc, /^\s*BIBLIOGRAPHY\b/i)) {
+      const sources = Bib.sortedSources(b, cited).filter((x) => cited.includes(x.tag));
+      const entries = sources.map((x) => Bib.formatEntry(x, b.style, cited.indexOf(x.tag) + 1));
+      this.doc.splice(f.a, f.b, S.bibliographyParagraphs(entries as { text: string; italic?: boolean }[][], style, f.id));
+    }
+  }
+
+  /** Literaturverzeichnis aktualisieren (and F9). */
+  updateCitations(): void {
+    this.snapshot();
+    this.refreshCitations();
+    this.update();
+  }
+
+  // ----- links ----------------------------------------------------------------------------
+
+  /** The link at the caret (or around the selection): its text range and where it goes. */
+  linkAt(pos: Pos = this.sel.head): { id: string; from: Pos; to: Pos; text: string; href?: string; anchor?: string; tip?: string; frame?: string } | null {
+    const para = this.doc.paras[pos.p];
+    const anchors = para?.anchors ?? [];
+    for (const start of anchors) {
+      if (start.link?.edge !== "start") continue;
+      const end = anchors.find((x) => x.link?.id === start.link!.id && x.link.edge === "end");
+      if (!end || pos.o < start.at || pos.o > end.at) continue;
+      return { id: start.link.id, from: { p: pos.p, o: start.at }, to: { p: pos.p, o: end.at }, text: para.text.slice(start.at, end.at),
+        href: start.link.href, anchor: start.link.anchor, tip: start.link.tip, frame: start.link.frame };
+    }
+    return null;
+  }
+
+  /**
+   * Link einfügen (Strg+K): the text to show becomes a link (web address, file, mailto: or a
+   * place in the document). An existing link at the caret is replaced; a link stays in one
+   * paragraph. The text gets Word's character style Hyperlink.
+   */
+  insertLink(link: { text: string; href?: string; anchor?: string; tip?: string; frame?: string }): void {
+    if (!link.href && !link.anchor) return;
+    const old = this.linkAt();
+    let [from, to] = old ? [old.from, old.to] : this.range();
+    if (from.p !== to.p) to = { p: from.p, o: this.doc.paras[from.p].text.length };
+    this.snapshot();
+    this.typing = false;
+    const style = this.styleId("hyperlink");
+    this.ensureStyle(style);
+    if (old) this.dropLink(old.id, from.p);
+    const text = link.text || link.href || link.anchor || "";
+    if (text !== this.doc.paras[from.p].text.slice(from.o, to.o)) {
+      const props = intern({ ...typedProps(this.doc.paras[from.p], from.o), rStyle: style, rev: undefined });
+      to = this.replaceTracked(from, to, [{ text, runs: [{ len: text.length, props }], props: {}, mark: EMPTY }]);
+    } else {
+      this.doc.mapChars(from, to, (c) => ({ ...c, rStyle: style }));
+    }
+    const id = `link:${++this.linkSeq}`;
+    const paras = [...this.doc.paras];
+    let para = paras[from.p];
+    para = S.withAnchor(para, { at: from.o, data: undefined, link: { id, edge: "start", href: link.href, anchor: link.anchor, tip: link.tip || undefined, frame: link.frame || undefined } });
+    para = S.withAnchor(para, { at: to.o, data: undefined, link: { id, edge: "end" } });
+    paras[from.p] = para;
+    this.doc.paras = paras;
+    this.setSel(to, to);
+    this.update({ scroll: true });
+  }
+
+  /** A heading as a link target: its hidden _Toc bookmark (added if missing), as Word does. */
+  headingBookmark(p: number): string {
+    const before = this.doc.main[p]?.anchors;
+    const name = S.tocBookmark(this.doc, p);
+    if (this.doc.main[p]?.anchors !== before) this.update();
+    return name;
+  }
+
+  /** Strg+Klick on a link (the host opens web pages, files and mail; bookmarks are gone to). */
+  onFollowLink: ((link: { href?: string; anchor?: string }) => void) | null = null;
+
+  /** Link entfernen: the text stays, without the link and its style. */
+  removeLink(): void {
+    const l = this.linkAt();
+    if (!l) return;
+    this.snapshot();
+    this.dropLink(l.id, l.from.p);
+    const style = this.styleId("hyperlink");
+    this.doc.mapChars(l.from, l.to, (c) => (c.rStyle === style ? { ...c, rStyle: undefined } : c));
+    this.update();
+  }
+
+  private linkSeq = 0;
+
+  private dropLink(id: string, p: number): void {
+    const paras = [...this.doc.paras];
+    paras[p] = { ...paras[p], anchors: paras[p].anchors?.filter((a) => a.link?.id !== id) };
+    this.doc.paras = paras;
+  }
+
+  /**
+   * Einfügen > Symbol: a character at the caret, in its own font when one was chosen. A symbol
+   * font's character (U+F020-U+F0FF) is written as Word writes it, a w:sym.
+   */
+  insertSymbol(ch: string, font?: string, symbolFont = false): void {
+    if (this.inBlock()) return;
+    this.snapshot();
+    this.typing = false;
+    const [from, to] = this.range();
+    const base: CharProps = { ...typedProps(this.doc.paras[from.p], from.o), rev: undefined };
+    let piece: Para;
+    if (symbolFont && font) {
+      const hex = (ch.codePointAt(0) ?? 0).toString(16).toUpperCase().padStart(4, "0");
+      const safe = font.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+      const obj: InlineObject = { kind: "other", data: { inner: `<w:sym w:font="${safe}" w:char="${hex}"/>` }, display: ch, font };
+      piece = { text: OBJ, runs: [{ len: 1, props: intern(base) }], props: {}, mark: EMPTY, objects: [obj] };
+    } else {
+      piece = { text: ch, runs: [{ len: ch.length, props: intern(font ? { ...base, font } : base) }], props: {}, mark: EMPTY };
+    }
+    const end = this.replaceTracked(from, to, [piece]);
+    this.setSel(end, end);
+    this.update({ scroll: true });
+  }
 
   /** Formel einfügen: a new equation at the caret; returns where it is. */
   insertMath(latex = "", seq?: Seq): Pos | null {
@@ -3304,6 +3648,80 @@ cropFill(fit: boolean): void {
   // ----- foot- and endnotes ------------------------------------------------------------------
 
   /** Fußnote einfügen (Strg+Alt+F) / Endnote einfügen (Strg+Alt+D): the caret goes into the note. */
+  /** Fuß- und Endnote: the document's note settings (Word's defaults when it has none). */
+  noteSettings(): NonNullable<DocSettings["notes"]> {
+    return this.doc.settings.notes ?? {};
+  }
+
+  setNoteSettings(notes: NonNullable<DocSettings["notes"]>): void {
+    this.snapshot();
+    this.doc.setSettings({ ...this.doc.settings, notes });
+    this.relayout();
+  }
+
+  /**
+   * Fuß- und Endnote > Konvertieren: all footnotes become endnotes, all endnotes footnotes, or
+   * both swap. References, note texts and their styles follow.
+   */
+  convertNotes(mode: "toEndnotes" | "toFootnotes" | "swap"): void {
+    if (this.storyKey !== MAIN) return;
+    const map = new Map<string, string>();
+    const next = { fn: 0, en: 0 };
+    for (const k of this.doc.stories.keys()) {
+      const kind = k.slice(0, 2) as "fn" | "en";
+      if (kind === "fn" || kind === "en") next[kind] = Math.max(next[kind], Number(k.slice(3)) || 0);
+    }
+    for (const k of S.referencedNotes(this.doc)) {
+      const kind = k.slice(0, 2);
+      const to = mode === "swap" ? (kind === "fn" ? "en" : "fn") : mode === "toEndnotes" ? "en" : "fn";
+      if (kind === to) continue;
+      map.set(k, `${to}:${++next[to as "fn" | "en"]}`);
+    }
+    if (!map.size) return;
+    this.snapshot();
+    const style = (kind: string, what: "reference" | "text") => {
+      const id = this.styleId(`${kind === "fn" ? "footnote" : "endnote"} ${what}`);
+      this.ensureStyle(id);
+      return id;
+    };
+    const refOf = new Map([["fn", style("fn", "reference")], ["en", style("en", "reference")]]);
+    const textOf = new Map([["fn", style("fn", "text")], ["en", style("en", "text")]]);
+    const swapRuns = (p: Para): Para => {
+      if (!p.objects?.some((o) => o.note && map.has(o.note))) return p;
+      let k = 0;
+      const runs: Para["runs"][number][] = [];
+      let pos = 0;
+      for (const r of p.runs) {
+        // A run over a converted reference gets the other reference style.
+        let props = r.props;
+        for (let i = pos; i < pos + r.len; i++) {
+          if (p.text[i] !== OBJ) continue;
+          const o = p.objects?.[k++];
+          const to = o?.note ? map.get(o.note) : undefined;
+          if (to && props.rStyle === refOf.get(o!.note!.slice(0, 2))) props = intern({ ...props, rStyle: refOf.get(to.slice(0, 2)) });
+        }
+        runs.push(props === r.props ? r : { ...r, props });
+        pos += r.len;
+      }
+      const objects = p.objects.map((o) => {
+        const to = o.note ? map.get(o.note) : undefined;
+        if (!to) return o;
+        const data = o.data && typeof o.data === "object" && "inner" in (o.data as object) ? { inner: to.startsWith("en") ? "<w:endnoteRef/>" : "<w:footnoteRef/>" } : undefined;
+        return { ...o, note: to, data };
+      });
+      return { ...p, runs, objects };
+    };
+    this.doc.setStory(MAIN, this.doc.main.map(swapRuns));
+    for (const [from, to] of map) {
+      const paras = this.doc.stories.get(from);
+      if (!paras) continue;
+      const fromText = textOf.get(from.slice(0, 2)), toText = textOf.get(to.slice(0, 2));
+      this.doc.setStory(to, paras.map((q) => swapRuns({ ...q, props: q.props.style === fromText ? { ...q.props, style: toText } : q.props })));
+      this.doc.deleteStory(from);
+    }
+    this.update();
+  }
+
   insertNote(kind: "fn" | "en"): void {
     if (this.doc.activeStory !== MAIN) return;
     this.snapshot();
@@ -3374,6 +3792,43 @@ cropFill(fit: boolean): void {
     this.update({ scroll: true });
   }
 
+  /**
+   * Abbildungsverzeichnis einfügen: a TOC field with \\c "Abbildung" (or Formel, Tabelle)
+   * listing the captions with dotted page numbers, at the caret's paragraph.
+   */
+  insertTableOfFigures(label = "Abbildung", look: S.TocLook = {}, includeLabel = true): void {
+    if (this.doc.activeStory !== MAIN || this.inTable()) return;
+    this.snapshot();
+    const style = this.styleId("table of figures");
+    this.ensureStyle(style);
+    const cur = this.sel.head.p;
+    const empty = !this.doc.main[cur]?.text.length;
+    const at = empty ? cur : cur + 1;
+    // Word's switches: \\h links, \\n no page numbers, \\c with "Abbildung 1", \\a the caption text only.
+    const instr = `TOC ${look.links !== false ? "\\h " : ""}\\z ${look.pageNumbers === false ? "\\n " : ""}${includeLabel ? "\\c" : "\\a"} "${label}"`;
+    const entries = Refs.captions(this.doc, label).map((x) => ({ p: x.p, level: 1, text: includeLabel ? x.text : x.rest }));
+    const paras = S.tocParagraphs(this.doc, entries, () => "1", [style], this.tocWidth(), undefined, instr, look);
+    this.doc.splice(at, empty ? at : at - 1, paras);
+    this.update();
+    this.refreshToc(S.tocFields(this.doc).find((f) => f.a === at)?.id);
+    this.setSel({ p: at, o: 0 }, { p: at, o: 0 });
+    this.update({ scroll: true });
+  }
+
+  /** Abbildungsverzeichnis aktualisieren: every table of figures is built again. */
+  updateTablesOfFigures(): void {
+    const ids = S.tocFields(this.doc).filter((f) => /\\[ca]\s+"/i.test(f.instr)).map((f) => f.id);
+    if (!ids.length) return;
+    this.snapshot();
+    for (const id of ids) this.refreshToc(id);
+    this.update({ scroll: true });
+  }
+
+  /** Whether the document has a table of figures (Abbildungsverzeichnis aktualisieren). */
+  hasTableOfFigures(): boolean {
+    return S.tocFields(this.doc).some((f) => /\\[ca]\s+"/i.test(f.instr));
+  }
+
   /** Replaces paragraph `p` by a table of contents (the heading above stays as it is). */
   insertTocAt(p: number): void {
     if (p < 0 || p >= this.doc.main.length) return;
@@ -3436,9 +3891,24 @@ cropFill(fit: boolean): void {
       for (const id of ids) {
         const f = S.tocFields(this.doc).find((x) => x.id === id);
         if (!f) continue;
-        const entries = this.headings().filter((x) => x.level <= 3 && (x.p < f.a || x.p > f.b));
+        // An Abbildungsverzeichnis (TOC \\c "Abbildung") lists the captions of its label.
+        const label = /\\[ca]\s+"([^"]+)"/i.exec(f.instr)?.[1];
+        const withLabel = !/\\a\s+"/i.test(f.instr);
+        const outside = (p: number) => p < f.a || p > f.b;
+        const entries = label
+          ? Refs.captions(this.doc, label).filter((x) => outside(x.p)).map((x) => ({ p: x.p, level: 1, text: withLabel ? x.text : x.rest }))
+          : this.headings().filter((x) => x.level <= 3 && outside(x.p));
+        // The entries keep their look: page numbers, the right tab and its leader, links.
+        const first = this.doc.main[f.a];
+        const tab = first?.props.tabs?.find((t) => t.align === "right");
+        const look: S.TocLook = label ? {
+          pageNumbers: !/\\n\b/.test(f.instr), links: /\\h\b/.test(f.instr),
+          rightAlign: !!tab || !first?.objects?.length, leader: (tab?.leader as S.TocLook["leader"]) ?? "dot",
+        } : {};
+        const tof = this.styleId("table of figures");
+        if (label) this.ensureStyle(tof);
         const before = sig(this.doc.main.slice(f.a, f.b + 1));
-        const paras = S.tocParagraphs(this.doc, entries, this.pageNumberOf, styles, this.tocWidth(), f.id);
+        const paras = S.tocParagraphs(this.doc, entries, this.pageNumberOf, label ? [tof] : styles, this.tocWidth(), f.id, f.instr, look);
         if (sig(paras) === before) continue;
         changed = true;
         S.stripTocTail(this.doc, f);
@@ -4249,6 +4719,11 @@ cropFill(fit: boolean): void {
     const at = this.view.posInLine(hit.index, hit.x);
     const under = this.view.posInLine(hit.index, hit.x, true).pos;
     const pl = this.view.storyLayout().placed[hit.index];
+    // Strg+Klick follows a link (Word).
+    if ((e.ctrlKey || e.metaKey) && !e.shiftKey && this.onFollowLink && !hit.inLeftMargin) {
+      const link = this.linkAt(under);
+      if (link && under.o < link.to.o) { this.onFollowLink(link); return; }
+    }
 
     if (hit.inLeftMargin) {
       // Selection bar: line, paragraph, whole document.

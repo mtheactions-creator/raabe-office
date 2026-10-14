@@ -9,10 +9,11 @@ import { strFromU8, unzipSync } from "fflate";
 import {
   A4, COLUMN_BREAK, DEFAULT_SECTION, LINE_BREAK, OBJ, ONE_COLUMN, PAGE_BREAK, StyleSheet, defaultStyleSheet, intern, nextTableId, plainPicture, seqToLatex,
   type Anchor, type BlockObject, type CellDef, type CellRef, type CharProps, type CommentMeta, type DocState, type FloatObject,
-  type HeaderRefs, type ImageData, type InlineObject, type MathSettings, type Numbering, type Para, type ParaGroup, type ParaProps, type PictureFormat, type Revision, type ShapeInfo,
+  type DocSettings, type HeaderRefs, type ImageData, type InlineObject, type MathSettings, type NoteProps, type Numbering, type Para, type ParaGroup, type ParaProps, type PictureFormat, type Revision, type ShapeInfo,
   type RowDef, type Run, type Section, type StyleDef, type StyleType, type TableDef, type TableStyleDef, type TableStylePart,
 } from "@raabe/text-engine";
 import { mathParaJc, ommlToSeq, readMathPr } from "./math";
+import { readSources, type Bibliography } from "@raabe/text-engine";
 import { readNumbering } from "./numbering";
 import { REL, Rels, mimeOf, relsPath, resolveTarget } from "./package";
 import { readBorders, readPPr, readRPr, readShading, type RevisionOf } from "./props";
@@ -47,6 +48,8 @@ export interface DocxPackage {
   /** Stories and comment data as read: parts whose stories are unchanged are kept as they are. */
   originalStories: Map<string, Para[]>;
   originalComments: ReadonlyMap<string, CommentMeta> | null;
+  /** Word's sources part (customXml/itemN.xml with b:Sources) and what was read from it. */
+  bibliography?: { path: string; read: Bibliography };
 }
 
 export interface ReadResult {
@@ -249,6 +252,8 @@ class Reader {
   matrix: FormatMatrix | null = null;
   /** Formeloptionen of the document (m:mathPr). */
   mathSettings: MathSettings | undefined;
+  /** Fuß- und Endnote settings (w:footnotePr, w:endnotePr in settings.xml). */
+  noteSettings: DocSettings["notes"];
   readonly stories = new Map<string, Para[]>();
   private textboxSeq = 0;
 
@@ -452,7 +457,10 @@ class PartReader {
         case "hyperlink": {
           const id = this.r.nextField();
           const open = outer(el.cloneNode(false) as Element).replace(/\/>\s*$/, ">");
-          b.addAnchor({ data: { raw: open }, link: { id, edge: "start" } });
+          // Where it goes: an external relationship (web, file, mail) or a bookmark (w:anchor).
+          const rid = el.getAttributeNS(RNS, "id");
+          const href = rid ? this.rels.list.find((r) => r.id === rid)?.target : undefined;
+          b.addAnchor({ data: { raw: open }, link: { id, edge: "start", href, anchor: attr(el, "anchor") ?? undefined, tip: attr(el, "tooltip") ?? undefined, frame: attr(el, "tgtFrame") ?? undefined } });
           this.inline(kids(el), b, rev);
           b.addAnchor({ data: { raw: "</w:hyperlink>" }, link: { id, edge: "end" } });
           break;
@@ -938,6 +946,24 @@ function readComments(r: Reader, path: string, extPath: string | null): { rootTa
 
 // ----- the package --------------------------------------------------------------------------
 
+/** w:footnotePr and w:endnotePr of settings.xml (only what the dialog Fuß- und Endnote sets). */
+export function readNoteSettings(settings: Element): DocSettings["notes"] {
+  const one = (name: string): NoteProps | undefined => {
+    const pr = child(settings, name);
+    if (!pr) return undefined;
+    const v = (k: string) => attr(child(pr, k), "val");
+    const pos = v("pos"), fmt = v("numFmt"), start = v("numStart"), restart = v("numRestart");
+    const out: NoteProps = {
+      ...(pos === "pageBottom" || pos === "beneathText" || pos === "sectEnd" || pos === "docEnd" ? { pos } : {}),
+      ...(fmt ? { numFmt: fmt } : {}), ...(start && Number(start) > 0 ? { numStart: Number(start) } : {}),
+      ...(restart === "continuous" || restart === "eachSect" || restart === "eachPage" ? { numRestart: restart } : {}),
+    };
+    return Object.keys(out).length ? out : undefined;
+  };
+  const footnote = one("footnotePr"), endnote = one("endnotePr");
+  return footnote || endnote ? { footnote, endnote } : undefined;
+}
+
 export function readDocx(bytes: Uint8Array): ReadResult {
   const files = unzipSync(bytes);
   const r = new Reader(files);
@@ -959,6 +985,14 @@ export function readDocx(bytes: Uint8Array): ReadResult {
     evenOdd = onOff(child(s, "evenAndOddHeaders")) ?? false;
     trackChanges = onOff(child(s, "trackRevisions")) ?? false;
     r.mathSettings = readMathPr(s);
+    r.noteSettings = readNoteSettings(s);
+  }
+  // Word keeps the document's sources in a customXml part.
+  let bibliography: DocxPackage["bibliography"];
+  for (const path of Object.keys(files).filter((f) => /^customXml\/item\d+\.xml$/i.test(f)).sort()) {
+    const xml = r.text(path);
+    const read = xml && xml.includes("bibliography") ? readSources(parse(xml)) : null;
+    if (read) { bibliography = { path, read }; break; }
   }
   const docRels = r.rels("word/document.xml");
   const partOf = (type: string) => {
@@ -991,14 +1025,14 @@ export function readDocx(bytes: Uint8Array): ReadResult {
   const styleIds = new Set<string>(styles.styles.keys());
   return {
     state: {
-      paras, styles, settings: { section, defaultTab, evenOdd: evenOdd || undefined, trackChanges: trackChanges || undefined, math: r.mathSettings }, stories: r.stories, numbering,
+      paras, styles, settings: { section, defaultTab, evenOdd: evenOdd || undefined, trackChanges: trackChanges || undefined, math: r.mathSettings, bibliography: bibliography?.read, notes: r.noteSettings }, stories: r.stories, numbering,
       comments: cm?.meta,
     },
     pkg: {
       files, rootTag: rootTagOf(root), trailing, stylesXml, styleIds, hasTheme: !!themeXml, storyParts: r.storyParts,
       numbering, numberingRoot: numberingXml ? rootTagOf(parse(numberingXml).documentElement) : null, notes,
       comments: cm && cmPath ? { path: cmPath, rootTag: cm.rootTag } : null, settingsXml,
-      originalStories: new Map(r.stories), originalComments: cm?.meta ?? null,
+      originalStories: new Map(r.stories), originalComments: cm?.meta ?? null, bibliography,
     },
     partial: [...r.partial],
   };

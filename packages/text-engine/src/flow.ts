@@ -114,6 +114,14 @@ export interface FlowInput {
   readonly stories: ReadonlyMap<string, readonly Para[]>;
   readonly settings: DocSettings;
   readonly numbering: Numbering;
+  /** Note numbers decided by a first layout (notes numbered per page). */
+  readonly noteNumbers?: ReadonlyMap<string, string>;
+}
+
+/** A note number in Word's formats (chicago: *, †, ‡, §, then doubled). */
+export function noteNumber(n: number, fmt = "decimal"): string {
+  if (fmt === "chicago") { const marks = ["*", "†", "‡", "§"]; return marks[(n - 1) % 4].repeat(Math.floor((n - 1) / 4) + 1); }
+  return fmt === "decimal" ? String(n) : formatNumber(n, fmt);
 }
 
 // ----- helpers -------------------------------------------------------------------------------
@@ -224,13 +232,23 @@ class Flow {
     this.splitSections();
   }
 
+  /**
+   * Note numbers as the document's Fuß- und Endnote settings say: format, start, restarting
+   * with each section (per page from a first layout, see layoutDocument).
+   */
   private numberNotes(): void {
-    let fn = 0, en = 0;
+    if (this.input.noteNumbers) { for (const [k, v] of this.input.noteNumbers) this.noteNumbers.set(k, v); return; }
+    const f = this.input.settings.notes?.footnote ?? {}, e = this.input.settings.notes?.endnote ?? {};
+    let fn = (f.numStart ?? 1) - 1, en = (e.numStart ?? 1) - 1;
     for (const p of this.input.main) {
       for (const o of p.objects ?? []) {
         if (!o.note || this.noteNumbers.has(o.note)) continue;
-        if (o.note.startsWith("en:")) this.noteNumbers.set(o.note, formatNumber(++en, "lowerRoman"));
-        else this.noteNumbers.set(o.note, String(++fn));
+        if (o.note.startsWith("en:")) this.noteNumbers.set(o.note, noteNumber(++en, e.numFmt ?? "lowerRoman"));
+        else this.noteNumbers.set(o.note, noteNumber(++fn, f.numFmt ?? "decimal"));
+      }
+      if (p.sect) {
+        if (f.numRestart === "eachSect") fn = (f.numStart ?? 1) - 1;
+        if (e.numRestart === "eachSect") en = (e.numStart ?? 1) - 1;
       }
     }
   }
@@ -1201,7 +1219,13 @@ class Flow {
     if (!page.notes.length) return;
     const s = page.setup;
     const x = s.marginLeft * PT, w = (s.width - s.marginLeft - s.marginRight) * PT;
+    // "Unterhalb des Texts": the notes follow the page's last line instead of its bottom.
     let y = page.bodyBottom - page.notesHeight;
+    if (this.input.settings.notes?.footnote?.pos === "beneathText") {
+      const lines = this.main.placed.filter((pl) => pl.page === page.index);
+      const last = lines[lines.length - 1];
+      if (last) y = Math.min(y, last.y + this.main.paras[last.para].lines[last.line].height);
+    }
     const sep = this.separatorHeight();
     // Word's separator: a 2-inch line in the middle of a Normal line.
     page.deco.push({ kind: "line", story: "notes", x1: x, y1: y + sep / 2, x2: x + 144 * PT, y2: y + sep / 2, width: 0.5 * PT, color: "#000000", style: "single" });
@@ -1287,8 +1311,18 @@ function buildIndex(story: StoryLayout): void {
 
 /** Lays out a whole document. */
 export function layoutDocument(lt: Layouter, input: FlowInput): Layout {
-  const flow = new Flow(lt, input);
+  let flow = new Flow(lt, input);
   flow.run();
+  // Footnotes numbered per page: the pages of a first layout decide the numbers.
+  const fp = input.settings.notes?.footnote;
+  if (fp?.numRestart === "eachPage" && !input.noteNumbers) {
+    const numbers = new Map(flow.noteNumbers);
+    for (const page of flow.pages) page.notes.filter((id) => id.startsWith("fn:")).forEach((id, i) => numbers.set(id, noteNumber((fp.numStart ?? 1) + i, fp.numFmt ?? "decimal")));
+    if ([...numbers].some(([k, v]) => flow.noteNumbers.get(k) !== v)) {
+      flow = new Flow(lt, { ...input, noteNumbers: numbers });
+      flow.run();
+    }
+  }
   buildIndex(flow.main);
   for (const s of flow.stories.values()) buildIndex(s);
   return {

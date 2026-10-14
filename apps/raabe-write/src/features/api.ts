@@ -16,6 +16,10 @@ export interface AppApi {
   selectTab(id: string): void;
   /** Als Standardlayout festlegen: the wrapping new pictures get. */
   setDefaultPictureWrap?(wrap: string): void;
+  /** The active document's file, if it has one. */
+  documentPath(): string | null;
+  /** Link einfügen > Neues Dokument erstellen: an empty document written to `path` (opened when `open`). */
+  createEmptyDocument(path: string, open: boolean): Promise<void>;
   /** What the clipboard holds: text, HTML (formatting) and a picture. */
   clipboard(): Promise<{ text: string; html: string; image: Blob | null }>;
 }

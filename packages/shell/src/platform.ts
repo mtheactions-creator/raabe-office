@@ -42,8 +42,16 @@ export interface Platform {
   /** Puts HTML and its plain text on the clipboard, the HTML as it is. */
   clipboardWriteHtml?(html: string, text: string): Promise<void>;
   printToPdf(path: string): Promise<void>;
+  /** The folders and files of a folder (Link einfügen > Aktueller Ordner). */
+  listDir?(path: string): Promise<{ name: string; dir: boolean }[]>;
+  /** The user's Documents folder. */
+  documentsDir?(): Promise<string>;
+  /** Opens a web address, mail address or file with Windows' program for it (Strg+Klick on a link). */
+  openExternal?(target: string): Promise<void>;
   /** Installed font families (for the Schriftart box). */
   listFonts(): Promise<string[]>;
+  /** The characters a font has, as code point ranges; symbol fonts (Symbol, Wingdings) use U+F020-U+F0FF. */
+  fontChars?(family: string): Promise<{ found: boolean; symbol: boolean; ranges: [number, number][] }>;
   /** Vertical font metrics from the font files (hhea table), keyed by family name. */
   fontMetrics(families: string[]): Promise<Record<string, { found: boolean; unitsPerEm: number; ascender: number; descender: number; lineGap: number; winAscent?: number; winDescent?: number; math?: boolean }>>;
   /** Spelling: for each word whether it is correct in `lang` ("de-DE", "en-US", "en-GB"). */

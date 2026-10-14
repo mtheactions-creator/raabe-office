@@ -32,6 +32,20 @@ export interface DocSettings {
   trackChanges?: boolean;
   /** Formeloptionen (m:mathPr); Word's defaults when absent. */
   math?: MathSettings;
+  /** Fuß- und Endnote: where notes go and how they are numbered (w:footnotePr, w:endnotePr). */
+  notes?: { readonly footnote?: NoteProps; readonly endnote?: NoteProps };
+  /** Zitate und Literaturverzeichnis: the document's sources and citation style (customXml b:Sources). */
+  bibliography?: import("./bibliography").Bibliography;
+}
+
+/** Numbering and place of foot- or endnotes (Word's dialog Fuß- und Endnote). */
+export interface NoteProps {
+  /** Footnotes: pageBottom (Seitenende) or beneathText; endnotes: docEnd or sectEnd. */
+  readonly pos?: "pageBottom" | "beneathText" | "docEnd" | "sectEnd";
+  /** decimal, lowerLetter, upperLetter, lowerRoman, upperRoman, chicago (*, †, ‡, §). */
+  readonly numFmt?: string;
+  readonly numStart?: number;
+  readonly numRestart?: "continuous" | "eachSect" | "eachPage";
 }
 
 /** Formeloptionen of a document (m:mathPr in settings.xml). Lengths in points. */

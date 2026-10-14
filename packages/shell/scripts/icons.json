@@ -281,5 +281,9 @@
   "math-unicode": "custom:unicode",
   "math-latex": "custom:latex",
   "ink-equation": "inking_tool",
-  "math-linear": "custom:linear"
+  "math-linear": "custom:linear",
+  "globe": "globe",
+  "mail": "mail",
+  "arrow-up": "arrow_up",
+  "placeholder-source": "book_question_mark"
 }

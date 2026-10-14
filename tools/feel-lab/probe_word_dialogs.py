@@ -28,15 +28,15 @@ ITEMS = [
     ("symbol menu", "Einfügen", "Symbol", "click"),
     ("symbol dialog", "Einfügen", "Symbol", "menu:Weitere Symbole..."),
     ("link dialog", "Einfügen", "Link", "click"),
-    ("bookmark dialog", "Einfügen", "Textmarke", "click"),
-    ("cross reference dialog", "Einfügen", "Querverweis", "click"),
-    ("caption dialog", "Referenzen", "Beschriftung einfügen", "click"),
+    ("bookmark dialog", "Einfügen", "Textmarke...", "click"),
+    ("cross reference dialog", "Einfügen", "Querverweis...", "click"),
+    ("caption dialog", "Referenzen", "Beschriftung einfügen...", "click"),
     ("citation menu", "Referenzen", "Zitat einfügen", "click"),
-    ("sources dialog", "Referenzen", "Quellen verwalten", "click"),
-    ("citation style menu", "Referenzen", "Formatvorlage", "click"),
+    ("sources dialog", "Referenzen", "Quellen verwalten...", "click"),
+    ("citation style menu", "Referenzen", "Formatvorlage", "combo"),
     ("bibliography menu", "Referenzen", "Literaturverzeichnis", "click"),
     ("footnote dialog", "Referenzen", "Fußnoten", "launcher"),
-    ("track options", "Überprüfen", "Nachverfolgung", "launcher"),
+    ("track options", "Überprüfen", "Optionen zum Nachverfolgen von Änderungen...", "click"),
     ("themes menu", "Entwurf", "Designs", "click"),
     ("colors menu", "Entwurf", "Farben", "click"),
     ("fonts menu", "Entwurf", "Schriftarten", "click"),
@@ -44,14 +44,22 @@ ITEMS = [
     ("effects menu", "Entwurf", "Effekte", "click"),
     ("watermark menu", "Entwurf", "Wasserzeichen", "click"),
     ("page color menu", "Entwurf", "Seitenfarbe", "click"),
-    ("page borders dialog", "Entwurf", "Seitenränder", "click"),
+    ("page borders dialog", "Entwurf", "Seitenränder...", "click"),
     ("hyphenation menu", "Layout", "Silbentrennung", "click"),
     ("hyphenation options", "Layout", "Silbentrennung", "menu:Silbentrennungsoptionen..."),
     ("text effects menu", "Start", "Texteffekte und Typografie", "click"),
-    ("sort dialog", "Start", "Sortieren", "click"),
-    ("select menu", "Start", "Markieren", "click"),
-    ("clipboard pane", "Start", "Zwischenablage", "launcher"),
+    ("sort dialog", "Start", "Sortieren...", "click"),
+    ("select menu", "Start", "Bearbeiten", "menu:Markieren"),
+    ("clipboard pane", "Start", "Office-Zwischenablage...", "click"),
     ("view tab", "Ansicht", "", "tab"),
+    ("tof dialog", "Referenzen", "Abbildungsverzeichnis einfügen...", "click"),
+    ("toc menu", "Referenzen", "Inhaltsverzeichnis", "click"),
+    ("tab Start", "Start", "", "tab"),
+    ("tab Einfügen", "Einfügen", "", "tab"),
+    ("tab Entwurf", "Entwurf", "", "tab"),
+    ("tab Layout", "Layout", "", "tab"),
+    ("tab Referenzen", "Referenzen", "", "tab"),
+    ("tab Überprüfen", "Überprüfen", "", "tab"),
 ]
 
 
@@ -150,7 +158,10 @@ def main() -> None:
             x, y, cw, ch = uia.describe(el)["rect"]
             before = set(winapi.find_windows(lambda h: True))
             kind = uia.describe(el)["type"]
-            winapi.click(x + cw / 2, y + ch - 8 if kind == "SplitButton" else y + ch / 2)
+            if how == "combo":
+                winapi.click(x + cw - 8, y + ch / 2)
+            else:
+                winapi.click(x + cw / 2, y + ch - 8 if kind == "SplitButton" else y + ch / 2)
             time.sleep(1.5)
             if how.startswith("menu:"):
                 item = how[5:]
