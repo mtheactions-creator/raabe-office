@@ -20,6 +20,12 @@ export interface FileInfo {
   modified: number | null;
 }
 
+/** A thesaurus lookup: the word found and its meanings ("Adj." …; antonyms start with "!"). */
+export interface ThesaurusResult {
+  word: string;
+  meanings: { pos: string; terms: string[] }[];
+}
+
 export interface Platform {
   readonly kind: "tauri" | "browser";
   openFileDialog(): Promise<string | null>;
@@ -60,6 +66,8 @@ export interface Platform {
   spellCheck(lang: string, words: string[]): Promise<boolean[]>;
   /** Suggestions for a misspelled word. */
   spellSuggest(lang: string, word: string): Promise<string[]>;
+  /** Thesaurus: the meanings of a word (or of its base form), null when there are none. */
+  thesaurus(lang: string, word: string): Promise<ThesaurusResult | null>;
   /** Files passed on the command line (double-click in Explorer) at start and later. */
   onOpenFiles(handler: (paths: string[]) => void): void;
   window: {

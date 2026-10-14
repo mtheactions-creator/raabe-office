@@ -29,7 +29,9 @@ const cmds = (...ids: string[]): MenuEntry[] => ids.map((id) => (id === "-" ? "-
 export function contextFeature(api: AppApi, spellEntries: (e: Editor, pos: Pos) => Promise<MenuEntry[]>,
   toolbar: (kind: "text" | "table" | "picture") => HTMLElement | null,
   /** Word's menu inside an equation being edited (null outside one). */
-  mathEntries: (x: number, y: number) => MenuEntry[] | null = () => null) {
+  mathEntries: (x: number, y: number) => MenuEntry[] | null = () => null,
+  /** Synonyme: the thesaurus' words for the word clicked. */
+  synonymEntries: (e: Editor, pos: Pos) => Promise<MenuEntry[]> = async () => []) {
   const c = api.commands;
   const ed = () => api.editor();
   const has = () => !!ed();
@@ -108,12 +110,12 @@ export function contextFeature(api: AppApi, spellEntries: (e: Editor, pos: Pos) 
     ],
   };
 
-  const entriesFor = (e: Editor): MenuEntry[] => {
+  const entriesFor = (e: Editor, synonymList: MenuEntry[]): MenuEntry[] => {
     const out: MenuEntry[] = [];
     const image = e.selectedImage();
     const block = e.cellBlock();
     const cells = !!block?.multi;
-    const synonyms: MenuEntry = { label: "Synonyme", submenu: () => [{ label: "(Keine Vorschläge)", run: () => {}, disabled: true }, "-", { cmd: "review.thesaurus", label: "Thesaurus..." }] };
+    const synonyms: MenuEntry = { label: "Synonyme", submenu: () => synonymList.length ? synonymList : [{ label: "(Keine Vorschläge)", run: () => {}, disabled: true }, "-", { cmd: "review.thesaurus", label: "Thesaurus..." }] };
     const insertSub: MenuEntry = { label: "Einfügen", submenu: [
       { cmd: "table.insertLeft", label: "Spalten links einfügen" }, { cmd: "table.insertRight", label: "Spalten rechts einfügen" },
       { cmd: "table.insertAbove", label: "Zeilen oberhalb einfügen" }, { cmd: "table.insertBelow", label: "Zeilen unterhalb einfügen" },
@@ -193,9 +195,9 @@ export function contextFeature(api: AppApi, spellEntries: (e: Editor, pos: Pos) 
   const show = async (e: Editor, x: number, y: number, pos: Pos) => {
     const math = mathEntries(x, y);
     if (math) { open(math, new DOMRect(x, y, 0, 0), "", toolbar("text")); return; }
-    const spell = await spellEntries(e, pos);
+    const [spell, synonyms] = await Promise.all([spellEntries(e, pos), synonymEntries(e, pos)]);
     const kind = e.selectedImage() ? "picture" : e.inTable() ? "table" : "text";
-    open([...spell, ...entriesFor(e)], new DOMRect(x, y, 0, 0), "", toolbar(kind));
+    open([...spell, ...entriesFor(e, synonyms)], new DOMRect(x, y, 0, 0), "", toolbar(kind));
   };
 
   const attach = (e: Editor) => {

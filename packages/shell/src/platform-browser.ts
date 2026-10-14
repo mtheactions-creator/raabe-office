@@ -64,6 +64,7 @@ export function browserPlatform(): Platform {
     // The development platform has no dictionaries: every word counts as correct.
     spellCheck: async (_lang, words) => words.map(() => true),
     spellSuggest: async () => [],
+    thesaurus: async () => null,
     onOpenFiles: () => {},
     window: {
       minimize() {},

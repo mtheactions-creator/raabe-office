@@ -1,0 +1,8522 @@
+{
+ "com": {
+  "check_language": true,
+  "languages": [
+   {
+    "id": 1024,
+    "name": "(Keine Überprüfung)",
+    "en": "(Keine Überprüfung)",
+    "spelling": "MSSP7GE.LEX",
+    "grammar": "MSGR8GE.LEX",
+    "hyphenation": "MSHY7GE.LEX",
+    "thesaurus": "msth8GE.LEX"
+   },
+   {
+    "id": 1025,
+    "name": "Arabisch (Saudi-Arabien)",
+    "en": "Arabic",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1026,
+    "name": "Bulgarisch",
+    "en": "Bulgarisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1027,
+    "name": "Katalanisch",
+    "en": "Català",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1028,
+    "name": "Chinesisch (traditionell, Taiwan)",
+    "en": "Chinese Traditional",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1029,
+    "name": "Tschechisch",
+    "en": "Čeština",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1030,
+    "name": "Dänisch",
+    "en": "Dansk",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1031,
+    "name": "Deutsch (Deutschland)",
+    "en": "Deutsch",
+    "spelling": "MSSP7GE.LEX",
+    "grammar": "MSGR8GE.LEX",
+    "hyphenation": "MSHY7GE.LEX",
+    "thesaurus": "msth8GE.LEX"
+   },
+   {
+    "id": 1032,
+    "name": "Griechisch",
+    "en": "Ελληνικά",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1033,
+    "name": "Englisch (Vereinigte Staaten)",
+    "en": "English (US)",
+    "spelling": "MSSP7EN.LEX",
+    "grammar": "MSGR8EN.LEX",
+    "hyphenation": "MSHY7EN.LEX",
+    "thesaurus": "msth8EN.LEX"
+   },
+   {
+    "id": 1034,
+    "name": "Spanisch (Spanien, Traditionelle Sortierung)",
+    "en": "Español",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1035,
+    "name": "Finnisch",
+    "en": "Suomi",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1036,
+    "name": "Französisch (Frankreich)",
+    "en": "Français",
+    "spelling": "MSSP7FR.LEX",
+    "grammar": "MSGR8FR.LEX",
+    "hyphenation": "MSHY7FR.LEX",
+    "thesaurus": "msth8FR.LEX"
+   },
+   {
+    "id": 1037,
+    "name": "Hebräisch",
+    "en": "Hebrew",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1038,
+    "name": "Ungarisch",
+    "en": "Magyar",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1039,
+    "name": "Isländisch",
+    "en": "Íslenska",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1040,
+    "name": "Italienisch (Italien)",
+    "en": "Italiano",
+    "spelling": "MSSP7IT.LEX",
+    "grammar": "MSGR8IT.LEX",
+    "hyphenation": "MSHY7IT.LEX",
+    "thesaurus": "msth8IT.LEX"
+   },
+   {
+    "id": 1041,
+    "name": "Japanisch",
+    "en": "Nihongo",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1042,
+    "name": "Koreanisch",
+    "en": "Hangul",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1043,
+    "name": "Niederländisch (Niederlande)",
+    "en": "Nederlands",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1044,
+    "name": "Norwegisch (Bokmål)",
+    "en": "Norsk Bokmål",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1045,
+    "name": "Polnisch",
+    "en": "Polski",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1046,
+    "name": "Portugiesisch (Brasilien)",
+    "en": "Português (BR)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1047,
+    "name": "Rätoromanisch",
+    "en": "Rätoromanisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1048,
+    "name": "Rumänisch",
+    "en": "Rumänisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1049,
+    "name": "Russisch",
+    "en": "Русский",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1050,
+    "name": "Kroatisch (Kroatien)",
+    "en": "Kroatisch (Kroatien)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1051,
+    "name": "Slowakisch",
+    "en": "Slovenčina",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1052,
+    "name": "Albanisch",
+    "en": "Albanisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1053,
+    "name": "Schwedisch (Schweden)",
+    "en": "Svenska",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1054,
+    "name": "Thailändisch",
+    "en": "Thailändisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1055,
+    "name": "Türkisch (Türkei)",
+    "en": "Türkçe",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1056,
+    "name": "Urdu (Pakistan)",
+    "en": "Urdu (Pakistan)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1057,
+    "name": "Indonesisch",
+    "en": "Indonesia",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1058,
+    "name": "Ukrainisch",
+    "en": "Українська",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1059,
+    "name": "Belarussisch",
+    "en": "Belarussisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1060,
+    "name": "Slowenisch",
+    "en": "Slovenščina",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1061,
+    "name": "Estnisch",
+    "en": "Estnisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1062,
+    "name": "Lettisch",
+    "en": "Lettisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1063,
+    "name": "Litauisch",
+    "en": "Litauisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1064,
+    "name": "Tadschikisch",
+    "en": "Tadschikisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1065,
+    "name": "Persisch (Iran)",
+    "en": "Persisch (Iran)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1066,
+    "name": "Vietnamesisch",
+    "en": "Vietnamesisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1067,
+    "name": "Armenisch",
+    "en": "Armenisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1068,
+    "name": "Aserbaidschanisch (Lateinisch)",
+    "en": "Aserbaidschanisch (Lateinisch)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1069,
+    "name": "Baskisch (Baskisch)",
+    "en": "Euskara",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1070,
+    "name": "Obersorbisch",
+    "en": "Obersorbisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1071,
+    "name": "Mazedonisch",
+    "en": "Mazedonisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1072,
+    "name": "Sesotho (Südafrika)",
+    "en": "Sesotho (Südafrika)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1073,
+    "name": "Xitsonga",
+    "en": "Xitsonga",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1074,
+    "name": "Setswana (Südafrika)",
+    "en": "Setswana (Südafrika)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1075,
+    "name": "Venda",
+    "en": "Venda",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1076,
+    "name": "isi Xhosa",
+    "en": "isi Xhosa",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1077,
+    "name": "isi Zulu",
+    "en": "isi Zulu",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1078,
+    "name": "Afrikaans",
+    "en": "Afrikaans",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1079,
+    "name": "Georgisch",
+    "en": "Georgisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1080,
+    "name": "Färöisch",
+    "en": "Färöisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1081,
+    "name": "Hindi",
+    "en": "⍡⍧⌆⍂⍨",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1082,
+    "name": "Maltesisch",
+    "en": "Maltesisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1083,
+    "name": "Nordsamisch (Norwegen)",
+    "en": "Nordsamisch (Norwegen)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1085,
+    "name": "Jiddisch",
+    "en": "Jiddisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1086,
+    "name": "Malaiisch (Malaysia)",
+    "en": "Bahasa Malaysia",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1087,
+    "name": "Kasachisch",
+    "en": "Kasachisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1088,
+    "name": "Kirgisisch",
+    "en": "Kirgisisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1089,
+    "name": "Kisuaheli",
+    "en": "Kisuaheli",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1090,
+    "name": "Turkmenisch",
+    "en": "Turkmenisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1091,
+    "name": "Usbekisch (Lateinisch)",
+    "en": "Usbekisch (Lateinisch)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1092,
+    "name": "Tatarisch",
+    "en": "Tatarisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1093,
+    "name": "Bengali (Indien)",
+    "en": "Bengali (Indien)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1094,
+    "name": "Punjabi (Indien)",
+    "en": "Punjabi (Indien)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1095,
+    "name": "Gujarati",
+    "en": "Gujarati",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1096,
+    "name": "Odia",
+    "en": "Odia",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1097,
+    "name": "Tamil (Indien)",
+    "en": "⦀⦐〇⦖〡",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1098,
+    "name": "Telugu",
+    "en": "ㄈㅂㄢㄷゕㄷ",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1099,
+    "name": "Kannada",
+    "en": "Kannada",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1100,
+    "name": "Malayalam",
+    "en": "Malayalam",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1101,
+    "name": "Assamesisch",
+    "en": "Assamesisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1102,
+    "name": "Marathi",
+    "en": "⍐⍒⍦⌶⍨",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1103,
+    "name": "Sanskrit",
+    "en": "Sanskrit",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1104,
+    "name": "Mongolisch (Mongolei)",
+    "en": "Mongolisch (Mongolei)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1105,
+    "name": "Tibetisch (China)",
+    "en": "Tibetisch (China)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1106,
+    "name": "Walisisch",
+    "en": "Cymraeg",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1107,
+    "name": "Khmer",
+    "en": "Khmer",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1108,
+    "name": "Laotisch",
+    "en": "Laotisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1109,
+    "name": "Birmanisch",
+    "en": "Birmanisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1110,
+    "name": "Galicisch",
+    "en": "Galego",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1111,
+    "name": "Konkani",
+    "en": "Konkani",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1112,
+    "name": "Manipuri",
+    "en": "Manipuri",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1113,
+    "name": "Sindhi (Devanagari)",
+    "en": "Sindhi (Devanagari)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1114,
+    "name": "Syrisch",
+    "en": "Syrisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1115,
+    "name": "Sinhala",
+    "en": "Sinhala",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1116,
+    "name": "Cherokee (Cherokee, Vereinigte Staaten)",
+    "en": "Cherokee (Cherokee, Vereinigte Staaten)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1117,
+    "name": "Inuktitut (Silbenzeichen)",
+    "en": "Inuktitut (Silbenzeichen)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1118,
+    "name": "Amharisch",
+    "en": "Amharisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1119,
+    "name": "Zentralatlas-Tamazight (Arabisch, Marokko)",
+    "en": "Zentralatlas-Tamazight (Arabisch, Marokko)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1120,
+    "name": "Kaschmiri (Arabisch)",
+    "en": "Kaschmiri (Arabisch)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1121,
+    "name": "Nepali",
+    "en": "Nepali",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1122,
+    "name": "Westfriesisch",
+    "en": "Westfriesisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1123,
+    "name": "Pashtu",
+    "en": "Pashtu",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1124,
+    "name": "Filipino",
+    "en": "Filipino",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1125,
+    "name": "Divehi",
+    "en": "Divehi",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1126,
+    "name": "Edo",
+    "en": "Edo",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1127,
+    "name": "Fulah (Nigeria)",
+    "en": "Fulah (Nigeria)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1128,
+    "name": "Haussa",
+    "en": "Haussa",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1129,
+    "name": "Ibibio (Nigeria)",
+    "en": "Ibibio (Nigeria)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1130,
+    "name": "Yoruba",
+    "en": "Yoruba",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1131,
+    "name": "Quechua (Bolivien)",
+    "en": "Quechua (Bolivien)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1132,
+    "name": "Sesotho sa Leboa",
+    "en": "Sesotho sa Leboa",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1133,
+    "name": "Baschkirisch",
+    "en": "Baschkirisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1134,
+    "name": "Luxemburgisch",
+    "en": "Luxemburgisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1135,
+    "name": "Kalaallisut",
+    "en": "Kalaallisut",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1136,
+    "name": "Igbo",
+    "en": "Igbo",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1137,
+    "name": "Kanuri",
+    "en": "Kanuri",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1138,
+    "name": "Oromo",
+    "en": "Oromo",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1139,
+    "name": "Tigrinya (Äthiopien)",
+    "en": "Tigrinya (Äthiopien)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1140,
+    "name": "Guarani",
+    "en": "Guarani",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1141,
+    "name": "Hawaiisch",
+    "en": "Hawaiisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1142,
+    "name": "Lateinisch",
+    "en": "Lateinisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1143,
+    "name": "Somali",
+    "en": "Somali",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1144,
+    "name": "Yi (China)",
+    "en": "Yi (China)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1145,
+    "name": "Papiamento",
+    "en": "Papiamento",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1146,
+    "name": "Mapuche",
+    "en": "Mapuche",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1148,
+    "name": "Mohawk",
+    "en": "Mohawk",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1150,
+    "name": "Bretonisch",
+    "en": "Bretonisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1152,
+    "name": "Uigurisch (China)",
+    "en": "Uigurisch (China)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1153,
+    "name": "Māori",
+    "en": "Māori",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1154,
+    "name": "Okzitanisch",
+    "en": "Okzitanisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1155,
+    "name": "Korsisch",
+    "en": "Korsisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1156,
+    "name": "Elsässisch (Frankreich)",
+    "en": "Elsässisch (Frankreich)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1157,
+    "name": "Sacha",
+    "en": "Sacha",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1158,
+    "name": "K'iche'",
+    "en": "K'iche'",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1159,
+    "name": "Kinyarwanda",
+    "en": "Kinyarwanda",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1160,
+    "name": "Wolof",
+    "en": "Wolof",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1164,
+    "name": "Dari",
+    "en": "Dari",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1169,
+    "name": "Schottisches Gälisch (Vereinigtes Königreich)",
+    "en": "Schottisches Gälisch (Vereinigtes Königreich)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 1170,
+    "name": "Zentralkurdisch (Irak)",
+    "en": "Zentralkurdisch (Irak)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 2049,
+    "name": "Arabisch (Irak)",
+    "en": "Arabisch (Irak)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 2051,
+    "name": "Valencianisch",
+    "en": "Valencianisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 2052,
+    "name": "Chinesisch (vereinfacht, Festlandchina)",
+    "en": "Chinese",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 2055,
+    "name": "Deutsch (Schweiz)",
+    "en": "Deutsch (Schweiz)",
+    "spelling": "MSSP7GE.LEX",
+    "grammar": "MSGR8GE.LEX",
+    "hyphenation": "MSHY7GE.LEX",
+    "thesaurus": "msth8GE.LEX"
+   },
+   {
+    "id": 2057,
+    "name": "Englisch (Vereinigtes Königreich)",
+    "en": "English (UK)",
+    "spelling": "MSSP7EN.LEX",
+    "grammar": "MSGR8EN.LEX",
+    "hyphenation": "MSHY7EN.LEX",
+    "thesaurus": "msth8EN.LEX"
+   },
+   {
+    "id": 2058,
+    "name": "Spanisch (Mexiko)",
+    "en": "Spanisch (Mexiko)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 2060,
+    "name": "Französisch (Belgien)",
+    "en": "Französisch (Belgien)",
+    "spelling": "MSSP7FR.LEX",
+    "grammar": "MSGR8FR.LEX",
+    "hyphenation": "MSHY7FR.LEX",
+    "thesaurus": "msth8FR.LEX"
+   },
+   {
+    "id": 2064,
+    "name": "Italienisch (Schweiz)",
+    "en": "Italienisch (Schweiz)",
+    "spelling": "MSSP7IT.LEX",
+    "grammar": "MSGR8IT.LEX",
+    "hyphenation": "MSHY7IT.LEX",
+    "thesaurus": "msth8IT.LEX"
+   },
+   {
+    "id": 2067,
+    "name": "Niederländisch (Belgien)",
+    "en": "Niederländisch (Belgien)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 2068,
+    "name": "Norwegisch (Nynorsk)",
+    "en": "Norsk Nynorsk",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 2070,
+    "name": "Portugiesisch (Portugal)",
+    "en": "Português (POR)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 2072,
+    "name": "Rumänisch (Moldau)",
+    "en": "Rumänisch (Moldau)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 2073,
+    "name": "Russisch (Moldau)",
+    "en": "Russisch (Moldau)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 2074,
+    "name": "Serbisch (Lateinisch, (ehem.) Serbien und Montenegro)",
+    "en": "Serbisch (Lateinisch, (ehem.) Serbien und Montenegro)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 2077,
+    "name": "Schwedisch (Finnland)",
+    "en": "Schwedisch (Finnland)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 2080,
+    "name": "Urdu (Indien)",
+    "en": "Urdu (Indien)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 2092,
+    "name": "Aserbaidschanisch (Kyrillisch)",
+    "en": "Aserbaidschanisch (Kyrillisch)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 2094,
+    "name": "Niedersorbisch",
+    "en": "Niedersorbisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 2098,
+    "name": "Setswana (Botsuana)",
+    "en": "Setswana (Botsuana)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 2107,
+    "name": "Nordsamisch (Schweden)",
+    "en": "Nordsamisch (Schweden)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 2108,
+    "name": "Irisch",
+    "en": "Irisch",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 2110,
+    "name": "Malaiisch (Brunei Darussalam)",
+    "en": "Malaiisch (Brunei Darussalam)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 2115,
+    "name": "Usbekisch (Kyrillisch)",
+    "en": "Usbekisch (Kyrillisch)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 2117,
+    "name": "Bangla (Bangladesch)",
+    "en": "Bangla (Bangladesch)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 2118,
+    "name": "Punjabi (Pakistan)",
+    "en": "Punjabi (Pakistan)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 2121,
+    "name": "Tamil (Sri Lanka)",
+    "en": "Tamil (Sri Lanka)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 2128,
+    "name": "Mongolisch (traditionelles Mongolisch, China)",
+    "en": "Mongolisch (traditionelles Mongolisch, China)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 2137,
+    "name": "Sindhi (Arabisch)",
+    "en": "Sindhi (Arabisch)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 2141,
+    "name": "Inuktitut (Lateinisch)",
+    "en": "Inuktitut (Lateinisch)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 2143,
+    "name": "Zentralatlas-Tamazight (Lateinisch, Algerien)",
+    "en": "Zentralatlas-Tamazight (Lateinisch, Algerien)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 2144,
+    "name": "Kaschmiri",
+    "en": "Kaschmiri",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 2145,
+    "name": "Nepali (Indien)",
+    "en": "Nepali (Indien)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 2151,
+    "name": "Fulah (Lateinisch, Senegal)",
+    "en": "Fulah (Lateinisch, Senegal)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 2155,
+    "name": "Quechua (Ecuador)",
+    "en": "Quechua (Ecuador)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 2163,
+    "name": "Tigrinya (Eritrea)",
+    "en": "Tigrinya (Eritrea)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 3073,
+    "name": "Arabisch (Ägypten)",
+    "en": "Arabisch (Ägypten)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 3076,
+    "name": "Chinesisch (traditionell, Hongkong SAR)",
+    "en": "Chinesisch (traditionell, Hongkong SAR)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 3079,
+    "name": "Deutsch (Österreich)",
+    "en": "Deutsch (Österreich)",
+    "spelling": "MSSP7GE.LEX",
+    "grammar": "MSGR8GE.LEX",
+    "hyphenation": "MSHY7GE.LEX",
+    "thesaurus": "msth8GE.LEX"
+   },
+   {
+    "id": 3081,
+    "name": "Englisch (Australien)",
+    "en": "English (AUS)",
+    "spelling": "MSSP7EN.LEX",
+    "grammar": "MSGR8EN.LEX",
+    "hyphenation": "MSHY7EN.LEX",
+    "thesaurus": "msth8EN.LEX"
+   },
+   {
+    "id": 3082,
+    "name": "Spanisch (Spanien)",
+    "en": "Spanisch (Spanien)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 3084,
+    "name": "Französisch (Kanada)",
+    "en": "Canadien Français",
+    "spelling": "MSSP7FR.LEX",
+    "grammar": "MSGR8FR.LEX",
+    "hyphenation": "MSHY7FR.LEX",
+    "thesaurus": "msth8FR.LEX"
+   },
+   {
+    "id": 3098,
+    "name": "Serbisch (Kyrillisch, (ehem.) Serbien und Montenegro)",
+    "en": "Serbisch (Kyrillisch, (ehem.) Serbien und Montenegro)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 3131,
+    "name": "Nordsamisch (Finnland)",
+    "en": "Nordsamisch (Finnland)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 3152,
+    "name": "Mongolisch (Traditionelles Mongolisch, Mongolei)",
+    "en": "Mongolisch (Traditionelles Mongolisch, Mongolei)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 3179,
+    "name": "Quechua (Peru)",
+    "en": "Quechua (Peru)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 4096,
+    "name": "Schweizerdeutsch (Schweiz)",
+    "en": "Schweizerdeutsch (Schweiz)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 4097,
+    "name": "Arabisch (Libyen)",
+    "en": "Arabisch (Libyen)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 4100,
+    "name": "Chinesisch (vereinfacht, Singapur)",
+    "en": "Chinesisch (vereinfacht, Singapur)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 4103,
+    "name": "Deutsch (Luxemburg)",
+    "en": "Deutsch (Luxemburg)",
+    "spelling": "MSSP7GE.LEX",
+    "grammar": "MSGR8GE.LEX",
+    "hyphenation": "MSHY7GE.LEX",
+    "thesaurus": "msth8GE.LEX"
+   },
+   {
+    "id": 4105,
+    "name": "Englisch (Kanada)",
+    "en": "Englisch (Kanada)",
+    "spelling": "MSSP7EN.LEX",
+    "grammar": "MSGR8EN.LEX",
+    "hyphenation": "MSHY7EN.LEX",
+    "thesaurus": "msth8EN.LEX"
+   },
+   {
+    "id": 4106,
+    "name": "Spanisch (Guatemala)",
+    "en": "Spanisch (Guatemala)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 4108,
+    "name": "Französisch (Schweiz)",
+    "en": "Französisch (Schweiz)",
+    "spelling": "MSSP7FR.LEX",
+    "grammar": "MSGR8FR.LEX",
+    "hyphenation": "MSHY7FR.LEX",
+    "thesaurus": "msth8FR.LEX"
+   },
+   {
+    "id": 4122,
+    "name": "Kroatisch (Bosnien und Herzegowina)",
+    "en": "Kroatisch (Bosnien und Herzegowina)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 4155,
+    "name": "Lule-Samisch (Norwegen)",
+    "en": "Lule-Samisch (Norwegen)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 4191,
+    "name": "Zentralatlas-Tamazight (Tifinagh, Marokko)",
+    "en": "Zentralatlas-Tamazight (Tifinagh, Marokko)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 5121,
+    "name": "Arabisch (Algerien)",
+    "en": "Arabisch (Algerien)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 5124,
+    "name": "Chinesisch (traditionell, Macau SAR)",
+    "en": "Chinesisch (traditionell, Macau SAR)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 5127,
+    "name": "Deutsch (Liechtenstein)",
+    "en": "Deutsch (Liechtenstein)",
+    "spelling": "MSSP7GE.LEX",
+    "grammar": "MSGR8GE.LEX",
+    "hyphenation": "MSHY7GE.LEX",
+    "thesaurus": "msth8GE.LEX"
+   },
+   {
+    "id": 5129,
+    "name": "Englisch (Neuseeland)",
+    "en": "Englisch (Neuseeland)",
+    "spelling": "MSSP7EN.LEX",
+    "grammar": "MSGR8EN.LEX",
+    "hyphenation": "MSHY7EN.LEX",
+    "thesaurus": "msth8EN.LEX"
+   },
+   {
+    "id": 5130,
+    "name": "Spanisch (Costa Rica)",
+    "en": "Spanisch (Costa Rica)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 5132,
+    "name": "Französisch (Luxemburg)",
+    "en": "Französisch (Luxemburg)",
+    "spelling": "MSSP7FR.LEX",
+    "grammar": "MSGR8FR.LEX",
+    "hyphenation": "MSHY7FR.LEX",
+    "thesaurus": "msth8FR.LEX"
+   },
+   {
+    "id": 5146,
+    "name": "Bosnisch (Lateinisch)",
+    "en": "Bosnisch (Lateinisch)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 5179,
+    "name": "Lule-Samisch (Schweden)",
+    "en": "Lule-Samisch (Schweden)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 6145,
+    "name": "Arabisch (Marokko)",
+    "en": "Arabisch (Marokko)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 6153,
+    "name": "Englisch (Irland)",
+    "en": "Gaeilge",
+    "spelling": "MSSP7EN.LEX",
+    "grammar": "MSGR8EN.LEX",
+    "hyphenation": "MSHY7EN.LEX",
+    "thesaurus": "msth8EN.LEX"
+   },
+   {
+    "id": 6154,
+    "name": "Spanisch (Panama)",
+    "en": "Spanisch (Panama)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 6156,
+    "name": "Französisch (Monaco)",
+    "en": "Französisch (Monaco)",
+    "spelling": "MSSP7FR.LEX",
+    "grammar": "MSGR8FR.LEX",
+    "hyphenation": "MSHY7FR.LEX",
+    "thesaurus": "msth8FR.LEX"
+   },
+   {
+    "id": 6170,
+    "name": "Serbisch (Lateinisch, Bosnien und Herzegowina)",
+    "en": "Serbisch (Lateinisch, Bosnien und Herzegowina)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 6203,
+    "name": "Südsamisch (Norwegen)",
+    "en": "Südsamisch (Norwegen)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 7169,
+    "name": "Arabisch (Tunesien)",
+    "en": "Arabisch (Tunesien)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 7177,
+    "name": "Englisch (Südafrika)",
+    "en": "Englisch (Südafrika)",
+    "spelling": "MSSP7EN.LEX",
+    "grammar": "MSGR8EN.LEX",
+    "hyphenation": "MSHY7EN.LEX",
+    "thesaurus": "msth8EN.LEX"
+   },
+   {
+    "id": 7178,
+    "name": "Spanisch (Dominikanische Republik)",
+    "en": "Spanisch (Dominikanische Republik)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 7180,
+    "name": "Französisch (Karibik)",
+    "en": "Französisch (Karibik)",
+    "spelling": "MSSP7FR.LEX",
+    "grammar": "MSGR8FR.LEX",
+    "hyphenation": "MSHY7FR.LEX",
+    "thesaurus": "msth8FR.LEX"
+   },
+   {
+    "id": 7194,
+    "name": "Serbisch (Kyrillisch, Bosnien und Herzegowina)",
+    "en": "Serbisch (Kyrillisch, Bosnien und Herzegowina)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 7227,
+    "name": "Südsamisch (Schweden)",
+    "en": "Südsamisch (Schweden)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 8193,
+    "name": "Arabisch (Oman)",
+    "en": "Arabisch (Oman)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 8201,
+    "name": "Englisch (Jamaika)",
+    "en": "Englisch (Jamaika)",
+    "spelling": "MSSP7EN.LEX",
+    "grammar": "MSGR8EN.LEX",
+    "hyphenation": "MSHY7EN.LEX",
+    "thesaurus": "msth8EN.LEX"
+   },
+   {
+    "id": 8202,
+    "name": "Spanisch (Venezuela)",
+    "en": "Spanisch (Venezuela)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 8204,
+    "name": "Französisch (Réunion)",
+    "en": "Französisch (Réunion)",
+    "spelling": "MSSP7FR.LEX",
+    "grammar": "MSGR8FR.LEX",
+    "hyphenation": "MSHY7FR.LEX",
+    "thesaurus": "msth8FR.LEX"
+   },
+   {
+    "id": 8218,
+    "name": "Bosnisch (Kyrillisch)",
+    "en": "Bosnisch (Kyrillisch)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 8251,
+    "name": "Skolt-Samisch (Finnland)",
+    "en": "Skolt-Samisch (Finnland)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 9217,
+    "name": "Arabisch (Jemen)",
+    "en": "Arabisch (Jemen)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 9225,
+    "name": "Englisch (Karibik)",
+    "en": "Englisch (Karibik)",
+    "spelling": "MSSP7EN.LEX",
+    "grammar": "MSGR8EN.LEX",
+    "hyphenation": "MSHY7EN.LEX",
+    "thesaurus": "msth8EN.LEX"
+   },
+   {
+    "id": 9226,
+    "name": "Spanisch (Kolumbien)",
+    "en": "Spanisch (Kolumbien)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 9228,
+    "name": "Französisch (Kongo (DRK))",
+    "en": "Französisch (Kongo (DRK))",
+    "spelling": "MSSP7FR.LEX",
+    "grammar": "MSGR8FR.LEX",
+    "hyphenation": "MSHY7FR.LEX",
+    "thesaurus": "msth8FR.LEX"
+   },
+   {
+    "id": 9242,
+    "name": "Serbisch (Lateinisch, Serbien)",
+    "en": "Serbisch (Lateinisch, Serbien)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 9275,
+    "name": "Inari-Samisch (Finnland)",
+    "en": "Inari-Samisch (Finnland)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 10241,
+    "name": "Arabisch (Syrien)",
+    "en": "Arabisch (Syrien)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 10249,
+    "name": "Englisch (Belize)",
+    "en": "Englisch (Belize)",
+    "spelling": "MSSP7EN.LEX",
+    "grammar": "MSGR8EN.LEX",
+    "hyphenation": "MSHY7EN.LEX",
+    "thesaurus": "msth8EN.LEX"
+   },
+   {
+    "id": 10250,
+    "name": "Spanisch (Peru)",
+    "en": "Spanisch (Peru)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 10252,
+    "name": "Französisch (Senegal)",
+    "en": "Französisch (Senegal)",
+    "spelling": "MSSP7FR.LEX",
+    "grammar": "MSGR8FR.LEX",
+    "hyphenation": "MSHY7FR.LEX",
+    "thesaurus": "msth8FR.LEX"
+   },
+   {
+    "id": 10266,
+    "name": "Serbisch (Kyrillisch, Serbien)",
+    "en": "Serbisch (Kyrillisch, Serbien)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 11265,
+    "name": "Arabisch (Jordanien)",
+    "en": "Arabisch (Jordanien)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 11273,
+    "name": "Englisch (Trinidad und Tobago)",
+    "en": "Englisch (Trinidad und Tobago)",
+    "spelling": "MSSP7EN.LEX",
+    "grammar": "MSGR8EN.LEX",
+    "hyphenation": "MSHY7EN.LEX",
+    "thesaurus": "msth8EN.LEX"
+   },
+   {
+    "id": 11274,
+    "name": "Spanisch (Argentinien)",
+    "en": "Spanisch (Argentinien)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 11276,
+    "name": "Französisch (Kamerun)",
+    "en": "Französisch (Kamerun)",
+    "spelling": "MSSP7FR.LEX",
+    "grammar": "MSGR8FR.LEX",
+    "hyphenation": "MSHY7FR.LEX",
+    "thesaurus": "msth8FR.LEX"
+   },
+   {
+    "id": 11290,
+    "name": "Serbisch (Lateinisch, Montenegro)",
+    "en": "Serbisch (Lateinisch, Montenegro)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 12289,
+    "name": "Arabisch (Libanon)",
+    "en": "Arabisch (Libanon)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 12297,
+    "name": "Englisch (Simbabwe)",
+    "en": "Englisch (Simbabwe)",
+    "spelling": "MSSP7EN.LEX",
+    "grammar": "MSGR8EN.LEX",
+    "hyphenation": "MSHY7EN.LEX",
+    "thesaurus": "msth8EN.LEX"
+   },
+   {
+    "id": 12298,
+    "name": "Spanisch (Ecuador)",
+    "en": "Spanisch (Ecuador)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 12300,
+    "name": "Französisch (Côte d'Ivoire)",
+    "en": "Französisch (Côte d'Ivoire)",
+    "spelling": "MSSP7FR.LEX",
+    "grammar": "MSGR8FR.LEX",
+    "hyphenation": "MSHY7FR.LEX",
+    "thesaurus": "msth8FR.LEX"
+   },
+   {
+    "id": 12314,
+    "name": "Serbisch (Kyrillisch, Montenegro)",
+    "en": "Serbisch (Kyrillisch, Montenegro)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 13313,
+    "name": "Arabisch (Kuwait)",
+    "en": "Arabisch (Kuwait)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 13321,
+    "name": "Englisch (Philippinen)",
+    "en": "Englisch (Philippinen)",
+    "spelling": "MSSP7EN.LEX",
+    "grammar": "MSGR8EN.LEX",
+    "hyphenation": "MSHY7EN.LEX",
+    "thesaurus": "msth8EN.LEX"
+   },
+   {
+    "id": 13322,
+    "name": "Spanisch (Chile)",
+    "en": "Spanisch (Chile)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 13324,
+    "name": "Französisch (Mali)",
+    "en": "Französisch (Mali)",
+    "spelling": "MSSP7FR.LEX",
+    "grammar": "MSGR8FR.LEX",
+    "hyphenation": "MSHY7FR.LEX",
+    "thesaurus": "msth8FR.LEX"
+   },
+   {
+    "id": 14337,
+    "name": "Arabisch (Vereinigte Arabische Emirate)",
+    "en": "Arabisch (Vereinigte Arabische Emirate)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 14345,
+    "name": "Englisch (Indonesien)",
+    "en": "Englisch (Indonesien)",
+    "spelling": "MSSP7EN.LEX",
+    "grammar": "MSGR8EN.LEX",
+    "hyphenation": "MSHY7EN.LEX",
+    "thesaurus": "msth8EN.LEX"
+   },
+   {
+    "id": 14346,
+    "name": "Spanisch (Uruguay)",
+    "en": "Spanisch (Uruguay)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 14348,
+    "name": "Französisch (Marokko)",
+    "en": "Französisch (Marokko)",
+    "spelling": "MSSP7FR.LEX",
+    "grammar": "MSGR8FR.LEX",
+    "hyphenation": "MSHY7FR.LEX",
+    "thesaurus": "msth8FR.LEX"
+   },
+   {
+    "id": 15361,
+    "name": "Arabisch (Bahrain)",
+    "en": "Arabisch (Bahrain)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 15369,
+    "name": "Englisch (Hongkong SAR)",
+    "en": "Englisch (Hongkong SAR)",
+    "spelling": "MSSP7EN.LEX",
+    "grammar": "MSGR8EN.LEX",
+    "hyphenation": "MSHY7EN.LEX",
+    "thesaurus": "msth8EN.LEX"
+   },
+   {
+    "id": 15370,
+    "name": "Spanisch (Paraguay)",
+    "en": "Spanisch (Paraguay)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 15372,
+    "name": "Französisch (Haiti)",
+    "en": "Französisch (Haiti)",
+    "spelling": "MSSP7FR.LEX",
+    "grammar": "MSGR8FR.LEX",
+    "hyphenation": "MSHY7FR.LEX",
+    "thesaurus": "msth8FR.LEX"
+   },
+   {
+    "id": 16385,
+    "name": "Arabisch (Katar)",
+    "en": "Arabisch (Katar)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 16393,
+    "name": "Englisch (Indien)",
+    "en": "Englisch (Indien)",
+    "spelling": "MSSP7EN.LEX",
+    "grammar": "MSGR8EN.LEX",
+    "hyphenation": "MSHY7EN.LEX",
+    "thesaurus": "msth8EN.LEX"
+   },
+   {
+    "id": 16394,
+    "name": "Spanisch (Bolivien)",
+    "en": "Spanisch (Bolivien)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 17417,
+    "name": "Englisch (Malaysia)",
+    "en": "Englisch (Malaysia)",
+    "spelling": "MSSP7EN.LEX",
+    "grammar": "MSGR8EN.LEX",
+    "hyphenation": "MSHY7EN.LEX",
+    "thesaurus": "msth8EN.LEX"
+   },
+   {
+    "id": 17418,
+    "name": "Spanisch (El Salvador)",
+    "en": "Spanisch (El Salvador)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 18441,
+    "name": "Englisch (Singapur)",
+    "en": "Englisch (Singapur)",
+    "spelling": "MSSP7EN.LEX",
+    "grammar": "MSGR8EN.LEX",
+    "hyphenation": "MSHY7EN.LEX",
+    "thesaurus": "msth8EN.LEX"
+   },
+   {
+    "id": 18442,
+    "name": "Spanisch (Honduras)",
+    "en": "Spanisch (Honduras)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 19466,
+    "name": "Spanisch (Nicaragua)",
+    "en": "Spanisch (Nicaragua)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 20490,
+    "name": "Spanisch (Puerto Rico)",
+    "en": "Spanisch (Puerto Rico)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 21514,
+    "name": "Spanisch (Vereinigte Staaten)",
+    "en": "Spanisch (Vereinigte Staaten)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   },
+   {
+    "id": 22538,
+    "name": "Spanisch (Lateinamerika)",
+    "en": "Spanisch (Lateinamerika)",
+    "spelling": null,
+    "grammar": null,
+    "hyphenation": null,
+    "thesaurus": null
+   }
+  ]
+ },
+ "language menu": {
+  "items": [
+   {
+    "type": "MenuItem",
+    "name": "Übersetzen",
+    "key": "Alt, P, Ü",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Sprache",
+    "key": "Alt, P, S P",
+    "enabled": true
+   }
+  ],
+  "submenu": [
+   {
+    "type": "MenuItem",
+    "name": "Sprache für die Korrekturhilfen festlegen...",
+    "key": "Alt, P, S P, L",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Spracheinstellungen...",
+    "key": "Alt, P, S P, P",
+    "enabled": true
+   }
+  ]
+ },
+ "thesaurus pane": {
+  "rect": [
+   1706,
+   276,
+   284,
+   42
+  ],
+  "items": [
+   {
+    "type": "Pane",
+    "name": "Thesaurus",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     0,
+     284,
+     42
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Optionen für den Aufgabenbereich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     194,
+     6,
+     36,
+     36
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Bereich schließen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     6,
+     36,
+     36
+    ]
+   },
+   {
+    "type": "Window",
+    "name": "Thesaurus",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     42,
+     284,
+     1690
+    ]
+   },
+   {
+    "type": "Custom",
+    "name": "Thesaurus",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     42,
+     284,
+     1690
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Zurück",
+    "key": "",
+    "enabled": false,
+    "rect": [
+     9,
+     53,
+     38,
+     38
+    ]
+   },
+   {
+    "type": "Edit",
+    "name": "Ausgangswort",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     60,
+     55,
+     182,
+     34
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Suchen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     242,
+     55,
+     32,
+     34
+    ]
+   },
+   {
+    "type": "Tree",
+    "name": "Synonyme",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     9,
+     112,
+     266,
+     1294
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "gern (Adv.)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     113,
+     264,
+     459
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "gern",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     140,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "gewiss",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     167,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "sicherlich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     194,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "wahrlich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     221,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "wirklich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     248,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "einverstanden",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     275,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "zugestimmt",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     302,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "bewilligt",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     329,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "gebilligt",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     356,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "genehmigt",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     383,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "gestattet",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     410,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "zugelassen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     437,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "gut",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     464,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "meinetwegen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     491,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "von mir aus",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     518,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "sehr wohl",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     545,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "wundervoll (Adj.)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     572,
+     264,
+     621
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "wundervoll",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     599,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "hübsch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     626,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "angenehm",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     653,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "geschmackvoll",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     680,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "ansehnlich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     707,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "liebreizend",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     734,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "attraktiv",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     761,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "makellos",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     788,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "begehrenswert",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     815,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "bildschön",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     842,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "faszinierend",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     869,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "formvollendet",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     896,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "glanzvoll",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     923,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "großartig",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     950,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "herrlich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     977,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "abscheulich (Antonym)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     1004,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "abstoßend (Antonym)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     1031,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "schauderhaft (Antonym)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     1058,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "scheußlich (Antonym)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     1085,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "widerwärtig (Antonym)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     1112,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "hässlich (Antonym)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     1139,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "TreeItem",
+    "name": "unschön (Antonym)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     1166,
+     264,
+     27
+    ]
+   },
+   {
+    "type": "ComboBox",
+    "name": "Sprache",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     9,
+     1688,
+     266,
+     33
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Öffnen",
+    "key": "Alt+Pfeil nach unten",
+    "enabled": true,
+    "rect": [
+     253,
+     1689,
+     21,
+     31
+    ]
+   }
+  ]
+ },
+ "context synonyms": [
+  {
+   "type": "MenuItem",
+   "name": "gern",
+   "enabled": true
+  },
+  {
+   "type": "MenuItem",
+   "name": "gewiss",
+   "enabled": true
+  },
+  {
+   "type": "MenuItem",
+   "name": "sicherlich",
+   "enabled": true
+  },
+  {
+   "type": "MenuItem",
+   "name": "wahrlich",
+   "enabled": true
+  },
+  {
+   "type": "MenuItem",
+   "name": "wirklich",
+   "enabled": true
+  },
+  {
+   "type": "MenuItem",
+   "name": "Thesaurus...",
+   "enabled": true
+  }
+ ],
+ "context misspelled": {
+  "kind": "misspelled",
+  "items": [
+   {
+    "type": "Edit",
+    "name": "Geben Sie etwas ein, um danach zu suchen, und verwenden Sie die NACH-OBEN- und NACH-UNTEN-TASTEN zum Navigieren.",
+    "enabled": true,
+    "rect": [
+     1005,
+     727,
+     284,
+     28
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Ausschneiden",
+    "enabled": false,
+    "rect": [
+     998,
+     766,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Kopieren",
+    "enabled": false,
+    "rect": [
+     998,
+     810,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Copy Link to Location...",
+    "enabled": true,
+    "rect": [
+     998,
+     951,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Schriftart...",
+    "enabled": true,
+    "rect": [
+     998,
+     998,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Absatz...",
+    "enabled": true,
+    "rect": [
+     998,
+     1042,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Synonyme",
+    "enabled": true,
+    "rect": [
+     998,
+     1089,
+     330,
+     44
+    ],
+    "submenu": []
+   },
+   {
+    "type": "MenuItem",
+    "name": "Laut vorlesen",
+    "enabled": true,
+    "rect": [
+     998,
+     1133,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Übersetzen",
+    "enabled": true,
+    "rect": [
+     998,
+     1177,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "SplitButton",
+    "name": "Link",
+    "enabled": true,
+    "rect": [
+     998,
+     1224,
+     330,
+     44
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Neuer Kommentar",
+    "enabled": true,
+    "rect": [
+     998,
+     1268,
+     330,
+     44
+    ]
+   }
+  ],
+  "toolbar": [
+   {
+    "type": "Button",
+    "name": "Mit Copilot bearbeiten ",
+    "enabled": false
+   },
+   {
+    "type": "MenuItem",
+    "name": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Neuer Kommentar",
+    "enabled": true
+   },
+   {
+    "type": "ComboBox",
+    "name": "",
+    "enabled": true
+   },
+   {
+    "type": "ComboBox",
+    "name": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Schriftart vergrößern",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Schriftart verkleinern",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Format übertragen",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Fett",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Kursiv",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Unterstreichen",
+    "enabled": true
+   },
+   {
+    "type": "SplitButton",
+    "name": "Texthervorhebungsfarbe",
+    "enabled": true
+   },
+   {
+    "type": "SplitButton",
+    "name": "Schriftfarbe",
+    "enabled": true
+   },
+   {
+    "type": "SplitButton",
+    "name": "Aufzählungszeichen",
+    "enabled": true
+   },
+   {
+    "type": "SplitButton",
+    "name": "Nummerierung",
+    "enabled": true
+   }
+  ]
+ },
+ "f7": {
+  "pane": "Editor",
+  "rect": [
+   1481,
+   276,
+   509,
+   42
+  ],
+  "items": [
+   {
+    "type": "Pane",
+    "name": "Editor",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     0,
+     509,
+     42
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Optionen für den Aufgabenbereich",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     419,
+     6,
+     36,
+     36
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Bereich schließen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     467,
+     6,
+     36,
+     36
+    ]
+   },
+   {
+    "type": "Window",
+    "name": "Editor",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     42,
+     509,
+     1690
+    ]
+   },
+   {
+    "type": "Custom",
+    "name": "Editor",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     0,
+     42,
+     509,
+     1690
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Zurück",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     10,
+     66,
+     54,
+     54
+    ]
+   },
+   {
+    "type": "Text",
+    "name": "1 verbleibend",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     76,
+     81,
+     111,
+     24
+    ]
+   },
+   {
+    "type": "Text",
+    "name": "Rechtschreibung",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     34,
+     144,
+     441,
+     28
+    ]
+   },
+   {
+    "type": "Text",
+    "name": "Nicht im Wörterbuch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     34,
+     184,
+     441,
+     54
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Rechtschreibung: Nicht im Wörterbuch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     34,
+     250,
+     441,
+     81
+    ]
+   },
+   {
+    "type": "Text",
+    "name": "Rechtschreibfehler, Fehlr, F e h l r, Das ist ein Satz mit einem Fehlr und das sind falsch Satz.",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     34,
+     250,
+     375,
+     81
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Kontext lesen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     421,
+     264,
+     54,
+     54
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Betrachten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     34,
+     343,
+     441,
+     296
+    ]
+   },
+   {
+    "type": "Text",
+    "name": "Betrachten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     34,
+     343,
+     441,
+     20
+    ]
+   },
+   {
+    "type": "SplitButton",
+    "name": "Fehler, F e h l e r, ähnlich wie Fehl, Makel, Untugend",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     34,
+     381,
+     441,
+     72
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Fehler, F e h l e r, ähnlich wie Fehl, Makel, Untugend",
+    "key": "1",
+    "enabled": true,
+    "rect": [
+     36,
+     383,
+     391,
+     69
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Optionen für Fehler",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     428,
+     383,
+     47,
+     69
+    ]
+   },
+   {
+    "type": "SplitButton",
+    "name": "Fehlt, F e h l t, ähnlich wie Irrt, Versäumt, Wegbleibt",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     34,
+     465,
+     441,
+     72
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Fehlt, F e h l t, ähnlich wie Irrt, Versäumt, Wegbleibt",
+    "key": "2",
+    "enabled": true,
+    "rect": [
+     36,
+     467,
+     391,
+     69
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Optionen für Fehlt",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     428,
+     467,
+     47,
+     69
+    ]
+   },
+   {
+    "type": "SplitButton",
+    "name": "Fehl, F e h l, ähnlich wie Fehler, Irre, Versäume",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     34,
+     549,
+     441,
+     72
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Fehl, F e h l, ähnlich wie Fehler, Irre, Versäume",
+    "key": "3",
+    "enabled": true,
+    "rect": [
+     36,
+     551,
+     391,
+     69
+    ]
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Optionen für Fehl",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     428,
+     551,
+     47,
+     69
+    ]
+   },
+   {
+    "type": "Group",
+    "name": "Andere Aktionen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     34,
+     639,
+     441,
+     164
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Einmal ignorieren",
+    "key": "I",
+    "enabled": true,
+    "rect": [
+     34,
+     639,
+     441,
+     54
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Alle ignorieren",
+    "key": "g",
+    "enabled": true,
+    "rect": [
+     34,
+     693,
+     441,
+     56
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Zum Wörterbuch hinzufügen",
+    "key": "A",
+    "enabled": true,
+    "rect": [
+     34,
+     749,
+     441,
+     54
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Optionen",
+    "key": "O",
+    "enabled": true,
+    "rect": [
+     10,
+     827,
+     489,
+     38
+    ]
+   }
+  ]
+ },
+ "errors": {
+  "spelling": [
+   "Fehlr"
+  ],
+  "grammar": []
+ },
+ "thesaurus entry menu": [],
+ "manual hyphenation": {
+  "title": "Manuelle Silbentrennung: Deutsch (Deutschland) - Neue Rechtschreibung",
+  "size": [
+   754,
+   165
+  ],
+  "items": [
+   {
+    "type": "Button",
+    "name": "Direkthilfe",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     602,
+     1,
+     71,
+     44
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Schließen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     673,
+     1,
+     71,
+     44
+    ]
+   },
+   {
+    "type": "Text",
+    "name": "Trennvorschlag:",
+    "key": "Alt+T",
+    "enabled": true,
+    "rect": [
+     21,
+     61,
+     110,
+     21
+    ]
+   },
+   {
+    "type": "Image",
+    "name": "Trennvorschlag:",
+    "key": "Alt+T",
+    "enabled": true,
+    "rect": [
+     146,
+     56,
+     587,
+     32
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Ja",
+    "key": "Alt+J",
+    "enabled": true,
+    "rect": [
+     327,
+     105,
+     126,
+     38
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Nein",
+    "key": "Alt+N",
+    "enabled": true,
+    "rect": [
+     467,
+     105,
+     126,
+     38
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Abbrechen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     607,
+     105,
+     126,
+     38
+    ]
+   }
+  ]
+ },
+ "language dialog": {
+  "title": "Sprache",
+  "size": [
+   507,
+   534
+  ],
+  "items": [
+   {
+    "type": "Button",
+    "name": "Bildlauf nach oben",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     458,
+     141,
+     26,
+     26
+    ]
+   },
+   {
+    "type": "Thumb",
+    "name": "Position",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     458,
+     167,
+     26,
+     26
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Seite nach unten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     458,
+     193,
+     26,
+     114
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Bildlauf nach unten",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     458,
+     307,
+     26,
+     26
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Direkthilfe",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     355,
+     1,
+     71,
+     44
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Schließen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     426,
+     1,
+     71,
+     44
+    ]
+   },
+   {
+    "type": "Text",
+    "name": "Alle Korrekturhilfen verwenden automatisch die Wörterbücher der ausgewählten Sprache.",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     21,
+     340,
+     465,
+     42
+    ]
+   },
+   {
+    "type": "RadioButton",
+    "name": "Markierter Text",
+    "key": "Alt+M",
+    "enabled": true,
+    "rect": [
+     21,
+     82,
+     135,
+     26
+    ]
+   },
+   {
+    "type": "RadioButton",
+    "name": "Aktives Dokument",
+    "key": "Alt+A",
+    "enabled": true,
+    "rect": [
+     171,
+     82,
+     157,
+     26
+    ]
+   },
+   {
+    "type": "Text",
+    "name": "Sprache für die Korrekturhilfen ändern für:",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     21,
+     56,
+     294,
+     21
+    ]
+   },
+   {
+    "type": "Text",
+    "name": "Ausgewählten Text markieren als:",
+    "key": "Alt+A",
+    "enabled": true,
+    "rect": [
+     21,
+     113,
+     231,
+     21
+    ]
+   },
+   {
+    "type": "List",
+    "name": "Ausgewählten Text markieren als:",
+    "key": "Alt+A",
+    "enabled": true,
+    "rect": [
+     21,
+     139,
+     465,
+     196
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Deutsch (Deutschland)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     21,
+     139,
+     465,
+     24
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Englisch (Vereinigte Staaten)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     21,
+     163,
+     465,
+     24
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Englisch (Vereinigtes Königreich)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     21,
+     187,
+     465,
+     24
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "\u0001￿Schweizerdeutsch (Schweiz)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     21,
+     211,
+     465,
+     24
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Afrikaans",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     21,
+     235,
+     465,
+     24
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Albanisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     21,
+     259,
+     465,
+     24
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Amharisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     21,
+     283,
+     465,
+     24
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Arabisch (Ägypten)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     21,
+     307,
+     465,
+     24
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Arabisch (Algerien)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Arabisch (Bahrain)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Arabisch (Irak)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Arabisch (Jemen)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Arabisch (Jordanien)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Arabisch (Katar)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Arabisch (Kuwait)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Arabisch (Libanon)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Arabisch (Libyen)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Arabisch (Marokko)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Arabisch (Oman)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Arabisch (Saudi-Arabien)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Arabisch (Syrien)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Arabisch (Tunesien)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Arabisch (Vereinigte Arabische Emirate)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Armenisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Aserbaidschanisch (Kyrillisch)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Aserbaidschanisch (Lateinisch)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Assamesisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Bangla (Bangladesch)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Baschkirisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Baskisch (Baskisch)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Belarussisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Bengali (Indien)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Birmanisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Bosnisch (Kyrillisch)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Bosnisch (Lateinisch)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Bretonisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Bulgarisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Cherokee (Cherokee, Vereinigte Staaten)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Chinesisch (traditionell, Hongkong SAR)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Chinesisch (traditionell, Macau SAR)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Chinesisch (traditionell, Taiwan)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Chinesisch (vereinfacht, Festlandchina)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Chinesisch (vereinfacht, Singapur)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Dänisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Dari",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Deutsch (Deutschland)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Deutsch (Liechtenstein)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Deutsch (Luxemburg)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Deutsch (Österreich)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Deutsch (Schweiz)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Divehi",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Edo",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Elsässisch (Frankreich)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Englisch (Australien)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Englisch (Belize)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Englisch (Hongkong SAR)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Englisch (Indien)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Englisch (Indonesien)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Englisch (Irland)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Englisch (Jamaika)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Englisch (Kanada)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Englisch (Karibik)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Englisch (Malaysia)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Englisch (Neuseeland)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Englisch (Philippinen)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Englisch (Simbabwe)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Englisch (Singapur)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Englisch (Südafrika)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Englisch (Trinidad und Tobago)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Englisch (Vereinigte Staaten)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Englisch (Vereinigtes Königreich)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Estnisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Färöisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Filipino",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Finnisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Französisch (Belgien)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Französisch (Côte d'Ivoire)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Französisch (Frankreich)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Französisch (Haiti)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Französisch (Kamerun)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Französisch (Kanada)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Französisch (Karibik)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Französisch (Kongo (DRK))",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Französisch (Luxemburg)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Französisch (Mali)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Französisch (Marokko)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Französisch (Monaco)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Französisch (Réunion)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Französisch (Schweiz)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Französisch (Senegal)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Fulah (Lateinisch, Senegal)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Fulah (Nigeria)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Galicisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Georgisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Griechisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Guarani",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Gujarati",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Haussa",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Hawaiisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Hebräisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Hindi",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Ibibio (Nigeria)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Igbo",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Inari-Samisch (Finnland)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Indonesisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Inuktitut (Lateinisch)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Inuktitut (Silbenzeichen)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Irisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿isi Xhosa",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿isi Zulu",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Isländisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Italienisch (Italien)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿\u0002Italienisch (Schweiz)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Japanisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Jiddisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Kalaallisut",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Kannada",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Kanuri",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Kasachisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Kaschmiri",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Kaschmiri (Arabisch)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Katalanisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Khmer",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿K'iche'",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Kinyarwanda",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Kirgisisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Kisuaheli",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Konkani",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Koreanisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Korsisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Kroatisch (Bosnien und Herzegowina)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Kroatisch (Kroatien)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Laotisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Lateinisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Lettisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Litauisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Lule-Samisch (Norwegen)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Lule-Samisch (Schweden)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Luxemburgisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Malaiisch (Brunei Darussalam)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Malaiisch (Malaysia)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Malayalam",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Maltesisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Manipuri",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Māori",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Mapuche",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Marathi",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Mazedonisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Mohawk",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Mongolisch (Mongolei)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Mongolisch (traditionelles Mongolisch, China)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Mongolisch (Traditionelles Mongolisch, Mongolei)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Nepali",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Nepali (Indien)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Niederländisch (Belgien)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Niederländisch (Niederlande)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Niedersorbisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Nordsamisch (Finnland)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Nordsamisch (Norwegen)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Nordsamisch (Schweden)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Norwegisch (Bokmål)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Norwegisch (Nynorsk)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Obersorbisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Odia",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Okzitanisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Oromo",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Papiamento",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Pashtu",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Persisch (Iran)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Polnisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Portugiesisch (Brasilien)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Portugiesisch (Portugal)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Punjabi (Indien)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Punjabi (Pakistan)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Quechua (Bolivien)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Quechua (Ecuador)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Quechua (Peru)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Rätoromanisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Rumänisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Rumänisch (Moldau)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Russisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Russisch (Moldau)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Sacha",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Sanskrit",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Schottisches Gälisch (Vereinigtes Königreich)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Schwedisch (Finnland)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Schwedisch (Schweden)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Schweizerdeutsch (Schweiz)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Serbisch (Kyrillisch, (ehem.) Serbien und Montenegro)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Serbisch (Kyrillisch, Bosnien und Herzegowina)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Serbisch (Kyrillisch, Montenegro)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Serbisch (Kyrillisch, Serbien)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Serbisch (Lateinisch, (ehem.) Serbien und Montenegro)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Serbisch (Lateinisch, Bosnien und Herzegowina)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Serbisch (Lateinisch, Montenegro)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Serbisch (Lateinisch, Serbien)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Sesotho (Südafrika)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Sesotho sa Leboa",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Setswana (Botsuana)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Setswana (Südafrika)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Sindhi (Arabisch)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Sindhi (Devanagari)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Sinhala",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Skolt-Samisch (Finnland)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Slowakisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Slowenisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Somali",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Spanisch (Argentinien)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Spanisch (Bolivien)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Spanisch (Chile)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Spanisch (Costa Rica)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Spanisch (Dominikanische Republik)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Spanisch (Ecuador)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Spanisch (El Salvador)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Spanisch (Guatemala)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Spanisch (Honduras)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Spanisch (Kolumbien)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Spanisch (Lateinamerika)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Spanisch (Mexiko)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Spanisch (Nicaragua)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Spanisch (Panama)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Spanisch (Paraguay)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Spanisch (Peru)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Spanisch (Puerto Rico)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Spanisch (Spanien)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Spanisch (Spanien, Traditionelle Sortierung)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Spanisch (Uruguay)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Spanisch (Venezuela)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Spanisch (Vereinigte Staaten)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Südsamisch (Norwegen)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Südsamisch (Schweden)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Syrisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Tadschikisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Tamil (Indien)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Tamil (Sri Lanka)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Tatarisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Telugu",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Thailändisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Tibetisch (China)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Tigrinya (Äthiopien)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Tigrinya (Eritrea)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Tschechisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Türkisch (Türkei)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Turkmenisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Uigurisch (China)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Ukrainisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Ungarisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Urdu (Indien)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Urdu (Pakistan)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Usbekisch (Kyrillisch)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Usbekisch (Lateinisch)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Valencianisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Venda",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Vietnamesisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Walisisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Westfriesisch",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Wolof",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Xitsonga",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Yi (China)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Yoruba",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Zentralatlas-Tamazight (Arabisch, Marokko)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Zentralatlas-Tamazight (Lateinisch, Algerien)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Zentralatlas-Tamazight (Tifinagh, Marokko)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "ListItem",
+    "name": "￿￿Zentralkurdisch (Irak)",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     -746,
+     -741,
+     0,
+     0
+    ]
+   },
+   {
+    "type": "CheckBox",
+    "name": "Rechtschreibung und Grammatik nicht prüfen",
+    "key": "Alt+n",
+    "enabled": true,
+    "rect": [
+     21,
+     400,
+     347,
+     26
+    ]
+   },
+   {
+    "type": "CheckBox",
+    "name": "Sprache automatisch erkennen",
+    "key": "Alt+p",
+    "enabled": true,
+    "rect": [
+     21,
+     431,
+     244,
+     26
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Als Standard festlegen",
+    "key": "Alt+l",
+    "enabled": true,
+    "rect": [
+     20,
+     474,
+     186,
+     38
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "OK",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     220,
+     474,
+     126,
+     38
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Abbrechen",
+    "key": "",
+    "enabled": true,
+    "rect": [
+     360,
+     474,
+     126,
+     38
+    ]
+   }
+  ]
+ },
+ "detection": {
+  "fr": {
+   "language": 1031,
+   "detected": true
+  },
+  "es": {
+   "language": 1033,
+   "detected": true
+  },
+  "en": {
+   "language": 1033,
+   "detected": true
+  }
+ },
+ "options": {
+  "Dokumentprüfung": {
+   "title": "Word-Optionen",
+   "size": [
+    1425,
+    1028
+   ],
+   "items": [
+    {
+     "type": "Group",
+     "name": "Word-Optionen",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      2,
+      45,
+      1421,
+      981
+     ]
+    },
+    {
+     "type": "List",
+     "name": "Kategorien",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      11,
+      56,
+      316,
+      919
+     ]
+    },
+    {
+     "type": "ListItem",
+     "name": "Allgemein",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      12,
+      57,
+      314,
+      41
+     ]
+    },
+    {
+     "type": "ListItem",
+     "name": "Anzeige",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      12,
+      98,
+      314,
+      41
+     ]
+    },
+    {
+     "type": "ListItem",
+     "name": "Dokumentprüfung",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      12,
+      139,
+      314,
+      41
+     ]
+    },
+    {
+     "type": "ListItem",
+     "name": "Copilot",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      12,
+      180,
+      314,
+      41
+     ]
+    },
+    {
+     "type": "ListItem",
+     "name": "Speichern",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      12,
+      221,
+      314,
+      41
+     ]
+    },
+    {
+     "type": "ListItem",
+     "name": "Sprache",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      12,
+      262,
+      314,
+      41
+     ]
+    },
+    {
+     "type": "ListItem",
+     "name": "Barrierefreiheit",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      12,
+      303,
+      314,
+      41
+     ]
+    },
+    {
+     "type": "ListItem",
+     "name": "Erweitert",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      12,
+      344,
+      314,
+      56
+     ]
+    },
+    {
+     "type": "ListItem",
+     "name": "Menüband anpassen",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      12,
+      400,
+      314,
+      41
+     ]
+    },
+    {
+     "type": "ListItem",
+     "name": "Symbolleiste für den Schnellzugriff",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      12,
+      441,
+      314,
+      56
+     ]
+    },
+    {
+     "type": "ListItem",
+     "name": "Add-Ins",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      12,
+      497,
+      314,
+      41
+     ]
+    },
+    {
+     "type": "ListItem",
+     "name": "Trust Center",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      12,
+      538,
+      314,
+      41
+     ]
+    },
+    {
+     "type": "Pane",
+     "name": "Dokumentprüfung",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      336,
+      56,
+      1078,
+      919
+     ]
+    },
+    {
+     "type": "Text",
+     "name": "Ändern Sie, wie Word Text korrigiert und formatiert.",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      423,
+      61,
+      964,
+      56
+     ]
+    },
+    {
+     "type": "Text",
+     "name": "AutoKorrektur-Optionen",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      356,
+      140,
+      1012,
+      37
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "AutoKorrektur-Optionen",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      356,
+      191,
+      1012,
+      35
+     ]
+    },
+    {
+     "type": "Text",
+     "name": "Ändern Sie, wie Word Text bei der Eingabe korrigiert und formatiert",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      375,
+      196,
+      537,
+      25
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "AutoKorrektur-Optionen...",
+     "key": "ALT+K",
+     "enabled": true,
+     "rect": [
+      926,
+      191,
+      231,
+      35
+     ]
+    },
+    {
+     "type": "Text",
+     "name": "Bei der Rechtschreibkorrektur in Microsoft Office-Programmen",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      356,
+      246,
+      1012,
+      37
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "Bei der Rechtschreibkorrektur in Microsoft Office-Programmen",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      356,
+      297,
+      1012,
+      325
+     ]
+    },
+    {
+     "type": "CheckBox",
+     "name": "Wörter in GROSSBUCHSTABEN ignorieren",
+     "key": "ALT+n",
+     "enabled": true,
+     "rect": [
+      375,
+      297,
+      361,
+      31
+     ]
+    },
+    {
+     "type": "CheckBox",
+     "name": "Wörter mit Zahlen ignorieren",
+     "key": "ALT+Z",
+     "enabled": true,
+     "rect": [
+      375,
+      333,
+      260,
+      31
+     ]
+    },
+    {
+     "type": "CheckBox",
+     "name": "Internet- und Dateiadressen ignorieren",
+     "key": "ALT+o",
+     "enabled": true,
+     "rect": [
+      375,
+      369,
+      338,
+      31
+     ]
+    },
+    {
+     "type": "CheckBox",
+     "name": "Wiederholte Wörter kennzeichnen",
+     "key": "ALT+W",
+     "enabled": true,
+     "rect": [
+      375,
+      405,
+      299,
+      31
+     ]
+    },
+    {
+     "type": "CheckBox",
+     "name": "Deutsch: Neue Rechtschreibung verwenden",
+     "key": "ALT+v",
+     "enabled": true,
+     "rect": [
+      375,
+      441,
+      373,
+      31
+     ]
+    },
+    {
+     "type": "CheckBox",
+     "name": "Großbuchstaben behalten Akzent",
+     "key": "ALT+G",
+     "enabled": true,
+     "rect": [
+      375,
+      477,
+      296,
+      31
+     ]
+    },
+    {
+     "type": "CheckBox",
+     "name": "Vorschläge nur aus Hauptwörterbuch",
+     "key": "ALT+ö",
+     "enabled": true,
+     "rect": [
+      375,
+      513,
+      326,
+      31
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Benutzerwörterbücher...",
+     "key": "ALT+B",
+     "enabled": true,
+     "rect": [
+      375,
+      549,
+      210,
+      35
+     ]
+    },
+    {
+     "type": "Text",
+     "name": "Französische Modi",
+     "key": "ALT+F",
+     "enabled": true,
+     "rect": [
+      375,
+      593,
+      154,
+      25
+     ]
+    },
+    {
+     "type": "ComboBox",
+     "name": "Französische Modi",
+     "key": "ALT+F",
+     "enabled": true,
+     "rect": [
+      543,
+      589,
+      348,
+      33
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Öffnen",
+     "key": "Alt+Pfeil nach unten",
+     "enabled": true,
+     "rect": [
+      869,
+      590,
+      21,
+      31
+     ]
+    },
+    {
+     "type": "Text",
+     "name": "Bei der Rechtschreib- und Grammatikkorrektur in Word",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      356,
+      642,
+      1012,
+      37
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "Bei der Rechtschreib- und Grammatikkorrektur in Word",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      356,
+      693,
+      1012,
+      272
+     ]
+    },
+    {
+     "type": "CheckBox",
+     "name": "Rechtschreibung während der Eingabe überprüfen",
+     "key": "ALT+ü",
+     "enabled": true,
+     "rect": [
+      375,
+      693,
+      428,
+      31
+     ]
+    },
+    {
+     "type": "CheckBox",
+     "name": "Grammatikfehler während der Eingabe markieren",
+     "key": "ALT+ä",
+     "enabled": true,
+     "rect": [
+      375,
+      729,
+      419,
+      31
+     ]
+    },
+    {
+     "type": "CheckBox",
+     "name": "Häufig verwechselte Wörter",
+     "key": "ALT+v",
+     "enabled": false,
+     "rect": [
+      375,
+      765,
+      250,
+      31
+     ]
+    },
+    {
+     "type": "CheckBox",
+     "name": "Lesbarkeitsstatistik anzeigen",
+     "key": "ALT+L",
+     "enabled": true,
+     "rect": [
+      375,
+      801,
+      255,
+      31
+     ]
+    },
+    {
+     "type": "Text",
+     "name": "Wählen Sie aus, welche Überprüfungen der Editor bezüglich Grammatik und Empfehlungen zum Sprachgebrauch ausführen soll.",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      375,
+      837,
+      975,
+      48
+     ]
+    },
+    {
+     "type": "Text",
+     "name": "Schreibstil",
+     "key": "ALT+S",
+     "enabled": true,
+     "rect": [
+      375,
+      895,
+      83,
+      25
+     ]
+    },
+    {
+     "type": "ComboBox",
+     "name": "Schreibstil",
+     "key": "ALT+S",
+     "enabled": true,
+     "rect": [
+      472,
+      891,
+      438,
+      33
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Öffnen",
+     "key": "Alt+Pfeil nach unten",
+     "enabled": true,
+     "rect": [
+      888,
+      892,
+      21,
+      31
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Einstellungen...",
+     "key": "ALT+.",
+     "enabled": true,
+     "rect": [
+      924,
+      890,
+      141,
+      35
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Dokument überprüfen",
+     "key": "ALT+D",
+     "enabled": true,
+     "rect": [
+      375,
+      930,
+      202,
+      35
+     ]
+    },
+    {
+     "type": "Text",
+     "name": "Ausnahmen für",
+     "key": "ALT+h",
+     "enabled": true,
+     "rect": [
+      356,
+      990,
+      154,
+      33
+     ]
+    },
+    {
+     "type": "ComboBox",
+     "name": "Ausnahmen für",
+     "key": "ALT+h",
+     "enabled": true,
+     "rect": [
+      524,
+      990,
+      250,
+      33
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Öffnen",
+     "key": "Alt+Pfeil nach unten",
+     "enabled": true,
+     "rect": [
+      752,
+      991,
+      21,
+      31
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "Ausnahmen für",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      356,
+      1038,
+      1012,
+      67
+     ]
+    },
+    {
+     "type": "CheckBox",
+     "name": "Rechtschreibfehler nur in diesem Dokument ausblenden",
+     "key": "ALT+m",
+     "enabled": false,
+     "rect": [
+      375,
+      1038,
+      473,
+      31
+     ]
+    },
+    {
+     "type": "CheckBox",
+     "name": "Grammatikfehler nur in diesem Dokument ausblenden",
+     "key": "ALT+i",
+     "enabled": false,
+     "rect": [
+      375,
+      1074,
+      461,
+      31
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Zeile nach oben",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      1387,
+      57,
+      26,
+      26
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Seite nach oben",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -288,
+      -511,
+      0,
+      0
+     ]
+    },
+    {
+     "type": "Thumb",
+     "name": "Position",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      1387,
+      83,
+      26,
+      743
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Seite nach unten",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      1387,
+      826,
+      26,
+      122
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Zeile nach unten",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      1387,
+      948,
+      26,
+      26
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "OK",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      1174,
+      980,
+      113,
+      35
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Abbrechen",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      1301,
+      980,
+      113,
+      35
+     ]
+    },
+    {
+     "type": "Thumb",
+     "name": "Größenfeld",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      1422,
+      1025,
+      1,
+      1
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Direkthilfe",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      1347,
+      10,
+      35,
+      35
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Schließen",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      1380,
+      10,
+      35,
+      35
+     ]
+    }
+   ]
+  },
+  "Sprache": {
+   "title": "Word-Optionen",
+   "size": [
+    1425,
+    1028
+   ],
+   "items": [
+    {
+     "type": "Group",
+     "name": "Word-Optionen",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      2,
+      45,
+      1421,
+      981
+     ]
+    },
+    {
+     "type": "List",
+     "name": "Kategorien",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      11,
+      56,
+      316,
+      919
+     ]
+    },
+    {
+     "type": "ListItem",
+     "name": "Allgemein",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      12,
+      57,
+      314,
+      41
+     ]
+    },
+    {
+     "type": "ListItem",
+     "name": "Anzeige",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      12,
+      98,
+      314,
+      41
+     ]
+    },
+    {
+     "type": "ListItem",
+     "name": "Dokumentprüfung",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      12,
+      139,
+      314,
+      41
+     ]
+    },
+    {
+     "type": "ListItem",
+     "name": "Copilot",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      12,
+      180,
+      314,
+      41
+     ]
+    },
+    {
+     "type": "ListItem",
+     "name": "Speichern",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      12,
+      221,
+      314,
+      41
+     ]
+    },
+    {
+     "type": "ListItem",
+     "name": "Sprache",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      12,
+      262,
+      314,
+      41
+     ]
+    },
+    {
+     "type": "ListItem",
+     "name": "Barrierefreiheit",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      12,
+      303,
+      314,
+      41
+     ]
+    },
+    {
+     "type": "ListItem",
+     "name": "Erweitert",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      12,
+      344,
+      314,
+      56
+     ]
+    },
+    {
+     "type": "ListItem",
+     "name": "Menüband anpassen",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      12,
+      400,
+      314,
+      41
+     ]
+    },
+    {
+     "type": "ListItem",
+     "name": "Symbolleiste für den Schnellzugriff",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      12,
+      441,
+      314,
+      56
+     ]
+    },
+    {
+     "type": "ListItem",
+     "name": "Add-Ins",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      12,
+      497,
+      314,
+      41
+     ]
+    },
+    {
+     "type": "ListItem",
+     "name": "Trust Center",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      12,
+      538,
+      314,
+      41
+     ]
+    },
+    {
+     "type": "Pane",
+     "name": "Sprache",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      336,
+      56,
+      1078,
+      919
+     ]
+    },
+    {
+     "type": "Text",
+     "name": "Office-Spracheinstellungen festlegen",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      423,
+      61,
+      964,
+      56
+     ]
+    },
+    {
+     "type": "Text",
+     "name": "Office-Anzeigesprache",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      356,
+      140,
+      1012,
+      37
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "Office-Anzeigesprache",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      356,
+      191,
+      1012,
+      319
+     ]
+    },
+    {
+     "type": "Text",
+     "name": "Schaltflächen, Menüs und andere Steuerelemente werden in der ersten verfügbaren Sprache in dieser Liste angezeigt.",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      394,
+      191,
+      921,
+      25
+     ]
+    },
+    {
+     "type": "DataGrid",
+     "name": "Anzeigesprache",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      394,
+      221,
+      748,
+      277
+     ]
+    },
+    {
+     "type": "ListItem",
+     "name": "Anzeigesprache 1.     An Microsoft Windows anpassen [Deutsch] <bevorzugt>",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      395,
+      222,
+      746,
+      55
+     ]
+    },
+    {
+     "type": "ListItem",
+     "name": "Anzeigesprache 2.     Deutsch",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      395,
+      277,
+      746,
+      55
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Sprache hinzufügen...",
+     "key": "ALT+c",
+     "enabled": true,
+     "rect": [
+      1156,
+      280,
+      212,
+      35
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Nach oben",
+     "key": "ALT+o",
+     "enabled": false,
+     "rect": [
+      1156,
+      324,
+      212,
+      35
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Nach unten",
+     "key": "ALT+u",
+     "enabled": true,
+     "rect": [
+      1156,
+      368,
+      212,
+      35
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Als bevorzugt festlegen",
+     "key": "ALT+A",
+     "enabled": false,
+     "rect": [
+      1156,
+      412,
+      212,
+      35
+     ]
+    },
+    {
+     "type": "Text",
+     "name": "Office-Erstellungssprachen und -Korrekturhilfen",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      356,
+      530,
+      1012,
+      37
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "Office-Erstellungssprachen und -Korrekturhilfen",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      356,
+      581,
+      1012,
+      432
+     ]
+    },
+    {
+     "type": "Text",
+     "name": "Verwalten von Sprachen, die zum Erstellen und Bearbeiten von Dokumenten verwendet werden, einschließlich Korrekturhilfen wie Rechtschreib-und Grammatikprüfung.",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      394,
+      581,
+      862,
+      48
+     ]
+    },
+    {
+     "type": "DataGrid",
+     "name": "Bearbeitungssprache",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      394,
+      634,
+      748,
+      277
+     ]
+    },
+    {
+     "type": "ListItem",
+     "name": "Bearbeitungssprache Deutsch (Deutschland) <bevorzugt>, Korrekturhilfen installiert",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      395,
+      635,
+      746,
+      55
+     ]
+    },
+    {
+     "type": "Text",
+     "name": "Deutsch (Deutschland) <bevorzugt>",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      403,
+      650,
+      315,
+      25
+     ]
+    },
+    {
+     "type": "Text",
+     "name": "Korrekturhilfen installiert",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      778,
+      650,
+      263,
+      25
+     ]
+    },
+    {
+     "type": "ListItem",
+     "name": "Bearbeitungssprache Englisch (Deutschland), Korrekturhilfen installiert",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      395,
+      690,
+      746,
+      55
+     ]
+    },
+    {
+     "type": "Text",
+     "name": "Englisch (Deutschland)",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      403,
+      705,
+      315,
+      25
+     ]
+    },
+    {
+     "type": "Text",
+     "name": "Korrekturhilfen installiert",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      778,
+      705,
+      263,
+      25
+     ]
+    },
+    {
+     "type": "ListItem",
+     "name": "Bearbeitungssprache Englisch (Vereinigte Staaten), Korrekturhilfen installiert",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      395,
+      745,
+      746,
+      55
+     ]
+    },
+    {
+     "type": "Text",
+     "name": "Englisch (Vereinigte Staaten)",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      403,
+      760,
+      315,
+      25
+     ]
+    },
+    {
+     "type": "Text",
+     "name": "Korrekturhilfen installiert",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      778,
+      760,
+      263,
+      25
+     ]
+    },
+    {
+     "type": "ListItem",
+     "name": "Bearbeitungssprache Englisch (Vereinigtes Königreich), Korrekturhilfen installiert",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      395,
+      800,
+      746,
+      55
+     ]
+    },
+    {
+     "type": "Text",
+     "name": "Englisch (Vereinigtes Königreich)",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      403,
+      815,
+      315,
+      25
+     ]
+    },
+    {
+     "type": "Text",
+     "name": "Korrekturhilfen installiert",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      778,
+      815,
+      263,
+      25
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Sprache hinzufügen...",
+     "key": "ALT+S",
+     "enabled": true,
+     "rect": [
+      1156,
+      715,
+      212,
+      35
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Entfernen",
+     "key": "ALT+r",
+     "enabled": false,
+     "rect": [
+      1156,
+      759,
+      212,
+      35
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Als bevorzugt festlegen",
+     "key": "ALT+b",
+     "enabled": false,
+     "rect": [
+      1156,
+      803,
+      212,
+      35
+     ]
+    },
+    {
+     "type": "CheckBox",
+     "name": "Speichern Sie meine Dokumenterstellungssprachen für mein Konto in der Cloud.",
+     "key": "ALT+C",
+     "enabled": true,
+     "rect": [
+      394,
+      933,
+      666,
+      31
+     ]
+    },
+    {
+     "type": "Hyperlink",
+     "name": "Zusätzliche Tastaturen aus den Windows-Einstellungen installieren",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      394,
+      986,
+      521,
+      27
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Zeile nach oben",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      1387,
+      57,
+      26,
+      26
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Seite nach oben",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -288,
+      -511,
+      0,
+      0
+     ]
+    },
+    {
+     "type": "Thumb",
+     "name": "Position",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      1387,
+      83,
+      26,
+      813
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Seite nach unten",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      1387,
+      896,
+      26,
+      52
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Zeile nach unten",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      1387,
+      948,
+      26,
+      26
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "OK",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      1174,
+      980,
+      113,
+      35
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Abbrechen",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      1301,
+      980,
+      113,
+      35
+     ]
+    },
+    {
+     "type": "Thumb",
+     "name": "Größenfeld",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      1422,
+      1025,
+      1,
+      1
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Direkthilfe",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      1347,
+      10,
+      35,
+      35
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Schließen",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      1380,
+      10,
+      35,
+      35
+     ]
+    }
+   ]
+  }
+ }
+}

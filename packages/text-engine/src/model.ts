@@ -35,6 +35,8 @@ export interface CharProps {
   /** Kerning applies from this font size (points) upwards; 0 = off. */
   readonly kern?: number;
   readonly lang?: string;
+  /** Sprache > Rechtschreibung und Grammatik nicht prüfen (w:noProof). */
+  readonly noProof?: boolean;
   /** Character style id. */
   readonly rStyle?: string;
   /** Run properties the engine does not interpret, kept for writing back. */

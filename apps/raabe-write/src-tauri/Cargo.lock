@@ -2883,6 +2883,7 @@ name = "raabe-write"
 version = "0.1.0"
 dependencies = [
  "clipboard-win",
+ "flate2",
  "fontdb",
  "percent-encoding",
  "serde",

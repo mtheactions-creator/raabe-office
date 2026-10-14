@@ -14,7 +14,7 @@ const PPR_ORDER = ["pStyle", "keepNext", "keepLines", "pageBreakBefore", "frameP
   "bidi", "adjustRightInd", "snapToGrid", "spacing", "ind", "contextualSpacing", "mirrorIndents", "suppressOverlap", "jc",
   "textDirection", "textAlignment", "textboxTightWrap", "outlineLvl", "divId", "cnfStyle", "rPr", "sectPr", "pPrChange"];
 
-const RPR_KNOWN = new Set(["rStyle", "rFonts", "b", "i", "caps", "smallCaps", "strike", "dstrike", "vanish", "color", "spacing", "kern", "sz", "highlight", "u", "vertAlign", "lang"]);
+const RPR_KNOWN = new Set(["rStyle", "rFonts", "b", "i", "caps", "smallCaps", "strike", "dstrike", "noProof", "vanish", "color", "spacing", "kern", "sz", "highlight", "u", "vertAlign", "lang"]);
 const PPR_KNOWN = new Set(["pStyle", "keepNext", "keepLines", "pageBreakBefore", "widowControl", "suppressLineNumbers", "tabs", "spacing", "ind", "contextualSpacing", "jc", "outlineLvl", "rPr",
   "numPr", "pBdr", "shd", "sectPr"]);
 
@@ -114,6 +114,7 @@ export function readRPr(el: Element | null, rev?: RevisionOf): CharProps {
       case "strike": p.strike = onOff(c); break;
       case "dstrike": p.dstrike = onOff(c); break;
       case "vanish": p.hidden = onOff(c); break;
+      case "noProof": p.noProof = onOff(c); break;
       case "color": {
         p.color = attr(c, "val") ?? undefined;
         const theme = ["themeColor", "themeShade", "themeTint"].filter((a) => attr(c, a) !== null);
@@ -265,6 +266,7 @@ export function writeRPr(p: CharProps, opts: WriteOptions, tag = "rPr"): string 
   add("smallCaps", flag("smallCaps", p.smallCaps));
   add("strike", flag("strike", p.strike));
   add("dstrike", flag("dstrike", p.dstrike));
+  add("noProof", flag("noProof", p.noProof));
   add("vanish", flag("vanish", p.hidden));
   if (p.color) add("color", `<w:color w:val="${esc(p.color)}"${p.colorTheme && opts.hasTheme ? ` ${p.colorTheme}` : ""}/>`);
   if (p.spacing !== undefined) add("spacing", `<w:spacing w:val="${ptToTwips(p.spacing)}"/>`);

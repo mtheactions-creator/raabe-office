@@ -326,7 +326,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
           smaller: [[stack(split("review.spelling", "S1", "medium"), b("review.thesaurus", "T", "medium"), b("review.wordCount", "W", "medium"))]] },
         { id: "speech", label: "Sprache", key: "Z1", icon: "read-aloud", controls: [b("review.readAloud", "V1", "large")] },
         { id: "language", label: "Sprache", key: "ZL", icon: "translate",
-          controls: [dd("review.translate", "Ü", "large"), dd("review.language", "SP", "large")] },
+          controls: [dd("review.translate", "Ü", "large"), dd("review.language", "SP", "large", undefined, [{ cmd: "review.languageProofing" }, { cmd: "review.languageOptions" }])] },
         { id: "comments", label: "Kommentare", key: "ZC", icon: "comment",
           controls: [b("review.newComment", "N", "large"), split("review.deleteComment", "L", "large", ctx.panels.deleteComment),
             b("review.prevComment", "Q", "large"), b("review.nextComment", "ß", "large"), showComments],

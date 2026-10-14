@@ -689,3 +689,41 @@ built with Word's labels and behaviour.
   document ending with a page break, so inserting again replaces it, Aktuelles Deckblatt
   entfernen removes it, and Word treats ours as its cover page.
 - Silbentrennung moves to F, where the hyphenation patterns come with the languages.
+
+### D-049 Languages and proofing tools (Step 4b F)
+Recorded from Word first (`probe_word_languages.py`: Word's 260 languages, which have proofing
+tools on this PC, the dialog Sprache, the Thesaurus pane and Synonyme menu, the Editor pane of
+F7, Manuelle Silbentrennung, Datei > Optionen > Dokumentprüfung and Sprache, and what Word
+does with typed French, Spanish and English sentences).
+- **Data**: open sources only, compiled into the program so everything works offline (and on
+  the iPad later). Spelling: Hunspell dictionaries for French (Dicollecte, MPL-2.0) and Spanish
+  (RLA-ES, GPL/LGPL/MPL) join German and English (npm `dictionary-*`). Thesaurus: LibreOffice's
+  thesauri (German OpenThesaurus, English from WordNet, French by Dicollecte, Spanish
+  OpenThesaurus; LGPL-2.1+ and the WordNet licence), fetched by `tools/lang-data/fetch.py`
+  and built by `build.py` into 7 MB of gzip files (meanings stored once, headwords pointing to
+  them; generic and related terms dropped as Word does). The program grows from 8 to 18 MB.
+- **Sprache**: Word's dialog with its language names and tags (260, generated from Word),
+  RaabeWrite's proofing languages on top and marked, Markierter Text / Aktives Dokument,
+  Rechtschreibung und Grammatik nicht prüfen (w:noProof, now a run property), Sprache
+  automatisch erkennen and Als Standard festlegen. The status bar shows the language at the
+  caret and opens the dialog.
+- **Sprache automatisch erkennen** (on by default, as in Word): Word decides only among the
+  editing languages enabled in Office (here German and English: a French sentence stayed
+  German, a Spanish one became English). RaabeWrite decides per sentence among its four
+  proofing languages from function words and letters, only when the evidence is clear, and
+  only for text without a language of its own. The result is used for checking and shown in
+  the status bar but not written into the file (Word writes the detected language); that keeps
+  undo and the file free of background changes.
+- **Thesaurus** (Umschalt+F7): Word's pane (Zurück, search, meanings headed by a synonym and
+  the part of speech, antonyms marked, Einfügen/Kopieren, the language) and the context menu's
+  Synonyme (five words of the first meaning, Thesaurus...). Inflected words find their base
+  form (schönen → schön).
+- **F7** opens Word 365's Editor pane instead of the old dialog: "n verbleibend", the issue
+  card with the sentence, suggestions with synonyms ("ähnlich wie"), Alle ändern, Einmal
+  ignorieren, Alle ignorieren, Zum Wörterbuch hinzufügen, Optionen. Hunspell's suggestions are
+  re-ranked (same first letter, fewest changes), as Word's list puts "Fehler" first for "Feher".
+- **Optionen**: the pages Dokumentprüfung (Word's options that RaabeWrite has: capitals,
+  numbers, addresses, repeated words, Benutzerwörterbücher, checking while typing, Dokument
+  überprüfen) and Sprache (the editing languages, the preferred one). Wiederholte Wörter are
+  marked as in Word (Wiederholtes Wort löschen).
+

@@ -20,7 +20,7 @@ What each app does, ordered by priority. **M** = first usable version (MVP),
 | Search box "Suchen" (Alt+M) that finds and runs commands | M | Done in Step 1 |
 | Keytips (Alt shortcuts) with Word's German letters | M | Done in Step 1 |
 | Dark mode | L | After the pilot (agreed) |
-| Spell check German + English (Hunspell dictionaries) | M | Done in Step 3 (D-031); French and Spanish in Step 4b |
+| Spell check German + English (Hunspell dictionaries) | M | Done in Step 3 (D-031); French and Spanish in Step 4b (D-049) |
 | Find and replace | M | Done in Step 3: Navigationsbereich, Suchen und Ersetzen, Gehe zu |
 | Zoom slider and view buttons in the status bar | M | |
 | Print with preview | M | Done in Step 3 |
@@ -65,7 +65,7 @@ What each app does, ordered by priority. **M** = first usable version (MVP),
 | Fields beyond page number / TOC / date | X | Preserved |
 | Entwurf tab: Designs, Farben, Schriftarten, Absatzabstand | M | Step 4b |
 | Entwurf tab: Wasserzeichen, Seitenfarbe, Seitenränder | M | Step 4b |
-| Hyphenation (Silbentrennung), Thesaurus | M | Step 4b, de/en/fr/es |
+| Hyphenation (Silbentrennung), Thesaurus | M | Step 4b, de/en/fr/es; Thesaurus done (D-049) |
 | Word count exactly like Word (standalone dashes are not words) | M | Done in Step 1 |
 
 ## RaabeCalc (Excel)

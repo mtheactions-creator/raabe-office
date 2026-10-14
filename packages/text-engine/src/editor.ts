@@ -1055,6 +1055,11 @@ export class Editor {
     return [minPos(this.sel.anchor, this.sel.head), maxPos(this.sel.anchor, this.sel.head)];
   }
 
+  /** The selection's start and end, in document order. */
+  selectionRange(): [Pos, Pos] {
+    return this.range();
+  }
+
   selectedText(): string {
     const [from, to] = this.range();
     return this.doc.slice(from, to);
@@ -2234,6 +2239,39 @@ export class Editor {
   /** Marks the selection (or what is typed next) as being in a language ("de-DE", "en-GB" …). */
   setLang(lang: string): void {
     this.setCharPropKeepAll("lang", lang);
+  }
+
+  /** The language and Rechtschreibung-nicht-prüfen of the text at the caret, styles included. */
+  proofingAt(): { lang: string; noProof: boolean } {
+    const h = this.sel.head;
+    const para = this.doc.paras[h.p];
+    const r = this.doc.styles.resolveChar(para?.props.style, this.typingProps());
+    return { lang: r.lang ?? "de-DE", noProof: !!r.noProof };
+  }
+
+  /** Sprache: the selection (or what is typed next) in a language, checked or not. */
+  setProofing(lang: string, noProof: boolean): void {
+    if (!this.hasSelection) {
+      const h = this.sel.head;
+      this.pending = intern({ ...(this.pending ?? typedProps(this.doc.paras[h.p], h.o)), lang, noProof: noProof || undefined });
+      this.emit(false);
+      return;
+    }
+    const [from, to] = this.range();
+    this.edit(() => this.doc.mapChars(from, to, (old) => ({ ...old, lang, noProof: noProof || undefined })), false);
+  }
+
+  /** Sprache für die Korrekturhilfen ändern für: Aktives Dokument (every story and the defaults). */
+  setDocumentProofing(lang: string, noProof: boolean): void {
+    this.snapshot();
+    const fix = (c: CharProps): CharProps => intern({ ...c, lang: c.lang === undefined ? undefined : lang, noProof: noProof || undefined });
+    const fixPara = (p: Para): Para => ({ ...p, mark: fix(p.mark), runs: p.runs.map((r) => ({ ...r, props: fix(r.props) })) });
+    this.doc.setStory(MAIN, this.doc.main.map(fixPara));
+    for (const k of [...this.doc.stories.keys()]) this.doc.setStory(k, (this.doc.stories.get(k) ?? []).map(fixPara));
+    const sheet = this.doc.styles;
+    this.doc.setStyles(sheet.withDefaults({ ...sheet.defaultsR, lang, noProof: noProof || undefined }, sheet.defaultsP));
+    this.pending = null;
+    this.relayout();
   }
 
   /** Sets a property as direct formatting on the selection, or for the next typed text. */

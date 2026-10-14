@@ -36,7 +36,9 @@ import { groupsFeature, GROUP_COMMANDS } from "./features/groups";
 import { rulerFeature } from "./features/ruler";
 import { referencesFeature, REFERENCE_COMMANDS } from "./features/references";
 import { reviewFeature, REVIEW_COMMANDS } from "./features/review";
-import { spellFeature } from "./features/spell";
+import { spellFeature, type Word as SpellWord } from "./features/spell";
+import { thesaurusFeature } from "./features/thesaurus";
+import { editorPaneFeature, type Issue } from "./features/editor-pane";
 import { contextFeature, CONTEXT_COMMANDS } from "./features/context";
 import { shapesFeature, SHAPE_COMMANDS } from "./features/shapes";
 import { tablesFeature, TABLE_COMMANDS } from "./features/tables";
@@ -242,9 +244,22 @@ export class WriteApp {
     const api = this.api();
     const spell = spellFeature(api);
     const math = mathFeature(api);
+    const thesaurus = thesaurusFeature(api, this.docArea, this.dock);
+    const asWord = (i: Issue): SpellWord => ({ a: i.a, b: i.b, text: i.text, lang: i.lang, repeat: i.kind === "repeat" });
+    const editorPane = editorPaneFeature(api, this.docArea, this.dock, [{
+      prepare: (e) => spell.checkAll(e),
+      issues: (e) => spell.issues(e).map(({ p, w }) => ({ p, a: w.a, b: w.b, kind: w.repeat ? "repeat" : "spell", text: w.text, lang: w.lang })),
+      suggestions: async (i) => (i.kind === "repeat" ? [""] : spell.suggest(asWord(i))),
+      ignoreOnce: (e, i) => spell.ignoreOnce(e, i.p, i.a),
+      ignoreAll: (_e, i) => spell.ignoreAll(i.text),
+      add: (i) => spell.addToDictionary(i.text),
+      apply: (e, i, s) => { if (i.kind !== "repeat" || s) return false; spell.deleteRepeat(e, i.p, asWord(i)); return true; },
+    }], () => void this.optionsDialog("Dokumentprüfung"));
     return {
       context: contextFeature(api, spell.spellEntries, (kind) => this.ribbon?.toolbar(miniToolbar(this.ribbonContext(), kind)).el ?? null,
-        (x, y) => math.contextMenu(x, y)),
+        (x, y) => math.contextMenu(x, y), thesaurus.synonymEntries),
+      thesaurus,
+      editorPane,
       lists: listsFeature(api),
       tables: tablesFeature(api),
       pages: pageSetupFeature(api),
@@ -395,7 +410,8 @@ export class WriteApp {
       this.wordCache = { paras, words: d.editor.countWords() };
     }
     const s = d.editor.stats();
-    this.statusBar.update({ page: s.caretPage + 1, pages: s.pageCount, words: this.wordCache.words, zoom: d.editor.zoom, pageLabel: this.features.views.statusLabel() });
+    this.statusBar.update({ page: s.caretPage + 1, pages: s.pageCount, words: this.wordCache.words, zoom: d.editor.zoom, pageLabel: this.features.views.statusLabel(),
+      language: this.features.spell.statusLanguage(d.editor) });
   }
 
   private renderInfobar(): void {
@@ -638,7 +654,7 @@ export class WriteApp {
     await showDialog({ title: "Wörter zählen", body: table, buttons: [{ label: "Schließen", value: undefined, primary: true }], cancel: undefined });
   }
 
-  private async optionsDialog(): Promise<void> {
+  private async optionsDialog(page?: string): Promise<void> {
     const s = { ...this.settings };
     const name = h("input", { type: "text", value: s.userName, style: "width:280px" });
     const touch = h("input", { type: "checkbox", checked: s.touchMode });
@@ -649,19 +665,27 @@ export class WriteApp {
     const saving = h("div", { class: "panel", hidden: true },
       h("label", { class: "field" }, "AutoWiederherstellen-Informationen speichern alle (Sekunden):", seconds),
       h("p", { class: "muted", style: "color:#5b5b5b" }, "Nicht gespeicherte Änderungen werden so oft gesichert und nach einem Absturz angeboten."));
-    const navBtn = (label: string, panel: HTMLElement) => h("button", {
-      onclick: (e: MouseEvent) => {
-        general.hidden = panel !== general; saving.hidden = panel !== saving;
-        nav.querySelectorAll("button").forEach((b) => b.classList.toggle("active", b === e.currentTarget));
-      },
-    }, label);
-    const nav = h("nav", null, navBtn("Allgemein", general), navBtn("Speichern", saving));
-    nav.firstElementChild!.classList.add("active");
+    // Dokumentprüfung and Sprache come from the spelling feature (Word's pages).
+    const extra = this.features.spell.optionPages();
+    const panels = [general, saving, ...extra.map((x) => x.el)];
+    for (const x of extra) x.el.hidden = true;
+    const show = (panel: HTMLElement, btn: HTMLElement) => {
+      for (const p of panels) p.hidden = p !== panel;
+      nav.querySelectorAll("button").forEach((b) => b.classList.toggle("active", b === btn));
+    };
+    const nav = h("nav", null);
+    for (const [label, panel] of [["Allgemein", general], ["Speichern", saving], ...extra.map((x) => [x.label, x.el] as const)] as const) {
+      const b = h("button", { onclick: () => show(panel, b) }, label);
+      nav.append(b);
+    }
+    const startAt = [...nav.querySelectorAll("button")].find((b) => b.textContent === page) ?? nav.firstElementChild as HTMLElement;
+    show(panels[[...nav.children].indexOf(startAt)] ?? general, startAt);
     const ok = await showDialog({
-      title: "RaabeWrite-Optionen", body: h("div", { class: "options" }, nav, general, saving),
+      title: "RaabeWrite-Optionen", body: h("div", { class: "options" }, nav, ...panels),
       buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false,
     });
     if (!ok) return;
+    for (const x of extra) x.apply?.();
     this.settings = { userName: name.value.trim(), touchMode: touch.checked, autoRecoverSeconds: Math.max(10, Number(seconds.value) || 30) };
     saveSettings(this.settings);
     document.body.classList.toggle("touch", this.settings.touchMode);
@@ -838,6 +862,7 @@ export class WriteApp {
     c.implement("file.exportPdf", { run: () => this.exportPdf(), enabled: has });
     c.implement("file.close", { run: async () => { if (this.active) { this.backstage.close(); await this.closeDoc(this.active); } }, enabled: has });
     c.implement("file.options", { run: () => this.optionsDialog() });
+    c.implement("review.languageOptions", { run: () => this.optionsDialog("Sprache") });
     c.implement("file.info", { run: () => this.openBackstage("info") });
 
     // Clipboard. The text goes to the system clipboard; the formatted copy stays inside RaabeWrite.

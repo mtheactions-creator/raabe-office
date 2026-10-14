@@ -74,6 +74,10 @@ export interface ResolvedChar {
   readonly textFx?: string;
   /** Tracked change the text belongs to (direct formatting only). */
   readonly rev?: Revision;
+  /** Language of the text (Korrekturhilfesprache), from the run, its styles or the defaults. */
+  readonly lang?: string;
+  /** Rechtschreibung und Grammatik nicht prüfen. */
+  readonly noProof?: boolean;
 }
 
 export interface ResolvedPara {
@@ -99,7 +103,7 @@ export interface ResolvedPara {
   readonly shading?: Shading;
 }
 
-const TOGGLES = ["bold", "italic", "caps", "smallCaps", "strike", "dstrike", "hidden"] as const;
+const TOGGLES = ["bold", "italic", "caps", "smallCaps", "strike", "dstrike", "hidden", "noProof"] as const;
 
 /** German names Word shows for built-in styles. */
 export const GERMAN_NAMES: Record<string, string> = {
@@ -387,6 +391,8 @@ export class StyleSheet {
       kern: c.kern ?? 0,
       ...(c.textFx ? { textFx: c.textFx } : {}),
       rev: r.rev,
+      ...(c.lang ? { lang: c.lang } : {}),
+      ...(c.noProof ? { noProof: true } : {}),
     };
     byStyle.set(r, hit);
     return hit;

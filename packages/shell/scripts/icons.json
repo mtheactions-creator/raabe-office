@@ -317,5 +317,9 @@
   "globe": "globe",
   "mail": "mail",
   "arrow-up": "arrow_up",
-  "placeholder-source": "book_question_mark"
+  "placeholder-source": "book_question_mark",
+  "ignore": "prohibited",
+  "ignore-all": "prohibited_multiple",
+  "dictionary-add": "book_add",
+  "editor": "pen_sparkle"
 }

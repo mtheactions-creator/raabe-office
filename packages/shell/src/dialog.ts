@@ -7,6 +7,8 @@ export interface DialogButton<T> {
   label: string;
   value: T;
   primary?: boolean;
+  /** Stands at the left of the button row (Als Standard festlegen). */
+  left?: boolean;
 }
 
 export function showDialog<T>(opts: { title: string; body: HTMLElement | string; buttons: DialogButton<T>[]; cancel: T }): Promise<T> {
@@ -18,7 +20,7 @@ export function showDialog<T>(opts: { title: string; body: HTMLElement | string;
       previous?.focus?.();
       resolve(v);
     };
-    const buttons = opts.buttons.map((b) => h("button", { class: b.primary ? "primary" : "", onclick: () => done(b.value) }, b.label));
+    const buttons = opts.buttons.map((b) => h("button", { class: b.primary ? "primary" : "", style: b.left ? "margin-right:auto" : "", onclick: () => done(b.value) }, b.label));
     const dialog = h("div", { class: "dialog", role: "dialog", "aria-modal": "true", "aria-label": opts.title },
       h("div", { class: "dlg-title" }, h("span", { class: "t" }, opts.title),
         h("button", { "aria-label": "Schließen", onclick: () => done(opts.cancel) }, icon("close"))),
