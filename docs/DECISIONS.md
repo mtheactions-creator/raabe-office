@@ -846,3 +846,14 @@ spanish-pos-dict LGPL-2.1, with LanguageTool's added/removed lists). What it too
   errors found, 13 of 3464 correct sentences flagged; fr 5495 of 5860, 33 of 4961; es 2183 of
   2312, 50 of 2292 (de 6192 of 6323, 20 of 2960).
 
+### D-053 Step 4c: Word's places, our look, and two deliberate improvements
+After trying Step 4b the owner listed what still differs from Word (ROADMAP, Step 4c). General
+rule: our own design language may deviate from Word's, but every command, option and pane sits
+where a Word user expects it (Bildfarboptionen in a pane at the right edge, as in Word, drawn
+in our style), so Word habits carry over. Two deliberate differences from Word, chosen by the
+owner:
+- Applying a Formatvorlage to a selection resets its direct formatting cleanly (colour, size,
+  highlighting, effects), where Word keeps some of it.
+- Tables can be moved freely by their handle and become floating tables as in Word; in
+  addition a second handle of our own gives layout options like a picture's (wrapping,
+  alignment), because aligning a table in Word is cumbersome.

@@ -11,11 +11,28 @@ owner's explicit go-ahead.
 | 3 | RaabeWrite documents: lists, tables, images, header/footer, page numbers, page setup, spell check, find/replace, print, PDF | done 2026-10-13 ([report](reports/2026-10-13-step3-documents.md)): layout identical to Word in ten test documents (632/632 lines), text rendering like Word (F6), smoke tests 28/28 and 41/41 |
 | 4 | RaabeWrite school features: footnotes, table of contents, comments, track changes, formula editor, Raabeschule templates | done 2026-10-13 ([report](reports/2026-10-13-step4-school.md)): Word updates our tables of contents to the same page numbers, layout identical to Word in eleven documents (682/682 lines), smoke tests 43/43, 28/28, 41/41 |
 | 4b | Word parity for RaabeWrite (D-038): feel basics and audit tools, tables/lists/clipboard, pictures and shapes, own formula editor, all remaining non-deferred ribbon commands, French and Spanish, own grammar checker | done 2026-10-15 ([report](reports/2026-10-15-step4b-word-parity.md)): every non-deferred ribbon command works; 960/965 line starts in 19 Word-built documents, behaviour catalogue 192/193 (the 193rd a Word glitch), formula editor 114/114, grammar in four languages finding more school errors than Word with fewer false alarms, smoke tests 41/41, 28/28, 43/43, 25/25 |
+| 4c | Polish for RaabeWrite (D-053): the owner's list after trying Step 4b (pictures, formulas, tables, cursors, Formatvorlagen) and an audit of the whole app for the same kinds of difference | planned, waiting for the go |
 | 5 | Pilot: one class uses RaabeWrite in lessons; fix what real use reveals | |
 | 6 | iPad build of RaabeWrite (touch polish, Files app integration, distribution) | |
 | 7 | RaabeCalc | |
 | 8 | RaabePresent | |
 | 9 | Optional features: read aloud, translator, dictation, ink | |
+
+## Step 4c: Polish (plan)
+
+Agreed with the owner on 2026-10-15 after trying Step 4b. Same working mode as 4b: Word's
+behaviour is recorded first in Word instances of our own, then built and measured against it;
+the owner leaves the PC, so real input is allowed throughout. Our look may differ from Word's,
+but everything sits where a Word user expects it (D-053).
+
+| Package | Content |
+|---|---|
+| A. Bugs | Zuschneiden creates duplicates; the table's top-left handle selects only part of the table; only the first Tabellenformatvorlage works; Bildformatvorlagen previews overlap; Formatvorlagen labels cut off. |
+| B. Pictures and panes | Text flow on both sides for Quadrat, Eng along the picture's outline (as measured in Word); snapping to margins, page centre and paragraphs with guide lines; double-click opens the contextual tab; icons and tooltips in the layout-options menu; Transparente Farbe bestimmen; a right-side task pane in our style for everything Word puts in a pane (Grafik formatieren, Bildfarboptionen …) instead of centred dialogs. |
+| C. Formulas | The Start tab shows the formula's font; copy and paste with Word both ways; "/" + space builds a fraction (with the operand before it) and "…" + space makes plain text, as recorded from Word; the caret around quotation marks; the top-left handle selects the whole formula. |
+| D. Tables | Drag-selection thresholds and the shading of selected cells as in Word (text area, multi-line cells, gridlines visible); the full Rahmen group (Rahmenarten, Linienart, Stärke, Stiftfarbe, Rahmenpinsel, Rahmenkopierer); all of Word's table styles with the in-ribbon preview; Entf and Rücktaste on selected cells with Word's Zellen löschen dialog; floating tables moved freely by the handle, plus a layout handle of our own for wrapping and alignment (D-053). |
+| E. Selection, cursors, Formatvorlagen | A selection visible over every background (highlighting, shading, coloured text, page colour); sharp cursors at every scaling (Windows' own where Word uses them); live preview on hover in the galleries; a Formatvorlage applied to a selection resets its direct formatting cleanly (D-053). |
+| F. Audit of the whole app | The same kinds of difference everywhere: live preview in every gallery, panes instead of dialogs, double-click on every object, tooltips and icons, cut-off labels at several widths (by script), selection visibility, clipboard with Word for every object, snapping for shapes and text boxes, menus and galleries entry by entry against recordings of Word, new behaviour-catalogue cases; what it finds is added to the list. |
 
 ## Step 4b: Word parity (plan)
 
