@@ -72,6 +72,8 @@ cd tools/feel-lab
 .venv/Scripts/python.exe check_shapes_render.py  # RaabeWrite's drawing of Word's shapes against Word's (PDF)
 .venv/Scripts/python.exe check_shapes_ui.py   # takes over mouse and keyboard (drawing, typing into shapes, Word reads it)
 .venv/Scripts/python.exe show_docx.py         # per-line table of the last docx run
+.venv/Scripts/python.exe devpage.py start      # dev build (npm run dev:write) in a headless InPrivate Edge:
+.venv/Scripts/python.exe devpage.py shot x.png # screenshots, clicks, drags, keys, JavaScript; invisible
 ```
 
 Rebuild the app after any frontend change (`npx tauri build --no-bundle` in

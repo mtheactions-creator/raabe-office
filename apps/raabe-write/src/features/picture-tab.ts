@@ -5,7 +5,7 @@
 // Breite). Gallery entries and presets were recorded from Word (picture-presets.ts).
 
 import { closePopup, colorGrid, h, showDialog, showMenu, type Command, type Control, type MenuEntry, type Tab } from "@raabe/shell";
-import { imageInfo, imageUrl, naturalSizePt, pictureElement, type PictureFormat } from "@raabe/text-engine";
+import { imageInfo, imageUrl, naturalSizePt, previewElement, type PictureFormat } from "@raabe/text-engine";
 import { DEFAULT_THEME_COLORS, pictureFromSpPr } from "@raabe/ooxml";
 import { CM, fmtCm, parseNum, type AppApi } from "./api";
 import { GROUP_MENU } from "./groups";
@@ -389,9 +389,7 @@ export function pictureTab(api: AppApi, insertFromPath: (path: string) => Promis
       const img = sel()?.obj.image;
       if (!img) return null;
       const items = styleItems();
-      const el = pictureElement(imageUrl(img), 50, 37, withItem(hoverBase ?? ed()?.pictureFormat() ?? {}, items[i]));
-      el.style.position = "relative";
-      return el;
+      return previewElement(imageUrl(img), 56, 42, withItem(hoverBase ?? ed()?.pictureFormat() ?? {}, items[i]));
     },
     tip: (i) => P.PICTURE_STYLES[i].label,
     pick: (i) => {

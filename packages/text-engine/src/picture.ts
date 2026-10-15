@@ -318,6 +318,30 @@ export function pictureElement(url: string, w: number, h: number, f: PictureForm
   return outer;
 }
 
+/**
+ * A gallery preview: the picture with its effects (shadow, reflection, glow, frame) made small
+ * enough that everything fits the tile, and clipped to it, so neighbouring tiles never overlap.
+ */
+export function previewElement(url: string, w: number, h: number, f: PictureFormat | undefined): HTMLElement {
+  const box = document.createElement("div");
+  box.style.cssText = `position:relative;width:${w}px;height:${h}px;overflow:hidden;flex:none`;
+  // Drawn as a picture of a usual size (effects in proportion, as in Word's thumbnails), then
+  // scaled down until it fits with its effects.
+  const vw = 150, vh = (150 * h) / w;
+  const ex = f ? effectExtent({ ...f, extent: undefined }, vh / PT) : { l: 0, t: 0, r: 0, b: 0 };
+  const l = ex.l * PT, t = ex.t * PT, r = ex.r * PT, b = ex.b * PT;
+  const fw = vw + l + r, fh = vh + t + b;
+  const k = Math.min((w - 2) / fw, (h - 2) / fh);
+  const inner = document.createElement("div");
+  inner.style.cssText = `position:absolute;left:${(w - fw * k) / 2}px;top:${(h - fh * k) / 2}px;width:${fw}px;height:${fh}px;transform:scale(${k});transform-origin:0 0`;
+  const el = pictureElement(url, vw, vh, f);
+  el.style.left = `${l}px`;
+  el.style.top = `${t}px`;
+  inner.append(el);
+  box.append(inner);
+  return box;
+}
+
 /** Space the effects take around the picture (points), when Word did not say. */
 export function effectExtent(f: PictureFormat, h: number): { l: number; t: number; r: number; b: number } {
   if (f.extent) return f.extent;

@@ -232,6 +232,8 @@ export class Editor {
     this.input.addEventListener("cut", (e) => this.onCopy(e, true));
     this.input.addEventListener("paste", (e) => this.onPaste(e));
     workspace.addEventListener("mousedown", (e) => this.onMouseDown(e));
+    // The document's pictures are not the browser's to drag (a drop would put a copy somewhere).
+    workspace.addEventListener("dragstart", (e) => e.preventDefault());
     workspace.addEventListener("mousemove", (e) => { if (!e.buttons) this.hoverCursor(e); });
     workspace.addEventListener("contextmenu", (e) => { if (!this.view.markupLayer.contains(e.target as Node)) this.onContext(e); });
     this.update();
@@ -1005,7 +1007,7 @@ export class Editor {
     // A selection that ends at the start of a cell ends after the cell before it.
     let to = to0;
     const tc = paras[to.p]?.cell, fc = paras[from.p]?.cell;
-    if (to.o === 0 && tc && to.p > from.p && !(fc && fc.table.id === tc.table.id && fc.row === tc.row && fc.col === tc.col)) {
+    if (!this.cellsInclusive && to.o === 0 && tc && to.p > from.p && !(fc && fc.table.id === tc.table.id && fc.row === tc.row && fc.col === tc.col)) {
       to = { p: to.p - 1, o: paras[to.p - 1].text.length };
     }
     const a = paras[from.p]?.cell, b = paras[to.p]?.cell;
@@ -1049,6 +1051,7 @@ export class Editor {
   private setSel(anchor: Pos, head: Pos, upstream = false, keepGoal = false): void {
     this.sel = { anchor, head, headUpstream: upstream };
     this.cellAnchor = null;
+    this.cellsInclusive = false;
     this.floatSel = null;
     this.floatMulti = [];
     if (!keepGoal) this.goalX = null;
@@ -2002,6 +2005,8 @@ export class Editor {
       for (let i = t.a; i <= t.b; i++) if (this.doc.paras[i].cell!.col === c.col) { a = Math.min(a, i); b = Math.max(b, i); }
     }
     this.setSel({ p: a, o: 0 }, { p: b, o: this.doc.paras[b].text.length });
+    // The last cell belongs to the selection even when it is empty (its end is also its start).
+    this.cellsInclusive = true;
     this.update();
   }
 
@@ -3181,7 +3186,8 @@ export class Editor {
     if (!this.cropping || !img?.obj.image) return { ...box, picture: isPicture };
     const c = img.obj.pic?.crop ?? { l: 0, t: 0, r: 0, b: 0 };
     const fw = box.w / Math.max(0.01, 1 - c.l - c.r), fh = box.h / Math.max(0.01, 1 - c.t - c.b);
-    return { ...box, picture: true, crop: { x: box.x - c.l * fw, y: box.y - c.t * fh, w: fw, h: fh, url: imageUrl(img.obj.image) } };
+    const pf = img.obj.pic;
+    return { ...box, picture: true, crop: { x: box.x - c.l * fw, y: box.y - c.t * fh, w: fw, h: fh, url: imageUrl(img.obj.image), rotation: pf?.rotation, flipH: pf?.flipH, flipV: pf?.flipV } };
   }
 
   /** Zuschneiden: the crop marks are shown until Esc, Enter or a click elsewhere. */
@@ -5216,6 +5222,8 @@ cropFill(fit: boolean): void {
 
   /** The anchor a keyboard selection had before it was widened to whole cells. */
   private cellAnchor: Pos | null = null;
+  /** The selection covers the cell at its end (selected as a part of the table), not just its start. */
+  private cellsInclusive = false;
 
   /**
    * Extends the selection; once it reaches another cell of the same table it covers whole

@@ -628,6 +628,11 @@ export class Ribbon {
       const itemW = items[0]?.offsetWidth || 108;
       const extra = Math.max(0, Math.floor(this.galleryRoom / itemW));
       items.forEach((it, i) => { it.style.display = i < min + extra ? "" : "none"; });
+      // Names wider than their tile: cut at the right (see .item.long).
+      for (const it of items) {
+        const span = it.firstElementChild as HTMLElement | null;
+        if (span && it.style.display !== "none") it.classList.toggle("long", span.scrollWidth > it.clientWidth - 12);
+      }
     }
   }
 }

@@ -4,7 +4,7 @@
 // Word's galleries do; hovering a tile previews it in the document (Livevorschau).
 
 import { closePopup, h, type MenuEntry } from "@raabe/shell";
-import { pictureElement, shapeElement, type Editor, type PictureFormat } from "@raabe/text-engine";
+import { previewElement, shapeElement, type Editor, type PictureFormat } from "@raabe/text-engine";
 import { imageUrl } from "@raabe/text-engine";
 
 export interface GalleryItem {
@@ -80,9 +80,7 @@ export function galleryPanel(e: Editor, sections: GallerySection[], links: MenuE
         onclick: () => { restore(); close(); apply(item); },
       });
       if (image) {
-        const el = pictureElement(imageUrl(image), w, hh, withItem(base, item));
-        el.style.position = "relative";
-        tile.append(el);
+        tile.append(previewElement(imageUrl(image), w, hh, withItem(base, item)));
       } else if (shape) {
         // A shape's tiles show a small rectangle-ish preview of its own geometry.
         const el = shapeElement(w * 0.75, hh * 0.75, withItem(base, item), shape);

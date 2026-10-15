@@ -26,7 +26,7 @@ export {
 export { AUTHOR_COLORS, HIGHLIGHT, MIN_ZOOM, MAX_ZOOM, imageUrl, storyIdOf, type TextMark } from "./view";
 export { countWords } from "./words";
 export { imageInfo, naturalSizePt, type ImageInfo } from "./images";
-export { effectExtent, pictureElement, plainPicture, type Fill, type LineEnd, type PictureFormat, type PictureShadow } from "./picture";
+export { effectExtent, pictureElement, plainPicture, previewElement, type Fill, type LineEnd, type PictureFormat, type PictureShadow } from "./picture";
 export { customGeometry, flattenPath, hasPreset, presetAdjust, presetGeometry, presetNames, type GeomHandle, type GeomPath, type Geometry } from "./geometry";
 export { SHAPE_NAMES, shadeColor, shadeLinear, shapeElement, shapeGeometry, shapeLook, shapeTextRect } from "./shape";
 export { fromHtml, toHtml } from "./html";

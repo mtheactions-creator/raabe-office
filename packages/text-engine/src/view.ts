@@ -45,7 +45,9 @@ export interface RenderOptions {
   readonly image?: {
     readonly page: number; readonly x: number; readonly y: number; readonly w: number; readonly h: number;
     /** Zuschneiden: the whole picture (page px) and its address, shown dimmed around the frame. */
-    readonly crop?: { readonly x: number; readonly y: number; readonly w: number; readonly h: number; readonly url: string };
+    readonly crop?: { readonly x: number; readonly y: number; readonly w: number; readonly h: number; readonly url: string;
+      /** The picture's turn and mirroring, which the dimmed whole follows. */
+      readonly rotation?: number; readonly flipH?: boolean; readonly flipV?: boolean };
     /** Pictures get the rotation handle and Word's layout options button. */
     readonly picture?: boolean;
     /** A shape whose text is being edited: its frame is dashed. */
@@ -662,6 +664,7 @@ export class View {
       (wm.kind === "text" && wm.diagonal ? "transform:rotate(-45deg);" : "");
     if (wm.kind === "picture") {
       const img = document.createElement("img");
+      img.draggable = false;
       img.src = imageUrl(wm.image);
       img.style.cssText = `width:100%;height:100%;${wm.washout ? "filter:brightness(1.55) contrast(0.32);" : ""}`;
       box.append(img);
@@ -819,13 +822,22 @@ export class View {
       handles.push(fr);
     }
     if (img && img.crop) {
-      // Zuschneiden: the whole picture dimmed, the frame with Word's black crop marks.
+      // Zuschneiden: the parts cut away dimmed around the frame (only outside it, so the picture
+      // inside keeps its colours and effects), turned and mirrored like the picture, and the
+      // frame with Word's black crop marks.
+      const c = img.crop;
+      const fx = img.x - c.x, fy = img.y - c.y;
+      const tf = [c.rotation ? `rotate(${c.rotation}deg)` : "", c.flipH ? "scaleX(-1)" : "", c.flipV ? "scaleY(-1)" : ""].filter(Boolean).join(" ");
+      const place = `position:absolute;left:${c.x}px;top:${c.y}px;width:${c.w}px;height:${c.h}px;max-width:none;` +
+        (tf ? `transform:${tf};transform-origin:${fx + img.w / 2}px ${fy + img.h / 2}px;` : "");
       const ghost = document.createElement("img");
-      ghost.src = img.crop.url;
-      ghost.style.cssText = `position:absolute;left:${img.crop.x}px;top:${img.crop.y}px;width:${img.crop.w}px;height:${img.crop.h}px;opacity:0.45;max-width:none`;
+      ghost.src = c.url;
+      ghost.draggable = false;
+      ghost.style.cssText = place + "opacity:0.45;pointer-events:none;" +
+        `clip-path:polygon(evenodd,0 0,100% 0,100% 100%,0 100%,0 0,${fx}px ${fy}px,${fx}px ${fy + img.h}px,${fx + img.w}px ${fy + img.h}px,${fx + img.w}px ${fy}px,${fx}px ${fy}px)`;
       handles.push(ghost);
       const outline = document.createElement("div");
-      outline.style.cssText = `position:absolute;left:${img.crop.x}px;top:${img.crop.y}px;width:${img.crop.w}px;height:${img.crop.h}px;box-sizing:border-box;border:1px solid #9e9e9e`;
+      outline.style.cssText = place + "box-sizing:border-box;border:1px solid #9e9e9e;pointer-events:none";
       handles.push(outline);
       const frame = document.createElement("div");
       frame.style.cssText = `position:absolute;left:${img.x}px;top:${img.y}px;width:${img.w}px;height:${img.h}px;box-sizing:border-box;border:1px solid #000`;
