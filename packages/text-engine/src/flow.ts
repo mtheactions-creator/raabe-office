@@ -974,6 +974,19 @@ class Flow {
       if (this.cur.w !== width) { width = this.cur.w; pl = this.lt.paragraph(para, this.env(i, width)); }
       gap = gapFor(pl);
     }
+    // An object placed below its paragraph that would reach past the bottom margin takes the
+    // paragraph to the next page, when it fits there (Word, measured with word-wrap.docx: the
+    // 110 pt picture of "Eng, freigestellt" near the end of page 2).
+    if (this.y > 0 && para.floats?.length) {
+      const top = this.cur.y + this.y + gap - pl.borderTop, bottom = this.cur.y + this.cur.h;
+      const over = para.floats.some((f) => !f.alt?.hidden && f.y.rel === "paragraph" && !f.y.align && f.wrap !== "front" && f.wrap !== "behind" && f.wrap !== "none"
+        && top + (f.y.offset + f.height) * PT > bottom + 0.5 && (f.y.offset + f.height) * PT <= this.cur.h);
+      if (over) {
+        this.nextColumn(si);
+        if (this.cur.w !== width) { width = this.cur.w; pl = this.lt.paragraph(para, this.env(i, width)); }
+        gap = gapFor(pl);
+      }
+    }
     // Pictures anchored here, and pictures already on the page, wrap the text.
     const textTop = this.cur.y + this.y + gap;
     if (para.floats?.length) this.placeFloats(this.page, "main", i, para.floats, textTop - pl.borderTop, this.cur, true);

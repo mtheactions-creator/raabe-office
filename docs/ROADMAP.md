@@ -11,7 +11,7 @@ owner's explicit go-ahead.
 | 3 | RaabeWrite documents: lists, tables, images, header/footer, page numbers, page setup, spell check, find/replace, print, PDF | done 2026-10-13 ([report](reports/2026-10-13-step3-documents.md)): layout identical to Word in ten test documents (632/632 lines), text rendering like Word (F6), smoke tests 28/28 and 41/41 |
 | 4 | RaabeWrite school features: footnotes, table of contents, comments, track changes, formula editor, Raabeschule templates | done 2026-10-13 ([report](reports/2026-10-13-step4-school.md)): Word updates our tables of contents to the same page numbers, layout identical to Word in eleven documents (682/682 lines), smoke tests 43/43, 28/28, 41/41 |
 | 4b | Word parity for RaabeWrite (D-038): feel basics and audit tools, tables/lists/clipboard, pictures and shapes, own formula editor, all remaining non-deferred ribbon commands, French and Spanish, own grammar checker | done 2026-10-15 ([report](reports/2026-10-15-step4b-word-parity.md)): every non-deferred ribbon command works; 960/965 line starts in 19 Word-built documents, behaviour catalogue 192/193 (the 193rd a Word glitch), formula editor 114/114, grammar in four languages finding more school errors than Word with fewer false alarms, smoke tests 41/41, 28/28, 43/43, 25/25 |
-| 4c | Polish for RaabeWrite (D-053): the owner's list after trying Step 4b (pictures, formulas, tables, cursors, Formatvorlagen) and an audit of the whole app for the same kinds of difference | in progress since 2026-10-15 (go given): A done |
+| 4c | Polish for RaabeWrite (D-053): the owner's list after trying Step 4b (pictures, formulas, tables, cursors, Formatvorlagen) and an audit of the whole app for the same kinds of difference | done 2026-10-15 ([report](reports/2026-10-15-step4c-polish.md)): the owner's list and an audit of the whole app (tooltips, labels, menus and context menus against Word, Livevorschau, double-clicks, panes, clipboard); 1216/1221 line starts in 22 Word-built documents, behaviour catalogue 202/203 (the 203rd a Word glitch), formula editor 146/146, smoke tests 41/41, 28/28, 43/43, 25/25 |
 | 5 | Pilot: one class uses RaabeWrite in lessons; fix what real use reveals | |
 | 6 | iPad build of RaabeWrite (touch polish, Files app integration, distribution) | |
 | 7 | RaabeCalc | |
@@ -46,10 +46,13 @@ the full Rahmen group with Rahmen übertragen and Rahmenpipette, Word's 105 tabl
 previews and Livevorschau, floating tables (word-table-float.docx 100 %) with dragging and our
 layout handle. E done 2026-10-15 (D-057): selection visible over every background, sharp
 pointers, Livevorschau in the Formatvorlagen gallery, Formatvorlagen reset cleanly.
-F in progress (D-058): tooltips, labels, menus and context menus audited against Word, the
+F done 2026-10-15 (D-058): tooltips, labels, menus and context menus audited against Word, the
 Tabellenlayout tab and the list dialogs completed; Livevorschau in every gallery and palette
 Word has it in; Word's double-clicks and the table selection zones; Alternativtext as a pane;
-pictures and links through the clipboard with Word both ways.
+pictures and links through the clipboard with Word both ways; ten new behaviour cases.
+**Step 4c done 2026-10-15** ([report](reports/2026-10-15-step4c-polish.md)): F4b 1216/1221 line
+starts in 22 Word-built documents, behaviour catalogue 202/203, formula editor 146/146, smoke
+tests all passed.
 
 ## Step 4b: Word parity (plan)
 

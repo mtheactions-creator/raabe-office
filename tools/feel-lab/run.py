@@ -47,6 +47,8 @@ def with_targets(fn, fixture="short", quiet=False):
 
 
 def main(argv: list[str]) -> None:
+    # Reports contain any character (equations: U+FFFC); a redirected stdout is cp1252 otherwise.
+    sys.stdout.reconfigure(encoding="utf-8")
     test = argv[1] if len(argv) > 1 else "fidelity"
     if test == "fidelity":
         from feellab import fidelity

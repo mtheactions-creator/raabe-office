@@ -1040,3 +1040,14 @@ Every kind of difference found in A–E was looked for everywhere, by script whe
   way: WebView2's clipboard API does not return while the clipboard holds only pictures, which
   made Einfügen hang after copying a picture in Word; the app reads the clipboard natively and
   uses the browser's API only in the development page.
+- **Behaviour catalogue**: ten new cases (Strg+Umschalt+Eingabe in tables, Rücktaste and Entf on
+  a cell's content, double-clicks on words and in the margin, margin and triple clicks). They
+  found that Word keeps the paragraph mark at the end of a selection that is typed over
+  (intelligent paragraph selection: a paragraph selected by a margin double-click or a
+  triple-click, then typed over, stays a paragraph of its own), and that whole paragraphs typed
+  over take the formatting of the paragraph whose mark survives (the last one); both now as in
+  Word.
+- **Found by the wrap-up's layout run**: an object placed below its paragraph that would reach
+  past the bottom margin takes the paragraph to the next page, when it fits there (Word, with
+  word-wrap.docx: a 110 pt picture near the end of page 2 moved "Eng, freigestellt" to page 3);
+  objects in front of or behind the text and aligned ones are not moved.

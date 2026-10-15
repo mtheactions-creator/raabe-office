@@ -1,9 +1,9 @@
 {
  "meta": {
-  "date": "2026-10-15T03:59:36"
+  "date": "2026-10-15T18:16:01"
  },
  "results": {
-  "summary": "192/193",
+  "summary": "202/203",
   "by_area": {
    "typing": "42/42",
    "autolist": "21/21",
@@ -11,7 +11,8 @@
    "mouse": "11/12",
    "delete": "9/9",
    "lists": "21/21",
-   "tables": "17/17",
+   "tables": "22/22",
+   "selection": "5/5",
    "styles": "7/7",
    "breaks": "6/6",
    "format": "20/20",
@@ -2835,7 +2836,7 @@
      "ours": {
       "para": "",
       "offset": 0,
-      "selected": ""
+      "selected": "\r\r"
      }
     }
    },
@@ -2956,6 +2957,206 @@
       "para": "Z2S3",
       "offset": 0,
       "selected": "Z1S2\rZ1S3\rZ2S1\rZ2S2\r"
+     }
+    }
+   },
+   "table ctrl+shift+enter splits the table": {
+    "area": "tables",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "X",
+      "offset": 1,
+      "selected": ""
+     },
+     "ours": {
+      "para": "X",
+      "offset": 1,
+      "selected": ""
+     }
+    }
+   },
+   "table ctrl+shift+enter in first row": {
+    "area": "tables",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "X",
+      "offset": 1,
+      "selected": ""
+     },
+     "ours": {
+      "para": "X",
+      "offset": 1,
+      "selected": ""
+     }
+    }
+   },
+   "table backspace on cell content": {
+    "area": "tables",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "X",
+      "offset": 1,
+      "selected": ""
+     },
+     "ours": {
+      "para": "X",
+      "offset": 1,
+      "selected": ""
+     }
+    }
+   },
+   "table delete on cell content then type": {
+    "area": "tables",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Y",
+      "offset": 1,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Y",
+      "offset": 1,
+      "selected": ""
+     }
+    }
+   },
+   "table double-click word in cell": {
+    "area": "tables",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "W",
+      "offset": 1,
+      "selected": ""
+     },
+     "ours": {
+      "para": "W",
+      "offset": 1,
+      "selected": ""
+     }
+    }
+   },
+   "margin double-click selects paragraph": {
+    "area": "selection",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "X",
+      "offset": 1,
+      "selected": ""
+     },
+     "ours": {
+      "para": "X",
+      "offset": 1,
+      "selected": ""
+     }
+    }
+   },
+   "margin click selects line": {
+    "area": "selection",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "X",
+      "offset": 1,
+      "selected": ""
+     },
+     "ours": {
+      "para": "X",
+      "offset": 1,
+      "selected": ""
+     }
+    }
+   },
+   "margin triple-click selects all": {
+    "area": "selection",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "X",
+      "offset": 1,
+      "selected": ""
+     },
+     "ours": {
+      "para": "X",
+      "offset": 1,
+      "selected": ""
+     }
+    }
+   },
+   "double-click word then type": {
+    "area": "selection",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Saft aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 94,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Pflanzen nehmen über ihre Blätter Kohlenstoffdioxid aus der Luft auf und über die Wurzeln Saft aus dem Boden. Mit der Energie des Sonnenlichts stellen sie daraus Traubenzucker her.",
+      "offset": 94,
+      "selected": ""
+     }
+    }
+   },
+   "triple-click paragraph then type": {
+    "area": "selection",
+    "ok": true,
+    "doc_ok": true,
+    "caret_ok": true,
+    "sel_ok": true,
+    "diffs": [],
+    "caret": {
+     "word": {
+      "para": "Neu",
+      "offset": 3,
+      "selected": ""
+     },
+     "ours": {
+      "para": "Neu",
+      "offset": 3,
+      "selected": ""
      }
     }
    },

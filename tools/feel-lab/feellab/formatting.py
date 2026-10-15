@@ -216,6 +216,10 @@ def perform(t, steps: list, is_word: bool) -> None:
                     t.app.Selection.Style = t.doc.Styles(-2)
                 else:
                     t.wb(step[1])
+            elif step[1] == "Heading1":
+                # With a German keyboard Strg+Alt+1 is AltGr+1 and does nothing in Word either
+                # (behaviour catalogue); Word gets the style through COM, we through the command.
+                t.js("__app.run('style.h1')")
             else:
                 key, ctrl, shift, alt, vk = CMD[step[1]]
                 t.send_key(key, ctrl=ctrl, shift=shift, alt=alt, vk=vk)

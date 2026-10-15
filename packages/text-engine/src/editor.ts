@@ -1279,7 +1279,18 @@ export class Editor {
     if (this.inBlock()) return;
     const continuing = continueTyping && this.typing;
     if (!continuing) this.snapshot();
-    const [from, to] = this.range();
+    const [from, range1] = this.range();
+    let to = range1;
+    // Word's intelligent paragraph selection (measured with the catalogue): typing over a
+    // selection that ends with a paragraph mark keeps that mark, so the next paragraph stays
+    // apart; whole paragraphs typed over take the formatting of the last one (its mark stays).
+    const plain = text !== "\n" && !this.doc.paras[from.p].cell && !this.doc.paras[to.p]?.cell && !this.doc.settings.trackChanges;
+    const lastPara = to.o === 0 && to.p > from.p ? this.doc.paras[to.p - 1] : undefined;
+    if (plain && lastPara && !lastPara.cell) to = { p: to.p - 1, o: lastPara.text.length };
+    if (plain && from.o === 0 && to.p > from.p && !this.doc.paras[to.p].cell) {
+      const survivor = this.doc.paras[to.p].props;
+      this.doc.mapParas(from.p, from.p, () => survivor);
+    }
     let fmt = props ?? this.pending ?? (cmp(from, to) !== 0
       ? (from.o < this.doc.paras[from.p].text.length ? this.doc.charPropsAt(from) : typedProps(this.doc.paras[from.p], from.o))
       : typedProps(this.doc.paras[from.p], from.o));
