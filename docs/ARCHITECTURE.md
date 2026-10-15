@@ -26,7 +26,7 @@
 | File formats | Own OOXML reader/writer (zip + XML), in TypeScript | Full control over fidelity and preservation of unknown parts |
 | Spell check | Hunspell dictionaries (German, English US/GB, French, Spanish) checked in Rust (`spellbook`) | Offline, open licences, fast (D-031, D-049) |
 | Thesaurus, hyphenation | LibreOffice's open thesauri (Rust lookup) and Hyphen patterns (Liang's algorithm in the layout engine) | D-049, D-050 |
-| Grammar check | Own Rust engine running LanguageTool's open German rules on Naber's POS lexicon, plus own rules | D-040, D-051 |
+| Grammar check | Own Rust engine running LanguageTool's open German, English, French and Spanish rules on LanguageTool's POS lexicons, plus own rules per language | D-040, D-051, D-052 |
 | Formula editor | Own editor on the equation tree that is saved as OMML (Word's behaviour recorded from Word), MathML display in Cambria Math | D-036, D-039, D-047 |
 | Charts | Own renderer (shared by RaabeCalc and RaabePresent) | Must match Excel chart look |
 | Fonts | System fonts, metrics read from the font files (Rust fontdb + ttf-parser); Carlito/Caladea/Liberation as metric-compatible fallbacks | D-011, D-027 |

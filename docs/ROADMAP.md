@@ -55,7 +55,8 @@ automatisch erkennen, Word's dialog Sprache, Thesaurus pane and Synonyme, the Ed
 and the options Dokumentprüfung and Sprache done. Silbentrennung done (D-050: Word's breaks on 120
 of 125 measured lines). Our own grammar checker in Rust done for German
 (D-051: 63 of 96 school errors found where Word finds 46, false alarms on clean texts as low as
-Word's), switched on.
+Word's), then English, French and Spanish (D-052: every school error Word finds and more, fewer
+false alarms on Wikipedia than Word), all four switched on.
 
 Order: A, B, C, D, E, F. A comes first because its tools find the differences nobody has
 reported yet; the behaviour catalogue grows with each package. F is last and the largest

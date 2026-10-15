@@ -1,0 +1,46 @@
+# Typical errors of German-speaking pupils in French (written for RaabeWrite's grammar
+# measurement, D-040; no student texts). One sentence per line: the error type, a tab, the sentence.
+accord	Les enfant jouent dans le jardin.
+accord	Les filles est très belles.
+accord	Je mange des pommes rouge.
+accord	Ils mange une pizza.
+accord	Nous mange au restaurant.
+accord	Tu as raisons.
+accord	Elle sont parties hier.
+accord	Le maison est grande.
+accord	Une garçon arrive.
+accord	Ces livre est intéressant.
+accord	Mon sœur est malade.
+participe	Il a manger une pomme.
+participe	Je suis aller au cinéma.
+participe	Nous avons mangés une pizza.
+participe	Elle est partit très tôt.
+participe	Ils ont finit leurs devoirs.
+homophone	Ils on faim.
+homophone	On a pas le temps.
+homophone	Il et très grand.
+homophone	Je vais a Paris demain.
+homophone	Ou est la gare ?
+homophone	J'ai vu ces amis hier, ils vont bien.
+homophone	Elle a oublié son sac, ce sac est rouge.
+homophone	Ca va bien.
+article	Il a peur de les chiens.
+article	Nous allons à le cinéma.
+article	Je n'ai pas de le temps.
+article	Il y a beaucoup des gens.
+article	Je viens de la France et je parle le français.
+elision	Je pense que il vient demain.
+elision	Le enfant dort.
+elision	Je ai faim.
+subjonctif	Il faut que tu viens.
+subjonctif	Je veux que tu fais tes devoirs.
+conditionnel	Si j'aurais le temps, je viendrais.
+genre	C'est la livre de Pierre.
+genre	Le table est petite.
+negation	Je ne sais.
+negation	Il est pas là.
+verbe	Je suis d'accord avec toi et je suis allé.
+verbe	Hier, je vais au cinéma.
+double	Je je pense que oui.
+espace	C'est super!
+espace	Comment vas-tu?

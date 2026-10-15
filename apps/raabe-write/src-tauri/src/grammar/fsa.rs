@@ -147,11 +147,12 @@ impl Fsa {
         let Some(node) = self.walk(&key) else { return Vec::new() };
         let mut seqs = Vec::new();
         self.collect(node, &mut Vec::new(), &mut seqs, 0);
-        seqs.into_iter().filter_map(|s| {
-            let i = s.iter().position(|&b| b == sep)?;
-            let (enc, tag) = (&s[..i], &s[i + 1..]);
+        seqs.into_iter().map(|s| {
+            // English synthesis entries end after the encoded form (no tag, no second separator).
+            let i = s.iter().position(|&b| b == sep).unwrap_or(s.len());
+            let (enc, tag) = (&s[..i], s.get(i + 1..).unwrap_or(&[]));
             let lemma = decode_suffix(w, enc);
-            Some((String::from_utf8_lossy(&lemma).into_owned(), String::from_utf8_lossy(tag).into_owned()))
+            (String::from_utf8_lossy(&lemma).into_owned(), String::from_utf8_lossy(tag).into_owned())
         }).collect()
     }
 }

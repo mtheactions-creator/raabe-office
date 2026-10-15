@@ -1,0 +1,1039 @@
+{
+ "date": "2026-10-15",
+ "language": "es",
+ "corpora": {
+  "school errors": {
+   "items": 28,
+   "ours": 24,
+   "word": null,
+   "both": null,
+   "our rules": [
+    [
+     "RAABE_ES_DET_NOMBRE",
+     6
+    ],
+    [
+     "RAABE_ES_SER_ESTAR",
+     2
+    ],
+    [
+     "CONTRACCIONES[0]",
+     2
+    ],
+    [
+     "RAABE_ES_APERTURA",
+     2
+    ],
+    [
+     "AGREEMENT_PRONOUNSUBJECT_VERB[0]",
+     1
+    ],
+    [
+     "AGREEMENT_PRONOUNSUBJECT_VERB[1]",
+     1
+    ],
+    [
+     "AGREEMENT_PRONOUNSUBJECT_VERB[5]",
+     1
+    ],
+    [
+     "AGREEMENT_PRONOUNSUBJECT_VERB[2]",
+     1
+    ],
+    [
+     "AGREEMENT_SUBJECT_VERB_PL_SG[0]",
+     1
+    ],
+    [
+     "AGREEMENT_SER_ADJ_SG[0]",
+     1
+    ],
+    [
+     "AGREEMENT_PARTICIPLE_NOUN[0]",
+     1
+    ],
+    [
+     "AGREEMENT_GUSTAR[0]",
+     1
+    ],
+    [
+     "HA_A[1]",
+     1
+    ],
+    [
+     "RAABE_ES_PARTICIPIO",
+     1
+    ],
+    [
+     "EL_TILDE[1]",
+     1
+    ],
+    [
+     "ESTA_TILDE[2]",
+     1
+    ],
+    [
+     "TU_TILDE[4]",
+     1
+    ],
+    [
+     "QUE_TILDE2[3]",
+     1
+    ],
+    [
+     "RAABE_ES_ESPACIO",
+     1
+    ]
+   ],
+   "by kind": {
+    "concordancia": {
+     "of": 11,
+     "ours": 11,
+     "word": null
+    },
+    "ser-estar": {
+     "of": 3,
+     "ours": 3,
+     "word": null
+    },
+    "verbo": {
+     "of": 4,
+     "ours": 2,
+     "word": null
+    },
+    "articulo": {
+     "of": 2,
+     "ours": 2,
+     "word": null
+    },
+    "acento": {
+     "of": 3,
+     "ours": 3,
+     "word": null
+    },
+    "signos": {
+     "of": 2,
+     "ours": 2,
+     "word": null
+    },
+    "doble": {
+     "of": 2,
+     "ours": 0,
+     "word": null
+    },
+    "espacio": {
+     "of": 1,
+     "ours": 1,
+     "word": null
+    }
+   },
+   "missed by us": [
+    "Ayer yo voy al cine.",
+    "Yo sabo la respuesta.",
+    "Yo yo creo que sí.",
+    "Vamos a la la playa."
+   ],
+   "word found, we did not": []
+  },
+  "LT incorrect examples": {
+   "items": 400,
+   "ours": 383,
+   "word": null,
+   "both": null,
+   "our rules": [
+    [
+     "EL_TILDE[1]",
+     10
+    ],
+    [
+     "QUE_TILDE2[7]",
+     9
+    ],
+    [
+     "ESTA_TILDE[7]",
+     7
+    ],
+    [
+     "ESTA_TILDE[6]",
+     7
+    ],
+    [
+     "AUN2[2]",
+     6
+    ],
+    [
+     "HABER_GERUNDIO[1]",
+     5
+    ],
+    [
+     "SE[11]",
+     5
+    ],
+    [
+     "ESTA_TILDE[2]",
+     5
+    ],
+    [
+     "ESTA_TILDE[22]",
+     5
+    ],
+    [
+     "PREP_VERB[18]",
+     5
+    ],
+    [
+     "ESTA_TILDE[5]",
+     4
+    ],
+    [
+     "QUE_TILDE2[9]",
+     4
+    ],
+    [
+     "QUE_TILDE2[25]",
+     4
+    ],
+    [
+     "DIACRITICS_OTHERS[24]",
+     4
+    ],
+    [
+     "ANO[0]",
+     4
+    ],
+    [
+     "MI_TILDE[0]",
+     4
+    ],
+    [
+     "DIACRITICS_OTHERS[0]",
+     3
+    ],
+    [
+     "DIACRITICS_OTHERS[2]",
+     3
+    ],
+    [
+     "QUE_TILDE1[4]",
+     3
+    ],
+    [
+     "ID_HUBO_HUBIERON",
+     3
+    ],
+    [
+     "PERSONAJES_FAMOSOS[15]",
+     3
+    ],
+    [
+     "VES_VEZ[0]",
+     3
+    ],
+    [
+     "VOSEO[1]",
+     3
+    ],
+    [
+     "HACIA_TILDE[9]",
+     3
+    ],
+    [
+     "ANO[6]",
+     3
+    ],
+    [
+     "QUE_TILDE2[6]",
+     2
+    ],
+    [
+     "AMPLIA[1]",
+     2
+    ],
+    [
+     "QUE_TILDE2[8]",
+     2
+    ],
+    [
+     "AGREEMENT_SUBJECT_VERB_PL_SG[0]",
+     2
+    ],
+    [
+     "EL_NO_TILDE[1]",
+     2
+    ],
+    [
+     "AUN[8]",
+     2
+    ],
+    [
+     "AGRREMENT_NUMBER[1]",
+     2
+    ],
+    [
+     "NOUN_PLURAL2[0]",
+     2
+    ],
+    [
+     "VOY_INF",
+     2
+    ],
+    [
+     "ESTAS_TILDE[4]",
+     2
+    ],
+    [
+     "CONTINUA[2]",
+     2
+    ],
+    [
+     "A_VER_HABER[1]",
+     2
+    ],
+    [
+     "ESTA_TILDE[8]",
+     2
+    ],
+    [
+     "PODER_HABER[0]",
+     2
+    ],
+    [
+     "RAABE_ES_APERTURA",
+     2
+    ]
+   ]
+  },
+  "Wikipedia": {
+   "items": 500,
+   "ours": 58,
+   "word": null,
+   "both": null,
+   "our rules": [
+    [
+     "DOBLE_ESPACIO",
+     10
+    ],
+    [
+     "RAABE_ES_ESPACIO",
+     4
+    ],
+    [
+     "COMA_SUJETO_PREDICADO[0]",
+     3
+    ],
+    [
+     "SOLO",
+     3
+    ],
+    [
+     "RAABE_ES_DET_NOMBRE",
+     3
+    ],
+    [
+     "INCORRECT_SPACES[0]",
+     3
+    ],
+    [
+     "QUE_TILDE2[4]",
+     2
+    ],
+    [
+     "ESTE_ESE_AQUEL_NOTILDE",
+     2
+    ],
+    [
+     "NO_SEPARADO[49]",
+     2
+    ],
+    [
+     "Y_E_O_U[2]",
+     2
+    ],
+    [
+     "NO_SEPARADO[66]",
+     2
+    ],
+    [
+     "RAABE_ES_APERTURA",
+     2
+    ],
+    [
+     "PUNTO_EN_ABREVIATURAS[1]",
+     2
+    ],
+    [
+     "EL_TILDE[1]",
+     2
+    ],
+    [
+     "PREP_VERB[18]",
+     2
+    ],
+    [
+     "COMMA_SINO[0]",
+     1
+    ],
+    [
+     "RIO[1]",
+     1
+    ],
+    [
+     "RIO[2]",
+     1
+    ],
+    [
+     "QUE_TILDE2[5]",
+     1
+    ],
+    [
+     "Y_E_O_U[3]",
+     1
+    ],
+    [
+     "AGREEMENT_SER_ADJ_SG[0]",
+     1
+    ],
+    [
+     "ESTA_TILDE[21]",
+     1
+    ],
+    [
+     "COMA_SUJETO_PREDICADO[4]",
+     1
+    ],
+    [
+     "LO_LOS[2]",
+     1
+    ],
+    [
+     "PARIS[0]",
+     1
+    ],
+    [
+     "AGREEMENT_ADJ_NOUN[6]",
+     1
+    ],
+    [
+     "COMMA_SINO2[1]",
+     1
+    ],
+    [
+     "NO_SEPARADO[3]",
+     1
+    ],
+    [
+     "EN_BASE_A[1]",
+     1
+    ],
+    [
+     "COMMA_SINO2[0]",
+     1
+    ],
+    [
+     "NOUN_PLURAL2[2]",
+     1
+    ],
+    [
+     "APARTE",
+     1
+    ],
+    [
+     "ESPACIO_DESPUES_DE_PUNTO[0]",
+     1
+    ],
+    [
+     "YA_QUE",
+     1
+    ]
+   ],
+   "our false alarms": [
+    {
+     "rule": "DOBLE_ESPACIO",
+     "message": "Sobra un espacio."
+    },
+    {
+     "rule": "COMMA_SINO[0]",
+     "message": "En la mayoría de los casos la conjunción 'sino' va precedida de una coma."
+    },
+    {
+     "rule": "QUE_TILDE2[4]",
+     "message": "Como adjetivo exclamativo o interrogativo, se escribe con tilde."
+    },
+    {
+     "rule": "ESTE_ESE_AQUEL_NOTILDE",
+     "message": "La tilde es innecesaria según la norma actual. Se puede usar en caso de ambigüedad cuando es un pronombre."
+    },
+    {
+     "rule": "RIO[1]",
+     "message": "Si es un nombre, se escribe con tilde. Correcto si es del v. 'reír' en pasado (él se rio)."
+    },
+    {
+     "rule": "RIO[2]",
+     "message": "Si es un nombre, se escribe con tilde. Correcto si es del v. 'reír' en pasado (él rio)."
+    },
+    {
+     "rule": "NO_SEPARADO[49]",
+     "message": "Se escribe junto."
+    },
+    {
+     "rule": "RAABE_ES_ESPACIO",
+     "message": "Sobra un espacio antes de este signo."
+    },
+    {
+     "rule": "DOBLE_ESPACIO",
+     "message": "Sobra un espacio."
+    },
+    {
+     "rule": "DOBLE_ESPACIO",
+     "message": "Sobra un espacio."
+    },
+    {
+     "rule": "DOBLE_ESPACIO",
+     "message": "Sobra un espacio."
+    },
+    {
+     "rule": "DOBLE_ESPACIO",
+     "message": "Sobra un espacio."
+    },
+    {
+     "rule": "QUE_TILDE2[5]",
+     "message": "Como adjetivo exclamativo o interrogativo, se escribe con tilde."
+    },
+    {
+     "rule": "Y_E_O_U[2]",
+     "message": "Cuando precede a palabras que comienzan con diptongo, se usa la conjunción 'y', no 'e'."
+    },
+    {
+     "rule": "COMA_SUJETO_PREDICADO[0]",
+     "message": "Probablemente sobra la coma entre el sujeto y el predicado."
+    },
+    {
+     "rule": "SOLO",
+     "message": "La tilde es innecesaria según la norma actual. Con el sentido de \"solamente\" (adv.), cuando hay riesgo de ambigüedad con el adj. \"solo\", puede escribirse \"sólo\" (DRAE)."
+    },
+    {
+     "rule": "DOBLE_ESPACIO",
+     "message": "Sobra un espacio."
+    },
+    {
+     "rule": "RAABE_ES_ESPACIO",
+     "message": "Sobra un espacio antes de este signo."
+    },
+    {
+     "rule": "Y_E_O_U[3]",
+     "message": "Cuando precede a palabras que comienzan por 'o', la conjunción 'o' se transforma en 'u'."
+    },
+    {
+     "rule": "AGREEMENT_SER_ADJ_SG[0]",
+     "message": "Posible error de concordancia."
+    },
+    {
+     "rule": "RAABE_ES_DET_NOMBRE",
+     "message": "El determinante y el sustantivo no concuerdan en género."
+    },
+    {
+     "rule": "NO_SEPARADO[66]",
+     "message": "Probablemente se escribe junto."
+    },
+    {
+     "rule": "RAABE_ES_APERTURA",
+     "message": "Las preguntas empiezan con «¿»."
+    },
+    {
+     "rule": "ESTA_TILDE[21]",
+     "message": "Si es del verbo 'estar', se escribe con tilde."
+    },
+    {
+     "rule": "COMA_SUJETO_PREDICADO[4]",
+     "message": "Probablemente sobra la coma entre el sujeto y el predicado."
+    },
+    {
+     "rule": "DOBLE_ESPACIO",
+     "message": "Sobra un espacio."
+    },
+    {
+     "rule": "LO_LOS[2]",
+     "message": "Posible error de concordancia."
+    },
+    {
+     "rule": "COMA_SUJETO_PREDICADO[0]",
+     "message": "Probablemente sobra la coma entre el sujeto y el predicado."
+    },
+    {
+     "rule": "COMA_SUJETO_PREDICADO[0]",
+     "message": "Probablemente sobra la coma entre el sujeto y el predicado."
+    },
+    {
+     "rule": "INCORRECT_SPACES[0]",
+     "message": "Sobra un espacio."
+    },
+    {
+     "rule": "PUNTO_EN_ABREVIATURAS[1]",
+     "message": "Probablemente falta un punto después de la abreviatura."
+    },
+    {
+     "rule": "PARIS[0]",
+     "message": "¿Quería decir „París“ (ciudad) en vez de Paris (personaje)?"
+    },
+    {
+     "rule": "INCORRECT_SPACES[0]",
+     "message": "Sobra un espacio."
+    },
+    {
+     "rule": "DOBLE_ESPACIO",
+     "message": "Sobra un espacio."
+    },
+    {
+     "rule": "EL_TILDE[1]",
+     "message": "El pronombre personal „él“ lleva tilde."
+    },
+    {
+     "rule": "PUNTO_EN_ABREVIATURAS[1]",
+     "message": "Probablemente falta un punto después de la abreviatura."
+    },
+    {
+     "rule": "AGREEMENT_ADJ_NOUN[6]",
+     "message": "Posible error de concordancia."
+    },
+    {
+     "rule": "SOLO",
+     "message": "La tilde es innecesaria según la norma actual. Con el sentido de \"solamente\" (adv.), cuando hay riesgo de ambigüedad con el adj. \"solo\", puede escribirse \"sólo\" (DRAE)."
+    },
+    {
+     "rule": "SOLO",
+     "message": "La tilde es innecesaria según la norma actual. Con el sentido de \"solamente\" (adv.), cuando hay riesgo de ambigüedad con el adj. \"solo\", puede escribirse \"sólo\" (DRAE)."
+    },
+    {
+     "rule": "COMMA_SINO2[1]",
+     "message": "En la mayoría de los casos la conjunción 'sino' va precedida de una coma."
+    },
+    {
+     "rule": "NO_SEPARADO[3]",
+     "message": "Probablemente se escribe junto."
+    },
+    {
+     "rule": "ESTE_ESE_AQUEL_NOTILDE",
+     "message": "La tilde es innecesaria según la norma actual. Se puede usar en caso de ambigüedad cuando es un pronombre."
+    },
+    {
+     "rule": "PREP_VERB[18]",
+     "message": "Combinación imposible: preposición seguida de verbo conjugado."
+    },
+    {
+     "rule": "RAABE_ES_DET_NOMBRE",
+     "message": "El determinante y el sustantivo no concuerdan en número."
+    },
+    {
+     "rule": "EN_BASE_A[1]",
+     "message": "Es preferible usar otra expresión."
+    },
+    {
+     "rule": "COMMA_SINO2[0]",
+     "message": "En la mayoría de los casos la conjunción 'sino' va precedida de una coma."
+    },
+    {
+     "rule": "RAABE_ES_DET_NOMBRE",
+     "message": "El determinante y el sustantivo no concuerdan en número."
+    },
+    {
+     "rule": "DOBLE_ESPACIO",
+     "message": "Sobra un espacio."
+    },
+    {
+     "rule": "RAABE_ES_ESPACIO",
+     "message": "Sobra un espacio antes de este signo."
+    },
+    {
+     "rule": "PREP_VERB[18]",
+     "message": "Combinación imposible: preposición seguida de verbo conjugado."
+    },
+    {
+     "rule": "RAABE_ES_ESPACIO",
+     "message": "Sobra un espacio antes de este signo."
+    },
+    {
+     "rule": "NO_SEPARADO[66]",
+     "message": "Probablemente se escribe junto."
+    },
+    {
+     "rule": "NOUN_PLURAL2[2]",
+     "message": "En este contexto, probablemente es más adecuado el nombre en plural."
+    },
+    {
+     "rule": "QUE_TILDE2[4]",
+     "message": "Como adjetivo exclamativo o interrogativo, se escribe con tilde."
+    },
+    {
+     "rule": "INCORRECT_SPACES[0]",
+     "message": "Sobra un espacio."
+    },
+    {
+     "rule": "APARTE",
+     "message": "En la mayoría de los casos se escribe „aparte“. Solo se escribe separado si equivale a 'a una parte'."
+    },
+    {
+     "rule": "DOBLE_ESPACIO",
+     "message": "Sobra un espacio."
+    },
+    {
+     "rule": "Y_E_O_U[2]",
+     "message": "Cuando precede a palabras que comienzan con diptongo, se usa la conjunción 'y', no 'e'."
+    },
+    {
+     "rule": "EL_TILDE[1]",
+     "message": "El pronombre personal „él“ lleva tilde."
+    },
+    {
+     "rule": "ESPACIO_DESPUES_DE_PUNTO[0]",
+     "message": "Falta un espacio tras el punto."
+    },
+    {
+     "rule": "NO_SEPARADO[49]",
+     "message": "Se escribe junto."
+    },
+    {
+     "rule": "RAABE_ES_APERTURA",
+     "message": "Las preguntas empiezan con «¿»."
+    },
+    {
+     "rule": "YA_QUE",
+     "message": "Como locución causal, se escribe con coma."
+    }
+   ]
+  },
+  "LT correct examples": {
+   "items": 400,
+   "ours": 31,
+   "word": null,
+   "both": null,
+   "our rules": [
+    [
+     "RAABE_ES_DET_NOMBRE",
+     7
+    ],
+    [
+     "DECADAS_1920[0]",
+     3
+    ],
+    [
+     "HOLA_COMO_ESTAS[9]",
+     3
+    ],
+    [
+     "ESTAS_TILDE2[4]",
+     3
+    ],
+    [
+     "DIACRITICS_OTHERS[3]",
+     2
+    ],
+    [
+     "ESTE_TILDE[5]",
+     2
+    ],
+    [
+     "NO_SEPARADO[4]",
+     2
+    ],
+    [
+     "DECADAS_1920[1]",
+     2
+    ],
+    [
+     "QUE_TILDE2[5]",
+     2
+    ],
+    [
+     "PREP_VERB[18]",
+     2
+    ],
+    [
+     "QUE_TILDE2[4]",
+     2
+    ],
+    [
+     "ESTE_ESE_AQUEL_NOTILDE",
+     1
+    ],
+    [
+     "ABREVIATURA_NUMERO[5]",
+     1
+    ],
+    [
+     "TU_SIN_TILDE[0]",
+     1
+    ],
+    [
+     "TU_SIN_TILDE[1]",
+     1
+    ],
+    [
+     "EL_TILDE[1]",
+     1
+    ],
+    [
+     "TE_TILDE[3]",
+     1
+    ],
+    [
+     "ESPACIO_DESPUES_DE_PUNTO[4]",
+     1
+    ],
+    [
+     "MI_TILDE[0]",
+     1
+    ],
+    [
+     "PHRASE_REPETITION[0]",
+     1
+    ],
+    [
+     "EN_TORNO[0]",
+     1
+    ],
+    [
+     "SI_AFIRMACION[0]",
+     1
+    ],
+    [
+     "SUPER[5]",
+     1
+    ],
+    [
+     "NO_SEPARADO[56]",
+     1
+    ],
+    [
+     "SUPER[3]",
+     1
+    ],
+    [
+     "SUPER[4]",
+     1
+    ],
+    [
+     "ESTO_ESTE",
+     1
+    ],
+    [
+     "NO_SEPARADO[35]",
+     1
+    ],
+    [
+     "VOSEO[1]",
+     1
+    ],
+    [
+     "COMMA_SINO[0]",
+     1
+    ],
+    [
+     "COMMA_SINO2[0]",
+     1
+    ]
+   ],
+   "our false alarms": [
+    {
+     "rule": "RAABE_ES_DET_NOMBRE",
+     "message": "El determinante y el sustantivo no concuerdan en género."
+    },
+    {
+     "rule": "RAABE_ES_DET_NOMBRE",
+     "message": "El determinante y el sustantivo no concuerdan en género."
+    },
+    {
+     "rule": "RAABE_ES_DET_NOMBRE",
+     "message": "El determinante y el sustantivo no concuerdan en género."
+    },
+    {
+     "rule": "DIACRITICS_OTHERS[3]",
+     "message": "Si es del verbo 'estar', se escribe con tilde."
+    },
+    {
+     "rule": "ESTE_TILDE[5]",
+     "message": "Si es del verbo estar, se escribe „esté“."
+    },
+    {
+     "rule": "RAABE_ES_DET_NOMBRE",
+     "message": "El determinante y el sustantivo no concuerdan en número."
+    },
+    {
+     "rule": "NO_SEPARADO[4]",
+     "message": "Probablemente se escribe junto."
+    },
+    {
+     "rule": "ESTE_ESE_AQUEL_NOTILDE",
+     "message": "La tilde es innecesaria según la norma actual. Se puede usar en caso de ambigüedad cuando es un pronombre."
+    },
+    {
+     "rule": "ABREVIATURA_NUMERO[5]",
+     "message": "Abreviatura de 'número'."
+    },
+    {
+     "rule": "TU_SIN_TILDE[0]",
+     "message": "Si es un posesivo, se escribe sin tilde."
+    },
+    {
+     "rule": "TU_SIN_TILDE[1]",
+     "message": "Si es un posesivo, se escribe sin tilde."
+    },
+    {
+     "rule": "RAABE_ES_DET_NOMBRE",
+     "message": "El determinante y el sustantivo no concuerdan en género."
+    },
+    {
+     "rule": "RAABE_ES_DET_NOMBRE",
+     "message": "El determinante y el sustantivo no concuerdan en género."
+    },
+    {
+     "rule": "RAABE_ES_DET_NOMBRE",
+     "message": "El determinante y el sustantivo no concuerdan en género."
+    },
+    {
+     "rule": "DIACRITICS_OTHERS[3]",
+     "message": "Si es del verbo 'estar', se escribe con tilde."
+    },
+    {
+     "rule": "ESTE_TILDE[5]",
+     "message": "Si es del verbo estar, se escribe „esté“."
+    },
+    {
+     "rule": "EL_TILDE[1]",
+     "message": "El pronombre personal „él“ lleva tilde."
+    },
+    {
+     "rule": "TE_TILDE[3]",
+     "message": "Si es un sustantivo (bebida), lleva tilde."
+    },
+    {
+     "rule": "DECADAS_1920[0]",
+     "message": "Las décadas se escriben sin 's'."
+    },
+    {
+     "rule": "DECADAS_1920[1]",
+     "message": "Las décadas se escriben sin 's'."
+    },
+    {
+     "rule": "QUE_TILDE2[5]",
+     "message": "Como adjetivo exclamativo o interrogativo, se escribe con tilde."
+    },
+    {
+     "rule": "DECADAS_1920[0]",
+     "message": "Las décadas se escriben sin 's'."
+    },
+    {
+     "rule": "DECADAS_1920[1]",
+     "message": "Las décadas se escriben sin 's'."
+    },
+    {
+     "rule": "ESPACIO_DESPUES_DE_PUNTO[4]",
+     "message": "Falta un espacio después del punto."
+    },
+    {
+     "rule": "MI_TILDE[0]",
+     "message": "Si es pronombre, se escribe con tilde."
+    },
+    {
+     "rule": "DECADAS_1920[0]",
+     "message": "Las décadas se escriben sin 's'."
+    },
+    {
+     "rule": "PHRASE_REPETITION[0]",
+     "message": "Frase duplicada."
+    },
+    {
+     "rule": "HOLA_COMO_ESTAS[9]",
+     "message": "Posible error ortográfico."
+    },
+    {
+     "rule": "ESTAS_TILDE2[4]",
+     "message": "Si es del verbo 'estar', se escribe con tilde."
+    },
+    {
+     "rule": "EN_TORNO[0]",
+     "message": "Con el sentido de 'alrededor de' se escribe separado."
+    },
+    {
+     "rule": "NO_SEPARADO[4]",
+     "message": "Probablemente se escribe junto."
+    },
+    {
+     "rule": "HOLA_COMO_ESTAS[9]",
+     "message": "Posible error ortográfico."
+    },
+    {
+     "rule": "ESTAS_TILDE2[4]",
+     "message": "Si es del verbo 'estar', se escribe con tilde."
+    },
+    {
+     "rule": "HOLA_COMO_ESTAS[9]",
+     "message": "Posible error ortográfico."
+    },
+    {
+     "rule": "ESTAS_TILDE2[4]",
+     "message": "Si es del verbo 'estar', se escribe con tilde."
+    },
+    {
+     "rule": "SI_AFIRMACION[0]",
+     "message": "Se escribe con tilde si es una afirmación. Correcto si es una frase condicional."
+    },
+    {
+     "rule": "SUPER[5]",
+     "message": "Como adjetivo, adverbio o sinónimo de 'supermercado', se escribe „súper“."
+    },
+    {
+     "rule": "NO_SEPARADO[56]",
+     "message": "Se escribe junto."
+    },
+    {
+     "rule": "SUPER[3]",
+     "message": "Como prefijo de un adjetivo, 'super-' se escribe junto, aunque la palabra resultante no esté en el diccionario."
+    },
+    {
+     "rule": "SUPER[4]",
+     "message": "Como prefijo, 'super-' se escribe junto, aunque la palabra resultante no esté en el diccionario."
+    },
+    {
+     "rule": "ESTO_ESTE",
+     "message": "¿Quería decir „este“?"
+    },
+    {
+     "rule": "NO_SEPARADO[35]",
+     "message": "Probablemente se escribe junto."
+    },
+    {
+     "rule": "VOSEO[1]",
+     "message": "Forma correcta si se usa voseo. Si no, utilice una forma alternativa."
+    },
+    {
+     "rule": "PREP_VERB[18]",
+     "message": "Combinación imposible: preposición seguida de verbo conjugado."
+    },
+    {
+     "rule": "QUE_TILDE2[5]",
+     "message": "Como adjetivo exclamativo o interrogativo, se escribe con tilde."
+    },
+    {
+     "rule": "PREP_VERB[18]",
+     "message": "Combinación imposible: preposición seguida de verbo conjugado."
+    },
+    {
+     "rule": "COMMA_SINO[0]",
+     "message": "En la mayoría de los casos la conjunción 'sino' va precedida de una coma."
+    },
+    {
+     "rule": "COMMA_SINO2[0]",
+     "message": "En la mayoría de los casos la conjunción 'sino' va precedida de una coma."
+    },
+    {
+     "rule": "QUE_TILDE2[4]",
+     "message": "Como adjetivo exclamativo o interrogativo, se escribe con tilde."
+    },
+    {
+     "rule": "QUE_TILDE2[4]",
+     "message": "Como adjetivo exclamativo o interrogativo, se escribe con tilde."
+    }
+   ]
+  }
+ }
+}

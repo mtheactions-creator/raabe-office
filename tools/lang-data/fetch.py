@@ -7,9 +7,9 @@ compact files the app ships). All files come from LibreOffice's dictionaries rep
 - Hyphenation patterns (Hyphen format): German (LGPL-2+, from TeX's dehyphn), English US and
   GB (BSD-style), French (LGPL-2.1+, from hyph-fr, MIT), Spanish (LGPL/GPL/MPL).
 
-For the grammar checker (D-040): LanguageTool's German rules (grammar.xml, disambiguation.xml
-and word lists, LGPL-2.1+) from its GitHub repository and Daniel Naber's German POS lexicon
-(german-pos-dict, CC-BY-SA-4.0) from Maven Central.
+For the grammar checker (D-040, D-051): LanguageTool's rules (grammar.xml, disambiguation.xml
+and word lists, LGPL-2.1+) from its GitHub repository and the POS lexicons from Maven Central
+(german-pos-dict by Daniel Naber, CC-BY-SA-4.0; english-, french- and spanish-pos-dict).
 
     python tools/lang-data/fetch.py
 """
@@ -37,8 +37,26 @@ LT_FILES = [
     "de/src/main/resources/org/languagetool/resource/de/removed.txt",
     "de/src/main/resources/org/languagetool/rules/de/replace.txt",
     "de/src/main/resources/org/languagetool/resource/de/case_rule_exceptions.txt",
+    "en/src/main/resources/org/languagetool/rules/en/grammar.xml",
+    "en/src/main/resources/org/languagetool/resource/en/disambiguation.xml",
+    "en/src/main/resources/org/languagetool/resource/en/added.txt",
+    "en/src/main/resources/org/languagetool/resource/en/removed.txt",
+    "fr/src/main/resources/org/languagetool/rules/fr/grammar.xml",
+    "fr/src/main/resources/org/languagetool/resource/fr/disambiguation.xml",
+    "fr/src/main/resources/org/languagetool/resource/fr/added.txt",
+    "fr/src/main/resources/org/languagetool/resource/fr/removed.txt",
+    "es/src/main/resources/org/languagetool/rules/es/grammar.xml",
+    "es/src/main/resources/org/languagetool/resource/es/disambiguation.xml",
+    "es/src/main/resources/org/languagetool/resource/es/added.txt",
+    "es/src/main/resources/org/languagetool/resource/es/removed.txt",
+    "es/src/main/resources/org/languagetool/resource/es/entities.ent",
 ]
-MAVEN = {"german-pos-dict-1.2.4.jar": "https://repo1.maven.org/maven2/de/danielnaber/german-pos-dict/1.2.4/german-pos-dict-1.2.4.jar"}
+MAVEN = {
+    "german-pos-dict-1.2.4.jar": "https://repo1.maven.org/maven2/de/danielnaber/german-pos-dict/1.2.4/german-pos-dict-1.2.4.jar",
+    "english-pos-dict-0.6.jar": "https://repo1.maven.org/maven2/org/languagetool/english-pos-dict/0.6/english-pos-dict-0.6.jar",
+    "french-pos-dict-0.7.jar": "https://repo1.maven.org/maven2/org/languagetool/french-pos-dict/0.7/french-pos-dict-0.7.jar",
+    "spanish-pos-dict-2.5.jar": "https://repo1.maven.org/maven2/org/softcatala/spanish-pos-dict/2.5/spanish-pos-dict-2.5.jar",
+}
 SRC = Path(__file__).parent / "src"
 
 

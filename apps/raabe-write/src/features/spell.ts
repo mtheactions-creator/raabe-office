@@ -199,6 +199,10 @@ export function spellFeature(api: AppApi) {
     e.extraMarks = (story, para) => marksFor(e, story, para);
   };
 
+  /** Whether a misspelled word overlaps a..b (grammar findings there give way, as in Word). */
+  const misspelledIn = (e: Editor, para: Para, a: number, b: number): boolean =>
+    words(e, para).some((w) => w.a < b && a < w.b && judge(w, false) === false && !ignoredOnce.get(para)?.has(w.a));
+
   const misspelled = (e: Editor, p: number, a: number): Word | null => {
     const para = e.doc.paras[p];
     for (const w of words(e, para)) if (a >= w.a && a < w.b && judge(w, false) === false && !ignoredOnce.get(para)?.has(w.a)) return w;
@@ -392,5 +396,5 @@ export function spellFeature(api: AppApi) {
   };
 
   return { attach, languageName, spellEntries, checkAll, issues, suggest, ignoreAll, ignoreOnce, addToDictionary, deleteRepeat, optionPages,
-    statusLanguage, options: () => options, languageDialog, langAt };
+    statusLanguage, options: () => options, languageDialog, langAt, misspelledIn };
 }

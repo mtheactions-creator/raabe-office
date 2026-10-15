@@ -1,0 +1,1640 @@
+{
+ "date": "2026-10-15",
+ "language": "fr",
+ "corpora": {
+  "school errors": {
+   "items": 44,
+   "ours": 35,
+   "word": 29,
+   "both": 29,
+   "our rules": [
+    [
+     "RAABE_FR_DET_NOM",
+     6
+    ],
+    [
+     "ELISION[1]",
+     3
+    ],
+    [
+     "AUX_AVOIR_VCONJ[0]",
+     2
+    ],
+    [
+     "AUX_AVOIR_VCONJ[1]",
+     2
+    ],
+    [
+     "RAABE_FR_PARTICIPE",
+     2
+    ],
+    [
+     "P_V_PAS[2]",
+     2
+    ],
+    [
+     "RAABE_FR_SUBJONCTIF",
+     2
+    ],
+    [
+     "RAABE_FR_ESPACE",
+     2
+    ],
+    [
+     "ACCORD_SUJET_VERBE[7]",
+     1
+    ],
+    [
+     "AGREEMENT_PARTICULAR[8]",
+     1
+    ],
+    [
+     "ACCORD_R_PERS_VERBE[19]",
+     1
+    ],
+    [
+     "ACCORD_R_PERS_VERBE[20]",
+     1
+    ],
+    [
+     "ACCORD_R_PERS_VERBE[12]",
+     1
+    ],
+    [
+     "ACCORD_R_PERS_VERBE[11]",
+     1
+    ],
+    [
+     "ACCORD_R_PERS_VERBE[54]",
+     1
+    ],
+    [
+     "ACCORD_R_PERS_VERBE[55]",
+     1
+    ],
+    [
+     "AUX_AVOIR[0]",
+     1
+    ],
+    [
+     "AUX_ETRE_VCONJ[0]",
+     1
+    ],
+    [
+     "AUX_ETRE_VCONJ[1]",
+     1
+    ],
+    [
+     "AUX_AVOIR_VCONJ[5]",
+     1
+    ],
+    [
+     "ON_ONT[3]",
+     1
+    ],
+    [
+     "ON_ONT[5]",
+     1
+    ],
+    [
+     "CONFUSION_EST_ET[0]",
+     1
+    ],
+    [
+     "A_ACCENT[26]",
+     1
+    ],
+    [
+     "OU[0]",
+     1
+    ],
+    [
+     "OU[9]",
+     1
+    ],
+    [
+     "RAABE_FR_CA",
+     1
+    ],
+    [
+     "DE_LE[1]",
+     1
+    ],
+    [
+     "A_LE[0]",
+     1
+    ],
+    [
+     "DE_LE[0]",
+     1
+    ],
+    [
+     "BEAUCOUP_DES[0]",
+     1
+    ],
+    [
+     "SI[0]",
+     1
+    ]
+   ],
+   "by kind": {
+    "accord": {
+     "of": 11,
+     "ours": 10,
+     "word": 10
+    },
+    "participe": {
+     "of": 5,
+     "ours": 5,
+     "word": 3
+    },
+    "homophone": {
+     "of": 8,
+     "ours": 6,
+     "word": 3
+    },
+    "article": {
+     "of": 5,
+     "ours": 4,
+     "word": 3
+    },
+    "elision": {
+     "of": 3,
+     "ours": 3,
+     "word": 3
+    },
+    "subjonctif": {
+     "of": 2,
+     "ours": 2,
+     "word": 2
+    },
+    "conditionnel": {
+     "of": 1,
+     "ours": 1,
+     "word": 1
+    },
+    "genre": {
+     "of": 2,
+     "ours": 1,
+     "word": 1
+    },
+    "negation": {
+     "of": 2,
+     "ours": 1,
+     "word": 1
+    },
+    "verbe": {
+     "of": 2,
+     "ours": 0,
+     "word": 0
+    },
+    "double": {
+     "of": 1,
+     "ours": 0,
+     "word": 0
+    },
+    "espace": {
+     "of": 2,
+     "ours": 2,
+     "word": 2
+    }
+   },
+   "missed by us": [
+    "Tu as raisons.",
+    "J'ai vu ces amis hier, ils vont bien.",
+    "Elle a oublié son sac, ce sac est rouge.",
+    "Je viens de la France et je parle le français.",
+    "C'est la livre de Pierre.",
+    "Je ne sais.",
+    "Je suis d'accord avec toi et je suis allé.",
+    "Hier, je vais au cinéma.",
+    "Je je pense que oui."
+   ],
+   "word found, we did not": []
+  },
+  "LT incorrect examples": {
+   "items": 400,
+   "ours": 387,
+   "word": 102,
+   "both": 99,
+   "our rules": [
+    [
+     "CONFUSION_E_ER[14]",
+     5
+    ],
+    [
+     "TOUT_TOUTE[14]",
+     3
+    ],
+    [
+     "ACCORD_R_PERS_VERBE[7]",
+     3
+    ],
+    [
+     "AUX_AVOIR_VCONJ[1]",
+     3
+    ],
+    [
+     "RAABE_FR_DET_NOM",
+     3
+    ],
+    [
+     "MOTS_INCOMP[68]",
+     3
+    ],
+    [
+     "CONFUSION_E_ER[2]",
+     3
+    ],
+    [
+     "PREFIXES_NON_SEPARES[6]",
+     3
+    ],
+    [
+     "COUR_COURS_COURT[3]",
+     2
+    ],
+    [
+     "A_A_ACCENT[6]",
+     2
+    ],
+    [
+     "SI[0]",
+     2
+    ],
+    [
+     "ACCORD_R_PERS_VERBE[9]",
+     2
+    ],
+    [
+     "P_V_PAS[29]",
+     2
+    ],
+    [
+     "P_V_PAS[8]",
+     2
+    ],
+    [
+     "TRAIT_UNION[37]",
+     2
+    ],
+    [
+     "PEUT_ETRE_VPPA_OU_ADJ[1]",
+     2
+    ],
+    [
+     "A_A_ACCENT2[5]",
+     2
+    ],
+    [
+     "RAABE_FR_ESPACE",
+     2
+    ],
+    [
+     "MOTS_INCOMP[86]",
+     2
+    ],
+    [
+     "ACCORD_V_QUESTION2[7]",
+     2
+    ],
+    [
+     "ACCORD_CHAQUE",
+     2
+    ],
+    [
+     "SUR_ACCENT[7]",
+     2
+    ],
+    [
+     "BARBARISME_TU[23]",
+     2
+    ],
+    [
+     "D_JSP_N[4]",
+     2
+    ],
+    [
+     "AUX_AVOIR[37]",
+     2
+    ],
+    [
+     "LUIS[0]",
+     2
+    ],
+    [
+     "ETRE_VPPA_OU_ADJ[1]",
+     2
+    ],
+    [
+     "ACCORD_SUJET_VERBE[7]",
+     2
+    ],
+    [
+     "ETRE_VPPA_OU_ADJ[8]",
+     2
+    ],
+    [
+     "D_N_E_OU_E[50]",
+     2
+    ],
+    [
+     "QUELLE_OU_QU_ELLE[4]",
+     2
+    ],
+    [
+     "BARBARISMES_COURANTS[1]",
+     2
+    ],
+    [
+     "ETRE_VPPA_OU_ADJ[7]",
+     2
+    ],
+    [
+     "ACCORD_COULEUR[6]",
+     2
+    ],
+    [
+     "ACCORD_R_PERS_VERBE[55]",
+     2
+    ],
+    [
+     "BAILLER_BAYER[8]",
+     2
+    ],
+    [
+     "DU_DU[6]",
+     2
+    ],
+    [
+     "ACCORD_LA_PLUPART[0]",
+     2
+    ],
+    [
+     "DES_DES_ACCENT[0]",
+     2
+    ],
+    [
+     "DES_DE[1]",
+     2
+    ]
+   ]
+  },
+  "Wikipedia": {
+   "items": 500,
+   "ours": 76,
+   "word": 112,
+   "both": 27,
+   "our rules": [
+    [
+     "RAABE_FR_ESPACE",
+     5
+    ],
+    [
+     "ENUMERATION_DET[6]",
+     4
+    ],
+    [
+     "MOIS[0]",
+     4
+    ],
+    [
+     "ELISION[1]",
+     4
+    ],
+    [
+     "QUI_VCONJ[4]",
+     3
+    ],
+    [
+     "PAS_DE_VIRGULE[34]",
+     3
+    ],
+    [
+     "A_A_ACCENT[0]",
+     2
+    ],
+    [
+     "WRONG_ABBREVIATION[1]",
+     2
+    ],
+    [
+     "PLACE_DE_LA_VIRGULE[16]",
+     2
+    ],
+    [
+     "AGREEMENT_PARTICULAR[8]",
+     2
+    ],
+    [
+     "TRANSITIF_ET_INTRANSITIF[2]",
+     2
+    ],
+    [
+     "VERBE_DET[2]",
+     2
+    ],
+    [
+     "DEBUTER_COMMENCER",
+     2
+    ],
+    [
+     "VIRGULE_DEBUT_DE_PHRASE[0]",
+     2
+    ],
+    [
+     "PLACE_ADJ[1]",
+     2
+    ],
+    [
+     "PAS_DE_VIRGULE[3]",
+     2
+    ],
+    [
+     "RAABE_FR_DET_NOM",
+     2
+    ],
+    [
+     "AGREEMENT_PARTICULAR[13]",
+     1
+    ],
+    [
+     "CONFUSION_IMPA_PSIM[6]",
+     1
+    ],
+    [
+     "AUX_AVOIR_VCONJ[1]",
+     1
+    ],
+    [
+     "AUXILIAIRE_MANQUANT[12]",
+     1
+    ],
+    [
+     "HEURES[1]",
+     1
+    ],
+    [
+     "QUASI_NOM",
+     1
+    ],
+    [
+     "COMMENT_VPPA[0]",
+     1
+    ],
+    [
+     "PAS_D_ELISION[11]",
+     1
+    ],
+    [
+     "CENT",
+     1
+    ],
+    [
+     "SONT_SON[0]",
+     1
+    ],
+    [
+     "ETRE_VPPA_OU_ADJ[12]",
+     1
+    ],
+    [
+     "QUELQUE_TRUC",
+     1
+    ],
+    [
+     "AUX_AVOIR[9]",
+     1
+    ],
+    [
+     "CONFUSION_E_ER[14]",
+     1
+    ],
+    [
+     "ETRE_VPPA_OU_ADJ[56]",
+     1
+    ],
+    [
+     "ACCORD_SUJET_VERBE[33]",
+     1
+    ],
+    [
+     "ACCORD_EXPRESSION_SANS_COMPLEMENT[0]",
+     1
+    ],
+    [
+     "AGREEMENT_PARTICULAR[4]",
+     1
+    ],
+    [
+     "AGREEMENT_PARTICULAR[5]",
+     1
+    ],
+    [
+     "VIRGULE_DEBUT_DE_PHRASE[2]",
+     1
+    ],
+    [
+     "ACCORD_SUJET_VERBE[46]",
+     1
+    ],
+    [
+     "VIRGULE_ET_CE[0]",
+     1
+    ],
+    [
+     "MOTS_INCOMP[53]",
+     1
+    ]
+   ],
+   "our false alarms": [
+    {
+     "rule": "AGREEMENT_PARTICULAR[13]",
+     "message": "Vérifiez la concordance de «VIe» avec les noms précédents."
+    },
+    {
+     "rule": "CONFUSION_IMPA_PSIM[6]",
+     "message": "Une autre préposition semble plus appropriée, car ce fait est passé."
+    },
+    {
+     "rule": "A_A_ACCENT[0]",
+     "message": "La préposition \"À\" placée en début de phrase possède un accent grave."
+    },
+    {
+     "rule": "AUX_AVOIR_VCONJ[1]",
+     "message": "Après l’auxiliaire « A », le verbe devrait être au participe passé. Quant à l’accord, celui-ci s’accorde avec le COD s’il est placé avant l’auxiliaire ; sinon il restera au masculin singulier."
+    },
+    {
+     "rule": "AUXILIAIRE_MANQUANT[12]",
+     "message": "Un verbe conjugué doit être inséré."
+    },
+    {
+     "rule": "HEURES[1]",
+     "message": "La lettre h doit être espacée dans les heures abrégées."
+    },
+    {
+     "rule": "QUASI_NOM",
+     "message": "Les deux mots formant ce nom sont unis par un trait d'union."
+    },
+    {
+     "rule": "COMMENT_VPPA[0]",
+     "message": "Le verbe \"alliés\" est généralement à l'infinitif après \"pour\"."
+    },
+    {
+     "rule": "PAS_D_ELISION[11]",
+     "message": "Cette élision peut sembler familière dans un contexte formel."
+    },
+    {
+     "rule": "CENT",
+     "message": "Le numéral cardinal cent prend un « s » au pluriel lorsqu’il représente des centaines entières."
+    },
+    {
+     "rule": "RAABE_FR_ESPACE",
+     "message": "En français, une espace (insécable) précède ce signe."
+    },
+    {
+     "rule": "SONT_SON[0]",
+     "message": "Le mot singulier \"Sévère\" n’est pas accordé en nombre avec le verbe \"sont\"."
+    },
+    {
+     "rule": "ETRE_VPPA_OU_ADJ[12]",
+     "message": "Le mot singulier « Sévère » n’est pas accordé en nombre avec le mot pluriel « nouveaux »."
+    },
+    {
+     "rule": "QUELQUE_TRUC",
+     "message": "Ce groupe nominal est pluriel."
+    },
+    {
+     "rule": "AUX_AVOIR[9]",
+     "message": "Le participe «  » devrait être au masculin singulier."
+    },
+    {
+     "rule": "QUI_VCONJ[4]",
+     "message": "Le verbe « essaient » devrait être à la 3ᵉ personne du singulier."
+    },
+    {
+     "rule": "CONFUSION_E_ER[14]",
+     "message": "Un participe passé semble plus probable."
+    },
+    {
+     "rule": "ETRE_VPPA_OU_ADJ[56]",
+     "message": "Vérifiez l'accord entre le sujet et le verbe."
+    },
+    {
+     "rule": "ACCORD_SUJET_VERBE[33]",
+     "message": "Un verbe conjugué semble plus approprié."
+    },
+    {
+     "rule": "ACCORD_EXPRESSION_SANS_COMPLEMENT[0]",
+     "message": "Une erreur d'accord semble être détectée, car \"résultats\" fait généralement référence à une unité au singulier."
+    },
+    {
+     "rule": "WRONG_ABBREVIATION[1]",
+     "message": "Un point est requis."
+    },
+    {
+     "rule": "AGREEMENT_PARTICULAR[4]",
+     "message": "L'accord est toujours pluriel."
+    },
+    {
+     "rule": "AGREEMENT_PARTICULAR[5]",
+     "message": "L'accord est toujours pluriel."
+    },
+    {
+     "rule": "WRONG_ABBREVIATION[1]",
+     "message": "Un point est requis."
+    },
+    {
+     "rule": "VIRGULE_DEBUT_DE_PHRASE[2]",
+     "message": "Une virgule semble être requise dans ce contexte."
+    },
+    {
+     "rule": "PLACE_DE_LA_VIRGULE[16]",
+     "message": "Des virgules semblent être requises dans ce contexte."
+    },
+    {
+     "rule": "ACCORD_SUJET_VERBE[46]",
+     "message": "Vérifiez la concordance entre les verbes."
+    },
+    {
+     "rule": "VIRGULE_ET_CE[0]",
+     "message": "Des virgules sont conseillées dans ce contexte."
+    },
+    {
+     "rule": "AGREEMENT_PARTICULAR[8]",
+     "message": "Vérifiez la concordance de «réflexe» avec les noms précédents."
+    },
+    {
+     "rule": "MOTS_INCOMP[53]",
+     "message": "Ces deux mots ne peuvent pas se côtoyer."
+    },
+    {
+     "rule": "SEMI",
+     "message": "« semi directes » est une erreur de typographie."
+    },
+    {
+     "rule": "ENUMERATION_DET[6]",
+     "message": "Un déterminant est nécessaire."
+    },
+    {
+     "rule": "MOTS_INCOMP[61]",
+     "message": "Un déterminant ou une virgule est conseillée devant ce nom."
+    },
+    {
+     "rule": "WRONG_ETRE_VPPA[2]",
+     "message": "L'auxiliaire \"avoir\" semble plus approprié."
+    },
+    {
+     "rule": "PAS_DE_VIRGULE[34]",
+     "message": "La virgule est omise ou une autre doit précéder ce mot."
+    },
+    {
+     "rule": "RAABE_FR_ESPACE",
+     "message": "En français, une espace (insécable) précède ce signe."
+    },
+    {
+     "rule": "ENUMERATION_DET[6]",
+     "message": "Un déterminant est nécessaire."
+    },
+    {
+     "rule": "MOIS[0]",
+     "message": "Les mois de l’année s'écrivent sans majuscule."
+    },
+    {
+     "rule": "TRANSITIF_ET_INTRANSITIF[2]",
+     "message": "La préposition doit être répétée."
+    },
+    {
+     "rule": "TRANSITIF_ET_INTRANSITIF[2]",
+     "message": "La préposition doit être répétée."
+    },
+    {
+     "rule": "POINT[5]",
+     "message": "Une espace est requise ou le point doit être supprimé."
+    },
+    {
+     "rule": "VERBE_DET[2]",
+     "message": "Un déterminant doit être ajouté."
+    },
+    {
+     "rule": "VERBE_DET[2]",
+     "message": "Un déterminant doit être ajouté."
+    },
+    {
+     "rule": "QUI_VCONJ[4]",
+     "message": "Le verbe « cherchent » devrait être à la 3ᵉ personne du singulier."
+    },
+    {
+     "rule": "AGREEMENT_PARTICULAR[15]",
+     "message": "Vérifiez la concordance de «IIIe» avec les noms précédents."
+    },
+    {
+     "rule": "DEBUTER_COMMENCER",
+     "message": "Le verbe \"commencer\" semble plus approprié, car le verbe \"débuter\" ne peut être suivi par un complément."
+    },
+    {
+     "rule": "VPPA_SUJET_INVERSE[4]",
+     "message": "Vérifiez l'accord du participe passé avec le sujet."
+    },
+    {
+     "rule": "PREP_PAYS[0]",
+     "message": "Une autre préposition semble plus appropriée."
+    },
+    {
+     "rule": "RAABE_FR_ESPACE",
+     "message": "En français, une espace (insécable) précède ce signe."
+    },
+    {
+     "rule": "PREP_PAYS[2]",
+     "message": "Une autre préposition semble plus appropriée."
+    },
+    {
+     "rule": "ENUMERATION_DET[6]",
+     "message": "Un déterminant est nécessaire."
+    },
+    {
+     "rule": "AIT_AIE_AIES_EST[9]",
+     "message": "Ce verbe ne se conjugue qu'avec l'auxiliaire avoir."
+    },
+    {
+     "rule": "AIT_AIE_AIES_EST[31]",
+     "message": "Un verbe conjugué à la troisième personne du singulier semble plus approprié."
+    },
+    {
+     "rule": "ACCORD_R_PERS_VERBE[52]",
+     "message": "Vérifiez l'accord avec le sujet."
+    },
+    {
+     "rule": "SUBJ_LOCU[10]",
+     "message": "Le verbe « ai » doit être au subjonctif après la locution « si tant est qu' »."
+    },
+    {
+     "rule": "MOIS[0]",
+     "message": "Les mois de l’année s'écrivent sans majuscule."
+    },
+    {
+     "rule": "MOIS[0]",
+     "message": "Les mois de l’année s'écrivent sans majuscule."
+    },
+    {
+     "rule": "PAS_DE_VIRGULE[38]",
+     "message": "La virgule est omise ou une autre doit précéder ce mot."
+    },
+    {
+     "rule": "AGREEMENT_PARTICULAR[8]",
+     "message": "Vérifiez la concordance de «politique» avec les noms précédents."
+    },
+    {
+     "rule": "QUI_VCONJ[4]",
+     "message": "Le verbe « remettent » devrait être à la 3ᵉ personne du singulier."
+    },
+    {
+     "rule": "A_ACCENT_A[8]",
+     "message": "Le verbe \"avoir\" semble plus approprié."
+    },
+    {
+     "rule": "RAABE_FR_ESPACE",
+     "message": "En français, une espace (insécable) précède ce signe."
+    },
+    {
+     "rule": "DEBUTER_COMMENCER",
+     "message": "Le verbe \"commencer\" semble plus approprié, car le verbe \"débuter\" ne peut être suivi par un complément."
+    },
+    {
+     "rule": "ELISION[1]",
+     "message": "« de Hubble » s’élide en „d'Hubble“."
+    },
+    {
+     "rule": "ELISION[1]",
+     "message": "« de Edward » s’élide en „d'Edward“."
+    },
+    {
+     "rule": "PAS_DE_VIRGULE[34]",
+     "message": "La virgule est omise ou une autre doit précéder ce mot."
+    },
+    {
+     "rule": "MOTS_INCOMP[93]",
+     "message": "Ces deux mots ne peuvent pas se côtoyer."
+    },
+    {
+     "rule": "PAS_DE_VIRGULE[45]",
+     "message": "La virgule est omise."
+    },
+    {
+     "rule": "MOIS[0]",
+     "message": "Les mois de l’année s'écrivent sans majuscule."
+    },
+    {
+     "rule": "RAABE_FR_ESPACE",
+     "message": "En français, une espace (insécable) précède ce signe."
+    },
+    {
+     "rule": "DU_DU[2]",
+     "message": "Le participe passé du verbe \"devoir\" comporte un accent circonflexe."
+    },
+    {
+     "rule": "DU_DU[6]",
+     "message": "Le participe passé du verbe \"devoir\" comporte un accent circonflexe."
+    },
+    {
+     "rule": "MOTS_INCOMP[68]",
+     "message": "Un adjectif ou une préposition semble plus approprié."
+    },
+    {
+     "rule": "VIRGULE_DEBUT_DE_PHRASE[0]",
+     "message": "Une virgule semble être requise dans ce contexte."
+    },
+    {
+     "rule": "ETRE_VPPA_OU_ADJ[49]",
+     "message": "Vérifiez l'accord entre le sujet et le participe passé."
+    },
+    {
+     "rule": "PLACE_ADJ[1]",
+     "message": "Cet adjectif précède généralement le nom."
+    },
+    {
+     "rule": "ACCORD_V_PPA[0]",
+     "message": "Vérifiez l'accord avec le sujet."
+    },
+    {
+     "rule": "MOT_TRAIT_MOT",
+     "message": "Le trait d'union doit être supprimé."
+    },
+    {
+     "rule": "ENUMERATION_DET[5]",
+     "message": "Un déterminant est nécessaire."
+    },
+    {
+     "rule": "ENUMERATION_DET[6]",
+     "message": "Un déterminant est nécessaire."
+    },
+    {
+     "rule": "DATE[12]",
+     "message": "Cette écriture de la date peut sembler familière dans un contexte formel."
+    },
+    {
+     "rule": "DATE[13]",
+     "message": "Cette écriture de la date peut sembler familière dans un contexte formel."
+    },
+    {
+     "rule": "ELISION[1]",
+     "message": "« de ABC » s’élide en „d'ABC“."
+    },
+    {
+     "rule": "PAS_DE_VIRGULE[2]",
+     "message": "La virgule doit être omise dans ce contexte."
+    },
+    {
+     "rule": "VIRGULE_ET_CE[2]",
+     "message": "Une virgule suivant cette expression est conseillée dans ce contexte."
+    },
+    {
+     "rule": "PLACE_DE_LA_VIRGULE[16]",
+     "message": "Des virgules semblent être requises dans ce contexte."
+    },
+    {
+     "rule": "COND_VS_FUTUR[5]",
+     "message": "L'imparfait semble plus adapté pour exprimer cette possibilité."
+    },
+    {
+     "rule": "A_ACCENT[30]",
+     "message": "Cette préposition comporte un accent."
+    },
+    {
+     "rule": "A_ACCENT[10]",
+     "message": "La préposition „à“ est attendue après cette conjonction."
+    },
+    {
+     "rule": "PAS_DE_VIRGULE[3]",
+     "message": "La virgule doit être omise dans ce contexte."
+    },
+    {
+     "rule": "ANNEE_AN[6]",
+     "message": "Dans cette phrase, il est plus approprié de dire „ans“."
+    },
+    {
+     "rule": "PLACE_ADJ[1]",
+     "message": "Cet adjectif précède généralement le nom."
+    },
+    {
+     "rule": "VIEUX[3]",
+     "message": "L'adjectif „nouvel“ s'écrit devant un nom masculin singulier commençant par une voyelle ou un h muet."
+    },
+    {
+     "rule": "RAABE_FR_DET_NOM",
+     "message": "Le déterminant et le nom ne s’accordent pas en genre."
+    },
+    {
+     "rule": "ELISION[1]",
+     "message": "« le Es » s’élide en „l'Es“."
+    },
+    {
+     "rule": "PAS_DE_VIRGULE[34]",
+     "message": "La virgule est omise ou une autre doit précéder ce mot."
+    },
+    {
+     "rule": "VIRGULE_DEBUT_DE_PHRASE[0]",
+     "message": "Une virgule semble être requise dans ce contexte."
+    },
+    {
+     "rule": "RAABE_FR_DET_NOM",
+     "message": "Le déterminant et le nom ne s’accordent pas en nombre."
+    },
+    {
+     "rule": "VIRGULE_DEBUT_DE_PHRASE[5]",
+     "message": "Une virgule semble être requise dans ce contexte."
+    },
+    {
+     "rule": "CEST_A_DIRE",
+     "message": "Faute de typographie."
+    },
+    {
+     "rule": "DOUBLES_ESPACES",
+     "message": "Il semblerait qu'une espace surnuméraire s'est glissée entre ces deux mots."
+    },
+    {
+     "rule": "PLACE_ADJ[10]",
+     "message": "Cet adjectif précède généralement le nom."
+    },
+    {
+     "rule": "IL_FAUT[11]",
+     "message": "Cette expression peut sembler familière dans un contexte formel."
+    },
+    {
+     "rule": "PAS_DE_VIRGULE[3]",
+     "message": "La virgule doit être omise dans ce contexte."
+    },
+    {
+     "rule": "CONFUSION_IMPA_PSIM[9]",
+     "message": "L'imparfait de description ou le passé simple d'action ponctuelle semblent plus appropriés pour évoquer un événement lointain."
+    },
+    {
+     "rule": "A_A_ACCENT[0]",
+     "message": "La préposition \"À\" placée en début de phrase possède un accent grave."
+    },
+    {
+     "rule": "ACCORD_SUJET_VERBE[49]",
+     "message": "Le verbe devrait être à la 3ᵉ personne du pluriel."
+    },
+    {
+     "rule": "ETRE_VPPA_OU_ADJ[7]",
+     "message": "Le mot pluriel « partielles » n’est pas accordé en nombre avec le mot singulier « connaissance »."
+    }
+   ]
+  },
+  "LT correct examples": {
+   "items": 400,
+   "ours": 79,
+   "word": 77,
+   "both": 32,
+   "our rules": [
+    [
+     "PLACE_DE_LA_VIRGULE[20]",
+     4
+    ],
+    [
+     "A_A_ACCENT[0]",
+     4
+    ],
+    [
+     "ON_ONT[29]",
+     3
+    ],
+    [
+     "AUX_AVOIR_VCONJ[1]",
+     3
+    ],
+    [
+     "RAABE_FR_ESPACE",
+     3
+    ],
+    [
+     "ELISION[1]",
+     3
+    ],
+    [
+     "AUX_AVOIR_VCONJ[0]",
+     2
+    ],
+    [
+     "A_ACCENT_A[8]",
+     2
+    ],
+    [
+     "IL_DEBUT_DE_PHRASE[1]",
+     2
+    ],
+    [
+     "AUX_AVOIR_VCONJ[2]",
+     2
+    ],
+    [
+     "A_ACCENT[65]",
+     2
+    ],
+    [
+     "TRAIT_UNION_INVERSION[0]",
+     2
+    ],
+    [
+     "SA_CA_SE[21]",
+     2
+    ],
+    [
+     "START_D_N[2]",
+     2
+    ],
+    [
+     "AGREEMENT_NUMERAL_PLURAL[0]",
+     2
+    ],
+    [
+     "VIRGULE_DEBUT_DE_PHRASE[5]",
+     2
+    ],
+    [
+     "A_A_ACCENT[42]",
+     2
+    ],
+    [
+     "TRAIT_UNION_INVERSION[5]",
+     2
+    ],
+    [
+     "P_V_PAS[10]",
+     1
+    ],
+    [
+     "P_V_PAS[33]",
+     1
+    ],
+    [
+     "ACCORD_R_PERS_VERBE[6]",
+     1
+    ],
+    [
+     "VOUS_NOUS_NON_VERBE[15]",
+     1
+    ],
+    [
+     "IL_FAUT[11]",
+     1
+    ],
+    [
+     "IL_FAUT[3]",
+     1
+    ],
+    [
+     "CONFUSION_EST_ET[7]",
+     1
+    ],
+    [
+     "A_A_ACCENT2[1]",
+     1
+    ],
+    [
+     "ETRE_VPPA_OU_ADJ[13]",
+     1
+    ],
+    [
+     "ETRE_VPPA_OU_ADJ[80]",
+     1
+    ],
+    [
+     "DANS_MAISON[4]",
+     1
+    ],
+    [
+     "ADMIN_PRESIDENT[2]",
+     1
+    ],
+    [
+     "PAS_D_ELISION[3]",
+     1
+    ],
+    [
+     "P_V_PAS[18]",
+     1
+    ],
+    [
+     "V_SUB_V_IND[1]",
+     1
+    ],
+    [
+     "V_SUB_V_IND[3]",
+     1
+    ],
+    [
+     "AIT_AIE_AIES_EST[19]",
+     1
+    ],
+    [
+     "V_SUB_V_IND[7]",
+     1
+    ],
+    [
+     "AUX_ETRE_VCONJ[0]",
+     1
+    ],
+    [
+     "P_V_PAS[15]",
+     1
+    ],
+    [
+     "NE_VERBE_RIEN[0]",
+     1
+    ],
+    [
+     "RAABE_FR_PARTICIPE",
+     1
+    ]
+   ],
+   "our false alarms": [
+    {
+     "rule": "P_V_PAS[10]",
+     "message": "Un adverbe de négation doit être ajouté afin d'obtenir une négation complète."
+    },
+    {
+     "rule": "P_V_PAS[33]",
+     "message": "Un adverbe de négation doit être ajouté afin d'obtenir une négation complète."
+    },
+    {
+     "rule": "ACCORD_R_PERS_VERBE[6]",
+     "message": "Vérifiez l’accord entre « personne » et le verbe « sont »."
+    },
+    {
+     "rule": "VOUS_NOUS_NON_VERBE[15]",
+     "message": "Un verbe conjugué semble plus approprié."
+    },
+    {
+     "rule": "IL_FAUT[11]",
+     "message": "Cette expression peut sembler familière dans un contexte formel."
+    },
+    {
+     "rule": "IL_FAUT[3]",
+     "message": "Cette expression peut sembler familière."
+    },
+    {
+     "rule": "CONFUSION_EST_ET[7]",
+     "message": "Le verbe \"être\" semble inapproprié et peut donc être remplacé par la conjonction „et“."
+    },
+    {
+     "rule": "A_A_ACCENT2[1]",
+     "message": "La préposition „à“ est généralement attendue après un verbe conjugué."
+    },
+    {
+     "rule": "ETRE_VPPA_OU_ADJ[13]",
+     "message": "Le mot singulier « considérée » n’est pas accordé en nombre avec le mot pluriel « hôtes »."
+    },
+    {
+     "rule": "ETRE_VPPA_OU_ADJ[80]",
+     "message": "Vérifiez l'accord entre le participe passé et le sujet."
+    },
+    {
+     "rule": "ON_ONT[29]",
+     "message": "Un verbe conjugué semble plus approprié."
+    },
+    {
+     "rule": "DANS_MAISON[4]",
+     "message": "Ce nom doit être précédé par un déterminant."
+    },
+    {
+     "rule": "ADMIN_PRESIDENT[2]",
+     "message": "Une autre expression semble plus appropriée."
+    },
+    {
+     "rule": "PLACE_DE_LA_VIRGULE[20]",
+     "message": "Une virgule semble être requise dans ce contexte."
+    },
+    {
+     "rule": "PLACE_DE_LA_VIRGULE[20]",
+     "message": "Une virgule semble être requise dans ce contexte."
+    },
+    {
+     "rule": "PAS_D_ELISION[3]",
+     "message": "Cette contraction peut être considérée familière."
+    },
+    {
+     "rule": "P_V_PAS[18]",
+     "message": "Un adverbe de négation doit être ajouté afin d'obtenir une négation complète."
+    },
+    {
+     "rule": "V_SUB_V_IND[1]",
+     "message": "L'indicatif semble plus approprié."
+    },
+    {
+     "rule": "V_SUB_V_IND[3]",
+     "message": "L'indicatif semble plus approprié."
+    },
+    {
+     "rule": "AIT_AIE_AIES_EST[19]",
+     "message": "Un auxiliaire à l'indicatif semble plus approprié."
+    },
+    {
+     "rule": "V_SUB_V_IND[7]",
+     "message": "L'indicatif semble plus approprié."
+    },
+    {
+     "rule": "AUX_ETRE_VCONJ[0]",
+     "message": "Après l’auxiliaire « est », le verbe devrait être au participe passé. Quant à l’accord, celui-ci s’accorde en genre et en nombre avec le sujet du verbe."
+    },
+    {
+     "rule": "P_V_PAS[15]",
+     "message": "Un adverbe de négation doit être ajouté afin d'obtenir une négation complète."
+    },
+    {
+     "rule": "NE_VERBE_RIEN[0]",
+     "message": "Un adverbe de négation doit être ajouté afin d'obtenir une négation complète."
+    },
+    {
+     "rule": "PLACE_DE_LA_VIRGULE[20]",
+     "message": "Une virgule semble être requise dans ce contexte."
+    },
+    {
+     "rule": "AUX_AVOIR_VCONJ[0]",
+     "message": "Après l’auxiliaire « a », le verbe devrait être au participe passé. Quant à l’accord, celui-ci s’accorde avec le COD s’il est placé avant l’auxiliaire ; sinon il restera au masculin singulier."
+    },
+    {
+     "rule": "AUX_AVOIR_VCONJ[1]",
+     "message": "Après l’auxiliaire « a », le verbe devrait être au participe passé. Quant à l’accord, celui-ci s’accorde avec le COD s’il est placé avant l’auxiliaire ; sinon il restera au masculin singulier."
+    },
+    {
+     "rule": "RAABE_FR_PARTICIPE",
+     "message": "Après « avoir » ou « être », le participe passé : « allé », « mangé »."
+    },
+    {
+     "rule": "SUR_ACCENT[7]",
+     "message": "Cet adverbe s'écrit avec un accent circonflexe."
+    },
+    {
+     "rule": "PLACE_DE_LA_VIRGULE[20]",
+     "message": "Une virgule semble être requise dans ce contexte."
+    },
+    {
+     "rule": "IMP_PRON[0]",
+     "message": "Un trait d'union est nécessaire entre le verbe et le pronom personnel \"vous\" à l'impératif."
+    },
+    {
+     "rule": "AGREEMENT_PARTICULAR[8]",
+     "message": "Vérifiez la concordance de «monétaire» avec les noms précédents."
+    },
+    {
+     "rule": "RAABE_FR_ESPACE",
+     "message": "En français, une espace (insécable) précède ce signe."
+    },
+    {
+     "rule": "A_ACCENT_A[8]",
+     "message": "Le verbe \"avoir\" semble plus approprié."
+    },
+    {
+     "rule": "MOTS_INCOMP[93]",
+     "message": "Ces deux mots ne peuvent pas se côtoyer."
+    },
+    {
+     "rule": "PREFIXES_NON_SEPARES[3]",
+     "message": "Le préfixe \"mini\" est généralement associé au terme qu'il précède."
+    },
+    {
+     "rule": "IL_DEBUT_DE_PHRASE[1]",
+     "message": "Ce verbe doit être précédé d'un sujet."
+    },
+    {
+     "rule": "P_V_PAS[21]",
+     "message": "Un adverbe de négation doit être ajouté afin d'obtenir une négation complète."
+    },
+    {
+     "rule": "AUX_AVOIR_VCONJ[2]",
+     "message": "Après l’auxiliaire « a », le verbe devrait être au participe passé. Quant à l’accord, celui-ci s’accorde avec le COD s’il est placé avant l’auxiliaire ; sinon il restera au masculin singulier."
+    },
+    {
+     "rule": "PRONSUJ_NONVERBE[36]",
+     "message": "Un verbe conjugué est attendu après le pronom personnel \"on\"."
+    },
+    {
+     "rule": "NE_IMP_PAS[2]",
+     "message": "Le verbe « troublent » devrait être à l’impératif."
+    },
+    {
+     "rule": "AUX_AVOIR_VCONJ[2]",
+     "message": "Après l’auxiliaire « a », le verbe devrait être au participe passé. Quant à l’accord, celui-ci s’accorde avec le COD s’il est placé avant l’auxiliaire ; sinon il restera au masculin singulier."
+    },
+    {
+     "rule": "REVENU",
+     "message": "Une erreur d'orthographe semble être détectée."
+    },
+    {
+     "rule": "GENE[0]",
+     "message": "Ce mot s'écrit avec un accent circonflexe."
+    },
+    {
+     "rule": "A_ACCENT[65]",
+     "message": "Cette préposition comporte un accent."
+    },
+    {
+     "rule": "TRAIT_UNION_INVERSION[0]",
+     "message": "Le t euphonique de liaison est généralement encadré par des traits d'union."
+    },
+    {
+     "rule": "A_A_ACCENT[0]",
+     "message": "La préposition \"À\" placée en début de phrase possède un accent grave."
+    },
+    {
+     "rule": "TRAIT_UNION_INVERSION[0]",
+     "message": "Le t euphonique de liaison est généralement encadré par des traits d'union."
+    },
+    {
+     "rule": "A_A_ACCENT2[5]",
+     "message": "Cette préposition comporte un accent."
+    },
+    {
+     "rule": "RAABE_FR_ESPACE",
+     "message": "En français, une espace (insécable) précède ce signe."
+    },
+    {
+     "rule": "ELISION[1]",
+     "message": "« se obedece » s’élide en „s'obedece“."
+    },
+    {
+     "rule": "IL_DEBUT_DE_PHRASE[1]",
+     "message": "Ce verbe doit être précédé d'un sujet."
+    },
+    {
+     "rule": "EST_CE[0]",
+     "message": "Le sujet est lié au verbe par un trait d'union dans une phrase interrogative."
+    },
+    {
+     "rule": "CE_SE[0]",
+     "message": "Le pronom réfléchi \"se\" est attendu devant le verbe pronominal \"abuser\"."
+    },
+    {
+     "rule": "IL_FAUT[1]",
+     "message": "Cette expression familière peut être considérée comme incorrecte dans le langage courant. Souhaitez-vous écrire „Il ne faut“ ?"
+    },
+    {
+     "rule": "SA_CA_SE[21]",
+     "message": "Le pronom démonstratif „ça“ s'écrit sans accent grave."
+    },
+    {
+     "rule": "A_ACCENT_A[6]",
+     "message": "Le verbe \"avoir\" semble plus approprié."
+    },
+    {
+     "rule": "SA_CA_SE[21]",
+     "message": "Le pronom démonstratif „ça“ s'écrit sans accent grave."
+    },
+    {
+     "rule": "A_ACCENT_A[8]",
+     "message": "Le verbe \"avoir\" semble plus approprié."
+    },
+    {
+     "rule": "CA_SA[0]",
+     "message": "Voulez-vous écrire „sa“ ?"
+    },
+    {
+     "rule": "RAPPELER_DE[0]",
+     "message": "\"Se rappeler\" est directement suivi par un complétement alors que \"se souvenir\" est suivi par la préposition \"de\"."
+    },
+    {
+     "rule": "WRONG_ETRE_VPPA[14]",
+     "message": "Un autre auxiliaire semble plus approprié, car ce verbe n'est pas suivi par un objet."
+    },
+    {
+     "rule": "START_D_N[2]",
+     "message": "Un déterminant est nécessaire, car une phrase ne peut pas commencer par un nom."
+    },
+    {
+     "rule": "CA_SA[1]",
+     "message": "Voulez-vous écrire „sa“ ?"
+    },
+    {
+     "rule": "QUASI_NOM",
+     "message": "Les deux mots formant ce nom sont unis par un trait d'union."
+    },
+    {
+     "rule": "A_A_ACCENT[0]",
+     "message": "La préposition \"À\" placée en début de phrase possède un accent grave."
+    },
+    {
+     "rule": "AUX_AVOIR_VCONJ[1]",
+     "message": "Après l’auxiliaire « A », le verbe devrait être au participe passé. Quant à l’accord, celui-ci s’accorde avec le COD s’il est placé avant l’auxiliaire ; sinon il restera au masculin singulier."
+    },
+    {
+     "rule": "PAS_DE_VIRGULE[38]",
+     "message": "La virgule est omise ou une autre doit précéder ce mot."
+    },
+    {
+     "rule": "NEGATION_QUE[3]",
+     "message": "L'adverbe \"ne\" doit être ajouté afin de former une négation complète."
+    },
+    {
+     "rule": "IL_Y_A[1]",
+     "message": "Cette expression est considérée comme familière."
+    },
+    {
+     "rule": "AGREEMENT_NUMERAL_SINGULAR",
+     "message": "\"1\" et \"Studios\" ne semblent pas bien accordés en nombre."
+    },
+    {
+     "rule": "A_A_ACCENT[0]",
+     "message": "La préposition \"À\" placée en début de phrase possède un accent grave."
+    },
+    {
+     "rule": "VOUS_EZ_OU_ER[3]",
+     "message": "Une erreur d'accord semble être détectée."
+    },
+    {
+     "rule": "ELISION[1]",
+     "message": "« de also » s’élide en „d'also“."
+    },
+    {
+     "rule": "POINT[16]",
+     "message": "Un point est requis pour indiquer la fin de cette phrase."
+    },
+    {
+     "rule": "AGREEMENT_NUMERAL_PLURAL[0]",
+     "message": "Vérifiez l'accord en nombre entre \"65262\" et \"visiteur\"."
+    },
+    {
+     "rule": "TRAIT_UNION_ESPACE[0]",
+     "message": "Une ou plusieurs espaces semblent être détectées dans cette expression interrogative."
+    },
+    {
+     "rule": "RAABE_FR_ESPACE",
+     "message": "En français, une espace (insécable) précède ce signe."
+    },
+    {
+     "rule": "START_D_N[2]",
+     "message": "Un déterminant est nécessaire, car une phrase ne peut pas commencer par un nom."
+    },
+    {
+     "rule": "A_A_ACCENT[0]",
+     "message": "La préposition \"À\" placée en début de phrase possède un accent grave."
+    },
+    {
+     "rule": "A_A_ACCENT[1]",
+     "message": "Dans l'expression suivante, la préposition \"a\" possède un accent grave."
+    },
+    {
+     "rule": "ACCORD_V_QUESTION2[6]",
+     "message": "Vérifiez l’accord entre le verbe \"A\" le pronom \"elles\"."
+    },
+    {
+     "rule": "AGREEMENT_NUMERAL_PLURAL[0]",
+     "message": "Vérifiez l'accord en nombre entre \"1566\" et \"émission\"."
+    },
+    {
+     "rule": "TRAIT_UNION[83]",
+     "message": "Ces deux noms doivent être reliés par un trait d'union."
+    },
+    {
+     "rule": "ACCORD_SUJET_VERBE[63]",
+     "message": "Le verbe devrait être à la 3ᵉ personne du pluriel."
+    },
+    {
+     "rule": "VOILA[1]",
+     "message": "Voulez-vous écrire „voilà“ ?"
+    },
+    {
+     "rule": "VIRGULE_DEBUT_DE_PHRASE[5]",
+     "message": "Une virgule semble être requise dans ce contexte."
+    },
+    {
+     "rule": "T_EUPHONIQUE[4]",
+     "message": "Si le verbe se termine par t ou d, la liaison se fait sans -t- euphonique."
+    },
+    {
+     "rule": "PRONSUJ_NONVERBE[89]",
+     "message": "Un verbe conjugué est attendu après le pronom personnel \"tu\"."
+    },
+    {
+     "rule": "TU_VERBE[9]",
+     "message": "Un verbe conjugué est attendu."
+    },
+    {
+     "rule": "NEGATION_PLUS[22]",
+     "message": "Un marqueur de négation ou un autre adverbe formel semble plus approprié."
+    },
+    {
+     "rule": "IL_DEBUT_DE_PHRASE[0]",
+     "message": "Ce verbe doit être précédé d'un sujet ou être à l'impératif."
+    },
+    {
+     "rule": "HEURES[1]",
+     "message": "La lettre h doit être espacée dans les heures abrégées."
+    },
+    {
+     "rule": "A_A_ACCENT[14]",
+     "message": "Dans cette expression, la préposition \"a\" possède un accent grave."
+    },
+    {
+     "rule": "A_A_ACCENT[42]",
+     "message": "La préposition „à“ est attendue."
+    },
+    {
+     "rule": "SUJET_AUXILIAIRE[9]",
+     "message": "Un verbe est nécessaire."
+    },
+    {
+     "rule": "P_V_PAS[3]",
+     "message": "Un adverbe de négation doit être ajouté afin d'obtenir une négation complète."
+    },
+    {
+     "rule": "ACCORD_R_PERS_VERBE[52]",
+     "message": "Vérifiez l'accord avec le sujet."
+    },
+    {
+     "rule": "COTE[0]",
+     "message": "Ce mot s'écrit avec un accent circonflexe."
+    },
+    {
+     "rule": "ON_ONT[29]",
+     "message": "Un verbe conjugué semble plus approprié."
+    },
+    {
+     "rule": "ON_ONT[29]",
+     "message": "Un verbe conjugué semble plus approprié."
+    },
+    {
+     "rule": "A_A_ACCENT[42]",
+     "message": "La préposition „à“ est attendue."
+    },
+    {
+     "rule": "A_ACCENT[28]",
+     "message": "Cette préposition comporte un accent."
+    },
+    {
+     "rule": "A_ACCENT[56]",
+     "message": "Cette préposition comporte un accent."
+    },
+    {
+     "rule": "A_ACCENT[65]",
+     "message": "Cette préposition comporte un accent."
+    },
+    {
+     "rule": "POINT[3]",
+     "message": "Un point est requis pour indiquer la fin de cette phrase."
+    },
+    {
+     "rule": "ACCORD_COULEUR[6]",
+     "message": "Quand la couleur est exprimée par un adjectif composé, il est invariable."
+    },
+    {
+     "rule": "ABSENCE_QUE[0]",
+     "message": "Une conjonction ou une virgule doit être ajoutée."
+    },
+    {
+     "rule": "WRONG_ABBREVIATION[1]",
+     "message": "Un point est requis."
+    },
+    {
+     "rule": "TRAIT_UNION_INVERSION[5]",
+     "message": "Le sujet est lié au verbe par un trait d'union dans une phrase interrogative."
+    },
+    {
+     "rule": "PLACE_DE_LA_VIRGULE[11]",
+     "message": "Une virgule est conseillée après le terme \"Soit\"."
+    },
+    {
+     "rule": "VIRGULE_DEBUT_DE_PHRASE[5]",
+     "message": "Une virgule semble être requise dans ce contexte."
+    },
+    {
+     "rule": "MOTS_INCOMP[81]",
+     "message": "Choisissez entre ces deux déterminants."
+    },
+    {
+     "rule": "TRAIT_UNION_INVERSION[5]",
+     "message": "Le sujet est lié au verbe par un trait d'union dans une phrase interrogative."
+    },
+    {
+     "rule": "NEGATION_PERSONNE[3]",
+     "message": "L'adverbe \"ne\" doit être ajouté afin de former une négation complète."
+    },
+    {
+     "rule": "APOS_M[8]",
+     "message": "Une apostrophe est nécessaire entre le pronom et le verbe \"apparait\"."
+    },
+    {
+     "rule": "LA_LA[1]",
+     "message": "L'adverbe de lieu et l'interjection „là“ s'écrivent avec un accent grave."
+    },
+    {
+     "rule": "LA_LA[7]",
+     "message": "L'adverbe de lieu et l'interjection „là“ s'écrivent avec un accent grave."
+    },
+    {
+     "rule": "AUX_AVOIR_VCONJ[0]",
+     "message": "Après l’auxiliaire « avoir », le verbe devrait être au participe passé. Quant à l’accord, celui-ci s’accorde avec le COD s’il est placé avant l’auxiliaire ; sinon il restera au masculin singulier."
+    },
+    {
+     "rule": "AUX_AVOIR_VCONJ[1]",
+     "message": "Après l’auxiliaire « avoir », le verbe devrait être au participe passé. Quant à l’accord, celui-ci s’accorde avec le COD s’il est placé avant l’auxiliaire ; sinon il restera au masculin singulier."
+    },
+    {
+     "rule": "ELISION[1]",
+     "message": "« de Infecté » s’élide en „d'Infecté“."
+    }
+   ]
+  }
+ }
+}

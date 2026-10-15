@@ -1,8 +1,8 @@
 // Grammatikprüfung while typing (Word's blue double underline) with RaabeWrite's own checker
 // (Rust, D-040, D-051): paragraphs are checked in the background, a moment after typing stops;
 // results are cached per paragraph text. The context menu offers the suggestions and Einmal
-// ignorieren; F7's Editor pane lists the findings with their explanation. German for now; other
-// languages are switched on once they measure well (D-040).
+// ignorieren; F7's Editor pane lists the findings with their explanation. German, English, French
+// and Spanish, each switched on once it measured well against Word (D-040, D-051).
 
 import type { Editor, Para, TextMark } from "@raabe/text-engine";
 import type { GrammarIssue, MenuEntry } from "@raabe/shell";
@@ -10,7 +10,7 @@ import type { AppApi } from "./api";
 import type { Issue, IssueSource } from "./editor-pane";
 
 /** The proofing languages the checker has rules for. */
-const LANGS = new Set(["de"]);
+const LANGS = new Set(["de", "en", "fr", "es"]);
 
 /** Word's names for the kinds of findings (LanguageTool's categories). */
 const TITLES: Record<string, string> = {
@@ -24,6 +24,7 @@ export const grammarKind = (category: string) => TITLES[category] ?? "Grammatik"
 
 interface Spell {
   langAt(e: Editor, p: Para, o: number): { lang: string; noProof: boolean };
+  misspelledIn(e: Editor, para: Para, a: number, b: number): boolean;
   options(): { grammarAsYouType: boolean };
 }
 
@@ -89,7 +90,7 @@ export function grammarFeature(api: AppApi, spell: Spell) {
     const lang = proofLang(e, para);
     if (!lang) return [];
     const hit = cache.get(keyOf(lang, para.text));
-    if (hit) return visible(para.text, hit);
+    if (hit) return visible(para.text, hit).filter((f) => !spell.misspelledIn(e, para, f.start, f.end));
     ask(lang, para.text);
     return undefined;
   };
@@ -136,6 +137,7 @@ export function grammarFeature(api: AppApi, spell: Spell) {
         const lang = proofLang(e, para);
         if (!lang) return;
         for (const f of visible(para.text, cache.get(keyOf(lang, para.text)) ?? [])) {
+          if (spell.misspelledIn(e, para, f.start, f.end)) continue;
           out.push({ p, a: f.start, b: f.end, kind: "grammar", text: para.text.slice(f.start, f.end), lang, title: "Grammatik",
             message: f.message, suggestions: f.suggestions, rule: f.rule });
         }

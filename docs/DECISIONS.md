@@ -788,3 +788,50 @@ Built as D-040 planned, in Rust (`src-tauri/src/grammar/`), compiled into the pr
   Zeichensetzung, Groß-/Kleinschreibung …), Grammatikfehler während der Eingabe markieren in
   the options. English, French and Spanish follow once their measurements are as good.
 
+### D-052 Grammar in English, French and Spanish: LanguageTool's rules, own rules, switched on
+The same engine (D-051) now runs LanguageTool's English, French and Spanish rules on
+LanguageTool's lexicons (english-pos-dict LGPL-2.1, french-pos-dict CC-BY-SA-4.0, Softcatalà's
+spanish-pos-dict LGPL-2.1, with LanguageTool's added/removed lists). What it took:
+- **Engine, closer to LanguageTool** (German results unchanged): contractions and elisions split
+  as LanguageTool's tokenizers do (do|n't, it|'s; l'|on, jusqu'|à, also where the lexicon has
+  the whole word); after a skip only the first token that matches is tried, as LanguageTool does
+  (otherwise "die Philosophen vor Sokrates, die …" agrees with Sokrates); `filterall` acts on the
+  marked tokens only; `<disambig postag>` keeps the lemma of the reading with that tag (does:
+  do, not doe); synthesis lexicons without a tag field (English); empty optional tokens no longer
+  leave double spaces in suggestions; zero-width spaces are invisible. Expressions that are only
+  lists of words are matched as word sets and identical expressions compiled once: loading
+  French went from 10.5 s to 1.6 s (German 0.75 s, English and Spanish under 1 s; each language
+  loads on first use).
+- **Own rules per language** (`en_rules.rs`, `fr_rules.rs`, `es_rules.rs`) for what
+  LanguageTool checks in Java or with its chunker, aimed at pupils' errors and as cautious as
+  the German ones: English subject and verb (he go, I has, we was, there is many, Do he …,
+  My brother like), the base form after do/can/to (didn't went, does he likes), more taller,
+  a/an by sound (an hour, a university, an X-ray), its/it's, your/you're, their/there, whose,
+  I am agree, look forward to see, much friends, borrow me, informations, go to home, spaces
+  before punctuation; French determiner–noun agreement (le maison, les enfant, mon sœur), the
+  subjunctive after il faut que/vouloir que/pour que/bien que (que tu viens → viennes), the
+  participle after avoir/être (je suis aller, il a manger), Ca → Ça, the space before !, ? and ";";
+  Spanish determiner–noun agreement (los niño, la problema, mi hermanos; el agua stays), ser for
+  a place (Madrid es en España → está), irregular participles (escribido → escrito), the
+  opening ¿ and ¡, spaces before punctuation. Suggestions come from the synthesis lexicons.
+- **Left out** where they fire on correct text because they need LanguageTool's chunker or are
+  style advice: en EN_QUOTES, EN_ELLIPSIS; fr dashes, unit spaces, 1990 spellings, ellipses,
+  the comma before "mais", NORD_SUD[9] (l'Est de la France), VIRG_NON_TROUVEE; es typographic
+  quotes, dashes, ellipses, commas before pero/sino que, AGREEMENT_NUMERAL_PLURAL[1],
+  AGREEMENT_ADJ_NOUN[4]/[5], DEMAS[0].
+- **Measured** as German (sentences; Word has no Spanish proofing tools on the development PC,
+  so Spanish has no Word column):
+  | Corpus | en ours | en Word | fr ours | fr Word | es ours |
+  |---|---|---|---|---|---|
+  | typical school errors (found) | 47 of 50 | 39 | 35 of 44 | 29 | 24 of 28 |
+  | 400 of LanguageTool's incorrect examples (found) | 393 | 92 | 387 | 102 | 383 |
+  | 500 Wikipedia paragraphs on school topics (flagged) | 17 | 130 | 76 | 112 | 58 |
+  | 400 of LanguageTool's correct examples (flagged) | 13 | 59 | 79 | 77 | 31 |
+  We find every school error Word finds in English and French and more besides; on clean text
+  we flag fewer paragraphs than Word. Spanish flags 12 % of the Wikipedia paragraphs, between
+  German (6 %) and French (15 %) and below Word's rate in the other three languages (10–26 %);
+  several of its findings there are real errors (un baraja, la conversiones). So all three are
+  switched on (D-040). LanguageTool's own example sentences, rule by rule: en 5124 of 5278
+  errors found, 13 of 3464 correct sentences flagged; fr 5503 of 5868, 33 of 4965; es 2183 of
+  2312, 50 of 2292 (de 6192 of 6323, 20 of 2960).
+

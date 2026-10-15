@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import gzip
 import json
+import re
 import sys
 import xml.etree.ElementTree as ET
 from collections import Counter
@@ -26,9 +27,23 @@ skipped: Counter = Counter()
 
 # Typographic advice (protected spaces in "z. B.", typographic apostrophes and ellipses) that
 # Word never gives and that fires on most correct texts (measured on Wikipedia, D-051).
-DISABLED = ("ABKUERZUNG_LEERZEICHEN", "AUSLASSUNGSPUNKTE", "AUSLASSUNGSPUNKTE_LEERZEICHEN", "TYPOGRAFISCHE_APOSTROPHE", "LEERZEICHEN_HINTER_DOPPELPUNKT",
-            # Years read as quantities ("1891 kam die Volksinitiative"): LanguageTool tells them apart in Java.
-            "VIELZAHL_PLUS_SINGULAR[2]")
+DISABLED_BY_LANG = {
+    "de": ("ABKUERZUNG_LEERZEICHEN", "AUSLASSUNGSPUNKTE", "AUSLASSUNGSPUNKTE_LEERZEICHEN", "TYPOGRAFISCHE_APOSTROPHE", "LEERZEICHEN_HINTER_DOPPELPUNKT",
+           # Years read as quantities ("1891 kam die Volksinitiative"): LanguageTool tells them apart in Java.
+           "VIELZAHL_PLUS_SINGULAR[2]"),
+    "en": ("EN_QUOTES", "EN_ELLIPSIS"),
+    # Dashes, protected spaces before units and the 1990 reform's spellings without hyphen are style.
+    "fr": ("TIRET", "ESPACE_UNITES", "PAS_DE_TRAIT_UNION", "POINTS_SUSPENSION", "POINTS_SUSPENSIONS_SPACE",
+           # A comma before "mais" is advice, not a rule; "l'Est de la France" is a region's name.
+           "PLACE_DE_LA_VIRGULE[5]", "NORD_SUD[9]",
+           # Needs LanguageTool's chunker: fires on most correct sentences with a long subject.
+           "VIRG_NON_TROUVEE"),
+    "es": ("COMILLAS_TIPOGRAFICAS", "GUION_LARGO", "PUNTOS_SUSPENSIVOS",
+           # Commas before "pero" and "sino que" are advice; the agreement rules below need
+           # LanguageTool's chunker ("dos o más palabras", "positivos o negativos", "los demás").
+           "COMMA_PERO", "COMMA_SINO[1]", "AGREEMENT_NUMERAL_PLURAL[1]", "AGREEMENT_ADJ_NOUN[4]", "AGREEMENT_ADJ_NOUN[5]", "DEMAS[0]"),
+}
+DISABLED: tuple = ()
 
 
 def yes(v: str | None) -> bool:
@@ -36,7 +51,12 @@ def yes(v: str | None) -> bool:
 
 
 def token_text(el: ET.Element) -> str:
-    return (el.text or "").strip()
+    """A token's text: before its exceptions or after them (<token><exception/>I</token>)."""
+    text = el.text or ""
+    for c in el:
+        if c.tag in ("exception", "match"):
+            text += c.tail or ""
+    return text.strip()
 
 
 def match_ref(el: ET.Element) -> dict:
@@ -180,12 +200,13 @@ def pattern(el: ET.Element) -> tuple[list, int, int, list] | None:
     return toks, a, b, groups
 
 
-def unification(lang: str) -> dict:
-    """The features unification compares (number, case, gender): their types as tag patterns."""
-    path = SRC / f"lt__{lang}__disambiguation.xml"
+def unification(lang: str, file: str = "disambiguation") -> dict:
+    """The features unification compares (number, case, gender): their types as tag patterns,
+    from grammar.xml or disambiguation.xml (each file defines its own)."""
+    path = SRC / f"lt__{lang}__{file}.xml"
     out: dict = {}
     if path.exists():
-        for u in ET.parse(path).getroot().findall("unification"):
+        for u in parse(path).findall("unification"):
             out[u.get("feature")] = [[e.get("type"), e.find("token").get("postag")] for e in u.findall("equivalence")]
     return out
 
@@ -268,18 +289,39 @@ def rule(el: ET.Element, group: ET.Element | None, cat: ET.Element, index: int) 
     return r, [{"rule": rid, **x} for x in examples]
 
 
+LEXICONS = {
+    # language: (jar, folder in the jar, file stem, output stem)
+    "de": ("german-pos-dict-1.2.4.jar", "org/languagetool/resource/de", "german", "german"),
+    "en": ("english-pos-dict-0.6.jar", "org/languagetool/resource/en", "english", "english"),
+    "fr": ("french-pos-dict-0.7.jar", "org/languagetool/resource/fr", "french", "french"),
+    "es": ("spanish-pos-dict-2.5.jar", "org/languagetool/resource/es", "es-ES", "spanish"),
+}
+
+
 def lexicon(lang: str) -> None:
-    """The POS lexicon (Morfologik automaton from german-pos-dict, CC-BY-SA-4.0) and
+    """The POS and synthesis lexicons (Morfologik automata: german-pos-dict CC-BY-SA-4.0,
+    english-pos-dict LGPL-2.1, french-pos-dict CC-BY-SA-4.0, spanish-pos-dict LGPL-2.1) and
     LanguageTool's additions and removals (LGPL-2.1+), as the Rust tagger reads them."""
     import zipfile
-    if lang != "de":
-        return
-    with zipfile.ZipFile(SRC / "german-pos-dict-1.2.4.jar") as z:
-        (OUT / "german.dict").write_bytes(z.read("org/languagetool/resource/de/german.dict"))
-        (OUT / "german_synth.dict").write_bytes(z.read("org/languagetool/resource/de/german_synth.dict"))
+    jar, folder, stem, out = LEXICONS[lang]
+    with zipfile.ZipFile(SRC / jar) as z:
+        (OUT / f"{out}.dict").write_bytes(z.read(f"{folder}/{stem}.dict"))
+        (OUT / f"{out}_synth.dict").write_bytes(z.read(f"{folder}/{stem}_synth.dict"))
     for name in ("added", "removed"):
-        data = (SRC / f"lt__de__{name}.txt").read_bytes()
-        (OUT / f"german-{name}.txt.gz").write_bytes(gzip.compress(data, 9, mtime=0))
+        src = SRC / f"lt__{lang}__{name}.txt"
+        data = src.read_bytes() if src.exists() else b""
+        (OUT / f"{out}-{name}.txt.gz").write_bytes(gzip.compress(data, 9, mtime=0))
+
+
+def parse(path: Path) -> ET.Element:
+    """Parses a LanguageTool XML file; an external entity file (Spanish: entities.ent) is inlined."""
+    text = path.read_text(encoding="utf-8")
+    m = re.search(r'<!ENTITY\s+%\s+(\w+)\s+SYSTEM\s+"([^"]+)"\s*>', text)
+    if m:
+        ent = SRC / f"{path.name.split('__')[0]}__{path.name.split('__')[1]}__{Path(m.group(2)).name}"
+        body = ent.read_text(encoding="utf-8") if ent.exists() else ""
+        text = text.replace(m.group(0), "").replace(f"%{m.group(1)};", body)
+    return ET.fromstring(text.encode("utf-8"))
 
 
 def disambiguation(lang: str) -> list[dict]:
@@ -288,7 +330,7 @@ def disambiguation(lang: str) -> list[dict]:
     path = SRC / f"lt__{lang}__disambiguation.xml"
     if not path.exists():
         return []
-    root = ET.parse(path).getroot()
+    root = parse(path)
     out = []
     items = []
     for el in root:
@@ -301,7 +343,7 @@ def disambiguation(lang: str) -> list[dict]:
         if d is None:
             continue
         action = d.get("action", "replace")
-        if action not in ("remove", "add", "filter", "replace", "immunize", "unify"):
+        if action not in ("remove", "add", "filter", "replace", "immunize", "unify", "filterall"):
             skipped["disambig " + action] += 1
             continue
         pat = r.find("pattern")
@@ -333,9 +375,11 @@ def disambiguation(lang: str) -> list[dict]:
 
 def main() -> None:
     lang = sys.argv[1] if len(sys.argv) > 1 else "de"
+    global DISABLED
+    DISABLED = DISABLED_BY_LANG.get(lang, ())
     OUT.mkdir(parents=True, exist_ok=True)
     lexicon(lang)
-    root = ET.parse(SRC / f"lt__{lang}__grammar.xml").getroot()
+    root = parse(SRC / f"lt__{lang}__grammar.xml")
     rules, examples = [], []
     for cat in root.iter("category"):
         if cat.get("default") == "off":
@@ -353,7 +397,9 @@ def main() -> None:
                     rules.append(x)
                     examples.extend(ex)
     disambig = disambiguation(lang)
-    data = json.dumps({"rules": rules, "disambig": disambig, "unification": unification(lang)}, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+    unify_rules = unification(lang, "grammar") or unification(lang)
+    data = json.dumps({"rules": rules, "disambig": disambig, "unification": unify_rules, "unification_disambig": unification(lang)},
+                      ensure_ascii=False, separators=(",", ":")).encode("utf-8")
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / f"grammar-{lang}.json.gz").write_bytes(gzip.compress(data, 9, mtime=0))
     WORK.mkdir(exist_ok=True)

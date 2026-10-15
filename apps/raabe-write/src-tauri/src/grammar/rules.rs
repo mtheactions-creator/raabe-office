@@ -151,6 +151,8 @@ pub struct RuleFile {
     pub disambig: Vec<DisambigJson>,
     #[serde(default)]
     pub unification: std::collections::HashMap<String, Vec<(String, String)>>,
+    #[serde(default)]
+    pub unification_disambig: std::collections::HashMap<String, Vec<(String, String)>>,
 }
 
 // ----- unification -----------------------------------------------------------------------------------
@@ -172,6 +174,10 @@ impl Unifier {
     /// For the readings of each token: whether it takes part in a unification over `wanted`
     /// features; None when the tokens do not unify.
     pub fn unify(&self, toks: &[&ATok], wanted: &[String]) -> Option<Vec<Vec<bool>>> {
+        // Features this file does not define cannot disagree.
+        if !wanted.is_empty() && wanted.iter().any(|w| !self.features.iter().any(|(f, _)| f == w)) || self.features.is_empty() {
+            return Some(toks.iter().map(|t| vec![true; t.readings.len()]).collect());
+        }
         let feats: Vec<&Vec<Regex>> = self.features.iter().filter(|(f, _)| wanted.is_empty() || wanted.contains(f)).map(|(_, t)| t).collect();
         if feats.is_empty() || toks.is_empty() {
             return None;
@@ -209,6 +215,54 @@ pub struct ATok {
 
 /// Java's regular expressions as fancy-regex reads them (anchored: the whole token must match).
 pub fn compile(re: &str, case_sensitive: bool) -> Option<Regex> {
+    // Rules share many expressions (the same lists of verbs); each is compiled once per load.
+    thread_local! {
+        static CACHE: std::cell::RefCell<std::collections::HashMap<(String, bool), Option<Regex>>> = std::cell::RefCell::new(std::collections::HashMap::new());
+    }
+    let key = (re.to_string(), case_sensitive);
+    if let Some(r) = CACHE.with(|c| c.borrow().get(&key).cloned()) {
+        return r;
+    }
+    let r = compile_new(re, case_sensitive);
+    CACHE.with(|c| c.borrow_mut().insert(key, r.clone()));
+    r
+}
+
+/// The words of an expression that is only a list of words ("aller|venir|partir", "(le|la)"),
+/// which a set matches much faster than a regular expression and builds in no time.
+fn word_list(re: &str) -> Option<Vec<String>> {
+    let mut body = re;
+    for (a, b) in [("(?:", ")"), ("(", ")")] {
+        if let Some(inner) = body.strip_prefix(a).and_then(|x| x.strip_suffix(b)) {
+            if !inner.contains(['(', ')']) {
+                body = inner;
+            }
+            break;
+        }
+    }
+    let mut out = Vec::new();
+    for alt in body.split('|') {
+        let mut w = String::new();
+        let mut chars = alt.chars();
+        while let Some(c) = chars.next() {
+            match c {
+                '\\' => match chars.next() {
+                    Some(e @ ('.' | '-' | '\'' | '/' | '&' | ',' | ' ')) => w.push(e),
+                    _ => return None,
+                },
+                c if c.is_alphanumeric() || matches!(c, '\'' | '\u{2019}' | '-' | '_' | ':' | ' ' | '&' | ',' | '/' | '%' | '\u{ad}') => w.push(c),
+                _ => return None,
+            }
+        }
+        if w.is_empty() {
+            return None;
+        }
+        out.push(w);
+    }
+    Some(out)
+}
+
+fn compile_new(re: &str, case_sensitive: bool) -> Option<Regex> {
     let mut s = re.to_string();
     for (a, b) in [("\\p{Punct}", "[\\p{P}\\p{S}]"), ("\\p{Upper}", "\\p{Lu}"), ("\\p{Lower}", "\\p{Ll}"), ("\\p{Alpha}", "\\p{L}"),
         ("\\p{Digit}", "\\d"), ("\\p{IsAlphabetic}", "\\p{Alphabetic}"), ("\\p{IsLetter}", "\\p{L}"), ("\\p{javaLowerCase}", "\\p{Ll}"),
@@ -217,12 +271,19 @@ pub fn compile(re: &str, case_sensitive: bool) -> Option<Regex> {
         s = s.replace(a, b);
     }
     let flags = if case_sensitive { "" } else { "(?i)" };
+    // Java's CASE_INSENSITIVE leaves Unicode properties alone (\p{Lu} stays upper case).
+    if !case_sensitive {
+        for p in ["\\p{Lu}", "\\p{Ll}", "\\p{Lt}", "\\P{Lu}", "\\P{Ll}"] {
+            s = s.replace(p, &format!("(?-i:{p})"));
+        }
+    }
     Regex::new(&format!("^{flags}(?:{s})$")).ok()
 }
 
 enum TextCond {
     Any,
     Lit(String, bool),
+    Set(std::collections::HashSet<String>, bool),
     Re(Regex),
 }
 
@@ -230,7 +291,10 @@ impl TextCond {
     fn new(t: &Option<String>, re: bool, cs: bool) -> Option<TextCond> {
         match t {
             None => Some(TextCond::Any),
-            Some(t) if re => compile(t, cs).map(TextCond::Re),
+            Some(t) if re => match word_list(t) {
+                Some(words) => Some(TextCond::Set(words.into_iter().map(|w| if cs { w } else { w.to_lowercase() }).collect(), cs)),
+                None => compile(t, cs).map(TextCond::Re),
+            },
             Some(t) => Some(TextCond::Lit(if cs { t.clone() } else { t.to_lowercase() }, cs)),
         }
     }
@@ -239,6 +303,7 @@ impl TextCond {
         match self {
             TextCond::Any => true,
             TextCond::Lit(l, cs) => if *cs { s == l } else { lower == l },
+            TextCond::Set(set, cs) => set.contains(if *cs { s } else { lower }),
             TextCond::Re(r) => r.is_match(s).unwrap_or(false),
         }
     }
@@ -247,6 +312,7 @@ impl TextCond {
 enum PosCond {
     Any,
     Lit(String),
+    Set(std::collections::HashSet<String>),
     Re(Regex),
 }
 
@@ -254,7 +320,10 @@ impl PosCond {
     fn new(pos: &Option<String>, pre: bool) -> Option<PosCond> {
         match pos {
             None => Some(PosCond::Any),
-            Some(p) if pre => compile(p, true).map(PosCond::Re),
+            Some(p) if pre => match word_list(p) {
+                Some(tags) => Some(PosCond::Set(tags.into_iter().collect())),
+                None => compile(p, true).map(PosCond::Re),
+            },
             Some(p) => Some(PosCond::Lit(p.clone())),
         }
     }
@@ -263,6 +332,7 @@ impl PosCond {
         match self {
             PosCond::Any => true,
             PosCond::Lit(l) => tag == l,
+            PosCond::Set(set) => set.contains(tag),
             PosCond::Re(r) => r.is_match(tag).unwrap_or(false),
         }
     }
@@ -392,14 +462,14 @@ impl PTok {
 struct Pattern {
     toks: Vec<PTok>,
     unify: Vec<UnifyJson>,
+    /// The language's unifier (only patterns with <unify> use it).
+    unifier: Option<std::sync::Arc<Unifier>>,
 }
 
-/// The unifier of the language being checked (set when its checker loads).
-pub static UNIFIER: std::sync::OnceLock<Unifier> = std::sync::OnceLock::new();
-
 impl Pattern {
-    fn new(j: &[TokJson], unify: &[UnifyJson]) -> Option<Pattern> {
-        Some(Pattern { toks: j.iter().map(PTok::new).collect::<Option<Vec<_>>>()?, unify: unify.to_vec() })
+    fn new(j: &[TokJson], unify: &[UnifyJson], unifier: &std::sync::Arc<Unifier>) -> Option<Pattern> {
+        Some(Pattern { toks: j.iter().map(PTok::new).collect::<Option<Vec<_>>>()?, unify: unify.to_vec(),
+            unifier: if unify.is_empty() { None } else { Some(unifier.clone()) } })
     }
 
     /// Matches starting at token `ti`: the tokens each pattern token took (start, count).
@@ -422,7 +492,7 @@ impl Pattern {
     fn unified(&self, toks: &[ATok], spans: &[(usize, usize)], g: usize) -> Option<(Vec<usize>, Vec<Vec<bool>>)> {
         let members: Vec<usize> = self.toks.iter().enumerate().filter(|(_, t)| t.group == Some(g))
             .flat_map(|(i, _)| { let (s, n) = spans[i]; s..s + n }).collect();
-        let u = UNIFIER.get()?;
+        let u = self.unifier.as_ref()?;
         let refs: Vec<&ATok> = members.iter().map(|&k| &toks[k]).collect();
         let keep = u.unify(&refs, &self.unify[g].features)?;
         Some((members, keep))
@@ -459,6 +529,11 @@ impl Pattern {
                     return true;
                 }
                 if s >= limit || s >= toks.len() || pi + 1 == self.toks.len() {
+                    break;
+                }
+                // After a skip LanguageTool takes the first token that matches and does not look
+                // further when the rest then fails ("die Philosophen vor Sokrates, die …").
+                if p.skip != 0 && self.toks[pi + 1].min > 0 && self.toks[pi + 1].matches(toks, s) {
                     break;
                 }
                 // A skipping token's "next" exceptions stop the skip.
@@ -538,8 +613,8 @@ fn lower_first(s: &str) -> String {
 }
 
 impl Rule {
-    pub fn new(j: RuleJson) -> Option<Rule> {
-        let pattern = match &j.pat { Some(p) => Some(Pattern::new(p, &j.unify)?), None => None };
+    pub fn new(j: RuleJson, unifier: &std::sync::Arc<Unifier>) -> Option<Rule> {
+        let pattern = match &j.pat { Some(p) => Some(Pattern::new(p, &j.unify, unifier)?), None => None };
         let regex = match &j.regex {
             Some(r) => {
                 let flags = if r.cs { "" } else { "(?i)" };
@@ -554,7 +629,7 @@ impl Rule {
         if pattern.is_none() && regex.is_none() {
             return None;
         }
-        let anti = j.anti.iter().enumerate().map(|(i, a)| Pattern::new(a, j.antiu.get(i).map_or(&[][..], |v| &v[..]))).collect::<Option<Vec<_>>>()?;
+        let anti = j.anti.iter().enumerate().map(|(i, a)| Pattern::new(a, j.antiu.get(i).map_or(&[][..], |v| &v[..]), unifier)).collect::<Option<Vec<_>>>()?;
         let literals = pattern.as_ref().map(|p| p.literals()).unwrap_or_default();
         Some(Rule {
             id: j.id, category: j.cat.unwrap_or_default(), name: j.name, pattern, regex, ma: j.ma.unwrap_or(0), mb: j.mb.unwrap_or(0),
@@ -664,6 +739,12 @@ impl Rule {
                 *s = upper_first(s);
             }
         }
+        // An empty optional token leaves two spaces behind ("Il nous  mange").
+        for s in &mut sugg {
+            if !s.trim().is_empty() && s.contains("  ") {
+                *s = s.split(' ').filter(|w| !w.is_empty()).collect::<Vec<_>>().join(" ");
+            }
+        }
         sugg.dedup();
         sugg.retain(|s| *s != original && !s.trim().is_empty());
         Some(Finding { start, end, rule: self.id.clone(), category: self.category.clone(), message: message.trim().to_string(),
@@ -735,6 +816,7 @@ enum Action {
     Replace,
     Immunize,
     Unify,
+    FilterAll,
 }
 
 /// A disambiguation rule (LanguageTool's disambiguation.xml): it changes the readings of the
@@ -745,16 +827,19 @@ pub struct Disambig {
     mb: usize,
     action: Action,
     pos: Option<Regex>,
+    /// The tag as written (<disambig postag="Y"/> replaces the readings with it).
+    pos_raw: Option<String>,
     wd: Vec<(Option<String>, Option<String>)>,
     anti: Vec<Pattern>,
     literals: Vec<String>,
 }
 
 impl Disambig {
-    pub fn new(j: DisambigJson) -> Option<Disambig> {
-        let pattern = Pattern::new(&j.pat, &j.unify)?;
+    pub fn new(j: DisambigJson, unifier: &std::sync::Arc<Unifier>) -> Option<Disambig> {
+        let pattern = Pattern::new(&j.pat, &j.unify, unifier)?;
         let action = match j.action.as_str() {
             "unify" => Action::Unify,
+            "filterall" => Action::FilterAll,
             "remove" => Action::Remove,
             "filter" => Action::Filter,
             "add" => Action::Add,
@@ -763,9 +848,9 @@ impl Disambig {
             _ => return None,
         };
         let pos = match &j.pos { Some(p) => Some(compile(p, true)?), None => None };
-        let anti = j.anti.iter().enumerate().map(|(i, a)| Pattern::new(a, j.antiu.get(i).map_or(&[][..], |v| &v[..]))).collect::<Option<Vec<_>>>()?;
+        let anti = j.anti.iter().enumerate().map(|(i, a)| Pattern::new(a, j.antiu.get(i).map_or(&[][..], |v| &v[..]), unifier)).collect::<Option<Vec<_>>>()?;
         let literals = pattern.literals();
-        Some(Disambig { pattern, ma: j.ma, mb: j.mb, action, pos, wd: j.wd.into_iter().map(|w| (w.lemma, w.pos)).collect(), anti, literals })
+        Some(Disambig { pattern, ma: j.ma, mb: j.mb, action, pos, pos_raw: j.pos.clone(), wd: j.wd.into_iter().map(|w| (w.lemma, w.pos)).collect(), anti, literals })
     }
 
     pub fn needs(&self, words: &std::collections::HashSet<&str>) -> bool {
@@ -783,7 +868,25 @@ impl Disambig {
                 let u: Vec<&(usize, usize)> = s.iter().filter(|x| x.1 > 0).collect();
                 matches!((u.first(), u.last()), (Some(f), Some(l)) if f.0 < b && a < l.0 + l.1)
             })));
-            if !blocked && matches!(self.action, Action::Unify) {
+            if !blocked && matches!(self.action, Action::FilterAll) {
+                // Every marked pattern token keeps only the readings its own condition matches.
+                for (pi, &(s, n)) in spans.iter().enumerate() {
+                    if pi < self.ma || pi > self.mb {
+                        continue;
+                    }
+                    let p = &self.pattern.toks[pi];
+                    if !p.cond.has_pos {
+                        continue;
+                    }
+                    for k in s..s + n {
+                        let t = &mut toks[k];
+                        let keep: Vec<Reading> = t.readings.iter().filter(|r| r.tag == "SENT_END" || r.tag == "SENT_START" || p.cond.reading(t, r)).cloned().collect();
+                        if keep.iter().any(|r| r.tag != "SENT_END" && r.tag != "SENT_START") {
+                            t.readings = keep;
+                        }
+                    }
+                }
+            } else if !blocked && matches!(self.action, Action::Unify) {
                 // Only the readings that agree stay (der Mann: ART and SUB in the same case …).
                 for g in 0..self.pattern.unify.len() {
                     if let Some((members, keep)) = self.pattern.unified(toks, &spans, g) {
@@ -811,7 +914,7 @@ impl Disambig {
         let tag_ok = |tag: &str| self.pos.as_ref().is_some_and(|p| p.is_match(tag).unwrap_or(false));
         match self.action {
             Action::Immunize => t.immune = true,
-            Action::Unify => {}
+            Action::Unify | Action::FilterAll => {}
             Action::Remove => {
                 let keep: Vec<Reading> = if self.wd.is_empty() {
                     t.readings.iter().filter(|r| !tag_ok(&r.tag)).cloned().collect()
@@ -830,7 +933,18 @@ impl Disambig {
                 }
             }
             Action::Add | Action::Replace => {
-                let new: Vec<Reading> = self.wd.iter().filter_map(|(l, p)| Some(Reading { lemma: l.clone().unwrap_or_else(|| t.text.clone()), tag: p.clone()?, guessed: false })).collect();
+                let mut new: Vec<Reading> = self.wd.iter().filter_map(|(l, p)| Some(Reading { lemma: l.clone().unwrap_or_else(|| t.text.clone()), tag: p.clone()?, guessed: false })).collect();
+                // <disambig postag="Y"/>: the readings become that tag.
+                if new.is_empty() && matches!(self.action, Action::Replace) {
+                    if let Some(p) = self.pos_raw.as_ref().filter(|p| !p.is_empty() && !p.contains(['*', '|', '('])) {
+                        // The lemma stays: the one of the reading with that tag (does: do/VBZ, not
+                        // doe/NNS), else the first one's (n' keeps "ne"), as LanguageTool does.
+                        let lemma = t.readings.iter().rfind(|r| r.tag == *p)
+                            .or_else(|| t.readings.iter().find(|r| r.tag != "UNKNOWN" && r.tag != "SENT_END" && r.tag != "SENT_START"))
+                            .map_or_else(|| t.text.clone(), |r| r.lemma.clone());
+                        new.push(Reading { lemma, tag: p.clone(), guessed: false });
+                    }
+                }
                 if new.is_empty() {
                     return;
                 }

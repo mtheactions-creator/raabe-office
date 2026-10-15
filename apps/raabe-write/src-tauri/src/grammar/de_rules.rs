@@ -11,16 +11,17 @@ use super::tagger::Reading;
 
 pub struct Synth {
     fsa: Fsa,
+    sep: u8,
 }
 
 impl Synth {
-    pub fn new(data: &[u8]) -> Option<Synth> {
-        Some(Synth { fsa: Fsa::new(data)? })
+    pub fn new(data: &[u8], sep: u8) -> Option<Synth> {
+        Some(Synth { fsa: Fsa::new(data)?, sep })
     }
 
     /// The forms of a lemma with a tag ("ein", "ART:IND:AKK:SIN:NEU" → ["ein"]).
     pub fn forms(&self, lemma: &str, tag: &str) -> Vec<String> {
-        self.fsa.lookup(&format!("{lemma}|{tag}"), b'_').into_iter().map(|(form, _)| form).collect()
+        self.fsa.lookup(&format!("{lemma}|{tag}"), self.sep).into_iter().map(|(form, _)| form).collect()
     }
 }
 

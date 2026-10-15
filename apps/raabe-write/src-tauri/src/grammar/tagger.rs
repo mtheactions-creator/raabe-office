@@ -20,6 +20,10 @@ pub struct Tagger {
     fsa: Fsa,
     added: HashMap<String, Vec<Reading>>,
     removed: HashSet<(String, String, String)>,
+    /// The lexicon's separator byte and whether its tags end with a frequency letter.
+    sep: u8,
+    freq: bool,
+    lang: &'static str,
 }
 
 fn lines_of(gz: &[u8]) -> String {
@@ -45,14 +49,15 @@ fn lower_first(s: &str) -> String {
 }
 
 impl Tagger {
-    pub fn new(dict: &[u8], added_gz: &[u8], removed_gz: &[u8]) -> Option<Tagger> {
+    pub fn new(dict: &[u8], added_gz: &[u8], removed_gz: &[u8], sep: u8, freq: bool, lang: &'static str) -> Option<Tagger> {
         let fsa = Fsa::new(dict)?;
         let mut added: HashMap<String, Vec<Reading>> = HashMap::new();
         for line in lines_of(added_gz).lines() {
             if line.starts_with('#') {
                 continue;
             }
-            let mut p = line.split('\t');
+            // Tab-separated; French uses semicolons (Spontex;Spontex;Z e sp).
+            let mut p = line.split(if line.contains('\t') { '\t' } else { ';' });
             if let (Some(form), Some(lemma), Some(tag)) = (p.next(), p.next(), p.next()) {
                 added.entry(form.to_string()).or_default().push(Reading { lemma: lemma.to_string(), tag: tag.trim().to_string(), guessed: false });
             }
@@ -62,17 +67,36 @@ impl Tagger {
             if line.starts_with('#') {
                 continue;
             }
-            let mut p = line.split('\t');
+            // Tab-separated; French uses semicolons (Spontex;Spontex;Z e sp).
+            let mut p = line.split(if line.contains('\t') { '\t' } else { ';' });
             if let (Some(form), Some(lemma), Some(tag)) = (p.next(), p.next(), p.next()) {
                 removed.insert((form.to_string(), lemma.to_string(), tag.trim().to_string()));
             }
         }
-        Some(Tagger { fsa, added, removed })
+        Some(Tagger { fsa, added, removed, sep, freq, lang })
+    }
+
+    /// Whether the lexicon knows a word (typographic apostrophes as plain ones).
+    pub fn has(&self, word: &str) -> bool {
+        !self.known(word).is_empty()
     }
 
     /// The lexicon's readings of a word as written.
     pub fn known(&self, word: &str) -> Vec<Reading> {
-        let mut out: Vec<Reading> = self.fsa.lookup(word, b'_').into_iter()
+        if word.contains('\u{2019}') {
+            let plain = word.replace('\u{2019}', "'");
+            let r = self.known_exact(&plain);
+            if !r.is_empty() {
+                return r;
+            }
+        }
+        self.known_exact(word)
+    }
+
+    fn known_exact(&self, word: &str) -> Vec<Reading> {
+        let freq = self.freq;
+        let mut out: Vec<Reading> = self.fsa.lookup(word, self.sep).into_iter()
+            .map(|(l, mut t)| { if freq { t.pop(); } (l, t) })
             .filter(|(l, t)| !self.removed.contains(&(word.to_string(), l.clone(), t.clone())))
             .map(|(lemma, tag)| Reading { lemma, tag, guessed: false }).collect();
         if let Some(a) = self.added.get(word) {
@@ -88,10 +112,19 @@ impl Tagger {
     /// The readings of a token (`first`: the first word of a sentence, which may be capitalized).
     pub fn tag(&self, word: &str, first: bool) -> Vec<Reading> {
         if word.chars().all(|c| !c.is_alphanumeric()) {
-            return vec![Reading { lemma: word.to_string(), tag: "PKT".into(), guessed: false }];
+            let known = self.known(word);
+            let tag = match self.lang {
+                "de" => "PKT".to_string(),
+                "es" => es_punct(word).to_string(),
+                _ if !known.is_empty() => return known,
+                "en" => word.to_string(),
+                _ => "UNKNOWN".to_string(),
+            };
+            return vec![Reading { lemma: word.to_string(), tag, guessed: false }];
         }
         if word.chars().all(|c| c.is_ascii_digit() || c == '.' || c == ',') {
-            return vec![Reading { lemma: word.to_string(), tag: "ZAL".into(), guessed: false }];
+            let tag = match self.lang { "de" => "ZAL", "en" => "CD", "fr" => "UNKNOWN", _ => "Z" };
+            return vec![Reading { lemma: word.to_string(), tag: tag.into(), guessed: false }];
         }
         let w = word.replace('\u{ad}', "");
         let mut out = self.known(&w);
@@ -112,7 +145,7 @@ impl Tagger {
                 }
             }
         }
-        if out.is_empty() {
+        if out.is_empty() && self.lang == "de" {
             out = self.compound(&w);
             for r in &mut out {
                 r.guessed = true;
@@ -168,5 +201,14 @@ impl Tagger {
             }
         }
         Vec::new()
+    }
+}
+
+/// Spanish punctuation tags (EAGLES, as LanguageTool's Spanish tagger gives them).
+fn es_punct(p: &str) -> &'static str {
+    match p {
+        "," => "Fc", "." => "Fp", ";" => "Fx", ":" => "Fd", "?" => "Fit", "¿" => "Fia", "!" => "Fat", "¡" => "Faa", "(" => "Fpa", ")" => "Fpt",
+        "\"" | "“" | "”" => "Fe", "«" => "Fra", "»" => "Frc", "-" | "–" | "—" => "Fg", "…" => "Fs", "/" => "Fh", "%" => "Ft", "[" => "Fca", "]" => "Fct",
+        _ => "Fz",
     }
 }

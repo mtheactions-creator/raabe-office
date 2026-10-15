@@ -32,9 +32,14 @@ compiled in from `node_modules` (`src/spell.rs`).
 | File | Source | Licence |
 |---|---|---|
 | `german.dict`, `german_synth.dict` | german-pos-dict 1.2.4 by Daniel Naber (Morfologik automata, from Morphy data) | CC-BY-SA-4.0 |
-| `german-added.txt.gz`, `german-removed.txt.gz` | LanguageTool's additions to and removals from that lexicon | LGPL-2.1 or later |
-| `grammar-de.json.gz` | LanguageTool's German rules (grammar.xml) and disambiguation (disambiguation.xml), compiled by `tools/lang-data/build_grammar.py` | LGPL-2.1 or later |
+| `english.dict`, `english_synth.dict` | english-pos-dict 0.6 (LanguageTool, Morfologik automata) | LGPL-2.1 |
+| `french.dict`, `french_synth.dict` | french-pos-dict 0.7 (LanguageTool, from Dicollecte's lexicon) | CC-BY-SA-4.0 |
+| `spanish.dict`, `spanish_synth.dict` | spanish-pos-dict 2.5 (Softcatalà) | LGPL-2.1 |
+| `*-added.txt.gz`, `*-removed.txt.gz` | LanguageTool's additions to and removals from these lexicons | LGPL-2.1 or later |
+| `grammar-de.json.gz`, `grammar-en.json.gz`, `grammar-fr.json.gz`, `grammar-es.json.gz` | LanguageTool's rules (grammar.xml) and disambiguation (disambiguation.xml) per language, compiled by `tools/lang-data/build_grammar.py` | LGPL-2.1 or later |
 
 LanguageTool: © LanguageTool contributors, https://languagetool.org, https://github.com/languagetool-org/languagetool.
-german-pos-dict: https://github.com/languagetool-org/german-pos-dict.
+german-pos-dict: https://github.com/languagetool-org/german-pos-dict. english-pos-dict and
+french-pos-dict: https://github.com/languagetool-org (Maven org.languagetool). spanish-pos-dict:
+https://github.com/Softcatala/spanish-dict-tools (Maven org.softcatala).
 

@@ -1,0 +1,30 @@
+# Typical errors of German-speaking pupils in Spanish (written for RaabeWrite's grammar
+# measurement, D-040; no student texts). One sentence per line: the error type, a tab, the sentence.
+concordancia	Los niño juegan en el parque.
+concordancia	Las casa son muy bonitas.
+concordancia	El casa es grande.
+concordancia	La problema es difícil.
+concordancia	Hay muchos gente en la calle.
+concordancia	Mi hermanos son simpáticos.
+concordancia	Yo tiene un perro.
+concordancia	Nosotros va al cine.
+concordancia	Ellos come pizza.
+concordancia	Tú es mi amigo.
+concordancia	Las chicas está cansadas.
+ser-estar	Ella es muy cansada hoy.
+ser-estar	Yo soy en casa.
+ser-estar	Madrid es en España.
+verbo	Me gusta los libros.
+verbo	Ayer yo voy al cine.
+verbo	Yo sabo la respuesta.
+verbo	Él ha escribido una carta.
+articulo	Voy a el mercado.
+articulo	Vengo de el colegio.
+acento	El esta en casa.
+acento	Tu eres mi mejor amigo.
+acento	Que hora es?
+signos	Cómo estás?
+signos	Qué bonito!
+doble	Yo yo creo que sí.
+doble	Vamos a la la playa.
+espacio	Hola , ¿qué tal?

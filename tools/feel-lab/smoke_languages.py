@@ -164,6 +164,18 @@ def main() -> None:
         t.js("document.querySelector('.edpane .tp-head button[aria-label=\"Bereich schließen\"]')?.click()")
         t.js(f"{ED}.replaceRange({g}, 0, {ED}.doc.main[{g}].text.length, '')")
 
+        # ----- Grammatik in English, French and Spanish (D-052): the language found by itself ------
+        for text, wrong in [("My brother go to school every day with his friends.", "go"),
+                            ("Il faut que tu viens demain chez nous avec tes amis.", "viens"),
+                            ("Los niño juegan en el parque con sus amigos del colegio.", "Los niño")]:
+            t.js(f"(() => {{ const e = {ED}; e.selectRange({g}, 0, e.doc.main[{g}].text.length); }})()")
+            t.js("__probe.focus()")
+            t.send_text(text)
+            found = wait(t, f"{expr}.length >= 1 ? {expr} : null", 10)
+            check(f"grammar in another language: '{wrong}' is marked", bool(found) and wrong in found,
+                  json.dumps([t.js(expr), t.js(f"{ED}.doc.main[{g}].runs.map(r => r.props.lang)")], ensure_ascii=False))
+        t.js(f"{ED}.replaceRange({g}, 0, {ED}.doc.main[{g}].text.length, '')")
+
         # ----- Sprache: marked text in a language, nicht prüfen; Word reads both ------------------
         t.js(f"(() => {{ const e = {ED}; e.selectRange(2, 0, e.doc.main[2].text.length); e.setProofing('es-ES', false); e.selectRange(3, 0, 0); }})()")
         t.send_text("Ein Abschnitt ohne Prüfung: Feher.")

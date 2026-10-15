@@ -1,0 +1,52 @@
+# Typical errors of German-speaking pupils in English (written for RaabeWrite's grammar
+# measurement, D-040; no student texts). One sentence per line: the error type, a tab, the sentence.
+3rd-s	He go to school every day.
+3rd-s	She play the piano very well.
+3rd-s	My brother like football.
+agreement	She don't like apples.
+agreement	I has a dog.
+agreement	They was at home yesterday.
+agreement	We was very happy.
+agreement	There is many people in the park.
+agreement	He have been to London twice.
+agreement	Everybody have a book.
+agreement	One of the boys are late.
+agreement	These is my new shoes.
+agreement	This are my friends.
+agreement	He are very nice.
+agreement	They doesn't know the answer.
+verb	I didn't saw him.
+verb	He didn't went to school.
+verb	Does he likes music?
+verb	She can sings very well.
+verb	I am agree with you.
+verb	I am live in Hanover.
+verb	I look forward to see you.
+verb	I could of done it.
+verb	We should of left earlier.
+comparison	He is more taller than me.
+comparison	This is the most best day of my life.
+comparison	He is taller then me.
+article	I have a apple.
+article	It was a honour to meet you.
+article	That is a advantage.
+confusion	Its a nice day today.
+confusion	The dog wagged it's tail.
+confusion	Your welcome.
+confusion	Your going to be late.
+confusion	Their going to the cinema.
+confusion	I went to there house.
+confusion	Lets go home.
+confusion	Who's book is this?
+confusion	I want to loose weight.
+confusion	Can you borrow me your pen?
+noun	The informations are wrong.
+noun	I have much friends.
+noun	He gave me many advices.
+word	I am going to home.
+word	My sister she is very nice.
+word	I go in the school every morning.
+double	I I think so.
+double	We went to the the park.
+space	This is my house .
+space	Where are you ?

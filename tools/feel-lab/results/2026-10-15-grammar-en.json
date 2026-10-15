@@ -1,0 +1,668 @@
+{
+ "date": "2026-10-15",
+ "language": "en",
+ "corpora": {
+  "school errors": {
+   "items": 50,
+   "ours": 47,
+   "word": 39,
+   "both": 39,
+   "our rules": [
+    [
+     "RAABE_EN_3RD_PERSON",
+     5
+    ],
+    [
+     "RAABE_EN_BASE_FORM",
+     3
+    ],
+    [
+     "RAABE_EN_A_AN",
+     3
+    ],
+    [
+     "RAABE_EN_HAVE",
+     2
+    ],
+    [
+     "RAABE_EN_THESE",
+     2
+    ],
+    [
+     "RAABE_EN_AM_AGREE",
+     2
+    ],
+    [
+     "MODAL_OF[0]",
+     2
+    ],
+    [
+     "COULD_OF",
+     2
+    ],
+    [
+     "RAABE_EN_SPACE",
+     2
+    ],
+    [
+     "PERS_PRONOUN_AGREEMENT[12]",
+     1
+    ],
+    [
+     "PERS_PRONOUN_AGREEMENT[10]",
+     1
+    ],
+    [
+     "RAABE_EN_THERE_IS",
+     1
+    ],
+    [
+     "RAABE_EN_ONE_OF",
+     1
+    ],
+    [
+     "THIS_NNS[5]",
+     1
+    ],
+    [
+     "THIS_NNS[4]",
+     1
+    ],
+    [
+     "PERS_PRONOUN_AGREEMENT[8]",
+     1
+    ],
+    [
+     "BASE_FORM[1]",
+     1
+    ],
+    [
+     "BASE_FORM[0]",
+     1
+    ],
+    [
+     "DIDN_T_SAW",
+     1
+    ],
+    [
+     "DID_FOUND_AMBIGUOUS_2[1]",
+     1
+    ],
+    [
+     "RAABE_EN_LOOK_FORWARD",
+     1
+    ],
+    [
+     "RAABE_EN_MORE_TALLER",
+     1
+    ],
+    [
+     "MOST_SUPERLATIVE",
+     1
+    ],
+    [
+     "COMPARISONS_THEN",
+     1
+    ],
+    [
+     "COMP_THAN[1]",
+     1
+    ],
+    [
+     "IT_IS[36]",
+     1
+    ],
+    [
+     "RAABE_EN_ITS",
+     1
+    ],
+    [
+     "YOUR_YOU_RE[0]",
+     1
+    ],
+    [
+     "YOUR_YOU_RE[8]",
+     1
+    ],
+    [
+     "RAABE_EN_YOUR",
+     1
+    ],
+    [
+     "RAABE_EN_THEIR",
+     1
+    ],
+    [
+     "THERE_THEIR[0]",
+     1
+    ],
+    [
+     "THERE_THEIR[2]",
+     1
+    ],
+    [
+     "RAABE_EN_LETS",
+     1
+    ],
+    [
+     "RAABE_EN_WHOSE",
+     1
+    ],
+    [
+     "LOOSE_LOSE[2]",
+     1
+    ],
+    [
+     "RAABE_EN_LEND",
+     1
+    ],
+    [
+     "INFORMATIONS",
+     1
+    ],
+    [
+     "RAABE_EN_MUCH",
+     1
+    ],
+    [
+     "RAABE_EN_UNCOUNTABLE",
+     1
+    ]
+   ],
+   "by kind": {
+    "3rd-s": {
+     "of": 3,
+     "ours": 3,
+     "word": 2
+    },
+    "agreement": {
+     "of": 12,
+     "ours": 12,
+     "word": 10
+    },
+    "verb": {
+     "of": 9,
+     "ours": 9,
+     "word": 7
+    },
+    "comparison": {
+     "of": 3,
+     "ours": 3,
+     "word": 3
+    },
+    "article": {
+     "of": 3,
+     "ours": 3,
+     "word": 3
+    },
+    "confusion": {
+     "of": 10,
+     "ours": 10,
+     "word": 9
+    },
+    "noun": {
+     "of": 3,
+     "ours": 3,
+     "word": 3
+    },
+    "word": {
+     "of": 3,
+     "ours": 2,
+     "word": 0
+    },
+    "double": {
+     "of": 2,
+     "ours": 0,
+     "word": 0
+    },
+    "space": {
+     "of": 2,
+     "ours": 2,
+     "word": 2
+    }
+   },
+   "missed by us": [
+    "I go in the school every morning.",
+    "I I think so.",
+    "We went to the the park."
+   ],
+   "word found, we did not": []
+  },
+  "LT incorrect examples": {
+   "items": 400,
+   "ours": 393,
+   "word": 92,
+   "both": 91,
+   "our rules": [
+    [
+     "NON_STANDARD_WORD[0]",
+     4
+    ],
+    [
+     "IT_IS[17]",
+     3
+    ],
+    [
+     "IT_IS[13]",
+     3
+    ],
+    [
+     "MISSING_APOSTROPHE_T[0]",
+     3
+    ],
+    [
+     "RAABE_EN_3RD_PERSON",
+     2
+    ],
+    [
+     "MODAL_OF[0]",
+     2
+    ],
+    [
+     "SETUP_VERB[2]",
+     2
+    ],
+    [
+     "SETUP_VERB[4]",
+     2
+    ],
+    [
+     "KNOW_NOW[11]",
+     2
+    ],
+    [
+     "INTERJECTIONS_PUNCTUATION[0]",
+     2
+    ],
+    [
+     "IT_IS[15]",
+     2
+    ],
+    [
+     "APPLE_PRODUCTS[0]",
+     2
+    ],
+    [
+     "LOG_IN[5]",
+     2
+    ],
+    [
+     "MISSING_HYPHEN[4]",
+     2
+    ],
+    [
+     "ITS_TO_IT_S[2]",
+     2
+    ],
+    [
+     "IT_IS[9]",
+     2
+    ],
+    [
+     "SUPERLATIVE_THAN",
+     2
+    ],
+    [
+     "IT_IS_2[51]",
+     2
+    ],
+    [
+     "THE_THEY[9]",
+     2
+    ],
+    [
+     "AWAY_AWAYS[1]",
+     2
+    ],
+    [
+     "PRP_COMMA[0]",
+     2
+    ],
+    [
+     "TIS",
+     2
+    ],
+    [
+     "DINER_DINNER[0]",
+     2
+    ],
+    [
+     "DINER_DINNER[1]",
+     2
+    ],
+    [
+     "YOUR_YOU_2[7]",
+     2
+    ],
+    [
+     "PRP_RB_JJ[0]",
+     2
+    ],
+    [
+     "WANT_WONT[0]",
+     2
+    ],
+    [
+     "PRP_RB_NO_VB",
+     1
+    ],
+    [
+     "TYP_TYPE[0]",
+     1
+    ],
+    [
+     "AN_ANOTHER",
+     1
+    ],
+    [
+     "TANK_YOU[0]",
+     1
+    ],
+    [
+     "IT_IS_2[4]",
+     1
+    ],
+    [
+     "IT_IS_2[45]",
+     1
+    ],
+    [
+     "YOUR_YOU_2[2]",
+     1
+    ],
+    [
+     "COMMA_THAN",
+     1
+    ],
+    [
+     "VERB_APOSTROPHE_S[6]",
+     1
+    ],
+    [
+     "IN_PRINCIPAL[4]",
+     1
+    ],
+    [
+     "VBZ_VBD",
+     1
+    ],
+    [
+     "COM_COME[1]",
+     1
+    ],
+    [
+     "TAIL_GATE_COMPOUND",
+     1
+    ]
+   ]
+  },
+  "Wikipedia": {
+   "items": 500,
+   "ours": 17,
+   "word": 130,
+   "both": 10,
+   "our rules": [
+    [
+     "CONSECUTIVE_SPACES",
+     5
+    ],
+    [
+     "NON_STANDARD_WORD[0]",
+     3
+    ],
+    [
+     "COLLOCATION_ERRORS_BOKOMARU[119]",
+     2
+    ],
+    [
+     "BUNCH_OF[3]",
+     1
+    ],
+    [
+     "UNLIKELY_OPENING_PUNCTUATION",
+     1
+    ],
+    [
+     "HOUR_HYPHEN",
+     1
+    ],
+    [
+     "MISSING_HYPHEN[4]",
+     1
+    ],
+    [
+     "ON_COMPOUNDS[2]",
+     1
+    ],
+    [
+     "COLLOCATION_ERRORS_BOKOMARU[93]",
+     1
+    ],
+    [
+     "EXCEPTION_OF_TO[0]",
+     1
+    ],
+    [
+     "LIGHT_COMPOUNDS",
+     1
+    ],
+    [
+     "SECOND_LARGEST_HYPHEN",
+     1
+    ],
+    [
+     "DETERMINER_GEOGRAPHICAL_WORD[0]",
+     1
+    ],
+    [
+     "COLLOCATION_ERRORS_BOKOMARU[74]",
+     1
+    ]
+   ],
+   "our false alarms": [
+    {
+     "rule": "BUNCH_OF[3]",
+     "message": "An article may be missing."
+    },
+    {
+     "rule": "COLLOCATION_ERRORS_BOKOMARU[119]",
+     "message": "The usual collocation for \"independent\" is \"of\", not \"from\". Did you mean „independent of“?"
+    },
+    {
+     "rule": "UNLIKELY_OPENING_PUNCTUATION",
+     "message": "Loose punctuation mark."
+    },
+    {
+     "rule": "HOUR_HYPHEN",
+     "message": "When '30-minute' is used as a modifier, it is usually spelled with a hyphen."
+    },
+    {
+     "rule": "MISSING_HYPHEN[4]",
+     "message": "When a number forms part of an adjectival compound, use a hyphen."
+    },
+    {
+     "rule": "ON_COMPOUNDS[2]",
+     "message": "Did you mean the adverb or adjective „online“?"
+    },
+    {
+     "rule": "COLLOCATION_ERRORS_BOKOMARU[119]",
+     "message": "The usual collocation for \"independent\" is \"of\", not \"from\". Did you mean „independent of“?"
+    },
+    {
+     "rule": "COLLOCATION_ERRORS_BOKOMARU[93]",
+     "message": "The usual collocation for \"absorbs\" is \"in\", not \"at\". Did you mean „absorbs in“?"
+    },
+    {
+     "rule": "EXCEPTION_OF_TO[0]",
+     "message": "The usual collocation for \"exception\" in this context is \"to\", not \"of\". Did you mean „exception to“?"
+    },
+    {
+     "rule": "CONSECUTIVE_SPACES",
+     "message": "It seems like there are too many consecutive spaces here."
+    },
+    {
+     "rule": "CONSECUTIVE_SPACES",
+     "message": "It seems like there are too many consecutive spaces here."
+    },
+    {
+     "rule": "NON_STANDARD_WORD[0]",
+     "message": "The word '2·s' is not standard English. Did you mean „2’s“ (curly apostrophe) or „2's“ (straight apostrophe)?"
+    },
+    {
+     "rule": "NON_STANDARD_WORD[0]",
+     "message": "The word '2·s' is not standard English. Did you mean „2’s“ (curly apostrophe) or „2's“ (straight apostrophe)?"
+    },
+    {
+     "rule": "LIGHT_COMPOUNDS",
+     "message": "This word is usually spelled as one word: „sunlight“."
+    },
+    {
+     "rule": "NON_STANDARD_WORD[0]",
+     "message": "The word '2·s' is not standard English. Did you mean „2’s“ (curly apostrophe) or „2's“ (straight apostrophe)?"
+    },
+    {
+     "rule": "SECOND_LARGEST_HYPHEN",
+     "message": "It appears that a hyphen is missing."
+    },
+    {
+     "rule": "CONSECUTIVE_SPACES",
+     "message": "It seems like there are too many consecutive spaces here."
+    },
+    {
+     "rule": "CONSECUTIVE_SPACES",
+     "message": "It seems like there are too many consecutive spaces here."
+    },
+    {
+     "rule": "DETERMINER_GEOGRAPHICAL_WORD[0]",
+     "message": "A determiner may be missing."
+    },
+    {
+     "rule": "COLLOCATION_ERRORS_BOKOMARU[74]",
+     "message": "The usual verb for \"courses\" in a school is \"take\" or \"attend\", not \"follow\"."
+    },
+    {
+     "rule": "CONSECUTIVE_SPACES",
+     "message": "It seems like there are too many consecutive spaces here."
+    }
+   ]
+  },
+  "LT correct examples": {
+   "items": 400,
+   "ours": 13,
+   "word": 59,
+   "both": 4,
+   "our rules": [
+    [
+     "RAABE_EN_3RD_PERSON",
+     2
+    ],
+    [
+     "SECOND_LARGEST_HYPHEN",
+     1
+    ],
+    [
+     "UH_UH_COMMA",
+     1
+    ],
+    [
+     "ROLL_PLAYER",
+     1
+    ],
+    [
+     "TO_TOO[12]",
+     1
+    ],
+    [
+     "COLLOCATION_ERRORS_BOKOMARU[13]",
+     1
+    ],
+    [
+     "MUST_HAVE[0]",
+     1
+    ],
+    [
+     "LETS_LET[2]",
+     1
+    ],
+    [
+     "THE_ADD_ON[0]",
+     1
+    ],
+    [
+     "THE_ADD_ON[1]",
+     1
+    ],
+    [
+     "MISSING_COMMA_WITH_NNP[3]",
+     1
+    ],
+    [
+     "A_BIT[1]",
+     1
+    ],
+    [
+     "SOON_TO_BE_HYPHEN",
+     1
+    ]
+   ],
+   "our false alarms": [
+    {
+     "rule": "SECOND_LARGEST_HYPHEN",
+     "message": "It appears that a hyphen is missing."
+    },
+    {
+     "rule": "UH_UH_COMMA",
+     "message": "Consider adding a comma between these interjections."
+    },
+    {
+     "rule": "ROLL_PLAYER",
+     "message": "Did you mean „role model“?"
+    },
+    {
+     "rule": "TO_TOO[12]",
+     "message": "Did you mean „too“?"
+    },
+    {
+     "rule": "COLLOCATION_ERRORS_BOKOMARU[13]",
+     "message": "Consider using \"to\" with \"prefer\"."
+    },
+    {
+     "rule": "MUST_HAVE[0]",
+     "message": "It appears that a hyphen is missing in this expression."
+    },
+    {
+     "rule": "LETS_LET[2]",
+     "message": "Did you mean „Lets“ or „Let“ (let's = let us; lets = 3rd person singular of 'let')?"
+    },
+    {
+     "rule": "RAABE_EN_3RD_PERSON",
+     "message": "Only he, she and it take the verb with -s."
+    },
+    {
+     "rule": "RAABE_EN_3RD_PERSON",
+     "message": "With he, she or it the verb takes -s."
+    },
+    {
+     "rule": "THE_ADD_ON[0]",
+     "message": "This noun is usually spelled with a hyphen."
+    },
+    {
+     "rule": "THE_ADD_ON[1]",
+     "message": "This noun is usually spelled with a hyphen."
+    },
+    {
+     "rule": "MISSING_COMMA_WITH_NNP[3]",
+     "message": "When a person is directly addressed, a comma should set off the name."
+    },
+    {
+     "rule": "A_BIT[1]",
+     "message": "It seems that an article is missing."
+    },
+    {
+     "rule": "SOON_TO_BE_HYPHEN",
+     "message": "The adjective „soon-to-be“ requires hyphens."
+    }
+   ]
+  }
+ }
+}
