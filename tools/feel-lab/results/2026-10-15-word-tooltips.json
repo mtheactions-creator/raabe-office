@@ -1,0 +1,1170 @@
+{
+ "Start": {
+  "Einfügen": {
+   "title": "Einfügen (Strg+V)",
+   "described": true
+  },
+  "Ausschneiden": {
+   "title": "Ausschneiden (Strg+X)",
+   "described": true
+  },
+  "Kopieren": {
+   "title": "Kopieren (Strg+C)",
+   "described": true
+  },
+  "Format übertragen": {
+   "title": "Format übertragen (Alt+Strg+C, Alt+Strg+V)",
+   "described": true
+  },
+  "Office-Zwischenablage...": {
+   "title": "Zwischenablage",
+   "described": true
+  },
+  "Schriftart": {
+   "title": "Schriftart (Strg+Umschalt+A)",
+   "described": true
+  },
+  "Schriftgrad": {
+   "title": "Schriftgrad (Strg+Umschalt+P)",
+   "described": true
+  },
+  "Schriftart vergrößern": {
+   "title": "Schriftgrad vergrößern (Strg+Umschalt+>)",
+   "described": true
+  },
+  "Schriftart verkleinern": {
+   "title": "Schriftgrad verkleinern (Strg+<)",
+   "described": true
+  },
+  "Groß-/Kleinschreibung": {
+   "title": "Groß-/Kleinschreibung",
+   "described": true
+  },
+  "Formatierung löschen": {
+   "title": "Alle Formatierungen löschen",
+   "described": true
+  },
+  "Fett": {
+   "title": "Fett (Strg+Umschalt+F)",
+   "described": true
+  },
+  "Kursiv": {
+   "title": "Kursiv (Strg+Umschalt+K)",
+   "described": true
+  },
+  "Unterstreichen": {
+   "title": "Unterstreichen (Strg+Umschalt+U)",
+   "described": true
+  },
+  "Durchstreichen": {
+   "title": "Durchstreichen",
+   "described": true
+  },
+  "Tiefgestellt": {
+   "title": "Tiefgestellt (Strg+#)",
+   "described": true
+  },
+  "Hochgestellt": {
+   "title": "Hochgestellt",
+   "described": true
+  },
+  "Texteffekte und Typografie": {
+   "title": "Texteffekte und Typografie",
+   "described": true
+  },
+  "Texthervorhebungsfarbe": {
+   "title": "Texthervorhebungsfarbe",
+   "described": true
+  },
+  "Texthervorhebungsfarbe Gelb": {
+   "title": "Texthervorhebungsfarbe",
+   "described": true
+  },
+  "Schriftfarbe": {
+   "title": "Schriftfarbe",
+   "described": true
+  },
+  "Schriftfarbe Rot": {
+   "title": "Schriftfarbe",
+   "described": true
+  },
+  "Schriftart...": {
+   "title": "Schriftart (Strg+D)",
+   "described": true
+  },
+  "Aufzählungszeichen": {
+   "title": "Aufzählungszeichen",
+   "described": true
+  },
+  "Nummerierung": {
+   "title": "Nummerierung",
+   "described": true
+  },
+  "Liste mit mehreren Ebenen": {
+   "title": "Liste mit mehreren Ebenen",
+   "described": true
+  },
+  "Einzug verkleinern": {
+   "title": "Einzug verkleinern",
+   "described": true
+  },
+  "Einzug vergrößern": {
+   "title": "Einzug vergrößern",
+   "described": true
+  },
+  "Sortieren...": {
+   "title": "Sortieren",
+   "described": true
+  },
+  "Alle anzeigen": {
+   "title": "Alle anzeigen (Strg+()",
+   "described": true
+  },
+  "Linksbündig": {
+   "title": "Linksbündig ausrichten (Strg+L)",
+   "described": true
+  },
+  "Zentriert": {
+   "title": "Zentriert (Strg+E)",
+   "described": true
+  },
+  "Rechtsbündig": {
+   "title": "Rechtsbündig ausrichten (Strg+R)",
+   "described": true
+  },
+  "Blocksatz": {
+   "title": "Blocksatz (Strg+B)",
+   "described": true
+  },
+  "Zeilen- und Absatzabstand": {
+   "title": "Zeilen- und Absatzabstand",
+   "described": true
+  },
+  "Schattierung": {
+   "title": "Schattierung",
+   "described": true
+  },
+  "Schattierung RGB(0, 0, 0)": {
+   "title": "Schattierung",
+   "described": true
+  },
+  "Rahmen": {
+   "title": "Rahmen",
+   "described": true
+  },
+  "Absatz...": {
+   "title": "Absatzeinstellungen",
+   "described": true
+  },
+  "Formatvorlagen": {
+   "title": "Formatvorlagen",
+   "described": true
+  },
+  "Formatvorlagen...": {
+   "title": "Formatvorlagen (Alt+Strg+Umschalt+S)",
+   "described": true
+  },
+  "Bearbeiten": {
+   "title": "Bearbeiten",
+   "described": false
+  },
+  "PDF erstellen": {
+   "title": "PDF erstellen",
+   "described": true
+  },
+  "Diktieren": {
+   "title": "Office-Diktat (Alt+`)",
+   "described": true
+  },
+  "Editor": {
+   "title": "Editor (F7)",
+   "described": true
+  },
+  "Add-Ins": {
+   "title": "Add-Ins",
+   "described": true
+  }
+ },
+ "Einfügen": {
+  "Deckblatt": {
+   "title": "Ein Deckblatt hinzufügen.",
+   "described": true
+  },
+  "Leere Seite": {
+   "title": "Eine leere Seite hinzufügen.",
+   "described": true
+  },
+  "Seitenumbruch": {
+   "title": "Einen Seitenumbruch einfügen. (Strg+Return)",
+   "described": true
+  },
+  "Tabelle": {
+   "title": "Tabelle hinzufügen",
+   "described": true
+  },
+  "Bilder": {
+   "title": "Bilder einfügen",
+   "described": true
+  },
+  "Formen": {
+   "title": "Eine Form zeichnen.",
+   "described": true
+  },
+  "Piktogramme": {
+   "title": "Fügt ein Piktogramm ein.",
+   "described": true
+  },
+  "3D-Modelle": {
+   "title": "3D-Modelle",
+   "described": true
+  },
+  "SmartArt...": {
+   "title": "Eine SmartArt-Grafik einfügen.",
+   "described": true
+  },
+  "Diagramm...": {
+   "title": "Ein Diagramm hinzufügen.",
+   "described": true
+  },
+  "Screenshot": {
+   "title": "Einen Screenshot erstellen",
+   "described": true
+  },
+  "Onlinevideos...": {
+   "title": "Onlinevideos",
+   "described": true
+  },
+  "Link": {
+   "title": "Link",
+   "described": true
+  },
+  "Textmarke...": {
+   "title": "Eine Textmarke einfügen.",
+   "described": true
+  },
+  "Querverweis...": {
+   "title": "Einen Querverweis einfügen.",
+   "described": true
+  },
+  "Kommentar": {
+   "title": "Kommentar einfügen",
+   "described": true
+  },
+  "Kopfzeile": {
+   "title": "Eine Kopfzeile hinzufügen.",
+   "described": true
+  },
+  "Fußzeile": {
+   "title": "Eine Fußzeile hinzufügen.",
+   "described": true
+  },
+  "Seitenzahl": {
+   "title": "Seitenzahlen hinzufügen",
+   "described": true
+  },
+  "Textfeld": {
+   "title": "Ein Textfeld auswählen.",
+   "described": true
+  },
+  "Schnellbausteine": {
+   "title": "Schnellbausteine durchsuchen.",
+   "described": true
+  },
+  "WordArt": {
+   "title": "WordArt einfügen",
+   "described": true
+  },
+  "Initiale": {
+   "title": "Eine Initiale hinzufügen.",
+   "described": true
+  },
+  "Signaturzeile": {
+   "title": "Eine Signaturzeile hinzufügen.",
+   "described": true
+  },
+  "Datum und Uhrzeit...": {
+   "title": "Datum und Uhrzeit",
+   "described": true
+  },
+  "Objekt...": {
+   "title": "Objekt",
+   "described": true
+  },
+  "Formel": {
+   "title": "Eine Formel einfügen. (Alt+=)",
+   "described": true
+  },
+  "Symbol": {
+   "title": "Symbol einfügen",
+   "described": true
+  },
+  "Signaturfelder": {
+   "title": "eSignature-Felder hinzufügen",
+   "described": true
+  }
+ },
+ "Entwurf": {
+  "Designs": {
+   "title": "Designs",
+   "described": true
+  },
+  "Formatvorlagensatz": {
+   "title": "Formatvorlagensatz",
+   "described": true
+  },
+  "Farben": {
+   "title": "Designfarben",
+   "described": true
+  },
+  "Schriftarten": {
+   "title": "Designschriftarten",
+   "described": true
+  },
+  "Absatzabstand": {
+   "title": "Absatzabstand",
+   "described": true
+  },
+  "Effekte": {
+   "title": "Designeffekte",
+   "described": true
+  },
+  "Als Standard festlegen": {
+   "title": "Als Standard festlegen",
+   "described": true
+  },
+  "Wasserzeichen": {
+   "title": "Wasserzeichen",
+   "described": true
+  },
+  "Seitenfarbe": {
+   "title": "Seitenfarbe",
+   "described": true
+  },
+  "Seitenränder...": {
+   "title": "Rahmen und Schattierung",
+   "described": true
+  }
+ },
+ "Layout": {
+  "Seitenränder": {
+   "title": "Seitenränder anpassen.",
+   "described": true
+  },
+  "Ausrichtung": {
+   "title": "Seitenausrichtung ändern.",
+   "described": true
+  },
+  "Format": {
+   "title": "Seitenformat auswählen.",
+   "described": true
+  },
+  "Spalten": {
+   "title": "Spalten hinzufügen oder entfernen.",
+   "described": true
+  },
+  "Umbrüche": {
+   "title": "Seiten- und Abschnittsumbrüche einfügen",
+   "described": true
+  },
+  "Zeilennummern": {
+   "title": "Zeilennummern anzeigen.",
+   "described": true
+  },
+  "Silbentrennung": {
+   "title": "Silbentrennung ändern.",
+   "described": true
+  },
+  "Seite einrichten...": {
+   "title": "Seite einrichten",
+   "described": true
+  },
+  "Absatz...": {
+   "title": "Absatzeinstellungen",
+   "described": true
+  },
+  "Position": {
+   "title": "Objekt positionieren.",
+   "described": true
+  },
+  "Textumbruch": {
+   "title": "Textumbruch",
+   "described": true
+  },
+  "Ebene nach vorne": {
+   "title": "Eine Ebene nach vorne",
+   "described": true
+  },
+  "Ebene nach hinten": {
+   "title": "Eine Ebene nach hinten",
+   "described": true
+  },
+  "Auswahlbereich...": {
+   "title": "Auswahlbereich anzeigen",
+   "described": true
+  },
+  "Ausrichten": {
+   "title": "Objekte ausrichten",
+   "described": true
+  },
+  "Gruppieren": {
+   "title": "Objekte gruppieren",
+   "described": true
+  },
+  "Drehen": {
+   "title": "Objekte drehen",
+   "described": true
+  }
+ },
+ "Referenzen": {
+  "Inhaltsverzeichnis": {
+   "title": "Inhaltsverzeichnis",
+   "described": true
+  },
+  "Text hinzufügen": {
+   "title": "Text hinzufügen",
+   "described": true
+  },
+  "Inhaltsverzeichnis aktualisieren...": {
+   "title": "Inhaltsverzeichnis aktualisieren",
+   "described": true
+  },
+  "Fußnote einfügen": {
+   "title": "Fußnote einfügen (Alt+Strg+F)",
+   "described": true
+  },
+  "Endnote einfügen": {
+   "title": "Endnote einfügen (Alt+Strg+D)",
+   "described": true
+  },
+  "Nächste Fußnote": {
+   "title": "Nächste Fußnote",
+   "described": true
+  },
+  "Notizen anzeigen": {
+   "title": "Notizen anzeigen",
+   "described": true
+  },
+  "Dialogfeld 'Fuß- und Endnote'...": {
+   "title": "Fußnote und Endnote",
+   "described": true
+  },
+  "Zitat einfügen": {
+   "title": "Zitat einfügen",
+   "described": true
+  },
+  "Quellen verwalten...": {
+   "title": "Quellen verwalten",
+   "described": true
+  },
+  "Formatvorlage": {
+   "title": "Literaturverzeichnisformat",
+   "described": true
+  },
+  "Literaturverzeichnis": {
+   "title": "Literaturverzeichnis",
+   "described": true
+  },
+  "Anbieter ändern": {
+   "title": "Anbieter ändern",
+   "described": true
+  },
+  "Beschriftung einfügen...": {
+   "title": "Beschriftung einfügen",
+   "described": true
+  },
+  "Abbildungsverzeichnis einfügen...": {
+   "title": "Abbildungsverzeichnis einfügen",
+   "described": true
+  },
+  "Abbildungsverzeichnis aktualisieren": {
+   "title": "Abbildungsverzeichnis aktualisieren",
+   "described": true
+  },
+  "Querverweis...": {
+   "title": "Einen Querverweis einfügen.",
+   "described": true
+  },
+  "Eintrag markieren...": {
+   "title": "Eintrag markieren (Alt+Umschalt+X)",
+   "described": true
+  },
+  "Index einfügen...": {
+   "title": "Index einfügen",
+   "described": true
+  },
+  "Index aktualisieren": {
+   "title": "Index aktualisieren",
+   "described": true
+  },
+  "Zitat markieren...": {
+   "title": "Zitat markieren (Alt+Umschalt+I)",
+   "described": true
+  },
+  "Rechtsgrundlagenverzeichnis einfügen...": {
+   "title": "Rechtsgrundlagenverzeichnis einfügen",
+   "described": true
+  },
+  "Rechtsgrundlagenverzeichnis aktualisieren": {
+   "title": "Rechtsgrundlagenverzeichnis aktualisieren",
+   "described": true
+  }
+ },
+ "Überprüfen": {
+  "Editor": {
+   "title": "Editor (F7)",
+   "described": true
+  },
+  "Rechtschreibung und Grammatik": {
+   "title": "Rechtschreibung und Grammatik",
+   "described": false
+  },
+  "Thesaurus...": {
+   "title": "Thesaurus (Umschalt+F7)",
+   "described": true
+  },
+  "Wörter zählen": {
+   "title": "Wörter zählen",
+   "described": true
+  },
+  "Laut vorlesen": {
+   "title": "Laut vorlesen (Alt+Strg+Leertaste)",
+   "described": true
+  },
+  "Barrierefreiheit überprüfen": {
+   "title": "Barrierefreiheit überprüfen",
+   "described": true
+  },
+  "Sprache": {
+   "title": "Sprache",
+   "described": false
+  },
+  "Kommentare": {
+   "title": "Kommentare",
+   "described": false
+  },
+  "Sämtliches Markup filtern": {
+   "title": "Filterkommentare",
+   "described": false
+  },
+  "Anzeige zur Überarbeitung": {
+   "title": "Anzeige zur Überarbeitung",
+   "described": true
+  },
+  "Markup anzeigen": {
+   "title": "Markup anzeigen",
+   "described": true
+  },
+  "Überarbeitungsbereich": {
+   "title": "Überarbeitungsbereich",
+   "described": true
+  },
+  "Optionen zum Nachverfolgen von Änderungen...": {
+   "title": "Optionen zum Nachverfolgen von Änderungen",
+   "described": false
+  },
+  "Nachverfolgung": {
+   "title": "Nachverfolgung",
+   "described": false
+  },
+  "Vergleichen": {
+   "title": "Vergleichen",
+   "described": true
+  },
+  "Schützen": {
+   "title": "Schützen",
+   "described": false
+  },
+  "Freihand ausblenden": {
+   "title": "Sämtliche Freihand in Ihrem Dokument ausblenden",
+   "described": false
+  }
+ },
+ "Ansicht": {
+  "Lesemodus": {
+   "title": "Lesemodus",
+   "described": true
+  },
+  "Drucklayout": {
+   "title": "Drucklayout",
+   "described": true
+  },
+  "Weblayout": {
+   "title": "Weblayout",
+   "described": true
+  },
+  "Gliederung": {
+   "title": "Gliederungsansicht",
+   "described": true
+  },
+  "Entwurf": {
+   "title": "Entwurf",
+   "described": true
+  },
+  "Fokus": {
+   "title": "Fokusmodus",
+   "described": true
+  },
+  "Plastischer Reader": {
+   "title": "Plastischer Reader",
+   "described": true
+  },
+  "Vertikal": {
+   "title": "Vertikal",
+   "described": true
+  },
+  "Seitenweise": {
+   "title": "Seitenweise",
+   "described": true
+  },
+  "Lineal": {
+   "title": "Lineal",
+   "described": true
+  },
+  "Gitternetzlinien": {
+   "title": "Gitternetzlinien",
+   "described": true
+  },
+  "Navigationsbereich": {
+   "title": "Navigationsbereich öffnen",
+   "described": true
+  },
+  "Zoom...": {
+   "title": "Zoom",
+   "described": true
+  },
+  "100%": {
+   "title": "100 % (Strg+0)",
+   "described": true
+  },
+  "Eine Seite": {
+   "title": "Eine Seite",
+   "described": true
+  },
+  "Mehrere Seiten": {
+   "title": "Mehrere Seiten",
+   "described": true
+  },
+  "Seitenbreite": {
+   "title": "Seitenbreite",
+   "described": true
+  },
+  "Neues Fenster": {
+   "title": "Neues Fenster",
+   "described": true
+  },
+  "Alle anordnen": {
+   "title": "Alle anordnen",
+   "described": true
+  },
+  "Teilen": {
+   "title": "Teilen",
+   "described": true
+  },
+  "Nebeneinander anzeigen": {
+   "title": "Nebeneinander anzeigen",
+   "described": true
+  },
+  "Synchrones Scrollen": {
+   "title": "Synchrones Scrollen",
+   "described": true
+  },
+  "Fensterposition zurücksetzen": {
+   "title": "Fensterposition zurücksetzen",
+   "described": true
+  },
+  "Fenster wechseln": {
+   "title": "Fenster wechseln",
+   "described": true
+  },
+  "Makros": {
+   "title": "Makros anzeigen (Alt+F8)",
+   "described": true
+  },
+  "Makros anzeigen": {
+   "title": "Makros anzeigen (Alt+F8)",
+   "described": true
+  },
+  "Eigenschaften": {
+   "title": "SharePoint-Eigenschaften",
+   "described": true
+  }
+ },
+ "Bildformat": {
+  "Freistellen": {
+   "title": "Freistellen",
+   "described": true
+  },
+  "Korrekturen": {
+   "title": "Korrekturen",
+   "described": true
+  },
+  "Farbe": {
+   "title": "Farbe",
+   "described": true
+  },
+  "Künstlerische Effekte": {
+   "title": "Künstlerische Effekte",
+   "described": true
+  },
+  "Transparenz": {
+   "title": "Transparenz",
+   "described": true
+  },
+  "Bilder komprimieren...": {
+   "title": "Bilder komprimieren",
+   "described": true
+  },
+  "Bild ändern": {
+   "title": "Bild ändern",
+   "described": true
+  },
+  "Bild zurücksetzen": {
+   "title": "Bild zurücksetzen",
+   "described": true
+  },
+  "Schnellformatvorlagen": {
+   "title": "Bildeffekte",
+   "described": true
+  },
+  "Bildrahmen": {
+   "title": "Bildrahmen",
+   "described": true
+  },
+  "Bildrahmen Dunkelblaugrün, Akzent 1": {
+   "title": "Bildrahmen",
+   "described": true
+  },
+  "Bildeffekte": {
+   "title": "Bildeffekte",
+   "described": true
+  },
+  "Bildlayout": {
+   "title": "In eine SmartArt-Grafik konvertieren",
+   "described": true
+  },
+  "Bild...": {
+   "title": "Grafik formatieren",
+   "described": true
+  },
+  "Alternativtext": {
+   "title": "Alternativtextbereich anzeigen",
+   "described": true
+  },
+  "Position": {
+   "title": "Objekt positionieren.",
+   "described": true
+  },
+  "Textumbruch": {
+   "title": "Textumbruch",
+   "described": true
+  },
+  "Ebene nach vorne": {
+   "title": "Eine Ebene nach vorne",
+   "described": true
+  },
+  "Ebene nach hinten": {
+   "title": "Eine Ebene nach hinten",
+   "described": true
+  },
+  "Auswahlbereich...": {
+   "title": "Auswahlbereich anzeigen",
+   "described": true
+  },
+  "Ausrichten": {
+   "title": "Objekte ausrichten",
+   "described": true
+  },
+  "Gruppieren": {
+   "title": "Objekte gruppieren",
+   "described": true
+  },
+  "Drehen": {
+   "title": "Objekte drehen",
+   "described": true
+  },
+  "Zuschneiden": {
+   "title": "Zuschneiden",
+   "described": true
+  },
+  "Größe und Position...": {
+   "title": "Erweitertes Layout: Größe",
+   "described": true
+  }
+ },
+ "Formformat": {
+  "Formen": {
+   "title": "Formen",
+   "described": true
+  },
+  "Form bearbeiten": {
+   "title": "Form bearbeiten",
+   "described": true
+  },
+  "Textfeld erstellen": {
+   "title": "Textfeld",
+   "described": true
+  },
+  "Schnellformatvorlagen": {
+   "title": "WordArt-Schnellformatvorlagen",
+   "described": true
+  },
+  "Fülleffekt": {
+   "title": "Fülleffekt",
+   "described": true
+  },
+  "Fülleffekt Orange, Akzent 2": {
+   "title": "Fülleffekt",
+   "described": true
+  },
+  "Formkontur": {
+   "title": "Formkontur",
+   "described": true
+  },
+  "Formkontur Dunkelblaugrün, Akzent 1": {
+   "title": "Formkontur",
+   "described": true
+  },
+  "Formeffekte": {
+   "title": "Formeffekte",
+   "described": true
+  },
+  "Objekt formatieren...": {
+   "title": "Form formatieren",
+   "described": true
+  },
+  "Textfüllung": {
+   "title": "Textfüllung",
+   "described": true
+  },
+  "Textkontur": {
+   "title": "Textkontur",
+   "described": true
+  },
+  "Texteffekte": {
+   "title": "Texteffekte",
+   "described": true
+  },
+  "Texteffekte formatieren...": {
+   "title": "Texteffekte formatieren: Textfeld",
+   "described": true
+  },
+  "Textrichtung": {
+   "title": "Textrichtung",
+   "described": true
+  },
+  "Text ausrichten": {
+   "title": "Text ausrichten",
+   "described": true
+  },
+  "Verknüpfung erstellen": {
+   "title": "Verknüpfung erstellen",
+   "described": true
+  },
+  "Alternativtext": {
+   "title": "Alternativtextbereich anzeigen",
+   "described": true
+  },
+  "Position": {
+   "title": "Objekt positionieren.",
+   "described": true
+  },
+  "Textumbruch": {
+   "title": "Textumbruch",
+   "described": true
+  },
+  "Ebene nach vorne": {
+   "title": "Ebene nach vorne",
+   "described": true
+  },
+  "Ebene nach hinten": {
+   "title": "Ebene nach hinten",
+   "described": true
+  },
+  "Auswahlbereich...": {
+   "title": "Auswahlbereich anzeigen",
+   "described": true
+  },
+  "Ausrichten": {
+   "title": "Objekte ausrichten",
+   "described": true
+  },
+  "Gruppieren": {
+   "title": "Objekte gruppieren",
+   "described": true
+  },
+  "Drehen": {
+   "title": "Objekte drehen",
+   "described": true
+  },
+  "Größe": {
+   "title": "Größe",
+   "described": false
+  }
+ },
+ "Tabellenentwurf": {
+  "Kopfzeile": {
+   "title": "Kopfzeile",
+   "described": true
+  },
+  "Ergebniszeile": {
+   "title": "Ergebniszeile",
+   "described": true
+  },
+  "Gebänderte Zeilen": {
+   "title": "Gebänderte Zeilen",
+   "described": true
+  },
+  "Erste Spalte": {
+   "title": "Erste Spalte",
+   "described": true
+  },
+  "Letzte Spalte": {
+   "title": "Letzte Spalte",
+   "described": true
+  },
+  "Gebänderte Spalten": {
+   "title": "Gebänderte Spalten",
+   "described": true
+  },
+  "Tabellenformatvorlagen": {
+   "title": "Tabellenformatvorlagen",
+   "described": true
+  },
+  "Schattierung": {
+   "title": "Schattierung",
+   "described": true
+  },
+  "Schattierung RGB(0, 0, 0)": {
+   "title": "Schattierung",
+   "described": true
+  },
+  "Rahmenarten": {
+   "title": "Rahmenarten",
+   "described": true
+  },
+  "Stiftart": {
+   "title": "Stiftart",
+   "described": true
+  },
+  "Stiftstärke": {
+   "title": "Stiftstärke",
+   "described": true
+  },
+  "Stiftfarbe": {
+   "title": "Stiftfarbe",
+   "described": true
+  },
+  "Stiftfarbe RGB(0, 0, 0)": {
+   "title": "Stiftfarbe",
+   "described": true
+  },
+  "Rahmen": {
+   "title": "Rahmen",
+   "described": true
+  },
+  "Rahmen übertragen": {
+   "title": "Rahmen übertragen",
+   "described": true
+  },
+  "Rahmen und Schattierung...": {
+   "title": "Rahmen und Schattierung",
+   "described": true
+  }
+ },
+ "Tabellenlayout": {
+  "Auswählen": {
+   "title": "Tabelle auswählen",
+   "described": true
+  },
+  "Gitternetzlinien anzeigen": {
+   "title": "Tabellen-Gitternetzlinien anzeigen",
+   "described": true
+  },
+  "Eigenschaften...": {
+   "title": "Tabelleneigenschaften",
+   "described": true
+  },
+  "Tabelle zeichnen": {
+   "title": "Tabelle zeichnen",
+   "described": true
+  },
+  "Radierer": {
+   "title": "Tabellenradierer",
+   "described": true
+  },
+  "Löschen": {
+   "title": "Tabelle löschen",
+   "described": true
+  },
+  "Zeile Oberhalb": {
+   "title": "Zeilen oberhalb einfügen",
+   "described": true
+  },
+  "Zeile unterhalb einfügen": {
+   "title": "Zeilen unterhalb einfügen",
+   "described": true
+  },
+  "Spalte Links": {
+   "title": "Spalten links einfügen",
+   "described": true
+  },
+  "Spalte rechts einfügen": {
+   "title": "Spalten rechts einfügen",
+   "described": true
+  },
+  "Zellen einfügen...": {
+   "title": "Tabellenzellen einfügen",
+   "described": true
+  },
+  "Zellen verbinden": {
+   "title": "Zellen verbinden",
+   "described": true
+  },
+  "Zellen teilen...": {
+   "title": "Zellen teilen",
+   "described": true
+  },
+  "Tabelle teilen": {
+   "title": "Tabelle teilen",
+   "described": true
+  },
+  "AutoAnpassen": {
+   "title": "AutoAnpassen",
+   "described": true
+  },
+  "Zeilen verteilen": {
+   "title": "Zeilen verteilen",
+   "described": true
+  },
+  "Spalten verteilen": {
+   "title": "Spalten verteilen",
+   "described": true
+  },
+  "Oben links ausrichten": {
+   "title": "Oben links ausrichten",
+   "described": true
+  },
+  "Oben zentriert ausrichten": {
+   "title": "Oben zentriert ausrichten",
+   "described": true
+  },
+  "Oben rechts ausrichten": {
+   "title": "Oben rechts ausrichten",
+   "described": true
+  },
+  "Mitte links ausrichten": {
+   "title": "Mitte links ausrichten",
+   "described": true
+  },
+  "Zentriert ausrichten": {
+   "title": "Zentriert ausrichten",
+   "described": true
+  },
+  "Mitte rechts ausrichten": {
+   "title": "Mitte rechts ausrichten",
+   "described": true
+  },
+  "Unten links ausrichten": {
+   "title": "Unten links ausrichten",
+   "described": true
+  },
+  "Unten Mitte ausrichten": {
+   "title": "Unten Mitte ausrichten",
+   "described": true
+  },
+  "Unten rechts ausrichten": {
+   "title": "Unten rechts ausrichten",
+   "described": true
+  },
+  "Textrichtung": {
+   "title": "Textrichtung",
+   "described": true
+  },
+  "Zellenbegrenzungen...": {
+   "title": "Zellenbegrenzungen",
+   "described": true
+  },
+  "Daten": {
+   "title": "Tabellendaten",
+   "described": false
+  }
+ },
+ "Formel": {
+  "Formel": {
+   "title": "Eine Formel einfügen. (Alt+=)",
+   "described": true
+  },
+  "Freihandgleichung": {
+   "title": "Freihandgleichung",
+   "described": true
+  },
+  "Unicode": {
+   "title": "Unicode-Eingabe",
+   "described": true
+  },
+  "LaTeX": {
+   "title": "LaTeX-Eingabe",
+   "described": true
+  },
+  "Text": {
+   "title": "Text",
+   "described": true
+  },
+  "Konvertieren": {
+   "title": "Mathematische Bereiche konvertieren",
+   "described": true
+  },
+  "Formeloptionen...": {
+   "title": "Formeloptionen",
+   "described": true
+  },
+  "Formelsymbole": {
+   "title": "Formelsymbole",
+   "described": true
+  },
+  "Bruch": {
+   "title": "Bruch",
+   "described": true
+  },
+  "Hoch/Tief": {
+   "title": "Hoch/Tief",
+   "described": true
+  },
+  "Wurzel": {
+   "title": "Wurzel",
+   "described": true
+  },
+  "Integral": {
+   "title": "Integral",
+   "described": true
+  },
+  "Großer Operator": {
+   "title": "Großer Operator",
+   "described": true
+  },
+  "Eckige Klammer": {
+   "title": "Eckige Klammer",
+   "described": true
+  },
+  "Funktion": {
+   "title": "Funktion",
+   "described": true
+  },
+  "Akzent": {
+   "title": "Akzent",
+   "described": true
+  },
+  "Grenzwert und Logarithmus": {
+   "title": "Grenzwert und Logarithmus",
+   "described": true
+  },
+  "Operator": {
+   "title": "Operator",
+   "described": true
+  },
+  "Matrix": {
+   "title": "Matrix",
+   "described": true
+  }
+ }
+}

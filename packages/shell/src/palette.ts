@@ -11,6 +11,13 @@ const THEME = [
   ["5B9BD5", "Blau, Akzent 5"], ["70AD47", "Grün, Akzent 6"],
 ] as const;
 
+/** Word's names for the colours of the current Office theme (2023), which files without a theme part get. */
+const THEME_2023 = [
+  ["FFFFFF", "Weiß, Hintergrund 1"], ["000000", "Schwarz, Text 1"], ["E8E8E8", "Hellgrau, Hintergrund 2"], ["0E2841", "Dunkelblau, Text 2"],
+  ["156082", "Dunkelblaugrün, Akzent 1"], ["E97132", "Orange, Akzent 2"], ["196B24", "Dunkelgrün, Akzent 3"], ["0F9ED5", "Türkis, Akzent 4"],
+  ["A02B93", "Pflaume, Akzent 5"], ["4EA72E", "Grün, Akzent 6"],
+] as const;
+
 const STANDARD = [
   ["C00000", "Dunkelrot"], ["FF0000", "Rot"], ["FFC000", "Orange"], ["FFFF00", "Gelb"], ["92D050", "Hellgrün"],
   ["00B050", "Grün"], ["00B0F0", "Hellblau"], ["0070C0", "Blau"], ["002060", "Dunkelblau"], ["7030A0", "Lila"],
@@ -56,10 +63,14 @@ function fromHsl(hu: number, s: number, l: number): string {
 
 function variants(hex: string): { hex: string; label: string }[] {
   const [hu, s, l] = toHsl(hex);
-  const lighter = (p: number) => ({ hex: fromHsl(hu, s, l + (1 - l) * p), label: `heller ${Math.round(p * 100)} %` });
-  const darker = (p: number) => ({ hex: fromHsl(hu, s, l * (1 - p)), label: `dunkler ${Math.round(p * 100)} %` });
-  if (l > 0.9) return [darker(0.05), darker(0.15), darker(0.25), darker(0.35), darker(0.5)];
-  if (l < 0.1) return [lighter(0.5), lighter(0.35), lighter(0.25), lighter(0.15), lighter(0.05)];
+  const lighter = (p: number) => ({ hex: fromHsl(hu, s, l + (1 - l) * p), label: `heller ${Math.round(p * 100)}%` });
+  const darker = (p: number) => ({ hex: fromHsl(hu, s, l * (1 - p)), label: `dunkler ${Math.round(p * 100)}%` });
+  // Word's rows (recorded 2026-10-14): white and black have their own, other very light and
+  // very dark colours a wider range.
+  if (l > 0.999) return [darker(0.05), darker(0.15), darker(0.25), darker(0.35), darker(0.5)];
+  if (l < 0.001) return [lighter(0.5), lighter(0.35), lighter(0.25), lighter(0.15), lighter(0.05)];
+  if (l > 0.8) return [darker(0.1), darker(0.25), darker(0.5), darker(0.75), darker(0.9)];
+  if (l < 0.2) return [lighter(0.9), lighter(0.75), lighter(0.5), lighter(0.25), lighter(0.1)];
   return [lighter(0.8), lighter(0.6), lighter(0.4), darker(0.25), darker(0.5)];
 }
 
@@ -68,17 +79,17 @@ const ORDER: [string, string, string][] = [["lt1", "background1", "Hintergrund 1
   ...[1, 2, 3, 4, 5, 6].map((i): [string, string, string] => [`accent${i}`, `accent${i}`, `Akzent ${i}`])];
 
 /**
- * Theme colours with their labels and WordprocessingML references: the Office 2013–2022 names
- * for that theme, otherwise "Text 1", "Akzent 2" … (Word names colours of other themes by hue).
+ * Theme colours with their labels and WordprocessingML references: Word's names for the Office
+ * 2013–2022 and 2023 themes, otherwise "Text 1", "Akzent 2" … (Word names other themes' colours by hue).
  */
 function themeEntries(theme?: Readonly<Record<string, string>>): { hex: string; label: string; ref: string }[] {
-  const office = !theme || ORDER.every(([k], i) => (theme[k] ?? "").toUpperCase() === THEME[i][0]);
-  return ORDER.map(([k, ref, name], i) => ({ hex: office ? THEME[i][0] : (theme![k] ?? THEME[i][0]).toUpperCase(), label: office ? THEME[i][1] : name, ref }));
+  const known = [THEME, THEME_2023].find((set) => (!theme && set === THEME) || (theme && ORDER.every(([k], i) => (theme[k] ?? "").toUpperCase() === set[i][0])));
+  return ORDER.map(([k, ref, name], i) => ({ hex: known ? known[i][0] : (theme![k] ?? THEME[i][0]).toUpperCase(), label: known ? known[i][1] : name, ref }));
 }
 
-/** w:themeTint / w:themeShade for a palette variant ("heller 80 %" is tint 33, "dunkler 25 %" shade BF). */
+/** w:themeTint / w:themeShade for a palette variant ("heller 80%" is tint 33, "dunkler 25%" shade BF). */
 function variantRef(ref: string, label: string): string {
-  const m = /(heller|dunkler) (\d+) %/.exec(label);
+  const m = /(heller|dunkler) (\d+) ?%/.exec(label);
   if (!m) return `w:themeColor="${ref}"`;
   const v = Math.round((1 - Number(m[2]) / 100) * 255).toString(16).toUpperCase().padStart(2, "0");
   return `w:themeColor="${ref}" w:${m[1] === "heller" ? "themeTint" : "themeShade"}="${v}"`;

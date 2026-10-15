@@ -44,6 +44,34 @@ function letters(n: number): string {
 
 const ORDINAL_DE = (n: number) => `${n}.`;
 
+const ONES = ["", "eins", "zwei", "drei", "vier", "fünf", "sechs", "sieben", "acht", "neun", "zehn", "elf", "zwölf", "dreizehn", "vierzehn", "fünfzehn", "sechzehn", "siebzehn", "achtzehn", "neunzehn"];
+const TENS = ["", "", "zwanzig", "dreißig", "vierzig", "fünfzig", "sechzig", "siebzig", "achtzig", "neunzig"];
+
+/** German number words as Word writes them (cardinalText, lower case; "ein" inside compounds). */
+function wordsDe(n: number): string {
+  if (n <= 0) return "null";
+  if (n >= 1000) return String(n);
+  const h = Math.floor(n / 100), r = n % 100;
+  const head = h ? `${h === 1 ? "ein" : ONES[h]}hundert` : "";
+  if (!r) return head;
+  if (r < 20) return head + (r === 1 && h ? "eins" : ONES[r]);
+  const t = Math.floor(r / 10), o = r % 10;
+  return head + (o ? `${o === 1 ? "ein" : ONES[o]}und` : "") + TENS[t];
+}
+
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+/** German ordinal words (ordinalText): Erste, Zweite, Dritte … Zwanzigste. */
+function ordinalWordsDe(n: number): string {
+  const r = n % 100;
+  if (r > 0 && r < 20) {
+    const stem = r === 1 ? "ers" : r === 3 ? "drit" : r === 7 ? "sieb" : r === 8 ? "ach" : ONES[r];
+    const head = n - r ? wordsDe(n - r) : "";
+    return `${head}${stem}te`;
+  }
+  return `${wordsDe(n)}ste`;
+}
+
 export function formatNumber(n: number, format: string): string {
   switch (format) {
     case "decimal": return String(n);
@@ -53,9 +81,15 @@ export function formatNumber(n: number, format: string): string {
     case "lowerRoman": return roman(n);
     case "upperRoman": return roman(n).toUpperCase();
     case "ordinal": return ORDINAL_DE(n);
+    case "cardinalText": return cap(wordsDe(n));
+    case "ordinalText": return cap(ordinalWordsDe(n));
     case "none": return "";
     case "bullet": return "";
-    default: return String(n);
+    default: {
+      // Word 2010's custom formats ("001, 002, 003, ..."): zero-padded numbers.
+      const m = /^custom:(0+)1\b/.exec(format);
+      return m ? String(n).padStart(m[1].length + 1, "0") : String(n);
+    }
   }
 }
 

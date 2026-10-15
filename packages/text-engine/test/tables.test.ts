@@ -38,6 +38,33 @@ describe("Zellen löschen (as recorded in Word)", () => {
   });
 });
 
+describe("Tabellenlayout (Step 4c F, as recorded in Word: results/2026-10-15-word-table-layout.json)", () => {
+  const texts = (doc: Doc) => doc.paras.map((p) => (p.cell ? `[${p.cell.row + 1},${p.cell.col + 1}]` : "") + p.text).join("|");
+  it("Zellen einfügen: nach rechts makes the row longer", () => {
+    const doc = table();
+    E.insertCells(doc, first(doc), { r1: 1, r2: 1, c1: 1, c2: 1 }, "right");
+    expect(cells(doc)).toBe("1,1:Z1S1 1,2:Z1S2 1,3:Z1S3 2,1:Z2S1 2,2: 2,3:Z2S2 2,4:Z2S3 3,1:Z3S1 3,2:Z3S2 3,3:Z3S3");
+  });
+  it("Zellen einfügen: nach unten moves the column's contents down into a new row", () => {
+    const doc = table();
+    E.insertCells(doc, first(doc), { r1: 1, r2: 1, c1: 1, c2: 1 }, "down");
+    expect(cells(doc)).toBe("1,1:Z1S1 1,2:Z1S2 1,3:Z1S3 2,1:Z2S1 2,2: 2,3:Z2S3 3,1:Z3S1 3,2:Z2S2 3,3:Z3S3 4,1: 4,2:Z3S2 4,3:");
+  });
+  it("Tabelle teilen puts an empty paragraph between the halves, or before the table in its first row", () => {
+    let doc = table();
+    E.splitTable(doc, first(doc) + 3);
+    expect(texts(doc)).toBe("Vor|[1,1]Z1S1|[1,2]Z1S2|[1,3]Z1S3||[1,1]Z2S1|[1,2]Z2S2|[1,3]Z2S3|[2,1]Z3S1|[2,2]Z3S2|[2,3]Z3S3|");
+    doc = table();
+    E.splitTable(doc, first(doc));
+    expect(texts(doc).startsWith("Vor||[1,1]Z1S1")).toBe(true);
+  });
+  it("In Text konvertieren joins each row's cells with the separator", () => {
+    const doc = table();
+    E.tableToText(doc, first(doc), "	");
+    expect(texts(doc)).toBe("Vor|Z1S1	Z1S2	Z1S3|Z2S1	Z2S2	Z2S3|Z3S1	Z3S2	Z3S3|");
+  });
+});
+
 describe("table style borders (Word's rules)", () => {
   const line = (color: string, size = 0.5) => ({ style: "single", size, color, space: 0 });
   const look = { firstRow: true, lastRow: false, firstColumn: true, lastColumn: false, noHBand: false, noVBand: true };

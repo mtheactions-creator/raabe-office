@@ -57,13 +57,15 @@ export function designFeature(api: AppApi) {
     !!a && !!b && Object.keys(OFFICE_2013_COLORS).every((k) => (a[k] ?? "").toUpperCase() === (b[k] ?? "").toUpperCase());
 
   // ----- Designs ---------------------------------------------------------------------------------
+  // Word's gallery names the old Office theme "Office 2013 – 2022-Design" (its colours and fonts without "-Design").
+  const tileName = (name: string) => (name === "Office 2013 – 2022" ? `${name}-Design` : name);
   const themeTile = (t: { name: string; colors: Readonly<Record<string, string>>; major: string; minor: string }, active: boolean, pick: () => void) =>
-    h("button", { class: `dz-theme${active ? " active" : ""}`, "data-tip": t.name, "aria-label": t.name, onclick: pick },
+    h("button", { class: `dz-theme${active ? " active" : ""}`, "data-tip": tileName(t.name), "aria-label": tileName(t.name), onclick: pick },
       h("span", { class: "dz-page" },
         h("span", { class: "dz-aa", style: `font-family:"${t.major}";color:#${t.colors.dk2 ?? "000"}` }, "Aa"),
         h("span", { class: "dz-bars" }, ...["accent1", "accent2", "accent3", "accent4", "accent5", "accent6"].map((k) => h("i", { style: `background:#${t.colors[k]}` }))),
         h("span", { class: "dz-lines" }, h("i"), h("i"), h("i"))),
-      h("span", { class: "dz-name" }, t.name));
+      h("span", { class: "dz-name" }, tileName(t.name)));
 
   const themesPanel = (close: () => void) => {
     const e = ed();
@@ -183,7 +185,7 @@ export function designFeature(api: AppApi) {
     const e = ed();
     const cur = e ? themeOf(e) : OFFICE_2013;
     const row = (name: string, major: string, minor: string) =>
-      h("button", { class: `dz-frow${cur.majorFont === major && cur.minorFont === minor ? " active" : ""}`, onclick: () => { close(); apply((x) => x.setTheme({ ...themeOf(x), majorFont: major, minorFont: minor, fontName: name })); } },
+      h("button", { class: `dz-frow${cur.majorFont === major && cur.minorFont === minor ? " active" : ""}`, "aria-label": `${name}, Überschriftenschriftart: ${major}, Textschriftart: ${minor}`, onclick: () => { close(); apply((x) => x.setTheme({ ...themeOf(x), majorFont: major, minorFont: minor, fontName: name })); } },
         h("span", { class: "dz-faa" }, h("span", { style: `font-family:"${major}"` }, "A"), h("span", { style: `font-family:"${minor}"` }, "a")),
         h("span", { class: "dz-ftext" }, h("b", null, name), h("span", { style: `font-family:"${major}";font-size:15px` }, major), h("span", { style: `font-family:"${minor}"` }, minor)));
     const custom = load<{ major: string; minor: string }>(FONTS_KEY);

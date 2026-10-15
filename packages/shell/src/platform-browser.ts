@@ -45,6 +45,7 @@ export function browserPlatform(): Platform {
       input.click();
     }),
     saveFileDialog: async (name) => name,
+    saveAnyDialog: async (_title, name) => name,
     readFile: async (path) => {
       const f = files.get(path);
       if (!f) throw new Error(`Datei nicht gefunden: ${path}`);

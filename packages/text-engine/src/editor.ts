@@ -6,7 +6,7 @@ import { alphaPolygon, BOX, outlinePolygon } from "./wrap-polygon";
 import { DEFAULT_MATH, Doc, MAIN, cmp, maxPos, minPos, type DocSettings, type DocSnapshot, type DocState, type Hyphenation, type MathSettings, type Pos } from "./doc";
 import { hyphenatorFor, onHyphenationReady } from "./hyphen";
 import { Fonts, PT } from "./fonts";
-import { layoutDocument, type FlowInput, type Layout } from "./flow";
+import { DEFAULT_CELL_MARGINS, layoutDocument, type FlowInput, type Layout } from "./flow";
 import { Layouter, type LayoutContext } from "./layout";
 import { markInputHandled } from "./probe";
 import {
@@ -3002,6 +3002,27 @@ export class Editor {
     return { numberPos: left + first, textIndent: left, suffix: found.level.suffix, bullet: found.level.format === "bullet" };
   }
 
+  /** The definition of the caret's list level and its level number, or null outside lists. */
+  listLevelDef(): { level: import("./model").NumLevel; ilvl: number } | null {
+    const n = numberingOf(this.doc.paras[this.sel.head.p].props, this.doc.styles);
+    const found = n ? levelOf(this.doc.numbering, n.numId, n.ilvl) : null;
+    return n && found ? { level: found.level, ilvl: n.ilvl } : null;
+  }
+
+  /** Changes the caret's list level for every item of it (Neues Aufzählungszeichen/Zahlenformat definieren). */
+  updateListLevel(change: (l: import("./model").NumLevel) => import("./model").NumLevel): void {
+    const n = numberingOf(this.doc.paras[this.sel.head.p].props, this.doc.styles);
+    const found = n ? levelOf(this.doc.numbering, n.numId, n.ilvl) : null;
+    if (!n || !found) return;
+    this.edit(() => {
+      const abs = found.abstract;
+      const levels = abs.levels.map((l, i) => (i === n.ilvl ? { ...change(l), data: undefined } : l));
+      const abstracts = new Map(this.doc.numbering.abstracts);
+      abstracts.set(abs.id, { ...abs, levels, data: undefined });
+      this.doc.setNumbering({ ...this.doc.numbering, abstracts });
+    });
+  }
+
   /** Listeneinzug anpassen: changes the caret's list level (all items of that level). */
   setListLevelIndent(numberPos: number, textIndent: number, suffix: "tab" | "space" | "nothing"): void {
     const para = this.doc.paras[this.sel.head.p];
@@ -3086,6 +3107,113 @@ export class Editor {
     if (!b) return;
     const block = { r1: b.r1, r2: b.r2, c1: b.c1, c2: b.c2 };
     this.tableOp((p) => E.deleteCells(this.doc, p, block, mode));
+  }
+
+  /** Zellen einfügen (Word's dialog): new cells moving the others right or down, or a whole row or column. */
+  insertCells(mode: "right" | "down" | "row" | "column"): void {
+    if (mode === "row") { this.insertRows("above"); return; }
+    if (mode === "column") { this.insertColumns("left"); return; }
+    const b = this.cellBlock();
+    if (!b) return;
+    const block = { r1: b.r1, r2: b.r2, c1: b.c1, c2: b.c2 };
+    this.tableOp((p) => E.insertCells(this.doc, p, block, mode));
+  }
+
+  /** Tabelle teilen: the rows from the caret's row on become a table of their own. */
+  splitTable(): void { this.tableOp((p) => E.splitTable(this.doc, p)); }
+
+  /** In Text konvertieren: the table becomes text, cells separated by `sep` ("\n": paragraphs). */
+  tableToText(sep: string): void { this.tableOp((p) => E.tableToText(this.doc, p, sep)); }
+
+  /**
+   * AutoAnpassen (Word's three choices, recorded 2026-10-15): "contents" gives every column the
+   * room its widest content needs, at most the text width (shared out between the columns'
+   * longest words and their whole lines as a browser does), with automatic widths; "window"
+   * stretches the table to the text width (Word: tblW 100 %); "fixed" keeps the widths
+   * (tblLayout fixed).
+   */
+  autofitTable(mode: "contents" | "window" | "fixed"): void {
+    const def = this.tableDef();
+    if (!def) return;
+    const NUL = String.fromCharCode(0);
+    const withExtra = (extra: readonly unknown[] | undefined, name: string, xml: string | null) => {
+      const keep = (extra ?? []).filter((e) => !(typeof e === "string" && e.startsWith(name + NUL)));
+      return xml ? [...keep, `${name}${NUL}${xml}`] : keep;
+    };
+    const tcW = (c: CellDef, xml: string | null): CellDef => ({ ...c, width: undefined, extra: withExtra(c.extra, "tcW", xml) });
+    // The room of the column the table stands in (the caret's frame is the cell).
+    const sect = this.doc.sectionOf(this.sel.head.p);
+    const pg = sect.page, cols = sect.columns;
+    const text = pg.width - pg.marginLeft - pg.marginRight - (pg.gutter ?? 0);
+    const column = cols.count > 1 ? cols.cols?.[0]?.width ?? (text - cols.space * (cols.count - 1)) / cols.count : text;
+    const avail = column - (def.indent ?? 0);
+    if (mode === "fixed") {
+      this.updateTable((d) => ({ ...d, extra: withExtra(d.extra, "tblLayout", '<w:tblLayout w:type="fixed"/>') }));
+      return;
+    }
+    if (mode === "window") {
+      const total = def.grid.reduce((s, x) => s + x, 0) || 1;
+      this.updateTable((d) => ({
+        ...d, grid: d.grid.map((g) => (g * avail) / total),
+        rows: d.rows.map((r) => ({ ...r, cells: r.cells.map((c) => tcW(c, null)) })),
+        extra: withExtra(withExtra(d.extra, "tblLayout", null), "tblW", '<w:tblW w:w="5000" w:type="pct"/>'),
+      }));
+      return;
+    }
+    // Inhalt: the widest line and the longest word of every single-column cell.
+    const style = this.doc.styles.tableStyle(def.style ?? "");
+    const m = { ...DEFAULT_CELL_MARGINS, ...(style?.cellMargins ?? {}), ...(def.cellMargins ?? {}) };
+    const n = def.grid.length;
+    const most = new Array<number>(n).fill(0), least = new Array<number>(n).fill(0);
+    const range = this.doc.tableRange(this.sel.head.p, def);
+    if (!range) return;
+    for (let i = range[0]; i <= range[1]; i++) {
+      const para = this.doc.paras[i];
+      const cell = para.cell!;
+      const cd = def.rows[cell.row]?.cells[cell.col];
+      if (!cd || Math.max(1, cd.span) > 1) continue;
+      const g = def.rows[cell.row].cells.slice(0, cell.col).reduce((s, c) => s + Math.max(1, c.span), 0);
+      if (g >= n) continue;
+      const pl = this.layouter.paragraph(para, { width: 1e6 });
+      for (const line of pl.lines) {
+        most[g] = Math.max(most[g], (line.x0 + line.width) / PT + pl.rp.indRight);
+        let start = 0;
+        for (let k = 0; k <= line.end - line.start; k++) {
+          const ch = para.text[line.start + k];
+          if (k === line.end - line.start || ch === " " || ch === "\t") {
+            least[g] = Math.max(least[g], (line.charX[k] - line.charX[start]) / PT + (start === 0 ? line.x0 / PT : 0));
+            start = k + 1;
+          }
+        }
+      }
+    }
+    const pad = m.left + m.right;
+    const hi = most.map((w) => w + pad), lo = least.map((w, g) => Math.min(w, most[g]) + pad);
+    const sumHi = hi.reduce((s, x) => s + x, 0), sumLo = lo.reduce((s, x) => s + x, 0);
+    const grid = sumHi <= avail ? hi : sumLo >= avail ? lo : lo.map((w, g) => w + ((hi[g] - w) * (avail - sumLo)) / (sumHi - sumLo));
+    this.updateTable((d) => ({
+      ...d, grid,
+      rows: d.rows.map((r) => ({ ...r, cells: r.cells.map((c) => tcW(c, '<w:tcW w:w="0" w:type="auto"/>')) })),
+      extra: withExtra(withExtra(d.extra, "tblLayout", null), "tblW", null),
+    }));
+  }
+
+  /** Tabellenoptionen: the table's default cell margins (points) and Automatische Größenänderung zulassen. */
+  tableOptions(): { top: number; bottom: number; left: number; right: number; autoResize: boolean } | null {
+    const def = this.tableDef();
+    if (!def) return null;
+    const style = this.doc.styles.tableStyle(def.style ?? "");
+    const m = { ...DEFAULT_CELL_MARGINS, ...(style?.cellMargins ?? {}), ...(def.cellMargins ?? {}) };
+    const fixed = (def.extra ?? []).some((e) => typeof e === "string" && e.startsWith("tblLayout") && e.includes('w:type="fixed"'));
+    return { top: m.top, bottom: m.bottom, left: m.left, right: m.right, autoResize: !fixed };
+  }
+
+  setTableOptions(o: { top: number; bottom: number; left: number; right: number; autoResize: boolean }): void {
+    const NUL = String.fromCharCode(0);
+    this.updateTable((d) => {
+      const extra = (d.extra ?? []).filter((e) => !(typeof e === "string" && e.startsWith("tblLayout" + NUL)));
+      return { ...d, cellMargins: { top: o.top, bottom: o.bottom, left: o.left, right: o.right }, extra: o.autoResize ? extra : [...extra, `tblLayout${NUL}<w:tblLayout w:type="fixed"/>`] };
+    });
   }
 
   wholeTableSelected(): boolean {

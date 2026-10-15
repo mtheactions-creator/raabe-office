@@ -1,0 +1,156 @@
+{
+ "symbol menu": {
+  "word": 21,
+  "missing": [],
+  "explained": {
+   "Symbol: 183": "recently used symbols differ per user",
+   "White Square": "recently used symbols differ per user",
+   "Latin Capital Letter O With Stroke": "recently used symbols differ per user"
+  }
+ },
+ "citation menu": {
+  "word": 2,
+  "missing": [],
+  "explained": {}
+ },
+ "citation style menu": {
+  "word": 12,
+  "missing": [],
+  "explained": {}
+ },
+ "bibliography menu": {
+  "word": 4,
+  "missing": [],
+  "explained": {}
+ },
+ "themes menu": {
+  "word": 34,
+  "missing": [],
+  "explained": {}
+ },
+ "colors menu": {
+  "word": 25,
+  "missing": [],
+  "explained": {}
+ },
+ "fonts menu": {
+  "word": 27,
+  "missing": [],
+  "explained": {}
+ },
+ "paragraph spacing menu": {
+  "word": 8,
+  "missing": [],
+  "explained": {}
+ },
+ "effects menu": {
+  "word": 15,
+  "missing": [],
+  "explained": {}
+ },
+ "watermark menu": {
+  "word": 16,
+  "missing": [],
+  "explained": {}
+ },
+ "page color menu": {
+  "word": 73,
+  "missing": [],
+  "explained": {}
+ },
+ "hyphenation menu": {
+  "word": 4,
+  "missing": [],
+  "explained": {}
+ },
+ "text effects menu": {
+  "word": 22,
+  "missing": [],
+  "explained": {}
+ },
+ "select menu": {
+  "word": 4,
+  "missing": [],
+  "explained": {}
+ },
+ "reviewing pane menu": {
+  "word": 2,
+  "missing": [],
+  "explained": {}
+ },
+ "line numbers menu": {
+  "word": 6,
+  "missing": [],
+  "explained": {}
+ },
+ "case menu": {
+  "word": 5,
+  "missing": [],
+  "explained": {}
+ },
+ "line spacing menu": {
+  "word": 9,
+  "missing": [],
+  "explained": {
+   "Abstand vor Absatz entfernen": "depends on the paragraph (hinzufügen when there is none)"
+  }
+ },
+ "cover page gallery": {
+  "word": 19,
+  "missing": [],
+  "explained": {
+   "*": "RaabeWrite's own cover pages for school work (D-048)"
+  }
+ },
+ "context text": {
+  "word": 10,
+  "missing": [],
+  "explained": {
+   "Copy Link to Location...": "cloud documents only"
+  }
+ },
+ "context list": {
+  "word": 13,
+  "missing": [],
+  "explained": {
+   "Copy Link to Location...": "cloud documents only"
+  }
+ },
+ "context table": {
+  "word": 14,
+  "missing": [],
+  "explained": {
+   "Copy Link to Location...": "cloud documents only"
+  }
+ },
+ "context table-cells": {
+  "word": 13,
+  "missing": [],
+  "explained": {
+   "Auswahl im Editor überprüfen": "Word's Editor pane (cloud); F7 checks spelling"
+  }
+ },
+ "context picture": {
+  "word": 16,
+  "missing": [],
+  "explained": {
+   "In Office Math konvertieren": "handwriting conversion, not planned",
+   "Alle in Office Math konvertieren": "handwriting conversion, not planned",
+   "Bild bearbeiten": "Microsoft's online picture editor"
+  }
+ },
+ "context floating-picture": {
+  "word": 16,
+  "missing": [],
+  "explained": {
+   "In Office Math konvertieren": "handwriting conversion, not planned",
+   "Alle in Office Math konvertieren": "handwriting conversion, not planned",
+   "Bild bearbeiten": "Microsoft's online picture editor"
+  }
+ },
+ "context textbox-frame": {
+  "word": 15,
+  "missing": [],
+  "explained": {}
+ }
+}

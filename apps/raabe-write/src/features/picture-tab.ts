@@ -115,6 +115,18 @@ export function pictureTab(api: AppApi, insertFromPath: (path: string) => Promis
     const size = naturalSizePt(info);
     ed()?.replacePicture({ bytes, type: info.type }, size.w, size.h);
   });
+  // Als Grafik speichern: the picture's own file, in its format (Word offers the original type first).
+  c.implement("picture.saveAs", {
+    run: async () => {
+      const img = sel()?.obj.image;
+      if (!img || !api.platform.saveAnyDialog) return;
+      const ext = ({ "image/jpeg": "jpg", "image/gif": "gif", "image/bmp": "bmp", "image/svg+xml": "svg", "image/webp": "webp", "image/tiff": "tif" } as Record<string, string>)[img.type] ?? "png";
+      const kind = ({ jpg: "JPEG-Dateiaustauschformat", gif: "GIF (Graphics Interchange Format)", bmp: "Windows-Bitmap", svg: "SVG (Scalable Vector Graphics)", webp: "WebP", tif: "TIFF (Tag Image File Format)" } as Record<string, string>)[ext] ?? "PNG (Portable Network Graphics)";
+      const path = await api.platform.saveAnyDialog("Als Grafik speichern", `Grafik.${ext}`, [{ name: kind, extensions: ext === "jpg" ? ["jpg", "jpeg"] : [ext] }]);
+      if (path) await api.platform.writeFile(path, img.bytes);
+    },
+    enabled: () => !!sel()?.obj.image,
+  });
   run("picture.reset", () => ed()?.resetPicture());
   run("picture.resetAll", () => {
     const img = sel()?.obj.image;

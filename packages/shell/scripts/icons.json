@@ -343,5 +343,9 @@
   "pen": "pen",
   "table-draw": "table_edit",
   "line-style": "line_style",
-  "line-weight-pen": "line_thickness"
+  "line-weight-pen": "line_thickness",
+  "cell-margins": "table_cell_edit",
+  "table-to-text": "document_table_arrow_right",
+  "table-eraser": "eraser",
+  "table-formula": "custom:function"
 }

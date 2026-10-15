@@ -30,6 +30,9 @@ export function tauriPlatform(): Platform {
       const r = await open({ multiple: false, directory: false, filters: FILTERS.image, title: "Grafik einfügen" });
       return typeof r === "string" ? r : null;
     },
+    async saveAnyDialog(title, defaultName, filters) {
+      return (await save({ defaultPath: defaultName, filters, title })) ?? null;
+    },
     async saveFileDialog(defaultName, kind) {
       return (await save({ defaultPath: defaultName, filters: FILTERS[kind], title: kind === "pdf" ? "Als PDF exportieren" : "Speichern unter" })) ?? null;
     },

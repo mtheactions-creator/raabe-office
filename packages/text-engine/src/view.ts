@@ -1073,6 +1073,14 @@ export class View {
     return null;
   }
 
+  /** Client rectangle of the selected picture or shape (unturned), for tests and probes. */
+  selectedObjectRect(): DOMRect | null {
+    const img = this.opts.image;
+    if (!img) return null;
+    const p = this.pageToClient(img.page, img.x, img.y);
+    return new DOMRect(p.x, p.y, img.w * this.zoomFactor, img.h * this.zoomFactor);
+  }
+
   /** Client rectangle of the layout options button of the selected picture. */
   layoutButtonRect(): DOMRect | null {
     const img = this.opts.image;

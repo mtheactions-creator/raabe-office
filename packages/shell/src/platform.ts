@@ -45,6 +45,8 @@ export interface Platform {
   /** Chooses a file of the given kinds (Entwurf > Designs > Nach Designs suchen …). */
   openAnyDialog?(title: string, filters: { name: string; extensions: string[] }[]): Promise<string | null>;
   saveFileDialog(defaultName: string, kind: "docx" | "pdf"): Promise<string | null>;
+  /** Chooses where to save a file of the given kinds (Als Grafik speichern …). */
+  saveAnyDialog?(title: string, defaultName: string, filters: { name: string; extensions: string[] }[]): Promise<string | null>;
   readFile(path: string): Promise<Uint8Array>;
   writeFile(path: string, bytes: Uint8Array): Promise<void>;
   fileInfo(path: string): Promise<FileInfo>;

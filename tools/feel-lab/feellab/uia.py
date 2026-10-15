@@ -55,10 +55,14 @@ def find(el, predicate, max_depth: int = 12):
     stack = [(el, 0)]
     while stack:
         e, d = stack.pop()
-        if predicate(describe(e)):
-            return e
-        if d < max_depth:
-            stack.extend((c, d + 1) for c in reversed(children(e)))
+        # Elements can vanish while they are read (tooltips, menus closing): skip them.
+        try:
+            if predicate(describe(e)):
+                return e
+            if d < max_depth:
+                stack.extend((c, d + 1) for c in reversed(children(e)))
+        except Exception:  # noqa: BLE001
+            continue
     return None
 
 

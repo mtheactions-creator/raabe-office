@@ -11,7 +11,6 @@ const cmd = (id: string, label: string, icon?: string, extra: Partial<Command> =
 
 export const TABLE_COMMANDS: Command[] = [
   cmd("table.insertDialog", "Tabelle einfügen...", "table"),
-  cmd("table.styleOptions", "Optionen für Tabellenformat", "table-style", { hidden: true }),
   cmd("table.headerRow", "Kopfzeile", undefined, { tip: "Kopfzeile\nDie erste Zeile der Tabelle besonders formatieren." }),
   cmd("table.totalRow", "Ergebniszeile", undefined, { tip: "Ergebniszeile\nDie letzte Zeile der Tabelle besonders formatieren." }),
   cmd("table.bandedRows", "Gebänderte Zeilen", undefined),
@@ -24,10 +23,16 @@ export const TABLE_COMMANDS: Command[] = [
   cmd("table.insertCells", "Zellen einfügen...", "table-insert-cells"),
   cmd("table.deleteCells", "Zellen löschen...", "table-delete"),
   cmd("table.autofit", "AutoAnpassen", "table-autofit"),
-  cmd("table.autofitContents", "Inhalt automatisch anpassen", "table-autofit"),
-  cmd("table.autofitWindow", "Fenster automatisch anpassen", "table-autofit"),
+  cmd("table.autofitContents", "Automatisch an Inhalt anpassen", "table-autofit"),
+  cmd("table.autofitWindow", "Automatisch an Fenster anpassen", "table-autofit"),
   cmd("table.fixedWidth", "Feste Spaltenbreite", "table-autofit"),
-  cmd("table.textDirection", "Textrichtung", "text-direction"),
+  // Turned text in cells needs vertical lines in the layout engine.
+  cmd("table.textDirection", "Textrichtung", "text-direction", { deferred: true }),
+  cmd("table.splitTable", "Tabelle teilen", "table-split-table"),
+  cmd("table.cellMargins", "Zellenbegrenzungen...", "cell-margins"),
+  cmd("table.toText", "In Text konvertieren...", "table-to-text"),
+  cmd("table.eraser", "Radierer", "table-eraser", { deferred: true }),
+  cmd("table.formula", "Formel...", "table-formula", { deferred: true }),
   cmd("table.select", "Auswählen", "table-select"),
   cmd("table.selectCell", "Zelle auswählen", "table-select"),
   cmd("table.selectColumn", "Spalte auswählen", "table-select"),
@@ -39,10 +44,11 @@ export const TABLE_COMMANDS: Command[] = [
   cmd("table.deleteColumns", "Spalten löschen", "table-delete-column"),
   cmd("table.deleteRows", "Zeilen löschen", "table-delete-row"),
   cmd("table.deleteTable", "Tabelle löschen", "table-delete"),
-  cmd("table.insertAbove", "Darüber einfügen", "table-above", { tip: "Darüber einfügen\nEine neue Zeile direkt über der aktuellen Zeile einfügen." }),
-  cmd("table.insertBelow", "Darunter einfügen", "table-below", { tip: "Darunter einfügen\nEine neue Zeile direkt unter der aktuellen Zeile einfügen." }),
-  cmd("table.insertLeft", "Links einfügen", "table-left", { tip: "Links einfügen\nEine neue Spalte direkt links von der aktuellen Spalte einfügen." }),
-  cmd("table.insertRight", "Rechts einfügen", "table-right", { tip: "Rechts einfügen\nEine neue Spalte direkt rechts von der aktuellen Spalte einfügen." }),
+  // Word's labels on the ribbon (recorded 2026-10-15).
+  cmd("table.insertAbove", "Zeile Oberhalb", "table-above"),
+  cmd("table.insertBelow", "Zeile unterhalb einfügen", "table-below"),
+  cmd("table.insertLeft", "Spalte Links", "table-left"),
+  cmd("table.insertRight", "Spalte rechts einfügen", "table-right"),
   cmd("table.merge", "Zellen verbinden", "table-merge"),
   cmd("table.split", "Zellen teilen", "table-split"),
   cmd("table.height", "Höhe der Tabellenzeile", undefined),
@@ -51,8 +57,8 @@ export const TABLE_COMMANDS: Command[] = [
   cmd("table.distributeColumns", "Spalten verteilen", "table-cols-even"),
   cmd("table.repeatHeader", "Überschriften wiederholen", "table-repeat-header", { tip: "Überschriften wiederholen\nDie Kopfzeilen auf jeder Seite wiederholen, wenn die Tabelle über mehrere Seiten geht." }),
   ...([["TopLeft", "Oben links ausrichten"], ["TopCenter", "Oben zentriert ausrichten"], ["TopRight", "Oben rechts ausrichten"],
-    ["MiddleLeft", "Zentriert links ausrichten"], ["MiddleCenter", "Zentriert ausrichten"], ["MiddleRight", "Zentriert rechts ausrichten"],
-    ["BottomLeft", "Unten links ausrichten"], ["BottomCenter", "Unten zentriert ausrichten"], ["BottomRight", "Unten rechts ausrichten"]] as const)
+    ["MiddleLeft", "Mitte links ausrichten"], ["MiddleCenter", "Zentriert ausrichten"], ["MiddleRight", "Mitte rechts ausrichten"],
+    ["BottomLeft", "Unten links ausrichten"], ["BottomCenter", "Unten Mitte ausrichten"], ["BottomRight", "Unten rechts ausrichten"]] as const)
     .map(([k, label]) => cmd(`table.align${k}`, label, `cell-${k.replace(/([A-Z])/g, "-$1").slice(1).toLowerCase()}`)),
   cmd("border.bottom", "Rahmenlinie unten", "border-bottom"),
   cmd("border.top", "Rahmenlinie oben", "border-top"),
@@ -266,6 +272,74 @@ export function tablesFeature(api: AppApi) {
   run("table.insertRight", () => ed()?.insertColumns("right"));
   run("table.merge", () => ed()?.mergeCells(), () => !!ed()?.cellBlock()?.multi);
   run("table.split", () => void splitDialog());
+  run("table.splitTable", () => ed()?.splitTable());
+  // Zellen einfügen: Word's dialog (recorded 2026-10-15), "Zellen nach unten verschieben" chosen.
+  c.implement("table.insertCells", { run: async () => {
+    const e = ed();
+    if (!e?.inTable()) return;
+    const choices: ["right" | "down" | "row" | "column", string][] = [["right", "Zellen nach rechts verschieben"], ["down", "Zellen nach unten verschieben"],
+      ["row", "Ganze Zeile einfügen"], ["column", "Ganze Spalte einfügen"]];
+    const radios = choices.map(([v, l], i) => ({ v, el: h("input", { type: "radio", name: "inscells", checked: i === 1 }) as HTMLInputElement, l }));
+    const ok = await showDialog({
+      title: "Zellen einfügen",
+      body: h("div", { style: "display:flex;flex-direction:column;gap:6px;min-width:240px" }, ...radios.map((r) => h("label", { class: "check" }, r.el, r.l))),
+      buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false,
+    });
+    if (ok) e.insertCells(radios.find((r) => r.el.checked)?.v ?? "down");
+    api.focus();
+  }, enabled: inTable });
+  // AutoAnpassen.
+  c.implement("table.autofit", { run: () => {}, enabled: inTable });
+  run("table.autofitContents", () => ed()?.autofitTable("contents"));
+  run("table.autofitWindow", () => ed()?.autofitTable("window"));
+  run("table.fixedWidth", () => ed()?.autofitTable("fixed"));
+  // Zellenbegrenzungen: Word's dialog Tabellenoptionen (recorded); Abstand zwischen Zellen is not drawn.
+  run("table.cellMargins", async () => {
+    const e = ed();
+    const o = e?.tableOptions();
+    if (!e || !o) return;
+    const field = (v: number) => h("input", { type: "text", value: fmtCm(v), style: "width:90px" }) as HTMLInputElement;
+    const top = field(o.top), bottom = field(o.bottom), left = field(o.left), right = field(o.right);
+    const spacing = h("input", { type: "checkbox", disabled: true }) as HTMLInputElement;
+    const auto = h("input", { type: "checkbox", checked: o.autoResize }) as HTMLInputElement;
+    const ok = await showDialog({
+      title: "Tabellenoptionen",
+      body: h("div", { style: "width:380px" },
+        h("fieldset", null, h("legend", null, "Standardzellenbegrenzungen"),
+          h("div", { style: "display:grid;grid-template-columns:auto auto auto auto;gap:6px 10px;align-items:center" }, "Oben:", top, "Links:", left, "Unten:", bottom, "Rechts:", right)),
+        h("fieldset", null, h("legend", null, "Standardzellenabstand"),
+          h("label", { class: "check", "data-tip": "Abstand zwischen Zellen zulassen\nRaabeWrite zeichnet Tabellen ohne Abstand zwischen den Zellen." }, spacing, "Abstand zwischen Zellen zulassen")),
+        h("fieldset", null, h("legend", null, "Optionen"), h("label", { class: "check" }, auto, "Automatische Größenänderung zulassen"))),
+      buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false,
+    });
+    if (!ok) return;
+    const val = (f: HTMLInputElement, old: number) => { const v = parseNum(f.value); return Number.isFinite(v) && v >= 0 ? v * CM : old; };
+    e.setTableOptions({ top: val(top, o.top), bottom: val(bottom, o.bottom), left: val(left, o.left), right: val(right, o.right), autoResize: auto.checked });
+    api.focus();
+  });
+  // In Text konvertieren: Word's dialog Tabelle in Text umwandeln (recorded), Tabstopps chosen.
+  run("table.toText", async () => {
+    const e = ed();
+    if (!e?.inTable()) return;
+    const choices: [string, string][] = [["\n", "Absatzmarken"], ["\t", "Tabstopps"], ["; ", "Semikolons"], ["", "Andere:"]];
+    const radios = choices.map(([v, l], i) => ({ v, el: h("input", { type: "radio", name: "totext", checked: i === 1 }) as HTMLInputElement, l }));
+    const other = h("input", { type: "text", value: "-", maxlength: "1", style: "width:36px" }) as HTMLInputElement;
+    other.addEventListener("focus", () => { radios[3].el.checked = true; });
+    const nested = h("input", { type: "checkbox", checked: true, disabled: true }) as HTMLInputElement;
+    const ok = await showDialog({
+      title: "Tabelle in Text umwandeln",
+      body: h("div", { style: "width:300px" },
+        h("fieldset", null, h("legend", null, "Text trennen durch"),
+          h("div", { style: "display:flex;flex-direction:column;gap:6px" },
+            ...radios.map((r, i) => h("label", { class: "check" }, r.el, r.l, ...(i === 3 ? [other] : []))))),
+        h("label", { class: "check" }, nested, "Geschachtelte Tabellen umwandeln")),
+      buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false,
+    });
+    if (!ok) return;
+    const pick = radios.find((r) => r.el.checked);
+    e.tableToText(pick?.l === "Andere:" ? other.value || "-" : pick?.v ?? "\t");
+    api.focus();
+  });
   run("table.distributeColumns", () => ed()?.distributeColumns());
   run("table.distributeRows", () => ed()?.updateRows((r) => ({ ...r, height: undefined, heightRule: undefined })));
   run("table.repeatHeader", () => { const on = !!ed()?.rowDef()?.header; ed()?.updateRows((r) => ({ ...r, header: !on || undefined })); }, inTable, () => !!ed()?.rowDef()?.header);
@@ -386,31 +460,40 @@ export function tablesFeature(api: AppApi) {
     ],
   };
 
+  // Word's Tabellenlayout (recorded 2026-10-15 at a wide window, probe_word_table_layout.py tab):
+  // labels, keytips and layouts; the smaller ones are Word's at 2000 px.
+  const select = (size: "large" | "medium") => dd("table.select", "W", size, [{ cmd: "table.selectCell" }, { cmd: "table.selectColumn" }, { cmd: "table.selectRow" }, { cmd: "table.selectTable" }]);
+  const del = dd("table.delete", "Ö", "large", [{ cmd: "table.deleteCells" }, { cmd: "table.deleteColumns" }, { cmd: "table.deleteRows" }, { cmd: "table.deleteTable" }]);
+  const autofit = (size: "large" | "medium") => dd("table.autofit", "AU", size, [{ cmd: "table.autofitContents" }, { cmd: "table.autofitWindow" }, { cmd: "table.fixedWidth" }]);
+  const height: Control = { type: "spinner", cmd: "table.height", label: "Höhe:", key: "P", value: heightValue, commit: setHeight, step: stepHeight };
+  const width: Control = { type: "spinner", cmd: "table.width", label: "Breite:", key: "B", value: widthValue, commit: setWidth, step: stepWidth };
   const layoutTab: Tab = {
-    id: "tableLayout", label: "Layout", key: "JL", contextual: true, shrink: ["data", "alignment", "size", "merge", "rowsCols", "table"],
+    id: "tableLayout", label: "Layout", key: "JL", contextual: true,
+    shrink: ["table", "draw", "merge", "rowsCols", "size", "data", "alignment", "size", "merge", "draw", "rowsCols", "table"],
     groups: [
       { id: "table", label: "Tabelle", key: "ZT", icon: "table",
-        controls: [stack(dd("table.select", "K", "medium", [{ cmd: "table.selectCell" }, { cmd: "table.selectColumn" }, { cmd: "table.selectRow" }, { cmd: "table.selectTable" }]),
-          b("table.gridlines", "TG", "medium"), b("table.properties", "O", "medium"))] },
-      { id: "rowsCols", label: "Zeilen und Spalten", key: "ZZ", icon: "table-insert-row",
-        controls: [dd("table.delete", "D", "large", [{ cmd: "table.deleteColumns" }, { cmd: "table.deleteRows" }, { cmd: "table.deleteTable" }]),
-          b("table.insertAbove", "A", "large"), b("table.insertBelow", "BE", "large"),
-          stack(b("table.insertLeft", "L", "medium"), b("table.insertRight", "R", "medium"))] },
+        controls: [select("large"), b("table.gridlines", "ß", "large"), b("table.properties", "IE", "large")],
+        smaller: [[stack(select("medium"), b("table.gridlines", "ß", "medium"), b("table.properties", "IE", "medium"))]] },
+      { id: "draw", label: "Zeichnen", key: "ZD1", icon: "table-draw",
+        controls: [b("table.draw", "AA", "large"), b("table.eraser", "R", "large")],
+        smaller: [[stack(b("table.draw", "AA", "medium"), b("table.eraser", "R", "medium"))]] },
+      { id: "rowsCols", label: "Zeilen und Spalten", key: "ZR", icon: "table-insert-row", launcher: { cmd: "table.insertCells", key: "EZ" },
+        controls: [del, b("table.insertAbove", "Ü", "large"), b("table.insertBelow", "FA", "large"), b("table.insertLeft", "Q", "large"), b("table.insertRight", "K", "large")],
+        smaller: [[del, b("table.insertAbove", "Ü", "large"), stack(b("table.insertBelow", "FA", "medium"), b("table.insertLeft", "Q", "medium"), b("table.insertRight", "K", "medium"))]] },
       { id: "merge", label: "Zusammenführen", key: "ZM", icon: "table-merge",
-        controls: [stack(b("table.merge", "M", "medium"), b("table.split", "P", "medium"))] },
-      { id: "size", label: "Zellengröße", key: "ZG", icon: "table-cols-even",
-        controls: [stack(
-          { type: "spinner", cmd: "table.height", label: "Höhe:", key: "H", value: heightValue, commit: setHeight, step: stepHeight },
-          { type: "spinner", cmd: "table.width", label: "Breite:", key: "W", value: widthValue, commit: setWidth, step: stepWidth }),
-          stack(b("table.distributeRows", "HZ", "medium"), b("table.distributeColumns", "HS", "medium"))] },
+        controls: [b("table.merge", "LE", "large"), b("table.split", "NE", "large"), b("table.splitTable", "TT", "large")],
+        smaller: [[stack(b("table.merge", "LE", "medium"), b("table.split", "NE", "medium"), b("table.splitTable", "TT", "medium"))]] },
+      { id: "size", label: "Zellengröße", key: "ZS", icon: "table-cols-even", launcher: { cmd: "table.properties", key: "IE" },
+        controls: [autofit("large"), stack(height, width), stack(b("table.distributeRows", "V", "medium"), b("table.distributeColumns", "SP", "medium"))],
+        smaller: [[stack(height, width, autofit("medium")), stack(b("table.distributeRows", "V"), b("table.distributeColumns", "SP"))]] },
       { id: "alignment", label: "Ausrichtung", key: "ZA", icon: "cell-top-left",
         controls: [{ type: "rows", rows: [
-          [b("table.alignTopLeft", "1"), b("table.alignTopCenter", "2"), b("table.alignTopRight", "3")],
-          [b("table.alignMiddleLeft", "4"), b("table.alignMiddleCenter", "5"), b("table.alignMiddleRight", "6")],
-          [b("table.alignBottomLeft", "7"), b("table.alignBottomCenter", "8"), b("table.alignBottomRight", "9")],
-        ] }] },
-      { id: "data", label: "Daten", key: "ZD", icon: "table-repeat-header",
-        controls: [b("table.repeatHeader", "W", "large")] },
+          [b("table.alignTopLeft", "O"), b("table.alignTopCenter", "ÄB"), b("table.alignTopRight", "EB")],
+          [b("table.alignMiddleLeft", "II"), b("table.alignMiddleCenter", "H"), b("table.alignMiddleRight", "M")],
+          [b("table.alignBottomLeft", "TN"), b("table.alignBottomCenter", "CN"), b("table.alignBottomRight", "U")],
+        ] }, b("table.textDirection", "CT", "large", "Text-\nrichtung"), b("table.cellMargins", "G", "large", "Zellenbe-\ngrenzungen")] },
+      { id: "data", label: "Daten", key: "ZD2", icon: "table-repeat-header",
+        controls: [b("para.sort", "J", "large"), b("table.repeatHeader", "D", "large"), b("table.toText", "X", "large"), b("table.formula", "FF", "large")] },
     ],
   };
 

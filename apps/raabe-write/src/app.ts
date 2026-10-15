@@ -46,6 +46,7 @@ import { contextFeature, CONTEXT_COMMANDS } from "./features/context";
 import { shapesFeature, SHAPE_COMMANDS } from "./features/shapes";
 import { tablesFeature, TABLE_COMMANDS } from "./features/tables";
 import { GALLERY, miniToolbar, ribbonTabs, type RibbonContext } from "./ribbon-def";
+import { applyTips } from "./tooltips";
 import { TEMPLATES, finishTemplate, templateState, type TemplateId } from "./templates";
 import { addRecent, loadRecent, loadSettings, removeRecent, saveSettings, setPinned, type Settings } from "./store";
 import appIconUrl from "../../../branding/raabe-write-small.svg?url";
@@ -131,6 +132,7 @@ export class WriteApp {
       ...REFERENCE_COMMANDS, ...REVIEW_COMMANDS, ...MATH_COMMANDS, ...CONTEXT_COMMANDS, ...LIST_COMMANDS, ...PICTURE_TAB_COMMANDS, ...SHAPE_COMMANDS, ...GROUP_COMMANDS, ...HYPHENATION_COMMANDS);
     this.implementCommands();
     this.features = this.makeFeatures();
+    applyTips(this.commands);
     // Formformat's Anordnen uses Bildformat's panels.
     this.features.shapes.layoutCommands.setPositionPanel(this.features.pictures.arrange.positionPanel);
     this.features.shapes.layoutCommands.setAlignPanel(this.features.pictures.arrange.alignPanel);
@@ -270,7 +272,7 @@ export class WriteApp {
       thesaurus,
       editorPane,
       grammar,
-      lists: listsFeature(api),
+      lists: listsFeature(api, (start, pick) => void this.features.symbols.dialog({ start, pick })),
       tables: tablesFeature(api),
       pages: pageSetupFeature(api),
       hf: headerFooterFeature(api),
@@ -1457,6 +1459,28 @@ export class WriteApp {
         const f = this.features;
         walk([...ribbonTabs(this.ribbonContext()), f.hf.tab, f.tables.designTab, f.tables.layoutTab, f.shapes.tab, f.pictures.tab, f.math.tab]);
         return [...ids].filter((id) => this.commands.has?.(id) !== false && !this.commands.isImplemented(id) && !this.commands.get(id).deferred).sort();
+      },
+      /** All registered commands (ribbon, menus, context menus) that do nothing yet and are not deferred. */
+      unimplementedAll: () => this.commands.all().filter((c) => !c.run && !c.deferred).map((c) => `${c.id} (${c.label})`).sort(),
+      /** Every ribbon control per tab with its label and tooltip (tooltip audit, Step 4c F). */
+      ribbonTips: () => {
+        const out: Record<string, { cmd: string; label: string; tip: string }[]> = {};
+        const f = this.features;
+        for (const tab of [...ribbonTabs(this.ribbonContext()), f.hf.tab, f.tables.designTab, f.tables.layoutTab, f.shapes.tab, f.pictures.tab, f.math.tab]) {
+          const list: { cmd: string; label: string; tip: string }[] = (out[tab.label in out ? `${tab.label} (Tabelle)` : tab.label] = []);
+          const walk = (x: unknown, inMenu: boolean): void => {
+            if (!x || typeof x !== "object") return;
+            if (Array.isArray(x)) { x.forEach((y) => walk(y, inMenu)); return; }
+            const o = x as Record<string, unknown>;
+            if (typeof o.cmd === "string" && this.commands.has(o.cmd) && !inMenu) {
+              list.push({ cmd: o.cmd, label: (o.label as string) ?? this.commands.get(o.cmd).label, tip: this.commands.tooltip(o.cmd, true) });
+            }
+            if (o.launcher) walk(o.launcher, inMenu);
+            for (const k of ["controls", "items", "rows", "groups"]) if (k in o) { try { walk(o[k], inMenu); } catch { /* getters needing a document */ } }
+          };
+          walk(tab, false);
+        }
+        return out;
       },
       infobar: () => this.infobarSlot.textContent,
       /** The active editor, for tests that call its commands directly. */

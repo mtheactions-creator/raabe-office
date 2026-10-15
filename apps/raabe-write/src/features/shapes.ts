@@ -11,6 +11,8 @@ const cmd = (id: string, label: string, icon?: string, extra: Partial<Command> =
 
 export const SHAPE_COMMANDS: Command[] = [
   cmd("insert.textBoxDraw", "Textfeld erstellen", "draw-text-box", { tip: "Textfeld erstellen\nEin Textfeld an beliebiger Stelle im Dokument zeichnen." }),
+  // Word saves a shape with its text as a picture; we cannot draw one into a file yet.
+  cmd("shape.saveAs", "Als Grafik speichern...", "save-picture", { deferred: true }),
   ...SHAPE_TAB_COMMANDS,
 ];
 

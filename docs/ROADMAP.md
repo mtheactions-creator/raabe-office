@@ -46,6 +46,8 @@ the full Rahmen group with Rahmen übertragen and Rahmenpipette, Word's 105 tabl
 previews and Livevorschau, floating tables (word-table-float.docx 100 %) with dragging and our
 layout handle. E done 2026-10-15 (D-057): selection visible over every background, sharp
 pointers, Livevorschau in the Formatvorlagen gallery, Formatvorlagen reset cleanly.
+F in progress (D-058): tooltips, labels, menus and context menus audited against Word, the
+Tabellenlayout tab and the list dialogs completed.
 
 ## Step 4b: Word parity (plan)
 

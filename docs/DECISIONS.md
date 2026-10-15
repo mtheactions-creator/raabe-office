@@ -973,3 +973,40 @@ Recorded in Word (32 new cases in `catalogue_math.py`, areas "fraction" and "tex
   character style that of the selection; links' and note marks' character styles, language,
   proofing and revisions stay. Hovering an entry of the Formatvorlagen gallery shows it on the
   text (Livevorschau, no undo step); leaving puts everything back.
+
+### D-058 The audit of the whole app (Step 4c F)
+Every kind of difference found in A–E was looked for everywhere, by script where possible
+(`audit_labels.py`, `audit_menus.py` in the headless development page; Word's side recorded by
+`probe_word_tooltips.py`, `probe_word_table_layout.py`, `probe_word_list_define.py`).
+- **Tooltips**: every ribbon command has Word's tooltip title and shortcut (as Word writes them:
+  "Fett (Strg+Umschalt+F)", "Alt+Strg+F", "Strg+Return", "Alt+="), the shortcut on the title
+  line, and a description in our own words (`apps/raabe-write/src/tooltips.ts`). Microsoft's
+  descriptions are not copied: the committed recording keeps only the titles, the full texts
+  stay in the uncommitted captures/.
+- **Labels**: no ribbon label is cut off on any tab (contextual ones included) at window widths
+  from 1920 to 800 CSS px.
+- **Menus and galleries** against Word's recordings, entry by entry: 19 menus and 7 context
+  menus, no unexplained difference left. Fixed on the way: the shades of Word's palettes (white
+  and black have their own rows, other very light or dark colours 10–90 %), "5%" without a space,
+  the names of the current Office theme's colours, "Office 2013 – 2022-Design" in Designs, the
+  names of the font schemes. Explained differences: cloud and online features, deferred ones,
+  recently used symbols, our own cover pages (D-048).
+- **Commands that did nothing**: Als Grafik speichern (now saves the picture's file; for shapes
+  deferred, it needs the shape drawn into a file), AutoAnpassen, Zellen einfügen, Neues
+  Aufzählungszeichen/Zahlenformat definieren; the rest are marked deferred (Textrichtung in
+  cells, Neue Liste mit mehreren Ebenen/Neuen Listentyp definieren, Tabelle zeichnen, Radierer,
+  Formel in tables).
+- **Tabellenlayout** complete as in Word (recorded at a wide window and at 2000 px): Word's
+  labels and keytips (ours were guessed), the groups Zeichnen and Daten, Tabelle teilen, Zellen
+  einfügen (Word's dialog and its four results), AutoAnpassen (Inhalt: the widest line and the
+  longest word of each column shared out as a browser does, Word's tblW/tcW auto; Fenster:
+  tblW 100 %; Fest: tblLayout fixed), Zellenbegrenzungen (Word's Tabellenoptionen; Abstand
+  zwischen Zellen is not drawn, so it is greyed), In Text konvertieren (Word's dialog; the results
+  as Word's, "; " for Semikolons). Measured: AutoAnpassen an Inhalt gives 32.2/167.3/32.2 pt where
+  Word gives 32.2/165.6/32.2.
+- **List dialogs**: Neues Aufzählungszeichen definieren (Symbol... through the Symbol dialog,
+  Schriftart..., Ausrichtung, Vorschau; Bild... greyed) and Neues Zahlenformat definieren
+  (Word's 13 Zahlenformatvorlagen, the number shaded between the text around it). In a list they
+  change the caret's level, elsewhere they start a list. New number formats: German number words
+  and ordinals, and Word's custom 001/0001/00001 formats (written in mc:AlternateContent as Word
+  writes them; Word reads all of them as we show them, checked through COM).

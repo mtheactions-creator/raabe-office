@@ -1,0 +1,1535 @@
+{
+ "Zellen einfügen": {
+  "title": "Zellen einfügen",
+  "size": [
+   307,
+   252
+  ],
+  "items": [
+   {
+    "type": "Button",
+    "name": "Direkthilfe",
+    "rect": [
+     155,
+     1,
+     71,
+     44
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Schließen",
+    "rect": [
+     226,
+     1,
+     71,
+     44
+    ]
+   },
+   {
+    "type": "RadioButton",
+    "name": "Zellen nach rechts verschieben",
+    "rect": [
+     21,
+     56,
+     242,
+     26
+    ]
+   },
+   {
+    "type": "RadioButton",
+    "name": "Zellen nach unten verschieben*",
+    "rect": [
+     21,
+     87,
+     240,
+     26
+    ]
+   },
+   {
+    "type": "RadioButton",
+    "name": "Ganze Zeile einfügen",
+    "rect": [
+     21,
+     118,
+     175,
+     26
+    ]
+   },
+   {
+    "type": "RadioButton",
+    "name": "Ganze Spalte einfügen",
+    "rect": [
+     21,
+     149,
+     185,
+     26
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "OK",
+    "rect": [
+     20,
+     192,
+     126,
+     38
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Abbrechen",
+    "rect": [
+     160,
+     192,
+     126,
+     38
+    ]
+   }
+  ]
+ },
+ "Tabellenoptionen": {
+  "title": "Tabellenoptionen",
+  "size": [
+   461,
+   390
+  ],
+  "items": [
+   {
+    "type": "Edit",
+    "name": "RichEdit Control=0 cm",
+    "rect": [
+     104,
+     91,
+     96,
+     26
+    ]
+   },
+   {
+    "type": "Edit",
+    "name": "RichEdit Control=0 cm",
+    "rect": [
+     104,
+     128,
+     96,
+     26
+    ]
+   },
+   {
+    "type": "Edit",
+    "name": "RichEdit Control=0,19 cm",
+    "rect": [
+     316,
+     91,
+     96,
+     26
+    ]
+   },
+   {
+    "type": "Edit",
+    "name": "RichEdit Control=0,19 cm",
+    "rect": [
+     316,
+     128,
+     96,
+     26
+    ]
+   },
+   {
+    "type": "Edit",
+    "name": "RichEdit Control=0 cm",
+    "rect": [
+     316,
+     205,
+     96,
+     26
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Direkthilfe",
+    "rect": [
+     309,
+     1,
+     71,
+     44
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Schließen",
+    "rect": [
+     380,
+     1,
+     71,
+     44
+    ]
+   },
+   {
+    "type": "Text",
+    "name": "Standardzellenbegrenzungen",
+    "rect": [
+     21,
+     56,
+     419,
+     21
+    ]
+   },
+   {
+    "type": "Text",
+    "name": "Oben:",
+    "rect": [
+     36,
+     93,
+     41,
+     21
+    ]
+   },
+   {
+    "type": "Spinner",
+    "name": "Oben:",
+    "rect": [
+     102,
+     88,
+     126,
+     32
+    ]
+   },
+   {
+    "type": "Text",
+    "name": "Unten:",
+    "rect": [
+     36,
+     130,
+     45,
+     21
+    ]
+   },
+   {
+    "type": "Spinner",
+    "name": "Unten:",
+    "rect": [
+     102,
+     125,
+     126,
+     32
+    ]
+   },
+   {
+    "type": "Text",
+    "name": "Links:",
+    "rect": [
+     243,
+     93,
+     39,
+     21
+    ]
+   },
+   {
+    "type": "Spinner",
+    "name": "Links:",
+    "rect": [
+     314,
+     88,
+     126,
+     32
+    ]
+   },
+   {
+    "type": "Text",
+    "name": "Rechts:",
+    "rect": [
+     243,
+     130,
+     49,
+     21
+    ]
+   },
+   {
+    "type": "Spinner",
+    "name": "Rechts:",
+    "rect": [
+     314,
+     125,
+     126,
+     32
+    ]
+   },
+   {
+    "type": "Text",
+    "name": "Standardzellenabstand",
+    "rect": [
+     21,
+     170,
+     419,
+     21
+    ]
+   },
+   {
+    "type": "CheckBox",
+    "name": "Abstand zwischen Zellen zulassen[ ]",
+    "rect": [
+     36,
+     205,
+     263,
+     26
+    ]
+   },
+   {
+    "type": "Text",
+    "name": "Optionen",
+    "rect": [
+     21,
+     247,
+     419,
+     21
+    ]
+   },
+   {
+    "type": "CheckBox",
+    "name": "Automatische Größenänderung zulassen[x]",
+    "rect": [
+     36,
+     279,
+     311,
+     26
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "OK",
+    "rect": [
+     174,
+     330,
+     126,
+     38
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Abbrechen",
+    "rect": [
+     314,
+     330,
+     126,
+     38
+    ]
+   }
+  ]
+ },
+ "AutoAnpassen": {
+  "menu": [
+   "Automatisch an Inhalt anpassen",
+   "Automatisch an Fenster anpassen",
+   "Feste Spaltenbreite"
+  ]
+ },
+ "Tabelle in Text": {
+  "title": "Tabelle in Text umwandeln",
+  "size": [
+   386,
+   342
+  ],
+  "items": [
+   {
+    "type": "Edit",
+    "name": "RichEdit Control=-",
+    "rect": [
+     136,
+     184,
+     36,
+     26
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Direkthilfe",
+    "rect": [
+     234,
+     1,
+     71,
+     44
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Schließen",
+    "rect": [
+     305,
+     1,
+     71,
+     44
+    ]
+   },
+   {
+    "type": "Text",
+    "name": "Text trennen durch",
+    "rect": [
+     21,
+     56,
+     344,
+     21
+    ]
+   },
+   {
+    "type": "RadioButton",
+    "name": "Absatzmarken",
+    "rect": [
+     36,
+     88,
+     129,
+     26
+    ]
+   },
+   {
+    "type": "RadioButton",
+    "name": "Tabstopps*",
+    "rect": [
+     36,
+     119,
+     101,
+     26
+    ]
+   },
+   {
+    "type": "RadioButton",
+    "name": "Semikolons",
+    "rect": [
+     36,
+     150,
+     111,
+     26
+    ]
+   },
+   {
+    "type": "RadioButton",
+    "name": "Andere:",
+    "rect": [
+     36,
+     184,
+     83,
+     26
+    ]
+   },
+   {
+    "type": "Edit",
+    "name": "Weitere=-",
+    "rect": [
+     134,
+     181,
+     40,
+     32
+    ]
+   },
+   {
+    "type": "CheckBox",
+    "name": "Geschachtelte Tabellen umwandeln[x]",
+    "rect": [
+     21,
+     239,
+     274,
+     26
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "OK",
+    "rect": [
+     99,
+     282,
+     126,
+     38
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Abbrechen",
+    "rect": [
+     239,
+     282,
+     126,
+     38
+    ]
+   }
+  ]
+ },
+ "Zellengröße launcher": {
+  "title": "Tabelleneigenschaften",
+  "size": [
+   673,
+   717
+  ],
+  "items": [
+   {
+    "type": "Edit",
+    "name": "RichEdit Control=0 cm",
+    "rect": [
+     223,
+     141,
+     96,
+     26
+    ]
+   },
+   {
+    "type": "Edit",
+    "name": "RichEdit Control=0 cm",
+    "rect": [
+     368,
+     245,
+     116,
+     26
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Direkthilfe",
+    "rect": [
+     521,
+     1,
+     71,
+     44
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Schließen",
+    "rect": [
+     592,
+     1,
+     71,
+     44
+    ]
+   },
+   {
+    "type": "TabItem",
+    "name": "Tabelle",
+    "rect": [
+     21,
+     58,
+     90,
+     31
+    ]
+   },
+   {
+    "type": "TabItem",
+    "name": "Zeile",
+    "rect": [
+     111,
+     58,
+     90,
+     31
+    ]
+   },
+   {
+    "type": "TabItem",
+    "name": "Spalte",
+    "rect": [
+     201,
+     58,
+     90,
+     31
+    ]
+   },
+   {
+    "type": "TabItem",
+    "name": "Zelle",
+    "rect": [
+     291,
+     58,
+     90,
+     31
+    ]
+   },
+   {
+    "type": "TabItem",
+    "name": "Alternativtext",
+    "rect": [
+     381,
+     58,
+     122,
+     31
+    ]
+   },
+   {
+    "type": "Text",
+    "name": "Textumbruch",
+    "rect": [
+     36,
+     342,
+     601,
+     21
+    ]
+   },
+   {
+    "type": "Text",
+    "name": "Ausrichtung",
+    "rect": [
+     36,
+     184,
+     601,
+     21
+    ]
+   },
+   {
+    "type": "Text",
+    "name": "Größe",
+    "rect": [
+     36,
+     105,
+     601,
+     21
+    ]
+   },
+   {
+    "type": "CheckBox",
+    "name": "Bevorzugte Breite:[ ]",
+    "rect": [
+     51,
+     141,
+     155,
+     26
+    ]
+   },
+   {
+    "type": "Spinner",
+    "name": "Bevorzugte Breite:",
+    "rect": [
+     221,
+     138,
+     126,
+     32
+    ]
+   },
+   {
+    "type": "Text",
+    "name": "Maßeinheit:",
+    "rect": [
+     362,
+     143,
+     81,
+     21
+    ]
+   },
+   {
+    "type": "ComboBox",
+    "name": "Maßeinheit:=Zentimeter",
+    "rect": [
+     458,
+     137,
+     179,
+     34
+    ]
+   },
+   {
+    "type": "Text",
+    "name": "Links",
+    "rect": [
+     78,
+     308,
+     36,
+     21
+    ]
+   },
+   {
+    "type": "Text",
+    "name": "Zentriert",
+    "rect": [
+     171,
+     308,
+     60,
+     21
+    ]
+   },
+   {
+    "type": "Text",
+    "name": "Rechts",
+    "rect": [
+     283,
+     308,
+     46,
+     21
+    ]
+   },
+   {
+    "type": "RadioButton",
+    "name": "Links*",
+    "rect": [
+     51,
+     216,
+     90,
+     87
+    ]
+   },
+   {
+    "type": "RadioButton",
+    "name": "Zentriert",
+    "rect": [
+     156,
+     216,
+     90,
+     87
+    ]
+   },
+   {
+    "type": "RadioButton",
+    "name": "Rechts",
+    "rect": [
+     261,
+     216,
+     90,
+     87
+    ]
+   },
+   {
+    "type": "Text",
+    "name": "Einzug von links:",
+    "rect": [
+     366,
+     216,
+     125,
+     21
+    ]
+   },
+   {
+    "type": "Spinner",
+    "name": "Einzug von links:",
+    "rect": [
+     366,
+     242,
+     146,
+     32
+    ]
+   },
+   {
+    "type": "Text",
+    "name": "Ohne",
+    "rect": [
+     77,
+     474,
+     38,
+     21
+    ]
+   },
+   {
+    "type": "Text",
+    "name": "Umgebend",
+    "rect": [
+     162,
+     474,
+     77,
+     21
+    ]
+   },
+   {
+    "type": "RadioButton",
+    "name": "Ohne*",
+    "rect": [
+     51,
+     374,
+     90,
+     87
+    ]
+   },
+   {
+    "type": "RadioButton",
+    "name": "Umgebend",
+    "rect": [
+     156,
+     374,
+     90,
+     87
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Positionierung...",
+    "rect": [
+     496,
+     465,
+     141,
+     38
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Rahmen und Schattierung...",
+    "rect": [
+     276,
+     591,
+     221,
+     38
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Optionen...",
+    "rect": [
+     511,
+     591,
+     126,
+     38
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "OK",
+    "rect": [
+     386,
+     657,
+     126,
+     38
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Abbrechen",
+    "rect": [
+     526,
+     657,
+     126,
+     38
+    ]
+   }
+  ]
+ },
+ "Tabelle teilen vor Zeile 2": {
+  "text": "Vor|Z1S1|¤Z1S2|¤Z1S3|¤|¤|Z2S1|¤Z2S2|¤Z2S3|¤|¤Z3S1|¤Z3S2|¤Z3S3|¤|¤Nach|",
+  "tables": 2,
+  "rows": 1,
+  "cells": [
+   "1,1:Z1S1",
+   "1,2:Z1S2",
+   "1,3:Z1S3"
+  ],
+  "styles": [
+   "Standard",
+   "Standard",
+   "Standard",
+   "Standard",
+   "Standard",
+   "Standard",
+   "Standard",
+   "Standard",
+   "Standard",
+   "Standard",
+   "Standard",
+   "Standard",
+   "Standard",
+   "Standard"
+  ]
+ },
+ "Tabelle teilen vor Zeile 1": {
+  "text": "Vor||Z1S1|¤Z1S2|¤Z1S3|¤|¤Z2S1|¤Z2S2|¤Z2S3|¤|¤Z3S1|¤Z3S2|¤Z3S3|¤|¤Nach|",
+  "tables": 1,
+  "rows": 3,
+  "cells": [
+   "1,1:Z1S1",
+   "1,2:Z1S2",
+   "1,3:Z1S3",
+   "2,1:Z2S1",
+   "2,2:Z2S2",
+   "2,3:Z2S3",
+   "3,1:Z3S1",
+   "3,2:Z3S2",
+   "3,3:Z3S3"
+  ],
+  "styles": [
+   "Standard",
+   "Standard",
+   "Standard",
+   "Standard",
+   "Standard",
+   "Standard",
+   "Standard",
+   "Standard",
+   "Standard",
+   "Standard",
+   "Standard",
+   "Standard",
+   "Standard",
+   "Standard"
+  ]
+ },
+ "In Text: Tabstopps": {
+  "text": "Vor|Z1S1\ta|b|Z2S1\tZ2S2|Nach|",
+  "tables": 0
+ },
+ "In Text: Absatzmarken": {
+  "text": "Vor|Z1S1|a|b|Z2S1|Z2S2|Nach|",
+  "tables": 0
+ },
+ "In Text: Semikola": {
+  "text": "Vor|Z1S1; a|b|Z2S1; Z2S2|Nach|",
+  "tables": 0
+ },
+ "Zellen einfügen: Zellen nach rechts verschieben": {
+  "text": "Vor|Z1S1|¤Z1S2|¤Z1S3|¤|¤Z2S1|¤|¤Z2S2|¤Z2S3|¤|¤Z3S1|¤Z3S2|¤Z3S3|¤|¤Nach|",
+  "tables": 1,
+  "rows": 3,
+  "cells": [
+   "1,1:Z1S1",
+   "1,2:Z1S2",
+   "1,3:Z1S3",
+   "2,1:Z2S1",
+   "2,2:",
+   "2,3:Z2S2",
+   "2,4:Z2S3",
+   "3,1:Z3S1",
+   "3,2:Z3S2",
+   "3,3:Z3S3"
+  ]
+ },
+ "Zellen einfügen: Zellen nach unten verschieben": {
+  "text": "Vor|Z1S1|¤Z1S2|¤Z1S3|¤|¤Z2S1|¤|¤Z2S3|¤|¤Z3S1|¤Z2S2|¤Z3S3|¤|¤|¤Z3S2|¤|¤|¤Nach|",
+  "tables": 1,
+  "rows": 4,
+  "cells": [
+   "1,1:Z1S1",
+   "1,2:Z1S2",
+   "1,3:Z1S3",
+   "2,1:Z2S1",
+   "2,2:",
+   "2,3:Z2S3",
+   "3,1:Z3S1",
+   "3,2:Z2S2",
+   "3,3:Z3S3",
+   "4,1:",
+   "4,2:Z3S2",
+   "4,3:"
+  ]
+ },
+ "Zellen einfügen: Ganze Zeile einfügen": {
+  "text": "Vor|Z1S1|¤Z1S2|¤Z1S3|¤|¤|¤|¤|¤|¤Z2S1|¤Z2S2|¤Z2S3|¤|¤Z3S1|¤Z3S2|¤Z3S3|¤|¤Nach|",
+  "tables": 1,
+  "rows": 4,
+  "cells": [
+   "1,1:Z1S1",
+   "1,2:Z1S2",
+   "1,3:Z1S3",
+   "2,1:",
+   "2,2:",
+   "2,3:",
+   "3,1:Z2S1",
+   "3,2:Z2S2",
+   "3,3:Z2S3",
+   "4,1:Z3S1",
+   "4,2:Z3S2",
+   "4,3:Z3S3"
+  ]
+ },
+ "Zellen einfügen: Ganze Spalte einfügen": {
+  "text": "Vor|Z1S1|¤|¤Z1S2|¤Z1S3|¤|¤Z2S1|¤|¤Z2S2|¤Z2S3|¤|¤Z3S1|¤|¤Z3S2|¤Z3S3|¤|¤Nach|",
+  "tables": 1,
+  "rows": 3,
+  "cells": [
+   "1,1:Z1S1",
+   "1,2:",
+   "1,3:Z1S2",
+   "1,4:Z1S3",
+   "2,1:Z2S1",
+   "2,2:",
+   "2,3:Z2S2",
+   "2,4:Z2S3",
+   "3,1:Z3S1",
+   "3,2:",
+   "3,3:Z3S2",
+   "3,4:Z3S3"
+  ]
+ },
+ "AutoAnpassen: Inhalt automatisch anpassen": {
+  "tblW": [
+   "<w:tblW w:w=\"0\" w:type=\"auto\"/>"
+  ],
+  "tblLayout": [],
+  "grid": [
+   "644",
+   "3312",
+   "644"
+  ],
+  "tcW": [
+   "<w:tcW w:w=\"0\" w:type=\"auto\"/>",
+   "<w:tcW w:w=\"0\" w:type=\"auto\"/>",
+   "<w:tcW w:w=\"0\" w:type=\"auto\"/>",
+   "<w:tcW w:w=\"0\" w:type=\"auto\"/>",
+   "<w:tcW w:w=\"0\" w:type=\"auto\"/>",
+   "<w:tcW w:w=\"0\" w:type=\"auto\"/>"
+  ]
+ },
+ "AutoAnpassen: Fenster automatisch anpassen": {
+  "tblW": [
+   "<w:tblW w:w=\"5000\" w:type=\"pct\"/>"
+  ],
+  "tblLayout": [],
+  "grid": [
+   "3130",
+   "3133",
+   "3133"
+  ],
+  "tcW": [
+   "<w:tcW w:w=\"1666\" w:type=\"pct\"/>",
+   "<w:tcW w:w=\"1667\" w:type=\"pct\"/>",
+   "<w:tcW w:w=\"1667\" w:type=\"pct\"/>",
+   "<w:tcW w:w=\"1666\" w:type=\"pct\"/>",
+   "<w:tcW w:w=\"1667\" w:type=\"pct\"/>",
+   "<w:tcW w:w=\"1667\" w:type=\"pct\"/>"
+  ]
+ },
+ "AutoAnpassen: Feste Spaltenbreite": {
+  "tblW": [
+   "<w:tblW w:w=\"0\" w:type=\"auto\"/>"
+  ],
+  "tblLayout": [
+   "<w:tblLayout w:type=\"fixed\"/>"
+  ],
+  "grid": [
+   "3020",
+   "3021",
+   "3021"
+  ],
+  "tcW": [
+   "<w:tcW w:w=\"3020\" w:type=\"dxa\"/>",
+   "<w:tcW w:w=\"3021\" w:type=\"dxa\"/>",
+   "<w:tcW w:w=\"3021\" w:type=\"dxa\"/>",
+   "<w:tcW w:w=\"3020\" w:type=\"dxa\"/>",
+   "<w:tcW w:w=\"3021\" w:type=\"dxa\"/>",
+   "<w:tcW w:w=\"3021\" w:type=\"dxa\"/>"
+  ]
+ },
+ "AutoAnpassen: new table": {
+  "tblW": [
+   "<w:tblW w:w=\"0\" w:type=\"auto\"/>"
+  ],
+  "tblLayout": [],
+  "grid": [
+   "3020",
+   "3021",
+   "3021"
+  ],
+  "tcW": [
+   "<w:tcW w:w=\"3020\" w:type=\"dxa\"/>",
+   "<w:tcW w:w=\"3021\" w:type=\"dxa\"/>",
+   "<w:tcW w:w=\"3021\" w:type=\"dxa\"/>",
+   "<w:tcW w:w=\"3020\" w:type=\"dxa\"/>",
+   "<w:tcW w:w=\"3021\" w:type=\"dxa\"/>",
+   "<w:tcW w:w=\"3021\" w:type=\"dxa\"/>"
+  ]
+ },
+ "tab": [
+  {
+   "type": "Group",
+   "name": "Tabellenlayout",
+   "key": "Alt, J L",
+   "enabled": true,
+   "rect": [
+    20,
+    119,
+    3624,
+    150
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Tabelle",
+   "key": "Alt, J L, Z T",
+   "enabled": true,
+   "rect": [
+    20,
+    122,
+    365,
+    144
+   ]
+  },
+  {
+   "type": "MenuItem",
+   "name": "Auswählen",
+   "key": "Alt, J L, W",
+   "enabled": true,
+   "rect": [
+    32,
+    125,
+    93,
+    114
+   ]
+  },
+  {
+   "type": "Button",
+   "name": "Gitternetzlinien anzeigen",
+   "key": "Alt, J L, ß",
+   "enabled": true,
+   "rect": [
+    128,
+    125,
+    125,
+    114
+   ]
+  },
+  {
+   "type": "Button",
+   "name": "Eigenschaften...",
+   "key": "Alt, J L, I E",
+   "enabled": true,
+   "rect": [
+    256,
+    125,
+    117,
+    114
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Zeichnen",
+   "key": "Alt, J L, Z D 1",
+   "enabled": true,
+   "rect": [
+    385,
+    122,
+    176,
+    144
+   ]
+  },
+  {
+   "type": "Button",
+   "name": "Tabelle zeichnen",
+   "key": "Alt, J L, A A",
+   "enabled": true,
+   "rect": [
+    397,
+    125,
+    76,
+    114
+   ]
+  },
+  {
+   "type": "Button",
+   "name": "Radierer",
+   "key": "Alt, J L, R",
+   "enabled": true,
+   "rect": [
+    476,
+    125,
+    73,
+    114
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Zeilen und Spalten",
+   "key": "Alt, J L, Z R",
+   "enabled": true,
+   "rect": [
+    561,
+    122,
+    501,
+    144
+   ]
+  },
+  {
+   "type": "MenuItem",
+   "name": "Löschen",
+   "key": "Alt, J L, Ö",
+   "enabled": true,
+   "rect": [
+    573,
+    125,
+    72,
+    114
+   ]
+  },
+  {
+   "type": "Button",
+   "name": "Zeile Oberhalb",
+   "key": "Alt, J L, Ü",
+   "enabled": true,
+   "rect": [
+    664,
+    125,
+    82,
+    114
+   ]
+  },
+  {
+   "type": "Button",
+   "name": "Zeile unterhalb einfügen",
+   "key": "Alt, J L, F A",
+   "enabled": true,
+   "rect": [
+    749,
+    125,
+    124,
+    114
+   ]
+  },
+  {
+   "type": "Button",
+   "name": "Spalte Links",
+   "key": "Alt, J L, Q",
+   "enabled": true,
+   "rect": [
+    876,
+    125,
+    62,
+    114
+   ]
+  },
+  {
+   "type": "Button",
+   "name": "Spalte rechts einfügen",
+   "key": "Alt, J L, K",
+   "enabled": true,
+   "rect": [
+    941,
+    125,
+    109,
+    114
+   ]
+  },
+  {
+   "type": "Button",
+   "name": "Zellen einfügen...",
+   "key": "Alt, J L, E Z",
+   "enabled": true,
+   "rect": [
+    1038,
+    242,
+    24,
+    24
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Zusammenführen",
+   "key": "Alt, J L, Z M",
+   "enabled": true,
+   "rect": [
+    1062,
+    122,
+    241,
+    144
+   ]
+  },
+  {
+   "type": "Button",
+   "name": "Zellen verbinden",
+   "key": "Alt, J L, L E",
+   "enabled": false,
+   "rect": [
+    1074,
+    125,
+    87,
+    114
+   ]
+  },
+  {
+   "type": "Button",
+   "name": "Zellen teilen...",
+   "key": "Alt, J L, N E",
+   "enabled": true,
+   "rect": [
+    1164,
+    125,
+    62,
+    114
+   ]
+  },
+  {
+   "type": "Button",
+   "name": "Tabelle teilen",
+   "key": "Alt, J L, T T",
+   "enabled": true,
+   "rect": [
+    1229,
+    125,
+    62,
+    114
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Zellengröße",
+   "key": "Alt, J L, Z S",
+   "enabled": true,
+   "rect": [
+    1303,
+    122,
+    566,
+    144
+   ]
+  },
+  {
+   "type": "MenuItem",
+   "name": "AutoAnpassen",
+   "key": "Alt, J L, A U",
+   "enabled": true,
+   "rect": [
+    1315,
+    125,
+    124,
+    114
+   ]
+  },
+  {
+   "type": "Spinner",
+   "name": "Tabellenzeilenhöhe",
+   "key": "Alt, J L, P",
+   "enabled": true,
+   "rect": [
+    1546,
+    139,
+    85,
+    31
+   ]
+  },
+  {
+   "type": "Spinner",
+   "name": "Tabellenspaltenbreite",
+   "key": "Alt, J L, B",
+   "enabled": true,
+   "rect": [
+    1546,
+    187,
+    85,
+    31
+   ]
+  },
+  {
+   "type": "Button",
+   "name": "Zeilen verteilen",
+   "key": "Alt, J L, V",
+   "enabled": true,
+   "rect": [
+    1677,
+    137,
+    167,
+    36
+   ]
+  },
+  {
+   "type": "Button",
+   "name": "Spalten verteilen",
+   "key": "Alt, J L, S P",
+   "enabled": true,
+   "rect": [
+    1677,
+    185,
+    180,
+    36
+   ]
+  },
+  {
+   "type": "Button",
+   "name": "Eigenschaften...",
+   "key": "Alt, J L, I E",
+   "enabled": true,
+   "rect": [
+    1845,
+    242,
+    24,
+    24
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Ausrichtung",
+   "key": "Alt, J L, Z A",
+   "enabled": true,
+   "rect": [
+    1869,
+    122,
+    319,
+    144
+   ]
+  },
+  {
+   "type": "Button",
+   "name": "Oben links ausrichten",
+   "key": "Alt, J L, O",
+   "enabled": true,
+   "rect": [
+    1881,
+    125,
+    36,
+    36
+   ]
+  },
+  {
+   "type": "Button",
+   "name": "Oben zentriert ausrichten",
+   "key": "Alt, J L, Ä B",
+   "enabled": true,
+   "rect": [
+    1920,
+    125,
+    36,
+    36
+   ]
+  },
+  {
+   "type": "Button",
+   "name": "Oben rechts ausrichten",
+   "key": "Alt, J L, E B",
+   "enabled": true,
+   "rect": [
+    1959,
+    125,
+    36,
+    36
+   ]
+  },
+  {
+   "type": "Button",
+   "name": "Mitte links ausrichten",
+   "key": "Alt, J L, I I",
+   "enabled": true,
+   "rect": [
+    1881,
+    164,
+    36,
+    36
+   ]
+  },
+  {
+   "type": "Button",
+   "name": "Zentriert ausrichten",
+   "key": "Alt, J L, H",
+   "enabled": true,
+   "rect": [
+    1920,
+    164,
+    36,
+    36
+   ]
+  },
+  {
+   "type": "Button",
+   "name": "Mitte rechts ausrichten",
+   "key": "Alt, J L, M",
+   "enabled": true,
+   "rect": [
+    1959,
+    164,
+    36,
+    36
+   ]
+  },
+  {
+   "type": "Button",
+   "name": "Unten links ausrichten",
+   "key": "Alt, J L, T N",
+   "enabled": true,
+   "rect": [
+    1881,
+    203,
+    36,
+    36
+   ]
+  },
+  {
+   "type": "Button",
+   "name": "Unten Mitte ausrichten",
+   "key": "Alt, J L, C N",
+   "enabled": true,
+   "rect": [
+    1920,
+    203,
+    36,
+    36
+   ]
+  },
+  {
+   "type": "Button",
+   "name": "Unten rechts ausrichten",
+   "key": "Alt, J L, U",
+   "enabled": true,
+   "rect": [
+    1959,
+    203,
+    36,
+    36
+   ]
+  },
+  {
+   "type": "Button",
+   "name": "Textrichtung",
+   "key": "Alt, J L, C T",
+   "enabled": true,
+   "rect": [
+    1998,
+    125,
+    73,
+    115
+   ]
+  },
+  {
+   "type": "Button",
+   "name": "Zellenbegrenzungen...",
+   "key": "Alt, J L, G",
+   "enabled": true,
+   "rect": [
+    2074,
+    125,
+    102,
+    115
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Daten",
+   "key": "Alt, J L, Z D 2",
+   "enabled": true,
+   "rect": [
+    2188,
+    122,
+    394,
+    144
+   ]
+  },
+  {
+   "type": "Button",
+   "name": "Sortieren...",
+   "key": "Alt, J L, J",
+   "enabled": true,
+   "rect": [
+    2200,
+    125,
+    79,
+    115
+   ]
+  },
+  {
+   "type": "Button",
+   "name": "Überschriften wiederholen",
+   "key": "Alt, J L, D",
+   "enabled": false,
+   "rect": [
+    2282,
+    125,
+    113,
+    115
+   ]
+  },
+  {
+   "type": "Button",
+   "name": "In Text konvertieren...",
+   "key": "Alt, J L, X",
+   "enabled": true,
+   "rect": [
+    2398,
+    125,
+    106,
+    115
+   ]
+  },
+  {
+   "type": "Button",
+   "name": "Formel...",
+   "key": "Alt, J L, F F",
+   "enabled": true,
+   "rect": [
+    2507,
+    125,
+    63,
+    115
+   ]
+  }
+ ]
+}

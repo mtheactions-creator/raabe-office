@@ -90,8 +90,9 @@ export class Commands {
   /** `available` overrides whether the command works (a menu button works when its menu does). */
   tooltip(id: string, available?: boolean): string {
     const c = this.get(id);
-    let t = c.tip ?? c.label;
-    if (c.shortcut) t += ` (${c.shortcut})`;
+    // Word's form: "Title (Shortcut)", then the description.
+    const [title, ...rest] = (c.tip ?? c.label).split("\n");
+    let t = [c.shortcut ? `${title} (${c.shortcut})` : title, ...rest].join("\n");
     if (c.deferred) t += "\nZurückgestellt: bewusst auf eine spätere Version verschoben";
     else if (!(available ?? !!c.run)) t += "\nNoch nicht verfügbar";
     return t;

@@ -119,3 +119,23 @@ describe("Umgebende Tabellen (word-table-float.docx, made by Word)", () => {
     expect(back[0]).toEqual(tables[0].float);
   });
 });
+
+describe("Neues Zahlenformat definieren: Word's number styles (Step 4c F)", () => {
+  it("formats German number words and zero-padded custom formats", async () => {
+    const { formatNumber } = await import("@raabe/text-engine");
+    expect([1, 2, 3, 13, 21, 101].map((n) => formatNumber(n, "cardinalText"))).toEqual(["Eins", "Zwei", "Drei", "Dreizehn", "Einundzwanzig", "Einhunderteins"]);
+    expect([1, 3, 7, 8, 20, 21].map((n) => formatNumber(n, "ordinalText"))).toEqual(["Erste", "Dritte", "Siebte", "Achte", "Zwanzigste", "Einundzwanzigste"]);
+    expect(formatNumber(7, "custom:001, 002, 003, ...")).toBe("007");
+    expect(formatNumber(42, "custom:0001, 0002, 0003, ...")).toBe("0042");
+  });
+  it("writes a custom format as Word does (mc:AlternateContent) and reads it back", async () => {
+    const { readNumbering, writeNumbering } = await import("../src/numbering");
+    const { defaultStyleSheet } = await import("@raabe/text-engine");
+    const level = { start: 1, format: "custom:001, 002, 003, ...", text: "%1.", align: "left" as const, suffix: "tab" as const, pPr: {}, rPr: {} };
+    const xml = writeNumbering({ abstracts: new Map([[0, { id: 0, levels: [level] }]]), nums: new Map([[1, { id: 1, abstractId: 0 }]]) }, null, {} as never);
+    expect(xml).toContain('<w:numFmt w:val="custom" w:format="001, 002, 003, ..."/>');
+    expect(xml).toContain('<mc:Fallback><w:numFmt w:val="decimal"/></mc:Fallback>');
+    const back = readNumbering(xml, defaultStyleSheet());
+    expect(back.abstracts.get(0)?.levels[0].format).toBe("custom:001, 002, 003, ...");
+  });
+});

@@ -1,9 +1,10 @@
 // Aufzählungszeichen, Nummerierung and Liste mit mehreren Ebenen: Word's galleries (the
 // library entries Word 365 shows) and the buttons, which apply the last chosen entry.
 
-import { bulletLevels, displayBullet, multilevelLevels, numberLevels, type NumLevel } from "@raabe/text-engine";
-import { h, showMenu, type Command } from "@raabe/shell";
+import { bulletLevels, displayBullet, formatNumber, multilevelLevels, numberLevels, type CharProps, type NumLevel } from "@raabe/text-engine";
+import { h, showDialog, showMenu, type Command } from "@raabe/shell";
 import type { AppApi } from "./api";
+import type { Recent } from "./symbols";
 
 interface Entry {
   label: string;
@@ -106,11 +107,24 @@ function tile(e: Entry, deep = false): HTMLElement {
 export const LIST_COMMANDS: Command[] = [
   { id: "list.defineBullet", label: "Neues Aufzählungszeichen definieren..." },
   { id: "list.defineNumber", label: "Neues Zahlenformat definieren..." },
-  { id: "list.defineMultilevel", label: "Neue Liste mit mehreren Ebenen definieren..." },
-  { id: "list.defineStyle", label: "Neuen Listentyp definieren..." },
+  // Word's dialogs for these set nine levels with every option; not built yet.
+  { id: "list.defineMultilevel", label: "Neue Liste mit mehreren Ebenen definieren...", deferred: true },
+  { id: "list.defineStyle", label: "Neuen Listentyp definieren...", deferred: true },
 ];
 
-export function listsFeature(api: AppApi) {
+/** Zahlenformatvorlage in Word's order (recorded 2026-10-15, probe_word_list_define.py). */
+const NUMBER_STYLES: [string, string][] = [
+  ["none", "(ohne)"], ["decimal", "1, 2, 3, …"], ["upperRoman", "I, II, III, …"], ["lowerRoman", "i, ii, iii, …"],
+  ["upperLetter", "A, B, C, …"], ["lowerLetter", "a, b, c, …"], ["ordinal", "1. 2. 3. …"], ["cardinalText", "Eins Zwei Drei …"],
+  ["ordinalText", "Erste, Zweite, Dritte …"], ["decimalZero", "01, 02, 03, …"], ["custom:001, 002, 003, ...", "001, 002, 003, …"],
+  ["custom:0001, 0002, 0003, ...", "0001, 0002, 0003, …"], ["custom:00001, 00002, 00003, ...", "00001, 00002, 00003, …"],
+];
+const ALIGNS: ["left" | "center" | "right", string][] = [["left", "Links"], ["center", "Zentriert"], ["right", "Rechts"]];
+
+/** The dialog Schriftart's view of a level's character formatting. */
+const charState = (r: CharProps) => ({ font: r.font, size: r.size, bold: r.bold, italic: r.italic, color: r.color, underline: r.underline as string | undefined });
+
+export function listsFeature(api: AppApi, chooseSymbol: (start: Recent, pick: (r: Recent) => void) => void) {
   const c = api.commands;
   let lastBullet = bulletEntry(BULLETS[0]);
   let lastNumber = NUMBERS[0];
@@ -150,6 +164,113 @@ export function listsFeature(api: AppApi) {
     else extra.push(link("Neue Liste mit mehreren Ebenen definieren...", "list.defineMultilevel"), link("Neuen Listentyp definieren...", "list.defineStyle"));
     return h("div", { class: "rpanel" }, h("div", { class: "title" }, title), tiles, ...extra);
   };
+
+  /** Vorschau: three lines, each the label and grey text bars, as in Word's dialogs. */
+  const preview = (label: (i: number) => { text: string; style: string }, align: string) => {
+    const box = h("div", { style: "border:1px solid var(--line, #c8c8c8);background:#fff;padding:14px 18px;height:150px;display:flex;flex-direction:column;justify-content:center;gap:16px" });
+    for (let i = 0; i < 3; i++) {
+      const l = label(i);
+      box.append(h("div", { style: "display:flex;align-items:center;gap:8px" },
+        h("span", { style: `width:34px;text-align:${align};${l.style}` }, l.text),
+        h("span", { style: "flex:1;display:flex;flex-direction:column;gap:4px" }, h("i", { style: "height:3px;background:#c8c8c8" }), h("i", { style: "height:3px;background:#c8c8c8;width:70%" }))));
+    }
+    return box;
+  };
+  const css = (r: CharProps, font?: string) =>
+    `font-family:"${font ?? r.font ?? "Calibri"}";${r.bold ? "font-weight:bold;" : ""}${r.italic ? "font-style:italic;" : ""}${r.color && r.color !== "auto" ? `color:#${r.color};` : ""}`;
+  const select = (options: [string, string][], value: string) => {
+    const el = h("select", { style: "width:210px" }, ...options.map(([v, l]) => h("option", { value: v }, l))) as HTMLSelectElement;
+    el.value = value;
+    return el;
+  };
+
+  // Neues Aufzählungszeichen definieren (Word's dialog, recorded): Symbol..., Bild..., Schriftart...,
+  // Ausrichtung, Vorschau. In a bullet list it changes the caret's level, elsewhere it starts a list.
+  c.implement("list.defineBullet", { run: async () => {
+    const e = ed();
+    if (!e) return;
+    const cur = e.listKind() === "bullet" ? e.listLevelDef() : null;
+    let ch = cur?.level.text ?? "\uf0b7";
+    let rPr: CharProps = cur?.level.rPr ?? { font: "Symbol" };
+    const align = select(ALIGNS, cur?.level.align ?? "left");
+    const view = h("div");
+    const show = () => {
+      const shown = displayBullet(ch, rPr.font);
+      view.replaceChildren(preview(() => ({ text: shown.text, style: css(rPr, shown.font) }), align.value));
+    };
+    align.onchange = show;
+    const symbol = h("button", { onclick: () => chooseSymbol({ c: ch, f: rPr.font, s: ch.charCodeAt(0) >= 0xf000 || undefined }, (r) => { ch = r.c; rPr = { ...rPr, font: r.f ?? rPr.font }; show(); }) }, "Symbol...");
+    const picture = h("button", { disabled: true, "data-tip": "Bild...\nRaabeWrite hat keine Bilder als Aufzählungszeichen." }, "Bild...");
+    const font = h("button", { onclick: () => void api.fontDialog({ state: charState(rPr), apply: (r) => { rPr = { ...rPr, ...r }; show(); } }) }, "Schriftart...");
+    show();
+    const ok = await showDialog({
+      title: "Neues Aufzählungszeichen definieren",
+      body: h("div", { style: "width:400px" },
+        h("fieldset", null, h("legend", null, "Aufzählungszeichen"), h("div", { style: "display:flex;gap:12px" }, symbol, picture, font)),
+        h("label", { class: "field" }, "Ausrichtung:", align),
+        h("fieldset", null, h("legend", null, "Vorschau"), view)),
+      buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false,
+    });
+    if (!ok) return;
+    const a = align.value as "left" | "center" | "right";
+    if (cur) e.updateListLevel((l) => ({ ...l, format: "bullet", text: ch, rPr, align: a }));
+    else {
+      const entry: Entry = { label: "Aufzählungszeichen", preview: [ch, ch, ch], font: rPr.font,
+        levels: () => { const l = bulletLevels(); l[0] = { ...l[0], text: ch, rPr, align: a }; return l; } };
+      lastBullet = entry;
+      apply("bullet", entry);
+    }
+    api.focus();
+  }, enabled: () => !!ed() });
+
+  // Neues Zahlenformat definieren (Word's dialog, recorded): Zahlenformatvorlage, Schriftart...,
+  // Zahlenformat (the number shaded inside the text around it), Ausrichtung, Vorschau.
+  c.implement("list.defineNumber", { run: async () => {
+    const e = ed();
+    if (!e) return;
+    const cur = e.listKind() === "number" ? e.listLevelDef() : null;
+    const ilvl = cur?.ilvl ?? 0;
+    const ph = `%${ilvl + 1}`;
+    let rPr: CharProps = cur?.level.rPr ?? {};
+    const startFmt = cur && NUMBER_STYLES.some(([v]) => v === cur.level.format) ? cur.level.format : "decimal";
+    const style = select(NUMBER_STYLES, startFmt);
+    // The text around the number; the number itself is the shaded part (Word's field).
+    const parts = (cur?.level.text ?? `${ph}.`).split(ph);
+    const before = h("input", { type: "text", value: parts[0] ?? "", style: "width:70px" }) as HTMLInputElement;
+    const after = h("input", { type: "text", value: parts.slice(1).join(ph), style: "width:70px" }) as HTMLInputElement;
+    const sample = h("span", { style: "background:#d9d9d9;padding:2px 4px;border-radius:2px" });
+    const align = select(ALIGNS, cur?.level.align ?? "left");
+    const view = h("div");
+    const show = () => {
+      sample.textContent = formatNumber(1, style.value) || "\u2003";
+      view.replaceChildren(preview((i) => ({ text: `${before.value}${formatNumber(i + 1, style.value)}${after.value}`, style: css(rPr) }), align.value));
+    };
+    for (const el of [style, align]) el.onchange = show;
+    for (const el of [before, after]) el.oninput = show;
+    const font = h("button", { onclick: () => void api.fontDialog({ state: charState(rPr), apply: (r) => { rPr = { ...rPr, ...r }; show(); } }) }, "Schriftart...");
+    show();
+    const ok = await showDialog({
+      title: "Neues Zahlenformat definieren",
+      body: h("div", { style: "width:380px" },
+        h("fieldset", null, h("legend", null, "Zahlenformat"),
+          h("label", { class: "field" }, "Zahlenformatvorlage:", h("div", { style: "display:flex;gap:12px" }, style, font)),
+          h("label", { class: "field" }, "Zahlenformat:", h("div", { style: "display:flex;align-items:center;gap:2px" }, before, sample, after)),
+          h("label", { class: "field" }, "Ausrichtung:", align)),
+        h("fieldset", null, h("legend", null, "Vorschau"), view)),
+      buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false,
+    });
+    if (!ok) return;
+    const format = style.value, text = format === "none" ? `${before.value}${after.value}` : `${before.value}${ph}${after.value}`;
+    const a = align.value as "left" | "center" | "right";
+    if (cur) e.updateListLevel((l) => ({ ...l, format, text, rPr, align: a }));
+    else {
+      const entry: Entry = { label: "Nummerierung", preview: [1, 2, 3].map((n) => `${before.value}${formatNumber(n, format)}${after.value}`),
+        levels: () => { const l = numberLevels(); l[0] = { ...l[0], format, text: text.replace(ph, "%1"), rPr, align: a }; return l; } };
+      lastNumber = entry;
+      apply("number", entry);
+    }
+    api.focus();
+  }, enabled: () => !!ed() });
 
   const has = () => !!ed();
   c.implement("para.bullets", { run: () => apply("bullet", lastBullet), enabled: has, checked: () => ed()?.listKind() === "bullet" });

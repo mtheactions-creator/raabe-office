@@ -1,0 +1,334 @@
+{
+ "Neues Aufzählungszeichen definieren...": {
+  "title": "Neues Aufzählungszeichen definieren",
+  "size": [
+   471,
+   588
+  ],
+  "items": [
+   {
+    "type": "Button",
+    "name": "Direkthilfe",
+    "enabled": true,
+    "rect": [
+     319,
+     1,
+     71,
+     44
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Schließen",
+    "enabled": true,
+    "rect": [
+     390,
+     1,
+     71,
+     44
+    ]
+   },
+   {
+    "type": "Text",
+    "name": "Aufzählungszeichen",
+    "enabled": true,
+    "rect": [
+     21,
+     56,
+     429,
+     21
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Symbol...",
+    "enabled": true,
+    "rect": [
+     35,
+     87,
+     126,
+     38
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Bild...",
+    "enabled": true,
+    "rect": [
+     175,
+     87,
+     126,
+     38
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Schriftart...",
+    "enabled": true,
+    "rect": [
+     315,
+     87,
+     126,
+     38
+    ]
+   },
+   {
+    "type": "Text",
+    "name": "Ausrichtung:",
+    "enabled": true,
+    "rect": [
+     36,
+     130,
+     87,
+     21
+    ]
+   },
+   {
+    "type": "ComboBox",
+    "name": "Ausrichtung:",
+    "enabled": true,
+    "rect": [
+     36,
+     156,
+     211,
+     34
+    ],
+    "value": "Links",
+    "options": [
+     "Links",
+     "Zentriert",
+     "Rechts"
+    ]
+   },
+   {
+    "type": "Text",
+    "name": "Vorschau",
+    "enabled": true,
+    "rect": [
+     21,
+     203,
+     429,
+     21
+    ]
+   },
+   {
+    "type": "Image",
+    "name": "Vorschau",
+    "enabled": true,
+    "rect": [
+     36,
+     235,
+     414,
+     268
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "OK",
+    "enabled": true,
+    "rect": [
+     184,
+     528,
+     126,
+     38
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Abbrechen",
+    "enabled": true,
+    "rect": [
+     324,
+     528,
+     126,
+     38
+    ]
+   }
+  ]
+ },
+ "Neues Zahlenformat definieren...": {
+  "title": "Neues Zahlenformat definieren",
+  "size": [
+   421,
+   679
+  ],
+  "items": [
+   {
+    "type": "Document",
+    "name": "Zahlenformat",
+    "enabled": true,
+    "rect": [
+     37,
+     183,
+     362,
+     32
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Direkthilfe",
+    "enabled": true,
+    "rect": [
+     269,
+     1,
+     71,
+     44
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Schließen",
+    "enabled": true,
+    "rect": [
+     340,
+     1,
+     71,
+     44
+    ]
+   },
+   {
+    "type": "Text",
+    "name": "Zahlenformat",
+    "enabled": true,
+    "rect": [
+     21,
+     56,
+     379,
+     21
+    ]
+   },
+   {
+    "type": "Text",
+    "name": "Zahlenformatvorlage:",
+    "enabled": true,
+    "rect": [
+     36,
+     88,
+     149,
+     21
+    ]
+   },
+   {
+    "type": "ComboBox",
+    "name": "Zahlenformatvorlage:",
+    "enabled": true,
+    "rect": [
+     36,
+     114,
+     219,
+     34
+    ],
+    "value": "1, 2, 3, …",
+    "options": [
+     "(ohne)",
+     "1, 2, 3, …",
+     "I, II, III, …",
+     "i, ii, iii, …",
+     "A, B, C, …",
+     "a, b, c, …",
+     "1. 2. 3. …",
+     "Eins Zwei Drei …",
+     "Erste, Zweite, Dritte …",
+     "01, 02, 03, …",
+     "001, 002, 003, …",
+     "0001, 0002, 0003, …",
+     "00001, 00002, 00003, …"
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Schriftart...",
+    "enabled": true,
+    "rect": [
+     269,
+     113,
+     126,
+     38
+    ]
+   },
+   {
+    "type": "Text",
+    "name": "Zahlenformat:",
+    "enabled": true,
+    "rect": [
+     36,
+     156,
+     97,
+     21
+    ]
+   },
+   {
+    "type": "Text",
+    "name": "Ausrichtung:",
+    "enabled": true,
+    "rect": [
+     36,
+     221,
+     87,
+     21
+    ]
+   },
+   {
+    "type": "ComboBox",
+    "name": "Ausrichtung:",
+    "enabled": true,
+    "rect": [
+     36,
+     247,
+     211,
+     34
+    ],
+    "value": "Links",
+    "options": [
+     "Links",
+     "Zentriert",
+     "Rechts"
+    ]
+   },
+   {
+    "type": "Text",
+    "name": "Vorschau",
+    "enabled": true,
+    "rect": [
+     21,
+     294,
+     379,
+     21
+    ]
+   },
+   {
+    "type": "Image",
+    "name": "Vorschau",
+    "enabled": true,
+    "rect": [
+     36,
+     326,
+     325,
+     268
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "OK",
+    "enabled": true,
+    "rect": [
+     134,
+     619,
+     126,
+     38
+    ]
+   },
+   {
+    "type": "Button",
+    "name": "Abbrechen",
+    "enabled": true,
+    "rect": [
+     274,
+     619,
+     126,
+     38
+    ]
+   }
+  ]
+ }
+}

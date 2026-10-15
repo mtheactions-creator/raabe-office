@@ -139,6 +139,7 @@ export function contextFeature(api: AppApi, spellEntries: (e: Editor, pos: Pos) 
         { label: "In den Hintergrund", icon: "send-backward", submenu: cmds("layout.sendBackward") },
         "-",
         { cmd: "insert.link", label: "Link" },
+        { cmd: "shape.saveAs" },
         { cmd: "ref.caption", label: "Beschriftung einfügen..." },
         { label: "Textumbruch", icon: "wrap-text", submenu: [...wrap, "-", { cmd: "picture.moreLayout", label: "Weitere Layoutoptionen..." }] },
         "-",
@@ -177,7 +178,7 @@ export function contextFeature(api: AppApi, spellEntries: (e: Editor, pos: Pos) 
       if (!e.wholeTableSelected()) out.splice(out.length - 1, 1, { cmd: "table.deleteCells", label: "Zellen löschen..." }, { cmd: "table.merge", label: "Zellen verbinden" });
       out.push({ cmd: "table.distributeRows", label: "Zeilen gleichmäßig verteilen" }, { cmd: "table.distributeColumns", label: "Spalten gleichmäßig verteilen" }, "-",
         borders,
-        { label: "AutoAnpassen", submenu: [{ cmd: "table.autofitContents", label: "AutoAnpassen an Inhalt" }, { cmd: "table.autofitWindow", label: "Größe an Fenster anpassen" }, { cmd: "table.fixedWidth", label: "Feste Spaltenbreite" }] },
+        { label: "AutoAnpassen", icon: "table-autofit", submenu: [{ cmd: "table.autofitContents" }, { cmd: "table.autofitWindow" }, { cmd: "table.fixedWidth" }] },
         { cmd: "table.textDirection", label: "Textrichtung..." },
         { cmd: "ref.caption", label: "Beschriftung einfügen..." },
         { cmd: "table.properties", label: "Tabelleneigenschaften..." }, "-",

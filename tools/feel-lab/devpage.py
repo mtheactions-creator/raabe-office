@@ -9,11 +9,13 @@ For checking UI work between builds; nothing touches the real keyboard, mouse or
     python devpage.py shot <out.png> [x y w h]     # CSS pixels of the page
     python devpage.py click x y [count] [mods]     # mods: ctrl,shift,alt
     python devpage.py dblclick x y
+    python devpage.py rclick x y                   # right click (context menu)
     python devpage.py drag x1 y1 x2 y2 [steps]
     python devpage.py move x y
     python devpage.py key <Key> [mods]             # Enter, ArrowLeft, a, Delete …
     python devpage.py type "<text>"
     python devpage.py reload
+    python devpage.py viewport <width> <height> [scale] | reset   # CSS size of the page
 """
 from __future__ import annotations
 
@@ -133,6 +135,13 @@ def main(a):
             pg.mouse("mouseReleased", x, y, count=c, mods=m)
         time.sleep(0.15)
         print("ok")
+    elif cmd == "rclick":
+        x, y = float(a[2]), float(a[3])
+        pg.mouse("mouseMoved", x, y)
+        pg.cdp("Input.dispatchMouseEvent", {"type": "mousePressed", "x": x, "y": y, "button": "right", "clickCount": 1, "buttons": 2})
+        pg.cdp("Input.dispatchMouseEvent", {"type": "mouseReleased", "x": x, "y": y, "button": "right", "clickCount": 1, "buttons": 0})
+        time.sleep(0.2)
+        print("ok")
     elif cmd == "move":
         pg.mouse("mouseMoved", float(a[2]), float(a[3]))
         print("ok")
@@ -180,6 +189,16 @@ def main(a):
     elif cmd == "reload":
         pg.cdp("Page.reload")
         time.sleep(1.5)
+        print("ok")
+    elif cmd == "viewport":
+        # The page at another window size (CSS px); "reset" back to the window's own.
+        if a[2] == "reset":
+            pg.cdp("Emulation.clearDeviceMetricsOverride")
+        else:
+            w, h = int(a[2]), int(a[3])
+            scale = float(a[4]) if len(a) > 4 else 1.5
+            pg.cdp("Emulation.setDeviceMetricsOverride", {"width": w, "height": h, "deviceScaleFactor": scale, "mobile": False})
+        time.sleep(0.6)
         print("ok")
     else:
         raise SystemExit(__doc__)

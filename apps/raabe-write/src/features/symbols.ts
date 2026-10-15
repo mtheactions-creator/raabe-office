@@ -52,7 +52,7 @@ const DEFAULT_RECENT = ["€", "£", "¥", "©", "®", "™", "±", "≠", "≤"
 const NORMAL = "(normaler Text)";
 const COLS = 16, ROW = 31, VISIBLE_ROWS = 7;
 
-interface Recent { c: string; f?: string; s?: boolean }
+export interface Recent { c: string; f?: string; s?: boolean }
 
 function recentList(): Recent[] {
   try {
@@ -114,12 +114,16 @@ export function symbolsFeature(api: AppApi) {
   };
 
   // ----- the dialog ----------------------------------------------------------------------------
-  const dialog = async () => {
+  /**
+   * The dialog Symbol. With `choose` it picks a character instead of inserting it (Neues
+   * Aufzählungszeichen definieren > Symbol...): OK hands it over, Sonderzeichen is not offered.
+   */
+  const dialog = async (choose?: { start: Recent; pick: (r: Recent) => void }) => {
     const e = ed();
     if (!e) return;
     await loadNames();
     const fonts = [NORMAL, ...(await api.platform.listFonts().catch(() => [] as string[]))];
-    let font = NORMAL;
+    let font = choose?.start.f ?? NORMAL;
     let symbolFont = false;
     let chars: number[] = [];
     let selected = 0;
@@ -135,7 +139,7 @@ export function symbolsFeature(api: AppApi) {
     const uname = h("div", { class: "symname" });
     const code = h("input", { type: "text", class: "symcode" }) as HTMLInputElement;
     const von = h("select", { class: "symvon" }) as HTMLSelectElement;
-    const insertBtn = h("button", { class: "primary" }, "Einfügen") as HTMLButtonElement;
+    const insertBtn = h("button", { class: "primary" }, choose ? "OK" : "Einfügen") as HTMLButtonElement;
     const cancelBtn = h("button", {}, closeLabel) as HTMLButtonElement;
 
     // "(normaler Text)" is the font at the caret.
@@ -225,6 +229,7 @@ export function symbolsFeature(api: AppApi) {
     const doInsert = () => {
       const cp = visibleChars()[selected];
       if (cp === undefined) return;
+      if (choose) { choose.pick({ c: chr(cp), f: font === NORMAL ? undefined : font, s: symbolFont || undefined }); done(); return; }
       insert({ c: chr(cp), f: font === NORMAL ? undefined : font, s: symbolFont || undefined });
       renderRecent();
       closeLabel = "Schließen";
@@ -285,7 +290,7 @@ export function symbolsFeature(api: AppApi) {
         if (page === pageSpecial) renderSpecial();
       },
     }, label);
-    tabs.append(tab("Symbole", pageSymbols), tab("Sonderzeichen", pageSpecial));
+    tabs.append(tab("Symbole", pageSymbols), ...(choose ? [] : [tab("Sonderzeichen", pageSpecial)]));
 
     // The dialog itself: modeless in Word; here a dialog that stays until Schließen.
     const box = h("div", { class: "dialog symdialog", role: "dialog", "aria-label": "Symbol" },
@@ -300,10 +305,11 @@ export function symbolsFeature(api: AppApi) {
     addEventListener("keydown", key, true);
     document.body.append(layer);
     renderRecent();
+    fontInput.value = font;
     await loadChars();
-    // Word opens on the symbol used last.
-    const last = recentList()[0];
-    if (last && !last.f) pick(last.c.codePointAt(0) ?? 0);
+    // Word opens on the symbol used last (when choosing a bullet: on the current one).
+    const last = choose?.start ?? recentList()[0];
+    if (last && (choose || !last.f)) pick(last.c.codePointAt(0) ?? 0);
     scroller.focus();
   };
 

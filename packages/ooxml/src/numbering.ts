@@ -5,13 +5,35 @@ import type { AbstractNum, NumInstance, NumLevel, Numbering, StyleSheet } from "
 import { readPPr, readRPr, writePPr, writeRPr, type WriteOptions } from "./props";
 import { attr, child, esc, kids, num, onOff, outer, parse, W } from "./xml";
 
+const MC = "http://schemas.openxmlformats.org/markup-compatibility/2006";
+const W14 = "http://schemas.microsoft.com/office/word/2010/wordml";
+
+/** Word 2010's custom number formats ("001, 002, 003, ..."), kept in mc:AlternateContent. */
+function customFormat(lvl: Element): string | undefined {
+  for (const ac of kids(lvl).filter((c) => c.localName === "AlternateContent")) {
+    for (const choice of kids(ac).filter((c) => c.localName === "Choice")) {
+      const f = child(choice, "numFmt");
+      const v = f?.getAttributeNS(W, "format") ?? attr(f, "format");
+      if (f && attr(f, "val") === "custom" && v) return `custom:${v}`;
+    }
+  }
+  return undefined;
+}
+
+/** w:numFmt; a custom format as Word writes it (with a decimal fallback for older readers). */
+function numFmtXml(format: string): string {
+  if (!format.startsWith("custom:")) return `<w:numFmt w:val="${esc(format)}"/>`;
+  return `<mc:AlternateContent xmlns:mc="${MC}"><mc:Choice Requires="w14" xmlns:w14="${W14}"><w:numFmt w:val="custom" w:format="${esc(format.slice(7))}"/></mc:Choice>` +
+    `<mc:Fallback><w:numFmt w:val="decimal"/></mc:Fallback></mc:AlternateContent>`;
+}
+
 function readLevel(el: Element): NumLevel {
   const jc = attr(child(el, "lvlJc"), "val");
   const suff = attr(child(el, "suff"), "val");
   const restart = num(attr(child(el, "lvlRestart"), "val"));
   return {
     start: num(attr(child(el, "start"), "val")) ?? 0,
-    format: attr(child(el, "numFmt"), "val") ?? "decimal",
+    format: customFormat(el) ?? attr(child(el, "numFmt"), "val") ?? "decimal",
     text: attr(child(el, "lvlText"), "val") ?? "",
     align: jc === "center" ? "center" : jc === "right" || jc === "end" ? "right" : "left",
     suffix: suff === "space" ? "space" : suff === "nothing" ? "nothing" : "tab",
@@ -72,7 +94,7 @@ export function readNumbering(xml: string | null, styles: StyleSheet): Numbering
 const SUFFIX: Record<string, string> = { space: "space", nothing: "nothing" };
 
 function levelXml(l: NumLevel, ilvl: number, opts: WriteOptions): string {
-  return `<w:lvl w:ilvl="${ilvl}"><w:start w:val="${l.start}"/><w:numFmt w:val="${esc(l.format)}"/>` +
+  return `<w:lvl w:ilvl="${ilvl}"><w:start w:val="${l.start}"/>${numFmtXml(l.format)}` +
     (l.restart !== undefined ? `<w:lvlRestart w:val="${l.restart}"/>` : "") +
     (l.legal ? "<w:isLgl/>" : "") +
     (SUFFIX[l.suffix] ? `<w:suff w:val="${SUFFIX[l.suffix]}"/>` : "") +

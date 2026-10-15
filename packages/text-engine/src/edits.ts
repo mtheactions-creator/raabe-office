@@ -4,7 +4,7 @@
 
 import { Doc, nextTableId, type Pos } from "./doc";
 import {
-  EMPTY, OBJ, intern, makePara, type CellDef, type CellRef, type CharProps, type ImageData, type InlineObject, type NumLevel,
+  EMPTY, OBJ, intern, joinParas, makePara, type CellDef, type CellRef, type CharProps, type ImageData, type InlineObject, type NumLevel,
   type Numbering, type Para, type ParaProps, type RowDef, type Section, type TableDef,
 } from "./model";
 import { addList, bulletLevels, levelOf, multilevelLevels, numberLevels, numberingOf } from "./numbering";
@@ -425,6 +425,115 @@ export function deleteCells(doc: Doc, p: number, block: CellBlock, mode: "left" 
   }
   rebuild(doc, t.a, t.b, { ...t.def, rows }, cells);
   return firstOfCell(doc, t.a, block.r1, Math.min(block.c1, rows[block.r1].cells.length - 1));
+}
+
+/**
+ * Zellen einfügen (Word's dialog, recorded 2026-10-15): "right" puts new empty cells before the
+ * block in its rows (the rows get longer); "down" puts them in the block's place and moves the
+ * contents below down, the table getting as many rows at the bottom as the block is high.
+ */
+export function insertCells(doc: Doc, p: number, block: CellBlock, mode: "right" | "down"): Pos | null {
+  const t = tableAt(doc, p);
+  if (!t) return null;
+  const cells = cellParas(doc, t.a, t.b, t.def);
+  let rows = t.def.rows;
+  let grid = t.def.grid;
+  if (mode === "right") {
+    let most = 0;
+    rows = rows.map((row, r) => {
+      if (r < block.r1 || r > block.r2) return row;
+      const c1 = Math.min(block.c1, row.cells.length);
+      const hi = Math.min(block.c2, row.cells.length - 1);
+      const n = Math.max(1, hi - c1 + 1);
+      const fresh = Array.from({ length: n }, (_, i): CellDef => ({ ...row.cells[Math.min(c1 + i, row.cells.length - 1)], span: 1, vMerge: undefined }));
+      cells[r] = [...cells[r].slice(0, c1), ...fresh.map(() => [emptyLike(cells[r][c1] ?? [])]), ...cells[r].slice(c1)];
+      const out = { ...row, cells: [...row.cells.slice(0, c1), ...fresh, ...row.cells.slice(c1)] };
+      most = Math.max(most, out.cells.reduce((s, c) => s + Math.max(1, c.span), 0));
+      return out;
+    });
+    // Longer rows reach past the grid: it gets columns as wide as the new cells (Word: the rows stand out).
+    if (most > grid.length) {
+      const w = grid[Math.min(block.c1, grid.length - 1)] ?? 36;
+      grid = [...grid, ...Array.from({ length: most - grid.length }, () => w)];
+    }
+  } else {
+    const n = block.r2 - block.r1 + 1;
+    const last = rows[rows.length - 1];
+    const added = Array.from({ length: n }, (): RowDef => ({ ...last, header: undefined, cells: last.cells.map((c) => ({ ...c, vMerge: undefined })) }));
+    rows = [...rows, ...added];
+    for (let k = 0; k < n; k++) cells.push(last.cells.map((_, c) => [emptyLike(cells[cells.length - 1 - k]?.[c] ?? [])]));
+    for (let c = block.c1; c <= block.c2; c++) {
+      for (let r = rows.length - 1; r >= block.r1; r--) {
+        if (c >= cells[r].length) continue;
+        const from = r - n >= block.r1 && c < cells[r - n].length ? cells[r - n][c] : null;
+        cells[r][c] = from ?? [emptyLike(cells[r][c])];
+      }
+    }
+  }
+  rebuild(doc, t.a, t.b, { ...t.def, grid, rows }, cells);
+  return firstOfCell(doc, t.a, block.r1, Math.min(block.c1, rows[block.r1].cells.length - 1));
+}
+
+/**
+ * Tabelle teilen (Word, recorded): the rows from p's row on become a table of their own, with an
+ * empty "Standard" paragraph between; in the first row the empty paragraph goes before the table.
+ * The caret goes into the empty paragraph.
+ */
+export function splitTable(doc: Doc, p: number): Pos | null {
+  const t = tableAt(doc, p);
+  if (!t) return null;
+  const row = doc.paras[p].cell!.row;
+  const empty = makePara("");
+  if (row === 0) {
+    doc.splice(t.a, t.a - 1, [empty]);
+    return { p: t.a, o: 0 };
+  }
+  const cells = cellParas(doc, t.a, t.b, t.def);
+  const top: TableDef = { ...t.def, rows: t.def.rows.slice(0, row) };
+  const bottom: TableDef = { ...t.def, id: nextTableId(), rows: t.def.rows.slice(row), float: undefined };
+  const paras: Para[] = [];
+  const add = (def: TableDef, list: CellParas) => list.forEach((cs, r) => cs.forEach((ps, c) => {
+    for (const q of ps.length ? ps : [makePara("")]) paras.push({ ...q, cell: { table: def, row: r, col: c } });
+  }));
+  add(top, cells.slice(0, row));
+  const at = t.a + paras.length;
+  paras.push(empty);
+  add(bottom, cells.slice(row));
+  doc.splice(t.a, t.b, paras);
+  return { p: at, o: 0 };
+}
+
+/**
+ * In Text konvertieren (Word's "Tabelle in Text umwandeln", recorded): each row becomes text, its
+ * cells separated by `sep` ("\n" makes every cell a paragraph of its own); a cell with several
+ * paragraphs keeps them. The caret goes to the start of the text.
+ */
+export function tableToText(doc: Doc, p: number, sep: string): Pos | null {
+  const t = tableAt(doc, p);
+  if (!t) return null;
+  const cells = cellParas(doc, t.a, t.b, t.def);
+  const out: Para[] = [];
+  for (const row of cells) {
+    let line: Para | null = null;
+    for (const ps of row) {
+      const list = ps.map((q) => ({ ...q, cell: undefined }));
+      if (line === null || sep === "\n") {
+        if (line) out.push(line);
+        out.push(...list.slice(0, -1));
+        line = list[list.length - 1];
+        continue;
+      }
+      const glue = makePara(sep, {}, line.runs[line.runs.length - 1]?.props ?? line.mark, line.mark);
+      line = joinParas(joinParas(line, glue), list[0]);
+      if (list.length > 1) {
+        out.push(line, ...list.slice(1, -1));
+        line = list[list.length - 1];
+      }
+    }
+    if (line) out.push(line);
+  }
+  doc.splice(t.a, t.b, out);
+  return { p: t.a, o: 0 };
 }
 
 /** Tabelle löschen. */
