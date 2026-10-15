@@ -2,6 +2,7 @@
 // Word's selection rules, and all edits go through the document model. The shell calls the
 // public commands below and listens for changes with onChange().
 
+import { alphaPolygon, BOX, outlinePolygon } from "./wrap-polygon";
 import { DEFAULT_MATH, Doc, MAIN, cmp, maxPos, minPos, type DocSettings, type DocSnapshot, type DocState, type Hyphenation, type MathSettings, type Pos } from "./doc";
 import { hyphenatorFor, onHyphenationReady } from "./hyphen";
 import { Fonts, PT } from "./fonts";
@@ -138,6 +139,9 @@ export interface CopiedFormat {
 export const FONT_STEPS = [8, 9, 10, 10.5, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72];
 /** Schriftgrad vergrößern/verkleinern skip 10.5 (measured: 11 shrinks to 10). */
 const GROW_STEPS = FONT_STEPS.filter((x) => x !== 10.5);
+
+/** Word's pen cursor for Transparente Farbe bestimmen (tip at the hot spot, bottom left). */
+const PICK_CURSOR = `url("data:image/svg+xml,${encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path d="M3 29l2-7L21 6l5 5-16 16z" fill="#fff" stroke="#000" stroke-width="1.5" stroke-linejoin="round"/><path d="M5 22l5 5" stroke="#000" stroke-width="1.5"/><path d="M3 29l2.2-1" stroke="#000" stroke-width="2"/></svg>')}") 3 29, crosshair`;
 
 let clipboardFragment: {
   text: string; paras: Para[]; source: Editor;
@@ -714,7 +718,7 @@ export class Editor {
     const top = this.view.pageTop(pl.page) + pl.y;
     const rp = this.view.storyLayout().paras[pos.p]?.rp;
     const size = this.doc.styles.resolveChar(rp?.style, propsAt(this.doc.paras[pos.p], pos.o)).size;
-    return { x, y: top, w, h: line.height, baseline: top + line.baseline, size };
+    return { x, y: top, w, h: line.rowHeight ?? line.height, baseline: top + line.baseline, size };
   }
 
   /** The drawn equation at a position (the formula editor reads its geometry) and its page. */
@@ -954,7 +958,7 @@ export class Editor {
     this.fixStoryKey();
     this.clampSelection();
     const others = this.floatMulti.map((x) => this.floatBox(x.p, x.index)).filter((b): b is NonNullable<typeof b> => !!b);
-    const ropts = { active: this.storyKey, cells: this.selectedCells(), image: this.imageOverlay(), table: this.handleTable(), others };
+    const ropts = { active: this.storyKey, cells: this.selectedCells(), image: this.imageOverlay(), table: this.handleTable(), others, guides: this.guides };
     this.view.render(this.doc, this.layout, this.sel, ropts);
     // The picture's frame comes from the view's new layout: draw it again when it moved.
     const image = this.imageOverlay();
@@ -3114,8 +3118,87 @@ export class Editor {
     if (snapshot) this.snapshot();
     this.typing = false;
     if (img.kind === "inline") this.replaceObject(img.p, img.o, { ...img.obj, pic });
-    else this.replaceFloat(img.p, img.index, { ...img.obj, pic });
+    else {
+      this.replaceFloat(img.p, img.index, { ...img.obj, pic });
+      // A new outline (Auf Form zuschneiden, Zuschneiden): Eng follows it.
+      if (old.geometry !== pic?.geometry || JSON.stringify(old.crop) !== JSON.stringify(pic?.crop)) this.refreshWrapPolygon(img.p, img.index);
+    }
     this.update();
+  }
+
+  /**
+   * Eng and Transparent: the wrap polygon around the object's outline, as Word makes it (a
+   * shape's or cut-to-shape picture's outline, the visible part of a picture with a
+   * transparent background, else the box). The picture's part is read asynchronously.
+   */
+  private refreshWrapPolygon(p: number, index: number): void {
+    const f = this.doc.main[p]?.floats?.[index];
+    if (!f || (f.wrap !== "tight" && f.wrap !== "through")) return;
+    const outline = outlinePolygon(f);
+    this.replaceFloat(p, index, { ...f, polygon: outline ?? BOX });
+    if (outline || !f.image) return;
+    const image = f.image, crop = f.pic?.crop;
+    void alphaPolygon(image, crop).then((poly) => {
+      const cur = this.doc.main[p]?.floats?.[index];
+      if (!poly || !cur || cur.image !== image || cur.pic?.crop !== crop || (cur.wrap !== "tight" && cur.wrap !== "through")) return;
+      this.replaceFloat(p, index, { ...cur, polygon: poly });
+      this.update();
+    });
+  }
+
+  /** Transparente Farbe bestimmen: the next click on the selected picture picks the colour. */
+  private pickingColor = false;
+
+  pickTransparentColor(): void {
+    if (!this.selectedImage()?.obj.image) return;
+    this.pickingColor = true;
+    this.workspace.style.cursor = PICK_CURSOR;
+  }
+
+  private overSelectedImage(clientX: number, clientY: number): boolean {
+    const box = this.imageBox();
+    const pt = this.view.pointAt(clientX, clientY);
+    return !!box && pt.page === box.page && pt.x >= box.x && pt.x <= box.x + box.w && pt.y >= box.y && pt.y <= box.y + box.h;
+  }
+
+  /** The colour of the selected picture's pixel under a point becomes see-through. */
+  private pickColorAt(clientX: number, clientY: number): void {
+    this.pickingColor = false;
+    this.workspace.style.cursor = "";
+    const img = this.selectedImage();
+    const box = this.imageBox();
+    if (!img?.obj.image || !box) return;
+    const pt = this.view.pointAt(clientX, clientY);
+    if (pt.page !== box.page) return;
+    const f = img.obj.pic ?? {};
+    // Back through the turn, the mirroring and the crop to the picture's own pixels.
+    let x = pt.x, y = pt.y;
+    if (f.rotation) {
+      const a = (-f.rotation * Math.PI) / 180, cx = box.x + box.w / 2, cy = box.y + box.h / 2;
+      const dx = x - cx, dy = y - cy;
+      x = cx + dx * Math.cos(a) - dy * Math.sin(a);
+      y = cy + dx * Math.sin(a) + dy * Math.cos(a);
+    }
+    let u = (x - box.x) / box.w, v = (y - box.y) / box.h;
+    if (u < 0 || u > 1 || v < 0 || v > 1) return;
+    if (f.flipH) u = 1 - u;
+    if (f.flipV) v = 1 - v;
+    const c = f.crop ?? { l: 0, t: 0, r: 0, b: 0 };
+    u = c.l + u * (1 - c.l - c.r);
+    v = c.t + v * (1 - c.t - c.b);
+    const image = img.obj.image;
+    const src = new Image();
+    src.onload = () => {
+      const cv = document.createElement("canvas");
+      cv.width = src.naturalWidth; cv.height = src.naturalHeight;
+      const g = cv.getContext("2d");
+      if (!g) return;
+      g.drawImage(src, 0, 0);
+      const px = g.getImageData(Math.min(cv.width - 1, Math.max(0, Math.floor(u * cv.width))), Math.min(cv.height - 1, Math.max(0, Math.floor(v * cv.height))), 1, 1).data;
+      const hex = [px[0], px[1], px[2]].map((n) => n.toString(16).padStart(2, "0")).join("").toUpperCase();
+      if (this.selectedImage()?.obj.image === image) { this.setPictureFormat({ transparentColor: hex }); this.emit(true); }
+    };
+    src.src = imageUrl(image);
   }
 
   /** Alternativtext of the selected picture. */
@@ -3269,6 +3352,8 @@ export class Editor {
 
   /** The host shows Word's layout options (wrapping) next to the picture. */
   onLayoutOptions: ((rect: DOMRect) => void) | null = null;
+  /** A double-click on a picture or shape: Word opens its ribbon tab (Bildformat, Formformat). */
+  onObjectOpen: ((kind: "picture" | "shape") => void) | null = null;
 
   /** New picture data in place of the selected picture's (Freistellen, Bilder komprimieren). */
   replaceImageData(image: ImageData, snapshot = true): void {
@@ -3480,6 +3565,7 @@ cropFill(fit: boolean): void {
       next[img.p] = { ...para, floats: [...(para.floats ?? []), f] };
       this.doc.setStory(MAIN, next);
       this.floatSel = { p: img.p, index: (para.floats ?? []).length };
+      this.refreshWrapPolygon(img.p, (para.floats ?? []).length);
       this.setSelKeepFloat({ p: img.p, o: img.o });
     } else if (wrap === "inline") {
       const f = img.obj;
@@ -3491,6 +3577,7 @@ cropFill(fit: boolean): void {
       this.setSel(at, { p: at.p, o: at.o + 1 });
     } else {
       this.replaceFloat(img.p, img.index, { ...img.obj, wrap, data: img.obj.image ? undefined : img.obj.data });
+      this.refreshWrapPolygon(img.p, img.index);
     }
     this.update({ scroll: true });
   }
@@ -4138,7 +4225,7 @@ cropFill(fit: boolean): void {
     if (!story || !paras || !paras.some((q) => q.text.length)) return false;
     return story.placed.some((pl) => {
       const ln = story.paras[pl.para]?.lines[pl.line];
-      return ln && pl.page === page && y >= pl.y && y <= pl.y + ln.height && x >= pl.x + ln.x0 - 4 && x <= pl.x + ln.x0 + ln.width + 4;
+      return ln && pl.page === page && y >= pl.y && y <= pl.y + (ln.rowHeight ?? ln.height) && x >= pl.x + ln.x0 - 4 && x <= pl.x + ln.x0 + ln.width + 4;
     });
   }
 
@@ -5127,9 +5214,47 @@ cropFill(fit: boolean): void {
    * a table at the cell under the caret.
    */
   private lineNeighbour(p: number, line: number, dir: -1 | 1, goal: number): number | null {
+    const r = this.lineNeighbourRaw(p, line, dir, goal);
+    return r === null ? null : this.pieceNear(r, goal);
+  }
+
+  /**
+   * In a row a picture divides (text on both sides), the piece nearest to x; any other line
+   * stays as it is.
+   */
+  private pieceNear(index: number, x: number): number {
+    const story = this.view.storyLayout();
+    const pl = story.placed[index];
+    if (!pl) return index;
+    const lines = story.paras[pl.para]?.lines;
+    if (!lines) return index;
+    // The row: pieces of height 0 belong with the line after them.
+    let a = pl.line, b = pl.line;
+    while (a > 0 && lines[a - 1].rowHeight !== undefined) a--;
+    while (b < lines.length - 1 && lines[b].rowHeight !== undefined) b++;
+    if (a === b) return index;
+    const idx = story.index[pl.para] ?? [];
+    let best = index, bestD = Infinity;
+    for (let k = a; k <= b; k++) {
+      const q = story.placed[idx[k]];
+      if (!q) continue;
+      const l = lines[k], left = q.x + l.x0, right = left + Math.max(1, l.width);
+      const d = x < left ? left - x : x > right ? x - right : 0;
+      if (d < bestD) { bestD = d; best = idx[k]; }
+    }
+    return best;
+  }
+
+  private lineNeighbourRaw(p: number, line: number, dir: -1 | 1, goal: number): number | null {
     const story = this.view.storyLayout();
     const paras = this.doc.paras;
     const idx = story.index[p] ?? [];
+    // Pieces of the same row are one line for Nach oben/Nach unten.
+    const lines = story.paras[p]?.lines ?? [];
+    let k = line;
+    if (dir > 0) { while (k < lines.length - 1 && lines[k].rowHeight !== undefined) k++; }
+    else { while (k > 0 && lines[k - 1].rowHeight !== undefined) k--; }
+    line = k;
     if (idx[line + dir] !== undefined) return idx[line + dir];
     const cell = paras[p].cell;
     let q = p + dir;
@@ -5287,6 +5412,7 @@ cropFill(fit: boolean): void {
   private onKeyDown(e: KeyboardEvent): void {
     if (e.isComposing) return;
     if (this.interceptKey?.(e)) { e.preventDefault(); return; }
+    if (this.pickingColor && e.key === "Escape") { e.preventDefault(); this.pickingColor = false; this.workspace.style.cursor = ""; return; }
     // Lesemodus: moving, selecting and copying only; the arrows and Bild ab/auf turn screens.
     if (this.readOnly) {
       const nav = /^(Arrow|Home$|End$|Page)/.test(e.key);
@@ -5621,6 +5747,8 @@ cropFill(fit: boolean): void {
   private onMouseDown(e: MouseEvent): void {
     if (e.button !== 0) return;
     if (this.interceptMouse?.(e)) { e.preventDefault(); return; }
+    // Transparente Farbe bestimmen: this click picks the colour (anywhere else: cancelled).
+    if (this.pickingColor) { e.preventDefault(); this.pickColorAt(e.clientX, e.clientY); return; }
     // Einfügen > Formen: the drag draws the chosen shape.
     if (this.drawTool) { e.preventDefault(); this.focus(); this.drawShape(e); return; }
     // Comment cards handle their own clicks.
@@ -5705,7 +5833,15 @@ cropFill(fit: boolean): void {
     }
     if (this.storyKey === MAIN && e.detail === 2 && !this.readOnly) {
       const deco = this.view.imageAt(e.clientX, e.clientY);
-      if (deco?.shape && deco.shape.kind !== "connector") { this.editShapeText(deco.para, deco.index, "end"); return; }
+      if (deco?.shape && deco.shape.kind !== "connector") { this.editShapeText(deco.para, deco.index, "end"); this.onObjectOpen?.("shape"); return; }
+      if (deco) {
+        // A double-click on a picture (or a line, a group) selects it and opens its tab.
+        this.selectFloat(deco.para, deco.index);
+        this.update();
+        this.emit(false);
+        this.onObjectOpen?.(deco.shape || this.doc.main[deco.para]?.floats?.[deco.index]?.group ? "shape" : "picture");
+        return;
+      }
     }
     if (!this.storyKey.startsWith("tx:") && !this.chooseStory(e)) return;
     const hit = this.view.hitLine(e.clientX, e.clientY);
@@ -5733,6 +5869,14 @@ cropFill(fit: boolean): void {
     } else if (e.shiftKey) {
       this.setSel(this.sel.anchor, at.pos, at.upstream);
       this.drag = { granularity: "char", origin: [this.sel.anchor, this.sel.anchor] };
+    } else if (e.detail === 2 && this.isImageAt(under) && this.overObject(hit.index, hit.x, under)) {
+      // A picture in the text: selected, and its tab opens (Word).
+      this.setSel(under, { p: under.p, o: under.o + 1 });
+      this.drag = null;
+      this.update();
+      this.emit(false);
+      this.onObjectOpen?.(this.selectedShape() ? "shape" : "picture");
+      return;
     } else if (e.detail === 2) {
       const r = this.wordRange(under);
       this.setSel(r[0], r[1]);
@@ -5914,6 +6058,40 @@ cropFill(fit: boolean): void {
   }
 
   /** Resizes (from a handle) or moves (floating pictures) the selected picture with the mouse. */
+  /** Ausrichtungslinien shown while an object is dragged (Word's green alignment guides). */
+  private guides: { page: number; x1: number; y1: number; x2: number; y2: number }[] = [];
+
+  /**
+   * Word's alignment guides: an edge or the middle of the box being dragged (page px) within a
+   * few pixels of a margin or the middle of the text area snaps to it and shows a green line.
+   * `edges` says which of the box's edges move (moving: all; sizing: the dragged ones).
+   * Returns the corrections in px.
+   */
+  private snapBox(page: number, box: { x: number; y: number; w: number; h: number }, edges: { l: boolean; r: boolean; t: boolean; b: boolean; mid: boolean }): { dx: number; dy: number } {
+    const pg = this.layout.pages[page];
+    this.guides = [];
+    if (!pg) return { dx: 0, dy: 0 };
+    const s = pg.setup;
+    const tol = 6 / this.view.zoom;
+    const ml = s.marginLeft * PT, mr = (s.width - s.marginRight) * PT, mt = s.marginTop * PT, mb = (s.height - s.marginBottom) * PT;
+    const xs = [ml, (ml + mr) / 2, mr], ys = [mt, (mt + mb) / 2, mb];
+    const best = (cands: [number, boolean][], targets: number[]): number | null => {
+      let out: number | null = null;
+      for (const [v, on] of cands) {
+        if (!on) continue;
+        for (const t of targets) if (Math.abs(t - v) <= tol && (out === null || Math.abs(t - v) < Math.abs(out))) out = t - v;
+      }
+      return out;
+    };
+    const ddx = best([[box.x, edges.l], [box.x + box.w / 2, edges.mid], [box.x + box.w, edges.r]], xs) ?? 0;
+    const ddy = best([[box.y, edges.t], [box.y + box.h / 2, edges.mid], [box.y + box.h, edges.b]], ys) ?? 0;
+    const b = { x: box.x + ddx, y: box.y + ddy, w: box.w, h: box.h };
+    const near = (a: number, c: number) => Math.abs(a - c) < 0.01;
+    for (const t of xs) if (near(b.x, t) || near(b.x + b.w / 2, t) || near(b.x + b.w, t)) this.guides.push({ page, x1: t, y1: 0, x2: t, y2: s.height * PT });
+    for (const t of ys) if (near(b.y, t) || near(b.y + b.h / 2, t) || near(b.y + b.h, t)) this.guides.push({ page, x1: 0, y1: t, x2: s.width * PT, y2: t });
+    return { dx: ddx, dy: ddy };
+  }
+
   private dragImage(e: MouseEvent, handle: string | null): void {
     const box0 = this.imageBox();
     if (!box0) return;
@@ -5935,6 +6113,14 @@ cropFill(fit: boolean): void {
         if (handle.startsWith("n")) hh -= dy;
         // Corner handles keep a picture's proportions; a shape's only with Umschalt (Word).
         if (handle.length === 2 && isShape === ev.shiftKey) { const k = Math.max(w / w0, hh / h0); w = w0 * k; hh = h0 * k; }
+        else if (floating && !ev.altKey) {
+          // The dragged edges snap to the margins (only when the proportions are free).
+          const bx = handle.includes("w") ? box0.x + (w0 - w) * PT : box0.x, by = handle.startsWith("n") ? box0.y + (h0 - hh) * PT : box0.y;
+          const sn = this.snapBox(box0.page, { x: bx, y: by, w: w * PT, h: hh * PT },
+            { l: handle.includes("w"), r: handle.includes("e"), t: handle.startsWith("n"), b: handle.startsWith("s"), mid: false });
+          if (handle.includes("w")) w -= sn.dx / PT; else if (handle.includes("e")) w += sn.dx / PT;
+          if (handle.startsWith("n")) hh -= sn.dy / PT; else if (handle.startsWith("s")) hh += sn.dy / PT;
+        }
         w = Math.max(isShape ? 1 : 6, w);
         hh = Math.max(isShape ? 1 : 6, hh);
         this.setImageSize(w, hh, first);
@@ -5944,12 +6130,22 @@ cropFill(fit: boolean): void {
           if (mx !== movedX || my !== movedY) { this.moveFloat(mx - movedX, my - movedY, false); movedX = mx; movedY = my; }
         }
       } else {
-        this.moveFloat(dx - lastDx, dy - lastDy, first);
-        lastDx = dx; lastDy = dy;
+        // Floating objects snap to the margins and the text area's middle (Alt: no snapping).
+        let sx = dx, sy = dy;
+        if (floating && !ev.altKey) {
+          const s = this.snapBox(box0.page, { x: box0.x + dx * PT, y: box0.y + dy * PT, w: box0.w, h: box0.h }, { l: true, r: true, t: true, b: true, mid: true });
+          sx += s.dx / PT; sy += s.dy / PT;
+        } else this.guides = [];
+        this.moveFloat(sx - lastDx, sy - lastDy, first);
+        lastDx = sx; lastDy = sy;
       }
       first = false;
     };
-    const up = () => { removeEventListener("mousemove", move, true); removeEventListener("mouseup", up, true); this.emit(true); };
+    const up = () => {
+      removeEventListener("mousemove", move, true); removeEventListener("mouseup", up, true);
+      if (this.guides.length) { this.guides = []; this.update(); }
+      this.emit(true);
+    };
     addEventListener("mousemove", move, true);
     addEventListener("mouseup", up, true);
     this.update();
@@ -6054,6 +6250,11 @@ cropFill(fit: boolean): void {
    */
   private hoverCursor(e: MouseEvent): void {
     if (this.painter) return;
+    if (this.pickingColor) {
+      const c = this.view.imageAt(e.clientX, e.clientY) || this.overSelectedImage(e.clientX, e.clientY) ? PICK_CURSOR : "default";
+      if (this.workspace.style.cursor !== c) this.workspace.style.cursor = c;
+      return;
+    }
     let cursor = "default";
     // Word shows the table handles while the mouse is over a table.
     const tableNow = this.storyKey === MAIN ? this.view.tableAt(e.clientX, e.clientY) : null;

@@ -136,6 +136,18 @@ def main(a):
     elif cmd == "move":
         pg.mouse("mouseMoved", float(a[2]), float(a[3]))
         print("ok")
+    elif cmd == "down":  # press and hold (then "hold x y" moves, "up x y" releases)
+        pg.mouse("mouseMoved", float(a[2]), float(a[3]))
+        pg.mouse("mousePressed", float(a[2]), float(a[3]), mods=mods_of(a[4] if len(a) > 4 else ""))
+        print("ok")
+    elif cmd == "hold":
+        x, y = float(a[2]), float(a[3])
+        pg.cdp("Input.dispatchMouseEvent", {"type": "mouseMoved", "x": x, "y": y, "button": "left", "buttons": 1, "modifiers": mods_of(a[4] if len(a) > 4 else "")})
+        time.sleep(0.05)
+        print("ok")
+    elif cmd == "up":
+        pg.mouse("mouseReleased", float(a[2]), float(a[3]))
+        print("ok")
     elif cmd == "drag":
         x1, y1, x2, y2 = map(float, a[2:6])
         steps = int(a[6]) if len(a) > 6 else 12

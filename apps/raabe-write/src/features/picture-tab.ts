@@ -109,7 +109,8 @@ export function pictureTab(api: AppApi, insertFromPath: (path: string) => Promis
     { title: "Farbsättigung", items: SATURATION, columns: 7, tile },
     { title: "Farbton", items: TEMPERATURE, columns: 7, tile },
     { title: "Neu einfärben", items: recolorItems(), columns: 7, tile },
-  ], [{ label: "Bildfarboptionen...", run: () => void c.run("picture.formatPane") }]);
+  ], [{ label: "Transparente Farbe bestimmen", run: () => { ed()?.pickTransparentColor(); } },
+    { label: "Bildfarboptionen...", run: () => void c.run("picture.formatPane") }]);
   const transparency = gallery([{ items: TRANSPARENCY, columns: 7, tile }], [{ label: "Optionen für die Bildtransparenz...", run: () => void c.run("picture.formatPane") }]);
   c.implement("picture.corrections", { run: () => {}, enabled: picked });
   c.implement("picture.color", { run: () => {}, enabled: picked });

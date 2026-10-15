@@ -857,3 +857,36 @@ owner:
 - Tables can be moved freely by their handle and become floating tables as in Word; in
   addition a second handle of our own gives layout options like a picture's (wrapping,
   alignment), because aligning a table in Word is cumbersome.
+
+### D-054 Pictures as Word places them (Step 4c B)
+Measured with a Word-built document (`make_fixtures.py --wrap`, `word-wrap.docx`: Quadrat in the
+middle, off-centre and near the margin, "Nur größte Seite", Eng around a box, a turned picture,
+a cut-out picture with a transparent background and an ellipse) and `probe_word_wrap.py`:
+- **Both sides**: Quadrat and Eng ("Beide Seiten", the default) put text left *and* right of a
+  picture; a row of text is then made of pieces, read left to right. Word fills no piece
+  narrower than a quarter inch (18 pt used, 17.5 pt left empty); a piece where the next word
+  does not fit stays empty and the text goes on in the next one. "Nur links/rechts/größte Seite"
+  leave the other side empty.
+- **The band** tested against a picture is the text's own height (13.4 pt for Calibri 11), not
+  the line pitch with the 1.08 spacing.
+- **Eng and Transparent** follow Word's wrap polygon (wp:wrapPolygon, in 21600ths of the
+  object's *unturned* box; Word turns it with the object) plus the left/right text distance;
+  Quadrat follows the box with the effect extent, for a turned picture its turned bounding box.
+  When Eng is chosen in RaabeWrite the polygon is made as Word makes it: a shape's or
+  cut-to-shape picture's outline, the visible part of a picture with a transparent background
+  (about 3 % larger, as Word's), else the box. It is written to the file and read back.
+- **Aligned objects** (zentriert, rechts) are placed with their effect extent: Word centres an
+  ellipse with its 2 pt outline extent 1 pt further left.
+- **Text above the anchor**: a picture that reaches up into text already placed on its page
+  (moved above its paragraph, or turned so it rises) pushes that text aside too; the layout then
+  runs a second time with the picture known from the start of its page.
+- Result: all 162 line starts of word-wrap.docx as in Word, also with RaabeWrite's own polygons
+  for the ellipse and the cut-out picture.
+- **Snapping**: moving or sizing a floating object snaps its edges and middle to the margins and
+  the middle of the text area within 6 px, with Word's green alignment guides; Alt switches it
+  off, as in Word.
+- **Double-click** on a picture opens Bildformat, on a shape Formformat (and its text).
+- **Textumbruch icons** show what each option does (text beside, around an outline, through,
+  above and below, behind, in front); tooltips now also appear inside open menus and galleries.
+- **Transparente Farbe bestimmen** (Farbe menu): a pen cursor, the clicked colour becomes
+  see-through (a:clrChange, as Word writes it).

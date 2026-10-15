@@ -9,13 +9,41 @@ import { pictureTab, PICTURE_TAB_COMMANDS } from "./picture-tab";
 export { PICTURE_TAB_COMMANDS };
 
 /** A small icon of a wrapping style (text lines and a picture), for the layout options. */
-function wrapIcon(wrap: string): HTMLElement {
-  const box = h("div", { style: "position:relative;width:26px;height:26px" });
-  const lines = wrap === "inline" ? [6, 18] : [2, 7, 12, 17, 22];
-  for (const y of lines) box.append(h("div", { style: `position:absolute;left:0;right:0;top:${y}px;height:2px;background:#9e9e9e` }));
-  const pic = h("div", { style: `position:absolute;left:8px;top:${wrap === "inline" ? 9 : 7}px;width:10px;height:10px;background:${wrap === "behind" ? "rgba(91,155,213,.5)" : "#5b9bd5"}` });
-  if (wrap === "front") pic.style.zIndex = "1";
-  box.append(pic);
+/**
+ * Word's Textumbruch icons: where the text lines (grey) run around the picture (blue), so each
+ * option shows what it does (Layoutoptionen, Textumbruch menu).
+ */
+export function wrapIcon(wrap: string): HTMLElement {
+  const L = (x1: number, x2: number, y: number) => `<path d="M${x1} ${y}H${x2}" stroke="#8a8a8a" stroke-width="2"/>`;
+  const pic = (x: number, y: number, w: number, hh: number, o = 1) => `<rect x="${x}" y="${y}" width="${w}" height="${hh}" rx="1" fill="#4f8fd6" fill-opacity="${o}"/>`;
+  let body = "";
+  switch (wrap) {
+    case "inline":
+      body = L(2, 30, 5) + L(2, 9, 19) + pic(11, 11, 10, 9) + L(23, 30, 19) + L(2, 30, 27);
+      break;
+    case "square":
+      body = L(2, 30, 4) + [10, 16, 22].map((y) => L(2, 8, y) + L(24, 30, y)).join("") + pic(11, 9, 10, 14) + L(2, 30, 28);
+      break;
+    case "tight":
+      body = L(2, 30, 4) + L(2, 10, 10) + L(22, 30, 10) + L(2, 7, 16) + L(25, 30, 16) + L(2, 10, 22) + L(22, 30, 22) +
+        '<circle cx="16" cy="16" r="7" fill="#4f8fd6"/>' + L(2, 30, 28);
+      break;
+    case "through":
+      // Text runs into the hollow of the shape.
+      body = L(2, 30, 4) + L(2, 9, 10) + L(23, 30, 10) + L(2, 18, 16) + L(23, 30, 16) + L(2, 9, 22) + L(23, 30, 22) +
+        '<path d="M11 8h11v16H11v-4h6v-8h-6z" fill="#4f8fd6"/>' + L(2, 30, 28);
+      break;
+    case "topAndBottom":
+      body = L(2, 30, 4) + L(2, 30, 8) + pic(10, 11, 12, 10) + L(2, 30, 24) + L(2, 30, 28);
+      break;
+    case "behind":
+      body = pic(8, 7, 16, 18, 0.35) + [4, 10, 16, 22, 28].map((y) => L(2, 30, y)).join("");
+      break;
+    default: // front
+      body = [4, 10, 16, 22, 28].map((y) => L(2, 30, y)).join("") + pic(9, 8, 14, 16);
+  }
+  const box = h("div", { style: "width:32px;height:32px" });
+  box.innerHTML = `<svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">${body}</svg>`;
   return box;
 }
 
@@ -23,13 +51,13 @@ const cmd = (id: string, label: string, icon?: string, extra: Partial<Command> =
 
 export const PICTURE_COMMANDS: Command[] = [
   cmd("picture.fromFile", "Dieses Gerät...", "image-add", { keywords: ["Bild einfügen", "Grafik", "Foto"] }),
-  cmd("picture.wrapInline", "Mit Text in Zeile", "wrap-text"),
-  cmd("picture.wrapSquare", "Quadrat", "wrap-text"),
-  cmd("picture.wrapTight", "Eng", "wrap-text"),
-  cmd("picture.wrapThrough", "Transparent", "wrap-text"),
-  cmd("picture.wrapTopBottom", "Oben und unten", "wrap-text"),
-  cmd("picture.wrapBehind", "Hinter den Text", "send-backward"),
-  cmd("picture.wrapFront", "Vor den Text", "bring-forward"),
+  cmd("picture.wrapInline", "Mit Text in Zeile", "wrap-inline"),
+  cmd("picture.wrapSquare", "Quadrat", "wrap-square"),
+  cmd("picture.wrapTight", "Eng", "wrap-tight"),
+  cmd("picture.wrapThrough", "Transparent", "wrap-through"),
+  cmd("picture.wrapTopBottom", "Oben und unten", "wrap-top-bottom"),
+  cmd("picture.wrapBehind", "Hinter den Text", "wrap-behind"),
+  cmd("picture.wrapFront", "Vor den Text", "wrap-front"),
   cmd("picture.height", "Höhe der Form", undefined),
   cmd("picture.width", "Breite der Form", undefined),
   cmd("picture.changeFromFile", "Bild ändern", "change-picture"),
@@ -110,7 +138,7 @@ export function picturesFeature(api: AppApi) {
     if (!s0) return;
     const icon = (id: string, wrap: string) => {
       const cur = currentWrap() === wrap;
-      return h("button", { class: `tile${cur ? " on" : ""}`, "data-tip": c.get(id).label, style: "width:40px;height:40px", onclick: () => { closePopup(); void c.run(id); } }, wrapIcon(wrap));
+      return h("button", { class: `tile${cur ? " on" : ""}`, "data-tip": c.get(id).label, "aria-label": c.get(id).label, style: "width:42px;height:42px", onclick: () => { closePopup(); void c.run(id); } }, wrapIcon(wrap));
     };
     const panel = h("div", { class: "rpanel layout-options", style: "width:220px" },
       h("div", { class: "title" }, "Layoutoptionen"),
@@ -118,8 +146,8 @@ export function picturesFeature(api: AppApi) {
       h("div", { class: "subtitle" }, "Mit Textumbruch"),
       h("div", { class: "tiles", style: "grid-template-columns:repeat(4, auto)" }, ...wraps.slice(1).map(([id, w]) => icon(id, w))),
       h("hr"),
-      h("label", { class: "check" }, h("input", { type: "radio", name: "lo-move", checked: s0.kind === "float" && s0.obj.moveWithText !== false, disabled: s0.kind !== "float", onchange: () => { ed()?.setPictureMoveWithText(true); } }), "Mit Text verschieben"),
-      h("label", { class: "check" }, h("input", { type: "radio", name: "lo-move", checked: s0.kind === "float" && s0.obj.moveWithText === false, disabled: s0.kind !== "float", onchange: () => { ed()?.setPictureMoveWithText(false); } }), "Position auf der Seite fixieren"),
+      h("label", { class: "check", style: "display:flex" }, h("input", { type: "radio", name: "lo-move", checked: s0.kind === "float" && s0.obj.moveWithText !== false, disabled: s0.kind !== "float", onchange: () => { ed()?.setPictureMoveWithText(true); } }), "Mit Text verschieben"),
+      h("label", { class: "check", style: "display:flex" }, h("input", { type: "radio", name: "lo-move", checked: s0.kind === "float" && s0.obj.moveWithText === false, disabled: s0.kind !== "float", onchange: () => { ed()?.setPictureMoveWithText(false); } }), "Position auf der Seite fixieren"),
       h("button", { class: "link", onclick: () => { closePopup(); void c.run("picture.moreLayout"); } }, "Mehr anzeigen"));
     showPopup(panel, new DOMRect(rect.left, rect.bottom, 0, 0));
   };

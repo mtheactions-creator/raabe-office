@@ -136,6 +136,9 @@ class WordDocument:
         positions (Word's MoveDown moves between table cells and gets stuck in fields)."""
         if self.doc.Tables.Count or self.doc.Sections.Count > 1 or self.doc.Fields.Count or self.doc.OMaths.Count:
             return True
+        # Floating objects that text flows around: MoveDown gets stuck beside them.
+        if any(self.doc.Shapes(k).WrapFormat.Type in (0, 1, 2) for k in range(1, self.doc.Shapes.Count + 1)):
+            return True
         return any(self.doc.Sections(k).PageSetup.TextColumns.Count > 1 for k in range(1, self.doc.Sections.Count + 1))
 
     def lines_by_position(self) -> list[int]:
@@ -173,7 +176,26 @@ class WordDocument:
                 i = hi
                 starts.append(vis[i])
                 k = key(vis[i])
-        return starts
+        return self.split_pieces(starts) if self.doc.Shapes.Count else starts
+
+    def split_pieces(self, starts: list[int]) -> list[int]:
+        """Rows that a picture divides (text on both sides): a new line where x jumps forward
+        across the picture (Information(5), screen pixels; jumps of over 40 pt)."""
+        out: list[int] = []
+        ends = starts[1:] + [self.doc.Content.End - 1]
+        jump = 40 * self.app.PointsToPixels(1)
+        for a, e in zip(starts, ends):
+            out.append(a)
+            if e - a < 3:
+                continue
+            prev = None
+            for q in range(a, e):
+                r = self.doc.Range(q, q)
+                x = float(r.Information(5))
+                if prev is not None and x - prev > jump and self.doc.Range(q - 1, q).Text != "\t" and not self.doc.Range(q - 1, q).InlineShapes.Count:
+                    out.append(q)
+                prev = x
+        return out
 
     def lines(self) -> list[int]:
         s = self.app.Selection

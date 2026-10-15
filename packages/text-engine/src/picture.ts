@@ -59,6 +59,8 @@ export interface PictureFormat {
     | { readonly kind: "duotone"; readonly dark: string; readonly light: string };
   /** Transparenz, 0…1. */
   readonly transparency?: number;
+  /** Transparente Farbe bestimmen: this colour (hex) is see-through (a:clrChange). */
+  readonly transparentColor?: string;
   /** Cropped share of the original picture on each side (0…1, may be negative: padding). */
   readonly crop?: { readonly l: number; readonly t: number; readonly r: number; readonly b: number };
   /** Drehen: degrees clockwise; Horizontal/Vertikal kippen. */
@@ -230,7 +232,7 @@ export function pictureElement(url: string, w: number, h: number, f: PictureForm
   const shape = frameShape(f?.geometry, w, h, f);
   frame.style.cssText = `position:absolute;inset:0;overflow:hidden;${shape}`;
   const img = document.createElement("img");
-  img.src = url;
+  img.src = f?.transparentColor ? withTransparentColor(url, f.transparentColor, img) : url;
   img.draggable = false;
   const c = f?.crop;
   if (c && (c.l || c.t || c.r || c.b)) {
@@ -340,6 +342,43 @@ export function previewElement(url: string, w: number, h: number, f: PictureForm
   inner.append(el);
   box.append(inner);
   return box;
+}
+
+const transparentCache = new Map<string, string>();
+
+/**
+ * The picture with one colour made see-through (Transparente Farbe bestimmen): the address of
+ * a copy once it is made; until then the picture as it is, which `img` then swaps for it.
+ */
+function withTransparentColor(url: string, hex: string, img: HTMLImageElement): string {
+  const key = `${url}|${hex}`;
+  const done = transparentCache.get(key);
+  if (done) return done;
+  const src = new Image();
+  src.onload = () => {
+    const c = document.createElement("canvas");
+    c.width = src.naturalWidth;
+    c.height = src.naturalHeight;
+    const g = c.getContext("2d");
+    if (!g) return;
+    g.drawImage(src, 0, 0);
+    const data = g.getImageData(0, 0, c.width, c.height);
+    const d = data.data;
+    const r = parseInt(hex.slice(0, 2), 16), gg = parseInt(hex.slice(2, 4), 16), b = parseInt(hex.slice(4, 6), 16);
+    // Word changes exactly that colour; a step of tolerance keeps compressed pictures usable.
+    for (let i = 0; i < d.length; i += 4) {
+      if (Math.abs(d[i] - r) <= 2 && Math.abs(d[i + 1] - gg) <= 2 && Math.abs(d[i + 2] - b) <= 2) d[i + 3] = 0;
+    }
+    g.putImageData(data, 0, 0);
+    c.toBlob((blob) => {
+      if (!blob) return;
+      const out = URL.createObjectURL(blob);
+      transparentCache.set(key, out);
+      if (img.src === url || img.getAttribute("src") === url) img.src = out;
+    }, "image/png");
+  };
+  src.src = url;
+  return url;
 }
 
 /** Space the effects take around the picture (points), when Word did not say. */

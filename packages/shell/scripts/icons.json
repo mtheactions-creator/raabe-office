@@ -321,5 +321,12 @@
   "ignore": "prohibited",
   "ignore-all": "prohibited_multiple",
   "dictionary-add": "book_add",
-  "editor": "pen_sparkle"
+  "editor": "pen_sparkle",
+  "wrap-inline": "custom:wrap-inline",
+  "wrap-square": "custom:wrap-square",
+  "wrap-tight": "custom:wrap-tight",
+  "wrap-through": "custom:wrap-through",
+  "wrap-top-bottom": "custom:wrap-top-bottom",
+  "wrap-behind": "custom:wrap-behind",
+  "wrap-front": "custom:wrap-front"
 }

@@ -59,6 +59,8 @@ export interface RenderOptions {
   };
   /** The table (id) that shows Word's move and resize handles (caret or mouse in it). */
   readonly table?: number;
+  /** Ausrichtungslinien while an object is dragged: green lines on a page (page px). */
+  readonly guides?: readonly { readonly page: number; readonly x1: number; readonly y1: number; readonly x2: number; readonly y2: number }[];
 }
 
 /** Word's rotation handle (a circular arrow) and the layout options button's icon. */
@@ -576,7 +578,7 @@ export class View {
       // Geänderte Zeilen: a bar in the left margin next to lines with tracked changes.
       if ((this.markupMode === "all" || this.markupMode === "simple") && !this.printing && lineHasRevision(para, line, isLast)) {
         const bar = document.createElement("div");
-        bar.style.cssText = `position:absolute;left:${page.setup.marginLeft * PT - 14}px;top:${pl.y}px;width:0;height:${line.height}px;` +
+        bar.style.cssText = `position:absolute;left:${page.setup.marginLeft * PT - 14}px;top:${pl.y}px;width:0;height:${line.rowHeight ?? line.height}px;` +
           `border-left:1px solid ${this.markupMode === "simple" ? "#d13438" : "#7f7f7f"};pointer-events:none`;
         el.append(bar);
       }
@@ -806,11 +808,21 @@ export class View {
     const img = this.opts.image && this.opts.image.page === page.index ? this.opts.image : null;
     const tb = this.opts.table !== undefined ? this.tableBounds(page, this.opts.table) : null;
     const others = (this.opts.others ?? []).filter((o) => o.page === page.index);
-    const key = others.map((o) => `o${o.x},${o.y},${o.w},${o.h}`).join("") + (editing ? `${page.bodyTop}|${page.bodyBottom}|${page.section}|${sections}|${pv.w}` : "") +
+    const guides = (this.opts.guides ?? []).filter((g) => g.page === page.index);
+    const key = guides.map((g) => `g${g.x1},${g.y1},${g.x2},${g.y2}`).join("") + others.map((o) => `o${o.x},${o.y},${o.w},${o.h}`).join("") + (editing ? `${page.bodyTop}|${page.bodyBottom}|${page.section}|${sections}|${pv.w}` : "") +
       (img ? `|img${img.x},${img.y},${img.w},${img.h},${img.crop ? `${img.crop.x},${img.crop.y},${img.crop.w},${img.crop.h}` : ""},${img.picture},${img.editing},${(img.adjust ?? []).map((a) => `${a.x},${a.y}`).join(";")},${(img.ends ?? []).map((a) => `${a.x},${a.y}`).join(";")}` : "") + (tb ? `|tb${tb.x},${tb.y},${tb.w},${tb.h},${tb.first},${tb.last}` : "");
     if (key === pv.overlayKey) return;
     pv.overlayKey = key;
     const handles: HTMLElement[] = [];
+    for (const g of guides) {
+      // Word's alignment guides: thin green lines across the page.
+      const el = document.createElement("div");
+      const vertical = Math.abs(g.x1 - g.x2) < 0.5;
+      el.style.cssText = `position:absolute;left:${Math.min(g.x1, g.x2)}px;top:${Math.min(g.y1, g.y2)}px;` +
+        (vertical ? `width:0;height:${Math.abs(g.y2 - g.y1)}px;border-left:1px solid #48b84e` : `width:${Math.abs(g.x2 - g.x1)}px;height:0;border-top:1px solid #48b84e`) +
+        ";pointer-events:none;z-index:3";
+      handles.push(el);
+    }
     for (const o of others) {
       const fr = document.createElement("div");
       fr.style.cssText = `position:absolute;left:${o.x}px;top:${o.y}px;width:${o.w}px;height:${o.h}px;box-sizing:border-box;border:1px solid #6f8db9;pointer-events:none`;
@@ -1093,7 +1105,7 @@ export class View {
     if (para.block) {
       const b = para.block;
       const box = document.createElement("div");
-      box.style.cssText = `position:absolute;left:${left}px;top:${top}px;width:${line.segments[0].width}px;height:${line.height - 4}px;` +
+      box.style.cssText = `position:absolute;left:${left}px;top:${top}px;width:${line.segments[0].width}px;height:${(line.rowHeight ?? line.height) - 4}px;` +
         "box-sizing:border-box;border:1px dashed #9e9e9e;background:#fafafa;color:#616161;font:12px 'Segoe UI',sans-serif;padding:4px 8px;overflow:hidden;white-space:pre-wrap";
       box.textContent = `${b.label}\n${b.lines.join("\n")}`;
       out.push(box);
@@ -1133,7 +1145,7 @@ export class View {
           `border-top:1px solid #2f5fb3;border-bottom:1px solid #2f5fb3;pointer-events:none;z-index:1`;
       } else {
         const color = m.kind === "find" ? "#ffff00" : m.kind === "findCurrent" ? "#ffc000" : m.kind === "comment" ? "#f8e3c4" : "#f5c58c";
-        el.style.cssText = `position:absolute;left:${x1}px;top:${top}px;width:${x2 - x1}px;height:${line.height}px;background:${color};pointer-events:none;z-index:-1`;
+        el.style.cssText = `position:absolute;left:${x1}px;top:${top}px;width:${x2 - x1}px;height:${line.rowHeight ?? line.height}px;background:${color};pointer-events:none;z-index:-1`;
       }
       out.push(el);
     }
@@ -1173,7 +1185,7 @@ export class View {
         if (ch === LINE_BREAK) out.push(this.glyphAt("↵", c, x, y, lh));
         if (ch === PAGE_BREAK || ch === COLUMN_BREAK) {
           const pb = document.createElement("div");
-          pb.style.cssText = `position:absolute;left:${x}px;top:${top + line.height / 2 - 8}px;font:11px 'Segoe UI',sans-serif;color:#5b5b5b;white-space:pre;border-top:1px dotted #5b5b5b;padding-top:1px`;
+          pb.style.cssText = `position:absolute;left:${x}px;top:${top + (line.rowHeight ?? line.height) / 2 - 8}px;font:11px 'Segoe UI',sans-serif;color:#5b5b5b;white-space:pre;border-top:1px dotted #5b5b5b;padding-top:1px`;
           pb.textContent = ch === PAGE_BREAK ? "··········Seitenumbruch··········" : "··········Spaltenumbruch··········";
           out.push(pb);
         }
@@ -1342,7 +1354,7 @@ export class View {
           let x2 = ln.charX[b - ln.start];
           if (includesBreak) x2 += 7;
           const r = document.createElement("div");
-          r.style.cssText = `position:absolute;background:${SELECTION_COLOR};left:${pl.x + ln.x0 + x1}px;top:${pl.y}px;width:${Math.max(0, x2 - x1)}px;height:${ln.height}px`;
+          r.style.cssText = `position:absolute;background:${SELECTION_COLOR};left:${pl.x + ln.x0 + x1}px;top:${pl.y}px;width:${Math.max(0, x2 - x1)}px;height:${ln.rowHeight ?? ln.height}px`;
           if (inShape) r.style.mixBlendMode = "multiply";
           (inShape ? this.pages[pl.page].selTop : this.pages[pl.page].selLayer).append(r);
         }
@@ -1522,7 +1534,8 @@ export class View {
     if (!cand.length) return { index: 0, x: pt.x, inLeftMargin: false };
     let { x, y } = pt;
     if (page !== pt.page) y = page < pt.page ? Infinity : -Infinity;
-    const lineH = (pl: PlacedLine) => story.paras[pl.para].lines[pl.line].height;
+    const lineOfPl = (pl: PlacedLine) => story.paras[pl.para].lines[pl.line];
+    const lineH = (pl: PlacedLine) => { const l = lineOfPl(pl); return l.rowHeight ?? l.height; };
     const frames = new Map<number, Frame>();
     for (const pl of cand) frames.set(pl.frame, layout.frames[pl.frame]);
     // A cell (or other frame) that contains the point wins.
@@ -1540,6 +1553,12 @@ export class View {
     const lines = cand.filter((pl) => ok.has(pl.frame)).sort((a, b) => a.y - b.y);
     let hit = lines[lines.length - 1];
     for (const pl of lines) if (y < pl.y + lineH(pl)) { hit = pl; break; }
+    // A row a picture divides: the piece nearest to x (text on both sides of the picture).
+    const row = lines.filter((pl) => pl.frame === hit.frame && Math.abs(pl.y - hit.y) < 0.5);
+    if (row.length > 1) {
+      const dist = (pl: PlacedLine) => { const l = lineOfPl(pl); const a = pl.x + l.x0, b = a + Math.max(l.width, 1); return x < a ? a - x : x > b ? x - b : 0; };
+      hit = row.reduce((m, pl) => (dist(pl) < dist(m) ? pl : m));
+    }
     const index = story.placed.indexOf(hit);
     const fr = layout.frames[hit.frame];
     const s = layout.pages[hit.page].setup;

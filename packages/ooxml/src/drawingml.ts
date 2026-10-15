@@ -127,6 +127,13 @@ export function readPicture(pic: Element, theme: Record<string, string>): Pictur
           break;
         }
         case "grayscl": out.recolor = { kind: "grayscale" }; break;
+        case "clrChange": {
+          // Transparente Farbe bestimmen: the colour that becomes see-through.
+          const from = kid(e, "clrFrom");
+          const hex = from ? readColor(from, theme)?.hex : undefined;
+          if (hex) out.transparentColor = hex;
+          break;
+        }
         case "biLevel": out.recolor = { kind: "bw", threshold: pctOf(num(e, "thresh")) ?? 0.5 }; break;
         case "duotone": {
           const cs = kids(e).map((x) => {
@@ -304,6 +311,10 @@ const p = (x: number) => Math.round(x * 100000);
 /** The blip's children for a picture's colour settings (Word's order and elements). */
 export function blipEffectsXml(f: PictureFormat): string {
   let out = "";
+  if (f.transparentColor) {
+    const c = f.transparentColor.toUpperCase();
+    out += `<a:clrChange><a:clrFrom><a:srgbClr val="${c}"/></a:clrFrom><a:clrTo><a:srgbClr val="${c}"><a:alpha val="0"/></a:srgbClr></a:clrTo></a:clrChange>`;
+  }
   if (f.transparency !== undefined && f.transparency > 0) out += `<a:alphaModFix amt="${p(1 - f.transparency)}"/>`;
   if (f.lum) out += `<a:lum${f.lum.bright ? ` bright="${p(f.lum.bright)}"` : ""}${f.lum.contrast ? ` contrast="${p(f.lum.contrast)}"` : ""}/>`;
   const rc = f.recolor;

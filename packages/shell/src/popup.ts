@@ -160,7 +160,8 @@ export function installTooltips(): void {
   document.addEventListener("mouseover", (e) => {
     const target = (e.target as Element).closest<HTMLElement>("[data-tip]");
     hide();
-    if (!target || isPopupOpen()) return;
+    // While a menu or gallery is open, its own entries get tooltips (as in Word), nothing else.
+    if (!target || (isPopupOpen() && !(open?.el.contains(target) || target.closest(".menu, .rpanel")))) return;
     tipTimer = window.setTimeout(() => {
       const [title, ...rest] = (target.dataset.tip ?? "").split("\n");
       tipEl = h("div", { class: "tooltip" }, h("b", null, title), rest.join("\n"));

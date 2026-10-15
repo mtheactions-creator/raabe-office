@@ -74,6 +74,7 @@ cd tools/feel-lab
 .venv/Scripts/python.exe show_docx.py         # per-line table of the last docx run
 .venv/Scripts/python.exe devpage.py start      # dev build (npm run dev:write) in a headless InPrivate Edge:
 .venv/Scripts/python.exe devpage.py shot x.png # screenshots, clicks, drags, keys, JavaScript; invisible
+.venv/Scripts/python.exe compare_dev.py f.docx [--para N] [--recompute]  # line starts: Word vs the dev build
 ```
 
 Rebuild the app after any frontend change (`npx tauri build --no-bundle` in

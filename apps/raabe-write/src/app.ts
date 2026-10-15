@@ -325,6 +325,8 @@ export class WriteApp {
     const ws = h("div", { class: "workspace", tabIndex: -1 });
     this.docArea.append(ws);
     const editor = new Editor(ws, state ?? {}, this.fonts);
+    // A double-click on a picture or shape opens its tab, as in Word.
+    editor.onObjectOpen = (kind) => { this.updateContextualTabs(); this.ribbon?.select(kind === "picture" ? "pictureFormat" : "shapeFormat"); };
     this.features.spell.attach(editor);
     this.features.grammar.attach(editor);
     this.features.context.attach(editor);

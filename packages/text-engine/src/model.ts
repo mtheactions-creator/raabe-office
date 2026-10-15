@@ -311,6 +311,11 @@ export interface FloatObject {
   readonly side: string;
   /** Distance from the text: top, bottom, left, right (points). */
   readonly dist: readonly [number, number, number, number];
+  /**
+   * The wrap polygon of "Eng" and "Transparent" (wp:wrapPolygon): points in 21600ths of the
+   * object's unturned box (Word turns it with the object); the text follows it.
+   */
+  readonly polygon?: readonly (readonly [number, number])[];
   readonly pic?: PictureFormat;
   readonly alt?: AltText;
   /** Mit Text verschieben (false: Position auf Seite fixieren). */

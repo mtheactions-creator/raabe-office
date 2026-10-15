@@ -12,7 +12,7 @@
 // it belongs to (text column, table cell, header, footer, note), which the view uses for
 // drawing and hit testing.
 
-import type { PictureFormat } from "./picture";
+import { effectExtent, type PictureFormat } from "./picture";
 import { shapeTextRect } from "./shape";
 import { PT } from "./fonts";
 import { fieldType, type Layouter, type Line, type ParaEnv, type ParaLayout } from "./layout";
@@ -155,12 +155,48 @@ export const DEFAULT_CELL_MARGINS: CellMargins = { left: 5.4, right: 5.4, top: 0
 const newStory = (n: number): StoryLayout => ({ paras: new Array(n), placed: [], firstPlaced: new Array(n).fill(-1), index: [] });
 
 interface Exclusion {
+  /** The box the text keeps clear of, distances included (page px). */
   readonly x: number;
   readonly y: number;
   readonly w: number;
   readonly h: number;
   readonly wrap: string;
   readonly side: string;
+  /** Eng and Transparent: the wrap polygon (page px) and the horizontal distances it keeps. */
+  readonly poly?: readonly { readonly x: number; readonly y: number }[];
+  readonly dl?: number;
+  readonly dr?: number;
+  /** The object (paragraph and float index of the main text), so a second pass knows it. */
+  readonly key?: string;
+}
+
+/** The polygon's leftmost and rightmost x between y1 and y2, or null when it is not there. */
+function polyExtent(poly: readonly { readonly x: number; readonly y: number }[], y1: number, y2: number): [number, number] | null {
+  let lo = Infinity, hi = -Infinity;
+  for (let k = 0; k < poly.length; k++) {
+    const a = poly[k], b = poly[(k + 1) % poly.length];
+    if (Math.max(a.y, b.y) < y1 || Math.min(a.y, b.y) > y2) continue;
+    let t0 = 0, t1 = 1;
+    if (b.y !== a.y) {
+      const ta = (y1 - a.y) / (b.y - a.y), tb = (y2 - a.y) / (b.y - a.y);
+      t0 = Math.max(0, Math.min(ta, tb));
+      t1 = Math.min(1, Math.max(ta, tb));
+      if (t0 > t1) continue;
+    }
+    for (const t of [t0, t1]) {
+      const x = a.x + (b.x - a.x) * t;
+      lo = Math.min(lo, x);
+      hi = Math.max(hi, x);
+    }
+  }
+  return lo <= hi ? [lo, hi] : null;
+}
+
+/** The corners of a w × h box at x, y turned by `deg` around its centre. */
+function turnedCorners(x: number, y: number, w: number, h: number, deg: number): { x: number; y: number }[] {
+  const a = (deg * Math.PI) / 180, c = Math.cos(a), sn = Math.sin(a);
+  const cx = x + w / 2, cy = y + h / 2;
+  return [[-w / 2, -h / 2], [w / 2, -h / 2], [w / 2, h / 2], [-w / 2, h / 2]].map(([dx, dy]) => ({ x: cx + dx * c - dy * sn, y: cy + dx * sn + dy * c }));
 }
 
 interface CellGeom {
@@ -228,6 +264,13 @@ class Flow {
   private readonly labels: (ListLabel | undefined)[];
   private readonly sections: SectionRange[] = [];
   private readonly excl = new Map<number, Exclusion[]>();
+  /**
+   * Pictures that reach up into text already placed on their page (moved above their anchor,
+   * or placed at the top of the page): Word wraps that text too, so the main text is laid out
+   * once more with them known from the start of their page.
+   */
+  private late: { page: number; e: Exclusion }[] = [];
+  private seeds = new Map<number, Exclusion[]>();
   private readonly noteLayouts = new Map<string, { paras: ParaLayout[]; height: number; width: number }>();
   private totalPages = "1";
 
@@ -370,11 +413,15 @@ class Flow {
     this.flowMain();
     this.placeEndnotes();
     const total = String(this.pages.length);
-    if (total !== this.totalPages && this.usesPageCount()) {
-      this.totalPages = total;
+    const again = total !== this.totalPages && this.usesPageCount();
+    if (again || this.late.length) {
+      if (again) this.totalPages = total;
+      for (const { page, e } of this.late) this.seeds.set(page, [...(this.seeds.get(page) ?? []), e]);
+      this.late = [];
       this.reset();
       this.flowMain();
       this.placeEndnotes();
+      this.late = [];
     }
     for (const page of this.pages) this.finishPage(page);
   }
@@ -480,6 +527,9 @@ class Flow {
     const ftrH = page.footer ? this.headerFooter(page, page.footer, "footer") : 0;
     page.bodyTop = Math.max(setup.marginTop * PT, setup.header * PT + hdrH);
     page.bodyBottom = Math.min((setup.height - setup.marginBottom) * PT, (setup.height - setup.footer) * PT - ftrH);
+    // Pictures the first pass found reaching up into this page's earlier text.
+    const seeded = this.seeds.get(index);
+    if (seeded) this.excl.set(index, [...seeded]);
     this.sectionStart = this.main.placed.length;
     this.startColumns(si, page.bodyTop);
     this.fresh = true;
@@ -969,11 +1019,15 @@ class Flow {
       };
       const [x0, xw] = relX(f.x.rel);
       const [y0, yh] = relY(f.y.rel);
+      // Aligned objects are placed with their effects' room (Word centres an ellipse with its
+      // 2 pt outline extent 1 pt further left; measured).
+      const fx = f.pic?.extent ?? { l: 0, t: 0, r: 0, b: 0 };
+      const el = fx.l * PT, er = fx.r * PT, et = fx.t * PT, eb = fx.b * PT;
       const x = f.x.align
-        ? (f.x.align === "center" ? x0 + (xw - w) / 2 : f.x.align === "right" || f.x.align === "outside" ? x0 + xw - w : x0)
+        ? (f.x.align === "center" ? x0 + (xw - w - el - er) / 2 + el : f.x.align === "right" || f.x.align === "outside" ? x0 + xw - w - er : x0 + el)
         : x0 + f.x.offset * PT;
       const y = f.y.align && yh > 0
-        ? (f.y.align === "center" ? y0 + (yh - h) / 2 : f.y.align === "bottom" || f.y.align === "outside" ? y0 + yh - h : y0)
+        ? (f.y.align === "center" ? y0 + (yh - h - et - eb) / 2 + et : f.y.align === "bottom" || f.y.align === "outside" ? y0 + yh - h - eb : y0 + et)
         : y0 + f.y.offset * PT;
       let hh = h;
       // Linked text boxes get their text once all boxes of the chain have their places.
@@ -985,7 +1039,40 @@ class Flow {
       if (wrap && f.wrap !== "front" && f.wrap !== "behind" && f.wrap !== "none") {
         const [dt, db, dl, dr] = f.dist.map((d) => d * PT);
         const list = this.excl.get(page.index) ?? [];
-        list.push({ x: x - dl, y: y - dt, w: w + dl + dr, h: h + dt + db, wrap: f.wrap, side: f.side });
+        // Quadrat and Oben und unten: the box with the effects' room (shadows, a turn), as
+        // Word's effect extent says; measured with a picture turned by 25°.
+        const rot = f.pic?.rotation ?? 0;
+        const turned = rot ? turnedCorners(x, y, w, hh, rot) : null;
+        const ex = f.pic?.extent ?? (f.pic ? effectExtent(f.pic, f.height) : undefined);
+        let bx1 = x - (ex?.l ?? 0) * PT, by1 = y - (ex?.t ?? 0) * PT, bx2 = x + w + (ex?.r ?? 0) * PT, by2 = y + hh + (ex?.b ?? 0) * PT;
+        if (turned) {
+          bx1 = Math.min(bx1, ...turned.map((q) => q.x)); bx2 = Math.max(bx2, ...turned.map((q) => q.x));
+          by1 = Math.min(by1, ...turned.map((q) => q.y)); by2 = Math.max(by2, ...turned.map((q) => q.y));
+        }
+        // Eng and Transparent: Word's wrap polygon (stored unturned, in 21600ths of the box;
+        // Word turns it with the object, measured with a picture turned by 25°), else the box.
+        const turn = (q: { x: number; y: number }) => {
+          if (!rot) return q;
+          const ang = (rot * Math.PI) / 180, c = Math.cos(ang), sn = Math.sin(ang), cx = x + w / 2, cy = y + hh / 2;
+          return { x: cx + (q.x - cx) * c - (q.y - cy) * sn, y: cy + (q.x - cx) * sn + (q.y - cy) * c };
+        };
+        const poly = f.wrap === "tight" || f.wrap === "through"
+          ? (f.polygon ? f.polygon.map(([px, py]) => turn({ x: x + (px / 21600) * w, y: y + (py / 21600) * hh })) : turned ?? undefined)
+          : undefined;
+        if (poly) {
+          const ys = poly.map((q) => q.y);
+          by1 = Math.min(...ys); by2 = Math.max(...ys);
+        }
+        const key = story === "main" ? `${i}:${index}` : undefined;
+        const e: Exclusion = { x: bx1 - dl, y: by1 - dt, w: bx2 - bx1 + dl + dr, h: by2 - by1 + dt + db, wrap: f.wrap, side: f.side, poly, dl, dr, key };
+        // Known from the start of the page already (second pass): not twice.
+        if (!key || !list.some((o) => o.key === key)) {
+          list.push(e);
+          // Reaching above the text placed so far on this page: Word wraps that text too.
+          const placed = this.main.placed;
+          const textAbove = placed.length > 0 && placed[placed.length - 1].page === page.index;
+          if (key && story === "main" && textAbove && e.y < this.cur.y + this.y - 0.5 && !this.seeds.get(page.index)?.some((o) => o.key === key)) this.late.push({ page: page.index, e });
+        }
         this.excl.set(page.index, list);
       }
     });
@@ -1034,33 +1121,55 @@ class Flow {
     return height;
   }
 
-  /** Lays out a paragraph against the current page's pictures, or null when none is near. */
+  /**
+   * Lays out a paragraph against the current page's pictures, or null when none is near. Each
+   * line gets the pieces of its row beside the pictures: both sides with Word's "Beide Seiten",
+   * Eng and Transparent along the wrap polygon, Quadrat along the (turned) box.
+   */
   private withExclusions(para: Para, i: number, width: number, paraTop: number): ParaLayout | null {
     const list = this.excl.get(this.page.index);
     if (!list?.length) return null;
     const fr = this.cur;
-    const minRoom = 36 * PT;
     let any = false;
     const box = (top: number, h: number) => {
       const y1 = paraTop + top, y2 = y1 + h;
-      let left = 0, right = width, push = 0;
+      let push = 0;
       let hit = false;
+      const blocked: [number, number][] = [];
+      let bottom = 0;
       for (const e of list) {
         if (e.y + e.h <= y1 || e.y >= y2) continue;
-        const ex1 = e.x - fr.x, ex2 = e.x + e.w - fr.x;
+        let ex1 = e.x - fr.x, ex2 = e.x + e.w - fr.x;
+        if (e.poly) {
+          const ext = polyExtent(e.poly, y1, y2);
+          if (!ext) continue;
+          ex1 = ext[0] - (e.dl ?? 0) - fr.x;
+          ex2 = ext[1] + (e.dr ?? 0) - fr.x;
+        }
         if (ex2 <= 0 || ex1 >= width) continue;
         hit = true;
+        bottom = Math.max(bottom, e.y + e.h - y1);
         if (e.wrap === "topAndBottom") { push = Math.max(push, e.y + e.h - y1); continue; }
-        const leftRoom = ex1 - left, rightRoom = right - ex2;
-        // Text flows on the side with room (Word's "both sides" uses the larger one when
-        // only one side has at least about an inch).
-        const side = e.side === "left" ? "left" : e.side === "right" ? "right" : leftRoom >= rightRoom ? "left" : "right";
-        if (side === "left") right = Math.min(right, ex1);
-        else left = Math.max(left, ex2);
-        if (right - left < minRoom) push = Math.max(push, e.y + e.h - y1);
+        // Nur links / Nur rechts / Nur größte Seite leave the other side empty.
+        const side = e.side === "left" ? "left" : e.side === "right" ? "right" : e.side === "largest" ? (ex1 > width - ex2 ? "left" : "right") : "both";
+        blocked.push(side === "left" ? [ex1, width] : side === "right" ? [0, ex2] : [ex1, ex2]);
       }
-      if (hit) any = true;
-      return hit ? (push > 0 ? { left: 0, right: width, push } : { left, right }) : null;
+      if (!hit) return null;
+      any = true;
+      if (push > 0) return { left: 0, right: width, push };
+      // The free stretches between the pictures, from left to right.
+      blocked.sort((a, b) => a[0] - b[0]);
+      const pieces: { left: number; right: number }[] = [];
+      let at = 0;
+      for (const [b1, b2] of blocked) {
+        if (b1 > at) pieces.push({ left: at, right: b1 });
+        at = Math.max(at, b2);
+      }
+      if (at < width) pieces.push({ left: at, right: width });
+      const usable = pieces.filter((q) => q.right - q.left >= 18 * PT);
+      // No room beside the pictures: the line goes below them.
+      if (!usable.length) return { left: 0, right: width, push: Math.max(1, bottom) };
+      return { left: usable[0].left, right: usable[0].right, pieces: usable };
     };
     const pl = this.lt.paragraph(para, { ...this.env(i, width), box });
     return any ? pl : null;

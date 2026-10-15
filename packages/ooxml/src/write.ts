@@ -329,7 +329,8 @@ class DocWriter {
     const pos = (tag: string, p: FloatObject["x"]) => `<wp:${tag} relativeFrom="${esc(p.rel)}">${p.align ? `<wp:align>${esc(p.align)}</wp:align>` : `<wp:posOffset>${e(p.offset)}</wp:posOffset>`}</wp:${tag}>`;
     const wrap = anchor.wrap === "front" || anchor.wrap === "behind" || anchor.wrap === "none" ? "<wp:wrapNone/>"
       : anchor.wrap === "topAndBottom" ? "<wp:wrapTopAndBottom/>"
-      : `<wp:wrap${anchor.wrap === "tight" ? "Tight" : anchor.wrap === "through" ? "Through" : "Square"} wrapText="${esc(anchor.side)}"${anchor.wrap === "square" ? "" : "><wp:wrapPolygon edited=\"0\"><wp:start x=\"0\" y=\"0\"/><wp:lineTo x=\"0\" y=\"21600\"/><wp:lineTo x=\"21600\" y=\"21600\"/><wp:lineTo x=\"21600\" y=\"0\"/><wp:lineTo x=\"0\" y=\"0\"/></wp:wrapPolygon></wp:wrap" + (anchor.wrap === "tight" ? "Tight" : "Through")}/>`;
+      : anchor.wrap === "square" ? `<wp:wrapSquare wrapText="${esc(anchor.side)}"/>`
+      : `<wp:wrap${anchor.wrap === "tight" ? "Tight" : "Through"} wrapText="${esc(anchor.side)}">${polygonXml(anchor.polygon)}</wp:wrap${anchor.wrap === "tight" ? "Tight" : "Through"}>`;
     const [t, b, l, r] = anchor.dist.map(e);
     return `<w:drawing><wp:anchor distT="${t}" distB="${b}" distL="${l}" distR="${r}" simplePos="0" relativeHeight="${anchor.z ?? id}" behindDoc="${anchor.wrap === "behind" ? 1 : 0}" locked="0" layoutInCell="1" allowOverlap="1" xmlns:wp="${NS_WP}">` +
       `<wp:simplePos x="0" y="0"/>${pos("positionH", anchor.x)}${pos("positionV", anchor.y)}${common}${wrap}${docPr}${graphic}</wp:anchor></w:drawing>`;
@@ -467,7 +468,7 @@ class DocWriter {
     if (!anchor) return `<w:drawing><wp:inline distT="0" distB="0" distL="0" distR="0" xmlns:wp="${NS_WP}">${common}${docPr}${graphic}</wp:inline></w:drawing>`;
     const e = (pt: number) => Math.round(pt * EMU);
     const pos = (tag: string, p: FloatObject["x"]) => `<wp:${tag} relativeFrom="${esc(p.rel)}">${p.align ? `<wp:align>${esc(p.align)}</wp:align>` : `<wp:posOffset>${e(p.offset)}</wp:posOffset>`}</wp:${tag}>`;
-    const poly = '<wp:wrapPolygon edited="0"><wp:start x="0" y="0"/><wp:lineTo x="0" y="21600"/><wp:lineTo x="21600" y="21600"/><wp:lineTo x="21600" y="0"/><wp:lineTo x="0" y="0"/></wp:wrapPolygon>';
+    const poly = polygonXml(anchor.polygon);
     const wrap = anchor.wrap === "front" || anchor.wrap === "behind" || anchor.wrap === "none" ? "<wp:wrapNone/>"
       : anchor.wrap === "topAndBottom" ? "<wp:wrapTopAndBottom/>"
       : anchor.wrap === "square" ? `<wp:wrapSquare wrapText="${esc(anchor.side)}"/>`
@@ -1028,4 +1029,14 @@ export function writeDocx(state: DocState, pkg: DocxPackage | null, options: { a
     pw.setPart("word/theme/theme1.xml", themeXml(state.styles.theme));
   }
   return zipSync(pw.finish(), { level: 6 });
+}
+
+/** wp:wrapPolygon: the object's own polygon (Eng around its outline), or its box. */
+function polygonXml(poly: readonly (readonly [number, number])[] | undefined): string {
+  const pts = poly && poly.length >= 3 ? poly : [[0, 0], [0, 21600], [21600, 21600], [21600, 0]] as const;
+  const r = (v: number) => Math.round(v);
+  const first = pts[0], last = pts[pts.length - 1];
+  const closed = first[0] === last[0] && first[1] === last[1] ? pts : [...pts, first];
+  return `<wp:wrapPolygon edited="0"><wp:start x="${r(closed[0][0])}" y="${r(closed[0][1])}"/>` +
+    closed.slice(1).map((q) => `<wp:lineTo x="${r(q[0])}" y="${r(q[1])}"/>`).join("") + "</wp:wrapPolygon>";
 }

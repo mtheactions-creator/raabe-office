@@ -743,7 +743,7 @@ class PartReader {
     b.floats.push({
       at: b.text.length, data, width: size.width, height: size.height, image,
       x: pos("positionH"), y: pos("positionV"), wrap, side: wrapEl?.getAttribute("wrapText") ?? "bothSides",
-      dist: [d("distT"), d("distB"), d("distL"), d("distR")], pic, alt,
+      dist: [d("distT"), d("distB"), d("distL"), d("distR")], polygon: wrapPolygon(wrapEl), pic, alt,
       z: Number(anchor.getAttribute("relativeHeight") ?? 0) || undefined,
     });
   }
@@ -810,13 +810,17 @@ class PartReader {
     b.floats.push({
       at: b.text.length, data, width: Number(e?.getAttribute("cx") ?? 0) / EMU, height: Number(e?.getAttribute("cy") ?? 0) / EMU,
       x: pos("positionH"), y: pos("positionV"), wrap, side: wrapEl?.getAttribute("wrapText") ?? "bothSides",
-      dist: [d("distT"), d("distB"), d("distL"), d("distR")], alt, z: Number(a.getAttribute("relativeHeight") ?? 0) || undefined,
+      dist: [d("distT"), d("distB"), d("distL"), d("distR")], polygon: wrapPolygon(wrapEl), alt, z: Number(a.getAttribute("relativeHeight") ?? 0) || undefined,
       group: { members },
     });
   }
 
   private shapeDrawing(c: Element, wsp: Element, b: ParaBuilder, props: CharProps, inline: Element | undefined, anchor: Element | undefined): void {
-    const { pic, shape } = this.shapeOf(wsp);
+    const read = this.shapeOf(wsp);
+    const shape = read.shape;
+    // The room of the outline and effects (wp:effectExtent): Word aligns shapes with it.
+    const fx = readExtent(Array.from((inline ?? anchor!).children).find((x) => x.localName === "effectExtent"));
+    const pic = fx && (fx.l || fx.t || fx.r || fx.b) ? { ...read.pic, extent: fx } : read.pic;
     const docPr = c.getElementsByTagNameNS(WP, "docPr")[0];
     const descr = docPr?.getAttribute("descr") ?? undefined, title = docPr?.getAttribute("title") ?? undefined;
     const alt = docPrAlt(docPr, { descr: descr || undefined, title: title || undefined });
@@ -845,7 +849,7 @@ class PartReader {
     b.floats.push({
       at: b.text.length, data, width: size.width, height: size.height,
       x: pos("positionH"), y: pos("positionV"), wrap, side: wrapEl?.getAttribute("wrapText") ?? "bothSides",
-      dist: [d("distT"), d("distB"), d("distL"), d("distR")], pic, alt, shape,
+      dist: [d("distT"), d("distB"), d("distL"), d("distR")], polygon: wrapPolygon(wrapEl), pic, alt, shape,
       z: Number(a.getAttribute("relativeHeight") ?? 0) || undefined,
     });
   }
@@ -1254,4 +1258,13 @@ export function readDocx(bytes: Uint8Array): ReadResult {
     },
     partial: [...r.partial],
   };
+}
+
+/** The points of a wp:wrapPolygon (Eng, Transparent), in 21600ths of the object's box. */
+function wrapPolygon(wrapEl: Element | undefined): [number, number][] | undefined {
+  const poly = wrapEl ? Array.from(wrapEl.children).find((x) => x.localName === "wrapPolygon") : undefined;
+  if (!poly) return undefined;
+  const pts = Array.from(poly.children).filter((x) => x.localName === "start" || x.localName === "lineTo")
+    .map((x) => [Number(x.getAttribute("x") ?? 0), Number(x.getAttribute("y") ?? 0)] as [number, number]);
+  return pts.length >= 3 ? pts : undefined;
 }

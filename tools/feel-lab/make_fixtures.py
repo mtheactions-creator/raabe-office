@@ -833,6 +833,58 @@ def images(app) -> None:
     d.Close(0)
 
 
+def wrap(app) -> None:
+    """Textumbruch around floating objects (Step 4c): square text on both sides when the picture
+    stands in the middle or off-centre, tight around a rotated picture, a cut-out picture with a
+    transparent background and an ellipse, and the "largest side" variant."""
+    import tempfile
+    tmp = Path(tempfile.gettempdir())
+    opaque = tmp / "raabe-fixture-wrap-opaque.png"
+    img = Image.new("RGB", (480, 320), (235, 245, 230))
+    dr = ImageDraw.Draw(img)
+    dr.ellipse((60, 40, 420, 280), fill=(90, 160, 70), outline=(40, 90, 30), width=6)
+    img.save(opaque)
+    cut = tmp / "raabe-fixture-wrap-cut.png"
+    img = Image.new("RGBA", (400, 400), (0, 0, 0, 0))
+    dr = ImageDraw.Draw(img)
+    dr.ellipse((20, 20, 380, 380), fill=(200, 80, 60, 255))
+    img.save(cut)
+    d = base_doc(app)
+    b = Builder(d)
+    b.para("Textumbruch", -2)
+
+    def case(title, png, w, h, wrap_type, left, side=0, rotation=0.0, shape=None):
+        p = b.para(title + " " + FILL + " " + FILL + " " + FILL)
+        if shape is None:
+            il = d.InlineShapes.AddPicture(str(png), False, True, d.Range(p.Range.Start, p.Range.Start))
+            il.Width, il.Height = w, h
+            sh = il.ConvertToShape()
+        else:
+            sh = d.Shapes.AddShape(shape, 100, 100, w, h, d.Range(p.Range.Start, p.Range.Start))
+        sh.WrapFormat.Type = wrap_type
+        sh.WrapFormat.Side = side
+        sh.RelativeHorizontalPosition = 0
+        sh.Left = left
+        sh.RelativeVerticalPosition = 2
+        sh.Top = 12
+        if rotation:
+            sh.Rotation = rotation
+
+    case("Quadrat, Mitte.", opaque, 120, 80, 0, -999995)
+    case("Quadrat, links versetzt.", opaque, 120, 80, 0, 60)
+    case("Quadrat, knapp links.", opaque, 120, 80, 0, 25)
+    case("Quadrat, größte Seite.", opaque, 120, 80, 0, -999995, side=3)
+    case("Eng, Mitte.", opaque, 120, 80, 1, -999995)
+    case("Eng, gedreht.", opaque, 120, 80, 1, -999995, rotation=25)
+    case("Quadrat, gedreht.", opaque, 120, 80, 0, -999995, rotation=25)
+    case("Eng, freigestellt.", cut, 110, 110, 1, -999995)
+    case("Eng, Ellipse.", None, 130, 90, 1, -999995, shape=9)
+    b.para("Letzter Absatz.")
+    d.SaveAs2(str(OUT / "word-wrap.docx"), 16)
+    d.SaveAs2(str(tmp / "raabe-word-wrap.pdf"), 17)
+    d.Close(0)
+
+
 def shapes(app) -> None:
     """Shapes and text boxes as Word makes them (Office 2013-2022 theme, like new RaabeWrite
     documents): a default rectangle with text, a text box, an arrow, a gradient, a shadow, a
@@ -1033,7 +1085,7 @@ def main() -> None:
         if only:
             for name in only:
                 {"layout": layout, "fonts": fonts, "breaks": breaks, "top": top, "formatting": formatting, "rich": rich,
-                 "lists": lists, "tables": tables, "sections": sections, "notes": notes, "borders": borders, "images": images, "step4": step4, "shapes": shapes, "math": math, "hyphenation": hyphenation}[name](app)
+                 "lists": lists, "tables": tables, "sections": sections, "notes": notes, "borders": borders, "images": images, "wrap": wrap, "step4": step4, "shapes": shapes, "math": math, "hyphenation": hyphenation}[name](app)
         else:
             formatting(app)
             rich(app)

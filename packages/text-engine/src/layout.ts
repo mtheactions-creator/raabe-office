@@ -72,6 +72,11 @@ export interface Line {
   /** Width of the content without trailing spaces (px). */
   readonly width: number;
   readonly height: number;
+  /**
+   * A piece of a row that a picture divides (text on both sides): every piece but the last has
+   * height 0 (the row advances once) and its visible height here.
+   */
+  readonly rowHeight?: number;
   /** Distance from the line top to the baseline (px). */
   readonly baseline: number;
   readonly segments: readonly Segment[];
@@ -115,7 +120,7 @@ export interface ParaEnv {
    * Available horizontal room for a line starting `top` px below the paragraph's first line
    * (pictures with text wrapping). `push` moves the line further down. Uncached when set.
    */
-  readonly box?: (top: number, height: number) => { left: number; right: number; push?: number } | null;
+  readonly box?: (top: number, height: number) => { left: number; right: number; push?: number; pieces?: readonly { left: number; right: number }[] } | null;
 }
 
 const isSpace = (ch: string) => ch === " ";
@@ -284,19 +289,12 @@ export class Layouter {
 
     /** Lines in a row ending with a hyphen (Aufeinanderfolgende Trennstriche). */
     let hyphenRun = 0;
-    while (true) {
-      let lineLeft = label && first ? labelEnd : (rp.indLeft + (first ? rp.indFirst : 0)) * PT;
-      let lineRight = width - rp.indRight * PT;
-      let push = 0;
-      if (env.box) {
-        const est = fonts.lineHeight(markC.font, markC.size) * PT * (rp.lineRule === "auto" ? rp.line : 1);
-        const b = env.box(top, est);
-        if (b) {
-          lineLeft = Math.max(lineLeft, b.left);
-          lineRight = Math.min(lineRight, b.right);
-          push = b.push ?? 0;
-        }
-      }
+    /**
+     * Fills one line (or one piece of a row beside a picture) from `start` between lineLeft and
+     * lineRight. With `needWord`, a piece where not even the first word fits stays empty (null)
+     * and the text goes on in the next piece, as in Word.
+     */
+    const fill = (lineLeft: number, lineRight: number, push: number, needWord: boolean, firstLine: boolean) => {
       const avail = Math.max(10, lineRight - lineLeft);
       let x = 0;
       let lastBreak = -1;
@@ -307,6 +305,7 @@ export class Layouter {
       const squeeze = rp.align === "both" ? 0.25 : 0;
       let spaceW = 0;
       let hyphenW = 0;
+      let overflow = false;
       for (let i = start; i < text.length; i++) {
         const ch = text[i];
         const info = infos[i];
@@ -319,7 +318,7 @@ export class Layouter {
         }
         if (info.kind === "tab") {
           const absX = lineLeft + x;
-          const t = tabStop(absX, first && !label);
+          const t = tabStop(absX, firstLine && !label);
           let w = t.stop - absX;
           if (t.align !== "left") {
             // Right/centre/decimal stops align the text that follows (up to the next tab).
@@ -339,31 +338,78 @@ export class Layouter {
         if (isSpace(ch)) { x += info.w; spaceW += info.w; lastBreak = i + 1; continue; }
         if (x + info.w > avail + 0.01 + squeeze * spaceW && i > start) {
           end = lastBreak > start ? lastBreak : i;
+          overflow = lastBreak <= start;
           // Automatische Silbentrennung: as much of the word as fits, with a hyphen.
           const hy = this.hyphenBreak(text, infos, start, i, x, avail + 0.01 + squeeze * spaceW, lastBreak, rp, hyphenRun);
-          if (hy) { end = hy.at; hyphenW = hy.w; }
+          if (hy) { end = hy.at; hyphenW = hy.w; overflow = false; }
           break;
         }
+        if (x + info.w > avail + 0.01 && i === start) overflow = true;
         x += info.w;
         if ((ch === "-" || ch === "\u00ad") && i + 1 < text.length && !isSpace(text[i + 1])) lastBreak = i + 1;
       }
+      if (needWord && overflow) return null;
       // A soft hyphen at a line end shows a hyphen.
       if (!forcedEnd && end < text.length && text[end - 1] === "\u00ad") infos[end - 1].w = fonts.advance(infos[end - 1].c, "-");
       const line = this.buildLine(text, infos, objs, start, end, lineLeft, avail, rp, markC, forcedEnd || end >= text.length, pageBreakAfter, push,
-        first && labelMetrics ? labelMetrics : undefined, hyphenW);
+        firstLine && labelMetrics ? labelMetrics : undefined, hyphenW);
       hyphenRun = hyphenW || (!forcedEnd && end < text.length && text[end - 1] === "\u00ad") ? hyphenRun + 1 : 0;
-      lines.push(columnBreakAfter || (first && label) ? { ...line, columnBreakAfter: columnBreakAfter || undefined, label: first ? label : undefined } : line);
-      top += line.height;
+      return { line: columnBreakAfter || (firstLine && label) ? { ...line, columnBreakAfter: columnBreakAfter || undefined, label: firstLine ? label : undefined } : line, end, forcedEnd };
+    };
+    while (true) {
+      const baseLeft = label && first ? labelEnd : (rp.indLeft + (first ? rp.indFirst : 0)) * PT;
+      const baseRight = width - rp.indRight * PT;
+      let push = 0;
+      let pieces = [{ left: baseLeft, right: baseRight }];
+      if (env.box) {
+        // The band tested against the pictures is the text's own height, without the extra
+        // of the line spacing (measured: a circle starting 13.5 pt below a line's top leaves an
+        // 11 pt Calibri line, 13.4 pt high, at full width).
+        const lh = fonts.lineHeight(markC.font, markC.size) * PT;
+        const est = rp.lineRule === "exact" ? Math.min(lh, rp.line * PT) : lh;
+        const bx = env.box(top, est);
+        if (bx) {
+          push = bx.push ?? 0;
+          if (bx.pieces && bx.pieces.length > 1) {
+            // Text on both sides of a picture: each piece within the paragraph's indents; Word
+            // leaves pieces narrower than a quarter inch empty (measured: 18 pt used, 17.5 not).
+            const cut = bx.pieces.map((q, k) => ({ left: Math.max(q.left, k === 0 ? baseLeft : rp.indLeft * PT), right: Math.min(q.right, baseRight) }));
+            const usable = cut.filter((q) => q.right - q.left >= 18 * PT);
+            pieces = usable.length ? usable : [cut.reduce((m, q) => (q.right - q.left > m.right - m.left ? q : m))];
+          } else {
+            const q = bx.pieces?.[0] ?? bx;
+            pieces = [{ left: Math.max(baseLeft, q.left), right: Math.min(baseRight, q.right) }];
+          }
+        }
+      }
+      const row: Line[] = [];
+      let finished = false;
+      for (let k = 0; k < pieces.length; k++) {
+        const lastPiece = k === pieces.length - 1;
+        const r = fill(pieces[k].left, pieces[k].right, push, !lastPiece, first && row.length === 0);
+        if (!r) continue;
+        row.push(r.line);
+        start = r.end;
+        if (r.end >= text.length) { finished = true; break; }
+        if (r.forcedEnd) break;
+      }
+      if (row.length > 1) {
+        // One row: the pieces share its top, height and baseline; only the last one advances.
+        const base = Math.max(...row.map((l) => l.baseline));
+        const h = base + Math.max(...row.map((l) => l.height - l.baseline));
+        row.forEach((l, k) => { row[k] = k < row.length - 1 ? { ...l, height: 0, rowHeight: h, baseline: base } : { ...l, height: h, baseline: base }; });
+      }
+      lines.push(...row);
+      for (const l of row) top += l.height;
       first = false;
-      if (end >= text.length) {
+      if (finished) {
         // A trailing line or column break still produces an (empty) last line, as in Word
         // (after a column break it starts the next column; a page break keeps the mark on its line).
-        if (forcedEnd && text.length && (text[text.length - 1] === LINE_BREAK || text[text.length - 1] === COLUMN_BREAK)) {
+        if (text.length && (text[text.length - 1] === LINE_BREAK || text[text.length - 1] === COLUMN_BREAK) && infos[text.length - 1].kind === "break") {
           lines.push(this.buildLine(text, infos, objs, text.length, text.length, rp.indLeft * PT, width - rp.indLeft * PT - rp.indRight * PT, rp, markC, true, false, 0));
         }
         break;
       }
-      start = end;
     }
     return { rp, lines, before, after, width, borderTop: bt, borderBottom: bb };
   }
