@@ -254,7 +254,8 @@ export function pictureElement(url: string, w: number, h: number, f: PictureForm
     const k = fill[3] ? Number(fill[3]) / 100000 : 1;
     if (fill[2] === "shade") [r, g, bl] = [r, g, bl].map((x) => x * k);
     else if (fill[2] === "tint") [r, g, bl] = [r, g, bl].map((x) => x + (255 - x) * (1 - k));
-    frame.style.background = `rgb(${Math.round(r)},${Math.round(g)},${Math.round(bl)})`;
+    const alpha = /<a:alpha val="(\d+)"\/>/.exec(f.fillXml ?? "");
+    frame.style.background = `rgba(${Math.round(r)},${Math.round(g)},${Math.round(bl)},${alpha ? Number(alpha[1]) / 100000 : 1})`;
   }
   // Bildrahmen: centred on the frame's edge, as Word draws lines.
   if (f.line && f.line.width > 0) {
@@ -262,7 +263,7 @@ export function pictureElement(url: string, w: number, h: number, f: PictureForm
     const ring = document.createElement("div");
     const dash = f.line.dash && f.line.dash !== "solid" ? (/dot/i.test(f.line.dash) && !/dash/i.test(f.line.dash) ? "dotted" : "dashed") : f.line.compound === "dbl" ? "double" : "solid";
     ring.style.cssText = `position:absolute;left:${-lw / 2}px;top:${-lw / 2}px;width:${w + lw}px;height:${h + lw}px;box-sizing:border-box;` +
-      `border:${lw}px ${dash} #${f.line.color};pointer-events:none;${frameShape(f.geometry, w + lw, h + lw, f)}`;
+      `border:${lw}px ${dash} #${f.line.color};opacity:${1 - (f.line.transparency ?? 0)};pointer-events:none;${frameShape(f.geometry, w + lw, h + lw, f)}`;
     outer.append(ring);
   }
   // Abschrägung: light on the top left, shade on the bottom right.

@@ -328,5 +328,9 @@
   "wrap-through": "custom:wrap-through",
   "wrap-top-bottom": "custom:wrap-top-bottom",
   "wrap-behind": "custom:wrap-behind",
-  "wrap-front": "custom:wrap-front"
+  "wrap-front": "custom:wrap-front",
+  "pane-fill-line": "custom:pane-fill-line",
+  "pane-effects": "custom:pane-effects",
+  "pane-layout": "custom:pane-layout",
+  "pane-picture": "image"
 }

@@ -10,9 +10,10 @@ import { DEFAULT_THEME_COLORS, pictureFromSpPr } from "@raabe/ooxml";
 import { CM, fmtCm, parseNum, type AppApi } from "./api";
 import { GROUP_MENU } from "./groups";
 import {
-  BRIGHT_CONTRAST, SATURATION, SHARPEN, TEMPERATURE, TRANSPARENCY, galleryPanel, withItem, type GalleryItem, type GallerySection,
+  BRIGHT_CONTRAST, SATURATION, SHARPEN, TEMPERATURE, TRANSPARENCY, galleryPanel, recolorGallery, withItem, type GalleryItem, type GallerySection,
 } from "./picture-format";
 import * as P from "./picture-presets";
+import { FORMAT_PANE, type FormatSection } from "./format-pane";
 
 const cmd = (id: string, label: string, icon?: string, extra: Partial<Command> = {}): Command => ({ id, label, icon, ...extra });
 
@@ -78,40 +79,19 @@ export function pictureTab(api: AppApi, insertFromPath: (path: string) => Promis
   // ----- Anpassen ----------------------------------------------------------------------
   const presetItems = (list: readonly P.PicturePreset[], keys: (keyof PictureFormat)[], extra?: (i: number) => PictureFormat): GalleryItem[] =>
     list.map((p, i) => ({ label: p.label, format: fromPreset(p, theme(), keys, extra?.(i)) }));
-  const recolorItems = (): GalleryItem[] => {
-    const t = theme();
-    const names = ["Text 2", "Akzent 1", "Akzent 2", "Akzent 3", "Akzent 4", "Akzent 5", "Akzent 6"];
-    const keys = ["dk2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6"];
-    const lightBg = ["lt2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6"];
-    const mix = (hex: string, k: number, toWhite: boolean) => {
-      const v = [0, 2, 4].map((i) => parseInt(hex.slice(i, i + 2), 16));
-      const out = v.map((x) => Math.round(toWhite ? x + (255 - x) * (1 - k) : x * k));
-      return out.map((x) => x.toString(16).padStart(2, "0")).join("").toUpperCase();
-    };
-    return [
-      { label: "Keine Neueinfärbung", format: { recolor: undefined, lum: undefined } },
-      { label: "Graustufe", format: { recolor: { kind: "grayscale" } } },
-      { label: "Sepia", format: { recolor: { kind: "sepia" } } },
-      { label: "Ausgewaschen", format: { recolor: { kind: "washout" } } },
-      { label: "Schwarzweiß: 25 %", format: { recolor: { kind: "bw", threshold: 0.25 } } },
-      { label: "Schwarzweiß: 50 %", format: { recolor: { kind: "bw", threshold: 0.5 } } },
-      { label: "Schwarzweiß: 75 %", format: { recolor: { kind: "bw", threshold: 0.75 } } },
-      ...keys.map((k, i) => ({ label: `${names[i]}, dunkle Farbe`, format: { recolor: { kind: "duotone" as const, dark: "000000", light: mix(t[k] ?? "4472C4", 0.45, true) } } })),
-      ...lightBg.map((k, i) => ({ label: `${names[i] === "Text 2" ? "Hintergrund 2" : names[i]}, helle Farbe`, format: { recolor: { kind: "duotone" as const, dark: mix(t[k] ?? "4472C4", 0.45, false), light: "FFFFFF" } } })),
-    ];
-  };
+  const recolorItems = () => recolorGallery(theme());
   const tile: [number, number] = [90, 68];
   const corrections = gallery([
     { title: "Schärfen/Weichzeichnen", items: SHARPEN, columns: 5, tile },
     { title: "Helligkeit/Kontrast", items: BRIGHT_CONTRAST, columns: 5, tile },
-  ], [{ label: "Bildkorrekturoptionen...", run: () => void c.run("picture.formatPane") }]);
+  ], [{ label: "Bildkorrekturoptionen...", run: () => FORMAT_PANE.open("corrections") }]);
   const color = gallery([
     { title: "Farbsättigung", items: SATURATION, columns: 7, tile },
     { title: "Farbton", items: TEMPERATURE, columns: 7, tile },
     { title: "Neu einfärben", items: recolorItems(), columns: 7, tile },
   ], [{ label: "Transparente Farbe bestimmen", run: () => { ed()?.pickTransparentColor(); } },
-    { label: "Bildfarboptionen...", run: () => void c.run("picture.formatPane") }]);
-  const transparency = gallery([{ items: TRANSPARENCY, columns: 7, tile }], [{ label: "Optionen für die Bildtransparenz...", run: () => void c.run("picture.formatPane") }]);
+    { label: "Bildfarboptionen...", run: () => FORMAT_PANE.open("color") }]);
+  const transparency = gallery([{ items: TRANSPARENCY, columns: 7, tile }], [{ label: "Optionen für die Bildtransparenz...", run: () => FORMAT_PANE.open("transparency") }]);
   c.implement("picture.corrections", { run: () => {}, enabled: picked });
   c.implement("picture.color", { run: () => {}, enabled: picked });
   c.implement("picture.transparency", { run: () => {}, enabled: picked });
@@ -199,9 +179,10 @@ export function pictureTab(api: AppApi, insertFromPath: (path: string) => Promis
       h("hr"),
       link("Keine Kontur", () => { close(); setLine(null); api.focus(); }),
       link("Weitere Konturfarben...", () => { close(); void moreColor((hex) => setLine({ color: hex })); }),
-      h("button", { class: "link has-sub", onclick: (ev: MouseEvent) => sub(ev, weights.map((w) => ({ label: `${w.toLocaleString("de-DE")} Pt.`, checked: lineOf()?.width === w, run: () => setLine({ width: w }) }))) }, "Stärke"),
-      h("button", { class: "link has-sub", onclick: (ev: MouseEvent) => sub(ev, dashes.map(([v, l]) => ({ label: l, checked: (lineOf()?.dash ?? "solid") === v, run: () => setLine({ dash: v === "solid" ? undefined : v }) }))) }, "Striche"));
+      h("button", { class: "link has-sub", onclick: (ev: MouseEvent) => sub(ev, [...weights.map((w): MenuEntry => ({ label: `${w.toLocaleString("de-DE")} Pt.`, checked: lineOf()?.width === w, run: () => setLine({ width: w }) })), "-", moreLines]) }, "Stärke"),
+      h("button", { class: "link has-sub", onclick: (ev: MouseEvent) => sub(ev, [...dashes.map(([v, l]): MenuEntry => ({ label: l, checked: (lineOf()?.dash ?? "solid") === v, run: () => setLine({ dash: v === "solid" ? undefined : v }) })), "-", moreLines]) }, "Striche"));
   };
+  const moreLines: MenuEntry = { label: "Weitere Linien...", run: () => FORMAT_PANE.open("line") };
   const moreColor = async (done: (hex: string) => void) => {
     const input = h("input", { type: "color", value: `#${lineOf()?.color ?? "000000"}` });
     const ok = await showDialog({ title: "Farben", body: h("div", { class: "grid2" }, "Farbe:", input), buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
@@ -210,7 +191,7 @@ export function pictureTab(api: AppApi, insertFromPath: (path: string) => Promis
   c.implement("picture.border", { run: () => setLine({}), enabled: picked });
 
   // Bildeffekte: submenus with Word's presets.
-  const fx = (title: string, noneLabel: string, list: readonly (P.PicturePreset & { readonly id: string })[], keys: (keyof PictureFormat)[], columns: number, sections?: [string, number][]) => (): HTMLElement => {
+  const fx = (title: string, noneLabel: string, list: readonly (P.PicturePreset & { readonly id: string })[], keys: (keyof PictureFormat)[], columns: number, sections?: [string, number][], more?: [string, FormatSection]) => (): HTMLElement => {
     const e = ed();
     if (!e) return h("div");
     const items = presetItems(list, keys);
@@ -222,16 +203,16 @@ export function pictureTab(api: AppApi, insertFromPath: (path: string) => Promis
       let at = 0;
       for (const [t, n] of sections) { parts.push({ title: t, items: rest.slice(at, at + n), columns, tile: [48, 36] }); at += n; }
     } else parts.push({ title, items: rest, columns, tile: [48, 36] });
-    return galleryPanel(e, parts, [], () => closePopup(), apply);
+    return galleryPanel(e, parts, more ? [{ label: more[0], run: () => FORMAT_PANE.open(more[1]) }] : [], () => closePopup(), apply);
   };
   const effectsMenu: MenuEntry[] = [
-    { label: "Voreinstellung", icon: "picture-effects", flyout: fx("Voreinstellungen", "Keine Voreinstellungen", P.EFFECT_PRESETS, ["shadow", "glow", "reflection", "softEdge", "bevel", "scene3dXml", "sp3dXml"], 4) },
-    { label: "Schatten", icon: "picture-effects", flyout: fx("Schatten", "Kein Schatten", P.SHADOWS, ["shadow"], 3, [["Außen", 9], ["Innen", 9], ["Perspektive", 5]]) },
-    { label: "Spiegelung", icon: "picture-effects", flyout: fx("Spiegelungsvarianten", "Keine Spiegelung", P.REFLECTIONS, ["reflection"], 3) },
-    { label: "Leuchteffekt", icon: "picture-effects", flyout: fx("Leuchteffektvarianten", "Kein Leuchteffekt", P.GLOWS, ["glow"], 6) },
-    { label: "Weiche Kanten", icon: "picture-effects", flyout: fx("Varianten weicher Kanten", "Keine weichen Kanten", P.SOFT_EDGES, ["softEdge"], 3) },
-    { label: "Abschrägung", icon: "picture-effects", flyout: fx("Abschrägung", "Keine Abschrägung", P.BEVELS, ["bevel", "sp3dXml", "scene3dXml"], 4) },
-    { label: "3D-Drehung", icon: "picture-effects", flyout: fx("3D-Drehung", "Keine Drehung", P.ROTATIONS_3D, ["scene3dXml"], 4, [["Parallel", 10], ["Perspektive", 11], ["Schräg", 4]]) },
+    { label: "Voreinstellung", icon: "picture-effects", flyout: fx("Voreinstellungen", "Keine Voreinstellungen", P.EFFECT_PRESETS, ["shadow", "glow", "reflection", "softEdge", "bevel", "scene3dXml", "sp3dXml"], 4, undefined, ["3D-Optionen...", "format3d"]) },
+    { label: "Schatten", icon: "picture-effects", flyout: fx("Schatten", "Kein Schatten", P.SHADOWS, ["shadow"], 3, [["Außen", 9], ["Innen", 9], ["Perspektive", 5]], ["Schattenoptionen...", "shadow"]) },
+    { label: "Spiegelung", icon: "picture-effects", flyout: fx("Spiegelungsvarianten", "Keine Spiegelung", P.REFLECTIONS, ["reflection"], 3, undefined, ["Spiegelungsoptionen...", "reflection"]) },
+    { label: "Leuchteffekt", icon: "picture-effects", flyout: fx("Leuchteffektvarianten", "Kein Leuchteffekt", P.GLOWS, ["glow"], 6, undefined, ["Leuchteffektoptionen...", "glow"]) },
+    { label: "Weiche Kanten", icon: "picture-effects", flyout: fx("Varianten weicher Kanten", "Keine weichen Kanten", P.SOFT_EDGES, ["softEdge"], 3, undefined, ["Optionen für weiche Kanten...", "softEdge"]) },
+    { label: "Abschrägung", icon: "picture-effects", flyout: fx("Abschrägung", "Keine Abschrägung", P.BEVELS, ["bevel", "sp3dXml", "scene3dXml"], 4, undefined, ["3D-Optionen...", "format3d"]) },
+    { label: "3D-Drehung", icon: "picture-effects", flyout: fx("3D-Drehung", "Keine Drehung", P.ROTATIONS_3D, ["scene3dXml"], 4, [["Parallel", 10], ["Perspektive", 11], ["Schräg", 4]], ["3D-Drehungsoptionen...", "rotation3d"]) },
   ];
   c.implement("picture.effects", { run: () => {}, enabled: picked });
 
@@ -367,8 +348,6 @@ export function pictureTab(api: AppApi, insertFromPath: (path: string) => Promis
   c.implement("picture.moreLayout", { run: () => void layoutDialog("position"), enabled: picked });
   c.implement("picture.sizePosition", { run: () => void layoutDialog("size"), enabled: picked });
 
-  // Grafik formatieren: the settings as numbers (Word's pane, as a dialog).
-  c.implement("picture.formatPane", { run: () => void formatDialog(api), enabled: picked });
 
   const wrapMenu: MenuEntry[] = [
     { cmd: "picture.wrapInline" }, "-", { cmd: "picture.wrapSquare" }, { cmd: "picture.wrapTight" }, { cmd: "picture.wrapThrough" }, { cmd: "picture.wrapTopBottom" }, "-",
@@ -532,44 +511,4 @@ async function removeBackground(bytes: Uint8Array, type: string): Promise<Uint8A
   } finally {
     URL.revokeObjectURL(url);
   }
-}
-
-/** Grafik formatieren: Word's pane settings as numbers in a dialog. */
-async function formatDialog(api: AppApi): Promise<void> {
-  const e = api.editor();
-  const f = e?.pictureFormat();
-  if (!e || !f) return;
-  const pctField = (v: number | undefined, def = 0) => h("input", { type: "number", value: String(Math.round(((v ?? def) * 100))), style: "width:70px" });
-  const sharpen = pctField(f.sharpen), bright = pctField(f.brightness), contrast = pctField(f.contrast);
-  const sat = pctField(f.saturation, 1), temp = h("input", { type: "number", value: String(f.temperature ?? 6500), style: "width:80px" });
-  const transp = pctField(f.transparency);
-  const lineW = h("input", { value: f.line ? `${f.line.width.toLocaleString("de-DE")} Pt.` : "", style: "width:80px" });
-  const lineC = h("input", { type: "color", value: `#${f.line?.color ?? "000000"}` });
-  const noLine = h("input", { type: "checkbox", checked: !f.line });
-  const soft = h("input", { type: "number", value: String(f.softEdge ?? 0), style: "width:70px" });
-  const crop = f.crop ?? { l: 0, t: 0, r: 0, b: 0 };
-  const cl = pctField(crop.l), ct = pctField(crop.t), cr = pctField(crop.r), cb = pctField(crop.b);
-  const ok = await showDialog({
-    title: "Grafik formatieren",
-    body: h("div", { style: "width:420px;display:flex;flex-direction:column;gap:6px" },
-      h("b", null, "Linie"), h("label", { class: "check" }, noLine, "Keine Linie"), h("div", { class: "grid2" }, "Farbe:", lineC, "Breite:", lineW),
-      h("b", null, "Weiche Kanten"), h("div", { class: "grid2" }, "Größe (Pt.):", soft),
-      h("b", null, "Bildkorrekturen"), h("div", { class: "grid2" }, "Schärfe (%):", sharpen, "Helligkeit (%):", bright, "Kontrast (%):", contrast),
-      h("b", null, "Bildfarbe"), h("div", { class: "grid2" }, "Sättigung (%):", sat, "Temperatur (K):", temp),
-      h("b", null, "Bildtransparenz"), h("div", { class: "grid2" }, "Transparenz (%):", transp),
-      h("b", null, "Zuschneiden (% des Bilds)"), h("div", { class: "grid2" }, "Links:", cl, "Oben:", ct, "Rechts:", cr, "Unten:", cb)),
-    buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false,
-  });
-  if (!ok) return;
-  const n = (el: HTMLInputElement) => (Number(el.value) || 0) / 100;
-  const width = parseNum(lineW.value);
-  const cropNext = { l: n(cl), t: n(ct), r: n(cr), b: n(cb) };
-  e.setPictureFormat({
-    sharpen: n(sharpen) || undefined, brightness: n(bright) || undefined, contrast: n(contrast) || undefined,
-    saturation: Math.abs(n(sat) - 1) < 1e-6 ? undefined : n(sat), temperature: Number(temp.value) === 6500 ? undefined : Number(temp.value) || undefined,
-    transparency: n(transp) || undefined, softEdge: Number(soft.value) || undefined,
-    line: noLine.checked ? (f.line ? null : f.line) : { ...(f.line ?? {}), color: lineC.value.slice(1).toUpperCase(), width: width > 0 ? width : f.line?.width ?? 0.75 },
-    crop: cropNext.l || cropNext.t || cropNext.r || cropNext.b ? cropNext : undefined,
-  });
-  api.focus();
 }

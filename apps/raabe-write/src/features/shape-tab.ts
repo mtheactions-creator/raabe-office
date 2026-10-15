@@ -13,6 +13,7 @@ import * as P from "./picture-presets";
 import { SHAPE_STYLES } from "./shape-presets";
 import { WORDART } from "./text-effects";
 import { GROUP_MENU } from "./groups";
+import { FORMAT_PANE, type FormatSection } from "./format-pane";
 
 const cmd = (id: string, label: string, icon?: string, extra: Partial<Command> = {}): Command => ({ id, label, icon, ...extra });
 
@@ -203,6 +204,7 @@ export function shapeTab(api: AppApi, galleryPanel: (close: () => void) => HTMLE
     ["Pfeilart 9", { head: { type: "oval" }, tail: { type: "oval" } }], ["Pfeilart 10", { head: { type: "diamond" }, tail: { type: "diamond" } }],
     ["Pfeilart 11", { head: { type: "oval" }, tail: { type: "stealth" } }],
   ];
+  const moreLines: MenuEntry = { label: "Weitere Linien...", run: () => FORMAT_PANE.open("line") };
   const outlinePanel = (close: () => void) => {
     const colors = colorGrid((hex) => { close(); setLine({ color: hex }); api.focus(); });
     const sub = (ev: MouseEvent, entries: MenuEntry[]) => {
@@ -215,14 +217,14 @@ export function shapeTab(api: AppApi, galleryPanel: (close: () => void) => HTMLE
     return h("div", { class: "rpanel palette" }, ...colors, h("hr"),
       link("Keine Kontur", () => { close(); setLine(null); api.focus(); }),
       link("Weitere Konturfarben...", () => { close(); void moreColor("Farben", (hex) => setLine({ color: hex })); }),
-      link("Stärke", (ev) => sub(ev, weights.map((w) => ({ label: `${w.toLocaleString("de-DE")} Pt.`, checked: lineOf()?.width === w, run: () => setLine({ width: w }) }))), true),
-      link("Striche", (ev) => sub(ev, dashes.map(([v, l]) => ({ label: l, checked: (lineOf()?.dash ?? "solid") === v, run: () => setLine({ dash: v === "solid" ? undefined : v }) }))), true),
-      ...(isLine() ? [link("Pfeile", (ev) => sub(ev, arrows.map(([l, patch]) => ({ label: l, run: () => setLine(patch) }))), true)] : []));
+      link("Stärke", (ev) => sub(ev, [...weights.map((w): MenuEntry => ({ label: `${w.toLocaleString("de-DE")} Pt.`, checked: lineOf()?.width === w, run: () => setLine({ width: w }) })), "-", moreLines]), true),
+      link("Striche", (ev) => sub(ev, [...dashes.map(([v, l]): MenuEntry => ({ label: l, checked: (lineOf()?.dash ?? "solid") === v, run: () => setLine({ dash: v === "solid" ? undefined : v }) })), "-", moreLines]), true),
+      ...(isLine() ? [link("Pfeile", (ev) => sub(ev, [...arrows.map(([l, patch]): MenuEntry => ({ label: l, run: () => setLine(patch) })), "-", { label: "Weitere Pfeile...", run: () => FORMAT_PANE.open("line") }]), true)] : []));
   };
   run("shape.outline", onShape(() => setLine({})));
 
   // Formeffekte: Word's presets (the same as for pictures).
-  const fx = (title: string, noneLabel: string, list: readonly (P.PicturePreset & { readonly id: string })[], keys: (keyof PictureFormat)[], columns: number, sections?: [string, number][]) => (): HTMLElement => {
+  const fx = (title: string, noneLabel: string, list: readonly (P.PicturePreset & { readonly id: string })[], keys: (keyof PictureFormat)[], columns: number, sections?: [string, number][], more?: [string, FormatSection]) => (): HTMLElement => {
     const e = ed();
     if (!e) return h("div");
     const items = list.map((p) => {
@@ -239,19 +241,18 @@ export function shapeTab(api: AppApi, galleryPanel: (close: () => void) => HTMLE
       let at = 0;
       for (const [t, n] of sections) { parts.push({ title: t, items: rest.slice(at, at + n), columns, tile: [48, 36] }); at += n; }
     } else parts.push({ title, items: rest, columns, tile: [48, 36] });
-    return pictureGallery(e, parts, [], () => closePopup(), (item) => setFormat((f) => ({ ...f, ...item.format })));
+    return pictureGallery(e, parts, more ? [{ label: more[0], run: () => FORMAT_PANE.open(more[1]) }] : [], () => closePopup(), (item) => setFormat((f) => ({ ...f, ...item.format })));
   };
   const effectsMenu: MenuEntry[] = [
-    { label: "Voreinstellung", icon: "shape-effects", flyout: fx("Voreinstellungen", "Keine Voreinstellungen", P.EFFECT_PRESETS, ["shadow", "glow", "reflection", "softEdge", "bevel", "scene3dXml", "sp3dXml"], 4) },
-    { label: "Schatten", icon: "shape-effects", flyout: fx("Schatten", "Kein Schatten", P.SHADOWS, ["shadow"], 3, [["Außen", 9], ["Innen", 9], ["Perspektive", 5]]) },
-    { label: "Spiegelung", icon: "shape-effects", flyout: fx("Spiegelungsvarianten", "Keine Spiegelung", P.REFLECTIONS, ["reflection"], 3) },
-    { label: "Leuchten", icon: "shape-effects", flyout: fx("Leuchteffektvarianten", "Kein Leuchteffekt", P.GLOWS, ["glow"], 6) },
-    { label: "Weiche Kanten", icon: "shape-effects", flyout: fx("Varianten weicher Kanten", "Keine weichen Kanten", P.SOFT_EDGES, ["softEdge"], 3) },
-    { label: "Abschrägung", icon: "shape-effects", flyout: fx("Abschrägung", "Keine Abschrägung", P.BEVELS, ["bevel", "sp3dXml", "scene3dXml"], 4) },
-    { label: "3D-Drehung", icon: "shape-effects", flyout: fx("3D-Drehung", "Keine Drehung", P.ROTATIONS_3D, ["scene3dXml"], 4, [["Parallel", 10], ["Perspektive", 11], ["Schräg", 4]]) },
+    { label: "Voreinstellung", icon: "shape-effects", flyout: fx("Voreinstellungen", "Keine Voreinstellungen", P.EFFECT_PRESETS, ["shadow", "glow", "reflection", "softEdge", "bevel", "scene3dXml", "sp3dXml"], 4, undefined, ["3D-Optionen...", "format3d"]) },
+    { label: "Schatten", icon: "shape-effects", flyout: fx("Schatten", "Kein Schatten", P.SHADOWS, ["shadow"], 3, [["Außen", 9], ["Innen", 9], ["Perspektive", 5]], ["Schattenoptionen...", "shadow"]) },
+    { label: "Spiegelung", icon: "shape-effects", flyout: fx("Spiegelungsvarianten", "Keine Spiegelung", P.REFLECTIONS, ["reflection"], 3, undefined, ["Spiegelungsoptionen...", "reflection"]) },
+    { label: "Leuchten", icon: "shape-effects", flyout: fx("Leuchteffektvarianten", "Kein Leuchteffekt", P.GLOWS, ["glow"], 6, undefined, ["Leuchteffektoptionen...", "glow"]) },
+    { label: "Weiche Kanten", icon: "shape-effects", flyout: fx("Varianten weicher Kanten", "Keine weichen Kanten", P.SOFT_EDGES, ["softEdge"], 3, undefined, ["Optionen für weiche Kanten...", "softEdge"]) },
+    { label: "Abschrägung", icon: "shape-effects", flyout: fx("Abschrägung", "Keine Abschrägung", P.BEVELS, ["bevel", "sp3dXml", "scene3dXml"], 4, undefined, ["3D-Optionen...", "format3d"]) },
+    { label: "3D-Drehung", icon: "shape-effects", flyout: fx("3D-Drehung", "Keine Drehung", P.ROTATIONS_3D, ["scene3dXml"], 4, [["Parallel", 10], ["Perspektive", 11], ["Schräg", 4]], ["3D-Drehungsoptionen...", "rotation3d"]) },
   ];
   c.implement("shape.effects", { run: () => {}, enabled: picked });
-  c.implement("shape.formatPane", { run: () => void c.run("picture.sizeDialog"), enabled: picked });
 
   // ----- Text ------------------------------------------------------------------------------
   const body = () => shape()?.obj.shape?.body;
@@ -265,7 +266,7 @@ export function shapeTab(api: AppApi, galleryPanel: (close: () => void) => HTMLE
   c.implement("shape.textAlign", { run: () => {}, enabled: picked });
   c.implement("shape.textDirection", { run: () => {}, enabled: picked });
   const alignMenu: MenuEntry[] = [{ cmd: "shape.alignTop" }, { cmd: "shape.alignMiddle" }, { cmd: "shape.alignBottom" }];
-  const directionMenu: MenuEntry[] = [{ cmd: "shape.horizontal" }, { cmd: "shape.rotate90" }, { cmd: "shape.rotate270" }, "-", { label: "Textrichtungsoptionen...", run: () => void c.run("picture.sizeDialog") }];
+  const directionMenu: MenuEntry[] = [{ cmd: "shape.horizontal" }, { cmd: "shape.rotate90" }, { cmd: "shape.rotate270" }, "-", { label: "Textrichtungsoptionen...", run: () => FORMAT_PANE.open("textLayout") }];
 
   // ----- Größe -----------------------------------------------------------------------------
   const size = () => { const s = shape(); return s ? { w: s.obj.width ?? 0, h: s.obj.height ?? 0 } : null; };

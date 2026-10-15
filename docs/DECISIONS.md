@@ -890,3 +890,21 @@ a cut-out picture with a transparent background and an ellipse) and `probe_word_
   above and below, behind, in front); tooltips now also appear inside open menus and galleries.
 - **Transparente Farbe bestimmen** (Farbe menu): a pen cursor, the clicked colour becomes
   see-through (a:clrChange, as Word writes it).
+- **Grafik formatieren / Form formatieren** is a task pane at the right, laid out as Word's
+  (recorded with `probe_word_format_pane.py`): the tabs Füllung und Linie, Effekte, Layout und
+  Eigenschaften and Bild (shapes: under Formoptionen, with Textoptionen beside them), fold-out
+  sections with Word's labels, a slider and a value field per setting. Changes apply at once;
+  dragging a slider is one undo step. Every "…optionen" entry opens its section, as in Word
+  (Bildkorrektur-, Bildfarb-, Bildtransparenzoptionen, Schatten-, Spiegelungs-, Leuchteffekt-,
+  3D- und 3D-Drehungsoptionen, Optionen für weiche Kanten, Weitere Linien/Pfeile,
+  Textrichtungsoptionen); the group launchers open Effekte (Bildformatvorlagen) and Füllung und
+  Linie (Formenarten). Shown but off: Bild-/Textur- and Musterfüllung, Farbverlaufslinie,
+  Künstlerische Effekte; the 3D-Format settings beyond the top bevel are kept for Word, not shown.
+  Größe and Weitere Layoutoptionen stay dialogs, as in Word.
+- **Turned objects**: frame, handles, rotation handle and crop marks turn with the object; sizing
+  and cropping work along its own sides with the opposite side staying where it is, and the
+  sizing pointers turn with it. A click hits a turned or mirrored object where it is drawn.
+  Undo keeps the floating object selected (the pane stays on it).
+- **Context menu** of shapes and text boxes as Word's (recorded with `probe_word_context.py
+  objects`): Text bearbeiten, Punkte bearbeiten, Gruppieren, Vordergrund/Hintergrund, Link,
+  Beschriftung, Textumbruch, Alternativtext, Weitere Layoutoptionen, Form formatieren.

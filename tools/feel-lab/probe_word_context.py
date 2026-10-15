@@ -1,14 +1,16 @@
 """Probe: Word's context menus (right click) in text, a list, a table cell and on a picture,
-with their submenus. Own Word instance; takes over mouse and screen briefly. Writes the
+with their submenus; with "objects" those of a shape, a text box (frame and inside) and a
+floating picture instead. Own Word instance; takes over mouse and screen briefly. Writes the
 items (name, enabled, submenu items) to results/<date>-word-context.json and screenshots to
 captures/word-context/ (local only).
 
-    .venv/Scripts/python.exe probe_word_context.py
+    .venv/Scripts/python.exe probe_word_context.py [objects]
 """
 from __future__ import annotations
 
 import datetime
 import json
+import sys
 import tempfile
 import time
 from pathlib import Path
@@ -156,20 +158,42 @@ def main() -> None:
             rg.Find.Execute(FindText=text)
             return d.Range(rg.Start + 2, rg.Start + 2)
 
-        results.append(capture("text", *at(find("etwas"))))
-        results.append(capture("list", *at(find("Zweiter"))))
-        results.append(capture("table", *at(find("Zelle12"))))
-        # several cells selected
-        app.Selection.SetRange(t.Cell(1, 1).Range.Start, t.Cell(2, 2).Range.End)
-        sel_pt = at(find("Zelle21"))
-        results.append(capture("table-cells", *sel_pt, click_first=False))
-        shp = d.InlineShapes(1)
-        left, top, width, height = win.GetPoint(0, 0, 0, 0, shp.Range)
-        results.append(capture("picture", float(left) + float(width) / 2, float(top) + float(height) / 2))
+        if "objects" in sys.argv[1:]:
+            def centre(shape) -> tuple[float, float]:
+                left, top, width, height = win.GetPoint(0, 0, 0, 0, shape)
+                return float(left) + float(width) / 2, float(top) + float(height) / 2
+            anchor = d.Paragraphs(1).Range
+            shp = d.Shapes.AddShape(1, 300, 80, 120, 60, anchor)
+            shp.TextFrame.TextRange.Text = "Form"
+            box = d.Shapes.AddTextbox(1, 300, 170, 140, 50, anchor)
+            box.TextFrame.TextRange.Text = "Textfeld"
+            fl = d.InlineShapes(1).ConvertToShape()
+            fl.WrapFormat.Type = 0
+            time.sleep(0.5)
+            x, y = centre(shp)
+            results.append(capture("shape", x + 30, y + 18))
+            x, y = centre(box)
+            left, top, width, height = win.GetPoint(0, 0, 0, 0, box)
+            winapi.click(x, y)
+            time.sleep(0.3)
+            results.append(capture("textbox-frame", float(left) + 2, y, click_first=False))
+            results.append(capture("textbox-text", x - 30, y))
+            results.append(capture("floating-picture", *centre(fl)))
+        else:
+            results.append(capture("text", *at(find("etwas"))))
+            results.append(capture("list", *at(find("Zweiter"))))
+            results.append(capture("table", *at(find("Zelle12"))))
+            # several cells selected
+            app.Selection.SetRange(t.Cell(1, 1).Range.Start, t.Cell(2, 2).Range.End)
+            sel_pt = at(find("Zelle21"))
+            results.append(capture("table-cells", *sel_pt, click_first=False))
+            shp = d.InlineShapes(1)
+            left, top, width, height = win.GetPoint(0, 0, 0, 0, shp.Range)
+            results.append(capture("picture", float(left) + float(width) / 2, float(top) + float(height) / 2))
         d.Close(0)
     finally:
         app.Quit(0)
-    out = HERE / "results" / f"{datetime.date.today().isoformat()}-word-context.json"
+    out = HERE / "results" / f"{datetime.date.today().isoformat()}-word-context{'-objects' if 'objects' in sys.argv[1:] else ''}.json"
     out.write_text(json.dumps(results, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
     for r in results:
         print("==", r["kind"])

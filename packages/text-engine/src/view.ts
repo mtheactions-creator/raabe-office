@@ -50,6 +50,8 @@ export interface RenderOptions {
       readonly rotation?: number; readonly flipH?: boolean; readonly flipV?: boolean };
     /** Pictures get the rotation handle and Word's layout options button. */
     readonly picture?: boolean;
+    /** The object's turn (degrees clockwise about its middle): the frame and handles turn with it. */
+    readonly rotation?: number;
     /** A shape whose text is being edited: its frame is dashed. */
     readonly editing?: boolean;
     /** Shapes: the yellow adjust handles (page px). */
@@ -810,7 +812,7 @@ export class View {
     const others = (this.opts.others ?? []).filter((o) => o.page === page.index);
     const guides = (this.opts.guides ?? []).filter((g) => g.page === page.index);
     const key = guides.map((g) => `g${g.x1},${g.y1},${g.x2},${g.y2}`).join("") + others.map((o) => `o${o.x},${o.y},${o.w},${o.h}`).join("") + (editing ? `${page.bodyTop}|${page.bodyBottom}|${page.section}|${sections}|${pv.w}` : "") +
-      (img ? `|img${img.x},${img.y},${img.w},${img.h},${img.crop ? `${img.crop.x},${img.crop.y},${img.crop.w},${img.crop.h}` : ""},${img.picture},${img.editing},${(img.adjust ?? []).map((a) => `${a.x},${a.y}`).join(";")},${(img.ends ?? []).map((a) => `${a.x},${a.y}`).join(";")}` : "") + (tb ? `|tb${tb.x},${tb.y},${tb.w},${tb.h},${tb.first},${tb.last}` : "");
+      (img ? `|img${img.x},${img.y},${img.w},${img.h},${img.rotation ?? 0},${img.crop ? `${img.crop.x},${img.crop.y},${img.crop.w},${img.crop.h}` : ""},${img.picture},${img.editing},${(img.adjust ?? []).map((a) => `${a.x},${a.y}`).join(";")},${(img.ends ?? []).map((a) => `${a.x},${a.y}`).join(";")}` : "") + (tb ? `|tb${tb.x},${tb.y},${tb.w},${tb.h},${tb.first},${tb.last}` : "");
     if (key === pv.overlayKey) return;
     pv.overlayKey = key;
     const handles: HTMLElement[] = [];
@@ -851,11 +853,12 @@ export class View {
       const outline = document.createElement("div");
       outline.style.cssText = place + "box-sizing:border-box;border:1px solid #9e9e9e;pointer-events:none";
       handles.push(outline);
-      const frame = document.createElement("div");
-      frame.style.cssText = `position:absolute;left:${img.x}px;top:${img.y}px;width:${img.w}px;height:${img.h}px;box-sizing:border-box;border:1px solid #000`;
+      const frame = this.turnedBox(img);
+      frame.style.boxSizing = "border-box";
+      frame.style.border = "1px solid #000";
       handles.push(frame);
       for (const hd of HANDLES) {
-        const { x, y } = this.handlePos(img, hd);
+        const { x, y } = this.handlePos({ x: 0, y: 0, w: img.w, h: img.h }, hd);
         const el = document.createElement("div");
         const corner = hd.length === 2;
         const len = 12, th = 4;
@@ -865,7 +868,7 @@ export class View {
             `border-${hd.startsWith("n") ? "top" : "bottom"}:${th}px solid #000;border-${hd.includes("w") ? "left" : "right"}:${th}px solid #000;box-sizing:border-box`;
         } else if (hd === "n" || hd === "s") el.style.cssText = `position:absolute;left:${x - 8}px;top:${y - th / 2}px;width:16px;height:${th}px;background:#000`;
         else el.style.cssText = `position:absolute;left:${x - th / 2}px;top:${y - 8}px;width:${th}px;height:16px;background:#000`;
-        handles.push(el);
+        frame.append(el);
       }
     } else if (img?.ends) {
       // Lines: Word's two round handles at the ends (and yellow ones of connectors).
@@ -880,23 +883,27 @@ export class View {
         handles.push(el);
       }
     } else if (img) {
+      // The frame turns with the object (Word): handles and rotation handle sit on it.
+      const box = this.turnedBox(img);
       const frame = document.createElement("div");
-      frame.style.cssText = `position:absolute;left:${img.x}px;top:${img.y}px;width:${img.w}px;height:${img.h}px;box-sizing:border-box;border:1px ${img.editing ? "dashed" : "solid"} #6f8db9`;
-      handles.push(frame);
+      frame.style.cssText = `position:absolute;inset:0;box-sizing:border-box;border:1px ${img.editing ? "dashed" : "solid"} #6f8db9`;
+      box.append(frame);
+      handles.push(box);
       // Word 365: eight round handles; pictures also get the rotation handle and the layout button.
       for (const hd of HANDLES) {
-        const { x, y } = this.handlePos(img, hd);
+        const { x, y } = this.handlePos({ x: 0, y: 0, w: img.w, h: img.h }, hd);
         const el = document.createElement("div");
         el.style.cssText = `position:absolute;left:${x - 4.5}px;top:${y - 4.5}px;width:9px;height:9px;box-sizing:border-box;border:1px solid #5f5f5f;background:#fff;border-radius:50%`;
-        handles.push(el);
+        box.append(el);
       }
       if (img.picture) {
         const rot = document.createElement("div");
-        rot.style.cssText = `position:absolute;left:${img.x + img.w / 2 - 9}px;top:${img.y - 26}px;width:18px;height:18px`;
+        rot.style.cssText = `position:absolute;left:${img.w / 2 - 9}px;top:-26px;width:18px;height:18px`;
         rot.innerHTML = ROTATE_SVG;
-        handles.push(rot);
+        box.append(rot);
+        const at = this.layoutButtonPos(img);
         const lb = document.createElement("div");
-        lb.style.cssText = `position:absolute;left:${img.x + img.w + 10}px;top:${img.y}px;width:22px;height:22px;box-sizing:border-box;border:1px solid #9e9e9e;background:#fff;display:flex;align-items:center;justify-content:center`;
+        lb.style.cssText = `position:absolute;left:${at.x}px;top:${at.y}px;width:22px;height:22px;box-sizing:border-box;border:1px solid #9e9e9e;background:#fff;display:flex;align-items:center;justify-content:center`;
         lb.innerHTML = LAYOUT_SVG;
         lb.title = "Layoutoptionen";
         handles.push(lb);
@@ -940,6 +947,29 @@ export class View {
       ...label(`Fußzeile${sect}`, page.bodyBottom + 2, true),
       ...handles,
     );
+  }
+
+  /** A box at the object's place, turned like it (children use the box's own coordinates). */
+  private turnedBox(img: { x: number; y: number; w: number; h: number; rotation?: number }): HTMLElement {
+    const el = document.createElement("div");
+    el.style.cssText = `position:absolute;left:${img.x}px;top:${img.y}px;width:${img.w}px;height:${img.h}px;` +
+      (img.rotation ? `transform:rotate(${img.rotation}deg);transform-origin:50% 50%;` : "");
+    return el;
+  }
+
+  /** A page point in the turned object's own (unturned) coordinates. */
+  private unturn(img: { x: number; y: number; w: number; h: number; rotation?: number }, pt: { x: number; y: number }): { x: number; y: number } {
+    if (!img.rotation) return pt;
+    const a = (-img.rotation * Math.PI) / 180, cx = img.x + img.w / 2, cy = img.y + img.h / 2;
+    const dx = pt.x - cx, dy = pt.y - cy;
+    return { x: cx + dx * Math.cos(a) - dy * Math.sin(a), y: cy + dx * Math.sin(a) + dy * Math.cos(a) };
+  }
+
+  /** Word's layout options button: beside the top right of the (turned) object's bounds. */
+  private layoutButtonPos(img: { x: number; y: number; w: number; h: number; rotation?: number }): { x: number; y: number } {
+    const a = ((img.rotation ?? 0) * Math.PI) / 180;
+    const bw = Math.abs(img.w * Math.cos(a)) + Math.abs(img.h * Math.sin(a)), bh = Math.abs(img.w * Math.sin(a)) + Math.abs(img.h * Math.cos(a));
+    return { x: img.x + img.w / 2 + bw / 2 + 10, y: img.y + img.h / 2 - bh / 2 };
   }
 
   private handlePos(b: { x: number; y: number; w: number; h: number }, hd: Handle): { x: number; y: number } {
@@ -1004,13 +1034,16 @@ export class View {
       for (let i = 0; i < 2; i++) if (Math.abs(pt.x - img.ends[i].x) <= tol && Math.abs(pt.y - img.ends[i].y) <= tol) return i ? "end-1" : "end-0";
       return null;
     }
+    // Handles of a turned object: tested in its own coordinates.
+    const lp = this.unturn(img, pt);
     for (const hd of HANDLES) {
       const p = this.handlePos(img, hd);
-      if (Math.abs(pt.x - p.x) <= tol && Math.abs(pt.y - p.y) <= tol) return img.crop ? `crop-${hd}` as Handle : hd;
+      if (Math.abs(lp.x - p.x) <= tol && Math.abs(lp.y - p.y) <= tol) return img.crop ? `crop-${hd}` as Handle : hd;
     }
     if (img.picture && !img.crop) {
-      if (Math.abs(pt.x - (img.x + img.w / 2)) <= 10 && Math.abs(pt.y - (img.y - 17)) <= 10) return "rot";
-      if (pt.x >= img.x + img.w + 10 && pt.x <= img.x + img.w + 32 && pt.y >= img.y && pt.y <= img.y + 22) return "layout";
+      if (Math.abs(lp.x - (img.x + img.w / 2)) <= 10 && Math.abs(lp.y - (img.y - 17)) <= 10) return "rot";
+      const lb = this.layoutButtonPos(img);
+      if (pt.x >= lb.x && pt.x <= lb.x + 22 && pt.y >= lb.y && pt.y <= lb.y + 22) return "layout";
     }
     return null;
   }
@@ -1019,7 +1052,8 @@ export class View {
   layoutButtonRect(): DOMRect | null {
     const img = this.opts.image;
     if (!img) return null;
-    const left = this.pageLeft(img.page) + img.x + img.w + 10, top = this.pageTop(img.page) + img.y;
+    const lb = this.layoutButtonPos(img);
+    const left = this.pageLeft(img.page) + lb.x, top = this.pageTop(img.page) + lb.y;
     const ws = this.workspace.getBoundingClientRect();
     const z = this.zoomFactor;
     return new DOMRect(ws.left + left * z - this.workspace.scrollLeft, ws.top + top * z - this.workspace.scrollTop, 22 * z, 22 * z);
@@ -1604,15 +1638,20 @@ export class View {
 
   /** Image decoration under a client point (floating pictures), for selection. */
   imageAt(clientX: number, clientY: number): Extract<Deco, { kind: "image" }> | null {
-    const { page, x, y } = this.pointAt(clientX, clientY);
+    const { page, x: px, y: py } = this.pointAt(clientX, clientY);
     const pg = this.layoutRef?.pages[page];
     if (!pg) return null;
     // Topmost first (stacking order), lines within a few pixels of their stroke.
     const tol = 4 / this.zoomFactor;
     const hits = pg.deco.filter((d): d is Extract<Deco, { kind: "image" }> => d.kind === "image" && d.story === "main" &&
-      x >= d.x - tol && x <= d.x + d.w + tol && y >= d.y - tol && y <= d.y + d.h + tol);
+      Math.hypot(px - d.x - d.w / 2, py - d.y - d.h / 2) <= Math.hypot(d.w, d.h) / 2 + tol);
     hits.sort((a, b) => (b.z ?? 0) - (a.z ?? 0));
     for (const d of hits) {
+      // A turned or mirrored object is hit where it is drawn: the point in its own coordinates.
+      let { x, y } = this.unturn({ ...d, rotation: d.pic?.rotation }, { x: px, y: py });
+      if (d.pic?.flipH) x = 2 * d.x + d.w - x;
+      if (d.pic?.flipV) y = 2 * d.y + d.h - y;
+      if (x < d.x - tol || x > d.x + d.w + tol || y < d.y - tol || y > d.y + d.h + tol) continue;
       if (!d.shape) { if (x >= d.x && x <= d.x + d.w && y >= d.y && y <= d.y + d.h) return d; continue; }
       const g = shapeGeometry(d.pic, d.shape, d.w, d.h);
       const open = g?.paths.filter((p) => p.fill === "none" || d.shape!.kind === "connector") ?? [];

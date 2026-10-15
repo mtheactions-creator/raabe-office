@@ -34,6 +34,11 @@ but everything sits where a Word user expects it (D-053).
 | E. Selection, cursors, Formatvorlagen | A selection visible over every background (highlighting, shading, coloured text, page colour); sharp cursors at every scaling (Windows' own where Word uses them); live preview on hover in the galleries; a Formatvorlage applied to a selection resets its direct formatting cleanly (D-053). |
 | F. Audit of the whole app | The same kinds of difference everywhere: live preview in every gallery, panes instead of dialogs, double-click on every object, tooltips and icons, cut-off labels at several widths (by script), selection visibility, clipboard with Word for every object, snapping for shapes and text boxes, menus and galleries entry by entry against recordings of Word, new behaviour-catalogue cases; what it finds is added to the list. |
 
+Status: A done 2026-10-15. B done 2026-10-15 (D-054): text on both sides and Eng along
+outlines (all 162 line starts of the Word-built word-wrap.docx as in Word), snapping with guide
+lines, double-click, wrap icons, Transparente Farbe bestimmen, the Grafik/Form formatieren pane
+in Word's layout, turned selection frames, Word's shape context menu.
+
 ## Step 4b: Word parity (plan)
 
 Agreed with the owner on 2026-10-14 after trying Step 4. Goal: RaabeWrite behaves and looks

@@ -74,7 +74,8 @@ def main(argv: list[str]) -> None:
             raabe.close()
         for name, r in data.items():
             print(name, json.dumps({k: v for k, v in r.items() if k != "lines"}, ensure_ascii=False, indent=1)[:5000])
-        print("saved to", save(test, data))
+        # A check of a few files does not replace the full run's results.
+        print("saved to", save(test if len(files) > 3 else f"docx-{'-'.join(f.stem for f in files)}", data))
         return
     elif test == "formatting":
         from feellab import formatting

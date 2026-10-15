@@ -32,6 +32,7 @@ import { backgroundFeature } from "./features/background";
 import { coverPageFeature } from "./features/cover-page";
 import { bordersFeature } from "./features/borders";
 import { textEffectsFeature } from "./features/text-effects";
+import { formatPaneFeature } from "./features/format-pane";
 import { groupsFeature, GROUP_COMMANDS } from "./features/groups";
 import { hyphenationFeature, HYPHENATION_COMMANDS } from "./features/hyphenation";
 import { rulerFeature } from "./features/ruler";
@@ -258,6 +259,10 @@ export class WriteApp {
       add: (i) => spell.addToDictionary(i.text),
       apply: (e, i, s) => { if (i.kind !== "repeat" || s) return false; spell.deleteRepeat(e, i.p, asWord(i)); return true; },
     }, grammar.source], () => void this.optionsDialog("Dokumentprüfung"));
+    const textEffects = textEffectsFeature(api, this.docArea, this.dock);
+    const formatPane = formatPaneFeature(api, this.docArea, this.dock, textEffects);
+    // With a shape selected, the text effects' "…optionen" open Form formatieren > Textoptionen (as in Word).
+    textEffects.redirect((t) => { if (!api.editor()?.selectedShape()) return false; formatPane.open(t === "fill" ? "textFill" : "textEffects"); return true; });
     return {
       context: contextFeature(api, async (e, pos) => { const s = await spell.spellEntries(e, pos); return s.length ? s : grammar.entries(e, pos); },
         (kind) => this.ribbon?.toolbar(miniToolbar(this.ribbonContext(), kind)).el ?? null,
@@ -288,7 +293,8 @@ export class WriteApp {
       design: designFeature(api),
       background: backgroundFeature(api),
       borders: bordersFeature(api),
-      textEffects: textEffectsFeature(api, this.docArea, this.dock),
+      textEffects,
+      formatPane,
       groups: groupsFeature(api),
       cover: coverPageFeature(api),
       hyphenation: hyphenationFeature(api),
@@ -403,6 +409,7 @@ export class WriteApp {
     this.features.styles.render();
     this.features.ruler.refresh();
     this.features.textEffects.refresh();
+    this.features.formatPane.refresh();
     if (countWords && this.wordCache?.paras !== d.editor.paragraphs()) {
       // Counting runs after a short pause in typing, not on every key.
       clearTimeout(this.wordTimer);

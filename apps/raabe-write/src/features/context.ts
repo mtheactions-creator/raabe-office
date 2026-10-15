@@ -123,6 +123,32 @@ export function contextFeature(api: AppApi, spellEntries: (e: Editor, pos: Pos) 
     ] };
     const borders: MenuEntry = { label: "Rahmenarten", submenu: cmds("border.bottom", "border.top", "border.left", "border.right", "border.none", "border.all", "border.outside", "border.inside") };
     out.push({ cmd: "edit.cut" }, { cmd: "edit.copy" }, pasteOptions, "-");
+    // A shape or text box (its frame selected): Word's menu (recorded 2026-10-15,
+    // probe_word_context.py objects).
+    const shape = e.selectedShape();
+    if (shape && !shape.editing) {
+      const wrap = cmds("picture.wrapInline", "-", "picture.wrapSquare", "picture.wrapTight", "picture.wrapThrough", "picture.wrapTopBottom", "-", "picture.wrapBehind", "picture.wrapFront");
+      const hasText = !!shape.obj.shape?.story;
+      const textbox = shape.obj.shape?.kind === "textbox";
+      out.push(
+        { label: hasText ? "Text bearbeiten" : "Text hinzufügen", icon: "text-box", run: () => { e.editShapeText(shape.p, shape.index, "end"); api.refresh(); }, disabled: shape.obj.shape?.kind === "connector" },
+        { label: "Punkte bearbeiten", icon: "edit-shape", run: () => {}, disabled: true },
+        "-",
+        { label: "Gruppieren", icon: "group-objects", submenu: cmds("layout.group") },
+        { label: "In den Vordergrund", icon: "bring-forward", submenu: cmds("layout.bringForward") },
+        { label: "In den Hintergrund", icon: "send-backward", submenu: cmds("layout.sendBackward") },
+        "-",
+        { cmd: "insert.link", label: "Link" },
+        { cmd: "ref.caption", label: "Beschriftung einfügen..." },
+        { label: "Textumbruch", icon: "wrap-text", submenu: [...wrap, "-", { cmd: "picture.moreLayout", label: "Weitere Layoutoptionen..." }] },
+        "-",
+        { cmd: "picture.altText", label: "Alternativtext anzeigen..." },
+        { label: textbox ? "Als Standardtextfeld-Format festlegen" : "Als Standardform festlegen", run: () => {}, disabled: true },
+        { cmd: "picture.moreLayout", label: "Weitere Layoutoptionen..." },
+        { cmd: "shape.formatPane", label: "Form formatieren..." },
+      );
+      return out;
+    }
     if (image) {
       out.push(
         { label: "Bild ändern", icon: "change-picture", submenu: [{ cmd: "picture.changeFromFile", label: "Dieses Gerät..." }, { cmd: "picture.changeFromClipboard", label: "Aus Zwischenablage..." }] },

@@ -221,7 +221,12 @@ export function textEffectsFeature(api: AppApi, docArea: HTMLElement, dock: Dock
   const pane = h("div", { class: "fxpane", hidden: true, role: "complementary", "aria-label": "Texteffekte formatieren" });
   docArea.append(pane);
   dock.add(pane, "right", 300);
-  const openPane = (t: "fill" | "effects") => { tab = t; paneOpen = true; pane.hidden = false; renderPane(); api.refresh(); };
+  /** With a shape selected, Word shows these settings in Form formatieren > Textoptionen. */
+  let redirect: ((t: "fill" | "effects") => boolean) | null = null;
+  const openPane = (t: "fill" | "effects") => {
+    if (redirect?.(t)) return;
+    tab = t; paneOpen = true; pane.hidden = false; renderPane(); api.refresh();
+  };
   const closePane = () => { paneOpen = false; pane.hidden = true; api.refresh(); api.focus(); };
 
   const slider = (label: string, value: number, min: number, max: number, unit: string, set: (v: number) => void, step = 1) => {
@@ -246,13 +251,18 @@ export function textEffectsFeature(api: AppApi, docArea: HTMLElement, dock: Dock
 
   const renderPane = () => {
     if (!paneOpen) return;
-    const e = ed();
-    const parts = fxParts(e?.textFxAt());
     const head = h("div", { class: "fx-head" }, h("span", null, "Texteffekte formatieren"),
       h("button", { "aria-label": "Bereich schließen", "data-tip": "Bereich schließen", onclick: closePane }, icon("close")));
     const tabs = h("div", { class: "fx-tabs" },
       h("button", { class: tab === "fill" ? "active" : "", "data-tip": "Textfüllung und Kontur", onclick: () => { tab = "fill"; renderPane(); } }, icon("text-fill")),
       h("button", { class: tab === "effects" ? "active" : "", "data-tip": "Texteffekte", onclick: () => { tab = "effects"; renderPane(); } }, icon("text-effects")));
+    pane.replaceChildren(head, tabs, paneBody(tab));
+  };
+
+  /** The settings of one tab (also shown in Form formatieren > Textoptionen). */
+  const paneBody = (tab: "fill" | "effects"): HTMLElement => {
+    const e = ed();
+    const parts = fxParts(e?.textFxAt());
     const body = h("div", { class: "fx-body" });
     if (tab === "fill") {
       const f = parts.textFill;
@@ -308,12 +318,16 @@ export function textEffectsFeature(api: AppApi, docArea: HTMLElement, dock: Dock
         slider("Transparenz", Math.round((1 - alphaOf(gl)) * 100), 0, 100, "%", (v) => change("glow", withAlpha(gl, 1 - v / 100)))] : [])));
       body.append(section("3D-Format", h("div", { class: "muted" }, "RaabeWrite zeigt Abschrägungen und 3D-Effekte nicht an; Word sieht sie weiterhin.")));
     }
-    pane.replaceChildren(head, tabs, body);
+    return body;
   };
 
   c.implement("font.effects", { run: () => {}, enabled: has });
   for (const id of ["wordart.styles", "text.fill", "text.outline", "text.effects"]) c.implement(id, { run: () => {}, enabled: () => !!ed()?.selectedShape() });
   c.implement("text.effectsPane", { run: () => (paneOpen ? closePane() : openPane("fill")), enabled: has, checked: () => paneOpen });
-  return { get fontEffectsMenu() { return fontEffectsMenu(); }, refresh: renderPane };
+  return {
+    get fontEffectsMenu() { return fontEffectsMenu(); }, refresh: renderPane, body: paneBody,
+    /** Form formatieren takes over the "…optionen" entries while a shape is selected. */
+    redirect(fn: (t: "fill" | "effects") => boolean) { redirect = fn; },
+  };
 }
 

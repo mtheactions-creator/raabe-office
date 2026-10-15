@@ -47,6 +47,29 @@ export const TRANSPARENCY: GalleryItem[] = [0, 0.15, 0.3, 0.5, 0.65, 0.8, 0.95].
   label: `Transparenz: ${pct(t)}`, format: { transparency: t || undefined },
 }));
 
+/** Neu einfärben: Word's entries for the document's theme colours. */
+export function recolorGallery(t: Readonly<Record<string, string>>): GalleryItem[] {
+  const names = ["Text 2", "Akzent 1", "Akzent 2", "Akzent 3", "Akzent 4", "Akzent 5", "Akzent 6"];
+  const keys = ["dk2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6"];
+  const lightBg = ["lt2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6"];
+  const mix = (hex: string, k: number, toWhite: boolean) => {
+    const v = [0, 2, 4].map((i) => parseInt(hex.slice(i, i + 2), 16));
+    const out = v.map((x) => Math.round(toWhite ? x + (255 - x) * (1 - k) : x * k));
+    return out.map((x) => x.toString(16).padStart(2, "0")).join("").toUpperCase();
+  };
+  return [
+    { label: "Keine Neueinfärbung", format: { recolor: undefined, lum: undefined } },
+    { label: "Graustufe", format: { recolor: { kind: "grayscale" } } },
+    { label: "Sepia", format: { recolor: { kind: "sepia" } } },
+    { label: "Ausgewaschen", format: { recolor: { kind: "washout" } } },
+    { label: "Schwarzweiß: 25 %", format: { recolor: { kind: "bw", threshold: 0.25 } } },
+    { label: "Schwarzweiß: 50 %", format: { recolor: { kind: "bw", threshold: 0.5 } } },
+    { label: "Schwarzweiß: 75 %", format: { recolor: { kind: "bw", threshold: 0.75 } } },
+    ...keys.map((k, i) => ({ label: `${names[i]}, dunkle Farbe`, format: { recolor: { kind: "duotone" as const, dark: "000000", light: mix(t[k] ?? "4472C4", 0.45, true) } } })),
+    ...lightBg.map((k, i) => ({ label: `${names[i] === "Text 2" ? "Hintergrund 2" : names[i]}, helle Farbe`, format: { recolor: { kind: "duotone" as const, dark: mix(t[k] ?? "4472C4", 0.45, false), light: "FFFFFF" } } })),
+  ];
+}
+
 /** The picture's current settings with an entry's applied (for previews and applying). */
 export function withItem(f: PictureFormat, item: GalleryItem): PictureFormat {
   return { ...f, ...item.format };

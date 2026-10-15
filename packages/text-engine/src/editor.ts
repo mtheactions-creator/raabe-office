@@ -95,6 +95,8 @@ interface Snapshot {
   key: string;
   anchor: Pos;
   head: Pos;
+  /** The selected floating object (undo of a picture change keeps it selected, as in Word). */
+  floatSel?: { p: number; index: number } | null;
 }
 
 export interface ChangeEvent {
@@ -139,6 +141,22 @@ export interface CopiedFormat {
 export const FONT_STEPS = [8, 9, 10, 10.5, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72];
 /** Schriftgrad vergrößern/verkleinern skip 10.5 (measured: 11 shrinks to 10). */
 const GROW_STEPS = FONT_STEPS.filter((x) => x !== 10.5);
+
+/** Word's rotation pointer: a circular arrow (hot spot in the middle). */
+const ROTATE_CURSOR = `url("data:image/svg+xml,${encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M18 9.5A6.5 6.5 0 1 0 19 14" stroke="#fff" stroke-width="4"/><path d="M19.5 4.5v5h-5" stroke="#fff" stroke-width="4"/><path d="M18 9.5A6.5 6.5 0 1 0 19 14" stroke="#000" stroke-width="1.6"/><path d="M19.5 4.5v5h-5" stroke="#000" stroke-width="1.6"/></g></svg>')}") 12 12, pointer`;
+
+const HANDLE_DIRS: Record<string, number> = { e: 0, se: 45, s: 90, sw: 135, w: 180, nw: 225, n: 270, ne: 315 };
+
+/** The pointer over a selection handle; sizing pointers turn with the object (Word). */
+function handleCursor(hd: string, rotation: number): string {
+  if (hd === "rot") return ROTATE_CURSOR;
+  if (hd === "layout" || hd.startsWith("adj-")) return "default";
+  if (hd.startsWith("end-")) return "crosshair";
+  const base = HANDLE_DIRS[hd.replace(/^crop-/, "")];
+  if (base === undefined) return "default";
+  const a = (((Math.round((base + rotation) / 45) * 45) % 180) + 180) % 180;
+  return a === 0 ? "ew-resize" : a === 45 ? "nwse-resize" : a === 90 ? "ns-resize" : "nesw-resize";
+}
 
 /** Word's pen cursor for Transparente Farbe bestimmen (tip at the hot spot, bottom left). */
 const PICK_CURSOR = `url("data:image/svg+xml,${encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path d="M3 29l2-7L21 6l5 5-16 16z" fill="#fff" stroke="#000" stroke-width="1.5" stroke-linejoin="round"/><path d="M5 22l5 5" stroke="#000" stroke-width="1.5"/><path d="M3 29l2.2-1" stroke="#000" stroke-width="2"/></svg>')}") 3 29, crosshair`;
@@ -1150,7 +1168,7 @@ export class Editor {
   // ----- undo ---------------------------------------------------------------------------
 
   private current(): Snapshot {
-    return { state: this.doc.snapshot(), story: this.doc.activeStory, key: this.storyKey, anchor: this.sel.anchor, head: this.sel.head };
+    return { state: this.doc.snapshot(), story: this.doc.activeStory, key: this.storyKey, anchor: this.sel.anchor, head: this.sel.head, floatSel: this.floatSel ? { ...this.floatSel } : null };
   }
 
   private snapshot(): void {
@@ -1164,6 +1182,7 @@ export class Editor {
     this.doc.activeStory = s.story === MAIN || this.doc.stories.has(s.story) ? s.story : MAIN;
     this.storyKey = this.doc.activeStory === MAIN ? MAIN : s.key;
     this.setSel(s.anchor, s.head);
+    if (s.floatSel && this.doc.activeStory === MAIN && this.doc.main[s.floatSel.p]?.floats?.[s.floatSel.index]) this.floatSel = { ...s.floatSel };
     this.update({ scroll: true });
   }
 
@@ -3254,9 +3273,9 @@ export class Editor {
       const b = this.floatBox(se.p, se.index);
       if (b && se.member !== undefined) {
         const m = this.doc.main[se.p]?.floats?.[se.index]?.group?.members[se.member];
-        if (m) return { page: b.page, x: b.x + m.x * PT, y: b.y + m.y * PT, w: m.width * PT, h: m.height * PT, picture: true, editing: true };
+        if (m) return { page: b.page, x: b.x + m.x * PT, y: b.y + m.y * PT, w: m.width * PT, h: m.height * PT, picture: true, editing: true, rotation: m.pic?.rotation };
       }
-      return b ? { ...b, picture: true, editing: true } : undefined;
+      return b ? { ...b, picture: true, editing: true, rotation: se.obj.pic?.rotation } : undefined;
     }
     const box = this.imageBox();
     if (!box) { this.cropping = false; return undefined; }
@@ -3264,13 +3283,14 @@ export class Editor {
     const isPicture = img?.obj.image !== undefined;
     if (img?.obj.shape) {
       const ends = this.lineEnds(img.obj, box);
-      return ends ? { ...box, picture: false, adjust: this.adjustHandles(img.obj, box), ends } : { ...box, picture: true, adjust: this.adjustHandles(img.obj, box) };
+      return ends ? { ...box, picture: false, adjust: this.adjustHandles(img.obj, box), ends } : { ...box, picture: true, adjust: this.adjustHandles(img.obj, box), rotation: img.obj.pic?.rotation };
     }
-    if (!this.cropping || !img?.obj.image) return { ...box, picture: isPicture };
+    if (!this.cropping || !img?.obj.image) return { ...box, picture: isPicture, rotation: img?.obj.pic?.rotation };
     const c = img.obj.pic?.crop ?? { l: 0, t: 0, r: 0, b: 0 };
     const fw = box.w / Math.max(0.01, 1 - c.l - c.r), fh = box.h / Math.max(0.01, 1 - c.t - c.b);
     const pf = img.obj.pic;
-    return { ...box, picture: true, crop: { x: box.x - c.l * fw, y: box.y - c.t * fh, w: fw, h: fh, url: imageUrl(img.obj.image), rotation: pf?.rotation, flipH: pf?.flipH, flipV: pf?.flipV } };
+    // The whole picture around the frame (the view turns and mirrors it about the frame's middle).
+    return { ...box, picture: true, rotation: pf?.rotation, crop: { x: box.x - c.l * fw, y: box.y - c.t * fh, w: fw, h: fh, url: imageUrl(img.obj.image), rotation: pf?.rotation, flipH: pf?.flipH, flipV: pf?.flipV } };
   }
 
   /** Zuschneiden: the crop marks are shown until Esc, Enter or a click elsewhere. */
@@ -3294,34 +3314,54 @@ export class Editor {
 
   /** Dragging a crop mark (or the picture inside the frame, `null`) while cropping. */
   private dragCrop(e: MouseEvent, handle: string | null): void {
-    const img = this.selectedImage();
+    const img0 = this.selectedImage();
     const box0 = this.imageBox();
-    if (!img || !box0) return;
-    const f0 = img.obj.pic ?? {};
+    if (!img0 || !box0) return;
+    const f0 = img0.obj.pic ?? {};
     const c0 = f0.crop ?? { l: 0, t: 0, r: 0, b: 0 };
-    const w0 = (img.obj.width ?? 0), h0 = (img.obj.height ?? 0);
+    const w0 = (img0.obj.width ?? 0), h0 = (img0.obj.height ?? 0);
     const fw = w0 / Math.max(0.01, 1 - c0.l - c0.r), fh = h0 / Math.max(0.01, 1 - c0.t - c0.b);
+    const floating = img0.kind === "float";
+    // A turned picture is cropped along its own sides; a mirrored one has its crops swapped.
+    const turn = ((f0.rotation ?? 0) * Math.PI) / 180;
+    const cos = Math.cos(turn), sin = Math.sin(turn);
+    const fh0 = !!f0.flipH, fv0 = !!f0.flipV;
+    /** The crops as seen: left, top, right, bottom of the frame on the page (before turning). */
+    const seen = (c: { l: number; t: number; r: number; b: number }) => ({ l: fh0 ? c.r : c.l, r: fh0 ? c.l : c.r, t: fv0 ? c.b : c.t, b: fv0 ? c.t : c.b });
+    const own = (v: { l: number; t: number; r: number; b: number }) => ({ l: fh0 ? v.r : v.l, r: fh0 ? v.l : v.r, t: fv0 ? v.b : v.t, b: fv0 ? v.t : v.b });
+    const v0 = seen(c0);
     const start = { x: e.clientX, y: e.clientY };
-    let first = true;
+    let first = true, movedX = 0, movedY = 0;
     const move = (ev: MouseEvent) => {
       const z = this.view.zoom;
       const dx = (ev.clientX - start.x) / z / PT, dy = (ev.clientY - start.y) / z / PT;
-      const c = { ...c0 };
+      const lx = dx * cos + dy * sin, ly = -dx * sin + dy * cos;
+      const v = { ...v0 };
       if (handle) {
-        if (handle.includes("w")) c.l = Math.min(c0.l + dx / fw, 1 - c.r - 0.02);
-        if (handle.includes("e")) c.r = Math.min(c0.r - dx / fw, 1 - c.l - 0.02);
-        if (handle.startsWith("n")) c.t = Math.min(c0.t + dy / fh, 1 - c.b - 0.02);
-        if (handle.startsWith("s")) c.b = Math.min(c0.b - dy / fh, 1 - c.t - 0.02);
+        if (handle.includes("w")) v.l = Math.min(v0.l + lx / fw, 1 - v.r - 0.02);
+        if (handle.includes("e")) v.r = Math.min(v0.r - lx / fw, 1 - v.l - 0.02);
+        if (handle.startsWith("n")) v.t = Math.min(v0.t + ly / fh, 1 - v.b - 0.02);
+        if (handle.startsWith("s")) v.b = Math.min(v0.b - ly / fh, 1 - v.t - 0.02);
       } else {
         // The picture moves under the frame.
-        c.l = c0.l - dx / fw; c.r = c0.r + dx / fw; c.t = c0.t - dy / fh; c.b = c0.b + dy / fh;
+        v.l = v0.l - lx / fw; v.r = v0.r + lx / fw; v.t = v0.t - ly / fh; v.b = v0.b + ly / fh;
       }
+      const c = own(v);
       const w = fw * (1 - c.l - c.r), h = fh * (1 - c.t - c.b);
       if (first) this.snapshot();
       first = false;
+      const img = this.selectedImage();
+      if (!img) return;
       const pic = { ...f0, crop: c.l || c.t || c.r || c.b ? c : undefined };
       if (img.kind === "inline") this.replaceObject(img.p, img.o, { ...img.obj, width: w, height: h, pic });
       else this.replaceFloat(img.p, img.index, { ...img.obj, width: w, height: h, pic });
+      // A floating picture stays where it is on the page: the frame's middle moves with the
+      // cropped sides (turned like the picture); the box is placed by its unturned corner.
+      if (floating && handle) {
+        const gx = ((v.l - v.r - (v0.l - v0.r)) * fw) / 2, gy = ((v.t - v.b - (v0.t - v0.b)) * fh) / 2;
+        const mx = gx * cos - gy * sin - (w - w0) / 2, my = gx * sin + gy * cos - (h - h0) / 2;
+        if (mx !== movedX || my !== movedY) { this.moveFloat(mx - movedX, my - movedY, false); movedX = mx; movedY = my; }
+      }
       this.update();
     };
     const up = () => { removeEventListener("mousemove", move, true); removeEventListener("mouseup", up, true); this.emit(true); };
@@ -6100,20 +6140,24 @@ cropFill(fit: boolean): void {
     const w0 = box0.w / PT, h0 = box0.h / PT;
     const sel0 = this.selectedImage();
     const isShape = !!sel0?.obj.shape, floating = sel0?.kind === "float";
+    // A turned object is sized along its own sides.
+    const turn = ((sel0?.obj.pic?.rotation ?? 0) * Math.PI) / 180;
+    const cos = Math.cos(turn), sin = Math.sin(turn);
     let movedX = 0, movedY = 0;
     const move = (ev: MouseEvent) => {
       const z = this.view.zoom;
       const dx = (ev.clientX - start.x) / z / PT, dy = (ev.clientY - start.y) / z / PT;
       if (Math.abs(dx) + Math.abs(dy) < 0.5 && first) return;
       if (handle) {
+        const lx = dx * cos + dy * sin, ly = -dx * sin + dy * cos;
         let w = w0, hh = h0;
-        if (handle.includes("e")) w += dx;
-        if (handle.includes("w")) w -= dx;
-        if (handle.startsWith("s")) hh += dy;
-        if (handle.startsWith("n")) hh -= dy;
+        if (handle.includes("e")) w += lx;
+        if (handle.includes("w")) w -= lx;
+        if (handle.startsWith("s")) hh += ly;
+        if (handle.startsWith("n")) hh -= ly;
         // Corner handles keep a picture's proportions; a shape's only with Umschalt (Word).
         if (handle.length === 2 && isShape === ev.shiftKey) { const k = Math.max(w / w0, hh / h0); w = w0 * k; hh = h0 * k; }
-        else if (floating && !ev.altKey) {
+        else if (floating && !ev.altKey && !turn) {
           // The dragged edges snap to the margins (only when the proportions are free).
           const bx = handle.includes("w") ? box0.x + (w0 - w) * PT : box0.x, by = handle.startsWith("n") ? box0.y + (h0 - hh) * PT : box0.y;
           const sn = this.snapBox(box0.page, { x: bx, y: by, w: w * PT, h: hh * PT },
@@ -6124,9 +6168,13 @@ cropFill(fit: boolean): void {
         w = Math.max(isShape ? 1 : 6, w);
         hh = Math.max(isShape ? 1 : 6, hh);
         this.setImageSize(w, hh, first);
-        // A floating object keeps the opposite edge where it was.
+        // A floating object keeps the opposite edge where it was: its middle moves by half the
+        // growth along the dragged sides (turned like the object); the box is placed by its
+        // unturned top left corner.
         if (floating) {
-          const mx = handle.includes("w") ? w0 - w : 0, my = handle.startsWith("n") ? h0 - hh : 0;
+          const gx = handle.includes("e") ? (w - w0) / 2 : handle.includes("w") ? -(w - w0) / 2 : 0;
+          const gy = handle.startsWith("s") ? (hh - h0) / 2 : handle.startsWith("n") ? -(hh - h0) / 2 : 0;
+          const mx = gx * cos - gy * sin - (w - w0) / 2, my = gx * sin + gy * cos - (hh - h0) / 2;
           if (mx !== movedX || my !== movedY) { this.moveFloat(mx - movedX, my - movedY, false); movedX = mx; movedY = my; }
         }
       } else {
@@ -6264,7 +6312,7 @@ cropFill(fit: boolean): void {
     if (this.view.pageIndexAt(e.clientX, e.clientY) >= 0) {
       cursor = "text";
       const hd = this.storyKey === MAIN ? this.view.handleAt(e.clientX, e.clientY) : null;
-      if (hd) cursor = hd === "n" || hd === "s" ? "ns-resize" : hd === "e" || hd === "w" ? "ew-resize" : hd === "nw" || hd === "se" ? "nwse-resize" : "nesw-resize";
+      if (hd) cursor = handleCursor(hd, this.selectedShape()?.obj.pic?.rotation ?? this.selectedImage()?.obj.pic?.rotation ?? 0);
       else if (this.storyKey === MAIN && this.view.cellBorderAt(e.clientX, e.clientY)) cursor = "col-resize";
       else if (this.storyKey === MAIN && this.view.rowBorderAt(e.clientX, e.clientY)) cursor = "row-resize";
       else if (this.storyKey === MAIN && this.view.imageAt(e.clientX, e.clientY)) cursor = "move";
