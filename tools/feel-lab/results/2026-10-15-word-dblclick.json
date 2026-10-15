@@ -1,0 +1,108 @@
+{
+ "footnote reference": {
+  "start": 0,
+  "end": 0,
+  "type": 1,
+  "story": 2,
+  "text": "\u0002",
+  "ribbonMinimized": false,
+  "widths": [
+   151.0,
+   151.1,
+   151.1
+  ]
+ },
+ "footnote number in the note": {
+  "start": 88,
+  "end": 88,
+  "type": 1,
+  "story": 1,
+  "text": "\u0002",
+  "ribbonMinimized": false,
+  "widths": [
+   151.0,
+   151.1,
+   151.1
+  ]
+ },
+ "column border": {
+  "start": 0,
+  "end": 0,
+  "type": 1,
+  "story": 1,
+  "text": "E",
+  "ribbonHeight": 150,
+  "widths": [
+   37.3,
+   151.1,
+   151.1
+  ]
+ },
+ "table move handle": {
+  "start": 182,
+  "end": 229,
+  "type": 5,
+  "story": 1,
+  "text": "kurz|\u0007ein längerer Text in der Zelle|\u0007|\u0007",
+  "ribbonMinimized": false,
+  "widths": [
+   151.0,
+   151.1,
+   151.1
+  ]
+ },
+ "cell selection area": {
+  "start": 220,
+  "end": 229,
+  "type": 5,
+  "story": 1,
+  "text": "Zelle|\u0007|\u0007|\u0007|\u0007",
+  "ribbonMinimized": false,
+  "widths": [
+   151.0,
+   151.1,
+   151.1
+  ]
+ },
+ "left margin": {
+  "start": 0,
+  "end": 91,
+  "type": 2,
+  "story": 1,
+  "text": "Ein Absatz mit etwas Text, damit die Zei",
+  "ribbonHeight": 150,
+  "widths": [
+   151.0,
+   151.1,
+   151.1
+  ]
+ },
+ "ribbon tab": {
+  "start": 0,
+  "end": 0,
+  "type": 1,
+  "story": 1,
+  "text": "E",
+  "ribbonHeight": 149,
+  "widths": [
+   151.0,
+   151.1,
+   151.1
+  ],
+  "ribbonHeightAfterSecond": 0
+ },
+ "section break": {
+  "start": 180,
+  "end": 180,
+  "type": 1,
+  "story": 1,
+  "text": "\f",
+  "ribbonMinimized": false,
+  "widths": [
+   151.0,
+   151.1,
+   151.1
+  ],
+  "dialog": "Seite einrichten"
+ }
+}

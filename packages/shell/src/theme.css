@@ -1025,6 +1025,10 @@ body.touch .qat button { height: 36px; min-width: 36px; }
 .tpane .tp-head { display: flex; align-items: center; justify-content: space-between; padding: 8px 8px 4px 12px; font-size: 15px; }
 .tpane .tp-head button { width: 26px; height: 26px; border-radius: 3px; display: inline-flex; align-items: center; justify-content: center; }
 .tpane .tp-head button:hover { background: var(--hover); }
+.altpane { width: 280px; }
+.altpane .alt-body { padding: 8px 12px; display: flex; flex-direction: column; gap: 10px; }
+.altpane .alt-text { width: 100%; box-sizing: border-box; resize: vertical; font: inherit; padding: 6px; }
+.altpane .alt-note { color: var(--muted, #616161); font-size: 12px; }
 .thespane { width: 220px; }
 .thespane .thes-bar { display: flex; gap: 6px; padding: 4px 8px 8px 6px; align-items: center; }
 .thespane .thes-back { width: 26px; height: 26px; border-radius: 3px; display: inline-flex; align-items: center; justify-content: center; background: #f0f0f0; }

@@ -47,6 +47,13 @@ import { shapesFeature, SHAPE_COMMANDS } from "./features/shapes";
 import { tablesFeature, TABLE_COMMANDS } from "./features/tables";
 import { GALLERY, miniToolbar, ribbonTabs, type RibbonContext } from "./ribbon-def";
 import { applyTips } from "./tooltips";
+import { altTextPane } from "./features/alt-text-pane";
+
+/** Menu entries Word shows on the document while the mouse is over them (Livevorschau). */
+const LIVE_PREVIEW = [
+  "spacing.1", "spacing.1.15", "spacing.1.5", "spacing.2", "spacing.2.5", "spacing.3",
+  "underline.single", "underline.double", "underline.thick", "underline.dotted", "underline.dash", "underline.wave",
+];
 import { TEMPLATES, finishTemplate, templateState, type TemplateId } from "./templates";
 import { addRecent, loadRecent, loadSettings, removeRecent, saveSettings, setPinned, type Settings } from "./store";
 import appIconUrl from "../../../branding/raabe-write-small.svg?url";
@@ -133,6 +140,15 @@ export class WriteApp {
     this.implementCommands();
     this.features = this.makeFeatures();
     applyTips(this.commands);
+    // Livevorschau: what the entry under the mouse would do, shown in the active document.
+    this.commands.onHover((t) => {
+      const e = this.active?.editor;
+      if (!e) return;
+      if (t === null) e.preview(null);
+      else e.preview(() => { if (typeof t === "string") void this.commands.get(t).run?.(); else t(); });
+      this.updateChrome(false);
+    });
+    for (const id of LIVE_PREVIEW) if (this.commands.has(id)) this.commands.get(id).preview = true;
     // Formformat's Anordnen uses Bildformat's panels.
     this.features.shapes.layoutCommands.setPositionPanel(this.features.pictures.arrange.positionPanel);
     this.features.shapes.layoutCommands.setAlignPanel(this.features.pictures.arrange.alignPanel);
@@ -223,13 +239,19 @@ export class WriteApp {
     let image: Blob | null = null;
     if (!plain) {
       try { if (this.platform.clipboardReadHtml) html = await this.platform.clipboardReadHtml(); } catch { /* the browser's API below */ }
-      try {
-        for (const item of await navigator.clipboard.read()) {
-          if (item.types.includes("text/html") && !html) html = await (await item.getType("text/html")).text();
-          const type = item.types.find((t) => t.startsWith("image/"));
-          if (type && !image) image = await item.getType(type);
-        }
-      } catch { /* no HTML access: text only */ }
+      // The browser's clipboard API only where the platform has no reader of its own (the
+      // development page): in WebView2 it does not return while the clipboard holds only
+      // pictures (Word's copied picture), and the platform reads them anyway.
+      if (!this.platform.clipboardReadHtml || !this.platform.clipboardReadImage) {
+        try {
+          const items = await Promise.race([navigator.clipboard.read(), new Promise<never>((_, no) => setTimeout(() => no(new Error("timeout")), 1500))]);
+          for (const item of items) {
+            if (item.types.includes("text/html") && !html) html = await (await item.getType("text/html")).text();
+            const type = item.types.find((t) => t.startsWith("image/"));
+            if (type && !image) image = await item.getType(type);
+          }
+        } catch { /* no HTML access: text only */ }
+      }
     }
     const text = await this.platform.clipboardRead().catch(() => "");
     if (!image && !plain && this.platform.clipboardReadImage) {
@@ -263,6 +285,8 @@ export class WriteApp {
     }, grammar.source], () => void this.optionsDialog("Dokumentprüfung"));
     const textEffects = textEffectsFeature(api, this.docArea, this.dock);
     const formatPane = formatPaneFeature(api, this.docArea, this.dock, textEffects);
+    const altText = altTextPane(api, this.docArea, this.dock);
+    this.commands.implement("picture.altText", { run: () => altText.open(), enabled: () => !!this.active?.editor.pictureAlt() });
     // With a shape selected, the text effects' "…optionen" open Form formatieren > Textoptionen (as in Word).
     textEffects.redirect((t) => { if (!api.editor()?.selectedShape()) return false; formatPane.open(t === "fill" ? "textFill" : "textEffects"); return true; });
     return {
@@ -296,7 +320,7 @@ export class WriteApp {
       background: backgroundFeature(api),
       borders: bordersFeature(api),
       textEffects,
-      formatPane,
+      formatPane, altText,
       groups: groupsFeature(api),
       cover: coverPageFeature(api),
       hyphenation: hyphenationFeature(api),
@@ -339,6 +363,8 @@ export class WriteApp {
     // Rahmen übertragen and the Rahmenpipette start and end in the editor too (Esc, a click).
     editor.onBorderPainter = () => this.commands.refresh();
     editor.onObjectOpen = (kind) => { this.updateContextualTabs(); this.ribbon?.select(kind === "picture" ? "pictureFormat" : "shapeFormat"); };
+    // A double-click on a section break's mark opens Seite einrichten (Word).
+    editor.onSectionBreakOpen = () => void this.commands.run("layout.pageSetup");
     this.features.spell.attach(editor);
     // Equations go to and come from Word as Word's own HTML (OMML in a conditional comment).
     editor.mathClipboard = {
@@ -364,6 +390,7 @@ export class WriteApp {
       editor.clipboardHost = {
         readHtml: () => pf.clipboardReadHtml!(), write: (text, html) => pf.clipboardWriteHtml!(html, text),
         readImage: async () => { const b = await pf.clipboardReadImage?.(); return b ? new Blob([b as BlobPart]) : null; },
+        readFile: (path) => pf.readFile(path),
       };
     }
     this.features.review.attach(editor);
@@ -432,6 +459,7 @@ export class WriteApp {
     this.features.ruler.refresh();
     this.features.textEffects.refresh();
     this.features.formatPane.refresh();
+    this.features.altText.refresh();
     if (countWords && this.wordCache?.paras !== d.editor.paragraphs()) {
       // Counting runs after a short pause in typing, not on every key.
       clearTimeout(this.wordTimer);
@@ -908,8 +936,10 @@ export class WriteApp {
     c.implement("edit.redo", { run: () => ed()?.redo(), enabled: () => !!ed()?.canRedo });
     // Text and HTML (formatting for Word); the system clipboard API first, the platform's text as fallback.
     const write = async (e: Editor, cut: boolean) => {
-      const html = e.selectionHtml();
-      const text = (cut ? e.cutSelection() : e.copySelection()).replace(/\n/g, "\r\n");
+      // A selected picture or shape (Word copies it too).
+      const fl = e.copyFloatData(cut);
+      const html = fl ? fl.html : e.selectionHtml();
+      const text = fl ? fl.text : (cut ? e.cutSelection() : e.copySelection()).replace(/\n/g, "\r\n");
       if (this.platform.clipboardWriteHtml) {
         try { await this.platform.clipboardWriteHtml(html, text); return; } catch { /* the browser's API below */ }
       }
@@ -919,11 +949,11 @@ export class WriteApp {
         await this.platform.clipboardWrite(text);
       }
     };
-    c.implement("edit.copy", { run: async () => { const e = ed(); if (e) await write(e, false); }, enabled: () => !!ed()?.hasSelection });
-    c.implement("edit.cut", { run: async () => { const e = ed(); if (e) await write(e, true); }, enabled: () => !!ed()?.hasSelection });
+    c.implement("edit.copy", { run: async () => { const e = ed(); if (e) await write(e, false); }, enabled: () => !!ed()?.canCopy });
+    c.implement("edit.cut", { run: async () => { const e = ed(); if (e) await write(e, true); }, enabled: () => !!ed()?.canCopy });
     const paste = (plain: boolean) => async () => {
       const { text: t, html, image } = await this.readClipboard(plain);
-      if (plain) { if (t) ed()?.pasteText(t, true); } else ed()?.paste(t, html, image);
+      if (plain) { if (t) ed()?.pasteText(t, true); } else await ed()?.pasteFrom(t, html, image);
     };
     c.implement("edit.paste", { run: paste(false), enabled: has });
     c.implement("edit.pasteText", { run: paste(true), enabled: has });
@@ -1091,6 +1121,13 @@ export class WriteApp {
         this.recentFonts = [clean, ...this.recentFonts.filter((f) => f !== clean)].slice(0, 5);
       },
       setSize: (v) => { const n = parseNum(v); if (n > 0) ed()?.setSize(n); },
+      preview: {
+        font: (name) => ed()?.setFont(name.replace(/ \((Textkörper|Überschriften)\)$/, "")),
+        size: (v) => { const n = parseNum(v); if (n > 0) ed()?.setSize(n); },
+        color: (hex) => ed()?.setColor(hex),
+        highlight: (name) => ed()?.setHighlight(name),
+        shading: (hex) => ed()?.paragraphShading(hex),
+      },
       fontColor: () => this.lastFontColor,
       setFontColor: (hex) => { if (hex !== "auto") this.lastFontColor = hex; ed()?.setColor(hex); },
       highlight: () => this.lastHighlight,
@@ -1459,6 +1496,11 @@ export class WriteApp {
         const f = this.features;
         walk([...ribbonTabs(this.ribbonContext()), f.hf.tab, f.tables.designTab, f.tables.layoutTab, f.shapes.tab, f.pictures.tab, f.math.tab]);
         return [...ids].filter((id) => this.commands.has?.(id) !== false && !this.commands.isImplemented(id) && !this.commands.get(id).deferred).sort();
+      },
+      /** What Einfügen reads from the clipboard (sizes), for the clipboard checks. */
+      clipboardInfo: async () => {
+        const r = await this.readClipboard(false);
+        return { text: r.text.length, html: r.html.length, image: r.image?.size ?? 0, imageType: r.image?.type ?? "" };
       },
       /** All registered commands (ribbon, menus, context menus) that do nothing yet and are not deferred. */
       unimplementedAll: () => this.commands.all().filter((c) => !c.run && !c.deferred).map((c) => `${c.id} (${c.label})`).sort(),

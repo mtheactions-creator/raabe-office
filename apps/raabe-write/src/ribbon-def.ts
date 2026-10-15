@@ -18,6 +18,8 @@ export interface RibbonContext {
   fontOptions(): { heading?: string; items: string[] }[];
   setFont(name: string): void;
   setSize(value: string): void;
+  /** Livevorschau of the Schriftart/Schriftgrad lists and the colour palettes (nothing remembered). */
+  preview: { font(name: string): void; size(value: string): void; color(hex: string): void; highlight(name: string): void; shading(hex: string): void };
   fontColor(): string;
   setFontColor(hex: string): void;
   highlight(): string;
@@ -89,20 +91,20 @@ export function miniToolbar(ctx: RibbonContext, kind: "text" | "table" | "pictur
   if (kind === "picture") return [dd("picture.styles", "", "large", "Formatvorlage"), b("picture.crop", "", "large")];
   const fontName: Control = {
     type: "combo", cmd: "font.name", width: 104, value: ctx.fontName, options: ctx.fontOptions,
-    optionStyle: (f) => `font-family:"${f.replace(/ \(.*\)$/, "")}";font-size:14px`, commit: ctx.setFont,
+    optionStyle: (f) => `font-family:"${f.replace(/ \(.*\)$/, "")}";font-size:14px`, commit: ctx.setFont, preview: ctx.preview.font,
   };
   const fontSize: Control = {
     type: "combo", cmd: "font.size", width: 50, value: ctx.fontSize,
     options: () => [{ items: ["8", "9", "10", "10,5", "11", "12", "14", "16", "18", "20", "22", "24", "26", "28", "36", "48", "72"] }],
-    commit: ctx.setSize,
+    commit: ctx.setSize, preview: ctx.preview.size,
   };
-  const highlight: Control = { type: "color", cmd: "font.highlight", palette: "highlight", current: ctx.highlight, pick: ctx.setHighlight };
-  const fontColor: Control = { type: "color", cmd: "font.color", palette: "font", current: ctx.fontColor, pick: ctx.setFontColor };
+  const highlight: Control = { type: "color", cmd: "font.highlight", palette: "highlight", current: ctx.highlight, pick: ctx.setHighlight, preview: ctx.preview.highlight };
+  const fontColor: Control = { type: "color", cmd: "font.color", palette: "font", current: ctx.fontColor, pick: ctx.setFontColor, preview: ctx.preview.color };
   const bullets = split("para.bullets", "", "small", [], undefined, ctx.panels.bullets);
   const numbering = split("para.numbering", "", "small", [], undefined, ctx.panels.numbers);
   const comment = b("review.newComment", "", "large");
   if (kind === "table") {
-    const shading: Control = { type: "color", cmd: "para.shading", palette: "font", current: ctx.shading, pick: ctx.setShading };
+    const shading: Control = { type: "color", cmd: "para.shading", palette: "font", current: ctx.shading, pick: ctx.setShading, preview: ctx.preview.shading };
     return [
       { type: "rows", rows: [
         [fontName, fontSize, b("font.grow", ""), b("font.shrink", ""), bullets, numbering],
@@ -130,17 +132,17 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
   // ----- shared controls ------------------------------------------------------------------
   const fontName = (width: number): Control => ({
     type: "combo", cmd: "font.name", width, key: "SC", value: ctx.fontName, options: ctx.fontOptions,
-    optionStyle: (f) => `font-family:"${f.replace(/ \(.*\)$/, "")}";font-size:14px`, commit: ctx.setFont,
+    optionStyle: (f) => `font-family:"${f.replace(/ \(.*\)$/, "")}";font-size:14px`, commit: ctx.setFont, preview: ctx.preview.font,
   });
   const fontSize: Control = {
     type: "combo", cmd: "font.size", width: 63, key: "HC", value: ctx.fontSize,
     options: () => [{ items: ["8", "9", "10", "10,5", "11", "12", "14", "16", "18", "20", "22", "24", "26", "28", "36", "48", "72"] }],
-    commit: ctx.setSize,
+    commit: ctx.setSize, preview: ctx.preview.size,
   };
   const underline = split("font.underline", "3", "small", [{ cmd: "underline.single" }, { cmd: "underline.double" }, { cmd: "underline.thick" },
     { cmd: "underline.dotted" }, { cmd: "underline.dash" }, { cmd: "underline.wave" }]);
-  const highlight: Control = { type: "color", cmd: "font.highlight", key: "GE", palette: "highlight", current: ctx.highlight, pick: ctx.setHighlight };
-  const fontColor: Control = { type: "color", cmd: "font.color", key: "AC", palette: "font", current: ctx.fontColor, pick: ctx.setFontColor };
+  const highlight: Control = { type: "color", cmd: "font.highlight", key: "GE", palette: "highlight", current: ctx.highlight, pick: ctx.setHighlight, preview: ctx.preview.highlight };
+  const fontColor: Control = { type: "color", cmd: "font.color", key: "AC", palette: "font", current: ctx.fontColor, pick: ctx.setFontColor, preview: ctx.preview.color };
   const fontCase = dd("font.case", "7", "small", undefined, [{ cmd: "case.sentence" }, { cmd: "case.lower" }, { cmd: "case.upper" }, { cmd: "case.title" }, { cmd: "case.toggle" }]);
   const bullets = split("para.bullets", "AA", "small", [], undefined, ctx.panels.bullets);
   const numbering = split("para.numbering", "GN", "small", [], undefined, ctx.panels.numbers);
@@ -149,7 +151,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
     { cmd: "spacing.1" }, { cmd: "spacing.1.15" }, { cmd: "spacing.1.5" }, { cmd: "spacing.2" }, { cmd: "spacing.2.5" }, { cmd: "spacing.3" }, "-",
     { cmd: "para.dialog", label: "Zeilenabstandsoptionen..." }, "-",
     { cmd: "spacing.toggleBefore" }, { cmd: "spacing.toggleAfter" }]);
-  const shading: Control = { type: "color", cmd: "para.shading", key: "NC", palette: "font", current: ctx.shading, pick: ctx.setShading };
+  const shading: Control = { type: "color", cmd: "para.shading", key: "NC", palette: "font", current: ctx.shading, pick: ctx.setShading, preview: ctx.preview.shading };
   const borders = split("para.borders", "MR", "small", ctx.panels.borders);
   const paste = split("edit.paste", "V", "large", [{ cmd: "edit.paste", label: "Ursprüngliche Formatierung beibehalten" }, { cmd: "edit.pasteText" }]);
   const find = (size: "medium" | "small") => split("edit.find", "UU", size, [{ cmd: "edit.find" }, { cmd: "edit.goto" }]);

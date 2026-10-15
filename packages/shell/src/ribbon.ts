@@ -4,7 +4,7 @@
 
 import { h, icon } from "./dom";
 import type { Commands } from "./commands";
-import { closePopup, showMenu, showPopup, type MenuEntry } from "./popup";
+import { closePopup, hoverPreview, showMenu, showPopup, type MenuEntry } from "./popup";
 import { highlightHex, showFontColors, showHighlights } from "./palette";
 
 export type Size = "large" | "medium" | "small";
@@ -29,6 +29,8 @@ export type Control =
       /** Drawn entries and box face instead of text (Stiftart: line samples); the entry's text is its tooltip. */
       renderOption?: (o: string) => HTMLElement;
       renderValue?: () => HTMLElement;
+      /** Livevorschau of the list entry under the mouse (Schriftart, Schriftgrad). */
+      preview?: (o: string) => void;
     }
   | {
       type: "gallery"; key?: string; items: { cmd: string; preview: string }[];
@@ -41,7 +43,9 @@ export type Control =
       type: "spinner"; cmd: string; label: string; icon?: string; key?: string;
       value?: () => string; commit?: (v: string) => void; step?: (dir: 1 | -1) => void;
     }
-  | { type: "color"; cmd: string; key?: string; palette: "font" | "highlight"; current: () => string; pick: (c: string) => void; showLabel?: boolean }
+  | { type: "color"; cmd: string; key?: string; palette: "font" | "highlight"; current: () => string; pick: (c: string) => void; showLabel?: boolean;
+      /** Livevorschau of a colour under the mouse (without remembering it as the button's colour). */
+      preview?: (c: string) => void }
   /**
    * A gallery of drawn tiles (Bildformatvorlagen: the selected picture in each style).
    * `key` changes when the tiles must be drawn again; `panel` is the full gallery.
@@ -418,10 +422,12 @@ export class Ribbon {
           for (const g of groups) {
             if (g.heading) list.append(h("div", { class: "palette-title" }, g.heading));
             for (const item of g.items) {
-              list.append(h("button", {
+              const b = h("button", {
                 style: c2.optionStyle?.(item) ?? "", "aria-label": item, "data-tip": c2.renderOption ? item : undefined,
-                onclick: () => { closePopup(); input.value = item; commit(); },
-              }, c2.renderOption ? c2.renderOption(item) : item));
+                onclick: () => { this.commands.hover(null); closePopup(); input.value = item; commit(); },
+              }, c2.renderOption ? c2.renderOption(item) : item);
+              if (c2.preview) hoverPreview(this.commands, b, () => c2.preview!(item));
+              list.append(b);
             }
           }
           showPopup(list, wrap.getBoundingClientRect());
@@ -544,8 +550,9 @@ export class Ribbon {
           class: "rb rb-small arrow", "aria-label": "Weitere Optionen", "data-keytip": c.key, "data-keytip-scope": this.scope(),
           onclick: () => {
             const pick = (v: string) => { c2.pick(v); this.opts.onDone?.(); };
-            if (c2.palette === "font") showFontColors(arrow.getBoundingClientRect(), pick);
-            else showHighlights(arrow.getBoundingClientRect(), pick);
+            const hover = c2.preview ? { commands: this.commands, apply: c2.preview } : undefined;
+            if (c2.palette === "font") showFontColors(arrow.getBoundingClientRect(), pick, hover);
+            else showHighlights(arrow.getBoundingClientRect(), pick, hover);
           },
         }, chev());
         this.updaters.push(() => {

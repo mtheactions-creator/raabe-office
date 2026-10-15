@@ -1010,3 +1010,33 @@ Every kind of difference found in A–E was looked for everywhere, by script whe
   change the caret's level, elsewhere they start a list. New number formats: German number words
   and ordinals, and Word's custom 001/0001/00001 formats (written in mc:AlternateContent as Word
   writes them; Word reads all of them as we show them, checked through COM).
+- **Livevorschau everywhere Word has it**: one mechanism (`Editor.preview`): the entry under the
+  mouse is applied to the document without an undo step and taken back when the mouse leaves or
+  the menu closes; a click ends the preview first, so the real change is one undo step. Used by
+  the Schriftart and Schriftgrad lists, the Schriftfarbe, Texthervorhebungsfarbe and
+  Schattierung palettes (also those of shapes, text, picture borders, table shading and
+  Seitenfarbe), Zeilenabstand and Unterstreichen, Designs, Farben, Schriftarten,
+  Formatvorlagensatz, Absatzabstand, the list libraries and the text effect galleries, in
+  addition to the galleries that had it (Formatvorlagen, table, picture and shape styles).
+- **Double-clicks as recorded in Word** (`probe_word_dblclick.py`): on a note reference into the
+  note, on the note's number back to the text; on a column border the column fits its content;
+  the table's move handle selects the table; the new selection zones of a table (inside a cell
+  at its left edge: the cell, double-click the row; above the table: the column; the left margin
+  beside a row: the row), each with Word's black arrow pointer; on a section break's mark
+  (Alle anzeigen) Seite einrichten. Strg+Umschalt+Eingabe in a table splits it, as in Word.
+  Word keeps a reduced ribbon and Alle anzeigen for the user's next session: the probe puts them
+  back (and a note in CLAUDE.md says so).
+- **Panes**: Alternativtext is a task pane on the right that follows the selection, as in Word,
+  no longer a dialog.
+- **Clipboard with Word** (`clipboard_objects.py`): pictures and hyperlinks now go both ways.
+  Our HTML carries pictures as data: images (Word reads them, at their size) and links as
+  <a href>; Word's HTML is read with its links and its pictures, the ones Word keeps in its
+  temporary folder (clip_image001.png) read before the paste. Kopieren/Ausschneiden work on a
+  selected picture or shape (Word: yes, we: before only with Strg+C). Floating objects reach
+  Word as pictures in the line (Word makes floats only from VML, and reads a VML picture with a
+  data: address as a linked one), Word's floating objects in a mixed selection arrive as
+  pictures in the line, shapes and text boxes as their pictures and text; a single picture or
+  shape copied in Word arrives as a picture (Word offers no HTML for it, only PNG). Found on the
+  way: WebView2's clipboard API does not return while the clipboard holds only pictures, which
+  made Einfügen hang after copying a picture in Word; the app reads the clipboard natively and
+  uses the browser's API only in the development page.

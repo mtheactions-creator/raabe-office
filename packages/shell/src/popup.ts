@@ -6,10 +6,23 @@ import type { Commands } from "./commands";
 
 let open: { el: HTMLElement; close: () => void } | null = null;
 
+/** The registry whose Livevorschau a menu started (it ends when the menu closes). */
+let hovered: Commands | null = null;
+
 export function closePopup(): void {
   const o = open;
   open = null;
+  hovered?.hover(null);
+  hovered = null;
   o?.close();
+}
+
+/** Livevorschau for a menu or gallery entry: shown while the mouse is over `el`. */
+export function hoverPreview(commands: Commands, el: HTMLElement, target: string | (() => void)): void {
+  el.addEventListener("mouseenter", () => { hovered = commands; commands.hover(target); });
+  el.addEventListener("mouseleave", () => commands.hover(null));
+  // A click ends the preview first, so the command itself makes the change (one undo step).
+  el.addEventListener("mousedown", () => commands.hover(null), true);
 }
 
 /** Shows `el` as a popup anchored below (or beside) `anchor`. */
@@ -48,7 +61,9 @@ export function isPopupOpen(): boolean {
 
 export type MenuEntry =
   | { cmd: string; label?: string }
-  | { label: string; icon?: string; run: () => void; disabled?: boolean; checked?: boolean; preview?: HTMLElement; bold?: boolean }
+  | { label: string; icon?: string; run: () => void; disabled?: boolean; checked?: boolean; preview?: HTMLElement; bold?: boolean;
+      /** Livevorschau while the mouse is over the entry (the change `run` makes, shown without an undo step). */
+      hover?: () => void }
   | { heading: string }
   /** A submenu opening to the right (Word's "Einfügen ▸" in a table's context menu). */
   | { label: string; icon?: string; submenu: MenuEntry[] | (() => MenuEntry[]); disabled?: boolean }
@@ -111,17 +126,19 @@ function buildMenu(commands: Commands, entries: MenuEntry[], root: HTMLElement, 
       const c = commands.get(e.cmd);
       const b = h("button", {
         role: "menuitem", disabled: !commands.isEnabled(e.cmd), title: commands.tooltip(e.cmd),
-        onclick: () => { closePopup(); void commands.run(e.cmd); },
+        onclick: () => { commands.hover(null); closePopup(); void commands.run(e.cmd); },
       }, icon(c.icon), e.label ?? c.label);
       b.addEventListener("mouseenter", closeSub);
+      if (c.preview) hoverPreview(commands, b, e.cmd);
       menu.append(b);
     } else {
       const b = h("button", {
         role: "menuitem", disabled: !!e.disabled, class: e.preview ? "with-preview" : e.checked ? "checked" : "",
         style: e.bold ? "font-weight:600" : undefined,
-        onclick: () => { closePopup(); e.run(); },
+        onclick: () => { commands.hover(null); closePopup(); e.run(); },
       }, e.preview ?? icon(e.checked ? "check" : e.icon), e.preview ? h("span", null, e.label) : e.label);
       b.addEventListener("mouseenter", closeSub);
+      if (e.hover && !e.disabled) hoverPreview(commands, b, e.hover);
       menu.append(b);
     }
   }

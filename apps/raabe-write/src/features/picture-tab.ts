@@ -178,7 +178,7 @@ export function pictureTab(api: AppApi, insertFromPath: (path: string) => Promis
     set({ line: { color: cur?.color ?? "000000", width: cur?.width ?? 0.75, ...patch } });
   };
   const border = (close: () => void) => {
-    const colors = colorGrid((hex) => { close(); setLine({ color: hex }); api.focus(); });
+    const colors = colorGrid((hex) => { close(); setLine({ color: hex }); api.focus(); }, undefined, { commands: api.commands, apply: (hex) => setLine({ color: hex }) });
     const link = (label: string, fn: () => void) => h("button", { class: "link", onclick: fn }, label);
     const weights = [0.25, 0.5, 0.75, 1, 1.5, 2.25, 3, 4.5, 6];
     const dashes: [string, string][] = [["solid", "Durchgezogen"], ["sysDot", "Rundpunkt"], ["sysDash", "Quadratpunkt"], ["dash", "Strich"], ["dashDot", "Strich-Punkt"], ["lgDash", "Langer Strich"], ["lgDashDot", "Lang-Strich-Punkt"], ["lgDashDotDot", "Lang-Strich-Punkt-Punkt"]];
@@ -229,22 +229,7 @@ export function pictureTab(api: AppApi, insertFromPath: (path: string) => Promis
   c.implement("picture.effects", { run: () => {}, enabled: picked });
 
   // ----- Barrierefreiheit --------------------------------------------------------------
-  run("picture.altText", async () => {
-    const e = ed();
-    const cur = e?.pictureAlt();
-    if (!e || !cur) return;
-    const text = h("textarea", { rows: 5, style: "width:100%;box-sizing:border-box", placeholder: "Beschreiben Sie dieses Objekt für Personen mit Sehbehinderungen." });
-    text.value = cur.descr ?? "";
-    const deco = h("input", { type: "checkbox", checked: !!cur.decorative });
-    const ok = await showDialog({
-      title: "Alternativtext",
-      body: h("div", { style: "width:360px;display:flex;flex-direction:column;gap:8px" },
-        h("div", null, "Wie würden Sie dieses Objekt und seinen Kontext jemandem beschreiben, der es nicht sehen kann?"), text,
-        h("label", { class: "check" }, deco, "Als dekorativ markieren")),
-      buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false,
-    });
-    if (ok) e.setPictureAlt({ descr: text.value.trim() || undefined, decorative: deco.checked || undefined, title: cur.title });
-  });
+  // Alternativtext: a task pane (alt-text-pane.ts), opened by the app.
 
   // ----- Anordnen ----------------------------------------------------------------------
   const positions: [string, "left" | "center" | "right", "top" | "center" | "bottom"][] = [

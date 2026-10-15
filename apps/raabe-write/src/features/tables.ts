@@ -442,7 +442,7 @@ export function tablesFeature(api: AppApi) {
     (l) => { const v = PEN_WEIGHTS.find(([, x]) => x === l)?.[0]; if (v) setPen({ size: v }); },
     (l) => { const v = PEN_WEIGHTS.find(([, x]) => x === l)?.[0] ?? 0.5; const el = penSample(pen.style === "nil" ? "single" : pen.style, v, "auto", 70); el.prepend(h("span", { style: "width:42px;flex:none" }, l)); return el; });
 
-  const shading: Control = { type: "color", cmd: "table.shading", key: "NC", palette: "font", showLabel: true, current: () => lastShading, pick: (hex) => { if (hex !== "auto") lastShading = hex; shade(hex); } };
+  const shading: Control = { type: "color", cmd: "table.shading", key: "NC", palette: "font", showLabel: true, current: () => lastShading, pick: (hex) => { if (hex !== "auto") lastShading = hex; shade(hex); }, preview: (hex) => shade(hex) };
   const designTab: Tab = {
     id: "tableDesign", label: "Tabellenentwurf", key: "JT", contextual: true, shrink: ["borders", "styles", "options"],
     groups: [

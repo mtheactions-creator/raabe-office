@@ -21,7 +21,12 @@ export interface Command {
   keywords?: string[];
   /** Deliberately postponed (SCOPE, D-041): shown greyed out and marked in the tooltip. */
   deferred?: boolean;
+  /** Livevorschau: hovering the command in a menu or gallery shows its effect (Word's live preview). */
+  preview?: boolean;
 }
+
+/** What a Livevorschau shows: a command (one with `preview`), a change of its own, or nothing. */
+export type HoverTarget = string | (() => void) | null;
 
 type Listener = () => void;
 
@@ -29,6 +34,8 @@ export class Commands {
   private map = new Map<string, Command>();
   private listeners = new Set<Listener>();
   private scheduled = false;
+  private hoverHandler: ((t: HoverTarget) => void) | null = null;
+  private hovering = false;
 
   register(...commands: Command[]): void {
     for (const c of commands) this.map.set(c.id, c);
@@ -85,6 +92,20 @@ export class Commands {
 
   onRefresh(l: Listener): void {
     this.listeners.add(l);
+  }
+
+  /** The app shows Livevorschau (menus and galleries call hover()). */
+  onHover(handler: (t: HoverTarget) => void): void {
+    this.hoverHandler = handler;
+  }
+
+  /** Starts (or, with null, ends) the Livevorschau of a menu or gallery entry under the mouse. */
+  hover(t: HoverTarget): void {
+    if (t === null && !this.hovering) return;
+    if (typeof t === "string" && !(this.map.get(t)?.preview && this.isEnabled(t))) t = null;
+    if (t === null && !this.hovering) return;
+    this.hovering = t !== null;
+    this.hoverHandler?.(t);
   }
 
   /** `available` overrides whether the command works (a menu button works when its menu does). */

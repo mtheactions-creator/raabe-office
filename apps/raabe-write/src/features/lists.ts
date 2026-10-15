@@ -2,7 +2,7 @@
 // library entries Word 365 shows) and the buttons, which apply the last chosen entry.
 
 import { bulletLevels, displayBullet, formatNumber, multilevelLevels, numberLevels, type CharProps, type NumLevel } from "@raabe/text-engine";
-import { h, showDialog, showMenu, type Command } from "@raabe/shell";
+import { h, hoverPreview, showDialog, showMenu, type Command } from "@raabe/shell";
 import type { AppApi } from "./api";
 import type { Recent } from "./symbols";
 
@@ -131,22 +131,24 @@ export function listsFeature(api: AppApi, chooseSymbol: (start: Recent, pick: (r
   let lastMulti = MULTI[0];
   const ed = () => api.editor();
 
-  const apply = (kind: "bullet" | "number" | "multilevel", e: Entry | null) => {
+  const change = (kind: "bullet" | "number" | "multilevel", e: Entry | null) => {
     const editor = ed();
     if (!editor) return;
     if (!e) { if (editor.listKind()) editor.toggleList(editor.listKind()!); }
     else if (e.headings) editor.numberHeadings(e.levels());
     else editor.toggleList(kind, e.levels());
-    api.focus();
   };
+  const apply = (kind: "bullet" | "number" | "multilevel", e: Entry | null) => { change(kind, e); api.focus(); };
+  /** A library tile with Livevorschau on the paragraphs (Word's galleries preview the list). */
+  const live = (b: HTMLElement, kind: "bullet" | "number" | "multilevel", e: Entry | null) => { hoverPreview(c, b, () => change(kind, e)); return b; };
 
   const panel = (title: string, entries: Entry[], kind: "bullet" | "number" | "multilevel", remember: (e: Entry) => void, close: () => void, deep = false) => {
     const tiles = h("div", { class: "tiles" },
-      h("button", { class: "tile", "data-tip": "Ohne", onclick: () => { close(); apply(kind, null); } }, h("span", { style: "font-size:12px" }, "Ohne")),
-      ...entries.map((e) => h("button", {
+      live(h("button", { class: "tile", "data-tip": "Ohne", onclick: () => { close(); apply(kind, null); } }, h("span", { style: "font-size:12px" }, "Ohne")), kind, null),
+      ...entries.map((e) => live(h("button", {
         class: "tile", "data-tip": e.label,
         onclick: () => { close(); remember(e); apply(kind, e); },
-      }, tile(e, deep))));
+      }, tile(e, deep)), kind, e)));
     const inList = !!ed()?.listKind();
     const link = (label: string, cmd: string | null, run?: () => void, disabled = false) =>
       h("button", { class: "link", disabled: disabled || (cmd ? !c.isEnabled(cmd) : false), onclick: () => { close(); if (run) run(); else if (cmd) void c.run(cmd); } }, label);

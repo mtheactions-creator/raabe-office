@@ -1,0 +1,64 @@
+{
+ "original": {
+  "text": "Ein Absatz mit einem Bild im Text. Hier steht ein Link zu einer Webseite und ein zweiter zur Schule. Ein Absatz mit einem schwebenden Bild, einer Form und einem Textfeld. Ende.",
+  "inline pictures": 1,
+  "floating pictures": 1,
+  "shapes": 1,
+  "text boxes": 1,
+  "links": [
+   "https://www.example.com/schule",
+   "https://www.example.org/"
+  ]
+ },
+ "word-to-raabe": {
+  "text": "Ein Absatz mit einem Bild im Text. Hier steht ein Link zu einer Webseite und ein zweiter zur Schule. Textfeld Ein Absatz mit einem schwebenden Bild, einer Form und einem Textfeld. Ende.",
+  "inline pictures": 3,
+  "floating pictures": 0,
+  "shapes": 0,
+  "text boxes": 0,
+  "links": [
+   "https://www.example.com/schule",
+   "https://www.example.org/"
+  ]
+ },
+ "picture word-to-raabe": {
+  "text": "",
+  "inline pictures": 1,
+  "floating pictures": 0,
+  "shapes": 0,
+  "text boxes": 0,
+  "links": []
+ },
+ "raabe-to-word": {
+  "text": "Ein Absatz mit einem Bild im Text. Hier steht ein Link zu einer Webseite und ein zweiter zur Schule. Ein Absatz mit einem schwebenden Bild, einer Form und einem Textfeld. Ende.",
+  "inline pictures": 2,
+  "floating pictures": 0,
+  "shapes": 0,
+  "text boxes": 0,
+  "links": [
+   "https://www.example.com/schule",
+   "https://www.example.org/"
+  ]
+ },
+ "picture raabe-to-word": {
+  "text": "",
+  "inline pictures": 1,
+  "floating pictures": 0,
+  "shapes": 0,
+  "text boxes": 0,
+  "links": []
+ },
+ "word-to-raabe differences": [
+  "text: Word 'Ein Absatz mit einem Bild im Text. Hier steht ein Link zu einer Webseite und ein zweiter zur Schule. Ein Absatz mit einem schwebenden Bild, einer Form und einem Textfeld. Ende.', ours 'Ein Absatz mit einem Bild im Text. Hier steht ein Link zu einer Webseite und ein zweiter zur Schule. Textfeld Ein Absatz mit einem schwebenden Bild, einer Form und einem Textfeld. Ende.'",
+  "inline pictures: Word 1, ours 3",
+  "floating pictures: Word 1, ours 0",
+  "shapes: Word 1, ours 0",
+  "text boxes: Word 1, ours 0"
+ ],
+ "raabe-to-word differences": [
+  "inline pictures: Word 1, ours 2",
+  "floating pictures: Word 1, ours 0",
+  "shapes: Word 1, ours 0",
+  "text boxes: Word 1, ours 0"
+ ]
+}

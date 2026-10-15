@@ -153,7 +153,8 @@ export function backgroundFeature(api: AppApi) {
     const pick = (hex: string, ref?: string) => { close(); apply((x) => x.setBackground({ color: hex.toUpperCase(), ...(ref ? { colorTheme: ref } : {}) })); };
     const custom = h("input", { type: "color", style: "position:absolute;opacity:0;width:0;height:0" }) as HTMLInputElement;
     custom.addEventListener("change", () => pick(custom.value.slice(1)));
-    return h("div", { class: "menu palette" }, ...colorGrid(pick, e?.theme.colors), h("hr"),
+    const show = (hex: string, ref?: string) => ed()?.setBackground({ color: hex.toUpperCase(), ...(ref ? { colorTheme: ref } : {}) });
+    return h("div", { class: "menu palette" }, ...colorGrid(pick, e?.theme.colors, { commands: c, apply: show }), h("hr"),
       h("button", { onclick: () => { close(); apply((x) => x.setBackground(undefined)); } }, h("span", { class: "auto-swatch none" }), "Keine Farbe"),
       h("button", { onclick: () => custom.click() }, "Weitere Farben..."), custom,
       h("button", { disabled: true, "data-tip": "Fülleffekte\nRaabeWrite füllt Seiten nur mit einer Farbe." }, "Fülleffekte..."));

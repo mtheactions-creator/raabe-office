@@ -47,7 +47,9 @@ previews and Livevorschau, floating tables (word-table-float.docx 100 %) with dr
 layout handle. E done 2026-10-15 (D-057): selection visible over every background, sharp
 pointers, Livevorschau in the Formatvorlagen gallery, Formatvorlagen reset cleanly.
 F in progress (D-058): tooltips, labels, menus and context menus audited against Word, the
-Tabellenlayout tab and the list dialogs completed.
+Tabellenlayout tab and the list dialogs completed; Livevorschau in every gallery and palette
+Word has it in; Word's double-clicks and the table selection zones; Alternativtext as a pane;
+pictures and links through the clipboard with Word both ways.
 
 ## Step 4b: Word parity (plan)
 

@@ -3,7 +3,7 @@
 // read from Word: tools/feel-lab/probe_word_design.py, design-data.gen.ts). The thumbnails are
 // RaabeWrite's own, drawn from each entry's colours and fonts.
 
-import { h, icon, showDialog, type MenuEntry } from "@raabe/shell";
+import { h, hoverPreview, icon, showDialog, type MenuEntry } from "@raabe/shell";
 import { readThemeFile } from "@raabe/ooxml";
 import { OFFICE_2013_COLORS, StyleSheet, defaultStyleSheet, type CharProps, type Editor, type ParaProps, type Theme } from "@raabe/text-engine";
 import type { AppApi } from "./api";
@@ -52,6 +52,8 @@ export function designFeature(api: AppApi) {
   const has = () => !!ed();
 
   const apply = (fn: (e: Editor) => void) => { const e = ed(); if (e) { fn(e); api.refresh(); api.focus(); } };
+  /** Livevorschau: the entry's change shown on the document while the mouse is over it. */
+  const live = <T extends HTMLElement>(el: T, fn: (e: Editor) => void): T => { hoverPreview(c, el, () => { const e = ed(); if (e) fn(e); }); return el; };
   const themeOf = (e: Editor) => e.theme;
   const sameColors = (a: Readonly<Record<string, string>> | undefined, b: Readonly<Record<string, string>> | undefined) =>
     !!a && !!b && Object.keys(OFFICE_2013_COLORS).every((k) => (a[k] ?? "").toUpperCase() === (b[k] ?? "").toUpperCase());
@@ -70,8 +72,9 @@ export function designFeature(api: AppApi) {
   const themesPanel = (close: () => void) => {
     const e = ed();
     const cur = e ? themeOf(e) : OFFICE_2013;
-    const grid = h("div", { class: "dz-grid" }, ...THEMES.map((t) => themeTile(t, cur.name === t.name || (cur.name === undefined && t.name.startsWith("Office 2013") && sameColors(cur.colors, t.colors)),
-      () => { close(); apply((x) => x.setTheme({ majorFont: t.major, minorFont: t.minor, colors: t.colors, name: t.name, colorName: t.name, fontName: t.name })); })));
+    const set = (t: (typeof THEMES)[number]) => (x: Editor) => x.setTheme({ majorFont: t.major, minorFont: t.minor, colors: t.colors, name: t.name, colorName: t.name, fontName: t.name });
+    const grid = h("div", { class: "dz-grid" }, ...THEMES.map((t) => live(themeTile(t, cur.name === t.name || (cur.name === undefined && t.name.startsWith("Office 2013") && sameColors(cur.colors, t.colors)),
+      () => { close(); apply(set(t)); }), set(t))));
     const item = (label: string, ic: string | null, run: () => void, disabled = false, tip?: string) =>
       h("button", { class: "dz-cmd", disabled, onclick: () => { close(); run(); }, ...(tip ? { "data-tip": tip } : {}) }, ic ? icon(ic) : h("span", { class: "dz-noicon" }), label);
     return h("div", { class: "rpanel designpanel" }, h("div", { class: "title" }, "Office"), grid, h("hr"),
@@ -127,7 +130,7 @@ export function designFeature(api: AppApi) {
     if (!e) return h("div", { class: "rpanel" });
     const word2013 = STYLE_SETS.find((s) => s.name === "Word 2013");
     const grid = h("div", { class: "dz-sets" },
-      ...STYLE_SETS.map((s) => styleTile(s.name, previewSheet(e, s.set), () => { close(); apply((x) => x.applyStyleSet(s.set)); })));
+      ...STYLE_SETS.map((s) => live(styleTile(s.name, previewSheet(e, s.set), () => { close(); apply((x) => x.applyStyleSet(s.set)); }), (x) => x.applyStyleSet(s.set))));
     return h("div", { class: "rpanel designpanel wide" },
       h("div", { class: "title" }, "Dieses Dokument"), h("div", { class: "dz-sets" }, styleTile("Dokument", e.doc.styles, () => close())),
       h("div", { class: "title" }, "Integriert"), grid, h("hr"),
@@ -140,8 +143,9 @@ export function designFeature(api: AppApi) {
     const e = ed();
     const cur = e ? themeOf(e) : OFFICE_2013;
     const row = (name: string, colors: Readonly<Record<string, string>>) =>
-      h("button", { class: `dz-crow${sameColors(cur.colors, colors) ? " active" : ""}`, onclick: () => { close(); apply((x) => x.setTheme({ ...themeOf(x), colors, colorName: name })); } },
-        h("span", { class: "dz-swatches" }, ...ROW.map((k) => h("i", { style: `background:#${colors[k]}` }))), h("span", null, name));
+      live(h("button", { class: `dz-crow${sameColors(cur.colors, colors) ? " active" : ""}`, onclick: () => { close(); apply((x) => x.setTheme({ ...themeOf(x), colors, colorName: name })); } },
+        h("span", { class: "dz-swatches" }, ...ROW.map((k) => h("i", { style: `background:#${colors[k]}` }))), h("span", null, name)),
+      (x) => x.setTheme({ ...themeOf(x), colors, colorName: name }));
     const custom = load<{ colors: Record<string, string> }>(COLORS_KEY);
     return h("div", { class: "rpanel designpanel list" },
       ...(custom.length ? [h("div", { class: "title" }, "Benutzerdefiniert"), ...custom.map((x) => row(x.name, x.colors))] : []),
@@ -185,9 +189,10 @@ export function designFeature(api: AppApi) {
     const e = ed();
     const cur = e ? themeOf(e) : OFFICE_2013;
     const row = (name: string, major: string, minor: string) =>
-      h("button", { class: `dz-frow${cur.majorFont === major && cur.minorFont === minor ? " active" : ""}`, "aria-label": `${name}, Überschriftenschriftart: ${major}, Textschriftart: ${minor}`, onclick: () => { close(); apply((x) => x.setTheme({ ...themeOf(x), majorFont: major, minorFont: minor, fontName: name })); } },
+      live(h("button", { class: `dz-frow${cur.majorFont === major && cur.minorFont === minor ? " active" : ""}`, "aria-label": `${name}, Überschriftenschriftart: ${major}, Textschriftart: ${minor}`, onclick: () => { close(); apply((x) => x.setTheme({ ...themeOf(x), majorFont: major, minorFont: minor, fontName: name })); } },
         h("span", { class: "dz-faa" }, h("span", { style: `font-family:"${major}"` }, "A"), h("span", { style: `font-family:"${minor}"` }, "a")),
-        h("span", { class: "dz-ftext" }, h("b", null, name), h("span", { style: `font-family:"${major}";font-size:15px` }, major), h("span", { style: `font-family:"${minor}"` }, minor)));
+        h("span", { class: "dz-ftext" }, h("b", null, name), h("span", { style: `font-family:"${major}";font-size:15px` }, major), h("span", { style: `font-family:"${minor}"` }, minor))),
+      (x) => x.setTheme({ ...themeOf(x), majorFont: major, minorFont: minor, fontName: name }));
     const custom = load<{ major: string; minor: string }>(FONTS_KEY);
     return h("div", { class: "rpanel designpanel list" },
       ...(custom.length ? [h("div", { class: "title" }, "Benutzerdefiniert"), ...custom.map((x) => row(x.name, x.major, x.minor))] : []),
@@ -233,11 +238,12 @@ export function designFeature(api: AppApi) {
     const presets = PARAGRAPH_SPACING.filter((x) => x.name !== "Standard");
     // "Standard": the spacing of RaabeWrite's default set (Word 2013, D-011).
     const std = STYLE_SETS.find((s) => s.name === "Word 2013")?.set.defaultsP;
+    const standard = (x: Editor) => x.setParagraphSpacing({ before: std?.before ?? 0, after: std?.after ?? 8, line: std?.line ?? 1.08, lineRule: std?.lineRule ?? "auto" });
     return [
       { heading: "Formatvorlagensatz" },
-      { label: "Standard", icon: "paragraph-spacing", run: () => apply((x) => x.setParagraphSpacing({ before: std?.before ?? 0, after: std?.after ?? 8, line: std?.line ?? 1.08, lineRule: std?.lineRule ?? "auto" })) },
+      { label: "Standard", icon: "paragraph-spacing", run: () => apply(standard), hover: () => { const e = ed(); if (e) standard(e); } },
       { heading: "Standard" },
-      ...presets.map((x, i): MenuEntry => ({ label: x.name, icon: SPACING_ICONS[i], get checked() { return isPreset(x); }, run: () => apply((y) => y.setParagraphSpacing(x)) })),
+      ...presets.map((x, i): MenuEntry => ({ label: x.name, icon: SPACING_ICONS[i], get checked() { return isPreset(x); }, run: () => apply((y) => y.setParagraphSpacing(x)), hover: () => ed()?.setParagraphSpacing(x) })),
       "-",
       { label: "Benutzerdefinierter Absatzabstand...", run: () => customSpacing() },
     ];

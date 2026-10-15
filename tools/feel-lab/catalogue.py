@@ -183,6 +183,17 @@ CASES: list[Case] = [
     C("table shift+right then back", "table", [("caret", F("Z1S1", 2)), ("keys", "shift+right", 4), ("keys", "shift+left")], "tables"),
     C("table shift+left across cells", "table", [("caret", F("Z1S2", 2)), ("keys", "shift+left", 4)], "tables"),
     C("table shift+down", "table", [("caret", F("Z1S2", 2)), ("keys", "shift+down")], "tables"),
+    # ----- Step 4c: tables, selection by mouse (D-056, D-058) ----------------------------------------
+    C("table ctrl+shift+enter splits the table", "table", [("caret", F("Z2S1")), ("keys", "ctrl+shift+enter"), ("type", "X")], "tables"),
+    C("table ctrl+shift+enter in first row", "table", [("caret", F("Z1S2", 2)), ("keys", "ctrl+shift+enter"), ("type", "X")], "tables"),
+    C("table backspace on cell content", "table", [("sel", F("Z2S2"), F("Z2S2", 4)), ("keys", "backspace"), ("type", "X")], "tables"),
+    C("table delete on cell content then type", "table", [("sel", F("Z3S1"), F("Z3S1", 4)), ("keys", "delete"), ("type", "Y")], "tables"),
+    C("table double-click word in cell", "table", [("click", char(F("Z2S3", 1)), 2), ("type", "W")], "tables"),
+    C("margin double-click selects paragraph", "plain", [("click", margin(F("Das Wasser")), 2), ("type", "X")], "selection"),
+    C("margin click selects line", "plain", [("click", margin(F("Letzter"))), ("type", "X")], "selection"),
+    C("margin triple-click selects all", "plain", [("click", margin(F("Letzter")), 3), ("type", "X")], "selection"),
+    C("double-click word then type", "plain", [("click", char(F("Wasser", 2)), 2), ("type", "Saft")], "selection"),
+    C("triple-click paragraph then type", "plain", [("click", char(F("Wasser", 2)), 3), ("type", "Neu")], "selection"),
     # ----- headings and styles -----------------------------------------------------------------------
     C("Enter at end of heading", "plain", [("caret", F("Photosynthese", 13)), ("keys", "enter"), ("type", "Text")], "styles"),
     C("Enter at start of heading", "plain", [("caret", F("Photosynthese")), ("keys", "enter"), ("type", "X")], "styles"),

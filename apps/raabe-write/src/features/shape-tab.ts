@@ -151,7 +151,8 @@ export function shapeTab(api: AppApi, galleryPanel: (close: () => void) => HTMLE
 
   // Fülleffekt: theme colours, Keine Füllung, Weitere Füllfarben, Farbverlauf.
   const fillPanel = (close: () => void) => {
-    const colors = colorGrid((hex) => { close(); setFormat({ fill: { kind: "solid", color: hex }, fillXml: undefined }); api.focus(); });
+    const colors = colorGrid((hex) => { close(); setFormat({ fill: { kind: "solid", color: hex }, fillXml: undefined }); api.focus(); }, undefined,
+      { commands: api.commands, apply: (hex) => setFormat({ fill: { kind: "solid", color: hex }, fillXml: undefined }) });
     const link = (label: string, fn: () => void, sub = false) => h("button", { class: `link${sub ? " has-sub" : ""}`, onclick: fn }, label);
     return h("div", { class: "rpanel palette" }, ...colors, h("hr"),
       link("Keine Füllung", () => { close(); setFormat({ fill: { kind: "none" }, fillXml: undefined }); api.focus(); }),
@@ -206,7 +207,7 @@ export function shapeTab(api: AppApi, galleryPanel: (close: () => void) => HTMLE
   ];
   const moreLines: MenuEntry = { label: "Weitere Linien...", run: () => FORMAT_PANE.open("line") };
   const outlinePanel = (close: () => void) => {
-    const colors = colorGrid((hex) => { close(); setLine({ color: hex }); api.focus(); });
+    const colors = colorGrid((hex) => { close(); setLine({ color: hex }); api.focus(); }, undefined, { commands: api.commands, apply: (hex) => setLine({ color: hex }) });
     const sub = (ev: MouseEvent, entries: MenuEntry[]) => {
       const r = (ev.currentTarget as HTMLElement).getBoundingClientRect();
       close();

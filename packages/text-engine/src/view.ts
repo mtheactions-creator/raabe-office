@@ -1107,6 +1107,28 @@ export class View {
     return null;
   }
 
+  /**
+   * Word's selection zones of a table under a client point: inside a cell along its left edge
+   * (a click selects the cell, a double-click its row), and just above the table (a column).
+   */
+  tableZoneAt(clientX: number, clientY: number): { kind: "cell" | "column"; cell: string } | null {
+    const layout = this.layoutRef;
+    if (!layout || this.opts.active !== "main") return null;
+    const pt = this.pointAt(clientX, clientY);
+    const pg = layout.pages[pt.page];
+    if (!pg) return null;
+    const edge = 3 / this.zoomFactor, zone = 5.4 * PT;
+    for (const id of pg.frames) {
+      const f = layout.frames[id];
+      if (f.kind !== "cell" || !f.cell || f.story !== "main") continue;
+      const inX = pt.x >= f.x && pt.x <= f.x + f.w;
+      if (pt.y >= f.y && pt.y <= f.y + f.h && pt.x > f.x + edge && pt.x < f.x + zone) return { kind: "cell", cell: f.cell };
+      // The column zone: above the cells of the first row.
+      if (inX && f.cell.split(":")[1] === "0" && pt.y < f.y - edge && pt.y >= f.y - 10 / this.zoomFactor) return { kind: "column", cell: f.cell };
+    }
+    return null;
+  }
+
   /** The edge of a table cell under a client point (Rahmen übertragen, Rahmenpipette). */
   cellEdgeAt(clientX: number, clientY: number): { cell: string; side: "top" | "bottom" | "left" | "right" } | null {
     const layout = this.layoutRef;

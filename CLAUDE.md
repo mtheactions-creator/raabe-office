@@ -45,6 +45,9 @@ Display: 4K at 150 % scaling, currently 30 Hz.
   owner may have unsaved work open.
 - After a failed run, check for leftover `WINWORD.EXE` / `raabe-feel.exe` processes and
   windows of the test document, and close only those.
+- Some of Word's settings outlive the probe's own instance and reach the owner's Word: a reduced
+  ribbon (double-click on a tab), Alle anzeigen. A probe that changes them puts them back
+  before quitting (`probe_word_dblclick.py`).
 
 ## Building and running
 - `npm install` at the repo root (workspaces). `npm test` runs the unit tests,

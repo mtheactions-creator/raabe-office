@@ -1,8 +1,12 @@
 // Word's colour pickers: "Schriftfarbe" (theme colours with tints and shades, standard
 // colours, Automatisch) and "Texthervorhebungsfarbe" (the 15 highlight colours).
 
+import type { Commands } from "./commands";
 import { h } from "./dom";
-import { closePopup, showPopup } from "./popup";
+import { closePopup, hoverPreview, showPopup } from "./popup";
+
+/** Livevorschau of a palette: what a colour would do, shown while the mouse is over it. */
+export interface PaletteHover<T = string> { commands: Commands; apply: (value: T, themeRef?: string) => void }
 
 /** Office 2013–2022 theme colours, in Word's palette order. */
 const THEME = [
@@ -95,45 +99,50 @@ function variantRef(ref: string, label: string): string {
   return `w:themeColor="${ref}" w:${m[1] === "heller" ? "themeTint" : "themeShade"}="${v}"`;
 }
 
-function swatch(hex: string, label: string, pick: () => void): HTMLElement {
-  return h("button", {
+function swatch(hex: string, label: string, pick: () => void, hover?: { commands: Commands; apply: () => void }): HTMLElement {
+  const b = h("button", {
     class: "swatch", style: `background:#${hex}`, "aria-label": label, "data-tip": label,
-    onclick: () => { closePopup(); pick(); },
+    onclick: () => { hover?.commands.hover(null); closePopup(); pick(); },
   });
+  if (hover) hoverPreview(hover.commands, b, hover.apply);
+  return b;
 }
 
 /**
  * Word's colour grid (Designfarben with tints and shades, Standardfarben), for other menus;
  * with a theme its colours, and `pick` also gets the theme reference (w:themeColor …).
  */
-export function colorGrid(pick: (hex: string, themeRef?: string) => void, theme?: Readonly<Record<string, string>>): HTMLElement[] {
+export function colorGrid(pick: (hex: string, themeRef?: string) => void, theme?: Readonly<Record<string, string>>, hover?: PaletteHover): HTMLElement[] {
   const grid = h("div", { class: "swatches", style: "grid-template-columns:repeat(10, 18px)" });
   const entries = themeEntries(theme);
-  for (const t of entries) grid.append(swatch(t.hex, t.label, () => pick(t.hex, `w:themeColor="${t.ref}"`)));
+  const hv = (hex: string, ref?: string) => (hover ? { commands: hover.commands, apply: () => hover.apply(hex, ref) } : undefined);
+  for (const t of entries) grid.append(swatch(t.hex, t.label, () => pick(t.hex, `w:themeColor="${t.ref}"`), hv(t.hex, `w:themeColor="${t.ref}"`)));
   const vars = entries.map((t) => variants(t.hex));
   for (let row = 0; row < 5; row++) {
     for (let col = 0; col < entries.length; col++) {
       const v = vars[col][row];
-      grid.append(swatch(v.hex, `${entries[col].label}, ${v.label}`, () => pick(v.hex, variantRef(entries[col].ref, v.label))));
+      const ref = variantRef(entries[col].ref, v.label);
+      grid.append(swatch(v.hex, `${entries[col].label}, ${v.label}`, () => pick(v.hex, ref), hv(v.hex, ref)));
     }
   }
   const std = h("div", { class: "swatches", style: "grid-template-columns:repeat(10, 18px)" },
-    ...STANDARD.map(([hex, label]) => swatch(hex, label, () => pick(hex))));
+    ...STANDARD.map(([hex, label]) => swatch(hex, label, () => pick(hex), hv(hex))));
   return [h("div", { class: "palette-title" }, "Designfarben"), grid, h("div", { class: "palette-title" }, "Standardfarben"), std];
 }
 
-export function showFontColors(anchor: DOMRect, pick: (hex: string) => void): void {
+export function showFontColors(anchor: DOMRect, pick: (hex: string) => void, hover?: PaletteHover): void {
+  const hv = (hex: string) => (hover ? { commands: hover.commands, apply: () => hover.apply(hex) } : undefined);
   const grid = h("div", { class: "swatches", style: "grid-template-columns:repeat(10, 18px)" });
-  for (const [hex, label] of THEME) grid.append(swatch(hex, label, () => pick(hex)));
+  for (const [hex, label] of THEME) grid.append(swatch(hex, label, () => pick(hex), hv(hex)));
   const vars = THEME.map(([hex]) => variants(hex));
   for (let row = 0; row < 5; row++) {
     for (let col = 0; col < THEME.length; col++) {
       const v = vars[col][row];
-      grid.append(swatch(v.hex, `${THEME[col][1]}, ${v.label}`, () => pick(v.hex)));
+      grid.append(swatch(v.hex, `${THEME[col][1]}, ${v.label}`, () => pick(v.hex), hv(v.hex)));
     }
   }
   const std = h("div", { class: "swatches", style: "grid-template-columns:repeat(10, 18px)" },
-    ...STANDARD.map(([hex, label]) => swatch(hex, label, () => pick(hex))));
+    ...STANDARD.map(([hex, label]) => swatch(hex, label, () => pick(hex), hv(hex))));
   const custom = h("input", { type: "color", style: "position:absolute;opacity:0;width:0;height:0" });
   custom.addEventListener("change", () => { closePopup(); pick(custom.value.slice(1).toUpperCase()); });
   const box = h("div", { class: "menu palette" },
@@ -145,9 +154,9 @@ export function showFontColors(anchor: DOMRect, pick: (hex: string) => void): vo
   showPopup(box, anchor);
 }
 
-export function showHighlights(anchor: DOMRect, pick: (name: string) => void): void {
+export function showHighlights(anchor: DOMRect, pick: (name: string) => void, hover?: PaletteHover): void {
   const grid = h("div", { class: "swatches", style: "grid-template-columns:repeat(5, 22px)" },
-    ...HIGHLIGHTS.map(([name, hex, label]) => swatch(hex, label, () => pick(name))));
+    ...HIGHLIGHTS.map(([name, hex, label]) => swatch(hex, label, () => pick(name), hover ? { commands: hover.commands, apply: () => hover.apply(name) } : undefined)));
   const box = h("div", { class: "menu palette" }, grid, h("hr"),
     h("button", { onclick: () => { closePopup(); pick("none"); } }, "Keine Farbe"));
   showPopup(box, anchor);

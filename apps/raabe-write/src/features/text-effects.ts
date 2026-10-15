@@ -4,7 +4,7 @@
 // (text-effects.gen.ts, recorded with probe_word_texteffects.py); the rest (Kontur colours and
 // widths, Leuchten colours, the pane's settings) changes those elements as Word does.
 
-import { closePopup, colorGrid, h, icon, type MenuEntry } from "@raabe/shell";
+import { closePopup, colorGrid, h, hoverPreview, icon, type MenuEntry } from "@raabe/shell";
 import { fxColor, fxColorXml, fxNumbers, fxParts, fxSet, outlineXml, textFxCss, type TextFxPart } from "@raabe/text-engine";
 import type { AppApi } from "./api";
 import type { Dock } from "./dock";
@@ -50,12 +50,21 @@ export function textEffectsFeature(api: AppApi, docArea: HTMLElement, dock: Dock
   const current = (part: TextFxPart) => fxParts(ed()?.textFxAt())[part];
 
   /** A tile showing an "A" with effects (Word's previews). */
-  const tile = (fx: string, label: string, pick: () => void, color?: string) =>
-    h("button", { class: "fx-tile", "data-tip": label, "aria-label": label, onclick: pick },
+  const tile = (fx: string, label: string, pick: () => void, color?: string, hover?: () => void) => {
+    const b = h("button", { class: "fx-tile", "data-tip": label, "aria-label": label, onclick: pick },
       h("span", { style: `color:${color ?? "#000"};${textFxCss(fx, colors())}` }, "A"));
+    // Livevorschau on the text while the mouse is over the tile.
+    if (hover) hoverPreview(api.commands, b, hover);
+    return b;
+  };
 
   // ----- presets (Texteffekte und Typografie, WordArt-Formate) ---------------------------------------
   const applyPreset = (p: (typeof TEXTFX_PRESETS)[number]) => {
+    setPreset(p);
+    api.refresh();
+    api.focus();
+  };
+  const setPreset = (p: (typeof TEXTFX_PRESETS)[number]) => {
     const e = ed();
     if (!e) return;
     // A preset replaces the effects; the typography stays.
@@ -65,11 +74,9 @@ export function textEffectsFeature(api: AppApi, docArea: HTMLElement, dock: Dock
       for (const k of ["ligatures", "numForm", "numSpacing", "stylisticSets", "cntxtAlts"] as const) next[k] = keep[k];
       return Object.values(next).join("") || undefined;
     }, p.color ? { color: p.color, colorTheme: p.colorTheme } : undefined);
-    api.refresh();
-    api.focus();
   };
   const presetGrid = (close: () => void) => h("div", { class: "fx-presets" }, ...TEXTFX_PRESETS.map((p) => tile(p.fx, p.name, () => { close(); applyPreset(p); },
-    p.colorTheme ? `#${themeHex(p.colorTheme) ?? p.color}` : p.color ? `#${p.color}` : undefined)));
+    p.colorTheme ? `#${themeHex(p.colorTheme) ?? p.color}` : p.color ? `#${p.color}` : undefined, () => setPreset(p))));
   const themeHex = (ref: string) => {
     const name = /w:themeColor="([^"]*)"/.exec(ref)?.[1];
     const map: Record<string, string> = { text1: "dk1", background1: "lt1", text2: "dk2", background2: "lt2" };
@@ -85,7 +92,7 @@ export function textEffectsFeature(api: AppApi, docArea: HTMLElement, dock: Dock
     return { w, colorXml, dash };
   };
   const outlineMenu = (): MenuEntry[] => [
-    { block: () => h("div", { class: "fx-palette" }, ...colorGrid((hex, ref) => { const p = outlineParts(); change("textOutline", outlineXml(fxColorXml(hex, ref), p.w || 0.75, p.dash)); }, colors())) },
+    { block: () => h("div", { class: "fx-palette" }, ...colorGrid((hex, ref) => { const p = outlineParts(); change("textOutline", outlineXml(fxColorXml(hex, ref), p.w || 0.75, p.dash)); }, colors(), { commands: api.commands, apply: (hex, ref) => { const p = outlineParts(); change("textOutline", outlineXml(fxColorXml(hex, ref), p.w || 0.75, p.dash)); } })) },
     { label: "Keine Kontur", run: () => change("textOutline", null) },
     { label: "Weitere Konturfarben...", icon: "colors", run: () => pickColor((hex) => { const p = outlineParts(); change("textOutline", outlineXml(fxColorXml(hex), p.w || 0.75, p.dash)); }) },
     { label: "Stärke", icon: "line-weight", submenu: () => WIDTHS.map((w): MenuEntry => ({
@@ -111,7 +118,7 @@ export function textEffectsFeature(api: AppApi, docArea: HTMLElement, dock: Dock
     const box = h("div", { class: "fx-gallery" });
     for (const s of sections) {
       box.append(h("div", { class: "menu-heading" }, s.heading), h("div", { class: "fx-grid", style: `grid-template-columns:repeat(${cols}, 54px)` },
-        ...s.items.map((it) => tile(it.xml ?? "", it.name, () => { closeMenus(); change(part, it.xml); }))));
+        ...s.items.map((it) => tile(it.xml ?? "", it.name, () => { closeMenus(); change(part, it.xml); }, undefined, () => change(part, it.xml)))));
     }
     for (const f of footer) if (typeof f === "object" && "label" in f && "run" in f) box.append(h("button", { class: "fx-cmd", onclick: () => { closeMenus(); f.run(); } }, icon(f.icon), f.label));
     return box;
@@ -185,7 +192,7 @@ export function textEffectsFeature(api: AppApi, docArea: HTMLElement, dock: Dock
     return inner ?? fxColorXml(e?.charState().color && e.charState().color !== "auto" ? e.charState().color! : "000000");
   };
   const fillMenu = (): MenuEntry[] => [
-    { block: () => h("div", { class: "fx-palette" }, ...colorGrid((hex, ref) => change("textFill", `<w14:textFill><w14:solidFill>${fxColorXml(hex, ref)}</w14:solidFill></w14:textFill>`), colors())) },
+    { block: () => h("div", { class: "fx-palette" }, ...colorGrid((hex, ref) => change("textFill", `<w14:textFill><w14:solidFill>${fxColorXml(hex, ref)}</w14:solidFill></w14:textFill>`), colors(), { commands: api.commands, apply: (hex, ref) => change("textFill", `<w14:textFill><w14:solidFill>${fxColorXml(hex, ref)}</w14:solidFill></w14:textFill>`) })) },
     { label: "Keine Füllung", get checked() { return fillParts().none; }, run: () => change("textFill", "<w14:textFill><w14:noFill/></w14:textFill>") },
     { label: "Weitere Füllfarben...", icon: "colors", run: () => pickColor((hex) => change("textFill", `<w14:textFill><w14:solidFill>${fxColorXml(hex)}</w14:solidFill></w14:textFill>`)) },
     { label: "Farbverlauf", icon: "gradient", flyout: () => {

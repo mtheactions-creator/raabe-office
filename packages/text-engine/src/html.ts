@@ -5,7 +5,16 @@
 // their indents, levels and widths; Word's own HTML is read back the same way.
 
 import { nextTableId } from "./doc";
-import { EMPTY, OBJ, intern, makePara, type CellDef, type CharProps, type InlineObject, type NumLevel, type Numbering, type Para, type ParaProps, type RowDef, type TableDef } from "./model";
+import { EMPTY, OBJ, intern, makePara, type Anchor, type CellDef, type CharProps, type ImageData, type InlineObject, type NumLevel, type Numbering, type Para, type ParaProps, type RowDef, type TableDef } from "./model";
+
+/** A picture as an HTML image for other programs (Word reads data: addresses), its size in pixels. */
+function imgHtml(image: ImageData, widthPt: number, heightPt: number, alt?: string, extra = ""): string {
+  let bin = "";
+  const bytes = image.bytes;
+  for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+  const px = (v: number) => Math.round(v / 0.75);
+  return `<img width=${px(widthPt)} height=${px(heightPt)} src="data:${image.type};base64,${btoa(bin)}"${alt ? ` alt="${escHtml(alt)}"` : ""}${extra}>`;
+}
 import { levelOf, numberingOf, type ListLabel } from "./numbering";
 import type { StyleSheet } from "./styles";
 import { HIGHLIGHT } from "./view";
@@ -64,6 +73,16 @@ export function toHtml(paras: readonly Para[], styles: StyleSheet, numbering?: N
   const runs = (p: Para, rpStyle: string) => {
     let inner = "";
     let pos = 0, k = 0;
+    // Hyperlinks: <a> around their text (ends before starts at the same place).
+    const linkAt = new Map<number, string>();
+    for (const a of p.anchors ?? []) {
+      if (!a.link) continue;
+      const tag = a.link.edge === "end" ? "</a>" : `<a href="${escHtml(a.link.href ?? (a.link.anchor ? `#${a.link.anchor}` : ""))}">`;
+      linkAt.set(a.at, a.link.edge === "end" ? tag + (linkAt.get(a.at) ?? "") : (linkAt.get(a.at) ?? "") + tag);
+    }
+    // Floating pictures go along as pictures (other programs get them in the line).
+    for (const f of p.floats ?? []) if (f.image && !f.shape) inner += imgHtml(f.image, f.width, f.height, f.alt?.descr);
+    let open = 0;
     for (const r of p.runs) {
       const c = styles.resolveChar(rpStyle, r.props);
       const s: string[] = [`font-family:'${c.font}'`, `font-size:${c.size}pt`];
@@ -77,13 +96,15 @@ export function toHtml(paras: readonly Para[], styles: StyleSheet, numbering?: N
       let text = "";
       const flush = () => { if (text) inner += `<span style="${s.join(";")}">${text}</span>`; text = ""; };
       for (let i = pos; i < pos + r.len; i++) {
+        const lk = linkAt.get(i);
+        if (lk) { flush(); inner += lk; open += (lk.match(/<a /g) ?? []).length - (lk.match(/<\/a>/g) ?? []).length; }
         const ch = p.text[i];
         if (ch === OBJ) {
           // Equations go to Word as its own HTML (OMML in a conditional comment), outside the
           // run's span: Word would take its italics for every letter (a function name too).
           const o = p.objects?.[k++];
           const mh = o?.kind === "math" && mathHtml ? mathHtml(o, p.text === OBJ) : undefined;
-          if (mh) { flush(); inner += mh; } else text += escHtml(o?.display ?? "");
+          if (mh) { flush(); inner += mh; } else if (o?.kind === "image" && o.image) { flush(); inner += imgHtml(o.image, o.width ?? 72, o.height ?? 72, o.alt?.descr); } else text += escHtml(o?.display ?? "");
           continue;
         }
         text += ch === "\t" ? "<span style='mso-tab-count:1'>&emsp;</span>" : ch === "\u000b" ? "<br>" : ch === "\u000c" || ch === "\u000e" ? "" : escHtml(ch);
@@ -91,6 +112,9 @@ export function toHtml(paras: readonly Para[], styles: StyleSheet, numbering?: N
       pos += r.len;
       flush();
     }
+    const tail = linkAt.get(p.text.length);
+    if (tail) inner += tail.replace(/<a [^>]*>/g, "");
+    else if (open > 0) inner += "</a>".repeat(open);
     return inner;
   };
 
@@ -227,8 +251,10 @@ function charFrom(el: Element, base: CharProps): CharProps {
 interface Builder {
   text: string;
   runs: { len: number; props: CharProps }[];
-  /** Equations pasted from Word (one per object character). */
+  /** Equations and pictures pasted from Word (one per object character). */
   objects: InlineObject[];
+  /** Hyperlinks (<a href>) as link anchors. */
+  anchors: Anchor[];
   props: ParaProps;
   list?: "bullet" | "number";
   level?: number;
@@ -299,14 +325,16 @@ function wordStyles(doc: Document): { levels: Map<string, HtmlLevel[]>; classes:
  * numbering.
  */
 export function fromHtml(html: string, styleFor: (name: string) => string | undefined,
-  mathFrom?: (omml: string) => InlineObject | null):
+  mathFrom?: (omml: string) => InlineObject | null,
+  /** A picture for an <img> (its address, and size in pixels when given), or null to leave it out. */
+  imageFor?: (src: string, width?: number, height?: number, alt?: string) => InlineObject | null):
   { paras: HtmlPara[]; lists: Map<string, HtmlLevel[]> } {
   const doc = new DOMParser().parseFromString(html, "text/html");
   const word = wordStyles(doc);
   const lists = new Map<string, HtmlLevel[]>();
   const out: HtmlPara[] = [];
   let cur: Builder | null = null;
-  const start = (props: ParaProps = {}, list?: "bullet" | "number", level?: number, listKey?: string) => { finish(); cur = { text: "", runs: [], objects: [], props, list, level, listKey }; };
+  const start = (props: ParaProps = {}, list?: "bullet" | "number", level?: number, listKey?: string) => { finish(); cur = { text: "", runs: [], objects: [], anchors: [], props, list, level, listKey }; };
   const finish = () => {
     const b = cur;
     cur = null;
@@ -316,7 +344,10 @@ export function fromHtml(html: string, styleFor: (name: string) => string | unde
     const runs = [];
     for (const r of b.runs) { const l = Math.min(r.len, text.length - len); if (l > 0) { runs.push({ len: l, props: intern(r.props) }); len += l; } }
     const objects = b.objects.slice(0, [...text].filter((ch) => ch === OBJ).length);
-    out.push({ ...makePara(""), text, runs, props: b.props, mark: EMPTY, list: b.list, level: b.level, listKey: b.listKey, ...(objects.length ? { objects } : {}) });
+    // Links: only whole ones (start and end) inside the kept text.
+    const anchors = b.anchors.filter((a) => a.at <= text.length);
+    const whole = anchors.filter((a) => anchors.some((x) => x.link?.id === a.link?.id && x !== a));
+    out.push({ ...makePara(""), text, runs, props: b.props, mark: EMPTY, list: b.list, level: b.level, listKey: b.listKey, ...(objects.length ? { objects } : {}), ...(whole.length ? { anchors: whole } : {}) });
   };
   // Word's equations: OMML in a conditional comment, then a fallback (picture and text) for
   // other programs between <![if !msEquation]> and <![endif]>, which is skipped.
@@ -363,6 +394,7 @@ export function fromHtml(html: string, styleFor: (name: string) => string | unde
     return { ...merged, ...decls(el.getAttribute("style") ?? "") };
   };
 
+  let linkSeq = 0;
   const walk = (node: Node, props: CharProps) => {
     if (node.nodeType === Node.COMMENT_NODE) { comment((node as Comment).data, props); return; }
     if (skipDepth) return;
@@ -383,6 +415,24 @@ export function fromHtml(html: string, styleFor: (name: string) => string | unde
     if (/mso-tab-count/.test(style)) { addRaw("\t", intern(props)); return; }
     if (tag === "BR") { if (cur) { cur.text += "\u000b"; const l = cur.runs[cur.runs.length - 1]; if (l) l.len += 1; else cur.runs.push({ len: 1, props: intern(props) }); } return; }
     if (tag === "TABLE") { finish(); table(el); return; }
+    if (tag === "IMG") {
+      const num = (a: string) => { const v = Number(el.getAttribute(a)); return v > 0 ? v : undefined; };
+      const obj = imageFor?.(el.getAttribute("src") ?? "", num("width"), num("height"), el.getAttribute("alt") ?? undefined);
+      if (obj) { addRaw(OBJ, intern(props)); cur!.objects.push(obj); }
+      return;
+    }
+    if (tag === "A" && el.getAttribute("href") && !el.getAttribute("href")!.startsWith("#_ftn") && !el.getAttribute("href")!.startsWith("#_edn")) {
+      if (!cur) start();
+      const href = el.getAttribute("href")!;
+      const id = `link:html${++linkSeq}`;
+      const internal = href.startsWith("#") ? href.slice(1) : undefined;
+      cur!.anchors.push({ at: cur!.text.length, data: undefined, link: { id, edge: "start", ...(internal ? { anchor: internal } : { href }) } });
+      const style = styleFor("Hyperlink");
+      const cp = intern({ ...charFrom(el, props), ...(style ? { rStyle: style } : {}) });
+      for (const ch of Array.from(el.childNodes)) walk(ch, cp);
+      if (cur) cur.anchors.push({ at: cur.text.length, data: undefined, link: { id, edge: "end" } });
+      return;
+    }
     if (BLOCK.has(tag) && tag !== "UL" && tag !== "OL" && tag !== "TR" && tag !== "TD" && tag !== "TH" && tag !== "BODY") {
       const pp: Record<string, unknown> = {};
       const m = /^H([1-6])$/.exec(tag);

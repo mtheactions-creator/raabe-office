@@ -61,7 +61,7 @@ import * as S from "./school";
 import * as Refs from "./refs";
 import * as Bib from "./bibliography";
 import { sortOrder, type SortSpec } from "./sort";
-import { COLUMN_BREAK, type CellDef, type ImageData, type RowDef, type TableDef } from "./model";
+import { COLUMN_BREAK, cellKey, type CellDef, type ImageData, type RowDef, type TableDef } from "./model";
 import { addList, bulletLevels as bulletLevelsOf, levelOf, listLabels, numberLevels as numberLevelsOf, numberingOf, restartList } from "./numbering";
 import { DEFAULT_SHAPE_BODY, type AltText, type BorderSpec, type Borders, type FloatObject, type GroupMember, type InlineObject, type NumLevel, type ShapeInfo } from "./model";
 import { SHAPE_NAMES, shadeLinear, shapeElement, shapeGeometry, shapeTextRect } from "./shape";
@@ -183,6 +183,9 @@ function handleCursor(hd: string, rotation: number): string {
 
 /** Word's pen cursor for Transparente Farbe bestimmen (tip at the hot spot, bottom left). */
 const PICK_CURSOR = sharpCursor('<path d="M3 29l2-7L21 6l5 5-16 16z" fill="#fff" stroke="#000" stroke-width="1.5" stroke-linejoin="round"/><path d="M5 22l5 5" stroke="#000" stroke-width="1.5"/><path d="M3 29l2.2-1" stroke="#000" stroke-width="2"/>', 32, 3, 29, "crosshair");
+/** Word's black arrows of a table's selection zones: into a cell (up right) and onto a column (down). */
+const CELL_CURSOR = sharpCursor('<path d="M23 4L9 7.5l4.2 4.2L4 21l4 4 9.3-9.3 4.2 4.2z" fill="#000" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/>', 32, 23, 4, "default");
+const COLUMN_CURSOR = sharpCursor('<path d="M16 29l-8-10h5V3h6v16h5z" fill="#000" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/>', 32, 16, 29, "default");
 
 let clipboardFragment: {
   text: string; paras: Para[]; source: Editor;
@@ -1209,6 +1212,40 @@ export class Editor {
     this.update({ scroll: true });
   }
 
+  /** The document before a Livevorschau, and the undo history then. */
+  private livePreview: { snap: Snapshot; undo: Snapshot[]; redo: Snapshot[] } | null = null;
+
+  /**
+   * Livevorschau (Word's preview while the mouse is over a gallery or menu entry): `apply`
+   * changes the document as the command would, leaving no undo step; the next preview, or
+   * preview(null), first puts the document back as it was. `apply` must change it at once.
+   */
+  preview(apply: (() => void) | null): void {
+    const pv = this.livePreview;
+    if (pv) {
+      this.doc.restore(pv.snap.state);
+      this.doc.activeStory = pv.snap.story;
+      this.storyKey = pv.snap.key;
+      this.setSel(pv.snap.anchor, pv.snap.head);
+      this.floatSel = pv.snap.floatSel ? { ...pv.snap.floatSel } : null;
+      this.undoStack = [...pv.undo];
+      this.redoStack = [...pv.redo];
+    }
+    if (!apply) {
+      this.livePreview = null;
+      if (pv) { this.layouter.setContext(this.context()); this.update(); }
+      return;
+    }
+    const base = pv ?? { snap: this.current(), undo: [...this.undoStack], redo: [...this.redoStack] };
+    this.livePreview = base;
+    try { apply(); } finally {
+      this.undoStack = [...base.undo];
+      this.redoStack = [...base.redo];
+    }
+  }
+
+  get previewing(): boolean { return !!this.livePreview; }
+
   undo(): void {
     const s = this.undoStack.pop();
     if (!s) return;
@@ -2087,6 +2124,52 @@ export class Editor {
   }
 
   /** Selects the whole table / the current row / column / cell ("Auswählen"). */
+  /** The cell `cellKey` ("table:row:col") and then its cell, row or column selected (the zones' clicks). */
+  private selectCellPart(cellKey: string, part: "cell" | "row" | "column"): void {
+    const [tid, row, col] = cellKey.split(":").map(Number);
+    const p = this.doc.paras.findIndex((x) => x.cell && x.cell.table.id === tid && x.cell.row === row && x.cell.col === col);
+    if (p < 0) return;
+    this.drag = null;
+    this.setSel({ p, o: 0 }, { p, o: 0 });
+    this.selectTablePart(part);
+    this.emit(false);
+  }
+
+  /** The whole table with id `tid` selected (a double-click on its move handle). */
+  private selectTableOf(tid: number): void {
+    const p = this.doc.paras.findIndex((x) => x.cell?.table.id === tid);
+    if (p < 0) return;
+    this.drag = null;
+    this.setSel({ p, o: 0 }, { p, o: 0 });
+    this.selectTablePart("table");
+    this.emit(false);
+  }
+
+  /**
+   * Double-click on a note reference in the text: into the note (Word puts the caret at its
+   * start); on the note's own number: back to the text after the reference.
+   */
+  private noteJump(under: Pos): boolean {
+    const para = this.doc.paras[under.p];
+    if (!para || para.text[under.o] !== OBJ) return false;
+    const obj = this.objectAt(para, under.o);
+    if (this.storyKey === MAIN && obj?.note && this.doc.stories.has(obj.note)) {
+      this.drag = null;
+      this.switchStory(obj.note, obj.note, { anchor: { p: 0, o: 0 }, head: { p: 0, o: 0 }, headUpstream: false });
+      this.update({ scroll: true });
+      this.emit(false);
+      return true;
+    }
+    const story = this.doc.activeStory;
+    if ((story.startsWith("fn:") || story.startsWith("en:")) && under.p === 0 && under.o === 0) {
+      this.drag = null;
+      this.showNotes(story.startsWith("en:") ? "en" : "fn");
+      this.emit(false);
+      return true;
+    }
+    return false;
+  }
+
   selectTablePart(part: "table" | "row" | "column" | "cell"): void {
     const h = this.sel.head;
     const t = E.tableAt(this.doc, h.p);
@@ -3160,13 +3243,29 @@ export class Editor {
       }));
       return;
     }
-    // Inhalt: the widest line and the longest word of every single-column cell.
+    const fit = this.contentWidths(def, this.sel.head.p);
+    if (!fit) return;
+    const { hi, lo } = fit;
+    const sumHi = hi.reduce((s, x) => s + x, 0), sumLo = lo.reduce((s, x) => s + x, 0);
+    const grid = sumHi <= avail ? hi : sumLo >= avail ? lo : lo.map((w, g) => w + ((hi[g] - w) * (avail - sumLo)) / (sumHi - sumLo));
+    this.updateTable((d) => ({
+      ...d, grid,
+      rows: d.rows.map((r) => ({ ...r, cells: r.cells.map((c) => tcW(c, '<w:tcW w:w="0" w:type="auto"/>')) })),
+      extra: withExtra(withExtra(d.extra, "tblLayout", null), "tblW", null),
+    }));
+  }
+
+  /**
+   * What the table's columns need (points, with the cell margins): `hi` the widest line of each
+   * grid column, `lo` its longest word (cells spanning several columns do not count).
+   */
+  private contentWidths(def: TableDef, near: number): { hi: number[]; lo: number[] } | null {
     const style = this.doc.styles.tableStyle(def.style ?? "");
     const m = { ...DEFAULT_CELL_MARGINS, ...(style?.cellMargins ?? {}), ...(def.cellMargins ?? {}) };
     const n = def.grid.length;
     const most = new Array<number>(n).fill(0), least = new Array<number>(n).fill(0);
-    const range = this.doc.tableRange(this.sel.head.p, def);
-    if (!range) return;
+    const range = this.doc.tableRange(near, def);
+    if (!range) return null;
     for (let i = range[0]; i <= range[1]; i++) {
       const para = this.doc.paras[i];
       const cell = para.cell!;
@@ -3188,14 +3287,28 @@ export class Editor {
       }
     }
     const pad = m.left + m.right;
-    const hi = most.map((w) => w + pad), lo = least.map((w, g) => Math.min(w, most[g]) + pad);
-    const sumHi = hi.reduce((s, x) => s + x, 0), sumLo = lo.reduce((s, x) => s + x, 0);
-    const grid = sumHi <= avail ? hi : sumLo >= avail ? lo : lo.map((w, g) => w + ((hi[g] - w) * (avail - sumLo)) / (sumHi - sumLo));
-    this.updateTable((d) => ({
-      ...d, grid,
-      rows: d.rows.map((r) => ({ ...r, cells: r.cells.map((c) => tcW(c, '<w:tcW w:w="0" w:type="auto"/>')) })),
-      extra: withExtra(withExtra(d.extra, "tblLayout", null), "tblW", null),
-    }));
+    return { hi: most.map((w) => w + pad), lo: least.map((w, g) => Math.min(w, most[g]) + pad) };
+  }
+
+  /**
+   * Double-click on a column's right border (Word, recorded 2026-10-15): the column gets the
+   * width of its widest line, the other columns stay, the table gets narrower or wider.
+   */
+  autofitColumn(cellKey: string): void {
+    const [tid, row, col] = cellKey.split(":").map(Number);
+    const p = this.doc.paras.findIndex((x) => x.cell && x.cell.table.id === tid && x.cell.row === row && x.cell.col === col);
+    if (p < 0) return;
+    const def = this.doc.paras[p].cell!.table;
+    const r = def.rows[row];
+    let g = -1;
+    for (let i = 0; i <= col; i++) g += Math.max(1, r.cells[i].span);
+    const fit = this.contentWidths(def, p);
+    if (!fit || g < 0 || g >= def.grid.length) return;
+    const keep = this.sel;
+    this.setSel({ p, o: 0 }, { p, o: 0 });
+    this.updateTable((d) => ({ ...d, grid: d.grid.map((w, i) => (i === g ? fit.hi[g] : w)), rows: d.rows.map((x) => ({ ...x, cells: x.cells.map((c) => ({ ...c, width: undefined })) })) }));
+    this.sel = keep;
+    this.update();
   }
 
   /** Tabellenoptionen: the table's default cell margins (points) and Automatische Größenänderung zulassen. */
@@ -3813,6 +3926,8 @@ export class Editor {
   onLayoutOptions: ((rect: DOMRect) => void) | null = null;
   /** A double-click on a picture or shape: Word opens its ribbon tab (Bildformat, Formformat). */
   onObjectOpen: ((kind: "picture" | "shape") => void) | null = null;
+  /** A double-click on a section break's mark (Alle anzeigen): Seite einrichten. */
+  onSectionBreakOpen: (() => void) | null = null;
 
   /** New picture data in place of the selected picture's (Freistellen, Bilder komprimieren). */
   replaceImageData(image: ImageData, snapshot = true): void {
@@ -5955,7 +6070,8 @@ cropFill(fit: boolean): void {
         this.typing = false;
         if (shift && !e.ctrlKey) this.insertBreak("line");
         else if (ctrl && !shift) this.insertBreak("page");
-        else if (e.ctrlKey && shift) this.insertBreak("column");
+        // In a table Word splits it there (Tabelle teilen); elsewhere a column break.
+        else if (e.ctrlKey && shift) { if (this.inTable() && this.storyKey === MAIN) this.splitTable(); else this.insertBreak("column"); }
         else if (!e.ctrlKey) {
           // Enter in an empty list item ends the list (Word).
           const p = this.doc.paras[h.p];
@@ -6013,19 +6129,45 @@ cropFill(fit: boolean): void {
   /** Equations on the clipboard in Word's own form (OMML in its HTML); set by the host. */
   mathClipboard: { toHtml(obj: InlineObject, alone: boolean): string | undefined; fromOmml(omml: string): InlineObject | null } | null = null;
 
-  clipboardHost: { readHtml(): Promise<string>; readImage?(): Promise<Blob | null>; write(text: string, html: string): Promise<void> } | null = null;
+  clipboardHost: { readHtml(): Promise<string>; readImage?(): Promise<Blob | null>; write(text: string, html: string): Promise<void>;
+    /** Reads a file (the pictures Word's clipboard HTML points to, in its temporary folder). */
+    readFile?(path: string): Promise<Uint8Array> } | null = null;
+
+  /** Pictures of the clipboard HTML read from files before pasting (address → picture). */
+  private pastedImages = new Map<string, ImageData>();
 
   /** Each copy or cut (the Office-Zwischenablage collects them): text, HTML, or an object. */
   onCopied: ((text: string, html: string, object: boolean) => void) | null = null;
 
+  /** Kopieren and Ausschneiden work on a selection or a selected floating object (Word). */
+  get canCopy(): boolean { return this.hasSelection || (!!this.floatSel && this.storyKey === MAIN); }
+
+  /**
+   * A selected floating picture or shape copied as itself (pasted in RaabeWrite as it was);
+   * other programs (Word) get a picture as an HTML image. Returns the HTML, or null when no
+   * floating object is selected.
+   */
+  copyFloatData(cut: boolean): { text: string; html: string } | null {
+    if (!this.floatSel || !this.copyFloat()) return null;
+    const f = this.doc.main[this.floatSel.p]?.floats?.[this.floatSel.index];
+    const html = f?.image && !f.shape ? toHtml([{ ...makePara("\ufffc"), objects: [E.imageObject(f.image, f.width, f.height)] }], this.doc.styles) : "";
+    this.onCopied?.("", "", true);
+    if (cut) this.deleteFloat();
+    return { text: "", html };
+  }
+
+  /** Einfügen from the ribbon: pictures Word's HTML points to are read first (as Strg+V does). */
+  async pasteFrom(text: string, html: string, image: Blob | null): Promise<void> {
+    await this.loadPastedImages(html);
+    this.paste(text, html, image);
+  }
+
   private onCopy(e: ClipboardEvent, cut: boolean): void {
     e.preventDefault();
-    // A selected floating picture or shape is copied as itself.
-    if (this.floatSel && this.copyFloat()) {
-      if (this.clipboardHost) void this.clipboardHost.write("", "").catch(() => undefined);
-      else e.clipboardData?.setData("text/plain", "");
-      this.onCopied?.("", "", true);
-      if (cut) this.deleteFloat();
+    const fl = this.copyFloatData(cut);
+    if (fl) {
+      if (this.clipboardHost) void this.clipboardHost.write(fl.text, fl.html).catch(() => undefined);
+      else { e.clipboardData?.setData("text/plain", ""); if (fl.html) e.clipboardData?.setData("text/html", fl.html); }
       return;
     }
     if (!this.hasSelection) return;
@@ -6056,6 +6198,7 @@ cropFill(fit: boolean): void {
     if (host && (html || (!image && !text.trim() && host.readImage))) {
       void (async () => {
         const full = html ? await host.readHtml().catch(() => "") : "";
+        await this.loadPastedImages(full || html);
         // Pictures the web view does not hand out (Word's, the "PNG" format) come from the host.
         const picture = image ?? (!text.trim() && host.readImage ? await host.readImage().catch(() => null) : null);
         this.paste(text, full || html, picture);
@@ -6064,6 +6207,43 @@ cropFill(fit: boolean): void {
     }
     this.paste(text, html, image);
   }
+
+  /**
+   * Word's clipboard HTML points to its pictures as files in its temporary folder
+   * (file:///…/msohtmlclip/…/clip_image001.png): they are read before the paste.
+   */
+  private async loadPastedImages(html: string): Promise<void> {
+    this.pastedImages.clear();
+    const host = this.clipboardHost;
+    if (!host?.readFile || !html.includes("<img")) return;
+    for (const m of html.matchAll(/<img\b[^>]*\bsrc=["']?(file:[^"'\s>]+)/gi)) {
+      const src = m[1];
+      if (this.pastedImages.has(src)) continue;
+      const path = decodeURIComponent(src.replace(/^file:\/\/\/?/i, "")).replace(/\//g, "\\");
+      const bytes = await host.readFile(path).catch(() => null);
+      const info = bytes ? imageInfo(bytes) : null;
+      if (bytes && info) this.pastedImages.set(src, { bytes, type: info.type });
+    }
+  }
+
+  /** A pasted <img>: its picture (a data: address or one read before), sized as the HTML says. */
+  private htmlImage = (src: string, width?: number, height?: number): InlineObject | null => {
+    let image = this.pastedImages.get(src) ?? null;
+    const m = /^data:([^;,]+);base64,(.*)$/s.exec(src);
+    if (!image && m) {
+      const bin = atob(m[2]);
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      image = { bytes, type: m[1] };
+    }
+    if (!image) return null;
+    const info = imageInfo(image.bytes);
+    const nat = info ? naturalSizePt(info) : { w: 72, h: 72 };
+    const w = width ? width * 0.75 : nat.w, h = height ? height * 0.75 : width ? (width * 0.75 * nat.h) / nat.w : nat.h;
+    const max = this.textWidth();
+    const k = w > max ? max / w : 1;
+    return E.imageObject(image, w * k, h * k);
+  };
 
   /**
    * A picture from the clipboard (a screenshot, a picture copied in Word or a browser), at
@@ -6149,7 +6329,7 @@ cropFill(fit: boolean): void {
   /** Inserts HTML from another program. */
   pasteHtml(html: string): void {
     const style = (name: string) => { const id = this.styleId(name); this.ensureStyle(id); return id; };
-    const { paras, lists } = fromHtml(html, style, this.mathClipboard?.fromOmml);
+    const { paras, lists } = fromHtml(html, style, this.mathClipboard?.fromOmml, this.htmlImage);
     if (!paras.length) return;
     // Lists: Word's own definitions (symbols, fonts, indents) where the HTML has them, else one
     // numbering per run of list paragraphs of the same kind.
@@ -6263,7 +6443,19 @@ cropFill(fit: boolean): void {
         return;
       }
     }
+    // Double-clicks on a table (Word, recorded 2026-10-15): the move handle selects the table, a
+    // column border fits the column to its contents, a cell's selection zone selects the row.
+    if (this.storyKey === MAIN && !e.shiftKey && e.detail === 2 && !this.readOnly) {
+      const th = this.view.tableHandleAt(e.clientX, e.clientY);
+      if (th?.kind === "move") { this.selectTableOf(th.table); return; }
+      const border = this.view.cellBorderAt(e.clientX, e.clientY);
+      if (border) { this.autofitColumn(border.cell); this.emit(true); return; }
+      const zone = this.view.tableZoneAt(e.clientX, e.clientY);
+      if (zone) { this.selectCellPart(zone.cell, zone.kind === "cell" ? "row" : "column"); return; }
+    }
     if (this.storyKey === MAIN && !e.shiftKey && e.detail < 2 && !this.readOnly) {
+      const zone = this.view.tableZoneAt(e.clientX, e.clientY);
+      if (zone && !this.view.cellBorderAt(e.clientX, e.clientY)) { this.selectCellPart(zone.cell, zone.kind); return; }
       const th = this.view.tableHandleAt(e.clientX, e.clientY);
       if (th?.kind === "layout") { e.preventDefault(); this.showTableLayout(th.table); return; }
       if (th) { this.dragTableHandle(e, th.kind, th.table); return; }
@@ -6334,6 +6526,12 @@ cropFill(fit: boolean): void {
       if (link && under.o < link.to.o) { this.onFollowLink(link); return; }
     }
 
+    const rowCell = hit.inLeftMargin && this.storyKey === MAIN && e.detail < 3 ? this.doc.paras[pl.para]?.cell : undefined;
+    if (rowCell) {
+      // Beside a table the selection bar selects the row (Word).
+      this.selectCellPart(cellKey(rowCell), "row");
+      return;
+    }
     if (hit.inLeftMargin) {
       // Selection bar: line, paragraph, whole document.
       if (e.detail >= 3) this.setSel({ p: 0, o: 0 }, this.doc.end());
@@ -6356,6 +6554,13 @@ cropFill(fit: boolean): void {
       this.update();
       this.emit(false);
       this.onObjectOpen?.(this.selectedShape() ? "shape" : "picture");
+      return;
+    } else if (e.detail === 2 && this.noteJump(under)) {
+      return;
+    } else if (e.detail === 2 && this.storyKey === MAIN && this.showMarks && this.doc.paras[under.p]?.sect && under.o >= this.doc.paras[under.p].text.length) {
+      // The section break's mark (Alle anzeigen): Word opens Seite einrichten.
+      this.drag = null;
+      this.onSectionBreakOpen?.();
       return;
     } else if (e.detail === 2) {
       const r = this.wordRange(under);
@@ -6759,6 +6964,7 @@ cropFill(fit: boolean): void {
       const hd = this.storyKey === MAIN ? this.view.handleAt(e.clientX, e.clientY) : null;
       if (hd) cursor = handleCursor(hd, this.selectedShape()?.obj.pic?.rotation ?? this.selectedImage()?.obj.pic?.rotation ?? 0);
       else if (this.storyKey === MAIN && this.view.cellBorderAt(e.clientX, e.clientY)) cursor = COL_CURSOR;
+      else if (this.storyKey === MAIN && this.view.tableZoneAt(e.clientX, e.clientY)) cursor = this.view.tableZoneAt(e.clientX, e.clientY)!.kind === "cell" ? CELL_CURSOR : COLUMN_CURSOR;
       else if (this.storyKey === MAIN && this.view.rowBorderAt(e.clientX, e.clientY)) cursor = ROW_CURSOR;
       else if (this.storyKey === MAIN && this.view.imageAt(e.clientX, e.clientY)) cursor = "move";
       else {
