@@ -5,7 +5,7 @@
 // their indents, levels and widths; Word's own HTML is read back the same way.
 
 import { nextTableId } from "./doc";
-import { EMPTY, OBJ, intern, makePara, type CellDef, type CharProps, type NumLevel, type Numbering, type Para, type ParaProps, type RowDef, type TableDef } from "./model";
+import { EMPTY, OBJ, intern, makePara, type CellDef, type CharProps, type InlineObject, type NumLevel, type Numbering, type Para, type ParaProps, type RowDef, type TableDef } from "./model";
 import { levelOf, numberingOf, type ListLabel } from "./numbering";
 import type { StyleSheet } from "./styles";
 import { HIGHLIGHT } from "./view";
@@ -32,7 +32,8 @@ const htmlBullet = (text: string) => text.replace(/[\uf020-\uf0ff]/g, (c) => Str
  * Paragraphs as HTML with inline styles (what Word reads when pasting). `labels` are the list
  * labels of these paragraphs as the document shows them.
  */
-export function toHtml(paras: readonly Para[], styles: StyleSheet, numbering?: Numbering, labels?: readonly (ListLabel | undefined)[]): string {
+export function toHtml(paras: readonly Para[], styles: StyleSheet, numbering?: Numbering, labels?: readonly (ListLabel | undefined)[],
+  mathHtml?: (obj: InlineObject, alone: boolean) => string | undefined): string {
   const out: string[] = [];
   const lists = new Map<number, number>(); // numId → l index
   const listCss: string[] = [];
@@ -74,13 +75,21 @@ export function toHtml(paras: readonly Para[], styles: StyleSheet, numbering?: N
       if (c.highlight !== "none" && HIGHLIGHT[c.highlight]) s.push(`background:${HIGHLIGHT[c.highlight]}`);
       if (c.vertAlign !== "baseline") s.push(`vertical-align:${c.vertAlign === "superscript" ? "super" : "sub"}`);
       let text = "";
+      const flush = () => { if (text) inner += `<span style="${s.join(";")}">${text}</span>`; text = ""; };
       for (let i = pos; i < pos + r.len; i++) {
         const ch = p.text[i];
-        if (ch === OBJ) { text += escHtml(p.objects?.[k++]?.display ?? ""); continue; }
+        if (ch === OBJ) {
+          // Equations go to Word as its own HTML (OMML in a conditional comment), outside the
+          // run's span: Word would take its italics for every letter (a function name too).
+          const o = p.objects?.[k++];
+          const mh = o?.kind === "math" && mathHtml ? mathHtml(o, p.text === OBJ) : undefined;
+          if (mh) { flush(); inner += mh; } else text += escHtml(o?.display ?? "");
+          continue;
+        }
         text += ch === "\t" ? "<span style='mso-tab-count:1'>&emsp;</span>" : ch === "\u000b" ? "<br>" : ch === "\u000c" || ch === "\u000e" ? "" : escHtml(ch);
       }
       pos += r.len;
-      if (text) inner += `<span style="${s.join(";")}">${text}</span>`;
+      flush();
     }
     return inner;
   };
@@ -144,7 +153,7 @@ export function toHtml(paras: readonly Para[], styles: StyleSheet, numbering?: N
     out.push(para(p, i, false));
   }
   const head = listCss.length ? `<head><meta charset="utf-8"><style>\n<!--\n${listCss.join("\n")}\n-->\n</style></head>` : `<head><meta charset="utf-8"></head>`;
-  return `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">${head}` +
+  return `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:m="http://schemas.microsoft.com/office/2004/12/omml" xmlns="http://www.w3.org/TR/REC-html40">${head}` +
     `<body><!--StartFragment-->${out.join("")}<!--EndFragment--></body></html>`;
 }
 
@@ -218,6 +227,8 @@ function charFrom(el: Element, base: CharProps): CharProps {
 interface Builder {
   text: string;
   runs: { len: number; props: CharProps }[];
+  /** Equations pasted from Word (one per object character). */
+  objects: InlineObject[];
   props: ParaProps;
   list?: "bullet" | "number";
   level?: number;
@@ -287,14 +298,15 @@ function wordStyles(doc: Document): { levels: Map<string, HtmlLevel[]>; classes:
  * (Word's own list definitions: symbols, fonts and indents), which the caller turns into
  * numbering.
  */
-export function fromHtml(html: string, styleFor: (name: string) => string | undefined):
+export function fromHtml(html: string, styleFor: (name: string) => string | undefined,
+  mathFrom?: (omml: string) => InlineObject | null):
   { paras: HtmlPara[]; lists: Map<string, HtmlLevel[]> } {
   const doc = new DOMParser().parseFromString(html, "text/html");
   const word = wordStyles(doc);
   const lists = new Map<string, HtmlLevel[]>();
   const out: HtmlPara[] = [];
   let cur: Builder | null = null;
-  const start = (props: ParaProps = {}, list?: "bullet" | "number", level?: number, listKey?: string) => { finish(); cur = { text: "", runs: [], props, list, level, listKey }; };
+  const start = (props: ParaProps = {}, list?: "bullet" | "number", level?: number, listKey?: string) => { finish(); cur = { text: "", runs: [], objects: [], props, list, level, listKey }; };
   const finish = () => {
     const b = cur;
     cur = null;
@@ -303,7 +315,25 @@ export function fromHtml(html: string, styleFor: (name: string) => string | unde
     let len = 0;
     const runs = [];
     for (const r of b.runs) { const l = Math.min(r.len, text.length - len); if (l > 0) { runs.push({ len: l, props: intern(r.props) }); len += l; } }
-    out.push({ ...makePara(""), text, runs, props: b.props, mark: EMPTY, list: b.list, level: b.level, listKey: b.listKey });
+    const objects = b.objects.slice(0, [...text].filter((ch) => ch === OBJ).length);
+    out.push({ ...makePara(""), text, runs, props: b.props, mark: EMPTY, list: b.list, level: b.level, listKey: b.listKey, ...(objects.length ? { objects } : {}) });
+  };
+  // Word's equations: OMML in a conditional comment, then a fallback (picture and text) for
+  // other programs between <![if !msEquation]> and <![endif]>, which is skipped.
+  let skipNext = false, skipDepth = 0;
+  const comment = (data: string, props: CharProps) => {
+    const m = /^\[if gte msEquation 12\]>([\s\S]*)<!\[endif\]$/.exec(data);
+    if (m) {
+      const obj = mathFrom?.(m[1]);
+      if (obj) { addRaw(OBJ, intern({ ...props, italic: true })); cur!.objects.push(obj); skipNext = true; }
+      return;
+    }
+    if (skipDepth) {
+      if (/^\[if [^\]]*\]$/.test(data)) skipDepth++;
+      else if (data === "[endif]") skipDepth--;
+      return;
+    }
+    if (skipNext && /^\[if !msEquation\]$/.test(data)) { skipDepth = 1; skipNext = false; }
   };
   const add = (s: string, props: CharProps) => {
     if (!s) return;
@@ -334,7 +364,14 @@ export function fromHtml(html: string, styleFor: (name: string) => string | unde
   };
 
   const walk = (node: Node, props: CharProps) => {
-    if (node.nodeType === Node.TEXT_NODE) { add(node.textContent ?? "", props); return; }
+    if (node.nodeType === Node.COMMENT_NODE) { comment((node as Comment).data, props); return; }
+    if (skipDepth) return;
+    if (node.nodeType === Node.TEXT_NODE) {
+      // Word writes ordinary spaces it must keep as &nbsp; in mso-spacerun spans.
+      const t = node.textContent ?? "";
+      add(/mso-spacerun/.test(node.parentElement?.getAttribute("style") ?? "") ? t.replace(/\u00a0/g, " ") : t, props);
+      return;
+    }
     if (node.nodeType !== Node.ELEMENT_NODE) return;
     const el = node as HTMLElement;
     const tag = el.tagName;

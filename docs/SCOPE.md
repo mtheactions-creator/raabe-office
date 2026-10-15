@@ -42,7 +42,7 @@ What each app does, ordered by priority. **M** = first usable version (MVP),
 | Paragraph formatting (alignment, indents, line and paragraph spacing, borders, shading) | M | Done in Steps 2 and 3 (Absatz dialog, tabs, page-break options, Rahmen, Schattierung) |
 | Bulleted and numbered lists, multilevel lists | M | Done in Step 3, incl. Word's auto-list on "1. " / "- " and heading numbering |
 | Styles (Formatvorlagen): Standard, Überschrift 1-3, Titel, Zitat … | M | Style gallery in Start tab; done in Step 2 (Word 2016-2019 set) |
-| Tables: insert, resize, merge/split, borders, shading, header row | M | Done in Step 3 (Tabellenentwurf, Layout) |
+| Tables: insert, resize, merge/split, borders, shading, header row | M | Done in Step 3 (Tabellenentwurf, Layout); Step 4c: Word's 105 table styles, the full Rahmen group with the border painter, floating tables (Umgebend), Zellen löschen (D-056) |
 | Images: insert, resize, rotate, crop, text wrapping (inline, square, tight, behind, in front) | M | Done: Step 3, and in Step 4b the full Bildformat tab (D-045), paste, pictures in tables, sizes from the file's resolution |
 | Shapes and text boxes: Word's Formen gallery, drawing, text in shapes, Formformat tab, Formenarten, adjust handles, freeform shapes | M | Done in Step 4b (D-046); WordArt styles, linked text boxes, grouping and the selection pane follow in package E |
 | Shapes and text boxes | M | Basic set, Step 4b |

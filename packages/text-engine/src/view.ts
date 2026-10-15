@@ -446,6 +446,9 @@ export class View {
       const back = layer(0), selLayer = layer(1), textLayer = layer(2), front = layer(3), selTop = layer(3), overlay = layer(4);
       overlay.style.pointerEvents = "none";
       selTop.style.pointerEvents = "none";
+      // The selection over the text, multiplied with everything below it (a layer of its own
+      // blends only with what is under the layer, so the layer itself multiplies).
+      selTop.style.mixBlendMode = "multiply";
       el.append(back, selLayer, textLayer, front, selTop, overlay);
       this.container.append(el);
       this.pages.push({ el, back, selLayer, selTop, textLayer, front, overlay, lineEls: [], lineKeys: [], decoKey: "", overlayKey: "", live: false, w: 0, h: 0 });
@@ -924,6 +927,14 @@ export class View {
           "border:1px solid #a0a0a0;background:#fff;display:flex;align-items:center;justify-content:center";
         mh.innerHTML = MOVE_HANDLE_SVG;
         handles.push(mh);
+        // Our own addition (D-053): the table's layout options beside its top right corner,
+        // like a picture's (Textumbruch, Ausrichtung).
+        const lb = document.createElement("div");
+        lb.style.cssText = `position:absolute;left:${tb.x + tb.w + 8}px;top:${tb.y}px;width:20px;height:20px;box-sizing:border-box;` +
+          "border:1px solid #9e9e9e;background:#fff;display:flex;align-items:center;justify-content:center";
+        lb.innerHTML = LAYOUT_SVG;
+        lb.title = "Layoutoptionen für die Tabelle";
+        handles.push(lb);
       }
       if (tb.last) {
         const rh = document.createElement("div");
@@ -1009,7 +1020,7 @@ export class View {
   }
 
   /** Word's table move or sizing handle under a client point. */
-  tableHandleAt(clientX: number, clientY: number): { kind: "move" | "size"; table: number } | null {
+  tableHandleAt(clientX: number, clientY: number): { kind: "move" | "size" | "layout"; table: number } | null {
     const tid = this.opts.table;
     if (tid === undefined || !this.layoutRef) return null;
     const pt = this.pointAt(clientX, clientY);
@@ -1018,6 +1029,20 @@ export class View {
     if (!tb) return null;
     if (tb.first && pt.x >= tb.x - 16 && pt.x <= tb.x - 1 && pt.y >= tb.y - 16 && pt.y <= tb.y - 1) return { kind: "move", table: tid };
     if (tb.last && pt.x >= tb.x + tb.w + 1 && pt.x <= tb.x + tb.w + 11 && pt.y >= tb.y + tb.h + 1 && pt.y <= tb.y + tb.h + 11) return { kind: "size", table: tid };
+    if (tb.first && pt.x >= tb.x + tb.w + 8 && pt.x <= tb.x + tb.w + 28 && pt.y >= tb.y && pt.y <= tb.y + 20) return { kind: "layout", table: tid };
+    return null;
+  }
+
+  /** Client rectangle of the table's layout options button (our addition, D-053). */
+  tableLayoutButtonRect(tid: number): DOMRect | null {
+    const layout = this.layoutRef;
+    if (!layout) return null;
+    for (const pg of layout.pages) {
+      const tb = this.tableBounds(pg, tid);
+      if (!tb?.first) continue;
+      const p = this.pageToClient(pg.index, tb.x + tb.w + 8, tb.y);
+      return new DOMRect(p.x, p.y, 20 * this.zoomFactor, 20 * this.zoomFactor);
+    }
     return null;
   }
 
@@ -1053,10 +1078,8 @@ export class View {
     const img = this.opts.image;
     if (!img) return null;
     const lb = this.layoutButtonPos(img);
-    const left = this.pageLeft(img.page) + lb.x, top = this.pageTop(img.page) + lb.y;
-    const ws = this.workspace.getBoundingClientRect();
-    const z = this.zoomFactor;
-    return new DOMRect(ws.left + left * z - this.workspace.scrollLeft, ws.top + top * z - this.workspace.scrollTop, 22 * z, 22 * z);
+    const p = this.pageToClient(img.page, lb.x, lb.y);
+    return new DOMRect(p.x, p.y, 22 * this.zoomFactor, 22 * this.zoomFactor);
   }
 
   /** A column border of a table under a client point (for dragging it): the cell left of it. */
@@ -1074,6 +1097,27 @@ export class View {
       if (Math.abs(pt.x - (f.x + f.w)) <= tol) return { cell: f.cell, x: f.x + f.w };
     }
     return null;
+  }
+
+  /** The edge of a table cell under a client point (Rahmen übertragen, Rahmenpipette). */
+  cellEdgeAt(clientX: number, clientY: number): { cell: string; side: "top" | "bottom" | "left" | "right" } | null {
+    const layout = this.layoutRef;
+    if (!layout) return null;
+    const pt = this.pointAt(clientX, clientY);
+    const pg = layout.pages[pt.page];
+    if (!pg) return null;
+    const tol = 4 / this.zoomFactor;
+    let best: { cell: string; side: "top" | "bottom" | "left" | "right"; d: number } | null = null;
+    const offer = (cell: string, side: "top" | "bottom" | "left" | "right", d: number) => { if (d <= tol && (!best || d < best.d)) best = { cell, side, d }; };
+    for (const id of pg.frames) {
+      const f = layout.frames[id];
+      if (f.kind !== "cell" || !f.cell || f.story !== this.opts.active) continue;
+      const inY = pt.y >= f.y - tol && pt.y <= f.y + f.h + tol, inX = pt.x >= f.x - tol && pt.x <= f.x + f.w + tol;
+      if (inY) { offer(f.cell, "left", Math.abs(pt.x - f.x)); offer(f.cell, "right", Math.abs(pt.x - (f.x + f.w))); }
+      if (inX) { offer(f.cell, "top", Math.abs(pt.y - f.y)); offer(f.cell, "bottom", Math.abs(pt.y - (f.y + f.h))); }
+    }
+    const b = best as { cell: string; side: "top" | "bottom" | "left" | "right"; d: number } | null;
+    return b ? { cell: b.cell, side: b.side } : null;
   }
 
   /** The bottom border of a table row under a client point (row heights are dragged there). */
@@ -1357,18 +1401,29 @@ export class View {
     for (let i = this.visibleFrom; i <= this.visibleTo; i++) {
       for (const layer of [this.pages[i]?.selLayer, this.pages[i]?.selTop]) if (layer?.firstChild) layer.replaceChildren();
     }
-    const inShape = this.opts.active.startsWith("tx:");
     // A selected picture shows its frame and handles, not a text highlight (Word).
     if (this.opts.image?.picture && !empty && from.p === to.p && to.o - from.o === 1) return;
     const story = this.storyLayout();
     const cells = this.opts.cells;
     if (cells?.size) {
+      // Word shades a selected cell as far down as its text goes (one line when it is empty),
+      // between its gridlines, which stay visible (recorded 2026-10-15).
+      const bottoms = new Map<number, number>();
+      for (const pl of story.placed) {
+        const ln = story.paras[pl.para]?.lines[pl.line];
+        if (!ln || pl.hide) continue;
+        const b = pl.y + (ln.rowHeight ?? ln.height);
+        if (b > (bottoms.get(pl.frame) ?? -Infinity)) bottoms.set(pl.frame, b);
+      }
+      // Half a pixel off each gridline (they are about 0.7 px wide at 100 %).
+      const gap = 0.5 / this.zoomFactor;
       for (const fr of layout.frames) {
         if (fr.kind !== "cell" || !fr.cell || !cells.has(fr.cell) || fr.story !== this.opts.active) continue;
         if (fr.page < this.visibleFrom || fr.page > this.visibleTo) continue;
+        const bottom = Math.min(fr.y + fr.h, bottoms.get(fr.id) ?? fr.y + fr.h);
         const r = document.createElement("div");
-        r.style.cssText = `position:absolute;background:${SELECTION_COLOR};left:${fr.x}px;top:${fr.y}px;width:${fr.w}px;height:${fr.h}px`;
-        this.pages[fr.page].selLayer.append(r);
+        r.style.cssText = `position:absolute;background:${SELECTION_COLOR};left:${fr.x + gap}px;top:${fr.y + gap}px;width:${Math.max(0, fr.w - 2 * gap)}px;height:${Math.max(0, bottom - fr.y - (bottom >= fr.y + fr.h ? 2 : 1) * gap)}px`;
+        this.pages[fr.page].selTop.append(r);
       }
     } else if (!empty) {
       for (let p = from.p; p <= to.p; p++) {
@@ -1388,9 +1443,10 @@ export class View {
           let x2 = ln.charX[b - ln.start];
           if (includesBreak) x2 += 7;
           const r = document.createElement("div");
+          // On top of the text, multiplied: visible over highlighting, shading, coloured text and
+          // page colour alike (behind them a highlight hid it), as Word's grey.
           r.style.cssText = `position:absolute;background:${SELECTION_COLOR};left:${pl.x + ln.x0 + x1}px;top:${pl.y}px;width:${Math.max(0, x2 - x1)}px;height:${ln.rowHeight ?? ln.height}px`;
-          if (inShape) r.style.mixBlendMode = "multiply";
-          (inShape ? this.pages[pl.page].selTop : this.pages[pl.page].selLayer).append(r);
+          this.pages[pl.page].selTop.append(r);
         }
       }
     }
@@ -1505,6 +1561,13 @@ export class View {
     const h = this.fonts.lineHeight(c.font, c.size) * PT;
     const a = this.fonts.ascent(c.font, c.size) * PT;
     return { page: pl.page, x: pl.x + line.x0 + line.charX[o - line.start], y: pl.y + line.baseline - a, h };
+  }
+
+  /** A point of a page (page px) in client coordinates (the pages may stand centred). */
+  pageToClient(page: number, x: number, y: number): { x: number; y: number } {
+    const rect = this.sizer.getBoundingClientRect();
+    const z = this.zoomFactor;
+    return { x: rect.left + (this.pageLeft(page) + x) * z, y: rect.top + (this.pageTop(page) + y) * z };
   }
 
   clientPoint(pos: Pos, upstream = false): { x: number; y: number; h: number } {

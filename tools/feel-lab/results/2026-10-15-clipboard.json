@@ -1,0 +1,189 @@
+{
+ "word-to-raabe": [],
+ "raabe-to-word": [],
+ "original": [
+  {
+   "text": "Material",
+   "style": "Standard",
+   "list": "",
+   "level": 0,
+   "indent": 0.0,
+   "first": 0.0
+  },
+  {
+   "text": "Becherglas",
+   "style": "Listenabsatz",
+   "list": "",
+   "level": 1,
+   "indent": 36.0,
+   "first": -18.0,
+   "font": "Symbol"
+  },
+  {
+   "text": "Wasser",
+   "style": "Listenabsatz",
+   "list": "",
+   "level": 1,
+   "indent": 36.0,
+   "first": -18.0,
+   "font": "Symbol"
+  },
+  {
+   "text": "Leitungswasser",
+   "style": "Listenabsatz",
+   "list": "o",
+   "level": 2,
+   "indent": 72.0,
+   "first": -18.0,
+   "font": "Courier New"
+  },
+  {
+   "text": "Salz",
+   "style": "Listenabsatz",
+   "list": "",
+   "level": 1,
+   "indent": 36.0,
+   "first": -18.0,
+   "font": "Symbol"
+  },
+  {
+   "text": "Ablauf",
+   "style": "Standard",
+   "list": "",
+   "level": 0,
+   "indent": 0.0,
+   "first": 0.0
+  },
+  {
+   "text": "Wasser einfüllen",
+   "style": "Listenabsatz",
+   "list": "1.",
+   "level": 1,
+   "indent": 36.0,
+   "first": -18.0,
+   "font": ""
+  },
+  {
+   "text": "Salz zugeben",
+   "style": "Listenabsatz",
+   "list": "a.",
+   "level": 2,
+   "indent": 72.0,
+   "first": -18.0,
+   "font": ""
+  },
+  {
+   "text": "Umrühren",
+   "style": "Listenabsatz",
+   "list": "2.",
+   "level": 1,
+   "indent": 36.0,
+   "first": -18.0,
+   "font": ""
+  },
+  {
+   "text": "Gliederung",
+   "style": "Standard",
+   "list": "",
+   "level": 0,
+   "indent": 0.0,
+   "first": 0.0
+  },
+  {
+   "text": "Einleitung",
+   "style": "Listenabsatz",
+   "list": "I.",
+   "level": 1,
+   "indent": 36.0,
+   "first": -9.0,
+   "font": ""
+  },
+  {
+   "text": "Hauptteil",
+   "style": "Listenabsatz",
+   "list": "II.",
+   "level": 1,
+   "indent": 36.0,
+   "first": -9.0,
+   "font": ""
+  },
+  {
+   "text": "Eingerückter Absatz mit Text.",
+   "style": "Standard",
+   "list": "",
+   "level": 0,
+   "indent": 42.5,
+   "first": 14.2
+  },
+  {
+   "text": "Tabelle",
+   "style": "Standard",
+   "list": "",
+   "level": 0,
+   "indent": 0.0,
+   "first": 0.0
+  },
+  {
+   "text": "Z1S1",
+   "style": "Standard",
+   "list": "",
+   "level": 0,
+   "indent": 0.0,
+   "first": 0.0,
+   "width": 60.0
+  },
+  {
+   "text": "Z1S2",
+   "style": "Standard",
+   "list": "",
+   "level": 0,
+   "indent": 0.0,
+   "first": 0.0,
+   "width": 220.0
+  },
+  {
+   "text": "Z1S3",
+   "style": "Standard",
+   "list": "",
+   "level": 0,
+   "indent": 0.0,
+   "first": 0.0,
+   "width": 120.0
+  },
+  {
+   "text": "Z2S1",
+   "style": "Standard",
+   "list": "",
+   "level": 0,
+   "indent": 0.0,
+   "first": 0.0,
+   "width": 60.0
+  },
+  {
+   "text": "Z2S2",
+   "style": "Standard",
+   "list": "",
+   "level": 0,
+   "indent": 0.0,
+   "first": 0.0,
+   "width": 220.0
+  },
+  {
+   "text": "Z2S3",
+   "style": "Standard",
+   "list": "",
+   "level": 0,
+   "indent": 0.0,
+   "first": 0.0,
+   "width": 120.0
+  },
+  {
+   "text": "Ende",
+   "style": "Standard",
+   "list": "",
+   "level": 0,
+   "indent": 0.0,
+   "first": 0.0
+  }
+ ]
+}

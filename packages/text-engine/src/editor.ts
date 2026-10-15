@@ -13,7 +13,7 @@ import {
   EMPTY, LINE_BREAK, OBJ, PAGE_BREAK, insertionProps, intern, joinParas, makePara, propsAt, type Align, type CharProps, type LineRule,
   type Para, type ParaGroup, type ParaProps, type Section,
 } from "./model";
-import { GERMAN_NAMES, builtinStyle, defaultStyleSheet, type ResolvedChar, type ResolvedPara, type StyleDef, type Theme } from "./styles";
+import { GERMAN_NAMES, builtinStyle, defaultStyleSheet, type ResolvedChar, type ResolvedPara, type StyleDef, type StyleSheet, type Theme } from "./styles";
 import { View, imageUrl, storyIdOf, type RenderOptions, type Selection, type TextMark } from "./view";
 import * as E from "./edits";
 import { fromHtml, toHtml } from "./html";
@@ -142,8 +142,31 @@ export const FONT_STEPS = [8, 9, 10, 10.5, 11, 12, 14, 16, 18, 20, 22, 24, 26, 2
 /** Schriftgrad vergrößern/verkleinern skip 10.5 (measured: 11 shrinks to 10). */
 const GROW_STEPS = FONT_STEPS.filter((x) => x !== 10.5);
 
+/**
+ * A drawn pointer as sharp as the system's at every display scale: the SVG (its body in a
+ * `size` × `size` viewBox) at 1×, 1.5× and 2×, the hot spot in CSS pixels.
+ */
+function sharpCursor(body: string, size: number, hx: number, hy: number, fallback: string): string {
+  const svg = (px: number) => `url("data:image/svg+xml,${encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${px}" height="${px}" viewBox="0 0 ${size} ${size}">${body}</svg>`)}")`;
+  const set = `image-set(${svg(size)} 1x, ${svg(size * 1.5)} 1.5x, ${svg(size * 2)} 2x) ${hx} ${hy}, ${fallback}`;
+  return typeof CSS !== "undefined" && CSS.supports("cursor", set) ? set : `${svg(size)} ${hx} ${hy}, ${fallback}`;
+}
+
+/** Word's pointers for a table's column and row borders (two lines with arrows); Chromium's own
+ * col-resize/row-resize are small bitmaps that blur at 150 %. */
+const COL_CURSOR = sharpCursor('<path d="M14.5 6v20M17.5 6v20" stroke="#fff" stroke-width="3"/><path d="M14.5 6v20M17.5 6v20" stroke="#000" stroke-width="1"/>' +
+  '<path d="M4 16l5-4v2.5h4v3H9V20z M28 16l-5-4v2.5h-4v3h4V20z" fill="#000" stroke="#fff" stroke-width="1" stroke-linejoin="round"/>', 32, 16, 16, "col-resize");
+const ROW_CURSOR = sharpCursor('<path d="M6 14.5h20M6 17.5h20" stroke="#fff" stroke-width="3"/><path d="M6 14.5h20M6 17.5h20" stroke="#000" stroke-width="1"/>' +
+  '<path d="M16 4l-4 5h2.5v4h3V9H20z M16 28l-4-5h2.5v-4h3v4H20z" fill="#000" stroke="#fff" stroke-width="1" stroke-linejoin="round"/>', 32, 16, 16, "row-resize");
+
+/** Word's pen pointer for Rahmen übertragen (tip at the bottom left). */
+const PEN_CURSOR = sharpCursor('<path d="M3 21l1.5-5L17 3.5l3.5 3.5L8 19.5z" fill="#fff" stroke="#000" stroke-width="1.3" stroke-linejoin="round"/><path d="M4.5 16l3.5 3.5" stroke="#000" stroke-width="1.3"/><path d="M3 21l1.2-.4" stroke="#000" stroke-width="2"/>', 24, 3, 21, "crosshair");
+/** Word's pipette pointer for the Rahmenpipette (tip at the bottom left). */
+const PIPETTE_CURSOR = sharpCursor('<path d="M3 21l1-4 9-9 3 3-9 9z" fill="#fff" stroke="#000" stroke-width="1.3" stroke-linejoin="round"/><path d="M12.5 6.5l2-2a2.1 2.1 0 0 1 3 3l-2 2" fill="#000" stroke="#000" stroke-width="1.3"/><path d="M11 7l6 6" stroke="#000" stroke-width="1.6"/>', 24, 3, 21, "crosshair");
+
 /** Word's rotation pointer: a circular arrow (hot spot in the middle). */
-const ROTATE_CURSOR = `url("data:image/svg+xml,${encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M18 9.5A6.5 6.5 0 1 0 19 14" stroke="#fff" stroke-width="4"/><path d="M19.5 4.5v5h-5" stroke="#fff" stroke-width="4"/><path d="M18 9.5A6.5 6.5 0 1 0 19 14" stroke="#000" stroke-width="1.6"/><path d="M19.5 4.5v5h-5" stroke="#000" stroke-width="1.6"/></g></svg>')}") 12 12, pointer`;
+const ROTATE_CURSOR = sharpCursor('<g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M18 9.5A6.5 6.5 0 1 0 19 14" stroke="#fff" stroke-width="4"/><path d="M19.5 4.5v5h-5" stroke="#fff" stroke-width="4"/><path d="M18 9.5A6.5 6.5 0 1 0 19 14" stroke="#000" stroke-width="1.6"/><path d="M19.5 4.5v5h-5" stroke="#000" stroke-width="1.6"/></g>', 24, 12, 12, "pointer");
 
 const HANDLE_DIRS: Record<string, number> = { e: 0, se: 45, s: 90, sw: 135, w: 180, nw: 225, n: 270, ne: 315 };
 
@@ -159,7 +182,7 @@ function handleCursor(hd: string, rotation: number): string {
 }
 
 /** Word's pen cursor for Transparente Farbe bestimmen (tip at the hot spot, bottom left). */
-const PICK_CURSOR = `url("data:image/svg+xml,${encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path d="M3 29l2-7L21 6l5 5-16 16z" fill="#fff" stroke="#000" stroke-width="1.5" stroke-linejoin="round"/><path d="M5 22l5 5" stroke="#000" stroke-width="1.5"/><path d="M3 29l2.2-1" stroke="#000" stroke-width="2"/></svg>')}") 3 29, crosshair`;
+const PICK_CURSOR = sharpCursor('<path d="M3 29l2-7L21 6l5 5-16 16z" fill="#fff" stroke="#000" stroke-width="1.5" stroke-linejoin="round"/><path d="M5 22l5 5" stroke="#000" stroke-width="1.5"/><path d="M3 29l2.2-1" stroke="#000" stroke-width="2"/>', 32, 3, 29, "crosshair");
 
 let clipboardFragment: {
   text: string; paras: Para[]; source: Editor;
@@ -179,9 +202,8 @@ const MIRRORED_ARROW = (() => {
   return typeof CSS !== "undefined" && CSS.supports("cursor", set) ? set : `${svg(32)} 19 1, default`;
 })();
 
-const BRUSH_CURSOR = `url("data:image/svg+xml,${encodeURIComponent(
-  '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="24"><path d="M2 2v20M2 2h3M2 22h3" stroke="black" stroke-width="1.5" fill="none"/>' +
-  '<path d="M8 4h9v5H8z" fill="white" stroke="black"/><path d="M12 9v4h1v6" stroke="black" fill="none"/></svg>')}") 2 12, text`;
+const BRUSH_CURSOR = sharpCursor('<path d="M2 2v20M2 2h3M2 22h3" stroke="black" stroke-width="1.5" fill="none"/>' +
+  '<path d="M8 4h9v5H8z" fill="white" stroke="black"/><path d="M12 9v4h1v6" stroke="black" fill="none"/>', 24, 2, 12, "text");
 
 /** A tool of the Formen gallery: preset geometry (or a freeform tool) and what it starts with. */
 export interface DrawTool {
@@ -1033,8 +1055,9 @@ export class Editor {
       to = { p: to.p - 1, o: paras[to.p - 1].text.length };
     }
     const a = paras[from.p]?.cell, b = paras[to.p]?.cell;
-    if (from.p === to.p || (!a && !b)) return undefined;
-    if (a && b && a.table.id === b.table.id && a.row === b.row && a.col === b.col) return undefined;
+    // One whole cell (Zelle auswählen) is a cell selection too.
+    if ((from.p === to.p && !(this.cellsInclusive && a)) || (!a && !b)) return undefined;
+    if (a && b && a.table.id === b.table.id && a.row === b.row && a.col === b.col) return this.cellsInclusive ? new Set([`${a.table.id}:${a.row}:${a.col}`]) : undefined;
     if (a && b && a.table.id === b.table.id) {
       // Word selects a block: the rows and columns between the two cells.
       const r1 = Math.min(a.row, b.row), r2 = Math.max(a.row, b.row), c1 = Math.min(a.col, b.col), c2 = Math.max(a.col, b.col);
@@ -1637,7 +1660,7 @@ export class Editor {
    * A copy of a paragraph piece that is safe to paste elsewhere: no bookmarks, and objects
    * that must stay unique (comment references, revisions …) become their plain text.
    */
-  private portable(p: Para, keep = (k: string) => k === "field" || k === "link" || k === "image"): Para {
+  private portable(p: Para, keep = (k: string) => k === "field" || k === "link" || k === "image" || k === "math"): Para {
     if (!(p.objects ?? []).some((o) => !keep(o.kind))) return { ...p, anchors: undefined };
     let text = "";
     const runs: { len: number; props: CharProps }[] = [];
@@ -1929,8 +1952,59 @@ export class Editor {
   }
 
   updateTable(change: (def: TableDef) => TableDef): void {
+    this.endTableStylePreview();
     const keep = this.sel;
     this.tableOp((p) => { E.updateTable(this.doc, p, change); });
+    this.sel = keep;
+    this.requireFonts();
+    this.update();
+  }
+
+  /** The style sheet and table style before a gallery preview (restored when it ends). */
+  private tableStylePreview: { styles: StyleSheet; style: string | undefined } | null = null;
+
+  /** The style sheet with `def` (and the built-ins it is based on). */
+  private withTableStyle(def: StyleDef): StyleSheet {
+    let sheet = this.doc.styles;
+    if (!sheet.get(def.id)) sheet = sheet.withStyle(def);
+    for (let cur = def.basedOn, guard = 0; cur && guard < 10 && !sheet.get(cur); guard++) {
+      const b = builtinStyle(BUILTIN_NAME_BY_ID[cur] ?? cur);
+      if (!b) break;
+      sheet = sheet.withStyle(b);
+      cur = b.basedOn;
+    }
+    return sheet;
+  }
+
+  /** Livevorschau: the table at the caret in a gallery's style (null ends the preview). */
+  previewTableStyle(def: StyleDef | null): void {
+    if (!def) { this.endTableStylePreview(); return; }
+    const t = E.tableAt(this.doc, this.sel.head.p);
+    if (!t) return;
+    if (!this.tableStylePreview) this.tableStylePreview = { styles: this.doc.styles, style: t.def.style };
+    this.doc.setStyles(this.tableStylePreview.styles);
+    this.doc.setStyles(this.withTableStyle(def));
+    E.updateTable(this.doc, this.sel.head.p, (d) => ({ ...d, style: def.id }));
+    this.update();
+  }
+
+  private endTableStylePreview(): void {
+    const pv = this.tableStylePreview;
+    if (!pv) return;
+    this.tableStylePreview = null;
+    this.doc.setStyles(pv.styles);
+    if (E.tableAt(this.doc, this.sel.head.p)) E.updateTable(this.doc, this.sel.head.p, (d) => ({ ...d, style: pv.style }));
+    this.update();
+  }
+
+  /** Tabellenformatvorlagen: the table at the caret gets a style (added from Word's definition). */
+  applyTableStyle(def: StyleDef | null): void {
+    this.endTableStylePreview();
+    if (!E.tableAt(this.doc, this.sel.head.p)) return;
+    this.snapshot();
+    if (def) this.doc.setStyles(this.withTableStyle(def));
+    const keep = this.sel;
+    E.updateTable(this.doc, this.sel.head.p, (d) => ({ ...d, style: def?.id }));
     this.sel = keep;
     this.requireFonts();
     this.update();
@@ -2332,15 +2406,36 @@ export class Editor {
   }
 
   applyCharStyle(id: string): void {
+    this.previewStyle(null);
     this.ensureStyle(id);
+    // A Formatvorlage replaces the direct formatting cleanly (D-053: unlike Word, which keeps some).
+    const style = this.doc.styles.get(id);
+    const plainDefault = style?.isDefault && style.type === "character";
     const r = this.formatRange();
     if (!r) {
       const h = this.sel.head;
-      this.pending = intern({ ...(this.pending ?? typedProps(this.doc.paras[h.p], h.o)), rStyle: id });
+      const base = this.plainChars(this.pending ?? typedProps(this.doc.paras[h.p], h.o));
+      this.pending = intern({ ...base, rStyle: plainDefault ? base.rStyle : id });
       this.emit(false);
       return;
     }
-    this.edit(() => this.doc.mapChars(r[0], r[1], (old) => ({ ...old, rStyle: id })), false);
+    this.edit(() => this.doc.mapChars(r[0], r[1], (old) => { const c = this.plainChars(old); return intern({ ...c, rStyle: plainDefault ? c.rStyle : id }); }), false);
+  }
+
+  /** Character styles that belong to what the text is (links, note and comment marks): kept by a reset. */
+  private structuralCharStyle(id: string | undefined): boolean {
+    if (!id) return false;
+    const name = this.doc.styles.get(id)?.name ?? id;
+    return ["Hyperlink", "FollowedHyperlink", "footnote reference", "endnote reference", "annotation reference", "line number", "Placeholder Text"].includes(name);
+  }
+
+  /**
+   * Character properties without direct formatting (font, size, colour, highlighting, effects …):
+   * what a Formatvorlage leaves (D-053). Language, proofing, revision marks, unknown properties
+   * and the character styles of links and note marks stay.
+   */
+  private plainChars(old: CharProps): CharProps {
+    return intern({ lang: old.lang, noProof: old.noProof, rev: old.rev, extra: old.extra, rStyle: this.structuralCharStyle(old.rStyle) ? old.rStyle : undefined });
   }
 
   changeCase(mode: CaseMode | "cycle"): void {
@@ -2454,13 +2549,45 @@ export class Editor {
 
   /** Applies a paragraph style; direct paragraph formatting is removed (numbering stays). */
   applyParaStyle(id: string): void {
+    this.previewStyle(null);
     const [a, b] = this.paraRangeIdx();
     this.snapshot();
     this.typing = false;
-    this.ensureStyle(id);
-    this.doc.mapParas(a, b, (old) => ({ style: id, extra: old.extra, outline: undefined }));
+    this.styleParas(id, a, b);
     this.requireFonts();
     this.update({ scroll: true });
+  }
+
+  /** A paragraph style on paragraphs a..b; their direct character formatting goes, cleanly (D-053). */
+  private styleParas(id: string, a: number, b: number): void {
+    this.ensureStyle(id);
+    this.doc.mapParas(a, b, (old) => ({ style: id, extra: old.extra, outline: undefined }));
+    const last = this.doc.paras[b];
+    this.doc.mapChars({ p: a, o: 0 }, { p: b, o: last.text.length }, (old) => this.plainChars(old));
+    this.doc.paras = this.doc.paras.map((p, i) => (i >= a && i <= b && !p.block ? { ...p, mark: this.plainChars(p.mark) } : p));
+  }
+
+  /** The text and styles before a gallery's Livevorschau (restored when it ends). */
+  private stylePreviewState: { paras: Para[]; styles: StyleSheet } | null = null;
+
+  /**
+   * Livevorschau of a Formatvorlage (the gallery entry under the mouse): applied as a click
+   * would, without an undo step; null puts everything back.
+   */
+  previewStyle(id: string | null, type: "paragraph" | "character" = "paragraph"): void {
+    const pv = this.stylePreviewState;
+    if (pv) { this.doc.paras = pv.paras; this.doc.setStyles(pv.styles); }
+    if (id === null) { if (pv) { this.stylePreviewState = null; this.update(); } return; }
+    this.stylePreviewState = pv ?? { paras: this.doc.paras, styles: this.doc.styles };
+    if (type === "paragraph") {
+      const [a, b] = this.paraRangeIdx();
+      this.styleParas(id, a, b);
+    } else {
+      const r = this.formatRange();
+      if (r) { this.ensureStyle(id); this.doc.mapChars(r[0], r[1], (old) => intern({ ...this.plainChars(old), rStyle: id })); }
+    }
+    this.requireFonts();
+    this.update();
   }
 
   // ----- Formatvorlagen (pane, Formatvorlage ändern, Neue Formatvorlage) ------------------------
@@ -2896,6 +3023,71 @@ export class Editor {
   }
 
   /** The selection covers every cell of its table. */
+  /**
+   * What the selected cells make up: whole rows, whole columns, the whole table or other
+   * cells (Word's Rücktaste deletes the first three and asks for the last).
+   */
+  selectedCellsKind(): { kind: "rows" | "columns" | "table" | "cells"; block: E.CellBlock } | null {
+    const cells = this.selectedCells();
+    const b = this.cellBlock();
+    const def = this.doc.paras[this.sel.head.p]?.cell?.table;
+    if (!cells || !b || !def) return null;
+    const has = (r: number, c: number) => cells.has(`${def.id}:${r}:${c}`);
+    const rows = [...new Set([...cells].map((k) => Number(k.split(":")[1])))];
+    const fullRows = rows.every((r) => def.rows[r].cells.every((_, c) => has(r, c)));
+    const block = { r1: b.r1, r2: b.r2, c1: b.c1, c2: b.c2 };
+    if (fullRows && rows.length === def.rows.length) return { kind: "table", block };
+    if (fullRows) return { kind: "rows", block };
+    const cols = [...new Set([...cells].map((k) => Number(k.split(":")[2])))];
+    if (cols.every((c) => def.rows.every((row, r) => c >= row.cells.length || has(r, c)))) return { kind: "columns", block };
+    return { kind: "cells", block };
+  }
+
+  /** The host's Zellen löschen dialog (Rücktaste on cells that are not whole rows or columns). */
+  onDeleteCells: (() => void) | null = null;
+
+  /** Rücktaste on selected cells: rows, columns or the table go; other cells ask (Word). */
+  private backspaceCells(): boolean {
+    const k = this.selectedCellsKind();
+    if (!k || this.doc.settings.trackChanges) return false;
+    if (k.kind === "table") this.deleteTable();
+    else if (k.kind === "rows") this.deleteRows();
+    else if (k.kind === "columns") this.deleteColumns();
+    else if (this.onDeleteCells) this.onDeleteCells();
+    else this.deleteCells("left");
+    return true;
+  }
+
+  /** Entf on selected cells: their contents go, the cells stay selected (Word). */
+  private clearSelectedCells(): boolean {
+    const k = this.selectedCellsKind();
+    if (!k || this.doc.settings.trackChanges) return false;
+    const [from] = this.range();
+    const t = E.tableAt(this.doc, from.p);
+    if (!t) return false;
+    this.snapshot();
+    this.typing = false;
+    E.clearCells(this.doc, from.p, k.block);
+    const def = this.doc.paras[t.a].cell!.table;
+    const first = E.firstOfCell(this.doc, t.a, k.block.r1, k.block.c1);
+    const lastRow = def.rows[k.block.r2];
+    const last = E.firstOfCell(this.doc, t.a, k.block.r2, Math.min(k.block.c2, lastRow.cells.length - 1));
+    this.setSel(first, { p: last.p, o: this.doc.paras[last.p].text.length });
+    this.cellsInclusive = true;
+    this.update();
+    return true;
+  }
+
+  /** Zellen löschen: "left"/"up" shift the cells, "row"/"column" delete them whole. */
+  deleteCells(mode: "left" | "up" | "row" | "column"): void {
+    if (mode === "row") { this.deleteRows(); return; }
+    if (mode === "column") { this.deleteColumns(); return; }
+    const b = this.cellBlock();
+    if (!b) return;
+    const block = { r1: b.r1, r2: b.r2, c1: b.c1, c2: b.c2 };
+    this.tableOp((p) => E.deleteCells(this.doc, p, block, mode));
+  }
+
   wholeTableSelected(): boolean {
     const b = this.cellBlock();
     const def = this.doc.paras[this.sel.head.p]?.cell?.table;
@@ -3165,6 +3357,108 @@ export class Editor {
     });
   }
 
+  // ----- Rahmen übertragen and Rahmenpipette (Tabellenentwurf > Rahmen) --------------------------
+
+  /** The border painter's pen, or the pipette waiting for a click (Word's pen and pipette). */
+  private borderPen: { pen: BorderSpec; sampler: boolean; picked?: (b: BorderSpec) => void } | null = null;
+  /** Told when the painter or the pipette starts or ends (the ribbon's buttons). */
+  onBorderPainter: (() => void) | null = null;
+
+  get borderPainting(): boolean { return !!this.borderPen && !this.borderPen.sampler; }
+  get borderSampling(): boolean { return !!this.borderPen?.sampler; }
+
+  /** Rahmen übertragen: clicks (and drags) on cell edges give them the pen's line. */
+  startBorderPainter(pen: BorderSpec): void {
+    this.borderPen = { pen, sampler: false };
+    this.onBorderPainter?.();
+  }
+
+  /** Rahmenpipette: the next click on a cell edge picks its line. */
+  startBorderSampler(picked: (b: BorderSpec) => void): void {
+    this.borderPen = { pen: { style: "single", size: 0.5, color: "auto", space: 0 }, sampler: true, picked };
+    this.onBorderPainter?.();
+  }
+
+  stopBorderPainter(): void {
+    if (!this.borderPen) return;
+    this.borderPen = null;
+    this.workspace.style.cursor = "";
+    this.onBorderPainter?.();
+  }
+
+  /** A cell's paragraph (its first) by cell key "table:row:col". */
+  private cellPara(key: string): number {
+    const [tid, r, c] = key.split(":").map(Number);
+    return this.doc.paras.findIndex((x) => x.cell && x.cell.table.id === tid && x.cell.row === r && x.cell.col === c);
+  }
+
+  /** The line a cell edge shows: the cell's own, else the table's, else its style's. */
+  private edgeSpec(key: string, side: "top" | "bottom" | "left" | "right"): BorderSpec | undefined {
+    const p = this.cellPara(key);
+    const ref = this.doc.paras[p]?.cell;
+    if (!ref) return undefined;
+    const def = ref.table, cd = def.rows[ref.row].cells[ref.col];
+    const own = cd.borders?.[side];
+    if (own) return own;
+    const outer = side === "top" ? ref.row === 0 : side === "bottom" ? ref.row === def.rows.length - 1 : side === "left" ? ref.col === 0 : ref.col === def.rows[ref.row].cells.length - 1;
+    const pick = (b: Borders | undefined) => (b ? (outer ? b[side] : side === "top" || side === "bottom" ? b.insideH ?? b[side] : b.insideV ?? b[side]) : undefined);
+    return pick(def.borders) ?? pick(this.doc.styles.tableStyle(def.style)?.borders);
+  }
+
+  private penOnEdge(edge: { cell: string; side: "top" | "bottom" | "left" | "right" }, e: MouseEvent): void {
+    const bp = this.borderPen!;
+    if (bp.sampler) {
+      const spec = this.edgeSpec(edge.cell, edge.side) ?? { style: "nil", size: 0, color: "auto", space: 0 };
+      const picked = bp.picked;
+      this.borderPen = null;
+      picked?.(spec);
+      this.onBorderPainter?.();
+      return;
+    }
+    this.snapshot();
+    const done = new Set<string>();
+    const paint = (ed: { cell: string; side: "top" | "bottom" | "left" | "right" }) => {
+      const k = `${ed.cell}|${ed.side}`;
+      if (done.has(k)) return;
+      done.add(k);
+      this.paintEdge(ed.cell, ed.side, bp.pen);
+      this.update();
+    };
+    paint(edge);
+    const move = (ev: MouseEvent) => { const ed = this.view.cellEdgeAt(ev.clientX, ev.clientY); if (ed) paint(ed); };
+    const up = () => { removeEventListener("mousemove", move, true); removeEventListener("mouseup", up, true); this.emit(true); };
+    addEventListener("mousemove", move, true);
+    addEventListener("mouseup", up, true);
+    void e;
+  }
+
+  /** One cell edge with the pen's line, and the same edge of the neighbouring cell. */
+  private paintEdge(key: string, side: "top" | "bottom" | "left" | "right", pen: BorderSpec): void {
+    const p = this.cellPara(key);
+    const ref = this.doc.paras[p]?.cell;
+    if (!ref) return;
+    const def = ref.table;
+    const set = (r: number, c: number, s: "top" | "bottom" | "left" | "right") => {
+      if (r < 0 || r >= def.rows.length || c < 0 || c >= def.rows[r].cells.length) return;
+      const q = this.cellPara(`${def.id}:${r}:${c}`);
+      if (q < 0) return;
+      E.updateCells(this.doc, q, q, (cd) => ({ ...cd, borders: { ...(cd.borders ?? {}), [s]: pen } }));
+    };
+    const gx = def.rows[ref.row].cells.slice(0, ref.col).reduce((s, c) => s + Math.max(1, c.span), 0);
+    const at = (r: number) => {
+      const row = def.rows[r];
+      if (!row) return -1;
+      let x = 0;
+      for (let c = 0; c < row.cells.length; c++) { const sp = Math.max(1, row.cells[c].span); if (gx >= x && gx < x + sp) return c; x += sp; }
+      return -1;
+    };
+    set(ref.row, ref.col, side);
+    if (side === "left") set(ref.row, ref.col - 1, "right");
+    if (side === "right") set(ref.row, ref.col + 1, "left");
+    if (side === "top") set(ref.row - 1, at(ref.row - 1), "bottom");
+    if (side === "bottom") set(ref.row + 1, at(ref.row + 1), "top");
+  }
+
   /** Transparente Farbe bestimmen: the next click on the selected picture picks the colour. */
   private pickingColor = false;
 
@@ -3373,10 +3667,7 @@ export class Editor {
   private dragRotate(): void {
     const box = this.imageBox();
     if (!box) return;
-    const ws = this.workspace.getBoundingClientRect();
-    const z = this.view.zoom;
-    const cx = ws.left + (this.view.pageLeft(box.page) + box.x + box.w / 2) * z - this.workspace.scrollLeft;
-    const cy = ws.top + (this.view.pageTop(box.page) + box.y + box.h / 2) * z - this.workspace.scrollTop;
+    const { x: cx, y: cy } = this.view.pageToClient(box.page, box.x + box.w / 2, box.y + box.h / 2);
     let first = true;
     const move = (ev: MouseEvent) => {
       let a = (Math.atan2(ev.clientY - cy, ev.clientX - cx) * 180) / Math.PI + 90;
@@ -5394,7 +5685,7 @@ cropFill(fit: boolean): void {
    * Extends the selection; once it reaches another cell of the same table it covers whole
    * cells, as in Word (the end then sits at the start of the cell after the last one).
    */
-  private extendTo(moved: Pos, forward: boolean): void {
+  private extendTo(moved: Pos, forward: boolean, mouse = false): void {
     const anchor = this.cellAnchor ?? this.sel.anchor;
     const paras = this.doc.paras;
     const ac = paras[anchor.p]?.cell, hc = paras[moved.p]?.cell;
@@ -5409,6 +5700,14 @@ cropFill(fit: boolean): void {
     };
     const down = cmp(moved, anchor) > 0;
     const set = (a: Pos, h: Pos) => { this.setSel(a, h); this.cellAnchor = anchor; };
+    if (mouse && ac && hc && ac.table.id === hc.table.id && !(ac.row === hc.row && ac.col === hc.col)) {
+      // The mouse in another cell: both cells and all between them, whole (Word switches as
+      // soon as the pointer crosses the gridline, recorded 2026-10-15).
+      const lastOf = (i: number): Pos => { const c = paras[i].cell!; let j = i; while (j + 1 < paras.length && sameCell(j + 1, c)) j++; return { p: j, o: paras[j].text.length }; };
+      set(down ? first(anchor.p, sameCell) : lastOf(anchor.p), down ? lastOf(moved.p) : first(moved.p, sameCell));
+      this.cellsInclusive = true;
+      return;
+    }
     if (ac && hc && ac.table.id === hc.table.id && !(ac.row === hc.row && ac.col === hc.col)) {
       // Whole cells. Reaching a cell's start going forward ends the selection after the cell before.
       const a = down ? first(anchor.p, sameCell) : after(anchor.p, sameCell);
@@ -5453,6 +5752,8 @@ cropFill(fit: boolean): void {
     if (e.isComposing) return;
     if (this.interceptKey?.(e)) { e.preventDefault(); return; }
     if (this.pickingColor && e.key === "Escape") { e.preventDefault(); this.pickingColor = false; this.workspace.style.cursor = ""; return; }
+    // Esc ends Rahmen übertragen and the Rahmenpipette (Word).
+    if (this.borderPen && e.key === "Escape") { e.preventDefault(); this.stopBorderPainter(); return; }
     // Lesemodus: moving, selecting and copying only; the arrows and Bild ab/auf turn screens.
     if (this.readOnly) {
       const nav = /^(Arrow|Home$|End$|Page)/.test(e.key);
@@ -5519,8 +5820,8 @@ cropFill(fit: boolean): void {
       }
       case "PageUp": this.page(-1, shift); break;
       case "PageDown": this.page(1, shift); break;
-      case "Backspace": if (!this.deleteFloat()) this.deleteBackward(ctrl, ts); return void e.preventDefault();
-      case "Delete": if (!this.deleteFloat()) this.deleteForward(ctrl, ts); return void e.preventDefault();
+      case "Backspace": if (!this.deleteFloat() && !this.backspaceCells()) this.deleteBackward(ctrl, ts); return void e.preventDefault();
+      case "Delete": if (!this.deleteFloat() && !this.clearSelectedCells()) this.deleteForward(ctrl, ts); return void e.preventDefault();
       case "Enter":
         e.preventDefault();
         this.typing = false;
@@ -5581,6 +5882,9 @@ cropFill(fit: boolean): void {
    * list definitions and RaabeWrite's arrive intact. Without it the browser's clipboard events
    * are used.
    */
+  /** Equations on the clipboard in Word's own form (OMML in its HTML); set by the host. */
+  mathClipboard: { toHtml(obj: InlineObject, alone: boolean): string | undefined; fromOmml(omml: string): InlineObject | null } | null = null;
+
   clipboardHost: { readHtml(): Promise<string>; readImage?(): Promise<Blob | null>; write(text: string, html: string): Promise<void> } | null = null;
 
   /** Each copy or cut (the Office-Zwischenablage collects them): text, HTML, or an object. */
@@ -5664,7 +5968,7 @@ cropFill(fit: boolean): void {
   selectionHtml(): string {
     const [from, to] = this.range();
     const labels = listLabels(this.doc.paras, this.doc.numbering, this.doc.styles).slice(from.p, to.p + 1);
-    return toHtml(this.doc.fragment(from, to), this.doc.styles, this.doc.numbering, labels);
+    return toHtml(this.doc.fragment(from, to), this.doc.styles, this.doc.numbering, labels, this.mathClipboard?.toHtml);
   }
 
   /**
@@ -5717,7 +6021,7 @@ cropFill(fit: boolean): void {
   /** Inserts HTML from another program. */
   pasteHtml(html: string): void {
     const style = (name: string) => { const id = this.styleId(name); this.ensureStyle(id); return id; };
-    const { paras, lists } = fromHtml(html, style);
+    const { paras, lists } = fromHtml(html, style, this.mathClipboard?.fromOmml);
     if (!paras.length) return;
     // Lists: Word's own definitions (symbols, fonts, indents) where the HTML has them, else one
     // numbering per run of list paragraphs of the same kind.
@@ -5787,6 +6091,13 @@ cropFill(fit: boolean): void {
   private onMouseDown(e: MouseEvent): void {
     if (e.button !== 0) return;
     if (this.interceptMouse?.(e)) { e.preventDefault(); return; }
+    // Rahmen übertragen / Rahmenpipette: a click on a cell edge paints (or picks) it.
+    if (this.borderPen && this.storyKey === MAIN) {
+      const edge = this.view.cellEdgeAt(e.clientX, e.clientY);
+      if (edge) { e.preventDefault(); this.penOnEdge(edge, e); return; }
+      if (this.view.tableAt(e.clientX, e.clientY) !== null) { e.preventDefault(); return; }
+      this.stopBorderPainter();
+    }
     // Transparente Farbe bestimmen: this click picks the colour (anywhere else: cancelled).
     if (this.pickingColor) { e.preventDefault(); this.pickColorAt(e.clientX, e.clientY); return; }
     // Einfügen > Formen: the drag draws the chosen shape.
@@ -5826,6 +6137,7 @@ cropFill(fit: boolean): void {
     }
     if (this.storyKey === MAIN && !e.shiftKey && e.detail < 2 && !this.readOnly) {
       const th = this.view.tableHandleAt(e.clientX, e.clientY);
+      if (th?.kind === "layout") { e.preventDefault(); this.showTableLayout(th.table); return; }
       if (th) { this.dragTableHandle(e, th.kind, th.table); return; }
       // Pictures and table borders take the click before the text.
       const handle = this.view.handleAt(e.clientX, e.clientY);
@@ -6298,6 +6610,11 @@ cropFill(fit: boolean): void {
    */
   private hoverCursor(e: MouseEvent): void {
     if (this.painter) return;
+    if (this.borderPen) {
+      const c = this.view.tableAt(e.clientX, e.clientY) !== null ? (this.borderPen.sampler ? PIPETTE_CURSOR : PEN_CURSOR) : "default";
+      if (this.workspace.style.cursor !== c) this.workspace.style.cursor = c;
+      return;
+    }
     if (this.pickingColor) {
       const c = this.view.imageAt(e.clientX, e.clientY) || this.overSelectedImage(e.clientX, e.clientY) ? PICK_CURSOR : "default";
       if (this.workspace.style.cursor !== c) this.workspace.style.cursor = c;
@@ -6308,13 +6625,13 @@ cropFill(fit: boolean): void {
     const tableNow = this.storyKey === MAIN ? this.view.tableAt(e.clientX, e.clientY) : null;
     if (tableNow !== this.hoverTable) { this.hoverTable = tableNow; this.view.render(this.doc, this.layout, this.sel, { active: this.storyKey, cells: this.selectedCells(), image: this.imageOverlay(), table: this.handleTable() }); }
     const th = this.storyKey === MAIN ? this.view.tableHandleAt(e.clientX, e.clientY) : null;
-    if (th) { const c = th.kind === "move" ? "move" : "nwse-resize"; if (this.workspace.style.cursor !== c) this.workspace.style.cursor = c; return; }
+    if (th) { const c = th.kind === "move" ? "move" : th.kind === "layout" ? "default" : "nwse-resize"; if (this.workspace.style.cursor !== c) this.workspace.style.cursor = c; return; }
     if (this.view.pageIndexAt(e.clientX, e.clientY) >= 0) {
       cursor = "text";
       const hd = this.storyKey === MAIN ? this.view.handleAt(e.clientX, e.clientY) : null;
       if (hd) cursor = handleCursor(hd, this.selectedShape()?.obj.pic?.rotation ?? this.selectedImage()?.obj.pic?.rotation ?? 0);
-      else if (this.storyKey === MAIN && this.view.cellBorderAt(e.clientX, e.clientY)) cursor = "col-resize";
-      else if (this.storyKey === MAIN && this.view.rowBorderAt(e.clientX, e.clientY)) cursor = "row-resize";
+      else if (this.storyKey === MAIN && this.view.cellBorderAt(e.clientX, e.clientY)) cursor = COL_CURSOR;
+      else if (this.storyKey === MAIN && this.view.rowBorderAt(e.clientX, e.clientY)) cursor = ROW_CURSOR;
       else if (this.storyKey === MAIN && this.view.imageAt(e.clientX, e.clientY)) cursor = "move";
       else {
         const hit = this.view.hitLine(e.clientX, e.clientY);
@@ -6346,6 +6663,38 @@ cropFill(fit: boolean): void {
    * The table handles: a click on the move handle selects the table, dragging it moves the
    * table sideways (its indent); the sizing handle scales columns and rows together.
    */
+  /** The host shows the table's layout options (Textumbruch, Ausrichtung) at a client rectangle. */
+  onTableLayout: ((rect: DOMRect) => void) | null = null;
+
+  private showTableLayout(tid: number): void {
+    const p = this.paraOfTable(tid);
+    if (p < 0) return;
+    if (this.doc.paras[this.sel.head.p]?.cell?.table.id !== tid) { this.setSel({ p, o: 0 }, { p, o: 0 }); this.update(); }
+    const r = this.view.tableLayoutButtonRect(tid);
+    if (r) this.onTableLayout?.(r);
+  }
+
+  /**
+   * Textumbruch of the table at the caret: "none" puts it back into the text, "around" makes it
+   * a floating table where it is (Word's Umgebend: 0.25 cm from the text on the left and right).
+   */
+  setTableWrap(wrap: "none" | "around"): void {
+    const t = E.tableAt(this.doc, this.sel.head.p);
+    if (!t || (wrap === "around") === !!t.def.float) return;
+    this.updateTable((d) => {
+      if (wrap === "none") return { ...d, float: undefined, indent: d.float && !d.float.xAlign && d.float.hAnchor === "text" ? d.float.x || undefined : d.indent };
+      const align = d.align && d.align !== "left" ? d.align : undefined;
+      return { ...d, float: { x: align ? 0 : d.indent ?? 0, y: 0, xAlign: align, hAnchor: align ? "margin" : "text", vAnchor: "text", left: 7.05, right: 7.05, top: 0, bottom: 0 }, align: undefined, indent: undefined };
+    });
+  }
+
+  /** Ausrichtung of the table at the caret (a floating one keeps floating, aligned to the margins). */
+  setTableAlign(align: "left" | "center" | "right"): void {
+    this.updateTable((d) => (d.float
+      ? { ...d, float: { ...d.float, xAlign: align, x: 0, hAnchor: "margin" } }
+      : { ...d, align: align === "left" ? undefined : align, indent: align === "left" ? d.indent : undefined }));
+  }
+
   private dragTableHandle(e: MouseEvent, kind: "move" | "size", tid: number): void {
     const p = this.paraOfTable(tid);
     if (p < 0) return;
@@ -6355,6 +6704,8 @@ cropFill(fit: boolean): void {
     }
     const def0 = this.doc.paras[p].cell!.table;
     const width0 = def0.grid.reduce((a, b) => a + b, 0);
+    // The table's left edge on the page before the drag (points), for page-anchored moves.
+    const tid0Left = this.tableLeftPt(tid);
     const pl = this.layout.placed[this.layout.firstPlaced[p]];
     const pageH = pl ? this.view.tableBounds(this.layout.pages[pl.page], tid) : null;
     const height0 = pageH ? pageH.h / PT : 0;
@@ -6367,7 +6718,32 @@ cropFill(fit: boolean): void {
       const at = this.paraOfTable(tid);
       if (at < 0) return;
       if (kind === "move") {
-        E.updateTable(this.doc, at, (d) => ({ ...d, indent: Math.round(((def0.indent ?? 0) + dx) * 20) / 20 }));
+        // Word (recorded 2026-10-15): moved sideways only, the table keeps its place in the text
+        // and gets an indent; moved up or down it becomes a floating table (Umgebend) there,
+        // measured from where it stood in the text (sideways too: from the page's edge).
+        const r2 = (v: number) => Math.round(v * 20) / 20;
+        const f0 = def0.float;
+        if (f0) {
+          const left0 = tid0Left;
+          E.updateTable(this.doc, at, (d) => ({
+            ...d, float: {
+              ...f0, xAlign: Math.abs(dx) >= 1 ? undefined : f0.xAlign, yAlign: Math.abs(dy) >= 1 ? undefined : f0.yAlign,
+              hAnchor: Math.abs(dx) >= 1 && f0.xAlign ? "page" : f0.hAnchor,
+              x: Math.abs(dx) >= 1 ? r2((f0.xAlign ? left0 : f0.x) + dx) : f0.x, y: r2(f0.y + dy),
+            },
+          }));
+        } else if (Math.abs(dy) < 2) {
+          E.updateTable(this.doc, at, (d) => ({ ...d, float: undefined, indent: r2((def0.indent ?? 0) + dx) }));
+        } else {
+          const sideways = Math.abs(dx) >= 2;
+          E.updateTable(this.doc, at, (d) => ({
+            ...d, align: undefined, indent: undefined,
+            float: {
+              x: sideways ? r2(tid0Left + dx) : r2(def0.indent ?? 0), y: r2(dy), hAnchor: sideways ? "page" : "text", vAnchor: "text",
+              left: 7.05, right: 7.05, top: 0, bottom: 0,
+            },
+          }));
+        }
       } else {
         const fx = Math.max(0.1, (width0 + dx) / width0);
         const fy = height0 > 0 ? Math.max(0.1, (height0 + dy) / height0) : 1;
@@ -6385,6 +6761,13 @@ cropFill(fit: boolean): void {
     const up = () => { removeEventListener("mousemove", move, true); removeEventListener("mouseup", up, true); this.emit(true); };
     addEventListener("mousemove", move, true);
     addEventListener("mouseup", up, true);
+  }
+
+  /** The left edge of a table's first cell on its page, in points. */
+  private tableLeftPt(tid: number): number {
+    let x = Infinity;
+    for (const f of this.layout.frames) if (f.kind === "cell" && f.cell?.startsWith(`${tid}:`)) x = Math.min(x, f.x);
+    return Number.isFinite(x) ? x / PT : 0;
   }
 
   /** A row's laid-out height in points (from its first cell's frame). */
@@ -6409,6 +6792,14 @@ cropFill(fit: boolean): void {
       const r = this.wordRange(under);
       if (cmp(r[0], o1) >= 0) this.setSel(o1, r[1]); else this.setSel(o2, r[0]);
     } else {
+      // Into another cell, or between a table and the text around it: whole cells or rows.
+      const ac = this.doc.paras[o1.p]?.cell, uc = this.doc.paras[under.p]?.cell;
+      if ((ac || uc) && !(ac && uc && ac.table.id === uc.table.id && ac.row === uc.row && ac.col === uc.col)) {
+        this.cellAnchor = o1;
+        this.extendTo(under, cmp(under, o1) > 0, true);
+        this.update({ inputTs: ts });
+        return;
+      }
       // Word's "automatically select entire word": once the selection leaves the word it
       // started in, both ends snap to whole words.
       const anchor = o1;

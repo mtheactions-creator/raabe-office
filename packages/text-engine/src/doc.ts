@@ -11,6 +11,7 @@ import {
   type TableDef, type ImageData,
 } from "./model";
 import { defaultStyleSheet, type StyleSheet } from "./styles";
+import { seqToLinear } from "./math/linear";
 
 export interface Pos {
   p: number;
@@ -287,7 +288,12 @@ export class Doc {
       let obj = 0;
       for (let i = 0; i < p.text.length && i < b; i++) {
         const ch = p.text[i];
-        if (ch === OBJ) { if (i >= a) out += p.objects?.[obj]?.display ?? ""; obj++; }
+        if (ch === OBJ) {
+          // Equations as Word copies them as text: the linear format ("a/b+x^2").
+          const o = p.objects?.[obj];
+          if (i >= a) out += o?.kind === "math" && o.math ? seqToLinear(o.math) : o?.display ?? "";
+          obj++;
+        }
         else if (i >= a) out += ch === "\u000b" ? "\n" : ch === "\u000c" || ch === "\u000e" ? "" : ch;
       }
       return out;

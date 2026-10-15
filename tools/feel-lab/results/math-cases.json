@@ -1435,6 +1435,366 @@
 "area": "navigate"
 },
 {
+"name": "fraction number before",
+"steps": [
+[
+"type",
+"12/5 "
+]
+],
+"area": "fraction"
+},
+{
+"name": "fraction term before",
+"steps": [
+[
+"type",
+"2x/3 "
+]
+],
+"area": "fraction"
+},
+{
+"name": "fraction after plus",
+"steps": [
+[
+"type",
+"1+2x/3 "
+]
+],
+"area": "fraction"
+},
+{
+"name": "fraction after equals",
+"steps": [
+[
+"type",
+"y=3a/4b "
+]
+],
+"area": "fraction"
+},
+{
+"name": "fraction decimal comma",
+"steps": [
+[
+"type",
+"0,5/2 "
+]
+],
+"area": "fraction"
+},
+{
+"name": "fraction decimal point",
+"steps": [
+[
+"type",
+"2.5/2 "
+]
+],
+"area": "fraction"
+},
+{
+"name": "two fractions",
+"steps": [
+[
+"type",
+"1/2+3/4 "
+]
+],
+"area": "fraction"
+},
+{
+"name": "fraction after power",
+"steps": [
+[
+"type",
+"x^2/3 "
+]
+],
+"area": "fraction"
+},
+{
+"name": "fraction with minus",
+"steps": [
+[
+"type",
+"-x/2 "
+]
+],
+"area": "fraction"
+},
+{
+"name": "fraction greek",
+"steps": [
+[
+"type",
+"\\pi/2 "
+]
+],
+"area": "fraction"
+},
+{
+"name": "fraction greek symbol",
+"steps": [
+[
+"type",
+"2\\pi /3 "
+]
+],
+"area": "fraction"
+},
+{
+"name": "fraction subscript",
+"steps": [
+[
+"type",
+"x_1/2 "
+]
+],
+"area": "fraction"
+},
+{
+"name": "fraction after times",
+"steps": [
+[
+"type",
+"3\\cdot a/b "
+]
+],
+"area": "fraction"
+},
+{
+"name": "fraction denominator brackets",
+"steps": [
+[
+"type",
+"1/(a+b) "
+]
+],
+"area": "fraction"
+},
+{
+"name": "fraction bracket factor",
+"steps": [
+[
+"type",
+"2(a+b)/c "
+]
+],
+"area": "fraction"
+},
+{
+"name": "fraction after function",
+"steps": [
+[
+"type",
+"sin x/2 "
+]
+],
+"area": "fraction"
+},
+{
+"name": "fraction after comma list",
+"steps": [
+[
+"type",
+"a,b/c "
+]
+],
+"area": "fraction"
+},
+{
+"name": "fraction no space yet",
+"steps": [
+[
+"type",
+"2x/3"
+]
+],
+"area": "fraction"
+},
+{
+"name": "fraction then operator",
+"steps": [
+[
+"type",
+"2x/3+1"
+]
+],
+"area": "fraction"
+},
+{
+"name": "quoted text",
+"steps": [
+[
+"type",
+"\"Text\" "
+]
+],
+"area": "text"
+},
+{
+"name": "quoted two words",
+"steps": [
+[
+"type",
+"\"zwei Worte\" "
+]
+],
+"area": "text"
+},
+{
+"name": "quoted after equals",
+"steps": [
+[
+"type",
+"a=\"wenn\" b "
+]
+],
+"area": "text"
+},
+{
+"name": "quoted no space",
+"steps": [
+[
+"type",
+"\"abc\""
+]
+],
+"area": "text"
+},
+{
+"name": "quote open",
+"steps": [
+[
+"type",
+"\"ab"
+]
+],
+"area": "text"
+},
+{
+"name": "quoted then left",
+"steps": [
+[
+"type",
+"\"abc\" "
+],
+[
+"keys",
+"left",
+1
+]
+],
+"area": "text"
+},
+{
+"name": "quoted then left x2",
+"steps": [
+[
+"type",
+"\"abc\" "
+],
+[
+"keys",
+"left",
+2
+]
+],
+"area": "text"
+},
+{
+"name": "quoted then left x4",
+"steps": [
+[
+"type",
+"\"abc\" "
+],
+[
+"keys",
+"left",
+4
+]
+],
+"area": "text"
+},
+{
+"name": "quoted then left x5",
+"steps": [
+[
+"type",
+"\"abc\" "
+],
+[
+"keys",
+"left",
+5
+]
+],
+"area": "text"
+},
+{
+"name": "quoted home right",
+"steps": [
+[
+"type",
+"\"abc\" "
+],
+[
+"keys",
+"home",
+1
+],
+[
+"keys",
+"right",
+1
+]
+],
+"area": "text"
+},
+{
+"name": "quoted backspace",
+"steps": [
+[
+"type",
+"\"abc\" "
+],
+[
+"keys",
+"backspace",
+1
+]
+],
+"area": "text"
+},
+{
+"name": "quoted backspace x2",
+"steps": [
+[
+"type",
+"\"abc\" "
+],
+[
+"keys",
+"backspace",
+2
+]
+],
+"area": "text"
+},
+{
+"name": "quoted then type",
+"steps": [
+[
+"type",
+"\"abc\" x"
+]
+],
+"area": "text"
+},
+{
 "name": "brackets left x2",
 "steps": [
 [

@@ -1,0 +1,2131 @@
+{
+  "meta": {
+    "date": "2026-10-15T15:54:29",
+    "test": "docx-table-float"
+  },
+  "results": {
+    "word-table-float.docx": {
+      "lines_word": 76,
+      "lines_ours": 67,
+      "identical_line_starts": 76,
+      "percent": 100.0,
+      "pages_word": 2,
+      "pages_ours": 2,
+      "page_mismatches": 0,
+      "x": {
+        "max": 454.0,
+        "mean": 24.31,
+        "within_0.5pt": 61,
+        "of": 76
+      },
+      "baseline": {
+        "max": 0.12,
+        "mean": 0.04,
+        "within_0.2pt": 67,
+        "of": 67
+      },
+      "baseline_pdf": {
+        "max": 0.82,
+        "mean": 0.27,
+        "within_0.2pt": 24,
+        "of": 59
+      },
+      "render_vs_model": {
+        "max": 0.71,
+        "mean": 0.25,
+        "within_0.2pt": 25,
+        "of": 65
+      },
+      "box_y": {
+        "max": 40.46,
+        "mean": 2.73,
+        "within_0.5pt": 66,
+        "of": 76
+      },
+      "box_h": {
+        "max": 22.03,
+        "mean": 3.66,
+        "within_0.5pt": 48,
+        "of": 76
+      },
+      "pitch": {
+        "max": 18.02,
+        "within_0.2pt": 73,
+        "of": 74
+      },
+      "only_in_word": [],
+      "only_in_ours": [],
+      "worst": [
+        {
+          "start": 2558,
+          "page": [
+            0,
+            0
+          ],
+          "dx": -454.0,
+          "dy": -28.47,
+          "dh": -8.01,
+          "context": "\nPflanzen nehmen über ihre Blä",
+          "base_ours": 650.88,
+          "base_word": 650.98,
+          "para": 28,
+          "dbase": -0.1,
+          "dpitch": 0.0
+        },
+        {
+          "start": 328,
+          "page": [
+            0,
+            0
+          ],
+          "dx": -302.5,
+          "dy": -34.45,
+          "dh": -8.01,
+          "context": "\nPflanzen nehmen über ihre Blä",
+          "base_ours": 181.14,
+          "base_word": 181.1,
+          "para": 8,
+          "dbase": 0.04,
+          "dpitch": 0.0
+        },
+        {
+          "start": 1447,
+          "page": [
+            0,
+            0
+          ],
+          "dx": -211.0,
+          "dy": -40.46,
+          "dh": -8.01,
+          "context": "\nPflanzen nehmen über ihre Blä",
+          "base_ours": 416.01,
+          "base_word": 415.99,
+          "para": 18,
+          "dbase": 0.02,
+          "dpitch": 0.0
+        },
+        {
+          "start": 1427,
+          "page": [
+            0,
+            0
+          ],
+          "dx": -145.3,
+          "dy": 13.9,
+          "dh": -9.07,
+          "context": "Z2S1\nZ2S2\nZ3S1\nZ3S2\n\nPflanzen ",
+          "base_ours": 442.49,
+          "base_word": 442.51,
+          "para": 14,
+          "dbase": -0.02,
+          "dbase_pdf": -0.24,
+          "render": -0.22,
+          "dpitch": 0.0
+        },
+        {
+          "start": 1437,
+          "page": [
+            0,
+            0
+          ],
+          "dx": -145.3,
+          "dy": 13.95,
+          "dh": -9.07,
+          "context": "Z3S1\nZ3S2\n\nPflanzen nehmen übe",
+          "base_ours": 456.42,
+          "base_word": 456.43,
+          "para": 16,
+          "dbase": -0.01,
+          "dbase_pdf": 0.09,
+          "render": 0.1,
+          "dpitch": 0.0
+        },
+        {
+          "start": 308,
+          "page": [
+            0,
+            0
+          ],
+          "dx": -145.05,
+          "dy": 13.9,
+          "dh": -9.07,
+          "context": "Z2S1\nZ2S2\nZ3S1\nZ3S2\n\nPflanzen ",
+          "base_ours": 201.62,
+          "base_word": 201.62,
+          "para": 4,
+          "dbase": 0.0,
+          "dbase_pdf": 0.03,
+          "render": 0.03,
+          "dpitch": 0.0
+        },
+        {
+          "start": 318,
+          "page": [
+            0,
+            0
+          ],
+          "dx": -145.05,
+          "dy": 13.95,
+          "dh": -9.07,
+          "context": "Z3S1\nZ3S2\n\nPflanzen nehmen übe",
+          "base_ours": 215.54,
+          "base_word": 215.54,
+          "para": 6,
+          "dbase": 0.0,
+          "dbase_pdf": -0.4,
+          "render": -0.4,
+          "dpitch": 0.0
+        },
+        {
+          "start": 2538,
+          "page": [
+            0,
+            0
+          ],
+          "dx": -144.75,
+          "dy": 13.89,
+          "dh": -9.07,
+          "context": "Z2S1\nZ2S2\nZ3S1\nZ3S2\n\nPflanzen ",
+          "base_ours": 665.36,
+          "base_word": 665.38,
+          "para": 24,
+          "dbase": -0.02,
+          "dbase_pdf": -0.47,
+          "render": -0.45,
+          "dpitch": 0.0
+        },
+        {
+          "start": 2548,
+          "page": [
+            0,
+            0
+          ],
+          "dx": -144.75,
+          "dy": 13.94,
+          "dh": -9.07,
+          "context": "Z3S1\nZ3S2\n\nPflanzen nehmen übe",
+          "base_ours": 679.29,
+          "base_word": 679.3,
+          "para": 26,
+          "dbase": -0.01,
+          "dbase_pdf": -0.15,
+          "render": -0.14,
+          "dpitch": 0.0
+        },
+        {
+          "start": 2687,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": 0.0,
+          "dh": -0.01,
+          "context": "des Sonnenlichts stellen sie d",
+          "base_ours": 702.35,
+          "base_word": 702.46,
+          "para": 29,
+          "dbase": -0.11,
+          "dbase_pdf": -0.82,
+          "render": -0.71,
+          "dpitch": -0.01
+        },
+        {
+          "start": 2980,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": -0.02,
+          "dh": -0.01,
+          "context": "sie daraus Traubenzucker her, ",
+          "base_ours": 745.83,
+          "base_word": 745.92,
+          "para": 29,
+          "dbase": -0.09,
+          "dbase_pdf": -0.8,
+          "render": -0.71,
+          "dpitch": -0.01
+        },
+        {
+          "start": 2528,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.75,
+          "dy": -0.04,
+          "dh": 0.05,
+          "context": "Z1S1\nZ1S2\nZ2S1\nZ2S2\nZ3S1\nZ3S2\n",
+          "base_ours": 651.43,
+          "base_word": 651.46,
+          "para": 22,
+          "dbase": -0.03,
+          "dbase_pdf": -0.04,
+          "render": -0.01,
+          "dpitch": 0.0
+        }
+      ],
+      "lines": [
+        {
+          "start": 0,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": 17.97,
+          "dh": -22.03,
+          "context": "Umgebende Tabellen\nZentriert. ",
+          "base_ours": 107.89,
+          "base_word": 107.9,
+          "para": 0,
+          "dbase": -0.01,
+          "dbase_pdf": 0.04,
+          "render": 0.05,
+          "dpitch": -18.02
+        },
+        {
+          "start": 19,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": -0.05,
+          "dh": -0.01,
+          "context": "Zentriert. Pflanzen nehmen übe",
+          "base_ours": 129.67,
+          "base_word": 129.62,
+          "para": 1,
+          "dbase": 0.05,
+          "dbase_pdf": 0.06,
+          "render": 0.01,
+          "dpitch": -0.01
+        },
+        {
+          "start": 120,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": -0.06,
+          "dh": -0.01,
+          "context": "Wasser aus dem Boden. Mit der ",
+          "base_ours": 144.16,
+          "base_word": 144.14,
+          "para": 1,
+          "dbase": 0.02,
+          "dbase_pdf": -0.21,
+          "render": -0.23,
+          "dpitch": -0.01
+        },
+        {
+          "start": 217,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": -0.07,
+          "dh": -7.89,
+          "context": "als Nebenprodukt entsteht Saue",
+          "base_ours": 158.65,
+          "base_word": 158.66,
+          "para": 1,
+          "dbase": -0.01,
+          "dbase_pdf": 0.26,
+          "render": 0.27,
+          "dpitch": 0.04
+        },
+        {
+          "start": 298,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.45,
+          "dy": -0.03,
+          "dh": 0.05,
+          "context": "Z1S1\nZ1S2\nZ2S1\nZ2S2\nZ3S1\nZ3S2\n",
+          "base_ours": 187.69,
+          "base_word": 187.7,
+          "para": 2,
+          "dbase": -0.01,
+          "dbase_pdf": -0.3,
+          "render": -0.29,
+          "dpitch": 0.0
+        },
+        {
+          "start": 303,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.45,
+          "dy": -0.03,
+          "dh": 0.05,
+          "context": "Z1S2\nZ2S1\nZ2S2\nZ3S1\nZ3S2\n\nPfla",
+          "base_ours": 187.69,
+          "base_word": 187.7,
+          "para": 3,
+          "dbase": -0.01,
+          "dbase_pdf": -0.3,
+          "render": -0.29,
+          "dpitch": 0.06
+        },
+        {
+          "start": 308,
+          "page": [
+            0,
+            0
+          ],
+          "dx": -145.05,
+          "dy": 13.9,
+          "dh": -9.07,
+          "context": "Z2S1\nZ2S2\nZ3S1\nZ3S2\n\nPflanzen ",
+          "base_ours": 201.62,
+          "base_word": 201.62,
+          "para": 4,
+          "dbase": 0.0,
+          "dbase_pdf": 0.03,
+          "render": 0.03,
+          "dpitch": 0.0
+        },
+        {
+          "start": 308,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.45,
+          "dy": 0.03,
+          "dh": 0.05,
+          "context": "Z2S1\nZ2S2\nZ3S1\nZ3S2\n\nPflanzen ",
+          "base_ours": 201.62,
+          "base_word": null,
+          "para": 4,
+          "render": 0.03,
+          "dpitch": 0.0
+        },
+        {
+          "start": 313,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.45,
+          "dy": 0.03,
+          "dh": 0.05,
+          "context": "Z2S2\nZ3S1\nZ3S2\n\nPflanzen nehme",
+          "base_ours": 201.62,
+          "base_word": 201.62,
+          "para": 5,
+          "dbase": 0.0,
+          "dbase_pdf": 0.03,
+          "render": 0.03,
+          "dpitch": -0.08
+        },
+        {
+          "start": 318,
+          "page": [
+            0,
+            0
+          ],
+          "dx": -145.05,
+          "dy": 13.95,
+          "dh": -9.07,
+          "context": "Z3S1\nZ3S2\n\nPflanzen nehmen übe",
+          "base_ours": 215.54,
+          "base_word": 215.54,
+          "para": 6,
+          "dbase": 0.0,
+          "dbase_pdf": -0.4,
+          "render": -0.4,
+          "dpitch": 0.0
+        },
+        {
+          "start": 318,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.45,
+          "dy": -0.05,
+          "dh": 0.05,
+          "context": "Z3S1\nZ3S2\n\nPflanzen nehmen übe",
+          "base_ours": 215.54,
+          "base_word": null,
+          "para": 6,
+          "render": -0.4,
+          "dpitch": 0.0
+        },
+        {
+          "start": 323,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.45,
+          "dy": -0.05,
+          "dh": 0.05,
+          "context": "Z3S2\n\nPflanzen nehmen über ihr",
+          "base_ours": 215.54,
+          "base_word": 215.54,
+          "para": 7,
+          "dbase": 0.0,
+          "dbase_pdf": -0.4,
+          "render": -0.4,
+          "dpitch": 0.1
+        },
+        {
+          "start": 328,
+          "page": [
+            0,
+            0
+          ],
+          "dx": -302.5,
+          "dy": -34.45,
+          "dh": -8.01,
+          "context": "\nPflanzen nehmen über ihre Blä",
+          "base_ours": 181.14,
+          "base_word": 181.1,
+          "para": 8,
+          "dbase": 0.04,
+          "dpitch": 0.0
+        },
+        {
+          "start": 328,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": 0.05,
+          "dh": -8.01,
+          "context": "\nPflanzen nehmen über ihre Blä",
+          "base_ours": 181.14,
+          "base_word": null,
+          "para": 8,
+          "dpitch": -0.01
+        },
+        {
+          "start": 329,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": 0.04,
+          "dh": -14.5,
+          "context": "Pflanzen nehmen über ihre Blät",
+          "base_ours": 203.63,
+          "base_word": 203.66,
+          "para": 9,
+          "dbase": -0.03,
+          "dpitch": 0.0
+        },
+        {
+          "start": 355,
+          "page": [
+            0,
+            0
+          ],
+          "dx": -0.15,
+          "dy": 0.04,
+          "dh": -0.01,
+          "context": "Blätter Kohlenstoffdioxid aus ",
+          "base_ours": 203.63,
+          "base_word": 203.66,
+          "para": 9,
+          "dbase": -0.03,
+          "dbase_pdf": 0.24,
+          "render": 0.27,
+          "dpitch": -0.01
+        },
+        {
+          "start": 385,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": 0.03,
+          "dh": -14.5,
+          "context": "der Luft auf und über die Wurz",
+          "base_ours": 218.12,
+          "base_word": 218.06,
+          "para": 9,
+          "dbase": 0.06,
+          "dpitch": 0.0
+        },
+        {
+          "start": 411,
+          "page": [
+            0,
+            0
+          ],
+          "dx": -0.15,
+          "dy": 0.03,
+          "dh": -0.01,
+          "context": "Wurzeln Wasser aus dem Boden. ",
+          "base_ours": 218.12,
+          "base_word": 218.06,
+          "para": 9,
+          "dbase": 0.06,
+          "dbase_pdf": 0.08,
+          "render": 0.02,
+          "dpitch": -0.01
+        },
+        {
+          "start": 434,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": 0.02,
+          "dh": -0.01,
+          "context": "Boden. Mit der Energie des Son",
+          "base_ours": 232.61,
+          "base_word": 232.58,
+          "para": 9,
+          "dbase": 0.03,
+          "dbase_pdf": -0.2,
+          "render": -0.23,
+          "dpitch": -0.01
+        },
+        {
+          "start": 533,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": 0.01,
+          "dh": -0.01,
+          "context": "entsteht Sauerstoff, den Mensc",
+          "base_ours": 247.1,
+          "base_word": 247.13,
+          "para": 9,
+          "dbase": -0.03,
+          "dbase_pdf": -0.51,
+          "render": -0.48,
+          "dpitch": -0.01
+        },
+        {
+          "start": 623,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": 0.0,
+          "dh": -0.01,
+          "context": "Blätter Kohlenstoffdioxid aus ",
+          "base_ours": 261.59,
+          "base_word": 261.65,
+          "para": 9,
+          "dbase": -0.06,
+          "dbase_pdf": -0.03,
+          "render": 0.03,
+          "dpitch": -0.01
+        },
+        {
+          "start": 717,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": -0.01,
+          "dh": -0.01,
+          "context": "Energie des Sonnenlichts stell",
+          "base_ours": 276.08,
+          "base_word": 276.05,
+          "para": 9,
+          "dbase": 0.03,
+          "dbase_pdf": -0.19,
+          "render": -0.22,
+          "dpitch": -0.01
+        },
+        {
+          "start": 810,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": -0.02,
+          "dh": -8.01,
+          "context": "Sauerstoff, den Menschen und T",
+          "base_ours": 290.57,
+          "base_word": 290.57,
+          "para": 9,
+          "dbase": 0.0,
+          "dbase_pdf": -0.47,
+          "render": -0.47,
+          "dpitch": 0.0
+        },
+        {
+          "start": 865,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": -0.02,
+          "dh": -0.01,
+          "context": "Pflanzen nehmen über ihre Blät",
+          "base_ours": 313.07,
+          "base_word": 313.13,
+          "para": 10,
+          "dbase": -0.06,
+          "dbase_pdf": -0.54,
+          "render": -0.48,
+          "dpitch": -0.01
+        },
+        {
+          "start": 962,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": -0.03,
+          "dh": -0.01,
+          "context": "aus dem Boden. Mit der Energie",
+          "base_ours": 327.56,
+          "base_word": 327.53,
+          "para": 10,
+          "dbase": 0.03,
+          "dbase_pdf": 0.05,
+          "render": 0.02,
+          "dpitch": -0.01
+        },
+        {
+          "start": 1056,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": -0.04,
+          "dh": -8.01,
+          "context": "Nebenprodukt entsteht Sauersto",
+          "base_ours": 342.05,
+          "base_word": 342.05,
+          "para": 10,
+          "dbase": 0.0,
+          "dbase_pdf": -0.23,
+          "render": -0.23,
+          "dpitch": -0.01
+        },
+        {
+          "start": 1133,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": -0.05,
+          "dh": -0.01,
+          "context": "Links versetzt. Pflanzen nehme",
+          "base_ours": 364.54,
+          "base_word": 364.61,
+          "para": 11,
+          "dbase": -0.07,
+          "dbase_pdf": -0.3,
+          "render": -0.23,
+          "dpitch": -0.01
+        },
+        {
+          "start": 1231,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": -0.06,
+          "dh": -0.01,
+          "context": "Wurzeln Wasser aus dem Boden. ",
+          "base_ours": 379.03,
+          "base_word": 379.01,
+          "para": 11,
+          "dbase": 0.02,
+          "dbase_pdf": -0.45,
+          "render": -0.47,
+          "dpitch": -0.01
+        },
+        {
+          "start": 1327,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": -0.07,
+          "dh": -7.89,
+          "context": "her, und als Nebenprodukt ents",
+          "base_ours": 393.52,
+          "base_word": 393.53,
+          "para": 11,
+          "dbase": -0.01,
+          "dbase_pdf": 0.02,
+          "render": 0.03,
+          "dpitch": 0.04
+        },
+        {
+          "start": 1417,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.2,
+          "dy": -0.03,
+          "dh": 0.05,
+          "context": "Z1S1\nZ1S2\nZ2S1\nZ2S2\nZ3S1\nZ3S2\n",
+          "base_ours": 428.56,
+          "base_word": 428.59,
+          "para": 12,
+          "dbase": -0.03,
+          "dbase_pdf": -0.56,
+          "render": -0.53,
+          "dpitch": 0.0
+        },
+        {
+          "start": 1422,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.2,
+          "dy": -0.03,
+          "dh": 0.05,
+          "context": "Z1S2\nZ2S1\nZ2S2\nZ3S1\nZ3S2\n\nPfla",
+          "base_ours": 428.56,
+          "base_word": 428.59,
+          "para": 13,
+          "dbase": -0.03,
+          "dbase_pdf": -0.56,
+          "render": -0.53,
+          "dpitch": 0.05
+        },
+        {
+          "start": 1427,
+          "page": [
+            0,
+            0
+          ],
+          "dx": -145.3,
+          "dy": 13.9,
+          "dh": -9.07,
+          "context": "Z2S1\nZ2S2\nZ3S1\nZ3S2\n\nPflanzen ",
+          "base_ours": 442.49,
+          "base_word": 442.51,
+          "para": 14,
+          "dbase": -0.02,
+          "dbase_pdf": -0.24,
+          "render": -0.22,
+          "dpitch": 0.0
+        },
+        {
+          "start": 1427,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.2,
+          "dy": 0.02,
+          "dh": 0.05,
+          "context": "Z2S1\nZ2S2\nZ3S1\nZ3S2\n\nPflanzen ",
+          "base_ours": 442.49,
+          "base_word": null,
+          "para": 14,
+          "render": -0.22,
+          "dpitch": 0.0
+        },
+        {
+          "start": 1432,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.2,
+          "dy": 0.02,
+          "dh": 0.05,
+          "context": "Z2S2\nZ3S1\nZ3S2\n\nPflanzen nehme",
+          "base_ours": 442.49,
+          "base_word": 442.51,
+          "para": 15,
+          "dbase": -0.02,
+          "dbase_pdf": -0.24,
+          "render": -0.22,
+          "dpitch": -0.07
+        },
+        {
+          "start": 1437,
+          "page": [
+            0,
+            0
+          ],
+          "dx": -145.3,
+          "dy": 13.95,
+          "dh": -9.07,
+          "context": "Z3S1\nZ3S2\n\nPflanzen nehmen übe",
+          "base_ours": 456.42,
+          "base_word": 456.43,
+          "para": 16,
+          "dbase": -0.01,
+          "dbase_pdf": 0.09,
+          "render": 0.1,
+          "dpitch": 0.0
+        },
+        {
+          "start": 1437,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.2,
+          "dy": -0.05,
+          "dh": 0.05,
+          "context": "Z3S1\nZ3S2\n\nPflanzen nehmen übe",
+          "base_ours": 456.42,
+          "base_word": null,
+          "para": 16,
+          "render": 0.1,
+          "dpitch": 0.0
+        },
+        {
+          "start": 1442,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.2,
+          "dy": -0.05,
+          "dh": 0.05,
+          "context": "Z3S2\n\nPflanzen nehmen über ihr",
+          "base_ours": 456.42,
+          "base_word": 456.43,
+          "para": 17,
+          "dbase": -0.01,
+          "dbase_pdf": 0.09,
+          "render": 0.1,
+          "dpitch": 0.09
+        },
+        {
+          "start": 1447,
+          "page": [
+            0,
+            0
+          ],
+          "dx": -211.0,
+          "dy": -40.46,
+          "dh": -8.01,
+          "context": "\nPflanzen nehmen über ihre Blä",
+          "base_ours": 416.01,
+          "base_word": 415.99,
+          "para": 18,
+          "dbase": 0.02,
+          "dpitch": 0.0
+        },
+        {
+          "start": 1447,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": 0.04,
+          "dh": -8.01,
+          "context": "\nPflanzen nehmen über ihre Blä",
+          "base_ours": 416.01,
+          "base_word": null,
+          "para": 18,
+          "dpitch": -0.01
+        },
+        {
+          "start": 1448,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": 0.03,
+          "dh": -14.5,
+          "context": "Pflanzen nehmen über ihre Blät",
+          "base_ours": 438.5,
+          "base_word": 438.55,
+          "para": 19,
+          "dbase": -0.05,
+          "dpitch": 0.0
+        },
+        {
+          "start": 1457,
+          "page": [
+            0,
+            0
+          ],
+          "dx": -0.4,
+          "dy": 0.03,
+          "dh": -0.01,
+          "context": "nehmen über ihre Blätter Kohle",
+          "base_ours": 438.5,
+          "base_word": 438.55,
+          "para": 19,
+          "dbase": -0.05,
+          "dbase_pdf": -0.03,
+          "render": 0.02,
+          "dpitch": -0.01
+        },
+        {
+          "start": 1508,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": 0.02,
+          "dh": -14.5,
+          "context": "Luft auf und über die Wurzeln ",
+          "base_ours": 452.99,
+          "base_word": 453.07,
+          "para": 19,
+          "dbase": -0.08,
+          "dpitch": 0.0
+        },
+        {
+          "start": 1517,
+          "page": [
+            0,
+            0
+          ],
+          "dx": -0.4,
+          "dy": 0.02,
+          "dh": -0.01,
+          "context": "und über die Wurzeln Wasser au",
+          "base_ours": 452.99,
+          "base_word": 453.07,
+          "para": 19,
+          "dbase": -0.08,
+          "dbase_pdf": -0.3,
+          "render": -0.22,
+          "dpitch": -0.01
+        },
+        {
+          "start": 1564,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": 0.01,
+          "dh": -14.5,
+          "context": "der Energie des Sonnenlichts s",
+          "base_ours": 467.48,
+          "base_word": 467.47,
+          "para": 19,
+          "dbase": 0.01,
+          "dpitch": 0.0
+        },
+        {
+          "start": 1576,
+          "page": [
+            0,
+            0
+          ],
+          "dx": -0.4,
+          "dy": 0.01,
+          "dh": -0.01,
+          "context": "des Sonnenlichts stellen sie d",
+          "base_ours": 467.48,
+          "base_word": 467.47,
+          "para": 19,
+          "dbase": 0.01,
+          "dbase_pdf": -0.46,
+          "render": -0.47,
+          "dpitch": -0.01
+        },
+        {
+          "start": 1626,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": 0.0,
+          "dh": -0.01,
+          "context": "her, und als Nebenprodukt ents",
+          "base_ours": 481.97,
+          "base_word": 481.99,
+          "para": 19,
+          "dbase": -0.02,
+          "dbase_pdf": 0.01,
+          "render": 0.03,
+          "dpitch": -0.01
+        },
+        {
+          "start": 1716,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": -0.01,
+          "dh": -0.01,
+          "context": "Pflanzen nehmen über ihre Blät",
+          "base_ours": 496.46,
+          "base_word": 496.51,
+          "para": 19,
+          "dbase": -0.05,
+          "dbase_pdf": -0.26,
+          "render": -0.21,
+          "dpitch": -0.01
+        },
+        {
+          "start": 1813,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": -0.02,
+          "dh": -0.01,
+          "context": "aus dem Boden. Mit der Energie",
+          "base_ours": 510.95,
+          "base_word": 511.03,
+          "para": 19,
+          "dbase": -0.08,
+          "dbase_pdf": -0.54,
+          "render": -0.46,
+          "dpitch": 0.0
+        },
+        {
+          "start": 1907,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": -0.02,
+          "dh": -8.01,
+          "context": "Nebenprodukt entsteht Sauersto",
+          "base_ours": 525.45,
+          "base_word": 525.43,
+          "para": 19,
+          "dbase": 0.02,
+          "dbase_pdf": 0.05,
+          "render": 0.03,
+          "dpitch": -0.01
+        },
+        {
+          "start": 1984,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": -0.03,
+          "dh": -0.01,
+          "context": "Pflanzen nehmen über ihre Blät",
+          "base_ours": 547.94,
+          "base_word": 547.99,
+          "para": 20,
+          "dbase": -0.05,
+          "dbase_pdf": -0.02,
+          "render": 0.03,
+          "dpitch": -0.01
+        },
+        {
+          "start": 2081,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": -0.04,
+          "dh": -0.01,
+          "context": "aus dem Boden. Mit der Energie",
+          "base_ours": 562.43,
+          "base_word": 562.54,
+          "para": 20,
+          "dbase": -0.11,
+          "dbase_pdf": -0.33,
+          "render": -0.22,
+          "dpitch": -0.01
+        },
+        {
+          "start": 2175,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": -0.05,
+          "dh": -7.89,
+          "context": "Nebenprodukt entsteht Sauersto",
+          "base_ours": 576.92,
+          "base_word": 576.94,
+          "para": 20,
+          "dbase": -0.02,
+          "dbase_pdf": -0.48,
+          "render": -0.46,
+          "dpitch": 0.11
+        },
+        {
+          "start": 2252,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": 0.06,
+          "dh": -0.01,
+          "context": "Rechts. Pflanzen nehmen über i",
+          "base_ours": 599.41,
+          "base_word": 599.5,
+          "para": 21,
+          "dbase": -0.09,
+          "dbase_pdf": -0.56,
+          "render": -0.47,
+          "dpitch": -0.01
+        },
+        {
+          "start": 2350,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": 0.05,
+          "dh": -0.01,
+          "context": "Wasser aus dem Boden. Mit der ",
+          "base_ours": 613.9,
+          "base_word": 614.02,
+          "para": 21,
+          "dbase": -0.12,
+          "dbase_pdf": -0.08,
+          "render": 0.04,
+          "dpitch": -0.01
+        },
+        {
+          "start": 2447,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": 0.04,
+          "dh": -8.01,
+          "context": "als Nebenprodukt entsteht Saue",
+          "base_ours": 628.39,
+          "base_word": 628.42,
+          "para": 21,
+          "dbase": -0.03,
+          "dbase_pdf": -0.24,
+          "render": -0.21,
+          "dpitch": -0.08
+        },
+        {
+          "start": 2528,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.75,
+          "dy": -0.04,
+          "dh": 0.05,
+          "context": "Z1S1\nZ1S2\nZ2S1\nZ2S2\nZ3S1\nZ3S2\n",
+          "base_ours": 651.43,
+          "base_word": 651.46,
+          "para": 22,
+          "dbase": -0.03,
+          "dbase_pdf": -0.04,
+          "render": -0.01,
+          "dpitch": 0.0
+        },
+        {
+          "start": 2533,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.75,
+          "dy": -0.04,
+          "dh": 0.05,
+          "context": "Z1S2\nZ2S1\nZ2S2\nZ3S1\nZ3S2\n\nPfla",
+          "base_ours": 651.43,
+          "base_word": 651.46,
+          "para": 23,
+          "dbase": -0.03,
+          "dbase_pdf": -0.04,
+          "render": -0.01,
+          "dpitch": 0.05
+        },
+        {
+          "start": 2538,
+          "page": [
+            0,
+            0
+          ],
+          "dx": -144.75,
+          "dy": 13.89,
+          "dh": -9.07,
+          "context": "Z2S1\nZ2S2\nZ3S1\nZ3S2\n\nPflanzen ",
+          "base_ours": 665.36,
+          "base_word": 665.38,
+          "para": 24,
+          "dbase": -0.02,
+          "dbase_pdf": -0.47,
+          "render": -0.45,
+          "dpitch": 0.0
+        },
+        {
+          "start": 2538,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.75,
+          "dy": 0.01,
+          "dh": 0.05,
+          "context": "Z2S1\nZ2S2\nZ3S1\nZ3S2\n\nPflanzen ",
+          "base_ours": 665.36,
+          "base_word": null,
+          "para": 24,
+          "render": -0.45,
+          "dpitch": 0.0
+        },
+        {
+          "start": 2543,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.75,
+          "dy": 0.01,
+          "dh": 0.05,
+          "context": "Z2S2\nZ3S1\nZ3S2\n\nPflanzen nehme",
+          "base_ours": 665.36,
+          "base_word": 665.38,
+          "para": 25,
+          "dbase": -0.02,
+          "dbase_pdf": -0.47,
+          "render": -0.45,
+          "dpitch": -0.07
+        },
+        {
+          "start": 2548,
+          "page": [
+            0,
+            0
+          ],
+          "dx": -144.75,
+          "dy": 13.94,
+          "dh": -9.07,
+          "context": "Z3S1\nZ3S2\n\nPflanzen nehmen übe",
+          "base_ours": 679.29,
+          "base_word": 679.3,
+          "para": 26,
+          "dbase": -0.01,
+          "dbase_pdf": -0.15,
+          "render": -0.14,
+          "dpitch": 0.0
+        },
+        {
+          "start": 2548,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.75,
+          "dy": -0.06,
+          "dh": 0.05,
+          "context": "Z3S1\nZ3S2\n\nPflanzen nehmen übe",
+          "base_ours": 679.29,
+          "base_word": null,
+          "para": 26,
+          "render": -0.14,
+          "dpitch": 0.0
+        },
+        {
+          "start": 2553,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.75,
+          "dy": -0.06,
+          "dh": 0.05,
+          "context": "Z3S2\n\nPflanzen nehmen über ihr",
+          "base_ours": 679.29,
+          "base_word": 679.3,
+          "para": 27,
+          "dbase": -0.01,
+          "dbase_pdf": -0.15,
+          "render": -0.14,
+          "dpitch": 0.09
+        },
+        {
+          "start": 2558,
+          "page": [
+            0,
+            0
+          ],
+          "dx": -454.0,
+          "dy": -28.47,
+          "dh": -8.01,
+          "context": "\nPflanzen nehmen über ihre Blä",
+          "base_ours": 650.88,
+          "base_word": 650.98,
+          "para": 28,
+          "dbase": -0.1,
+          "dpitch": 0.0
+        },
+        {
+          "start": 2558,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": 0.03,
+          "dh": -8.01,
+          "context": "\nPflanzen nehmen über ihre Blä",
+          "base_ours": 650.88,
+          "base_word": null,
+          "para": 28,
+          "dpitch": -0.01
+        },
+        {
+          "start": 2559,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": 0.02,
+          "dh": -0.01,
+          "context": "Pflanzen nehmen über ihre Blät",
+          "base_ours": 673.37,
+          "base_word": 673.42,
+          "para": 29,
+          "dbase": -0.05,
+          "dbase_pdf": -0.27,
+          "render": -0.22,
+          "dpitch": -0.01
+        },
+        {
+          "start": 2624,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": 0.01,
+          "dh": -0.01,
+          "context": "auf und über die Wurzeln Wasse",
+          "base_ours": 687.86,
+          "base_word": 687.94,
+          "para": 29,
+          "dbase": -0.08,
+          "dbase_pdf": -0.54,
+          "render": -0.46,
+          "dpitch": -0.01
+        },
+        {
+          "start": 2687,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": 0.0,
+          "dh": -0.01,
+          "context": "des Sonnenlichts stellen sie d",
+          "base_ours": 702.35,
+          "base_word": 702.46,
+          "para": 29,
+          "dbase": -0.11,
+          "dbase_pdf": -0.82,
+          "render": -0.71,
+          "dpitch": -0.01
+        },
+        {
+          "start": 2788,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": -0.01,
+          "dh": -0.01,
+          "context": "Menschen und Tiere zum Atmen b",
+          "base_ours": 716.84,
+          "base_word": 716.86,
+          "para": 29,
+          "dbase": -0.02,
+          "dbase_pdf": -0.23,
+          "render": -0.21,
+          "dpitch": -0.01
+        },
+        {
+          "start": 2883,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": -0.02,
+          "dh": -0.01,
+          "context": "der Luft auf und über die Wurz",
+          "base_ours": 731.33,
+          "base_word": 731.4,
+          "para": 29,
+          "dbase": -0.07,
+          "dbase_pdf": -0.52,
+          "render": -0.45,
+          "dpitch": 0.0
+        },
+        {
+          "start": 2980,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": -0.02,
+          "dh": -0.01,
+          "context": "sie daraus Traubenzucker her, ",
+          "base_ours": 745.83,
+          "base_word": 745.92,
+          "para": 29,
+          "dbase": -0.09,
+          "dbase_pdf": -0.8,
+          "render": -0.71,
+          "dpitch": -0.01
+        },
+        {
+          "start": 3075,
+          "page": [
+            0,
+            0
+          ],
+          "dx": 0.0,
+          "dy": -0.03,
+          "dh": -8.01,
+          "context": "zum Atmen brauchen.\nPflanzen n",
+          "base_ours": 760.32,
+          "base_word": 760.44,
+          "para": 29,
+          "dbase": -0.12,
+          "dbase_pdf": -0.33,
+          "render": -0.21
+        },
+        {
+          "start": 3095,
+          "page": [
+            1,
+            1
+          ],
+          "dx": 0.0,
+          "dy": -0.05,
+          "dh": -0.01,
+          "context": "Pflanzen nehmen über ihre Blät",
+          "base_ours": 81.32,
+          "base_word": 81.26,
+          "para": 30,
+          "dbase": 0.06,
+          "dbase_pdf": -0.3,
+          "render": -0.36,
+          "dpitch": -0.01
+        },
+        {
+          "start": 3192,
+          "page": [
+            1,
+            1
+          ],
+          "dx": 0.0,
+          "dy": -0.06,
+          "dh": -0.01,
+          "context": "aus dem Boden. Mit der Energie",
+          "base_ours": 95.81,
+          "base_word": 95.78,
+          "para": 30,
+          "dbase": 0.03,
+          "dbase_pdf": 0.17,
+          "render": 0.14,
+          "dpitch": -0.01
+        },
+        {
+          "start": 3286,
+          "page": [
+            1,
+            1
+          ],
+          "dx": 0.0,
+          "dy": -0.07,
+          "dh": -8.01,
+          "context": "Nebenprodukt entsteht Sauersto",
+          "base_ours": 110.3,
+          "base_word": 110.3,
+          "para": 30,
+          "dbase": 0.0,
+          "dbase_pdf": -0.11,
+          "render": -0.11,
+          "dpitch": -0.01
+        },
+        {
+          "start": 3363,
+          "page": [
+            1,
+            1
+          ],
+          "dx": 0.0,
+          "dy": -0.08,
+          "dh": -8.01,
+          "context": "Letzter Absatz.",
+          "base_ours": 132.79,
+          "base_word": 132.74,
+          "para": 31,
+          "dbase": 0.05,
+          "dbase_pdf": -0.06,
+          "render": -0.11
+        }
+      ],
+      "horizontal": {
+        "lines": 64,
+        "max": 0.11,
+        "mean": 0.049,
+        "within_0.25pt": 64,
+        "worst": [
+          {
+            "start": 1576,
+            "end_drift": -0.11,
+            "max": -0.11,
+            "words": 6,
+            "context": "des Sonnenlichts stellen sie daraus Trau"
+          },
+          {
+            "start": 1517,
+            "end_drift": 0.01,
+            "max": -0.1,
+            "words": 9,
+            "context": "und über die Wurzeln Wasser aus dem Bode"
+          },
+          {
+            "start": 355,
+            "end_drift": 0.06,
+            "max": 0.09,
+            "words": 3,
+            "context": "Blätter Kohlenstoffdioxid aus der Luft a"
+          },
+          {
+            "start": 1457,
+            "end_drift": 0.01,
+            "max": -0.09,
+            "words": 7,
+            "context": "nehmen über ihre Blätter Kohlenstoffdiox"
+          },
+          {
+            "start": 19,
+            "end_drift": -0.05,
+            "max": 0.07,
+            "words": 15,
+            "context": "Zentriert. Pflanzen nehmen über ihre Blä"
+          },
+          {
+            "start": 623,
+            "end_drift": 0.01,
+            "max": 0.07,
+            "words": 16,
+            "context": "Blätter Kohlenstoffdioxid aus der Luft a"
+          },
+          {
+            "start": 962,
+            "end_drift": 0.01,
+            "max": 0.07,
+            "words": 15,
+            "context": "aus dem Boden. Mit der Energie des Sonne"
+          },
+          {
+            "start": 1327,
+            "end_drift": -0.03,
+            "max": 0.07,
+            "words": 13,
+            "context": "her, und als Nebenprodukt entsteht Sauer"
+          },
+          {
+            "start": 1626,
+            "end_drift": -0.03,
+            "max": 0.07,
+            "words": 13,
+            "context": "her, und als Nebenprodukt entsteht Sauer"
+          },
+          {
+            "start": 1813,
+            "end_drift": 0.01,
+            "max": 0.07,
+            "words": 15,
+            "context": "aus dem Boden. Mit der Energie des Sonne"
+          }
+        ],
+        "rows": [
+          {
+            "start": 0,
+            "end_drift": 0.0,
+            "max": -0.01,
+            "words": 2,
+            "context": "Umgebende Tabellen\nZentriert. Pflanzen n"
+          },
+          {
+            "start": 19,
+            "end_drift": -0.05,
+            "max": 0.07,
+            "words": 15,
+            "context": "Zentriert. Pflanzen nehmen über ihre Blä"
+          },
+          {
+            "start": 120,
+            "end_drift": 0.0,
+            "max": 0.06,
+            "words": 15,
+            "context": "Wasser aus dem Boden. Mit der Energie de"
+          },
+          {
+            "start": 217,
+            "end_drift": 0.03,
+            "max": -0.04,
+            "words": 11,
+            "context": "als Nebenprodukt entsteht Sauerstoff, de"
+          },
+          {
+            "start": 298,
+            "end_drift": -0.02,
+            "max": -0.02,
+            "words": 1,
+            "context": "Z1S1\nZ1S2\nZ2S1\nZ2S2\nZ3S1\nZ3S2\n\nPflanzen "
+          },
+          {
+            "start": 303,
+            "end_drift": -0.01,
+            "max": -0.01,
+            "words": 1,
+            "context": "Z1S2\nZ2S1\nZ2S2\nZ3S1\nZ3S2\n\nPflanzen nehme"
+          },
+          {
+            "start": 308,
+            "end_drift": -0.02,
+            "max": -0.02,
+            "words": 1,
+            "context": "Z2S1\nZ2S2\nZ3S1\nZ3S2\n\nPflanzen nehmen übe"
+          },
+          {
+            "start": 313,
+            "end_drift": -0.01,
+            "max": -0.01,
+            "words": 1,
+            "context": "Z2S2\nZ3S1\nZ3S2\n\nPflanzen nehmen über ihr"
+          },
+          {
+            "start": 318,
+            "end_drift": -0.02,
+            "max": -0.02,
+            "words": 1,
+            "context": "Z3S1\nZ3S2\n\nPflanzen nehmen über ihre Blä"
+          },
+          {
+            "start": 323,
+            "end_drift": -0.01,
+            "max": -0.01,
+            "words": 1,
+            "context": "Z3S2\n\nPflanzen nehmen über ihre Blätter "
+          },
+          {
+            "start": 329,
+            "end_drift": -0.04,
+            "max": -0.04,
+            "words": 4,
+            "context": "Pflanzen nehmen über ihre Blätter Kohlen"
+          },
+          {
+            "start": 355,
+            "end_drift": 0.06,
+            "max": 0.09,
+            "words": 3,
+            "context": "Blätter Kohlenstoffdioxid aus der Luft a"
+          },
+          {
+            "start": 385,
+            "end_drift": -0.04,
+            "max": 0.06,
+            "words": 6,
+            "context": "der Luft auf und über die Wurzeln Wasser"
+          },
+          {
+            "start": 411,
+            "end_drift": 0.01,
+            "max": 0.06,
+            "words": 4,
+            "context": "Wurzeln Wasser aus dem Boden. Mit der En"
+          },
+          {
+            "start": 434,
+            "end_drift": 0.04,
+            "max": 0.06,
+            "words": 14,
+            "context": "Boden. Mit der Energie des Sonnenlichts "
+          },
+          {
+            "start": 533,
+            "end_drift": -0.01,
+            "max": 0.05,
+            "words": 13,
+            "context": "entsteht Sauerstoff, den Menschen und Ti"
+          },
+          {
+            "start": 623,
+            "end_drift": 0.01,
+            "max": 0.07,
+            "words": 16,
+            "context": "Blätter Kohlenstoffdioxid aus der Luft a"
+          },
+          {
+            "start": 717,
+            "end_drift": -0.06,
+            "max": -0.06,
+            "words": 12,
+            "context": "Energie des Sonnenlichts stellen sie dar"
+          },
+          {
+            "start": 810,
+            "end_drift": 0.02,
+            "max": -0.04,
+            "words": 8,
+            "context": "Sauerstoff, den Menschen und Tiere zum A"
+          },
+          {
+            "start": 865,
+            "end_drift": -0.03,
+            "max": -0.06,
+            "words": 15,
+            "context": "Pflanzen nehmen über ihre Blätter Kohlen"
+          },
+          {
+            "start": 962,
+            "end_drift": 0.01,
+            "max": 0.07,
+            "words": 15,
+            "context": "aus dem Boden. Mit der Energie des Sonne"
+          },
+          {
+            "start": 1056,
+            "end_drift": -0.06,
+            "max": -0.06,
+            "words": 10,
+            "context": "Nebenprodukt entsteht Sauerstoff, den Me"
+          },
+          {
+            "start": 1133,
+            "end_drift": -0.0,
+            "max": -0.06,
+            "words": 15,
+            "context": "Links versetzt. Pflanzen nehmen über ihr"
+          },
+          {
+            "start": 1231,
+            "end_drift": -0.01,
+            "max": -0.06,
+            "words": 14,
+            "context": "Wurzeln Wasser aus dem Boden. Mit der En"
+          },
+          {
+            "start": 1327,
+            "end_drift": -0.03,
+            "max": 0.07,
+            "words": 13,
+            "context": "her, und als Nebenprodukt entsteht Sauer"
+          },
+          {
+            "start": 1417,
+            "end_drift": -0.02,
+            "max": -0.02,
+            "words": 1,
+            "context": "Z1S1\nZ1S2\nZ2S1\nZ2S2\nZ3S1\nZ3S2\n\nPflanzen "
+          },
+          {
+            "start": 1422,
+            "end_drift": -0.02,
+            "max": -0.02,
+            "words": 1,
+            "context": "Z1S2\nZ2S1\nZ2S2\nZ3S1\nZ3S2\n\nPflanzen nehme"
+          },
+          {
+            "start": 1427,
+            "end_drift": -0.02,
+            "max": -0.02,
+            "words": 1,
+            "context": "Z2S1\nZ2S2\nZ3S1\nZ3S2\n\nPflanzen nehmen übe"
+          },
+          {
+            "start": 1432,
+            "end_drift": -0.02,
+            "max": -0.02,
+            "words": 1,
+            "context": "Z2S2\nZ3S1\nZ3S2\n\nPflanzen nehmen über ihr"
+          },
+          {
+            "start": 1437,
+            "end_drift": -0.02,
+            "max": -0.02,
+            "words": 1,
+            "context": "Z3S1\nZ3S2\n\nPflanzen nehmen über ihre Blä"
+          },
+          {
+            "start": 1442,
+            "end_drift": -0.02,
+            "max": -0.02,
+            "words": 1,
+            "context": "Z3S2\n\nPflanzen nehmen über ihre Blätter "
+          },
+          {
+            "start": 1448,
+            "end_drift": -0.03,
+            "max": -0.03,
+            "words": 1,
+            "context": "Pflanzen nehmen über ihre Blätter Kohlen"
+          },
+          {
+            "start": 1457,
+            "end_drift": 0.01,
+            "max": -0.09,
+            "words": 7,
+            "context": "nehmen über ihre Blätter Kohlenstoffdiox"
+          },
+          {
+            "start": 1508,
+            "end_drift": -0.05,
+            "max": -0.05,
+            "words": 2,
+            "context": "Luft auf und über die Wurzeln Wasser aus"
+          },
+          {
+            "start": 1517,
+            "end_drift": 0.01,
+            "max": -0.1,
+            "words": 9,
+            "context": "und über die Wurzeln Wasser aus dem Bode"
+          },
+          {
+            "start": 1564,
+            "end_drift": 0.06,
+            "max": 0.06,
+            "words": 2,
+            "context": "der Energie des Sonnenlichts stellen sie"
+          },
+          {
+            "start": 1576,
+            "end_drift": -0.11,
+            "max": -0.11,
+            "words": 6,
+            "context": "des Sonnenlichts stellen sie daraus Trau"
+          },
+          {
+            "start": 1626,
+            "end_drift": -0.03,
+            "max": 0.07,
+            "words": 13,
+            "context": "her, und als Nebenprodukt entsteht Sauer"
+          },
+          {
+            "start": 1716,
+            "end_drift": -0.03,
+            "max": -0.06,
+            "words": 15,
+            "context": "Pflanzen nehmen über ihre Blätter Kohlen"
+          },
+          {
+            "start": 1813,
+            "end_drift": 0.01,
+            "max": 0.07,
+            "words": 15,
+            "context": "aus dem Boden. Mit der Energie des Sonne"
+          },
+          {
+            "start": 1907,
+            "end_drift": -0.06,
+            "max": -0.06,
+            "words": 10,
+            "context": "Nebenprodukt entsteht Sauerstoff, den Me"
+          },
+          {
+            "start": 1984,
+            "end_drift": -0.03,
+            "max": -0.06,
+            "words": 15,
+            "context": "Pflanzen nehmen über ihre Blätter Kohlen"
+          },
+          {
+            "start": 2081,
+            "end_drift": 0.01,
+            "max": 0.07,
+            "words": 15,
+            "context": "aus dem Boden. Mit der Energie des Sonne"
+          },
+          {
+            "start": 2175,
+            "end_drift": -0.06,
+            "max": -0.06,
+            "words": 10,
+            "context": "Nebenprodukt entsteht Sauerstoff, den Me"
+          },
+          {
+            "start": 2252,
+            "end_drift": -0.02,
+            "max": -0.06,
+            "words": 15,
+            "context": "Rechts. Pflanzen nehmen über ihre Blätte"
+          },
+          {
+            "start": 2350,
+            "end_drift": 0.0,
+            "max": 0.06,
+            "words": 15,
+            "context": "Wasser aus dem Boden. Mit der Energie de"
+          },
+          {
+            "start": 2447,
+            "end_drift": 0.03,
+            "max": -0.04,
+            "words": 11,
+            "context": "als Nebenprodukt entsteht Sauerstoff, de"
+          },
+          {
+            "start": 2528,
+            "end_drift": -0.02,
+            "max": -0.02,
+            "words": 1,
+            "context": "Z1S1\nZ1S2\nZ2S1\nZ2S2\nZ3S1\nZ3S2\n\nPflanzen "
+          },
+          {
+            "start": 2533,
+            "end_drift": -0.02,
+            "max": -0.02,
+            "words": 1,
+            "context": "Z1S2\nZ2S1\nZ2S2\nZ3S1\nZ3S2\n\nPflanzen nehme"
+          },
+          {
+            "start": 2538,
+            "end_drift": -0.02,
+            "max": -0.02,
+            "words": 1,
+            "context": "Z2S1\nZ2S2\nZ3S1\nZ3S2\n\nPflanzen nehmen übe"
+          },
+          {
+            "start": 2543,
+            "end_drift": -0.02,
+            "max": -0.02,
+            "words": 1,
+            "context": "Z2S2\nZ3S1\nZ3S2\n\nPflanzen nehmen über ihr"
+          },
+          {
+            "start": 2548,
+            "end_drift": -0.02,
+            "max": -0.02,
+            "words": 1,
+            "context": "Z3S1\nZ3S2\n\nPflanzen nehmen über ihre Blä"
+          },
+          {
+            "start": 2553,
+            "end_drift": -0.02,
+            "max": -0.02,
+            "words": 1,
+            "context": "Z3S2\n\nPflanzen nehmen über ihre Blätter "
+          },
+          {
+            "start": 2559,
+            "end_drift": 0.0,
+            "max": -0.06,
+            "words": 9,
+            "context": "Pflanzen nehmen über ihre Blätter Kohlen"
+          },
+          {
+            "start": 2624,
+            "end_drift": -0.05,
+            "max": -0.06,
+            "words": 12,
+            "context": "auf und über die Wurzeln Wasser aus dem "
+          },
+          {
+            "start": 2687,
+            "end_drift": -0.01,
+            "max": 0.06,
+            "words": 13,
+            "context": "des Sonnenlichts stellen sie daraus Trau"
+          },
+          {
+            "start": 2788,
+            "end_drift": -0.01,
+            "max": 0.06,
+            "words": 13,
+            "context": "Menschen und Tiere zum Atmen brauchen. P"
+          },
+          {
+            "start": 2883,
+            "end_drift": 0.0,
+            "max": 0.06,
+            "words": 17,
+            "context": "der Luft auf und über die Wurzeln Wasser"
+          },
+          {
+            "start": 2980,
+            "end_drift": 0.01,
+            "max": -0.06,
+            "words": 13,
+            "context": "sie daraus Traubenzucker her, und als Ne"
+          },
+          {
+            "start": 3075,
+            "end_drift": 0.04,
+            "max": 0.04,
+            "words": 3,
+            "context": "zum Atmen brauchen.\nPflanzen nehmen über"
+          },
+          {
+            "start": 3095,
+            "end_drift": -0.03,
+            "max": -0.06,
+            "words": 15,
+            "context": "Pflanzen nehmen über ihre Blätter Kohlen"
+          },
+          {
+            "start": 3192,
+            "end_drift": 0.01,
+            "max": 0.07,
+            "words": 15,
+            "context": "aus dem Boden. Mit der Energie des Sonne"
+          },
+          {
+            "start": 3286,
+            "end_drift": -0.06,
+            "max": -0.06,
+            "words": 10,
+            "context": "Nebenprodukt entsteht Sauerstoff, den Me"
+          },
+          {
+            "start": 3363,
+            "end_drift": 0.05,
+            "max": 0.06,
+            "words": 2,
+            "context": "Letzter Absatz."
+          }
+        ]
+      }
+    }
+  }
+}

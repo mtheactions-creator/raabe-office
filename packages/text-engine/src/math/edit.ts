@@ -453,11 +453,34 @@ export class MathEditor {
     else this.collapse({ path: this.head.path, o: at + 1 });
   }
 
+  /** Where a quoted text was just closed (a space typed there is used up, as in Word). */
+  private quoteClosed: MathPos | null = null;
+
   /** Types a character with Word's Math AutoCorrect and build-up. */
   type(ch: string): MathSignal {
     if (this.hasSelection) this.removeRange(this.range());
     if (this.normal) { this.insertAtoms([{ k: "t", s: ch, nor: true }]); return {}; }
     if (this.latex) return this.typeLatex(ch);
+    // Quoted text ("wenn") becomes normal text when the closing quote is typed; inside the
+    // quotes nothing is built up or corrected; a space right after it is used up; typing
+    // inside or at the end of normal text continues it (Word, recorded 2026-10-15).
+    {
+      const qs = this.seqAt(this.head.path), qo = this.head.o;
+      const closed = this.quoteClosed && samePos(this.quoteClosed, this.head) ? this.quoteClosed : null;
+      this.quoteClosed = null;
+      const open = openQuote(qs, qo);
+      if (open >= 0) {
+        if (ch !== '"') { this.insertAtoms([{ k: "t", s: ch }]); return {}; }
+        const inner: Seq = qs.slice(open + 1, qo).map((n) => ({ k: "t", s: (n as T).s, nor: true }));
+        qs.splice(open, qo - open, ...inner);
+        this.collapse({ path: this.head.path, o: open + inner.length });
+        this.quoteClosed = { path: this.head.path, o: open + inner.length };
+        return {};
+      }
+      if (closed && ch === " ") { this.quoteClosed = closed; return {}; }
+      const left = qs[qo - 1], right = qs[qo];
+      if (isT(left) && left.nor && ((isT(right) && right.nor) || !closed)) { this.insertAtoms([{ k: "t", s: ch, nor: true }]); return {}; }
+    }
     const s = this.seqAt(this.head.path);
     const o = this.head.o;
     const prev = s[o - 1];
@@ -602,6 +625,18 @@ function verticalSlot(n: MNode, slot: SlotKey, dir: 1 | -1): SlotKey | null {
 
 // ----- building up the linear format -----------------------------------------------------------
 
+/** The unmatched opening quote before `o` in a sequence (its index), or -1. */
+function openQuote(s: Seq, o: number): number {
+  let at = -1;
+  for (let i = 0; i < o; i++) {
+    const n = s[i];
+    if (isT(n) && !n.nor && n.s === '"') at = at < 0 ? i : -1;
+  }
+  return at;
+}
+
+const samePos = (a: MathPos, b: MathPos) => a.o === b.o && a.path.length === b.path.length && a.path.every((st, k) => st.i === b.path[k].i && st.slot === b.path[k].slot);
+
 /** Where new large operators put their limits (the editor's Formeloptionen while it builds). */
 let LIMITS = { int: false, nary: true };
 
@@ -626,6 +661,9 @@ function expressionStart(s: Seq, end: number, trigger: string): number {
     if (OPERATORS.has(c)) {
       // A minus right after ^, _ or / belongs to the operand (e^-x).
       const before = s[i - 1];
+      // A decimal comma or point between digits is part of the number (0,5/2).
+      const after = s[i + 1];
+      if ((c === "," || c === ".") && isT(before) && /[0-9]/.test(before.s) && isT(after) && /[0-9]/.test(after.s)) continue;
       if ((c === "-" || c === "−") && (i === 0 || (isT(before) && BUILD_OPS.has(before.s)))) continue;
       break;
     }
@@ -846,10 +884,20 @@ function build(atoms: Seq, trigger: string): { seq: Seq; into?: number } | null 
   for (let i = 0; i < p2.length; i++) {
     const x = p2[i];
     if (!("k" in x) && (charOf(x) === "/" || charOf(x) === "¦") && p3.length && p2[i + 1]) {
-      const num = p3.pop()!;
-      const den = p2[i + 1];
-      p3.push({ k: "frac", num: "k" in num ? [num] : operandSeq(num), den: "k" in den ? [den] : operandSeq(den), ...(charOf(x) === "¦" ? { type: "noBar" as const } : {}) });
-      i++;
+      // Word's numerator: everything since the last operator; the denominator: everything up
+      // to the next one (2x/3, 0,5/2, y=3a/4b, 2(a+b)/c).
+      const ends = (u: Unit | MNode) => { const c = "k" in u ? null : charOf(u); return c !== null && (OPERATORS.has(c) || c === "/" || c === "¦"); };
+      let k = p3.length;
+      while (k > 0 && !ends(p3[k - 1])) k--;
+      let j = i + 1;
+      while (j < p2.length && !ends(p2[j])) j++;
+      if (k === p3.length || j === i + 1) { p3.push(x); continue; }
+      const part = (us: (Unit | MNode)[]): Seq => us.length === 1 ? ("k" in us[0] ? [us[0]] : operandSeq(us[0]))
+        : us.flatMap((u) => ("k" in u ? [u] : u.bracket ? [delim(u)] : u.seq));
+      const num = part(p3.splice(k));
+      const den = part(p2.slice(i + 1, j));
+      p3.push({ k: "frac", num, den, ...(charOf(x) === "¦" ? { type: "noBar" as const } : {}) });
+      i = j - 1;
       changed = true;
       continue;
     }

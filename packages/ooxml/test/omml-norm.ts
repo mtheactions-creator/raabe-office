@@ -27,5 +27,15 @@ export function norm(el: Element, keep: ReadonlySet<string> = KEEP_PR): string {
 }
 
 
+/**
+ * Neighbouring runs with the same properties as one (Word splits a run where a character is
+ * typed into it; the look is the same).
+ */
+export function mergeRuns(s: string): string {
+  const re = /(?<![\]\w])(r\[[^\]]*\]|)'((?:[^'\\]|\\.)*)' \1'((?:[^'\\]|\\.)*)'/;
+  for (let prev = ""; prev !== s;) { prev = s; s = s.replace(re, (_m, pr: string, a: string, b: string) => `${pr}'${a}${b}'`); }
+  return s;
+}
+
 /** Stricter: also the properties a round trip must keep (growing, shapes, matrix layout). */
 export const KEEP_ALL = new Set([...KEEP_PR, "grow", "shp", "plcHide", "baseJc", "mcJc", "argSz", "brk", "aln", "lit", "opEmu", "noBreak", "jc", "alnScr"]);

@@ -1140,5 +1140,325 @@
    "display[oMath('§')]"
   ],
   "ok": true
+ },
+ "fraction number before": {
+  "area": "fraction",
+  "word": [
+   "display[oMath(f(num('12') den('5')) '§')]"
+  ],
+  "ours": [
+   "display[oMath(f(num('12') den('5')) '§')]"
+  ],
+  "ok": true
+ },
+ "fraction term before": {
+  "area": "fraction",
+  "word": [
+   "display[oMath(f(num('2x') den('3')) '§')]"
+  ],
+  "ours": [
+   "display[oMath(f(num('2x') den('3')) '§')]"
+  ],
+  "ok": true
+ },
+ "fraction after plus": {
+  "area": "fraction",
+  "word": [
+   "display[oMath('1+' f(num('2x') den('3')) '§')]"
+  ],
+  "ours": [
+   "display[oMath('1+' f(num('2x') den('3')) '§')]"
+  ],
+  "ok": true
+ },
+ "fraction after equals": {
+  "area": "fraction",
+  "word": [
+   "display[oMath('y=' f(num('3a') den('4b')) '§')]"
+  ],
+  "ours": [
+   "display[oMath('y=' f(num('3a') den('4b')) '§')]"
+  ],
+  "ok": true
+ },
+ "fraction decimal comma": {
+  "area": "fraction",
+  "word": [
+   "display[oMath(f(num('0,5') den('2')) '§')]"
+  ],
+  "ours": [
+   "display[oMath(f(num('0,5') den('2')) '§')]"
+  ],
+  "ok": true
+ },
+ "fraction decimal point": {
+  "area": "fraction",
+  "word": [
+   "display[oMath(f(num('2.5') den('2')) '§')]"
+  ],
+  "ours": [
+   "display[oMath(f(num('2.5') den('2')) '§')]"
+  ],
+  "ok": true
+ },
+ "two fractions": {
+  "area": "fraction",
+  "word": [
+   "display[oMath(f(num('1') den('2')) '+' f(num('3') den('4')) '§')]"
+  ],
+  "ours": [
+   "display[oMath(f(num('1') den('2')) '+' f(num('3') den('4')) '§')]"
+  ],
+  "ok": true
+ },
+ "fraction after power": {
+  "area": "fraction",
+  "word": [
+   "display[oMath(f(num(sSup(e('x') sup('2'))) den('3')) '§')]"
+  ],
+  "ours": [
+   "display[oMath(f(num(sSup(e('x') sup('2'))) den('3')) '§')]"
+  ],
+  "ok": true
+ },
+ "fraction with minus": {
+  "area": "fraction",
+  "word": [
+   "display[oMath('-' f(num('x') den('2')) '§')]"
+  ],
+  "ours": [
+   "display[oMath('-' f(num('x') den('2')) '§')]"
+  ],
+  "ok": true
+ },
+ "fraction greek": {
+  "area": "fraction",
+  "word": [
+   "display[oMath(f(num('π') den('2')) '§')]"
+  ],
+  "ours": [
+   "display[oMath(f(num('π') den('2')) '§')]"
+  ],
+  "ok": true
+ },
+ "fraction greek symbol": {
+  "area": "fraction",
+  "word": [
+   "display[oMath(f(num('2π') den('3')) '§')]"
+  ],
+  "ours": [
+   "display[oMath(f(num('2π') den('3')) '§')]"
+  ],
+  "ok": true
+ },
+ "fraction subscript": {
+  "area": "fraction",
+  "word": [
+   "display[oMath(f(num(sSub(e('x') sub('1'))) den('2')) '§')]"
+  ],
+  "ours": [
+   "display[oMath(f(num(sSub(e('x') sub('1'))) den('2')) '§')]"
+  ],
+  "ok": true
+ },
+ "fraction after times": {
+  "area": "fraction",
+  "word": [
+   "display[oMath('3⋅' f(num('a') den('b')) '§')]"
+  ],
+  "ours": [
+   "display[oMath('3⋅' f(num('a') den('b')) '§')]"
+  ],
+  "ok": true
+ },
+ "fraction denominator brackets": {
+  "area": "fraction",
+  "word": [
+   "display[oMath(f(num('1') den('a+b')) '§')]"
+  ],
+  "ours": [
+   "display[oMath(f(num('1') den('a+b')) '§')]"
+  ],
+  "ok": true
+ },
+ "fraction bracket factor": {
+  "area": "fraction",
+  "word": [
+   "display[oMath(f(num('2' d(e('a+b'))) den('c')) '§')]"
+  ],
+  "ours": [
+   "display[oMath(f(num('2' d(e('a+b'))) den('c')) '§')]"
+  ],
+  "ok": true
+ },
+ "fraction after function": {
+  "area": "fraction",
+  "word": [
+   "display[oMath(func(fName(r[sty=p]'sin') e(f(num('x') den('2')) '§')))]"
+  ],
+  "ours": [
+   "display[oMath(func(fName(r[sty=p]'sin') e(f(num('x') den('2')) '§')))]"
+  ],
+  "ok": true
+ },
+ "fraction after comma list": {
+  "area": "fraction",
+  "word": [
+   "display[oMath('a,' f(num('b') den('c')) '§')]"
+  ],
+  "ours": [
+   "display[oMath('a,' f(num('b') den('c')) '§')]"
+  ],
+  "ok": true
+ },
+ "fraction no space yet": {
+  "area": "fraction",
+  "word": [
+   "display[oMath(f(num('2x') den('3')) '§')]"
+  ],
+  "ours": [
+   "display[oMath(f(num('2x') den('3')) '§')]"
+  ],
+  "ok": true
+ },
+ "fraction then operator": {
+  "area": "fraction",
+  "word": [
+   "display[oMath(f(num('2x') den('3')) '+1§')]"
+  ],
+  "ours": [
+   "display[oMath(f(num('2x') den('3')) '+1§')]"
+  ],
+  "ok": true
+ },
+ "quoted text": {
+  "area": "text",
+  "word": [
+   "display[oMath(r[nor=1]'Text' '§')]"
+  ],
+  "ours": [
+   "display[oMath(r[nor=1]'Text' '§')]"
+  ],
+  "ok": true
+ },
+ "quoted two words": {
+  "area": "text",
+  "word": [
+   "display[oMath(r[nor=1]'zwei Worte' '§')]"
+  ],
+  "ours": [
+   "display[oMath(r[nor=1]'zwei Worte' '§')]"
+  ],
+  "ok": true
+ },
+ "quoted after equals": {
+  "area": "text",
+  "word": [
+   "display[oMath('a=' r[nor=1]'wenn' 'b §')]"
+  ],
+  "ours": [
+   "display[oMath('a=' r[nor=1]'wenn' 'b §')]"
+  ],
+  "ok": true
+ },
+ "quoted no space": {
+  "area": "text",
+  "word": [
+   "display[oMath(r[nor=1]'abc' '§')]"
+  ],
+  "ours": [
+   "display[oMath(r[nor=1]'abc' '§')]"
+  ],
+  "ok": true
+ },
+ "quote open": {
+  "area": "text",
+  "word": [
+   "display[oMath('\"ab§')]"
+  ],
+  "ours": [
+   "display[oMath('\"ab§')]"
+  ],
+  "ok": true
+ },
+ "quoted then left": {
+  "area": "text",
+  "word": [
+   "display[oMath(r[nor=1]'ab' r[nor=1]'§' r[nor=1]'c')]"
+  ],
+  "ours": [
+   "display[oMath(r[nor=1]'ab§c')]"
+  ],
+  "ok": true
+ },
+ "quoted then left x2": {
+  "area": "text",
+  "word": [
+   "display[oMath(r[nor=1]'a' r[nor=1]'§' r[nor=1]'bc')]"
+  ],
+  "ours": [
+   "display[oMath(r[nor=1]'a§bc')]"
+  ],
+  "ok": true
+ },
+ "quoted then left x4": {
+  "area": "text",
+  "word": [
+   "'§' oMath(r[nor=1]'abc')"
+  ],
+  "ours": [
+   "'§' oMath(r[nor=1]'abc')"
+  ],
+  "ok": true
+ },
+ "quoted then left x5": {
+  "area": "text",
+  "word": [
+   "'§' oMath(r[nor=1]'abc')"
+  ],
+  "ours": [
+   "'§' oMath(r[nor=1]'abc')"
+  ],
+  "ok": true
+ },
+ "quoted home right": {
+  "area": "text",
+  "word": [
+   "display[oMath(r[nor=1]'a' r[nor=1]'§' r[nor=1]'bc')]"
+  ],
+  "ours": [
+   "display[oMath(r[nor=1]'a§bc')]"
+  ],
+  "ok": true
+ },
+ "quoted backspace": {
+  "area": "text",
+  "word": [
+   "display[oMath(r[nor=1]'ab' r[nor=1]'§')]"
+  ],
+  "ours": [
+   "display[oMath(r[nor=1]'ab§')]"
+  ],
+  "ok": true
+ },
+ "quoted backspace x2": {
+  "area": "text",
+  "word": [
+   "display[oMath(r[nor=1]'a' r[nor=1]'§')]"
+  ],
+  "ours": [
+   "display[oMath(r[nor=1]'a§')]"
+  ],
+  "ok": true
+ },
+ "quoted then type": {
+  "area": "text",
+  "word": [
+   "display[oMath(r[nor=1]'abc' 'x§')]"
+  ],
+  "ours": [
+   "display[oMath(r[nor=1]'abc' 'x§')]"
+  ],
+  "ok": true
  }
 }

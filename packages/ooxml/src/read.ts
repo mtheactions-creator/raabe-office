@@ -861,12 +861,27 @@ class PartReader {
     const extra: string[] = [];
     let style: string | undefined, align: TableDef["align"], indent: number | undefined;
     let look: TableDef["look"];
+    let float: TableDef["float"], overlap: boolean | undefined;
     if (tblPr) {
       for (const c of kids(tblPr)) {
         switch (c.localName) {
           case "tblStyle": style = attr(c, "val") ?? undefined; break;
           case "jc": { const v = attr(c, "val"); align = v === "center" ? "center" : v === "right" || v === "end" ? "right" : "left"; break; }
           case "tblInd": indent = (num(attr(c, "w")) ?? 0) / 20; break;
+          case "tblpPr": {
+            const tw = (n: string) => (num(attr(c, n)) ?? 0) / 20;
+            const xs = attr(c, "tblpXSpec"), ys = attr(c, "tblpYSpec");
+            const ha = attr(c, "horzAnchor"), va = attr(c, "vertAnchor");
+            float = {
+              x: tw("tblpX"), y: tw("tblpY"),
+              xAlign: xs === "left" || xs === "center" || xs === "right" || xs === "inside" || xs === "outside" ? xs : undefined,
+              yAlign: ys === "top" || ys === "center" || ys === "bottom" || ys === "inside" || ys === "outside" || ys === "inline" ? ys : undefined,
+              hAnchor: ha === "margin" || ha === "page" ? ha : "text", vAnchor: va === "text" || va === "page" ? va : "margin",
+              left: tw("leftFromText"), right: tw("rightFromText"), top: tw("topFromText"), bottom: tw("bottomFromText"),
+            };
+            break;
+          }
+          case "tblOverlap": overlap = attr(c, "val") !== "never"; break;
           case "tblBorders": case "shd": case "tblCellMar": break;
           case "tblLook": {
             const hex = parseInt(attr(c, "val") ?? "0", 16) || 0;
@@ -927,6 +942,7 @@ class PartReader {
       shading: readShading(child(tblPr ?? tbl, "shd")),
       cellMargins: cellMargins(child(tblPr ?? tbl, "tblCellMar")),
       look, extra: extra.length ? extra : undefined,
+      ...(float ? { float: overlap === false ? { ...float, overlap: false } : float } : {}),
     };
     const out: Para[] = [];
     cellEls.forEach((tcs, r) => tcs.forEach((tc, c) => {
@@ -1117,6 +1133,60 @@ function docPrAlt(docPr: Element | undefined, alt: AltText): AltText | undefined
  * colour or font scheme files (.xml: a:clrScheme, a:fontScheme). What it does not contain is
  * left out.
  */
+// ----- styles from Word's XML (the table style gallery) -----------------------------------------------
+
+/** Theme colour names of WordprocessingML (w:themeColor) and the theme's keys. */
+const THEME_KEYS: Record<string, string> = {
+  text1: "dk1", background1: "lt1", text2: "dk2", background2: "lt2", dark1: "dk1", light1: "lt1", dark2: "dk2", light2: "lt2",
+  hyperlink: "hlink", followedHyperlink: "folHlink",
+};
+
+/**
+ * A theme colour with Word's w:themeTint / w:themeShade (hex 00–FF): the HSL lightness is
+ * lifted towards white (L·t + 1 − t) or lowered (L·s), as Word computes it (checked against
+ * Word's own values, e.g. Akzent 1 with tint 99).
+ */
+export function themedHex(base: string, tint?: string, shade?: string): string {
+  const rgb = [0, 2, 4].map((i) => parseInt(base.slice(i, i + 2), 16) / 255);
+  const max = Math.max(...rgb), min = Math.min(...rgb);
+  let l = (max + min) / 2;
+  const d = max - min;
+  const s = d === 0 ? 0 : d / (1 - Math.abs(2 * l - 1));
+  let hue = 0;
+  if (d) {
+    const [r, g, b] = rgb;
+    hue = max === r ? ((g - b) / d) % 6 : max === g ? (b - r) / d + 2 : (r - g) / d + 4;
+    hue *= 60;
+    if (hue < 0) hue += 360;
+  }
+  if (tint) { const t = parseInt(tint, 16) / 255; l = l * t + (1 - t); }
+  if (shade) l *= parseInt(shade, 16) / 255;
+  const c = (1 - Math.abs(2 * l - 1)) * s, x = c * (1 - Math.abs(((hue / 60) % 2) - 1)), m = l - c / 2;
+  const [r1, g1, b1] = hue < 60 ? [c, x, 0] : hue < 120 ? [x, c, 0] : hue < 180 ? [0, c, x] : hue < 240 ? [0, x, c] : hue < 300 ? [x, 0, c] : [c, 0, x];
+  return [r1, g1, b1].map((v) => Math.round(Math.min(1, Math.max(0, v + m)) * 255).toString(16).padStart(2, "0")).join("").toUpperCase();
+}
+
+/** Word's XML with every theme-referencing colour (w:color/w:fill) computed from `colors`. */
+export function rethemeXml(xml: string, colors: Readonly<Record<string, string>>): string {
+  return xml.replace(/<w:[A-Za-z]+\b[^>]*>/g, (tag) => {
+    const get = (a: string) => new RegExp(`w:${a}="([^"]*)"`).exec(tag)?.[1];
+    let t = tag;
+    const tc = get("themeColor"), tf = get("themeFill");
+    const base = (k: string | undefined) => (k ? colors[THEME_KEYS[k] ?? k] : undefined);
+    if (base(tc)) t = t.replace(/w:color="[^"]*"/, `w:color="${themedHex(base(tc)!, get("themeTint"), get("themeShade"))}"`);
+    if (base(tf)) t = t.replace(/w:fill="[^"]*"/, `w:fill="${themedHex(base(tf)!, get("themeFillTint"), get("themeFillShade"))}"`);
+    return t;
+  });
+}
+
+/** A style from Word's w:style XML (a gallery table style), with the document's theme colours. */
+export function styleFromXml(styleXml: string, colors?: Readonly<Record<string, string>>): StyleDef | undefined {
+  const xml = colors ? rethemeXml(styleXml, colors) : styleXml;
+  const sheet = readStyles(`<w:styles xmlns:w="${W}">${xml}</w:styles>`, { major: "Calibri Light", minor: "Calibri" });
+  const id = /w:styleId="([^"]+)"/.exec(xml)?.[1];
+  return id ? sheet.get(id) : undefined;
+}
+
 export function readThemeFile(bytes: Uint8Array): { colors?: Record<string, string>; colorName?: string; major?: string; minor?: string; fontName?: string; name?: string } | null {
   let xml: string | null = null;
   try {

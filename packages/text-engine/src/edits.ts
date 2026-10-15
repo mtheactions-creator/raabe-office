@@ -379,6 +379,54 @@ export function deleteColumns(doc: Doc, p: number, q: number): Pos | null {
   return firstOfCell(doc, t.a, c1.row, Math.min(cellAtGrid(rows[c1.row], Math.min(lo, grid.length - 1)), rows[c1.row].cells.length - 1));
 }
 
+/** A block of cells (row and cell indices). */
+export interface CellBlock { r1: number; r2: number; c1: number; c2: number }
+
+/** Entf on selected cells: their contents go, the cells stay (Word). */
+export function clearCells(doc: Doc, p: number, block: CellBlock): void {
+  const t = tableAt(doc, p);
+  if (!t) return;
+  const cells = cellParas(doc, t.a, t.b, t.def);
+  for (let r = block.r1; r <= block.r2; r++) {
+    for (let c = block.c1; c <= Math.min(block.c2, cells[r].length - 1); c++) cells[r][c] = [emptyLike(cells[r][c])];
+  }
+  rebuild(doc, t.a, t.b, t.def, cells);
+}
+
+/**
+ * Zellen löschen (Word's dialog, recorded 2026-10-15): "left" takes the cells out of their
+ * rows (the cells after them move left, the rows get shorter); "up" moves the contents below
+ * up into them, the cells left at the bottom are empty.
+ */
+export function deleteCells(doc: Doc, p: number, block: CellBlock, mode: "left" | "up"): Pos | null {
+  const t = tableAt(doc, p);
+  if (!t) return null;
+  const cells = cellParas(doc, t.a, t.b, t.def);
+  let rows = t.def.rows;
+  if (mode === "left") {
+    rows = rows.map((row, r) => {
+      if (r < block.r1 || r > block.r2) return row;
+      const hi = Math.min(block.c2, row.cells.length - 1);
+      if (block.c1 > hi) return row;
+      // A row keeps at least one cell.
+      const keep = row.cells.filter((_, c) => c < block.c1 || c > hi);
+      cells[r] = keep.length ? cells[r].filter((_, c) => c < block.c1 || c > hi) : [[makePara("")]];
+      return { ...row, cells: keep.length ? keep : [{ span: 1 }] };
+    });
+  } else {
+    const n = block.r2 - block.r1 + 1;
+    for (let c = block.c1; c <= block.c2; c++) {
+      for (let r = block.r1; r < rows.length; r++) {
+        if (c >= cells[r].length) continue;
+        const from = r + n < rows.length && c < cells[r + n].length ? cells[r + n][c] : null;
+        cells[r][c] = from ?? [emptyLike(cells[r][c])];
+      }
+    }
+  }
+  rebuild(doc, t.a, t.b, { ...t.def, rows }, cells);
+  return firstOfCell(doc, t.a, block.r1, Math.min(block.c1, rows[block.r1].cells.length - 1));
+}
+
 /** Tabelle löschen. */
 export function deleteTable(doc: Doc, p: number): Pos | null {
   const t = tableAt(doc, p);

@@ -332,5 +332,16 @@
   "pane-fill-line": "custom:pane-fill-line",
   "pane-effects": "custom:pane-effects",
   "pane-layout": "custom:pane-layout",
-  "pane-picture": "image"
+  "pane-picture": "image",
+  "border-inside-h": "custom:border-inside-h",
+  "border-inside-v": "custom:border-inside-v",
+  "border-diag-down": "custom:border-diag-down",
+  "border-diag-up": "custom:border-diag-up",
+  "border-styles": "custom:border-styles",
+  "border-painter": "custom:border-painter",
+  "pipette": "eyedropper",
+  "pen": "pen",
+  "table-draw": "table_edit",
+  "line-style": "line_style",
+  "line-weight-pen": "line_thickness"
 }

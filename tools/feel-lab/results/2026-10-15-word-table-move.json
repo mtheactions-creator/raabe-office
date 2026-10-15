@@ -1,0 +1,35 @@
+{
+ "right 150": {
+  "tblPr": "<w:tblStyle w:val=\"Tabellenraster\"/><w:tblW w:w=\"4000\" w:type=\"dxa\"/><w:tblInd w:w=\"1498\" w:type=\"dxa\"/><w:tblLook w:val=\"04A0\" w:firstRow=\"1\" w:lastRow=\"0\" w:firstColumn=\"1\" w:lastColumn=\"0\" w:noHBand=\"0\" w:noVBand=\"1\"/>",
+  "order": "pTppppppppppp",
+  "positions": {
+   "table top": 122.80000305175781,
+   "para1 first line": 70.8499984741211,
+   "para1 last line": 99.69999694824219,
+   "para after table first line": 164.8000030517578,
+   "para after table text": "Ein Absatz mit etwas"
+  }
+ },
+ "down 120": {
+  "tblPr": "<w:tblStyle w:val=\"Tabellenraster\"/><w:tblpPr w:leftFromText=\"141\" w:rightFromText=\"141\" w:vertAnchor=\"text\" w:tblpY=\"359\"/><w:tblW w:w=\"4000\" w:type=\"dxa\"/><w:tblLook w:val=\"04A0\" w:firstRow=\"1\" w:lastRow=\"0\" w:firstColumn=\"1\" w:lastColumn=\"0\" w:noHBand=\"0\" w:noVBand=\"1\"/>",
+  "order": "pTppppppppppp",
+  "positions": {
+   "table top": 140.5500030517578,
+   "para1 first line": 70.8499984741211,
+   "para1 last line": 99.69999694824219,
+   "para after table first line": 122.44999694824219,
+   "para after table text": "Ein Absatz mit etwas"
+  }
+ },
+ "right 120 down 90": {
+  "tblPr": "<w:tblStyle w:val=\"Tabellenraster\"/><w:tblpPr w:leftFromText=\"141\" w:rightFromText=\"141\" w:vertAnchor=\"text\" w:horzAnchor=\"page\" w:tblpX=\"2621\" w:tblpY=\"59\"/><w:tblW w:w=\"4000\" w:type=\"dxa\"/><w:tblLook w:val=\"04A0\" w:firstRow=\"1\" w:lastRow=\"0\" w:firstColumn=\"1\" w:lastColumn=\"0\" w:noHBand=\"0\" w:noVBand=\"1\"/>",
+  "order": "pTppppppppppp",
+  "positions": {
+   "table top": 125.5,
+   "para1 first line": 70.8499984741211,
+   "para1 last line": 99.69999694824219,
+   "para after table first line": 122.44999694824219,
+   "para after table text": "Ein Absatz mit etwas"
+  }
+ }
+}

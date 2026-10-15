@@ -152,6 +152,60 @@ const fillOf = (s: Shading | undefined) => (s && s.fill && s.fill !== "auto" ? `
 /** Word's default cell margins (0.19 cm left and right). */
 export const DEFAULT_CELL_MARGINS: CellMargins = { left: 5.4, right: 5.4, top: 0, bottom: 0 };
 
+type TableLook = NonNullable<TableDef["look"]>;
+type Side = "top" | "bottom" | "left" | "right";
+
+/**
+ * A cell's table-style look: the conditional formats that apply to it in Word's order, and its
+ * four edges. A conditional format's top/bottom/left/right are the sides of its region (the
+ * header row, a band, the first column …), insideH/insideV the lines within it; the table's
+ * own borders (`direct`) come after the style, the cell's own after everything.
+ */
+export function tableCellLook(style: TableStyleDef | undefined, look: TableLook, r: number, nRows: number, gx: number, span: number, nCols: number,
+  direct?: Borders): { parts: TableStylePart[]; edges: Record<Side, BorderSpec | undefined> } {
+  const parts: TableStylePart[] = [];
+  const regions: { part: TableStylePart; r0: number; r1: number; c0: number; c1: number }[] = [];
+  const cond = style?.cond;
+  const lastC = gx + span - 1;
+  if (cond) {
+    const band = (n: number, size: number) => (Math.floor(n / Math.max(1, size)) % 2 === 0 ? 1 : 2);
+    const add = (part: TableStylePart | undefined, r0: number, r1: number, c0: number, c1: number) => { if (part) { parts.push(part); regions.push({ part, r0, r1, c0, c1 }); } };
+    const firstBody = look.firstColumn ? 1 : 0;
+    const bodyCol = gx - firstBody;
+    if (!look.noVBand && bodyCol >= 0) {
+      const size = style.colBand ?? 1, b0 = firstBody + Math.floor(bodyCol / size) * size;
+      add(cond[`band${band(bodyCol, size)}Vert`], 0, nRows - 1, b0, b0 + size - 1);
+    }
+    const firstRowBody = look.firstRow ? 1 : 0;
+    const bodyRow = r - firstRowBody;
+    if (!look.noHBand && bodyRow >= 0) {
+      const size = style.rowBand ?? 1, b0 = firstRowBody + Math.floor(bodyRow / size) * size;
+      add(cond[`band${band(bodyRow, size)}Horz`], b0, b0 + size - 1, 0, nCols - 1);
+    }
+    if (look.firstColumn && gx === 0) add(cond.firstCol, 0, nRows - 1, 0, 0);
+    if (look.lastColumn && lastC === nCols - 1) add(cond.lastCol, 0, nRows - 1, nCols - 1, nCols - 1);
+    if (look.firstRow && r === 0) add(cond.firstRow, 0, 0, 0, nCols - 1);
+    if (look.lastRow && r === nRows - 1) add(cond.lastRow, nRows - 1, nRows - 1, 0, nCols - 1);
+    // The corner cells last (Einfache Tabelle 3: no line right of the top left cell).
+    const top = look.firstRow && r === 0, bottom = look.lastRow && r === nRows - 1;
+    const left = look.firstColumn && gx === 0, right = look.lastColumn && lastC === nCols - 1;
+    if (top && right) add(cond.neCell, r, r, gx, lastC);
+    if (top && left) add(cond.nwCell, r, r, gx, lastC);
+    if (bottom && right) add(cond.seCell, r, r, gx, lastC);
+    if (bottom && left) add(cond.swCell, r, r, gx, lastC);
+  }
+  const at = (b: Borders | undefined, r0: number, r1: number, c0: number, c1: number) => ({
+    top: r === r0 ? b?.top : b?.insideH, bottom: r === r1 ? b?.bottom : b?.insideH,
+    left: gx === c0 ? b?.left : b?.insideV, right: lastC >= c1 ? b?.right : b?.insideV,
+  });
+  const edges: Record<Side, BorderSpec | undefined> = { top: undefined, bottom: undefined, left: undefined, right: undefined };
+  const over = (e: Record<Side, BorderSpec | undefined>) => { for (const k of ["top", "bottom", "left", "right"] as Side[]) if (e[k]) edges[k] = e[k]; };
+  over(at(style?.borders, 0, nRows - 1, 0, nCols - 1));
+  for (const g of regions) over(at(g.part.borders, g.r0, g.r1, g.c0, g.c1));
+  over(at(direct, 0, nRows - 1, 0, nCols - 1));
+  return { parts, edges };
+}
+
 const newStory = (n: number): StoryLayout => ({ paras: new Array(n), placed: [], firstPlaced: new Array(n).fill(-1), index: [] });
 
 interface Exclusion {
@@ -212,7 +266,7 @@ interface CellGeom {
   readonly vMerge?: "restart" | "continue";
   readonly shading: string | null;
   /** The borders this cell draws: its top, left, and (last row/column) bottom and right. */
-  readonly edges: Edges;
+  edges: Edges;
   readonly vAlign: "top" | "center" | "bottom";
   /** Rows a restart cell spans (vertical merge). */
   span: number;
@@ -236,6 +290,22 @@ interface RowGeom {
 }
 
 const borderW = (b: BorderSpec | undefined) => (visibleBorder(b) ? b.size * PT : 0);
+
+/** Lines of a border style (its weight in Word's conflict rule). */
+const borderLines = (style: string) => (style === "triple" || /ThinThin|thinThickThin/.test(style) ? 3 : style === "double" || /thin|thick|doubleWave/i.test(style) ? 2 : 1);
+
+/**
+ * Word's rule for an edge two cells share: a missing border loses; otherwise the heavier one
+ * (width × lines) wins, then the darker one.
+ */
+function strongerBorder(a: BorderSpec | undefined, b: BorderSpec | undefined): BorderSpec | undefined {
+  if (!visibleBorder(b)) return a;
+  if (!visibleBorder(a)) return b;
+  const wa = a.size * borderLines(a.style), wb = b.size * borderLines(b.style);
+  if (Math.abs(wa - wb) > 1e-6) return wa > wb ? a : b;
+  const dark = (c: string) => (c === "auto" ? 0 : [0, 2, 4].reduce((sum, i) => sum + (parseInt(c.slice(i, i + 2), 16) || 0), 0));
+  return dark(b.color) < dark(a.color) ? b : a;
+}
 
 interface TableGeom {
   readonly def: TableDef;
@@ -1179,7 +1249,7 @@ class Flow {
 
   /** Geometry of the table formed by paragraphs a..b (cells laid out, rows measured). */
   private tableGeom(paras: readonly Para[], a: number, b: number, frameX: number, frameW: number,
-    labels: (ListLabel | undefined)[], fields?: Record<string, string>): TableGeom {
+    labels: (ListLabel | undefined)[], fields?: Record<string, string>, at?: number): TableGeom {
     const def = paras[a].cell!.table;
     const style = this.styles.tableStyle(def.style ?? this.defaultTableStyle);
     const gridW = def.grid.map((g) => g * PT);
@@ -1187,6 +1257,7 @@ class Flow {
     let x = frameX + (def.indent ?? 0) * PT;
     if (def.align === "center") x = frameX + (frameW - total) / 2;
     else if (def.align === "right") x = frameX + frameW - total;
+    if (at !== undefined) x = at;
     const margins: CellMargins = { ...DEFAULT_CELL_MARGINS, ...(style?.cellMargins ?? {}), ...(def.cellMargins ?? {}) };
     const byCell = new Map<string, number[]>();
     for (let i = a; i <= b; i++) {
@@ -1203,19 +1274,19 @@ class Flow {
         const cx = x + sum(gridW, 0, gx);
         const cw = sum(gridW, gx, gx + span) || (cd.width ?? 50) * PT;
         const m: CellMargins = { ...margins, ...(cd.margins ?? {}) };
-        const conds = this.conditions(style, look, r, nRows, gx, span, gridW.length);
+        const cl = tableCellLook(style, look, r, nRows, gx, span, gridW.length, def.borders);
+        const conds = cl.parts;
         const pPr = mergeParts(style?.pPr, conds.map((p) => p.pPr));
         const rPr = mergeChars(style?.rPr, conds.map((p) => p.rPr));
         const shading = fillOf(cd.shading) ?? [...conds].reverse().map((p) => fillOf(p.shading)).find((v) => v) ?? fillOf(def.shading) ?? fillOf(style?.shading) ?? null;
-        // Table borders (style, conditional formats, the table's own); the cell's own win.
-        const tb: Borders = Object.assign({}, style?.borders ?? {}, ...conds.map((p) => p.borders ?? {}), def.borders ?? {});
+        // Table borders (style, its conditional formats by region, the table's own); the cell's own win.
         const own = cd.borders ?? {};
         const lastCol = gx + span >= gridW.length;
         const edges: Edges = {
-          top: cd.vMerge === "continue" ? undefined : own.top ?? (r === 0 ? tb.top : tb.insideH ?? tb.top),
-          bottom: own.bottom ?? (r === nRows - 1 ? tb.bottom : tb.insideH ?? tb.bottom),
-          left: own.left ?? (gx === 0 ? tb.left : tb.insideV ?? tb.left),
-          right: own.right ?? (lastCol ? tb.right : tb.insideV ?? tb.right),
+          top: cd.vMerge === "continue" ? undefined : own.top ?? cl.edges.top,
+          bottom: own.bottom ?? cl.edges.bottom,
+          left: own.left ?? cl.edges.left,
+          right: own.right ?? cl.edges.right,
         };
         // Measured: text starts after the left border's right half, and rows grow by the
         // full width of their top border.
@@ -1243,6 +1314,20 @@ class Flow {
       const bottomW = r === nRows - 1 ? Math.max(0, ...cells.map((c) => borderW(c.edges.bottom))) : 0;
       return { cells, height: 0, topW, bottomW, header: !!row.header, cantSplit: !!row.cantSplit };
     });
+    // Edges two cells share: the stronger of the two (a band's bottom line shows even where the
+    // row below has no top line). Tops and lefts are what is drawn.
+    rows.forEach((row, r) => {
+      row.cells.forEach((cell, c) => {
+        let { top, left } = cell.edges;
+        if (r > 0 && cell.vMerge !== "continue") {
+          const above = rows[r - 1].cells.filter((x) => x.x < cell.x + cell.w - 0.5 && x.x + x.w > cell.x + 0.5);
+          if (above.length === 1) top = strongerBorder(top, above[0].edges.bottom);
+        }
+        if (c > 0) left = strongerBorder(left, row.cells[c - 1].edges.right);
+        if (top !== cell.edges.top || left !== cell.edges.left) cell.edges = { ...cell.edges, top, left };
+      });
+      row.topW = Math.max(0, ...row.cells.map((x) => borderW(x.edges.top)));
+    });
     // Vertically merged cells: a restart cell spans the following "continue" cells below it.
     rows.forEach((row, r) => {
       for (const cell of row.cells) {
@@ -1269,24 +1354,6 @@ class Flow {
       }
     });
     return { def, x, w: total, rows };
-  }
-
-  /** Conditional formats of a table style that apply to a cell, in Word's order. */
-  private conditions(style: TableStyleDef | undefined, look: NonNullable<TableDef["look"]>, r: number, nRows: number,
-    gx: number, span: number, nCols: number): TableStylePart[] {
-    const out: TableStylePart[] = [];
-    const cond = style?.cond;
-    if (!style || !cond) return out;
-    const band = (n: number, size: number) => (Math.floor(n / Math.max(1, size)) % 2 === 0 ? 1 : 2);
-    const bodyCol = gx - (look.firstColumn ? 1 : 0);
-    if (!look.noVBand && bodyCol >= 0) { const c = cond[`band${band(bodyCol, style.colBand ?? 1)}Vert`]; if (c) out.push(c); }
-    const bodyRow = r - (look.firstRow ? 1 : 0);
-    if (!look.noHBand && bodyRow >= 0) { const c = cond[`band${band(bodyRow, style.rowBand ?? 1)}Horz`]; if (c) out.push(c); }
-    if (look.firstColumn && gx === 0 && cond.firstCol) out.push(cond.firstCol);
-    if (look.lastColumn && gx + span === nCols && cond.lastCol) out.push(cond.lastCol);
-    if (look.firstRow && r === 0 && cond.firstRow) out.push(cond.firstRow);
-    if (look.lastRow && r === nRows - 1 && cond.lastRow) out.push(cond.lastRow);
-    return out;
   }
 
   /**
@@ -1352,8 +1419,45 @@ class Flow {
     if (lastCol) line(e.right, cell.x + cell.w, top, cell.x + cell.w, top + h);
   }
 
+  /**
+   * Umgebend (w:tblpPr): the table where its offsets put it on the page, out of the text; the
+   * text after it flows around it (Quadrat with Word's distances to the text). Vertically "text"
+   * counts from where the table stands in the text (measured in Word: the top of the paragraph
+   * after it, which takes the table's place).
+   */
+  private placeFloatingTable(a: number, b: number): void {
+    const paras = this.input.main;
+    const def = paras[a].cell!.table, f = def.float!;
+    const s = this.page.setup;
+    const [ax, aw] = f.hAnchor === "page" ? [0, s.width * PT] : f.hAnchor === "margin" ? [s.marginLeft * PT, (s.width - s.marginLeft - s.marginRight) * PT] : [this.cur.x, this.cur.w];
+    const total = def.grid.reduce((t, g) => t + g, 0) * PT;
+    const x = f.xAlign === "center" ? ax + (aw - total) / 2 : f.xAlign === "right" || f.xAlign === "outside" ? ax + aw - total : f.xAlign ? ax : ax + f.x * PT;
+    const g = this.tableGeom(paras, a, b, this.cur.x, this.cur.w, this.labels, undefined, x);
+    const h = g.rows.reduce((t, r) => t + r.height, 0);
+    const flowY = this.cur.y + this.y + (this.y === 0 && this.fresh ? 0 : this.prev ? this.prev.after : 0);
+    const [ay, ah] = f.vAnchor === "page" ? [0, s.height * PT] : f.vAnchor === "margin" ? [s.marginTop * PT, (s.height - s.marginTop - s.marginBottom) * PT] : [flowY, 0];
+    const y = f.yAlign === "center" ? ay + (ah - h) / 2 : f.yAlign === "bottom" || f.yAlign === "outside" ? ay + ah - h : f.yAlign ? ay : ay + f.y * PT;
+    let top = y;
+    for (const row of g.rows) {
+      this.placeRow(g, row, this.page, top, row.height, "main", this.main, paras, { ghost: false });
+      top += row.height;
+    }
+    const list = this.excl.get(this.page.index) ?? [];
+    const key = `tbl${def.id}`;
+    const e: Exclusion = { x: g.x - f.left * PT, y: y - f.top * PT, w: g.w + (f.left + f.right) * PT, h: h + (f.top + f.bottom) * PT, wrap: "square", side: "bothSides", key };
+    if (!list.some((o) => o.key === key)) {
+      list.push(e);
+      // Reaching above the text placed so far on this page: that text wraps too (second pass).
+      const placed = this.main.placed;
+      const textAbove = placed.length > 0 && placed[placed.length - 1].page === this.page.index;
+      if (textAbove && e.y < this.cur.y + this.y - 0.5 && !this.seeds.get(this.page.index)?.some((o) => o.key === key)) this.late.push({ page: this.page.index, e });
+    }
+    this.excl.set(this.page.index, list);
+  }
+
   private placeTable(si: number, a: number, b: number): void {
     const paras = this.input.main;
+    if (paras[a].cell!.table.float) { this.placeFloatingTable(a, b); return; }
     if (!(this.y === 0 && this.fresh)) this.y += this.prev ? this.prev.after : 0;
     this.carried = null;
     this.fresh = false;

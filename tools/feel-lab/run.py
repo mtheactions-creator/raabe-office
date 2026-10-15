@@ -74,8 +74,9 @@ def main(argv: list[str]) -> None:
             raabe.close()
         for name, r in data.items():
             print(name, json.dumps({k: v for k, v in r.items() if k != "lines"}, ensure_ascii=False, indent=1)[:5000])
-        # A check of a few files does not replace the full run's results.
-        print("saved to", save(test if len(files) > 3 else f"docx-{'-'.join(f.stem for f in files)}", data))
+        # Only a run over every fixture is "the" docx result; a check of some files is saved apart.
+        everything = {f.name for f in files} >= {f.name for f in fixtures.glob("word-*.docx")}
+        print("saved to", save(test if everything else f"docx-{'-'.join(f.stem.removeprefix('word-') for f in files)[:80]}", data))
         return
     elif test == "formatting":
         from feellab import formatting

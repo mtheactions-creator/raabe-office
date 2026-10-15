@@ -38,6 +38,14 @@ Status: A done 2026-10-15. B done 2026-10-15 (D-054): text on both sides and Eng
 outlines (all 162 line starts of the Word-built word-wrap.docx as in Word), snapping with guide
 lines, double-click, wrap icons, Transparente Farbe bestimmen, the Grafik/Form formatieren pane
 in Word's layout, turned selection frames, Word's shape context menu.
+C done 2026-10-15 (D-055): "/" takes the whole operand and quoted text becomes normal text as
+in Word (146/146 recorded cases in the app), equations through the clipboard with Word both ways
+(0 differences), the formula's font in Start, the handle selects the whole formula. D done
+2026-10-15 (D-056): Entf/Rücktaste and Zellen löschen as recorded, cell drag and shading as Word's,
+the full Rahmen group with Rahmen übertragen and Rahmenpipette, Word's 105 table styles with
+previews and Livevorschau, floating tables (word-table-float.docx 100 %) with dragging and our
+layout handle. E done 2026-10-15 (D-057): selection visible over every background, sharp
+pointers, Livevorschau in the Formatvorlagen gallery, Formatvorlagen reset cleanly.
 
 ## Step 4b: Word parity (plan)
 

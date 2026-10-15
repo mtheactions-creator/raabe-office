@@ -7,7 +7,7 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { MathEditor, type Seq } from "@raabe/text-engine";
 import { seqToOmml } from "../src/math";
-import { M_NS, norm, repr } from "./omml-norm";
+import { M_NS, mergeRuns, norm, repr } from "./omml-norm";
 
 const RESULTS = join(__dirname, "..", "..", "..", "tools", "feel-lab", "results");
 /** The catalogue's description of a paragraph: text pieces and equations in order. */
@@ -84,9 +84,9 @@ describe.runIf(!!latest)("formula editor as Word (catalogue_math.py)", () => {
     for (const c of cases) {
       const w = word[c.name]?.word;
       if (!w) continue;
-      const want = w.map((x) => x.replace(/ ''\)/g, ")"));
+      const want = w.map((x) => mergeRuns(x.replace(/ ''\)/g, ")")));
       let got: string[];
-      try { got = replay(c.steps); } catch (e) { got = [`ERROR ${String(e)}`]; }
+      try { got = replay(c.steps).map(mergeRuns); } catch (e) { got = [`ERROR ${String(e)}`]; }
       if (JSON.stringify(got) === JSON.stringify(want)) ok++;
       else diffs.push(`${c.name}\n   word: ${want.join(" / ")}\n   ours: ${got.join(" / ")}`);
     }

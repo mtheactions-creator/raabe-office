@@ -138,6 +138,40 @@ case("sum down from body", T("\\sum_(i=1)^n i "), K("down"), area="navigate")
 case("sum left x3", T("\\sum_(i=1)^n i "), K("left", 3), area="navigate")
 case("matrix right x3", T("\\matrix(a&b@c&d) "), K("home"), K("right", 3), area="navigate")
 case("matrix down", T("\\matrix(a&b@c&d) "), K("home"), K("right", 2), K("down"), area="navigate")
+
+# ----- Step 4c C: what "/" takes before it, quoted text ---------------------------------------
+case("fraction number before", T("12/5 "), area="fraction")
+case("fraction term before", T("2x/3 "), area="fraction")
+case("fraction after plus", T("1+2x/3 "), area="fraction")
+case("fraction after equals", T("y=3a/4b "), area="fraction")
+case("fraction decimal comma", T("0,5/2 "), area="fraction")
+case("fraction decimal point", T("2.5/2 "), area="fraction")
+case("two fractions", T("1/2+3/4 "), area="fraction")
+case("fraction after power", T("x^2/3 "), area="fraction")
+case("fraction with minus", T("-x/2 "), area="fraction")
+case("fraction greek", T("\\pi/2 "), area="fraction")
+case("fraction greek symbol", T("2\\pi /3 "), area="fraction")
+case("fraction subscript", T("x_1/2 "), area="fraction")
+case("fraction after times", T("3\\cdot a/b "), area="fraction")
+case("fraction denominator brackets", T("1/(a+b) "), area="fraction")
+case("fraction bracket factor", T("2(a+b)/c "), area="fraction")
+case("fraction after function", T("sin x/2 "), area="fraction")
+case("fraction after comma list", T("a,b/c "), area="fraction")
+case("fraction no space yet", T("2x/3"), area="fraction")
+case("fraction then operator", T("2x/3+1"), area="fraction")
+case("quoted text", T('"Text" '), area="text")
+case("quoted two words", T('"zwei Worte" '), area="text")
+case("quoted after equals", T('a="wenn" b '), area="text")
+case("quoted no space", T('"abc"'), area="text")
+case("quote open", T('"ab'), area="text")
+case("quoted then left", T('"abc" '), K("left"), area="text")
+case("quoted then left x2", T('"abc" '), K("left", 2), area="text")
+case("quoted then left x4", T('"abc" '), K("left", 4), area="text")
+case("quoted then left x5", T('"abc" '), K("left", 5), area="text")
+case("quoted home right", T('"abc" '), K("home"), K("right"), area="text")
+case("quoted backspace", T('"abc" '), K("backspace"), area="text")
+case("quoted backspace x2", T('"abc" '), K("backspace", 2), area="text")
+case("quoted then type", T('"abc" x'), area="text")
 case("brackets left x2", T("(a+b) "), K("left", 2), area="navigate")
 case("ctrl left", T("ab+cd "), K("ctrl+left"), area="navigate")
 case("type after fraction", T("a/b "), K("left"), T("c"), area="type")
@@ -176,6 +210,17 @@ def norm(el) -> str:
     inner = [norm(c) for c in el]
     inner = [x for x in inner if x]
     return f"{tag}({' '.join(inner)})"
+
+
+def merge_runs(s: str) -> str:
+    """Neighbouring runs with the same properties as one (Word splits a run where a character
+    is typed into it; the look is the same)."""
+    pat = re.compile(r"(?<![\]\w])(r\[[^\]]*\]|)'((?:[^'\\]|\\.)*)' \1'((?:[^'\\]|\\.)*)'")
+    while True:
+        t = pat.sub(lambda m: f"{m.group(1)}'{m.group(2)}{m.group(3)}'", s, count=1)
+        if t == s:
+            return s
+        s = t
 
 
 def equations(path: Path) -> list[str]:
@@ -285,7 +330,7 @@ def main() -> None:
                 except Exception as e:  # noqa: BLE001
                     results[name]["ours_error"] = repr(e)
                 r = results[name]
-                r["ok"] = r.get("word") == r.get("ours")
+                r["ok"] = [merge_runs(x) for x in r.get("word") or []] == [merge_runs(x) for x in r.get("ours") or []] and r.get("word") is not None
                 print("ours:", name, "ok" if r["ok"] else f"DIFF {r.get('ours')}", flush=True)
         finally:
             ours.close()

@@ -1,0 +1,25 @@
+{
+ "original": [
+  "'Vor der Formel ' oMath(f(num('a') den('b')) '+' sSup(e('x') sup('2'))) ' danach.'",
+  "display[oMath('x=' f(num('-b±' rad(@degHide=1 deg() e(sSup(e('b') sup('2')) '-4ac'))) den('2a')))]",
+  "display[oMath(func(fName(r[sty=p]'sin') e('x')) '=' r[nor=1]'wenn' 'a')]",
+  "'Im Text ' oMath(nary(@chr=∑ sub('i=1') sup('n') e('i'))) ' steht eine Summe.'",
+  "'Ende'"
+ ],
+ "word-to-raabe": [],
+ "word-to-raabe-result": [
+  "'Vor der Formel ' oMath(f(num('a') den('b')) '+' sSup(e('x') sup('2'))) ' danach.'",
+  "display[oMath('x=' f(num('-b±' rad(@degHide=1 deg() e(sSup(e('b') sup('2')) '-4ac'))) den('2a')))]",
+  "display[oMath(func(fName(r[sty=p]'sin') e('x')) '=' r[nor=1]'wenn' 'a')]",
+  "'Im Text ' oMath(nary(@chr=∑ sub('i=1') sup('n') e('i'))) ' steht eine Summe.'",
+  "'Ende'"
+ ],
+ "raabe-to-word": [],
+ "raabe-to-word-result": [
+  "'Vor der Formel ' oMath(f(num('a') den('b')) '+' sSup(e('x') sup('2'))) ' danach.'",
+  "display[oMath('x=' f(num('-b±' rad(@degHide=1 deg() e(sSup(e('b') sup('2')) '-4ac'))) den('2a')))]",
+  "display[oMath(func(fName(r[sty=p]'sin') e('x')) '=' r[nor=1]'wenn' 'a')]",
+  "'Im Text ' oMath(nary(@chr=∑ sub('i=1') sup('n') e('i'))) ' steht eine Summe.'",
+  "'Ende'"
+ ]
+}

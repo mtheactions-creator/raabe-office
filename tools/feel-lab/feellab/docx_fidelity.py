@@ -176,7 +176,9 @@ class WordDocument:
                 i = hi
                 starts.append(vis[i])
                 k = key(vis[i])
-        return self.split_pieces(starts) if self.doc.Shapes.Count else starts
+        # Rows that a floating object divides (pictures, shapes, floating tables): pieces.
+        floating = self.doc.Shapes.Count or any(self.doc.Tables(k).Rows.WrapAroundText for k in range(1, self.doc.Tables.Count + 1))
+        return self.split_pieces(starts) if floating else starts
 
     def split_pieces(self, starts: list[int]) -> list[int]:
         """Rows that a picture divides (text on both sides): a new line where x jumps forward

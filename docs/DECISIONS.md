@@ -908,3 +908,68 @@ a cut-out picture with a transparent background and an ellipse) and `probe_word_
 - **Context menu** of shapes and text boxes as Word's (recorded with `probe_word_context.py
   objects`): Text bearbeiten, Punkte bearbeiten, Gruppieren, Vordergrund/Hintergrund, Link,
   Beschriftung, Textumbruch, Alternativtext, Weitere Layoutoptionen, Form formatieren.
+
+### D-055 Formulas as Word builds them, through the clipboard (Step 4c C)
+Recorded in Word (32 new cases in `catalogue_math.py`, areas "fraction" and "text"):
+- **"/" takes the whole operand**: the numerator is everything since the last operator (2x/3,
+  0,5/2 with its decimal comma, 2π/3, x^2/3, 2(a+b)/c keeps its brackets), the denominator
+  everything up to the next one (y=3a/4b). All 146 recorded cases now match Word, in the unit
+  replay and in the app.
+- **Quoted text** ("wenn") becomes normal text (m:nor) when the closing quote is typed; inside the
+  quotes nothing is built up; a space right after it is used up; typing inside or at the end
+  of normal text continues it, after the closing quote it is mathematics again. Word splits a
+  run where a character is typed into it; both catalogue comparisons merge neighbouring runs
+  with the same properties, since the look is the same.
+- **Clipboard with Word** (recorded with `probe_word_math_clipboard.py`): Word puts equations
+  into its HTML as OMML in a `<!--[if gte msEquation 12]>` comment (namespace
+  `…/office/2004/12/omml`), each run's text in HTML spans, italic marked by `<i>`, plus MathML
+  and a picture for other programs. RaabeWrite reads that (skipping the fallback) and writes
+  the same, with the linear form as fallback text; Word accepted our HTML only with the `m`
+  namespace declared and the text in spans (as `<m:t>` it came out upright). Copying part of
+  an equation gives Word an equation too, and Word's equations paste into an equation as
+  structures. `clipboard_math.py` checks both directions with inline and display equations.
+- The Start tab shows Cambria Math while the caret is in an equation; a click on the
+  equation's handle (top left) selects the whole equation, dragging it still moves it.
+
+### D-056 Tables as Word handles them (Step 4c D)
+- **Entf / Rücktaste on selected cells** (recorded with `probe_word_table_delete.py`): Entf
+  empties the cells and keeps them selected; Rücktaste deletes whole rows, whole columns or
+  the whole table, and for other cells (one whole cell included) opens Zellen löschen with
+  Word's four choices, "Zellen nach links verschieben" first.
+- **Dragging across cells** switches to whole cells as soon as the pointer crosses into
+  another cell (Word, measured), and the selection shading covers each cell only as far down
+  as its text goes, between the gridlines, which stay visible.
+- **Rahmen group** as Word's: Rahmenarten (21 Designrahmen in the theme's accent colours and
+  the Rahmenpipette), Stiftart (Word's 25 line styles), Stiftstärke, Stiftfarbe, Rahmen (with
+  inner horizontal/vertical lines) and Rahmen übertragen: the pen paints clicked or dragged
+  cell edges (both cells' sides), Esc ends it.
+- **Tabellenformatvorlagen**: Word's 105 gallery styles in its order and groups (Einfache
+  Tabellen, Rastertabellen, Listentabellen), definitions recorded from Word
+  (`probe_word_table_styles.py`) with their theme references, so each document gets them in
+  its own theme colours (Word's tint/shade computation, checked against Word's values). The
+  ribbon shows a row of previews drawn from the definitions with the table's options; hovering
+  previews the style on the table. Reading Word's table styles also became right: a border
+  element names only the sides it sets; a conditional format's outer sides belong to its region
+  (the header row's bottom line), corner cells (nwCell …) come last, and an edge two cells
+  share shows the stronger border (Word's conflict rule).
+- **Floating tables** (Textumbruch Umgebend, w:tblpPr): placed on the page, text flowing around
+  with Word's distances; vertically "text" counts from the paragraph after the table (measured).
+  `word-table-float.docx` (centred, offset, right) lays out as in Word to within 0.3 pt.
+  Dragging the move handle sideways indents the table, up or down makes it floating, as Word
+  does; our layout handle (D-053) beside its top right corner offers Ohne/Umgebend and
+  Links/Zentriert/Rechts, and Tabelleneigenschaften has Textumbruch Ohne/Umgebend.
+
+### D-057 Selection, pointers and Formatvorlagen (Step 4c E)
+- **The selection** is drawn over the text and multiplied with what is below (its layer blends,
+  not each rectangle): highlighting, shading, coloured text and page colour stay visible and
+  the selection shows over them, as Word's grey does; before, a highlight hid it.
+- **Pointers**: every drawn pointer (Format übertragen, the pen and pipette of the Rahmen group,
+  rotation, Transparente Farbe) comes at 1×, 1.5× and 2× (CSS image-set) so it is as sharp as
+  Windows' own at 150 %; the table border pointers are Word-like drawn ones instead of
+  Chromium's col-resize/row-resize bitmaps, which blur. Where Word uses Windows' pointers
+  (I-beam, arrow, move, sizing arrows) we use them too.
+- **Formatvorlagen** (D-053): a paragraph style removes the direct character formatting of its
+  paragraphs (font, size, colour, highlighting, effects, also on the paragraph mark); a
+  character style that of the selection; links' and note marks' character styles, language,
+  proofing and revisions stay. Hovering an entry of the Formatvorlagen gallery shows it on the
+  text (Livevorschau, no undo step); leaving puts everything back.

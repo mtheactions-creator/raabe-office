@@ -236,8 +236,30 @@ export interface TableDef {
   /** Preferred table width in points; undefined = automatic. */
   readonly width?: number;
   readonly fixed?: boolean;
+  /** Textumbruch Umgebend (w:tblpPr): placed on the page, the text flows around it. */
+  readonly float?: TableFloat;
   /** Other tblPr children (XML). */
   readonly extra?: readonly unknown[];
+}
+
+/**
+ * A floating table's place (Word's w:tblpPr, points). Vertically "text" is measured from where
+ * the table stands in the text (the top of the paragraph after it); horizontally "text" from the
+ * column. An alignment, when given, replaces the offset. The distances keep the text away.
+ */
+export interface TableFloat {
+  readonly x: number;
+  readonly y: number;
+  readonly xAlign?: "left" | "center" | "right" | "inside" | "outside";
+  readonly yAlign?: "top" | "center" | "bottom" | "inside" | "outside" | "inline";
+  readonly hAnchor: "text" | "margin" | "page";
+  readonly vAnchor: "text" | "margin" | "page";
+  readonly left: number;
+  readonly right: number;
+  readonly top: number;
+  readonly bottom: number;
+  /** Überlappen zulassen (w:tblOverlap); Word's default is yes. */
+  readonly overlap?: boolean;
 }
 
 export interface CellRef {

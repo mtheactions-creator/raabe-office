@@ -12,6 +12,7 @@ import {
   type Editor, type InlineObject, type MathPos, type MathStep, type MNode, type Pos, type Seq,
 } from "@raabe/text-engine";
 import { h, icon, showDialog, showMenu, type Command, type Control, type MenuEntry, type Tab } from "@raabe/shell";
+import { ommlToSeq, ommlToWordHtml, seqToOmml, wordHtmlMath } from "@raabe/ooxml";
 import type { AppApi } from "./api";
 import { BUILT_IN, MATH_GALLERIES, MATH_GALLERY_WIDTHS, SYMBOL_CATEGORIES, type GalleryItem } from "./math-gallery";
 import { mathOptionsDialog, userDefaults, userOptions } from "./math-options";
@@ -368,15 +369,18 @@ export function mathFeature(api: AppApi) {
     const arrow = h("button", { class: "math-options", style: `left:${left + width - 1}px;top:${top}px;height:${height}px`, "aria-label": "Formeloptionen", "data-tip": "Formeloptionen" },
       h("span", { class: "tri" }));
     arrow.addEventListener("mousedown", (e) => { e.stopPropagation(); e.preventDefault(); optionsMenu(s, arrow); });
-    // Dragging the handle moves the equation to where it is dropped.
+    // A click on the handle selects the whole equation (Word); dragging it moves the equation
+    // to where it is dropped.
     handle.style.pointerEvents = "auto";
     handle.addEventListener("mousedown", (e) => {
       e.stopPropagation();
       e.preventDefault();
+      const x0 = e.clientX, y0 = e.clientY;
       const up = (u: MouseEvent) => {
         window.removeEventListener("mouseup", up);
         document.body.style.cursor = "";
         if (session !== s) return;
+        if (Math.abs(u.clientX - x0) + Math.abs(u.clientY - y0) < 4) { s.me.selectAll(); draw(s); api.refresh(); return; }
         const at = s.editor.moveObject(s.pos, s.editor.posAtPoint(u.clientX, u.clientY));
         if (at && (at.p !== s.pos.p || at.o !== s.pos.o)) { s.pos = at; s.recorded = true; }
         draw(s);
@@ -548,9 +552,14 @@ export function mathFeature(api: AppApi) {
   };
 
   const paste = async (s: Session) => {
-    const { text } = await api.clipboard().catch(() => ({ text: "" }));
+    const { text, html } = await api.clipboard().catch(() => ({ text: "", html: "" }));
     if (session !== s) return;
-    if (clip && (text === clip.text || !text)) s.me.insertAtoms(explode(structuredClone(clip.seq) as Seq));
+    // An equation from Word (OMML in its HTML) goes in as it is built.
+    const fromWord = /<!--\[if gte msEquation 12\]>([\s\S]*?)<!\[endif\]-->/.exec(html ?? "");
+    const el = fromWord && !(clip && text === clip.text) ? wordHtmlMath(fromWord[1]) : null;
+    const seq = el ? ommlToSeq(el) : null;
+    if (seq) s.me.insertAtoms(explode(seq));
+    else if (clip && (text === clip.text || !text)) s.me.insertAtoms(explode(structuredClone(clip.seq) as Seq));
     else if (text) s.me.insertAtoms([...text.replace(/\r?\n/g, " ")].map((ch) => ({ k: "t", s: ch })));
     else return;
     sync(s);
@@ -858,7 +867,15 @@ export function mathFeature(api: AppApi) {
     const seq = structuredClone(me.seqAt(r.path).slice(r.from, r.to)) as Seq;
     const text = userOptions().copyMathml ? seqToMathml(seq, false, false) : seqToLinear(seq);
     clip = { seq, text };
-    void api.platform.clipboardWrite(text).catch(() => {});
+    // For Word the part as an equation of its own (its HTML), else the text.
+    const omml = ommlToWordHtml(seqToOmml(seq, false));
+    const esc = (t: string) => t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    const html = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:m="http://schemas.microsoft.com/office/2004/12/omml" ' +
+      `xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="utf-8"></head><body><!--StartFragment--><p class=MsoNormal><!--[if gte msEquation 12]>${omml}<![endif]-->` +
+      `<![if !msEquation]><span style='font-family:"Cambria Math",serif'>${esc(seqToLinear(seq))}</span><![endif]></p><!--EndFragment--></body></html>`;
+    const pf = api.platform;
+    if (omml && pf.clipboardWriteHtml) void pf.clipboardWriteHtml(html, text).catch(() => pf.clipboardWrite(text).catch(() => {}));
+    else void pf.clipboardWrite(text).catch(() => {});
     if (cut) { const sig = me.del(); if (sig.remove) remove(s); else sync(s); }
   };
 

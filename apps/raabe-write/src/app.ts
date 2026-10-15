@@ -2,8 +2,8 @@
 // Each open document is a tab with its own editor. Files are .docx (D-004); content the
 // editor cannot change yet is preserved verbatim and written back unchanged (D-024).
 
-import { Doc as TextDoc, Editor, Fonts, PT, type CharProps, type CopiedFormat, type DocState, type LineRule, type Para, type ParaProps } from "@raabe/text-engine";
-import { readDocx, writeDocx, type DocxPackage } from "@raabe/ooxml";
+import { Doc as TextDoc, Editor, Fonts, PT, seqToLatex, seqToLinear, type CharProps, type CopiedFormat, type DocState, type LineRule, type Para, type ParaProps } from "@raabe/text-engine";
+import { ommlToSeq, ommlToWordHtml, readDocx, seqToOmml, wordHtmlMath, writeDocx, type DocxPackage } from "@raabe/ooxml";
 import {
   Backstage, Commands, Keytips, Ribbon, StatusBar, TitleBar, baseName, dirName, h, icon, installTooltips, messageBox,
   showDialog, showFontColors, type BackstageEntry, type Platform,
@@ -332,11 +332,31 @@ export class WriteApp {
     this.docArea.append(ws);
     const editor = new Editor(ws, state ?? {}, this.fonts);
     // A double-click on a picture or shape opens its tab, as in Word.
+    // Rücktaste on cells that are not whole rows or columns: Word's Zellen löschen dialog.
+    editor.onDeleteCells = () => void this.commands.run("table.deleteCells");
+    // Rahmen übertragen and the Rahmenpipette start and end in the editor too (Esc, a click).
+    editor.onBorderPainter = () => this.commands.refresh();
     editor.onObjectOpen = (kind) => { this.updateContextualTabs(); this.ribbon?.select(kind === "picture" ? "pictureFormat" : "shapeFormat"); };
     this.features.spell.attach(editor);
+    // Equations go to and come from Word as Word's own HTML (OMML in a conditional comment).
+    editor.mathClipboard = {
+      toHtml: (o, alone) => {
+        if (!o.math) return undefined;
+        const omml = ommlToWordHtml(seqToOmml(o.math, alone && !o.mathInline));
+        if (!omml) return undefined;
+        const lin = seqToLinear(o.math).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        return `<!--[if gte msEquation 12]>${omml}<![endif]--><![if !msEquation]><span style='font-family:"Cambria Math",serif'>${lin}</span><![endif]>`;
+      },
+      fromOmml: (fragment) => {
+        const el = wordHtmlMath(fragment);
+        const math = el ? ommlToSeq(el) : null;
+        return el && math ? { kind: "math", data: undefined, display: "", latex: seqToLatex(math), math, mathInline: el.localName === "oMath" || undefined } : null;
+      },
+    };
     this.features.grammar.attach(editor);
     this.features.context.attach(editor);
     this.features.pictures.attach(editor);
+    this.features.tables.attach(editor);
     const pf = this.platform;
     if (pf.clipboardReadHtml && pf.clipboardWriteHtml) {
       editor.clipboardHost = {
@@ -1035,7 +1055,18 @@ export class WriteApp {
         options: () => this.features.citations.style.options(),
         commit: (v: string) => this.features.citations.style.commit(v),
       },
+      styleHover: (cmd) => {
+        const e = ed();
+        if (!e) return;
+        const g = cmd ? GALLERY.find((x) => x.cmd === cmd) : undefined;
+        if (!g) { e.previewStyle(null); return; }
+        const id = e.styleId(g.name);
+        const type = e.doc.styles.get(id)?.type ?? (/(emphasis|strong|reference|book title)/i.test(g.name) ? "character" : "paragraph");
+        e.previewStyle(id, type === "character" ? "character" : "paragraph");
+      },
       fontName: () => {
+        // In an equation Word shows its font.
+        if (this.features?.math.editing()) return "Cambria Math";
         const s = ed()?.charState();
         if (!s?.font) return "";
         const t = theme();

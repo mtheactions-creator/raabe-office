@@ -556,6 +556,21 @@ class DocWriter {
     if (!extra.some((e) => e.name === "tblW")) pr.push({ name: "tblW", xml: '<w:tblW w:w="0" w:type="auto"/>' });
     if (def.align && def.align !== "left") pr.push({ name: "jc", xml: `<w:jc w:val="${def.align}"/>` });
     if (def.indent !== undefined) pr.push({ name: "tblInd", xml: `<w:tblInd w:w="${tw(def.indent)}" w:type="dxa"/>` });
+    if (def.float) {
+      // Umgebend: Word's w:tblpPr (only what differs from its defaults).
+      const f = def.float;
+      const a: string[] = [];
+      if (f.left) a.push(`w:leftFromText="${tw(f.left)}"`);
+      if (f.right) a.push(`w:rightFromText="${tw(f.right)}"`);
+      if (f.top) a.push(`w:topFromText="${tw(f.top)}"`);
+      if (f.bottom) a.push(`w:bottomFromText="${tw(f.bottom)}"`);
+      if (f.vAnchor !== "margin") a.push(`w:vertAnchor="${f.vAnchor}"`);
+      if (f.hAnchor !== "text") a.push(`w:horzAnchor="${f.hAnchor}"`);
+      if (f.xAlign) a.push(`w:tblpXSpec="${f.xAlign}"`); else if (f.x) a.push(`w:tblpX="${tw(f.x)}"`);
+      if (f.yAlign) a.push(`w:tblpYSpec="${f.yAlign}"`); else if (f.y) a.push(`w:tblpY="${tw(f.y)}"`);
+      pr.push({ name: "tblpPr", xml: `<w:tblpPr ${a.join(" ")}/>` });
+      if (f.overlap === false) pr.push({ name: "tblOverlap", xml: '<w:tblOverlap w:val="never"/>' });
+    }
     if (def.borders) pr.push({ name: "tblBorders", xml: bordersXml("tblBorders", def.borders, "table") });
     if (def.shading) pr.push({ name: "shd", xml: shadingXml(def.shading) });
     if (def.cellMargins) pr.push({ name: "tblCellMar", xml: marginsXml("tblCellMar", def.cellMargins) });

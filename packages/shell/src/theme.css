@@ -465,6 +465,8 @@ body.touch .qat button { height: 36px; min-width: 36px; }
 .auto-swatch { width: 16px; height: 16px; background: #000; border: 1px solid #c7c7c7; display: inline-block; }
 .color-main { flex-direction: column; justify-content: flex-start !important; padding-top: 2px; }
 .color-main .ico-s { width: 14px; height: 14px; }
+.color-main.labelled { flex-direction: row; align-items: center; gap: 4px; padding: 0 4px; width: auto !important; }
+.color-main .color-col { display: inline-flex; flex-direction: column; align-items: center; }
 .colorbar { display: block; width: 16px; height: 4px; margin-top: 1px; }
 .rspinner .spinbox { display: inline-flex; align-items: stretch; border: 1px solid #c7c7c7; border-radius: 4px; background: var(--card); height: 22px; }
 .rspinner .spinbox input { width: 58px; height: 20px; border: 0; color: var(--text); padding: 0 4px; font: 12px var(--font); outline: none; }
@@ -956,6 +958,16 @@ body.touch .qat button { height: 36px; min-width: 36px; }
 
 /* Grafik formatieren / Form formatieren (Step 4c B, Word's layout recorded 2026-10-15). */
 .fmtpane { width: 320px; }
+.rcombo-face { flex: 1; min-width: 0; display: flex; align-items: center; padding: 0 6px; cursor: default; overflow: hidden; }
+.pen-sample { display: flex; align-items: center; gap: 8px; min-height: 18px; }
+/* Tabellenformatvorlagen: Word's gallery pictures (5 × 5 cells with a dash of text). */
+.tstyle-preview { border-collapse: collapse; table-layout: fixed; background: #fff; }
+.tstyle-preview td { padding: 0; text-align: center; vertical-align: middle; font-size: 0; line-height: 0; }
+.tstyle-preview td i { display: inline-block; width: 55%; vertical-align: middle; }
+.tstyle-gallery .tiles .tile { padding: 4px; }
+.layout-options .tiles { justify-content: start; gap: 6px; }
+.tstyle-gallery { max-height: calc(100vh - 220px); overflow-y: auto; }
+.combo-list .pen-sample { width: 100%; }
 .fmtpane .fx-head { padding-right: 4px; }
 .fmtpane .fp-headbtns { display: inline-flex; gap: 2px; }
 .fmtpane .fx-head button:hover, .fmtpane .fx-tabs button:hover, .fmtpane .fp-sec-head:hover { background: var(--hover); }

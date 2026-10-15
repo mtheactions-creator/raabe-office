@@ -2,15 +2,17 @@
 // Tabellenentwurf and Layout, with Word's groups, labels and keytips.
 
 import { PT, type BorderSpec, type Borders, type CellDef, type TableDef } from "@raabe/text-engine";
-import { h, showDialog, type Command, type Control, type MenuEntry, type Tab } from "@raabe/shell";
+import { closePopup, h, icon, showDialog, showPopup, type Command, type Control, type MenuEntry, type Tab } from "@raabe/shell";
+import { wrapIcon } from "./pictures";
 import { CM, fmtCm, parseNum, type AppApi } from "./api";
+import { tableStyleGallery } from "./table-style-gallery";
 
 const cmd = (id: string, label: string, icon?: string, extra: Partial<Command> = {}): Command => ({ id, label, icon, ...extra });
 
 export const TABLE_COMMANDS: Command[] = [
   cmd("table.insertDialog", "Tabelle einfügen...", "table"),
   cmd("table.styleOptions", "Optionen für Tabellenformat", "table-style", { hidden: true }),
-  cmd("table.headerRow", "Überschrift", undefined, { tip: "Überschrift\nDie erste Zeile der Tabelle besonders formatieren." }),
+  cmd("table.headerRow", "Kopfzeile", undefined, { tip: "Kopfzeile\nDie erste Zeile der Tabelle besonders formatieren." }),
   cmd("table.totalRow", "Ergebniszeile", undefined, { tip: "Ergebniszeile\nDie letzte Zeile der Tabelle besonders formatieren." }),
   cmd("table.bandedRows", "Gebänderte Zeilen", undefined),
   cmd("table.firstColumn", "Erste Spalte", undefined),
@@ -60,26 +62,50 @@ export const TABLE_COMMANDS: Command[] = [
   cmd("border.all", "Alle Rahmenlinien", "border-all"),
   cmd("border.outside", "Rahmenlinien außen", "border-outside"),
   cmd("border.inside", "Rahmenlinien innen", "border-inside"),
+  cmd("border.insideH", "Horizontale Rahmenlinie innen", "border-inside-h"),
+  cmd("border.insideV", "Vertikale Rahmenlinie innen", "border-inside-v"),
+  cmd("border.diagDown", "Rahmenlinien diagonal nach unten", "border-diag-down", { deferred: true }),
+  cmd("border.diagUp", "Rahmenlinien diagonal nach oben", "border-diag-up", { deferred: true }),
+  cmd("border.horizontalLine", "Horizontale Linie", "line-style", { deferred: true }),
+  cmd("table.draw", "Tabelle zeichnen", "table-draw", { deferred: true }),
+  cmd("table.borderStyles", "Rahmenarten", "border-styles", { tip: "Rahmenarten\nEine Rahmenart auswählen: Linie, Stärke und Farbe zusammen. Danach mit Rahmen übertragen auf die Rahmenlinien klicken." }),
+  cmd("table.penStyle", "Stiftart", "line-style", { tip: "Stiftart\nDie Art der Linie für Rahmen ändern." }),
+  cmd("table.penWeight", "Stiftstärke", "line-weight-pen", { tip: "Stiftstärke\nDie Breite der Linie für Rahmen ändern." }),
+  cmd("table.penColor", "Stiftfarbe", "pen", { tip: "Stiftfarbe\nDie Farbe des Stifts ändern." }),
+  cmd("table.borderPainter", "Rahmen übertragen", "border-painter", { tip: "Rahmen übertragen\nDie ausgewählte Rahmenart auf bestimmte Rahmenlinien in der Tabelle anwenden.\n\nKlicken Sie auf die Rahmenlinien, auf die Sie die Formatvorlage anwenden möchten." }),
+  cmd("table.borderSampler", "Rahmenpipette", "pipette"),
 ];
 
-const LINE: BorderSpec = { style: "single", size: 0.5, color: "auto", space: 0 };
-const NIL: BorderSpec = { style: "nil", size: 0, color: "auto", space: 0 };
-
-/** Table styles offered in the gallery (built-in Word styles; definitions in the engine). */
-export const TABLE_STYLES: { name: string; label: string; preview: { head: string; band: string; line: string; headText: string } }[] = [
-  { name: "Table Grid", label: "Tabellenraster", preview: { head: "#fff", band: "#fff", line: "#000", headText: "#000" } },
-  { name: "Table Grid Light", label: "Tabellenraster hell", preview: { head: "#fff", band: "#fff", line: "#bfbfbf", headText: "#000" } },
-  { name: "Plain Table 1", label: "Einfache Tabelle 1", preview: { head: "#fff", band: "#f2f2f2", line: "#bfbfbf", headText: "#000" } },
-  { name: "Grid Table 1 Light", label: "Gitternetztabelle 1 hell", preview: { head: "#fff", band: "#fff", line: "#999", headText: "#000" } },
-  { name: "Grid Table 4 Accent 1", label: "Gitternetztabelle 4 – Akzent 1", preview: { head: "#4472c4", band: "#d9e2f3", line: "#8eaadb", headText: "#fff" } },
-  { name: "Grid Table 5 Dark Accent 1", label: "Gitternetztabelle 5 dunkel – Akzent 1", preview: { head: "#4472c4", band: "#b4c6e7", line: "#fff", headText: "#fff" } },
+/** Stiftart: Word's 25 line styles in its order (recorded 2026-10-15). */
+export const PEN_STYLES: [string, string][] = [
+  ["nil", "Kein Rand"], ["single", "Einfache einfarbige Linie"], ["dotted", "Punktiert"], ["dashSmallGap", "Gestrichelt (kleiner Abstand)"],
+  ["dashed", "Gestrichelt (große Zwischenräume)"], ["dotDash", "Strichpunkt"], ["dotDotDash", "Strichpunkt-Punkt"], ["double", "Doppelte einfarbige Linien"],
+  ["triple", "Dreifache einfarbige Linien"], ["thickThinSmallGap", "Kleiner Abstand dick-dünn"], ["thinThickSmallGap", "Kleiner Abstand dünn-dick"],
+  ["thinThickThinSmallGap", "Kleiner Abstand dünn-dick-dünn"], ["thickThinMediumGap", "Mittlerer Abstand dick-dünn"], ["thinThickMediumGap", "Mittlerer Abstand dünn-dick"],
+  ["thinThickThinMediumGap", "Mittlerer Abstand dünn-dick-dünn"], ["thickThinLargeGap", "Großer Abstand dick-dünn"], ["thinThickLargeGap", "Großer Abstand dünn-dick"],
+  ["thinThickThinLargeGap", "Großer Abstand dünn-dick-dünn"], ["wave", "Einzelne Welle"], ["doubleWave", "Doppelt gewellt"], ["dashDotStroked", "Strichpunkt (gestrichelt)"],
+  ["threeDEmboss", "Relief 3D"], ["threeDEngrave", "Gravur 3D"], ["outset", "Anfang"], ["inset", "Abgesenkt"],
 ];
+/** Stiftstärke: Word's widths. */
+export const PEN_WEIGHTS: [number, string][] = [[0.25, "¼ Pt."], [0.5, "½ Pt."], [0.75, "¾ Pt."], [1, "1 Pt."], [1.5, "1 ½ Pt."], [2.25, "2 ¼ Pt."], [3, "3 Pt."], [4.5, "4 ½ Pt."], [6, "6 Pt."]];
 
-function stylePreview(p: (typeof TABLE_STYLES)[number]["preview"]): HTMLElement {
-  const rows = [0, 1, 2, 3, 4].map((r) => h("div", { style: `display:flex;background:${r === 0 ? p.head : r % 2 ? p.band : "#fff"}` },
-    ...[0, 1, 2, 3].map(() => h("div", { style: `width:14px;height:8px;border:1px solid ${p.line};margin:-1px 0 0 -1px` }))));
-  return h("div", { style: "padding:4px" }, ...rows);
+/** CSS for a line sample of a border style. */
+const SAMPLE_CSS: Record<string, string> = {
+  single: "solid", dotted: "dotted", dashSmallGap: "dashed", dashed: "dashed", dotDash: "dashed", dotDotDash: "dotted", double: "double", triple: "double",
+  wave: "solid", doubleWave: "double", dashDotStroked: "dashed", threeDEmboss: "ridge", threeDEngrave: "groove", outset: "outset", inset: "inset",
+};
+const sampleCss = (style: string) => SAMPLE_CSS[style] ?? (/thin|thick/.test(style) ? "double" : "solid");
+
+/** A drawn line sample (Stiftart, Stiftstärke, Rahmenarten). */
+export function penSample(style: string, size: number, color: string, width = 110): HTMLElement {
+  if (style === "nil" || style === "none") return h("span", { class: "pen-sample", style: `width:${width}px;justify-content:center;color:#616161` }, "Kein Rand");
+  const multi = sampleCss(style) === "double" || ["ridge", "groove", "outset", "inset"].includes(sampleCss(style));
+  const px = Math.max(multi ? 3 : 1, Math.round(size * (multi ? 2.5 : 1.33)));
+  return h("span", { class: "pen-sample", style: `width:${width}px` },
+    h("span", { style: `flex:1;border-top:${px}px ${sampleCss(style)} ${color === "auto" ? "#000" : `#${color}`}` }));
 }
+
+const NIL: BorderSpec = { style: "nil", size: 0, color: "auto", space: 0 };
 
 export function tablesFeature(api: AppApi) {
   const ed = () => api.editor();
@@ -143,19 +169,9 @@ export function tablesFeature(api: AppApi) {
     const l = look(key, inv);
     run(id, l.run, inTable, l.checked);
   }
-  const setStyle = (name: string) => {
-    const e = ed();
-    if (!e) return;
-    const id = e.styleId(name);
-    e.ensureStyle(id);
-    e.updateTable((def) => ({ ...def, style: id }));
-  };
+  // Tabellenformatvorlagen: Word's gallery (table-style-gallery.ts).
   c.implement("table.styles", { run: () => {}, enabled: inTable });
-  const stylesPanel = (close: () => void) => h("div", { class: "rpanel" }, h("div", { class: "title" }, "Tabellenformatvorlagen"),
-    h("div", { class: "tiles" }, ...TABLE_STYLES.map((s) => h("button", {
-      class: `tile${ed()?.tableDef()?.style === ed()?.styleId(s.name) ? " on" : ""}`, "data-tip": s.label,
-      onclick: () => { close(); setStyle(s.name); api.focus(); },
-    }, stylePreview(s.preview)))));
+  const styles = tableStyleGallery(ed, () => api.focus(), { clear: () => { ed()?.applyTableStyle(null); api.focus(); } });
 
   let lastShading = "FFFF00";
   const shade = (fill: string) => ed()?.updateCells((cd) => ({ ...cd, shading: fill === "auto" ? undefined : { fill, val: "clear", color: "auto" } }));
@@ -167,15 +183,18 @@ export function tablesFeature(api: AppApi) {
     if (!e) return;
     const sel = e.cellBlock();
     if (!sel) return;
+    const line = pen.style === "nil" ? NIL : penSpec();
     e.updateCells((cd, r, col) => {
       const b: Borders = { ...(cd.borders ?? {}) };
       const top = r === sel.r1, bottom = r === sel.r2, left = col === sel.c1, right = col === sel.c2;
-      const set = (side: keyof Borders, on: boolean) => { (b as Record<string, BorderSpec>)[side] = on ? LINE : NIL; };
+      const set = (side: keyof Borders, on: boolean) => { (b as Record<string, BorderSpec>)[side] = on ? line : NIL; };
       switch (kind) {
         case "all": set("top", true); set("bottom", true); set("left", true); set("right", true); break;
         case "none": set("top", false); set("bottom", false); set("left", false); set("right", false); break;
         case "outside": if (top) set("top", true); if (bottom) set("bottom", true); if (left) set("left", true); if (right) set("right", true); break;
         case "inside": if (!top) set("top", true); if (!bottom) set("bottom", true); if (!left) set("left", true); if (!right) set("right", true); break;
+        case "insideH": if (!top) set("top", true); if (!bottom) set("bottom", true); break;
+        case "insideV": if (!left) set("left", true); if (!right) set("right", true); break;
         case "top": if (top) set("top", true); break;
         case "bottom": if (bottom) set("bottom", true); break;
         case "left": if (left) set("left", true); break;
@@ -185,6 +204,37 @@ export function tablesFeature(api: AppApi) {
     });
   };
 
+  // Rahmen: Word's pen (Stiftart, Stiftstärke, Stiftfarbe; Rahmenarten sets all three). Choosing
+  // any of them starts Rahmen übertragen; the Rahmen menu draws with the pen too.
+  const pen: BorderSpec = { style: "single", size: 0.5, color: "auto", space: 0 };
+  const penSpec = (): BorderSpec => ({ ...pen });
+  const startPainter = () => { const e = ed(); if (e && inTable()) e.startBorderPainter(penSpec()); api.refresh(); };
+  const setPen = (patch: Partial<BorderSpec>) => { Object.assign(pen, patch); startPainter(); };
+  run("table.borderPainter", () => { const e = ed(); if (!e) return; if (e.borderPainting) e.stopBorderPainter(); else e.startBorderPainter(penSpec()); }, inTable, () => !!ed()?.borderPainting);
+  run("table.borderSampler", () => ed()?.startBorderSampler((b) => { Object.assign(pen, { style: b.style === "none" ? "nil" : b.style, size: b.size || 0.5, color: b.color }); startPainter(); }),
+    inTable, () => !!ed()?.borderSampling);
+  c.implement("table.borderStyles", { run: startPainter, enabled: inTable, checked: () => !!ed()?.borderPainting });
+  c.implement("table.penStyle", { run: () => {}, enabled: inTable });
+  c.implement("table.penWeight", { run: () => {}, enabled: inTable });
+  c.implement("table.penColor", { run: startPainter, enabled: inTable });
+  const themeColor = (k: string) => (ed()?.doc.styles.theme.colors ?? {})[k] ?? "000000";
+  /** Rahmenarten > Designrahmen: three lines (½ Pt., 1 ½ Pt., double ½ Pt.) in Automatisch and Akzent 1–6. */
+  const designBorders = (): { label: string; spec: BorderSpec }[] => {
+    const out: { label: string; spec: BorderSpec }[] = [];
+    for (const [style, size, name] of [["single", 0.5, "Einfache einfarbige Linie, 1/2 Pt."], ["single", 1.5, "Einfache einfarbige Linie, 1 1/2 Pt."], ["double", 0.5, "Doppelte einfarbige Linien, 1/2 Pt."]] as const) {
+      out.push({ label: name, spec: { style, size, color: "auto", space: 0 } });
+      for (let a = 1; a <= 6; a++) out.push({ label: `${name}, Akzent ${a}`, spec: { style, size, color: themeColor(`accent${a}`), space: 0 } });
+    }
+    return out;
+  };
+  const borderStylesPanel = (close: () => void) => h("div", { class: "rpanel" }, h("div", { class: "title" }, "Designrahmen"),
+    h("div", { class: "tiles", style: "grid-template-columns:repeat(7, auto)" }, ...designBorders().map((d) => h("button", {
+      class: `tile${d.spec.style === pen.style && d.spec.size === pen.size && d.spec.color === pen.color ? " on" : ""}`, "data-tip": d.label, "aria-label": d.label,
+      style: "width:64px;height:28px", onclick: () => { close(); setPen(d.spec); },
+    }, penSample(d.spec.style, d.spec.size, d.spec.color, 52)))),
+    h("hr"),
+    h("button", { class: "link", onclick: () => { close(); void c.run("table.borderSampler"); } }, "Rahmenpipette"));
+
   // ----- Layout ----------------------------------------------------------------------------
   run("table.selectCell", () => ed()?.selectTablePart("cell"));
   run("table.selectColumn", () => ed()?.selectTablePart("column"));
@@ -193,6 +243,21 @@ export function tablesFeature(api: AppApi) {
   c.implement("table.select", { run: () => {}, enabled: inTable });
   c.implement("table.delete", { run: () => {}, enabled: inTable });
   run("table.deleteColumns", () => ed()?.deleteColumns());
+  // Zellen löschen: Word's dialog (recorded 2026-10-15), "Zellen nach links verschieben" first.
+  c.implement("table.deleteCells", { run: async () => {
+    const e = ed();
+    if (!e?.inTable()) return;
+    const choices: ["left" | "up" | "row" | "column", string][] = [["left", "Zellen nach links verschieben"], ["up", "Zellen nach oben verschieben"],
+      ["row", "Ganze Zeile löschen"], ["column", "Ganze Spalte löschen"]];
+    const radios = choices.map(([v, l], i) => ({ v, el: h("input", { type: "radio", name: "delcells", checked: i === 0 }) as HTMLInputElement, l }));
+    const ok = await showDialog({
+      title: "Zellen löschen",
+      body: h("div", { style: "display:flex;flex-direction:column;gap:6px;min-width:240px" }, ...radios.map((r) => h("label", { class: "check" }, r.el, r.l))),
+      buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false,
+    });
+    if (ok) e.deleteCells(radios.find((r) => r.el.checked)?.v ?? "left");
+    api.focus();
+  }, enabled: () => !!ed()?.inTable() });
   run("table.deleteRows", () => ed()?.deleteRows());
   run("table.deleteTable", () => ed()?.deleteTable());
   run("table.insertAbove", () => ed()?.insertRows("above"));
@@ -222,6 +287,8 @@ export function tablesFeature(api: AppApi) {
   for (const k of ["bottom", "top", "left", "right", "none", "all", "outside", "inside"]) {
     run(`border.${k}`, () => (inTable() ? cellBorders(k) : ed()?.paragraphBorders(k)), () => !!ed());
   }
+  run("border.insideH", () => cellBorders("insideH"));
+  run("border.insideV", () => cellBorders("insideV"));
   c.implement("table.borders", { run: () => (inTable() ? cellBorders("all") : ed()?.paragraphBorders("bottom")), enabled: () => !!ed() });
 
   const splitDialog = async () => {
@@ -238,7 +305,9 @@ export function tablesFeature(api: AppApi) {
     const def = e?.tableDef();
     if (!e || !def) return;
     const align = h("select", null, ...[["left", "Links"], ["center", "Zentriert"], ["right", "Rechts"]].map(([v, l]) => h("option", { value: v }, l)));
-    align.value = def.align ?? "left";
+    align.value = def.float ? def.float.xAlign ?? "left" : def.align ?? "left";
+    const wrapNone = h("input", { type: "radio", name: "tp-wrap", checked: !def.float }) as HTMLInputElement;
+    const wrapAround = h("input", { type: "radio", name: "tp-wrap", checked: !!def.float }) as HTMLInputElement;
     const indent = h("input", { type: "text", value: fmtCm(def.indent ?? 0), style: "width:90px" });
     const row = e.rowDef();
     const height = h("input", { type: "text", value: row?.height !== undefined ? fmtCm(row.height) : "", style: "width:90px", placeholder: "automatisch" });
@@ -249,14 +318,18 @@ export function tablesFeature(api: AppApi) {
     const ok = await showDialog({
       title: "Tabelleneigenschaften",
       body: h("div", { style: "width:380px" },
-        h("fieldset", null, h("legend", null, "Tabelle"), h("div", { class: "grid2" }, "Ausrichtung:", align, "Einzug von links:", indent)),
+        h("fieldset", null, h("legend", null, "Tabelle"), h("div", { class: "grid2" }, "Ausrichtung:", align, "Einzug von links:", indent),
+          h("div", { style: "display:flex;gap:16px;margin-top:6px" }, h("span", null, "Textumbruch:"),
+            h("label", { class: "check" }, wrapNone, "Ohne"), h("label", { class: "check" }, wrapAround, "Umgebend"))),
         h("fieldset", null, h("legend", null, "Zeile"), h("div", { class: "grid2" }, "Höhe angeben:", height, "Zeilenhöhe:", rule),
           h("label", { class: "check" }, cantSplit, "Zeilenwechsel auf Seiten zulassen"),
           h("label", { class: "check" }, header, "Gleiche Kopfzeile auf jeder Seite wiederholen"))),
       buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false,
     });
     if (!ok) return;
-    e.updateTable((d) => ({ ...d, align: align.value === "left" ? undefined : align.value as "center" | "right", indent: parseNum(indent.value) * CM || undefined }));
+    e.setTableWrap(wrapAround.checked ? "around" : "none");
+    if (wrapAround.checked) e.setTableAlign(align.value as "left" | "center" | "right");
+    else e.updateTable((d) => ({ ...d, align: align.value === "left" ? undefined : align.value as "center" | "right", indent: parseNum(indent.value) * CM || undefined }));
     const hv = parseNum(height.value);
     e.updateRows((r) => ({
       ...r, height: Number.isFinite(hv) && hv > 0 ? hv * CM : undefined, heightRule: Number.isFinite(hv) && hv > 0 ? rule.value as "atLeast" | "exact" : undefined,
@@ -279,19 +352,37 @@ export function tablesFeature(api: AppApi) {
   const dd = (id: string, key: string, size: "large" | "medium" | "small", menu: MenuEntry[], popup?: (close: () => void) => HTMLElement): Control =>
     ({ type: "dropdown", cmd: id, key, size, menu, popup });
   const stack = (...items: Control[]): Control => ({ type: "stack", items });
-  const bordersMenu: MenuEntry[] = ["bottom", "top", "left", "right", "none", "all", "outside", "inside"].map((k) => ({ cmd: `border.${k}` }));
+  const bordersMenu: MenuEntry[] = [
+    ...["bottom", "top", "left", "right"].map((k): MenuEntry => ({ cmd: `border.${k}` })), "-",
+    ...["none", "all", "outside", "inside"].map((k): MenuEntry => ({ cmd: `border.${k}` })), "-",
+    { cmd: "border.insideH" }, { cmd: "border.insideV" }, { cmd: "border.diagDown" }, { cmd: "border.diagUp" }, "-",
+    { cmd: "border.horizontalLine" }, "-",
+    { cmd: "table.draw" }, { cmd: "table.gridlines" }, { cmd: "border.dialog", label: "Rahmen und Schattierung..." },
+  ];
+  const penCombo = (cmdId: string, key: string, options: () => string[], value: () => string, pick: (v: string) => void, sample: (v: string) => HTMLElement): Control => ({
+    type: "combo", cmd: cmdId, key, width: 140, value, options: () => [{ items: options() }], commit: pick, renderOption: sample, renderValue: () => sample(value()),
+  });
+  const styleCombo = penCombo("table.penStyle", "B", () => PEN_STYLES.map(([, l]) => l), () => PEN_STYLES.find(([v]) => v === pen.style)?.[1] ?? PEN_STYLES[1][1],
+    (l) => { const v = PEN_STYLES.find(([, x]) => x === l)?.[0]; if (v) setPen({ style: v }); }, (l) => penSample(PEN_STYLES.find(([, x]) => x === l)?.[0] ?? "single", 0.75, "auto", 118));
+  const weightCombo = penCombo("table.penWeight", "6", () => PEN_WEIGHTS.map(([, l]) => l), () => PEN_WEIGHTS.find(([v]) => v === pen.size)?.[1] ?? `${pen.size} Pt.`,
+    (l) => { const v = PEN_WEIGHTS.find(([, x]) => x === l)?.[0]; if (v) setPen({ size: v }); },
+    (l) => { const v = PEN_WEIGHTS.find(([, x]) => x === l)?.[0] ?? 0.5; const el = penSample(pen.style === "nil" ? "single" : pen.style, v, "auto", 70); el.prepend(h("span", { style: "width:42px;flex:none" }, l)); return el; });
 
+  const shading: Control = { type: "color", cmd: "table.shading", key: "NC", palette: "font", showLabel: true, current: () => lastShading, pick: (hex) => { if (hex !== "auto") lastShading = hex; shade(hex); } };
   const designTab: Tab = {
     id: "tableDesign", label: "Tabellenentwurf", key: "JT", contextual: true, shrink: ["borders", "styles", "options"],
     groups: [
-      { id: "options", label: "Optionen für Tabellenformat", key: "ZO", icon: "table-style",
-        controls: [stack(check("table.headerRow", "T"), check("table.totalRow", "E"), check("table.bandedRows", "R")),
-          stack(check("table.firstColumn", "S"), check("table.lastColumn", "L"), check("table.bandedColumns", "B"))] },
-      { id: "styles", label: "Tabellenformatvorlagen", key: "ZT", icon: "table-style",
-        controls: [dd("table.styles", "Q", "large", [], stylesPanel),
-          { type: "color", cmd: "table.shading", key: "H", palette: "font", current: () => lastShading, pick: (hex) => { if (hex !== "auto") lastShading = hex; shade(hex); } }] },
-      { id: "borders", label: "Rahmen", key: "ZR", icon: "borders",
-        controls: [{ type: "split", cmd: "table.borders", key: "B", size: "large", menu: bordersMenu }] },
+      { id: "options", label: "Tabellenformatoptionen", key: "ZL", icon: "table-style",
+        controls: [stack(check("table.headerRow", "Ü"), check("table.totalRow", "G"), check("table.bandedRows", "R1")),
+          stack(check("table.firstColumn", "T"), check("table.lastColumn", "L"), check("table.bandedColumns", "U"))] },
+      { id: "styles", label: "Tabellenformatvorlagen", key: "ZS", icon: "table-style",
+        controls: [styles.control, shading],
+        smaller: [[dd("table.styles", "O", "large", [], styles.panel), shading]] },
+      { id: "borders", label: "Rahmen", key: "ZB", icon: "borders", launcher: { cmd: "border.dialog", key: "R2" },
+        controls: [{ type: "split", cmd: "table.borderStyles", key: "H", size: "large", menu: [], popup: borderStylesPanel },
+          stack(styleCombo, weightCombo, { type: "color", cmd: "table.penColor", key: "F", palette: "font", showLabel: true, current: () => pen.color, pick: (hex) => setPen({ color: hex }) }),
+          { type: "split", cmd: "table.borders", key: "MR", size: "large", menu: bordersMenu },
+          b("table.borderPainter", "A", "large")] },
     ],
   };
 
@@ -323,7 +414,33 @@ export function tablesFeature(api: AppApi) {
     ],
   };
 
-  return { insertPanel, designTab, layoutTab, cellWidthPt: () => (ed()?.cellWidth() ?? 0) / PT };
+  // Our own addition (D-053): the table's layout options beside its top right corner, like a
+  // picture's: Textumbruch (Ohne / Umgebend) and Ausrichtung, with Tabelleneigenschaften below.
+  const layoutOptions = (rect: DOMRect) => {
+    const e = ed();
+    const def = e?.tableDef();
+    if (!e || !def) return;
+    const floating = !!def.float;
+    const align = def.float ? def.float.xAlign ?? "left" : def.align ?? "left";
+    const tile = (label: string, on: boolean, body: HTMLElement, run: () => void) =>
+      h("button", { class: `tile${on ? " on" : ""}`, "data-tip": label, "aria-label": label, style: "width:42px;height:42px", onclick: () => { closePopup(); run(); api.focus(); } }, body);
+    const alignIcon = (a: string) => icon(a === "center" ? "align-center" : a === "right" ? "align-right" : "align-left");
+    const panel = h("div", { class: "rpanel layout-options", style: "width:220px" },
+      h("div", { class: "title" }, "Layoutoptionen"),
+      h("div", { class: "subtitle" }, "Textumbruch"),
+      h("div", { class: "tiles", style: "grid-template-columns:repeat(2, auto)" },
+        tile("Ohne", !floating, wrapIcon("top-bottom"), () => e.setTableWrap("none")),
+        tile("Umgebend", floating, wrapIcon("square"), () => e.setTableWrap("around"))),
+      h("div", { class: "subtitle" }, "Ausrichtung"),
+      h("div", { class: "tiles", style: "grid-template-columns:repeat(3, auto)" },
+        ...([["left", "Links"], ["center", "Zentriert"], ["right", "Rechts"]] as const).map(([a, l]) => tile(l, align === a, alignIcon(a), () => e.setTableAlign(a)))),
+      h("hr"),
+      h("button", { class: "link", onclick: () => { closePopup(); void c.run("table.properties"); } }, "Tabelleneigenschaften..."));
+    showPopup(panel, new DOMRect(rect.left, rect.bottom, 0, 0));
+  };
+  const attach = (e: import("@raabe/text-engine").Editor) => { e.onTableLayout = layoutOptions; };
+
+  return { insertPanel, designTab, layoutTab, attach, cellWidthPt: () => (ed()?.cellWidth() ?? 0) / PT };
 }
 
 export type { CellDef };

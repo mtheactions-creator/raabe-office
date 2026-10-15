@@ -39,7 +39,10 @@ export function readBorders(el: Element | null): Borders | undefined {
     top: pick("top"), bottom: pick("bottom"), left: pick("left", "start"), right: pick("right", "end"),
     between: pick("between"), insideH: pick("insideH"), insideV: pick("insideV"),
   };
-  return Object.values(b).some((x) => x) ? b : undefined;
+  // Only the sides the element names: an unnamed side must not hide the one a table style
+  // or a conditional format gives (Gitternetztabelle 1 hell: the first row names only bottom).
+  const named = Object.fromEntries(Object.entries(b).filter(([, x]) => x)) as Borders;
+  return Object.keys(named).length ? named : undefined;
 }
 
 export function borderXml(name: string, b: BorderSpec | undefined): string {

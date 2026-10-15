@@ -4,7 +4,7 @@ export { Editor, FONT_STEPS, type ChangeEvent, type EditorStats, type CharState,
 export { DEFAULT_MATH, Doc, MAIN, cmp, nextTableId, type Pos, type DocState, type DocSettings, type DocSnapshot, type Hyphenation, type MathSettings, type NoteProps, type Watermark } from "./doc";
 export { Fonts, PT, type FontMetrics, type MetricsProvider } from "./fonts";
 export { Layouter, fieldType, type LayoutContext } from "./layout";
-export { DEFAULT_CELL_MARGINS, layoutDocument, type Deco, type Frame, type Layout, type PageLayout, type PlacedLine, type StoryLayout } from "./flow";
+export { DEFAULT_CELL_MARGINS, layoutDocument, tableCellLook, type Deco, type Frame, type Layout, type PageLayout, type PlacedLine, type StoryLayout } from "./flow";
 export {
   A4, COLUMN_BREAK, DEFAULT_SECTION, DEFAULT_SHAPE_BODY, EMPTY, EMPTY_NUMBERING, LINE_BREAK, OBJ, ONE_COLUMN, PAGE_BREAK, cellKey, intern, makePara, validPara,
   type AltText, type ShapeBody, type ShapeInfo,
@@ -12,7 +12,7 @@ export {
   type CellRef, type CharProps, type Columns, type CommentMeta, type GroupInfo, type GroupMember, type LineNumbers, type PageBorders, type FloatObject, type HeaderRefs, type ImageData,
   type InlineObject, type LineRule, type NumInstance, type NumLevel, type Numbering, type PageSetup, type Para,
   type ParaGroup, type ParaProps, type Revision, type RowDef, type Run, type Section, type Shading, type TabStop,
-  type TableDef, type Underline,
+  type TableDef, type TableFloat, type Underline,
 } from "./model";
 export {
   addList, bulletLevels, displayBullet, formatNumber, levelOf, listLabels, multilevelLevels, numberLevels, numberingOf,

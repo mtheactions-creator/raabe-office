@@ -257,6 +257,86 @@ export function ommlToSeq(el: Element, opts: MathOptions = {}): Seq | null {
   }
 }
 
+// ----- the clipboard: Word's HTML flavour of OMML ----------------------------------------------------
+
+/** The OMML namespace in Word's HTML (the clipboard's "HTML Format"). */
+export const M_HTML_NS = "http://schemas.microsoft.com/office/2004/12/omml";
+
+const escXml = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
+/**
+ * An equation from Word's clipboard HTML (the inside of its `<!--[if gte msEquation 12]>`
+ * comment): Word keeps the OMML elements but puts each run's text in HTML spans, italic
+ * marked by `<i>` (recorded 2026-10-15). Returns the m:oMath or m:oMathPara element in OMML
+ * proper, or null.
+ */
+export function wordHtmlMath(fragment: string): Element | null {
+  const src = new DOMParser().parseFromString(
+    `<x xmlns:m="${M_HTML_NS}" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:v="urn:schemas-microsoft-com:vml">` +
+    `${fragment.replace(/&nbsp;/g, "&#160;")}</x>`, "application/xml");
+  if (src.getElementsByTagName("parsererror").length) return null;
+  const isM = (el: Element) => el.namespaceURI === M_HTML_NS || el.prefix === "m";
+  const attrs = (el: Element) => Array.from(el.attributes).filter((a) => a.prefix === "m").map((a) => ` m:${a.localName}="${escXml(a.value)}"`).join("");
+  const textOf = (n: Node): string => {
+    if (n.nodeType === 3) return n.nodeValue ?? "";
+    if (n.nodeType !== 1 || (isM(n as Element) && (n as Element).localName === "rPr")) return "";
+    return Array.from(n.childNodes).map(textOf).join("");
+  };
+  const conv = (el: Element, italic: boolean): string => {
+    const kids = Array.from(el.children);
+    if (!isM(el)) {
+      const it = italic || el.localName === "i" || el.localName === "em";
+      return kids.map((c) => conv(c, it)).join("");
+    }
+    if (el.localName === "r") {
+      const pr = kids.find((c) => isM(c) && c.localName === "rPr");
+      const text = textOf(el).replace(/[\r\n]+\s*/g, "");
+      const it = italic || el.getElementsByTagName("i").length > 0;
+      let inner = pr ? Array.from(pr.children).filter((c) => isM(c) && !(c.localName === "scr" && /roman/.test(attrs(c)))).map((c) => `<m:${c.localName}${attrs(c)}/>`).join("") : "";
+      // Not italic and no style of its own: Word means upright text (sty p).
+      if (!it && !/<m:(sty|nor)\b/.test(inner)) inner += '<m:sty m:val="p"/>';
+      return `<m:r>${inner ? `<m:rPr>${inner}</m:rPr>` : ""}<m:t xml:space="preserve">${escXml(text)}</m:t></m:r>`;
+    }
+    return `<m:${el.localName}${attrs(el)}>${kids.map((c) => conv(c, italic)).join("")}</m:${el.localName}>`;
+  };
+  const top = Array.from(src.documentElement.children).map((c) => conv(c, false)).join("");
+  const doc = new DOMParser().parseFromString(`<w xmlns:m="${M_NS}">${top}</w>`, "application/xml");
+  const el = doc.documentElement.firstElementChild;
+  return el && (el.localName === "oMath" || el.localName === "oMathPara") ? el : null;
+}
+
+/** OMML (as written to documents) in Word's HTML flavour, for the clipboard. */
+export function ommlToWordHtml(omml: string): string {
+  const doc = new DOMParser().parseFromString(`<w xmlns:m="${M_NS}" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">${omml}</w>`, "application/xml");
+  if (doc.getElementsByTagName("parsererror").length) return "";
+  const font = `<span style='font-family:"Cambria Math",serif'>`;
+  const escHtml = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  const attrs = (el: Element) => Array.from(el.attributes).filter((a) => a.prefix === "m").map((a) => ` m:${a.localName}="${escXml(a.value)}"`).join("");
+  const conv = (el: Element, fname = false): string => {
+    if (el.namespaceURI !== M_NS) return "";
+    const kids = Array.from(el.children);
+    if (el.localName === "r") {
+      const pr0 = kids.find((c) => c.namespaceURI === M_NS && c.localName === "rPr");
+      // A function's name is upright text, as Word's own clipboard writes it.
+      const pr = fname && !pr0 ? new DOMParser().parseFromString(`<m:rPr xmlns:m="${M_NS}"><m:scr m:val="roman"/><m:sty m:val="p"/></m:rPr>`, "application/xml").documentElement : pr0;
+      const sty = pr ? Array.from(pr.children).find((c) => c.localName === "sty")?.getAttributeNS(M_NS, "val") ?? undefined : undefined;
+      const nor = !!pr && Array.from(pr.children).some((c) => c.localName === "nor");
+      const text = escHtml(kids.filter((c) => c.localName === "t").map((c) => c.textContent ?? "").join(""));
+      const prXml = pr ? `<m:rPr>${Array.from(pr.children).map((c) => `<m:${c.localName}${attrs(c)}/>`).join("")}</m:rPr>` : "";
+      const italic = !nor && (sty === undefined || sty === "i" || sty === "bi");
+      const bold = sty === "b" || sty === "bi";
+      // As Word's own clipboard: the formatting wraps the run, the text stands in it (Word reads
+      // an upright function name from a span inside the run as italic).
+      let run = `${font}<m:r>${prXml}${text}</m:r></span>`;
+      if (italic) run = `<i>${run}</i>`;
+      if (bold) run = `<b>${run}</b>`;
+      return run;
+    }
+    return `<m:${el.localName}${attrs(el)}>${kids.map((c) => conv(c, fname || el.localName === "fName")).join("")}</m:${el.localName}>`;
+  };
+  return Array.from(doc.documentElement.children).map((c) => conv(c)).join("");
+}
+
 /** LaTeX of an m:oMath or m:oMathPara element, or null when it uses something unsupported. */
 export function ommlToLatex(el: Element): string | null {
   const seq = ommlToSeq(el);

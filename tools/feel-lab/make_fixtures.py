@@ -885,6 +885,40 @@ def wrap(app) -> None:
     d.Close(0)
 
 
+def tablefloat(app) -> None:
+    """Floating tables (Textumbruch Umgebend, Step 4c D): centred, at an offset from the margin
+    and right-aligned, each placed relative to its paragraph, with text flowing around them."""
+    d = base_doc(app)
+    b = Builder(d)
+    b.para("Umgebende Tabellen", -2)
+
+    def case(title, hpos, hrel, vpos, width=150):
+        b.para(title + " " + FILL)
+        holder = b.para("")
+        t = d.Tables.Add(holder.Range, 3, 2)
+        t.Style = "Tabellenraster"
+        t.PreferredWidthType = 3
+        t.PreferredWidth = width
+        for i in range(1, 4):
+            for j in range(1, 3):
+                t.Cell(i, j).Range.Text = f"Z{i}S{j}"
+        rows = t.Rows
+        rows.WrapAroundText = True
+        rows.RelativeHorizontalPosition = hrel
+        rows.HorizontalPosition = hpos
+        rows.RelativeVerticalPosition = 2
+        rows.VerticalPosition = vpos
+        b.para(FILL + " " + FILL)
+        b.para(FILL)
+
+    case("Zentriert.", -999995, 0, 6)
+    case("Links versetzt.", 60, 0, 12)
+    case("Rechts.", -999996, 0, 0)
+    b.para("Letzter Absatz.")
+    d.SaveAs2(str(OUT / "word-table-float.docx"), 16)
+    d.Close(0)
+
+
 def shapes(app) -> None:
     """Shapes and text boxes as Word makes them (Office 2013-2022 theme, like new RaabeWrite
     documents): a default rectangle with text, a text box, an arrow, a gradient, a shadow, a
@@ -1085,7 +1119,7 @@ def main() -> None:
         if only:
             for name in only:
                 {"layout": layout, "fonts": fonts, "breaks": breaks, "top": top, "formatting": formatting, "rich": rich,
-                 "lists": lists, "tables": tables, "sections": sections, "notes": notes, "borders": borders, "images": images, "wrap": wrap, "step4": step4, "shapes": shapes, "math": math, "hyphenation": hyphenation}[name](app)
+                 "lists": lists, "tables": tables, "sections": sections, "notes": notes, "borders": borders, "images": images, "wrap": wrap, "tablefloat": tablefloat, "step4": step4, "shapes": shapes, "math": math, "hyphenation": hyphenation}[name](app)
         else:
             formatting(app)
             rich(app)

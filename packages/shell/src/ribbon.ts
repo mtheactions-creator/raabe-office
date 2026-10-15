@@ -26,17 +26,22 @@ export type Control =
       /** CSS for an entry (e.g. the font itself for "Schriftart"). */
       optionStyle?: (o: string) => string;
       commit?: (v: string) => void;
+      /** Drawn entries and box face instead of text (Stiftart: line samples); the entry's text is its tooltip. */
+      renderOption?: (o: string) => HTMLElement;
+      renderValue?: () => HTMLElement;
     }
   | {
       type: "gallery"; key?: string; items: { cmd: string; preview: string }[];
       /** Items shown at least; with `fill` the gallery grows into free width, as Word's does. */
       visible: number; fill?: boolean;
+      /** Livevorschau: the entry under the mouse (null when it leaves). */
+      hover?: (cmd: string | null) => void;
     }
   | {
       type: "spinner"; cmd: string; label: string; icon?: string; key?: string;
       value?: () => string; commit?: (v: string) => void; step?: (dir: 1 | -1) => void;
     }
-  | { type: "color"; cmd: string; key?: string; palette: "font" | "highlight"; current: () => string; pick: (c: string) => void }
+  | { type: "color"; cmd: string; key?: string; palette: "font" | "highlight"; current: () => string; pick: (c: string) => void; showLabel?: boolean }
   /**
    * A gallery of drawn tiles (Bildformatvorlagen: the selected picture in each style).
    * `key` changes when the tiles must be drawn again; `panel` is the full gallery.
@@ -414,9 +419,9 @@ export class Ribbon {
             if (g.heading) list.append(h("div", { class: "palette-title" }, g.heading));
             for (const item of g.items) {
               list.append(h("button", {
-                style: c2.optionStyle?.(item) ?? "",
+                style: c2.optionStyle?.(item) ?? "", "aria-label": item, "data-tip": c2.renderOption ? item : undefined,
                 onclick: () => { closePopup(); input.value = item; commit(); },
-              }, item));
+              }, c2.renderOption ? c2.renderOption(item) : item));
             }
           }
           showPopup(list, wrap.getBoundingClientRect());
@@ -429,7 +434,11 @@ export class Ribbon {
           onclick: (e: MouseEvent) => { if (e.target === wrap) input.focus(); },
         }, input, arrow);
         const labelled = c.label ? h("div", { class: "rcombo-labelled" }, ...(c.icon ? [icon(c.icon)] : []), h("span", { class: "rcombo-label" }, c.label), wrap) : null;
+        // A drawn face (a line sample) in place of the text; a click on it opens the list.
+        const face = c2.renderValue ? h("span", { class: "rcombo-face", onclick: () => { if (!arrow.disabled) openList(); } }) : null;
+        if (face) { input.hidden = true; wrap.insertBefore(face, input); }
         this.updaters.push(() => {
+          if (face) face.replaceChildren(c2.renderValue!());
           if (document.activeElement !== input) input.value = c2.value();
           const on = this.commands.isEnabled(c2.cmd);
           wrap.classList.toggle("disabled", !on);
@@ -444,9 +453,10 @@ export class Ribbon {
         for (const it of c.items.slice(0, c.visible)) {
           const b = h("button", {
             class: "item", "data-tip": this.commands.tooltip(it.cmd), style: "",
-            onclick: () => void this.commands.run(it.cmd),
+            onclick: () => { c.hover?.(null); void this.commands.run(it.cmd); },
           }, h("span", { style: it.preview }, this.commands.get(it.cmd).label));
           this.bind(b, it.cmd);
+          if (c.hover) { b.addEventListener("mouseenter", () => c.hover!(it.cmd)); b.addEventListener("mouseleave", () => c.hover!(null)); }
           items.append(b);
         }
         const more = h("button", { "aria-label": "Weitere", "data-keytip": c.key, "data-keytip-scope": this.scope() }, icon("chevron-down"));
@@ -458,9 +468,10 @@ export class Ribbon {
           for (const it of c.items.slice(c.visible)) {
             const b = h("button", {
               class: "item extra", "data-tip": this.commands.tooltip(it.cmd), style: "display:none",
-              onclick: () => void this.commands.run(it.cmd),
+              onclick: () => { c.hover?.(null); void this.commands.run(it.cmd); },
             }, h("span", { style: it.preview }, this.commands.get(it.cmd).label));
             this.bind(b, it.cmd);
+            if (c.hover) { b.addEventListener("mouseenter", () => c.hover!(it.cmd)); b.addEventListener("mouseleave", () => c.hover!(null)); }
             items.append(b);
           }
         }
@@ -527,7 +538,8 @@ export class Ribbon {
         const main = h("button", {
           class: "rb rb-small color-main", "data-tip": this.commands.tooltip(c.cmd), "aria-label": cmdDef.label,
           onclick: () => { if (this.commands.isEnabled(c2.cmd)) { c2.pick(c2.current()); this.opts.onDone?.(); } },
-        }, icon(cmdDef.icon), bar);
+        }, ...(c.showLabel ? [h("span", { class: "color-col" }, icon(cmdDef.icon), bar), h("span", { class: "lbl" }, cmdDef.label)] : [icon(cmdDef.icon), bar]));
+        if (c.showLabel) main.classList.add("labelled");
         const arrow = h("button", {
           class: "rb rb-small arrow", "aria-label": "Weitere Optionen", "data-keytip": c.key, "data-keytip-scope": this.scope(),
           onclick: () => {

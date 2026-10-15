@@ -12,6 +12,8 @@ export interface RibbonContext {
   /** Referenzen > Formatvorlage (the document's citation style). */
   citationStyle: { value(): string; options(): { heading?: string; items: string[] }[]; commit(v: string): void };
   fontName(): string;
+  /** Formatvorlagen: Livevorschau of the gallery entry under the mouse (null ends it). */
+  styleHover?(cmd: string | null): void;
   fontSize(): string;
   fontOptions(): { heading?: string; items: string[] }[];
   setFont(name: string): void;
@@ -216,7 +218,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
         {
           id: "styles", label: "Formatvorlagen", key: "ZS", icon: "fonts",
           launcher: { cmd: "style.pane", key: "RF" },
-          controls: [{ type: "gallery", key: "K", visible: 4, fill: true, items: GALLERY.map((g) => ({ cmd: g.cmd, preview: g.preview })) }],
+          controls: [{ type: "gallery", key: "K", visible: 4, fill: true, items: GALLERY.map((g) => ({ cmd: g.cmd, preview: g.preview })), hover: ctx.styleHover ? (c) => ctx.styleHover!(c) : undefined }],
           smaller: [[{ type: "dropdown", cmd: "style.pane", key: "K", size: "large", label: "Formatvorlagen", menu: styleMenu }]],
         },
         {
