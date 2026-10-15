@@ -9,6 +9,7 @@ mod en_rules;
 mod es_rules;
 mod fr_rules;
 mod fsa;
+mod minire;
 mod rules;
 mod tagger;
 mod text;
@@ -263,6 +264,61 @@ mod tests {
         }
     }
 
+    /// Counts the bytes in use, for `memory_use`.
+    struct Counting;
+    static LIVE: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
+    unsafe impl std::alloc::GlobalAlloc for Counting {
+        unsafe fn alloc(&self, l: std::alloc::Layout) -> *mut u8 {
+            LIVE.fetch_add(l.size(), std::sync::atomic::Ordering::Relaxed);
+            unsafe { std::alloc::System.alloc(l) }
+        }
+        unsafe fn dealloc(&self, p: *mut u8, l: std::alloc::Layout) {
+            LIVE.fetch_sub(l.size(), std::sync::atomic::Ordering::Relaxed);
+            unsafe { std::alloc::System.dealloc(p, l) }
+        }
+    }
+    #[global_allocator]
+    static ALLOC: Counting = Counting;
+
+    /// Memory in use after loading each language's checker (and its parts with
+    /// $GRAMMAR_MEM_PARTS=xx).
+    #[test]
+    #[ignore]
+    fn memory_use() {
+        let private = || LIVE.load(std::sync::atomic::Ordering::Relaxed) / (1 << 20);
+        eprintln!("start {} MB", private());
+        if let Ok(l) = std::env::var("GRAMMAR_MEM_PARTS") {
+            let d = LANGS.iter().find(|d| d.key == l).unwrap();
+            let _tagger = Tagger::new(d.dict, d.added, d.removed, d.sep, d.freq, d.key).unwrap();
+            eprintln!("tagger: {} MB", private());
+            let mut json = String::new();
+            flate2::read::GzDecoder::new(d.rules).read_to_string(&mut json).unwrap();
+            let file: RuleFile = serde_json::from_str(&json).unwrap();
+            drop(json);
+            let unifier = std::sync::Arc::new(rules::Unifier::new(&file.unification));
+            let _dis: Vec<Disambig> = file.disambig.into_iter().filter_map(|j| Disambig::new(j, &unifier)).collect();
+            let mut rs: Vec<Rule> = Vec::new();
+            let mut heavy: Vec<(usize, String)> = Vec::new();
+            for j in file.rules {
+                let id = j.id.clone();
+                let before = LIVE.load(std::sync::atomic::Ordering::Relaxed);
+                rs.extend(Rule::new(j, &unifier));
+                heavy.push((LIVE.load(std::sync::atomic::Ordering::Relaxed).saturating_sub(before), id));
+            }
+            eprintln!("all: {} MB ({} rules, {} expressions for fancy-regex)", private(), rs.len(), rules::fancy_count());
+            heavy.sort_by(|a, b| b.0.cmp(&a.0));
+            for (b, id) in heavy.iter().take(12) {
+                eprintln!("  {} KB {id}", b / 1024);
+            }
+            return;
+        }
+        let mut keep = Vec::new();
+        for l in ["de", "en", "fr", "es"] {
+            keep.push(Checker::new(l).unwrap());
+            eprintln!("after {l}: {} MB", private());
+        }
+    }
+
     /// How long loading a language takes, by phase, and the slowest rules to compile.
     #[test]
     #[ignore]
@@ -351,6 +407,9 @@ mod tests {
         let Ok(text) = std::fs::read_to_string(&path) else { eprintln!("no examples at {path:?}"); return };
         let examples: Vec<serde_json::Value> = serde_json::from_str(&text).unwrap();
         let c = checker();
+        if std::env::var_os("GRAMMAR_PROFILE").is_some() {
+            *minire::PROFILE.lock().unwrap() = Some(HashMap::new());
+        }
         let known: HashSet<String> = c.rules.iter().map(|r| r.id.clone()).collect();
         let mut stats: HashMap<String, [u32; 4]> = HashMap::new();
         let t0 = std::time::Instant::now();
@@ -383,7 +442,17 @@ mod tests {
         for s in stats.values() {
             inc += s[0]; hit += s[1]; cor += s[2]; fa += s[3];
         }
-        eprintln!("incorrect examples found: {hit}/{inc}; correct examples flagged: {fa}/{cor}; {sentences} sentences, {chars_total} chars in {elapsed:?}");
+        eprintln!("incorrect examples found: {hit}/{inc}; correct examples flagged: {fa}/{cor}; {sentences} sentences, {chars_total} chars in {elapsed:?}; {} MB in use",
+            LIVE.load(std::sync::atomic::Ordering::Relaxed) >> 20);
+        if let Some(m) = minire::PROFILE.lock().unwrap().take() {
+            let mut v: Vec<_> = m.into_iter().collect();
+            v.sort_by(|a, b| b.1 .1.cmp(&a.1 .1));
+            let total: u128 = v.iter().map(|x| x.1 .1).sum();
+            eprintln!("matcher time {} ms", total / 1_000_000);
+            for (src, (n, ns)) in v.iter().take(25) {
+                eprintln!("  {} ms {n} calls {src}", ns / 1_000_000);
+            }
+        }
         let report: serde_json::Map<String, serde_json::Value> = stats.into_iter().map(|(k, v)| (k, serde_json::json!(v))).collect();
         let out = path.with_file_name(format!("grammar-{}-report.json", lang()));
         std::fs::write(out, serde_json::to_string(&report).unwrap()).unwrap();

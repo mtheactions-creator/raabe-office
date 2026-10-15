@@ -798,10 +798,21 @@ spanish-pos-dict LGPL-2.1, with LanguageTool's added/removed lists). What it too
   (otherwise "die Philosophen vor Sokrates, die …" agrees with Sokrates); `filterall` acts on the
   marked tokens only; `<disambig postag>` keeps the lemma of the reading with that tag (does:
   do, not doe); synthesis lexicons without a tag field (English); empty optional tokens no longer
-  leave double spaces in suggestions; zero-width spaces are invisible. Expressions that are only
-  lists of words are matched as word sets and identical expressions compiled once: loading
-  French went from 10.5 s to 1.6 s (German 0.75 s, English and Spanish under 1 s; each language
-  loads on first use).
+  leave double spaces in suggestions; zero-width spaces are invisible.
+- **Memory** (measured at the Step 4b wrap-up, `memory_use` test with a counting allocator):
+  compiled with the regex crate, each of the rules' tens of thousands of token expressions took
+  14-20 KB, so the checkers took 174 MB (German), 104 MB (English), 336 MB (French) and 65 MB
+  (Spanish), and RaabeWrite 636 MB with a document open. Now expressions whose matches are a
+  short list of words ("aller|venir", "para[iî]tre", "chats?") are word sets, one per
+  expression; the rest run on our own small matcher (`minire.rs`: Java's syntax as a Pike VM of
+  a few dozen instructions), with fancy-regex only for lookarounds and the like (21 of French's
+  expressions); an expression used more than 4,000 times also gets the regex crate's automaton,
+  so the few hundred hot ones stay fast. Every finding is the same as with fancy-regex alone
+  (compared rule by rule on LanguageTool's examples in all four languages, `GRAMMAR_NO_MINI`).
+  Result: 43, 22, 59 and 19 MB; RaabeWrite 462 MB with a document (Word 291 MB, RaabeWrite at
+  Step 4 346 MB); loading takes 0.35 s (German, French), 0.14 s (English), 0.08 s (Spanish);
+  checking is as fast as before (German examples 27.5 s instead of 28.9 s). French's two rules
+  for postal addresses are left out (one expression of place names was 18 MB).
 - **Own rules per language** (`en_rules.rs`, `fr_rules.rs`, `es_rules.rs`) for what
   LanguageTool checks in Java or with its chunker, aimed at pupils' errors and as cautious as
   the German ones: English subject and verb (he go, I has, we was, there is many, Do he …,
@@ -824,14 +835,14 @@ spanish-pos-dict LGPL-2.1, with LanguageTool's added/removed lists). What it too
   | Corpus | en ours | en Word | fr ours | fr Word | es ours |
   |---|---|---|---|---|---|
   | typical school errors (found) | 47 of 50 | 39 | 35 of 44 | 29 | 24 of 28 |
-  | 400 of LanguageTool's incorrect examples (found) | 393 | 92 | 387 | 102 | 383 |
+  | 400 of LanguageTool's incorrect examples (found) | 393 | 92 | 387 | 103 | 383 |
   | 500 Wikipedia paragraphs on school topics (flagged) | 17 | 130 | 76 | 112 | 58 |
-  | 400 of LanguageTool's correct examples (flagged) | 13 | 59 | 79 | 77 | 31 |
+  | 400 of LanguageTool's correct examples (flagged) | 13 | 59 | 79 | 81 | 31 |
   We find every school error Word finds in English and French and more besides; on clean text
   we flag fewer paragraphs than Word. Spanish flags 12 % of the Wikipedia paragraphs, between
   German (6 %) and French (15 %) and below Word's rate in the other three languages (10–26 %);
   several of its findings there are real errors (un baraja, la conversiones). So all three are
   switched on (D-040). LanguageTool's own example sentences, rule by rule: en 5124 of 5278
-  errors found, 13 of 3464 correct sentences flagged; fr 5503 of 5868, 33 of 4965; es 2183 of
+  errors found, 13 of 3464 correct sentences flagged; fr 5495 of 5860, 33 of 4961; es 2183 of
   2312, 50 of 2292 (de 6192 of 6323, 20 of 2960).
 

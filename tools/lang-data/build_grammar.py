@@ -37,7 +37,9 @@ DISABLED_BY_LANG = {
            # A comma before "mais" is advice, not a rule; "l'Est de la France" is a region's name.
            "PLACE_DE_LA_VIRGULE[5]", "NORD_SUD[9]",
            # Needs LanguageTool's chunker: fires on most correct sentences with a long subject.
-           "VIRG_NON_TROUVEE"),
+           "VIRG_NON_TROUVEE",
+           # Postal address formats: an 18 MB expression of place names, nothing for school.
+           "ADRESSES_FRANCE", "ADRESSES_BELGIQUE"),
     "es": ("COMILLAS_TIPOGRAFICAS", "GUION_LARGO", "PUNTOS_SUSPENSIVOS",
            # Commas before "pero" and "sino que" are advice; the agreement rules below need
            # LanguageTool's chunker ("dos o más palabras", "positivos o negativos", "los demás").

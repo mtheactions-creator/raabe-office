@@ -1,0 +1,1144 @@
+{
+ "plain letters": {
+  "area": "type",
+  "word": [
+   "display[oMath('abc§')]"
+  ],
+  "ours": [
+   "display[oMath('abc§')]"
+  ],
+  "ok": true
+ },
+ "letters and digits": {
+  "area": "type",
+  "word": [
+   "display[oMath('x+2y=3§')]"
+  ],
+  "ours": [
+   "display[oMath('x+2y=3§')]"
+  ],
+  "ok": true
+ },
+ "space between letters": {
+  "area": "type",
+  "word": [
+   "display[oMath('a b§')]"
+  ],
+  "ours": [
+   "display[oMath('a b§')]"
+  ],
+  "ok": true
+ },
+ "power without space": {
+  "area": "buildup",
+  "word": [
+   "display[oMath(sSup(e('x') sup('2')) '§')]"
+  ],
+  "ours": [
+   "display[oMath(sSup(e('x') sup('2')) '§')]"
+  ],
+  "ok": true
+ },
+ "power with space": {
+  "area": "buildup",
+  "word": [
+   "display[oMath(sSup(e('x') sup('2')) '§')]"
+  ],
+  "ours": [
+   "display[oMath(sSup(e('x') sup('2')) '§')]"
+  ],
+  "ok": true
+ },
+ "power then operator": {
+  "area": "buildup",
+  "word": [
+   "display[oMath(sSup(e('x') sup('2')) '+1§')]"
+  ],
+  "ours": [
+   "display[oMath(sSup(e('x') sup('2')) '+1§')]"
+  ],
+  "ok": true
+ },
+ "subscript": {
+  "area": "buildup",
+  "word": [
+   "display[oMath(sSub(e('x') sub('1')) '§')]"
+  ],
+  "ours": [
+   "display[oMath(sSub(e('x') sub('1')) '§')]"
+  ],
+  "ok": true
+ },
+ "sub and sup": {
+  "area": "buildup",
+  "word": [
+   "display[oMath(sSubSup(e('x') sub('1') sup('2')) '§')]"
+  ],
+  "ours": [
+   "display[oMath(sSubSup(e('x') sub('1') sup('2')) '§')]"
+  ],
+  "ok": true
+ },
+ "fraction": {
+  "area": "buildup",
+  "word": [
+   "display[oMath(f(num('a') den('b')) '§')]"
+  ],
+  "ours": [
+   "display[oMath(f(num('a') den('b')) '§')]"
+  ],
+  "ok": true
+ },
+ "fraction of numbers": {
+  "area": "buildup",
+  "word": [
+   "display[oMath(f(num('1') den('2')) '§')]"
+  ],
+  "ours": [
+   "display[oMath(f(num('1') den('2')) '§')]"
+  ],
+  "ok": true
+ },
+ "fraction with brackets": {
+  "area": "buildup",
+  "word": [
+   "display[oMath(f(num('a+b') den('c')) '§')]"
+  ],
+  "ours": [
+   "display[oMath(f(num('a+b') den('c')) '§')]"
+  ],
+  "ok": true
+ },
+ "fraction then text": {
+  "area": "buildup",
+  "word": [
+   "display[oMath(f(num('a') den('b')) '+c §')]"
+  ],
+  "ours": [
+   "display[oMath(f(num('a') den('b')) '+c §')]"
+  ],
+  "ok": true
+ },
+ "power in brackets": {
+  "area": "buildup",
+  "word": [
+   "display[oMath(sSup(e('x') sup('2n')) '§')]"
+  ],
+  "ours": [
+   "display[oMath(sSup(e('x') sup('2n')) '§')]"
+  ],
+  "ok": true
+ },
+ "negative exponent": {
+  "area": "buildup",
+  "word": [
+   "display[oMath(sSup(e('e') sup('-x')) '§')]"
+  ],
+  "ours": [
+   "display[oMath(sSup(e('e') sup('-x')) '§')]"
+  ],
+  "ok": true
+ },
+ "alpha": {
+  "area": "autocorrect",
+  "word": [
+   "display[oMath('α§')]"
+  ],
+  "ours": [
+   "display[oMath('α§')]"
+  ],
+  "ok": true
+ },
+ "pi r squared": {
+  "area": "autocorrect",
+  "word": [
+   "display[oMath('π' sSup(e('r') sup('2')) '§')]"
+  ],
+  "ours": [
+   "display[oMath('π' sSup(e('r') sup('2')) '§')]"
+  ],
+  "ok": true
+ },
+ "cdot": {
+  "area": "autocorrect",
+  "word": [
+   "display[oMath('a⋅b§')]"
+  ],
+  "ours": [
+   "display[oMath('a⋅b§')]"
+  ],
+  "ok": true
+ },
+ "cdot space": {
+  "area": "autocorrect",
+  "word": [
+   "display[oMath('a⋅b §')]"
+  ],
+  "ours": [
+   "display[oMath('a⋅b §')]"
+  ],
+  "ok": true
+ },
+ "less or equal": {
+  "area": "autocorrect",
+  "word": [
+   "display[oMath('x≤y §')]"
+  ],
+  "ours": [
+   "display[oMath('x≤y §')]"
+  ],
+  "ok": true
+ },
+ "not equal": {
+  "area": "autocorrect",
+  "word": [
+   "display[oMath('a≠b §')]"
+  ],
+  "ours": [
+   "display[oMath('a≠b §')]"
+  ],
+  "ok": true
+ },
+ "arrow": {
+  "area": "autocorrect",
+  "word": [
+   "display[oMath('a→b §')]"
+  ],
+  "ours": [
+   "display[oMath('a→b §')]"
+  ],
+  "ok": true
+ },
+ "infinity": {
+  "area": "autocorrect",
+  "word": [
+   "display[oMath('∞§')]"
+  ],
+  "ours": [
+   "display[oMath('∞§')]"
+  ],
+  "ok": true
+ },
+ "times": {
+  "area": "autocorrect",
+  "word": [
+   "display[oMath('a×b §')]"
+  ],
+  "ours": [
+   "display[oMath('a×b §')]"
+  ],
+  "ok": true
+ },
+ "square root": {
+  "area": "buildup",
+  "word": [
+   "display[oMath(rad(@degHide=1 deg() e('x')) '§')]"
+  ],
+  "ours": [
+   "display[oMath(rad(@degHide=1 deg() e('x')) '§')]"
+  ],
+  "ok": true
+ },
+ "square root of number": {
+  "area": "buildup",
+  "word": [
+   "display[oMath(rad(@degHide=1 deg() e('2')) '§')]"
+  ],
+  "ours": [
+   "display[oMath(rad(@degHide=1 deg() e('2')) '§')]"
+  ],
+  "ok": true
+ },
+ "integral": {
+  "area": "buildup",
+  "word": [
+   "display[oMath(nary(sub('0') sup('1') e('x dx §')))]"
+  ],
+  "ours": [
+   "display[oMath(nary(sub('0') sup('1') e('x dx §')))]"
+  ],
+  "ok": true
+ },
+ "sum": {
+  "area": "buildup",
+  "word": [
+   "display[oMath(nary(@chr=∑ sub('i=1') sup('n') e('i §')))]"
+  ],
+  "ours": [
+   "display[oMath(nary(@chr=∑ sub('i=1') sup('n') e('i §')))]"
+  ],
+  "ok": true
+ },
+ "sin x": {
+  "area": "buildup",
+  "word": [
+   "display[oMath(func(fName(r[sty=p]'sin') e('x §')))]"
+  ],
+  "ours": [
+   "display[oMath(func(fName(r[sty=p]'sin') e('x §')))]"
+  ],
+  "ok": true
+ },
+ "brackets": {
+  "area": "buildup",
+  "word": [
+   "display[oMath(d(e('a+b')) '§')]"
+  ],
+  "ours": [
+   "display[oMath(d(e('a+b')) '§')]"
+  ],
+  "ok": true
+ },
+ "absolute value": {
+  "area": "buildup",
+  "word": [
+   "display[oMath(d(@begChr=|,endChr=| e('x')) '§')]"
+  ],
+  "ours": [
+   "display[oMath(d(@begChr=|,endChr=| e('x')) '§')]"
+  ],
+  "ok": true
+ },
+ "matrix": {
+  "area": "buildup",
+  "word": [
+   "display[oMath(m(mr(e('a') e('b')) mr(e('c') e('d'))) '§')]"
+  ],
+  "ours": [
+   "display[oMath(m(mr(e('a') e('b')) mr(e('c') e('d'))) '§')]"
+  ],
+  "ok": true
+ },
+ "bar accent": {
+  "area": "buildup",
+  "word": [
+   "display[oMath(acc(@chr=̅ e('x')) '§')]"
+  ],
+  "ours": [
+   "display[oMath(acc(@chr=̅ e('x')) '§')]"
+  ],
+  "ok": true
+ },
+ "degree": {
+  "area": "autocorrect",
+  "word": [
+   "display[oMath('90°§')]"
+  ],
+  "ours": [
+   "display[oMath('90°§')]"
+  ],
+  "ok": true
+ },
+ "fraction left x1": {
+  "area": "navigate",
+  "word": [
+   "display[oMath(f(num('a') den('b§')))]"
+  ],
+  "ours": [
+   "display[oMath(f(num('a') den('b§')))]"
+  ],
+  "ok": true
+ },
+ "fraction left x2": {
+  "area": "navigate",
+  "word": [
+   "display[oMath(f(num('a') den('§b')))]"
+  ],
+  "ours": [
+   "display[oMath(f(num('a') den('§b')))]"
+  ],
+  "ok": true
+ },
+ "fraction left x3": {
+  "area": "navigate",
+  "word": [
+   "display[oMath(f(num('a§') den('b')))]"
+  ],
+  "ours": [
+   "display[oMath(f(num('a§') den('b')))]"
+  ],
+  "ok": true
+ },
+ "fraction left x4": {
+  "area": "navigate",
+  "word": [
+   "display[oMath(f(num('§a') den('b')))]"
+  ],
+  "ours": [
+   "display[oMath(f(num('§a') den('b')))]"
+  ],
+  "ok": true
+ },
+ "fraction left x5": {
+  "area": "navigate",
+  "word": [
+   "display[oMath('§' f(num('a') den('b')))]"
+  ],
+  "ours": [
+   "display[oMath('§' f(num('a') den('b')))]"
+  ],
+  "ok": true
+ },
+ "fraction left x6": {
+  "area": "navigate",
+  "word": [
+   "'§' oMath(f(num('a') den('b')))"
+  ],
+  "ours": [
+   "'§' oMath(f(num('a') den('b')))"
+  ],
+  "ok": true
+ },
+ "power left x1": {
+  "area": "navigate",
+  "word": [
+   "display[oMath(sSup(e('x') sup('2§')))]"
+  ],
+  "ours": [
+   "display[oMath(sSup(e('x') sup('2§')))]"
+  ],
+  "ok": true
+ },
+ "power left x2": {
+  "area": "navigate",
+  "word": [
+   "display[oMath(sSup(e('x') sup('§2')))]"
+  ],
+  "ours": [
+   "display[oMath(sSup(e('x') sup('§2')))]"
+  ],
+  "ok": true
+ },
+ "power left x3": {
+  "area": "navigate",
+  "word": [
+   "display[oMath(sSup(e('x§') sup('2')))]"
+  ],
+  "ours": [
+   "display[oMath(sSup(e('x§') sup('2')))]"
+  ],
+  "ok": true
+ },
+ "power left x4": {
+  "area": "navigate",
+  "word": [
+   "display[oMath(sSup(e('§x') sup('2')))]"
+  ],
+  "ours": [
+   "display[oMath(sSup(e('§x') sup('2')))]"
+  ],
+  "ok": true
+ },
+ "power left x5": {
+  "area": "navigate",
+  "word": [
+   "display[oMath('§' sSup(e('x') sup('2')))]"
+  ],
+  "ours": [
+   "display[oMath('§' sSup(e('x') sup('2')))]"
+  ],
+  "ok": true
+ },
+ "root left x1": {
+  "area": "navigate",
+  "word": [
+   "display[oMath(rad(@degHide=1 deg() e('x§')))]"
+  ],
+  "ours": [
+   "display[oMath(rad(@degHide=1 deg() e('x§')))]"
+  ],
+  "ok": true
+ },
+ "root left x2": {
+  "area": "navigate",
+  "word": [
+   "display[oMath(rad(@degHide=1 deg() e('§x')))]"
+  ],
+  "ours": [
+   "display[oMath(rad(@degHide=1 deg() e('§x')))]"
+  ],
+  "ok": true
+ },
+ "root left x3": {
+  "area": "navigate",
+  "word": [
+   "display[oMath('§' rad(@degHide=1 deg() e('x')))]"
+  ],
+  "ours": [
+   "display[oMath('§' rad(@degHide=1 deg() e('x')))]"
+  ],
+  "ok": true
+ },
+ "root left x4": {
+  "area": "navigate",
+  "word": [
+   "'§' oMath(rad(@degHide=1 deg() e('x')))"
+  ],
+  "ours": [
+   "'§' oMath(rad(@degHide=1 deg() e('x')))"
+  ],
+  "ok": true
+ },
+ "sub sup left x1": {
+  "area": "navigate",
+  "word": [
+   "display[oMath(sSubSup(e('x') sub('1') sup('2§')))]"
+  ],
+  "ours": [
+   "display[oMath(sSubSup(e('x') sub('1') sup('2§')))]"
+  ],
+  "ok": true
+ },
+ "sub sup left x2": {
+  "area": "navigate",
+  "word": [
+   "display[oMath(sSubSup(e('x') sub('1') sup('§2')))]"
+  ],
+  "ours": [
+   "display[oMath(sSubSup(e('x') sub('1') sup('§2')))]"
+  ],
+  "ok": true
+ },
+ "sub sup left x3": {
+  "area": "navigate",
+  "word": [
+   "display[oMath(sSubSup(e('x') sub('1§') sup('2')))]"
+  ],
+  "ours": [
+   "display[oMath(sSubSup(e('x') sub('1§') sup('2')))]"
+  ],
+  "ok": true
+ },
+ "sub sup left x4": {
+  "area": "navigate",
+  "word": [
+   "display[oMath(sSubSup(e('x') sub('§1') sup('2')))]"
+  ],
+  "ours": [
+   "display[oMath(sSubSup(e('x') sub('§1') sup('2')))]"
+  ],
+  "ok": true
+ },
+ "sub sup left x5": {
+  "area": "navigate",
+  "word": [
+   "display[oMath(sSubSup(e('x§') sub('1') sup('2')))]"
+  ],
+  "ours": [
+   "display[oMath(sSubSup(e('x§') sub('1') sup('2')))]"
+  ],
+  "ok": true
+ },
+ "sub sup left x6": {
+  "area": "navigate",
+  "word": [
+   "display[oMath(sSubSup(e('§x') sub('1') sup('2')))]"
+  ],
+  "ours": [
+   "display[oMath(sSubSup(e('§x') sub('1') sup('2')))]"
+  ],
+  "ok": true
+ },
+ "sub sup left x7": {
+  "area": "navigate",
+  "word": [
+   "display[oMath('§' sSubSup(e('x') sub('1') sup('2')))]"
+  ],
+  "ours": [
+   "display[oMath('§' sSubSup(e('x') sub('1') sup('2')))]"
+  ],
+  "ok": true
+ },
+ "fraction home": {
+  "area": "navigate",
+  "word": [
+   "display[oMath('§' f(num('a') den('b')))]"
+  ],
+  "ours": [
+   "display[oMath('§' f(num('a') den('b')))]"
+  ],
+  "ok": true
+ },
+ "fraction end": {
+  "area": "navigate",
+  "word": [
+   "display[oMath(f(num('a') den('b')) '§')]"
+  ],
+  "ours": [
+   "display[oMath(f(num('a') den('b')) '§')]"
+  ],
+  "ok": true
+ },
+ "fraction up from denominator": {
+  "area": "navigate",
+  "word": [
+   "display[oMath(f(num('a§') den('b')))]"
+  ],
+  "ours": [
+   "display[oMath(f(num('a§') den('b')))]"
+  ],
+  "ok": true
+ },
+ "fraction down from numerator": {
+  "area": "navigate",
+  "word": [
+   "display[oMath(f(num('a') den('b§')))]"
+  ],
+  "ours": [
+   "display[oMath(f(num('a') den('b§')))]"
+  ],
+  "ok": true
+ },
+ "right after home": {
+  "area": "navigate",
+  "word": [
+   "display[oMath(f(num('§a') den('b')))]"
+  ],
+  "ours": [
+   "display[oMath(f(num('§a') den('b')))]"
+  ],
+  "ok": true
+ },
+ "right x2 after home": {
+  "area": "navigate",
+  "word": [
+   "display[oMath(f(num('a§') den('b')))]"
+  ],
+  "ours": [
+   "display[oMath(f(num('a§') den('b')))]"
+  ],
+  "ok": true
+ },
+ "right x3 after home": {
+  "area": "navigate",
+  "word": [
+   "display[oMath(f(num('a') den('§b')))]"
+  ],
+  "ours": [
+   "display[oMath(f(num('a') den('§b')))]"
+  ],
+  "ok": true
+ },
+ "leave equation right": {
+  "area": "navigate",
+  "word": [
+   "oMath('x ') '§'"
+  ],
+  "ours": [
+   "oMath('x ') '§'"
+  ],
+  "ok": true
+ },
+ "leave equation left": {
+  "area": "navigate",
+  "word": [
+   "'§' oMath('x ')"
+  ],
+  "ours": [
+   "'§' oMath('x ')"
+  ],
+  "ok": true
+ },
+ "ctrl right": {
+  "area": "navigate",
+  "word": [
+   "display[oMath('ab§+cd ')]"
+  ],
+  "ours": [
+   "display[oMath('ab§+cd ')]"
+  ],
+  "ok": true
+ },
+ "backspace after fraction": {
+  "area": "delete",
+  "word": [
+   "display[oMath('§')]"
+  ],
+  "ours": [
+   "display[oMath('§')]"
+  ],
+  "ok": true
+ },
+ "backspace twice after fraction": {
+  "area": "delete",
+  "word": [
+   "'§'"
+  ],
+  "ours": [
+   "'§'"
+  ],
+  "ok": true
+ },
+ "backspace after power": {
+  "area": "delete",
+  "word": [
+   "display[oMath('§')]"
+  ],
+  "ours": [
+   "display[oMath('§')]"
+  ],
+  "ok": true
+ },
+ "backspace twice after power": {
+  "area": "delete",
+  "word": [
+   "'§'"
+  ],
+  "ours": [
+   "'§'"
+  ],
+  "ok": true
+ },
+ "backspace in denominator start": {
+  "area": "delete",
+  "word": [
+   "display[oMath('§')]"
+  ],
+  "ours": [
+   "display[oMath('§')]"
+  ],
+  "ok": true
+ },
+ "backspace in empty numerator": {
+  "area": "delete",
+  "word": [
+   "display[oMath('§')]"
+  ],
+  "ours": [
+   "display[oMath('§')]"
+  ],
+  "ok": true
+ },
+ "delete before fraction": {
+  "area": "delete",
+  "word": [
+   "display[oMath('§')]"
+  ],
+  "ours": [
+   "display[oMath('§')]"
+  ],
+  "ok": true
+ },
+ "delete twice before fraction": {
+  "area": "delete",
+  "word": [
+   "'§'"
+  ],
+  "ours": [
+   "'§'"
+  ],
+  "ok": true
+ },
+ "backspace letter": {
+  "area": "delete",
+  "word": [
+   "display[oMath('ab§')]"
+  ],
+  "ours": [
+   "display[oMath('ab§')]"
+  ],
+  "ok": true
+ },
+ "shift left over fraction": {
+  "area": "select",
+  "word": [
+   "display[oMath('§')]"
+  ],
+  "ours": [
+   "display[oMath('§')]"
+  ],
+  "ok": true
+ },
+ "shift left twice": {
+  "area": "select",
+  "word": [
+   "display[oMath('x§')]"
+  ],
+  "ours": [
+   "display[oMath('x§')]"
+  ],
+  "ok": true
+ },
+ "shift home": {
+  "area": "select",
+  "word": [
+   "display[oMath('§')]"
+  ],
+  "ours": [
+   "display[oMath('§')]"
+  ],
+  "ok": true
+ },
+ "shift right in numerator": {
+  "area": "select",
+  "word": [
+   "display[oMath(f(num('a§') den('c')))]"
+  ],
+  "ours": [
+   "display[oMath(f(num('a§') den('c')))]"
+  ],
+  "ok": true
+ },
+ "shift right out of numerator": {
+  "area": "select",
+  "word": [
+   "display[oMath('§')]"
+  ],
+  "ours": [
+   "display[oMath('§')]"
+  ],
+  "ok": true
+ },
+ "enter in equation": {
+  "area": "enter",
+  "word": [
+   "display[oMath('x=1')]",
+   "'§'"
+  ],
+  "ours": [
+   "display[oMath('x=1')]",
+   "'§'"
+  ],
+  "ok": true
+ },
+ "shift enter in equation": {
+  "area": "enter",
+  "word": [
+   "display[oMath('x=1') | oMath('§')]"
+  ],
+  "ours": [
+   "display[oMath('x=1') | oMath('§')]"
+  ],
+  "ok": true
+ },
+ "nth root": {
+  "area": "buildup",
+  "word": [
+   "display[oMath(rad(deg('3') e('x')) '§')]"
+  ],
+  "ours": [
+   "display[oMath(rad(deg('3') e('x')) '§')]"
+  ],
+  "ok": true
+ },
+ "abs then power": {
+  "area": "buildup",
+  "word": [
+   "display[oMath(sSup(e(d(@begChr=|,endChr=| e('x'))) sup('2')) '§')]"
+  ],
+  "ours": [
+   "display[oMath(sSup(e(d(@begChr=|,endChr=| e('x'))) sup('2')) '§')]"
+  ],
+  "ok": true
+ },
+ "power of fraction": {
+  "area": "buildup",
+  "word": [
+   "display[oMath(sSup(e(d(e(f(num('a') den('b'))))) sup('2')) '§')]"
+  ],
+  "ours": [
+   "display[oMath(sSup(e(d(e(f(num('a') den('b'))))) sup('2')) '§')]"
+  ],
+  "ok": true
+ },
+ "fraction of power": {
+  "area": "buildup",
+  "word": [
+   "display[oMath(f(num(sSup(e('a') sup('2'))) den('b')) '§')]"
+  ],
+  "ours": [
+   "display[oMath(f(num(sSup(e('a') sup('2'))) den('b')) '§')]"
+  ],
+  "ok": true
+ },
+ "root in fraction": {
+  "area": "buildup",
+  "word": [
+   "display[oMath(f(num(rad(@degHide=1 deg() e('x'))) den('2')) '§')]"
+  ],
+  "ours": [
+   "display[oMath(f(num(rad(@degHide=1 deg() e('x'))) den('2')) '§')]"
+  ],
+  "ok": true
+ },
+ "product": {
+  "area": "buildup",
+  "word": [
+   "display[oMath(nary(@chr=∏ sub('k=1') sup('n') e('k §')))]"
+  ],
+  "ours": [
+   "display[oMath(nary(@chr=∏ sub('k=1') sup('n') e('k §')))]"
+  ],
+  "ok": true
+ },
+ "limit": {
+  "area": "buildup",
+  "word": [
+   "display[oMath(func(fName(limLow(e(r[sty=p]'lim') lim('n→∞'))) e(sSub(e('a') sub('n')) '§')))]"
+  ],
+  "ours": [
+   "display[oMath(func(fName(limLow(e(r[sty=p]'lim') lim('n→∞'))) e(sSub(e('a') sub('n')) '§')))]"
+  ],
+  "ok": true
+ },
+ "vector accent": {
+  "area": "buildup",
+  "word": [
+   "display[oMath(acc(@chr=⃗ e('v')) '§')]"
+  ],
+  "ours": [
+   "display[oMath(acc(@chr=⃗ e('v')) '§')]"
+  ],
+  "ok": true
+ },
+ "hat accent": {
+  "area": "buildup",
+  "word": [
+   "display[oMath(acc(e('x')) '§')]"
+  ],
+  "ours": [
+   "display[oMath(acc(e('x')) '§')]"
+  ],
+  "ok": true
+ },
+ "double integral": {
+  "area": "buildup",
+  "word": [
+   "display[oMath(nary(@chr=∬,supHide=1 sub('D') sup() e('f dA §')))]"
+  ],
+  "ours": [
+   "display[oMath(nary(@chr=∬,supHide=1 sub('D') sup() e('f dA §')))]"
+  ],
+  "ok": true
+ },
+ "plus minus": {
+  "area": "autocorrect",
+  "word": [
+   "display[oMath('x=±1 §')]"
+  ],
+  "ours": [
+   "display[oMath('x=±1 §')]"
+  ],
+  "ok": true
+ },
+ "capital delta": {
+  "area": "autocorrect",
+  "word": [
+   "display[oMath(r[sty=p]'Δ' 'x §')]"
+  ],
+  "ours": [
+   "display[oMath(r[sty=p]'Δ' 'x §')]"
+  ],
+  "ok": true
+ },
+ "dots": {
+  "area": "autocorrect",
+  "word": [
+   "display[oMath('1,2,…,n §')]"
+  ],
+  "ours": [
+   "display[oMath('1,2,…,n §')]"
+  ],
+  "ok": true
+ },
+ "cos of fraction": {
+  "area": "buildup",
+  "word": [
+   "display[oMath(func(fName(r[sty=p]'cos') e(f(num('x') den('2')) '§')))]"
+  ],
+  "ours": [
+   "display[oMath(func(fName(r[sty=p]'cos') e(f(num('x') den('2')) '§')))]"
+  ],
+  "ok": true
+ },
+ "power down to base": {
+  "area": "navigate",
+  "word": [
+   "display[oMath(sSup(e('x§') sup('2')))]"
+  ],
+  "ours": [
+   "display[oMath(sSup(e('x§') sup('2')))]"
+  ],
+  "ok": true
+ },
+ "power up from base": {
+  "area": "navigate",
+  "word": [
+   "display[oMath(sSup(e('x') sup('§2')))]"
+  ],
+  "ours": [
+   "display[oMath(sSup(e('x') sup('§2')))]"
+  ],
+  "ok": true
+ },
+ "sub sup up": {
+  "area": "navigate",
+  "word": [
+   "display[oMath(sSubSup(e('x§') sub('1') sup('2')))]"
+  ],
+  "ours": [
+   "display[oMath(sSubSup(e('x§') sub('1') sup('2')))]"
+  ],
+  "ok": true
+ },
+ "sub sup down": {
+  "area": "navigate",
+  "word": [
+   "display[oMath(sSubSup(e('x§') sub('1') sup('2')))]"
+  ],
+  "ours": [
+   "display[oMath(sSubSup(e('x§') sub('1') sup('2')))]"
+  ],
+  "ok": true
+ },
+ "sum up from body": {
+  "area": "navigate",
+  "word": [
+   "display[oMath(nary(@chr=∑ sub('i=1') sup('n') e('i §')))]"
+  ],
+  "ours": [
+   "display[oMath(nary(@chr=∑ sub('i=1') sup('n') e('i §')))]"
+  ],
+  "ok": true
+ },
+ "sum down from body": {
+  "area": "navigate",
+  "word": [
+   "display[oMath(nary(@chr=∑ sub('i=1') sup('n') e('i §')))]"
+  ],
+  "ours": [
+   "display[oMath(nary(@chr=∑ sub('i=1') sup('n') e('i §')))]"
+  ],
+  "ok": true
+ },
+ "sum left x3": {
+  "area": "navigate",
+  "word": [
+   "display[oMath(nary(@chr=∑ sub('i=1') sup('n§') e('i ')))]"
+  ],
+  "ours": [
+   "display[oMath(nary(@chr=∑ sub('i=1') sup('n§') e('i ')))]"
+  ],
+  "ok": true
+ },
+ "matrix right x3": {
+  "area": "navigate",
+  "word": [
+   "display[oMath(m(mr(e('a') e('§b')) mr(e('c') e('d'))))]"
+  ],
+  "ours": [
+   "display[oMath(m(mr(e('a') e('§b')) mr(e('c') e('d'))))]"
+  ],
+  "ok": true
+ },
+ "matrix down": {
+  "area": "navigate",
+  "word": [
+   "display[oMath(m(mr(e('a') e('b')) mr(e('c§') e('d'))))]"
+  ],
+  "ours": [
+   "display[oMath(m(mr(e('a') e('b')) mr(e('c§') e('d'))))]"
+  ],
+  "ok": true
+ },
+ "brackets left x2": {
+  "area": "navigate",
+  "word": [
+   "display[oMath(d(e('a+§b')))]"
+  ],
+  "ours": [
+   "display[oMath(d(e('a+§b')))]"
+  ],
+  "ok": true
+ },
+ "ctrl left": {
+  "area": "navigate",
+  "word": [
+   "display[oMath('ab+§cd ')]"
+  ],
+  "ours": [
+   "display[oMath('ab+§cd ')]"
+  ],
+  "ok": true
+ },
+ "type after fraction": {
+  "area": "type",
+  "word": [
+   "display[oMath(f(num('a') den('bc§')))]"
+  ],
+  "ours": [
+   "display[oMath(f(num('a') den('bc§')))]"
+  ],
+  "ok": true
+ },
+ "type into numerator": {
+  "area": "type",
+  "word": [
+   "display[oMath(f(num('ax§') den('b')))]"
+  ],
+  "ours": [
+   "display[oMath(f(num('ax§') den('b')))]"
+  ],
+  "ok": true
+ },
+ "type over selection": {
+  "area": "select",
+  "word": [
+   "display[oMath('ax§')]"
+  ],
+  "ours": [
+   "display[oMath('ax§')]"
+  ],
+  "ok": true
+ },
+ "shift end": {
+  "area": "select",
+  "word": [
+   "display[oMath('§')]"
+  ],
+  "ours": [
+   "display[oMath('§')]"
+  ],
+  "ok": true
+ },
+ "shift right over fraction": {
+  "area": "select",
+  "word": [
+   "display[oMath('§')]"
+  ],
+  "ours": [
+   "display[oMath('§')]"
+  ],
+  "ok": true
+ },
+ "delete in middle": {
+  "area": "delete",
+  "word": [
+   "display[oMath('a§c')]"
+  ],
+  "ours": [
+   "display[oMath('a§c')]"
+  ],
+  "ok": true
+ },
+ "backspace after sum": {
+  "area": "delete",
+  "word": [
+   "display[oMath('§')]"
+  ],
+  "ours": [
+   "display[oMath('§')]"
+  ],
+  "ok": true
+ },
+ "backspace into root": {
+  "area": "delete",
+  "word": [
+   "display[oMath('§')]"
+  ],
+  "ours": [
+   "display[oMath('§')]"
+  ],
+  "ok": true
+ }
+}

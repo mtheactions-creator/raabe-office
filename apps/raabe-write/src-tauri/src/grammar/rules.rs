@@ -78,7 +78,7 @@ pub struct MatchRef {
 #[serde(untagged)]
 pub enum Piece {
     Text(String),
-    Match { m: MatchRef },
+    Match { m: Box<MatchRef> },
     Sugg { s: Vec<Piece> },
 }
 
@@ -262,7 +262,8 @@ fn word_list(re: &str) -> Option<Vec<String>> {
     Some(out)
 }
 
-fn compile_new(re: &str, case_sensitive: bool) -> Option<Regex> {
+/// Java's names for classes and flags as the regex crate and our matcher read them.
+fn rewrite(re: &str) -> String {
     let mut s = re.to_string();
     for (a, b) in [("\\p{Punct}", "[\\p{P}\\p{S}]"), ("\\p{Upper}", "\\p{Lu}"), ("\\p{Lower}", "\\p{Ll}"), ("\\p{Alpha}", "\\p{L}"),
         ("\\p{Digit}", "\\d"), ("\\p{IsAlphabetic}", "\\p{Alphabetic}"), ("\\p{IsLetter}", "\\p{L}"), ("\\p{javaLowerCase}", "\\p{Ll}"),
@@ -270,6 +271,11 @@ fn compile_new(re: &str, case_sensitive: bool) -> Option<Regex> {
         ("*+", "*"), ("++", "+"), ("?+", "?")] {
         s = s.replace(a, b);
     }
+    s
+}
+
+fn compile_new(re: &str, case_sensitive: bool) -> Option<Regex> {
+    let mut s = rewrite(re);
     let flags = if case_sensitive { "" } else { "(?i)" };
     // Java's CASE_INSENSITIVE leaves Unicode properties alone (\p{Lu} stays upper case).
     if !case_sensitive {
@@ -280,20 +286,118 @@ fn compile_new(re: &str, case_sensitive: bool) -> Option<Regex> {
     Regex::new(&format!("^{flags}(?:{s})$")).ok()
 }
 
+/// A token or tag condition's expression: our small matcher where it can (a few hundred bytes
+/// each), fancy-regex otherwise (14-20 KB each).
+static FANCY: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
+
+/// How many conditions needed fancy-regex so far (for measuring).
+pub fn fancy_count() -> usize {
+    FANCY.load(std::sync::atomic::Ordering::Relaxed)
+}
+
+pub enum Matcher {
+    Mini(std::sync::Arc<Adaptive>),
+    Fancy(Box<Regex>),
+}
+
+/// Our matcher first; an expression used very often (number words tested on every token) gets
+/// the regex crate's faster automaton as well, so only the few hundred hot ones pay its memory.
+pub struct Adaptive {
+    mini: super::minire::MiniRe,
+    src: Box<str>,
+    cs: bool,
+    calls: std::sync::atomic::AtomicU32,
+    fast: std::sync::OnceLock<Option<Regex>>,
+}
+
+impl Adaptive {
+    fn is_match(&self, s: &str) -> bool {
+        if let Some(r) = self.fast.get() {
+            if let Some(r) = r {
+                return r.is_match(s).unwrap_or(false);
+            }
+            return self.mini.is_match(s);
+        }
+        if self.calls.fetch_add(1, std::sync::atomic::Ordering::Relaxed) > 4000 {
+            let _ = self.fast.set(compile(&self.src, self.cs));
+        }
+        self.mini.is_match(s)
+    }
+}
+
+type Shared<T> = std::cell::RefCell<std::collections::HashMap<(String, bool), std::sync::Arc<T>>>;
+
+thread_local! {
+    // Rules repeat the same expressions and word lists (LanguageTool's entities): one copy each.
+    static MINI: Shared<Adaptive> = std::cell::RefCell::new(std::collections::HashMap::new());
+    static SETS: std::cell::RefCell<std::collections::HashMap<(String, bool), Option<(WordSet, bool)>>> = std::cell::RefCell::new(std::collections::HashMap::new());
+}
+
+/// Tests compare our matcher with fancy-regex alone (GRAMMAR_NO_MINI=1): the same findings.
+fn no_mini() -> bool {
+    static N: std::sync::OnceLock<bool> = std::sync::OnceLock::new();
+    *N.get_or_init(|| std::env::var_os("GRAMMAR_NO_MINI").is_some())
+}
+
+type WordSet = std::sync::Arc<std::collections::HashSet<String>>;
+
+/// The words an expression matches when it is a list of words or has few matches
+/// ("aller|venir", "para[iî]tre", "chats?"), lower-cased unless case-sensitive; one shared
+/// set per expression. Also returns whether the set is case-sensitive ("(?-i)OpenGL|WebGL" is,
+/// whatever the token says).
+fn shared_words(re: &str, cs: bool) -> Option<(WordSet, bool)> {
+    let k = (re.to_string(), cs);
+    if let Some(s) = SETS.with(|m| m.borrow().get(&k).cloned()) {
+        return s;
+    }
+    let words = word_list(re).map(|w| (w, !cs));
+    let words = if no_mini() { words } else { words.or_else(|| super::minire::finite(&rewrite(re), !cs, 20_000)) };
+    let set = words.map(|(w, ci)| (std::sync::Arc::new(w.into_iter().map(|x| if ci { x.to_lowercase() } else { x }).collect()), !ci));
+    SETS.with(|m| m.borrow_mut().insert(k, set.clone()));
+    set
+}
+
+impl Matcher {
+    pub fn new(re: &str, case_sensitive: bool) -> Option<Matcher> {
+        let k = (re.to_string(), case_sensitive);
+        if let Some(m) = MINI.with(|c| c.borrow().get(&k).cloned()) {
+            return Some(Matcher::Mini(m));
+        }
+        match if no_mini() { None } else { super::minire::MiniRe::new(&rewrite(re), !case_sensitive) } {
+            Some(m) => {
+                let m = std::sync::Arc::new(Adaptive { mini: m, src: re.into(), cs: case_sensitive, calls: 0.into(), fast: std::sync::OnceLock::new() });
+                MINI.with(|c| c.borrow_mut().insert(k, m.clone()));
+                Some(Matcher::Mini(m))
+            }
+            None => {
+                FANCY.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+                compile(re, case_sensitive).map(|r| Matcher::Fancy(Box::new(r)))
+            }
+        }
+    }
+
+    pub fn is_match(&self, s: &str) -> bool {
+        match self {
+            Matcher::Mini(m) => m.is_match(s),
+            Matcher::Fancy(r) => r.is_match(s).unwrap_or(false),
+        }
+    }
+}
+
 enum TextCond {
     Any,
     Lit(String, bool),
-    Set(std::collections::HashSet<String>, bool),
-    Re(Regex),
+    Set(std::sync::Arc<std::collections::HashSet<String>>, bool),
+    Re(Matcher),
 }
 
 impl TextCond {
     fn new(t: &Option<String>, re: bool, cs: bool) -> Option<TextCond> {
         match t {
             None => Some(TextCond::Any),
-            Some(t) if re => match word_list(t) {
-                Some(words) => Some(TextCond::Set(words.into_iter().map(|w| if cs { w } else { w.to_lowercase() }).collect(), cs)),
-                None => compile(t, cs).map(TextCond::Re),
+            Some(t) if re => match shared_words(t, cs) {
+                Some((words, cs)) => Some(TextCond::Set(words, cs)),
+                None => Matcher::new(t, cs).map(TextCond::Re),
             },
             Some(t) => Some(TextCond::Lit(if cs { t.clone() } else { t.to_lowercase() }, cs)),
         }
@@ -304,7 +408,7 @@ impl TextCond {
             TextCond::Any => true,
             TextCond::Lit(l, cs) => if *cs { s == l } else { lower == l },
             TextCond::Set(set, cs) => set.contains(if *cs { s } else { lower }),
-            TextCond::Re(r) => r.is_match(s).unwrap_or(false),
+            TextCond::Re(r) => r.is_match(s),
         }
     }
 }
@@ -312,17 +416,18 @@ impl TextCond {
 enum PosCond {
     Any,
     Lit(String),
-    Set(std::collections::HashSet<String>),
-    Re(Regex),
+    Set(std::sync::Arc<std::collections::HashSet<String>>),
+    Re(Matcher),
 }
 
 impl PosCond {
     fn new(pos: &Option<String>, pre: bool) -> Option<PosCond> {
         match pos {
             None => Some(PosCond::Any),
-            Some(p) if pre => match word_list(p) {
-                Some(tags) => Some(PosCond::Set(tags.into_iter().collect())),
-                None => compile(p, true).map(PosCond::Re),
+            Some(p) if pre => match shared_words(p, true) {
+                Some((tags, true)) => Some(PosCond::Set(tags)),
+                Some(_) => Matcher::new(p, true).map(PosCond::Re),
+                None => Matcher::new(p, true).map(PosCond::Re),
             },
             Some(p) => Some(PosCond::Lit(p.clone())),
         }
@@ -333,7 +438,7 @@ impl PosCond {
             PosCond::Any => true,
             PosCond::Lit(l) => tag == l,
             PosCond::Set(set) => set.contains(tag),
-            PosCond::Re(r) => r.is_match(tag).unwrap_or(false),
+            PosCond::Re(r) => r.is_match(tag),
         }
     }
 }
@@ -392,16 +497,17 @@ impl Cond {
 
 struct PTok {
     cond: Cond,
-    exc_cur: Vec<Cond>,
-    exc_next: Vec<Cond>,
-    exc_prev: Vec<Cond>,
-    and_: Vec<PTok>,
-    or_: Vec<PTok>,
+    // Boxed slices: most tokens have none of these, and the rules hold some 100,000 tokens.
+    exc_cur: Box<[Cond]>,
+    exc_next: Box<[Cond]>,
+    exc_prev: Box<[Cond]>,
+    and_: Box<[PTok]>,
+    or_: Box<[PTok]>,
     skip: i32,
     min: usize,
     max: usize,
     /// A literal the token needs (lower case), for skipping rules quickly.
-    literal: Option<String>,
+    literal: Option<Box<str>>,
     /// The same word as an earlier pattern token (0-based) and whether lemmas count.
     backref: Option<(usize, bool, bool)>,
     /// The unify group the token belongs to.
@@ -420,17 +526,17 @@ impl PTok {
                 _ => cur.push(c),
             }
         }
-        let and_ = j.and_.iter().map(PTok::new).collect::<Option<Vec<_>>>()?;
-        let or_ = j.or_.iter().map(PTok::new).collect::<Option<Vec<_>>>()?;
+        let and_ = j.and_.iter().map(PTok::new).collect::<Option<Box<[_]>>>()?;
+        let or_ = j.or_.iter().map(PTok::new).collect::<Option<Box<[_]>>>()?;
         let min = j.min.unwrap_or(1).max(0) as usize;
         let max = match j.max { Some(m) if m < 0 => usize::MAX, Some(m) => m.max(0) as usize, None => min.max(1) };
         let literal = match (&j.t, j.re, j.neg, j.inf) {
-            (Some(t), false, false, false) if min > 0 => Some(t.to_lowercase()),
+            (Some(t), false, false, false) if min > 0 => Some(t.to_lowercase().into_boxed_str()),
             _ => None,
         };
         // Inside patterns LanguageTool counts from 0 (in messages from 1).
         let backref = j.backref.map(|n| (n, j.inf, j.cs));
-        Some(PTok { cond, exc_cur: cur, exc_next: next, exc_prev: prev, and_, or_, skip: j.skip.unwrap_or(0), min, max, literal, backref, group: j.u })
+        Some(PTok { cond, exc_cur: cur.into_boxed_slice(), exc_next: next.into_boxed_slice(), exc_prev: prev.into_boxed_slice(), and_, or_, skip: j.skip.unwrap_or(0), min, max, literal, backref, group: j.u })
     }
 
     fn matches(&self, toks: &[ATok], i: usize) -> bool {
@@ -565,7 +671,7 @@ impl Pattern {
 
     /// Literals the pattern needs (all of them must be in the sentence).
     fn literals(&self) -> Vec<String> {
-        self.toks.iter().filter_map(|t| t.literal.clone()).collect()
+        self.toks.iter().filter_map(|t| t.literal.as_deref().map(str::to_string)).collect()
     }
 }
 
@@ -574,7 +680,7 @@ pub struct Rule {
     pub category: String,
     pub name: String,
     pattern: Option<Pattern>,
-    regex: Option<(Regex, usize)>,
+    regex: Option<Box<(Regex, usize)>>,
     ma: usize,
     mb: usize,
     anti: Vec<Pattern>,
@@ -622,7 +728,7 @@ impl Rule {
                 for (a, b) in [("\\p{Punct}", "[\\p{P}\\p{S}]"), ("(?iu)", "(?i)"), ("(?u)", "")] {
                     s = s.replace(a, b);
                 }
-                Some((Regex::new(&format!("{flags}{s}")).ok()?, r.mark))
+                Some(Box::new((Regex::new(&format!("{flags}{s}")).ok()?, r.mark)))
             }
             None => None,
         };
@@ -753,7 +859,7 @@ impl Rule {
 
     /// The rule's findings in a sentence (tokens with SENT_START at 0; `text` is the sentence).
     pub fn check(&self, toks: &[ATok], chars: &[char], sentence: (usize, usize), out: &mut Vec<Finding>) {
-        if let Some((re, mark)) = &self.regex {
+        if let Some((re, mark)) = self.regex.as_deref() {
             let text: String = chars[sentence.0..sentence.1].iter().collect();
             let offsets: Vec<usize> = text.char_indices().map(|(b, _)| b).chain(std::iter::once(text.len())).collect();
             let char_at = |byte: usize| offsets.iter().position(|&b| b >= byte).unwrap_or(offsets.len() - 1);
