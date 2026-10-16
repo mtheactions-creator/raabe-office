@@ -253,6 +253,10 @@ def perform(side, case: Case, docs: dict[str, Path], out: Path) -> dict:
         elif op == "click":
             x, y = _point(side, step[1])
             winapi.click(x, y, count=step[2] if len(step) > 2 else 1, modifiers=step[3] if len(step) > 3 else "")
+        elif op == "rclick":
+            x, y = _point(side, step[1])
+            winapi.right_click(x, y)
+            time.sleep(0.5)
         elif op == "drag":
             x1, y1 = _point(side, step[1])
             x2, y2 = _point(side, step[2])

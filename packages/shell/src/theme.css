@@ -662,6 +662,10 @@ body.touch .qat button { height: 36px; min-width: 36px; }
 /* ----- equations (Formel) ------------------------------------------------------------------ */
 
 /* Formel: Word's equation box while an equation is edited (frame, move handle, options arrow). */
+/* Word makes scripts smaller twice (73 %, then 59 %) and no further: a script inside a script
+   inside a script keeps the second size (measured, probe_math_sizes.py), where MathML would
+   shrink it again. */
+:is(msub > :nth-child(2), msup > :nth-child(2), msubsup > :nth-child(n+2), munder > :nth-child(2), mover > :nth-child(2), munderover > :nth-child(n+2), mmultiscripts > :not(:first-child)) :is(msub > :nth-child(2), msup > :nth-child(2), msubsup > :nth-child(n+2), munder > :nth-child(2), mover > :nth-child(2), munderover > :nth-child(n+2), mmultiscripts > :not(:first-child)) :is(msub > :nth-child(2), msup > :nth-child(2), msubsup > :nth-child(n+2), munder > :nth-child(2), mover > :nth-child(2), munderover > :nth-child(n+2), mmultiscripts > :not(:first-child)) { math-depth: 2; }
 .math-session { position: absolute; inset: 0; pointer-events: none; }
 .math-session.back { z-index: 1; }
 .math-session.front { z-index: 5; }

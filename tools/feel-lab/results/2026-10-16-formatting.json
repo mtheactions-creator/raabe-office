@@ -1,0 +1,184 @@
+{
+  "meta": {
+    "date": "2026-10-16T11:36:32",
+    "test": "formatting"
+  },
+  "results": {
+    "bold, caret inside a word": {
+      "ok": true,
+      "problems": []
+    },
+    "bold at a word end, then type": {
+      "ok": true,
+      "problems": []
+    },
+    "bold on a selection, twice": {
+      "ok": true,
+      "problems": []
+    },
+    "bold on a partly bold selection": {
+      "ok": true,
+      "problems": []
+    },
+    "italic and underline inside a word": {
+      "ok": true,
+      "problems": []
+    },
+    "double underline on a selection": {
+      "ok": true,
+      "problems": []
+    },
+    "word underline on a selection": {
+      "ok": true,
+      "problems": []
+    },
+    "hidden, caret inside a word": {
+      "ok": true,
+      "problems": []
+    },
+    "grow font twice on a selection": {
+      "ok": true,
+      "problems": []
+    },
+    "shrink font, caret inside a word": {
+      "ok": true,
+      "problems": []
+    },
+    "grow one point, caret inside a word": {
+      "ok": true,
+      "problems": []
+    },
+    "shrink one point on a selection": {
+      "ok": true,
+      "problems": []
+    },
+    "bold+italic then Strg+Leertaste": {
+      "ok": true,
+      "problems": []
+    },
+    "Strg+Leertaste at the caret, then type": {
+      "ok": true,
+      "problems": []
+    },
+    "all caps on a selection": {
+      "ok": true,
+      "problems": []
+    },
+    "small caps, caret inside a word": {
+      "ok": true,
+      "problems": []
+    },
+    "subscript on one character": {
+      "ok": true,
+      "problems": []
+    },
+    "change case once": {
+      "ok": true,
+      "problems": []
+    },
+    "change case twice": {
+      "ok": true,
+      "problems": []
+    },
+    "change case three times": {
+      "ok": true,
+      "problems": []
+    },
+    "change case, caret inside a word": {
+      "ok": true,
+      "problems": []
+    },
+    "change case on a sentence": {
+      "ok": true,
+      "problems": []
+    },
+    "bold at a paragraph end, Enter, type": {
+      "ok": true,
+      "problems": []
+    },
+    "bold paragraph, Enter at its end, type": {
+      "ok": true,
+      "problems": []
+    },
+    "bold across a paragraph end": {
+      "ok": true,
+      "problems": []
+    },
+    "type before a bold word": {
+      "ok": true,
+      "problems": []
+    },
+    "type after a bold word": {
+      "ok": true,
+      "problems": []
+    },
+    "type at a paragraph start before bold": {
+      "ok": true,
+      "problems": []
+    },
+    "heading 1, Enter at its end, type": {
+      "ok": true,
+      "problems": []
+    },
+    "Standard style on the heading": {
+      "ok": true,
+      "problems": []
+    },
+    "Backspace joins a paragraph to the heading": {
+      "ok": true,
+      "problems": []
+    },
+    "Delete at the heading end": {
+      "ok": true,
+      "problems": []
+    },
+    "Backspace joins two body paragraphs": {
+      "ok": true,
+      "problems": []
+    },
+    "centre": {
+      "ok": true,
+      "problems": []
+    },
+    "right, then Strg+Q": {
+      "ok": true,
+      "problems": []
+    },
+    "justify": {
+      "ok": true,
+      "problems": []
+    },
+    "indent twice": {
+      "ok": true,
+      "problems": []
+    },
+    "indent twice, unindent once": {
+      "ok": true,
+      "problems": []
+    },
+    "indent over two paragraphs": {
+      "ok": true,
+      "problems": []
+    },
+    "hanging indent twice": {
+      "ok": true,
+      "problems": []
+    },
+    "hanging indent, unhang": {
+      "ok": true,
+      "problems": []
+    },
+    "double line spacing": {
+      "ok": true,
+      "problems": []
+    },
+    "1.5 line spacing": {
+      "ok": true,
+      "problems": []
+    },
+    "single line spacing": {
+      "ok": true,
+      "problems": []
+    }
+  }
+}

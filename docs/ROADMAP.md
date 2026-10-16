@@ -12,11 +12,29 @@ owner's explicit go-ahead.
 | 4 | RaabeWrite school features: footnotes, table of contents, comments, track changes, formula editor, Raabeschule templates | done 2026-10-13 ([report](reports/2026-10-13-step4-school.md)): Word updates our tables of contents to the same page numbers, layout identical to Word in eleven documents (682/682 lines), smoke tests 43/43, 28/28, 41/41 |
 | 4b | Word parity for RaabeWrite (D-038): feel basics and audit tools, tables/lists/clipboard, pictures and shapes, own formula editor, all remaining non-deferred ribbon commands, French and Spanish, own grammar checker | done 2026-10-15 ([report](reports/2026-10-15-step4b-word-parity.md)): every non-deferred ribbon command works; 960/965 line starts in 19 Word-built documents, behaviour catalogue 192/193 (the 193rd a Word glitch), formula editor 114/114, grammar in four languages finding more school errors than Word with fewer false alarms, smoke tests 41/41, 28/28, 43/43, 25/25 |
 | 4c | Polish for RaabeWrite (D-053): the owner's list after trying Step 4b (pictures, formulas, tables, cursors, Formatvorlagen) and an audit of the whole app for the same kinds of difference | done 2026-10-15 ([report](reports/2026-10-15-step4c-polish.md)): the owner's list and an audit of the whole app (tooltips, labels, menus and context menus against Word, Livevorschau, double-clicks, panes, clipboard); 1216/1221 line starts in 22 Word-built documents, behaviour catalogue 202/203 (the 203rd a Word glitch), formula editor 146/146, smoke tests 41/41, 28/28, 43/43, 25/25 |
+| 4d | Second polish list from the owner after trying Step 4c (D-059): pictures by drag and drop, text boxes and shapes while edited, the caret, ribbon menus, tables and the border pen, formulas | done 2026-10-16: the owner's list as recorded in Word (D-059); 1216/1221 line starts in 22 Word-built documents (unchanged), behaviour catalogue 206/207 (the 207th a Word glitch), formula editor 152/152, smoke tests 41/41, 28/28, 43/43, 25/25 |
 | 5 | Pilot: one class uses RaabeWrite in lessons; fix what real use reveals | |
 | 6 | iPad build of RaabeWrite (touch polish, Files app integration, distribution) | |
 | 7 | RaabeCalc | |
 | 8 | RaabePresent | |
 | 9 | Optional features: read aloud, translator, dictation, ink | |
+
+## Step 4d: Second polish list
+
+Agreed with the owner on 2026-10-16 after trying Step 4c (D-059), in one run with real input.
+The owner's list: pictures dropped from Explorer; text boxes and shapes while their text is
+edited (pointers, yellow handles, moving by the frame); a caret "afterglow" on fast Rücktaste;
+ribbon tabs jumping and chevron menus that do not close on a second press; tables (right-click
+on selected cells, whole table vs. cells, typing over cells, the layout handle, at most 14
+Tabellenformatvorlagen, the border pen's lines and exit, gridlines only while the pen is out);
+formulas ("/" + space alone and after one operand, script sizes).
+
+**Done 2026-10-16**: everything on the list as recorded in Word or decided with the owner
+(D-059); the ribbon jump could not be reproduced (tabs switch only on insertion, double-click
+and header editing). Found on the way: after a right-click and Esc the keys went nowhere, and a
+drag from a cell into the text after the table ended mid-word (both fixed). Behaviour catalogue
+206/207, F3 49/50, F3b 44/44, formula editor 152/152, F4b 1216/1221 (unchanged), F1 32 ms vs
+Word 36 ms, smoke tests all passed.
 
 ## Step 4c: Polish (plan)
 

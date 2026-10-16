@@ -1051,3 +1051,55 @@ Every kind of difference found in A–E was looked for everywhere, by script whe
   past the bottom margin takes the paragraph to the next page, when it fits there (Word, with
   word-wrap.docx: a 110 pt picture near the end of page 2 moved "Eng, freigestellt" to page 3);
   objects in front of or behind the text and aligned ones are not moved.
+
+### D-059 Step 4d: the owner's second list
+Agreed with the owner on 2026-10-16 after trying Step 4c, with four decisions of theirs:
+1. **Ribbon tabs** switch only after inserting an object (and on a double-click), never when
+   the caret enters a table or formula or a picture or shape is clicked (Word's behaviour). The
+   reported jump could not be reproduced in the development page or the release build (clicks
+   into a cell, a picture, a shape and a formula all leave the tab where it was); the code
+   switches tabs only on insertion, double-click and header/footer editing.
+2. **Dotted gridlines** for missing borders are off by default and shown while the border pen
+   or the eraser is out (as in Word); the switch Gitternetzlinien anzeigen in Tabellenlayout
+   stays.
+3. **Whole table vs. cells**: Word draws both the same. We add a marker of our own when the
+   whole table is selected together with text beyond it (a drag past the table, which Entf then
+   deletes as an object): a thin blue frame around the table and the move handle drawn pressed;
+   the text beyond the table is highlighted too.
+4. Step name 4d.
+
+Recorded in Word (`probe_word_table_typing.py`, `probe_math_sizes.py`, catalogue_math.py) and
+built the same way:
+- **Typing over selected cells** (nine cells, a row, a block, the whole table) replaces only the
+  first cell's content and leaves the caret there; the table stays. Before, "a" deleted the
+  table.
+- **Fractions**: "/" + space on its own builds an empty fraction, "a/" + space a fraction with a
+  as numerator and an empty denominator; the caret goes after the fraction. Six new cases,
+  formula catalogue 152/152.
+- **Script sizes**: Word shrinks scripts once to 73 % and once more to 59 %, then no further
+  (11.04 → 8.04 → 6.48 pt). Chromium's MathML went on shrinking (4.68 pt at the third level); CSS
+  clamps the depth at two levels. Now 10.99 / 8.02 / 6.6 pt.
+- **Border pen**: a press on a gridline draws a straight line along it while the mouse is held
+  (the line follows that direction only) and is applied on release, as one undo step; single
+  clicks elsewhere keep the pen, a double-click away from the lines ends it.
+- **Right-click on selected cells** keeps the selection (the click counts as inside it). A
+  right press no longer takes the focus from the text, so typing goes on after Esc closes the
+  context menu (found on the way: the keys went nowhere).
+- **A drag from a cell into the text after the table** selects the whole table and, in the
+  text, whole words (Word's automatic word selection); before, it ended in the middle of a word.
+- **Behaviour catalogue**: four new cases (typing over dragged cells and over a row, right-click
+  on selected cells then Esc and typing, a drag past the table then Entf).
+- **The layout handle** beside the table stays while the pointer travels to it from the table.
+- **Tabellenformatvorlagen** in the ribbon show at most 14 previews, as Word's.
+- **Menus with a chevron** close when their button is pressed again (Office).
+- **Text boxes and shapes while their text is edited**: the handles keep their pointers and
+  work, shapes keep their yellow handles; a text box's frame (a 5 px band) moves it and shows the
+  move pointer, inside it the pointer is the text pointer and a drag selects text. Before, the
+  frame did not move it and a drag on it moved the caret.
+- **The caret** is its own compositor layer moved by a transform, so fast Rücktaste leaves no
+  "afterglow" of earlier positions.
+- **Drag and drop**: selected text is dragged to another place (Strg: copied) with Word's
+  spacing (a space between words, none before punctuation); files from Explorer: pictures go in
+  at the drop point, a .docx opens in a tab of its own. The web view gives the page no file path,
+  so a dropped document is saved with Speichern unter the first time; text from other programs
+  is pasted at the drop point.

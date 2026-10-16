@@ -1,0 +1,1127 @@
+{
+  "meta": {
+    "date": "2026-10-16T10:55:31",
+    "test": "behaviour"
+  },
+  "results": {
+    "summary": {
+      "raabe-write": "49/50"
+    },
+    "cases": [
+      {
+        "case": "dblclick inside word",
+        "word": {
+          "sel": [
+            93,
+            106
+          ],
+          "head": 106,
+          "points": [
+            [
+              1090,
+              522
+            ]
+          ],
+          "selected": "Lichtenergie "
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            93,
+            106
+          ],
+          "head": 106
+        }
+      },
+      {
+        "case": "dblclick word before comma",
+        "word": {
+          "sel": [
+            34,
+            42
+          ],
+          "head": 42,
+          "points": [
+            [
+              562,
+              522
+            ]
+          ],
+          "selected": "Pflanzen"
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            34,
+            42
+          ],
+          "head": 42
+        }
+      },
+      {
+        "case": "dblclick comma",
+        "word": {
+          "sel": [
+            42,
+            44
+          ],
+          "head": 44,
+          "points": [
+            [
+              613,
+              522
+            ]
+          ],
+          "selected": ", "
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            42,
+            44
+          ],
+          "head": 44
+        }
+      },
+      {
+        "case": "dblclick space between words",
+        "word": {
+          "sel": [
+            50,
+            54
+          ],
+          "head": 54,
+          "points": [
+            [
+              714,
+              522
+            ]
+          ],
+          "selected": "und "
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            50,
+            54
+          ],
+          "head": 54
+        }
+      },
+      {
+        "case": "dblclick last word of paragraph",
+        "word": {
+          "sel": [
+            279,
+            288
+          ],
+          "head": 288,
+          "points": [
+            [
+              1061,
+              588
+            ]
+          ],
+          "selected": "vorkommen"
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            279,
+            288
+          ],
+          "head": 288
+        }
+      },
+      {
+        "case": "dblclick word with digits",
+        "word": {
+          "sel": [
+            575,
+            579
+          ],
+          "head": 579,
+          "points": [
+            [
+              827,
+              728
+            ]
+          ],
+          "selected": "CO2 "
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            575,
+            579
+          ],
+          "head": 579
+        }
+      },
+      {
+        "case": "dblclick hyphenated word",
+        "word": {
+          "sel": [
+            734,
+            740
+          ],
+          "head": 740,
+          "points": [
+            [
+              598,
+              794
+            ]
+          ],
+          "selected": "Calvin"
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            734,
+            740
+          ],
+          "head": 740
+        }
+      },
+      {
+        "case": "dblclick word in parentheses",
+        "word": {
+          "sel": [
+            0,
+            0
+          ],
+          "head": 0,
+          "points": [
+            [
+              886,
+              692
+            ]
+          ],
+          "selected": ""
+        },
+        "raabe-write": {
+          "ok": false,
+          "sel": [
+            520,
+            527
+          ],
+          "head": 527,
+          "selected": "Glucose"
+        }
+      },
+      {
+        "case": "dblclick word in quotes",
+        "word": {
+          "sel": [
+            1226,
+            1239
+          ],
+          "head": 1239,
+          "points": [
+            [
+              960,
+              1000
+            ]
+          ],
+          "selected": "Minimumfaktor"
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            1226,
+            1239
+          ],
+          "head": 1239
+        }
+      },
+      {
+        "case": "dblclick umlaut word",
+        "word": {
+          "sel": [
+            24,
+            33
+          ],
+          "head": 33,
+          "points": [
+            [
+              910,
+              475
+            ]
+          ],
+          "selected": "Überblick"
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            24,
+            33
+          ],
+          "head": 33
+        }
+      },
+      {
+        "case": "tripleclick paragraph",
+        "word": {
+          "sel": [
+            290,
+            545
+          ],
+          "head": 545,
+          "points": [
+            [
+              1326,
+              626
+            ]
+          ],
+          "selected": "Für die Photosynthese benötigt die Pflanze Wasser, Kohlenstoffdioxid und Licht. Das Wasser nimmt sie über die Wurzeln auf, das Kohlenstoffdioxid gelangt durch die Spaltöffnungen in das Blatt. Als Produkte entstehen Traubenzucker (Glucose) und Sauerstoff.\n"
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            290,
+            545
+          ],
+          "head": 545
+        }
+      },
+      {
+        "case": "ctrl+click sentence",
+        "word": {
+          "sel": [
+            137,
+            177
+          ],
+          "head": 177,
+          "points": [
+            [
+              666,
+              552
+            ]
+          ],
+          "selected": "Diesen Vorgang nennt man Photosynthese. "
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            137,
+            177
+          ],
+          "head": 177
+        }
+      },
+      {
+        "case": "click right of wrapped line",
+        "word": {
+          "sel": [
+            127,
+            127
+          ],
+          "head": 127,
+          "points": [
+            [
+              1486,
+              522
+            ]
+          ],
+          "selected": ""
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            127,
+            127
+          ],
+          "head": 127
+        }
+      },
+      {
+        "case": "click right of wrapped line, type",
+        "word": {
+          "sel": [
+            128,
+            128
+          ],
+          "head": 128,
+          "points": [
+            [
+              1486,
+              522
+            ]
+          ],
+          "selected": ""
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            128,
+            128
+          ],
+          "head": 128
+        }
+      },
+      {
+        "case": "click right of last line",
+        "word": {
+          "sel": [
+            289,
+            289
+          ],
+          "head": 289,
+          "points": [
+            [
+              1486,
+              588
+            ]
+          ],
+          "selected": ""
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            289,
+            289
+          ],
+          "head": 289
+        }
+      },
+      {
+        "case": "click in paragraph spacing",
+        "word": {
+          "sel": [
+            353,
+            353
+          ],
+          "head": 353,
+          "points": [
+            [
+              1110,
+              620
+            ]
+          ],
+          "selected": ""
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            353,
+            353
+          ],
+          "head": 353
+        }
+      },
+      {
+        "case": "click left margin",
+        "word": {
+          "sel": [
+            34,
+            127
+          ],
+          "head": 127,
+          "points": [
+            [
+              489,
+              522
+            ]
+          ],
+          "selected": "Pflanzen, Algen und einige Bakterien sind in der Lage, aus Lichtenergie chemische Energie zu "
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            34,
+            127
+          ],
+          "head": 127
+        }
+      },
+      {
+        "case": "dblclick left margin",
+        "word": {
+          "sel": [
+            34,
+            290
+          ],
+          "head": 290,
+          "points": [
+            [
+              489,
+              522
+            ]
+          ],
+          "selected": "Pflanzen, Algen und einige Bakterien sind in der Lage, aus Lichtenergie chemische Energie zu gewinnen. Diesen Vorgang nennt man Photosynthese. Er findet in den Chloroplasten statt, kleinen grünen Zellbestandteilen, die vor allem in den Blättern vorkommen.\n"
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            34,
+            290
+          ],
+          "head": 290
+        }
+      },
+      {
+        "case": "shift+click extends",
+        "word": {
+          "sel": [
+            44,
+            65
+          ],
+          "head": 65,
+          "points": [
+            [
+              621,
+              522
+            ],
+            [
+              815,
+              522
+            ]
+          ],
+          "selected": "Algen und einige Bakt"
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            44,
+            65
+          ],
+          "head": 65
+        }
+      },
+      {
+        "case": "drag inside one word",
+        "word": {
+          "sel": [
+            95,
+            101
+          ],
+          "head": 101,
+          "points": [],
+          "selected": "chtene"
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            95,
+            101
+          ],
+          "head": 101
+        }
+      },
+      {
+        "case": "drag forward across words",
+        "word": {
+          "sel": [
+            106,
+            124
+          ],
+          "head": 124,
+          "points": [],
+          "selected": "chemische Energie "
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            106,
+            124
+          ],
+          "head": 124
+        }
+      },
+      {
+        "case": "drag backward across words",
+        "word": {
+          "sel": [
+            106,
+            124
+          ],
+          "head": 106,
+          "points": [],
+          "selected": "chemische Energie "
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            106,
+            124
+          ],
+          "head": 106
+        }
+      },
+      {
+        "case": "drag across paragraphs",
+        "word": {
+          "sel": [
+            137,
+            321
+          ],
+          "head": 321,
+          "points": [],
+          "selected": "Diesen Vorgang nennt man Photosynthese. Er findet in den Chloroplasten statt, kleinen grünen Zellbestandteilen, die vor allem in den Blättern vorkommen.\nFür die Photosynthese benötigt "
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            137,
+            321
+          ],
+          "head": 321
+        }
+      },
+      {
+        "case": "dblclick then drag",
+        "word": {
+          "sel": [
+            44,
+            61
+          ],
+          "head": 61,
+          "points": [],
+          "selected": "Algen und einige "
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            44,
+            61
+          ],
+          "head": 61
+        }
+      },
+      {
+        "case": "ctrl+right from mid-word",
+        "word": {
+          "sel": [
+            106,
+            106
+          ],
+          "head": 106,
+          "points": [],
+          "selected": ""
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            106,
+            106
+          ],
+          "head": 106
+        }
+      },
+      {
+        "case": "ctrl+right x4 over comma",
+        "word": {
+          "sel": [
+            54,
+            54
+          ],
+          "head": 54,
+          "points": [],
+          "selected": ""
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            54,
+            54
+          ],
+          "head": 54
+        }
+      },
+      {
+        "case": "ctrl+left x2",
+        "word": {
+          "sel": [
+            54,
+            54
+          ],
+          "head": 54,
+          "points": [],
+          "selected": ""
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            54,
+            54
+          ],
+          "head": 54
+        }
+      },
+      {
+        "case": "ctrl+shift+right x2",
+        "word": {
+          "sel": [
+            44,
+            54
+          ],
+          "head": 54,
+          "points": [],
+          "selected": "Algen und "
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            44,
+            54
+          ],
+          "head": 54
+        }
+      },
+      {
+        "case": "ctrl+right across paragraph end",
+        "word": {
+          "sel": [
+            290,
+            290
+          ],
+          "head": 290,
+          "points": [],
+          "selected": ""
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            290,
+            290
+          ],
+          "head": 290
+        }
+      },
+      {
+        "case": "ctrl+right over parentheses",
+        "word": {
+          "sel": [
+            527,
+            527
+          ],
+          "head": 527,
+          "points": [],
+          "selected": ""
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            527,
+            527
+          ],
+          "head": 527
+        }
+      },
+      {
+        "case": "end on wrapped line, type",
+        "word": {
+          "sel": [
+            128,
+            128
+          ],
+          "head": 128,
+          "points": [],
+          "selected": ""
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            128,
+            128
+          ],
+          "head": 128
+        }
+      },
+      {
+        "case": "home on wrapped line",
+        "word": {
+          "sel": [
+            34,
+            34
+          ],
+          "head": 34,
+          "points": [],
+          "selected": ""
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            34,
+            34
+          ],
+          "head": 34
+        }
+      },
+      {
+        "case": "shift+end",
+        "word": {
+          "sel": [
+            44,
+            127
+          ],
+          "head": 127,
+          "points": [],
+          "selected": "Algen und einige Bakterien sind in der Lage, aus Lichtenergie chemische Energie zu "
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            44,
+            127
+          ],
+          "head": 127
+        }
+      },
+      {
+        "case": "shift+right x3, shift+left",
+        "word": {
+          "sel": [
+            44,
+            46
+          ],
+          "head": 46,
+          "points": [],
+          "selected": "Al"
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            44,
+            46
+          ],
+          "head": 46
+        }
+      },
+      {
+        "case": "down x3 keeps column",
+        "word": {
+          "sel": [
+            365,
+            365
+          ],
+          "head": 365,
+          "points": [],
+          "selected": ""
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            365,
+            365
+          ],
+          "head": 365
+        }
+      },
+      {
+        "case": "up x2",
+        "word": {
+          "sel": [
+            1253,
+            1253
+          ],
+          "head": 1253,
+          "points": [],
+          "selected": ""
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            1253,
+            1253
+          ],
+          "head": 1253
+        }
+      },
+      {
+        "case": "shift+down",
+        "word": {
+          "sel": [
+            44,
+            135
+          ],
+          "head": 135,
+          "points": [],
+          "selected": "Algen und einige Bakterien sind in der Lage, aus Lichtenergie chemische Energie zu gewinnen"
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            44,
+            135
+          ],
+          "head": 135
+        }
+      },
+      {
+        "case": "ctrl+down x2",
+        "word": {
+          "sel": [
+            545,
+            545
+          ],
+          "head": 545,
+          "points": [],
+          "selected": ""
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            545,
+            545
+          ],
+          "head": 545
+        }
+      },
+      {
+        "case": "ctrl+up mid-paragraph",
+        "word": {
+          "sel": [
+            34,
+            34
+          ],
+          "head": 34,
+          "points": [],
+          "selected": ""
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            34,
+            34
+          ],
+          "head": 34
+        }
+      },
+      {
+        "case": "left collapses selection",
+        "word": {
+          "sel": [
+            44,
+            44
+          ],
+          "head": 44,
+          "points": [],
+          "selected": ""
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            44,
+            44
+          ],
+          "head": 44
+        }
+      },
+      {
+        "case": "right collapses selection",
+        "word": {
+          "sel": [
+            49,
+            49
+          ],
+          "head": 49,
+          "points": [],
+          "selected": ""
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            49,
+            49
+          ],
+          "head": 49
+        }
+      },
+      {
+        "case": "ctrl+a",
+        "word": {
+          "sel": [
+            0,
+            1465
+          ],
+          "head": 1465,
+          "points": [],
+          "selected": "Die Photosynthese – ein Überblick\nPflanzen, Algen und einige Bakterien sind in der Lage, aus Lichtenergie chemische Energie zu gewinnen. Diesen Vorgang nennt man Photosynthese. Er findet in den Chloroplasten statt, kleinen grünen Zellbestandteilen, die vor allem in den Blättern vorkommen.\nFür die Photosynthese benötigt die Pflanze Wasser, Kohlenstoffdioxid und Licht. Das Wasser nimmt sie über die Wurzeln auf, das Kohlenstoffdioxid gelangt durch die Spaltöffnungen in das Blatt. Als Produkte entstehen Traubenzucker (Glucose) und Sauerstoff.\nDie Gesamtgleichung lautet: 6 CO2 + 6 H2O → C6H12O6 + 6 O2. Sie fasst jedoch zahlreiche Einzelschritte zusammen, die man in zwei Abschnitte gliedert: die lichtabhängigen Reaktionen und den Calvin-Zyklus.\nIn den lichtabhängigen Reaktionen wird Wasser gespalten. Dabei wird Sauerstoff frei, und es entstehen die energiereichen Verbindungen ATP und NADPH. Diese werden im Calvin-Zyklus genutzt, um aus Kohlenstoffdioxid schrittweise Zucker aufzubauen.\nWie stark eine Pflanze Photosynthese betreibt, hängt von mehreren Faktoren ab: Lichtintensität, Temperatur und Kohlenstoffdioxid-Konzentration. Der Faktor, der am knappsten ist, begrenzt die Geschwindigkeit des gesamten Prozesses („Minimumfaktor“).\nAufgabe 1: Beschreibe mit eigenen Worten, woher die Pflanze die Ausgangsstoffe der Photosynthese bezieht.\nAufgabe 2: Erkläre, warum ein Aquarium mit Wasserpflanzen ohne Licht nach einigen Tagen zu wenig Sauerstoff enthält."
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            0,
+            1465
+          ],
+          "head": 1465
+        }
+      },
+      {
+        "case": "ctrl+backspace mid-word",
+        "word": {
+          "sel": [
+            93,
+            93
+          ],
+          "head": 93,
+          "points": [],
+          "selected": ""
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            93,
+            93
+          ],
+          "head": 93
+        }
+      },
+      {
+        "case": "ctrl+backspace after word",
+        "word": {
+          "sel": [
+            44,
+            44
+          ],
+          "head": 44,
+          "points": [],
+          "selected": ""
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            44,
+            44
+          ],
+          "head": 44
+        }
+      },
+      {
+        "case": "ctrl+delete mid-word",
+        "word": {
+          "sel": [
+            46,
+            46
+          ],
+          "head": 46,
+          "points": [],
+          "selected": ""
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            46,
+            46
+          ],
+          "head": 46
+        }
+      },
+      {
+        "case": "backspace at paragraph start",
+        "word": {
+          "sel": [
+            289,
+            289
+          ],
+          "head": 289,
+          "points": [],
+          "selected": ""
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            289,
+            289
+          ],
+          "head": 289
+        }
+      },
+      {
+        "case": "enter splits paragraph, type",
+        "word": {
+          "sel": [
+            139,
+            139
+          ],
+          "head": 139,
+          "points": [],
+          "selected": ""
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            139,
+            139
+          ],
+          "head": 139
+        }
+      },
+      {
+        "case": "type over double-clicked word",
+        "word": {
+          "sel": [
+            49,
+            49
+          ],
+          "head": 49,
+          "points": [
+            [
+              644,
+              522
+            ]
+          ],
+          "selected": ""
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            49,
+            49
+          ],
+          "head": 49
+        }
+      },
+      {
+        "case": "smart cut and paste",
+        "word": {
+          "sel": [
+            68,
+            68
+          ],
+          "head": 68,
+          "points": [
+            [
+              644,
+              522
+            ],
+            [
+              778,
+              522
+            ]
+          ],
+          "selected": ""
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            68,
+            68
+          ],
+          "head": 68
+        }
+      },
+      {
+        "case": "undo after typing two words",
+        "word": {
+          "sel": [
+            44,
+            44
+          ],
+          "head": 44,
+          "points": [],
+          "selected": ""
+        },
+        "raabe-write": {
+          "ok": true,
+          "sel": [
+            44,
+            44
+          ],
+          "head": 44
+        }
+      }
+    ]
+  }
+}

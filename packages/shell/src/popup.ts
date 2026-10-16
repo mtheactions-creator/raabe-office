@@ -6,6 +6,13 @@ import type { Commands } from "./commands";
 
 let open: { el: HTMLElement; close: () => void } | null = null;
 
+/** The control pressed last (the one that opens a popup), and when. */
+let lastDown: { el: Element; at: number } | null = null;
+addEventListener("mousedown", (e) => {
+  const el = (e.target as Element | null)?.closest?.("button, [role=button], .rcombo");
+  lastDown = el ? { el, at: performance.now() } : null;
+}, true);
+
 /** The registry whose Livevorschau a menu started (it ends when the menu closes). */
 let hovered: Commands | null = null;
 
@@ -36,7 +43,18 @@ export function showPopup(el: HTMLElement, anchor: DOMRect, onClose?: () => void
   if (y + r.height > innerHeight - 4) y = Math.max(4, anchor.top - r.height - 2);
   el.style.left = `${x}px`;
   el.style.top = `${y}px`;
-  const outside = (e: MouseEvent) => { if (!el.contains(e.target as Node)) closePopup(); };
+  // The control that opened the popup: pressing it again closes the popup (Office), and the
+  // click that follows must not open it anew.
+  const opener = lastDown && performance.now() - lastDown.at < 1500 ? lastDown.el : null;
+  const outside = (e: MouseEvent) => {
+    if (el.contains(e.target as Node)) return;
+    if (opener && opener.contains(e.target as Node)) {
+      const swallow = (c: MouseEvent) => { if (opener.contains(c.target as Node)) { c.stopImmediatePropagation(); c.preventDefault(); } };
+      addEventListener("click", swallow, { capture: true, once: true });
+      setTimeout(() => removeEventListener("click", swallow, true), 600);
+    }
+    closePopup();
+  };
   const key = (e: KeyboardEvent) => { if (e.key === "Escape") { e.preventDefault(); closePopup(); } };
   setTimeout(() => {
     addEventListener("mousedown", outside, true);

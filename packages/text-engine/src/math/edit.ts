@@ -883,7 +883,9 @@ function build(atoms: Seq, trigger: string): { seq: Seq; into?: number } | null 
   const p3: (Unit | MNode)[] = [];
   for (let i = 0; i < p2.length; i++) {
     const x = p2[i];
-    if (!("k" in x) && (charOf(x) === "/" || charOf(x) === "¦") && p3.length && p2[i + 1]) {
+    // On a space Word builds a fraction with an empty part too ("/ ", "a/ ": recorded 2026-10-16).
+    const open = trigger === " ";
+    if (!("k" in x) && (charOf(x) === "/" || charOf(x) === "¦") && ((p3.length && p2[i + 1]) || open)) {
       // Word's numerator: everything since the last operator; the denominator: everything up
       // to the next one (2x/3, 0,5/2, y=3a/4b, 2(a+b)/c).
       const ends = (u: Unit | MNode) => { const c = "k" in u ? null : charOf(u); return c !== null && (OPERATORS.has(c) || c === "/" || c === "¦"); };
@@ -891,7 +893,7 @@ function build(atoms: Seq, trigger: string): { seq: Seq; into?: number } | null 
       while (k > 0 && !ends(p3[k - 1])) k--;
       let j = i + 1;
       while (j < p2.length && !ends(p2[j])) j++;
-      if (k === p3.length || j === i + 1) { p3.push(x); continue; }
+      if (!open && (k === p3.length || j === i + 1)) { p3.push(x); continue; }
       const part = (us: (Unit | MNode)[]): Seq => us.length === 1 ? ("k" in us[0] ? [us[0]] : operandSeq(us[0]))
         : us.flatMap((u) => ("k" in u ? [u] : u.bracket ? [delim(u)] : u.seq));
       const num = part(p3.splice(k));

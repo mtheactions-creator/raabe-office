@@ -195,6 +195,7 @@ export class WriteApp {
     );
     this.installKeyboard();
     this.installFocusKeeping();
+    this.installDrops();
 
     // Ctrl + mouse wheel zooms, as in Word.
     this.docArea.addEventListener("wheel", (e) => {
@@ -351,6 +352,19 @@ export class WriteApp {
 
   private contextualKey = "";
 
+  /**
+   * A .docx dropped on the window opens in a tab of its own. The web view gives no file path,
+   * so Speichern asks where to save it (Speichern unter).
+   */
+  private openDroppedDocument(name: string, bytes: Uint8Array): void {
+    try {
+      const result = readDocx(bytes);
+      this.createDoc(stripExt(name), null, result.state, result.pkg, result.partial);
+    } catch (e) {
+      void messageBox("RaabeWrite", `„${name}“ konnte nicht geöffnet werden.\n\n${String(e)}`);
+    }
+  }
+
   // ----- documents ----------------------------------------------------------------------
 
   private createDoc(name: string, path: string | null, state: Partial<DocState> | undefined, pkg: DocxPackage | null = null, partial: string[] = []): Doc {
@@ -365,6 +379,8 @@ export class WriteApp {
     editor.onObjectOpen = (kind) => { this.updateContextualTabs(); this.ribbon?.select(kind === "picture" ? "pictureFormat" : "shapeFormat"); };
     // A double-click on a section break's mark opens Seite einrichten (Word).
     editor.onSectionBreakOpen = () => void this.commands.run("layout.pageSetup");
+    // A document dropped on the text opens in a tab of its own.
+    editor.onDropDocument = (name, bytes) => this.openDroppedDocument(name, bytes);
     this.features.spell.attach(editor);
     // Equations go to and come from Word as Word's own HTML (OMML in a conditional comment).
     editor.mathClipboard = {
@@ -1441,6 +1457,20 @@ export class WriteApp {
       if (cmd && this.commands.has(cmd)) {
         e.preventDefault();
         void this.commands.run(cmd);
+      }
+    });
+  }
+
+  /**
+   * Files dropped outside the text: documents open, nothing else happens (the web view would
+   * otherwise show the dropped file instead of the app).
+   */
+  private installDrops(): void {
+    addEventListener("dragover", (e) => { if (e.dataTransfer?.types.includes("Files")) e.preventDefault(); });
+    addEventListener("drop", (e) => {
+      e.preventDefault();
+      for (const f of Array.from(e.dataTransfer?.files ?? [])) {
+        if (/\.(docx|docm|dotx)$/i.test(f.name)) void f.arrayBuffer().then((b) => this.openDroppedDocument(f.name, new Uint8Array(b)));
       }
     });
   }

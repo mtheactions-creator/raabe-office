@@ -102,7 +102,7 @@ export function tableStyleGallery(ed: () => Editor | undefined, done: () => void
   };
 
   const control: Control = {
-    type: "tiles", cmd: "table.styles", key: "O", count: TABLE_STYLE_PRESETS.length, visible: 7, fill: true, size: [72, 56], cls: "tstyle-tiles",
+    type: "tiles", cmd: "table.styles", key: "O", count: TABLE_STYLE_PRESETS.length, visible: 7, fill: true, max: 14, size: [72, 56], cls: "tstyle-tiles",
     render: (i) => tile(i, 62, 46),
     tip: (i) => TABLE_STYLE_PRESETS[i].label,
     pick,

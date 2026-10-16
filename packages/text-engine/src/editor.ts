@@ -281,6 +281,11 @@ export class Editor {
     workspace.addEventListener("mousedown", (e) => this.onMouseDown(e));
     // The document's pictures are not the browser's to drag (a drop would put a copy somewhere).
     workspace.addEventListener("dragstart", (e) => e.preventDefault());
+    // Files and text dragged in from other programs (Explorer, a browser): a caret shows where
+    // they go; pictures and text are inserted there, documents open (Word).
+    workspace.addEventListener("dragover", (e) => this.onDragOver(e));
+    workspace.addEventListener("dragleave", () => { this.view.caretOverride = null; this.view.refreshCaret(); });
+    workspace.addEventListener("drop", (e) => void this.onDrop(e));
     workspace.addEventListener("mousemove", (e) => { if (!e.buttons) this.hoverCursor(e); });
     workspace.addEventListener("contextmenu", (e) => { if (!this.view.markupLayer.contains(e.target as Node)) this.onContext(e); });
     this.update();
@@ -1001,7 +1006,7 @@ export class Editor {
     this.fixStoryKey();
     this.clampSelection();
     const others = this.floatMulti.map((x) => this.floatBox(x.p, x.index)).filter((b): b is NonNullable<typeof b> => !!b);
-    const ropts = { active: this.storyKey, cells: this.selectedCells(), image: this.imageOverlay(), table: this.handleTable(), others, guides: this.guides };
+    const ropts = { active: this.storyKey, cells: this.selectedCells(), image: this.imageOverlay(), table: this.tableInSelection() ?? this.handleTable(), wholeTable: this.tableInSelection() !== undefined, others, guides: this.guides };
     this.view.render(this.doc, this.layout, this.sel, ropts);
     // The picture's frame comes from the view's new layout: draw it again when it moved.
     const image = this.imageOverlay();
@@ -1313,11 +1318,26 @@ export class Editor {
     this.update({ scroll: true, inputTs });
   }
 
+  /**
+   * Typing over selected cells (several, a row, the whole table) replaces the first cell's
+   * content only; the other cells stay as they are (Word, recorded 2026-10-16).
+   */
+  private typeIntoFirstCell(): void {
+    const [from, to] = this.range();
+    const cell = this.doc.paras[from.p]?.cell;
+    if (!cell || cmp(from, to) === 0) return;
+    const [a, b] = E.cellRange(this.doc, from.p);
+    if (to.p <= b && !(to.p === b + 1 && to.o === 0 && this.cellsInclusive)) return;
+    this.setSel({ p: a, o: 0 }, { p: b, o: this.doc.paras[b].text.length });
+    this.cellsInclusive = false;
+  }
+
   insertText(text: string, inputTs?: number): void {
     const shape = this.selectedShape();
     if (shape && !shape.editing && shape.obj.shape?.kind !== "connector" && (shape.obj.pic?.geometry ?? "rect") !== "line") {
       this.editShapeText(shape.p, shape.index, "end");
     }
+    this.typeIntoFirstCell();
     this.smartTrimSelection();
     this.replaceSelection(text, inputTs, true);
     if (text === " " || text === "\t") this.autoList();
@@ -3622,12 +3642,14 @@ export class Editor {
   /** Rahmen übertragen: clicks (and drags) on cell edges give them the pen's line. */
   startBorderPainter(pen: BorderSpec): void {
     this.borderPen = { pen, sampler: false };
+    this.penGrid(true);
     this.onBorderPainter?.();
   }
 
   /** Rahmenpipette: the next click on a cell edge picks its line. */
   startBorderSampler(picked: (b: BorderSpec) => void): void {
     this.borderPen = { pen: { style: "single", size: 0.5, color: "auto", space: 0 }, sampler: true, picked };
+    this.penGrid(true);
     this.onBorderPainter?.();
   }
 
@@ -3635,7 +3657,14 @@ export class Editor {
     if (!this.borderPen) return;
     this.borderPen = null;
     this.workspace.style.cursor = "";
+    this.penGrid(false);
     this.onBorderPainter?.();
+  }
+
+  /** While the pen is out, the cells' edges without a line show as gridlines (Word). */
+  private penGrid(on: boolean): void {
+    this.view.penGridlines = on;
+    this.view.refresh();
   }
 
   /** A cell's paragraph (its first) by cell key "table:row:col". */
@@ -3667,21 +3696,40 @@ export class Editor {
       this.onBorderPainter?.();
       return;
     }
-    this.snapshot();
-    const done = new Set<string>();
-    const paint = (ed: { cell: string; side: "top" | "bottom" | "left" | "right" }) => {
-      const k = `${ed.cell}|${ed.side}`;
-      if (done.has(k)) return;
-      done.add(k);
-      this.paintEdge(ed.cell, ed.side, bp.pen);
+    // Word draws in a straight line along the edge the drag starts on (shown while dragging)
+    // and changes the borders only when the mouse is let go; a click paints the one edge.
+    const horizontal = edge.side === "top" || edge.side === "bottom";
+    const p0 = this.view.pointAt(e.clientX, e.clientY);
+    const x0 = e.clientX, y0 = e.clientY;
+    let x1 = x0, y1 = y0;
+    const along = (): { cell: string; side: "top" | "bottom" | "left" | "right" }[] => {
+      const out = new Map<string, { cell: string; side: "top" | "bottom" | "left" | "right" }>();
+      const steps = Math.max(1, Math.ceil(Math.abs(horizontal ? x1 - x0 : y1 - y0) / 3));
+      for (let k = 0; k <= steps; k++) {
+        const x = horizontal ? x0 + ((x1 - x0) * k) / steps : x0, y = horizontal ? y0 : y0 + ((y1 - y0) * k) / steps;
+        const ed = this.view.cellEdgeAt(x, y);
+        if (!ed || (ed.side === "top" || ed.side === "bottom") !== horizontal) continue;
+        out.set(`${ed.cell}|${ed.side}`, ed);
+      }
+      out.set(`${edge.cell}|${edge.side}`, edge);
+      return [...out.values()];
+    };
+    const move = (ev: MouseEvent) => {
+      x1 = ev.clientX; y1 = ev.clientY;
+      const p1 = this.view.pointAt(horizontal ? x1 : x0, horizontal ? y0 : y1);
+      this.guides = p1.page === p0.page ? [{ page: p0.page, x1: p0.x, y1: p0.y, x2: p1.x, y2: p1.y }] : [];
       this.update();
     };
-    paint(edge);
-    const move = (ev: MouseEvent) => { const ed = this.view.cellEdgeAt(ev.clientX, ev.clientY); if (ed) paint(ed); };
-    const up = () => { removeEventListener("mousemove", move, true); removeEventListener("mouseup", up, true); this.emit(true); };
+    const up = () => {
+      removeEventListener("mousemove", move, true); removeEventListener("mouseup", up, true);
+      this.guides = [];
+      this.snapshot();
+      for (const ed of along()) this.paintEdge(ed.cell, ed.side, bp.pen);
+      this.update();
+      this.emit(true);
+    };
     addEventListener("mousemove", move, true);
     addEventListener("mouseup", up, true);
-    void e;
   }
 
   /** One cell edge with the pen's line, and the same edge of the neighbouring cell. */
@@ -3821,7 +3869,8 @@ export class Editor {
         const m = this.doc.main[se.p]?.floats?.[se.index]?.group?.members[se.member];
         if (m) return { page: b.page, x: b.x + m.x * PT, y: b.y + m.y * PT, w: m.width * PT, h: m.height * PT, picture: true, editing: true, rotation: m.pic?.rotation };
       }
-      return b ? { ...b, picture: true, editing: true, rotation: se.obj.pic?.rotation } : undefined;
+      // Word keeps a shape's yellow handles while its text is edited.
+      return b ? { ...b, picture: true, editing: true, rotation: se.obj.pic?.rotation, adjust: this.adjustHandles(se.obj, b) } : undefined;
     }
     const box = this.imageBox();
     if (!box) { this.cropping = false; return undefined; }
@@ -4795,16 +4844,35 @@ cropFill(fit: boolean): void {
   }
 
   /** True when a page point lies in a shape's text area (where a click edits its text). */
+  /**
+   * Word moves a text box only by its frame: a band a few pixels wide along its border (inside
+   * it, a click places the caret). True for a point on that band of a text box.
+   */
+  private onTextBoxFrame(p: number, index: number, clientX: number, clientY: number): boolean {
+    const f = this.doc.main[p]?.floats?.[index];
+    if (f?.shape?.kind !== "textbox") return false;
+    const box = this.floatBox(p, index);
+    const pt = this.view.pointAt(clientX, clientY);
+    if (!box || box.page !== pt.page) return false;
+    const band = 5 / this.view.zoom;
+    const outside = pt.x < box.x - band || pt.x > box.x + box.w + band || pt.y < box.y - band || pt.y > box.y + box.h + band;
+    const inner = pt.x > box.x + band && pt.x < box.x + box.w - band && pt.y > box.y + band && pt.y < box.y + box.h - band;
+    return !outside && !inner;
+  }
+
   private inShapeTextArea(p: number, index: number, page: number, x: number, y: number): boolean {
     const f = this.doc.main[p]?.floats?.[index];
     const box = this.floatBox(p, index);
     if (!f?.shape || !box || box.page !== page) return false;
     if (f.shape.kind === "connector" || (f.pic?.geometry ?? "rect") === "line") return false;
+    // Text boxes take every click inside their frame; other shapes only clicks on their text.
+    if (f.shape.kind === "textbox") {
+      const band = 5 / this.view.zoom;
+      return x > box.x + band && x < box.x + box.w - band && y > box.y + band && y < box.y + box.h - band;
+    }
     const tr = shapeTextRect(f.pic, f.shape, box.w, box.h);
     const inRect = x >= box.x + tr.x && x <= box.x + tr.x + tr.w && y >= box.y + tr.y - 2 && y <= box.y + tr.y + tr.h + 2;
     if (!inRect) return false;
-    // Text boxes take every click inside; other shapes only clicks on their text.
-    if (f.shape.kind === "textbox") return true;
     const story = f.shape.story ? this.layout.stories.get(f.shape.story) : undefined;
     const paras = f.shape.story ? this.doc.stories.get(f.shape.story) : undefined;
     if (!story || !paras || !paras.some((q) => q.text.length)) return false;
@@ -6408,14 +6476,19 @@ cropFill(fit: boolean): void {
   }
 
   private onMouseDown(e: MouseEvent): void {
+    // A right press must not take the focus from the text: after Esc closes the context
+    // menu, typing goes on where it was (Word).
+    if (e.button === 2) { e.preventDefault(); this.focus(); }
     if (e.button !== 0) return;
     if (this.interceptMouse?.(e)) { e.preventDefault(); return; }
     // Rahmen übertragen / Rahmenpipette: a click on a cell edge paints (or picks) it.
+    // Word: the pen stays out until Esc or a double-click away from a cell edge.
     if (this.borderPen && this.storyKey === MAIN) {
       const edge = this.view.cellEdgeAt(e.clientX, e.clientY);
-      if (edge) { e.preventDefault(); this.penOnEdge(edge, e); return; }
-      if (this.view.tableAt(e.clientX, e.clientY) !== null) { e.preventDefault(); return; }
-      this.stopBorderPainter();
+      if (edge && e.detail < 2) { e.preventDefault(); this.penOnEdge(edge, e); return; }
+      if (!edge && e.detail >= 2) { e.preventDefault(); this.stopBorderPainter(); return; }
+      e.preventDefault();
+      return;
     }
     // Transparente Farbe bestimmen: this click picks the colour (anywhere else: cancelled).
     if (this.pickingColor) { e.preventDefault(); this.pickColorAt(e.clientX, e.clientY); return; }
@@ -6441,7 +6514,8 @@ cropFill(fit: boolean): void {
       const pt = this.view.pointAt(e.clientX, e.clientY);
       const box = this.floatBox(se.p, se.index);
       const inside = box && pt.page === box.page && pt.x >= box.x - 3 && pt.x <= box.x + box.w + 3 && pt.y >= box.y - 3 && pt.y <= box.y + box.h + 3;
-      if (!inside || this.view.handleAt(e.clientX, e.clientY)) this.leaveShapeText(!!inside);
+      const onFrame = se.member === undefined && this.onTextBoxFrame(se.p, se.index, e.clientX, e.clientY);
+      if (!inside || onFrame || this.view.handleAt(e.clientX, e.clientY)) this.leaveShapeText(!!inside);
     }
     // Umschalt- or Strg+Klick on another object adds it to the selection (Gruppieren).
     if (this.storyKey === MAIN && (e.shiftKey || e.ctrlKey) && this.floatSel && !this.readOnly && e.detail < 2) {
@@ -6558,6 +6632,11 @@ cropFill(fit: boolean): void {
     } else if (e.shiftKey) {
       this.setSel(this.sel.anchor, at.pos, at.upstream);
       this.drag = { granularity: "char", origin: [this.sel.anchor, this.sel.anchor] };
+    } else if (e.detail === 1 && this.hasSelection && !this.selectedCells() && !this.readOnly && this.insideSelection(under)) {
+      // Word: selected text is dragged to another place (Strg: copied); a press without moving
+      // puts the caret there.
+      this.dragSelectedText(e, at.pos, at.upstream);
+      return;
     } else if (e.detail === 2 && this.isImageAt(under) && this.overObject(hit.index, hit.x, under)) {
       // A picture in the text: selected, and its tab opens (Word).
       this.setSel(under, { p: under.p, o: under.o + 1 });
@@ -6925,13 +7004,134 @@ cropFill(fit: boolean): void {
     }
     const [from, to] = this.range();
     // A right click outside the selection moves the caret there (Word).
-    const inside = cmp(under, from) >= 0 && cmp(under, to) < 0;
+    // Selected cells count whole (a click after the last cell's text is inside them).
+    const cellAt = this.doc.paras[under.p]?.cell;
+    const inCells = !!cellAt && !!this.selectedCells()?.has(cellKey(cellAt));
+    const inside = inCells || (cmp(under, from) >= 0 && cmp(under, to) < 0);
     if (!inside) {
       const at = this.view.posInLine(hit.index, hit.x);
       this.setSel(at.pos, at.pos, at.upstream);
       this.update();
     }
     this.onContextMenu(e.clientX, e.clientY, under);
+  }
+
+  private insideSelection(pos: Pos): boolean {
+    const [a, b] = this.range();
+    return cmp(a, pos) <= 0 && cmp(pos, b) < 0;
+  }
+
+  /** Drags the selected text: a caret shows where it goes; on release it moves (Strg: a copy). */
+  private dragSelectedText(e: MouseEvent, click: Pos, upstream: boolean): void {
+    const x0 = e.clientX, y0 = e.clientY;
+    let moved = false;
+    let target: Pos | null = null;
+    const move = (ev: MouseEvent) => {
+      if (!moved && Math.abs(ev.clientX - x0) + Math.abs(ev.clientY - y0) < 5) return;
+      moved = true;
+      const hit = this.view.hitLine(ev.clientX, ev.clientY);
+      target = this.view.posInLine(hit.index, hit.x).pos;
+      this.view.caretOverride = this.insideSelection(target) ? null : this.view.caretBox(target);
+      this.view.refreshCaret();
+      this.workspace.style.cursor = "default";
+    };
+    const up = (ev: MouseEvent) => {
+      removeEventListener("mousemove", move, true);
+      removeEventListener("mouseup", up, true);
+      this.view.caretOverride = null;
+      if (!moved || !target) { this.setSel(click, click, upstream); this.update(); this.emit(false); return; }
+      if (!this.insideSelection(target)) this.moveSelectionTo(target, ev.ctrlKey);
+      else this.update();
+      this.emit(true);
+    };
+    addEventListener("mousemove", move, true);
+    addEventListener("mouseup", up, true);
+  }
+
+  /** Moves (or copies) the selected text to `target`, selecting it there (Word). */
+  moveSelectionTo(target: Pos, copy = false): void {
+    const [from, to] = this.range();
+    if (this.inBlock() || (cmp(target, from) >= 0 && cmp(target, to) <= 0)) return;
+    this.snapshot();
+    this.typing = false;
+    const pieces = this.doc.fragment(from, to).map((p) => this.portable(p));
+    if (pieces.length > 1) pieces[pieces.length - 1] = { ...pieces[pieces.length - 1], props: this.doc.paras[target.p].props };
+    // Positions are kept by their distance from the document's end across the deletion.
+    const fromEnd = (pos: Pos) => ({ p: this.doc.paras.length - pos.p, tail: this.doc.paras[pos.p].text.length - pos.o });
+    const back = (k: { p: number; tail: number }): Pos => { const p = Math.max(0, this.doc.paras.length - k.p); return { p, o: Math.max(0, this.doc.paras[p].text.length - k.tail) }; };
+    let start: Pos, end: Pos;
+    if (cmp(target, to) > 0) {
+      // Behind the text: insert there first, then take the text out where it was.
+      const inserted = this.doc.replace(target, target, pieces);
+      const startK = fromEnd(target), endK = fromEnd(inserted);
+      if (!copy) this.doc.delete(from, to);
+      start = back(startK);
+      end = back(endK);
+    } else {
+      if (!copy) this.doc.delete(from, to);
+      start = target;
+      end = this.doc.replace(target, target, pieces);
+    }
+    // Word's smart spacing: a space between the moved word and the one before it, no space
+    // left over before punctuation or the paragraph end.
+    const textOf = (p: number) => this.doc.paras[p].text;
+    const word = (ch: string | undefined) => !!ch && /[\p{L}\p{N}]/u.test(ch);
+    if (word(textOf(start.p)[start.o - 1]) && word(textOf(start.p)[start.o])) {
+      this.doc.insertText(start, start, " ", typedProps(this.doc.paras[start.p], start.o));
+      start = { p: start.p, o: start.o + 1 };
+      if (end.p === start.p) end = { p: end.p, o: end.o + 1 };
+    }
+    const after = textOf(end.p)[end.o];
+    if (end.o > 0 && textOf(end.p)[end.o - 1] === " " && (after === undefined || /[\s.,;:!?)]/.test(after)) && cmp(end, start) > 0) {
+      this.doc.delete({ p: end.p, o: end.o - 1 }, end);
+      end = { p: end.p, o: end.o - 1 };
+    }
+    this.setSel(start, end);
+    this.requireFonts();
+    this.update({ scroll: true });
+  }
+
+  /** A document file dropped on the text (the host opens it). */
+  onDropDocument: ((name: string, bytes: Uint8Array) => void) | null = null;
+
+  private dropPos(e: DragEvent): Pos {
+    const hit = this.view.hitLine(e.clientX, e.clientY);
+    return this.view.posInLine(hit.index, hit.x).pos;
+  }
+
+  private onDragOver(e: DragEvent): void {
+    const types = Array.from(e.dataTransfer?.types ?? []);
+    if (this.readOnly || !types.some((t) => t === "Files" || t === "text/plain" || t === "text/html")) return;
+    e.preventDefault();
+    if (e.dataTransfer) e.dataTransfer.dropEffect = "copy";
+    this.view.caretOverride = this.view.caretBox(this.dropPos(e));
+    this.view.refreshCaret();
+  }
+
+  private async onDrop(e: DragEvent): Promise<void> {
+    const dt = e.dataTransfer;
+    this.view.caretOverride = null;
+    if (!dt || this.readOnly) return;
+    e.preventDefault();
+    e.stopPropagation();
+    const at = this.dropPos(e);
+    const files = Array.from(dt.files ?? []);
+    this.focus();
+    if (files.length) {
+      for (const f of files) {
+        const name = f.name.toLowerCase();
+        if (/\.(docx|docm|dotx)$/.test(name)) { this.onDropDocument?.(f.name, new Uint8Array(await f.arrayBuffer())); continue; }
+        if (f.type.startsWith("image/") || /\.(png|jpe?g|gif|bmp|webp|svg)$/.test(name)) {
+          this.setSel(at, at);
+          await this.pasteImage(f);
+        }
+      }
+      return;
+    }
+    const html = dt.getData("text/html"), text = dt.getData("text/plain");
+    if (!html && !text) return;
+    this.setSel(at, at);
+    this.paste(text, html, null);
   }
 
   /** The word at a position (letters, digits, inner hyphens and apostrophes). */
@@ -6966,18 +7166,31 @@ cropFill(fit: boolean): void {
     }
     let cursor = "default";
     // Word shows the table handles while the mouse is over a table.
-    const tableNow = this.storyKey === MAIN ? this.view.tableAt(e.clientX, e.clientY) : null;
-    if (tableNow !== this.hoverTable) { this.hoverTable = tableNow; this.view.render(this.doc, this.layout, this.sel, { active: this.storyKey, cells: this.selectedCells(), image: this.imageOverlay(), table: this.handleTable() }); }
+    let tableNow = this.storyKey === MAIN ? this.view.tableAt(e.clientX, e.clientY) : null;
+    // On the way from the table to our layout button the handles stay (the button is beside it).
+    if (tableNow === null && this.hoverTable !== null && this.storyKey === MAIN) {
+      const r = this.view.tableLayoutButtonRect(this.hoverTable);
+      if (r && e.clientX >= r.left - 24 && e.clientX <= r.right + 4 && e.clientY >= r.top - 12 && e.clientY <= r.bottom + 12) tableNow = this.hoverTable;
+    }
+    if (tableNow !== this.hoverTable) { this.hoverTable = tableNow; this.view.render(this.doc, this.layout, this.sel, { active: this.storyKey, cells: this.selectedCells(), image: this.imageOverlay(), table: this.tableInSelection() ?? this.handleTable(), wholeTable: this.tableInSelection() !== undefined }); }
     const th = this.storyKey === MAIN ? this.view.tableHandleAt(e.clientX, e.clientY) : null;
     if (th) { const c = th.kind === "move" ? "move" : th.kind === "layout" ? "default" : "nwse-resize"; if (this.workspace.style.cursor !== c) this.workspace.style.cursor = c; return; }
     if (this.view.pageIndexAt(e.clientX, e.clientY) >= 0) {
       cursor = "text";
-      const hd = this.storyKey === MAIN ? this.view.handleAt(e.clientX, e.clientY) : null;
+      const editingShape = this.storyKey.startsWith("tx:") && !!this.selectedShape()?.editing;
+      const hd = this.storyKey === MAIN || editingShape ? this.view.handleAt(e.clientX, e.clientY) : null;
+      const deco = this.storyKey === MAIN || editingShape ? this.view.imageAt(e.clientX, e.clientY) : null;
+      const textbox = deco?.shape?.kind === "textbox";
       if (hd) cursor = handleCursor(hd, this.selectedShape()?.obj.pic?.rotation ?? this.selectedImage()?.obj.pic?.rotation ?? 0);
       else if (this.storyKey === MAIN && this.view.cellBorderAt(e.clientX, e.clientY)) cursor = COL_CURSOR;
       else if (this.storyKey === MAIN && this.view.tableZoneAt(e.clientX, e.clientY)) cursor = this.view.tableZoneAt(e.clientX, e.clientY)!.kind === "cell" ? CELL_CURSOR : COLUMN_CURSOR;
       else if (this.storyKey === MAIN && this.view.rowBorderAt(e.clientX, e.clientY)) cursor = ROW_CURSOR;
-      else if (this.storyKey === MAIN && this.view.imageAt(e.clientX, e.clientY)) cursor = "move";
+      else if (deco && textbox) cursor = this.onTextBoxFrame(deco.para, deco.index, e.clientX, e.clientY) ? "move" : "text";
+      else if (deco && editingShape) {
+        // In a shape's text: the I-beam over the text, the move pointer elsewhere in the shape.
+        const pt = this.view.pointAt(e.clientX, e.clientY);
+        cursor = this.inShapeTextArea(deco.para, deco.index, pt.page, pt.x, pt.y) ? "text" : "move";
+      } else if (this.storyKey === MAIN && deco) cursor = "move";
       else {
         const hit = this.view.hitLine(e.clientX, e.clientY);
         if (hit.inLeftMargin) cursor = MIRRORED_ARROW;
@@ -6993,6 +7206,21 @@ cropFill(fit: boolean): void {
 
   /** Mouse over a table (Word shows its handles then, and while the caret is in it). */
   private hoverTable: number | null = null;
+
+  /** A table the selection holds whole, together with text outside it (Entf removes it then). */
+  private tableInSelection(): number | undefined {
+    if (this.storyKey !== MAIN || !this.hasSelection) return undefined;
+    const [from, to] = this.range();
+    for (let p = from.p; p <= to.p && p < this.doc.paras.length; p++) {
+      const cell = this.doc.paras[p].cell;
+      if (!cell) continue;
+      const range = this.doc.tableRange(p, cell.table);
+      if (!range) continue;
+      if (cmp(from, { p: range[0], o: 0 }) <= 0 && to.p > range[1] && !(from.p >= range[0] && to.p <= range[1])) return cell.table.id;
+      p = range[1];
+    }
+    return undefined;
+  }
 
   private handleTable(): number | undefined {
     if (this.storyKey !== MAIN) return undefined;
@@ -7141,7 +7369,10 @@ cropFill(fit: boolean): void {
       const ac = this.doc.paras[o1.p]?.cell, uc = this.doc.paras[under.p]?.cell;
       if ((ac || uc) && !(ac && uc && ac.table.id === uc.table.id && ac.row === uc.row && ac.col === uc.col)) {
         this.cellAnchor = o1;
-        this.extendTo(under, cmp(under, o1) > 0, true);
+        // In the text beyond the table the end snaps to whole words, as any drag across words.
+        const forward = cmp(under, o1) > 0;
+        const end = uc ? under : this.wordRange(under)[forward ? 1 : 0];
+        this.extendTo(end, forward, true);
         this.update({ inputTs: ts });
         return;
       }

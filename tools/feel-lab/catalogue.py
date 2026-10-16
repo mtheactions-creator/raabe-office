@@ -189,6 +189,11 @@ CASES: list[Case] = [
     C("table backspace on cell content", "table", [("sel", F("Z2S2"), F("Z2S2", 4)), ("keys", "backspace"), ("type", "X")], "tables"),
     C("table delete on cell content then type", "table", [("sel", F("Z3S1"), F("Z3S1", 4)), ("keys", "delete"), ("type", "Y")], "tables"),
     C("table double-click word in cell", "table", [("click", char(F("Z2S3", 1)), 2), ("type", "W")], "tables"),
+    # ----- Step 4d: typing over selected cells, right-click, a drag past the table (D-059) ---------
+    C("table type over nine dragged cells", "table", [("drag", caret(F("Z1S1", 1)), caret(F("Z3S3", 3))), ("type", "a")], "tables"),
+    C("table type over a selected row", "table", [("sel", F("Z2S1"), F("Z2S3", 4)), ("type", "a")], "tables"),
+    C("table right-click on selected cells then type", "table", [("drag", caret(F("Z1S1", 1)), caret(F("Z3S3", 3))), ("rclick", char(F("Z3S3", 2))), ("keys", "esc"), ("type", "a")], "tables"),
+    C("table drag past the table then delete", "table", [("drag", caret(F("Z1S1", 1)), caret(F("Nach der Tabelle", 4))), ("keys", "delete")], "tables"),
     C("margin double-click selects paragraph", "plain", [("click", margin(F("Das Wasser")), 2), ("type", "X")], "selection"),
     C("margin click selects line", "plain", [("click", margin(F("Letzter"))), ("type", "X")], "selection"),
     C("margin triple-click selects all", "plain", [("click", margin(F("Letzter")), 3), ("type", "X")], "selection"),

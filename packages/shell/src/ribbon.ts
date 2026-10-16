@@ -52,6 +52,8 @@ export type Control =
    */
   | {
       type: "tiles"; cmd: string; key?: string; count: number; visible: number; fill?: boolean; size: [number, number]; cls?: string;
+      /** With `fill`: the most tiles shown in the ribbon (Word's Tabellenformatvorlagen: 14). */
+      max?: number;
       render: (i: number) => HTMLElement | null; tip: (i: number) => string; pick: (i: number) => void;
       hover?: (i: number | null) => void; current?: () => number | undefined; redraw: () => string; panel: (close: () => void) => HTMLElement;
     }
@@ -510,7 +512,7 @@ export class Ribbon {
         });
         const more = h("button", { "aria-label": "Weitere", "data-keytip": c.key, "data-keytip-scope": this.scope() }, icon("chevron-down"));
         more.onclick = () => showPopup(c.panel(closePopup), more.getBoundingClientRect(), () => this.opts.onDone?.());
-        return h("div", { class: `rgallery tiles${c.fill ? " fill" : ""}${c.cls ? ` ${c.cls}` : ""}`, role: "listbox", "data-min": String(c.visible) }, items,
+        return h("div", { class: `rgallery tiles${c.fill ? " fill" : ""}${c.cls ? ` ${c.cls}` : ""}`, role: "listbox", "data-min": String(c.visible), ...(c.max ? { "data-max": String(c.max) } : {}) }, items,
           h("div", { class: "scroll" }, h("button", { disabled: true }, icon("chevron-up")), more));
       }
       case "spinner": {
@@ -646,7 +648,8 @@ export class Ribbon {
       const min = Number(gal.dataset.min) || 1;
       const itemW = items[0]?.offsetWidth || 108;
       const extra = Math.max(0, Math.floor(this.galleryRoom / itemW));
-      items.forEach((it, i) => { it.style.display = i < min + extra ? "" : "none"; });
+      const max = Number(gal.dataset.max) || Infinity;
+      items.forEach((it, i) => { it.style.display = i < Math.min(max, min + extra) ? "" : "none"; });
       // Names wider than their tile: cut at the right (see .item.long).
       for (const it of items) {
         const span = it.firstElementChild as HTMLElement | null;

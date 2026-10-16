@@ -61,6 +61,11 @@ export interface RenderOptions {
   };
   /** The table (id) that shows Word's move and resize handles (caret or mouse in it). */
   readonly table?: number;
+  /**
+   * That table is selected as a whole together with text outside it, so Entf removes it (our
+   * own marker, D-059): a frame around it and the move handle drawn pressed.
+   */
+  readonly wholeTable?: boolean;
   /** Ausrichtungslinien while an object is dragged: green lines on a page (page px). */
   readonly guides?: readonly { readonly page: number; readonly x1: number; readonly y1: number; readonly x2: number; readonly y2: number }[];
 }
@@ -206,7 +211,10 @@ export class View {
   /** Where the host puts comment cards: right of the pages, scrolled and zoomed with them. */
   readonly markupLayer: HTMLDivElement;
   /** Gitternetzlinien anzeigen: dashed cell edges on screen (on by default, as in Word). */
-  showGridlines = true;
+  /** Tabellen-Gitternetzlinien anzeigen: off, as in Word's default (D-059). */
+  showGridlines = false;
+  /** Gridlines while the border pen or pipette is out. */
+  penGridlines = false;
   private printing = false;
 
   constructor(readonly workspace: HTMLElement, private fonts: Fonts) {
@@ -220,7 +228,9 @@ export class View {
     this.container.append(this.markupLayer);
     workspace.append(this.sizer);
     this.caret = document.createElement("div");
-    this.caret.style.cssText = "position:absolute;z-index:5;pointer-events:none;background:#000";
+    // Its own compositor layer, moved by transform: moving it repaints nothing (moved by
+    // left/top at 150 % the old place's edge was sometimes left on screen, an "afterglow").
+    this.caret.style.cssText = "position:absolute;left:0;top:0;z-index:5;pointer-events:none;background:#000;will-change:transform";
     workspace.addEventListener("scroll", () => this.onScroll(), { passive: true });
     addEventListener("blur", () => { this.windowActive = false; this.caret.style.display = "none"; this.stopBlink(); });
     addEventListener("focus", () => { this.windowActive = true; if (this.caretWanted) this.renderCaret(true); });
@@ -599,7 +609,7 @@ export class View {
 
   private renderDeco(pv: PageView, page: PageLayout): void {
     const layout = this.layoutRef!;
-    const grid = this.showGridlines && !this.printing
+    const grid = (this.showGridlines || this.penGridlines) && !this.printing
       ? page.frames.map((id) => layout.frames[id]).filter((f) => f.kind === "cell") : [];
     const key = grid.map((f) => `g${f.x},${f.y},${f.w},${f.h}`).join(";") + "|" + page.deco.map((d) => {
       if (d.kind === "rect") return `r${d.x},${d.y},${d.w},${d.h},${d.fill},${this.dimmed(d.story)}`;
@@ -815,7 +825,7 @@ export class View {
     const others = (this.opts.others ?? []).filter((o) => o.page === page.index);
     const guides = (this.opts.guides ?? []).filter((g) => g.page === page.index);
     const key = guides.map((g) => `g${g.x1},${g.y1},${g.x2},${g.y2}`).join("") + others.map((o) => `o${o.x},${o.y},${o.w},${o.h}`).join("") + (editing ? `${page.bodyTop}|${page.bodyBottom}|${page.section}|${sections}|${pv.w}` : "") +
-      (img ? `|img${img.x},${img.y},${img.w},${img.h},${img.rotation ?? 0},${img.crop ? `${img.crop.x},${img.crop.y},${img.crop.w},${img.crop.h}` : ""},${img.picture},${img.editing},${(img.adjust ?? []).map((a) => `${a.x},${a.y}`).join(";")},${(img.ends ?? []).map((a) => `${a.x},${a.y}`).join(";")}` : "") + (tb ? `|tb${tb.x},${tb.y},${tb.w},${tb.h},${tb.first},${tb.last}` : "");
+      (img ? `|img${img.x},${img.y},${img.w},${img.h},${img.rotation ?? 0},${img.crop ? `${img.crop.x},${img.crop.y},${img.crop.w},${img.crop.h}` : ""},${img.picture},${img.editing},${(img.adjust ?? []).map((a) => `${a.x},${a.y}`).join(";")},${(img.ends ?? []).map((a) => `${a.x},${a.y}`).join(";")}` : "") + (tb ? `|tb${tb.x},${tb.y},${tb.w},${tb.h},${tb.first},${tb.last},${!!this.opts.wholeTable}` : "");
     if (key === pv.overlayKey) return;
     pv.overlayKey = key;
     const handles: HTMLElement[] = [];
@@ -921,10 +931,17 @@ export class View {
     if (tb && !this.printing) {
       // Word's handles: the move handle above the table's top-left corner on the page it starts,
       // the sizing handle below its bottom-right corner on the page it ends.
+      if (this.opts.wholeTable) {
+        const fr = document.createElement("div");
+        fr.style.cssText = `position:absolute;left:${tb.x - 2}px;top:${tb.y - 2}px;width:${tb.w + 4}px;height:${tb.h + 4}px;box-sizing:border-box;` +
+          "border:2px solid #2b579a;pointer-events:none";
+        handles.push(fr);
+      }
       if (tb.first) {
         const mh = document.createElement("div");
+        const pressed = this.opts.wholeTable;
         mh.style.cssText = `position:absolute;left:${tb.x - 15}px;top:${tb.y - 15}px;width:13px;height:13px;box-sizing:border-box;` +
-          "border:1px solid #a0a0a0;background:#fff;display:flex;align-items:center;justify-content:center";
+          `border:1px solid ${pressed ? "#2b579a" : "#a0a0a0"};background:${pressed ? "#c7d7ef" : "#fff"};display:flex;align-items:center;justify-content:center`;
         mh.innerHTML = MOVE_HANDLE_SVG;
         handles.push(mh);
         // Our own addition (D-053): the table's layout options beside its top right corner,
@@ -1455,8 +1472,11 @@ export class View {
         r.style.cssText = `position:absolute;background:${SELECTION_COLOR};left:${fr.x + gap}px;top:${fr.y + gap}px;width:${Math.max(0, fr.w - 2 * gap)}px;height:${Math.max(0, bottom - fr.y - (bottom >= fr.y + fr.h ? 2 : 1) * gap)}px`;
         this.pages[fr.page].selTop.append(r);
       }
-    } else if (!empty) {
+    }
+    if (!empty) {
       for (let p = from.p; p <= to.p; p++) {
+        // With cells selected, the text outside the table (a drag beyond it) is highlighted too.
+        if (cells?.size && doc.paras[p]?.cell) continue;
         const plo = story.paras[p];
         const idx = story.index[p];
         if (!plo || !idx) continue;
@@ -1522,9 +1542,8 @@ export class View {
     if (pv.el !== this.caret.parentElement) pv.el.append(this.caret);
     const px = (devicePixelRatio || 1) * this.zoomFactor;
     this.caret.style.display = "";
-    this.caret.style.left = `${Math.round(c.x * px) / px}px`;
-    this.caret.style.top = `${c.y}px`;
-    this.caret.style.height = `${c.h}px`;
+    this.caret.style.transform = `translate(${Math.round(c.x * px) / px}px, ${Math.round(c.y * px) / px}px)`;
+    this.caret.style.height = `${Math.round(c.h * px) / px}px`;
     this.caret.style.width = `${Math.max(1, Math.round(devicePixelRatio || 1)) / px}px`;
     this.restartBlink();
   }
