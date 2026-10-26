@@ -38,6 +38,9 @@ export interface Frame {
   h: number;
   /** For cells: which cell (cellKey). */
   readonly cell?: string;
+  /** For cells: the height their content needs with the cell margins, and the row's border widths (px). */
+  readonly need?: number;
+  readonly rowBorders?: number;
 }
 
 /** A line number on a page: right edge x and baseline y (px), and its font. */
@@ -1380,7 +1383,7 @@ class Flow {
     for (const cell of row.cells) {
       const merged = cell.vMerge === "continue";
       const cellH = cell.span > 1 && !split ? h + sum(g.rows.map((x) => x.height), r + 1, r + cell.span) : h;
-      const fr = this.frame({ page: page.index, story, kind: "cell", x: cell.x, y: top, w: cell.w, h: cellH, cell: cell.paras.length ? cellKey(paras[cell.paras[0]].cell!) : undefined });
+      const fr = this.frame({ page: page.index, story, kind: "cell", x: cell.x, y: top, w: cell.w, h: cellH, cell: cell.paras.length ? cellKey(paras[cell.paras[0]].cell!) : undefined, need: cell.need, rowBorders: row.topW + row.bottomW });
       if (!merged && cell.shading) page.deco.push({ kind: "rect", story, x: cell.x, y: top, w: cell.w, h: cellH, fill: cell.shading });
       // Content, vertically aligned in the cell.
       let y = top + row.topW + cell.margins.top * PT;

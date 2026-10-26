@@ -1,0 +1,150 @@
+{
+ "meta": {
+  "date": "2026-10-26"
+ },
+ "distribute_rows": {
+  "caret": {
+   "word": [
+    [
+     53.7,
+     "atLeast"
+    ],
+    [
+     53.7,
+     "atLeast"
+    ],
+    [
+     53.7,
+     "atLeast"
+    ],
+    [
+     53.7,
+     "atLeast"
+    ]
+   ],
+   "ours": [
+    [
+     53.7,
+     "atLeast"
+    ],
+    [
+     53.7,
+     "atLeast"
+    ],
+    [
+     53.7,
+     "atLeast"
+    ],
+    [
+     53.7,
+     "atLeast"
+    ]
+   ],
+   "ok": true
+  },
+  "rows12": {
+   "word": [
+    [
+     40.0,
+     "atLeast"
+    ],
+    [
+     40.0,
+     "atLeast"
+    ],
+    [
+     40.0,
+     "exact"
+    ],
+    [
+     9999999.0,
+     null
+    ]
+   ],
+   "ours": [
+    [
+     40,
+     "atLeast"
+    ],
+    [
+     40,
+     "atLeast"
+    ],
+    [
+     40,
+     "exact"
+    ],
+    [
+     null,
+     null
+    ]
+   ],
+   "ok": true
+  },
+  "table": {
+   "word": [
+    [
+     53.7,
+     "atLeast"
+    ],
+    [
+     53.7,
+     "atLeast"
+    ],
+    [
+     53.7,
+     "atLeast"
+    ],
+    [
+     53.7,
+     "atLeast"
+    ]
+   ],
+   "ours": [
+    [
+     53.7,
+     "atLeast"
+    ],
+    [
+     53.7,
+     "atLeast"
+    ],
+    [
+     53.7,
+     "atLeast"
+    ],
+    [
+     53.7,
+     "atLeast"
+    ]
+   ],
+   "ok": true
+  }
+ },
+ "size_handle": {
+  "first drag": {
+   "before": {
+    "width": 453.6,
+    "height": 40.3
+   },
+   "after": {
+    "width": 333.6,
+    "height": 41.8
+   },
+   "height_ok": true,
+   "width_ok": true
+  },
+  "second drag": {
+   "before": {
+    "width": 333.6,
+    "height": 41.8
+   },
+   "after": {
+    "width": 213.6,
+    "height": 43.3
+   },
+   "height_ok": true,
+   "width_ok": true
+  }
+ }
+}

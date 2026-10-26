@@ -341,7 +341,7 @@ export function tablesFeature(api: AppApi) {
     api.focus();
   });
   run("table.distributeColumns", () => ed()?.distributeColumns());
-  run("table.distributeRows", () => ed()?.updateRows((r) => ({ ...r, height: undefined, heightRule: undefined })));
+  run("table.distributeRows", () => ed()?.distributeRows());
   run("table.repeatHeader", () => { const on = !!ed()?.rowDef()?.header; ed()?.updateRows((r) => ({ ...r, header: !on || undefined })); }, inTable, () => !!ed()?.rowDef()?.header);
   c.implement("table.gridlines", { run: () => { const e = ed(); if (e) e.setShowGridlines(!e.showGridlines); }, enabled: inTable, checked: () => !!ed()?.showGridlines });
   run("table.properties", () => void propertiesDialog());

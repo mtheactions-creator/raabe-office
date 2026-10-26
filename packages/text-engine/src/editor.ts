@@ -2004,6 +2004,32 @@ export class Editor {
   splitCell(n: number): void { this.tableOp((p) => E.splitCell(this.doc, p, n)); }
   distributeColumns(): void { this.tableOp((p) => { E.distributeColumns(this.doc, p); }); }
 
+  /**
+   * Zeilen verteilen as in Word (recorded 2026-10-26): the selected rows, or every row of the
+   * table when the selection lies in one row, get the same minimum height: their average
+   * height between the borders, or more if a row's content needs more. So the table keeps its
+   * height where the text fits.
+   */
+  distributeRows(): void {
+    const cell = this.doc.paras[this.range()[0].p]?.cell;
+    if (!cell) return;
+    const tid = cell.table.id;
+    const rows = new Set([...(this.selectedCells() ?? [])].filter((k) => k.startsWith(`${tid}:`)).map((k) => Number(k.split(":")[1])));
+    let lo = Math.min(...rows), hi = Math.max(...rows);
+    if (rows.size < 2) { lo = 0; hi = cell.table.rows.length - 1; }
+    let sum = 0, need = 0;
+    for (let i = lo; i <= hi; i++) {
+      const m = this.rowMeasurePt(tid, i);
+      sum += m.inner;
+      need = Math.max(need, m.need);
+    }
+    const h = Math.round(Math.max(sum / (hi - lo + 1), need) * 20) / 20;
+    const keep = this.sel;
+    this.tableOp((p) => { E.updateTable(this.doc, p, (def) => ({ ...def, rows: def.rows.map((r, i) => (i >= lo && i <= hi ? { ...r, height: h, heightRule: "atLeast" } : r)) })); });
+    this.sel = keep;
+    this.update();
+  }
+
   /** Changes the selected cells' definitions (Schattierung, Rahmen, Ausrichtung). */
   updateCells(change: (c: CellDef, row: number, col: number) => CellDef): void {
     const keep = this.sel;
@@ -7279,9 +7305,10 @@ cropFill(fit: boolean): void {
     const width0 = def0.grid.reduce((a, b) => a + b, 0);
     // The table's left edge on the page before the drag (points), for page-anchored moves.
     const tid0Left = this.tableLeftPt(tid);
-    const pl = this.layout.placed[this.layout.firstPlaced[p]];
-    const pageH = pl ? this.view.tableBounds(this.layout.pages[pl.page], tid) : null;
-    const height0 = pageH ? pageH.h / PT : 0;
+    // The rows' heights between their borders when the drag starts: measured during the drag
+    // they would already include the previous step's scaling (a new table grew without end).
+    const rowH0 = def0.rows.map((_, i) => this.rowMeasurePt(tid, i).inner);
+    const sum0 = rowH0.reduce((a, b) => a + b, 0);
     const sx = e.clientX, sy = e.clientY;
     let started = false;
     const move = (ev: MouseEvent) => {
@@ -7319,12 +7346,12 @@ cropFill(fit: boolean): void {
         }
       } else {
         const fx = Math.max(0.1, (width0 + dx) / width0);
-        const fy = height0 > 0 ? Math.max(0.1, (height0 + dy) / height0) : 1;
+        const fy = sum0 > 0 ? Math.max(0.1, (sum0 + dy) / sum0) : 1;
         E.updateTable(this.doc, at, (d) => ({
           ...d, grid: def0.grid.map((g) => g * fx),
           rows: def0.rows.map((r, i) => ({
             ...r, cells: r.cells.map((c) => (c.width !== undefined ? { ...c, width: c.width * fx } : c)),
-            height: fy !== 1 ? Math.max(4, ((r.height ?? 0) || this.rowHeightPt(tid, i)) * fy) : r.height,
+            height: fy !== 1 ? Math.max(4, rowH0[i] * fy) : r.height,
             heightRule: fy !== 1 ? (r.heightRule ?? "atLeast") : r.heightRule,
           })),
         }));
@@ -7343,12 +7370,19 @@ cropFill(fit: boolean): void {
     return Number.isFinite(x) ? x / PT : 0;
   }
 
-  /** A row's laid-out height in points (from its first cell's frame). */
-  private rowHeightPt(tid: number, row: number): number {
+  /**
+   * A row as Word measures it, in points: its height between the borders (what a set row
+   * height means) and the height its tallest cell's content needs.
+   */
+  private rowMeasurePt(tid: number, row: number): { inner: number; need: number } {
+    let key: string | undefined, h = 0, borders = 0, need = 0;
     for (const f of this.layout.frames) {
-      if (f.kind === "cell" && f.cell?.startsWith(`${tid}:${row}:`)) return f.h / PT;
+      if (f.kind !== "cell" || !f.cell?.startsWith(`${tid}:${row}:`)) continue;
+      key ??= f.cell;
+      if (f.cell === key) { h += f.h; borders = f.rowBorders ?? 0; }
+      need = Math.max(need, f.need ?? 0);
     }
-    return 14;
+    return key ? { inner: (h - borders) / PT, need: need / PT } : { inner: 14, need: 0 };
   }
 
   private dragTo(clientX: number, clientY: number, ts?: number): void {

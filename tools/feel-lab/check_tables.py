@@ -71,7 +71,7 @@ def main() -> None:
         while y < y1 + 2:
             winapi.move(cx, y)
             time.sleep(0.03)
-            if t.js("getComputedStyle(document.querySelector('.workspace')).cursor") == "row-resize":
+            if t.js("getComputedStyle(document.querySelector('.workspace')).cursor").endswith("row-resize"):
                 found = y
                 break
             y += 1

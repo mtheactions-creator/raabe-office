@@ -195,7 +195,9 @@ class WordTarget(Target):
 
 # ----- prototypes and apps -----------------------------------------------------------------
 
-RAABE_WRITE_EXE = ROOT / "apps/raabe-write/src-tauri/target/release/raabe-write.exe"
+# RAABE_WRITE_EXE overrides it: a build in another target folder, while the owner has the app
+# open and the release exe cannot be replaced.
+RAABE_WRITE_EXE = Path(os.environ.get("RAABE_WRITE_EXE") or ROOT / "apps/raabe-write/src-tauri/target/release/raabe-write.exe")
 
 
 def _pid(hwnd: int) -> int:

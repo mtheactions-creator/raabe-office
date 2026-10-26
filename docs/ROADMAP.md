@@ -36,6 +36,9 @@ drag from a cell into the text after the table ended mid-word (both fixed). Beha
 206/207, F3 49/50, F3b 44/44, formula editor 152/152, F4b 1216/1221 (unchanged), F1 32 ms vs
 Word 36 ms, smoke tests all passed.
 
+Fixes after Step 4d, 2026-10-26 (D-060): the sizing handle of a new table no longer makes it
+grow on the first drag; Zeilen verteilen gives the rows Word's heights (3/3 recorded cases).
+
 ## Step 4c: Polish (plan)
 
 Agreed with the owner on 2026-10-15 after trying Step 4b. Same working mode as 4b: Word's

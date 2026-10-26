@@ -296,8 +296,11 @@ pub fn run() {
     fonts::preload();
     spell::preload();
     grammar::preload();
-    tauri::Builder::default()
-        .plugin(tauri_plugin_single_instance::init(|app, argv, cwd| {
+    let mut builder = tauri::Builder::default();
+    // feel-lab runs are instances of their own: handed to the user's open window, a test would
+    // type into the user's documents.
+    if std::env::var_os("RAABE_FEEL_DEBUG_PORT").is_none() {
+        builder = builder.plugin(tauri_plugin_single_instance::init(|app, argv, cwd| {
             let files = docx_args(argv.into_iter().skip(1), Some(&cwd));
             if let Some(w) = app.get_webview_window("main") {
                 let _ = w.unminimize();
@@ -306,7 +309,9 @@ pub fn run() {
             if !files.is_empty() {
                 let _ = app.emit("open-files", files);
             }
-        }))
+        }));
+    }
+    builder
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_clipboard_manager::init())
         .manage(StartupFiles(Mutex::new(docx_args(args.clone(), None))))

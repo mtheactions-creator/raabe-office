@@ -59,6 +59,10 @@ Display: 4K at 150 % scaling, currently 30 Hz.
   (not on Git Bash's PATH: `export PATH="$HOME/.cargo/bin:$PATH"`).
 - Icons: edit `packages/shell/scripts/icons.json`, then `node packages/shell/scripts/build-icons.mjs`.
 - After any frontend change, rebuild the exe before running feel-lab or the smoke test.
+- If the owner has RaabeWrite open, the release exe cannot be replaced: build into another
+  folder (`CARGO_TARGET_DIR=<repo>/apps/raabe-write/src-tauri/target/check`) and point the
+  harness at it with `RAABE_WRITE_EXE=<that folder>/release/raabe-write.exe`. Never close the
+  owner's window. Test instances skip the single-instance handling (D-060).
 - Test documents for layout are built by Word itself: `tools/feel-lab/make_fixtures.py`
   (`--layout`, `--fonts`, `--breaks`, `--top`, ...) writes them to `packages/ooxml/test/fixtures/`.
 

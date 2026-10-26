@@ -1103,3 +1103,26 @@ built the same way:
   at the drop point, a .docx opens in a tab of its own. The web view gives the page no file path,
   so a dropped document is saved with Speichern unter the first time; text from other programs
   is pasted at the drop point.
+
+### D-060 Row heights: the sizing handle and Zeilen verteilen (2026-10-26)
+Two bugs the owner found after Step 4d, fixed with their go-ahead:
+- **The sizing handle of a new table** made it grow without end on the first drag: the rows had
+  no set height, so each mouse move measured them on the page, where the previous move had
+  already scaled them. The rows are now measured once when the drag starts, as their height
+  between the borders (what a set row height means in Word), and scaled on their sum. A second
+  drag had worked because the first one had set the heights.
+- **Zeilen verteilen** removed every row height, so the rows shrank to their text. Word
+  (recorded 2026-10-26, `check_table_rows.py`): the selected rows, or all rows of the table
+  when the selection lies in one row, get the same minimum height (Mindestens, an exact height
+  too): their average height between the borders, or more if a row's content needs more. So
+  the table keeps its height where the text fits (rows of 20 and 60 pt become 40 and 40), and
+  otherwise the rows are as tall as the tallest content (20, 60, 40 pt exact and a row of four
+  lines: all 53.7 pt). Ours now gives the same heights in all three recorded cases. The layout
+  hands the editor each cell's content height and the row's border widths for this
+  (`Frame.need`, `Frame.rowBorders`).
+
+Found on the way: the owner had RaabeWrite open, so the release exe could not be rebuilt, and
+the app's single-instance handling would have handed every test window to the owner's window
+(a test would have typed into their documents). Test instances (`RAABE_FEEL_DEBUG_PORT` set)
+now skip the single-instance handling, and the harness takes another build through
+`RAABE_WRITE_EXE` (built with `CARGO_TARGET_DIR=src-tauri/target/check`).
