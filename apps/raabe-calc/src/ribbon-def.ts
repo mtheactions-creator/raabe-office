@@ -63,10 +63,12 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
   const paste = split("edit.paste", "V", "large", m.paste);
   const autosum = split("edit.autosum", "KA", "small", m.autosum, "AutoSumme");
 
+  // The shrink orders follow Excel's own at window widths from 2000 to 800 px (capture_excel_ui.py).
   return [
     {
       id: "start", label: "Start", key: "R",
-      shrink: ["editing", "styles", "cells", "number", "alignment", "font", "clipboard"],
+      // Recorded at window widths from 2000 to 800 px: Formatvorlagen never collapses.
+      shrink: ["editing", "cells", "number", "alignment", "font", "clipboard"],
       groups: [
         {
           id: "clipboard", label: "Zwischenablage", key: "ZL", icon: "paste",
@@ -125,7 +127,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
     },
     {
       id: "insert", label: "Einfügen", key: "I",
-      shrink: ["text", "links", "filters", "sparklines", "charts", "illustrations", "tables"],
+      shrink: ["illustrations", "symbols", "text", "filters", "sparklines", "tables"],
       groups: [
         {
           id: "tables", label: "Tabellen", key: "ZB", icon: "table",
@@ -165,7 +167,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
     },
     {
       id: "layout", label: "Seitenlayout", key: "S",
-      shrink: ["arrange", "sheetOptions", "scale", "pageSetup", "themes"],
+      shrink: ["arrange", "sheetOptions", "scale", "themes"],
       groups: [
         {
           id: "themes", label: "Designs", key: "ZT", icon: "themes",
@@ -203,7 +205,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
     },
     {
       id: "formulas", label: "Formeln", key: "O",
-      shrink: ["calculation", "auditing", "names", "library"],
+      shrink: ["names", "auditing", "library"],
       groups: [
         {
           id: "library", label: "Funktionsbibliothek", key: "ZF", icon: "fx",
@@ -228,7 +230,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
     },
     {
       id: "data", label: "Daten", key: "V",
-      shrink: ["outline", "forecast", "tools", "sortFilter", "queries", "get"],
+      shrink: ["outline", "tools", "forecast", "sortFilter"],
       groups: [
         {
           id: "get", label: "Daten abrufen und transformieren", key: "Z1", icon: "document",
@@ -250,7 +252,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
     },
     {
       id: "review", label: "Überprüfen", key: "P",
-      shrink: ["protect", "notes", "comments", "language", "accessibility", "proofing"],
+      shrink: ["notes", "protect", "comments", "proofing"],
       groups: [
         { id: "proofing", label: "Rechtschreibung", key: "ZP", icon: "spelling", controls: [b("review.spelling", "BE", "large"), stack(b("review.thesaurus", "T"), b("review.statistics", "S1"))] },
         { id: "accessibility", label: "Barrierefreiheit", key: "Z2", icon: "check", controls: [b("review.accessibility", "B1", "large")] },
@@ -262,7 +264,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
     },
     {
       id: "view", label: "Ansicht", key: "F",
-      shrink: ["window", "zoom", "show", "views"],
+      shrink: ["show", "views", "window", "zoom"],
       groups: [
         { id: "views", label: "Arbeitsmappenansichten", key: "ZV", icon: "document", controls: [b("view.normal", "C", "large"), b("view.pageBreak", "V1", "large"), b("view.pageLayout", "I", "large")] },
         {

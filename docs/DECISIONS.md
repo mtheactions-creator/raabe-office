@@ -1217,5 +1217,19 @@ Recorded in an Excel of our own with real input (`catalogue_calc.py`, 117 cases;
 - **The AutoFilter dropdown** is a panel under the button as Excel's (recorded with
   `probe_excel_filter.py`), Alt+Unten opens it; a click on a link's text follows it; a finger
   drag scrolls and a tap selects (touch).
+- **Clipboard with Excel** both ways (`check_calc_clipboard.py`): values, number formats and bold
+  as Excel's HTML carries them (classes with `mso-number-format`, `font-weight`, `background`;
+  Excel's names such as "Short Date"); a formula in a Standard cell shows its result in the
+  format of the first referenced cell that has one, HEUTE/DATUM as a date (Excel).
 - Not yet as Excel: the drag of the selection's border onto other sheets, Schnellanalyse,
   Blitzvorschau, data validation, comments (Notizen work).
+
+### D-064 Raabeschule templates for RaabeCalc (2026-10-28)
+As RaabeWrite's (D-035): our own designs from ordinary Excel features, so files from them work in
+Excel, offered in Datei > Neu beside the blank workbook (`apps/raabe-calc/src/templates.ts`):
+**Notenliste** (25 names, three Klassenarbeiten, mündlich, schriftlich and Gesamt with
+MITTELWERT and RUNDEN, averages, fixed header row, Gesamt worse than 4,4 highlighted),
+**Notenspiegel** (counts per grade with ZÄHLENWENN, Durchschnitt, share below 4, a column chart)
+and **Messwerte** (t and s with STEIGUNG, ACHSENABSCHNITT, BESTIMMTHEITSMASS and an s-t chart
+with trendline, equation and R²). The weighting in the Notenliste (written and oral half each) is
+a placeholder the school can change; school material can replace the designs.

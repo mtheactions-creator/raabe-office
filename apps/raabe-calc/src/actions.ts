@@ -3,7 +3,7 @@
 // Every function runs inside the caller's undo step (History.step).
 
 import {
-  MAX_COLS, MAX_ROWS, adjustFormula, cellKey, shiftFormula, type Cell, type CellStyle, type Rect, type Sheet, type Workbook,
+  MAX_COLS, MAX_ROWS, adjustFormula, cellKey, formulaRefs, shiftFormula, toLocalFormula, type Cell, type CellStyle, type Rect, type Sheet, type Workbook,
 } from "@raabe/sheet-engine";
 import { readInput } from "./engine";
 import type { History } from "./ops";
@@ -32,11 +32,35 @@ export function enter(ctx: Ctx, sheet: Sheet, targets: Rect, text: string, origi
     // A line break typed with Alt+Eingabe turns on Textumbruch (Excel).
     if (typeof r.v === "string" && r.v.includes(String.fromCharCode(10)) && !style.wrap) cell.s = ctx.wb.styles.derive(cell.s, (s) => { s.wrap = true; });
     if (r.f !== undefined) cell.f = row === origin.row && col === origin.col ? r.f : shiftFormula(r.f, row - origin.row, col - origin.col);
+    // A formula in a Standard cell shows its result in the format of a referenced cell (the first
+    // one that has one), or as a date for HEUTE/JETZT/DATUM, as Excel does.
+    if (cell.f !== undefined && style.numFmt === "General") {
+      const fmt = formulaFormat(ctx.wb, sheet, cell.f);
+      if (fmt) cell.s = ctx.wb.styles.derive(cell.s, (s) => { s.numFmt = fmt; });
+    }
     if (r.numFmt && (style.numFmt === "General" || isDateLike(r.numFmt) !== isDateLike(style.numFmt) || style.numFmt === "0%" && r.numFmt !== "0%")) {
       cell.s = ctx.wb.styles.derive(cell.s, (s) => { s.numFmt = r.numFmt!; });
     }
     sheet.set(row, col, cell);
   });
+}
+
+function formulaFormat(wb: import("@raabe/sheet-engine").Workbook, sheet: Sheet, file: string): string | undefined {
+  const upper = file.toUpperCase();
+  if (/^(TODAY|DATE|EDATE|EOMONTH|WORKDAY)\(/.test(upper)) return "m/d/yyyy";
+  if (/^NOW\(/.test(upper)) return "m/d/yyyy h:mm";
+  try {
+    for (const ref of formulaRefs(toLocalFormula(file))) {
+      if (ref.sheet) continue;
+      for (let row = ref.ref.r0; row <= Math.min(ref.ref.r1, ref.ref.r0 + 200); row++) for (let col = ref.ref.c0; col <= Math.min(ref.ref.c1, ref.ref.c0 + 50); col++) {
+        const c = sheet.get(row, col);
+        if (!c) continue;
+        const fmt = wb.styles.get(c.s).numFmt;
+        if (fmt !== "General" && fmt !== "@") return fmt;
+      }
+    }
+  } catch { /* no references */ }
+  return undefined;
 }
 
 function isDateLike(code: string): boolean {

@@ -45,6 +45,8 @@ export interface GridHost {
   errorMenu(kind: "text-number" | "error", anchor: DOMRect): void;
   /** Enter while copied cells are marked: paste them; true when it did. */
   enterPaste(): boolean;
+  /** The Namenfeld's arrow: the workbook's names to go to. */
+  namesMenu(anchor: DOMRect): void;
   /** A link was clicked: a web address, a file or "#Sheet!A1" inside the workbook. */
   followLink(target: string): void;
 }
@@ -91,7 +93,8 @@ export class Grid {
     const ok = h("button", { class: "fx-btn", "aria-label": "Eingeben", "data-tip": "Eingeben", onclick: () => this.commitEdit("none") }, "✓");
     const insertFn = h("button", { class: "fx-btn fx-fn", "aria-label": "Funktion einfügen", "data-tip": "Funktion einfügen", onclick: () => this.startFormulaFromButton() }, h("i", {}, "fx"));
     this.formulaBar = h("div", { class: "fbar" },
-      h("div", { class: "namebox-wrap" }, this.nameBox, h("button", { class: "namebox-dd", "aria-label": "Namenfeld", tabindex: "-1" }, "⌄")),
+      h("div", { class: "namebox-wrap" }, this.nameBox, h("button", { class: "namebox-dd", "aria-label": "Namenfeld", tabindex: "-1",
+        onmousedown: (e: MouseEvent) => { e.preventDefault(); this.host.namesMenu((e.currentTarget as HTMLElement).closest(".namebox-wrap")!.getBoundingClientRect()); } }, "⌄")),
       h("div", { class: "fbar-sep" }, "⋮"),
       h("div", { class: "fx-btns" }, cancel, ok, insertFn),
       h("div", { class: "fx-wrap" }, this.fx));

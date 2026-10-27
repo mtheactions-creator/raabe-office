@@ -36,6 +36,8 @@ class Case:
     check: list[str] = field(default_factory=list)
     #: Extra sheets to add before the case (names).
     sheets: int = 1
+    #: Today's date or time in the result: compared by format only.
+    today: bool = False
 
 
 def addr_rc(addr: str) -> tuple[int, int]:
@@ -401,7 +403,7 @@ FIELDS = ("mode", "editing", "selection", "active", "sheet", "sheets", "hiddenRo
 CELL_FIELDS = ("formula", "text", "format", "bold", "italic", "underline", "strike", "wrap")
 
 
-def diff(excel: dict, calc: dict) -> list[str]:
+def diff(excel: dict, calc: dict, today: bool = False) -> list[str]:
     out = []
     for f in FIELDS:
         if f not in excel:
@@ -416,6 +418,8 @@ def diff(excel: dict, calc: dict) -> list[str]:
                 out.append(f"{a}: Excel {e and (e['formula'], e['text'])!r}, RaabeCalc {c and (c['formula'], c['text'])!r}")
             continue
         for f in CELL_FIELDS:
+            if today and f in ("formula", "text"):
+                continue
             if e.get(f) != c.get(f):
                 out.append(f"{a}.{f}: Excel {e.get(f)!r}, RaabeCalc {c.get(f)!r}")
     # Column widths: only those Excel changed by itself (AutoAnpassen, formatted numbers).
@@ -431,7 +435,9 @@ def diff(excel: dict, calc: dict) -> list[str]:
 def compare_calc(cases: list[Case], out, date: str) -> None:
     import json as _json
     import os
-    excel = _json.loads((out / f"{date}-catalogue-calc-excel.json").read_text(encoding="utf-8"))
+    # Excel's outcomes: the latest recording (recording and comparing may happen on different days).
+    latest = sorted(out.glob("*-catalogue-calc-excel.json"))[-1]
+    excel = _json.loads(latest.read_text(encoding="utf-8"))
     side = CalcSide()
     results = {}
     try:
@@ -450,7 +456,7 @@ def compare_calc(cases: list[Case], out, date: str) -> None:
                     print("   ", s, side.js("JSON.stringify([__calc.state([]).selection, __calc.app.grid.mode, document.activeElement.className])"))
             time.sleep(0.3)
             st = side.state(c)
-            d = diff(excel[c.name], st)
+            d = diff(excel[c.name], st, c.today)
             results[c.name] = {"area": c.area, "ok": not d, "diff": d}
             print(f"{'ok ' if not d else 'XX '} {c.area:10} {c.name:45} {'; '.join(d)[:160]}")
     finally:

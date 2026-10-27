@@ -143,7 +143,7 @@ CASES: list[Case] = [
     C("Strg+9 hides row", {}, [("keys", "ctrl+9")], "format", start="A3"),
     C("Strg+0 hides column", {}, [("keys", "ctrl+0")], "format", start="C1"),
     C("column border double-click fits", {"B1": "Ein ziemlich langer Text"}, [("colborder", "B")], "format"),
-    C("Strg+. inserts date", {}, [("keys", "ctrl+period"), ("keys", "enter")], "format"),
+    C("Strg+. inserts date", {}, [("keys", "ctrl+period"), ("keys", "enter")], "format", today=True),
     # ----- sheets ------------------------------------------------------------------------------------
     C("Umschalt+F11 new sheet", {}, [("keys", "shift+f11")], "sheets"),
     C("Strg+Bild ab next sheet", {}, [("keys", "ctrl+pagedown")], "sheets", sheets=2),

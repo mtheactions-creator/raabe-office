@@ -16,7 +16,7 @@ What each app does, ordered by priority. **M** = first usable version (MVP),
 | AutoSave every 30 s + crash recovery | M | Local only |
 | Document tabs in one window | M | D-010 |
 | Recent files list, pinned files | M | |
-| Templates gallery (Neu) incl. Raabeschule templates | M | Done in Step 4: Arbeitsblatt, Facharbeit, Versuchsprotokoll, Handout (D-035); school material can replace them |
+| Templates gallery (Neu) incl. Raabeschule templates | M | Done in Step 4: Arbeitsblatt, Facharbeit, Versuchsprotokoll, Handout (D-035); RaabeCalc: Notenliste, Notenspiegel, Messwerte (D-064); school material can replace them |
 | Search box "Suchen" (Alt+M) that finds and runs commands | M | Done in Step 1 |
 | Keytips (Alt shortcuts) with Word's German letters | M | Done in Step 1 |
 | Dark mode | L | After the pilot (agreed) |

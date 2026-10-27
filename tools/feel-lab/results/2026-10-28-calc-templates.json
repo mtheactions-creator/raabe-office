@@ -1,0 +1,35 @@
+{
+ "notenliste": {
+  "sheet": "Notenliste",
+  "charts": 0,
+  "used": "A1:G31",
+  "errors": [],
+  "sample": {
+   "E4": "Mündlich",
+   "B12": "",
+   "G31": ""
+  }
+ },
+ "notenspiegel": {
+  "sheet": "Notenspiegel",
+  "charts": 1,
+  "used": "A1:D14",
+  "errors": [],
+  "sample": {
+   "E4": "",
+   "B12": "0",
+   "G31": ""
+  }
+ },
+ "messwerte": {
+  "sheet": "Messwerte",
+  "charts": 1,
+  "used": "A1:E10",
+  "errors": [],
+  "sample": {
+   "E4": "2,009",
+   "B12": "",
+   "G31": ""
+  }
+ }
+}

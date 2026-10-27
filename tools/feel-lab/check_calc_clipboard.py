@@ -48,7 +48,8 @@ def main() -> None:
         time.sleep(0.5)
         expect2 = {a: ws.Range(a).Text for a in DATA}
         got2 = {a: ws.Range(chr(ord(a[0]) + 3) + str(int(a[1:]) + 1)).Text for a in DATA}
-        out["raabecalc->excel"] = {"expected": expect2, "got": got2, "same": expect2 == got2,
+        bold2 = [bool(ws.Range("D2").Font.Bold), bool(ws.Range("E2").Font.Bold)]
+        out["raabecalc->excel"] = {"expected": expect2, "got": got2, "same": expect2 == got2, "boldD2E2": bold2,
                                    "values": {a: ws.Range(chr(ord(a[0]) + 3) + str(int(a[1:]) + 1)).Value2 for a in ("B2", "B3", "B5")}}
     finally:
         c.close()

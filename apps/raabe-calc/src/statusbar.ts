@@ -2,7 +2,7 @@
 // statistics of the selection (Mittelwert, Anzahl, Summe when at least two cells hold values),
 // the view buttons and the zoom slider on the right.
 
-import { h, icon, type Commands } from "@raabe/shell";
+import { h, icon, showMenu, type Commands } from "@raabe/shell";
 
 function sliderToZoom(v: number): number {
   return v <= 50 ? 10 + (v / 50) * 90 : 100 + ((v - 50) / 50) * 300;
@@ -27,7 +27,11 @@ export class CalcStatusBar {
   private slider = h("input", { type: "range", min: "0", max: "100", step: "0.5", "aria-label": "Zoom" }) as HTMLInputElement;
   private pct = h("button", { class: "cell pct", "data-tip": "Zoom" });
 
-  constructor(commands: Commands, onZoom: (z: number) => void, private format: (v: number) => string) {
+  /** What the statistics show; Excel's default is Mittelwert, Anzahl and Summe. */
+  private shown: Record<string, boolean> = { avg: true, count: true, numbers: false, min: false, max: false, sum: true };
+  private last: { zoom: number; s: Stats | null } = { zoom: 100, s: null };
+
+  constructor(private commands: Commands, onZoom: (z: number) => void, private format: (v: number) => string) {
     const views = ["view.normal", "view.pageLayout", "view.pageBreak"].map((id) => {
       const c = commands.get(id);
       const b = h("button", { class: "cell viewbtn", "aria-label": c.label, "data-tip": commands.tooltip(id), onclick: () => void commands.run(id) }, icon(c.icon));
@@ -40,7 +44,7 @@ export class CalcStatusBar {
       const z = sliderToZoom(Number(this.slider.value));
       onZoom(Math.max(10, Math.min(400, Math.round((z + d) / 10) * 10)));
     };
-    this.el = h("div", { class: "statusbar", role: "status" }, this.mode,
+    this.el = h("div", { class: "statusbar", role: "status", oncontextmenu: (e: MouseEvent) => this.menu(e) }, this.mode,
       h("div", { class: "right" }, this.stats, ...views,
         h("div", { class: "zoom" },
           h("button", { "aria-label": "Verkleinern", "data-tip": "Verkleinern", onclick: step(-10) }, "−"),
@@ -53,14 +57,27 @@ export class CalcStatusBar {
     this.mode.textContent = text;
   }
 
+  /** Statusleiste anpassen: which statistics are shown (right click, as in Excel). */
+  private menu(e: MouseEvent): void {
+    e.preventDefault();
+    const entry = (key: string, label: string) => ({ label, checked: this.shown[key], run: () => { this.shown[key] = !this.shown[key]; this.update(this.last.zoom, this.last.s); } });
+    showMenu(this.commands, [{ heading: "Statusleiste anpassen" }, entry("avg", "Mittelwert"), entry("count", "Anzahl"), entry("numbers", "Numerische Zählung"),
+      entry("min", "Minimum"), entry("max", "Maximum"), entry("sum", "Summe")], new DOMRect(e.clientX, e.clientY, 0, 0));
+  }
+
   update(zoom: number, s: Stats | null): void {
+    this.last = { zoom, s };
     if (document.activeElement !== this.slider) this.slider.value = String(zoomToSlider(zoom));
     this.pct.textContent = `${zoom} %`;
     const parts: string[] = [];
+    const on = this.shown;
     if (s && s.count >= 2) {
-      if (s.numbers > 0) parts.push(`Mittelwert: ${this.format(s.sum / s.numbers)}`);
-      parts.push(`Anzahl: ${s.count}`);
-      if (s.numbers > 0) parts.push(`Summe: ${this.format(s.sum)}`);
+      if (on.avg && s.numbers > 0) parts.push(`Mittelwert: ${this.format(s.sum / s.numbers)}`);
+      if (on.count) parts.push(`Anzahl: ${s.count}`);
+      if (on.numbers && s.numbers > 0) parts.push(`Numerische Zählung: ${s.numbers}`);
+      if (on.min && s.numbers > 0) parts.push(`Min: ${this.format(s.min)}`);
+      if (on.max && s.numbers > 0) parts.push(`Max: ${this.format(s.max)}`);
+      if (on.sum && s.numbers > 0) parts.push(`Summe: ${this.format(s.sum)}`);
     }
     this.stats.replaceChildren(...parts.map((p) => h("span", { class: "cell stat" }, p)));
   }

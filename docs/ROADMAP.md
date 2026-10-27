@@ -55,11 +55,13 @@ Einfügeoptionen and AutoAusfülloptionen buttons, error indicators and their me
 Schnellanalyse button, context menus of cells, headers and sheet tabs, and every keyboard
 shortcut Excel reports on the German keyboard.
 
-Status 2026-10-27 night: A (Excel reference side, raabe-host crate, .xlsx package, the app with
-Excel's ribbon), B (grid, formats, .xlsx with 0 differences in Excel), C (formula engine,
-4229/4234 Excel results), D (controls: behaviour catalogue 142/142 cases as in Excel, context
-menus and tooltips recorded) and E (charts) are built (D-062, D-063). F (printing, conditional
-formatting, AutoFilter, CSV are in; the audit is open).
+Status 2026-10-28 morning ([report](reports/2026-10-28-step7-overnight.md)): A (Excel reference
+side, raabe-host crate, .xlsx package, the app with Excel's ribbon), B (grid, formats, .xlsx with
+0 differences in Excel), C (formula engine, 4229/4234 Excel results), D (controls: behaviour
+catalogue 142/142 cases as in Excel, context menus, ribbon menus and tooltips recorded), E
+(charts) and F (printing as Excel's PDF, clipboard with Excel both ways, CSV, conditional
+formatting, AutoFilter panel, templates D-064) are built (D-062, D-063). Open: the owner's trial
+and list; the deferred features in the report.
 
 ## Step 8: RaabePresent (proposal, not yet agreed)
 

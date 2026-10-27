@@ -1,0 +1,77 @@
+{
+ "excel->raabecalc": {
+  "expected": {
+   "D2": "Name",
+   "E2": "Wert",
+   "D3": "Anna",
+   "E3": "12,5",
+   "D4": "Ben",
+   "E4": "1.234",
+   "D5": "Datum",
+   "E5": "01.01.2026",
+   "D6": "Anteil",
+   "E6": "15%",
+   "D7": "Summe",
+   "E7": "1.247"
+  },
+  "got": {
+   "D2": "Name",
+   "E2": "Wert",
+   "D3": "Anna",
+   "E3": "12,5",
+   "D4": "Ben",
+   "E4": "1.234",
+   "D5": "Datum",
+   "E5": "01.01.2026",
+   "D6": "Anteil",
+   "E6": "15%",
+   "D7": "Summe",
+   "E7": "1.247"
+  },
+  "boldD2E2": [
+   true,
+   true
+  ],
+  "same": true
+ },
+ "raabecalc->excel": {
+  "expected": {
+   "A1": "Name",
+   "B1": "Wert",
+   "A2": "Anna",
+   "B2": "12,5",
+   "A3": "Ben",
+   "B3": "1.234",
+   "A4": "Datum",
+   "B4": "01.01.2026",
+   "A5": "Anteil",
+   "B5": "15%",
+   "A6": "Summe",
+   "B6": "1.247"
+  },
+  "got": {
+   "A1": "Name",
+   "B1": "Wert",
+   "A2": "Anna",
+   "B2": "12,5",
+   "A3": "Ben",
+   "B3": "1.234",
+   "A4": "Datum",
+   "B4": "1.1.2026",
+   "A5": "Anteil",
+   "B5": "15%",
+   "A6": "Summe",
+   "B6": "1.247"
+  },
+  "same": false,
+  "boldD2E2": [
+   false,
+   false
+  ],
+  "values": {
+   "B2": 12.5,
+   "B3": 1234.0,
+   "B5": 0.15
+  }
+ }
+}

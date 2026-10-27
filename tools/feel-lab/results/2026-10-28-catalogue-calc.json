@@ -1,0 +1,75 @@
+{
+ "summary": "14/14",
+ "cases": {
+  "Strg+Umschalt+F bold": {
+   "area": "format",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+Umschalt+K italic": {
+   "area": "format",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+Umschalt+U underline": {
+   "area": "format",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+2 bold": {
+   "area": "format",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+5 strike": {
+   "area": "format",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+Umschalt+4 currency": {
+   "area": "format",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+Umschalt+5 percent": {
+   "area": "format",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+Umschalt+1 number": {
+   "area": "format",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+Umschalt+3 date": {
+   "area": "format",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+Umschalt+6 scientific": {
+   "area": "format",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+9 hides row": {
+   "area": "format",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+0 hides column": {
+   "area": "format",
+   "ok": true,
+   "diff": []
+  },
+  "column border double-click fits": {
+   "area": "format",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+. inserts date": {
+   "area": "format",
+   "ok": true,
+   "diff": []
+  }
+ }
+}

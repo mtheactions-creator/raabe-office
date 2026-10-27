@@ -21,6 +21,7 @@ import * as A from "./actions";
 import { formulaLocal, makeCalc, readCsv, shown, writeCsv, type CalcLike } from "./engine";
 import { ribbonTabs, type RibbonContext } from "./ribbon-def";
 import { applyTips } from "./tooltips";
+import { CALC_TEMPLATES, templateWorkbook, type CalcTemplate } from "./templates";
 import { SheetBar } from "./sheetbar";
 import { CalcStatusBar, type Stats } from "./statusbar";
 import { parseClipboard, rangeHtml, rangeText, type Copied } from "./clipboard";
@@ -152,9 +153,9 @@ export class CalcApp {
     return doc;
   }
 
-  newDoc(): void {
+  newDoc(template?: CalcTemplate): void {
     this.untitled++;
-    const doc = this.makeDoc(newWorkbook(), `Mappe${this.untitled}`, null);
+    const doc = this.makeDoc(template ? templateWorkbook(template) : newWorkbook(), `Mappe${this.untitled}`, null);
     // A new, untouched Mappe1 is replaced by the next opened file (Excel).
     this.docs.push(doc);
     this.activate(doc);
@@ -253,6 +254,11 @@ export class CalcApp {
       contextMenu: (e, kind) => this.contextMenu(e, kind),
       key: (e) => this.shortcut(e),
       filterMenu: (col, anchor) => void this.dlg.filterMenu(col, anchor),
+      namesMenu: (anchor) => {
+        const names = this.wb.names.filter((n) => !n.name.startsWith("_xlnm") && !n.hidden);
+        showMenu(this.commands, names.length ? names.map((n) => ({ label: n.name, run: () => { this.grid.goTo(n.name); this.grid.focus(); } }))
+          : [{ label: "(keine Namen)", run: () => {}, disabled: true }], anchor);
+      },
       followLink: (target) => {
         if (target.startsWith("#")) {
           const m = /^#(?:'?([^'!]+)'?!)?(.+)$/.exec(target);
@@ -632,11 +638,22 @@ export class CalcApp {
     let html = "";
     try { if (this.platform.clipboardReadHtml) html = await this.platform.clipboardReadHtml(); } catch { /* text only */ }
     const rows = parseClipboard(html, text);
-    if (!rows.length || (rows.length === 1 && rows[0].length === 1 && rows[0][0] === "" )) return;
+    if (!rows.length || (rows.length === 1 && rows[0].length === 1 && rows[0][0].text === "")) return;
     const r = { r0: at.row, c0: at.col, r1: at.row + rows.length - 1, c1: at.col + Math.max(...rows.map((x) => x.length)) - 1 };
     this.change("Einfügen", () => {
-      rows.forEach((cells, i) => cells.forEach((t, j) => {
-        A.enter(this.ctx, this.sheet, { r0: at.row + i, c0: at.col + j, r1: at.row + i, c1: at.col + j }, t);
+      rows.forEach((cells, i) => cells.forEach((c, j) => {
+        const cell = { r0: at.row + i, c0: at.col + j, r1: at.row + i, c1: at.col + j };
+        A.enter(this.ctx, this.sheet, cell, c.text);
+        // The look from the other program (Excel's classes, Word's styles): bold, colours, number format.
+        const l = c.look;
+        if (l && what !== "values") A.format(this.ctx, this.sheet, [cell], (s) => {
+          if (l.bold) s.font.bold = true;
+          if (l.italic) s.font.italic = true;
+          if (l.underline) s.font.underline = "single";
+          if (l.color) s.font.color = l.color;
+          if (l.fill) s.fill = l.fill;
+          if (l.numFmt) s.numFmt = l.numFmt;
+        });
       }));
     });
     this.grid.select(r, at);
@@ -1678,9 +1695,10 @@ export class CalcApp {
       const hr = new Date().getHours();
       return hr < 11 ? "Guten Morgen" : hr < 18 ? "Guten Tag" : "Guten Abend";
     };
+    const thumb = (header: string) => h("div", { class: "thumb calc-thumb" }, ...Array.from({ length: 30 }, (_, i) => h("span", { style: i < 5 && header ? `background:${header}` : "" })));
     const blank = () => h("div", { class: "templates" },
-      h("button", { class: "template", onclick: () => { this.backstage.close(); this.newDoc(); } },
-        h("div", { class: "thumb calc-thumb" }, ...Array.from({ length: 30 }, () => h("span"))), h("span", null, "Leere Arbeitsmappe")));
+      h("button", { class: "template", onclick: () => { this.backstage.close(); this.newDoc(); } }, thumb(""), h("span", null, "Leere Arbeitsmappe")),
+      ...CALC_TEMPLATES.map((t) => h("button", { class: "template", onclick: () => { this.backstage.close(); this.newDoc(t.id); } }, thumb("#F2D7D8"), h("span", null, t.name))));
     return [
       { id: "home", label: "Startseite", icon: "home", page: () => h("div", null, h("h1", null, greeting()), h("h2", null, "Neu"), blank(), h("h2", null, "Zuletzt verwendet"), this.recentTable()) },
       { id: "new", label: "Neu", icon: "new", page: () => h("div", null, h("h1", null, "Neu"), blank()) },
@@ -1748,6 +1766,8 @@ export class CalcApp {
         const r = addr(start);
         this.grid.selectCell(r.r0, r.c0);
       },
+      /** A template as a new workbook, saved to a given file (check_calc_templates.py). */
+      template: async (id: CalcTemplate, path: string) => { this.newDoc(id); await this.platform.writeFile(path, writeXlsx(this.wb)); },
       /** Als PDF exportieren into a given file (check_calc_print.py). */
       pdf: (path: string) => this.print.exportPdf(path),
       /** Opens a file as Öffnen does (compare_calc_files.py). */

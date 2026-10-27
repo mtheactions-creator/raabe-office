@@ -41,12 +41,16 @@ grid and the controls were built and measured against Excel.
 
 | What | Result |
 |---|---|
-| Behaviour catalogue (real input, Excel vs RaabeCalc) | see below |
+| Behaviour catalogue (real input, Excel vs RaabeCalc) | 142/142 cases |
 | Formulas (Excel's results) | 4229/4234 (5 are Excel's own floating-point/iteration quirks) |
 | Number formats and typed input | ≈ 66 000 recorded cases equal (≈ 210 listed differences) |
 | .xlsx round trip checked by Excel | 0 differences, 0 repair prompts, 17 files |
 | Chart axis scaling | 145/145 axes, 1914/1914 interval limits, 28/28 histogram bins |
 | Speed, 20 000 rows (`perf_calc.py`) | typed value 11 ms, scroll redraw 6 ms median / 14 ms worst, full recalculation 0,26 s |
+| Printing (PDF from both) | pages, lines per page, spacing equal in 3/3 layouts; positions within 0,8 pt |
+| Clipboard with Excel, both ways | values, number formats, bold equal |
+| Templates opened in Excel | 3/3 without repair, results equal |
+| Start / memory | 579 ms vs Excel 936 ms / 365 MB vs Excel 240 MB |
 | RaabeWrite after the crate move | smoke tests 41/41, 28/28, 43/43 |
 
 ## Not done / known gaps
