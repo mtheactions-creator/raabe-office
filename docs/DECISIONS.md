@@ -1126,3 +1126,22 @@ the app's single-instance handling would have handed every test window to the ow
 (a test would have typed into their documents). Test instances (`RAABE_FEEL_DEBUG_PORT` set)
 now skip the single-instance handling, and the harness takes another build through
 `RAABE_WRITE_EXE` (built with `CARGO_TARGET_DIR=src-tauri/target/check`).
+
+### D-061 RaabeCalc next, handling exactly like Excel (2026-10-27)
+Agreed with the owner after a RaabePresent proposal:
+- **Order**: RaabeCalc (Step 7) starts now. RaabePresent's charts come from RaabeCalc's chart
+  engine (SCOPE), and Excel runs as a process of our own (`DispatchEx`), so the harness rules
+  for Word apply unchanged; PowerPoint runs as a single process and needs new rules (Step 8).
+  The RaabeWrite pilot (Step 5) runs alongside when a class fits the timetable; the RaabePresent
+  proposal is kept in the ROADMAP under Step 8 and discussed again before it starts.
+- **Excel in every way, especially the controls**: every control of the grid and the window
+  (cell pointer, edit modes, fill handle, Namenfeld, Bearbeitungsleiste, headers, sheet tabs,
+  scroll bars, status bar, filter buttons, option buttons, context menus, shortcuts; list in the
+  ROADMAP) is recorded in an Excel instance of our own before it is built, and the behaviour
+  catalogue and screen comparison exist for Excel from package A on rather than after the
+  fact as in Step 4b.
+- **Default font** Calibri 11, as in Excel 2013-2022, instead of Excel 365's Aptos Narrow, which
+  we cannot ship (D-011).
+- **Diagramm in RaabeWrite** (deferred, D-041) comes right after Step 7 as Step 7b, with the
+  chart's embedded workbook as Word writes it.
+- The owner leaves the PC for the whole step, so real input is allowed throughout.

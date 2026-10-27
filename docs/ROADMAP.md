@@ -13,11 +13,64 @@ owner's explicit go-ahead.
 | 4b | Word parity for RaabeWrite (D-038): feel basics and audit tools, tables/lists/clipboard, pictures and shapes, own formula editor, all remaining non-deferred ribbon commands, French and Spanish, own grammar checker | done 2026-10-15 ([report](reports/2026-10-15-step4b-word-parity.md)): every non-deferred ribbon command works; 960/965 line starts in 19 Word-built documents, behaviour catalogue 192/193 (the 193rd a Word glitch), formula editor 114/114, grammar in four languages finding more school errors than Word with fewer false alarms, smoke tests 41/41, 28/28, 43/43, 25/25 |
 | 4c | Polish for RaabeWrite (D-053): the owner's list after trying Step 4b (pictures, formulas, tables, cursors, Formatvorlagen) and an audit of the whole app for the same kinds of difference | done 2026-10-15 ([report](reports/2026-10-15-step4c-polish.md)): the owner's list and an audit of the whole app (tooltips, labels, menus and context menus against Word, Livevorschau, double-clicks, panes, clipboard); 1216/1221 line starts in 22 Word-built documents, behaviour catalogue 202/203 (the 203rd a Word glitch), formula editor 146/146, smoke tests 41/41, 28/28, 43/43, 25/25 |
 | 4d | Second polish list from the owner after trying Step 4c (D-059): pictures by drag and drop, text boxes and shapes while edited, the caret, ribbon menus, tables and the border pen, formulas | done 2026-10-16: the owner's list as recorded in Word (D-059); 1216/1221 line starts in 22 Word-built documents (unchanged), behaviour catalogue 206/207 (the 207th a Word glitch), formula editor 152/152, smoke tests 41/41, 28/28, 43/43, 25/25 |
-| 5 | Pilot: one class uses RaabeWrite in lessons; fix what real use reveals | |
+| 5 | Pilot: one class uses RaabeWrite in lessons; fix what real use reveals | runs alongside Step 7 when a class fits the timetable (D-061) |
 | 6 | iPad build of RaabeWrite (touch polish, Files app integration, distribution) | |
-| 7 | RaabeCalc | |
-| 8 | RaabePresent | |
+| 7 | RaabeCalc (D-061): handles like Excel in every way, the controls first; packages A-F below | next, agreed 2026-10-27; waiting for the go on package A |
+| 7b | Diagramm in RaabeWrite: charts with their embedded workbook, drawn by RaabeCalc's chart engine (D-061) | right after Step 7; not to be forgotten |
+| 8 | RaabePresent: proposal below | after Step 7 (D-061) |
 | 9 | Optional features: read aloud, translator, dictation, ink | |
+
+## Step 7: RaabeCalc (plan)
+
+Agreed with the owner on 2026-10-27 (D-061). RaabeCalc comes before RaabePresent because
+Present's charts come from RaabeCalc's chart engine and Excel, unlike PowerPoint, runs as a
+process of our own for the harness. Goal: RaabeCalc handles like Excel in every way, the
+controls above all. Same method as Step 4b, from the first package on: every control and
+behaviour is recorded in an Excel instance of our own first, then built the same way and
+compared automatically. The owner leaves the PC for the whole step, so real input is allowed
+throughout. Default font Calibri 11 (Excel 2013-2022's defaults) instead of Excel 365's Aptos
+Narrow (D-011). The owner tries the app after package D and at the end of the step.
+
+| Package | Content |
+|---|---|
+| A. Foundation and Excel reference | The harness's Excel side (`ExcelTarget` through `DispatchEx`, workbooks built by Excel itself, cell positions and values read through COM, Excel's PDF export); the behaviour catalogue and screen comparison for Excel (real input, menus and galleries recorded entry by entry); the shared Rust code moved out of `apps/raabe-write/src-tauri` into a crate both apps use; `packages/ooxml` reading and writing .xlsx parts beside .docx; `apps/raabe-calc` with the shell and Excel's ribbon, labels, keytips and tooltip titles as recorded. |
+| B. Grid and .xlsx | Reading and writing workbooks, everything not edited kept verbatim (D-024); column widths in Excel's character units and row heights as Excel computes them; fonts, fills, borders, alignment, wrapping, merged cells, hidden rows and columns, Fenster fixieren; a grid that draws only what is visible, so large sheets scroll at full frame rate (F2). Measured against Excel's own output. |
+| C. Formula engine | German function names and separators in the UI, English in the file as Excel writes it; recalculation through a dependency graph that never blocks typing; the MVP function list (SCOPE); Excel's error values and its rounding, display and date rules. Every function compared with Excel's results on generated cases. |
+| D. Working in the grid | Excel's controls and behaviour as recorded (see below); AutoAusfüllen, AutoSumme, copying with adjusted references, inserting and deleting cells, rows, columns and sheets, sorting and AutoFilter; behaviour catalogue cases for each. |
+| E. Charts | The chart engine shared with RaabePresent and RaabeWrite: Säule, Balken, Linie, Kreis, Punkt (XY) with Trendlinie, Formel and Bestimmtheitsmaß, Fläche; Excel's default look and the Diagrammentwurf and Format tabs, recorded from Excel. |
+| F. Formats, output, audit | Number formats in German conventions, bedingte Formatierung, printing (Druckbereich, an Seite anpassen, Gitternetzlinien and Überschriften), CSV; then the audit as in Step 4c F: tooltips, menus and context menus, double-clicks, Livevorschau, cut-off labels, the clipboard both ways with Excel, Word and RaabeWrite. |
+
+**Excel's controls**, each recorded in Excel before it is built (pointers, keys, mouse, what
+appears and where): the cell pointer and selections (Umschalt, Strg, whole rows and columns,
+the select-all corner), Eingeben and Bearbeiten modes (F2) with what the arrow keys do in each,
+Enter/Tab/Umschalt directions, Strg+arrows to the edge of the data, the fill handle (dragging,
+double-click, Strg), moving and copying cells by their border, the Namenfeld and the
+Bearbeitungsleiste (Funktion einfügen, its height), pointing at cells while a formula is typed
+(coloured ranges, F4), AutoVervollständigen in cells and for functions with their screen tips,
+column and row headers (sizing, double-click to fit, hiding), the sheet tabs (switching,
+dragging, Strg-drag, double-click to rename, context menu, the scroll arrows, Neues Blatt), the
+scroll bars and how far the sheet scrolls, Strg+mouse wheel zoom, the status bar (Summe,
+Mittelwert, Anzahl, its context menu, views, zoom), the AutoFilter buttons and their menus, the
+Einfügeoptionen and AutoAusfülloptionen buttons, error indicators and their menu, the
+Schnellanalyse button, context menus of cells, headers and sheet tabs, and every keyboard
+shortcut Excel reports on the German keyboard.
+
+## Step 8: RaabePresent (proposal, not yet agreed)
+
+Proposed on 2026-10-27 and set back behind Step 7 (D-061); to be discussed again before it
+starts. Packages as in Step 4b: A. PowerPoint reference side for the harness (fixtures built by
+PowerPoint, line positions through COM, slides exported as PDF/PNG) and `apps/raabe-present`;
+B. reading, drawing and saving .pptx (masters, layouts, themes, placeholders, text bodies with
+autofit and bullet levels, shapes, pictures, tables, equations; everything else verbatim);
+C. editing in Normalansicht (slide panel, Neue Folie with the layout gallery, text editing,
+PowerPoint's two selection levels, moving and sizing, smart guides, Anordnen, the notes pane);
+D. Foliensortierung, Abschnitte, PDF, printing, designs incl. a Raabeschule design; E.
+Bildschirmpräsentation (navigation, pen and laser pointer, Referentenansicht, a curated set of
+transitions and animations); F. the audit. Open questions for then: PowerPoint runs as a single
+process, so the harness cannot start one of its own and must refuse to run while the owner's
+PowerPoint is open; new presentations 16:9 with the Office 2013-2022 design (Calibri Light,
+Calibri); PowerPoint's own designs are Microsoft artwork and are not copied (school material
+for a Raabeschule design welcome).
 
 ## Step 4d: Second polish list
 

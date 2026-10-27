@@ -67,7 +67,8 @@ Windows 10 Pro, PowerShell + Git Bash, Node 24, Rust (stable, MSVC), Python 3.14
 Visual Studio 2022 C++ tools, WebView2, Microsoft Word 365 (COM: `Word.Application`).
 PowerPoint and Excel 365 are installed too (`POWERPNT.EXE`, `EXCEL.EXE` in
 `C:\Program Files\Microsoft Office\root\Office16`), as reference apps for RaabePresent and
-RaabeCalc; the harness-safety rules below apply to them the same way.
+RaabeCalc; the harness-safety rules below apply to them the same way (PowerPoint needs more, see
+below).
 Display: 4K at 150 % scaling, currently 30 Hz.
 
 ## Harness safety
@@ -83,6 +84,12 @@ Display: 4K at 150 % scaling, currently 30 Hz.
 - Some of Word's settings outlive the probe's own instance and reach the owner's Word: a reduced
   ribbon (double-click on a tab), Alle anzeigen. A probe that changes them puts them back
   before quitting (`probe_word_dblclick.py`).
+- Excel (Step 7) follows the same rules: `DispatchEx` starts an Excel process of its own;
+  close only the workbooks you created. Excel keeps many application options for the user
+  (e.g. where Enter moves the selection, the reduced ribbon): a probe that changes one puts it
+  back before quitting.
+- PowerPoint runs as one process only: `DispatchEx` would reach the owner's open
+  presentations. No PowerPoint probe until Step 8 has decided its own rules (ROADMAP).
 
 ## Building and running
 - `npm install` at the repo root (workspaces). `npm test` runs the unit tests,

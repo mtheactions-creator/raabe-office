@@ -70,6 +70,9 @@ What each app does, ordered by priority. **M** = first usable version (MVP),
 
 ## RaabeCalc (Excel)
 
+Beyond the features below, RaabeCalc handles like Excel in every way, its controls above all
+(D-061; the list of controls is in the ROADMAP, Step 7).
+
 | Feature | Prio | Notes |
 |---|---|---|
 | Grid, multiple sheets, rename/insert/delete/move sheets | M | |
@@ -131,6 +134,6 @@ BINOM.VERT/BINOM.DIST, NORM.VERT/NORM.DIST.
 ## Deferred commands shown in the ribbon
 
 Shown as in Word, greyed out, with "Zurückgestellt" in the tooltip (D-041): Laut vorlesen,
-Übersetzen, Diktieren, Diagramm (comes with the chart engine of RaabeCalc), Freihandgleichung,
+Übersetzen, Diktieren, Diagramm (comes with the chart engine of RaabeCalc, Step 7b), Freihandgleichung,
 Künstlerische Effekte (decided in package C, D-045), Bildlayout (converts to SmartArt, out of
 scope).
