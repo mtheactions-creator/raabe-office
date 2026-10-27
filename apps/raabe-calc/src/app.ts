@@ -166,7 +166,9 @@ export class CalcApp {
     this.grid.setMarquee(null);
     this.copied = this.copied && this.docs.some((d) => d.wb.sheets.includes(this.copied!.sheet)) ? this.copied : null;
     this.grid.refreshLayout();
+    this.grid.syncBar();
     this.sheetBar.render();
+    this.charts.refresh();
     this.updateTabs();
     this.updateChrome();
     this.grid.focus();
@@ -1725,6 +1727,8 @@ export class CalcApp {
         const r = addr(start);
         this.grid.selectCell(r.r0, r.c0);
       },
+      /** Opens a file as Öffnen does (compare_calc_files.py). */
+      open: (path: string) => this.openPath(path),
       /** Where a cell is on the page (CSS px from the viewport's top left). */
       point: (a: string, where: string) => {
         const r = addr(a);

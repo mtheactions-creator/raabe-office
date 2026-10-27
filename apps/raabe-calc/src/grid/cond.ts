@@ -145,10 +145,14 @@ export class CondEval {
   }
 }
 
+/** Farbskala: two colours from minimum to maximum; three with the middle one at the median (Excel's percentile 50). */
 function scaleColor(s: Stats, v: number, colors: string[]): string {
-  const t = s.max === s.min ? 0.5 : (v - s.min) / (s.max - s.min);
-  if (colors.length === 2) return mix(colors[0], colors[1], t);
-  return t < 0.5 ? mix(colors[0], colors[1], t * 2) : mix(colors[1], colors[2], (t - 0.5) * 2);
+  if (colors.length === 2) return mix(colors[0], colors[1], s.max === s.min ? 0.5 : (v - s.min) / (s.max - s.min));
+  const n = s.nums;
+  const k = (n.length - 1) / 2;
+  const median = n.length ? n[Math.floor(k)] + (n[Math.ceil(k)] - n[Math.floor(k)]) * (k - Math.floor(k)) : 0;
+  if (v <= median) return mix(colors[0], colors[1], median === s.min ? 1 : (v - s.min) / (median - s.min));
+  return mix(colors[1], colors[2], s.max === median ? 0 : (v - median) / (s.max - median));
 }
 
 function mix(a: string, b: string, t: number): string {

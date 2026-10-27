@@ -73,7 +73,30 @@ const PT = 96 / 72;
 
 export function cssFont(style: CellStyle, zoom: number): string {
   const f = style.font;
-  return `${f.italic ? "italic " : ""}${f.bold ? "bold " : ""}${(f.size * PT * zoom).toFixed(3)}px "${f.name}", Carlito, sans-serif`;
+  // Hoch- and tiefgestellt cells are drawn smaller (Excel: about two thirds of the size).
+  const size = f.vertAlign ? f.size * 0.66 : f.size;
+  return `${f.italic ? "italic " : ""}${f.bold ? "bold " : ""}${(size * PT * zoom).toFixed(3)}px "${f.name}", Carlito, sans-serif`;
+}
+
+/** A fill the grid does not draw as such (patterns, gradients): its look as one colour. */
+export function fillColor(style: CellStyle): string | undefined {
+  if (style.fill) return style.fill;
+  const xml = style.fillXml;
+  if (!xml) return undefined;
+  const rgb = (tag: string) => new RegExp(`<${tag}[^>]*rgb="(?:FF)?([0-9A-Fa-f]{6})"`).exec(xml)?.[1];
+  const grad = [...xml.matchAll(/<color[^>]*rgb="(?:FF)?([0-9A-Fa-f]{6})"/g)].map((m) => m[1]);
+  if (/gradientFill/.test(xml) && grad.length) return "#" + mixHex(grad[0], grad[grad.length - 1], 0.5);
+  const fg = rgb("fgColor"), bg = rgb("bgColor") ?? "FFFFFF";
+  const type = /patternType="([^"]+)"/.exec(xml)?.[1];
+  if (!type || type === "none" || !fg) return undefined;
+  // Pattern fills: the foreground colour at the pattern's density.
+  const density: Record<string, number> = { solid: 1, darkGray: 0.75, mediumGray: 0.5, lightGray: 0.25, gray125: 0.125, gray0625: 0.0625 };
+  return "#" + mixHex(bg, fg, density[type] ?? 0.4);
+}
+
+function mixHex(a: string, b: string, t: number): string {
+  const p = (h: string, i: number) => parseInt(h.slice(i * 2, i * 2 + 2), 16);
+  return [0, 1, 2].map((i) => Math.round(p(a, i) + (p(b, i) - p(a, i)) * t).toString(16).padStart(2, "0")).join("");
 }
 
 /** The rows or columns of a pane with their positions on the canvas. */
@@ -94,6 +117,14 @@ export function draw(ctx: CanvasRenderingContext2D, s: DrawState): void {
   ctx.fillStyle = "#ffffff";
   ctx.fillRect(0, 0, s.width, s.height);
   for (const pane of s.panes) drawPane(ctx, s, pane);
+  // Fenster fixieren: a thin dark line where the frozen rows and columns end (Excel).
+  if (s.panes.length > 1) {
+    const px = 1 / dpr;
+    const main = s.panes[s.panes.length - 1];
+    ctx.fillStyle = "#808080";
+    if (main.y > s.headerH + 0.5) ctx.fillRect(s.headerW, snap(main.y, dpr) - px, s.width - s.headerW, px);
+    if (main.x > s.headerW + 0.5) ctx.fillRect(snap(main.x, dpr) - px, s.headerH, px, s.height - s.headerH);
+  }
   if (s.showHeaders) drawHeaders(ctx, s);
 }
 
@@ -146,7 +177,7 @@ function drawPane(ctx: CanvasRenderingContext2D, s: DrawState, pane: Pane): void
       const cell = sheet.get(r.i, c.i);
       const st = styleOf(cell, r.i, c.i);
       const look = s.cond?.look(r.i, c.i);
-      const fill = look?.fill ?? st.fill;
+      const fill = look?.fill ?? fillColor(st);
       if (fill) {
         ctx.fillStyle = fill;
         ctx.fillRect(snap(c.at, dpr) - px, snap(r.at, dpr) - px, snap(c.size, dpr) + px, snap(r.size, dpr) + px);
@@ -260,8 +291,9 @@ function drawPane(ctx: CanvasRenderingContext2D, s: DrawState, pane: Pane): void
         if (text.fill && lines.length === 1) {
           drawFilled(ctx, text, box, pad, zoom);
         } else {
-          ctx.fillText(line, x, top + asc);
-          decorate(ctx, st, x, top + asc, lw, zoom, desc);
+          const shift = st.font.vertAlign === "superscript" ? -st.font.size * PT * zoom * 0.3 : st.font.vertAlign === "subscript" ? st.font.size * PT * zoom * 0.08 : 0;
+          ctx.fillText(line, x, top + asc + shift);
+          decorate(ctx, st, x, top + asc + shift, lw, zoom, desc);
         }
         top += lineH;
       }

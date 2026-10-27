@@ -130,7 +130,10 @@ export function chartsFeature(app: CalcApp) {
       const vals: CellValue[] = [];
       let format: string | undefined;
       for (let row = r.r0; row <= r.r1; row++) {
+        // Data in hidden rows and columns (also those a filter hides) is left out, as Excel does by default.
+        if (sheet.rows.get(row)?.hidden && r.r1 > r.r0) continue;
         for (let col = r.c0; col <= r.c1; col++) {
+          if (sheet.cols.get(col)?.hidden && r.c1 > r.c0) continue;
           const cell = sheet.get(row, col);
           if (format === undefined && cell) format = wb.styles.get(cell.s).numFmt;
           vals.push(cellValue(cell?.v ?? null));
