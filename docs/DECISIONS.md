@@ -1210,5 +1210,12 @@ Recorded in an Excel of our own with real input (`catalogue_calc.py`, 117 cases;
   Formeln/Notizen/Konstanten, Seitenränder, Berechnungsoptionen with Teilweise); labels that follow
   the content as Excel's (Fixierung aufheben; "Von A bis Z" for text, "Nach Größe" for numbers);
   F4 and Strg+Y repeat the last formatting; dragging the fill handle back empties cells.
+- **Printing** as Excel's PDF export (`check_calc_print.py`): rows and columns at 0,968 of their
+  screen size (a 15-pt row takes 14,52 pt, 50 rows on an A4 page with the normal margins), cut
+  down first, then across, the cells 2,6 pt inside the margins; the page size and orientation from
+  Seite einrichten.
+- **The AutoFilter dropdown** is a panel under the button as Excel's (recorded with
+  `probe_excel_filter.py`), Alt+Unten opens it; a click on a link's text follows it; a finger
+  drag scrolls and a tap selects (touch).
 - Not yet as Excel: the drag of the selection's border onto other sheets, Schnellanalyse,
   Blitzvorschau, data validation, comments (Notizen work).

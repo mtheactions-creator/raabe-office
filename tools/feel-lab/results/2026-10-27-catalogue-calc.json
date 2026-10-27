@@ -1,6 +1,681 @@
 {
- "summary": "6/6",
+ "summary": "142/142",
  "cases": {
+  "type text Enter": {
+   "area": "enter",
+   "ok": true,
+   "diff": []
+  },
+  "type number with comma": {
+   "area": "enter",
+   "ok": true,
+   "diff": []
+  },
+  "type thousands": {
+   "area": "enter",
+   "ok": true,
+   "diff": []
+  },
+  "type date": {
+   "area": "enter",
+   "ok": true,
+   "diff": []
+  },
+  "type short date": {
+   "area": "enter",
+   "ok": true,
+   "diff": []
+  },
+  "type percent": {
+   "area": "enter",
+   "ok": true,
+   "diff": []
+  },
+  "type euro": {
+   "area": "enter",
+   "ok": true,
+   "diff": []
+  },
+  "type time": {
+   "area": "enter",
+   "ok": true,
+   "diff": []
+  },
+  "type fraction": {
+   "area": "enter",
+   "ok": true,
+   "diff": []
+  },
+  "type scientific": {
+   "area": "enter",
+   "ok": true,
+   "diff": []
+  },
+  "type wahr": {
+   "area": "enter",
+   "ok": true,
+   "diff": []
+  },
+  "type apostrophe number": {
+   "area": "enter",
+   "ok": true,
+   "diff": []
+  },
+  "type leading zero": {
+   "area": "enter",
+   "ok": true,
+   "diff": []
+  },
+  "type minus formula": {
+   "area": "enter",
+   "ok": true,
+   "diff": []
+  },
+  "type plus formula": {
+   "area": "enter",
+   "ok": true,
+   "diff": []
+  },
+  "type long text overflows": {
+   "area": "enter",
+   "ok": true,
+   "diff": []
+  },
+  "Tab then Enter returns to start column": {
+   "area": "enter",
+   "ok": true,
+   "diff": []
+  },
+  "Shift+Enter moves up": {
+   "area": "enter",
+   "ok": true,
+   "diff": []
+  },
+  "Shift+Tab moves left": {
+   "area": "enter",
+   "ok": true,
+   "diff": []
+  },
+  "arrow commits in Eingeben": {
+   "area": "enter",
+   "ok": true,
+   "diff": []
+  },
+  "arrow down commits": {
+   "area": "enter",
+   "ok": true,
+   "diff": []
+  },
+  "Esc cancels typing": {
+   "area": "enter",
+   "ok": true,
+   "diff": []
+  },
+  "F2 edit and Left arrow moves caret": {
+   "area": "edit",
+   "ok": true,
+   "diff": []
+  },
+  "double-click edits at the end": {
+   "area": "edit",
+   "ok": true,
+   "diff": []
+  },
+  "F2 shows Bearbeiten": {
+   "area": "edit",
+   "ok": true,
+   "diff": []
+  },
+  "F2 twice toggles to Eingeben": {
+   "area": "edit",
+   "ok": true,
+   "diff": []
+  },
+  "Backspace clears and edits": {
+   "area": "edit",
+   "ok": true,
+   "diff": []
+  },
+  "Delete clears contents": {
+   "area": "edit",
+   "ok": true,
+   "diff": []
+  },
+  "Ctrl+Enter fills selection": {
+   "area": "edit",
+   "ok": true,
+   "diff": []
+  },
+  "Alt+Enter line break": {
+   "area": "edit",
+   "ok": true,
+   "diff": []
+  },
+  "Enter moves inside selection": {
+   "area": "edit",
+   "ok": true,
+   "diff": []
+  },
+  "Tab moves inside selection": {
+   "area": "edit",
+   "ok": true,
+   "diff": []
+  },
+  "Ctrl+Z undoes entry": {
+   "area": "edit",
+   "ok": true,
+   "diff": []
+  },
+  "Ctrl+Y redoes": {
+   "area": "edit",
+   "ok": true,
+   "diff": []
+  },
+  "AutoComplete from column": {
+   "area": "edit",
+   "ok": true,
+   "diff": []
+  },
+  "AutoComplete needs unique match": {
+   "area": "edit",
+   "ok": true,
+   "diff": []
+  },
+  "AutoComplete keeps typed case": {
+   "area": "edit",
+   "ok": true,
+   "diff": []
+  },
+  "Ctrl+Down to block end": {
+   "area": "move",
+   "ok": true,
+   "diff": []
+  },
+  "Ctrl+Down twice to next block": {
+   "area": "move",
+   "ok": true,
+   "diff": []
+  },
+  "Ctrl+Down four times": {
+   "area": "move",
+   "ok": true,
+   "diff": []
+  },
+  "Ctrl+Down from empty": {
+   "area": "move",
+   "ok": true,
+   "diff": []
+  },
+  "Ctrl+Right from data": {
+   "area": "move",
+   "ok": true,
+   "diff": []
+  },
+  "Ctrl+Up from below": {
+   "area": "move",
+   "ok": true,
+   "diff": []
+  },
+  "Ctrl+Shift+Down extends": {
+   "area": "move",
+   "ok": true,
+   "diff": []
+  },
+  "Shift+arrows extend": {
+   "area": "move",
+   "ok": true,
+   "diff": []
+  },
+  "Shift+arrow back shrinks": {
+   "area": "move",
+   "ok": true,
+   "diff": []
+  },
+  "Ctrl+Home": {
+   "area": "move",
+   "ok": true,
+   "diff": []
+  },
+  "Ctrl+End": {
+   "area": "move",
+   "ok": true,
+   "diff": []
+  },
+  "Home to column A": {
+   "area": "move",
+   "ok": true,
+   "diff": []
+  },
+  "Ctrl+A selects region": {
+   "area": "move",
+   "ok": true,
+   "diff": []
+  },
+  "Ctrl+A twice selects all": {
+   "area": "move",
+   "ok": true,
+   "diff": []
+  },
+  "Ctrl+A on empty selects all": {
+   "area": "move",
+   "ok": true,
+   "diff": []
+  },
+  "Shift+Space selects row": {
+   "area": "move",
+   "ok": true,
+   "diff": []
+  },
+  "Ctrl+Space selects column": {
+   "area": "move",
+   "ok": true,
+   "diff": []
+  },
+  "PageDown": {
+   "area": "move",
+   "ok": true,
+   "diff": []
+  },
+  "click selects": {
+   "area": "mouse",
+   "ok": true,
+   "diff": []
+  },
+  "Shift+click extends": {
+   "area": "mouse",
+   "ok": true,
+   "diff": []
+  },
+  "Ctrl+click adds": {
+   "area": "mouse",
+   "ok": true,
+   "diff": []
+  },
+  "drag selects": {
+   "area": "mouse",
+   "ok": true,
+   "diff": []
+  },
+  "drag upwards": {
+   "area": "mouse",
+   "ok": true,
+   "diff": []
+  },
+  "column header click": {
+   "area": "mouse",
+   "ok": true,
+   "diff": []
+  },
+  "column header shift-click": {
+   "area": "mouse",
+   "ok": true,
+   "diff": []
+  },
+  "row header click": {
+   "area": "mouse",
+   "ok": true,
+   "diff": []
+  },
+  "row header then Enter": {
+   "area": "mouse",
+   "ok": true,
+   "diff": []
+  },
+  "= then Up points": {
+   "area": "formula",
+   "ok": true,
+   "diff": []
+  },
+  "= then Up Up points further": {
+   "area": "formula",
+   "ok": true,
+   "diff": []
+  },
+  "Shift+Up extends pointed range": {
+   "area": "formula",
+   "ok": true,
+   "diff": []
+  },
+  "operator then arrow points again": {
+   "area": "formula",
+   "ok": true,
+   "diff": []
+  },
+  "click points": {
+   "area": "formula",
+   "ok": true,
+   "diff": []
+  },
+  "drag points range": {
+   "area": "formula",
+   "ok": true,
+   "diff": []
+  },
+  "open bracket closed": {
+   "area": "formula",
+   "ok": true,
+   "diff": []
+  },
+  "F4 makes absolute": {
+   "area": "formula",
+   "ok": true,
+   "diff": []
+  },
+  "F4 twice": {
+   "area": "formula",
+   "ok": true,
+   "diff": []
+  },
+  "F4 three times": {
+   "area": "formula",
+   "ok": true,
+   "diff": []
+  },
+  "lower case function upper": {
+   "area": "formula",
+   "ok": true,
+   "diff": []
+  },
+  "Alt+= AutoSumme": {
+   "area": "formula",
+   "ok": true,
+   "diff": []
+  },
+  "AutoSumme mode": {
+   "area": "formula",
+   "ok": true,
+   "diff": []
+  },
+  "AutoSumme row": {
+   "area": "formula",
+   "ok": true,
+   "diff": []
+  },
+  "pointing mode shown": {
+   "area": "formula",
+   "ok": true,
+   "diff": []
+  },
+  "Enter mode after typing =": {
+   "area": "formula",
+   "ok": true,
+   "diff": []
+  },
+  "division by zero": {
+   "area": "formula",
+   "ok": true,
+   "diff": []
+  },
+  "unknown name": {
+   "area": "formula",
+   "ok": true,
+   "diff": []
+  },
+  "fill one number copies": {
+   "area": "fill",
+   "ok": true,
+   "diff": []
+  },
+  "fill one number with Ctrl counts": {
+   "area": "fill",
+   "ok": true,
+   "diff": []
+  },
+  "fill two numbers continues": {
+   "area": "fill",
+   "ok": true,
+   "diff": []
+  },
+  "fill weekday": {
+   "area": "fill",
+   "ok": true,
+   "diff": []
+  },
+  "fill month name": {
+   "area": "fill",
+   "ok": true,
+   "diff": []
+  },
+  "fill text with number": {
+   "area": "fill",
+   "ok": true,
+   "diff": []
+  },
+  "fill date": {
+   "area": "fill",
+   "ok": true,
+   "diff": []
+  },
+  "fill formula shifts": {
+   "area": "fill",
+   "ok": true,
+   "diff": []
+  },
+  "fill right": {
+   "area": "fill",
+   "ok": true,
+   "diff": []
+  },
+  "fill handle double-click": {
+   "area": "fill",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+U fills down": {
+   "area": "fill",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+R fills right": {
+   "area": "fill",
+   "ok": true,
+   "diff": []
+  },
+  "drag border moves": {
+   "area": "move-cells",
+   "ok": true,
+   "diff": []
+  },
+  "drag border with Ctrl copies": {
+   "area": "move-cells",
+   "ok": true,
+   "diff": []
+  },
+  "copy and paste": {
+   "area": "move-cells",
+   "ok": true,
+   "diff": []
+  },
+  "cut and paste updates references": {
+   "area": "move-cells",
+   "ok": true,
+   "diff": []
+  },
+  "paste into larger selection repeats": {
+   "area": "move-cells",
+   "ok": true,
+   "diff": []
+  },
+  "Enter pastes and clears marquee": {
+   "area": "move-cells",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+Umschalt+F bold": {
+   "area": "format",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+Umschalt+K italic": {
+   "area": "format",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+Umschalt+U underline": {
+   "area": "format",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+2 bold": {
+   "area": "format",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+5 strike": {
+   "area": "format",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+Umschalt+4 currency": {
+   "area": "format",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+Umschalt+5 percent": {
+   "area": "format",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+Umschalt+1 number": {
+   "area": "format",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+Umschalt+3 date": {
+   "area": "format",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+Umschalt+6 scientific": {
+   "area": "format",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+9 hides row": {
+   "area": "format",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+0 hides column": {
+   "area": "format",
+   "ok": true,
+   "diff": []
+  },
+  "column border double-click fits": {
+   "area": "format",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+. inserts date": {
+   "area": "format",
+   "ok": true,
+   "diff": []
+  },
+  "Umschalt+F11 new sheet": {
+   "area": "sheets",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+Bild ab next sheet": {
+   "area": "sheets",
+   "ok": true,
+   "diff": []
+  },
+  "F4 repeats bold": {
+   "area": "repeat",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+Y repeats format": {
+   "area": "repeat",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+Minus deletes selected row": {
+   "area": "rows",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+Plus inserts row": {
+   "area": "rows",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+Minus deletes column": {
+   "area": "rows",
+   "ok": true,
+   "diff": []
+  },
+  "Ctrl+Shift+End": {
+   "area": "move2",
+   "ok": true,
+   "diff": []
+  },
+  "Shift+Home": {
+   "area": "move2",
+   "ok": true,
+   "diff": []
+  },
+  "Esc clears marquee then Enter moves": {
+   "area": "move2",
+   "ok": true,
+   "diff": []
+  },
+  "function AutoComplete Tab": {
+   "area": "formula2",
+   "ok": true,
+   "diff": []
+  },
+  "fill handle back clears": {
+   "area": "fill2",
+   "ok": true,
+   "diff": []
+  },
+  "fill Ctrl copies two numbers": {
+   "area": "fill2",
+   "ok": true,
+   "diff": []
+  },
+  "fill weekday long": {
+   "area": "fill2",
+   "ok": true,
+   "diff": []
+  },
+  "fill upwards": {
+   "area": "fill2",
+   "ok": true,
+   "diff": []
+  },
+  "column resize drag": {
+   "area": "sizes",
+   "ok": true,
+   "diff": []
+  },
+  "undo after delete": {
+   "area": "repeat",
+   "ok": true,
+   "diff": []
+  },
+  "typing replaces selection range": {
+   "area": "edit2",
+   "ok": true,
+   "diff": []
+  },
+  "Backspace in edit removes char": {
+   "area": "edit2",
+   "ok": true,
+   "diff": []
+  },
+  "Esc in Bearbeiten keeps old": {
+   "area": "edit2",
+   "ok": true,
+   "diff": []
+  },
+  "arrow in formula after number commits": {
+   "area": "formula2",
+   "ok": true,
+   "diff": []
+  },
   "double-click tab renames": {
    "area": "window",
    "ok": true,
@@ -28,6 +703,11 @@
   },
   "status bar count of text": {
    "area": "window",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+Umschalt+L filter": {
+   "area": "sheets",
    "ok": true,
    "diff": []
   }

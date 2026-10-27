@@ -75,19 +75,19 @@ Beyond the features below, RaabeCalc handles like Excel in every way, its contro
 
 | Feature | Prio | Notes |
 |---|---|---|
-| Grid, multiple sheets, rename/insert/delete/move sheets | M | |
-| Cell formatting: font, fill, borders, alignment, wrap, merge | M | |
-| Number formats: number, currency, percent, date, time, fraction, scientific | M | German locale (Komma as decimal separator) |
-| Fill handle / AutoFill (series, formulas) | M | |
-| Formulas with German function names | M | See function list below |
-| Relative/absolute references (F4), named ranges | M | |
-| Sort, filter (AutoFilter) | M | |
-| Freeze panes, hide rows/columns, column width/row height | M | |
-| Charts: column, bar, line, pie, scatter (with trendline + equation + R²), area | M | Maths and physics |
-| Conditional formatting (basic: highlight rules, data bars, colour scales) | M | |
-| Print area, fit to page, gridlines/headings on print | M | |
-| CSV import/export | M | |
-| Comments / notes on cells | L | |
+| Grid, multiple sheets, rename/insert/delete/move sheets | M | Done in Step 7 (D-062, D-063) |
+| Cell formatting: font, fill, borders, alignment, wrap, merge | M | Done in Step 7, incl. Zellen formatieren, rotated text, An Zellgröße anpassen |
+| Number formats: number, currency, percent, date, time, fraction, scientific | M | German locale (Komma as decimal separator); done in Step 7, ≈ 66 000 cases as Excel |
+| Fill handle / AutoFill (series, formulas) | M | Done in Step 7, with AutoAusfülloptionen |
+| Formulas with German function names | M | See function list below; done in Step 7 (4229/4234 Excel results) |
+| Relative/absolute references (F4), named ranges | M | Done in Step 7 (Namens-Manager) |
+| Sort, filter (AutoFilter) | M | Done in Step 7 (value filters; colour and custom filters later) |
+| Freeze panes, hide rows/columns, column width/row height | M | Done in Step 7 |
+| Charts: column, bar, line, pie, scatter (with trendline + equation + R²), area | M | Maths and physics; done in Step 7 (packages/charts), also histogram |
+| Conditional formatting (basic: highlight rules, data bars, colour scales) | M | Done in Step 7 (icon sets and rule manager later) |
+| Print area, fit to page, gridlines/headings on print | M | Done in Step 7 (print and PDF) |
+| CSV import/export | M | Done in Step 7, as German Excel (";", UTF-8 with BOM) |
+| Comments / notes on cells | L | Notizen done in Step 7; threaded comments later |
 | Data validation (dropdown lists) | L | |
 | PivotTables | L | Maybe a simplified version |
 | What-if analysis, Solver | X | |

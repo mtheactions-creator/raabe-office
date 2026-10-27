@@ -67,7 +67,7 @@ export class CalcApp {
   private refreshTimer = 0;
   private dlg = dialogs(this);
   readonly charts = chartsFeature(this);
-  private print = printFeature(this);
+  readonly print = printFeature(this);
 
   constructor(readonly platform: Platform) {
     void platform.listFonts().then((f) => { this.fontList = f; }).catch(() => {});
@@ -253,6 +253,13 @@ export class CalcApp {
       contextMenu: (e, kind) => this.contextMenu(e, kind),
       key: (e) => this.shortcut(e),
       filterMenu: (col, anchor) => void this.dlg.filterMenu(col, anchor),
+      followLink: (target) => {
+        if (target.startsWith("#")) {
+          const m = /^#(?:'?([^'!]+)'?!)?(.+)$/.exec(target);
+          const i = m?.[1] ? this.wb.sheets.findIndex((s) => s.name.toLowerCase() === m[1].toLowerCase()) : this.wb.active;
+          if (i >= 0) { this.activateSheet(i); this.grid.goTo(m?.[2] ?? "A1"); }
+        } else void this.platform.openExternal?.(target).catch(() => {});
+      },
       enterPaste: () => {
         if (!this.copied) return false;
         void this.paste().then(() => { this.copied = null; this.grid.setMarquee(null); this.grid.showOptions(null); });
@@ -392,7 +399,14 @@ export class CalcApp {
         lines = n;
       } else if (typeof c.v === "string" && c.v.includes("\n")) lines = c.v.split("\n").length;
       const lineH = Math.round(st.font.size * 1.3636 * 4) / 4;
-      need.set(row, Math.max(need.get(row) ?? 0, lineH * lines));
+      let h = lineH * lines;
+      // Turned text needs the height its rotated width takes (Excel grows the row).
+      if (st.rotation && typeof c.v !== "object") {
+        this.measureCtx.font = cssFont(st, 1);
+        const tw = this.measureCtx.measureText(shown(c, st).text).width * 0.75;
+        h = st.rotation === 255 ? lineH * String(shown(c, st).text).length : Math.abs(Math.sin(((st.rotation <= 90 ? st.rotation : st.rotation - 90) * Math.PI) / 180)) * tw + lineH * 0.6;
+      }
+      need.set(row, Math.max(need.get(row) ?? 0, h));
     }
     for (const row of rows) {
       const hgt = need.get(row);
@@ -423,6 +437,13 @@ export class CalcApp {
   }
 
   private lastRepeat: { label: string; run: () => void } | null = null;
+
+  /** Ausrichtung > Text drehen: the angle, and the rows grow for it (Excel). */
+  private rotateText(deg: number): void {
+    const cur = this.activeStyle().rotation;
+    this.formatSel("Ausrichtung", (s) => { s.rotation = cur === deg ? undefined : deg; });
+    this.change("Zeilenhöhe", () => this.autoRowHeights(this.grid.selection.at(-1)!));
+  }
 
   private toggleFont(key: "bold" | "italic" | "strike"): void {
     const on = !this.activeStyle().font[key];
@@ -1561,11 +1582,11 @@ export class CalcApp {
         ],
         merge: [{ cmd: "align.mergeCenter" }, { cmd: "align.mergeAcross" }, { cmd: "align.merge" }, { cmd: "align.unmerge" }],
         orientation: [
-          { label: "Gegen den Uhrzeigersinn drehen", run: () => this.formatSel("Ausrichtung", (s) => { s.rotation = 45; }) },
-          { label: "Im Uhrzeigersinn drehen", run: () => this.formatSel("Ausrichtung", (s) => { s.rotation = 135; }) },
-          { label: "Vertikaler Text", run: () => this.formatSel("Ausrichtung", (s) => { s.rotation = 255; }) },
-          { label: "Text nach oben drehen", run: () => this.formatSel("Ausrichtung", (s) => { s.rotation = 90; }) },
-          { label: "Text nach unten drehen", run: () => this.formatSel("Ausrichtung", (s) => { s.rotation = 180; }) },
+          { label: "Gegen den Uhrzeigersinn drehen", run: () => this.rotateText(45) },
+          { label: "Im Uhrzeigersinn drehen", run: () => this.rotateText(135) },
+          { label: "Vertikaler Text", run: () => this.rotateText(255) },
+          { label: "Text nach oben drehen", run: () => this.rotateText(90) },
+          { label: "Text nach unten drehen", run: () => this.rotateText(180) },
           "-", { label: "Zellenausrichtung formatieren", run: () => void this.dlg.formatCells("Ausrichtung") },
         ],
         accounting: [
@@ -1727,6 +1748,8 @@ export class CalcApp {
         const r = addr(start);
         this.grid.selectCell(r.r0, r.c0);
       },
+      /** Als PDF exportieren into a given file (check_calc_print.py). */
+      pdf: (path: string) => this.print.exportPdf(path),
       /** Opens a file as Öffnen does (compare_calc_files.py). */
       open: (path: string) => this.openPath(path),
       /** Where a cell is on the page (CSS px from the viewport's top left). */

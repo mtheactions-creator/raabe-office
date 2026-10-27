@@ -272,6 +272,18 @@ function drawPane(ctx: CanvasRenderingContext2D, s: DrawState, pane: Pane): void
       ctx.clip();
       ctx.fillStyle = look?.color ?? text.color ?? st.font.color ?? "#000000";
       ctx.font = font;
+      // Ausrichtung in degrees (1-90 up, 91-180 down) and vertical text (255).
+      if (st.rotation) {
+        drawRotated(ctx, text.text, st, box, pad, zoom, align);
+        ctx.restore();
+        continue;
+      }
+      // An Zellgröße anpassen: the font shrinks until the text fits the cell (Excel).
+      if (st.shrink && !st.wrap && width > box.w - 2 * pad && width > 0) {
+        const f = Math.max(0.1, (box.w - 2 * pad) / width);
+        ctx.font = font.replace(/([\d.]+)px/, (_m, n: string) => `${(Number(n) * f).toFixed(3)}px`);
+        measureCtx.font = ctx.font;
+      }
       const lines = st.wrap && isText ? wrapLines(measureCtx, text.text, box.w - 2 * pad) : [text.text];
       const m = measureCtx.measureText("Hg");
       const asc = m.fontBoundingBoxAscent, desc = m.fontBoundingBoxDescent;
@@ -293,7 +305,9 @@ function drawPane(ctx: CanvasRenderingContext2D, s: DrawState, pane: Pane): void
         } else {
           const shift = st.font.vertAlign === "superscript" ? -st.font.size * PT * zoom * 0.3 : st.font.vertAlign === "subscript" ? st.font.size * PT * zoom * 0.08 : 0;
           ctx.fillText(line, x, top + asc + shift);
-          decorate(ctx, st, x, top + asc + shift, lw, zoom, desc);
+          // Buchhaltung underlines run under the whole cell, the others under the text.
+          if (st.font.underline?.endsWith("Accounting")) decorate(ctx, st, box.x + pad, top + asc + shift, box.w - 2 * pad, zoom, desc);
+          else decorate(ctx, st, x, top + asc + shift, lw, zoom, desc);
         }
         top += lineH;
       }
@@ -691,4 +705,31 @@ export function errorIndicator(cell: Cell): "text-number" | "error" | null {
   if (cell.f === undefined && typeof cell.v === "string" && /^\s*[+-]?(\d{1,3}(\.\d{3})+|\d+)(,\d+)?\s*$/.test(cell.v)) return "text-number";
   if (cell.f !== undefined && cell.v !== null && typeof cell.v === "object") return "error";
   return null;
+}
+
+/** Turned text: rotated around the cell's anchor point as Excel lays it out (bottom for upward text). */
+function drawRotated(ctx: CanvasRenderingContext2D, text: string, st: CellStyle, box: { x: number; y: number; w: number; h: number }, pad: number, zoom: number, align: string): void {
+  const m = ctx.measureText("Hg");
+  const lineH = m.fontBoundingBoxAscent + m.fontBoundingBoxDescent;
+  if (st.rotation === 255) {
+    // Vertical text: one character under the other, centred in the cell.
+    let y = (st.v === "top" ? box.y + 2 * zoom : st.v === "center" ? box.y + (box.h - lineH * text.length) / 2 : box.y + box.h - lineH * text.length - 2 * zoom) + m.fontBoundingBoxAscent;
+    for (const ch of text) {
+      ctx.fillText(ch, box.x + (box.w - ctx.measureText(ch).width) / 2, y);
+      y += lineH;
+    }
+    return;
+  }
+  const deg = st.rotation! <= 90 ? st.rotation! : 90 - st.rotation!;
+  const rad = (-deg * Math.PI) / 180;
+  const w = ctx.measureText(text).width;
+  ctx.save();
+  // Anchor: upward text starts at the bottom (left), downward text at the top (left), as Excel draws it.
+  const ax = align === "right" ? box.x + box.w - pad : align === "center" ? box.x + box.w / 2 : box.x + pad;
+  const ay = deg > 0 ? box.y + box.h - 2 * zoom : box.y + 2 * zoom;
+  ctx.translate(ax, ay);
+  ctx.rotate(rad);
+  const dx = align === "right" ? -w : align === "center" ? -w / 2 : 0;
+  ctx.fillText(text, dx, deg > 0 ? -m.fontBoundingBoxDescent : m.fontBoundingBoxAscent);
+  ctx.restore();
 }

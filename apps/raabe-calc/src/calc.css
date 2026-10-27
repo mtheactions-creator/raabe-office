@@ -118,8 +118,11 @@ body.painting .grid-canvas { cursor: copy; }
 .print-table.grid td { outline: 1px solid #c0c0c0; outline-offset: -1px; }
 .print-table th { background: #f0f0f0; font: 9pt "Calibri", sans-serif; border: 1px solid #c0c0c0; }
 body.printing #print-root { display: block; position: fixed; left: 0; top: 0; z-index: -1; }
+.print-table td { line-height: 1.15; padding-bottom: 1px; }
 @media print {
   body.printing > *:not(#print-root) { display: none !important; }
+  /* Pages one after the other in the flow (a fixed layer would print as one page). */
+  body.printing #print-root { position: static; z-index: auto; }
   .print-page { break-after: page; page-break-after: always; }
 }
 

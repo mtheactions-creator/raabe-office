@@ -31,6 +31,14 @@ const MARGINS: Record<string, NonNullable<PageSetup["margins"]>> = {
   "Schmale Seitenränder": { left: 0.25, right: 0.25, top: 0.75, bottom: 0.75, header: 0.3, footer: 0.3 },
 };
 
+/**
+ * Excel prints rows and columns slightly smaller than on screen: measured from its PDF export,
+ * a 15-pt row takes 14,52 pt on paper (50 rows on an A4 page with the normal margins).
+ */
+const PRINT_SCALE = 14.522 / 15;
+/** Excel's PDF starts the cells 2,6 pt further right and down than the margins say (measured). */
+const PRINT_OFFSET = 2.6 / 72;
+
 const cm = (inch: number) => `${(inch * 2.54).toFixed(1).replace(".", ",")} cm`;
 
 export function printFeature(app: CalcApp) {
@@ -57,13 +65,13 @@ export function printFeature(app: CalcApp) {
     const pw = (sz.w - m.left - m.right) * 96, ph = (sz.h - m.top - m.bottom) * 96;
     const colW = (c: number) => colPx96(sheet, c);
     const rowH = (r: number) => (sheet.rows.get(r)?.hidden ? 0 : ptToPx(sheet.rows.get(r)?.height ?? sheet.defaultRowHeight));
-    let scale = (p.scale ?? 100) / 100;
+    let scale = ((p.scale ?? 100) / 100) * PRINT_SCALE;
     if (p.fitWidth || p.fitHeight) {
       let tw = 0, th = 0;
       for (let c = area.c0; c <= area.c1; c++) tw += colW(c);
       for (let r = area.r0; r <= area.r1; r++) th += rowH(r);
       const sw = p.fitWidth ? (pw * p.fitWidth) / tw : Infinity, sh = p.fitHeight ? (ph * p.fitHeight) / th : Infinity;
-      scale = Math.max(0.1, Math.min(1, sw, sh));
+      scale = Math.max(0.1, Math.min(PRINT_SCALE, sw * PRINT_SCALE, sh * PRINT_SCALE));
     }
     const cut = (from: number, to: number, size: (i: number) => number, room: number) => {
       const out: [number, number][] = [];
@@ -90,7 +98,7 @@ export function printFeature(app: CalcApp) {
     const sz = paper(p);
     const m = p.margins ?? MARGINS["Normale Seitenränder"];
     const scale = (paginate as unknown as { scale: number }).scale ?? 1;
-    const table = h("table", { class: "print-table", style: `transform:scale(${scale});transform-origin:top left` });
+    const table = h("table", { class: "print-table", style: `zoom:${scale}` });
     const colgroup = h("colgroup");
     if (p.headings) colgroup.append(h("col", { style: "width:30px" }));
     for (let c = pg.cols[0]; c <= pg.cols[1]; c++) {
@@ -123,25 +131,29 @@ export function printFeature(app: CalcApp) {
       table.append(tr);
     }
     if (p.gridLines) table.classList.add("grid");
-    return h("div", { class: "print-page", style: `width:${sz.w}in;height:${sz.h}in;padding:${m.top}in ${m.right}in ${m.bottom}in ${m.left}in` }, table);
+    return h("div", { class: "print-page", style: `width:${sz.w}in;height:${sz.h}in;padding:${m.top + PRINT_OFFSET}in ${m.right}in ${m.bottom}in ${m.left + PRINT_OFFSET}in` }, table);
   }
 
   function pages(): HTMLElement[] {
     return paginate(app.sheet).map((pg) => renderPage(app.sheet, pg));
   }
 
-  async function exportPdf(): Promise<void> {
-    const path = await app.platform.saveFileDialog(`${document.title.replace(/ - RaabeCalc$/, "")}.pdf`, "pdf");
+  async function exportPdf(to?: string): Promise<void> {
+    const path = to ?? await app.platform.saveFileDialog(`${document.title.replace(/ - RaabeCalc$/, "")}.pdf`, "pdf");
     if (!path) return;
     const root = document.getElementById("print-root") ?? document.body.appendChild(h("div", { id: "print-root" }));
     root.replaceChildren(...pages());
     const sz = paper(page());
+    // The page size for the PDF (the shell's print style sheet would otherwise make it A4 portrait).
+    const style = h("style", null, `@page { size: ${sz.w}in ${sz.h}in; margin: 0 }`);
+    document.head.append(style);
     document.body.classList.add("printing");
     try {
       await app.platform.printToPdf(path, { width: sz.w, height: sz.h });
     } finally {
       document.body.classList.remove("printing");
       root.replaceChildren();
+      style.remove();
     }
   }
 
@@ -219,7 +231,7 @@ export function printFeature(app: CalcApp) {
   }
 
   return {
-    exportPdf,
+    exportPdf: (to?: string) => exportPdf(to),
     page: printPage,
     orientation: () => page().orientation ?? "portrait",
     setOrientation,

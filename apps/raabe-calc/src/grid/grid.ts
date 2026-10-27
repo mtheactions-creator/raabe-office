@@ -9,7 +9,7 @@ import {
 } from "@raabe/sheet-engine";
 import { h } from "@raabe/shell";
 import { editText } from "../engine";
-import { draw, errorIndicator, expandToMerges, filterButton, placed, type DrawState, type Pane } from "./render";
+import { cssFont, draw, errorIndicator, expandToMerges, filterButton, placed, type DrawState, type Pane } from "./render";
 import { CondEval } from "./cond";
 import { POINTERS } from "./pointers";
 import { pxToChars, setDeviceScale, sheetAxes, type Axis } from "./metrics";
@@ -45,6 +45,8 @@ export interface GridHost {
   errorMenu(kind: "text-number" | "error", anchor: DOMRect): void;
   /** Enter while copied cells are marked: paste them; true when it did. */
   enterPaste(): boolean;
+  /** A link was clicked: a web address, a file or "#Sheet!A1" inside the workbook. */
+  followLink(target: string): void;
 }
 
 const REF_COLORS = ["#0070c0", "#c00000", "#7030a0", "#00b050", "#c55a11", "#2e75b6", "#bf8f00"];
@@ -873,7 +875,40 @@ export class Grid {
   /** Where the last press was: a drag is never a double-click (Excel). */
   private downAt = { x: 0, y: 0, moved: false };
 
+  /** A finger on the sheet: dragging scrolls, a tap selects (Excel's touch mode). */
+  private touch: { x: number; y: number; top: number; left: number; panned: boolean; id: number } | null = null;
+
+  private onTouchDown(e: PointerEvent): void {
+    this.touch = { x: e.clientX, y: e.clientY, top: this.view.top, left: this.view.left, panned: false, id: e.pointerId };
+    this.canvas.setPointerCapture(e.pointerId);
+  }
+
+  private onTouchMove(e: PointerEvent): void {
+    const t = this.touch!;
+    const dx = e.clientX - t.x, dy = e.clientY - t.y;
+    if (!t.panned && Math.hypot(dx, dy) < 8) return;
+    t.panned = true;
+    const fr = this.view.freeze?.row ?? 0, fc = this.view.freeze?.col ?? 0;
+    this.view.top = Math.max(fr, this.rows.at(this.rows.pos(t.top) - dy / this.zoom));
+    this.view.left = Math.max(fc, this.cols.at(this.cols.pos(t.left) - dx / this.zoom));
+    this.updateScrollbars();
+    this.invalidate();
+  }
+
+  private onTouchUp(e: PointerEvent): void {
+    const t = this.touch!;
+    this.touch = null;
+    if (t.panned) return;
+    const p = this.local(e);
+    const hit = this.hit(p.x, p.y);
+    if (hit.area === "cell") {
+      if (this.editing) this.commitEdit("none");
+      this.selectCell(hit.row, hit.col);
+    }
+  }
+
   private onDown(e: PointerEvent): void {
+    if (e.pointerType === "touch") { this.onTouchDown(e); return; }
     this.downAt = { x: e.clientX, y: e.clientY, moved: false };
     if (e.button !== 0) {
       if (e.button === 2) this.editor.focus({ preventScroll: true });
@@ -950,6 +985,7 @@ export class Grid {
   }
 
   private onMove(e: PointerEvent): void {
+    if (this.touch && e.pointerId === this.touch.id) { this.onTouchMove(e); return; }
     const p = this.local(e);
     if (e.buttons && Math.hypot(e.clientX - this.downAt.x, e.clientY - this.downAt.y) > 4) this.downAt.moved = true;
     if (!this.drag) {
@@ -1074,6 +1110,7 @@ export class Grid {
   private liveSize: { kind: "col" | "row"; i: number; size: number } | null = null;
 
   private onUp(e: PointerEvent): void {
+    if (this.touch && e.pointerId === this.touch.id) { this.onTouchUp(e); return; }
     const d = this.drag;
     this.drag = null;
     this.stopAutoScroll();
@@ -1125,7 +1162,26 @@ export class Grid {
       this.editing?.viaBar ? this.fx.focus() : this.editor.focus({ preventScroll: true });
       return;
     }
+    // A click on a link's text follows it (Excel); a click beside the text only selects.
+    if (d.kind === "cells" && !this.downAt.moved && !e.shiftKey && !e.ctrlKey) {
+      const c = this.sheet.get(this.active.row, this.active.col);
+      if (c?.link && this.overText(e, this.active.row, this.active.col)) this.host.followLink(c.link);
+    }
     this.syncBar();
+  }
+
+  /** Whether the pointer is over the text a cell shows. */
+  private overText(e: MouseEvent, row: number, col: number): boolean {
+    const b = this.rectOnCanvas({ r0: row, c0: col, r1: row, c1: col });
+    const c = this.sheet.get(row, col);
+    if (!b || !c) return false;
+    const st = this.wb.styles.get(c.s);
+    this.ctx.font = cssFont(st, this.zoom);
+    const w = this.ctx.measureText(String(c.v ?? "")).width;
+    const p = this.local(e);
+    const right = st.h === "right" || (st.h === undefined && typeof c.v === "number");
+    const x0 = right ? b.x + b.w - w - 3 : st.h === "center" ? b.x + (b.w - w) / 2 : b.x + 2;
+    return p.x >= x0 && p.x <= x0 + w + 2;
   }
 
   private scrollTimer = 0;
