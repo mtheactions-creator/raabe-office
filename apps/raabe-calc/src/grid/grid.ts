@@ -110,6 +110,7 @@ export class Grid {
 
   /** Sizes changed (columns, rows, sheet switched): rebuild the axes. */
   refreshLayout(): void {
+    this.usedCache = null;
     setDeviceScale(this.dpr);
     const a = sheetAxes(this.sheet);
     this.rows = a.rows;
@@ -136,6 +137,7 @@ export class Grid {
   /** Cell contents changed: redraw (formatted texts are cached per cell). */
   contentChanged(): void {
     this.textCache.clear();
+    this.usedCache = null;
     this.cond = null;
     this.invalidate();
     this.syncBar();
@@ -297,9 +299,17 @@ export class Grid {
     this.invalidate();
   }
 
+  /** The used range for the scroll bars, cached until cells change (a scan of every cell). */
+  private usedCache: { sheet: Sheet; used: Rect | null } | null = null;
+
+  private used(): Rect | null {
+    if (!this.usedCache || this.usedCache.sheet !== this.sheet) this.usedCache = { sheet: this.sheet, used: this.sheet.usedRange() };
+    return this.usedCache.used;
+  }
+
   private updateScrollbars(): void {
     if (!this.rows) return;
-    const used = this.sheet.usedRange();
+    const used = this.used();
     const vis = Math.max(1, this.visibleRows()), visC = Math.max(1, this.visibleCols());
     const maxRow = Math.min(MAX_ROWS - 1, Math.max(used?.r1 ?? 0, this.view.top + vis * 2, this.active.row + vis));
     const maxCol = Math.min(MAX_COLS - 1, Math.max(used?.c1 ?? 0, this.view.left + visC * 2, this.active.col + visC));
@@ -383,7 +393,7 @@ export class Grid {
     let p = from;
     const next = step(p);
     if (!inside(next)) return p;
-    const used = this.sheet.usedRange();
+    const used = this.used();
     const beyond = (q: { row: number; col: number }) => !used || (dr > 0 && q.row > used.r1) || (dc > 0 && q.col > used.c1);
     if (!this.isEmpty(p.row, p.col) && !this.isEmpty(next.row, next.col)) {
       while (inside(step(p)) && !this.isEmpty(step(p).row, step(p).col)) p = step(p);

@@ -28,13 +28,31 @@ interface Step {
   selAfter?: { sheet: number; sel: Rect[]; active: { row: number; col: number } };
 }
 
+/** What a step changed: the cells per sheet, or `structural` when only a full recalculation will do. */
+export interface Change {
+  structural: boolean;
+  cells: Map<Sheet, { row: number; col: number }[]>;
+}
+
+function changeOf(states: SheetState[], sheetsChanged: boolean): Change {
+  const cells = new Map<Sheet, { row: number; col: number }[]>();
+  let structural = sheetsChanged;
+  for (const st of states) {
+    if (st.whole || (st as SheetState & { areas?: Rect[] }).areas) structural = true;
+    const list: { row: number; col: number }[] = [];
+    for (const k of st.cells.keys()) if (k >= 0) list.push({ row: Math.floor(k / 16384), col: k % 16384 });
+    if (list.length) cells.set(st.sheet, list);
+  }
+  return { structural, cells };
+}
+
 export class History {
   private undoStack: Step[] = [];
   private redoStack: Step[] = [];
   private open: Step | null = null;
   private depth = 0;
   /** Called after every change (undo/redo included) with the sheets whose cells changed. */
-  onChange: (sheets: Set<Sheet>) => void = () => {};
+  onChange: (change: Change) => void = () => {};
 
   constructor(private wb: Workbook) {}
 
@@ -61,7 +79,7 @@ export class History {
           this.undoStack.push(st);
           if (this.undoStack.length > 100) this.undoStack.shift();
           this.redoStack = [];
-          this.onChange(new Set(st.before.map((b) => b.sheet)));
+          this.onChange(changeOf(st.before, !!st.sheetsBefore));
         }
       }
     }
@@ -197,7 +215,7 @@ export class History {
     if (st.sheetsBefore) { this.wb.sheets = [...st.sheetsBefore.list]; this.wb.active = st.sheetsBefore.active; }
     this.restoreSel(st.selBefore);
     this.redoStack.push(st);
-    this.onChange(new Set(st.before.map((b) => b.sheet)));
+    this.onChange(changeOf(st.before, !!st.sheetsBefore));
     return true;
   }
 
@@ -208,7 +226,7 @@ export class History {
     if (st.sheetsAfter) { this.wb.sheets = [...st.sheetsAfter.list]; this.wb.active = st.sheetsAfter.active; }
     this.restoreSel(st.selAfter);
     this.undoStack.push(st);
-    this.onChange(new Set(st.after.map((b) => b.sheet)));
+    this.onChange(changeOf(st.after, !!st.sheetsAfter));
     return true;
   }
 

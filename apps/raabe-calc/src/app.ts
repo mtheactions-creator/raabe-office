@@ -147,7 +147,7 @@ export class CalcApp {
   private makeDoc(wb: Workbook, name: string, path: string | null): Doc {
     const history = new History(wb);
     const doc: Doc = { id: crypto.randomUUID(), name, path, wb, history, calc: makeCalc(wb), version: 0, savedVersion: 0, recoveryVersion: 0, lastSaved: null };
-    history.onChange = () => this.afterChange(doc);
+    history.onChange = (change) => this.afterChange(doc, change);
     doc.calc.recalc();
     return doc;
   }
@@ -178,9 +178,15 @@ export class CalcApp {
     this.platform.window.setTitle(document.title);
   }
 
-  private afterChange(doc: Doc): void {
+  private afterChange(doc: Doc, change?: import("./ops").Change): void {
     doc.version++;
-    doc.calc.recalc();
+    // Only what depends on the changed cells is calculated again; structural changes (rows,
+    // columns, sheets, names) recalculate the whole workbook.
+    if (!change || change.structural) doc.calc.recalc();
+    else for (const [sheet, cells] of change.cells) {
+      const i = doc.wb.sheets.indexOf(sheet);
+      if (i >= 0) doc.calc.changed(i, cells);
+    }
     if (doc === this.active) {
       this.grid.refreshLayout();
       this.grid.contentChanged();
@@ -354,7 +360,14 @@ export class CalcApp {
     }
     if (r.r1 - r.r0 > 5000) return;
     const need = new Map<number, number>();
-    for (const [k, c] of sheet.cells) {
+    // Small ranges look at their own cells; whole rows look through the sheet's cells.
+    const area = (r.r1 - r.r0 + 1) * (Math.min(r.c1, MAX_COLS - 1) - r.c0 + 1);
+    const entries: [number, import("@raabe/sheet-engine").Cell][] = [];
+    const partial = area <= 5000 && r.c1 - r.c0 < 1000;
+    if (partial) {
+      for (let row = r.r0; row <= r.r1; row++) for (let col = r.c0; col <= r.c1; col++) { const c = sheet.get(row, col); if (c) entries.push([row * MAX_COLS + col, c]); }
+    } else for (const e of sheet.cells) entries.push(e);
+    for (const [k, c] of entries) {
       const row = Math.floor(k / MAX_COLS);
       if (!rows.has(row)) continue;
       const col = k % MAX_COLS;
@@ -386,6 +399,8 @@ export class CalcApp {
       const target = hgt && hgt > def ? hgt : undefined;
       if ((info?.height ?? undefined) === target && !force) continue;
       if (!target && !info?.height) continue;
+      // Looking at part of a row only, a row may grow but not shrink (another cell may need the height).
+      if (partial && (target ?? def) < (info?.height ?? def)) continue;
       this.history.row(sheet, row);
       sheet.rows.set(row, { ...(info ?? {}), height: target, custom: false });
     }
