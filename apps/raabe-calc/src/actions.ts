@@ -356,6 +356,27 @@ export function insertDelete(ctx: Ctx, sheet: Sheet, kind: "rows" | "cols", at: 
       if (nf !== c.f) s.cells.set(k, { ...c, f: nf });
     }
   }
+  // Charts follow too: their corners on this sheet and their series references anywhere (Excel).
+  for (const s of ctx.wb.sheets) {
+    if (!s.charts?.length) continue;
+    ctx.history.charts(s);
+    for (const ch of s.charts) {
+      if (s === sheet) {
+        for (const corner of [ch.from, ch.to]) {
+          const p = isRows ? corner.row : corner.col;
+          const np = p >= at ? Math.max(at, p + count) : p;
+          if (isRows) corner.row = np; else corner.col = np;
+        }
+      }
+      for (const ser of ch.series) {
+        for (const d of [ser.name, ser.cat, ser.val]) {
+          if (!d?.ref) continue;
+          const nf = adjustFormula(d.ref, { sheet: sheet.name, kind, at, count, home: s.name });
+          d.ref = nf;
+        }
+      }
+    }
+  }
 }
 
 /** Zellen einfügen/löschen with shifting (rechts/unten verschieben, nach links/oben verschieben). */

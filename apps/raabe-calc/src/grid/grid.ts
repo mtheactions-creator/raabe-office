@@ -12,7 +12,7 @@ import { editText } from "../engine";
 import { draw, errorIndicator, expandToMerges, filterButton, placed, type DrawState, type Pane } from "./render";
 import { CondEval } from "./cond";
 import { POINTERS } from "./pointers";
-import { sheetAxes, type Axis } from "./metrics";
+import { pxToChars, setDeviceScale, sheetAxes, type Axis } from "./metrics";
 import type { Shown } from "../engine";
 
 export type Mode = "ready" | "enter" | "edit" | "point";
@@ -22,6 +22,8 @@ export interface GridHost {
   /** Typed input committed into `targets` (Strg+Eingabe: every selected cell). */
   commit(targets: Rect, text: string, opts: { array?: boolean }): void;
   clearContents(): void;
+  /** The fill handle dragged back into its selection: these cells are emptied. */
+  clearRange(r: Rect): void;
   /** Fill handle released: fill from `source` to `target` (Strg held: series/copy toggled). */
   fill(source: Rect, target: Rect, ctrl: boolean): void;
   /** Selection border dragged: move (or copy with Strg) to a new top-left cell. */
@@ -108,6 +110,7 @@ export class Grid {
 
   /** Sizes changed (columns, rows, sheet switched): rebuild the axes. */
   refreshLayout(): void {
+    setDeviceScale(this.dpr);
     const a = sheetAxes(this.sheet);
     this.rows = a.rows;
     this.cols = a.cols;
@@ -161,7 +164,10 @@ export class Grid {
 
   private resize(): void {
     const r = this.el.getBoundingClientRect();
-    this.dpr = devicePixelRatio || 1;
+    const dpr = devicePixelRatio || 1;
+    const rescale = dpr !== this.dpr;
+    this.dpr = dpr;
+    if (rescale && this.rows) this.refreshLayout();
     this.width = Math.max(0, r.width - 17);
     this.height = Math.max(0, r.height);
     this.canvas.width = Math.round(this.width * this.dpr);
@@ -960,7 +966,7 @@ export class Grid {
         return;
       case "resizeCol": {
         const w = Math.max(0, (d.extra as number) + (p.x - d.x) / this.zoom);
-        this.canvas.dataset.tip = `Breite: ${((w - 5) / 7).toFixed(2).replace(".", ",")} (${Math.round(w)} Pixel)`;
+        this.canvas.dataset.tip = `Breite: ${pxToChars(w).toFixed(2).replace(".", ",")} (${Math.round(w * this.dpr)} Pixel)`;
         this.ghostSize("col", d.start.col, w);
         return;
       }
@@ -972,11 +978,18 @@ export class Grid {
       }
       case "fill": {
         const sel = this.selection[0];
+        // Upwards and leftwards a row or column counts once the pointer is past its middle (Excel).
+        const cellBox = this.rectOnCanvas({ r0: hit.row, c0: hit.col, r1: hit.row, c1: hit.col });
+        if (cellBox && hit.row < sel.r0 && p.y > cellBox.y + cellBox.h / 2) hit.row++;
+        if (cellBox && hit.col < sel.c0 && p.x > cellBox.x + cellBox.w / 2) hit.col++;
         const dr = hit.row > sel.r1 ? hit.row - sel.r1 : hit.row < sel.r0 ? hit.row - sel.r0 : 0;
         const dc = hit.col > sel.c1 ? hit.col - sel.c1 : hit.col < sel.c0 ? hit.col - sel.c0 : 0;
-        // The fill goes along the axis the pointer moved further on (Excel).
+        // The fill goes along the axis the pointer moved further on (Excel); back inside the
+        // selection it marks the cells that will be emptied.
         if (Math.abs(dr) >= Math.abs(dc) && dr) this.ghost = dr > 0 ? { ...sel, r1: hit.row } : { ...sel, r0: hit.row };
         else if (dc) this.ghost = dc > 0 ? { ...sel, c1: hit.col } : { ...sel, c0: hit.col };
+        else if (sel.r1 > sel.r0 && hit.row < sel.r1 && hit.row >= sel.r0) this.ghost = { ...sel, r1: hit.row };
+        else if (sel.c1 > sel.c0 && hit.col < sel.c1 && hit.col >= sel.c0) this.ghost = { ...sel, c1: hit.col };
         else this.ghost = null;
         this.invalidate();
         return;
@@ -1075,9 +1088,11 @@ export class Grid {
       const g = this.ghost;
       this.ghost = null;
       const src = this.selection[0];
-      // Dragging the handle back into the selection clears the cells left out (Excel).
+      // Dragging the handle back into the selection empties the cells left out (Excel).
       if (g.r0 >= src.r0 && g.r1 <= src.r1 && g.c0 >= src.c0 && g.c1 <= src.c1) {
-        this.invalidate();
+        const cleared = g.r1 < src.r1 ? { ...src, r0: g.r1 + 1 } : { ...src, c0: g.c1 + 1 };
+        this.host.clearRange(cleared);
+        this.select(g, { ...this.active });
         return;
       }
       this.host.fill(src, g, e.ctrlKey);
@@ -1392,7 +1407,7 @@ export class Grid {
     const m = t.startsWith("=") ? /([A-Za-zÄÖÜäöüß][A-Za-zÄÖÜäöüß0-9.]*)$/.exec(t.slice(0, pos)) : null;
     if (!m || /[A-Za-z]\$?\d/.test(m[1])) { this.ac.hidden = true; this.acItems = []; return; }
     const prefix = m[1].toUpperCase();
-    this.acItems = this.functions.filter((f) => f.name.startsWith(prefix)).slice(0, 12);
+    this.acItems = this.functions.filter((f) => f.name.startsWith(prefix)).sort((a, b) => a.name.localeCompare(b.name, "de")).slice(0, 12);
     if (!this.acItems.length) { this.ac.hidden = true; return; }
     this.acIndex = 0;
     this.renderAc();

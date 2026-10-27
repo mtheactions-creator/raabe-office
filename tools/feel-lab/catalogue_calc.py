@@ -147,6 +147,26 @@ CASES: list[Case] = [
     # ----- sheets ------------------------------------------------------------------------------------
     C("Umschalt+F11 new sheet", {}, [("keys", "shift+f11")], "sheets"),
     C("Strg+Bild ab next sheet", {}, [("keys", "ctrl+pagedown")], "sheets", sheets=2),
+    # ----- more controls (second round) ------------------------------------------------------------
+    C("F4 repeats bold", {"A1": "x", "B1": "y"}, [("keys", "ctrl+shift+f"), ("click", "B1"), ("keys", "f4")], "repeat"),
+    C("Strg+Y repeats format", {"A1": "x", "B1": "y"}, [("keys", "ctrl+2"), ("click", "B1"), ("keys", "ctrl+y")], "repeat"),
+    C("Strg+Minus deletes selected row", {"A1": "1", "A2": "2", "A3": "3"}, [("rowhead", 2), ("keys", "ctrl+minus")], "rows"),
+    C("Strg+Plus inserts row", {"A1": "1", "A2": "2", "B3": "=A2*2"}, [("rowhead", 2), ("keys", "ctrl+plus")], "rows"),
+    C("Strg+Minus deletes column", {"A1": "1", "B1": "2", "C1": "=B1+1"}, [("colhead", "A"), ("keys", "ctrl+minus")], "rows"),
+    C("Ctrl+Shift+End", {"A1": "1", "C5": "2"}, [("keys", "ctrl+shift+end")], "move2"),
+    C("Shift+Home", {}, [("keys", "shift+home")], "move2", start="D3"),
+    C("Esc clears marquee then Enter moves", {"A1": "1"}, [("keys", "ctrl+c"), ("keys", "esc"), ("click", "C1"), ("keys", "enter")], "move2"),
+    C("function AutoComplete Tab", NUM3, [("type", "=SUM"), ("keys", "tab"), ("type", "A1:A3)"), ("keys", "enter")], "formula2", start="B1"),
+    C("fill handle back clears", {"A1": "1", "A2": "2", "A3": "3", "A4": "4"}, [("drag", "A1", "A4"), ("fill", "A1:A4", "A2")], "fill2"),
+    C("fill Ctrl copies two numbers", {"A1": "1", "A2": "3"}, [("drag", "A1", "A2"), ("fill", "A1:A2", "A5", "ctrl")], "fill2"),
+    C("fill weekday long", {"A1": "Montag"}, [("fill", "A1", "A3")], "fill2"),
+    C("fill upwards", {"A5": "Woche 5"}, [("click", "A5"), ("fill", "A5", "A3")], "fill2", start="A5"),
+    C("column resize drag", {}, [("colresize", "B", 60)], "sizes"),
+    C("undo after delete", {"A1": "x"}, [("keys", "delete"), ("keys", "ctrl+z")], "repeat"),
+    C("typing replaces selection range", {"A1": "1", "A2": "2"}, [("drag", "A1", "A2"), ("type", "9"), ("keys", "enter")], "edit2"),
+    C("Backspace in edit removes char", {"A1": "abc"}, [("keys", "f2"), ("keys", "backspace"), ("keys", "enter")], "edit2"),
+    C("Esc in Bearbeiten keeps old", {"A1": "abc"}, [("keys", "f2"), ("type", "zz"), ("keys", "esc")], "edit2"),
+    C("arrow in formula after number commits", NUM3, [("type", "=A1+5"), ("keys", "down")], "formula2", start="B1"),
     C("Strg+Umschalt+L filter", {"A1": "Name", "A2": "x", "A3": "y"}, [("keys", "ctrl+shift+l")], "sheets"),
 ]
 

@@ -11,7 +11,7 @@ import { colorGrid, h, messageBox, showDialog, type MenuEntry } from "@raabe/she
 import type { CalcApp } from "./app";
 import * as A from "./actions";
 import { shown, editText } from "./engine";
-import { DEFAULT_COL_CHARS, charsToPx, pxToChars, ptToPx } from "./grid/metrics";
+import { DEFAULT_COL_CHARS, charsToPx, ptToPx, shownChars, shownToChars } from "./grid/metrics";
 import type { Settings } from "./store";
 
 const field = (label: string, input: HTMLElement) => h("label", { class: "field" }, label, input);
@@ -35,13 +35,13 @@ export function dialogs(app: CalcApp) {
   async function colWidth(): Promise<void> {
     const r = sel();
     const w = sheet().cols.get(r.c0)?.width;
-    const cur = w !== undefined ? pxToChars(charsToPx(w)) : sheet().defaultColWidth ?? DEFAULT_COL_CHARS;
+    const cur = shownChars(w ?? sheet().defaultColWidth ?? DEFAULT_COL_CHARS);
     const input = text(de(Math.round(cur * 100) / 100), 80);
     const ok = await showDialog({ title: "Spaltenbreite", body: field("Spaltenbreite:", input), buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
     if (!ok) return;
     const v = num(input.value);
     if (!(v >= 0 && v <= 255)) return void messageBox("RaabeCalc", "Die Spaltenbreite muss zwischen 0 und 255 liegen.");
-    app.setColWidths(range(r.c0, r.c1), v === 0 ? 0 : charsToPx(v));
+    app.setColWidths(range(r.c0, r.c1), v === 0 ? 0 : charsToPx(shownToChars(v)));
   }
 
   async function defaultWidth(): Promise<void> {

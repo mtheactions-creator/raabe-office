@@ -237,6 +237,9 @@ def run_step(side, step: tuple) -> None:
     elif kind == "colborder":
         x, y = side.header_point("colborder", step[1])
         winapi.click(x, y, 2)
+    elif kind == "colresize":
+        x, y = side.header_point("colborder", step[1])
+        winapi.drag(x - 1, y, x - 1 + step[2], y)
     elif kind == "wait":
         time.sleep(step[1])
     else:

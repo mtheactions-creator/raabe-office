@@ -305,6 +305,7 @@ export function chartsFeature(app: CalcApp) {
   // ----- selection, moving and sizing ------------------------------------------------------------------
 
   function select(m: ChartModel | null): void {
+    queueMicrotask(() => app.chartSelectionChanged());
     if (m === selected) return;
     selected = m;
     for (const [k, v] of views) v.el.classList.toggle("sel", k === m);
@@ -542,6 +543,12 @@ export function chartsFeature(app: CalcApp) {
     refresh,
     /** The selected chart, if any (for the ribbon's contextual tabs). */
     selected: (): ChartModel | null => selected,
+    /** A cell was selected: the chart is no longer (Excel). */
+    deselect: (): void => { if (selected) select(null); },
     deleteSelected: (): void => { if (selected) remove(selected); },
+    /** Diagrammentwurf > Diagrammelement hinzufügen: the elements list of the selected chart. */
+    elements: (): void => { if (selected) openFlyout(selected); },
+    /** Diagrammentwurf > Diagrammtyp ändern. */
+    changeKind: (kind: ChartKind): void => { if (selected) edit(selected, (m) => { m.kind = kind; }); },
   };
 }

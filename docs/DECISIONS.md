@@ -1160,8 +1160,11 @@ Built overnight on 2026-10-27 with the owner away (real input allowed, D-061):
   Bearbeitungsleiste (38 px high, as Excel's), menus and dialogs are DOM. Excel's pointers are
   drawn as sharp SVGs (D-057).
 - **Widths**: German Excel's standard column width is 10,71 characters (80 px), not the 8,43 of
-  English Excel; the model keeps widths in characters without padding (Excel's Spaltenbreite),
-  the file adds 5 px (`ooxml/src/xlsx/units.ts`).
+  English Excel; the model keeps widths in characters without padding as the file has them at
+  96 dpi (`ooxml/src/xlsx/units.ts`). On screen Excel computes widths with the display's own
+  digit width and padding (measured at 150 %: 11 device pixels and 7 px, so a column dragged
+  40 CSS px wider shows 15,73 characters, not 16,43); the grid does the same (`grid/metrics.ts`),
+  printing uses the 96-dpi widths.
 - **Formulas** are stored as Excel's `Formula2` without "=" (English names, no `_xlfn.`
   prefixes) and evaluated with Excel 365's semantics (spilling arrays); the UI converts to
   German on the way in and out. Measured: 4229/4234 recorded Excel results equal (the five
@@ -1201,5 +1204,11 @@ Recorded in an Excel of our own with real input (`catalogue_calc.py`, 117 cases;
 - **Context menus** of cells, column and row headers and sheet tabs with Excel's labels
   (three dots, "Zellen einfügen…"); the search box at their top and Microsoft's descriptions are
   not copied (D-058).
+- **Ribbon menus** entry by entry as recorded (`probe_excel_menus.py`: Rahmen with "Doppelte
+  Rahmenlinien unten", Bedingte Formatierung with "Regeln für oberste/unterste Werte", AutoSumme
+  with "Anzahl Zahlen", Löschen with "Kommentare und Notizen löschen", Suchen und Auswählen with
+  Formeln/Notizen/Konstanten, Seitenränder, Berechnungsoptionen with Teilweise); labels that follow
+  the content as Excel's (Fixierung aufheben; "Von A bis Z" for text, "Nach Größe" for numbers);
+  F4 and Strg+Y repeat the last formatting; dragging the fill handle back empties cells.
 - Not yet as Excel: the drag of the selection's border onto other sheets, Schnellanalyse,
   Blitzvorschau, data validation, comments (Notizen work).

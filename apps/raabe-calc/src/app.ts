@@ -14,7 +14,7 @@ import {
 } from "@raabe/shell";
 import { COMMANDS } from "./command-list";
 import { Grid, type GridHost, type Mode } from "./grid/grid";
-import { DEFAULT_COL_CHARS, charsToPx, pxToChars, pxToPt, pxToWidth, ptToPx } from "./grid/metrics";
+import { DEFAULT_COL_CHARS, charsToPx, defaultColPx, pxToPt, pxToWidth, ptToPx, shownChars } from "./grid/metrics";
 import { cssFont } from "./grid/render";
 import { History } from "./ops";
 import * as A from "./actions";
@@ -223,6 +223,7 @@ export class CalcApp {
         this.copied = null;
       },
       clearContents: () => this.change("Löschen", () => A.clearContents(this.ctx, this.sheet, this.grid.selection)),
+      clearRange: (r) => this.change("Löschen", () => A.clearContents(this.ctx, this.sheet, [r])),
       fill: (source, target, ctrl) => this.fillWithOptions(source, target, ctrl ? "toggle" : "auto"),
       move: (source, to, copy) => this.change(copy ? "Kopieren" : "Verschieben", () => {
         if (copy) A.copyCells(this.ctx, { sheet: this.sheet, rect: source }, this.sheet, to);
@@ -233,6 +234,7 @@ export class CalcApp {
       autofitCols: (cols) => this.autofitCols(cols),
       autofitRows: (rows) => this.change("Zeilenhöhe", () => this.autoRowHeights({ r0: Math.min(...rows), c0: 0, r1: Math.max(...rows), c1: MAX_COLS - 1 }, true)),
       selectionChanged: () => {
+        this.charts.deselect();
         if (this.painter) this.applyPainter();
         this.scheduleChrome();
       },
@@ -361,7 +363,8 @@ export class CalcApp {
       let lines = 1;
       if (st.wrap && typeof c.v === "string") {
         this.measureCtx.font = cssFont(st, 1);
-        const w = charsToPx(sheet.cols.get(col)?.width ?? DEFAULT_COL_CHARS) - 5;
+        const cw = sheet.cols.get(col)?.width;
+        const w = (cw !== undefined ? charsToPx(cw) : defaultColPx(sheet.defaultColWidth ?? DEFAULT_COL_CHARS)) - 5;
         let n = 0;
         for (const para of c.v.split("\n")) {
           let line = "";
@@ -398,7 +401,11 @@ export class CalcApp {
 
   formatSel(label: string, change: (s: CellStyle) => void): void {
     this.change(label, () => A.format(this.ctx, this.sheet, this.grid.selection, change));
+    // F4 and Strg+Y (with nothing to redo) repeat the last formatting on the new selection (Excel).
+    this.lastRepeat = { label, run: () => this.formatSel(label, change) };
   }
+
+  private lastRepeat: { label: string; run: () => void } | null = null;
 
   private toggleFont(key: "bold" | "italic" | "strike"): void {
     const on = !this.activeStyle().font[key];
@@ -770,7 +777,7 @@ export class CalcApp {
     for (const [col, w] of need) {
       const info = sheet.cols.get(col);
       if (info?.width !== undefined && !info.bestFit) continue;
-      const cur = info?.width !== undefined ? charsToPx(info.width) : charsToPx((sheet.defaultColWidth ?? DEFAULT_COL_CHARS));
+      const cur = info?.width !== undefined ? charsToPx(info.width) : defaultColPx(sheet.defaultColWidth ?? DEFAULT_COL_CHARS);
       const px = Math.ceil(w) + 7;
       if (px - 2 <= cur) continue;
       this.history.col(sheet, col);
@@ -822,6 +829,15 @@ export class CalcApp {
         c.defaultColWidth = s.defaultColWidth;
         c.defaultRowHeight = s.defaultRowHeight;
         c.view = structuredClone(s.view);
+        // Charts come along and show the copy's cells (Excel).
+        if (s.charts?.length) {
+          const quote = (n: string) => (/^[A-Za-z_][A-Za-z0-9_.]*$/.test(n) ? n : `'${n.replace(/'/g, "''")}'`);
+          const from = quote(s.name) + "!", to = quote(c.name) + "!";
+          c.charts = structuredClone(s.charts).map((ch) => {
+            for (const ser of ch.series) for (const d of [ser.name, ser.cat, ser.val]) if (d?.ref?.startsWith(from)) d.ref = to + d.ref.slice(from.length);
+            return ch;
+          });
+        }
         this.wb.sheets.splice(to, 0, c);
         this.wb.active = to;
       } else {
@@ -871,7 +887,33 @@ export class CalcApp {
     });
   }
 
+  /** Labels that follow the content, as Excel's do: Fixierung aufheben, sorting by text or by size. */
+  private updateLabels(): void {
+    this.commands.get("view.freezePanes").label = this.sheet.view.freeze ? "Fixierung aufheben" : "Fenster fixieren";
+    const { row, col } = this.sheet.view.active;
+    const text = typeof this.sheet.get(row, col)?.v === "string";
+    this.commands.get("edit.sortAscMenu").label = text ? "Von A bis Z sortieren" : "Nach Größe sortieren (aufsteigend)";
+    this.commands.get("edit.sortDescMenu").label = text ? "Von Z bis A sortieren" : "Nach Größe sortieren (absteigend)";
+  }
+
+  /** Suchen und Auswählen > Formeln, Notizen, Konstanten …: those cells of the sheet (or the selection) selected. */
+  private selectWhere(test: (c: import("@raabe/sheet-engine").Cell, row: number, col: number) => boolean, label: string): void {
+    const sel = this.grid.selection;
+    const within = sel.length > 1 || sel[0].r0 !== sel[0].r1 || sel[0].c0 !== sel[0].c1 ? sel : null;
+    const hits: Rect[] = [];
+    for (const [k, c] of this.sheet.cells) {
+      const row = Math.floor(k / MAX_COLS), col = k % MAX_COLS;
+      if (within && !within.some((r) => row >= r.r0 && row <= r.r1 && col >= r.c0 && col <= r.c1)) continue;
+      if (test(c, row, col)) hits.push({ r0: row, c0: col, r1: row, c1: col });
+    }
+    if (!hits.length) { void messageBox("RaabeCalc", `Es wurden keine Zellen gefunden (${label}).`); return; }
+    hits.sort((a, b) => a.r0 - b.r0 || a.c0 - b.c0);
+    this.grid.select(hits[0], { row: hits[0].r0, col: hits[0].c0 });
+    for (const h of hits.slice(1, 2000)) this.grid.select(h, { row: hits[0].r0, col: hits[0].c0 }, true);
+  }
+
   updateChrome(): void {
+    this.updateLabels();
     this.statusBar.update(this.sheet.view.zoom, this.stats());
     this.commands.refresh();
     this.ribbon.refresh?.();
@@ -951,7 +993,12 @@ export class CalcApp {
     run("file.options", () => void this.dlg.options(this.settings, (s) => { this.settings = s; saveSettings(s); document.body.classList.toggle("touch", s.touchMode); }));
 
     run("edit.undo", () => { if (this.grid.isEditing) this.grid.cancelEdit(); else this.history.undo(); this.grid.syncBar(); }, () => this.grid?.isEditing || this.history.canUndo);
-    run("edit.redo", () => { this.history.redo(); this.grid.syncBar(); }, () => notEditing() && this.history.canRedo);
+    run("edit.redo", () => {
+      if (this.history.canRedo) this.history.redo();
+      else this.lastRepeat?.run();
+      this.grid.syncBar();
+    }, () => notEditing() && (this.history.canRedo || !!this.lastRepeat));
+    run("edit.repeat", () => this.lastRepeat?.run(), () => notEditing() && !!this.lastRepeat);
     run("edit.copy", () => void this.copy(false), notEditing);
     run("edit.cut", () => void this.copy(true), notEditing);
     run("edit.paste", () => void this.paste(), notEditing);
@@ -969,6 +1016,9 @@ export class CalcApp {
       document.body.classList.toggle("painting", !!this.painter);
     }, notEditing, () => !!this.painter);
 
+    // The Schriftart and Schriftgrad boxes act through their lists; as commands they only focus them.
+    run("font.name", () => this.focusRibbonInput("font.name"));
+    run("font.size", () => this.focusRibbonInput("font.size"));
     run("font.bold", () => this.toggleFont("bold"), undefined, () => !!st().font.bold);
     run("font.italic", () => this.toggleFont("italic"), undefined, () => !!st().font.italic);
     run("font.strike", () => this.toggleFont("strike"), undefined, () => !!st().font.strike);
@@ -1111,6 +1161,16 @@ export class CalcApp {
     run("edit.dateToday", () => this.typeNow("date"));
     run("edit.timeNow", () => this.typeNow("time"));
 
+    run("edit.sortAscMenu", () => this.dlg.sortQuick(true));
+    run("edit.sortDescMenu", () => this.dlg.sortQuick(false));
+    run("edit.removeLinks", () => this.change("Links entfernen", () => {
+      A.clearAll(this.ctx, this.sheet, this.grid.selection, "links");
+      A.format(this.ctx, this.sheet, this.grid.selection, (s) => { if (s.font.color === "#0563C1") { s.font.color = undefined; s.font.underline = undefined; } });
+    }));
+    run("edit.selectFormulas", () => this.selectWhere((c) => c.f !== undefined, "Formeln"));
+    run("edit.selectNotes", () => this.selectWhere((c) => !!c.note, "Notizen"));
+    run("edit.selectConstants", () => this.selectWhere((c) => c.f === undefined && c.v !== null && c.v !== "", "Konstanten"));
+    run("edit.selectConditional", () => this.selectWhere((_c, row, col) => !!this.sheet.conditional?.some((f) => f.ref.some((r) => row >= r.r0 && row <= r.r1 && col >= r.c0 && col <= r.c1)), "Bedingte Formatierung"));
     run("data.sortAsc", () => this.dlg.sortQuick(true));
     run("data.sortDesc", () => this.dlg.sortQuick(false));
     run("data.sort", () => void this.dlg.sort());
@@ -1131,6 +1191,8 @@ export class CalcApp {
     run("insert.chartPie", () => this.charts.insert("pie"));
     run("insert.chartScatter", () => this.charts.insert("scatter"));
     run("insert.chartStat", () => this.charts.insert("histogram"));
+    run("chart.addElement", () => this.charts.elements(), () => !!this.charts.selected());
+    run("chart.changeType", () => {}, () => !!this.charts.selected());
 
     run("layout.margins", () => {});
     run("layout.orientation", () => {});
@@ -1185,6 +1247,39 @@ export class CalcApp {
     run("sheet.prev", () => { let i = this.wb.active - 1; while (i >= 0 && this.wb.sheets[i].hidden) i--; if (i >= 0) this.activateSheet(i); });
   }
 
+  private focusRibbonInput(cmd: string): void {
+    if (this.ribbon.activeTab !== "start") this.ribbon.select("start");
+    requestAnimationFrame(() => {
+      this.ribbon.card.querySelector<HTMLInputElement>(`[data-tip^="${this.commands.get(cmd).label}"] input`)?.focus();
+    });
+  }
+
+  /** Diagrammentwurf appears while a chart is selected, as Excel's contextual tab does. */
+  chartSelectionChanged(): void {
+    const on = !!this.charts.selected();
+    this.ribbon.setContextual(on ? [this.chartTab()] : []);
+    if (on) this.ribbon.select("chartDesign");
+    this.updateChrome();
+  }
+
+  private chartTabDef: import("@raabe/shell").Tab | null = null;
+  private chartTab(): import("@raabe/shell").Tab {
+    const kinds: [string, import("./charts/feature").ChartKind][] = [["Gruppierte Säulen", "column"], ["Gestapelte Säulen", "columnStacked"], ["Gruppierte Balken", "bar"],
+      ["Linie", "line"], ["Linie mit Datenpunkten", "lineMarkers"], ["Fläche", "area"], ["Kreis", "pie"], ["Ring", "doughnut"], ["Punkte (XY)", "scatter"],
+      ["Punkte mit geraden Linien", "scatterLines"], ["Histogramm", "histogram"]];
+    const b = (cmd: string, key: string): import("@raabe/shell").Control => ({ type: "button", cmd, key, size: "large" });
+    return this.chartTabDef ??= {
+      id: "chartDesign", label: "Diagrammentwurf", key: "JC", contextual: true, shrink: [],
+      groups: [
+        { id: "layouts", label: "Diagrammlayouts", key: "ZL", icon: "chart-recommended", controls: [b("chart.addElement", "A"), b("chart.quickLayout", "L")] },
+        { id: "styles", label: "Diagrammformatvorlagen", key: "ZS", icon: "styles", controls: [b("chart.colors", "H"), b("chart.styles", "S")] },
+        { id: "data", label: "Daten", key: "ZD", icon: "table", controls: [b("chart.switchRowCol", "W"), b("chart.selectData", "E")] },
+        { id: "type", label: "Typ", key: "ZT", icon: "chart-column", controls: [{ type: "dropdown", cmd: "chart.changeType", key: "C", size: "large", menu: kinds.map(([label, k]) => ({ label, run: () => this.charts.changeKind(k) })) }] },
+        { id: "place", label: "Ort", key: "ZO", icon: "position", controls: [b("chart.move", "V")] },
+      ],
+    };
+  }
+
   showFormulas = false;
   showNotes = false;
 
@@ -1225,7 +1320,7 @@ export class CalcApp {
     const el = this.grid.el.getBoundingClientRect();
     const sheet = this.sheet;
     let w = 0, hgt = 0;
-    for (let c = r.c0; c <= Math.min(r.c1, r.c0 + 300); c++) w += sheet.cols.get(c)?.hidden ? 0 : charsToPx(sheet.cols.get(c)?.width ?? (sheet.defaultColWidth ?? DEFAULT_COL_CHARS));
+    for (let c = r.c0; c <= Math.min(r.c1, r.c0 + 300); c++) { const cw = sheet.cols.get(c)?.width; w += sheet.cols.get(c)?.hidden ? 0 : cw !== undefined ? charsToPx(cw) : defaultColPx(sheet.defaultColWidth ?? DEFAULT_COL_CHARS); }
     for (let rr = r.r0; rr <= Math.min(r.r1, r.r0 + 1000); rr++) hgt += ptToPx(sheet.rows.get(rr)?.height ?? sheet.defaultRowHeight);
     const z = Math.floor(Math.min((el.width - 60) / w, (el.height - 40) / hgt) * 100);
     this.setZoom(Math.max(10, Math.min(400, z)));
@@ -1294,6 +1389,7 @@ export class CalcApp {
     const run = (id: string) => { void this.commands.run(id); return true; };
     if (this.painter && k === "Escape") { this.painter = null; document.body.classList.remove("painting"); return true; }
     if (k === "F12" && !ctrl) return run("file.saveAs");
+    if (k === "F4" && !e.ctrlKey && !e.altKey && !shift) return run("edit.repeat");
     if (k === "F5" && !ctrl) return run("edit.goto");
     if (k === "F9") return run("formulas.calcNow");
     if (k === "F11" && shift) return run("cells.insertSheet");
@@ -1440,9 +1536,10 @@ export class CalcApp {
       },
       menus: {
         borders: [
-          { heading: "Rahmen" }, { cmd: "border.bottom" }, { cmd: "border.top" }, { cmd: "border.left" }, { cmd: "border.right" }, "-",
+          { heading: "Rahmenlinien" }, { cmd: "border.bottom" }, { cmd: "border.top" }, { cmd: "border.left" }, { cmd: "border.right" }, "-",
           { cmd: "border.none" }, { cmd: "border.all" }, { cmd: "border.outside" }, { cmd: "border.thickOutside" }, "-",
-          { cmd: "border.doubleBottom" }, { cmd: "border.thickBottom" }, { cmd: "border.topBottom" }, { cmd: "border.topThickBottom" }, { cmd: "border.topDoubleBottom" }, "-",
+          { cmd: "border.doubleBottom" }, { cmd: "border.thickBottom" }, { cmd: "border.topBottom" }, { cmd: "border.topThickBottom" }, { cmd: "border.topDoubleBottom" },
+          { heading: "Rahmenlinien zeichnen" }, { cmd: "border.draw" }, { cmd: "border.drawGrid" }, { cmd: "border.erase" }, { cmd: "border.lineColor" }, { cmd: "border.lineStyle" }, "-",
           { cmd: "border.more" },
         ],
         merge: [{ cmd: "align.mergeCenter" }, { cmd: "align.mergeAcross" }, { cmd: "align.merge" }, { cmd: "align.unmerge" }],
@@ -1455,39 +1552,43 @@ export class CalcApp {
           "-", { label: "Zellenausrichtung formatieren", run: () => void this.dlg.formatCells("Ausrichtung") },
         ],
         accounting: [
-          fmtEntry("Deutsch (Deutschland)", RIBBON_FORMATS[3].code),
-          fmtEntry("Englisch (Vereinigtes Königreich)", '_-[$£-809]* #,##0.00_-;\\-[$£-809]* #,##0.00_-;_-[$£-809]* "-"??_-;_-@_-'),
-          fmtEntry("Englisch (USA)", '_-[$$-409]* #,##0.00_ ;_-[$$-409]* \\-#,##0.00\\ ;_-[$$-409]* "-"??_ ;_-@_ '),
-          fmtEntry("Französisch (Schweiz)", '_-* #,##0.00\\ [$CHF-100C]_-;\\-* #,##0.00\\ [$CHF-100C]_-;_-* "-"??\\ [$CHF-100C]_-;_-@_-'),
-          "-", { label: "Weitere Buchhaltungszahlenformate...", run: () => void this.dlg.formatCells("Zahlen") },
+          fmtEntry("€ Deutsch (Deutschland)", RIBBON_FORMATS[3].code),
+          fmtEntry("$ Englisch (Vereinigte Staaten)", '_-[$$-409]* #,##0.00_ ;_-[$$-409]* \\-#,##0.00\\ ;_-[$$-409]* "-"??_ ;_-@_ '),
+          "-", { label: "Weitere Buchhaltungsformate...", run: () => void this.dlg.formatCells("Zahlen") },
         ],
         underline: [{ cmd: "font.underline" }, { cmd: "font.underlineDouble" }],
         conditional: [
           { label: "Regeln zum Hervorheben von Zellen", submenu: () => this.dlg.conditionalHighlightMenu() },
-          { label: "Obere/untere Regeln", submenu: () => this.dlg.conditionalTopMenu() },
+          { label: "Regeln für oberste/unterste Werte", submenu: () => this.dlg.conditionalTopMenu() },
+          "-",
           { label: "Datenbalken", submenu: () => this.dlg.conditionalBarMenu() },
           { label: "Farbskalen", submenu: () => this.dlg.conditionalScaleMenu() },
+          { label: "Symbolsätze", submenu: [], disabled: true },
           "-",
+          { label: "Neue Regel...", run: () => {}, disabled: true },
           { label: "Regeln löschen", submenu: [
             { label: "Regeln in ausgewählten Zellen löschen", run: () => this.dlg.clearConditional(true) },
             { label: "Regeln im gesamten Blatt löschen", run: () => this.dlg.clearConditional(false) },
           ] },
+          { label: "Regeln verwalten...", run: () => {}, disabled: true },
         ],
         insertCells: [{ cmd: "cells.insertDialog" }, { cmd: "cells.insertRows" }, { cmd: "cells.insertCols" }, "-", { cmd: "cells.insertSheet" }],
         deleteCells: [{ label: "Zellen löschen...", run: () => void this.dlg.deleteCells() }, { cmd: "cells.deleteRows" }, { cmd: "cells.deleteCols" }, "-", { cmd: "cells.deleteSheet" }],
         format: [
           { heading: "Zellengröße" }, { cmd: "cells.rowHeight" }, { cmd: "cells.autofitRows" }, { cmd: "cells.colWidth" }, { cmd: "cells.autofitCols" }, { cmd: "cells.defaultWidth" },
           { heading: "Sichtbarkeit" },
-          { label: "Ausblenden & Einblenden", submenu: [{ cmd: "cells.hideRows" }, { cmd: "cells.hideCols" }, { cmd: "cells.hideSheet" }, "-", { cmd: "cells.unhideRows" }, { cmd: "cells.unhideCols" }, { cmd: "cells.unhideSheet" }] },
+          { label: "Ausblenden und Einblenden", submenu: [{ cmd: "cells.hideRows" }, { cmd: "cells.hideCols" }, { cmd: "cells.hideSheet" }, "-", { cmd: "cells.unhideRows" }, { cmd: "cells.unhideCols" }, { cmd: "cells.unhideSheet" }] },
           { heading: "Blätter anordnen" }, { cmd: "cells.renameSheet" }, { cmd: "cells.moveSheet" },
           { label: "Registerfarbe", submenu: ["#C00000", "#FF0000", "#FFC000", "#FFFF00", "#92D050", "#00B050", "#00B0F0", "#0070C0", "#002060", "#7030A0"].map((col) => ({ label: col, run: () => this.change("Registerfarbe", () => { this.history.sheets(); this.sheet.tabColor = col; }) })) },
           { heading: "Schutz" }, { cmd: "cells.protectSheet" }, { cmd: "cells.lock" }, { cmd: "cells.formatDialog" },
         ],
         autosum: [{ cmd: "edit.autosum" }, { cmd: "edit.autoAverage" }, { cmd: "edit.autoCount" }, { cmd: "edit.autoMax" }, { cmd: "edit.autoMin" }, "-", { cmd: "formulas.insertFunction", label: "Weitere Funktionen..." }],
-        fill: [{ cmd: "edit.fillDown" }, { cmd: "edit.fillRight" }, { cmd: "edit.fillUp" }, { cmd: "edit.fillLeft" }, "-", { cmd: "edit.fillSeries" }, { cmd: "edit.flashFill" }],
-        clear: [{ cmd: "edit.clearAll" }, { cmd: "edit.clearFormats" }, { cmd: "edit.clearContents" }, { cmd: "edit.clearNotes" }, { cmd: "edit.clearLinks" }],
-        sortFilter: [{ cmd: "data.sortAsc" }, { cmd: "data.sortDesc" }, { label: "Benutzerdefiniertes Sortieren...", run: () => void this.dlg.sort() }, "-", { cmd: "data.filter" }, { cmd: "data.filterClear" }, { cmd: "data.filterReapply" }],
-        find: [{ cmd: "edit.find" }, { cmd: "edit.replace" }, { cmd: "edit.goto" }, { cmd: "edit.gotoSpecial" }],
+        fill: [{ cmd: "edit.fillDown" }, { cmd: "edit.fillRight" }, { cmd: "edit.fillUp" }, { cmd: "edit.fillLeft" }, { cmd: "edit.fillAcross" }, { cmd: "edit.fillSeries" }, { cmd: "edit.justify" }, { cmd: "edit.flashFill" }],
+        clear: [{ cmd: "edit.clearAll" }, { cmd: "edit.clearFormats" }, { cmd: "edit.clearContents" }, { cmd: "edit.clearNotes" }, { cmd: "edit.clearLinks" }, "-", { cmd: "edit.removeLinks" }],
+        sortFilter: [{ cmd: "edit.sortAscMenu" }, { cmd: "edit.sortDescMenu" }, { label: "Benutzerdefiniertes Sortieren...", run: () => void this.dlg.sort() }, "-", { cmd: "data.filter" }, { cmd: "data.filterClear" }, { cmd: "data.filterReapply" }],
+        find: [{ cmd: "edit.find" }, { cmd: "edit.replace" }, { cmd: "edit.goto" }, { cmd: "edit.gotoSpecial" }, "-",
+          { cmd: "edit.selectFormulas" }, { cmd: "edit.selectNotes" }, { cmd: "edit.selectConditional" }, { cmd: "edit.selectConstants" }, { cmd: "edit.selectValidation" }, "-",
+          { cmd: "edit.selectObjects" }, { cmd: "edit.selectionPane" }],
         paste: [
           { label: "Einfügen", icons: [
             { icon: "paste", tip: "Einfügen (E)", run: () => void this.paste() },
@@ -1502,8 +1603,8 @@ export class CalcApp {
         orientationPage: [{ cmd: "layout.portrait" }, { cmd: "layout.landscape" }],
         size: this.print.sizeMenu(),
         printArea: [{ cmd: "layout.printAreaSet" }, { cmd: "layout.printAreaClear" }],
-        freeze: [{ cmd: "view.freezePanes" }, { cmd: "view.unfreeze" }, { cmd: "view.freezeTop" }, { cmd: "view.freezeFirst" }],
-        calcOptions: [{ cmd: "formulas.calcAuto" }, { cmd: "formulas.calcManual" }],
+        freeze: [{ cmd: "view.freezePanes" }, { cmd: "view.freezeTop" }, { cmd: "view.freezeFirst" }],
+        calcOptions: [{ cmd: "formulas.calcAuto" }, { cmd: "formulas.calcPartial" }, { cmd: "formulas.calcManual" }],
         notes: [{ cmd: "review.newNote" }, { cmd: "review.editNote" }, { cmd: "review.deleteNote" }, "-", { cmd: "review.showNotes" }],
         names: [{ cmd: "formulas.defineName" }],
         fnLogical: fnMenu(["FALSCH", "NICHT", "ODER", "UND", "WAHR", "WENN", "WENNFEHLER", "WENNNV", "WENNS", "XODER", "ERSTERWERT"]),
@@ -1648,7 +1749,7 @@ export class CalcApp {
         const hiddenRows: number[] = [], hiddenCols: number[] = [], widths: Record<string, number> = {};
         for (let r = 0; r < 29; r++) if (sheet.rows.get(r)?.hidden) hiddenRows.push(r + 1);
         for (let c = 0; c < 14; c++) if (sheet.cols.get(c)?.hidden) hiddenCols.push(c + 1);
-        for (let c = 0; c < 7; c++) { const w = sheet.cols.get(c)?.width; if (w !== undefined) widths[String(c + 1)] = Math.round(w * 100) / 100; }
+        for (let c = 0; c < 7; c++) { const w = sheet.cols.get(c)?.width; if (w !== undefined) widths[String(c + 1)] = Math.round(shownChars(w) * 100) / 100; }
         return {
           mode, editing, cells, selection: this.grid.selection.map(excelAddress).join(","), active: cellName(sheet.view.active.row, sheet.view.active.col),
           sheet: sheet.name, sheets: this.wb.sheets.map((s) => s.name), hiddenRows, hiddenCols, widths, filter: !!sheet.autoFilter,
@@ -1688,4 +1789,3 @@ function detectEncoding(bytes: Uint8Array): string {
   }
 }
 
-void pxToChars;

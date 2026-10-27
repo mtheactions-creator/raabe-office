@@ -1,5 +1,5 @@
 {
- "summary": "114/117",
+ "summary": "136/136",
  "cases": {
   "type text Enter": {
    "area": "enter",
@@ -163,19 +163,13 @@
   },
   "Ctrl+Z undoes entry": {
    "area": "edit",
-   "ok": false,
-   "diff": [
-    "selection: Excel 'A1', RaabeCalc 'A2'",
-    "active: Excel 'A1', RaabeCalc 'A2'",
-    "A1: Excel None, RaabeCalc ('x', 'x')"
-   ]
+   "ok": true,
+   "diff": []
   },
   "Ctrl+Y redoes": {
    "area": "edit",
-   "ok": false,
-   "diff": [
-    "A1: Excel ('x', 'x'), RaabeCalc None"
-   ]
+   "ok": true,
+   "diff": []
   },
   "AutoComplete from column": {
    "area": "edit",
@@ -279,11 +273,8 @@
   },
   "PageDown": {
    "area": "move",
-   "ok": false,
-   "diff": [
-    "selection: Excel 'A56', RaabeCalc 'A55'",
-    "active: Excel 'A56', RaabeCalc 'A55'"
-   ]
+   "ok": true,
+   "diff": []
   },
   "click selects": {
    "area": "mouse",
@@ -587,6 +578,101 @@
   },
   "Strg+Bild ab next sheet": {
    "area": "sheets",
+   "ok": true,
+   "diff": []
+  },
+  "F4 repeats bold": {
+   "area": "repeat",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+Y repeats format": {
+   "area": "repeat",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+Minus deletes selected row": {
+   "area": "rows",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+Plus inserts row": {
+   "area": "rows",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+Minus deletes column": {
+   "area": "rows",
+   "ok": true,
+   "diff": []
+  },
+  "Ctrl+Shift+End": {
+   "area": "move2",
+   "ok": true,
+   "diff": []
+  },
+  "Shift+Home": {
+   "area": "move2",
+   "ok": true,
+   "diff": []
+  },
+  "Esc clears marquee then Enter moves": {
+   "area": "move2",
+   "ok": true,
+   "diff": []
+  },
+  "function AutoComplete Tab": {
+   "area": "formula2",
+   "ok": true,
+   "diff": []
+  },
+  "fill handle back clears": {
+   "area": "fill2",
+   "ok": true,
+   "diff": []
+  },
+  "fill Ctrl copies two numbers": {
+   "area": "fill2",
+   "ok": true,
+   "diff": []
+  },
+  "fill weekday long": {
+   "area": "fill2",
+   "ok": true,
+   "diff": []
+  },
+  "fill upwards": {
+   "area": "fill2",
+   "ok": true,
+   "diff": []
+  },
+  "column resize drag": {
+   "area": "sizes",
+   "ok": true,
+   "diff": []
+  },
+  "undo after delete": {
+   "area": "repeat",
+   "ok": true,
+   "diff": []
+  },
+  "typing replaces selection range": {
+   "area": "edit2",
+   "ok": true,
+   "diff": []
+  },
+  "Backspace in edit removes char": {
+   "area": "edit2",
+   "ok": true,
+   "diff": []
+  },
+  "Esc in Bearbeiten keeps old": {
+   "area": "edit2",
+   "ok": true,
+   "diff": []
+  },
+  "arrow in formula after number commits": {
+   "area": "formula2",
    "ok": true,
    "diff": []
   },

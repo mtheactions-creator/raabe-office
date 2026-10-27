@@ -7,7 +7,15 @@ import { MAX_COLS, cellName, colName, type PageSetup, type Rect, type Sheet } fr
 import { h, icon, showDialog, type MenuEntry } from "@raabe/shell";
 import type { CalcApp } from "./app";
 import { shown } from "./engine";
-import { DEFAULT_COL_CHARS, charsToPx, ptToPx } from "./grid/metrics";
+import { DEFAULT_COL_CHARS, charsToPx96, ptToPx } from "./grid/metrics";
+
+/** A column's printed width in px at 96 dpi (the standard width rounded up to 8 px). */
+function colPx96(sheet: Sheet, c: number): number {
+  const w = sheet.cols.get(c)?.width;
+  if (sheet.cols.get(c)?.hidden) return 0;
+  if (w !== undefined) return charsToPx96(w);
+  return Math.ceil((Math.floor((sheet.defaultColWidth ?? DEFAULT_COL_CHARS) + 1e-6) * 7 + 5) / 8) * 8;
+}
 
 const PAPERS: { code: number; name: string; w: number; h: number }[] = [
   { code: 9, name: "A4", w: 8.27, h: 11.69 },
@@ -18,9 +26,9 @@ const PAPERS: { code: number; name: string; w: number; h: number }[] = [
 ];
 
 const MARGINS: Record<string, NonNullable<PageSetup["margins"]>> = {
-  Normal: { left: 0.7, right: 0.7, top: 0.75, bottom: 0.75, header: 0.3, footer: 0.3 },
-  Breit: { left: 1, right: 1, top: 1, bottom: 1, header: 0.5, footer: 0.5 },
-  Schmal: { left: 0.25, right: 0.25, top: 0.75, bottom: 0.75, header: 0.3, footer: 0.3 },
+  "Normale Seitenränder": { left: 0.7, right: 0.7, top: 0.75, bottom: 0.75, header: 0.3, footer: 0.3 },
+  "Breite Seitenränder": { left: 1, right: 1, top: 1, bottom: 1, header: 0.5, footer: 0.5 },
+  "Schmale Seitenränder": { left: 0.25, right: 0.25, top: 0.75, bottom: 0.75, header: 0.3, footer: 0.3 },
 };
 
 const cm = (inch: number) => `${(inch * 2.54).toFixed(1).replace(".", ",")} cm`;
@@ -45,9 +53,9 @@ export function printFeature(app: CalcApp) {
     const area: Rect | null = p.printArea ?? sheet.usedRange();
     if (!area) return [];
     const sz = paper(p);
-    const m = p.margins ?? MARGINS.Normal;
+    const m = p.margins ?? MARGINS["Normale Seitenränder"];
     const pw = (sz.w - m.left - m.right) * 96, ph = (sz.h - m.top - m.bottom) * 96;
-    const colW = (c: number) => (sheet.cols.get(c)?.hidden ? 0 : charsToPx(sheet.cols.get(c)?.width ?? (sheet.defaultColWidth ?? DEFAULT_COL_CHARS)));
+    const colW = (c: number) => colPx96(sheet, c);
     const rowH = (r: number) => (sheet.rows.get(r)?.hidden ? 0 : ptToPx(sheet.rows.get(r)?.height ?? sheet.defaultRowHeight));
     let scale = (p.scale ?? 100) / 100;
     if (p.fitWidth || p.fitHeight) {
@@ -80,13 +88,13 @@ export function printFeature(app: CalcApp) {
   function renderPage(sheet: Sheet, pg: { rows: [number, number]; cols: [number, number] }): HTMLElement {
     const p = sheet.page ?? {};
     const sz = paper(p);
-    const m = p.margins ?? MARGINS.Normal;
+    const m = p.margins ?? MARGINS["Normale Seitenränder"];
     const scale = (paginate as unknown as { scale: number }).scale ?? 1;
     const table = h("table", { class: "print-table", style: `transform:scale(${scale});transform-origin:top left` });
     const colgroup = h("colgroup");
     if (p.headings) colgroup.append(h("col", { style: "width:30px" }));
     for (let c = pg.cols[0]; c <= pg.cols[1]; c++) {
-      const w = sheet.cols.get(c)?.hidden ? 0 : charsToPx(sheet.cols.get(c)?.width ?? (sheet.defaultColWidth ?? DEFAULT_COL_CHARS));
+      const w = colPx96(sheet, c);
       colgroup.append(h("col", { style: `width:${w}px` }));
     }
     table.append(colgroup);
@@ -186,7 +194,7 @@ export function printFeature(app: CalcApp) {
 
   async function pageSetupDialog(): Promise<void> {
     const p = page();
-    const m = { ...(p.margins ?? MARGINS.Normal) };
+    const m = { ...(p.margins ?? MARGINS["Normale Seitenränder"]) };
     const inputs = (["top", "bottom", "left", "right"] as const).map((k) => {
       const input = h("input", { type: "text", value: (m[k] * 2.54).toFixed(1).replace(".", ","), style: "width:60px" }) as HTMLInputElement;
       return { k, input, el: h("label", { class: "field" }, { top: "Oben:", bottom: "Unten:", left: "Links:", right: "Rechts:" }[k], input) };
@@ -221,7 +229,7 @@ export function printFeature(app: CalcApp) {
     togglePrintOption: (k: "gridLines" | "headings") => setPage("Blattoptionen", (p) => { p[k] = !p[k] || undefined; }),
     marginsMenu: (): MenuEntry[] => [
       ...Object.entries(MARGINS).map(([name, mm]): MenuEntry => ({
-        label: `${name}  (Oben: ${cm(mm.top)}, Unten: ${cm(mm.bottom)}, Links: ${cm(mm.left)}, Rechts: ${cm(mm.right)})`,
+        label: `${name}  (Oben: ${cm(mm.top)}  Unten: ${cm(mm.bottom)}  Links: ${cm(mm.left)}  Rechts: ${cm(mm.right)})`,
         run: () => setPage("Seitenränder", (p) => { p.margins = { ...mm }; }),
       })),
       { label: "Benutzerdefinierte Seitenränder...", run: () => void pageSetupDialog() },

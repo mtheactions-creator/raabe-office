@@ -1,0 +1,1204 @@
+{
+ "Start/Einfügen": [
+  {
+   "name": "Zellen einfügen",
+   "type": "Button",
+   "enabled": true
+  },
+  {
+   "name": "Weitere Optionen",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Zellen einfügen...",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Blattzeilen einfügen",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Blattspalten einfügen",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Blatt einfügen",
+   "type": "MenuItem",
+   "enabled": true
+  }
+ ],
+ "Start/Rahmen": [
+  {
+   "name": "Rahmenlinie unten",
+   "type": "Button",
+   "enabled": true
+  },
+  {
+   "name": "Weitere Optionen",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Rahmenlinien",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Rahmenlinie unten",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Rahmenlinie oben",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Rahmenlinie links",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Rahmenlinie rechts",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Kein Rahmen",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Alle Rahmenlinien",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Rahmenlinien außen",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Dicke Rahmenlinie außen",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Doppelte Rahmenlinien unten",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Dicke Rahmenlinie unten",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Rahmenlinie oben und unten",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Rahmenlinie oben und dicke unten",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Rahmenlinie oben und doppelte unten",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Rahmenlinien zeichnen",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Rahmenlinie zeichnen",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Rahmenraster zeichnen",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Rahmenlinie entfernen",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Linienfarbe",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Linienart",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Weitere Rahmenlinien...",
+   "type": "MenuItem",
+   "enabled": true
+  }
+ ],
+ "Start/Unterstreichen": [
+  {
+   "name": "Unterstreichen",
+   "type": "Button",
+   "enabled": true
+  },
+  {
+   "name": "Weitere Optionen",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Unterstreichen",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Doppelt unterstreichen",
+   "type": "MenuItem",
+   "enabled": true
+  }
+ ],
+ "Start/Ausrichtung": [
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Gegen den Uhrzeigersinn drehen",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Im Uhrzeigersinn drehen",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Vertikaler Text",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Text nach oben drehen",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Text nach unten drehen",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Zellenausrichtung formatieren",
+   "type": "MenuItem",
+   "enabled": true
+  }
+ ],
+ "Start/Verbinden und zentrieren": [
+  {
+   "name": "Verbinden und zentrieren",
+   "type": "Button",
+   "enabled": true
+  },
+  {
+   "name": "Weitere Optionen",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Verbinden und zentrieren",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Verbinden über",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Zellen verbinden",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Zellverbund aufheben",
+   "type": "MenuItem",
+   "enabled": true
+  }
+ ],
+ "Start/Buchhaltungszahlenformat": [
+  {
+   "name": "Buchhaltungszahlenformat",
+   "type": "Button",
+   "enabled": true
+  },
+  {
+   "name": "Weitere Optionen",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "‎€‎ Deutsch (Deutschland)‎",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "‎$‎ Englisch (Vereinigte Staaten)‎",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Weitere Buchhaltungsformate...",
+   "type": "MenuItem",
+   "enabled": true
+  }
+ ],
+ "Start/Bedingte Formatierung": [
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Regeln zum Hervorheben von Zellen",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Regeln für oberste/unterste Werte",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Datenbalken",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Farbskalen",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Symbolsätze",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Neue Regel...",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Regeln löschen",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Regeln verwalten...",
+   "type": "MenuItem",
+   "enabled": true
+  }
+ ],
+ "Start/Zellen einfügen": [],
+ "Start/Zellen löschen...": [],
+ "Start/Format": [
+  {
+   "name": "Zellengröße",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Zeilenhöhe...",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Zeilenhöhe automatisch anpassen",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Spaltenbreite...",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Spaltenbreite automatisch anpassen",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Standardbreite...",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Sichtbarkeit",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Ausblenden und Einblenden",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Blätter anordnen",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Blatt umbenennen",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Blatt verschieben/kopieren...",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Registerfarbe",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Schutz",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Blatt schützen...",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Zelle sperren",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Zellen formatieren...",
+   "type": "MenuItem",
+   "enabled": true
+  }
+ ],
+ "Start/AutoSumme": [
+  {
+   "name": "Summe",
+   "type": "Button",
+   "enabled": true
+  },
+  {
+   "name": "Weitere Optionen",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Summe",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Mittelwert",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Anzahl Zahlen",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Max",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Min",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Weitere Funktionen...",
+   "type": "MenuItem",
+   "enabled": true
+  }
+ ],
+ "Start/Ausfüllen": [
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Unten",
+   "type": "MenuItem",
+   "enabled": false
+  },
+  {
+   "name": "Rechts",
+   "type": "MenuItem",
+   "enabled": false
+  },
+  {
+   "name": "Oben",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Links",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Über Arbeitsblätter...",
+   "type": "MenuItem",
+   "enabled": false
+  },
+  {
+   "name": "Datenreihe...",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Ausrichten",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Blitzvorschau",
+   "type": "MenuItem",
+   "enabled": true
+  }
+ ],
+ "Start/Löschen": [
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Alle löschen",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Formate löschen",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Inhalte löschen",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Kommentare und Notizen löschen",
+   "type": "MenuItem",
+   "enabled": false
+  },
+  {
+   "name": "Links löschen",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Links entfernen",
+   "type": "MenuItem",
+   "enabled": false
+  }
+ ],
+ "Start/Sortieren und Filtern": [
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Nach Größe sortieren (aufsteigend)",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Nach Größe sortieren (absteigend)",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Benutzerdefiniertes Sortieren...",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Filtern",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Löschen",
+   "type": "MenuItem",
+   "enabled": false
+  },
+  {
+   "name": "Erneut anwenden",
+   "type": "MenuItem",
+   "enabled": false
+  }
+ ],
+ "Start/Suchen und Auswählen": [
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Suchen...",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Ersetzen...",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Gehe zu...",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Inhalte auswählen...",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Formeln",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Notizen",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Bedingte Formatierung",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Konstanten",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Datenüberprüfung",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Objekte auswählen",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Auswahlbereich...",
+   "type": "MenuItem",
+   "enabled": true
+  }
+ ],
+ "Seitenlayout/Seitenränder": [
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Normale Seitenränder",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "Breite Seitenränder",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "Schmale Seitenränder",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "Benutzerdefinierte Seitenränder",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Benutzerdefinierte Seitenränder...",
+   "type": "MenuItem",
+   "enabled": true
+  }
+ ],
+ "Seitenlayout/Ausrichtung": [
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Hochformat",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "Querformat",
+   "type": "ListItem",
+   "enabled": true
+  }
+ ],
+ "Seitenlayout/Druckbereich": [
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Druckbereich festlegen",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Druckbereich aufheben",
+   "type": "MenuItem",
+   "enabled": true
+  }
+ ],
+ "Formeln/Logisch": [
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "ERSTERWERT",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "FALSCH",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "LAMBDA",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "LET",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "MAP",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "MATRIXERSTELLEN",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "NACHSPALTE",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "NACHZEILE",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "NICHT",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "ODER",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "REDUCE",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "SCAN",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "UND",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "WAHR",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "WENN",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "WENNFEHLER",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "WENNNV",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "WENNS",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "XODER",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Funktion einfügen...",
+   "type": "MenuItem",
+   "enabled": true
+  }
+ ],
+ "Formeln/Text": [
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "BAHTTEXT",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "CODE",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "DM",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "ERSETZEN",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "FEST",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "FINDEN",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "GLÄTTEN",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "GROSS",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "GROSS2",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "IDENTISCH",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "KLEIN",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "LÄNGE",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "LINKS",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "MATRIXZUTEXT",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "RECHTS",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "REGEXERSETZEN",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "REGEXEXTRAHIEREN",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "REGEXTESTEN",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "SÄUBERN",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "SPRACHEERKENNEN",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "SUCHEN",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "T",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "TEIL",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "TEXT",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "TEXTKETTE",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "TEXTNACH",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "TEXTTEILEN",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "TEXTVERKETTEN",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "TEXTVOR",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "ÜBERSETZEN",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "UNICODE",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "UNIZEICHEN",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "WECHSELN",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "WERT",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "WERTZUTEXT",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "WIEDERHOLEN",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "ZAHLENWERT",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "ZEICHEN",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "Zeile nach oben",
+   "type": "Button",
+   "enabled": true
+  },
+  {
+   "name": "Seite nach oben",
+   "type": "Button",
+   "enabled": true
+  },
+  {
+   "name": "Seite nach unten",
+   "type": "Button",
+   "enabled": true
+  },
+  {
+   "name": "Zeile nach unten",
+   "type": "Button",
+   "enabled": true
+  },
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Funktion einfügen...",
+   "type": "MenuItem",
+   "enabled": true
+  }
+ ],
+ "Formeln/Berechnungsoptionen": [
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Automatisch",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Teilweise",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": "Manuell",
+   "type": "MenuItem",
+   "enabled": true
+  },
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Veraltete Werte formatieren",
+   "type": "MenuItem",
+   "enabled": false
+  },
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Kompatibilität & Version",
+   "type": "MenuItem",
+   "enabled": true
+  }
+ ],
+ "Ansicht/Fenster fixieren": [
+  {
+   "name": " ",
+   "type": "Group",
+   "enabled": true
+  },
+  {
+   "name": "Fenster fixieren",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "Oberste Zeile fixieren",
+   "type": "ListItem",
+   "enabled": true
+  },
+  {
+   "name": "Erste Spalte fixieren",
+   "type": "ListItem",
+   "enabled": true
+  }
+ ]
+}
