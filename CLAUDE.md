@@ -21,6 +21,35 @@ Windows first, iPad close behind (new students all use iPads). Open source, GPL-
   using the PC. Everything else (`docx`, `formatting`, `fidelity`, `smoke_write.py`) runs
   invisibly in the background (D-028).
 
+## The repository is public
+- Results (`tools/feel-lab/results/`) must not contain private paths (`C:\Users\...`),
+  user names or the owner's files; check every new results file before committing. Test
+  files are built by the harness in TEMP, never taken from the owner's folders.
+- Never copy Microsoft's prose (tooltips, help texts, dialog explanations): labels and
+  shortcuts as in Office, descriptions in our own words. Full recordings of Office's texts
+  stay in `tools/feel-lab/captures/`, which is not committed (D-058).
+- Probes read UI only from the window of the Office instance they started, never from other
+  windows on the screen.
+- Never accept consent, sign-in, licence or sync dialogs in Office (or anywhere else); if
+  one blocks a probe, stop and tell the owner.
+
+## How an app is built (method from Steps 4b-4d)
+1. Discuss the step with the owner, agree packages and decisions, wait for the go.
+2. Record the behaviour first, in a hidden Office instance of our own (COM, or real input
+   when the owner is away): what happens, exact sizes, positions, menu entries. Probes are
+   `tools/feel-lab/probe_word_*.py`; their results go to `results/<date>-<name>.json`.
+3. Build it the same way. Where we deliberately differ (an improvement, or our own look),
+   write it down as a decision.
+4. Compare automatically: behaviour catalogue cases (`catalogue.py`, `catalogue_math.py`)
+   that run the same input in Office and in our app, layout against Office's own documents
+   (`run.py docx`), formatting (`run.py formatting`), smoke tests. Add cases for every new
+   behaviour, especially for bugs the owner finds.
+5. Before committing: unit tests, type check, `tools/check-chars.py`, the results scan above;
+   docs (DECISIONS, ROADMAP, FEEL) in the same commit.
+6. The owner then tries the app and sends a list of differences; each list is discussed
+   (decisions for the open questions), then done in one run and measured again.
+Report numbers honestly, including what failed and why (e.g. a known Office glitch).
+
 ## Where things are
 - Repository: https://github.com/mtheactions-creator/raabe-office (public, branch `main`).
   `gh` lives at `C:\Program Files\GitHub CLI\gh.exe` if it is not on PATH.
@@ -36,9 +65,15 @@ Windows first, iPad close behind (new students all use iPads). Open source, GPL-
 ## Environment (development PC)
 Windows 10 Pro, PowerShell + Git Bash, Node 24, Rust (stable, MSVC), Python 3.14,
 Visual Studio 2022 C++ tools, WebView2, Microsoft Word 365 (COM: `Word.Application`).
+PowerPoint and Excel 365 are installed too (`POWERPNT.EXE`, `EXCEL.EXE` in
+`C:\Program Files\Microsoft Office\root\Office16`), as reference apps for RaabePresent and
+RaabeCalc; the harness-safety rules below apply to them the same way.
 Display: 4K at 150 % scaling, currently 30 Hz.
 
 ## Harness safety
+- So far the harness knows only Word (`WordTarget`, `docx_fidelity.py`, the catalogues) and
+  `packages/ooxml` reads and writes only .docx. A new app needs its own reference side
+  (PowerPoint/Excel through COM, `DispatchEx`) and its own file format first.
 - The harness always starts its **own** Word process (`DispatchEx`, `WINWORD.EXE /x`) and
   closes only what it opened. Never attach to the owner's running Word
   (`GetActiveObject`/`Dispatch`) and never close documents you did not create; the
