@@ -9,6 +9,8 @@
   "scripts": {
     "dev:write": "npm run dev -w @raabe/write",
     "build:write": "npm run tauri -w @raabe/write -- build",
+    "dev:calc": "npm run dev -w @raabe/calc",
+    "build:calc": "npm run tauri -w @raabe/calc -- build",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "vitest run"
   }

@@ -956,7 +956,7 @@ const DOCUMENT_RELS = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 </Relationships>`;
 
 /** A theme part: the document's colours and fonts with Office's format matrix. */
-function themeXml(t: Theme): string {
+export function themeXml(t: Theme): string {
   const c: Record<string, string> = { ...OFFICE_2013_COLORS, ...(t.colors ?? {}) };
   const clr = (name: string) => name === "dk1" ? `<a:sysClr val="windowText" lastClr="${c.dk1}"/>` : name === "lt1" ? `<a:sysClr val="window" lastClr="${c.lt1}"/>` : `<a:srgbClr val="${c[name]}"/>`;
   const names = ["dk1", "lt1", "dk2", "lt2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6", "hlink", "folHlink"];

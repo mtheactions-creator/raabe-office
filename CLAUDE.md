@@ -105,6 +105,11 @@ Display: 4K at 150 % scaling, currently 30 Hz.
   folder (`CARGO_TARGET_DIR=<repo>/apps/raabe-write/src-tauri/target/check`) and point the
   harness at it with `RAABE_WRITE_EXE=<that folder>/release/raabe-write.exe`. Never close the
   owner's window. Test instances skip the single-instance handling (D-060).
+- RaabeCalc (Step 7): `npm run dev:calc` (browser, port 5175), `npx tauri build --no-bundle` in
+  `apps/raabe-calc`; the native side shared by both apps is `crates/raabe-host`. Its harness
+  against Excel: `catalogue_calc.py excel|calc` (real input), `probe_excel_*.py` (own invisible
+  Excel), `xlsx_excel_check.py`; `RAABE_CALC_EXE` points the catalogue at another build. Excel's
+  reference side is `feellab/excel.py` (`ExcelTarget`, `DispatchEx`, ends only its own process).
 - Test documents for layout are built by Word itself: `tools/feel-lab/make_fixtures.py`
   (`--layout`, `--fonts`, `--breaks`, `--top`, ...) writes them to `packages/ooxml/test/fixtures/`.
 

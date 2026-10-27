@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "fflate": "^0.8.3",
-    "@raabe/text-engine": "0.1.0"
+    "@raabe/text-engine": "0.1.0",
+    "@raabe/sheet-engine": "0.1.0",
+    "@raabe/charts": "0.1.0"
   }
 }

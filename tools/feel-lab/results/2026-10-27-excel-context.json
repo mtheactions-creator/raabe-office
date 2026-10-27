@@ -1,0 +1,304 @@
+{
+ "cell": [
+  {
+   "name": "Ausschneiden",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "C"
+  },
+  {
+   "name": "Kopieren",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "O"
+  },
+  {
+   "name": "Inhalte einfügen...",
+   "type": "MenuItem",
+   "enabled": false,
+   "key": "G"
+  },
+  {
+   "name": "Zellen einfügen...",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "E"
+  },
+  {
+   "name": "Zellen löschen...",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "Ö"
+  },
+  {
+   "name": "Inhalte löschen",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "T"
+  },
+  {
+   "name": "Schnellanalyse",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "Y"
+  },
+  {
+   "name": "Filter",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "R"
+  },
+  {
+   "name": "Sortieren",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "S"
+  },
+  {
+   "name": "Daten aus Tabelle/Bereich abrufen...",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "A"
+  },
+  {
+   "name": "Neuer Kommentar",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "U"
+  },
+  {
+   "name": "Neue Notiz",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "N"
+  },
+  {
+   "name": "Zellen formatieren...",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "F"
+  },
+  {
+   "name": "Dropdown-Auswahlliste...",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "W"
+  },
+  {
+   "name": "Namen definieren...",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "N"
+  },
+  {
+   "name": "Link",
+   "type": "SplitButton",
+   "enabled": true,
+   "key": ""
+  },
+  {
+   "name": "Hyperlink öffnen...",
+   "type": "MenuItem",
+   "enabled": false,
+   "key": "L"
+  },
+  {
+   "name": "Link zu diesem Bereich",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "M"
+  }
+ ],
+ "column": [
+  {
+   "name": "Ausschneiden",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "C"
+  },
+  {
+   "name": "Kopieren",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "O"
+  },
+  {
+   "name": "Inhalte einfügen...",
+   "type": "MenuItem",
+   "enabled": false,
+   "key": "G"
+  },
+  {
+   "name": "Zellen einfügen",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "E"
+  },
+  {
+   "name": "Zellen löschen",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "Ö"
+  },
+  {
+   "name": "Inhalte löschen",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "T"
+  },
+  {
+   "name": "Zellen formatieren...",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "F"
+  },
+  {
+   "name": "Spaltenbreite...",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "B"
+  },
+  {
+   "name": "Ausblenden",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "A"
+  },
+  {
+   "name": "Einblenden",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "L"
+  }
+ ],
+ "row": [
+  {
+   "name": "Ausschneiden",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "C"
+  },
+  {
+   "name": "Kopieren",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "O"
+  },
+  {
+   "name": "Inhalte einfügen...",
+   "type": "MenuItem",
+   "enabled": false,
+   "key": "G"
+  },
+  {
+   "name": "Zellen einfügen",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "E"
+  },
+  {
+   "name": "Zellen löschen",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "Ö"
+  },
+  {
+   "name": "Inhalte löschen",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "T"
+  },
+  {
+   "name": "Zellen formatieren...",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "F"
+  },
+  {
+   "name": "Zeilenhöhe...",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "Z"
+  },
+  {
+   "name": "Ausblenden",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "D"
+  },
+  {
+   "name": "Einblenden",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "I"
+  }
+ ],
+ "sheettab": [
+  {
+   "name": "Einfügen...",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "I"
+  },
+  {
+   "name": "Löschen",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "L"
+  },
+  {
+   "name": "Umbenennen",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "U"
+  },
+  {
+   "name": "Verschieben oder kopieren...",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "V"
+  },
+  {
+   "name": "Code anzeigen",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "D"
+  },
+  {
+   "name": "Blatt schützen...",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "Z"
+  },
+  {
+   "name": "Registerfarbe",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "R"
+  },
+  {
+   "name": "Ausblenden",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "N"
+  },
+  {
+   "name": "Einblenden...",
+   "type": "MenuItem",
+   "enabled": false,
+   "key": "E"
+  },
+  {
+   "name": "Alle Blätter auswählen",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "A"
+  },
+  {
+   "name": "Link zu diesem Blatt",
+   "type": "MenuItem",
+   "enabled": true,
+   "key": "L"
+  }
+ ]
+}

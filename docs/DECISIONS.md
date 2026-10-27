@@ -1145,3 +1145,61 @@ Agreed with the owner after a RaabePresent proposal:
 - **Diagramm in RaabeWrite** (deferred, D-041) comes right after Step 7 as Step 7b, with the
   chart's embedded workbook as Word writes it.
 - The owner leaves the PC for the whole step, so real input is allowed throughout.
+
+### D-062 RaabeCalc's building blocks (Step 7, packages A-E)
+Built overnight on 2026-10-27 with the owner away (real input allowed, D-061):
+- **Shared native side**: `crates/raabe-host` holds what RaabeWrite's `src-tauri` had in common
+  (files, AutoRecover, PDF with a page size, fonts, clipboard, window, single instance); each
+  app adds its own commands (RaabeWrite: spelling, thesaurus, grammar) and combines both
+  handlers. The shell's file dialogs know .xlsx and .csv.
+- **The grid is drawn on one canvas** at the device's pixel size (ARCHITECTURE "Workbooks"),
+  with Excel's measured look at 150 % (`capture_excel_ui.py`): 1-device-pixel gridlines
+  #E0E0E0, headers #F0F0F0 with a #ABABAB line, the selected headers #E1E1E1 with an accent
+  line and accent text, a 2-device-pixel selection frame on the gridline, the 6-pixel fill
+  handle. Excel's green accent becomes Raabe red (#B3141B, D-018). The cell editor, Namenfeld,
+  Bearbeitungsleiste (38 px high, as Excel's), menus and dialogs are DOM. Excel's pointers are
+  drawn as sharp SVGs (D-057).
+- **Widths**: German Excel's standard column width is 10,71 characters (80 px), not the 8,43 of
+  English Excel; the model keeps widths in characters without padding (Excel's Spaltenbreite),
+  the file adds 5 px (`ooxml/src/xlsx/units.ts`).
+- **Formulas** are stored as Excel's `Formula2` without "=" (English names, no `_xlfn.`
+  prefixes) and evaluated with Excel 365's semantics (spilling arrays); the UI converts to
+  German on the way in and out. Measured: 4229/4234 recorded Excel results equal (the five
+  others are Excel's own floating-point and iteration quirks, listed in the tests), all
+  conversions, copies, insertions/deletions, moves and cell shifts as Excel adjusts them.
+  Not supported yet: the 1904 system in formulas, structured references, LET/LAMBDA/AGGREGAT.
+- **Number formats and typed input** follow German Excel as recorded (about 66 000 cases):
+  locale-dependent built-in codes show the German way (`m/d/yyyy` as TT.MM.JJJJ), General
+  shortens to the column width as Excel does, typed input keeps or replaces the cell's format as
+  Excel does ("1.1." stays text, "3/4" is a date unless the cell has a number format).
+- **.xlsx** keeps everything not edited exactly as Excel wrote it (D-024): unchanged sheet parts
+  are written back from Excel's own text, unknown parts byte for byte, styles keep their file
+  index. Excel opens our files without repair and reads 0 differences in 17 checked files
+  (9 Excel-built fixtures written back, 8 edits). CSV as German Excel: ";" separator, values as
+  shown, UTF-8 with byte order mark.
+- **Charts** (package E, `packages/charts`, shared with Step 7b and RaabePresent): Excel's
+  default look, axis scaling equal to Excel's in 145 recorded axes, Excel's rule for series from
+  a selection, histogram bins as Excel's (Scott's rule), trendline labels in Excel's wording.
+  Gaps: no Diagrammentwurf/Format tabs yet, charts do not follow inserted rows.
+
+### D-063 Excel's controls as recorded (Step 7 package D)
+Recorded in an Excel of our own with real input (`catalogue_calc.py`, 117 cases;
+`probe_excel_context.py`, `probe_excel_tooltips.py`) and built the same way:
+- **Shortcuts on the German keyboard**: Strg+Umschalt+F/K/U fett, kursiv, unterstrichen,
+  Strg+2/3/4/5 as well; Strg+Umschalt+1 "#.##0,00", +4 Währung with red negatives, +5 Prozent;
+  Strg+Umschalt+3 and +6 and Strg+0 do nothing in German Excel; Strg+U/Strg+R fill down/right;
+  Strg+. today's date; Strg+Umschalt+A Schriftarteinstellungen; Strg+Alt+L Erneut anwenden;
+  Alt+= (Alt+Umschalt+0) AutoSumme, which ends in Zeigen with the range marked. Letters are
+  matched by their character (Z and Y swap places on German keyboards), digits by position.
+- **Moving**: Tab remembers the column it started in and Enter returns there; arrows in
+  Eingeben commit and move one cell; Enter and Tab move inside a selection; Bild ab moves one
+  row more than the window shows; Umschalt+F11 inserts the new sheet before the active one,
+  the + beside the tabs after it.
+- **Editing**: AutoVervollständigen takes the stored entry's spelling; Alt+Eingabe turns on
+  Textumbruch; "+2*3" becomes "=2*3"; Enter pastes copied cells while the marching ants show;
+  columns of standard width widen when a formatted number no longer fits.
+- **Context menus** of cells, column and row headers and sheet tabs with Excel's labels
+  (three dots, "Zellen einfügen…"); the search box at their top and Microsoft's descriptions are
+  not copied (D-058).
+- Not yet as Excel: the drag of the selection's border onto other sheets, Schnellanalyse,
+  Blitzvorschau, data validation, comments (Notizen work).

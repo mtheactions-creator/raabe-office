@@ -1,0 +1,257 @@
+{
+ "date": "2026-10-27",
+ "fixtures": {
+  "xlsx-1904.xlsx": {
+   "opened": true,
+   "differences": 0,
+   "allowed": 0,
+   "allowed_details": [],
+   "details": [],
+   "read_check": 0,
+   "read_details": [],
+   "missing": [],
+   "cells": 5
+  },
+  "xlsx-blank.xlsx": {
+   "opened": true,
+   "differences": 0,
+   "allowed": 0,
+   "allowed_details": [],
+   "details": [],
+   "read_check": 0,
+   "read_details": [],
+   "missing": [],
+   "cells": 0
+  },
+  "xlsx-formulas.edit.xlsx": {
+   "opened": true,
+   "differences": 0,
+   "allowed": 13,
+   "allowed_details": [
+    "/sheets/Formeln/cells/A1/Formula: '=SUM(Daten!A1:A10)' -> '=SUM(Daten!A1:A5)'",
+    "/sheets/Formeln/cells/A1/Text: '55' -> '15'",
+    "/sheets/Formeln/cells/A1/Value2: 55.0 -> 15.0",
+    "/sheets/Formeln/cells/A14/Text: '055' -> '015'",
+    "/sheets/Formeln/cells/A14/Value2: '055' -> '015'",
+    "/sheets/Formeln/cells/A15/Text: '3025' -> '225'",
+    "/sheets/Formeln/cells/A15/Value2: 3025.0 -> 225.0",
+    "/sheets/Formeln/cells/A16/Text: '55 Punkte' -> '15 Punkte'",
+    "/sheets/Formeln/cells/A16/Value2: '55 Punkte' -> '15 Punkte'",
+    "/sheets/Formeln/cells/A21/Text: '27,5' -> '7,5'",
+    "/sheets/Formeln/cells/A21/Value2: 27.5 -> 7.5",
+    "/sheets/Formeln/cells/A4/Text: 'groß' -> 'klein'",
+    "/sheets/Formeln/cells/A4/Value2: 'groß' -> 'klein'"
+   ],
+   "details": [],
+   "read_check": 0,
+   "read_details": [],
+   "missing": [],
+   "cells": 103
+  },
+  "xlsx-formulas.xlsx": {
+   "opened": true,
+   "differences": 0,
+   "allowed": 0,
+   "allowed_details": [],
+   "details": [],
+   "read_check": 0,
+   "read_details": [],
+   "missing": [],
+   "cells": 103
+  },
+  "xlsx-layout.edit.xlsx": {
+   "opened": true,
+   "differences": 0,
+   "allowed": 6,
+   "allowed_details": [
+    "/sheets/Layout/cols/0/0: 20.0 -> 30.09",
+    "/sheets/Layout/rows/1/0: 30.0 -> 40.0",
+    "/sheets/Layout/window/FreezePanes: True -> False",
+    "/sheets/Layout/window/SplitColumn: 1.0 -> 0",
+    "/sheets/Layout/window/SplitRow: 2.0 -> 0",
+    "/sheets/Layout/window/Zoom: 120.0 -> 100.0"
+   ],
+   "details": [],
+   "read_check": 0,
+   "read_details": [],
+   "missing": [],
+   "cells": 41
+  },
+  "xlsx-layout.xlsx": {
+   "opened": true,
+   "differences": 0,
+   "allowed": 0,
+   "allowed_details": [],
+   "details": [],
+   "read_check": 0,
+   "read_details": [],
+   "missing": [],
+   "cells": 41
+  },
+  "xlsx-new.edit.xlsx": {
+   "opened": true,
+   "differences": 0,
+   "allowed": 0,
+   "allowed_details": [],
+   "details": [],
+   "read_check": 0,
+   "read_details": [],
+   "missing": [],
+   "cells": 8
+  },
+  "xlsx-numfmt.xlsx": {
+   "opened": true,
+   "differences": 0,
+   "allowed": 0,
+   "allowed_details": [],
+   "details": [],
+   "read_check": 0,
+   "read_details": [],
+   "missing": [],
+   "cells": 230
+  },
+  "xlsx-objects-kopie.edit.xlsx": {
+   "opened": true,
+   "differences": 0,
+   "allowed": 0,
+   "allowed_details": [],
+   "details": [],
+   "read_check": 0,
+   "read_details": [],
+   "missing": [],
+   "cells": 76
+  },
+  "xlsx-objects.edit.xlsx": {
+   "opened": true,
+   "differences": 0,
+   "allowed": 21,
+   "allowed_details": [
+    "/sheets/Objekte/UsedRange: 'A1:E11' -> 'A1:E12'",
+    "/sheets/Objekte/cells/A12: None -> {'Formula': 'Beispiel', 'Value2': 'Beispiel', 'NumberFormat': 'General', 'Text': 'Beispiel', 'Font': ('Calibri', 11.0, False, False, -4142, False, False, False, 0.0), 'Interior': (-4142, None, None), 'Align': (1, -4107, False, 0, -4128, False), 'Protection': (True, False), 'Merge': None, 'Style': 'Normal', 'HasArray': False, 'Array': None, 'Border left': None, 'Border top': None, 'Border bottom': None, 'Border right': None, 'Border diagonal_down': None, 'Border diagonal_up': None}",
+    "/sheets/Objekte/charts/0/5: 191.0 -> 220.0",
+    "/sheets/Objekte/charts/0/7: 'Notenschnitt' -> 'Notenschnitt 2026'",
+    "/sheets/Objekte/links/2/0: 'A9' -> 'A12'",
+    "/sheets/Objekte/links/2/1: 'https://www.raabeschule.de/' -> 'https://example.org/'",
+    "/sheets/Objekte/links/2/3: 'Raabeschule' -> 'Beispiel'",
+    "/sheets/Objekte/notes/0/0: 'B2' -> 'A2'",
+    "/sheets/Objekte/notes/0/1: 'Bitte prüfen' -> 'Neue Notiz'",
+    "/sheets/Objekte/notes/1/0: 'C4' -> 'B2'",
+    "/sheets/Objekte/notes/1/1: 'Zweite Notiz\\nmit zwei Zeilen' -> 'Geänderte Notiz'",
+    "/sheets/Objekte/page/3: 1.0 -> 2.0",
+    "/sheets/Objekte/rows: [(14.5, False, 1.0), (14.5, False, 1.0), (14.5, False, 1.0), (0.0, True, 1.0), (14.5, False, 1.0), (0.0, True, 1.0), (14.5, False, 1.0), (14.5, False, 1.0), (14.5, False, 1.0), (14.5, False, 1.0), (14.5, False, 1.0), (14.5, False, 1.0)] -> [(14.5, False, 1.0), (14.5, False, 1.0), (14.5, False, 1.0), (14.5, False, 1.0), (14.5, False, 1.0), (14.5, False, 1.0), (14.5, False, 1.0), (14.5, False, 1.0), (14.5, False, 1.0), (14.5, False, 1.0), (14.5, False, 1.0), (14.5, False, 1.0), (14.5, False, 1.0)]",
+    "/sheets/Objekte/shapes/0/5: 191.0 -> 220.0",
+    "/sheets/Objekte/shapes/1/3: 250.0 -> 279.0",
+    "/sheets/Objekte/shapes/2/5: 77.0 -> 106.0",
+    "/sheets/Objekte/shapes/3/0: 'Comment 2' -> 'Comment 3'",
+    "/sheets/Objekte/shapes/3/2: 187.5 -> 71.0",
+    "/sheets/Objekte/shapes/3/3: 38.0 -> 7.5",
+    "/sheets/Objekte/shapes/3/4: 103.5 -> 120.0",
+    "/sheets/Objekte/shapes/3/5: 77.0 -> 53.5"
+   ],
+   "details": [],
+   "read_check": 0,
+   "read_details": [],
+   "missing": [],
+   "cells": 46
+  },
+  "xlsx-objects.xlsx": {
+   "opened": true,
+   "differences": 0,
+   "allowed": 0,
+   "allowed_details": [],
+   "details": [],
+   "read_check": 0,
+   "read_details": [],
+   "missing": [],
+   "cells": 45
+  },
+  "xlsx-sheets.edit.xlsx": {
+   "opened": true,
+   "differences": 0,
+   "allowed": 7,
+   "allowed_details": [
+    "/ActiveSheet: 'Rot' -> 'Erstes'",
+    "/Sheets/4: 'Akzent' -> 'Letztes'",
+    "/Sheets/5: 'Letztes' -> 'Neu'",
+    "/sheets/Akzent: {'Name': 'Akzent', 'Visible': -1, 'Tab': 14395790, 'StandardWidth': 10.27, 'StandardHeight': 14.5, 'UsedRange': 'A1', 'cols': [(10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0)], 'rows': [(14.5, False, 1.0), (14.5, False, 1.0)], 'cells': {'A1': {'Formula': 'Akzent', 'Value2': 'Akzent', 'NumberFormat': 'General', 'Text': 'Akzent', 'Font': ('Calibri', 11.0, False, False, -4142, False, False, False, 0.0), 'Interior': (-4142, None, None), 'Align': (1, -4107, False, 0, -4128, False), 'Protection': (True, False), 'Merge': None, 'Style': 'Normal', 'HasArray': False, 'Array': None, 'Border left': None, 'Border top': None, 'Border bottom': None, 'Border right': None, 'Border diagonal_down': None, 'Border diagonal_up': None}}, 'charts': [], 'shapes': [], 'notes': [], 'links': [], 'conditional': [], 'validation': None, 'autofilter': (False, None), 'tables': [], 'page': ('', '', '', 1.0), 'window': {'FreezePanes': False, 'SplitRow': 0, 'SplitColumn': 0, 'ScrollRow': 1.0, 'ScrollColumn': 1.0, 'Zoom': 100.0, 'Gridlines': True, 'Headings': True, 'ActiveCell': 'A1', 'Selection': 'A1'}} -> None",
+    "/sheets/Neu: None -> {'Name': 'Neu', 'Visible': -1, 'Tab': False, 'StandardWidth': 10.27, 'StandardHeight': 14.5, 'UsedRange': 'A1:A2', 'cols': [(10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0)], 'rows': [(14.5, False, 1.0), (14.5, False, 1.0), (14.5, False, 1.0)], 'cells': {'A1': {'Formula': '5', 'Value2': 5.0, 'NumberFormat': 'General', 'Text': '5', 'Font': ('Calibri', 11.0, False, False, -4142, False, False, False, 0.0), 'Interior': (-4142, None, None), 'Align': (1, -4107, False, 0, -4128, False), 'Protection': (True, False), 'Merge': None, 'Style': 'Normal', 'HasArray': False, 'Array': None, 'Border left': None, 'Border top': None, 'Border bottom': None, 'Border right': None, 'Border diagonal_down': None, 'Border diagonal_up': None}, 'A2': {'Formula': '=A1*2', 'Value2': 10.0, 'NumberFormat': 'General', 'Text': '10', 'Font': ('Calibri', 11.0, False, False, -4142, False, False, False, 0.0), 'Interior': (-4142, None, None), 'Align': (1, -4107, False, 0, -4128, False), 'Protection': (True, False), 'Merge': None, 'Style': 'Normal', 'HasArray': False, 'Array': None, 'Border left': None, 'Border top': None, 'Border bottom': None, 'Border right': None, 'Border diagonal_down': None, 'Border diagonal_up': None}}, 'charts': [], 'shapes': [], 'notes': [], 'links': [], 'conditional': [], 'validation': None, 'autofilter': (False, None), 'tables': [], 'page': ('', '', '', 1.0), 'window': {'FreezePanes': False, 'SplitRow': 0, 'SplitColumn': 0, 'ScrollRow': 1.0, 'ScrollColumn': 1.0, 'Zoom': 100.0, 'Gridlines': True, 'Headings': True, 'ActiveCell': 'A1', 'Selection': 'A1'}}",
+    "/sheets/Rot/Tab: 255 -> 5287936",
+    "/sheets/Versteckt/Visible: 0 -> -1"
+   ],
+   "details": [],
+   "read_check": 0,
+   "read_details": [],
+   "missing": [],
+   "cells": 16
+  },
+  "xlsx-sheets.xlsx": {
+   "opened": true,
+   "differences": 0,
+   "allowed": 0,
+   "allowed_details": [],
+   "details": [],
+   "read_check": 0,
+   "read_details": [],
+   "missing": [],
+   "cells": 15
+  },
+  "xlsx-styles.edit.xlsx": {
+   "opened": true,
+   "differences": 0,
+   "allowed": 2,
+   "allowed_details": [
+    "/sheets/Formate/cells/B1/Interior: (-4142, None, None) -> (1, 5296274.0, None)",
+    "/sheets/Formate/cells/B14/Font: ('Calibri', 11.0, False, False, -4142, False, False, False, 12874308.0) -> ('Calibri', 11.0, False, False, -4142, False, False, False, 255.0)"
+   ],
+   "details": [],
+   "read_check": 0,
+   "read_details": [],
+   "missing": [],
+   "cells": 132
+  },
+  "xlsx-styles.xlsx": {
+   "opened": true,
+   "differences": 0,
+   "allowed": 0,
+   "allowed_details": [],
+   "details": [],
+   "read_check": 0,
+   "read_details": [],
+   "missing": [],
+   "cells": 132
+  },
+  "xlsx-values.edit.xlsx": {
+   "opened": true,
+   "differences": 0,
+   "allowed": 10,
+   "allowed_details": [
+    "/sheets/Werte/UsedRange: 'A1:AA1000' -> 'A1:AB1000'",
+    "/sheets/Werte/cells/A2/Formula: '42' -> '43'",
+    "/sheets/Werte/cells/A2/Text: '42' -> '43'",
+    "/sheets/Werte/cells/A2/Value2: 42.0 -> 43.0",
+    "/sheets/Werte/cells/AB2: None -> {'Formula': 'neu', 'Value2': 'neu', 'NumberFormat': 'General', 'Text': 'neu', 'Font': ('Calibri', 11.0, False, False, -4142, False, False, False, 0.0), 'Interior': (-4142, None, None), 'Align': (1, -4107, False, 0, -4128, False), 'Protection': (True, False), 'Merge': None, 'Style': 'Normal', 'HasArray': False, 'Array': None, 'Border left': None, 'Border top': None, 'Border bottom': None, 'Border right': None, 'Border diagonal_down': None, 'Border diagonal_up': None}",
+    "/sheets/Werte/cells/B2/Font: ('Calibri', 11.0, False, False, -4142, False, False, False, 0.0) -> ('Calibri', 11.0, True, False, -4142, False, False, False, 0.0)",
+    "/sheets/Werte/cells/C2/Formula: 'TRUE' -> ''",
+    "/sheets/Werte/cells/C2/Text: 'WAHR' -> ''",
+    "/sheets/Werte/cells/C2/Value2: True -> None",
+    "/sheets/Werte/cols: [(10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0)] -> [(10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0), (10.27, False, 1.0)]"
+   ],
+   "details": [],
+   "read_check": 0,
+   "read_details": [],
+   "missing": [],
+   "cells": 54
+  },
+  "xlsx-values.xlsx": {
+   "opened": true,
+   "differences": 0,
+   "allowed": 0,
+   "allowed_details": [],
+   "details": [],
+   "read_check": 0,
+   "read_details": [],
+   "missing": [],
+   "cells": 53
+  }
+ }
+}

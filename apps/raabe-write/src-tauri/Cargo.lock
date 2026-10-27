@@ -2890,14 +2890,30 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f8dcc9c7d52a811697d2151c701e0d08956f92b0e24136cf4cf27b57a6a0d9bf"
 
 [[package]]
-name = "raabe-write"
+name = "raabe-host"
 version = "0.1.0"
 dependencies = [
  "clipboard-win",
- "fancy-regex",
- "flate2",
  "fontdb",
  "percent-encoding",
+ "serde",
+ "serde_json",
+ "tauri",
+ "tauri-plugin-clipboard-manager",
+ "tauri-plugin-dialog",
+ "tauri-plugin-single-instance",
+ "ttf-parser",
+ "webview2-com",
+ "windows",
+]
+
+[[package]]
+name = "raabe-write"
+version = "0.1.0"
+dependencies = [
+ "fancy-regex",
+ "flate2",
+ "raabe-host",
  "serde",
  "serde_json",
  "spellbook",
@@ -2905,10 +2921,6 @@ dependencies = [
  "tauri-build",
  "tauri-plugin-clipboard-manager",
  "tauri-plugin-dialog",
- "tauri-plugin-single-instance",
- "ttf-parser",
- "webview2-com",
- "windows",
 ]
 
 [[package]]

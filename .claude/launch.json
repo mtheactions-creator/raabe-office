@@ -22,6 +22,17 @@
         "@raabe/write"
       ],
       "port": 5174
+    },
+    {
+      "name": "raabe-calc",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "-w",
+        "@raabe/calc"
+      ],
+      "port": 5175
     }
   ]
 }

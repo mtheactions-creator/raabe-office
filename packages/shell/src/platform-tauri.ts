@@ -10,6 +10,9 @@ import type { FileInfo, GrammarIssue, Platform, RecoveryEntry, ThesaurusResult }
 
 const FILTERS = {
   docx: [{ name: "Word-Dokument", extensions: ["docx"] }],
+  xlsx: [{ name: "Excel-Arbeitsmappe", extensions: ["xlsx"] }],
+  csv: [{ name: "CSV (Trennzeichen-getrennt)", extensions: ["csv"] }],
+  xlsxOpen: [{ name: "Alle Excel-Dateien", extensions: ["xlsx", "csv"] }],
   pdf: [{ name: "PDF", extensions: ["pdf"] }],
   image: [{ name: "Alle Bilder", extensions: ["png", "jpg", "jpeg", "gif", "bmp", "svg", "webp"] }],
 };
@@ -22,8 +25,8 @@ export function tauriPlatform(): Platform {
       const r = await open({ multiple: false, directory: false, filters, title });
       return typeof r === "string" ? r : null;
     },
-    async openFileDialog() {
-      const r = await open({ multiple: false, directory: false, filters: FILTERS.docx, title: "Öffnen" });
+    async openFileDialog(kind = "docx") {
+      const r = await open({ multiple: false, directory: false, filters: kind === "xlsx" ? FILTERS.xlsxOpen : FILTERS.docx, title: "Öffnen" });
       return typeof r === "string" ? r : null;
     },
     async openImageDialog() {
@@ -59,7 +62,7 @@ export function tauriPlatform(): Platform {
       return bytes.length ? bytes : null;
     },
     clipboardWriteHtml: (html, text) => invoke("clipboard_write_html", { html, text }),
-    printToPdf: (path) => invoke("print_to_pdf", { path }),
+    printToPdf: (path, size) => invoke("print_to_pdf", { path, width: size?.width ?? null, height: size?.height ?? null }),
     listFonts: () => invoke<string[]>("list_fonts"),
     fontChars: (family) => invoke("font_chars", { family }),
     listDir: (path) => invoke("list_dir", { path }),

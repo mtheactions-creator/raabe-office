@@ -45,7 +45,13 @@ apps/
                       src-tauri/ (Rust: file access, AutoRecover, PDF, single instance, fonts,
                       spell checking, thesaurus, grammar/ (the grammar checker, D-051);
                       data/: the compiled language data and its licences)
-  raabe-calc/         later
+  raabe-calc/         RaabeCalc (Step 7, D-061): app.ts (workbooks, files, commands, shortcuts,
+                      context menus), command-list.ts and ribbon-def.ts (Excel's labels and
+                      keytips), grid/ (canvas drawing, metrics, the controls, conditional
+                      formats, pointers), actions.ts (what commands do to cells), ops.ts (undo),
+                      engine.ts (the one door to the sheet engine), dialogs.ts, print.ts,
+                      sheetbar.ts, statusbar.ts, clipboard.ts, charts/ (package E),
+                      src-tauri/ (only its configuration; the native side is raabe-host)
   raabe-present/      later
 packages/
   text-engine/        model.ts (paragraphs, runs, objects, tables, sections), styles.ts (style
@@ -63,8 +69,15 @@ packages/
                       backstage, status bar, dialogs, popups, platform layer, theme.css,
                       icons.gen.ts (generated from Fluent UI System Icons, MIT)
   ooxml/              .docx reading and writing; everything not edited is kept verbatim (D-024);
-                      math.ts: LaTeX ↔ OMML and MathML for equations (D-036)
-  (planned) spell/, charts/
+                      math.ts: LaTeX ↔ OMML and MathML for equations (D-036);
+                      xlsx/: .xlsx reading and writing for RaabeCalc (D-061)
+  sheet-engine/       RaabeCalc's workbook model (model.ts, address.ts), formulas (formula/:
+                      parsing, German ↔ file form, evaluation, Excel's functions, dependencies),
+                      number formats (numfmt.ts), typed input (input.ts), dates, CSV
+  charts/             the chart engine shared by RaabeCalc, RaabeWrite (Step 7b) and RaabePresent
+crates/
+  raabe-host/         the native side shared by the apps (D-061): files, AutoRecover, PDF, fonts,
+                      clipboard, window and single instance; each app adds its own commands
 branding/             logos (excluded from the GPL, see branding/README.md)
 docs/                 decisions, scope, architecture, feel metrics, roadmap, reports
 prototypes/           Step 0 feel prototypes (kept for reference; the harness uses the real app)
@@ -81,6 +94,20 @@ dialogs, reading and writing files, AutoRecover storage, clipboard (on Windows t
 controls and files opened from Explorer. `platform-tauri.ts` implements it for Tauri
 (Windows now, iPadOS later); `platform-browser.ts` is a development fallback for
 `npm run dev:write` in a normal browser.
+
+## Workbooks (Step 7)
+
+- A workbook is a list of sheets plus a style table; a sheet holds its cells in a map keyed by
+  row × 16384 + column, column and row information, merged ranges, the view (selection,
+  scroll position, zoom, frozen panes), AutoFilter, conditional formats and page setup
+  (`packages/sheet-engine/src/model.ts`). Formulas are stored in the file's form (English names,
+  "," between arguments); the UI converts them to German on the way in and out.
+- The grid is drawn on one canvas at the device's pixel size (D-062): Excel itself draws its
+  grid, a screen of cells is thousands of rectangles and texts that change on every scroll step,
+  and one canvas redraw per frame keeps scrolling smooth. The cell editor, the formula bar, the
+  Namenfeld and the menus are DOM elements, so typing, IME and the caret are the browser's.
+- Every change is one undo step (`ops.ts`) that records the cells, columns, rows, merges and
+  sheets it touches; after each step the workbook is recalculated and the grid redrawn.
 
 ## Documents (Steps 2-4)
 

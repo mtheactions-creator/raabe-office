@@ -1,0 +1,27 @@
+[package]
+name = "raabe-calc"
+version = "0.1.0"
+description = "RaabeCalc – Tabellenkalkulation der Raabeschule"
+license = "GPL-3.0-only"
+edition = "2024"
+rust-version = "1.90"
+
+[lib]
+name = "raabe_calc_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2.7.2", features = [] }
+
+[dependencies]
+raabe-host = { path = "../../../crates/raabe-host" }
+tauri = { version = "2.12.3", features = [] }
+tauri-plugin-dialog = "2"
+tauri-plugin-clipboard-manager = "2"
+
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = 3
+panic = "abort"
+strip = true

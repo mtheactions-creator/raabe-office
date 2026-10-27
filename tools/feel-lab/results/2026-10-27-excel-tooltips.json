@@ -1,0 +1,800 @@
+{
+ "Start": {
+  "Einfügen": {
+   "title": "Zellen einfügen",
+   "described": true
+  },
+  "Ausschneiden": {
+   "title": "Ausschneiden (Strg+X)",
+   "described": true
+  },
+  "Kopieren": {
+   "title": "Kopieren (Strg+C)",
+   "described": true
+  },
+  "Format übertragen": {
+   "title": "Format übertragen",
+   "described": true
+  },
+  "Office-Zwischenablage...": {
+   "title": "Zwischenablage",
+   "described": true
+  },
+  "Schriftart": {
+   "title": "Schriftart",
+   "described": true
+  },
+  "Schriftgrad": {
+   "title": "Schriftgrad",
+   "described": true
+  },
+  "Schriftgrad vergrößern": {
+   "title": "Schriftgrad vergrößern",
+   "described": true
+  },
+  "Schriftgrad verkleinern": {
+   "title": "Schriftgrad verkleinern",
+   "described": true
+  },
+  "Fett": {
+   "title": "Fett (Strg+Umschalt+F)",
+   "described": true
+  },
+  "Kursiv": {
+   "title": "Kursiv (Strg+Umschalt+K)",
+   "described": true
+  },
+  "Unterstreichen": {
+   "title": "Unterstreichen (Strg+Umschalt+U)",
+   "described": true
+  },
+  "Rahmen": {
+   "title": "Rahmenlinie unten",
+   "described": false
+  },
+  "Rahmenlinie unten": {
+   "title": "Rahmenlinie unten",
+   "described": false
+  },
+  "Füllfarbe": {
+   "title": "Füllfarbe",
+   "described": true
+  },
+  "Füllfarbe RGB(255, 255, 0)": {
+   "title": "Füllfarbe",
+   "described": true
+  },
+  "Schriftfarbe": {
+   "title": "Schriftfarbe",
+   "described": true
+  },
+  "Schriftfarbe RGB(255, 0, 0)": {
+   "title": "Schriftfarbe",
+   "described": true
+  },
+  "Zellenschriftart formatieren": {
+   "title": "Schriftarteinstellungen (Strg+Umschalt+A)",
+   "described": true
+  },
+  "Oben ausrichten": {
+   "title": "Oben ausrichten",
+   "described": true
+  },
+  "Zentriert ausrichten": {
+   "title": "Zentriert ausrichten",
+   "described": true
+  },
+  "Unten ausrichten": {
+   "title": "Unten ausrichten",
+   "described": true
+  },
+  "Ausrichtung": {
+   "title": "Ausrichtung",
+   "described": true
+  },
+  "Linksbündig": {
+   "title": "Linksbündig ausrichten",
+   "described": true
+  },
+  "Zentriert": {
+   "title": "Zentriert",
+   "described": true
+  },
+  "Rechtsbündig": {
+   "title": "Rechtsbündig ausrichten",
+   "described": true
+  },
+  "Einzug verkleinern": {
+   "title": "Einzug verkleinern",
+   "described": true
+  },
+  "Einzug vergrößern": {
+   "title": "Einzug vergrößern",
+   "described": true
+  },
+  "Textumbruch": {
+   "title": "Textumbruch",
+   "described": true
+  },
+  "Verbinden und zentrieren": {
+   "title": "Verbinden und zentrieren",
+   "described": true
+  },
+  "Zellenausrichtung formatieren": {
+   "title": "Ausrichtungseinstellungen",
+   "described": true
+  },
+  "Zahlenformat": {
+   "title": "Zahlenformat",
+   "described": true
+  },
+  "Buchhaltungszahlenformat": {
+   "title": "Buchhaltungszahlenformat",
+   "described": true
+  },
+  "Prozentformat": {
+   "title": "Prozentformat (Strg+Umschalt+%)",
+   "described": true
+  },
+  "1.000er-Trennzeichen": {
+   "title": "1.000er-Trennzeichen",
+   "described": true
+  },
+  "Dezimalstelle hinzufügen": {
+   "title": "Dezimalstelle hinzufügen",
+   "described": true
+  },
+  "Dezimalstelle entfernen": {
+   "title": "Dezimalstelle entfernen",
+   "described": true
+  },
+  "Zellennummer formatieren": {
+   "title": "Zahlenformat",
+   "described": true
+  },
+  "Bedingte Formatierung": {
+   "title": "Bedingte Formatierung",
+   "described": true
+  },
+  "Als Tabelle formatieren": {
+   "title": "Als Tabelle formatieren",
+   "described": true
+  },
+  "Zellenformatvorlagen": {
+   "title": "Zellenformatvorlagen",
+   "described": true
+  },
+  "Zellen einfügen": {
+   "title": "Zellen einfügen",
+   "described": true
+  },
+  "Löschen": {
+   "title": "Löschen",
+   "described": true
+  },
+  "Zellen löschen...": {
+   "title": "Zellen löschen",
+   "described": true
+  },
+  "Format": {
+   "title": "Format",
+   "described": true
+  },
+  "AutoSumme": {
+   "title": "Summe (Alt+=)",
+   "described": true
+  },
+  "Summe": {
+   "title": "Summe (Alt+=)",
+   "described": true
+  },
+  "Ausfüllen": {
+   "title": "Ausfüllen",
+   "described": true
+  },
+  "Sortieren und Filtern": {
+   "title": "Sortieren und Filtern",
+   "described": true
+  },
+  "Suchen und Auswählen": {
+   "title": "Suchen und Auswählen",
+   "described": true
+  },
+  "Add-Ins": {
+   "title": "Add-Ins",
+   "described": true
+  },
+  "PDF erstellen": {
+   "title": "PDF erstellen",
+   "described": true
+  }
+ },
+ "Einfügen": {
+  "PivotTable": {
+   "title": "PivotTable",
+   "described": true
+  },
+  "Empfohlene PivotTables": {
+   "title": "Empfohlene PivotTables",
+   "described": true
+  },
+  "Tabelle": {
+   "title": "Tabelle (Strg+T)",
+   "described": true
+  },
+  "Formulare": {
+   "title": "Formulare",
+   "described": false
+  },
+  "Illustrationen": {
+   "title": "Illustrationen",
+   "described": false
+  },
+  "Kontrollkästchen": {
+   "title": "Kontrollkästchen einfügen",
+   "described": true
+  },
+  "Empfohlene Diagramme": {
+   "title": "Empfohlene Diagramme",
+   "described": false
+  },
+  "Säulen- oder Balkendiagramm einfügen": {
+   "title": "Säulen- oder Balkendiagramm einfügen",
+   "described": true
+  },
+  "Linien- oder Flächendiagramm einfügen": {
+   "title": "Linien- oder Flächendiagramm einfügen",
+   "described": true
+  },
+  "Kreis- oder Ringdiagramm einfügen": {
+   "title": "Kreis- oder Ringdiagramm einfügen",
+   "described": true
+  },
+  "Hierarchiediagramm einfügen": {
+   "title": "Hierarchiediagramm einfügen",
+   "described": true
+  },
+  "Statistikdiagramm einfügen": {
+   "title": "Statistikdiagramm einfügen",
+   "described": true
+  },
+  "Punkt (XY)- oder Blasendiagramm einfügen": {
+   "title": "Punkt (XY)- oder Blasendiagramm einfügen",
+   "described": true
+  },
+  "Wasserfall-, Trichter-, Kurs-, Oberflächen- oder Netzdiagramm einfügen": {
+   "title": "Wasserfall-, Trichter-, Kurs-, Oberflächen- oder Netzdiagramm einfügen",
+   "described": true
+  },
+  "Verbunddiagramm einfügen": {
+   "title": "Verbunddiagramm einfügen",
+   "described": true
+  },
+  "Karten": {
+   "title": "Kartendiagramm einfügen",
+   "described": true
+  },
+  "PivotChart": {
+   "title": "PivotChart",
+   "described": true
+  },
+  "Linie": {
+   "title": "Liniensparkline",
+   "described": true
+  },
+  "Säule": {
+   "title": "Säulensparkline",
+   "described": true
+  },
+  "Gewinn/Verlust": {
+   "title": "Gewinn/Verlust-Sparkline",
+   "described": true
+  },
+  "Datenschnitt": {
+   "title": "Datenschnitt einfügen",
+   "described": true
+  },
+  "Zeitachse": {
+   "title": "Zeitachse",
+   "described": true
+  },
+  "Link": {
+   "title": "Link",
+   "described": true
+  },
+  "Kommentar": {
+   "title": "Kommentar einfügen",
+   "described": true
+  },
+  "Text": {
+   "title": "Text",
+   "described": false
+  },
+  "Symbole": {
+   "title": "Symbole",
+   "described": false
+  }
+ },
+ "Seitenlayout": {
+  "Designs": {
+   "title": "Designs",
+   "described": true
+  },
+  "Farben": {
+   "title": "Designfarben",
+   "described": true
+  },
+  "Schriftarten": {
+   "title": "Designschriftarten",
+   "described": true
+  },
+  "Effekte": {
+   "title": "Designeffekte",
+   "described": true
+  },
+  "Seitenränder": {
+   "title": "Seitenränder anpassen.",
+   "described": true
+  },
+  "Ausrichtung": {
+   "title": "Seitenausrichtung ändern.",
+   "described": true
+  },
+  "Format": {
+   "title": "Seitenformat auswählen.",
+   "described": true
+  },
+  "Druckbereich": {
+   "title": "Druckbereich",
+   "described": true
+  },
+  "Umbrüche": {
+   "title": "Umbrüche",
+   "described": true
+  },
+  "Hintergrund...": {
+   "title": "Hintergrund",
+   "described": true
+  },
+  "Drucktitel": {
+   "title": "Drucktitel",
+   "described": true
+  },
+  "Seite einrichten": {
+   "title": "Seite einrichten",
+   "described": true
+  },
+  "Breite": {
+   "title": "Breite",
+   "described": true
+  },
+  "Höhe": {
+   "title": "Höhe",
+   "described": true
+  },
+  "Anzeigen": {
+   "title": "Überschriften anzeigen",
+   "described": true
+  },
+  "Drucken": {
+   "title": "Überschriften drucken",
+   "described": true
+  },
+  "Blattoptionen": {
+   "title": "Arbeitsblatt einrichten",
+   "described": true
+  },
+  "Ebene nach vorne": {
+   "title": "Ebene nach vorne",
+   "described": true
+  },
+  "Ebene nach hinten": {
+   "title": "Ebene nach hinten",
+   "described": true
+  },
+  "Auswahlbereich...": {
+   "title": "Auswahlbereich anzeigen",
+   "described": true
+  },
+  "Ausrichten": {
+   "title": "Objekte ausrichten",
+   "described": true
+  },
+  "Gruppieren": {
+   "title": "Objekte gruppieren",
+   "described": true
+  },
+  "Drehen": {
+   "title": "Objekte drehen",
+   "described": true
+  }
+ },
+ "Formeln": {
+  "Funktion einfügen...": {
+   "title": "Funktion einfügen (Umschalt+F3)",
+   "described": true
+  },
+  "AutoSumme": {
+   "title": "Summe (Alt+=)",
+   "described": true
+  },
+  "Summe": {
+   "title": "Summe (Alt+=)",
+   "described": true
+  },
+  "Zuletzt verwendet": {
+   "title": "Zuletzt verwendet",
+   "described": true
+  },
+  "Finanzmathematik": {
+   "title": "Finanzmathematik",
+   "described": true
+  },
+  "Logisch": {
+   "title": "Logisch",
+   "described": true
+  },
+  "Text": {
+   "title": "Textfunktion",
+   "described": true
+  },
+  "Datum u. Uhrzeit": {
+   "title": "Datum u. Uhrzeit",
+   "described": true
+  },
+  "Nachschlagen und Verweisen": {
+   "title": "Nachschlagen und Verweisen",
+   "described": true
+  },
+  "Mathematik und Trigonometrie": {
+   "title": "Mathematik und Trigonometrie",
+   "described": true
+  },
+  "Mehr Funktionen": {
+   "title": "Mehr Funktionen",
+   "described": true
+  },
+  "Python (Vorschau)": {
+   "title": "Python (Vorschau)",
+   "described": false
+  },
+  "Definierte Namen": {
+   "title": "Definierte Namen",
+   "described": false
+  },
+  "Formelüberwachung": {
+   "title": "Formelüberwachung",
+   "described": false
+  },
+  "Berechnungsoptionen": {
+   "title": "Berechnungsoptionen",
+   "described": true
+  },
+  "Neu berechnen": {
+   "title": "Neu berechnen (F9)",
+   "described": true
+  },
+  "Blatt berechnen": {
+   "title": "Blatt berechnen (Umschalt+F9)",
+   "described": true
+  }
+ },
+ "Daten": {
+  "Daten abrufen": {
+   "title": "Daten abrufen",
+   "described": true
+  },
+  "Aus Text/CSV": {
+   "title": "Aus Text/CSV",
+   "described": true
+  },
+  "Aus dem Web": {
+   "title": "Aus dem Web",
+   "described": true
+  },
+  "Aus Tabelle/Bereich": {
+   "title": "Aus Tabelle/Bereich",
+   "described": true
+  },
+  "Von Bild": {
+   "title": "Von Bild",
+   "described": false
+  },
+  "Zuletzt verwendete Quellen": {
+   "title": "Zuletzt verwendete Quellen",
+   "described": true
+  },
+  "Vorhandene Verbindungen": {
+   "title": "Daten mithilfe einer vorhandenen Verbindung abrufen",
+   "described": true
+  },
+  "Alle aktualisieren": {
+   "title": "Alle aktualisieren (Strg+Alt+F5)",
+   "described": true
+  },
+  "Abfragen und Verbindungen": {
+   "title": "Abfragen und Verbindungen",
+   "described": true
+  },
+  "Eigenschaften": {
+   "title": "Datenbereichseigenschaften",
+   "described": true
+  },
+  "Workbook Links": {
+   "title": "Workbook Links",
+   "described": true
+  },
+  "Datentypen": {
+   "title": "Datentypen",
+   "described": false
+  },
+  "Nach Größe sortieren (aufsteigend)": {
+   "title": "Nach Größe sortieren (aufsteigend)",
+   "described": true
+  },
+  "Nach Größe sortieren (absteigend)": {
+   "title": "Nach Größe sortieren (absteigend)",
+   "described": true
+  },
+  "Sortieren...": {
+   "title": "Sortieren",
+   "described": true
+  },
+  "Filtern": {
+   "title": "Filtern (Strg+Umschalt+L)",
+   "described": true
+  },
+  "Löschen": {
+   "title": "Löschen",
+   "described": true
+  },
+  "Erneut anwenden": {
+   "title": "Erneut anwenden (Strg+Alt+L)",
+   "described": true
+  },
+  "Erweitert...": {
+   "title": "Erweitert",
+   "described": true
+  },
+  "Text in Spalten...": {
+   "title": "Text in Spalten",
+   "described": true
+  },
+  "Blitzvorschau": {
+   "title": "Blitzvorschau (Strg+E)",
+   "described": true
+  },
+  "Duplikate entfernen": {
+   "title": "Duplikate entfernen",
+   "described": true
+  },
+  "Datenüberprüfung...": {
+   "title": "Datenüberprüfung",
+   "described": true
+  },
+  "Konsolidieren...": {
+   "title": "Konsolidieren",
+   "described": true
+  },
+  "Datenmodell": {
+   "title": "Datenmodell",
+   "described": false
+  },
+  "Datenanalyse": {
+   "title": "Datenanalyse",
+   "described": true
+  },
+  "Was-wäre-wenn-Analyse": {
+   "title": "Was-wäre-wenn-Analyse",
+   "described": true
+  },
+  "Prognoseblatt": {
+   "title": "Prognoseblatt",
+   "described": true
+  },
+  "Gliederung": {
+   "title": "Gliederung",
+   "described": false
+  }
+ },
+ "Überprüfen": {
+  "Rechtschreibung...": {
+   "title": "Rechtschreibung (F7)",
+   "described": true
+  },
+  "Thesaurus...": {
+   "title": "Thesaurus",
+   "described": true
+  },
+  "Arbeitsmappenstatistiken": {
+   "title": "Arbeitsmappenstatistiken",
+   "described": true
+  },
+  "Leistung prüfen": {
+   "title": "Leistung prüfen",
+   "described": true
+  },
+  "Barrierefreiheit überprüfen": {
+   "title": "Barrierefreiheit überprüfen",
+   "described": true
+  },
+  "Übersetzen": {
+   "title": "Übersetzen (Alt+Umschalt+F7)",
+   "described": true
+  },
+  "Änderungen anzeigen": {
+   "title": "Änderungen anzeigen",
+   "described": true
+  },
+  "Neuer Kommentar": {
+   "title": "Neuer Kommentar",
+   "described": true
+  },
+  "Löschen": {
+   "title": "Kommentar löschen",
+   "described": true
+  },
+  "Vorheriger Kommentar": {
+   "title": "Vorheriger Kommentar",
+   "described": true
+  },
+  "Nächster Kommentar": {
+   "title": "Nächster Kommentar",
+   "described": true
+  },
+  "Kommentare anzeigen": {
+   "title": "Kommentare anzeigen",
+   "described": true
+  },
+  "Notizen": {
+   "title": "Notizen",
+   "described": true
+  },
+  "Blatt schützen...": {
+   "title": "Blatt schützen",
+   "described": true
+  },
+  "Arbeitsmappe schützen...": {
+   "title": "Arbeitsmappe schützen",
+   "described": true
+  },
+  "Bearbeiten von Bereichen zulassen": {
+   "title": "Bearbeiten von Bereichen zulassen",
+   "described": true
+  },
+  "Arbeitsmappe nicht mehr teilen": {
+   "title": "Arbeitsmappe nicht mehr teilen",
+   "described": false
+  },
+  "Freihand ausblenden": {
+   "title": "Sämtliche Freihand in Ihrem Dokument ausblenden",
+   "described": false
+  }
+ },
+ "Ansicht": {
+  "Tabellenansicht wechseln": {
+   "title": "Tabellenansicht wechseln",
+   "described": false
+  },
+  "Behalten": {
+   "title": "Tabellenansicht behalten",
+   "described": false
+  },
+  "Beenden": {
+   "title": "Tabellenansicht beenden",
+   "described": false
+  },
+  "Neu": {
+   "title": "Neue Tabellenansicht",
+   "described": false
+  },
+  "Optionen": {
+   "title": "Tabellenansichtsoptionen",
+   "described": false
+  },
+  "Normal": {
+   "title": "Normalansicht",
+   "described": true
+  },
+  "Umbruchvorschau": {
+   "title": "Umbruchvorschau",
+   "described": true
+  },
+  "Seitenlayout": {
+   "title": "Seitenlayoutansicht",
+   "described": true
+  },
+  "Benutzerdef. Ansichten...": {
+   "title": "Benutzerdef. Ansichten",
+   "described": true
+  },
+  "Navigation": {
+   "title": "Navigationsbereich",
+   "described": true
+  },
+  "Lineal": {
+   "title": "Lineal",
+   "described": true
+  },
+  "Gitternetzlinien": {
+   "title": "Gitternetzlinien anzeigen",
+   "described": true
+  },
+  "Bearbeitungsleiste": {
+   "title": "Bearbeitungsleiste",
+   "described": true
+  },
+  "Überschriften": {
+   "title": "Überschriften anzeigen",
+   "described": true
+  },
+  "Datentypsymbole": {
+   "title": "Datentypsymbole",
+   "described": true
+  },
+  "Fokuszelle": {
+   "title": "Fokuszelle",
+   "described": true
+  },
+  "Zoom...": {
+   "title": "Zoom",
+   "described": true
+  },
+  "100%": {
+   "title": "100 %",
+   "described": true
+  },
+  "Auswahl vergrößern": {
+   "title": "Auswahl vergrößern",
+   "described": true
+  },
+  "Neues Fenster": {
+   "title": "Neues Fenster",
+   "described": true
+  },
+  "Alle anordnen": {
+   "title": "Anordnen",
+   "described": true
+  },
+  "Fenster fixieren": {
+   "title": "Fenster fixieren",
+   "described": true
+  },
+  "Teilen": {
+   "title": "Teilen",
+   "described": true
+  },
+  "Ausblenden": {
+   "title": "Fenster ausblenden",
+   "described": true
+  },
+  "Einblenden...": {
+   "title": "Fenster einblenden",
+   "described": true
+  },
+  "Nebeneinander anzeigen": {
+   "title": "Nebeneinander anzeigen",
+   "described": true
+  },
+  "Synchrones Scrollen": {
+   "title": "Synchrones Scrollen",
+   "described": true
+  },
+  "Fensterposition zurücksetzen": {
+   "title": "Fensterposition zurücksetzen",
+   "described": true
+  },
+  "Fenster wechseln": {
+   "title": "Fenster wechseln",
+   "described": true
+  },
+  "Makros": {
+   "title": "Makros anzeigen (Alt+F8)",
+   "described": true
+  },
+  "Makros anzeigen": {
+   "title": "Makros anzeigen (Alt+F8)",
+   "described": true
+  }
+ }
+}

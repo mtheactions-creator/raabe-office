@@ -8,10 +8,10 @@ export function browserPlatform(): Platform {
   const recovery = new Map<string, { entry: RecoveryEntry; bytes: Uint8Array }>();
   return {
     kind: "browser",
-    openFileDialog: () => new Promise((resolve) => {
+    openFileDialog: (kind = "docx") => new Promise((resolve) => {
       const input = document.createElement("input");
       input.type = "file";
-      input.accept = ".docx";
+      input.accept = kind === "xlsx" ? ".xlsx,.csv" : ".docx";
       input.onchange = async () => {
         const f = input.files?.[0];
         if (!f) return resolve(null);

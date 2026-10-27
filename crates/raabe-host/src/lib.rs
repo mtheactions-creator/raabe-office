@@ -1,0 +1,405 @@
+//! The native side shared by the Raabe Office apps (D-061): file access (atomic saves),
+//! AutoRecover files, PDF export through WebView2, fonts, the clipboard's HTML, the window and
+//! single-instance handling so a double-clicked file opens as a new tab in the running window.
+//! Each app adds its own commands (spelling, grammar …) and combines both handlers:
+//!
+//! ```ignore
+//! let host = raabe_host::handler();
+//! let own = tauri::generate_handler![...];
+//! raabe_host::builder(CONFIG)
+//!     .invoke_handler(move |inv| if raabe_host::handles(inv.message.command()) { host(inv) } else { own(inv) })
+//! ```
+
+pub mod clipboard;
+pub mod fonts;
+
+use std::fs;
+use std::path::{Path, PathBuf};
+use std::sync::Mutex;
+
+use serde::{Deserialize, Serialize};
+use tauri::ipc::{Invoke, InvokeBody, Request, Response};
+use tauri::window::Color;
+use tauri::{AppHandle, Emitter, Manager, WebviewUrl, WebviewWindow, WebviewWindowBuilder, Wry};
+
+/// What differs between the apps.
+#[derive(Clone, Copy)]
+pub struct AppConfig {
+    /// Window title and product name ("RaabeWrite").
+    pub title: &'static str,
+    /// Short id for test folders ("raabe-write" → raabe-write-feel-recovery).
+    pub id: &'static str,
+    /// File extensions the app opens from Explorer, lower case without the dot; the first is
+    /// the extension of AutoRecover backups.
+    pub extensions: &'static [&'static str],
+}
+
+struct StartupFiles(Mutex<Vec<String>>);
+
+fn header(request: &Request, name: &str) -> Result<String, String> {
+    let raw = request.headers().get(name).ok_or_else(|| format!("missing header {name}"))?;
+    let text = raw.to_str().map_err(|e| e.to_string())?;
+    Ok(percent_encoding::percent_decode_str(text).decode_utf8_lossy().into_owned())
+}
+
+fn body<'a>(request: &'a Request<'_>) -> Result<&'a [u8], String> {
+    match request.body() {
+        InvokeBody::Raw(data) => Ok(data),
+        _ => Err("expected binary data".into()),
+    }
+}
+
+/// Writes to a temporary file next to the target and renames it over the target, so a
+/// crash or full disk never leaves a half-written document behind.
+fn atomic_write(path: &Path, data: &[u8]) -> Result<(), String> {
+    let tmp = path.with_extension("raabe-tmp");
+    fs::write(&tmp, data).map_err(|e| e.to_string())?;
+    if let Err(e) = fs::rename(&tmp, path) {
+        let _ = fs::remove_file(&tmp);
+        return Err(e.to_string());
+    }
+    Ok(())
+}
+
+#[tauri::command]
+fn read_file(path: String) -> Result<Response, String> {
+    fs::read(&path).map(Response::new).map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+fn write_file(request: Request) -> Result<(), String> {
+    let path = header(&request, "path")?;
+    atomic_write(Path::new(&path), body(&request)?)
+}
+
+#[derive(Serialize)]
+struct DirEntry {
+    name: String,
+    dir: bool,
+}
+
+/// Link einfügen > Aktueller Ordner: the folders and files of a folder (folders first).
+#[tauri::command]
+fn list_dir(path: String) -> Result<Vec<DirEntry>, String> {
+    let mut out: Vec<DirEntry> = fs::read_dir(&path)
+        .map_err(|e| e.to_string())?
+        .filter_map(|e| e.ok())
+        .filter_map(|e| {
+            let name = e.file_name().to_string_lossy().to_string();
+            if name.starts_with('.') || name.starts_with('~') {
+                return None;
+            }
+            Some(DirEntry { dir: e.file_type().map(|t| t.is_dir()).unwrap_or(false), name })
+        })
+        .collect();
+    out.sort_by(|a, b| b.dir.cmp(&a.dir).then_with(|| a.name.to_lowercase().cmp(&b.name.to_lowercase())));
+    Ok(out)
+}
+
+/// The user's Documents folder (where the Link dialog starts without a saved document).
+#[tauri::command]
+fn documents_dir() -> String {
+    std::env::var("USERPROFILE").map(|h| format!("{h}\\Documents")).unwrap_or_default()
+}
+
+/// A link followed with Strg+Klick: web addresses, mail and files open with Windows' program for them.
+#[tauri::command]
+fn open_external(target: String) -> Result<(), String> {
+    let lower = target.to_lowercase();
+    let allowed = lower.starts_with("http://") || lower.starts_with("https://") || lower.starts_with("mailto:")
+        || Path::new(&target).exists();
+    if !allowed {
+        return Err("not a web address, mail address or file".into());
+    }
+    #[cfg(windows)]
+    {
+        use std::os::windows::process::CommandExt;
+        // rundll32 url.dll hands the target to its program without a console window or shell parsing.
+        std::process::Command::new("rundll32")
+            .args(["url.dll,FileProtocolHandler", &target])
+            .creation_flags(0x0800_0000)
+            .spawn()
+            .map_err(|e| e.to_string())?;
+    }
+    Ok(())
+}
+
+#[derive(Serialize)]
+struct FileInfo {
+    exists: bool,
+    modified: Option<u128>,
+}
+
+#[tauri::command]
+fn file_info(path: String) -> FileInfo {
+    match fs::metadata(&path) {
+        Ok(meta) => FileInfo {
+            exists: meta.is_file(),
+            modified: meta
+                .modified()
+                .ok()
+                .and_then(|t| t.duration_since(std::time::UNIX_EPOCH).ok())
+                .map(|d| d.as_millis()),
+        },
+        Err(_) => FileInfo { exists: false, modified: None },
+    }
+}
+
+// ----- AutoRecover -------------------------------------------------------------------------
+
+#[derive(Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct RecoveryEntry {
+    id: String,
+    title: String,
+    path: Option<String>,
+    saved_at: u64,
+}
+
+fn recovery_dir(app: &AppHandle) -> Result<PathBuf, String> {
+    let cfg = app.state::<AppConfig>();
+    // feel-lab runs use their own folder so tests never touch the user's real backups.
+    let dir = if std::env::var("RAABE_FEEL_DEBUG_PORT").is_ok() {
+        std::env::temp_dir().join(format!("{}-feel-recovery", cfg.id))
+    } else {
+        app.path().app_local_data_dir().map_err(|e| e.to_string())?.join("recovery")
+    };
+    fs::create_dir_all(&dir).map_err(|e| e.to_string())?;
+    Ok(dir)
+}
+
+fn recovery_ext(app: &AppHandle) -> &'static str {
+    app.state::<AppConfig>().extensions.first().copied().unwrap_or("bin")
+}
+
+/// Recovery ids are UUIDs; anything else could escape the recovery folder.
+fn check_id(id: &str) -> Result<(), String> {
+    if !id.is_empty() && id.len() <= 64 && id.chars().all(|c| c.is_ascii_hexdigit() || c == '-') {
+        Ok(())
+    } else {
+        Err("invalid recovery id".into())
+    }
+}
+
+#[tauri::command]
+fn save_recovery(app: AppHandle, request: Request) -> Result<(), String> {
+    let meta = header(&request, "meta")?;
+    let entry: RecoveryEntry = serde_json::from_str(&meta).map_err(|e| e.to_string())?;
+    check_id(&entry.id)?;
+    let dir = recovery_dir(&app)?;
+    atomic_write(&dir.join(format!("{}.{}", entry.id, recovery_ext(&app))), body(&request)?)?;
+    atomic_write(&dir.join(format!("{}.json", entry.id)), meta.as_bytes())
+}
+
+#[tauri::command]
+fn list_recovery(app: AppHandle) -> Result<Vec<RecoveryEntry>, String> {
+    let dir = recovery_dir(&app)?;
+    let ext = recovery_ext(&app);
+    let mut out = Vec::new();
+    for item in fs::read_dir(&dir).map_err(|e| e.to_string())?.flatten() {
+        let p = item.path();
+        if p.extension().is_some_and(|e| e == "json") {
+            if let Ok(entry) = fs::read_to_string(&p).map_err(|_| ()).and_then(|s| serde_json::from_str::<RecoveryEntry>(&s).map_err(|_| ())) {
+                if dir.join(format!("{}.{ext}", entry.id)).exists() {
+                    out.push(entry);
+                }
+            }
+        }
+    }
+    out.sort_by_key(|e| e.saved_at);
+    Ok(out)
+}
+
+#[tauri::command]
+fn read_recovery(app: AppHandle, id: String) -> Result<Response, String> {
+    check_id(&id)?;
+    let ext = recovery_ext(&app);
+    fs::read(recovery_dir(&app)?.join(format!("{id}.{ext}"))).map(Response::new).map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+fn delete_recovery(app: AppHandle, id: String) -> Result<(), String> {
+    check_id(&id)?;
+    let dir = recovery_dir(&app)?;
+    let _ = fs::remove_file(dir.join(format!("{id}.{}", recovery_ext(&app))));
+    let _ = fs::remove_file(dir.join(format!("{id}.json")));
+    Ok(())
+}
+
+// ----- opening files from Explorer -----------------------------------------------------------
+
+fn file_args(cfg: &AppConfig, args: impl IntoIterator<Item = String>, cwd: Option<&str>) -> Vec<String> {
+    args.into_iter()
+        .filter(|a| {
+            let lower = a.to_lowercase();
+            cfg.extensions.iter().any(|e| lower.ends_with(&format!(".{e}")))
+        })
+        .map(|a| {
+            let p = PathBuf::from(&a);
+            match (p.is_absolute(), cwd) {
+                (false, Some(dir)) => Path::new(dir).join(p).to_string_lossy().into_owned(),
+                _ => a,
+            }
+        })
+        .collect()
+}
+
+#[tauri::command]
+fn startup_files(state: tauri::State<StartupFiles>) -> Vec<String> {
+    std::mem::take(&mut *state.0.lock().unwrap())
+}
+
+// ----- PDF export ---------------------------------------------------------------------------
+
+/// Page size in inches; A4 portrait when not given (RaabeWrite's pages carry their own size).
+#[tauri::command]
+async fn print_to_pdf(window: WebviewWindow, path: String, width: Option<f64>, height: Option<f64>) -> Result<(), String> {
+    #[cfg(windows)]
+    {
+        print_to_pdf_windows(window, path, width.unwrap_or(8.27), height.unwrap_or(11.69)).await
+    }
+    #[cfg(not(windows))]
+    {
+        let _ = (window, path, width, height);
+        Err("PDF-Export ist auf diesem System noch nicht verfügbar.".into())
+    }
+}
+
+#[cfg(windows)]
+async fn print_to_pdf_windows(window: WebviewWindow, path: String, width: f64, height: f64) -> Result<(), String> {
+    use webview2_com::Microsoft::Web::WebView2::Win32::{
+        COREWEBVIEW2_PRINT_ORIENTATION_PORTRAIT, ICoreWebView2_7, ICoreWebView2Environment6,
+    };
+    use webview2_com::PrintToPdfCompletedHandler;
+    use windows::core::{HSTRING, Interface};
+
+    let (tx, rx) = std::sync::mpsc::channel::<Result<(), String>>();
+    window
+        .with_webview(move |wv| {
+            let start = || -> windows::core::Result<()> {
+                unsafe {
+                    let core: ICoreWebView2_7 = wv.controller().CoreWebView2()?.cast()?;
+                    let env: ICoreWebView2Environment6 = wv.environment().cast()?;
+                    let settings = env.CreatePrintSettings()?;
+                    // Without the browser's own header/footer and margins; the pages already
+                    // contain the document's margins.
+                    settings.SetOrientation(COREWEBVIEW2_PRINT_ORIENTATION_PORTRAIT)?;
+                    settings.SetPageWidth(width)?;
+                    settings.SetPageHeight(height)?;
+                    settings.SetMarginTop(0.0)?;
+                    settings.SetMarginBottom(0.0)?;
+                    settings.SetMarginLeft(0.0)?;
+                    settings.SetMarginRight(0.0)?;
+                    settings.SetShouldPrintHeaderAndFooter(false)?;
+                    settings.SetShouldPrintBackgrounds(true)?;
+                    let tx2 = tx.clone();
+                    let handler = PrintToPdfCompletedHandler::create(Box::new(move |result, ok| {
+                        let _ = tx2.send(match (result, ok) {
+                            (Ok(()), true) => Ok(()),
+                            (Err(e), _) => Err(e.message().to_string()),
+                            _ => Err("Die PDF-Datei konnte nicht geschrieben werden.".into()),
+                        });
+                        Ok(())
+                    }));
+                    core.PrintToPdf(&HSTRING::from(path.as_str()), &settings, &handler)
+                }
+            };
+            if let Err(e) = start() {
+                let _ = tx.send(Err(e.message().to_string()));
+            }
+        })
+        .map_err(|e| e.to_string())?;
+    tauri::async_runtime::spawn_blocking(move || rx.recv().map_err(|e| e.to_string())?)
+        .await
+        .map_err(|e| e.to_string())?
+}
+
+// ----- app ------------------------------------------------------------------------------------
+
+/// The commands of this crate (for the app's combined handler).
+pub const COMMANDS: &[&str] = &[
+    "read_file", "write_file", "file_info", "list_dir", "documents_dir", "open_external", "save_recovery", "list_recovery",
+    "read_recovery", "delete_recovery", "startup_files", "print_to_pdf", "list_fonts", "font_metrics", "font_chars",
+    "clipboard_read_html", "clipboard_write_html", "clipboard_read_image",
+];
+
+pub fn handles(command: &str) -> bool {
+    COMMANDS.contains(&command)
+}
+
+pub fn handler() -> impl Fn(Invoke<Wry>) -> bool + Send + Sync + 'static {
+    tauri::generate_handler![
+        read_file, write_file, file_info, list_dir, documents_dir, open_external, save_recovery, list_recovery, read_recovery, delete_recovery,
+        startup_files, print_to_pdf, fonts::list_fonts, fonts::font_metrics, fonts::font_chars,
+        clipboard::clipboard_read_html, clipboard::clipboard_write_html, clipboard::clipboard_read_image
+    ]
+}
+
+const BROWSER_ARGS: &str = "--disable-features=msWebOOUI,msPdfOOUI,msSmartScreenProtection --disable-lcd-text";
+
+/// The app with its window, plugins and single-instance handling; the app adds its handler and runs it.
+pub fn builder(cfg: AppConfig) -> tauri::Builder<Wry> {
+    let args: Vec<String> = std::env::args().skip(1).collect();
+    fonts::preload();
+    let mut builder = tauri::Builder::default();
+    // feel-lab runs are instances of their own: handed to the user's open window, a test would
+    // type into the user's documents.
+    if std::env::var_os("RAABE_FEEL_DEBUG_PORT").is_none() {
+        builder = builder.plugin(tauri_plugin_single_instance::init(move |app, argv, cwd| {
+            let files = file_args(&cfg, argv.into_iter().skip(1), Some(&cwd));
+            if let Some(w) = app.get_webview_window("main") {
+                let _ = w.unminimize();
+                let _ = w.set_focus();
+            }
+            if !files.is_empty() {
+                let _ = app.emit("open-files", files);
+            }
+        }));
+    }
+    builder
+        .plugin(tauri_plugin_dialog::init())
+        .plugin(tauri_plugin_clipboard_manager::init())
+        .manage(cfg)
+        .manage(StartupFiles(Mutex::new(file_args(&cfg, args.clone(), None))))
+        .setup(move |app| {
+            let mut window = WebviewWindowBuilder::new(app, "main", WebviewUrl::default())
+                .title(cfg.title)
+                .inner_size(1400.0, 950.0)
+                .min_inner_size(640.0, 480.0)
+                .center()
+                .decorations(false)
+                .shadow(true)
+                .background_color(Color(240, 240, 240, 255))
+                .disable_drag_drop_handler()
+                // Office draws document text with grayscale smoothing, not ClearType colour
+                // fringes (measured, F6); WebView2 follows with LCD text off. Tauri's own default
+                // flags are repeated because these arguments replace them.
+                .additional_browser_args(BROWSER_ARGS);
+            // feel-lab runs (see docs/FEEL.md): with RAABE_FEEL_DEBUG_PORT set, the DevTools
+            // protocol is opened on that port and `--feel <fixture>` loads a test document.
+            if let Ok(port) = std::env::var("RAABE_FEEL_DEBUG_PORT").map(|p| p.parse::<u16>()) {
+                if let Ok(port) = port {
+                    // Occlusion tracking would pause rendering whenever the window is covered.
+                    // RAABE_FEEL_BROWSER_ARGS adds experimental flags (latency investigations).
+                    let extra = std::env::var("RAABE_FEEL_BROWSER_ARGS").unwrap_or_default();
+                    window = window
+                        .data_directory(std::env::temp_dir().join(format!("{}-feel-{port}", cfg.id)))
+                        .additional_browser_args(&format!(
+                            "--disable-features=msWebOOUI,msPdfOOUI,msSmartScreenProtection,CalculateNativeWinOcclusion --disable-lcd-text --remote-debugging-port={port} {extra}"
+                        ));
+                    // Runs that need no real input stay off screen and never take the focus, so
+                    // they can run while someone works at the PC.
+                    if std::env::var("RAABE_FEEL_BACKGROUND").is_ok() {
+                        window = window.position(-4000.0, 0.0).focused(false).skip_taskbar(true);
+                    }
+                    if let Some(i) = args.iter().position(|a| a == "--feel") {
+                        let fixture: String = args.get(i + 1).cloned().unwrap_or_else(|| "short".into())
+                            .chars().filter(|c| c.is_ascii_alphanumeric()).collect();
+                        window = window.initialization_script(&format!("window.__FEEL = {fixture:?};"));
+                    }
+                }
+            }
+            window.build()?;
+            Ok(())
+        })
+}

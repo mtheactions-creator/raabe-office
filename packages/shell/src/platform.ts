@@ -39,12 +39,13 @@ export interface ThesaurusResult {
 
 export interface Platform {
   readonly kind: "tauri" | "browser";
-  openFileDialog(): Promise<string | null>;
+  /** Öffnen: RaabeWrite opens .docx, RaabeCalc .xlsx and .csv. */
+  openFileDialog(kind?: "docx" | "xlsx"): Promise<string | null>;
   /** Chooses a picture file (Einfügen > Bilder > Dieses Gerät). */
   openImageDialog(): Promise<string | null>;
   /** Chooses a file of the given kinds (Entwurf > Designs > Nach Designs suchen …). */
   openAnyDialog?(title: string, filters: { name: string; extensions: string[] }[]): Promise<string | null>;
-  saveFileDialog(defaultName: string, kind: "docx" | "pdf"): Promise<string | null>;
+  saveFileDialog(defaultName: string, kind: "docx" | "pdf" | "xlsx" | "csv"): Promise<string | null>;
   /** Chooses where to save a file of the given kinds (Als Grafik speichern …). */
   saveAnyDialog?(title: string, defaultName: string, filters: { name: string; extensions: string[] }[]): Promise<string | null>;
   readFile(path: string): Promise<Uint8Array>;
@@ -62,7 +63,8 @@ export interface Platform {
   clipboardReadImage?(): Promise<Uint8Array | null>;
   /** Puts HTML and its plain text on the clipboard, the HTML as it is. */
   clipboardWriteHtml?(html: string, text: string): Promise<void>;
-  printToPdf(path: string): Promise<void>;
+  /** The page size in inches (A4 portrait when not given). */
+  printToPdf(path: string, size?: { width: number; height: number }): Promise<void>;
   /** The folders and files of a folder (Link einfügen > Aktueller Ordner). */
   listDir?(path: string): Promise<{ name: string; dir: boolean }[]>;
   /** The user's Documents folder. */

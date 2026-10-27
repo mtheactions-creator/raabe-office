@@ -15,7 +15,7 @@ owner's explicit go-ahead.
 | 4d | Second polish list from the owner after trying Step 4c (D-059): pictures by drag and drop, text boxes and shapes while edited, the caret, ribbon menus, tables and the border pen, formulas | done 2026-10-16: the owner's list as recorded in Word (D-059); 1216/1221 line starts in 22 Word-built documents (unchanged), behaviour catalogue 206/207 (the 207th a Word glitch), formula editor 152/152, smoke tests 41/41, 28/28, 43/43, 25/25 |
 | 5 | Pilot: one class uses RaabeWrite in lessons; fix what real use reveals | runs alongside Step 7 when a class fits the timetable (D-061) |
 | 6 | iPad build of RaabeWrite (touch polish, Files app integration, distribution) | |
-| 7 | RaabeCalc (D-061): handles like Excel in every way, the controls first; packages A-F below | next, agreed 2026-10-27; waiting for the go on package A |
+| 7 | RaabeCalc (D-061): handles like Excel in every way, the controls first; packages A-F below | in progress since 2026-10-27 (owner's go for the whole step, overnight run): A-E built (D-062, D-063), behaviour catalogue 114/117 |
 | 7b | Diagramm in RaabeWrite: charts with their embedded workbook, drawn by RaabeCalc's chart engine (D-061) | right after Step 7; not to be forgotten |
 | 8 | RaabePresent: proposal below | after Step 7 (D-061) |
 | 9 | Optional features: read aloud, translator, dictation, ink | |
@@ -54,6 +54,12 @@ Mittelwert, Anzahl, its context menu, views, zoom), the AutoFilter buttons and t
 Einfügeoptionen and AutoAusfülloptionen buttons, error indicators and their menu, the
 Schnellanalyse button, context menus of cells, headers and sheet tabs, and every keyboard
 shortcut Excel reports on the German keyboard.
+
+Status 2026-10-27 night: A (Excel reference side, raabe-host crate, .xlsx package, the app with
+Excel's ribbon), B (grid, formats, .xlsx with 0 differences in Excel), C (formula engine,
+4229/4234 Excel results), D (controls: behaviour catalogue 114/117 cases as in Excel, context
+menus and tooltips recorded) and E (charts) are built (D-062, D-063). F (printing, conditional
+formatting, AutoFilter, CSV are in; the audit is open).
 
 ## Step 8: RaabePresent (proposal, not yet agreed)
 
