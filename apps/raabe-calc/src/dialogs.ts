@@ -468,36 +468,75 @@ export function dialogs(app: CalcApp) {
     app.change("Filtern", () => { app.history.whole(sheet()); f.columns[a.col - f.ref.c0] = { values: [t] }; applyFilter(); });
   }
 
-  /** The dropdown of a filter button: the column's values with check boxes, sorting on top (Excel). */
-  async function filterMenu(col: number): Promise<void> {
+  /**
+   * The dropdown of a filter button as Excel's panel under the button (recorded with
+   * probe_excel_filter.py): sorting labelled by the column's content, Filter entfernen aus "…",
+   * the colour and custom filters (not built yet), a search box and the column's values with
+   * check boxes, OK and Abbrechen.
+   */
+  async function filterMenu(col: number, anchor?: DOMRect): Promise<void> {
     const f = sheet().autoFilter;
     if (!f) return;
     const values = new Set<string>();
-    let blank = false;
+    let blank = false, numbers = 0, texts = 0;
     for (let r = f.ref.r0 + 1; r <= f.ref.r1; r++) {
       const c = sheet().get(r, col);
       const t = shown(c, app.wb.styles.get(c?.s)).text;
+      if (typeof c?.v === "number") numbers++; else if (typeof c?.v === "string") texts++;
       if (t === "") blank = true; else values.add(t);
     }
+    const head = sheet().get(f.ref.r0, col);
+    const name = head && head.v !== null ? shown(head, app.wb.styles.get(head.s)).text : `Spalte ${colName(col)}`;
+    const numeric = numbers > texts;
     const crit = f.columns[col - f.ref.c0];
     const list = [...values].sort((a, b) => a.localeCompare(b, "de", { numeric: true }));
     const boxes = list.map((v) => checkbox(v, !crit?.values || crit.values.includes(v)));
     const blankBox = blank ? checkbox("(Leere)", !crit?.values || !!crit.blank) : null;
     const allBox = checkbox("(Alles auswählen)", !crit?.values);
-    allBox.input.onchange = () => { for (const b of boxes) b.input.checked = allBox.input.checked; if (blankBox) blankBox.input.checked = allBox.input.checked; };
-    const body = h("div", { class: "filter-menu" },
-      h("button", { type: "button", onclick: () => { doSort({ ...f.ref, r0: f.ref.r0 + 1 }, [{ col, asc: true }]); } }, "Von A bis Z sortieren"),
-      h("button", { type: "button", onclick: () => { doSort({ ...f.ref, r0: f.ref.r0 + 1 }, [{ col, asc: false }]); } }, "Von Z bis A sortieren"),
-      h("div", { class: "filter-list" }, allBox.el, ...boxes.map((b) => b.el), ...(blankBox ? [blankBox.el] : [])));
-    const ok = await showDialog({ title: `Filter: Spalte ${colName(col)}`, body, buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
-    if (!ok) return;
-    const chosen = list.filter((_, i) => boxes[i].input.checked);
-    app.change("Filtern", () => {
-      app.history.whole(sheet());
-      if (chosen.length === list.length && (!blankBox || blankBox.input.checked)) delete f.columns[col - f.ref.c0];
-      else f.columns[col - f.ref.c0] = { values: chosen, blank: blankBox?.input.checked };
-      applyFilter();
-    });
+    const all = () => [...boxes, ...(blankBox ? [blankBox] : [])];
+    allBox.input.onchange = () => { for (const b of all()) b.input.checked = allBox.input.checked; };
+    for (const b of all()) b.input.onchange = () => { allBox.input.checked = all().every((x) => x.input.checked); allBox.input.indeterminate = !allBox.input.checked && all().some((x) => x.input.checked); };
+    const search = h("input", { type: "search", class: "filter-search", placeholder: "Suchen" }) as HTMLInputElement;
+    search.oninput = () => {
+      const q = search.value.toLowerCase();
+      list.forEach((v, i) => { boxes[i].el.hidden = !!q && !v.toLowerCase().includes(q); boxes[i].input.checked = !q || v.toLowerCase().includes(q); });
+    };
+    const panel = h("div", { class: "filter-panel" });
+    const close = () => { panel.remove(); removeEventListener("pointerdown", outside, true); removeEventListener("keydown", keys, true); app.grid.focus(); };
+    const outside = (e: Event) => { if (!panel.contains(e.target as Node)) close(); };
+    const keys = (e: KeyboardEvent) => { if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); close(); } };
+    const item = (label: string, run: (() => void) | null, icon = "") =>
+      h("button", { type: "button", class: "filter-item", disabled: run ? undefined : true, onclick: () => { close(); run?.(); } }, h("span", { class: "fi-icon" }, icon), label);
+    const body = { ...f.ref, r0: f.ref.r0 + 1 };
+    const apply = () => {
+      const chosen = list.filter((_, i) => boxes[i].input.checked);
+      close();
+      app.change("Filtern", () => {
+        app.history.whole(sheet());
+        if (chosen.length === list.length && (!blankBox || blankBox.input.checked)) delete f.columns[col - f.ref.c0];
+        else f.columns[col - f.ref.c0] = { values: chosen, blank: blankBox?.input.checked };
+        applyFilter();
+      });
+    };
+    panel.append(
+      item(numeric ? "Nach Größe sortieren (aufsteigend)" : "Von A bis Z sortieren", () => doSort(body, [{ col, asc: true }]), "↑"),
+      item(numeric ? "Nach Größe sortieren (absteigend)" : "Von Z bis A sortieren", () => doSort(body, [{ col, asc: false }]), "↓"),
+      item("Nach Farbe sortieren", null),
+      h("hr"),
+      item(`Filter entfernen aus "${name}"`, crit ? () => app.change("Filter löschen", () => { app.history.whole(sheet()); delete f.columns[col - f.ref.c0]; applyFilter(); }) : null),
+      item("Nach Farbe filtern", null),
+      item(numeric ? "Zahlenfilter" : "Textfilter", null),
+      search,
+      h("div", { class: "filter-list" }, allBox.el, ...boxes.map((b) => b.el), ...(blankBox ? [blankBox.el] : [])),
+      h("div", { class: "filter-buttons" },
+        h("button", { type: "button", class: "primary", onclick: apply }, "OK"),
+        h("button", { type: "button", onclick: close }, "Abbrechen")));
+    document.body.append(panel);
+    const r = anchor ?? new DOMRect(200, 200, 0, 0);
+    panel.style.left = `${Math.max(4, Math.min(innerWidth - 271, r.left))}px`;
+    panel.style.top = `${Math.min(innerHeight - panel.offsetHeight - 4, r.bottom + 1)}px`;
+    setTimeout(() => { addEventListener("pointerdown", outside, true); addEventListener("keydown", keys, true); });
+    search.focus();
   }
 
   // ----- data tools ----------------------------------------------------------------------------------

@@ -1,0 +1,362 @@
+{
+ "text": {
+  "window": [
+   0,
+   382,
+   401,
+   818
+  ],
+  "items": [
+   {
+    "name": "Von A bis Z sortieren",
+    "type": "MenuItem",
+    "rect": [
+     1,
+     383,
+     399,
+     44
+    ]
+   },
+   {
+    "name": "Von Z bis A sortieren",
+    "type": "MenuItem",
+    "rect": [
+     1,
+     427,
+     399,
+     44
+    ]
+   },
+   {
+    "name": "Nach Farbe sortieren",
+    "type": "MenuItem",
+    "rect": [
+     1,
+     471,
+     399,
+     44
+    ]
+   },
+   {
+    "name": "Nach Farbe sortieren",
+    "type": "MenuItem",
+    "rect": [
+     1,
+     471,
+     399,
+     44
+    ]
+   },
+   {
+    "name": "Tabellenansicht",
+    "type": "MenuItem",
+    "rect": [
+     1,
+     518,
+     399,
+     44
+    ]
+   },
+   {
+    "name": "Tabellenansicht",
+    "type": "MenuItem",
+    "rect": [
+     1,
+     518,
+     399,
+     44
+    ]
+   },
+   {
+    "name": "Filter entfernen aus \"Fach\"",
+    "type": "MenuItem",
+    "rect": [
+     1,
+     565,
+     399,
+     44
+    ]
+   },
+   {
+    "name": "Nach Farbe filtern",
+    "type": "MenuItem",
+    "rect": [
+     1,
+     609,
+     399,
+     44
+    ]
+   },
+   {
+    "name": "Nach Farbe filtern",
+    "type": "MenuItem",
+    "rect": [
+     1,
+     609,
+     399,
+     44
+    ]
+   },
+   {
+    "name": "Textfilter",
+    "type": "MenuItem",
+    "rect": [
+     1,
+     653,
+     399,
+     44
+    ]
+   },
+   {
+    "name": "Textfilter",
+    "type": "MenuItem",
+    "rect": [
+     1,
+     653,
+     399,
+     44
+    ]
+   },
+   {
+    "name": "(Alles auswählen)",
+    "type": "CheckBox",
+    "rect": [
+     87,
+     746,
+     138,
+     28
+    ]
+   },
+   {
+    "name": "Deutsch",
+    "type": "CheckBox",
+    "rect": [
+     87,
+     774,
+     68,
+     28
+    ]
+   },
+   {
+    "name": "Mathe",
+    "type": "CheckBox",
+    "rect": [
+     87,
+     802,
+     54,
+     28
+    ]
+   },
+   {
+    "name": "Physik",
+    "type": "CheckBox",
+    "rect": [
+     87,
+     830,
+     54,
+     28
+    ]
+   },
+   {
+    "name": "OK",
+    "type": "Button",
+    "rect": [
+     217,
+     1143,
+     49,
+     35
+    ]
+   },
+   {
+    "name": "Abbrechen",
+    "type": "Button",
+    "rect": [
+     280,
+     1143,
+     111,
+     35
+    ]
+   }
+  ]
+ },
+ "number": {
+  "window": [
+   0,
+   382,
+   401,
+   818
+  ],
+  "items": [
+   {
+    "name": "Nach Größe sortieren (aufsteigend)",
+    "type": "MenuItem",
+    "rect": [
+     1,
+     383,
+     399,
+     44
+    ]
+   },
+   {
+    "name": "Nach Größe sortieren (absteigend)",
+    "type": "MenuItem",
+    "rect": [
+     1,
+     427,
+     399,
+     44
+    ]
+   },
+   {
+    "name": "Nach Farbe sortieren",
+    "type": "MenuItem",
+    "rect": [
+     1,
+     471,
+     399,
+     44
+    ]
+   },
+   {
+    "name": "Nach Farbe sortieren",
+    "type": "MenuItem",
+    "rect": [
+     1,
+     471,
+     399,
+     44
+    ]
+   },
+   {
+    "name": "Tabellenansicht",
+    "type": "MenuItem",
+    "rect": [
+     1,
+     518,
+     399,
+     44
+    ]
+   },
+   {
+    "name": "Tabellenansicht",
+    "type": "MenuItem",
+    "rect": [
+     1,
+     518,
+     399,
+     44
+    ]
+   },
+   {
+    "name": "Filter entfernen aus \"Note\"",
+    "type": "MenuItem",
+    "rect": [
+     1,
+     565,
+     399,
+     44
+    ]
+   },
+   {
+    "name": "Nach Farbe filtern",
+    "type": "MenuItem",
+    "rect": [
+     1,
+     609,
+     399,
+     44
+    ]
+   },
+   {
+    "name": "Nach Farbe filtern",
+    "type": "MenuItem",
+    "rect": [
+     1,
+     609,
+     399,
+     44
+    ]
+   },
+   {
+    "name": "Zahlenfilter",
+    "type": "MenuItem",
+    "rect": [
+     1,
+     653,
+     399,
+     44
+    ]
+   },
+   {
+    "name": "Zahlenfilter",
+    "type": "MenuItem",
+    "rect": [
+     1,
+     653,
+     399,
+     44
+    ]
+   },
+   {
+    "name": "(Alles auswählen)",
+    "type": "CheckBox",
+    "rect": [
+     87,
+     746,
+     138,
+     28
+    ]
+   },
+   {
+    "name": "1",
+    "type": "CheckBox",
+    "rect": [
+     87,
+     774,
+     14,
+     28
+    ]
+   },
+   {
+    "name": "2",
+    "type": "CheckBox",
+    "rect": [
+     87,
+     802,
+     14,
+     28
+    ]
+   },
+   {
+    "name": "3",
+    "type": "CheckBox",
+    "rect": [
+     87,
+     830,
+     14,
+     28
+    ]
+   },
+   {
+    "name": "OK",
+    "type": "Button",
+    "rect": [
+     217,
+     1143,
+     49,
+     35
+    ]
+   },
+   {
+    "name": "Abbrechen",
+    "type": "Button",
+    "rect": [
+     280,
+     1143,
+     111,
+     35
+    ]
+   }
+  ]
+ }
+}

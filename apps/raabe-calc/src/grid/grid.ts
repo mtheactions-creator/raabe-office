@@ -37,8 +37,8 @@ export interface GridHost {
   contextMenu(e: MouseEvent, kind: "cell" | "col" | "row"): void;
   /** Keys the grid does not handle itself (ribbon shortcuts …); true when used. */
   key(e: KeyboardEvent): boolean;
-  /** An AutoFilter button was clicked (its column). */
-  filterMenu(col: number): void;
+  /** An AutoFilter button was clicked (its column and where the button is on the page). */
+  filterMenu(col: number, anchor: DOMRect): void;
   /** Formeln anzeigen (Strg+#). */
   showFormulas(): boolean;
   /** The warning button beside a cell with an error indicator was pressed. */
@@ -898,7 +898,8 @@ export class Grid {
       const fb = filterButton(b.x, b.w, b.y, b.h, this.zoom);
       if (p.x >= fb.x && p.x <= fb.x + fb.w && p.y >= fb.y && p.y <= fb.y + fb.h) {
         this.selectCell(t.row, t.col);
-        this.host.filterMenu(t.col);
+        const c = this.canvas.getBoundingClientRect();
+        this.host.filterMenu(t.col, new DOMRect(c.left + fb.x, c.top + fb.y, fb.w, fb.h));
         return;
       }
     }
@@ -1214,6 +1215,16 @@ export class Grid {
     }
     if (this.host.key(e)) { e.preventDefault(); return; }
     const k = e.key;
+    // Alt+Unten on a filter's header cell opens its dropdown (Excel).
+    const af = this.sheet.autoFilter;
+    if (e.altKey && k === "ArrowDown" && af && this.active.row === af.ref.r0 && this.active.col >= af.ref.c0 && this.active.col <= af.ref.c1) {
+      e.preventDefault();
+      const b = this.rectOnCanvas({ r0: this.active.row, c0: this.active.col, r1: this.active.row, c1: this.active.col })!;
+      const fb = filterButton(b.x, b.w, b.y, b.h, this.zoom);
+      const c = this.canvas.getBoundingClientRect();
+      this.host.filterMenu(this.active.col, new DOMRect(c.left + fb.x, c.top + fb.y, fb.w, fb.h));
+      return;
+    }
     const arrows: Record<string, [number, number]> = { ArrowDown: [1, 0], ArrowUp: [-1, 0], ArrowRight: [0, 1], ArrowLeft: [0, -1] };
     if (arrows[k] && !e.altKey) {
       e.preventDefault();

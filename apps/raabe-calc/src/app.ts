@@ -252,7 +252,7 @@ export class CalcApp {
       },
       contextMenu: (e, kind) => this.contextMenu(e, kind),
       key: (e) => this.shortcut(e),
-      filterMenu: (col) => void this.dlg.filterMenu(col),
+      filterMenu: (col, anchor) => void this.dlg.filterMenu(col, anchor),
       enterPaste: () => {
         if (!this.copied) return false;
         void this.paste().then(() => { this.copied = null; this.grid.setMarquee(null); this.grid.showOptions(null); });
