@@ -131,6 +131,26 @@ class ExcelSide:
         r = self.x.sheet.Range(f"A{which}")
         return win.PointsToScreenPixelsX(0) - 14 * 1.5, win.PointsToScreenPixelsY(0) + _pt_to_px(r.Top + r.Height / 2)
 
+    def ui_point(self, kind: str, arg=None) -> tuple[float, float]:
+        if kind == "sheettab":
+            el = uia.find(self.root, lambda d: d["type"] == "TabItem" and d["name"] == arg, max_depth=10)
+        elif kind == "sheetadd":
+            el = uia.find(self.root, lambda d: d["type"] == "Button" and d["name"] == "Blatt hinzufügen", max_depth=10)
+        else:
+            el = uia.find(self.root, lambda d: d["type"] == "Edit" and d["name"] == "Namenfeld", max_depth=10)
+        r = uia.describe(el)["rect"]
+        return r[0] + r[2] / 2, r[1] + r[3] / 2
+
+    def status(self) -> list[str]:
+        bar = uia.find(self.root, lambda d: d["type"] == "StatusBar", max_depth=6)
+        out = []
+        for c in uia.children(bar) if bar else []:
+            n = uia.describe(c)["name"]
+            for key in ("Mittelwert", "Anzahl", "Summe"):
+                if n.startswith(key):
+                    out.append(n.replace(" ", "").replace(":", ""))
+        return out
+
     def mode(self) -> str:
         el = uia.find(self.root, lambda d: d["type"] == "Text" and d["name"].startswith("Zellenmodus"), max_depth=8)
         return el.CurrentName.replace("Zellenmodus", "").strip() if el else "?"
@@ -169,7 +189,9 @@ class ExcelSide:
         hidden_cols = [i for i in range(1, 15) if ws.Columns(i).Hidden]
         std = ws.StandardWidth
         widths = {c: round(ws.Columns(c).ColumnWidth, 2) for c in range(1, 8) if abs(ws.Columns(c).ColumnWidth - std) > 0.01}
+        status = self.status()
         return {
+            "status": status,
             "mode": mode, "editing": editing_text, "cells": cells, "selection": app.Selection.GetAddress(False, False),
             "active": app.ActiveCell.GetAddress(False, False), "sheet": ws.Name, "sheets": [s.Name for s in app.ActiveWorkbook.Worksheets],
             "hiddenRows": hidden_rows, "hiddenCols": hidden_cols, "widths": widths, "filter": bool(ws.AutoFilterMode),
@@ -240,6 +262,19 @@ def run_step(side, step: tuple) -> None:
     elif kind == "colresize":
         x, y = side.header_point("colborder", step[1])
         winapi.drag(x - 1, y, x - 1 + step[2], y)
+    elif kind in ("tabdbl", "tabclick"):
+        x, y = side.ui_point("sheettab", step[1])
+        winapi.click(x, y, 2 if kind == "tabdbl" else 1)
+    elif kind == "sheetadd":
+        x, y = side.ui_point("sheetadd")
+        winapi.click(x, y)
+    elif kind == "namebox":
+        x, y = side.ui_point("namebox")
+        winapi.click(x, y)
+        time.sleep(0.15)
+        winapi.press("ctrl+a")
+        winapi.type_text(step[1], gap=0.02)
+        winapi.press("enter")
     elif kind == "wait":
         time.sleep(step[1])
     else:
@@ -337,9 +372,22 @@ class CalcSide:
         p = self.js(f"__calc.header({_json.dumps(kind)}, {_json.dumps(str(which))})")
         return ox + p["x"] * dpr, oy + p["y"] * dpr
 
+    def ui_point(self, kind: str, arg=None) -> tuple[float, float]:
+        import json as _json
+        sel = {"sheettab": None, "sheetadd": ".sheetadd", "namebox": ".namebox"}[kind]
+        if kind == "sheettab":
+            js = f"[...document.querySelectorAll('.sheettab')].find(t => t.textContent === {_json.dumps(arg)}).getBoundingClientRect()"
+        else:
+            js = f"document.querySelector('{sel}').getBoundingClientRect()"
+        r = self.js(f"(() => {{ const r = {js}; return {{x: r.left + r.width / 2, y: r.top + r.height / 2}}; }})()")
+        ox, oy, dpr = self._origin()
+        return ox + r["x"] * dpr, oy + r["y"] * dpr
+
     def state(self, case: Case) -> dict:
         import json as _json
-        return self.js(f"__calc.state({_json.dumps(case.check)})")
+        st = self.js(f"__calc.state({_json.dumps(case.check)})")
+        st["status"] = self.js("[...document.querySelectorAll('.statusbar .stat')].map(e => e.textContent.replace(/[ :]/g, ''))")
+        return st
 
     def close(self) -> None:
         try:
@@ -349,13 +397,15 @@ class CalcSide:
             self.proc.wait(5)
 
 
-FIELDS = ("mode", "editing", "selection", "active", "sheet", "sheets", "hiddenRows", "hiddenCols", "filter")
+FIELDS = ("mode", "editing", "selection", "active", "sheet", "sheets", "hiddenRows", "hiddenCols", "filter", "status")
 CELL_FIELDS = ("formula", "text", "format", "bold", "italic", "underline", "strike", "wrap")
 
 
 def diff(excel: dict, calc: dict) -> list[str]:
     out = []
     for f in FIELDS:
+        if f not in excel:
+            continue
         if excel.get(f) != calc.get(f):
             out.append(f"{f}: Excel {excel.get(f)!r}, RaabeCalc {calc.get(f)!r}")
     names = sorted(set(excel["cells"]) | set(calc["cells"]))

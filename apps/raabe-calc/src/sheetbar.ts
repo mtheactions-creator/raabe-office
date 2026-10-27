@@ -25,7 +25,7 @@ export class SheetBar {
     const nav = h("div", { class: "sheetnav" },
       h("button", { "aria-label": "Zum vorherigen Blatt scrollen", "data-tip": "Strg+Klick: zum ersten Blatt", onclick: (e: MouseEvent) => this.scrollTabs(e.ctrlKey ? -999 : -1) }, icon("chevron-left")),
       h("button", { "aria-label": "Zum nächsten Blatt scrollen", "data-tip": "Strg+Klick: zum letzten Blatt", onclick: (e: MouseEvent) => this.scrollTabs(e.ctrlKey ? 999 : 1) }, icon("chevron-right")));
-    const add = h("button", { class: "sheetadd", "aria-label": "Neues Blatt", "data-tip": "Neues Blatt (Umschalt+F11)", onclick: () => host.add() }, "+");
+    const add = h("button", { class: "sheetadd", "aria-label": "Blatt hinzufügen", "data-tip": "Blatt hinzufügen (Umschalt+F11)", onclick: () => host.add() }, "+");
     const splitter = h("div", { class: "sheetsplit", "aria-hidden": "true" });
     const left = h("div", { class: "sheetleft" }, nav, this.tabs, add);
     this.el = h("div", { class: "sheetbar" }, left, splitter, hscroll);

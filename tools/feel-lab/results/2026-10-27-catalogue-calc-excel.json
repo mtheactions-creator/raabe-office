@@ -5144,5 +5144,170 @@
   "hiddenCols": [],
   "widths": {},
   "filter": false
+ },
+ "double-click tab renames": {
+  "status": [],
+  "mode": "Bereit",
+  "editing": null,
+  "cells": {},
+  "selection": "A1",
+  "active": "A1",
+  "sheet": "Noten",
+  "sheets": [
+   "Noten"
+  ],
+  "hiddenRows": [],
+  "hiddenCols": [],
+  "widths": {},
+  "filter": false
+ },
+ "plus adds sheet after": {
+  "status": [],
+  "mode": "Bereit",
+  "editing": null,
+  "cells": {},
+  "selection": "A1",
+  "active": "A1",
+  "sheet": "Tabelle2",
+  "sheets": [
+   "Tabelle1",
+   "Tabelle2"
+  ],
+  "hiddenRows": [],
+  "hiddenCols": [],
+  "widths": {},
+  "filter": false
+ },
+ "Namenfeld goes to cell": {
+  "status": [],
+  "mode": "Bereit",
+  "editing": null,
+  "cells": {},
+  "selection": "C5",
+  "active": "C5",
+  "sheet": "Tabelle1",
+  "sheets": [
+   "Tabelle1"
+  ],
+  "hiddenRows": [],
+  "hiddenCols": [],
+  "widths": {},
+  "filter": false
+ },
+ "Namenfeld selects range": {
+  "status": [],
+  "mode": "Bereit",
+  "editing": null,
+  "cells": {},
+  "selection": "B2:D4",
+  "active": "B2",
+  "sheet": "Tabelle1",
+  "sheets": [
+   "Tabelle1"
+  ],
+  "hiddenRows": [],
+  "hiddenCols": [],
+  "widths": {},
+  "filter": false
+ },
+ "status bar sums": {
+  "status": [
+   "Mittelwert2,5",
+   "Anzahl4",
+   "Summe7,5"
+  ],
+  "mode": "Bereit",
+  "editing": null,
+  "cells": {
+   "A1": {
+    "formula": "1",
+    "text": "1",
+    "format": "Standard",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "strike": false,
+    "wrap": false
+   },
+   "A2": {
+    "formula": "2,5",
+    "text": "2,5",
+    "format": "Standard",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "strike": false,
+    "wrap": false
+   },
+   "A3": {
+    "formula": "x",
+    "text": "x",
+    "format": "Standard",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "strike": false,
+    "wrap": false
+   },
+   "A4": {
+    "formula": "4",
+    "text": "4",
+    "format": "Standard",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "strike": false,
+    "wrap": false
+   }
+  },
+  "selection": "A1:A4",
+  "active": "A1",
+  "sheet": "Tabelle1",
+  "sheets": [
+   "Tabelle1"
+  ],
+  "hiddenRows": [],
+  "hiddenCols": [],
+  "widths": {},
+  "filter": false
+ },
+ "status bar count of text": {
+  "status": [
+   "Anzahl2"
+  ],
+  "mode": "Bereit",
+  "editing": null,
+  "cells": {
+   "A1": {
+    "formula": "a",
+    "text": "a",
+    "format": "Standard",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "strike": false,
+    "wrap": false
+   },
+   "A2": {
+    "formula": "b",
+    "text": "b",
+    "format": "Standard",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "strike": false,
+    "wrap": false
+   }
+  },
+  "selection": "A1:A2",
+  "active": "A1",
+  "sheet": "Tabelle1",
+  "sheets": [
+   "Tabelle1"
+  ],
+  "hiddenRows": [],
+  "hiddenCols": [],
+  "widths": {},
+  "filter": false
  }
 }

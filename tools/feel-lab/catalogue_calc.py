@@ -167,6 +167,13 @@ CASES: list[Case] = [
     C("Backspace in edit removes char", {"A1": "abc"}, [("keys", "f2"), ("keys", "backspace"), ("keys", "enter")], "edit2"),
     C("Esc in Bearbeiten keeps old", {"A1": "abc"}, [("keys", "f2"), ("type", "zz"), ("keys", "esc")], "edit2"),
     C("arrow in formula after number commits", NUM3, [("type", "=A1+5"), ("keys", "down")], "formula2", start="B1"),
+    # ----- the window's controls ------------------------------------------------------------------
+    C("double-click tab renames", {}, [("tabdbl", "Tabelle1"), ("type", "Noten"), ("keys", "enter")], "window"),
+    C("plus adds sheet after", {}, [("sheetadd",)], "window"),
+    C("Namenfeld goes to cell", {}, [("namebox", "C5")], "window"),
+    C("Namenfeld selects range", {}, [("namebox", "B2:D4")], "window"),
+    C("status bar sums", {"A1": "1", "A2": "2,5", "A3": "x", "A4": "4"}, [("drag", "A1", "A4")], "window"),
+    C("status bar count of text", {"A1": "a", "A2": "b"}, [("drag", "A1", "A2")], "window"),
     C("Strg+Umschalt+L filter", {"A1": "Name", "A2": "x", "A3": "y"}, [("keys", "ctrl+shift+l")], "sheets"),
 ]
 
