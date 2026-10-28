@@ -634,9 +634,27 @@ export class CalcApp {
     this.history.step(label, fn);
   }
 
+  /** The sheet a formula is typed on while it points into another one. */
+  private pointHome: number | null = null;
+
   private activateSheet(i: number): void {
+    if (this.grid.isEditing && this.grid.canPointSheet()) {
+      // A formula being typed points into the other sheet and stays open (Excel).
+      if (i === this.wb.active) return;
+      const home = this.pointHome ?? this.wb.active;
+      this.pointHome = i === home ? null : home;
+      this.showSheet(i);
+      const name = this.wb.sheets[i].name;
+      const q = /^[\p{L}_][\p{L}\p{N}_.]*$/u.test(name) && !/^[A-Za-z]{1,3}\d+$/.test(name) ? name : `'${name.replace(/'/g, "''")}'`;
+      this.grid.pointOnSheet(`${q}!`, i !== home);
+      return;
+    }
     if (this.grid.isEditing) this.grid.commitEdit("none");
     if (i === this.wb.active) return;
+    this.showSheet(i);
+  }
+
+  private showSheet(i: number): void {
     this.wb.active = i;
     this.grid.refreshLayout();
     this.grid.syncBar();
@@ -663,6 +681,12 @@ export class CalcApp {
       },
       clearContents: () => { if (this.protection.guard("edit.clearContents")) this.change("Löschen", () => A.clearContents(this.ctx, this.sheet, this.grid.selection)); },
       clearRange: (r) => { if (this.protection.guard("edit.clearContents")) this.change("Löschen", () => A.clearContents(this.ctx, this.sheet, [r])); },
+      leavePointing: () => {
+        if (this.pointHome === null) return;
+        const home = this.pointHome;
+        this.pointHome = null;
+        this.showSheet(home);
+      },
       shiftFill: (rect, dir) => {
         if (!this.protection.guardRects([rect])) return;
         this.change(dir === "down" || dir === "right" ? "Zellen einfügen" : "Zellen löschen", () => A.shiftCells(this.ctx, this.sheet, rect, dir));

@@ -58,7 +58,7 @@ shortcut Excel reports on the German keyboard.
 Status 2026-10-28 morning ([report](reports/2026-10-28-step7-overnight.md)): A (Excel reference
 side, raabe-host crate, .xlsx package, the app with Excel's ribbon), B (grid, formats, .xlsx with
 0 differences in Excel), C (formula engine, 4229/4234 Excel results), D (controls: behaviour
-catalogue 244/244 cases as in Excel, context menus, ribbon menus and tooltips recorded), E
+catalogue 266/266 cases as in Excel, context menus, ribbon menus and tooltips recorded), E
 (charts) and F (printing as Excel's PDF, clipboard with Excel both ways, CSV, conditional
 formatting, AutoFilter panel, templates D-064) are built (D-062, D-063); after them
 Datenüberprüfung, Blatt- and Arbeitsmappenschutz, Formelüberwachung, Zahlen-/Text-/Farbfilter,

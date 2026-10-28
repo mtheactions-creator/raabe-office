@@ -29,6 +29,8 @@ export interface GridHost {
   fill(source: Rect, target: Rect, ctrl: boolean): void;
   /** Umschalt+drag of the fill handle: empty cells inserted ("down"/"right") or cells deleted ("up"/"left"). */
   shiftFill?(rect: Rect, dir: "down" | "right" | "up" | "left"): void;
+  /** A formula pointed into another sheet ends: show the sheet it is typed on again. */
+  leavePointing?(): void;
   /** Selection border dragged: move (or copy with Strg) to a new top-left cell. */
   move(source: Rect, to: { row: number; col: number }, copy: boolean): void;
   /** A drag with the right mouse button ended: Excel's menu of what to do (fill handle or border). */
@@ -258,7 +260,7 @@ export class Grid {
       sheet: this.sheet, styles: this.wb.styles, rows: this.rows, cols: this.cols, zoom: this.zoom, dpr: this.dpr,
       width: this.width, height: this.height, headerW: this.headerW(), headerH: this.headerH(), panes: this.panes(),
       outlineW: this.outlineW(), outlineH: this.outlineH(),
-      selection: this.selection, active: this.active, editing: this.editing ?? undefined, marquee: this.marquee,
+      selection: this.selection, active: this.active, editing: this.pointAway ? undefined : this.editing ?? undefined, marquee: this.marquee,
       marqueePhase: this.marqueePhase, ghost: this.ghost, insertLine: this.insertLine, refs: this.refHighlights(), showGrid: this.view.showGrid,
       showHeaders: this.view.showHeaders, textCache: this.previewState ? new Map() : this.textCache, cond: this.condEval(), showFormulas: this.host.showFormulas(),
       preview: this.previewState, arrows: this.host.arrows?.(), circles: this.host.circles?.(), pageBreaks: this.host.pageBreaks?.(),
@@ -674,7 +676,7 @@ export class Grid {
 
   /** The editor covers the cell and grows to the right as the text gets longer (Excel). */
   private placeEditor(): void {
-    if (!this.editing) return;
+    if (!this.editing || this.pointAway) return;
     const { row, col } = this.editing;
     const m = this.sheet.mergeAt(row, col) ?? { r0: row, c0: col, r1: row, c1: col };
     const b = this.rectOnCanvas(m);
@@ -697,6 +699,7 @@ export class Grid {
   }
 
   private stopEdit(): void {
+    this.leavePointSheet();
     this.editing = null;
     this.pointRef = null;
     this.editor.classList.remove("on");
@@ -710,6 +713,37 @@ export class Grid {
     this.invalidate();
   }
 
+  // ----- pointing into another sheet ---------------------------------------------------------------
+
+  /** While a formula points into another sheet: its references' prefix ("Tabelle3!"). */
+  private pointPrefix: string | null = null;
+
+  /** True when changing the sheet keeps the formula open for pointing there (Excel). */
+  canPointSheet(): boolean {
+    return !!this.editing && this.mode !== "edit" && (!!this.pointRef || this.canPoint());
+  }
+
+  /** The view shows another sheet (its prefix) or the formula's own again (null); the formula stays open. */
+  pointOnSheet(prefix: string, away: boolean): void {
+    // Once another sheet was visited, references keep the sheet's name, also back home (recorded).
+    this.pointPrefix = prefix;
+    this.pointAway = away;
+    // The cell editor belongs to the formula's own sheet; elsewhere only the Bearbeitungsleiste shows it.
+    if (away) { this.editor.style.left = "-10000px"; this.editor.classList.remove("on"); }
+    else if (this.editing) { this.editor.classList.add("on"); this.placeEditor(); }
+    this.editor.focus({ preventScroll: true });
+    this.invalidate();
+  }
+
+  private pointAway = false;
+
+  private leavePointSheet(): void {
+    if (this.pointPrefix === null) return;
+    this.pointPrefix = null;
+    this.pointAway = false;
+    this.host.leavePointing?.();
+  }
+
   cancelEdit(): void {
     if (!this.editing) return;
     this.stopEdit();
@@ -719,6 +753,8 @@ export class Grid {
   /** Commits the edit, then moves as Enter/Tab/arrows do ("none": stays, as the ✓ button). */
   commitEdit(moveBy: "down" | "up" | "right" | "left" | "none", opts: { all?: boolean; array?: boolean; arrow?: boolean } = {}): void {
     if (!this.editing) return;
+    // Back on the formula's own sheet before it is checked and written.
+    this.leavePointSheet();
     let text = (this.editing.viaBar ? this.fx : this.editor).value;
     // Excel closes brackets a formula left open.
     if (text.startsWith("=")) {
@@ -828,7 +864,7 @@ export class Grid {
     const t = input.value;
     const start = this.pointRef?.start ?? input.selectionStart ?? t.length;
     const end = this.pointRef?.end ?? start;
-    const ref = sheetPrefix + (anchor.row === head.row && anchor.col === head.col ? cellName(anchor.row, anchor.col) : rangeName(normRect(anchor.row, anchor.col, head.row, head.col)));
+    const ref = (sheetPrefix || this.pointPrefix || "") + (anchor.row === head.row && anchor.col === head.col ? cellName(anchor.row, anchor.col) : rangeName(normRect(anchor.row, anchor.col, head.row, head.col)));
     input.value = t.slice(0, start) + ref + t.slice(end);
     const pos = start + ref.length;
     input.setSelectionRange(pos, pos);
@@ -1761,6 +1797,13 @@ export class Grid {
       this.pointRef = null;
       return;
     }
+    if (ctrl && (k === "PageDown" || k === "PageUp")) {
+      // Strg+Bild ab/auf: a formula goes on pointing on the other sheet; other text is entered first (recorded).
+      e.preventDefault();
+      if (!this.canPointSheet()) this.commitEdit("none");
+      this.host.key(e);
+      return;
+    }
     if (k === "F4" && input.value.startsWith("=")) {
       e.preventDefault();
       this.cycleAbsolute(input);
@@ -1771,7 +1814,8 @@ export class Grid {
       const [dr, dc] = arrows[k];
       if (this.mode !== "edit" && (this.canPoint() || this.pointRef)) {
         e.preventDefault();
-        const base = this.pointRef ? (shift ? this.pointRef.head : this.pointRef.head) : { ...this.editing!.row !== undefined ? { row: this.editing!.row, col: this.editing!.col } : this.active };
+        // On another sheet the arrows start from that sheet's active cell.
+        const base = this.pointRef ? this.pointRef.head : this.pointAway ? { ...this.active } : { row: this.editing!.row, col: this.editing!.col };
         const next = ctrl ? this.jump(base, dr, dc) : { row: Math.max(0, Math.min(MAX_ROWS - 1, base.row + dr)), col: Math.max(0, Math.min(MAX_COLS - 1, base.col + dc)) };
         if (shift && this.pointRef) this.point(this.pointRef.anchor, next);
         else this.point(next, next);

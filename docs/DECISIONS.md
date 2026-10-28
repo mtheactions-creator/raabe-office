@@ -1406,6 +1406,21 @@ Excel a school uses most among those first deferred.
   when it is on another sheet); before, nothing told the user. A formula ending in an operator
   ("=1+") is left out: Excel stored "=1", presumably through its formula correction, which the
   harness cannot see; RaabeCalc keeps "=1+" (#NAME?). To be checked with the owner watching.
+- **Merged cells** (12 recorded cases, area "merge"; the harness can now merge cells before a
+  case): arrows, Umschalt+arrows, Umschalt+click, Strg+Rechts, Enter, Tab and clicks around and
+  inside merged cells were already as in Excel. One recording was left out: when the harness
+  selects a merged cell through COM instead of a click, Excel's Enter goes to B3 below a merged
+  A1:B2; after a real click it goes to A3, as in RaabeCalc.
+- **Sheet tabs and pointing into other sheets** (10 recorded cases, area "tabs"): while a formula
+  is typed at a place where a reference can go, clicking another sheet's tab or Strg+Bild ab/auf
+  keeps the formula open; clicks and arrows there write "Tabelle3!B2" (names that need it in
+  quotes), the cell editor is hidden and only the Bearbeitungsleiste shows the formula; Enter
+  writes it into the cell it was typed in and goes back to that sheet, Esc goes back without it.
+  Once another sheet was visited, references keep a sheet name also after going back
+  ("=1+Tabelle1!C3", as Excel writes it). Strg+Bild ab while typing a value enters it first, as a
+  tab click does (before, it did nothing). The harness names extra sheets itself, since Excel's
+  name count goes on across cases. A range dragged on the other sheet is not compared (Excel's
+  recording was unreliable).
 - **Keyboard modes** (recorded): Ende then an arrow jumps as Strg+arrow (status bar "Endmodus"),
   F8 Auswahl erweitern, Umschalt+F8 Abschnitt hinzufügen oder entfernen, Strg+Rücktaste shows the
   active cell.

@@ -76,6 +76,11 @@ class ExcelSide:
             wb.Worksheets(wb.Worksheets.Count).Delete()
         while wb.Worksheets.Count < case.sheets:
             wb.Worksheets.Add(After=wb.Worksheets(wb.Worksheets.Count))
+        # Extra sheets get fixed names (Excel's own count goes on with every sheet added before).
+        for i in range(1, wb.Worksheets.Count + 1):
+            wb.Worksheets(i).Name = f"tmp{i}"
+        for i in range(2, wb.Worksheets.Count + 1):
+            wb.Worksheets(i).Name = f"Tabelle{i + 1}"
         ws = wb.Worksheets(1)
         ws.Name = "Tabelle1"
         ws.Activate()

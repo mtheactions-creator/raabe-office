@@ -1,5 +1,5 @@
 {
- "summary": "244/244",
+ "summary": "266/266",
  "cases": {
   "type text Enter": {
    "area": "enter",
@@ -1213,6 +1213,116 @@
   },
   "F4 on a range in Bearbeiten": {
    "area": "edit2",
+   "ok": true,
+   "diff": []
+  },
+  "Down from a merged cell": {
+   "area": "merge",
+   "ok": true,
+   "diff": []
+  },
+  "Right from a merged cell": {
+   "area": "merge",
+   "ok": true,
+   "diff": []
+  },
+  "Down into a merged cell": {
+   "area": "merge",
+   "ok": true,
+   "diff": []
+  },
+  "Up into a merged cell": {
+   "area": "merge",
+   "ok": true,
+   "diff": []
+  },
+  "Umschalt+arrows over a merged cell": {
+   "area": "merge",
+   "ok": true,
+   "diff": []
+  },
+  "Enter in a clicked merged cell": {
+   "area": "merge",
+   "ok": true,
+   "diff": []
+  },
+  "Enter without typing in a merged cell": {
+   "area": "merge",
+   "ok": true,
+   "diff": []
+  },
+  "Enter in a wide merged cell": {
+   "area": "merge",
+   "ok": true,
+   "diff": []
+  },
+  "Tab through a merged cell then Enter": {
+   "area": "merge",
+   "ok": true,
+   "diff": []
+  },
+  "click inside a merged cell": {
+   "area": "merge",
+   "ok": true,
+   "diff": []
+  },
+  "Ctrl+Right across a merged cell": {
+   "area": "merge",
+   "ok": true,
+   "diff": []
+  },
+  "Umschalt+click past a merged cell": {
+   "area": "merge",
+   "ok": true,
+   "diff": []
+  },
+  "rename tab then Esc keeps the name": {
+   "area": "tabs",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+Bild ab on the last sheet stays": {
+   "area": "tabs",
+   "ok": true,
+   "diff": []
+  },
+  "Umschalt+F11 twice": {
+   "area": "tabs",
+   "ok": true,
+   "diff": []
+  },
+  "click a tab while typing": {
+   "area": "tabs",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+Bild ab while typing": {
+   "area": "tabs",
+   "ok": true,
+   "diff": []
+  },
+  "click a tab in a formula points there": {
+   "area": "tabs",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+Bild ab in a formula points there": {
+   "area": "tabs",
+   "ok": true,
+   "diff": []
+  },
+  "Esc while pointing on another sheet": {
+   "area": "tabs",
+   "ok": true,
+   "diff": []
+  },
+  "back to the own sheet while pointing": {
+   "area": "tabs",
+   "ok": true,
+   "diff": []
+  },
+  "click a tab then back keeps each selection": {
+   "area": "tabs",
    "ok": true,
    "diff": []
   },
