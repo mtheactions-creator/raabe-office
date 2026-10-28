@@ -225,6 +225,7 @@ function drawPane(ctx: CanvasRenderingContext2D, s: DrawState, pane: Pane): void
         ctx.lineWidth = px;
         ctx.strokeRect(c.at + 2 * zoom, r.at + 2 * zoom, w, r.size - 5 * zoom);
       }
+      if (look?.icon) drawIcon(ctx, look.icon, c.at + 2 * zoom, r.at + r.size - 3 * zoom, zoom);
     }
   }
   for (const m of merges) {
@@ -251,6 +252,7 @@ function drawPane(ctx: CanvasRenderingContext2D, s: DrawState, pane: Pane): void
       const st = look && (look.bold || look.italic || look.underline || look.strike)
         ? { ...baseSt, font: { ...baseSt.font, bold: look.bold ?? baseSt.font.bold, italic: look.italic ?? baseSt.font.italic, underline: look.underline ? "single" as const : baseSt.font.underline, strike: look.strike ?? baseSt.font.strike } }
         : baseSt;
+      if (look?.icon?.hideValue) continue;
       const font = cssFont(st, zoom);
       measureCtx.font = font;
       let box: { x: number; y: number; w: number; h: number };
@@ -832,5 +834,88 @@ function drawRotated(ctx: CanvasRenderingContext2D, text: string, st: CellStyle,
   ctx.rotate(rad);
   const dx = align === "right" ? -w : align === "center" ? -w / 2 : 0;
   ctx.fillText(text, dx, deg > 0 ? -m.fontBoundingBoxDescent : m.fontBoundingBoxAscent);
+  ctx.restore();
+}
+
+const GREEN = "#00B050", YELLOW = "#FFC000", RED = "#FF0000", GREY = "#808080", BLACK = "#404040";
+
+/**
+ * Symbolsätze: the icon at the cell's left, bottom-aligned like the text (Excel draws 16 px icons).
+ * Index 0 is the lowest value's icon.
+ */
+export function drawIcon(ctx: CanvasRenderingContext2D, icon: { set: string; index: number }, x: number, bottom: number, zoom: number): void {
+  const n = Number(icon.set[0]) || 3;
+  const size = 14 * zoom;
+  const cx = x + size / 2 + zoom, cy = bottom - size / 2;
+  const i = icon.index;
+  const name = icon.set.slice(1);
+  const top = i === n - 1, low = i === 0;
+  ctx.save();
+  const circle = (fill: string) => { ctx.fillStyle = fill; ctx.beginPath(); ctx.arc(cx, cy, size * 0.42, 0, Math.PI * 2); ctx.fill(); };
+  const arrow = (fill: string, angle: number) => {
+    ctx.translate(cx, cy);
+    ctx.rotate(angle);
+    ctx.fillStyle = fill;
+    const s = size / 2;
+    ctx.beginPath();
+    ctx.moveTo(0, -s); ctx.lineTo(s * 0.8, -s * 0.1); ctx.lineTo(s * 0.28, -s * 0.1); ctx.lineTo(s * 0.28, s);
+    ctx.lineTo(-s * 0.28, s); ctx.lineTo(-s * 0.28, -s * 0.1); ctx.lineTo(-s * 0.8, -s * 0.1); ctx.closePath();
+    ctx.fill();
+  };
+  // How far up an arrow points: up for the top icon, down for the lowest, steps between.
+  const angle = Math.PI * (1 - i / (n - 1));
+  if (name.startsWith("Arrows")) {
+    const grey = name.includes("Gray");
+    arrow(grey ? GREY : top ? GREEN : low ? RED : YELLOW, angle);
+  } else if (name.startsWith("TrafficLights") || name === "Signs") {
+    const colors = n === 4 ? [BLACK, RED, YELLOW, GREEN] : [RED, YELLOW, GREEN];
+    if (name === "Signs" && !top) {
+      ctx.fillStyle = colors[i];
+      ctx.beginPath();
+      if (low) { ctx.moveTo(cx, cy - size * 0.45); ctx.lineTo(cx + size * 0.45, cy); ctx.lineTo(cx, cy + size * 0.45); ctx.lineTo(cx - size * 0.45, cy); }
+      else { ctx.moveTo(cx, cy - size * 0.45); ctx.lineTo(cx + size * 0.45, cy + size * 0.4); ctx.lineTo(cx - size * 0.45, cy + size * 0.4); }
+      ctx.fill();
+    } else circle(colors[i]);
+  } else if (name === "RedToBlack") {
+    circle(["#404040", "#808080", "#FF8080", RED][i] ?? RED);
+  } else if (name.startsWith("Symbols")) {
+    circle([RED, YELLOW, GREEN][i]);
+    ctx.strokeStyle = "#ffffff";
+    ctx.lineWidth = 1.6 * zoom;
+    ctx.beginPath();
+    const d = size * 0.18;
+    if (top) { ctx.moveTo(cx - d * 1.2, cy); ctx.lineTo(cx - d * 0.2, cy + d); ctx.lineTo(cx + d * 1.3, cy - d); }
+    else if (low) { ctx.moveTo(cx - d, cy - d); ctx.lineTo(cx + d, cy + d); ctx.moveTo(cx + d, cy - d); ctx.lineTo(cx - d, cy + d); }
+    else { ctx.moveTo(cx, cy - d * 1.3); ctx.lineTo(cx, cy + d * 0.3); ctx.moveTo(cx, cy + d * 1.1); ctx.lineTo(cx, cy + d * 1.3); }
+    ctx.stroke();
+  } else if (name === "Triangles") {
+    ctx.fillStyle = top ? GREEN : low ? RED : YELLOW;
+    ctx.beginPath();
+    const d = size * 0.4;
+    if (top) { ctx.moveTo(cx, cy - d); ctx.lineTo(cx + d, cy + d * 0.6); ctx.lineTo(cx - d, cy + d * 0.6); ctx.fill(); }
+    else if (low) { ctx.moveTo(cx, cy + d); ctx.lineTo(cx + d, cy - d * 0.6); ctx.lineTo(cx - d, cy - d * 0.6); ctx.fill(); }
+    else ctx.fillRect(cx - d * 0.7, cy - d * 0.25, d * 1.4, d * 0.5);
+  } else if (name === "Stars") {
+    const star = () => { ctx.beginPath(); for (let k = 0; k < 10; k++) { const r = k % 2 ? size * 0.2 : size * 0.48, a = -Math.PI / 2 + (k * Math.PI) / 5; ctx.lineTo(cx + r * Math.cos(a), cy + r * Math.sin(a)); } ctx.closePath(); };
+    ctx.strokeStyle = "#FFC000";
+    ctx.lineWidth = zoom;
+    star();
+    if (top) { ctx.fillStyle = "#FFC000"; ctx.fill(); }
+    else if (!low) { ctx.save(); ctx.clip(); ctx.fillStyle = "#FFC000"; ctx.fillRect(cx - size, cy - size, size, size * 2); ctx.restore(); }
+    star();
+    ctx.stroke();
+  } else if (name === "Flags") {
+    ctx.fillStyle = [RED, YELLOW, GREEN][i];
+    ctx.fillRect(cx - size * 0.3, cy - size * 0.4, size * 0.6, size * 0.4);
+    ctx.fillStyle = "#404040";
+    ctx.fillRect(cx - size * 0.3, cy - size * 0.4, zoom, size * 0.85);
+  } else {
+    // Other sets (stars, ratings, quarters, boxes): a circle filled by the share.
+    ctx.strokeStyle = "#5b9bd5";
+    ctx.lineWidth = zoom;
+    ctx.beginPath(); ctx.arc(cx, cy, size * 0.42, 0, Math.PI * 2); ctx.stroke();
+    ctx.fillStyle = "#5b9bd5";
+    ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, size * 0.42, -Math.PI / 2, -Math.PI / 2 + (Math.PI * 2 * i) / Math.max(1, n - 1)); ctx.closePath(); ctx.fill();
+  }
   ctx.restore();
 }

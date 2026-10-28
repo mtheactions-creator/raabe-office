@@ -168,7 +168,8 @@ describe("edited workbooks", () => {
     s.rows.set(5, { height: 30, custom: true });
     s.view = { ...s.view, freeze: { row: 1, col: 0 }, top: 1 };
     s.autoFilter = { ref: { r0: 1, c0: 0, r1: 4, c1: 0 }, columns: {} };
-    s.conditional = [{ ref: [{ r0: 1, c0: 0, r1: 3, c1: 0 }], rules: [{ type: "cellIs", priority: 1, operator: "greaterThan", formulas: ["2"], format: { color: "#9C0006", fill: "#FFC7CE" } }] }];
+    s.conditional = [{ ref: [{ r0: 1, c0: 0, r1: 3, c1: 0 }], rules: [{ type: "cellIs", priority: 1, operator: "greaterThan", formulas: ["2"], format: { color: "#9C0006", fill: "#FFC7CE" } }] },
+      { ref: [{ r0: 1, c0: 3, r1: 3, c1: 3 }], rules: [{ type: "iconSet", priority: 2, iconSet: { set: "3Arrows", cfvo: [{ type: "percent", val: "0" }, { type: "percent", val: "33" }, { type: "percent", val: "67" }] } }] }];
     s.page = { orientation: "landscape", paperSize: 9, margins: { left: 0.7, right: 0.7, top: 0.75, bottom: 0.75, header: 0.3, footer: 0.3 }, printArea: { r0: 0, c0: 0, r1: 4, c1: 2 }, titleRows: [0, 1], titleCols: [0, 0], header: "&CKlasse 7b", footer: "&RSeite &P von &N" };
     s.tabColor = "#FF0000";
     const zwei = new Sheet("Zweites");
@@ -184,7 +185,7 @@ describe("edited workbooks", () => {
         ["/sheets/Tabelle1/cells/A3/NumberFormat", "m/d/yyyy"], ["/sheets/Tabelle1/cells/A4/Value2", 3], ["/sheets/Tabelle1/cols/0/0", approx(20, 0.2)],
         ["/sheets/Tabelle1/rows/5/0", 30], ["/sheets/Tabelle1/window/FreezePanes", true], ["/sheets/Tabelle1/autofilter/1", "A2:A5"],
         ["/sheets/Tabelle1/notes/0/1", "Eine Notiz"], ["/sheets/Tabelle1/links/0/1", "https://www.raabeschule.de/"], ["/sheets/Tabelle1/page/3", 2],
-        ["/sheets/Tabelle1/page/0", "$A$1:$C$5"], ["/sheets/Tabelle1/page/4", "$1:$2"], ["/sheets/Tabelle1/page/1", "Klasse 7b"], ["/sheets/Tabelle1/page/2", "Seite &P von &N"], ["/sheets/Tabelle1/page/5", "$A:$A"], ["/sheets/Tabelle1/Tab", 0x0000ff], ["/sheets/Zweites/cells/A1/Value2", 1], ["/sheets/Tabelle1/StandardHeight", approx(15, 0.6)],
+        ["/sheets/Tabelle1/page/0", "$A$1:$C$5"], ["/sheets/Tabelle1/page/4", "$1:$2"], ["/sheets/Tabelle1/conditional/1/0", 6], ["/sheets/Tabelle1/conditional/1/1", "D2:D4"], ["/sheets/Tabelle1/page/1", "Klasse 7b"], ["/sheets/Tabelle1/page/2", "Seite &P von &N"], ["/sheets/Tabelle1/page/5", "$A:$A"], ["/sheets/Tabelle1/Tab", 0x0000ff], ["/sheets/Zweites/cells/A1/Value2", 1], ["/sheets/Tabelle1/StandardHeight", approx(15, 0.6)],
         ["/sheets/Tabelle1/charts/0/1", 51], ["/sheets/Tabelle1/charts/0/6/0", "=SERIES(\"Werte\",,Tabelle1!$A$2:$A$4,1)"],
       ],
     });

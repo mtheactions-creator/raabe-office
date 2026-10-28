@@ -84,7 +84,7 @@ Beyond the features below, RaabeCalc handles like Excel in every way, its contro
 | Sort, filter (AutoFilter) | M | Done in Step 7 (values, Zahlen-/Textfilter, Top 10, average; colour filters later) |
 | Freeze panes, hide rows/columns, column width/row height | M | Done in Step 7 |
 | Charts: column, bar, line, pie, scatter (with trendline + equation + R²), area | M | Maths and physics; done in Step 7 (packages/charts), also histogram |
-| Conditional formatting (basic: highlight rules, data bars, colour scales) | M | Done in Step 7 (icon sets and rule manager later) |
+| Conditional formatting (basic: highlight rules, data bars, colour scales) | M | Done in Step 7, with Symbolsätze (rule manager later) |
 | Print area, fit to page, gridlines/headings on print | M | Done in Step 7 (print and PDF), with Drucktitel |
 | CSV import/export | M | Done in Step 7, as German Excel (";", UTF-8 with BOM) |
 | Comments / notes on cells | L | Notizen done in Step 7; threaded comments later |

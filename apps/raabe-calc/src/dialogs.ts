@@ -697,11 +697,12 @@ export function dialogs(app: CalcApp) {
         ...Array.from({ length: 5 }, (_, i) => h("div", { style: `height:5px;margin:1px 0;background:${i === 0 ? t.head : i % 2 ? t.band : "#fff"};border-top:1px solid ${t.line}` }))))));
   }
 
-  async function formatAsTable(style = TABLE_STYLES[0]): Promise<void> {
+  /** Als Tabelle formatieren; `direct` (Schnellanalyse > Tabelle) skips the dialog as Excel does. */
+  async function formatAsTable(style = TABLE_STYLES[0], direct = false): Promise<void> {
     const { rect, header } = sortRange();
     const ref = text(rangeName(rect).replace(/([A-Z]+)(\d+)/g, "$$$1$$$2"), 160);
     const hasHeader = checkbox("Tabelle hat Überschriften", header);
-    const ok = await showDialog({ title: "Tabelle erstellen", body: h("div", null, field("Wo sind die Daten für die Tabelle?", ref), hasHeader.el), buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
+    const ok = direct || await showDialog({ title: "Tabelle erstellen", body: h("div", null, field("Wo sind die Daten für die Tabelle?", ref), hasHeader.el), buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
     if (!ok) return;
     const r = parseRange(ref.value.replace(/\$/g, "")) ?? rect;
     // Formats the range like Excel's table style (banded rows, header in the accent colour) and adds a filter.
@@ -812,6 +813,16 @@ export function dialogs(app: CalcApp) {
       ["Weiß - Rot", ["#FCFCFF", "#F8696B"]], ["Grün - Weiß", ["#63BE7B", "#FCFCFF"]],
     ];
     return scales.map(([l, c]) => ({ label: `Farbskala ${l}`, run: () => void addRule({ type: "colorScale", colors: c }) }));
+  }
+
+  /** Symbolsätze, in the gallery's groups (Richtungen, Formen, Indikatoren, Bewertungen). */
+  function conditionalIconMenu(): MenuEntry[] {
+    const out: MenuEntry[] = [];
+    for (const [group, sets] of ICON_SETS) {
+      out.push({ heading: group });
+      for (const [label, set] of sets) out.push({ label, run: () => void addRule(iconRule(set)) });
+    }
+    return out;
   }
 
   function clearConditional(selection: boolean): void {
@@ -978,7 +989,7 @@ export function dialogs(app: CalcApp) {
   return {
     colWidth, defaultWidth, rowHeight, insertCells, deleteCells, formatCells, find, goto, sortQuick, sort, hasFilter, toggleFilter, clearFilter,
     reapplyFilter, filterByActive, filterMenu, textToColumns, removeDuplicates, series, tableStylesPanel, formatAsTable, cellStylesPanel,
-    addRule, conditionalHighlightMenu, conditionalTopMenu, conditionalBarMenu, conditionalScaleMenu, clearConditional, defineName, nameManager, note, link,
+    addRule, conditionalIconMenu, conditionalHighlightMenu, conditionalTopMenu, conditionalBarMenu, conditionalScaleMenu, clearConditional, defineName, nameManager, note, link,
     symbol, insertFunction, moveSheet, unhideSheet, zoom, statistics, options, pasteSpecial,
   };
 }
@@ -994,3 +1005,18 @@ function quoteSheet(n: string): string {
 }
 
 void MAX_ROWS;
+
+/** Excel's icon sets by gallery group (recorded: probe_excel_iconsets.py): German name and the file's name. */
+export const ICON_SETS: [string, [string, string][]][] = [
+  ["Richtungen", [["3 Pfeile (farbig)", "3Arrows"], ["3 Pfeile (grau)", "3ArrowsGray"], ["3 Dreiecke", "3Triangles"], ["4 Pfeile (grau)", "4ArrowsGray"], ["4 Pfeile (farbig)", "4Arrows"], ["5 Pfeile (grau)", "5ArrowsGray"], ["5 Pfeile (farbig)", "5Arrows"]]],
+  ["Formen", [["3 Ampeln (ohne Rand)", "3TrafficLights1"], ["3 Ampeln (mit Rand)", "3TrafficLights2"], ["3 Zeichen", "3Signs"], ["4 Ampeln", "4TrafficLights"], ["Rot/Schwarz", "4RedToBlack"]]],
+  ["Indikatoren", [["3 Symbole (mit Kreis)", "3Symbols"], ["3 Symbole (ohne Kreis)", "3Symbols2"], ["3 Kennzeichen", "3Flags"]]],
+  ["Bewertungen", [["3 Sterne", "3Stars"], ["4 Bewertungen", "4Rating"], ["5 Viertel", "5Quarters"], ["5 Bewertungen", "5Rating"], ["5 Kästchen", "5Boxes"]]],
+];
+
+/** A Symbolsatz rule with Excel's default limits (equal shares of the range in percent). */
+export function iconRule(set: string): Omit<CondRule, "priority"> {
+  const n = Number(set[0]) || 3;
+  const cfvo = Array.from({ length: n }, (_, i) => ({ type: "percent", val: String(Math.round((100 * i) / n)) }));
+  return { type: "iconSet", iconSet: { set, cfvo } };
+}

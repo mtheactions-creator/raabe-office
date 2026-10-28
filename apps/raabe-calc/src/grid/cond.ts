@@ -13,6 +13,8 @@ export interface CondLook {
   strike?: boolean;
   /** Datenbalken: the bar's length as a share of the cell and its colour. */
   bar?: { frac: number; color: string };
+  /** Symbolsatz: the set, the icon (0 = lowest), and whether the value is hidden. */
+  icon?: { set: string; index: number; hideValue?: boolean };
 }
 
 interface Stats { nums: number[]; min: number; max: number; avg: number; counts: Map<string, number> }
@@ -78,6 +80,8 @@ export class CondEval {
         const s = this.statsOf(f);
         const span = s.max - Math.min(0, s.min);
         out.bar ??= { frac: span ? (v - Math.min(0, s.min)) / span : 0, color: r.colors?.[0] ?? "#638EC6" };
+      } else if (r.type === "iconSet" && typeof v === "number" && r.iconSet) {
+        out.icon ??= this.iconOf(f, r, v, row, col);
       } else if (r.type === "colorScale" && typeof v === "number") {
         out.fill ??= scaleColor(this.statsOf(f), v, r.colors ?? ["#F8696B", "#FFEB84", "#63BE7B"]);
       } else if (r.format) {
@@ -92,6 +96,31 @@ export class CondEval {
     }
     this.cache.set(key, out);
     return out;
+  }
+
+  /**
+   * The icon of a value: each limit after the first (percent of the range between minimum and
+   * maximum, a number, a percentile or a formula) that the value reaches moves it one icon up.
+   */
+  private iconOf(f: CondFormat, r: CondRule, v: number, row: number, col: number): CondLook["icon"] {
+    const set = r.iconSet!;
+    const s = this.statsOf(f);
+    let index = 0;
+    for (const c of set.cfvo.slice(1)) {
+      const val = Number(c.val);
+      let t: number;
+      if (c.type === "percent") t = s.min + ((s.max - s.min) * val) / 100;
+      else if (c.type === "percentile") {
+        const k = ((s.nums.length - 1) * val) / 100, lo = Math.floor(k);
+        t = s.nums.length ? s.nums[lo] + ((s.nums[Math.ceil(k)] ?? s.nums[lo]) - s.nums[lo]) * (k - lo) : 0;
+      } else if (c.type === "formula") {
+        const x = this.value({ ...r, formulas: [c.val] }, 0, row, col);
+        t = typeof x === "number" ? x : Infinity;
+      } else t = val;
+      if (c.gte === false ? v > t : v >= t) index++;
+    }
+    if (set.reverse) index = set.cfvo.length - 1 - index;
+    return { set: set.set, index, hideValue: set.showValue === false };
   }
 
   private matches(f: CondFormat, r: CondRule, v: Value, row: number, col: number): boolean {
@@ -135,6 +164,7 @@ export class CondEval {
         return r.above === false ? num < s.avg : num > s.avg;
       }
       case "dataBar":
+      case "iconSet":
       case "colorScale": return num !== null;
       case "expression": {
         const x = this.value(r, 0, row, col);

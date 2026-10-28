@@ -231,6 +231,11 @@ export interface CondRule {
   format?: { color?: string; fill?: string; bold?: boolean; italic?: boolean; underline?: boolean; strike?: boolean; border?: string };
   /** dataBar: one colour; colorScale: two or three colours (min, [mid], max). */
   colors?: string[];
+  /**
+   * Symbolsatz: the set's file name (3TrafficLights1, 3Arrows …), reversed order, value hidden,
+   * and the limits above the first icon (percent, num, percentile or formula; gte false = ">").
+   */
+  iconSet?: { set: string; reverse?: boolean; showValue?: boolean; cfvo: { type: string; val: string; gte?: boolean }[] };
   /** The whole cfRule XML when the app cannot write it back from these fields (icon sets …). */
   rawXml?: string;
 }

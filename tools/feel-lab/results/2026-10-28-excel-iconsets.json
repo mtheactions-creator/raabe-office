@@ -1,0 +1,101 @@
+{
+ "entries": [
+  [
+   "Group",
+   "Richtungen"
+  ],
+  [
+   "ListItem",
+   "3 Pfeile (farbig)"
+  ],
+  [
+   "ListItem",
+   "3 Pfeile (grau)"
+  ],
+  [
+   "ListItem",
+   "3 Dreiecke"
+  ],
+  [
+   "ListItem",
+   "4 Pfeile (grau)"
+  ],
+  [
+   "ListItem",
+   "4 Pfeile (farbig)"
+  ],
+  [
+   "ListItem",
+   "5 Pfeile (grau)"
+  ],
+  [
+   "ListItem",
+   "5 Pfeile (farbig)"
+  ],
+  [
+   "Group",
+   "Formen"
+  ],
+  [
+   "ListItem",
+   "3 Ampeln (ohne Rand)"
+  ],
+  [
+   "ListItem",
+   "3 Ampeln (mit Rand)"
+  ],
+  [
+   "ListItem",
+   "3 Zeichen"
+  ],
+  [
+   "ListItem",
+   "4 Ampeln"
+  ],
+  [
+   "ListItem",
+   "Rot/Schwarz"
+  ],
+  [
+   "Group",
+   "Indikatoren"
+  ],
+  [
+   "ListItem",
+   "3 Symbole (mit Kreis)"
+  ],
+  [
+   "ListItem",
+   "3 Symbole (ohne Kreis)"
+  ],
+  [
+   "ListItem",
+   "3 Kennzeichen"
+  ],
+  [
+   "Group",
+   "Bewertungen"
+  ],
+  [
+   "ListItem",
+   "3 Sterne"
+  ],
+  [
+   "ListItem",
+   "4 Bewertungen"
+  ],
+  [
+   "ListItem",
+   "5 Viertel"
+  ],
+  [
+   "ListItem",
+   "5 Bewertungen"
+  ],
+  [
+   "ListItem",
+   "5 Kästchen"
+  ]
+ ],
+ "applied": {}
+}

@@ -1,41 +1,489 @@
 {
+ "tabs": {
+  "Formatierung": [
+   [
+    "ListItem",
+    "Datenbalken"
+   ],
+   [
+    "ListItem",
+    "Farbskala"
+   ],
+   [
+    "ListItem",
+    "Symbolsatz"
+   ],
+   [
+    "ListItem",
+    "Größer als"
+   ],
+   [
+    "ListItem",
+    "Obere 10 %"
+   ],
+   [
+    "ListItem",
+    "Formatierung löschen"
+   ]
+  ],
+  "Diagramme": [
+   [
+    "ListItem",
+    "Weitere Diagramme"
+   ]
+  ],
+  "Ergebnisse": [
+   [
+    "ListItem",
+    "Summe"
+   ],
+   [
+    "ListItem",
+    "Durchschnitt"
+   ],
+   [
+    "ListItem",
+    "Anzahl"
+   ],
+   [
+    "ListItem",
+    "% Gesamt"
+   ],
+   [
+    "ListItem",
+    "Laufende Summe"
+   ],
+   [
+    "ListItem",
+    "Summe"
+   ],
+   [
+    "ListItem",
+    "Durchschnitt"
+   ],
+   [
+    "ListItem",
+    "Anzahl"
+   ],
+   [
+    "ListItem",
+    "% Gesamt"
+   ],
+   [
+    "ListItem",
+    "Laufende Summe"
+   ],
+   [
+    "Button",
+    "Spalte nach links"
+   ],
+   [
+    "Button",
+    "Spalte nach rechts"
+   ]
+  ],
+  "Tabellen": [
+   [
+    "ListItem",
+    "Tabelle"
+   ],
+   [
+    "ListItem",
+    "Leere PivotTable"
+   ]
+  ],
+  "Sparklines": []
+ },
+ "effects": {
+  "Formatierung/0/Datenbalken": {
+   "cells": {},
+   "rules": [
+    {
+     "type": 4,
+     "range": "B2:C5"
+    }
+   ],
+   "charts": [],
+   "tables": [],
+   "sparklines": 0,
+   "dialog": null
+  },
+  "Formatierung/1/Farbskala": {
+   "cells": {},
+   "rules": [
+    {
+     "type": 3,
+     "range": "B2:C5"
+    }
+   ],
+   "charts": [],
+   "tables": [],
+   "sparklines": 0,
+   "dialog": null
+  },
+  "Formatierung/2/Symbolsatz": {
+   "cells": {},
+   "rules": [
+    {
+     "type": 6,
+     "range": "B2:C5"
+    }
+   ],
+   "charts": [],
+   "tables": [],
+   "sparklines": 0,
+   "dialog": null
+  },
+  "Formatierung/3/Größer als": {
+   "cells": {},
+   "rules": [
+    {
+     "type": 1,
+     "range": "B2:C5"
+    }
+   ],
+   "charts": [],
+   "tables": [],
+   "sparklines": 0,
+   "dialog": {
+    "title": "Größer als",
+    "controls": [
+     [
+      "ComboBox",
+      "Zu übernehmendes Format"
+     ],
+     [
+      "Button",
+      "Öffnen"
+     ],
+     [
+      "Button",
+      "OK"
+     ],
+     [
+      "Button",
+      "Abbrechen"
+     ],
+     [
+      "Button",
+      "Direkthilfe"
+     ],
+     [
+      "Button",
+      "Schließen"
+     ]
+    ]
+   }
+  },
+  "Formatierung/4/Obere 10 %": {
+   "cells": {},
+   "rules": [
+    {
+     "type": 5,
+     "range": "B2:C5"
+    }
+   ],
+   "charts": [],
+   "tables": [],
+   "sparklines": 0,
+   "dialog": null
+  },
+  "Formatierung/5/Formatierung löschen": {
+   "cells": {},
+   "rules": [],
+   "charts": [],
+   "tables": [],
+   "sparklines": 0,
+   "dialog": null
+  },
+  "Diagramme/0/Weitere Diagramme": {
+   "cells": {},
+   "rules": [],
+   "charts": [
+    {
+     "type": 51,
+     "series": 2
+    }
+   ],
+   "tables": [],
+   "sparklines": 0,
+   "dialog": {
+    "title": "Diagramm einfügen",
+    "controls": [
+     [
+      "Button",
+      "Zeile nach oben"
+     ],
+     [
+      "Button",
+      "Seite nach oben"
+     ],
+     [
+      "Button",
+      "Seite nach unten"
+     ],
+     [
+      "Button",
+      "Zeile nach unten"
+     ],
+     [
+      "Button",
+      "OK"
+     ],
+     [
+      "Button",
+      "Abbrechen"
+     ],
+     [
+      "Button",
+      "Direkthilfe"
+     ],
+     [
+      "Button",
+      "Schließen"
+     ]
+    ]
+   }
+  },
+  "Ergebnisse/0/Summe": {
+   "cells": {
+    "A6": {
+     "formula": "Summe",
+     "text": "Summe",
+     "format": "Standard",
+     "bold": true
+    },
+    "B6": {
+     "formula": "=SUMME(B2:B5)",
+     "text": "10",
+     "format": "Standard",
+     "bold": true
+    },
+    "C6": {
+     "formula": "=SUMME(C2:C5)",
+     "text": "10",
+     "format": "Standard",
+     "bold": true
+    }
+   },
+   "rules": [],
+   "charts": [],
+   "tables": [],
+   "sparklines": 0,
+   "dialog": null
+  },
+  "Ergebnisse/1/Durchschnitt": {
+   "cells": {
+    "A6": {
+     "formula": "Mittelwert",
+     "text": "Mittelwert",
+     "format": "Standard",
+     "bold": true
+    },
+    "B6": {
+     "formula": "=MITTELWERT(B2:B5)",
+     "text": "2,5",
+     "format": "Standard",
+     "bold": true
+    },
+    "C6": {
+     "formula": "=MITTELWERT(C2:C5)",
+     "text": "2,5",
+     "format": "Standard",
+     "bold": true
+    }
+   },
+   "rules": [],
+   "charts": [],
+   "tables": [],
+   "sparklines": 0,
+   "dialog": null
+  },
+  "Ergebnisse/2/Anzahl": {
+   "cells": {
+    "A6": {
+     "formula": "Anzahl",
+     "text": "Anzahl",
+     "format": "Standard",
+     "bold": true
+    },
+    "B6": {
+     "formula": "=ANZAHL2(B2:B5)",
+     "text": "4",
+     "format": "Standard",
+     "bold": true
+    },
+    "C6": {
+     "formula": "=ANZAHL2(C2:C5)",
+     "text": "4",
+     "format": "Standard",
+     "bold": true
+    }
+   },
+   "rules": [],
+   "charts": [],
+   "tables": [],
+   "sparklines": 0,
+   "dialog": null
+  },
+  "Ergebnisse/3/% Gesamt": {
+   "cells": {
+    "A6": {
+     "formula": "% Gesamtergebnis",
+     "text": "% Gesamtergebnis",
+     "format": "Standard",
+     "bold": true
+    },
+    "B6": {
+     "formula": "=SUMME(B2:B5)/SUMME($B$2:$C$5)",
+     "text": "50,00%",
+     "format": "0,00%",
+     "bold": true
+    },
+    "C6": {
+     "formula": "=SUMME(C2:C5)/SUMME($B$2:$C$5)",
+     "text": "50,00%",
+     "format": "0,00%",
+     "bold": true
+    }
+   },
+   "rules": [],
+   "charts": [],
+   "tables": [],
+   "sparklines": 0,
+   "dialog": null
+  },
+  "Ergebnisse/4/Laufende Summe": {
+   "cells": {
+    "A6": {
+     "formula": "Laufende Summe",
+     "text": "Laufende Summe",
+     "format": "Standard",
+     "bold": true
+    },
+    "B6": {
+     "formula": "=SUMME($B$2:B5)",
+     "text": "10",
+     "format": "Standard",
+     "bold": true
+    },
+    "C6": {
+     "formula": "=SUMME($B$2:C5)",
+     "text": "20",
+     "format": "Standard",
+     "bold": true
+    }
+   },
+   "rules": [],
+   "charts": [],
+   "tables": [],
+   "sparklines": 0,
+   "dialog": null
+  },
+  "Ergebnisse/5/Summe": {
+   "cells": {
+    "D1": {
+     "formula": "Summe",
+     "text": "Summe",
+     "format": "Standard",
+     "bold": true
+    },
+    "D2": {
+     "formula": "=SUMME(B2:C2)",
+     "text": "5",
+     "format": "Standard",
+     "bold": true
+    },
+    "D3": {
+     "formula": "=SUMME(B3:C3)",
+     "text": "4",
+     "format": "Standard",
+     "bold": true
+    },
+    "D4": {
+     "formula": "=SUMME(B4:C4)",
+     "text": "3",
+     "format": "Standard",
+     "bold": true
+    },
+    "D5": {
+     "formula": "=SUMME(B5:C5)",
+     "text": "8",
+     "format": "Standard",
+     "bold": true
+    }
+   },
+   "rules": [],
+   "charts": [],
+   "tables": [],
+   "sparklines": 0,
+   "dialog": null
+  },
+  "Ergebnisse/6/Durchschnitt": {
+   "cells": {},
+   "rules": [],
+   "charts": [],
+   "tables": [],
+   "sparklines": 0,
+   "dialog": null
+  },
+  "Ergebnisse/7/Anzahl": {
+   "cells": {},
+   "rules": [],
+   "charts": [],
+   "tables": [],
+   "sparklines": 0,
+   "dialog": null
+  },
+  "Ergebnisse/8/% Gesamt": {
+   "cells": {},
+   "rules": [],
+   "charts": [],
+   "tables": [],
+   "sparklines": 0,
+   "dialog": null
+  },
+  "Ergebnisse/9/Laufende Summe": {
+   "cells": {},
+   "rules": [],
+   "charts": [],
+   "tables": [],
+   "sparklines": 0,
+   "dialog": null
+  },
+  "Tabellen/0/Tabelle": {
+   "cells": {},
+   "rules": [],
+   "charts": [],
+   "tables": [
+    {
+     "range": "A1:C5",
+     "style": "TableStyleMedium2"
+    }
+   ],
+   "sparklines": 0,
+   "dialog": null
+  },
+  "Tabellen/1/Leere PivotTable": {
+   "cells": {},
+   "rules": [],
+   "charts": [],
+   "tables": [],
+   "sparklines": 0,
+   "dialog": null
+  }
+ },
  "button": {
   "name": "Schnellanalyse",
   "rect": [
-   285,
+   405,
    503,
    33,
    33
   ],
   "cellCorner": [
-   282,
+   402,
    500
   ]
- },
- "tabs": [
-  "Diagramme",
-  "Ergebnisse",
-  "Tabellen",
-  "Sparklines"
- ],
- "Diagramme": [
-  "Schnellanalyse",
-  "Weitere Diagramme"
- ],
- "Ergebnisse": [
-  "Schnellanalyse",
-  "Durchschnitt",
-  "Anzahl",
-  "% Gesamt",
-  "Laufende Summe",
-  "Summe",
-  "Spalte nach rechts"
- ],
- "Tabellen": [
-  "Schnellanalyse"
- ],
- "Sparklines": [
-  "Schnellanalyse",
-  "Gewinn/Verlust"
- ]
+ }
 }

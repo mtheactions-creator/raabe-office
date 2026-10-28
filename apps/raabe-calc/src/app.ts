@@ -36,6 +36,7 @@ import { evaluateFeature } from "./evaluate";
 import { errorCheckFeature } from "./errorcheck";
 import { isValidEntry, validationFeature } from "./validation";
 import { quickFeature, type QuickTile } from "./quick";
+import { iconRule } from "./dialogs";
 import appIconUrl from "../../../branding/raabe-calc-small.svg?url";
 
 interface Doc {
@@ -205,7 +206,7 @@ export class CalcApp {
       Formatierung: [
         { label: "Datenbalken", icon: "cond-format", run: rule({ type: "dataBar", colors: ["#638EC6"] }) },
         { label: "Farbskala", icon: "cond-format", run: rule({ type: "colorScale", colors: ["#F8696B", "#FFEB84", "#63BE7B"] }) },
-        { label: "Symbolsatz", icon: "cond-format", run: () => {}, disabled: true },
+        { label: "Symbolsatz", icon: "cond-format", run: rule(iconRule("3Arrows")) },
         { label: "Größer als", icon: "cond-format", run: () => { const m = this.dlg.conditionalHighlightMenu()[0]; if (typeof m === "object" && "run" in m) m.run(); } },
         { label: "Obere 10 %", icon: "cond-format", run: rule({ type: "top10", rank: 10, percent: true, format: { fill: "#FFC7CE", color: "#9C0006" } }) },
         { label: "Formatierung löschen", icon: "eraser", run: () => this.dlg.clearConditional(true) },
@@ -218,16 +219,14 @@ export class CalcApp {
         { label: "Punkt (XY)", icon: "chart-scatter", run: chart("scatter") },
         { label: "Weitere Diagramme", icon: "chart-recommended", run: () => void this.commands.run("insert.chartRecommended") },
       ],
+      // Below the selection (a row of results) and to its right (a column), Excel's two sets.
       Ergebnisse: [
-        { label: "Summe", icon: "autosum", run: (r) => this.quickTotals(r, "SUMME") },
-        { label: "Durchschnitt", icon: "autosum", run: (r) => this.quickTotals(r, "MITTELWERT") },
-        { label: "Anzahl", icon: "autosum", run: (r) => this.quickTotals(r, "ANZAHL") },
-        { label: "% Gesamt", icon: "percent", run: (r) => this.quickTotals(r, "%") },
-        { label: "Laufende Summe", icon: "autosum", run: (r) => this.quickTotals(r, "laufend") },
+        ...(["Summe", "Durchschnitt", "Anzahl", "% Gesamt", "Laufende Summe"] as const).map((k) => ({ label: k, icon: k === "% Gesamt" ? "percent" : "autosum", run: (r: Rect) => this.quickTotals(r, k, "below") })),
+        ...(["Summe", "Durchschnitt", "Anzahl", "% Gesamt", "Laufende Summe"] as const).map((k) => ({ label: k, icon: "table-insert-column", run: (r: Rect) => this.quickTotals(r, k, "right") })),
       ],
       Tabellen: [
-        { label: "Tabelle", icon: "format-table", run: () => void this.dlg.formatAsTable() },
-        { label: "PivotTable", icon: "table", run: () => {}, disabled: true },
+        { label: "Tabelle", icon: "format-table", run: () => void this.dlg.formatAsTable(undefined, true) },
+        { label: "Leere PivotTable", icon: "table", run: () => {}, disabled: true },
       ],
       Sparklines: [
         { label: "Linie", icon: "chart-line", run: () => {}, disabled: true },
@@ -237,15 +236,49 @@ export class CalcApp {
     };
   }
 
-  /** Ergebnisse: a row of totals under the selection (filled in once Excel's formulas are recorded). */
-  private quickTotals(r: Rect, fn: string): void {
-    const row = r.r1 + 1;
+  /**
+   * Schnellanalyse > Ergebnisse as Excel writes them (recorded): a text first row is the header
+   * and a text first column holds the labels; below the data a bold row with the label (Summe,
+   * Mittelwert, Anzahl, % Gesamtergebnis, Laufende Summe) and one formula per column, or to the
+   * right a bold column with the label on top and one formula per row. Anzahl counts with
+   * ANZAHL2, % Gesamt divides by the sum of all data (0,00%), Laufende Summe adds up from the
+   * first data cell.
+   */
+  private quickTotals(r: Rect, kind: "Summe" | "Durchschnitt" | "Anzahl" | "% Gesamt" | "Laufende Summe", side: "below" | "right"): void {
+    const sheet = this.sheet;
+    const isText = (row: number, col: number) => typeof sheet.get(row, col)?.v === "string";
+    let head = false, labels = false;
+    for (let c = r.c0; c <= r.c1; c++) if (isText(r.r0, c) && r.r1 > r.r0) head = true;
+    for (let row = r.r0 + (head ? 1 : 0); row <= r.r1; row++) if (isText(row, r.c0) && r.c1 > r.c0) labels = true;
+    const d = { r0: r.r0 + (head ? 1 : 0), c0: r.c0 + (labels ? 1 : 0), r1: r.r1, c1: r.c1 };
+    if (d.r0 > d.r1 || d.c0 > d.c1) return;
+    const label = { Summe: "Summe", Durchschnitt: "Mittelwert", Anzahl: "Anzahl", "% Gesamt": "% Gesamtergebnis", "Laufende Summe": "Laufende Summe" }[kind];
+    const fn = { Summe: "SUMME", Durchschnitt: "MITTELWERT", Anzahl: "ANZAHL2", "% Gesamt": "SUMME", "Laufende Summe": "SUMME" }[kind];
+    const abs = (row: number, col: number) => `$${colName(col)}$${row + 1}`;
+    const ref = (row: number, col: number) => `${colName(col)}${row + 1}`;
+    const all = `${abs(d.r0, d.c0)}:${abs(d.r1, d.c1)}`;
+    const put = (row: number, col: number, text: string) => {
+      A.enter(this.ctx, sheet, { r0: row, c0: col, r1: row, c1: col }, text);
+      const c = sheet.get(row, col)!;
+      sheet.set(row, col, { ...c, s: this.wb.styles.derive(c.s, (st) => { st.font.bold = true; if (kind === "% Gesamt" && text.startsWith("=")) st.numFmt = "0.00%"; }) });
+    };
     this.change("Schnellanalyse", () => {
-      for (let c = r.c0; c <= r.c1; c++) {
-        const col = colName(c);
-        const body = `${col}${r.r0 + 1}:${col}${r.r1 + 1}`;
-        const text = fn === "%" ? `=SUMME(${body})/SUMME($${colName(r.c0)}$${r.r0 + 1}:$${colName(r.c1)}$${r.r1 + 1})` : fn === "laufend" ? `=SUMME($${colName(r.c0)}$${r.r0 + 1}:${col}$${r.r1 + 1})` : `=${fn}(${body})`;
-        A.enter(this.ctx, this.sheet, { r0: row, c0: c, r1: row, c1: c }, text);
+      if (side === "below") {
+        const row = d.r1 + 1;
+        this.history.cells(sheet, { r0: row, c0: r.c0, r1: row, c1: r.c1 });
+        if (labels) put(row, r.c0, label);
+        for (let c = d.c0; c <= d.c1; c++) {
+          const part = `${ref(d.r0, c)}:${ref(d.r1, c)}`;
+          put(row, c, kind === "% Gesamt" ? `=SUMME(${part})/SUMME(${all})` : kind === "Laufende Summe" ? `=SUMME(${abs(d.r0, d.c0)}:${ref(d.r1, c)})` : `=${fn}(${part})`);
+        }
+      } else {
+        const col = d.c1 + 1;
+        this.history.cells(sheet, { r0: r.r0, c0: col, r1: r.r1, c1: col });
+        if (head) put(r.r0, col, label);
+        for (let row = d.r0; row <= d.r1; row++) {
+          const part = `${ref(row, d.c0)}:${ref(row, d.c1)}`;
+          put(row, col, kind === "% Gesamt" ? `=SUMME(${part})/SUMME(${all})` : kind === "Laufende Summe" ? `=SUMME(${abs(d.r0, d.c0)}:${ref(row, d.c1)})` : `=${fn}(${part})`);
+        }
       }
     });
   }
@@ -268,6 +301,9 @@ export class CalcApp {
     this.circles.set(sheet, out.slice(0, 255));
     this.grid.contentChanged();
   }
+
+  /** Changes to the active workbook so far (features cache what they read from the cells by it). */
+  get version(): number { return this.active.version; }
 
   /** Zahl als Text gespeichert > In eine Zahl umwandeln for one cell. */
   toNumber(row: number, col: number): void {
@@ -1798,7 +1834,7 @@ export class CalcApp {
           "-",
           { label: "Datenbalken", submenu: () => this.dlg.conditionalBarMenu() },
           { label: "Farbskalen", submenu: () => this.dlg.conditionalScaleMenu() },
-          { label: "Symbolsätze", submenu: [], disabled: true },
+          { label: "Symbolsätze", submenu: () => this.dlg.conditionalIconMenu() },
           "-",
           { label: "Neue Regel...", run: () => {}, disabled: true },
           { label: "Regeln löschen", submenu: [

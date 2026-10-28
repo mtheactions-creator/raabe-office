@@ -104,7 +104,22 @@ def main() -> None:
                     continue
                 click(same[k])
                 time.sleep(1.5)
+                # Some tiles open a dialog first (Größer als): record its title and controls, then OK.
+                dlg = [h for h in winapi.find_windows(lambda h: _pid(h) == side.x.pid and h != side.x.hwnd) if winapi.window_title(h)]
+                dialog = None
+                if dlg:
+                    el = uia.element_for(dlg[0])
+                    f = el.FindAll(uia.U.TreeScope_Descendants, uia._uia.CreateTrueCondition())
+                    ctl = []
+                    for j in range(f.Length):
+                        d = uia.describe(f.GetElement(j))
+                        if d["name"] and len(d["name"]) < 60 and d["type"] in ("Button", "ComboBox", "CheckBox"):
+                            ctl.append([d["type"], d["name"]])
+                    dialog = {"title": winapi.window_title(dlg[0]), "controls": ctl}
+                    winapi.press("enter")
+                    time.sleep(1.2)
                 e = effect(side)
+                e["dialog"] = dialog
                 out["effects"][f"{tab}/{k}/{it['name']}"] = e
                 print(tab, it["name"], json.dumps(e, ensure_ascii=False)[:300])
                 winapi.press("esc")
@@ -112,6 +127,7 @@ def main() -> None:
                 winapi.press("ctrl+z")
                 time.sleep(0.8)
                 # Make sure the sheet is back as it was (undo can leave a chart behind).
+                time.sleep(0.5)
                 after = effect(side)
                 if after["cells"] or after["rules"] or after["charts"] or after["tables"] or after["sparklines"]:
                     side.reset(Case("q", SETUP, [], "x"))

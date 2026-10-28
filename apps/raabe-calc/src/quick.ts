@@ -20,17 +20,29 @@ export function quickFeature(app: CalcApp, tiles: () => Record<string, QuickTile
   let tab = "Formatierung";
 
   /** The selection Schnellanalyse works on: one range of at least two cells, one of them not empty. */
+  let memo: { key: string; hit: boolean } | null = null;
   function target(): Rect | null {
     const sel = app.grid.selection;
     if (sel.length !== 1 || app.grid.isEditing) return null;
     const r = sel[0];
     if (r.r0 === r.r1 && r.c0 === r.c1) return null;
     if ((r.r1 - r.r0 + 1) * (r.c1 - r.c0 + 1) > 1_000_000) return null;
-    for (const [key, c] of app.sheet.cells) {
-      const row = Math.floor(key / 16384), col = key % 16384;
-      if (row >= r.r0 && row <= r.r1 && col >= r.c0 && col <= r.c1 && c.v !== null && c.v !== "") return r;
+    // Called on every paint: the answer is kept until the selection or the cells change.
+    const key = `${app.sheet.name}|${r.r0},${r.c0},${r.r1},${r.c1}|${app.version}`;
+    if (memo?.key !== key) {
+      let hit = false;
+      const small = (r.r1 - r.r0 + 1) * (r.c1 - r.c0 + 1) < app.sheet.cells.size;
+      if (small) {
+        for (let row = r.r0; row <= r.r1 && !hit; row++) for (let col = r.c0; col <= r.c1 && !hit; col++) { const v = app.sheet.get(row, col)?.v; hit = v !== null && v !== undefined && v !== ""; }
+      } else {
+        for (const [k, c] of app.sheet.cells) {
+          const row = Math.floor(k / 16384), col = k % 16384;
+          if (row >= r.r0 && row <= r.r1 && col >= r.c0 && col <= r.c1 && c.v !== null && c.v !== "") { hit = true; break; }
+        }
+      }
+      memo = { key, hit };
     }
-    return null;
+    return memo.hit ? r : null;
   }
 
   function place(): void {

@@ -132,6 +132,12 @@ export function readConditional(xml: string, els: El[], ctx: ColorContext, dxfs:
           const cfvo = parts.filter((p) => p.name === "cfvo").map((p) => canon(attrs(xml, p)));
           const std = cfvo.length === 3 ? [canon({ type: "min" }), canon({ type: "percentile", val: "50" }), canon({ type: "max" })] : [canon({ type: "min" }), canon({ type: "max" })];
           if (canon(cfvo) !== canon(std) || Object.keys(attrs(xml, k)).length) plain = false;
+        } else if (k.name === "iconSet") {
+          // Read for display; the file's text is written back as it was (rawXml).
+          const ia = attrs(xml, k);
+          const cfvo = children(xml, k.open, k.close).filter((p) => p.name === "cfvo").map((p) => { const c = attrs(xml, p); return { type: c.type ?? "percent", val: c.val ?? "0", gte: c.gte === "0" ? false : undefined }; });
+          rule.iconSet = { set: ia.iconSet ?? "3TrafficLights1", reverse: yes(ia.reverse) || undefined, showValue: ia.showValue === "0" ? false : undefined, cfvo };
+          plain = false;
         } else plain = false;
       }
       if (!plain) rule.rawXml = outer(xml, r);
@@ -185,6 +191,10 @@ function ruleXml(r: CondRule, sw: StylesWriter): string {
     body = `<colorScale>${cfvo}${colors.map(rgb).join("")}</colorScale>`;
   } else if (r.type === "dataBar") {
     body = `<dataBar><cfvo type="min"/><cfvo type="max"/>${rgb(colors[0] ?? "#638EC6")}</dataBar>`;
+  } else if (r.type === "iconSet" && r.iconSet) {
+    const i = r.iconSet;
+    const at = (i.set !== "3TrafficLights1" ? ` iconSet="${esc(i.set)}"` : "") + (i.showValue === false ? ' showValue="0"' : "") + (i.reverse ? ' reverse="1"' : "");
+    body = `<iconSet${at}>${i.cfvo.map((c) => `<cfvo type="${esc(c.type)}" val="${esc(c.val)}"${c.gte === false ? ' gte="0"' : ""}/>`).join("")}</iconSet>`;
   }
   return body ? `<cfRule${a}>${body}</cfRule>` : `<cfRule${a}/>`;
 }

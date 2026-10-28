@@ -1292,6 +1292,20 @@ Excel a school uses most among those first deferred.
   must match the whole text, Top 10 percent rounds down). Read and written as Excel's
   customFilters, top10 and dynamicFilter. Undoing a paste brings the copy marquee back, and copy
   mode shows a status message (our own words) in place of the cell mode (recorded).
+- **Schnellanalyse** (recorded with `probe_excel_quickanalysis.py`: tiles clicked in Excel, the
+  result read through COM): a 22-px button 2 px beyond the selection's corner when it holds data,
+  Strg+Q; tabs Formatierung (Datenbalken, Farbskala, Größer als, Obere 10 %, Formatierung
+  löschen), Diagramme, Ergebnisse (below and to the right: Summe, Durchschnitt, Anzahl with
+  ANZAHL2, % Gesamt, Laufende Summe, with Excel's bold labels and formulas, 6/6 recorded cases
+  equal), Tabellen (Tabelle without a dialog, as Excel). PivotTable and Sparklines are greyed
+  (not built); the chart tiles are our choice of common types, since Excel's recommended ones
+  depend on the data; the Symbolsatz tile uses 3 Pfeile (Excel's set there not recorded).
+- **Symbolsätze** (Bedingte Formatierung; the gallery's 24 names and groups recorded with
+  `probe_excel_iconsets.py`): arrows, triangles, traffic lights, signs, symbols, Kennzeichen,
+  Rot/Schwarz and stars drawn as our own icons at the cell's left; a value moves one icon up for each
+  limit it reaches (Excel's defaults: equal shares of the range in percent; numbers,
+  percentiles and formulas read from files); "Nur Symbol anzeigen" hides the value. The
+  ratings, quarters and boxes sets show a filled circle instead of Excel's pictures.
 - **Keyboard modes** (recorded): Ende then an arrow jumps as Strg+arrow (status bar "Endmodus"),
   F8 Auswahl erweitern, Umschalt+F8 Abschnitt hinzufügen oder entfernen, Strg+Rücktaste shows the
   active cell.
