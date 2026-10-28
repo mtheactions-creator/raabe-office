@@ -308,7 +308,7 @@ export const COMMANDS: Command[] = [
 
   // ----- Ansicht ----------------------------------------------------------------------------
   cmd("view.normal", "Normal", "document"),
-  cmd("view.pageBreak", "Umbruchvorschau", "breaks", { deferred: true }),
+  cmd("view.pageBreak", "Umbruchvorschau", "breaks"),
   cmd("view.pageLayout", "Seitenlayout", "print-layout", { deferred: true }),
   cmd("view.gridlines", "Gitternetzlinien", undefined),
   cmd("view.formulaBar", "Bearbeitungsleiste", undefined),

@@ -68,6 +68,8 @@ export interface DrawState {
   showFormulas?: boolean;
   /** Livevorschau: the format under the mouse in a list or palette, shown on the selection. */
   preview?: { ranges: Rect[]; change: (s: CellStyle) => void } | null;
+  /** Umbruchvorschau: the printed area and its pages (manual breaks drawn solid, automatic dashed). */
+  pageBreaks?: { area: Rect; pages: { rows: [number, number]; cols: [number, number] }[]; manualRows: number[]; manualCols: number[] } | null;
   /** The Gliederung bars: width left of the row headers, height above the column headers. */
   outlineW?: number;
   outlineH?: number;
@@ -466,6 +468,7 @@ function drawPane(ctx: CanvasRenderingContext2D, s: DrawState, pane: Pane): void
   } else if (s.selection.length > 1) {
     frame(ctx, a, COLORS.accent, dpr, 1);
   }
+  if (s.pageBreaks) drawPageBreaks(ctx, s, rectOf, { r0, c0, r1, c1 });
   if (s.arrows?.length) drawArrows(ctx, s, rectOf);
   // Ungültige Daten einkreisen: a red ellipse a little larger than the cell (Excel).
   for (const c of s.circles ?? []) {
@@ -1029,4 +1032,46 @@ function colX(s: DrawState, col: number): number | null {
   const pane = s.panes[s.panes.length - 1];
   if (col < pane.col) return null;
   return pane.x + (s.cols.pos(col) - s.cols.pos(pane.col)) * s.zoom;
+}
+
+/**
+ * Umbruchvorschau as Excel draws it: everything outside the printed area grey, a blue frame around
+ * the area, blue lines between pages (dashed where Excel breaks by itself, solid at manual breaks)
+ * and "Seite n" in large grey letters in the middle of each page.
+ */
+function drawPageBreaks(ctx: CanvasRenderingContext2D, s: DrawState, rectOf: (m: Rect) => { x: number; y: number; w: number; h: number }, vis: Rect): void {
+  const pb = s.pageBreaks!;
+  const { zoom, dpr } = s;
+  const a = rectOf(pb.area);
+  const pane = rectOf(vis);
+  // Outside the area: grey.
+  ctx.fillStyle = "rgba(128, 128, 128, 0.45)";
+  ctx.beginPath();
+  ctx.rect(pane.x, pane.y, pane.w + 4000, pane.h + 4000);
+  ctx.rect(a.x, a.y, a.w, a.h);
+  ctx.fill("evenodd");
+  const blue = "#2f5597";
+  const lw = Math.max(2, Math.round(2.5 * dpr)) / dpr;
+  ctx.font = `bold ${Math.round(48 * zoom)}px "Calibri", Carlito, sans-serif`;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  pb.pages.forEach((pg, i) => {
+    const b = rectOf({ r0: pg.rows[0], c0: pg.cols[0], r1: pg.rows[1], c1: pg.cols[1] });
+    ctx.fillStyle = "rgba(160, 160, 160, 0.55)";
+    ctx.fillText(`Seite ${i + 1}`, b.x + b.w / 2, b.y + b.h / 2);
+    ctx.strokeStyle = blue;
+    ctx.lineWidth = lw;
+    // The page's bottom and right edges inside the area: a break.
+    const line = (x0: number, y0: number, x1: number, y1: number, manual: boolean) => {
+      ctx.setLineDash(manual ? [] : [6 * zoom, 4 * zoom]);
+      ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.stroke();
+    };
+    if (pg.rows[1] < pb.area.r1) line(b.x, b.y + b.h, b.x + b.w, b.y + b.h, pb.manualRows.includes(pg.rows[1] + 1));
+    if (pg.cols[1] < pb.area.c1) line(b.x + b.w, b.y, b.x + b.w, b.y + b.h, pb.manualCols.includes(pg.cols[1] + 1));
+  });
+  ctx.setLineDash([]);
+  ctx.strokeStyle = blue;
+  ctx.lineWidth = lw;
+  ctx.strokeRect(a.x, a.y, a.w, a.h);
+  ctx.textBaseline = "alphabetic";
 }

@@ -1322,6 +1322,11 @@ Excel a school uses most among those first deferred.
   2 to 10,7 MB with the dictionaries); the text cells from the active cell on, then from the top,
   with Excel's dialog labels; capitals, words with digits and addresses are left out as Office
   does. AutoKorrektur, Optionen and Rückgängig are greyed; the closing message is our own.
+- **Umbruchvorschau** (Ansicht and the status bar): the printed area framed in blue, everything
+  outside it grey, blue lines between the pages as the printing cuts them (dashed where the page
+  is full, solid at manual breaks) and "Seite n" in each page, at 60 % the first time as Excel.
+  Dragging a line moves the break to the gridline nearest the pointer and makes it manual (as
+  Excel does); the area's frame cannot be dragged yet, and the view is not written to the file.
 - **Keyboard modes** (recorded): Ende then an arrow jumps as Strg+arrow (status bar "Endmodus"),
   F8 Auswahl erweitern, Umschalt+F8 Abschnitt hinzufügen oder entfernen, Strg+Rücktaste shows the
   active cell.

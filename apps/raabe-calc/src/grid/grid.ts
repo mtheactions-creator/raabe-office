@@ -60,6 +60,10 @@ export interface GridHost {
   nextUnlocked?(row: number, col: number, back: boolean): { row: number; col: number } | null;
   /** Ungültige Daten einkreisen: the circled cells of the sheet. */
   circles?(): { row: number; col: number }[];
+  /** Umbruchvorschau: the printed area and pages to draw, or null in Normal view. */
+  pageBreaks?(): { area: Rect; pages: { rows: [number, number]; cols: [number, number] }[]; manualRows: number[]; manualCols: number[] } | null;
+  /** Umbruchvorschau: a page break dragged from before row/column `from` to before `to`. */
+  movePageBreak?(rows: boolean, from: number, to: number): void;
   /** A change to the Gliederung (a level button or −/+): done as one undo step by the host. */
   outline?(axis: "rows" | "cols", change: () => void): void;
   /** Spur zum Vorgänger/Nachfolger arrows of the sheet. */
@@ -102,7 +106,7 @@ export class Grid {
   private head = { row: 0, col: 0 };
   /** Tab moves remember their starting column; Enter returns to it (Excel). */
   private tabStart: number | null = null;
-  private drag: null | { kind: "cells" | "cols" | "rows" | "fill" | "move" | "resizeCol" | "resizeRow" | "point"; start: { row: number; col: number }; x: number; y: number; extra?: unknown } = null;
+  private drag: null | { kind: "cells" | "cols" | "rows" | "fill" | "move" | "resizeCol" | "resizeRow" | "point" | "pageBreak"; start: { row: number; col: number }; x: number; y: number; extra?: unknown } = null;
   private ghost: Rect | null = null;
   marquee: Rect | null = null;
   private marqueePhase = 0;
@@ -254,7 +258,7 @@ export class Grid {
       selection: this.selection, active: this.active, editing: this.editing ?? undefined, marquee: this.marquee,
       marqueePhase: this.marqueePhase, ghost: this.ghost, insertLine: this.insertLine, refs: this.refHighlights(), showGrid: this.view.showGrid,
       showHeaders: this.view.showHeaders, textCache: this.previewState ? new Map() : this.textCache, cond: this.condEval(), showFormulas: this.host.showFormulas(),
-      preview: this.previewState, arrows: this.host.arrows?.(), circles: this.host.circles?.(),
+      preview: this.previewState, arrows: this.host.arrows?.(), circles: this.host.circles?.(), pageBreaks: this.host.pageBreaks?.(),
     };
     draw(this.ctx, st);
     if (this.editing && !this.editing.viaBar) this.placeEditor();
@@ -398,6 +402,23 @@ export class Grid {
       return !!g && act("cols", () => toggle(this.sheet, "cols", g, level));
     }
     return false;
+  }
+
+  /** Umbruchvorschau: the page break line under the pointer (within 3 px), as "before row/column at". */
+  private breakAt(x: number, y: number): { rows: boolean; at: number } | null {
+    const pb = this.host.pageBreaks?.();
+    if (!pb || x < this.headerW() || y < this.headerH()) return null;
+    for (const pg of pb.pages) {
+      if (pg.rows[1] < pb.area.r1) {
+        const b = this.rectOnCanvas({ r0: pg.rows[1], c0: pg.cols[0], r1: pg.rows[1], c1: pg.cols[1] });
+        if (b && Math.abs(y - (b.y + b.h)) <= 3 && x >= b.x && x <= b.x + b.w) return { rows: true, at: pg.rows[1] + 1 };
+      }
+      if (pg.cols[1] < pb.area.c1) {
+        const b = this.rectOnCanvas({ r0: pg.rows[0], c0: pg.cols[1], r1: pg.rows[1], c1: pg.cols[1] });
+        if (b && Math.abs(x - (b.x + b.w)) <= 3 && y >= b.y && y <= b.y + b.h) return { rows: false, at: pg.cols[1] + 1 };
+      }
+    }
+    return null;
   }
 
   /** Tab on a protected sheet: to the next unlocked cell (Excel); false where the sheet is not protected. */
@@ -965,8 +986,10 @@ export class Grid {
   }
 
   /** What the pointer is over: a header edge, the fill handle, the selection's border or a cell. */
-  private target(x: number, y: number): { kind: "resizeCol" | "resizeRow" | "fill" | "move" | "cells" | "cols" | "rows" | "corner" | "outline" | "none"; row: number; col: number } {
+  private target(x: number, y: number): { kind: "resizeCol" | "resizeRow" | "fill" | "move" | "cells" | "cols" | "rows" | "corner" | "outline" | "pageBreak" | "none"; row: number; col: number } {
     if ((x < this.outlineW() || y < this.outlineH()) && this.outlineClick(x, y, true)) return { kind: "outline", row: 0, col: 0 };
+    const pb = this.breakAt(x, y);
+    if (pb) return { kind: "pageBreak", row: pb.rows ? pb.at : -1, col: pb.rows ? -1 : pb.at };
     if (x < this.outlineW() || y < this.outlineH()) return { kind: "none", row: 0, col: 0 };
     const hit = this.hit(x, y);
     const z = this.zoom;
@@ -1075,6 +1098,11 @@ export class Grid {
       }
     }
     if (t.kind === "outline") { this.outlineClick(p.x, p.y, false); return; }
+    if (t.kind === "pageBreak") {
+      this.canvas.setPointerCapture(e.pointerId);
+      this.drag = { kind: "pageBreak", start: { row: t.row, col: t.col }, x: p.x, y: p.y };
+      return;
+    }
     this.canvas.setPointerCapture(e.pointerId);
     this.tabStart = null;
     const add = e.ctrlKey;
@@ -1127,7 +1155,7 @@ export class Grid {
     if (e.buttons && Math.hypot(e.clientX - this.downAt.x, e.clientY - this.downAt.y) > 4) this.downAt.moved = true;
     if (!this.drag) {
       const t = this.target(p.x, p.y);
-      this.canvas.style.cursor = POINTERS[t.kind] ?? "default";
+      this.canvas.style.cursor = POINTERS[t.kind === "pageBreak" ? (t.row >= 0 ? "resizeRow" : "resizeCol") : t.kind] ?? "default";
       this.canvas.dataset.pointer = t.kind;
       this.noteHover(t.kind === "cells" ? t : null, p);
       return;
@@ -1175,6 +1203,16 @@ export class Grid {
         else if (sel.r1 > sel.r0 && hit.row < sel.r1 && hit.row >= sel.r0) this.ghost = { ...sel, r1: hit.row };
         else if (sel.c1 > sel.c0 && hit.col < sel.c1 && hit.col >= sel.c0) this.ghost = { ...sel, c1: hit.col };
         else this.ghost = null;
+        this.invalidate();
+        return;
+      }
+      case "pageBreak": {
+        // The line follows the gridline nearest the pointer.
+        const rows = d.start.row >= 0;
+        const cell = this.rectOnCanvas({ r0: hit.row, c0: hit.col, r1: hit.row, c1: hit.col });
+        const after = cell ? (rows ? p.y > cell.y + cell.h / 2 : p.x > cell.x + cell.w / 2) : false;
+        const at = Math.max(1, (rows ? hit.row : hit.col) + (after ? 1 : 0));
+        this.insertLine = rows ? { r0: at, c0: 0, r1: at - 1, c1: this.cols.at(this.cols.pos(this.view.left) + this.width / this.zoom) } : { r0: 0, c0: at, r1: this.rows.at(this.rows.pos(this.view.top) + this.height / this.zoom), c1: at - 1 };
         this.invalidate();
         return;
       }
@@ -1320,6 +1358,16 @@ export class Grid {
       }
       this.host.fill(src, g, e.ctrlKey);
       this.select(g, { ...this.active });
+      return;
+    }
+    if (d.kind === "pageBreak") {
+      const line = this.insertLine;
+      this.insertLine = null;
+      this.invalidate();
+      if (!line) return;
+      const rows = d.start.row >= 0;
+      const to = rows ? line.r0 : line.c0, from = rows ? d.start.row : d.start.col;
+      if (to !== from) this.host.movePageBreak?.(rows, from, to);
       return;
     }
     if (d.kind === "move" && this.insertLine) {

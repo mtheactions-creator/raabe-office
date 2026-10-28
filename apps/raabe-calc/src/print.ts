@@ -338,6 +338,8 @@ export function printFeature(app: CalcApp) {
   }
 
   return {
+    /** The printed pages of a sheet (Umbruchvorschau): the area and each page's rows and columns. */
+    layout: (sheet: Sheet) => ({ area: sheet.page?.printArea ?? sheet.usedRange(), pages: paginate(sheet) }),
     exportPdf: (to?: string) => exportPdf(to),
     page: printPage,
     orientation: () => page().orientation ?? "portrait",

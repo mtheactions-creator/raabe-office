@@ -512,6 +512,26 @@ export class CalcApp {
     });
   }
 
+  private breakMemo: { key: string; layout: ReturnType<CalcApp["print"]["layout"]> } | null = null;
+
+  /** Sheets shown in Umbruchvorschau (Excel keeps the view per sheet). */
+  private breakView = new Set<Sheet>();
+
+  /** Normal / Umbruchvorschau; Excel shows the preview at 60 % the first time. */
+  private setPageBreakView(on: boolean): void {
+    if (on === this.breakView.has(this.sheet)) return;
+    if (on) {
+      this.breakView.add(this.sheet);
+      if (this.sheet.view.zoom === 100) this.sheet.view.zoom = 60;
+    } else {
+      this.breakView.delete(this.sheet);
+      if (this.sheet.view.zoom === 60) this.sheet.view.zoom = 100;
+    }
+    this.grid.refreshLayout();
+    this.grid.contentChanged();
+    this.scheduleChrome();
+  }
+
   /** Changes to the active workbook so far (features cache what they read from the cells by it). */
   get version(): number { return this.active.version; }
 
@@ -645,6 +665,26 @@ export class CalcApp {
       },
       showFormulas: () => this.showFormulas,
       arrows: () => this.trace.of(this.sheet),
+      movePageBreak: (rows, from, to) => this.change("Seitenumbruch", () => {
+        // A moved break is a manual one at its new place (Excel); an automatic one leaves nothing behind.
+        this.history.whole(this.sheet);
+        const p = { ...(this.sheet.page ?? {}) };
+        const list = new Set((rows ? p.rowBreaks : p.colBreaks) ?? []);
+        list.delete(from);
+        list.add(to);
+        const sorted = [...list].sort((a, b) => a - b);
+        if (rows) p.rowBreaks = sorted; else p.colBreaks = sorted;
+        this.sheet.page = p;
+      }),
+      pageBreaks: () => {
+        if (!this.breakView.has(this.sheet)) return null;
+        // Paginating walks every row: kept until the workbook changes.
+        const key = `${this.wb.sheets.indexOf(this.sheet)}|${this.version}`;
+        if (this.breakMemo?.key !== key) this.breakMemo = { key, layout: this.print.layout(this.sheet) };
+        const l = this.breakMemo.layout;
+        if (!l.area) return null;
+        return { area: l.area, pages: l.pages, manualRows: this.sheet.page?.rowBreaks ?? [], manualCols: this.sheet.page?.colBreaks ?? [] };
+      },
       outline: (_axis, fn) => this.change("Gliederung", () => { this.history.whole(this.sheet); fn(); }),
       circles: () => this.circles.get(this.sheet) ?? [],
       canEdit: (row, col) => this.protection.canEdit(row, col),
@@ -1727,7 +1767,8 @@ export class CalcApp {
     run("review.deleteNote", () => this.change("Notiz löschen", () => A.clearAll(this.ctx, this.sheet, this.grid.selection, "notes")), () => !!this.activeCellNote());
     run("review.showNotes", () => { this.showNotes = !this.showNotes; this.grid.contentChanged(); }, undefined, () => this.showNotes);
 
-    run("view.normal", () => {}, undefined, () => true);
+    run("view.normal", () => this.setPageBreakView(false), undefined, () => !this.breakView.has(this.sheet));
+    run("view.pageBreak", () => this.setPageBreakView(true), undefined, () => this.breakView.has(this.sheet));
     run("view.gridlines", () => this.toggleView("showGrid"), undefined, () => this.sheet.view.showGrid);
     run("view.headings", () => this.toggleView("showHeaders"), undefined, () => this.sheet.view.showHeaders);
     run("view.formulaBar", () => { document.body.classList.toggle("no-fbar"); }, undefined, () => !document.body.classList.contains("no-fbar"));
