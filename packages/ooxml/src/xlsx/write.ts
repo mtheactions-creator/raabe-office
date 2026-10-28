@@ -542,6 +542,7 @@ function workbookXml(wb: Workbook, raw: BookRaw, entries: { name: string; sheetI
     put("definedNames", names.length ? `<definedNames>${names.join("")}</definedNames>` : null);
   }
   if (needsCalc) put("calcPr", setAttrs(get("calcPr") ?? '<calcPr calcId="191029"/>', { fullCalcOnLoad: "1" }));
+  if ((wb.calcMode ?? "") !== raw.snap.calcMode) put("calcPr", setAttrs(get("calcPr") ?? '<calcPr calcId="191029"/>', { calcMode: wb.calcMode ?? null }));
   return joinSplit(sp);
 }
 

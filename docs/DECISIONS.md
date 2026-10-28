@@ -1343,6 +1343,10 @@ Excel a school uses most among those first deferred.
   new ones as Excel's inserted pictures (checked in Excel: 0 differences, the new one is a
   picture). Stockbilder and Onlinebilder stay greyed (offline). Print positions are computed,
   not compared with Excel's PDF.
+- **Berechnungsoptionen**: Automatisch, Automatisch außer bei Datentabellen (the same while there
+  are no Datentabellen) and Manuell, kept in the file's calcPr. Manuell leaves formulas as they
+  are until F9 / Neu berechnen and shows "Berechnen" in the status bar; a formula typed meanwhile
+  is worked out at once, as Excel does.
 - **Keyboard modes** (recorded): Ende then an arrow jumps as Strg+arrow (status bar "Endmodus"),
   F8 Auswahl erweitern, Umschalt+F8 Abschnitt hinzufügen oder entfernen, Strg+Rücktaste shows the
   active cell.

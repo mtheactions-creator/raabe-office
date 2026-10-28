@@ -550,6 +550,14 @@ export class CalcApp {
 
   private afterChange(doc: Doc, change?: import("./ops").Change): void {
     doc.version++;
+    if (doc.wb.calcMode === "manual") {
+      // Manuell: no recalculation now; the status bar shows that one is due (Excel's "Berechnen").
+      if (doc === this.active) this.statusBar.setFlags([["Berechnen", "Berechnen"]]);
+      // Formulas typed now are worked out (Excel computes the entered formula itself); the rest waits.
+      const cells = new Map<Sheet, { row: number; col: number }[]>();
+      for (const [sh, list] of change?.cells ?? []) cells.set(sh, list.filter((p) => sh.get(p.row, p.col)?.f !== undefined));
+      change = { structural: false, cells };
+    }
     // Excel removes the trace arrows on any change; a circled cell that is now valid loses its circle.
     this.trace.clear();
     for (const [sheet, list] of this.circles) {
@@ -1765,10 +1773,18 @@ export class CalcApp {
     run("formulas.createFromSelection", () => void this.dlg.defineName());
     run("formulas.showFormulas", () => { this.showFormulas = !this.showFormulas; document.body.classList.toggle("show-formulas", this.showFormulas); this.grid.contentChanged(); }, undefined, () => this.showFormulas);
     run("formulas.calcOptions", () => {});
-    run("formulas.calcAuto", () => {}, undefined, () => true);
-    run("formulas.calcManual", () => {}, () => false);
-    run("formulas.calcNow", () => { this.active.calc.recalc(); this.grid.contentChanged(); });
-    run("formulas.calcSheet", () => { this.active.calc.recalc(); this.grid.contentChanged(); });
+    // Berechnungsoptionen: Manuell leaves formulas until F9 (the status bar says "Berechnen").
+    const setMode = (m: "autoNoTable" | "manual" | undefined) => () => {
+      this.wb.calcMode = m;
+      if (!m || m === "autoNoTable") { this.active.calc.recalc(); this.grid.contentChanged(); }
+      this.active.version++;
+      this.scheduleChrome();
+    };
+    run("formulas.calcAuto", setMode(undefined), undefined, () => !this.wb.calcMode);
+    run("formulas.calcPartial", setMode("autoNoTable"), undefined, () => this.wb.calcMode === "autoNoTable");
+    run("formulas.calcManual", setMode("manual"), undefined, () => this.wb.calcMode === "manual");
+    run("formulas.calcNow", () => { this.active.calc.recalc(); this.statusBar.setFlags([]); this.grid.contentChanged(); });
+    run("formulas.calcSheet", () => { this.active.calc.recalc(); this.statusBar.setFlags([]); this.grid.contentChanged(); });
 
     run("review.statistics", () => void this.dlg.statistics());
     run("review.notes", () => {});

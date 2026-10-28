@@ -12,3 +12,15 @@ describe("pictures in a sheet", () => {
     expect(pics[0].to ?? pics[0].size).toBeTruthy();
   });
 });
+
+describe("Berechnungsoptionen in the file", () => {
+  it("writes and reads calcPr calcMode", async () => {
+    const { writeXlsx } = await import("../src");
+    const wb = readXlsx(readFileSync("packages/ooxml/test/fixtures/xlsx-values.xlsx"));
+    wb.calcMode = "manual";
+    const back = readXlsx(writeXlsx(wb));
+    expect(back.calcMode).toBe("manual");
+    back.calcMode = undefined;
+    expect(readXlsx(writeXlsx(back)).calcMode).toBeUndefined();
+  });
+});

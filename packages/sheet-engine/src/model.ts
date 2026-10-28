@@ -404,6 +404,8 @@ export class Workbook {
   names: DefinedName[] = [];
   /** Dates count from 1904 (Mac workbooks) instead of 1900. */
   date1904 = false;
+  /** Berechnungsoptionen: Automatisch (absent), Automatisch außer bei Datentabellen, Manuell. */
+  calcMode?: "autoNoTable" | "manual";
   /** Arbeitsmappe schützen: <workbookProtection>'s attributes as the file has them (lockStructure="1" …). */
   protection?: Record<string, string>;
   /** Theme colours (dk1, lt1, dk2, lt2, accent1-6, hlink, folHlink) as "#RRGGBB". */

@@ -268,7 +268,7 @@ export const COMMANDS: Command[] = [
   cmd("formulas.evaluate", "Formelauswertung", "fx"),
   cmd("formulas.calcOptions", "Berechnungsoptionen", "calculate"),
   cmd("formulas.calcAuto", "Automatisch", undefined),
-  later("formulas.calcPartial", "Teilweise", undefined),
+  cmd("formulas.calcPartial", "Automatisch außer bei Datentabellen", undefined),
   cmd("formulas.calcManual", "Manuell", undefined),
   cmd("formulas.calcNow", "Neu berechnen", "calculate", { shortcut: "F9" }),
   cmd("formulas.calcSheet", "Blatt berechnen", "calculate", { shortcut: "Umschalt+F9" }),
