@@ -39,6 +39,7 @@ import { quickFeature, type QuickTile } from "./quick";
 import { learn as learnFill, run as runFill } from "./flashfill";
 import { regroup } from "./grid/outline";
 import { seek } from "./goalseek";
+import { spellingFeature } from "./spelling";
 import { iconRule } from "./dialogs";
 import appIconUrl from "../../../branding/raabe-calc-small.svg?url";
 
@@ -84,6 +85,7 @@ export class CalcApp {
   private trace = traceFeature(this);
   private protection = protectionFeature(this);
   private evaluator = evaluateFeature(this);
+  private spelling = spellingFeature(this);
   private errorCheck = errorCheckFeature(this, () => void this.evaluator.open());
   private quick = quickFeature(this, () => this.quickTiles());
   readonly validation = validationFeature(this, (t, text) => this.gridHost().commit(t, text, {}));
@@ -1688,6 +1690,7 @@ export class CalcApp {
     run("data.subtotal", () => void this.subtotalDialog(), notEditing);
     run("data.whatIf", () => {});
     run("data.goalSeek", () => void this.goalSeek(), notEditing);
+    run("review.spelling", () => void this.spelling.run(), notEditing);
     run("data.ungroup", () => void this.group(-1), notEditing);
     run("edit.selectValidation", () => this.validation.select());
     run("data.circleInvalid", () => this.circleInvalid());
@@ -1887,6 +1890,7 @@ export class CalcApp {
     const run = (id: string) => { void this.commands.run(id); return true; };
     if (this.painter && k === "Escape") { this.painter = null; document.body.classList.remove("painting"); return true; }
     if (k === "F12" && !ctrl) return run("file.saveAs");
+    if (k === "F7" && !ctrl && !shift && !e.altKey) return run("review.spelling");
     if (k === "F4" && !e.ctrlKey && !e.altKey && !shift) return run("edit.repeat");
     if (k === "F5" && !ctrl) return run("edit.goto");
     if (k === "F9") return run("formulas.calcNow");

@@ -1317,6 +1317,11 @@ Excel a school uses most among those first deferred.
   the solution nearest the start. Against Excel's Range.GoalSeek in 10 school cases: the same
   outcome and the same solution (Excel's exact iterations are not reproduced). Abbrechen in the
   status box puts the old value back; the box's text is our own.
+- **Rechtschreibung (F7)**: RaabeWrite's Hunspell module (D-031, D-049) is compiled into
+  RaabeCalc too, included from RaabeWrite's crate rather than copied (the program grows from about
+  2 to 10,7 MB with the dictionaries); the text cells from the active cell on, then from the top,
+  with Excel's dialog labels; capitals, words with digits and addresses are left out as Office
+  does. AutoKorrektur, Optionen and Rückgängig are greyed; the closing message is our own.
 - **Keyboard modes** (recorded): Ende then an arrow jumps as Strg+arrow (status bar "Endmodus"),
   F8 Auswahl erweitern, Umschalt+F8 Abschnitt hinzufügen oder entfernen, Strg+Rücktaste shows the
   active cell.

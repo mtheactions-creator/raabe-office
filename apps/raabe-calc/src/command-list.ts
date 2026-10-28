@@ -292,7 +292,7 @@ export const COMMANDS: Command[] = [
   cmd("data.subtotal", "Teilergebnis", "autosum"),
 
   // ----- Überprüfen -------------------------------------------------------------------------
-  cmd("review.spelling", "Rechtschreibung...", "spelling", { shortcut: "F7", deferred: true }),
+  cmd("review.spelling", "Rechtschreibung...", "spelling", { shortcut: "F7" }),
   later("review.thesaurus", "Thesaurus...", "thesaurus"),
   cmd("review.statistics", "Arbeitsmappenstatistiken", "statistics"),
   later("review.accessibility", "Barrierefreiheit überprüfen", "check"),

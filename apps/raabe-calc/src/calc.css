@@ -206,3 +206,10 @@ body.printing #print-root { display: block; position: fixed; left: 0; top: 0; z-
 
 /* Nach Farbe sortieren / filtern: the colour swatches in the menu. */
 .color-swatch { display: inline-block; width: 64px; height: 14px; border: 1px solid #a0a0a0; }
+
+/* Rechtschreibung (F7). */
+.sp-dialog { width: 560px; }
+.sp-body { display: grid; grid-template-columns: 1fr 190px; gap: 12px; }
+.sp-word { width: 100%; }
+.sp-list { width: 100%; }
+.sp-buttons { display: flex; flex-direction: column; gap: 6px; padding-top: 18px; }
