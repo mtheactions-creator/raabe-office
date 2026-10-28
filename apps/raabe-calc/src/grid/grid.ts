@@ -33,8 +33,9 @@ export interface GridHost {
   rightDrag?(kind: "fill" | "move", source: Rect, target: Rect, at: { x: number; y: number }): void;
   /** Umschalt+drag of the border: the cells are taken out and inserted at `at` (before that row, or column). */
   moveInsert?(source: Rect, at: { row: number; col: number }, rows: boolean): Rect | undefined;
-  resizeCols(cols: number[], px: number): void;
-  resizeRows(rows: number[], px: number): void;
+  /** `before`: when the border was dragged past the start, the columns (rows) ahead shrunk too. */
+  resizeCols(cols: number[], px: number, before?: { i: number; size: number }[]): void;
+  resizeRows(rows: number[], px: number, before?: { i: number; size: number }[]): void;
   autofitCols(cols: number[]): void;
   autofitRows(rows: number[]): void;
   selectionChanged(): void;
@@ -486,7 +487,8 @@ export class Grid {
     this.head = to;
     const r = expandToMerges(this.sheet, normRect(this.active.row, this.active.col, to.row, to.col));
     this.view.selection = [...this.selection.slice(0, -1), r];
-    this.reveal(to.row, to.col);
+    // A selection over whole columns (rows) does not scroll along them (recorded in Excel).
+    this.reveal(r.r0 === 0 && r.r1 === MAX_ROWS - 1 ? -1 : to.row, r.c0 === 0 && r.c1 === MAX_COLS - 1 ? -1 : to.col);
     this.afterSelect();
   }
 
@@ -598,18 +600,22 @@ export class Grid {
       this.move(dr, dc, false, false);
       return;
     }
-    let ri = sel.length - 1;
     let { row, col } = this.active;
-    const r = sel[ri];
+    let ri = sel.length - 1;
+    for (let i = sel.length - 1; i >= 0; i--) if (row >= sel[i].r0 && row <= sel[i].r1 && col >= sel[i].c0 && col <= sel[i].c1) { ri = i; break; }
+    // Past the area's last cell the next area begins, before its first the previous one ends (Excel).
+    const next = () => { ri = (ri + 1) % sel.length; row = sel[ri].r0; col = sel[ri].c0; };
+    const prev = () => { ri = (ri - 1 + sel.length) % sel.length; row = sel[ri].r1; col = sel[ri].c1; };
     const advance = () => {
+      const r = sel[ri];
       if (dr) {
         row += dr;
-        if (row > r.r1) { row = r.r0; col++; if (col > r.c1) { col = r.c0; ri = (ri + 1) % sel.length; } }
-        if (row < r.r0) { row = r.r1; col--; if (col < r.c0) { col = r.c1; ri = (ri - 1 + sel.length) % sel.length; } }
+        if (row > r.r1) { row = r.r0; col++; if (col > r.c1) next(); }
+        else if (row < r.r0) { row = r.r1; col--; if (col < r.c0) prev(); }
       } else {
         col += dc;
-        if (col > r.c1) { col = r.c0; row++; if (row > r.r1) { row = r.r0; } }
-        if (col < r.c0) { col = r.c1; row--; if (row < r.r0) { row = r.r1; } }
+        if (col > r.c1) { col = r.c0; row++; if (row > r.r1) next(); }
+        else if (col < r.c0) { col = r.c1; row--; if (row < r.r0) prev(); }
       }
     };
     advance();
@@ -881,8 +887,10 @@ export class Grid {
       if (e.ctrlKey) return;
       e.preventDefault();
       const lines = Math.sign(e.deltaY) * Math.max(1, Math.round(Math.abs(e.deltaY) / 100 * 3));
-      if (e.shiftKey || e.deltaX) {
-        const n = e.deltaX ? Math.sign(e.deltaX) * 2 : lines;
+      // Umschalt+wheel does not scroll in Excel (recorded); a sideways wheel or touchpad does.
+      if (e.shiftKey && !e.deltaX) return;
+      if (e.deltaX) {
+        const n = Math.sign(e.deltaX) * 2;
         let left = this.view.left;
         for (let i = 0; i < Math.abs(n); i++) left = this.cols.step(left, n > 0 ? 1 : -1);
         this.view.left = Math.max(this.view.freeze?.col ?? 0, left);
@@ -1118,6 +1126,7 @@ export class Grid {
         return;
       case "resizeCol":
       case "resizeRow":
+        this.liveBefore = [];
         this.drag = { kind: t.kind, start: { row: t.row, col: t.col }, x: p.x, y: p.y, extra: t.kind === "resizeCol" ? this.cols.size(t.col) : this.rows.size(t.row) };
         return;
       case "fill":
@@ -1183,13 +1192,17 @@ export class Grid {
         this.fullRows(d.start.row, hit.row);
         return;
       case "resizeCol": {
-        const w = Math.max(0, (d.extra as number) + (p.x - d.x) / this.zoom);
+        const raw = (d.extra as number) + (p.x - d.x) / this.zoom;
+        const w = Math.max(0, raw);
+        this.liveBefore = this.overshoot("col", d.start.col, -raw);
         this.canvas.dataset.tip = `Breite: ${pxToChars(w).toFixed(2).replace(".", ",")} (${Math.round(w * this.dpr)} Pixel)`;
         this.ghostSize("col", d.start.col, w);
         return;
       }
       case "resizeRow": {
-        const hgt = Math.max(0, (d.extra as number) + (p.y - d.y) / this.zoom);
+        const raw = (d.extra as number) + (p.y - d.y) / this.zoom;
+        const hgt = Math.max(0, raw);
+        this.liveBefore = this.overshoot("row", d.start.row, -raw);
         this.canvas.dataset.tip = `Höhe: ${(hgt * 0.75).toFixed(2).replace(".", ",")} (${Math.round(hgt)} Pixel)`;
         this.ghostSize("row", d.start.row, hgt);
         return;
@@ -1299,6 +1312,25 @@ export class Grid {
     this.noteEl.style.top = `${b.y}px`;
   }
 
+  /**
+   * A border dragged past its column's start: the column is hidden and the drag goes on into the
+   * visible columns before it, which shrink to the pointer (recorded in Excel). Rows likewise.
+   */
+  private overshoot(kind: "col" | "row", i: number, over: number): { i: number; size: number }[] {
+    const out: { i: number; size: number }[] = [];
+    const a = sheetAxes(this.sheet);
+    const axis = kind === "col" ? a.cols : a.rows;
+    for (let j = i - 1; over > 0 && j >= 0; j--) {
+      const s = axis.size(j);
+      if (s <= 0) continue;
+      out.push({ i: j, size: Math.max(0, Math.round(s - over)) });
+      over -= s;
+    }
+    return out;
+  }
+
+  private liveBefore: { i: number; size: number }[] = [];
+
   private ghostSize(kind: "col" | "row", i: number, size: number): void {
     // Live: the column or row changes while dragging, as in Excel 365.
     this.liveSize = { kind, i, size };
@@ -1310,6 +1342,7 @@ export class Grid {
     const keys = kind === "col" ? [...this.sheet.cols.keys()] : [...this.sheet.rows.keys()];
     for (const k of keys) all.set(k, axis.size(k));
     all.set(i, Math.round(size));
+    for (const b of this.liveBefore) all.set(b.i, b.size);
     axis.set(all, axis.def);
     this.textCache.clear();
     this.invalidate();
@@ -1346,8 +1379,10 @@ export class Grid {
         const list: number[] = [];
         if (whole) for (let i = kind === "cols" ? sel.c0 : sel.r0; i <= (kind === "cols" ? sel.c1 : sel.r1); i++) list.push(i);
         else list.push(live.i);
-        if (kind === "cols") this.host.resizeCols(list, Math.round(live.size));
-        else this.host.resizeRows(list, Math.round(live.size));
+        const before = whole ? [] : this.liveBefore;
+        this.liveBefore = [];
+        if (kind === "cols") this.host.resizeCols(list, Math.round(live.size), before);
+        else this.host.resizeRows(list, Math.round(live.size), before);
       }
       return;
     }
@@ -1584,6 +1619,8 @@ export class Grid {
         return;
       case "Backspace":
         e.preventDefault();
+        // Umschalt+Rücktaste: the selection shrinks to the active cell (recorded in Excel).
+        if (shift) { this.selectCell(this.active.row, this.active.col); return; }
         // Excel: Rücktaste empties the active cell and starts Eingeben.
         this.startEdit("enter", "");
         return;

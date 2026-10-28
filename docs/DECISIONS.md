@@ -1367,12 +1367,29 @@ Excel a school uses most among those first deferred.
   page setup, filter, rules, Kommentare and pictures; a kept Print_Titles name could be written
   twice; SVG pictures (which Excel stores with a PNG copy) are no longer offered; undo no longer
   copies picture data per step; sorting moves Kommentare with their rows; Registerfarbe can be
-  undone. Still open from it: sorting does not move pictures.
+  undone. Its last point, that sorting does not move pictures, is Excel's behaviour too: Excel
+  leaves shapes in place when it sorts, whatever their placement (`probe_excel_sortpics.py`).
 - **Sparklines** (Einfügen > Sparklines and Schnellanalyse): Linie, Säule and Gewinn/Verlust,
   one per row (or column) of the data in the Positionsbereich, drawn in the cell with Excel's
   default colours; read and written as Excel's x14:sparklineGroups (Excel sees ours as sparkline
   groups of the right type). Alles löschen removes them. The Sparkline tab (markers, styles,
   axis) is not built; sparklines whose data is on another sheet are kept but not drawn.
+- **Hidden rows and columns** (14 recorded cases, catalogue area "hidden"): arrows, Strg+arrows,
+  Umschalt+arrows and Eingabe skip hidden rows and columns as before. The status bar's Mittelwert,
+  Anzahl and Summe leave out hidden (and filtered) rows but count cells in hidden columns, as
+  Excel does. A column border dragged past the column's start hides the column and the drag goes
+  on into the visible columns before it, which shrink to the pointer (Excel: column A 9,36 after
+  130 px, 3,0 after 200 px; ours equal); rows are built the same way, not recorded.
+  Umschalt+wheel does not scroll (Excel 365 here: recorded no scroll); a sideways wheel or
+  touchpad still does. The cases hide columns by dragging, since Strg+0 does nothing in German
+  Excel (D-063).
+- **More keys** (19 recorded cases, area "keys5"): Enter and Tab in a selection of several
+  areas go on into the next area after the last cell of one (before, they stayed in the area);
+  Umschalt+Rücktaste shrinks the selection to the active cell (before, it started Eingeben); a
+  selection extended over whole columns or rows (Strg+Umschalt+Unten past the data, Umschalt+Unten
+  after a row header) no longer scrolls to the sheet's end. Alt+Bild ab / auf, Umschalt+Bild ab,
+  Strg+Bild auf, Umschalt+Leertaste while typing, Strg+Umschalt+Leertaste and the editing keys in
+  Bearbeiten were already as in Excel.
 - **Keyboard modes** (recorded): Ende then an arrow jumps as Strg+arrow (status bar "Endmodus"),
   F8 Auswahl erweitern, Umschalt+F8 Abschnitt hinzufügen oder entfernen, Strg+Rücktaste shows the
   active cell.

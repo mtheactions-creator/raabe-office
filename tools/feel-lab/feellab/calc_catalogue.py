@@ -227,19 +227,21 @@ def _pt_to_px(pt: float) -> float:
     return pt * 96 / 72 * 1.5
 
 
-def wheel(x: float, y: float, notches: int, ctrl: bool = False) -> None:
+def wheel(x: float, y: float, notches: int, ctrl: bool = False, mod: str = "") -> None:
     """Real mouse wheel notches at a point (positive: away from the user, i.e. up)."""
     import ctypes
     winapi.move(x, y)
     time.sleep(0.05)
     if ctrl:
-        winapi.key_down(winapi.vk_for("ctrl"))
+        mod = "ctrl"
+    if mod:
+        winapi.key_down(winapi.vk_for(mod))
     for _ in range(abs(notches)):
         inp = winapi.INPUT(type=winapi.INPUT_MOUSE, u=winapi._INPUTUNION(mi=winapi.MOUSEINPUT(dx=0, dy=0, mouseData=ctypes.c_ulong(120 if notches > 0 else (-120) & 0xFFFFFFFF).value, dwFlags=0x0800, time=0, dwExtraInfo=0)))
         winapi._send(inp)
         time.sleep(0.12)
-    if ctrl:
-        winapi.key_up(winapi.vk_for("ctrl"))
+    if mod:
+        winapi.key_up(winapi.vk_for(mod))
 
 
 def settle() -> None:
@@ -291,6 +293,13 @@ def run_step(side, step: tuple) -> None:
         winapi.drag(x1 - 1, y1, x2 - 1, y2)
         if mods:
             winapi.key_up(winapi.vk_for(mods))
+    elif kind in ("rclick", "rcolhead", "rrowhead"):
+        # Right-click, then Esc closes the context menu; what is left is the selection it made.
+        x, y = side.point(step[1]) if kind == "rclick" else side.header_point("col" if kind == "rcolhead" else "row", step[1])
+        winapi.right_click(x, y)
+        time.sleep(0.6)
+        winapi.press("esc")
+        time.sleep(0.3)
     elif kind == "colhead":
         x, y = side.header_point("col", step[1])
         winapi.click(x, y, 1, step[2] if len(step) > 2 else "")
@@ -316,9 +325,9 @@ def run_step(side, step: tuple) -> None:
         winapi.press("ctrl+a")
         winapi.type_text(step[1], gap=0.02)
         winapi.press("enter")
-    elif kind in ("wheel", "ctrlwheel"):
+    elif kind in ("wheel", "ctrlwheel", "shiftwheel"):
         x, y = side.point(step[1])
-        wheel(x, y, step[2], kind == "ctrlwheel")
+        wheel(x, y, step[2], kind == "ctrlwheel", "shift" if kind == "shiftwheel" else "")
     elif kind == "borderdbl":
         # Double-click on the selection's border towards a direction (Strg+arrow in Excel).
         x, y = side.point(step[1], step[2])

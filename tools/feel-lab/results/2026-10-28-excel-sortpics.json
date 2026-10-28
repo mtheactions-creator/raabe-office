@@ -1,0 +1,53 @@
+{
+ "rows after sort": [
+  "r5",
+  "r4",
+  "r3",
+  "r2",
+  "r1"
+ ],
+ "before": {
+  "in row 1": [
+   "B1",
+   "B1"
+  ],
+  "in row 2 move only": [
+   "B2",
+   "B2"
+  ],
+  "in row 3 free": [
+   "B3",
+   "B3"
+  ],
+  "over rows 4-5": [
+   "B4",
+   "B5"
+  ],
+  "outside in D1": [
+   "D1",
+   "D1"
+  ]
+ },
+ "after": {
+  "in row 1": [
+   "B1",
+   "B1"
+  ],
+  "in row 2 move only": [
+   "B2",
+   "B2"
+  ],
+  "in row 3 free": [
+   "B3",
+   "B3"
+  ],
+  "over rows 4-5": [
+   "B4",
+   "B5"
+  ],
+  "outside in D1": [
+   "D1",
+   "D1"
+  ]
+ }
+}

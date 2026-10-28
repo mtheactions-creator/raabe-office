@@ -1,5 +1,5 @@
 {
- "summary": "187/187",
+ "summary": "220/220",
  "cases": {
   "type text Enter": {
    "area": "enter",
@@ -928,6 +928,171 @@
   },
   "Strg+E with header": {
    "area": "flash",
+   "ok": true,
+   "diff": []
+  },
+  "Down skips a hidden row": {
+   "area": "hidden",
+   "ok": true,
+   "diff": []
+  },
+  "Up skips a hidden row": {
+   "area": "hidden",
+   "ok": true,
+   "diff": []
+  },
+  "Ctrl+Down across a hidden row": {
+   "area": "hidden",
+   "ok": true,
+   "diff": []
+  },
+  "Shift+Down over a hidden row": {
+   "area": "hidden",
+   "ok": true,
+   "diff": []
+  },
+  "Enter skips a hidden row": {
+   "area": "hidden",
+   "ok": true,
+   "diff": []
+  },
+  "Right skips a hidden column": {
+   "area": "hidden",
+   "ok": true,
+   "diff": []
+  },
+  "Status bar over a hidden column": {
+   "area": "hidden",
+   "ok": true,
+   "diff": []
+  },
+  "Border dragged far past the column's start": {
+   "area": "hidden",
+   "ok": true,
+   "diff": []
+  },
+  "Border dragged into the column before": {
+   "area": "hidden",
+   "ok": true,
+   "diff": []
+  },
+  "Border dragged just past the column's start": {
+   "area": "hidden",
+   "ok": true,
+   "diff": []
+  },
+  "Ctrl+click two column headers": {
+   "area": "hidden",
+   "ok": true,
+   "diff": []
+  },
+  "Shift+wheel scrolls sideways": {
+   "area": "hidden",
+   "ok": true,
+   "diff": []
+  },
+  "Ctrl+Shift+Right from inside a block": {
+   "area": "hidden",
+   "ok": true,
+   "diff": []
+  },
+  "Ctrl+Up to the block's top": {
+   "area": "hidden",
+   "ok": true,
+   "diff": []
+  },
+  "Alt+Bild ab moves a screen right": {
+   "area": "keys5",
+   "ok": true,
+   "diff": []
+  },
+  "Alt+Bild auf back to the left": {
+   "area": "keys5",
+   "ok": true,
+   "diff": []
+  },
+  "Bild auf after Bild ab": {
+   "area": "keys5",
+   "ok": true,
+   "diff": []
+  },
+  "Umschalt+Bild ab extends": {
+   "area": "keys5",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+Bild auf to the previous sheet": {
+   "area": "keys5",
+   "ok": true,
+   "diff": []
+  },
+  "Umschalt+Leertaste while typing": {
+   "area": "keys5",
+   "ok": true,
+   "diff": []
+  },
+  "Umschalt+Rücktaste keeps the active cell": {
+   "area": "keys5",
+   "ok": true,
+   "diff": []
+  },
+  "Enter through two areas": {
+   "area": "keys5",
+   "ok": true,
+   "diff": []
+  },
+  "Tab through two areas": {
+   "area": "keys5",
+   "ok": true,
+   "diff": []
+  },
+  "Ctrl+Shift+Down from an empty cell": {
+   "area": "keys5",
+   "ok": true,
+   "diff": []
+  },
+  "Ctrl+Shift+Down past the last data": {
+   "area": "keys5",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+Umschalt+Leertaste selects all": {
+   "area": "keys5",
+   "ok": true,
+   "diff": []
+  },
+  "Row header Shift+click": {
+   "area": "keys5",
+   "ok": true,
+   "diff": []
+  },
+  "Row header then Shift+Down": {
+   "area": "keys5",
+   "ok": true,
+   "diff": []
+  },
+  "Delete in Bearbeiten removes the next character": {
+   "area": "keys5",
+   "ok": true,
+   "diff": []
+  },
+  "Ende in Bearbeiten after Pos1": {
+   "area": "keys5",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+Z after Strg+Eingabe": {
+   "area": "keys5",
+   "ok": true,
+   "diff": []
+  },
+  "Tab commits Eingeben": {
+   "area": "keys5",
+   "ok": true,
+   "diff": []
+  },
+  "Esc after F2 leaves the cell": {
+   "area": "keys5",
    "ok": true,
    "diff": []
   },

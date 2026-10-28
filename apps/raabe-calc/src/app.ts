@@ -675,8 +675,8 @@ export class CalcApp {
         this.change("Verschieben", () => { dst = A.moveInsert(this.ctx, this.sheet, source, at, rows); });
         return dst;
       },
-      resizeCols: (cols, px) => { if (this.protection.enabled("cells.colWidth")) this.setColWidths(cols, px); },
-      resizeRows: (rows, px) => { if (this.protection.enabled("cells.rowHeight")) this.setRowHeights(rows, px); },
+      resizeCols: (cols, px, before) => { if (this.protection.enabled("cells.colWidth")) this.setColWidths(cols, px, before); },
+      resizeRows: (rows, px, before) => { if (this.protection.enabled("cells.rowHeight")) this.setRowHeights(rows, px, before); },
       autofitCols: (cols) => { if (this.protection.enabled("cells.autofitCols")) this.autofitCols(cols); },
       autofitRows: (rows) => !this.protection.enabled("cells.autofitRows") ? undefined : this.change("Zeilenhöhe", () => this.autoRowHeights({ r0: Math.min(...rows), c0: 0, r1: Math.max(...rows), c1: MAX_COLS - 1 }, true)),
       selectionChanged: () => {
@@ -779,9 +779,11 @@ export class CalcApp {
 
   // ----- sizes ----------------------------------------------------------------------------------
 
-  setColWidths(cols: number[], px: number): void {
+  /** `before`: columns ahead of them the drag went on into, with their new sizes (Excel). */
+  setColWidths(cols: number[], px: number, before: { i: number; size: number }[] = []): void {
     this.change("Spaltenbreite", () => {
-      for (const c of cols) {
+      for (const [c, w] of [...cols.map((c) => [c, px] as const), ...before.map((b) => [b.i, b.size] as const)]) {
+        const px = w;
         this.history.col(this.sheet, c);
         const info = this.sheet.cols.get(c) ?? {};
         if (px <= 0) this.sheet.cols.set(c, { ...info, hidden: true });
@@ -790,9 +792,10 @@ export class CalcApp {
     });
   }
 
-  setRowHeights(rows: number[], px: number): void {
+  setRowHeights(rows: number[], px: number, before: { i: number; size: number }[] = []): void {
     this.change("Zeilenhöhe", () => {
-      for (const r of rows) {
+      for (const [r, h] of [...rows.map((r) => [r, px] as const), ...before.map((b) => [b.i, b.size] as const)]) {
+        const px = h;
         this.history.row(this.sheet, r);
         const info = this.sheet.rows.get(r) ?? {};
         if (px <= 0) this.sheet.rows.set(r, { ...info, hidden: true });
@@ -1507,6 +1510,8 @@ export class CalcApp {
         const row = Math.floor(k / MAX_COLS), col = k % MAX_COLS;
         if (row < r.r0 || row > r.r1 || col < r.c0 || col > r.c1) continue;
         if (c.v === null || c.v === "") continue;
+        // Hidden and filtered-out rows do not count (Excel).
+        if (this.sheet.rows.get(row)?.hidden) continue;
         seen.add(k);
         s.count++;
         if (typeof c.v === "number") { s.numbers++; s.sum += c.v; s.min = Math.min(s.min, c.v); s.max = Math.max(s.max, c.v); }
@@ -2417,7 +2422,8 @@ export class CalcApp {
         const hiddenRows: number[] = [], hiddenCols: number[] = [], widths: Record<string, number> = {};
         for (let r = 0; r < 29; r++) if (sheet.rows.get(r)?.hidden) hiddenRows.push(r + 1);
         for (let c = 0; c < 14; c++) if (sheet.cols.get(c)?.hidden) hiddenCols.push(c + 1);
-        for (let c = 0; c < 7; c++) { const w = sheet.cols.get(c)?.width; if (w !== undefined) widths[String(c + 1)] = Math.round(shownChars(w) * 100) / 100; }
+        // A hidden column's width is 0, as Excel reports it.
+        for (let c = 0; c < 7; c++) { const i = sheet.cols.get(c); if (i?.hidden) widths[String(c + 1)] = 0; else if (i?.width !== undefined) widths[String(c + 1)] = Math.round(shownChars(i.width) * 100) / 100; }
         return {
           mode, editing, cells, selection: this.grid.selection.map(excelAddress).join(","), active: cellName(sheet.view.active.row, sheet.view.active.col),
           sheet: sheet.name, sheets: this.wb.sheets.map((s) => s.name), hiddenRows, hiddenCols, widths, filter: !!sheet.autoFilter,
