@@ -80,7 +80,7 @@ grid and the controls were built and measured against Excel.
 
 ## Not done / known gaps
 
-- Shapes in sheets (kept in the file, not shown), the Kommentare pane, PivotTables, the
+- Shapes in sheets (kept in the file, not shown), PivotTables, the
   Seitenlayout view, Datentabelle and Szenario-Manager: deferred, greyed with "Zurückgestellt".
 - Diagramm in RaabeWrite (Step 7b) is the next step.
 - The owner has not tried the app yet (planned after package D, now after the run).

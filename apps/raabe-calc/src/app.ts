@@ -602,6 +602,7 @@ export class CalcApp {
       for (const [sh, list] of change?.cells ?? []) cells.set(sh, list.filter((p) => sh.get(p.row, p.col)?.f !== undefined));
       change = { structural: false, cells };
     }
+    this.comments.refreshPane();
     // Excel removes the trace arrows on any change; a circled cell that is now valid loses its circle.
     this.trace.clear();
     for (const [sheet, list] of this.circles) {
@@ -1824,6 +1825,7 @@ export class CalcApp {
     run("review.deleteComment", () => this.comments.remove(), () => this.comments.has());
     run("review.prevComment", () => this.comments.prev(), () => this.comments.any());
     run("review.nextComment", () => this.comments.next(), () => this.comments.any());
+    run("review.showComments", () => this.comments.togglePane(), undefined, () => this.comments.paneOpen());
     run("insert.pictureFile", () => void this.pictures.insertFromFile(), notEditing);
     run("data.ungroup", () => void this.group(-1), notEditing);
     run("edit.selectValidation", () => this.validation.select());

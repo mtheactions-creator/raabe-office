@@ -1353,8 +1353,9 @@ Excel a school uses most among those first deferred.
   Thread auflösen in its "…" menu; hovering shows the card. Files: threadedComments and persons
   parts as Excel's, each thread with a legacy note for older programs linked by the author
   "tc={id}" (Excel's way; the note's text is our own); Excel reads them as threads with their
-  replies and no extra note (checked). Kommentare anzeigen (the pane) is not built; the author is
-  the name from Datei > Optionen.
+  replies and no extra note (checked). Kommentare anzeigen opens a pane at the right with every
+  thread of the sheet (a click goes to it, Neu starts one); the author is the name from Datei >
+  Optionen.
 - **Undo of whole-sheet steps** now also restores the sheet's page setup, filter, conditional
   formats, validations, protection, threads and pictures (before, only cells, sizes and merges).
 - **Review of these additions** (an independent read of the code at 04:00) found and we fixed:

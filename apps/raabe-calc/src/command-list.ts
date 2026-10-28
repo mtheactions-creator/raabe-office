@@ -304,7 +304,7 @@ export const COMMANDS: Command[] = [
   cmd("review.deleteComment", "Löschen", "comment-delete"),
   cmd("review.prevComment", "Vorheriger Kommentar", "arrow-up"),
   cmd("review.nextComment", "Nächster Kommentar", "arrow-down"),
-  later("review.showComments", "Kommentare anzeigen", "comments-show"),
+  cmd("review.showComments", "Kommentare anzeigen", "comments-show"),
   cmd("review.notes", "Notizen", "note"),
   cmd("review.newNote", "Neue Notiz", "note"),
   cmd("review.editNote", "Notiz bearbeiten", "note-edit"),

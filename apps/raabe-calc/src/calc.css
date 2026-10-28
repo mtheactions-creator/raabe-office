@@ -239,3 +239,15 @@ body.printing #print-root { display: block; position: fixed; left: 0; top: 0; z-
 .cm-reply { display: flex; gap: 6px; align-items: flex-end; margin-top: 8px; }
 .cm-input { flex: 1; resize: none; font: inherit; border: 1px solid #c8c6c4; border-radius: 3px; padding: 4px; }
 .cm-post { border: 0; background: none; cursor: pointer; color: #7719aa; }
+
+/* Kommentare anzeigen: the pane at the right; the sheet makes room for it. */
+body.cm-pane-open .calc-main { margin-right: 300px; }
+.cm-pane { position: fixed; right: 0; top: var(--pane-top, 150px); bottom: var(--statusbar-h); width: 300px; background: #faf9f8; border-left: 1px solid #e1dfdd; display: flex; flex-direction: column; z-index: 15; font: 12px "Segoe UI", sans-serif; }
+.cm-pane-head { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-bottom: 1px solid #e1dfdd; }
+.cm-pane-head b { flex: 1; font-size: 14px; }
+.cm-pane-head button { border: 0; background: none; display: inline-flex; align-items: center; gap: 4px; cursor: pointer; }
+.cm-pane-list { overflow-y: auto; padding: 8px; display: flex; flex-direction: column; gap: 8px; }
+.cm-pane-item { text-align: left; background: #fff; border: 1px solid #e1dfdd; border-radius: 4px; padding: 6px 8px; cursor: pointer; font: inherit; }
+.cm-pane-item.done { opacity: .7; }
+.cm-pane-ref { color: #605e5c; font-size: 11px; }
+.cm-pane-more { color: #7719aa; margin: 2px 0 0 28px; }

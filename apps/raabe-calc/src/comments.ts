@@ -115,7 +115,37 @@ export function commentsFeature(app: CalcApp, userName: () => string) {
     open(t.row, t.col, true);
   }
 
+  // ----- Kommentare anzeigen: the pane with every thread of the sheet --------------------------
+  let pane: HTMLElement | null = null;
+  function renderPane(): void {
+    if (!pane) return;
+    const list = [...(app.sheet.threads ?? [])].sort((a, b) => a.row - b.row || a.col - b.col);
+    const items = list.length ? list.map((t) => h("button", { type: "button", class: `cm-pane-item${t.done ? " done" : ""}`, onclick: () => { app.grid.selectCell(t.row, t.col); open(t.row, t.col, true); } },
+      h("div", { class: "cm-pane-ref" }, cellName(t.row, t.col), t.done ? " · Aufgelöst" : ""), entry(t), t.replies.length ? h("div", { class: "cm-pane-more" }, t.replies.length === 1 ? "1 Antwort" : `${t.replies.length} Antworten`) : null))
+      : [h("p", { class: "muted" }, "Auf diesem Blatt gibt es noch keine Kommentare.")];
+    pane.replaceChildren(
+      h("div", { class: "cm-pane-head" }, h("b", null, "Kommentare"),
+        h("button", { type: "button", class: "cm-pane-new", onclick: () => { const a = app.sheet.view.active; open(a.row, a.col, true); } }, icon("comment"), "Neu"),
+        h("button", { type: "button", "aria-label": "Schließen", onclick: () => togglePane() }, icon("close"))),
+      h("div", { class: "cm-pane-list" }, ...items));
+  }
+  function togglePane(): void {
+    if (pane) { pane.remove(); pane = null; document.body.classList.remove("cm-pane-open"); }
+    else {
+      pane = h("aside", { class: "cm-pane", role: "complementary", "aria-label": "Kommentare" });
+      // From the top of the sheet area (below the ribbon) to the status bar.
+      pane.style.top = `${document.querySelector(".calc-main")?.getBoundingClientRect().top ?? 150}px`;
+      document.body.append(pane);
+      document.body.classList.add("cm-pane-open");
+      renderPane();
+    }
+    requestAnimationFrame(() => app.grid.refreshLayout());
+  }
+
   return {
+    togglePane,
+    paneOpen: () => !!pane,
+    refreshPane: renderPane,
     newComment: () => { const a = app.sheet.view.active; open(a.row, a.col, true); },
     remove: () => { const a = app.sheet.view.active; const t = threadAt(a.row, a.col); if (t) { close(); change("Kommentar löschen", (list) => list.filter((x) => x.id !== t.id)); } },
     has: () => { const a = app.sheet.view.active; return !!threadAt(a.row, a.col); },
