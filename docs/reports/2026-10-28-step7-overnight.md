@@ -42,7 +42,7 @@ grid and the controls were built and measured against Excel.
   Vorgänger/Nachfolger, Formelauswertung, Fehlerüberprüfung, Drucktitel, Kopf- und Fußzeile,
   Ungültige Daten einkreisen, Zahlen-, Text- und Farbfilter (Top 10, Durchschnitt), Schnellanalyse,
   Symbolsätze, Blitzvorschau, Gruppieren and Teilergebnis, Seitenumbrüche and Umbruchvorschau,
-  Zielwertsuche, Rechtschreibung (F7), pictures from files shown and printed, Umschalt+drag and the right-button drag menus, Inhalte auswählen,
+  Zielwertsuche, Rechtschreibung (F7), pictures (shown, printed, inserted, moved, sized), Umschalt+drag and the right-button drag menus, Inhalte auswählen,
   Notizen typed in place, the Dropdown-Auswahlliste (Alt+Unten), Finanzmathematik, Excel's
   keyboard modes (Ende, F8, Umschalt+F8, Strg+Rücktaste).
 
@@ -64,8 +64,7 @@ grid and the controls were built and measured against Excel.
 
 ## Not done / known gaps
 
-- Comments (threaded), shapes in sheets (kept in the file, not shown), inserting and moving
-  pictures (pictures from files are shown and printed), PivotTables, the Seitenlayout view, Sparklines,
+- Comments (threaded), shapes in sheets (kept in the file, not shown), PivotTables, the Seitenlayout view, Sparklines,
   Datentabelle and Szenario-Manager: deferred, greyed with "Zurückgestellt".
 - Diagramm in RaabeWrite (Step 7b) is the next step.
 - The owner has not tried the app yet (planned after package D, now after the run).

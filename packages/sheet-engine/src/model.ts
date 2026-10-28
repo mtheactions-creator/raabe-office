@@ -253,6 +253,8 @@ export interface SheetPicture {
   /** The picture as a data: URL. */
   src: string;
   name?: string;
+  /** The anchor's XML as the file had it (kept as it is while the picture is not moved). */
+  raw?: string;
 }
 
 export interface CondFormat {

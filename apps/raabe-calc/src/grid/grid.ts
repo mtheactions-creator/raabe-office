@@ -404,6 +404,12 @@ export class Grid {
     return false;
   }
 
+  /** The cell under a point of the canvas (CSS px), for things placed over the grid. */
+  hitCell(x: number, y: number): { row: number; col: number } {
+    const h = this.hit(Math.max(this.headerW() + 1, x), Math.max(this.headerH() + 1, y));
+    return { row: h.row, col: h.col };
+  }
+
   /** Umbruchvorschau: the page break line under the pointer (within 3 px), as "before row/column at". */
   private breakAt(x: number, y: number): { rows: boolean; at: number } | null {
     const pb = this.host.pageBreaks?.();

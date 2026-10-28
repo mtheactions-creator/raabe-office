@@ -120,6 +120,10 @@ describe("edited workbooks", () => {
     s.page = { ...s.page, orientation: "landscape" };
     const chart = charts(s)![0];
     chart.title = { show: true, text: "Notenschnitt 2026" };
+    // The picture moves two columns to the right (its anchor is rewritten, the rest kept).
+    const pic = s.pictures![0];
+    pic.from = { ...pic.from, col: pic.from.col + 2 };
+    if (pic.to) pic.to = { ...pic.to, col: pic.to.col + 2 };
     const back = save(wb, "xlsx-objects", {
       allow: ["/sheets/Objekte/notes", "/sheets/Objekte/links", "/sheets/Objekte/cells/A12", "/sheets/Objekte/cells/A9", "/sheets/Objekte/rows",
         "/sheets/Objekte/page", "/sheets/Objekte/UsedRange", "/sheets/Objekte/cols",
@@ -133,14 +137,20 @@ describe("edited workbooks", () => {
     expect(cell(t, "A2")?.note).toBe("Neue Notiz");
     expect(cell(t, "A12")?.link).toBe("https://example.org/");
     expect(cell(t, "A9")?.link).toBeUndefined();
+    expect(t.pictures?.[0].from.col).toBe(pic.from.col);
     expect(t.autoFilter?.columns).toEqual({});
     expect(t.conditional?.[0].rules[0].format?.fill).toBe("#C6EFCE");
     expect(t.page?.orientation).toBe("landscape");
     expect(charts(t)?.[0].title.text).toBe("Notenschnitt 2026");
-    // The drawing, picture and table parts are untouched (the chart was edited).
+    // The picture, chart style and table parts are untouched; in the drawing only the moved
+    // picture's corners differ (the chart was edited, not moved).
     const parts = unzipSync(writeXlsx(wb));
     const orig = unzipSync(new Uint8Array(readFileSync("packages/ooxml/test/fixtures/xlsx-objects.xlsx")));
-    for (const p of ["xl/drawings/drawing1.xml", "xl/charts/style1.xml", "xl/tables/table1.xml", "xl/media/image1.png"]) expect(strFromU8(parts[p])).toBe(strFromU8(orig[p]));
+    for (const p of ["xl/charts/style1.xml", "xl/tables/table1.xml", "xl/media/image1.png"]) expect(strFromU8(parts[p])).toBe(strFromU8(orig[p]));
+    const cols = (x: string) => [...x.matchAll(/<xdr:col>(\d+)<\/xdr:col>/g)].map((m) => Number(m[1]));
+    const before = strFromU8(orig["xl/drawings/drawing1.xml"]), after = strFromU8(parts["xl/drawings/drawing1.xml"]);
+    expect(after.replace(/<xdr:col>\d+<\/xdr:col>/g, "")).toBe(before.replace(/<xdr:col>\d+<\/xdr:col>/g, ""));
+    expect(cols(after).filter((c, i) => c !== cols(before)[i]).length).toBe(2);
   });
 
   it("formulas: a formula without a cached value makes Excel calculate on opening", () => {
@@ -174,6 +184,7 @@ describe("edited workbooks", () => {
       { ref: [{ r0: 1, c0: 3, r1: 3, c1: 3 }], rules: [{ type: "iconSet", priority: 2, iconSet: { set: "3Arrows", cfvo: [{ type: "percent", val: "0" }, { type: "percent", val: "33" }, { type: "percent", val: "67" }] } }] }];
     s.page = { orientation: "landscape", paperSize: 9, margins: { left: 0.7, right: 0.7, top: 0.75, bottom: 0.75, header: 0.3, footer: 0.3 }, printArea: { r0: 0, c0: 0, r1: 4, c1: 2 }, titleRows: [0, 1], titleCols: [0, 0], header: "&CKlasse 7b", footer: "&RSeite &P von &N", rowBreaks: [3] };
     s.tabColor = "#FF0000";
+    s.pictures = [{ from: { col: 6, row: 1, x: 0, y: 0 }, to: { col: 8, row: 6, x: 0, y: 0 }, size: { w: 128, h: 100 }, src: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==", name: "Logo" }];
     const zwei = new Sheet("Zweites");
     zwei.set(0, 0, { v: 1, f: "Tabelle1!A2-0.5" });
     wb.sheets.push(zwei);
@@ -187,7 +198,7 @@ describe("edited workbooks", () => {
         ["/sheets/Tabelle1/cells/A3/NumberFormat", "m/d/yyyy"], ["/sheets/Tabelle1/cells/A4/Value2", 3], ["/sheets/Tabelle1/cols/0/0", approx(20, 0.2)],
         ["/sheets/Tabelle1/rows/5/0", 30], ["/sheets/Tabelle1/window/FreezePanes", true], ["/sheets/Tabelle1/autofilter/1", "A2:A5"],
         ["/sheets/Tabelle1/notes/0/1", "Eine Notiz"], ["/sheets/Tabelle1/links/0/1", "https://www.raabeschule.de/"], ["/sheets/Tabelle1/page/3", 2],
-        ["/sheets/Tabelle1/page/0", "$A$1:$C$5"], ["/sheets/Tabelle1/page/4", "$1:$2"], ["/sheets/Tabelle1/conditional/1/0", 6], ["/sheets/Tabelle1/page/6", [4]], ["/sheets/Tabelle1/rows/2/2", 2], ["/sheets/Tabelle1/rows/3/2", 2], ["/sheets/Tabelle1/conditional/1/1", "D2:D4"], ["/sheets/Tabelle1/page/1", "Klasse 7b"], ["/sheets/Tabelle1/page/2", "Seite &P von &N"], ["/sheets/Tabelle1/page/5", "$A:$A"], ["/sheets/Tabelle1/Tab", 0x0000ff], ["/sheets/Zweites/cells/A1/Value2", 1], ["/sheets/Tabelle1/StandardHeight", approx(15, 0.6)],
+        ["/sheets/Tabelle1/page/0", "$A$1:$C$5"], ["/sheets/Tabelle1/page/4", "$1:$2"], ["/sheets/Tabelle1/conditional/1/0", 6], ["/sheets/Tabelle1/shapes/1/0", "Logo"], ["/sheets/Tabelle1/shapes/1/1", 13], ["/sheets/Tabelle1/page/6", [4]], ["/sheets/Tabelle1/rows/2/2", 2], ["/sheets/Tabelle1/rows/3/2", 2], ["/sheets/Tabelle1/conditional/1/1", "D2:D4"], ["/sheets/Tabelle1/page/1", "Klasse 7b"], ["/sheets/Tabelle1/page/2", "Seite &P von &N"], ["/sheets/Tabelle1/page/5", "$A:$A"], ["/sheets/Tabelle1/Tab", 0x0000ff], ["/sheets/Zweites/cells/A1/Value2", 1], ["/sheets/Tabelle1/StandardHeight", approx(15, 0.6)],
         ["/sheets/Tabelle1/charts/0/1", 51], ["/sheets/Tabelle1/charts/0/6/0", "=SERIES(\"Werte\",,Tabelle1!$A$2:$A$4,1)"],
       ],
     });

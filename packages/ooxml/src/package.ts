@@ -167,11 +167,11 @@ export class PackageWriter {
   }
 
   /** Stores picture bytes as a media part (once per picture) and returns its path. */
-  addMedia(bytes: Uint8Array, mime: string): string {
+  addMedia(bytes: Uint8Array, mime: string, prefix = "word/media/image"): string {
     const hit = this.media.get(bytes);
     if (hit) return hit;
     const ext = MIME_EXT[mime] ?? "bin";
-    const path = this.freeName("word/media/image", ext);
+    const path = this.freeName(prefix, ext);
     this.files[path] = bytes;
     this.media.set(bytes, path);
     if (!this.defaults.has(ext)) { this.defaults.set(ext, mime); this.typesChanged = true; }

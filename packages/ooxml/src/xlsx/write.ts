@@ -266,7 +266,7 @@ class SheetWriter {
       const next = pr.replace(/^<sheetPr\b[^>]*?\/?>/, (t) => setAttrs(t, { filterMode: filtering ? "1" : null }));
       this.put("sheetPr", /^<sheetPr\s*\/>$|^<sheetPr>\s*<\/sheetPr>$/.test(next) ? null : next);
     }
-    const drawing = writeCharts(this.pw, s, this.part, this.own?.drawing, this.get("drawing"));
+    const drawing = writeCharts(this.pw, s, this.part, this.own?.drawing, this.get("drawing"), this.own?.pics);
     if (drawing !== undefined) this.put("drawing", drawing);
     if (!snap || now.cf !== snap.cf) placeAll(this.sp, "conditionalFormatting", conditionalXml(s.conditional ?? [], this.own?.cf, this.sw), SHEET_ORDER);
     if (!snap || now.dv !== snap.dv) {

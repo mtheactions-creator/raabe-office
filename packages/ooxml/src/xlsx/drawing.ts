@@ -72,9 +72,11 @@ export function readCharts(files: Record<string, Uint8Array>, sheet: Sheet, shee
  * new ones get parts of their own, removed ones lose their anchor (their parts go unused).
  * Returns the <drawing> element for the sheet, null to remove it, undefined to keep it.
  */
-export function writeCharts(pw: PackageWriter, sheet: Sheet, sheetPart: string, raw: DrawingRaw | undefined, current: string | undefined): string | null | undefined {
+export function writeCharts(pw: PackageWriter, sheet: Sheet, sheetPart: string, raw: DrawingRaw | undefined, current: string | undefined, picsSnap?: string): string | null | undefined {
   const charts = chartsOf(sheet) ?? [];
-  if (raw ? canon(charts) === raw.snap : !charts.length) return undefined;
+  const pics = sheet.pictures ?? [];
+  const picsSame = picturesKey(sheet) === (picsSnap ?? canon([]));
+  if ((raw ? canon(charts) === raw.snap : !charts.length) && picsSame) return undefined;
   const sheetRels = pw.relsOf(sheetPart);
   let drel = sheetRels.list.find((r) => isRel(r.type, DRAWING_REL_TYPE));
   let part = drel ? resolveTarget(sheetPart, drel.target) : undefined;
@@ -91,10 +93,19 @@ export function writeCharts(pw: PackageWriter, sheet: Sheet, sheetPart: string, 
     tail = old.slice(kids.length ? kids[kids.length - 1].end : r.close);
     for (const a of kids) {
       const ax = outer(old, a);
+      // Pictures: kept as they are, with new corners when moved, gone when deleted.
+      if (/<xdr:pic\b/.test(ax)) {
+        const p = pics.find((q) => q.raw === ax);
+        if (!p) continue;
+        const moved = canon([p.from, p.to ?? null]) !== canon([point(ax, "from") ?? null, p.to ? point(ax, "to") ?? null : null]);
+        slots.push({ xml: moved ? movedPicture(p) : ax });
+        continue;
+      }
       slots.push({ xml: ax, chart: /<(?:c|cx):chart\b/.test(ax) ? raw?.charts.find((c) => c.anchor === ax) : undefined });
     }
   }
-  const others = slots.filter((x) => !x.chart);
+  const fresh = pics.filter((p) => !p.raw || !old?.includes(p.raw));
+  const others = [...slots.filter((x) => !x.chart), ...fresh];
   if (!charts.length && !others.length) {
     if (drel) sheetRels.list.splice(sheetRels.list.indexOf(drel), 1), (sheetRels.changed = true);
     return null;
@@ -123,6 +134,17 @@ export function writeCharts(pw: PackageWriter, sheet: Sheet, sheetPart: string, 
     const rId = pw.link(part, ex ? CHARTEX_REL_TYPE : CHART_REL_TYPE, cpart);
     added.push(anchorXml({ from: m.from, to: m.to, id: id++, name: m.name ?? `Diagramm ${id - 1}`, rId, chartEx: ex }));
   }
+  // New pictures: their image as a media part of the package.
+  for (const p of fresh) {
+    const m = /^data:([^;]+);base64,(.*)$/.exec(p.src);
+    if (!m) continue;
+    const bin = atob(m[2]);
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    const media = pw.addMedia(bytes, m[1], "xl/media/image");
+    const rId = pw.link(part, IMAGE_REL_TYPE, media);
+    added.push(newPicture(p, id++, rId));
+  }
   const all = [...slots.map((x) => (x.chart ? placed.get(x.chart) ?? "" : x.xml)), ...added].join("");
   // Relationships of removed charts.
   for (const r of [...drels.list]) {
@@ -146,21 +168,49 @@ const MIME: Record<string, string> = { png: "image/png", jpg: "image/jpeg", jpeg
  * The pictures of a sheet's drawing (xdr:pic in two- or one-cell anchors), with their image as a
  * data: URL, for showing them; the drawing itself is written back as it was.
  */
-export function readPictures(files: Record<string, Uint8Array>, sheet: Sheet, sheetPart: string, sheetRels: Rels): void {
+function point(ax: string, tag: string): { col: number; row: number; x: number; y: number } | undefined {
+  const m = new RegExp(`<xdr:${tag}>([\\s\\S]*?)</xdr:${tag}>`).exec(ax);
+  if (!m) return undefined;
+  const v = (n: string) => Number(new RegExp(`<xdr:${n}>([^<]*)</xdr:${n}>`).exec(m[1])?.[1] ?? 0);
+  return { col: v("col"), row: v("row"), x: v("colOff") / EMU_PER_PX, y: v("rowOff") / EMU_PER_PX };
+}
+
+/** What decides whether the drawing's pictures changed (their places, names and identity, not the image data). */
+export function picturesKey(sheet: Sheet): string {
+  return canon((sheet.pictures ?? []).map((p) => ({ from: p.from, to: p.to ?? null, size: p.size ?? null, name: p.name ?? null, raw: p.raw ?? null })));
+}
+
+const IMAGE_REL_TYPE = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image";
+
+const pointXml = (tag: string, p: { col: number; row: number; x: number; y: number }) =>
+  `<xdr:${tag}><xdr:col>${p.col}</xdr:col><xdr:colOff>${Math.round(p.x * EMU_PER_PX)}</xdr:colOff><xdr:row>${p.row}</xdr:row><xdr:rowOff>${Math.round(p.y * EMU_PER_PX)}</xdr:rowOff></xdr:${tag}>`;
+
+/** A picture's anchor after it moved: the kept XML with new corners (and size). */
+function movedPicture(p: NonNullable<Sheet["pictures"]>[number]): string {
+  let x = p.raw!.replace(/<xdr:from>[\s\S]*?<\/xdr:from>/, pointXml("from", p.from));
+  if (p.to) x = x.replace(/<xdr:to>[\s\S]*?<\/xdr:to>/, pointXml("to", p.to));
+  if (p.size) x = x.replace(/<xdr:ext\b[^>]*\/>/, `<xdr:ext cx="${Math.round(p.size.w * EMU_PER_PX)}" cy="${Math.round(p.size.h * EMU_PER_PX)}"/>`);
+  return x;
+}
+
+/** A new picture's anchor (Excel's form for an inserted picture: two cells, sized with them). */
+function newPicture(p: NonNullable<Sheet["pictures"]>[number], id: number, rId: string): string {
+  const w = Math.round((p.size?.w ?? 100) * EMU_PER_PX), h = Math.round((p.size?.h ?? 100) * EMU_PER_PX);
+  const name = p.name ?? `Grafik ${id - 1}`;
+  return `<xdr:twoCellAnchor editAs="oneCell">${pointXml("from", p.from)}${pointXml("to", p.to ?? p.from)}<xdr:pic><xdr:nvPicPr><xdr:cNvPr id="${id}" name="${name.replace(/[<&"]/g, "")}"/><xdr:cNvPicPr><a:picLocks noChangeAspect="1"/></xdr:cNvPicPr></xdr:nvPicPr>` +
+    `<xdr:blipFill><a:blip xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" r:embed="${rId}"/><a:stretch><a:fillRect/></a:stretch></xdr:blipFill>` +
+    `<xdr:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="${w}" cy="${h}"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></xdr:spPr></xdr:pic><xdr:clientData/></xdr:twoCellAnchor>`;
+}
+
+export function readPictures(files: Record<string, Uint8Array>, sheet: Sheet, sheetPart: string, sheetRels: Rels): string {
   const rel = sheetRels.list.find((r) => isRel(r.type, DRAWING_REL_TYPE));
-  if (!rel) return;
+  if (!rel) return picturesKey(sheet);
   const part = resolveTarget(sheetPart, rel.target);
-  if (!files[part]) return;
+  if (!files[part]) return picturesKey(sheet);
   const xml = strFromU8(files[part]);
   const rels = new Rels(files[relsPath(part)] ? strFromU8(files[relsPath(part)]) : null);
   const r = root(xml);
   const out: NonNullable<Sheet["pictures"]> = [];
-  const point = (ax: string, tag: string) => {
-    const m = new RegExp(`<xdr:${tag}>([\\s\\S]*?)</xdr:${tag}>`).exec(ax);
-    if (!m) return undefined;
-    const v = (n: string) => Number(new RegExp(`<xdr:${n}>([^<]*)</xdr:${n}>`).exec(m[1])?.[1] ?? 0);
-    return { col: v("col"), row: v("row"), x: v("colOff") / EMU_PER_PX, y: v("rowOff") / EMU_PER_PX };
-  };
   for (const a of children(xml, r.open, r.close)) {
     const ax = outer(xml, a);
     if (!/<xdr:pic\b/.test(ax)) continue;
@@ -178,7 +228,8 @@ export function readPictures(files: Record<string, Uint8Array>, sheet: Sheet, sh
     const to = point(ax, "to");
     const extEl = /<xdr:ext\b[^>]*cx="(\d+)"[^>]*cy="(\d+)"/.exec(ax);
     const name = /<xdr:cNvPr\b[^>]*name="([^"]*)"/.exec(ax)?.[1];
-    out.push({ from, to: a.name === "xdr:twoCellAnchor" ? to : undefined, size: a.name !== "xdr:twoCellAnchor" && extEl ? { w: Number(extEl[1]) / EMU_PER_PX, h: Number(extEl[2]) / EMU_PER_PX } : undefined, src, name });
+    out.push({ from, to: a.name === "xdr:twoCellAnchor" ? to : undefined, size: a.name !== "xdr:twoCellAnchor" && extEl ? { w: Number(extEl[1]) / EMU_PER_PX, h: Number(extEl[2]) / EMU_PER_PX } : undefined, src, name, raw: ax });
   }
   if (out.length) sheet.pictures = out;
+  return picturesKey(sheet);
 }

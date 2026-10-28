@@ -1330,8 +1330,12 @@ Excel a school uses most among those first deferred.
 - **Pictures in sheets** (PNG, JPEG, GIF, BMP, SVG from the file's drawing, e.g. a school logo in
   a template): shown at their two- or one-cell anchor over the cells, following scrolling and
   zoom, and printed on the page of their top-left cell; the printed range includes them, as in
-  Excel. They are shown only: moving, sizing and inserting pictures are not built; the file keeps
-  them as they were. Print positions are computed, not compared with Excel's PDF.
+  Excel. Einfügen > Bilder > Dieses Gerät puts one at the active cell at its natural size; a click
+  selects it, dragging moves it, a corner sizes it keeping its proportions, Entf deletes it. The
+  file keeps untouched pictures byte for byte, rewrites only the corners of moved ones and adds
+  new ones as Excel's inserted pictures (checked in Excel: 0 differences, the new one is a
+  picture). Stockbilder and Onlinebilder stay greyed (offline). Print positions are computed,
+  not compared with Excel's PDF.
 - **Keyboard modes** (recorded): Ende then an arrow jumps as Strg+arrow (status bar "Endmodus"),
   F8 Auswahl erweitern, Umschalt+F8 Abschnitt hinzufügen oder entfernen, Strg+Rücktaste shows the
   active cell.

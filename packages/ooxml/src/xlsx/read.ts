@@ -83,6 +83,8 @@ export interface SheetRaw {
   cf?: CfRaw;
   /** Data validations as read. */
   dv?: DvRaw;
+  /** The pictures as read (picturesKey), to see whether they changed. */
+  pics?: string;
   snap: { view: string; cols: string; merges: string; tab: string; defaults: string; notes: string; links: string; filter: string; cf: string; page: string; dv: string; prot: string };
 }
 
@@ -362,7 +364,7 @@ function readSheet(xml: string, name: string, c: SheetContext): Sheet {
   sheet.page = readPage(sp.parts);
 
   const charts = readCharts(c.files, sheet, c.part, rels);
-  readPictures(c.files, sheet, c.part, rels);
+  raw.pics = readPictures(c.files, sheet, c.part, rels);
   if (charts) raw.drawing = charts;
 
   // View.

@@ -135,7 +135,7 @@
   "xlsx-objects.edit.xlsx": {
    "opened": true,
    "differences": 0,
-   "allowed": 21,
+   "allowed": 22,
    "allowed_details": [
     "/sheets/Objekte/UsedRange: 'A1:E11' -> 'A1:E12'",
     "/sheets/Objekte/cells/A12: None -> {'Formula': 'Beispiel', 'Value2': 'Beispiel', 'NumberFormat': 'General', 'Text': 'Beispiel', 'Font': ('Calibri', 11.0, False, False, -4142, False, False, False, 0.0), 'Interior': (-4142, None, None), 'Align': (1, -4107, False, 0, -4128, False), 'Protection': (True, False), 'Merge': None, 'Style': 'Normal', 'HasArray': False, 'Array': None, 'Border left': None, 'Border top': None, 'Border bottom': None, 'Border right': None, 'Border diagonal_down': None, 'Border diagonal_up': None}",
@@ -151,6 +151,7 @@
     "/sheets/Objekte/page/3: 1.0 -> 2.0",
     "/sheets/Objekte/rows: [(14.5, False, 1.0), (14.5, False, 1.0), (14.5, False, 1.0), (0.0, True, 1.0), (14.5, False, 1.0), (0.0, True, 1.0), (14.5, False, 1.0), (14.5, False, 1.0), (14.5, False, 1.0), (14.5, False, 1.0), (14.5, False, 1.0), (14.5, False, 1.0)] -> [(14.5, False, 1.0), (14.5, False, 1.0), (14.5, False, 1.0), (14.5, False, 1.0), (14.5, False, 1.0), (14.5, False, 1.0), (14.5, False, 1.0), (14.5, False, 1.0), (14.5, False, 1.0), (14.5, False, 1.0), (14.5, False, 1.0), (14.5, False, 1.0), (14.5, False, 1.0)]",
     "/sheets/Objekte/shapes/0/5: 191.0 -> 220.0",
+    "/sheets/Objekte/shapes/1/2: 300.0 -> 420.0",
     "/sheets/Objekte/shapes/1/3: 250.0 -> 279.0",
     "/sheets/Objekte/shapes/2/5: 77.0 -> 106.0",
     "/sheets/Objekte/shapes/3/0: 'Comment 2' -> 'Comment 3'",

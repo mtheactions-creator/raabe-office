@@ -1733,6 +1733,8 @@ export class CalcApp {
     run("data.whatIf", () => {});
     run("data.goalSeek", () => void this.goalSeek(), notEditing);
     run("review.spelling", () => void this.spelling.run(), notEditing);
+    run("insert.pictures", () => {});
+    run("insert.pictureFile", () => void this.pictures.insertFromFile(), notEditing);
     run("data.ungroup", () => void this.group(-1), notEditing);
     run("edit.selectValidation", () => this.validation.select());
     run("data.circleInvalid", () => this.circleInvalid());

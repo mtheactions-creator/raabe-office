@@ -135,7 +135,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
         },
         {
           id: "illustrations", label: "Illustrationen", key: "ZI", icon: "picture",
-          controls: [stack(b("insert.pictures", "P"), b("insert.shapes", "SH"), b("insert.icons", "Y1"))],
+          controls: [stack(dd("insert.pictures", "P", "small", [{ cmd: "insert.pictureFile" }, { cmd: "insert.pictureStock" }, { cmd: "insert.pictureOnline" }]), b("insert.shapes", "SH"), b("insert.icons", "Y1"))],
         },
         {
           id: "charts", label: "Diagramme", key: "ZC", icon: "chart-column",
