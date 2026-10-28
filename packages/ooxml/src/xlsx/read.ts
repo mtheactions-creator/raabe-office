@@ -13,7 +13,7 @@ import { readTheme, resolveColor, type ColorContext } from "./colors";
 import { shiftFormula } from "./shift";
 import { readStyles, canon, type StylesRaw } from "./styles";
 import { MDW, widthFromBase, widthFromFile } from "./units";
-import { readCharts, type DrawingRaw } from "./drawing";
+import { readCharts, readPictures, type DrawingRaw } from "./drawing";
 import { FILTER_DB, PRINT_AREA, PRINT_TITLES, ownRange, readTitles, readAutoFilter, readConditional, readPage, readValidations, type CfRaw, type DvRaw } from "./sheetparts";
 import { attrs, child, children, decodeX, element, outer, root, split, text, unesc, type El, type Split } from "./xml";
 
@@ -362,6 +362,7 @@ function readSheet(xml: string, name: string, c: SheetContext): Sheet {
   sheet.page = readPage(sp.parts);
 
   const charts = readCharts(c.files, sheet, c.part, rels);
+  readPictures(c.files, sheet, c.part, rels);
   if (charts) raw.drawing = charts;
 
   // View.

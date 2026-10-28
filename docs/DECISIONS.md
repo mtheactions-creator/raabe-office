@@ -1327,6 +1327,11 @@ Excel a school uses most among those first deferred.
   is full, solid at manual breaks) and "Seite n" in each page, at 60 % the first time as Excel.
   Dragging a line moves the break to the gridline nearest the pointer and makes it manual (as
   Excel does); the area's frame cannot be dragged yet, and the view is not written to the file.
+- **Pictures in sheets** (PNG, JPEG, GIF, BMP, SVG from the file's drawing, e.g. a school logo in
+  a template): shown at their two- or one-cell anchor over the cells, following scrolling and
+  zoom, and printed on the page of their top-left cell; the printed range includes them, as in
+  Excel. They are shown only: moving, sizing and inserting pictures are not built; the file keeps
+  them as they were. Print positions are computed, not compared with Excel's PDF.
 - **Keyboard modes** (recorded): Ende then an arrow jumps as Strg+arrow (status bar "Endmodus"),
   F8 Auswahl erweitern, Umschalt+F8 Abschnitt hinzufügen oder entfernen, Strg+Rücktaste shows the
   active cell.

@@ -115,7 +115,13 @@ export function printFeature(app: CalcApp) {
   /** The pages of a sheet: row and column ranges, Excel's order (down, then across). */
   function paginate(sheet: Sheet): Page[] {
     const p = sheet.page ?? {};
-    const area: Rect | null = p.printArea ?? sheet.usedRange();
+    // Without a Druckbereich: the used cells and the pictures (Excel prints pictures beyond the data too).
+    let area: Rect | null = p.printArea ?? sheet.usedRange();
+    if (!p.printArea) for (const pic of sheet.pictures ?? []) {
+      const end = pic.to ?? pic.from;
+      const r = { r0: pic.from.row, c0: pic.from.col, r1: end.row, c1: end.col };
+      area = area ? { r0: Math.min(area.r0, r.r0), c0: Math.min(area.c0, r.c0), r1: Math.max(area.r1, r.r1), c1: Math.max(area.c1, r.c1) } : r;
+    }
     if (!area) return [];
     const sz = paper(p);
     const m = p.margins ?? MARGINS["Normale Seitenränder"];
@@ -203,6 +209,22 @@ export function printFeature(app: CalcApp) {
     }
     if (p.gridLines) table.classList.add("grid");
     const el = h("div", { class: "print-page", style: `position:relative;width:${sz.w}in;height:${sz.h}in;padding:${m.top + PRINT_OFFSET}in ${m.right}in ${m.bottom}in ${m.left + PRINT_OFFSET}in` }, table);
+    // Pictures whose top-left cell is on this page, at their place among the printed rows and columns.
+    for (const pic of sheet.pictures ?? []) {
+      const ci = cols.indexOf(pic.from.col), ri = rows.indexOf(pic.from.row);
+      if (ci < 0 || ri < 0) continue;
+      const rowH = (r: number) => (sheet.rows.get(r)?.hidden ? 0 : ptToPx(sheet.rows.get(r)?.height ?? sheet.defaultRowHeight));
+      let x = (p.headings ? 30 : 0) + pic.from.x, y = (p.headings ? ptToPx(sheet.defaultRowHeight) : 0) + pic.from.y;
+      for (const c of cols.slice(0, ci)) x += colPx96(sheet, c);
+      for (const r of rows.slice(0, ri)) y += rowH(r);
+      let w = pic.size?.w ?? 0, hgt = pic.size?.h ?? 0;
+      if (pic.to) {
+        w = pic.to.x - pic.from.x; hgt = pic.to.y - pic.from.y;
+        for (let c = pic.from.col; c < pic.to.col; c++) w += colPx96(sheet, c);
+        for (let r = pic.from.row; r < pic.to.row; r++) hgt += rowH(r);
+      }
+      el.append(h("img", { src: pic.src, style: `position:absolute;left:calc(${m.left + PRINT_OFFSET}in + ${x * scale}px);top:calc(${m.top + PRINT_OFFSET}in + ${y * scale}px);width:${w * scale}px;height:${hgt * scale}px` }));
+    }
     // Kopf- und Fußzeile at Excel's header and footer distances, between the side margins (the
     // footer's text sits 1,5 pt higher in Excel's PDF than the box's bottom).
     const info = { page: (pg.index ?? 0) + 1, pages: pg.count ?? 1, sheet: sheet.name, file: document.title.replace(/ - RaabeCalc$/, "") };
@@ -339,7 +361,11 @@ export function printFeature(app: CalcApp) {
 
   return {
     /** The printed pages of a sheet (Umbruchvorschau): the area and each page's rows and columns. */
-    layout: (sheet: Sheet) => ({ area: sheet.page?.printArea ?? sheet.usedRange(), pages: paginate(sheet) }),
+    layout: (sheet: Sheet) => {
+      const pages = paginate(sheet);
+      const area = pages.length ? { r0: Math.min(...pages.map((p) => p.rows[0])), c0: Math.min(...pages.map((p) => p.cols[0])), r1: Math.max(...pages.map((p) => p.rows[1])), c1: Math.max(...pages.map((p) => p.cols[1])) } : null;
+      return { area, pages };
+    },
     exportPdf: (to?: string) => exportPdf(to),
     page: printPage,
     orientation: () => page().orientation ?? "portrait",

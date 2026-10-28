@@ -242,6 +242,19 @@ export interface CondRule {
   rawXml?: string;
 }
 
+/** A picture in the sheet's drawing, shown as the file places it (the file keeps it as it was). */
+export interface SheetPicture {
+  /** Top-left: the cell and the offset inside it in px at 100 %. */
+  from: { col: number; row: number; x: number; y: number };
+  /** Bottom-right as a cell anchor (two-cell anchors) … */
+  to?: { col: number; row: number; x: number; y: number };
+  /** … or the size in px at 100 % (one-cell anchors). */
+  size?: { w: number; h: number };
+  /** The picture as a data: URL. */
+  src: string;
+  name?: string;
+}
+
 export interface CondFormat {
   ref: Rect[];
   rules: CondRule[];
@@ -325,6 +338,8 @@ export class Sheet {
   hidden?: boolean | "very";
   /** AutoFilter: its range and the values shown per column (column index inside the range). */
   autoFilter?: AutoFilter;
+  /** Pictures of the drawing (read only: shown, kept in the file as they are). */
+  pictures?: SheetPicture[];
   /** Blatt schützen: the attributes of <sheetProtection> as the file has them (sheet="1" when on). */
   protection?: Record<string, string>;
   /** Bedingte Formatierung, in the file's order (priority decides). */

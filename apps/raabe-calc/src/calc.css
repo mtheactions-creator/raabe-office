@@ -213,3 +213,7 @@ body.printing #print-root { display: block; position: fixed; left: 0; top: 0; z-
 .sp-word { width: 100%; }
 .sp-list { width: 100%; }
 .sp-buttons { display: flex; flex-direction: column; gap: 6px; padding-top: 18px; }
+
+/* Pictures of the sheet: over the cells, under charts and the grid's own buttons. */
+.picture-layer { position: absolute; right: 17px; bottom: 0; overflow: hidden; pointer-events: none; z-index: 3; }
+.picture-layer img { position: absolute; user-select: none; }

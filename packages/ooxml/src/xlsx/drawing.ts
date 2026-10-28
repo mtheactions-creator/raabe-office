@@ -138,3 +138,47 @@ export function writeCharts(pw: PackageWriter, sheet: Sheet, sheetPart: string, 
   }
   return current && current.includes(`r:id="${drel.id}"`) ? current : `<drawing r:id="${drel.id}"/>`;
 }
+
+const EMU_PER_PX = 9525;
+const MIME: Record<string, string> = { png: "image/png", jpg: "image/jpeg", jpeg: "image/jpeg", gif: "image/gif", bmp: "image/bmp", svg: "image/svg+xml", emf: "image/emf", wmf: "image/wmf" };
+
+/**
+ * The pictures of a sheet's drawing (xdr:pic in two- or one-cell anchors), with their image as a
+ * data: URL, for showing them; the drawing itself is written back as it was.
+ */
+export function readPictures(files: Record<string, Uint8Array>, sheet: Sheet, sheetPart: string, sheetRels: Rels): void {
+  const rel = sheetRels.list.find((r) => isRel(r.type, DRAWING_REL_TYPE));
+  if (!rel) return;
+  const part = resolveTarget(sheetPart, rel.target);
+  if (!files[part]) return;
+  const xml = strFromU8(files[part]);
+  const rels = new Rels(files[relsPath(part)] ? strFromU8(files[relsPath(part)]) : null);
+  const r = root(xml);
+  const out: NonNullable<Sheet["pictures"]> = [];
+  const point = (ax: string, tag: string) => {
+    const m = new RegExp(`<xdr:${tag}>([\\s\\S]*?)</xdr:${tag}>`).exec(ax);
+    if (!m) return undefined;
+    const v = (n: string) => Number(new RegExp(`<xdr:${n}>([^<]*)</xdr:${n}>`).exec(m[1])?.[1] ?? 0);
+    return { col: v("col"), row: v("row"), x: v("colOff") / EMU_PER_PX, y: v("rowOff") / EMU_PER_PX };
+  };
+  for (const a of children(xml, r.open, r.close)) {
+    const ax = outer(xml, a);
+    if (!/<xdr:pic\b/.test(ax)) continue;
+    const from = point(ax, "from");
+    const embed = /<a:blip\b[^>]*r:embed="([^"]*)"/.exec(ax)?.[1];
+    const target = embed ? rels.get(embed) : undefined;
+    if (!from || !target) continue;
+    const media = resolveTarget(part, target.target);
+    const bytes = files[media];
+    const ext = media.split(".").pop()?.toLowerCase() ?? "";
+    if (!bytes || !MIME[ext] || ext === "emf" || ext === "wmf") continue;
+    let bin = "";
+    for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+    const src = `data:${MIME[ext]};base64,${btoa(bin)}`;
+    const to = point(ax, "to");
+    const extEl = /<xdr:ext\b[^>]*cx="(\d+)"[^>]*cy="(\d+)"/.exec(ax);
+    const name = /<xdr:cNvPr\b[^>]*name="([^"]*)"/.exec(ax)?.[1];
+    out.push({ from, to: a.name === "xdr:twoCellAnchor" ? to : undefined, size: a.name !== "xdr:twoCellAnchor" && extEl ? { w: Number(extEl[1]) / EMU_PER_PX, h: Number(extEl[2]) / EMU_PER_PX } : undefined, src, name });
+  }
+  if (out.length) sheet.pictures = out;
+}

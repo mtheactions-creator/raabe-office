@@ -40,6 +40,7 @@ import { learn as learnFill, run as runFill } from "./flashfill";
 import { regroup } from "./grid/outline";
 import { seek } from "./goalseek";
 import { spellingFeature } from "./spelling";
+import { picturesFeature } from "./pictures";
 import { iconRule } from "./dialogs";
 import appIconUrl from "../../../branding/raabe-calc-small.svg?url";
 
@@ -86,6 +87,7 @@ export class CalcApp {
   private protection = protectionFeature(this);
   private evaluator = evaluateFeature(this);
   private spelling = spellingFeature(this);
+  private pictures = picturesFeature(this);
   private errorCheck = errorCheckFeature(this, () => void this.evaluator.open());
   private quick = quickFeature(this, () => this.quickTiles());
   readonly validation = validationFeature(this, (t, text) => this.gridHost().commit(t, text, {}));
@@ -689,7 +691,7 @@ export class CalcApp {
       circles: () => this.circles.get(this.sheet) ?? [],
       canEdit: (row, col) => this.protection.canEdit(row, col),
       validate: (row, col, text) => (this.validation.quickCheck(row, col, text) ? "ok" : this.validation.check(row, col, text)),
-      painted: () => { this.validation.place(); this.quick.place(); },
+      painted: () => { this.pictures.place(); this.validation.place(); this.quick.place(); },
       nextUnlocked: (row, col, back) => this.protection.nextUnlocked(row, col, back),
     };
   }
