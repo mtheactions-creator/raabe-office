@@ -68,7 +68,22 @@ export class CalcStatusBar {
 
   /** Mode texts beside the cell mode (Endmodus, Auswahl erweitern …), named as Excel names them. */
   setFlags(flags: [string, string][]): void {
-    this.flags.replaceChildren(...flags.map(([field, text]) => h("span", { class: "cell flag", "aria-label": `${field} ${text}` }, text)));
+    this.modeFlags = flags.map(([field, text]) => [`${field} ${text}`, text]);
+    this.renderFlags();
+  }
+
+  /** A note of the workbook beside them (Berechnen, Zirkelbezüge: A1), as [accessible name, text]; null removes it. */
+  setNote(key: string, note: [string, string] | null): void {
+    if (note) this.notes.set(key, note);
+    else this.notes.delete(key);
+    this.renderFlags();
+  }
+
+  private modeFlags: [string, string][] = [];
+  private notes = new Map<string, [string, string]>();
+
+  private renderFlags(): void {
+    this.flags.replaceChildren(...[...this.modeFlags, ...this.notes.values()].map(([name, text]) => h("span", { class: "cell flag", "aria-label": name }, text)));
   }
 
   /** Statusleiste anpassen: which statistics are shown (right click, as in Excel). */

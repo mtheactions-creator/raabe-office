@@ -27,6 +27,8 @@ export interface GridHost {
   clearRange(r: Rect): void;
   /** Fill handle released: fill from `source` to `target` (Strg held: series/copy toggled). */
   fill(source: Rect, target: Rect, ctrl: boolean): void;
+  /** Umschalt+drag of the fill handle: empty cells inserted ("down"/"right") or cells deleted ("up"/"left"). */
+  shiftFill?(rect: Rect, dir: "down" | "right" | "up" | "left"): void;
   /** Selection border dragged: move (or copy with Strg) to a new top-left cell. */
   move(source: Rect, to: { row: number; col: number }, copy: boolean): void;
   /** A drag with the right mouse button ended: Excel's menu of what to do (fill handle or border). */
@@ -913,6 +915,11 @@ export class Grid {
       const p = this.local(e);
       const hit = this.hit(p.x, p.y);
       if (hit.area === "cell" && !this.selection.some((r) => inRect(r, hit.row, hit.col))) this.selectCell(hit.row, hit.col);
+      // A header outside the selected whole columns (rows) selects its column (row), as a click does (recorded).
+      if (hit.area === "col" && !this.selection.some((r) => r.r0 === 0 && r.r1 === MAX_ROWS - 1 && hit.col >= r.c0 && hit.col <= r.c1))
+        this.select({ r0: 0, c0: hit.col, r1: MAX_ROWS - 1, c1: hit.col }, { row: this.view.top, col: hit.col });
+      if (hit.area === "row" && !this.selection.some((r) => r.c0 === 0 && r.c1 === MAX_COLS - 1 && hit.row >= r.r0 && hit.row <= r.r1))
+        this.select({ r0: hit.row, c0: 0, r1: hit.row, c1: MAX_COLS - 1 }, { row: hit.row, col: this.view.left });
       this.host.contextMenu(e, hit.area === "col" ? "col" : hit.area === "row" ? "row" : "cell");
     });
 
@@ -1391,6 +1398,14 @@ export class Grid {
       this.ghost = null;
       const src = this.selection[0];
       // Dragging the handle back into the selection empties the cells left out (Excel).
+      const down = g.r1 > src.r1, right = g.c1 > src.c1;
+      // With Umschalt the handle inserts empty cells, or deletes them when dragged back (recorded in Excel).
+      if (e.shiftKey && this.host.shiftFill && (down || right || g.r1 < src.r1 || g.c1 < src.c1) && g.r0 >= src.r0 && g.c0 >= src.c0) {
+        if (down || right) this.host.shiftFill(down ? { ...src, r0: src.r1 + 1, r1: g.r1 } : { ...src, c0: src.c1 + 1, c1: g.c1 }, down ? "down" : "right");
+        else this.host.shiftFill(g.r1 < src.r1 ? { ...src, r0: g.r1 + 1 } : { ...src, c0: g.c1 + 1 }, g.r1 < src.r1 ? "up" : "left");
+        this.select(g, { ...this.active });
+        return;
+      }
       if (g.r0 >= src.r0 && g.r1 <= src.r1 && g.c0 >= src.c0 && g.c1 <= src.c1) {
         const cleared = g.r1 < src.r1 ? { ...src, r0: g.r1 + 1 } : { ...src, c0: g.c1 + 1 };
         this.host.clearRange(cleared);
@@ -1698,6 +1713,28 @@ export class Grid {
       this.placeEditor();
       return;
     }
+    if (ctrl && shift && (k === "a" || k === "A")) {
+      // Strg+Umschalt+A: the function's argument names after its name, as Excel writes them.
+      e.preventDefault();
+      const pos = input.selectionStart ?? input.value.length;
+      const m = /([A-Za-zÄÖÜäöü][A-Za-zÄÖÜäöü0-9.]*)(\(?)$/.exec(input.value.slice(0, pos));
+      const fn = m && this.functions.find((f) => f.name.toUpperCase() === m[1].toUpperCase());
+      if (!m || !fn) return;
+      const ins = (m[2] ? "" : "(") + fn.args.replace(/[[\]]/g, "").replace(/;\s*/g, ";") + ")";
+      input.value = input.value.slice(0, pos) + ins + input.value.slice(pos);
+      input.setSelectionRange(pos + ins.length, pos + ins.length);
+      (input === this.fx ? this.editor : this.fx).value = input.value;
+      this.ac.hidden = true;
+      this.acItems = [];
+      this.placeEditor();
+      return;
+    }
+    if (e.altKey && k === "ArrowDown" && this.mode !== "point") {
+      // Alt+Unten while typing opens the Auswahlliste too; the choice goes into the cell's text.
+      e.preventDefault();
+      this.pickList(true);
+      return;
+    }
     if (k === "Enter") {
       e.preventDefault();
       if (ctrl && shift) this.commitEdit("none", { array: true });
@@ -1749,9 +1786,15 @@ export class Grid {
       return;
     }
     if (ctrl && (k === "z" || k === "Z")) {
-      // Strg+Z while typing cancels the entry (Excel).
+      // Strg+Z while typing takes back the typing but stays in the cell (recorded in Excel).
       e.preventDefault();
-      this.cancelEdit();
+      const back = this.mode === "edit" ? this.editing!.original : "";
+      this.editor.value = back;
+      this.fx.value = back;
+      input.setSelectionRange(back.length, back.length);
+      this.ac.hidden = true;
+      this.acItems = [];
+      this.placeEditor();
       return;
     }
   }
@@ -1766,10 +1809,14 @@ export class Grid {
       const start = m.index, end = start + m[0].length;
       if (pos < start || pos > end) continue;
       const cycle = (a: string, b: string) => (!a && !b ? ["$", "$"] : a && b ? ["", "$"] : !a && b ? ["$", ""] : ["", ""]);
-      const [c1, r1] = cycle(m[1], m[3]);
+      // A pointed range changes as a whole; in a typed one only the cell at the caret (recorded in Excel).
+      const pointed = !!this.pointRef && this.pointRef.start <= start && this.pointRef.end >= end;
+      const firstEnd = start + m[1].length + m[2].length + m[3].length + m[4].length;
+      const doFirst = !m[6] || pointed || pos <= firstEnd, doSecond = !!m[6] && (pointed || pos > firstEnd);
+      const [c1, r1] = doFirst ? cycle(m[1], m[3]) : [m[1], m[3]];
       let out = `${c1}${m[2]}${r1}${m[4]}`;
       if (m[6]) {
-        const [c2, r2] = cycle(m[5], m[7]);
+        const [c2, r2] = doSecond ? cycle(m[5], m[7]) : [m[5], m[7]];
         out += `:${c2}${m[6]}${r2}${m[8]}`;
       }
       input.value = t.slice(0, start) + out + t.slice(end);
@@ -1782,7 +1829,7 @@ export class Grid {
   }
 
   /** Dropdown-Auswahlliste: the different texts above and below in the column, sorted; the chosen one is entered. */
-  private pickList(): void {
+  private pickList(typing = false): void {
     const { row, col } = this.active;
     const seen = new Map<string, string>();
     const scan = (dir: 1 | -1) => {
@@ -1798,10 +1845,24 @@ export class Grid {
     if (!items.length) return;
     const b = this.rectOnCanvas({ r0: row, c0: col, r1: row, c1: col })!;
     const list = h("div", { class: "pick-list", role: "listbox" });
-    // Excel opens the list with nothing highlighted; the first Down picks the first entry.
-    let index = -1;
+    // Excel opens the list with nothing highlighted; the first Down picks the first entry. While
+    // typing, the entry that starts with the typed text is highlighted.
+    const typed = typing ? this.editor.value.toLowerCase() : "";
+    let index = typed ? items.findIndex((t) => t.toLowerCase().startsWith(typed)) : -1;
     const close = () => { list.remove(); removeEventListener("keydown", keys, true); removeEventListener("pointerdown", outside, true); this.editor.focus({ preventScroll: true }); };
-    const take = (i: number) => { close(); this.host.commit({ r0: row, c0: col, r1: row, c1: col }, items[i], {}); this.syncBar(); };
+    const take = (i: number) => {
+      close();
+      if (typing && this.editing) {
+        // The choice replaces the typed text; the cell stays in Eingeben.
+        this.editor.value = items[i];
+        this.fx.value = items[i];
+        this.editor.setSelectionRange(items[i].length, items[i].length);
+        this.placeEditor();
+        return;
+      }
+      this.host.commit({ r0: row, c0: col, r1: row, c1: col }, items[i], {});
+      this.syncBar();
+    };
     const render = () => list.replaceChildren(...items.map((t, i) => h("div", { class: `pick-item${i === index ? " on" : ""}`, onmousedown: (ev: MouseEvent) => { ev.preventDefault(); take(i); } }, t)));
     const keys = (ev: KeyboardEvent) => {
       if (ev.key === "ArrowDown" || ev.key === "ArrowUp") { ev.preventDefault(); ev.stopPropagation(); index = ev.key === "ArrowDown" ? Math.min(items.length - 1, index + 1) : Math.max(0, index - 1); render(); }

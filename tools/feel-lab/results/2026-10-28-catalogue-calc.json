@@ -1,5 +1,5 @@
 {
- "summary": "220/220",
+ "summary": "244/244",
  "cases": {
   "type text Enter": {
    "area": "enter",
@@ -1093,6 +1093,126 @@
   },
   "Esc after F2 leaves the cell": {
    "area": "keys5",
+   "ok": true,
+   "diff": []
+  },
+  "Right-click inside the selection keeps it": {
+   "area": "mouse2",
+   "ok": true,
+   "diff": []
+  },
+  "Right-click outside the selection selects the cell": {
+   "area": "mouse2",
+   "ok": true,
+   "diff": []
+  },
+  "Right-click in a second area": {
+   "area": "mouse2",
+   "ok": true,
+   "diff": []
+  },
+  "Right-click on a selected column header": {
+   "area": "mouse2",
+   "ok": true,
+   "diff": []
+  },
+  "Right-click on another column header": {
+   "area": "mouse2",
+   "ok": true,
+   "diff": []
+  },
+  "Right-click on a row header inside selected cells": {
+   "area": "mouse2",
+   "ok": true,
+   "diff": []
+  },
+  "Fill handle with Umschalt inserts cells": {
+   "area": "mouse2",
+   "ok": true,
+   "diff": []
+  },
+  "Fill handle with Umschalt back deletes cells": {
+   "area": "mouse2",
+   "ok": true,
+   "diff": []
+  },
+  "Fill handle with Umschalt to the right": {
+   "area": "mouse2",
+   "ok": true,
+   "diff": []
+  },
+  "Fill handle double-click stops at a gap": {
+   "area": "mouse2",
+   "ok": true,
+   "diff": []
+  },
+  "Fill handle double-click uses the column to the right": {
+   "area": "mouse2",
+   "ok": true,
+   "diff": []
+  },
+  "click another cell commits typing": {
+   "area": "edit2",
+   "ok": true,
+   "diff": []
+  },
+  "click after a number in a formula": {
+   "area": "edit2",
+   "ok": true,
+   "diff": []
+  },
+  "click in Bearbeiten commits": {
+   "area": "edit2",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+Eingabe keeps the cell": {
+   "area": "edit2",
+   "ok": true,
+   "diff": []
+  },
+  "Esc while pointing cancels": {
+   "area": "edit2",
+   "ok": true,
+   "diff": []
+  },
+  "missing bracket closed on Enter": {
+   "area": "edit2",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+Umschalt+A shows the arguments": {
+   "area": "edit2",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+Z while typing": {
+   "area": "edit2",
+   "ok": true,
+   "diff": []
+  },
+  "lower-case reference becomes upper": {
+   "area": "edit2",
+   "ok": true,
+   "diff": []
+  },
+  "text then Alt+Unten picks": {
+   "area": "edit2",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+Umschalt+A inserts the argument names": {
+   "area": "edit2",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+Umschalt+A after the bracket": {
+   "area": "edit2",
+   "ok": true,
+   "diff": []
+  },
+  "F4 on a range in Bearbeiten": {
+   "area": "edit2",
    "ok": true,
    "diff": []
   },

@@ -1390,6 +1390,22 @@ Excel a school uses most among those first deferred.
   after a row header) no longer scrolls to the sheet's end. Alt+Bild ab / auf, Umschalt+Bild ab,
   Strg+Bild auf, Umschalt+Leertaste while typing, Strg+Umschalt+Leertaste and the editing keys in
   Bearbeiten were already as in Excel.
+- **Right-click and the fill handle** (11 recorded cases, area "mouse2"): a right-click on a
+  column or row header outside the selected whole columns (rows) selects that column (row) before
+  the menu opens, as a click does; inside a selection, or on a cell of it, the selection stays.
+  Umschalt+drag of the fill handle inserts empty cells below or to the right (the cells there
+  move on), and dragged back into the selection it deletes the cells left out (those below move
+  up); before, it filled as without Umschalt.
+- **Editing** (16 recorded cases, area "edit2"): F4 in a typed range changes only the cell
+  reference at the caret ("=SUMME(A1:B2" gives A1:$B$2), a pointed range as a whole; Strg+Z while
+  typing takes the typing back and stays in the cell (before, it left the cell); Alt+Unten while
+  typing opens the Auswahlliste with the matching entry highlighted, and the choice goes into the
+  text; Strg+Umschalt+A writes the argument names after a function name as Excel does
+  ("=RUNDEN(Zahl;Anzahl_Stellen)", "=SUMME(Zahl1;Zahl2;...)"). The status bar shows
+  "Zirkelbezüge: A1" for the first cell of a circular reference on the sheet ("Zirkelbezüge" alone
+  when it is on another sheet); before, nothing told the user. A formula ending in an operator
+  ("=1+") is left out: Excel stored "=1", presumably through its formula correction, which the
+  harness cannot see; RaabeCalc keeps "=1+" (#NAME?). To be checked with the owner watching.
 - **Keyboard modes** (recorded): Ende then an arrow jumps as Strg+arrow (status bar "Endmodus"),
   F8 Auswahl erweitern, Umschalt+F8 Abschnitt hinzufügen oder entfernen, Strg+Rücktaste shows the
   active cell.

@@ -38,6 +38,8 @@ class Case:
     sheets: int = 1
     #: Today's date or time in the result: compared by format only.
     today: bool = False
+    #: Ranges merged before the steps (Verbinden), e.g. ["A1:C1"].
+    merges: list[str] = field(default_factory=list)
 
 
 def addr_rc(addr: str) -> tuple[int, int]:
@@ -86,6 +88,8 @@ class ExcelSide:
             ws.AutoFilterMode = False
         for addr, text in case.setup.items():
             ws.Range(addr).FormulaLocal = text
+        for m in case.merges:
+            ws.Range(m).Merge()
         ws.Range(case.start).Select()
         app.ActiveWindow.Zoom = 100
         app.ActiveWindow.ScrollRow = 1
@@ -404,7 +408,7 @@ class CalcSide:
 
     def reset(self, case: Case) -> None:
         import json as _json
-        self.js(f"__calc.reset({_json.dumps(case.setup)}, {_json.dumps(case.start)}, {case.sheets})")
+        self.js(f"__calc.reset({_json.dumps(case.setup)}, {_json.dumps(case.start)}, {case.sheets}, {_json.dumps(case.merges)})")
         time.sleep(0.15)
 
     def prepare(self, case: Case) -> None:

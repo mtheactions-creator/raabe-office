@@ -596,7 +596,7 @@ export class CalcApp {
     doc.version++;
     if (doc.wb.calcMode === "manual") {
       // Manuell: no recalculation now; the status bar shows that one is due (Excel's "Berechnen").
-      if (doc === this.active) this.statusBar.setFlags([["Berechnen", "Berechnen"]]);
+      if (doc === this.active) this.statusBar.setNote("calc", ["Berechnen Berechnen", "Berechnen"]);
       // Formulas typed now are worked out (Excel computes the entered formula itself); the rest waits.
       const cells = new Map<Sheet, { row: number; col: number }[]>();
       for (const [sh, list] of change?.cells ?? []) cells.set(sh, list.filter((p) => sh.get(p.row, p.col)?.f !== undefined));
@@ -663,6 +663,10 @@ export class CalcApp {
       },
       clearContents: () => { if (this.protection.guard("edit.clearContents")) this.change("Löschen", () => A.clearContents(this.ctx, this.sheet, this.grid.selection)); },
       clearRange: (r) => { if (this.protection.guard("edit.clearContents")) this.change("Löschen", () => A.clearContents(this.ctx, this.sheet, [r])); },
+      shiftFill: (rect, dir) => {
+        if (!this.protection.guardRects([rect])) return;
+        this.change(dir === "down" || dir === "right" ? "Zellen einfügen" : "Zellen löschen", () => A.shiftCells(this.ctx, this.sheet, rect, dir));
+      },
       fill: (source, target, ctrl) => { if (this.protection.guardRects([target])) this.fillWithOptions(source, target, ctrl ? "toggle" : "auto"); },
       move: (source, to, copy) => this.protection.on() ? void this.protection.canEdit(this.sheet.view.active.row, this.sheet.view.active.col) : this.change(copy ? "Kopieren" : "Verschieben", () => {
         if (copy) A.copyCells(this.ctx, { sheet: this.sheet, rect: source }, this.sheet, to);
@@ -1493,6 +1497,10 @@ export class CalcApp {
 
   updateChrome(): void {
     this.updateLabels();
+    // Zirkelbezüge: the first cell of a loop on this sheet, or the word alone when it is elsewhere (Excel).
+    const circ = this.active.calc.circular, here = circ.find((c) => this.active.wb.sheets[c.sheet] === this.sheet);
+    this.statusBar.setNote("circular", here ? ["Zirkelbezüge " + cellName(here.row, here.col), "Zirkelbezüge: " + cellName(here.row, here.col)]
+      : circ.length ? ["Zirkelbezüge", "Zirkelbezüge"] : null);
     this.statusBar.update(this.sheet.view.zoom, this.stats());
     this.commands.refresh();
     this.ribbon.refresh?.();
@@ -1866,8 +1874,8 @@ export class CalcApp {
     run("formulas.calcAuto", setMode(undefined), undefined, () => !this.wb.calcMode);
     run("formulas.calcPartial", setMode("autoNoTable"), undefined, () => this.wb.calcMode === "autoNoTable");
     run("formulas.calcManual", setMode("manual"), undefined, () => this.wb.calcMode === "manual");
-    run("formulas.calcNow", () => { this.active.calc.recalc(); this.statusBar.setFlags([]); this.grid.contentChanged(); });
-    run("formulas.calcSheet", () => { this.active.calc.recalc(); this.statusBar.setFlags([]); this.grid.contentChanged(); });
+    run("formulas.calcNow", () => { this.active.calc.recalc(); this.statusBar.setNote("calc", null); this.grid.contentChanged(); });
+    run("formulas.calcSheet", () => { this.active.calc.recalc(); this.statusBar.setNote("calc", null); this.grid.contentChanged(); });
 
     run("review.statistics", () => void this.dlg.statistics());
     run("review.notes", () => {});
@@ -2359,7 +2367,7 @@ export class CalcApp {
       app: this,
       grid: this.grid,
       /** A fresh workbook with the case's cells typed in, the start cell selected. */
-      reset: (setup: Record<string, string>, start: string, sheets: number) => {
+      reset: (setup: Record<string, string>, start: string, sheets: number, merges: string[] = []) => {
         this.grid.resetKeyModes();
         if (this.grid.isEditing) this.grid.cancelEdit();
         const doc = this.makeDoc(newWorkbook(), this.active.name, null);
@@ -2370,6 +2378,7 @@ export class CalcApp {
         this.copied = null;
         this.grid.setMarquee(null);
         doc.history.step("Test", () => { for (const [a, t] of Object.entries(setup)) A.enter(this.ctx, this.sheet, addr(a), t); });
+        for (const m of merges) this.sheet.merges.push(addr(m));
         doc.calc.recalc();
         doc.history.clear();
         this.activate(doc);

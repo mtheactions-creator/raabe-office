@@ -59,15 +59,17 @@ grid and the controls were built and measured against Excel.
   - An independent review of these additions at 04:00 found nine problems (protection gaps,
     threads and pictures not following inserted rows, a fill-step bug, pictures dropped on save
     …); all are fixed or turned out to be Excel's behaviour too (D-065 lists them).
-  - Later, 33 more control cases (hidden rows and columns, multi-area Enter/Tab, Umschalt+Rücktaste,
-    border dragged past a column's start) found six behaviours that differed from Excel; all
+  - Later, 57 more control cases (hidden rows and columns, multi-area Enter/Tab, Umschalt+Rücktaste,
+    right-click on headers, Umschalt+fill handle, F4 in a typed range, Strg+Z and Alt+Unten while typing,
+    border dragged past a column's start) found fourteen behaviours that differed from Excel (one of them: no
+    "Zirkelbezüge" in the status bar); all
     are fixed.
 
 ## Measured
 
 | What | Result |
 |---|---|
-| Behaviour catalogue (real input, Excel vs RaabeCalc) | 220/220 cases |
+| Behaviour catalogue (real input, Excel vs RaabeCalc) | 244/244 cases |
 | Formulas (Excel's results) | 4229/4234 (5 are Excel's own floating-point/iteration quirks) |
 | Number formats and typed input | ≈ 66 000 recorded cases equal (≈ 210 listed differences) |
 | .xlsx round trip checked by Excel | 0 differences, 0 repair prompts, 21 files (incl. validation, protection, threads, pictures, outline, icon sets) |
