@@ -28,6 +28,10 @@ export interface GridHost {
   fill(source: Rect, target: Rect, ctrl: boolean): void;
   /** Selection border dragged: move (or copy with Strg) to a new top-left cell. */
   move(source: Rect, to: { row: number; col: number }, copy: boolean): void;
+  /** A drag with the right mouse button ended: Excel's menu of what to do (fill handle or border). */
+  rightDrag?(kind: "fill" | "move", source: Rect, target: Rect, at: { x: number; y: number }): void;
+  /** Umschalt+drag of the border: the cells are taken out and inserted at `at` (before that row, or column). */
+  moveInsert?(source: Rect, at: { row: number; col: number }, rows: boolean): Rect | undefined;
   resizeCols(cols: number[], px: number): void;
   resizeRows(rows: number[], px: number): void;
   autofitCols(cols: number[]): void;
@@ -235,7 +239,7 @@ export class Grid {
       sheet: this.sheet, styles: this.wb.styles, rows: this.rows, cols: this.cols, zoom: this.zoom, dpr: this.dpr,
       width: this.width, height: this.height, headerW: this.headerW(), headerH: this.headerH(), panes: this.panes(),
       selection: this.selection, active: this.active, editing: this.editing ?? undefined, marquee: this.marquee,
-      marqueePhase: this.marqueePhase, ghost: this.ghost, refs: this.refHighlights(), showGrid: this.view.showGrid,
+      marqueePhase: this.marqueePhase, ghost: this.ghost, insertLine: this.insertLine, refs: this.refHighlights(), showGrid: this.view.showGrid,
       showHeaders: this.view.showHeaders, textCache: this.previewState ? new Map() : this.textCache, cond: this.condEval(), showFormulas: this.host.showFormulas(),
       preview: this.previewState, arrows: this.host.arrows?.(), circles: this.host.circles?.(),
     };
@@ -832,6 +836,7 @@ export class Grid {
     this.canvas.addEventListener("dblclick", (e) => this.onDouble(e));
     this.canvas.addEventListener("contextmenu", (e) => {
       e.preventDefault();
+      if (this.rightDragEnded) { this.rightDragEnded = false; return; }
       const p = this.local(e);
       const hit = this.hit(p.x, p.y);
       if (hit.area === "cell" && !this.selection.some((r) => inRect(r, hit.row, hit.col))) this.selectCell(hit.row, hit.col);
@@ -992,7 +997,17 @@ export class Grid {
     if (e.pointerType === "touch") { this.onTouchDown(e); return; }
     this.downAt = { x: e.clientX, y: e.clientY, moved: false };
     if (e.button !== 0) {
-      if (e.button === 2) this.editor.focus({ preventScroll: true });
+      if (e.button === 2) {
+        this.editor.focus({ preventScroll: true });
+        // The right button on the fill handle or the selection's border drags too; the menu
+        // comes when it is released (Excel).
+        const p = this.local(e);
+        const t = this.target(p.x, p.y);
+        if (!this.editing && (t.kind === "fill" || t.kind === "move") && this.host.rightDrag) {
+          this.canvas.setPointerCapture(e.pointerId);
+          this.drag = { kind: t.kind, start: { row: t.row, col: t.col }, x: p.x, y: p.y, extra: "right" };
+        }
+      }
       return;
     }
     const p = this.local(e);
@@ -1125,6 +1140,22 @@ export class Grid {
       case "move": {
         const sel = this.selection[0];
         const dr = hit.row - d.start.row, dc = hit.col - d.start.col;
+        // Umschalt: an insertion line between rows, under the cell at the pointer when the pointer
+        // is in its lower half (the middle included), above it otherwise; whole columns go between
+        // columns (recorded in Excel, 7 cases).
+        if (e.shiftKey && this.host.moveInsert) {
+          const rows = !(sel.r0 === 0 && sel.r1 === MAX_ROWS - 1);
+          const cell = this.rectOnCanvas({ r0: hit.row, c0: hit.col, r1: hit.row, c1: hit.col });
+          const after = cell ? (rows ? p.y >= cell.y + cell.h / 2 : p.x >= cell.x + cell.w / 2) : false;
+          const at = (rows ? hit.row : hit.col) + (after ? 1 : 0);
+          const c0 = Math.max(0, Math.min(MAX_COLS - 1 - (sel.c1 - sel.c0), sel.c0 + dc));
+          const r0 = Math.max(0, Math.min(MAX_ROWS - 1 - (sel.r1 - sel.r0), sel.r0 + dr));
+          this.insertLine = rows ? { r0: at, c0, r1: at - 1, c1: c0 + sel.c1 - sel.c0 } : { r0, c0: at, r1: r0 + sel.r1 - sel.r0, c1: at - 1 };
+          this.ghost = null;
+          this.invalidate();
+          return;
+        }
+        this.insertLine = null;
         const r0 = Math.max(0, Math.min(MAX_ROWS - 1 - (sel.r1 - sel.r0), sel.r0 + dr));
         const c0 = Math.max(0, Math.min(MAX_COLS - 1 - (sel.c1 - sel.c0), sel.c0 + dc));
         this.ghost = { r0, c0, r1: r0 + sel.r1 - sel.r0, c1: c0 + sel.c1 - sel.c0 };
@@ -1134,6 +1165,12 @@ export class Grid {
       }
     }
   }
+
+  /** The context menu after a right-button drag is the drag's own menu, not the cell menu. */
+  private rightDragEnded = false;
+
+  /** Umschalt+drag: where the moved cells will be inserted (r1 < r0: between rows, c1 < c0: between columns). */
+  private insertLine: Rect | null = null;
 
   private optBtn: HTMLElement | null = null;
   private optRect: Rect | null = null;
@@ -1202,6 +1239,17 @@ export class Grid {
     this.stopAutoScroll();
     if (!d) return;
     delete this.canvas.dataset.tip;
+    if (d.extra === "right" && (d.kind === "fill" || d.kind === "move")) {
+      const g = this.ghost;
+      this.ghost = null;
+      this.insertLine = null;
+      this.invalidate();
+      if (!g || !this.downAt.moved) return;
+      this.rightDragEnded = true;
+      setTimeout(() => { this.rightDragEnded = false; }, 400);
+      this.host.rightDrag!(d.kind, { ...this.selection[0] }, g, { x: e.clientX, y: e.clientY });
+      return;
+    }
     if (d.kind === "resizeCol" || d.kind === "resizeRow") {
       const live = this.liveSize;
       this.liveSize = null;
@@ -1231,6 +1279,21 @@ export class Grid {
       }
       this.host.fill(src, g, e.ctrlKey);
       this.select(g, { ...this.active });
+      return;
+    }
+    if (d.kind === "move" && this.insertLine) {
+      const line = this.insertLine;
+      this.insertLine = null;
+      const src = this.selection[0];
+      const rows = line.r1 < line.r0;
+      const at = { row: line.r0, col: line.c0 };
+      const same = rows ? line.c0 === src.c0 : line.r0 === src.r0;
+      const lo = rows ? src.r0 : src.c0, hi = rows ? src.r1 : src.c1, pos = rows ? at.row : at.col;
+      if (!same || pos < lo || pos > hi + 1) {
+        const dst = this.host.moveInsert!(src, at, rows);
+        if (dst) this.select(dst, { row: dst.r0 + (this.active.row - src.r0), col: dst.c0 + (this.active.col - src.c0) });
+      }
+      this.invalidate();
       return;
     }
     if (d.kind === "move" && this.ghost) {

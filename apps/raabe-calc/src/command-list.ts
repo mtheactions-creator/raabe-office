@@ -145,7 +145,7 @@ export const COMMANDS: Command[] = [
   later("edit.fillAcross", "Über Arbeitsblätter...", "fill-down"),
   cmd("edit.fillSeries", "Datenreihe...", "fill-down"),
   later("edit.justify", "Ausrichten", "align-justify"),
-  cmd("edit.flashFill", "Blitzvorschau", "flash-fill", { shortcut: "Strg+E", deferred: true }),
+  cmd("edit.flashFill", "Blitzvorschau", "flash-fill", { shortcut: "Strg+E" }),
   cmd("edit.clearAll", "Alle löschen", "eraser"),
   cmd("edit.clearFormats", "Formate löschen", "eraser"),
   cmd("edit.clearContents", "Inhalte löschen", "eraser", { shortcut: "Entf" }),

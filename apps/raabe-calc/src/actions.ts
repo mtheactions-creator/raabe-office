@@ -3,7 +3,7 @@
 // Every function runs inside the caller's undo step (History.step).
 
 import {
-  MAX_COLS, MAX_ROWS, adjustFormula, affectedByShift, shiftValidations, cellKey, formulaRefs, shiftFormula, toLocalFormula, type Cell, type CellStyle, type Rect, type Sheet, type Validation, type Workbook,
+  MAX_COLS, MAX_ROWS, colName, adjustFormula, affectedByShift, shiftValidations, cellKey, formulaRefs, shiftFormula, toLocalFormula, type Cell, type CellStyle, type Rect, type Sheet, type Validation, type Workbook,
 } from "@raabe/sheet-engine";
 import { readInput } from "./engine";
 import type { History } from "./ops";
@@ -447,6 +447,30 @@ export function insertDelete(ctx: Ctx, sheet: Sheet, kind: "rows" | "cols", at: 
 }
 
 /** Zellen einfügen/löschen with shifting (rechts/unten verschieben, nach links/oben verschieben). */
+/**
+ * Umschalt+drag of the selection's border: the cells are taken out (the rest closes the gap) and
+ * inserted before row or column `at` (the cells there move aside), as Excel's insert-move.
+ */
+export function moveInsert(ctx: Ctx, sheet: Sheet, src: Rect, at: { row: number; col: number }, rows: boolean): Rect {
+  const h = src.r1 - src.r0 + 1, w = src.c1 - src.c0 + 1;
+  // Where the gap closed, the cells after it moved up (or left): the place counts from there.
+  const overlap = rows ? at.col <= src.c1 && at.col + w - 1 >= src.c0 : at.row <= src.r1 && at.row + h - 1 >= src.r0;
+  const target = rows
+    ? { r0: overlap && at.row > src.r1 ? at.row - h : at.row, c0: at.col, r1: 0, c1: at.col + w - 1 }
+    : { r0: at.row, c0: overlap && at.col > src.c1 ? at.col - w : at.col, r1: at.row + h - 1, c1: 0 };
+  if (rows) target.r1 = target.r0 + h - 1;
+  else target.c1 = target.c0 + w - 1;
+  // Done as Excel's references see it: the cells go aside (references follow them), the gap
+  // closes, room opens at the target, and the cells come back into it.
+  const aside = { row: Math.max(src.r1, target.r1) + 1 + h, col: MAX_COLS - w };
+  ctx.history.whole(sheet);
+  moveCells(ctx, sheet, src, aside);
+  shiftCells(ctx, sheet, src, rows ? "up" : "left");
+  shiftCells(ctx, sheet, target, rows ? "down" : "right");
+  moveCells(ctx, sheet, { r0: aside.row, c0: aside.col, r1: aside.row + h - 1, c1: aside.col + w - 1 }, { row: target.r0, col: target.c0 });
+  return target;
+}
+
 export function shiftCells(ctx: Ctx, sheet: Sheet, r: Rect, dir: "right" | "down" | "left" | "up"): void {
   ctx.history.whole(sheet);
   const next = new Map<number, Cell>();
@@ -461,4 +485,122 @@ export function shiftCells(ctx: Ctx, sheet: Sheet, r: Rect, dir: "right" | "down
     if (nr < MAX_ROWS && nc < MAX_COLS) next.set(cellKey(nr, nc), c);
   }
   sheet.cells = next;
+  // Formulas on every sheet follow the shifted cells (references to deleted cells become #BEZUG!).
+  for (const s of ctx.wb.sheets) {
+    let saved = s === sheet;
+    for (const [k, c] of s.cells) {
+      if (c.f === undefined) continue;
+      const nf = adjustFormula(c.f, { kind: "cells", sheet: sheet.name, rect: r, dir, home: s.name });
+      if (nf === c.f) continue;
+      if (!saved) { ctx.history.whole(s); saved = true; }
+      s.cells.set(k, { ...c, f: nf });
+    }
+  }
+}
+
+/** Excel's day number → a date (serial 1 = 1.1.1900, with Excel's 29.2.1900). */
+const toDate = (n: number) => new Date(Date.UTC(1899, 11, 30) + Math.round(n) * 86400000);
+const toSerial = (d: Date) => Math.round((d.getTime() - Date.UTC(1899, 11, 30)) / 86400000);
+
+/**
+ * Tage / Arbeitstage / Monate / Jahre ausfüllen (right-drag menu): each lane continues from its
+ * last date by one unit (two dates: by their distance in that unit), keeping the format.
+ */
+export function fillDates(ctx: Ctx, sheet: Sheet, source: Rect, target: Rect, unit: "days" | "workdays" | "months" | "years"): void {
+  ctx.history.cells(sheet, target);
+  const vertical = target.r1 > source.r1 || target.r0 < source.r0;
+  const lanes = vertical ? range(source.c0, source.c1) : range(source.r0, source.r1);
+  const step = (d: Date, k: number): Date => {
+    const x = new Date(d.getTime());
+    if (unit === "months" || unit === "years") {
+      // As EDATUM: the same day in the month k months on, the month's last day where it is shorter.
+      const m = d.getUTCMonth() + (unit === "months" ? k : 12 * k);
+      const y = d.getUTCFullYear() + Math.floor(m / 12), mm = ((m % 12) + 12) % 12;
+      const last = new Date(Date.UTC(y, mm + 1, 0)).getUTCDate();
+      return new Date(Date.UTC(y, mm, Math.min(d.getUTCDate(), last)));
+    }
+    else if (unit === "days") x.setUTCDate(x.getUTCDate() + k);
+    else {
+      let left = Math.abs(k);
+      const dir = Math.sign(k);
+      while (left > 0) { x.setUTCDate(x.getUTCDate() + dir); if (x.getUTCDay() !== 0 && x.getUTCDay() !== 6) left--; }
+    }
+    return x;
+  };
+  for (const lane of lanes) {
+    const at = (i: number) => (vertical ? { row: i, col: lane } : { row: lane, col: i });
+    const first = vertical ? source.r0 : source.c0, last = vertical ? source.r1 : source.c1;
+    const start = sheet.get(at(first).row, at(first).col);
+    if (typeof start?.v !== "number") continue;
+    const end = sheet.get(at(last).row, at(last).col);
+    const d0 = toDate(start.v);
+    let by = 1;
+    if (last > first && typeof end?.v === "number") {
+      const d1 = toDate(end.v);
+      by = unit === "months" ? (d1.getUTCFullYear() - d0.getUTCFullYear()) * 12 + d1.getUTCMonth() - d0.getUTCMonth()
+        : unit === "years" ? d1.getUTCFullYear() - d0.getUTCFullYear() : Math.round((end.v - start.v) / (last - first));
+      by = by / (last - first) || 1;
+    }
+    const lo = vertical ? target.r0 : target.c0, hi = vertical ? target.r1 : target.c1;
+    for (let i = lo; i <= hi; i++) {
+      if (i >= first && i <= last) continue;
+      const p = at(i);
+      sheet.set(p.row, p.col, { v: toSerial(step(d0, Math.round((i - first) * by))), s: start.s });
+    }
+  }
+}
+
+/**
+ * Linearer / Exponentieller Trend (right-drag menu): the best-fitting straight line (or growth
+ * curve) through the source values, continued over the target.
+ */
+export function fillTrend(ctx: Ctx, sheet: Sheet, source: Rect, target: Rect, exponential: boolean): void {
+  ctx.history.cells(sheet, target);
+  const vertical = target.r1 > source.r1 || target.r0 < source.r0;
+  const lanes = vertical ? range(source.c0, source.c1) : range(source.r0, source.r1);
+  for (const lane of lanes) {
+    const at = (i: number) => (vertical ? { row: i, col: lane } : { row: lane, col: i });
+    const first = vertical ? source.r0 : source.c0, last = vertical ? source.r1 : source.c1;
+    const xs: number[] = [], ys: number[] = [];
+    for (let i = first; i <= last; i++) {
+      const v = sheet.get(at(i).row, at(i).col)?.v;
+      if (typeof v === "number" && (!exponential || v > 0)) { xs.push(i); ys.push(exponential ? Math.log(v) : v); }
+    }
+    if (!xs.length) continue;
+    const n = xs.length, mx = xs.reduce((a, b) => a + b, 0) / n, my = ys.reduce((a, b) => a + b, 0) / n;
+    let sxy = 0, sxx = 0;
+    for (let k = 0; k < n; k++) { sxy += (xs[k] - mx) * (ys[k] - my); sxx += (xs[k] - mx) ** 2; }
+    // One value: Excel steps by 1 (linear) or keeps it (growth).
+    const slope = n > 1 ? sxy / sxx : exponential ? 0 : 1;
+    const style = sheet.get(at(last).row, at(last).col)?.s;
+    const lo = vertical ? target.r0 : target.c0, hi = vertical ? target.r1 : target.c1;
+    for (let i = lo; i <= hi; i++) {
+      if (i >= first && i <= last) continue;
+      const y = my + slope * (i - mx);
+      sheet.set(at(i).row, at(i).col, { v: exponential ? Math.exp(y) : y, s: style });
+    }
+  }
+}
+
+/** Verknüpfung hier erstellen: formulas pointing to the source cells (one cell: absolute, as Excel's Verknüpfung einfügen). */
+export function linkCells(ctx: Ctx, sheet: Sheet, source: Rect, to: { row: number; col: number }): void {
+  const h = source.r1 - source.r0, w = source.c1 - source.c0;
+  ctx.history.cells(sheet, { r0: to.row, c0: to.col, r1: to.row + h, c1: to.col + w });
+  const single = h === 0 && w === 0;
+  for (let r = 0; r <= h; r++) for (let c = 0; c <= w; c++) {
+    const ref = single ? `$${colName(source.c0)}$${source.r0 + 1}` : `${colName(source.c0 + c)}${source.r0 + r + 1}`;
+    enter(ctx, sheet, { r0: to.row + r, c0: to.col + c, r1: to.row + r, c1: to.col + c }, `=${ref}`);
+  }
+}
+
+/** Link hier erstellen: the source's values with a link to the source cell inside the workbook. */
+export function hyperlinkCells(ctx: Ctx, sheet: Sheet, source: Rect, to: { row: number; col: number }): void {
+  const h = source.r1 - source.r0, w = source.c1 - source.c0;
+  ctx.history.cells(sheet, { r0: to.row, c0: to.col, r1: to.row + h, c1: to.col + w });
+  const q = /^[\p{L}_][\p{L}\p{N}_.]*$/u.test(sheet.name) ? sheet.name : `'${sheet.name.replace(/'/g, "''")}'`;
+  for (let r = 0; r <= h; r++) for (let c = 0; c <= w; c++) {
+    const src = sheet.get(source.r0 + r, source.c0 + c);
+    const old = sheet.get(to.row + r, to.col + c);
+    sheet.set(to.row + r, to.col + c, { v: src?.v ?? null, s: old?.s, link: `#${q}!${colName(source.c0 + c)}${source.r0 + r + 1}` });
+  }
 }

@@ -1,6 +1,7 @@
 // RaabeCalc's cell operations: AutoAusfüllen as recorded in Excel (catalogue_calc.py), inserting
 // and deleting rows with formulas following, copying with shifted references, undo and redo.
 
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { Calc, Workbook, parseRange, type Rect } from "@raabe/sheet-engine";
 import * as A from "../src/actions";
@@ -118,5 +119,60 @@ describe("AutoAusfüllen and Datenüberprüfung", () => {
     const whole = b.sheet.validations!.filter((v) => v.type === "whole").flatMap((v) => v.ref);
     expect(list).toEqual(expect.arrayContaining([R("A1"), R("A3"), R("A5")]));
     expect(whole).toEqual(expect.arrayContaining([R("A2"), R("A4")]));
+  });
+});
+
+describe("Umschalt+drag inserts the cells (recorded in Excel)", () => {
+  const cases: [Record<string, string>, string, { row: number; col: number }, Record<string, string>][] = [
+    [{ A1: "1", A2: "2", A3: "3", A4: "4", A5: "5" }, "A1", { row: 3, col: 0 }, { A1: "2", A2: "3", A3: "1", A4: "4", A5: "5" }],
+    [{ A1: "1", B1: "2", C1: "3", B2: "x" }, "A1", { row: 1, col: 1 }, { B1: "2", C1: "3", B2: "1", B3: "x" }],
+    [{ A1: "1", B1: "2", C1: "3", D1: "4" }, "A1", { row: 1, col: 2 }, { B1: "2", C1: "3", D1: "4", C2: "1" }],
+    [{ A1: "1", B1: "2", A2: "3", B2: "4", A3: "5" }, "A1", { row: 2, col: 0 }, { A1: "3", B1: "2", A2: "1", B2: "4", A3: "5" }],
+    [{ A1: "1", A2: "2", A3: "3", A4: "4" }, "A4", { row: 1, col: 0 }, { A1: "1", A2: "4", A3: "2", A4: "3" }],
+    [{ A1: "1", A2: "2", B1: "3", B2: "4", C1: "5", C2: "6" }, "A1:A2", { row: 1, col: 1 }, { B1: "3", C1: "5", B2: "1", C2: "6", B3: "2", B4: "4" }],
+  ];
+  for (const [setup, src, at, want] of cases) {
+    it(`${src} to row ${at.row + 1}, column ${at.col + 1}`, () => {
+      const b = book(setup);
+      b.history.step("m", () => A.moveInsert(b.ctx, b.sheet, R(src), at, true));
+      const got: Record<string, string> = {};
+      for (const [k, c] of b.sheet.cells) if (c.v !== null) got[`${String.fromCharCode(65 + (k % 16384))}${Math.floor(k / 16384) + 1}`] = String(c.v);
+      expect(got).toEqual(want);
+    });
+  }
+});
+
+describe("References follow inserted, deleted and insert-moved cells", () => {
+  it("Umschalt+drag: formulas point to the moved and the shifted cells", () => {
+    const b = book({ A1: "1", A2: "2", A3: "3", B1: "=A1*2", C1: "=A2" });
+    b.history.step("m", () => A.moveInsert(b.ctx, b.sheet, R("A1"), { row: 3, col: 0 }, true));
+    expect(b.formula("B1")).toBe("=A3*2");
+    expect(b.formula("C1")).toBe("=A1");
+  });
+  it("Zellen einfügen (shift down) moves references", () => {
+    const b = book({ A1: "1", A2: "2", B1: "=A2" });
+    b.history.step("i", () => A.shiftCells(b.ctx, b.sheet, R("A1"), "down"));
+    expect(b.formula("B1")).toBe("=A3");
+  });
+});
+
+describe("Right-drag fills", () => {
+  const recorded = JSON.parse(readFileSync("tools/feel-lab/results/2026-10-28-excel-autofill-types.json", "utf-8")) as { kind: string; source: number[]; values: number[] }[];
+  for (const c of recorded) {
+    it(`${c.kind} from ${c.source.join(", ")} as Excel`, () => {
+      const b = book(Object.fromEntries(c.source.map((v, i) => [`A${i + 1}`, String(v)])));
+      b.history.step("f", () => A.fillTrend(b.ctx, b.sheet, R(`A1:A${c.source.length}`), R(`A1:A${c.values.length}`), c.kind === "growth"));
+      c.values.forEach((v, i) => expect(b.sheet.get(i, 0)?.v as number).toBeCloseTo(v, 9));
+    });
+  }
+  it("Monate ausfüllen keeps the day or takes the month's last (EDATUM)", () => {
+    const b = book({ A1: "31.01.2026" });
+    b.history.step("f", () => A.fillDates(b.ctx, b.sheet, R("A1"), R("A1:A4"), "months"));
+    expect([1, 2, 3].map((i) => b.text(`A${i + 1}`))).toEqual(["28.02.2026", "31.03.2026", "30.04.2026"]);
+  });
+  it("Arbeitstage ausfüllen skips weekends", () => {
+    const b = book({ A1: "30.01.2026" });
+    b.history.step("f", () => A.fillDates(b.ctx, b.sheet, R("A1"), R("A1:A3"), "workdays"));
+    expect([b.text("A2"), b.text("A3")]).toEqual(["02.02.2026", "03.02.2026"]);
   });
 });

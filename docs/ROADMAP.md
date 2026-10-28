@@ -62,7 +62,8 @@ catalogue 142/142 cases as in Excel, context menus, ribbon menus and tooltips re
 (charts) and F (printing as Excel's PDF, clipboard with Excel both ways, CSV, conditional
 formatting, AutoFilter panel, templates D-064) are built (D-062, D-063); after them
 Datenüberprüfung, Blatt schützen, Formelüberwachung, Zahlen-/Textfilter, Drucktitel, Kopf- und
-Fußzeile, Schnellanalyse and Excel's keyboard modes (D-065). Open: the owner's trial and list;
+Fußzeile, Schnellanalyse, Symbolsätze, Blitzvorschau, Excel's keyboard modes and mouse drags
+(D-065). Open: the owner's trial and list;
 the deferred features in the report.
 
 ## Step 8: RaabePresent (proposal, not yet agreed)

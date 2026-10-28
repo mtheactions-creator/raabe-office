@@ -211,6 +211,15 @@ CASES: list[Case] = [
     C("Strg+Leertaste then type fills nothing", {}, [("keys", "ctrl+space"), ("type", "x"), ("keys", "enter")], "keys3"),
     C("undo after paste", {"A1": "5"}, [("keys", "ctrl+c"), ("keys", "down"), ("keys", "ctrl+v"), ("keys", "esc"), ("keys", "ctrl+z")], "keys3"),
     C("Alt+Enter twice", {}, [("type", "a"), ("keys", "alt+enter"), ("keys", "alt+enter"), ("type", "b"), ("keys", "enter")], "keys3"),
+    C("Umschalt+drag inserts between rows", {"A1": "1", "A2": "2", "A3": "3", "A4": "4", "A5": "5"}, [("border", "A1", "A3@bottom", "shift")], "move4"),
+    C("Umschalt+drag inserts between columns", {"A1": "1", "B1": "2", "C1": "3"}, [("border", "A1", "B1@right", "shift")], "move4"),
+    C("Umschalt+drag upwards", {"A1": "1", "A2": "2", "A3": "3", "A4": "4"}, [("border", "A4", "A1@bottom", "shift")], "move4", start="A4"),
+    C("Umschalt+drag to cell centre", {"A1": "1", "B1": "2", "C1": "3", "B2": "x"}, [("border", "A1", "B1@center", "shift")], "move5"),
+    C("Umschalt+drag far right", {"A1": "1", "B1": "2", "C1": "3", "D1": "4"}, [("border", "A1", "C1@center", "shift")], "move5"),
+    C("Umschalt+drag down a column", {"A1": "1", "B1": "2", "A2": "3", "B2": "4", "A3": "5"}, [("border", "A1", "A2@center", "shift")], "move5"),
+    C("Umschalt+drag column block right", {"A1": "1", "A2": "2", "B1": "3", "B2": "4", "C1": "5", "C2": "6"}, [("keys", "shift+down"), ("border", "A1", "B1@br", "shift")], "move5"),
+    C("Strg+E Blitzvorschau", {"A1": "Max Mustermann", "A2": "Erika Musterfrau", "A3": "Jonas Weber", "A4": "Ali Yilmaz", "B1": "Mustermann"}, [("keys", "ctrl+e")], "flash", start="B2"),
+    C("Strg+E with header", {"A1": "Name", "B1": "Vorname", "A2": "Max Mustermann", "A3": "Erika Musterfrau", "A4": "Jonas Weber", "B2": "Max"}, [("keys", "ctrl+e")], "flash", start="B3"),
     C("Strg+Umschalt+L filter", {"A1": "Name", "A2": "x", "A3": "y"}, [("keys", "ctrl+shift+l")], "sheets"),
 ]
 

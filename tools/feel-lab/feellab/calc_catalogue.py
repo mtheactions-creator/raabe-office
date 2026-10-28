@@ -280,7 +280,11 @@ def run_step(side, step: tuple) -> None:
         winapi.click(x1 - 1, y1 - 1, 2)
     elif kind == "border":
         x1, y1 = side.point(step[1], "right")
-        x2, y2 = side.point(step[2], "right")
+        # "A4@bottom": drop on that edge of the cell (Umschalt+drag picks the nearest gridline).
+        addr, where = (step[2].split("@") + ["right"])[:2]
+        x2, y2 = side.point(addr, where)
+        if where == "bottom":
+            x2 += 1
         mods = step[3] if len(step) > 3 else ""
         if mods:
             winapi.key_down(winapi.vk_for(mods))
@@ -400,8 +404,8 @@ class CalcSide:
         self.cache = {}
         for st in case.steps:
             for a in st[1:]:
-                if isinstance(a, str) and re.fullmatch(r"[A-Z]+\d+(:[A-Z]+\d+)?", a):
-                    for one in a.split(":"):
+                if isinstance(a, str) and re.fullmatch(r"[A-Z]+\d+(:[A-Z]+\d+)?(@\w+)?", a):
+                    for one in a.split("@")[0].split(":"):
                         for where in ("center", "br", "right", "bottom"):
                             p = self.js(f"__calc.point({_json.dumps(one)}, {_json.dumps(where)})")
                             self.cache[(one, where)] = (ox + p["x"] * dpr, oy + p["y"] * dpr)

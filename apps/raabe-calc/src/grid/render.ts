@@ -67,6 +67,8 @@ export interface DrawState {
   showFormulas?: boolean;
   /** Livevorschau: the format under the mouse in a list or palette, shown on the selection. */
   preview?: { ranges: Rect[]; change: (s: CellStyle) => void } | null;
+  /** Umschalt+drag: the insertion line (r1 < r0: between rows r0-1 and r0; c1 < c0: between columns). */
+  insertLine?: Rect | null;
   /** Ungültige Daten einkreisen: red ellipses around these cells. */
   circles?: { row: number; col: number }[];
   /** Spur zum Vorgänger/Nachfolger: arrows from referenced cells (null: another sheet) to formulas. */
@@ -472,6 +474,14 @@ function drawPane(ctx: CanvasRenderingContext2D, s: DrawState, pane: Pane): void
     ctx.stroke();
   }
   if (s.ghost) frame(ctx, rectOf(s.ghost), "#808080", dpr, 2, [3, 2]);
+  if (s.insertLine) {
+    // A thick grey bar on the gridline where the cells will go (Excel's I-beam).
+    const l = s.insertLine, rows = l.r1 < l.r0;
+    const b = rectOf(rows ? { r0: l.r0, c0: l.c0, r1: l.r0, c1: l.c1 } : { r0: l.r0, c0: l.c0, r1: l.r1, c1: l.c0 });
+    ctx.fillStyle = "#808080";
+    if (rows) ctx.fillRect(b.x, b.y - 1.5, b.w, 3);
+    else ctx.fillRect(b.x - 1.5, b.y, 3, b.h);
+  }
   if (s.marquee) {
     const b = rectOf(s.marquee);
     ctx.save();

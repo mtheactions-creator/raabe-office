@@ -4,7 +4,7 @@
 // opens and saves as German Excel does.
 
 import {
-  MAX_COLS, MAX_ROWS, Workbook, Sheet, cellName, colName, FUNCTIONS_DE, RIBBON_FORMATS, localFormat, parseRange, rangeName,
+  MAX_COLS, MAX_ROWS, Workbook, Sheet, cellName, colName, isDateFormat, FUNCTIONS_DE, RIBBON_FORMATS, localFormat, parseRange, rangeName,
   type CellStyle, type Rect,
 } from "@raabe/sheet-engine";
 import { readXlsx, writeXlsx, newWorkbook } from "@raabe/ooxml";
@@ -36,6 +36,7 @@ import { evaluateFeature } from "./evaluate";
 import { errorCheckFeature } from "./errorcheck";
 import { isValidEntry, validationFeature } from "./validation";
 import { quickFeature, type QuickTile } from "./quick";
+import { learn as learnFill, run as runFill } from "./flashfill";
 import { iconRule } from "./dialogs";
 import appIconUrl from "../../../branding/raabe-calc-small.svg?url";
 
@@ -302,6 +303,103 @@ export class CalcApp {
     this.grid.contentChanged();
   }
 
+  /**
+   * The menu after a drag with the right mouse button, with Excel's entries (recorded,
+   * probe_excel_rightdrag.py): for the fill handle the kinds of filling, for the border where and
+   * how the cells go.
+   */
+  private rightDragMenu(kind: "fill" | "move", source: Rect, target: Rect, at: { x: number; y: number }): void {
+    if (this.protection.on()) return;
+    const anchor = new DOMRect(at.x, at.y, 0, 0);
+    // After a choice the target is selected (Excel); Abbrechen leaves everything as it was.
+    const show = (entries: MenuEntry[]) => showMenu(this.commands, entries.map((m) => (typeof m === "object" && "run" in m && m.label !== "Abbrechen"
+      ? { ...m, run: () => { m.run(); this.grid.select(target, { row: target.r0, col: target.c0 }); } } : m)), anchor);
+    if (kind === "fill") {
+      const v = this.sheet.get(source.r0, source.c0);
+      const isDate = typeof v?.v === "number" && isDateFormat(this.wb.styles.get(v.s).numFmt);
+      const fill = (how: "copy" | "series" | "formats" | "values") => () => this.fillWithOptions(source, target, how);
+      const dates = (unit: "days" | "workdays" | "months" | "years") => () => this.change("AutoAusfüllen", () => A.fillDates(this.ctx, this.sheet, source, target, unit));
+      const trend = (exp: boolean) => () => this.change("AutoAusfüllen", () => A.fillTrend(this.ctx, this.sheet, source, target, exp));
+      const numbers = typeof v?.v === "number";
+      show([
+        { label: "Zellen kopieren", run: fill("copy") },
+        { label: "Datenreihe ausfüllen", run: fill("series") },
+        { label: "Nur Formate ausfüllen", run: fill("formats") },
+        { label: "Ohne Formatierung ausfüllen", run: fill("values") },
+        "-",
+        { label: "Tage ausfüllen", run: dates("days"), disabled: !isDate },
+        { label: "Arbeitstage ausfüllen", run: dates("workdays"), disabled: !isDate },
+        { label: "Monate ausfüllen", run: dates("months"), disabled: !isDate },
+        { label: "Jahre ausfüllen", run: dates("years"), disabled: !isDate },
+        "-",
+        { label: "Linearer Trend", run: trend(false), disabled: !numbers },
+        { label: "Exponentieller Trend", run: trend(true), disabled: !numbers },
+        { label: "Blitzvorschau", run: () => void this.flashFill() },
+        { label: "Reihe...", run: () => void this.dlg.series() },
+      ]);
+      return;
+    }
+    const to = { row: target.r0, col: target.c0 };
+    const copyAs = (what: "all" | "values" | "formats") => () => this.change("Kopieren", () => { A.copyCells(this.ctx, { sheet: this.sheet, rect: source }, this.sheet, to, what); });
+    const shifted = (cut: boolean, rows: boolean) => () => {
+      if (cut) { this.gridHost().moveInsert!(source, to, rows); return; }
+      this.change("Kopieren", () => {
+        A.shiftCells(this.ctx, this.sheet, target, rows ? "down" : "right");
+        A.copyCells(this.ctx, { sheet: this.sheet, rect: source }, this.sheet, to);
+      });
+    };
+    show([
+      { label: "Hierhin verschieben", run: () => this.gridHost().move(source, to, false) },
+      { label: "Hierhin kopieren", run: copyAs("all") },
+      { label: "Hierhin nur als Werte kopieren", run: copyAs("values") },
+      { label: "Hierhin nur als Format kopieren", run: copyAs("formats") },
+      { label: "Verknüpfung hier erstellen", run: () => this.change("Verknüpfung", () => A.linkCells(this.ctx, this.sheet, source, to)) },
+      { label: "Link hier erstellen", run: () => this.change("Link", () => A.hyperlinkCells(this.ctx, this.sheet, source, to)) },
+      "-",
+      { label: "Kopieren und nach unten verschieben", run: shifted(false, true) },
+      { label: "Kopieren und nach rechts verschieben", run: shifted(false, false) },
+      { label: "Ausschneiden und nach unten verschieben", run: shifted(true, true) },
+      { label: "Ausschneiden und nach rechts verschieben", run: shifted(true, false) },
+      "-",
+      { label: "Abbrechen", run: () => {} },
+    ]);
+  }
+
+  /**
+   * Blitzvorschau (Strg+E): the examples typed in the active cell's column, the texts in the
+   * columns to its left as sources (as the cells show them), the rest of the column filled where
+   * the sources have text; a first row that does not fit is taken as the header.
+   */
+  private async flashFill(): Promise<void> {
+    if (this.grid.isEditing) this.grid.commitEdit("none");
+    const sheet = this.sheet;
+    const { row, col } = sheet.view.active;
+    const region = this.grid.currentRegion(row, col);
+    if (col === 0 || region.c0 >= col) { await messageBox("RaabeCalc", "Blitzvorschau braucht links neben der Spalte Daten, aus denen sich die Einträge ableiten lassen."); return; }
+    const text = (r: number, c: number) => { const cell = sheet.get(r, c); return cell?.v === null || cell?.v === undefined ? "" : shown(cell, this.wb.styles.get(cell.s)).text; };
+    const srcCols: number[] = [];
+    for (let c = region.c0; c < col; c++) srcCols.push(c);
+    const rows: number[] = [];
+    for (let r = region.r0; r <= region.r1; r++) rows.push(r);
+    const sources = (r: number) => srcCols.map((c) => text(r, c));
+    const examples = rows.filter((r) => text(r, col) !== "");
+    let prog = learnFill(examples.map((r) => ({ sources: sources(r), output: text(r, col) })));
+    let body = rows;
+    if (!prog && examples[0] === region.r0) {
+      prog = learnFill(examples.slice(1).map((r) => ({ sources: sources(r), output: text(r, col) })));
+      body = rows.slice(1);
+    }
+    if (!prog) { await messageBox("RaabeCalc", "Blitzvorschau hat kein Muster gefunden. Geben Sie ein oder zwei weitere Beispiele ein und versuchen Sie es noch einmal."); return; }
+    const fills = body.filter((r) => text(r, col) === "" && sources(r).some((s) => s !== ""));
+    if (!fills.length) return;
+    this.change("Blitzvorschau", () => {
+      for (const r of fills) {
+        const out = runFill(prog!, sources(r));
+        if (out !== null) A.enter(this.ctx, sheet, { r0: r, c0: col, r1: r, c1: col }, out);
+      }
+    });
+  }
+
   /** Changes to the active workbook so far (features cache what they read from the cells by it). */
   get version(): number { return this.active.version; }
 
@@ -377,6 +475,13 @@ export class CalcApp {
         if (copy) A.copyCells(this.ctx, { sheet: this.sheet, rect: source }, this.sheet, to);
         else A.moveCells(this.ctx, this.sheet, source, to);
       }),
+      rightDrag: (kind, source, target, at) => this.rightDragMenu(kind, source, target, at),
+      moveInsert: (source, at, rows) => {
+        if (this.protection.on()) return undefined;
+        let dst: Rect | undefined;
+        this.change("Verschieben", () => { dst = A.moveInsert(this.ctx, this.sheet, source, at, rows); });
+        return dst;
+      },
       resizeCols: (cols, px) => { if (this.protection.enabled("cells.colWidth")) this.setColWidths(cols, px); },
       resizeRows: (rows, px) => { if (this.protection.enabled("cells.rowHeight")) this.setRowHeights(rows, px); },
       autofitCols: (cols) => { if (this.protection.enabled("cells.autofitCols")) this.autofitCols(cols); },
@@ -1463,6 +1568,7 @@ export class CalcApp {
     run("cells.protectSheet", () => void this.protection.protect());
     run("formulas.evaluate", () => void this.evaluator.open(), notEditing);
     run("data.validation", () => void this.validation.openDialog(), notEditing);
+    run("edit.flashFill", () => void this.flashFill());
     run("edit.selectValidation", () => this.validation.select());
     run("data.circleInvalid", () => this.circleInvalid());
     run("data.clearCircles", () => { this.circles.delete(this.sheet); this.grid.contentChanged(); }, () => this.circles.has(this.sheet));
@@ -1699,6 +1805,7 @@ export class CalcApp {
       case "KeyN": return run("file.new");
       case "KeyP": return run("file.print");
       case "KeyQ": return this.quick.open();
+      case "KeyE": return run("edit.flashFill");
       case "KeyW": return run("file.close");
       case "KeyZ": return run("edit.undo");
       case "KeyY": return run("edit.redo");

@@ -1,0 +1,318 @@
+{
+ "first name": {
+  "sources": [
+   [
+    "Max Mustermann",
+    "Erika Musterfrau",
+    "Jonas Weber",
+    "Lea Sophie Schmidt",
+    "Ali Yilmaz",
+    "Anna-Lena Krüger"
+   ]
+  ],
+  "examples": [
+   "Max"
+  ],
+  "result": [
+   "Max",
+   "Erika",
+   "Jonas",
+   "Lea",
+   "Ali",
+   "Anna"
+  ]
+ },
+ "last name": {
+  "sources": [
+   [
+    "Max Mustermann",
+    "Erika Musterfrau",
+    "Jonas Weber",
+    "Lea Sophie Schmidt",
+    "Ali Yilmaz",
+    "Anna-Lena Krüger"
+   ]
+  ],
+  "examples": [
+   "Mustermann"
+  ],
+  "result": [
+   "Mustermann",
+   "Musterfrau",
+   "Weber",
+   "Schmidt",
+   "Yilmaz",
+   "Krüger"
+  ]
+ },
+ "initial and last": {
+  "sources": [
+   [
+    "Max Mustermann",
+    "Erika Musterfrau",
+    "Jonas Weber",
+    "Lea Sophie Schmidt",
+    "Ali Yilmaz",
+    "Anna-Lena Krüger"
+   ]
+  ],
+  "examples": [
+   "M. Mustermann"
+  ],
+  "result": [
+   "M. Mustermann",
+   "E. Musterfrau",
+   "J. Weber",
+   "L. Schmidt",
+   "A. Yilmaz",
+   "A. Krüger"
+  ]
+ },
+ "last, first": {
+  "sources": [
+   [
+    "Max Mustermann",
+    "Erika Musterfrau",
+    "Jonas Weber",
+    "Lea Sophie Schmidt",
+    "Ali Yilmaz",
+    "Anna-Lena Krüger"
+   ]
+  ],
+  "examples": [
+   "Mustermann, Max"
+  ],
+  "result": [
+   "Mustermann, Max",
+   "Musterfrau, Erika",
+   "Weber, Jonas",
+   "Schmidt, Lea",
+   "Yilmaz, Ali",
+   "Krüger, Anna"
+  ]
+ },
+ "upper last": {
+  "sources": [
+   [
+    "Max Mustermann",
+    "Erika Musterfrau",
+    "Jonas Weber",
+    "Lea Sophie Schmidt",
+    "Ali Yilmaz",
+    "Anna-Lena Krüger"
+   ]
+  ],
+  "examples": [
+   "MUSTERMANN"
+  ],
+  "result": [
+   "MUSTERMANN",
+   "MUSTERFRAU",
+   "WEBER",
+   "SCHMIDT",
+   "YILMAZ",
+   "KRÜGER"
+  ]
+ },
+ "lower first": {
+  "sources": [
+   [
+    "Max Mustermann",
+    "Erika Musterfrau",
+    "Jonas Weber",
+    "Lea Sophie Schmidt",
+    "Ali Yilmaz",
+    "Anna-Lena Krüger"
+   ]
+  ],
+  "examples": [
+   "max"
+  ],
+  "result": [
+   "max",
+   "erika",
+   "jonas",
+   "lea",
+   "ali",
+   "anna"
+  ]
+ },
+ "mail user": {
+  "sources": [
+   [
+    "max.mustermann@raabeschule.de",
+    "erika.musterfrau@raabeschule.de",
+    "j.weber@schule.de",
+    "lea@example.org",
+    "ali.yilmaz@schule.de",
+    "a.krueger@raabeschule.de"
+   ]
+  ],
+  "examples": [
+   "max.mustermann"
+  ],
+  "result": [
+   "max.mustermann",
+   "erika.musterfrau",
+   "j.weber",
+   "lea",
+   "ali.yilmaz",
+   "a.krueger"
+  ]
+ },
+ "mail domain": {
+  "sources": [
+   [
+    "max.mustermann@raabeschule.de",
+    "erika.musterfrau@raabeschule.de",
+    "j.weber@schule.de",
+    "lea@example.org",
+    "ali.yilmaz@schule.de",
+    "a.krueger@raabeschule.de"
+   ]
+  ],
+  "examples": [
+   "raabeschule.de"
+  ],
+  "result": [
+   "raabeschule.de",
+   "raabeschule.de",
+   "schule.de",
+   "example.org",
+   "schule.de",
+   "raabeschule.de"
+  ]
+ },
+ "class": {
+  "sources": [
+   [
+    "Klasse 7b",
+    "Klasse 10a",
+    "Klasse 5c",
+    "Klasse 12",
+    "Klasse 8d",
+    "Klasse 6a"
+   ]
+  ],
+  "examples": [
+   "7b"
+  ],
+  "result": [
+   "7b",
+   "10a",
+   "5c",
+   "12",
+   "8d",
+   "6a"
+  ]
+ },
+ "date reordered": {
+  "sources": [
+   [
+    "2026-10-28",
+    "2025-01-05",
+    "2024-12-31",
+    "2026-03-01",
+    "2025-07-14",
+    "2023-11-09"
+   ]
+  ],
+  "examples": [
+   "28.10.2026"
+  ],
+  "result": [
+   "28.10.2026",
+   "05.01.2025",
+   "31.12.2024",
+   "01.03.2026",
+   "14.07.2025",
+   "09.11.2023"
+  ]
+ },
+ "two columns joined": {
+  "sources": [
+   [
+    "Max",
+    "Erika",
+    "Jonas",
+    "Lea",
+    "Ali",
+    "Anna"
+   ],
+   [
+    "Mustermann",
+    "Musterfrau",
+    "Weber",
+    "Schmidt",
+    "Yilmaz",
+    "Krüger"
+   ]
+  ],
+  "examples": [
+   "Max Mustermann"
+  ],
+  "result": [
+   "Max Mustermann",
+   "Erika Musterfrau",
+   "Jonas Weber",
+   "Lea Schmidt",
+   "Ali Yilmaz",
+   "Anna Krüger"
+  ]
+ },
+ "two columns initials": {
+  "sources": [
+   [
+    "Max",
+    "Erika",
+    "Jonas",
+    "Lea",
+    "Ali",
+    "Anna"
+   ],
+   [
+    "Mustermann",
+    "Musterfrau",
+    "Weber",
+    "Schmidt",
+    "Yilmaz",
+    "Krüger"
+   ]
+  ],
+  "examples": [
+   "MM"
+  ],
+  "result": [
+   "MM",
+   "EE",
+   "JJ",
+   "LL",
+   "AA",
+   "AA"
+  ]
+ },
+ "two examples": {
+  "sources": [
+   [
+    "Max Mustermann",
+    "Erika Musterfrau",
+    "Jonas Weber",
+    "Lea Sophie Schmidt",
+    "Ali Yilmaz",
+    "Anna-Lena Krüger"
+   ]
+  ],
+  "examples": [
+   "Max M.",
+   "Erika M."
+  ],
+  "result": [
+   "Max M.",
+   "Erika M.",
+   "Jonas W.",
+   "Lea Sophie S.",
+   "Ali Y.",
+   "Anna-Lena K."
+  ]
+ }
+}

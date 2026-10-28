@@ -1235,8 +1235,8 @@ Recorded in an Excel of our own with real input (`catalogue_calc.py`, 117 cases;
   Finanzmathematik lists the financial functions the engine has; Drucktitel (Wiederholungszeilen
   oben, Wiederholungsspalten links) repeat on every page as Excel prints them and are read and
   written as `_xlnm.Print_Titles`.
-- Not yet as Excel: the drag of the selection's border onto other sheets, Schnellanalyse,
-  Blitzvorschau, comments (Notizen work). Datenüberprüfung and Blatt schützen: D-065.
+- Not yet as Excel: the drag of the selection's border onto other sheets, comments (Notizen
+  work). Datenüberprüfung, Blatt schützen, Schnellanalyse, Blitzvorschau: D-065.
 
 ### D-064 Raabeschule templates for RaabeCalc (2026-10-28)
 As RaabeWrite's (D-035): our own designs from ordinary Excel features, so files from them work in
@@ -1309,3 +1309,23 @@ Excel a school uses most among those first deferred.
 - **Keyboard modes** (recorded): Ende then an arrow jumps as Strg+arrow (status bar "Endmodus"),
   F8 Auswahl erweitern, Umschalt+F8 Abschnitt hinzufügen oder entfernen, Strg+Rücktaste shows the
   active cell.
+- **Umschalt+drag of the selection's border** (7 recorded cases): the cells are taken out (the
+  rest of their columns closes up) and inserted between rows, below the cell at the pointer when
+  the pointer is in its lower half, above it otherwise, in the pointer's columns; a grey line
+  shows the place while dragging. Whole columns go between columns. Formulas follow the moved
+  cells and the cells that closed up or made room; inserting and deleting cells (Zellen einfügen /
+  löschen with shifting) now adjusts references everywhere too, as Excel does.
+- **Dragging with the right mouse button** (menus recorded, `probe_excel_rightdrag.py`): the fill
+  handle offers Zellen kopieren, Datenreihe ausfüllen, Nur Formate / Ohne Formatierung
+  ausfüllen, Tage / Arbeitstage / Monate / Jahre ausfüllen (dates only; months as EDATUM),
+  Linearer and Exponentieller Trend (Excel's results for 6 recorded cases), Reihe...; the border
+  offers Hierhin verschieben / kopieren / nur als Werte / nur als Format kopieren, Verknüpfung
+  and Link hier erstellen, Kopieren / Ausschneiden und nach unten / rechts verschieben,
+  Abbrechen.
+- **Blitzvorschau** (Strg+E, Daten > Blitzvorschau, right-drag menu): from the examples typed in
+  the column, the cheapest description out of words (the first counted from the left, the last
+  from the right), first letters, stretches between delimiter characters, case changes and
+  literal text, applied to the rows below where the columns to the left have text; a first row
+  that does not fit is the header. Excel's own results (Range.FlashFill) for 13 school cases are
+  reproduced except two rows where Excel keeps a double first name ("Lea Sophie S."). Excel's
+  grey suggestions while typing are not built.

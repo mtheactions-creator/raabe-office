@@ -1,0 +1,98 @@
+{
+ "fillHandle": [
+  {
+   "name": "Zellen kopieren",
+   "enabled": true
+  },
+  {
+   "name": "Datenreihe ausfüllen",
+   "enabled": true
+  },
+  {
+   "name": "Nur Formate ausfüllen",
+   "enabled": true
+  },
+  {
+   "name": "Ohne Formatierung ausfüllen",
+   "enabled": true
+  },
+  {
+   "name": "Tage ausfüllen",
+   "enabled": false
+  },
+  {
+   "name": "Arbeitstage ausfüllen",
+   "enabled": false
+  },
+  {
+   "name": "Monate ausfüllen",
+   "enabled": false
+  },
+  {
+   "name": "Jahre ausfüllen",
+   "enabled": false
+  },
+  {
+   "name": "Linearer Trend",
+   "enabled": true
+  },
+  {
+   "name": "Exponentieller Trend",
+   "enabled": true
+  },
+  {
+   "name": "Blitzvorschau",
+   "enabled": true
+  },
+  {
+   "name": "Reihe...",
+   "enabled": true
+  }
+ ],
+ "border": [
+  {
+   "name": "Hierhin verschieben",
+   "enabled": true
+  },
+  {
+   "name": "Hierhin kopieren",
+   "enabled": true
+  },
+  {
+   "name": "Hierhin nur als Werte kopieren",
+   "enabled": true
+  },
+  {
+   "name": "Hierhin nur als Format kopieren",
+   "enabled": true
+  },
+  {
+   "name": "Verknüpfung hier erstellen",
+   "enabled": true
+  },
+  {
+   "name": "Link hier erstellen",
+   "enabled": true
+  },
+  {
+   "name": "Kopieren und nach unten verschieben",
+   "enabled": true
+  },
+  {
+   "name": "Kopieren und nach rechts verschieben",
+   "enabled": true
+  },
+  {
+   "name": "Ausschneiden und nach unten verschieben",
+   "enabled": true
+  },
+  {
+   "name": "Ausschneiden und nach rechts verschieben",
+   "enabled": true
+  },
+  {
+   "name": "Abbrechen",
+   "enabled": true
+  }
+ ]
+}
