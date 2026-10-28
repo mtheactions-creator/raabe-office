@@ -1311,6 +1311,12 @@ Excel a school uses most among those first deferred.
   shows the rows with that colour (5/5 recorded cases), sorting puts them on top and keeps the
   others' order (as Excel); colour filters are read and written as Excel's colorFilter. Colours
   from conditional formats are not offered yet.
+- **Zielwertsuche** (Was-wäre-wenn-Analyse; Szenario-Manager and Datentabelle stay deferred):
+  Zielzelle, Zielwert, Veränderbare Zelle; stops within 0,001 of the goal or after 100 steps as
+  Excel does; Newton's steps with a measured slope, never larger than the value itself, so it finds
+  the solution nearest the start. Against Excel's Range.GoalSeek in 10 school cases: the same
+  outcome and the same solution (Excel's exact iterations are not reproduced). Abbrechen in the
+  status box puts the old value back; the box's text is our own.
 - **Keyboard modes** (recorded): Ende then an arrow jumps as Strg+arrow (status bar "Endmodus"),
   F8 Auswahl erweitern, Umschalt+F8 Abschnitt hinzufügen oder entfernen, Strg+Rücktaste shows the
   active cell.

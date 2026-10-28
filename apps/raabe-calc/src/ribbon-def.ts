@@ -246,7 +246,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
           id: "tools", label: "Datentools", key: "ZD", icon: "text-columns",
           controls: [b("data.textToColumns", "T", "large"), stack(b("edit.flashFill", "B"), b("data.removeDuplicates", "4"), split("data.validation", "Ü", "small", [{ cmd: "data.validation" }, { cmd: "data.circleInvalid" }, { cmd: "data.clearCircles" }])), b("data.consolidate", "8", "large")],
         },
-        { id: "forecast", label: "Prognose", key: "Z3", icon: "trend", controls: [b("data.whatIf", "5", "large"), b("data.forecast", "3", "large")] },
+        { id: "forecast", label: "Prognose", key: "Z3", icon: "trend", controls: [dd("data.whatIf", "5", "large", [{ cmd: "data.scenarios" }, { cmd: "data.goalSeek" }, { cmd: "data.dataTable" }]), b("data.forecast", "3", "large")] },
         { id: "outline", label: "Gliederung", key: "ZO", icon: "outline", controls: [b("data.group", "G", "large"), b("data.ungroup", "H", "large"), b("data.subtotal", "B", "large")] },
       ],
     },

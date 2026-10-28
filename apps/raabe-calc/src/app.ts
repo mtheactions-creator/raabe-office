@@ -38,6 +38,7 @@ import { isValidEntry, validationFeature } from "./validation";
 import { quickFeature, type QuickTile } from "./quick";
 import { learn as learnFill, run as runFill } from "./flashfill";
 import { regroup } from "./grid/outline";
+import { seek } from "./goalseek";
 import { iconRule } from "./dialogs";
 import appIconUrl from "../../../branding/raabe-calc-small.svg?url";
 
@@ -420,6 +421,51 @@ export class CalcApp {
       this.history.whole(this.sheet);
       regroup(this.sheet, axis!, a, b, delta);
     });
+  }
+
+  /**
+   * Zielwertsuche: Zielzelle (a formula), Zielwert, Veränderbare Zelle (a value); the search runs
+   * on the workbook itself, and Abbrechen in the result box puts the old value back (Excel).
+   */
+  private async goalSeek(): Promise<void> {
+    const sheet = this.sheet, si = this.wb.sheets.indexOf(sheet);
+    const a = sheet.view.active;
+    const target = h("input", { type: "text", value: cellName(a.row, a.col), style: "width:120px" }) as HTMLInputElement;
+    const goal = h("input", { type: "text", style: "width:120px" }) as HTMLInputElement;
+    const changing = h("input", { type: "text", style: "width:120px" }) as HTMLInputElement;
+    const body = h("div", { class: "goalseek" },
+      h("label", { class: "field" }, "Zielzelle:", target), h("label", { class: "field" }, "Zielwert:", goal), h("label", { class: "field" }, "Veränderbare Zelle:", changing));
+    setTimeout(() => goal.focus());
+    const ok = await showDialog({ title: "Zielwertsuche", body, buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
+    if (!ok) return;
+    const t = parseRange(target.value.replace(/\$/g, "")), c = parseRange(changing.value.replace(/\$/g, ""));
+    const g = Number(goal.value.trim().replace(/\./g, "").replace(",", "."));
+    if (!t || t.r0 !== t.r1 || t.c0 !== t.c1 || sheet.get(t.r0, t.c0)?.f === undefined) { await messageBox("RaabeCalc", "Die Zielzelle muss eine Formel enthalten."); return; }
+    if (!c || c.r0 !== c.r1 || c.c0 !== c.c1 || sheet.get(c.r0, c.c0)?.f !== undefined) { await messageBox("RaabeCalc", "Die veränderbare Zelle muss einen Wert enthalten, keine Formel."); return; }
+    if (!goal.value.trim() || !Number.isFinite(g)) { await messageBox("RaabeCalc", "Der Zielwert muss eine Zahl sein."); return; }
+    const old = sheet.get(c.r0, c.c0);
+    const start = typeof old?.v === "number" ? old.v : 0;
+    const calc = this.active.calc;
+    const f = (x: number) => {
+      sheet.set(c.r0, c.c0, { ...(old ?? { v: null }), v: x });
+      calc.changed(si, [{ row: c.r0, col: c.c0 }]);
+      const v = calc.value(si, t.r0, t.c0);
+      return typeof v === "number" ? v : NaN;
+    };
+    const r = seek(f, g, start);
+    // The search's own changes go; the result is one undo step.
+    sheet.set(c.r0, c.c0, old);
+    calc.changed(si, [{ row: c.r0, col: c.c0 }]);
+    this.change("Zielwertsuche", () => {
+      this.history.cell(sheet, c.r0, c.c0);
+      sheet.set(c.r0, c.c0, { ...(old ?? { v: null }), v: r.x });
+    });
+    const shownY = shown(sheet.get(t.r0, t.c0), this.wb.styles.get(sheet.get(t.r0, t.c0)?.s)).text;
+    const keep = await showDialog({ title: "Status der Zielwertsuche", body: h("div", null,
+      h("p", null, r.found ? `Für Zelle ${cellName(t.r0, t.c0)} wurde ein Wert gefunden, der das Ziel erreicht.` : `Für Zelle ${cellName(t.r0, t.c0)} wurde kein Wert gefunden, der das Ziel erreicht.`),
+      h("div", { class: "field" }, "Zielwert:", h("span", null, goal.value)), h("div", { class: "field" }, "Aktueller Wert:", h("span", null, shownY))),
+      buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
+    if (!keep) void this.commands.run("edit.undo");
   }
 
   /** Teilergebnisse: group column, function, columns to total, replace or remove (Excel's dialog). */
@@ -1640,6 +1686,8 @@ export class CalcApp {
     run("edit.flashFill", () => void this.flashFill());
     run("data.group", () => void this.group(1), notEditing);
     run("data.subtotal", () => void this.subtotalDialog(), notEditing);
+    run("data.whatIf", () => {});
+    run("data.goalSeek", () => void this.goalSeek(), notEditing);
     run("data.ungroup", () => void this.group(-1), notEditing);
     run("edit.selectValidation", () => this.validation.select());
     run("data.circleInvalid", () => this.circleInvalid());
