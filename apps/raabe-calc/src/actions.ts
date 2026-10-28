@@ -604,3 +604,85 @@ export function hyperlinkCells(ctx: Ctx, sheet: Sheet, source: Rect, to: { row: 
     sheet.set(to.row + r, to.col + c, { v: src?.v ?? null, s: old?.s, link: `#${q}!${colName(source.c0 + c)}${source.r0 + r + 1}` });
   }
 }
+
+/**
+ * Teilergebnis's functions: the dialog's name, TEILERGEBNIS's number, and the labels Excel writes
+ * after a group's value and in the last row (recorded: probe_excel_subtotal.py).
+ */
+export const SUBTOTALS: { name: string; code: number; label: string; grand: string }[] = [
+  { name: "Summe", code: 9, label: "Ergebnis", grand: "Gesamtergebnis" },
+  { name: "Anzahl", code: 3, label: "Anzahl", grand: "Gesamtanzahl" },
+  { name: "Mittelwert", code: 1, label: "Mittelwert", grand: "Gesamtmittelwert" },
+  { name: "Maximum", code: 4, label: "Max.", grand: "Gesamtmaximum" },
+  { name: "Minimum", code: 5, label: "Min.", grand: "Gesamtminimum" },
+  { name: "Produkt", code: 6, label: "Produkt", grand: "Gesamtprodukt" },
+  { name: "Anzahl Zahlen", code: 2, label: "Anzahl", grand: "Gesamtanzahl" },
+  { name: "Standardabweichung (Stichprobe)", code: 7, label: "STABW", grand: "Gesamtstandardabweichung (Stichprobe)" },
+  { name: "Standardabweichung (Grundgesamtheit)", code: 8, label: "Standardabweichung (Grundgesamtheit)", grand: "Gesamtstandardabweichung (Grundgesamtheit)" },
+  { name: "Varianz (Stichprobe)", code: 10, label: "Var", grand: "Gesamtvarianz" },
+  { name: "Varianz (Grundgesamtheit)", code: 11, label: "Varianz (Grundgesamtheit)", grand: "Gesamtvarianz" },
+];
+
+/**
+ * Teilergebnis as Excel inserts it: after each run of equal values in the group column a row with
+ * "<value> <label>" (bold) and TEILERGEBNIS over the run in each chosen column, at the end a
+ * row with the total over everything; data rows get outline level 2, result rows 1.
+ * `region` includes the header row. Returns the new region.
+ */
+export function subtotal(ctx: Ctx, sheet: Sheet, region: Rect, groupCol: number, fn: (typeof SUBTOTALS)[number], cols: number[]): Rect {
+  ctx.history.whole(sheet);
+  const text = (r: number, c: number) => { const v = sheet.get(r, c)?.v; return v === null || v === undefined ? "" : String(v); };
+  const first = region.r0 + 1;
+  let row = first, end = region.r1;
+  const bold = (r: number, c: number) => {
+    const cell = sheet.get(r, c) ?? { v: null };
+    sheet.set(r, c, { ...cell, s: ctx.wb.styles.derive(cell.s, (st) => { st.font.bold = true; }) });
+  };
+  const resultRow = (at: number, label: string, from: number, to: number) => {
+    insertDelete(ctx, sheet, "rows", at, 1);
+    // An inserted row takes the format of the one above (Excel does not here): start clean.
+    for (let c = region.c0; c <= region.c1; c++) sheet.set(at, c, undefined);
+    enter(ctx, sheet, { r0: at, c0: groupCol, r1: at, c1: groupCol }, label);
+    bold(at, groupCol);
+    for (const c of cols) {
+      const col = colName(c);
+      enter(ctx, sheet, { r0: at, c0: c, r1: at, c1: c }, `=TEILERGEBNIS(${fn.code};${col}${from + 1}:${col}${to + 1})`);
+    }
+    const info = sheet.rows.get(at);
+    sheet.rows.set(at, { ...(info ?? {}), outline: label === fn.grand ? undefined : 1 });
+  };
+  let lastData = first;
+  while (row <= end) {
+    const value = text(row, groupCol);
+    let last = row;
+    while (last + 1 <= end && text(last + 1, groupCol) === value) last++;
+    for (let r = row; r <= last; r++) sheet.rows.set(r, { ...(sheet.rows.get(r) ?? {}), outline: 2 });
+    resultRow(last + 1, `${value} ${fn.label}`, row, last);
+    lastData = last;
+    end++;
+    row = last + 2;
+  }
+  // The total runs from the first to the last data row (Excel's range leaves out the last result row).
+  resultRow(end + 1, fn.grand, first, lastData);
+  return { ...region, r1: end + 1 };
+}
+
+/** Teilergebnis > Alle entfernen: the result rows (with TEILERGEBNIS) go, and the outline with them. */
+export function removeSubtotals(ctx: Ctx, sheet: Sheet, region: Rect): Rect {
+  ctx.history.whole(sheet);
+  let r1 = region.r1;
+  for (let r = region.r1; r > region.r0; r--) {
+    let has = false;
+    for (let c = region.c0; c <= region.c1 && !has; c++) has = /^SUBTOTAL\(/i.test(sheet.get(r, c)?.f ?? "");
+    if (has) { insertDelete(ctx, sheet, "rows", r, -1); r1--; }
+  }
+  for (let r = region.r0; r <= r1; r++) {
+    const info = sheet.rows.get(r);
+    if (info?.outline || info?.collapsed || info?.hidden) {
+      const { outline: _o, collapsed: _c, hidden: _h, ...rest } = info;
+      if (Object.keys(rest).length) sheet.rows.set(r, rest);
+      else sheet.rows.delete(r);
+    }
+  }
+  return { ...region, r1 };
+}

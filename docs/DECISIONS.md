@@ -1322,6 +1322,22 @@ Excel a school uses most among those first deferred.
   offers Hierhin verschieben / kopieren / nur als Werte / nur als Format kopieren, Verknüpfung
   and Link hier erstellen, Kopieren / Ausschneiden und nach unten / rechts verschieben,
   Abbrechen.
+- **Gruppieren** (Daten > Gliederung, Umschalt+Alt+Rechts / Links): rows or columns get an
+  outline level (up to 7); a bar beside the headers shows one lane per level with level buttons
+  1, 2, …, a bracket along each group and a −/+ box at its summary row below (column to the
+  right), as Excel's default; collapsing hides the group and marks the summary row as the .xlsx
+  keeps it, and outlineLevelRow/Col are written so Excel shows the bar. Sizes of the bar are our
+  estimate (16 px per lane at 100 %), not measured.
+- **Teilergebnis** (recorded with `probe_excel_subtotal.py`, Range.Subtotal in an Excel of our
+  own; all 11 functions equal cell by cell): after each run of equal values a bold row
+  "<value> Ergebnis" (Anzahl, Mittelwert, Max., Min., Produkt, STABW, Var … as Excel names them)
+  with TEILERGEBNIS over the run, a last row "Gesamtergebnis" over the first to the last data row,
+  outline level 2 for data rows and 1 for result rows; Alle entfernen and Vorhandene ersetzen
+  remove the rows with TEILERGEBNIS; Seitenumbrüche zwischen Gruppen starts a page after each
+  result row. The dialog's labels are from German Excel, not recorded.
+- **Seitenumbrüche** (Seitenlayout > Umbrüche: einfügen above and left of the active cell,
+  entfernen, Alle zurücksetzen): printing starts a new page there, as Excel's PDF shows (2/2
+  layouts with manual breaks equal); kept in the file as Excel's rowBreaks/colBreaks.
 - **Blitzvorschau** (Strg+E, Daten > Blitzvorschau, right-drag menu): from the examples typed in
   the column, the cheapest description out of words (the first counted from the left, the last
   from the right), first letters, stretches between delimiter characters, case changes and

@@ -41,7 +41,7 @@ grid and the controls were built and measured against Excel.
   Excel's verdict on 150 entries reproduced), Blatt schützen with Excel's password hash, Spur zum
   Vorgänger/Nachfolger, Formelauswertung, Fehlerüberprüfung, Drucktitel, Kopf- und Fußzeile,
   Ungültige Daten einkreisen, Zahlen- und Textfilter (Top 10, Durchschnitt), Schnellanalyse,
-  Symbolsätze, Blitzvorschau, Umschalt+drag and the right-button drag menus, Inhalte auswählen,
+  Symbolsätze, Blitzvorschau, Gruppieren and Teilergebnis, Umschalt+drag and the right-button drag menus, Inhalte auswählen,
   Notizen typed in place, the Dropdown-Auswahlliste (Alt+Unten), Finanzmathematik, Excel's
   keyboard modes (Ende, F8, Umschalt+F8, Strg+Rücktaste).
 
@@ -63,7 +63,7 @@ grid and the controls were built and measured against Excel.
 
 ## Not done / known gaps
 
-- Outline (Gruppierung), comments (threaded), shapes and
+- Comments (threaded), shapes and
   pictures in sheets (kept in the file, not shown), PivotTables, colour filters, Seitenlayout
   and Umbruchvorschau views: deferred, greyed with "Zurückgestellt".
 - Diagramm in RaabeWrite (Step 7b) is the next step.

@@ -422,6 +422,16 @@ export function readPage(parts: { name: string; xml: string }[]): PageSetup | un
   }
   if (yes(po?.gridLines)) page.gridLines = true;
   if (yes(po?.headings)) page.headings = true;
+  const breaks = (name: string) => {
+    const x = get(name);
+    if (!x) return undefined;
+    const ids = [...x.matchAll(/<brk\b([^>]*)\/?>/g)].filter((m) => /\bman="(1|true)"/.test(m[1])).map((m) => Number(/\bid="(\d+)"/.exec(m[1])?.[1] ?? NaN)).filter((n) => n > 0);
+    return ids.length ? ids : undefined;
+  };
+  page.rowBreaks = breaks("rowBreaks");
+  page.colBreaks = breaks("colBreaks");
+  if (!page.rowBreaks) delete page.rowBreaks;
+  if (!page.colBreaks) delete page.colBreaks;
   const hf = get("headerFooter");
   if (hf) {
     const part = (name: string) => { const m = new RegExp(`<${name}>([\\s\\S]*?)</${name}>`).exec(hf); return m ? unesc(m[1]) : undefined; };
@@ -429,6 +439,14 @@ export function readPage(parts: { name: string; xml: string }[]): PageSetup | un
     page.footer = part("oddFooter");
   }
   return page;
+}
+
+/** <rowBreaks>/<colBreaks> for manual page breaks (Excel's form), null without any. */
+export function breaksXml(ids: number[] | undefined, rows: boolean): string | null {
+  if (!ids?.length) return null;
+  const max = rows ? 16383 : 1048575;
+  const sorted = [...new Set(ids)].sort((a, b) => a - b);
+  return `<${rows ? "rowBreaks" : "colBreaks"} count="${sorted.length}" manualBreakCount="${sorted.length}">${sorted.map((i) => `<brk id="${i}" max="${max}" man="1"/>`).join("")}</${rows ? "rowBreaks" : "colBreaks"}>`;
 }
 
 /** <headerFooter> with the model's odd header and footer; Excel's other parts (first page, even pages) stay. */

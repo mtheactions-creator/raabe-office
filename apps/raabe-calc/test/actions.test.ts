@@ -176,3 +176,31 @@ describe("Right-drag fills", () => {
     expect([b.text("A2"), b.text("A3")]).toEqual(["02.02.2026", "03.02.2026"]);
   });
 });
+
+describe("Teilergebnis as Excel inserts it", () => {
+  const rec = JSON.parse(readFileSync("tools/feel-lab/results/2026-10-28-excel-subtotal.json", "utf-8")) as Record<string, { cells: string[]; level: number; bold: boolean[] }[]>;
+  const FN: Record<string, [string, number[]]> = {
+    "Summe Punkte": ["Summe", [3]], "Mittelwert Note und Punkte": ["Mittelwert", [2, 3]], "Anzahl Note": ["Anzahl", [2]], "Max Punkte": ["Maximum", [3]],
+    "Min Punkte": ["Minimum", [3]], "Produkt Note": ["Produkt", [2]], "Anzahl Zahlen": ["Anzahl Zahlen", [2]], StdAbw: ["Standardabweichung (Stichprobe)", [3]],
+    StdAbwN: ["Standardabweichung (Grundgesamtheit)", [3]], Varianz: ["Varianz (Stichprobe)", [3]], VarianzN: ["Varianz (Grundgesamtheit)", [3]],
+  };
+  for (const [name, rows] of Object.entries(rec)) {
+    it(name, () => {
+      const data = [["Klasse", "Name", "Note", "Punkte"], ["7a", "Anna", "2", "11"], ["7a", "Ben", "3", "8"], ["7b", "Cem", "1", "14"], ["7b", "Dora", "4", "6"], ["7b", "Emil", "2", "10"], ["8a", "Finn", "3", "9"]];
+      const setup: Record<string, string> = {};
+      data.forEach((r, i) => r.forEach((v, j) => { setup[`${"ABCD"[j]}${i + 1}`] = v; }));
+      const b = book(setup);
+      const [fname, cols] = FN[name];
+      b.history.step("t", () => A.subtotal(b.ctx, b.sheet, R("A1:D7"), 0, A.SUBTOTALS.find((f) => f.name === fname)!, cols));
+      rows.forEach((row, r) => {
+        expect((b.sheet.rows.get(r)?.outline ?? 0) + 1, `level of row ${r + 1}`).toBe(row.level);
+        row.cells.forEach((want, c) => {
+          const cell = b.sheet.get(r, c);
+          const got = cell?.f !== undefined ? formulaLocal(cell) : cell?.v === null || cell?.v === undefined ? "" : String(cell.v);
+          expect(got, `${"ABCD"[c]}${r + 1}`).toBe(want);
+          expect(!!b.wb.styles.get(cell?.s).font.bold, `bold ${"ABCD"[c]}${r + 1}`).toBe(row.bold[c]);
+        });
+      });
+    });
+  }
+});

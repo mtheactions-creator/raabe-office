@@ -296,6 +296,9 @@ export interface PageSetup {
   headings?: boolean;
   /** The print area (the defined name _xlnm.Print_Area). */
   printArea?: Rect;
+  /** Manual page breaks: a new page starts at these rows / columns (0-based; the file's brk id). */
+  rowBreaks?: number[];
+  colBreaks?: number[];
   /** Kopf- und Fußzeile in Excel's codes ("&LText&C&P&R&D"; &P page, &N pages, &D date, &T time, &F file, &A sheet). */
   header?: string;
   footer?: string;

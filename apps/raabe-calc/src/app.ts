@@ -37,6 +37,7 @@ import { errorCheckFeature } from "./errorcheck";
 import { isValidEntry, validationFeature } from "./validation";
 import { quickFeature, type QuickTile } from "./quick";
 import { learn as learnFill, run as runFill } from "./flashfill";
+import { regroup } from "./grid/outline";
 import { iconRule } from "./dialogs";
 import appIconUrl from "../../../branding/raabe-calc-small.svg?url";
 
@@ -400,6 +401,69 @@ export class CalcApp {
     });
   }
 
+  /**
+   * Gruppieren / Gruppierung aufheben: whole rows or columns directly, otherwise Excel's question
+   * whether the rows or the columns of the selection are meant.
+   */
+  private async group(delta: 1 | -1): Promise<void> {
+    const r = this.grid.selection.at(-1)!;
+    let axis: "rows" | "cols" | null = r.c0 === 0 && r.c1 === MAX_COLS - 1 ? "rows" : r.r0 === 0 && r.r1 === MAX_ROWS - 1 ? "cols" : null;
+    if (!axis) {
+      const rows = h("input", { type: "radio", name: "grp", checked: true }) as HTMLInputElement;
+      const body = h("div", null, h("label", { class: "check" }, rows, "Zeilen"), h("label", { class: "check" }, h("input", { type: "radio", name: "grp" }), "Spalten"));
+      const ok = await showDialog({ title: delta > 0 ? "Gruppieren" : "Gruppierung aufheben", body, buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
+      if (!ok) return;
+      axis = rows.checked ? "rows" : "cols";
+    }
+    const [a, b] = axis === "rows" ? [r.r0, r.r1] : [r.c0, r.c1];
+    this.change(delta > 0 ? "Gruppieren" : "Gruppierung aufheben", () => {
+      this.history.whole(this.sheet);
+      regroup(this.sheet, axis!, a, b, delta);
+    });
+  }
+
+  /** Teilergebnisse: group column, function, columns to total, replace or remove (Excel's dialog). */
+  private async subtotalDialog(): Promise<void> {
+    const sheet = this.sheet;
+    const a = sheet.view.active;
+    const region = this.grid.currentRegion(a.row, a.col);
+    if (region.r1 <= region.r0) { await messageBox("RaabeCalc", "Markieren Sie eine Zelle in einer Liste mit Überschriften, um Teilergebnisse einzufügen."); return; }
+    const names: string[] = [];
+    for (let c = region.c0; c <= region.c1; c++) {
+      const cell = sheet.get(region.r0, c);
+      names.push(cell?.v !== null && cell?.v !== undefined ? shown(cell, this.wb.styles.get(cell.s)).text : `Spalte ${colName(c)}`);
+    }
+    const by = h("select", null, ...names.map((n, i) => h("option", { value: String(i) }, n))) as HTMLSelectElement;
+    const fn = h("select", null, ...A.SUBTOTALS.map((f) => h("option", { value: f.name }, f.name))) as HTMLSelectElement;
+    const boxes = names.map((n, i) => { const input = h("input", { type: "checkbox", checked: i === names.length - 1 || undefined }) as HTMLInputElement; return { input, el: h("label", { class: "check" }, input, n) }; });
+    const replace = h("input", { type: "checkbox", checked: true }) as HTMLInputElement;
+    const breaks = h("input", { type: "checkbox" }) as HTMLInputElement;
+    const below = h("input", { type: "checkbox", checked: true, disabled: true }) as HTMLInputElement;
+    const body = h("div", { class: "subtotal-dialog" },
+      h("div", { class: "fc-label" }, "Gruppieren nach:"), by,
+      h("div", { class: "fc-label" }, "Unter Verwendung von:"), fn,
+      h("div", { class: "fc-label" }, "Teilergebnis addieren zu:"), h("div", { class: "protect-list" }, ...boxes.map((b) => b.el)),
+      h("label", { class: "check" }, replace, "Vorhandene Teilergebnisse ersetzen"),
+      h("label", { class: "check" }, breaks, "Seitenumbrüche zwischen Gruppen einfügen"),
+      h("label", { class: "check" }, below, "Ergebnisse unterhalb der Daten anzeigen"));
+    const choice = await showDialog<"ok" | "remove" | null>({ title: "Teilergebnisse", body, buttons: [{ label: "Alle entfernen", value: "remove", left: true }, { label: "OK", value: "ok", primary: true }, { label: "Abbrechen", value: null }], cancel: null });
+    if (!choice) return;
+    this.change("Teilergebnis", () => {
+      let r = region;
+      if (choice === "remove" || replace.checked) r = A.removeSubtotals(this.ctx, sheet, r);
+      if (choice === "remove") return;
+      const cols = boxes.map((b, i) => (b.input.checked ? region.c0 + i : -1)).filter((c) => c >= 0);
+      if (!cols.length) return;
+      const done = A.subtotal(this.ctx, sheet, r, region.c0 + Number(by.value), A.SUBTOTALS.find((f) => f.name === fn.value)!, cols);
+      if (breaks.checked) {
+        // A new page after each group's result row (not after the last one).
+        const at: number[] = [];
+        for (let row = done.r0 + 1; row < done.r1 - 1; row++) if (sheet.rows.get(row)?.outline === 1) at.push(row + 1);
+        sheet.page = { ...(sheet.page ?? {}), rowBreaks: [...new Set([...(sheet.page?.rowBreaks ?? []), ...at])].sort((a, b) => a - b) };
+      }
+    });
+  }
+
   /** Changes to the active workbook so far (features cache what they read from the cells by it). */
   get version(): number { return this.active.version; }
 
@@ -533,6 +597,7 @@ export class CalcApp {
       },
       showFormulas: () => this.showFormulas,
       arrows: () => this.trace.of(this.sheet),
+      outline: (_axis, fn) => this.change("Gliederung", () => { this.history.whole(this.sheet); fn(); }),
       circles: () => this.circles.get(this.sheet) ?? [],
       canEdit: (row, col) => this.protection.canEdit(row, col),
       validate: (row, col, text) => (this.validation.quickCheck(row, col, text) ? "ok" : this.validation.check(row, col, text)),
@@ -1563,12 +1628,19 @@ export class CalcApp {
     run("layout.printAreaSet", () => this.print.setPrintArea(selRect()));
     run("layout.printAreaClear", () => this.print.setPrintArea(null));
     run("layout.printTitles", () => void this.print.pageSetupDialog(true));
+    run("layout.breaks", () => {});
+    run("layout.breakInsert", () => this.print.breaks("insert"));
+    run("layout.breakRemove", () => this.print.breaks("remove"), () => { const p = this.sheet.page, a = this.sheet.view.active; return !!(p?.rowBreaks?.includes(a.row) || p?.colBreaks?.includes(a.col)); });
+    run("layout.breakReset", () => this.print.breaks("reset"), () => !!(this.sheet.page?.rowBreaks?.length || this.sheet.page?.colBreaks?.length));
     run("insert.headerFooter", () => void this.print.pageSetupDialog("header"));
     run("review.protectSheet", () => void this.protection.protect());
     run("cells.protectSheet", () => void this.protection.protect());
     run("formulas.evaluate", () => void this.evaluator.open(), notEditing);
     run("data.validation", () => void this.validation.openDialog(), notEditing);
     run("edit.flashFill", () => void this.flashFill());
+    run("data.group", () => void this.group(1), notEditing);
+    run("data.subtotal", () => void this.subtotalDialog(), notEditing);
+    run("data.ungroup", () => void this.group(-1), notEditing);
     run("edit.selectValidation", () => this.validation.select());
     run("data.circleInvalid", () => this.circleInvalid());
     run("data.clearCircles", () => { this.circles.delete(this.sheet); this.grid.contentChanged(); }, () => this.circles.has(this.sheet));
@@ -1759,6 +1831,8 @@ export class CalcApp {
     // Letters by their character (Z and Y swap places on a German keyboard), digits and
     // punctuation by their position (Strg+Umschalt+4 is "$" on one layout and "4" on the key).
     const ctrl = e.ctrlKey && !e.altKey, shift = e.shiftKey, k = e.key;
+    // Umschalt+Alt+Rechts / Links: Gruppieren / Gruppierung aufheben (Excel).
+    if (e.altKey && shift && !e.ctrlKey && (k === "ArrowRight" || k === "ArrowLeft")) { void this.commands.run(k === "ArrowRight" ? "data.group" : "data.ungroup"); return true; }
     // Alt+Unten on a cell with a Datenüberprüfung list opens it (before the pick list).
     if (e.altKey && k === "ArrowDown" && this.validation.openList()) return true;
     const code = /^[a-zäöü]$/i.test(k) && /^[a-z]$/i.test(k) ? "Key" + k.toUpperCase() : e.code;

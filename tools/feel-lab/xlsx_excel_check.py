@@ -136,7 +136,9 @@ def sheet_props(wb, ws, cells: list[str]) -> dict:
     out["tables"] = [(lo.Name, lo.Range.GetAddress(False, False), lo.ShowTotals) for lo in ws.ListObjects]
     # Header codes through the English interface (German COM shows &P as &S, &N as &A).
     out["page"] = (english(ws.PageSetup, "PrintArea"), english(ws.PageSetup, "CenterHeader"), english(ws.PageSetup, "RightFooter"), ws.PageSetup.Orientation,
-                   english(ws.PageSetup, "PrintTitleRows"), english(ws.PageSetup, "PrintTitleColumns"))
+                   english(ws.PageSetup, "PrintTitleRows"), english(ws.PageSetup, "PrintTitleColumns"),
+                   # Manual page breaks (xlPageBreakManual); the HPageBreaks collection fails in a hidden Excel.
+                   [r for r in range(2, 41) if ws.Rows(r).PageBreak == -4135])
     ws.Activate()
     w = wb.Windows(1)
     out["window"] = {

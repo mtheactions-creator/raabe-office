@@ -336,6 +336,128 @@
   },
   "samePages": true
  },
+ "60x3 manual breaks": {
+  "excel": {
+   "pages": 3,
+   "detail": [
+    {
+     "w": 595,
+     "h": 842,
+     "lines": 10,
+     "first": 67.8,
+     "last": 198.5,
+     "left": 87.96
+    },
+    {
+     "w": 595,
+     "h": 842,
+     "lines": 25,
+     "first": 67.8,
+     "last": 416.33,
+     "left": 87.96
+    },
+    {
+     "w": 595,
+     "h": 842,
+     "lines": 25,
+     "first": 67.8,
+     "last": 416.33,
+     "left": 87.96
+    }
+   ]
+  },
+  "raabecalc": {
+   "pages": 3,
+   "detail": [
+    {
+     "w": 595,
+     "h": 842,
+     "lines": 10,
+     "first": 68.2,
+     "last": 198.6,
+     "left": 87.98
+    },
+    {
+     "w": 595,
+     "h": 842,
+     "lines": 25,
+     "first": 68.2,
+     "last": 415.94,
+     "left": 87.98
+    },
+    {
+     "w": 595,
+     "h": 842,
+     "lines": 25,
+     "first": 68.2,
+     "last": 415.94,
+     "left": 87.98
+    }
+   ]
+  },
+  "samePages": true
+ },
+ "20x20 manual column break": {
+  "excel": {
+   "pages": 3,
+   "detail": [
+    {
+     "w": 595,
+     "h": 842,
+     "lines": 20,
+     "first": 67.8,
+     "last": 343.73,
+     "left": 87.96
+    },
+    {
+     "w": 595,
+     "h": 842,
+     "lines": 20,
+     "first": 67.8,
+     "last": 343.73,
+     "left": 87.96
+    },
+    {
+     "w": 595,
+     "h": 842,
+     "lines": 20,
+     "first": 67.8,
+     "last": 343.73,
+     "left": 87.96
+    }
+   ]
+  },
+  "raabecalc": {
+   "pages": 3,
+   "detail": [
+    {
+     "w": 595,
+     "h": 842,
+     "lines": 20,
+     "first": 68.2,
+     "last": 343.99,
+     "left": 87.98
+    },
+    {
+     "w": 595,
+     "h": 842,
+     "lines": 20,
+     "first": 68.2,
+     "last": 343.99,
+     "left": 87.98
+    },
+    {
+     "w": 595,
+     "h": 842,
+     "lines": 20,
+     "first": 68.2,
+     "last": 343.99,
+     "left": 87.98
+    }
+   ]
+  },
+  "samePages": true
+ },
  "40x30 Drucktitel column": {
   "excel": {
    "pages": 5,

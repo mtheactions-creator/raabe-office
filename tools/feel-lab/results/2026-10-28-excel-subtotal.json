@@ -1,0 +1,2565 @@
+{
+ "Summe Punkte": [
+  {
+   "cells": [
+    "Klasse",
+    "Name",
+    "Note",
+    "Punkte"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 1.0,
+   "text": [
+    "Klasse",
+    "Name",
+    "Note",
+    "Punkte"
+   ]
+  },
+  {
+   "cells": [
+    "7a",
+    "Anna",
+    "2",
+    "11"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7a",
+    "Anna",
+    "2",
+    "11"
+   ]
+  },
+  {
+   "cells": [
+    "7a",
+    "Ben",
+    "3",
+    "8"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7a",
+    "Ben",
+    "3",
+    "8"
+   ]
+  },
+  {
+   "cells": [
+    "7a Ergebnis",
+    "",
+    "",
+    "=TEILERGEBNIS(9;D2:D3)"
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 2.0,
+   "text": [
+    "7a Ergebnis",
+    "",
+    "",
+    "19"
+   ]
+  },
+  {
+   "cells": [
+    "7b",
+    "Cem",
+    "1",
+    "14"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7b",
+    "Cem",
+    "1",
+    "14"
+   ]
+  },
+  {
+   "cells": [
+    "7b",
+    "Dora",
+    "4",
+    "6"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7b",
+    "Dora",
+    "4",
+    "6"
+   ]
+  },
+  {
+   "cells": [
+    "7b",
+    "Emil",
+    "2",
+    "10"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7b",
+    "Emil",
+    "2",
+    "10"
+   ]
+  },
+  {
+   "cells": [
+    "7b Ergebnis",
+    "",
+    "",
+    "=TEILERGEBNIS(9;D5:D7)"
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 2.0,
+   "text": [
+    "7b Ergebnis",
+    "",
+    "",
+    "30"
+   ]
+  },
+  {
+   "cells": [
+    "8a",
+    "Finn",
+    "3",
+    "9"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "8a",
+    "Finn",
+    "3",
+    "9"
+   ]
+  },
+  {
+   "cells": [
+    "8a Ergebnis",
+    "",
+    "",
+    "=TEILERGEBNIS(9;D9:D9)"
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 2.0,
+   "text": [
+    "8a Ergebnis",
+    "",
+    "",
+    "9"
+   ]
+  },
+  {
+   "cells": [
+    "Gesamtergebnis",
+    "",
+    "",
+    "=TEILERGEBNIS(9;D2:D9)"
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 1.0,
+   "text": [
+    "Gesamtergebnis",
+    "",
+    "",
+    "58"
+   ]
+  }
+ ],
+ "Mittelwert Note und Punkte": [
+  {
+   "cells": [
+    "Klasse",
+    "Name",
+    "Note",
+    "Punkte"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 1.0,
+   "text": [
+    "Klasse",
+    "Name",
+    "Note",
+    "Punkte"
+   ]
+  },
+  {
+   "cells": [
+    "7a",
+    "Anna",
+    "2",
+    "11"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7a",
+    "Anna",
+    "2",
+    "11"
+   ]
+  },
+  {
+   "cells": [
+    "7a",
+    "Ben",
+    "3",
+    "8"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7a",
+    "Ben",
+    "3",
+    "8"
+   ]
+  },
+  {
+   "cells": [
+    "7a Mittelwert",
+    "",
+    "=TEILERGEBNIS(1;C2:C3)",
+    "=TEILERGEBNIS(1;D2:D3)"
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 2.0,
+   "text": [
+    "7a Mittelwert",
+    "",
+    "2,5",
+    "9,5"
+   ]
+  },
+  {
+   "cells": [
+    "7b",
+    "Cem",
+    "1",
+    "14"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7b",
+    "Cem",
+    "1",
+    "14"
+   ]
+  },
+  {
+   "cells": [
+    "7b",
+    "Dora",
+    "4",
+    "6"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7b",
+    "Dora",
+    "4",
+    "6"
+   ]
+  },
+  {
+   "cells": [
+    "7b",
+    "Emil",
+    "2",
+    "10"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7b",
+    "Emil",
+    "2",
+    "10"
+   ]
+  },
+  {
+   "cells": [
+    "7b Mittelwert",
+    "",
+    "=TEILERGEBNIS(1;C5:C7)",
+    "=TEILERGEBNIS(1;D5:D7)"
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 2.0,
+   "text": [
+    "7b Mittelwert",
+    "",
+    "2,33333333",
+    "10"
+   ]
+  },
+  {
+   "cells": [
+    "8a",
+    "Finn",
+    "3",
+    "9"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "8a",
+    "Finn",
+    "3",
+    "9"
+   ]
+  },
+  {
+   "cells": [
+    "8a Mittelwert",
+    "",
+    "=TEILERGEBNIS(1;C9:C9)",
+    "=TEILERGEBNIS(1;D9:D9)"
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 2.0,
+   "text": [
+    "8a Mittelwert",
+    "",
+    "3",
+    "9"
+   ]
+  },
+  {
+   "cells": [
+    "Gesamtmittelwert",
+    "",
+    "=TEILERGEBNIS(1;C2:C9)",
+    "=TEILERGEBNIS(1;D2:D9)"
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 1.0,
+   "text": [
+    "Gesamtmittelwert",
+    "",
+    "2,5",
+    "9,66666667"
+   ]
+  }
+ ],
+ "Anzahl Note": [
+  {
+   "cells": [
+    "Klasse",
+    "Name",
+    "Note",
+    "Punkte"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 1.0,
+   "text": [
+    "Klasse",
+    "Name",
+    "Note",
+    "Punkte"
+   ]
+  },
+  {
+   "cells": [
+    "7a",
+    "Anna",
+    "2",
+    "11"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7a",
+    "Anna",
+    "2",
+    "11"
+   ]
+  },
+  {
+   "cells": [
+    "7a",
+    "Ben",
+    "3",
+    "8"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7a",
+    "Ben",
+    "3",
+    "8"
+   ]
+  },
+  {
+   "cells": [
+    "7a Anzahl",
+    "",
+    "=TEILERGEBNIS(3;C2:C3)",
+    ""
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 2.0,
+   "text": [
+    "7a Anzahl",
+    "",
+    "2",
+    ""
+   ]
+  },
+  {
+   "cells": [
+    "7b",
+    "Cem",
+    "1",
+    "14"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7b",
+    "Cem",
+    "1",
+    "14"
+   ]
+  },
+  {
+   "cells": [
+    "7b",
+    "Dora",
+    "4",
+    "6"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7b",
+    "Dora",
+    "4",
+    "6"
+   ]
+  },
+  {
+   "cells": [
+    "7b",
+    "Emil",
+    "2",
+    "10"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7b",
+    "Emil",
+    "2",
+    "10"
+   ]
+  },
+  {
+   "cells": [
+    "7b Anzahl",
+    "",
+    "=TEILERGEBNIS(3;C5:C7)",
+    ""
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 2.0,
+   "text": [
+    "7b Anzahl",
+    "",
+    "3",
+    ""
+   ]
+  },
+  {
+   "cells": [
+    "8a",
+    "Finn",
+    "3",
+    "9"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "8a",
+    "Finn",
+    "3",
+    "9"
+   ]
+  },
+  {
+   "cells": [
+    "8a Anzahl",
+    "",
+    "=TEILERGEBNIS(3;C9:C9)",
+    ""
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 2.0,
+   "text": [
+    "8a Anzahl",
+    "",
+    "1",
+    ""
+   ]
+  },
+  {
+   "cells": [
+    "Gesamtanzahl",
+    "",
+    "=TEILERGEBNIS(3;C2:C9)",
+    ""
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 1.0,
+   "text": [
+    "Gesamtanzahl",
+    "",
+    "6",
+    ""
+   ]
+  }
+ ],
+ "Max Punkte": [
+  {
+   "cells": [
+    "Klasse",
+    "Name",
+    "Note",
+    "Punkte"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 1.0,
+   "text": [
+    "Klasse",
+    "Name",
+    "Note",
+    "Punkte"
+   ]
+  },
+  {
+   "cells": [
+    "7a",
+    "Anna",
+    "2",
+    "11"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7a",
+    "Anna",
+    "2",
+    "11"
+   ]
+  },
+  {
+   "cells": [
+    "7a",
+    "Ben",
+    "3",
+    "8"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7a",
+    "Ben",
+    "3",
+    "8"
+   ]
+  },
+  {
+   "cells": [
+    "7a Max.",
+    "",
+    "",
+    "=TEILERGEBNIS(4;D2:D3)"
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 2.0,
+   "text": [
+    "7a Max.",
+    "",
+    "",
+    "11"
+   ]
+  },
+  {
+   "cells": [
+    "7b",
+    "Cem",
+    "1",
+    "14"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7b",
+    "Cem",
+    "1",
+    "14"
+   ]
+  },
+  {
+   "cells": [
+    "7b",
+    "Dora",
+    "4",
+    "6"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7b",
+    "Dora",
+    "4",
+    "6"
+   ]
+  },
+  {
+   "cells": [
+    "7b",
+    "Emil",
+    "2",
+    "10"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7b",
+    "Emil",
+    "2",
+    "10"
+   ]
+  },
+  {
+   "cells": [
+    "7b Max.",
+    "",
+    "",
+    "=TEILERGEBNIS(4;D5:D7)"
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 2.0,
+   "text": [
+    "7b Max.",
+    "",
+    "",
+    "14"
+   ]
+  },
+  {
+   "cells": [
+    "8a",
+    "Finn",
+    "3",
+    "9"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "8a",
+    "Finn",
+    "3",
+    "9"
+   ]
+  },
+  {
+   "cells": [
+    "8a Max.",
+    "",
+    "",
+    "=TEILERGEBNIS(4;D9:D9)"
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 2.0,
+   "text": [
+    "8a Max.",
+    "",
+    "",
+    "9"
+   ]
+  },
+  {
+   "cells": [
+    "Gesamtmaximum",
+    "",
+    "",
+    "=TEILERGEBNIS(4;D2:D9)"
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 1.0,
+   "text": [
+    "Gesamtmaximum",
+    "",
+    "",
+    "14"
+   ]
+  }
+ ],
+ "Min Punkte": [
+  {
+   "cells": [
+    "Klasse",
+    "Name",
+    "Note",
+    "Punkte"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 1.0,
+   "text": [
+    "Klasse",
+    "Name",
+    "Note",
+    "Punkte"
+   ]
+  },
+  {
+   "cells": [
+    "7a",
+    "Anna",
+    "2",
+    "11"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7a",
+    "Anna",
+    "2",
+    "11"
+   ]
+  },
+  {
+   "cells": [
+    "7a",
+    "Ben",
+    "3",
+    "8"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7a",
+    "Ben",
+    "3",
+    "8"
+   ]
+  },
+  {
+   "cells": [
+    "7a Min.",
+    "",
+    "",
+    "=TEILERGEBNIS(5;D2:D3)"
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 2.0,
+   "text": [
+    "7a Min.",
+    "",
+    "",
+    "8"
+   ]
+  },
+  {
+   "cells": [
+    "7b",
+    "Cem",
+    "1",
+    "14"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7b",
+    "Cem",
+    "1",
+    "14"
+   ]
+  },
+  {
+   "cells": [
+    "7b",
+    "Dora",
+    "4",
+    "6"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7b",
+    "Dora",
+    "4",
+    "6"
+   ]
+  },
+  {
+   "cells": [
+    "7b",
+    "Emil",
+    "2",
+    "10"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7b",
+    "Emil",
+    "2",
+    "10"
+   ]
+  },
+  {
+   "cells": [
+    "7b Min.",
+    "",
+    "",
+    "=TEILERGEBNIS(5;D5:D7)"
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 2.0,
+   "text": [
+    "7b Min.",
+    "",
+    "",
+    "6"
+   ]
+  },
+  {
+   "cells": [
+    "8a",
+    "Finn",
+    "3",
+    "9"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "8a",
+    "Finn",
+    "3",
+    "9"
+   ]
+  },
+  {
+   "cells": [
+    "8a Min.",
+    "",
+    "",
+    "=TEILERGEBNIS(5;D9:D9)"
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 2.0,
+   "text": [
+    "8a Min.",
+    "",
+    "",
+    "9"
+   ]
+  },
+  {
+   "cells": [
+    "Gesamtminimum",
+    "",
+    "",
+    "=TEILERGEBNIS(5;D2:D9)"
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 1.0,
+   "text": [
+    "Gesamtminimum",
+    "",
+    "",
+    "6"
+   ]
+  }
+ ],
+ "Produkt Note": [
+  {
+   "cells": [
+    "Klasse",
+    "Name",
+    "Note",
+    "Punkte"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 1.0,
+   "text": [
+    "Klasse",
+    "Name",
+    "Note",
+    "Punkte"
+   ]
+  },
+  {
+   "cells": [
+    "7a",
+    "Anna",
+    "2",
+    "11"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7a",
+    "Anna",
+    "2",
+    "11"
+   ]
+  },
+  {
+   "cells": [
+    "7a",
+    "Ben",
+    "3",
+    "8"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7a",
+    "Ben",
+    "3",
+    "8"
+   ]
+  },
+  {
+   "cells": [
+    "7a Produkt",
+    "",
+    "=TEILERGEBNIS(6;C2:C3)",
+    ""
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 2.0,
+   "text": [
+    "7a Produkt",
+    "",
+    "6",
+    ""
+   ]
+  },
+  {
+   "cells": [
+    "7b",
+    "Cem",
+    "1",
+    "14"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7b",
+    "Cem",
+    "1",
+    "14"
+   ]
+  },
+  {
+   "cells": [
+    "7b",
+    "Dora",
+    "4",
+    "6"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7b",
+    "Dora",
+    "4",
+    "6"
+   ]
+  },
+  {
+   "cells": [
+    "7b",
+    "Emil",
+    "2",
+    "10"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7b",
+    "Emil",
+    "2",
+    "10"
+   ]
+  },
+  {
+   "cells": [
+    "7b Produkt",
+    "",
+    "=TEILERGEBNIS(6;C5:C7)",
+    ""
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 2.0,
+   "text": [
+    "7b Produkt",
+    "",
+    "8",
+    ""
+   ]
+  },
+  {
+   "cells": [
+    "8a",
+    "Finn",
+    "3",
+    "9"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "8a",
+    "Finn",
+    "3",
+    "9"
+   ]
+  },
+  {
+   "cells": [
+    "8a Produkt",
+    "",
+    "=TEILERGEBNIS(6;C9:C9)",
+    ""
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 2.0,
+   "text": [
+    "8a Produkt",
+    "",
+    "3",
+    ""
+   ]
+  },
+  {
+   "cells": [
+    "Gesamtprodukt",
+    "",
+    "=TEILERGEBNIS(6;C2:C9)",
+    ""
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 1.0,
+   "text": [
+    "Gesamtprodukt",
+    "",
+    "144",
+    ""
+   ]
+  }
+ ],
+ "Anzahl Zahlen": [
+  {
+   "cells": [
+    "Klasse",
+    "Name",
+    "Note",
+    "Punkte"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 1.0,
+   "text": [
+    "Klasse",
+    "Name",
+    "Note",
+    "Punkte"
+   ]
+  },
+  {
+   "cells": [
+    "7a",
+    "Anna",
+    "2",
+    "11"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7a",
+    "Anna",
+    "2",
+    "11"
+   ]
+  },
+  {
+   "cells": [
+    "7a",
+    "Ben",
+    "3",
+    "8"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7a",
+    "Ben",
+    "3",
+    "8"
+   ]
+  },
+  {
+   "cells": [
+    "7a Anzahl",
+    "",
+    "=TEILERGEBNIS(2;C2:C3)",
+    ""
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 2.0,
+   "text": [
+    "7a Anzahl",
+    "",
+    "2",
+    ""
+   ]
+  },
+  {
+   "cells": [
+    "7b",
+    "Cem",
+    "1",
+    "14"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7b",
+    "Cem",
+    "1",
+    "14"
+   ]
+  },
+  {
+   "cells": [
+    "7b",
+    "Dora",
+    "4",
+    "6"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7b",
+    "Dora",
+    "4",
+    "6"
+   ]
+  },
+  {
+   "cells": [
+    "7b",
+    "Emil",
+    "2",
+    "10"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7b",
+    "Emil",
+    "2",
+    "10"
+   ]
+  },
+  {
+   "cells": [
+    "7b Anzahl",
+    "",
+    "=TEILERGEBNIS(2;C5:C7)",
+    ""
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 2.0,
+   "text": [
+    "7b Anzahl",
+    "",
+    "3",
+    ""
+   ]
+  },
+  {
+   "cells": [
+    "8a",
+    "Finn",
+    "3",
+    "9"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "8a",
+    "Finn",
+    "3",
+    "9"
+   ]
+  },
+  {
+   "cells": [
+    "8a Anzahl",
+    "",
+    "=TEILERGEBNIS(2;C9:C9)",
+    ""
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 2.0,
+   "text": [
+    "8a Anzahl",
+    "",
+    "1",
+    ""
+   ]
+  },
+  {
+   "cells": [
+    "Gesamtanzahl",
+    "",
+    "=TEILERGEBNIS(2;C2:C9)",
+    ""
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 1.0,
+   "text": [
+    "Gesamtanzahl",
+    "",
+    "6",
+    ""
+   ]
+  }
+ ],
+ "StdAbw": [
+  {
+   "cells": [
+    "Klasse",
+    "Name",
+    "Note",
+    "Punkte"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 1.0,
+   "text": [
+    "Klasse",
+    "Name",
+    "Note",
+    "Punkte"
+   ]
+  },
+  {
+   "cells": [
+    "7a",
+    "Anna",
+    "2",
+    "11"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7a",
+    "Anna",
+    "2",
+    "11"
+   ]
+  },
+  {
+   "cells": [
+    "7a",
+    "Ben",
+    "3",
+    "8"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7a",
+    "Ben",
+    "3",
+    "8"
+   ]
+  },
+  {
+   "cells": [
+    "7a STABW",
+    "",
+    "",
+    "=TEILERGEBNIS(7;D2:D3)"
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 2.0,
+   "text": [
+    "7a STABW",
+    "",
+    "",
+    "2,12132034"
+   ]
+  },
+  {
+   "cells": [
+    "7b",
+    "Cem",
+    "1",
+    "14"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7b",
+    "Cem",
+    "1",
+    "14"
+   ]
+  },
+  {
+   "cells": [
+    "7b",
+    "Dora",
+    "4",
+    "6"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7b",
+    "Dora",
+    "4",
+    "6"
+   ]
+  },
+  {
+   "cells": [
+    "7b",
+    "Emil",
+    "2",
+    "10"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7b",
+    "Emil",
+    "2",
+    "10"
+   ]
+  },
+  {
+   "cells": [
+    "7b STABW",
+    "",
+    "",
+    "=TEILERGEBNIS(7;D5:D7)"
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 2.0,
+   "text": [
+    "7b STABW",
+    "",
+    "",
+    "4"
+   ]
+  },
+  {
+   "cells": [
+    "8a",
+    "Finn",
+    "3",
+    "9"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "8a",
+    "Finn",
+    "3",
+    "9"
+   ]
+  },
+  {
+   "cells": [
+    "8a STABW",
+    "",
+    "",
+    "=TEILERGEBNIS(7;D9:D9)"
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 2.0,
+   "text": [
+    "8a STABW",
+    "",
+    "",
+    "#DIV/0!"
+   ]
+  },
+  {
+   "cells": [
+    "Gesamtstandardabweichung (Stichprobe)",
+    "",
+    "",
+    "=TEILERGEBNIS(7;D2:D9)"
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 1.0,
+   "text": [
+    "Gesamtstandardabweichung (Stichprobe)",
+    "",
+    "",
+    "2,7325202"
+   ]
+  }
+ ],
+ "StdAbwN": [
+  {
+   "cells": [
+    "Klasse",
+    "Name",
+    "Note",
+    "Punkte"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 1.0,
+   "text": [
+    "Klasse",
+    "Name",
+    "Note",
+    "Punkte"
+   ]
+  },
+  {
+   "cells": [
+    "7a",
+    "Anna",
+    "2",
+    "11"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7a",
+    "Anna",
+    "2",
+    "11"
+   ]
+  },
+  {
+   "cells": [
+    "7a",
+    "Ben",
+    "3",
+    "8"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7a",
+    "Ben",
+    "3",
+    "8"
+   ]
+  },
+  {
+   "cells": [
+    "7a Standardabweichung (Grundgesamtheit)",
+    "",
+    "",
+    "=TEILERGEBNIS(8;D2:D3)"
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 2.0,
+   "text": [
+    "7a Standardabweichung (Grundgesamtheit)",
+    "",
+    "",
+    "1,5"
+   ]
+  },
+  {
+   "cells": [
+    "7b",
+    "Cem",
+    "1",
+    "14"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7b",
+    "Cem",
+    "1",
+    "14"
+   ]
+  },
+  {
+   "cells": [
+    "7b",
+    "Dora",
+    "4",
+    "6"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7b",
+    "Dora",
+    "4",
+    "6"
+   ]
+  },
+  {
+   "cells": [
+    "7b",
+    "Emil",
+    "2",
+    "10"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7b",
+    "Emil",
+    "2",
+    "10"
+   ]
+  },
+  {
+   "cells": [
+    "7b Standardabweichung (Grundgesamtheit)",
+    "",
+    "",
+    "=TEILERGEBNIS(8;D5:D7)"
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 2.0,
+   "text": [
+    "7b Standardabweichung (Grundgesamtheit)",
+    "",
+    "",
+    "3,26598632"
+   ]
+  },
+  {
+   "cells": [
+    "8a",
+    "Finn",
+    "3",
+    "9"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "8a",
+    "Finn",
+    "3",
+    "9"
+   ]
+  },
+  {
+   "cells": [
+    "8a Standardabweichung (Grundgesamtheit)",
+    "",
+    "",
+    "=TEILERGEBNIS(8;D9:D9)"
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 2.0,
+   "text": [
+    "8a Standardabweichung (Grundgesamtheit)",
+    "",
+    "",
+    "0"
+   ]
+  },
+  {
+   "cells": [
+    "Gesamtstandardabweichung (Grundgesamtheit)",
+    "",
+    "",
+    "=TEILERGEBNIS(8;D2:D9)"
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 1.0,
+   "text": [
+    "Gesamtstandardabweichung (Grundgesamtheit)",
+    "",
+    "",
+    "2,49443826"
+   ]
+  }
+ ],
+ "Varianz": [
+  {
+   "cells": [
+    "Klasse",
+    "Name",
+    "Note",
+    "Punkte"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 1.0,
+   "text": [
+    "Klasse",
+    "Name",
+    "Note",
+    "Punkte"
+   ]
+  },
+  {
+   "cells": [
+    "7a",
+    "Anna",
+    "2",
+    "11"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7a",
+    "Anna",
+    "2",
+    "11"
+   ]
+  },
+  {
+   "cells": [
+    "7a",
+    "Ben",
+    "3",
+    "8"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7a",
+    "Ben",
+    "3",
+    "8"
+   ]
+  },
+  {
+   "cells": [
+    "7a Var",
+    "",
+    "",
+    "=TEILERGEBNIS(10;D2:D3)"
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 2.0,
+   "text": [
+    "7a Var",
+    "",
+    "",
+    "4,5"
+   ]
+  },
+  {
+   "cells": [
+    "7b",
+    "Cem",
+    "1",
+    "14"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7b",
+    "Cem",
+    "1",
+    "14"
+   ]
+  },
+  {
+   "cells": [
+    "7b",
+    "Dora",
+    "4",
+    "6"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7b",
+    "Dora",
+    "4",
+    "6"
+   ]
+  },
+  {
+   "cells": [
+    "7b",
+    "Emil",
+    "2",
+    "10"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7b",
+    "Emil",
+    "2",
+    "10"
+   ]
+  },
+  {
+   "cells": [
+    "7b Var",
+    "",
+    "",
+    "=TEILERGEBNIS(10;D5:D7)"
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 2.0,
+   "text": [
+    "7b Var",
+    "",
+    "",
+    "16"
+   ]
+  },
+  {
+   "cells": [
+    "8a",
+    "Finn",
+    "3",
+    "9"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "8a",
+    "Finn",
+    "3",
+    "9"
+   ]
+  },
+  {
+   "cells": [
+    "8a Var",
+    "",
+    "",
+    "=TEILERGEBNIS(10;D9:D9)"
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 2.0,
+   "text": [
+    "8a Var",
+    "",
+    "",
+    "#DIV/0!"
+   ]
+  },
+  {
+   "cells": [
+    "Gesamtvarianz",
+    "",
+    "",
+    "=TEILERGEBNIS(10;D2:D9)"
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 1.0,
+   "text": [
+    "Gesamtvarianz",
+    "",
+    "",
+    "7,46666667"
+   ]
+  }
+ ],
+ "VarianzN": [
+  {
+   "cells": [
+    "Klasse",
+    "Name",
+    "Note",
+    "Punkte"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 1.0,
+   "text": [
+    "Klasse",
+    "Name",
+    "Note",
+    "Punkte"
+   ]
+  },
+  {
+   "cells": [
+    "7a",
+    "Anna",
+    "2",
+    "11"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7a",
+    "Anna",
+    "2",
+    "11"
+   ]
+  },
+  {
+   "cells": [
+    "7a",
+    "Ben",
+    "3",
+    "8"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7a",
+    "Ben",
+    "3",
+    "8"
+   ]
+  },
+  {
+   "cells": [
+    "7a Varianz (Grundgesamtheit)",
+    "",
+    "",
+    "=TEILERGEBNIS(11;D2:D3)"
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 2.0,
+   "text": [
+    "7a Varianz (Grundgesamtheit)",
+    "",
+    "",
+    "2,25"
+   ]
+  },
+  {
+   "cells": [
+    "7b",
+    "Cem",
+    "1",
+    "14"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7b",
+    "Cem",
+    "1",
+    "14"
+   ]
+  },
+  {
+   "cells": [
+    "7b",
+    "Dora",
+    "4",
+    "6"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7b",
+    "Dora",
+    "4",
+    "6"
+   ]
+  },
+  {
+   "cells": [
+    "7b",
+    "Emil",
+    "2",
+    "10"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "7b",
+    "Emil",
+    "2",
+    "10"
+   ]
+  },
+  {
+   "cells": [
+    "7b Varianz (Grundgesamtheit)",
+    "",
+    "",
+    "=TEILERGEBNIS(11;D5:D7)"
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 2.0,
+   "text": [
+    "7b Varianz (Grundgesamtheit)",
+    "",
+    "",
+    "10,6666667"
+   ]
+  },
+  {
+   "cells": [
+    "8a",
+    "Finn",
+    "3",
+    "9"
+   ],
+   "bold": [
+    false,
+    false,
+    false,
+    false
+   ],
+   "level": 3.0,
+   "text": [
+    "8a",
+    "Finn",
+    "3",
+    "9"
+   ]
+  },
+  {
+   "cells": [
+    "8a Varianz (Grundgesamtheit)",
+    "",
+    "",
+    "=TEILERGEBNIS(11;D9:D9)"
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 2.0,
+   "text": [
+    "8a Varianz (Grundgesamtheit)",
+    "",
+    "",
+    "0"
+   ]
+  },
+  {
+   "cells": [
+    "Gesamtvarianz",
+    "",
+    "",
+    "=TEILERGEBNIS(11;D2:D9)"
+   ],
+   "bold": [
+    true,
+    false,
+    false,
+    false
+   ],
+   "level": 1.0,
+   "text": [
+    "Gesamtvarianz",
+    "",
+    "",
+    "6,22222222"
+   ]
+  }
+ ]
+}

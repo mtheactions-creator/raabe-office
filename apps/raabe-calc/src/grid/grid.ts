@@ -14,6 +14,7 @@ import { CondEval } from "./cond";
 import { POINTERS } from "./pointers";
 import { pxToChars, setDeviceScale, sheetAxes, type Axis } from "./metrics";
 import type { Shown } from "../engine";
+import { LANE, barSize, groups, maxLevel, showLevel, toggle, type Axis as OutlineAxis } from "./outline";
 
 export type Mode = "ready" | "enter" | "edit" | "point";
 
@@ -59,6 +60,8 @@ export interface GridHost {
   nextUnlocked?(row: number, col: number, back: boolean): { row: number; col: number } | null;
   /** Ungültige Daten einkreisen: the circled cells of the sheet. */
   circles?(): { row: number; col: number }[];
+  /** A change to the Gliederung (a level button or −/+): done as one undo step by the host. */
+  outline?(axis: "rows" | "cols", change: () => void): void;
   /** Spur zum Vorgänger/Nachfolger arrows of the sheet. */
   arrows?(): { from: Rect | null; to: { row: number; col: number }; error?: boolean }[];
   /** The warning button beside a cell with an error indicator was pressed. */
@@ -207,15 +210,24 @@ export class Grid {
     }
   }
 
+  /** The Gliederung bar left of the row headers (width) and above the column headers (height). */
+  private outlineW(): number {
+    return this.view.showHeaders ? barSize(this.sheet, "rows", this.zoom) : 0;
+  }
+
+  private outlineH(): number {
+    return this.view.showHeaders ? barSize(this.sheet, "cols", this.zoom) : 0;
+  }
+
   private headerW(): number {
     if (!this.view.showHeaders) return 0;
     const last = this.rows.at(this.rows.pos(this.view.top) + this.height / this.zoom) + 1;
     const digits = Math.max(3, String(last).length);
-    return Math.round((digits * 7 + 6) * this.zoom);
+    return Math.round((digits * 7 + 6) * this.zoom) + this.outlineW();
   }
 
   private headerH(): number {
-    return this.view.showHeaders ? Math.round(this.rows.def * this.zoom) : 0;
+    return this.view.showHeaders ? Math.round(this.rows.def * this.zoom) + this.outlineH() : 0;
   }
 
   private panes(): Pane[] {
@@ -238,6 +250,7 @@ export class Grid {
     const st: DrawState = {
       sheet: this.sheet, styles: this.wb.styles, rows: this.rows, cols: this.cols, zoom: this.zoom, dpr: this.dpr,
       width: this.width, height: this.height, headerW: this.headerW(), headerH: this.headerH(), panes: this.panes(),
+      outlineW: this.outlineW(), outlineH: this.outlineH(),
       selection: this.selection, active: this.active, editing: this.editing ?? undefined, marquee: this.marquee,
       marqueePhase: this.marqueePhase, ghost: this.ghost, insertLine: this.insertLine, refs: this.refHighlights(), showGrid: this.view.showGrid,
       showHeaders: this.view.showHeaders, textCache: this.previewState ? new Map() : this.textCache, cond: this.condEval(), showFormulas: this.host.showFormulas(),
@@ -360,6 +373,31 @@ export class Grid {
     this.view.active = { ...a };
     this.head = { row: rect.r0 === a.row ? rect.r1 : rect.r0, col: rect.c0 === a.col ? rect.c1 : rect.c0 };
     this.afterSelect();
+  }
+
+  /**
+   * A click in the Gliederung bar: a level button or a group's −/+ box (`probe` only says whether
+   * there is one under the point).
+   */
+  private outlineClick(x: number, y: number, probe: boolean): boolean {
+    const z = this.zoom, ow = this.outlineW(), oh = this.outlineH(), hw = this.headerW(), hh = this.headerH();
+    const lane = (v: number) => Math.floor(v / (LANE * z)) + 1;
+    const act = (axis: OutlineAxis, fn: () => void) => { if (!probe) this.host.outline?.(axis, fn); return true; };
+    // Level buttons: for rows in the band beside the column headers, for columns above the row headers.
+    if (x < ow && y >= oh && y < hh) { const n = lane(x); return n <= maxLevel(this.sheet, "rows") + 1 && act("rows", () => showLevel(this.sheet, "rows", n)); }
+    if (y < oh && x >= ow && x < hw) { const n = lane(y); return n <= maxLevel(this.sheet, "cols") + 1 && act("cols", () => showLevel(this.sheet, "cols", n)); }
+    // A group's box sits at its summary row (column), in the lane of its level.
+    if (x < ow && y >= hh) {
+      const level = lane(x), row = this.hit(hw + 1, y).row;
+      const g = groups(this.sheet, "rows", level).find((r) => r[1] + 1 === row);
+      return !!g && act("rows", () => toggle(this.sheet, "rows", g, level));
+    }
+    if (y < oh && x >= hw) {
+      const level = lane(y), col = this.hit(x, hh + 1).col;
+      const g = groups(this.sheet, "cols", level).find((c) => c[1] + 1 === col);
+      return !!g && act("cols", () => toggle(this.sheet, "cols", g, level));
+    }
+    return false;
   }
 
   /** Tab on a protected sheet: to the next unlocked cell (Excel); false where the sheet is not protected. */
@@ -927,7 +965,9 @@ export class Grid {
   }
 
   /** What the pointer is over: a header edge, the fill handle, the selection's border or a cell. */
-  private target(x: number, y: number): { kind: "resizeCol" | "resizeRow" | "fill" | "move" | "cells" | "cols" | "rows" | "corner" | "none"; row: number; col: number } {
+  private target(x: number, y: number): { kind: "resizeCol" | "resizeRow" | "fill" | "move" | "cells" | "cols" | "rows" | "corner" | "outline" | "none"; row: number; col: number } {
+    if ((x < this.outlineW() || y < this.outlineH()) && this.outlineClick(x, y, true)) return { kind: "outline", row: 0, col: 0 };
+    if (x < this.outlineW() || y < this.outlineH()) return { kind: "none", row: 0, col: 0 };
     const hit = this.hit(x, y);
     const z = this.zoom;
     if (hit.area === "col") {
@@ -1034,6 +1074,7 @@ export class Grid {
         return;
       }
     }
+    if (t.kind === "outline") { this.outlineClick(p.x, p.y, false); return; }
     this.canvas.setPointerCapture(e.pointerId);
     this.tabStart = null;
     const add = e.ctrlKey;

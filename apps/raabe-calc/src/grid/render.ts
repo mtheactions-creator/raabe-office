@@ -8,6 +8,7 @@ import { cellKey, inRect, type Cell, type CellStyle, type Rect, type Sheet, type
 import { shownAt, type Shown } from "../engine";
 import type { CondEval } from "./cond";
 import { device, type Axis } from "./metrics";
+import { LANE, groups, maxLevel } from "./outline";
 
 export const COLORS = {
   grid: "#e0e0e0",
@@ -67,6 +68,9 @@ export interface DrawState {
   showFormulas?: boolean;
   /** Livevorschau: the format under the mouse in a list or palette, shown on the selection. */
   preview?: { ranges: Rect[]; change: (s: CellStyle) => void } | null;
+  /** The Gliederung bars: width left of the row headers, height above the column headers. */
+  outlineW?: number;
+  outlineH?: number;
   /** Umschalt+drag: the insertion line (r1 < r0: between rows r0-1 and r0; c1 < c0: between columns). */
   insertLine?: Rect | null;
   /** Ungültige Daten einkreisen: red ellipses around these cells. */
@@ -712,6 +716,7 @@ function drawHeaders(ctx: CanvasRenderingContext2D, s: DrawState): void {
   ctx.font = font;
   ctx.textBaseline = "middle";
   // Column headers.
+  const ow = s.outlineW ?? 0, oh = s.outlineH ?? 0;
   ctx.fillStyle = COLORS.header;
   ctx.fillRect(0, 0, s.width, s.headerH);
   ctx.fillRect(0, 0, s.headerW, s.height);
@@ -719,20 +724,20 @@ function drawHeaders(ctx: CanvasRenderingContext2D, s: DrawState): void {
   for (const pane of colPanes) {
     ctx.save();
     ctx.beginPath();
-    ctx.rect(pane.x, 0, pane.w, s.headerH);
+    ctx.rect(pane.x, oh, pane.w, s.headerH - oh);
     ctx.clip();
     for (const c of placed(s.cols, pane.col, pane.x, pane.w, zoom)) {
       const on = colSelected(c.i);
       const x0 = snap(c.at, dpr), x1 = snap(c.at + c.size, dpr);
       if (on) {
         ctx.fillStyle = fullCol(c.i) ? "#c9c9c9" : COLORS.headerSel;
-        ctx.fillRect(x0 - px, 0, x1 - x0 + px, s.headerH);
+        ctx.fillRect(x0 - px, oh, x1 - x0 + px, s.headerH - oh);
       }
       ctx.fillStyle = on ? COLORS.headerSelSep : COLORS.headerSep;
-      ctx.fillRect(x1 - px, 0, px, s.headerH - px);
+      ctx.fillRect(x1 - px, oh, px, s.headerH - oh - px);
       ctx.fillStyle = on ? COLORS.accent : COLORS.headerText;
       ctx.textAlign = "center";
-      ctx.fillText(colLabel(c.i), (x0 + x1) / 2, s.headerH / 2 + 0.5);
+      ctx.fillText(colLabel(c.i), (x0 + x1) / 2, oh + (s.headerH - oh) / 2 + 0.5);
       if (on) {
         ctx.fillStyle = COLORS.accent;
         ctx.fillRect(x0 - px, snap(s.headerH, dpr) - 2 * px, x1 - x0 + px, 2 * px);
@@ -747,20 +752,20 @@ function drawHeaders(ctx: CanvasRenderingContext2D, s: DrawState): void {
   for (const pane of rowPanes) {
     ctx.save();
     ctx.beginPath();
-    ctx.rect(0, pane.y, s.headerW, pane.h);
+    ctx.rect(ow, pane.y, s.headerW - ow, pane.h);
     ctx.clip();
     for (const r of placed(s.rows, pane.row, pane.y, pane.h, zoom)) {
       const on = rowSelected(r.i);
       const y0 = snap(r.at, dpr), y1 = snap(r.at + r.size, dpr);
       if (on) {
         ctx.fillStyle = fullRow(r.i) ? "#c9c9c9" : COLORS.headerSel;
-        ctx.fillRect(0, y0 - px, s.headerW, y1 - y0 + px);
+        ctx.fillRect(ow, y0 - px, s.headerW - ow, y1 - y0 + px);
       }
       ctx.fillStyle = on ? COLORS.headerSelSep : COLORS.headerSep;
-      ctx.fillRect(0, y1 - px, s.headerW - px, px);
+      ctx.fillRect(ow, y1 - px, s.headerW - ow - px, px);
       ctx.fillStyle = on ? COLORS.accent : COLORS.headerText;
       ctx.textAlign = "center";
-      ctx.fillText(String(r.i + 1), s.headerW / 2, (y0 + y1) / 2 + 0.5);
+      ctx.fillText(String(r.i + 1), ow + (s.headerW - ow) / 2, (y0 + y1) / 2 + 0.5);
       if (on) {
         ctx.fillStyle = COLORS.accent;
         ctx.fillRect(snap(s.headerW, dpr) - 2 * px, y0 - px, 2 * px, y1 - y0 + px);
@@ -772,7 +777,8 @@ function drawHeaders(ctx: CanvasRenderingContext2D, s: DrawState): void {
   ctx.fillRect(snap(s.headerW, dpr) - px, s.headerH, px, s.height);
   // Alles auswählen: the corner with its triangle.
   ctx.fillStyle = COLORS.header;
-  ctx.fillRect(0, 0, s.headerW - px, s.headerH - px);
+  ctx.fillRect(ow, oh, s.headerW - ow - px, s.headerH - oh - px);
+  if (ow || oh) drawOutlineBars(ctx, s, ow, oh);
   ctx.fillStyle = "#b4b4b4";
   ctx.beginPath();
   const tx = s.headerW - 4, ty = s.headerH - 4, ts = Math.min(s.headerH, s.headerW) * 0.55;
@@ -928,4 +934,99 @@ export function drawIcon(ctx: CanvasRenderingContext2D, icon: { set: string; ind
     ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, size * 0.42, -Math.PI / 2, -Math.PI / 2 + (Math.PI * 2 * i) / Math.max(1, n - 1)); ctx.closePath(); ctx.fill();
   }
   ctx.restore();
+}
+
+/** The Gliederung bars: level buttons, a bracket along each group and its −/+ box at the summary row. */
+function drawOutlineBars(ctx: CanvasRenderingContext2D, s: DrawState, ow: number, oh: number): void {
+  const { zoom, dpr, sheet } = s;
+  const lane = LANE * zoom, box = Math.round(11 * zoom);
+  ctx.save();
+  ctx.fillStyle = "#ffffff";
+  if (ow) ctx.fillRect(0, 0, ow, s.height);
+  if (oh) ctx.fillRect(0, 0, s.width, oh);
+  ctx.font = `${(8 * PT * zoom).toFixed(2)}px "Segoe UI", sans-serif`;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  const button = (cx: number, cy: number, label: string) => {
+    const x = snap(cx - box / 2, dpr), y = snap(cy - box / 2, dpr);
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(x, y, box, box);
+    ctx.strokeStyle = "#7a7a7a";
+    ctx.lineWidth = 1 / dpr;
+    ctx.strokeRect(x + 0.5 / dpr, y + 0.5 / dpr, box - 1 / dpr, box - 1 / dpr);
+    ctx.fillStyle = "#333333";
+    ctx.fillText(label, cx, cy + 0.5);
+  };
+  const levels = { rows: maxLevel(sheet, "rows"), cols: maxLevel(sheet, "cols") };
+  // Level buttons.
+  for (let n = 1; ow && n <= levels.rows + 1; n++) button((n - 0.5) * lane, oh + (s.headerH - oh) / 2, String(n));
+  for (let n = 1; oh && n <= levels.cols + 1; n++) button(ow + (s.headerW - ow) / 2, (n - 0.5) * lane, String(n));
+  ctx.strokeStyle = "#7a7a7a";
+  ctx.lineWidth = Math.max(1, Math.round(dpr)) / dpr;
+  // Row groups.
+  if (ow) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(0, s.headerH, ow, s.height - s.headerH);
+    ctx.clip();
+    for (let l = 1; l <= levels.rows; l++) {
+      const cx = (l - 0.5) * lane;
+      for (const [a, b] of groups(sheet, "rows", l)) {
+        const ya = rowY(s, a), yb = rowY(s, b + 1);
+        if (ya === null && yb === null) continue;
+        const collapsed = !!sheet.rows.get(b + 1)?.collapsed;
+        if (!collapsed && ya !== null && yb !== null && yb > ya) {
+          ctx.beginPath();
+          ctx.moveTo(snap(cx, dpr), ya + 2);
+          ctx.lineTo(snap(cx, dpr), yb);
+          ctx.moveTo(snap(cx, dpr) - lane * 0.25, ya + 2);
+          ctx.lineTo(snap(cx, dpr), ya + 2);
+          ctx.stroke();
+        }
+        const ys = rowY(s, b + 1);
+        if (ys !== null) button(cx, ys + s.rows.size(b + 1) * zoom / 2, collapsed ? "+" : "−");
+      }
+    }
+    ctx.restore();
+  }
+  // Column groups.
+  if (oh) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(s.headerW, 0, s.width - s.headerW, oh);
+    ctx.clip();
+    for (let l = 1; l <= levels.cols; l++) {
+      const cy = (l - 0.5) * lane;
+      for (const [a, b] of groups(sheet, "cols", l)) {
+        const xa = colX(s, a), xb = colX(s, b + 1);
+        if (xa === null && xb === null) continue;
+        const collapsed = !!sheet.cols.get(b + 1)?.collapsed;
+        if (!collapsed && xa !== null && xb !== null && xb > xa) {
+          ctx.beginPath();
+          ctx.moveTo(xa + 2, snap(cy, dpr));
+          ctx.lineTo(xb, snap(cy, dpr));
+          ctx.moveTo(xa + 2, snap(cy, dpr) - lane * 0.25);
+          ctx.lineTo(xa + 2, snap(cy, dpr));
+          ctx.stroke();
+        }
+        const xs = colX(s, b + 1);
+        if (xs !== null) button(xs + s.cols.size(b + 1) * zoom / 2, cy, collapsed ? "+" : "−");
+      }
+    }
+    ctx.restore();
+  }
+  ctx.restore();
+}
+
+/** Where a row starts on the canvas in the main pane (null when it is above it). */
+function rowY(s: DrawState, row: number): number | null {
+  const pane = s.panes[s.panes.length - 1];
+  if (row < pane.row) return null;
+  return pane.y + (s.rows.pos(row) - s.rows.pos(pane.row)) * s.zoom;
+}
+
+function colX(s: DrawState, col: number): number | null {
+  const pane = s.panes[s.panes.length - 1];
+  if (col < pane.col) return null;
+  return pane.x + (s.cols.pos(col) - s.cols.pos(pane.col)) * s.zoom;
 }

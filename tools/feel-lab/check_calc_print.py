@@ -27,6 +27,8 @@ CASES = {
     "200x3 fit width": (200, 3, {"fitWidth": 1}, {"Zoom": False, "FitToPagesWide": 1, "FitToPagesTall": False}),
     "120x6 Drucktitel rows": (120, 6, {"titleRows": [0, 1]}, {"PrintTitleRows": "$1:$2"}),
     "80x4 Kopf- und Fußzeile": (80, 4, {"header": "&CKlasse 7b", "footer": "&RSeite &P von &N"}, {"CenterHeader": "Klasse 7b", "RightFooter": "Seite &P von &N"}),
+    "60x3 manual breaks": (60, 3, {"rowBreaks": [10, 35]}, {"_rowBreaks": [10, 35]}),
+    "20x20 manual column break": (20, 20, {"colBreaks": [4]}, {"_colBreaks": [4]}),
     "40x30 Drucktitel column": (40, 30, {"titleCols": [0, 0]}, {"PrintTitleColumns": "$A:$A"}),
 }
 
@@ -54,6 +56,14 @@ def main() -> None:
             for r in range(1, rows + 1):
                 ws.Range(ws.Cells(r, 1), ws.Cells(r, cols)).Value = tuple(r * 100 + c for c in range(1, cols + 1))
             for k, v in ps.items():
+                if k == "_rowBreaks":
+                    for n in v:
+                        ws.HPageBreaks.Add(ws.Rows(n + 1))
+                    continue
+                if k == "_colBreaks":
+                    for n in v:
+                        ws.VPageBreaks.Add(ws.Columns(n + 1))
+                    continue
                 if k.endswith(("Header", "Footer")):
                     # Excel's English codes (&P, &N); the German interface would read them as its own.
                     o = ws.PageSetup._oleobj_

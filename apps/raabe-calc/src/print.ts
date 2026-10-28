@@ -136,21 +136,22 @@ export function printFeature(app: CalcApp) {
       if (t) for (let i = t[0]; i <= t[1]; i++) s += size(i) * scale;
       return s;
     };
-    const cut = (from: number, to: number, size: (i: number) => number, room: number, title?: [number, number]) => {
+    const cut = (from: number, to: number, size: (i: number) => number, room: number, title?: [number, number], breaks?: number[]) => {
       const out: [number, number][] = [];
       const extra = titleSize(title, size);
+      const manual = new Set(breaks ?? []);
       let start = from, used = 0;
       const roomFor = (s: number) => (title && s > title[1] ? room - extra : room);
       for (let i = from; i <= to; i++) {
         const s = size(i) * scale;
-        if (used + s > roomFor(start) && i > start) { out.push([start, i - 1]); start = i; used = 0; }
+        if (i > start && (manual.has(i) || used + s > roomFor(start))) { out.push([start, i - 1]); start = i; used = 0; }
         used += s;
       }
       out.push([start, to]);
       return out;
     };
-    const colPages = cut(area.c0, area.c1, colW, pw, p.titleCols);
-    const rowPages = cut(area.r0, area.r1, rowH, ph, p.titleRows);
+    const colPages = cut(area.c0, area.c1, colW, pw, p.titleCols, p.colBreaks);
+    const rowPages = cut(area.r0, area.r1, rowH, ph, p.titleRows, p.rowBreaks);
     const pages: Page[] = [];
     for (const cols of colPages) for (const rows of rowPages) pages.push({ rows, cols });
     pages.forEach((pg, i) => { pg.index = i; pg.count = pages.length; });
@@ -342,6 +343,18 @@ export function printFeature(app: CalcApp) {
     orientation: () => page().orientation ?? "portrait",
     setOrientation,
     setPrintArea: (r: Rect | null) => setPage("Druckbereich", (p) => { p.printArea = r ?? undefined; }),
+    /** Seitenumbruch einfügen / entfernen at the active cell (above its row, left of its column), or all reset. */
+    breaks: (what: "insert" | "remove" | "reset") => setPage("Seitenumbruch", (p) => {
+      const { row, col } = app.sheet.view.active;
+      if (what === "reset") { p.rowBreaks = p.colBreaks = undefined; return; }
+      const edit = (list: number[] | undefined, at: number) => {
+        const set = new Set(list ?? []);
+        if (at > 0) { if (what === "insert") set.add(at); else set.delete(at); }
+        return set.size ? [...set].sort((a, b) => a - b) : undefined;
+      };
+      p.rowBreaks = edit(p.rowBreaks, row);
+      p.colBreaks = edit(p.colBreaks, col);
+    }),
     pageSetupDialog,
     printOption: (k: "gridLines" | "headings") => !!page()[k],
     togglePrintOption: (k: "gridLines" | "headings") => setPage("Blattoptionen", (p) => { p[k] = !p[k] || undefined; }),

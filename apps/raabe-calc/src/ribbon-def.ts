@@ -177,7 +177,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
           id: "pageSetup", label: "Seite einrichten", key: "ZS", icon: "margins",
           launcher: { cmd: "layout.pageSetup", key: "K" },
           controls: [dd("layout.margins", "8", "large", m.margins), dd("layout.orientation", "4", "large", m.orientationPage), dd("layout.size", "R", "large", m.size),
-            dd("layout.printArea", "H", "large", m.printArea), b("layout.breaks", "Ü", "large"), b("layout.background", "M", "large"), b("layout.printTitles", "I", "large")],
+            dd("layout.printArea", "H", "large", m.printArea), dd("layout.breaks", "Ü", "large", [{ cmd: "layout.breakInsert" }, { cmd: "layout.breakRemove" }, { cmd: "layout.breakReset" }]), b("layout.background", "M", "large"), b("layout.printTitles", "I", "large")],
         },
         {
           id: "scale", label: "An Format anpassen", key: "ZC", icon: "zoom",

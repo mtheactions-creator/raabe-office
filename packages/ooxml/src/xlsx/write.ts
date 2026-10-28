@@ -18,7 +18,7 @@ import { writeCharts } from "./drawing";
 import { newPackage } from "./new";
 import { numText, widthFromBase, widthToFile } from "./units";
 import { esc, escText, encodeX, joinSplit, place, placeAll, setAttrs, split, tXml, type Split, XML_HEAD } from "./xml";
-import { FILTER_DB, PRINT_AREA, PRINT_TITLES, titlesRef, headerFooterXml, autoFilterXml, conditionalXml, fitToPage, pageXml, sheetRef, validationsXml } from "./sheetparts";
+import { FILTER_DB, PRINT_AREA, PRINT_TITLES, titlesRef, breaksXml, readPage, headerFooterXml, autoFilterXml, conditionalXml, fitToPage, pageXml, sheetRef, validationsXml } from "./sheetparts";
 
 export const CT = {
   worksheet: "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml",
@@ -241,6 +241,14 @@ class SheetWriter {
       });
       this.put("sheetFormatPr", fmt);
     }
+    // Gliederung: Excel shows the outline bar from these two levels.
+    {
+      const lv = (m: Map<number, { outline?: number }>) => Math.max(0, ...[...m.values()].map((i) => i.outline ?? 0));
+      const fmt = this.get("sheetFormatPr") ?? '<sheetFormatPr baseColWidth="10" defaultRowHeight="15"/>';
+      const want = { outlineLevelRow: lv(s.rows) ? String(lv(s.rows)) : null, outlineLevelCol: lv(s.cols) ? String(lv(s.cols)) : null };
+      const next = setAttrs(fmt, want);
+      if (next !== fmt) this.put("sheetFormatPr", next);
+    }
     // Columns.
     if (!snap || now.cols !== snap.cols) this.put("cols", this.colsXml());
     this.put("sheetData", this.dataXml());
@@ -275,6 +283,10 @@ class SheetWriter {
       this.put("pageMargins", pg.margins);
       this.put("pageSetup", pg.setup);
       this.put("printOptions", pg.options);
+      const same = (a?: number[], b?: number[]) => JSON.stringify(a ?? []) === JSON.stringify(b ?? []);
+      const old = this.own ? readPage(this.sp.parts) : undefined;
+      if (!this.own || !same(old?.rowBreaks, s.page?.rowBreaks)) this.put("rowBreaks", breaksXml(s.page?.rowBreaks, true));
+      if (!this.own || !same(old?.colBreaks, s.page?.colBreaks)) this.put("colBreaks", breaksXml(s.page?.colBreaks, false));
       if ((s.page?.header ?? "") !== (this.own ? readHf(this.get("headerFooter"), "oddHeader") : "") || (s.page?.footer ?? "") !== (this.own ? readHf(this.get("headerFooter"), "oddFooter") : "")) {
         this.put("headerFooter", headerFooterXml(s.page, this.get("headerFooter")));
       }
