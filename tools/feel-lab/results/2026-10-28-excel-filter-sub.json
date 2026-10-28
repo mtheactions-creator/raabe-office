@@ -1,0 +1,222 @@
+{
+ "menus": {
+  "number": [
+   "Ist gleich...",
+   "Ist nicht gleich...",
+   "Größer als...",
+   "Größer oder gleich...",
+   "Kleiner als...",
+   "Kleiner oder gleich...",
+   "Zwischen...",
+   "Top 10...",
+   "Über dem Durchschnitt",
+   "Unter dem Durchschnitt",
+   "Benutzerdefinierter Filter..."
+  ],
+  "text": [
+   "Ist gleich...",
+   "Ist nicht gleich...",
+   "Beginnt mit...",
+   "Endet mit...",
+   "Enthält...",
+   "Enthält nicht...",
+   "Benutzerdefinierter Filter..."
+  ]
+ },
+ "rules": [
+  {
+   "col": 2,
+   "c1": ">2",
+   "op": null,
+   "c2": null,
+   "shown": [
+    3,
+    5,
+    6,
+    7
+   ]
+  },
+  {
+   "col": 2,
+   "c1": ">=2,5",
+   "op": null,
+   "c2": null,
+   "shown": [
+    3,
+    5,
+    6,
+    7
+   ]
+  },
+  {
+   "col": 2,
+   "c1": "<>2",
+   "op": null,
+   "c2": null,
+   "shown": [
+    3,
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  {
+   "col": 2,
+   "c1": ">1",
+   "op": 1,
+   "c2": "<4",
+   "shown": [
+    2,
+    3,
+    7
+   ]
+  },
+  {
+   "col": 2,
+   "c1": "<2",
+   "op": 2,
+   "c2": ">4",
+   "shown": [
+    4,
+    5
+   ]
+  },
+  {
+   "col": 2,
+   "c1": "3",
+   "op": 3,
+   "c2": null,
+   "shown": [
+    3,
+    5,
+    6
+   ]
+  },
+  {
+   "col": 2,
+   "c1": "2",
+   "op": 4,
+   "c2": null,
+   "shown": [
+    2,
+    4
+   ]
+  },
+  {
+   "col": 2,
+   "c1": "40",
+   "op": 5,
+   "c2": null,
+   "shown": [
+    5,
+    6
+   ]
+  },
+  {
+   "col": 2,
+   "c1": 33,
+   "op": 11,
+   "c2": null,
+   "shown": [
+    3,
+    5,
+    6
+   ]
+  },
+  {
+   "col": 2,
+   "c1": 34,
+   "op": 11,
+   "c2": null,
+   "shown": [
+    2,
+    4,
+    7
+   ]
+  },
+  {
+   "col": 1,
+   "c1": "Mathe*",
+   "op": null,
+   "c2": null,
+   "shown": [
+    3,
+    4,
+    7
+   ]
+  },
+  {
+   "col": 1,
+   "c1": "*he*",
+   "op": null,
+   "c2": null,
+   "shown": [
+    3,
+    4,
+    6,
+    7
+   ]
+  },
+  {
+   "col": 1,
+   "c1": "*e",
+   "op": null,
+   "c2": null,
+   "shown": [
+    3,
+    6
+   ]
+  },
+  {
+   "col": 1,
+   "c1": "<>*the*",
+   "op": null,
+   "c2": null,
+   "shown": [
+    2,
+    5,
+    6
+   ]
+  },
+  {
+   "col": 1,
+   "c1": "mathe",
+   "op": null,
+   "c2": null,
+   "shown": [
+    3
+   ]
+  },
+  {
+   "col": 1,
+   "c1": ">M",
+   "op": null,
+   "c2": null,
+   "shown": [
+    3,
+    4,
+    5,
+    7
+   ]
+  },
+  {
+   "col": 1,
+   "c1": "?athe",
+   "op": null,
+   "c2": null,
+   "shown": [
+    3
+   ]
+  },
+  {
+   "col": 1,
+   "c1": "=Mathe",
+   "op": null,
+   "c2": null,
+   "shown": [
+    3
+   ]
+  }
+ ]
+}

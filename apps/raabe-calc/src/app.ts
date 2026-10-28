@@ -4,7 +4,7 @@
 // opens and saves as German Excel does.
 
 import {
-  MAX_COLS, MAX_ROWS, Workbook, Sheet, cellName, FUNCTIONS_DE, RIBBON_FORMATS, localFormat, parseRange, rangeName,
+  MAX_COLS, MAX_ROWS, Workbook, Sheet, cellName, colName, FUNCTIONS_DE, RIBBON_FORMATS, localFormat, parseRange, rangeName,
   type CellStyle, type Rect,
 } from "@raabe/sheet-engine";
 import { readXlsx, writeXlsx, newWorkbook } from "@raabe/ooxml";
@@ -15,10 +15,10 @@ import {
 import { COMMANDS } from "./command-list";
 import { Grid, type GridHost, type Mode } from "./grid/grid";
 import { DEFAULT_COL_CHARS, charsToPx, defaultColPx, pxToPt, pxToWidth, ptToPx, shownChars } from "./grid/metrics";
-import { cssFont } from "./grid/render";
+import { cssFont, fitShown } from "./grid/render";
 import { History } from "./ops";
 import * as A from "./actions";
-import { formulaLocal, makeCalc, readCsv, shown, writeCsv, type CalcLike } from "./engine";
+import { editText, formulaLocal, makeCalc, readCsv, shown, writeCsv, type CalcLike } from "./engine";
 import { ribbonTabs, type RibbonContext } from "./ribbon-def";
 import { applyTips } from "./tooltips";
 import { CALC_TEMPLATES, templateWorkbook, type CalcTemplate } from "./templates";
@@ -29,6 +29,13 @@ import { addRecent, loadRecent, loadSettings, removeRecent, saveSettings, setPin
 import { dialogs } from "./dialogs";
 import { chartsFeature } from "./charts/feature";
 import { printFeature } from "./print";
+import { notesFeature } from "./notes";
+import { traceFeature } from "./trace";
+import { protectionFeature } from "./protection";
+import { evaluateFeature } from "./evaluate";
+import { errorCheckFeature } from "./errorcheck";
+import { isValidEntry, validationFeature } from "./validation";
+import { quickFeature, type QuickTile } from "./quick";
 import appIconUrl from "../../../branding/raabe-calc-small.svg?url";
 
 interface Doc {
@@ -69,6 +76,14 @@ export class CalcApp {
   private dlg = dialogs(this);
   readonly charts = chartsFeature(this);
   readonly print = printFeature(this);
+  private notes = notesFeature(this, () => this.settings.userName);
+  private trace = traceFeature(this);
+  private protection = protectionFeature(this);
+  private evaluator = evaluateFeature(this);
+  private errorCheck = errorCheckFeature(this, () => void this.evaluator.open());
+  private quick = quickFeature(this, () => this.quickTiles());
+  readonly validation = validationFeature(this, (t, text) => this.gridHost().commit(t, text, {}));
+  get calc(): CalcLike { return this.active.calc; }
 
   constructor(readonly platform: Platform) {
     void platform.listFonts().then((f) => { this.fontList = f; }).catch(() => {});
@@ -129,7 +144,8 @@ export class CalcApp {
     main.addEventListener("wheel", (e) => {
       if (!e.ctrlKey) return;
       e.preventDefault();
-      this.setZoom(this.wb.sheet().view.zoom + (e.deltaY < 0 ? 10 : -10));
+      // Strg+mouse wheel zooms in steps of 15 % (recorded in Excel).
+      this.setZoom(this.wb.sheet().view.zoom + (e.deltaY < 0 ? 15 : -15));
     }, { passive: false });
     platform.window.onCloseRequested(() => this.confirmQuit());
     setInterval(() => void this.autoRecover(), Math.max(10, this.settings.autoRecoverSeconds) * 1000);
@@ -181,8 +197,94 @@ export class CalcApp {
     this.platform.window.setTitle(document.title);
   }
 
+  /** Schnellanalyse's tiles per tab, doing what Excel's do (results/2026-10-28-excel-quickanalysis.json). */
+  private quickTiles(): Record<string, QuickTile[]> {
+    const rule = (r: Omit<import("@raabe/sheet-engine").CondRule, "priority">) => () => void this.dlg.addRule(r);
+    const chart = (k: import("./charts/feature").ChartKind) => () => this.charts.insert(k);
+    return {
+      Formatierung: [
+        { label: "Datenbalken", icon: "cond-format", run: rule({ type: "dataBar", colors: ["#638EC6"] }) },
+        { label: "Farbskala", icon: "cond-format", run: rule({ type: "colorScale", colors: ["#F8696B", "#FFEB84", "#63BE7B"] }) },
+        { label: "Symbolsatz", icon: "cond-format", run: () => {}, disabled: true },
+        { label: "Größer als", icon: "cond-format", run: () => { const m = this.dlg.conditionalHighlightMenu()[0]; if (typeof m === "object" && "run" in m) m.run(); } },
+        { label: "Obere 10 %", icon: "cond-format", run: rule({ type: "top10", rank: 10, percent: true, format: { fill: "#FFC7CE", color: "#9C0006" } }) },
+        { label: "Formatierung löschen", icon: "eraser", run: () => this.dlg.clearConditional(true) },
+      ],
+      Diagramme: [
+        { label: "Gruppierte Säulen", icon: "chart-column", run: chart("column") },
+        { label: "Gruppierte Balken", icon: "chart-bar", run: chart("bar") },
+        { label: "Linie", icon: "chart-line", run: chart("line") },
+        { label: "Kreis", icon: "chart-pie", run: chart("pie") },
+        { label: "Punkt (XY)", icon: "chart-scatter", run: chart("scatter") },
+        { label: "Weitere Diagramme", icon: "chart-recommended", run: () => void this.commands.run("insert.chartRecommended") },
+      ],
+      Ergebnisse: [
+        { label: "Summe", icon: "autosum", run: (r) => this.quickTotals(r, "SUMME") },
+        { label: "Durchschnitt", icon: "autosum", run: (r) => this.quickTotals(r, "MITTELWERT") },
+        { label: "Anzahl", icon: "autosum", run: (r) => this.quickTotals(r, "ANZAHL") },
+        { label: "% Gesamt", icon: "percent", run: (r) => this.quickTotals(r, "%") },
+        { label: "Laufende Summe", icon: "autosum", run: (r) => this.quickTotals(r, "laufend") },
+      ],
+      Tabellen: [
+        { label: "Tabelle", icon: "format-table", run: () => void this.dlg.formatAsTable() },
+        { label: "PivotTable", icon: "table", run: () => {}, disabled: true },
+      ],
+      Sparklines: [
+        { label: "Linie", icon: "chart-line", run: () => {}, disabled: true },
+        { label: "Säule", icon: "chart-column", run: () => {}, disabled: true },
+        { label: "Gewinn/Verlust", icon: "chart-column", run: () => {}, disabled: true },
+      ],
+    };
+  }
+
+  /** Ergebnisse: a row of totals under the selection (filled in once Excel's formulas are recorded). */
+  private quickTotals(r: Rect, fn: string): void {
+    const row = r.r1 + 1;
+    this.change("Schnellanalyse", () => {
+      for (let c = r.c0; c <= r.c1; c++) {
+        const col = colName(c);
+        const body = `${col}${r.r0 + 1}:${col}${r.r1 + 1}`;
+        const text = fn === "%" ? `=SUMME(${body})/SUMME($${colName(r.c0)}$${r.r0 + 1}:$${colName(r.c1)}$${r.r1 + 1})` : fn === "laufend" ? `=SUMME($${colName(r.c0)}$${r.r0 + 1}:${col}$${r.r1 + 1})` : `=${fn}(${body})`;
+        A.enter(this.ctx, this.sheet, { r0: row, c0: c, r1: row, c1: c }, text);
+      }
+    });
+  }
+
+  /** Ungültige Daten einkreisen, per sheet; a cell loses its circle once it holds a valid entry. */
+  private circles = new Map<Sheet, { row: number; col: number }[]>();
+
+  private circleInvalid(): void {
+    const sheet = this.sheet, si = this.wb.sheets.indexOf(sheet);
+    const out: { row: number; col: number }[] = [];
+    for (const v of sheet.validations ?? []) for (const r of v.ref) {
+      for (const [key, cell] of sheet.cells) {
+        const row = Math.floor(key / 16384), col = key % 16384;
+        if (row < r.r0 || row > r.r1 || col < r.c0 || col > r.c1 || cell.v === null || cell.v === "") continue;
+        const st = this.wb.styles.get(cell.s);
+        if (!isValidEntry(this.wb, si, row, col, editText(cell, st))) out.push({ row, col });
+      }
+    }
+    // Excel circles at most 255 cells.
+    this.circles.set(sheet, out.slice(0, 255));
+    this.grid.contentChanged();
+  }
+
+  /** Zahl als Text gespeichert > In eine Zahl umwandeln for one cell. */
+  toNumber(row: number, col: number): void {
+    const c = this.sheet.get(row, col);
+    if (c && typeof c.v === "string" && c.f === undefined) this.change("In eine Zahl umwandeln", () => A.enter(this.ctx, this.sheet, { r0: row, c0: col, r1: row, c1: col }, String(c.v).trim()));
+  }
+
   private afterChange(doc: Doc, change?: import("./ops").Change): void {
     doc.version++;
+    // Excel removes the trace arrows on any change; a circled cell that is now valid loses its circle.
+    this.trace.clear();
+    for (const [sheet, list] of this.circles) {
+      const si = doc.wb.sheets.indexOf(sheet);
+      if (si < 0) continue;
+      this.circles.set(sheet, list.filter(({ row, col }) => { const c = sheet.get(row, col); return !!c && c.v !== null && c.v !== "" && !isValidEntry(doc.wb, si, row, col, editText(c, doc.wb.styles.get(c.s))); }));
+    }
+    queueMicrotask(() => this.validation.afterSelect());
     // Only what depends on the changed cells is calculated again; structural changes (rows,
     // columns, sheets, names) recalculate the whole workbook.
     if (!change || change.structural) doc.calc.recalc();
@@ -215,6 +317,7 @@ export class CalcApp {
     this.sheetBar.render();
     this.charts.refresh();
     this.updateChrome();
+    this.validation.afterSelect();
   }
 
   // ----- the grid's host ------------------------------------------------------------------------
@@ -231,22 +334,25 @@ export class CalcApp {
         this.grid.setMarquee(null);
         this.copied = null;
       },
-      clearContents: () => this.change("Löschen", () => A.clearContents(this.ctx, this.sheet, this.grid.selection)),
-      clearRange: (r) => this.change("Löschen", () => A.clearContents(this.ctx, this.sheet, [r])),
-      fill: (source, target, ctrl) => this.fillWithOptions(source, target, ctrl ? "toggle" : "auto"),
-      move: (source, to, copy) => this.change(copy ? "Kopieren" : "Verschieben", () => {
+      clearContents: () => { if (this.protection.guard("edit.clearContents")) this.change("Löschen", () => A.clearContents(this.ctx, this.sheet, this.grid.selection)); },
+      clearRange: (r) => { if (this.protection.guard("edit.clearContents")) this.change("Löschen", () => A.clearContents(this.ctx, this.sheet, [r])); },
+      fill: (source, target, ctrl) => { if (this.protection.guard("edit.fillDown")) this.fillWithOptions(source, target, ctrl ? "toggle" : "auto"); },
+      move: (source, to, copy) => this.protection.on() ? void this.protection.canEdit(this.sheet.view.active.row, this.sheet.view.active.col) : this.change(copy ? "Kopieren" : "Verschieben", () => {
         if (copy) A.copyCells(this.ctx, { sheet: this.sheet, rect: source }, this.sheet, to);
         else A.moveCells(this.ctx, this.sheet, source, to);
       }),
-      resizeCols: (cols, px) => this.setColWidths(cols, px),
-      resizeRows: (rows, px) => this.setRowHeights(rows, px),
-      autofitCols: (cols) => this.autofitCols(cols),
-      autofitRows: (rows) => this.change("Zeilenhöhe", () => this.autoRowHeights({ r0: Math.min(...rows), c0: 0, r1: Math.max(...rows), c1: MAX_COLS - 1 }, true)),
+      resizeCols: (cols, px) => { if (this.protection.enabled("cells.colWidth")) this.setColWidths(cols, px); },
+      resizeRows: (rows, px) => { if (this.protection.enabled("cells.rowHeight")) this.setRowHeights(rows, px); },
+      autofitCols: (cols) => { if (this.protection.enabled("cells.autofitCols")) this.autofitCols(cols); },
+      autofitRows: (rows) => !this.protection.enabled("cells.autofitRows") ? undefined : this.change("Zeilenhöhe", () => this.autoRowHeights({ r0: Math.min(...rows), c0: 0, r1: Math.max(...rows), c1: MAX_COLS - 1 }, true)),
       selectionChanged: () => {
         this.charts.deselect();
+        this.validation.afterSelect();
         if (this.painter) this.applyPainter();
         this.scheduleChrome();
       },
+      flagsChanged: (flags) => this.statusBar.setFlags(flags),
+      copyMode: (on) => this.statusBar.setMessage(on ? "Ziel wählen, mit Eingabe oder Strg+V einfügen" : null),
       modeChanged: (mode: Mode) => {
         this.statusBar.setMode(mode === "ready" ? "Bereit" : mode === "enter" ? "Eingeben" : mode === "edit" ? "Bearbeiten" : "Zeigen");
         this.commands.refresh();
@@ -285,6 +391,12 @@ export class CalcApp {
         showMenu(this.commands, entries, anchor);
       },
       showFormulas: () => this.showFormulas,
+      arrows: () => this.trace.of(this.sheet),
+      circles: () => this.circles.get(this.sheet) ?? [],
+      canEdit: (row, col) => this.protection.canEdit(row, col),
+      validate: (row, col, text) => (this.validation.quickCheck(row, col, text) ? "ok" : this.validation.check(row, col, text)),
+      painted: () => { this.validation.place(); this.quick.place(); },
+      nextUnlocked: (row, col, back) => this.protection.nextUnlocked(row, col, back),
     };
   }
 
@@ -823,18 +935,26 @@ export class CalcApp {
         const c = sheet.get(row, col);
         if (!c || typeof c.v !== "number") continue;
         const st = this.wb.styles.get(c.s);
-        if (st.numFmt === "General") continue;
-        this.measureCtx.font = cssFont(st, 1);
-        const w = this.measureCtx.measureText(shown(c, st).text).width;
-        need.set(col, Math.max(need.get(col) ?? 0, w));
+        const info = sheet.cols.get(col);
+        const curPx = info?.width !== undefined ? charsToPx(info.width) : defaultColPx(sheet.defaultColWidth ?? DEFAULT_COL_CHARS);
+        const full = shown(c, st).text;
+        const fitted = fitShown(this.measureCtx, c, st, curPx).text;
+        if (fitted === full) continue;
+        // Standard numbers widen the column only where the width would turn them into
+        // scientific notation or cut a small number; dropping decimals is fine (recorded).
+        if (st.numFmt === "General" && !(full.includes("E") || fitted.includes("E") || Math.abs(c.v) < 1)) continue;
+        // The width the full text needs, as Excel decides whether it fits.
+        let px = curPx;
+        while (px < 2000 && fitShown(this.measureCtx, c, st, px).text !== full) px += 1 / devicePixelRatio;
+        need.set(col, Math.max(need.get(col) ?? 0, px));
       }
     }
     for (const [col, w] of need) {
       const info = sheet.cols.get(col);
       if (info?.width !== undefined && !info.bestFit) continue;
       const cur = info?.width !== undefined ? charsToPx(info.width) : defaultColPx(sheet.defaultColWidth ?? DEFAULT_COL_CHARS);
-      const px = Math.ceil(w) + 7;
-      if (px - 2 <= cur) continue;
+      const px = w;
+      if (px <= cur) continue;
       this.history.col(sheet, col);
       sheet.cols.set(col, { ...(info ?? {}), width: pxToWidth(px) });
     }
@@ -881,6 +1001,7 @@ export class CalcApp {
         c.cols = new Map([...s.cols].map(([k, v]) => [k, { ...v }]));
         c.rows = new Map([...s.rows].map(([k, v]) => [k, { ...v }]));
         c.merges = s.merges.map((m) => ({ ...m }));
+        c.validations = s.validations ? structuredClone(s.validations) : undefined;
         c.defaultColWidth = s.defaultColWidth;
         c.defaultRowHeight = s.defaultRowHeight;
         c.view = structuredClone(s.view);
@@ -945,10 +1066,42 @@ export class CalcApp {
   /** Labels that follow the content, as Excel's do: Fixierung aufheben, sorting by text or by size. */
   private updateLabels(): void {
     this.commands.get("view.freezePanes").label = this.sheet.view.freeze ? "Fixierung aufheben" : "Fenster fixieren";
+    const prot = this.protection.on();
+    this.commands.get("review.protectSheet").label = prot ? "Blattschutz aufheben..." : "Blatt schützen...";
+    this.commands.get("cells.protectSheet").label = prot ? "Blattschutz aufheben..." : "Blatt schützen...";
     const { row, col } = this.sheet.view.active;
     const text = typeof this.sheet.get(row, col)?.v === "string";
     this.commands.get("edit.sortAscMenu").label = text ? "Von A bis Z sortieren" : "Nach Größe sortieren (aufsteigend)";
     this.commands.get("edit.sortDescMenu").label = text ? "Von Z bis A sortieren" : "Nach Größe sortieren (absteigend)";
+  }
+
+  /** Inhalte auswählen: Excel's choices of cells to select. */
+  private async gotoSpecial(): Promise<void> {
+    const opts: [string, string][] = [["notes", "Notizen"], ["constants", "Konstanten"], ["formulas", "Formeln"], ["blanks", "Leerzellen"], ["region", "Aktueller Bereich"],
+      ["last", "Letzte Zelle"], ["visible", "Nur sichtbare Zellen"], ["conditional", "Bedingte Formate"]];
+    const body = h("div", { class: "goto-special" }, ...opts.map(([v, l], i) => h("label", { class: "check" }, h("input", { type: "radio", name: "gs", value: v, checked: i === 0 || undefined }), l)));
+    const ok = await showDialog({ title: "Inhalte auswählen", body, buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
+    if (!ok) return;
+    const v = body.querySelector<HTMLInputElement>("input:checked")?.value;
+    const a = this.sheet.view.active;
+    if (v === "notes") return void this.commands.run("edit.selectNotes");
+    if (v === "constants") return void this.commands.run("edit.selectConstants");
+    if (v === "formulas") return void this.commands.run("edit.selectFormulas");
+    if (v === "conditional") return void this.commands.run("edit.selectConditional");
+    if (v === "region") { this.grid.select(this.grid.currentRegion(a.row, a.col), { ...a }); return; }
+    if (v === "last") { const u = this.sheet.usedRange(); if (u) this.grid.selectCell(u.r1, u.c1); return; }
+    const sel = this.grid.selection.length > 1 || this.grid.selection[0].r0 !== this.grid.selection[0].r1 ? this.grid.selection : [this.sheet.usedRange() ?? this.grid.selection[0]];
+    const hits: Rect[] = [];
+    for (const r of sel) for (let row = r.r0; row <= Math.min(r.r1, r.r0 + 5000); row++) {
+      if (v === "visible" && this.sheet.rows.get(row)?.hidden) continue;
+      for (let col = r.c0; col <= Math.min(r.c1, r.c0 + 200); col++) {
+        if (v === "visible") { if (!this.sheet.cols.get(col)?.hidden) hits.push({ r0: row, c0: col, r1: row, c1: col }); continue; }
+        const c = this.sheet.get(row, col);
+        if (!c || c.v === null || c.v === "") hits.push({ r0: row, c0: col, r1: row, c1: col });
+      }
+    }
+    if (!hits.length) { void messageBox("RaabeCalc", "Es wurden keine Zellen gefunden."); return; }
+    this.grid.selectMany(hits.slice(0, 5000));
   }
 
   /** Suchen und Auswählen > Formeln, Notizen, Konstanten …: those cells of the sheet (or the selection) selected. */
@@ -963,8 +1116,7 @@ export class CalcApp {
     }
     if (!hits.length) { void messageBox("RaabeCalc", `Es wurden keine Zellen gefunden (${label}).`); return; }
     hits.sort((a, b) => a.r0 - b.r0 || a.c0 - b.c0);
-    this.grid.select(hits[0], { row: hits[0].r0, col: hits[0].c0 });
-    for (const h of hits.slice(1, 2000)) this.grid.select(h, { row: hits[0].r0, col: hits[0].c0 }, true);
+    this.grid.selectMany(hits.slice(0, 5000));
   }
 
   updateChrome(): void {
@@ -1033,7 +1185,10 @@ export class CalcApp {
 
   private implementCommands(): void {
     const c = this.commands;
-    const run = (id: string, fn: () => void | Promise<void>, enabled?: () => boolean, checked?: () => boolean) => c.implement(id, { run: fn, enabled, checked });
+    // Blatt schützen decides first: commands it does not allow are greyed out, changes to locked
+    // cells are refused with a message.
+    const run = (id: string, fn: () => void | Promise<void>, enabled?: () => boolean, checked?: () => boolean) =>
+      c.implement(id, { run: () => (this.protection.guard(id) ? fn() : undefined), enabled: () => this.protection.enabled(id) && (enabled ? enabled() : true), checked });
     const notEditing = () => !this.grid?.isEditing;
     const st = () => this.activeStyle();
 
@@ -1047,7 +1202,16 @@ export class CalcApp {
     run("file.close", () => void this.closeDoc(this.active));
     run("file.options", () => void this.dlg.options(this.settings, (s) => { this.settings = s; saveSettings(s); document.body.classList.toggle("touch", s.touchMode); }));
 
-    run("edit.undo", () => { if (this.grid.isEditing) this.grid.cancelEdit(); else this.history.undo(); this.grid.syncBar(); }, () => this.grid?.isEditing || this.history.canUndo);
+    run("edit.undo", () => {
+      if (this.grid.isEditing) this.grid.cancelEdit();
+      else {
+        const label = this.history.undoLabel;
+        this.history.undo();
+        // Undoing a paste brings the copied range's marquee back (recorded).
+        if (label === "Einfügen" && this.copied && !this.copied.cut && this.copied.sheet === this.sheet) this.grid.setMarquee(this.copied.rect);
+      }
+      this.grid.syncBar();
+    }, () => this.grid?.isEditing || this.history.canUndo);
     run("edit.redo", () => {
       if (this.history.canRedo) this.history.redo();
       else this.lastRepeat?.run();
@@ -1211,7 +1375,7 @@ export class CalcApp {
     run("edit.find", () => void this.dlg.find("Suchen"));
     run("edit.replace", () => void this.dlg.find("Ersetzen"));
     run("edit.goto", () => void this.dlg.goto());
-    run("edit.gotoSpecial", () => void this.dlg.goto());
+    run("edit.gotoSpecial", () => void this.gotoSpecial());
     run("edit.selectAll", () => this.grid.select({ r0: 0, c0: 0, r1: MAX_ROWS - 1, c1: MAX_COLS - 1 }, this.sheet.view.active));
     run("edit.dateToday", () => this.typeNow("date"));
     run("edit.timeNow", () => this.typeNow("time"));
@@ -1238,7 +1402,7 @@ export class CalcApp {
 
     run("insert.table", () => void this.dlg.formatAsTable());
     run("insert.link", () => void this.dlg.link());
-    run("insert.note", () => void this.dlg.note());
+    run("insert.note", () => this.notes.edit());
     run("insert.symbol", () => void this.dlg.symbol());
     run("insert.chartRecommended", () => this.charts.insert("column"));
     run("insert.chartColumn", () => this.charts.insert("column"));
@@ -1257,6 +1421,19 @@ export class CalcApp {
     run("layout.printArea", () => {});
     run("layout.printAreaSet", () => this.print.setPrintArea(selRect()));
     run("layout.printAreaClear", () => this.print.setPrintArea(null));
+    run("layout.printTitles", () => void this.print.pageSetupDialog(true));
+    run("insert.headerFooter", () => void this.print.pageSetupDialog("header"));
+    run("review.protectSheet", () => void this.protection.protect());
+    run("cells.protectSheet", () => void this.protection.protect());
+    run("formulas.evaluate", () => void this.evaluator.open(), notEditing);
+    run("data.validation", () => void this.validation.openDialog(), notEditing);
+    run("edit.selectValidation", () => this.validation.select());
+    run("data.circleInvalid", () => this.circleInvalid());
+    run("data.clearCircles", () => { this.circles.delete(this.sheet); this.grid.contentChanged(); }, () => this.circles.has(this.sheet));
+    run("formulas.errorCheck", () => void this.errorCheck.open(), notEditing);
+    run("formulas.tracePrecedents", () => this.trace.precedents());
+    run("formulas.traceDependents", () => this.trace.dependents());
+    run("formulas.removeArrows", () => this.trace.clear(), () => this.trace.any());
     run("layout.pageSetup", () => void this.print.pageSetupDialog());
     run("layout.fitWidth", () => {});
     run("layout.fitHeight", () => {});
@@ -1267,7 +1444,7 @@ export class CalcApp {
     run("layout.headingsPrint", () => this.print.togglePrintOption("headings"), undefined, () => this.print.printOption("headings"));
 
     run("formulas.insertFunction", () => void this.dlg.insertFunction());
-    for (const id of ["formulas.recent", "formulas.logical", "formulas.text", "formulas.dateTime", "formulas.lookup", "formulas.math", "formulas.more"]) run(id, () => {});
+    for (const id of ["formulas.recent", "formulas.financial", "formulas.logical", "formulas.text", "formulas.dateTime", "formulas.lookup", "formulas.math", "formulas.more"]) run(id, () => {});
     run("formulas.nameManager", () => void this.dlg.nameManager());
     run("formulas.defineName", () => void this.dlg.defineName());
     run("formulas.createFromSelection", () => void this.dlg.defineName());
@@ -1280,8 +1457,8 @@ export class CalcApp {
 
     run("review.statistics", () => void this.dlg.statistics());
     run("review.notes", () => {});
-    run("review.newNote", () => void this.dlg.note());
-    run("review.editNote", () => void this.dlg.note(), () => !!this.activeCellNote());
+    run("review.newNote", () => this.notes.edit());
+    run("review.editNote", () => this.notes.edit(), () => !!this.activeCellNote());
     run("review.deleteNote", () => this.change("Notiz löschen", () => A.clearAll(this.ctx, this.sheet, this.grid.selection, "notes")), () => !!this.activeCellNote());
     run("review.showNotes", () => { this.showNotes = !this.showNotes; this.grid.contentChanged(); }, undefined, () => this.showNotes);
 
@@ -1440,6 +1617,8 @@ export class CalcApp {
     // Letters by their character (Z and Y swap places on a German keyboard), digits and
     // punctuation by their position (Strg+Umschalt+4 is "$" on one layout and "4" on the key).
     const ctrl = e.ctrlKey && !e.altKey, shift = e.shiftKey, k = e.key;
+    // Alt+Unten on a cell with a Datenüberprüfung list opens it (before the pick list).
+    if (e.altKey && k === "ArrowDown" && this.validation.openList()) return true;
     const code = /^[a-zäöü]$/i.test(k) && /^[a-z]$/i.test(k) ? "Key" + k.toUpperCase() : e.code;
     const run = (id: string) => { void this.commands.run(id); return true; };
     if (this.painter && k === "Escape") { this.painter = null; document.body.classList.remove("painting"); return true; }
@@ -1483,6 +1662,7 @@ export class CalcApp {
       case "KeyO": return run("file.open");
       case "KeyN": return run("file.new");
       case "KeyP": return run("file.print");
+      case "KeyQ": return this.quick.open();
       case "KeyW": return run("file.close");
       case "KeyZ": return run("edit.undo");
       case "KeyY": return run("edit.redo");
@@ -1671,6 +1851,7 @@ export class CalcApp {
           { label: "Statistik", submenu: fnMenu(["ANZAHL", "ANZAHL2", "ANZAHLLEEREZELLEN", "BESTIMMTHEITSMASS", "BINOM.VERT", "GEOMITTEL", "KGRÖSSTE", "KKLEINSTE", "KORREL", "MAX", "MAXWENNS", "MEDIAN", "MIN", "MINWENNS", "MITTELABW", "MITTELWERT", "MITTELWERTWENN", "MITTELWERTWENNS", "MODUS.EINF", "NORM.INV", "NORM.S.VERT", "NORM.VERT", "POISSON.VERT", "QUANTIL.INKL", "QUARTILE.INKL", "RANG.GLEICH", "STABW.N", "STABW.S", "STEIGUNG", "ACHSENABSCHNITT", "VAR.P", "VAR.S", "VARIATIONEN", "ZÄHLENWENN", "ZÄHLENWENNS"]) },
           { label: "Informationen", submenu: fnMenu(["ISTFEHL", "ISTFEHLER", "ISTGERADE", "ISTLEER", "ISTLOG", "ISTNV", "ISTTEXT", "ISTUNGERADE", "ISTZAHL", "NV"]) },
         ],
+        fnFinancial: fnMenu(["BW", "KAPZ", "NBW", "RMZ", "ZINS", "ZINSZ", "ZW", "ZZR"]),
         fnRecent: fnMenu(["SUMME", "MITTELWERT", "WENN", "MAX", "MIN", "ANZAHL", "SVERWEIS", "RUNDEN", "ZÄHLENWENN", "SUMMEWENN"]),
         chartColumn: [{ heading: "2D-Säule" }, { label: "Gruppierte Säulen", run: () => this.charts.insert("column") }, { label: "Gestapelte Säulen", run: () => this.charts.insert("columnStacked") },
           { heading: "2D-Balken" }, { label: "Gruppierte Balken", run: () => this.charts.insert("bar") }, { label: "Gestapelte Balken", run: () => this.charts.insert("barStacked") }],
@@ -1741,6 +1922,15 @@ export class CalcApp {
       h("td", null, h("button", { class: "pinbtn", "aria-label": f.pinned ? "Lösen" : "Anheften", onclick: (e: MouseEvent) => { e.stopPropagation(); setPinned(f.path, !f.pinned); this.backstage.refreshPage(); } }, icon(f.pinned ? "unpin" : "pin"))))));
   }
 
+  /** What a cell shows in its column's width (Standard numbers shorten to fit), as the grid draws it. */
+  private shownInColumn(row: number, col: number): string {
+    const c = this.sheet.get(row, col);
+    const st = this.wb.styles.get(c?.s);
+    const cw = this.sheet.cols.get(col)?.width;
+    const px = cw !== undefined ? charsToPx(cw) : defaultColPx(this.sheet.defaultColWidth ?? DEFAULT_COL_CHARS);
+    return fitShown(this.measureCtx, c, st, px).text;
+  }
+
   /** Test hooks for feel-lab (development and test runs only): the behaviour catalogue (catalogue_calc.py). */
   testApi() {
     const addr = (a: string) => { const r = parseRange(a)!; return r; };
@@ -1751,6 +1941,7 @@ export class CalcApp {
       grid: this.grid,
       /** A fresh workbook with the case's cells typed in, the start cell selected. */
       reset: (setup: Record<string, string>, start: string, sheets: number) => {
+        this.grid.resetKeyModes();
         if (this.grid.isEditing) this.grid.cancelEdit();
         const doc = this.makeDoc(newWorkbook(), this.active.name, null);
         for (let i = 1; i < sheets; i++) doc.wb.sheets.push(new Sheet(`Tabelle${i + 2}`));
@@ -1804,7 +1995,7 @@ export class CalcApp {
           const c = sheet.get(row, col);
           const st = this.wb.styles.get(c?.s);
           cells[cellName(row, col)] = {
-            formula: formulaLocal(c), text: shown(c, st).text, format: st.numFmt === "General" ? "Standard" : localFormat(st.numFmt),
+            formula: formulaLocal(c), text: this.shownInColumn(row, col), format: st.numFmt === "General" ? "Standard" : localFormat(st.numFmt),
             bold: !!st.font.bold, italic: !!st.font.italic, underline: !!st.font.underline, strike: !!st.font.strike, wrap: !!st.wrap,
           };
         }

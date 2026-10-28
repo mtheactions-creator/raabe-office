@@ -3,10 +3,11 @@
 // Every function runs inside the caller's undo step (History.step).
 
 import {
-  MAX_COLS, MAX_ROWS, adjustFormula, cellKey, formulaRefs, shiftFormula, toLocalFormula, type Cell, type CellStyle, type Rect, type Sheet, type Workbook,
+  MAX_COLS, MAX_ROWS, adjustFormula, affectedByShift, shiftValidations, cellKey, formulaRefs, shiftFormula, toLocalFormula, type Cell, type CellStyle, type Rect, type Sheet, type Validation, type Workbook,
 } from "@raabe/sheet-engine";
 import { readInput } from "./engine";
 import type { History } from "./ops";
+import { applyValidation } from "./validation";
 
 export interface Ctx {
   wb: Workbook;
@@ -190,6 +191,21 @@ export function autoFill(ctx: Ctx, sheet: Sheet, source: Rect, target: Rect, opt
       sheet.set(d.row, d.col, cell);
     }
   }
+  if (!opts.formatsOnly && !opts.valuesOnly && sheet.validations?.length) fillValidations(ctx, sheet, source, target);
+}
+
+/** AutoAusfüllen repeats the source's Datenüberprüfung over the filled cells, block by block (Excel). */
+function fillValidations(ctx: Ctx, sheet: Sheet, source: Rect, target: Rect): void {
+  const vertical = target.r0 !== source.r0 || target.r1 !== source.r1;
+  const n = vertical ? source.r1 - source.r0 + 1 : source.c1 - source.c0 + 1;
+  const lo = vertical ? target.r0 : target.c0, hi = vertical ? target.r1 : target.c1, s0 = vertical ? source.r0 : source.c0;
+  for (let a = s0 - Math.ceil((s0 - lo) / n) * n; a <= hi; a += n) {
+    if (a === s0) continue;
+    const t0 = Math.max(a, lo), t1 = Math.min(a + n - 1, hi);
+    const src = vertical ? { ...source, r0: s0 + (t0 - a), r1: s0 + (t1 - a) } : { ...source, c0: s0 + (t0 - a), c1: s0 + (t1 - a) };
+    const dst = vertical ? { ...source, r0: t0, r1: t1 } : { ...source, c0: t0, c1: t1 };
+    pasteValidations(ctx, { sheet, rect: src }, sheet, dst);
+  }
 }
 
 function range(a: number, b: number): number[] {
@@ -284,7 +300,31 @@ export function copyCells(ctx: Ctx, from: { sheet: Sheet; rect: Rect }, to: Shee
       for (const m of ms) to.merges.push({ r0: m.r0 - from.rect.r0 + dst.r0, c0: m.c0 - from.rect.c0 + dst.c0, r1: m.r1 - from.rect.r0 + dst.r0, c1: m.c1 - from.rect.c0 + dst.c0 });
     }
   }
+  if (what === "all" && !transpose) pasteValidations(ctx, from, to, dst);
   return dst;
+}
+
+/**
+ * Einfügen takes the copied cells' Datenüberprüfung along and replaces the target's (Excel);
+ * relative references in criteria move with the cells.
+ */
+function pasteValidations(ctx: Ctx, from: { sheet: Sheet; rect: Rect }, to: Sheet, dst: Rect): void {
+  const dr = dst.r0 - from.rect.r0, dc = dst.c0 - from.rect.c0;
+  const moved: Validation[] = [];
+  for (const v of from.sheet.validations ?? []) {
+    const parts = v.ref.map((r) => ({ r0: Math.max(r.r0, from.rect.r0), c0: Math.max(r.c0, from.rect.c0), r1: Math.min(r.r1, from.rect.r1), c1: Math.min(r.c1, from.rect.c1) }))
+      .filter((r) => r.r0 <= r.r1 && r.c0 <= r.c1).map((r) => ({ r0: r.r0 + dr, c0: r.c0 + dc, r1: r.r1 + dr, c1: r.c1 + dc }));
+    if (!parts.length) continue;
+    // Criteria are relative to the first range's top-left cell.
+    const o = v.ref[0], n = parts[0];
+    const sr = n.r0 - o.r0, sc = n.c0 - o.c0;
+    const shift = (f?: string) => (f !== undefined && (sr || sc) ? shiftFormula(f, sr, sc) : f);
+    moved.push({ ...v, ref: parts, formula1: shift(v.formula1), formula2: shift(v.formula2) });
+  }
+  if (!moved.length && !(to.validations ?? []).some((v) => v.ref.some((r) => overlaps(r, dst)))) return;
+  ctx.history.validations(to);
+  applyValidation(to, [dst], null);
+  if (moved.length) to.validations = [...(to.validations ?? []), ...moved];
 }
 
 export function overlaps(a: Rect, b: Rect): boolean {
@@ -327,6 +367,9 @@ export function moveCells(ctx: Ctx, sheet: Sheet, from: Rect, at: { row: number;
 /** Inserts (count > 0) or deletes (count < 0) whole rows or columns at `at`. */
 export function insertDelete(ctx: Ctx, sheet: Sheet, kind: "rows" | "cols", at: number, count: number): void {
   ctx.history.whole(sheet);
+  // Datenüberprüfung ranges move with the cells (also those on other sheets that point here).
+  for (const s of affectedByShift(ctx.wb, sheet)) ctx.history.validations(s);
+  shiftValidations(ctx.wb, sheet, kind, at, count);
   const isRows = kind === "rows";
   const next = new Map<number, Cell>();
   for (const [k, c] of sheet.cells) {

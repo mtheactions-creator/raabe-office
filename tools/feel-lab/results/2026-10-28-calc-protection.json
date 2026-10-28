@@ -1,0 +1,9 @@
+{
+ "protected": true,
+ "allowFormattingCells": true,
+ "allowSorting": false,
+ "firstSheetProtected": false,
+ "wrongPasswordRefused": true,
+ "rightPasswordAccepted": true,
+ "pass": true
+}

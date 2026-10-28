@@ -12,6 +12,8 @@ interface SheetState {
   merges?: Rect[];
   /** The sheet's charts (inserted, moved, sized, formatted, deleted). */
   charts?: Sheet["charts"];
+  /** The sheet's Datenüberprüfung (changed through its dialog). */
+  validations?: Sheet["validations"] | null;
   /** Whole-sheet copies for structural changes (insert/delete rows and columns, sorting). */
   whole?: { cells: Map<number, Cell>; cols: Map<number, ColInfo>; rows: Map<number, RowInfo>; merges: Rect[] };
   defaults?: { col?: number; row: number };
@@ -142,6 +144,12 @@ export class History {
     if (!st.charts) st.charts = structuredClone(sheet.charts ?? []);
   }
 
+  /** Records the sheet's data validations before they change. */
+  validations(sheet: Sheet): void {
+    const st = this.stateFor(sheet);
+    if (st.validations === undefined) st.validations = sheet.validations ? structuredClone(sheet.validations) : null;
+  }
+
   merges(sheet: Sheet): void {
     const st = this.stateFor(sheet);
     if (!st.merges) st.merges = sheet.merges.map((m) => ({ ...m }));
@@ -176,6 +184,7 @@ export class History {
     for (const k of b.rows.keys()) out.rows.set(k, clone(s.rows.get(k)));
     if (b.merges) out.merges = s.merges.map((m) => ({ ...m }));
     if (b.charts) out.charts = structuredClone(s.charts ?? []);
+    if (b.validations !== undefined) out.validations = s.validations ? structuredClone(s.validations) : null;
     return out;
   }
 
@@ -204,6 +213,7 @@ export class History {
       for (const [k, c] of st.rows) { if (c) s.rows.set(k, { ...c }); else s.rows.delete(k); }
       if (st.merges) s.merges = st.merges.map((m) => ({ ...m }));
       if (st.charts) s.charts = structuredClone(st.charts);
+      if (st.validations !== undefined) s.validations = st.validations ? structuredClone(st.validations) : undefined;
       if (st.defaults) { s.defaultColWidth = st.defaults.col; s.defaultRowHeight = st.defaults.row; }
     }
   }

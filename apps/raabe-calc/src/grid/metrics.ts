@@ -32,6 +32,11 @@ export function setDeviceScale(dpr: number): void {
   DEV.pad = Math.floor((5 * mdw) / 7);
 }
 
+/** The display's scale and the cell padding in device pixels (for fitting text as Excel does). */
+export function device(): { dpr: number; pad: number; mdw: number } {
+  return { dpr: DEV.dpr, pad: DEV.pad, mdw: DEV.mdw };
+}
+
 /** The file's width (characters plus padding, in 1/256) → device pixels with digit width `mdw`. */
 function filePx(w: number, mdw: number): number {
   return Math.trunc(((256 * w + Math.trunc(128 / mdw)) / 256) * mdw);

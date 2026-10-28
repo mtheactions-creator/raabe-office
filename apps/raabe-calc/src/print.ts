@@ -1,9 +1,9 @@
 // Printing and PDF as Excel lays sheets out on paper: the used range (or the Druckbereich),
 // cut into pages first down, then across, at the page's printable size with Excel's default
 // margins ("Normal": 1,9 cm top and bottom, 1,8 cm left and right), Skalierung or An Format
-// anpassen, optional gridlines and row/column headings.
+// anpassen, optional gridlines and row/column headings, Drucktitel repeated on every page.
 
-import { MAX_COLS, cellName, colName, type PageSetup, type Rect, type Sheet } from "@raabe/sheet-engine";
+import { MAX_COLS, cellName, colName, parseRange, type PageSetup, type Rect, type Sheet } from "@raabe/sheet-engine";
 import { h, icon, showDialog, type MenuEntry } from "@raabe/shell";
 import type { CalcApp } from "./app";
 import { shown } from "./engine";
@@ -41,6 +41,63 @@ const PRINT_OFFSET = 2.6 / 72;
 
 const cm = (inch: number) => `${(inch * 2.54).toFixed(1).replace(".", ",")} cm`;
 
+type Page = { rows: [number, number]; cols: [number, number]; index?: number; count?: number };
+
+/**
+ * Kopf- und Fußzeile: Excel's codes split into left, centre and right with the fields filled in
+ * (&P page, &N pages, &D date, &T time, &F file, &A sheet, &Z path; format codes are left out).
+ */
+export function headerSections(code: string, f: { page: number; pages: number; sheet: string; file: string; now?: Date }): { L: string; C: string; R: string } {
+  const out = { L: "", C: "", R: "" };
+  let sec: "L" | "C" | "R" = "C";
+  const now = f.now ?? new Date();
+  const two = (n: number) => String(n).padStart(2, "0");
+  for (let i = 0; i < code.length; i++) {
+    const ch = code[i];
+    if (ch !== "&") { out[sec] += ch; continue; }
+    const k = code[++i];
+    if (k === undefined) break;
+    if (k === "&") out[sec] += "&";
+    else if (k === "L" || k === "C" || k === "R") sec = k;
+    else if (k === "P") out[sec] += String(f.page);
+    else if (k === "N") out[sec] += String(f.pages);
+    else if (k === "D") out[sec] += `${two(now.getDate())}.${two(now.getMonth() + 1)}.${now.getFullYear()}`;
+    else if (k === "T") out[sec] += `${two(now.getHours())}:${two(now.getMinutes())}`;
+    else if (k === "F") out[sec] += f.file;
+    else if (k === "A") out[sec] += f.sheet;
+    else if (k === '"') { const j = code.indexOf('"', i + 1); i = j < 0 ? code.length : j; }
+    else if (/\d/.test(k)) { while (/\d/.test(code[i + 1] ?? "")) i++; }
+    else if (k === "K") i += 6;
+  }
+  return out;
+}
+
+/** The three sections of a header code, codes kept (for editing). */
+function splitSections(code: string): { L: string; C: string; R: string } {
+  const out = { L: "", C: "", R: "" };
+  let sec: "L" | "C" | "R" = "C";
+  for (let i = 0; i < code.length; i++) {
+    if (code[i] === "&" && /[LCR]/.test(code[i + 1] ?? "")) { sec = code[++i] as "L" | "C" | "R"; continue; }
+    if (code[i] === "&" && code[i + 1] === "&") { out[sec] += "&&"; i++; continue; }
+    out[sec] += code[i];
+  }
+  return out;
+}
+
+/** Excel's German field names in the Kopf-/Fußzeile fields ⇄ its codes. */
+const FIELDS: [string, string][] = [["&[Seite]", "&P"], ["&[Seiten]", "&N"], ["&[Datum]", "&D"], ["&[Zeit]", "&T"], ["&[Pfad]", "&Z"], ["&[Datei]", "&F"], ["&[Register]", "&A"]];
+const toFields = (s: string) => FIELDS.reduce((t, [f, c]) => t.split(c).join(f), s);
+const toCodes = (s: string) => FIELDS.reduce((t, [f, c]) => t.split(f).join(c), s);
+
+/** "$1:$2" / "1" → rows, "$A:$B" / "A" → columns (Wiederholungszeilen/-spalten). */
+function readSpan(text: string, rows: boolean): [number, number] | undefined {
+  const t = text.trim().replace(/^.*!/, "");
+  if (!t) return undefined;
+  const r = parseRange(t.includes(":") ? t : `${t}:${t}`);
+  if (!r) return undefined;
+  return rows ? (r.c0 === 0 && r.c1 === MAX_COLS - 1 ? [r.r0, r.r1] : undefined) : (r.r1 - r.r0 > 1000000 ? [r.c0, r.c1] : undefined);
+}
+
 export function printFeature(app: CalcApp) {
   const page = (): PageSetup => app.sheet.page ?? {};
   const setPage = (label: string, fn: (p: PageSetup) => void) => app.change(label, () => {
@@ -56,7 +113,7 @@ export function printFeature(app: CalcApp) {
   }
 
   /** The pages of a sheet: row and column ranges, Excel's order (down, then across). */
-  function paginate(sheet: Sheet): { rows: [number, number]; cols: [number, number] }[] {
+  function paginate(sheet: Sheet): Page[] {
     const p = sheet.page ?? {};
     const area: Rect | null = p.printArea ?? sheet.usedRange();
     if (!area) return [];
@@ -73,27 +130,36 @@ export function printFeature(app: CalcApp) {
       const sw = p.fitWidth ? (pw * p.fitWidth) / tw : Infinity, sh = p.fitHeight ? (ph * p.fitHeight) / th : Infinity;
       scale = Math.max(0.1, Math.min(PRINT_SCALE, sw * PRINT_SCALE, sh * PRINT_SCALE));
     }
-    const cut = (from: number, to: number, size: (i: number) => number, room: number) => {
+    // Drucktitel take room on every page that does not already start with them.
+    const titleSize = (t: [number, number] | undefined, size: (i: number) => number) => {
+      let s = 0;
+      if (t) for (let i = t[0]; i <= t[1]; i++) s += size(i) * scale;
+      return s;
+    };
+    const cut = (from: number, to: number, size: (i: number) => number, room: number, title?: [number, number]) => {
       const out: [number, number][] = [];
+      const extra = titleSize(title, size);
       let start = from, used = 0;
+      const roomFor = (s: number) => (title && s > title[1] ? room - extra : room);
       for (let i = from; i <= to; i++) {
         const s = size(i) * scale;
-        if (used + s > room && i > start) { out.push([start, i - 1]); start = i; used = 0; }
+        if (used + s > roomFor(start) && i > start) { out.push([start, i - 1]); start = i; used = 0; }
         used += s;
       }
       out.push([start, to]);
       return out;
     };
-    const colPages = cut(area.c0, area.c1, colW, pw);
-    const rowPages = cut(area.r0, area.r1, rowH, ph);
-    const pages: { rows: [number, number]; cols: [number, number] }[] = [];
+    const colPages = cut(area.c0, area.c1, colW, pw, p.titleCols);
+    const rowPages = cut(area.r0, area.r1, rowH, ph, p.titleRows);
+    const pages: Page[] = [];
     for (const cols of colPages) for (const rows of rowPages) pages.push({ rows, cols });
+    pages.forEach((pg, i) => { pg.index = i; pg.count = pages.length; });
     (paginate as unknown as { scale: number }).scale = scale;
     return pages;
   }
 
   /** One page as HTML at its printed size. */
-  function renderPage(sheet: Sheet, pg: { rows: [number, number]; cols: [number, number] }): HTMLElement {
+  function renderPage(sheet: Sheet, pg: Page): HTMLElement {
     const p = sheet.page ?? {};
     const sz = paper(p);
     const m = p.margins ?? MARGINS["Normale Seitenränder"];
@@ -101,17 +167,21 @@ export function printFeature(app: CalcApp) {
     const table = h("table", { class: "print-table", style: `zoom:${scale}` });
     const colgroup = h("colgroup");
     if (p.headings) colgroup.append(h("col", { style: "width:30px" }));
-    for (let c = pg.cols[0]; c <= pg.cols[1]; c++) {
+    // Drucktitel first where the page does not start with them.
+    const withTitles = (span: [number, number], t: [number, number] | undefined) =>
+      [...(t && span[0] > t[1] ? range(t[0], t[1]) : []), ...range(span[0], span[1])];
+    const rows = withTitles(pg.rows, p.titleRows), cols = withTitles(pg.cols, p.titleCols);
+    for (const c of cols) {
       const w = colPx96(sheet, c);
       colgroup.append(h("col", { style: `width:${w}px` }));
     }
     table.append(colgroup);
-    if (p.headings) table.append(h("tr", null, h("th"), ...range(pg.cols[0], pg.cols[1]).map((c) => h("th", null, colName(c)))));
-    for (let r = pg.rows[0]; r <= pg.rows[1]; r++) {
+    if (p.headings) table.append(h("tr", null, h("th"), ...cols.map((c) => h("th", null, colName(c)))));
+    for (const r of rows) {
       if (sheet.rows.get(r)?.hidden) continue;
       const tr = h("tr", { style: `height:${ptToPx(sheet.rows.get(r)?.height ?? sheet.defaultRowHeight)}px` });
       if (p.headings) tr.append(h("th", null, String(r + 1)));
-      for (let c = pg.cols[0]; c <= pg.cols[1]; c++) {
+      for (const c of cols) {
         const merge = sheet.mergeAt(r, c);
         if (merge && (merge.r0 !== r || merge.c0 !== c)) continue;
         const cell = sheet.get(r, c);
@@ -131,7 +201,19 @@ export function printFeature(app: CalcApp) {
       table.append(tr);
     }
     if (p.gridLines) table.classList.add("grid");
-    return h("div", { class: "print-page", style: `width:${sz.w}in;height:${sz.h}in;padding:${m.top + PRINT_OFFSET}in ${m.right}in ${m.bottom}in ${m.left + PRINT_OFFSET}in` }, table);
+    const el = h("div", { class: "print-page", style: `position:relative;width:${sz.w}in;height:${sz.h}in;padding:${m.top + PRINT_OFFSET}in ${m.right}in ${m.bottom}in ${m.left + PRINT_OFFSET}in` }, table);
+    // Kopf- und Fußzeile at Excel's header and footer distances, between the side margins (the
+    // footer's text sits 1,5 pt higher in Excel's PDF than the box's bottom).
+    const info = { page: (pg.index ?? 0) + 1, pages: pg.count ?? 1, sheet: sheet.name, file: document.title.replace(/ - RaabeCalc$/, "") };
+    const band = (code: string | undefined, top: boolean) => {
+      if (!code) return;
+      const s = headerSections(code, info);
+      el.append(h("div", { class: "print-hf", style: `left:${m.left}in;right:${m.right}in;${top ? `top:${m.header}in` : `bottom:calc(${m.footer}in + 1.5pt)`}` },
+        h("span", { style: "text-align:left" }, s.L), h("span", { style: "text-align:center" }, s.C), h("span", { style: "text-align:right" }, s.R)));
+    };
+    band(p.header, true);
+    band(p.footer, false);
+    return el;
   }
 
   function pages(): HTMLElement[] {
@@ -204,7 +286,7 @@ export function printFeature(app: CalcApp) {
     setPage("Ausrichtung", (p) => { p.orientation = o; });
   }
 
-  async function pageSetupDialog(): Promise<void> {
+  async function pageSetupDialog(focusTitles: boolean | "header" = false): Promise<void> {
     const p = page();
     const m = { ...(p.margins ?? MARGINS["Normale Seitenränder"]) };
     const inputs = (["top", "bottom", "left", "right"] as const).map((k) => {
@@ -214,9 +296,25 @@ export function printFeature(app: CalcApp) {
     const scale = h("input", { type: "text", value: String(p.scale ?? 100), style: "width:60px" }) as HTMLInputElement;
     const grid = h("input", { type: "checkbox", checked: p.gridLines || undefined }) as HTMLInputElement;
     const heads = h("input", { type: "checkbox", checked: p.headings || undefined }) as HTMLInputElement;
+    const span = (t: [number, number] | undefined, rows: boolean) => (t ? (rows ? `$${t[0] + 1}:$${t[1] + 1}` : `$${colName(t[0])}:$${colName(t[1])}`) : "");
+    const titleRows = h("input", { type: "text", value: span(p.titleRows, true), style: "width:120px" }) as HTMLInputElement;
+    const titleCols = h("input", { type: "text", value: span(p.titleCols, false), style: "width:120px" }) as HTMLInputElement;
+    // Kopfzeile and Fußzeile: the three sections of Excel's Benutzerdefinierte Kopfzeile, with its field names.
+    const hfInputs = (code: string | undefined) => {
+      const s = code ? splitSections(code) : { L: "", C: "", R: "" };
+      return (["L", "C", "R"] as const).map((k) => h("input", { type: "text", value: toFields(s[k]), style: "width:100%", "aria-label": { L: "Linker Abschnitt", C: "Mittlerer Abschnitt", R: "Rechter Abschnitt" }[k] }) as HTMLInputElement);
+    };
+    const head = hfInputs(p.header), foot = hfInputs(p.footer);
+    const hfRow = (label: string, inputs: HTMLInputElement[]) => h("div", null, h("div", { class: "fc-label" }, label), h("div", { class: "hf-row" }, ...inputs));
+    if (focusTitles === "header") setTimeout(() => head[1].focus());
     const body = h("div", null, h("div", { class: "fc-label" }, "Seitenränder (cm)"), ...inputs.map((x) => x.el),
       h("label", { class: "field" }, "Verkleinern/Vergrößern (%):", scale),
+      h("div", { class: "fc-label" }, "Drucktitel"),
+      h("label", { class: "field" }, "Wiederholungszeilen oben:", titleRows), h("label", { class: "field" }, "Wiederholungsspalten links:", titleCols),
+      hfRow("Kopfzeile", head), hfRow("Fußzeile", foot),
+      h("p", { class: "muted" }, "Felder: &[Seite], &[Seiten], &[Datum], &[Zeit], &[Datei], &[Register]"),
       h("label", { class: "check" }, grid, "Gitternetzlinien drucken"), h("label", { class: "check" }, heads, "Zeilen- und Spaltenüberschriften drucken"));
+    if (focusTitles === true) setTimeout(() => titleRows.focus());
     const ok = await showDialog({ title: "Seite einrichten", body, buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
     if (!ok) return;
     setPage("Seite einrichten", (x) => {
@@ -227,6 +325,14 @@ export function printFeature(app: CalcApp) {
       if (s >= 10 && s <= 400) { x.scale = s; x.fitWidth = x.fitHeight = undefined; }
       x.gridLines = grid.checked || undefined;
       x.headings = heads.checked || undefined;
+      x.titleRows = readSpan(titleRows.value, true);
+      x.titleCols = readSpan(titleCols.value, false);
+      const code = (inputs: HTMLInputElement[]) => {
+        const [l, c, r] = inputs.map((i) => toCodes(i.value));
+        return (l ? `&L${l}` : "") + (c ? `&C${c}` : "") + (r ? `&R${r}` : "") || undefined;
+      };
+      x.header = code(head);
+      x.footer = code(foot);
     });
   }
 

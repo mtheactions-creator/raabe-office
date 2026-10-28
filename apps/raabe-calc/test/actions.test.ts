@@ -87,3 +87,36 @@ describe("rows, columns, copying, undo", () => {
     expect(b.wb.styles.get(b.sheet.get(0, 0)?.s).wrap).toBe(true);
   });
 });
+
+describe("Einfügen and Datenüberprüfung", () => {
+  it("takes the copied cells' validation along and replaces the target's; undo restores it", () => {
+    const b = book({ A1: "Ja", B1: "x" });
+    b.sheet.validations = [
+      { ref: [R("A1:A3")], type: "list", formula1: '"Ja,Nein"', allowBlank: true },
+      { ref: [R("C5:D6")], type: "custom", formula1: "ISNUMBER(C5)", allowBlank: true },
+      { ref: [R("F1")], type: "whole", operator: "greaterThan", formula1: "0" },
+    ];
+    b.history.step("paste", () => A.copyCells(b.ctx, { sheet: b.sheet, rect: R("A1:A2") }, b.sheet, { row: 0, col: 5 }));
+    const f = b.sheet.validations!.filter((v) => v.ref.some((r) => r.c0 === 5));
+    expect(f).toHaveLength(1);
+    expect(f[0]).toMatchObject({ type: "list", ref: [R("F1:F2")] });
+    // A relative criterion moves with the cells.
+    b.history.step("paste2", () => A.copyCells(b.ctx, { sheet: b.sheet, rect: R("C5") }, b.sheet, { row: 9, col: 7 }));
+    expect(b.sheet.validations!.find((v) => v.ref[0].r0 === 9)?.formula1).toBe("ISNUMBER(H10)");
+    b.history.undo();
+    b.history.undo();
+    expect(b.sheet.validations!.find((v) => v.type === "whole")?.ref).toEqual([R("F1")]);
+  });
+});
+
+describe("AutoAusfüllen and Datenüberprüfung", () => {
+  it("repeats the source's validation over the filled cells", () => {
+    const b = book({ A1: "Ja", A2: "1" });
+    b.sheet.validations = [{ ref: [R("A1")], type: "list", formula1: '"Ja,Nein"' }, { ref: [R("A2")], type: "whole", operator: "greaterThan", formula1: "0" }];
+    b.history.step("f", () => A.autoFill(b.ctx, b.sheet, R("A1:A2"), R("A1:A5")));
+    const list = b.sheet.validations!.filter((v) => v.type === "list").flatMap((v) => v.ref);
+    const whole = b.sheet.validations!.filter((v) => v.type === "whole").flatMap((v) => v.ref);
+    expect(list).toEqual(expect.arrayContaining([R("A1"), R("A3"), R("A5")]));
+    expect(whole).toEqual(expect.arrayContaining([R("A2"), R("A4")]));
+  });
+});

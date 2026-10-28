@@ -29,6 +29,15 @@ export function shown(cell: Cell | undefined, style: CellStyle, widthPx?: number
   return { text: r.text, color: r.color, align, fill: r.fill, hashes: r.hashes };
 }
 
+/** What a cell shows at a width in device pixels, with a measure in device pixels and Excel's padding. */
+export function shownAt(cell: Cell | undefined, style: CellStyle, widthPx: number, measure: (s: string) => number, padPx: number): Shown {
+  const v = cell?.v ?? null;
+  if (v === null) return { text: "", align: "left" };
+  const r = formatValue(v, style.numFmt, { widthPx, measure, padPx });
+  const align = r.align ?? (typeof v === "number" ? "right" : typeof v === "boolean" || v instanceof CellError ? "center" : "left");
+  return { text: r.text, color: r.color, align, fill: r.fill, hashes: r.hashes };
+}
+
 /** The cell's content as the formula bar and the cell editor show it (Excel's rules, measured in numfmt/input). */
 export function editText(cell: Cell | undefined, style: CellStyle): string {
   if (!cell) return "";

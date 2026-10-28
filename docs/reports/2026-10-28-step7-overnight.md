@@ -37,6 +37,13 @@ grid and the controls were built and measured against Excel.
 - **F. Formats, output:** Zellen formatieren, number formats in German conventions, printing and
   PDF with Excel's default margins, Seite einrichten, CSV as German Excel.
 
+- **G. After the catalogue was complete** (D-065): Datenüberprüfung (built by a parallel agent,
+  Excel's verdict on 150 entries reproduced), Blatt schützen with Excel's password hash, Spur zum
+  Vorgänger/Nachfolger, Formelauswertung, Fehlerüberprüfung, Drucktitel, Kopf- und Fußzeile,
+  Ungültige Daten einkreisen, Zahlen- und Textfilter (Top 10, Durchschnitt), Inhalte auswählen,
+  Notizen typed in place, the Dropdown-Auswahlliste (Alt+Unten), Finanzmathematik, Excel's
+  keyboard modes (Ende, F8, Umschalt+F8, Strg+Rücktaste).
+
 ## Measured
 
 | What | Result |
@@ -55,9 +62,8 @@ grid and the controls were built and measured against Excel.
 
 ## Not done / known gaps
 
-- Outline (Gruppierung), data validation, comments (threaded), Schnellanalyse, Blitzvorschau,
-  shapes and pictures in sheets (kept in the file, not shown), PivotTables, custom filters and
-  colour filters, sheet protection, Seitenlayout and Umbruchvorschau views: deferred, greyed with
-  "Zurückgestellt".
+- Outline (Gruppierung), comments (threaded), Schnellanalyse, Blitzvorschau, shapes and
+  pictures in sheets (kept in the file, not shown), PivotTables, colour filters, Seitenlayout
+  and Umbruchvorschau views: deferred, greyed with "Zurückgestellt".
 - Diagramm in RaabeWrite (Step 7b) is the next step.
 - The owner has not tried the app yet (planned after package D, now after the run).

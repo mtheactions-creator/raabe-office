@@ -13,6 +13,8 @@ import tempfile
 import time
 from pathlib import Path
 
+import pythoncom
+
 from feellab import pdftext
 from feellab.calc_catalogue import CalcSide
 from feellab.excel import ExcelTarget
@@ -23,6 +25,9 @@ CASES = {
     "120x12 portrait": (120, 12, {}, {}),
     "60x5 landscape": (60, 5, {"orientation": "landscape"}, {"Orientation": 2}),
     "200x3 fit width": (200, 3, {"fitWidth": 1}, {"Zoom": False, "FitToPagesWide": 1, "FitToPagesTall": False}),
+    "120x6 Drucktitel rows": (120, 6, {"titleRows": [0, 1]}, {"PrintTitleRows": "$1:$2"}),
+    "80x4 Kopf- und Fußzeile": (80, 4, {"header": "&CKlasse 7b", "footer": "&RSeite &P von &N"}, {"CenterHeader": "Klasse 7b", "RightFooter": "Seite &P von &N"}),
+    "40x30 Drucktitel column": (40, 30, {"titleCols": [0, 0]}, {"PrintTitleColumns": "$A:$A"}),
 }
 
 
@@ -49,7 +54,12 @@ def main() -> None:
             for r in range(1, rows + 1):
                 ws.Range(ws.Cells(r, 1), ws.Cells(r, cols)).Value = tuple(r * 100 + c for c in range(1, cols + 1))
             for k, v in ps.items():
-                setattr(ws.PageSetup, k, v)
+                if k.endswith(("Header", "Footer")):
+                    # Excel's English codes (&P, &N); the German interface would read them as its own.
+                    o = ws.PageSetup._oleobj_
+                    o.Invoke(o.GetIDsOfNames(k), 1033, pythoncom.DISPATCH_PROPERTYPUT, 0, v)
+                else:
+                    setattr(ws.PageSetup, k, v)
             out = TMP / f"raabe-print-excel-{len(results)}.pdf"
             ws.ExportAsFixedFormat(0, str(out))
             results[name] = {"excel": summary(out)}

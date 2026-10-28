@@ -265,6 +265,19 @@ export class Calc implements Host {
   }
 
   /** The formula whose dynamic array covers this cell (for greyed formulas in the Bearbeitungsleiste). */
+  /** The cells and ranges a formula refers to (Spur zum Vorgänger). */
+  precedents(sheet: number, row: number, col: number): { sheet: number; rect: Rect }[] {
+    const n = this.nodes.get(sheet)?.get(cellKey(row, col));
+    return n ? n.deps.map((d) => ({ sheet: d.sheet, rect: { ...d.rect } })) : [];
+  }
+
+  /** The formulas that refer to a cell (Spur zum Nachfolger). */
+  dependentsOf(sheet: number, row: number, col: number): CellAt[] {
+    const out: CellAt[] = [];
+    this.dependents(sheet, row, col, (n) => out.push({ sheet: n.sheet, row: n.row, col: n.col }));
+    return out;
+  }
+
   spillAnchor(sheet: number, row: number, col: number): { row: number; col: number } | null {
     const n = this.owner.get(sheet)?.get(cellKey(row, col));
     return n ? { row: n.row, col: n.col } : null;

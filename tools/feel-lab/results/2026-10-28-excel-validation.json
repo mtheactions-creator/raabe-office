@@ -1,0 +1,1912 @@
+{
+ "date": "2026-10-28",
+ "defaults": {
+  "any": {
+   "Type": 0,
+   "AlertStyle": 1,
+   "Operator": 1,
+   "Formula1": "",
+   "Formula2": "",
+   "IgnoreBlank": true,
+   "InCellDropdown": true,
+   "ShowInput": true,
+   "ShowError": true,
+   "InputTitle": "",
+   "InputMessage": "",
+   "ErrorTitle": "",
+   "ErrorMessage": "",
+   "Value": true
+  },
+  "whole": {
+   "Type": 1,
+   "AlertStyle": 1,
+   "Operator": 1,
+   "Formula1": "1",
+   "Formula2": "6",
+   "IgnoreBlank": true,
+   "InCellDropdown": true,
+   "ShowInput": true,
+   "ShowError": true,
+   "InputTitle": "",
+   "InputMessage": "",
+   "ErrorTitle": "",
+   "ErrorMessage": "",
+   "Value": true
+  },
+  "decimal": {
+   "Type": 2,
+   "AlertStyle": 1,
+   "Operator": 1,
+   "Formula1": "1",
+   "Formula2": "6",
+   "IgnoreBlank": true,
+   "InCellDropdown": true,
+   "ShowInput": true,
+   "ShowError": true,
+   "InputTitle": "",
+   "InputMessage": "",
+   "ErrorTitle": "",
+   "ErrorMessage": "",
+   "Value": true
+  },
+  "list": {
+   "Type": 3,
+   "AlertStyle": 1,
+   "Operator": 1,
+   "Formula1": "Ja;Nein",
+   "Formula2": "",
+   "IgnoreBlank": true,
+   "InCellDropdown": true,
+   "ShowInput": true,
+   "ShowError": true,
+   "InputTitle": "",
+   "InputMessage": "",
+   "ErrorTitle": "",
+   "ErrorMessage": "",
+   "Value": true
+  },
+  "date": {
+   "Type": 4,
+   "AlertStyle": 1,
+   "Operator": 1,
+   "Formula1": "01.01.2026",
+   "Formula2": "31.12.2026",
+   "IgnoreBlank": true,
+   "InCellDropdown": true,
+   "ShowInput": true,
+   "ShowError": true,
+   "InputTitle": "",
+   "InputMessage": "",
+   "ErrorTitle": "",
+   "ErrorMessage": "",
+   "Value": true
+  },
+  "time": {
+   "Type": 5,
+   "AlertStyle": 1,
+   "Operator": 1,
+   "Formula1": "08:00:00",
+   "Formula2": "12:00:00",
+   "IgnoreBlank": true,
+   "InCellDropdown": true,
+   "ShowInput": true,
+   "ShowError": true,
+   "InputTitle": "",
+   "InputMessage": "",
+   "ErrorTitle": "",
+   "ErrorMessage": "",
+   "Value": true
+  },
+  "textLength": {
+   "Type": 6,
+   "AlertStyle": 1,
+   "Operator": 1,
+   "Formula1": "1",
+   "Formula2": "6",
+   "IgnoreBlank": true,
+   "InCellDropdown": true,
+   "ShowInput": true,
+   "ShowError": true,
+   "InputTitle": "",
+   "InputMessage": "",
+   "ErrorTitle": "",
+   "ErrorMessage": "",
+   "Value": true
+  },
+  "custom": {
+   "Type": 7,
+   "AlertStyle": 1,
+   "Operator": 1,
+   "Formula1": "=ISTZAHL(A1)",
+   "Formula2": "",
+   "IgnoreBlank": true,
+   "InCellDropdown": true,
+   "ShowInput": true,
+   "ShowError": true,
+   "InputTitle": "",
+   "InputMessage": "",
+   "ErrorTitle": "",
+   "ErrorMessage": "",
+   "Value": true
+  }
+ },
+ "cases": [
+  {
+   "name": "whole between 1 6",
+   "type": "whole",
+   "operator": "between",
+   "formula1": "1",
+   "formula2": "6",
+   "ignoreBlank": true,
+   "context": {},
+   "read": {
+    "Formula1": "1",
+    "Formula2": "6"
+   },
+   "results": [
+    {
+     "entry": "3",
+     "valid": true,
+     "value": 3.0,
+     "text": "3",
+     "formula": "3"
+    },
+    {
+     "entry": "3,5",
+     "valid": false,
+     "value": 3.5,
+     "text": "3,5",
+     "formula": "3.5"
+    },
+    {
+     "entry": "0",
+     "valid": false,
+     "value": 0.0,
+     "text": "0",
+     "formula": "0"
+    },
+    {
+     "entry": "7",
+     "valid": false,
+     "value": 7.0,
+     "text": "7",
+     "formula": "7"
+    },
+    {
+     "entry": "6",
+     "valid": true,
+     "value": 6.0,
+     "text": "6",
+     "formula": "6"
+    },
+    {
+     "entry": "1",
+     "valid": true,
+     "value": 1.0,
+     "text": "1",
+     "formula": "1"
+    },
+    {
+     "entry": "abc",
+     "valid": false,
+     "value": "abc",
+     "text": "abc",
+     "formula": "abc"
+    },
+    {
+     "entry": "WAHR",
+     "valid": false,
+     "value": true,
+     "text": "WAHR",
+     "formula": "TRUE"
+    },
+    {
+     "entry": "=2+2",
+     "valid": true,
+     "value": 4.0,
+     "text": "4",
+     "formula": "=2+2"
+    },
+    {
+     "entry": "=2,5",
+     "valid": false,
+     "value": 2.5,
+     "text": "2,5",
+     "formula": "=2.5"
+    },
+    {
+     "entry": "6,0",
+     "valid": true,
+     "value": 6.0,
+     "text": "6",
+     "formula": "6"
+    },
+    {
+     "entry": "50%",
+     "valid": false,
+     "value": 0.5,
+     "text": "50%",
+     "formula": "0.5"
+    },
+    {
+     "entry": "1.1.2026",
+     "valid": false,
+     "value": 46023.0,
+     "text": "01.01.2026",
+     "formula": "46023"
+    },
+    {
+     "entry": "-1",
+     "valid": false,
+     "value": -1.0,
+     "text": "-1",
+     "formula": "-1"
+    },
+    {
+     "entry": " 3",
+     "valid": true,
+     "value": 3.0,
+     "text": "3",
+     "formula": "3"
+    },
+    {
+     "entry": "'3",
+     "valid": false,
+     "value": "3",
+     "text": "3",
+     "formula": "3"
+    }
+   ]
+  },
+  {
+   "name": "whole notBetween 1 6",
+   "type": "whole",
+   "operator": "notBetween",
+   "formula1": "1",
+   "formula2": "6",
+   "ignoreBlank": true,
+   "context": {},
+   "read": {
+    "Formula1": "1",
+    "Formula2": "6"
+   },
+   "results": [
+    {
+     "entry": "0",
+     "valid": true,
+     "value": 0.0,
+     "text": "0",
+     "formula": "0"
+    },
+    {
+     "entry": "3",
+     "valid": false,
+     "value": 3.0,
+     "text": "3",
+     "formula": "3"
+    },
+    {
+     "entry": "7",
+     "valid": true,
+     "value": 7.0,
+     "text": "7",
+     "formula": "7"
+    },
+    {
+     "entry": "7,5",
+     "valid": false,
+     "value": 7.5,
+     "text": "7,5",
+     "formula": "7.5"
+    },
+    {
+     "entry": "abc",
+     "valid": false,
+     "value": "abc",
+     "text": "abc",
+     "formula": "abc"
+    }
+   ]
+  },
+  {
+   "name": "whole equal 5",
+   "type": "whole",
+   "operator": "equal",
+   "formula1": "5",
+   "formula2": null,
+   "ignoreBlank": true,
+   "context": {},
+   "read": {
+    "Formula1": "5",
+    "Formula2": ""
+   },
+   "results": [
+    {
+     "entry": "5",
+     "valid": true,
+     "value": 5.0,
+     "text": "5",
+     "formula": "5"
+    },
+    {
+     "entry": "4",
+     "valid": false,
+     "value": 4.0,
+     "text": "4",
+     "formula": "4"
+    },
+    {
+     "entry": "5,0",
+     "valid": true,
+     "value": 5.0,
+     "text": "5",
+     "formula": "5"
+    },
+    {
+     "entry": "abc",
+     "valid": false,
+     "value": "abc",
+     "text": "abc",
+     "formula": "abc"
+    }
+   ]
+  },
+  {
+   "name": "whole notEqual 5",
+   "type": "whole",
+   "operator": "notEqual",
+   "formula1": "5",
+   "formula2": null,
+   "ignoreBlank": true,
+   "context": {},
+   "read": {
+    "Formula1": "5",
+    "Formula2": ""
+   },
+   "results": [
+    {
+     "entry": "5",
+     "valid": false,
+     "value": 5.0,
+     "text": "5",
+     "formula": "5"
+    },
+    {
+     "entry": "4",
+     "valid": true,
+     "value": 4.0,
+     "text": "4",
+     "formula": "4"
+    },
+    {
+     "entry": "4,5",
+     "valid": false,
+     "value": 4.5,
+     "text": "4,5",
+     "formula": "4.5"
+    }
+   ]
+  },
+  {
+   "name": "whole greaterThan 5",
+   "type": "whole",
+   "operator": "greaterThan",
+   "formula1": "5",
+   "formula2": null,
+   "ignoreBlank": true,
+   "context": {},
+   "read": {
+    "Formula1": "5",
+    "Formula2": ""
+   },
+   "results": [
+    {
+     "entry": "5",
+     "valid": false,
+     "value": 5.0,
+     "text": "5",
+     "formula": "5"
+    },
+    {
+     "entry": "6",
+     "valid": true,
+     "value": 6.0,
+     "text": "6",
+     "formula": "6"
+    },
+    {
+     "entry": "100000",
+     "valid": true,
+     "value": 100000.0,
+     "text": "100000",
+     "formula": "100000"
+    }
+   ]
+  },
+  {
+   "name": "whole lessThan 5",
+   "type": "whole",
+   "operator": "lessThan",
+   "formula1": "5",
+   "formula2": null,
+   "ignoreBlank": true,
+   "context": {},
+   "read": {
+    "Formula1": "5",
+    "Formula2": ""
+   },
+   "results": [
+    {
+     "entry": "5",
+     "valid": false,
+     "value": 5.0,
+     "text": "5",
+     "formula": "5"
+    },
+    {
+     "entry": "4",
+     "valid": true,
+     "value": 4.0,
+     "text": "4",
+     "formula": "4"
+    },
+    {
+     "entry": "-100",
+     "valid": true,
+     "value": -100.0,
+     "text": "-100",
+     "formula": "-100"
+    }
+   ]
+  },
+  {
+   "name": "whole greaterThanOrEqual 5",
+   "type": "whole",
+   "operator": "greaterThanOrEqual",
+   "formula1": "5",
+   "formula2": null,
+   "ignoreBlank": true,
+   "context": {},
+   "read": {
+    "Formula1": "5",
+    "Formula2": ""
+   },
+   "results": [
+    {
+     "entry": "5",
+     "valid": true,
+     "value": 5.0,
+     "text": "5",
+     "formula": "5"
+    },
+    {
+     "entry": "4",
+     "valid": false,
+     "value": 4.0,
+     "text": "4",
+     "formula": "4"
+    }
+   ]
+  },
+  {
+   "name": "whole lessThanOrEqual 5",
+   "type": "whole",
+   "operator": "lessThanOrEqual",
+   "formula1": "5",
+   "formula2": null,
+   "ignoreBlank": true,
+   "context": {},
+   "read": {
+    "Formula1": "5",
+    "Formula2": ""
+   },
+   "results": [
+    {
+     "entry": "5",
+     "valid": true,
+     "value": 5.0,
+     "text": "5",
+     "formula": "5"
+    },
+    {
+     "entry": "6",
+     "valid": false,
+     "value": 6.0,
+     "text": "6",
+     "formula": "6"
+    }
+   ]
+  },
+  {
+   "name": "decimal between 1,5 2,5",
+   "type": "decimal",
+   "operator": "between",
+   "formula1": "1,5",
+   "formula2": "2,5",
+   "ignoreBlank": true,
+   "context": {},
+   "read": {
+    "Formula1": "1,5",
+    "Formula2": "2,5"
+   },
+   "results": [
+    {
+     "entry": "2",
+     "valid": true,
+     "value": 2.0,
+     "text": "2",
+     "formula": "2"
+    },
+    {
+     "entry": "1,5",
+     "valid": true,
+     "value": 1.5,
+     "text": "1,5",
+     "formula": "1.5"
+    },
+    {
+     "entry": "2,6",
+     "valid": false,
+     "value": 2.6,
+     "text": "2,6",
+     "formula": "2.6"
+    },
+    {
+     "entry": "abc",
+     "valid": false,
+     "value": "abc",
+     "text": "abc",
+     "formula": "abc"
+    },
+    {
+     "entry": "WAHR",
+     "valid": false,
+     "value": true,
+     "text": "WAHR",
+     "formula": "TRUE"
+    },
+    {
+     "entry": "=1+1",
+     "valid": true,
+     "value": 2.0,
+     "text": "2",
+     "formula": "=1+1"
+    },
+    {
+     "entry": "15.3.2026",
+     "valid": false,
+     "value": 46096.0,
+     "text": "15.03.2026",
+     "formula": "46096"
+    }
+   ]
+  },
+  {
+   "name": "decimal greaterThan ref",
+   "type": "decimal",
+   "operator": "greaterThan",
+   "formula1": "=$D$1",
+   "formula2": null,
+   "ignoreBlank": true,
+   "context": {
+    "D1": "10"
+   },
+   "read": {
+    "Formula1": "=$D$1",
+    "Formula2": ""
+   },
+   "results": [
+    {
+     "entry": "11",
+     "valid": true,
+     "value": 11.0,
+     "text": "11",
+     "formula": "11"
+    },
+    {
+     "entry": "9",
+     "valid": false,
+     "value": 9.0,
+     "text": "9",
+     "formula": "9"
+    },
+    {
+     "entry": "10",
+     "valid": false,
+     "value": 10.0,
+     "text": "10",
+     "formula": "10"
+    }
+   ]
+  },
+  {
+   "name": "decimal between blank ref, ignore",
+   "type": "decimal",
+   "operator": "between",
+   "formula1": "=$D$1",
+   "formula2": "=$D$2",
+   "ignoreBlank": true,
+   "context": {
+    "D1": "1"
+   },
+   "read": {
+    "Formula1": "=$D$1",
+    "Formula2": "=$D$2"
+   },
+   "results": [
+    {
+     "entry": "5",
+     "valid": true,
+     "value": 5.0,
+     "text": "5",
+     "formula": "5"
+    },
+    {
+     "entry": "0",
+     "valid": true,
+     "value": 0.0,
+     "text": "0",
+     "formula": "0"
+    },
+    {
+     "entry": "abc",
+     "valid": false,
+     "value": "abc",
+     "text": "abc",
+     "formula": "abc"
+    }
+   ]
+  },
+  {
+   "name": "decimal between blank ref, no ignore",
+   "type": "decimal",
+   "operator": "between",
+   "formula1": "=$D$1",
+   "formula2": "=$D$2",
+   "ignoreBlank": false,
+   "context": {
+    "D1": "1"
+   },
+   "read": {
+    "Formula1": "=$D$1",
+    "Formula2": "=$D$2"
+   },
+   "results": [
+    {
+     "entry": "5",
+     "valid": false,
+     "value": 5.0,
+     "text": "5",
+     "formula": "5"
+    },
+    {
+     "entry": "0",
+     "valid": false,
+     "value": 0.0,
+     "text": "0",
+     "formula": "0"
+    },
+    {
+     "entry": "abc",
+     "valid": false,
+     "value": "abc",
+     "text": "abc",
+     "formula": "abc"
+    }
+   ]
+  },
+  {
+   "name": "list literal",
+   "type": "list",
+   "operator": null,
+   "formula1": "Ja;Nein;Vielleicht",
+   "formula2": null,
+   "ignoreBlank": true,
+   "context": {},
+   "read": {
+    "Formula1": "Ja;Nein;Vielleicht",
+    "Formula2": ""
+   },
+   "results": [
+    {
+     "entry": "Ja",
+     "valid": true,
+     "value": "Ja",
+     "text": "Ja",
+     "formula": "Ja"
+    },
+    {
+     "entry": "ja",
+     "valid": false,
+     "value": "ja",
+     "text": "ja",
+     "formula": "ja"
+    },
+    {
+     "entry": "JA",
+     "valid": false,
+     "value": "JA",
+     "text": "JA",
+     "formula": "JA"
+    },
+    {
+     "entry": "Nein",
+     "valid": true,
+     "value": "Nein",
+     "text": "Nein",
+     "formula": "Nein"
+    },
+    {
+     "entry": "Nein ",
+     "valid": true,
+     "value": "Nein ",
+     "text": "Nein ",
+     "formula": "Nein "
+    },
+    {
+     "entry": "x",
+     "valid": false,
+     "value": "x",
+     "text": "x",
+     "formula": "x"
+    },
+    {
+     "entry": "1",
+     "valid": false,
+     "value": 1.0,
+     "text": "1",
+     "formula": "1"
+    }
+   ]
+  },
+  {
+   "name": "list literal numbers",
+   "type": "list",
+   "operator": null,
+   "formula1": "1;2;2,5",
+   "formula2": null,
+   "ignoreBlank": true,
+   "context": {},
+   "read": {
+    "Formula1": "1;2;2,5",
+    "Formula2": ""
+   },
+   "results": [
+    {
+     "entry": "1",
+     "valid": true,
+     "value": 1.0,
+     "text": "1",
+     "formula": "1"
+    },
+    {
+     "entry": "2",
+     "valid": true,
+     "value": 2.0,
+     "text": "2",
+     "formula": "2"
+    },
+    {
+     "entry": "2,5",
+     "valid": true,
+     "value": 2.5,
+     "text": "2,5",
+     "formula": "2.5"
+    },
+    {
+     "entry": "2,50",
+     "valid": true,
+     "value": 2.5,
+     "text": "2,5",
+     "formula": "2.5"
+    },
+    {
+     "entry": "3",
+     "valid": false,
+     "value": 3.0,
+     "text": "3",
+     "formula": "3"
+    },
+    {
+     "entry": "abc",
+     "valid": false,
+     "value": "abc",
+     "text": "abc",
+     "formula": "abc"
+    }
+   ]
+  },
+  {
+   "name": "list range",
+   "type": "list",
+   "operator": null,
+   "formula1": "=$D$1:$D$4",
+   "formula2": null,
+   "ignoreBlank": true,
+   "context": {
+    "D1": "Rot",
+    "D2": "Grün",
+    "D3": "1,5",
+    "D4": "15.03.2026"
+   },
+   "read": {
+    "Formula1": "=$D$1:$D$4",
+    "Formula2": ""
+   },
+   "results": [
+    {
+     "entry": "Rot",
+     "valid": true,
+     "value": "Rot",
+     "text": "Rot",
+     "formula": "Rot"
+    },
+    {
+     "entry": "rot",
+     "valid": true,
+     "value": "rot",
+     "text": "rot",
+     "formula": "rot"
+    },
+    {
+     "entry": "Grün",
+     "valid": true,
+     "value": "Grün",
+     "text": "Grün",
+     "formula": "Grün"
+    },
+    {
+     "entry": "Blau",
+     "valid": false,
+     "value": "Blau",
+     "text": "Blau",
+     "formula": "Blau"
+    },
+    {
+     "entry": "1,5",
+     "valid": true,
+     "value": 1.5,
+     "text": "1,5",
+     "formula": "1.5"
+    },
+    {
+     "entry": "1,50",
+     "valid": true,
+     "value": 1.5,
+     "text": "1,5",
+     "formula": "1.5"
+    },
+    {
+     "entry": "15.03.2026",
+     "valid": true,
+     "value": 46096.0,
+     "text": "15.03.2026",
+     "formula": "46096"
+    },
+    {
+     "entry": "46096",
+     "valid": true,
+     "value": 46096.0,
+     "text": "46096",
+     "formula": "46096"
+    }
+   ]
+  },
+  {
+   "name": "list range with blank, ignore",
+   "type": "list",
+   "operator": null,
+   "formula1": "=$D$1:$D$3",
+   "formula2": null,
+   "ignoreBlank": true,
+   "context": {
+    "D1": "Rot",
+    "D3": "Blau"
+   },
+   "read": {
+    "Formula1": "=$D$1:$D$3",
+    "Formula2": ""
+   },
+   "results": [
+    {
+     "entry": "Rot",
+     "valid": true,
+     "value": "Rot",
+     "text": "Rot",
+     "formula": "Rot"
+    },
+    {
+     "entry": "Blau",
+     "valid": true,
+     "value": "Blau",
+     "text": "Blau",
+     "formula": "Blau"
+    },
+    {
+     "entry": "Gelb",
+     "valid": false,
+     "value": "Gelb",
+     "text": "Gelb",
+     "formula": "Gelb"
+    }
+   ]
+  },
+  {
+   "name": "list range with blank, no ignore",
+   "type": "list",
+   "operator": null,
+   "formula1": "=$D$1:$D$3",
+   "formula2": null,
+   "ignoreBlank": false,
+   "context": {
+    "D1": "Rot",
+    "D3": "Blau"
+   },
+   "read": {
+    "Formula1": "=$D$1:$D$3",
+    "Formula2": ""
+   },
+   "results": [
+    {
+     "entry": "Rot",
+     "valid": true,
+     "value": "Rot",
+     "text": "Rot",
+     "formula": "Rot"
+    },
+    {
+     "entry": "Blau",
+     "valid": true,
+     "value": "Blau",
+     "text": "Blau",
+     "formula": "Blau"
+    },
+    {
+     "entry": "Gelb",
+     "valid": false,
+     "value": "Gelb",
+     "text": "Gelb",
+     "formula": "Gelb"
+    }
+   ]
+  },
+  {
+   "name": "date between",
+   "type": "date",
+   "operator": "between",
+   "formula1": "01.01.2026",
+   "formula2": "31.12.2026",
+   "ignoreBlank": true,
+   "context": {},
+   "read": {
+    "Formula1": "01.01.2026",
+    "Formula2": "31.12.2026"
+   },
+   "results": [
+    {
+     "entry": "15.03.2026",
+     "valid": true,
+     "value": 46096.0,
+     "text": "15.03.2026",
+     "formula": "46096"
+    },
+    {
+     "entry": "1.1.2025",
+     "valid": false,
+     "value": 45658.0,
+     "text": "01.01.2025",
+     "formula": "45658"
+    },
+    {
+     "entry": "31.12.2026",
+     "valid": true,
+     "value": 46387.0,
+     "text": "31.12.2026",
+     "formula": "46387"
+    },
+    {
+     "entry": "abc",
+     "valid": false,
+     "value": "abc",
+     "text": "abc",
+     "formula": "abc"
+    },
+    {
+     "entry": "46100",
+     "valid": true,
+     "value": 46100.0,
+     "text": "46100",
+     "formula": "46100"
+    },
+    {
+     "entry": "15.03.2026 12:00",
+     "valid": true,
+     "value": 46096.5,
+     "text": "##########",
+     "formula": "46096.5"
+    },
+    {
+     "entry": "31.12.2026 12:00",
+     "valid": false,
+     "value": 46387.5,
+     "text": "##########",
+     "formula": "46387.5"
+    },
+    {
+     "entry": "WAHR",
+     "valid": false,
+     "value": true,
+     "text": "WAHR",
+     "formula": "TRUE"
+    }
+   ]
+  },
+  {
+   "name": "date equal",
+   "type": "date",
+   "operator": "equal",
+   "formula1": "15.03.2026",
+   "formula2": null,
+   "ignoreBlank": true,
+   "context": {},
+   "read": {
+    "Formula1": "15.03.2026",
+    "Formula2": ""
+   },
+   "results": [
+    {
+     "entry": "15.03.2026",
+     "valid": true,
+     "value": 46096.0,
+     "text": "15.03.2026",
+     "formula": "46096"
+    },
+    {
+     "entry": "15.03.2026 12:00",
+     "valid": false,
+     "value": 46096.5,
+     "text": "##########",
+     "formula": "46096.5"
+    },
+    {
+     "entry": "16.03.2026",
+     "valid": false,
+     "value": 46097.0,
+     "text": "16.03.2026",
+     "formula": "46097"
+    }
+   ]
+  },
+  {
+   "name": "date greaterThan",
+   "type": "date",
+   "operator": "greaterThan",
+   "formula1": "15.03.2026",
+   "formula2": null,
+   "ignoreBlank": true,
+   "context": {},
+   "read": {
+    "Formula1": "15.03.2026",
+    "Formula2": ""
+   },
+   "results": [
+    {
+     "entry": "15.03.2026",
+     "valid": false,
+     "value": 46096.0,
+     "text": "15.03.2026",
+     "formula": "46096"
+    },
+    {
+     "entry": "15.03.2026 00:01",
+     "valid": true,
+     "value": 46096.00069444445,
+     "text": "##########",
+     "formula": "46096.0006944444"
+    },
+    {
+     "entry": "16.03.2026",
+     "valid": true,
+     "value": 46097.0,
+     "text": "16.03.2026",
+     "formula": "46097"
+    }
+   ]
+  },
+  {
+   "name": "time between",
+   "type": "time",
+   "operator": "between",
+   "formula1": "08:00",
+   "formula2": "12:00",
+   "ignoreBlank": true,
+   "context": {},
+   "read": {
+    "Formula1": "08:00:00",
+    "Formula2": "12:00:00"
+   },
+   "results": [
+    {
+     "entry": "09:30",
+     "valid": true,
+     "value": 0.3958333333333333,
+     "text": "09:30",
+     "formula": "0.395833333333333"
+    },
+    {
+     "entry": "13:00",
+     "valid": false,
+     "value": 0.5416666666666666,
+     "text": "13:00",
+     "formula": "0.541666666666667"
+    },
+    {
+     "entry": "0,4",
+     "valid": true,
+     "value": 0.4,
+     "text": "0,4",
+     "formula": "0.4"
+    },
+    {
+     "entry": "abc",
+     "valid": false,
+     "value": "abc",
+     "text": "abc",
+     "formula": "abc"
+    },
+    {
+     "entry": "1.1.2026 09:00",
+     "valid": false,
+     "value": 46023.375,
+     "text": "##########",
+     "formula": "46023.375"
+    },
+    {
+     "entry": "08:00",
+     "valid": true,
+     "value": 0.3333333333333333,
+     "text": "08:00",
+     "formula": "0.333333333333333"
+    },
+    {
+     "entry": "12:00:01",
+     "valid": false,
+     "value": 0.500011574074074,
+     "text": "12:00:01",
+     "formula": "0.500011574074074"
+    },
+    {
+     "entry": "WAHR",
+     "valid": false,
+     "value": true,
+     "text": "WAHR",
+     "formula": "TRUE"
+    }
+   ]
+  },
+  {
+   "name": "time lessThan",
+   "type": "time",
+   "operator": "lessThan",
+   "formula1": "12:00",
+   "formula2": null,
+   "ignoreBlank": true,
+   "context": {},
+   "read": {
+    "Formula1": "12:00:00",
+    "Formula2": ""
+   },
+   "results": [
+    {
+     "entry": "11:59",
+     "valid": true,
+     "value": 0.49930555555555556,
+     "text": "11:59",
+     "formula": "0.499305555555556"
+    },
+    {
+     "entry": "12:00",
+     "valid": false,
+     "value": 0.5,
+     "text": "12:00",
+     "formula": "0.5"
+    },
+    {
+     "entry": "0",
+     "valid": true,
+     "value": 0.0,
+     "text": "0",
+     "formula": "0"
+    }
+   ]
+  },
+  {
+   "name": "textLength between 2 5",
+   "type": "textLength",
+   "operator": "between",
+   "formula1": "2",
+   "formula2": "5",
+   "ignoreBlank": true,
+   "context": {},
+   "read": {
+    "Formula1": "2",
+    "Formula2": "5"
+   },
+   "results": [
+    {
+     "entry": "a",
+     "valid": false,
+     "value": "a",
+     "text": "a",
+     "formula": "a"
+    },
+    {
+     "entry": "ab",
+     "valid": true,
+     "value": "ab",
+     "text": "ab",
+     "formula": "ab"
+    },
+    {
+     "entry": "abcdef",
+     "valid": false,
+     "value": "abcdef",
+     "text": "abcdef",
+     "formula": "abcdef"
+    },
+    {
+     "entry": "12345",
+     "valid": true,
+     "value": 12345.0,
+     "text": "12345",
+     "formula": "12345"
+    },
+    {
+     "entry": "123456",
+     "valid": false,
+     "value": 123456.0,
+     "text": "123456",
+     "formula": "123456"
+    },
+    {
+     "entry": "1,5",
+     "valid": true,
+     "value": 1.5,
+     "text": "1,5",
+     "formula": "1.5"
+    },
+    {
+     "entry": "15.03.2026",
+     "valid": true,
+     "value": 46096.0,
+     "text": "15.03.2026",
+     "formula": "46096"
+    },
+    {
+     "entry": "=WIEDERHOLEN(\"x\";7)",
+     "valid": false,
+     "value": "xxxxxxx",
+     "text": "xxxxxxx",
+     "formula": "=REPT(\"x\",7)"
+    },
+    {
+     "entry": "WAHR",
+     "valid": true,
+     "value": true,
+     "text": "WAHR",
+     "formula": "TRUE"
+    },
+    {
+     "entry": "1234,5678",
+     "valid": false,
+     "value": 1234.5678,
+     "text": "1234,5678",
+     "formula": "1234.5678"
+    },
+    {
+     "entry": "0,1",
+     "valid": true,
+     "value": 0.1,
+     "text": "0,1",
+     "formula": "0.1"
+    }
+   ]
+  },
+  {
+   "name": "textLength lessThanOrEqual 3",
+   "type": "textLength",
+   "operator": "lessThanOrEqual",
+   "formula1": "3",
+   "formula2": null,
+   "ignoreBlank": true,
+   "context": {},
+   "read": {
+    "Formula1": "3",
+    "Formula2": ""
+   },
+   "results": [
+    {
+     "entry": "abc",
+     "valid": true,
+     "value": "abc",
+     "text": "abc",
+     "formula": "abc"
+    },
+    {
+     "entry": "abcd",
+     "valid": false,
+     "value": "abcd",
+     "text": "abcd",
+     "formula": "abcd"
+    },
+    {
+     "entry": "äöü",
+     "valid": true,
+     "value": "äöü",
+     "text": "äöü",
+     "formula": "äöü"
+    },
+    {
+     "entry": "123",
+     "valid": true,
+     "value": 123.0,
+     "text": "123",
+     "formula": "123"
+    },
+    {
+     "entry": "1000",
+     "valid": false,
+     "value": 1000.0,
+     "text": "1000",
+     "formula": "1000"
+    }
+   ]
+  },
+  {
+   "name": "custom isnumber",
+   "type": "custom",
+   "operator": null,
+   "formula1": "=ISTZAHL(B2)",
+   "formula2": null,
+   "ignoreBlank": true,
+   "context": {},
+   "read": {
+    "Formula1": "=ISTZAHL(B2)",
+    "Formula2": ""
+   },
+   "results": [
+    {
+     "entry": "5",
+     "valid": true,
+     "value": 5.0,
+     "text": "5",
+     "formula": "5"
+    },
+    {
+     "entry": "abc",
+     "valid": false,
+     "value": "abc",
+     "text": "abc",
+     "formula": "abc"
+    },
+    {
+     "entry": "=1/0",
+     "valid": false,
+     "value": -2146826281,
+     "text": "#DIV/0!",
+     "formula": "=1/0"
+    },
+    {
+     "entry": "WAHR",
+     "valid": false,
+     "value": true,
+     "text": "WAHR",
+     "formula": "TRUE"
+    }
+   ]
+  },
+  {
+   "name": "custom compare",
+   "type": "custom",
+   "operator": null,
+   "formula1": "=B2>C2",
+   "formula2": null,
+   "ignoreBlank": true,
+   "context": {
+    "C2": "3"
+   },
+   "read": {
+    "Formula1": "=B2>C2",
+    "Formula2": ""
+   },
+   "results": [
+    {
+     "entry": "5",
+     "valid": true,
+     "value": 5.0,
+     "text": "5",
+     "formula": "5"
+    },
+    {
+     "entry": "3",
+     "valid": false,
+     "value": 3.0,
+     "text": "3",
+     "formula": "3"
+    },
+    {
+     "entry": "abc",
+     "valid": true,
+     "value": "abc",
+     "text": "abc",
+     "formula": "abc"
+    }
+   ]
+  },
+  {
+   "name": "custom len",
+   "type": "custom",
+   "operator": null,
+   "formula1": "=LÄNGE(B2)<4",
+   "formula2": null,
+   "ignoreBlank": true,
+   "context": {},
+   "read": {
+    "Formula1": "=LÄNGE(B2)<4",
+    "Formula2": ""
+   },
+   "results": [
+    {
+     "entry": "abc",
+     "valid": true,
+     "value": "abc",
+     "text": "abc",
+     "formula": "abc"
+    },
+    {
+     "entry": "abcd",
+     "valid": false,
+     "value": "abcd",
+     "text": "abcd",
+     "formula": "abcd"
+    }
+   ]
+  },
+  {
+   "name": "custom text result",
+   "type": "custom",
+   "operator": null,
+   "formula1": "=\"x\"",
+   "formula2": null,
+   "ignoreBlank": true,
+   "context": {},
+   "read": {
+    "Formula1": "x",
+    "Formula2": ""
+   },
+   "results": [
+    {
+     "entry": "5",
+     "valid": false,
+     "value": 5.0,
+     "text": "5",
+     "formula": "5"
+    }
+   ]
+  },
+  {
+   "name": "custom number result",
+   "type": "custom",
+   "operator": null,
+   "formula1": "=2",
+   "formula2": null,
+   "ignoreBlank": true,
+   "context": {},
+   "read": {
+    "Formula1": "2",
+    "Formula2": ""
+   },
+   "results": [
+    {
+     "entry": "5",
+     "valid": true,
+     "value": 5.0,
+     "text": "5",
+     "formula": "5"
+    }
+   ]
+  },
+  {
+   "name": "custom zero result",
+   "type": "custom",
+   "operator": null,
+   "formula1": "=0",
+   "formula2": null,
+   "ignoreBlank": true,
+   "context": {},
+   "read": {
+    "Formula1": "0",
+    "Formula2": ""
+   },
+   "results": [
+    {
+     "entry": "5",
+     "valid": false,
+     "value": 5.0,
+     "text": "5",
+     "formula": "5"
+    }
+   ]
+  },
+  {
+   "name": "custom error result",
+   "type": "custom",
+   "formula1": "=1/0",
+   "refused": "(-2147352567, 'Ausnahmefehler aufgetreten.', (0, None, None, None, 0, -214682728"
+  },
+  {
+   "name": "custom blank ref, ignore",
+   "type": "custom",
+   "operator": null,
+   "formula1": "=B2>D9",
+   "formula2": null,
+   "ignoreBlank": true,
+   "context": {},
+   "read": {
+    "Formula1": "=B2>D9",
+    "Formula2": ""
+   },
+   "results": [
+    {
+     "entry": "5",
+     "valid": true,
+     "value": 5.0,
+     "text": "5",
+     "formula": "5"
+    },
+    {
+     "entry": "-5",
+     "valid": true,
+     "value": -5.0,
+     "text": "-5",
+     "formula": "-5"
+    }
+   ]
+  },
+  {
+   "name": "custom blank ref, no ignore",
+   "type": "custom",
+   "operator": null,
+   "formula1": "=B2>D9",
+   "formula2": null,
+   "ignoreBlank": false,
+   "context": {},
+   "read": {
+    "Formula1": "=B2>D9",
+    "Formula2": ""
+   },
+   "results": [
+    {
+     "entry": "5",
+     "valid": true,
+     "value": 5.0,
+     "text": "5",
+     "formula": "5"
+    },
+    {
+     "entry": "-5",
+     "valid": false,
+     "value": -5.0,
+     "text": "-5",
+     "formula": "-5"
+    }
+   ]
+  },
+  {
+   "name": "list literal spaces",
+   "type": "list",
+   "operator": null,
+   "formula1": "Ja; Nein ;Vielleicht",
+   "formula2": null,
+   "ignoreBlank": true,
+   "context": {},
+   "read": {
+    "Formula1": "Ja; Nein ;Vielleicht",
+    "Formula2": ""
+   },
+   "results": [
+    {
+     "entry": "Ja",
+     "valid": true,
+     "value": "Ja",
+     "text": "Ja",
+     "formula": "Ja"
+    },
+    {
+     "entry": "Nein",
+     "valid": false,
+     "value": "Nein",
+     "text": "Nein",
+     "formula": "Nein"
+    },
+    {
+     "entry": " Nein",
+     "valid": false,
+     "value": " Nein",
+     "text": " Nein",
+     "formula": " Nein"
+    },
+    {
+     "entry": "Nein ",
+     "valid": false,
+     "value": "Nein ",
+     "text": "Nein ",
+     "formula": "Nein "
+    },
+    {
+     "entry": "Vielleicht",
+     "valid": true,
+     "value": "Vielleicht",
+     "text": "Vielleicht",
+     "formula": "Vielleicht"
+    }
+   ]
+  },
+  {
+   "name": "list range numbers formatted",
+   "type": "list",
+   "operator": null,
+   "formula1": "=$D$1:$D$2",
+   "formula2": null,
+   "ignoreBlank": true,
+   "context": {
+    "D1": "1,50 €",
+    "D2": "50%"
+   },
+   "read": {
+    "Formula1": "=$D$1:$D$2",
+    "Formula2": ""
+   },
+   "results": [
+    {
+     "entry": "1,5",
+     "valid": true,
+     "value": 1.5,
+     "text": "1,5",
+     "formula": "1.5"
+    },
+    {
+     "entry": "1,50 €",
+     "valid": true,
+     "value": 1.5,
+     "text": "1,50 €",
+     "formula": "1.5"
+    },
+    {
+     "entry": "0,5",
+     "valid": true,
+     "value": 0.5,
+     "text": "0,5",
+     "formula": "0.5"
+    },
+    {
+     "entry": "50%",
+     "valid": true,
+     "value": 0.5,
+     "text": "50%",
+     "formula": "0.5"
+    },
+    {
+     "entry": "Rot",
+     "valid": false,
+     "value": "Rot",
+     "text": "Rot",
+     "formula": "Rot"
+    }
+   ]
+  },
+  {
+   "name": "whole formula text",
+   "type": "whole",
+   "operator": "between",
+   "formula1": "1",
+   "formula2": "6",
+   "ignoreBlank": true,
+   "context": {},
+   "read": {
+    "Formula1": "1",
+    "Formula2": "6"
+   },
+   "results": [
+    {
+     "entry": "=\"3\"",
+     "valid": false,
+     "value": "3",
+     "text": "3",
+     "formula": "=\"3\""
+    },
+    {
+     "entry": "=WAHR",
+     "valid": false,
+     "value": true,
+     "text": "WAHR",
+     "formula": "=TRUE"
+    }
+   ]
+  }
+ ],
+ "files": {
+  "list literal": {
+   "main": [
+    "<dataValidation type=\"list\" allowBlank=\"1\" showInputMessage=\"1\" showErrorMessage=\"1\" sqref=\"B2:B5\"><formula1>\"Ja,Nein\"</formula1></dataValidation>"
+   ],
+   "x14": [],
+   "reread": {
+    "Formula1": "Ja;Nein",
+    "Formula2": ""
+   }
+  },
+  "list literal numbers": {
+   "main": [
+    "<dataValidation type=\"list\" allowBlank=\"1\" showInputMessage=\"1\" showErrorMessage=\"1\" sqref=\"B2:B5\"><mc:AlternateContent xmlns:x12ac=\"http://schemas.microsoft.com/office/spreadsheetml/2011/1/ac\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\"><mc:Choice Requires=\"x12ac\"><x12ac:list>1,2,\"2,5\"</x12ac:list></mc:Choice><mc:Fallback><formula1>\"1,2,2,5\"</formula1></mc:Fallback></mc:AlternateContent></dataValidation>"
+   ],
+   "x14": [],
+   "reread": {
+    "Formula1": "1;2;2,5",
+    "Formula2": ""
+   }
+  },
+  "list literal comma": {
+   "main": [
+    "<dataValidation type=\"list\" allowBlank=\"1\" showInputMessage=\"1\" showErrorMessage=\"1\" sqref=\"B2:B5\"><mc:AlternateContent xmlns:x12ac=\"http://schemas.microsoft.com/office/spreadsheetml/2011/1/ac\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\"><mc:Choice Requires=\"x12ac\"><x12ac:list>\"a,b\",c</x12ac:list></mc:Choice><mc:Fallback><formula1>\"a,b,c\"</formula1></mc:Fallback></mc:AlternateContent></dataValidation>"
+   ],
+   "x14": [],
+   "reread": {
+    "Formula1": "a,b;c",
+    "Formula2": ""
+   }
+  },
+  "list literal quote": {
+   "main": [
+    "<dataValidation type=\"list\" allowBlank=\"1\" showInputMessage=\"1\" showErrorMessage=\"1\" sqref=\"B2:B5\"><mc:AlternateContent xmlns:x12ac=\"http://schemas.microsoft.com/office/spreadsheetml/2011/1/ac\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\"><mc:Choice Requires=\"x12ac\"><x12ac:list>\"sagt \"\"hallo\"\"\",x</x12ac:list></mc:Choice><mc:Fallback><formula1>\"sagt \"\"hallo\"\",x\"</formula1></mc:Fallback></mc:AlternateContent></dataValidation>"
+   ],
+   "x14": [],
+   "reread": {
+    "Formula1": "sagt \"hallo\";x",
+    "Formula2": ""
+   }
+  },
+  "list range": {
+   "main": [
+    "<dataValidation type=\"list\" allowBlank=\"1\" showInputMessage=\"1\" showErrorMessage=\"1\" sqref=\"B2:B5\"><formula1>$D$1:$D$3</formula1></dataValidation>"
+   ],
+   "x14": [],
+   "reread": {
+    "Formula1": "=$D$1:$D$3",
+    "Formula2": ""
+   }
+  },
+  "list other sheet": {
+   "main": [],
+   "x14": [
+    "<ext uri=\"{CCE6A557-97BC-4b89-ADB6-D9C93CAAB3DF}\" xmlns:x14=\"http://schemas.microsoft.com/office/spreadsheetml/2009/9/main\"><x14:dataValidations count=\"1\" xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:dataValidation type=\"list\" allowBlank=\"1\" showInputMessage=\"1\" showErrorMessage=\"1\"><x14:formula1><xm:f>Listen!$A$1:$A$3</xm:f></x14:formula1><xm:sqref>B2:B5</xm:sqref></x14:dataValidation></x14:dataValidations></ext>"
+   ],
+   "reread": {
+    "Formula1": "=Listen!$A$1:$A$3",
+    "Formula2": ""
+   }
+  },
+  "list name": {
+   "main": [
+    "<dataValidation type=\"list\" allowBlank=\"1\" showInputMessage=\"1\" showErrorMessage=\"1\" sqref=\"B2:B5\"><formula1>Faecher</formula1></dataValidation>"
+   ],
+   "x14": [],
+   "reread": {
+    "Formula1": "=Faecher",
+    "Formula2": ""
+   }
+  },
+  "whole between": {
+   "main": [
+    "<dataValidation type=\"whole\" allowBlank=\"1\" showInputMessage=\"1\" showErrorMessage=\"1\" sqref=\"B2:B5\"><formula1>1</formula1><formula2>6</formula2></dataValidation>"
+   ],
+   "x14": [],
+   "reread": {
+    "Formula1": "1",
+    "Formula2": "6"
+   }
+  },
+  "decimal greaterThan": {
+   "main": [
+    "<dataValidation type=\"decimal\" errorStyle=\"warning\" operator=\"greaterThan\" allowBlank=\"1\" showInputMessage=\"1\" showErrorMessage=\"1\" sqref=\"B2:B5\"><formula1>1.5</formula1></dataValidation>"
+   ],
+   "x14": [],
+   "reread": {
+    "Formula1": "1,5",
+    "Formula2": ""
+   }
+  },
+  "date between": {
+   "main": [
+    "<dataValidation type=\"date\" errorStyle=\"information\" allowBlank=\"1\" showInputMessage=\"1\" showErrorMessage=\"1\" sqref=\"B2:B5\"><formula1>46023</formula1><formula2>46387</formula2></dataValidation>"
+   ],
+   "x14": [],
+   "reread": {
+    "Formula1": "01.01.2026",
+    "Formula2": "31.12.2026"
+   }
+  },
+  "time lessThan": {
+   "main": [
+    "<dataValidation type=\"time\" operator=\"lessThan\" allowBlank=\"1\" showInputMessage=\"1\" showErrorMessage=\"1\" sqref=\"B2:B5\"><formula1>0.5</formula1></dataValidation>"
+   ],
+   "x14": [],
+   "reread": {
+    "Formula1": "12:00:00",
+    "Formula2": ""
+   }
+  },
+  "textLength lessThanOrEqual": {
+   "main": [
+    "<dataValidation type=\"textLength\" operator=\"lessThanOrEqual\" allowBlank=\"1\" showInputMessage=\"1\" showErrorMessage=\"1\" sqref=\"B2:B5\"><formula1>10</formula1></dataValidation>"
+   ],
+   "x14": [],
+   "reread": {
+    "Formula1": "10",
+    "Formula2": ""
+   }
+  },
+  "custom": {
+   "main": [
+    "<dataValidation type=\"custom\" allowBlank=\"1\" showInputMessage=\"1\" showErrorMessage=\"1\" sqref=\"B2:B5\"><formula1>ISNUMBER(B2)</formula1></dataValidation>"
+   ],
+   "x14": [],
+   "reread": {
+    "Formula1": "=ISTZAHL(B2)",
+    "Formula2": ""
+   }
+  },
+  "custom other sheet": {
+   "main": [],
+   "x14": [
+    "<ext uri=\"{CCE6A557-97BC-4b89-ADB6-D9C93CAAB3DF}\" xmlns:x14=\"http://schemas.microsoft.com/office/spreadsheetml/2009/9/main\"><x14:dataValidations count=\"1\" xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:dataValidation type=\"custom\" allowBlank=\"1\" showInputMessage=\"1\" showErrorMessage=\"1\"><x14:formula1><xm:f>B2&lt;=Listen!$B$1</xm:f></x14:formula1><xm:sqref>B2:B5</xm:sqref></x14:dataValidation></x14:dataValidations></ext>"
+   ],
+   "reread": {
+    "Formula1": "=B2<=Listen!$B$1",
+    "Formula2": ""
+   }
+  },
+  "any with message": {
+   "main": [
+    "<dataValidation allowBlank=\"1\" showInputMessage=\"1\" showErrorMessage=\"1\" promptTitle=\"Hinweis\" prompt=\"Bitte eine Zahl\" sqref=\"B2:B5\"/>"
+   ],
+   "x14": [],
+   "reread": {
+    "Formula1": "",
+    "Formula2": ""
+   }
+  },
+  "hidden dropdown, no error": {
+   "main": [
+    "<dataValidation type=\"list\" allowBlank=\"1\" showDropDown=\"1\" showInputMessage=\"1\" sqref=\"B2:B5\"><formula1>\"Ja,Nein\"</formula1></dataValidation>"
+   ],
+   "x14": [],
+   "reread": {
+    "Formula1": "Ja;Nein",
+    "Formula2": ""
+   }
+  },
+  "messages": {
+   "main": [
+    "<dataValidation type=\"whole\" allowBlank=\"1\" showInputMessage=\"1\" showErrorMessage=\"1\" errorTitle=\"Falsch\" error=\"Nur 1 bis 6\" promptTitle=\"Note\" prompt=\"1 bis 6\" sqref=\"B2:B5\"><formula1>1</formula1><formula2>6</formula2></dataValidation>"
+   ],
+   "x14": [],
+   "reread": {
+    "Formula1": "1",
+    "Formula2": "6"
+   }
+  }
+ },
+ "listSeparator": ";",
+ "decimalSeparator": ","
+}

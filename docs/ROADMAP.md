@@ -60,8 +60,10 @@ side, raabe-host crate, .xlsx package, the app with Excel's ribbon), B (grid, fo
 0 differences in Excel), C (formula engine, 4229/4234 Excel results), D (controls: behaviour
 catalogue 142/142 cases as in Excel, context menus, ribbon menus and tooltips recorded), E
 (charts) and F (printing as Excel's PDF, clipboard with Excel both ways, CSV, conditional
-formatting, AutoFilter panel, templates D-064) are built (D-062, D-063). Open: the owner's trial
-and list; the deferred features in the report.
+formatting, AutoFilter panel, templates D-064) are built (D-062, D-063); after them
+Datenüberprüfung, Blatt schützen, Formelüberwachung, Zahlen-/Textfilter, Drucktitel, Kopf- und
+Fußzeile, Schnellanalyse and Excel's keyboard modes (D-065). Open: the owner's trial and list;
+the deferred features in the report.
 
 ## Step 8: RaabePresent (proposal, not yet agreed)
 

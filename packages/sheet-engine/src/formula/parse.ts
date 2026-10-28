@@ -37,7 +37,21 @@ export function refRect(r: RefTok): { r0: number; c0: number; r1: number; c1: nu
 
 class Parser {
   private i = 0;
+  /** Source offsets of the nodes (Formelauswertung), when asked for. */
+  spans: Map<Node, [number, number]> | null = null;
   constructor(private toks: Token[]) {}
+
+  /** Offset of the next significant token. */
+  private here(): number {
+    let j = this.i;
+    while (j < this.toks.length && this.toks[j].k === "ws") j++;
+    return this.toks[j]?.s ?? 0;
+  }
+
+  private spanned(start: number, n: Node): Node {
+    if (this.spans && !this.spans.has(n)) this.spans.set(n, [start, this.toks[this.i - 1]?.e ?? start]);
+    return n;
+  }
 
   /** Next significant token (skipping whitespace). */
   peek(): Token | undefined {
@@ -121,6 +135,11 @@ class Parser {
   }
 
   unary(u: boolean): Node {
+    const start = this.here();
+    return this.spanned(start, this.unary0(u));
+  }
+
+  private unary0(u: boolean): Node {
     const t = this.peek();
     if (this.isOp(t, "-", "+")) {
       this.next();
@@ -168,6 +187,11 @@ class Parser {
   }
 
   primary(): Node {
+    const start = this.here();
+    return this.spanned(start, this.primary0());
+  }
+
+  private primary0(): Node {
     const t = this.next();
     if (!t) throw new FormulaError("unexpected end");
     switch (t.k) {
@@ -275,6 +299,29 @@ export function parseFormula(file: string, dialect: Dialect = "file"): Node {
   }
   if (n instanceof FormulaError) throw n;
   return n;
+}
+
+/**
+ * A formula in the local form with the source offsets of its nodes (without "="; offsets count
+ * from the text's start, "=" included when given). Operators get the span from their left
+ * operand's start to their right operand's end.
+ */
+export function parseWithSpans(local: string): { node: Node; span: (n: Node) => [number, number] } {
+  const p = new Parser(lex(local, "local"));
+  p.spans = new Map();
+  const node = p.parseFormula();
+  const spans = p.spans;
+  const span = (n: Node): [number, number] => {
+    let s = spans.get(n);
+    if (!s) {
+      if (n.t === "bin") s = [span(n.a)[0], span(n.b)[1]];
+      else if (n.t === "un" || n.t === "paren") s = span(n.a);
+      else s = [0, local.length];
+      spans.set(n, s);
+    }
+    return s;
+  };
+  return { node, span };
 }
 
 /** Whether the text is a formula Excel would accept (local form, with or without "="). */

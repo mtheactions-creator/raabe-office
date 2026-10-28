@@ -5,9 +5,9 @@
 // (D-018). The canvas has the device's pixel size, so lines stay one device pixel wide.
 
 import { cellKey, inRect, type Cell, type CellStyle, type Rect, type Sheet, type StyleTable, type BorderSide } from "@raabe/sheet-engine";
-import { shown, type Shown } from "../engine";
+import { shownAt, type Shown } from "../engine";
 import type { CondEval } from "./cond";
-import type { Axis } from "./metrics";
+import { device, type Axis } from "./metrics";
 
 export const COLORS = {
   grid: "#e0e0e0",
@@ -67,9 +67,40 @@ export interface DrawState {
   showFormulas?: boolean;
   /** Livevorschau: the format under the mouse in a list or palette, shown on the selection. */
   preview?: { ranges: Rect[]; change: (s: CellStyle) => void } | null;
+  /** Ungültige Daten einkreisen: red ellipses around these cells. */
+  circles?: { row: number; col: number }[];
+  /** Spur zum Vorgänger/Nachfolger: arrows from referenced cells (null: another sheet) to formulas. */
+  arrows?: { from: Rect | null; to: { row: number; col: number }; error?: boolean }[];
 }
 
 const PT = 96 / 72;
+
+/**
+ * What a cell shows in a column of `colPx` CSS px, decided as Excel decides it: at the display's
+ * pixels with whole-pixel character widths (GDI) and Excel's padding (Standard numbers shorten,
+ * other numbers and dates turn into "####").
+ */
+export function fitShown(ctx: CanvasRenderingContext2D, cell: Cell | undefined, st: CellStyle, colPx: number): Shown {
+  const d = device();
+  ctx.font = cssFont(st, d.dpr);
+  const cache = new Map<string, number>();
+  const measure = (t: string) => {
+    let w = 0;
+    for (const ch of t) {
+      let cw = cache.get(ch);
+      if (cw === undefined) { cw = Math.round(ctx.measureText(ch).width); cache.set(ch, cw); }
+      w += cw;
+    }
+    return w;
+  };
+  return shownAt(cell, st, Math.round(colPx * d.dpr), measure, d.pad);
+}
+
+let fitCanvas: CanvasRenderingContext2D | null = null;
+/** A canvas of its own for fitting texts (the grid's keeps its transform and clip). */
+export function fitCtx(): CanvasRenderingContext2D {
+  return (fitCanvas ??= document.createElement("canvas").getContext("2d")!);
+}
 
 export function cssFont(style: CellStyle, zoom: number): string {
   const f = style.font;
@@ -236,7 +267,7 @@ function drawPane(ctx: CanvasRenderingContext2D, s: DrawState, pane: Pane): void
       if (!text) {
         text = s.showFormulas && cell.f !== undefined
           ? { text: "=" + cell.f, align: "left" as const }
-          : shown(cell, st, Math.max(0, box.w - 2 * pad) / zoom, (t) => measureCtx.measureText(t).width / zoom);
+          : fitShown(fitCtx(), cell, st, box.w / zoom);
         s.textCache.set(key, text);
       }
       if (!text.text) continue;
@@ -427,6 +458,17 @@ function drawPane(ctx: CanvasRenderingContext2D, s: DrawState, pane: Pane): void
   } else if (s.selection.length > 1) {
     frame(ctx, a, COLORS.accent, dpr, 1);
   }
+  if (s.arrows?.length) drawArrows(ctx, s, rectOf);
+  // Ungültige Daten einkreisen: a red ellipse a little larger than the cell (Excel).
+  for (const c of s.circles ?? []) {
+    if (c.row < r0 || c.row > r1 || c.col < c0 || c.col > c1) continue;
+    const b = rectOf({ r0: c.row, c0: c.col, r1: c.row, c1: c.col });
+    ctx.strokeStyle = "#ff0000";
+    ctx.lineWidth = 1.5 * zoom;
+    ctx.beginPath();
+    ctx.ellipse(b.x + b.w / 2, b.y + b.h / 2, b.w / 2 + 4 * zoom, b.h / 2 + 3 * zoom, 0, 0, Math.PI * 2);
+    ctx.stroke();
+  }
   if (s.ghost) frame(ctx, rectOf(s.ghost), "#808080", dpr, 2, [3, 2]);
   if (s.marquee) {
     const b = rectOf(s.marquee);
@@ -436,6 +478,65 @@ function drawPane(ctx: CanvasRenderingContext2D, s: DrawState, pane: Pane): void
     ctx.restore();
   }
   ctx.restore();
+}
+
+/** Trace arrows: a dot at the source's centre, a line, an arrowhead at the formula's centre. */
+function drawArrows(ctx: CanvasRenderingContext2D, s: DrawState, rectOf: (m: Rect) => { x: number; y: number; w: number; h: number }): void {
+  const { zoom, dpr } = s;
+  const lw = Math.max(1, Math.round(dpr)) / dpr;
+  for (const a of s.arrows ?? []) {
+    const t = rectOf({ r0: a.to.row, c0: a.to.col, r1: a.to.row, c1: a.to.col });
+    const tx = t.x + t.w / 2, ty = t.y + t.h / 2;
+    const color = a.error ? "#ff0000" : a.from ? "#0000ff" : "#000000";
+    ctx.strokeStyle = ctx.fillStyle = color;
+    ctx.lineWidth = lw;
+    let fx: number, fy: number;
+    if (a.from) {
+      const single = a.from.r0 === a.from.r1 && a.from.c0 === a.from.c1;
+      const f = rectOf({ r0: a.from.r0, c0: a.from.c0, r1: a.from.r0, c1: a.from.c0 });
+      if (!single) {
+        // A referenced range gets a frame of its own; the arrow starts in its first cell.
+        const b = rectOf(a.from);
+        ctx.strokeRect(snap(b.x, dpr) + lw / 2, snap(b.y, dpr) + lw / 2, snap(b.w, dpr) - lw, snap(b.h, dpr) - lw);
+      }
+      fx = f.x + f.w / 2;
+      fy = f.y + f.h / 2;
+      ctx.setLineDash([]);
+    } else {
+      // Another sheet: a small sheet symbol up and to the left of the formula, dashed line.
+      fx = t.x - 40 * zoom;
+      fy = t.y - 24 * zoom;
+      ctx.setLineDash([4 * zoom, 3 * zoom]);
+    }
+    const ang = Math.atan2(ty - fy, tx - fx);
+    const head = 8 * zoom;
+    ctx.beginPath();
+    ctx.moveTo(fx, fy);
+    ctx.lineTo(tx - Math.cos(ang) * head * 0.8, ty - Math.sin(ang) * head * 0.8);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.beginPath();
+    ctx.moveTo(tx, ty);
+    ctx.lineTo(tx - Math.cos(ang - 0.4) * head, ty - Math.sin(ang - 0.4) * head);
+    ctx.lineTo(tx - Math.cos(ang + 0.4) * head, ty - Math.sin(ang + 0.4) * head);
+    ctx.closePath();
+    ctx.fill();
+    if (a.from) {
+      ctx.beginPath();
+      ctx.arc(fx, fy, 2.5 * zoom, 0, Math.PI * 2);
+      ctx.fill();
+    } else {
+      const w = 14 * zoom, h = 11 * zoom;
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(fx - w / 2, fy - h / 2, w, h);
+      ctx.strokeStyle = "#000000";
+      ctx.strokeRect(fx - w / 2, fy - h / 2, w, h);
+      ctx.beginPath();
+      for (let i = 1; i < 3; i++) { ctx.moveTo(fx - w / 2, fy - h / 2 + (h * i) / 3); ctx.lineTo(fx + w / 2, fy - h / 2 + (h * i) / 3); }
+      ctx.moveTo(fx - w / 6, fy - h / 2); ctx.lineTo(fx - w / 6, fy + h / 2);
+      ctx.stroke();
+    }
+  }
 }
 
 /** Fills b except the rectangle `hole` (the active cell stays white). */

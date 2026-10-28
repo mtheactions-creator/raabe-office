@@ -16,7 +16,7 @@ export function modelOf(wb: Workbook) {
       name: s.name, hidden: s.hidden, tab: s.tabColor, view: s.view, merges: s.merges, dw: s.defaultColWidth, dh: s.defaultRowHeight,
       cols: [...s.cols].sort((a, b) => a[0] - b[0]), rows: [...s.rows].sort((a, b) => a[0] - b[0]).map(([r, info]) => [r, { ...info, s: info.s ? styleOf(wb, info.s) : undefined }]),
       cells: [...s.cells].sort((a, b) => a[0] - b[0]).map(([k, c]) => [k, { ...c, s: styleOf(wb, c.s) }]),
-      autoFilter: s.autoFilter, conditional: s.conditional, page: s.page,
+      autoFilter: s.autoFilter, conditional: s.conditional, page: s.page, validations: s.validations,
     })),
   };
 }

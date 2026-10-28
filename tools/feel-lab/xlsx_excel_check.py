@@ -85,6 +85,28 @@ def cell_props(r) -> dict:
     return out
 
 
+DV_PROPS = ("Type", "Operator", "Formula1", "Formula2", "AlertStyle", "IgnoreBlank", "InCellDropdown", "ShowInput", "ShowError",
+            "InputTitle", "InputMessage", "ErrorTitle", "ErrorMessage")
+
+
+def validation_props(ws) -> dict | None:
+    """Datenüberprüfung: the cells that have one and, per cell (up to 400), its settings."""
+    try:
+        rng = ws.Cells.SpecialCells(-4174)
+    except Exception:  # noqa: BLE001 - no cell has a validation
+        return None
+    out: dict = {"cells": rng.GetAddress(False, False)}
+    n = 0
+    for area in rng.Areas:
+        for c in area.Cells:
+            n += 1
+            if n > 400:
+                return out
+            v = c.Validation
+            out[c.GetAddress(False, False)] = [safe(lambda p=p: getattr(v, p)) for p in DV_PROPS]
+    return out
+
+
 def sheet_props(wb, ws, cells: list[str]) -> dict:
     used = ws.UsedRange
     out: dict = {
@@ -108,10 +130,13 @@ def sheet_props(wb, ws, cells: list[str]) -> dict:
     out["notes"] = sorted((c.Parent.GetAddress(False, False), c.Text(), c.Visible) for c in ws.Comments)
     out["links"] = sorted((h.Range.GetAddress(False, False), h.Address, h.SubAddress, h.TextToDisplay, h.ScreenTip) for h in ws.Hyperlinks)
     out["conditional"] = safe(lambda: [(fc.Type, safe(lambda fc=fc: fc.AppliesTo.GetAddress(False, False))) for fc in ws.Cells.FormatConditions], [])
-    out["validation"] = safe(lambda: ws.Cells.SpecialCells(-4174).GetAddress(False, False))
+    out["validation"] = safe(lambda: validation_props(ws))
+    out["protection"] = (ws.ProtectContents, ws.Protection.AllowFormattingCells, ws.Protection.AllowSorting, ws.Protection.AllowInsertingRows)
     out["autofilter"] = (ws.AutoFilterMode, safe(lambda: ws.AutoFilter.Range.GetAddress(False, False)))
     out["tables"] = [(lo.Name, lo.Range.GetAddress(False, False), lo.ShowTotals) for lo in ws.ListObjects]
-    out["page"] = (english(ws.PageSetup, "PrintArea"), ws.PageSetup.CenterHeader, ws.PageSetup.RightFooter, ws.PageSetup.Orientation)
+    # Header codes through the English interface (German COM shows &P as &S, &N as &A).
+    out["page"] = (english(ws.PageSetup, "PrintArea"), english(ws.PageSetup, "CenterHeader"), english(ws.PageSetup, "RightFooter"), ws.PageSetup.Orientation,
+                   english(ws.PageSetup, "PrintTitleRows"), english(ws.PageSetup, "PrintTitleColumns"))
     ws.Activate()
     w = wb.Windows(1)
     out["window"] = {

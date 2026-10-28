@@ -464,8 +464,78 @@ def blank(b: Builder) -> None:
     b.save(b.new(), "xlsx-blank.xlsx")
 
 
+def validation(b: Builder) -> None:
+    """Datenüberprüfung of every kind (probe_excel_validation.py records how Excel checks them):
+    lists from text, cells, another sheet (x14 in the extLst), a name and entries with commas
+    (x12ac:list); numbers, dates, times, text lengths, formulas; the three error styles."""
+    wb = b.new()
+    ws = wb.Worksheets(1)
+    ws.Name = "Prüfung"
+    lst = wb.Worksheets.Add(After=ws)
+    lst.Name = "Listen"
+    for i, t in enumerate(["Deutsch", "Mathe", "Physik"]):
+        lst.Cells(i + 1, 1).Value2 = t
+    lst.Range("B1").Value2 = 10
+    wb.Names.Add("Faecher", "=Listen!$A$1:$A$3")
+    ws.Activate()
+    heads = ["Name", "Teilnahme", "Kurs", "Fach", "Note", "Punkte", "Datum", "Kurse", "Uhrzeit", "Kommentar", "Zahl", "Fach (Name)",
+             "Stufe", "Hinweis", "Gruppe", "Höchstens B1"]
+    for i, t in enumerate(heads):
+        ws.Cells(1, i + 1).Value2 = t
+    for i, t in enumerate(["Deutsch", "Mathe", "Englisch", "Physik"]):
+        ws.Cells(i + 2, 8).Value2 = t
+
+    def add(addr: str, kind: int, style: int, op: int, f1: str | None = None, f2: str | None = None):
+        # Areas joined with Union: the range text's separator follows the locale through COM.
+        parts = [ws.Range(x) for x in addr.split(",")]
+        v = (b.app.Union(*parts) if len(parts) > 1 else parts[0]).Validation
+        args = [kind, style, op] + [f for f in (f1, f2) if f is not None]
+        v.Add(*args)
+        return v
+
+    v = add("B2:B6", 3, 1, 1, "Ja;Nein")
+    v.InputTitle, v.InputMessage = "Teilnahme", "Ja oder Nein wählen"
+    add("C2:C6", 3, 1, 1, "=$H$2:$H$5")
+    add("D2:D6", 3, 1, 1, "=Listen!$A$1:$A$3")
+    v = add("E2:E6", 1, 1, 1, "1", "6")
+    v.ErrorTitle, v.ErrorMessage = "Ungültige Note", "Nur ganze Noten von 1 bis 6."
+    add("F2:F6", 2, 2, 5, "0")
+    add("G2:G6", 4, 3, 1, "01.08.2026", "31.07.2027")
+    v = add("I2:I6", 5, 1, 6, "12:00")
+    v.ShowError = False
+    add("J2:J6", 6, 1, 8, "20")
+    add("K2:K6", 7, 1, 1, "=ISTZAHL(K2)")
+    v = add("L2:L6", 3, 1, 1, "=Faecher")
+    v.InCellDropdown = False
+    add("M2:M6", 3, 1, 1, "1;2;2,5")
+    v = add("N2", 0, 1, 1)
+    v.InputTitle, v.InputMessage = "Hinweis", "Hier steht nur ein Hinweis."
+    add("O2:O4,O8:O9", 3, 1, 1, 'a,b;"c";d')
+    add("P2:P6", 7, 2, 1, "=P2<=Listen!$B$1")
+    ws.Range("A1").Select()
+    b.save(wb, "xlsx-validation.xlsx")
+
+
+def protection(b: Builder) -> None:
+    """Blatt schützen with a password (Excel's SHA-512 hash) and two allowed actions; one sheet
+    protected without a password; unlocked input cells (Zellen formatieren > Schutz)."""
+    wb = b.new()
+    ws = wb.Worksheets(1)
+    ws.Name = "Geschützt"
+    ws.Range("A1").Value = "Name"
+    ws.Range("B1").Value = "Note"
+    ws.Range("B2:B5").Locked = False
+    ws.Protect(Password="Raabe", AllowFormattingCells=True, AllowSorting=True)
+    two = wb.Worksheets.Add(After=ws)
+    two.Name = "Ohne Kennwort"
+    two.Range("A1").Value = 1
+    two.Protect()
+    ws.Activate()
+    b.save(wb, "xlsx-protection.xlsx")
+
+
 ALL = {"values": values, "formulas": formulas, "styles": styles, "numfmt": numfmt, "layout": layout, "sheets": sheets,
-       "date1904": date1904, "blank": blank}
+       "date1904": date1904, "blank": blank, "validation": validation, "protection": protection}
 
 
 def anonymize(path: Path) -> None:

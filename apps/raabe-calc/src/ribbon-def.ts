@@ -27,7 +27,7 @@ export interface RibbonContext {
     autosum: MenuEntry[]; fill: MenuEntry[]; clear: MenuEntry[]; sortFilter: MenuEntry[]; find: MenuEntry[];
     paste: MenuEntry[]; margins: MenuEntry[]; orientationPage: MenuEntry[]; size: MenuEntry[]; printArea: MenuEntry[];
     freeze: MenuEntry[]; calcOptions: MenuEntry[]; notes: MenuEntry[]; names: MenuEntry[];
-    fnLogical: MenuEntry[]; fnText: MenuEntry[]; fnDate: MenuEntry[]; fnLookup: MenuEntry[]; fnMath: MenuEntry[]; fnMore: MenuEntry[]; fnRecent: MenuEntry[];
+    fnLogical: MenuEntry[]; fnText: MenuEntry[]; fnDate: MenuEntry[]; fnLookup: MenuEntry[]; fnMath: MenuEntry[]; fnFinancial: MenuEntry[]; fnMore: MenuEntry[]; fnRecent: MenuEntry[];
     chartColumn: MenuEntry[]; chartLine: MenuEntry[]; chartPie: MenuEntry[]; chartScatter: MenuEntry[]; chartStat: MenuEntry[];
     fitWidth: MenuEntry[]; fitHeight: MenuEntry[];
   };
@@ -210,7 +210,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
         {
           id: "library", label: "Funktionsbibliothek", key: "ZF", icon: "fx",
           controls: [b("formulas.insertFunction", "U", "large"), split("edit.autosum", "KA", "large", m.autosum, "AutoSumme"),
-            dd("formulas.recent", "Ä", "large", m.fnRecent), b("formulas.financial", "I", "large"), dd("formulas.logical", "L", "large", m.fnLogical),
+            dd("formulas.recent", "Ä", "large", m.fnRecent), dd("formulas.financial", "I", "large", m.fnFinancial), dd("formulas.logical", "L", "large", m.fnLogical),
             dd("formulas.text", "X", "large", m.fnText), dd("formulas.dateTime", "9", "large", m.fnDate), dd("formulas.lookup", "C", "large", m.fnLookup),
             dd("formulas.math", "T", "large", m.fnMath), dd("formulas.more", "M", "large", m.fnMore)],
         },
@@ -220,7 +220,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
         },
         {
           id: "auditing", label: "Formelüberwachung", key: "ZO", icon: "fx",
-          controls: [stack(b("formulas.tracePrecedents", "R"), b("formulas.traceDependents", "D")), stack(b("formulas.showFormulas", "H"), b("formulas.errorCheck", "K"), b("formulas.evaluate", "V"))],
+          controls: [stack(b("formulas.tracePrecedents", "R"), b("formulas.traceDependents", "D"), b("formulas.removeArrows", "AA")), stack(b("formulas.showFormulas", "H"), b("formulas.errorCheck", "K"), b("formulas.evaluate", "V"))],
         },
         {
           id: "calculation", label: "Berechnung", key: "ZB", icon: "calculate",
@@ -244,7 +244,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
         },
         {
           id: "tools", label: "Datentools", key: "ZD", icon: "text-columns",
-          controls: [b("data.textToColumns", "T", "large"), stack(b("edit.flashFill", "B"), b("data.removeDuplicates", "4"), b("data.validation", "Ü")), b("data.consolidate", "8", "large")],
+          controls: [b("data.textToColumns", "T", "large"), stack(b("edit.flashFill", "B"), b("data.removeDuplicates", "4"), split("data.validation", "Ü", "small", [{ cmd: "data.validation" }, { cmd: "data.circleInvalid" }, { cmd: "data.clearCircles" }])), b("data.consolidate", "8", "large")],
         },
         { id: "forecast", label: "Prognose", key: "Z3", icon: "trend", controls: [b("data.whatIf", "5", "large"), b("data.forecast", "3", "large")] },
         { id: "outline", label: "Gliederung", key: "ZO", icon: "outline", controls: [b("data.group", "G", "large"), b("data.ungroup", "H", "large"), b("data.subtotal", "B", "large")] },

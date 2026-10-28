@@ -34,6 +34,10 @@ export interface GridHost {
   autofitRows(rows: number[]): void;
   selectionChanged(): void;
   modeChanged(mode: Mode): void;
+  /** Copied cells wait to be pasted (the status bar says so instead of the cell mode). */
+  copyMode?(on: boolean): void;
+  /** The status bar's mode texts besides the cell mode: [field, text] (Endmodus, Auswahlmodus). */
+  flagsChanged?(flags: [string, string][]): void;
   contextMenu(e: MouseEvent, kind: "cell" | "col" | "row"): void;
   /** Keys the grid does not handle itself (ribbon shortcuts …); true when used. */
   key(e: KeyboardEvent): boolean;
@@ -41,6 +45,18 @@ export interface GridHost {
   filterMenu(col: number, anchor: DOMRect): void;
   /** Formeln anzeigen (Strg+#). */
   showFormulas(): boolean;
+  /** Datenüberprüfung: "ok", or the user's answer to the error box (retry: edit again; cancel: drop it). */
+  validate?(row: number, col: number, text: string): "ok" | Promise<"ok" | "retry" | "cancel">;
+  /** After every paint (things placed over the grid follow scrolling and zoom). */
+  painted?(): void;
+  /** Blatt schützen: false (after telling the user) where the cell may not be changed. */
+  canEdit?(row: number, col: number): boolean;
+  /** Blatt schützen: Tab goes to the next unlocked cell (null: the sheet is not protected). */
+  nextUnlocked?(row: number, col: number, back: boolean): { row: number; col: number } | null;
+  /** Ungültige Daten einkreisen: the circled cells of the sheet. */
+  circles?(): { row: number; col: number }[];
+  /** Spur zum Vorgänger/Nachfolger arrows of the sheet. */
+  arrows?(): { from: Rect | null; to: { row: number; col: number }; error?: boolean }[];
   /** The warning button beside a cell with an error indicator was pressed. */
   errorMenu(kind: "text-number" | "error", anchor: DOMRect): void;
   /** Enter while copied cells are marked: paste them; true when it did. */
@@ -221,12 +237,13 @@ export class Grid {
       selection: this.selection, active: this.active, editing: this.editing ?? undefined, marquee: this.marquee,
       marqueePhase: this.marqueePhase, ghost: this.ghost, refs: this.refHighlights(), showGrid: this.view.showGrid,
       showHeaders: this.view.showHeaders, textCache: this.previewState ? new Map() : this.textCache, cond: this.condEval(), showFormulas: this.host.showFormulas(),
-      preview: this.previewState,
+      preview: this.previewState, arrows: this.host.arrows?.(), circles: this.host.circles?.(),
     };
     draw(this.ctx, st);
     if (this.editing && !this.editing.viaBar) this.placeEditor();
     this.placeOptions();
     this.updateWarning();
+    this.host.painted?.();
   }
 
   private condEval(): CondEval | null {
@@ -341,6 +358,25 @@ export class Grid {
     this.afterSelect();
   }
 
+  /** Tab on a protected sheet: to the next unlocked cell (Excel); false where the sheet is not protected. */
+  private protectedTab(back: boolean): boolean {
+    const n = this.host.nextUnlocked?.(this.active.row, this.active.col, back);
+    if (!n) return false;
+    this.selectCell(n.row, n.col);
+    return true;
+  }
+
+  /** Several ranges at once (Inhalte auswählen, Suchen und Auswählen); the first holds the active cell. */
+  selectMany(ranges: Rect[]): void {
+    if (!ranges.length) return;
+    this.tabStart = null;
+    this.view.selection = ranges.map((r) => ({ ...r }));
+    this.view.active = { row: ranges[0].r0, col: ranges[0].c0 };
+    this.head = { ...this.view.active };
+    this.reveal(ranges[0].r0, ranges[0].c0);
+    this.afterSelect();
+  }
+
   selectCell(row: number, col: number): void {
     const m = this.sheet.mergeAt(row, col);
     this.select(m ?? { r0: row, c0: col, r1: row, c1: col }, { row: m?.r0 ?? row, col: m?.c0 ?? col });
@@ -431,6 +467,24 @@ export class Grid {
     return r;
   }
 
+  /** Excel's keyboard modes: Ende (the next arrow jumps), F8 Auswahl erweitern, Umschalt+F8 Abschnitt hinzufügen. */
+  private keyMode: { end: boolean; select: "extend" | "add" | null } = { end: false, select: null };
+
+  /** Leaves Ende, Auswahl erweitern and Abschnitt hinzufügen (a fresh workbook starts without them). */
+  resetKeyModes(): void {
+    this.setKeyMode(false, null);
+  }
+
+  private setKeyMode(end: boolean, select: "extend" | "add" | null): void {
+    if (this.keyMode.end === end && this.keyMode.select === select) return;
+    this.keyMode = { end, select };
+    const flags: [string, string][] = [];
+    if (select === "extend") flags.push(["Auswahlmodus", "Auswahl erweitern"]);
+    if (select === "add") flags.push(["Auswahlmodus", "Abschnitt hinzufügen oder entfernen"]);
+    if (end) flags.push(["Endmodus", "Endmodus"]);
+    this.host.flagsChanged?.(flags);
+  }
+
   private move(dr: number, dc: number, extend: boolean, ctrl: boolean): void {
     const from = extend ? this.head : this.active;
     let to: { row: number; col: number };
@@ -504,6 +558,7 @@ export class Grid {
     if (this.editing) return;
     this.showOptions(null);
     const { row, col } = this.active;
+    if (this.host.canEdit && !this.host.canEdit(row, col)) return;
     const cell = this.sheet.get(row, col);
     const style = this.wb.styles.get(cell?.s ?? this.sheet.rows.get(row)?.s ?? this.sheet.cols.get(col)?.s);
     const original = editText(cell, style);
@@ -595,8 +650,31 @@ export class Grid {
       for (const ch of text) { if (ch === '"') quoted = !quoted; else if (!quoted && ch === "(") open++; else if (!quoted && ch === ")") open--; }
       if (open > 0) text += ")".repeat(open);
     }
-    const { row, col } = this.editing;
+    const { row, col, viaBar } = this.editing;
     const changed = text !== this.editing.original;
+    // Datenüberprüfung: the entry is checked first; the editor stays while the box is open (Excel).
+    if (changed && !opts.array && this.host.validate) {
+      const v = this.host.validate(row, col, text);
+      if (v !== "ok") {
+        void v.then((r) => {
+          if (r === "ok") this.finishCommit(row, col, text, changed, moveBy, opts);
+          else if (r === "retry") {
+            this.stopEdit();
+            this.startEdit("edit", text, undefined, viaBar);
+            (viaBar ? this.fx : this.editor).select();
+          } else {
+            this.stopEdit();
+            this.editor.focus({ preventScroll: true });
+            this.afterSelect();
+          }
+        });
+        return;
+      }
+    }
+    this.finishCommit(row, col, text, changed, moveBy, opts);
+  }
+
+  private finishCommit(row: number, col: number, text: string, changed: boolean, moveBy: "down" | "up" | "right" | "left" | "none", opts: { all?: boolean; array?: boolean; arrow?: boolean }): void {
     this.stopEdit();
     const targets = opts.all ? this.selection : [{ r0: row, c0: col, r1: row, c1: col }];
     if (changed || opts.all) for (const t of targets) this.host.commit(t, text, { array: opts.array });
@@ -967,8 +1045,8 @@ export class Grid {
         this.drag = { kind: "rows", start: { row: e.shiftKey ? this.active.row : t.row, col: 0 }, x: p.x, y: p.y };
         return;
       case "cells":
-        if (e.shiftKey) this.extendTo({ row: t.row, col: t.col });
-        else if (add) this.select({ r0: t.row, c0: t.col, r1: t.row, c1: t.col }, { row: t.row, col: t.col }, true);
+        if (e.shiftKey || this.keyMode.select === "extend") this.extendTo({ row: t.row, col: t.col });
+        else if (add || this.keyMode.select === "add") this.select({ r0: t.row, c0: t.col, r1: t.row, c1: t.col }, { row: t.row, col: t.col }, true);
         else this.selectCell(t.row, t.col);
         this.drag = { kind: "cells", start: { ...this.active }, x: p.x, y: p.y };
         return;
@@ -1071,6 +1149,11 @@ export class Grid {
     this.optBtn.addEventListener("mousedown", (e) => { e.preventDefault(); open(this.optBtn!.getBoundingClientRect()); });
     this.el.append(this.optBtn);
     this.placeOptions();
+  }
+
+  /** Whether the Einfüge-/AutoAusfülloptionen button is showing (Schnellanalyse then stays away). */
+  optionsShown(): boolean {
+    return !!this.optBtn;
   }
 
   private placeOptions(): void {
@@ -1284,11 +1367,42 @@ export class Grid {
       this.host.filterMenu(this.active.col, new DOMRect(c.left + fb.x, c.top + fb.y, fb.w, fb.h));
       return;
     }
+    // Alt+Unten elsewhere: the Dropdown-Auswahlliste of the column's texts (Excel).
+    if (e.altKey && k === "ArrowDown") {
+      e.preventDefault();
+      this.pickList();
+      return;
+    }
     const arrows: Record<string, [number, number]> = { ArrowDown: [1, 0], ArrowUp: [-1, 0], ArrowRight: [0, 1], ArrowLeft: [0, -1] };
+    // F8: Auswahl erweitern (arrows extend until F8 or Esc); Umschalt+F8: Abschnitt hinzufügen
+    // (the next click adds a range). Both are shown in the status bar (recorded).
+    if (k === "F8" && !ctrl && !e.altKey) {
+      e.preventDefault();
+      const want = shift ? "add" : "extend";
+      this.setKeyMode(false, this.keyMode.select === want ? null : want);
+      return;
+    }
+    // Ende: the next arrow jumps as Strg+arrow does; Ende again leaves the mode (recorded).
+    if (k === "End" && !ctrl && !e.altKey && !shift) {
+      e.preventDefault();
+      this.setKeyMode(!this.keyMode.end, this.keyMode.select);
+      return;
+    }
     if (arrows[k] && !e.altKey) {
       e.preventDefault();
       this.tabStart = null;
-      this.move(arrows[k][0], arrows[k][1], shift, ctrl);
+      const jump = ctrl || this.keyMode.end;
+      const extend = shift || this.keyMode.select === "extend";
+      if (this.keyMode.end) this.setKeyMode(false, this.keyMode.select);
+      this.move(arrows[k][0], arrows[k][1], extend, jump);
+      return;
+    }
+    if (this.keyMode.end && !["Shift", "Control", "Alt"].includes(k)) this.setKeyMode(false, this.keyMode.select);
+    if (k === "Escape" && this.keyMode.select) this.setKeyMode(false, null);
+    // Strg+Rücktaste: back to where the active cell is.
+    if (ctrl && k === "Backspace") {
+      e.preventDefault();
+      this.reveal(this.active.row, this.active.col);
       return;
     }
     switch (k) {
@@ -1300,7 +1414,7 @@ export class Grid {
         return;
       case "Tab":
         e.preventDefault();
-        this.moveWithin(0, shift ? -1 : 1);
+        if (!this.protectedTab(shift)) this.moveWithin(0, shift ? -1 : 1);
         return;
       case "F2":
         e.preventDefault();
@@ -1398,7 +1512,10 @@ export class Grid {
     }
     if (k === "Tab") {
       e.preventDefault();
-      this.commitEdit(shift ? "left" : "right");
+      if (this.host.nextUnlocked?.(this.active.row, this.active.col, shift)) {
+        this.commitEdit("none");
+        this.protectedTab(shift);
+      } else this.commitEdit(shift ? "left" : "right");
       return;
     }
     if (k === "Escape") {
@@ -1467,6 +1584,42 @@ export class Grid {
       this.invalidate();
       return;
     }
+  }
+
+  /** Dropdown-Auswahlliste: the different texts above and below in the column, sorted; the chosen one is entered. */
+  private pickList(): void {
+    const { row, col } = this.active;
+    const seen = new Map<string, string>();
+    const scan = (dir: 1 | -1) => {
+      for (let r = row + dir; r >= 0 && r < MAX_ROWS; r += dir) {
+        const c = this.sheet.get(r, col);
+        if (!c || c.v === null || c.v === "") break;
+        if (typeof c.v === "string" && c.f === undefined && !seen.has(c.v.toLowerCase())) seen.set(c.v.toLowerCase(), c.v);
+      }
+    };
+    scan(-1);
+    scan(1);
+    const items = [...seen.values()].sort((a, b) => a.localeCompare(b, "de"));
+    if (!items.length) return;
+    const b = this.rectOnCanvas({ r0: row, c0: col, r1: row, c1: col })!;
+    const list = h("div", { class: "pick-list", role: "listbox" });
+    // Excel opens the list with nothing highlighted; the first Down picks the first entry.
+    let index = -1;
+    const close = () => { list.remove(); removeEventListener("keydown", keys, true); removeEventListener("pointerdown", outside, true); this.editor.focus({ preventScroll: true }); };
+    const take = (i: number) => { close(); this.host.commit({ r0: row, c0: col, r1: row, c1: col }, items[i], {}); this.syncBar(); };
+    const render = () => list.replaceChildren(...items.map((t, i) => h("div", { class: `pick-item${i === index ? " on" : ""}`, onmousedown: (ev: MouseEvent) => { ev.preventDefault(); take(i); } }, t)));
+    const keys = (ev: KeyboardEvent) => {
+      if (ev.key === "ArrowDown" || ev.key === "ArrowUp") { ev.preventDefault(); ev.stopPropagation(); index = ev.key === "ArrowDown" ? Math.min(items.length - 1, index + 1) : Math.max(0, index - 1); render(); }
+      else if (ev.key === "Enter") { ev.preventDefault(); ev.stopPropagation(); if (index >= 0) take(index); else close(); }
+      else if (ev.key === "Escape") { ev.preventDefault(); ev.stopPropagation(); close(); }
+    };
+    const outside = (ev: Event) => { if (!list.contains(ev.target as Node)) close(); };
+    render();
+    list.style.left = `${b.x}px`;
+    list.style.top = `${b.y + b.h}px`;
+    list.style.minWidth = `${b.w}px`;
+    this.el.append(list);
+    setTimeout(() => { addEventListener("keydown", keys, true); addEventListener("pointerdown", outside, true); });
   }
 
   // ----- function AutoComplete --------------------------------------------------------------------
@@ -1543,6 +1696,7 @@ export class Grid {
   // ----- marquee -------------------------------------------------------------------------------
 
   setMarquee(r: Rect | null): void {
+    if (!!r !== !!this.marquee) this.host.copyMode?.(!!r);
     this.marquee = r;
     clearInterval(this.marqueeTimer);
     if (r) this.marqueeTimer = window.setInterval(() => { this.marqueePhase = (this.marqueePhase + 1) % 16; this.invalidate(); }, 120);

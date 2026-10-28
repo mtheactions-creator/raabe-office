@@ -192,10 +192,22 @@ export interface View {
   freeze?: { row: number; col: number };
 }
 
+/** One column's filter: chosen values, or Zahlenfilter/Textfilter (custom), Top 10, above/below the average. */
+export interface FilterColumn {
+  values?: string[];
+  blank?: boolean;
+  /** Benutzerdefinierter AutoFilter: one or two conditions (operator as in the file, value with * and ? wildcards). */
+  custom?: { and?: boolean; items: { op: string; val: string }[] };
+  /** Top 10: the top or bottom items or percent; filterVal is the limit found when it was applied. */
+  top10?: { top: boolean; percent: boolean; val: number; filterVal?: number };
+  /** Über/Unter dem Durchschnitt; val is the average when it was applied. */
+  dynamic?: { type: "aboveAverage" | "belowAverage"; val?: number };
+}
+
 export interface AutoFilter {
   ref: Rect;
   /** Per column (0 = first column of `ref`): the texts shown (as the cells show them); absent = all. */
-  columns: Record<number, { values?: string[]; blank?: boolean }>;
+  columns: Record<number, FilterColumn>;
   /** The file's <autoFilter> children the app does not model (custom, top 10 …), kept as XML. */
   rawXml?: string;
 }
@@ -228,6 +240,44 @@ export interface CondFormat {
   rules: CondRule[];
 }
 
+/** Zulassen in Datenüberprüfung; "any" is Jeden Wert (no type in the file). */
+export type ValidationType = "any" | "whole" | "decimal" | "list" | "date" | "time" | "textLength" | "custom";
+export type ValidationOperator = "between" | "notBetween" | "equal" | "notEqual" | "greaterThan" | "lessThan" | "greaterThanOrEqual" | "lessThanOrEqual";
+
+/**
+ * Datenüberprüfung of some ranges, as SpreadsheetML's <dataValidation> (and the x14 form Excel
+ * writes into the extLst when a formula refers to another sheet). Flags are false when absent.
+ */
+export interface Validation {
+  ref: Rect[];
+  type: ValidationType;
+  /** Daten; absent: between (the file's default). */
+  operator?: ValidationOperator;
+  /**
+   * Criteria in the file's form without "=": numbers with ".", dates and times as serial
+   * numbers, a literal list as a quoted string ("\"Ja,Nein\""), a source range or name, a
+   * formula with English names. Relative references belong to the top-left cell of `ref[0]`.
+   */
+  formula1?: string;
+  formula2?: string;
+  /** A literal list's entries when one holds a comma or quote (Excel's x12ac:list); formula1 is then Excel's fallback. */
+  items?: string[];
+  /** Leere Zellen ignorieren. */
+  allowBlank?: boolean;
+  /** Excel's inverted flag: true HIDES the cell's dropdown arrow (Zellendropdown off). */
+  showDropDown?: boolean;
+  showInputMessage?: boolean;
+  promptTitle?: string;
+  prompt?: string;
+  showErrorMessage?: boolean;
+  /** Typ of the Fehlermeldung; absent: stop (Stopp). */
+  errorStyle?: "stop" | "warning" | "information";
+  errorTitle?: string;
+  error?: string;
+  /** The element as the file had it when the fields above cannot express it (imeMode …); written back with the new sqref. */
+  rawXml?: string;
+}
+
 export interface PageSetup {
   orientation?: "portrait" | "landscape";
   /** Excel's paperSize code (9 = A4, 1 = Letter, 11 = A5, 8 = A3). */
@@ -241,6 +291,12 @@ export interface PageSetup {
   headings?: boolean;
   /** The print area (the defined name _xlnm.Print_Area). */
   printArea?: Rect;
+  /** Kopf- und Fußzeile in Excel's codes ("&LText&C&P&R&D"; &P page, &N pages, &D date, &T time, &F file, &A sheet). */
+  header?: string;
+  footer?: string;
+  /** Drucktitel: rows repeated at the top and columns at the left of every page (_xlnm.Print_Titles). */
+  titleRows?: [number, number];
+  titleCols?: [number, number];
 }
 
 export class Sheet {
@@ -259,8 +315,12 @@ export class Sheet {
   hidden?: boolean | "very";
   /** AutoFilter: its range and the values shown per column (column index inside the range). */
   autoFilter?: AutoFilter;
+  /** Blatt schützen: the attributes of <sheetProtection> as the file has them (sheet="1" when on). */
+  protection?: Record<string, string>;
   /** Bedingte Formatierung, in the file's order (priority decides). */
   conditional?: CondFormat[];
+  /** Datenüberprüfung, in the file's order (the first one covering a cell applies). */
+  validations?: Validation[];
   /** Seite einrichten (pageSetup, pageMargins, printOptions, the print area). */
   page?: PageSetup;
   /** The .xlsx layer's parts of the sheet it does not model, written back unchanged. */

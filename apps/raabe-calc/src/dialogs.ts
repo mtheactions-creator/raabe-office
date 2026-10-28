@@ -7,12 +7,13 @@ import {
   MAX_COLS, MAX_ROWS, cellName, colName, FUNCTIONS_DE, FORMAT_CATEGORIES, localFormat, fileFormat, parseRange, rangeName,
   type Cell, type CondRule, type Rect, type Sheet,
 } from "@raabe/sheet-engine";
-import { colorGrid, h, messageBox, showDialog, type MenuEntry } from "@raabe/shell";
+import { colorGrid, h, messageBox, showDialog, showMenu, type MenuEntry } from "@raabe/shell";
 import type { CalcApp } from "./app";
 import * as A from "./actions";
 import { shown, editText } from "./engine";
 import { DEFAULT_COL_CHARS, charsToPx, ptToPx, shownChars, shownToChars } from "./grid/metrics";
 import type { Settings } from "./store";
+import { CUSTOM_OPS, NUMBER_FILTERS, TEXT_FILTERS, fromCustom, passes, prepare as prepareFilter, toCustom } from "./filters";
 
 const field = (label: string, input: HTMLElement) => h("label", { class: "field" }, label, input);
 const radio = (name: string, label: string, value: string, checked = false) =>
@@ -436,12 +437,19 @@ export function dialogs(app: CalcApp) {
   function applyFilter(): void {
     const f = sheet().autoFilter;
     if (!f) return;
+    // Top 10 and the average need the column's numbers first.
+    for (const [k, crit] of Object.entries(f.columns)) {
+      if (!crit.top10 && !crit.dynamic) continue;
+      const nums: number[] = [];
+      for (let r = f.ref.r0 + 1; r <= f.ref.r1; r++) { const v = sheet().get(r, f.ref.c0 + Number(k))?.v; if (typeof v === "number") nums.push(v); }
+      f.columns[Number(k)] = prepareFilter(crit, nums);
+    }
     for (let r = f.ref.r0 + 1; r <= f.ref.r1; r++) {
       let show = true;
       for (const [k, crit] of Object.entries(f.columns)) {
         const c = sheet().get(r, f.ref.c0 + Number(k));
         const t = shown(c, app.wb.styles.get(c?.s)).text;
-        if (crit.values && !(t === "" ? crit.blank : crit.values.includes(t))) show = false;
+        if (!passes(crit, c, t)) show = false;
       }
       const info = sheet().rows.get(r);
       if (!!info?.hidden === !show) continue;
@@ -525,7 +533,17 @@ export function dialogs(app: CalcApp) {
       h("hr"),
       item(`Filter entfernen aus "${name}"`, crit ? () => app.change("Filter löschen", () => { app.history.whole(sheet()); delete f.columns[col - f.ref.c0]; applyFilter(); }) : null),
       item("Nach Farbe filtern", null),
-      item(numeric ? "Zahlenfilter" : "Textfilter", null),
+      h("button", { type: "button", class: "filter-item sub", onclick: (e: MouseEvent) => {
+        // Excel's submenu: the comparisons open Benutzerdefinierter AutoFilter with the operator chosen.
+        const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+        const entries: MenuEntry[] = (numeric ? NUMBER_FILTERS : TEXT_FILTERS).map((x) => x === "-" ? "-" : ({ label: x.label, run: () => {
+          close();
+          if (x.kind === "top10") void top10Dialog(col);
+          else if (x.kind === "above" || x.kind === "below") setColumn(col, { dynamic: { type: x.kind === "above" ? "aboveAverage" : "belowAverage" } });
+          else void customFilterDialog(col, name, x.op, x.op2);
+        } }));
+        showMenu(app.commands, entries, new DOMRect(rect.right, rect.top, 0, rect.height));
+      } }, h("span", { class: "fi-icon" }), numeric ? "Zahlenfilter" : "Textfilter", h("span", { class: "fi-arrow" }, "›")),
       search,
       h("div", { class: "filter-list" }, allBox.el, ...boxes.map((b) => b.el), ...(blankBox ? [blankBox.el] : [])),
       h("div", { class: "filter-buttons" },
@@ -537,6 +555,57 @@ export function dialogs(app: CalcApp) {
     panel.style.top = `${Math.min(innerHeight - panel.offsetHeight - 4, r.bottom + 1)}px`;
     setTimeout(() => { addEventListener("pointerdown", outside, true); addEventListener("keydown", keys, true); });
     search.focus();
+  }
+
+  /** One column's filter set (Über/Unter dem Durchschnitt, the dialogs below). */
+  function setColumn(col: number, crit: import("@raabe/sheet-engine").FilterColumn): void {
+    const f = sheet().autoFilter;
+    if (!f) return;
+    app.change("Filtern", () => { app.history.whole(sheet()); f.columns[col - f.ref.c0] = crit; applyFilter(); });
+  }
+
+  /** Benutzerdefinierter AutoFilter: two conditions joined by Und or Oder. */
+  async function customFilterDialog(col: number, name: string, op = "eq", op2?: string): Promise<void> {
+    const f = sheet().autoFilter;
+    if (!f) return;
+    const now = f.columns[col - f.ref.c0]?.custom;
+    const start = now ? now.items.map(fromCustom) : [{ op, val: "" }, ...(op2 ? [{ op: op2, val: "" }] : [])];
+    const values = new Set<string>();
+    for (let r = f.ref.r0 + 1; r <= f.ref.r1; r++) { const c = sheet().get(r, col); const t = shown(c, app.wb.styles.get(c?.s)).text; if (t) values.add(t); }
+    const listId = `cf-values-${Date.now()}`;
+    const row = (i: number) => {
+      const sel = h("select", null, h("option", { value: "" }, ""), ...CUSTOM_OPS.map(([k, label]) => h("option", { value: k, selected: start[i]?.op === k || undefined }, label))) as HTMLSelectElement;
+      const val = h("input", { type: "text", list: listId, value: start[i]?.val ?? "", style: "width:180px" }) as HTMLInputElement;
+      return { sel, val, el: h("div", { class: "cf-row" }, sel, val) };
+    };
+    const a = row(0), b = row(1);
+    const and = h("input", { type: "radio", name: "cf-join", checked: !now || now.and ? true : undefined }) as HTMLInputElement;
+    const or = h("input", { type: "radio", name: "cf-join", checked: now && !now.and ? true : undefined }) as HTMLInputElement;
+    const body = h("div", { class: "cf-dialog" }, h("div", { class: "fc-label" }, "Zeilen anzeigen:"), h("div", null, name), a.el,
+      h("div", { class: "cf-join" }, h("label", { class: "check" }, and, "Und"), h("label", { class: "check" }, or, "Oder")), b.el,
+      h("datalist", { id: listId }, ...[...values].sort((x, y) => x.localeCompare(y, "de", { numeric: true })).map((v) => h("option", { value: v }))),
+      h("p", { class: "muted" }, "? steht für ein beliebiges Zeichen, * für beliebig viele Zeichen."));
+    setTimeout(() => a.val.focus());
+    const ok = await showDialog({ title: "Benutzerdefinierter AutoFilter", body, buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
+    if (!ok) return;
+    const items = [a, b].filter((r) => r.sel.value).map((r) => toCustom(r.sel.value, r.val.value));
+    if (!items.length) return;
+    setColumn(col, { custom: { and: (items.length > 1 && and.checked) || undefined, items } });
+  }
+
+  /** Top 10 AutoFilter: Obersten/Untersten, a number, Elemente/Prozent. */
+  async function top10Dialog(col: number): Promise<void> {
+    const f = sheet().autoFilter;
+    if (!f) return;
+    const now = f.columns[col - f.ref.c0]?.top10;
+    const which = h("select", null, h("option", { value: "top", selected: !now || now.top || undefined }, "Obersten"), h("option", { value: "bottom", selected: now && !now.top || undefined }, "Untersten")) as HTMLSelectElement;
+    const n = h("input", { type: "number", min: "1", max: "500", value: String(now?.val ?? 10), style: "width:60px" }) as HTMLInputElement;
+    const unit = h("select", null, h("option", { value: "items", selected: !now?.percent || undefined }, "Elemente"), h("option", { value: "percent", selected: now?.percent || undefined }, "Prozent")) as HTMLSelectElement;
+    const body = h("div", null, h("div", { class: "fc-label" }, "Anzeigen"), h("div", { class: "cf-row" }, which, n, unit));
+    const ok = await showDialog({ title: "Top 10 AutoFilter", body, buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
+    if (!ok) return;
+    const val = Math.max(1, Math.min(500, Math.round(Number(n.value) || 10)));
+    setColumn(col, { top10: { top: which.value === "top", percent: unit.value === "percent", val } });
   }
 
   // ----- data tools ----------------------------------------------------------------------------------
@@ -909,7 +978,7 @@ export function dialogs(app: CalcApp) {
   return {
     colWidth, defaultWidth, rowHeight, insertCells, deleteCells, formatCells, find, goto, sortQuick, sort, hasFilter, toggleFilter, clearFilter,
     reapplyFilter, filterByActive, filterMenu, textToColumns, removeDuplicates, series, tableStylesPanel, formatAsTable, cellStylesPanel,
-    conditionalHighlightMenu, conditionalTopMenu, conditionalBarMenu, conditionalScaleMenu, clearConditional, defineName, nameManager, note, link,
+    addRule, conditionalHighlightMenu, conditionalTopMenu, conditionalBarMenu, conditionalScaleMenu, clearConditional, defineName, nameManager, note, link,
     symbol, insertFunction, moveSheet, unhideSheet, zoom, statistics, options, pasteSpecial,
   };
 }

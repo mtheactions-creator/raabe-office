@@ -402,5 +402,11 @@
   "grid": "grid",
   "validation": "data_usage_checkmark",
   "flash-fill": "text_grammar_wand",
-  "outline": "table_stack_below"
+  "outline": "table_stack_below",
+  "trace-precedents": "custom:trace-precedents",
+  "trace-dependents": "custom:trace-dependents",
+  "remove-arrows": "custom:remove-arrows",
+  "circle-invalid": "custom:circle-invalid",
+  "clear-circles": "custom:clear-circles",
+  "quick-analysis": "custom:quick-analysis"
 }

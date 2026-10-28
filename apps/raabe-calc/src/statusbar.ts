@@ -23,6 +23,8 @@ export interface Stats {
 export class CalcStatusBar {
   readonly el: HTMLElement;
   private mode = h("span", { class: "cell mode" }, "Bereit");
+  private flags = h("span", { class: "flags" });
+  private message = h("span", { class: "cell flag message", "aria-label": "Statusmeldung", hidden: true });
   private stats = h("div", { class: "stats" });
   private slider = h("input", { type: "range", min: "0", max: "100", step: "0.5", "aria-label": "Zoom" }) as HTMLInputElement;
   private pct = h("button", { class: "cell pct", "data-tip": "Zoom" });
@@ -44,7 +46,7 @@ export class CalcStatusBar {
       const z = sliderToZoom(Number(this.slider.value));
       onZoom(Math.max(10, Math.min(400, Math.round((z + d) / 10) * 10)));
     };
-    this.el = h("div", { class: "statusbar", role: "status", oncontextmenu: (e: MouseEvent) => this.menu(e) }, this.mode,
+    this.el = h("div", { class: "statusbar", role: "status", oncontextmenu: (e: MouseEvent) => this.menu(e) }, this.mode, this.message, this.flags,
       h("div", { class: "right" }, this.stats, ...views,
         h("div", { class: "zoom" },
           h("button", { "aria-label": "Verkleinern", "data-tip": "Verkleinern", onclick: step(-10) }, "−"),
@@ -55,6 +57,18 @@ export class CalcStatusBar {
 
   setMode(text: string): void {
     this.mode.textContent = text;
+  }
+
+  /** A message in place of the cell mode (Excel's copy mode); null shows the mode again. */
+  setMessage(text: string | null): void {
+    this.message.textContent = text ?? "";
+    this.message.hidden = !text;
+    this.mode.hidden = !!text;
+  }
+
+  /** Mode texts beside the cell mode (Endmodus, Auswahl erweitern …), named as Excel names them. */
+  setFlags(flags: [string, string][]): void {
+    this.flags.replaceChildren(...flags.map(([field, text]) => h("span", { class: "cell flag", "aria-label": `${field} ${text}` }, text)));
   }
 
   /** Statusleiste anpassen: which statistics are shown (right click, as in Excel). */

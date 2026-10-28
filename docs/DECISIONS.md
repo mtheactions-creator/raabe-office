@@ -1221,8 +1221,22 @@ Recorded in an Excel of our own with real input (`catalogue_calc.py`, 117 cases;
   as Excel's HTML carries them (classes with `mso-number-format`, `font-weight`, `background`;
   Excel's names such as "Short Date"); a formula in a Standard cell shows its result in the
   format of the first referenced cell that has one, HEUTE/DATUM as a date (Excel).
+- **Display and view** (recorded): a wheel notch scrolls 3 rows, Strg+wheel zooms in steps of 15 %;
+  whether a value fits its column is decided at the display's pixels with whole-pixel character
+  widths and Excel's padding, so Standard numbers shorten exactly where Excel's do
+  (1234567,891 shows 1234567,89); a column of standard width widens for a Standard number only
+  where it would otherwise turn scientific or cut a small number (123456789012, 0,000012345), and
+  for dates and other formats that do not fit.
+- **More controls** (recorded where marked): Alt+Unten outside a filter button opens the
+  Dropdown-Auswahlliste with the column's texts, sorted, nothing highlighted until the first Down
+  (recorded); Neue Notiz/Notiz bearbeiten type straight into the yellow box beside the cell, a
+  click outside ends it; Inhalte auswählen (Notizen, Konstanten, Formeln, Leerzellen, Aktueller
+  Bereich, Letzte Zelle, Nur sichtbare Zellen, Bedingte Formate) selects all hits at once;
+  Finanzmathematik lists the financial functions the engine has; Drucktitel (Wiederholungszeilen
+  oben, Wiederholungsspalten links) repeat on every page as Excel prints them and are read and
+  written as `_xlnm.Print_Titles`.
 - Not yet as Excel: the drag of the selection's border onto other sheets, Schnellanalyse,
-  Blitzvorschau, data validation, comments (Notizen work).
+  Blitzvorschau, comments (Notizen work). Datenüberprüfung and Blatt schützen: D-065.
 
 ### D-064 Raabeschule templates for RaabeCalc (2026-10-28)
 As RaabeWrite's (D-035): our own designs from ordinary Excel features, so files from them work in
@@ -1233,3 +1247,51 @@ MITTELWERT and RUNDEN, averages, fixed header row, Gesamt worse than 4,4 highlig
 and **Messwerte** (t and s with STEIGUNG, ACHSENABSCHNITT, BESTIMMTHEITSMASS and an s-t chart
 with trendline, equation and R²). The weighting in the Notenliste (written and oral half each) is
 a placeholder the school can change; school material can replace the designs.
+
+## D-065 Step 7: Datenüberprüfung, Blatt schützen, Formelüberwachung (2026-10-28)
+
+Built during the overnight run (D-061) after the behaviour catalogue was complete, as the parts of
+Excel a school uses most among those first deferred.
+
+- **Datenüberprüfung** as Excel checks it, recorded through COM in an Excel of our own
+  (`probe_excel_validation.py`; Excel's verdict on 150 typed entries in 33 cases, all reproduced):
+  number types refuse text and WAHR and compare exactly; Textlänge counts the edit text; a literal
+  list is case-sensitive, a list from cells is not; Benutzerdefiniert passes on WAHR or a number
+  other than 0; a criterion that refers to an empty cell lets every entry of the right kind pass.
+  Zellendropdown arrow beside the cell and its list (Alt+Unten), Eingabemeldung below the cell,
+  Fehlermeldung Stopp (Wiederholen/Abbrechen), Warnung (Ja/Nein/Abbrechen), Information
+  (OK/Abbrechen). Files: unchanged validations stay as Excel wrote them; Excel's x14 form (other
+  sheets) and the x12ac list form (entries with commas or quotes) are read and written; 0
+  differences in Excel. Not recorded (no COM access): the dialog's labels (taken from German
+  Excel), the default button of Warnung (Nein, a guess), positions of arrow and message. Excel's
+  default error text is in our own words (D-058). Ungültige Daten einkreisen draws red ellipses
+  (at most 255, a corrected cell loses its circle); Einfügen and AutoAusfüllen carry the source's
+  validations and replace the target's, relative references moving with the cells (Excel).
+- **Blatt schützen**: the sheet's `<sheetProtection>` attributes are kept as the file has them;
+  the dialog offers Excel's list of allowed actions and writes the password as Excel 2013+ does
+  (SHA-512 over salt and password, 100 000 rounds); older files' 16-bit hashes are accepted. On a
+  protected sheet locked cells refuse changes with a message in our own words, formatting,
+  inserting, deleting and sorting are greyed out unless allowed, and Tab moves between unlocked
+  cells (Excel), which is what teachers' templates need.
+- **Formelüberwachung**: Spur zum Vorgänger / Spur zum Nachfolger draw Excel's arrows (blue, a
+  dot at the source, a frame around ranges, dashed from a sheet symbol for other sheets, red from
+  errors), each click one level further, removed by Pfeile entfernen or any change.
+  Formelauswertung works the formula out one part at a time in Excel's order (single-cell
+  references first, then each operation once its operands are values, WENN after its condition
+  as a whole), the next part underlined and the last value in italics; Einzelschritt and
+  Prozedurschritt are greyed out. Fehlerüberprüfung walks the cells with an error indicator from
+  the active cell on, with explanations in our own words.
+- **Kopf- und Fußzeile** (Einfügen > Kopf- und Fußzeile opens Seite einrichten there): three
+  sections each, typed with Excel's German field names (&[Seite], &[Seiten], &[Datum], &[Zeit],
+  &[Datei], &[Register]) and kept in the file as Excel's codes (&P, &N ...); printed at the
+  header and footer distances. Excel's separate Kopf- und Fußzeile view on the sheet is not built.
+- **Zahlenfilter / Textfilter** in the AutoFilter panel: Benutzerdefinierter AutoFilter (two
+  conditions with Und/Oder, * and ? wildcards), Top 10 (items or percent), Über/Unter dem
+  Durchschnitt; which rows pass follows Excel's results for 18 recorded criteria
+  (`probe_excel_filter_sub.py`: numbers compare as numbers, text case-insensitively, a plain value
+  must match the whole text, Top 10 percent rounds down). Read and written as Excel's
+  customFilters, top10 and dynamicFilter. Undoing a paste brings the copy marquee back, and copy
+  mode shows a status message (our own words) in place of the cell mode (recorded).
+- **Keyboard modes** (recorded): Ende then an arrow jumps as Strg+arrow (status bar "Endmodus"),
+  F8 Auswahl erweitern, Umschalt+F8 Abschnitt hinzufügen oder entfernen, Strg+Rücktaste shows the
+  active cell.

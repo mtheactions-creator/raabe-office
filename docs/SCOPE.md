@@ -81,14 +81,16 @@ Beyond the features below, RaabeCalc handles like Excel in every way, its contro
 | Fill handle / AutoFill (series, formulas) | M | Done in Step 7, with AutoAusfülloptionen |
 | Formulas with German function names | M | See function list below; done in Step 7 (4229/4234 Excel results) |
 | Relative/absolute references (F4), named ranges | M | Done in Step 7 (Namens-Manager) |
-| Sort, filter (AutoFilter) | M | Done in Step 7 (value filters; colour and custom filters later) |
+| Sort, filter (AutoFilter) | M | Done in Step 7 (values, Zahlen-/Textfilter, Top 10, average; colour filters later) |
 | Freeze panes, hide rows/columns, column width/row height | M | Done in Step 7 |
 | Charts: column, bar, line, pie, scatter (with trendline + equation + R²), area | M | Maths and physics; done in Step 7 (packages/charts), also histogram |
 | Conditional formatting (basic: highlight rules, data bars, colour scales) | M | Done in Step 7 (icon sets and rule manager later) |
-| Print area, fit to page, gridlines/headings on print | M | Done in Step 7 (print and PDF) |
+| Print area, fit to page, gridlines/headings on print | M | Done in Step 7 (print and PDF), with Drucktitel |
 | CSV import/export | M | Done in Step 7, as German Excel (";", UTF-8 with BOM) |
 | Comments / notes on cells | L | Notizen done in Step 7; threaded comments later |
-| Data validation (dropdown lists) | L | |
+| Data validation (dropdown lists) | L | Done in Step 7 (D-065; Ungültige Daten einkreisen later) |
+| Sheet protection (Blatt schützen), locked cells | L | Done in Step 7 (D-065), password as Excel's |
+| Formula auditing: trace arrows, Formelauswertung, Fehlerüberprüfung | L | Done in Step 7 (D-065) |
 | PivotTables | L | Maybe a simplified version |
 | What-if analysis, Solver | X | |
 | Power Query, Power Pivot, data model | X | |

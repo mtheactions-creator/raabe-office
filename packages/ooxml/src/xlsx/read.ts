@@ -14,7 +14,7 @@ import { shiftFormula } from "./shift";
 import { readStyles, canon, type StylesRaw } from "./styles";
 import { MDW, widthFromBase, widthFromFile } from "./units";
 import { readCharts, type DrawingRaw } from "./drawing";
-import { FILTER_DB, PRINT_AREA, ownRange, readAutoFilter, readConditional, readPage, type CfRaw } from "./sheetparts";
+import { FILTER_DB, PRINT_AREA, PRINT_TITLES, ownRange, readTitles, readAutoFilter, readConditional, readPage, readValidations, type CfRaw, type DvRaw } from "./sheetparts";
 import { attrs, child, children, decodeX, element, outer, root, split, text, unesc, type El, type Split } from "./xml";
 
 /** Whether a relationship type is `want`, also in Strict OOXML (same last segment). */
@@ -81,7 +81,9 @@ export interface SheetRaw {
   drawing?: DrawingRaw;
   /** Conditional formats as read. */
   cf?: CfRaw;
-  snap: { view: string; cols: string; merges: string; tab: string; defaults: string; notes: string; links: string; filter: string; cf: string; page: string };
+  /** Data validations as read. */
+  dv?: DvRaw;
+  snap: { view: string; cols: string; merges: string; tab: string; defaults: string; notes: string; links: string; filter: string; cf: string; page: string; dv: string; prot: string };
 }
 
 const ERRORS = new Set(["#NULL!", "#DIV/0!", "#VALUE!", "#REF!", "#NAME?", "#NUM!", "#N/A", "#SPILL!", "#CALC!", "#GETTING_DATA"]);
@@ -167,8 +169,15 @@ export function readPackage(files: Record<string, Uint8Array>): Workbook {
     if (a.hidden === "1" || a.hidden === "true") dn.hidden = true;
     defined.push(outer(wbXml, n));
     // The print area and the AutoFilter's range belong to the sheet's model.
-    if (dn.sheet !== undefined && (dn.name === PRINT_AREA || dn.name === FILTER_DB) && Object.keys(a).every((k) => /^(name|localSheetId|hidden)$/.test(k))) {
+    if (dn.sheet !== undefined && (dn.name === PRINT_AREA || dn.name === FILTER_DB || dn.name === PRINT_TITLES) && Object.keys(a).every((k) => /^(name|localSheetId|hidden)$/.test(k))) {
       const sheet = wb.sheets[dn.sheet];
+      if (dn.name === PRINT_TITLES) {
+        const t = readTitles(dn.ref, sheet.name);
+        if (t) {
+          sheet.page = { ...sheet.page, titleRows: t.rows, titleCols: t.cols };
+          continue;
+        }
+      }
       const rect = ownRange(dn.ref, sheet.name);
       if (rect && dn.name === PRINT_AREA) {
         sheet.page = { ...sheet.page, printArea: rect };
@@ -252,7 +261,7 @@ function readSheet(xml: string, name: string, c: SheetContext): Sheet {
   const els = children(xml, r.open, r.close);
   const get = (n: string) => els.find((e) => e.name === n);
   const rels = new Rels(c.files[relsPath(c.part)] ? strFromU8(c.files[relsPath(c.part)]) : null);
-  const raw: SheetRaw = { part: c.part, sheetId: 0, attrs: {}, xml: sp, hyperlinks: [], snap: { view: "", cols: "", merges: "", tab: "", defaults: "", notes: "", links: "", filter: "", cf: "", page: "" } };
+  const raw: SheetRaw = { part: c.part, sheetId: 0, attrs: {}, xml: sp, hyperlinks: [], snap: { view: "", cols: "", merges: "", tab: "", defaults: "", notes: "", links: "", filter: "", cf: "", page: "", dv: "", prot: "" } };
 
   const prEl = get("sheetPr");
   const tab = prEl && child(xml, prEl, "tabColor");
@@ -335,10 +344,20 @@ function readSheet(xml: string, name: string, c: SheetContext): Sheet {
 
   const af = get("autoFilter");
   if (af) sheet.autoFilter = readAutoFilter(xml, af);
+  // Blatt schützen: the attributes as they are (sheet="1" when on, the password hash, what is allowed).
+  const prot = get("sheetProtection");
+  if (prot) sheet.protection = attrs(xml, prot);
   const cfs = els.filter((e) => e.name === "conditionalFormatting");
   if (cfs.length) {
     raw.cf = { xml: [], rules: [] };
     sheet.conditional = readConditional(xml, cfs, c.ctx, c.dxfs, raw.cf);
+  }
+  const dvs = get("dataValidations");
+  const ext = get("extLst");
+  if (dvs || (ext && text(xml, ext).includes("x14:dataValidation"))) {
+    raw.dv = { items: [] };
+    const list = readValidations(xml, dvs, ext, raw.dv);
+    if (list.length) sheet.validations = list;
   }
   sheet.page = readPage(sp.parts);
 
@@ -366,7 +385,7 @@ export function sheetSnap(s: Sheet): SheetRaw["snap"] {
   return {
     view: canon(s.view), cols: canon([...s.cols].sort((a, b) => a[0] - b[0])), merges: canon(s.merges), tab: canon([s.tabColor ?? null]),
     defaults: canon([s.defaultColWidth ?? null, s.defaultRowHeight]), notes: canon(notes), links: canon(links),
-    filter: canon([s.autoFilter ?? null]), cf: canon(s.conditional ?? []), page: canon([s.page ?? null]),
+    filter: canon([s.autoFilter ?? null]), cf: canon(s.conditional ?? []), page: canon([s.page ?? null]), dv: canon(s.validations ?? []), prot: canon([s.protection ?? null]),
   };
 }
 

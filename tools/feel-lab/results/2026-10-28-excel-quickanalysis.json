@@ -1,0 +1,41 @@
+{
+ "button": {
+  "name": "Schnellanalyse",
+  "rect": [
+   285,
+   503,
+   33,
+   33
+  ],
+  "cellCorner": [
+   282,
+   500
+  ]
+ },
+ "tabs": [
+  "Diagramme",
+  "Ergebnisse",
+  "Tabellen",
+  "Sparklines"
+ ],
+ "Diagramme": [
+  "Schnellanalyse",
+  "Weitere Diagramme"
+ ],
+ "Ergebnisse": [
+  "Schnellanalyse",
+  "Durchschnitt",
+  "Anzahl",
+  "% Gesamt",
+  "Laufende Summe",
+  "Summe",
+  "Spalte nach rechts"
+ ],
+ "Tabellen": [
+  "Schnellanalyse"
+ ],
+ "Sparklines": [
+  "Schnellanalyse",
+  "Gewinn/Verlust"
+ ]
+}

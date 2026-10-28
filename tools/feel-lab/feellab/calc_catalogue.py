@@ -42,6 +42,8 @@ class Case:
 
 def addr_rc(addr: str) -> tuple[int, int]:
     m = re.fullmatch(r"([A-Z]+)(\d+)", addr)
+    if not m:
+        raise ValueError(f"not a cell address: {addr!r}")
     col = 0
     for ch in m.group(1):
         col = col * 26 + ord(ch) - 64
@@ -85,6 +87,7 @@ class ExcelSide:
         for addr, text in case.setup.items():
             ws.Range(addr).FormulaLocal = text
         ws.Range(case.start).Select()
+        app.ActiveWindow.Zoom = 100
         app.ActiveWindow.ScrollRow = 1
         app.ActiveWindow.ScrollColumn = 1
         app.CutCopyMode = False
@@ -153,6 +156,19 @@ class ExcelSide:
                     out.append(n.replace(" ", "").replace(":", ""))
         return out
 
+    def flags(self) -> list[str]:
+        """Texts the status bar shows for modes beside the cell mode (Ende-Modus, Markierung erweitern ...)."""
+        bar = uia.find(self.root, lambda d: d["type"] == "StatusBar", max_depth=6)
+        out = []
+        for c in uia.children(bar) if bar else []:
+            d = uia.describe(c)
+            if d["type"] == "Text" and d["name"].startswith("Statusmeldung"):
+                # Only that there is one: its text is Excel's own prose (D-058).
+                out.append("Statusmeldung")
+            elif d["type"] == "Text" and d["name"] and not d["name"].startswith(("Zellenmodus", "Zoom", "Mittelwert", "Anzahl", "Summe", "Numerische", "Min", "Max")):
+                out.append(d["name"])
+        return out
+
     def mode(self) -> str:
         el = uia.find(self.root, lambda d: d["type"] == "Text" and d["name"].startswith("Zellenmodus"), max_depth=8)
         return el.CurrentName.replace("Zellenmodus", "").strip() if el else "?"
@@ -180,8 +196,10 @@ class ExcelSide:
         used = ws.UsedRange
         addrs = set(case.check)
         for c in used.Cells:
-            if c.Formula != "" or c.GetAddress(False, False) in addrs:
-                addrs.add(c.GetAddress(False, False))
+            # In Markierung erweitern (F8) Excel's COM gives single cells as "A1:A1".
+            ad = c.GetAddress(False, False).split(":")[0]
+            if c.Formula != "" or ad in addrs:
+                addrs.add(ad)
         for a in sorted(addrs, key=lambda s: addr_rc(s)):
             r = ws.Range(a)
             cells[a] = {"formula": r.FormulaLocal, "text": r.Text, "format": r.NumberFormatLocal,
@@ -192,10 +210,12 @@ class ExcelSide:
         std = ws.StandardWidth
         widths = {c: round(ws.Columns(c).ColumnWidth, 2) for c in range(1, 8) if abs(ws.Columns(c).ColumnWidth - std) > 0.01}
         status = self.status()
+        flags = self.flags()
+        win = app.ActiveWindow
         return {
-            "status": status,
+            "flags": flags, "status": status, "scroll": [win.ScrollRow, win.ScrollColumn], "zoom": win.Zoom,
             "mode": mode, "editing": editing_text, "cells": cells, "selection": app.Selection.GetAddress(False, False),
-            "active": app.ActiveCell.GetAddress(False, False), "sheet": ws.Name, "sheets": [s.Name for s in app.ActiveWorkbook.Worksheets],
+            "active": app.ActiveCell.GetAddress(False, False).split(":")[0], "sheet": ws.Name, "sheets": [s.Name for s in app.ActiveWorkbook.Worksheets],
             "hiddenRows": hidden_rows, "hiddenCols": hidden_cols, "widths": widths, "filter": bool(ws.AutoFilterMode),
         }
 
@@ -205,6 +225,21 @@ class ExcelSide:
 
 def _pt_to_px(pt: float) -> float:
     return pt * 96 / 72 * 1.5
+
+
+def wheel(x: float, y: float, notches: int, ctrl: bool = False) -> None:
+    """Real mouse wheel notches at a point (positive: away from the user, i.e. up)."""
+    import ctypes
+    winapi.move(x, y)
+    time.sleep(0.05)
+    if ctrl:
+        winapi.key_down(winapi.vk_for("ctrl"))
+    for _ in range(abs(notches)):
+        inp = winapi.INPUT(type=winapi.INPUT_MOUSE, u=winapi._INPUTUNION(mi=winapi.MOUSEINPUT(dx=0, dy=0, mouseData=ctypes.c_ulong(120 if notches > 0 else (-120) & 0xFFFFFFFF).value, dwFlags=0x0800, time=0, dwExtraInfo=0)))
+        winapi._send(inp)
+        time.sleep(0.12)
+    if ctrl:
+        winapi.key_up(winapi.vk_for("ctrl"))
 
 
 def settle() -> None:
@@ -277,6 +312,13 @@ def run_step(side, step: tuple) -> None:
         winapi.press("ctrl+a")
         winapi.type_text(step[1], gap=0.02)
         winapi.press("enter")
+    elif kind in ("wheel", "ctrlwheel"):
+        x, y = side.point(step[1])
+        wheel(x, y, step[2], kind == "ctrlwheel")
+    elif kind == "borderdbl":
+        # Double-click on the selection's border towards a direction (Strg+arrow in Excel).
+        x, y = side.point(step[1], step[2])
+        winapi.click(x - (1 if step[2] == "right" else 0), y - (1 if step[2] == "bottom" else 0), 2)
     elif kind == "wait":
         time.sleep(step[1])
     else:
@@ -389,6 +431,12 @@ class CalcSide:
         import json as _json
         st = self.js(f"__calc.state({_json.dumps(case.check)})")
         st["status"] = self.js("[...document.querySelectorAll('.statusbar .stat')].map(e => e.textContent.replace(/[ :]/g, ''))")
+        st["flags"] = self.js("[...document.querySelectorAll('.statusbar .flag:not([hidden])')].map(e => e.getAttribute('aria-label') || e.textContent)")
+        # A status message stands where the cell mode was (Excel then has no Zellenmodus).
+        if "Statusmeldung" in st["flags"]:
+            st["mode"] = "?"
+        st["scroll"] = self.js("[__calc.app.sheet.view.top + 1, __calc.app.sheet.view.left + 1]")
+        st["zoom"] = self.js("__calc.app.sheet.view.zoom")
         return st
 
     def close(self) -> None:
@@ -399,7 +447,7 @@ class CalcSide:
             self.proc.wait(5)
 
 
-FIELDS = ("mode", "editing", "selection", "active", "sheet", "sheets", "hiddenRows", "hiddenCols", "filter", "status")
+FIELDS = ("mode", "editing", "selection", "active", "sheet", "sheets", "hiddenRows", "hiddenCols", "filter", "status", "flags", "scroll", "zoom")
 CELL_FIELDS = ("formula", "text", "format", "bold", "italic", "underline", "strike", "wrap")
 
 
@@ -435,9 +483,10 @@ def diff(excel: dict, calc: dict, today: bool = False) -> list[str]:
 def compare_calc(cases: list[Case], out, date: str) -> None:
     import json as _json
     import os
-    # Excel's outcomes: the latest recording (recording and comparing may happen on different days).
-    latest = sorted(out.glob("*-catalogue-calc-excel.json"))[-1]
-    excel = _json.loads(latest.read_text(encoding="utf-8"))
+    # Excel's outcomes: all recordings, later ones replacing earlier ones (cases are recorded on different days).
+    excel: dict = {}
+    for f in sorted(out.glob("*-catalogue-calc-excel.json")):
+        excel.update(_json.loads(f.read_text(encoding="utf-8")))
     side = CalcSide()
     results = {}
     try:

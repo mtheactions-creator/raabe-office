@@ -18,7 +18,7 @@ import { writeCharts } from "./drawing";
 import { newPackage } from "./new";
 import { numText, widthFromBase, widthToFile } from "./units";
 import { esc, escText, encodeX, joinSplit, place, placeAll, setAttrs, split, tXml, type Split, XML_HEAD } from "./xml";
-import { FILTER_DB, PRINT_AREA, autoFilterXml, conditionalXml, fitToPage, pageXml, sheetRef } from "./sheetparts";
+import { FILTER_DB, PRINT_AREA, PRINT_TITLES, titlesRef, headerFooterXml, autoFilterXml, conditionalXml, fitToPage, pageXml, sheetRef, validationsXml } from "./sheetparts";
 
 export const CT = {
   worksheet: "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml",
@@ -261,11 +261,23 @@ class SheetWriter {
     const drawing = writeCharts(this.pw, s, this.part, this.own?.drawing, this.get("drawing"));
     if (drawing !== undefined) this.put("drawing", drawing);
     if (!snap || now.cf !== snap.cf) placeAll(this.sp, "conditionalFormatting", conditionalXml(s.conditional ?? [], this.own?.cf, this.sw), SHEET_ORDER);
+    if (!snap || now.dv !== snap.dv) {
+      const dv = validationsXml(s.validations ?? [], this.own?.dv, this.get("dataValidations"), this.get("extLst"));
+      this.put("dataValidations", dv.main);
+      this.put("extLst", dv.ext);
+    }
+    if (!snap || now.prot !== snap.prot) {
+      const p = s.protection;
+      this.put("sheetProtection", p && Object.keys(p).length ? `<sheetProtection${Object.entries(p).map(([k, v]) => ` ${k}="${esc(v)}"`).join("")}/>` : null);
+    }
     if (!snap || now.page !== snap.page) {
       const pg = pageXml(s.page, this.sp.parts);
       this.put("pageMargins", pg.margins);
       this.put("pageSetup", pg.setup);
       this.put("printOptions", pg.options);
+      if ((s.page?.header ?? "") !== (this.own ? readHf(this.get("headerFooter"), "oddHeader") : "") || (s.page?.footer ?? "") !== (this.own ? readHf(this.get("headerFooter"), "oddFooter") : "")) {
+        this.put("headerFooter", headerFooterXml(s.page, this.get("headerFooter")));
+      }
       this.put("sheetPr", fitToPage(this.get("sheetPr"), pg.fit));
     }
     return joinSplit(this.sp);
@@ -501,6 +513,7 @@ function workbookXml(wb: Workbook, raw: BookRaw, entries: { name: string; sheetI
   wb.sheets.forEach((s, i) => {
     const local = fileIndex.get(i);
     if (s.page?.printArea) names.push(`<definedName name="${PRINT_AREA}" localSheetId="${local}">${escText(sheetRef(s.name, s.page.printArea))}</definedName>`);
+    if (s.page?.titleRows || s.page?.titleCols) names.push(`<definedName name="${PRINT_TITLES}" localSheetId="${local}">${escText(titlesRef(s.name, s.page.titleRows, s.page.titleCols))}</definedName>`);
     if (s.autoFilter) names.push(`<definedName name="${FILTER_DB}" localSheetId="${local}" hidden="1">${escText(sheetRef(s.name, s.autoFilter.ref))}</definedName>`);
   });
   for (const o of raw.otherNames) {
@@ -542,3 +555,9 @@ function props(pw: PackageWriter, wb: Workbook, raw: BookRaw, o: XlsxWriteOption
   }
 }
 
+
+/** The text of one part of <headerFooter> as the model holds it. */
+function readHf(xml: string | undefined, name: string): string {
+  const m = xml ? new RegExp(`<${name}>([\\s\\S]*?)</${name}>`).exec(xml) : null;
+  return m ? m[1].replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&amp;/g, "&") : "";
+}
