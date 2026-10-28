@@ -80,8 +80,8 @@ grid and the controls were built and measured against Excel.
 
 ## Not done / known gaps
 
-- Shapes in sheets (kept in the file, not shown), the Kommentare pane, PivotTables, the Seitenlayout view, Sparklines,
-  Datentabelle and Szenario-Manager: deferred, greyed with "Zurückgestellt".
+- Shapes in sheets (kept in the file, not shown), the Kommentare pane, PivotTables, the
+  Seitenlayout view, Datentabelle and Szenario-Manager: deferred, greyed with "Zurückgestellt".
 - Diagramm in RaabeWrite (Step 7b) is the next step.
 - The owner has not tried the app yet (planned after package D, now after the run).
 - Not measured against Excel: the outline bar's sizes, Schnellanalyse's chart tiles, the
