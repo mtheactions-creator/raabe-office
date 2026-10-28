@@ -246,11 +246,11 @@ export class CalcApp {
         { label: "Tabelle", icon: "format-table", run: () => void this.dlg.formatAsTable(undefined, true) },
         { label: "Leere PivotTable", icon: "table", run: () => {}, disabled: true },
       ],
-      Sparklines: [
-        { label: "Linie", icon: "chart-line", run: () => {}, disabled: true },
-        { label: "Säule", icon: "chart-column", run: () => {}, disabled: true },
-        { label: "Gewinn/Verlust", icon: "chart-column", run: () => {}, disabled: true },
-      ],
+      // One sparkline per row of the selection, in the column to its right (Excel).
+      Sparklines: (["line", "column", "stacked"] as const).map((t) => ({
+        label: { line: "Linie", column: "Säule", stacked: "Gewinn/Verlust" }[t], icon: t === "line" ? "chart-line" : "chart-column",
+        run: (r: Rect) => this.addSparklines(t, r, { r0: r.r0, c0: r.c1 + 1, r1: r.r1, c1: r.c1 + 1 }),
+      })),
     };
   }
 
@@ -549,6 +549,39 @@ export class CalcApp {
   /** Blatt schützen: whether the active sheet is protected, and whether it allows an action ("objects" …). */
   isProtected(): boolean { return this.protection.on(); }
   protectionAllows(what: string): boolean { return this.protection.allows(this.sheet, what); }
+
+  /** Sparklines erstellen: Datenbereich and Positionsbereich (a row or column of cells). */
+  private async sparklineDialog(type: "line" | "column" | "stacked"): Promise<void> {
+    const sel = this.grid.selection.at(-1)!;
+    const data = h("input", { type: "text", value: rangeName(sel), style: "width:180px" }) as HTMLInputElement;
+    const place = h("input", { type: "text", value: rangeName({ r0: sel.r0, c0: sel.c1 + 1, r1: sel.r1, c1: sel.c1 + 1 }), style: "width:180px" }) as HTMLInputElement;
+    const body = h("div", null, h("label", { class: "field" }, "Datenbereich:", data), h("label", { class: "field" }, "Positionsbereich:", place));
+    const ok = await showDialog({ title: "Sparklines erstellen", body, buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
+    if (!ok) return;
+    const d = parseRange(data.value.replace(/\$/g, "")), p = parseRange(place.value.replace(/\$/g, ""));
+    if (!d || !p) { await messageBox("RaabeCalc", "Der Daten- oder Positionsbereich ist ungültig."); return; }
+    if (!this.addSparklines(type, d, p)) await messageBox("RaabeCalc", "Der Positionsbereich muss eine Zeile oder Spalte sein, die zu den Daten passt.");
+  }
+
+  /** One sparkline per row (or column) of `data`, placed in the cells of `place`. */
+  private addSparklines(type: "line" | "column" | "stacked", data: Rect, place: Rect): boolean {
+    const cells: { row: number; col: number }[] = [];
+    for (let r = place.r0; r <= place.r1; r++) for (let c = place.c0; c <= place.c1; c++) cells.push({ row: r, col: c });
+    const byRow = place.c0 === place.c1 && cells.length === data.r1 - data.r0 + 1;
+    const byCol = !byRow && place.r0 === place.r1 && cells.length === data.c1 - data.c0 + 1;
+    if (!byRow && !byCol) return false;
+    const sheet = this.sheet;
+    const q = /^[A-Za-z_][A-Za-z0-9_.]*$/.test(sheet.name) ? sheet.name : `'${sheet.name.replace(/'/g, "''")}'`;
+    const items = cells.map((c, i) => ({ ...c, f: `${q}!${rangeName(byRow ? { ...data, r0: data.r0 + i, r1: data.r0 + i } : { ...data, c0: data.c0 + i, c1: data.c0 + i })}` }));
+    this.change("Sparklines", () => {
+      this.history.whole(sheet);
+      // A cell holds one sparkline: new ones replace those in their cells.
+      const taken = new Set(items.map((i) => `${i.row},${i.col}`));
+      const kept = (sheet.sparklines ?? []).map((g) => ({ ...g, items: g.items.filter((i) => !taken.has(`${i.row},${i.col}`)) })).filter((g) => g.items.length);
+      sheet.sparklines = [...kept, { type, color: "#376092", negative: "#D00000", items }];
+    });
+    return true;
+  }
 
   /** Changes to the active workbook so far (features cache what they read from the cells by it). */
   get version(): number { return this.active.version; }
@@ -1371,8 +1404,8 @@ export class CalcApp {
       { label: "Code anzeigen", run: () => {}, disabled: true },
       { label: "Blatt schützen...", run: () => {}, disabled: true },
       { label: "Registerfarbe", submenu: [
-        { label: "Keine Farbe", disabled: this.protection.bookLocked(), run: () => this.change("Registerfarbe", () => { this.history.sheets(); this.sheet.tabColor = undefined; }) },
-        ...colors.map((c) => ({ label: c, icon: undefined, disabled: this.protection.bookLocked(), run: () => this.change("Registerfarbe", () => { this.history.sheets(); this.sheet.tabColor = c; }) })),
+        { label: "Keine Farbe", disabled: this.protection.bookLocked(), run: () => this.change("Registerfarbe", () => { this.history.whole(this.sheet); this.sheet.tabColor = undefined; }) },
+        ...colors.map((c) => ({ label: c, icon: undefined, disabled: this.protection.bookLocked(), run: () => this.change("Registerfarbe", () => { this.history.whole(this.sheet); this.sheet.tabColor = c; }) })),
       ] },
       "-",
       { label: "Ausblenden", run: () => void this.commands.run("cells.hideSheet"), disabled: this.wb.sheets.filter((s) => !s.hidden).length < 2 },
@@ -1702,7 +1735,16 @@ export class CalcApp {
     run("edit.fillUp", fillDir("up"));
     run("edit.fillLeft", fillDir("left"));
     run("edit.fillSeries", () => void this.dlg.series());
-    run("edit.clearAll", () => this.change("Löschen", () => A.clearAll(this.ctx, this.sheet, this.grid.selection, "all")));
+    run("edit.clearAll", () => this.change("Löschen", () => {
+      A.clearAll(this.ctx, this.sheet, this.grid.selection, "all");
+      // Alles löschen also takes the sparklines out of the cells.
+      const sel = this.grid.selection, sheet = this.sheet;
+      if (sheet.sparklines?.some((g) => g.items.some((i) => sel.some((r) => i.row >= r.r0 && i.row <= r.r1 && i.col >= r.c0 && i.col <= r.c1)))) {
+        this.history.whole(sheet);
+        const left = sheet.sparklines.map((g) => ({ ...g, items: g.items.filter((i) => !sel.some((r) => i.row >= r.r0 && i.row <= r.r1 && i.col >= r.c0 && i.col <= r.c1)) })).filter((g) => g.items.length);
+        sheet.sparklines = left.length ? left : undefined;
+      }
+    }));
     run("edit.clearFormats", () => this.change("Löschen", () => A.clearAll(this.ctx, this.sheet, this.grid.selection, "formats")));
     run("edit.clearContents", () => this.change("Löschen", () => A.clearContents(this.ctx, this.sheet, this.grid.selection)));
     run("edit.clearNotes", () => this.change("Löschen", () => A.clearAll(this.ctx, this.sheet, this.grid.selection, "notes")));
@@ -1774,6 +1816,9 @@ export class CalcApp {
     run("data.goalSeek", () => void this.goalSeek(), notEditing);
     run("review.spelling", () => void this.spelling.run(), notEditing);
     run("insert.pictures", () => {});
+    run("insert.sparkLine", () => void this.sparklineDialog("line"), notEditing);
+    run("insert.sparkColumn", () => void this.sparklineDialog("column"), notEditing);
+    run("insert.sparkWinLoss", () => void this.sparklineDialog("stacked"), notEditing);
     run("insert.comment", () => this.comments.newComment(), notEditing);
     run("review.newComment", () => this.comments.newComment(), notEditing);
     run("review.deleteComment", () => this.comments.remove(), () => this.comments.has());
@@ -2181,7 +2226,7 @@ export class CalcApp {
           { heading: "Sichtbarkeit" },
           { label: "Ausblenden und Einblenden", submenu: [{ cmd: "cells.hideRows" }, { cmd: "cells.hideCols" }, { cmd: "cells.hideSheet" }, "-", { cmd: "cells.unhideRows" }, { cmd: "cells.unhideCols" }, { cmd: "cells.unhideSheet" }] },
           { heading: "Blätter anordnen" }, { cmd: "cells.renameSheet" }, { cmd: "cells.moveSheet" },
-          { label: "Registerfarbe", submenu: ["#C00000", "#FF0000", "#FFC000", "#FFFF00", "#92D050", "#00B050", "#00B0F0", "#0070C0", "#002060", "#7030A0"].map((col) => ({ label: col, run: () => this.change("Registerfarbe", () => { this.history.sheets(); this.sheet.tabColor = col; }) })) },
+          { label: "Registerfarbe", submenu: ["#C00000", "#FF0000", "#FFC000", "#FFFF00", "#92D050", "#00B050", "#00B0F0", "#0070C0", "#002060", "#7030A0"].map((col) => ({ label: col, run: () => { if (this.protection.bookLocked()) return; this.change("Registerfarbe", () => { this.history.whole(this.sheet); this.sheet.tabColor = col; }); } })) },
           { heading: "Schutz" }, { cmd: "cells.protectSheet" }, { cmd: "cells.lock" }, { cmd: "cells.formatDialog" },
         ],
         autosum: [{ cmd: "edit.autosum" }, { cmd: "edit.autoAverage" }, { cmd: "edit.autoCount" }, { cmd: "edit.autoMax" }, { cmd: "edit.autoMin" }, "-", { cmd: "formulas.insertFunction", label: "Weitere Funktionen..." }],

@@ -129,6 +129,8 @@ def sheet_props(wb, ws, cells: list[str]) -> dict:
     out["shapes"] = [(s.Name, s.Type, s.Left, s.Top, s.Width, s.Height) for s in ws.Shapes]
     out["notes"] = sorted((c.Parent.GetAddress(False, False), c.Text(), c.Visible) for c in ws.Comments)
     out["noteCount"] = ws.Comments.Count
+    # Sparklines: number of groups and the type of the first (xlSparkLine 1, xlSparkColumn 2, xlSparkColumnStacked100 3).
+    out["sparklines"] = safe(lambda: [ws.Cells.SparklineGroups.Count, ws.Cells.SparklineGroups(1).Type] if ws.Cells.SparklineGroups.Count else [0, 0], [0, 0])
     # Kommentare (threaded): cell, text, author, number of replies.
     out["threads"] = safe(lambda: sorted((t.Parent.GetAddress(False, False), t.Text(), t.Author.Name, t.Replies.Count) for t in ws.CommentsThreaded), [])
     out["links"] = sorted((h.Range.GetAddress(False, False), h.Address, h.SubAddress, h.TextToDisplay, h.ScreenTip) for h in ws.Hyperlinks)

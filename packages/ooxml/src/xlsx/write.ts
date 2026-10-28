@@ -19,6 +19,7 @@ import { newPackage } from "./new";
 import { numText, widthFromBase, widthToFile } from "./units";
 import { esc, escText, encodeX, joinSplit, place, placeAll, setAttrs, split, tXml, type Split, XML_HEAD } from "./xml";
 import { CT_PERSON, CT_THREADS, RT_PERSON, RT_THREADS, fallbackText, guid, personsXml, readPersons, threadsXml } from "./threads";
+import { sparklinesExt } from "./sheetparts";
 import { FILTER_DB, PRINT_AREA, PRINT_TITLES, titlesRef, breaksXml, readPage, headerFooterXml, autoFilterXml, conditionalXml, fitToPage, pageXml, sheetRef, validationsXml } from "./sheetparts";
 
 export const CT = {
@@ -298,6 +299,7 @@ class SheetWriter {
       this.put("dataValidations", dv.main);
       this.put("extLst", dv.ext);
     }
+    if (JSON.stringify(s.sparklines ?? []) !== (this.own?.spark ?? "[]")) this.put("extLst", sparklinesExt(this.get("extLst"), s.sparklines ?? []));
     if (!snap || now.prot !== snap.prot) {
       const p = s.protection;
       this.put("sheetProtection", p && Object.keys(p).length ? `<sheetProtection${Object.entries(p).map(([k, v]) => ` ${k}="${esc(v)}"`).join("")}/>` : null);

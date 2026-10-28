@@ -6,7 +6,7 @@ import { MAX_COLS, MAX_ROWS, fromXlsxFormula, parseRange, rangeName, toXlsxFormu
 import { resolveColor, type ColorContext } from "./colors";
 import { canon, readDxf, type StylesWriter } from "./styles";
 import { attrs, child, children, decodeX, encodeX, esc, escText, local, outer, root, setAttrs, text, unesc, type El } from "./xml";
-import type { Validation } from "@raabe/sheet-engine";
+import type { SparklineGroup, Validation } from "@raabe/sheet-engine";
 
 /** Excel's built-in names for a sheet's print area and AutoFilter range. */
 export const PRINT_AREA = "_xlnm.Print_Area";
@@ -558,4 +558,48 @@ export function ownRange(ref: string, sheet: string): Rect | null {
   const name = m[1] !== undefined ? m[1].replace(/''/g, "'") : m[2];
   if (name !== sheet) return null;
   return parseRange(m[3]);
+}
+
+// ----- Sparklines ---------------------------------------------------------------------------
+// x14:sparklineGroups in the sheet's extLst (Excel's place for them).
+
+export const SL_EXT = "{05C60535-1F16-4fd2-B633-F4F36F0B64E0}";
+
+const rgbOf = (tag: string | undefined) => {
+  const m = tag ? /rgb="(?:FF)?([0-9A-Fa-f]{6})"/.exec(tag) : null;
+  return m ? `#${m[1].toUpperCase()}` : undefined;
+};
+
+/** The sparkline groups of a sheet's extLst (none: empty). */
+export function readSparklines(ext: string | undefined): SparklineGroup[] {
+  const out: SparklineGroup[] = [];
+  if (!ext) return out;
+  for (const g of ext.matchAll(/<x14:sparklineGroup\b([^>]*)>([\s\S]*?)<\/x14:sparklineGroup>/g)) {
+    const t = /\btype="(\w+)"/.exec(g[1])?.[1];
+    const items: SparklineGroup["items"] = [];
+    for (const sp of g[2].matchAll(/<x14:sparkline>([\s\S]*?)<\/x14:sparkline>/g)) {
+      const f = /<xm:f>([\s\S]*?)<\/xm:f>/.exec(sp[1])?.[1];
+      const at = parseRange(/<xm:sqref>([\s\S]*?)<\/xm:sqref>/.exec(sp[1])?.[1] ?? "");
+      if (f && at) items.push({ f: f.replace(/&amp;/g, "&").replace(/&apos;/g, "'"), row: at.r0, col: at.c0 });
+    }
+    out.push({ type: t === "column" ? "column" : t === "stacked" ? "stacked" : "line", color: rgbOf(/<x14:colorSeries\b[^>]*>/.exec(g[2])?.[0]) ?? "#376092",
+      negative: rgbOf(/<x14:colorNegative\b[^>]*>/.exec(g[2])?.[0]), items });
+  }
+  return out;
+}
+
+/** The sheet's extLst with the sparkline groups written as Excel writes new ones (others kept). */
+export function sparklinesExt(old: string | undefined, groups: SparklineGroup[]): string | null {
+  const re = new RegExp(`<ext\\b[^>]*uri="${SL_EXT.replace(/[{}]/g, "\\$&")}"[^>]*>[\\s\\S]*?</ext>`);
+  const rgb = (c: string) => `FF${c.replace("#", "").toUpperCase()}`;
+  const entry = groups.length ? `<ext uri="${SL_EXT}" xmlns:x14="${X14_NS}"><x14:sparklineGroups xmlns:xm="${XM_NS}">` + groups.map((g) =>
+    `<x14:sparklineGroup${g.type === "line" ? "" : ` type="${g.type}"`} displayEmptyCellsAs="gap"${g.type === "stacked" ? ' negative="1"' : ""}>` +
+    `<x14:colorSeries rgb="${rgb(g.color)}"/><x14:colorNegative rgb="${rgb(g.negative ?? "#D00000")}"/><x14:colorAxis rgb="FF000000"/><x14:colorMarkers rgb="FFD00000"/>` +
+    `<x14:colorFirst rgb="FFD00000"/><x14:colorLast rgb="FFD00000"/><x14:colorHigh rgb="FFD00000"/><x14:colorLow rgb="FFD00000"/><x14:sparklines>` +
+    g.items.map((i) => `<x14:sparkline><xm:f>${esc(i.f)}</xm:f><xm:sqref>${rangeName({ r0: i.row, c0: i.col, r1: i.row, c1: i.col })}</xm:sqref></x14:sparkline>`).join("") +
+    "</x14:sparklines></x14:sparklineGroup>").join("") + "</x14:sparklineGroups></ext>" : "";
+  if (!old) return entry ? `<extLst>${entry}</extLst>` : null;
+  const oldEntry = re.exec(old)?.[0];
+  const out = oldEntry ? old.replace(oldEntry, entry) : entry ? old.replace(/<\/extLst>$/, `${entry}</extLst>`) : old;
+  return /^<extLst\b[^>]*>\s*<\/extLst>$/.test(out) ? null : out;
 }

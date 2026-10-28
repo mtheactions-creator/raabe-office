@@ -4,7 +4,7 @@
 // 2-device-pixel frame and the fill handle at its corner. Excel's green accent is Raabe red
 // (D-018). The canvas has the device's pixel size, so lines stay one device pixel wide.
 
-import { cellKey, inRect, type Cell, type CellStyle, type Rect, type Sheet, type StyleTable, type BorderSide } from "@raabe/sheet-engine";
+import { cellKey, inRect, parseRange, type Cell, type CellStyle, type Rect, type Sheet, type StyleTable, type BorderSide } from "@raabe/sheet-engine";
 import { shownAt, type Shown } from "../engine";
 import type { CondEval } from "./cond";
 import { device, type Axis } from "./metrics";
@@ -402,6 +402,47 @@ function drawPane(ctx: CanvasRenderingContext2D, s: DrawState, pane: Pane): void
     ctx.lineTo(x, y + t);
     ctx.closePath();
     ctx.fill();
+  }
+
+  // Sparklines: a small chart filling the cell (line, columns, or Gewinn/Verlust blocks).
+  for (const g of sheet.sparklines ?? []) for (const it of g.items) {
+    if (it.row < r0 || it.row > r1 || it.col < c0 || it.col > c1) continue;
+    const m = /^(?:'((?:[^']|'')+)'|([^!]+))!(.+)$/.exec(it.f);
+    const sheetName = m ? (m[1] ?? m[2]).replace(/''/g, "'") : sheet.name;
+    if (sheetName !== sheet.name) continue;
+    const src = parseRange((m ? m[3] : it.f).replace(/\$/g, ""));
+    if (!src) continue;
+    const vals: (number | null)[] = [];
+    for (let rr = src.r0; rr <= src.r1; rr++) for (let cc = src.c0; cc <= src.c1; cc++) { const v = sheet.get(rr, cc)?.v; vals.push(typeof v === "number" ? v : null); }
+    const nums = vals.filter((v): v is number => v !== null);
+    if (!nums.length) continue;
+    const b = rectOf({ r0: it.row, c0: it.col, r1: it.row, c1: it.col });
+    const pad = 3 * zoom, x0 = b.x + pad, y0 = b.y + pad, w = b.w - 2 * pad, hgt = b.h - 2 * pad;
+    const lo = Math.min(...nums, g.type === "column" ? 0 : Infinity), hi = Math.max(...nums, g.type === "column" ? 0 : -Infinity);
+    const y = (v: number) => y0 + hgt - ((v - lo) / (hi - lo || 1)) * hgt;
+    const step = w / Math.max(1, vals.length);
+    ctx.save();
+    if (g.type === "line") {
+      ctx.strokeStyle = g.color;
+      ctx.lineWidth = Math.max(1, 0.75 * zoom * dpr) / dpr;
+      ctx.beginPath();
+      let started = false;
+      vals.forEach((v, i) => {
+        if (v === null) { started = false; return; }
+        const x = x0 + (vals.length > 1 ? (i * w) / (vals.length - 1) : w / 2);
+        if (started) ctx.lineTo(x, y(v)); else { ctx.moveTo(x, y(v)); started = true; }
+      });
+      ctx.stroke();
+    } else {
+      vals.forEach((v, i) => {
+        if (v === null) return;
+        ctx.fillStyle = v < 0 ? g.negative ?? "#D00000" : g.color;
+        const x = x0 + i * step + step * 0.1, bw = step * 0.8;
+        if (g.type === "stacked") { const mid = y0 + hgt / 2; ctx.fillRect(x, v < 0 ? mid : y0, bw, hgt / 2); }
+        else { const base = y(Math.max(lo, Math.min(hi, 0))); ctx.fillRect(x, Math.min(base, y(v)), bw, Math.max(1 / dpr, Math.abs(base - y(v)))); }
+      });
+    }
+    ctx.restore();
   }
 
   // Kommentare: a purple corner (Excel's colour for threads; notes are red).

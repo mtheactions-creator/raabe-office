@@ -1365,8 +1365,13 @@ Excel a school uses most among those first deferred.
   Arbeitsmappe schützen could be bypassed from the tab menu; copied sheets lost protection,
   page setup, filter, rules, Kommentare and pictures; a kept Print_Titles name could be written
   twice; SVG pictures (which Excel stores with a PNG copy) are no longer offered; undo no longer
-  copies picture data per step; sorting moves Kommentare with their rows. Still open from it:
-  sorting does not move pictures, undo of Registerfarbe.
+  copies picture data per step; sorting moves Kommentare with their rows; Registerfarbe can be
+  undone. Still open from it: sorting does not move pictures.
+- **Sparklines** (Einfügen > Sparklines and Schnellanalyse): Linie, Säule and Gewinn/Verlust,
+  one per row (or column) of the data in the Positionsbereich, drawn in the cell with Excel's
+  default colours; read and written as Excel's x14:sparklineGroups (Excel sees ours as sparkline
+  groups of the right type). Alles löschen removes them. The Sparkline tab (markers, styles,
+  axis) is not built; sparklines whose data is on another sheet are kept but not drawn.
 - **Keyboard modes** (recorded): Ende then an arrow jumps as Strg+arrow (status bar "Endmodus"),
   F8 Auswahl erweitern, Umschalt+F8 Abschnitt hinzufügen oder entfernen, Strg+Rücktaste shows the
   active cell.

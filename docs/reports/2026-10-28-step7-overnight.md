@@ -49,7 +49,8 @@ grid and the controls were built and measured against Excel.
     breaks, pictures on the page.
   - Data tools: Schnellanalyse (Excel's formulas for 6 recorded Ergebnisse), Blitzvorschau (13
     of Excel's FlashFill results), Gruppieren and Teilergebnis (11 functions equal cell by cell),
-    Zielwertsuche (10 cases, same solutions), Symbolsätze, Berechnungsoptionen incl. Manuell.
+    Zielwertsuche (10 cases, same solutions), Symbolsätze, Sparklines, Berechnungsoptionen incl.
+    Manuell.
   - Rechtschreibung (F7) with RaabeWrite's dictionaries; Kommentare (Excel 365's threads, Excel
     reads ours as threads); pictures shown, printed, inserted, moved and sized.
   - Controls: Umschalt+drag (7 recorded cases), the right-button drag menus (recorded), Excel's

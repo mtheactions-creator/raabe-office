@@ -248,6 +248,14 @@ export interface ThreadComment { id: string; author: string; personId?: string; 
 /** A Kommentar thread on a cell: the first comment, its replies, and whether it is resolved. */
 export interface CommentThread extends ThreadComment { row: number; col: number; replies: ThreadComment[]; done?: boolean }
 
+/** Sparklines: a group of small charts in cells, each drawn from a range ("Tabelle1!A2:E2"). */
+export interface SparklineGroup {
+  type: "line" | "column" | "stacked";
+  color: string;
+  negative?: string;
+  items: { f: string; row: number; col: number }[];
+}
+
 /** A picture in the sheet's drawing, shown as the file places it (the file keeps it as it was). */
 export interface SheetPicture {
   /** Top-left: the cell and the offset inside it in px at 100 %. */
@@ -346,6 +354,8 @@ export class Sheet {
   hidden?: boolean | "very";
   /** AutoFilter: its range and the values shown per column (column index inside the range). */
   autoFilter?: AutoFilter;
+  /** Sparklines of the sheet (Einfügen > Sparklines). */
+  sparklines?: SparklineGroup[];
   /** Kommentare (threaded comments) of the sheet's cells. */
   threads?: CommentThread[];
   /** Pictures of the drawing (read only: shown, kept in the file as they are). */

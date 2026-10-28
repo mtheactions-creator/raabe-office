@@ -15,7 +15,7 @@ import { readStyles, canon, type StylesRaw } from "./styles";
 import { MDW, widthFromBase, widthFromFile } from "./units";
 import { readCharts, readPictures, type DrawingRaw } from "./drawing";
 import { RT_PERSON, RT_THREADS, readPersons, readThreads } from "./threads";
-import { FILTER_DB, PRINT_AREA, PRINT_TITLES, ownRange, readTitles, readAutoFilter, readConditional, readPage, readValidations, type CfRaw, type DvRaw } from "./sheetparts";
+import { FILTER_DB, PRINT_AREA, PRINT_TITLES, ownRange, readSparklines, readTitles, readAutoFilter, readConditional, readPage, readValidations, type CfRaw, type DvRaw } from "./sheetparts";
 import { attrs, child, children, decodeX, element, outer, root, split, text, unesc, type El, type Split } from "./xml";
 
 /** Whether a relationship type is `want`, also in Strict OOXML (same last segment). */
@@ -86,6 +86,8 @@ export interface SheetRaw {
   dv?: DvRaw;
   /** The pictures as read (picturesKey), to see whether they changed. */
   pics?: string;
+  /** Sparklines as read (a snapshot). */
+  spark?: string;
   /** Kommentare as read: their part and a snapshot. */
   threads?: { part: string; snap: string };
   snap: { view: string; cols: string; merges: string; tab: string; defaults: string; notes: string; links: string; filter: string; cf: string; page: string; dv: string; prot: string };
@@ -383,6 +385,9 @@ function readSheet(xml: string, name: string, c: SheetContext): Sheet {
   }
   const dvs = get("dataValidations");
   const ext = get("extLst");
+  const spark = readSparklines(ext ? outer(xml, ext) : undefined);
+  if (spark.length) sheet.sparklines = spark;
+  raw.spark = JSON.stringify(sheet.sparklines ?? []);
   if (dvs || (ext && text(xml, ext).includes("x14:dataValidation"))) {
     raw.dv = { items: [] };
     const list = readValidations(xml, dvs, ext, raw.dv);
