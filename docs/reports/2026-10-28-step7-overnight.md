@@ -37,31 +37,45 @@ grid and the controls were built and measured against Excel.
 - **F. Formats, output:** Zellen formatieren, number formats in German conventions, printing and
   PDF with Excel's default margins, Seite einrichten, CSV as German Excel.
 
-- **G. After the catalogue was complete** (D-065): Datenüberprüfung (built by a parallel agent,
-  Excel's verdict on 150 entries reproduced), Blatt schützen with Excel's password hash, Spur zum
-  Vorgänger/Nachfolger, Formelauswertung, Fehlerüberprüfung, Drucktitel, Kopf- und Fußzeile,
-  Ungültige Daten einkreisen, Zahlen-, Text- und Farbfilter (Top 10, Durchschnitt), Schnellanalyse,
-  Symbolsätze, Blitzvorschau, Gruppieren and Teilergebnis, Seitenumbrüche and Umbruchvorschau,
-  Zielwertsuche, Rechtschreibung (F7), pictures (shown, printed, inserted, moved, sized), Kommentare (threads), Arbeitsmappe schützen,
-  Berechnungsoptionen, Umschalt+drag and the right-button drag menus, Inhalte auswählen,
-  Notizen typed in place, the Dropdown-Auswahlliste (Alt+Unten), Finanzmathematik, Excel's
-  keyboard modes (Ende, F8, Umschalt+F8, Strg+Rücktaste).
+- **G. After the catalogue was complete** (D-065), each recorded in or checked against Excel
+  where it could be:
+  - Datenüberprüfung (built by a parallel agent; Excel's verdict on 150 entries reproduced) with
+    Ungültige Daten einkreisen; Blatt schützen and Arbeitsmappe schützen with Excel's password
+    hash (Excel accepts our passwords and refuses wrong ones).
+  - Formelüberwachung: Spur zum Vorgänger/Nachfolger, Formelauswertung, Fehlerüberprüfung.
+  - Filters: Zahlen-, Text- and Farbfilter, Top 10, Durchschnitt (Excel's rows for 18 + 5
+    criteria); Nach Farbe sortieren.
+  - Printing: Drucktitel, Kopf- und Fußzeile, Seitenumbrüche, Umbruchvorschau with draggable
+    breaks, pictures on the page.
+  - Data tools: Schnellanalyse (Excel's formulas for 6 recorded Ergebnisse), Blitzvorschau (13
+    of Excel's FlashFill results), Gruppieren and Teilergebnis (11 functions equal cell by cell),
+    Zielwertsuche (10 cases, same solutions), Symbolsätze, Berechnungsoptionen incl. Manuell.
+  - Rechtschreibung (F7) with RaabeWrite's dictionaries; Kommentare (Excel 365's threads, Excel
+    reads ours as threads); pictures shown, printed, inserted, moved and sized.
+  - Controls: Umschalt+drag (7 recorded cases), the right-button drag menus (recorded), Excel's
+    keyboard modes (Ende, F8, Umschalt+F8, Strg+Rücktaste), Alt+Unten, Inhalte auswählen,
+    Notizen typed in place, Finanzmathematik.
+  - An independent review of these additions at 04:00 found nine problems (protection gaps,
+    threads and pictures not following inserted rows, a fill-step bug, pictures dropped on save
+    …); all but two minor ones are fixed (D-065 lists them).
 
 ## Measured
 
 | What | Result |
 |---|---|
-| Behaviour catalogue (real input, Excel vs RaabeCalc) | 142/142 cases |
+| Behaviour catalogue (real input, Excel vs RaabeCalc) | 187/187 cases |
 | Formulas (Excel's results) | 4229/4234 (5 are Excel's own floating-point/iteration quirks) |
 | Number formats and typed input | ≈ 66 000 recorded cases equal (≈ 210 listed differences) |
-| .xlsx round trip checked by Excel | 0 differences, 0 repair prompts, 17 files |
+| .xlsx round trip checked by Excel | 0 differences, 0 repair prompts, 21 files (incl. validation, protection, threads, pictures, outline, icon sets) |
 | Chart axis scaling | 145/145 axes, 1914/1914 interval limits, 28/28 histogram bins |
-| Speed, 20 000 rows (`perf_calc.py`) | typed value 11 ms, scroll redraw 6 ms median / 14 ms worst, full recalculation 0,26 s |
-| Printing (PDF from both) | pages, lines per page, spacing equal in 3/3 layouts; positions within 0,8 pt |
+| Speed, 20 000 rows (`perf_calc.py`) | typed value 12 ms, scroll redraw 6,4 ms median / 21 ms worst, full recalculation 0,26 s |
+| Printing (PDF from both) | pages and lines per page equal in 8/8 layouts (Drucktitel, Kopf-/Fußzeile, manual breaks); header within 0,14 pt, footer within 0,01 pt |
 | Clipboard with Excel, both ways | values, number formats, bold equal |
 | Templates opened in Excel | 3/3 without repair, results equal |
-| Start / memory | 579 ms vs Excel 936 ms / 365 MB vs Excel 240 MB |
-| RaabeWrite after the crate move | smoke tests 41/41, 28/28, 43/43 |
+| Smoke test of the later features (`smoke_calc.py`) | Excel opens the workbook and sees every feature |
+| Start / memory (`startup_calc.py`) | 573 ms vs Excel 960 ms / 362 MB vs Excel 238 MB |
+| RaabeWrite after the shared changes | smoke tests 41/41, 28/28, 43/43 |
+| Program size | 10,7 MB, installer 2,9 MB (the spelling dictionaries add 8,6 MB to the program) |
 
 ## Not done / known gaps
 
@@ -69,3 +83,8 @@ grid and the controls were built and measured against Excel.
   Datentabelle and Szenario-Manager: deferred, greyed with "Zurückgestellt".
 - Diagramm in RaabeWrite (Step 7b) is the next step.
 - The owner has not tried the app yet (planned after package D, now after the run).
+- Not measured against Excel: the outline bar's sizes, Schnellanalyse's chart tiles, the
+  positions of pictures on printed pages, the dialogs of Datenüberprüfung and Teilergebnis
+  (labels from German Excel, not recorded).
+- The scheduled task meant to resume work after a session limit was refused by the permission
+  check; the run did not need it.

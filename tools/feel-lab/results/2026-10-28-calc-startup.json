@@ -1,28 +1,28 @@
 {
  "startMs": {
   "raabecalc": {
-   "median": 579,
+   "median": 573,
    "all": [
-    686,
-    579,
-    569,
-    588,
-    574
+    695,
+    601,
+    571,
+    573,
+    537
    ]
   },
   "excel": {
-   "median": 936,
+   "median": 960,
    "all": [
-    1112,
-    936,
+    1113,
+    912,
+    925,
     964,
-    920,
-    928
+    960
    ]
   }
  },
  "workingSetMB": {
-  "raabecalc": 365,
-  "excel": 240
+  "raabecalc": 362,
+  "excel": 238
  }
 }
