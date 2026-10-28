@@ -36,3 +36,19 @@ describe("AutoFilter criteria as Excel applies them", () => {
     });
   }
 });
+
+describe("Nach Farbe filtern as Excel", () => {
+  const rec = JSON.parse(readFileSync("tools/feel-lab/results/2026-10-28-excel-colorfilter.json", "utf-8")) as { filters: { name: string; shown: number[] }[] };
+  const fills: Record<number, string> = { 3: "#FFFF00", 5: "#FF0000", 7: "#FFFF00" };
+  const fonts: Record<number, string> = { 6: "#FF0000" };
+  const crit: Record<string, FilterColumn> = {
+    "fill yellow": { color: { fill: "#FFFF00" } }, "fill red": { color: { fill: "#FF0000" } }, "no fill": { color: { fill: null } },
+    "font red": { color: { font: "#FF0000" } }, "automatic font": { color: { font: null } },
+  };
+  for (const f of rec.filters) {
+    it(f.name, () => {
+      const shown = [2, 3, 4, 5, 6, 7, 8].filter((r) => passes(crit[f.name], { v: 1 }, "1", { fill: fills[r], color: fonts[r] }));
+      expect(shown).toEqual(f.shown);
+    });
+  }
+});

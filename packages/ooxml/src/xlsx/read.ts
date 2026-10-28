@@ -343,7 +343,7 @@ function readSheet(xml: string, name: string, c: SheetContext): Sheet {
   }
 
   const af = get("autoFilter");
-  if (af) sheet.autoFilter = readAutoFilter(xml, af);
+  if (af) sheet.autoFilter = readAutoFilter(xml, af, c.dxfs, c.ctx);
   // Blatt schützen: the attributes as they are (sheet="1" when on, the password hash, what is allowed).
   const prot = get("sheetProtection");
   if (prot) sheet.protection = attrs(xml, prot);

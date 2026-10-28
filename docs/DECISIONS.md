@@ -1306,6 +1306,11 @@ Excel a school uses most among those first deferred.
   limit it reaches (Excel's defaults: equal shares of the range in percent; numbers,
   percentiles and formulas read from files); "Nur Symbol anzeigen" hides the value. The
   ratings, quarters and boxes sets show a filled circle instead of Excel's pictures.
+- **Nach Farbe sortieren / filtern** (submenus recorded; rules through COM): the column's fill
+  colours then font colours in order of appearance, Keine Füllung and Automatisch; filtering
+  shows the rows with that colour (5/5 recorded cases), sorting puts them on top and keeps the
+  others' order (as Excel); colour filters are read and written as Excel's colorFilter. Colours
+  from conditional formats are not offered yet.
 - **Keyboard modes** (recorded): Ende then an arrow jumps as Strg+arrow (status bar "Endmodus"),
   F8 Auswahl erweitern, Umschalt+F8 Abschnitt hinzufügen oder entfernen, Strg+Rücktaste shows the
   active cell.

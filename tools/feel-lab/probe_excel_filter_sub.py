@@ -56,7 +56,13 @@ def main() -> None:
         ws.Range("A1:B7").AutoFilter(1)
         winapi.activate(side.x.hwnd)
         time.sleep(0.5)
-        for col, kind, entry in (("B", "number", "Zahlenfilter"), ("A", "text", "Textfilter")):
+        if "--colors" in sys.argv:
+            # Coloured cells for the colour menus: fills and a font colour.
+            ws.Range("B3").Interior.Color = 0x00FFFF
+            ws.Range("B5").Interior.Color = 0x0000FF
+            ws.Range("B6").Font.Color = 0x0000FF
+        entries = (("B", "colorFilter", "Nach Farbe filtern"), ("B", "colorSort", "Nach Farbe sortieren")) if "--colors" in sys.argv else (("B", "number", "Zahlenfilter"), ("A", "text", "Textfilter"))
+        for col, kind, entry in entries:
             x, y = side._point(f"{col}1", "br")
             before = set(popups())
             winapi.click(x - 10, y - 10)
@@ -83,14 +89,14 @@ def main() -> None:
                         d = uia.describe(hit)
                     except Exception:  # noqa: BLE001
                         continue
-                    if d["name"] and d["type"] == "MenuItem" and d["rect"][0] > r[0] + r[2] - 5 and d["name"] not in seen:
+                    if d["name"] and d["type"] in ("MenuItem", "Text", "Group", "ListItem", "Button") and d["rect"][0] > r[0] + r[2] - 5 and d["name"] not in seen:
                         seen.add(d["name"])
                         subitems.append({"name": d["name"], "type": d["type"], "rect": d["rect"]})
             subitems.sort(key=lambda d: d["rect"][1])
             out["menus"][kind] = [i["name"] for i in subitems]
             print(kind, out["menus"][kind])
             last = next((i for i in subitems if i["name"].startswith("Benutzerdefiniert")), None)
-            if last:
+            if last and "--colors" not in sys.argv:
                 r = last["rect"]
                 winapi.click(r[0] + r[2] // 2, r[1] + r[3] // 2)
                 time.sleep(1.5)
@@ -120,7 +126,7 @@ def main() -> None:
             winapi.press("esc")
             time.sleep(0.5)
         # The rules, invisibly: which rows stay visible for each criterion.
-        for col, c1, op, c2 in ([] if "--menus" in sys.argv else CRITERIA):
+        for col, c1, op, c2 in ([] if "--menus" in sys.argv or "--colors" in sys.argv else CRITERIA):
             ws.ShowAllData() if ws.FilterMode else None
             kw = {"Field": col, "Criteria1": c1}
             if op is not None:
@@ -135,7 +141,9 @@ def main() -> None:
     finally:
         side.close()
     path = HERE / "results" / f"{datetime.date.today().isoformat()}-excel-filter-sub.json"
-    if "--menus" in sys.argv and path.exists():
+    if "--colors" in sys.argv:
+        path = HERE / "results" / f"{datetime.date.today().isoformat()}-excel-filter-colors.json"
+    elif "--menus" in sys.argv and path.exists():
         out["rules"] = json.loads(path.read_text(encoding="utf-8"))["rules"]
     path.write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
 

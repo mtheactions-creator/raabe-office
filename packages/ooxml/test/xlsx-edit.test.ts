@@ -169,7 +169,7 @@ describe("edited workbooks", () => {
     s.rows.set(2, { outline: 1 });
     s.rows.set(3, { outline: 1 });
     s.view = { ...s.view, freeze: { row: 1, col: 0 }, top: 1 };
-    s.autoFilter = { ref: { r0: 1, c0: 0, r1: 4, c1: 0 }, columns: {} };
+    s.autoFilter = { ref: { r0: 1, c0: 0, r1: 4, c1: 0 }, columns: { 0: { color: { fill: "#FFFF00" } } } };
     s.conditional = [{ ref: [{ r0: 1, c0: 0, r1: 3, c1: 0 }], rules: [{ type: "cellIs", priority: 1, operator: "greaterThan", formulas: ["2"], format: { color: "#9C0006", fill: "#FFC7CE" } }] },
       { ref: [{ r0: 1, c0: 3, r1: 3, c1: 3 }], rules: [{ type: "iconSet", priority: 2, iconSet: { set: "3Arrows", cfvo: [{ type: "percent", val: "0" }, { type: "percent", val: "33" }, { type: "percent", val: "67" }] } }] }];
     s.page = { orientation: "landscape", paperSize: 9, margins: { left: 0.7, right: 0.7, top: 0.75, bottom: 0.75, header: 0.3, footer: 0.3 }, printArea: { r0: 0, c0: 0, r1: 4, c1: 2 }, titleRows: [0, 1], titleCols: [0, 0], header: "&CKlasse 7b", footer: "&RSeite &P von &N", rowBreaks: [3] };
@@ -194,6 +194,7 @@ describe("edited workbooks", () => {
     expect(back.sheets.map((x) => x.name)).toEqual(["Tabelle1", "Zweites"]);
     expect(back.sheets[0].conditional?.[0].rules[0]).toMatchObject({ type: "cellIs", operator: "greaterThan", formulas: ["2"], format: { color: "#9C0006", fill: "#FFC7CE" } });
     expect(back.names).toEqual([{ name: "Satz", ref: "Tabelle1!$A$2" }]);
+    expect(back.sheets[0].autoFilter?.columns[0]).toEqual({ color: { fill: "#FFFF00" } });
     expect(back.sheets[0].page).toMatchObject({ titleRows: [0, 1], titleCols: [0, 0], header: "&CKlasse 7b", footer: "&RSeite &P von &N", rowBreaks: [3] });
   });
 

@@ -15,7 +15,7 @@ export const FILTER_DB = "_xlnm._FilterDatabase";
 
 // ----- AutoFilter -----------------------------------------------------------------------
 
-export function readAutoFilter(xml: string, el: El): AutoFilter | undefined {
+export function readAutoFilter(xml: string, el: El, dxfs: string[] = [], ctx?: ColorContext): AutoFilter | undefined {
   const ref = parseRange(attrs(xml, el).ref ?? "");
   if (!ref) return undefined;
   const af: AutoFilter = { ref, columns: {} };
@@ -39,6 +39,16 @@ export function readAutoFilter(xml: string, el: El): AutoFilter | undefined {
         af.columns[Number(a.colId)] = { top10: { top: t.top !== "0" && t.top !== "false", percent: t.percent === "1" || t.percent === "true", val: Number(t.val ?? 10), filterVal: t.filterVal !== undefined ? Number(t.filterVal) : undefined } };
         continue;
       }
+      if (only?.name === "colorFilter" && ctx) {
+        // Nach Farbe filtern: the colour is the dxf's fill (cellColor, the default) or font colour.
+        const t = attrs(xml, only);
+        const f = t.dxfId !== undefined && dxfs[Number(t.dxfId)] ? readDxf(dxfs[Number(t.dxfId)], ctx) : undefined;
+        const cell = t.cellColor !== "0" && t.cellColor !== "false";
+        if (f && (cell ? f.fill : f.color)) {
+          af.columns[Number(a.colId)] = { color: cell ? { fill: f.fill } : { font: f.color } };
+          continue;
+        }
+      }
       if (only?.name === "dynamicFilter") {
         const t = attrs(xml, only);
         if (t.type === "aboveAverage" || t.type === "belowAverage") { af.columns[Number(a.colId)] = { dynamic: { type: t.type, val: t.val !== undefined ? Number(t.val) : undefined } }; continue; }
@@ -60,7 +70,11 @@ export function readAutoFilter(xml: string, el: El): AutoFilter | undefined {
 }
 
 /** One column's criteria as Excel writes them. */
-function filterXml(c: FilterColumn): string {
+function filterXml(c: FilterColumn, sw?: StylesWriter): string {
+  if (c.color && sw && (c.color.fill || c.color.font)) {
+    const cell = !!c.color.fill;
+    return `<colorFilter dxfId="${sw.dxf(cell ? { fill: c.color.fill! } : { color: c.color.font! })}"${cell ? "" : ' cellColor="0"'}/>`;
+  }
   if (c.custom) return `<customFilters${c.custom.and ? ' and="1"' : ""}>${c.custom.items.map((i) => `<customFilter${i.op !== "equal" ? ` operator="${i.op}"` : ""} val="${esc(i.val)}"/>`).join("")}</customFilters>`;
   if (c.top10) {
     const t = c.top10;
@@ -70,14 +84,14 @@ function filterXml(c: FilterColumn): string {
   return `<filters${c.blank ? ' blank="1"' : ""}>${(c.values ?? []).map((v) => `<filter val="${esc(v)}"/>`).join("")}</filters>`;
 }
 
-export function autoFilterXml(af: AutoFilter, old: string | undefined): string {
+export function autoFilterXml(af: AutoFilter, old: string | undefined, sw?: StylesWriter): string {
   const tag = old ? setAttrs(/^<autoFilter\b[^>]*?\/?>/.exec(old)![0].replace(/\/>$/, ">"), { ref: rangeName(af.ref) }) : `<autoFilter ref="${rangeName(af.ref)}">`;
   const raw = af.rawXml ?? "";
   const rawCols = [...raw.matchAll(/<filterColumn\b[\s\S]*?(?:<\/filterColumn>|\/>)/g)].map((m) => ({ col: Number(/colId="(\d+)"/.exec(m[0])?.[1] ?? 0), xml: m[0] }));
   const rest = raw.replace(/<filterColumn\b[\s\S]*?(?:<\/filterColumn>|\/>)/g, "");
   const cols = Object.entries(af.columns).map(([k, c]) => ({
     col: Number(k),
-    xml: `<filterColumn colId="${k}">${filterXml(c)}</filterColumn>`,
+    xml: `<filterColumn colId="${k}">${filterXml(c, sw)}</filterColumn>`,
   }));
   const all = [...cols, ...rawCols.filter((r) => !(r.col in af.columns))].sort((a, b) => a.col - b.col);
   const body = all.map((c) => c.xml).join("") + rest;

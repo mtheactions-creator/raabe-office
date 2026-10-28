@@ -259,7 +259,7 @@ class SheetWriter {
     if (!snap || now.notes !== snap.notes) this.notes();
     if (!snap || now.filter !== snap.filter) {
       const af = s.autoFilter;
-      this.put("autoFilter", af ? autoFilterXml(af, this.get("autoFilter")) : null);
+      this.put("autoFilter", af ? autoFilterXml(af, this.get("autoFilter"), this.sw) : null);
       // sheetPr filterMode: whether the filter hides rows.
       const filtering = !!af && (Object.keys(af.columns).length > 0 || /<filterColumn\b/.test(af.rawXml ?? ""));
       const pr = this.get("sheetPr") ?? "<sheetPr/>";

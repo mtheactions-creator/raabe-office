@@ -203,3 +203,6 @@ body.printing #print-root { display: block; position: fixed; left: 0; top: 0; z-
 .quick-tile:hover:not(:disabled) { border-color: #c6c6c6; background: #f3f3f3; }
 .quick-tile:disabled { opacity: .45; }
 .subtotal-dialog { width: 300px; } .subtotal-dialog select { width: 100%; }
+
+/* Nach Farbe sortieren / filtern: the colour swatches in the menu. */
+.color-swatch { display: inline-block; width: 64px; height: 14px; border: 1px solid #a0a0a0; }

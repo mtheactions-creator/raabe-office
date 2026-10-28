@@ -57,8 +57,14 @@ function condition(op: string, val: string, cell: Cell | undefined, text: string
   return op === "greaterThan" ? c > 0 : op === "greaterThanOrEqual" ? c >= 0 : op === "lessThan" ? c < 0 : c <= 0;
 }
 
-/** Whether the row passes this column's filter (`text` is what the cell shows). */
-export function passes(crit: FilterColumn, cell: Cell | undefined, text: string): boolean {
+const sameColor = (a?: string | null, b?: string | null) => (a ?? "").toUpperCase() === (b ?? "").toUpperCase();
+
+/** Whether the row passes this column's filter (`text` is what the cell shows, `look` its fill and font colour). */
+export function passes(crit: FilterColumn, cell: Cell | undefined, text: string, look: { fill?: string; color?: string } = {}): boolean {
+  if (crit.color) {
+    if ("fill" in crit.color) return crit.color.fill === null ? !look.fill : sameColor(look.fill, crit.color.fill);
+    return crit.color.font === null ? !look.color || sameColor(look.color, "#000000") : sameColor(look.color, crit.color.font);
+  }
   if (crit.custom) {
     const r = crit.custom.items.map((i) => condition(i.op, i.val, cell, text));
     return crit.custom.and ? r.every(Boolean) : r.some(Boolean);

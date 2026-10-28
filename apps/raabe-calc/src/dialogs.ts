@@ -384,6 +384,23 @@ export function dialogs(app: CalcApp) {
     });
   }
 
+  /** Nach Farbe sortieren: the rows with that colour first, the others after them in their order (Excel's "Oben"). */
+  function sortByColor(rect: Rect, col: number, color: { fill?: string | null; font?: string | null }): void {
+    app.change("Sortieren", () => {
+      app.history.cells(sheet(), rect);
+      const rows: Cell[][] = [];
+      for (let r = rect.r0; r <= rect.r1; r++) rows.push(range(rect.c0, rect.c1).map((c) => sheet().get(r, c) ?? { v: null }));
+      const hit = (cells: Cell[]) => {
+        const st = app.wb.styles.get(cells[col - rect.c0].s);
+        return passes({ color }, cells[col - rect.c0], "", { fill: st.fill, color: st.font.color });
+      };
+      const sorted = [...rows.filter(hit), ...rows.filter((x) => !hit(x))];
+      sorted.forEach((cells, i) => cells.forEach((c, j) => {
+        sheet().set(rect.r0 + i, rect.c0 + j, c.v === null && c.s === undefined && !c.f ? undefined : { ...c });
+      }));
+    });
+  }
+
   function sortQuick(asc: boolean): void {
     const { rect, header } = sortRange();
     const body = header ? { ...rect, r0: rect.r0 + 1 } : rect;
@@ -449,7 +466,8 @@ export function dialogs(app: CalcApp) {
       for (const [k, crit] of Object.entries(f.columns)) {
         const c = sheet().get(r, f.ref.c0 + Number(k));
         const t = shown(c, app.wb.styles.get(c?.s)).text;
-        if (!passes(crit, c, t)) show = false;
+        const st = app.wb.styles.get(c?.s);
+        if (!passes(crit, c, t, { fill: st.fill, color: st.font.color })) show = false;
       }
       const info = sheet().rows.get(r);
       if (!!info?.hidden === !show) continue;
@@ -497,6 +515,38 @@ export function dialogs(app: CalcApp) {
     const name = head && head.v !== null ? shown(head, app.wb.styles.get(head.s)).text : `Spalte ${colName(col)}`;
     const numeric = numbers > texts;
     const crit = f.columns[col - f.ref.c0];
+    // The colours in the column, in order of appearance (Nach Farbe sortieren / filtern).
+    const fills: string[] = [], fonts: string[] = [];
+    let noFill = false, autoFont = false;
+    for (let r = f.ref.r0 + 1; r <= f.ref.r1; r++) {
+      const st = app.wb.styles.get(sheet().get(r, col)?.s);
+      if (st.fill) { if (!fills.some((x) => x.toUpperCase() === st.fill!.toUpperCase())) fills.push(st.fill); } else noFill = true;
+      const fc = st.font.color;
+      if (fc && fc.toUpperCase() !== "#000000") { if (!fonts.some((x) => x.toUpperCase() === fc.toUpperCase())) fonts.push(fc); } else autoFont = true;
+    }
+    const swatch = (c: string) => h("span", { class: "color-swatch", style: `background:${c}` });
+    const colorMenu = (kind: "filter" | "sort", at: DOMRect) => {
+      const entries: MenuEntry[] = [];
+      const pick = (color: { fill?: string | null; font?: string | null }) => () => {
+        close();
+        if (kind === "filter") setColumn(col, { color });
+        else sortByColor(body, col, color);
+      };
+      if (fills.length) {
+        entries.push({ heading: kind === "filter" ? "Nach Zellenfarbe filtern" : "Nach Zellenfarbe sortieren" });
+        for (const c of fills) entries.push({ label: "", preview: swatch(c), run: pick({ fill: c }) });
+        if (noFill) entries.push({ label: "Keine Füllung", run: pick({ fill: null }) });
+      }
+      if (fonts.length) {
+        entries.push({ heading: kind === "filter" ? "Nach Schriftfarbe filtern" : "Nach Schriftfarbe sortieren" });
+        for (const c of fonts) entries.push({ label: "", preview: swatch(c), run: pick({ font: c }) });
+        if (autoFont) entries.push({ label: "Automatisch", run: pick({ font: null }) });
+      }
+      if (kind === "sort") entries.push("-", { label: "Benutzerdefiniertes Sortieren...", run: () => { close(); void app.commands.run("data.sort"); } });
+      showMenu(app.commands, entries, new DOMRect(at.right, at.top, 0, at.height));
+    };
+    const colorItem = (label: string, kind: "filter" | "sort") => h("button", { type: "button", class: "filter-item sub", disabled: fills.length || fonts.length ? undefined : true,
+      onclick: (e: MouseEvent) => colorMenu(kind, (e.currentTarget as HTMLElement).getBoundingClientRect()) }, h("span", { class: "fi-icon" }), label, h("span", { class: "fi-arrow" }, "›"));
     const list = [...values].sort((a, b) => a.localeCompare(b, "de", { numeric: true }));
     const boxes = list.map((v) => checkbox(v, !crit?.values || crit.values.includes(v)));
     const blankBox = blank ? checkbox("(Leere)", !crit?.values || !!crit.blank) : null;
@@ -529,10 +579,10 @@ export function dialogs(app: CalcApp) {
     panel.append(
       item(numeric ? "Nach Größe sortieren (aufsteigend)" : "Von A bis Z sortieren", () => doSort(body, [{ col, asc: true }]), "↑"),
       item(numeric ? "Nach Größe sortieren (absteigend)" : "Von Z bis A sortieren", () => doSort(body, [{ col, asc: false }]), "↓"),
-      item("Nach Farbe sortieren", null),
+      colorItem("Nach Farbe sortieren", "sort"),
       h("hr"),
       item(`Filter entfernen aus "${name}"`, crit ? () => app.change("Filter löschen", () => { app.history.whole(sheet()); delete f.columns[col - f.ref.c0]; applyFilter(); }) : null),
-      item("Nach Farbe filtern", null),
+      colorItem("Nach Farbe filtern", "filter"),
       h("button", { type: "button", class: "filter-item sub", onclick: (e: MouseEvent) => {
         // Excel's submenu: the comparisons open Benutzerdefinierter AutoFilter with the operator chosen.
         const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();

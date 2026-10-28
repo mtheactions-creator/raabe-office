@@ -1,0 +1,22 @@
+{
+ "menus": {
+  "colorFilter": [
+   " ",
+   "Nach Zellenfarbe filtern RGB(255, 255, 0)",
+   "Nach Zellenfarbe filtern RGB(255, 0, 0)",
+   "Keine Füllung",
+   "Nach Schriftfarbe filtern RGB(255, 0, 0)",
+   "Automatisch"
+  ],
+  "colorSort": [
+   " ",
+   "Nach Zellenfarbe sortieren RGB(255, 255, 0)",
+   "Nach Zellenfarbe sortieren RGB(255, 0, 0)",
+   "Keine Füllung",
+   "Nach Schriftfarbe sortieren RGB(255, 0, 0)",
+   "Automatisch",
+   "Benutzerdefiniertes Sortieren..."
+  ]
+ },
+ "rules": []
+}

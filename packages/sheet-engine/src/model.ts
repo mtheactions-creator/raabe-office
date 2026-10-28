@@ -202,6 +202,8 @@ export interface FilterColumn {
   top10?: { top: boolean; percent: boolean; val: number; filterVal?: number };
   /** Über/Unter dem Durchschnitt; val is the average when it was applied. */
   dynamic?: { type: "aboveAverage" | "belowAverage"; val?: number };
+  /** Nach Farbe filtern: a fill colour (null: Keine Füllung) or a font colour (null: Automatisch). */
+  color?: { fill?: string | null; font?: string | null };
 }
 
 export interface AutoFilter {
