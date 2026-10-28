@@ -41,12 +41,21 @@ def main() -> None:
             res["wrongPasswordRefused"] = True
         ws.Unprotect("Schule")
         res["rightPasswordAccepted"] = not ws.ProtectContents
+        # Arbeitsmappe schützen (Struktur) with the password "Mappe".
+        res["bookProtected"] = bool(wb.ProtectStructure)
+        try:
+            wb.Unprotect("falsch")
+            res["bookWrongRefused"] = False
+        except Exception:  # noqa: BLE001
+            res["bookWrongRefused"] = True
+        wb.Unprotect("Mappe")
+        res["bookRightAccepted"] = not wb.ProtectStructure
         wb.Close(False)
     finally:
         x.close()
         out.unlink(missing_ok=True)
     res["pass"] = res == {**res, "protected": True, "allowFormattingCells": True, "allowSorting": False, "firstSheetProtected": False,
-                         "wrongPasswordRefused": True, "rightPasswordAccepted": True}
+                         "wrongPasswordRefused": True, "rightPasswordAccepted": True, "bookProtected": True, "bookWrongRefused": True, "bookRightAccepted": True}
     print(json.dumps(res, indent=1))
     Path(__file__).parent.joinpath("results", f"{datetime.date.today().isoformat()}-calc-protection.json").write_text(json.dumps(res, indent=1), encoding="utf-8", newline="\n")
 

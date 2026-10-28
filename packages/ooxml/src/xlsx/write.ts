@@ -501,6 +501,10 @@ function workbookXml(wb: Workbook, raw: BookRaw, entries: { name: string; sheetI
   const fileIndex = new Map<number, number>();
   order.forEach((x, i) => { if (typeof x === "number") fileIndex.set(x, i); });
   if (wb.date1904 !== raw.snap.date1904) put("workbookPr", setAttrs(get("workbookPr") ?? "<workbookPr/>", { date1904: wb.date1904 ? "1" : null }));
+  if (canon([wb.protection ?? null]) !== raw.snap.prot) {
+    const p = wb.protection;
+    put("workbookProtection", p && Object.keys(p).length ? `<workbookProtection${Object.entries(p).map(([k, v]) => ` ${k}="${esc(v)}"`).join("")}/>` : null);
+  }
   const active = fileIndex.get(wb.active) ?? 0;
   const views = get("bookViews");
   if (views) {

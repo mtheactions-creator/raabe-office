@@ -23,8 +23,8 @@ interface Step {
   label: string;
   before: SheetState[];
   after: SheetState[];
-  sheetsBefore?: { list: Sheet[]; active: number };
-  sheetsAfter?: { list: Sheet[]; active: number };
+  sheetsBefore?: { list: Sheet[]; active: number; protection?: Record<string, string> };
+  sheetsAfter?: { list: Sheet[]; active: number; protection?: Record<string, string> };
   /** Selection to restore with undo/redo. */
   selBefore?: { sheet: number; sel: Rect[]; active: { row: number; col: number } };
   selAfter?: { sheet: number; sel: Rect[]; active: { row: number; col: number } };
@@ -76,7 +76,7 @@ export class History {
         this.open = null;
         st.selAfter = this.selection();
         st.after = st.before.map((b) => this.capture(b));
-        if (st.sheetsBefore) st.sheetsAfter = { list: [...this.wb.sheets], active: this.wb.active };
+        if (st.sheetsBefore) st.sheetsAfter = { list: [...this.wb.sheets], active: this.wb.active, protection: this.wb.protection };
         if (st.before.length || st.sheetsBefore) {
           this.undoStack.push(st);
           if (this.undoStack.length > 100) this.undoStack.shift();
@@ -164,7 +164,7 @@ export class History {
   /** Records the list of sheets (insert, delete, move, rename …). */
   sheets(): void {
     if (!this.open) throw new Error("change outside an undo step");
-    if (!this.open.sheetsBefore) this.open.sheetsBefore = { list: [...this.wb.sheets], active: this.wb.active };
+    if (!this.open.sheetsBefore) this.open.sheetsBefore = { list: [...this.wb.sheets], active: this.wb.active, protection: this.wb.protection };
   }
 
   private capture(b: SheetState): SheetState {
@@ -222,7 +222,7 @@ export class History {
     const st = this.undoStack.pop();
     if (!st) return false;
     this.apply(st.before);
-    if (st.sheetsBefore) { this.wb.sheets = [...st.sheetsBefore.list]; this.wb.active = st.sheetsBefore.active; }
+    if (st.sheetsBefore) { this.wb.sheets = [...st.sheetsBefore.list]; this.wb.active = st.sheetsBefore.active; this.wb.protection = st.sheetsBefore.protection; }
     this.restoreSel(st.selBefore);
     this.redoStack.push(st);
     this.onChange(changeOf(st.before, !!st.sheetsBefore));
@@ -233,7 +233,7 @@ export class History {
     const st = this.redoStack.pop();
     if (!st) return false;
     this.apply(st.after);
-    if (st.sheetsAfter) { this.wb.sheets = [...st.sheetsAfter.list]; this.wb.active = st.sheetsAfter.active; }
+    if (st.sheetsAfter) { this.wb.sheets = [...st.sheetsAfter.list]; this.wb.active = st.sheetsAfter.active; this.wb.protection = st.sheetsAfter.protection; }
     this.restoreSel(st.selAfter);
     this.undoStack.push(st);
     this.onChange(changeOf(st.after, !!st.sheetsAfter));

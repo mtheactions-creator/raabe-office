@@ -503,6 +503,8 @@ export function dialogs(app: CalcApp) {
   async function filterMenu(col: number, anchor?: DOMRect): Promise<void> {
     const f = sheet().autoFilter;
     if (!f) return;
+    // A protected sheet filters only when AutoFilter verwenden is allowed.
+    if (app.isProtected() && !app.protectionAllows("autoFilter")) return;
     const values = new Set<string>();
     let blank = false, numbers = 0, texts = 0;
     for (let r = f.ref.r0 + 1; r <= f.ref.r1; r++) {

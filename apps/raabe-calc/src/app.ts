@@ -133,9 +133,10 @@ export class CalcApp {
     this.sheetBar = new SheetBar({
       workbook: () => this.wb,
       activate: (i) => this.activateSheet(i),
-      add: () => this.addSheet(true),
-      rename: (i, name) => this.renameSheet(i, name),
-      moveSheet: (from, to, copy) => this.moveSheet(from, to, copy),
+      // Arbeitsmappe schützen keeps the sheets as they are.
+      add: () => { if (!this.protection.bookLocked()) this.addSheet(true); },
+      rename: (i, name) => (this.protection.bookLocked() ? "Die Arbeitsmappe ist geschützt; Blätter können nicht umbenannt werden." : this.renameSheet(i, name)),
+      moveSheet: (from, to, copy) => { if (!this.protection.bookLocked()) this.moveSheet(from, to, copy); },
       contextMenu: (e) => this.sheetMenu(e),
     }, this.grid.hscroll);
     this.statusBar = new CalcStatusBar(this.commands, (z) => this.setZoom(z), (v) => shown({ v }, this.wb.styles.get(0)).text);
@@ -533,6 +534,10 @@ export class CalcApp {
     this.grid.contentChanged();
     this.scheduleChrome();
   }
+
+  /** Blatt schützen: whether the active sheet is protected, and whether it allows an action ("objects" …). */
+  isProtected(): boolean { return this.protection.on(); }
+  protectionAllows(what: string): boolean { return this.protection.allows(this.sheet, what); }
 
   /** Changes to the active workbook so far (features cache what they read from the cells by it). */
   get version(): number { return this.active.version; }
@@ -1484,7 +1489,7 @@ export class CalcApp {
     // Blatt schützen decides first: commands it does not allow are greyed out, changes to locked
     // cells are refused with a message.
     const run = (id: string, fn: () => void | Promise<void>, enabled?: () => boolean, checked?: () => boolean) =>
-      c.implement(id, { run: () => (this.protection.guard(id) ? fn() : undefined), enabled: () => this.protection.enabled(id) && (enabled ? enabled() : true), checked });
+      c.implement(id, { run: () => (this.protection.guard(id) ? fn() : undefined), enabled: () => this.protection.enabled(id) && !(this.protection.bookLocked() && this.protection.structureCommand(id)) && (enabled ? enabled() : true), checked });
     const notEditing = () => !this.grid?.isEditing;
     const st = () => this.activeStyle();
 
@@ -1724,6 +1729,7 @@ export class CalcApp {
     run("layout.breakReset", () => this.print.breaks("reset"), () => !!(this.sheet.page?.rowBreaks?.length || this.sheet.page?.colBreaks?.length));
     run("insert.headerFooter", () => void this.print.pageSetupDialog("header"));
     run("review.protectSheet", () => void this.protection.protect());
+    run("review.protectBook", () => void this.protection.protectBook(), undefined, () => this.protection.bookLocked());
     run("cells.protectSheet", () => void this.protection.protect());
     run("formulas.evaluate", () => void this.evaluator.open(), notEditing);
     run("data.validation", () => void this.validation.openDialog(), notEditing);

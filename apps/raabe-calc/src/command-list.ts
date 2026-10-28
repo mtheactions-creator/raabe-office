@@ -307,7 +307,7 @@ export const COMMANDS: Command[] = [
   cmd("review.deleteNote", "Notiz löschen", "remove"),
   cmd("review.showNotes", "Alle Notizen anzeigen", "eye"),
   cmd("review.protectSheet", "Blatt schützen...", "protect"),
-  later("review.protectBook", "Arbeitsmappe schützen...", "protect"),
+  cmd("review.protectBook", "Arbeitsmappe schützen...", "protect"),
 
   // ----- Ansicht ----------------------------------------------------------------------------
   cmd("view.normal", "Normal", "document"),

@@ -5,5 +5,8 @@
  "firstSheetProtected": false,
  "wrongPasswordRefused": true,
  "rightPasswordAccepted": true,
+ "bookProtected": true,
+ "bookWrongRefused": true,
+ "bookRightAccepted": true,
  "pass": true
 }

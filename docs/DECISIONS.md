@@ -1272,7 +1272,14 @@ Excel a school uses most among those first deferred.
   (SHA-512 over salt and password, 100 000 rounds); older files' 16-bit hashes are accepted. On a
   protected sheet locked cells refuse changes with a message in our own words, formatting,
   inserting, deleting and sorting are greyed out unless allowed, and Tab moves between unlocked
-  cells (Excel), which is what teachers' templates need.
+  cells (Excel), which is what teachers' templates need. The later additions follow it too:
+  Gruppieren, Teilergebnis, Seitenumbrüche, Zielwertsuche, Datenüberprüfung and Rechtschreibung
+  are greyed, Schnellanalyse does not appear, pictures stay put unless Objekte bearbeiten is
+  allowed, the filter buttons work only with AutoFilter verwenden.
+- **Arbeitsmappe schützen** (Struktur; Fenster greyed as in Excel 365): no sheets added, deleted,
+  renamed, moved, hidden or coloured; the password is written as Excel's workbookProtection hash
+  (checked in Excel: locked, wrong password refused, right one accepted). The button shows its
+  state; pressing it again asks for the password.
 - **Formelüberwachung**: Spur zum Vorgänger / Spur zum Nachfolger draw Excel's arrows (blue, a
   dot at the source, a frame around ranges, dashed from a sheet symbol for other sheets, red from
   errors), each click one level further, removed by Pfeile entfernen or any change.

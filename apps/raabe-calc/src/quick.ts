@@ -23,7 +23,8 @@ export function quickFeature(app: CalcApp, tiles: () => Record<string, QuickTile
   let memo: { key: string; hit: boolean } | null = null;
   function target(): Rect | null {
     const sel = app.grid.selection;
-    if (sel.length !== 1 || app.grid.isEditing) return null;
+    // Not on a protected sheet (Excel shows no Schnellanalyse there).
+    if (sel.length !== 1 || app.grid.isEditing || app.isProtected()) return null;
     const r = sel[0];
     if (r.r0 === r.r1 && r.c0 === r.c1) return null;
     if ((r.r1 - r.r0 + 1) * (r.c1 - r.c0 + 1) > 1_000_000) return null;

@@ -33,7 +33,9 @@ describe("Blatt schützen", () => {
     wb.sheets[1].protection = protectionAttrs(new Map([["formatCells", true], ["objects", false], ["scenarios", false]]),
       { algorithmName: "SHA-512", hashValue: await sha512("Schule", salt, 100000), saltValue: btoa(String.fromCharCode(...salt)), spinCount: "100000" });
     wb.sheets[0].protection = undefined;
+    wb.protection = { workbookAlgorithmName: "SHA-512", workbookHashValue: await sha512("Mappe", salt, 100000), workbookSaltValue: btoa(String.fromCharCode(...salt)), workbookSpinCount: "100000", lockStructure: "1" };
     const out = writeXlsx(wb);
+    expect(readXlsx(out).protection).toEqual(wb.protection);
     expect(readXlsx(out).sheets[0].protection).toBeUndefined();
     if (process.env.PROTECTION_OUT) writeFileSync(process.env.PROTECTION_OUT, out);
   }, 60000);
@@ -41,5 +43,17 @@ describe("Blatt schützen", () => {
   it("checks the old 16-bit password hash", () => {
     expect(legacyHash("")).toBe("CE4B");
     expect(legacyHash("test")).toBe("CBEB");
+  });
+});
+
+describe("What a protected sheet allows", () => {
+  it("knows tonight's commands and reads objects/scenarios as Excel writes them", async () => {
+    const { needs } = await import("../src/protection");
+    expect(needs("data.subtotal")).toBe("never");
+    expect(needs("data.group")).toBe("never");
+    expect(needs("review.spelling")).toBe("never");
+    expect(needs("insert.pictureFile")).toBe("objects");
+    expect(needs("edit.flashFill")).toBe("unlocked");
+    expect(protectionAttrs(new Map([["objects", true], ["scenarios", false]]))).toEqual({ sheet: "1", scenarios: "1" });
   });
 });

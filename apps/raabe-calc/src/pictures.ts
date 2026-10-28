@@ -99,6 +99,8 @@ export function picturesFeature(app: CalcApp) {
     if (e.button !== 0) return;
     e.preventDefault();
     e.stopPropagation();
+    // A protected sheet keeps its pictures where they are unless Objekte bearbeiten is allowed.
+    if (!app.protectionAllows("objects")) return;
     if (selected !== p) { selected = p; for (const x of imgs) x.classList.toggle("on", x === el); }
     const b = boxOf(p);
     if (!b) return;
@@ -135,7 +137,7 @@ export function picturesFeature(app: CalcApp) {
   // A click elsewhere ends the selection; Entf deletes the selected picture.
   addEventListener("pointerdown", (e) => { if (selected && !(e.target as HTMLElement).closest?.(".pic")) select(null); }, true);
   addEventListener("keydown", (e) => {
-    if (!selected || app.grid.isEditing) return;
+    if (!selected || app.grid.isEditing || !app.protectionAllows("objects")) return;
     if (e.key === "Delete" || e.key === "Backspace") {
       e.preventDefault();
       e.stopPropagation();

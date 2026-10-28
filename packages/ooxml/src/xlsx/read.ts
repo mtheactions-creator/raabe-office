@@ -61,7 +61,7 @@ export interface BookRaw {
   otherNames: { index: number; xml: string }[];
   mdw: number;
   /** What was read, to see changes. */
-  snap: { names: string; date1904: boolean; active: number; sheetNames: string };
+  snap: { names: string; date1904: boolean; active: number; sheetNames: string; prot: string };
 }
 
 /** A worksheet's part and what the model does not hold (Sheet.raw). */
@@ -122,6 +122,8 @@ export function readPackage(files: Record<string, Uint8Array>): Workbook {
   const find = (name: string) => parts.find((p) => p.name === name);
   const pr = find("workbookPr");
   wb.date1904 = pr ? /^(1|true)$/.test(attrs(wbXml, pr).date1904 ?? "") : false;
+  const wp = find("workbookProtection");
+  if (wp) wb.protection = attrs(wbXml, wp);
   const sheetsEl = find("sheets");
   const entries = sheetsEl ? children(wbXml, sheetsEl.open, sheetsEl.close) : [];
   const others: OtherSheet[] = [];
@@ -194,7 +196,7 @@ export function readPackage(files: Record<string, Uint8Array>): Workbook {
 
   const raw: BookRaw = {
     files, wbPath, wb: wbSplit, styles: stylesRaw, theme: { major: theme.major, minor: theme.minor }, sstPath, others, nameAttrs, otherNames, defined, mdw: MDW,
-    snap: { names: canon(wb.names), date1904: wb.date1904, active: wb.active, sheetNames: "" },
+    snap: { names: canon(wb.names), date1904: wb.date1904, active: wb.active, sheetNames: "", prot: canon([wb.protection ?? null]) },
   };
   raw.snap.sheetNames = sheetNamesSnap(wb);
   // Snapshots again: print areas came from the names.

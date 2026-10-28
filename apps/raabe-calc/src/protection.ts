@@ -41,6 +41,9 @@ export function needs(id: string): string | null {
   if (/^data\.(filter|filterClear|filterReapply)$/.test(id)) return "autoFilter";
   if (id === "insert.link") return "insertHyperlinks";
   if (/^insert\.(table|chart\w*|note)$/.test(id) || /^data\.(textToColumns|removeDuplicates|advancedFilter)$/.test(id) || id === "styles.table") return "never";
+  // Tonight's additions (D-065): changes Excel does not allow on a protected sheet.
+  if (/^data\.(group|ungroup|subtotal|goalSeek|validation|circleInvalid)$/.test(id) || /^layout\.break(Insert|Remove|Reset)$/.test(id) || id === "review.spelling") return "never";
+  if (/^insert\.picture\w*$/.test(id)) return "objects";
   if (/^edit\.(paste\w*|cut|clear\w*|fill\w+|auto\w+|dateToday|timeNow|flashFill|removeLinks)$/.test(id)) return "unlocked";
   return null;
 }
@@ -101,7 +104,8 @@ export function protectionFeature(app: CalcApp) {
     if (what === "never") return false;
     const v = flag(s, what);
     const isTrue = v === "1" || v === "true";
-    if (what.startsWith("select")) return !isTrue;
+    // These attributes say what is protected (set) rather than what is allowed.
+    if (what.startsWith("select") || what === "objects" || what === "scenarios") return !isTrue;
     return v !== undefined && !isTrue;
   }
   const lockedAt = (s: Sheet, row: number, col: number) => {
@@ -208,7 +212,51 @@ export function protectionFeature(app: CalcApp) {
     app.change("Blattschutz aufheben", () => { app.history.whole(s); s.protection = undefined; });
   }
 
-  return { on, allows, canEdit, enabled, guard, nextUnlocked, protect, unprotect };
+  /** Arbeitsmappe schützen (Struktur): no sheets added, deleted, renamed, moved, hidden or coloured. */
+  const bookLocked = () => { const v = app.wb.protection?.lockStructure; return v === "1" || v === "true"; };
+  const STRUCTURE = /^(cells\.(insertSheet|deleteSheet|renameSheet|moveSheet|tabColor|hideSheet|unhideSheet)|sheet\.add)$/;
+
+  async function askPassword(title: string, label: string): Promise<string | null> {
+    const pw = h("input", { type: "password", style: "width:100%" }) as HTMLInputElement;
+    setTimeout(() => pw.focus());
+    const ok = await showDialog({ title, body: h("div", null, h("div", { class: "fc-label" }, label), pw), buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
+    return ok ? pw.value : null;
+  }
+
+  async function protectBook(): Promise<void> {
+    const wb = app.wb;
+    if (bookLocked()) {
+      const p = wb.protection ?? {};
+      if (p.workbookHashValue || p.workbookPassword) {
+        const pw = await askPassword("Arbeitsmappenschutz aufheben", "Kennwort:");
+        if (pw === null) return;
+        const right = p.workbookHashValue ? (await sha512(pw, unb64(p.workbookSaltValue ?? ""), Number(p.workbookSpinCount ?? 0))) === p.workbookHashValue : legacyHash(pw) === (p.workbookPassword ?? "").toUpperCase();
+        if (!right) { await messageBox("RaabeCalc", "Das Kennwort ist nicht richtig. Achten Sie auf Groß- und Kleinschreibung."); return; }
+      }
+      app.change("Arbeitsmappenschutz aufheben", () => { app.history.sheets(); wb.protection = undefined; });
+      return;
+    }
+    const pw = h("input", { type: "password", style: "width:100%" }) as HTMLInputElement;
+    const structure = h("input", { type: "checkbox", checked: true }) as HTMLInputElement;
+    const body = h("div", { class: "protect-dialog" }, h("div", { class: "fc-label" }, "Arbeitsmappe schützen für"),
+      h("label", { class: "check" }, structure, "Struktur"), h("label", { class: "check" }, h("input", { type: "checkbox", disabled: true }), "Fenster"),
+      h("div", { class: "fc-label" }, "Kennwort (optional):"), pw);
+    setTimeout(() => pw.focus());
+    const ok = await showDialog({ title: "Struktur und Fenster schützen", body, buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
+    if (!ok || !structure.checked) return;
+    const attrs: Record<string, string> = {};
+    if (pw.value) {
+      const again = await askPassword("Kennwort bestätigen", "Kennwort erneut eingeben:");
+      if (again === null) return;
+      if (again !== pw.value) { await messageBox("RaabeCalc", "Die beiden Kennwörter sind nicht gleich."); return; }
+      const salt = crypto.getRandomValues(new Uint8Array(16));
+      Object.assign(attrs, { workbookAlgorithmName: "SHA-512", workbookHashValue: await sha512(pw.value, salt, 100000), workbookSaltValue: b64(salt), workbookSpinCount: "100000" });
+    }
+    attrs.lockStructure = "1";
+    app.change("Arbeitsmappe schützen", () => { app.history.sheets(); wb.protection = attrs; });
+  }
+
+  return { on, allows, canEdit, enabled, guard, nextUnlocked, protect, unprotect, bookLocked, structureCommand: (id: string) => STRUCTURE.test(id), protectBook };
 }
 
 export { legacyHash, sha512 };
