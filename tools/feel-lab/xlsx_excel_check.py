@@ -128,6 +128,9 @@ def sheet_props(wb, ws, cells: list[str]) -> dict:
                      for co in ws.ChartObjects()]
     out["shapes"] = [(s.Name, s.Type, s.Left, s.Top, s.Width, s.Height) for s in ws.Shapes]
     out["notes"] = sorted((c.Parent.GetAddress(False, False), c.Text(), c.Visible) for c in ws.Comments)
+    out["noteCount"] = ws.Comments.Count
+    # Kommentare (threaded): cell, text, author, number of replies.
+    out["threads"] = safe(lambda: sorted((t.Parent.GetAddress(False, False), t.Text(), t.Author.Name, t.Replies.Count) for t in ws.CommentsThreaded), [])
     out["links"] = sorted((h.Range.GetAddress(False, False), h.Address, h.SubAddress, h.TextToDisplay, h.ScreenTip) for h in ws.Hyperlinks)
     out["conditional"] = safe(lambda: [(fc.Type, safe(lambda fc=fc: fc.AppliesTo.GetAddress(False, False))) for fc in ws.Cells.FormatConditions], [])
     out["validation"] = safe(lambda: validation_props(ws))

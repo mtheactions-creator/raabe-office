@@ -204,3 +204,21 @@ describe("Teilergebnis as Excel inserts it", () => {
     });
   }
 });
+
+describe("Undo of whole-sheet steps restores the sheet's settings", () => {
+  it("page setup, filter, protection and threads come back", () => {
+    const b = book({ A1: "1" });
+    b.history.step("x", () => {
+      b.history.whole(b.sheet);
+      b.sheet.page = { orientation: "landscape" };
+      b.sheet.autoFilter = { ref: R("A1:A3"), columns: {} };
+      b.sheet.protection = { sheet: "1" };
+      b.sheet.threads = [{ row: 0, col: 0, id: "{1}", author: "A", date: "", text: "t", replies: [] }];
+    });
+    b.history.undo();
+    expect([b.sheet.page, b.sheet.autoFilter, b.sheet.protection, b.sheet.threads]).toEqual([undefined, undefined, undefined, undefined]);
+    b.history.redo();
+    expect(b.sheet.page?.orientation).toBe("landscape");
+    expect(b.sheet.threads?.[0].text).toBe("t");
+  });
+});

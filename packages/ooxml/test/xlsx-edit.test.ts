@@ -174,6 +174,8 @@ describe("edited workbooks", () => {
     s.set(2, 0, { v: 46322, s: wb.styles.derive(0, (st) => { st.numFmt = "m/d/yyyy"; }) });
     s.set(3, 0, { v: 3, f: "A2*2" });
     s.set(4, 0, { v: "Link", link: "https://www.raabeschule.de/", note: "Eine Notiz" });
+    s.threads = [{ row: 0, col: 1, id: "{6E1A2B3C-0000-4000-8000-000000000001}", author: "Lehrkraft", date: "2026-10-28T03:40:00.00", text: "Bitte prüfen",
+      replies: [{ id: "{6E1A2B3C-0000-4000-8000-000000000002}", author: "Anna", date: "2026-10-28T03:45:00.00", text: "Erledigt" }] }];
     s.cols.set(0, { width: 20 });
     s.rows.set(5, { height: 30, custom: true });
     s.rows.set(2, { outline: 1 });
@@ -197,7 +199,7 @@ describe("edited workbooks", () => {
         ["/sheets/Tabelle1/cells/A1/Value2", "Titel"], ["/sheets/Tabelle1/cells/A1/Merge", "A1:C1"], ["/sheets/Tabelle1/cells/A2/NumberFormat", "0.00"],
         ["/sheets/Tabelle1/cells/A3/NumberFormat", "m/d/yyyy"], ["/sheets/Tabelle1/cells/A4/Value2", 3], ["/sheets/Tabelle1/cols/0/0", approx(20, 0.2)],
         ["/sheets/Tabelle1/rows/5/0", 30], ["/sheets/Tabelle1/window/FreezePanes", true], ["/sheets/Tabelle1/autofilter/1", "A2:A5"],
-        ["/sheets/Tabelle1/notes/0/1", "Eine Notiz"], ["/sheets/Tabelle1/links/0/1", "https://www.raabeschule.de/"], ["/sheets/Tabelle1/page/3", 2],
+        ["/sheets/Tabelle1/notes/0/1", "Eine Notiz"], ["/sheets/Tabelle1/threads/0/0", "B1"], ["/sheets/Tabelle1/threads/0/1", "Bitte prüfen"], ["/sheets/Tabelle1/threads/0/2", "Lehrkraft"], ["/sheets/Tabelle1/threads/0/3", 1], ["/sheets/Tabelle1/noteCount", 1], ["/sheets/Tabelle1/links/0/1", "https://www.raabeschule.de/"], ["/sheets/Tabelle1/page/3", 2],
         ["/sheets/Tabelle1/page/0", "$A$1:$C$5"], ["/sheets/Tabelle1/page/4", "$1:$2"], ["/sheets/Tabelle1/conditional/1/0", 6], ["/sheets/Tabelle1/shapes/1/0", "Logo"], ["/sheets/Tabelle1/shapes/1/1", 13], ["/sheets/Tabelle1/page/6", [4]], ["/sheets/Tabelle1/rows/2/2", 2], ["/sheets/Tabelle1/rows/3/2", 2], ["/sheets/Tabelle1/conditional/1/1", "D2:D4"], ["/sheets/Tabelle1/page/1", "Klasse 7b"], ["/sheets/Tabelle1/page/2", "Seite &P von &N"], ["/sheets/Tabelle1/page/5", "$A:$A"], ["/sheets/Tabelle1/Tab", 0x0000ff], ["/sheets/Zweites/cells/A1/Value2", 1], ["/sheets/Tabelle1/StandardHeight", approx(15, 0.6)],
         ["/sheets/Tabelle1/charts/0/1", 51], ["/sheets/Tabelle1/charts/0/6/0", "=SERIES(\"Werte\",,Tabelle1!$A$2:$A$4,1)"],
       ],
@@ -206,6 +208,8 @@ describe("edited workbooks", () => {
     expect(back.sheets[0].conditional?.[0].rules[0]).toMatchObject({ type: "cellIs", operator: "greaterThan", formulas: ["2"], format: { color: "#9C0006", fill: "#FFC7CE" } });
     expect(back.names).toEqual([{ name: "Satz", ref: "Tabelle1!$A$2" }]);
     expect(back.sheets[0].autoFilter?.columns[0]).toEqual({ color: { fill: "#FFFF00" } });
+    expect(back.sheets[0].threads?.[0]).toMatchObject({ row: 0, col: 1, author: "Lehrkraft", text: "Bitte prüfen", replies: [{ author: "Anna", text: "Erledigt" }] });
+    expect(cell(back.sheets[0], "B1")?.note).toBeUndefined();
     expect(back.sheets[0].page).toMatchObject({ titleRows: [0, 1], titleCols: [0, 0], header: "&CKlasse 7b", footer: "&RSeite &P von &N", rowBreaks: [3] });
   });
 

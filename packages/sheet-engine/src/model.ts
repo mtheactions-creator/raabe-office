@@ -242,6 +242,12 @@ export interface CondRule {
   rawXml?: string;
 }
 
+/** One comment of a thread (Excel 365's Kommentar): author, ISO date, text. */
+export interface ThreadComment { id: string; author: string; personId?: string; date: string; text: string }
+
+/** A Kommentar thread on a cell: the first comment, its replies, and whether it is resolved. */
+export interface CommentThread extends ThreadComment { row: number; col: number; replies: ThreadComment[]; done?: boolean }
+
 /** A picture in the sheet's drawing, shown as the file places it (the file keeps it as it was). */
 export interface SheetPicture {
   /** Top-left: the cell and the offset inside it in px at 100 %. */
@@ -340,6 +346,8 @@ export class Sheet {
   hidden?: boolean | "very";
   /** AutoFilter: its range and the values shown per column (column index inside the range). */
   autoFilter?: AutoFilter;
+  /** Kommentare (threaded comments) of the sheet's cells. */
+  threads?: CommentThread[];
   /** Pictures of the drawing (read only: shown, kept in the file as they are). */
   pictures?: SheetPicture[];
   /** Blatt schützen: the attributes of <sheetProtection> as the file has them (sheet="1" when on). */

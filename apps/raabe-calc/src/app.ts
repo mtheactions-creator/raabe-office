@@ -41,6 +41,7 @@ import { regroup } from "./grid/outline";
 import { seek } from "./goalseek";
 import { spellingFeature } from "./spelling";
 import { picturesFeature } from "./pictures";
+import { commentsFeature } from "./comments";
 import { iconRule } from "./dialogs";
 import appIconUrl from "../../../branding/raabe-calc-small.svg?url";
 
@@ -88,6 +89,7 @@ export class CalcApp {
   private evaluator = evaluateFeature(this);
   private spelling = spellingFeature(this);
   private pictures = picturesFeature(this);
+  private comments = commentsFeature(this, () => this.settings.userName);
   private errorCheck = errorCheckFeature(this, () => void this.evaluator.open());
   private quick = quickFeature(this, () => this.quickTiles());
   readonly validation = validationFeature(this, (t, text) => this.gridHost().commit(t, text, {}));
@@ -1748,6 +1750,11 @@ export class CalcApp {
     run("data.goalSeek", () => void this.goalSeek(), notEditing);
     run("review.spelling", () => void this.spelling.run(), notEditing);
     run("insert.pictures", () => {});
+    run("insert.comment", () => this.comments.newComment(), notEditing);
+    run("review.newComment", () => this.comments.newComment(), notEditing);
+    run("review.deleteComment", () => this.comments.remove(), () => this.comments.has());
+    run("review.prevComment", () => this.comments.prev(), () => this.comments.any());
+    run("review.nextComment", () => this.comments.next(), () => this.comments.any());
     run("insert.pictureFile", () => void this.pictures.insertFromFile(), notEditing);
     run("data.ungroup", () => void this.group(-1), notEditing);
     run("edit.selectValidation", () => this.validation.select());

@@ -10,7 +10,7 @@ const MAIN = "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
 /** Excel's run format for note text (Segoe UI 9, comment colour). */
 const NOTE_RPR = '<rPr><sz val="9"/><color indexed="81"/><rFont val="Segoe UI"/><family val="2"/></rPr>';
 
-export interface NoteIn { row: number; col: number; text: string }
+export interface NoteIn { row: number; col: number; text: string; author?: string }
 
 /** comments.xml for the notes, reusing the original <comment> of unchanged ones. */
 export function commentsXml(notes: NoteIn[], author: string, orig?: { xml: string; byRef: Record<string, { text: string; xml: string }> }): string {
@@ -22,16 +22,16 @@ export function commentsXml(notes: NoteIn[], author: string, orig?: { xml: strin
     const a = /<authors>([\s\S]*?)<\/authors>/.exec(orig.xml)?.[1] ?? "";
     authors = [...a.matchAll(/<author>([\s\S]*?)<\/author>/g)].map((x) => x[1]);
   }
-  const name = esc(author || "RaabeCalc");
-  let id = authors.indexOf(name);
   const list = notes.map((n) => {
     const ref = cellName(n.row, n.col);
     const old = orig?.byRef[ref];
     if (old && old.text === n.text) return old.xml;
+    const name = esc(n.author ?? (author || "RaabeCalc"));
+    let id = authors.indexOf(name);
     if (id < 0) { authors.push(name); id = authors.length - 1; }
     return `<comment ref="${ref}" authorId="${id}" shapeId="0"><text><r>${NOTE_RPR}${tXml(n.text)}</r></text></comment>`;
   });
-  if (!authors.length) authors.push(name);
+  if (!authors.length) authors.push(esc(author || "RaabeCalc"));
   return `${head}<authors>${authors.map((a) => `<author>${a}</author>`).join("")}</authors><commentList>${list.join("")}</commentList></comments>`;
 }
 

@@ -14,6 +14,7 @@ import { shiftFormula } from "./shift";
 import { readStyles, canon, type StylesRaw } from "./styles";
 import { MDW, widthFromBase, widthFromFile } from "./units";
 import { readCharts, readPictures, type DrawingRaw } from "./drawing";
+import { RT_PERSON, RT_THREADS, readPersons, readThreads } from "./threads";
 import { FILTER_DB, PRINT_AREA, PRINT_TITLES, ownRange, readTitles, readAutoFilter, readConditional, readPage, readValidations, type CfRaw, type DvRaw } from "./sheetparts";
 import { attrs, child, children, decodeX, element, outer, root, split, text, unesc, type El, type Split } from "./xml";
 
@@ -85,6 +86,8 @@ export interface SheetRaw {
   dv?: DvRaw;
   /** The pictures as read (picturesKey), to see whether they changed. */
   pics?: string;
+  /** Kommentare as read: their part and a snapshot. */
+  threads?: { part: string; snap: string };
   snap: { view: string; cols: string; merges: string; tab: string; defaults: string; notes: string; links: string; filter: string; cf: string; page: string; dv: string; prot: string };
 }
 
@@ -108,6 +111,7 @@ export function readPackage(files: Record<string, Uint8Array>): Workbook {
   };
 
   const wb = new Workbook();
+  const persons = readPersons(str(partOf(RT_PERSON)));
   const theme = readTheme(str(partOf(RT.theme)));
   wb.theme = Object.fromEntries(Object.entries(theme.colors).map(([k, v]) => [k, "#" + v]));
   const { table, raw: stylesRaw } = readStyles(str(partOf(RT.styles)) || NO_STYLES, theme.colors);
@@ -141,7 +145,7 @@ export function readPackage(files: Record<string, Uint8Array>): Workbook {
       others.push({ index, xml: outer(wbXml, e) });
       return;
     }
-    const sheet = readSheet(xml, a.name ?? `Tabelle${index + 1}`, { files, part, sst, ctx, date1904: wb.date1904, styles: wb.styles.list.length, dxfs: stylesRaw.dxfs });
+    const sheet = readSheet(xml, a.name ?? `Tabelle${index + 1}`, { files, part, sst, ctx, date1904: wb.date1904, styles: wb.styles.list.length, dxfs: stylesRaw.dxfs, persons });
     const keep: Record<string, string> = {};
     for (const [k, v] of Object.entries(a)) if (!/^(name|sheetId|state|r:id)$/.test(k)) keep[k] = v;
     (sheet.raw as SheetRaw).sheetId = Number(a.sheetId ?? index + 1);
@@ -252,6 +256,8 @@ interface SheetContext {
   date1904: boolean;
   styles: number;
   dxfs: string[];
+  /** Kommentare: the workbook's persons (id → display name). */
+  persons: Map<string, string>;
   /** The sheet's default x14ac:dyDescent (rows with it need not keep their own). */
   dyDescent?: string;
 }
@@ -347,6 +353,22 @@ function readSheet(xml: string, name: string, c: SheetContext): Sheet {
       }
     }
     raw.notes = notes;
+  }
+
+  // Kommentare: the threads; their legacy notes are Excel's fallback and are not shown as notes.
+  const tRel = rels.list.find((x) => isRel(x.type, RT_THREADS));
+  if (tRel) {
+    const part = resolveTarget(c.part, tRel.target);
+    const threads = c.files[part] ? readThreads(strFromU8(c.files[part]), c.persons) : [];
+    if (threads.length) {
+      sheet.threads = threads;
+      for (const t of threads) {
+        const k = cellKey(t.row, t.col);
+        const cell = sheet.cells.get(k);
+        if (cell?.note !== undefined) { delete cell.note; if (cell.v === null && Object.keys(cell).length === 1) sheet.cells.delete(k); }
+      }
+    }
+    raw.threads = { part, snap: JSON.stringify(threads) };
   }
 
   const af = get("autoFilter");

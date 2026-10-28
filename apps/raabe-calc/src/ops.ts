@@ -15,7 +15,7 @@ interface SheetState {
   /** The sheet's Datenüberprüfung (changed through its dialog). */
   validations?: Sheet["validations"] | null;
   /** Whole-sheet copies for structural changes (insert/delete rows and columns, sorting). */
-  whole?: { cells: Map<number, Cell>; cols: Map<number, ColInfo>; rows: Map<number, RowInfo>; merges: Rect[] };
+  whole?: { cells: Map<number, Cell>; cols: Map<number, ColInfo>; rows: Map<number, RowInfo>; merges: Rect[]; settings: Settings };
   defaults?: { col?: number; row: number };
 }
 
@@ -196,6 +196,7 @@ export class History {
         s.cols = new Map([...st.whole.cols].map(([k, c]) => [k, { ...c }]));
         s.rows = new Map([...st.whole.rows].map(([k, c]) => [k, { ...c }]));
         s.merges = st.whole.merges.map((m) => ({ ...m }));
+        for (const k of SETTINGS) (s as unknown as Record<string, unknown>)[k] = st.whole.settings[k] !== undefined ? structuredClone(st.whole.settings[k]) : undefined;
       }
       const areas = (st as SheetState & { areas?: Rect[] }).areas;
       if (areas && !st.whole) {
@@ -262,11 +263,18 @@ function clone<T>(v: T): T {
   return c;
 }
 
+/** Sheet settings a whole-sheet step restores besides the cells (page setup, filter, rules …). */
+const SETTINGS = ["page", "autoFilter", "conditional", "validations", "protection", "threads", "pictures"] as const;
+type Settings = Partial<Pick<Sheet, (typeof SETTINGS)[number]>>;
+
 function snapshot(s: Sheet) {
+  const settings: Settings = {};
+  for (const k of SETTINGS) if (s[k] !== undefined) (settings as Record<string, unknown>)[k] = structuredClone(s[k]);
   return {
     cells: new Map([...s.cells].map(([k, c]) => [k, clone(c)])),
     cols: new Map([...s.cols].map(([k, c]) => [k, { ...c }])),
     rows: new Map([...s.rows].map(([k, c]) => [k, { ...c }])),
     merges: s.merges.map((m) => ({ ...m })),
+    settings,
   };
 }

@@ -18,6 +18,7 @@ import { writeCharts } from "./drawing";
 import { newPackage } from "./new";
 import { numText, widthFromBase, widthToFile } from "./units";
 import { esc, escText, encodeX, joinSplit, place, placeAll, setAttrs, split, tXml, type Split, XML_HEAD } from "./xml";
+import { CT_PERSON, CT_THREADS, RT_PERSON, RT_THREADS, fallbackText, guid, personsXml, readPersons, threadsXml } from "./threads";
 import { FILTER_DB, PRINT_AREA, PRINT_TITLES, titlesRef, breaksXml, readPage, headerFooterXml, autoFilterXml, conditionalXml, fitToPage, pageXml, sheetRef, validationsXml } from "./sheetparts";
 
 export const CT = {
@@ -69,6 +70,18 @@ export function writePackage(wb: Workbook, options: XlsxWriteOptions = {}): Reco
   let maxId = Math.max(0, ...wb.sheets.map((s) => (s.raw as SheetRaw | undefined)?.sheetId ?? 0), ...raw.others.map((o) => Number(/sheetId="(\d+)"/.exec(o.xml)?.[1] ?? 0)));
   let needsCalc = false;
   const vmlIds = vmlBlocks(Object.keys(raw.files).filter((p) => p.endsWith(".vml")).map((p) => strFromU8(raw.files[p])));
+  // Kommentare: the workbook's persons, with a new one for each new author.
+  const personRel = wbRels.list.find((r) => isRel(r.type, RT_PERSON));
+  const personPart = personRel ? resolveTarget(raw.wbPath, personRel.target) : "xl/persons/person.xml";
+  const persons = readPersons(raw.files[personPart] ? strFromU8(raw.files[personPart]) : null);
+  let personsChanged = false;
+  const personOf = (name: string) => {
+    for (const [id, n] of persons) if (n === name) return id;
+    const id = guid();
+    persons.set(id, name);
+    personsChanged = true;
+    return id;
+  };
 
   wb.sheets.forEach((sheet, i) => {
     const sr = sheet.raw as SheetRaw | undefined;
@@ -76,6 +89,7 @@ export function writePackage(wb: Workbook, options: XlsxWriteOptions = {}): Reco
     const part = own ? sr!.part : pw.freeName("xl/worksheets/sheet");
     used.add(part);
     const w = new SheetWriter(sheet, i === wb.active, own ? sr : undefined, sr, part, pw, sw, sst, raw, options.author ?? "", vmlIds);
+    w.personOf = personOf;
     pw.setPart(part, w.xml(), CT.worksheet);
     if (w.formulaWithoutValue) needsCalc = true;
     let rid = own ? wbRels.list.find((r) => isRel(r.type, RT.worksheet) && resolveTarget(raw.wbPath, r.target) === part)?.id : undefined;
@@ -84,6 +98,11 @@ export function writePackage(wb: Workbook, options: XlsxWriteOptions = {}): Reco
     const state = sheet.hidden === "very" ? "veryHidden" : sheet.hidden ? "hidden" : undefined;
     entries.push({ name: sheet.name, sheetId, state, rid, attrs: own ? sr!.attrs : {} });
   });
+
+  if (personsChanged) {
+    pw.setPart(personPart, personsXml(persons), CT_PERSON);
+    if (!personRel) pw.link(raw.wbPath, RT_PERSON, personPart);
+  }
 
   // Worksheets that were deleted, and the calculation chain, lose their relationships.
   for (const r of [...wbRels.list]) {
@@ -180,6 +199,8 @@ const NEW_SHEET = `${XML_HEAD}<worksheet xmlns="http://schemas.openxmlformats.or
 
 class SheetWriter {
   formulaWithoutValue = false;
+  /** Kommentare: the person id for an author's name (set by the package writer). */
+  personOf: (name: string) => string = () => guid();
   private sp: Split;
   private readonly rels: Rels;
 
@@ -256,7 +277,10 @@ class SheetWriter {
       this.put("mergeCells", s.merges.length ? `<mergeCells count="${s.merges.length}">${s.merges.map((m) => `<mergeCell ref="${rangeName(m)}"/>`).join("")}</mergeCells>` : null);
     }
     if (!snap || now.links !== snap.links) this.hyperlinks();
-    if (!snap || now.notes !== snap.notes) this.notes();
+    // Kommentare: their part when they changed, and the legacy notes Excel keeps for them.
+    const threadsChanged = JSON.stringify(s.threads ?? []) !== (this.own?.threads?.snap ?? "[]");
+    if (threadsChanged) this.threads();
+    if (!snap || now.notes !== snap.notes || threadsChanged) this.notes();
     if (!snap || now.filter !== snap.filter) {
       const af = s.autoFilter;
       this.put("autoFilter", af ? autoFilterXml(af, this.get("autoFilter"), this.sw) : null);
@@ -392,9 +416,26 @@ class SheetWriter {
     for (const r of [...this.rels.list]) if (isRel(r.type, RT.hyperlink) && !ids.has(r.id)) removeRel(this.rels, r.id);
   }
 
+  private threads(): void {
+    const list = this.s.threads ?? [];
+    const tRel = this.rels.list.find((r) => isRel(r.type, RT_THREADS));
+    if (!list.length) { if (tRel) removeRel(this.rels, tRel.id); return; }
+    for (const t of list) {
+      t.personId ??= this.personOf(t.author);
+      for (const r of t.replies) r.personId ??= this.personOf(r.author);
+    }
+    const part = tRel ? resolveTarget(this.part, tRel.target) : this.pw.freeName("xl/threadedComments/threadedComment");
+    this.pw.setPart(part, threadsXml(list, this.personOf), CT_THREADS);
+    if (!tRel) this.pw.link(this.part, RT_THREADS, part);
+  }
+
   private notes(): void {
-    const notes: NoteIn[] = [...this.s.cells].filter(([, c]) => c.note !== undefined).sort((a, b) => a[0] - b[0])
+    const threaded = new Set((this.s.threads ?? []).map((t) => `${t.row},${t.col}`));
+    const notes: NoteIn[] = [...this.s.cells].filter(([k, c]) => c.note !== undefined && !threaded.has(`${keyCell(k).row},${keyCell(k).col}`))
       .map(([k, c]) => ({ ...keyCell(k), text: c.note! }));
+    // Each thread keeps a legacy note for older programs, linked by its author "tc={id}" (Excel's way).
+    for (const t of this.s.threads ?? []) notes.push({ row: t.row, col: t.col, text: fallbackText(t), author: `tc=${t.id}` });
+    notes.sort((a, b) => a.row - b.row || a.col - b.col);
     const orig = this.own?.notes;
     const cRel = this.rels.list.find((r) => isRel(r.type, RT.comments));
     const vRel = this.rels.list.find((r) => isRel(r.type, RT.vmlDrawing));

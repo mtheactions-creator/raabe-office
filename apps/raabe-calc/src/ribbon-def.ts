@@ -257,7 +257,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
         { id: "proofing", label: "Rechtschreibung", key: "ZP", icon: "spelling", controls: [b("review.spelling", "BE", "large"), stack(b("review.thesaurus", "T"), b("review.statistics", "S1"))] },
         { id: "accessibility", label: "Barrierefreiheit", key: "Z2", icon: "check", controls: [b("review.accessibility", "B1", "large")] },
         { id: "language", label: "Sprache", key: "ZL", icon: "translate", controls: [b("review.translate", "Ü", "large")] },
-        { id: "comments", label: "Kommentare", key: "ZC", icon: "comment", controls: [b("review.newComment", "N1", "large")] },
+        { id: "comments", label: "Kommentare", key: "ZC", icon: "comment", controls: [b("review.newComment", "N1", "large"), stack(b("review.deleteComment", "DC"), b("review.prevComment", "V"), b("review.nextComment", "N2")), b("review.showComments", "H1", "large")] },
         { id: "notes", label: "Notizen", key: "Z4", icon: "note", controls: [dd("review.notes", "N3", "large", m.notes)] },
         { id: "protect", label: "Schützen", key: "Z5", icon: "protect", controls: [b("review.protectSheet", "S2", "large"), b("review.protectBook", "E", "large")] },
       ],

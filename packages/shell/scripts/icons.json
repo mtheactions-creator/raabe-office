@@ -408,5 +408,6 @@
   "remove-arrows": "custom:remove-arrows",
   "circle-invalid": "custom:circle-invalid",
   "clear-circles": "custom:clear-circles",
-  "quick-analysis": "custom:quick-analysis"
+  "quick-analysis": "custom:quick-analysis",
+  "arrow-down": "arrow_down"
 }

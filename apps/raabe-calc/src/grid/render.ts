@@ -404,6 +404,21 @@ function drawPane(ctx: CanvasRenderingContext2D, s: DrawState, pane: Pane): void
     ctx.fill();
   }
 
+  // Kommentare: a purple corner (Excel's colour for threads; notes are red).
+  ctx.fillStyle = "#7719aa";
+  for (const t of sheet.threads ?? []) {
+    if (t.row < r0 || t.row > r1 || t.col < c0 || t.col > c1) continue;
+    const b = rectOf({ r0: t.row, c0: t.col, r1: t.row, c1: t.col });
+    const x = snap(b.x + b.w, dpr) - px, y = snap(b.y, dpr);
+    const k = 7 * zoom;
+    ctx.beginPath();
+    ctx.moveTo(x - k, y);
+    ctx.lineTo(x, y);
+    ctx.lineTo(x, y + k);
+    ctx.closePath();
+    ctx.fill();
+  }
+
   // AutoFilter buttons on the filter's first row (Excel: a small box with an arrow, a funnel when filtered).
   const af = sheet.autoFilter;
   if (af && af.ref.r0 >= r0 && af.ref.r0 <= r1) {

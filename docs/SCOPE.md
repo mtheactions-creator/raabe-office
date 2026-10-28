@@ -87,7 +87,7 @@ Beyond the features below, RaabeCalc handles like Excel in every way, its contro
 | Conditional formatting (basic: highlight rules, data bars, colour scales) | M | Done in Step 7, with Symbolsätze (rule manager later) |
 | Print area, fit to page, gridlines/headings on print | M | Done in Step 7 (print and PDF), with Drucktitel |
 | CSV import/export | M | Done in Step 7, as German Excel (";", UTF-8 with BOM) |
-| Comments / notes on cells | L | Notizen done in Step 7; threaded comments later |
+| Comments / notes on cells | L | Notizen and Kommentare (threads) done in Step 7 |
 | Data validation (dropdown lists) | L | Done in Step 7 (D-065; Ungültige Daten einkreisen later) |
 | Sheet protection (Blatt schützen), locked cells | L | Done in Step 7 (D-065), password as Excel's |
 | Formula auditing: trace arrows, Formelauswertung, Fehlerüberprüfung | L | Done in Step 7 (D-065) |

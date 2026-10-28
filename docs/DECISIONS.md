@@ -1347,6 +1347,16 @@ Excel a school uses most among those first deferred.
   are no Datentabellen) and Manuell, kept in the file's calcPr. Manuell leaves formulas as they
   are until F9 / Neu berechnen and shows "Berechnen" in the status bar; a formula typed meanwhile
   is worked out at once, as Excel does.
+- **Kommentare** (Excel 365's threads; Einfügen > Kommentar, Überprüfen > Neuer Kommentar,
+  Löschen, Vorheriger / Nächster Kommentar): a purple corner on the cell, a card beside it with
+  each comment's author, date and text, Antworten with Posten (Strg+Eingabe), Thread löschen and
+  Thread auflösen in its "…" menu; hovering shows the card. Files: threadedComments and persons
+  parts as Excel's, each thread with a legacy note for older programs linked by the author
+  "tc={id}" (Excel's way; the note's text is our own); Excel reads them as threads with their
+  replies and no extra note (checked). Kommentare anzeigen (the pane) is not built; the author is
+  the name from Datei > Optionen.
+- **Undo of whole-sheet steps** now also restores the sheet's page setup, filter, conditional
+  formats, validations, protection, threads and pictures (before, only cells, sizes and merges).
 - **Keyboard modes** (recorded): Ende then an arrow jumps as Strg+arrow (status bar "Endmodus"),
   F8 Auswahl erweitern, Umschalt+F8 Abschnitt hinzufügen oder entfernen, Strg+Rücktaste shows the
   active cell.
