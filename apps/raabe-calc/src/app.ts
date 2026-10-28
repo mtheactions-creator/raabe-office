@@ -2297,6 +2297,7 @@ export class CalcApp {
       template: async (id: CalcTemplate, path: string) => { this.newDoc(id); await this.platform.writeFile(path, writeXlsx(this.wb)); },
       /** Als PDF exportieren into a given file (check_calc_print.py). */
       pdf: (path: string) => this.print.exportPdf(path),
+      save: (path: string) => this.platform.writeFile(path, writeXlsx(this.wb)),
       /** Opens a file as Öffnen does (compare_calc_files.py). */
       open: (path: string) => this.openPath(path),
       /** Where a cell is on the page (CSS px from the viewport's top left). */
