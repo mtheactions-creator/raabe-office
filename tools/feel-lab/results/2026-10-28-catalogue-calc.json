@@ -1,5 +1,5 @@
 {
- "summary": "266/266",
+ "summary": "278/278",
  "cases": {
   "type text Enter": {
    "area": "enter",
@@ -1323,6 +1323,66 @@
   },
   "click a tab then back keeps each selection": {
    "area": "tabs",
+   "ok": true,
+   "diff": []
+  },
+  "typing after copy ends copy mode": {
+   "area": "clip2",
+   "ok": true,
+   "diff": []
+  },
+  "Delete after copy": {
+   "area": "clip2",
+   "ok": true,
+   "diff": []
+  },
+  "Enter after copy fills a selection": {
+   "area": "clip2",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+V twice then Enter": {
+   "area": "clip2",
+   "ok": true,
+   "diff": []
+  },
+  "F2 after copy then Strg+V": {
+   "area": "clip2",
+   "ok": true,
+   "diff": []
+  },
+  "Delete after copy then Strg+V": {
+   "area": "clip2",
+   "ok": true,
+   "diff": []
+  },
+  "Esc after copy then Strg+V": {
+   "area": "clip2",
+   "ok": true,
+   "diff": []
+  },
+  "Strg+X then Esc then Strg+V": {
+   "area": "clip2",
+   "ok": true,
+   "diff": []
+  },
+  "undo after paste keeps copy mode": {
+   "area": "clip2",
+   "ok": true,
+   "diff": []
+  },
+  "copy then another sheet": {
+   "area": "clip2",
+   "ok": true,
+   "diff": []
+  },
+  "cut pasted twice": {
+   "area": "clip2",
+   "ok": true,
+   "diff": []
+  },
+  "F2 after copy": {
+   "area": "clip2",
    "ok": true,
    "diff": []
   },

@@ -636,6 +636,8 @@ export class Grid {
   startEdit(mode: "enter" | "edit", text?: string, caret?: number, viaBar = false): void {
     if (this.editing) return;
     this.showOptions(null);
+    // Editing a cell ends the copy mode (recorded in Excel).
+    if (this.marquee) this.setMarquee(null);
     const { row, col } = this.active;
     if (this.host.canEdit && !this.host.canEdit(row, col)) return;
     const cell = this.sheet.get(row, col);

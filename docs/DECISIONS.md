@@ -1421,6 +1421,14 @@ Excel a school uses most among those first deferred.
   tab click does (before, it did nothing). The harness names extra sheets itself, since Excel's
   name count goes on across cases. A range dragged on the other sheet is not compared (Excel's
   recording was unreliable).
+- **Copy mode** (12 recorded cases, area "clip2"): Entf and F2 end the copy mode as typing does;
+  once it has ended (also by Esc or by pasting a cut), Strg+V pastes nothing, since Excel
+  empties the clipboard then. RaabeCalc leaves the clipboard alone and instead ignores it while
+  it still holds that copy's text, so text copied in another program still pastes (the one
+  difference: the same text copied elsewhere afterwards is ignored too). Undo and a sheet change
+  keep the copy mode, as in Excel, and undoing a paste brings it back even after Esc (recorded),
+  so the ended copy is kept for that. One recording was redone: a click right of a pasted cell hit
+  Excel's Einfügeoptionen button.
 - **Keyboard modes** (recorded): Ende then an arrow jumps as Strg+arrow (status bar "Endmodus"),
   F8 Auswahl erweitern, Umschalt+F8 Abschnitt hinzufügen oder entfernen, Strg+Rücktaste shows the
   active cell.

@@ -299,6 +299,18 @@ CASES: list[Case] = [
     C("Esc while pointing on another sheet", {}, [("type", "=1+"), ("tabclick", "Tabelle3"), ("click", "B2"), ("keys", "esc")], "tabs", sheets=2, check=["A1"]),
     C("back to the own sheet while pointing", {}, [("type", "=1+"), ("tabclick", "Tabelle3"), ("tabclick", "Tabelle1"), ("click", "C3"), ("keys", "enter")], "tabs", sheets=2, check=["A1"]),
     C("click a tab then back keeps each selection", {}, [("click", "C3"), ("tabclick", "Tabelle3"), ("click", "B2"), ("tabclick", "Tabelle1")], "tabs", sheets=2),
+    C("typing after copy ends copy mode", {"A1": "1"}, [("keys", "ctrl+c"), ("click", "B1"), ("type", "x"), ("keys", "enter")], "clip2"),
+    C("Delete after copy", {"A1": "1"}, [("keys", "ctrl+c"), ("click", "B1"), ("keys", "delete")], "clip2"),
+    C("Enter after copy fills a selection", {"A1": "1"}, [("keys", "ctrl+c"), ("click", "B1"), ("keys", "shift+down"), ("keys", "enter")], "clip2"),
+    C("Strg+V twice then Enter", {"A1": "1"}, [("keys", "ctrl+c"), ("click", "B1"), ("keys", "ctrl+v"), ("click", "C1"), ("keys", "ctrl+v"), ("click", "D3"), ("keys", "enter")], "clip2"),
+    C("F2 after copy then Strg+V", {"A1": "1"}, [("keys", "ctrl+c"), ("click", "B1"), ("keys", "f2"), ("keys", "esc"), ("click", "C1"), ("keys", "ctrl+v")], "clip2"),
+    C("Delete after copy then Strg+V", {"A1": "1"}, [("keys", "ctrl+c"), ("click", "B1"), ("keys", "delete"), ("click", "C1"), ("keys", "ctrl+v")], "clip2"),
+    C("Esc after copy then Strg+V", {"A1": "1"}, [("keys", "ctrl+c"), ("keys", "esc"), ("click", "B1"), ("keys", "ctrl+v")], "clip2"),
+    C("Strg+X then Esc then Strg+V", {"A1": "1"}, [("keys", "ctrl+x"), ("keys", "esc"), ("click", "B1"), ("keys", "ctrl+v")], "clip2"),
+    C("undo after paste keeps copy mode", {"A1": "1"}, [("keys", "ctrl+c"), ("click", "B1"), ("keys", "ctrl+v"), ("keys", "ctrl+z")], "clip2"),
+    C("copy then another sheet", {"A1": "1"}, [("keys", "ctrl+c"), ("keys", "ctrl+pagedown"), ("click", "B2"), ("keys", "ctrl+v")], "clip2", sheets=2),
+    C("cut pasted twice", {"A1": "1"}, [("keys", "ctrl+x"), ("click", "B1"), ("keys", "ctrl+v"), ("click", "C1"), ("keys", "ctrl+v")], "clip2"),
+    C("F2 after copy", {"A1": "1"}, [("keys", "ctrl+c"), ("click", "B1"), ("keys", "f2"), ("keys", "esc")], "clip2"),
     C("Strg+Umschalt+L filter", {"A1": "Name", "A2": "x", "A3": "y"}, [("keys", "ctrl+shift+l")], "sheets"),
 ]
 

@@ -634,6 +634,9 @@ export class CalcApp {
     this.history.step(label, fn);
   }
 
+  /** A copy whose copy mode has ended: Strg+V does not paste it any more; undoing a paste brings it back. */
+  private spent: Copied | null = null;
+
   /** The sheet a formula is typed on while it points into another one. */
   private pointHome: number | null = null;
 
@@ -679,7 +682,10 @@ export class CalcApp {
         this.grid.setMarquee(null);
         this.copied = null;
       },
-      clearContents: () => { if (this.protection.guard("edit.clearContents")) this.change("Löschen", () => A.clearContents(this.ctx, this.sheet, this.grid.selection)); },
+      clearContents: () => {
+        this.grid.setMarquee(null);
+        if (this.protection.guard("edit.clearContents")) this.change("Löschen", () => A.clearContents(this.ctx, this.sheet, this.grid.selection));
+      },
       clearRange: (r) => { if (this.protection.guard("edit.clearContents")) this.change("Löschen", () => A.clearContents(this.ctx, this.sheet, [r])); },
       leavePointing: () => {
         if (this.pointHome === null) return;
@@ -714,7 +720,12 @@ export class CalcApp {
         this.scheduleChrome();
       },
       flagsChanged: (flags) => this.statusBar.setFlags(flags),
-      copyMode: (on) => this.statusBar.setMessage(on ? "Ziel wählen, mit Eingabe oder Strg+V einfügen" : null),
+      copyMode: (on) => {
+        this.statusBar.setMessage(on ? "Ziel wählen, mit Eingabe oder Strg+V einfügen" : null);
+        // Once the copy mode ends (Esc, Entf, F2, typing, a pasted cut), Strg+V no longer pastes
+        // it: Excel empties the clipboard then (recorded). Text copied elsewhere still pastes.
+        if (!on && this.copied) { this.spent = this.copied; this.copied = null; }
+      },
       modeChanged: (mode: Mode) => {
         this.statusBar.setMode(mode === "ready" ? "Bereit" : mode === "enter" ? "Eingeben" : mode === "edit" ? "Bearbeiten" : "Zeigen");
         this.commands.refresh();
@@ -1084,6 +1095,7 @@ export class CalcApp {
     const text = rangeText(this.wb, this.sheet, r);
     const html = rangeHtml(this.wb, this.sheet, r);
     this.copied = { sheet: this.sheet, rect: r, cut, text };
+    this.spent = null;
     this.grid.setMarquee(r);
     try {
       if (this.platform.clipboardWriteHtml) await this.platform.clipboardWriteHtml(html, text);
@@ -1095,6 +1107,7 @@ export class CalcApp {
     const at = { row: this.grid.selection.at(-1)!.r0, col: this.grid.selection.at(-1)!.c0 };
     let text = "";
     try { text = await this.platform.clipboardRead(); } catch { /* empty */ }
+    if (this.spent && text.replace(/\r\n/g, "\n") === this.spent.text.replace(/\r\n/g, "\n")) return;
     const c = this.copied;
     const same = c && this.wb.sheets.includes(c.sheet) && (text === "" || text.replace(/\r\n/g, "\n") === c.text.replace(/\r\n/g, "\n"));
     if (c && same) {
@@ -1120,7 +1133,7 @@ export class CalcApp {
           this.grid.select(all, at);
         }
       });
-      if (c.cut) { this.copied = null; this.grid.setMarquee(null); }
+      if (c.cut) { this.grid.setMarquee(null); this.copied = null; }
       else {
         const pasted = this.grid.selection.at(-1)!;
         const again = (w: "all" | "values" | "formats" | "formulas" | "transpose") => () => { this.history.undo(); this.grid.select(target, at); void this.paste(w); };
@@ -1613,7 +1626,8 @@ export class CalcApp {
       else {
         const label = this.history.undoLabel;
         this.history.undo();
-        // Undoing a paste brings the copied range's marquee back (recorded).
+        // Undoing a paste brings the copied range's marquee back, also after Esc (recorded).
+        if (label === "Einfügen" && !this.copied && this.spent && !this.spent.cut) { this.copied = this.spent; this.spent = null; }
         if (label === "Einfügen" && this.copied && !this.copied.cut && this.copied.sheet === this.sheet) this.grid.setMarquee(this.copied.rect);
       }
       this.grid.syncBar();
