@@ -264,7 +264,7 @@ class SheetWriter {
     }
     // Gliederung: Excel shows the outline bar from these two levels.
     {
-      const lv = (m: Map<number, { outline?: number }>) => Math.max(0, ...[...m.values()].map((i) => i.outline ?? 0));
+      const lv = (m: Map<number, { outline?: number }>) => { let x = 0; for (const i of m.values()) if ((i.outline ?? 0) > x) x = i.outline!; return x; };
       const fmt = this.get("sheetFormatPr") ?? '<sheetFormatPr baseColWidth="10" defaultRowHeight="15"/>';
       const want = { outlineLevelRow: lv(s.rows) ? String(lv(s.rows)) : null, outlineLevelCol: lv(s.cols) ? String(lv(s.cols)) : null };
       const next = setAttrs(fmt, want);
@@ -566,7 +566,11 @@ function workbookXml(wb: Workbook, raw: BookRaw, entries: { name: string; sheetI
   put("sheets", `<sheets>${sheetXml.join("")}</sheets>`);
   // Defined names, with each sheet's print area and AutoFilter range; Excel's text is kept
   // when the set of names did not change.
-  const names = wb.names.map((n) => nameXml(n, raw, fileIndex));
+  // A print area or Drucktitel set in the model replaces a name the reader kept for that sheet.
+  const owned = (n: { name: string; sheet?: number }) => n.sheet !== undefined && (
+    (n.name === PRINT_TITLES && !!(wb.sheets[n.sheet]?.page?.titleRows || wb.sheets[n.sheet]?.page?.titleCols)) ||
+    (n.name === PRINT_AREA && !!wb.sheets[n.sheet]?.page?.printArea));
+  const names = wb.names.filter((n) => !owned(n)).map((n) => nameXml(n, raw, fileIndex));
   wb.sheets.forEach((s, i) => {
     const local = fileIndex.get(i);
     if (s.page?.printArea) names.push(`<definedName name="${PRINT_AREA}" localSheetId="${local}">${escText(sheetRef(s.name, s.page.printArea))}</definedName>`);

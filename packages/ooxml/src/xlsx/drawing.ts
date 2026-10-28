@@ -76,6 +76,8 @@ export function writeCharts(pw: PackageWriter, sheet: Sheet, sheetPart: string, 
   const charts = chartsOf(sheet) ?? [];
   const pics = sheet.pictures ?? [];
   const picsSame = picturesKey(sheet) === (picsSnap ?? canon([]));
+  // The anchors the reader turned into pictures; others (EMF logos …) are kept as they are.
+  const readRaws = new Set<string>((JSON.parse(picsSnap ?? "[]") as { raw?: string | null }[]).map((p) => p.raw ?? "").filter(Boolean));
   if ((raw ? canon(charts) === raw.snap : !charts.length) && picsSame) return undefined;
   const sheetRels = pw.relsOf(sheetPart);
   let drel = sheetRels.list.find((r) => isRel(r.type, DRAWING_REL_TYPE));
@@ -96,7 +98,7 @@ export function writeCharts(pw: PackageWriter, sheet: Sheet, sheetPart: string, 
       // Pictures: kept as they are, with new corners when moved, gone when deleted.
       if (/<xdr:pic\b/.test(ax)) {
         const p = pics.find((q) => q.raw === ax);
-        if (!p) continue;
+        if (!p) { if (!readRaws.has(ax)) slots.push({ xml: ax }); continue; }
         const moved = canon([p.from, p.to ?? null]) !== canon([point(ax, "from") ?? null, p.to ? point(ax, "to") ?? null : null]);
         slots.push({ xml: moved ? movedPicture(p) : ax });
         continue;

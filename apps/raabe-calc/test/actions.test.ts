@@ -222,3 +222,26 @@ describe("Undo of whole-sheet steps restores the sheet's settings", () => {
     expect(b.sheet.threads?.[0].text).toBe("t");
   });
 });
+
+describe("Review fixes", () => {
+  it("Kommentare and pictures move with inserted and deleted rows", () => {
+    const b = book({ A1: "1" });
+    b.sheet.threads = [{ row: 4, col: 1, id: "{1}", author: "A", date: "", text: "B5", replies: [] }, { row: 1, col: 0, id: "{2}", author: "A", date: "", text: "A2", replies: [] }];
+    b.sheet.pictures = [{ from: { col: 2, row: 5, x: 3, y: 4 }, to: { col: 4, row: 8, x: 0, y: 0 }, src: "data:image/png;base64,", name: "P" }];
+    b.history.step("i", () => A.insertDelete(b.ctx, b.sheet, "rows", 2, 1));
+    expect(b.sheet.threads!.map((t) => [t.text, t.row])).toEqual([["B5", 5], ["A2", 1]]);
+    expect([b.sheet.pictures![0].from.row, b.sheet.pictures![0].to!.row]).toEqual([6, 9]);
+    b.history.step("d", () => A.insertDelete(b.ctx, b.sheet, "rows", 5, -1));
+    expect(b.sheet.threads!.map((t) => t.text)).toEqual(["A2"]);
+  });
+  it("Tage ausfüllen continues by the step of two dates", () => {
+    const b = book({ A1: "01.01.2026", A2: "03.01.2026" });
+    b.history.step("f", () => A.fillDates(b.ctx, b.sheet, R("A1:A2"), R("A1:A4"), "days"));
+    expect([b.text("A3"), b.text("A4")]).toEqual(["05.01.2026", "07.01.2026"]);
+  });
+  it("Arbeitstage ausfüllen counts workdays between two dates (Fri, Mon: one)", () => {
+    const b = book({ A1: "30.01.2026", A2: "02.02.2026" });
+    b.history.step("f", () => A.fillDates(b.ctx, b.sheet, R("A1:A2"), R("A1:A3"), "workdays"));
+    expect(b.text("A3")).toBe("03.02.2026");
+  });
+});

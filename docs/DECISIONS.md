@@ -1357,6 +1357,16 @@ Excel a school uses most among those first deferred.
   the name from Datei > Optionen.
 - **Undo of whole-sheet steps** now also restores the sheet's page setup, filter, conditional
   formats, validations, protection, threads and pictures (before, only cells, sizes and merges).
+- **Review of these additions** (an independent read of the code at 04:00) found and we fixed:
+  Kommentare and pictures did not move with inserted or deleted rows and columns; Blatt schützen
+  checked only the selection, so filling, pasting, Strg+Eingabe, dropdown choices and
+  Blitzvorschau could write into locked cells (now every written cell is checked); saving dropped
+  pictures the reader does not show (EMF logos); Tage / Arbeitstage ausfüllen used a wrong step;
+  Arbeitsmappe schützen could be bypassed from the tab menu; copied sheets lost protection,
+  page setup, filter, rules, Kommentare and pictures; a kept Print_Titles name could be written
+  twice; SVG pictures (which Excel stores with a PNG copy) are no longer offered; undo no longer
+  copies picture data per step; sorting moves Kommentare with their rows. Still open from it:
+  sorting does not move pictures, undo of Registerfarbe.
 - **Keyboard modes** (recorded): Ende then an arrow jumps as Strg+arrow (status bar "Endmodus"),
   F8 Auswahl erweitern, Umschalt+F8 Abschnitt hinzufügen oder entfernen, Strg+Rücktaste shows the
   active cell.

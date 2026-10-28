@@ -43,7 +43,7 @@ export function needs(id: string): string | null {
   if (/^insert\.(table|chart\w*|note)$/.test(id) || /^data\.(textToColumns|removeDuplicates|advancedFilter)$/.test(id) || id === "styles.table") return "never";
   // Tonight's additions (D-065): changes Excel does not allow on a protected sheet.
   if (/^data\.(group|ungroup|subtotal|goalSeek|validation|circleInvalid)$/.test(id) || /^layout\.break(Insert|Remove|Reset)$/.test(id) || id === "review.spelling") return "never";
-  if (/^insert\.picture\w*$/.test(id)) return "objects";
+  if (/^insert\.picture\w*$/.test(id) || /^(insert\.comment|review\.(newComment|deleteComment))$/.test(id)) return "objects";
   if (/^edit\.(paste\w*|cut|clear\w*|fill\w+|auto\w+|dateToday|timeNow|flashFill|removeLinks)$/.test(id)) return "unlocked";
   return null;
 }
@@ -140,6 +140,13 @@ export function protectionFeature(app: CalcApp) {
   function guard(id: string): boolean {
     if (needs(id) !== "unlocked" || !on()) return true;
     if (!anyLocked(app.sheet, app.grid.selection)) return true;
+    refuse();
+    return false;
+  }
+
+  /** Before cells are written: true when none of them is locked on a protected sheet, else the message. */
+  function guardRects(rects: Rect[]): boolean {
+    if (!on() || !anyLocked(app.sheet, rects)) return true;
     refuse();
     return false;
   }
@@ -256,7 +263,7 @@ export function protectionFeature(app: CalcApp) {
     app.change("Arbeitsmappe schützen", () => { app.history.sheets(); wb.protection = attrs; });
   }
 
-  return { on, allows, canEdit, enabled, guard, nextUnlocked, protect, unprotect, bookLocked, structureCommand: (id: string) => STRUCTURE.test(id), protectBook };
+  return { on, allows, canEdit, enabled, guard, guardRects, nextUnlocked, protect, unprotect, bookLocked, structureCommand: (id: string) => STRUCTURE.test(id), protectBook };
 }
 
 export { legacyHash, sha512 };

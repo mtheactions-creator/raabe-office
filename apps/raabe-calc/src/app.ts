@@ -59,6 +59,14 @@ interface Doc {
 }
 
 const stripExt = (name: string) => name.replace(/\.(xlsx|csv)$/i, "");
+/** A new GUID in Excel's form (Kommentar ids). */
+const newId = () => {
+  const b = crypto.getRandomValues(new Uint8Array(16));
+  b[6] = (b[6] & 0x0f) | 0x40;
+  b[8] = (b[8] & 0x3f) | 0x80;
+  const x = [...b].map((v) => v.toString(16).padStart(2, "0").toUpperCase()).join("");
+  return `{${x.slice(0, 8)}-${x.slice(8, 12)}-${x.slice(12, 16)}-${x.slice(16, 20)}-${x.slice(20)}}`;
+};
 const samePath = (a: string, b: string) => a.toLowerCase() === b.toLowerCase();
 
 export class CalcApp {
@@ -401,6 +409,7 @@ export class CalcApp {
     if (!prog) { await messageBox("RaabeCalc", "Blitzvorschau hat kein Muster gefunden. Geben Sie ein oder zwei weitere Beispiele ein und versuchen Sie es noch einmal."); return; }
     const fills = body.filter((r) => text(r, col) === "" && sources(r).some((s) => s !== ""));
     if (!fills.length) return;
+    if (!this.protection.guardRects(fills.map((r) => ({ r0: r, c0: col, r1: r, c1: col })))) return;
     this.change("Blitzvorschau", () => {
       for (const r of fills) {
         const out = runFill(prog!, sources(r));
@@ -609,6 +618,7 @@ export class CalcApp {
     return {
       workbook: () => this.wb,
       commit: (targets, text) => {
+        if (!this.protection.guardRects([targets])) return;
         this.change("Eingabe", () => {
           A.enter(this.ctx, this.sheet, targets, text);
           this.autoRowHeights(targets);
@@ -619,7 +629,7 @@ export class CalcApp {
       },
       clearContents: () => { if (this.protection.guard("edit.clearContents")) this.change("Löschen", () => A.clearContents(this.ctx, this.sheet, this.grid.selection)); },
       clearRange: (r) => { if (this.protection.guard("edit.clearContents")) this.change("Löschen", () => A.clearContents(this.ctx, this.sheet, [r])); },
-      fill: (source, target, ctrl) => { if (this.protection.guard("edit.fillDown")) this.fillWithOptions(source, target, ctrl ? "toggle" : "auto"); },
+      fill: (source, target, ctrl) => { if (this.protection.guardRects([target])) this.fillWithOptions(source, target, ctrl ? "toggle" : "auto"); },
       move: (source, to, copy) => this.protection.on() ? void this.protection.canEdit(this.sheet.view.active.row, this.sheet.view.active.col) : this.change(copy ? "Kopieren" : "Verschieben", () => {
         if (copy) A.copyCells(this.ctx, { sheet: this.sheet, rect: source }, this.sheet, to);
         else A.moveCells(this.ctx, this.sheet, source, to);
@@ -682,7 +692,7 @@ export class CalcApp {
       },
       showFormulas: () => this.showFormulas,
       arrows: () => this.trace.of(this.sheet),
-      movePageBreak: (rows, from, to) => this.change("Seitenumbruch", () => {
+      movePageBreak: (rows, from, to) => this.protection.on() ? undefined : this.change("Seitenumbruch", () => {
         // A moved break is a manual one at its new place (Excel); an automatic one leaves nothing behind.
         this.history.whole(this.sheet);
         const p = { ...(this.sheet.page ?? {}) };
@@ -1024,6 +1034,9 @@ export class CalcApp {
     const same = c && this.wb.sheets.includes(c.sheet) && (text === "" || text.replace(/\r\n/g, "\n") === c.text.replace(/\r\n/g, "\n"));
     if (c && same) {
       const target = this.grid.selection.at(-1)!;
+      const size = what === "transpose" ? { h: c.rect.c1 - c.rect.c0, w: c.rect.r1 - c.rect.r0 } : { h: c.rect.r1 - c.rect.r0, w: c.rect.c1 - c.rect.c0 };
+      const written = { r0: target.r0, c0: target.c0, r1: Math.max(target.r1, target.r0 + size.h), c1: Math.max(target.c1, target.c0 + size.w) };
+      if (!this.protection.guardRects(c.cut ? [written, c.rect] : [written])) return;
       this.change(c.cut ? "Ausschneiden" : "Einfügen", () => {
         if (c.cut && c.sheet === this.sheet) {
           const dst = A.moveCells(this.ctx, this.sheet, c.rect, at);
@@ -1063,6 +1076,7 @@ export class CalcApp {
     const rows = parseClipboard(html, text);
     if (!rows.length || (rows.length === 1 && rows[0].length === 1 && rows[0][0].text === "")) return;
     const r = { r0: at.row, c0: at.col, r1: at.row + rows.length - 1, c1: at.col + Math.max(...rows.map((x) => x.length)) - 1 };
+    if (!this.protection.guardRects([r])) return;
     this.change("Einfügen", () => {
       rows.forEach((cells, i) => cells.forEach((c, j) => {
         const cell = { r0: at.row + i, c0: at.col + j, r1: at.row + i, c1: at.col + j };
@@ -1303,6 +1317,7 @@ export class CalcApp {
   }
 
   private moveSheet(from: number, to: number, copy: boolean): void {
+    if (this.protection.bookLocked()) return;
     this.change(copy ? "Blatt kopieren" : "Blatt verschieben", () => {
       this.history.sheets();
       const s = this.wb.sheets[from];
@@ -1313,6 +1328,15 @@ export class CalcApp {
         c.rows = new Map([...s.rows].map(([k, v]) => [k, { ...v }]));
         c.merges = s.merges.map((m) => ({ ...m }));
         c.validations = s.validations ? structuredClone(s.validations) : undefined;
+        // The copy keeps the sheet's settings (Excel): protection, page setup, filter, rules,
+        // Kommentare (new ids) and pictures (written as new ones).
+        c.protection = s.protection ? { ...s.protection } : undefined;
+        c.page = s.page ? structuredClone(s.page) : undefined;
+        c.autoFilter = s.autoFilter ? structuredClone(s.autoFilter) : undefined;
+        c.conditional = s.conditional ? structuredClone(s.conditional) : undefined;
+        c.threads = s.threads?.map((t) => ({ ...t, id: newId(), personId: undefined, replies: t.replies.map((r) => ({ ...r, id: newId(), personId: undefined })) }));
+        c.pictures = s.pictures?.map((p) => ({ ...p, raw: undefined }));
+        c.tabColor = s.tabColor;
         c.defaultColWidth = s.defaultColWidth;
         c.defaultRowHeight = s.defaultRowHeight;
         c.view = structuredClone(s.view);
@@ -1347,8 +1371,8 @@ export class CalcApp {
       { label: "Code anzeigen", run: () => {}, disabled: true },
       { label: "Blatt schützen...", run: () => {}, disabled: true },
       { label: "Registerfarbe", submenu: [
-        { label: "Keine Farbe", run: () => this.change("Registerfarbe", () => { this.history.sheets(); this.sheet.tabColor = undefined; }) },
-        ...colors.map((c) => ({ label: c, icon: undefined, run: () => this.change("Registerfarbe", () => { this.history.sheets(); this.sheet.tabColor = c; }) })),
+        { label: "Keine Farbe", disabled: this.protection.bookLocked(), run: () => this.change("Registerfarbe", () => { this.history.sheets(); this.sheet.tabColor = undefined; }) },
+        ...colors.map((c) => ({ label: c, icon: undefined, disabled: this.protection.bookLocked(), run: () => this.change("Registerfarbe", () => { this.history.sheets(); this.sheet.tabColor = c; }) })),
       ] },
       "-",
       { label: "Ausblenden", run: () => void this.commands.run("cells.hideSheet"), disabled: this.wb.sheets.filter((s) => !s.hidden).length < 2 },

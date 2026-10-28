@@ -365,11 +365,37 @@ export function moveCells(ctx: Ctx, sheet: Sheet, from: Rect, at: { row: number;
 }
 
 /** Inserts (count > 0) or deletes (count < 0) whole rows or columns at `at`. */
+/**
+ * Kommentare and pictures sit at a row and column of their own: they move with inserted and
+ * deleted rows or columns as the cells do (a thread on a deleted cell goes with it; a picture
+ * whose top-left cell is deleted moves to the first row or column after the gap), as in Excel.
+ */
+function shiftAnchored(sheet: Sheet, kind: "rows" | "cols", at: number, count: number): void {
+  const rows = kind === "rows";
+  const move = (p: number) => (p < at ? p : count < 0 && p < at - count ? null : p + count);
+  if (sheet.threads?.length) {
+    const next = sheet.threads.flatMap((t) => {
+      const p = move(rows ? t.row : t.col);
+      return p === null ? [] : [{ ...t, row: rows ? p : t.row, col: rows ? t.col : p }];
+    });
+    sheet.threads = next.length ? next : undefined;
+  }
+  if (sheet.pictures?.length) {
+    const shift = <T extends { row: number; col: number; x: number; y: number }>(a: T): T => {
+      const p = move(rows ? a.row : a.col);
+      const q = p === null ? at : p;
+      return { ...a, row: rows ? q : a.row, col: rows ? a.col : q, x: rows || p !== null ? a.x : 0, y: !rows || p !== null ? a.y : 0 };
+    };
+    sheet.pictures = sheet.pictures.map((pic) => ({ ...pic, from: shift(pic.from), to: pic.to ? shift(pic.to) : undefined }));
+  }
+}
+
 export function insertDelete(ctx: Ctx, sheet: Sheet, kind: "rows" | "cols", at: number, count: number): void {
   ctx.history.whole(sheet);
   // Datenüberprüfung ranges move with the cells (also those on other sheets that point here).
   for (const s of affectedByShift(ctx.wb, sheet)) ctx.history.validations(s);
   shiftValidations(ctx.wb, sheet, kind, at, count);
+  shiftAnchored(sheet, kind, at, count);
   const isRows = kind === "rows";
   const next = new Map<number, Cell>();
   for (const [k, c] of sheet.cells) {
@@ -485,6 +511,19 @@ export function shiftCells(ctx: Ctx, sheet: Sheet, r: Rect, dir: "right" | "down
     if (nr < MAX_ROWS && nc < MAX_COLS) next.set(cellKey(nr, nc), c);
   }
   sheet.cells = next;
+  // Kommentare in the shifted block move with their cells; those in deleted cells go.
+  if (sheet.threads?.length) {
+    const h2 = r.r1 - r.r0 + 1, w2 = r.c1 - r.c0 + 1;
+    const next2 = sheet.threads.flatMap((t) => {
+      let row = t.row, col = t.col;
+      if (dir === "right" && row >= r.r0 && row <= r.r1 && col >= r.c0) col += w2;
+      if (dir === "down" && col >= r.c0 && col <= r.c1 && row >= r.r0) row += h2;
+      if (dir === "left" && row >= r.r0 && row <= r.r1 && col >= r.c0) { if (col <= r.c1) return []; col -= w2; }
+      if (dir === "up" && col >= r.c0 && col <= r.c1 && row >= r.r0) { if (row <= r.r1) return []; row -= h2; }
+      return [{ ...t, row, col }];
+    });
+    sheet.threads = next2.length ? next2 : undefined;
+  }
   // Formulas on every sheet follow the shifted cells (references to deleted cells become #BEZUG!).
   for (const s of ctx.wb.sheets) {
     let saved = s === sheet;
@@ -537,9 +576,18 @@ export function fillDates(ctx: Ctx, sheet: Sheet, source: Rect, target: Rect, un
     let by = 1;
     if (last > first && typeof end?.v === "number") {
       const d1 = toDate(end.v);
-      by = unit === "months" ? (d1.getUTCFullYear() - d0.getUTCFullYear()) * 12 + d1.getUTCMonth() - d0.getUTCMonth()
-        : unit === "years" ? d1.getUTCFullYear() - d0.getUTCFullYear() : Math.round((end.v - start.v) / (last - first));
-      by = by / (last - first) || 1;
+      let total = unit === "months" ? (d1.getUTCFullYear() - d0.getUTCFullYear()) * 12 + d1.getUTCMonth() - d0.getUTCMonth()
+        : unit === "years" ? d1.getUTCFullYear() - d0.getUTCFullYear() : Math.round(end.v - start.v);
+      if (unit === "workdays") {
+        // Workdays between the two dates, not calendar days.
+        total = 0;
+        const dir = Math.sign(end.v - start.v);
+        for (const x = new Date(d0.getTime()); dir && Math.sign(d1.getTime() - x.getTime()) === dir;) {
+          x.setUTCDate(x.getUTCDate() + dir);
+          if (x.getUTCDay() !== 0 && x.getUTCDay() !== 6) total += dir;
+        }
+      }
+      by = total / (last - first) || 1;
     }
     const lo = vertical ? target.r0 : target.c0, hi = vertical ? target.r1 : target.c1;
     for (let i = lo; i <= hi; i++) {

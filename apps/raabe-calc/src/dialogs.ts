@@ -361,6 +361,7 @@ export function dialogs(app: CalcApp) {
       app.history.cells(sheet(), rect);
       const rows: Cell[][] = [];
       for (let r = rect.r0; r <= rect.r1; r++) rows.push(range(rect.c0, rect.c1).map((c) => sheet().get(r, c) ?? { v: null }));
+      const origin = new Map(rows.map((cells, i) => [cells, rect.r0 + i]));
       const rank = (v: Cell["v"]) => (v === null || v === "" ? 5 : typeof v === "number" ? 0 : typeof v === "string" ? 1 : typeof v === "boolean" ? 2 : 3);
       rows.sort((a, b) => {
         for (const k of keys) {
@@ -381,7 +382,17 @@ export function dialogs(app: CalcApp) {
         const row = rect.r0 + i, col = rect.c0 + j;
         sheet().set(row, col, c.v === null && c.s === undefined && !c.f ? undefined : { ...c });
       }));
+      moveThreads(rect, rows.map((cells) => origin.get(cells)!));
     });
+  }
+
+  /** Sorting: Kommentare in the sorted range go with their rows (`order` lists the old row of each new one). */
+  function moveThreads(rect: Rect, order: number[]): void {
+    const th = sheet().threads;
+    if (!th?.length) return;
+    app.history.whole(sheet());
+    const newRow = new Map(order.map((old, i) => [old, rect.r0 + i]));
+    sheet().threads = th.map((t) => (t.col >= rect.c0 && t.col <= rect.c1 && newRow.has(t.row) ? { ...t, row: newRow.get(t.row)! } : t));
   }
 
   /** Nach Farbe sortieren: the rows with that colour first, the others after them in their order (Excel's "Oben"). */

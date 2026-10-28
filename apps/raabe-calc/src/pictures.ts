@@ -8,7 +8,8 @@ import { h, messageBox } from "@raabe/shell";
 import type { SheetPicture } from "@raabe/sheet-engine";
 import type { CalcApp } from "./app";
 
-const MIME: Record<string, string> = { png: "image/png", jpg: "image/jpeg", jpeg: "image/jpeg", gif: "image/gif", bmp: "image/bmp", svg: "image/svg+xml" };
+// SVG is left out: Excel stores it with a PNG copy beside it, which RaabeCalc does not make.
+const MIME: Record<string, string> = { png: "image/png", jpg: "image/jpeg", jpeg: "image/jpeg", gif: "image/gif", bmp: "image/bmp" };
 
 export function picturesFeature(app: CalcApp) {
   const layer = h("div", { class: "picture-layer" });
@@ -123,6 +124,7 @@ export function picturesFeature(app: CalcApp) {
     const up = () => {
       el.removeEventListener("pointermove", move);
       el.removeEventListener("pointerup", up);
+      el.removeEventListener("pointercancel", up);
       const l = live;
       live = null;
       if (!l || (Math.abs(l.dx) < 1 && Math.abs(l.dy) < 1 && Math.abs(l.w - b.w) < 1)) { place(); return; }
@@ -132,6 +134,7 @@ export function picturesFeature(app: CalcApp) {
     };
     el.addEventListener("pointermove", move);
     el.addEventListener("pointerup", up);
+    el.addEventListener("pointercancel", up);
   }
 
   // A click elsewhere ends the selection; Entf deletes the selected picture.
@@ -154,7 +157,8 @@ export function picturesFeature(app: CalcApp) {
     try {
       const bytes = await app.platform.readFile(path);
       const ext = path.split(".").pop()?.toLowerCase() ?? "";
-      const type = bytes[0] === 0x89 && bytes[1] === 0x50 ? "image/png" : bytes[0] === 0xff && bytes[1] === 0xd8 ? "image/jpeg" : MIME[ext] ?? "image/png";
+      const type = bytes[0] === 0x89 && bytes[1] === 0x50 ? "image/png" : bytes[0] === 0xff && bytes[1] === 0xd8 ? "image/jpeg" : MIME[ext];
+      if (!type) throw new Error("Dieses Bildformat wird nicht unterstützt (PNG, JPEG, GIF oder BMP).");
       let bin = "";
       for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
       const src = `data:${type};base64,${btoa(bin)}`;

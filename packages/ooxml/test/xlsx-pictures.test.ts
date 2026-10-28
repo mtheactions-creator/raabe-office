@@ -24,3 +24,14 @@ describe("Berechnungsoptionen in the file", () => {
     expect(readXlsx(writeXlsx(back)).calcMode).toBeUndefined();
   });
 });
+
+describe("Review fixes in files", () => {
+  it("keeps one Print_Titles name when the model sets Drucktitel", async () => {
+    const { writeXlsx } = await import("../src");
+    const wb = readXlsx(readFileSync("packages/ooxml/test/fixtures/xlsx-values.xlsx"));
+    wb.names.push({ name: "_xlnm.Print_Titles", ref: "Werte!$A$1:$B$2", sheet: 0 });
+    wb.sheets[0].page = { ...(wb.sheets[0].page ?? {}), titleRows: [0, 0] };
+    const xml = new TextDecoder().decode((await import("fflate")).unzipSync(writeXlsx(wb))["xl/workbook.xml"]);
+    expect(xml.match(/_xlnm\.Print_Titles/g)?.length).toBe(1);
+  });
+});

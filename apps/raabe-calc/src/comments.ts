@@ -36,6 +36,8 @@ export function commentsFeature(app: CalcApp, userName: () => string) {
   const outside = (e: Event) => { if (card && !card.contains(e.target as Node)) close(); };
 
   function change(label: string, fn: (list: CommentThread[]) => CommentThread[]): void {
+    // A protected sheet keeps its Kommentare unless Objekte bearbeiten is allowed (Excel).
+    if (app.isProtected() && !app.protectionAllows("objects")) return;
     const sheet = app.sheet;
     app.change(label, () => {
       app.history.whole(sheet);
