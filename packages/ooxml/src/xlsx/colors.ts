@@ -30,12 +30,16 @@ export interface Theme {
   colors: Record<string, string>;
   major: string;
   minor: string;
+  /** The widths of the theme's three line styles (a:lnStyleLst) in pt. */
+  lines: number[];
 }
 
 /** Colours and fonts of a theme part (xl/theme/theme1.xml). */
 export function readTheme(xml: string | null): Theme {
-  const out: Theme = { colors: { ...OFFICE_2013_THEME }, major: "Calibri Light", minor: "Calibri" };
+  const out: Theme = { colors: { ...OFFICE_2013_THEME }, major: "Calibri Light", minor: "Calibri", lines: [0.5, 1, 1.5] };
   if (!xml) return out;
+  const lines = [...(/<a:lnStyleLst>([\s\S]*?)<\/a:lnStyleLst>/.exec(xml)?.[1] ?? "").matchAll(/<a:ln\b[^>]*\bw="(\d+)"/g)].map((m) => Number(m[1]) / 12700);
+  if (lines.length === 3) out.lines = lines;
   const scheme = /<a:clrScheme\b[\s\S]*?<\/a:clrScheme>/.exec(xml)?.[0];
   if (scheme) {
     for (const m of scheme.matchAll(/<a:(dk1|lt1|dk2|lt2|accent[1-6]|hlink|folHlink)>\s*<a:(sysClr|srgbClr)\b([^>]*)>/g)) {

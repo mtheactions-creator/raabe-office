@@ -1554,6 +1554,15 @@ that the catalogue only measured what we had thought of. Decided with the owner:
   with dash and both arrow ends, text, bold and size, rotation, flip, adjust value) and 10/10
   Excel→RaabeCalc. `shot_compare.py` puts Excel's picture of a range (CopyPicture) next to RaabeCalc's
   for a look by eye. Not yet: Freihand shapes (Kurve, Freihandform, Skizze).
+  Shapes drawn in Excel with the mouse (`probe_excel_drawshape.py`, both Office themes): a new
+  shape's text starts at the top left; its outline is Akzent 1 shaded to 15 % at the theme's second
+  line width (1 pt in the Office 2013-2022 theme, 1,5 pt in the current one); a line takes the
+  theme's first line style in the 2013-2022 theme and the second in the current one; a click gives
+  a 2,54 cm square. RaabeCalc keeps the style reference of each shape and reads the theme's line
+  widths. `shot_compare.py` on Excel's own file: the same picture (mean difference 2 of 255).
+- **Row heights in whole device pixels**, as Excel rounds them at the screen's DPI: 14,5 pt rows
+  are 29 device px at 150 % (they were 28,5 px; over 20 rows RaabeCalc drifted 10 px from Excel).
+  Printing stays at 96 dpi. The Zeilenhöhe dialog keeps the typed height exactly.
 - **Inventory results hold labels only** (CLAUDE.md, D-058): `feellab/sanitize.py` drops Office's
   descriptions (function tips, explanations after a label) and anything naming a file; the full
   recording stays in `captures/`. The first inventory commit (36c7d49) still had them in the file:

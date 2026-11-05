@@ -117,6 +117,7 @@ export function readPackage(files: Record<string, Uint8Array>): Workbook {
   const persons = readPersons(str(partOf(RT_PERSON)));
   const theme = readTheme(str(partOf(RT.theme)));
   wb.theme = Object.fromEntries(Object.entries(theme.colors).map(([k, v]) => [k, "#" + v]));
+  wb.themeLines = theme.lines;
   const { table, raw: stylesRaw } = readStyles(str(partOf(RT.styles)) || NO_STYLES, theme.colors);
   wb.styles = table;
   const ctx = stylesRaw.ctx;

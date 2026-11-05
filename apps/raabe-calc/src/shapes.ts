@@ -104,13 +104,16 @@ export function shapesFeature(app: CalcApp) {
    */
   function engineOf(s: SheetShape): { fmt: PictureFormat; info: ShapeInfo; text: string } {
     const a = accent().replace("#", "").toUpperCase();
+    const lines = app.wb.themeLines;
     const line = isLinePreset(s.geom) || !!s.connector;
     const kind: ShapeInfo["kind"] = line ? "connector" : s.textBox ? "textbox" : "shape";
     const info: ShapeInfo = {
       kind, adjust: s.adjust,
       styleFill: kind === "shape" ? { kind: "solid", color: a } : kind === "textbox" ? { kind: "solid", color: "FFFFFF" } : { kind: "none" },
-      styleLine: kind === "shape" ? { color: shadeLinear(a, 0.5), width: 1 } : kind === "textbox" ? { color: shadeLinear("FFFFFF", 0.5), width: 0.75 } : { color: a, width: 0.5 },
-      body: { l: 7.2, t: 3.6, r: 7.2, b: 3.6, anchor: s.anchor ?? (s.textBox ? "t" : "ctr"), wrap: true, autofit: "none" },
+      styleLine: kind === "shape" ? { color: shadeLinear(a, s.style?.shade ?? 0.15), width: lines[(s.style?.ln ?? 2) - 1] ?? 1 }
+        : kind === "textbox" ? { color: shadeLinear("FFFFFF", 0.5), width: 0.75 }
+        : { color: s.style?.shade !== undefined ? shadeLinear(a, s.style.shade) : a, width: lines[(s.style?.ln ?? 1) - 1] ?? 0.5 },
+      body: { l: 7.2, t: 3.6, r: 7.2, b: 3.6, anchor: s.anchor ?? "t", wrap: true, autofit: "none" },
     };
     const hex = (c?: string) => (c ?? "").replace("#", "").toUpperCase();
     const end = (t?: string) => (t && t !== "none" ? { type: t as "triangle" } : undefined);
@@ -186,8 +189,8 @@ export function shapesFeature(app: CalcApp) {
         Object.assign(t.style, {
           color: l.text, fontSize: `${((s.font?.size ?? 11) * 96 / 72) * z()}px`, fontWeight: s.font?.bold ? "bold" : "", fontStyle: s.font?.italic ? "italic" : "",
           textDecoration: s.font?.underline ? "underline" : "",
-          justifyContent: { t: "flex-start", ctr: "center", b: "flex-end" }[s.anchor ?? (s.textBox ? "t" : "ctr")],
-          textAlign: { l: "left", ctr: "center", r: "right" }[s.align ?? (s.textBox ? "l" : "ctr")],
+          justifyContent: { t: "flex-start", ctr: "center", b: "flex-end" }[s.anchor ?? "t"],
+          textAlign: { l: "left", ctr: "center", r: "right" }[s.align ?? "l"],
         });
       }
       const pos: Record<string, [number, number]> = { nw: [0, 0], n: [0.5, 0], ne: [1, 0], e: [1, 0.5], se: [1, 1], s: [0.5, 1], sw: [0, 1], w: [0, 0.5],
@@ -470,7 +473,11 @@ export function shapesFeature(app: CalcApp) {
       const n = (app.sheet.shapes?.length ?? 0) + (app.sheet.pictures?.length ?? 0) + (app.sheet.charts?.length ?? 0) + 1;
       const label = SHAPE_NAMES[drawFor] ?? entry?.label ?? "Form";
       let s: SheetShape = { from: { col: 0, row: 0, x: 0, y: 0 }, to: { col: 0, row: 0, x: 0, y: 0 }, geom: drawFor, name: textBox ? `Textfeld ${n}` : `${label} ${n}` };
-      if (line) { s.connector = true; if (w < 0) s.flipH = true; if (hh < 0) s.flipV = true; }
+      if (line) {
+        s.connector = true; if (w < 0) s.flipH = true; if (hh < 0) s.flipV = true;
+        // Excel's lines take line style 1 of the Office 2013-2022 theme, style 2 of the current one (recorded).
+        s.style = { ln: (app.wb.themeLines[0] ?? 0.5) >= 1 ? 2 : 1 };
+      }
       if (ends?.head || ends?.tail) s.line = { type: "solid", ...(ends.head ? { head: ends.head.type } : {}), ...(ends.tail ? { tail: ends.tail.type } : {}) };
       if (textBox) s.textBox = true;
       s = placeAt(s, { x: start.x, y: start.y, w, h: hh });
@@ -544,7 +551,7 @@ export function shapesFeature(app: CalcApp) {
       ];
       if (l?.type !== "none") {
         c.push({ type: "color", label: "Farbe", value: () => l?.color ?? null, set: (hex) => set({ type: "solid", color: hex ?? undefined }) });
-        c.push({ type: "number", label: "Breite", unit: " Pt.", min: 0, max: 1584, step: 0.25, decimals: 2, value: () => l?.width ?? (line ? 0.5 : s().textBox ? 0.75 : 1), set: (v) => set({ width: v }) });
+        c.push({ type: "number", label: "Breite", unit: " Pt.", min: 0, max: 1584, step: 0.25, decimals: 2, value: () => l?.width ?? (s().textBox ? 0.75 : app.wb.themeLines[(s().style?.ln ?? (line ? 1 : 2)) - 1] ?? 1), set: (v) => set({ width: v }) });
         c.push({ type: "select", label: "Strichtyp", options: [["solid", "Durchgehend"], ["sysDot", "Rundpunkt"], ["sysDash", "Quadratpunkt"], ["dash", "Strich"], ["dashDot", "Strich-Punkt"], ["lgDash", "Langer Strich"]].map(([value, label]) => ({ value, label })),
           value: () => l?.dash ?? "solid", set: (v) => set({ dash: v === "solid" ? undefined : v }) });
         if (line) {
@@ -567,9 +574,9 @@ export function shapesFeature(app: CalcApp) {
     } };
     const textSec: PaneSection = { title: "Textfeld", open: true, controls: () => [
       { type: "select", label: "Vertikale Ausrichtung", options: [{ value: "t", label: "Oben" }, { value: "ctr", label: "Mitte" }, { value: "b", label: "Unten" }],
-        value: () => s().anchor ?? (s().textBox ? "t" : "ctr"), set: (v) => edit("Ausrichtung", (q) => ({ ...q, anchor: v as SheetShape["anchor"] })) },
+        value: () => s().anchor ?? "t", set: (v) => edit("Ausrichtung", (q) => ({ ...q, anchor: v as SheetShape["anchor"] })) },
       { type: "select", label: "Horizontale Ausrichtung", options: [{ value: "l", label: "Links" }, { value: "ctr", label: "Zentriert" }, { value: "r", label: "Rechts" }],
-        value: () => s().align ?? (s().textBox ? "l" : "ctr"), set: (v) => edit("Ausrichtung", (q) => ({ ...q, align: v as SheetShape["align"] })) },
+        value: () => s().align ?? "l", set: (v) => edit("Ausrichtung", (q) => ({ ...q, align: v as SheetShape["align"] })) },
     ] };
     const tabs = [{ id: "fill", label: "Füllung und Linie", icon: "pane-fill-line", sections: () => (line ? [lineSec] : [fillSec, lineSec]) },
       { id: "size", label: "Größe und Eigenschaften", icon: "size-position", sections: () => (line ? [sizeSec] : [sizeSec, textSec]) }];

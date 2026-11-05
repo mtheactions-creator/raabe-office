@@ -81,8 +81,13 @@ export function pxToChars(px: number): number {
   return Math.round(shownChars(pxToWidth(px)) * 100) / 100;
 }
 
+/**
+ * A row height in pt as CSS px: whole device pixels, as Excel rounds it at the screen's DPI
+ * (14,5 pt is 19 px at 100 % but 29 device px = 19,33 CSS px at 150 %, recorded with shot_compare.py).
+ */
 export function ptToPx(pt: number): number {
-  return Math.round((pt * 96) / 72);
+  const dpr = (typeof devicePixelRatio === "number" && devicePixelRatio > 0) ? devicePixelRatio : 1;
+  return Math.round(((pt * 96) / 72) * dpr) / dpr;
 }
 
 export function pxToPt(px: number): number {
@@ -178,4 +183,9 @@ export function sheetAxes(sheet: Sheet): { rows: Axis; cols: Axis } {
   }
   rows.set(rx, rowDef);
   return { rows, cols };
+}
+
+/** A row height in pt as px at 96 dpi (printing, whatever the screen). */
+export function ptToPx96(pt: number): number {
+  return Math.round((pt * 96) / 72);
 }

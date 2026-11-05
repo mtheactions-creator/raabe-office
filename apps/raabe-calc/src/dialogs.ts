@@ -11,7 +11,7 @@ import { colorGrid, h, messageBox, showDialog, showMenu, type MenuEntry } from "
 import type { CalcApp } from "./app";
 import * as A from "./actions";
 import { shown, editText } from "./engine";
-import { DEFAULT_COL_CHARS, charsToPx, ptToPx, shownChars, shownToChars } from "./grid/metrics";
+import { DEFAULT_COL_CHARS, charsToPx, shownChars, shownToChars } from "./grid/metrics";
 import type { Settings } from "./store";
 import { CUSTOM_OPS, NUMBER_FILTERS, TEXT_FILTERS, fromCustom, passes, prepare as prepareFilter, toCustom } from "./filters";
 
@@ -62,7 +62,7 @@ export function dialogs(app: CalcApp) {
     if (!ok) return;
     const v = num(input.value);
     if (!(v >= 0 && v <= 409)) return void messageBox("RaabeCalc", "Die Zeilenhöhe muss zwischen 0 und 409 liegen.");
-    app.setRowHeights(range(r.r0, r.r1), ptToPx(v));
+    app.setRowHeights(range(r.r0, r.r1), (v * 96) / 72);
   }
 
   // ----- cells ---------------------------------------------------------------------------------

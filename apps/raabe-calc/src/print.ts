@@ -7,7 +7,7 @@ import { MAX_COLS, cellName, colName, parseRange, type PageSetup, type Rect, typ
 import { h, icon, showDialog, type MenuEntry } from "@raabe/shell";
 import type { CalcApp } from "./app";
 import { shown } from "./engine";
-import { DEFAULT_COL_CHARS, charsToPx96, ptToPx } from "./grid/metrics";
+import { DEFAULT_COL_CHARS, charsToPx96, ptToPx96 } from "./grid/metrics";
 
 /** A column's printed width in px at 96 dpi (the standard width rounded up to 8 px). */
 function colPx96(sheet: Sheet, c: number): number {
@@ -127,7 +127,7 @@ export function printFeature(app: CalcApp) {
     const m = p.margins ?? MARGINS["Normale Seitenränder"];
     const pw = (sz.w - m.left - m.right) * 96, ph = (sz.h - m.top - m.bottom) * 96;
     const colW = (c: number) => colPx96(sheet, c);
-    const rowH = (r: number) => (sheet.rows.get(r)?.hidden ? 0 : ptToPx(sheet.rows.get(r)?.height ?? sheet.defaultRowHeight));
+    const rowH = (r: number) => (sheet.rows.get(r)?.hidden ? 0 : ptToPx96(sheet.rows.get(r)?.height ?? sheet.defaultRowHeight));
     let scale = ((p.scale ?? 100) / 100) * PRINT_SCALE;
     if (p.fitWidth || p.fitHeight) {
       let tw = 0, th = 0;
@@ -186,7 +186,7 @@ export function printFeature(app: CalcApp) {
     if (p.headings) table.append(h("tr", null, h("th"), ...cols.map((c) => h("th", null, colName(c)))));
     for (const r of rows) {
       if (sheet.rows.get(r)?.hidden) continue;
-      const tr = h("tr", { style: `height:${ptToPx(sheet.rows.get(r)?.height ?? sheet.defaultRowHeight)}px` });
+      const tr = h("tr", { style: `height:${ptToPx96(sheet.rows.get(r)?.height ?? sheet.defaultRowHeight)}px` });
       if (p.headings) tr.append(h("th", null, String(r + 1)));
       for (const c of cols) {
         const merge = sheet.mergeAt(r, c);
@@ -213,8 +213,8 @@ export function printFeature(app: CalcApp) {
     for (const pic of sheet.pictures ?? []) {
       const ci = cols.indexOf(pic.from.col), ri = rows.indexOf(pic.from.row);
       if (ci < 0 || ri < 0) continue;
-      const rowH = (r: number) => (sheet.rows.get(r)?.hidden ? 0 : ptToPx(sheet.rows.get(r)?.height ?? sheet.defaultRowHeight));
-      let x = (p.headings ? 30 : 0) + pic.from.x, y = (p.headings ? ptToPx(sheet.defaultRowHeight) : 0) + pic.from.y;
+      const rowH = (r: number) => (sheet.rows.get(r)?.hidden ? 0 : ptToPx96(sheet.rows.get(r)?.height ?? sheet.defaultRowHeight));
+      let x = (p.headings ? 30 : 0) + pic.from.x, y = (p.headings ? ptToPx96(sheet.defaultRowHeight) : 0) + pic.from.y;
       for (const c of cols.slice(0, ci)) x += colPx96(sheet, c);
       for (const r of rows.slice(0, ri)) y += rowH(r);
       let w = pic.size?.w ?? 0, hgt = pic.size?.h ?? 0;

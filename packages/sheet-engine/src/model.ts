@@ -263,6 +263,12 @@ export interface SheetShape {
   to: { col: number; row: number; x: number; y: number };
   /** DrawingML preset geometry ("rect", "ellipse", "rightArrow", "line" …). */
   geom: string;
+  /**
+   * The shape style's line reference (xdr:style lnRef): which of the theme's line styles and how
+   * much Akzent 1 is shaded. Excel 365 gives shapes style 2 shaded to 15 %, lines style 1 (Office
+   * 2013-2022 theme) or 2 (the current Office theme).
+   */
+  style?: { ln: number; shade?: number };
   /** The preset's adjust values that differ from its defaults (a:avLst, the yellow handles). */
   adjust?: Record<string, number>;
   /** Lines and arrows (xdr:cxnSp). */
@@ -465,6 +471,8 @@ export class Workbook {
   protection?: Record<string, string>;
   /** Theme colours (dk1, lt1, dk2, lt2, accent1-6, hlink, folHlink) as "#RRGGBB". */
   theme: Record<string, string> = {};
+  /** The widths of the theme's line styles in pt (shapes' outlines refer to them). */
+  themeLines: number[] = [0.5, 1, 1.5];
   /** The .xlsx layer's package and parts it does not model. */
   raw?: unknown;
 

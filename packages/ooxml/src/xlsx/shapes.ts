@@ -71,6 +71,8 @@ export function shapeFromXml(ax: string): SheetShape | null {
     }
   }
   if (/<xdr:cNvSpPr\b[^>]*txBox="1"/.test(ax)) s.textBox = true;
+  const lnRef = /<a:lnRef idx="(\d+)">\s*<a:schemeClr val="accent1"(?:\s*\/>|>\s*(?:<a:shade val="(\d+)"\/>)?)/.exec(/<xdr:style>([\s\S]*?)<\/xdr:style>/.exec(ax)?.[1] ?? "");
+  if (lnRef && !s.textBox) s.style = { ln: Number(lnRef[1]), ...(lnRef[2] ? { shade: Number(lnRef[2]) / 100000 } : {}) };
   const name = /<xdr:cNvPr\b[^>]*name="([^"]*)"/.exec(ax)?.[1];
   if (name) s.name = unesc(name);
   const body = /<xdr:txBody>([\s\S]*?)<\/xdr:txBody>/.exec(ax)?.[1];
@@ -123,18 +125,19 @@ export function shapeToXml(s: SheetShape, id: number, size: { w: number; h: numb
     : s.textBox ? '<a:ln w="9525" cmpd="sng"><a:solidFill><a:schemeClr val="lt1"><a:shade val="50000"/></a:schemeClr></a:solidFill></a:ln>' : "";
   if (s.connector) {
     return `<xdr:twoCellAnchor>${pointXml("from", s.from)}${pointXml("to", s.to)}<xdr:cxnSp macro=""><xdr:nvCxnSpPr><xdr:cNvPr id="${id}" name="${name}"/><xdr:cNvCxnSpPr/></xdr:nvCxnSpPr>`
-      + `<xdr:spPr>${xfrm}${line}</xdr:spPr><xdr:style><a:lnRef idx="1"><a:schemeClr val="accent1"/></a:lnRef><a:fillRef idx="0"><a:schemeClr val="accent1"/></a:fillRef><a:effectRef idx="0"><a:schemeClr val="accent1"/></a:effectRef><a:fontRef idx="minor"><a:schemeClr val="tx1"/></a:fontRef></xdr:style></xdr:cxnSp><xdr:clientData/></xdr:twoCellAnchor>`;
+      + `<xdr:spPr>${xfrm}${line}</xdr:spPr><xdr:style><a:lnRef idx="${s.style?.ln ?? 1}"><a:schemeClr val="accent1"/></a:lnRef><a:fillRef idx="0"><a:schemeClr val="accent1"/></a:fillRef><a:effectRef idx="${(s.style?.ln ?? 1) >= 2 ? 1 : 0}"><a:schemeClr val="accent1"/></a:effectRef><a:fontRef idx="minor"><a:schemeClr val="tx1"/></a:fontRef></xdr:style></xdr:cxnSp><xdr:clientData/></xdr:twoCellAnchor>`;
   }
   const f = s.font;
   const rAttrs = ` lang="de-DE"${f?.size ? ` sz="${Math.round(f.size * 100)}"` : ' sz="1100"'}${f?.bold ? ' b="1"' : ""}${f?.italic ? ' i="1"' : ""}${f?.underline ? ' u="sng"' : ""}`;
   const rFill = f?.color ? `<a:solidFill>${srgb(f.color)}</a:solidFill>` : "";
-  const algn = s.align ?? (s.textBox ? "l" : "ctr");
+  // Excel 365 starts a new shape's text at the top left, as DrawingML's defaults are.
+  const algn = s.align ?? "l";
   const paras = (s.text ?? "").split("\n").map((t) => t
     ? `<a:p><a:pPr algn="${algn}"/><a:r><a:rPr${rAttrs}>${rFill}</a:rPr><a:t>${esc(t)}</a:t></a:r></a:p>`
     : `<a:p><a:pPr algn="${algn}"/><a:endParaRPr${rAttrs}/></a:p>`).join("");
   const style = s.textBox
     ? '<xdr:style><a:lnRef idx="0"><a:scrgbClr r="0" g="0" b="0"/></a:lnRef><a:fillRef idx="0"><a:scrgbClr r="0" g="0" b="0"/></a:fillRef><a:effectRef idx="0"><a:scrgbClr r="0" g="0" b="0"/></a:effectRef><a:fontRef idx="minor"><a:schemeClr val="dk1"/></a:fontRef></xdr:style>'
-    : '<xdr:style><a:lnRef idx="2"><a:schemeClr val="accent1"><a:shade val="50000"/></a:schemeClr></a:lnRef><a:fillRef idx="1"><a:schemeClr val="accent1"/></a:fillRef><a:effectRef idx="0"><a:schemeClr val="accent1"/></a:effectRef><a:fontRef idx="minor"><a:schemeClr val="lt1"/></a:fontRef></xdr:style>';
+    : `<xdr:style><a:lnRef idx="${s.style?.ln ?? 2}"><a:schemeClr val="accent1"><a:shade val="${Math.round((s.style?.shade ?? 0.15) * 100000)}"/></a:schemeClr></a:lnRef><a:fillRef idx="1"><a:schemeClr val="accent1"/></a:fillRef><a:effectRef idx="0"><a:schemeClr val="accent1"/></a:effectRef><a:fontRef idx="minor"><a:schemeClr val="lt1"/></a:fontRef></xdr:style>`;
   return `<xdr:twoCellAnchor>${pointXml("from", s.from)}${pointXml("to", s.to)}<xdr:sp macro="" textlink=""><xdr:nvSpPr><xdr:cNvPr id="${id}" name="${name}"/><xdr:cNvSpPr${s.textBox ? ' txBox="1"' : ""}/></xdr:nvSpPr>`
-    + `<xdr:spPr>${xfrm}${fill}${line}</xdr:spPr>${style}<xdr:txBody><a:bodyPr vertOverflow="clip" horzOverflow="clip" wrap="square" rtlCol="0" anchor="${s.anchor ?? (s.textBox ? "t" : "ctr")}"/><a:lstStyle/>${paras}</xdr:txBody></xdr:sp><xdr:clientData/></xdr:twoCellAnchor>`;
+    + `<xdr:spPr>${xfrm}${fill}${line}</xdr:spPr>${style}<xdr:txBody><a:bodyPr vertOverflow="clip" horzOverflow="clip" wrap="square" rtlCol="0" anchor="${s.anchor ?? "t"}"/><a:lstStyle/>${paras}</xdr:txBody></xdr:sp><xdr:clientData/></xdr:twoCellAnchor>`;
 }
