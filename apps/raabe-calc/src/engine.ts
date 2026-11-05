@@ -41,6 +41,7 @@ export function shownAt(cell: Cell | undefined, style: CellStyle, widthPx: numbe
 /** The cell's content as the formula bar and the cell editor show it (Excel's rules, measured in numfmt/input). */
 export function editText(cell: Cell | undefined, style: CellStyle): string {
   if (!cell) return "";
+  if (cell.dt !== undefined) return `{=${cell.dt}}`;
   if (cell.f !== undefined) return "=" + toLocalFormula(cell.f);
   if (cell.v instanceof CellError) return errorText(cell.v);
   return valueEditText(cell.v, style.numFmt);

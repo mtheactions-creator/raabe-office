@@ -43,6 +43,7 @@ import { spellingFeature } from "./spelling";
 import { picturesFeature } from "./pictures";
 import { shapesFeature } from "./shapes";
 import { borderDrawFeature } from "./borderdraw";
+import { whatIfFeature } from "./whatif";
 import { pivotsFeature } from "./pivots";
 import { commentsFeature } from "./comments";
 import { iconRule } from "./dialogs";
@@ -102,6 +103,7 @@ export class CalcApp {
   private pictures = picturesFeature(this);
   readonly shapes = shapesFeature(this);
   readonly borderDraw = borderDrawFeature(this);
+  readonly whatIf = whatIfFeature(this);
   readonly pivots = pivotsFeature(this);
   private comments = commentsFeature(this, () => this.settings.userName);
   private errorCheck = errorCheckFeature(this, () => void this.evaluator.open());
@@ -191,6 +193,7 @@ export class CalcApp {
     const doc: Doc = { id: crypto.randomUUID(), name, path, wb, history, calc: makeCalc(wb), version: 0, savedVersion: 0, recoveryVersion: 0, lastSaved: null };
     history.onChange = (change) => this.afterChange(doc, change);
     doc.calc.recalc();
+    this.whatIf?.refresh(false, { wb, calc: doc.calc });
     return doc;
   }
 
@@ -626,6 +629,8 @@ export class CalcApp {
       if (i >= 0) doc.calc.changed(i, cells);
     }
     if (doc === this.active) this.warnNewLoops(loopsBefore);
+    // Datentabellen work their results out again after every change (Excel's automatic mode).
+    if (doc === this.active) this.whatIf.refresh();
     if (doc === this.active) {
       this.grid.refreshLayout();
       this.grid.contentChanged();
@@ -694,6 +699,7 @@ export class CalcApp {
       commit: (targets, text) => {
         if (!this.protection.guardRects([targets])) return;
         if (!this.pivots.guard(targets)) return;
+        if (!this.whatIf.guard(targets)) return;
         this.change("Eingabe", () => {
           A.enter(this.ctx, this.sheet, targets, text);
           // Formulas are worked out first, so the column can widen for their result (an error too).
@@ -712,6 +718,7 @@ export class CalcApp {
       },
       clearContents: () => {
         this.grid.setMarquee(null);
+        if (!this.grid.selection.every((r) => this.whatIf.guard(r))) return;
         if (this.protection.guard("edit.clearContents")) this.change("Löschen", () => A.clearContents(this.ctx, this.sheet, this.grid.selection));
       },
       clearRange: (r) => { if (this.protection.guard("edit.clearContents")) this.change("Löschen", () => A.clearContents(this.ctx, this.sheet, [r])); },
@@ -1957,6 +1964,7 @@ export class CalcApp {
     run("data.subtotal", () => void this.subtotalDialog(), notEditing);
     run("data.whatIf", () => {});
     run("data.goalSeek", () => void this.goalSeek(), notEditing);
+    run("data.dataTable", () => void this.whatIf.dialog(), notEditing);
     run("review.spelling", () => void this.spelling.run(), notEditing);
     run("insert.pictures", () => {});
     run("insert.sparkLine", () => void this.sparklineDialog("line"), notEditing);
@@ -2003,7 +2011,7 @@ export class CalcApp {
     run("formulas.calcAuto", setMode(undefined), undefined, () => !this.wb.calcMode);
     run("formulas.calcPartial", setMode("autoNoTable"), undefined, () => this.wb.calcMode === "autoNoTable");
     run("formulas.calcManual", setMode("manual"), undefined, () => this.wb.calcMode === "manual");
-    run("formulas.calcNow", () => { this.active.calc.recalc(); this.statusBar.setNote("calc", null); this.grid.contentChanged(); });
+    run("formulas.calcNow", () => { this.active.calc.recalc(); this.whatIf.refresh(true); this.statusBar.setNote("calc", null); this.grid.contentChanged(); });
     run("formulas.calcSheet", () => { this.active.calc.recalc(); this.statusBar.setNote("calc", null); this.grid.contentChanged(); });
 
     run("review.statistics", () => void this.dlg.statistics());
@@ -2605,6 +2613,8 @@ export class CalcApp {
     return {
       app: this,
       grid: this.grid,
+      /** A range address ("B2:C4") as a Rect. */
+      parse: (a: string) => addr(a),
       /** A fresh workbook with the case's cells typed in, the start cell selected. */
       reset: (setup: Record<string, string>, start: string, sheets: number, merges: string[] = []) => {
         this.grid.resetKeyModes();
@@ -2671,9 +2681,11 @@ export class CalcApp {
           if (c.type === "gallery") return c.items.map((i) => ({ ...cmdItem(i.cmd), type: "gallery" }));
           const base: Item = "cmd" in c ? cmdItem(c.cmd, "label" in c ? c.label : undefined) : { name: "?" };
           const menu = "menu" in c && c.menu.length ? { items: entries(c.menu) } : {};
-          return [{ ...base, type: (c as { type: string }).type, ...menu }];
+          // Own panels (colour palettes, galleries) hold their entries outside the menu.
+          const own = "popup" in c && c.popup ? { panel: true } : c.type === "color" ? { panel: true } : {};
+          return [{ ...base, type: (c as { type: string }).type, ...menu, ...own }];
         };
-        const tabs = [...ribbonTabs(this.ribbonContext()), this.chartTab()];
+        const tabs = [...ribbonTabs(this.ribbonContext()), this.chartTab(), this.chartFormatTab(), this.shapeTab(), this.pivotAnalyzeTab(), this.pivotDesignTab()];
         return tabs.map((t) => ({
           name: t.label, contextual: !!t.contextual,
           groups: t.groups.map((g) => ({ name: g.label, launcher: g.launcher ? cmdItem(g.launcher.cmd) : undefined, controls: g.controls.flatMap(ctl) })),

@@ -165,6 +165,8 @@ export interface Cell {
   link?: string;
   /** Note (Notiz) text. */
   note?: string;
+  /** A Datentabelle's result cell: the formula the formula bar shows ("MEHRFACHOPERATION(B1;A1)"; not saved). */
+  dt?: string;
   /** Fehler ignorieren was chosen for this cell's error indicator (session only, not saved). */
   ignoreError?: boolean;
   /** The .xlsx layer's parts of the cell it does not model (attributes such as cm/vm, data-table formulas, the formula as the file spelt it). */

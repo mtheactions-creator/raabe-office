@@ -1573,6 +1573,17 @@ that the catalogue only measured what we had thought of. Decided with the owner:
 - **Rahmenlinien zeichnen**: Rahmenlinie zeichnen (a click on a cell edge draws it, a drag the
   outline), Rahmenraster zeichnen, Rahmenlinie löschen (also the neighbouring cell's side), Linienfarbe
   and Linienart (13 styles, our own samples); choosing a colour or style switches drawing on, Esc ends.
+- **Datentabelle** (Was-wäre-wenn-Analyse): one-variable tables down a column or across a row and
+  two-variable tables; each result is the formula's value with the input cell set to that row's or
+  column's value (worked out through the engine, the input cell put back), again after every change
+  (not under "Automatisch außer bei Datentabellen", then F9). The cells show
+  {=MEHRFACHOPERATION(Zeile;Spalte)} and refuse single edits; the whole table can be cleared. Saved as
+  Excel saves it (f t="dataTable" on the first result cell). `check_datatable.py`: 3/3 both ways.
+- **Inventory of the contextual tabs** (Diagramm, Tabelle, Bild, Form, Textfeld, Sparkline,
+  PivotTable; Datenschnitt's setup and SmartArt failed and are still open) and the report
+  `docs/EXCEL-INVENTORY.md` with RaabeCalc's contextual tabs and own panels counted: 766 of 2422
+  controls and menu entries (31,6 %). The largest gaps: 252 of Excel's 493 functions (being built),
+  real Excel tables with Tabellenentwurf, Sparklines, chart types and styles, Designs, the Zeichnen tab.
 - **Sheet names and status bar** (catalogue): Excel numbers a new sheet on from the last one it made in
   the workbook and never reuses a number (Tabelle4 after Tabelle2 and 3 were deleted); the status bar
   shows Mittelwert, Summe, Min and Max in the number format of the first number in the selection

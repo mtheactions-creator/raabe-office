@@ -307,7 +307,7 @@ export const COMMANDS: Command[] = [
   cmd("data.whatIf", "Was-wäre-wenn-Analyse", "trend"),
   later("data.scenarios", "Szenario-Manager...", undefined),
   cmd("data.goalSeek", "Zielwertsuche...", undefined),
-  later("data.dataTable", "Datentabelle...", undefined),
+  cmd("data.dataTable", "Datentabelle...", undefined),
   later("data.forecast", "Prognoseblatt", "trend"),
   cmd("data.group", "Gruppieren", "outline", { shortcut: "Umschalt+Alt+Nach-rechts" }),
   cmd("data.ungroup", "Gruppierung aufheben", "outline", { shortcut: "Umschalt+Alt+Nach-links" }),

@@ -1,0 +1,3784 @@
+[
+ {
+  "name": "Start",
+  "contextual": false,
+  "groups": [
+   {
+    "name": "Zwischenablage",
+    "launcher": {
+     "name": "Office-Zwischenablage",
+     "deferred": true,
+     "enabled": false
+    },
+    "controls": [
+     {
+      "name": "Einfügen",
+      "deferred": false,
+      "enabled": true,
+      "type": "split",
+      "items": [
+       {
+        "name": "Einfügen",
+        "items": [
+         {
+          "name": "Einfügen"
+         },
+         {
+          "name": "Formeln"
+         },
+         {
+          "name": "Transponieren"
+         }
+        ]
+       },
+       {
+        "name": "Werte einfügen",
+        "items": [
+         {
+          "name": "Werte"
+         }
+        ]
+       },
+       {
+        "name": "Weitere Einfügeoptionen",
+        "items": [
+         {
+          "name": "Formatierung"
+         }
+        ]
+       },
+       {
+        "name": "Inhalte einfügen...",
+        "deferred": false,
+        "enabled": false
+       }
+      ]
+     },
+     {
+      "name": "Ausschneiden",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Kopieren",
+      "deferred": false,
+      "enabled": true,
+      "type": "split",
+      "items": [
+       {
+        "name": "Kopieren",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Als Bild kopieren...",
+        "deferred": true,
+        "enabled": false
+       }
+      ]
+     },
+     {
+      "name": "Format übertragen",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     }
+    ]
+   },
+   {
+    "name": "Schriftart",
+    "launcher": {
+     "name": "Zellenschriftart formatieren",
+     "deferred": false,
+     "enabled": true
+    },
+    "controls": [
+     {
+      "name": "Schriftart",
+      "deferred": false,
+      "enabled": true,
+      "type": "combo"
+     },
+     {
+      "name": "Schriftgrad",
+      "deferred": false,
+      "enabled": true,
+      "type": "combo"
+     },
+     {
+      "name": "Schriftgrad vergrößern",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Schriftgrad verkleinern",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Fett",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Kursiv",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Unterstreichen",
+      "deferred": false,
+      "enabled": true,
+      "type": "split",
+      "items": [
+       {
+        "name": "Unterstreichen",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Doppelt unterstreichen",
+        "deferred": false,
+        "enabled": true
+       }
+      ]
+     },
+     {
+      "name": "Rahmen",
+      "deferred": false,
+      "enabled": true,
+      "type": "split",
+      "items": [
+       {
+        "name": "Rahmenlinie unten",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Rahmenlinie oben",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Rahmenlinie links",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Rahmenlinie rechts",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Kein Rahmen",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Alle Rahmenlinien",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Rahmenlinien außen",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Dicke Rahmenlinie außen",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Doppelte Rahmenlinien unten",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Dicke Rahmenlinie unten",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Rahmenlinie oben und unten",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Rahmenlinie oben und dicke unten",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Rahmenlinie oben und doppelte unten",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Rahmenlinie zeichnen",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Rahmenraster zeichnen",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Rahmenlinie löschen",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Linienfarbe",
+        "enabled": true,
+        "type": "flyout"
+       },
+       {
+        "name": "Linienart",
+        "enabled": true,
+        "type": "flyout"
+       },
+       {
+        "name": "Weitere Rahmenlinien...",
+        "deferred": false,
+        "enabled": true
+       }
+      ]
+     },
+     {
+      "name": "Füllfarbe",
+      "deferred": false,
+      "enabled": true,
+      "type": "color",
+      "panel": true
+     },
+     {
+      "name": "Schriftfarbe",
+      "deferred": false,
+      "enabled": true,
+      "type": "color",
+      "panel": true
+     }
+    ]
+   },
+   {
+    "name": "Ausrichtung",
+    "launcher": {
+     "name": "Zellenausrichtung formatieren",
+     "deferred": false,
+     "enabled": true
+    },
+    "controls": [
+     {
+      "name": "Oben ausrichten",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Zentriert ausrichten",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Unten ausrichten",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Ausrichtung",
+      "deferred": false,
+      "enabled": true,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "Gegen den Uhrzeigersinn drehen",
+        "enabled": true
+       },
+       {
+        "name": "Im Uhrzeigersinn drehen",
+        "enabled": true
+       },
+       {
+        "name": "Vertikaler Text",
+        "enabled": true
+       },
+       {
+        "name": "Text nach oben drehen",
+        "enabled": true
+       },
+       {
+        "name": "Text nach unten drehen",
+        "enabled": true
+       },
+       {
+        "name": "Zellenausrichtung formatieren",
+        "enabled": true
+       }
+      ]
+     },
+     {
+      "name": "Textumbruch",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Linksbündig",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Zentriert",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Rechtsbündig",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Einzug verkleinern",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Einzug vergrößern",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Verbinden und zentrieren",
+      "deferred": false,
+      "enabled": true,
+      "type": "split",
+      "items": [
+       {
+        "name": "Verbinden und zentrieren",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Verbinden über",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Zellen verbinden",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Zellverbund aufheben",
+        "deferred": false,
+        "enabled": true
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "Zahl",
+    "launcher": {
+     "name": "Zellennummer formatieren",
+     "deferred": false,
+     "enabled": true
+    },
+    "controls": [
+     {
+      "name": "Zahlenformat",
+      "deferred": false,
+      "enabled": true,
+      "type": "combo"
+     },
+     {
+      "name": "Buchhaltungszahlenformat",
+      "deferred": false,
+      "enabled": true,
+      "type": "split",
+      "items": [
+       {
+        "name": "€ Deutsch (Deutschland)",
+        "enabled": true
+       },
+       {
+        "name": "$ Englisch (Vereinigte Staaten)",
+        "enabled": true
+       },
+       {
+        "name": "Weitere Buchhaltungsformate...",
+        "enabled": true
+       }
+      ]
+     },
+     {
+      "name": "Prozentformat",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "1.000er-Trennzeichen",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Dezimalstelle hinzufügen",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Dezimalstelle entfernen",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     }
+    ]
+   },
+   {
+    "name": "Formatvorlagen",
+    "controls": [
+     {
+      "name": "Bedingte Formatierung",
+      "deferred": false,
+      "enabled": true,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "Regeln zum Hervorheben von Zellen",
+        "enabled": true,
+        "submenu": [
+         {
+          "name": "Größer als...",
+          "enabled": true
+         },
+         {
+          "name": "Kleiner als...",
+          "enabled": true
+         },
+         {
+          "name": "Zwischen...",
+          "enabled": true
+         },
+         {
+          "name": "Gleich...",
+          "enabled": true
+         },
+         {
+          "name": "Textinhalt...",
+          "enabled": true
+         },
+         {
+          "name": "Doppelte Werte...",
+          "enabled": true
+         }
+        ]
+       },
+       {
+        "name": "Regeln für oberste/unterste Werte",
+        "enabled": true,
+        "submenu": [
+         {
+          "name": "Obere 10 Elemente...",
+          "enabled": true
+         },
+         {
+          "name": "Obere 10 %...",
+          "enabled": true
+         },
+         {
+          "name": "Untere 10 Elemente...",
+          "enabled": true
+         },
+         {
+          "name": "Untere 10 %...",
+          "enabled": true
+         },
+         {
+          "name": "Über dem Durchschnitt...",
+          "enabled": true
+         },
+         {
+          "name": "Unter dem Durchschnitt...",
+          "enabled": true
+         }
+        ]
+       },
+       {
+        "name": "Datenbalken",
+        "enabled": true,
+        "submenu": [
+         {
+          "name": "Blaue Datenleiste",
+          "enabled": true
+         },
+         {
+          "name": "Grüne Datenleiste",
+          "enabled": true
+         },
+         {
+          "name": "Rote Datenleiste",
+          "enabled": true
+         },
+         {
+          "name": "Orangefarbene Datenleiste",
+          "enabled": true
+         },
+         {
+          "name": "Hellblaue Datenleiste",
+          "enabled": true
+         },
+         {
+          "name": "Lila Datenleiste",
+          "enabled": true
+         }
+        ]
+       },
+       {
+        "name": "Farbskalen",
+        "enabled": true,
+        "submenu": [
+         {
+          "name": "Farbskala Grün - Gelb - Rot",
+          "enabled": true
+         },
+         {
+          "name": "Farbskala Rot - Gelb - Grün",
+          "enabled": true
+         },
+         {
+          "name": "Farbskala Grün - Weiß - Rot",
+          "enabled": true
+         },
+         {
+          "name": "Farbskala Rot - Weiß - Grün",
+          "enabled": true
+         },
+         {
+          "name": "Farbskala Weiß - Rot",
+          "enabled": true
+         },
+         {
+          "name": "Farbskala Grün - Weiß",
+          "enabled": true
+         }
+        ]
+       },
+       {
+        "name": "Symbolsätze",
+        "enabled": true,
+        "submenu": [
+         {
+          "name": "3 Pfeile (farbig)",
+          "enabled": true
+         },
+         {
+          "name": "3 Pfeile (grau)",
+          "enabled": true
+         },
+         {
+          "name": "3 Dreiecke",
+          "enabled": true
+         },
+         {
+          "name": "4 Pfeile (grau)",
+          "enabled": true
+         },
+         {
+          "name": "4 Pfeile (farbig)",
+          "enabled": true
+         },
+         {
+          "name": "5 Pfeile (grau)",
+          "enabled": true
+         },
+         {
+          "name": "5 Pfeile (farbig)",
+          "enabled": true
+         },
+         {
+          "name": "3 Ampeln (ohne Rand)",
+          "enabled": true
+         },
+         {
+          "name": "3 Ampeln (mit Rand)",
+          "enabled": true
+         },
+         {
+          "name": "3 Zeichen",
+          "enabled": true
+         },
+         {
+          "name": "4 Ampeln",
+          "enabled": true
+         },
+         {
+          "name": "Rot/Schwarz",
+          "enabled": true
+         },
+         {
+          "name": "3 Symbole (mit Kreis)",
+          "enabled": true
+         },
+         {
+          "name": "3 Symbole (ohne Kreis)",
+          "enabled": true
+         },
+         {
+          "name": "3 Kennzeichen",
+          "enabled": true
+         },
+         {
+          "name": "3 Sterne",
+          "enabled": true
+         },
+         {
+          "name": "4 Bewertungen",
+          "enabled": true
+         },
+         {
+          "name": "5 Viertel",
+          "enabled": true
+         },
+         {
+          "name": "5 Bewertungen",
+          "enabled": true
+         },
+         {
+          "name": "5 Kästchen",
+          "enabled": true
+         }
+        ]
+       },
+       {
+        "name": "Neue Regel...",
+        "enabled": false
+       },
+       {
+        "name": "Regeln löschen",
+        "enabled": true,
+        "submenu": [
+         {
+          "name": "Regeln in ausgewählten Zellen löschen",
+          "enabled": true
+         },
+         {
+          "name": "Regeln im gesamten Blatt löschen",
+          "enabled": true
+         }
+        ]
+       },
+       {
+        "name": "Regeln verwalten...",
+        "enabled": false
+       }
+      ]
+     },
+     {
+      "name": "Als Tabelle formatieren",
+      "deferred": false,
+      "enabled": true,
+      "type": "dropdown",
+      "panel": true
+     },
+     {
+      "name": "Zellenformatvorlagen",
+      "deferred": false,
+      "enabled": true,
+      "type": "dropdown",
+      "panel": true
+     }
+    ]
+   },
+   {
+    "name": "Zellen",
+    "controls": [
+     {
+      "name": "Einfügen",
+      "deferred": false,
+      "enabled": true,
+      "type": "split",
+      "items": [
+       {
+        "name": "Zellen einfügen...",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Blattzeilen einfügen",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Blattspalten einfügen",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Blatt einfügen",
+        "deferred": false,
+        "enabled": true
+       }
+      ]
+     },
+     {
+      "name": "Löschen",
+      "deferred": false,
+      "enabled": true,
+      "type": "split",
+      "items": [
+       {
+        "name": "Zellen löschen...",
+        "enabled": true
+       },
+       {
+        "name": "Blattzeilen löschen",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Blattspalten löschen",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Blatt löschen",
+        "deferred": false,
+        "enabled": true
+       }
+      ]
+     },
+     {
+      "name": "Format",
+      "deferred": false,
+      "enabled": true,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "Zeilenhöhe...",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Zeilenhöhe automatisch anpassen",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Spaltenbreite...",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Spaltenbreite automatisch anpassen",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Standardbreite...",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Ausblenden und Einblenden",
+        "enabled": true,
+        "submenu": [
+         {
+          "name": "Zeilen ausblenden",
+          "deferred": false,
+          "enabled": true
+         },
+         {
+          "name": "Spalten ausblenden",
+          "deferred": false,
+          "enabled": true
+         },
+         {
+          "name": "Blatt ausblenden",
+          "deferred": false,
+          "enabled": true
+         },
+         {
+          "name": "Zeilen einblenden",
+          "deferred": false,
+          "enabled": true
+         },
+         {
+          "name": "Spalten einblenden",
+          "deferred": false,
+          "enabled": true
+         },
+         {
+          "name": "Einblenden...",
+          "deferred": false,
+          "enabled": false
+         }
+        ]
+       },
+       {
+        "name": "Blatt umbenennen",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Blatt verschieben/kopieren...",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Registerfarbe",
+        "enabled": true,
+        "submenu": [
+         {
+          "name": "#C00000",
+          "enabled": true
+         },
+         {
+          "name": "#FF0000",
+          "enabled": true
+         },
+         {
+          "name": "#FFC000",
+          "enabled": true
+         },
+         {
+          "name": "#FFFF00",
+          "enabled": true
+         },
+         {
+          "name": "#92D050",
+          "enabled": true
+         },
+         {
+          "name": "#00B050",
+          "enabled": true
+         },
+         {
+          "name": "#00B0F0",
+          "enabled": true
+         },
+         {
+          "name": "#0070C0",
+          "enabled": true
+         },
+         {
+          "name": "#002060",
+          "enabled": true
+         },
+         {
+          "name": "#7030A0",
+          "enabled": true
+         }
+        ]
+       },
+       {
+        "name": "Blatt schützen...",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Zelle sperren",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Zellen formatieren...",
+        "deferred": false,
+        "enabled": true
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "Bearbeiten",
+    "controls": [
+     {
+      "name": "AutoSumme",
+      "deferred": false,
+      "enabled": true,
+      "type": "split",
+      "items": [
+       {
+        "name": "Summe",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Mittelwert",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Anzahl Zahlen",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Max",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Min",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Weitere Funktionen...",
+        "deferred": false,
+        "enabled": true
+       }
+      ]
+     },
+     {
+      "name": "Ausfüllen",
+      "deferred": false,
+      "enabled": true,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "Unten",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Rechts",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Oben",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Links",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Über Arbeitsblätter...",
+        "deferred": true,
+        "enabled": false
+       },
+       {
+        "name": "Datenreihe...",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Ausrichten",
+        "deferred": true,
+        "enabled": false
+       },
+       {
+        "name": "Blitzvorschau",
+        "deferred": false,
+        "enabled": true
+       }
+      ]
+     },
+     {
+      "name": "Löschen",
+      "deferred": false,
+      "enabled": true,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "Alle löschen",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Formate löschen",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Inhalte löschen",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Kommentare und Notizen löschen",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Links löschen",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Links entfernen",
+        "deferred": false,
+        "enabled": true
+       }
+      ]
+     },
+     {
+      "name": "Sortieren und Filtern",
+      "deferred": false,
+      "enabled": true,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "Nach Größe sortieren (aufsteigend)",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Nach Größe sortieren (absteigend)",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Benutzerdefiniertes Sortieren...",
+        "enabled": true
+       },
+       {
+        "name": "Filtern",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Löschen",
+        "deferred": false,
+        "enabled": false
+       },
+       {
+        "name": "Erneut anwenden",
+        "deferred": false,
+        "enabled": false
+       }
+      ]
+     },
+     {
+      "name": "Suchen und Auswählen",
+      "deferred": false,
+      "enabled": true,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "Suchen...",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Ersetzen...",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Gehe zu...",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Inhalte auswählen...",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Formeln",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Notizen",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Bedingte Formatierung",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Konstanten",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Datenüberprüfung",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Objekte auswählen",
+        "deferred": true,
+        "enabled": false
+       },
+       {
+        "name": "Auswahlbereich...",
+        "deferred": false,
+        "enabled": true
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Einfügen",
+  "contextual": false,
+  "groups": [
+   {
+    "name": "Tabellen",
+    "controls": [
+     {
+      "name": "PivotTable",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Empfohlene PivotTables",
+      "deferred": true,
+      "enabled": false,
+      "type": "button"
+     },
+     {
+      "name": "Tabelle",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     }
+    ]
+   },
+   {
+    "name": "Illustrationen",
+    "controls": [
+     {
+      "name": "Bilder",
+      "deferred": false,
+      "enabled": true,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "Dieses Gerät...",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Stockbilder...",
+        "deferred": true,
+        "enabled": false
+       },
+       {
+        "name": "Onlinebilder...",
+        "deferred": true,
+        "enabled": false
+       }
+      ]
+     },
+     {
+      "name": "Formen",
+      "deferred": false,
+      "enabled": true,
+      "type": "dropdown",
+      "panel": true
+     },
+     {
+      "name": "Piktogramme",
+      "deferred": true,
+      "enabled": false,
+      "type": "button"
+     }
+    ]
+   },
+   {
+    "name": "Diagramme",
+    "launcher": {
+     "name": "Empfohlene Diagramme",
+     "deferred": false,
+     "enabled": true
+    },
+    "controls": [
+     {
+      "name": "Empfohlene Diagramme",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Säulen- oder Balkendiagramm einfügen",
+      "deferred": false,
+      "enabled": true,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "Gruppierte Säulen",
+        "enabled": true
+       },
+       {
+        "name": "Gestapelte Säulen",
+        "enabled": true
+       },
+       {
+        "name": "Gruppierte Balken",
+        "enabled": true
+       },
+       {
+        "name": "Gestapelte Balken",
+        "enabled": true
+       }
+      ]
+     },
+     {
+      "name": "Hierarchiediagramm einfügen",
+      "deferred": true,
+      "enabled": false,
+      "type": "dropdown"
+     },
+     {
+      "name": "Statistikdiagramm einfügen",
+      "deferred": false,
+      "enabled": true,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "Histogramm",
+        "enabled": true
+       }
+      ]
+     },
+     {
+      "name": "Linien- oder Flächendiagramm einfügen",
+      "deferred": false,
+      "enabled": true,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "Linie",
+        "enabled": true
+       },
+       {
+        "name": "Linie mit Datenpunkten",
+        "enabled": true
+       },
+       {
+        "name": "Fläche",
+        "enabled": true
+       }
+      ]
+     },
+     {
+      "name": "Kreis- oder Ringdiagramm einfügen",
+      "deferred": false,
+      "enabled": true,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "Kreis",
+        "enabled": true
+       },
+       {
+        "name": "Ring",
+        "enabled": true
+       }
+      ]
+     },
+     {
+      "name": "Punkt (XY)- oder Blasendiagramm einfügen",
+      "deferred": false,
+      "enabled": true,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "Punkte",
+        "enabled": true
+       },
+       {
+        "name": "Punkte mit interpolierten Linien",
+        "enabled": true
+       },
+       {
+        "name": "Punkte mit geraden Linien und Datenpunkten",
+        "enabled": true
+       }
+      ]
+     },
+     {
+      "name": "Wasserfall-, Trichter-, Kurs-, Oberflächen- oder Netzdiagramm einfügen",
+      "deferred": true,
+      "enabled": false,
+      "type": "dropdown"
+     },
+     {
+      "name": "Verbunddiagramm einfügen",
+      "deferred": true,
+      "enabled": false,
+      "type": "dropdown"
+     },
+     {
+      "name": "Karten",
+      "deferred": true,
+      "enabled": false,
+      "type": "button"
+     },
+     {
+      "name": "PivotChart",
+      "deferred": true,
+      "enabled": false,
+      "type": "button"
+     }
+    ]
+   },
+   {
+    "name": "Sparklines",
+    "controls": [
+     {
+      "name": "Linie",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Säule",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Gewinn/Verlust",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     }
+    ]
+   },
+   {
+    "name": "Filter",
+    "controls": [
+     {
+      "name": "Datenschnitt",
+      "deferred": true,
+      "enabled": false,
+      "type": "button"
+     },
+     {
+      "name": "Zeitachse",
+      "deferred": true,
+      "enabled": false,
+      "type": "button"
+     }
+    ]
+   },
+   {
+    "name": "Links",
+    "controls": [
+     {
+      "name": "Link",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     }
+    ]
+   },
+   {
+    "name": "Kommentare",
+    "controls": [
+     {
+      "name": "Kommentar",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     }
+    ]
+   },
+   {
+    "name": "Text",
+    "controls": [
+     {
+      "name": "Textfeld",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Kopf- und Fußzeile",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "WordArt",
+      "deferred": true,
+      "enabled": false,
+      "type": "button"
+     }
+    ]
+   },
+   {
+    "name": "Symbole",
+    "controls": [
+     {
+      "name": "Formel",
+      "deferred": true,
+      "enabled": false,
+      "type": "button"
+     },
+     {
+      "name": "Symbol",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Seitenlayout",
+  "contextual": false,
+  "groups": [
+   {
+    "name": "Designs",
+    "controls": [
+     {
+      "name": "Designs",
+      "deferred": true,
+      "enabled": false,
+      "type": "button"
+     },
+     {
+      "name": "Farben",
+      "deferred": true,
+      "enabled": false,
+      "type": "button"
+     },
+     {
+      "name": "Schriftarten",
+      "deferred": true,
+      "enabled": false,
+      "type": "button"
+     },
+     {
+      "name": "Effekte",
+      "deferred": true,
+      "enabled": false,
+      "type": "button"
+     }
+    ]
+   },
+   {
+    "name": "Seite einrichten",
+    "launcher": {
+     "name": "Seite einrichten",
+     "deferred": false,
+     "enabled": true
+    },
+    "controls": [
+     {
+      "name": "Seitenränder",
+      "deferred": false,
+      "enabled": true,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "Normale Seitenränder  (Oben: 1,9 cm  Unten: 1,9 cm  Links: 1,8 cm  Rechts: 1,8 cm)",
+        "enabled": true
+       },
+       {
+        "name": "Breite Seitenränder  (Oben: 2,5 cm  Unten: 2,5 cm  Links: 2,5 cm  Rechts: 2,5 cm)",
+        "enabled": true
+       },
+       {
+        "name": "Schmale Seitenränder  (Oben: 1,9 cm  Unten: 1,9 cm  Links: 0,6 cm  Rechts: 0,6 cm)",
+        "enabled": true
+       },
+       {
+        "name": "Benutzerdefinierte Seitenränder...",
+        "enabled": true
+       }
+      ]
+     },
+     {
+      "name": "Ausrichtung",
+      "deferred": false,
+      "enabled": true,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "Hochformat",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Querformat",
+        "deferred": false,
+        "enabled": true
+       }
+      ]
+     },
+     {
+      "name": "Format",
+      "deferred": false,
+      "enabled": true,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "A4  21,0 cm x 29,7 cm",
+        "enabled": true
+       },
+       {
+        "name": "A3  29,7 cm x 42,0 cm",
+        "enabled": true
+       },
+       {
+        "name": "A5  14,8 cm x 21,0 cm",
+        "enabled": true
+       },
+       {
+        "name": "Letter  21,6 cm x 27,9 cm",
+        "enabled": true
+       },
+       {
+        "name": "Legal  21,6 cm x 35,6 cm",
+        "enabled": true
+       }
+      ]
+     },
+     {
+      "name": "Druckbereich",
+      "deferred": false,
+      "enabled": true,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "Druckbereich festlegen",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Druckbereich aufheben",
+        "deferred": false,
+        "enabled": true
+       }
+      ]
+     },
+     {
+      "name": "Umbrüche",
+      "deferred": false,
+      "enabled": true,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "Seitenumbruch einfügen",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Seitenumbruch entfernen",
+        "deferred": false,
+        "enabled": false
+       },
+       {
+        "name": "Alle Seitenumbrüche zurücksetzen",
+        "deferred": false,
+        "enabled": false
+       }
+      ]
+     },
+     {
+      "name": "Hintergrund...",
+      "deferred": true,
+      "enabled": false,
+      "type": "button"
+     },
+     {
+      "name": "Drucktitel",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     }
+    ]
+   },
+   {
+    "name": "An Format anpassen",
+    "launcher": {
+     "name": "Seite einrichten",
+     "deferred": false,
+     "enabled": true
+    },
+    "controls": [
+     {
+      "name": "Breite",
+      "deferred": false,
+      "enabled": true,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "Automatisch",
+        "enabled": true
+       },
+       {
+        "name": "1 Seite",
+        "enabled": true
+       },
+       {
+        "name": "2 Seiten",
+        "enabled": true
+       },
+       {
+        "name": "3 Seiten",
+        "enabled": true
+       }
+      ]
+     },
+     {
+      "name": "Höhe",
+      "deferred": false,
+      "enabled": true,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "Automatisch",
+        "enabled": true
+       },
+       {
+        "name": "1 Seite",
+        "enabled": true
+       },
+       {
+        "name": "2 Seiten",
+        "enabled": true
+       },
+       {
+        "name": "3 Seiten",
+        "enabled": true
+       }
+      ]
+     },
+     {
+      "name": "Skalierung:",
+      "deferred": false,
+      "enabled": true,
+      "type": "spinner"
+     }
+    ]
+   },
+   {
+    "name": "Blattoptionen",
+    "launcher": {
+     "name": "Seite einrichten",
+     "deferred": false,
+     "enabled": true
+    },
+    "controls": [
+     {
+      "name": "Anzeigen",
+      "deferred": false,
+      "enabled": true,
+      "type": "check"
+     },
+     {
+      "name": "Drucken",
+      "deferred": false,
+      "enabled": true,
+      "type": "check"
+     },
+     {
+      "name": "Anzeigen",
+      "deferred": false,
+      "enabled": true,
+      "type": "check"
+     },
+     {
+      "name": "Drucken",
+      "deferred": false,
+      "enabled": true,
+      "type": "check"
+     }
+    ]
+   },
+   {
+    "name": "Anordnen",
+    "controls": [
+     {
+      "name": "Ebene nach vorne",
+      "deferred": false,
+      "enabled": false,
+      "type": "split",
+      "items": [
+       {
+        "name": "Ebene nach vorne",
+        "deferred": false,
+        "enabled": false
+       },
+       {
+        "name": "In den Vordergrund",
+        "deferred": false,
+        "enabled": false
+       }
+      ]
+     },
+     {
+      "name": "Ebene nach hinten",
+      "deferred": false,
+      "enabled": false,
+      "type": "split",
+      "items": [
+       {
+        "name": "Ebene nach hinten",
+        "deferred": false,
+        "enabled": false
+       },
+       {
+        "name": "In den Hintergrund",
+        "deferred": false,
+        "enabled": false
+       }
+      ]
+     },
+     {
+      "name": "Auswahlbereich...",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Ausrichten",
+      "deferred": false,
+      "enabled": false,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "Linksbündig",
+        "enabled": false
+       },
+       {
+        "name": "Horizontal zentrieren",
+        "enabled": false
+       },
+       {
+        "name": "Rechtsbündig",
+        "enabled": false
+       },
+       {
+        "name": "Oben ausrichten",
+        "enabled": false
+       },
+       {
+        "name": "Vertikal zentrieren",
+        "enabled": false
+       },
+       {
+        "name": "Unten ausrichten",
+        "enabled": false
+       },
+       {
+        "name": "Horizontal verteilen",
+        "enabled": false
+       },
+       {
+        "name": "Vertikal verteilen",
+        "enabled": false
+       }
+      ]
+     },
+     {
+      "name": "Gruppieren",
+      "deferred": false,
+      "enabled": false,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "Gruppieren",
+        "deferred": false,
+        "enabled": false
+       },
+       {
+        "name": "Gruppierung aufheben",
+        "deferred": false,
+        "enabled": false
+       },
+       {
+        "name": "Gruppierung wiederherstellen",
+        "deferred": false,
+        "enabled": false
+       }
+      ]
+     },
+     {
+      "name": "Drehen",
+      "deferred": false,
+      "enabled": false,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "Rechtsdrehung 90°",
+        "enabled": true
+       },
+       {
+        "name": "Linksdrehung 90°",
+        "enabled": true
+       },
+       {
+        "name": "Vertikal kippen",
+        "enabled": true
+       },
+       {
+        "name": "Horizontal kippen",
+        "enabled": true
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Formeln",
+  "contextual": false,
+  "groups": [
+   {
+    "name": "Funktionsbibliothek",
+    "controls": [
+     {
+      "name": "Funktion einfügen...",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "AutoSumme",
+      "deferred": false,
+      "enabled": true,
+      "type": "split",
+      "items": [
+       {
+        "name": "Summe",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Mittelwert",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Anzahl Zahlen",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Max",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Min",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Weitere Funktionen...",
+        "deferred": false,
+        "enabled": true
+       }
+      ]
+     },
+     {
+      "name": "Zuletzt verwendet",
+      "deferred": false,
+      "enabled": true,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "SUMME",
+        "enabled": true
+       },
+       {
+        "name": "MITTELWERT",
+        "enabled": true
+       },
+       {
+        "name": "WENN",
+        "enabled": true
+       },
+       {
+        "name": "MAX",
+        "enabled": true
+       },
+       {
+        "name": "MIN",
+        "enabled": true
+       },
+       {
+        "name": "ANZAHL",
+        "enabled": true
+       },
+       {
+        "name": "SVERWEIS",
+        "enabled": true
+       },
+       {
+        "name": "RUNDEN",
+        "enabled": true
+       },
+       {
+        "name": "ZÄHLENWENN",
+        "enabled": true
+       },
+       {
+        "name": "SUMMEWENN",
+        "enabled": true
+       }
+      ]
+     },
+     {
+      "name": "Finanzmathematik",
+      "deferred": false,
+      "enabled": true,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "BW",
+        "enabled": true
+       },
+       {
+        "name": "KAPZ",
+        "enabled": true
+       },
+       {
+        "name": "NBW",
+        "enabled": true
+       },
+       {
+        "name": "RMZ",
+        "enabled": true
+       },
+       {
+        "name": "ZINS",
+        "enabled": true
+       },
+       {
+        "name": "ZINSZ",
+        "enabled": true
+       },
+       {
+        "name": "ZW",
+        "enabled": true
+       },
+       {
+        "name": "ZZR",
+        "enabled": true
+       }
+      ]
+     },
+     {
+      "name": "Logisch",
+      "deferred": false,
+      "enabled": true,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "FALSCH",
+        "enabled": true
+       },
+       {
+        "name": "NICHT",
+        "enabled": true
+       },
+       {
+        "name": "ODER",
+        "enabled": true
+       },
+       {
+        "name": "UND",
+        "enabled": true
+       },
+       {
+        "name": "WAHR",
+        "enabled": true
+       },
+       {
+        "name": "WENN",
+        "enabled": true
+       },
+       {
+        "name": "WENNFEHLER",
+        "enabled": true
+       },
+       {
+        "name": "WENNNV",
+        "enabled": true
+       },
+       {
+        "name": "WENNS",
+        "enabled": true
+       },
+       {
+        "name": "XODER",
+        "enabled": true
+       },
+       {
+        "name": "ERSTERWERT",
+        "enabled": true
+       }
+      ]
+     },
+     {
+      "name": "Text",
+      "deferred": false,
+      "enabled": true,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "CODE",
+        "enabled": true
+       },
+       {
+        "name": "ERSETZEN",
+        "enabled": true
+       },
+       {
+        "name": "FINDEN",
+        "enabled": true
+       },
+       {
+        "name": "GLÄTTEN",
+        "enabled": true
+       },
+       {
+        "name": "GROSS",
+        "enabled": true
+       },
+       {
+        "name": "GROSS2",
+        "enabled": true
+       },
+       {
+        "name": "IDENTISCH",
+        "enabled": true
+       },
+       {
+        "name": "KLEIN",
+        "enabled": true
+       },
+       {
+        "name": "LÄNGE",
+        "enabled": true
+       },
+       {
+        "name": "LINKS",
+        "enabled": true
+       },
+       {
+        "name": "RECHTS",
+        "enabled": true
+       },
+       {
+        "name": "SÄUBERN",
+        "enabled": true
+       },
+       {
+        "name": "SUCHEN",
+        "enabled": true
+       },
+       {
+        "name": "TEIL",
+        "enabled": true
+       },
+       {
+        "name": "TEXT",
+        "enabled": true
+       },
+       {
+        "name": "TEXTKETTE",
+        "enabled": true
+       },
+       {
+        "name": "TEXTVERKETTEN",
+        "enabled": true
+       },
+       {
+        "name": "VERKETTEN",
+        "enabled": true
+       },
+       {
+        "name": "WECHSELN",
+        "enabled": true
+       },
+       {
+        "name": "WERT",
+        "enabled": true
+       },
+       {
+        "name": "WIEDERHOLEN",
+        "enabled": true
+       },
+       {
+        "name": "ZEICHEN",
+        "enabled": true
+       }
+      ]
+     },
+     {
+      "name": "Datum u. Uhrzeit",
+      "deferred": false,
+      "enabled": true,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "ARBEITSTAG",
+        "enabled": true
+       },
+       {
+        "name": "DATEDIF",
+        "enabled": true
+       },
+       {
+        "name": "DATUM",
+        "enabled": true
+       },
+       {
+        "name": "DATWERT",
+        "enabled": true
+       },
+       {
+        "name": "EDATUM",
+        "enabled": true
+       },
+       {
+        "name": "HEUTE",
+        "enabled": true
+       },
+       {
+        "name": "ISOKALENDERWOCHE",
+        "enabled": true
+       },
+       {
+        "name": "JAHR",
+        "enabled": true
+       },
+       {
+        "name": "JETZT",
+        "enabled": true
+       },
+       {
+        "name": "KALENDERWOCHE",
+        "enabled": true
+       },
+       {
+        "name": "MINUTE",
+        "enabled": true
+       },
+       {
+        "name": "MONAT",
+        "enabled": true
+       },
+       {
+        "name": "MONATSENDE",
+        "enabled": true
+       },
+       {
+        "name": "NETTOARBEITSTAGE",
+        "enabled": true
+       },
+       {
+        "name": "SEKUNDE",
+        "enabled": true
+       },
+       {
+        "name": "STUNDE",
+        "enabled": true
+       },
+       {
+        "name": "TAG",
+        "enabled": true
+       },
+       {
+        "name": "TAGE",
+        "enabled": true
+       },
+       {
+        "name": "WOCHENTAG",
+        "enabled": true
+       },
+       {
+        "name": "ZEIT",
+        "enabled": true
+       },
+       {
+        "name": "ZEITWERT",
+        "enabled": true
+       }
+      ]
+     },
+     {
+      "name": "Nachschlagen und Verweisen",
+      "deferred": false,
+      "enabled": true,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "ADRESSE",
+        "enabled": true
+       },
+       {
+        "name": "BEREICH.VERSCHIEBEN",
+        "enabled": true
+       },
+       {
+        "name": "INDEX",
+        "enabled": true
+       },
+       {
+        "name": "INDIREKT",
+        "enabled": true
+       },
+       {
+        "name": "SPALTE",
+        "enabled": true
+       },
+       {
+        "name": "SPALTEN",
+        "enabled": true
+       },
+       {
+        "name": "SVERWEIS",
+        "enabled": true
+       },
+       {
+        "name": "VERGLEICH",
+        "enabled": true
+       },
+       {
+        "name": "WAHL",
+        "enabled": true
+       },
+       {
+        "name": "WVERWEIS",
+        "enabled": true
+       },
+       {
+        "name": "XVERWEIS",
+        "enabled": true
+       },
+       {
+        "name": "ZEILE",
+        "enabled": true
+       },
+       {
+        "name": "ZEILEN",
+        "enabled": true
+       },
+       {
+        "name": "FILTER",
+        "enabled": true
+       },
+       {
+        "name": "SORTIEREN",
+        "enabled": true
+       },
+       {
+        "name": "EINDEUTIG",
+        "enabled": true
+       }
+      ]
+     },
+     {
+      "name": "Mathematik und Trigonometrie",
+      "deferred": false,
+      "enabled": true,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "ABRUNDEN",
+        "enabled": true
+       },
+       {
+        "name": "ABS",
+        "enabled": true
+       },
+       {
+        "name": "ARCCOS",
+        "enabled": true
+       },
+       {
+        "name": "ARCSIN",
+        "enabled": true
+       },
+       {
+        "name": "ARCTAN",
+        "enabled": true
+       },
+       {
+        "name": "AUFRUNDEN",
+        "enabled": true
+       },
+       {
+        "name": "BOGENMASS",
+        "enabled": true
+       },
+       {
+        "name": "COS",
+        "enabled": true
+       },
+       {
+        "name": "EXP",
+        "enabled": true
+       },
+       {
+        "name": "FAKULTÄT",
+        "enabled": true
+       },
+       {
+        "name": "GANZZAHL",
+        "enabled": true
+       },
+       {
+        "name": "GERADE",
+        "enabled": true
+       },
+       {
+        "name": "GGT",
+        "enabled": true
+       },
+       {
+        "name": "GRAD",
+        "enabled": true
+       },
+       {
+        "name": "KGV",
+        "enabled": true
+       },
+       {
+        "name": "KOMBINATIONEN",
+        "enabled": true
+       },
+       {
+        "name": "KÜRZEN",
+        "enabled": true
+       },
+       {
+        "name": "LN",
+        "enabled": true
+       },
+       {
+        "name": "LOG",
+        "enabled": true
+       },
+       {
+        "name": "LOG10",
+        "enabled": true
+       },
+       {
+        "name": "OBERGRENZE.MATHEMATIK",
+        "enabled": true
+       },
+       {
+        "name": "PI",
+        "enabled": true
+       },
+       {
+        "name": "POTENZ",
+        "enabled": true
+       },
+       {
+        "name": "PRODUKT",
+        "enabled": true
+       },
+       {
+        "name": "QUADRATESUMME",
+        "enabled": true
+       },
+       {
+        "name": "REST",
+        "enabled": true
+       },
+       {
+        "name": "RUNDEN",
+        "enabled": true
+       },
+       {
+        "name": "SIN",
+        "enabled": true
+       },
+       {
+        "name": "SUMME",
+        "enabled": true
+       },
+       {
+        "name": "SUMMENPRODUKT",
+        "enabled": true
+       },
+       {
+        "name": "SUMMEWENN",
+        "enabled": true
+       },
+       {
+        "name": "SUMMEWENNS",
+        "enabled": true
+       },
+       {
+        "name": "TAN",
+        "enabled": true
+       },
+       {
+        "name": "UNGERADE",
+        "enabled": true
+       },
+       {
+        "name": "UNTERGRENZE.MATHEMATIK",
+        "enabled": true
+       },
+       {
+        "name": "VORZEICHEN",
+        "enabled": true
+       },
+       {
+        "name": "VRUNDEN",
+        "enabled": true
+       },
+       {
+        "name": "WURZEL",
+        "enabled": true
+       },
+       {
+        "name": "ZUFALLSBEREICH",
+        "enabled": true
+       },
+       {
+        "name": "ZUFALLSZAHL",
+        "enabled": true
+       }
+      ]
+     },
+     {
+      "name": "Mehr Funktionen",
+      "deferred": false,
+      "enabled": true,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "Statistik",
+        "enabled": true,
+        "submenu": [
+         {
+          "name": "ANZAHL",
+          "enabled": true
+         },
+         {
+          "name": "ANZAHL2",
+          "enabled": true
+         },
+         {
+          "name": "ANZAHLLEEREZELLEN",
+          "enabled": true
+         },
+         {
+          "name": "BESTIMMTHEITSMASS",
+          "enabled": true
+         },
+         {
+          "name": "BINOM.VERT",
+          "enabled": true
+         },
+         {
+          "name": "GEOMITTEL",
+          "enabled": true
+         },
+         {
+          "name": "KGRÖSSTE",
+          "enabled": true
+         },
+         {
+          "name": "KKLEINSTE",
+          "enabled": true
+         },
+         {
+          "name": "KORREL",
+          "enabled": true
+         },
+         {
+          "name": "MAX",
+          "enabled": true
+         },
+         {
+          "name": "MAXWENNS",
+          "enabled": true
+         },
+         {
+          "name": "MEDIAN",
+          "enabled": true
+         },
+         {
+          "name": "MIN",
+          "enabled": true
+         },
+         {
+          "name": "MINWENNS",
+          "enabled": true
+         },
+         {
+          "name": "MITTELABW",
+          "enabled": true
+         },
+         {
+          "name": "MITTELWERT",
+          "enabled": true
+         },
+         {
+          "name": "MITTELWERTWENN",
+          "enabled": true
+         },
+         {
+          "name": "MITTELWERTWENNS",
+          "enabled": true
+         },
+         {
+          "name": "MODUS.EINF",
+          "enabled": true
+         },
+         {
+          "name": "NORM.INV",
+          "enabled": true
+         },
+         {
+          "name": "NORM.S.VERT",
+          "enabled": true
+         },
+         {
+          "name": "NORM.VERT",
+          "enabled": true
+         },
+         {
+          "name": "POISSON.VERT",
+          "enabled": true
+         },
+         {
+          "name": "QUANTIL.INKL",
+          "enabled": true
+         },
+         {
+          "name": "QUARTILE.INKL",
+          "enabled": true
+         },
+         {
+          "name": "RANG.GLEICH",
+          "enabled": true
+         },
+         {
+          "name": "STABW.N",
+          "enabled": true
+         },
+         {
+          "name": "STABW.S",
+          "enabled": true
+         },
+         {
+          "name": "STEIGUNG",
+          "enabled": true
+         },
+         {
+          "name": "ACHSENABSCHNITT",
+          "enabled": true
+         },
+         {
+          "name": "VAR.P",
+          "enabled": true
+         },
+         {
+          "name": "VAR.S",
+          "enabled": true
+         },
+         {
+          "name": "VARIATIONEN",
+          "enabled": true
+         },
+         {
+          "name": "ZÄHLENWENN",
+          "enabled": true
+         },
+         {
+          "name": "ZÄHLENWENNS",
+          "enabled": true
+         }
+        ]
+       },
+       {
+        "name": "Informationen",
+        "enabled": true,
+        "submenu": [
+         {
+          "name": "ISTFEHL",
+          "enabled": true
+         },
+         {
+          "name": "ISTFEHLER",
+          "enabled": true
+         },
+         {
+          "name": "ISTGERADE",
+          "enabled": true
+         },
+         {
+          "name": "ISTLEER",
+          "enabled": true
+         },
+         {
+          "name": "ISTLOG",
+          "enabled": true
+         },
+         {
+          "name": "ISTNV",
+          "enabled": true
+         },
+         {
+          "name": "ISTTEXT",
+          "enabled": true
+         },
+         {
+          "name": "ISTUNGERADE",
+          "enabled": true
+         },
+         {
+          "name": "ISTZAHL",
+          "enabled": true
+         },
+         {
+          "name": "NV",
+          "enabled": true
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "Definierte Namen",
+    "controls": [
+     {
+      "name": "Namens-Manager",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Namen definieren",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Aus Auswahl erstellen",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     }
+    ]
+   },
+   {
+    "name": "Formelüberwachung",
+    "controls": [
+     {
+      "name": "Spur zum Vorgänger",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Spur zum Nachfolger",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Pfeile entfernen",
+      "deferred": false,
+      "enabled": false,
+      "type": "button"
+     },
+     {
+      "name": "Formeln anzeigen",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Fehlerüberprüfung",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Formelauswertung",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     }
+    ]
+   },
+   {
+    "name": "Berechnung",
+    "controls": [
+     {
+      "name": "Berechnungsoptionen",
+      "deferred": false,
+      "enabled": true,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "Automatisch",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Automatisch außer bei Datentabellen",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Manuell",
+        "deferred": false,
+        "enabled": true
+       }
+      ]
+     },
+     {
+      "name": "Neu berechnen",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Blatt berechnen",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Daten",
+  "contextual": false,
+  "groups": [
+   {
+    "name": "Daten abrufen und transformieren",
+    "controls": [
+     {
+      "name": "Daten abrufen",
+      "deferred": true,
+      "enabled": false,
+      "type": "button"
+     },
+     {
+      "name": "Aus Text/CSV",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Aus dem Web",
+      "deferred": true,
+      "enabled": false,
+      "type": "button"
+     }
+    ]
+   },
+   {
+    "name": "Abfragen & Verbindungen",
+    "controls": [
+     {
+      "name": "Alle aktualisieren",
+      "deferred": false,
+      "enabled": false,
+      "type": "button"
+     }
+    ]
+   },
+   {
+    "name": "Sortieren und Filtern",
+    "controls": [
+     {
+      "name": "Von A bis Z sortieren",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Von Z bis A sortieren",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Sortieren...",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Filtern",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Löschen",
+      "deferred": false,
+      "enabled": false,
+      "type": "button"
+     },
+     {
+      "name": "Erneut anwenden",
+      "deferred": false,
+      "enabled": false,
+      "type": "button"
+     },
+     {
+      "name": "Erweitert...",
+      "deferred": true,
+      "enabled": false,
+      "type": "button"
+     }
+    ]
+   },
+   {
+    "name": "Datentools",
+    "controls": [
+     {
+      "name": "Text in Spalten...",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Blitzvorschau",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Duplikate entfernen",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Datenüberprüfung...",
+      "deferred": false,
+      "enabled": true,
+      "type": "split",
+      "items": [
+       {
+        "name": "Datenüberprüfung...",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Ungültige Daten einkreisen",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Gültigkeitskreise löschen",
+        "deferred": false,
+        "enabled": false
+       }
+      ]
+     },
+     {
+      "name": "Konsolidieren...",
+      "deferred": true,
+      "enabled": false,
+      "type": "button"
+     }
+    ]
+   },
+   {
+    "name": "Prognose",
+    "controls": [
+     {
+      "name": "Was-wäre-wenn-Analyse",
+      "deferred": false,
+      "enabled": true,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "Szenario-Manager...",
+        "deferred": true,
+        "enabled": false
+       },
+       {
+        "name": "Zielwertsuche...",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Datentabelle...",
+        "deferred": false,
+        "enabled": true
+       }
+      ]
+     },
+     {
+      "name": "Prognoseblatt",
+      "deferred": true,
+      "enabled": false,
+      "type": "button"
+     }
+    ]
+   },
+   {
+    "name": "Gliederung",
+    "controls": [
+     {
+      "name": "Gruppieren",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Gruppierung aufheben",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Teilergebnis",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Überprüfen",
+  "contextual": false,
+  "groups": [
+   {
+    "name": "Rechtschreibung",
+    "controls": [
+     {
+      "name": "Rechtschreibung...",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Thesaurus...",
+      "deferred": true,
+      "enabled": false,
+      "type": "button"
+     },
+     {
+      "name": "Arbeitsmappenstatistiken",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     }
+    ]
+   },
+   {
+    "name": "Barrierefreiheit",
+    "controls": [
+     {
+      "name": "Barrierefreiheit überprüfen",
+      "deferred": true,
+      "enabled": false,
+      "type": "button"
+     }
+    ]
+   },
+   {
+    "name": "Sprache",
+    "controls": [
+     {
+      "name": "Übersetzen",
+      "deferred": true,
+      "enabled": false,
+      "type": "button"
+     }
+    ]
+   },
+   {
+    "name": "Kommentare",
+    "controls": [
+     {
+      "name": "Neuer Kommentar",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Löschen",
+      "deferred": false,
+      "enabled": false,
+      "type": "button"
+     },
+     {
+      "name": "Vorheriger Kommentar",
+      "deferred": false,
+      "enabled": false,
+      "type": "button"
+     },
+     {
+      "name": "Nächster Kommentar",
+      "deferred": false,
+      "enabled": false,
+      "type": "button"
+     },
+     {
+      "name": "Kommentare anzeigen",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     }
+    ]
+   },
+   {
+    "name": "Notizen",
+    "controls": [
+     {
+      "name": "Notizen",
+      "deferred": false,
+      "enabled": true,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "Neue Notiz",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Notiz bearbeiten",
+        "deferred": false,
+        "enabled": false
+       },
+       {
+        "name": "Notiz löschen",
+        "deferred": false,
+        "enabled": false
+       },
+       {
+        "name": "Alle Notizen anzeigen",
+        "deferred": false,
+        "enabled": true
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "Schützen",
+    "controls": [
+     {
+      "name": "Blatt schützen...",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Arbeitsmappe schützen...",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Ansicht",
+  "contextual": false,
+  "groups": [
+   {
+    "name": "Arbeitsmappenansichten",
+    "controls": [
+     {
+      "name": "Normal",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Umbruchvorschau",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Seitenlayout",
+      "deferred": true,
+      "enabled": false,
+      "type": "button"
+     }
+    ]
+   },
+   {
+    "name": "Anzeigen",
+    "controls": [
+     {
+      "name": "Gitternetzlinien",
+      "deferred": false,
+      "enabled": true,
+      "type": "check"
+     },
+     {
+      "name": "Bearbeitungsleiste",
+      "deferred": false,
+      "enabled": true,
+      "type": "check"
+     },
+     {
+      "name": "Überschriften",
+      "deferred": false,
+      "enabled": true,
+      "type": "check"
+     }
+    ]
+   },
+   {
+    "name": "Zoom",
+    "controls": [
+     {
+      "name": "Zoom",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "100%",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     },
+     {
+      "name": "Auswahl vergrößern",
+      "deferred": false,
+      "enabled": true,
+      "type": "button"
+     }
+    ]
+   },
+   {
+    "name": "Fenster",
+    "controls": [
+     {
+      "name": "Neues Fenster",
+      "deferred": true,
+      "enabled": false,
+      "type": "button"
+     },
+     {
+      "name": "Alle anordnen",
+      "deferred": true,
+      "enabled": false,
+      "type": "button"
+     },
+     {
+      "name": "Fenster fixieren",
+      "deferred": false,
+      "enabled": true,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "Fenster fixieren",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Oberste Zeile fixieren",
+        "deferred": false,
+        "enabled": true
+       },
+       {
+        "name": "Erste Spalte fixieren",
+        "deferred": false,
+        "enabled": true
+       }
+      ]
+     },
+     {
+      "name": "Teilen",
+      "deferred": true,
+      "enabled": false,
+      "type": "button"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Diagrammentwurf",
+  "contextual": true,
+  "groups": [
+   {
+    "name": "Diagrammlayouts",
+    "controls": [
+     {
+      "name": "Diagrammelement hinzufügen",
+      "deferred": false,
+      "enabled": false,
+      "type": "button"
+     },
+     {
+      "name": "Schnelllayout",
+      "deferred": false,
+      "enabled": false,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "Layout 1",
+        "enabled": true
+       },
+       {
+        "name": "Layout 2",
+        "enabled": true
+       },
+       {
+        "name": "Layout 3",
+        "enabled": true
+       },
+       {
+        "name": "Layout 4",
+        "enabled": true
+       },
+       {
+        "name": "Layout 5",
+        "enabled": true
+       },
+       {
+        "name": "Layout 6",
+        "enabled": true
+       },
+       {
+        "name": "Layout 7",
+        "enabled": true
+       },
+       {
+        "name": "Layout 8",
+        "enabled": true
+       },
+       {
+        "name": "Layout 9",
+        "enabled": true
+       },
+       {
+        "name": "Layout 10",
+        "enabled": true
+       },
+       {
+        "name": "Layout 11",
+        "enabled": true
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "Diagrammformatvorlagen",
+    "controls": [
+     {
+      "name": "Farben ändern",
+      "deferred": false,
+      "enabled": false,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "Farbige Palette 1",
+        "enabled": true
+       },
+       {
+        "name": "Farbige Palette 2",
+        "enabled": true
+       },
+       {
+        "name": "Farbige Palette 3",
+        "enabled": true
+       },
+       {
+        "name": "Farbige Palette 4",
+        "enabled": true
+       },
+       {
+        "name": "Monochromatische Palette 1",
+        "enabled": true
+       },
+       {
+        "name": "Monochromatische Palette 2",
+        "enabled": true
+       },
+       {
+        "name": "Monochromatische Palette 3",
+        "enabled": true
+       },
+       {
+        "name": "Monochromatische Palette 4",
+        "enabled": true
+       },
+       {
+        "name": "Monochromatische Palette 5",
+        "enabled": true
+       },
+       {
+        "name": "Monochromatische Palette 6",
+        "enabled": true
+       },
+       {
+        "name": "Monochromatische Palette 7",
+        "enabled": true
+       },
+       {
+        "name": "Monochromatische Palette 8",
+        "enabled": true
+       },
+       {
+        "name": "Monochromatische Palette 9",
+        "enabled": true
+       },
+       {
+        "name": "Monochromatische Palette 10",
+        "enabled": true
+       },
+       {
+        "name": "Monochromatische Palette 11",
+        "enabled": true
+       },
+       {
+        "name": "Monochromatische Palette 12",
+        "enabled": true
+       },
+       {
+        "name": "Monochromatische Palette 13",
+        "enabled": true
+       }
+      ]
+     },
+     {
+      "name": "Diagrammformatvorlagen",
+      "deferred": true,
+      "enabled": false,
+      "type": "button"
+     }
+    ]
+   },
+   {
+    "name": "Daten",
+    "controls": [
+     {
+      "name": "Zeile/Spalte wechseln",
+      "deferred": false,
+      "enabled": false,
+      "type": "button"
+     },
+     {
+      "name": "Daten auswählen",
+      "deferred": false,
+      "enabled": false,
+      "type": "button"
+     }
+    ]
+   },
+   {
+    "name": "Typ",
+    "controls": [
+     {
+      "name": "Diagrammtyp ändern",
+      "deferred": false,
+      "enabled": false,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "Gruppierte Säulen",
+        "enabled": true
+       },
+       {
+        "name": "Gestapelte Säulen",
+        "enabled": true
+       },
+       {
+        "name": "Gruppierte Balken",
+        "enabled": true
+       },
+       {
+        "name": "Linie",
+        "enabled": true
+       },
+       {
+        "name": "Linie mit Datenpunkten",
+        "enabled": true
+       },
+       {
+        "name": "Fläche",
+        "enabled": true
+       },
+       {
+        "name": "Kreis",
+        "enabled": true
+       },
+       {
+        "name": "Ring",
+        "enabled": true
+       },
+       {
+        "name": "Punkte (XY)",
+        "enabled": true
+       },
+       {
+        "name": "Punkte mit geraden Linien",
+        "enabled": true
+       },
+       {
+        "name": "Histogramm",
+        "enabled": true
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "Ort",
+    "controls": [
+     {
+      "name": "Diagramm verschieben",
+      "deferred": false,
+      "enabled": false,
+      "type": "button"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Format",
+  "contextual": true,
+  "groups": [
+   {
+    "name": "Aktuelle Auswahl",
+    "controls": [
+     {
+      "name": "Diagrammelemente",
+      "deferred": false,
+      "enabled": false,
+      "type": "combo"
+     },
+     {
+      "name": "Auswahl formatieren",
+      "deferred": false,
+      "enabled": false,
+      "type": "button"
+     },
+     {
+      "name": "Auf Formatvorlage zurücksetzen",
+      "deferred": false,
+      "enabled": false,
+      "type": "button"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Formformat",
+  "contextual": true,
+  "groups": [
+   {
+    "name": "Formen einfügen",
+    "controls": [
+     {
+      "name": "Formen",
+      "deferred": false,
+      "enabled": false,
+      "type": "dropdown",
+      "panel": true
+     }
+    ]
+   },
+   {
+    "name": "Formenarten",
+    "launcher": {
+     "name": "Form formatieren",
+     "deferred": false,
+     "enabled": false
+    },
+    "controls": [
+     {
+      "name": "Fülleffekt",
+      "deferred": false,
+      "enabled": false,
+      "type": "color",
+      "panel": true
+     },
+     {
+      "name": "Formkontur",
+      "deferred": false,
+      "enabled": false,
+      "type": "color",
+      "panel": true
+     }
+    ]
+   },
+   {
+    "name": "Anordnen",
+    "controls": [
+     {
+      "name": "Ebene nach vorne",
+      "deferred": false,
+      "enabled": false,
+      "type": "split",
+      "items": [
+       {
+        "name": "Ebene nach vorne",
+        "deferred": false,
+        "enabled": false
+       },
+       {
+        "name": "In den Vordergrund",
+        "deferred": false,
+        "enabled": false
+       }
+      ]
+     },
+     {
+      "name": "Ebene nach hinten",
+      "deferred": false,
+      "enabled": false,
+      "type": "split",
+      "items": [
+       {
+        "name": "Ebene nach hinten",
+        "deferred": false,
+        "enabled": false
+       },
+       {
+        "name": "In den Hintergrund",
+        "deferred": false,
+        "enabled": false
+       }
+      ]
+     },
+     {
+      "name": "Ausrichten",
+      "deferred": false,
+      "enabled": false,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "Linksbündig",
+        "enabled": false
+       },
+       {
+        "name": "Horizontal zentrieren",
+        "enabled": false
+       },
+       {
+        "name": "Rechtsbündig",
+        "enabled": false
+       },
+       {
+        "name": "Oben ausrichten",
+        "enabled": false
+       },
+       {
+        "name": "Vertikal zentrieren",
+        "enabled": false
+       },
+       {
+        "name": "Unten ausrichten",
+        "enabled": false
+       },
+       {
+        "name": "Horizontal verteilen",
+        "enabled": false
+       },
+       {
+        "name": "Vertikal verteilen",
+        "enabled": false
+       }
+      ]
+     },
+     {
+      "name": "Gruppieren",
+      "deferred": false,
+      "enabled": false,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "Gruppieren",
+        "deferred": false,
+        "enabled": false
+       },
+       {
+        "name": "Gruppierung aufheben",
+        "deferred": false,
+        "enabled": false
+       },
+       {
+        "name": "Gruppierung wiederherstellen",
+        "deferred": false,
+        "enabled": false
+       }
+      ]
+     },
+     {
+      "name": "Drehen",
+      "deferred": false,
+      "enabled": false,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "Rechtsdrehung 90°",
+        "enabled": true
+       },
+       {
+        "name": "Linksdrehung 90°",
+        "enabled": true
+       },
+       {
+        "name": "Vertikal kippen",
+        "enabled": true
+       },
+       {
+        "name": "Horizontal kippen",
+        "enabled": true
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "PivotTable-Analyse",
+  "contextual": true,
+  "groups": [
+   {
+    "name": "Daten",
+    "controls": [
+     {
+      "name": "Aktualisieren",
+      "deferred": false,
+      "enabled": false,
+      "type": "button"
+     }
+    ]
+   },
+   {
+    "name": "Aktionen",
+    "controls": [
+     {
+      "name": "PivotTable löschen",
+      "deferred": false,
+      "enabled": false,
+      "type": "button"
+     }
+    ]
+   },
+   {
+    "name": "Anzeigen",
+    "controls": [
+     {
+      "name": "Feldliste",
+      "deferred": false,
+      "enabled": false,
+      "type": "button"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Entwurf",
+  "contextual": true,
+  "groups": [
+   {
+    "name": "Layout",
+    "controls": [
+     {
+      "name": "Teilergebnisse",
+      "deferred": false,
+      "enabled": false,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "Teilergebnisse nicht anzeigen",
+        "enabled": true
+       },
+       {
+        "name": "Alle Teilergebnisse unten in der Gruppe anzeigen",
+        "enabled": true
+       },
+       {
+        "name": "Alle Teilergebnisse oben in der Gruppe anzeigen",
+        "enabled": true
+       }
+      ]
+     },
+     {
+      "name": "Gesamtergebnisse",
+      "deferred": false,
+      "enabled": false,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "Für Zeilen und Spalten deaktiviert",
+        "enabled": true
+       },
+       {
+        "name": "Für Zeilen und Spalten aktiviert",
+        "enabled": true
+       },
+       {
+        "name": "Nur für Zeilen aktiviert",
+        "enabled": true
+       },
+       {
+        "name": "Nur für Spalten aktiviert",
+        "enabled": true
+       }
+      ]
+     },
+     {
+      "name": "Berichtslayout",
+      "deferred": false,
+      "enabled": false,
+      "type": "dropdown",
+      "items": [
+       {
+        "name": "Im Kurzformat anzeigen",
+        "enabled": true
+       },
+       {
+        "name": "Im Gliederungsformat anzeigen",
+        "enabled": true
+       },
+       {
+        "name": "Im Tabellenformat anzeigen",
+        "enabled": true
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ }
+]

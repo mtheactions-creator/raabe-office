@@ -11073,6 +11073,4766 @@
      "enabled": true
     }
    ]
+  },
+  "Diagramm/Diagrammentwurf": {
+   "controls": [
+    {
+     "group": "Diagrammlayouts",
+     "name": "Diagrammelement hinzufügen",
+     "type": "MenuItem",
+     "enabled": true,
+     "items": [
+      {
+       "name": "Diagrammelement hinzufügen",
+       "type": "Menu",
+       "enabled": true
+      },
+      {
+       "name": " ",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "Achsen",
+       "type": "MenuItem",
+       "enabled": true,
+       "submenu": [
+        {
+         "name": " ",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Primär horizontal",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Primär vertikal",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": " ",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Weitere Achsenoptionen...",
+         "type": "MenuItem",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Achsentitel",
+       "type": "MenuItem",
+       "enabled": true,
+       "submenu": [
+        {
+         "name": " ",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Primär horizontal",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Primär vertikal",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": " ",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Weitere Optionen für Achsentitel...",
+         "type": "MenuItem",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Diagrammtitel",
+       "type": "MenuItem",
+       "enabled": true,
+       "submenu": [
+        {
+         "name": " ",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Ohne",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Über Diagramm",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Mittig überlagert",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": " ",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Weitere Titeloptionen...",
+         "type": "MenuItem",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Datenbeschriftungen",
+       "type": "MenuItem",
+       "enabled": true,
+       "submenu": [
+        {
+         "name": " ",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Keine",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Mitte",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Am Ende innerhalb",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Am Anfang innerhalb",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Am Ende außerhalb",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Datenlegende",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": " ",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Weitere Datenbeschriftungsoptionen...",
+         "type": "MenuItem",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Datentabelle",
+       "type": "MenuItem",
+       "enabled": true,
+       "submenu": [
+        {
+         "name": " ",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Keine",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Mit Legendensymbolen",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Ohne Legendensymbole",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": " ",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Weitere Datentabellenoptionen...",
+         "type": "MenuItem",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Fehlerindikatoren",
+       "type": "MenuItem",
+       "enabled": true,
+       "submenu": [
+        {
+         "name": " ",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Keine",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Standardfehler",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Prozentsatz",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Standardabweichung",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": " ",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Weitere Fehlerindikatorenoptionen...",
+         "type": "MenuItem",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Gitternetzlinien",
+       "type": "MenuItem",
+       "enabled": true,
+       "submenu": [
+        {
+         "name": " ",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Primäres Hauptgitter horizontal",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Primäres Hauptgitter vertikal",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Primäres Hilfsgitter horizontal",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Primäres Hilfsgitter vertikal",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": " ",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Weitere Optionen für Gitternetzlinien...",
+         "type": "MenuItem",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Legende",
+       "type": "MenuItem",
+       "enabled": true,
+       "submenu": [
+        {
+         "name": " ",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Keine",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Rechts",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Oben",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Links",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Unten",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": " ",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Weitere Legendenoptionen...",
+         "type": "MenuItem",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Linien",
+       "type": "MenuItem",
+       "enabled": false,
+       "submenu": []
+      },
+      {
+       "name": "Trendlinie",
+       "type": "MenuItem",
+       "enabled": true
+      },
+      {
+       "name": "Pos./Neg. Abweichung",
+       "type": "MenuItem",
+       "enabled": false
+      }
+     ]
+    },
+    {
+     "group": "Diagrammlayouts",
+     "name": "Schnelllayout",
+     "type": "MenuItem",
+     "enabled": true,
+     "items": [
+      {
+       "name": "Schnelllayout",
+       "type": "Menu",
+       "enabled": true
+      },
+      {
+       "name": " ",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "Layout 1",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Layout 2",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Layout 3",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Layout 4",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Layout 5",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Layout 6",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Layout 7",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Layout 8",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Layout 9",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Layout 10",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Layout 11",
+       "type": "ListItem",
+       "enabled": true
+      }
+     ]
+    },
+    {
+     "group": "Diagrammformatvorlagen",
+     "name": "Farben ändern",
+     "type": "MenuItem",
+     "enabled": true,
+     "items": [
+      {
+       "name": "Farben ändern",
+       "type": "Menu",
+       "enabled": true
+      },
+      {
+       "name": "Bunt",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "Farbige Palette 1",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Farbige Palette 2",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Farbige Palette 3",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Farbige Palette 4",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Einfarbig",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "Monochrome Palette 1",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Monochrome Palette 2",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Monochrome Palette 3",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Monochrome Palette 4",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Monochrome Palette 5",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Monochrome Palette 6",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Monochrome Palette 7",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Monochrome Palette 8",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Monochrome Palette 9",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Monochrome Palette 10",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Monochrome Palette 11",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Monochrome Palette 12",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Monochrome Palette 13",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Zeile nach oben",
+       "type": "Button",
+       "enabled": true
+      },
+      {
+       "name": "Seite nach oben",
+       "type": "Button",
+       "enabled": true
+      },
+      {
+       "name": "Seite nach unten",
+       "type": "Button",
+       "enabled": true
+      },
+      {
+       "name": "Zeile nach unten",
+       "type": "Button",
+       "enabled": true
+      }
+     ]
+    },
+    {
+     "group": "Daten",
+     "name": "Zeile/Spalte tauschen",
+     "type": "Button",
+     "enabled": true
+    },
+    {
+     "group": "Daten",
+     "name": "Daten auswählen...",
+     "type": "Button",
+     "enabled": true,
+     "dialog": true
+    },
+    {
+     "group": "Typ",
+     "name": "Diagrammtyp ändern...",
+     "type": "Button",
+     "enabled": true,
+     "dialog": true
+    },
+    {
+     "group": "Ort",
+     "name": "Diagramm verschieben...",
+     "type": "Button",
+     "enabled": true,
+     "dialog": true
+    }
+   ]
+  },
+  "Diagramm/Format": {
+   "controls": [],
+   "error": "NULL COM pointer access"
+  },
+  "Tabelle/Tabellenentwurf": {
+   "controls": [
+    {
+     "group": "Eigenschaften",
+     "name": "Tabellenname",
+     "type": "Edit",
+     "enabled": true
+    },
+    {
+     "group": "Eigenschaften",
+     "name": "Tabellengröße ändern",
+     "type": "Button",
+     "enabled": true
+    },
+    {
+     "group": "Tools",
+     "name": "Mit PivotTable zusammenfassen",
+     "type": "Button",
+     "enabled": true
+    },
+    {
+     "group": "Tools",
+     "name": "Duplikate entfernen",
+     "type": "Button",
+     "enabled": true
+    },
+    {
+     "group": "Tools",
+     "name": "In Bereich konvertieren ",
+     "type": "Button",
+     "enabled": true
+    },
+    {
+     "group": "Tools",
+     "name": "Datenschnitt einfügen...",
+     "type": "Button",
+     "enabled": true,
+     "dialog": true
+    },
+    {
+     "group": "Externe Tabellendaten",
+     "name": "Exportieren",
+     "type": "MenuItem",
+     "enabled": true,
+     "items": [
+      {
+       "name": "Exportieren",
+       "type": "Menu",
+       "enabled": true
+      },
+      {
+       "name": " ",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "[Beschreibung]",
+       "type": "MenuItem",
+       "enabled": true
+      },
+      {
+       "name": "[Beschreibung]",
+       "type": "MenuItem",
+       "enabled": false
+      }
+     ]
+    },
+    {
+     "group": "Externe Tabellendaten",
+     "name": "Aktualisieren",
+     "type": "SplitButton",
+     "enabled": true,
+     "items": [
+      {
+       "name": "Aktualisieren",
+       "type": "Button",
+       "enabled": false
+      },
+      {
+       "name": "Weitere Optionen",
+       "type": "MenuItem",
+       "enabled": true,
+       "submenu": []
+      },
+      {
+       "name": "Aktualisieren",
+       "type": "Menu",
+       "enabled": true
+      },
+      {
+       "name": " ",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "Aktualisieren",
+       "type": "MenuItem",
+       "enabled": false
+      },
+      {
+       "name": "Alle aktualisieren",
+       "type": "MenuItem",
+       "enabled": true
+      },
+      {
+       "name": "Status aktualisieren",
+       "type": "MenuItem",
+       "enabled": false
+      },
+      {
+       "name": "Aktualisierung abbrechen",
+       "type": "MenuItem",
+       "enabled": false
+      },
+      {
+       "name": " ",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "Verbindungseigenschaften...",
+       "type": "MenuItem",
+       "enabled": false
+      }
+     ]
+    },
+    {
+     "group": "Externe Tabellendaten",
+     "name": "Eigenschaften",
+     "type": "Button",
+     "enabled": false
+    },
+    {
+     "group": "Externe Tabellendaten",
+     "name": "Im Browser öffnen",
+     "type": "Button",
+     "enabled": false
+    },
+    {
+     "group": "Externe Tabellendaten",
+     "name": "Verknüpfung aufheben",
+     "type": "Button",
+     "enabled": false
+    },
+    {
+     "group": "Tabellenformatoptionen",
+     "name": "Kopfzeile",
+     "type": "CheckBox",
+     "enabled": true
+    },
+    {
+     "group": "Tabellenformatoptionen",
+     "name": "Ergebniszeile",
+     "type": "CheckBox",
+     "enabled": true
+    },
+    {
+     "group": "Tabellenformatoptionen",
+     "name": "Gebänderte Zeilen",
+     "type": "CheckBox",
+     "enabled": true
+    },
+    {
+     "group": "Tabellenformatoptionen",
+     "name": "Erste Spalte",
+     "type": "CheckBox",
+     "enabled": true
+    },
+    {
+     "group": "Tabellenformatoptionen",
+     "name": "Letzte Spalte",
+     "type": "CheckBox",
+     "enabled": true
+    },
+    {
+     "group": "Tabellenformatoptionen",
+     "name": "Gebänderte Spalten",
+     "type": "CheckBox",
+     "enabled": true
+    },
+    {
+     "group": "Tabellenformatoptionen",
+     "name": "Schaltfläche \"Filter\"",
+     "type": "CheckBox",
+     "enabled": true
+    },
+    {
+     "group": "Tabellenformatvorlagen",
+     "name": "Schnellformatvorlagen",
+     "type": "MenuItem",
+     "enabled": true,
+     "items": [
+      {
+       "name": "Schnellformatvorlagen",
+       "type": "Menu",
+       "enabled": true
+      },
+      {
+       "name": "Hell",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "Keine",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Weiß, Tabellenformat - Hell 1",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Helltürkis, Tabellenformat - Hell 2",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Hellorange, Tabellenformat - Hell 3",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Hellgrün, Tabellenformat - Hell 4",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Helltürkis, Tabellenformat - Hell 5",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Rosa, Tabellenformat - Hell 6",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Hellgrün, Tabellenformat - Hell 7",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Weiß, Tabellenformat - Hell 8",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Dunkelblaugrün, Tabellenformat - Hell 9",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Orange, Tabellenformat - Hell 10",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Dunkelgrün, Tabellenformat - Hell 11",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Türkis, Tabellenformat - Hell 12",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Pflaume, Tabellenformat - Hell 13",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Grün, Tabellenformat - Hell 14",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Weiß, Tabellenformat - Hell 15",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Helltürkis, Tabellenformat - Hell 16",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Hellorange, Tabellenformat - Hell 17",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Hellgrün, Tabellenformat - Hell 18",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Helltürkis, Tabellenformat - Hell 19",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Rosa, Tabellenformat - Hell 20",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Hellgrün, Tabellenformat - Hell 21",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Mittel",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "Weiß, Tabellenformat - Mittel 1",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Dunkelblaugrün, Tabellenformat - Mittel 2",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Orange, Tabellenformat - Mittel 3",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Dunkelgrün, Tabellenformat - Mittel 4",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Türkis, Tabellenformat - Mittel 5",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Pflaume, Tabellenformat - Mittel 6",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Grün, Tabellenformat - Mittel 7",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Hellgrau, Tabellenformat - Mittel 8",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Dunkelblaugrün, Tabellenformat - Mittel 9",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Orange, Tabellenformat - Mittel 10",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Dunkelgrün, Tabellenformat - Mittel 11",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Türkis, Tabellenformat - Mittel 12",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Pflaume, Tabellenformat - Mittel 13",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Grün, Tabellenformat - Mittel 14",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Weiß, Tabellenformat - Mittel 15",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Dunkelblaugrün, Tabellenformat - Mittel 16",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Orange, Tabellenformat - Mittel 17",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Dunkelgrün, Tabellenformat - Mittel 18",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Türkis, Tabellenformat - Mittel 19",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Pflaume, Tabellenformat - Mittel 20",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Grün, Tabellenformat - Mittel 21",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Hellgrau, Tabellenformat - Mittel 22",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Helltürkis, Tabellenformat - Mittel 23",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Hellorange, Tabellenformat - Mittel 24",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Hellgrün, Tabellenformat - Mittel 25",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Helltürkis, Tabellenformat - Mittel 26",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Rosa, Tabellenformat - Mittel 27",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Hellgrün, Tabellenformat - Mittel 28",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Dunkel",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "Dunkelgrau, Tabellenformat - Dunkel 1",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Dunkelblaugrün, Tabellenformat - Dunkel 2",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Braun, Tabellenformat - Dunkel 3",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Dunkelgrün, Tabellenformat - Dunkel 4",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Türkis, Tabellenformat - Dunkel 5",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Pflaume, Tabellenformat - Dunkel 6",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Dunkelgrün, Tabellenformat - Dunkel 7",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Hellgrau, Tabellenformat - Dunkel 8",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Orange, Tabellenformat - Dunkel 9",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Türkis, Tabellenformat - Dunkel 10",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Grün, Tabellenformat - Dunkel 11",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": " ",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "Neue Tabellenformatvorlage...",
+       "type": "MenuItem",
+       "enabled": true
+      },
+      {
+       "name": "Löschen",
+       "type": "MenuItem",
+       "enabled": true
+      }
+     ]
+    }
+   ]
+  },
+  "Bild/Bildformat": {
+   "controls": [],
+   "error": "NULL COM pointer access"
+  },
+  "Form/Formformat": {
+   "controls": [],
+   "error": "NULL COM pointer access"
+  },
+  "Textfeld/Formformat": {
+   "controls": [],
+   "error": "NULL COM pointer access"
+  },
+  "Sparkline/Sparkline": {
+   "controls": [
+    {
+     "group": "Sparkline",
+     "name": "Daten bearbeiten",
+     "type": "SplitButton",
+     "enabled": true,
+     "items": [
+      {
+       "name": "[Beschreibung]",
+       "type": "Button",
+       "enabled": true
+      },
+      {
+       "name": "Weitere Optionen",
+       "type": "MenuItem",
+       "enabled": true,
+       "submenu": []
+      },
+      {
+       "name": "Daten bearbeiten",
+       "type": "Menu",
+       "enabled": true
+      },
+      {
+       "name": " ",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "[Beschreibung]",
+       "type": "MenuItem",
+       "enabled": true
+      },
+      {
+       "name": "[Beschreibung]",
+       "type": "MenuItem",
+       "enabled": true
+      },
+      {
+       "name": " ",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "Ausgeblendete und leere Zellen...",
+       "type": "MenuItem",
+       "enabled": true
+      },
+      {
+       "name": "Zeile/Spalte wechseln",
+       "type": "MenuItem",
+       "enabled": false
+      }
+     ]
+    },
+    {
+     "group": "Typ",
+     "name": "Linie",
+     "type": "Button",
+     "enabled": true
+    },
+    {
+     "group": "Typ",
+     "name": "Säule",
+     "type": "Button",
+     "enabled": true
+    },
+    {
+     "group": "Typ",
+     "name": "Gewinn/Verlust",
+     "type": "Button",
+     "enabled": true
+    },
+    {
+     "group": "Anzeigen",
+     "name": "Höchstpunkt",
+     "type": "CheckBox",
+     "enabled": true
+    },
+    {
+     "group": "Anzeigen",
+     "name": "Tiefpunkt",
+     "type": "CheckBox",
+     "enabled": true
+    },
+    {
+     "group": "Anzeigen",
+     "name": "Negative Punkte",
+     "type": "CheckBox",
+     "enabled": true
+    },
+    {
+     "group": "Anzeigen",
+     "name": "Erster Punkt",
+     "type": "CheckBox",
+     "enabled": true
+    },
+    {
+     "group": "Anzeigen",
+     "name": "Letzter Punkt",
+     "type": "CheckBox",
+     "enabled": true
+    },
+    {
+     "group": "Anzeigen",
+     "name": "Datenpunkte",
+     "type": "CheckBox",
+     "enabled": true
+    },
+    {
+     "group": "Formatvorlage",
+     "name": "Sparklinefarbe",
+     "type": "SplitButton",
+     "enabled": true,
+     "items": [
+      {
+       "name": "Sparklinefarbe RGB(0, 0, 0)",
+       "type": "Button",
+       "enabled": true
+      },
+      {
+       "name": "Weitere Optionen",
+       "type": "MenuItem",
+       "enabled": true,
+       "submenu": []
+      },
+      {
+       "name": "Sparklinefarbe",
+       "type": "Menu",
+       "enabled": true
+      },
+      {
+       "name": "Katalogfilter",
+       "type": "Group",
+       "enabled": false
+      },
+      {
+       "name": "Nur hoher Kontrast",
+       "type": "Button",
+       "enabled": false
+      },
+      {
+       "name": "Designfarben",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "Weiß, Hintergrund 1",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Schwarz, Text 1",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Hellgrau, Hintergrund 2",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Dunkelblau, Text 2",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Dunkelblaugrün, Akzent 1",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Orange, Akzent 2",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Dunkelgrün, Akzent 3",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Türkis, Akzent 4",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Pflaume, Akzent 5",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Grün, Akzent 6",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": " ",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "Weiß, Hintergrund 1, dunkler 5%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Schwarz, Text 1, heller 50%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Hellgrau, Hintergrund 2, dunkler 10%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Dunkelblau, Text 2, heller 90%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Dunkelblaugrün, Akzent 1, heller 80%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Orange, Akzent 2, heller 80%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Dunkelgrün, Akzent 3, heller 80%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Türkis, Akzent 4, heller 80%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Pflaume, Akzent 5, heller 80%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Grün, Akzent 6, heller 80%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Weiß, Hintergrund 1, dunkler 15%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Schwarz, Text 1, heller 35%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Hellgrau, Hintergrund 2, dunkler 25%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Dunkelblau, Text 2, heller 75%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Dunkelblaugrün, Akzent 1, heller 60%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Orange, Akzent 2, heller 60%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Dunkelgrün, Akzent 3, heller 60%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Türkis, Akzent 4, heller 60%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Pflaume, Akzent 5, heller 60%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Grün, Akzent 6, heller 60%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Weiß, Hintergrund 1, dunkler 25%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Schwarz, Text 1, heller 25%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Hellgrau, Hintergrund 2, dunkler 50%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Dunkelblau, Text 2, heller 50%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Dunkelblaugrün, Akzent 1, heller 40%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Orange, Akzent 2, heller 40%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Dunkelgrün, Akzent 3, heller 40%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Türkis, Akzent 4, heller 40%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Pflaume, Akzent 5, heller 40%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Grün, Akzent 6, heller 40%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Weiß, Hintergrund 1, dunkler 35%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Schwarz, Text 1, heller 15%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Hellgrau, Hintergrund 2, dunkler 75%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Dunkelblau, Text 2, heller 25%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Dunkelblaugrün, Akzent 1, dunkler 25%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Orange, Akzent 2, dunkler 25%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Dunkelgrün, Akzent 3, dunkler 25%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Türkis, Akzent 4, dunkler 25%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Pflaume, Akzent 5, dunkler 25%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Grün, Akzent 6, dunkler 25%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Weiß, Hintergrund 1, dunkler 50%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Schwarz, Text 1, heller 5%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Hellgrau, Hintergrund 2, dunkler 90%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Dunkelblau, Text 2, heller 10%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Dunkelblaugrün, Akzent 1, dunkler 50%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Orange, Akzent 2, dunkler 50%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Dunkelgrün, Akzent 3, dunkler 50%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Türkis, Akzent 4, dunkler 50%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Pflaume, Akzent 5, dunkler 50%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Grün, Akzent 6, dunkler 50%",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Standardfarben",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "Dunkelrot",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Rot",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Orange",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Gelb",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Hellgrün",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Grün",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Hellblau",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Blau",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Dunkelblau",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": "Lila",
+       "type": "ListItem",
+       "enabled": true
+      },
+      {
+       "name": " ",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "Weitere Farben...",
+       "type": "MenuItem",
+       "enabled": true
+      },
+      {
+       "name": "Stärke",
+       "type": "MenuItem",
+       "enabled": true
+      }
+     ]
+    },
+    {
+     "group": "Formatvorlage",
+     "name": "Datenpunktfarbe",
+     "type": "MenuItem",
+     "enabled": true,
+     "items": [
+      {
+       "name": "Datenpunktfarbe",
+       "type": "Menu",
+       "enabled": true
+      },
+      {
+       "name": " ",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "Negative Punkte",
+       "type": "MenuItem",
+       "enabled": true,
+       "submenu": [
+        {
+         "name": "Katalogfilter",
+         "type": "Group",
+         "enabled": false
+        },
+        {
+         "name": "Nur hoher Kontrast",
+         "type": "Button",
+         "enabled": false
+        },
+        {
+         "name": "Designfarben",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Weiß, Hintergrund 1",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Schwarz, Text 1",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau, Text 2",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblaugrün, Akzent 1",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzent 2",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelgrün, Akzent 3",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Türkis, Akzent 4",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Pflaume, Akzent 5",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzent 6",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": " ",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 5%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Schwarz, Text 1, heller 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 10%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau, Text 2, heller 90%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblaugrün, Akzent 1, heller 80%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzent 2, heller 80%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelgrün, Akzent 3, heller 80%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Türkis, Akzent 4, heller 80%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Pflaume, Akzent 5, heller 80%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzent 6, heller 80%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 15%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Schwarz, Text 1, heller 35%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau, Text 2, heller 75%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblaugrün, Akzent 1, heller 60%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzent 2, heller 60%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelgrün, Akzent 3, heller 60%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Türkis, Akzent 4, heller 60%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Pflaume, Akzent 5, heller 60%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzent 6, heller 60%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Schwarz, Text 1, heller 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau, Text 2, heller 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblaugrün, Akzent 1, heller 40%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzent 2, heller 40%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelgrün, Akzent 3, heller 40%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Türkis, Akzent 4, heller 40%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Pflaume, Akzent 5, heller 40%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzent 6, heller 40%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 35%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Schwarz, Text 1, heller 15%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 75%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau, Text 2, heller 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblaugrün, Akzent 1, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelgrün, Akzent 3, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Türkis, Akzent 4, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Pflaume, Akzent 5, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Schwarz, Text 1, heller 5%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 90%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau, Text 2, heller 10%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblaugrün, Akzent 1, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelgrün, Akzent 3, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Türkis, Akzent 4, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Pflaume, Akzent 5, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Standardfarben",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelrot",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Rot",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Gelb",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrün",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellblau",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Blau",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Lila",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": " ",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Weitere Farben...",
+         "type": "MenuItem",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Datenpunkte",
+       "type": "MenuItem",
+       "enabled": true,
+       "submenu": [
+        {
+         "name": "Katalogfilter",
+         "type": "Group",
+         "enabled": false
+        },
+        {
+         "name": "Nur hoher Kontrast",
+         "type": "Button",
+         "enabled": false
+        },
+        {
+         "name": "Designfarben",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Weiß, Hintergrund 1",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Schwarz, Text 1",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau, Text 2",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblaugrün, Akzent 1",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzent 2",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelgrün, Akzent 3",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Türkis, Akzent 4",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Pflaume, Akzent 5",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzent 6",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": " ",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 5%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Schwarz, Text 1, heller 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 10%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau, Text 2, heller 90%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblaugrün, Akzent 1, heller 80%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzent 2, heller 80%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelgrün, Akzent 3, heller 80%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Türkis, Akzent 4, heller 80%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Pflaume, Akzent 5, heller 80%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzent 6, heller 80%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 15%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Schwarz, Text 1, heller 35%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau, Text 2, heller 75%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblaugrün, Akzent 1, heller 60%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzent 2, heller 60%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelgrün, Akzent 3, heller 60%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Türkis, Akzent 4, heller 60%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Pflaume, Akzent 5, heller 60%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzent 6, heller 60%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Schwarz, Text 1, heller 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau, Text 2, heller 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblaugrün, Akzent 1, heller 40%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzent 2, heller 40%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelgrün, Akzent 3, heller 40%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Türkis, Akzent 4, heller 40%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Pflaume, Akzent 5, heller 40%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzent 6, heller 40%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 35%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Schwarz, Text 1, heller 15%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 75%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau, Text 2, heller 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblaugrün, Akzent 1, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelgrün, Akzent 3, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Türkis, Akzent 4, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Pflaume, Akzent 5, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Schwarz, Text 1, heller 5%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 90%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau, Text 2, heller 10%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblaugrün, Akzent 1, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelgrün, Akzent 3, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Türkis, Akzent 4, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Pflaume, Akzent 5, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Standardfarben",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelrot",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Rot",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Gelb",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrün",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellblau",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Blau",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Lila",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": " ",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Weitere Farben...",
+         "type": "MenuItem",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": " ",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "Höchstpunkt",
+       "type": "MenuItem",
+       "enabled": true,
+       "submenu": [
+        {
+         "name": "Katalogfilter",
+         "type": "Group",
+         "enabled": false
+        },
+        {
+         "name": "Nur hoher Kontrast",
+         "type": "Button",
+         "enabled": false
+        },
+        {
+         "name": "Designfarben",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Weiß, Hintergrund 1",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Schwarz, Text 1",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau, Text 2",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblaugrün, Akzent 1",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzent 2",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelgrün, Akzent 3",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Türkis, Akzent 4",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Pflaume, Akzent 5",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzent 6",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": " ",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 5%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Schwarz, Text 1, heller 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 10%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau, Text 2, heller 90%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblaugrün, Akzent 1, heller 80%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzent 2, heller 80%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelgrün, Akzent 3, heller 80%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Türkis, Akzent 4, heller 80%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Pflaume, Akzent 5, heller 80%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzent 6, heller 80%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 15%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Schwarz, Text 1, heller 35%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau, Text 2, heller 75%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblaugrün, Akzent 1, heller 60%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzent 2, heller 60%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelgrün, Akzent 3, heller 60%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Türkis, Akzent 4, heller 60%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Pflaume, Akzent 5, heller 60%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzent 6, heller 60%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Schwarz, Text 1, heller 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau, Text 2, heller 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblaugrün, Akzent 1, heller 40%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzent 2, heller 40%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelgrün, Akzent 3, heller 40%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Türkis, Akzent 4, heller 40%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Pflaume, Akzent 5, heller 40%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzent 6, heller 40%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 35%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Schwarz, Text 1, heller 15%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 75%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau, Text 2, heller 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblaugrün, Akzent 1, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelgrün, Akzent 3, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Türkis, Akzent 4, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Pflaume, Akzent 5, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Schwarz, Text 1, heller 5%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 90%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau, Text 2, heller 10%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblaugrün, Akzent 1, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelgrün, Akzent 3, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Türkis, Akzent 4, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Pflaume, Akzent 5, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Standardfarben",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelrot",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Rot",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Gelb",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrün",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellblau",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Blau",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Lila",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": " ",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Weitere Farben...",
+         "type": "MenuItem",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Tiefpunkt",
+       "type": "MenuItem",
+       "enabled": true,
+       "submenu": [
+        {
+         "name": "Katalogfilter",
+         "type": "Group",
+         "enabled": false
+        },
+        {
+         "name": "Nur hoher Kontrast",
+         "type": "Button",
+         "enabled": false
+        },
+        {
+         "name": "Designfarben",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Weiß, Hintergrund 1",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Schwarz, Text 1",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau, Text 2",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblaugrün, Akzent 1",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzent 2",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelgrün, Akzent 3",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Türkis, Akzent 4",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Pflaume, Akzent 5",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzent 6",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": " ",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 5%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Schwarz, Text 1, heller 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 10%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau, Text 2, heller 90%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblaugrün, Akzent 1, heller 80%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzent 2, heller 80%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelgrün, Akzent 3, heller 80%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Türkis, Akzent 4, heller 80%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Pflaume, Akzent 5, heller 80%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzent 6, heller 80%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 15%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Schwarz, Text 1, heller 35%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau, Text 2, heller 75%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblaugrün, Akzent 1, heller 60%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzent 2, heller 60%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelgrün, Akzent 3, heller 60%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Türkis, Akzent 4, heller 60%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Pflaume, Akzent 5, heller 60%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzent 6, heller 60%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Schwarz, Text 1, heller 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau, Text 2, heller 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblaugrün, Akzent 1, heller 40%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzent 2, heller 40%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelgrün, Akzent 3, heller 40%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Türkis, Akzent 4, heller 40%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Pflaume, Akzent 5, heller 40%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzent 6, heller 40%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 35%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Schwarz, Text 1, heller 15%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 75%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau, Text 2, heller 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblaugrün, Akzent 1, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelgrün, Akzent 3, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Türkis, Akzent 4, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Pflaume, Akzent 5, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Schwarz, Text 1, heller 5%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 90%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau, Text 2, heller 10%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblaugrün, Akzent 1, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelgrün, Akzent 3, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Türkis, Akzent 4, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Pflaume, Akzent 5, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Standardfarben",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelrot",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Rot",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Gelb",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrün",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellblau",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Blau",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Lila",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": " ",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Weitere Farben...",
+         "type": "MenuItem",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Erster Punkt",
+       "type": "MenuItem",
+       "enabled": true,
+       "submenu": [
+        {
+         "name": "Katalogfilter",
+         "type": "Group",
+         "enabled": false
+        },
+        {
+         "name": "Nur hoher Kontrast",
+         "type": "Button",
+         "enabled": false
+        },
+        {
+         "name": "Designfarben",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Weiß, Hintergrund 1",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Schwarz, Text 1",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau, Text 2",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblaugrün, Akzent 1",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzent 2",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelgrün, Akzent 3",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Türkis, Akzent 4",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Pflaume, Akzent 5",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzent 6",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": " ",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 5%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Schwarz, Text 1, heller 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 10%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau, Text 2, heller 90%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblaugrün, Akzent 1, heller 80%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzent 2, heller 80%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelgrün, Akzent 3, heller 80%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Türkis, Akzent 4, heller 80%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Pflaume, Akzent 5, heller 80%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzent 6, heller 80%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 15%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Schwarz, Text 1, heller 35%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau, Text 2, heller 75%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblaugrün, Akzent 1, heller 60%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzent 2, heller 60%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelgrün, Akzent 3, heller 60%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Türkis, Akzent 4, heller 60%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Pflaume, Akzent 5, heller 60%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzent 6, heller 60%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Schwarz, Text 1, heller 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau, Text 2, heller 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblaugrün, Akzent 1, heller 40%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzent 2, heller 40%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelgrün, Akzent 3, heller 40%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Türkis, Akzent 4, heller 40%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Pflaume, Akzent 5, heller 40%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzent 6, heller 40%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 35%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Schwarz, Text 1, heller 15%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 75%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau, Text 2, heller 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblaugrün, Akzent 1, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelgrün, Akzent 3, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Türkis, Akzent 4, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Pflaume, Akzent 5, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Schwarz, Text 1, heller 5%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 90%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau, Text 2, heller 10%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblaugrün, Akzent 1, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelgrün, Akzent 3, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Türkis, Akzent 4, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Pflaume, Akzent 5, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Standardfarben",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelrot",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Rot",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Gelb",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrün",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellblau",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Blau",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Lila",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": " ",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Weitere Farben...",
+         "type": "MenuItem",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Letzter Punkt",
+       "type": "MenuItem",
+       "enabled": true,
+       "submenu": [
+        {
+         "name": "Katalogfilter",
+         "type": "Group",
+         "enabled": false
+        },
+        {
+         "name": "Nur hoher Kontrast",
+         "type": "Button",
+         "enabled": false
+        },
+        {
+         "name": "Designfarben",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Weiß, Hintergrund 1",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Schwarz, Text 1",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau, Text 2",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblaugrün, Akzent 1",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzent 2",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelgrün, Akzent 3",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Türkis, Akzent 4",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Pflaume, Akzent 5",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzent 6",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": " ",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 5%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Schwarz, Text 1, heller 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 10%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau, Text 2, heller 90%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblaugrün, Akzent 1, heller 80%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzent 2, heller 80%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelgrün, Akzent 3, heller 80%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Türkis, Akzent 4, heller 80%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Pflaume, Akzent 5, heller 80%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzent 6, heller 80%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 15%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Schwarz, Text 1, heller 35%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau, Text 2, heller 75%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblaugrün, Akzent 1, heller 60%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzent 2, heller 60%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelgrün, Akzent 3, heller 60%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Türkis, Akzent 4, heller 60%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Pflaume, Akzent 5, heller 60%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzent 6, heller 60%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Schwarz, Text 1, heller 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau, Text 2, heller 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblaugrün, Akzent 1, heller 40%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzent 2, heller 40%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelgrün, Akzent 3, heller 40%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Türkis, Akzent 4, heller 40%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Pflaume, Akzent 5, heller 40%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzent 6, heller 40%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 35%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Schwarz, Text 1, heller 15%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 75%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau, Text 2, heller 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblaugrün, Akzent 1, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelgrün, Akzent 3, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Türkis, Akzent 4, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Pflaume, Akzent 5, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 25%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Schwarz, Text 1, heller 5%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 90%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau, Text 2, heller 10%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblaugrün, Akzent 1, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelgrün, Akzent 3, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Türkis, Akzent 4, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Pflaume, Akzent 5, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 50%",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Standardfarben",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelrot",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Rot",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Orange",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Gelb",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrün",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Grün",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Hellblau",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Blau",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Dunkelblau",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": "Lila",
+         "type": "ListItem",
+         "enabled": true
+        },
+        {
+         "name": " ",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Weitere Farben...",
+         "type": "MenuItem",
+         "enabled": true
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "group": "Gruppieren",
+     "name": "Achse",
+     "type": "MenuItem",
+     "enabled": true,
+     "items": [
+      {
+       "name": "Achse",
+       "type": "Menu",
+       "enabled": true
+      },
+      {
+       "name": "Horizontale Achsenoptionen",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "Allgemeiner Achsentyp",
+       "type": "MenuItem",
+       "enabled": true
+      },
+      {
+       "name": "Datumsachsentyp...",
+       "type": "MenuItem",
+       "enabled": true
+      },
+      {
+       "name": " ",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "Achse anzeigen",
+       "type": "MenuItem",
+       "enabled": true
+      },
+      {
+       "name": "Daten von rechts nach links darstellen",
+       "type": "MenuItem",
+       "enabled": true
+      },
+      {
+       "name": "Optionen für den Minimalwert der vertikalen Achse",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "Automatisch für jede Sparkline",
+       "type": "MenuItem",
+       "enabled": true
+      },
+      {
+       "name": "Identisch für alle Sparklines",
+       "type": "MenuItem",
+       "enabled": true
+      },
+      {
+       "name": "Benutzerdefinierter Wert...",
+       "type": "MenuItem",
+       "enabled": true
+      },
+      {
+       "name": "Optionen für den Höchstwert der vertikalen Achse",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "Automatisch für jede Sparkline",
+       "type": "MenuItem",
+       "enabled": true
+      },
+      {
+       "name": "Identisch für alle Sparklines",
+       "type": "MenuItem",
+       "enabled": true
+      },
+      {
+       "name": "Benutzerdefinierter Wert...",
+       "type": "MenuItem",
+       "enabled": true
+      }
+     ]
+    },
+    {
+     "group": "Gruppieren",
+     "name": "Gruppieren",
+     "type": "Button",
+     "enabled": false
+    },
+    {
+     "group": "Gruppieren",
+     "name": "Gruppierung aufheben",
+     "type": "Button",
+     "enabled": false
+    },
+    {
+     "group": "Gruppieren",
+     "name": "Löschen",
+     "type": "SplitButton",
+     "enabled": true,
+     "items": [
+      {
+       "name": "Ausgewählte Sparklines löschen",
+       "type": "Button",
+       "enabled": true
+      },
+      {
+       "name": "Weitere Optionen",
+       "type": "MenuItem",
+       "enabled": true,
+       "submenu": []
+      },
+      {
+       "name": "Löschen",
+       "type": "Menu",
+       "enabled": true
+      },
+      {
+       "name": " ",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "Ausgewählte Sparklines löschen",
+       "type": "MenuItem",
+       "enabled": true
+      },
+      {
+       "name": "Ausgewählte Sparklinegruppen löschen",
+       "type": "MenuItem",
+       "enabled": true
+      }
+     ]
+    }
+   ]
+  },
+  "PivotTable/PivotTable-Analyse": {
+   "controls": [
+    {
+     "group": "PivotTable",
+     "name": "PivotTable",
+     "type": "MenuItem",
+     "enabled": true,
+     "items": [
+      {
+       "name": "PivotTable",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "PivotTable-Name",
+       "type": "Edit",
+       "enabled": true
+      },
+      {
+       "name": "Optionen",
+       "type": "SplitButton",
+       "enabled": true
+      },
+      {
+       "name": "Optionen",
+       "type": "Button",
+       "enabled": true
+      },
+      {
+       "name": "Weitere Optionen",
+       "type": "MenuItem",
+       "enabled": true,
+       "submenu": []
+      }
+     ]
+    },
+    {
+     "group": "Aktives Feld",
+     "name": "PivotField-Name",
+     "type": "Edit",
+     "enabled": true
+    },
+    {
+     "group": "Aktives Feld",
+     "name": "Feldeinstellungen",
+     "type": "Button",
+     "enabled": true
+    },
+    {
+     "group": "Aktives Feld",
+     "name": "Details",
+     "type": "Button",
+     "enabled": false
+    },
+    {
+     "group": "Aktives Feld",
+     "name": "Feld erweitern",
+     "type": "Button",
+     "enabled": true
+    },
+    {
+     "group": "Aktives Feld",
+     "name": "Feld reduzieren",
+     "type": "Button",
+     "enabled": true
+    },
+    {
+     "group": "Gruppieren",
+     "name": "Auswahl gruppieren",
+     "type": "Button",
+     "enabled": true
+    },
+    {
+     "group": "Gruppieren",
+     "name": "Gruppierung aufheben...",
+     "type": "Button",
+     "enabled": true
+    },
+    {
+     "group": "Gruppieren",
+     "name": "Feld gruppieren",
+     "type": "Button",
+     "enabled": false
+    },
+    {
+     "group": "Filtern",
+     "name": "Datenschnitt einfügen...",
+     "type": "Button",
+     "enabled": true,
+     "dialog": true
+    },
+    {
+     "group": "Filtern",
+     "name": "Zeitachse einfügen...",
+     "type": "Button",
+     "enabled": true,
+     "dialog": true
+    },
+    {
+     "group": "Filtern",
+     "name": "Filterverbindungen...",
+     "type": "Button",
+     "enabled": false
+    },
+    {
+     "group": "Daten",
+     "name": "Aktualisieren",
+     "type": "SplitButton",
+     "enabled": true,
+     "items": [
+      {
+       "name": "Aktualisieren",
+       "type": "Button",
+       "enabled": true
+      },
+      {
+       "name": "Weitere Optionen",
+       "type": "MenuItem",
+       "enabled": true,
+       "submenu": []
+      },
+      {
+       "name": "Aktualisieren",
+       "type": "Menu",
+       "enabled": true
+      },
+      {
+       "name": " ",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "Aktualisieren",
+       "type": "MenuItem",
+       "enabled": true
+      },
+      {
+       "name": "Alle aktualisieren",
+       "type": "MenuItem",
+       "enabled": true
+      },
+      {
+       "name": "Status aktualisieren",
+       "type": "MenuItem",
+       "enabled": false
+      },
+      {
+       "name": "Aktualisierung abbrechen",
+       "type": "MenuItem",
+       "enabled": false
+      },
+      {
+       "name": " ",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "Verbindungseigenschaften...",
+       "type": "MenuItem",
+       "enabled": false
+      }
+     ]
+    },
+    {
+     "group": "Daten",
+     "name": "Datenquelle ändern...",
+     "type": "SplitButton",
+     "enabled": true,
+     "items": [
+      {
+       "name": "Datenquelle ändern...",
+       "type": "Button",
+       "enabled": true
+      },
+      {
+       "name": "Weitere Optionen",
+       "type": "MenuItem",
+       "enabled": true,
+       "submenu": []
+      },
+      {
+       "name": "Datenquelle ändern...",
+       "type": "Menu",
+       "enabled": true
+      },
+      {
+       "name": " ",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "Datenquelle ändern...",
+       "type": "MenuItem",
+       "enabled": true
+      },
+      {
+       "name": "Verbindungseigenschaften...",
+       "type": "MenuItem",
+       "enabled": false
+      }
+     ]
+    },
+    {
+     "group": "Aktionen",
+     "name": "Aktionen",
+     "type": "MenuItem",
+     "enabled": true,
+     "items": [
+      {
+       "name": "Aktionen",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "Löschen",
+       "type": "MenuItem",
+       "enabled": true,
+       "submenu": [
+        {
+         "name": " ",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Alle löschen",
+         "type": "MenuItem",
+         "enabled": true
+        },
+        {
+         "name": "Filter entfernen",
+         "type": "MenuItem",
+         "enabled": false
+        }
+       ]
+      },
+      {
+       "name": "Auswählen",
+       "type": "MenuItem",
+       "enabled": true,
+       "submenu": [
+        {
+         "name": " ",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Beschriftungen und Werte",
+         "type": "MenuItem",
+         "enabled": false
+        },
+        {
+         "name": "Werte",
+         "type": "MenuItem",
+         "enabled": false
+        },
+        {
+         "name": "Beschriftungen",
+         "type": "MenuItem",
+         "enabled": false
+        },
+        {
+         "name": "Gesamte PivotTable",
+         "type": "MenuItem",
+         "enabled": true
+        },
+        {
+         "name": " ",
+         "type": "Group",
+         "enabled": true
+        },
+        {
+         "name": "Auswahl aktivieren",
+         "type": "MenuItem",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "PivotTable verschieben",
+       "type": "Button",
+       "enabled": true
+      }
+     ]
+    },
+    {
+     "group": "Berechnungen",
+     "name": "Felder, Elemente und Gruppen",
+     "type": "MenuItem",
+     "enabled": true,
+     "items": [
+      {
+       "name": "Felder, Elemente und Gruppen",
+       "type": "Menu",
+       "enabled": true
+      },
+      {
+       "name": " ",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "Berechnetes Feld...",
+       "type": "MenuItem",
+       "enabled": true
+      },
+      {
+       "name": "Berechnetes Element...",
+       "type": "MenuItem",
+       "enabled": true
+      },
+      {
+       "name": " ",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "Lösungsreihenfolge...",
+       "type": "MenuItem",
+       "enabled": true
+      },
+      {
+       "name": "Formeln auflisten",
+       "type": "MenuItem",
+       "enabled": true
+      },
+      {
+       "name": " ",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "[Beschreibung]",
+       "type": "MenuItem",
+       "enabled": false
+      },
+      {
+       "name": "[Beschreibung]",
+       "type": "MenuItem",
+       "enabled": false
+      },
+      {
+       "name": "Gruppen verwalten...",
+       "type": "MenuItem",
+       "enabled": false
+      }
+     ]
+    },
+    {
+     "group": "Berechnungen",
+     "name": "OLAP-Tools",
+     "type": "MenuItem",
+     "enabled": false
+    },
+    {
+     "group": "Berechnungen",
+     "name": "Beziehungen",
+     "type": "Button",
+     "enabled": false
+    },
+    {
+     "group": "Tools",
+     "name": "PivotChart",
+     "type": "Button",
+     "enabled": true
+    },
+    {
+     "group": "Tools",
+     "name": "Empfohlene PivotTables",
+     "type": "Button",
+     "enabled": true
+    },
+    {
+     "group": "Einblenden",
+     "name": "Einblenden",
+     "type": "MenuItem",
+     "enabled": true,
+     "items": [
+      {
+       "name": "Einblenden",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "Feldliste",
+       "type": "Button",
+       "enabled": true
+      },
+      {
+       "name": "Schaltflächen +/-",
+       "type": "Button",
+       "enabled": true
+      },
+      {
+       "name": "Feldkopfzeilen",
+       "type": "Button",
+       "enabled": true
+      }
+     ]
+    }
+   ]
+  },
+  "PivotTable/Entwurf": {
+   "controls": [
+    {
+     "group": "Layout",
+     "name": "Teilergebnisse",
+     "type": "MenuItem",
+     "enabled": true,
+     "items": [
+      {
+       "name": "Teilergebnisse",
+       "type": "Menu",
+       "enabled": true
+      },
+      {
+       "name": " ",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "Teilergebnisse nicht anzeigen",
+       "type": "MenuItem",
+       "enabled": true
+      },
+      {
+       "name": "Alle Teilergebnisse in der Gruppe unten anzeigen",
+       "type": "MenuItem",
+       "enabled": true
+      },
+      {
+       "name": "Alle Teilergebnisse in der Gruppe oben anzeigen",
+       "type": "MenuItem",
+       "enabled": true
+      },
+      {
+       "name": " ",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "Gefilterte Elemente in Summen einschließen",
+       "type": "MenuItem",
+       "enabled": false
+      }
+     ]
+    },
+    {
+     "group": "Layout",
+     "name": "Gesamtergebnisse",
+     "type": "MenuItem",
+     "enabled": true,
+     "items": [
+      {
+       "name": "Gesamtergebnisse",
+       "type": "Menu",
+       "enabled": true
+      },
+      {
+       "name": " ",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "Für Zeilen und Spalten deaktiviert",
+       "type": "MenuItem",
+       "enabled": true
+      },
+      {
+       "name": "Für Zeilen und Spalten aktiviert",
+       "type": "MenuItem",
+       "enabled": true
+      },
+      {
+       "name": "Nur für Zeilen aktiviert",
+       "type": "MenuItem",
+       "enabled": true
+      },
+      {
+       "name": "Nur für Spalten aktiviert",
+       "type": "MenuItem",
+       "enabled": true
+      }
+     ]
+    },
+    {
+     "group": "Layout",
+     "name": "Berichtslayout",
+     "type": "MenuItem",
+     "enabled": true,
+     "items": [
+      {
+       "name": "Berichtslayout",
+       "type": "Menu",
+       "enabled": true
+      },
+      {
+       "name": " ",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "Im Kurzformat anzeigen",
+       "type": "MenuItem",
+       "enabled": true
+      },
+      {
+       "name": "Im Gliederungsformat anzeigen",
+       "type": "MenuItem",
+       "enabled": true
+      },
+      {
+       "name": "Im Tabellenformat anzeigen",
+       "type": "MenuItem",
+       "enabled": true
+      },
+      {
+       "name": " ",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "Alle Elementnamen wiederholen",
+       "type": "MenuItem",
+       "enabled": true
+      },
+      {
+       "name": "Elementnamen nicht wiederholen",
+       "type": "MenuItem",
+       "enabled": true
+      }
+     ]
+    },
+    {
+     "group": "Layout",
+     "name": "Leere Zeilen",
+     "type": "MenuItem",
+     "enabled": true,
+     "items": [
+      {
+       "name": "Leere Zeilen",
+       "type": "Menu",
+       "enabled": true
+      },
+      {
+       "name": " ",
+       "type": "Group",
+       "enabled": true
+      },
+      {
+       "name": "Leerzeile nach jedem Element einfügen",
+       "type": "MenuItem",
+       "enabled": true
+      },
+      {
+       "name": "Leerzeile nach jedem Element entfernen",
+       "type": "MenuItem",
+       "enabled": true
+      }
+     ]
+    },
+    {
+     "group": "Optionen für PivotTable-Formate",
+     "name": "Zeilenüberschriften",
+     "type": "CheckBox",
+     "enabled": true
+    },
+    {
+     "group": "Optionen für PivotTable-Formate",
+     "name": "Spaltenüberschriften",
+     "type": "CheckBox",
+     "enabled": true
+    },
+    {
+     "group": "Optionen für PivotTable-Formate",
+     "name": "Gebänderte Zeilen",
+     "type": "CheckBox",
+     "enabled": true
+    },
+    {
+     "group": "Optionen für PivotTable-Formate",
+     "name": "Gebänderte Spalten",
+     "type": "CheckBox",
+     "enabled": true
+    }
+   ]
   }
  },
  "dialogs": {
@@ -47015,6 +51775,2281 @@
      }
     ]
    }
+  },
+  "Diagrammentwurf/Daten/Daten auswählen...": {
+   "title": "Datenquelle auswählen",
+   "pages": {
+    "": [
+     {
+      "name": "Diagrammdatenbereich",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Diagrammdatenbereich",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "Zeile/Spalte tauschen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Legendeneinträge (Reihen)",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Datenreihe hinzufügen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Datenreihe bearbeiten",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Datenreihe entfernen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Nach oben",
+      "type": "Button",
+      "enabled": false
+     },
+     {
+      "name": "Nach unten",
+      "type": "Button",
+      "enabled": false
+     },
+     {
+      "name": "Legendeneinträge (Reihen)",
+      "type": "List",
+      "enabled": true
+     },
+     {
+      "name": "Wert",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Wert",
+      "type": "CheckBox",
+      "enabled": true
+     },
+     {
+      "name": "Wert",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Horizontale Achsenbeschriftungen (Rubrik)",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Kategorie bearbeiten",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Horizontale Achsenbeschriftungen (Rubrik)",
+      "type": "List",
+      "enabled": true
+     },
+     {
+      "name": "Anna",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Anna",
+      "type": "CheckBox",
+      "enabled": true
+     },
+     {
+      "name": "Anna",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Ben",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Ben",
+      "type": "CheckBox",
+      "enabled": true
+     },
+     {
+      "name": "Ben",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Cem",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Cem",
+      "type": "CheckBox",
+      "enabled": true
+     },
+     {
+      "name": "Cem",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Dora",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Dora",
+      "type": "CheckBox",
+      "enabled": true
+     },
+     {
+      "name": "Dora",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Ausgeblendete und leere Zellen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "OK",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Abbrechen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Direkthilfe",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Schließen",
+      "type": "Button",
+      "enabled": true
+     }
+    ]
+   }
+  },
+  "Diagrammentwurf/Typ/Diagrammtyp ändern...": {
+   "title": "Diagrammtyp ändern",
+   "pages": {
+    "": [
+     {
+      "name": "Empfohlene Diagramme",
+      "type": "TabItem",
+      "enabled": true
+     },
+     {
+      "name": "Alle Diagramme",
+      "type": "TabItem",
+      "enabled": true
+     },
+     {
+      "name": "Diagrammtypen",
+      "type": "Menu",
+      "enabled": true
+     },
+     {
+      "name": " ",
+      "type": "Group",
+      "enabled": true
+     },
+     {
+      "name": "Zuletzt verwendet",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Vorlagen",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Säule",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Linie",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Kreis",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Balken",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Fläche",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Punkt (XY)",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Karte",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Kurs",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Oberfläche",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Netz",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Treemap",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Sunburst",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Histogramm",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Kastengrafik",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Wasserfall",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Trichter",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Kombi",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": " ",
+      "type": "Group",
+      "enabled": true
+     },
+     {
+      "name": "Gruppierte Säulen",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Gestapelte Säulen",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Gestapelte Säulen (100 %)",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "3D-Säulen (gruppiert)",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Gestapelte 3D-Säulen",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Gestapelte 3D-Säulen (100 %)",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "3D-Säulen",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Gruppierte Säulen",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": " ",
+      "type": "Group",
+      "enabled": true
+     },
+     {
+      "name": "Gruppierte Säulen",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Gruppierte Säulen",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "OK",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Abbrechen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Direkthilfe",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Schließen",
+      "type": "Button",
+      "enabled": true
+     }
+    ],
+    "Empfohlene Diagramme": [
+     {
+      "name": "Empfohlene Diagramme",
+      "type": "TabItem",
+      "enabled": true
+     },
+     {
+      "name": "Alle Diagramme",
+      "type": "TabItem",
+      "enabled": true
+     },
+     {
+      "name": " ",
+      "type": "Group",
+      "enabled": true
+     },
+     {
+      "name": "Gruppierte Säulen",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Kreis",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Gruppierte Balken",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Trichter",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Gruppierte Säulen",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "OK",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Abbrechen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Direkthilfe",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Schließen",
+      "type": "Button",
+      "enabled": true
+     }
+    ],
+    "Alle Diagramme": [
+     {
+      "name": "Empfohlene Diagramme",
+      "type": "TabItem",
+      "enabled": true
+     },
+     {
+      "name": "Alle Diagramme",
+      "type": "TabItem",
+      "enabled": true
+     },
+     {
+      "name": "Diagrammtypen",
+      "type": "Menu",
+      "enabled": true
+     },
+     {
+      "name": " ",
+      "type": "Group",
+      "enabled": true
+     },
+     {
+      "name": "Zuletzt verwendet",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Vorlagen",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Säule",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Linie",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Kreis",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Balken",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Fläche",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Punkt (XY)",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Karte",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Kurs",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Oberfläche",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Netz",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Treemap",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Sunburst",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Histogramm",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Kastengrafik",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Wasserfall",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Trichter",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Kombi",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": " ",
+      "type": "Group",
+      "enabled": true
+     },
+     {
+      "name": "Gruppierte Säulen",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Gestapelte Säulen",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Gestapelte Säulen (100 %)",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "3D-Säulen (gruppiert)",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Gestapelte 3D-Säulen",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Gestapelte 3D-Säulen (100 %)",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "3D-Säulen",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Gruppierte Säulen",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": " ",
+      "type": "Group",
+      "enabled": true
+     },
+     {
+      "name": "Gruppierte Säulen",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Gruppierte Säulen",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "OK",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Abbrechen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Direkthilfe",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Schließen",
+      "type": "Button",
+      "enabled": true
+     }
+    ]
+   }
+  },
+  "Diagrammentwurf/Ort/Diagramm verschieben...": {
+   "title": "Diagramm verschieben",
+   "pages": {
+    "": [
+     {
+      "name": "RichEdit Control",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "Direkthilfe",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Schließen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Neues Blatt:",
+      "type": "RadioButton",
+      "enabled": true
+     },
+     {
+      "name": "Objekt in:",
+      "type": "RadioButton",
+      "enabled": true
+     },
+     {
+      "name": "Name des neuen Blattes",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "Blätter in Arbeitsmappe",
+      "type": "ComboBox",
+      "enabled": true
+     },
+     {
+      "name": "OK",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Abbrechen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Legen Sie fest, wo das Diagramm eingefügt werden soll:",
+      "type": "Text",
+      "enabled": true
+     }
+    ]
+   }
+  },
+  "Tabellenentwurf/Tools/Datenschnitt einfügen...": {
+   "title": "Datenschnitt auswählen",
+   "pages": {
+    "": [
+     {
+      "name": "Name. KontrollkästchenDeaktiviert",
+      "type": "Group",
+      "enabled": true
+     },
+     {
+      "name": "Name. KontrollkästchenDeaktiviert",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Name",
+      "type": "CheckBox",
+      "enabled": true
+     },
+     {
+      "name": "Wert. KontrollkästchenDeaktiviert",
+      "type": "Group",
+      "enabled": true
+     },
+     {
+      "name": "Wert. KontrollkästchenDeaktiviert",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Wert",
+      "type": "CheckBox",
+      "enabled": true
+     },
+     {
+      "name": "OK",
+      "type": "Button",
+      "enabled": false
+     },
+     {
+      "name": "Abbrechen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Direkthilfe",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Schließen",
+      "type": "Button",
+      "enabled": true
+     }
+    ]
+   }
+  },
+  "Tabellenentwurf/Exportieren/Tabelle in SharePoint-Liste exportieren...": {
+   "title": "Tabelle in SharePoint-Liste exportieren - Schritt 1 von 2",
+   "pages": {
+    "": [
+     {
+      "name": "Wo möchten Sie die Tabelle veröffentlichen?",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Adresse",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Adresse",
+      "type": "ComboBox",
+      "enabled": true
+     },
+     {
+      "name": "Adresse",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "Öffnen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Schreibgeschützte Verbindung mit neuer SharePoint-Tabelle erstellen",
+      "type": "CheckBox",
+      "enabled": true
+     },
+     {
+      "name": "[Beschreibung]",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Name",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Name",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "Beschreibung",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Beschreibung",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "Hilfe",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Abbrechen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Zurück",
+      "type": "Button",
+      "enabled": false
+     },
+     {
+      "name": "Weiter",
+      "type": "Button",
+      "enabled": false
+     },
+     {
+      "name": "Fertig stellen",
+      "type": "Button",
+      "enabled": false
+     },
+     {
+      "name": "Direkthilfe",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Schließen",
+      "type": "Button",
+      "enabled": true
+     }
+    ]
+   }
+  },
+  "Tabellenentwurf/Schnellformatvorlagen/Neue Tabellenformatvorlage...": {
+   "title": "Neues Tabellenformat",
+   "pages": {
+    "": [
+     {
+      "name": "Name",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Name",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "Tabellenelement",
+      "type": "Group",
+      "enabled": true
+     },
+     {
+      "name": "Tabellenelement",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Ganze Tabelle",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Stripeset der ersten Spalte",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Stripeset der zweiten Spalte",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Stripeset der ersten Zeile",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Stripeset der zweiten Zeile",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Letzte Spalte",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Erste Spalte",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Überschriftenzeile",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Ergebniszeile",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Erste Überschriftenzelle",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Letzte Überschriftenzelle",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Erste Ergebniszelle",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Letzte Ergebniszelle",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Zeile nach oben",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Seite nach oben",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Seite nach unten",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Zeile nach unten",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Formatieren",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Löschen",
+      "type": "Button",
+      "enabled": false
+     },
+     {
+      "name": "Vorschau",
+      "type": "Group",
+      "enabled": true
+     },
+     {
+      "name": "Vorschau",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Elementformatierung",
+      "type": "Group",
+      "enabled": true
+     },
+     {
+      "name": "Elementformatierung",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Als standardmäßige Tabellenformatvorlage für dieses Dokument festlegen",
+      "type": "CheckBox",
+      "enabled": true
+     },
+     {
+      "name": "OK",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Abbrechen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Direkthilfe",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Schließen",
+      "type": "Button",
+      "enabled": true
+     }
+    ]
+   }
+  },
+  "Sparkline/Daten bearbeiten/Gruppenspeicherort und -daten bearbeiten...": {
+   "title": "Sparklines bearbeiten",
+   "pages": {
+    "": [
+     {
+      "name": "Wählen Sie die gewünschten Daten.",
+      "type": "Group",
+      "enabled": true
+     },
+     {
+      "name": "Wählen Sie die gewünschten Daten.",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Datenbereich",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Datenbereich",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "[Beschreibung]",
+      "type": "Group",
+      "enabled": true
+     },
+     {
+      "name": "[Beschreibung]",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Positionsbereich",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Positionsbereich",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "OK",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Abbrechen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Direkthilfe",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Schließen",
+      "type": "Button",
+      "enabled": true
+     }
+    ]
+   }
+  },
+  "Sparkline/Daten bearbeiten/Daten einer einzelnen Sparkline bearbeiten...": {
+   "title": "Sparklinedaten bearbeiten",
+   "pages": {
+    "": [
+     {
+      "name": "[Beschreibung]",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "[Beschreibung]",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "OK",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Abbrechen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Direkthilfe",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Schließen",
+      "type": "Button",
+      "enabled": true
+     }
+    ]
+   }
+  },
+  "Sparkline/Daten bearbeiten/Ausgeblendete und leere Zellen...": {
+   "title": "Ausgeblendete und leere Zelleneinstellungen",
+   "pages": {
+    "": [
+     {
+      "name": "Leere Zellen anzeigen als",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Leere Zellen anzeigen als",
+      "type": "Group",
+      "enabled": true
+     },
+     {
+      "name": "Lücken",
+      "type": "RadioButton",
+      "enabled": true
+     },
+     {
+      "name": "Null",
+      "type": "RadioButton",
+      "enabled": true
+     },
+     {
+      "name": "Datenpunkte mit einer Linie verbinden",
+      "type": "RadioButton",
+      "enabled": true
+     },
+     {
+      "name": "Daten in ausgeblendeten Zeilen und Spalten anzeigen",
+      "type": "CheckBox",
+      "enabled": true
+     },
+     {
+      "name": "OK",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Abbrechen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Direkthilfe",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Schließen",
+      "type": "Button",
+      "enabled": true
+     }
+    ]
+   }
+  },
+  "Sparkline/Sparklinefarbe/Weitere Farben...": {
+   "title": "Farben",
+   "pages": {
+    "": [
+     {
+      "name": "RichEdit Control",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "RichEdit Control",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "RichEdit Control",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "RichEdit Control",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "Minimieren",
+      "type": "Button",
+      "enabled": false
+     },
+     {
+      "name": "Maximieren",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Schließen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Standard",
+      "type": "TabItem",
+      "enabled": true
+     },
+     {
+      "name": "Benutzerdefiniert",
+      "type": "TabItem",
+      "enabled": true
+     },
+     {
+      "name": "Farben:",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Farbmodell:",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Farbmodell:",
+      "type": "ComboBox",
+      "enabled": true
+     },
+     {
+      "name": "Rot:",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Rot:",
+      "type": "Spinner",
+      "enabled": true
+     },
+     {
+      "name": "Grün:",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Grün:",
+      "type": "Spinner",
+      "enabled": true
+     },
+     {
+      "name": "Blau:",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Blau:",
+      "type": "Spinner",
+      "enabled": true
+     },
+     {
+      "name": "Hex:",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Hex:",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "OK",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Abbrechen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Aktuell",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Neu ",
+      "type": "Text",
+      "enabled": true
+     }
+    ],
+    "Standard": [
+     {
+      "name": "Minimieren",
+      "type": "Button",
+      "enabled": false
+     },
+     {
+      "name": "Maximieren",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Schließen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Standard",
+      "type": "TabItem",
+      "enabled": true
+     },
+     {
+      "name": "Benutzerdefiniert",
+      "type": "TabItem",
+      "enabled": true
+     },
+     {
+      "name": "Farben:",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "OK",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Abbrechen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Aktuell",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Neu ",
+      "type": "Text",
+      "enabled": true
+     }
+    ],
+    "Benutzerdefiniert": [
+     {
+      "name": "RichEdit Control",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "RichEdit Control",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "RichEdit Control",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "RichEdit Control",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "Minimieren",
+      "type": "Button",
+      "enabled": false
+     },
+     {
+      "name": "Maximieren",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Schließen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Standard",
+      "type": "TabItem",
+      "enabled": true
+     },
+     {
+      "name": "Benutzerdefiniert",
+      "type": "TabItem",
+      "enabled": true
+     },
+     {
+      "name": "Farben:",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Farbmodell:",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Farbmodell:",
+      "type": "ComboBox",
+      "enabled": true
+     },
+     {
+      "name": "Rot:",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Rot:",
+      "type": "Spinner",
+      "enabled": true
+     },
+     {
+      "name": "Grün:",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Grün:",
+      "type": "Spinner",
+      "enabled": true
+     },
+     {
+      "name": "Blau:",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Blau:",
+      "type": "Spinner",
+      "enabled": true
+     },
+     {
+      "name": "Hex:",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Hex:",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "OK",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Abbrechen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Aktuell",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Neu ",
+      "type": "Text",
+      "enabled": true
+     }
+    ]
+   }
+  },
+  "Sparkline/Datenpunktfarbe/Weitere Farben...": {
+   "title": "Farben",
+   "pages": {
+    "": [
+     {
+      "name": "RichEdit Control",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "RichEdit Control",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "RichEdit Control",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "RichEdit Control",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "Minimieren",
+      "type": "Button",
+      "enabled": false
+     },
+     {
+      "name": "Maximieren",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Schließen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Standard",
+      "type": "TabItem",
+      "enabled": true
+     },
+     {
+      "name": "Benutzerdefiniert",
+      "type": "TabItem",
+      "enabled": true
+     },
+     {
+      "name": "Farben:",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Farbmodell:",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Farbmodell:",
+      "type": "ComboBox",
+      "enabled": true
+     },
+     {
+      "name": "Rot:",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Rot:",
+      "type": "Spinner",
+      "enabled": true
+     },
+     {
+      "name": "Grün:",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Grün:",
+      "type": "Spinner",
+      "enabled": true
+     },
+     {
+      "name": "Blau:",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Blau:",
+      "type": "Spinner",
+      "enabled": true
+     },
+     {
+      "name": "Hex:",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Hex:",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "OK",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Abbrechen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Aktuell",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Neu ",
+      "type": "Text",
+      "enabled": true
+     }
+    ],
+    "Standard": [
+     {
+      "name": "Minimieren",
+      "type": "Button",
+      "enabled": false
+     },
+     {
+      "name": "Maximieren",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Schließen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Standard",
+      "type": "TabItem",
+      "enabled": true
+     },
+     {
+      "name": "Benutzerdefiniert",
+      "type": "TabItem",
+      "enabled": true
+     },
+     {
+      "name": "Farben:",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "OK",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Abbrechen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Aktuell",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Neu ",
+      "type": "Text",
+      "enabled": true
+     }
+    ],
+    "Benutzerdefiniert": [
+     {
+      "name": "RichEdit Control",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "RichEdit Control",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "RichEdit Control",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "RichEdit Control",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "Minimieren",
+      "type": "Button",
+      "enabled": false
+     },
+     {
+      "name": "Maximieren",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Schließen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Standard",
+      "type": "TabItem",
+      "enabled": true
+     },
+     {
+      "name": "Benutzerdefiniert",
+      "type": "TabItem",
+      "enabled": true
+     },
+     {
+      "name": "Farben:",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Farbmodell:",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Farbmodell:",
+      "type": "ComboBox",
+      "enabled": true
+     },
+     {
+      "name": "Rot:",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Rot:",
+      "type": "Spinner",
+      "enabled": true
+     },
+     {
+      "name": "Grün:",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Grün:",
+      "type": "Spinner",
+      "enabled": true
+     },
+     {
+      "name": "Blau:",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Blau:",
+      "type": "Spinner",
+      "enabled": true
+     },
+     {
+      "name": "Hex:",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Hex:",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "OK",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Abbrechen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Aktuell",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Neu ",
+      "type": "Text",
+      "enabled": true
+     }
+    ]
+   }
+  },
+  "Sparkline/Achse/Datumsachsentyp...": {
+   "title": "Sparkline-Datumsbereich",
+   "pages": {
+    "": [
+     {
+      "name": "[Beschreibung]",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "[Beschreibung]",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "OK",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Abbrechen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Direkthilfe",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Schließen",
+      "type": "Button",
+      "enabled": true
+     }
+    ]
+   }
+  },
+  "Sparkline/Achse/Benutzerdefinierter Wert...": {
+   "title": "Einstellungen für die vertikale Sparklineachse",
+   "pages": {
+    "": [
+     {
+      "name": "[Beschreibung]",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "[Beschreibung]",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "OK",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Abbrechen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Direkthilfe",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Schließen",
+      "type": "Button",
+      "enabled": true
+     }
+    ]
+   }
+  },
+  "PivotTable-Analyse/Filtern/Datenschnitt einfügen...": {
+   "title": "Datenschnitt auswählen",
+   "pages": {
+    "": [
+     {
+      "name": "Name. KontrollkästchenDeaktiviert",
+      "type": "Group",
+      "enabled": true
+     },
+     {
+      "name": "Name. KontrollkästchenDeaktiviert",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Name",
+      "type": "CheckBox",
+      "enabled": true
+     },
+     {
+      "name": "Wert. KontrollkästchenDeaktiviert",
+      "type": "Group",
+      "enabled": true
+     },
+     {
+      "name": "Wert. KontrollkästchenDeaktiviert",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Wert",
+      "type": "CheckBox",
+      "enabled": true
+     },
+     {
+      "name": "OK",
+      "type": "Button",
+      "enabled": false
+     },
+     {
+      "name": "Abbrechen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Direkthilfe",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Schließen",
+      "type": "Button",
+      "enabled": true
+     }
+    ]
+   }
+  },
+  "PivotTable-Analyse/Filtern/Zeitachse einfügen...": {
+   "title": "Microsoft Excel",
+   "pages": {
+    "": [
+     {
+      "name": "Microsoft Excel",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "OK",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Schließen",
+      "type": "Button",
+      "enabled": true
+     }
+    ]
+   }
+  },
+  "PivotTable-Analyse/Datenquelle ändern.../Datenquelle ändern...": {
+   "title": "PivotTable-Datenquelle ändern",
+   "pages": {
+    "": [
+     {
+      "name": "Minimieren",
+      "type": "Button",
+      "enabled": false
+     },
+     {
+      "name": "Maximieren",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Schließen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "[Beschreibung]",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Tabelle oder Bereich auswählen",
+      "type": "RadioButton",
+      "enabled": true
+     },
+     {
+      "name": "Externe Datenquelle verwenden",
+      "type": "RadioButton",
+      "enabled": false
+     },
+     {
+      "name": "Tabelle/Bereich:",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Tabelle/Bereich:",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "Verbindung auswählen...",
+      "type": "Button",
+      "enabled": false
+     },
+     {
+      "name": "Verbindungsname:",
+      "type": "Text",
+      "enabled": false
+     },
+     {
+      "name": "OK",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Abbrechen",
+      "type": "Button",
+      "enabled": true
+     }
+    ]
+   }
+  },
+  "PivotTable-Analyse/Felder, Elemente und Gruppen/Berechnetes Feld...": {
+   "title": "Berechnetes Feld einfügen",
+   "pages": {
+    "": [
+     {
+      "name": "Bildlauf nach oben",
+      "type": "Button",
+      "enabled": false
+     },
+     {
+      "name": "Bildlauf nach unten",
+      "type": "Button",
+      "enabled": false
+     },
+     {
+      "name": "Direkthilfe",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Schließen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Schließen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Name:",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Name:",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "Formel:",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Formel:",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "Felder:",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Felder:",
+      "type": "List",
+      "enabled": true
+     },
+     {
+      "name": "Name",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Wert",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Feld einfügen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Hinzufügen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Löschen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "OK",
+      "type": "Button",
+      "enabled": true
+     }
+    ]
+   }
+  },
+  "PivotTable-Analyse/Felder, Elemente und Gruppen/Berechnetes Element...": {
+   "title": "Berechnetes Element in \"Name\" einfügen.",
+   "pages": {
+    "": [
+     {
+      "name": "Bildlauf nach oben",
+      "type": "Button",
+      "enabled": false
+     },
+     {
+      "name": "Bildlauf nach unten",
+      "type": "Button",
+      "enabled": false
+     },
+     {
+      "name": "Bildlauf nach oben",
+      "type": "Button",
+      "enabled": false
+     },
+     {
+      "name": "Bildlauf nach unten",
+      "type": "Button",
+      "enabled": false
+     },
+     {
+      "name": "Direkthilfe",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Schließen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Schließen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Name:",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Name:",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "Formel:",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Formel:",
+      "type": "Edit",
+      "enabled": true
+     },
+     {
+      "name": "Felder:",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Felder:",
+      "type": "List",
+      "enabled": true
+     },
+     {
+      "name": "Name",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Wert",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Elemente:",
+      "type": "Text",
+      "enabled": true
+     },
+     {
+      "name": "Elemente:",
+      "type": "List",
+      "enabled": true
+     },
+     {
+      "name": "Anna",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Ben",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Cem",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Dora",
+      "type": "ListItem",
+      "enabled": true
+     },
+     {
+      "name": "Feld einfügen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Element einfügen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Hinzufügen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Löschen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "OK",
+      "type": "Button",
+      "enabled": true
+     }
+    ]
+   }
+  },
+  "PivotTable-Analyse/Felder, Elemente und Gruppen/Lösungsreihenfolge...": {
+   "title": "Lösungsreihenfolge für berechnete Elemente",
+   "pages": {
+    "": [
+     {
+      "name": "Bildlauf nach oben",
+      "type": "Button",
+      "enabled": false
+     },
+     {
+      "name": "Bildlauf nach unten",
+      "type": "Button",
+      "enabled": false
+     },
+     {
+      "name": "Direkthilfe",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Schließen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Nach Oben",
+      "type": "Button",
+      "enabled": false
+     },
+     {
+      "name": "Nach Unten",
+      "type": "Button",
+      "enabled": false
+     },
+     {
+      "name": "Löschen",
+      "type": "Button",
+      "enabled": false
+     },
+     {
+      "name": "Schließen",
+      "type": "Button",
+      "enabled": true
+     },
+     {
+      "name": "Lösungsreihenfolge:",
+      "type": "Text",
+      "enabled": true
+     }
+    ]
+   }
   }
  },
  "contexts": {
@@ -47033,6 +54068,143 @@
     "Acrobat"
    ],
    "own": []
+  },
+  "Diagramm": {
+   "tabs": [
+    "Start",
+    "Einfügen",
+    "Zeichnen",
+    "Seitenlayout",
+    "Formeln",
+    "Daten",
+    "Überprüfen",
+    "Ansicht",
+    "Automatisieren",
+    "Hilfe",
+    "Acrobat",
+    "Diagrammentwurf",
+    "Format"
+   ],
+   "own": [
+    "Diagrammentwurf",
+    "Format"
+   ]
+  },
+  "Tabelle": {
+   "tabs": [
+    "Start",
+    "Einfügen",
+    "Zeichnen",
+    "Seitenlayout",
+    "Formeln",
+    "Daten",
+    "Überprüfen",
+    "Ansicht",
+    "Automatisieren",
+    "Hilfe",
+    "Acrobat",
+    "Tabellenentwurf"
+   ],
+   "own": [
+    "Tabellenentwurf"
+   ]
+  },
+  "Bild": {
+   "tabs": [
+    "Start",
+    "Einfügen",
+    "Zeichnen",
+    "Seitenlayout",
+    "Formeln",
+    "Daten",
+    "Überprüfen",
+    "Ansicht",
+    "Automatisieren",
+    "Hilfe",
+    "Acrobat",
+    "Bildformat"
+   ],
+   "own": [
+    "Bildformat"
+   ]
+  },
+  "Form": {
+   "tabs": [
+    "Start",
+    "Einfügen",
+    "Zeichnen",
+    "Seitenlayout",
+    "Formeln",
+    "Daten",
+    "Überprüfen",
+    "Ansicht",
+    "Automatisieren",
+    "Hilfe",
+    "Acrobat",
+    "Formformat"
+   ],
+   "own": [
+    "Formformat"
+   ]
+  },
+  "Textfeld": {
+   "tabs": [
+    "Start",
+    "Einfügen",
+    "Zeichnen",
+    "Seitenlayout",
+    "Formeln",
+    "Daten",
+    "Überprüfen",
+    "Ansicht",
+    "Automatisieren",
+    "Hilfe",
+    "Acrobat",
+    "Formformat"
+   ],
+   "own": [
+    "Formformat"
+   ]
+  },
+  "Sparkline": {
+   "tabs": [
+    "Start",
+    "Einfügen",
+    "Zeichnen",
+    "Seitenlayout",
+    "Formeln",
+    "Daten",
+    "Überprüfen",
+    "Ansicht",
+    "Automatisieren",
+    "Hilfe",
+    "Acrobat",
+    "Sparkline"
+   ],
+   "own": [
+    "Sparkline"
+   ]
+  },
+  "PivotTable": {
+   "tabs": [
+    "Start",
+    "Einfügen",
+    "Zeichnen",
+    "Seitenlayout",
+    "Formeln",
+    "Daten",
+    "Überprüfen",
+    "Ansicht",
+    "Automatisieren",
+    "Hilfe",
+    "Acrobat",
+    "PivotTable-Analyse",
+    "Entwurf"
+   ],
+   "own": [
+    "PivotTable-Analyse",
+    "Entwurf"
+   ]
   }
  }
 }

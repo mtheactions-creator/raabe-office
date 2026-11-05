@@ -1,0 +1,30 @@
+{
+ "raabe->excel": [
+  {
+   "table": "column",
+   "ok": true
+  },
+  {
+   "table": "row",
+   "ok": true
+  },
+  {
+   "table": "two",
+   "ok": true
+  }
+ ],
+ "excel->raabe": [
+  {
+   "table": "column",
+   "ok": true
+  },
+  {
+   "table": "row",
+   "ok": true
+  },
+  {
+   "table": "two",
+   "ok": true
+  }
+ ]
+}
