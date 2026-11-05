@@ -263,6 +263,8 @@ export interface SheetShape {
   to: { col: number; row: number; x: number; y: number };
   /** DrawingML preset geometry ("rect", "ellipse", "rightArrow", "line" …). */
   geom: string;
+  /** The preset's adjust values that differ from its defaults (a:avLst, the yellow handles). */
+  adjust?: Record<string, number>;
   /** Lines and arrows (xdr:cxnSp). */
   connector?: boolean;
   /** Its size in px at 100 % (the file's extent; the anchors decide where it is). */

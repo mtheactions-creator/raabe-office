@@ -2605,7 +2605,7 @@ export class CalcApp {
         const b = this.grid.rectOnCanvas(r)!;
         const c = this.grid.el.getBoundingClientRect();
         const x = c.left + b.x, y = c.top + b.y;
-        return where === "br" ? { x: x + b.w, y: y + b.h } : where === "right" ? { x: x + b.w, y: y + b.h / 2 } : where === "bottom" ? { x: x + b.w / 2, y: y + b.h } : { x: x + b.w / 2, y: y + b.h / 2 };
+        return where === "tl" ? { x, y } : where === "br" ? { x: x + b.w, y: y + b.h } : where === "right" ? { x: x + b.w, y: y + b.h / 2 } : where === "bottom" ? { x: x + b.w / 2, y: y + b.h } : { x: x + b.w / 2, y: y + b.h / 2 };
       },
       header: (kind: string, which: string) => {
         const c = this.grid.el.getBoundingClientRect();

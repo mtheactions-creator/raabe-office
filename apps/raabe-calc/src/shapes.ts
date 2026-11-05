@@ -5,13 +5,17 @@
 // nudge it. Typing while it is selected writes its text; a double-click edits the text. Strg+1 opens
 // "Form formatieren". Its look until it is formatted is the theme's shape style, as in Excel.
 
-import { isLinePreset, presetPath, SHAPE_PRESETS } from "@raabe/charts";
 import { h, type MenuEntry, type PaneControl, type PaneSection, type PaneSpec } from "@raabe/shell";
 import type { SheetShape } from "@raabe/sheet-engine";
+import { presetAdjust, presetGeometry, shadeLinear, SHAPE_GALLERY, SHAPE_NAMES, shapeElement, shapeIcon, shapeTextRect,
+  type GalleryEntry, type PictureFormat, type ShapeInfo } from "@raabe/text-engine";
 import type { CalcApp } from "./app";
 
 type Box = { x: number; y: number; w: number; h: number };
-type Handle = "nw" | "n" | "ne" | "e" | "se" | "s" | "sw" | "w" | "rot" | "p0" | "p1";
+type Handle = "nw" | "n" | "ne" | "e" | "se" | "s" | "sw" | "w" | "rot" | "p0" | "p1" | `adj${number}`;
+
+/** Lines and connectors (no fill, two end handles). */
+const isLinePreset = (prst: string) => prst === "line" || /Connector\d$/.test(prst);
 
 /** Excel's size of a shape made with a click: 2,54 cm (96 px at 100 %). */
 const CLICK_SIZE = 96;
@@ -20,16 +24,18 @@ const CSS = `
 .shape-layer { position: absolute; right: 17px; bottom: 0; overflow: hidden; pointer-events: none; z-index: 3; }
 .shape-layer .shp { position: absolute; pointer-events: auto; cursor: move; }
 .shape-layer .shp > svg { position: absolute; left: 0; top: 0; overflow: visible; }
-.shape-layer .shp-text { position: absolute; inset: 0; display: flex; flex-direction: column; padding: 4px 7px; box-sizing: border-box; overflow: hidden;
+.shape-layer .shp-svg { position: absolute; left: 0; top: 0; transform-origin: 0 0; pointer-events: none; }
+.shape-layer .shp-text { position: absolute; display: flex; flex-direction: column; box-sizing: border-box; overflow: hidden;
   white-space: pre-wrap; word-break: break-word; font-family: Calibri, Carlito, sans-serif; outline: none; cursor: text; line-height: 1.2; }
 .shape-layer .shp-h { position: absolute; width: 8px; height: 8px; margin: -5px 0 0 -5px; border: 1px solid #5f5f5f; border-radius: 50%; background: #fff; display: none; }
 .shape-layer .shp.on .shp-h { display: block; }
 .shape-layer .shp.on { outline: 1px solid #7a7a7a; }
 .shape-layer .shp.line.on { outline: none; }
 .shape-layer .shp-h.rot { border-radius: 50%; width: 12px; height: 12px; margin: -7px 0 0 -7px; cursor: grab; }
+.shape-layer .shp-h.adj { background: #ffd800; border-color: #5f5f5f; cursor: default; }
 .shape-draw { position: absolute; inset: 0; z-index: 6; cursor: crosshair; }
-.shape-gallery { display: grid; grid-template-columns: repeat(8, 28px); gap: 2px; padding: 4px 8px 8px; }
-.shape-gallery button { width: 28px; height: 28px; border: 1px solid transparent; background: none; padding: 2px; }
+.shape-gallery { display: grid; grid-template-columns: repeat(12, 26px); gap: 1px; padding: 2px 8px 6px; color: #444; }
+.shape-gallery button { width: 26px; height: 26px; border: 1px solid transparent; background: none; padding: 2px; display: flex; align-items: center; justify-content: center; }
 .shape-gallery button:hover { border-color: #c6c6c6; background: #f3f3f3; }
 `;
 
@@ -91,33 +97,37 @@ export function shapesFeature(app: CalcApp) {
 
   // ----- drawing --------------------------------------------------------------------------------
 
-  /** The look a shape has: its own fill and line, else the theme's shape style. */
-  function look(s: SheetShape): { fill: string; stroke: string; sw: number; dash?: string; text: string } {
-    const line = isLinePreset(s.geom) || s.connector;
-    const autoFill = s.textBox ? "#FFFFFF" : line ? "none" : accent();
-    const autoStroke = s.textBox ? "#7F7F7F" : line ? accent() : shade(accent(), 0.5);
-    const autoW = s.textBox || line ? 0.75 : 1;
-    const fill = !s.fill ? autoFill : s.fill.type === "none" ? "none" : alpha(s.fill.color ?? autoFill, s.fill.transparency);
-    const stroke = !s.line ? autoStroke : s.line.type === "none" ? "none" : s.line.color ?? autoStroke;
-    const sw = ((s.line?.width ?? autoW) * 96) / 72;
-    const dashes: Record<string, number[]> = { sysDot: [1, 1], sysDash: [3, 1], dash: [4, 3], dashDot: [4, 3, 1, 3], lgDash: [8, 3], lgDashDot: [8, 3, 1, 3], lgDashDotDot: [8, 3, 1, 3, 1, 3], dot: [1, 3] };
-    const dash = s.line?.dash && dashes[s.line.dash] ? dashes[s.line.dash].map((x) => x * sw).join(" ") : undefined;
-    return { fill, stroke, sw, dash, text: s.font?.color ?? (s.textBox || line ? "#000000" : "#FFFFFF") };
+  /**
+   * The shape as the shared Office renderer takes it: its own fill and line, else Excel's shape
+   * style (shapes: Akzent 1 with its outline 50 % darker, 1 pt; lines Akzent 1, 0,5 pt; text boxes
+   * white with a grey 0,75 pt outline, as the style references of a new shape resolve).
+   */
+  function engineOf(s: SheetShape): { fmt: PictureFormat; info: ShapeInfo; text: string } {
+    const a = accent().replace("#", "").toUpperCase();
+    const line = isLinePreset(s.geom) || !!s.connector;
+    const kind: ShapeInfo["kind"] = line ? "connector" : s.textBox ? "textbox" : "shape";
+    const info: ShapeInfo = {
+      kind, adjust: s.adjust,
+      styleFill: kind === "shape" ? { kind: "solid", color: a } : kind === "textbox" ? { kind: "solid", color: "FFFFFF" } : { kind: "none" },
+      styleLine: kind === "shape" ? { color: shadeLinear(a, 0.5), width: 1 } : kind === "textbox" ? { color: shadeLinear("FFFFFF", 0.5), width: 0.75 } : { color: a, width: 0.5 },
+      body: { l: 7.2, t: 3.6, r: 7.2, b: 3.6, anchor: s.anchor ?? (s.textBox ? "t" : "ctr"), wrap: true, autofit: "none" },
+    };
+    const hex = (c?: string) => (c ?? "").replace("#", "").toUpperCase();
+    const end = (t?: string) => (t && t !== "none" ? { type: t as "triangle" } : undefined);
+    const fmt: PictureFormat = {
+      geometry: s.geom,
+      ...(s.fill ? { fill: s.fill.type === "none" ? { kind: "none" } : { kind: "solid", color: hex(s.fill.color) || a, transparency: (s.fill.transparency ?? 0) / 100 } } : {}),
+      ...(s.line ? { line: s.line.type === "none" ? null : { color: hex(s.line.color), width: s.line.width ?? -1, dash: s.line.dash, head: end(s.line.head), tail: end(s.line.tail) } } : {}),
+    };
+    return { fmt, info, text: s.font?.color ?? (kind === "shape" ? "#FFFFFF" : "#000000") };
   }
 
-  function svgOf(s: SheetShape, w: number, hh: number): string {
-    const l = look(s);
-    const zz = z();
-    const lw = Math.max(1e-3, w / zz), lh = Math.max(1e-3, hh / zz);
-    let d = presetPath(s.geom, lw, lh);
-    if (isLinePreset(s.geom) || s.connector) d = `M${s.flipH ? lw : 0} ${s.flipV ? lh : 0}L${s.flipH ? 0 : lw} ${s.flipV ? 0 : lh}`;
-    const marker = (end?: string, id = "") => (end && end !== "none"
-      ? `<marker id="${id}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="${l.stroke}"/></marker>` : "");
-    const mid = Math.random().toString(36).slice(2, 8);
-    const defs = marker(s.line?.tail ?? (s.geom === "straightConnector1" ? "triangle" : undefined), `t${mid}`) + marker(s.line?.head, `h${mid}`);
-    const ends = `${defs.includes(`t${mid}`) ? ` marker-end="url(#t${mid})"` : ""}${defs.includes(`h${mid}`) ? ` marker-start="url(#h${mid})"` : ""}`;
-    const flip = !isLinePreset(s.geom) && (s.flipH || s.flipV) ? ` transform="translate(${s.flipH ? lw : 0} ${s.flipV ? lh : 0}) scale(${s.flipH ? -1 : 1} ${s.flipV ? -1 : 1})"` : "";
-    return `<svg width="${w}" height="${hh}" viewBox="0 0 ${lw} ${lh}"><defs>${defs}</defs><path d="${d}" fill="${isLinePreset(s.geom) || s.connector ? "none" : l.fill}" stroke="${l.stroke}" stroke-width="${l.sw}"${l.dash ? ` stroke-dasharray="${l.dash}"` : ""}${ends}${flip} vector-effect="non-scaling-stroke"/></svg>`;
+  /** The shape drawn at its size at 100 % (the caller scales it with the zoom). */
+  function drawn(s: SheetShape, w: number, hh: number): HTMLElement {
+    const { fmt, info } = engineOf(s);
+    const el = shapeElement(Math.max(w, 0.01), Math.max(hh, 0.01), fmt, info);
+    if (s.flipH || s.flipV) { el.style.transform = `scale(${s.flipH ? -1 : 1}, ${s.flipV ? -1 : 1})`; el.style.transformOrigin = "50% 50%"; }
+    return el;
   }
 
   /** Called after every paint of the grid. */
@@ -135,9 +145,10 @@ export function shapesFeature(app: CalcApp) {
       els.length = 0;
       for (const s of list) {
         const line = isLinePreset(s.geom) || !!s.connector;
-        const handles: Handle[] = line ? ["p0", "p1"] : ["nw", "n", "ne", "e", "se", "s", "sw", "w", "rot"];
+        const adj = line ? [] : (presetGeometry(s.geom, 100, 100, s.adjust ?? {})?.handles ?? []).map((_, k): Handle => `adj${k}`);
+        const handles: Handle[] = line ? ["p0", "p1"] : ["nw", "n", "ne", "e", "se", "s", "sw", "w", "rot", ...adj];
         const el = h("div", { class: `shp${line ? " line" : ""}` }, h("div", { class: "shp-svg" }), ...(line ? [] : [h("div", { class: "shp-text" })]),
-          ...handles.map((k) => h("span", { class: `shp-h ${k}`, "data-h": k })));
+          ...handles.map((k) => h("span", { class: `shp-h ${k.startsWith("adj") ? "adj" : k}`, "data-h": k })));
         el.addEventListener("pointerdown", (e) => down(e, s, el));
         el.addEventListener("dblclick", (e) => { e.preventDefault(); e.stopPropagation(); if (!line) startText(s, el, true); });
         els.push(el);
@@ -157,12 +168,20 @@ export function shapesFeature(app: CalcApp) {
       const rot = live?.s === s && live.rot !== undefined ? live.rot : s.rot ?? 0;
       Object.assign(el.style, { display: "", left: `${b.x - tl.x}px`, top: `${b.y - tl.y}px`, width: `${Math.max(1, b.w)}px`, height: `${Math.max(1, b.h)}px`,
         transform: rot ? `rotate(${rot}deg)` : "" });
-      const key = JSON.stringify([s.geom, s.fill, s.line, s.flipH, s.flipV, Math.round(b.w), Math.round(b.h), v.zoom, accent()]);
+      const lw = Math.max(0.01, b.w / z()), lh = Math.max(0.01, b.h / z());
+      const key = JSON.stringify([s.geom, s.fill, s.line, s.adjust, s.flipH, s.flipV, Math.round(lw * 4), Math.round(lh * 4), accent()]);
       const sv = el.querySelector<HTMLElement>(".shp-svg")!;
-      if (sv.dataset.key !== key) { sv.innerHTML = svgOf(s, Math.max(1, b.w), Math.max(1, b.h)); sv.dataset.key = key; }
+      if (sv.dataset.key !== key) { sv.replaceChildren(drawn(s, lw, lh)); sv.dataset.key = key; }
+      sv.style.transform = `scale(${z()})`;
       const t = el.querySelector<HTMLElement>(".shp-text");
+      if (t) {
+        // The text in the preset's text rectangle, inside Excel's insets (7,2 / 3,6 pt).
+        const e = engineOf(s);
+        const r = shapeTextRect(e.fmt, e.info, lw, lh);
+        Object.assign(t.style, { left: `${r.x * z()}px`, top: `${r.y * z()}px`, width: `${r.w * z()}px`, height: `${r.h * z()}px` });
+      }
       if (t && editing?.s !== s) {
-        const l = look(s);
+        const l = engineOf(s);
         t.textContent = s.text ?? "";
         Object.assign(t.style, {
           color: l.text, fontSize: `${((s.font?.size ?? 11) * 96 / 72) * z()}px`, fontWeight: s.font?.bold ? "bold" : "", fontStyle: s.font?.italic ? "italic" : "",
@@ -173,9 +192,15 @@ export function shapesFeature(app: CalcApp) {
       }
       const pos: Record<string, [number, number]> = { nw: [0, 0], n: [0.5, 0], ne: [1, 0], e: [1, 0.5], se: [1, 1], s: [0.5, 1], sw: [0, 1], w: [0, 0.5],
         p0: [s.flipH ? 1 : 0, s.flipV ? 1 : 0], p1: [s.flipH ? 0 : 1, s.flipV ? 0 : 1] };
+      const gh = presetGeometry(s.geom, lw, lh, s.adjust ?? {})?.handles ?? [];
       for (const hd of el.querySelectorAll<HTMLElement>(".shp-h")) {
         const k = hd.dataset.h as Handle;
         if (k === "rot") { hd.style.left = `${b.w / 2}px`; hd.style.top = `-22px`; continue; }
+        if (k.startsWith("adj")) {
+          const q = gh[Number(k.slice(3))];
+          if (q) { hd.style.left = `${(s.flipH ? lw - q.x : q.x) * z()}px`; hd.style.top = `${(s.flipV ? lh - q.y : q.y) * z()}px`; }
+          continue;
+        }
         hd.style.left = `${pos[k][0] * b.w}px`;
         hd.style.top = `${pos[k][1] * b.h}px`;
       }
@@ -205,6 +230,7 @@ export function shapesFeature(app: CalcApp) {
     const b = boxOf(s);
     if (!b) return;
     const handle = (e.target as HTMLElement).dataset.h as Handle | undefined;
+    if (handle?.startsWith("adj")) { dragAdjust(e, s, el, b, Number(handle.slice(3))); return; }
     const sx = e.clientX, sy = e.clientY;
     el.setPointerCapture(e.pointerId);
     const move = (ev: PointerEvent) => {
@@ -263,6 +289,79 @@ export function shapesFeature(app: CalcApp) {
         if (l.flip) { moved.flipH = l.flip[0] || undefined; moved.flipV = l.flip[1] || undefined; }
         return moved;
       });
+    };
+    el.addEventListener("pointermove", move);
+    el.addEventListener("pointerup", up);
+    el.addEventListener("pointercancel", up);
+  }
+
+  /**
+   * A yellow handle: the adjust value whose handle lands nearest the pointer, searched in the
+   * evaluated geometry so that every preset follows its own formulas (as in RaabeWrite).
+   */
+  function dragAdjust(e: PointerEvent, s: SheetShape, el: HTMLElement, b: Box, i: number): void {
+    const w = b.w / z(), hh = b.h / z();
+    const base = { ...presetAdjust(s.geom), ...(s.adjust ?? {}) };
+    const hd = presetGeometry(s.geom, w, hh, base)?.handles[i];
+    if (!hd) return;
+    const at = (a: Record<string, number>) => presetGeometry(s.geom, w, hh, a)?.handles[i];
+    const search = (adj: Record<string, number>, key: string, lo: number, hi: number, pos: (a: Record<string, number>) => number, target: number) => {
+      let best = adj[key] ?? lo, bestD = Infinity;
+      let a = Math.min(lo, hi), c = Math.max(lo, hi);
+      for (let round = 0; round < 3; round++) {
+        for (let k = 0; k <= 48; k++) {
+          const v = a + ((c - a) * k) / 48;
+          const d = Math.abs(pos({ ...adj, [key]: v }) - target);
+          if (d < bestD) { bestD = d; best = v; }
+        }
+        const span = (c - a) / 48;
+        a = Math.max(Math.min(lo, hi), best - span);
+        c = Math.min(Math.max(lo, hi), best + span);
+      }
+      return Math.round(best);
+    };
+    let adj = base;
+    el.setPointerCapture(e.pointerId);
+    const move = (ev: PointerEvent) => {
+      // The pointer in the shape's own coordinates (unrotated, unflipped, at 100 %).
+      const r = el.getBoundingClientRect();
+      const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+      const rad = (-(s.rot ?? 0) * Math.PI) / 180;
+      const dx = ev.clientX - cx, dy = ev.clientY - cy;
+      let qx = (dx * Math.cos(rad) - dy * Math.sin(rad)) / z() + w / 2, qy = (dx * Math.sin(rad) + dy * Math.cos(rad)) / z() + hh / 2;
+      if (s.flipH) qx = w - qx;
+      if (s.flipV) qy = hh - qy;
+      const next: Record<string, number> = { ...base };
+      if (hd.kind === "polar") {
+        if (hd.gdY) {
+          let ang = (Math.atan2(qy - hh / 2, qx - w / 2) * 180) / Math.PI;
+          if (ang < 0) ang += 360;
+          next[hd.gdY] = Math.max(hd.minY ?? 0, Math.min(hd.maxY ?? 21599999, Math.round(ang * 60000)));
+        }
+        if (hd.gdX) next[hd.gdX] = search(next, hd.gdX, hd.minX ?? 0, hd.maxX ?? 50000, (a) => { const p = at(a); return p ? Math.hypot(p.x - w / 2, p.y - hh / 2) : 0; }, Math.hypot(qx - w / 2, qy - hh / 2));
+      } else {
+        const big = (v: number | undefined, fallback: number) => (v === undefined || Math.abs(v) > 1e8 ? fallback : v);
+        if (hd.gdX) next[hd.gdX] = search(next, hd.gdX, big(hd.minX, -400000), big(hd.maxX, 400000), (a) => at(a)?.x ?? 0, qx);
+        if (hd.gdY) next[hd.gdY] = search(next, hd.gdY, big(hd.minY, -400000), big(hd.maxY, 400000), (a) => at(a)?.y ?? 0, qy);
+      }
+      adj = next;
+      const sv = el.querySelector<HTMLElement>(".shp-svg")!;
+      sv.replaceChildren(drawn({ ...s, adjust: adj }, w, hh));
+      sv.dataset.key = "";
+      const q = at(adj);
+      const hEl = el.querySelector<HTMLElement>(`[data-h="adj${i}"]`);
+      if (q && hEl) { hEl.style.left = `${(s.flipH ? w - q.x : q.x) * z()}px`; hEl.style.top = `${(s.flipV ? hh - q.y : q.y) * z()}px`; }
+    };
+    const up = () => {
+      el.removeEventListener("pointermove", move);
+      el.removeEventListener("pointerup", up);
+      el.removeEventListener("pointercancel", up);
+      if (JSON.stringify(adj) !== JSON.stringify(base)) {
+        // Only the values that differ from the preset's defaults are kept (as Excel writes avLst).
+        const def = presetAdjust(s.geom);
+        const own = Object.fromEntries(Object.entries(adj).filter(([k, v]) => def[k] !== v));
+        edit("Form anpassen", (q) => ({ ...q, adjust: Object.keys(own).length ? own : undefined }));
+      } else place();
     };
     el.addEventListener("pointermove", move);
     el.addEventListener("pointerup", up);
@@ -349,10 +448,12 @@ export function shapesFeature(app: CalcApp) {
   // ----- inserting ------------------------------------------------------------------------------
 
   /** Einfügen > Formen > a shape, or Textfeld: the next drag on the sheet draws it. */
-  function startDraw(prst: string, textBox = false): void {
+  function startDraw(prst: string, textBox = false, entry?: GalleryEntry): void {
     if (app.grid.isEditing) app.grid.commitEdit("none");
     css();
     drawFor = prst;
+    if (entry) { const i = recent.findIndex((r) => r.label === entry.label); if (i >= 0) recent.splice(i, 1); recent.unshift(entry); recent.length = Math.min(recent.length, 24); }
+    const ends = entry?.tool.pic?.line;
     const over = h("div", { class: "shape-draw" });
     app.grid.el.append(over);
     let start: { x: number; y: number } | null = null;
@@ -365,10 +466,12 @@ export function shapesFeature(app: CalcApp) {
       const line = isLinePreset(drawFor);
       if (Math.abs(w) < 3 && Math.abs(hh) < 3) { w = CLICK_SIZE * z(); hh = line ? 0 : (textBox ? CLICK_SIZE * 0.4 : CLICK_SIZE) * z(); }
       if (e.shiftKey && !line) { const m = Math.max(Math.abs(w), Math.abs(hh)); w = Math.sign(w || 1) * m; hh = Math.sign(hh || 1) * m; }
-      const n = (app.sheet.shapes?.length ?? 0) + 1;
-      const label = SHAPE_PRESETS.find((p) => p.prst === drawFor)?.label.split(":")[0] ?? "Form";
+      // Excel numbers new objects after all of the sheet's drawing objects ("Rechteck 3").
+      const n = (app.sheet.shapes?.length ?? 0) + (app.sheet.pictures?.length ?? 0) + (app.sheet.charts?.length ?? 0) + 1;
+      const label = SHAPE_NAMES[drawFor] ?? entry?.label ?? "Form";
       let s: SheetShape = { from: { col: 0, row: 0, x: 0, y: 0 }, to: { col: 0, row: 0, x: 0, y: 0 }, geom: drawFor, name: textBox ? `Textfeld ${n}` : `${label} ${n}` };
       if (line) { s.connector = true; if (w < 0) s.flipH = true; if (hh < 0) s.flipV = true; }
+      if (ends?.head || ends?.tail) s.line = { type: "solid", ...(ends.head ? { head: ends.head.type } : {}), ...(ends.tail ? { tail: ends.tail.type } : {}) };
       if (textBox) s.textBox = true;
       s = placeAt(s, { x: start.x, y: start.y, w, h: hh });
       change(textBox ? "Textfeld" : "Form einfügen", (list) => [...list, s]);
@@ -381,21 +484,25 @@ export function shapesFeature(app: CalcApp) {
     over.addEventListener("keydown", (e) => { if (e.key === "Escape") { over.remove(); drawFor = null; } });
   }
 
-  /** The Formen gallery (Einfügen > Formen and Formformat > Formen einfügen). */
+  const recent: GalleryEntry[] = [];
+
+  /** The Formen gallery (Einfügen > Formen and Formformat > Formen einfügen): Office's, recent ones first. */
   function gallery(close: () => void): HTMLElement {
-    const groups = [...new Set(SHAPE_PRESETS.map((p) => p.group))];
-    const out = h("div", { class: "menu" });
-    for (const g of groups) {
-      out.append(h("div", { class: "palette-title" }, g));
+    const out = h("div", { class: "menu shape-menu" });
+    const section = (title: string, items: GalleryEntry[]) => {
+      if (!items.length) return;
+      out.append(h("div", { class: "palette-title" }, title));
       const grid = h("div", { class: "shape-gallery" });
-      for (const p of SHAPE_PRESETS.filter((x) => x.group === g)) {
-        const line = isLinePreset(p.prst);
-        const d = line ? "M2 2L18 18" : presetPath(p.prst, 18, 14);
-        grid.append(h("button", { type: "button", "data-tip": p.label, "aria-label": p.label, onclick: () => { close(); startDraw(p.prst); } },
-          h("span", { innerHTML: `<svg width="20" height="18" viewBox="-1 -2 20 18"><path d="${d}" fill="none" stroke="#444" stroke-width="1"/></svg>` } as never)));
+      for (const e of items) {
+        const b = h("button", { type: "button", "data-tip": e.label, "aria-label": e.label, onclick: () => { close(); startDraw(e.tool.geometry, e.tool.kind === "textbox", e); } });
+        b.append(shapeIcon(e, 20));
+        grid.append(b);
       }
       out.append(grid);
-    }
+    };
+    section("Zuletzt verwendete Formen", recent);
+    // Freihand shapes are drawn point by point (not yet in RaabeCalc).
+    for (const g of SHAPE_GALLERY) section(g.title, g.items.filter((e) => !e.tool.freeform));
     return out;
   }
 
@@ -437,13 +544,13 @@ export function shapesFeature(app: CalcApp) {
       ];
       if (l?.type !== "none") {
         c.push({ type: "color", label: "Farbe", value: () => l?.color ?? null, set: (hex) => set({ type: "solid", color: hex ?? undefined }) });
-        c.push({ type: "number", label: "Breite", unit: " Pt.", min: 0, max: 1584, step: 0.25, decimals: 2, value: () => l?.width ?? (line || s().textBox ? 0.75 : 1), set: (v) => set({ width: v }) });
+        c.push({ type: "number", label: "Breite", unit: " Pt.", min: 0, max: 1584, step: 0.25, decimals: 2, value: () => l?.width ?? (line ? 0.5 : s().textBox ? 0.75 : 1), set: (v) => set({ width: v }) });
         c.push({ type: "select", label: "Strichtyp", options: [["solid", "Durchgehend"], ["sysDot", "Rundpunkt"], ["sysDash", "Quadratpunkt"], ["dash", "Strich"], ["dashDot", "Strich-Punkt"], ["lgDash", "Langer Strich"]].map(([value, label]) => ({ value, label })),
           value: () => l?.dash ?? "solid", set: (v) => set({ dash: v === "solid" ? undefined : v }) });
         if (line) {
           const ends = [["none", "Keine"], ["triangle", "Pfeil"], ["stealth", "Offener Pfeil"], ["oval", "Oval"], ["diamond", "Raute"]].map(([value, label]) => ({ value, label }));
           c.push({ type: "select", label: "Anfangspfeiltyp", options: ends, value: () => l?.head ?? "none", set: (v) => set({ head: v === "none" ? undefined : v }) });
-          c.push({ type: "select", label: "Endpfeiltyp", options: ends, value: () => l?.tail ?? (s().geom === "straightConnector1" ? "triangle" : "none"), set: (v) => set({ tail: v === "none" ? undefined : v }) });
+          c.push({ type: "select", label: "Endpfeiltyp", options: ends, value: () => l?.tail ?? "none", set: (v) => set({ tail: v === "none" ? undefined : v }) });
         }
       }
       return c;
@@ -497,15 +604,4 @@ export function shapesFeature(app: CalcApp) {
     setFill: (hex: string | null) => edit("Fülleffekt", (q) => ({ ...q, fill: hex === null ? { type: "none" } : { type: "solid", color: hex } })),
     setLine: (hex: string | null) => edit("Formkontur", (q) => ({ ...q, line: hex === null ? { type: "none" } : { type: "solid", ...q.line, color: hex } })),
   };
-}
-
-function shade(hex: string, s: number): string {
-  const lin = (c: number) => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
-  const srgb = (c: number) => (c <= 0.0031308 ? c * 12.92 : 1.055 * c ** (1 / 2.4) - 0.055);
-  return "#" + [1, 3, 5].map((i) => Math.round(srgb(lin(parseInt(hex.slice(i, i + 2), 16) / 255) * s) * 255).toString(16).padStart(2, "0")).join("");
-}
-
-function alpha(color: string, transparency?: number): string {
-  if (!transparency) return color;
-  return color.slice(0, 7) + Math.round((1 - transparency / 100) * 255).toString(16).padStart(2, "0");
 }

@@ -8,7 +8,8 @@ listed, not pressed; cloud features are listed and marked, not opened.
 
     .venv/Scripts/python.exe probe_excel_inventory.py [context …]
 
-Result: results/<date>-excel-inventory.json, written after each context.
+Result: results/<date>-excel-inventory.json (labels only), written after each context; the full
+recording with Office's descriptions in captures/ (not committed).
 """
 from __future__ import annotations
 
@@ -23,7 +24,16 @@ from feellab import uia, winapi
 from feellab.calc_catalogue import Case, ExcelSide
 
 HERE = Path(__file__).parent
-OUT = HERE / "results" / f"{datetime.date.today().isoformat()}-excel-inventory.json"
+# The full recording (with Office's descriptions) stays in captures/; results/ gets labels only.
+OUT = HERE / "captures" / "2026-11-05-excel-inventory-full.json"
+RESULT = HERE / "results" / "2026-11-05-excel-inventory.json"
+
+
+def save(data: dict) -> None:
+    from feellab.sanitize import clean
+    OUT.parent.mkdir(exist_ok=True)
+    OUT.write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8", newline=chr(10))
+    RESULT.write_text(json.dumps(clean(data), ensure_ascii=False, indent=1), encoding="utf-8", newline=chr(10))
 
 # Cloud and online features (D-066): listed, never opened.
 CLOUD = ("Freigeben", "Teilen", "Copilot", "Daten analysieren", "Add-Ins abrufen", "Add-Ins", "Online-Bilder", "Piktogramme",
@@ -467,7 +477,7 @@ def main() -> None:
                     inv.side.reset(Case("inventory", {}, [], "x"))
                     setup(inv, ctx)
                 data["dialogs"].update(inv.dialogs)
-                OUT.write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
+                save(data)
                 # Each tab starts from the same situation again (a new Excel when this one is stuck).
                 try:
                     setup(inv, ctx)
@@ -484,7 +494,7 @@ def main() -> None:
     finally:
         inv.close_all()
         data["dialogs"].update(inv.dialogs)
-        OUT.write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
+        save(data)
         inv.side.close()
 
 

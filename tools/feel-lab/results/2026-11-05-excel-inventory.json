@@ -5212,7 +5212,7 @@
        "enabled": true
       },
       {
-       "name": "Benutzerdefiniertes Verbunddiagramm erstellen...",
+       "name": "[Beschreibung]",
        "type": "MenuItem",
        "enabled": true
       }
@@ -5529,21 +5529,21 @@
     },
     {
      "group": "Zeichentools",
-     "name": "Auswählen: Objekte auswählen, einschließlich Freihandelementen, Formen und Textbereichen. Dies ist besonders nützlich, wenn Sie mit Objekten arbeiten, die hinter dem Text liegen.",
+     "name": "Auswählen",
      "type": "SplitButton",
      "enabled": true,
      "items": []
     },
     {
      "group": "Zeichentools",
-     "name": "Lassoauswahl: Freihand auswählen durch Zeichnen einer Form. Alle Freihandstriche in der Form werden ausgewählt.",
+     "name": "Lassoauswahl",
      "type": "SplitButton",
      "enabled": true,
      "items": []
     },
     {
      "group": "Zeichentools",
-     "name": "Radierer: Mithilfe des Radierers auf der Seite erstellte Freihandanmerkungen löschen.",
+     "name": "Radierer",
      "type": "SplitButton",
      "enabled": true,
      "items": []
@@ -5610,7 +5610,7 @@
     },
     {
      "group": "Zeichentools",
-     "name": "Aktionsstift: Verwenden Sie den Aktionsstifts, um Daten handschriftlich einzugeben.",
+     "name": "Aktionsstift",
      "type": "SplitButton",
      "enabled": true,
      "items": []
@@ -14168,7 +14168,7 @@
       "enabled": true
      },
      {
-      "name": "Standardzellen haben kein bestimmtes Zahlenformat.",
+      "name": "[Beschreibung]",
       "type": "Text",
       "enabled": true
      },
@@ -18282,7 +18282,7 @@
       "enabled": true
      },
      {
-      "name": "Standardzellen haben kein bestimmtes Zahlenformat.",
+      "name": "[Beschreibung]",
       "type": "Text",
       "enabled": true
      },
@@ -22249,7 +22249,7 @@
       "enabled": true
      },
      {
-      "name": "Standardzellen haben kein bestimmtes Zahlenformat.",
+      "name": "[Beschreibung]",
       "type": "Text",
       "enabled": true
      },
@@ -22396,7 +22396,7 @@
       "enabled": true
      },
      {
-      "name": "Standardzellen haben kein bestimmtes Zahlenformat.",
+      "name": "[Beschreibung]",
       "type": "Text",
       "enabled": true
      },
@@ -26662,7 +26662,7 @@
       "enabled": true
      },
      {
-      "name": "Standardzellen haben kein bestimmtes Zahlenformat.",
+      "name": "[Beschreibung]",
       "type": "Text",
       "enabled": true
      },
@@ -31086,7 +31086,7 @@
       "enabled": true
      },
      {
-      "name": "Buchhaltung richtet die Währungssymbole und die Dezimalstellen in einer Spalte aus.",
+      "name": "[Beschreibung]",
       "type": "Text",
       "enabled": true
      },
@@ -31228,7 +31228,7 @@
       "enabled": true
      },
      {
-      "name": "Buchhaltung richtet die Währungssymbole und die Dezimalstellen in einer Spalte aus.",
+      "name": "[Beschreibung]",
       "type": "Text",
       "enabled": true
      },
@@ -33485,7 +33485,7 @@
       "enabled": true
      },
      {
-      "name": "Standardzellen haben kein bestimmtes Zahlenformat.",
+      "name": "[Beschreibung]",
       "type": "Text",
       "enabled": true
      },
@@ -33632,7 +33632,7 @@
       "enabled": true
      },
      {
-      "name": "Standardzellen haben kein bestimmtes Zahlenformat.",
+      "name": "[Beschreibung]",
       "type": "Text",
       "enabled": true
      },
@@ -37760,32 +37760,32 @@
       "enabled": true
      },
      {
-      "name": "SUMME, Summiert die Zahlen in einem Zellenbereich.",
+      "name": "SUMME",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "WENN, Gibt einen Wahrheitstest an, der durchgeführt werden soll.",
+      "name": "WENN",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "HYPERLINK, Erstellt eine Verknüpfung, die zur Hyperlink_Adresse verbindet.",
+      "name": "HYPERLINK",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "ANZAHL, Berechnet, wie viele Zellen in einem Bereich Zahlen enthalten.",
+      "name": "ANZAHL",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "SIN, Gibt den Sinus einer Zahl zurück.",
+      "name": "SIN",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "SUMMEWENN, Addiert Zahlen, die mit dem Suchkriterium übereinstimmen.",
+      "name": "SUMMEWENN",
       "type": "ListItem",
       "enabled": true
      },
@@ -37795,7 +37795,7 @@
       "enabled": true
      },
      {
-      "name": "Summiert die Zahlen in einem Zellenbereich.",
+      "name": "[Beschreibung]",
       "type": "Text",
       "enabled": true
      },
@@ -43244,166 +43244,6 @@
       "enabled": true
      },
      {
-      "name": "20210422 Protokoll DB Mathematik.doc",
-      "type": "TreeItem",
-      "enabled": true
-     },
-     {
-      "name": "20210422 Protokoll DB Mathematik.pdf",
-      "type": "TreeItem",
-      "enabled": true
-     },
-     {
-      "name": "20210422 Protokoll FK Mathematik.doc",
-      "type": "TreeItem",
-      "enabled": true
-     },
-     {
-      "name": "20210422 Protokoll FK Mathematik.pdf",
-      "type": "TreeItem",
-      "enabled": true
-     },
-     {
-      "name": "Aufgaben 1.pdf",
-      "type": "TreeItem",
-      "enabled": true
-     },
-     {
-      "name": "Aufgaben.pdf",
-      "type": "TreeItem",
-      "enabled": true
-     },
-     {
-      "name": "Boy Erased - Characters.pdf",
-      "type": "TreeItem",
-      "enabled": true
-     },
-     {
-      "name": "Boy Erased.docx",
-      "type": "TreeItem",
-      "enabled": true
-     },
-     {
-      "name": "Geschenke für Krissi.docx",
-      "type": "TreeItem",
-      "enabled": true
-     },
-     {
-      "name": "Hello.docx",
-      "type": "TreeItem",
-      "enabled": true
-     },
-     {
-      "name": "IMG_20260116_0001.pdf",
-      "type": "TreeItem",
-      "enabled": true
-     },
-     {
-      "name": "IMG_20260116_0002.pdf",
-      "type": "TreeItem",
-      "enabled": true
-     },
-     {
-      "name": "IMG_20260116_0003.pdf",
-      "type": "TreeItem",
-      "enabled": true
-     },
-     {
-      "name": "Matthias Schenker.docx",
-      "type": "TreeItem",
-      "enabled": true
-     },
-     {
-      "name": "Matthias Schenker.pdf",
-      "type": "TreeItem",
-      "enabled": true
-     },
-     {
-      "name": "Meine Äußerung zur Sache.docx",
-      "type": "TreeItem",
-      "enabled": true
-     },
-     {
-      "name": "oberstdorf-4032x2688-germany-mountains-autumn-forest-4k-16347.jpg",
-      "type": "TreeItem",
-      "enabled": true
-     },
-     {
-      "name": "PDF-Dokument.pdf",
-      "type": "TreeItem",
-      "enabled": true
-     },
-     {
-      "name": "PF_Reinigungsanleitung_VIGOUR_derby_AQUAWASH_DE___0ddc0bb96d5cb9c6b6b7d7a0e3a7c3a3.pdf",
-      "type": "TreeItem",
-      "enabled": true
-     },
-     {
-      "name": "Rechentabelle Kristina Abi.xlsx",
-      "type": "TreeItem",
-      "enabled": true
-     },
-     {
-      "name": "Rückzahlung Postbank.docx",
-      "type": "TreeItem",
-      "enabled": true
-     },
-     {
-      "name": "Schil.jpeg",
-      "type": "TreeItem",
-      "enabled": true
-     },
-     {
-      "name": "schulkalender-2020-2021-querformat.xlsx",
-      "type": "TreeItem",
-      "enabled": true
-     },
-     {
-      "name": "Stempel der Arztpraxis.docx",
-      "type": "TreeItem",
-      "enabled": true
-     },
-     {
-      "name": "Umsätze Comdirekt.docx",
-      "type": "TreeItem",
-      "enabled": true
-     },
-     {
-      "name": "Veränderungsanzeige Kristina.pdf",
-      "type": "TreeItem",
-      "enabled": true
-     },
-     {
-      "name": "Veränderungsanzeige Matthias.pdf",
-      "type": "TreeItem",
-      "enabled": true
-     },
-     {
-      "name": "Vodafone Kündigung 1.png",
-      "type": "TreeItem",
-      "enabled": true
-     },
-     {
-      "name": "Vodafone Kündigung 2.png",
-      "type": "TreeItem",
-      "enabled": true
-     },
-     {
-      "name": "Vodafone Kündigung 3.png",
-      "type": "TreeItem",
-      "enabled": true
-     },
-     {
-      "name": "Vodafone Kündigung.png",
-      "type": "TreeItem",
-      "enabled": true
-     },
-     {
-      "name": "Wunschliste.docx",
-      "type": "TreeItem",
-      "enabled": true
-     },
-     {
       "name": "RichEdit Control",
       "type": "Edit",
       "enabled": true
@@ -43561,32 +43401,32 @@
       "enabled": true
      },
      {
-      "name": "SUMME, Summiert die Zahlen in einem Zellenbereich.",
+      "name": "SUMME",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "WENN, Gibt einen Wahrheitstest an, der durchgeführt werden soll.",
+      "name": "WENN",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "HYPERLINK, Erstellt eine Verknüpfung, die zur Hyperlink_Adresse verbindet.",
+      "name": "HYPERLINK",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "ANZAHL, Berechnet, wie viele Zellen in einem Bereich Zahlen enthalten.",
+      "name": "ANZAHL",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "SIN, Gibt den Sinus einer Zahl zurück.",
+      "name": "SIN",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "SUMMEWENN, Addiert Zahlen, die mit dem Suchkriterium übereinstimmen.",
+      "name": "SUMMEWENN",
       "type": "ListItem",
       "enabled": true
      },
@@ -43596,7 +43436,7 @@
       "enabled": true
      },
      {
-      "name": "Summiert die Zahlen in einem Zellenbereich.",
+      "name": "[Beschreibung]",
       "type": "Text",
       "enabled": true
      },
@@ -43678,12 +43518,12 @@
       "enabled": true
      },
      {
-      "name": "URLCODIEREN, Gibt eine URL-codierte Zeichenfolge zurück.",
+      "name": "URLCODIEREN",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "WEBDIENST, Gibt Daten von einem Webdienst zurück.",
+      "name": "WEBDIENST",
       "type": "ListItem",
       "enabled": true
      },
@@ -43775,32 +43615,32 @@
       "enabled": true
      },
      {
-      "name": "SUMME, Summiert die Zahlen in einem Zellenbereich.",
+      "name": "SUMME",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "WENN, Gibt einen Wahrheitstest an, der durchgeführt werden soll.",
+      "name": "WENN",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "HYPERLINK, Erstellt eine Verknüpfung, die zur Hyperlink_Adresse verbindet.",
+      "name": "HYPERLINK",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "ANZAHL, Berechnet, wie viele Zellen in einem Bereich Zahlen enthalten.",
+      "name": "ANZAHL",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "SIN, Gibt den Sinus einer Zahl zurück.",
+      "name": "SIN",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "SUMMEWENN, Addiert Zahlen, die mit dem Suchkriterium übereinstimmen.",
+      "name": "SUMMEWENN",
       "type": "ListItem",
       "enabled": true
      },
@@ -43810,7 +43650,7 @@
       "enabled": true
      },
      {
-      "name": "Summiert die Zahlen in einem Zellenbereich.",
+      "name": "[Beschreibung]",
       "type": "Text",
       "enabled": true
      },
@@ -43897,77 +43737,77 @@
       "enabled": true
      },
      {
-      "name": "DISAGIO, Gibt den in Prozent ausgedrückten Abschlag (Disagio) eines Wertpapiers zurück.",
+      "name": "DISAGIO",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "EFFEKTIV, Gibt die jährliche Effektivverzinsung zurück.",
+      "name": "EFFEKTIV",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "KUMZINSZ, Berechnet die kumulierten Zinsen, die zwischen zwei Perioden zu zahlen sind.",
+      "name": "KUMZINSZ",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "KURSDISAGIO, Gibt den Kurs pro 100 EUR Nennwert eines unverzinslichen Wertpapiers zurück.",
+      "name": "KURSDISAGIO",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "LIA, Gibt die lineare Abschreibung eines Wirtschaftsguts pro Periode zurück.",
+      "name": "LIA",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "NOMINAL, Gibt die jährliche Nominalverzinsung zurück.",
+      "name": "NOMINAL",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "RENDITE, Gibt die Rendite eines Wertpapiers zurück, das periodisch Zinsen auszahlt.",
+      "name": "RENDITE",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "RENDITEDIS, Gibt die jährliche Rendite eines unverzinslichen Wertpapiers zurück.",
+      "name": "RENDITEDIS",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "TBILLÄQUIV, Gibt die Rendite eines Wertpapiers zurück.",
+      "name": "TBILLÄQUIV",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "TBILLKURS, Gibt den Kurs pro 100 EUR Nennwert eines Wertpapiers zurück.",
+      "name": "TBILLKURS",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "TBILLRENDITE, Gibt die Rendite eines Wertpapiers zurück.",
+      "name": "TBILLRENDITE",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "ZINSSATZ, Gibt den Zinssatz eines voll investierten Wertpapiers zurück.",
+      "name": "ZINSSATZ",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "ZINSTERMNZ, Gibt das Datum des ersten Zinstermins nach dem Abrechnungstermin zurück.",
+      "name": "ZINSTERMNZ",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "ZINSTERMVZ, Gibt das Datum des letzten Zinstermins vor dem Abrechnungstermin zurück.",
+      "name": "ZINSTERMVZ",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "ZSATZINVEST, Gibt den effektiven Jahreszins für den Wertzuwachs einer Investition zurück.",
+      "name": "ZSATZINVEST",
       "type": "ListItem",
       "enabled": true
      },
@@ -44059,37 +43899,37 @@
       "enabled": true
      },
      {
-      "name": "FALSCH, Gibt den Wahrheitswert FALSCH zurück.",
+      "name": "FALSCH",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "LAMBDA, Erstellt einen Funktionswert, der in Formeln aufgerufen werden kann.",
+      "name": "LAMBDA",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "NICHT, Kehrt den Wert ihres Argumentes um.",
+      "name": "NICHT",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "UND, Prüft, ob alle Argumente WAHR sind; gibt WAHR zurück, wenn alle Argumente WAHR sind.",
+      "name": "UND",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "WAHR, Gibt den Wahrheitswert WAHR zurück.",
+      "name": "WAHR",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "WENN, Gibt einen Wahrheitstest an, der durchgeführt werden soll.",
+      "name": "WENN",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "XODER, Gibt ein logisches \"Ausschließliches Oder\" aller Argumente zurück.",
+      "name": "XODER",
       "type": "ListItem",
       "enabled": true
      },
@@ -44181,117 +44021,117 @@
       "enabled": true
      },
      {
-      "name": "BAHTTEXT, Wandelt eine Zahl in Text um (Baht).",
+      "name": "BAHTTEXT",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "DM, Wandelt eine Zahl in einen Text im Währungsformat um.",
+      "name": "DM",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "FEST, Formatiert eine Zahl als Text mit einer festen Anzahl an Nachkommastellen.",
+      "name": "FEST",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "GLÄTTEN, Löscht Leerzeichen in einem Text.",
+      "name": "GLÄTTEN",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "GROSS, Wandelt einen Text in Großbuchstaben um.",
+      "name": "GROSS",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "KLEIN, Wandelt einen Text in Kleinbuchstaben um.",
+      "name": "KLEIN",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "LÄNGE, Gibt die Anzahl der Zeichen einer Zeichenfolge zurück.",
+      "name": "LÄNGE",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "LINKS, Gibt das erste oder die ersten Zeichen einer Zeichenfolge zurück.",
+      "name": "LINKS",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "MATRIXZUTEXT, Gibt eine Textdarstellung einer Matrix zurück.",
+      "name": "MATRIXZUTEXT",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "RECHTS, Gibt das letzte oder die letzten Zeichen einer Zeichenfolge zurück.",
+      "name": "RECHTS",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "SÄUBERN, Löscht alle nicht druckbaren Zeichen aus einem Text.",
+      "name": "SÄUBERN",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "TEXT, Formatiert eine Zahl und wandelt sie in einen Text um.",
+      "name": "TEXT",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "TEXTKETTE, Verkettet eine Liste oder einen Bereich aus Textzeichenfolgen.",
+      "name": "TEXTKETTE",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "TEXTNACH, Gibt Text zurück, der hinter den Trennzeichen steht.",
+      "name": "TEXTNACH",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "TEXTTEILEN, Teilt Text mithilfe von Trennzeichen in Zeilen oder Spalten auf.",
+      "name": "TEXTTEILEN",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "TEXTVOR, Gibt Text zurück, der sich vor dem Trennzeichen befindet.",
+      "name": "TEXTVOR",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "UNICODE, Gibt die Zahl (Codepoint) zurück, die dem ersten Zeichen des Texts entspricht.",
+      "name": "UNICODE",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "WECHSELN, Tauscht einen alten Text durch einen neuen Text in einer Zeichenfolge aus.",
+      "name": "WECHSELN",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "WERT, Wandelt ein als Text angegebenes Argument in eine Zahl um.",
+      "name": "WERT",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "WERTZUTEXT,  Gibt eine Textdarstellung eines Werts zurück.",
+      "name": "[Beschreibung]",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "WIEDERHOLEN, Wiederholt einen Text so oft wie angegeben.",
+      "name": "WIEDERHOLEN",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "ZAHLENWERT, Konvertiert auf vom Gebietsschema unabhängige Weise Text in Zahlen.",
+      "name": "ZAHLENWERT",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "ZEICHEN, Gibt das der Codezahl entsprechende Zeichen zurück.",
+      "name": "ZEICHEN",
       "type": "ListItem",
       "enabled": true
      },
@@ -44388,72 +44228,72 @@
       "enabled": true
      },
      {
-      "name": "HEUTE, Gibt die fortlaufende Zahl des heutigen Datums zurück.",
+      "name": "HEUTE",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "ISOKALENDERWOCHE, Gibt die ISO-Wochennummer des Jahres für ein angegebenes Datum zurück.",
+      "name": "ISOKALENDERWOCHE",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "JAHR, Wandelt eine fortlaufende Zahl im Bereich von 1900 - 9999 in eine Jahreszahl um.",
+      "name": "JAHR",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "JETZT, Gibt die fortlaufende Zahl des aktuellen Datums und der aktuellen Uhrzeit zurück.",
+      "name": "JETZT",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "KALENDERWOCHE, Gibt die Wochennummer für das Jahr zurück.",
+      "name": "KALENDERWOCHE",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "MINUTE, Wandelt eine fortlaufende Zahl in einen Wert zwischen 0 und 59 für Minuten um.",
+      "name": "MINUTE",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "MONAT, Gibt eine Zahl von 1 (Januar) bis 12 (Dezember) für den Monat zurück.",
+      "name": "MONAT",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "NETTOARBEITSTAGE, Gibt die Anzahl der Arbeitstage in einem Zeitintervall zurück.",
+      "name": "NETTOARBEITSTAGE",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "SEKUNDE, Wandelt eine fortlaufende Zahl in einen Wert von 0 bis 59 für die Sekunde um.",
+      "name": "SEKUNDE",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "STUNDE, Liefert den Wert für die Stunde von 0 (00:00:00 Uhr) bis 23 (23:00:00 Uhr) zurück.",
+      "name": "STUNDE",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "TAG, Wandelt eine fortlaufende Zahl in eine Zahl von 1 bis 31 für den Tag des Monats um.",
+      "name": "TAG",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "TAGE, Gibt die Anzahl der Tage zwischen den beiden Datumswerten zurück.",
+      "name": "TAGE",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "WOCHENTAG, Wandelt eine fortlaufende Zahl in einen Wochentag um.",
+      "name": "WOCHENTAG",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "ZEIT, Gibt die Excel fortlaufende Zahl einer bestimmten Uhrzeit zurück.",
+      "name": "ZEIT",
       "type": "ListItem",
       "enabled": true
      },
@@ -44545,157 +44385,157 @@
       "enabled": true
      },
      {
-      "name": "ADRESSE, Gibt einen Verweis auf eine Zelle einer Tabelle als Text zurück.",
+      "name": "ADRESSE",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "BEREICHE, Gibt die Anzahl der innerhalb eines Bezuges aufgeführten Bereiche zurück.",
+      "name": "BEREICHE",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "BILD, Gibt ein Bild aus einer gegebenen Quelle zurück.",
+      "name": "BILD",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "EINDEUTIG, Gibt die eindeutigen Werte eines Bereichs oder Arrays zurück.",
+      "name": "EINDEUTIG",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "ERWEITERN, Erweitert eine Matrix auf die angegebenen Dimensionen.",
+      "name": "ERWEITERN",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "FELDWERT, Extrahiert einen Wert aus einem angegebenen Feld eines angegebenen Datensatzes.",
+      "name": "FELDWERT",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "FILTER, Filtert einen Bereich oder eine Matrix.",
+      "name": "FILTER",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "FORMELTEXT, Gibt eine Formel als Zeichenfolge zurück.",
+      "name": "FORMELTEXT",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "GRUPPIERENNACH, Aggregiert Werte nach Zeilenfeldern.",
+      "name": "GRUPPIERENNACH",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "HSTAPELN, Stapelt Matrizen horizontal in eine Matrix.",
+      "name": "HSTAPELN",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "HYPERLINK, Erstellt eine Verknüpfung, die zur Hyperlink_Adresse verbindet.",
+      "name": "HYPERLINK",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "INDEX, Verwendet einen Index, um aus einem Bezug oder einer Matrix einen Wert zu wählen.",
+      "name": "INDEX",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "INDIREKT, Gibt den Bezug eines Textwertes zurück.",
+      "name": "INDIREKT",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "PIVOTDATENZUORDNEN, Extrahiert Daten, die in einer PivotTable gespeichert sind.",
+      "name": "PIVOTDATENZUORDNEN",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "PIVOTMIT, Aggregiert Werte nach Zeilen und Spalten.",
+      "name": "PIVOTMIT",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "RTD, Empfängt Echtzeitdaten von einem Programm, das COM-Automatisierung unterstützt.",
+      "name": "RTD",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "SORTIEREN, Sortiert einen Bereich oder eine Matrix.",
+      "name": "SORTIEREN",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "SPALTE, Gibt die Spaltennummer eines Bezuges zurück.",
+      "name": "SPALTE",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "SPALTEN, Gibt die Anzahl der Spalten eines Bezuges zurück.",
+      "name": "SPALTEN",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "SPALTENWAHL, Gibt Spalten aus einer Matrix oder einem Verweis zurück.",
+      "name": "SPALTENWAHL",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "ÜBERNEHMEN, Gibt Zeilen oder Spalten vom Anfang oder Ende der Matrix zurück.",
+      "name": "ÜBERNEHMEN",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "VERGLEICH, Sucht Werte innerhalb eines Bezuges oder einer Matrix.",
+      "name": "VERGLEICH",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "VERWEIS, Durchsucht die Werte eines Vektors oder einer Matrix.",
+      "name": "VERWEIS",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "VSTAPELN, Stapelt Matrizen vertikal in eine Matrix.",
+      "name": "VSTAPELN",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "WAHL, Wählt einen Wert aus einer Liste von Werten.",
+      "name": "WAHL",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "WEGLASSEN, Löscht Zeilen oder Spalten vom Anfang oder Ende der Matrix.",
+      "name": "WEGLASSEN",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "ZEILE, Gibt die Zeilennummer eines Bezuges zurück.",
+      "name": "ZEILE",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "ZEILEN, Gibt die Anzahl der Zeilen eines Bezuges zurück.",
+      "name": "ZEILEN",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "ZEILENWAHL, Gibt Zeilen aus einer Matrix oder einem Verweis zurück.",
+      "name": "ZEILENWAHL",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "ZUSPALTE, Gibt die Matrix als eine Spalte zurück.",
+      "name": "ZUSPALTE",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "ZUZEILE, Gibt die Matrix als eine Zeile zurück.",
+      "name": "ZUZEILE",
       "type": "ListItem",
       "enabled": true
      },
@@ -44705,7 +44545,7 @@
       "enabled": true
      },
      {
-      "name": "Kürzt einen Bereich bis zur zuletzt verwendeten Zelle in einer beliebigen Richtung.",
+      "name": "[Beschreibung]",
       "type": "Text",
       "enabled": true
      },
@@ -44792,287 +44632,287 @@
       "enabled": true
      },
      {
-      "name": "ABRUNDEN, Rundet die Zahl auf Anzahl_Stellen ab.",
+      "name": "ABRUNDEN",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "ABS, Gibt den Absolutwert einer Zahl zurück.",
+      "name": "ABS",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "AGGREGAT, Gibt ein Aggregat in einer Liste oder Datenbank zurück.",
+      "name": "AGGREGAT",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "ARABISCH, Konvertiert eine römische Zahl in eine arabische Zahl.",
+      "name": "ARABISCH",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "ARCCOS, Gibt den Arkuskosinus einer Zahl im Bereich von 0 bis Pi zurück.",
+      "name": "ARCCOS",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "ARCCOSHYP, Gibt den umgekehrten hyperbolischen Kosinus einer Zahl zurück.",
+      "name": "ARCCOSHYP",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "ARCCOT, Gibt den Arkuskotangens einer Zahl als Bogenmaß im Bereich 0 bis Pi zurück.",
+      "name": "ARCCOT",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "ARCCOTHYP, Gibt den umgekehrten hyperbolischen Kotangens einer Zahl zurück.",
+      "name": "ARCCOTHYP",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "ARCSIN, Gibt den Arkussinus einer Zahl im Bereich von -Pi/2 bis Pi/2 zurück.",
+      "name": "ARCSIN",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "ARCSINHYP, Gibt den umgekehrten hyperbolischen Sinus einer Zahl zurück.",
+      "name": "ARCSINHYP",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "ARCTANHYP, Gibt den umgekehrten hyperbolischen Tangens einer Zahl zurück.",
+      "name": "ARCTANHYP",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "AUFRUNDEN, Rundet die Zahl auf Anzahl_Stellen auf.",
+      "name": "AUFRUNDEN",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "BASIS, Konvertiert eine Zahl in eine Textdarstellung mit der angegebenen Basis.",
+      "name": "BASIS",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "BOGENMASS, Wandelt Grad in Bogenmaß (Radiant) um.",
+      "name": "BOGENMASS",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "COS, Gibt den Kosinus einer Zahl zurück.",
+      "name": "COS",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "COSEC, Gibt den Kosekans eines Winkels zurück.",
+      "name": "COSEC",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "COSECHYP, Gibt den hyperbolischen Kosekans eines Winkels zurück.",
+      "name": "COSECHYP",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "COSHYP, Gibt den hyperbolischen Kosinus einer Zahl zurück. .",
+      "name": "COSHYP",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "COT, Gibt den Kotangens eines Winkels zurück.",
+      "name": "COT",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "COTHYP, Gibt den hyperbolischen Kotangens einer Zahl zurück.",
+      "name": "COTHYP",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "EXP, Potenziert die Basis e mit der als Argument angegebenen Zahl.",
+      "name": "EXP",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "FAKULTÄT, Gibt die Fakultät einer Zahl zurück (Fakultät n = 1*2*3...*n).",
+      "name": "FAKULTÄT",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "GANZZAHL, Rundet eine Zahl auf die nächstkleinere ganze Zahl ab.",
+      "name": "GANZZAHL",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "GGT, Gibt den größten gemeinsamen Teiler zurück.",
+      "name": "GGT",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "GRAD, Wandelt Bogenmaß (Radiant) in Grad um.",
+      "name": "GRAD",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "KGV, Gibt das kleinste gemeinsame Vielfache zurück.",
+      "name": "KGV",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "LN, Gibt den natürlichen Logarithmus einer Zahl zurück.",
+      "name": "LN",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "LOG, Gibt den Logarithmus einer Zahl zu der angegebenen Basis zurück.",
+      "name": "LOG",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "LOG10, Gibt den Logarithmus einer Zahl zur Basis 10 zurück.",
+      "name": "LOG10",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "MDET, Gibt die Determinante einer Matrix zurück.",
+      "name": "MDET",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "MEINHEIT, Gibt die Einheitsmatrix für die angegebene Größe zurück.",
+      "name": "MEINHEIT",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "MINV, Gibt die Inverse einer Matrix (die zu einer Matrix gehörende Kehrmatrix) zurück.",
+      "name": "MINV",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "PI, Gibt den Wert PI, 3.14159265358979, mit 15 Stellen Genauigkeit zurück.",
+      "name": "PI",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "POLYNOMIAL, Gibt den Polynomialkoeffizienten einer Gruppe von Zahlen.",
+      "name": "POLYNOMIAL",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "POTENZ, Gibt als Ergebnis eine potenzierte Zahl zurück.",
+      "name": "POTENZ",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "PRODUKT, Multipliziert alle als Argumente angegebenen Zahlen.",
+      "name": "PRODUKT",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "PROZENTVON,  Gibt den Prozentsatz einer Teilmenge eines angegebenen Datasets zurück.",
+      "name": "[Beschreibung]",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "QUOTIENT, Gibt den ganzzahligen Anteil einer Division zurück.",
+      "name": "QUOTIENT",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "REST, Gibt den Rest einer Division zurück.",
+      "name": "REST",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "RÖMISCH, Wandelt eine arabische Zahl in eine römische Zahl als Text um.",
+      "name": "RÖMISCH",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "RUNDEN, Rundet eine Zahl auf eine bestimmte Anzahl an Dezimalstellen.",
+      "name": "RUNDEN",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "SEC, Gibt den Sekans eines Winkels zurück.",
+      "name": "SEC",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "SECHYP, Gibt den hyperbolischen Sekans eines Winkels zurück.",
+      "name": "SECHYP",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "SEQUENZ, Gibt eine Sequenz von Zahlen zurück.",
+      "name": "SEQUENZ",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "SIN, Gibt den Sinus einer Zahl zurück.",
+      "name": "SIN",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "SUMME, Summiert die Zahlen in einem Zellenbereich.",
+      "name": "SUMME",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "SUMMENPRODUKT, Gibt die Summe der Produkte der entsprechenden Bereiche und Arrays zurück.",
+      "name": "SUMMENPRODUKT",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "SUMMEWENN, Addiert Zahlen, die mit dem Suchkriterium übereinstimmen.",
+      "name": "SUMMEWENN",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "TAN, Gibt den Tangens einer Zahl zurück.",
+      "name": "TAN",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "TANHYP, Gibt den hyperbolischen Tangens einer Zahl zurück.",
+      "name": "TANHYP",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "TEILERGEBNIS, Gibt ein Teilergebnis in einer Liste oder Datenbank zurück.",
+      "name": "TEILERGEBNIS",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "VRUNDEN, Gibt eine auf das gewünschte Vielfache gerundete Zahl.",
+      "name": "VRUNDEN",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "WURZEL, Gibt die Quadratwurzel einer Zahl.",
+      "name": "WURZEL",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "WURZELPI, Gibt die Wurzel aus der mit Pi multiplizierten Zahl zurück.",
+      "name": "WURZELPI",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "ZUFALLSBEREICH, Gibt eine ganze Zufallszahl aus dem festgelegten Bereich zurück.",
+      "name": "ZUFALLSBEREICH",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "ZUFALLSMATRIX, Gibt ein Array von Zufallszahlen zurück.",
+      "name": "ZUFALLSMATRIX",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "ZWEIFAKULTÄT, Gibt die Fakultät zu Zahl mit Schrittlänge 2 zurück.",
+      "name": "ZWEIFAKULTÄT",
       "type": "ListItem",
       "enabled": true
      },
@@ -45169,182 +45009,182 @@
       "enabled": true
      },
      {
-      "name": "ANZAHL, Berechnet, wie viele Zellen in einem Bereich Zahlen enthalten.",
+      "name": "ANZAHL",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "ANZAHL2, Zählt die Anzahl nicht leerer Zellen in einem Bereich.",
+      "name": "ANZAHL2",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "ANZAHLLEEREZELLEN, Zählt die leeren Zellen in einem Zellbereich.",
+      "name": "ANZAHLLEEREZELLEN",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "BETA.INV, Gibt Perzentile der Betaverteilung (BETA.VERT) zurück.",
+      "name": "BETA.INV",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "BINOM.VERT, Gibt Wahrscheinlichkeiten einer binomialverteilten Zufallsvariablen zurück.",
+      "name": "BINOM.VERT",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "CHIQU.TEST, Gibt die Teststatistik eines Chi-Quadrat-Unabhängigkeitstests zurück.",
+      "name": "CHIQU.TEST",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "EXPON.VERT, Gibt Wahrscheinlichkeiten einer exponentialverteilten Zufallsvariablen zurück.",
+      "name": "EXPON.VERT",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "FISHER, Gibt die Fisher-Transformation zurück.",
+      "name": "FISHER",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "FISHERINV, Gibt die Umkehrung der Fisher-Transformation zurück.",
+      "name": "FISHERINV",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "G.TEST, Gibt die einseitige Prüfstatistik für einen Gaußtest (Normalverteilung) zurück.",
+      "name": "G.TEST",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "GAMMA, Gibt den Wert der Gammafunktion zurück.",
+      "name": "GAMMA",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "GAMMA.VERT, Gibt Wahrscheinlichkeiten einer gammaverteilten Zufallsvariablen zurück.",
+      "name": "GAMMA.VERT",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "GAMMALN, Gibt den natürlichen Logarithmus der Gammafunktion zurück.",
+      "name": "GAMMALN",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "GAMMALN.GENAU, Gibt den natürlichen Logarithmus der Gammafunktion zurück.",
+      "name": "GAMMALN.GENAU",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "GAUSS, Gibt 0,5 weniger als die kumulierte Normalverteilung zurück.",
+      "name": "GAUSS",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "HÄUFIGKEIT, Gibt eine Häufigkeitsverteilung als einspaltige Matrix zurück.",
+      "name": "HÄUFIGKEIT",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "KGRÖSSTE, Gibt den k-größten Wert einer Datengruppe zurück.",
+      "name": "KGRÖSSTE",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "KKLEINSTE, Gibt den k-kleinsten Wert einer Datengruppe zurück.",
+      "name": "KKLEINSTE",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "KORREL, Gibt den Korrelationskoeffizient zweier Reihen von Merkmalsausprägungen zurück.",
+      "name": "KORREL",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "KURT, Gibt die Kurtosis (Exzess) einer Datengruppe zurück.",
+      "name": "KURT",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "LOGNORM.INV, Gibt Perzentile der Lognormalverteilung zurück.",
+      "name": "LOGNORM.INV",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "MODUS.EINF, Gibt den häufigsten Wert in einem Array oder einer Datengruppe zurück.",
+      "name": "MODUS.EINF",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "NORM.INV, Gibt Perzentile der Normalverteilung zurück.",
+      "name": "NORM.INV",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "NORM.S.INV, Gibt Perzentile der Standardnormalverteilung zurück.",
+      "name": "NORM.S.INV",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "NORM.VERT, Gibt Wahrscheinlichkeiten einer normal verteilten Zufallsvariablen zurück.",
+      "name": "NORM.VERT",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "PEARSON, Gibt den Pearsonschen Korrelationskoeffizienten zurück.",
+      "name": "PEARSON",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "PHI, Gibt den Wert der Dichtefunktion für eine Standardnormalverteilung zurück.",
+      "name": "PHI",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "PROGNOSE.ETS.STAT, Gibt die angeforderte Statistik für die Prognose zurück.",
+      "name": "PROGNOSE.ETS.STAT",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "STANDARDISIERUNG, Gibt den standardisierten Wert zurück.",
+      "name": "STANDARDISIERUNG",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "T.INV, Gibt linksseitige Quantile der Studentschen t-Verteilung zurück.",
+      "name": "T.INV",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "T.INV.2S, Gibt zweiseitige Quantile der Studentschen t-Verteilung zurück.",
+      "name": "T.INV.2S",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "T.TEST, Gibt die mit einem Studentschen t-Test verbundene Wahrscheinlichkeit zurück.",
+      "name": "T.TEST",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "T.VERT, Gibt die Studentsche t-Verteilung der linken Endfläche zurück.",
+      "name": "T.VERT",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "T.VERT.2S, Gibt die Studentsche t-Verteilung für zwei Endflächen zurück.",
+      "name": "T.VERT.2S",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "T.VERT.RE, Gibt die Studentsche t-Verteilung für die rechte Endfläche zurück.",
+      "name": "T.VERT.RE",
       "type": "ListItem",
       "enabled": true
      },
      {
-      "name": "WEIBULL.VERT, Gibt Wahrscheinlichkeiten einer Weibull-verteilten Zufallsvariablen zurück.",
+      "name": "WEIBULL.VERT",
       "type": "ListItem",
       "enabled": true
      },
@@ -45515,7 +45355,7 @@
       "enabled": true
      },
      {
-      "name": "Die Fehlerüberprüfung für das gesamte Tabellenblatt ist abgeschlossen.",
+      "name": "[Beschreibung]",
       "type": "Text",
       "enabled": true
      },
@@ -45786,12 +45626,12 @@
       "enabled": true
      },
      {
-      "name": "- Felder sind in Spalten ausgerichtet, mit Leerzeichen zwischen jedem Feld.",
+      "name": "[Beschreibung]",
       "type": "Text",
       "enabled": true
      },
      {
-      "name": "- Zeichen wie z.B. Kommas oder Tabstopps trennen Felder (Excel 4.0-Standard).",
+      "name": "[Beschreibung]",
       "type": "Text",
       "enabled": true
      },
@@ -46177,11 +46017,6 @@
      {
       "name": "Name",
       "type": "Edit",
-      "enabled": true
-     },
-     {
-      "name": "Screenshot 2021-10-13 221113.png",
-      "type": "ListItem",
       "enabled": true
      },
      {
@@ -46593,7 +46428,7 @@
       "enabled": true
      },
      {
-      "name": "Fehlermeldung anzeigen, wenn ungültige Daten eingegeben wurden.",
+      "name": "[Beschreibung]",
       "type": "CheckBox",
       "enabled": true
      },
@@ -46670,7 +46505,7 @@
       "enabled": false
      },
      {
-      "name": "Es wurde kein Szenario festgelegt. Wählen Sie 'Hinzufügen', um ein Szenario hinzuzufügen.",
+      "name": "[Beschreibung]",
       "type": "Text",
       "enabled": true
      },
@@ -46831,7 +46666,7 @@
       "enabled": true
      },
      {
-      "name": "Die Rechtschreibprüfung ist abgeschlossen. Jetzt kann's weitergehen!",
+      "name": "[Beschreibung]",
       "type": "Text",
       "enabled": true
      },

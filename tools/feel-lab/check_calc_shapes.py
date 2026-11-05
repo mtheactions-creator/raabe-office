@@ -27,6 +27,8 @@ CASES = [
     {"name": "triangle-flip", "geom": "triangle", "excel": ("shape", 7), "box": (8, 1, 2, 3), "flipV": True},
     {"name": "star-nofill", "geom": "star5", "excel": ("shape", 92), "box": (8, 6, 2, 3), "nofill": True},
     {"name": "line-arrow", "geom": "straightConnector1", "excel": ("line",), "box": (1, 11, 4, 2), "line": {"color": "#FF0000", "width": 1.5, "tail": "triangle"}},
+    {"name": "roundrect-adj", "geom": "roundRect", "excel": ("shape", 5), "box": (10, 10, 3, 3), "adj": 30000},
+    {"name": "arrow-both", "geom": "straightConnector1", "excel": ("line",), "box": (10, 1, 2, 4), "line": {"head": "oval", "tail": "stealth"}},
     {"name": "textbox", "geom": "rect", "excel": ("textbox",), "box": (6, 10, 3, 2), "text": "Zwei\nZeilen", "textBox": True},
 ]
 DASH = {"dash": 4, "sysDot": 3, "sysDash": 10}
@@ -58,6 +60,8 @@ def model(c: dict) -> dict:
     for k in ("rot", "flipV", "textBox"):
         if k in c:
             m[k] = c[k]
+    if "adj" in c:
+        m["adjust"] = {"adj": c["adj"]}
     return m
 
 
@@ -73,8 +77,12 @@ def excel_view(sh) -> dict:
         out["geom"] = GEOM.get(sh.AutoShapeType, sh.AutoShapeType)
     out["fill"] = None if not sh.Fill.Visible else sh.Fill.ForeColor.RGB
     out["line"] = None if not sh.Line.Visible else {"rgb": sh.Line.ForeColor.RGB, "w": round(sh.Line.Weight, 2), "dash": sh.Line.DashStyle,
-                                                     "tail": sh.Line.EndArrowheadStyle}
+                                                     "tail": sh.Line.EndArrowheadStyle, "head": sh.Line.BeginArrowheadStyle}
     out["flipV"] = bool(sh.VerticalFlip)
+    try:
+        out["adj"] = round(sh.Adjustments.Item(1), 3) if sh.Adjustments.Count else None
+    except Exception:  # noqa: BLE001
+        out["adj"] = None
     try:
         tr = sh.TextFrame2.TextRange
         out["text"] = tr.Text.replace("\r", "\n")
@@ -96,8 +104,11 @@ def expect(c: dict) -> dict:
         e["fill"] = None
     if "line" in c:
         ln = c["line"]
-        e["line"] = {"rgb": bgr(ln["color"]), "w": float(ln["width"]), "dash": DASH.get(ln.get("dash", ""), 1), "tail": ARROW.get(ln.get("tail", ""), 1)}
+        e["line"] = {"rgb": bgr(ln["color"]) if "color" in ln else None, "w": float(ln["width"]) if "width" in ln else None,
+                     "dash": DASH.get(ln.get("dash", ""), 1), "tail": ARROW.get(ln.get("tail", ""), 1), "head": ARROW.get(ln.get("head", ""), 1)}
     e["flipV"] = bool(c.get("flipV"))
+    if "adj" in c:
+        e["adj"] = round(c["adj"] / 100000, 3)
     e["text"] = c.get("text", "")
     if c.get("bold"):
         e["bold"] = True
@@ -110,7 +121,9 @@ def same(e: dict, got: dict) -> list[str]:
     bad = []
     for k, v in e.items():
         g = got.get(k)
-        if isinstance(v, float) and isinstance(g, (int, float)):
+        if isinstance(v, dict) and isinstance(g, dict):
+            bad += [f"{k}.{q}" for q, x in v.items() if x is not None and (abs(x - g.get(q, -99)) > 0.05 if isinstance(x, float) else x != g.get(q))]
+        elif isinstance(v, float) and isinstance(g, (int, float)):
             if abs(v - g) > 1.0:
                 bad.append(k)
         elif v != g:
@@ -164,12 +177,16 @@ def main() -> None:
             if "line" in k:
                 ln = k["line"]
                 sh.Line.Visible = True
-                sh.Line.ForeColor.RGB = bgr(ln["color"])
-                sh.Line.Weight = ln["width"]
+                if "color" in ln:
+                    sh.Line.ForeColor.RGB = bgr(ln["color"])
+                if "width" in ln:
+                    sh.Line.Weight = ln["width"]
                 if "dash" in ln:
                     sh.Line.DashStyle = DASH[ln["dash"]]
                 if "tail" in ln:
                     sh.Line.EndArrowheadStyle = ARROW[ln["tail"]]
+                if "head" in ln:
+                    sh.Line.BeginArrowheadStyle = ARROW[ln["head"]]
             if "text" in k:
                 sh.TextFrame2.TextRange.Text = k["text"].replace("\n", "\r")
                 if k.get("bold"):
@@ -178,6 +195,8 @@ def main() -> None:
                     sh.TextFrame2.TextRange.Font.Size = k["size"]
             if "rot" in k:
                 sh.Rotation = k["rot"]
+            if "adj" in k:
+                sh.Adjustments.SetItem(1, k["adj"] / 100000)
             if k.get("flipV"):
                 sh.Flip(1)  # msoFlipVertical
         wb.SaveAs(str(excel_file), 51)
@@ -212,6 +231,8 @@ def main() -> None:
                         bad.append("line." + q)
             if (g.get("text") or "") != want.get("text", ""):
                 bad.append("text")
+            if "adjust" in want and any(abs((g.get("adjust") or {}).get(q, -1) - v) > 50 for q, v in want["adjust"].items()):
+                bad.append("adjust")
             for q in ("rot", "flipV", "textBox"):
                 if q in want and g.get(q) != want[q]:
                     bad.append(q)

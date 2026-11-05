@@ -40,6 +40,11 @@ export function shapeFromXml(ax: string): SheetShape | null {
   const connector = /<xdr:cxnSp\b/.test(ax);
   const spPr = /<xdr:spPr>([\s\S]*?)<\/xdr:spPr>/.exec(ax)?.[1] ?? "";
   const s: SheetShape = { from, to, geom: /<a:prstGeom prst="(\w+)"/.exec(spPr)?.[1] ?? "rect" };
+  const av = /<a:prstGeom\b[^>]*>\s*<a:avLst>([\s\S]*?)<\/a:avLst>/.exec(spPr)?.[1];
+  if (av) {
+    const adj = Object.fromEntries([...av.matchAll(/<a:gd name="(\w+)" fmla="val (-?\d+)"\s*\/>/g)].map((m) => [m[1], Number(m[2])]));
+    if (Object.keys(adj).length) s.adjust = adj;
+  }
   if (connector) s.connector = true;
   const xfrm = /<a:xfrm\b([^>]*)>/.exec(spPr)?.[1] ?? "";
   const rot = num(/\brot="(-?\d+)"/, xfrm);
@@ -108,7 +113,7 @@ export function shapeToXml(s: SheetShape, id: number, size: { w: number; h: numb
   if (s.raw && s.rawKey === shapeKey(s)) return s.raw;
   const name = esc(s.name ?? (s.textBox ? `Textfeld ${id - 1}` : `Form ${id - 1}`));
   const xfrmAttrs = `${s.rot ? ` rot="${Math.round(s.rot * 60000)}"` : ""}${s.flipH ? ' flipH="1"' : ""}${s.flipV ? ' flipV="1"' : ""}`;
-  const xfrm = `<a:xfrm${xfrmAttrs}><a:off x="0" y="0"/><a:ext cx="${Math.round(size.w * EMU_PX)}" cy="${Math.round(size.h * EMU_PX)}"/></a:xfrm><a:prstGeom prst="${s.geom}"><a:avLst/></a:prstGeom>`;
+  const xfrm = `<a:xfrm${xfrmAttrs}><a:off x="0" y="0"/><a:ext cx="${Math.round(size.w * EMU_PX)}" cy="${Math.round(size.h * EMU_PX)}"/></a:xfrm><a:prstGeom prst="${s.geom}"><a:avLst${s.adjust ? `>${Object.entries(s.adjust).map(([k, v]) => `<a:gd name="${k}" fmla="val ${Math.round(v)}"/>`).join("")}</a:avLst>` : "/>"}</a:prstGeom>`;
   const fill = s.fill ? (s.fill.type === "none" ? "<a:noFill/>" : `<a:solidFill>${srgb(s.fill.color ?? "#4472C4", s.fill.transparency)}</a:solidFill>`)
     : s.textBox ? '<a:solidFill><a:schemeClr val="lt1"/></a:solidFill>' : "";
   const ends = (s.line?.head ? `<a:headEnd type="${s.line.head}"/>` : "") + (s.line?.tail ? `<a:tailEnd type="${s.line.tail}"/>` : "");

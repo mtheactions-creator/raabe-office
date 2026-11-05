@@ -29,6 +29,7 @@ export { imageInfo, naturalSizePt, type ImageInfo } from "./images";
 export { effectExtent, pictureElement, plainPicture, previewElement, type Fill, type LineEnd, type PictureFormat, type PictureShadow } from "./picture";
 export { customGeometry, flattenPath, hasPreset, presetAdjust, presetGeometry, presetNames, type GeomHandle, type GeomPath, type Geometry } from "./geometry";
 export { SHAPE_NAMES, shadeColor, shadeLinear, shapeElement, shapeGeometry, shapeLook, shapeTextRect } from "./shape";
+export { SHAPE_GALLERY, shapeIcon, type GalleryEntry } from "./shape-gallery";
 export { fromHtml, toHtml } from "./html";
 export * as Revisions from "./revisions";
 export * as Edits from "./edits";

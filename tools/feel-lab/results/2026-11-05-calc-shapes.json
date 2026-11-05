@@ -29,6 +29,14 @@
    "ok": true
   },
   {
+   "case": "roundrect-adj",
+   "ok": true
+  },
+  {
+   "case": "arrow-both",
+   "ok": true
+  },
+  {
    "case": "textbox",
    "ok": true
   }
@@ -60,6 +68,14 @@
   },
   {
    "case": "line-arrow",
+   "ok": true
+  },
+  {
+   "case": "roundrect-adj",
+   "ok": true
+  },
+  {
+   "case": "arrow-both",
    "ok": true
   },
   {
