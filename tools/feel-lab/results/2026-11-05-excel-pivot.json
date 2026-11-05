@@ -1,0 +1,510 @@
+{
+ "data": [
+  [
+   "Name",
+   "Klasse",
+   "Fach",
+   "Note",
+   "Geschlecht"
+  ],
+  [
+   "Anna",
+   "8a",
+   "Mathe",
+   2,
+   "w"
+  ],
+  [
+   "Ben",
+   "8a",
+   "Mathe",
+   3,
+   "m"
+  ],
+  [
+   "Cem",
+   "8b",
+   "Mathe",
+   1,
+   "m"
+  ],
+  [
+   "Dora",
+   "8b",
+   "Mathe",
+   4,
+   "w"
+  ],
+  [
+   "Anna",
+   "8a",
+   "Deutsch",
+   1,
+   "w"
+  ],
+  [
+   "Ben",
+   "8a",
+   "Deutsch",
+   2,
+   "m"
+  ],
+  [
+   "Cem",
+   "8b",
+   "Deutsch",
+   3,
+   "m"
+  ],
+  [
+   "Dora",
+   "8b",
+   "Deutsch",
+   2,
+   "w"
+  ],
+  [
+   "Emil",
+   "8c",
+   "Mathe",
+   5,
+   "m"
+  ],
+  [
+   "Emil",
+   "8c",
+   "Deutsch",
+   4,
+   "m"
+  ]
+ ],
+ "configs": {
+  "rows-sum": {
+   "cfg": {
+    "rows": [
+     "Klasse"
+    ],
+    "values": [
+     [
+      "Note",
+      "sum"
+     ]
+    ]
+   },
+   "top": 3,
+   "left": 1,
+   "cells": [
+    [
+     "Zeilenbeschriftungen",
+     "Summe von Note"
+    ],
+    [
+     "8a",
+     8.0
+    ],
+    [
+     "8b",
+     10.0
+    ],
+    [
+     "8c",
+     9.0
+    ],
+    [
+     "Gesamtergebnis",
+     27.0
+    ]
+   ]
+  },
+  "rows2-avg": {
+   "cfg": {
+    "rows": [
+     "Klasse",
+     "Fach"
+    ],
+    "values": [
+     [
+      "Note",
+      "average"
+     ]
+    ]
+   },
+   "top": 3,
+   "left": 1,
+   "cells": [
+    [
+     "Zeilenbeschriftungen",
+     "Mittelwert von Note"
+    ],
+    [
+     "8a",
+     2.0
+    ],
+    [
+     "Deutsch",
+     1.5
+    ],
+    [
+     "Mathe",
+     2.5
+    ],
+    [
+     "8b",
+     2.5
+    ],
+    [
+     "Deutsch",
+     2.5
+    ],
+    [
+     "Mathe",
+     2.5
+    ],
+    [
+     "8c",
+     4.5
+    ],
+    [
+     "Deutsch",
+     4.0
+    ],
+    [
+     "Mathe",
+     5.0
+    ],
+    [
+     "Gesamtergebnis",
+     2.7
+    ]
+   ]
+  },
+  "rows-cols-count": {
+   "cfg": {
+    "rows": [
+     "Klasse"
+    ],
+    "cols": [
+     "Fach"
+    ],
+    "values": [
+     [
+      "Name",
+      "count"
+     ]
+    ]
+   },
+   "top": 3,
+   "left": 1,
+   "cells": [
+    [
+     "Anzahl von Name",
+     "Spaltenbeschriftungen",
+     null,
+     null
+    ],
+    [
+     "Zeilenbeschriftungen",
+     "Deutsch",
+     "Mathe",
+     "Gesamtergebnis"
+    ],
+    [
+     "8a",
+     2.0,
+     2.0,
+     4.0
+    ],
+    [
+     "8b",
+     2.0,
+     2.0,
+     4.0
+    ],
+    [
+     "8c",
+     1.0,
+     1.0,
+     2.0
+    ],
+    [
+     "Gesamtergebnis",
+     5.0,
+     5.0,
+     10.0
+    ]
+   ]
+  },
+  "two-values": {
+   "cfg": {
+    "rows": [
+     "Fach"
+    ],
+    "values": [
+     [
+      "Note",
+      "sum"
+     ],
+     [
+      "Note",
+      "count"
+     ]
+    ]
+   },
+   "top": 3,
+   "left": 1,
+   "cells": [
+    [
+     "Zeilenbeschriftungen",
+     "Summe von Note",
+     "Anzahl von Note2"
+    ],
+    [
+     "Deutsch",
+     12.0,
+     5.0
+    ],
+    [
+     "Mathe",
+     15.0,
+     5.0
+    ],
+    [
+     "Gesamtergebnis",
+     27.0,
+     10.0
+    ]
+   ]
+  },
+  "filter-max": {
+   "cfg": {
+    "rows": [
+     "Klasse"
+    ],
+    "values": [
+     [
+      "Note",
+      "max"
+     ]
+    ],
+    "filter": [
+     "Geschlecht",
+     "w"
+    ]
+   },
+   "top": 1,
+   "left": 1,
+   "cells": [
+    [
+     "Geschlecht",
+     "w"
+    ],
+    [
+     null,
+     null
+    ],
+    [
+     "Zeilenbeschriftungen",
+     "Max. von Note"
+    ],
+    [
+     "8a",
+     2.0
+    ],
+    [
+     "8b",
+     4.0
+    ],
+    [
+     "Gesamtergebnis",
+     4.0
+    ]
+   ]
+  },
+  "tabular": {
+   "cfg": {
+    "rows": [
+     "Klasse",
+     "Fach"
+    ],
+    "values": [
+     [
+      "Note",
+      "sum"
+     ]
+    ],
+    "layout": 1
+   },
+   "top": 3,
+   "left": 1,
+   "cells": [
+    [
+     "Klasse",
+     "Fach",
+     "Summe von Note"
+    ],
+    [
+     "8a",
+     "Deutsch",
+     3.0
+    ],
+    [
+     null,
+     "Mathe",
+     5.0
+    ],
+    [
+     "8a Ergebnis",
+     null,
+     8.0
+    ],
+    [
+     "8b",
+     "Deutsch",
+     5.0
+    ],
+    [
+     null,
+     "Mathe",
+     5.0
+    ],
+    [
+     "8b Ergebnis",
+     null,
+     10.0
+    ],
+    [
+     "8c",
+     "Deutsch",
+     4.0
+    ],
+    [
+     null,
+     "Mathe",
+     5.0
+    ],
+    [
+     "8c Ergebnis",
+     null,
+     9.0
+    ],
+    [
+     "Gesamtergebnis",
+     null,
+     27.0
+    ]
+   ]
+  },
+  "outline": {
+   "cfg": {
+    "rows": [
+     "Klasse",
+     "Fach"
+    ],
+    "values": [
+     [
+      "Note",
+      "min"
+     ]
+    ],
+    "layout": 2
+   },
+   "top": 3,
+   "left": 1,
+   "cells": [
+    [
+     "Klasse",
+     "Fach",
+     "Min. von Note"
+    ],
+    [
+     "8a",
+     null,
+     1.0
+    ],
+    [
+     null,
+     "Deutsch",
+     1.0
+    ],
+    [
+     null,
+     "Mathe",
+     2.0
+    ],
+    [
+     "8b",
+     null,
+     1.0
+    ],
+    [
+     null,
+     "Deutsch",
+     2.0
+    ],
+    [
+     null,
+     "Mathe",
+     1.0
+    ],
+    [
+     "8c",
+     null,
+     4.0
+    ],
+    [
+     null,
+     "Deutsch",
+     4.0
+    ],
+    [
+     null,
+     "Mathe",
+     5.0
+    ],
+    [
+     "Gesamtergebnis",
+     null,
+     1.0
+    ]
+   ]
+  },
+  "cols-only": {
+   "cfg": {
+    "cols": [
+     "Klasse"
+    ],
+    "values": [
+     [
+      "Note",
+      "sum"
+     ]
+    ]
+   },
+   "top": 3,
+   "left": 1,
+   "cells": [
+    [
+     null,
+     "Spaltenbeschriftungen",
+     null,
+     null,
+     null
+    ],
+    [
+     null,
+     "8a",
+     "8b",
+     "8c",
+     "Gesamtergebnis"
+    ],
+    [
+     "Summe von Note",
+     8.0,
+     10.0,
+     9.0,
+     27.0
+    ]
+   ]
+  }
+ }
+}

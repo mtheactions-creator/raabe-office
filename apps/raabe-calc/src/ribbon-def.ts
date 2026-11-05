@@ -31,7 +31,7 @@ export interface RibbonContext {
     chartColumn: MenuEntry[]; chartLine: MenuEntry[]; chartPie: MenuEntry[]; chartScatter: MenuEntry[]; chartStat: MenuEntry[];
     fitWidth: MenuEntry[]; fitHeight: MenuEntry[];
   };
-  panels: { cellStyles: Popup; tableStyles: Popup };
+  panels: { cellStyles: Popup; tableStyles: Popup; shapes: Popup };
   scale: { value(): string; commit(v: string): void; step(d: 1 | -1): void };
 }
 
@@ -135,7 +135,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
         },
         {
           id: "illustrations", label: "Illustrationen", key: "ZI", icon: "picture",
-          controls: [stack(dd("insert.pictures", "P", "small", [{ cmd: "insert.pictureFile" }, { cmd: "insert.pictureStock" }, { cmd: "insert.pictureOnline" }]), b("insert.shapes", "SH"), b("insert.icons", "Y1"))],
+          controls: [stack(dd("insert.pictures", "P", "small", [{ cmd: "insert.pictureFile" }, { cmd: "insert.pictureStock" }, { cmd: "insert.pictureOnline" }]), panel("insert.shapes", "SH", "small", ctx.panels.shapes), b("insert.icons", "Y1"))],
         },
         {
           id: "charts", label: "Diagramme", key: "ZC", icon: "chart-column",

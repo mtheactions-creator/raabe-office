@@ -198,7 +198,7 @@ export class History {
         s.merges = st.whole.merges.map((m) => ({ ...m }));
         for (const k of SETTINGS) {
           const v = st.whole.settings[k];
-          (s as unknown as Record<string, unknown>)[k] = v === undefined ? undefined : k === "pictures" || k === "threads" ? [...(v as unknown[])] : structuredClone(v);
+          (s as unknown as Record<string, unknown>)[k] = v === undefined ? undefined : k === "pictures" || k === "threads" || k === "shapes" ? [...(v as unknown[])] : structuredClone(v);
         }
       }
       const areas = (st as SheetState & { areas?: Rect[] }).areas;
@@ -267,14 +267,14 @@ function clone<T>(v: T): T {
 }
 
 /** Sheet settings a whole-sheet step restores besides the cells (page setup, filter, rules …). */
-const SETTINGS = ["page", "autoFilter", "conditional", "validations", "protection", "threads", "pictures", "tabColor", "sparklines"] as const;
+const SETTINGS = ["page", "autoFilter", "conditional", "validations", "protection", "threads", "pictures", "shapes", "pivots", "tabColor", "sparklines"] as const;
 type Settings = Partial<Pick<Sheet, (typeof SETTINGS)[number]>>;
 
 function snapshot(s: Sheet) {
   const settings: Settings = {};
   // Pictures (with their image data) and Kommentare are replaced as a whole when they change,
   // so the step keeps the arrays themselves instead of copies.
-  for (const k of SETTINGS) if (s[k] !== undefined) (settings as Record<string, unknown>)[k] = k === "pictures" || k === "threads" ? [...(s[k] as unknown[])] : structuredClone(s[k]);
+  for (const k of SETTINGS) if (s[k] !== undefined) (settings as Record<string, unknown>)[k] = k === "pictures" || k === "threads" || k === "shapes" ? [...(s[k] as unknown[])] : structuredClone(s[k]);
   return {
     cells: new Map([...s.cells].map(([k, c]) => [k, clone(c)])),
     cols: new Map([...s.cols].map(([k, c]) => [k, { ...c }])),

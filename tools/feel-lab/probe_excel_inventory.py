@@ -32,8 +32,10 @@ CLOUD = ("Freigeben", "Teilen", "Copilot", "Daten analysieren", "Add-Ins abrufen
          "Bing", "Personen", "Microsoft Forms", "Office-Add-Ins", "Meine Add-Ins", "Store")
 # Never pressed even in the second pass (they act at once or leave Excel).
 NEVER = ("Speichern", "Drucken", "Schließen", "Beenden", "Konto", "Feedback", "Hilfe", "Kontakt", "Schulung", "Neuigkeiten",
-         "Makro aufzeichnen", "Makros", "Visual Basic", "Ausführen")
-DIALOG_CLASSES = ("#32770", "bosa_sdm_XL9", "NUIDialog", "bosa_sdm_msword")
+         "Makro aufzeichnen", "Makros", "Visual Basic", "Ausführen",
+         # Reading these dialogs through UI Automation made our Excel crash (recorded 2026-11-05).
+         "Suchen...", "Ersetzen...", "Gehe zu...")
+DIALOG_CLASSES = ("#32770", "bosa_sdm_XL9", "NUIDialog", "bosa_sdm_msword", "WebView2Dialog_v2")
 
 
 def cloud(name: str) -> bool:
@@ -375,6 +377,12 @@ def _png() -> str:
 
 def setup(inv: Inventory, ctx: str) -> None:
     x = inv.x
+    # Whatever a tab left open (a dialog, edit mode) goes first.
+    inv.close_all()
+    for _ in range(3):
+        winapi.activate(x.hwnd)
+        winapi.press("esc")
+        time.sleep(0.2)
     ws = x.wb.Worksheets(1)
     for s in list(ws.Shapes):
         s.Delete()
@@ -421,6 +429,7 @@ def main() -> None:
     pick = sys.argv[1:] or CONTEXTS
     data = json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else {"tabs": {}, "dialogs": {}, "contexts": {}}
     inv = Inventory()
+    done = set(data["tabs"])
     try:
         inv.side.reset(Case("inventory", {}, [], "x"))
         base = None
@@ -434,18 +443,43 @@ def main() -> None:
             elif base is None:
                 base = data["contexts"].get("Blatt", {}).get("tabs", [])
             walk = [t for t in tabs if t not in base or ctx == "Blatt"]
-            walk = [t for t in walk if t not in ("Datei", "Hilfe")]
+            # Add-in tabs (Acrobat …) are not Excel's; Hilfe is online.
+            walk = [t for t in walk if t not in ("Datei", "Hilfe", "Acrobat")]
             data["contexts"][ctx] = {"tabs": tabs, "own": [t for t in tabs if t not in base] if ctx != "Blatt" else []}
             print(ctx, "tabs:", tabs, flush=True)
             for t in walk:
+                if f"{ctx}/{t}" in done:
+                    continue
                 print("TAB", t, flush=True)
-                got = inv.walk_tab(t)
-                data["tabs"][f"{ctx}/{t}"] = got
-                inv.second_pass(t, got["controls"])
+                try:
+                    got = inv.walk_tab(t)
+                    data["tabs"][f"{ctx}/{t}"] = got
+                    inv.second_pass(t, got["controls"])
+                except Exception as e:  # noqa: BLE001
+                    # Our Excel may die reading a dialog: note it, start a new one, go on with the next tab.
+                    print("  tab failed:", str(e)[:100], flush=True)
+                    data["tabs"].setdefault(f"{ctx}/{t}", {"controls": [], "error": str(e)[:100]})
+                    try:
+                        inv.side.close()
+                    except Exception:  # noqa: BLE001
+                        pass
+                    inv = Inventory()
+                    inv.side.reset(Case("inventory", {}, [], "x"))
+                    setup(inv, ctx)
                 data["dialogs"].update(inv.dialogs)
                 OUT.write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
-                # Each tab starts from the same situation again.
-                setup(inv, ctx)
+                # Each tab starts from the same situation again (a new Excel when this one is stuck).
+                try:
+                    setup(inv, ctx)
+                except Exception as e:  # noqa: BLE001
+                    print("  setup failed:", str(e)[:100], flush=True)
+                    try:
+                        inv.side.close()
+                    except Exception:  # noqa: BLE001
+                        pass
+                    inv = Inventory()
+                    inv.side.reset(Case("inventory", {}, [], "x"))
+                    setup(inv, ctx)
                 time.sleep(0.6)
     finally:
         inv.close_all()

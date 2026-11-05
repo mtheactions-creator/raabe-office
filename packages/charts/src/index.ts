@@ -8,3 +8,4 @@ export * from "./series";
 export * from "./render";
 export * from "./layouts";
 export * from "./colors";
+export * from "./geometry";

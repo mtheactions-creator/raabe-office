@@ -2,6 +2,7 @@
 // sheet's chart models and written back. The drawing and every chart part stay as Excel wrote
 // them while the charts are unchanged; pictures and shapes in the drawing are always kept.
 
+import { shapeFromXml, shapeKey, shapeToXml } from "./shapes";
 import { strFromU8 } from "fflate";
 import type { ChartModel } from "@raabe/charts";
 import type { Sheet } from "@raabe/sheet-engine";
@@ -103,11 +104,20 @@ export function writeCharts(pw: PackageWriter, sheet: Sheet, sheetPart: string, 
         slots.push({ xml: moved ? movedPicture(p) : ax });
         continue;
       }
+      // Shapes: the model's version (the same XML while unchanged), gone when deleted.
+      if (/^<xdr:twoCellAnchor\b/.test(ax) && /<xdr:(?:sp|cxnSp)\b/.test(ax) && !/<xdr:grpSp\b/.test(ax)) {
+        const s = (sheet.shapes ?? []).find((q) => q.raw === ax);
+        if (!s) { if (!readRaws.has(ax)) slots.push({ xml: ax }); continue; }
+        const sid = Number(/<xdr:cNvPr\b[^>]*\bid="(\d+)"/.exec(ax)?.[1] ?? 2);
+        slots.push({ xml: shapeToXml(s, sid, s.size ?? { w: 120, h: 80 }) });
+        continue;
+      }
       slots.push({ xml: ax, chart: /<(?:c|cx):chart\b/.test(ax) ? raw?.charts.find((c) => c.anchor === ax) : undefined });
     }
   }
   const fresh = pics.filter((p) => !p.raw || !old?.includes(p.raw));
-  const others = [...slots.filter((x) => !x.chart), ...fresh];
+  const freshShapes = (sheet.shapes ?? []).filter((s) => !s.raw || !old?.includes(s.raw));
+  const others = [...slots.filter((x) => !x.chart), ...fresh, ...freshShapes];
   if (!charts.length && !others.length) {
     if (drel) sheetRels.list.splice(sheetRels.list.indexOf(drel), 1), (sheetRels.changed = true);
     return null;
@@ -147,6 +157,8 @@ export function writeCharts(pw: PackageWriter, sheet: Sheet, sheetPart: string, 
     const rId = pw.link(part, IMAGE_REL_TYPE, media);
     added.push(newPicture(p, id++, rId));
   }
+  // New shapes and text boxes.
+  for (const s of freshShapes) added.push(shapeToXml({ ...s, raw: undefined }, id++, s.size ?? { w: 120, h: 80 }));
   const all = [...slots.map((x) => (x.chart ? placed.get(x.chart) ?? "" : x.xml)), ...added].join("");
   // Relationships of removed charts.
   for (const r of [...drels.list]) {
@@ -179,7 +191,10 @@ function point(ax: string, tag: string): { col: number; row: number; x: number; 
 
 /** What decides whether the drawing's pictures changed (their places, names and identity, not the image data). */
 export function picturesKey(sheet: Sheet): string {
-  return canon((sheet.pictures ?? []).map((p) => ({ from: p.from, to: p.to ?? null, size: p.size ?? null, name: p.name ?? null, raw: p.raw ?? null })));
+  return canon([
+    ...(sheet.pictures ?? []).map((p) => ({ from: p.from, to: p.to ?? null, size: p.size ?? null, name: p.name ?? null, raw: p.raw ?? null })),
+    ...(sheet.shapes ?? []).map((s) => ({ shape: shapeKey(s), raw: s.raw ?? null })),
+  ]);
 }
 
 const IMAGE_REL_TYPE = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image";
@@ -213,8 +228,16 @@ export function readPictures(files: Record<string, Uint8Array>, sheet: Sheet, sh
   const rels = new Rels(files[relsPath(part)] ? strFromU8(files[relsPath(part)]) : null);
   const r = root(xml);
   const out: NonNullable<Sheet["pictures"]> = [];
+  const shapes: NonNullable<Sheet["shapes"]> = [];
   for (const a of children(xml, r.open, r.close)) {
     const ax = outer(xml, a);
+    const sh = shapeFromXml(ax);
+    if (sh) {
+      const ext = /<a:ext cx="(\d+)" cy="(\d+)"/.exec(ax);
+      if (ext) { sh.size = { w: Number(ext[1]) / EMU_PER_PX, h: Number(ext[2]) / EMU_PER_PX }; sh.rawKey = shapeKey(sh); }
+      shapes.push(sh);
+      continue;
+    }
     if (!/<xdr:pic\b/.test(ax)) continue;
     const from = point(ax, "from");
     const embed = /<a:blip\b[^>]*r:embed="([^"]*)"/.exec(ax)?.[1];
@@ -233,5 +256,6 @@ export function readPictures(files: Record<string, Uint8Array>, sheet: Sheet, sh
     out.push({ from, to: a.name === "xdr:twoCellAnchor" ? to : undefined, size: a.name !== "xdr:twoCellAnchor" && extEl ? { w: Number(extEl[1]) / EMU_PER_PX, h: Number(extEl[2]) / EMU_PER_PX } : undefined, src, name, raw: ax });
   }
   if (out.length) sheet.pictures = out;
+  if (shapes.length) sheet.shapes = shapes;
   return picturesKey(sheet);
 }

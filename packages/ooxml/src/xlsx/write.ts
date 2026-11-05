@@ -4,6 +4,7 @@
 // in schema order the way Excel writes it. Shared formulas are written per cell, strings into
 // a fresh shared-string table; calcChain.xml is dropped (Excel rebuilds it).
 
+import { writePivots, type PivotCacheRef } from "./pivots";
 import { strFromU8, strToU8, zipSync } from "fflate";
 import {
   CellError, cellName, fromXlsxFormula, keyCell, rangeName, toXlsxFormula,
@@ -84,6 +85,23 @@ export function writePackage(wb: Workbook, options: XlsxWriteOptions = {}): Reco
     return id;
   };
 
+  // PivotTables made in RaabeCalc: their caches get ids after the file's own.
+  const caches: PivotCacheRef[] = [];
+  let cacheId = Math.max(0, ...[...new TextDecoder().decode(raw.files[raw.wbPath] ?? new Uint8Array()).matchAll(/cacheId="(\d+)"/g)].map((m) => Number(m[1]))) + 1;
+  const pivotData = (pt: import("@raabe/sheet-engine").PivotTable) => {
+    const src = wb.sheets.find((x) => x.name === pt.source.sheet);
+    if (!src) return [];
+    const rows: import("@raabe/sheet-engine").PivotValue[][] = [];
+    for (let r = pt.source.r0; r <= pt.source.r1; r++) {
+      const row: import("@raabe/sheet-engine").PivotValue[] = [];
+      for (let c = pt.source.c0; c <= pt.source.c1; c++) {
+        const v = src.value(r, c);
+        row.push(typeof v === "number" || typeof v === "string" || typeof v === "boolean" ? v : null);
+      }
+      rows.push(row);
+    }
+    return rows;
+  };
   wb.sheets.forEach((sheet, i) => {
     const sr = sheet.raw as SheetRaw | undefined;
     const own = !!sr && !used.has(sr.part) && !!raw.files[sr.part];
@@ -93,6 +111,7 @@ export function writePackage(wb: Workbook, options: XlsxWriteOptions = {}): Reco
     w.personOf = personOf;
     pw.setPart(part, w.xml(), CT.worksheet);
     if (w.formulaWithoutValue) needsCalc = true;
+    caches.push(...writePivots(pw, sheet, part, raw.wbPath, pivotData, () => cacheId++));
     let rid = own ? wbRels.list.find((r) => isRel(r.type, RT.worksheet) && resolveTarget(raw.wbPath, r.target) === part)?.id : undefined;
     if (!rid) rid = pw.link(raw.wbPath, RT.worksheet, part);
     const sheetId = own ? sr!.sheetId : ++maxId;
@@ -124,7 +143,7 @@ export function writePackage(wb: Workbook, options: XlsxWriteOptions = {}): Reco
   const stylesXml = sw.xml();
   if (stylesRel && stylesXml !== raw.styles.xml) pw.setPart(resolveTarget(raw.wbPath, stylesRel.target), stylesXml);
 
-  pw.setPart(raw.wbPath, workbookXml(wb, raw, entries, needsCalc));
+  pw.setPart(raw.wbPath, workbookXml(wb, raw, entries, needsCalc, caches));
   props(pw, wb, raw, options);
 
   const files = pw.finish();
@@ -534,7 +553,7 @@ function viewsXml(v: View, old: string | undefined, raw: SheetRaw | undefined): 
   return `${head}${body ? `${tag}${body}</sheetView>` : tag.replace(/>$/, "/>")}${others}</sheetViews>`;
 }
 
-function workbookXml(wb: Workbook, raw: BookRaw, entries: { name: string; sheetId: number; state?: string; rid: string; attrs: Record<string, string> }[], needsCalc: boolean): string {
+function workbookXml(wb: Workbook, raw: BookRaw, entries: { name: string; sheetId: number; state?: string; rid: string; attrs: Record<string, string> }[], needsCalc: boolean, caches: PivotCacheRef[] = []): string {
   const sp: Split = { ...raw.wb, parts: raw.wb.parts.map((p) => ({ ...p })) };
   const get = (n: string) => sp.parts.find((p) => p.name === n)?.xml;
   const put = (n: string, xml: string | null) => place(sp, n, xml, BOOK_ORDER);
@@ -589,6 +608,10 @@ function workbookXml(wb: Workbook, raw: BookRaw, entries: { name: string; sheetI
     put("definedNames", names.length ? `<definedNames>${names.join("")}</definedNames>` : null);
   }
   if (needsCalc) put("calcPr", setAttrs(get("calcPr") ?? '<calcPr calcId="191029"/>', { fullCalcOnLoad: "1" }));
+  if (caches.length) {
+    const old = get("pivotCaches")?.replace(/^<pivotCaches>|<\/pivotCaches>$/g, "") ?? "";
+    put("pivotCaches", `<pivotCaches>${old}${caches.map((c) => `<pivotCache cacheId="${c.id}" r:id="${c.rid}"/>`).join("")}</pivotCaches>`);
+  }
   if ((wb.calcMode ?? "") !== raw.snap.calcMode) put("calcPr", setAttrs(get("calcPr") ?? '<calcPr calcId="191029"/>', { calcMode: wb.calcMode ?? null }));
   return joinSplit(sp);
 }

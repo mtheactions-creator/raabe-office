@@ -71,7 +71,8 @@ Since 2026-11-05 (D-066): everything Excel offers except the cloud, measured aga
 taken from Excel (`docs/EXCEL-INVENTORY.md`), generated behaviour cases and screenshots. First run:
 pointing in formulas (168 generated cases), Excel's checks on Enter, circular references, the chart
 Format pane with axis, series, label, trendline and error-bar options (44/44 settings read back by
-Excel, 32/32 of Excel's read by RaabeCalc), Schnelllayout, Farben ändern, Daten auswählen.
+Excel, 32/32 of Excel's read by RaabeCalc), Schnelllayout, Farben ändern, Daten auswählen;
+Formen and Textfelder (8/8 both ways with Excel), PivotTables (8/8 computed, 8/8 both ways in the file).
 
 ## Step 8: RaabePresent (proposal, not yet agreed)
 

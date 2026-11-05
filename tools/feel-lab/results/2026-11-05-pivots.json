@@ -1,0 +1,120 @@
+{
+ "raabe->excel": [
+  {
+   "config": "rows-sum",
+   "rows": [
+    "Klasse"
+   ],
+   "data": [
+    "Summe von Note"
+   ],
+   "ok": true
+  },
+  {
+   "config": "rows2-avg",
+   "rows": [
+    "Klasse",
+    "Fach"
+   ],
+   "data": [
+    "Mittelwert von Note"
+   ],
+   "ok": true
+  },
+  {
+   "config": "rows-cols-count",
+   "rows": [
+    "Klasse"
+   ],
+   "data": [
+    "Anzahl von Name"
+   ],
+   "ok": true
+  },
+  {
+   "config": "two-values",
+   "rows": [
+    "Fach"
+   ],
+   "data": [
+    "Summe von Note",
+    "Anzahl von Note2"
+   ],
+   "ok": true
+  },
+  {
+   "config": "filter-max",
+   "rows": [
+    "Klasse"
+   ],
+   "data": [
+    "Max. von Note"
+   ],
+   "ok": true
+  },
+  {
+   "config": "tabular",
+   "rows": [
+    "Klasse",
+    "Fach"
+   ],
+   "data": [
+    "Summe von Note"
+   ],
+   "ok": true
+  },
+  {
+   "config": "outline",
+   "rows": [
+    "Klasse",
+    "Fach"
+   ],
+   "data": [
+    "Min. von Note"
+   ],
+   "ok": true
+  },
+  {
+   "config": "cols-only",
+   "rows": [],
+   "data": [
+    "Summe von Note"
+   ],
+   "ok": true
+  }
+ ],
+ "excel->raabe": [
+  {
+   "config": "rows-sum",
+   "ok": true
+  },
+  {
+   "config": "rows2-avg",
+   "ok": true
+  },
+  {
+   "config": "rows-cols-count",
+   "ok": true
+  },
+  {
+   "config": "two-values",
+   "ok": true
+  },
+  {
+   "config": "filter-max",
+   "ok": true
+  },
+  {
+   "config": "tabular",
+   "ok": true
+  },
+  {
+   "config": "outline",
+   "ok": true
+  },
+  {
+   "config": "cols-only",
+   "ok": true
+  }
+ ]
+}

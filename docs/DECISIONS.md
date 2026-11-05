@@ -1542,4 +1542,24 @@ that the catalogue only measured what we had thought of. Decided with the owner:
   `probe_excel_chartcolors.py`, colours within 3/255 of Excel's), Zeile/Spalte wechseln, Daten
   auswählen (Datenquelle auswählen with series list), Diagramm verschieben (to another sheet; chart
   sheets not yet).
+- **Formen and Textfelder** (Einfügen > Formen, 38 presets in Excel's groups; Textfeld): drawn with a
+  drag (Umschalt keeps the proportions, a click alone gives Excel's default size), selected with
+  eight handles and a rotation handle, moved, sized, rotated (Umschalt in 15° steps), Pfeiltasten
+  move, Entf deletes, typing goes into the shape. The Formformat tab (Formen einfügen, Fülleffekt,
+  Formkontur with Stärke / Striche / Pfeile, Anordnen, Größe) and the pane "Form formatieren".
+  Saved as Excel 365 saves a new shape (xdr:sp / xdr:cxnSp, the theme's shape style) and written back
+  verbatim while unchanged. `check_calc_shapes.py`: 8/8 RaabeCalc→Excel (kind, place, size, fill, line
+  with dash and arrow, text, bold and size, rotation, flip) and 8/8 Excel→RaabeCalc.
+- **PivotTable** (Einfügen > PivotTable, `probe_excel_pivot.py` with 8 configurations): the dialog,
+  the field list pane (fields dragged into Filter / Spalten / Zeilen / Werte, a chip's menu),
+  Wertfeldeinstellungen (all eleven functions, Excel's captions "Summe von Note", a second use of a
+  field numbered "…2"), the Kompakt-, Gliederungs- and Tabellenformat, Teilergebnisse,
+  Gesamtergebnisse, filters above the table, Aktualisieren (Alt+F5, Strg+Alt+F5 for all), the
+  PivotTable-Analyse and Entwurf tabs; computed as Excel computes it (`pivot.test.ts` 8/8 against
+  Excel's cells). In the file Excel keeps the layout on each field (compact="0" / outline="0"), the
+  items in sorted order with the filter's item as an index into that order, and an x14 extension
+  that hides the "Werte" row of several value fields; without it Excel adds that row (all recorded
+  from Excel's own file). The cache is written without records and refreshed on opening, as other
+  writers do. `check_pivots.py`: 8/8 RaabeCalc→Excel (Excel's refreshed report equals ours cell by
+  cell) and 8/8 Excel→RaabeCalc (fields, values, filters, layout).
 

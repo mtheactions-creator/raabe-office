@@ -1,0 +1,70 @@
+{
+ "raabe->excel": [
+  {
+   "case": "rect-red",
+   "ok": true
+  },
+  {
+   "case": "ellipse-text",
+   "ok": true
+  },
+  {
+   "case": "arrow-rot",
+   "ok": true
+  },
+  {
+   "case": "roundrect-dash",
+   "ok": true
+  },
+  {
+   "case": "triangle-flip",
+   "ok": true
+  },
+  {
+   "case": "star-nofill",
+   "ok": true
+  },
+  {
+   "case": "line-arrow",
+   "ok": true
+  },
+  {
+   "case": "textbox",
+   "ok": true
+  }
+ ],
+ "excel->raabe": [
+  {
+   "case": "rect-red",
+   "ok": true
+  },
+  {
+   "case": "ellipse-text",
+   "ok": true
+  },
+  {
+   "case": "arrow-rot",
+   "ok": true
+  },
+  {
+   "case": "roundrect-dash",
+   "ok": true
+  },
+  {
+   "case": "triangle-flip",
+   "ok": true
+  },
+  {
+   "case": "star-nofill",
+   "ok": true
+  },
+  {
+   "case": "line-arrow",
+   "ok": true
+  },
+  {
+   "case": "textbox",
+   "ok": true
+  }
+ ]
+}

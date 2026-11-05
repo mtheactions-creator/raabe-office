@@ -41,6 +41,8 @@ import { regroup } from "./grid/outline";
 import { seek } from "./goalseek";
 import { spellingFeature } from "./spelling";
 import { picturesFeature } from "./pictures";
+import { shapesFeature } from "./shapes";
+import { pivotsFeature } from "./pivots";
 import { commentsFeature } from "./comments";
 import { iconRule } from "./dialogs";
 import appIconUrl from "../../../branding/raabe-calc-small.svg?url";
@@ -97,6 +99,8 @@ export class CalcApp {
   private evaluator = evaluateFeature(this);
   private spelling = spellingFeature(this);
   private pictures = picturesFeature(this);
+  readonly shapes = shapesFeature(this);
+  readonly pivots = pivotsFeature(this);
   private comments = commentsFeature(this, () => this.settings.userName);
   private errorCheck = errorCheckFeature(this, () => void this.evaluator.open());
   private quick = quickFeature(this, () => this.quickTiles());
@@ -687,6 +691,7 @@ export class CalcApp {
       workbook: () => this.wb,
       commit: (targets, text) => {
         if (!this.protection.guardRects([targets])) return;
+        if (!this.pivots.guard(targets)) return;
         this.change("Eingabe", () => {
           A.enter(this.ctx, this.sheet, targets, text);
           // Formulas are worked out first, so the column can widen for their result (an error too).
@@ -743,6 +748,7 @@ export class CalcApp {
       autofitRows: (rows) => !this.protection.enabled("cells.autofitRows") ? undefined : this.change("Zeilenhöhe", () => this.autoRowHeights({ r0: Math.min(...rows), c0: 0, r1: Math.max(...rows), c1: MAX_COLS - 1 }, true)),
       selectionChanged: () => {
         this.charts.deselect();
+        this.pivotTabs();
         this.validation.afterSelect();
         if (this.painter) this.applyPainter();
         this.scheduleChrome();
@@ -817,7 +823,7 @@ export class CalcApp {
       circles: () => this.circles.get(this.sheet) ?? [],
       canEdit: (row, col) => this.protection.canEdit(row, col),
       validate: (row, col, text) => (this.validation.quickCheck(row, col, text) ? "ok" : this.validation.check(row, col, text)),
-      painted: () => { this.pictures.place(); this.validation.place(); this.quick.place(); },
+      painted: () => { this.pictures.place(); this.shapes.place(); this.validation.place(); this.quick.place(); },
       nextUnlocked: (row, col, back) => this.protection.nextUnlocked(row, col, back),
     };
   }
@@ -1449,6 +1455,7 @@ export class CalcApp {
         c.conditional = s.conditional ? structuredClone(s.conditional) : undefined;
         c.threads = s.threads?.map((t) => ({ ...t, id: newId(), personId: undefined, replies: t.replies.map((r) => ({ ...r, id: newId(), personId: undefined })) }));
         c.pictures = s.pictures?.map((p) => ({ ...p, raw: undefined }));
+        c.shapes = s.shapes?.map((x) => ({ ...x, raw: undefined, rawKey: undefined }));
         c.tabColor = s.tabColor;
         c.defaultColWidth = s.defaultColWidth;
         c.defaultRowHeight = s.defaultRowHeight;
@@ -1877,6 +1884,23 @@ export class CalcApp {
     run("chart.addElement", () => this.charts.elements(), () => !!this.charts.selected());
     run("chart.changeType", () => {}, () => !!this.charts.selected());
     run("chart.element", () => {}, () => !!this.charts.selected());
+    run("insert.pivot", () => void this.pivots.create(), notEditing);
+    run("pivot.refresh", () => this.pivots.refresh(), () => !!this.pivots.current());
+    run("data.refreshAll", () => this.pivots.refresh(true), () => this.wb.sheets.some((s) => !!s.pivots?.length));
+    run("pivot.fieldList", () => this.pivots.fieldList(), () => !!this.pivots.current());
+    run("pivot.delete", () => this.pivots.remove(), () => !!this.pivots.current());
+    run("pivot.subtotals", () => {}, () => !!this.pivots.current());
+    run("pivot.grandTotals", () => {}, () => !!this.pivots.current());
+    run("pivot.layout", () => {}, () => !!this.pivots.current());
+    run("insert.shapes", () => {}, notEditing);
+    run("insert.textBox", () => this.shapes.startDraw("rect", true), notEditing);
+    run("shape.insert", () => {}, () => !!this.shapes.selected());
+    run("shape.fill", () => {}, () => !!this.shapes.selected());
+    run("shape.outline", () => {}, () => !!this.shapes.selected());
+    run("shape.forward", () => this.shapes.arrange.forward(), () => !!this.shapes.selected());
+    run("shape.backward", () => this.shapes.arrange.backward(), () => !!this.shapes.selected());
+    run("shape.rotate", () => {}, () => !!this.shapes.selected());
+    run("shape.format", () => this.shapes.openPane(), () => !!this.shapes.selected());
     run("chart.switchRowCol", () => this.charts.switchRowCol(), () => !!this.charts.selected());
     run("chart.quickLayout", () => {}, () => this.charts.layoutCount() > 0);
     run("chart.colors", () => {}, () => !!this.charts.selected());
@@ -1991,8 +2015,84 @@ export class CalcApp {
   }
 
   /** Diagrammentwurf appears while a chart is selected, as Excel's contextual tab does. */
+  /** PivotTable-Analyse and Entwurf appear while the active cell is in a PivotTable (Excel). */
+  private pivotWas = false;
+  private pivotTabs(): void {
+    const on = !!this.pivots.current();
+    if (on === this.pivotWas || this.charts.selected() || this.shapes.selected()) return;
+    this.pivotWas = on;
+    this.ribbon.setContextual(on ? [this.pivotAnalyzeTab(), this.pivotDesignTab()] : []);
+  }
+
+  private pivotAnalyzeDef: import("@raabe/shell").Tab | null = null;
+  private pivotAnalyzeTab(): import("@raabe/shell").Tab {
+    const b = (cmd: string, key: string, size: "large" | "small" = "large"): import("@raabe/shell").Control => ({ type: "button", cmd, key, size });
+    return this.pivotAnalyzeDef ??= {
+      id: "pivotAnalyze", label: "PivotTable-Analyse", key: "JT", contextual: true, shrink: [],
+      groups: [
+        { id: "data", label: "Daten", key: "ZD", icon: "reapply", controls: [b("pivot.refresh", "F")] },
+        { id: "actions", label: "Aktionen", key: "ZA", icon: "delete", controls: [b("pivot.delete", "C")] },
+        { id: "show", label: "Anzeigen", key: "ZS", icon: "table", controls: [b("pivot.fieldList", "L")] },
+      ],
+    };
+  }
+
+  private pivotDesignDef: import("@raabe/shell").Tab | null = null;
+  private pivotDesignTab(): import("@raabe/shell").Tab {
+    return this.pivotDesignDef ??= {
+      id: "pivotDesign", label: "Entwurf", key: "JY", contextual: true, shrink: [],
+      groups: [{ id: "layout", label: "Layout", key: "ZL", icon: "table", controls: [
+        { type: "dropdown", cmd: "pivot.subtotals", key: "T", size: "large", menu: [
+          { label: "Teilergebnisse nicht anzeigen", run: () => this.pivots.setSubtotals("none") },
+          { label: "Alle Teilergebnisse unten in der Gruppe anzeigen", run: () => this.pivots.setSubtotals("bottom") },
+          { label: "Alle Teilergebnisse oben in der Gruppe anzeigen", run: () => this.pivots.setSubtotals("top") },
+        ] },
+        { type: "dropdown", cmd: "pivot.grandTotals", key: "G", size: "large", menu: [
+          { label: "Für Zeilen und Spalten deaktiviert", run: () => this.pivots.setGrand(false, false) },
+          { label: "Für Zeilen und Spalten aktiviert", run: () => this.pivots.setGrand(true, true) },
+          { label: "Nur für Zeilen aktiviert", run: () => this.pivots.setGrand(false, true) },
+          { label: "Nur für Spalten aktiviert", run: () => this.pivots.setGrand(true, false) },
+        ] },
+        { type: "dropdown", cmd: "pivot.layout", key: "R", size: "large", menu: [
+          { label: "Im Kurzformat anzeigen", run: () => this.pivots.setLayout("compact") },
+          { label: "Im Gliederungsformat anzeigen", run: () => this.pivots.setLayout("outline") },
+          { label: "Im Tabellenformat anzeigen", run: () => this.pivots.setLayout("tabular") },
+        ] },
+      ] }],
+    };
+  }
+
+  /** Formformat appears while a shape is selected (Excel's contextual tab). */
+  shapeSelectionChanged(): void {
+    if (this.charts.selected()) return;
+    const on = !!this.shapes.selected();
+    this.ribbon.setContextual(on ? [this.shapeTab()] : []);
+    if (on) this.ribbon.select("shapeFormat");
+    this.updateChrome();
+  }
+
+  private shapeTabDef: import("@raabe/shell").Tab | null = null;
+  private shapeTab(): import("@raabe/shell").Tab {
+    const b = (cmd: string, key: string, size: "large" | "small" = "small"): import("@raabe/shell").Control => ({ type: "button", cmd, key, size });
+    return this.shapeTabDef ??= {
+      id: "shapeFormat", label: "Formformat", key: "JD", contextual: true, shrink: [],
+      groups: [
+        { id: "insert", label: "Formen einfügen", key: "ZE", icon: "shapes", controls: [{ type: "dropdown", cmd: "shape.insert", key: "E", size: "large", menu: [], popup: (close) => this.shapes.gallery(close) }] },
+        { id: "styles", label: "Formenarten", key: "ZF", icon: "shape-fill", controls: [{ type: "stack", items: [
+          { type: "color", cmd: "shape.fill", key: "SF", palette: "font", current: () => this.shapes.selected()?.fill?.color ?? "#4472C4", pick: (c) => this.shapes.setFill(c), showLabel: true },
+          { type: "color", cmd: "shape.outline", key: "SO", palette: "font", current: () => this.shapes.selected()?.line?.color ?? "#2F528F", pick: (c) => this.shapes.setLine(c), showLabel: true },
+        ] }], launcher: { cmd: "shape.format" } },
+        { id: "arrange", label: "Anordnen", key: "ZA", icon: "bring-forward", controls: [{ type: "stack", items: [b("shape.forward", "AF"), b("shape.backward", "AE"),
+          { type: "dropdown", cmd: "shape.rotate", key: "AY", size: "small", menu: this.shapes.rotateMenu }] }] },
+      ],
+    };
+  }
+
   chartSelectionChanged(): void {
     const on = !!this.charts.selected();
+    if (on) this.shapes.deselect();
+    // No chart: a selected shape keeps its Formformat tab.
+    if (!on && this.shapes.selected()) { this.shapeSelectionChanged(); return; }
     this.ribbon.setContextual(on ? [this.chartTab(), this.chartFormatTab()] : []);
     if (on) this.ribbon.select("chartDesign");
     this.updateChrome();
@@ -2155,6 +2255,8 @@ export class CalcApp {
     if (k === "F12" && !ctrl) return run("file.saveAs");
     if (k === "F7" && !ctrl && !shift && !e.altKey) return run("review.spelling");
     if (k === "F4" && !e.ctrlKey && !e.altKey && !shift) return run("edit.repeat");
+    if (k === "F5" && e.altKey && ctrl) return run("data.refreshAll");
+    if (k === "F5" && e.altKey) return run("pivot.refresh");
     if (k === "F5" && !ctrl) return run("edit.goto");
     if (k === "F9") return run("formulas.calcNow");
     if (k === "F11" && shift) return run("cells.insertSheet");
@@ -2396,7 +2498,7 @@ export class CalcApp {
         fitWidth: ["Automatisch", "1 Seite", "2 Seiten", "3 Seiten"].map((l, i) => ({ label: l, run: () => this.print.setFit("width", i) })),
         fitHeight: ["Automatisch", "1 Seite", "2 Seiten", "3 Seiten"].map((l, i) => ({ label: l, run: () => this.print.setFit("height", i) })),
       },
-      panels: { cellStyles: (close) => this.dlg.cellStylesPanel(close), tableStyles: (close) => this.dlg.tableStylesPanel(close) },
+      panels: { cellStyles: (close) => this.dlg.cellStylesPanel(close), tableStyles: (close) => this.dlg.tableStylesPanel(close), shapes: (close) => this.shapes.gallery(close) },
       scale: { value: () => `${this.print.scale()} %`, commit: (v) => this.print.setScale(Number(v.replace(/[^\d]/g, "")) || 100), step: (d) => this.print.setScale(this.print.scale() + d * 5) },
     };
   }

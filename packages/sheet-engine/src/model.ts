@@ -256,6 +256,37 @@ export interface SparklineGroup {
   items: { f: string; row: number; col: number }[];
 }
 
+/** A shape of the sheet's drawing (Einfügen > Formen, Textfeld; D-066). Unset fill and line: the
+ *  theme's shape style (Akzent 1 with a darker outline; text boxes white with a grey outline). */
+export interface SheetShape {
+  from: { col: number; row: number; x: number; y: number };
+  to: { col: number; row: number; x: number; y: number };
+  /** DrawingML preset geometry ("rect", "ellipse", "rightArrow", "line" …). */
+  geom: string;
+  /** Lines and arrows (xdr:cxnSp). */
+  connector?: boolean;
+  /** Its size in px at 100 % (the file's extent; the anchors decide where it is). */
+  size?: { w: number; h: number };
+  fill?: { type: "none" | "solid"; color?: string; transparency?: number };
+  line?: { type: "none" | "solid"; color?: string; width?: number; dash?: string; head?: string; tail?: string };
+  /** The text, lines separated by "
+". */
+  text?: string;
+  font?: { size?: number; bold?: boolean; italic?: boolean; underline?: boolean; color?: string };
+  align?: "l" | "ctr" | "r";
+  anchor?: "t" | "ctr" | "b";
+  /** Drehung in degrees, Spiegeln. */
+  rot?: number;
+  flipH?: boolean;
+  flipV?: boolean;
+  /** Textfeld (white with a grey outline, text at the top left). */
+  textBox?: boolean;
+  name?: string;
+  /** The anchor's XML as read and what it held then: written back as it is while unchanged. */
+  raw?: string;
+  rawKey?: string;
+}
+
 /** A picture in the sheet's drawing, shown as the file places it (the file keeps it as it was). */
 export interface SheetPicture {
   /** Top-left: the cell and the offset inside it in px at 100 %. */
@@ -360,6 +391,10 @@ export class Sheet {
   threads?: CommentThread[];
   /** Pictures of the drawing (read only: shown, kept in the file as they are). */
   pictures?: SheetPicture[];
+  /** PivotTables whose report is on this sheet. */
+  pivots?: import("./pivot").PivotTable[];
+  /** Shapes and text boxes of the drawing. */
+  shapes?: SheetShape[];
   /** Blatt schützen: the attributes of <sheetProtection> as the file has them (sheet="1" when on). */
   protection?: Record<string, string>;
   /** Bedingte Formatierung, in the file's order (priority decides). */
