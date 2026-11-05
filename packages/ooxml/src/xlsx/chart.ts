@@ -6,8 +6,13 @@
 // A chart read from a file keeps its XML in `raw`; while the modelled parts stay unchanged it is
 // written back verbatim (D-024), with Excel recalculating the caches from the cells on opening.
 
-import { type CellAnchor, type ChartKind, type ChartModel, type ChartSeries, type LegendPos } from "@raabe/charts";
+import { OFFICE_ACCENTS, isPie, paletteColor, type CellAnchor, type ChartKind, type ChartModel, type ChartSeries, type LegendPos } from "@raabe/charts";
 import { attrs, child, children, esc, escText, root, text, unesc, type El } from "./xml";
+import {
+  crossesXml, defRPrAttrs, errBarsXml, labelFlags, lineXml, markerXml, readAxis, readFormat, readShape, readText, scalingXml,
+  spPrXml, tickXml, trendlineXml, type Reader,
+} from "./chartfmt";
+import type { AxisOptions, ChartFormat, DataLabelOptions, ElementFormat, ErrorBars, MarkerSymbol, TextFormat, Trendline } from "@raabe/charts";
 
 export const CHART_CONTENT_TYPE = "application/vnd.openxmlformats-officedocument.drawingml.chart+xml";
 export const CHART_REL_TYPE = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/chart";
@@ -35,9 +40,13 @@ const GREY = '<a:solidFill><a:schemeClr val="tx1"><a:lumMod val="65000"/><a:lumO
 const LINE_GREY = '<a:solidFill><a:schemeClr val="tx1"><a:lumMod val="15000"/><a:lumOff val="85000"/></a:schemeClr></a:solidFill>';
 const NO_SHAPE = "<c:spPr><a:noFill/><a:ln><a:noFill/></a:ln><a:effectLst/></c:spPr>";
 
-function txPr(size: number, rot = "-60000000", extra = ""): string {
-  return `<c:txPr><a:bodyPr rot="${rot}" spcFirstLastPara="1" vertOverflow="ellipsis" vert="horz" wrap="square" anchor="ctr" anchorCtr="1"/><a:lstStyle/><a:p><a:pPr><a:defRPr sz="${size}" b="0" i="0" u="none" strike="noStrike" kern="1200"${extra} baseline="0">${GREY}<a:latin typeface="+mn-lt"/><a:ea typeface="+mn-ea"/><a:cs typeface="+mn-cs"/></a:defRPr></a:pPr><a:endParaRPr lang="de-DE"/></a:p></c:txPr>`;
+function txPr(size: number, rot = "-60000000", extra = "", t?: TextFormat): string {
+  const r = defRPrAttrs(t, size);
+  return `<c:txPr><a:bodyPr rot="${rot}" spcFirstLastPara="1" vertOverflow="ellipsis" vert="horz" wrap="square" anchor="ctr" anchorCtr="1"/><a:lstStyle/><a:p><a:pPr><a:defRPr${r.attrs} u="none" strike="noStrike" kern="1200"${extra} baseline="0">${r.fill ?? GREY}<a:latin typeface="+mn-lt"/><a:ea typeface="+mn-ea"/><a:cs typeface="+mn-cs"/></a:defRPr></a:pPr><a:endParaRPr lang="de-DE"/></a:p></c:txPr>`;
 }
+
+/** The automatic look of an element without its own shape (no fill, no line). */
+const NONE_FILL = "<a:noFill/>", NONE_LINE = "<a:ln><a:noFill/></a:ln>";
 
 function rich(textValue: string, size: number, rot = "0"): string {
   const runs = textValue.split("\n").map((line) => `<a:p><a:pPr><a:defRPr sz="${size}" b="0" i="0" u="none" strike="noStrike" kern="1200" baseline="0">${GREY}<a:latin typeface="+mn-lt"/><a:ea typeface="+mn-ea"/><a:cs typeface="+mn-cs"/></a:defRPr></a:pPr><a:r><a:rPr lang="de-DE"/><a:t>${escText(line)}</a:t></a:r></a:p>`).join("");
@@ -87,21 +96,25 @@ function flags(val: boolean, leader = false): string {
   return `<c:showLegendKey val="0"/><c:showVal val="${val ? 1 : 0}"/><c:showCatName val="0"/><c:showSerName val="0"/><c:showPercent val="0"/><c:showBubbleSize val="0"/>${leader ? '<c:showLeaderLines val="1"/>' : ""}`;
 }
 
-/** Datenbeschriftungen of a series with Excel's default position for the chart type. */
-function seriesLabels(kind: ChartKind): string {
+/** Datenbeschriftungen of a series with Excel's default position for the chart type, or the pane's options. */
+function seriesLabels(kind: ChartKind, o?: DataLabelOptions): string {
   const pos: Partial<Record<ChartKind, string>> = {
     column: "outEnd", bar: "outEnd", columnStacked: "ctr", barStacked: "ctr", line: "r", lineMarkers: "r",
     scatter: "r", scatterSmooth: "r", scatterLines: "r", pie: "bestFit",
   };
-  const p = pos[kind];
-  return `<c:dLbls>${NO_SHAPE}${txPr(900, "0", "")}${p ? `<c:dLblPos val="${p}"/>` : ""}${flags(true, kind === "pie" || kind === "doughnut")}</c:dLbls>`;
+  const numFmt = o?.numFmt ? `<c:numFmt formatCode="${esc(o.numFmt)}" sourceLinked="0"/>` : "";
+  return `<c:dLbls>${numFmt}${spPrXml(o, NONE_FILL, NONE_LINE)}${txPr(900, "0", "", o?.text)}${labelFlags(o, pos[kind], kind === "pie" || kind === "doughnut")}</c:dLbls>`;
 }
 
 function trendline(s: ChartSeries, i: number): string {
   const t = s.trendline;
   if (!t) return "";
   const lbl = t.showEq || t.showR2 ? `<c:trendlineLbl><c:numFmt formatCode="General" sourceLinked="0"/>${NO_SHAPE}${txPr(900, "0")}</c:trendlineLbl>` : "";
-  return `<c:trendline><c:spPr><a:ln w="19050" cap="rnd">${fill(s, i)}<a:prstDash val="sysDot"/></a:ln><a:effectLst/></c:spPr><c:trendlineType val="linear"/><c:dispRSqr val="${t.showR2 ? 1 : 0}"/><c:dispEq val="${t.showEq ? 1 : 0}"/>${lbl}</c:trendline>`;
+  return trendlineXml(t, `<a:ln w="19050" cap="rnd">${fill(s, i)}<a:prstDash val="sysDot"/></a:ln>`, lbl);
+}
+
+function errBars(s: ChartSeries, scatter: boolean): string {
+  return s.errorBars ? errBarsXml(s.errorBars, scatter, `<a:ln w="9525" cap="flat" cmpd="sng" algn="ctr">${LINE_GREY}<a:round/></a:ln>`) : "";
 }
 
 const MARKER_NONE = '<c:marker><c:symbol val="none"/></c:marker>';
@@ -111,44 +124,64 @@ function marker(s: ChartSeries, i: number): string {
 
 function ser(m: ChartModel, s: ChartSeries, i: number): string {
   const head = `<c:ser><c:idx val="${i}"/><c:order val="${i}"/>${seriesText(s)}`;
-  const labels = m.dataLabels ? seriesLabels(m.kind) : "";
+  const labels = m.dataLabels ? seriesLabels(m.kind, m.format?.dataLabels) : "";
+  const mk = (auto: string) => markerXml(s.marker, auto, fill(s, i), `<a:ln w="9525">${fill(s, i)}</a:ln>`);
   switch (m.kind) {
     case "column": case "columnStacked": case "bar": case "barStacked":
-      return `${head}<c:spPr>${fill(s, i)}<a:ln><a:noFill/></a:ln><a:effectLst/></c:spPr><c:invertIfNegative val="0"/>${labels}${trendline(s, i)}${catData("cat", s.cat)}${numData("val", s.val)}</c:ser>`;
+      return `${head}${spPrXml(s, fill(s, i), NONE_LINE)}<c:invertIfNegative val="${s.invertIfNegative ? 1 : 0}"/>${labels}${trendline(s, i)}${errBars(s, false)}${catData("cat", s.cat)}${numData("val", s.val)}</c:ser>`;
     case "line": case "lineMarkers":
-      return `${head}<c:spPr><a:ln w="28575" cap="rnd">${fill(s, i)}<a:round/></a:ln><a:effectLst/></c:spPr>${m.kind === "line" ? MARKER_NONE : marker(s, i)}${labels}${trendline(s, i)}${catData("cat", s.cat)}${numData("val", s.val)}<c:smooth val="0"/></c:ser>`;
+      return `${head}<c:spPr>${lineXml(s.line, `<a:ln w="28575" cap="rnd">${fill(s, i)}<a:round/></a:ln>`)}<a:effectLst/></c:spPr>${mk(m.kind === "line" ? MARKER_NONE : marker(s, i))}${labels}${trendline(s, i)}${errBars(s, false)}${catData("cat", s.cat)}${numData("val", s.val)}<c:smooth val="${s.smooth ? 1 : 0}"/></c:ser>`;
     case "area":
-      return `${head}<c:spPr>${fill(s, i)}<a:ln><a:noFill/></a:ln><a:effectLst/></c:spPr>${labels}${trendline(s, i)}${catData("cat", s.cat)}${numData("val", s.val)}</c:ser>`;
+      return `${head}${spPrXml(s, fill(s, i), NONE_LINE)}${labels}${trendline(s, i)}${errBars(s, false)}${catData("cat", s.cat)}${numData("val", s.val)}</c:ser>`;
     case "pie": case "doughnut": {
-      const pts = s.val.cache.map((_, k) => `<c:dPt><c:idx val="${k}"/><c:bubble3D val="0"/><c:spPr><a:solidFill>${schemeColor(k)}</a:solidFill><a:ln w="19050"><a:solidFill><a:schemeClr val="lt1"/></a:solidFill></a:ln><a:effectLst/></c:spPr></c:dPt>`).join("");
-      return `${head}${pts}${labels}${catData("cat", s.cat)}${numData("val", s.val)}</c:ser>`;
+      // A series with its own Füllung has one colour; otherwise every slice takes the next accent.
+      const own = s.fill && s.fill.type !== "auto";
+      const ln = lineXml(s.line, '<a:ln w="19050"><a:solidFill><a:schemeClr val="lt1"/></a:solidFill></a:ln>');
+      const slice = (k: number) => (m.colors && m.colors !== 10 ? `<a:srgbClr val="${paletteColor(m, k, s.val.cache.length, OFFICE_ACCENTS).slice(1)}"/>` : schemeColor(k));
+      const pts = own ? "" : s.val.cache.map((_, k) => `<c:dPt><c:idx val="${k}"/><c:bubble3D val="0"/><c:spPr><a:solidFill>${slice(k)}</a:solidFill>${ln}<a:effectLst/></c:spPr></c:dPt>`).join("");
+      return `${head}${own ? spPrXml(s, "", ln) : ""}${pts}${labels}${catData("cat", s.cat)}${numData("val", s.val)}</c:ser>`;
     }
     default: {
       // Scatter charts: Punkte (no line), with smoothed or straight lines.
-      const line = m.kind === "scatter" ? '<a:ln w="19050" cap="rnd"><a:noFill/><a:round/></a:ln>' : `<a:ln w="19050" cap="rnd">${fill(s, i)}<a:round/></a:ln>`;
-      return `${head}<c:spPr>${line}<a:effectLst/></c:spPr>${m.kind === "scatterSmooth" ? MARKER_NONE : marker(s, i)}${labels}${trendline(s, i)}${catData("xVal", s.cat)}${numData("yVal", s.val)}<c:smooth val="${m.kind === "scatterSmooth" ? 1 : 0}"/></c:ser>`;
+      const auto = m.kind === "scatter" ? '<a:ln w="19050" cap="rnd"><a:noFill/><a:round/></a:ln>' : `<a:ln w="19050" cap="rnd">${fill(s, i)}<a:round/></a:ln>`;
+      return `${head}<c:spPr>${lineXml(s.line, auto)}<a:effectLst/></c:spPr>${mk(m.kind === "scatterSmooth" ? MARKER_NONE : marker(s, i))}${labels}${trendline(s, i)}${errBars(s, true)}${catData("xVal", s.cat)}${numData("yVal", s.val)}<c:smooth val="${m.kind === "scatterSmooth" || s.smooth ? 1 : 0}"/></c:ser>`;
     }
   }
 }
 
-function axisTitle(textValue: string | undefined, vertical: boolean): string {
+function axisTitle(textValue: string | undefined, vertical: boolean, f?: ElementFormat): string {
   if (textValue === undefined) return "";
-  return `<c:title>${rich(textValue || "Achsentitel", 1000, vertical ? "-5400000" : "0")}<c:overlay val="0"/>${NO_SHAPE}${txPr(1000, vertical ? "-5400000" : "0")}</c:title>`;
+  return `<c:title>${rich(textValue || "Achsentitel", 1000, vertical ? "-5400000" : "0")}<c:overlay val="0"/>${spPrXml(f, NONE_FILL, NONE_LINE)}${txPr(1000, vertical ? "-5400000" : "0", "", f?.text)}</c:title>`;
 }
+
+function gridXml(tag: "majorGridlines" | "minorGridlines", f: ElementFormat | undefined, autoLine: string): string {
+  return `<c:${tag}><c:spPr>${lineXml(f?.line, autoLine)}<a:effectLst/></c:spPr></c:${tag}>`;
+}
+
+const GRID_LINE = `<a:ln w="9525" cap="flat" cmpd="sng" algn="ctr">${LINE_GREY}<a:round/></a:ln>`;
+const MINOR_GRID_LINE = '<a:ln w="9525" cap="flat" cmpd="sng" algn="ctr"><a:solidFill><a:schemeClr val="tx1"><a:lumMod val="5000"/><a:lumOff val="95000"/></a:schemeClr></a:solidFill><a:round/></a:ln>';
 
 const AX_CAT = 500000001, AX_VAL = 500000002;
 
-function catAx(pos: string, titleText: string | undefined): string {
-  return `<c:catAx><c:axId val="${AX_CAT}"/><c:scaling><c:orientation val="minMax"/></c:scaling><c:delete val="0"/><c:axPos val="${pos}"/>${axisTitle(titleText, pos === "l")}<c:numFmt formatCode="General" sourceLinked="1"/><c:majorTickMark val="none"/><c:minorTickMark val="none"/><c:tickLblPos val="nextTo"/><c:spPr><a:noFill/><a:ln w="9525" cap="flat" cmpd="sng" algn="ctr">${LINE_GREY}<a:round/></a:ln><a:effectLst/></c:spPr>${txPr(900)}<c:crossAx val="${AX_VAL}"/><c:crosses val="autoZero"/><c:auto val="1"/><c:lblAlgn val="ctr"/><c:lblOffset val="100"/><c:noMultiLvlLbl val="0"/></c:catAx>`;
+function catAx(pos: string, titleText: string | undefined, f?: ChartFormat): string {
+  const o = f?.catAxis;
+  const grid = f?.catGrid?.show ? gridXml("majorGridlines", f.catGrid, GRID_LINE) : "";
+  const numFmt = o?.numFmt ? `<c:numFmt formatCode="${esc(o.numFmt)}" sourceLinked="0"/>` : '<c:numFmt formatCode="General" sourceLinked="1"/>';
+  return `<c:catAx><c:axId val="${AX_CAT}"/>${scalingXml(o)}<c:delete val="${o?.visible === false ? 1 : 0}"/><c:axPos val="${pos}"/>${grid}${axisTitle(titleText, pos === "l", f?.axisTitles?.cat)}${numFmt}${tickXml("majorTickMark", o?.majorTick)}${tickXml("minorTickMark", o?.minorTick)}<c:tickLblPos val="${o?.labelPos ?? "nextTo"}"/><c:spPr>${NONE_FILL}${lineXml(o?.line, GRID_LINE)}<a:effectLst/></c:spPr>${txPr(900, "-60000000", "", o?.text)}<c:crossAx val="${AX_VAL}"/>${crossesXml(f?.valAxis)}<c:auto val="1"/><c:lblAlgn val="ctr"/><c:lblOffset val="100"/><c:noMultiLvlLbl val="0"/></c:catAx>`;
 }
 
-/** A value axis; `fmt` null leaves out the number format (Excel: X values that are text). */
-function valAx(fmt: string | null, id: number, cross: number, pos: string, titleText: string | undefined, between: "between" | "midCat", line: boolean, grid: boolean): string {
-  const gridXml = grid ? `<c:majorGridlines><c:spPr><a:ln w="9525" cap="flat" cmpd="sng" algn="ctr">${LINE_GREY}<a:round/></a:ln><a:effectLst/></c:spPr></c:majorGridlines>` : "";
-  const lineXml = line
-    ? `<c:spPr><a:noFill/><a:ln w="9525" cap="flat" cmpd="sng" algn="ctr"><a:solidFill><a:schemeClr val="tx1"><a:lumMod val="25000"/><a:lumOff val="75000"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>`
-    : "<c:spPr><a:noFill/><a:ln><a:noFill/></a:ln><a:effectLst/></c:spPr>";
-  return `<c:valAx><c:axId val="${id}"/><c:scaling><c:orientation val="minMax"/></c:scaling><c:delete val="0"/><c:axPos val="${pos}"/>${gridXml}${axisTitle(titleText, pos === "l")}${fmt === null ? "" : `<c:numFmt formatCode="${esc(fmt)}" sourceLinked="1"/>`}<c:majorTickMark val="none"/><c:minorTickMark val="none"/><c:tickLblPos val="nextTo"/>${lineXml}${txPr(900)}<c:crossAx val="${cross}"/><c:crosses val="autoZero"/><c:crossBetween val="${between}"/></c:valAx>`;
+/**
+ * A value axis; `fmt` null leaves out the number format (Excel: X values that are text). `o` are the
+ * axis' own options, `crossing` those of the other axis (where this one crosses it), `f` the chart's format.
+ */
+function valAx(fmt: string | null, id: number, cross: number, pos: string, titleText: string | undefined, between: "between" | "midCat", line: boolean, grid: boolean,
+  o?: AxisOptions, crossing?: AxisOptions, f?: ChartFormat, titleFmt?: ElementFormat, grids = true): string {
+  const majorGrid = grid ? gridXml("majorGridlines", grids ? f?.majorGrid : undefined, GRID_LINE) : "";
+  const minorGrid = grids && f?.minorGrid?.show ? gridXml("minorGridlines", f.minorGrid, MINOR_GRID_LINE) : "";
+  const autoLine = line ? `<a:ln w="9525" cap="flat" cmpd="sng" algn="ctr"><a:solidFill><a:schemeClr val="tx1"><a:lumMod val="25000"/><a:lumOff val="75000"/></a:schemeClr></a:solidFill><a:round/></a:ln>` : NONE_LINE;
+  const numFmt = o?.numFmt ? `<c:numFmt formatCode="${esc(o.numFmt)}" sourceLinked="0"/>` : fmt === null ? "" : `<c:numFmt formatCode="${esc(fmt)}" sourceLinked="1"/>`;
+  const units = (o?.majorUnit !== undefined ? `<c:majorUnit val="${o.majorUnit}"/>` : "") + (o?.minorUnit !== undefined ? `<c:minorUnit val="${o.minorUnit}"/>` : "");
+  return `<c:valAx><c:axId val="${id}"/>${scalingXml(o)}<c:delete val="${o?.visible === false ? 1 : 0}"/><c:axPos val="${pos}"/>${majorGrid}${minorGrid}${axisTitle(titleText, pos === "l", titleFmt)}${numFmt}${tickXml("majorTickMark", o?.majorTick)}${tickXml("minorTickMark", o?.minorTick)}<c:tickLblPos val="${o?.labelPos ?? "nextTo"}"/><c:spPr>${NONE_FILL}${lineXml(o?.line, autoLine)}<a:effectLst/></c:spPr>${txPr(900, "-60000000", "", o?.text)}<c:crossAx val="${cross}"/>${crossesXml(crossing)}<c:crossBetween val="${between}"/>${units}</c:valAx>`;
 }
 
 function plotArea(m: ChartModel): string {
@@ -159,27 +192,31 @@ function plotArea(m: ChartModel): string {
   const vFmt = m.series[0]?.val.format ?? "General";
   const cat = m.series[0]?.cat;
   const xFmt = cat && cat.cache.some((v) => typeof v === "string") ? null : cat?.format ?? "General";
+  const f = m.format, at = f?.axisTitles;
+  const varied = m.series.some((s) => s.fill && s.fill.type !== "auto") ? 0 : 1;
   switch (m.kind) {
     case "column": case "columnStacked": case "bar": case "barStacked": {
       const bar = m.kind === "bar" || m.kind === "barStacked", stacked = m.kind === "columnStacked" || m.kind === "barStacked";
-      const gap = stacked ? 150 : bar ? 182 : 219, overlap = stacked ? 100 : bar ? 0 : -27;
+      const gap = m.gapWidth ?? (stacked ? 150 : bar ? 182 : 219), overlap = m.overlap ?? (stacked ? 100 : bar ? 0 : -27);
       return `<c:barChart><c:barDir val="${bar ? "bar" : "col"}"/><c:grouping val="${stacked ? "stacked" : "clustered"}"/><c:varyColors val="0"/>${series}${groupLabels}<c:gapWidth val="${gap}"/>${overlap ? `<c:overlap val="${overlap}"/>` : ""}${ax}</c:barChart>`
-        + catAx(bar ? "l" : "b", t.cat) + valAx(vFmt, AX_VAL, AX_CAT, bar ? "b" : "l", t.val, "between", false, m.gridlines);
+        + catAx(bar ? "l" : "b", t.cat, f) + valAx(vFmt, AX_VAL, AX_CAT, bar ? "b" : "l", t.val, "between", false, m.gridlines, f?.valAxis, f?.catAxis, f, at?.val);
     }
     case "line": case "lineMarkers":
       return `<c:lineChart><c:grouping val="standard"/><c:varyColors val="0"/>${series}${groupLabels}<c:marker val="1"/>${ax}</c:lineChart>`
-        + catAx("b", t.cat) + valAx(vFmt, AX_VAL, AX_CAT, "l", t.val, "between", false, m.gridlines);
+        + catAx("b", t.cat, f) + valAx(vFmt, AX_VAL, AX_CAT, "l", t.val, "between", false, m.gridlines, f?.valAxis, f?.catAxis, f, at?.val);
     case "area":
       return `<c:areaChart><c:grouping val="standard"/><c:varyColors val="0"/>${series}${groupLabels}${ax}</c:areaChart>`
-        + catAx("b", t.cat) + valAx(vFmt, AX_VAL, AX_CAT, "l", t.val, "midCat", false, m.gridlines);
+        + catAx("b", t.cat, f) + valAx(vFmt, AX_VAL, AX_CAT, "l", t.val, "midCat", false, m.gridlines, f?.valAxis, f?.catAxis, f, at?.val);
     case "pie":
-      return `<c:pieChart><c:varyColors val="1"/>${series}${groupLabels}<c:firstSliceAng val="0"/></c:pieChart>`;
+      return `<c:pieChart><c:varyColors val="${varied}"/>${series}${groupLabels}<c:firstSliceAng val="${m.firstSliceAngle ?? 0}"/></c:pieChart>`;
     case "doughnut":
-      return `<c:doughnutChart><c:varyColors val="1"/>${series}${groupLabels}<c:firstSliceAng val="0"/><c:holeSize val="75"/></c:doughnutChart>`;
+      return `<c:doughnutChart><c:varyColors val="${varied}"/>${series}${groupLabels}<c:firstSliceAng val="${m.firstSliceAngle ?? 0}"/><c:holeSize val="${m.holeSize ?? 75}"/></c:doughnutChart>`;
     default: {
       const style = m.kind === "scatterSmooth" ? "smoothMarker" : "lineMarker";
+      // Scatter: the X axis is the category axis' options, the Y axis the value axis'.
       return `<c:scatterChart><c:scatterStyle val="${style}"/><c:varyColors val="0"/>${series}${groupLabels}${ax}</c:scatterChart>`
-        + valAx(xFmt, AX_CAT, AX_VAL, "b", t.cat, "midCat", true, m.gridlines) + valAx(vFmt, AX_VAL, AX_CAT, "l", t.val, "midCat", true, m.gridlines);
+        + valAx(xFmt, AX_CAT, AX_VAL, "b", t.cat, "midCat", true, m.gridlines, f?.catAxis, f?.valAxis, f, at?.cat, false)
+        + valAx(vFmt, AX_VAL, AX_CAT, "l", t.val, "midCat", true, m.gridlines, f?.valAxis, f?.catAxis, f, at?.val);
     }
   }
 }
@@ -188,7 +225,9 @@ function plotArea(m: ChartModel): string {
 function signature(m: ChartModel): string {
   return JSON.stringify({
     kind: m.kind, title: m.title, axisTitles: m.axisTitles, legend: m.legend, dataLabels: m.dataLabels, gridlines: m.gridlines,
-    series: m.series.map((s) => ({ name: s.name?.ref ?? s.name?.text, cat: s.cat?.ref, val: s.val.ref, color: s.color, trendline: s.trendline })),
+    format: m.format, gapWidth: m.gapWidth, overlap: m.overlap, firstSliceAngle: m.firstSliceAngle, holeSize: m.holeSize, colors: m.colors,
+    series: m.series.map((s) => ({ name: s.name?.ref ?? s.name?.text, cat: s.cat?.ref, val: s.val.ref, color: s.color, trendline: s.trendline,
+      fill: s.fill, line: s.line, marker: s.marker, smooth: s.smooth, invertIfNegative: s.invertIfNegative, errorBars: s.errorBars })),
   });
 }
 
@@ -200,17 +239,22 @@ function rawOf(m: ChartModel): RawChart | undefined {
 }
 
 /** The chart part (xl/charts/chartN.xml) for a model; histograms: the chartex part. */
-export function chartToXml(m: ChartModel): string {
-  const raw = rawOf(m);
-  if (raw && raw.sig === signature(m)) return raw.xml;
+export function chartToXml(model: ChartModel): string {
+  const raw = rawOf(model);
+  if (raw && raw.sig === signature(model)) return raw.xml;
+  // A Farben ändern scheme other than Farbig: its colours are written as the series' own (no colour part is written).
+  const m: ChartModel = model.colors && model.colors !== 10 && !isPie(model.kind)
+    ? { ...model, series: model.series.map((s, i) => (s.color ? s : { ...s, color: paletteColor(model, i, model.series.length, OFFICE_ACCENTS) })) }
+    : model;
   if (isChartEx(m)) return chartExToXml(m);
+  const f = m.format;
   const title = m.title.show
-    ? `<c:title>${m.title.text !== undefined ? rich(m.title.text, 1400) : ""}<c:overlay val="0"/>${NO_SHAPE}${txPr(1400, "0", ' spc="0"')}</c:title><c:autoTitleDeleted val="0"/>`
+    ? `<c:title>${m.title.text !== undefined ? rich(m.title.text, 1400) : ""}<c:overlay val="${f?.title?.overlay ? 1 : 0}"/>${spPrXml(f?.title, NONE_FILL, NONE_LINE)}${txPr(1400, "0", ' spc="0"', f?.title?.text)}</c:title><c:autoTitleDeleted val="0"/>`
     : '<c:autoTitleDeleted val="1"/>';
-  const legend = m.legend === "none" ? "" : `<c:legend><c:legendPos val="${m.legend}"/><c:overlay val="0"/>${NO_SHAPE}${txPr(900, "0")}</c:legend>`;
+  const legend = m.legend === "none" ? "" : `<c:legend><c:legendPos val="${m.legend}"/><c:overlay val="${f?.legend?.overlay ? 1 : 0}"/>${spPrXml(f?.legend, NONE_FILL, NONE_LINE)}${txPr(900, "0", "", f?.legend?.text)}</c:legend>`;
   return HEAD + `<c:chartSpace xmlns:c="${NS_C}" xmlns:a="${NS_A}" xmlns:r="${NS_R}"><c:date1904 val="0"/><c:lang val="de-DE"/><c:roundedCorners val="0"/>`
-    + `<c:chart>${title}<c:plotArea><c:layout/>${plotArea(m)}${NO_SHAPE}</c:plotArea>${legend}<c:plotVisOnly val="1"/><c:dispBlanksAs val="gap"/></c:chart>`
-    + `<c:spPr><a:solidFill><a:schemeClr val="bg1"/></a:solidFill><a:ln w="9525" cap="flat" cmpd="sng" algn="ctr">${LINE_GREY}<a:round/></a:ln><a:effectLst/></c:spPr>`
+    + `<c:chart>${title}<c:plotArea><c:layout/>${plotArea(m)}${spPrXml(f?.plot, NONE_FILL, NONE_LINE)}</c:plotArea>${legend}<c:plotVisOnly val="1"/><c:dispBlanksAs val="gap"/></c:chart>`
+    + spPrXml(f?.chart, '<a:solidFill><a:schemeClr val="bg1"/></a:solidFill>', `<a:ln w="9525" cap="flat" cmpd="sng" algn="ctr">${LINE_GREY}<a:round/></a:ln>`)
     + `<c:txPr><a:bodyPr/><a:lstStyle/><a:p><a:pPr><a:defRPr/></a:pPr><a:endParaRPr lang="de-DE"/></a:p></c:txPr>`
     + `<c:printSettings><c:headerFooter/><c:pageMargins b="0.78740157499999996" l="0.7" r="0.7" t="0.78740157499999996" header="0.3" footer="0.3"/><c:pageSetup/></c:printSettings></c:chartSpace>`;
 }
@@ -478,6 +522,7 @@ export function chartFromXml(xml: string, anchor?: { from: CellAnchor; to: CellA
     }
   }
   const scatter = group?.name === "c:scatterChart" || group?.name === "c:bubbleChart";
+  const rd: Reader = { xml, find: (el, ...path) => find(xml, el, ...path), val: (el) => val(xml, el) };
   const series: ChartSeries[] = [];
   let dataLabels = !!group && val(xml, find(xml, group, "c:dLbls", "c:showVal")) === "1";
   for (const s of group ? kidsOf(xml, group).filter((k) => k.name === "c:ser") : []) {
@@ -503,8 +548,45 @@ export function chartFromXml(xml: string, anchor?: { from: CellAnchor; to: CellA
     const color = readColor(xml, find(xml, s, "c:spPr")) ?? readColor(xml, find(xml, s, "c:marker", "c:spPr"));
     if (color) out.color = color;
     const tl = find(xml, s, "c:trendline");
-    if (tl && val(xml, find(xml, tl, "c:trendlineType")) === "linear") {
-      out.trendline = { type: "linear", showEq: val(xml, find(xml, tl, "c:dispEq")) === "1", showR2: val(xml, find(xml, tl, "c:dispRSqr")) === "1" };
+    const ttype = val(xml, find(xml, tl, "c:trendlineType"));
+    if (tl && ttype && ["linear", "exp", "log", "poly", "power", "movingAvg"].includes(ttype)) {
+      const t: Trendline = { type: ttype as Trendline["type"], showEq: val(xml, find(xml, tl, "c:dispEq")) === "1", showR2: val(xml, find(xml, tl, "c:dispRSqr")) === "1" };
+      const n = (tag: string) => { const v = val(xml, find(xml, tl, tag)); return v === undefined ? undefined : Number(v); };
+      if (n("c:order") !== undefined) t.order = n("c:order");
+      if (n("c:period") !== undefined) t.period = n("c:period");
+      if (n("c:forward")) t.forward = n("c:forward");
+      if (n("c:backward")) t.backward = n("c:backward");
+      if (n("c:intercept") !== undefined) t.intercept = n("c:intercept");
+      const nm = find(xml, tl, "c:name");
+      if (nm) t.name = unesc(text(xml, nm));
+      const ln = readShape(rd, find(xml, tl, "c:spPr")).line;
+      if (ln && ln.type === "solid") t.line = ln;
+      out.trendline = t;
+    }
+    // The Format pane's settings of the series.
+    const shape = readShape(rd, find(xml, s, "c:spPr"));
+    if (shape.fill?.type === "none" || shape.fill?.transparency) out.fill = shape.fill;
+    // Columns, bars and areas have no border by default, Punkte-scatter no line: "none" is automatic there.
+    const noLineByDefault = kind === "scatter" || kind === "area" || kind.startsWith("column") || kind.startsWith("bar");
+    // A line in the series' colour at the kind's own width is the automatic one (the colour is kept as `color`).
+    const autoWidth = kind === "line" || kind === "lineMarkers" ? 2.25 : 1.5;
+    const plain = shape.line?.type === "solid" && !shape.line.dash && !shape.line.transparency && (shape.line.width ?? autoWidth) === autoWidth && shape.line.color === (color ?? shape.line.color);
+    if (shape.line && !plain && (shape.line.width !== undefined || shape.line.dash || shape.line.type === "none") && !(noLineByDefault && shape.line.type === "none")) out.line = shape.line;
+    const mkEl = find(xml, s, "c:marker");
+    if (mkEl) {
+      const sym = val(xml, find(xml, mkEl, "c:symbol")) as MarkerSymbol | undefined, size = val(xml, find(xml, mkEl, "c:size"));
+      const autoSym = kind === "line" || kind === "scatterSmooth" ? "none" : "circle";
+      if ((sym && sym !== autoSym) || (size && size !== "5")) out.marker = { ...(sym ? { symbol: sym } : {}), ...(size ? { size: Number(size) } : {}) };
+    }
+    if (val(xml, find(xml, s, "c:smooth")) === "1" && kind !== "scatterSmooth") out.smooth = true;
+    if (val(xml, find(xml, s, "c:invertIfNegative")) === "1") out.invertIfNegative = true;
+    const eb = find(xml, s, "c:errBars");
+    if (eb) {
+      const e: ErrorBars = { dir: (val(xml, find(xml, eb, "c:errBarType")) ?? "both") as ErrorBars["dir"], type: (val(xml, find(xml, eb, "c:errValType")) ?? "fixedVal") as ErrorBars["type"] };
+      if (val(xml, find(xml, eb, "c:noEndCap")) === "1") e.noEndCap = true;
+      const v = val(xml, find(xml, eb, "c:val"));
+      if (v !== undefined) e.value = Number(v);
+      out.errorBars = e;
     }
     if (val(xml, find(xml, s, "c:dLbls", "c:showVal")) === "1") dataLabels = true;
     series.push(out);
@@ -541,6 +623,82 @@ export function chartFromXml(xml: string, anchor?: { from: CellAnchor; to: CellA
   const legend = (legendEl ? (val(xml, find(xml, legendEl, "c:legendPos")) ?? "r") : "none") as LegendPos;
   const model: ChartModel = { kind, series, title, axisTitles, legend: ["b", "t", "l", "r"].includes(legend) ? legend : legend === "none" ? "none" : "r", dataLabels, gridlines, from, to };
   if (anchor?.name) model.name = anchor.name;
+  // The Format pane's settings of the chart's elements.
+  const fmt: ChartFormat = {};
+  const put = <K extends keyof ChartFormat>(k: K, v: ChartFormat[K] | undefined) => { if (v && Object.keys(v).length) fmt[k] = v; };
+  const space = root(xml);
+  const chartSp = readShape(rd, find(xml, space, "c:spPr"));
+  put("chart", chartSp.fill || (chartSp.line && chartSp.line.type !== "auto") ? chartSp : undefined);
+  // Elements that have no fill and no line by default: "none" is their automatic look.
+  const noneIsAuto = <T extends ElementFormat>(x: T | undefined): T | undefined => {
+    if (!x) return x;
+    if (x.fill?.type === "none") delete x.fill;
+    if (x.line?.type === "none") delete x.line;
+    return x;
+  };
+  put("plot", noneIsAuto(readFormat(rd, find(xml, plot, "c:spPr"), undefined, 0)));
+  if (titleEl) {
+    const tf = readFormat(rd, find(xml, titleEl, "c:spPr"), find(xml, titleEl, "c:txPr"), 1400) ?? {};
+    if (val(xml, find(xml, titleEl, "c:overlay")) === "1") (tf as { overlay?: boolean }).overlay = true;
+    if (tf.fill?.type === "none") delete tf.fill;
+    if (tf.line?.type === "none") delete tf.line;
+    put("title", tf);
+  }
+  if (legendEl) {
+    const lf = readFormat(rd, find(xml, legendEl, "c:spPr"), find(xml, legendEl, "c:txPr"), 900) ?? {};
+    if (val(xml, find(xml, legendEl, "c:overlay")) === "1") (lf as { overlay?: boolean }).overlay = true;
+    if (lf.fill?.type === "none") delete lf.fill;
+    if (lf.line?.type === "none") delete lf.line;
+    put("legend", lf);
+  }
+  if (plot) {
+    for (const ax of kidsOf(xml, plot).filter((k) => k.name === "c:catAx" || k.name === "c:valAx" || k.name === "c:dateAx")) {
+      const pos = val(xml, find(xml, ax, "c:axPos"));
+      const isVal = ax.name === "c:valAx" && (!scatter || pos === "l" || pos === "r");
+      const o = readAxis(rd, ax, ax.name === "c:valAx");
+      if (o?.line?.type === "none" && isVal && !scatter) delete o.line;
+      put(isVal ? "valAxis" : "catAxis", o);
+      const mg = find(xml, ax, "c:majorGridlines"), ng = find(xml, ax, "c:minorGridlines");
+      if (isVal && mg) { const l = readShape(rd, find(xml, mg, "c:spPr")).line; if (l && l.type !== "auto") put("majorGrid", { line: l }); }
+      if (isVal && ng) put("minorGrid", { show: true, ...readShape(rd, find(xml, ng, "c:spPr")) });
+      if (!isVal && !scatter && mg) put("catGrid", { show: true, ...readShape(rd, find(xml, mg, "c:spPr")) });
+    }
+  }
+  const dl = group ? find(xml, group, "c:ser", "c:dLbls") ?? find(xml, group, "c:dLbls") : undefined;
+  if (dl && dataLabels) {
+    const o: DataLabelOptions = {};
+    const b = (tag: string) => val(xml, find(xml, dl, tag));
+    if (b("c:showVal") === "0") o.showVal = false;
+    if (b("c:showCatName") === "1") o.showCat = true;
+    if (b("c:showSerName") === "1") o.showSer = true;
+    if (b("c:showPercent") === "1") o.showPercent = true;
+    if (b("c:showLegendKey") === "1") o.showLegendKey = true;
+    const pos = b("c:dLblPos");
+    const defPos: Partial<Record<ChartKind, string>> = { column: "outEnd", bar: "outEnd", columnStacked: "ctr", barStacked: "ctr", line: "r", lineMarkers: "r", scatter: "r", scatterSmooth: "r", scatterLines: "r", pie: "bestFit" };
+    if (pos && pos !== defPos[kind]) o.pos = pos as DataLabelOptions["pos"];
+    const sep = find(xml, dl, "c:separator");
+    if (sep) o.separator = unesc(text(xml, sep));
+    const nf = find(xml, dl, "c:numFmt");
+    if (nf && attrs(xml, nf).sourceLinked === "0") o.numFmt = attrs(xml, nf).formatCode;
+    const t = readText(rd, find(xml, dl, "c:txPr"), 900);
+    if (t) o.text = t;
+    const shp = noneIsAuto(readShape(rd, find(xml, dl, "c:spPr")));
+    if (shp?.fill) o.fill = shp.fill;
+    if (shp?.line) o.line = shp.line;
+    put("dataLabels", o);
+  }
+  if (Object.keys(fmt).length) model.format = fmt;
+  if (group?.name === "c:barChart") {
+    const gw = val(xml, find(xml, group, "c:gapWidth")), ov = val(xml, find(xml, group, "c:overlap"));
+    const stacked = kind === "columnStacked" || kind === "barStacked", bar = kind === "bar" || kind === "barStacked";
+    if (gw !== undefined && Number(gw) !== (stacked ? 150 : bar ? 182 : 219)) model.gapWidth = Number(gw);
+    if (ov !== undefined && Number(ov) !== (stacked ? 100 : bar ? 0 : -27)) model.overlap = Number(ov);
+  }
+  if (group && (kind === "pie" || kind === "doughnut")) {
+    const fa = Number(val(xml, find(xml, group, "c:firstSliceAng")) ?? 0), hs = val(xml, find(xml, group, "c:holeSize"));
+    if (fa) model.firstSliceAngle = fa;
+    if (kind === "doughnut" && hs !== undefined && Number(hs) !== 75) model.holeSize = Number(hs);
+  }
   model.raw = { xml, sig: signature(model) } satisfies RawChart;
   return model;
 }

@@ -27,7 +27,7 @@ export function err(code: ErrorCode): CellError {
 /** Excel's German names of the error values. */
 export const ERROR_TEXT_DE: Record<ErrorCode, string> = {
   "#NULL!": "#NULL!", "#DIV/0!": "#DIV/0!", "#VALUE!": "#WERT!", "#REF!": "#BEZUG!", "#NAME?": "#NAME?",
-  "#NUM!": "#ZAHL!", "#N/A": "#NV", "#SPILL!": "#ÜBERLAUF!", "#CALC!": "#KALK!", "#GETTING_DATA": "#DATEN_ABRUFEN",
+  "#NUM!": "#ZAHL!", "#N/A": "#NV", "#SPILL!": "#ÜBERLAUF!", "#CALC!": "#CALC!", "#GETTING_DATA": "#DATEN_ABRUFEN",
 };
 
 export function errorText(e: CellError): string {

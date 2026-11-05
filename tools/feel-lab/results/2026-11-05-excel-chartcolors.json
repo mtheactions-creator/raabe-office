@@ -1,0 +1,439 @@
+{
+ "10": {
+  "meth": "cycle",
+  "colors": [
+   "accent1",
+   "accent2",
+   "accent3",
+   "accent4",
+   "accent5",
+   "accent6"
+  ],
+  "variations": [
+   [],
+   [
+    [
+     "lumMod",
+     "60000"
+    ]
+   ],
+   [
+    [
+     "lumMod",
+     "80000"
+    ],
+    [
+     "lumOff",
+     "20000"
+    ]
+   ],
+   [
+    [
+     "lumMod",
+     "80000"
+    ]
+   ],
+   [
+    [
+     "lumMod",
+     "60000"
+    ],
+    [
+     "lumOff",
+     "40000"
+    ]
+   ],
+   [
+    [
+     "lumMod",
+     "50000"
+    ]
+   ],
+   [
+    [
+     "lumMod",
+     "70000"
+    ],
+    [
+     "lumOff",
+     "30000"
+    ]
+   ],
+   [
+    [
+     "lumMod",
+     "70000"
+    ]
+   ],
+   [
+    [
+     "lumMod",
+     "50000"
+    ],
+    [
+     "lumOff",
+     "50000"
+    ]
+   ]
+  ]
+ },
+ "11": {
+  "meth": "cycle",
+  "colors": [
+   "accent1",
+   "accent3",
+   "accent5"
+  ],
+  "variations": [
+   [],
+   [
+    [
+     "lumMod",
+     "60000"
+    ]
+   ],
+   [
+    [
+     "lumMod",
+     "80000"
+    ],
+    [
+     "lumOff",
+     "20000"
+    ]
+   ],
+   [
+    [
+     "lumMod",
+     "80000"
+    ]
+   ],
+   [
+    [
+     "lumMod",
+     "60000"
+    ],
+    [
+     "lumOff",
+     "40000"
+    ]
+   ],
+   [
+    [
+     "lumMod",
+     "50000"
+    ]
+   ],
+   [
+    [
+     "lumMod",
+     "70000"
+    ],
+    [
+     "lumOff",
+     "30000"
+    ]
+   ],
+   [
+    [
+     "lumMod",
+     "70000"
+    ]
+   ],
+   [
+    [
+     "lumMod",
+     "50000"
+    ],
+    [
+     "lumOff",
+     "50000"
+    ]
+   ]
+  ]
+ },
+ "12": {
+  "meth": "cycle",
+  "colors": [
+   "accent2",
+   "accent4",
+   "accent6"
+  ],
+  "variations": [
+   [],
+   [
+    [
+     "lumMod",
+     "60000"
+    ]
+   ],
+   [
+    [
+     "lumMod",
+     "80000"
+    ],
+    [
+     "lumOff",
+     "20000"
+    ]
+   ],
+   [
+    [
+     "lumMod",
+     "80000"
+    ]
+   ],
+   [
+    [
+     "lumMod",
+     "60000"
+    ],
+    [
+     "lumOff",
+     "40000"
+    ]
+   ],
+   [
+    [
+     "lumMod",
+     "50000"
+    ]
+   ],
+   [
+    [
+     "lumMod",
+     "70000"
+    ],
+    [
+     "lumOff",
+     "30000"
+    ]
+   ],
+   [
+    [
+     "lumMod",
+     "70000"
+    ]
+   ],
+   [
+    [
+     "lumMod",
+     "50000"
+    ],
+    [
+     "lumOff",
+     "50000"
+    ]
+   ]
+  ]
+ },
+ "13": {
+  "meth": "cycle",
+  "colors": [
+   "accent6",
+   "accent5",
+   "accent4"
+  ],
+  "variations": [
+   [],
+   [
+    [
+     "lumMod",
+     "60000"
+    ]
+   ],
+   [
+    [
+     "lumMod",
+     "80000"
+    ],
+    [
+     "lumOff",
+     "20000"
+    ]
+   ],
+   [
+    [
+     "lumMod",
+     "80000"
+    ]
+   ],
+   [
+    [
+     "lumMod",
+     "60000"
+    ],
+    [
+     "lumOff",
+     "40000"
+    ]
+   ],
+   [
+    [
+     "lumMod",
+     "50000"
+    ]
+   ],
+   [
+    [
+     "lumMod",
+     "70000"
+    ],
+    [
+     "lumOff",
+     "30000"
+    ]
+   ],
+   [
+    [
+     "lumMod",
+     "70000"
+    ]
+   ],
+   [
+    [
+     "lumMod",
+     "50000"
+    ],
+    [
+     "lumOff",
+     "50000"
+    ]
+   ]
+  ]
+ },
+ "14": {
+  "meth": "withinLinear",
+  "colors": [
+   "accent1"
+  ],
+  "variations": []
+ },
+ "15": {
+  "meth": "withinLinear",
+  "colors": [
+   "accent2"
+  ],
+  "variations": []
+ },
+ "16": {
+  "meth": "withinLinear",
+  "colors": [
+   "accent3"
+  ],
+  "variations": []
+ },
+ "17": {
+  "meth": "withinLinear",
+  "colors": [
+   "accent4"
+  ],
+  "variations": []
+ },
+ "18": {
+  "meth": "withinLinear",
+  "colors": [
+   "accent5"
+  ],
+  "variations": []
+ },
+ "19": {
+  "meth": "withinLinear",
+  "colors": [
+   "accent6"
+  ],
+  "variations": []
+ },
+ "20": {
+  "meth": "cycle",
+  "colors": [
+   "dk1"
+  ],
+  "variations": [
+   [
+    [
+     "tint",
+     "88500"
+    ]
+   ],
+   [
+    [
+     "tint",
+     "55000"
+    ]
+   ],
+   [
+    [
+     "tint",
+     "75000"
+    ]
+   ],
+   [
+    [
+     "tint",
+     "98500"
+    ]
+   ],
+   [
+    [
+     "tint",
+     "30000"
+    ]
+   ],
+   [
+    [
+     "tint",
+     "60000"
+    ]
+   ],
+   [
+    [
+     "tint",
+     "80000"
+    ]
+   ]
+  ]
+ },
+ "21": {
+  "meth": "withinLinearReversed",
+  "colors": [
+   "accent1"
+  ],
+  "variations": []
+ },
+ "22": {
+  "meth": "withinLinearReversed",
+  "colors": [
+   "accent2"
+  ],
+  "variations": []
+ },
+ "23": {
+  "meth": "withinLinearReversed",
+  "colors": [
+   "accent3"
+  ],
+  "variations": []
+ },
+ "24": {
+  "meth": "withinLinearReversed",
+  "colors": [
+   "accent4"
+  ],
+  "variations": []
+ },
+ "25": {
+  "meth": "withinLinearReversed",
+  "colors": [
+   "accent5"
+  ],
+  "variations": []
+ },
+ "26": {
+  "meth": "withinLinearReversed",
+  "colors": [
+   "accent6"
+  ],
+  "variations": []
+ }
+}

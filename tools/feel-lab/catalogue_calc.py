@@ -17,6 +17,7 @@ import time
 from pathlib import Path
 
 from feellab.calc_catalogue import Case, run_step, settle
+from feellab.calc_matrix import MATRIX
 
 C = Case
 NUM3 = {"A1": "10", "A2": "20", "A3": "30"}
@@ -315,6 +316,9 @@ CASES: list[Case] = [
 ]
 
 
+CASES += MATRIX
+
+
 def main() -> None:
     which = sys.argv[1] if len(sys.argv) > 1 else "excel"
     pick = {a for a in sys.argv[2:] if a != "--from"}
@@ -337,19 +341,29 @@ def main() -> None:
                 side.reset(c)
                 side.prepare(c)
                 settle()
-                winapi.activate(side.x.hwnd)
+                # Windows sometimes refuses the focus once (a toast, a dialog of our Excel): close and try again.
+                for attempt in range(4):
+                    try:
+                        winapi.activate(side.x.hwnd)
+                        break
+                    except RuntimeError:
+                        side.close_dialogs()
+                        time.sleep(1.0)
                 time.sleep(0.25)
                 for s in c.steps:
                     run_step(side, s)
                 time.sleep(0.3)
+                dialog = side.close_dialogs()
                 results[c.name] = side.state(c)
-                print(f"{c.area:10} {c.name:45} {results[c.name]['selection']:12} {results[c.name]['mode']}")
+                if dialog:
+                    results[c.name]["dialog"] = True
+                print(f"{c.area:10} {c.name[:45]:45} {results[c.name]['selection']:12} {results[c.name]['mode']}{'  DIALOG' if dialog else ''}", flush=True)
         finally:
+            path = out / f"{date}-catalogue-calc-excel.json"
+            old = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+            old.update(results)
+            path.write_text(json.dumps(old, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
             side.close()
-        path = out / f"{date}-catalogue-calc-excel.json"
-        old = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
-        old.update(results)
-        path.write_text(json.dumps(old, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
         print(f"{len(results)} cases recorded -> {path.name}")
     else:
         from feellab.calc_catalogue import compare_calc

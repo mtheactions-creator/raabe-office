@@ -8,7 +8,7 @@ import {
   type Rect, type Sheet, type Workbook,
 } from "@raabe/sheet-engine";
 import { h } from "@raabe/shell";
-import { editText } from "../engine";
+import { checkEntry, editText } from "../engine";
 import { cssFont, draw, errorIndicator, expandToMerges, filterButton, placed, type DrawState, type Pane } from "./render";
 import { CondEval } from "./cond";
 import { POINTERS } from "./pointers";
@@ -29,6 +29,10 @@ export interface GridHost {
   fill(source: Rect, target: Rect, ctrl: boolean): void;
   /** Umschalt+drag of the fill handle: empty cells inserted ("down"/"right") or cells deleted ("up"/"left"). */
   shiftFill?(rect: Rect, dir: "down" | "right" | "up" | "left"): void;
+  /** A formula Excel would refuse on Enter: the message; the cell stays in Bearbeiten. */
+  formulaError?(): Promise<void>;
+  /** A formula Excel would mend: asks whether to take the mended one (true) or go on editing. */
+  proposeFormula?(text: string): Promise<boolean>;
   /** A formula pointed into another sheet ends: show the sheet it is typed on again. */
   leavePointing?(): void;
   /** Selection border dragged: move (or copy with Strg) to a new top-left cell. */
@@ -83,6 +87,9 @@ export interface GridHost {
   followLink(target: string): void;
 }
 
+/** A reference's frame being dragged: where its text is, what it was, the corner that stays (null: moved). */
+interface FrameDrag { start: number; end: number; text: string; rect: Rect; anchor: { row: number; col: number } | null }
+
 const REF_COLORS = ["#0070c0", "#c00000", "#7030a0", "#00b050", "#c55a11", "#2e75b6", "#bf8f00"];
 const PT = 96 / 72;
 
@@ -111,7 +118,7 @@ export class Grid {
   private head = { row: 0, col: 0 };
   /** Tab moves remember their starting column; Enter returns to it (Excel). */
   private tabStart: number | null = null;
-  private drag: null | { kind: "cells" | "cols" | "rows" | "fill" | "move" | "resizeCol" | "resizeRow" | "point" | "pageBreak"; start: { row: number; col: number }; x: number; y: number; extra?: unknown } = null;
+  private drag: null | { kind: "cells" | "cols" | "rows" | "fill" | "move" | "resizeCol" | "resizeRow" | "point" | "pageBreak" | "frame"; start: { row: number; col: number }; x: number; y: number; extra?: unknown } = null;
   private ghost: Rect | null = null;
   marquee: Rect | null = null;
   private marqueePhase = 0;
@@ -129,9 +136,9 @@ export class Grid {
         onmousedown: (e: MouseEvent) => { e.preventDefault(); this.host.namesMenu((e.currentTarget as HTMLElement).closest(".namebox-wrap")!.getBoundingClientRect()); } }, "⌄")),
       h("div", { class: "fbar-sep" }, "⋮"),
       h("div", { class: "fx-btns" }, cancel, ok, insertFn),
-      h("div", { class: "fx-wrap" }, this.fx));
+      h("div", { class: "fx-wrap" }, this.fxTint, this.fx));
     this.hscroll = h("div", { class: "hscroll" }, h("div"));
-    this.el = h("div", { class: "gridwrap" }, this.canvas, this.editor, this.vscroll, this.ac);
+    this.el = h("div", { class: "gridwrap" }, this.canvas, this.editorTint, this.editor, this.vscroll, this.ac);
     this.installEvents();
     new ResizeObserver(() => this.resize()).observe(this.el);
   }
@@ -255,6 +262,7 @@ export class Grid {
   }
 
   private paint(): void {
+    this.updateTint();
     if (!this.rows || !this.width) return;
     const st: DrawState = {
       sheet: this.sheet, styles: this.wb.styles, rows: this.rows, cols: this.cols, zoom: this.zoom, dpr: this.dpr,
@@ -753,18 +761,33 @@ export class Grid {
   }
 
   /** Commits the edit, then moves as Enter/Tab/arrows do ("none": stays, as the ✓ button). */
-  commitEdit(moveBy: "down" | "up" | "right" | "left" | "none", opts: { all?: boolean; array?: boolean; arrow?: boolean } = {}): void {
+  commitEdit(moveBy: "down" | "up" | "right" | "left" | "none", opts: { all?: boolean; array?: boolean; arrow?: boolean; click?: boolean } = {}): void {
     if (!this.editing) return;
     // Back on the formula's own sheet before it is checked and written.
     this.leavePointSheet();
     let text = (this.editing.viaBar ? this.fx : this.editor).value;
-    // Excel closes brackets a formula left open.
-    if (text.startsWith("=")) {
-      let open = 0;
-      let quoted = false;
-      for (const ch of text) { if (ch === '"') quoted = !quoted; else if (!quoted && ch === "(") open++; else if (!quoted && ch === ")") open--; }
-      if (open > 0) text += ")".repeat(open);
+    // Excel's checks on Enter (recorded, D-066): mended without asking, mended after asking, or refused.
+    const check = checkEntry(text);
+    const input = this.editing.viaBar ? this.fx : this.editor;
+    if (check.kind === "error" && this.host.formulaError) {
+      this.setMode("edit");
+      this.pointRef = null;
+      void this.host.formulaError().then(() => input.focus({ preventScroll: true }));
+      return;
     }
+    if (check.kind === "propose" && this.host.proposeFormula && !opts.arrow && !opts.click) {
+      this.setMode("edit");
+      this.pointRef = null;
+      void this.host.proposeFormula(check.text).then((yes) => {
+        if (!this.editing) return;
+        if (!yes) { input.focus({ preventScroll: true }); return; }
+        this.editor.value = check.text;
+        this.fx.value = check.text;
+        this.commitEdit(moveBy, opts);
+      });
+      return;
+    }
+    if (check.kind !== "error") text = check.text;
     const { row, col, viaBar } = this.editing;
     const changed = text !== this.editing.original;
     // Datenüberprüfung: the entry is checked first; the editor stays while the box is open (Excel).
@@ -827,27 +850,171 @@ export class Grid {
   }
 
   private refHighlights(): { rect: Rect; color: string }[] | undefined {
+    const refs = this.colouredRefs();
+    return refs && refs.map((r) => ({ rect: r.rect, color: r.color }));
+  }
+
+  /**
+   * The references of the formula being typed with their colours: the frames on the sheet and the
+   * text in the cell and the Bearbeitungsleiste share them (Excel). A reference written twice keeps
+   * its colour; references to other sheets get none.
+   */
+  private colouredRefs(): { start: number; end: number; rect: Rect; color: string }[] | undefined {
     const t = this.editorText();
     if (!t.startsWith("=")) return undefined;
     try {
-      const refs = formulaRefs(t.slice(1)).filter((r) => !r.sheet || r.sheet.toLowerCase() === this.sheet.name.toLowerCase());
-      return refs.map((r, i) => ({ rect: r.ref, color: REF_COLORS[i % REF_COLORS.length] }));
+      const own = this.sheet.name.toLowerCase();
+      const colours = new Map<string, string>();
+      const out: { start: number; end: number; rect: Rect; color: string }[] = [];
+      for (const r of formulaRefs(t.slice(1))) {
+        if (r.sheet && r.sheet.toLowerCase() !== own) continue;
+        const key = `${r.ref.r0},${r.ref.c0},${r.ref.r1},${r.ref.c1}`;
+        if (!colours.has(key)) colours.set(key, REF_COLORS[colours.size % REF_COLORS.length]);
+        out.push({ start: r.start + 1, end: r.end + 1, rect: r.ref, color: colours.get(key)! });
+      }
+      return out;
     } catch {
       return undefined;
     }
   }
 
+  // The coloured text: a layer under the transparent text of the editor and the Bearbeitungsleiste.
+  private editorTint = h("div", { class: "cell-editor-tint", "aria-hidden": "true" });
+  private fxTint = h("div", { class: "fx-tint", "aria-hidden": "true" });
+
+  /** Fills the layers with the text, its references in their colours; plain text when there is none. */
+  private updateTint(): void {
+    const refs = this.editing ? this.colouredRefs() : undefined;
+    const on = !!refs?.length;
+    for (const [input, tint, own] of [[this.editor, this.editorTint, true], [this.fx, this.fxTint, false]] as const) {
+      input.classList.toggle("tinted", on);
+      tint.hidden = !on || (own && (this.pointAway || !this.editor.classList.contains("on")));
+      if (!on || tint.hidden) continue;
+      const t = input.value;
+      const parts: (string | HTMLElement)[] = [];
+      let at = 0;
+      for (const r of refs!) {
+        if (r.start < at) continue;
+        parts.push(t.slice(at, r.start), h("span", { style: `color:${r.color}` }, t.slice(r.start, r.end)));
+        at = r.end;
+      }
+      // A line break at the very end needs something after it to take up its line.
+      parts.push(t.slice(at) + (t.endsWith("\n") ? " " : ""));
+      tint.replaceChildren(...parts);
+      if (own) {
+        // Same place, size and font as the editor.
+        const st = this.editor.style;
+        Object.assign(tint.style, { left: st.left, top: st.top, width: st.width, height: st.height, font: st.font, lineHeight: st.lineHeight, paddingTop: st.paddingTop, background: st.background, color: st.color });
+        tint.dataset.align = this.editor.dataset.align ?? "";
+        tint.dataset.wrap = this.editor.dataset.wrap ?? "";
+      }
+      tint.scrollLeft = input.scrollLeft;
+      tint.scrollTop = input.scrollTop;
+    }
+  }
+
   /** Whether arrow keys and clicks point at cells (Excel: after an operator, "(" or ";"). */
-  private canPoint(): boolean {
-    if (!this.editing || this.mode === "edit") return false;
+  private canPoint(forClick = false): boolean {
+    if (!this.editing) return false;
     const input = this.editing.viaBar ? this.fx : this.editor;
     const t = input.value;
-    if (!t.startsWith("=") && !t.startsWith("+")) return false;
+    // A formula, or text that becomes one ("+", "-" first, Lotus style).
+    if (!/^[=+-]/.test(t)) return false;
     const pos = input.selectionStart ?? t.length;
     if (input.selectionEnd !== pos && !this.pointRef) return false;
     if (this.pointRef && this.pointRef.end === pos) return true;
-    if (pos !== t.length && !/^\s*[;)]/.test(t.slice(pos))) return false;
-    return /[=(;+\-*/^&<>:,]\s*$/.test(t.slice(0, pos));
+    // Recorded in Excel (D-066): only the character before the caret counts, whatever follows,
+    // in Eingeben and Bearbeiten alike (arrows point only in Eingeben); at the very start too.
+    if (pos === 0) return true;
+    const before = t.slice(0, pos);
+    if ((before.match(/"/g)?.length ?? 0) % 2 === 1) return false;
+    // After a space only a click points (Excel's intersection "=A1 C3"); an arrow ends the entry (recorded).
+    return /[=(;+\-*/^&<>:!]\s*$/.test(before) || (forClick && /\s$/.test(before));
+  }
+
+  /** Keys that point somewhere other than the arrows do (recorded in Excel, D-066). True when handled. */
+  private pointKey(e: KeyboardEvent, k: string, ctrl: boolean, shift: boolean): boolean {
+    const base = this.pointRef ? this.pointRef.head : this.pointAway ? { ...this.active } : { row: this.editing!.row, col: this.editing!.col };
+    let from: { row: number; col: number } | null = null;
+    let to: { row: number; col: number } | null = null;
+    if (k === " " && ctrl && !shift) { from = { row: 0, col: base.col }; to = { row: MAX_ROWS - 1, col: base.col }; }
+    else if (k === " " && shift && !ctrl) { from = { row: base.row, col: 0 }; to = { row: base.row, col: MAX_COLS - 1 }; }
+    else if (k === "Home" && !shift) to = ctrl ? { row: 0, col: 0 } : { row: base.row, col: 0 };
+    else if (k === "End" && ctrl && !shift) {
+      const u = this.used();
+      // The cell being typed counts as used.
+      to = { row: Math.max(u?.r1 ?? 0, this.editing!.row), col: Math.max(u?.c1 ?? 0, this.editing!.col) };
+    } else if ((k === "PageDown" || k === "PageUp") && !ctrl && !shift) {
+      const n = this.visibleRows() + 2;
+      // At the top already, Bild auf points nowhere (recorded).
+      if (k === "PageUp" && this.view.top === 0) { e.preventDefault(); return true; }
+      to = { row: Math.max(0, Math.min(MAX_ROWS - 1, base.row + (k === "PageDown" ? n : -n))), col: base.col };
+    }
+    if (!to) return false;
+    e.preventDefault();
+    this.point(from ?? to, to);
+    return true;
+  }
+
+  // ----- the coloured frames of a formula's references ----------------------------------------
+
+  /** The frame of a reference under the pointer: a corner to size it, a border to move it. */
+  private frameAt(x: number, y: number): FrameDrag | null {
+    const refs = this.colouredRefs();
+    if (!refs) return null;
+    const t = this.editorText();
+    for (const r of refs) {
+      const b = this.rectOnCanvas(r.rect);
+      if (!b) continue;
+      const corners: [number, number, number, number][] = [[b.x, b.y, r.rect.r1, r.rect.c1], [b.x + b.w, b.y, r.rect.r1, r.rect.c0],
+        [b.x, b.y + b.h, r.rect.r0, r.rect.c1], [b.x + b.w, b.y + b.h, r.rect.r0, r.rect.c0]];
+      for (const [cx, cy, ar, ac] of corners) {
+        if (Math.abs(x - cx) <= 4 && Math.abs(y - cy) <= 4) return { start: r.start, end: r.end, text: t.slice(r.start, r.end), rect: r.rect, anchor: { row: ar, col: ac } };
+      }
+      const inX = x >= b.x - 3 && x <= b.x + b.w + 3, inY = y >= b.y - 3 && y <= b.y + b.h + 3;
+      const onV = (Math.abs(x - b.x) <= 2 || Math.abs(x - b.x - b.w) <= 2) && inY;
+      const onH = (Math.abs(y - b.y) <= 2 || Math.abs(y - b.y - b.h) <= 2) && inX;
+      if (onV || onH) return { start: r.start, end: r.end, text: t.slice(r.start, r.end), rect: r.rect, anchor: null };
+    }
+    return null;
+  }
+
+  /** Writes the frame's new place into the formula, keeping each part's $ signs. */
+  private dragFrame(f: FrameDrag, start: { row: number; col: number }, hit: { row: number; col: number }): void {
+    const m = /^(.*!)?(\$?)([A-Za-z]{1,3})(\$?)(\d+)(?::(\$?)([A-Za-z]{1,3})(\$?)(\d+))?$/.exec(f.text);
+    if (!m || !this.editing) return;
+    let r: Rect;
+    if (f.anchor) r = normRect(f.anchor.row, f.anchor.col, hit.row, hit.col);
+    else {
+      const dr = Math.max(-f.rect.r0, Math.min(MAX_ROWS - 1 - f.rect.r1, hit.row - start.row));
+      const dc = Math.max(-f.rect.c0, Math.min(MAX_COLS - 1 - f.rect.c1, hit.col - start.col));
+      r = { r0: f.rect.r0 + dr, c0: f.rect.c0 + dc, r1: f.rect.r1 + dr, c1: f.rect.c1 + dc };
+    }
+    const [, sheet = "", cA = "", , rA = ""] = m;
+    const cB = m[6] ?? cA, rB = m[8] ?? rA;
+    const part = (c$: string, col: number, r$: string, row: number) => `${c$}${colName(col)}${r$}${row + 1}`;
+    const text = sheet + part(cA, r.c0, rA, r.r0) + (r.r0 === r.r1 && r.c0 === r.c1 ? "" : ":" + part(cB, r.c1, rB, r.r1));
+    const input = this.editing.viaBar ? this.fx : this.editor;
+    const cur = this.editorText();
+    input.value = cur.slice(0, f.start) + text + cur.slice(f.end);
+    (input === this.fx ? this.editor : this.fx).value = input.value;
+    f.end = f.start + text.length;
+    f.text = text;
+    input.setSelectionRange(input.value.length, input.value.length);
+    this.pointRef = null;
+    this.placeEditor();
+    this.invalidate();
+  }
+
+  /** Strg+click while pointing: the next reference comes after a ";" (Excel). */
+  private addPointSeparator(): void {
+    if (!this.pointRef || !this.editing) return;
+    const input = this.editing.viaBar ? this.fx : this.editor;
+    const at = this.pointRef.end;
+    input.value = input.value.slice(0, at) + ";" + input.value.slice(at);
+    input.setSelectionRange(at + 1, at + 1);
+    (input === this.fx ? this.editor : this.fx).value = input.value;
+    this.pointRef = null;
   }
 
   /** AutoSumme: the formula is typed with its range marked as pointed (Zeigen), as Excel does. */
@@ -866,14 +1033,19 @@ export class Grid {
     const t = input.value;
     const start = this.pointRef?.start ?? input.selectionStart ?? t.length;
     const end = this.pointRef?.end ?? start;
-    const ref = (sheetPrefix || this.pointPrefix || "") + (anchor.row === head.row && anchor.col === head.col ? cellName(anchor.row, anchor.col) : rangeName(normRect(anchor.row, anchor.col, head.row, head.col)));
-    input.value = t.slice(0, start) + ref + t.slice(end);
-    const pos = start + ref.length;
+    const r = normRect(anchor.row, anchor.col, head.row, head.col);
+    const ref = (sheetPrefix || this.pointPrefix || "") + (anchor.row === head.row && anchor.col === head.col ? cellName(anchor.row, anchor.col) : rangeName(r));
+    let value = t.slice(0, start) + ref + t.slice(end);
+    // Text that does not start with "=" gets it once a reference is pointed ("+" then a click is "=+C3", recorded).
+    const shift = value.startsWith("=") ? 0 : 1;
+    if (shift) value = "=" + value;
+    input.value = value;
+    const pos = start + shift + ref.length;
     input.setSelectionRange(pos, pos);
-    this.pointRef = { start, end: pos, anchor, head };
+    this.pointRef = { start: start + shift, end: pos, anchor, head };
     (input === this.fx ? this.editor : this.fx).value = input.value;
     this.setMode("point");
-    this.reveal(head.row, head.col);
+    this.reveal(r.r0 === 0 && r.r1 === MAX_ROWS - 1 ? -1 : head.row, r.c0 === 0 && r.c1 === MAX_COLS - 1 ? -1 : head.col);
     this.placeEditor();
     this.invalidate();
   }
@@ -1110,7 +1282,7 @@ export class Grid {
     const p = this.local(e);
     const hit = this.hit(p.x, p.y);
     if (hit.area === "cell") {
-      if (this.editing) this.commitEdit("none");
+      if (this.editing) this.commitEdit("none", { click: true });
       this.selectCell(hit.row, hit.col);
     }
   }
@@ -1134,15 +1306,40 @@ export class Grid {
     }
     const p = this.local(e);
     const t = this.target(p.x, p.y);
-    if (this.editing && t.kind === "cells" && this.canPoint() || (this.pointRef && t.kind === "cells")) {
+    // The coloured frame of a reference in the formula: its corner sizes it, its border moves it (Excel).
+    const frame = this.editing && !this.pointAway ? this.frameAt(p.x, p.y) : null;
+    if (frame) {
+      e.preventDefault();
+      this.canvas.setPointerCapture(e.pointerId);
+      this.drag = { kind: "frame", start: { row: t.row, col: t.col }, x: p.x, y: p.y, extra: frame };
+      return;
+    }
+    if (this.editing && t.kind === "cells" && this.canPoint(true) || (this.pointRef && t.kind === "cells")) {
       e.preventDefault();
       this.canvas.setPointerCapture(e.pointerId);
       if (e.shiftKey && this.pointRef) this.point(this.pointRef.anchor, { row: t.row, col: t.col });
-      else this.point({ row: t.row, col: t.col }, { row: t.row, col: t.col });
+      else {
+        if (e.ctrlKey) this.addPointSeparator();
+        this.point({ row: t.row, col: t.col }, { row: t.row, col: t.col });
+      }
       this.drag = { kind: "point", start: { row: t.row, col: t.col }, x: p.x, y: p.y };
       return;
     }
-    if (this.editing) this.commitEdit("none");
+    // Headers while pointing: whole columns ("C:C") or rows ("3:3"), Umschalt extends, Strg adds (recorded).
+    if (this.editing && (t.kind === "cols" || t.kind === "rows") && (this.canPoint() || this.pointRef)) {
+      e.preventDefault();
+      const cols = t.kind === "cols";
+      const at = cols ? t.col : t.row;
+      const first = (i: number) => (cols ? { row: 0, col: i } : { row: i, col: 0 });
+      const last = (i: number) => (cols ? { row: MAX_ROWS - 1, col: i } : { row: i, col: MAX_COLS - 1 });
+      if (e.shiftKey && this.pointRef) this.point(first(cols ? this.pointRef.anchor.col : this.pointRef.anchor.row), last(at));
+      else {
+        if (e.ctrlKey) this.addPointSeparator();
+        this.point(first(at), last(at));
+      }
+      return;
+    }
+    if (this.editing) this.commitEdit("none", { click: true });
     e.preventDefault();
     this.editor.focus({ preventScroll: true });
     const af = this.sheet.autoFilter;
@@ -1226,6 +1423,9 @@ export class Grid {
     switch (d.kind) {
       case "point":
         this.point(this.pointRef?.anchor ?? d.start, { row: hit.row, col: hit.col });
+        return;
+      case "frame":
+        this.dragFrame(d.extra as FrameDrag, d.start, { row: hit.row, col: hit.col });
         return;
       case "cells":
         if (hit.row !== this.head.row || hit.col !== this.head.col) this.extendTo({ row: hit.row, col: hit.col });
@@ -1490,7 +1690,7 @@ export class Grid {
       this.invalidate();
       return;
     }
-    if (d.kind === "point") {
+    if (d.kind === "point" || d.kind === "frame") {
       this.editing?.viaBar ? this.fx.focus() : this.editor.focus({ preventScroll: true });
       return;
     }
@@ -1751,6 +1951,18 @@ export class Grid {
       this.placeEditor();
       return;
     }
+    if (ctrl && !shift && (k === "a" || k === "A") && input.value.startsWith("=")) {
+      const pos = input.selectionStart ?? input.value.length;
+      if (/[A-Za-zÄÖÜäöü][A-Za-zÄÖÜäöü0-9.]*\($/.test(input.value.slice(0, pos)) && input.value[pos] !== ")") {
+        e.preventDefault();
+        input.value = input.value.slice(0, pos) + ")" + input.value.slice(pos);
+        input.setSelectionRange(pos, pos);
+        (input === this.fx ? this.editor : this.fx).value = input.value;
+        this.pointRef = null;
+        this.invalidate();
+        return;
+      }
+    }
     if (ctrl && shift && (k === "a" || k === "A")) {
       // Strg+Umschalt+A: the function's argument names after its name, as Excel writes them.
       e.preventDefault();
@@ -1811,6 +2023,7 @@ export class Grid {
       this.cycleAbsolute(input);
       return;
     }
+    if (this.mode !== "edit" && !e.altKey && (this.canPoint() || this.pointRef) && this.pointKey(e, k, ctrl, shift)) return;
     const arrows: Record<string, [number, number]> = { ArrowDown: [1, 0], ArrowUp: [-1, 0], ArrowRight: [0, 1], ArrowLeft: [0, -1] };
     if (arrows[k] && !e.altKey) {
       const [dr, dc] = arrows[k];
@@ -1868,7 +2081,8 @@ export class Grid {
       input.value = t.slice(0, start) + out + t.slice(end);
       input.setSelectionRange(start + out.length, start + out.length);
       (input === this.fx ? this.editor : this.fx).value = input.value;
-      this.pointRef = null;
+      // A pointed reference stays pointed, so F4 again changes all of it (recorded).
+      this.pointRef = pointed && this.pointRef ? { ...this.pointRef, start, end: start + out.length } : null;
       this.invalidate();
       return;
     }
@@ -1940,7 +2154,9 @@ export class Grid {
     const t = input.value;
     const pos = input.selectionStart ?? t.length;
     const m = t.startsWith("=") ? /([A-Za-zÄÖÜäöüß][A-Za-zÄÖÜäöüß0-9.]*)$/.exec(t.slice(0, pos)) : null;
-    if (!m || /[A-Za-z]\$?\d/.test(m[1])) { this.ac.hidden = true; this.acItems = []; return; }
+    // Inside a string there is no function list (Excel).
+    const inString = (t.slice(0, pos).match(/"/g)?.length ?? 0) % 2 === 1;
+    if (!m || inString || /[A-Za-z]\$?\d/.test(m[1])) { this.ac.hidden = true; this.acItems = []; return; }
     const prefix = m[1].toUpperCase();
     this.acItems = this.functions.filter((f) => f.name.startsWith(prefix)).sort((a, b) => a.name.localeCompare(b.name, "de")).slice(0, 12);
     if (!this.acItems.length) { this.ac.hidden = true; return; }

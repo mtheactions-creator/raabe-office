@@ -4,6 +4,7 @@
 
 import { MAX_COLS, MAX_ROWS, type Rect } from "../address";
 import { CellError, type Workbook } from "../model";
+import { englishName, isEnglishName } from "./names";
 import { parseFormula, type Node } from "./parse";
 import { Arr, E, Ref, compare, isErr, num, toNum, toStr, type Any, type V } from "./values";
 
@@ -51,7 +52,14 @@ export class Ctx {
 
   /** The values of a reference as an array (huge whole-column areas trimmed to the used rows). */
   refArr(ref: Ref, area = 0): Arr {
-    const a = this.clip(ref.sheet, ref.areas[area]);
+    const whole = ref.areas[area];
+    const a = this.clip(ref.sheet, whole);
+    const arr = this.areaArr(ref, a);
+    if (a !== whole) arr.full = { rows: whole.r1 - whole.r0 + 1, cols: whole.c1 - whole.c0 + 1 };
+    return arr;
+  }
+
+  private areaArr(ref: Ref, a: Rect): Arr {
     const rows = a.r1 - a.r0 + 1, cols = a.c1 - a.c0 + 1;
     const d: V[] = new Array(Math.max(0, rows * cols)).fill(null);
     if (rows <= 0 || cols <= 0) return new Arr(0, 0, []);
@@ -132,7 +140,10 @@ export function map2(a: V | Arr, b: V | Arr, f: (x: V, y: V) => V): V | Arr {
       d[r * cols + c] = f(x, y);
     }
   }
-  return new Arr(rows, cols, d);
+  const out = new Arr(rows, cols, d);
+  const fa = a instanceof Arr ? a.full : undefined, fb = b instanceof Arr ? b.full : undefined;
+  if (fa || fb) out.full = { rows: Math.max(rows, fa?.rows ?? 0, fb?.rows ?? 0), cols: Math.max(cols, fa?.cols ?? 0, fb?.cols ?? 0) };
+  return out;
 }
 
 /** Element (r, c) of a value broadcast to a larger shape. */
@@ -155,6 +166,9 @@ export function mapN(args: (V | Arr)[], f: (vals: V[]) => V | Arr): V | Arr {
   }
   if (!any) return f(args as V[]);
   const d: V[] = new Array(rows * cols);
+  // Whole columns or rows keep their full size for the result (a spill of them cannot fit).
+  let full: { rows: number; cols: number } | undefined;
+  for (const a of args) if (a instanceof Arr && a.full) full = { rows: Math.max(full?.rows ?? 0, a.full.rows, rows), cols: Math.max(full?.cols ?? 0, a.full.cols, cols) };
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
       const vals = args.map((a) => pick(a, r, c));
@@ -162,7 +176,9 @@ export function mapN(args: (V | Arr)[], f: (vals: V[]) => V | Arr): V | Arr {
       d[r * cols + c] = out instanceof Arr ? out.d[0] ?? null : out;
     }
   }
-  return new Arr(rows, cols, d);
+  const out = new Arr(rows, cols, d);
+  if (full) out.full = full;
+  return out;
 }
 
 // ----- Operators ---------------------------------------------------------------------------
@@ -278,7 +294,8 @@ function evalName(name: string, sheetName: string | undefined, ctx: Ctx): Any {
   const lname = name.toLowerCase();
   const home = sheetName !== undefined ? ctx.sheetIndex(sheetName) : ctx.sheet;
   const dn = wb.names.find((n) => n.name.toLowerCase() === lname && n.sheet === home) ?? (sheetName === undefined ? wb.names.find((n) => n.name.toLowerCase() === lname && n.sheet === undefined) : undefined);
-  if (!dn) return E.name;
+  // A function's name without brackets is the function itself, which a cell cannot show (Excel: #CALC!).
+  if (!dn) return isEnglishName(name.toUpperCase()) || englishName(name.toUpperCase()) !== undefined ? E.calc : E.name;
   let node: Node;
   try {
     node = parseFormula(dn.ref.startsWith("=") ? dn.ref.slice(1) : dn.ref);

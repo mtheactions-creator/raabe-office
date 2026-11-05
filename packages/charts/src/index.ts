@@ -6,3 +6,5 @@ export * from "./format";
 export * from "./stats";
 export * from "./series";
 export * from "./render";
+export * from "./layouts";
+export * from "./colors";

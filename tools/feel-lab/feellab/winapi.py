@@ -188,6 +188,16 @@ def window_title(hwnd: int) -> str:
     return buf.value
 
 
+def window_pid(hwnd: int) -> int:
+    pid = ctypes.c_ulong()
+    user32.GetWindowThreadProcessId(hwnd, ctypes.byref(pid))
+    return pid.value
+
+
+def foreground() -> int:
+    return user32.GetForegroundWindow() or 0
+
+
 def window_class(hwnd: int) -> str:
     buf = ctypes.create_unicode_buffer(256)
     user32.GetClassNameW(hwnd, buf, 256)

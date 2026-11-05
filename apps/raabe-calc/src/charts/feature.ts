@@ -9,12 +9,13 @@
 // Bestimmtheitsmaß). Every change is one undo step (History.charts).
 
 import {
-  isBar, isPie, newChart, parseRef, renderChart, seriesFromBlock, titleText,
+  QUICK_LAYOUTS, isBar, isPie, newChart, parseRef, refText, renderChart, seriesFromBlock, seriesName, sourceOf, titleText,
   type CellAnchor, type CellValue, type ChartKind as Kind, type ChartModel, type LegendPos,
 } from "@raabe/charts";
 import { CellError, formatValue, type Rect, type Sheet, type Workbook } from "@raabe/sheet-engine";
-import { h } from "@raabe/shell";
+import { h, messageBox, showDialog } from "@raabe/shell";
 import type { CalcApp } from "../app";
+import { chartElements, elementName, formatPane, type ChartElement } from "./formatpane";
 import { sheetAxes, type Axis } from "../grid/metrics";
 
 export type ChartKind = Kind;
@@ -53,6 +54,8 @@ const CSS = `
 .chart-flyout label.sub { padding-left: 34px; }
 .chart-flyout input[type=text] { flex: 1; min-width: 0; font: inherit; padding: 1px 4px; border: 1px solid #c6c6c6; }
 .chart-flyout select { margin-left: auto; font: inherit; }
+.chart-elsel { position: absolute; pointer-events: none; border: 1px dashed #5f5f5f; display: none; }
+.chart-obj.sel .chart-elsel.on { display: block; }
 `;
 
 export function chartsFeature(app: CalcApp) {
@@ -67,6 +70,8 @@ export function chartsFeature(app: CalcApp) {
   let shownSheet: Sheet | null = null;
   let shownList: ChartModel[] | undefined;
   let drag: { m: ChartModel; handle: Handle | null; x: number; y: number; box: Box; draft: Box; moved: boolean } | null = null;
+  /** The selected element of the selected chart (Excel: Diagrammelemente on the Format tab). */
+  let element: ChartElement = { kind: "chart" };
 
   const zoom = () => app.sheet.view.zoom / 100;
 
@@ -207,7 +212,15 @@ export function chartsFeature(app: CalcApp) {
     el.addEventListener("pointerdown", (e) => onDown(e, m));
     el.addEventListener("pointermove", (e) => onMove(e));
     el.addEventListener("pointerup", (e) => onUp(e));
-    el.addEventListener("dblclick", (e) => { e.preventDefault(); e.stopPropagation(); select(m); openFlyout(m); });
+    el.addEventListener("dblclick", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if ((e.target as HTMLElement).closest?.(".chart-plus")) return;
+      select(m);
+      // Excel: a double-click on an element opens its Format pane.
+      setElement(m, elementAt(e.target as Element) ?? element);
+      openPane(m);
+    });
     el.addEventListener("contextmenu", (e) => { e.preventDefault(); e.stopPropagation(); select(m); openFlyout(m); });
     el.addEventListener("keydown", (e) => onKey(e, m));
     el.addEventListener("wheel", () => closeFlyout(), { passive: true });
@@ -298,6 +311,7 @@ export function chartsFeature(app: CalcApp) {
       // Undo/redo replaces the models: keep the selection on the same chart by position.
       selected = null;
       closeFlyout();
+      if (paneChart) { paneChart = null; app.taskPane.close(); }
     }
     for (const [m, v] of views) v.el.classList.toggle("sel", m === selected);
     // Drawing order: later charts on top.
@@ -311,6 +325,8 @@ export function chartsFeature(app: CalcApp) {
     queueMicrotask(() => app.chartSelectionChanged());
     if (m === selected) return;
     selected = m;
+    element = { kind: "chart" };
+    if (!m && app.taskPane.isOpen && paneChart) { paneChart = null; app.taskPane.close(); }
     for (const [k, v] of views) v.el.classList.toggle("sel", k === m);
     if (!m) closeFlyout();
     else views.get(m)?.el.focus({ preventScroll: true });
@@ -323,6 +339,8 @@ export function chartsFeature(app: CalcApp) {
     if (app.grid.isEditing) app.grid.commitEdit("none");
     closeFlyout();
     select(m);
+    // A click on an element selects it; a click on the chart's handles keeps the chart area.
+    if (!(e.target as HTMLElement).closest?.(".chart-handle")) setElement(m, elementAt(e.target as Element) ?? { kind: "chart" });
     const view = views.get(m)!;
     view.el.focus({ preventScroll: true });
     const handle = ((e.target as HTMLElement).closest?.(".chart-handle") as HTMLElement | null)?.dataset.h as Handle | undefined;
@@ -386,6 +404,13 @@ export function chartsFeature(app: CalcApp) {
   }
 
   function onKey(e: KeyboardEvent, m: ChartModel): void {
+    if (e.ctrlKey && (e.key === "1" || e.code === "Digit1")) {
+      // Strg+1: the Format pane of the selected element (Excel).
+      e.preventDefault();
+      e.stopPropagation();
+      openPane(m);
+      return;
+    }
     if (e.key === "Delete" || e.key === "Backspace") {
       e.preventDefault();
       e.stopPropagation();
@@ -411,6 +436,96 @@ export function chartsFeature(app: CalcApp) {
     app.grid.focus();
   }
 
+  // ----- elements and the Format pane --------------------------------------------------------------
+
+  /** The element under the pointer, from the drawing's data-part marks. */
+  function elementAt(target: Element): ChartElement | null {
+    const part = (target.closest?.("[data-part]") as SVGElement | null)?.dataset.part;
+    if (!part) return null;
+    const [kind, a] = part.split(":");
+    switch (kind) {
+      case "chart": return { kind: "chart" };
+      case "plot": return { kind: "plot" };
+      case "title": return { kind: "title" };
+      case "legend": return { kind: "legend" };
+      case "axis": return a === "val" ? { kind: "valAxis" } : { kind: "catAxis" };
+      case "axes": return { kind: "catAxis" };
+      case "grid": return { kind: "majorGrid" };
+      case "minorGrid": return { kind: "minorGrid" };
+      case "catGrid": return { kind: "catGrid" };
+      case "axisTitle": return { kind: "axisTitle", axis: a === "val" ? "val" : "cat" };
+      case "series": return { kind: "series", index: Number(a) };
+      case "labels": return { kind: "labels" };
+      case "trend": case "trendLabel": return { kind: "trend", index: Number(a) };
+      case "errbars": return { kind: "errorBars", index: Number(a) };
+      default: return null;
+    }
+  }
+
+  /** The SVG parts that make up an element (for its selection frame). */
+  function partsOf(e: ChartElement): string {
+    switch (e.kind) {
+      case "chart": return "";
+      case "valAxis": return '[data-part="axis:val"]';
+      case "catAxis": return '[data-part="axis:cat"],[data-part="axes"]';
+      case "majorGrid": return '[data-part="grid"]';
+      case "series": return `[data-part^="series:${e.index}"]`;
+      case "labels": return '[data-part^="labels:"]';
+      case "trend": return `[data-part="trend:${e.index}"]`;
+      case "errorBars": return `[data-part="errbars:${e.index}"]`;
+      case "axisTitle": return `[data-part="axisTitle:${e.axis}"]`;
+      default: return `[data-part="${e.kind}"]`;
+    }
+  }
+
+  function setElement(m: ChartModel, e: ChartElement): void {
+    element = e;
+    showElement(m);
+    if (paneChart === m && app.taskPane.isOpen) openPane(m);
+    queueMicrotask(() => app.chartSelectionChanged());
+  }
+
+  /** The dashed frame around the selected element (the chart area has the chart's own frame). */
+  function showElement(m: ChartModel): void {
+    const v = views.get(m);
+    if (!v) return;
+    let box = v.el.querySelector<HTMLElement>(".chart-elsel");
+    if (!box) { box = h("div", { class: "chart-elsel" }); v.el.append(box); }
+    const sel = partsOf(element);
+    const els = sel ? [...v.el.querySelectorAll<SVGGraphicsElement>(sel)] : [];
+    if (!els.length) { box.classList.remove("on"); return; }
+    const o = v.el.getBoundingClientRect();
+    let l = Infinity, t = Infinity, r = -Infinity, b = -Infinity;
+    for (const el of els) {
+      const rr = el.getBoundingClientRect();
+      l = Math.min(l, rr.left); t = Math.min(t, rr.top); r = Math.max(r, rr.right); b = Math.max(b, rr.bottom);
+    }
+    Object.assign(box.style, { left: `${l - o.left - 2}px`, top: `${t - o.top - 2}px`, width: `${r - l + 4}px`, height: `${b - t + 4}px` });
+    box.classList.add("on");
+  }
+
+  let paneChart: ChartModel | null = null;
+
+  /** Opens (or follows) the Format pane of the selected element. */
+  function openPane(m: ChartModel): void {
+    paneChart = m;
+    const valid = chartElements(m).some((x) => JSON.stringify(x) === JSON.stringify(element));
+    if (!valid) element = { kind: "chart" };
+    app.taskPane.onClose = () => { paneChart = null; };
+    // Below the formula bar, as Excel docks its panes.
+    document.documentElement.style.setProperty("--pane-top", `${document.querySelector(".calc-main")?.getBoundingClientRect().top ?? 150}px`);
+    app.taskPane.show(formatPane(m, element, {
+      edit: (fn) => { edit(m, fn); showElement(m); },
+      select: (x) => setElement(m, x),
+      size: () => { const b = sheetBox(m); return { w: Math.round((b.w / 96) * 2.54 * 100) / 100, h: Math.round((b.h / 96) * 2.54 * 100) / 100 }; },
+      resize: (w, hh) => {
+        const b = sheetBox(m);
+        const to = anchorAt(b.x + (w / 2.54) * 96, b.y + (hh / 2.54) * 96);
+        edit(m, (c) => { c.to = to; });
+      },
+    }));
+  }
+
   // ----- Diagrammelemente -----------------------------------------------------------------------------
 
   function closeFlyout(): void {
@@ -428,6 +543,7 @@ export function chartsFeature(app: CalcApp) {
       fn(m);
     });
     if (flyout) openFlyout(m);
+    if (paneChart === m && app.taskPane.isOpen) app.taskPane.refresh();
   }
 
   function openFlyout(m: ChartModel): void {
@@ -532,6 +648,140 @@ export function chartsFeature(app: CalcApp) {
     select(m);
   }
 
+  // ----- Schnelllayout ------------------------------------------------------------------------------
+
+  /** The recorded layouts that fit the chart's kind (Excel shows the same eleven for each family). */
+  function layoutsFor(m: ChartModel) {
+    const fam: Record<string, string> = { column: "column", columnStacked: "column", bar: "bar", barStacked: "bar", line: "line", lineMarkers: "lineMarkers",
+      area: "area", pie: "pie", doughnut: "pie", scatter: "scatter", scatterSmooth: "scatter", scatterLines: "scatter" };
+    return QUICK_LAYOUTS[fam[m.kind] ?? ""] ?? [];
+  }
+
+  /** Diagrammentwurf > Schnelllayout > Layout n: the elements Excel's layout sets (recorded). */
+  function quickLayout(n: number): void {
+    const m = selected;
+    const l = m ? layoutsFor(m)[n - 1] : null;
+    if (!m || !l) return;
+    edit(m, (c) => {
+      c.title.show = l.title;
+      c.legend = l.legend;
+      c.dataLabels = l.labels;
+      const f = (c.format ??= {});
+      if (l.labels) {
+        const d: NonNullable<typeof f.dataLabels> = { ...(f.dataLabels ?? {}) };
+        delete d.pos; delete d.showCat; delete d.showPercent;
+        const defPos = isPie(c.kind) ? "bestFit" : c.kind.endsWith("Stacked") ? "ctr" : c.kind === "column" || c.kind === "bar" ? "outEnd" : "r";
+        if (l.labelPos && l.labelPos !== defPos) d.pos = l.labelPos as import("@raabe/charts").DataLabelOptions["pos"];
+        if (l.showCat) d.showCat = true;
+        if (l.showPct) d.showPercent = true;
+        if (Object.keys(d).length) f.dataLabels = d; else delete f.dataLabels;
+      }
+      c.axisTitles = { ...(l.catTitle ? { cat: c.axisTitles.cat ?? "" } : {}), ...(l.valTitle ? { val: c.axisTitles.val ?? "" } : {}) };
+      c.gridlines = !!l.majorGrid;
+      if (l.minorGrid) f.minorGrid = { ...(f.minorGrid ?? {}), show: true }; else delete f.minorGrid;
+      if (l.catGrid) f.catGrid = { ...(f.catGrid ?? {}), show: true }; else delete f.catGrid;
+      const defGap = c.kind.endsWith("Stacked") ? 150 : c.kind === "bar" ? 182 : 219;
+      if (l.gap !== undefined && (c.kind === "column" || c.kind === "bar" || c.kind.endsWith("Stacked"))) c.gapWidth = l.gap === defGap ? undefined : l.gap;
+      if (!Object.keys(f).length) delete c.format;
+    });
+  }
+
+  // ----- Daten: Zeile/Spalte wechseln, Daten auswählen -------------------------------------------
+
+  /** The series of a range, as Excel makes them (`orientation` forced by Zeile/Spalte wechseln). */
+  function seriesOf(m: ChartModel, ref: { sheet: string; r0: number; c0: number; r1: number; c1: number }, orientation?: "rows" | "cols") {
+    const sheet = app.wb.sheets.find((s) => s.name === ref.sheet) ?? app.sheet;
+    return seriesFromBlock({ ...ref, sheet: sheet.name, get: (r, c) => cellValue(sheet.value(r, c)) }, m.kind, orientation);
+  }
+
+  /** Diagrammentwurf > Zeile/Spalte wechseln: the series run the other way through the same range. */
+  function switchRowCol(): void {
+    const m = selected;
+    if (!m) return;
+    const src = sourceOf(m.series);
+    if (!src) return;
+    edit(m, (c) => {
+      c.series = seriesOf(c, src.ref, src.orientation === "cols" ? "rows" : "cols");
+      delete c.raw;
+      readCaches(app.wb, c);
+    });
+  }
+
+  /** Diagrammentwurf > Daten auswählen: Excel's "Datenquelle auswählen". */
+  async function selectData(): Promise<void> {
+    const m = selected;
+    if (!m) return;
+    const src = sourceOf(m.series);
+    const range = h("input", { type: "text", style: "width:260px", value: src ? refText(src.ref.sheet, src.ref.r0, src.ref.c0, src.ref.r1, src.ref.c1) : "" }) as HTMLInputElement;
+    const list = h("select", { size: 6, style: "width:220px" }) as HTMLSelectElement;
+    const cats = h("div", { style: "width:220px;height:96px;overflow:auto;border:1px solid #c6c6c6;padding:2px 4px" });
+    let draft = m.series.map((s) => structuredClone(s));
+    let orientation = src?.orientation;
+    const fill = () => {
+      const keep = list.selectedIndex;
+      list.replaceChildren(...draft.map((s, i) => h("option", { value: String(i) }, seriesName(s, i))));
+      list.selectedIndex = Math.min(Math.max(0, keep), draft.length - 1);
+      cats.replaceChildren(...(draft[0]?.cat?.cache ?? []).map((v) => h("div", null, v === null ? "" : String(v))));
+    };
+    const fromRange = (o?: "rows" | "cols") => {
+      const r = parseRef(range.value.replace(/^=/, ""));
+      if (!r) return;
+      draft = seriesOf(m, r, o);
+      fill();
+    };
+    range.addEventListener("change", () => fromRange());
+    const btn = (label: string, run: () => void) => h("button", { type: "button", class: "dlg-btn", onclick: run }, label);
+    const editSeries = async (i: number | null) => {
+      const s = i === null ? { val: { cache: [] as (number | null)[] } } : draft[i];
+      const name = h("input", { type: "text", style: "width:240px", value: s.name?.ref ? "=" + s.name.ref : s.name?.text ?? "" }) as HTMLInputElement;
+      const vals = h("input", { type: "text", style: "width:240px", value: s.val.ref ? "=" + s.val.ref : "={1}" }) as HTMLInputElement;
+      const ok = await showDialog({ title: "Datenreihe bearbeiten", body: h("div", null, h("label", { class: "field" }, "Reihenname:", name), h("label", { class: "field" }, "Reihenwerte:", vals)),
+        buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
+      if (!ok) return;
+      const n = name.value.startsWith("=") ? { ref: name.value.slice(1) } : { text: name.value };
+      const next = { ...s, name: n, val: { ...s.val, ref: vals.value.replace(/^=/, "") } };
+      if (i === null) draft.push(next); else draft[i] = next;
+      fill();
+    };
+    fill();
+    const body = h("div", { style: "display:flex;flex-direction:column;gap:10px" },
+      h("label", { class: "field" }, "Diagrammdatenbereich:", range),
+      h("div", null, btn("Zeile/Spalte wechseln", () => { orientation = orientation === "cols" ? "rows" : "cols"; fromRange(orientation); })),
+      h("div", { style: "display:flex;gap:16px" },
+        h("div", null, h("div", null, "Legendeneinträge (Reihen)"),
+          h("div", { style: "display:flex;gap:4px;margin:4px 0" },
+            btn("Hinzufügen", () => void editSeries(null)), btn("Bearbeiten", () => list.selectedIndex >= 0 && void editSeries(list.selectedIndex)),
+            btn("Entfernen", () => { if (list.selectedIndex >= 0) { draft.splice(list.selectedIndex, 1); fill(); } }),
+            btn("\u25b2", () => { const i = list.selectedIndex; if (i > 0) { [draft[i - 1], draft[i]] = [draft[i], draft[i - 1]]; fill(); list.selectedIndex = i - 1; } }),
+            btn("\u25bc", () => { const i = list.selectedIndex; if (i >= 0 && i < draft.length - 1) { [draft[i + 1], draft[i]] = [draft[i], draft[i + 1]]; fill(); list.selectedIndex = i + 1; } })),
+          list),
+        h("div", null, h("div", null, "Horizontale Achsenbeschriftungen (Rubrik)"), h("div", { style: "height:26px" }), cats)));
+    const ok = await showDialog({ title: "Datenquelle auswählen", body, buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
+    if (!ok) return;
+    if (!draft.length) { await messageBox("RaabeCalc", "Ein Diagramm braucht mindestens eine Datenreihe."); return; }
+    edit(m, (c) => { c.series = draft; delete c.raw; readCaches(app.wb, c); });
+  }
+
+  /** Diagrammentwurf > Diagramm verschieben: as an object onto another sheet (chart sheets: EXCEL-INVENTORY). */
+  async function moveChart(): Promise<void> {
+    const m = selected;
+    if (!m) return;
+    const sel = h("select", null, ...app.wb.sheets.map((s) => h("option", { value: s.name, selected: s === app.sheet }, s.name))) as HTMLSelectElement;
+    const ok = await showDialog({ title: "Diagramm verschieben", body: h("div", null, h("p", null, "Wählen Sie, wo das Diagramm platziert werden soll:"), h("label", { class: "field" }, "Objekt in:", sel)),
+      buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
+    if (!ok || sel.value === app.sheet.name) return;
+    const to = app.wb.sheets.find((s) => s.name === sel.value)!;
+    const from = app.sheet;
+    select(null);
+    app.change("Diagramm verschieben", () => {
+      app.history.charts(from);
+      app.history.charts(to);
+      from.charts = (from.charts ?? []).filter((c) => c !== m);
+      to.charts = [...(to.charts ?? []), m];
+    });
+    refresh();
+  }
+
   function nextNumber(wb: Workbook): number {
     let n = 0;
     for (const s of wb.sheets) for (const c of s.charts ?? []) {
@@ -553,5 +803,35 @@ export function chartsFeature(app: CalcApp) {
     elements: (): void => { if (selected) openFlyout(selected); },
     /** Diagrammentwurf > Diagrammtyp ändern. */
     changeKind: (kind: ChartKind): void => { if (selected) edit(selected, (m) => { m.kind = kind; }); },
+    switchRowCol,
+    quickLayout,
+    /** Diagrammentwurf > Farben ändern: a colour scheme (Excel's 10-26; series with their own colour keep it). */
+    setColors: (k: number): void => { if (selected) edit(selected, (c) => { c.colors = k === 10 ? undefined : k; for (const s of c.series) delete s.color; }); },
+    layoutCount: (): number => (selected ? layoutsFor(selected).filter(Boolean).length : 0),
+    selectData: (): void => void selectData(),
+    moveChart: (): void => void moveChart(),
+    /** Format > Aktuelle Auswahl: the elements of the selected chart, the selected one, choosing one. */
+    elementNames: (): string[] => (selected ? chartElements(selected).map((x) => elementName(selected!, x)) : []),
+    elementName: (): string => (selected ? elementName(selected, element) : ""),
+    chooseElement: (name: string): void => {
+      if (!selected) return;
+      const x = chartElements(selected).find((e) => elementName(selected!, e) === name);
+      if (x) setElement(selected, x);
+    },
+    /** Format > Auswahl formatieren (Strg+1). */
+    formatSelection: (): void => { if (selected) openPane(selected); },
+    /** Format > Auf Formatvorlage zurücksetzen: the selected element's own formatting goes. */
+    resetElement: (): void => {
+      if (!selected) return;
+      const e = element;
+      edit(selected, (m) => {
+        const f = m.format;
+        const k = e.kind;
+        if (k === "series") { const s = m.series[e.index]; delete s.fill; delete s.line; delete s.marker; return; }
+        if (!f) return;
+        const key = ({ chart: "chart", plot: "plot", title: "title", legend: "legend", valAxis: "valAxis", catAxis: "catAxis", majorGrid: "majorGrid", minorGrid: "minorGrid", catGrid: "catGrid", labels: "dataLabels" } as const)[k as "chart"];
+        if (key) delete (f as Record<string, unknown>)[key];
+      });
+    },
   };
 }

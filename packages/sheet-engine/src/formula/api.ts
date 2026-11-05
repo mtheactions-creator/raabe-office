@@ -5,5 +5,6 @@ export { evaluate, StoredHost, FUNCTIONS_DE, implemented } from "./functions";
 export { shiftFormula, adjustFormula, formulaRefs, type Change, type RowColChange, type MoveChange, type CellsChange, type FormulaRef } from "./refs";
 export { ALL_FUNCTIONS_DE, germanName, englishName, XLFN } from "./names";
 export { isValidLocal } from "./parse";
+export { checkEntry, type EntryCheck } from "./entry";
 export { nextStep } from "./steps";
 export { Calc, type CalcOptions, type CellAt } from "./calc";

@@ -1101,3 +1101,42 @@ body.touch .qat button { height: 36px; min-width: 36px; }
 .hy-point.off { cursor: default; color: #8a8a8a; }
 .hyopts { width: 380px; display: flex; flex-direction: column; gap: 8px; }
 .hyopts .grid2 { display: grid; grid-template-columns: 1fr auto; gap: 8px 12px; align-items: center; margin-top: 6px; }
+
+/* ----- Task pane (Excel's Format panes): docked at the right, below the ribbon ----- */
+.taskpane { position: fixed; right: 0; top: var(--pane-top, 150px); bottom: var(--statusbar-h, 22px); width: 300px; z-index: 15;
+  display: flex; flex-direction: column; background: #fff; border-left: 1px solid #e1dfdd; font: 12px var(--font); color: #252423; }
+.taskpane[hidden] { display: none; }
+body.taskpane-open .calc-main { margin-right: 300px; }
+.tp-head { display: flex; align-items: center; padding: 12px 10px 6px 16px; }
+.tp-title { flex: 1; font-size: 18px; font-weight: 300; }
+.tp-close { border: 0; background: none; width: 26px; height: 26px; border-radius: 3px; color: #605e5c; cursor: pointer; }
+.tp-close:hover { background: var(--hover); }
+.tp-sets { display: flex; gap: 16px; padding: 4px 16px 0; }
+.tp-set { border: 0; background: none; padding: 4px 0; font: 12px var(--font); color: #605e5c; cursor: pointer; border-bottom: 2px solid transparent; }
+.tp-set.on { color: #252423; font-weight: 600; border-bottom-color: var(--accent); }
+.tp-chev { margin-left: 4px; font-size: 10px; }
+.tp-tabs { display: flex; gap: 2px; padding: 8px 16px 4px; border-bottom: 1px solid #edebe9; }
+.tp-tab { border: 0; background: none; width: 36px; height: 30px; border-radius: 3px; cursor: pointer; border-bottom: 2px solid transparent; }
+.tp-tab.on { border-bottom-color: var(--accent); background: #f3f2f1; }
+.tp-tab:hover { background: var(--hover); }
+.tp-body { flex: 1; overflow-y: auto; padding: 4px 0 16px; }
+.tp-sec-head { display: flex; align-items: center; gap: 6px; width: 100%; border: 0; background: none; padding: 7px 16px; font: 600 12px var(--font); text-align: left; cursor: pointer; }
+.tp-sec-head:hover { background: var(--hover); }
+.tp-tri { width: 10px; font-size: 9px; color: #605e5c; }
+.tp-sec-body { padding: 2px 16px 8px 32px; display: flex; flex-direction: column; gap: 6px; }
+.tp-line { display: flex; align-items: center; gap: 8px; min-height: 24px; }
+.tp-label { flex: 1; }
+.tp-choice { gap: 6px; }
+.tp-heading { font-weight: 600; margin-top: 6px; }
+.tp-row { display: flex; flex-direction: column; gap: 6px; }
+.tp-color { display: inline-flex; align-items: center; gap: 4px; height: 24px; padding: 0 4px; border: 1px solid #c8c6c4; background: #fff; border-radius: 2px; }
+.tp-swatch { width: 16px; height: 14px; border: 1px solid #c8c6c4; }
+.tp-numbox { display: inline-flex; align-items: stretch; border: 1px solid #c8c6c4; border-radius: 2px; height: 24px; }
+.tp-num { width: 64px; border: 0; padding: 0 4px; font: 12px var(--font); text-align: right; outline: none; }
+.tp-spin { display: flex; flex-direction: column; border-left: 1px solid #edebe9; }
+.tp-spin button { flex: 1; width: 16px; border: 0; background: none; font-size: 8px; line-height: 1; padding: 0; cursor: pointer; }
+.tp-spin button:hover { background: var(--hover); }
+.tp-slider { width: 90px; }
+.tp-select, .tp-text { height: 24px; border: 1px solid #c8c6c4; border-radius: 2px; font: 12px var(--font); min-width: 110px; }
+.tp-btn, .tp-reset { height: 24px; padding: 0 10px; border: 1px solid #c8c6c4; background: #fff; border-radius: 2px; font: 12px var(--font); cursor: pointer; }
+.tp-btn:hover, .tp-reset:hover:not(:disabled) { background: var(--hover); }

@@ -67,12 +67,24 @@ class ExcelSide:
         st.Font.Size = 11
         self.x.app.ActiveWindow.Zoom = 100
         self.root = uia.element_for(self.x.hwnd)
+        # Excel's messages as a user sees them (a wrong formula, …); off only while the harness deletes sheets.
+        self.x.app.DisplayAlerts = True
 
     def reset(self, case: Case) -> None:
         app = self.x.app
+        for _ in range(4):
+            try:
+                _ = app.ActiveSheet.Name
+                app.ActiveSheet.Range("A1").Value2
+                break
+            except Exception:  # noqa: BLE001
+                self.close_dialogs()
+                winapi.activate(self.x.hwnd)
+                winapi.press("esc")
+                time.sleep(0.4)
         wb = self.x.wb
+        app.DisplayAlerts = False
         while wb.Worksheets.Count > 1:
-            app.DisplayAlerts = False
             wb.Worksheets(wb.Worksheets.Count).Delete()
         while wb.Worksheets.Count < case.sheets:
             wb.Worksheets.Add(After=wb.Worksheets(wb.Worksheets.Count))
@@ -96,6 +108,7 @@ class ExcelSide:
         for m in case.merges:
             ws.Range(m).Merge()
         ws.Range(case.start).Select()
+        app.DisplayAlerts = True
         app.ActiveWindow.Zoom = 100
         app.ActiveWindow.ScrollRow = 1
         app.ActiveWindow.ScrollColumn = 1
@@ -111,6 +124,15 @@ class ExcelSide:
                     for where in ("center", "br", "right", "bottom"):
                         self.cache[(last, where)] = self._point(last, where)
                         self.cache[(a.split(":")[0], where)] = self._point(a.split(":")[0], where)
+            # Header positions too: a header clicked while a formula is typed cannot ask Excel then.
+            if st[0] in ("colhead", "rcolhead"):
+                self.cache[("header", "col", str(st[1]))] = self._header_point("col", st[1])
+            if st[0] in ("rowhead", "rrowhead"):
+                self.cache[("header", "row", str(st[1]))] = self._header_point("row", st[1])
+
+    def header_point(self, kind: str, which) -> tuple[float, float]:
+        hit = getattr(self, "cache", {}).get(("header", kind, str(which)))
+        return hit if hit else self._header_point(kind, which)
 
     def point(self, addr: str, where: str = "center") -> tuple[float, float]:
         hit = getattr(self, "cache", {}).get((addr, where))
@@ -132,7 +154,7 @@ class ExcelSide:
             px, py = left, top
         return win.PointsToScreenPixelsX(0) + _pt_to_px(px), win.PointsToScreenPixelsY(0) + _pt_to_px(py)
 
-    def header_point(self, kind: str, which) -> tuple[float, float]:
+    def _header_point(self, kind: str, which) -> tuple[float, float]:
         win = self.x.app.ActiveWindow
         if kind == "col":
             r = self.x.sheet.Range(f"{which}1")
@@ -150,10 +172,31 @@ class ExcelSide:
             el = uia.find(self.root, lambda d: d["type"] == "TabItem" and d["name"] == arg, max_depth=10)
         elif kind == "sheetadd":
             el = uia.find(self.root, lambda d: d["type"] == "Button" and d["name"] == "Blatt hinzufügen", max_depth=10)
+        elif kind == "fxbar":
+            el = uia.find(self.root, lambda d: d["type"] == "Edit" and d["name"] == "Bearbeitungsleiste", max_depth=10)
         else:
             el = uia.find(self.root, lambda d: d["type"] == "Edit" and d["name"] == "Namenfeld", max_depth=10)
         r = uia.describe(el)["rect"]
         return r[0] + r[2] / 2, r[1] + r[3] / 2
+
+    def close_dialogs(self) -> bool:
+        """A message box or dialog of our own Excel: Esc closes it (never accepted). True when there was one."""
+        pid = winapi.window_pid(self.x.hwnd)
+        found = False
+        for _ in range(4):
+            # Office's floating buttons (Einfügeoptionen, AutoAusfüllen …) are small NUIDialogs too: not dialogs.
+            def big(h: int) -> bool:
+                l, t, r, b = winapi.window_rect(h)
+                return r - l > 120 and b - t > 80
+            dlg = [h for h in winapi.find_windows(lambda h: winapi.window_pid(h) == pid and h != self.x.hwnd
+                                                  and winapi.window_class(h) in ("#32770", "NUIDialog", "bosa_sdm_XL9") and big(h))]
+            if not dlg:
+                return found
+            found = True
+            winapi.activate(dlg[0])
+            winapi.press("esc")
+            time.sleep(0.4)
+        return found
 
     def status(self) -> list[str]:
         bar = uia.find(self.root, lambda d: d["type"] == "StatusBar", max_depth=6)
@@ -302,6 +345,21 @@ def run_step(side, step: tuple) -> None:
         winapi.drag(x1 - 1, y1, x2 - 1, y2)
         if mods:
             winapi.key_up(winapi.vk_for(mods))
+    elif kind == "fxclick":
+        # The formula bar, right of a short text: the caret goes to the end.
+        x, y = side.ui_point("fxbar")
+        winapi.click(x, y, 1)
+    elif kind == "dragfrom":
+        # ("dragfrom", cell, "br" | "right" | "bottom", target): from that edge of the cell to the target's centre.
+        x1, y1 = side.point(step[1], step[2])
+        x2, y2 = side.point(step[3])
+        winapi.drag(x1 - 1, y1 - (1 if step[2] == "br" else 0), x2, y2)
+    elif kind == "dragctrl":
+        x1, y1 = side.point(step[1])
+        x2, y2 = side.point(step[2])
+        winapi.key_down(winapi.vk_for("ctrl"))
+        winapi.drag(x1, y1, x2, y2)
+        winapi.key_up(winapi.vk_for("ctrl"))
     elif kind in ("rclick", "rcolhead", "rrowhead"):
         # Right-click, then Esc closes the context menu; what is left is the selection it made.
         x, y = side.point(step[1]) if kind == "rclick" else side.header_point("col" if kind == "rcolhead" else "row", step[1])
@@ -440,7 +498,7 @@ class CalcSide:
 
     def ui_point(self, kind: str, arg=None) -> tuple[float, float]:
         import json as _json
-        sel = {"sheettab": None, "sheetadd": ".sheetadd", "namebox": ".namebox"}[kind]
+        sel = {"sheettab": None, "sheetadd": ".sheetadd", "namebox": ".namebox", "fxbar": ".fx-input"}[kind]
         if kind == "sheettab":
             js = f"[...document.querySelectorAll('.sheettab')].find(t => t.textContent === {_json.dumps(arg)}).getBoundingClientRect()"
         else:
@@ -475,6 +533,8 @@ CELL_FIELDS = ("formula", "text", "format", "bold", "italic", "underline", "stri
 
 def diff(excel: dict, calc: dict, today: bool = False) -> list[str]:
     out = []
+    if bool(excel.get("dialog")) != bool(calc.get("dialog")):
+        out.append(f"dialog: Excel {bool(excel.get('dialog'))}, RaabeCalc {bool(calc.get('dialog'))}")
     for f in FIELDS:
         if f not in excel:
             continue
@@ -526,7 +586,16 @@ def compare_calc(cases: list[Case], out, date: str) -> None:
                 if os.environ.get("CATDEBUG"):
                     print("   ", s, side.js("JSON.stringify([__calc.state([]).selection, __calc.app.grid.mode, document.activeElement.className])"))
             time.sleep(0.3)
+            # A dialog of RaabeCalc's own (Excel's are recorded the same way): noted, then closed with Esc.
+            dialog = bool(side.js("!!document.querySelector('.dialog-layer')"))
+            for _ in range(4):
+                if not side.js("!!document.querySelector('.dialog-layer')"):
+                    break
+                winapi.press("esc")
+                time.sleep(0.3)
             st = side.state(c)
+            if dialog:
+                st["dialog"] = True
             d = diff(excel[c.name], st, c.today)
             results[c.name] = {"area": c.area, "ok": not d, "diff": d}
             print(f"{'ok ' if not d else 'XX '} {c.area:10} {c.name:45} {'; '.join(d)[:160]}")

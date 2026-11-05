@@ -1468,3 +1468,78 @@ Excel a school uses most among those first deferred.
   that does not fit is the header. Excel's own results (Range.FlashFill) for 13 school cases are
   reproduced except two rows where Excel keeps a double first name ("Lea Sophie S."). Excel's
   grey suggestions while typing are not built.
+
+## D-066 RaabeCalc: everything Excel offers, except the cloud (2026-11-05)
+
+After trying RaabeCalc for one minute the owner found three differences (reference text not
+coloured while typing, clicks in Bearbeiten not pointing, no Format pane on a chart) and concluded
+that the catalogue only measured what we had thought of. Decided with the owner:
+
+- **Scope:** the full Excel feeling and the same behaviour for clicking, dragging and keys, and all
+  menus and possibilities except cloud features. Nothing is deferred on our own judgement or for
+  lack of time; what is not finished stays listed as open and is continued after checking with the
+  owner. The items deferred in D-065 are in scope (PivotTables with PivotCharts, shapes, Seitenlayout
+  view, Datentabelle, Szenario-Manager), as is whatever the inventory turns up.
+- **Cloud, left out (the buttons are missing, not grey):** OneDrive and SharePoint saving, Teilen and
+  co-authoring, sign-in and account features, Copilot and Daten analysieren, online pictures, Smart
+  Lookup, online translation, stock and geography data types, the add-in store, Python in Excel, web
+  data connections.
+- **Order:** macros (VBA, Entwicklertools) are built last; Power Query and Power Pivot (local) after
+  everything else. Goal for macros: .xlsm files from Excel run in RaabeCalc with an interpreter of our
+  own; macros reaching outside Excel (other programs, Windows calls) cannot work.
+- **Method:** (1) an inventory taken from Excel itself (ribbon with contextual tabs, galleries,
+  dialogs and their controls, Format panes, context menus, shortcuts), each entry marked built, partly
+  built, missing or left out, so that coverage is a number (`docs/EXCEL-INVENTORY.md`); (2) behaviour
+  cases generated systematically: mode x input x situation; (3) screenshots of Excel and RaabeCalc in
+  the same state compared automatically, because the catalogue does not see what the screen shows.
+- **Limits kept:** labels and shortcuts as in Excel, tooltips, help and dialog explanations in our own
+  words and our own icons (D-058); Excel's quirks are copied unless they are plain calculation
+  glitches or harm students, each exception written down; RaabeCalc stays offline and may grow in size;
+  this step covers RaabeCalc only (Step 7b and RaabePresent follow).
+
+**First run (2026-11-05 evening), what was built and measured:**
+- **Pointing while a formula is typed** (168 generated cases, areas "point", "pointedit", "pointed",
+  "frames"; `feellab/calc_matrix.py`): a click inserts a reference when the character before the
+  caret is an operator, "(", ";", ":", "!" or the leading "=", "+", "-", in Eingeben and in
+  Bearbeiten alike (F2, double-click, Bearbeitungsleiste), whatever follows the caret; at the very
+  start too ("=C3=1+2"); after a space only a click points (Excel's intersection "=A1 C3"), not an
+  arrow. Arrows point only in Eingeben. Strg+click and Strg+drag add a reference after ";", headers
+  give "C:C" / "3:3" (Umschalt extends, Strg adds), Strg+Leertaste / Umschalt+Leertaste the pointer's
+  column / row, Pos1 / Strg+Pos1 / Strg+Ende / Bild ab point as they move. F4 on a pointed range
+  changes it as a whole, also again. Text that does not start with "=" gets it once a reference is
+  pointed ("+" then a click is "=+C3"). The coloured frames of a formula's references can be dragged:
+  the corner sizes, the border moves, $ signs are kept. The reference text is coloured as its frame
+  in the cell and the Bearbeitungsleiste (a layer under the transparent text of the editor). Inside a
+  string there is no function list.
+- **Excel's checks on Enter** (`checkEntry`, recorded with Excel's messages on, 42 entries in
+  `entry.test.ts`): some slips are mended without asking (brackets of a function closed, "1++2"),
+  for others Excel proposes a mended formula with Ja/Nein (an operator at the end, an open string or
+  plain bracket, a bracket too many, two operators in a row, "2(3)", "1 2"), and some are refused with
+  a message (no parse, too few or too many arguments; WENN needs two). The cell stays in Bearbeiten
+  after Nein or the message. Ending the entry with a click or an arrow mends without asking (recorded).
+  Our messages are in our own words. The harness's Excel now runs with its messages on (they were
+  off, which hid these dialogs); a dialog on one side only is a difference.
+- **Circular references**: a new one brings a warning (own words), the status bar shows
+  "Zirkelbezüge: A1"; a dynamic array spilling over the cells it reads is circular too. Whole
+  columns or rows in an array formula keep their full size, so `=1+2+C:C` gives #ÜBERLAUF! as in
+  Excel, and the column widens for an error result. A function's name alone gives #CALC! (Excel shows
+  that untranslated, so the German error name is #CALC! too).
+- **Chart Format pane** (the owner's third finding): a task pane docked at the right (shared shell
+  component) with Excel's option sets ("Diagrammoptionen", "Textoptionen"), icon tabs and sections
+  for Diagrammbereich, Zeichnungsfläche, Titel, Legende, both axes, Gitternetzlinien, Datenreihen,
+  Datenbeschriftungen, Trendlinie and Fehlerindikatoren: Füllung (keine, einfarbig with Transparenz,
+  automatisch), Rahmen/Linie (Farbe, Transparenz, Breite, Strichtyp), Markierung, Linie glätten,
+  Achsenoptionen (Begrenzungen, Einheiten, schneidet bei, logarithmisch, umgekehrt, Teilstriche,
+  Beschriftungsposition, Zahlenformat), Reihenachsenüberlappung and Abstandsbreite, Kreissegment-
+  winkel and Innenringgröße, Beschriftung enthält / Trennzeichen / Position, all six trendline types
+  with Prognose and Name, Fehlerindikatoren (Richtung, Endformat, Betrag), Textfüllung and Schrift,
+  Größe. A click selects a chart element (dashed frame), a double-click or Strg+1 opens its pane;
+  the new Format tab has Diagrammelemente, Auswahl formatieren and Auf Formatvorlage zurücksetzen.
+  Everything is drawn and written to the file as DrawingML and read back (`chart-format.test.ts`).
+  Not yet: Farbverlauf, Bild-/Muster-füllung, Effekte, 3D, Sekundärachse, Datentabelle (inventory).
+- **Diagrammentwurf**: Schnelllayout (Layout 1-11 as recorded per chart type,
+  `probe_excel_chartlayouts.py`), Farben ändern (schemes 10-26 from Excel's colour parts,
+  `probe_excel_chartcolors.py`, colours within 3/255 of Excel's), Zeile/Spalte wechseln, Daten
+  auswählen (Datenquelle auswählen with series list), Diagramm verschieben (to another sheet; chart
+  sheets not yet).
+

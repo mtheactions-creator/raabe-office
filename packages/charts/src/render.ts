@@ -7,11 +7,13 @@
 // into an SVG element sized in CSS px.
 
 import { autoScale, maxIntervals, ticks, type AxisScale } from "./scale";
-import { equationText, formatGeneral, r2Text, type NumberFormatter } from "./format";
-import { histogramBins, linearFit } from "./stats";
+import { formatGeneral, r2Text, type NumberFormatter } from "./format";
+import { fitTrend, histogramBins } from "./stats";
+import { fillPaint, fixedScale, linePaint, textLook } from "./paint";
+import { schemeColor } from "./colors";
 import {
   DEFAULT_AXIS_TITLE, LOOK, OFFICE_ACCENTS, isBar, isPie, isScatter, isStacked, seriesColor, titleText,
-  type ChartModel, type ChartSeries,
+  type ChartModel, type ChartSeries, type MarkerSymbol,
 } from "./model";
 
 export type Measure = (text: string, sizePt: number) => number;
@@ -26,10 +28,10 @@ export interface RenderOptions {
 }
 
 export type Prim =
-  | { t: "rect"; x: number; y: number; w: number; h: number; fill?: string; stroke?: string; sw?: number; part?: string }
+  | { t: "rect"; x: number; y: number; w: number; h: number; fill?: string; stroke?: string; sw?: number; dash?: string; part?: string }
   | { t: "path"; d: string; fill?: string; stroke?: string; sw?: number; dash?: string; cap?: "round" | "butt"; part?: string }
   | { t: "circle"; cx: number; cy: number; r: number; fill: string; stroke?: string; sw?: number; part?: string }
-  | { t: "text"; x: number; y: number; text: string; size: number; fill: string; anchor: "start" | "middle" | "end"; rotate?: number; part?: string };
+  | { t: "text"; x: number; y: number; text: string; size: number; fill: string; anchor: "start" | "middle" | "end"; rotate?: number; part?: string; bold?: boolean; italic?: boolean };
 
 export interface Box { x: number; y: number; w: number; h: number }
 
@@ -116,24 +118,37 @@ export function chartScene(m: ChartModel, W: number, H: number, opts: RenderOpti
   };
   const c: Ctx = {
     m, W, H, measure: opts.measure ?? defaultMeasure, fmt, accents,
-    color: (i) => m.series[i]?.color ?? seriesColor(i, accents),
+    color: (i) => m.series[i]?.color ?? paletteColor(m, i, m.series.length, accents),
     prims: [], parts: [],
   };
-  // Chart area: white with a light grey border.
-  c.prims.push({ t: "rect", x: 0.375, y: 0.375, w: W - 0.75, h: H - 0.75, fill: "#FFFFFF", stroke: LOOK.border, sw: 0.75, part: "chart" });
+  // Chart area: white with a light grey border, or its Füllung and Rahmen.
+  const ca = m.format?.chart;
+  const caLine = linePaint(ca?.line, { color: LOOK.border, width: 0.75 });
+  const inset = (caLine?.sw ?? 0) / 2;
+  c.prims.push({ t: "rect", x: inset, y: inset, w: W - 2 * inset, h: H - 2 * inset, fill: fillPaint(ca?.fill, "#FFFFFF"), stroke: caLine?.stroke, sw: caLine?.sw, dash: caLine?.dash, part: "chart" });
   const hist = m.kind === "histogram";
   let top = 14.5;
   if (m.title.show) {
     const text = titleText(m);
     const y = hist ? 19 : 21.5;
-    const tw = c.measure(text, LOOK.titleSize);
-    c.prims.push({ t: "text", x: W / 2, y, text, size: LOOK.titleSize, fill: LOOK.text, anchor: "middle", part: "title" });
-    c.parts.push({ name: "title", box: { x: W / 2 - tw / 2 - 4, y: y - 15, w: tw + 8, h: 19 } });
-    top = hist ? 31.75 : 37.5;
+    const tl = textLook(m.format?.title?.text, { size: LOOK.titleSize, color: LOOK.text });
+    const tw = c.measure(text, tl.size);
+    const box = { x: W / 2 - tw / 2 - 4, y: y - tl.size - 1, w: tw + 8, h: tl.size + 5 };
+    const tf = fillPaint(m.format?.title?.fill, undefined), tln = linePaint(m.format?.title?.line, null);
+    if ((tf && tf !== "none") || tln) c.prims.push({ t: "rect", ...box, fill: tf ?? "none", stroke: tln?.stroke, sw: tln?.sw, dash: tln?.dash, part: "title" });
+    c.prims.push({ t: "text", x: W / 2, y, text, size: tl.size, fill: tl.fill, bold: tl.bold, italic: tl.italic, anchor: "middle", part: "title" });
+    c.parts.push({ name: "title", box });
+    // "Titel über dem Diagramm einblenden": the plot keeps the room.
+    if (!m.format?.title?.overlay) top = (hist ? 31.75 : 37.5) + (tl.size - LOOK.titleSize);
   }
   // Legend: reserve its room first.
   const area = { left: 0, right: W, top, bottom: H };
-  if (m.legend !== "none" && !hist) layoutLegend(c, area);
+  if (m.legend !== "none" && !hist) {
+    // "Legende ohne Überlappung des Diagramms anzeigen" off: the plot keeps its room.
+    const keep = { ...area };
+    layoutLegend(c, area);
+    if (m.format?.legend?.overlay) Object.assign(area, keep);
+  }
   let scene: Pick<Scene, "plot" | "valueScale" | "xScale">;
   if (isPie(m.kind)) scene = drawPie(c, area);
   else if (hist) scene = drawHistogram(c, area);
@@ -153,16 +168,40 @@ function legendItems(c: Ctx): LegendItem[] {
   if (isPie(m.kind)) {
     const s = m.series[0];
     const n = s ? s.val.cache.length : 0;
-    return Array.from({ length: n }, (_, i) => ({ text: catText(c, s, i), color: seriesColor(i, c.accents), kind: "square" as const }));
+    return Array.from({ length: n }, (_, i) => ({ text: catText(c, s, i), color: paletteColor(m, i, n, c.accents), kind: "square" as const }));
   }
   const kind: LegendItem["kind"] = m.kind === "line" ? "line" : m.kind === "lineMarkers" || m.kind === "scatterLines" ? "lineMarker"
     : m.kind === "scatter" ? "marker" : m.kind === "scatterSmooth" ? "line" : "square";
-  const items: LegendItem[] = m.series.map((s, i) => ({ text: seriesName(s, i), color: c.color(i), kind }));
+  const items: LegendItem[] = m.series.map((s, i) => ({ text: seriesName(s, i), color: seriesPaint(c, i), kind }));
   // Clustered bars list their series bottom-up, as the bars are drawn (Excel).
   if (m.kind === "bar") items.reverse();
   // Trendlines follow as "Linear (Reihe A)".
-  m.series.forEach((s, i) => { if (s.trendline) items.push({ text: `Linear (${seriesName(s, i)})`, color: c.color(i), kind: "trend" }); });
+  m.series.forEach((s, i) => { if (s.trendline) items.push({ text: trendName(s, i), color: c.color(i), kind: "trend" }); });
   return items;
+}
+
+/** A trendline's legend entry: its own name, else "Linear (Reihe A)" and so on (Excel). */
+export function trendName(s: ChartSeries, i: number): string {
+  const t = s.trendline!;
+  if (t.name) return t.name;
+  const kind = { linear: "Linear", exp: "Exponentiell", log: "Logarithmisch", poly: "Polynomisch", power: "Potenzfunktion", movingAvg: `${t.period ?? 2} per. Gleitender Durchschnitt` }[t.type];
+  return `${kind} (${seriesName(s, i)})`;
+}
+
+/** Colour i of n under the chart's Farben ändern scheme (10, Farbig, is the theme's accents in turn). */
+export function paletteColor(m: ChartModel, i: number, n: number, accents: string[]): string {
+  if (!m.colors || m.colors === 10) return seriesColor(i, accents);
+  const theme: Record<string, string> = { dk1: "#000000", lt1: "#FFFFFF" };
+  accents.forEach((a, k) => { theme[`accent${k + 1}`] = a; });
+  return schemeColor(m.colors, i, n, theme);
+}
+
+/** The colour a series shows: its Füllung (bars, areas) or Linie (lines), else its colour. */
+function seriesPaint(c: Ctx, i: number): string {
+  const s = c.m.series[i];
+  const lineKind = c.m.kind === "line" || c.m.kind === "lineMarkers" || isScatter(c.m.kind);
+  const own = lineKind ? (s?.line?.type === "solid" ? s.line.color : undefined) : (s?.fill?.type === "solid" ? s.fill.color : undefined);
+  return own ?? c.color(i);
 }
 
 export function seriesName(s: ChartSeries, i: number): string {
@@ -197,6 +236,15 @@ function drawKey(c: Ctx, it: LegendItem, x: number, base: number): void {
 function layoutLegend(c: Ctx, area: { left: number; right: number; top: number; bottom: number }): void {
   const items = legendItems(c);
   if (!items.length) return;
+  const at = c.prims.length;
+  const lf = c.m.format?.legend;
+  const lt = textLook(lf?.text, { size: LOOK.labelSize, color: LOOK.text });
+  // The legend's own Füllung / Rahmen go under its entries once its box is known.
+  const boxUnder = () => {
+    const b = c.parts.find((p) => p.name === "legend")?.box;
+    const fl = fillPaint(lf?.fill, undefined), ln = linePaint(lf?.line, null);
+    if (b && ((fl && fl !== "none") || ln)) c.prims.splice(at, 0, { t: "rect", ...b, fill: fl ?? "none", stroke: ln?.stroke, sw: ln?.sw, dash: ln?.dash, part: "legend" });
+  };
   const pos = c.m.legend;
   const textX = (it: LegendItem) => (isLineKey(it) ? 19 + 2.2 : LEGEND_SQUARE + 2.1);
   if (pos === "b" || pos === "t") {
@@ -225,12 +273,13 @@ function layoutLegend(c: Ctx, area: { left: number; right: number; top: number; 
       maxX = Math.max(maxX, x + rw);
       for (const it of row) {
         drawKey(c, it, x, base);
-        c.prims.push({ t: "text", x: x + textX(it), y: base, text: it.text, size: LOOK.labelSize, fill: LOOK.text, anchor: "start", part: "legend" });
+        c.prims.push({ t: "text", x: x + textX(it), y: base, text: it.text, size: lt.size, fill: lt.fill, bold: lt.bold, italic: lt.italic, anchor: "start", part: "legend" });
         x += itemWidth(c, it) + gapAfter(it);
       }
       base += lineH;
     }
     c.parts.push({ name: "legend", box: { x: minX - 4, y: y0, w: maxX - minX + 8, h: height } });
+    boxUnder();
     if (pos === "b") area.bottom = c.H - 22.9 - (rows.length - 1) * lineH;
     else area.top += height + 4;
   } else {
@@ -242,10 +291,11 @@ function layoutLegend(c: Ctx, area: { left: number; right: number; top: number; 
     const y0 = base - 11;
     for (const it of items) {
       drawKey(c, it, x, base);
-      c.prims.push({ t: "text", x: x + textX(it), y: base, text: it.text, size: LOOK.labelSize, fill: LOOK.text, anchor: "start", part: "legend" });
+      c.prims.push({ t: "text", x: x + textX(it), y: base, text: it.text, size: lt.size, fill: lt.fill, bold: lt.bold, italic: lt.italic, anchor: "start", part: "legend" });
       base += lineH;
     }
     c.parts.push({ name: "legend", box: { x: x - 4, y: y0, w: w + 8, h: total } });
+    boxUnder();
     if (pos === "r") area.right = x - 6;
     else area.left = x + w + 6;
   }
@@ -263,24 +313,25 @@ function drawPie(c: Ctx, area: { left: number; right: number; top: number; botto
   const r = d / 2;
   const plot = { x: cx - r, y: cy - r, w: d, h: d };
   const series = m.kind === "pie" ? m.series.slice(0, 1) : m.series;
-  const hole = m.kind === "doughnut" ? 0.75 : 0;
+  const hole = m.kind === "doughnut" ? (m.holeSize ?? 75) / 100 : 0;
   const ringW = series.length ? (r * (1 - hole)) / series.length : 0;
   series.forEach((s, si) => {
     const vals = s.val.cache.map((v) => (v !== null && v > 0 ? v : 0));
     const sum = vals.reduce((a, b) => a + b, 0);
     if (sum <= 0) return;
     const ro = r - si * ringW, ri = m.kind === "doughnut" ? ro - ringW : 0;
-    let a0 = 0;
+    let a0 = ((m.firstSliceAngle ?? 0) * Math.PI) / 180;
+    const ln = linePaint(s.line, { color: "#FFFFFF", width: 1.5 });
     vals.forEach((v, i) => {
       if (v <= 0) return;
       const a1 = a0 + (v / sum) * Math.PI * 2;
-      // Slices take the accents in order (Excel's "Punkte variieren").
-      const color = seriesColor(i, c.accents);
-      c.prims.push({ t: "path", d: slice(cx, cy, ro, ri, a0, a1), fill: color, stroke: "#FFFFFF", sw: 1.5, part: `series:${si}:${i}` });
+      // Slices take the accents in order (Excel's "Punkte variieren"), unless the series has its own Füllung.
+      const color = fillPaint(s.fill, paletteColor(m, i, vals.length, c.accents));
+      c.prims.push({ t: "path", d: slice(cx, cy, ro, ri, a0, a1), fill: color, stroke: ln?.stroke, sw: ln?.sw, dash: ln?.dash, part: `series:${si}:${i}` });
       if (m.dataLabels) {
         const mid = (a0 + a1) / 2, lr = ri ? (ro + ri) / 2 : ro * 0.7;
         const tx = cx + lr * Math.sin(mid), ty = cy - lr * Math.cos(mid);
-        c.prims.push({ t: "text", x: tx, y: ty + 3.2, text: c.fmt(s.val.cache[i]!, s.val.format), size: LOOK.labelSize, fill: LOOK.dataLabel, anchor: "middle", part: `labels:${si}` });
+        label(c, s, si, i, s.val.cache[i]!, tx, ty + 3.2, "middle", v / sum);
       }
       a0 = a1;
     });
@@ -393,18 +444,32 @@ function xOf(s: ChartSeries, i: number): number | null {
   return typeof v === "number" ? v : null;
 }
 
-function gridAndValueLabels(c: Ctx, scale: AxisScale, labels: string[], plot: Box, horizontal: boolean, labelRight: number): void {
+function gridAndValueLabels(c: Ctx, scale: AxisScale, labels: string[], plot: Box, horizontal: boolean, labelRight: number, reverse = false): void {
   const t = ticks(scale);
   const span = scale.max - scale.min || 1;
+  const frac = (v: number) => (reverse ? 1 - (v - scale.min) / span : (v - scale.min) / span);
+  const fmt = c.m.format;
+  const grid = linePaint(fmt?.majorGrid?.line, { color: LOOK.gridline, width: 0.75 });
+  const minor = fmt?.minorGrid?.show ? linePaint(fmt.minorGrid.line, { color: "#F2F2F2", width: 0.75 }) : null;
+  const vt = textLook(fmt?.valAxis?.text, { size: LOOK.labelSize, color: LOOK.text });
+  if (minor) {
+    // Hilfsgitternetzlinien: five steps per major unit unless the minor unit is set.
+    const unit = fmt?.valAxis?.minorUnit ?? scale.major / 5;
+    for (let v = scale.min; v <= scale.max + 1e-9 && unit > 0; v += unit) {
+      const p = frac(v);
+      c.prims.push(horizontal ? { t: "path", d: `M${f(plot.x + p * plot.w)} ${f(plot.y)}V${f(plot.y + plot.h)}`, ...minor, part: "minorGrid" }
+        : { t: "path", d: `M${f(plot.x)} ${f(plot.y + plot.h - p * plot.h)}H${f(plot.x + plot.w)}`, ...minor, part: "minorGrid" });
+    }
+  }
   t.forEach((v, i) => {
     if (horizontal) {
-      const x = plot.x + ((v - scale.min) / span) * plot.w;
-      if (c.m.gridlines) c.prims.push({ t: "path", d: `M${f(x)} ${f(plot.y)}V${f(plot.y + plot.h)}`, stroke: LOOK.gridline, sw: 0.75, part: "grid" });
-      c.prims.push({ t: "text", x, y: plot.y + plot.h + 14, text: labels[i], size: LOOK.labelSize, fill: LOOK.text, anchor: "middle", part: "axis:val" });
+      const x = plot.x + frac(v) * plot.w;
+      if (c.m.gridlines && grid) c.prims.push({ t: "path", d: `M${f(x)} ${f(plot.y)}V${f(plot.y + plot.h)}`, ...grid, part: "grid" });
+      if (labels[i]) c.prims.push({ t: "text", x, y: plot.y + plot.h + 14, text: labels[i], size: vt.size, fill: vt.fill, bold: vt.bold, italic: vt.italic, anchor: "middle", part: "axis:val" });
     } else {
-      const y = plot.y + plot.h - ((v - scale.min) / span) * plot.h;
-      if (c.m.gridlines) c.prims.push({ t: "path", d: `M${f(plot.x)} ${f(y)}H${f(plot.x + plot.w)}`, stroke: LOOK.gridline, sw: 0.75, part: "grid" });
-      c.prims.push({ t: "text", x: labelRight, y: y + 2.5, text: labels[i], size: LOOK.labelSize, fill: LOOK.text, anchor: "end", part: "axis:val" });
+      const y = plot.y + plot.h - frac(v) * plot.h;
+      if (c.m.gridlines && grid) c.prims.push({ t: "path", d: `M${f(plot.x)} ${f(y)}H${f(plot.x + plot.w)}`, ...grid, part: "grid" });
+      if (labels[i]) c.prims.push({ t: "text", x: labelRight, y: y + 2.5, text: labels[i], size: vt.size, fill: vt.fill, bold: vt.bold, italic: vt.italic, anchor: "end", part: "axis:val" });
     }
   });
 }
@@ -416,7 +481,9 @@ function drawAxes(c: Ctx, area: { left: number; right: number; top: number; bott
   const valFormat = m.series[0]?.val.format;
   const [lo, hi] = valueRange(m);
   const [xlo, xhi] = scatter ? xRange(m) : [0, 0];
-  const catLabels = scatter ? [] : Array.from({ length: nCat }, (_, i) => catText(c, m.series[0], i));
+  const va = m.format?.valAxis, xa = m.format?.catAxis;
+  const hideCat = xa?.labelPos === "none" || xa?.visible === false;
+  const catLabels = scatter ? [] : Array.from({ length: nCat }, (_, i) => (hideCat ? "" : catText(c, m.series[0], i)));
   const hasValTitle = m.axisTitles.val !== undefined, hasCatTitle = m.axisTitles.cat !== undefined;
   const titleRoom = 15;
 
@@ -427,11 +494,11 @@ function drawAxes(c: Ctx, area: { left: number; right: number; top: number; bott
   let leftLabelsW = 0;
   for (let pass = 0; pass < 3; pass++) {
     const vLen = bar ? plot.w : plot.h;
-    vScale = autoScale(lo, hi, maxIntervals(vLen, bar));
-    vLabels = ticks(vScale).map((v) => c.fmt(v, valFormat));
+    vScale = fixedScale(lo, hi, va, maxIntervals(vLen, bar));
+    vLabels = va?.labelPos === "none" || va?.visible === false ? ticks(vScale).map(() => "") : ticks(vScale).map((v) => c.fmt(v, va?.numFmt ?? valFormat));
     if (scatter) {
-      xScale = autoScale(xlo, xhi, maxIntervals(plot.w, true));
-      xLabels = ticks(xScale).map((v) => c.fmt(v, m.series[0]?.cat?.format));
+      xScale = fixedScale(xlo, xhi, xa, maxIntervals(plot.w, true));
+      xLabels = xa?.labelPos === "none" || xa?.visible === false ? ticks(xScale).map(() => "") : ticks(xScale).map((v) => c.fmt(v, xa?.numFmt ?? m.series[0]?.cat?.format));
     }
     // Labels left of the plot: values (columns, lines, scatter) or categories (bars).
     const leftTexts = bar ? catLabels : vLabels;
@@ -473,9 +540,13 @@ function drawAxes(c: Ctx, area: { left: number; right: number; top: number; bott
 
   // Gridlines and value labels.
   const leftLabelRight = plot.x - LABEL_GAP;
-  gridAndValueLabels(c, vScale, vLabels, plot, bar, leftLabelRight);
+  // Zeichnungsfläche: its own Füllung and Rahmen under everything inside it.
+  const pf = fillPaint(m.format?.plot?.fill, undefined), pl = linePaint(m.format?.plot?.line, null);
+  if ((pf && pf !== "none") || pl) c.prims.push({ t: "rect", ...plot, fill: pf ?? "none", stroke: pl?.stroke, sw: pl?.sw, dash: pl?.dash, part: "plot" });
+  gridAndValueLabels(c, vScale, vLabels, plot, bar, leftLabelRight, !!va?.reverse);
   const vSpan = vScale.max - vScale.min || 1;
-  const vPos = (v: number) => (bar ? plot.x + ((v - vScale.min) / vSpan) * plot.w : plot.y + plot.h - ((v - vScale.min) / vSpan) * plot.h);
+  const vFrac = (v: number) => (va?.reverse ? 1 - (v - vScale.min) / vSpan : (v - vScale.min) / vSpan);
+  const vPos = (v: number) => (bar ? plot.x + vFrac(v) * plot.w : plot.y + plot.h - vFrac(v) * plot.h);
   const base = vPos(Math.min(Math.max(0, vScale.min), vScale.max));
 
   if (scatter && xScale) {
@@ -491,6 +562,7 @@ function drawAxes(c: Ctx, area: { left: number; right: number; top: number; bott
     c.prims.push({ t: "path", d: `M${f(plot.x)} ${f(base)}H${f(plot.x + plot.w)}M${f(x0)} ${f(plot.y)}V${f(plot.y + plot.h)}`, stroke: LOOK.valueAxisLine, sw: 0.75, part: "axes" });
     clipStart(c, plot);
     m.series.forEach((s, si) => drawScatterSeries(c, s, si, xPos, vPos));
+    m.series.forEach((s, si) => { if (s.errorBars) s.val.cache.forEach((v, i) => { const x = xOf(s, i); if (v !== null && x !== null) drawErrorBar(c, s, si, xPos(x), v, vPos, false); }); });
     m.series.forEach((s, si) => { if (s.trendline) drawTrendline(c, s, si, plot, (v) => xPos(v), vPos, (i) => xOf(s, i)); });
     clipEnd(c);
     return { plot, valueScale: vScale, xScale: xs };
@@ -502,27 +574,78 @@ function drawAxes(c: Ctx, area: { left: number; right: number; top: number; bott
   const catLen = bar ? plot.h : plot.w;
   const step = between ? catLen / n : n > 1 ? catLen / (n - 1) : catLen;
   const catCenter = (i: number) => {
-    const p = between ? (i + 0.5) * step : n > 1 ? i * step : catLen / 2;
+    const j = xa?.reverse ? n - 1 - i : i;
+    const p = between ? (j + 0.5) * step : n > 1 ? j * step : catLen / 2;
     return bar ? plot.y + plot.h - p : plot.x + p;
   };
+  if (m.format?.catGrid?.show) {
+    const cg = linePaint(m.format.catGrid.line, { color: LOOK.gridline, width: 0.75 });
+    if (cg) for (let i = 0; i <= n; i++) {
+      const p = between ? i * step : Math.min(i, n - 1) * step;
+      c.prims.push(bar ? { t: "path", d: `M${f(plot.x)} ${f(plot.y + plot.h - p)}H${f(plot.x + plot.w)}`, ...cg, part: "catGrid" }
+        : { t: "path", d: `M${f(plot.x + p)} ${f(plot.y)}V${f(plot.y + plot.h)}`, ...cg, part: "catGrid" });
+    }
+  }
   const maxCatW = Math.max(0, ...catLabels.map((t) => c.measure(t, LOOK.labelSize)));
   const rotate = !bar && maxCatW > step - 2 && catLabels.length > 1;
+  const ct = textLook(xa?.text, { size: LOOK.labelSize, color: LOOK.text });
   catLabels.forEach((t, i) => {
-    if (bar) c.prims.push({ t: "text", x: plot.x - LABEL_GAP, y: catCenter(i) + 3.2, text: t, size: LOOK.labelSize, fill: LOOK.text, anchor: "end", part: "axis:cat" });
-    else if (rotate) c.prims.push({ t: "text", x: catCenter(i) + 3, y: plot.y + plot.h + 7, text: t, size: LOOK.labelSize, fill: LOOK.text, anchor: "end", rotate: -45, part: "axis:cat" });
-    else c.prims.push({ t: "text", x: catCenter(i), y: plot.y + plot.h + 14, text: t, size: LOOK.labelSize, fill: LOOK.text, anchor: "middle", part: "axis:cat" });
+    if (!t) return;
+    const look = { size: ct.size, fill: ct.fill, bold: ct.bold, italic: ct.italic };
+    if (bar) c.prims.push({ t: "text", x: plot.x - LABEL_GAP, y: catCenter(i) + 3.2, text: t, ...look, anchor: "end", part: "axis:cat" });
+    else if (rotate) c.prims.push({ t: "text", x: catCenter(i) + 3, y: plot.y + plot.h + 7, text: t, ...look, anchor: "end", rotate: -45, part: "axis:cat" });
+    else c.prims.push({ t: "text", x: catCenter(i), y: plot.y + plot.h + 14, text: t, ...look, anchor: "middle", part: "axis:cat" });
   });
-  c.prims.push({ t: "path", d: bar ? `M${f(base)} ${f(plot.y)}V${f(plot.y + plot.h)}` : `M${f(plot.x)} ${f(base)}H${f(plot.x + plot.w)}`, stroke: LOOK.gridline, sw: 0.75, part: "axes" });
+  const axLine = xa?.visible === false ? null : linePaint(xa?.line, { color: LOOK.gridline, width: 0.75 });
+  if (axLine) c.prims.push({ t: "path", d: bar ? `M${f(base)} ${f(plot.y)}V${f(plot.y + plot.h)}` : `M${f(plot.x)} ${f(base)}H${f(plot.x + plot.w)}`, ...axLine, part: "axes" });
 
   clipStart(c, plot);
   if (m.kind === "column" || m.kind === "columnStacked" || bar) drawBars(c, n, step, catCenter, vPos, base);
   else if (m.kind === "area") drawAreas(c, catCenter, vPos, base);
   else drawLines(c, catCenter, vPos);
   m.series.forEach((s, si) => {
+    if (!s.errorBars || bar) return;
+    // Clustered columns: the bar's middle; other kinds: the category's centre.
+    const k = m.kind === "column" ? m.series.length : 1;
+    const gap = (m.gapWidth ?? 219) / 100, ov = m.overlap !== undefined ? m.overlap / 100 : -0.27;
+    const bw = step / (k - (k - 1) * ov + gap);
+    s.val.cache.forEach((v, i) => {
+      if (v === null || !isFinite(v)) return;
+      const x = m.kind === "column" ? catCenter(i) - step / 2 + (bw * gap) / 2 + si * bw * (1 - ov) + bw / 2 : catCenter(i);
+      drawErrorBar(c, s, si, x, v, vPos, false);
+    });
+  });
+  m.series.forEach((s, si) => {
     if (s.trendline) drawTrendline(c, s, si, plot, (x) => (bar ? 0 : catCenter(x - 1)), vPos, (i) => i + 1, bar);
   });
   clipEnd(c);
   return { plot, valueScale: vScale };
+}
+
+/** A vertical Fehlerindikator at a point: the amount as the pane sets it, with or without caps. */
+function drawErrorBar(c: Ctx, s: ChartSeries, si: number, x: number, v: number, vPos: (v: number) => number, _bar: boolean): void {
+  const e = s.errorBars!;
+  const vals = s.val.cache.filter((y): y is number => y !== null && isFinite(y));
+  const n = vals.length, mean = vals.reduce((a, b) => a + b, 0) / Math.max(1, n);
+  const sd = n > 1 ? Math.sqrt(vals.reduce((a, y) => a + (y - mean) ** 2, 0) / (n - 1)) : 0;
+  let centre = v, amount: number;
+  switch (e.type) {
+    case "percentage": amount = Math.abs(v) * (e.value ?? 5) / 100; break;
+    // Standard deviation bars stand on the series' mean (Excel).
+    case "stdDev": amount = sd * (e.value ?? 1); centre = mean; break;
+    case "stdErr": amount = n ? sd / Math.sqrt(n) : 0; break;
+    default: amount = e.value ?? 1;
+  }
+  const hi = e.dir === "minus" ? centre : centre + amount, lo = e.dir === "plus" ? centre : centre - amount;
+  const ln = linePaint(e.line, { color: "#595959", width: 0.75 });
+  if (!ln) return;
+  const y1 = vPos(hi), y0 = vPos(lo), cap = 3;
+  let d = `M${f(x)} ${f(y0)}V${f(y1)}`;
+  if (!e.noEndCap) {
+    if (e.dir !== "minus") d += `M${f(x - cap)} ${f(y1)}H${f(x + cap)}`;
+    if (e.dir !== "plus") d += `M${f(x - cap)} ${f(y0)}H${f(x + cap)}`;
+  }
+  c.prims.push({ t: "path", d, ...ln, part: `errbars:${si}` });
 }
 
 function clipStart(c: Ctx, plot: Box): void {
@@ -535,8 +658,8 @@ function clipEnd(c: Ctx): void {
 function drawBars(c: Ctx, n: number, step: number, catCenter: (i: number) => number, vPos: (v: number) => number, base: number): void {
   const { m } = c;
   const bar = isBar(m.kind), stacked = isStacked(m.kind);
-  const gap = (m.kind === "column" ? 219 : m.kind === "bar" ? 182 : 150) / 100;
-  const overlap = m.kind === "column" ? -0.27 : stacked ? 1 : 0;
+  const gap = (m.gapWidth ?? (m.kind === "column" ? 219 : m.kind === "bar" ? 182 : 150)) / 100;
+  const overlap = m.overlap !== undefined ? m.overlap / 100 : m.kind === "column" ? -0.27 : stacked ? 1 : 0;
   const k = stacked ? 1 : m.series.length || 1;
   const bw = step / (k - (k - 1) * overlap + gap);
   const pos = new Array(n).fill(0), neg = new Array(n).fill(0);
@@ -565,15 +688,22 @@ function drawBars(c: Ctx, n: number, step: number, catCenter: (i: number) => num
         const x1 = start + off;
         rect = { x: x1, y: Math.min(from, to), w: bw, h: Math.abs(to - from) };
       }
-      c.prims.push({ t: "rect", ...rect, fill: c.color(si), part: `series:${si}:${i}` });
+      const ln = linePaint(s.line, null);
+      const fill = v < 0 && s.invertIfNegative ? "#FFFFFF" : fillPaint(s.fill, c.color(si));
+      c.prims.push({ t: "rect", ...rect, fill, stroke: ln?.stroke ?? (v < 0 && s.invertIfNegative ? c.color(si) : undefined), sw: ln?.sw ?? 0.75, dash: ln?.dash, part: `series:${si}:${i}` });
       if (m.dataLabels) {
-        const text = c.fmt(v, s.val.format);
+        // Beschriftungsposition: Außerhalb Ende by default (stacked: Zentriert), or the chosen one.
+        const pos = m.format?.dataLabels?.pos ?? (stacked ? "ctr" : "outEnd");
+        const neg = v < 0;
         if (bar) {
-          const x = stacked ? rect.x + rect.w / 2 : v >= 0 ? rect.x + rect.w + 3 : rect.x - 3;
-          c.prims.push({ t: "text", x, y: rect.y + rect.h / 2 + 3.2, text, size: LOOK.labelSize, fill: LOOK.dataLabel, anchor: stacked ? "middle" : v >= 0 ? "start" : "end", part: `labels:${si}` });
+          const end = neg ? rect.x : rect.x + rect.w, startX = neg ? rect.x + rect.w : rect.x;
+          const x = pos === "ctr" ? rect.x + rect.w / 2 : pos === "inEnd" ? end + (neg ? 3 : -3) : pos === "inBase" ? startX + (neg ? -3 : 3) : end + (neg ? -3 : 3);
+          const anchor = pos === "ctr" ? "middle" : (pos === "inEnd") !== neg ? "end" : "start";
+          label(c, s, si, i, v, x, rect.y + rect.h / 2 + 3.2, anchor as "start" | "middle" | "end");
         } else {
-          const y = stacked ? rect.y + rect.h / 2 + 3.2 : v >= 0 ? rect.y - 3.4 : rect.y + rect.h + 9.6;
-          c.prims.push({ t: "text", x: rect.x + rect.w / 2, y, text, size: LOOK.labelSize, fill: LOOK.dataLabel, anchor: "middle", part: `labels:${si}` });
+          const top = neg ? rect.y + rect.h : rect.y, bottom = neg ? rect.y : rect.y + rect.h;
+          const y = pos === "ctr" ? rect.y + rect.h / 2 + 3.2 : pos === "inEnd" ? (neg ? top - 3.4 : top + 9.6) : pos === "inBase" ? (neg ? bottom + 9.6 : bottom - 3.4) : neg ? top + 9.6 : top - 3.4;
+          label(c, s, si, i, v, rect.x + rect.w / 2, y, "middle");
         }
       }
     });
@@ -585,9 +715,10 @@ function drawAreas(c: Ctx, catCenter: (i: number) => number, vPos: (v: number) =
     const pts = s.val.cache.map((v, i) => [catCenter(i), vPos(v ?? 0)] as const);
     if (!pts.length) return;
     const d = `M${f(pts[0][0])} ${f(base)}` + pts.map(([x, y]) => `L${f(x)} ${f(y)}`).join("") + `L${f(pts.at(-1)![0])} ${f(base)}Z`;
-    c.prims.push({ t: "path", d, fill: c.color(si), part: `series:${si}` });
+    const ln = linePaint(s.line, null);
+    c.prims.push({ t: "path", d, fill: fillPaint(s.fill, c.color(si)), stroke: ln?.stroke, sw: ln?.sw, dash: ln?.dash, part: `series:${si}` });
     if (c.m.dataLabels) s.val.cache.forEach((v, i) => {
-      if (v !== null) c.prims.push({ t: "text", x: catCenter(i), y: (pts[i][1] + base) / 2 + 3.2, text: c.fmt(v, s.val.format), size: LOOK.labelSize, fill: LOOK.dataLabel, anchor: "middle", part: `labels:${si}` });
+      if (v !== null) label(c, s, si, i, v, catCenter(i), (pts[i][1] + base) / 2 + 3.2, "middle");
     });
   });
 }
@@ -596,19 +727,59 @@ function drawLines(c: Ctx, catCenter: (i: number) => number, vPos: (v: number) =
   const markers = c.m.kind === "lineMarkers";
   c.m.series.forEach((s, si) => {
     const color = c.color(si);
-    let d = "", pen = false;
+    const ln = linePaint(s.line, { color, width: 2.25 });
+    // Runs of points without gaps, drawn straight or smoothed (Linie glätten).
+    const runs: [number, number][][] = [[]];
     s.val.cache.forEach((v, i) => {
-      if (v === null || !isFinite(v)) { pen = false; return; }
-      d += `${pen ? "L" : "M"}${f(catCenter(i))} ${f(vPos(v))}`;
-      pen = true;
+      if (v === null || !isFinite(v)) { if (runs.at(-1)!.length) runs.push([]); return; }
+      runs.at(-1)!.push([catCenter(i), vPos(v)]);
     });
-    if (d) c.prims.push({ t: "path", d, stroke: color, sw: 2.25, cap: "round", part: `series:${si}` });
+    const d = runs.filter((r) => r.length).map((r) => (s.smooth && r.length > 2 ? smoothPath(r) : r.map(([x, y], i) => `${i ? "L" : "M"}${f(x)} ${f(y)}`).join(""))).join("");
+    if (d && ln) c.prims.push({ t: "path", d, ...ln, cap: "round", part: `series:${si}` });
     s.val.cache.forEach((v, i) => {
       if (v === null || !isFinite(v)) return;
-      if (markers) c.prims.push({ t: "circle", cx: catCenter(i), cy: vPos(v), r: 2.5, fill: color, stroke: color, sw: 0.75, part: `series:${si}:${i}` });
-      if (c.m.dataLabels) c.prims.push({ t: "text", x: catCenter(i) + 5, y: vPos(v) + 3.2, text: c.fmt(v, s.val.format), size: LOOK.labelSize, fill: LOOK.dataLabel, anchor: "start", part: `labels:${si}` });
+      drawMarker(c, s, si, i, catCenter(i), vPos(v), markers ? "circle" : "none");
+      if (c.m.dataLabels) label(c, s, si, i, v, catCenter(i) + 5, vPos(v) + 3.2, "start");
     });
   });
+}
+
+/** A series' Markierung at a point: its own symbol, size, Füllung and Rahmen, else the chart kind's. */
+function drawMarker(c: Ctx, s: ChartSeries, si: number, i: number, x: number, y: number, auto: MarkerSymbol): void {
+  const mk = s.marker;
+  const sym = !mk?.symbol || mk.symbol === "auto" ? auto : mk.symbol;
+  if (sym === "none") return;
+  const color = seriesPaint(c, si);
+  const r = (mk?.size ?? 5) / 2;
+  const fill = fillPaint(mk?.fill, color) ?? color;
+  const ln = linePaint(mk?.line, { color, width: 0.75 });
+  const st = { stroke: ln?.stroke, sw: ln?.sw, part: `series:${si}:${i}` };
+  switch (sym) {
+    case "square": c.prims.push({ t: "rect", x: x - r, y: y - r, w: 2 * r, h: 2 * r, fill, ...st }); break;
+    case "diamond": c.prims.push({ t: "path", d: `M${f(x)} ${f(y - r)}L${f(x + r)} ${f(y)}L${f(x)} ${f(y + r)}L${f(x - r)} ${f(y)}Z`, fill, ...st }); break;
+    case "triangle": c.prims.push({ t: "path", d: `M${f(x)} ${f(y - r)}L${f(x + r)} ${f(y + r)}L${f(x - r)} ${f(y + r)}Z`, fill, ...st }); break;
+    case "x": c.prims.push({ t: "path", d: `M${f(x - r)} ${f(y - r)}L${f(x + r)} ${f(y + r)}M${f(x + r)} ${f(y - r)}L${f(x - r)} ${f(y + r)}`, stroke: ln?.stroke ?? color, sw: ln?.sw ?? 0.75, part: st.part }); break;
+    case "plus": c.prims.push({ t: "path", d: `M${f(x - r)} ${f(y)}H${f(x + r)}M${f(x)} ${f(y - r)}V${f(y + r)}`, stroke: ln?.stroke ?? color, sw: ln?.sw ?? 0.75, part: st.part }); break;
+    case "star": c.prims.push({ t: "path", d: `M${f(x - r)} ${f(y - r)}L${f(x + r)} ${f(y + r)}M${f(x + r)} ${f(y - r)}L${f(x - r)} ${f(y + r)}M${f(x)} ${f(y - r)}V${f(y + r)}`, stroke: ln?.stroke ?? color, sw: ln?.sw ?? 0.75, part: st.part }); break;
+    case "dash": c.prims.push({ t: "path", d: `M${f(x - r)} ${f(y)}H${f(x + r)}`, stroke: ln?.stroke ?? color, sw: Math.max(1.5, ln?.sw ?? 0.75), part: st.part }); break;
+    case "dot": c.prims.push({ t: "circle", cx: x, cy: y, r: Math.max(1, r / 2), fill, ...st }); break;
+    default: c.prims.push({ t: "circle", cx: x, cy: y, r, fill, ...st });
+  }
+}
+
+/** A data label: value, category, series name, percentage as the Beschriftungsoptionen say, joined by the Trennzeichen. */
+function label(c: Ctx, s: ChartSeries, si: number, i: number, v: number, x: number, y: number, anchor: "start" | "middle" | "end", share?: number): void {
+  const o = c.m.format?.dataLabels;
+  const pie = isPie(c.m.kind);
+  const parts: string[] = [];
+  if (o?.showSer) parts.push(seriesName(s, si));
+  if (o?.showCat) parts.push(catText(c, s, i));
+  if (o?.showVal ?? true) parts.push(c.fmt(v, o?.numFmt ?? s.val.format));
+  if (o?.showPercent && pie && share !== undefined) parts.push(`${Math.round(share * 100)}%`);
+  if (!parts.length) return;
+  const look = textLook(o?.text, { size: LOOK.labelSize, color: LOOK.dataLabel });
+  const lines = (o?.separator ?? "; ").includes("\n") ? parts : [parts.join(o?.separator ?? "; ")];
+  lines.forEach((t, k) => c.prims.push({ t: "text", x, y: y + k * (look.size + 2), text: t, size: look.size, fill: look.fill, bold: look.bold, italic: look.italic, anchor, part: `labels:${si}` }));
 }
 
 function drawScatterSeries(c: Ctx, s: ChartSeries, si: number, xPos: (v: number) => number, vPos: (v: number) => number): void {
@@ -620,19 +791,18 @@ function drawScatterSeries(c: Ctx, s: ChartSeries, si: number, xPos: (v: number)
     pts.push([xPos(x), vPos(v)]);
   });
   const kind = c.m.kind;
-  if (kind === "scatterLines" && pts.length > 1) {
-    c.prims.push({ t: "path", d: pts.map(([x, y], i) => `${i ? "L" : "M"}${f(x)} ${f(y)}`).join(""), stroke: color, sw: 1.5, cap: "round", part: `series:${si}` });
-  } else if (kind === "scatterSmooth" && pts.length > 1) {
-    c.prims.push({ t: "path", d: smoothPath(pts), stroke: color, sw: 1.5, cap: "round", part: `series:${si}` });
+  const lineOn = kind === "scatterLines" || kind === "scatterSmooth" || (s.line !== undefined && s.line.type === "solid");
+  const ln = lineOn ? linePaint(s.line, { color, width: 1.5 }) : null;
+  if (ln && pts.length > 1) {
+    const d = kind === "scatterSmooth" || s.smooth ? smoothPath(pts) : pts.map(([x, y], i) => `${i ? "L" : "M"}${f(x)} ${f(y)}`).join("");
+    c.prims.push({ t: "path", d, ...ln, cap: "round", part: `series:${si}` });
   }
-  if (kind !== "scatterSmooth") {
-    pts.forEach(([x, y], i) => c.prims.push({ t: "circle", cx: x, cy: y, r: 2.5, fill: color, stroke: color, sw: 0.75, part: `series:${si}:${i}` }));
-  }
+  pts.forEach(([x, y], i) => drawMarker(c, s, si, i, x, y, kind === "scatterSmooth" ? "none" : "circle"));
   if (c.m.dataLabels) {
     s.val.cache.forEach((v, i) => {
       const x = xOf(s, i);
       if (v === null || x === null) return;
-      c.prims.push({ t: "text", x: xPos(x) + 5, y: vPos(v) + 3.2, text: c.fmt(v, s.val.format), size: LOOK.labelSize, fill: LOOK.dataLabel, anchor: "start", part: `labels:${si}` });
+      label(c, s, si, i, v, xPos(x) + 5, vPos(v) + 3.2, "start");
     });
   }
 }
@@ -658,16 +828,27 @@ function drawTrendline(c: Ctx, s: ChartSeries, si: number, plot: Box, xPos: (x: 
     const x = xOfPoint(i);
     if (v !== null && x !== null && isFinite(v)) { xs.push(x); ys.push(v); }
   });
-  const fit = linearFit(xs, ys);
-  if (!fit) return;
-  const x0 = Math.min(...xs), x1 = Math.max(...xs);
-  const P = (x: number) => [xPos(x), vPos(fit.slope * x + fit.intercept)] as const;
-  const [ax, ay] = P(x0), [bx, by] = P(x1);
-  c.prims.push({ t: "path", d: `M${f(ax)} ${f(ay)}L${f(bx)} ${f(by)}`, stroke: c.color(si), sw: 1.5, dash: "0.1 3", cap: "round", part: `trend:${si}` });
   const tl = s.trendline!;
+  const fit = fitTrend(tl, xs, ys);
+  if (!fit) return;
+  const x0 = Math.min(...xs) - (tl.backward ?? 0), x1 = Math.max(...xs) + (tl.forward ?? 0);
+  // Curves are drawn through enough points to look smooth; a straight line needs two.
+  const steps = tl.type === "linear" ? 1 : 60;
+  const pts: string[] = [];
+  let bx = 0, by = 0;
+  for (let k = 0; k <= steps; k++) {
+    const x = tl.type === "movingAvg" ? 0 : x0 + ((x1 - x0) * k) / steps;
+    const y = fit.at(x);
+    if (!isFinite(y)) continue;
+    bx = xPos(x); by = vPos(y);
+    pts.push(`${pts.length ? "L" : "M"}${f(bx)} ${f(by)}`);
+  }
+  const path = tl.type === "movingAvg" ? fit.points!.map(([x, y], k) => `${k ? "L" : "M"}${f(xPos(x))} ${f(vPos(y))}`).join("") : pts.join("");
+  const tln = linePaint(tl.line, { color: c.color(si), width: 1.5 });
+  if (tln) c.prims.push({ t: "path", d: path, stroke: tln.stroke, sw: tln.sw, dash: tl.line?.dash ? tln.dash : "0.1 3", cap: "round", part: `trend:${si}` });
   const lines: string[] = [];
-  if (tl.showEq) lines.push(equationText(fit.slope, fit.intercept));
-  if (tl.showR2) lines.push(r2Text(fit.r2));
+  if (tl.showEq && fit.equation) lines.push(fit.equation);
+  if (tl.showR2 && fit.r2 !== undefined) lines.push(r2Text(fit.r2));
   if (!lines.length) return;
   // Excel centres the label 32 pt left of the line's right end, the first line's baseline
   // 2.6 pt above that end (recorded for rising and falling lines).
@@ -713,7 +894,7 @@ export function sceneMarkup(scene: Scene): string {
     if (p.t === "rect" && p.part === "clip:end") { out.push("</g>"); continue; }
     switch (p.t) {
       case "rect":
-        out.push(`<rect x="${f(p.x)}" y="${f(p.y)}" width="${f(Math.max(0, p.w))}" height="${f(Math.max(0, p.h))}" fill="${p.fill ?? "none"}"${p.stroke ? ` stroke="${p.stroke}" stroke-width="${p.sw ?? 0.75}"` : ""}${part(p)}/>`);
+        out.push(`<rect x="${f(p.x)}" y="${f(p.y)}" width="${f(Math.max(0, p.w))}" height="${f(Math.max(0, p.h))}" fill="${p.fill ?? "none"}"${p.stroke ? ` stroke="${p.stroke}" stroke-width="${p.sw ?? 0.75}"` : ""}${p.dash ? ` stroke-dasharray="${p.dash}"` : ""}${part(p)}/>`);
         break;
       case "path":
         out.push(`<path d="${p.d}" fill="${p.fill ?? "none"}"${p.stroke ? ` stroke="${p.stroke}" stroke-width="${p.sw ?? 0.75}" stroke-linejoin="round"` : ""}${p.cap ? ` stroke-linecap="${p.cap}"` : ""}${p.dash ? ` stroke-dasharray="${p.dash}"` : ""}${part(p)}/>`);
@@ -723,7 +904,8 @@ export function sceneMarkup(scene: Scene): string {
         break;
       case "text": {
         const tr = p.rotate ? ` transform="rotate(${p.rotate} ${f(p.x)} ${f(p.y)})"` : "";
-        out.push(`<text x="${f(p.x)}" y="${f(p.y)}" font-size="${p.size}" fill="${p.fill}" text-anchor="${p.anchor}"${tr}${part(p)}>${esc(p.text)}</text>`);
+        const wt = `${p.bold ? ' font-weight="bold"' : ""}${p.italic ? ' font-style="italic"' : ""}`;
+        out.push(`<text x="${f(p.x)}" y="${f(p.y)}" font-size="${p.size}" fill="${p.fill}" text-anchor="${p.anchor}"${wt}${tr}${part(p)}>${esc(p.text)}</text>`);
         break;
       }
     }

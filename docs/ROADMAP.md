@@ -67,6 +67,12 @@ Blitzvorschau, Gruppieren and Teilergebnis, Zielwertsuche, Rechtschreibung, Komm
 Excel's keyboard modes and mouse drags (D-065). Open: the owner's trial and list; the deferred
 features in the report; then Step 7b (Diagramm in RaabeWrite).
 
+Since 2026-11-05 (D-066): everything Excel offers except the cloud, measured against an inventory
+taken from Excel (`docs/EXCEL-INVENTORY.md`), generated behaviour cases and screenshots. First run:
+pointing in formulas (168 generated cases), Excel's checks on Enter, circular references, the chart
+Format pane with axis, series, label, trendline and error-bar options (44/44 settings read back by
+Excel, 32/32 of Excel's read by RaabeCalc), Schnelllayout, Farben ändern, Daten auswählen.
+
 ## Step 8: RaabePresent (proposal, not yet agreed)
 
 Proposed on 2026-10-27 and set back behind Step 7 (D-061); to be discussed again before it

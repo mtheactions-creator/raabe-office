@@ -4,12 +4,12 @@
 // opens and saves as German Excel does.
 
 import {
-  MAX_COLS, MAX_ROWS, Workbook, Sheet, cellName, colName, isDateFormat, FUNCTIONS_DE, RIBBON_FORMATS, localFormat, parseRange, rangeName,
+  CellError, MAX_COLS, MAX_ROWS, Workbook, Sheet, cellName, colName, isDateFormat, FUNCTIONS_DE, RIBBON_FORMATS, localFormat, parseRange, rangeName,
   type CellStyle, type Rect,
 } from "@raabe/sheet-engine";
 import { readXlsx, writeXlsx, newWorkbook } from "@raabe/ooxml";
 import {
-  Backstage, Commands, Keytips, Ribbon, TitleBar, baseName, h, icon, installTooltips, messageBox, showDialog, showMenu,
+  Backstage, Commands, Keytips, Ribbon, TaskPane, TitleBar, baseName, h, icon, installTooltips, messageBox, showDialog, showMenu,
   type BackstageEntry, type MenuEntry, type Platform,
 } from "@raabe/shell";
 import { COMMANDS } from "./command-list";
@@ -613,11 +613,13 @@ export class CalcApp {
     queueMicrotask(() => this.validation.afterSelect());
     // Only what depends on the changed cells is calculated again; structural changes (rows,
     // columns, sheets, names) recalculate the whole workbook.
+    const loopsBefore = this.loopKeys(doc);
     if (!change || change.structural) doc.calc.recalc();
     else for (const [sheet, cells] of change.cells) {
       const i = doc.wb.sheets.indexOf(sheet);
       if (i >= 0) doc.calc.changed(i, cells);
     }
+    if (doc === this.active) this.warnNewLoops(loopsBefore);
     if (doc === this.active) {
       this.grid.refreshLayout();
       this.grid.contentChanged();
@@ -626,6 +628,17 @@ export class CalcApp {
     }
     this.updateTabs();
     this.updateChrome();
+  }
+
+  /** The cells in circular references now, to tell new ones. */
+  private loopKeys(doc = this.active): Set<string> {
+    return new Set(doc.calc.circular.map((c) => `${c.sheet},${c.row},${c.col}`));
+  }
+
+  /** A new circular reference: Excel warns (recorded, D-066); the status bar names it afterwards. */
+  private warnNewLoops(before: Set<string>): void {
+    if (!this.active.calc.circular.some((c) => !before.has(`${c.sheet},${c.row},${c.col}`))) return;
+    queueMicrotask(() => void messageBox("RaabeCalc", "Die Formel bezieht sich direkt oder über andere Zellen auf ihre eigene Zelle (Zirkelbezug). So lässt sie sich nicht richtig berechnen; sie zeigt 0. Die Statusleiste nennt die Zelle."));
   }
 
   /** Runs a change as one undo step on the active workbook. */
@@ -676,6 +689,14 @@ export class CalcApp {
         if (!this.protection.guardRects([targets])) return;
         this.change("Eingabe", () => {
           A.enter(this.ctx, this.sheet, targets, text);
+          // Formulas are worked out first, so the column can widen for their result (an error too).
+          if (text.startsWith("=") && (targets.r1 - targets.r0 + 1) * (targets.c1 - targets.c0 + 1) <= 400) {
+            const cells: { row: number; col: number }[] = [];
+            for (let r = targets.r0; r <= targets.r1; r++) for (let c = targets.c0; c <= targets.c1; c++) cells.push({ row: r, col: c });
+            const loops = this.loopKeys();
+            this.active.calc.changed(this.wb.sheets.indexOf(this.sheet), cells);
+            this.warnNewLoops(loops);
+          }
           this.autoRowHeights(targets);
           this.autoWiden([targets]);
         });
@@ -687,6 +708,13 @@ export class CalcApp {
         if (this.protection.guard("edit.clearContents")) this.change("Löschen", () => A.clearContents(this.ctx, this.sheet, this.grid.selection));
       },
       clearRange: (r) => { if (this.protection.guard("edit.clearContents")) this.change("Löschen", () => A.clearContents(this.ctx, this.sheet, [r])); },
+      formulaError: () => messageBox("RaabeCalc", "Diese Formel ist fehlerhaft und kann so nicht übernommen werden. Bitte korrigieren Sie sie oder entfernen Sie das Gleichheitszeichen am Anfang, wenn es Text sein soll."),
+      proposeFormula: async (text) => !!(await showDialog({
+        title: "RaabeCalc",
+        body: h("div", null, h("p", null, "In der Formel steckt vermutlich ein Tippfehler. Soll sie so berichtigt übernommen werden?"),
+          h("p", { style: "font-family:Consolas,monospace;margin:8px 0 0 16px" }, text)),
+        buttons: [{ label: "Ja", value: true, primary: true }, { label: "Nein", value: false }], cancel: false,
+      })),
       leavePointing: () => {
         if (this.pointHome === null) return;
         const home = this.pointHome;
@@ -1336,16 +1364,23 @@ export class CalcApp {
       if (r.r1 - r.r0 > 2000) continue;
       for (let row = r.r0; row <= r.r1; row++) for (let col = r.c0; col <= Math.min(r.c1, r.c0 + 200); col++) {
         const c = sheet.get(row, col);
-        if (!c || typeof c.v !== "number") continue;
+        // Numbers, and the error a formula gives (#ÜBERLAUF! is wider than a column, recorded).
+        if (!c || (typeof c.v !== "number" && !(c.f !== undefined && c.v instanceof CellError))) continue;
         const st = this.wb.styles.get(c.s);
         const info = sheet.cols.get(col);
         const curPx = info?.width !== undefined ? charsToPx(info.width) : defaultColPx(sheet.defaultColWidth ?? DEFAULT_COL_CHARS);
         const full = shown(c, st).text;
+        if (c.v instanceof CellError) {
+          // An error is never cut or shown as ###: the column takes its width, with Excel's 5 px of margin.
+          const px = this.textWidth(row, col) + 5;
+          if (px > curPx) need.set(col, Math.max(need.get(col) ?? 0, px));
+          continue;
+        }
         const fitted = fitShown(this.measureCtx, c, st, curPx).text;
         if (fitted === full) continue;
         // Standard numbers widen the column only where the width would turn them into
         // scientific notation or cut a small number; dropping decimals is fine (recorded).
-        if (st.numFmt === "General" && !(full.includes("E") || fitted.includes("E") || Math.abs(c.v) < 1)) continue;
+        if (typeof c.v === "number" && st.numFmt === "General" && !(full.includes("E") || fitted.includes("E") || Math.abs(c.v) < 1)) continue;
         // The width the full text needs, as Excel decides whether it fits.
         let px = curPx;
         while (px < 2000 && fitShown(this.measureCtx, c, st, px).text !== full) px += 1 / devicePixelRatio;
@@ -1841,6 +1876,14 @@ export class CalcApp {
     run("insert.chartStat", () => this.charts.insert("histogram"));
     run("chart.addElement", () => this.charts.elements(), () => !!this.charts.selected());
     run("chart.changeType", () => {}, () => !!this.charts.selected());
+    run("chart.element", () => {}, () => !!this.charts.selected());
+    run("chart.switchRowCol", () => this.charts.switchRowCol(), () => !!this.charts.selected());
+    run("chart.quickLayout", () => {}, () => this.charts.layoutCount() > 0);
+    run("chart.colors", () => {}, () => !!this.charts.selected());
+    run("chart.selectData", () => this.charts.selectData(), () => !!this.charts.selected());
+    run("chart.move", () => this.charts.moveChart(), () => !!this.charts.selected());
+    run("chart.formatSelection", () => this.charts.formatSelection(), () => !!this.charts.selected());
+    run("chart.resetStyle", () => this.charts.resetElement(), () => !!this.charts.selected());
 
     run("layout.margins", () => {});
     run("layout.orientation", () => {});
@@ -1950,7 +1993,7 @@ export class CalcApp {
   /** Diagrammentwurf appears while a chart is selected, as Excel's contextual tab does. */
   chartSelectionChanged(): void {
     const on = !!this.charts.selected();
-    this.ribbon.setContextual(on ? [this.chartTab()] : []);
+    this.ribbon.setContextual(on ? [this.chartTab(), this.chartFormatTab()] : []);
     if (on) this.ribbon.select("chartDesign");
     this.updateChrome();
   }
@@ -1964,14 +2007,38 @@ export class CalcApp {
     return this.chartTabDef ??= {
       id: "chartDesign", label: "Diagrammentwurf", key: "JC", contextual: true, shrink: [],
       groups: [
-        { id: "layouts", label: "Diagrammlayouts", key: "ZL", icon: "chart-recommended", controls: [b("chart.addElement", "A"), b("chart.quickLayout", "L")] },
-        { id: "styles", label: "Diagrammformatvorlagen", key: "ZS", icon: "styles", controls: [b("chart.colors", "H"), b("chart.styles", "S")] },
+        { id: "layouts", label: "Diagrammlayouts", key: "ZL", icon: "chart-recommended", controls: [b("chart.addElement", "A"),
+          { type: "dropdown", cmd: "chart.quickLayout", key: "L", size: "large", menu: Array.from({ length: 11 }, (_, i) => ({ label: `Layout ${i + 1}`, run: () => this.charts.quickLayout(i + 1) })) }] },
+        { id: "styles", label: "Diagrammformatvorlagen", key: "ZS", icon: "styles", controls: [
+          { type: "dropdown", cmd: "chart.colors", key: "H", size: "large", menu: [
+            { heading: "Farbig" }, ...[10, 11, 12, 13].map((k) => ({ label: `Farbige Palette ${k - 9}`, run: () => this.charts.setColors(k) })),
+            { heading: "Monochromatisch" }, ...Array.from({ length: 13 }, (_, i) => ({ label: `Monochromatische Palette ${i + 1}`, run: () => this.charts.setColors(14 + i) })),
+          ] },
+          b("chart.styles", "S")] },
         { id: "data", label: "Daten", key: "ZD", icon: "table", controls: [b("chart.switchRowCol", "W"), b("chart.selectData", "E")] },
         { id: "type", label: "Typ", key: "ZT", icon: "chart-column", controls: [{ type: "dropdown", cmd: "chart.changeType", key: "C", size: "large", menu: kinds.map(([label, k]) => ({ label, run: () => this.charts.changeKind(k) })) }] },
         { id: "place", label: "Ort", key: "ZO", icon: "position", controls: [b("chart.move", "V")] },
       ],
     };
   }
+
+  /** Format (chart tools): Aktuelle Auswahl; the shape and WordArt groups follow (EXCEL-INVENTORY). */
+  private chartFormatTabDef: import("@raabe/shell").Tab | null = null;
+  private chartFormatTab(): import("@raabe/shell").Tab {
+    return this.chartFormatTabDef ??= {
+      id: "chartFormat", label: "Format", key: "JO", contextual: true, shrink: [],
+      groups: [
+        { id: "current", label: "Aktuelle Auswahl", key: "ZA", icon: "format-picture", controls: [{ type: "stack", items: [
+          { type: "combo", cmd: "chart.element", width: 160, key: "E", value: () => this.charts.elementName(), options: () => [{ items: this.charts.elementNames() }], commit: (v) => this.charts.chooseElement(v) },
+          { type: "button", cmd: "chart.formatSelection", key: "M", size: "small" },
+          { type: "button", cmd: "chart.resetStyle", key: "A", size: "small" },
+        ] }] },
+      ],
+    };
+  }
+
+  /** Excel's task pane at the right (Format panes). */
+  readonly taskPane = new TaskPane();
 
   showFormulas = false;
   showNotes = false;
@@ -2448,6 +2515,34 @@ export class CalcApp {
         const b = this.grid.rectOnCanvas(addr(`A${which}`))!;
         return { x: c.left + b.x - 14, y: c.top + b.y + b.h / 2 };
       },
+      /** RaabeCalc's ribbon as data for the inventory against Excel (D-066): tabs, groups, controls, menu entries. */
+      inventory: () => {
+        type Item = { name: string; type?: string; deferred?: boolean; enabled?: boolean; items?: Item[]; submenu?: Item[] };
+        const cmdItem = (id: string, label?: string): Item => {
+          const c = this.commands.get(id);
+          return { name: label ?? c.label, deferred: !!c.deferred, enabled: this.commands.isEnabled(id) };
+        };
+        const entries = (menu: import("@raabe/shell").MenuEntry[]): Item[] => menu.flatMap((m): Item[] => {
+          if (m === "-" || "heading" in m || "block" in m) return [];
+          if ("cmd" in m) return [cmdItem(m.cmd, m.label)];
+          if ("icons" in m) return [{ name: m.label, items: m.icons.map((i) => ({ name: i.tip.replace(/ \(.\)$/, "") })) }];
+          const sub = "submenu" in m ? (typeof m.submenu === "function" ? m.submenu() : m.submenu) : undefined;
+          return [{ name: m.label, enabled: !("disabled" in m && m.disabled), ...(sub ? { submenu: entries(sub) } : {}), ...("flyout" in m ? { type: "flyout" } : {}) }];
+        });
+        const ctl = (c: import("@raabe/shell").Control): Item[] => {
+          if (c.type === "stack") return c.items.flatMap(ctl);
+          if (c.type === "rows") return c.rows.flat().flatMap((x) => (x === "gap" ? [] : ctl(x)));
+          if (c.type === "gallery") return c.items.map((i) => ({ ...cmdItem(i.cmd), type: "gallery" }));
+          const base: Item = "cmd" in c ? cmdItem(c.cmd, "label" in c ? c.label : undefined) : { name: "?" };
+          const menu = "menu" in c && c.menu.length ? { items: entries(c.menu) } : {};
+          return [{ ...base, type: (c as { type: string }).type, ...menu }];
+        };
+        const tabs = [...ribbonTabs(this.ribbonContext()), this.chartTab()];
+        return tabs.map((t) => ({
+          name: t.label, contextual: !!t.contextual,
+          groups: t.groups.map((g) => ({ name: g.label, launcher: g.launcher ? cmdItem(g.launcher.cmd) : undefined, controls: g.controls.flatMap(ctl) })),
+        }));
+      },
       state: (check: string[]) => {
         const editing = this.grid.isEditing ? (document.querySelector<HTMLTextAreaElement>(".fx-input")!.value) : null;
         const mode = modeName();
@@ -2455,7 +2550,14 @@ export class CalcApp {
         const sheet = this.sheet;
         const cells: Record<string, unknown> = {};
         const keys = new Set<number>();
-        for (const [k, c] of sheet.cells) if (c.v !== null || c.f) keys.add(k);
+        // Cells a dynamic array spills into have no formula of their own; Excel's COM lists them as empty.
+        const si = this.wb.sheets.indexOf(sheet);
+        for (const [k, c] of sheet.cells) {
+          if (!(c.v !== null || c.f)) continue;
+          const anchor = c.f ? null : this.active.calc.spillAnchor(si, Math.floor(k / MAX_COLS), k % MAX_COLS);
+          if (anchor && (anchor.row !== Math.floor(k / MAX_COLS) || anchor.col !== k % MAX_COLS)) continue;
+          keys.add(k);
+        }
         for (const a of check) { const r = addr(a); keys.add(r.r0 * MAX_COLS + r.c0); }
         for (const k of [...keys].sort((a, b) => (a % MAX_COLS) - (b % MAX_COLS) || Math.floor(a / MAX_COLS) - Math.floor(b / MAX_COLS))) {
           const row = Math.floor(k / MAX_COLS), col = k % MAX_COLS;

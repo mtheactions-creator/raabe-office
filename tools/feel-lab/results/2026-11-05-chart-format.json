@@ -1,0 +1,619 @@
+{
+ "raabe->excel": [
+  {
+   "chart": "column",
+   "what": "ch.ChartGroups(1).GapWidth",
+   "want": 60,
+   "got": 60,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "ch.ChartGroups(1).Overlap",
+   "want": 15,
+   "got": 15,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "ch.ChartArea.Format.Fill.ForeColor.RGB",
+   "want": 13431551,
+   "got": 13431551,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "ch.ChartArea.Format.Line.ForeColor.RGB",
+   "want": 192,
+   "got": 192,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "ch.ChartArea.Format.Line.Weight",
+   "want": 2,
+   "got": 2.0,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "ch.ChartArea.Format.Line.DashStyle",
+   "want": 4,
+   "got": 4,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "ch.PlotArea.Format.Fill.ForeColor.RGB",
+   "want": 16247773,
+   "got": 16247773,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "ch.ChartTitle.Format.TextFrame2.TextRange.Font.Size",
+   "want": 18,
+   "got": 18.0,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "ch.ChartTitle.Format.TextFrame2.TextRange.Font.Bold",
+   "want": -1,
+   "got": -1,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "ch.Axes(2).MinimumScale",
+   "want": -2,
+   "got": -2.0,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "ch.Axes(2).MaximumScale",
+   "want": 8,
+   "got": 8.0,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "ch.Axes(2).MajorUnit",
+   "want": 2,
+   "got": 2.0,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "ch.Axes(2).MinorUnit",
+   "want": 0.5,
+   "got": 0.5,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "ch.Axes(2).ReversePlotOrder",
+   "want": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "ch.Axes(2).TickLabels.NumberFormat",
+   "want": "0.0",
+   "got": "0.0",
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "ch.Axes(2).MajorTickMark",
+   "want": 3,
+   "got": 3,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "ch.Axes(2).TickLabelPosition",
+   "want": -4134,
+   "got": -4134,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "ch.Axes(1).ReversePlotOrder",
+   "want": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "ch.Axes(2).MajorGridlines.Format.Line.ForeColor.RGB",
+   "want": 10921638,
+   "got": 10921638,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "ch.Axes(2).MajorGridlines.Format.Line.Weight",
+   "want": 1.5,
+   "got": 1.5,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "ch.Axes(2).MajorGridlines.Format.Line.DashStyle",
+   "want": 11,
+   "got": 11,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "ch.Axes(2).HasMinorGridlines",
+   "want": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "ch.Legend.IncludeInLayout",
+   "want": false,
+   "got": false,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "ch.SeriesCollection(1).DataLabels().ShowCategoryName",
+   "want": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "ch.SeriesCollection(1).DataLabels().ShowSeriesName",
+   "want": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "ch.SeriesCollection(1).DataLabels().Position",
+   "want": 3,
+   "got": 3,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "ch.SeriesCollection(1).DataLabels().Separator",
+   "want": ", ",
+   "got": ", ",
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "ch.SeriesCollection(1).Format.Fill.ForeColor.RGB",
+   "want": 4697456,
+   "got": 4697456,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "ch.SeriesCollection(1).InvertIfNegative",
+   "want": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "ch.SeriesCollection(2).Trendlines(1).Type",
+   "want": 3,
+   "got": 3,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "ch.SeriesCollection(2).Trendlines(1).DisplayEquation",
+   "want": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "ch.SeriesCollection(2).Trendlines(1).DisplayRSquared",
+   "want": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "ch.SeriesCollection(2).Trendlines(1).Order",
+   "want": 3,
+   "got": 3,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "ch.SeriesCollection(2).Trendlines(1).Forward",
+   "want": 1,
+   "got": 1.0,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "ch.SeriesCollection(2).Trendlines(1).Name",
+   "want": "Kurve",
+   "got": "Kurve",
+   "ok": true
+  },
+  {
+   "chart": "lineMarkers",
+   "what": "ch.SeriesCollection(1).Format.Line.ForeColor.RGB",
+   "want": 10498160,
+   "got": 10498160,
+   "ok": true
+  },
+  {
+   "chart": "lineMarkers",
+   "what": "ch.SeriesCollection(1).Format.Line.Weight",
+   "want": 3,
+   "got": 3.0,
+   "ok": true
+  },
+  {
+   "chart": "lineMarkers",
+   "what": "ch.SeriesCollection(1).Format.Line.DashStyle",
+   "want": 7,
+   "got": 7,
+   "ok": true
+  },
+  {
+   "chart": "lineMarkers",
+   "what": "ch.SeriesCollection(1).MarkerStyle",
+   "want": 2,
+   "got": 2,
+   "ok": true
+  },
+  {
+   "chart": "lineMarkers",
+   "what": "ch.SeriesCollection(1).MarkerSize",
+   "want": 9,
+   "got": 9,
+   "ok": true
+  },
+  {
+   "chart": "lineMarkers",
+   "what": "ch.SeriesCollection(1).Smooth",
+   "want": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "chart": "lineMarkers",
+   "what": "ch.SeriesCollection(2).ErrorBars.EndStyle",
+   "want": 2,
+   "got": 2,
+   "ok": true
+  },
+  {
+   "chart": "doughnut",
+   "what": "ch.ChartGroups(1).FirstSliceAngle",
+   "want": 90,
+   "got": 90,
+   "ok": true
+  },
+  {
+   "chart": "doughnut",
+   "what": "ch.ChartGroups(1).DoughnutHoleSize",
+   "want": 40,
+   "got": 40,
+   "ok": true
+  }
+ ],
+ "excel->raabe": [
+  {
+   "chart": "column",
+   "what": "gapWidth",
+   "want": 60,
+   "got": 60,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "overlap",
+   "want": 15,
+   "got": 15,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "dataLabels",
+   "want": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "format.chart.fill",
+   "want": {
+    "type": "solid",
+    "color": "#FFF2CC"
+   },
+   "got": {
+    "type": "solid",
+    "color": "#FFF2CC"
+   },
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "format.chart.line",
+   "want": {
+    "type": "solid",
+    "color": "#C00000",
+    "width": 2,
+    "dash": "dash"
+   },
+   "got": {
+    "type": "solid",
+    "color": "#C00000",
+    "width": 2,
+    "dash": "dash"
+   },
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "format.plot.fill",
+   "want": {
+    "type": "solid",
+    "color": "#DDEBF7"
+   },
+   "got": {
+    "type": "solid",
+    "color": "#DDEBF7"
+   },
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "format.title.text",
+   "want": {
+    "size": 18,
+    "bold": true
+   },
+   "got": {
+    "size": 18,
+    "bold": true
+   },
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "format.valAxis.min",
+   "want": -2,
+   "got": -2,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "format.valAxis.max",
+   "want": 8,
+   "got": 8,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "format.valAxis.majorUnit",
+   "want": 2,
+   "got": 2,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "format.valAxis.minorUnit",
+   "want": 0.5,
+   "got": 0.5,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "format.valAxis.reverse",
+   "want": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "format.valAxis.numFmt",
+   "want": "0.0",
+   "got": "0.0",
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "format.valAxis.majorTick",
+   "want": "out",
+   "got": "out",
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "format.valAxis.labelPos",
+   "want": "low",
+   "got": "low",
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "format.catAxis.reverse",
+   "want": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "format.majorGrid.line",
+   "want": {
+    "type": "solid",
+    "color": "#A6A6A6",
+    "width": 1.5,
+    "dash": "sysDot"
+   },
+   "got": {
+    "type": "solid",
+    "color": "#A6A6A6",
+    "width": 1.5,
+    "dash": "sysDot"
+   },
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "format.minorGrid.show",
+   "want": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "format.legend.overlay",
+   "want": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "format.dataLabels.showCat",
+   "want": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "format.dataLabels.showSer",
+   "want": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "format.dataLabels.pos",
+   "want": "inEnd",
+   "got": "inEnd",
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "format.dataLabels.separator",
+   "want": ", ",
+   "got": ", ",
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "series[0].fill",
+   "want": {
+    "type": "solid",
+    "color": "#70AD47"
+   },
+   "got": null,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "series[0].invertIfNegative",
+   "want": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "chart": "column",
+   "what": "series[1].trendline",
+   "want": {
+    "type": "poly",
+    "order": 3,
+    "showEq": true,
+    "showR2": true,
+    "forward": 1,
+    "name": "Kurve"
+   },
+   "got": {
+    "type": "poly",
+    "showEq": true,
+    "showR2": true,
+    "order": 3,
+    "forward": 1,
+    "name": "Kurve"
+   },
+   "ok": true
+  },
+  {
+   "chart": "lineMarkers",
+   "what": "series[0].marker",
+   "want": {
+    "symbol": "diamond",
+    "size": 9
+   },
+   "got": {
+    "symbol": "diamond",
+    "size": 9
+   },
+   "ok": true
+  },
+  {
+   "chart": "lineMarkers",
+   "what": "series[0].smooth",
+   "want": true,
+   "got": true,
+   "ok": true
+  },
+  {
+   "chart": "lineMarkers",
+   "what": "series[0].line",
+   "want": {
+    "type": "solid",
+    "color": "#7030A0",
+    "width": 3,
+    "dash": "lgDash"
+   },
+   "got": {
+    "type": "solid",
+    "color": "#7030A0",
+    "width": 3,
+    "dash": "lgDash"
+   },
+   "ok": true
+  },
+  {
+   "chart": "lineMarkers",
+   "what": "series[1].errorBars",
+   "want": {
+    "dir": "plus",
+    "type": "fixedVal",
+    "value": 1,
+    "noEndCap": true
+   },
+   "got": {
+    "dir": "plus",
+    "type": "fixedVal",
+    "noEndCap": true,
+    "value": 1
+   },
+   "ok": true
+  },
+  {
+   "chart": "doughnut",
+   "what": "firstSliceAngle",
+   "want": 90,
+   "got": 90,
+   "ok": true
+  },
+  {
+   "chart": "doughnut",
+   "what": "holeSize",
+   "want": 40,
+   "got": 40,
+   "ok": true
+  }
+ ]
+}

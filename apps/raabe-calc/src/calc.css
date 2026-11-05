@@ -28,6 +28,21 @@
   user-select: text; -webkit-user-select: text;
 }
 .cell-editor.on { opacity: 1; box-shadow: 0 0 0 1px #b3141b; }
+/* References in colour while a formula is typed: the text itself is drawn by the layer below. */
+.cell-editor.tinted, .fx-input.tinted { color: transparent !important; background: transparent !important; }
+.cell-editor-tint {
+  position: absolute; z-index: 4; overflow: hidden; margin: 0; padding: 0 2px 0 3px; box-sizing: border-box; white-space: pre;
+  background: #fff; color: #000; pointer-events: none;
+}
+.cell-editor-tint[data-align="right"] { text-align: right; }
+.cell-editor-tint[data-align="center"] { text-align: center; }
+.cell-editor-tint[data-wrap="1"] { white-space: pre-wrap; }
+.fx-wrap { position: relative; }
+.fx-tint {
+  position: absolute; inset: 0; overflow: hidden; padding: 2px 4px; font: 14.667px "Calibri", Carlito, sans-serif; line-height: 18px;
+  white-space: pre; color: #000; pointer-events: none;
+}
+.fx-input { position: relative; z-index: 1; background: transparent; }
 .cell-editor[data-align="right"] { text-align: right; }
 .cell-editor[data-align="center"] { text-align: center; }
 .cell-editor[data-wrap="1"] { white-space: pre-wrap; }

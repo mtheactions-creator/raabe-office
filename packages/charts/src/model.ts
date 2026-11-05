@@ -19,12 +19,118 @@ export interface ChartData<T> {
   format?: string;
 }
 
+// ----- formatting (Excel's Format panes, D-066) ------------------------------------------------------
+// Unset fields keep Excel's automatic look (style 201); what is set is written to the file as
+// DrawingML (c:spPr, c:txPr, c:scaling …) and read back.
+
+/** Füllung: Keine Füllung, Einfarbige Füllung (colour, Transparenz in %), Automatisch. */
+export interface Fill { type: "none" | "solid" | "auto"; color?: string; transparency?: number }
+
+/** Strichtyp, as DrawingML's preset dashes. */
+export type Dash = "solid" | "dot" | "sysDot" | "sysDash" | "sysDashDot" | "sysDashDotDot" | "dash" | "dashDot" | "lgDash" | "lgDashDot" | "lgDashDotDot";
+
+/** Rahmen or Linie: Keine Linie, Einfarbige Linie, Automatisch; Breite in pt. */
+export interface Line { type: "none" | "solid" | "auto"; color?: string; transparency?: number; width?: number; dash?: Dash }
+
+/** Text of an element (Start > Schriftart while a chart element is selected; Textoptionen). */
+export interface TextFormat { size?: number; bold?: boolean; italic?: boolean; color?: string }
+
+export interface ElementFormat { fill?: Fill; line?: Line; text?: TextFormat }
+
+/** Teilstriche: Ohne, Innen, Außen, Kreuz. */
+export type TickMark = "none" | "in" | "out" | "cross";
+
+/** Achsenoptionen (value axes: bounds and units; both: ticks, labels, number format). */
+export interface AxisOptions extends ElementFormat {
+  /** Begrenzungen Minimum / Maximum; undefined: Automatisch. */
+  min?: number;
+  max?: number;
+  /** Einheiten Haupt / Hilfs; undefined: Automatisch. */
+  majorUnit?: number;
+  minorUnit?: number;
+  /** Logarithmische Skalierung with this Basis. */
+  logBase?: number;
+  /** Werte in umgekehrter Reihenfolge / Kategorien in umgekehrter Reihenfolge. */
+  reverse?: boolean;
+  /** Horizontale Achse schneidet: Automatisch, Maximaler Achsenwert, or at a value. */
+  crosses?: "auto" | "max" | number;
+  majorTick?: TickMark;
+  minorTick?: TickMark;
+  /** Beschriftungsposition: Achsennah, Hoch, Tief, Keine. */
+  labelPos?: "nextTo" | "high" | "low" | "none";
+  /** Zahlenformat of the labels; undefined: Mit Quelle verknüpfen. */
+  numFmt?: string;
+  /** The axis is shown (Diagrammelemente > Achsen). */
+  visible?: boolean;
+}
+
+/** Datenbeschriftungen: what they show and where (Beschriftungsoptionen). */
+export interface DataLabelOptions extends ElementFormat {
+  showVal?: boolean;
+  showCat?: boolean;
+  showSer?: boolean;
+  showPercent?: boolean;
+  showLegendKey?: boolean;
+  /** Beschriftungsposition: Zentriert, Innerhalb Ende, Innerhalb Basis, Außerhalb Ende, Links, Rechts, Über, Unter, Optimale Anpassung. */
+  pos?: "ctr" | "inEnd" | "inBase" | "outEnd" | "l" | "r" | "t" | "b" | "bestFit";
+  /** Trennzeichen between the parts: "; " ", " ". " line break. */
+  separator?: string;
+  numFmt?: string;
+}
+
+export type MarkerSymbol = "auto" | "none" | "circle" | "square" | "diamond" | "triangle" | "x" | "star" | "dash" | "dot" | "plus";
+
+/** Markierung of line and scatter series. */
+export interface MarkerOptions { symbol?: MarkerSymbol; size?: number; fill?: Fill; line?: Line }
+
 export interface Trendline {
-  type: "linear";
+  /** Linear, Exponentiell, Logarithmisch, Polynomisch (order 2-6), Potenz, Gleitender Durchschnitt (period). */
+  type: "linear" | "exp" | "log" | "poly" | "power" | "movingAvg";
+  order?: number;
+  period?: number;
+  /** Name: undefined: Automatisch ("Linear (Reihe1)"). */
+  name?: string;
+  /** Prognose vorwärts / rückwärts in category units. */
+  forward?: number;
+  backward?: number;
+  /** Schnittpunkt festlegen. */
+  intercept?: number;
   /** Formel im Diagramm anzeigen. */
   showEq: boolean;
   /** Bestimmtheitsmaß im Diagramm anzeigen. */
   showR2: boolean;
+  line?: Line;
+}
+
+/** Fehlerbalken (Fehlerindikatoren): direction, end style, amount. */
+export interface ErrorBars {
+  dir: "both" | "minus" | "plus";
+  /** Endformat: Ohne Abschluss (true) / Abschluss. */
+  noEndCap?: boolean;
+  /** Fehlerbetrag: Fester Wert, Prozentsatz, Standardabweichung(en), Standardfehler. */
+  type: "fixedVal" | "percentage" | "stdDev" | "stdErr";
+  value?: number;
+  line?: Line;
+}
+
+/** The formatting of the chart's elements that are not series. */
+export interface ChartFormat {
+  chart?: ElementFormat;
+  plot?: ElementFormat;
+  /** Diagrammtitel; overlay: Titel über dem Diagramm einblenden, ohne die Größe zu ändern. */
+  title?: ElementFormat & { overlay?: boolean };
+  legend?: ElementFormat & { overlay?: boolean };
+  catAxis?: AxisOptions;
+  valAxis?: AxisOptions;
+  /** Primäre Hauptgitternetzlinien of the value axis (their Linie). */
+  majorGrid?: ElementFormat;
+  /** Primäre Hilfsgitternetzlinien of the value axis, shown when set. */
+  minorGrid?: ElementFormat & { show?: boolean };
+  /** Primäre vertikale Hauptgitternetzlinien (category axis). */
+  catGrid?: ElementFormat & { show?: boolean };
+  axisTitles?: { cat?: ElementFormat; val?: ElementFormat };
+  /** Datenbeschriftungen of all series. */
+  dataLabels?: DataLabelOptions;
 }
 
 export interface ChartSeries {
@@ -35,6 +141,17 @@ export interface ChartSeries {
   /** Fill/line colour "#RRGGBB"; undefined: the theme's accent for the series' index. */
   color?: string;
   trendline?: Trendline;
+  /** Füllung and Rahmen (columns, areas, pie slices) or Linie (lines, scatter lines) from the Format pane. */
+  fill?: Fill;
+  line?: Line;
+  marker?: MarkerOptions;
+  /** Linie glätten. */
+  smooth?: boolean;
+  /** Invertieren falls negativ. */
+  invertIfNegative?: boolean;
+  /** Sekundärachse (Datenreihe zeichnen auf). */
+  secondary?: boolean;
+  errorBars?: ErrorBars;
 }
 
 /** A corner of the chart: a cell and the offset into it in px at 100 % (twoCellAnchor). */
@@ -52,6 +169,17 @@ export interface ChartModel {
   dataLabels: boolean;
   /** Primäre horizontale Hauptgitternetzlinien (value gridlines). */
   gridlines: boolean;
+  /** Formatting from the Format panes; unset: Excel's automatic look. */
+  format?: ChartFormat;
+  /** Reihenachsenüberlappung and Abstandsbreite (columns and bars), in %. */
+  overlap?: number;
+  gapWidth?: number;
+  /** Winkel des ersten Kreissegments (pies), Innenringgröße (doughnuts, %). */
+  firstSliceAngle?: number;
+  holeSize?: number;
+  /** Diagrammformatvorlage (Excel's style number, 201 the default) and Farben ändern (colour scheme, 10 the default). */
+  style?: number;
+  colors?: number;
   from: CellAnchor;
   to: CellAnchor;
   /** Name of the drawing object ("Diagramm 1"). */

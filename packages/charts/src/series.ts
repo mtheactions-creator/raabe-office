@@ -58,7 +58,7 @@ const isText = (v: CellValue) => typeof v === "string" && v !== "";
 const num = (v: CellValue): number | null => (typeof v === "number" && isFinite(v) ? v : null);
 
 /** The series Excel makes of a block for a chart of `kind`. */
-export function seriesFromBlock(b: Block, kind: ChartKind): ChartSeries[] {
+export function seriesFromBlock(b: Block, kind: ChartKind, orientation?: "rows" | "cols"): ChartSeries[] {
   const rows = b.r1 - b.r0 + 1, cols = b.c1 - b.c0 + 1;
   if (kind === "histogram") {
     const vals: number[] = [];
@@ -73,7 +73,8 @@ export function seriesFromBlock(b: Block, kind: ChartKind): ChartSeries[] {
     const first = name ? (cols === 1 ? b.r0 + 1 : b.r0) : b.r0;
     return [{ name, val: { ref: refText(b.sheet, first, b.c0, b.r1, b.c1), cache: vals } }];
   }
-  const byCols = rows > cols;
+  // Series in columns when the block is taller than wide (Excel), unless Zeile/Spalte wechseln chose.
+  const byCols = orientation ? orientation === "cols" : rows > cols;
   let headRow = false, headCol = false;
   if (rows > 1 && cols > 1 && (b.get(b.r0, b.c0) === null || b.get(b.r0, b.c0) === "")) {
     headRow = headCol = true;
@@ -126,4 +127,16 @@ export function seriesFromBlock(b: Block, kind: ChartKind): ChartSeries[] {
     }
     return s;
   });
+}
+
+/** The block a chart's series come from (the bounding range of their names, categories and values) and how they run. */
+export function sourceOf(series: ChartSeries[]): { ref: Ref; orientation: "rows" | "cols" } | null {
+  const refs = series.flatMap((x) => [x.name?.ref, x.cat?.ref, x.val.ref]).filter((r): r is string => !!r).map(parseRef).filter((r): r is Ref => !!r);
+  if (!refs.length) return null;
+  const sheet = refs[0].sheet;
+  const same = refs.filter((r) => r.sheet === sheet);
+  const ref = { sheet, r0: Math.min(...same.map((r) => r.r0)), c0: Math.min(...same.map((r) => r.c0)), r1: Math.max(...same.map((r) => r.r1)), c1: Math.max(...same.map((r) => r.c1)) };
+  const v = parseRef(series[0].val.ref ?? "");
+  const orientation = v && v.c0 === v.c1 && v.r1 > v.r0 ? "cols" : v && v.r0 === v.r1 && v.c1 > v.c0 ? "rows" : "cols";
+  return { ref, orientation };
 }

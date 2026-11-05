@@ -506,7 +506,8 @@ export class Calc implements Host {
 
   private spillOut(n: FNode, cell: Cell, a: Arr): void {
     const sheet = this.wb.sheets[n.sheet];
-    const want = { r0: n.row, c0: n.col, r1: n.row + a.rows - 1, c1: n.col + a.cols - 1 };
+    const size = a.full ?? { rows: a.rows, cols: a.cols };
+    const want = { r0: n.row, c0: n.col, r1: n.row + size.rows - 1, c1: n.col + size.cols - 1 };
     n.wanted = want;
     this.anchors.add(n);
     let blocked = want.r1 >= MAX_ROWS || want.c1 >= MAX_COLS;
@@ -523,6 +524,14 @@ export class Calc implements Host {
           break;
         }
       }
+    }
+    // A spill over the cells the formula reads is a circular reference (Excel: 0, the warning, recorded).
+    if (!blocked && n.deps.some((d) => d.sheet === n.sheet && d.rect.r0 <= want.r1 && d.rect.r1 >= want.r0 && d.rect.c0 <= want.c1 && d.rect.c1 >= want.c0)) {
+      if (n.spill) this.clearSpill(n);
+      cell.spill = undefined;
+      this.newLoops.push({ sheet: n.sheet, row: n.row, col: n.col });
+      this.store(n.sheet, n.row, n.col, cell, 0);
+      return;
     }
     if (n.spill) this.clearSpill(n, blocked ? undefined : want);
     if (blocked) {

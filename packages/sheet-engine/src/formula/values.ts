@@ -21,6 +21,8 @@ export class Ref {
 
 /** A two-dimensional array of values (row-major). */
 export class Arr {
+  /** The size before whole columns or rows were cut to the used range (what a spill would need). */
+  full?: { rows: number; cols: number };
   constructor(readonly rows: number, readonly cols: number, readonly d: V[]) {}
   get(r: number, c: number): V {
     return this.d[r * this.cols + c];

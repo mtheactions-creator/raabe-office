@@ -3,7 +3,7 @@
 // internals (formulas, number formats; packages/sheet-engine).
 
 import {
-  Calc, CellError, editText as valueEditText, errorText, formatValue, numberEditText, parseInput, toFileFormula, toLocalFormula,
+  Calc, CellError, checkEntry, editText as valueEditText, errorText, formatValue, numberEditText, parseInput, toFileFormula, toLocalFormula,
   type Cell, type CellStyle, type Value, type Workbook,
 } from "@raabe/sheet-engine";
 
@@ -63,8 +63,19 @@ export function readInput(text: string, style: CellStyle): { v: Value; f?: strin
   if (style.numFmt === "@") return { v: text };
   const r = parseInput(text, { numFmt: style.numFmt });
   // "+2*3" becomes "=2*3": Excel drops the plus that started the formula.
-  if (r.formula !== undefined) return { v: null, f: toFileFormula(text.startsWith("+") && r.formula.startsWith("=+") ? "=" + r.formula.slice(2) : r.formula) };
+  if (r.formula !== undefined) return { v: null, f: toFileFormula(mendFormula(text.startsWith("+") && r.formula.startsWith("=+") ? "=" + r.formula.slice(2) : r.formula)) };
   return { v: r.value, numFmt: r.numFmt };
+}
+
+export { checkEntry } from "@raabe/sheet-engine";
+
+/**
+ * A formula entered without asking (pasted, filled, set up by a test): Excel's mended form when it
+ * would propose one, as Excel takes it when its messages are off.
+ */
+export function mendFormula(text: string): string {
+  const c = checkEntry(text);
+  return c.kind === "error" ? text : c.text;
 }
 
 export type CalcLike = Calc;

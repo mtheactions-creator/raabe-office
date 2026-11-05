@@ -335,13 +335,16 @@ export const COMMANDS: Command[] = [
 
   // ----- Diagrammentwurf (a selected chart) ----------------------------------------------------
   cmd("chart.addElement", "Diagrammelement hinzufügen", "chart-recommended"),
-  later("chart.quickLayout", "Schnelllayout", "chart-recommended"),
-  later("chart.colors", "Farben ändern", "colors"),
+  cmd("chart.quickLayout", "Schnelllayout", "chart-recommended"),
+  cmd("chart.colors", "Farben ändern", "colors"),
   later("chart.styles", "Diagrammformatvorlagen", "styles"),
-  later("chart.switchRowCol", "Zeile/Spalte wechseln", "table-switch"),
-  later("chart.selectData", "Daten auswählen", "table"),
+  cmd("chart.switchRowCol", "Zeile/Spalte wechseln", "table-switch"),
+  cmd("chart.selectData", "Daten auswählen", "table"),
   cmd("chart.changeType", "Diagrammtyp ändern", "chart-column"),
-  later("chart.move", "Diagramm verschieben", "position"),
+  cmd("chart.element", "Diagrammelemente", "chart-recommended"),
+  cmd("chart.formatSelection", "Auswahl formatieren", "format-picture", { shortcut: "Strg+1" }),
+  cmd("chart.resetStyle", "Auf Formatvorlage zurücksetzen", "reset-picture"),
+  cmd("chart.move", "Diagramm verschieben", "position"),
 
   // ----- sheets and context ----------------------------------------------------------------
   cmd("sheet.next", "Nächstes Blatt", undefined, { shortcut: "Strg+Bild ab", hidden: true }),
