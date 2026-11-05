@@ -37,6 +37,14 @@
    "ok": true
   },
   {
+   "case": "group",
+   "ok": true
+  },
+  {
+   "case": "freeform",
+   "ok": true
+  },
+  {
    "case": "textbox",
    "ok": true
   }
@@ -76,6 +84,14 @@
   },
   {
    "case": "arrow-both",
+   "ok": true
+  },
+  {
+   "case": "group",
+   "ok": true
+  },
+  {
+   "case": "freeform",
    "ok": true
   },
   {

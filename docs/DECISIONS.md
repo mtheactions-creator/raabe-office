@@ -1560,6 +1560,27 @@ that the catalogue only measured what we had thought of. Decided with the owner:
   theme's first line style in the 2013-2022 theme and the second in the current one; a click gives
   a 2,54 cm square. RaabeCalc keeps the style reference of each shape and reads the theme's line
   widths. `shot_compare.py` on Excel's own file: the same picture (mean difference 2 of 255).
+- **Anordnen, Gruppieren, Auswahlbereich, Freihand** (D-066): Umschalt+click or Strg+click selects
+  several shapes, which then move, nudge, delete and format together; Ebene nach vorne / hinten with
+  In den Vordergrund / Hintergrund, Ausrichten (Linksbündig … Unten ausrichten for two or more,
+  Horizontal / Vertikal verteilen for three or more, to the outermost shapes), Gruppieren, Gruppierung
+  aufheben and wiederherstellen (xdr:grpSp read and written; a group's shapes keep their places in its
+  own coordinates and scale with it, line widths stay), the Auswahlbereich (frontmost first, Anzeigen /
+  Ausblenden per shape and for all, renaming by double-click, order arrows; hidden="1" in the file),
+  on Seitenlayout and Formformat. Kurve, Freihandform: Form and Freihand: Skizze draw custom geometry
+  (a:custGeom) as RaabeWrite does. `check_calc_shapes.py` 12/12 both ways with a group and a freeform.
+  Not yet: selecting one shape inside a group, pictures and charts in groups and in the Auswahlbereich.
+- **Rahmenlinien zeichnen**: Rahmenlinie zeichnen (a click on a cell edge draws it, a drag the
+  outline), Rahmenraster zeichnen, Rahmenlinie löschen (also the neighbouring cell's side), Linienfarbe
+  and Linienart (13 styles, our own samples); choosing a colour or style switches drawing on, Esc ends.
+- **Sheet names and status bar** (catalogue): Excel numbers a new sheet on from the last one it made in
+  the workbook and never reuses a number (Tabelle4 after Tabelle2 and 3 were deleted); the status bar
+  shows Mittelwert, Summe, Min and Max in the number format of the first number in the selection
+  (dates as dates).
+- **The harness places windows by their visible frame**: RaabeCalc's and RaabeWrite's standard frames
+  have invisible resize borders, so their cell areas were compared smaller than Excel's; the formula
+  bar sat 4 px lower than Excel's and now does not. The remaining difference in how many rows fit is
+  the default font (Calibri 15 pt rows against Aptos Narrow 14,5 pt, D-011).
 - **Row heights in whole device pixels**, as Excel rounds them at the screen's DPI: 14,5 pt rows
   are 29 device px at 150 % (they were 28,5 px; over 20 rows RaabeCalc drifted 10 px from Excel).
   Printing stays at 96 dpi. The Zeilenhöhe dialog keeps the typed height exactly.

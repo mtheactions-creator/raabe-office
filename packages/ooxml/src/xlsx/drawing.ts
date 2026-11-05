@@ -105,7 +105,7 @@ export function writeCharts(pw: PackageWriter, sheet: Sheet, sheetPart: string, 
         continue;
       }
       // Shapes: the model's version (the same XML while unchanged), gone when deleted.
-      if (/^<xdr:twoCellAnchor\b/.test(ax) && /<xdr:(?:sp|cxnSp)\b/.test(ax) && !/<xdr:grpSp\b/.test(ax)) {
+      if (/^<xdr:twoCellAnchor\b/.test(ax) && /<xdr:(?:sp|cxnSp|grpSp)\b/.test(ax)) {
         const s = (sheet.shapes ?? []).find((q) => q.raw === ax);
         if (!s) { if (!readRaws.has(ax)) slots.push({ xml: ax }); continue; }
         const sid = Number(/<xdr:cNvPr\b[^>]*\bid="(\d+)"/.exec(ax)?.[1] ?? 2);

@@ -42,6 +42,7 @@ import { seek } from "./goalseek";
 import { spellingFeature } from "./spelling";
 import { picturesFeature } from "./pictures";
 import { shapesFeature } from "./shapes";
+import { borderDrawFeature } from "./borderdraw";
 import { pivotsFeature } from "./pivots";
 import { commentsFeature } from "./comments";
 import { iconRule } from "./dialogs";
@@ -100,6 +101,7 @@ export class CalcApp {
   private spelling = spellingFeature(this);
   private pictures = picturesFeature(this);
   readonly shapes = shapesFeature(this);
+  readonly borderDraw = borderDrawFeature(this);
   readonly pivots = pivotsFeature(this);
   private comments = commentsFeature(this, () => this.settings.userName);
   private errorCheck = errorCheckFeature(this, () => void this.evaluator.open());
@@ -153,7 +155,7 @@ export class CalcApp {
       moveSheet: (from, to, copy) => { if (!this.protection.bookLocked()) this.moveSheet(from, to, copy); },
       contextMenu: (e) => this.sheetMenu(e),
     }, this.grid.hscroll);
-    this.statusBar = new CalcStatusBar(this.commands, (z) => this.setZoom(z), (v) => shown({ v }, this.wb.styles.get(0)).text);
+    this.statusBar = new CalcStatusBar(this.commands, (z) => this.setZoom(z), (v, st) => shown({ v }, this.wb.styles.get(st ?? 0)).text);
     const main = h("div", { class: "calc-main" }, this.grid.formulaBar, this.grid.el, this.sheetBar.el);
     document.body.append(this.titleBar.el, this.ribbon.tabRow, this.ribbon.card, main, this.statusBar.el, this.backstage.el);
     document.body.classList.add("calc");
@@ -1404,11 +1406,12 @@ export class CalcApp {
     }
   }
 
+  /** Excel numbers new sheets on from the last one it made in this workbook, never reusing a number. */
   private nextSheetName(): string {
-    for (let i = 1; ; i++) {
-      const n = `Tabelle${i}`;
-      if (!this.wb.sheetByName(n)) return n;
-    }
+    let n = this.wb.sheetSeq ?? this.wb.sheets.length;
+    do n++; while (this.wb.sheetByName(`Tabelle${n}`));
+    this.wb.sheetSeq = n;
+    return `Tabelle${n}`;
   }
 
   renameSheet(i: number, name: string): string | null {
@@ -1601,7 +1604,7 @@ export class CalcApp {
         if (this.sheet.rows.get(row)?.hidden) continue;
         seen.add(k);
         s.count++;
-        if (typeof c.v === "number") { s.numbers++; s.sum += c.v; s.min = Math.min(s.min, c.v); s.max = Math.max(s.max, c.v); }
+        if (typeof c.v === "number") { if (!s.numbers) s.style = c.s; s.numbers++; s.sum += c.v; s.min = Math.min(s.min, c.v); s.max = Math.max(s.max, c.v); }
       }
     }
     return s;
@@ -1711,6 +1714,10 @@ export class CalcApp {
     run("font.fill", () => this.formatSel("Füllfarbe", (s) => { s.fill = this.lastFill || undefined; s.fillXml = undefined; }));
     run("font.dialog", () => void this.dlg.formatCells("Schrift"));
     run("border.menu", () => this.setBorders(this.lastBorder));
+    const bd = this.borderDraw;
+    this.commands.implement("border.draw", { run: () => bd.start("draw"), checked: () => bd.mode() === "draw" });
+    this.commands.implement("border.drawGrid", { run: () => bd.start("grid"), checked: () => bd.mode() === "grid" });
+    this.commands.implement("border.erase", { run: () => bd.start("erase"), checked: () => bd.mode() === "erase" });
     for (const k of ["bottom", "top", "left", "right", "none", "all", "outside", "thickOutside", "doubleBottom", "thickBottom", "topBottom", "topThickBottom", "topDoubleBottom"]) run(`border.${k}`, () => this.setBorders(k));
     run("border.more", () => void this.dlg.formatCells("Rahmen"));
 
@@ -1897,8 +1904,25 @@ export class CalcApp {
     run("shape.insert", () => {}, () => !!this.shapes.selected());
     run("shape.fill", () => {}, () => !!this.shapes.selected());
     run("shape.outline", () => {}, () => !!this.shapes.selected());
-    run("shape.forward", () => this.shapes.arrange.forward(), () => !!this.shapes.selected());
-    run("shape.backward", () => this.shapes.arrange.backward(), () => !!this.shapes.selected());
+    const shapeOn = () => !!this.shapes.selected();
+    run("shape.forward", () => this.shapes.arrange.forward(), shapeOn);
+    run("shape.backward", () => this.shapes.arrange.backward(), shapeOn);
+    run("shape.bringToFront", () => this.shapes.arrange.front(), shapeOn);
+    run("shape.sendToBack", () => this.shapes.arrange.back(), shapeOn);
+    run("shape.align", () => {}, shapeOn);
+    run("layout.forward", () => this.shapes.arrange.forward(), shapeOn);
+    run("layout.backward", () => this.shapes.arrange.backward(), shapeOn);
+    run("layout.align", () => {}, shapeOn);
+    run("layout.rotate", () => {}, shapeOn);
+    run("layout.selectionPane", () => this.shapes.selectionPane());
+    run("edit.selectionPane", () => this.shapes.selectionPane());
+    run("shape.selectionPane", () => this.shapes.selectionPane());
+    const gr = this.shapes.grouping;
+    run("shape.group", () => gr.group(), () => gr.canGroup());
+    run("shape.ungroup", () => gr.ungroup(), () => gr.canUngroup());
+    run("shape.regroup", () => gr.regroup(), () => gr.canRegroup());
+    run("shape.groupMenu", () => {}, () => gr.canGroup() || gr.canUngroup() || gr.canRegroup());
+    run("layout.group", () => {}, () => gr.canGroup() || gr.canUngroup() || gr.canRegroup());
     run("shape.rotate", () => {}, () => !!this.shapes.selected());
     run("shape.format", () => this.shapes.openPane(), () => !!this.shapes.selected());
     run("chart.switchRowCol", () => this.charts.switchRowCol(), () => !!this.charts.selected());
@@ -2073,7 +2097,7 @@ export class CalcApp {
 
   private shapeTabDef: import("@raabe/shell").Tab | null = null;
   private shapeTab(): import("@raabe/shell").Tab {
-    const b = (cmd: string, key: string, size: "large" | "small" = "small"): import("@raabe/shell").Control => ({ type: "button", cmd, key, size });
+    const shapes = this.shapes;
     return this.shapeTabDef ??= {
       id: "shapeFormat", label: "Formformat", key: "JD", contextual: true, shrink: [],
       groups: [
@@ -2082,7 +2106,12 @@ export class CalcApp {
           { type: "color", cmd: "shape.fill", key: "SF", palette: "font", current: () => this.shapes.selected()?.fill?.color ?? "#4472C4", pick: (c) => this.shapes.setFill(c), showLabel: true },
           { type: "color", cmd: "shape.outline", key: "SO", palette: "font", current: () => this.shapes.selected()?.line?.color ?? "#2F528F", pick: (c) => this.shapes.setLine(c), showLabel: true },
         ] }], launcher: { cmd: "shape.format" } },
-        { id: "arrange", label: "Anordnen", key: "ZA", icon: "bring-forward", controls: [{ type: "stack", items: [b("shape.forward", "AF"), b("shape.backward", "AE"),
+        { id: "arrange", label: "Anordnen", key: "ZA", icon: "bring-forward", controls: [{ type: "stack", items: [
+          { type: "split", cmd: "shape.forward", key: "AF", size: "small", menu: [{ cmd: "shape.forward" }, { cmd: "shape.bringToFront" }] },
+          { type: "split", cmd: "shape.backward", key: "AE", size: "small", menu: [{ cmd: "shape.backward" }, { cmd: "shape.sendToBack" }] },
+        ] }, { type: "stack", items: [
+          { type: "dropdown", cmd: "shape.align", key: "AA", size: "small", get menu() { return shapes.arrange.alignMenu(); } },
+          { type: "dropdown", cmd: "shape.groupMenu", key: "AG", size: "small", menu: shapes.grouping.menu },
           { type: "dropdown", cmd: "shape.rotate", key: "AY", size: "small", menu: this.shapes.rotateMenu }] }] },
       ],
     };
@@ -2408,7 +2437,7 @@ export class CalcApp {
           { heading: "Rahmenlinien" }, { cmd: "border.bottom" }, { cmd: "border.top" }, { cmd: "border.left" }, { cmd: "border.right" }, "-",
           { cmd: "border.none" }, { cmd: "border.all" }, { cmd: "border.outside" }, { cmd: "border.thickOutside" }, "-",
           { cmd: "border.doubleBottom" }, { cmd: "border.thickBottom" }, { cmd: "border.topBottom" }, { cmd: "border.topThickBottom" }, { cmd: "border.topDoubleBottom" },
-          { heading: "Rahmenlinien zeichnen" }, { cmd: "border.draw" }, { cmd: "border.drawGrid" }, { cmd: "border.erase" }, { cmd: "border.lineColor" }, { cmd: "border.lineStyle" }, "-",
+          { heading: "Rahmenlinien zeichnen" }, { cmd: "border.draw" }, { cmd: "border.drawGrid" }, { cmd: "border.erase" }, ...this.borderDraw.menuEntries(), "-",
           { cmd: "border.more" },
         ],
         merge: [{ cmd: "align.mergeCenter" }, { cmd: "align.mergeAcross" }, { cmd: "align.merge" }, { cmd: "align.unmerge" }],
@@ -2497,6 +2526,9 @@ export class CalcApp {
         chartStat: [{ heading: "Histogramm" }, { label: "Histogramm", run: () => this.charts.insert("histogram") }],
         fitWidth: ["Automatisch", "1 Seite", "2 Seiten", "3 Seiten"].map((l, i) => ({ label: l, run: () => this.print.setFit("width", i) })),
         fitHeight: ["Automatisch", "1 Seite", "2 Seiten", "3 Seiten"].map((l, i) => ({ label: l, run: () => this.print.setFit("height", i) })),
+        align: () => this.shapes.arrange.alignMenu(),
+        rotate: this.shapes.rotateMenu,
+        group: this.shapes.grouping.menu,
       },
       panels: { cellStyles: (close) => this.dlg.cellStylesPanel(close), tableStyles: (close) => this.dlg.tableStylesPanel(close), shapes: (close) => this.shapes.gallery(close) },
       scale: { value: () => `${this.print.scale()} %`, commit: (v) => this.print.setScale(Number(v.replace(/[^\d]/g, "")) || 100), step: (d) => this.print.setScale(this.print.scale() + d * 5) },
@@ -2579,6 +2611,8 @@ export class CalcApp {
         if (this.grid.isEditing) this.grid.cancelEdit();
         const doc = this.makeDoc(newWorkbook(), this.active.name, null);
         for (let i = 1; i < sheets; i++) doc.wb.sheets.push(new Sheet(`Tabelle${i + 2}`));
+        // Excel's harness workbook lives on: its sheet counter too (it adds the extra sheets anew).
+        doc.wb.sheetSeq = (this.wb.sheetSeq ?? this.wb.sheets.length) + Math.max(0, sheets - 1);
         const i = this.docs.indexOf(this.active);
         this.docs[i] = doc;
         this.active = doc;

@@ -238,8 +238,20 @@ def wait_for_window(predicate, timeout: float = 20.0) -> int:
 
 
 def place(hwnd: int, x: int, y: int, w: int, h: int) -> None:
+    """Moves and sizes a window so that what is visible of it fills the rectangle: a standard
+    frame's invisible resize borders (RaabeCalc, RaabeWrite) lie outside, as Office draws its own
+    frame to the edge (D-066: the apps' cell areas were compared at different sizes)."""
     user32.ShowWindow(hwnd, 9)  # SW_RESTORE
     user32.SetWindowPos(hwnd, 0, x, y, w, h, 0x0004 | 0x0010)  # NOZORDER | NOACTIVATE
+    try:
+        vis = RECT()
+        ctypes.windll.dwmapi.DwmGetWindowAttribute(hwnd, 9, ctypes.byref(vis), ctypes.sizeof(vis))  # DWMWA_EXTENDED_FRAME_BOUNDS
+        l, t, r, b = window_rect(hwnd)
+        dl, dt, dr, db = vis.left - l, vis.top - t, r - vis.right, b - vis.bottom
+        if any(d > 0 for d in (dl, dt, dr, db)):
+            user32.SetWindowPos(hwnd, 0, x - dl, y - dt, w + dl + dr, h + dt + db, 0x0004 | 0x0010)
+    except OSError:
+        pass
 
 
 def place_quietly(hwnd: int, x: int, y: int, w: int, h: int) -> None:

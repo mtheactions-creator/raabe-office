@@ -269,6 +269,17 @@ export interface SheetShape {
    * 2013-2022 theme) or 2 (the current Office theme).
    */
   style?: { ln: number; shade?: number };
+  /**
+   * Gruppieren: a group (geom "group") holds its shapes; each child's box is `rel`, in px at 100 %
+   * in the group's own coordinates, whose extent is `frame` (the group's size when it was made).
+   */
+  children?: SheetShape[];
+  rel?: { x: number; y: number; w: number; h: number };
+  frame?: { w: number; h: number };
+  /** Ausgeblendet in the Auswahlbereich (cNvPr hidden="1"). */
+  hidden?: boolean;
+  /** Freihandform, Kurve, Skizze: custom geometry (a:custGeom) in text-engine's definition syntax. */
+  custom?: string;
   /** The preset's adjust values that differ from its defaults (a:avLst, the yellow handles). */
   adjust?: Record<string, number>;
   /** Lines and arrows (xdr:cxnSp). */
@@ -473,6 +484,8 @@ export class Workbook {
   theme: Record<string, string> = {};
   /** The widths of the theme's line styles in pt (shapes' outlines refer to them). */
   themeLines: number[] = [0.5, 1, 1.5];
+  /** The number of the last sheet Excel would have named "TabelleN" (new sheets count on from it). */
+  sheetSeq?: number;
   /** The .xlsx layer's package and parts it does not model. */
   raw?: unknown;
 

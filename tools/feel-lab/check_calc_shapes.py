@@ -29,6 +29,8 @@ CASES = [
     {"name": "line-arrow", "geom": "straightConnector1", "excel": ("line",), "box": (1, 11, 4, 2), "line": {"color": "#FF0000", "width": 1.5, "tail": "triangle"}},
     {"name": "roundrect-adj", "geom": "roundRect", "excel": ("shape", 5), "box": (10, 10, 3, 3), "adj": 30000},
     {"name": "arrow-both", "geom": "straightConnector1", "excel": ("line",), "box": (10, 1, 2, 4), "line": {"head": "oval", "tail": "stealth"}},
+    {"name": "group", "geom": "group", "excel": ("group",), "box": (12, 13, 4, 3)},
+    {"name": "freeform", "geom": "rect", "excel": ("freeform",), "box": (0, 14, 2, 3)},
     {"name": "textbox", "geom": "rect", "excel": ("textbox",), "box": (6, 10, 3, 2), "text": "Zwei\nZeilen", "textBox": True},
 ]
 DASH = {"dash": 4, "sysDot": 3, "sysDash": 10}
@@ -62,6 +64,14 @@ def model(c: dict) -> dict:
             m[k] = c[k]
     if "adj" in c:
         m["adjust"] = {"adj": c["adj"]}
+    wpx, hpx = m["size"]["w"], m["size"]["h"]
+    if c["excel"][0] == "group":
+        kid = lambda geom, x: {"geom": geom, "from": m["from"], "to": m["to"], "rel": {"x": x, "y": 0, "w": wpx / 2, "h": hpx}}
+        m["children"] = [kid("rect", 0), kid("ellipse", wpx / 2)]
+        m["frame"] = {"w": wpx, "h": hpx}
+    if c["excel"][0] == "freeform":
+        W, H = round(wpx * 9525), round(hpx * 9525)
+        m["custom"] = f"rect l t r b{chr(10)}path w={W} h={H}: M 0 {H} L {W // 2} 0 L {W} {H} Z"
     return m
 
 
@@ -69,6 +79,14 @@ def excel_view(sh) -> dict:
     """What Excel shows of a shape, in our terms."""
     out: dict = {"left": round(sh.Left, 1), "top": round(sh.Top, 1), "width": round(sh.Width, 1), "height": round(sh.Height, 1),
                  "rot": round(sh.Rotation, 1)}
+    if sh.Type == 6:  # msoGroup
+        out["geom"] = "group"
+        out["items"] = sh.GroupItems.Count
+        return out
+    if sh.Type == 5:  # msoFreeform
+        out["geom"] = "freeform"
+        out["nodes"] = sh.Nodes.Count
+        return out
     if sh.Connector or sh.Type == 9:  # msoLine
         out["geom"] = "line"
     elif sh.Type == 17:  # msoTextBox
@@ -97,7 +115,11 @@ def expect(c: dict) -> dict:
     """What Excel must show for a case."""
     col, row, w, h = c["box"]
     e: dict = {"left": col * COL_PT, "top": row * ROW_PT, "width": w * COL_PT, "height": h * ROW_PT, "rot": float(c.get("rot", 0))}
-    e["geom"] = {"line": "line", "textbox": "textbox"}.get(c["excel"][0], c["geom"])
+    e["geom"] = {"line": "line", "textbox": "textbox", "group": "group", "freeform": "freeform"}.get(c["excel"][0], c["geom"])
+    if c["excel"][0] == "group":
+        e["items"] = 2
+    if c["excel"][0] in ("group", "freeform"):
+        return e
     if "fill" in c:
         e["fill"] = bgr(c["fill"])
     if c.get("nofill"):
@@ -165,6 +187,16 @@ def main() -> None:
                 sh = ws.Shapes.AddShape(k["excel"][1], left, top, wid, hei)
             elif kind == "line":
                 sh = ws.Shapes.AddConnector(1, left, top, left + wid, top + hei)
+            elif kind == "group":
+                a1 = ws.Shapes.AddShape(1, left, top, wid / 2, hei)
+                a2 = ws.Shapes.AddShape(9, left + wid / 2, top, wid / 2, hei)
+                sh = ws.Shapes.Range([a1.Name, a2.Name]).Group()
+            elif kind == "freeform":
+                fb = ws.Shapes.BuildFreeform(0, left, top + hei)
+                fb.AddNodes(0, 0, left + wid / 2, top)
+                fb.AddNodes(0, 0, left + wid, top + hei)
+                fb.AddNodes(0, 0, left, top + hei)
+                sh = fb.ConvertToShape()
             else:
                 sh = ws.Shapes.AddTextbox(1, left, top, wid, hei)
             sh.Name = k["name"]
@@ -217,6 +249,10 @@ def main() -> None:
         if g is None:
             bad = ["missing"]
         else:
+            if k["excel"][0] == "group" and [c.get("geom") for c in g.get("children") or []] != ["rect", "ellipse"]:
+                bad.append("children")
+            if k["excel"][0] == "freeform" and not g.get("custom"):
+                bad.append("custom")
             if g["geom"] != want["geom"] and not (k["excel"][0] == "line" and g["geom"] in ("straightConnector1", "line")):
                 bad.append("geom")
             for key in ("from", "to"):

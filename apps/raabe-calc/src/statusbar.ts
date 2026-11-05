@@ -16,6 +16,8 @@ export interface Stats {
   count: number;
   numbers: number;
   sum: number;
+  /** The number format the sums are shown in: the first number's cell style (Excel). */
+  style?: number;
   min: number;
   max: number;
 }
@@ -33,7 +35,7 @@ export class CalcStatusBar {
   private shown: Record<string, boolean> = { avg: true, count: true, numbers: false, min: false, max: false, sum: true };
   private last: { zoom: number; s: Stats | null } = { zoom: 100, s: null };
 
-  constructor(private commands: Commands, onZoom: (z: number) => void, private format: (v: number) => string) {
+  constructor(private commands: Commands, onZoom: (z: number) => void, private format: (v: number, style?: number) => string) {
     const views = ["view.normal", "view.pageLayout", "view.pageBreak"].map((id) => {
       const c = commands.get(id);
       const b = h("button", { class: "cell viewbtn", "aria-label": c.label, "data-tip": commands.tooltip(id), onclick: () => void commands.run(id) }, icon(c.icon));
@@ -101,12 +103,12 @@ export class CalcStatusBar {
     const parts: string[] = [];
     const on = this.shown;
     if (s && s.count >= 2) {
-      if (on.avg && s.numbers > 0) parts.push(`Mittelwert: ${this.format(s.sum / s.numbers)}`);
+      if (on.avg && s.numbers > 0) parts.push(`Mittelwert: ${this.format(s.sum / s.numbers, s.style)}`);
       if (on.count) parts.push(`Anzahl: ${s.count}`);
       if (on.numbers && s.numbers > 0) parts.push(`Numerische Zählung: ${s.numbers}`);
-      if (on.min && s.numbers > 0) parts.push(`Min: ${this.format(s.min)}`);
-      if (on.max && s.numbers > 0) parts.push(`Max: ${this.format(s.max)}`);
-      if (on.sum && s.numbers > 0) parts.push(`Summe: ${this.format(s.sum)}`);
+      if (on.min && s.numbers > 0) parts.push(`Min: ${this.format(s.min, s.style)}`);
+      if (on.max && s.numbers > 0) parts.push(`Max: ${this.format(s.max, s.style)}`);
+      if (on.sum && s.numbers > 0) parts.push(`Summe: ${this.format(s.sum, s.style)}`);
     }
     this.stats.replaceChildren(...parts.map((p) => h("span", { class: "cell stat" }, p)));
   }

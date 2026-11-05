@@ -5,7 +5,7 @@
 // nudge it. Typing while it is selected writes its text; a double-click edits the text. Strg+1 opens
 // "Form formatieren". Its look until it is formatted is the theme's shape style, as in Excel.
 
-import { h, type MenuEntry, type PaneControl, type PaneSection, type PaneSpec } from "@raabe/shell";
+import { h, icon, type MenuEntry, type PaneControl, type PaneSection, type PaneSpec } from "@raabe/shell";
 import type { SheetShape } from "@raabe/sheet-engine";
 import { presetAdjust, presetGeometry, shadeLinear, SHAPE_GALLERY, SHAPE_NAMES, shapeElement, shapeIcon, shapeTextRect,
   type GalleryEntry, type PictureFormat, type ShapeInfo } from "@raabe/text-engine";
@@ -37,6 +37,15 @@ const CSS = `
 .shape-gallery { display: grid; grid-template-columns: repeat(12, 26px); gap: 1px; padding: 2px 8px 6px; color: #444; }
 .shape-gallery button { width: 26px; height: 26px; border: 1px solid transparent; background: none; padding: 2px; display: flex; align-items: center; justify-content: center; }
 .shape-gallery button:hover { border-color: #c6c6c6; background: #f3f3f3; }
+.sel-pane { display: flex; flex-direction: column; gap: 1px; }
+.sel-pane-top { display: flex; gap: 8px; align-items: center; padding: 2px 0 6px; }
+.sel-pane-top .icon, .sel-pane-row .icon { border: none; background: none; width: 22px; height: 22px; cursor: pointer; }
+.sel-pane-row { display: flex; align-items: center; padding: 2px 4px; cursor: default; }
+.sel-pane-row:hover { background: #f0f0f0; }
+.sel-pane-row.on { background: #dbe8f6; }
+.sel-pane-row.off .sel-pane-name { color: #8a8a8a; }
+.sel-pane-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sel-pane-empty { color: #6a6a6a; padding: 6px 2px; }
 `;
 
 export function shapesFeature(app: CalcApp) {
@@ -44,6 +53,11 @@ export function shapesFeature(app: CalcApp) {
   let shown: SheetShape[] | undefined;
   const els: HTMLElement[] = [];
   let selected: SheetShape | null = null;
+  /** Further shapes selected with Umschalt+click or Strg+click (Excel's multiple selection). */
+  let others: SheetShape[] = [];
+  /** Moving several shapes: the pointer's offset so far. */
+  let moving: { dx: number; dy: number } | null = null;
+  const picked = (): SheetShape[] => (selected ? [selected, ...others] : []);
   let live: { s: SheetShape; box: Box; rot?: number } | null = null;
   let editing: { s: SheetShape; el: HTMLElement } | null = null;
   let drawFor: string | null = null;
@@ -85,8 +99,21 @@ export function shapesFeature(app: CalcApp) {
     });
   }
 
-  /** Replaces the selected shape (one undo step). */
+  /** Changes every selected shape (one undo step), as Excel formats a multiple selection. */
   function edit(label: string, fn: (s: SheetShape) => SheetShape): void {
+    const all = picked();
+    if (!all.length) return;
+    const placing = ["Verschieben", "Ausrichten", "Größe ändern", "Drehen", "Spiegeln"].includes(label);
+    const apply = (q: SheetShape): SheetShape => (q.geom === "group" && !placing ? { ...q, children: q.children?.map(apply) } : fn(q));
+    const map = new Map(all.map((q) => [q, apply(q)]));
+    change(label, (list) => list.map((q) => map.get(q) ?? q));
+    selected = map.get(selected!) ?? null;
+    others = others.map((q) => map.get(q) ?? q);
+    if (app.taskPane.isOpen && paneFor) openPane();
+  }
+
+  /** Changes only the shape under the pointer (moving a handle, its text). */
+  function editOne(label: string, fn: (s: SheetShape) => SheetShape): void {
     const s = selected;
     if (!s) return;
     const next = fn(s);
@@ -105,10 +132,11 @@ export function shapesFeature(app: CalcApp) {
   function engineOf(s: SheetShape): { fmt: PictureFormat; info: ShapeInfo; text: string } {
     const a = accent().replace("#", "").toUpperCase();
     const lines = app.wb.themeLines;
-    const line = isLinePreset(s.geom) || !!s.connector;
+    // An open freeform (its path not filled) looks like a line.
+    const line = isLinePreset(s.geom) || !!s.connector || (s.custom !== undefined && /fill=none/.test(s.custom));
     const kind: ShapeInfo["kind"] = line ? "connector" : s.textBox ? "textbox" : "shape";
     const info: ShapeInfo = {
-      kind, adjust: s.adjust,
+      kind, adjust: s.adjust, custom: s.custom,
       styleFill: kind === "shape" ? { kind: "solid", color: a } : kind === "textbox" ? { kind: "solid", color: "FFFFFF" } : { kind: "none" },
       styleLine: kind === "shape" ? { color: shadeLinear(a, s.style?.shade ?? 0.15), width: lines[(s.style?.ln ?? 2) - 1] ?? 1 }
         : kind === "textbox" ? { color: shadeLinear("FFFFFF", 0.5), width: 0.75 }
@@ -127,6 +155,29 @@ export function shapesFeature(app: CalcApp) {
 
   /** The shape drawn at its size at 100 % (the caller scales it with the zoom). */
   function drawn(s: SheetShape, w: number, hh: number): HTMLElement {
+    if (s.geom === "group") {
+      const box = h("div", { style: `position:absolute;left:0;top:0;width:${w}px;height:${hh}px` });
+      const f = s.frame ?? { w, h: hh };
+      const sx = w / (f.w || 1), sy = hh / (f.h || 1);
+      for (const c of s.children ?? []) {
+        const r = c.rel ?? { x: 0, y: 0, w: f.w, h: f.h };
+        const cw = Math.max(0.01, r.w * sx), ch = Math.max(0.01, r.h * sy);
+        const wrap = h("div", { style: `position:absolute;left:${r.x * sx}px;top:${r.y * sy}px;width:${cw}px;height:${ch}px;${c.rot ? `transform:rotate(${c.rot}deg);` : ""}` });
+        wrap.append(drawn(c, cw, ch));
+        if (c.text) {
+          const e = engineOf(c);
+          const tr = shapeTextRect(e.fmt, e.info, cw, ch);
+          const t = h("div", { class: "shp-text" }, c.text);
+          Object.assign(t.style, { left: `${tr.x}px`, top: `${tr.y}px`, width: `${tr.w}px`, height: `${tr.h}px`, color: e.text, fontSize: `${(c.font?.size ?? 11) * 96 / 72}px`,
+            fontWeight: c.font?.bold ? "bold" : "", fontStyle: c.font?.italic ? "italic" : "", justifyContent: { t: "flex-start", ctr: "center", b: "flex-end" }[c.anchor ?? "t"],
+            textAlign: { l: "left", ctr: "center", r: "right" }[c.align ?? "l"], pointerEvents: "none" });
+          wrap.append(t);
+        }
+        box.append(wrap);
+      }
+      if (s.flipH || s.flipV) { box.style.transform = `scale(${s.flipH ? -1 : 1}, ${s.flipV ? -1 : 1})`; box.style.transformOrigin = "50% 50%"; }
+      return box;
+    }
     const { fmt, info } = engineOf(s);
     const el = shapeElement(Math.max(w, 0.01), Math.max(hh, 0.01), fmt, info);
     if (s.flipH || s.flipV) { el.style.transform = `scale(${s.flipH ? -1 : 1}, ${s.flipV ? -1 : 1})`; el.style.transformOrigin = "50% 50%"; }
@@ -144,13 +195,14 @@ export function shapesFeature(app: CalcApp) {
     }
     if (shown !== list) {
       if (selected && !list.includes(selected)) selected = list.find((q) => q.raw && q.raw === selected!.raw) ?? null;
+      others = others.filter((q) => list.includes(q) && q !== selected);
       layer.replaceChildren();
       els.length = 0;
       for (const s of list) {
         const line = isLinePreset(s.geom) || !!s.connector;
-        const adj = line ? [] : (presetGeometry(s.geom, 100, 100, s.adjust ?? {})?.handles ?? []).map((_, k): Handle => `adj${k}`);
+        const adj = line || s.custom !== undefined ? [] : (presetGeometry(s.geom, 100, 100, s.adjust ?? {})?.handles ?? []).map((_, k): Handle => `adj${k}`);
         const handles: Handle[] = line ? ["p0", "p1"] : ["nw", "n", "ne", "e", "se", "s", "sw", "w", "rot", ...adj];
-        const el = h("div", { class: `shp${line ? " line" : ""}` }, h("div", { class: "shp-svg" }), ...(line ? [] : [h("div", { class: "shp-text" })]),
+        const el = h("div", { class: `shp${line ? " line" : ""}` }, h("div", { class: "shp-svg" }), ...(line || s.geom === "group" ? [] : [h("div", { class: "shp-text" })]),
           ...handles.map((k) => h("span", { class: `shp-h ${k.startsWith("adj") ? "adj" : k}`, "data-h": k })));
         el.addEventListener("pointerdown", (e) => down(e, s, el));
         el.addEventListener("dblclick", (e) => { e.preventDefault(); e.stopPropagation(); if (!line) startText(s, el, true); });
@@ -167,12 +219,12 @@ export function shapesFeature(app: CalcApp) {
       const el = els[i];
       const b0 = boxOf(s);
       if (!b0) { el.style.display = "none"; return; }
-      const b = live?.s === s ? live.box : b0;
+      const b = live?.s === s ? live.box : moving && (s === selected || others.includes(s)) ? { ...b0, x: b0.x + moving.dx, y: b0.y + moving.dy } : b0;
       const rot = live?.s === s && live.rot !== undefined ? live.rot : s.rot ?? 0;
       Object.assign(el.style, { display: "", left: `${b.x - tl.x}px`, top: `${b.y - tl.y}px`, width: `${Math.max(1, b.w)}px`, height: `${Math.max(1, b.h)}px`,
         transform: rot ? `rotate(${rot}deg)` : "" });
       const lw = Math.max(0.01, b.w / z()), lh = Math.max(0.01, b.h / z());
-      const key = JSON.stringify([s.geom, s.fill, s.line, s.adjust, s.flipH, s.flipV, Math.round(lw * 4), Math.round(lh * 4), accent()]);
+      const key = JSON.stringify([s.geom, s.fill, s.line, s.adjust, s.custom, s.children, s.flipH, s.flipV, Math.round(lw * 4), Math.round(lh * 4), accent()]);
       const sv = el.querySelector<HTMLElement>(".shp-svg")!;
       if (sv.dataset.key !== key) { sv.replaceChildren(drawn(s, lw, lh)); sv.dataset.key = key; }
       sv.style.transform = `scale(${z()})`;
@@ -207,13 +259,15 @@ export function shapesFeature(app: CalcApp) {
         hd.style.left = `${pos[k][0] * b.w}px`;
         hd.style.top = `${pos[k][1] * b.h}px`;
       }
-      el.classList.toggle("on", s === selected);
+      el.classList.toggle("on", s === selected || others.includes(s));
+      if (s.hidden) el.style.display = "none";
     });
   }
 
   function select(s: SheetShape | null): void {
     if (editing && editing.s !== s) endText();
     selected = s;
+    others = [];
     shown = undefined;
     app.shapeSelectionChanged();
     app.grid.contentChanged();
@@ -229,7 +283,25 @@ export function shapesFeature(app: CalcApp) {
     e.stopPropagation();
     if (!app.protectionAllows("objects")) return;
     if (app.grid.isEditing) app.grid.commitEdit("none");
-    if (selected !== s) select(s);
+    // Umschalt+click or Strg+click adds a shape to the selection or takes it out (Excel).
+    if ((e.shiftKey || e.ctrlKey) && selected && selected !== s && !(e.target as HTMLElement).dataset.h) {
+      if (others.includes(s)) others = others.filter((q) => q !== s);
+      else { others = [...others, selected]; selected = s; others = others.filter((q) => q !== s); }
+      shown = undefined;
+      app.shapeSelectionChanged();
+      app.grid.contentChanged();
+      return;
+    }
+    if ((e.shiftKey || e.ctrlKey) && selected === s && others.length) {
+      selected = others[others.length - 1];
+      others = others.slice(0, -1);
+      shown = undefined;
+      app.shapeSelectionChanged();
+      app.grid.contentChanged();
+      return;
+    }
+    if (selected !== s && !others.includes(s)) select(s);
+    else if (others.includes(s)) { others = [selected!, ...others.filter((q) => q !== s)]; selected = s; }
     const b = boxOf(s);
     if (!b) return;
     const handle = (e.target as HTMLElement).dataset.h as Handle | undefined;
@@ -238,7 +310,10 @@ export function shapesFeature(app: CalcApp) {
     el.setPointerCapture(e.pointerId);
     const move = (ev: PointerEvent) => {
       let dx = ev.clientX - sx, dy = ev.clientY - sy;
-      if (!handle) { live = { s, box: { ...b, x: b.x + dx, y: b.y + dy } }; place(); return; }
+      if (!handle) {
+        if (others.length) { moving = { dx, dy }; place(); return; }
+        live = { s, box: { ...b, x: b.x + dx, y: b.y + dy } }; place(); return;
+      }
       if (handle === "rot") {
         const cx = b.x + b.w / 2, cy = b.y + b.h / 2;
         const r = app.grid.el.getBoundingClientRect();
@@ -283,11 +358,18 @@ export function shapesFeature(app: CalcApp) {
       el.removeEventListener("pointercancel", up);
       const l = live as (typeof live & { flip?: [boolean, boolean] }) | null;
       live = null;
+      if (moving) {
+        const m = moving;
+        moving = null;
+        if (Math.abs(m.dx) < 1 && Math.abs(m.dy) < 1) { place(); return; }
+        edit("Verschieben", (q) => { const qb = boxOf(q); return qb ? placeAt(q, { ...qb, x: qb.x + m.dx, y: qb.y + m.dy }) : q; });
+        return;
+      }
       if (!l) { place(); return; }
-      if (l.rot !== undefined) { edit("Drehen", (q) => ({ ...q, rot: Math.round(l.rot!) || undefined })); return; }
+      if (l.rot !== undefined) { editOne("Drehen", (q) => ({ ...q, rot: Math.round(l.rot!) || undefined })); return; }
       const same = Math.abs(l.box.x - b.x) < 1 && Math.abs(l.box.y - b.y) < 1 && Math.abs(l.box.w - b.w) < 1 && Math.abs(l.box.h - b.h) < 1;
       if (same && !l.flip) { place(); return; }
-      edit(handle ? "Größe ändern" : "Verschieben", (q) => {
+      editOne(handle ? "Größe ändern" : "Verschieben", (q) => {
         const moved = placeAt(q, l.box);
         if (l.flip) { moved.flipH = l.flip[0] || undefined; moved.flipV = l.flip[1] || undefined; }
         return moved;
@@ -363,7 +445,7 @@ export function shapesFeature(app: CalcApp) {
         // Only the values that differ from the preset's defaults are kept (as Excel writes avLst).
         const def = presetAdjust(s.geom);
         const own = Object.fromEntries(Object.entries(adj).filter(([k, v]) => def[k] !== v));
-        edit("Form anpassen", (q) => ({ ...q, adjust: Object.keys(own).length ? own : undefined }));
+        editOne("Form anpassen", (q) => ({ ...q, adjust: Object.keys(own).length ? own : undefined }));
       } else place();
     };
     el.addEventListener("pointermove", move);
@@ -410,7 +492,7 @@ export function shapesFeature(app: CalcApp) {
     if (text !== (ed.s.text ?? "")) {
       const s = ed.s;
       selected = s;
-      edit("Text eingeben", (q) => ({ ...q, text: text || undefined }));
+      editOne("Text eingeben", (q) => ({ ...q, text: text || undefined }));
     } else place();
     app.grid.focus();
   }
@@ -428,19 +510,19 @@ export function shapesFeature(app: CalcApp) {
     const s = selected;
     if (e.key === "Delete" || e.key === "Backspace") {
       e.preventDefault(); e.stopPropagation();
+      const gone = picked();
       selected = null;
-      change("Löschen", (list) => list.filter((q) => q !== s));
+      others = [];
+      change("Löschen", (list) => list.filter((q) => !gone.includes(q)));
       app.shapeSelectionChanged();
     } else if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); select(null); app.grid.focus(); }
     else if (e.key.startsWith("Arrow")) {
       e.preventDefault(); e.stopPropagation();
-      const b = boxOf(s);
-      if (!b) return;
       const d = e.ctrlKey ? 1 : 1 * z();
       const dx = e.key === "ArrowLeft" ? -d : e.key === "ArrowRight" ? d : 0, dy = e.key === "ArrowUp" ? -d : e.key === "ArrowDown" ? d : 0;
-      edit("Verschieben", (q) => placeAt(q, { ...b, x: b.x + dx, y: b.y + dy }));
+      edit("Verschieben", (q) => { const qb = boxOf(q); return qb ? placeAt(q, { ...qb, x: qb.x + dx, y: qb.y + dy }) : q; });
     } else if (e.ctrlKey && (e.key === "1" || e.code === "Digit1")) { e.preventDefault(); e.stopPropagation(); openPane(); }
-    else if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !isLinePreset(s.geom) && !s.connector) {
+    else if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !isLinePreset(s.geom) && !s.connector && s.geom !== "group") {
       // Typing while a shape is selected writes its text (Excel).
       e.preventDefault(); e.stopPropagation();
       const i = (app.sheet.shapes ?? []).indexOf(s);
@@ -454,8 +536,9 @@ export function shapesFeature(app: CalcApp) {
   function startDraw(prst: string, textBox = false, entry?: GalleryEntry): void {
     if (app.grid.isEditing) app.grid.commitEdit("none");
     css();
+    if (entry?.tool.freeform) { remember(entry); drawFreeform(entry.tool.freeform); return; }
     drawFor = prst;
-    if (entry) { const i = recent.findIndex((r) => r.label === entry.label); if (i >= 0) recent.splice(i, 1); recent.unshift(entry); recent.length = Math.min(recent.length, 24); }
+    if (entry) remember(entry);
     const ends = entry?.tool.pic?.line;
     const over = h("div", { class: "shape-draw" });
     app.grid.el.append(over);
@@ -492,6 +575,95 @@ export function shapesFeature(app: CalcApp) {
   }
 
   const recent: GalleryEntry[] = [];
+  function remember(entry: GalleryEntry): void {
+    const i = recent.findIndex((r) => r.label === entry.label);
+    if (i >= 0) recent.splice(i, 1);
+    recent.unshift(entry);
+    recent.length = Math.min(recent.length, 24);
+  }
+
+  /**
+   * Kurve (clicked points, smoothed), Freihandform: Form (clicked corners; dragging draws freehand),
+   * Freihand: Skizze (one drag). A double-click, Enter or Esc ends; a click on the first point closes
+   * the shape, which is then filled (as in Excel and RaabeWrite).
+   */
+  function drawFreeform(kind: "curve" | "polygon" | "scribble"): void {
+    const over = h("div", { class: "shape-draw" });
+    app.grid.el.append(over);
+    const r0 = app.grid.el.getBoundingClientRect();
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("style", "position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible;pointer-events:none");
+    over.append(svg);
+    const pts: [number, number][] = [];
+    let hover: [number, number] | null = null;
+    let down = false;
+    const at = (ev: PointerEvent | MouseEvent): [number, number] => [ev.clientX - r0.left, ev.clientY - r0.top];
+    const path = (list: [number, number][], smooth: boolean) => {
+      if (!list.length) return "";
+      let d = `M${list[0][0]} ${list[0][1]}`;
+      for (let i = 1; i < list.length; i++) {
+        if (!smooth) { d += ` L${list[i][0]} ${list[i][1]}`; continue; }
+        const p0 = list[Math.max(0, i - 2)], p1 = list[i - 1], p2 = list[i], p3 = list[Math.min(list.length - 1, i + 1)];
+        d += ` C${p1[0] + (p2[0] - p0[0]) / 6} ${p1[1] + (p2[1] - p0[1]) / 6} ${p2[0] - (p3[0] - p1[0]) / 6} ${p2[1] - (p3[1] - p1[1]) / 6} ${p2[0]} ${p2[1]}`;
+      }
+      return d;
+    };
+    const preview = () => { svg.innerHTML = `<path d="${path(hover ? [...pts, hover] : pts, kind === "curve")}" fill="none" stroke="#6F8DB9" stroke-width="1.5"/>`; };
+    const finish = () => {
+      over.remove();
+      const clean = pts.filter((p, i) => i === 0 || Math.hypot(p[0] - pts[i - 1][0], p[1] - pts[i - 1][1]) > 0.5);
+      if (clean.length < 2) return;
+      const first = clean[0], last = clean[clean.length - 1];
+      const closed = clean.length > 2 && Math.hypot(first[0] - last[0], first[1] - last[1]) < 6;
+      if (closed) clean[clean.length - 1] = first;
+      const xs = clean.map((p) => p[0]), ys = clean.map((p) => p[1]);
+      const x = Math.min(...xs), y = Math.min(...ys), w = Math.max(1, Math.max(...xs) - x), hh = Math.max(1, Math.max(...ys) - y);
+      // The path in EMU of the shape's size at 100 %, as Office writes a freeform.
+      const W = Math.round((w / z()) * 9525), H = Math.round((hh / z()) * 9525);
+      const q = clean.map(([px, py]) => [Math.round(((px - x) / w) * W), Math.round(((py - y) / hh) * H)] as [number, number]);
+      let cmds = `M ${q[0][0]} ${q[0][1]}`;
+      if (kind === "curve") {
+        for (let i = 0; i < q.length - 1; i++) {
+          const p0 = q[Math.max(0, i - 1)], p1 = q[i], p2 = q[i + 1], p3 = q[Math.min(q.length - 1, i + 2)];
+          cmds += ` C ${Math.round(p1[0] + (p2[0] - p0[0]) / 6)} ${Math.round(p1[1] + (p2[1] - p0[1]) / 6)} ${Math.round(p2[0] - (p3[0] - p1[0]) / 6)} ${Math.round(p2[1] - (p3[1] - p1[1]) / 6)} ${p2[0]} ${p2[1]}`;
+        }
+      } else for (const p of q.slice(1)) cmds += ` L ${p[0]} ${p[1]}`;
+      if (closed) cmds += " Z";
+      const n = (app.sheet.shapes?.length ?? 0) + (app.sheet.pictures?.length ?? 0) + (app.sheet.charts?.length ?? 0) + 1;
+      let s: SheetShape = { from: { col: 0, row: 0, x: 0, y: 0 }, to: { col: 0, row: 0, x: 0, y: 0 }, geom: "rect", name: `Freihandform: Form ${n}`,
+        custom: `rect l t r b\npath w=${W} h=${H}${closed ? "" : " fill=none"}: ${cmds}` };
+      if (!closed) s.style = { ln: (app.wb.themeLines[0] ?? 0.5) >= 1 ? 2 : 1 };
+      s = placeAt(s, { x, y, w, h: hh });
+      change("Form einfügen", (list) => [...list, s]);
+      selected = s;
+      shown = undefined;
+      app.shapeSelectionChanged();
+    };
+    over.addEventListener("pointerdown", (ev) => {
+      if (ev.button !== 0) return;
+      ev.preventDefault();
+      over.setPointerCapture(ev.pointerId);
+      const p = at(ev);
+      if (pts.length > 2 && Math.hypot(p[0] - pts[0][0], p[1] - pts[0][1]) < 6) { pts.push(pts[0]); finish(); return; }
+      if (ev.detail >= 2 && pts.length) { finish(); return; }
+      pts.push(p);
+      down = true;
+    });
+    over.addEventListener("pointermove", (ev) => {
+      const p = at(ev);
+      // Dragging adds points (Skizze always, Freihandform while the button is down).
+      if (down && kind !== "curve") {
+        const lastP = pts[pts.length - 1];
+        if (lastP && Math.hypot(p[0] - lastP[0], p[1] - lastP[1]) > 2) pts.push(p);
+        hover = null;
+      } else hover = pts.length ? p : null;
+      preview();
+    });
+    over.addEventListener("pointerup", () => { down = false; if (kind === "scribble" && pts.length) finish(); });
+    over.tabIndex = -1;
+    over.focus();
+    over.addEventListener("keydown", (ev) => { if (ev.key === "Escape" || ev.key === "Enter") { ev.preventDefault(); ev.stopPropagation(); finish(); } });
+  }
 
   /** The Formen gallery (Einfügen > Formen and Formformat > Formen einfügen): Office's, recent ones first. */
   function gallery(close: () => void): HTMLElement {
@@ -508,10 +680,154 @@ export function shapesFeature(app: CalcApp) {
       out.append(grid);
     };
     section("Zuletzt verwendete Formen", recent);
-    // Freihand shapes are drawn point by point (not yet in RaabeCalc).
-    for (const g of SHAPE_GALLERY) section(g.title, g.items.filter((e) => !e.tool.freeform));
+    for (const g of SHAPE_GALLERY) section(g.title, g.items);
     return out;
   }
+
+  // ----- Auswahlbereich -------------------------------------------------------------------------
+
+  let selPaneOn = false;
+
+  /** Auswahlbereich: the sheet's shapes, frontmost first, with Anzeigen/Ausblenden and renaming. */
+  function selectionPane(): void {
+    selPaneOn = true;
+    paneFor = false;
+    document.documentElement.style.setProperty("--pane-top", `${document.querySelector(".calc-main")?.getBoundingClientRect().top ?? 150}px`);
+    app.taskPane.onClose = () => { selPaneOn = false; };
+    app.taskPane.show(selectionSpec());
+  }
+
+  function refreshSelectionPane(): void {
+    if (selPaneOn && app.taskPane.isOpen) app.taskPane.show(selectionSpec());
+  }
+
+  function setHidden(list: SheetShape[], hidden: boolean): void {
+    if (!list.length) return;
+    change(hidden ? "Ausblenden" : "Anzeigen", (l) => l.map((q) => (list.includes(q) ? { ...q, hidden: hidden || undefined } : q)));
+    if (hidden && list.some((q) => q === selected || others.includes(q))) { selected = null; others = []; app.shapeSelectionChanged(); }
+    shown = undefined;
+    refreshSelectionPane();
+  }
+
+  function selectionSpec(): PaneSpec {
+    const render = (): HTMLElement => {
+      const list = app.sheet.shapes ?? [];
+      const box = h("div", { class: "sel-pane" });
+      const top = h("div", { class: "sel-pane-top" },
+        h("button", { type: "button", class: "link", onclick: () => setHidden(list.filter((q) => q.hidden), false) }, "Alle anzeigen"),
+        h("button", { type: "button", class: "link", onclick: () => setHidden(list.filter((q) => !q.hidden), true) }, "Alle ausblenden"),
+        h("span", { style: "flex:1" }),
+        h("button", { type: "button", class: "icon", "aria-label": "Nach vorne", "data-tip": "Nach vorne", onclick: () => { reorder("Ebene nach vorne", "forward"); refreshSelectionPane(); } }, icon("arrow-up")),
+        h("button", { type: "button", class: "icon", "aria-label": "Nach hinten", "data-tip": "Nach hinten", onclick: () => { reorder("Ebene nach hinten", "backward"); refreshSelectionPane(); } }, icon("arrow-down")));
+      box.append(top);
+      if (!list.length) box.append(h("div", { class: "sel-pane-empty" }, "Auf diesem Blatt gibt es keine Formen."));
+      for (const q of [...list].reverse()) {
+        const on = q === selected || others.includes(q);
+        const name = h("span", { class: "sel-pane-name" }, q.name ?? "Form");
+        const row = h("div", { class: `sel-pane-row${on ? " on" : ""}${q.hidden ? " off" : ""}` }, name,
+          h("button", { type: "button", class: "icon", "aria-label": q.hidden ? "Anzeigen" : "Ausblenden", "data-tip": q.hidden ? "Anzeigen" : "Ausblenden",
+            onclick: (e: MouseEvent) => { e.stopPropagation(); setHidden([q], !q.hidden); } }, icon(q.hidden ? "eye-off" : "eye")));
+        row.addEventListener("click", (e) => {
+          if (q.hidden) return;
+          if (e.ctrlKey && selected && selected !== q) { others = others.includes(q) ? others.filter((x) => x !== q) : [...others, selected]; selected = q; others = others.filter((x) => x !== q); }
+          else { selected = q; others = []; }
+          shown = undefined;
+          app.shapeSelectionChanged();
+          app.grid.contentChanged();
+          refreshSelectionPane();
+        });
+        row.addEventListener("dblclick", () => {
+          const input = h("input", { type: "text", value: q.name ?? "", class: "sel-pane-edit" }) as HTMLInputElement;
+          name.replaceWith(input);
+          input.focus();
+          input.select();
+          const done = (keep: boolean) => {
+            const v = input.value.trim();
+            if (keep && v && v !== q.name) change("Umbenennen", (l) => l.map((x) => (x === q ? { ...x, name: v } : x)));
+            shown = undefined;
+            refreshSelectionPane();
+          };
+          input.addEventListener("keydown", (e) => { e.stopPropagation(); if (e.key === "Enter") done(true); else if (e.key === "Escape") done(false); });
+          input.addEventListener("blur", () => done(true));
+        });
+        box.append(row);
+      }
+      return box;
+    };
+    return { title: "Auswahl", sets: [{ label: "", tabs: [{ id: "sel", label: "Auswahl", icon: "selection-pane", sections: () => [{ title: "", open: true, controls: () => [{ type: "custom", render }] }] }] }] };
+  }
+
+  // ----- Gruppieren -----------------------------------------------------------------------------
+
+  let lastUngrouped: SheetShape[] = [];
+
+  /** Gruppieren: the selected shapes become one group, in the place of the frontmost of them. */
+  function group(): void {
+    const all = picked();
+    const boxes = all.map((q) => [q, boxOf(q)] as const).filter((x): x is readonly [SheetShape, Box] => !!x[1]);
+    if (boxes.length < 2) return;
+    const ux = Math.min(...boxes.map(([, b]) => b.x)), uy = Math.min(...boxes.map(([, b]) => b.y));
+    const ur = Math.max(...boxes.map(([, b]) => b.x + b.w)), ub = Math.max(...boxes.map(([, b]) => b.y + b.h));
+    const list = app.sheet.shapes ?? [];
+    const ordered = [...boxes].sort((a, b) => list.indexOf(a[0]) - list.indexOf(b[0]));
+    const children = ordered.map(([q, b]): SheetShape => {
+      const { raw: _r, rawKey: _k, size: _s, ...rest } = q;
+      void _r; void _k; void _s;
+      return { ...rest, rel: { x: (b.x - ux) / z(), y: (b.y - uy) / z(), w: b.w / z(), h: b.h / z() } };
+    });
+    const n = list.length + (app.sheet.pictures?.length ?? 0) + (app.sheet.charts?.length ?? 0) + 1;
+    let g: SheetShape = { from: children[0].from, to: children[0].to, geom: "group", children, frame: { w: (ur - ux) / z(), h: (ub - uy) / z() }, name: `Gruppieren ${n}` };
+    g = placeAt(g, { x: ux, y: uy, w: ur - ux, h: ub - uy });
+    change("Gruppieren", (l) => {
+      const last = Math.max(...all.map((q) => l.indexOf(q)));
+      const at = l.slice(0, last + 1).filter((q) => !all.includes(q)).length;
+      const out = l.filter((q) => !all.includes(q));
+      out.splice(at, 0, g);
+      return out;
+    });
+    selected = g;
+    others = [];
+    shown = undefined;
+    app.shapeSelectionChanged();
+  }
+
+  /** Gruppierung aufheben: the group's shapes take its place, each where it is shown. */
+  function ungroup(): void {
+    const g = selected;
+    const b = g && g.geom === "group" ? boxOf(g) : null;
+    if (!g || !b) return;
+    const f = g.frame ?? { w: b.w / z(), h: b.h / z() };
+    const sx = b.w / (f.w || 1), sy = b.h / (f.h || 1);
+    const kids = (g.children ?? []).map((c) => {
+      const r = c.rel ?? { x: 0, y: 0, w: f.w, h: f.h };
+      const { rel: _r, ...rest } = c;
+      void _r;
+      return placeAt(rest, { x: b.x + r.x * sx, y: b.y + r.y * sy, w: r.w * sx, h: r.h * sy });
+    });
+    change("Gruppierung aufheben", (l) => l.flatMap((q) => (q === g ? kids : [q])));
+    lastUngrouped = kids;
+    selected = kids[kids.length - 1] ?? null;
+    others = kids.slice(0, -1);
+    shown = undefined;
+    app.shapeSelectionChanged();
+  }
+
+  /** Gruppierung wiederherstellen: the shapes last ungrouped, as long as they are all still there. */
+  function regroup(): void {
+    const list = app.sheet.shapes ?? [];
+    if (lastUngrouped.length < 2 || !lastUngrouped.every((q) => list.includes(q))) return;
+    selected = lastUngrouped[lastUngrouped.length - 1];
+    others = lastUngrouped.slice(0, -1);
+    group();
+  }
+
+  const groupMenu: MenuEntry[] = [{ cmd: "shape.group" }, { cmd: "shape.ungroup" }, { cmd: "shape.regroup" }];
+  const grouping = {
+    group, ungroup, regroup, menu: groupMenu,
+    canGroup: () => picked().length >= 2,
+    canUngroup: () => selected?.geom === "group" && !others.length,
+    canRegroup: () => lastUngrouped.length >= 2 && lastUngrouped.every((q) => (app.sheet.shapes ?? []).includes(q)),
+  };
 
   // ----- Form formatieren -------------------------------------------------------------------------
 
@@ -564,7 +880,7 @@ export function shapesFeature(app: CalcApp) {
     } };
     const sizeSec: PaneSection = { title: "Größe", open: true, controls: () => {
       const cm = (px: number) => Math.round((px / 96) * 2.54 * 100) / 100;
-      const resize = (w: number, hh: number) => { const b = boxOf(s()); if (b) edit("Größe ändern", (q) => placeAt(q, { x: b.x, y: b.y, w: (w / 2.54) * 96 * z(), h: (hh / 2.54) * 96 * z() })); };
+      const resize = (w: number, hh: number) => { const b = boxOf(s()); if (b) editOne("Größe ändern", (q) => placeAt(q, { x: b.x, y: b.y, w: (w / 2.54) * 96 * z(), h: (hh / 2.54) * 96 * z() })); };
       const size = () => { const b = boxOf(s()); return { w: b ? cm(b.w / z()) : 0, h: b ? cm(b.h / z()) : 0 }; };
       return [
         { type: "number", label: "Höhe", unit: " cm", min: 0, max: 558, step: 0.1, decimals: 2, value: () => size().h, set: (v) => resize(size().w, v) },
@@ -592,9 +908,66 @@ export function shapesFeature(app: CalcApp) {
 
   // ----- Formformat commands ------------------------------------------------------------------------
 
+  /** Moves the selected shapes in the drawing order (later ones are in front). */
+  function reorder(label: string, how: "forward" | "backward" | "front" | "back"): void {
+    const all = picked();
+    if (!all.length) return;
+    change(label, (list) => {
+      if (how === "front") return [...list.filter((q) => !all.includes(q)), ...list.filter((q) => all.includes(q))];
+      if (how === "back") return [...list.filter((q) => all.includes(q)), ...list.filter((q) => !all.includes(q))];
+      const idx = list.map((q, i) => (all.includes(q) ? i : -1)).filter((i) => i >= 0);
+      for (const i of how === "forward" ? idx.reverse() : idx) {
+        const j = how === "forward" ? i + 1 : i - 1;
+        if (j < 0 || j >= list.length || all.includes(list[j])) continue;
+        [list[i], list[j]] = [list[j], list[i]];
+      }
+      return list;
+    });
+    shown = undefined;
+  }
+
+  /** Ausrichten: the selected shapes to the outermost one (two or more), or Verteilen (three or more). */
+  function align(how: "left" | "center" | "right" | "top" | "middle" | "bottom" | "distH" | "distV"): void {
+    const all = picked();
+    const boxes = new Map(all.map((q) => [q, boxOf(q)!] as const).filter(([, b]) => !!b));
+    if (boxes.size < 2) return;
+    const bs = [...boxes.values()];
+    const left = Math.min(...bs.map((b) => b.x)), right = Math.max(...bs.map((b) => b.x + b.w));
+    const top = Math.min(...bs.map((b) => b.y)), bottom = Math.max(...bs.map((b) => b.y + b.h));
+    const at = new Map<SheetShape, Box>();
+    if (how === "distH" || how === "distV") {
+      if (boxes.size < 3) return;
+      const horiz = how === "distH";
+      const order = [...boxes.entries()].sort((a, b) => (horiz ? a[1].x - b[1].x : a[1].y - b[1].y));
+      const total = order.reduce((n, [, b]) => n + (horiz ? b.w : b.h), 0);
+      const gap = ((horiz ? right - left : bottom - top) - total) / (order.length - 1);
+      let pos = horiz ? left : top;
+      for (const [q, b] of order) { at.set(q, horiz ? { ...b, x: pos } : { ...b, y: pos }); pos += (horiz ? b.w : b.h) + gap; }
+    } else {
+      for (const [q, b] of boxes) {
+        const n = { ...b };
+        if (how === "left") n.x = left; else if (how === "right") n.x = right - b.w; else if (how === "center") n.x = (left + right) / 2 - b.w / 2;
+        else if (how === "top") n.y = top; else if (how === "bottom") n.y = bottom - b.h; else n.y = (top + bottom) / 2 - b.h / 2;
+        at.set(q, n);
+      }
+    }
+    edit("Ausrichten", (q) => (at.has(q) ? placeAt(q, at.get(q)!) : q));
+  }
+
+  const alignMenu = (): MenuEntry[] => {
+    const n = picked().length;
+    const a = (label: string, how: Parameters<typeof align>[0], min = 2): MenuEntry => ({ label, disabled: n < min, run: () => align(how) });
+    return [a("Linksbündig", "left"), a("Horizontal zentrieren", "center"), a("Rechtsbündig", "right"), "-",
+      a("Oben ausrichten", "top"), a("Vertikal zentrieren", "middle"), a("Unten ausrichten", "bottom"), "-",
+      a("Horizontal verteilen", "distH", 3), a("Vertikal verteilen", "distV", 3)];
+  };
+
   const arrange = {
-    forward: () => { const s = selected; if (!s) return; change("Ebene nach vorne", (list) => { const i = list.indexOf(s); if (i < list.length - 1) [list[i], list[i + 1]] = [list[i + 1], list[i]]; return list; }); shown = undefined; },
-    backward: () => { const s = selected; if (!s) return; change("Ebene nach hinten", (list) => { const i = list.indexOf(s); if (i > 0) [list[i], list[i - 1]] = [list[i - 1], list[i]]; return list; }); shown = undefined; },
+    forward: () => reorder("Ebene nach vorne", "forward"),
+    backward: () => reorder("Ebene nach hinten", "backward"),
+    front: () => reorder("In den Vordergrund", "front"),
+    back: () => reorder("In den Hintergrund", "back"),
+    alignMenu,
     rotate: (deg: number) => edit("Drehen", (q) => ({ ...q, rot: (((q.rot ?? 0) + deg) % 360 + 360) % 360 || undefined })),
     flip: (k: "flipH" | "flipV") => edit("Spiegeln", (q) => ({ ...q, [k]: q[k] ? undefined : true })),
   };
@@ -607,6 +980,8 @@ export function shapesFeature(app: CalcApp) {
   return {
     place, startDraw, gallery, openPane, arrange, rotateMenu,
     selected: (): SheetShape | null => selected,
+    count: (): number => picked().length,
+    grouping, selectionPane,
     deselect: (): void => { if (selected) select(null); },
     setFill: (hex: string | null) => edit("Fülleffekt", (q) => ({ ...q, fill: hex === null ? { type: "none" } : { type: "solid", color: hex } })),
     setLine: (hex: string | null) => edit("Formkontur", (q) => ({ ...q, line: hex === null ? { type: "none" } : { type: "solid", ...q.line, color: hex } })),

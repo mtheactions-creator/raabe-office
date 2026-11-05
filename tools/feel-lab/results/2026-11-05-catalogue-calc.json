@@ -1,5 +1,5 @@
 {
- "summary": "436/446",
+ "summary": "433/446",
  "cases": {
   "type text Enter": {
    "area": "enter",
@@ -203,8 +203,10 @@
   },
   "Ctrl+Down from empty": {
    "area": "move",
-   "ok": true,
-   "diff": []
+   "ok": false,
+   "diff": [
+    "scroll: Excel [1048522.0, 1.0], RaabeCalc [1048524, 1]"
+   ]
   },
   "Ctrl+Right from data": {
    "area": "move",
@@ -443,8 +445,10 @@
   },
   "fill date": {
    "area": "fill",
-   "ok": true,
-   "diff": []
+   "ok": false,
+   "diff": [
+    "status: Excel ['Mittelwert02.01.2026', 'Anzahl4', 'Summe15.01.2404'], RaabeCalc ['Mittelwert46024,5', 'Anzahl4', 'Summe184098']"
+   ]
   },
   "fill formula shifts": {
    "area": "fill",
@@ -683,8 +687,11 @@
   },
   "plus adds sheet after": {
    "area": "window",
-   "ok": true,
-   "diff": []
+   "ok": false,
+   "diff": [
+    "sheet: Excel 'Tabelle4', RaabeCalc 'Tabelle2'",
+    "sheets: Excel ['Tabelle1', 'Tabelle4'], RaabeCalc ['Tabelle1', 'Tabelle2']"
+   ]
   },
   "Namenfeld goes to cell": {
    "area": "window",
@@ -1023,8 +1030,11 @@
   },
   "Strg+Bild auf to the previous sheet": {
    "area": "keys5",
-   "ok": true,
-   "diff": []
+   "ok": false,
+   "diff": [
+    "sheet: Excel 'Tabelle5', RaabeCalc 'Tabelle2'",
+    "sheets: Excel ['Tabelle5', 'Tabelle1'], RaabeCalc ['Tabelle2', 'Tabelle1']"
+   ]
   },
   "Umschalt+Leertaste while typing": {
    "area": "keys5",
@@ -1193,10 +1203,8 @@
   },
   "lower-case reference becomes upper": {
    "area": "edit2",
-   "ok": false,
-   "diff": [
-    "dialog: Excel False, RaabeCalc True"
-   ]
+   "ok": true,
+   "diff": []
   },
   "text then Alt+Unten picks": {
    "area": "edit2",
@@ -1215,10 +1223,8 @@
   },
   "F4 on a range in Bearbeiten": {
    "area": "edit2",
-   "ok": false,
-   "diff": [
-    "dialog: Excel False, RaabeCalc True"
-   ]
+   "ok": true,
+   "diff": []
   },
   "Down from a merged cell": {
    "area": "merge",
@@ -1292,8 +1298,11 @@
   },
   "Umschalt+F11 twice": {
    "area": "tabs",
-   "ok": true,
-   "diff": []
+   "ok": false,
+   "diff": [
+    "sheet: Excel 'Tabelle7', RaabeCalc 'Tabelle3'",
+    "sheets: Excel ['Tabelle7', 'Tabelle6', 'Tabelle1'], RaabeCalc ['Tabelle3', 'Tabelle2', 'Tabelle1']"
+   ]
   },
   "click a tab while typing": {
    "area": "tabs",

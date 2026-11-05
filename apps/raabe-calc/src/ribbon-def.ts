@@ -30,6 +30,8 @@ export interface RibbonContext {
     fnLogical: MenuEntry[]; fnText: MenuEntry[]; fnDate: MenuEntry[]; fnLookup: MenuEntry[]; fnMath: MenuEntry[]; fnFinancial: MenuEntry[]; fnMore: MenuEntry[]; fnRecent: MenuEntry[];
     chartColumn: MenuEntry[]; chartLine: MenuEntry[]; chartPie: MenuEntry[]; chartScatter: MenuEntry[]; chartStat: MenuEntry[];
     fitWidth: MenuEntry[]; fitHeight: MenuEntry[];
+    /** Anordnen: built when opened (what is enabled depends on the selected objects). */
+    align(): MenuEntry[]; rotate: MenuEntry[]; group: MenuEntry[];
   };
   panels: { cellStyles: Popup; tableStyles: Popup; shapes: Popup };
   scale: { value(): string; commit(v: string): void; step(d: 1 | -1): void };
@@ -198,8 +200,10 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
         },
         {
           id: "arrange", label: "Anordnen", key: "ZA", icon: "bring-forward",
-          controls: [b("layout.forward", "GE", "large"), b("layout.backward", "GH", "large"), b("layout.selectionPane", "Q", "large"),
-            stack(b("layout.align", "DA"), b("layout.group", "GR"), b("layout.rotate", "DR"))],
+          controls: [split("layout.forward", "GE", "large", [{ cmd: "shape.forward" }, { cmd: "shape.bringToFront" }]),
+            split("layout.backward", "GH", "large", [{ cmd: "shape.backward" }, { cmd: "shape.sendToBack" }]), b("layout.selectionPane", "Q", "large"),
+            stack({ type: "dropdown", cmd: "layout.align", key: "DA", size: "small", get menu() { return m.align(); } }, dd("layout.group", "GR", "small", m.group),
+              dd("layout.rotate", "DR", "small", m.rotate))],
         },
       ],
     },
