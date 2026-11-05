@@ -1542,14 +1542,22 @@ that the catalogue only measured what we had thought of. Decided with the owner:
   `probe_excel_chartcolors.py`, colours within 3/255 of Excel's), Zeile/Spalte wechseln, Daten
   auswählen (Datenquelle auswählen with series list), Diagramm verschieben (to another sheet; chart
   sheets not yet).
-- **Formen and Textfelder** (Einfügen > Formen, 38 presets in Excel's groups; Textfeld): drawn with a
+- **Formen and Textfelder** (Einfügen > Formen with Office's whole gallery, shared with RaabeWrite and
+  drawn by its Word-checked renderer: every preset, shaded sub-paths, Office's arrowheads, the yellow
+  handles that change a preset's adjust values; Zuletzt verwendete Formen; Textfeld): drawn with a
   drag (Umschalt keeps the proportions, a click alone gives Excel's default size), selected with
   eight handles and a rotation handle, moved, sized, rotated (Umschalt in 15° steps), Pfeiltasten
   move, Entf deletes, typing goes into the shape. The Formformat tab (Formen einfügen, Fülleffekt,
   Formkontur with Stärke / Striche / Pfeile, Anordnen, Größe) and the pane "Form formatieren".
   Saved as Excel 365 saves a new shape (xdr:sp / xdr:cxnSp, the theme's shape style) and written back
-  verbatim while unchanged. `check_calc_shapes.py`: 8/8 RaabeCalc→Excel (kind, place, size, fill, line
-  with dash and arrow, text, bold and size, rotation, flip) and 8/8 Excel→RaabeCalc.
+  verbatim while unchanged. `check_calc_shapes.py`: 10/10 RaabeCalc→Excel (kind, place, size, fill, line
+  with dash and both arrow ends, text, bold and size, rotation, flip, adjust value) and 10/10
+  Excel→RaabeCalc. `shot_compare.py` puts Excel's picture of a range (CopyPicture) next to RaabeCalc's
+  for a look by eye. Not yet: Freihand shapes (Kurve, Freihandform, Skizze).
+- **Inventory results hold labels only** (CLAUDE.md, D-058): `feellab/sanitize.py` drops Office's
+  descriptions (function tips, explanations after a label) and anything naming a file; the full
+  recording stays in `captures/`. The first inventory commit (36c7d49) still had them in the file:
+  cleaned in the next commit; removing them from the history needs a force push (the owner decides).
 - **PivotTable** (Einfügen > PivotTable, `probe_excel_pivot.py` with 8 configurations): the dialog,
   the field list pane (fields dragged into Filter / Spalten / Zeilen / Werte, a chip's menu),
   Wertfeldeinstellungen (all eleven functions, Excel's captions "Summe von Note", a second use of a
