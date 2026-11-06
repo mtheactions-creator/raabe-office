@@ -1,0 +1,1207 @@
+{
+ "built_by": "PowerPoint 16.0 build 20326",
+ "date": "2026-11-06",
+ "design_file": "Office 2013 - 2022 Theme.thmx",
+ "slide_size": {
+  "pt": [
+   960.0,
+   540.0
+  ],
+  "emu": [
+   12192000,
+   6858000
+  ],
+  "size_type": 7
+ },
+ "design": "Office 2013 – 2022-Design",
+ "fonts": {
+  "major": "Calibri Light",
+  "minor": "Calibri"
+ },
+ "layouts": [
+  "Titelfolie",
+  "Titel und Inhalt",
+  "Abschnitts-\nüberschrift",
+  "Zwei Inhalte",
+  "Vergleich",
+  "Nur Titel",
+  "Leer",
+  "Inhalt mit Überschrift",
+  "Bild mit Überschrift",
+  "Titel und vertikaler Text",
+  "Vertikaler Titel und Text"
+ ],
+ "slides": [
+  {
+   "index": 1,
+   "id": 256,
+   "layout": "Object",
+   "custom_layout": "Titel und Inhalt",
+   "section": 1,
+   "shapes": [
+    {
+     "name": "Title 1",
+     "id": 2,
+     "type": "Placeholder",
+     "pt": [
+      66.0,
+      28.75,
+      828.0,
+      104.375
+     ],
+     "emu": [
+      838200,
+      365125,
+      10515600,
+      1325563
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 1,
+     "placeholder": "Title",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Text verkleinern (automatisch anpassen)",
+      "paragraphs": [
+       {
+        "text": "Text verkleinern (automatisch anpassen)",
+        "level": 1,
+        "font": "Calibri Light",
+        "size": 44.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 39,
+        "left": 73.2,
+        "top": 57.18,
+        "width": 711.31,
+        "height": 47.52
+       }
+      ]
+     }
+    },
+    {
+     "name": "Content Placeholder 2",
+     "id": 3,
+     "type": "Placeholder",
+     "pt": [
+      66.0,
+      143.75,
+      828.0,
+      342.625
+     ],
+     "emu": [
+      838200,
+      1825625,
+      10515600,
+      4351338
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 2,
+     "placeholder": "Object",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Absatz 1: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.\rAbsatz 2: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.\rAbsatz 3: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.\rAbsatz 4: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.\rAbsatz 5: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.\rAbsatz 6: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.\rAbsatz 7: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.\rAbsatz 8: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.\rAbsatz 9: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.\rAbsatz 10: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.\rAbsatz 11: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.\rAbsatz 12: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.\rAbsatz 13: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.\rAbsatz 14: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.",
+      "paragraphs": [
+       {
+        "text": "Absatz 1: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.",
+        "level": 1,
+        "font": "Calibri",
+        "size": 15.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Absatz 2: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.",
+        "level": 1,
+        "font": "Calibri",
+        "size": 15.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Absatz 3: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.",
+        "level": 1,
+        "font": "Calibri",
+        "size": 15.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Absatz 4: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.",
+        "level": 1,
+        "font": "Calibri",
+        "size": 15.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Absatz 5: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.",
+        "level": 1,
+        "font": "Calibri",
+        "size": 15.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Absatz 6: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.",
+        "level": 1,
+        "font": "Calibri",
+        "size": 15.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Absatz 7: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.",
+        "level": 1,
+        "font": "Calibri",
+        "size": 15.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Absatz 8: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.",
+        "level": 1,
+        "font": "Calibri",
+        "size": 15.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Absatz 9: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.",
+        "level": 1,
+        "font": "Calibri",
+        "size": 15.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Absatz 10: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.",
+        "level": 1,
+        "font": "Calibri",
+        "size": 15.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Absatz 11: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.",
+        "level": 1,
+        "font": "Calibri",
+        "size": 15.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Absatz 12: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.",
+        "level": 1,
+        "font": "Calibri",
+        "size": 15.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Absatz 13: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.",
+        "level": 1,
+        "font": "Calibri",
+        "size": 15.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Absatz 14: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.",
+        "level": 1,
+        "font": "Calibri",
+        "size": 15.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 85,
+        "left": 91.2,
+        "top": 147.35,
+        "width": 484.82,
+        "height": 12.6
+       },
+       {
+        "start": 86,
+        "length": 85,
+        "left": 91.2,
+        "top": 159.95,
+        "width": 484.82,
+        "height": 22.6
+       },
+       {
+        "start": 171,
+        "length": 85,
+        "left": 91.2,
+        "top": 182.55,
+        "width": 484.82,
+        "height": 22.6
+       },
+       {
+        "start": 256,
+        "length": 85,
+        "left": 91.2,
+        "top": 205.15,
+        "width": 484.82,
+        "height": 22.6
+       },
+       {
+        "start": 341,
+        "length": 85,
+        "left": 91.2,
+        "top": 227.75,
+        "width": 484.82,
+        "height": 22.6
+       },
+       {
+        "start": 426,
+        "length": 85,
+        "left": 91.2,
+        "top": 250.35,
+        "width": 484.82,
+        "height": 22.6
+       },
+       {
+        "start": 511,
+        "length": 85,
+        "left": 91.2,
+        "top": 272.95,
+        "width": 484.82,
+        "height": 22.6
+       },
+       {
+        "start": 596,
+        "length": 85,
+        "left": 91.2,
+        "top": 295.55,
+        "width": 484.82,
+        "height": 22.6
+       },
+       {
+        "start": 681,
+        "length": 85,
+        "left": 91.2,
+        "top": 318.15,
+        "width": 484.82,
+        "height": 22.6
+       },
+       {
+        "start": 766,
+        "length": 86,
+        "left": 91.2,
+        "top": 340.75,
+        "width": 492.45,
+        "height": 22.6
+       },
+       {
+        "start": 852,
+        "length": 86,
+        "left": 91.2,
+        "top": 363.35,
+        "width": 492.45,
+        "height": 22.6
+       },
+       {
+        "start": 938,
+        "length": 86,
+        "left": 91.2,
+        "top": 385.95,
+        "width": 492.45,
+        "height": 22.6
+       },
+       {
+        "start": 1024,
+        "length": 86,
+        "left": 91.2,
+        "top": 408.55,
+        "width": 492.45,
+        "height": 22.6
+       },
+       {
+        "start": 1110,
+        "length": 85,
+        "left": 91.2,
+        "top": 431.15,
+        "width": 489.08,
+        "height": 23.41
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "index": 2,
+   "id": 257,
+   "layout": "Object",
+   "custom_layout": "Titel und Inhalt",
+   "section": 1,
+   "shapes": [
+    {
+     "name": "Title 1",
+     "id": 2,
+     "type": "Placeholder",
+     "pt": [
+      66.0,
+      28.75,
+      828.0,
+      104.375
+     ],
+     "emu": [
+      838200,
+      365125,
+      10515600,
+      1325563
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 1,
+     "placeholder": "Title",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Nicht automatisch anpassen",
+      "paragraphs": [
+       {
+        "text": "Nicht automatisch anpassen",
+        "level": 1,
+        "font": "Calibri Light",
+        "size": 44.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 26,
+        "left": 73.2,
+        "top": 57.18,
+        "width": 498.09,
+        "height": 47.52
+       }
+      ]
+     }
+    },
+    {
+     "name": "Content Placeholder 2",
+     "id": 3,
+     "type": "Placeholder",
+     "pt": [
+      66.0,
+      143.75,
+      828.0,
+      342.625
+     ],
+     "emu": [
+      838200,
+      1825625,
+      10515600,
+      4351338
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 2,
+     "placeholder": "Object",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "None",
+      "wordwrap": true,
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Absatz 1: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.\rAbsatz 2: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.\rAbsatz 3: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.\rAbsatz 4: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.\rAbsatz 5: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.\rAbsatz 6: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.\rAbsatz 7: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.\rAbsatz 8: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.\rAbsatz 9: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.",
+      "paragraphs": [
+       {
+        "text": "Absatz 1: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.",
+        "level": 1,
+        "font": "Calibri",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Absatz 2: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.",
+        "level": 1,
+        "font": "Calibri",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Absatz 3: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.",
+        "level": 1,
+        "font": "Calibri",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Absatz 4: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.",
+        "level": 1,
+        "font": "Calibri",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Absatz 5: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.",
+        "level": 1,
+        "font": "Calibri",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Absatz 6: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.",
+        "level": 1,
+        "font": "Calibri",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Absatz 7: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.",
+        "level": 1,
+        "font": "Calibri",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Absatz 8: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.",
+        "level": 1,
+        "font": "Calibri",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Absatz 9: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.",
+        "level": 1,
+        "font": "Calibri",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 66,
+        "left": 91.2,
+        "top": 147.35,
+        "width": 704.99,
+        "height": 30.24
+       },
+       {
+        "start": 67,
+        "length": 19,
+        "left": 91.2,
+        "top": 177.59,
+        "width": 200.63,
+        "height": 30.24
+       },
+       {
+        "start": 86,
+        "length": 66,
+        "left": 91.2,
+        "top": 207.83,
+        "width": 704.99,
+        "height": 40.24
+       },
+       {
+        "start": 152,
+        "length": 19,
+        "left": 91.2,
+        "top": 248.07,
+        "width": 200.63,
+        "height": 30.24
+       },
+       {
+        "start": 171,
+        "length": 66,
+        "left": 91.2,
+        "top": 278.31,
+        "width": 704.99,
+        "height": 40.24
+       },
+       {
+        "start": 237,
+        "length": 19,
+        "left": 91.2,
+        "top": 318.55,
+        "width": 200.63,
+        "height": 30.24
+       },
+       {
+        "start": 256,
+        "length": 66,
+        "left": 91.2,
+        "top": 348.79,
+        "width": 704.99,
+        "height": 40.24
+       },
+       {
+        "start": 322,
+        "length": 19,
+        "left": 91.2,
+        "top": 389.03,
+        "width": 200.63,
+        "height": 30.24
+       },
+       {
+        "start": 341,
+        "length": 66,
+        "left": 91.2,
+        "top": 419.27,
+        "width": 704.99,
+        "height": 40.24
+       },
+       {
+        "start": 407,
+        "length": 19,
+        "left": 91.2,
+        "top": 459.51,
+        "width": 200.63,
+        "height": 30.24
+       },
+       {
+        "start": 426,
+        "length": 66,
+        "left": 91.2,
+        "top": 489.75,
+        "width": 704.99,
+        "height": 40.24
+       },
+       {
+        "start": 492,
+        "length": 19,
+        "left": 91.2,
+        "top": 529.99,
+        "width": 200.63,
+        "height": 30.24
+       },
+       {
+        "start": 511,
+        "length": 66,
+        "left": 91.2,
+        "top": 560.23,
+        "width": 704.99,
+        "height": 40.24
+       },
+       {
+        "start": 577,
+        "length": 19,
+        "left": 91.2,
+        "top": 600.47,
+        "width": 200.63,
+        "height": 30.24
+       },
+       {
+        "start": 596,
+        "length": 66,
+        "left": 91.2,
+        "top": 630.71,
+        "width": 704.99,
+        "height": 40.24
+       },
+       {
+        "start": 662,
+        "length": 19,
+        "left": 91.2,
+        "top": 670.95,
+        "width": 200.63,
+        "height": 30.24
+       },
+       {
+        "start": 681,
+        "length": 66,
+        "left": 91.2,
+        "top": 701.19,
+        "width": 704.99,
+        "height": 40.24
+       },
+       {
+        "start": 747,
+        "length": 18,
+        "left": 91.2,
+        "top": 741.43,
+        "width": 194.26,
+        "height": 30.24
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "index": 3,
+   "id": 258,
+   "layout": "Object",
+   "custom_layout": "Titel und Inhalt",
+   "section": 1,
+   "shapes": [
+    {
+     "name": "Title 1",
+     "id": 2,
+     "type": "Placeholder",
+     "pt": [
+      66.0,
+      28.75,
+      828.0,
+      104.375
+     ],
+     "emu": [
+      838200,
+      365125,
+      10515600,
+      1325563
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 1,
+     "placeholder": "Title",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Form an Text anpassen",
+      "paragraphs": [
+       {
+        "text": "Form an Text anpassen",
+        "level": 1,
+        "font": "Calibri Light",
+        "size": 44.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 21,
+        "left": 73.2,
+        "top": 57.18,
+        "width": 403.46,
+        "height": 47.52
+       }
+      ]
+     }
+    },
+    {
+     "name": "Content Placeholder 2",
+     "id": 3,
+     "type": "Placeholder",
+     "pt": [
+      66.0,
+      143.75,
+      828.0,
+      566.519
+     ],
+     "emu": [
+      838200,
+      1825625,
+      10515600,
+      7194790
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 2,
+     "placeholder": "Object",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "ShapeToFitText",
+      "wordwrap": true,
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Absatz 1: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.\rAbsatz 2: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.\rAbsatz 3: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.\rAbsatz 4: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.\rAbsatz 5: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.\rAbsatz 6: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.\rAbsatz 7: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.\rAbsatz 8: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.",
+      "paragraphs": [
+       {
+        "text": "Absatz 1: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.",
+        "level": 1,
+        "font": "Calibri",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Absatz 2: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.",
+        "level": 1,
+        "font": "Calibri",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Absatz 3: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.",
+        "level": 1,
+        "font": "Calibri",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Absatz 4: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.",
+        "level": 1,
+        "font": "Calibri",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Absatz 5: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.",
+        "level": 1,
+        "font": "Calibri",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Absatz 6: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.",
+        "level": 1,
+        "font": "Calibri",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Absatz 7: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.",
+        "level": 1,
+        "font": "Calibri",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Absatz 8: Dieser Text ist absichtlich lang, damit er nicht in den Platzhalter passt.",
+        "level": 1,
+        "font": "Calibri",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 66,
+        "left": 91.2,
+        "top": 147.35,
+        "width": 704.99,
+        "height": 30.24
+       },
+       {
+        "start": 67,
+        "length": 19,
+        "left": 91.2,
+        "top": 177.59,
+        "width": 200.63,
+        "height": 30.24
+       },
+       {
+        "start": 86,
+        "length": 66,
+        "left": 91.2,
+        "top": 207.83,
+        "width": 704.99,
+        "height": 40.24
+       },
+       {
+        "start": 152,
+        "length": 19,
+        "left": 91.2,
+        "top": 248.07,
+        "width": 200.63,
+        "height": 30.24
+       },
+       {
+        "start": 171,
+        "length": 66,
+        "left": 91.2,
+        "top": 278.31,
+        "width": 704.99,
+        "height": 40.24
+       },
+       {
+        "start": 237,
+        "length": 19,
+        "left": 91.2,
+        "top": 318.55,
+        "width": 200.63,
+        "height": 30.24
+       },
+       {
+        "start": 256,
+        "length": 66,
+        "left": 91.2,
+        "top": 348.79,
+        "width": 704.99,
+        "height": 40.24
+       },
+       {
+        "start": 322,
+        "length": 19,
+        "left": 91.2,
+        "top": 389.03,
+        "width": 200.63,
+        "height": 30.24
+       },
+       {
+        "start": 341,
+        "length": 66,
+        "left": 91.2,
+        "top": 419.27,
+        "width": 704.99,
+        "height": 40.24
+       },
+       {
+        "start": 407,
+        "length": 19,
+        "left": 91.2,
+        "top": 459.51,
+        "width": 200.63,
+        "height": 30.24
+       },
+       {
+        "start": 426,
+        "length": 66,
+        "left": 91.2,
+        "top": 489.75,
+        "width": 704.99,
+        "height": 40.24
+       },
+       {
+        "start": 492,
+        "length": 19,
+        "left": 91.2,
+        "top": 529.99,
+        "width": 200.63,
+        "height": 30.24
+       },
+       {
+        "start": 511,
+        "length": 66,
+        "left": 91.2,
+        "top": 560.23,
+        "width": 704.99,
+        "height": 40.24
+       },
+       {
+        "start": 577,
+        "length": 19,
+        "left": 91.2,
+        "top": 600.47,
+        "width": 200.63,
+        "height": 30.24
+       },
+       {
+        "start": 596,
+        "length": 66,
+        "left": 91.2,
+        "top": 630.71,
+        "width": 704.99,
+        "height": 40.24
+       },
+       {
+        "start": 662,
+        "length": 18,
+        "left": 91.2,
+        "top": 670.95,
+        "width": 194.26,
+        "height": 30.24
+       }
+      ]
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -11,6 +11,8 @@
     "build:write": "npm run tauri -w @raabe/write -- build",
     "dev:calc": "npm run dev -w @raabe/calc",
     "build:calc": "npm run tauri -w @raabe/calc -- build",
+    "dev:present": "npm run dev -w @raabe/present",
+    "build:present": "npm run tauri -w @raabe/present -- build",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "vitest run"
   }

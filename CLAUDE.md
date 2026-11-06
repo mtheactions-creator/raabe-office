@@ -72,9 +72,8 @@ below).
 Display: 4K at 150 % scaling, currently 30 Hz.
 
 ## Harness safety
-- So far the harness knows only Word (`WordTarget`, `docx_fidelity.py`, the catalogues) and
-  `packages/ooxml` reads and writes only .docx. A new app needs its own reference side
-  (PowerPoint/Excel through COM, `DispatchEx`) and its own file format first.
+- The harness knows Word (`WordTarget`), Excel (`ExcelTarget`) and PowerPoint (`PowerPointTarget`);
+  `packages/ooxml` reads and writes .docx, .xlsx and .pptx.
 - The harness always starts its **own** Word process (`DispatchEx`, `WINWORD.EXE /x`) and
   closes only what it opened. Never attach to the owner's running Word
   (`GetActiveObject`/`Dispatch`) and never close documents you did not create; the
@@ -88,8 +87,19 @@ Display: 4K at 150 % scaling, currently 30 Hz.
   close only the workbooks you created. Excel keeps many application options for the user
   (e.g. where Enter moves the selection, the reduced ribbon): a probe that changes one puts it
   back before quitting.
-- PowerPoint runs as one process only: `DispatchEx` would reach the owner's open
-  presentations. No PowerPoint probe until Step 8 has decided its own rules (ROADMAP).
+- PowerPoint runs as one process per user (D-070), so its probes follow stricter rules:
+  - Before every PowerPoint probe, check whether POWERPNT.EXE is running. If it is, it belongs to
+    the owner: do not attach, read or close it; skip the PowerPoint work, note it, check again later.
+  - If none is running, the probe starts PowerPoint itself (`feellab/powerpoint.py`) and works only
+    on presentations it created in TEMP. At the end it closes them and quits PowerPoint only if no
+    other presentation is open.
+  - Never click a sign-in, consent, licence, "Neuerungen" or sync dialog. If one appears, end only
+    the process you started (if it holds nothing else), note it and go on with other work.
+  - A probe that changes a PowerPoint option (reduced ribbon, default view, AutoKorrektur ...) puts
+    it back.
+- Real input is shared between sessions on this PC: before a real-input run create
+  `%TEMP%\raabe-real-input.lock` exclusively (session name and start time); if it exists and is
+  younger than 30 minutes, do invisible work and try later; delete it when done.
 
 ## Building and running
 - `npm install` at the repo root (workspaces). `npm test` runs the unit tests,
@@ -105,6 +115,10 @@ Display: 4K at 150 % scaling, currently 30 Hz.
   folder (`CARGO_TARGET_DIR=<repo>/apps/raabe-write/src-tauri/target/check`) and point the
   harness at it with `RAABE_WRITE_EXE=<that folder>/release/raabe-write.exe`. Never close the
   owner's window. Test instances skip the single-instance handling (D-060).
+- RaabePresent (Step 8, D-070): `npm run dev:present` (browser, port 5176), `npx tauri build --no-bundle`
+  in `apps/raabe-present`; `RAABE_PRESENT_EXE` points the harness at another build. Its harness
+  against PowerPoint: `catalogue_present.py powerpoint|present`, `check_present_*.py`,
+  `probe_powerpoint_*.py`, fixtures from `make_pptx_fixtures.py`.
 - RaabeCalc (Step 7): `npm run dev:calc` (browser, port 5175), `npx tauri build --no-bundle` in
   `apps/raabe-calc`; the native side shared by both apps is `crates/raabe-host`. Its harness
   against Excel: `catalogue_calc.py excel|calc` (real input), `probe_excel_*.py` (own invisible

@@ -1,0 +1,2144 @@
+{
+ "built_by": "PowerPoint 16.0 build 20326",
+ "date": "2026-11-06",
+ "design_file": "(PowerPoint's default)",
+ "slide_size": {
+  "pt": [
+   960.0,
+   540.0
+  ],
+  "emu": [
+   12192000,
+   6858000
+  ],
+  "size_type": 7
+ },
+ "design": "Office",
+ "fonts": {
+  "major": "Aptos Display",
+  "minor": "Aptos"
+ },
+ "layouts": [
+  "Titelfolie",
+  "Titel und Inhalt",
+  "Abschnitts-\nüberschrift",
+  "Zwei Inhalte",
+  "Vergleich",
+  "Nur Titel",
+  "Leer",
+  "Inhalt mit Überschrift",
+  "Bild mit Überschrift",
+  "Titel und vertikaler Text",
+  "Vertikaler Titel und Text"
+ ],
+ "slides": [
+  {
+   "index": 1,
+   "id": 256,
+   "layout": "Title",
+   "custom_layout": "Titelfolie",
+   "section": 1,
+   "shapes": [
+    {
+     "name": "Title 1",
+     "id": 2,
+     "type": "Placeholder",
+     "pt": [
+      120.0,
+      88.375,
+      720.0,
+      188.0
+     ],
+     "emu": [
+      1524000,
+      1122363,
+      9144000,
+      2387600
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 1,
+     "placeholder": "CenterTitle",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 4,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Titelfolie: Titel",
+      "paragraphs": [
+       {
+        "text": "Titelfolie: Titel",
+        "level": 1,
+        "font": "Aptos Display",
+        "size": 60.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 2
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 17,
+        "left": 311.42,
+        "top": 207.56,
+        "width": 337.15,
+        "height": 65.22
+       }
+      ]
+     }
+    },
+    {
+     "name": "Subtitle 2",
+     "id": 3,
+     "type": "Placeholder",
+     "pt": [
+      120.0,
+      283.625,
+      720.0,
+      130.375
+     ],
+     "emu": [
+      1524000,
+      3602038,
+      9144000,
+      1655762
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 2,
+     "placeholder": "Subtitle",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Untertitel der Folie 1",
+      "paragraphs": [
+       {
+        "text": "Untertitel der Folie 1",
+        "level": 1,
+        "font": "Aptos",
+        "size": 24.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 2
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 22,
+        "left": 375.14,
+        "top": 287.23,
+        "width": 209.72,
+        "height": 26.09
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "index": 2,
+   "id": 257,
+   "layout": "Object",
+   "custom_layout": "Titel und Inhalt",
+   "section": 1,
+   "shapes": [
+    {
+     "name": "Title 1",
+     "id": 2,
+     "type": "Placeholder",
+     "pt": [
+      66.0,
+      28.75,
+      828.0,
+      104.375
+     ],
+     "emu": [
+      838200,
+      365125,
+      10515600,
+      1325563
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 1,
+     "placeholder": "Title",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Titel und Inhalt: Titel",
+      "paragraphs": [
+       {
+        "text": "Titel und Inhalt: Titel",
+        "level": 1,
+        "font": "Aptos Display",
+        "size": 44.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 23,
+        "left": 73.2,
+        "top": 57.03,
+        "width": 356.08,
+        "height": 47.83
+       }
+      ]
+     }
+    },
+    {
+     "name": "Content Placeholder 2",
+     "id": 3,
+     "type": "Placeholder",
+     "pt": [
+      66.0,
+      143.75,
+      828.0,
+      342.625
+     ],
+     "emu": [
+      838200,
+      1825625,
+      10515600,
+      4351338
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 2,
+     "placeholder": "Object",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Text 1 auf der Folie 2\rZweite Ebene",
+      "paragraphs": [
+       {
+        "text": "Text 1 auf der Folie 2",
+        "level": 1,
+        "font": "Aptos",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Zweite Ebene",
+        "level": 2,
+        "font": "Aptos",
+        "size": 24.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 23,
+        "left": 91.2,
+        "top": 147.35,
+        "width": 248.48,
+        "height": 30.24
+       },
+       {
+        "start": 24,
+        "length": 12,
+        "left": 127.2,
+        "top": 177.59,
+        "width": 138.26,
+        "height": 31.09
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "index": 3,
+   "id": 258,
+   "layout": "SectionHeader",
+   "custom_layout": "Abschnitts-\nüberschrift",
+   "section": 1,
+   "shapes": [
+    {
+     "name": "Title 1",
+     "id": 2,
+     "type": "Placeholder",
+     "pt": [
+      65.5,
+      134.625,
+      828.0,
+      224.625
+     ],
+     "emu": [
+      831850,
+      1709738,
+      10515600,
+      2852737
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 1,
+     "placeholder": "Title",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 4,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Abschnitts-überschrift: Titel",
+      "paragraphs": [
+       {
+        "text": "Abschnitts-überschrift: Titel",
+        "level": 1,
+        "font": "Aptos Display",
+        "size": 60.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 29,
+        "left": 72.7,
+        "top": 290.43,
+        "width": 674.57,
+        "height": 65.22
+       }
+      ]
+     }
+    },
+    {
+     "name": "Text Placeholder 2",
+     "id": 3,
+     "type": "Placeholder",
+     "pt": [
+      65.5,
+      361.375,
+      828.0,
+      118.125
+     ],
+     "emu": [
+      831850,
+      4589463,
+      10515600,
+      1500187
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 2,
+     "placeholder": "Body",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Text 1 auf der Folie 3\rZweite Ebene",
+      "paragraphs": [
+       {
+        "text": "Text 1 auf der Folie 3",
+        "level": 1,
+        "font": "Aptos",
+        "size": 24.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Zweite Ebene",
+        "level": 2,
+        "font": "Aptos",
+        "size": 20.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 23,
+        "left": 72.7,
+        "top": 364.98,
+        "width": 212.91,
+        "height": 25.92
+       },
+       {
+        "start": 24,
+        "length": 12,
+        "left": 108.7,
+        "top": 390.9,
+        "width": 115.19,
+        "height": 26.74
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "index": 4,
+   "id": 259,
+   "layout": "TwoObjects",
+   "custom_layout": "Zwei Inhalte",
+   "section": 1,
+   "shapes": [
+    {
+     "name": "Title 1",
+     "id": 2,
+     "type": "Placeholder",
+     "pt": [
+      66.0,
+      28.75,
+      828.0,
+      104.375
+     ],
+     "emu": [
+      838200,
+      365125,
+      10515600,
+      1325563
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 1,
+     "placeholder": "Title",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Zwei Inhalte: Titel",
+      "paragraphs": [
+       {
+        "text": "Zwei Inhalte: Titel",
+        "level": 1,
+        "font": "Aptos Display",
+        "size": 44.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 19,
+        "left": 73.2,
+        "top": 57.03,
+        "width": 310.6,
+        "height": 47.83
+       }
+      ]
+     }
+    },
+    {
+     "name": "Content Placeholder 2",
+     "id": 3,
+     "type": "Placeholder",
+     "pt": [
+      66.0,
+      143.75,
+      408.0,
+      342.625
+     ],
+     "emu": [
+      838200,
+      1825625,
+      5181600,
+      4351338
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 2,
+     "placeholder": "Object",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Text 1 auf der Folie 4\rZweite Ebene",
+      "paragraphs": [
+       {
+        "text": "Text 1 auf der Folie 4",
+        "level": 1,
+        "font": "Aptos",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Zweite Ebene",
+        "level": 2,
+        "font": "Aptos",
+        "size": 24.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 23,
+        "left": 91.2,
+        "top": 147.35,
+        "width": 248.48,
+        "height": 30.24
+       },
+       {
+        "start": 24,
+        "length": 12,
+        "left": 127.2,
+        "top": 177.59,
+        "width": 138.26,
+        "height": 31.09
+       }
+      ]
+     }
+    },
+    {
+     "name": "Content Placeholder 3",
+     "id": 4,
+     "type": "Placeholder",
+     "pt": [
+      486.0,
+      143.75,
+      408.0,
+      342.625
+     ],
+     "emu": [
+      6172200,
+      1825625,
+      5181600,
+      4351338
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 3,
+     "placeholder": "Object",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Text 2 auf der Folie 4\rZweite Ebene",
+      "paragraphs": [
+       {
+        "text": "Text 2 auf der Folie 4",
+        "level": 1,
+        "font": "Aptos",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Zweite Ebene",
+        "level": 2,
+        "font": "Aptos",
+        "size": 24.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 23,
+        "left": 511.2,
+        "top": 147.35,
+        "width": 248.48,
+        "height": 30.24
+       },
+       {
+        "start": 24,
+        "length": 12,
+        "left": 547.2,
+        "top": 177.59,
+        "width": 138.26,
+        "height": 31.09
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "index": 5,
+   "id": 260,
+   "layout": "Comparison",
+   "custom_layout": "Vergleich",
+   "section": 1,
+   "shapes": [
+    {
+     "name": "Title 1",
+     "id": 2,
+     "type": "Placeholder",
+     "pt": [
+      66.125,
+      28.75,
+      828.0,
+      104.375
+     ],
+     "emu": [
+      839788,
+      365125,
+      10515600,
+      1325563
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 1,
+     "placeholder": "Title",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Vergleich: Titel",
+      "paragraphs": [
+       {
+        "text": "Vergleich: Titel",
+        "level": 1,
+        "font": "Aptos Display",
+        "size": 44.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 16,
+        "left": 73.33,
+        "top": 57.03,
+        "width": 258.27,
+        "height": 47.83
+       }
+      ]
+     }
+    },
+    {
+     "name": "Text Placeholder 2",
+     "id": 3,
+     "type": "Placeholder",
+     "pt": [
+      66.125,
+      132.375,
+      406.125,
+      64.875
+     ],
+     "emu": [
+      839788,
+      1681163,
+      5157787,
+      823912
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 2,
+     "placeholder": "Body",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 4,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Text 1 auf der Folie 5\rZweite Ebene",
+      "paragraphs": [
+       {
+        "text": "Text 1 auf der Folie 5",
+        "level": 1,
+        "font": "Aptos",
+        "size": 24.0,
+        "bold": true,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Zweite Ebene",
+        "level": 2,
+        "font": "Aptos",
+        "size": 20.0,
+        "bold": true,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 23,
+        "left": 73.33,
+        "top": 140.99,
+        "width": 223.53,
+        "height": 25.92
+       },
+       {
+        "start": 24,
+        "length": 12,
+        "left": 109.33,
+        "top": 166.91,
+        "width": 121.89,
+        "height": 26.74
+       }
+      ]
+     }
+    },
+    {
+     "name": "Content Placeholder 3",
+     "id": 4,
+     "type": "Placeholder",
+     "pt": [
+      66.125,
+      197.25,
+      406.125,
+      290.125
+     ],
+     "emu": [
+      839788,
+      2505075,
+      5157787,
+      3684588
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 3,
+     "placeholder": "Object",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Text 2 auf der Folie 5\rZweite Ebene",
+      "paragraphs": [
+       {
+        "text": "Text 2 auf der Folie 5",
+        "level": 1,
+        "font": "Aptos",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Zweite Ebene",
+        "level": 2,
+        "font": "Aptos",
+        "size": 24.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 23,
+        "left": 91.33,
+        "top": 200.85,
+        "width": 248.48,
+        "height": 30.24
+       },
+       {
+        "start": 24,
+        "length": 12,
+        "left": 127.33,
+        "top": 231.09,
+        "width": 138.26,
+        "height": 31.09
+       }
+      ]
+     }
+    },
+    {
+     "name": "Text Placeholder 4",
+     "id": 5,
+     "type": "Placeholder",
+     "pt": [
+      486.0,
+      132.375,
+      408.125,
+      64.875
+     ],
+     "emu": [
+      6172200,
+      1681163,
+      5183188,
+      823912
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 4,
+     "placeholder": "Body",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 4,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Text 3 auf der Folie 5\rZweite Ebene",
+      "paragraphs": [
+       {
+        "text": "Text 3 auf der Folie 5",
+        "level": 1,
+        "font": "Aptos",
+        "size": 24.0,
+        "bold": true,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Zweite Ebene",
+        "level": 2,
+        "font": "Aptos",
+        "size": 20.0,
+        "bold": true,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 23,
+        "left": 493.2,
+        "top": 140.99,
+        "width": 223.53,
+        "height": 25.92
+       },
+       {
+        "start": 24,
+        "length": 12,
+        "left": 529.2,
+        "top": 166.91,
+        "width": 121.89,
+        "height": 26.74
+       }
+      ]
+     }
+    },
+    {
+     "name": "Content Placeholder 5",
+     "id": 6,
+     "type": "Placeholder",
+     "pt": [
+      486.0,
+      197.25,
+      408.125,
+      290.125
+     ],
+     "emu": [
+      6172200,
+      2505075,
+      5183188,
+      3684588
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 5,
+     "placeholder": "Object",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Text 4 auf der Folie 5\rZweite Ebene",
+      "paragraphs": [
+       {
+        "text": "Text 4 auf der Folie 5",
+        "level": 1,
+        "font": "Aptos",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Zweite Ebene",
+        "level": 2,
+        "font": "Aptos",
+        "size": 24.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 23,
+        "left": 511.2,
+        "top": 200.85,
+        "width": 248.48,
+        "height": 30.24
+       },
+       {
+        "start": 24,
+        "length": 12,
+        "left": 547.2,
+        "top": 231.09,
+        "width": 138.26,
+        "height": 31.09
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "index": 6,
+   "id": 261,
+   "layout": "TitleOnly",
+   "custom_layout": "Nur Titel",
+   "section": 1,
+   "shapes": [
+    {
+     "name": "Title 1",
+     "id": 2,
+     "type": "Placeholder",
+     "pt": [
+      66.0,
+      28.75,
+      828.0,
+      104.375
+     ],
+     "emu": [
+      838200,
+      365125,
+      10515600,
+      1325563
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 1,
+     "placeholder": "Title",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Nur Titel: Titel",
+      "paragraphs": [
+       {
+        "text": "Nur Titel: Titel",
+        "level": 1,
+        "font": "Aptos Display",
+        "size": 44.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 16,
+        "left": 73.2,
+        "top": 57.03,
+        "width": 245.58,
+        "height": 47.83
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "index": 7,
+   "id": 262,
+   "layout": "Blank",
+   "custom_layout": "Leer",
+   "section": 1,
+   "shapes": []
+  },
+  {
+   "index": 8,
+   "id": 263,
+   "layout": "ContentWithCaption",
+   "custom_layout": "Inhalt mit Überschrift",
+   "section": 1,
+   "shapes": [
+    {
+     "name": "Title 1",
+     "id": 2,
+     "type": "Placeholder",
+     "pt": [
+      66.125,
+      36.0,
+      309.625,
+      126.0
+     ],
+     "emu": [
+      839788,
+      457200,
+      3932237,
+      1600200
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 1,
+     "placeholder": "Title",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 4,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Inhalt mit Überschrift: Titel",
+      "paragraphs": [
+       {
+        "text": "Inhalt mit Überschrift: Titel",
+        "level": 1,
+        "font": "Aptos Display",
+        "size": 32.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 24,
+        "left": 73.33,
+        "top": 89.05,
+        "width": 287.0,
+        "height": 34.56
+       },
+       {
+        "start": 25,
+        "length": 5,
+        "left": 73.33,
+        "top": 123.61,
+        "width": 55.23,
+        "height": 34.79
+       }
+      ]
+     }
+    },
+    {
+     "name": "Content Placeholder 2",
+     "id": 3,
+     "type": "Placeholder",
+     "pt": [
+      408.125,
+      77.75,
+      486.0,
+      383.75
+     ],
+     "emu": [
+      5183188,
+      987425,
+      6172200,
+      4873625
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 2,
+     "placeholder": "Object",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Text 1 auf der Folie 8\rZweite Ebene",
+      "paragraphs": [
+       {
+        "text": "Text 1 auf der Folie 8",
+        "level": 1,
+        "font": "Aptos",
+        "size": 32.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Zweite Ebene",
+        "level": 2,
+        "font": "Aptos",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 23,
+        "left": 433.33,
+        "top": 81.35,
+        "width": 283.92,
+        "height": 34.56
+       },
+       {
+        "start": 24,
+        "length": 12,
+        "left": 469.33,
+        "top": 115.91,
+        "width": 161.32,
+        "height": 35.44
+       }
+      ]
+     }
+    },
+    {
+     "name": "Text Placeholder 3",
+     "id": 4,
+     "type": "Placeholder",
+     "pt": [
+      66.125,
+      162.0,
+      309.625,
+      300.125
+     ],
+     "emu": [
+      839788,
+      2057400,
+      3932237,
+      3811588
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 3,
+     "placeholder": "Body",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Text 2 auf der Folie 8\rZweite Ebene",
+      "paragraphs": [
+       {
+        "text": "Text 2 auf der Folie 8",
+        "level": 1,
+        "font": "Aptos",
+        "size": 16.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Zweite Ebene",
+        "level": 2,
+        "font": "Aptos",
+        "size": 14.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 23,
+        "left": 73.33,
+        "top": 165.6,
+        "width": 141.78,
+        "height": 17.28
+       },
+       {
+        "start": 24,
+        "length": 12,
+        "left": 109.33,
+        "top": 182.88,
+        "width": 80.79,
+        "height": 20.22
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "index": 9,
+   "id": 264,
+   "layout": "PictureWithCaption",
+   "custom_layout": "Bild mit Überschrift",
+   "section": 1,
+   "shapes": [
+    {
+     "name": "Title 1",
+     "id": 2,
+     "type": "Placeholder",
+     "pt": [
+      66.125,
+      36.0,
+      309.625,
+      126.0
+     ],
+     "emu": [
+      839788,
+      457200,
+      3932237,
+      1600200
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 1,
+     "placeholder": "Title",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 4,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Bild mit Überschrift: Titel",
+      "paragraphs": [
+       {
+        "text": "Bild mit Überschrift: Titel",
+        "level": 1,
+        "font": "Aptos Display",
+        "size": 32.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 22,
+        "left": 73.33,
+        "top": 89.05,
+        "width": 263.63,
+        "height": 34.56
+       },
+       {
+        "start": 23,
+        "length": 5,
+        "left": 73.33,
+        "top": 123.61,
+        "width": 55.23,
+        "height": 34.79
+       }
+      ]
+     }
+    },
+    {
+     "name": "Picture Placeholder 2",
+     "id": 3,
+     "type": "Placeholder",
+     "pt": [
+      408.125,
+      77.75,
+      486.0,
+      383.75
+     ],
+     "emu": [
+      5183188,
+      987425,
+      6172200,
+      4873625
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 2,
+     "placeholder": "Picture",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     }
+    },
+    {
+     "name": "Text Placeholder 3",
+     "id": 4,
+     "type": "Placeholder",
+     "pt": [
+      66.125,
+      162.0,
+      309.625,
+      300.125
+     ],
+     "emu": [
+      839788,
+      2057400,
+      3932237,
+      3811588
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 3,
+     "placeholder": "Body",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Text 1 auf der Folie 9\rZweite Ebene",
+      "paragraphs": [
+       {
+        "text": "Text 1 auf der Folie 9",
+        "level": 1,
+        "font": "Aptos",
+        "size": 16.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Zweite Ebene",
+        "level": 2,
+        "font": "Aptos",
+        "size": 14.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 23,
+        "left": 73.33,
+        "top": 165.6,
+        "width": 141.78,
+        "height": 17.28
+       },
+       {
+        "start": 24,
+        "length": 12,
+        "left": 109.33,
+        "top": 182.88,
+        "width": 80.79,
+        "height": 20.22
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "index": 10,
+   "id": 265,
+   "layout": "VerticalText",
+   "custom_layout": "Titel und vertikaler Text",
+   "section": 1,
+   "shapes": [
+    {
+     "name": "Title 1",
+     "id": 2,
+     "type": "Placeholder",
+     "pt": [
+      66.0,
+      28.75,
+      828.0,
+      104.375
+     ],
+     "emu": [
+      838200,
+      365125,
+      10515600,
+      1325563
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 1,
+     "placeholder": "Title",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Titel und vertikaler Text: Titel",
+      "paragraphs": [
+       {
+        "text": "Titel und vertikaler Text: Titel",
+        "level": 1,
+        "font": "Aptos Display",
+        "size": 44.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 32,
+        "left": 73.2,
+        "top": 57.03,
+        "width": 498.71,
+        "height": 47.83
+       }
+      ]
+     }
+    },
+    {
+     "name": "Vertical Text Placeholder 2",
+     "id": 3,
+     "type": "Placeholder",
+     "pt": [
+      66.0,
+      143.75,
+      828.0,
+      342.625
+     ],
+     "emu": [
+      838200,
+      1825625,
+      10515600,
+      4351338
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 2,
+     "placeholder": "VerticalBody",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Text 1 auf der Folie 10\rZweite Ebene",
+      "paragraphs": [
+       {
+        "text": "Text 1 auf der Folie 10",
+        "level": 1,
+        "font": "Aptos",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Zweite Ebene",
+        "level": 2,
+        "font": "Aptos",
+        "size": 24.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 24,
+        "left": 856.56,
+        "top": 165.35,
+        "width": 30.24,
+        "height": 263.48
+       },
+       {
+        "start": 25,
+        "length": 12,
+        "left": 824.92,
+        "top": 201.35,
+        "width": 31.64,
+        "height": 138.26
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "index": 11,
+   "id": 266,
+   "layout": "VerticalTitleAndText",
+   "custom_layout": "Vertikaler Titel und Text",
+   "section": 1,
+   "shapes": [
+    {
+     "name": "Vertical Title 1",
+     "id": 2,
+     "type": "Placeholder",
+     "pt": [
+      687.0,
+      28.75,
+      207.0,
+      457.625
+     ],
+     "emu": [
+      8724900,
+      365125,
+      2628900,
+      5811838
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 1,
+     "placeholder": "VerticalTitle",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Vertikaler Titel und Text: Titel",
+      "paragraphs": [
+       {
+        "text": "Vertikaler Titel und Text: Titel",
+        "level": 1,
+        "font": "Aptos Display",
+        "size": 44.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 27,
+        "left": 791.16,
+        "top": 32.35,
+        "width": 47.52,
+        "height": 427.61
+       },
+       {
+        "start": 28,
+        "length": 5,
+        "left": 742.32,
+        "top": 32.35,
+        "width": 48.84,
+        "height": 75.92
+       }
+      ]
+     }
+    },
+    {
+     "name": "Vertical Text Placeholder 2",
+     "id": 3,
+     "type": "Placeholder",
+     "pt": [
+      66.0,
+      28.75,
+      609.0,
+      457.625
+     ],
+     "emu": [
+      838200,
+      365125,
+      7734300,
+      5811838
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 2,
+     "placeholder": "VerticalBody",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Text 1 auf der Folie 11\rZweite Ebene",
+      "paragraphs": [
+       {
+        "text": "Text 1 auf der Folie 11",
+        "level": 1,
+        "font": "Aptos",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Zweite Ebene",
+        "level": 2,
+        "font": "Aptos",
+        "size": 24.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 24,
+        "left": 637.56,
+        "top": 50.35,
+        "width": 30.24,
+        "height": 263.48
+       },
+       {
+        "start": 25,
+        "length": 12,
+        "left": 605.92,
+        "top": 86.35,
+        "width": 31.64,
+        "height": 138.26
+       }
+      ]
+     }
+    }
+   ]
+  }
+ ]
+}

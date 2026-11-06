@@ -33,6 +33,17 @@
         "@raabe/calc"
       ],
       "port": 5175
+    },
+    {
+      "name": "raabe-present",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "-w",
+        "@raabe/present"
+      ],
+      "port": 5176
     }
   ]
 }

@@ -1,0 +1,704 @@
+{
+ "built_by": "PowerPoint 16.0 build 20326",
+ "date": "2026-11-06",
+ "design_file": "(PowerPoint's default)",
+ "slide_size": {
+  "pt": [
+   960.0,
+   540.0
+  ],
+  "emu": [
+   12192000,
+   6858000
+  ],
+  "size_type": 7
+ },
+ "design": "Office",
+ "fonts": {
+  "major": "Aptos Display",
+  "minor": "Aptos"
+ },
+ "layouts": [
+  "Titelfolie",
+  "Titel und Inhalt",
+  "Abschnitts-\nüberschrift",
+  "Zwei Inhalte",
+  "Vergleich",
+  "Nur Titel",
+  "Leer",
+  "Inhalt mit Überschrift",
+  "Bild mit Überschrift",
+  "Titel und vertikaler Text",
+  "Vertikaler Titel und Text"
+ ],
+ "slides": [
+  {
+   "index": 1,
+   "id": 256,
+   "layout": "Title",
+   "custom_layout": "Titelfolie",
+   "section": 1,
+   "shapes": [
+    {
+     "name": "Title 1",
+     "id": 2,
+     "type": "Placeholder",
+     "pt": [
+      120.0,
+      88.375,
+      720.0,
+      188.0
+     ],
+     "emu": [
+      1524000,
+      1122363,
+      9144000,
+      2387600
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 1,
+     "placeholder": "CenterTitle",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 4,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Einleitung",
+      "paragraphs": [
+       {
+        "text": "Einleitung",
+        "level": 1,
+        "font": "Aptos Display",
+        "size": 60.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 2
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 10,
+        "left": 361.19,
+        "top": 207.56,
+        "width": 237.63,
+        "height": 65.22
+       }
+      ]
+     }
+    },
+    {
+     "name": "Subtitle 2",
+     "id": 3,
+     "type": "Placeholder",
+     "pt": [
+      120.0,
+      283.625,
+      720.0,
+      130.375
+     ],
+     "emu": [
+      1524000,
+      3602038,
+      9144000,
+      1655762
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 2,
+     "placeholder": "Subtitle",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": ""
+     }
+    }
+   ],
+   "notes": "Notizen zur Folie 1\rZweite Zeile der Notizen"
+  },
+  {
+   "index": 2,
+   "id": 257,
+   "layout": "Object",
+   "custom_layout": "Titel und Inhalt",
+   "section": 1,
+   "shapes": [
+    {
+     "name": "Title 1",
+     "id": 2,
+     "type": "Placeholder",
+     "pt": [
+      66.0,
+      28.75,
+      828.0,
+      104.375
+     ],
+     "emu": [
+      838200,
+      365125,
+      10515600,
+      1325563
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 1,
+     "placeholder": "Title",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Ein Übergang",
+      "paragraphs": [
+       {
+        "text": "Ein Übergang",
+        "level": 1,
+        "font": "Aptos Display",
+        "size": 44.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 12,
+        "left": 73.2,
+        "top": 57.03,
+        "width": 232.04,
+        "height": 47.83
+       }
+      ]
+     }
+    },
+    {
+     "name": "Content Placeholder 2",
+     "id": 3,
+     "type": "Placeholder",
+     "pt": [
+      66.0,
+      143.75,
+      828.0,
+      342.625
+     ],
+     "emu": [
+      838200,
+      1825625,
+      10515600,
+      4351338
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 2,
+     "placeholder": "Object",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Punkt 2.1\rPunkt 2.2",
+      "paragraphs": [
+       {
+        "text": "Punkt 2.1",
+        "level": 1,
+        "font": "Aptos",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Punkt 2.2",
+        "level": 1,
+        "font": "Aptos",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 10,
+        "left": 91.2,
+        "top": 147.35,
+        "width": 118.22,
+        "height": 30.24
+       },
+       {
+        "start": 11,
+        "length": 9,
+        "left": 91.2,
+        "top": 177.59,
+        "width": 112.48,
+        "height": 40.44
+       }
+      ]
+     }
+    }
+   ],
+   "notes": "Notizen zur Folie 2\rZweite Zeile der Notizen",
+   "transition": {
+    "effect": 3849,
+    "duration": 0.699999988079071
+   }
+  },
+  {
+   "index": 3,
+   "id": 258,
+   "layout": "Object",
+   "custom_layout": "Titel und Inhalt",
+   "section": 2,
+   "shapes": [
+    {
+     "name": "Title 1",
+     "id": 2,
+     "type": "Placeholder",
+     "pt": [
+      66.0,
+      28.75,
+      828.0,
+      104.375
+     ],
+     "emu": [
+      838200,
+      365125,
+      10515600,
+      1325563
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 1,
+     "placeholder": "Title",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Eine Animation",
+      "paragraphs": [
+       {
+        "text": "Eine Animation",
+        "level": 1,
+        "font": "Aptos Display",
+        "size": 44.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 14,
+        "left": 73.2,
+        "top": 57.03,
+        "width": 266.25,
+        "height": 47.83
+       }
+      ]
+     }
+    },
+    {
+     "name": "Content Placeholder 2",
+     "id": 3,
+     "type": "Placeholder",
+     "pt": [
+      66.0,
+      143.75,
+      828.0,
+      342.625
+     ],
+     "emu": [
+      838200,
+      1825625,
+      10515600,
+      4351338
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 2,
+     "placeholder": "Object",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Punkt 3.1\rPunkt 3.2",
+      "paragraphs": [
+       {
+        "text": "Punkt 3.1",
+        "level": 1,
+        "font": "Aptos",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Punkt 3.2",
+        "level": 1,
+        "font": "Aptos",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 10,
+        "left": 91.2,
+        "top": 147.35,
+        "width": 118.22,
+        "height": 30.24
+       },
+       {
+        "start": 11,
+        "length": 9,
+        "left": 91.2,
+        "top": 177.59,
+        "width": 112.48,
+        "height": 40.44
+       }
+      ]
+     }
+    }
+   ],
+   "animations": [
+    {
+     "shape": "Content Placeholder 2",
+     "effect": 10,
+     "trigger": 1,
+     "duration": 0.5
+    }
+   ]
+  },
+  {
+   "index": 4,
+   "id": 259,
+   "layout": "Object",
+   "custom_layout": "Titel und Inhalt",
+   "section": 2,
+   "shapes": [
+    {
+     "name": "Title 1",
+     "id": 2,
+     "type": "Placeholder",
+     "pt": [
+      66.0,
+      28.75,
+      828.0,
+      104.375
+     ],
+     "emu": [
+      838200,
+      365125,
+      10515600,
+      1325563
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 1,
+     "placeholder": "Title",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Noch eine Animation",
+      "paragraphs": [
+       {
+        "text": "Noch eine Animation",
+        "level": 1,
+        "font": "Aptos Display",
+        "size": 44.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 19,
+        "left": 73.2,
+        "top": 57.03,
+        "width": 369.12,
+        "height": 47.83
+       }
+      ]
+     }
+    },
+    {
+     "name": "Content Placeholder 2",
+     "id": 3,
+     "type": "Placeholder",
+     "pt": [
+      66.0,
+      143.75,
+      828.0,
+      342.625
+     ],
+     "emu": [
+      838200,
+      1825625,
+      10515600,
+      4351338
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 2,
+     "placeholder": "Object",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Punkt 4.1\rPunkt 4.2",
+      "paragraphs": [
+       {
+        "text": "Punkt 4.1",
+        "level": 1,
+        "font": "Aptos",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Punkt 4.2",
+        "level": 1,
+        "font": "Aptos",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 10,
+        "left": 91.2,
+        "top": 147.35,
+        "width": 118.22,
+        "height": 30.24
+       },
+       {
+        "start": 11,
+        "length": 9,
+        "left": 91.2,
+        "top": 177.59,
+        "width": 112.48,
+        "height": 40.44
+       }
+      ]
+     }
+    }
+   ],
+   "animations": [
+    {
+     "shape": "Content Placeholder 2",
+     "effect": 2,
+     "trigger": 1,
+     "duration": 0.5
+    }
+   ]
+  }
+ ],
+ "sections": [
+  {
+   "name": "Einleitung",
+   "first": 1,
+   "count": 2
+  },
+  {
+   "name": "Hauptteil",
+   "first": 3,
+   "count": 2
+  }
+ ]
+}

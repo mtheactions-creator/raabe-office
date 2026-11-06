@@ -1,0 +1,134 @@
+/* RaabePresent's window below the ribbon, laid out as PowerPoint's Normalansicht: the slide panel at
+   the left, the slide on a grey area in the middle, the notes below it, the status bar. */
+
+.present-main { flex: 1; display: flex; min-height: 0; background: var(--chrome, #f3f3f3); }
+.slide-panel { flex: none; width: 200px; display: flex; flex-direction: column; min-height: 0; outline: none; background: var(--chrome, #f3f3f3); }
+.slide-panel .thumbs { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 8px 6px 24px 0; position: relative; }
+.thumb-item { display: flex; align-items: flex-start; gap: 4px; padding: 5px 0 7px 4px; cursor: default; }
+.thumb-num { width: 22px; text-align: right; font: 12px var(--font); color: #444; padding-top: 2px; flex: none; }
+.thumb-num.hidden-slide { text-decoration: line-through; }
+.thumb-frame { border: 1px solid #c8c8c8; border-radius: 3px; overflow: hidden; background: #fff; }
+.thumb-item:hover .thumb-frame { border-color: #a0a0a0; }
+.thumb-item.selected .thumb-frame { border: 2px solid #e8a1a4; margin: -1px; }
+.thumb-item.current .thumb-frame { border: 2px solid var(--accent-text, #b3141b); margin: -1px; }
+.thumb-slide { position: relative; overflow: hidden; }
+.slide-panel:focus .thumb-item.current .thumb-frame { box-shadow: 0 0 0 1px var(--accent-text, #b3141b); }
+.drop-line { position: absolute; left: 26px; right: 8px; height: 2px; background: var(--accent-text, #b3141b); pointer-events: none; }
+.section-head { display: flex; align-items: center; gap: 4px; padding: 6px 6px 2px 8px; font: 12px var(--font); color: #333; cursor: default; }
+.section-head .tri { font-size: 10px; color: #666; width: 10px; }
+
+.splitter { flex: none; width: 4px; cursor: col-resize; }
+.center { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.editor { flex: 1; position: relative; overflow: auto; min-height: 0; background: #e6e6e6; outline: none; }
+.editor .canvas { margin: 0 auto; }
+.editor .stage { box-shadow: 0 0 0 1px #c6c6c6, 0 2px 6px rgba(0,0,0,.12); }
+.editor .ime { position: absolute; width: 1px; height: 1px; opacity: 0; border: 0; padding: 0; resize: none; overflow: hidden; z-index: -1; left: 0; top: 0; }
+
+/* The slide's shapes: only painted parts and text frames catch the mouse (PowerPoint's hit test). */
+.slide { user-select: none; -webkit-user-select: none; }
+.slide .shp { pointer-events: none; }
+.slide .shp svg path { pointer-events: visiblePainted; }
+.slide .shp > img, .slide .shp .tbl, .slide .shp > div > img, .slide .shp-pic > div { pointer-events: auto; }
+.slide .shp .txt { pointer-events: auto; }
+.slide .shp-sp:not(.ph):not(.tb) .txt { pointer-events: auto; }
+.slide .txt .para { margin: 0; }
+.slide .txt mark.tsel { background: rgba(0, 0, 0, 0.18); color: inherit; }
+.slide .ph-empty { outline: calc(1px / var(--s, 1)) dashed #9a9a9a; outline-offset: 0; }
+.slide .prompt { opacity: 1; }
+.editor .caret { position: absolute; background: #000; pointer-events: none; z-index: 5; }
+.editor .caret.off { visibility: hidden; }
+.editor .cm { display: inline; }
+
+/* Selection frames and handles (in screen pixels, over the slide). */
+.overlay { z-index: 2; }
+.overlay .frame { position: absolute; box-sizing: border-box; outline: 1px solid #7a7a7a; pointer-events: none; }
+.overlay .frame.editing { outline: 1px dashed #7a7a7a; }
+.overlay .frame.line { outline: none; }
+.overlay .edge { position: absolute; pointer-events: auto; cursor: move; }
+.overlay .edge-t { left: 0; right: 0; top: -4px; height: 7px; }
+.overlay .edge-b { left: 0; right: 0; bottom: -4px; height: 7px; }
+.overlay .edge-l { top: 0; bottom: 0; left: -4px; width: 7px; }
+.overlay .edge-r { top: 0; bottom: 0; right: -4px; width: 7px; }
+.overlay .handle { position: absolute; width: 9px; height: 9px; margin: -5px 0 0 -5px; border: 1px solid #6f6f6f; border-radius: 50%; background: #fff; pointer-events: auto; box-sizing: border-box; }
+.overlay .h-rot { left: 50%; top: -24px; width: 18px; height: 18px; margin: -9px 0 0 -9px; border: 0; background: transparent; color: #555; cursor: grab; display: flex; align-items: center; justify-content: center; }
+.overlay .h-rot svg { background: #fff; border-radius: 50%; }
+.overlay .marquee { position: absolute; border: 1px solid #7a7a7a; background: rgba(120, 120, 120, 0.08); }
+.overlay .ghost { position: absolute; border: 1px dashed #555; }
+.overlay .guide { position: absolute; border-left: 1px dashed #d24726; border-top: 1px dashed #d24726; }
+body.painting .editor { cursor: copy; }
+
+.notes-wrap { flex: none; height: 74px; border-top: 1px solid #d0d0d0; background: #fff; display: flex; }
+.notes-wrap[hidden] { display: none; }
+.notes { flex: 1; resize: none; border: 0; outline: none; padding: 8px 12px; font: 16px "Calibri", Carlito, sans-serif; color: #000; }
+.notes::placeholder { color: #707070; }
+
+/* Galleries */
+.gal-head { font: 600 12px var(--font); color: #333; padding: 6px 10px 4px; background: #f3f3f3; }
+.layout-gallery, .theme-gallery { max-height: 560px; overflow-y: auto; padding-bottom: 6px; }
+.layout-grid { display: grid; grid-template-columns: repeat(3, auto); gap: 6px 10px; padding: 8px 10px; }
+.layout-item { display: flex; flex-direction: column; align-items: center; gap: 4px; border: 1px solid transparent; background: none; padding: 4px; font: 11px var(--font); white-space: pre-line; text-align: center; max-width: 124px; }
+.layout-item:hover { border-color: #c6c6c6; background: #f3f3f3; }
+.layout-thumb { position: relative; overflow: hidden; border: 1px solid #c6c6c6; background: #fff; }
+.theme-label { position: absolute; left: 6px; bottom: 4px; font: 600 16px "Calibri Light", Calibri, sans-serif; }
+.shape-gallery-wrap { max-height: 560px; overflow-y: auto; width: 340px; }
+.shape-gallery { display: grid; grid-template-columns: repeat(12, 26px); gap: 1px; padding: 2px 8px 6px; color: #444; }
+.shape-gallery button { width: 26px; height: 26px; border: 1px solid transparent; background: none; padding: 2px; display: flex; align-items: center; justify-content: center; }
+.shape-gallery button:hover { border-color: #c6c6c6; background: #f3f3f3; }
+.table-popup { padding-bottom: 4px; }
+.table-grid { display: grid; grid-template-columns: repeat(10, 18px); gap: 2px; padding: 6px 10px; }
+.tg-cell { width: 18px; height: 18px; border: 1px solid #b8b8b8; background: #fff; box-sizing: border-box; }
+.tg-cell.on { border-color: #d24726; background: #fbe3dc; }
+.fx-gallery { max-height: 520px; overflow-y: auto; width: 560px; }
+.fx-row { display: flex; flex-wrap: wrap; gap: 2px; padding: 4px 8px; }
+.fx-item { width: 64px; height: 58px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; background: none; border: 1px solid transparent; font: 11px var(--font); color: #333; }
+.fx-item:hover { border-color: #c6c6c6; background: #f3f3f3; }
+.fx-entr .icon { color: #2e8b2e; } .fx-emph .icon { color: #c9a400; } .fx-exit .icon { color: #c0392b; }
+.sel-pane { min-width: 240px; display: flex; flex-direction: column; gap: 1px; }
+.sel-pane-row { padding: 3px 6px; cursor: default; }
+.sel-pane-row:hover { background: #f0f0f0; }
+.sel-pane-row.on { background: #dbe8f6; }
+.hf-dialog label { display: block; margin: 4px 0; }
+.form { display: flex; flex-direction: column; gap: 6px; min-width: 280px; }
+
+/* Foliensortierung */
+.sorter { flex: 1; overflow: auto; outline: none; background: var(--chrome, #f3f3f3); }
+.sorter[hidden] { display: none; }
+.sorter-grid { display: flex; flex-wrap: wrap; gap: 26px 34px; padding: 22px 30px; align-content: flex-start; }
+.sorter-section { flex: 0 0 100%; font: 600 13px var(--font); color: #333; }
+.sorter-item { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
+.sorter-thumb { position: relative; overflow: hidden; background: #fff; border: 1px solid #c8c8c8; }
+.sorter-item.selected .sorter-thumb { outline: 3px solid #e8a1a4; }
+.sorter-item.current .sorter-thumb { outline: 3px solid var(--accent-text, #b3141b); }
+.sorter-num { font: 12px var(--font); color: #444; }
+body[data-view="sorter"] .center { display: none; }
+
+/* Bildschirmpräsentation */
+.show { position: fixed; inset: 0; z-index: 1000; background: #000; outline: none; cursor: default; overflow: hidden; }
+.show.reading { top: 32px; }
+.show-stage { position: absolute; overflow: hidden; }
+.show-stage > .slide { position: absolute !important; left: 0; top: 0; }
+.show-ink { position: absolute; pointer-events: none; overflow: hidden; }
+.show[data-tool="pen"], .show[data-tool="highlighter"] { cursor: crosshair; }
+.show[data-tool="laser"] { cursor: none; }
+.show-laser { position: fixed; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; background: radial-gradient(circle, #ff3b30 0 40%, rgba(255, 59, 48, .35) 60%, transparent 70%); pointer-events: none; z-index: 2; }
+.show-blank { position: absolute; inset: 0; z-index: 3; }
+.show-end { position: absolute; inset: 0; color: #fff; font: 14px var(--font); padding: 12px 16px; background: #000; }
+.show-all { position: absolute; inset: 0; z-index: 5; background: #222; overflow: auto; display: flex; flex-wrap: wrap; gap: 20px; padding: 30px; align-content: flex-start; }
+.show-all-item { background: none; border: 2px solid transparent; color: #ddd; display: flex; flex-direction: column; gap: 4px; padding: 2px; }
+.show-all-item:hover { border-color: #ed1c24; }
+.show.presenter { background: #1f1f1f; }
+.presenter-ui { position: absolute; inset: 0; pointer-events: none; color: #eee; font: 14px var(--font); }
+.presenter-top { position: absolute; left: 16px; top: 14px; font: 22px var(--font); white-space: pre; }
+.presenter-next { position: absolute; left: 62%; top: 56px; display: flex; flex-direction: column; gap: 6px; }
+.presenter-label { font-size: 13px; color: #bbb; }
+.presenter-notes { position: absolute; left: 62%; right: 16px; top: 330px; bottom: 60px; overflow: auto; font: 20px "Calibri", Carlito, sans-serif; white-space: pre-wrap; pointer-events: auto; }
+.presenter-nav { position: absolute; left: 16px; bottom: 18px; font-size: 14px; }
+
+/* Printing: the slides one per page. */
+#print-root { display: none; }
+body.printing #print-root { display: block; position: fixed; left: 0; top: 0; z-index: -1; }
+@media print {
+  body.printing > *:not(#print-root) { display: none !important; }
+  body.printing #print-root { position: static; z-index: auto; }
+  .print-page { break-after: page; page-break-after: always; }
+}

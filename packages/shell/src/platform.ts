@@ -39,13 +39,13 @@ export interface ThesaurusResult {
 
 export interface Platform {
   readonly kind: "tauri" | "browser";
-  /** Öffnen: RaabeWrite opens .docx, RaabeCalc .xlsx and .csv. */
-  openFileDialog(kind?: "docx" | "xlsx"): Promise<string | null>;
+  /** Öffnen: RaabeWrite opens .docx, RaabeCalc .xlsx and .csv, RaabePresent .pptx. */
+  openFileDialog(kind?: "docx" | "xlsx" | "pptx"): Promise<string | null>;
   /** Chooses a picture file (Einfügen > Bilder > Dieses Gerät). */
   openImageDialog(): Promise<string | null>;
   /** Chooses a file of the given kinds (Entwurf > Designs > Nach Designs suchen …). */
   openAnyDialog?(title: string, filters: { name: string; extensions: string[] }[]): Promise<string | null>;
-  saveFileDialog(defaultName: string, kind: "docx" | "pdf" | "xlsx" | "csv"): Promise<string | null>;
+  saveFileDialog(defaultName: string, kind: "docx" | "pdf" | "xlsx" | "csv" | "pptx"): Promise<string | null>;
   /** Chooses where to save a file of the given kinds (Als Grafik speichern …). */
   saveAnyDialog?(title: string, defaultName: string, filters: { name: string; extensions: string[] }[]): Promise<string | null>;
   readFile(path: string): Promise<Uint8Array>;

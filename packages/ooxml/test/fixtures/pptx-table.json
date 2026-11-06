@@ -1,0 +1,232 @@
+{
+ "built_by": "PowerPoint 16.0 build 20326",
+ "date": "2026-11-06",
+ "design_file": "Office 2013 - 2022 Theme.thmx",
+ "slide_size": {
+  "pt": [
+   960.0,
+   540.0
+  ],
+  "emu": [
+   12192000,
+   6858000
+  ],
+  "size_type": 7
+ },
+ "design": "Office 2013 – 2022-Design",
+ "fonts": {
+  "major": "Calibri Light",
+  "minor": "Calibri"
+ },
+ "layouts": [
+  "Titelfolie",
+  "Titel und Inhalt",
+  "Abschnitts-\nüberschrift",
+  "Zwei Inhalte",
+  "Vergleich",
+  "Nur Titel",
+  "Leer",
+  "Inhalt mit Überschrift",
+  "Bild mit Überschrift",
+  "Titel und vertikaler Text",
+  "Vertikaler Titel und Text"
+ ],
+ "slides": [
+  {
+   "index": 1,
+   "id": 256,
+   "layout": "TitleOnly",
+   "custom_layout": "Nur Titel",
+   "section": 1,
+   "shapes": [
+    {
+     "name": "Title 1",
+     "id": 2,
+     "type": "Placeholder",
+     "pt": [
+      66.0,
+      28.75,
+      828.0,
+      104.375
+     ],
+     "emu": [
+      838200,
+      365125,
+      10515600,
+      1325563
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 1,
+     "placeholder": "Title",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Tabelle mit der Standardformatvorlage",
+      "paragraphs": [
+       {
+        "text": "Tabelle mit der Standardformatvorlage",
+        "level": 1,
+        "font": "Calibri Light",
+        "size": 44.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 37,
+        "left": 73.2,
+        "top": 57.18,
+        "width": 680.9,
+        "height": 47.52
+       }
+      ]
+     }
+    },
+    {
+     "name": "Table 2",
+     "id": 3,
+     "type": "Table",
+     "pt": [
+      66.0,
+      150.0,
+      828.0,
+      200.0
+     ],
+     "emu": [
+      838200,
+      1905000,
+      10515600,
+      2540000
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 2,
+     "table": {
+      "rows": 4,
+      "cols": 3,
+      "style": "Mittlere Formatvorlage 2 - Akzent 1",
+      "col_widths": [
+       276.0,
+       276.0,
+       276.0
+      ],
+      "row_heights": [
+       50.0,
+       50.0,
+       50.0,
+       50.0
+      ],
+      "cells": [
+       [
+        "Spalte 1",
+        "Spalte 2",
+        "Spalte 3"
+       ],
+       [
+        "Zeile 1, Zelle 1",
+        "Zeile 1, Zelle 2",
+        "Zeile 1, Zelle 3"
+       ],
+       [
+        "Zeile 2, Zelle 1",
+        "Zeile 2, Zelle 2",
+        "Zeile 2, Zelle 3"
+       ],
+       [
+        "Zeile 3, Zelle 1",
+        "Zeile 3, Zelle 2",
+        "Eine längere Zelle, die umbricht"
+       ]
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "index": 2,
+   "id": 257,
+   "layout": "Blank",
+   "custom_layout": "Leer",
+   "section": 1,
+   "shapes": [
+    {
+     "name": "Table 1",
+     "id": 2,
+     "type": "Table",
+     "pt": [
+      100.0,
+      100.0,
+      400.0,
+      120.0
+     ],
+     "emu": [
+      1270000,
+      1270000,
+      5080000,
+      1524000
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 1,
+     "table": {
+      "rows": 3,
+      "cols": 2,
+      "style": "Mittlere Formatvorlage 2 - Akzent 1",
+      "col_widths": [
+       200.0,
+       200.0
+      ],
+      "row_heights": [
+       40.0,
+       40.0,
+       40.0
+      ],
+      "cells": [
+       [
+        "Verbundene Kopfzelle",
+        "Verbundene Kopfzelle"
+       ],
+       [
+        "a",
+        "b"
+       ],
+       [
+        "",
+        ""
+       ]
+      ]
+     }
+    }
+   ]
+  }
+ ]
+}

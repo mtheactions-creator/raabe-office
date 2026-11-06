@@ -11,7 +11,7 @@ export function browserPlatform(): Platform {
     openFileDialog: (kind = "docx") => new Promise((resolve) => {
       const input = document.createElement("input");
       input.type = "file";
-      input.accept = kind === "xlsx" ? ".xlsx,.csv" : ".docx";
+      input.accept = kind === "xlsx" ? ".xlsx,.csv" : kind === "pptx" ? ".pptx" : ".docx";
       input.onchange = async () => {
         const f = input.files?.[0];
         if (!f) return resolve(null);

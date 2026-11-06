@@ -1,0 +1,126 @@
+{
+ "built_by": "PowerPoint 16.0 build 20326",
+ "date": "2026-11-06",
+ "design_file": "(PowerPoint's default)",
+ "slide_size": {
+  "pt": [
+   960.0,
+   540.0
+  ],
+  "emu": [
+   12192000,
+   6858000
+  ],
+  "size_type": 7
+ },
+ "design": "Office",
+ "fonts": {
+  "major": "Aptos Display",
+  "minor": "Aptos"
+ },
+ "layouts": [
+  "Titelfolie",
+  "Titel und Inhalt",
+  "Abschnitts-\nüberschrift",
+  "Zwei Inhalte",
+  "Vergleich",
+  "Nur Titel",
+  "Leer",
+  "Inhalt mit Überschrift",
+  "Bild mit Überschrift",
+  "Titel und vertikaler Text",
+  "Vertikaler Titel und Text"
+ ],
+ "slides": [
+  {
+   "index": 1,
+   "id": 256,
+   "layout": "Blank",
+   "custom_layout": "Leer",
+   "section": 1,
+   "shapes": [
+    {
+     "name": "Bild ganz",
+     "id": 3,
+     "type": "Picture",
+     "pt": [
+      60.0,
+      60.0,
+      300.0,
+      225.0
+     ],
+     "emu": [
+      762000,
+      762000,
+      3810000,
+      2857500
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 1,
+     "crop_pt": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "name": "Bild beschnitten",
+     "id": 5,
+     "type": "Picture",
+     "pt": [
+      573.333,
+      100.0,
+      320.0,
+      246.667
+     ],
+     "emu": [
+      7281333,
+      1270000,
+      4064002,
+      3132668
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 2,
+     "crop_pt": [
+      39.999000549316406,
+      29.999250411987305,
+      20.000999450683594,
+      9.99899959564209
+     ]
+    },
+    {
+     "name": "Bild gedreht",
+     "id": 7,
+     "type": "Picture",
+     "pt": [
+      120.0,
+      380.0,
+      200.0,
+      150.0
+     ],
+     "emu": [
+      1524000,
+      4826000,
+      2540000,
+      1905000
+     ],
+     "rotation": 20.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 3,
+     "crop_pt": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    }
+   ]
+  }
+ ]
+}

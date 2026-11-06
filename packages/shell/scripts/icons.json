@@ -409,5 +409,21 @@
   "circle-invalid": "custom:circle-invalid",
   "clear-circles": "custom:clear-circles",
   "quick-analysis": "custom:quick-analysis",
-  "arrow-down": "arrow_down"
+  "arrow-down": "arrow_down",
+  "slide-add": "slide_add",
+  "slide-layout": "slide_layout",
+  "section": "slide_multiple",
+  "slideshow": "slide_play",
+  "slide-hide": "slide_hide",
+  "slide-size": "slide_size",
+  "transition": "slide_transition",
+  "animation": "sparkle",
+  "presenter": "presenter",
+  "laser": "laser_tool",
+  "pen-tool": "pen",
+  "slide-grid": "slide_grid",
+  "slide-text": "slide_text",
+  "slide-record": "slide_record",
+  "slide-settings": "slide_settings",
+  "play": "play"
 }

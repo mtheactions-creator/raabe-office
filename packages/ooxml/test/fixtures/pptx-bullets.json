@@ -1,0 +1,614 @@
+{
+ "built_by": "PowerPoint 16.0 build 20326",
+ "date": "2026-11-06",
+ "design_file": "Office 2013 - 2022 Theme.thmx",
+ "slide_size": {
+  "pt": [
+   960.0,
+   540.0
+  ],
+  "emu": [
+   12192000,
+   6858000
+  ],
+  "size_type": 7
+ },
+ "design": "Office 2013 – 2022-Design",
+ "fonts": {
+  "major": "Calibri Light",
+  "minor": "Calibri"
+ },
+ "layouts": [
+  "Titelfolie",
+  "Titel und Inhalt",
+  "Abschnitts-\nüberschrift",
+  "Zwei Inhalte",
+  "Vergleich",
+  "Nur Titel",
+  "Leer",
+  "Inhalt mit Überschrift",
+  "Bild mit Überschrift",
+  "Titel und vertikaler Text",
+  "Vertikaler Titel und Text"
+ ],
+ "slides": [
+  {
+   "index": 1,
+   "id": 256,
+   "layout": "Object",
+   "custom_layout": "Titel und Inhalt",
+   "section": 1,
+   "shapes": [
+    {
+     "name": "Title 1",
+     "id": 2,
+     "type": "Placeholder",
+     "pt": [
+      66.0,
+      28.75,
+      828.0,
+      104.375
+     ],
+     "emu": [
+      838200,
+      365125,
+      10515600,
+      1325563
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 1,
+     "placeholder": "Title",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Aufzählungsebenen",
+      "paragraphs": [
+       {
+        "text": "Aufzählungsebenen",
+        "level": 1,
+        "font": "Calibri Light",
+        "size": 44.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 17,
+        "left": 73.2,
+        "top": 57.18,
+        "width": 347.47,
+        "height": 47.52
+       }
+      ]
+     }
+    },
+    {
+     "name": "Content Placeholder 2",
+     "id": 3,
+     "type": "Placeholder",
+     "pt": [
+      66.0,
+      143.75,
+      828.0,
+      342.625
+     ],
+     "emu": [
+      838200,
+      1825625,
+      10515600,
+      4351338
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 2,
+     "placeholder": "Object",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Ebene 1\rEbene 2\rEbene 3\rEbene 4\rEbene 5\rWieder Ebene 1",
+      "paragraphs": [
+       {
+        "text": "Ebene 1",
+        "level": 1,
+        "font": "Calibri",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Ebene 2",
+        "level": 2,
+        "font": "Calibri",
+        "size": 24.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Ebene 3",
+        "level": 3,
+        "font": "Calibri",
+        "size": 20.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Ebene 4",
+        "level": 4,
+        "font": "Calibri",
+        "size": 18.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Ebene 5",
+        "level": 5,
+        "font": "Calibri",
+        "size": 18.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Wieder Ebene 1",
+        "level": 1,
+        "font": "Calibri",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 1,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 8,
+        "left": 91.2,
+        "top": 147.35,
+        "width": 97.88,
+        "height": 30.24
+       },
+       {
+        "start": 9,
+        "length": 8,
+        "left": 127.2,
+        "top": 177.59,
+        "width": 83.88,
+        "height": 30.92
+       },
+       {
+        "start": 17,
+        "length": 8,
+        "left": 163.2,
+        "top": 208.51,
+        "width": 69.88,
+        "height": 26.6
+       },
+       {
+        "start": 25,
+        "length": 8,
+        "left": 199.2,
+        "top": 235.11,
+        "width": 63.13,
+        "height": 24.44
+       },
+       {
+        "start": 33,
+        "length": 8,
+        "left": 235.2,
+        "top": 259.55,
+        "width": 63.13,
+        "height": 24.44
+       },
+       {
+        "start": 41,
+        "length": 14,
+        "left": 91.2,
+        "top": 283.99,
+        "width": 181.38,
+        "height": 40.24
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "index": 2,
+   "id": 257,
+   "layout": "TwoObjects",
+   "custom_layout": "Zwei Inhalte",
+   "section": 1,
+   "shapes": [
+    {
+     "name": "Title 1",
+     "id": 2,
+     "type": "Placeholder",
+     "pt": [
+      66.0,
+      28.75,
+      828.0,
+      104.375
+     ],
+     "emu": [
+      838200,
+      365125,
+      10515600,
+      1325563
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 1,
+     "placeholder": "Title",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Nummerierung und ohne Aufzählungszeichen",
+      "paragraphs": [
+       {
+        "text": "Nummerierung und ohne Aufzählungszeichen",
+        "level": 1,
+        "font": "Calibri Light",
+        "size": 44.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 40,
+        "left": 73.2,
+        "top": 57.18,
+        "width": 806.71,
+        "height": 47.52
+       }
+      ]
+     }
+    },
+    {
+     "name": "Content Placeholder 2",
+     "id": 3,
+     "type": "Placeholder",
+     "pt": [
+      66.0,
+      143.75,
+      408.0,
+      342.625
+     ],
+     "emu": [
+      838200,
+      1825625,
+      5181600,
+      4351338
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 2,
+     "placeholder": "Object",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Erster Schritt\rZweiter Schritt\rUnterpunkt a\rUnterpunkt b\rDritter Schritt",
+      "paragraphs": [
+       {
+        "text": "Erster Schritt",
+        "level": 1,
+        "font": "Calibri",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 2,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Zweiter Schritt",
+        "level": 1,
+        "font": "Calibri",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 2,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Unterpunkt a",
+        "level": 2,
+        "font": "Calibri",
+        "size": 24.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 2,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Unterpunkt b",
+        "level": 2,
+        "font": "Calibri",
+        "size": 24.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 2,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Dritter Schritt",
+        "level": 1,
+        "font": "Calibri",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": true,
+         "type": 2,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 15,
+        "left": 94.58,
+        "top": 147.35,
+        "width": 153.01,
+        "height": 30.24
+       },
+       {
+        "start": 16,
+        "length": 16,
+        "left": 94.58,
+        "top": 177.59,
+        "width": 172.04,
+        "height": 40.24
+       },
+       {
+        "start": 32,
+        "length": 13,
+        "left": 145.2,
+        "top": 217.83,
+        "width": 134.78,
+        "height": 30.92
+       },
+       {
+        "start": 45,
+        "length": 13,
+        "left": 145.2,
+        "top": 248.75,
+        "width": 135.9,
+        "height": 30.92
+       },
+       {
+        "start": 58,
+        "length": 15,
+        "left": 94.58,
+        "top": 279.67,
+        "width": 155.41,
+        "height": 40.24
+       }
+      ]
+     }
+    },
+    {
+     "name": "Content Placeholder 3",
+     "id": 4,
+     "type": "Placeholder",
+     "pt": [
+      486.0,
+      143.75,
+      408.0,
+      342.625
+     ],
+     "emu": [
+      6172200,
+      1825625,
+      5181600,
+      4351338
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 3,
+     "placeholder": "Object",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Absatz ohne Aufzählungszeichen\rNoch ein Absatz",
+      "paragraphs": [
+       {
+        "text": "Absatz ohne Aufzählungszeichen",
+        "level": 1,
+        "font": "Calibri",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Noch ein Absatz",
+        "level": 1,
+        "font": "Calibri",
+        "size": 28.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 31,
+        "left": 493.2,
+        "top": 147.35,
+        "width": 376.12,
+        "height": 30.24
+       },
+       {
+        "start": 32,
+        "length": 15,
+        "left": 493.2,
+        "top": 177.59,
+        "width": 182.61,
+        "height": 40.24
+       }
+      ]
+     }
+    }
+   ]
+  }
+ ]
+}

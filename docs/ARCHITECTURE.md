@@ -52,7 +52,10 @@ apps/
                       engine.ts (the one door to the sheet engine), dialogs.ts, print.ts,
                       sheetbar.ts, statusbar.ts, clipboard.ts, charts/ (package E),
                       src-tauri/ (only its configuration; the native side is raabe-host)
-  raabe-present/      later
+  raabe-present/      RaabePresent (Step 8, D-070): app.ts (presentations, files, commands, menus), deck.ts
+                      (slides, undo), editor.ts (Normalansicht's slide area: selection levels, handles,
+                      text editing), panel.ts, sorter.ts, show.ts (Bildschirmpräsentation), render/ (slides,
+                      text, tables, charts as DOM), textops.ts / shapeops.ts (edits of the slide XML)
 packages/
   text-engine/        model.ts (paragraphs, runs, objects, tables, sections), styles.ts (style
                       sheet and resolution), fonts.ts (metrics, measuring), layout.ts (line
@@ -70,7 +73,8 @@ packages/
                       icons.gen.ts (generated from Fluent UI System Icons, MIT)
   ooxml/              .docx reading and writing; everything not edited is kept verbatim (D-024);
                       math.ts: LaTeX ↔ OMML and MathML for equations (D-036);
-                      xlsx/: .xlsx reading and writing for RaabeCalc (D-061)
+                      xlsx/: .xlsx reading and writing for RaabeCalc (D-061); pptx/: .pptx as DOM
+                      parts with PowerPoint's inheritance (D-071)
   sheet-engine/       RaabeCalc's workbook model (model.ts, address.ts), formulas (formula/:
                       parsing, German ↔ file form, evaluation, Excel's functions, dependencies),
                       number formats (numfmt.ts), typed input (input.ts), dates, CSV

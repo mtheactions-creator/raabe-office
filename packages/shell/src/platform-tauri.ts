@@ -14,6 +14,7 @@ const FILTERS = {
   csv: [{ name: "CSV (Trennzeichen-getrennt)", extensions: ["csv"] }],
   xlsxOpen: [{ name: "Alle Excel-Dateien", extensions: ["xlsx", "csv"] }],
   pdf: [{ name: "PDF", extensions: ["pdf"] }],
+  pptx: [{ name: "PowerPoint-Präsentation", extensions: ["pptx"] }],
   image: [{ name: "Alle Bilder", extensions: ["png", "jpg", "jpeg", "gif", "bmp", "svg", "webp"] }],
 };
 
@@ -26,7 +27,7 @@ export function tauriPlatform(): Platform {
       return typeof r === "string" ? r : null;
     },
     async openFileDialog(kind = "docx") {
-      const r = await open({ multiple: false, directory: false, filters: kind === "xlsx" ? FILTERS.xlsxOpen : FILTERS.docx, title: "Öffnen" });
+      const r = await open({ multiple: false, directory: false, filters: kind === "xlsx" ? FILTERS.xlsxOpen : kind === "pptx" ? FILTERS.pptx : FILTERS.docx, title: "Öffnen" });
       return typeof r === "string" ? r : null;
     },
     async openImageDialog() {

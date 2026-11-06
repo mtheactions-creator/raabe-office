@@ -17,7 +17,7 @@ owner's explicit go-ahead.
 | 6 | iPad build of RaabeWrite (touch polish, Files app integration, distribution) | |
 | 7 | RaabeCalc (D-061): handles like Excel in every way, the controls first; packages A-F below | in progress since 2026-10-27 (owner's go for the whole step, overnight run): A-E built (D-062, D-063), behaviour catalogue 142/142 |
 | 7b | Diagramm in RaabeWrite: charts with their embedded workbook, drawn by RaabeCalc's chart engine (D-061) | right after Step 7; not to be forgotten |
-| 8 | RaabePresent: proposal below | after Step 7 (D-061) |
+| 8 | RaabePresent (D-070): handles like PowerPoint in every way; packages A-F below | in progress since 2026-11-06 (owner's go for the whole step, overnight run) |
 | 9 | Optional features: read aloud, translator, dictation, ink | |
 
 ## Step 7: RaabeCalc (plan)
@@ -74,10 +74,11 @@ Format pane with axis, series, label, trendline and error-bar options (44/44 set
 Excel, 32/32 of Excel's read by RaabeCalc), Schnelllayout, Farben ändern, Daten auswählen;
 Formen and Textfelder (8/8 both ways with Excel), PivotTables (8/8 computed, 8/8 both ways in the file).
 
-## Step 8: RaabePresent (proposal, not yet agreed)
+## Step 8: RaabePresent
 
-Proposed on 2026-10-27 and set back behind Step 7 (D-061); to be discussed again before it
-starts. Packages as in Step 4b: A. PowerPoint reference side for the harness (fixtures built by
+Agreed with the owner on 2026-11-06 (D-070): everything PowerPoint offers except the cloud, measured
+against PowerPoint (behaviour catalogue, round trips, slide renders, inventory coverage). The original
+proposal of 2026-10-27, kept for reference: Packages as in Step 4b: A. PowerPoint reference side for the harness (fixtures built by
 PowerPoint, line positions through COM, slides exported as PDF/PNG) and `apps/raabe-present`;
 B. reading, drawing and saving .pptx (masters, layouts, themes, placeholders, text bodies with
 autofit and bullet levels, shapes, pictures, tables, equations; everything else verbatim);

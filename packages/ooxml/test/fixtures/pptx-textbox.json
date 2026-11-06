@@ -1,0 +1,422 @@
+{
+ "built_by": "PowerPoint 16.0 build 20326",
+ "date": "2026-11-06",
+ "design_file": "Office 2013 - 2022 Theme.thmx",
+ "slide_size": {
+  "pt": [
+   960.0,
+   540.0
+  ],
+  "emu": [
+   12192000,
+   6858000
+  ],
+  "size_type": 7
+ },
+ "design": "Office 2013 – 2022-Design",
+ "fonts": {
+  "major": "Calibri Light",
+  "minor": "Calibri"
+ },
+ "layouts": [
+  "Titelfolie",
+  "Titel und Inhalt",
+  "Abschnitts-\nüberschrift",
+  "Zwei Inhalte",
+  "Vergleich",
+  "Nur Titel",
+  "Leer",
+  "Inhalt mit Überschrift",
+  "Bild mit Überschrift",
+  "Titel und vertikaler Text",
+  "Vertikaler Titel und Text"
+ ],
+ "slides": [
+  {
+   "index": 1,
+   "id": 256,
+   "layout": "Blank",
+   "custom_layout": "Leer",
+   "section": 1,
+   "shapes": [
+    {
+     "name": "TextBox 1",
+     "id": 2,
+     "type": "TextBox",
+     "pt": [
+      60.0,
+      40.0,
+      300.0,
+      29.081
+     ],
+     "emu": [
+      762000,
+      508000,
+      3810000,
+      369332
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 1,
+     "autoshape": 1,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "ShapeToFitText",
+      "wordwrap": true,
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Ein Textfeld mit einer Zeile",
+      "paragraphs": [
+       {
+        "text": "Ein Textfeld mit einer Zeile",
+        "level": 1,
+        "font": "Calibri",
+        "size": 18.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 28,
+        "left": 67.2,
+        "top": 43.6,
+        "width": 192.97,
+        "height": 21.6
+       }
+      ]
+     }
+    },
+    {
+     "name": "TextBox 2",
+     "id": 3,
+     "type": "TextBox",
+     "pt": [
+      60.0,
+      120.0,
+      320.0,
+      72.703
+     ],
+     "emu": [
+      762000,
+      1524000,
+      4064000,
+      923330
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 2,
+     "autoshape": 1,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "ShapeToFitText",
+      "wordwrap": true,
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Ein Textfeld mit Zeilenumbruch: der Text ist länger als das Feld breit ist und bricht darum um.",
+      "paragraphs": [
+       {
+        "text": "Ein Textfeld mit Zeilenumbruch: der Text ist länger als das Feld breit ist und bricht darum um.",
+        "level": 1,
+        "font": "Calibri",
+        "size": 18.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 41,
+        "left": 67.2,
+        "top": 123.6,
+        "width": 298.4,
+        "height": 21.6
+       },
+       {
+        "start": 42,
+        "length": 45,
+        "left": 67.2,
+        "top": 145.2,
+        "width": 298.29,
+        "height": 21.6
+       },
+       {
+        "start": 87,
+        "length": 9,
+        "left": 67.2,
+        "top": 166.8,
+        "width": 80.76,
+        "height": 21.6
+       }
+      ]
+     }
+    },
+    {
+     "name": "TextBox 3",
+     "id": 4,
+     "type": "TextBox",
+     "pt": [
+      460.0,
+      40.0,
+      420.0,
+      46.045
+     ],
+     "emu": [
+      5842000,
+      508000,
+      5334000,
+      584775
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 3,
+     "autoshape": 1,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "ShapeToFitText",
+      "wordwrap": true,
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Fett, kursiv, farbig und groß",
+      "paragraphs": [
+       {
+        "text": "Fett, kursiv, farbig und groß",
+        "level": 1,
+        "font": "Calibri",
+        "size": 18.0,
+        "bold": true,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 2
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 29,
+        "left": 558.62,
+        "top": 43.6,
+        "width": 222.77,
+        "height": 38.4
+       }
+      ]
+     }
+    },
+    {
+     "name": "TextBox 4",
+     "id": 5,
+     "type": "TextBox",
+     "pt": [
+      460.0,
+      160.0,
+      36.352,
+      300.0
+     ],
+     "emu": [
+      5842000,
+      2032000,
+      461665,
+      3810000
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 4,
+     "autoshape": 1,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "ShapeToFitText",
+      "wordwrap": true,
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Nach oben gedreht",
+      "paragraphs": [
+       {
+        "text": "Nach oben gedreht",
+        "level": 1,
+        "font": "Calibri",
+        "size": 18.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 17,
+        "left": 467.2,
+        "top": 316.07,
+        "width": 21.6,
+        "height": 140.33
+       }
+      ]
+     }
+    },
+    {
+     "name": "TextBox 5",
+     "id": 6,
+     "type": "TextBox",
+     "pt": [
+      560.0,
+      200.0,
+      340.0,
+      200.0
+     ],
+     "emu": [
+      7112000,
+      2540000,
+      4318000,
+      2540000
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 5,
+     "autoshape": 1,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": true,
+      "rgb": 12874308,
+      "weight": 0.75
+     },
+     "text": {
+      "autosize": "None",
+      "wordwrap": true,
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Feste Größe, vertikal zentriert\rZweiter Absatz",
+      "paragraphs": [
+       {
+        "text": "Feste Größe, vertikal zentriert",
+        "level": 1,
+        "font": "Calibri",
+        "size": 18.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       },
+       {
+        "text": "Zweiter Absatz",
+        "level": 1,
+        "font": "Calibri",
+        "size": 18.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 32,
+        "left": 567.2,
+        "top": 278.4,
+        "width": 221.5,
+        "height": 21.6
+       },
+       {
+        "start": 33,
+        "length": 14,
+        "left": 567.2,
+        "top": 300.0,
+        "width": 107.44,
+        "height": 21.6
+       }
+      ]
+     }
+    }
+   ]
+  }
+ ]
+}

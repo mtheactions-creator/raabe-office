@@ -1636,3 +1636,58 @@ that the catalogue only measured what we had thought of. Decided with the owner:
   writers do. `check_pivots.py`: 8/8 RaabeCalc→Excel (Excel's refreshed report equals ours cell by
   cell) and 8/8 Excel→RaabeCalc (fields, values, filters, layout).
 
+## D-070 RaabePresent: everything PowerPoint offers, except the cloud (2026-11-06)
+
+The owner's go for Step 8 (2026-11-06), with their answers to the open questions of the Step 8
+proposal (ROADMAP), given for an overnight run without consulting them:
+
+- **Goal:** RaabePresent feels exactly like PowerPoint 365 in German: the same ribbon, menus, keytips,
+  shortcuts, dialogs, panes and context menus, and the same behaviour for clicking, double-clicking,
+  right-clicking, dragging, typing, selecting, sizing, rotating and snapping.
+- **Scope:** everything PowerPoint offers except the cloud. Left out: OneDrive/SharePoint, Teilen and
+  co-authoring, sign-in, Copilot, Designer/Design-Ideen, Stockbilder, Onlinebilder and -videos, Intelligente
+  Suche, Übersetzen, Live-Untertitel, the add-in store and Cameo. Macros come last.
+- **What we copy:** labels and shortcuts exactly as PowerPoint's; descriptions in our own words; our own
+  icons. PowerPoint's quirks are copied unless they are harmful. PowerPoint's design artwork and stock
+  content are not copied: we ship the Office design as in PowerPoint 2013-2022 (Calibri Light / Calibri and
+  its colours) plus our own designs, including a Raabeschule design in Raabe red. New presentations are
+  16:9 in that Office design. The frontend stays portable for the iPad.
+- **Order:** A reference side and inventory; B the app and .pptx; C Normalansicht; D all tabs, views, Kopf-
+  und Fußzeile, PDF and printing; E Bildschirmpräsentation; F the rest of the inventory, audio and video,
+  macros. No stopping between packages.
+- **Measuring:** a behaviour catalogue with the same real input in PowerPoint and RaabePresent
+  (`catalogue_present.py`), round trips in both directions (`check_present_*.py`), slide renders against
+  PowerPoint's PNG export and UI screenshots, inventory coverage. Lesson from RaabeCalc (D-066): test every
+  object type with every mouse action and every key in every state on purpose.
+- **PowerPoint harness rules** (PowerPoint runs as one process per user): see CLAUDE.md "Harness safety".
+- **Running beside the RaabeCalc session:** this step works in its own worktree branch; shared packages
+  only gain additions (all apps' tests stay green); decision numbers from D-070 on; real input only with
+  the lock file.
+
+### D-071 RaabePresent's building blocks (decided during the run)
+Decided on our own during the overnight run, for the owner to confirm or overturn:
+- **The parts stay XML documents** (`packages/ooxml/src/pptx`): a presentation is its package with every
+  part as PowerPoint wrote it; the parts RaabePresent reads or edits are DOM documents, and edits change
+  only the elements the app understands (place and size, text, fills ...). Whatever it does not know is
+  written back untouched without a separate "raw" model, parts nothing refers to any more (a deleted
+  slide) are left out, unchanged parts are written byte for byte (checked on PowerPoint's fixtures).
+- **Inheritance as PowerPoint's** (`resolve.ts`): a placeholder takes place, geometry, look, text frame
+  and each level's text style from its layout's placeholder (matched by index, then type) and that from
+  the master's (by type); levels start at the master's titleStyle, bodyStyle or otherStyle (date, footer,
+  number), other shapes at the presentation's defaultTextStyle. Our new presentation's eleven layouts sit
+  exactly where PowerPoint's own 2013-2022 blank presentation has them (test), including PowerPoint's
+  German names, also the line break in "Abschnitts-/überschrift".
+- **Undo by snapshots:** each change keeps the XML of the slides it touches before and after (a slide is a
+  few kilobytes); typing merges into one step per word run, as in PowerPoint.
+- **Text frames are laid out by the browser** (line breaking at the frame's width, line height from the
+  font's ascent and descent times the line spacing), with our own caret, selection and keys over the
+  text model. RaabeWrite's Word-measured layout engine is not used for slides yet; slide renders are
+  compared with PowerPoint's own PNG export to see how far the browser's breaks differ.
+- **Prompt texts** of empty placeholders ("Titel durch Klicken hinzufügen", "Untertitel durch Klicken
+  hinzufügen", "Text durch Klicken hinzufügen") are German PowerPoint's labels from memory; to be checked
+  against a screenshot of PowerPoint.
+- **A new shape's style** is PowerPoint 365's (Akzent 1 fill, its 15 % shade as outline, white text), as
+  recorded in Excel for the same Office (D-066).
+- **Designs:** "Office-Design" (2013-2022), and our own "Raabeschule" (Raabe red band and titles), "Klar"
+  and "Tafel" (dark). Applying a design changes the theme's colours and fonts and the master's design
+  shapes and background; placeholders and layouts stay. School material can replace them.

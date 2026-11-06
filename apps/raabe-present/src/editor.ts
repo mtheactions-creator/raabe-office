@@ -1,0 +1,1216 @@
+// Normalansicht's slide area (D-070): PowerPoint's two selection levels (a selected frame with a
+// solid outline, or text being edited with a dashed one and a caret), the eight sizing handles and
+// the rotation handle with their modifier keys, moving with Umschalt (one direction), Strg (copy) and
+// Alt (no snapping), smart guides to other shapes and the slide, the Auswahlrahmen, nudging with the
+// arrow keys and every key of text editing. Typing goes through a hidden textarea (IME included).
+
+import type { Pptx, ShapeView, SlideView } from "@raabe/ooxml";
+import { PptxDom } from "@raabe/ooxml";
+import type { Deck } from "./deck";
+import { renderSlide, type Rendered } from "./render/slide";
+import { AUTOFIT_STEPS, EMU_PX, renderText, textHeight } from "./render/text";
+import { shapeTextRect } from "@raabe/text-engine";
+import * as T from "./textops";
+import * as S from "./shapeops";
+import type { Pos } from "./textops";
+
+const ZWSP = String.fromCharCode(0x200b);
+
+export type Tool = { kind: "shape"; prst: string; head?: boolean; tail?: boolean; freeform?: string } | { kind: "textbox"; vertical?: boolean } | null;
+
+export interface EditorHost {
+  readonly deck: Deck;
+  slidePath(): string | null;
+  slideNumber(): number;
+  image(path: string): string | undefined;
+  selectionChanged(): void;
+  contextMenu(e: MouseEvent, kind: "shape" | "text" | "slide"): void;
+  shortcut(e: KeyboardEvent): boolean;
+  doubleClick(v: ShapeView): boolean;
+  toolDone(): void;
+}
+
+interface TextState {
+  id: number;
+  caret: Pos;
+  anchor: Pos;
+  /** Formatting set at a caret for the text typed next (Strg+Umschalt+F with nothing selected). */
+  pending: Element | null;
+  goalX?: number;
+}
+
+type Handle = "nw" | "n" | "ne" | "e" | "se" | "s" | "sw" | "w" | "rot";
+
+const HANDLE_POS: Record<Exclude<Handle, "rot">, [number, number]> = { nw: [0, 0], n: [0.5, 0], ne: [1, 0], e: [1, 0.5], se: [1, 1], s: [0.5, 1], sw: [0, 1], w: [0, 0.5] };
+const CURSORS: Record<string, string> = { nw: "nwse-resize", se: "nwse-resize", ne: "nesw-resize", sw: "nesw-resize", n: "ns-resize", s: "ns-resize", e: "ew-resize", w: "ew-resize" };
+/** Smart guides snap within this many screen pixels (PowerPoint's distance, estimated). */
+const SNAP_PX = 5;
+
+export class SlideEditor {
+  readonly el: HTMLElement;
+  private canvas: HTMLElement;
+  private stage: HTMLElement;
+  private overlay: HTMLElement;
+  readonly input: HTMLTextAreaElement;
+  view: SlideView | null = null;
+  private rendered: Rendered | null = null;
+  /** Selected shapes (ids); several with Umschalt/Strg. */
+  sel: number[] = [];
+  text: TextState | null = null;
+  tool: Tool = null;
+  zoom = 100;
+  fit = true;
+  /** Autofit steps found while editing, by shape id. */
+  private fits = new Map<number, { fontScale: number; lnSpcReduction: number }>();
+  private blinkTimer = 0;
+  /** Smart guides are on (Ansicht > Raster und Führungslinien). */
+  smartGuides = true;
+  snapToGrid = false;
+  gridSpacing = 72008;
+  showGrid = false;
+  showGuides = false;
+  private composing = false;
+
+  constructor(readonly host: EditorHost) {
+    this.el = h("div", "editor");
+    this.canvas = h("div", "canvas");
+    this.stage = h("div", "stage");
+    this.overlay = h("div", "overlay");
+    this.canvas.append(this.stage, this.overlay);
+    this.el.append(this.canvas);
+    this.input = document.createElement("textarea");
+    this.input.className = "ime";
+    this.input.setAttribute("aria-label", "Folie");
+    this.input.spellcheck = false;
+    this.el.append(this.input);
+    this.el.addEventListener("mousedown", (e) => this.onDown(e));
+    this.el.addEventListener("dblclick", (e) => this.onDouble(e));
+    this.el.addEventListener("contextmenu", (e) => this.onContext(e));
+    this.el.addEventListener("mousemove", (e) => this.hover(e));
+    this.input.addEventListener("keydown", (e) => this.onKey(e));
+    this.input.addEventListener("compositionstart", () => { this.composing = true; });
+    this.input.addEventListener("compositionend", () => { this.composing = false; this.flushInput(); });
+    this.input.addEventListener("input", () => { if (!this.composing) this.flushInput(); });
+    this.input.addEventListener("paste", (e) => e.preventDefault());
+    new ResizeObserver(() => { if (this.fit) this.fitZoom(); else this.layout(); }).observe(this.el);
+  }
+
+  get deck(): Deck { return this.host.deck; }
+  get pptx(): Pptx { return this.host.deck.pptx; }
+  get path(): string | null { return this.host.slidePath(); }
+  get scale(): number { return this.zoom / 100; }
+
+  focus(): void { this.input.focus({ preventScroll: true }); }
+
+  // ----- drawing -----------------------------------------------------------------------------------
+
+  /** Draws the slide again (after any change) with the selection and caret. */
+  render(): void {
+    const path = this.path;
+    if (!path) { this.stage.replaceChildren(); this.overlay.replaceChildren(); this.view = null; this.rendered = null; return; }
+    this.view = this.deck.view(path);
+    // Drop selected ids that no longer exist (undo, delete).
+    const all = new Set(flat(this.view.shapes).map((s) => s.id));
+    this.sel = this.sel.filter((id) => all.has(id));
+    if (this.text && !all.has(this.text.id)) this.text = null;
+    const sel = this.text ? { id: this.text.id, sel: T.cmpPos(this.text.caret, this.text.anchor) ? { from: T.minPos(this.text.caret, this.text.anchor), to: T.maxPos(this.text.caret, this.text.anchor) } : null } : null;
+    this.rendered = renderSlide(this.view, this.pptx.slideSize, { editing: true, slideNumber: this.host.slideNumber(), image: (p) => this.host.image(p), selection: sel, fits: this.fits, pptx: this.pptx });
+    if (this.showGrid) this.rendered.el.append(this.gridLayer());
+    this.stage.replaceChildren(this.rendered.el);
+    this.layout();
+    this.drawOverlay();
+    this.placeCaret();
+  }
+
+  private gridLayer(): HTMLElement {
+    const size = this.pptx.slideSize;
+    const g = h("div", "grid-layer");
+    const step = this.gridSpacing / EMU_PX;
+    g.style.cssText = `position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(circle, #808080 0.6px, transparent 0.8px);background-size:${step}px ${step}px;background-position:${(size.cx / EMU_PX / 2) % step}px ${(size.cy / EMU_PX / 2) % step}px`;
+    return g;
+  }
+
+  fitZoom(): void {
+    const size = this.pptx.slideSize;
+    const w = size.cx / EMU_PX, hh = size.cy / EMU_PX;
+    const r = this.el.getBoundingClientRect();
+    if (!r.width || !r.height) return;
+    // PowerPoint leaves a margin around the slide when it fits it to the window.
+    const z = Math.min((r.width - 48) / w, (r.height - 32) / hh) * 100;
+    this.zoom = Math.max(10, Math.floor(z));
+    this.layout();
+    this.drawOverlay();
+  }
+
+  setZoom(z: number): void {
+    this.fit = false;
+    this.zoom = Math.max(10, Math.min(400, Math.round(z)));
+    this.layout();
+    this.drawOverlay();
+    this.placeCaret();
+  }
+
+  private layout(): void {
+    const size = this.pptx.slideSize;
+    const w = (size.cx / EMU_PX) * this.scale, hh = (size.cy / EMU_PX) * this.scale;
+    const r = this.el.getBoundingClientRect();
+    const padX = Math.max(24, (r.width - w) / 2), padY = Math.max(16, (r.height - hh) / 2);
+    this.canvas.style.cssText = `position:relative;width:${w + padX * 2}px;height:${hh + padY * 2}px`;
+    this.stage.style.cssText = `position:absolute;left:${padX}px;top:${padY}px;transform:scale(${this.scale});transform-origin:0 0;--s:${this.scale}`;
+    this.overlay.style.cssText = `position:absolute;left:${padX}px;top:${padY}px;width:${w}px;height:${hh}px;pointer-events:none`;
+  }
+
+  /** The shape view of an id (members of groups included). */
+  shapeView(id: number): ShapeView | undefined {
+    return this.view ? flat(this.view.shapes).find((s) => s.id === id) : undefined;
+  }
+
+  get selectedViews(): ShapeView[] {
+    return this.sel.map((id) => this.shapeView(id)).filter((v): v is ShapeView => !!v);
+  }
+
+  private frameEl(v: ShapeView, editing: boolean, primary: boolean): HTMLElement {
+    const s = this.scale;
+    const f = h("div", `frame${editing ? " editing" : ""}${v.kind === "cxnSp" ? " line" : ""}`);
+    f.style.cssText = `left:${(v.x / EMU_PX) * s}px;top:${(v.y / EMU_PX) * s}px;width:${(v.w / EMU_PX) * s}px;height:${(v.h / EMU_PX) * s}px;transform:rotate(${v.rot}deg)`;
+    f.dataset.id = String(v.id);
+    // The outline itself can be grabbed to move the shape (PowerPoint's four-headed arrow).
+    for (const side of ["t", "r", "b", "l"]) { const b = h("div", `edge edge-${side}`); b.dataset.edge = side; f.append(b); }
+    if (!primary && !editing) return f;
+    if (v.kind === "cxnSp") {
+      for (const k of ["nw", "se"] as const) f.append(this.handle(k, v));
+    } else {
+      for (const k of Object.keys(HANDLE_POS) as Exclude<Handle, "rot">[]) {
+        if ((v.w / EMU_PX) * s < 16 && (k === "n" || k === "s")) continue;
+        if ((v.h / EMU_PX) * s < 16 && (k === "e" || k === "w")) continue;
+        f.append(this.handle(k, v));
+      }
+      if (v.kind !== "graphicFrame" || v.frame !== "table") f.append(this.handle("rot", v));
+    }
+    return f;
+  }
+
+  private handle(k: Handle, v: ShapeView): HTMLElement {
+    const el = h("div", `handle h-${k}`);
+    el.dataset.handle = k;
+    el.dataset.id = String(v.id);
+    if (k === "rot") el.innerHTML = '<svg viewBox="0 0 16 16" width="16" height="16"><path d="M12.6 5.2A5.5 5.5 0 1 0 13.5 9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M13.9 1.8v4.3H9.6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>';
+    else {
+      const [px, py] = HANDLE_POS[k];
+      el.style.left = `${px * 100}%`;
+      el.style.top = `${py * 100}%`;
+      // The pointer follows the shape's rotation (PowerPoint turns its sizing pointers too).
+      el.style.cursor = rotatedCursor(k, v.rot);
+    }
+    return el;
+  }
+
+  drawOverlay(): void {
+    this.overlay.replaceChildren();
+    if (!this.view) return;
+    const views = this.selectedViews;
+    views.forEach((v, i) => this.overlay.append(this.frameEl(v, this.text?.id === v.id, i === 0 || views.length > 1)));
+  }
+
+  // ----- caret -----------------------------------------------------------------------------------------
+
+  private textEl(id: number): HTMLElement | null {
+    return (this.rendered?.shapes.get(id)?.querySelector(":scope > .txt") as HTMLElement | null) ?? null;
+  }
+
+  /** Local position (in the text frame, unscaled px) and height of a text position. */
+  caretBox(id: number, pos: Pos): { x: number; y: number; h: number } | null {
+    const txt = this.textEl(id);
+    if (!txt) return null;
+    const para = txt.querySelector(`.para[data-p="${pos.p}"]`) as HTMLElement | null;
+    if (!para) return null;
+    const spans = Array.from(para.querySelectorAll(":scope > [data-o]")) as HTMLElement[];
+    let target: HTMLElement | null = null, local = 0;
+    for (const sp of spans) {
+      const o = Number(sp.dataset.o);
+      const len = sp.classList.contains("end") || sp.classList.contains("prompt") ? 0 : (sp.textContent ?? "").length;
+      if (o <= pos.o && pos.o <= o + len) {
+        // At a boundary the caret stays with the text before (not after a line break).
+        if (target && pos.o === o && !target.classList.contains("br")) break;
+        target = sp; local = pos.o - o;
+        if (pos.o < o + len) break;
+      }
+    }
+    target ??= spans[spans.length - 1] ?? null;
+    if (!target) return null;
+    if (target.classList.contains("prompt")) local = 0;
+    const marker = document.createElement("span");
+    marker.textContent = ZWSP;
+    marker.className = "cm";
+    let placed = false;
+    if (!target.classList.contains("end") && !target.classList.contains("prompt") && !target.classList.contains("br")) {
+      const walker = document.createTreeWalker(target, NodeFilter.SHOW_TEXT);
+      let n: Node | null, acc = 0;
+      while ((n = walker.nextNode())) {
+        const t = n as Text;
+        if (local <= acc + t.length) {
+          const rest = t.splitText(local - acc);
+          rest.parentNode!.insertBefore(marker, rest);
+          placed = true;
+          break;
+        }
+        acc += t.length;
+      }
+    }
+    if (!placed) {
+      if (target.classList.contains("br") && local > 0) target.after(marker);
+      else target.prepend(marker);
+    }
+    let x = 0, y = 0, el: HTMLElement | null = marker;
+    while (el && el !== txt) { x += el.offsetLeft; y += el.offsetTop; el = el.offsetParent as HTMLElement | null; }
+    const hh = marker.offsetHeight;
+    const parent = marker.parentNode as HTMLElement;
+    marker.remove();
+    parent.normalize();
+    return { x, y, h: hh };
+  }
+
+  private placeCaret(): void {
+    clearInterval(this.blinkTimer);
+    this.el.querySelectorAll(".caret").forEach((c) => c.remove());
+    const t = this.text;
+    if (!t || T.cmpPos(t.caret, t.anchor) !== 0) { this.placeInput(null); return; }
+    const box = this.caretBox(t.id, t.caret);
+    const txt = this.textEl(t.id);
+    if (!box || !txt) return;
+    const c = h("div", "caret");
+    c.style.cssText = `left:${box.x}px;top:${box.y}px;height:${box.h}px;width:${Math.max(1, 1 / this.scale)}px`;
+    txt.append(c);
+    this.blinkTimer = window.setInterval(() => c.classList.toggle("off"), 530);
+    this.placeInput(c);
+  }
+
+  /** The hidden textarea sits at the caret so the IME window opens there. */
+  private placeInput(caret: HTMLElement | null): void {
+    const r = (caret ?? this.stage).getBoundingClientRect(), er = this.el.getBoundingClientRect();
+    this.input.style.left = `${r.left - er.left + this.el.scrollLeft}px`;
+    this.input.style.top = `${r.top - er.top + this.el.scrollTop}px`;
+  }
+
+  /** The client point of a local point in a text frame (through all transforms). */
+  private localToClient(id: number, x: number, y: number): { x: number; y: number } | null {
+    const txt = this.textEl(id);
+    if (!txt) return null;
+    const probe = h("div", "probe");
+    probe.style.cssText = `position:absolute;left:${x}px;top:${y}px;width:0;height:0`;
+    txt.append(probe);
+    const r = probe.getBoundingClientRect();
+    probe.remove();
+    return { x: r.left, y: r.top };
+  }
+
+  /** The text position at a client point inside shape `id`'s text. */
+  posAt(id: number, cx: number, cy: number): Pos | null {
+    const txt = this.textEl(id);
+    if (!txt) return null;
+    const range = document.caretRangeFromPoint?.(cx, cy);
+    const paras = this.textBody(id) ? T.paras(this.textBody(id)!) : [];
+    if (!range || !txt.contains(range.startContainer)) {
+      // Above the text: its start; below or beside: the nearest paragraph's end.
+      const r = txt.getBoundingClientRect();
+      if (cy < r.top + 2) return { p: 0, o: 0 };
+      return T.endPos(this.textBody(id)!);
+    }
+    let node: Node | null = range.startContainer;
+    let off = range.startOffset;
+    const spanOf = (n: Node | null) => (n instanceof HTMLElement ? n : n?.parentElement)?.closest("[data-o]") as HTMLElement | null;
+    let span = spanOf(node);
+    const para = (node instanceof HTMLElement ? node : node?.parentElement)?.closest(".para") as HTMLElement | null;
+    if (!para) return T.endPos(this.textBody(id)!);
+    const p = Number(para.dataset.p);
+    if (!span) {
+      // In the paragraph's box but between spans: the child at the offset.
+      const kids = Array.from(para.childNodes);
+      const k = kids[Math.min(off, kids.length - 1)] as HTMLElement | undefined;
+      span = k?.closest?.("[data-o]") as HTMLElement | null;
+      node = null; off = 0;
+      if (!span) return { p, o: off };
+    }
+    const base = Number(span.dataset.o);
+    if (span.classList.contains("end") || span.classList.contains("prompt") || span.classList.contains("bullet")) return { p, o: span.classList.contains("bullet") ? 0 : base };
+    if (span.classList.contains("br")) return { p, o: base + (off > 0 ? 1 : 0) };
+    let acc = 0;
+    if (node && node.nodeType === Node.TEXT_NODE) {
+      const walker = document.createTreeWalker(span, NodeFilter.SHOW_TEXT);
+      let n: Node | null;
+      while ((n = walker.nextNode()) && n !== node) acc += (n as Text).length;
+      acc += off;
+    } else acc = off > 0 ? (span.textContent ?? "").length : 0;
+    const max = paras[p] ? T.paraLength(paras[p]) : 0;
+    return { p, o: Math.min(max, base + acc) };
+  }
+
+  // ----- the model ----------------------------------------------------------------------------------------
+
+  private get doc(): Document | null { return this.path ? this.pptx.doc(this.path) : null; }
+
+  shapeEl(id: number): Element | undefined {
+    const d = this.doc;
+    return d ? S.findShape(S.treeOf(d), id) : undefined;
+  }
+
+  textBody(id: number): Element | undefined {
+    const el = this.shapeEl(id);
+    return el ? S.txBodyOf(el) : undefined;
+  }
+
+  /** Changes the current slide in one undo step and draws it again. */
+  edit(label: string, fn: () => void, merge?: string): void {
+    const path = this.path;
+    if (!path) return;
+    this.deck.change(label, [path], fn, merge);
+    if (this.text) this.updateAutofit(this.text.id);
+    this.render();
+    this.host.selectionChanged();
+  }
+
+  // ----- selection ------------------------------------------------------------------------------------------
+
+  select(ids: number[]): void {
+    this.endText();
+    this.sel = ids;
+    this.render();
+    this.host.selectionChanged();
+  }
+
+  clear(): void {
+    this.endText();
+    this.sel = [];
+    this.render();
+    this.host.selectionChanged();
+  }
+
+  /** Text editing of shape `id`, the caret at `pos` (end when missing), or all text selected. */
+  enterText(id: number, pos?: Pos | "all"): void {
+    const el = this.shapeEl(id);
+    if (!el) return;
+    if (!S.txBodyOf(el)) {
+      if (el.localName !== "sp") return;
+      this.deck.change("Text", [this.path!], () => { S.ensureTxBody(el); });
+    }
+    const body = S.txBodyOf(el)!;
+    const end = T.endPos(body);
+    const caret = pos === "all" || !pos ? end : pos;
+    const anchor = pos === "all" ? { p: 0, o: 0 } : caret;
+    this.sel = [id];
+    this.text = { id, caret, anchor, pending: null };
+    this.deck.breakMerge();
+    this.render();
+    this.host.selectionChanged();
+  }
+
+  /** Leaves text editing; the frame stays selected (Esc) unless `deselect`. */
+  endText(): void {
+    if (!this.text) return;
+    this.text = null;
+    this.deck.breakMerge();
+  }
+
+  get mode(): "none" | "frame" | "text" {
+    return this.text ? "text" : this.sel.length ? "frame" : "none";
+  }
+
+  // ----- mouse ------------------------------------------------------------------------------------------------
+
+  /** Client point → slide coordinates in EMU. */
+  toSlide(cx: number, cy: number): { x: number; y: number } {
+    const r = this.overlay.getBoundingClientRect();
+    return { x: ((cx - r.left) / this.scale) * EMU_PX, y: ((cy - r.top) / this.scale) * EMU_PX };
+  }
+
+  /** The top-level shape (or, inside a selected group, the member) under a client point. */
+  private hit(e: MouseEvent): { v: ShapeView; text: boolean } | null {
+    const t = document.elementFromPoint(e.clientX, e.clientY) as HTMLElement | null;
+    if (!t || !this.stage.contains(t)) return null;
+    let shp = t.closest(".shp") as HTMLElement | null;
+    if (!shp) return null;
+    // Climb to the outermost shape unless its group is selected (then its member).
+    let top = shp;
+    for (let p = shp.parentElement?.closest(".shp") as HTMLElement | null; p; p = p.parentElement?.closest(".shp") as HTMLElement | null) {
+      if (this.sel.includes(Number(p.dataset.id)) || (this.text && Number(p.dataset.id) === this.text.id)) break;
+      top = p;
+    }
+    shp = top;
+    const v = this.shapeView(Number(shp.dataset.id));
+    if (!v) return null;
+    const inText = !!t.closest(".txt") && (t.closest(".shp") === shp);
+    return { v, text: inText };
+  }
+
+  private onDown(e: MouseEvent): void {
+    if (e.button === 2) return;
+    if (e.button !== 0) return;
+    const target = e.target as HTMLElement;
+    e.preventDefault();
+    this.focus();
+    if (this.tool) { this.drawTool(e); return; }
+    const handle = target.closest(".handle") as HTMLElement | null;
+    if (handle) { this.dragHandle(e, handle.dataset.handle as Handle, Number(handle.dataset.id)); return; }
+    const edge = target.closest(".edge") as HTMLElement | null;
+    if (edge) {
+      const id = Number((edge.parentElement as HTMLElement).dataset.id);
+      this.endText();
+      if (!this.sel.includes(id)) this.sel = [id];
+      this.render();
+      this.host.selectionChanged();
+      this.dragMove(e, false);
+      return;
+    }
+    const hit = this.hit(e);
+    if (!hit) {
+      if (!e.shiftKey && !e.ctrlKey) this.clear();
+      this.marquee(e);
+      return;
+    }
+    const { v } = hit;
+    // Clicks in the text being edited move the caret or select.
+    if (this.text && this.text.id === v.id && hit.text) {
+      const pos = this.posAt(v.id, e.clientX, e.clientY);
+      if (pos) {
+        if (e.shiftKey) this.text.caret = pos;
+        else { this.text.caret = pos; this.text.anchor = pos; }
+        this.text.goalX = undefined;
+        this.deck.breakMerge();
+        if (e.detail === 3) this.selectParagraph();
+        else this.render();
+        this.host.selectionChanged();
+        this.dragText(e);
+      }
+      return;
+    }
+    const multi = e.shiftKey || e.ctrlKey;
+    const wasSelected = this.sel.includes(v.id);
+    if (!multi && !wasSelected) { this.endText(); this.sel = [v.id]; this.render(); this.host.selectionChanged(); }
+    if (multi && !wasSelected) { this.endText(); this.sel = [...this.sel, v.id]; this.render(); this.host.selectionChanged(); }
+    const textCapable = !!v.text || v.kind === "sp";
+    const enterText = hit.text && textCapable && (v.ph || v.textBox || !!(v.text && !v.text.empty) || v.kind === "sp");
+    const start = { x: e.clientX, y: e.clientY };
+    let moved = false;
+    const move = (m: MouseEvent) => {
+      if (moved) return;
+      if (Math.hypot(m.clientX - start.x, m.clientY - start.y) < 4) return;
+      moved = true;
+      window.removeEventListener("mousemove", move);
+      window.removeEventListener("mouseup", up);
+      this.endText();
+      this.render();
+      this.dragMove(e, true, m);
+    };
+    const up = () => {
+      window.removeEventListener("mousemove", move);
+      window.removeEventListener("mouseup", up);
+      if (moved) return;
+      if (multi && wasSelected) { this.sel = this.sel.filter((x) => x !== v.id); this.render(); this.host.selectionChanged(); return; }
+      if (!multi && enterText && v.kind !== "grpSp") {
+        const pos = v.text && !v.text.empty ? this.posAt(v.id, start.x, start.y) : { p: 0, o: 0 };
+        this.enterText(v.id, pos ?? undefined);
+      }
+    };
+    window.addEventListener("mousemove", move);
+    window.addEventListener("mouseup", up);
+  }
+
+  private dragText(_e: MouseEvent): void {
+    const id = this.text!.id;
+    const move = (m: MouseEvent) => {
+      if (!this.text || this.text.id !== id) return;
+      const pos = this.posAt(id, m.clientX, m.clientY);
+      if (pos && T.cmpPos(pos, this.text.caret)) { this.text.caret = pos; this.render(); }
+    };
+    const up = () => { window.removeEventListener("mousemove", move); window.removeEventListener("mouseup", up); this.host.selectionChanged(); };
+    window.addEventListener("mousemove", move);
+    window.addEventListener("mouseup", up);
+  }
+
+  private onDouble(e: MouseEvent): void {
+    const hit = this.hit(e);
+    if (!hit) return;
+    const v = hit.v;
+    if (this.host.doubleClick(v)) return;
+    if (!v.text && v.kind !== "sp") return;
+    const body = this.textBody(v.id);
+    const pos = this.posAt(v.id, e.clientX, e.clientY) ?? { p: 0, o: 0 };
+    if (!this.text || this.text.id !== v.id) this.enterText(v.id, pos);
+    if (!body || !this.text) return;
+    const p = T.paras(body)[pos.p];
+    if (!p) return;
+    const w = T.wordSelection(p, pos.o);
+    this.text.anchor = { p: pos.p, o: w.from };
+    this.text.caret = { p: pos.p, o: w.to };
+    this.render();
+    this.host.selectionChanged();
+  }
+
+  private selectParagraph(): void {
+    if (!this.text) return;
+    const body = this.textBody(this.text.id)!;
+    const p = this.text.caret.p;
+    this.text.anchor = { p, o: 0 };
+    this.text.caret = { p, o: T.paraLength(T.paras(body)[p]) };
+    this.render();
+  }
+
+  private onContext(e: MouseEvent): void {
+    e.preventDefault();
+    this.focus();
+    const hit = this.hit(e);
+    if (!hit) {
+      if (!this.text) { this.sel = []; this.render(); this.host.selectionChanged(); }
+      this.host.contextMenu(e, "slide");
+      return;
+    }
+    if (this.text && this.text.id === hit.v.id) {
+      // A right-click outside the selected text puts the caret there first.
+      const pos = this.posAt(hit.v.id, e.clientX, e.clientY);
+      const t = this.text;
+      const inSel = pos && T.cmpPos(T.minPos(t.caret, t.anchor), pos) <= 0 && T.cmpPos(pos, T.maxPos(t.caret, t.anchor)) <= 0;
+      if (pos && !inSel) { t.caret = pos; t.anchor = pos; this.render(); }
+      this.host.contextMenu(e, "text");
+      return;
+    }
+    if (!this.sel.includes(hit.v.id)) { this.endText(); this.sel = [hit.v.id]; this.render(); this.host.selectionChanged(); }
+    this.host.contextMenu(e, "shape");
+  }
+
+  private hover(e: MouseEvent): void {
+    if (e.buttons) return;
+    const t = e.target as HTMLElement;
+    if (this.tool) { this.el.style.cursor = "crosshair"; return; }
+    if (t.closest(".handle") || t.closest(".edge")) { this.el.style.cursor = ""; return; }
+    const hit = this.hit(e);
+    let cursor = "default";
+    if (hit) {
+      const textish = hit.text && (hit.v.ph || hit.v.textBox || (this.text?.id === hit.v.id));
+      cursor = textish ? "text" : "move";
+    }
+    this.el.style.cursor = cursor;
+  }
+
+  /** Auswahlrahmen: shapes completely inside the rectangle are selected. */
+  private marquee(e: MouseEvent): void {
+    const start = this.toSlide(e.clientX, e.clientY);
+    const box = h("div", "marquee");
+    let shown = false;
+    const move = (m: MouseEvent) => {
+      const p = this.toSlide(m.clientX, m.clientY);
+      const x = Math.min(start.x, p.x), y = Math.min(start.y, p.y), w = Math.abs(p.x - start.x), hh = Math.abs(p.y - start.y);
+      if (!shown && Math.hypot(m.clientX - e.clientX, m.clientY - e.clientY) < 3) return;
+      if (!shown) { this.overlay.append(box); shown = true; }
+      const s = this.scale / EMU_PX;
+      box.style.cssText = `left:${x * s}px;top:${y * s}px;width:${w * s}px;height:${hh * s}px`;
+    };
+    const up = (m: MouseEvent) => {
+      window.removeEventListener("mousemove", move);
+      window.removeEventListener("mouseup", up);
+      box.remove();
+      if (!shown || !this.view) return;
+      const p = this.toSlide(m.clientX, m.clientY);
+      const x0 = Math.min(start.x, p.x), y0 = Math.min(start.y, p.y), x1 = Math.max(start.x, p.x), y1 = Math.max(start.y, p.y);
+      const inside = this.view.shapes.filter((s) => !s.hidden && s.x >= x0 && s.y >= y0 && s.x + s.w <= x1 && s.y + s.h <= y1).map((s) => s.id);
+      const ids = e.shiftKey || e.ctrlKey ? [...new Set([...this.sel, ...inside])] : inside;
+      this.select(ids);
+    };
+    window.addEventListener("mousemove", move);
+    window.addEventListener("mouseup", up);
+  }
+
+  // ----- moving -------------------------------------------------------------------------------------------------
+
+  /** Guide lines for a moving box: snaps to the slide's and other shapes' edges and centres. */
+  private snap(box: { x: number; y: number; w: number; h: number }, skip: Set<number>, noSnap: boolean): { dx: number; dy: number; lines: { x?: number; y?: number; from: number; to: number }[] } {
+    const lines: { x?: number; y?: number; from: number; to: number }[] = [];
+    if (!this.view || noSnap || !this.smartGuides) return { dx: 0, dy: 0, lines };
+    const size = this.pptx.slideSize;
+    const tol = (SNAP_PX / this.scale) * EMU_PX;
+    const others = this.view.shapes.filter((s) => !skip.has(s.id) && !s.hidden);
+    const xs: { v: number; from: number; to: number }[] = [{ v: 0, from: 0, to: size.cy }, { v: size.cx / 2, from: 0, to: size.cy }, { v: size.cx, from: 0, to: size.cy }];
+    const ys: { v: number; from: number; to: number }[] = [{ v: 0, from: 0, to: size.cx }, { v: size.cy / 2, from: 0, to: size.cx }, { v: size.cy, from: 0, to: size.cx }];
+    for (const o of others) {
+      for (const v of [o.x, o.x + o.w / 2, o.x + o.w]) xs.push({ v, from: Math.min(o.y, box.y), to: Math.max(o.y + o.h, box.y + box.h) });
+      for (const v of [o.y, o.y + o.h / 2, o.y + o.h]) ys.push({ v, from: Math.min(o.x, box.x), to: Math.max(o.x + o.w, box.x + box.w) });
+    }
+    const best = (cands: { v: number; from: number; to: number }[], mine: number[]) => {
+      let hit: { d: number; c: { v: number; from: number; to: number } } | null = null;
+      for (const c of cands) for (const m of mine) { const d = c.v - m; if (Math.abs(d) <= tol && (!hit || Math.abs(d) < Math.abs(hit.d))) hit = { d, c }; }
+      return hit;
+    };
+    const bx = best(xs, [box.x, box.x + box.w / 2, box.x + box.w]);
+    const by = best(ys, [box.y, box.y + box.h / 2, box.y + box.h]);
+    if (bx) lines.push({ x: bx.c.v, from: bx.c.from, to: bx.c.to });
+    if (by) lines.push({ y: by.c.v, from: by.c.from, to: by.c.to });
+    return { dx: bx?.d ?? 0, dy: by?.d ?? 0, lines };
+  }
+
+  private drawGuides(lines: { x?: number; y?: number; from: number; to: number }[]): void {
+    this.overlay.querySelectorAll(".guide").forEach((g) => g.remove());
+    const s = this.scale / EMU_PX;
+    for (const l of lines) {
+      const g = h("div", "guide");
+      if (l.x !== undefined) g.style.cssText = `left:${l.x * s}px;top:${l.from * s}px;width:0;height:${(l.to - l.from) * s}px`;
+      else g.style.cssText = `top:${l.y! * s}px;left:${l.from * s}px;height:0;width:${(l.to - l.from) * s}px`;
+      this.overlay.append(g);
+    }
+  }
+
+  /** Drags the selected shapes; Umschalt keeps one direction, Strg copies, Alt switches snapping off. */
+  private dragMove(e: MouseEvent, started: boolean, first?: MouseEvent): void {
+    const views = this.selectedViews;
+    if (!views.length) return;
+    const start = this.toSlide(e.clientX, e.clientY);
+    const box = union(views);
+    const skip = new Set(views.map((v) => v.id));
+    let dx = 0, dy = 0, copy = false;
+    const els = views.map((v) => this.rendered?.shapes.get(v.id)).filter((x): x is HTMLElement => !!x);
+    const frames = Array.from(this.overlay.querySelectorAll(".frame")) as HTMLElement[];
+    const move = (m: MouseEvent) => {
+      const p = this.toSlide(m.clientX, m.clientY);
+      dx = p.x - start.x; dy = p.y - start.y;
+      if (m.shiftKey) { if (Math.abs(dx) > Math.abs(dy)) dy = 0; else dx = 0; }
+      const snapped = this.snap({ x: box.x + dx, y: box.y + dy, w: box.w, h: box.h }, skip, m.altKey);
+      if (!m.shiftKey || dy === 0) dx += snapped.dx;
+      if (!m.shiftKey || dx === 0) dy += snapped.dy;
+      if (this.snapToGrid && !m.altKey && !snapped.lines.length) {
+        dx = Math.round((box.x + dx) / this.gridSpacing) * this.gridSpacing - box.x;
+        dy = Math.round((box.y + dy) / this.gridSpacing) * this.gridSpacing - box.y;
+      }
+      this.drawGuides(snapped.lines);
+      copy = m.ctrlKey;
+      const tx = (dx / EMU_PX), ty = (dy / EMU_PX);
+      for (const el of els) { el.style.translate = `${tx}px ${ty}px`; el.style.opacity = copy ? "0.6" : ""; }
+      for (const f of frames) f.style.translate = `${tx * this.scale}px ${ty * this.scale}px`;
+      this.el.style.cursor = copy ? "copy" : "move";
+    };
+    const up = () => {
+      window.removeEventListener("mousemove", move);
+      window.removeEventListener("mouseup", up);
+      this.drawGuides([]);
+      this.el.style.cursor = "";
+      if (!dx && !dy) { this.render(); return; }
+      if (copy) this.copyMoved(views, dx, dy);
+      else this.edit("Verschieben", () => { for (const v of views) this.moveShape(v, dx, dy); });
+    };
+    window.addEventListener("mousemove", move);
+    window.addEventListener("mouseup", up);
+    if (started && first) move(first);
+  }
+
+  /** Moves one shape (also a group member, through the group's child coordinates). */
+  moveShape(v: ShapeView, dx: number, dy: number): void {
+    const el = this.shapeEl(v.id);
+    if (!el) return;
+    const g = this.groupOf(v.id);
+    const k = g ? this.groupScale(g) : { sx: 1, sy: 1 };
+    const own = this.ownXfrm(el, v);
+    S.setXfrm(el, { x: own.x + dx / k.sx, y: own.y + dy / k.sy, w: own.w, h: own.h });
+  }
+
+  /** The shape's xfrm in its own coordinates (for placeholders: the inherited one). */
+  private ownXfrm(el: Element, v: ShapeView): S.Xfrm {
+    const x = el.localName === "graphicFrame" ? PptxDom.kid(el, "xfrm") : PptxDom.at(el, `${el.localName === "grpSp" ? "grpSpPr" : "spPr"}/xfrm`);
+    const off = PptxDom.kid(x, "off"), ext = PptxDom.kid(x, "ext");
+    if (off && ext) return { x: PptxDom.num(off, "x") ?? 0, y: PptxDom.num(off, "y") ?? 0, w: PptxDom.num(ext, "cx") ?? 0, h: PptxDom.num(ext, "cy") ?? 0, rot: v.rot, flipH: v.flipH, flipV: v.flipV };
+    return { x: v.x, y: v.y, w: v.w, h: v.h, rot: v.rot, flipH: v.flipH, flipV: v.flipV };
+  }
+
+  private groupOf(id: number): Element | null {
+    const el = this.shapeEl(id);
+    const p = el?.parentElement;
+    return p && p.localName === "grpSp" ? p : null;
+  }
+
+  private groupScale(g: Element): { sx: number; sy: number } {
+    const x = PptxDom.at(g, "grpSpPr/xfrm");
+    const ext = PptxDom.kid(x, "ext"), ce = PptxDom.kid(x, "chExt");
+    const sx = (PptxDom.num(ext, "cx") ?? 1) / (PptxDom.num(ce, "cx") || 1), sy = (PptxDom.num(ext, "cy") ?? 1) / (PptxDom.num(ce, "cy") || 1);
+    return { sx: sx || 1, sy: sy || 1 };
+  }
+
+  private copyMoved(views: ShapeView[], dx: number, dy: number): void {
+    const ids: number[] = [];
+    this.edit("Kopieren", () => {
+      const tree = S.treeOf(this.doc!);
+      let next = S.maxId(tree);
+      for (const v of views) {
+        const el = this.shapeEl(v.id);
+        if (!el) continue;
+        const copy = el.cloneNode(true) as Element;
+        S.renumber(copy, () => ++next);
+        tree.append(copy);
+        ids.push(S.shapeId(copy));
+        const own = this.ownXfrm(el, v);
+        S.setXfrm(copy, { x: own.x + dx, y: own.y + dy, w: own.w, h: own.h });
+      }
+    });
+    this.sel = ids;
+    this.render();
+    this.host.selectionChanged();
+  }
+
+  // ----- sizing and turning -------------------------------------------------------------------------------------
+
+  private dragHandle(_e: MouseEvent, k: Handle, id: number): void {
+    const v = this.shapeView(id);
+    if (!v) return;
+    this.endText();
+    const cx = v.x + v.w / 2, cy = v.y + v.h / 2;
+    const el = this.rendered?.shapes.get(id);
+    const frame = this.overlay.querySelector(`.frame[data-id="${id}"]`) as HTMLElement | null;
+    const keepRatio = v.kind === "pic" || (v.el.localName === "graphicFrame" && v.frame === "chart" ? false : !!PptxDom.at(v.el, "nvPicPr/cNvPicPr/picLocks")?.getAttribute("noChangeAspect"));
+    let result: S.Xfrm | null = null;
+    const move = (m: MouseEvent) => {
+      const p = this.toSlide(m.clientX, m.clientY);
+      if (k === "rot") {
+        let ang = (Math.atan2(p.y - cy, p.x - cx) * 180) / Math.PI + 90;
+        if (m.shiftKey) ang = Math.round(ang / 15) * 15;
+        ang = ((ang % 360) + 360) % 360;
+        result = { x: v.x, y: v.y, w: v.w, h: v.h, rot: ang, flipH: v.flipH, flipV: v.flipV };
+      } else result = resize(v, k, p, { shift: m.shiftKey, ctrl: m.ctrlKey, keepRatio: keepRatio && !m.shiftKey ? true : m.shiftKey && (k.length === 2) });
+      const r = result;
+      // Preview: the shape's element and frame take the new box.
+      const s = this.scale;
+      if (el) { el.style.left = `${r.x / EMU_PX}px`; el.style.top = `${r.y / EMU_PX}px`; el.style.width = `${r.w / EMU_PX}px`; el.style.height = `${r.h / EMU_PX}px`; el.style.transform = `rotate(${r.rot}deg)${r.flipH ? " scaleX(-1)" : ""}${r.flipV ? " scaleY(-1)" : ""}`; el.style.opacity = "0.75"; }
+      if (frame) frame.style.cssText = `left:${(r.x / EMU_PX) * s}px;top:${(r.y / EMU_PX) * s}px;width:${(r.w / EMU_PX) * s}px;height:${(r.h / EMU_PX) * s}px;transform:rotate(${r.rot}deg)`;
+    };
+    const up = () => {
+      window.removeEventListener("mousemove", move);
+      window.removeEventListener("mouseup", up);
+      if (!result) { this.render(); return; }
+      const r: S.Xfrm = result;
+      this.edit(k === "rot" ? "Drehen" : "Größe ändern", () => {
+        const sh = this.shapeEl(id);
+        if (!sh) return;
+        const g = this.groupOf(id);
+        if (g) {
+          const gv = this.groupView(g);
+          const sc = this.groupScale(g);
+          const ch = S.groupChildFrame(g)!;
+          S.setXfrm(sh, { x: ch.chOff[0] + (r.x - gv.x) / sc.sx, y: ch.chOff[1] + (r.y - gv.y) / sc.sy, w: r.w / sc.sx, h: r.h / sc.sy, rot: r.rot - gv.rot, flipH: r.flipH, flipV: r.flipV });
+        } else {
+          S.setXfrm(sh, r);
+          if (sh.localName === "grpSp") this.scaleGroup(sh, v, r);
+        }
+        // A sized text box no longer grows sideways with its text: it wraps (PowerPoint).
+        const bp = S.bodyPrOf(sh);
+        if (bp && k !== "rot" && bp.getAttribute("wrap") === "none" && (k === "e" || k === "w" || k.length === 2)) bp.setAttribute("wrap", "square");
+      });
+    };
+    window.addEventListener("mousemove", move);
+    window.addEventListener("mouseup", up);
+  }
+
+  private groupView(g: Element): ShapeView {
+    return this.shapeView(S.shapeId(g))!;
+  }
+
+  /** A sized group keeps its members' child coordinates (chOff/chExt), so they scale with it. */
+  private scaleGroup(_g: Element, _before: ShapeView, _after: S.Xfrm): void {
+    // Nothing to do: chOff/chExt stay, the members' coordinates map onto the new box.
+  }
+
+  // ----- drawing new shapes ------------------------------------------------------------------------------------
+
+  private drawTool(e: MouseEvent): void {
+    const tool = this.tool!;
+    const start = this.toSlide(e.clientX, e.clientY);
+    const ghost = h("div", "ghost");
+    this.overlay.append(ghost);
+    let end = start, dragged = false, shift = false;
+    const move = (m: MouseEvent) => {
+      end = this.toSlide(m.clientX, m.clientY);
+      shift = m.shiftKey;
+      if (Math.hypot(m.clientX - e.clientX, m.clientY - e.clientY) > 3) dragged = true;
+      const b = drawBox(start, end, shift, tool.kind === "shape" && S.isLine(tool.prst));
+      const s = this.scale / EMU_PX;
+      ghost.style.cssText = `left:${b.x * s}px;top:${b.y * s}px;width:${b.w * s}px;height:${b.h * s}px`;
+    };
+    const up = () => {
+      window.removeEventListener("mousemove", move);
+      window.removeEventListener("mouseup", up);
+      ghost.remove();
+      this.tool = null;
+      this.host.toolDone();
+      const line = tool.kind === "shape" && S.isLine(tool.prst);
+      let b = drawBox(start, end, shift, line);
+      // A click: PowerPoint's default size (2,54 cm square for shapes; a growing text box).
+      if (!dragged) b = { x: start.x, y: start.y, w: 914400, h: tool.kind === "textbox" ? 369332 : 914400, rot: 0, flipH: false, flipV: false };
+      let id = 0;
+      this.edit(tool.kind === "textbox" ? "Textfeld" : "Form einfügen", () => {
+        const tree = S.treeOf(this.doc!);
+        id = S.maxId(tree) + 1;
+        const el = tool.kind === "textbox"
+          ? S.newTextBox(this.doc!, id, b.x, b.y, dragged ? b.w : null, 369332)
+          : S.newShape(this.doc!, id, tool.prst, { ...b, rot: 0 });
+        if (tool.kind === "shape" && (tool.head || tool.tail)) {
+          const sp = PptxDom.kid(el, "spPr")!;
+          const ln = PptxDom.make(el.ownerDocument, "a:ln");
+          if (tool.head) ln.append(PptxDom.make(el.ownerDocument, "a:headEnd", { type: "triangle" }));
+          if (tool.tail) ln.append(PptxDom.make(el.ownerDocument, "a:tailEnd", { type: "triangle" }));
+          sp.append(ln);
+        }
+        if (tool.kind === "textbox" && tool.vertical) S.bodyPrOf(el)!.setAttribute("vert", "eaVert");
+        tree.append(el);
+      });
+      if (tool.kind === "textbox") this.enterText(id, { p: 0, o: 0 });
+      else this.select([id]);
+    };
+    window.addEventListener("mousemove", move);
+    window.addEventListener("mouseup", up);
+  }
+
+  // ----- keys ---------------------------------------------------------------------------------------------
+
+  private flushInput(): void {
+    const v = this.input.value;
+    this.input.value = "";
+    if (!v) return;
+    this.typeText(v);
+  }
+
+  /** Typed characters: into the text being edited; with a frame selected they replace its text (PowerPoint). */
+  typeText(v: string): void {
+    const text = v.replace(/\r?\n/g, "\n");
+    if (!this.text) {
+      const id = this.sel[0];
+      const el = id !== undefined ? this.shapeEl(id) : undefined;
+      if (!el || this.sel.length !== 1 || (el.localName !== "sp")) return;
+      this.edit("Eingeben", () => { S.ensureTxBody(el); T.replaceAll(S.txBodyOf(el)!, ""); }, `type:${id}`);
+      this.text = { id, caret: { p: 0, o: 0 }, anchor: { p: 0, o: 0 }, pending: null };
+    }
+    const t = this.text!;
+    const body = this.textBody(t.id);
+    if (!body) return;
+    this.edit("Eingeben", () => {
+      let pos = T.deleteRange(body, t.anchor, t.caret);
+      const parts = text.split("\n");
+      parts.forEach((part, i) => {
+        if (i > 0) pos = T.splitPara(body, pos);
+        if (part) pos = T.insertText(body, pos, part, t.pending);
+      });
+      t.caret = pos; t.anchor = pos; t.goalX = undefined;
+    }, `type:${t.id}`);
+    t.pending = null;
+  }
+
+  private onKey(e: KeyboardEvent): void {
+    if (this.composing || e.isComposing) return;
+    if (this.host.shortcut(e)) { e.preventDefault(); return; }
+    const handled = this.text ? this.textKey(e) : this.frameKey(e);
+    if (handled) e.preventDefault();
+  }
+
+  private frameKey(e: KeyboardEvent): boolean {
+    const k = e.key, ctrl = e.ctrlKey;
+    const views = this.selectedViews;
+    if (k === "Escape") {
+      if (this.tool) { this.tool = null; this.host.toolDone(); return true; }
+      if (this.sel.length) { this.clear(); return true; }
+      return false;
+    }
+    if (k === "Tab" && !ctrl) { this.cycle(e.shiftKey ? -1 : 1); return true; }
+    if (!views.length) return false;
+    if (k.startsWith("Arrow")) {
+      // Arrow keys nudge by the grid spacing, Strg+arrow by one pixel at the zoom (PowerPoint).
+      const step = ctrl ? (1 / this.scale) * EMU_PX : this.gridSpacing;
+      const dx = k === "ArrowLeft" ? -step : k === "ArrowRight" ? step : 0, dy = k === "ArrowUp" ? -step : k === "ArrowDown" ? step : 0;
+      if (e.altKey) { this.rotateBy(k === "ArrowLeft" ? -15 : k === "ArrowRight" ? 15 : 0, ctrl); return true; }
+      this.edit("Verschieben", () => { for (const v of views) this.moveShape(v, dx, dy); }, "nudge");
+      return true;
+    }
+    if (k === "Delete" || k === "Backspace") { this.deleteSelected(); return true; }
+    if ((k === "F2" || k === "Enter") && views.length === 1 && (views[0].text || views[0].kind === "sp")) { this.enterText(views[0].id, "all"); return true; }
+    return false;
+  }
+
+  private rotateBy(deg: number, fine: boolean): void {
+    const d = fine ? Math.sign(deg) : deg;
+    if (!d) return;
+    this.edit("Drehen", () => {
+      for (const v of this.selectedViews) {
+        const el = this.shapeEl(v.id)!;
+        const own = this.ownXfrm(el, v);
+        S.setXfrm(el, { ...own, rot: v.rot + d });
+      }
+    }, "rotate");
+  }
+
+  /** Tab / Umschalt+Tab: the next / previous shape in z-order. */
+  private cycle(dir: 1 | -1): void {
+    if (!this.view) return;
+    const list = this.view.shapes.filter((s) => !s.hidden).map((s) => s.id);
+    if (!list.length) return;
+    const cur = this.sel.length ? list.indexOf(this.sel[this.sel.length - 1]) : -1;
+    const next = cur < 0 ? (dir > 0 ? 0 : list.length - 1) : (cur + dir + list.length) % list.length;
+    this.select([list[next]]);
+  }
+
+  /** Entf on frames: removes them; a placeholder with text loses its text first (PowerPoint). */
+  deleteSelected(): void {
+    const views = this.selectedViews;
+    if (!views.length) return;
+    this.edit("Löschen", () => {
+      for (const v of views) {
+        const el = this.shapeEl(v.id);
+        if (!el) continue;
+        if (v.ph && v.text && !v.text.empty) { T.replaceAll(S.txBodyOf(el)!, ""); continue; }
+        el.remove();
+      }
+    });
+    const keep = views.filter((v) => v.ph && v.text && !v.text.empty).map((v) => v.id);
+    this.sel = keep;
+    this.render();
+    this.host.selectionChanged();
+  }
+
+  private textKey(e: KeyboardEvent): boolean {
+    const t = this.text!;
+    const body = this.textBody(t.id);
+    if (!body) return false;
+    const k = e.key, ctrl = e.ctrlKey && !e.altKey, shift = e.shiftKey;
+    const collapse = (pos: Pos) => { t.caret = pos; if (!shift) t.anchor = pos; this.deck.breakMerge(); this.render(); this.host.selectionChanged(); };
+    const hasSel = T.cmpPos(t.caret, t.anchor) !== 0;
+    const ps = T.paras(body);
+    switch (k) {
+      case "Escape":
+        this.endText();
+        this.render();
+        this.host.selectionChanged();
+        return true;
+      case "F2":
+        this.endText(); this.render(); this.host.selectionChanged(); return true;
+      case "ArrowLeft":
+      case "ArrowRight": {
+        const dir = k === "ArrowLeft" ? -1 : 1;
+        if (!shift && hasSel) { collapse(dir < 0 ? T.minPos(t.caret, t.anchor) : T.maxPos(t.caret, t.anchor)); return true; }
+        let pos = t.caret;
+        if (ctrl) pos = T.wordJump(body, pos, dir);
+        else if (dir < 0) pos = pos.o > 0 ? { p: pos.p, o: pos.o - 1 } : pos.p > 0 ? { p: pos.p - 1, o: T.paraLength(ps[pos.p - 1]) } : pos;
+        else pos = pos.o < T.paraLength(ps[pos.p]) ? { p: pos.p, o: pos.o + 1 } : pos.p + 1 < ps.length ? { p: pos.p + 1, o: 0 } : pos;
+        t.goalX = undefined;
+        collapse(pos);
+        return true;
+      }
+      case "ArrowUp":
+      case "ArrowDown": {
+        if (ctrl) {
+          // Strg+Oben/Unten: start of this / the previous / the next paragraph.
+          const pos = k === "ArrowUp" ? (t.caret.o > 0 ? { p: t.caret.p, o: 0 } : { p: Math.max(0, t.caret.p - 1), o: 0 }) : { p: Math.min(ps.length - 1, t.caret.p + 1), o: t.caret.p + 1 < ps.length ? 0 : T.paraLength(ps[ps.length - 1]) };
+          collapse(pos);
+          return true;
+        }
+        const pos = this.lineMove(t, k === "ArrowUp" ? -1 : 1);
+        collapse(pos);
+        return true;
+      }
+      case "Home":
+      case "End": {
+        if (ctrl) { collapse(k === "Home" ? { p: 0, o: 0 } : T.endPos(body)); return true; }
+        collapse(this.lineEdge(t, k === "Home" ? -1 : 1));
+        return true;
+      }
+      case "Backspace":
+      case "Delete": {
+        let from = t.anchor, to = t.caret;
+        if (!hasSel) {
+          if (k === "Backspace") {
+            if (ctrl) from = T.wordJump(body, t.caret, -1);
+            else if (t.caret.o === 0 && t.caret.p > 0) {
+              // Rücktaste at the start of an indented paragraph lowers its level first (PowerPoint)?
+              // PowerPoint joins the paragraphs.
+              from = { p: t.caret.p - 1, o: T.paraLength(ps[t.caret.p - 1]) };
+            } else if (t.caret.o === 0) return true;
+            else from = { p: t.caret.p, o: t.caret.o - 1 };
+          } else {
+            if (ctrl) to = T.wordJump(body, t.caret, 1);
+            else if (t.caret.o >= T.paraLength(ps[t.caret.p])) { if (t.caret.p + 1 >= ps.length) return true; to = { p: t.caret.p + 1, o: 0 }; }
+            else to = { p: t.caret.p, o: t.caret.o + 1 };
+            from = t.caret;
+          }
+        }
+        this.edit("Löschen", () => { const pos = T.deleteRange(body, from, to); t.caret = pos; t.anchor = pos; }, `del:${t.id}`);
+        return true;
+      }
+      case "Enter": {
+        if (ctrl) return false;
+        this.edit("Eingeben", () => {
+          let pos = T.deleteRange(body, t.anchor, t.caret);
+          pos = shift ? T.insertBreak(body, pos) : T.splitPara(body, pos);
+          t.caret = pos; t.anchor = pos;
+        }, `type:${t.id}`);
+        return true;
+      }
+      case "Tab": {
+        if (ctrl) { this.typeText("\t"); return true; }
+        // At the start of a paragraph (or with several selected) Tab changes the level, else it types a tab.
+        const allSel = hasSel && T.minPos(t.caret, t.anchor).p !== T.maxPos(t.caret, t.anchor).p;
+        if (t.caret.o === 0 && T.cmpPos(t.caret, t.anchor) === 0 || allSel || (shift && !hasSel)) { this.changeLevel(shift ? -1 : 1); return true; }
+        this.typeText("\t");
+        return true;
+      }
+      case "a":
+      case "A":
+        if (ctrl && !shift) { t.anchor = { p: 0, o: 0 }; t.caret = T.endPos(body); this.render(); this.host.selectionChanged(); return true; }
+        return false;
+    }
+    if (e.altKey && shift && (k === "ArrowRight" || k === "ArrowLeft")) { this.changeLevel(k === "ArrowRight" ? 1 : -1); return true; }
+    return false;
+  }
+
+  /** Listenebene erhöhen / verringern for the paragraphs of the selection (0…8). */
+  changeLevel(d: 1 | -1): void {
+    const t = this.text;
+    const id = t?.id ?? this.sel[0];
+    const body = id !== undefined ? this.textBody(id) : undefined;
+    if (!body) return;
+    const from = t ? T.minPos(t.caret, t.anchor).p : 0, to = t ? T.maxPos(t.caret, t.anchor).p : T.paras(body).length - 1;
+    this.edit(d > 0 ? "Listenebene erhöhen" : "Listenebene verringern", () => {
+      T.paraProps(body, from, to, (pPr) => {
+        const lvl = Math.max(0, Math.min(8, Number(pPr.getAttribute("lvl") ?? 0) + d));
+        if (lvl) pPr.setAttribute("lvl", String(lvl)); else pPr.removeAttribute("lvl");
+        // Indents written for the old level go, so the new level's apply.
+        pPr.removeAttribute("marL"); pPr.removeAttribute("indent");
+      });
+    });
+  }
+
+  /** The position one line up or down, keeping the column the caret started in. */
+  private lineMove(t: TextState, dir: -1 | 1): Pos {
+    const box = this.caretBox(t.id, t.caret);
+    const body = this.textBody(t.id)!;
+    if (!box) return t.caret;
+    const x = t.goalX ?? box.x;
+    const ty = dir < 0 ? box.y - box.h * 0.5 : box.y + box.h * 1.5;
+    const pt = this.localToClient(t.id, x, ty);
+    const pos = pt ? this.posAt(t.id, pt.x, pt.y) : null;
+    const keep = t.goalX ?? box.x;
+    let out = pos ?? t.caret;
+    const nb = this.caretBox(t.id, out);
+    if (!pos || (nb && Math.abs(nb.y - box.y) < 1)) out = dir < 0 ? { p: 0, o: 0 } : T.endPos(body);
+    t.goalX = keep;
+    return out;
+  }
+
+  private lineEdge(t: TextState, dir: -1 | 1): Pos {
+    const box = this.caretBox(t.id, t.caret);
+    const txt = this.textEl(t.id);
+    if (!box || !txt) return t.caret;
+    const pt = this.localToClient(t.id, dir < 0 ? -5000 : 5000, box.y + box.h / 2);
+    // caretRangeFromPoint needs a point inside the frame: clamp to its edges.
+    const r = txt.getBoundingClientRect();
+    if (!pt) return t.caret;
+    const cx = Math.max(r.left + 1, Math.min(r.right - 1, pt.x));
+    const own = this.localToClient(t.id, box.x, box.y + box.h / 2)!;
+    const pos = this.posAt(t.id, cx, own.y);
+    return pos ?? t.caret;
+  }
+
+  // ----- Autofit -----------------------------------------------------------------------------------------
+
+  /** After a change of text: PowerPoint's Autofit for "Text bei Überlauf verkleinern", and growing text boxes. */
+  updateAutofit(id: number): void {
+    const v = this.deck.view(this.path!);
+    const sv = flat(v.shapes).find((s) => s.id === id);
+    if (!sv?.text) return;
+    const el = this.shapeEl(id);
+    if (!el) return;
+    const body = sv.text.body;
+    const w = sv.w / EMU_PX, hh = sv.h / EMU_PX;
+    const rect = shapeTextRect(sv.format, { ...sv.info, body: { l: body.l / 12700, t: body.t / 12700, r: body.r / 12700, b: body.b / 12700, anchor: "t", wrap: true, autofit: "none" } }, w, hh);
+    const probe = h("div", "measure");
+    probe.style.cssText = "position:absolute;left:-10000px;top:0;visibility:hidden";
+    document.body.append(probe);
+    try {
+      if (body.autofit === "norm") {
+        let found = AUTOFIT_STEPS[AUTOFIT_STEPS.length - 1];
+        for (const st of AUTOFIT_STEPS) {
+          probe.replaceChildren(renderText(sv.text, rect.w, rect.h, { prompt: false, fit: st }));
+          if (textHeight(probe.firstElementChild as HTMLElement) <= rect.h + 0.5) { found = st; break; }
+        }
+        if (S.setAutofit(el, found)) this.pptx.touch(this.path!);
+      } else if (body.autofit === "shape") {
+        probe.replaceChildren(renderText(sv.text, body.wrap ? rect.w : 100000, 100000, { prompt: false }));
+        const col = probe.querySelector(".txt-col") as HTMLElement;
+        const needH = col.scrollHeight * EMU_PX + body.t + body.b;
+        const own = this.ownXfrm(el, sv);
+        const next: Partial<S.Xfrm> = { x: own.x, y: own.y, w: own.w, h: Math.round(needH) };
+        if (!body.wrap) {
+          const width = Math.ceil(Math.max(...Array.from(col.querySelectorAll(".para")).map((p) => (p as HTMLElement).scrollWidth)) * EMU_PX + body.l + body.r);
+          next.w = width;
+        }
+        if (Math.abs((next.h ?? 0) - own.h) > 1 || Math.abs((next.w ?? 0) - own.w) > 1) S.setXfrm(el, next);
+      }
+    } finally {
+      probe.remove();
+    }
+  }
+}
+
+function h(tag: string, cls: string): HTMLElement {
+  const e = document.createElement(tag);
+  e.className = cls;
+  return e;
+}
+
+export function flat(shapes: ShapeView[]): ShapeView[] {
+  return shapes.flatMap((s) => [s, ...(s.children ? flat(s.children) : [])]);
+}
+
+export function union(views: ShapeView[]): { x: number; y: number; w: number; h: number } {
+  const x0 = Math.min(...views.map((v) => v.x)), y0 = Math.min(...views.map((v) => v.y));
+  const x1 = Math.max(...views.map((v) => v.x + v.w)), y1 = Math.max(...views.map((v) => v.y + v.h));
+  return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 };
+}
+
+function rotatedCursor(k: Exclude<Handle, "rot">, rot: number): string {
+  const order = ["n", "ne", "e", "se", "s", "sw", "w", "nw"];
+  const i = (order.indexOf(k) + Math.round(rot / 45) + 8) % 8;
+  return CURSORS[order[i]];
+}
+
+/** The box of a drag from `a` to `b`: Umschalt keeps it square (lines: in 45° steps). */
+function drawBox(a: { x: number; y: number }, b: { x: number; y: number }, shift: boolean, line: boolean): S.Xfrm {
+  let dx = b.x - a.x, dy = b.y - a.y;
+  if (shift) {
+    if (line) {
+      const ang = Math.round(Math.atan2(dy, dx) / (Math.PI / 4)) * (Math.PI / 4), len = Math.hypot(dx, dy);
+      dx = Math.round(Math.cos(ang) * len); dy = Math.round(Math.sin(ang) * len);
+    } else { const m = Math.max(Math.abs(dx), Math.abs(dy)); dx = Math.sign(dx || 1) * m; dy = Math.sign(dy || 1) * m; }
+  }
+  return { x: Math.min(a.x, a.x + dx), y: Math.min(a.y, a.y + dy), w: Math.abs(dx), h: Math.abs(dy), rot: 0, flipH: line && dx < 0, flipV: line && dy < 0 };
+}
+
+/** A box sized by handle `k` to point `p` (EMU), in the shape's own rotated frame. */
+function resize(v: ShapeView, k: Exclude<Handle, "rot">, p: { x: number; y: number }, o: { shift: boolean; ctrl: boolean; keepRatio: boolean }): S.Xfrm {
+  const rad = (v.rot * Math.PI) / 180, cos = Math.cos(rad), sin = Math.sin(rad);
+  const cx = v.x + v.w / 2, cy = v.y + v.h / 2;
+  // The pointer in the shape's frame (origin at its centre, unrotated).
+  const lx = (p.x - cx) * cos + (p.y - cy) * sin, ly = -(p.x - cx) * sin + (p.y - cy) * cos;
+  let l = -v.w / 2, r = v.w / 2, t = -v.h / 2, b = v.h / 2;
+  if (k.includes("w")) l = lx; if (k.includes("e")) r = lx;
+  if (k.includes("n")) t = ly; if (k.includes("s")) b = ly;
+  if (o.ctrl) {
+    // Strg: from the centre.
+    if (k.includes("w")) r = -l; if (k.includes("e")) l = -r;
+    if (k.includes("n")) b = -t; if (k.includes("s")) t = -b;
+  }
+  let w = r - l, hh = b - t;
+  if (o.keepRatio && v.w && v.h) {
+    const ratio = v.w / v.h;
+    if (k.length === 2) {
+      if (Math.abs(w) / ratio > Math.abs(hh)) hh = Math.sign(hh || 1) * Math.abs(w) / ratio; else w = Math.sign(w || 1) * Math.abs(hh) * ratio;
+      if (k.includes("w")) l = r - w; else r = l + w;
+      if (k.includes("n")) t = b - hh; else b = t + hh;
+      if (o.ctrl) { l = -w / 2; r = w / 2; t = -hh / 2; b = hh / 2; }
+    }
+  }
+  const flipH = (r < l) !== v.flipH, flipV = (b < t) !== v.flipV;
+  const nl = Math.min(l, r), nr = Math.max(l, r), nt = Math.min(t, b), nb = Math.max(t, b);
+  const mx = (nl + nr) / 2, my = (nt + nb) / 2;
+  const ncx = cx + mx * cos - my * sin, ncy = cy + mx * sin + my * cos;
+  const W = nr - nl, H = nb - nt;
+  return { x: ncx - W / 2, y: ncy - H / 2, w: W, h: H, rot: v.rot, flipH: v.kind === "pic" ? v.flipH : flipH, flipV: v.kind === "pic" ? v.flipV : flipV };
+}

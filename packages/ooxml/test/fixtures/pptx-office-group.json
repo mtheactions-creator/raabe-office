@@ -1,0 +1,317 @@
+{
+ "built_by": "PowerPoint 16.0 build 20326",
+ "date": "2026-11-06",
+ "design_file": "(PowerPoint's default)",
+ "slide_size": {
+  "pt": [
+   960.0,
+   540.0
+  ],
+  "emu": [
+   12192000,
+   6858000
+  ],
+  "size_type": 7
+ },
+ "design": "Office",
+ "fonts": {
+  "major": "Aptos Display",
+  "minor": "Aptos"
+ },
+ "layouts": [
+  "Titelfolie",
+  "Titel und Inhalt",
+  "Abschnitts-\nüberschrift",
+  "Zwei Inhalte",
+  "Vergleich",
+  "Nur Titel",
+  "Leer",
+  "Inhalt mit Überschrift",
+  "Bild mit Überschrift",
+  "Titel und vertikaler Text",
+  "Vertikaler Titel und Text"
+ ],
+ "slides": [
+  {
+   "index": 1,
+   "id": 256,
+   "layout": "Blank",
+   "custom_layout": "Leer",
+   "section": 1,
+   "shapes": [
+    {
+     "name": "Gruppe 1",
+     "id": 5,
+     "type": "Group",
+     "pt": [
+      200.0,
+      150.0,
+      410.0,
+      180.0
+     ],
+     "emu": [
+      2540000,
+      1905000,
+      5207000,
+      2286000
+     ],
+     "rotation": 15.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 1,
+     "items": [
+      {
+       "name": "Gruppe Rechteck",
+       "id": 2,
+       "type": "AutoShape",
+       "pt": [
+        211.342,
+        123.846,
+        200.0,
+        120.0
+       ],
+       "emu": [
+        2684048,
+        1572847,
+        2540000,
+        1524000
+       ],
+       "rotation": 15.0,
+       "hflip": false,
+       "vflip": false,
+       "z": 2,
+       "autoshape": 1,
+       "fill": {
+        "visible": true,
+        "rgb": 8544277
+       },
+       "line": {
+        "visible": true,
+        "rgb": 3351556,
+        "weight": 1.5
+       }
+      },
+      {
+       "name": "Gruppe Ellipse",
+       "id": 3,
+       "type": "AutoShape",
+       "pt": [
+        443.153,
+        202.012,
+        160.0,
+        160.0
+       ],
+       "emu": [
+        5628037,
+        2565548,
+        2032000,
+        2032000
+       ],
+       "rotation": 15.0,
+       "hflip": false,
+       "vflip": false,
+       "z": 3,
+       "autoshape": 9,
+       "fill": {
+        "visible": true,
+        "rgb": 8544277
+       },
+       "line": {
+        "visible": true,
+        "rgb": 3351556,
+        "weight": 1.5
+       }
+      },
+      {
+       "name": "Gruppe Text",
+       "id": 4,
+       "type": "TextBox",
+       "pt": [
+        203.604,
+        275.46,
+        200.0,
+        29.081
+       ],
+       "emu": [
+        2585768,
+        3498348,
+        2540000,
+        369332
+       ],
+       "rotation": 15.0,
+       "hflip": false,
+       "vflip": false,
+       "z": 4,
+       "autoshape": 1,
+       "fill": {
+        "visible": false,
+        "rgb": 16777215
+       },
+       "line": {
+        "visible": false,
+        "rgb": 16777215,
+        "weight": null
+       },
+       "text": {
+        "autosize": "ShapeToFitText",
+        "wordwrap": true,
+        "anchor": 1,
+        "margins_pt": [
+         7.199999809265137,
+         3.5999999046325684,
+         7.199999809265137,
+         3.5999999046325684
+        ],
+        "text": "Text in der Gruppe",
+        "paragraphs": [
+         {
+          "text": "Text in der Gruppe",
+          "level": 1,
+          "font": "Aptos",
+          "size": 18.0,
+          "bold": false,
+          "bullet": {
+           "visible": false,
+           "type": 0,
+           "char": 8226
+          },
+          "align": 1
+         }
+        ],
+        "lines": [
+         {
+          "start": 1,
+          "length": 18,
+          "left": 211.21,
+          "top": 255.41,
+          "width": 140.26,
+          "height": 56.95
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "name": "Äußere Gruppe",
+     "id": 10,
+     "type": "Group",
+     "pt": [
+      680.0,
+      380.0,
+      240.0,
+      130.0
+     ],
+     "emu": [
+      8636000,
+      4826000,
+      3048000,
+      1651000
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 5,
+     "items": [
+      {
+       "name": "Außen",
+       "id": 6,
+       "type": "AutoShape",
+       "pt": [
+        680.0,
+        380.0,
+        120.0,
+        80.0
+       ],
+       "emu": [
+        8636000,
+        4826000,
+        1524000,
+        1016000
+       ],
+       "rotation": 0.0,
+       "hflip": false,
+       "vflip": false,
+       "z": 7,
+       "autoshape": 4,
+       "fill": {
+        "visible": true,
+        "rgb": 8544277
+       },
+       "line": {
+        "visible": true,
+        "rgb": 3351556,
+        "weight": 1.5
+       }
+      },
+      {
+       "name": "Außen Dreieck",
+       "id": 7,
+       "type": "AutoShape",
+       "pt": [
+        820.0,
+        380.0,
+        100.0,
+        80.0
+       ],
+       "emu": [
+        10414000,
+        4826000,
+        1270000,
+        1016000
+       ],
+       "rotation": 0.0,
+       "hflip": false,
+       "vflip": false,
+       "z": 8,
+       "autoshape": 7,
+       "adjustments": [
+        0.5
+       ],
+       "fill": {
+        "visible": true,
+        "rgb": 8544277
+       },
+       "line": {
+        "visible": true,
+        "rgb": 3351556,
+        "weight": 1.5
+       }
+      },
+      {
+       "name": "Außen Balken",
+       "id": 9,
+       "type": "AutoShape",
+       "pt": [
+        680.0,
+        470.0,
+        240.0,
+        40.0
+       ],
+       "emu": [
+        8636000,
+        5969000,
+        3048000,
+        508000
+       ],
+       "rotation": 0.0,
+       "hflip": false,
+       "vflip": false,
+       "z": 9,
+       "autoshape": 1,
+       "fill": {
+        "visible": true,
+        "rgb": 8544277
+       },
+       "line": {
+        "visible": true,
+        "rgb": 3351556,
+        "weight": 1.5
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

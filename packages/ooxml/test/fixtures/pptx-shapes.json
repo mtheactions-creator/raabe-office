@@ -1,0 +1,404 @@
+{
+ "built_by": "PowerPoint 16.0 build 20326",
+ "date": "2026-11-06",
+ "design_file": "Office 2013 - 2022 Theme.thmx",
+ "slide_size": {
+  "pt": [
+   960.0,
+   540.0
+  ],
+  "emu": [
+   12192000,
+   6858000
+  ],
+  "size_type": 7
+ },
+ "design": "Office 2013 – 2022-Design",
+ "fonts": {
+  "major": "Calibri Light",
+  "minor": "Calibri"
+ },
+ "layouts": [
+  "Titelfolie",
+  "Titel und Inhalt",
+  "Abschnitts-\nüberschrift",
+  "Zwei Inhalte",
+  "Vergleich",
+  "Nur Titel",
+  "Leer",
+  "Inhalt mit Überschrift",
+  "Bild mit Überschrift",
+  "Titel und vertikaler Text",
+  "Vertikaler Titel und Text"
+ ],
+ "slides": [
+  {
+   "index": 1,
+   "id": 256,
+   "layout": "Blank",
+   "custom_layout": "Leer",
+   "section": 1,
+   "shapes": [
+    {
+     "name": "Rectangle 1",
+     "id": 2,
+     "type": "AutoShape",
+     "pt": [
+      40.0,
+      40.0,
+      200.0,
+      120.0
+     ],
+     "emu": [
+      508000,
+      508000,
+      2540000,
+      1524000
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 1,
+     "autoshape": 1,
+     "fill": {
+      "visible": true,
+      "rgb": 12874308
+     },
+     "line": {
+      "visible": true,
+      "rgb": 5319703,
+      "weight": 1.0
+     },
+     "text": {
+      "autosize": "None",
+      "wordwrap": true,
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Rechteck",
+      "paragraphs": [
+       {
+        "text": "Rechteck",
+        "level": 1,
+        "font": "Calibri",
+        "size": 18.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 2
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 8,
+        "left": 107.03,
+        "top": 89.2,
+        "width": 65.95,
+        "height": 21.6
+       }
+      ]
+     }
+    },
+    {
+     "name": "Rounded Rectangle 2",
+     "id": 3,
+     "type": "AutoShape",
+     "pt": [
+      280.0,
+      40.0,
+      200.0,
+      120.0
+     ],
+     "emu": [
+      3556000,
+      508000,
+      2540000,
+      1524000
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 2,
+     "autoshape": 5,
+     "adjustments": [
+      0.3
+     ],
+     "fill": {
+      "visible": true,
+      "rgb": 4697456
+     },
+     "line": {
+      "visible": true,
+      "rgb": 2316088,
+      "weight": 3.0
+     }
+    },
+    {
+     "name": "Right Arrow 3",
+     "id": 4,
+     "type": "AutoShape",
+     "pt": [
+      520.0,
+      60.0,
+      200.0,
+      80.0
+     ],
+     "emu": [
+      6604000,
+      762000,
+      2540000,
+      1016000
+     ],
+     "rotation": 30.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 3,
+     "autoshape": 33,
+     "adjustments": [
+      0.5,
+      0.5
+     ],
+     "fill": {
+      "visible": true,
+      "rgb": 49407
+     },
+     "line": {
+      "visible": true,
+      "rgb": 5319703,
+      "weight": 1.0
+     }
+    },
+    {
+     "name": "Right Triangle 4",
+     "id": 5,
+     "type": "AutoShape",
+     "pt": [
+      760.0,
+      40.0,
+      140.0,
+      120.0
+     ],
+     "emu": [
+      9652000,
+      508000,
+      1778000,
+      1524000
+     ],
+     "rotation": 0.0,
+     "hflip": true,
+     "vflip": false,
+     "z": 4,
+     "autoshape": 8,
+     "fill": {
+      "visible": true,
+      "rgb": 12874308
+     },
+     "line": {
+      "visible": true,
+      "rgb": 5319703,
+      "weight": 1.0
+     }
+    },
+    {
+     "name": "5-Point Star 5",
+     "id": 6,
+     "type": "AutoShape",
+     "pt": [
+      40.0,
+      220.0,
+      160.0,
+      160.0
+     ],
+     "emu": [
+      508000,
+      2794000,
+      2032000,
+      2032000
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": true,
+     "z": 5,
+     "autoshape": 92,
+     "adjustments": [
+      0.19098,
+      1.05146,
+      1.10557
+     ],
+     "fill": {
+      "visible": true,
+      "rgb": 3243501
+     },
+     "line": {
+      "visible": true,
+      "rgb": 5319703,
+      "weight": 1.0
+     }
+    },
+    {
+     "name": "Oval 6",
+     "id": 7,
+     "type": "AutoShape",
+     "pt": [
+      240.0,
+      220.0,
+      200.0,
+      140.0
+     ],
+     "emu": [
+      3048000,
+      2794000,
+      2540000,
+      1778000
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 6,
+     "autoshape": 9,
+     "fill": {
+      "visible": true,
+      "rgb": 13998939
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "None",
+      "wordwrap": true,
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Ellipse",
+      "paragraphs": [
+       {
+        "text": "Ellipse",
+        "level": 1,
+        "font": "Calibri",
+        "size": 18.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 2
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 7,
+        "left": 316.73,
+        "top": 279.2,
+        "width": 46.54,
+        "height": 21.6
+       }
+      ]
+     }
+    },
+    {
+     "name": "Straight Connector 7",
+     "id": 8,
+     "type": "Line",
+     "pt": [
+      480.0,
+      240.0,
+      220.0,
+      140.0
+     ],
+     "emu": [
+      6096000,
+      3048000,
+      2794000,
+      1778000
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 7
+    },
+    {
+     "name": "Elbow Connector 8",
+     "id": 9,
+     "type": "AutoShape",
+     "pt": [
+      740.0,
+      220.0,
+      160.0,
+      160.0
+     ],
+     "emu": [
+      9398000,
+      2794000,
+      2032000,
+      2032000
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 8,
+     "fill": {
+      "visible": false,
+      "rgb": 0
+     },
+     "line": {
+      "visible": true,
+      "rgb": 0,
+      "weight": 0.5
+     }
+    },
+    {
+     "name": "Rounded Rectangular Callout 9",
+     "id": 10,
+     "type": "AutoShape",
+     "pt": [
+      520.0,
+      420.0,
+      220.0,
+      90.0
+     ],
+     "emu": [
+      6604000,
+      5334000,
+      2794000,
+      1143000
+     ],
+     "rotation": 350.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 9,
+     "autoshape": 106,
+     "adjustments": [
+      -0.20833,
+      0.625,
+      0.16667
+     ],
+     "fill": {
+      "visible": true,
+      "rgb": 12874308
+     },
+     "line": {
+      "visible": true,
+      "rgb": 5319703,
+      "weight": 1.0
+     }
+    }
+   ]
+  }
+ ]
+}

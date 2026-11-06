@@ -1,0 +1,251 @@
+{
+ "built_by": "PowerPoint 16.0 build 20326",
+ "date": "2026-11-06",
+ "design_file": "Office 2013 - 2022 Theme.thmx",
+ "slide_size": {
+  "pt": [
+   960.0,
+   540.0
+  ],
+  "emu": [
+   12192000,
+   6858000
+  ],
+  "size_type": 7
+ },
+ "design": "Office 2013 – 2022-Design",
+ "fonts": {
+  "major": "Calibri Light",
+  "minor": "Calibri"
+ },
+ "layouts": [
+  "Titelfolie",
+  "Titel und Inhalt",
+  "Abschnitts-\nüberschrift",
+  "Zwei Inhalte",
+  "Vergleich",
+  "Nur Titel",
+  "Leer",
+  "Inhalt mit Überschrift",
+  "Bild mit Überschrift",
+  "Titel und vertikaler Text",
+  "Vertikaler Titel und Text"
+ ],
+ "slides": [
+  {
+   "index": 1,
+   "id": 256,
+   "layout": "TitleOnly",
+   "custom_layout": "Nur Titel",
+   "section": 1,
+   "shapes": [
+    {
+     "name": "Title 1",
+     "id": 2,
+     "type": "Placeholder",
+     "pt": [
+      66.0,
+      28.75,
+      828.0,
+      104.375
+     ],
+     "emu": [
+      838200,
+      365125,
+      10515600,
+      1325563
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 1,
+     "placeholder": "Title",
+     "contains": "AutoShape",
+     "autoshape": 138,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "Mixed",
+      "wordwrap": true,
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "Formeln",
+      "paragraphs": [
+       {
+        "text": "Formeln",
+        "level": 1,
+        "font": "Calibri Light",
+        "size": 44.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 7,
+        "left": 73.2,
+        "top": 57.18,
+        "width": 146.86,
+        "height": 47.52
+       }
+      ]
+     }
+    },
+    {
+     "name": "TextBox 2",
+     "id": 3,
+     "type": "TextBox",
+     "pt": [
+      100.0,
+      160.0,
+      600.0,
+      29.081
+     ],
+     "emu": [
+      1270000,
+      2032000,
+      7620000,
+      369332
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 2,
+     "autoshape": 1,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "ShapeToFitText",
+      "wordwrap": true,
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": " 𝑎 2 + 𝑏 2 = 𝑐 2 ",
+      "paragraphs": [
+       {
+        "text": " 𝑎 2 + 𝑏 2 = 𝑐 2 ",
+        "level": 1,
+        "font": "Cambria Math",
+        "size": 18.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 20,
+        "left": 349.95,
+        "top": 163.6,
+        "width": 100.01,
+        "height": 21.6
+       }
+      ]
+     }
+    },
+    {
+     "name": "TextBox 3",
+     "id": 4,
+     "type": "TextBox",
+     "pt": [
+      100.0,
+      280.0,
+      600.0,
+      53.947
+     ],
+     "emu": [
+      1270000,
+      3556000,
+      7620000,
+      685124
+     ],
+     "rotation": 0.0,
+     "hflip": false,
+     "vflip": false,
+     "z": 3,
+     "autoshape": 1,
+     "fill": {
+      "visible": false,
+      "rgb": 16777215
+     },
+     "line": {
+      "visible": false,
+      "rgb": 16777215,
+      "weight": null
+     },
+     "text": {
+      "autosize": "ShapeToFitText",
+      "wordwrap": true,
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "text": "𝑥= −𝑏±   𝑏 2 −4𝑎𝑐  2𝑎 ",
+      "paragraphs": [
+       {
+        "text": "𝑥= −𝑏±   𝑏 2 −4𝑎𝑐  2𝑎 ",
+        "level": 1,
+        "font": "Cambria Math",
+        "size": 18.0,
+        "bold": false,
+        "bullet": {
+         "visible": false,
+         "type": 0,
+         "char": 8226
+        },
+        "align": 1
+       }
+      ],
+      "lines": [
+       {
+        "start": 1,
+        "length": 28,
+        "left": 320.13,
+        "top": 283.6,
+        "width": 159.65,
+        "height": 46.23
+       }
+      ]
+     }
+    }
+   ]
+  }
+ ]
+}
