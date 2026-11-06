@@ -41,7 +41,7 @@ export function colorWord(hex: string): string {
   if (l < 0.1) return "Schwarz";
   if (l > 0.93) return "Weiß";
   const s = d === 0 ? 0 : d / (1 - Math.abs(2 * l - 1));
-  if (s < 0.15) return l < 0.35 ? "Dunkelgrau" : "Grau";
+  if (s < 0.15) return l < 0.35 ? "Dunkelgrau" : l > 0.75 ? "Hellgrau" : "Grau";
   let hue = max === r ? ((g - b) / d) % 6 : max === g ? (b - r) / d + 2 : (r - g) / d + 4;
   hue = (hue * 60 + 360) % 360;
   const dark = l < 0.33;

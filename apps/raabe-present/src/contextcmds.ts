@@ -7,14 +7,14 @@ import { h, showDialog, type Control, type MenuEntry } from "@raabe/shell";
 import { PptxDom, type ShapeView } from "@raabe/ooxml";
 import type { PresentApp } from "./app";
 import { LINE_WEIGHTS } from "./lines";
-import { quickStylesPanel } from "./quickstyles";
+import { colorWord, quickStylesPanel } from "./quickstyles";
 import type { ContextTabHost } from "./contexttabs";
 import * as T from "./textops";
 import * as S from "./shapeops";
 import * as CH from "./chartops";
 import * as TC from "./tablecells";
 
-const { kid, kids, make, num } = PptxDom;
+const { kid, kids, make, num, fragment } = PptxDom;
 
 export function contextHost(app: PresentApp): ContextTabHost {
   const ctx = app.ribbonContext();
@@ -32,10 +32,13 @@ export function contextHost(app: PresentApp): ContextTabHost {
     sizeSpin: (k) => spin(() => sizeText(app, k), (v) => setSize(app, k, cmText(v)), (d) => { const v = app.editor.selectedViews[0]; if (v) setSize(app, k, Math.max(0, (k === "h" ? v.h : v.w) + d * 36000)); },
       k === "h" ? "Formenhöhe:" : "Formenbreite:", k === "h" ? "shape.heightBox" : "shape.widthBox", k === "h" ? "shape-height" : "shape-width", k === "h" ? "H" : "RR"),
     pictureColor: () => pictureColor(app),
-    pictureTransparency: () => [0, 15, 30, 50, 65, 80, 95].map((p) => ({ label: `Transparenz: ${p} %`, run: () => blipEffect(app, "Transparenz", (blip) => { remove(blip, "alphaModFix"); if (p) blip.prepend(make(blip.ownerDocument, "a:alphaModFix", { amt: (100 - p) * 1000 })); }) })),
+    pictureTransparency: () => [0, 15, 30, 50, 65, 80, 95].map((p) => ({ label: `Transparenz: ${p}%`, run: () => blipEffect(app, "Transparenz", (blip) => { remove(blip, "alphaModFix"); if (p) blip.prepend(make(blip.ownerDocument, "a:alphaModFix", { amt: (100 - p) * 1000 })); }) })),
     pictureCorrections: () => {
       const out: MenuEntry[] = [{ heading: "Helligkeit/Kontrast" }];
-      for (const c of [-40, -20, 0, 20, 40]) for (const br of [-40, -20, 0, 20, 40]) out.push({ label: `Helligkeit: ${br > 0 ? "+" : ""}${br} %  Kontrast: ${c > 0 ? "+" : ""}${c} %`, run: () => blipEffect(app, "Korrekturen", (blip) => { remove(blip, "lum"); if (br || c) blip.append(make(blip.ownerDocument, "a:lum", { bright: br * 1000, contrast: c * 1000 })); }) });
+      // PowerPoint's names: "Helligkeit: 0 % (Normal) Kontrast: +20 %".
+      const pct = (v: number) => `${v > 0 ? "+" : ""}${v} %${v === 0 ? " (Normal)" : ""}`;
+      for (const c of [-40, -20, 0, 20, 40]) for (const br of [-40, -20, 0, 20, 40]) out.push({ label: `Helligkeit: ${pct(br)} Kontrast: ${pct(c)}`, run: () => blipEffect(app, "Korrekturen", (blip) => { remove(blip, "lum"); if (br || c) blip.append(make(blip.ownerDocument, "a:lum", { bright: br * 1000, contrast: c * 1000 })); }) });
+      out.push("-", { label: "Bildkorrekturoptionen...", run: () => void app.commands.run("draw.format") });
       return out;
     },
     lineWeights: () => LINE_WEIGHTS.map(([label, w]) => ({ label, run: () => app.setLineWidth(w) })),
@@ -84,13 +87,26 @@ function blipEffect(app: PresentApp, label: string, fn: (blip: Element) => void)
   });
 }
 
+/** Farbe > Neu einfärben as PowerPoint's (names recorded; the theme colours named after the design, as there). */
 function pictureColor(app: PresentApp): MenuEntry[] {
   const clear = (blip: Element) => { for (const n of ["grayscl", "biLevel", "duotone", "clrChange", "lum"]) remove(blip, n); };
+  const set = (xml: string) => blipEffect(app, "Farbe", (b) => { clear(b); for (const x of fragment(b.ownerDocument, xml)) b.append(x); });
+  const colors = app.slidePath() ? app.deck.view(app.slidePath()!).theme.colors : {};
+  const word = (ref: string) => colorWord(colors[ref] ?? "000000");
+  const dark = (ref: string) => `<a:duotone><a:schemeClr val="${ref}"><a:shade val="45000"/><a:satMod val="135000"/></a:schemeClr><a:prstClr val="white"/></a:duotone>`;
+  const light = (ref: string) => `<a:duotone><a:prstClr val="black"/><a:schemeClr val="${ref}"><a:tint val="45000"/><a:satMod val="400000"/></a:schemeClr></a:duotone>`;
+  const accents = [1, 2, 3, 4, 5, 6];
   return [{ heading: "Neu einfärben" },
     { label: "Keine Neueinfärbung", run: () => blipEffect(app, "Farbe", clear) },
-    { label: "Graustufe", run: () => blipEffect(app, "Farbe", (b) => { clear(b); b.append(make(b.ownerDocument, "a:grayscl")); }) },
-    { label: "Schwarzweiß: 50 %", run: () => blipEffect(app, "Farbe", (b) => { clear(b); b.append(make(b.ownerDocument, "a:biLevel", { thresh: 50000 })); }) },
-    { label: "Ausgewaschen", run: () => blipEffect(app, "Farbe", (b) => { clear(b); b.append(make(b.ownerDocument, "a:lum", { bright: 70000, contrast: -70000 })); }) }];
+    { label: "Graustufe", run: () => set("<a:grayscl/>") },
+    { label: "Sepia", run: () => set('<a:duotone><a:prstClr val="black"/><a:srgbClr val="D9C3A5"><a:tint val="50000"/><a:satMod val="180000"/></a:srgbClr></a:duotone>') },
+    { label: "Ausgeblichen", run: () => set('<a:lum bright="70000" contrast="-70000"/>') },
+    ...[25, 50, 75].map((t) => ({ label: `Schwarzweiß: ${t} %`, run: () => set(`<a:biLevel thresh="${t * 1000}"/>`) })),
+    { label: `${word("tx2")}, Textfarbe 2 dunkel`, run: () => set(dark("tx2")) },
+    ...accents.map((n) => ({ label: `${word(`accent${n}`)}, Akzentfarbe ${n} dunkel`, run: () => set(dark(`accent${n}`)) })),
+    { label: `${word("bg2")}, Hintergrundfarbe 2 hell`, run: () => set(light("bg2")) },
+    ...accents.map((n) => ({ label: `${word(`accent${n}`)}, Akzentfarbe ${n} hell`, run: () => set(light(`accent${n}`)) })),
+    "-", { label: "Bildfarboptionen...", run: () => void app.commands.run("draw.format") }];
 }
 
 // ----- tables --------------------------------------------------------------------------------------
