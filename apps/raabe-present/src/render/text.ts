@@ -86,7 +86,7 @@ export function autoNumber(type: string, n: number): string {
 
 /** Text of a field run. */
 function fieldText(r: TextRun, o: TextOptions): string {
-  if (r.fieldType === "slidenum" && o.slideNumber !== undefined) return String(o.slideNumber);
+  if (r.fieldType === "slidenum" && o.slideNumber) return String(o.slideNumber);
   if (r.fieldType?.startsWith("datetime")) return new Date().toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" });
   return r.text;
 }

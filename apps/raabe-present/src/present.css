@@ -90,6 +90,21 @@ body.painting .editor { cursor: copy; }
 .hf-dialog label { display: block; margin: 4px 0; }
 .form { display: flex; flex-direction: column; gap: 6px; min-width: 280px; }
 
+/* Gliederungsansicht and Notizenseite */
+.outline { flex: none; width: 300px; overflow: auto; background: #fff; border-right: 1px solid #d0d0d0; padding: 8px 6px; font: 13px "Calibri", Carlito, sans-serif; }
+.outline[hidden] { display: none; }
+.ol-slide { position: relative; padding: 4px 0 6px 34px; }
+.ol-slide.current { background: #fbeaea; }
+.ol-num { position: absolute; left: 2px; top: 6px; font: 12px var(--font); color: #444; cursor: pointer; }
+.ol-icon { position: absolute; left: 16px; top: 8px; width: 12px; height: 8px; border: 1px solid #777; background: #fff; }
+.ol-para { outline: none; min-height: 1.2em; white-space: pre-wrap; }
+.ol-title { font-weight: bold; font-size: 14px; }
+.notes-page-view { flex: 1; overflow: auto; background: #e6e6e6; display: flex; justify-content: center; padding: 20px; }
+.notes-page-view[hidden] { display: none; }
+.notes-page { width: 560px; height: 747px; background: #fff; box-shadow: 0 0 0 1px #c6c6c6, 0 2px 6px rgba(0,0,0,.12); display: flex; flex-direction: column; align-items: center; padding-top: 70px; gap: 30px; box-sizing: border-box; }
+.notes-page-slide { position: relative; overflow: hidden; border: 1px solid #bfbfbf; }
+.notes-page-text { width: 448px; flex: 1; margin-bottom: 60px; border: 1px dashed #bfbfbf; resize: none; outline: none; font: 12pt "Calibri", Carlito, sans-serif; padding: 4px; }
+
 /* Foliensortierung */
 .sorter { flex: 1; overflow: auto; outline: none; background: var(--chrome, #f3f3f3); }
 .sorter[hidden] { display: none; }

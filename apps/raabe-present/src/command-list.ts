@@ -255,6 +255,17 @@ export const COMMANDS: Command[] = [
   cmd("shape.height", "Höhe", "shape-height"),
   cmd("shape.width", "Breite", "shape-width"),
 
+  cmd("master.insertMaster", "Folienmaster einfügen", "slide-add"),
+  cmd("master.insertLayout", "Layout einfügen", "slide-layout"),
+  cmd("master.delete", "Löschen", "remove"),
+  cmd("master.rename", "Umbenennen", "edit"),
+  cmd("master.preserve", "Erhalten", "pin"),
+  cmd("master.masterLayout", "Masterlayout", "slide-layout"),
+  cmd("master.insertPlaceholder", "Platzhalter einfügen", "placeholder-source"),
+  cmd("master.title", "Titel", "check"),
+  cmd("master.footers", "Fußzeilen", "check"),
+  cmd("master.close", "Masteransicht schließen", "close-x"),
+
   // ----- context menu only ----------------------------------------------------------------------
   cmd("shape.editText", "Text bearbeiten", "edit"),
   cmd("shape.editPoints", "Punkte bearbeiten", "edit-shape"),

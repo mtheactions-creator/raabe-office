@@ -16,6 +16,8 @@ export interface PanelHost {
   panelMenu(e: MouseEvent, onSlide: boolean): void;
   keys(e: KeyboardEvent): boolean;
   focusSlide(): void;
+  /** Folienmaster view: the master and its layouts instead of the slides. */
+  masterPaths(): string[] | null;
 }
 
 export class SlidePanel {
@@ -53,11 +55,17 @@ export class SlidePanel {
 
   get deck(): Deck { return this.host.deck; }
 
+  /** The parts the panel lists: slides, or in the Folienmaster view the master and its layouts. */
+  private paths(): { id: number; path: string }[] {
+    const m = this.host.masterPaths();
+    return m ? m.map((path, i) => ({ id: -1 - i, path })) : this.deck.slides;
+  }
+
   focus(): void { this.el.focus({ preventScroll: true }); }
 
   /** Selects slide i (Umschalt: a range from the anchor, Strg: toggles). */
   pick(i: number, shift: boolean, ctrl: boolean): void {
-    const n = this.deck.slides.length;
+    const n = this.paths().length;
     if (!n) return;
     i = Math.max(0, Math.min(n - 1, i));
     if (shift) {
@@ -82,7 +90,7 @@ export class SlidePanel {
   }
 
   private thumb(i: number, w: number): HTMLElement {
-    const ref = this.deck.slides[i];
+    const ref = this.paths()[i];
     const stamp = this.deck.partStamp(ref.path);
     const hit = this.thumbs.get(ref.path);
     if (hit && hit.stamp === stamp && hit.width === w) return hit.el;
@@ -103,14 +111,15 @@ export class SlidePanel {
 
   render(): void {
     const cur = this.host.current();
-    const slides = this.deck.slides;
-    const sections = this.deck.sections();
+    const slides = this.paths();
+    const master = !!this.host.masterPaths();
+    const sections = master ? [] : this.deck.sections();
     const sectionOf = new Map<number, { name: string; id: string; first: boolean; count: number }>();
     for (const sec of sections) {
       const idx = sec.slides.map((id) => slides.findIndex((s) => s.id === id)).filter((x) => x >= 0).sort((a, b) => a - b);
       idx.forEach((k, j) => sectionOf.set(k, { name: sec.name, id: sec.id, first: j === 0, count: idx.length }));
     }
-    const w = Math.max(60, (this.list.clientWidth || this.width) - 44);
+    const w0 = Math.max(60, (this.list.clientWidth || this.width) - 44);
     const items: HTMLElement[] = [];
     // Sections without slides still show their heading (PowerPoint), at their place in the list.
     slides.forEach((ref, i) => {
@@ -129,17 +138,17 @@ export class SlidePanel {
       }
       if (sec && this.collapsed.has(sec.id)) return;
       const item = document.createElement("div");
-      item.className = `thumb-item${i === cur ? " current" : ""}${this.selected.has(i) ? " selected" : ""}`;
+      item.className = `thumb-item${i === cur ? " current" : ""}${this.selected.has(i) ? " selected" : ""}${master ? (i === 0 ? " master" : " layout") : ""}`;
       item.dataset.i = String(i);
       const num = document.createElement("div");
       num.className = "thumb-num";
-      num.textContent = String(i + 1);
-      if (this.deck.pptx.doc(ref.path).documentElement.getAttribute("show") === "0") num.classList.add("hidden-slide");
+      num.textContent = master ? (i === 0 ? "1" : "") : String(i + 1);
+      if (!master && this.deck.pptx.doc(ref.path).documentElement.getAttribute("show") === "0") num.classList.add("hidden-slide");
       const frame = document.createElement("div");
       frame.className = "thumb-frame";
-      frame.append(this.thumb(i, w));
+      frame.append(this.thumb(i, master && i > 0 ? Math.round(w0 * 0.8) : w0));
       item.append(num, frame);
-      item.addEventListener("mousedown", (e) => this.down(e, i));
+      item.addEventListener("mousedown", (e) => { if (master) { e.preventDefault(); this.el.focus(); this.pick(i, false, false); } else this.down(e, i); });
       items.push(item);
     });
     this.list.replaceChildren(...items);
@@ -201,7 +210,7 @@ export class SlidePanel {
 
   private key(e: KeyboardEvent): boolean {
     const cur = this.host.current();
-    const n = this.deck.slides.length;
+    const n = this.paths().length;
     switch (e.key) {
       case "ArrowUp": case "ArrowLeft": case "PageUp": this.pick(cur - 1, e.shiftKey, false); return true;
       case "ArrowDown": case "ArrowRight": case "PageDown": this.pick(cur + 1, e.shiftKey, false); return true;

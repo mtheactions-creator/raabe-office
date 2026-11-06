@@ -21,6 +21,7 @@ import * as S from "./shapeops";
 import { DESIGNS } from "./designs";
 import { SlideShow } from "./show";
 import { FormatPane } from "./formatpane";
+import { NotesPageView, OutlineView } from "./views";
 import { Sorter } from "./sorter";
 import { addRecent, loadRecent, loadSettings, removeRecent, setPinned, type Settings } from "./store";
 import appIconUrl from "../../../branding/raabe-present-small.svg?url";
@@ -64,6 +65,8 @@ export class PresentApp implements EditorHost, PanelHost {
   private main: HTMLElement;
   private center: HTMLElement;
   private sorter: Sorter;
+  private outline!: OutlineView;
+  private notesPage!: NotesPageView;
   private view: View = "normal";
   private showNotes = true;
   private fontList: string[] = [];
@@ -110,7 +113,9 @@ export class PresentApp implements EditorHost, PanelHost {
     });
     this.notesWrap = h("div", { class: "notes-wrap" }, this.notes);
     this.center = h("div", { class: "center" }, this.editor.el, this.notesWrap);
-    this.main = h("div", { class: "present-main" }, this.panel.el, h("div", { class: "splitter" }), this.center, this.sorter.el);
+    this.outline = new OutlineView(this);
+    this.notesPage = new NotesPageView(this);
+    this.main = h("div", { class: "present-main" }, this.panel.el, this.outline.el, h("div", { class: "splitter" }), this.center, this.sorter.el, this.notesPage.el);
     this.formatPane = new FormatPane(this.editor, this.main);
     this.statusSlide = h("span", { class: "cell" });
     this.zoomPct = h("button", { class: "cell pct", "data-tip": "Zoom", onclick: () => void this.commands.run("view.zoom") });
@@ -194,6 +199,8 @@ export class PresentApp implements EditorHost, PanelHost {
     this.editor.render();
     this.panel.render();
     if (this.view === "sorter") this.sorter.render();
+    this.outline.render();
+    this.notesPage.render();
     this.syncNotes();
     this.updateChrome();
   }
@@ -216,11 +223,48 @@ export class PresentApp implements EditorHost, PanelHost {
 
   // ----- EditorHost / PanelHost -----------------------------------------------------------------------
 
-  slidePath(): string | null { return this.deck.slides[this.active.current]?.path ?? null; }
-  slideNumber(): number { return this.active.current + 1; }
-  current(): number { return this.active.current; }
+  slidePath(): string | null {
+    if (this.masterMode) return this.masterList()[this.masterIndex] ?? null;
+    return this.deck.slides[this.active.current]?.path ?? null;
+  }
+
+  /** Folienmaster view (Ansicht > Folienmaster): the panel lists the master and its layouts. */
+  private masterMode = false;
+  private masterIndex = 0;
+  private masterList(): string[] {
+    const m = this.deck.pptx.masters()[0];
+    return m ? [m, ...this.deck.pptx.layouts(m)] : [];
+  }
+  masterPaths(): string[] | null { return this.masterMode ? this.masterList() : null; }
+
+  setMasterView(on: boolean): void {
+    this.editor.endText();
+    this.editor.sel = [];
+    this.masterMode = on;
+    document.body.classList.toggle("master-view", on);
+    if (on) {
+      // PowerPoint opens the master view at the current slide's layout.
+      const lay = this.deck.pptx.layoutOf(this.deck.slides[this.active.current]?.path ?? "");
+      const list = this.masterList();
+      this.masterIndex = Math.max(0, lay ? list.indexOf(lay) : 0);
+      this.panel.selected = new Set([this.masterIndex]);
+    } else this.panel.selected = new Set([this.active.current]);
+    this.ctxKey = "";
+    this.renderAll();
+    this.focusMain();
+  }
+  /** 0 in the master view: layouts show the number field as "‹Nr.›" (PowerPoint). */
+  slideNumber(): number { return this.masterMode ? 0 : this.active.current + 1; }
+  current(): number { return this.masterMode ? this.masterIndex : this.active.current; }
 
   setCurrent(i: number): void {
+    if (this.masterMode) {
+      const n2 = this.masterList().length;
+      this.masterIndex = Math.max(0, Math.min(n2 - 1, i));
+      this.editor.endText(); this.editor.sel = [];
+      this.editor.render(); this.panel.render(); this.updateChrome();
+      return;
+    }
     const n = this.deck.slides.length;
     i = Math.max(0, Math.min(n - 1, i));
     if (i !== this.active.current) { this.editor.endText(); this.editor.sel = []; }
@@ -262,6 +306,7 @@ export class PresentApp implements EditorHost, PanelHost {
   keys(e: KeyboardEvent): boolean {
     // Keys in the slide panel.
     if (this.globalShortcut(e)) return true;
+    if (this.masterMode) return false;
     const ctrl = e.ctrlKey && !e.altKey;
     const sel = [...this.panel.selected].sort((a, b) => a - b);
     if (e.key === "Delete" || e.key === "Backspace") { this.deleteSlides(sel); return true; }
@@ -960,8 +1005,10 @@ export class PresentApp implements EditorHost, PanelHost {
   setView(v: View): void {
     this.view = v;
     document.body.dataset.view = v;
-    this.center.hidden = v === "sorter";
-    this.panel.el.hidden = v === "sorter" || v === "reading";
+    this.center.hidden = v === "sorter" || v === "notesPage";
+    this.panel.el.hidden = v === "sorter" || v === "reading" || v === "outline" || v === "notesPage";
+    this.outline.el.hidden = v !== "outline";
+    this.notesPage.el.hidden = v !== "notesPage";
     this.sorter.el.hidden = v !== "sorter";
     if (v === "sorter") this.sorter.render();
     if (v === "reading") { void this.startShow(this.active.current, true); this.view = "normal"; document.body.dataset.view = "normal"; this.center.hidden = false; this.panel.el.hidden = false; }
@@ -998,7 +1045,7 @@ export class PresentApp implements EditorHost, PanelHost {
   private updateContextual(): void {
     const views = this.editor.selectedViews;
     const kinds = new Set(views.map((v) => (v.kind === "graphicFrame" ? v.frame : v.kind)));
-    const key = [...kinds].sort().join(",") + (this.editor.text ? "+t" : "");
+    const key = [...kinds].sort().join(",") + (this.editor.text ? "+t" : "") + (this.masterMode ? "+m" : "");
     if (key === this.ctxKey) return;
     this.ctxKey = key;
     const tabs: Tab[] = [];
@@ -1006,7 +1053,24 @@ export class PresentApp implements EditorHost, PanelHost {
     if (kinds.has("pic")) tabs.push(this.pictureTab());
     if (kinds.has("table")) tabs.push(this.tableTab(), this.tableLayoutTab());
     if (kinds.has("chart")) tabs.push(this.chartTab(), this.chartFormatTab());
+    if (this.masterMode) tabs.unshift(this.masterTab());
     this.ribbon.setContextual(tabs);
+    if (this.masterMode && !kinds.size) this.ribbon.select("slideMaster");
+  }
+
+  private masterTabDef: Tab | null = null;
+  masterTab(): Tab {
+    const b = (cmd: string, key: string, size: "large" | "small" = "large") => ({ type: "button" as const, cmd, key, size });
+    return this.masterTabDef ??= {
+      id: "slideMaster", label: "Folienmaster", key: "M", contextual: true, shrink: [],
+      groups: [
+        { id: "edit", label: "Master bearbeiten", key: "ZM", icon: "slide-layout", controls: [b("master.insertMaster", "K"), b("master.insertLayout", "I"), { type: "stack", items: [b("master.delete", "D", "small"), b("master.rename", "R", "small"), b("master.preserve", "P", "small")] }] },
+        { id: "layout", label: "Masterlayout", key: "ZL", icon: "slide-layout", controls: [b("master.masterLayout", "M"), b("master.insertPlaceholder", "A"), { type: "stack", items: [{ type: "check", cmd: "master.title", key: "T" }, { type: "check", cmd: "master.footers", key: "F" }] }] },
+        { id: "edit2", label: "Design bearbeiten", key: "ZD", icon: "themes", controls: [{ type: "dropdown", cmd: "design.themes", key: "H", size: "large", menu: [], popup: (c) => this.themesGallery(c) }] },
+        { id: "size", label: "Größe", key: "ZG", icon: "page-size", controls: [{ type: "dropdown", cmd: "design.slideSize", key: "S", size: "large", menu: [{ cmd: "design.slide4x3" }, { cmd: "design.slide16x9" }] }] },
+        { id: "close", label: "Schließen", key: "ZS", icon: "close", controls: [b("master.close", "C")] },
+      ],
+    };
   }
 
   private shapeTabDef: Tab | null = null;
@@ -1378,8 +1442,15 @@ export class PresentApp implements EditorHost, PanelHost {
 
     impl("show.fromStart", () => this.startShow(0));
     impl("show.fromCurrent", () => this.startShow(this.active.current));
-    impl("view.normal", () => this.setView("normal"), undefined, () => this.view === "normal");
+    impl("view.normal", () => { if (this.masterMode) this.setMasterView(false); this.setView("normal"); }, undefined, () => this.view === "normal" && !this.masterMode);
+    impl("view.slideMaster", () => this.setMasterView(true), undefined, () => this.masterMode);
+    impl("master.close", () => this.setMasterView(false));
+    impl("master.rename", () => this.renameLayout(), () => this.masterMode && this.masterIndex > 0);
+    impl("master.insertLayout", () => this.insertLayout(), () => this.masterMode);
+    impl("master.delete", () => this.deleteLayout(), () => this.masterMode && this.masterIndex > 0 && !this.layoutInUse());
     impl("view.sorter", () => this.setView("sorter"), undefined, () => this.view === "sorter");
+    impl("view.outline", () => this.setView("outline"), undefined, () => this.view === "outline");
+    impl("view.notesPage", () => this.setView("notesPage"), undefined, () => this.view === "notesPage");
     impl("view.reading", () => this.setView("reading"), undefined, () => false);
     impl("view.notes", () => { this.showNotes = !this.showNotes; this.syncNotes(); this.editor.fit && this.editor.fitZoom(); }, undefined, () => this.showNotes);
     impl("view.fit", () => this.fitWindow());
@@ -1407,6 +1478,59 @@ export class PresentApp implements EditorHost, PanelHost {
     for (const [id, where] of [["table.insertAbove", "above"], ["table.insertBelow", "below"], ["table.insertLeft", "left"], ["table.insertRight", "right"]] as const) {
       impl(id, () => this.tableInsert(where), () => !!tableEl());
     }
+  }
+
+  private layoutInUse(): boolean {
+    const lay = this.masterList()[this.masterIndex];
+    return this.deck.slides.some((s) => this.deck.pptx.layoutOf(s.path) === lay);
+  }
+
+  private async renameLayout(): Promise<void> {
+    const lay = this.masterList()[this.masterIndex];
+    const cs = kid(this.deck.pptx.doc(lay).documentElement, "cSld");
+    const name = await this.askText("Layout umbenennen", "Layoutname:", cs?.getAttribute("name") ?? "");
+    if (name === null || !cs) return;
+    this.deck.change("Layout umbenennen", [lay], () => cs.setAttribute("name", name));
+  }
+
+  /** Layout einfügen: a new layout (a copy of Nur Titel) after the current one, "Benutzerdefiniertes Layout". */
+  private insertLayout(): void {
+    const pptx = this.deck.pptx;
+    const master = pptx.masters()[0];
+    const path = pptx.freeName("ppt/slideLayouts/slideLayout#.xml");
+    const list0 = this.masterList();
+    const src = list0.find((p) => pptx.doc(p).documentElement.getAttribute("type") === "titleOnly") ?? list0[1];
+    this.deck.change("Layout einfügen", [path, master], () => {
+      const doc = PptxDom.parseXml(PptxDom.serialize(pptx.doc(src)));
+      doc.documentElement.setAttribute("type", "cust");
+      doc.documentElement.setAttribute("preserve", "1");
+      kid(doc.documentElement, "cSld")?.setAttribute("name", "Benutzerdefiniertes Layout");
+      pptx.put(path, doc, "application/vnd.openxmlformats-officedocument.presentationml.slideLayout+xml");
+      pptx.link(path, "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideMaster", master);
+      const rid = pptx.link(master, "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout", path);
+      const list = at(pptx.doc(master).documentElement, "sldLayoutIdLst")!;
+      const ids = kids(list, "sldLayoutId").map((x) => num(x, "id") ?? 0);
+      const el = make(pptx.doc(master), "p:sldLayoutId", { id: Math.max(...ids, 2147483648) + 1 });
+      el.setAttributeNS(PptxDom.NS_R, "r:id", rid);
+      const after = kids(list, "sldLayoutId")[this.masterIndex - 1];
+      list.insertBefore(el, after ? after.nextSibling : null);
+    });
+    this.setCurrent(this.masterIndex + 1);
+  }
+
+  private deleteLayout(): void {
+    const pptx = this.deck.pptx;
+    const master = pptx.masters()[0];
+    const lay = this.masterList()[this.masterIndex];
+    this.deck.change("Layout löschen", [master], () => {
+      const rels = pptx.rels(master);
+      const r = rels.list.find((x) => pptx.target(master, x.id) === lay);
+      if (!r) return;
+      for (const x of kids(at(pptx.doc(master).documentElement, "sldLayoutIdLst"), "sldLayoutId")) if (x.getAttributeNS(PptxDom.NS_R, "id") === r.id) x.remove();
+      rels.list.splice(rels.list.indexOf(r), 1);
+      rels.changed = true;
+    });
+    this.setCurrent(this.masterIndex - 1);
   }
 
   private isHidden(): boolean {
