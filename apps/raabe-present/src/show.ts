@@ -25,6 +25,7 @@ export class SlideShow {
   private laser: HTMLElement;
   private blank: HTMLElement;
   private index: number;
+  private prevView: import("@raabe/ooxml").SlideView | null = null;
   /** Click steps played on the current slide. */
   private stepIdx = 0;
   private steps: Step[] = [];
@@ -141,9 +142,12 @@ export class SlideShow {
       el.addEventListener("mousedown", (ev) => ev.stopPropagation());
       r.shapes.get(s.id)?.append(el);
     }
-    if (old && transition && tr && tr.kind !== "cut" && tr.kind !== "none") {
+    if (old && transition && tr && tr.kind === "morph" && this.prevView) {
+      this.morph(old, r, view, tr.dur);
+    } else if (old && transition && tr && tr.kind !== "cut" && tr.kind !== "none") {
       r.el.animate(transitionKeyframes(tr.kind, tr.dir), { duration: tr.dur, easing: "ease-in-out" }).finished.then(() => old.remove()).catch(() => old.remove());
     } else old?.remove();
+    this.prevView = view;
     this.clearInk();
     this.layout();
     if (!back && seq.auto) this.play(seq.auto);
@@ -152,6 +156,34 @@ export class SlideShow {
     // Nach: the slide goes on by itself after its time (when nothing waits for a click).
     clearTimeout(this.timer);
     if (tr?.advTm !== undefined && !this.reading && this.setup.useTimings) this.timer = window.setTimeout(() => this.next(), tr.advTm + (tr.dur ?? 0));
+  }
+
+  /**
+   * Morphen (our drawing of PowerPoint's): shapes with the same name on both slides glide from their old
+   * place, size and turn to the new one; the others fade out and in.
+   */
+  private morph(old: HTMLElement, r: { el: HTMLElement; shapes: Map<number, HTMLElement> }, view: import("@raabe/ooxml").SlideView, dur: number): void {
+    const before = new Map((this.prevView?.shapes ?? []).map((s) => [s.name, s]));
+    const opts = { duration: dur, easing: "ease-in-out" };
+    old.animate([{ opacity: 1 }, { opacity: 0 }], opts).finished.then(() => old.remove()).catch(() => old.remove());
+    for (const s of view.shapes) {
+      const el = r.shapes.get(s.id);
+      const b = before.get(s.name);
+      if (!el) continue;
+      if (!b) { el.animate([{ opacity: 0 }, { opacity: 1 }], opts); continue; }
+      const k = 1 / 9525;
+      const dx = (b.x + b.w / 2 - (s.x + s.w / 2)) * k, dy = (b.y + b.h / 2 - (s.y + s.h / 2)) * k;
+      const sx = s.w ? b.w / s.w : 1, sy = s.h ? b.h / s.h : 1;
+      const end = el.style.transform === "none" ? "" : el.style.transform;
+      el.animate([{ transform: `translate(${dx}px, ${dy}px) rotate(${b.rot - s.rot}deg) scale(${sx}, ${sy}) ${end}` }, { transform: end || "none" }], opts);
+    }
+    // The old slide's matched shapes vanish at once (their new selves move in their place).
+    const names = new Set(view.shapes.map((s) => s.name));
+    for (const el of Array.from(old.querySelectorAll(".shp"))) {
+      const id = Number((el as HTMLElement).dataset.id);
+      const s = this.prevView?.shapes.find((x) => x.id === id);
+      if (s && names.has(s.name)) (el as HTMLElement).style.visibility = "hidden";
+    }
   }
 
   private play(step: Step): void {

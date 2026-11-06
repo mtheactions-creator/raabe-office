@@ -126,7 +126,7 @@ The earlier priorities are replaced by that scope; this table says what each par
 | Shapes, text boxes, pictures (crop, colour, transparency), tables (cells, styles, rows/columns), charts (RaabeCalc's engine, Daten bearbeiten), SmartArt (drawn from its cache), equations (drawn from their fallback) | built / partly | Editing SmartArt and equations, table cell ranges and merging: open |
 | Moving, sizing, rotating, adjust handles, smart guides, grid, Ausrichten, Verteilen, Gruppieren, Anordnen, Auswahl, Format übertragen | built | Measured by the behaviour catalogue |
 | Foliensortierung, Gliederungsansicht, Notizenseite, Folienmaster | built | Handzettel- and Notizenmaster: open |
-| Übergänge (49 named as PowerPoint), Animationen (entrance, emphasis, exit; Animationsbereich, Start, timing) | built | Our own drawing of each effect; Morphen and Animationspfade: open |
+| Übergänge (49 named as PowerPoint), Animationen (entrance, emphasis, exit; Animationsbereich, Start, timing) | built | Our own drawing of each effect; Morphen as our own drawing (shapes of the same name glide, others fade); Animationspfade: open |
 | Bildschirmpräsentation: PowerPoint's keys, pen, highlighter, laser, black/white screen, Referentenansicht (one screen), Einrichten | built | Second monitor: open |
 | Kommentare, Links, Kopf- und Fußzeile, Zeichnen (ink as freeform shapes), Video and Audio from files | built | |
 | PDF and printing with Handzettel layouts | built | |
