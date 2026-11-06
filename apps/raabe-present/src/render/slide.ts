@@ -84,6 +84,7 @@ export function renderShape(s: ShapeView, o: RenderOptions, map: Map<number, HTM
   } else if (s.kind === "graphicFrame") {
     if (s.frame === "table") box.append(renderTable(s, o));
     else if (s.frame === "chart" && s.chart) box.append(renderChart(o.pptx, s.chart, w, h));
+    else if (s.frame === "diagram" && s.children) for (const c of s.children) box.append(renderShape({ ...c, rot: c.rot - s.rot }, { ...o, editing: false, selection: null }, null, s));
     else box.append(placeholderBox(w, h));
   } else if (s.kind === "sp" || s.kind === "cxnSp") {
     const url = s.pic?.path ? o.image(s.pic.path) : undefined;

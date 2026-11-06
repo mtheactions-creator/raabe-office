@@ -11,6 +11,7 @@ import { renderSlide } from "./render/slide";
 import { EMU_PX } from "./render/text";
 import { mainSequence, type Step } from "./animations";
 import { readTransition } from "./transitions";
+import { readShowSetup, type ShowSetup } from "./showsetup";
 
 type Tool = "arrow" | "pen" | "highlighter" | "laser" | "eraser";
 
@@ -36,10 +37,18 @@ export class SlideShow {
   private history: number[] = [];
   lastIndex: number;
   private keyHandler = (e: KeyboardEvent) => this.key(e);
+  private setup: ShowSetup;
+  /** Slides shown (Folien anzeigen: von-bis), 0-based, inclusive. */
+  private first = 0;
+  private last = 0;
   private timer = 0;
 
   constructor(private app: PresentApp, from: number, private reading = false) {
     this.done = new Promise((r) => { this.finish = r; });
+    this.setup = readShowSetup(app.deck);
+    this.first = this.setup.from !== undefined ? Math.max(0, this.setup.from - 1) : 0;
+    this.last = this.setup.to !== undefined ? Math.min(app.deck.slides.length - 1, this.setup.to - 1) : app.deck.slides.length - 1;
+    if (from === 0) from = this.first;
     this.index = from;
     this.lastIndex = from;
     this.root = document.createElement("div");
@@ -110,10 +119,10 @@ export class SlideShow {
     const r = renderSlide(view, this.app.deck.pptx.slideSize, { editing: false, slideNumber: i + 1, image: (p) => this.app.image(p), pptx: this.app.deck.pptx });
     const root = this.app.deck.pptx.doc(path).documentElement;
     const seq = mainSequence(root);
-    this.steps = seq.steps;
+    this.steps = this.setup.noAnimations ? [] : seq.steps;
     this.shapes = r.shapes;
     this.stepIdx = back ? this.steps.length : 0;
-    if (!back) for (const id of seq.hidden) { const el = r.shapes.get(id); if (el) el.style.visibility = "hidden"; }
+    if (!back && !this.setup.noAnimations) for (const id of seq.hidden) { const el = r.shapes.get(id); if (el) el.style.visibility = "hidden"; }
     const tr = readTransition(root);
     const old = this.stageEl.firstElementChild as HTMLElement | null;
     this.stageEl.append(r.el);
@@ -127,7 +136,7 @@ export class SlideShow {
     this.renderPresenter();
     // Nach: the slide goes on by itself after its time (when nothing waits for a click).
     clearTimeout(this.timer);
-    if (tr?.advTm !== undefined && !this.reading) this.timer = window.setTimeout(() => this.next(), tr.advTm + (tr.dur ?? 0));
+    if (tr?.advTm !== undefined && !this.reading && this.setup.useTimings) this.timer = window.setTimeout(() => this.next(), tr.advTm + (tr.dur ?? 0));
   }
 
   private play(step: Step): void {
@@ -146,8 +155,13 @@ export class SlideShow {
     if (this.atEnd) { this.end(); return; }
     if (this.stepIdx < this.steps.length) { this.play(this.steps[this.stepIdx++]); this.renderPresenter(); return; }
     let i = this.index + 1;
-    while (i < this.count && this.hiddenSlide(i)) i++;
-    if (i >= this.count) { this.endScreen(); return; }
+    while (i <= this.last && this.hiddenSlide(i)) i++;
+    if (i > this.last) {
+      // Wiederholen, bis "Esc" gedrückt wird: from the first slide again.
+      if (this.setup.loop) { this.show(this.first, false); return; }
+      this.endScreen();
+      return;
+    }
     this.show(i, false);
   }
 

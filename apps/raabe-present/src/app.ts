@@ -1521,6 +1521,8 @@ export class PresentApp implements EditorHost, PanelHost {
     const dlgHost = () => ({ runStyle: () => this.runStyle(), paraStyle: () => this.paraStyle(), fonts: () => this.fontList, formatRuns: (l: string, f: (r: Element) => void) => this.formatRuns(l, f), formatParas: (l: string, f: (p: Element) => void) => this.formatParas(l, f) });
     const finder = new FindDialog(this);
     impl("edit.find", () => finder.open(false));
+    impl("show.setup", () => import("./showsetup").then((m) => m.showSetupDialog(this.deck)));
+    impl("show.useTimings", () => {}, undefined, () => true);
     impl("anim.pane", () => this.animPane.toggle(), undefined, () => this.animPane.isOpen);
     impl("anim.start", () => {}, () => this.selectedHasAnimation());
     impl("anim.earlier", () => this.moveAnimation(-1), () => this.selectedHasAnimation());

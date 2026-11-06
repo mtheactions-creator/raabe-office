@@ -647,6 +647,16 @@ export class SlideResolver {
       const gd = at(el, "graphic/graphicData");
       const uri = gd?.getAttribute("uri") ?? "";
       v.frame = uri.endsWith("/table") ? "table" : uri.endsWith("/chart") ? "chart" : uri.endsWith("/diagram") ? "diagram" : uri.endsWith("/ole") ? "ole" : "other";
+      if (v.frame === "diagram") {
+        // SmartArt: drawn from the shapes PowerPoint caches in the diagram's drawing part
+        // (dsp:drawing, linked from the data model's dataModelExt relId), placed in the frame.
+        const relIds = kids(gd).find((k) => k.localName === "relIds");
+        const dm = relIds ? this.pptx.target(this.path, relIds.getAttributeNS(NS_R, "dm") ?? "") : undefined;
+        const ext = dm && this.pptx.has(dm) ? this.pptx.doc(dm).getElementsByTagNameNS("http://schemas.microsoft.com/office/drawing/2008/diagram", "dataModelExt")[0] : undefined;
+        const drawing = ext ? this.pptx.target(this.path, ext.getAttribute("relId") ?? "") : undefined;
+        const tree = drawing && this.pptx.has(drawing) ? kids(this.pptx.doc(drawing).documentElement).find((k) => k.localName === "spTree") : undefined;
+        if (tree) v.children = this.shapes(tree, new GroupMap(x, y, w, h, 0, 0, w, h, rot));
+      }
       if (v.frame === "chart") {
         const ch = kids(gd).find((k) => k.localName === "chart");
         const rid = ch?.getAttributeNS(NS_R, "id");
