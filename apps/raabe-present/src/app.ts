@@ -20,6 +20,7 @@ import * as T from "./textops";
 import * as S from "./shapeops";
 import { DESIGNS } from "./designs";
 import { SlideShow } from "./show";
+import { FormatPane } from "./formatpane";
 import { Sorter } from "./sorter";
 import { addRecent, loadRecent, loadSettings, removeRecent, setPinned, type Settings } from "./store";
 import appIconUrl from "../../../branding/raabe-present-small.svg?url";
@@ -75,6 +76,7 @@ export class PresentApp implements EditorHost, PanelHost {
   private lastFill = "4472C4";
   private lastLine = "000000";
   private show: SlideShow | null = null;
+  private formatPane!: FormatPane;
 
   constructor(readonly platform: Platform) {
     void platform.listFonts().then((f) => { this.fontList = f; }).catch(() => {});
@@ -109,6 +111,7 @@ export class PresentApp implements EditorHost, PanelHost {
     this.notesWrap = h("div", { class: "notes-wrap" }, this.notes);
     this.center = h("div", { class: "center" }, this.editor.el, this.notesWrap);
     this.main = h("div", { class: "present-main" }, this.panel.el, h("div", { class: "splitter" }), this.center, this.sorter.el);
+    this.formatPane = new FormatPane(this.editor, this.main);
     this.statusSlide = h("span", { class: "cell" });
     this.zoomPct = h("button", { class: "cell pct", "data-tip": "Zoom", onclick: () => void this.commands.run("view.zoom") });
     this.zoomSlider = h("input", { type: "range", min: "0", max: "100", step: "0.5", "aria-label": "Zoom" }) as HTMLInputElement;
@@ -240,6 +243,7 @@ export class PresentApp implements EditorHost, PanelHost {
   }
 
   selectionChanged(): void {
+    this.formatPane?.sync();
     this.updateChrome();
   }
 
@@ -641,6 +645,40 @@ export class PresentApp implements EditorHost, PanelHost {
 
   private alignToSlide = false;
 
+  /** Zeilen und Spalten: a row above / below the first / last row, a column left / right (PowerPoint copies the neighbour's formatting). */
+  private tableInsert(where: "above" | "below" | "left" | "right"): void {
+    const v = this.editor.selectedViews.find((x) => x.frame === "table");
+    if (!v) return;
+    this.editor.edit(where === "above" || where === "below" ? "Zeile einfügen" : "Spalte einfügen", () => {
+      const el = this.editor.shapeEl(v.id)!;
+      const tbl = el.getElementsByTagNameNS(PptxDom.NS_A, "tbl")[0];
+      const rows = kids(tbl, "tr");
+      const emptyCell = (tc: Element) => { const c = tc.cloneNode(true) as Element; const body = kid(c, "txBody"); if (body) { T.replaceAll(body, ""); } return c; };
+      if (where === "above" || where === "below") {
+        const ref = where === "above" ? rows[0] : rows[rows.length - 1];
+        const nr = ref.cloneNode(false) as Element;
+        for (const tc of kids(ref, "tc")) nr.append(emptyCell(tc));
+        if (where === "above") ref.before(nr); else ref.after(nr);
+        const xf = kid(el, "xfrm"), ext = kid(xf, "ext");
+        if (ext) ext.setAttribute("cy", String((num(ext, "cy") ?? 0) + (num(ref, "h") ?? 370840)));
+      } else {
+        const grid = kid(tbl, "tblGrid")!;
+        const cols = kids(grid, "gridCol");
+        const refCol = where === "left" ? cols[0] : cols[cols.length - 1];
+        const nc = refCol.cloneNode(false) as Element;
+        if (where === "left") refCol.before(nc); else refCol.after(nc);
+        for (const tr of rows) {
+          const tcs = kids(tr, "tc");
+          const ref = where === "left" ? tcs[0] : tcs[tcs.length - 1];
+          const c = emptyCell(ref);
+          if (where === "left") ref.before(c); else ref.after(c);
+        }
+        const xf = kid(el, "xfrm"), ext = kid(xf, "ext");
+        if (ext) ext.setAttribute("cx", String((num(ext, "cx") ?? 0) + (num(refCol, "w") ?? 0)));
+      }
+    });
+  }
+
   private rotateFlip(kind: "r" | "l" | "h" | "v"): void {
     const ed = this.editor;
     const views = ed.selectedViews;
@@ -835,7 +873,7 @@ export class PresentApp implements EditorHost, PanelHost {
     this.editor.select([id]);
   }
 
-  private ensureTableStyle(): void {
+  ensureTableStyle(): void {
     const p = this.deck.pptx.related(this.deck.pptx.presPath, "http://schemas.openxmlformats.org/officeDocument/2006/relationships/tableStyles");
     if (!p) return;
     const doc = this.deck.pptx.doc(p);
@@ -972,7 +1010,7 @@ export class PresentApp implements EditorHost, PanelHost {
   }
 
   private shapeTabDef: Tab | null = null;
-  private shapeTab(): Tab {
+  shapeTab(): Tab {
     const b = (cmd: string, key: string, size: "large" | "small" = "small") => ({ type: "button" as const, cmd, key, size });
     return this.shapeTabDef ??= {
       id: "shapeFormat", label: "Formformat", key: "JD", contextual: true, shrink: [],
@@ -997,7 +1035,7 @@ export class PresentApp implements EditorHost, PanelHost {
   }
 
   private pictureTabDef: Tab | null = null;
-  private pictureTab(): Tab {
+  pictureTab(): Tab {
     return this.pictureTabDef ??= {
       id: "pictureFormat", label: "Bildformat", key: "JP", contextual: true, shrink: [],
       groups: [
@@ -1014,24 +1052,24 @@ export class PresentApp implements EditorHost, PanelHost {
     };
   }
 
-  private tableTab(): Tab {
+  tableTab(): Tab {
     return { id: "tableDesign", label: "Tabellenentwurf", key: "JT", contextual: true, shrink: [], groups: [
       { id: "options", label: "Tabellenformatoptionen", key: "ZO", icon: "table-style", controls: [{ type: "stack", items: [{ type: "check", cmd: "table.firstRow", key: "A" }, { type: "check", cmd: "table.lastRow", key: "T" }, { type: "check", cmd: "table.bandRow", key: "R" }] }, { type: "stack", items: [{ type: "check", cmd: "table.firstCol", key: "F" }, { type: "check", cmd: "table.lastCol", key: "L" }, { type: "check", cmd: "table.bandCol", key: "C" }] }] },
     ] };
   }
 
-  private tableLayoutTab(): Tab {
+  tableLayoutTab(): Tab {
     const b = (cmd: string, key: string) => ({ type: "button" as const, cmd, key, size: "large" as const });
     return { id: "tableLayout", label: "Layout", key: "JL", contextual: true, shrink: [], groups: [
       { id: "rows", label: "Zeilen und Spalten", key: "ZZ", icon: "table-insert-row", controls: [b("table.insertAbove", "A"), b("table.insertBelow", "BE"), b("table.insertLeft", "L"), b("table.insertRight", "R")] },
     ] };
   }
 
-  private chartTab(): Tab {
+  chartTab(): Tab {
     return { id: "chartDesign", label: "Diagrammentwurf", key: "JC", contextual: true, shrink: [], groups: [{ id: "data", label: "Daten", key: "ZD", icon: "table", controls: [{ type: "button", cmd: "chart.editData", key: "D", size: "large" }] }] };
   }
 
-  private chartFormatTab(): Tab {
+  chartFormatTab(): Tab {
     return { id: "chartFormat", label: "Format", key: "JO", contextual: true, shrink: [], groups: [{ id: "current", label: "Aktuelle Auswahl", key: "ZA", icon: "format-picture", controls: [{ type: "button", cmd: "draw.format", key: "M", size: "large" }] }] };
   }
 
@@ -1350,7 +1388,25 @@ export class PresentApp implements EditorHost, PanelHost {
     impl("view.guides", () => { ed().showGuides = !ed().showGuides; ed().render(); }, undefined, () => ed().showGuides);
     impl("view.gridDialog", () => this.gridDialog());
     impl("shape.editText", () => { const v = ed().selectedViews[0]; if (v) ed().enterText(v.id); }, shapes);
-    impl("shape.sizePosition", () => {}, shapes);
+    impl("shape.sizePosition", () => this.formatPane.open(), shapes);
+    impl("draw.format", () => this.formatPane.open(), shapes);
+    impl("pic.format", () => this.formatPane.open(), shapes);
+    const dlgHost = () => ({ runStyle: () => this.runStyle(), paraStyle: () => this.paraStyle(), fonts: () => this.fontList, formatRuns: (l: string, f: (r: Element) => void) => this.formatRuns(l, f), formatParas: (l: string, f: (p: Element) => void) => this.formatParas(l, f) });
+    impl("font.dialog", () => import("./dialogs").then((m) => m.fontDialog(dlgHost())), text);
+    impl("para.dialog", () => import("./dialogs").then((m) => m.paragraphDialog(dlgHost())), text);
+    impl("shape.height", () => {}, shapes);
+    impl("shape.width", () => {}, shapes);
+    const tableEl = () => { const v = this.editor.selectedViews.find((x) => x.frame === "table"); return v ? this.editor.shapeEl(v.id) : undefined; };
+    const tblFlag = (name: string) => () => tableEl()?.getElementsByTagNameNS(PptxDom.NS_A, "tblPr")[0]?.getAttribute(name) === "1";
+    for (const [id, attr] of [["table.firstRow", "firstRow"], ["table.lastRow", "lastRow"], ["table.bandRow", "bandRow"], ["table.firstCol", "firstCol"], ["table.lastCol", "lastCol"], ["table.bandCol", "bandCol"]] as const) {
+      impl(id, () => {
+        const on = !tblFlag(attr)();
+        this.editor.edit("Tabellenformatoptionen", () => { const pr = tableEl()?.getElementsByTagNameNS(PptxDom.NS_A, "tblPr")[0]; if (pr) { if (on) pr.setAttribute(attr, "1"); else pr.removeAttribute(attr); } });
+      }, () => !!tableEl(), tblFlag(attr));
+    }
+    for (const [id, where] of [["table.insertAbove", "above"], ["table.insertBelow", "below"], ["table.insertLeft", "left"], ["table.insertRight", "right"]] as const) {
+      impl(id, () => this.tableInsert(where), () => !!tableEl());
+    }
   }
 
   private isHidden(): boolean {
@@ -1592,7 +1648,7 @@ export class PresentApp implements EditorHost, PanelHost {
 
   // ----- ribbon context --------------------------------------------------------------------------------------
 
-  private ribbonContext(): RibbonContext {
+  ribbonContext(): RibbonContext {
     const fonts = () => {
       const theme = this.slidePath() ? this.deck.view(this.slidePath()!).theme : null;
       return [{ heading: "Designschriftarten", items: theme ? [`${theme.major} (Überschriften)`, `${theme.minor} (Textkörper)`] : [] }, { heading: "Alle Schriftarten", items: this.fontList }];
@@ -1982,6 +2038,121 @@ export class PresentApp implements EditorHost, PanelHost {
       },
       bytes: () => { const b = app.deck.write(); let s = ""; for (let i = 0; i < b.length; i += 0x8000) s += String.fromCharCode(...b.subarray(i, i + 0x8000)); return btoa(s); },
       newDoc: () => { const doc = app.makeDoc(new Deck(), "Test", null); app.docs.push(doc); app.activate(doc); },
+      openBytes: (name: string, bytes: Uint8Array) => { const doc = app.makeDoc(new Deck(Pptx.read(bytes)), stripExt(name), null); app.docs.push(doc); app.activate(doc); return doc.deck.slides.length; },
+      /** Slide i (1-based) drawn as in the show at `width` CSS px, alone at the page's top left (render comparison). */
+      renderAlone: (i: number, width: number) => {
+        document.getElementById("render-alone")?.remove();
+        const ref = app.deck.slides[i - 1];
+        if (!ref) return null;
+        const size = app.deck.pptx.slideSize;
+        const s = width / (size.cx / EMU_PX);
+        const box = h("div", { id: "render-alone", style: `position:fixed;left:0;top:0;z-index:99999;width:${width}px;height:${Math.round((size.cy / EMU_PX) * s)}px;overflow:hidden;background:#fff` });
+        const r = renderSlide(app.deck.view(ref.path), size, { editing: false, slideNumber: i, image: (p) => app.image(p), pptx: app.deck.pptx });
+        r.el.style.transform = `scale(${s})`; r.el.style.transformOrigin = "0 0";
+        box.append(r.el);
+        document.body.append(box);
+        return { w: width, h: Math.round((size.cy / EMU_PX) * s), images: box.querySelectorAll("img").length };
+      },
+      clearAlone: () => document.getElementById("render-alone")?.remove(),
+      /**
+       * A catalogue case's start (catalogue_present.py): a new presentation with `slides` slides of the
+       * layout named, the shapes made as PowerPoint's COM calls make them (boxes in points), nothing selected.
+       */
+      setupCase: (spec: { layout: string; slides?: number; shapes: { kind: string; box?: number[]; text?: string; ph?: number }[]; zoom?: number }) => {
+        const deck = new Deck();
+        const lay = deck.layouts().find((l) => l.name === spec.layout)?.path ?? deck.layouts()[6].path;
+        for (let k = 0; k < (spec.slides ?? 1); k++) deck.addSlide(k, lay);
+        // The new presentation's own Titelfolie goes; the case's slides remain.
+        deck.deleteSlides([0]);
+        const doc = app.makeDoc(deck, "Katalog", null);
+        // Earlier case documents go: only one presentation is open, as in PowerPoint's harness.
+        app.docs = [doc];
+        doc.savedVersion = deck.version;
+        app.activate(doc);
+        const path = deck.slides[0].path;
+        deck.change("Setup", [path], () => {
+          const doc = deck.pptx.doc(path);
+          const tree = S.treeOf(doc);
+          const phs = S.shapeEls(tree);
+          for (const sh of spec.shapes) {
+            const id = S.maxId(tree) + 1;
+            const b = (sh.box ?? [0, 0, 100, 100]).map((v) => v * 12700);
+            if (sh.kind === "ph") {
+              const el = phs[sh.ph ?? 0];
+              const body = el && S.txBodyOf(el);
+              if (body && sh.text) { let pos = { p: 0, o: 0 }; sh.text.split("\r").forEach((line, i) => { if (i) pos = T.splitPara(body, pos); if (line) pos = T.insertText(body, pos, line); }); }
+              continue;
+            }
+            let el: Element;
+            if (sh.kind === "textbox") el = S.newTextBox(doc, id, b[0], b[1], b[2], b[3]);
+            else if (sh.kind === "table") {
+              app.ensureTableStyle();
+              el = S.newTable(doc, id, 2, 2, { x: b[0], y: b[1], w: b[2] }, DEFAULT_TABLE_STYLE_ID);
+            } else el = S.newShape(doc, id, sh.kind === "ellipse" ? "ellipse" : sh.kind === "line" ? "line" : "rect", { x: b[0], y: b[1], w: b[2], h: b[3], rot: 0, flipH: false, flipV: false });
+            if (sh.kind === "textbox") S.bodyPrOf(el)!.setAttribute("wrap", "square");
+            tree.append(el);
+            const body = S.txBodyOf(el);
+            if (body && sh.text) { let pos = { p: 0, o: 0 }; sh.text.split("\r").forEach((line, i) => { if (i) pos = T.splitPara(body, pos); if (line) pos = T.insertText(body, pos, line); }); }
+          }
+        });
+        doc.savedVersion = deck.version;
+        app.editor.render(); app.panel.render();
+        if (spec.zoom) app.setZoom(spec.zoom);
+        app.editor.focus();
+        return deck.slides.length;
+      },
+      /** The selection as PowerPoint's COM reports it: type, shape ids, text start (1-based) and length. */
+      comSelection: () => {
+        const ed = app.editor;
+        if (app.panel.el.contains(document.activeElement)) return { type: "Slides", slides: [...app.panel.selected].sort((a, b) => a - b).map((i) => i + 1) };
+        if (ed.text) {
+          const body = ed.textBody(ed.text.id);
+          const lin = (p: { p: number; o: number }) => (body ? T.paras(body).slice(0, p.p).reduce((s, q) => s + T.paraLength(q) + 1, 0) : 0) + p.o;
+          const a = lin(ed.text.caret), b = lin(ed.text.anchor);
+          return { type: "Text", ids: [ed.text.id], start: Math.min(a, b) + 1, length: Math.abs(a - b) };
+        }
+        return ed.sel.length ? { type: "Shapes", ids: [...ed.sel] } : { type: "None" };
+      },
+      slidePointToClient: (xpt: number, ypt: number) => {
+        const r = (app.editor.el.querySelector(".stage .slide") as HTMLElement | null)?.getBoundingClientRect();
+        if (!r) return null;
+        const size = app.deck.pptx.slideSize;
+        return { x: r.left + (xpt * 12700 / size.cx) * r.width, y: r.top + (ypt * 12700 / size.cy) * r.height };
+      },
+      /** RaabePresent's ribbon as data for the inventory against PowerPoint (D-070), as RaabeCalc's (D-066). */
+      inventory: () => {
+        type Item = { name: string; type?: string; deferred?: boolean; enabled?: boolean; items?: Item[]; submenu?: Item[]; panel?: boolean };
+        const cmdItem = (id: string, label?: string): Item => {
+          const c = app.commands.get(id);
+          return { name: label ?? c.label, deferred: !!c.deferred, enabled: app.commands.isImplemented(id) };
+        };
+        const entries = (menu: MenuEntry[]): Item[] => menu.flatMap((m): Item[] => {
+          if (m === "-" || "heading" in m || "block" in m) return [];
+          if ("cmd" in m) return [cmdItem(m.cmd, m.label)];
+          if ("icons" in m) return [{ name: m.label, items: m.icons.map((i) => ({ name: i.tip.replace(/ \(.\)$/, "") })) }];
+          const sub = "submenu" in m ? (typeof m.submenu === "function" ? m.submenu() : m.submenu) : undefined;
+          return [{ name: m.label, enabled: !("disabled" in m && m.disabled), ...(sub ? { submenu: entries(sub) } : {}) }];
+        });
+        const ctl = (c: import("@raabe/shell").Control): Item[] => {
+          if (c.type === "stack") return c.items.flatMap(ctl);
+          if (c.type === "rows") return c.rows.flat().flatMap((x) => (x === "gap" ? [] : ctl(x)));
+          if (c.type === "gallery") return c.items.map((i) => ({ ...cmdItem(i.cmd), type: "gallery" }));
+          const base: Item = "cmd" in c ? cmdItem(c.cmd, "label" in c ? c.label : undefined) : { name: "?" };
+          const menu = "menu" in c && c.menu.length ? { items: entries(c.menu) } : {};
+          const own = ("popup" in c && c.popup) || c.type === "color" ? { panel: true } : {};
+          return [{ ...base, type: (c as { type: string }).type, ...menu, ...own }];
+        };
+        const tabs = [...ribbonTabs(app.ribbonContext()), app.shapeTab(), app.pictureTab(), app.tableTab(), app.tableLayoutTab(), app.chartTab(), app.chartFormatTab()];
+        return tabs.map((t) => ({
+          name: t.label, contextual: !!t.contextual,
+          groups: t.groups.map((g) => ({ name: g.label, launcher: g.launcher ? cmdItem(g.launcher.cmd) : undefined, controls: g.controls.flatMap(ctl) })),
+        }));
+      },
+      handlePoint: (id: number, k: string) => {
+        const el = app.editor.el.querySelector(`.overlay .handle[data-id="${id}"].h-${k}`) as HTMLElement | null;
+        const r = el?.getBoundingClientRect();
+        return r ? { x: r.left + r.width / 2, y: r.top + r.height / 2 } : null;
+      },
       shapeRect: (id: number) => { const el = app.editor.el.querySelector(`.shp[data-id="${id}"]`) as HTMLElement | null; const r = el?.getBoundingClientRect(); return r ? { x: r.left, y: r.top, w: r.width, h: r.height } : null; },
       slideRect: () => { const r = (app.editor.el.querySelector(".slide") as HTMLElement | null)?.getBoundingClientRect(); return r ? { x: r.left, y: r.top, w: r.width, h: r.height } : null; },
       thumbRect: (i: number) => { const r = (app.panel.el.querySelector(`.thumb-item[data-i="${i - 1}"]`) as HTMLElement | null)?.getBoundingClientRect(); return r ? { x: r.left, y: r.top, w: r.width, h: r.height } : null; },

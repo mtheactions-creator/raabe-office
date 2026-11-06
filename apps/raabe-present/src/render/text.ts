@@ -47,9 +47,14 @@ function hexA(hex: string, alpha: number): string {
   return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${(1 - alpha).toFixed(3)})`;
 }
 
+/** A font size under Autofit's scale: PowerPoint rounds it to whole points (28 pt at 55 % is 15 pt, read back). */
+export function fitSize(size: number, scale: number): number {
+  return scale < 1 ? Math.max(1, Math.round(size * scale)) : size;
+}
+
 export function runCss(r: RunStyle, scale: number): string {
   const deco = [r.underline !== "none" ? "underline" : "", r.strike !== "noStrike" ? "line-through" : ""].filter(Boolean).join(" ");
-  const size = r.size * scale * (r.baseline ? 2 / 3 : 1);
+  const size = fitSize(r.size, scale) * (r.baseline ? 2 / 3 : 1);
   return css({
     "font-family": `"${r.font}", Calibri, Carlito, sans-serif`,
     "font-size": `${(size * PT_PX).toFixed(3)}px`,
@@ -88,16 +93,21 @@ function fieldText(r: TextRun, o: TextOptions): string {
 
 /** Line height in px of a paragraph's largest run at its spacing. */
 function lineHeight(p: TextPara, scale: number, reduction: number): number {
-  const runs = p.runs.length ? p.runs : [];
-  let best = 0;
-  for (const r of runs.length ? runs : [p.end as TextRun]) {
-    const m = fontMetrics(r.font);
-    best = Math.max(best, r.size * scale * (m.ascent + m.descent));
-  }
-  if (!runs.length) { const m = fontMetrics(p.end.font); best = p.end.size * scale * (m.ascent + m.descent); }
+  // PowerPoint's single line is 1,2 times the largest font size of the line, whatever the font
+  // (read back from PowerPoint: 28 pt at 90 % gives 30,24 pt lines, 44 pt titles 47,52 pt).
+  const size = fitSize(largest(p), scale);
   if (p.lnPts !== undefined) return p.lnPts * PT_PX;
   const pct = Math.max(0.1, (p.lnPct ?? 1) - reduction);
-  return best * pct * PT_PX;
+  return size * 1.2 * pct * PT_PX;
+}
+
+/** The largest run of a paragraph (its mark when it has no text). */
+function largest(p: TextPara): number {
+  return p.runs.length ? Math.max(...p.runs.map((r) => r.size)) : p.end.size;
+}
+
+function mainRun(p: TextPara): RunStyle {
+  return p.runs.reduce<RunStyle>((m, r) => (r.size > m.size ? r : m), p.runs[0] ?? p.end);
 }
 
 /**
@@ -124,13 +134,14 @@ export function renderText(t: TextInfo, w: number, h: number, o: TextOptions): H
     div.className = "para";
     div.dataset.p = String(pi);
     const lh = lineHeight(p, fit.fontScale, fit.lnSpcReduction);
-    const bef = p.spcBefPts !== undefined ? p.spcBefPts * PT_PX * (1 - fit.lnSpcReduction) : (p.spcBefPct ?? 0) * lh;
-    const aft = p.spcAftPts !== undefined ? p.spcAftPts * PT_PX * (1 - fit.lnSpcReduction) : (p.spcAftPct ?? 0) * lh;
+    // Space before and after stays as set under Autofit (PowerPoint's read-back: 10 pt at 55 %).
+    const bef = p.spcBefPts !== undefined ? p.spcBefPts * PT_PX : (p.spcBefPct ?? 0) * lh;
+    const aft = p.spcAftPts !== undefined ? p.spcAftPts * PT_PX : (p.spcAftPct ?? 0) * lh;
     const marL = p.marL / EMU_PX, indent = p.indent / EMU_PX;
     div.style.cssText = css({
       position: "relative", "padding-left": `${marL}px`, "text-indent": p.bullet ? undefined : `${indent}px`,
       "text-align": p.algn === "ctr" ? "center" : p.algn === "r" ? "right" : p.algn === "just" || p.algn === "dist" ? "justify" : "left",
-      "line-height": `${lh.toFixed(3)}px`, "margin-top": pi === 0 ? undefined : `${bef.toFixed(2)}px`, "margin-bottom": `${aft.toFixed(2)}px`,
+      "line-height": `${lh.toFixed(3)}px`, "font-family": `"${mainRun(p).font}", Calibri, Carlito, sans-serif`, "font-size": `${(fitSize(largest(p), fit.fontScale) * PT_PX).toFixed(3)}px`, "margin-top": pi === 0 ? undefined : `${bef.toFixed(2)}px`, "margin-bottom": `${aft.toFixed(2)}px`,
       "white-space": body.wrap ? "pre-wrap" : "pre", "overflow-wrap": body.wrap ? "break-word" : undefined, "tab-size": `${p.defTab / EMU_PX}px`,
       direction: p.rtl ? "rtl" : undefined,
     });

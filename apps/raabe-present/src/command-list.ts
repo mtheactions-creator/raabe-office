@@ -240,6 +240,21 @@ export const COMMANDS: Command[] = [
   cmd("view.gridDialog", "Raster und Führungslinien...", "launcher"),
   cmd("view.comments", "Kommentare", "comments-show"),
 
+  // ----- contextual tabs --------------------------------------------------------------------------
+  cmd("table.firstRow", "Kopfzeile", "check"),
+  cmd("table.lastRow", "Ergebniszeile", "check"),
+  cmd("table.bandRow", "Gebänderte Zeilen", "check"),
+  cmd("table.firstCol", "Erste Spalte", "check"),
+  cmd("table.lastCol", "Letzte Spalte", "check"),
+  cmd("table.bandCol", "Gebänderte Spalten", "check"),
+  cmd("table.insertAbove", "Oberhalb einfügen", "table-insert-row"),
+  cmd("table.insertBelow", "Unterhalb einfügen", "table-below"),
+  cmd("table.insertLeft", "Links einfügen", "table-left"),
+  cmd("table.insertRight", "Rechts einfügen", "table-right"),
+  cmd("chart.editData", "Daten bearbeiten", "table"),
+  cmd("shape.height", "Höhe", "shape-height"),
+  cmd("shape.width", "Breite", "shape-width"),
+
   // ----- context menu only ----------------------------------------------------------------------
   cmd("shape.editText", "Text bearbeiten", "edit"),
   cmd("shape.editPoints", "Punkte bearbeiten", "edit-shape"),
