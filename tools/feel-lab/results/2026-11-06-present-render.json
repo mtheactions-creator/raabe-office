@@ -65,14 +65,14 @@
   {
    "file": "pptx-layouts",
    "slide": 10,
-   "mean": 2.83,
-   "differ": 1.43
+   "mean": 1.71,
+   "differ": 0.99
   },
   {
    "file": "pptx-layouts",
    "slide": 11,
-   "mean": 4.3,
-   "differ": 2.02
+   "mean": 1.14,
+   "differ": 0.74
   },
   {
    "file": "pptx-bullets",
@@ -89,8 +89,8 @@
   {
    "file": "pptx-textbox",
    "slide": 1,
-   "mean": 1.79,
-   "differ": 1.2
+   "mean": 1.4,
+   "differ": 1.01
   },
   {
    "file": "pptx-shapes",
@@ -167,13 +167,13 @@
   {
    "file": "pptx-equation",
    "slide": 1,
-   "mean": 0.73,
-   "differ": 0.37
+   "mean": 0.61,
+   "differ": 0.33
   }
  ],
  "summary": {
   "slides": 28,
-  "mean": 2.92,
-  "differ": 1.59
+  "mean": 2.75,
+  "differ": 1.52
  }
 }

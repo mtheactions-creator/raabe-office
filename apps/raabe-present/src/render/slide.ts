@@ -86,8 +86,12 @@ export function renderShape(s: ShapeView, o: RenderOptions, map: Map<number, HTM
     else if (s.frame === "chart" && s.chart) box.append(renderChart(o.pptx, s.chart, w, h));
     else box.append(placeholderBox(w, h));
   } else if (s.kind === "sp" || s.kind === "cxnSp") {
-    const look = s.ph && !s.format.fill && !s.format.line ? null : shapeElement(w, h, s.format, s.info);
-    if (look) box.append(look);
+    const url = s.pic?.path ? o.image(s.pic.path) : undefined;
+    if (url) box.append(pictureElement(url, w, h, { ...s.format, fill: undefined, crop: s.pic?.crop }));
+    else {
+      const look = s.ph && !s.format.fill && !s.format.line ? null : shapeElement(w, h, s.format, s.info);
+      if (look) box.append(look);
+    }
   }
   if (s.text) {
     const editing = o.selection && o.selection.id === s.id;

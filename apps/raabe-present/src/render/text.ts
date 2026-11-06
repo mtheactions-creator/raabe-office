@@ -115,17 +115,24 @@ function mainRun(p: TextPara): RunStyle {
  * frame. `w` and `h` are the text area in px (shape box minus insets).
  */
 export function renderText(t: TextInfo, w: number, h: number, o: TextOptions): HTMLElement {
+  // (w and h are swapped below for turned text.)
   const body = t.body;
   const fit = o.fit ?? { fontScale: body.autofit === "norm" ? body.fontScale : 1, lnSpcReduction: body.autofit === "norm" ? body.lnSpcReduction : 0 };
   const outer = document.createElement("div");
   outer.className = "txt";
   const anchor = body.anchor === "ctr" ? "center" : body.anchor === "b" ? "flex-end" : "flex-start";
-  outer.style.cssText = css({ position: "absolute", left: "0", top: "0", width: `${w}px`, height: `${h}px`, display: "flex", "flex-direction": "column", "justify-content": anchor });
+  // Vertical text (Alle Texte um 90° / 270° drehen, and the vertical placeholders): PowerPoint lays the
+  // text out across the frame's height and turns the whole frame; Latin text is not stacked.
+  const turn = body.vert === "vert" || body.vert === "eaVert" || body.vert === "mongolianVert" ? 90 : body.vert === "vert270" ? -90 : 0;
+  if (turn) { const t2 = w; w = h; h = t2; }
+  outer.style.cssText = css({ position: "absolute", left: "0", top: "0", width: `${w}px`, height: `${h}px`, display: "flex", "flex-direction": "column", "justify-content": anchor,
+    translate: turn ? `${(h - w) / 2}px ${(w - h) / 2}px` : undefined, rotate: turn ? `${turn}deg` : undefined });
+  if (turn) outer.dataset.turn = String(turn);
   const col = document.createElement("div");
   col.className = "txt-col";
   col.style.cssText = css({ width: body.wrap ? `${w}px` : "max-content", "align-self": body.anchorCtr ? "center" : body.wrap ? undefined : "flex-start",
     "column-count": body.numCol > 1 ? body.numCol : undefined, "column-gap": body.numCol > 1 ? `${body.spcCol / EMU_PX}px` : undefined,
-    "writing-mode": body.vert === "vert" || body.vert === "eaVert" ? "vertical-rl" : undefined });
+    "writing-mode": body.vert === "wordArtVert" ? "vertical-rl" : undefined, "text-orientation": body.vert === "wordArtVert" ? "upright" : undefined });
   outer.append(col);
   const showPrompt = t.empty && o.prompt && t.prompt;
   const counters: number[] = [];

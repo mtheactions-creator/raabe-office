@@ -226,8 +226,20 @@ export function matchPlaceholder(tree: Element | undefined, ph: NonNullable<Shap
   return cands.find((s) => phOf(s)!.type === ph.type) ?? (TITLE.has(ph.type) ? cands.find((s) => TITLE.has(phOf(s)!.type)) : undefined);
 }
 
-function allShapes(tree: Element): Element[] {
-  return kids(tree).filter((c) => ["sp", "pic", "graphicFrame", "grpSp", "cxnSp"].includes(c.localName));
+const SHAPES = ["sp", "pic", "graphicFrame", "grpSp", "cxnSp"];
+
+/**
+ * The shapes of a tree. Shapes inside mc:AlternateContent (equations, newer objects) are drawn from
+ * the Fallback PowerPoint writes for older readers (an equation's picture), as long as we do not
+ * understand the Choice.
+ */
+export function allShapes(tree: Element): Element[] {
+  const out: Element[] = [];
+  for (const c of kids(tree)) {
+    if (SHAPES.includes(c.localName)) out.push(c);
+    else if (c.localName === "AlternateContent") out.push(...kids(kid(c, "Fallback")).filter((x) => SHAPES.includes(x.localName)));
+  }
+  return out;
 }
 
 export function spTreeOf(doc: Document): Element | undefined {
@@ -611,6 +623,15 @@ export class SlideResolver {
       const text = readText(kid(el, "txBody"), { theme: this.theme, lists, fontColor: styleBits.fontColor }, body);
       if (ph && text.empty) text.prompt = this.prompt(ph, inh.chain[0]);
       v.text = text;
+    }
+    // A shape filled with a picture (also the picture PowerPoint keeps as an equation's fallback).
+    const spBlip = kind === "sp" ? kid(spPr, "blipFill") : undefined;
+    if (spBlip) {
+      const blip = kid(spBlip, "blip");
+      const rid = blip?.getAttributeNS(NS_R, "embed");
+      const src = kid(spBlip, "srcRect");
+      const pc = (n: string) => (num(src, n) ?? 0) / 100000;
+      v.pic = { path: rid ? this.pptx.target(this.path, rid) : undefined, crop: { l: pc("l"), t: pc("t"), r: pc("r"), b: pc("b") } };
     }
     if (kind === "pic") {
       const blip = at(el, "blipFill/blip");

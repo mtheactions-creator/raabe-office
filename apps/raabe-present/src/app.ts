@@ -2055,6 +2055,49 @@ export class PresentApp implements EditorHost, PanelHost {
       },
       clearAlone: () => document.getElementById("render-alone")?.remove(),
       /**
+       * Where the lines of shape `id` on slide i (drawn by renderAlone) start and how high they are, as
+       * PowerPoint's TextRange.Lines reports them: 1-based offsets over paragraphs joined by one character.
+       */
+      lineStarts: (id: number) => {
+        const shp = document.querySelector(`#render-alone .shp[data-id="${id}"]`);
+        if (!shp) return null;
+        // Turned text is measured unturned (its lines then run across).
+        const turned = Array.from(shp.querySelectorAll(".txt[data-turn]")) as HTMLElement[];
+        for (const el of turned) el.style.rotate = "none";
+        const out: { start: number; top: number }[] = [];
+        let base = 0, lastTop = -1e9;
+        const slideTop = (document.getElementById("render-alone") as HTMLElement).getBoundingClientRect().top;
+        const scale = (document.getElementById("render-alone") as HTMLElement).getBoundingClientRect().width / (app.deck.pptx.slideSize.cx / 12700);
+        for (const para of Array.from(shp.querySelectorAll(".para"))) {
+          let paraLen = 0;
+          lastTop = -1e9;
+          for (const sp of Array.from(para.querySelectorAll(":scope > [data-o]")) as HTMLElement[]) {
+            if (sp.classList.contains("end")) {
+              if (paraLen === 0) out.push({ start: base + 1, top: (sp.getBoundingClientRect().top - slideTop) / scale });
+              continue;
+            }
+            const o = Number(sp.dataset.o);
+            const walker = document.createTreeWalker(sp, NodeFilter.SHOW_TEXT);
+            let n: Node | null, acc = 0;
+            while ((n = walker.nextNode())) {
+              const t = n as Text;
+              for (let k = 0; k < t.length; k++) {
+                const r = document.createRange();
+                r.setStart(t, k); r.setEnd(t, k + 1);
+                const rect = r.getClientRects()[0];
+                if (!rect) continue;
+                if (rect.top > lastTop + rect.height * 0.5) { out.push({ start: base + o + acc + k + 1, top: (rect.top - slideTop) / scale }); lastTop = rect.top; }
+              }
+              acc += t.length;
+            }
+            paraLen = Math.max(paraLen, o + acc);
+          }
+          base += paraLen + 1;
+        }
+        for (const el of turned) el.style.rotate = `${el.dataset.turn}deg`;
+        return out;
+      },
+      /**
        * A catalogue case's start (catalogue_present.py): a new presentation with `slides` slides of the
        * layout named, the shapes made as PowerPoint's COM calls make them (boxes in points), nothing selected.
        */

@@ -1,0 +1,2331 @@
+{
+ "date": "2026-11-06",
+ "shapes": [
+  {
+   "file": "pptx-layouts",
+   "slide": 1,
+   "shape": "Title 1",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    207.98
+   ],
+   "ourTops": [
+    203.5
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-layouts",
+   "slide": 1,
+   "shape": "Subtitle 2",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    287.23
+   ],
+   "ourTops": [
+    285.0
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-layouts",
+   "slide": 2,
+   "shape": "Title 1",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    57.18
+   ],
+   "ourTops": [
+    53.4
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-layouts",
+   "slide": 2,
+   "shape": "Content Placeholder 2",
+   "theirs": [
+    1,
+    24
+   ],
+   "ours": [
+    1,
+    24
+   ],
+   "theirTops": [
+    147.35,
+    177.59
+   ],
+   "ourTops": [
+    145.1,
+    180.3
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-layouts",
+   "slide": 3,
+   "shape": "Title 1",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    290.85
+   ],
+   "ourTops": [
+    286.3
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-layouts",
+   "slide": 3,
+   "shape": "Text Placeholder 2",
+   "theirs": [
+    1,
+    24
+   ],
+   "ours": [
+    1,
+    24
+   ],
+   "theirTops": [
+    364.98,
+    390.9
+   ],
+   "ourTops": [
+    362.7,
+    394.4
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-layouts",
+   "slide": 4,
+   "shape": "Title 1",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    57.18
+   ],
+   "ourTops": [
+    53.4
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-layouts",
+   "slide": 4,
+   "shape": "Content Placeholder 2",
+   "theirs": [
+    1,
+    24
+   ],
+   "ours": [
+    1,
+    24
+   ],
+   "theirTops": [
+    147.35,
+    177.59
+   ],
+   "ourTops": [
+    145.1,
+    180.3
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-layouts",
+   "slide": 4,
+   "shape": "Content Placeholder 3",
+   "theirs": [
+    1,
+    24
+   ],
+   "ours": [
+    1,
+    24
+   ],
+   "theirTops": [
+    147.35,
+    177.59
+   ],
+   "ourTops": [
+    145.1,
+    180.3
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-layouts",
+   "slide": 5,
+   "shape": "Title 1",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    57.18
+   ],
+   "ourTops": [
+    53.4
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-layouts",
+   "slide": 5,
+   "shape": "Text Placeholder 2",
+   "theirs": [
+    1,
+    24
+   ],
+   "ours": [
+    1,
+    24
+   ],
+   "theirTops": [
+    141.13,
+    167.05
+   ],
+   "ourTops": [
+    138.9,
+    170.5
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-layouts",
+   "slide": 5,
+   "shape": "Content Placeholder 3",
+   "theirs": [
+    1,
+    24
+   ],
+   "ours": [
+    1,
+    24
+   ],
+   "theirTops": [
+    200.85,
+    231.09
+   ],
+   "ourTops": [
+    198.6,
+    233.8
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-layouts",
+   "slide": 5,
+   "shape": "Text Placeholder 4",
+   "theirs": [
+    1,
+    24
+   ],
+   "ours": [
+    1,
+    24
+   ],
+   "theirTops": [
+    141.13,
+    167.05
+   ],
+   "ourTops": [
+    138.9,
+    170.5
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-layouts",
+   "slide": 5,
+   "shape": "Content Placeholder 5",
+   "theirs": [
+    1,
+    24
+   ],
+   "ours": [
+    1,
+    24
+   ],
+   "theirTops": [
+    200.85,
+    231.09
+   ],
+   "ourTops": [
+    198.6,
+    233.8
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-layouts",
+   "slide": 6,
+   "shape": "Title 1",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    57.18
+   ],
+   "ourTops": [
+    53.4
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-layouts",
+   "slide": 8,
+   "shape": "Title 1",
+   "theirs": [
+    1,
+    25
+   ],
+   "ours": [
+    1,
+    25
+   ],
+   "theirTops": [
+    89.28,
+    123.84
+   ],
+   "ourTops": [
+    87.0,
+    121.6
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-layouts",
+   "slide": 8,
+   "shape": "Content Placeholder 2",
+   "theirs": [
+    1,
+    24
+   ],
+   "ours": [
+    1,
+    24
+   ],
+   "theirTops": [
+    81.35,
+    115.91
+   ],
+   "ourTops": [
+    79.1,
+    118.6
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-layouts",
+   "slide": 8,
+   "shape": "Text Placeholder 3",
+   "theirs": [
+    1,
+    24
+   ],
+   "ours": [
+    1,
+    24
+   ],
+   "theirTops": [
+    165.6,
+    182.88
+   ],
+   "ourTops": [
+    164.1,
+    186.4
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-layouts",
+   "slide": 9,
+   "shape": "Title 1",
+   "theirs": [
+    1,
+    23
+   ],
+   "ours": [
+    1,
+    23
+   ],
+   "theirTops": [
+    89.28,
+    123.84
+   ],
+   "ourTops": [
+    87.0,
+    121.6
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-layouts",
+   "slide": 9,
+   "shape": "Text Placeholder 3",
+   "theirs": [
+    1,
+    24
+   ],
+   "ours": [
+    1,
+    24
+   ],
+   "theirTops": [
+    165.6,
+    182.88
+   ],
+   "ourTops": [
+    164.1,
+    186.4
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-layouts",
+   "slide": 10,
+   "shape": "Title 1",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    57.18
+   ],
+   "ourTops": [
+    53.4
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-layouts",
+   "slide": 10,
+   "shape": "Vertical Text Placeholder 2",
+   "theirs": [
+    1,
+    25
+   ],
+   "ours": [
+    1,
+    25
+   ],
+   "theirTops": [
+    165.35,
+    201.35
+   ],
+   "ourTops": [
+    -94.0,
+    -58.8
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-layouts",
+   "slide": 11,
+   "shape": "Vertical Title 1",
+   "theirs": [
+    1,
+    28
+   ],
+   "ours": [
+    1,
+    28
+   ],
+   "theirTops": [
+    32.35,
+    32.35
+   ],
+   "ourTops": [
+    206.3,
+    253.8
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-layouts",
+   "slide": 11,
+   "shape": "Vertical Text Placeholder 2",
+   "theirs": [
+    1,
+    25
+   ],
+   "ours": [
+    1,
+    25
+   ],
+   "theirTops": [
+    50.35,
+    86.35
+   ],
+   "ourTops": [
+    -42.0,
+    -6.8
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-bullets",
+   "slide": 1,
+   "shape": "Title 1",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    57.18
+   ],
+   "ourTops": [
+    53.4
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-bullets",
+   "slide": 1,
+   "shape": "Content Placeholder 2",
+   "theirs": [
+    1,
+    9,
+    17,
+    25,
+    33,
+    41
+   ],
+   "ours": [
+    1,
+    9,
+    17,
+    25,
+    33,
+    41
+   ],
+   "theirTops": [
+    147.35,
+    177.59,
+    208.51,
+    235.11,
+    259.55,
+    283.99
+   ],
+   "ourTops": [
+    145.1,
+    180.3,
+    212.0,
+    238.6,
+    263.0,
+    291.7
+   ],
+   "same": 6,
+   "of": 6
+  },
+  {
+   "file": "pptx-bullets",
+   "slide": 2,
+   "shape": "Title 1",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    57.18
+   ],
+   "ourTops": [
+    53.4
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-bullets",
+   "slide": 2,
+   "shape": "Content Placeholder 2",
+   "theirs": [
+    1,
+    16,
+    32,
+    45,
+    58
+   ],
+   "ours": [
+    1,
+    16,
+    32,
+    45,
+    58
+   ],
+   "theirTops": [
+    147.35,
+    177.59,
+    217.83,
+    248.75,
+    279.67
+   ],
+   "ourTops": [
+    145.1,
+    185.3,
+    220.5,
+    251.5,
+    287.4
+   ],
+   "same": 5,
+   "of": 5
+  },
+  {
+   "file": "pptx-bullets",
+   "slide": 2,
+   "shape": "Content Placeholder 3",
+   "theirs": [
+    1,
+    32
+   ],
+   "ours": [
+    1,
+    32
+   ],
+   "theirTops": [
+    147.35,
+    177.59
+   ],
+   "ourTops": [
+    145.1,
+    185.3
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-textbox",
+   "slide": 1,
+   "shape": "TextBox 1",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    43.6
+   ],
+   "ourTops": [
+    42.8
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-textbox",
+   "slide": 1,
+   "shape": "TextBox 2",
+   "theirs": [
+    1,
+    42,
+    87
+   ],
+   "ours": [
+    1,
+    42,
+    87
+   ],
+   "theirTops": [
+    123.6,
+    145.2,
+    166.8
+   ],
+   "ourTops": [
+    122.8,
+    144.4,
+    166.0
+   ],
+   "same": 3,
+   "of": 3
+  },
+  {
+   "file": "pptx-textbox",
+   "slide": 1,
+   "shape": "TextBox 3",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    43.6
+   ],
+   "ourTops": [
+    56.3
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-textbox",
+   "slide": 1,
+   "shape": "TextBox 4",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    316.07
+   ],
+   "ourTops": [
+    298.3
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-textbox",
+   "slide": 1,
+   "shape": "TextBox 5",
+   "theirs": [
+    1,
+    33
+   ],
+   "ours": [
+    1,
+    33
+   ],
+   "theirTops": [
+    278.4,
+    300.0
+   ],
+   "ourTops": [
+    277.6,
+    299.2
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-shapes",
+   "slide": 1,
+   "shape": "Rectangle 1",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    89.2
+   ],
+   "ourTops": [
+    88.4
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-shapes",
+   "slide": 1,
+   "shape": "Oval 6",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    279.2
+   ],
+   "ourTops": [
+    278.4
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-table",
+   "slide": 1,
+   "shape": "Title 1",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    57.18
+   ],
+   "ourTops": [
+    53.4
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-autofit",
+   "slide": 1,
+   "shape": "Title 1",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    57.18
+   ],
+   "ourTops": [
+    53.4
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-autofit",
+   "slide": 1,
+   "shape": "Content Placeholder 2",
+   "theirs": [
+    1,
+    86,
+    171,
+    256,
+    341,
+    426,
+    511,
+    596,
+    681,
+    766,
+    852,
+    938,
+    1024,
+    1110
+   ],
+   "ours": [
+    1,
+    86,
+    171,
+    256,
+    341,
+    426,
+    511,
+    596,
+    681,
+    766,
+    852,
+    938,
+    1024,
+    1110
+   ],
+   "theirTops": [
+    147.35,
+    159.95,
+    182.55,
+    205.15,
+    227.75,
+    250.35,
+    272.95,
+    295.55,
+    318.15,
+    340.75,
+    363.35,
+    385.95,
+    408.55,
+    431.15
+   ],
+   "ourTops": [
+    144.3,
+    166.9,
+    189.5,
+    212.1,
+    234.7,
+    257.3,
+    279.9,
+    302.5,
+    325.1,
+    347.7,
+    370.3,
+    392.9,
+    415.5,
+    438.1
+   ],
+   "same": 14,
+   "of": 14
+  },
+  {
+   "file": "pptx-autofit",
+   "slide": 2,
+   "shape": "Title 1",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    57.18
+   ],
+   "ourTops": [
+    53.4
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-autofit",
+   "slide": 2,
+   "shape": "Content Placeholder 2",
+   "theirs": [
+    1,
+    67,
+    86,
+    152,
+    171,
+    237,
+    256,
+    322,
+    341,
+    407,
+    426,
+    492,
+    511,
+    577,
+    596,
+    662,
+    681,
+    747
+   ],
+   "ours": [
+    1,
+    67,
+    86,
+    152,
+    171,
+    237,
+    256,
+    322,
+    341,
+    407,
+    426,
+    492,
+    511,
+    577,
+    596,
+    662,
+    681,
+    747
+   ],
+   "theirTops": [
+    147.35,
+    177.59,
+    207.83,
+    248.07,
+    278.31,
+    318.55,
+    348.79,
+    389.03,
+    419.27,
+    459.51,
+    489.75,
+    529.99,
+    560.23,
+    600.47,
+    630.71,
+    670.95,
+    701.19,
+    741.43
+   ],
+   "ourTops": [
+    145.1,
+    175.3,
+    215.6,
+    245.8,
+    286.0,
+    316.3,
+    356.5,
+    386.7,
+    426.9,
+    457.2,
+    497.4,
+    527.6,
+    567.9,
+    598.1,
+    638.3,
+    668.6,
+    708.8,
+    739.0
+   ],
+   "same": 18,
+   "of": 18
+  },
+  {
+   "file": "pptx-autofit",
+   "slide": 3,
+   "shape": "Title 1",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    57.18
+   ],
+   "ourTops": [
+    53.4
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-autofit",
+   "slide": 3,
+   "shape": "Content Placeholder 2",
+   "theirs": [
+    1,
+    67,
+    86,
+    152,
+    171,
+    237,
+    256,
+    322,
+    341,
+    407,
+    426,
+    492,
+    511,
+    577,
+    596,
+    662
+   ],
+   "ours": [
+    1,
+    67,
+    86,
+    152,
+    171,
+    237,
+    256,
+    322,
+    341,
+    407,
+    426,
+    492,
+    511,
+    577,
+    596,
+    662
+   ],
+   "theirTops": [
+    147.35,
+    177.59,
+    207.83,
+    248.07,
+    278.31,
+    318.55,
+    348.79,
+    389.03,
+    419.27,
+    459.51,
+    489.75,
+    529.99,
+    560.23,
+    600.47,
+    630.71,
+    670.95
+   ],
+   "ourTops": [
+    145.1,
+    175.3,
+    215.6,
+    245.8,
+    286.0,
+    316.3,
+    356.5,
+    386.7,
+    426.9,
+    457.2,
+    497.4,
+    527.6,
+    567.9,
+    598.1,
+    638.3,
+    668.6
+   ],
+   "same": 16,
+   "of": 16
+  },
+  {
+   "file": "pptx-show",
+   "slide": 1,
+   "shape": "Title 1",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    207.98
+   ],
+   "ourTops": [
+    203.5
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-show",
+   "slide": 2,
+   "shape": "Title 1",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    57.18
+   ],
+   "ourTops": [
+    53.4
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-show",
+   "slide": 2,
+   "shape": "Content Placeholder 2",
+   "theirs": [
+    1,
+    11
+   ],
+   "ours": [
+    1,
+    11
+   ],
+   "theirTops": [
+    147.35,
+    177.59
+   ],
+   "ourTops": [
+    145.1,
+    185.3
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-show",
+   "slide": 3,
+   "shape": "Title 1",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    57.18
+   ],
+   "ourTops": [
+    53.4
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-show",
+   "slide": 3,
+   "shape": "Content Placeholder 2",
+   "theirs": [
+    1,
+    11
+   ],
+   "ours": [
+    1,
+    11
+   ],
+   "theirTops": [
+    147.35,
+    177.59
+   ],
+   "ourTops": [
+    145.1,
+    185.3
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-show",
+   "slide": 4,
+   "shape": "Title 1",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    57.18
+   ],
+   "ourTops": [
+    53.4
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-show",
+   "slide": 4,
+   "shape": "Content Placeholder 2",
+   "theirs": [
+    1,
+    11
+   ],
+   "ours": [
+    1,
+    11
+   ],
+   "theirTops": [
+    147.35,
+    177.59
+   ],
+   "ourTops": [
+    145.1,
+    185.3
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-office-layouts",
+   "slide": 1,
+   "shape": "Title 1",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    207.56
+   ],
+   "ourTops": [
+    203.5
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-office-layouts",
+   "slide": 1,
+   "shape": "Subtitle 2",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    287.23
+   ],
+   "ourTops": [
+    285.0
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-office-layouts",
+   "slide": 2,
+   "shape": "Title 1",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    57.03
+   ],
+   "ourTops": [
+    53.4
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-office-layouts",
+   "slide": 2,
+   "shape": "Content Placeholder 2",
+   "theirs": [
+    1,
+    24
+   ],
+   "ours": [
+    1,
+    24
+   ],
+   "theirTops": [
+    147.35,
+    177.59
+   ],
+   "ourTops": [
+    145.1,
+    180.3
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-office-layouts",
+   "slide": 3,
+   "shape": "Title 1",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    290.43
+   ],
+   "ourTops": [
+    286.3
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-office-layouts",
+   "slide": 3,
+   "shape": "Text Placeholder 2",
+   "theirs": [
+    1,
+    24
+   ],
+   "ours": [
+    1,
+    24
+   ],
+   "theirTops": [
+    364.98,
+    390.9
+   ],
+   "ourTops": [
+    362.7,
+    394.4
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-office-layouts",
+   "slide": 4,
+   "shape": "Title 1",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    57.03
+   ],
+   "ourTops": [
+    53.4
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-office-layouts",
+   "slide": 4,
+   "shape": "Content Placeholder 2",
+   "theirs": [
+    1,
+    24
+   ],
+   "ours": [
+    1,
+    24
+   ],
+   "theirTops": [
+    147.35,
+    177.59
+   ],
+   "ourTops": [
+    145.1,
+    180.3
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-office-layouts",
+   "slide": 4,
+   "shape": "Content Placeholder 3",
+   "theirs": [
+    1,
+    24
+   ],
+   "ours": [
+    1,
+    24
+   ],
+   "theirTops": [
+    147.35,
+    177.59
+   ],
+   "ourTops": [
+    145.1,
+    180.3
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-office-layouts",
+   "slide": 5,
+   "shape": "Title 1",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    57.03
+   ],
+   "ourTops": [
+    53.4
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-office-layouts",
+   "slide": 5,
+   "shape": "Text Placeholder 2",
+   "theirs": [
+    1,
+    24
+   ],
+   "ours": [
+    1,
+    24
+   ],
+   "theirTops": [
+    140.99,
+    166.91
+   ],
+   "ourTops": [
+    138.9,
+    170.5
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-office-layouts",
+   "slide": 5,
+   "shape": "Content Placeholder 3",
+   "theirs": [
+    1,
+    24
+   ],
+   "ours": [
+    1,
+    24
+   ],
+   "theirTops": [
+    200.85,
+    231.09
+   ],
+   "ourTops": [
+    198.6,
+    233.8
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-office-layouts",
+   "slide": 5,
+   "shape": "Text Placeholder 4",
+   "theirs": [
+    1,
+    24
+   ],
+   "ours": [
+    1,
+    24
+   ],
+   "theirTops": [
+    140.99,
+    166.91
+   ],
+   "ourTops": [
+    138.9,
+    170.5
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-office-layouts",
+   "slide": 5,
+   "shape": "Content Placeholder 5",
+   "theirs": [
+    1,
+    24
+   ],
+   "ours": [
+    1,
+    24
+   ],
+   "theirTops": [
+    200.85,
+    231.09
+   ],
+   "ourTops": [
+    198.6,
+    233.8
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-office-layouts",
+   "slide": 6,
+   "shape": "Title 1",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    57.03
+   ],
+   "ourTops": [
+    53.4
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-office-layouts",
+   "slide": 8,
+   "shape": "Title 1",
+   "theirs": [
+    1,
+    25
+   ],
+   "ours": [
+    1,
+    25
+   ],
+   "theirTops": [
+    89.05,
+    123.61
+   ],
+   "ourTops": [
+    87.0,
+    121.6
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-office-layouts",
+   "slide": 8,
+   "shape": "Content Placeholder 2",
+   "theirs": [
+    1,
+    24
+   ],
+   "ours": [
+    1,
+    24
+   ],
+   "theirTops": [
+    81.35,
+    115.91
+   ],
+   "ourTops": [
+    79.1,
+    118.6
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-office-layouts",
+   "slide": 8,
+   "shape": "Text Placeholder 3",
+   "theirs": [
+    1,
+    24
+   ],
+   "ours": [
+    1,
+    24
+   ],
+   "theirTops": [
+    165.6,
+    182.88
+   ],
+   "ourTops": [
+    164.1,
+    186.4
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-office-layouts",
+   "slide": 9,
+   "shape": "Title 1",
+   "theirs": [
+    1,
+    23
+   ],
+   "ours": [
+    1,
+    23
+   ],
+   "theirTops": [
+    89.05,
+    123.61
+   ],
+   "ourTops": [
+    87.0,
+    121.6
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-office-layouts",
+   "slide": 9,
+   "shape": "Text Placeholder 3",
+   "theirs": [
+    1,
+    24
+   ],
+   "ours": [
+    1,
+    24
+   ],
+   "theirTops": [
+    165.6,
+    182.88
+   ],
+   "ourTops": [
+    164.1,
+    186.4
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-office-layouts",
+   "slide": 10,
+   "shape": "Title 1",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    57.03
+   ],
+   "ourTops": [
+    53.4
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-office-layouts",
+   "slide": 10,
+   "shape": "Vertical Text Placeholder 2",
+   "theirs": [
+    1,
+    25
+   ],
+   "ours": [
+    1,
+    25
+   ],
+   "theirTops": [
+    165.35,
+    201.35
+   ],
+   "ourTops": [
+    -94.0,
+    -58.8
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-office-layouts",
+   "slide": 11,
+   "shape": "Vertical Title 1",
+   "theirs": [
+    1,
+    28
+   ],
+   "ours": [
+    1,
+    28
+   ],
+   "theirTops": [
+    32.35,
+    32.35
+   ],
+   "ourTops": [
+    206.3,
+    253.8
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-office-layouts",
+   "slide": 11,
+   "shape": "Vertical Text Placeholder 2",
+   "theirs": [
+    1,
+    25
+   ],
+   "ours": [
+    1,
+    25
+   ],
+   "theirTops": [
+    50.35,
+    86.35
+   ],
+   "ourTops": [
+    -42.0,
+    -6.8
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-office-bullets",
+   "slide": 1,
+   "shape": "Title 1",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    57.03
+   ],
+   "ourTops": [
+    53.4
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-office-bullets",
+   "slide": 1,
+   "shape": "Content Placeholder 2",
+   "theirs": [
+    1,
+    9,
+    17,
+    25,
+    33,
+    41
+   ],
+   "ours": [
+    1,
+    9,
+    17,
+    25,
+    33,
+    41
+   ],
+   "theirTops": [
+    147.35,
+    177.59,
+    208.51,
+    235.11,
+    259.55,
+    283.99
+   ],
+   "ourTops": [
+    145.1,
+    180.3,
+    212.0,
+    238.6,
+    263.0,
+    291.7
+   ],
+   "same": 6,
+   "of": 6
+  },
+  {
+   "file": "pptx-office-bullets",
+   "slide": 2,
+   "shape": "Title 1",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1,
+    23
+   ],
+   "theirTops": [
+    57.03
+   ],
+   "ourTops": [
+    29.7,
+    77.2
+   ],
+   "same": 1,
+   "of": 2
+  },
+  {
+   "file": "pptx-office-bullets",
+   "slide": 2,
+   "shape": "Content Placeholder 2",
+   "theirs": [
+    1,
+    16,
+    32,
+    45,
+    58
+   ],
+   "ours": [
+    1,
+    16,
+    32,
+    45,
+    58
+   ],
+   "theirTops": [
+    147.35,
+    177.59,
+    217.83,
+    248.75,
+    279.67
+   ],
+   "ourTops": [
+    145.1,
+    185.3,
+    220.5,
+    251.5,
+    287.4
+   ],
+   "same": 5,
+   "of": 5
+  },
+  {
+   "file": "pptx-office-bullets",
+   "slide": 2,
+   "shape": "Content Placeholder 3",
+   "theirs": [
+    1,
+    13,
+    32
+   ],
+   "ours": [
+    1,
+    32
+   ],
+   "theirTops": [
+    147.35,
+    177.59,
+    207.83
+   ],
+   "ourTops": [
+    145.1,
+    185.3
+   ],
+   "same": 2,
+   "of": 3
+  },
+  {
+   "file": "pptx-office-textbox",
+   "slide": 1,
+   "shape": "TextBox 1",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    43.6
+   ],
+   "ourTops": [
+    42.8
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-office-textbox",
+   "slide": 1,
+   "shape": "TextBox 2",
+   "theirs": [
+    1,
+    37,
+    80
+   ],
+   "ours": [
+    1,
+    42,
+    87
+   ],
+   "theirTops": [
+    123.6,
+    145.2,
+    166.8
+   ],
+   "ourTops": [
+    122.8,
+    144.4,
+    166.0
+   ],
+   "same": 1,
+   "of": 3
+  },
+  {
+   "file": "pptx-office-textbox",
+   "slide": 1,
+   "shape": "TextBox 3",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    43.6
+   ],
+   "ourTops": [
+    56.3
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-office-textbox",
+   "slide": 1,
+   "shape": "TextBox 4",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    308.77
+   ],
+   "ourTops": [
+    298.3
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-office-textbox",
+   "slide": 1,
+   "shape": "TextBox 5",
+   "theirs": [
+    1,
+    33
+   ],
+   "ours": [
+    1,
+    33
+   ],
+   "theirTops": [
+    278.4,
+    300.0
+   ],
+   "ourTops": [
+    277.6,
+    299.2
+   ],
+   "same": 2,
+   "of": 2
+  },
+  {
+   "file": "pptx-office-autofit",
+   "slide": 1,
+   "shape": "Title 1",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    57.03
+   ],
+   "ourTops": [
+    53.4
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-office-autofit",
+   "slide": 1,
+   "shape": "Content Placeholder 2",
+   "theirs": [
+    1,
+    86,
+    171,
+    256,
+    341,
+    426,
+    511,
+    596,
+    681,
+    766,
+    852,
+    938,
+    1024,
+    1110
+   ],
+   "ours": [
+    1,
+    86,
+    171,
+    256,
+    341,
+    426,
+    511,
+    596,
+    681,
+    766,
+    852,
+    938,
+    1024,
+    1110
+   ],
+   "theirTops": [
+    147.35,
+    159.95,
+    182.55,
+    205.15,
+    227.75,
+    250.35,
+    272.95,
+    295.55,
+    318.15,
+    340.75,
+    363.35,
+    385.95,
+    408.55,
+    431.15
+   ],
+   "ourTops": [
+    144.3,
+    166.9,
+    189.5,
+    212.1,
+    234.7,
+    257.3,
+    279.9,
+    302.5,
+    325.1,
+    347.7,
+    370.3,
+    392.9,
+    415.5,
+    438.1
+   ],
+   "same": 14,
+   "of": 14
+  },
+  {
+   "file": "pptx-office-autofit",
+   "slide": 2,
+   "shape": "Title 1",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    57.03
+   ],
+   "ourTops": [
+    53.4
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-office-autofit",
+   "slide": 2,
+   "shape": "Content Placeholder 2",
+   "theirs": [
+    1,
+    67,
+    86,
+    152,
+    171,
+    237,
+    256,
+    322,
+    341,
+    407,
+    426,
+    492,
+    511,
+    577,
+    596,
+    662,
+    681,
+    747
+   ],
+   "ours": [
+    1,
+    67,
+    86,
+    152,
+    171,
+    237,
+    256,
+    322,
+    341,
+    407,
+    426,
+    492,
+    511,
+    577,
+    596,
+    662,
+    681,
+    747
+   ],
+   "theirTops": [
+    147.35,
+    177.59,
+    207.83,
+    248.07,
+    278.31,
+    318.55,
+    348.79,
+    389.03,
+    419.27,
+    459.51,
+    489.75,
+    529.99,
+    560.23,
+    600.47,
+    630.71,
+    670.95,
+    701.19,
+    741.43
+   ],
+   "ourTops": [
+    145.1,
+    175.3,
+    215.6,
+    245.8,
+    286.0,
+    316.3,
+    356.5,
+    386.7,
+    426.9,
+    457.2,
+    497.4,
+    527.6,
+    567.9,
+    598.1,
+    638.3,
+    668.6,
+    708.8,
+    739.0
+   ],
+   "same": 18,
+   "of": 18
+  },
+  {
+   "file": "pptx-office-autofit",
+   "slide": 3,
+   "shape": "Title 1",
+   "theirs": [
+    1
+   ],
+   "ours": [
+    1
+   ],
+   "theirTops": [
+    57.03
+   ],
+   "ourTops": [
+    53.4
+   ],
+   "same": 1,
+   "of": 1
+  },
+  {
+   "file": "pptx-office-autofit",
+   "slide": 3,
+   "shape": "Content Placeholder 2",
+   "theirs": [
+    1,
+    67,
+    86,
+    152,
+    171,
+    237,
+    256,
+    322,
+    341,
+    407,
+    426,
+    492,
+    511,
+    577,
+    596,
+    662
+   ],
+   "ours": [
+    1,
+    67,
+    86,
+    152,
+    171,
+    237,
+    256,
+    322,
+    341,
+    407,
+    426,
+    492,
+    511,
+    577,
+    596,
+    662
+   ],
+   "theirTops": [
+    147.35,
+    177.59,
+    207.83,
+    248.07,
+    278.31,
+    318.55,
+    348.79,
+    389.03,
+    419.27,
+    459.51,
+    489.75,
+    529.99,
+    560.23,
+    600.47,
+    630.71,
+    670.95
+   ],
+   "ourTops": [
+    145.1,
+    175.3,
+    215.6,
+    245.8,
+    286.0,
+    316.3,
+    356.5,
+    386.7,
+    426.9,
+    457.2,
+    497.4,
+    527.6,
+    567.9,
+    598.1,
+    638.3,
+    668.6
+   ],
+   "same": 16,
+   "of": 16
+  }
+ ],
+ "summary": {
+  "lineStarts": 127,
+  "of": 127,
+  "aptos": {
+   "lineStarts": 112,
+   "of": 116
+  }
+ }
+}
