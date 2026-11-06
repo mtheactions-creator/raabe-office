@@ -77,6 +77,8 @@ export class SlideEditor {
   smartGuides = true;
   snapToGrid = false;
   gridSpacing = 72008;
+  /** Drawn over the page and not part of it (the Handzettelmaster's slide places). */
+  pageDecor: ((size: { cx: number; cy: number }) => HTMLElement | null) | null = null;
   showGrid = false;
   showGuides = false;
   private composing = false;
@@ -112,7 +114,7 @@ export class SlideEditor {
 
   /** The page being edited: a slide's size, or the notes page's for the Notizenmaster. */
   get pageSize(): { cx: number; cy: number } {
-    if (this.path && /notesMasters\//.test(this.path)) {
+    if (this.path && /(notesMasters|handoutMasters)\//.test(this.path)) {
       const n = PptxDom.at(this.pptx.presentation, "notesSz");
       return { cx: PptxDom.num(n, "cx") ?? 6858000, cy: PptxDom.num(n, "cy") ?? 9144000 };
     }
@@ -134,6 +136,8 @@ export class SlideEditor {
     if (this.text && !all.has(this.text.id)) this.text = null;
     const sel = this.text ? { id: this.text.id, cell: this.text.cell, cells: this.text.range, sel: T.cmpPos(this.text.caret, this.text.anchor) ? { from: T.minPos(this.text.caret, this.text.anchor), to: T.maxPos(this.text.caret, this.text.anchor) } : null } : null;
     this.rendered = renderSlide(this.view, this.pageSize, { editing: true, slideNumber: this.host.slideNumber(), image: (p) => this.host.image(p), selection: sel, fits: this.fits, pptx: this.pptx });
+    const decor = this.pageDecor?.(this.pageSize);
+    if (decor) this.rendered.el.append(decor);
     if (this.showGrid) this.rendered.el.append(this.gridLayer());
     this.stage.replaceChildren(this.rendered.el);
     this.layout();

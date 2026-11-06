@@ -378,6 +378,32 @@ export class Deck {
     }, `notes:${slidePath}`);
   }
 
+  ensureHandoutMasterPath(): string {
+    const rels = this.pptx.rels(this.pptx.presPath);
+    const r = rels.list.find((x) => /handoutMaster$/.test(x.type));
+    return r ? this.pptx.target(this.pptx.presPath, r.id)! : "ppt/handoutMasters/handoutMaster1.xml";
+  }
+
+  /** The Handzettelmaster (as PowerPoint makes it the first time it is opened): header, date, footer, page number. */
+  ensureHandoutMaster(path: string): void {
+    if (this.pptx.has(path)) return;
+    const theme = this.pptx.freeName("ppt/theme/theme#.xml");
+    const masterTheme = this.pptx.themeOf(this.pptx.masters()[0]);
+    this.pptx.put(theme, this.pptx.text(masterTheme!) ?? "", CT_PPTX.theme);
+    this.pptx.put(path, parseXml(handoutMasterXml()), CT_PPTX.handoutMaster);
+    this.pptx.link(path, PPTX_RT.theme, theme);
+    const rid = this.pptx.link(this.pptx.presPath, PPTX_RT.handoutMaster, path);
+    const pres = this.pptx.presentation;
+    if (!kid(pres, "handoutMasterIdLst")) {
+      const list = make(pres.ownerDocument, "p:handoutMasterIdLst");
+      const id = make(pres.ownerDocument, "p:handoutMasterId");
+      id.setAttributeNS(NS_R, "r:id", rid);
+      list.append(id);
+      const after = kid(pres, "notesMasterIdLst") ?? kid(pres, "sldMasterIdLst");
+      pres.insertBefore(list, after ? after.nextSibling : pres.firstChild);
+    }
+  }
+
   ensureNotesMasterPath(): string {
     const rels = this.pptx.rels(this.pptx.presPath);
     const r = rels.list.find((x) => /notesMaster$/.test(x.type));
@@ -471,6 +497,29 @@ function notesXml(): string {
     `<p:sp><p:nvSpPr><p:cNvPr id="2" name="Folienbildplatzhalter 1"/><p:cNvSpPr><a:spLocks noGrp="1" noRot="1" noChangeAspect="1"/></p:cNvSpPr><p:nvPr><p:ph type="sldImg"/></p:nvPr></p:nvSpPr><p:spPr/></p:sp>` +
     `<p:sp><p:nvSpPr><p:cNvPr id="3" name="Notizenplatzhalter 2"/><p:cNvSpPr><a:spLocks noGrp="1"/></p:cNvSpPr><p:nvPr><p:ph type="body" idx="1"/></p:nvPr></p:nvSpPr><p:spPr/><p:txBody><a:bodyPr/><a:lstStyle/><a:p><a:endParaRPr lang="de-DE"/></a:p></p:txBody></p:sp>` +
     `</p:spTree></p:cSld><p:clrMapOvr><a:masterClrMapping/></p:clrMapOvr></p:notes>`;
+}
+
+/** Our default placeholders of the notes and handout masters (each master's own XML), by ph type. */
+export function defaultMasterPlaceholder(kind: "notes" | "handout", type: string): string | undefined {
+  const xml = kind === "notes" ? notesMasterXml() : handoutMasterXml();
+  const doc = parseXml(xml);
+  const sp = Array.from(doc.getElementsByTagNameNS(PptxDom.NS_P, "sp")).find((s) => s.getElementsByTagNameNS(PptxDom.NS_P, "ph")[0]?.getAttribute("type") === type);
+  return sp ? serialize(sp).replace(/^<\?xml[^>]*>/, "") : undefined;
+}
+
+function masterPh(id: number, name: string, type: string, idx: number | null, box: number[], extra = "", algn = ""): string {
+  return `<p:sp><p:nvSpPr><p:cNvPr id="${id}" name="${name}"/><p:cNvSpPr><a:spLocks noGrp="1"/></p:cNvSpPr><p:nvPr><p:ph type="${type}"${idx !== null ? ` idx="${idx}"` : ""}${extra}/></p:nvPr></p:nvSpPr>` +
+    `<p:spPr><a:xfrm><a:off x="${box[0]}" y="${box[1]}"/><a:ext cx="${box[2]}" cy="${box[3]}"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></p:spPr>` +
+    `<p:txBody><a:bodyPr vert="horz" lIns="91440" tIns="45720" rIns="91440" bIns="45720" rtlCol="0"${box[1] > 4000000 ? ' anchor="b"' : ""}/><a:lstStyle><a:lvl1pPr${algn ? ` algn="${algn}"` : ""}><a:defRPr sz="1200"/></a:lvl1pPr></a:lstStyle><a:p><a:endParaRPr lang="de-DE"/></a:p></p:txBody></p:sp>`;
+}
+
+function handoutMasterXml(): string {
+  return `${PptxDom.XML_DECL}<p:handoutMaster ${NSD}><p:cSld><p:bg><p:bgRef idx="1001"><a:schemeClr val="bg1"/></p:bgRef></p:bg><p:spTree>${TREE_HEAD}` +
+    masterPh(2, "Kopfzeilenplatzhalter 1", "hdr", null, [0, 0, 2971800, 458788], ' sz="quarter"') +
+    masterPh(3, "Datumsplatzhalter 2", "dt", 1, [3884613, 0, 2971800, 458788], ' sz="quarter"', "r") +
+    masterPh(4, "Fußzeilenplatzhalter 3", "ftr", 2, [0, 8685213, 2971800, 458787], ' sz="quarter"') +
+    masterPh(5, "Foliennummernplatzhalter 4", "sldNum", 3, [3884613, 8685213, 2971800, 458787], ' sz="quarter"', "r") +
+    `</p:spTree></p:cSld><p:clrMap bg1="lt1" tx1="dk1" bg2="lt2" tx2="dk2" accent1="accent1" accent2="accent2" accent3="accent3" accent4="accent4" accent5="accent5" accent6="accent6" hlink="hlink" folHlink="folHlink"/></p:handoutMaster>`;
 }
 
 function notesMasterXml(): string {

@@ -5,12 +5,12 @@
 import { Pptx, newPptx, PptxDom, type ShapeView, type DesignSpec } from "@raabe/ooxml";
 import {
   Backstage, Commands, Keytips, Ribbon, TitleBar, baseName, colorGrid, h, icon, installTooltips, messageBox, showDialog, showMenu, showPopup, closePopup,
-  type BackstageEntry, type MenuEntry, type Platform, type Tab,
+  type BackstageEntry, type Control, type Group, type MenuEntry, type Platform, type Tab,
 } from "@raabe/shell";
 import { SHAPE_GALLERY, shapeIcon } from "@raabe/text-engine";
 import { COMMANDS } from "./command-list";
 import { ribbonTabs, type RibbonContext } from "./ribbon-def";
-import { Deck } from "./deck";
+import { Deck, defaultMasterPlaceholder } from "./deck";
 import { SlideEditor, flat, union, type EditorHost } from "./editor";
 import { SlidePanel, type PanelHost } from "./panel";
 import { renderSlide } from "./render/slide";
@@ -247,20 +247,28 @@ export class PresentApp implements EditorHost, PanelHost {
   /** Folienmaster view (Ansicht > Folienmaster): the panel lists the master and its layouts. */
   private masterMode = false;
   private masterIndex = 0;
-  private masterKind: "slides" | "notes" = "slides";
+  private masterKind: "slides" | "notes" | "handout" = "slides";
+  /** Handzettelmaster > Folien pro Seite (a view setting, as in PowerPoint not part of the master's shapes). */
+  handoutPerPage: 1 | 2 | 3 | 4 | 6 | 9 | 0 = 6;
   private masterList(): string[] {
     if (this.masterKind === "notes") return [this.deck.ensureNotesMasterPath()];
+    if (this.masterKind === "handout") return [this.deck.ensureHandoutMasterPath()];
     const m = this.deck.pptx.masters()[0];
     return m ? [m, ...this.deck.pptx.layouts(m)] : [];
   }
   masterPaths(): string[] | null { return this.masterMode ? this.masterList() : null; }
 
-  setMasterView(on: boolean, kind: "slides" | "notes" = "slides"): void {
+  setMasterView(on: boolean, kind: "slides" | "notes" | "handout" = "slides"): void {
     this.masterKind = kind;
     if (on && kind === "notes") {
       const nm = this.deck.ensureNotesMasterPath();
       if (!this.deck.pptx.has(nm)) this.deck.change("Notizenmaster", [nm], () => this.deck.ensureNotesMaster(nm));
     }
+    if (on && kind === "handout") {
+      const hm = this.deck.ensureHandoutMasterPath();
+      if (!this.deck.pptx.has(hm)) this.deck.change("Handzettelmaster", [hm], () => this.deck.ensureHandoutMaster(hm));
+    }
+    this.editor.pageDecor = on && kind === "handout" ? (size) => this.handoutDecor(size) : null;
     this.editor.endText();
     this.editor.sel = [];
     this.masterMode = on;
@@ -1181,7 +1189,7 @@ export class PresentApp implements EditorHost, PanelHost {
   private updateContextual(): void {
     const views = this.editor.selectedViews;
     const kinds = new Set(views.map((v) => (v.kind === "graphicFrame" ? v.frame : v.kind)));
-    const key = [...kinds].sort().join(",") + (this.editor.text ? "+t" : "") + (this.masterMode ? "+m" : "");
+    const key = [...kinds].sort().join(",") + (this.editor.text ? "+t" : "") + (this.masterMode ? `+m${this.masterKind}` : "");
     if (key === this.ctxKey) return;
     this.ctxKey = key;
     const tabs: Tab[] = [];
@@ -1191,22 +1199,127 @@ export class PresentApp implements EditorHost, PanelHost {
     if (kinds.has("chart")) tabs.push(this.chartTab(), this.chartFormatTab());
     if (this.masterMode) tabs.unshift(this.masterTab());
     this.ribbon.setContextual(tabs);
-    if (this.masterMode && !kinds.size) this.ribbon.select("slideMaster");
+    if (this.masterMode && !kinds.size) this.ribbon.select(this.masterKind === "slides" ? "slideMaster" : `${this.masterKind}Master`);
   }
 
-  private masterTabDef: Tab | null = null;
+  /**
+   * The master views' tabs as PowerPoint's recorded ones (key O, the same keytips): Folienmaster,
+   * Notizenmaster, Handzettelmaster.
+   */
   masterTab(): Tab {
-    const b = (cmd: string, key: string, size: "large" | "small" = "large") => ({ type: "button" as const, cmd, key, size });
-    return this.masterTabDef ??= {
-      id: "slideMaster", label: "Folienmaster", key: "M", contextual: true, shrink: [],
-      groups: [
-        { id: "edit", label: "Master bearbeiten", key: "ZM", icon: "slide-layout", controls: [b("master.insertMaster", "K"), b("master.insertLayout", "I"), { type: "stack", items: [b("master.delete", "D", "small"), b("master.rename", "R", "small"), b("master.preserve", "P", "small")] }] },
-        { id: "layout", label: "Masterlayout", key: "ZL", icon: "slide-layout", controls: [b("master.masterLayout", "M"), b("master.insertPlaceholder", "A"), { type: "stack", items: [{ type: "check", cmd: "master.title", key: "T" }, { type: "check", cmd: "master.footers", key: "F" }] }] },
-        { id: "edit2", label: "Design bearbeiten", key: "ZD", icon: "themes", controls: [{ type: "dropdown", cmd: "design.themes", key: "H", size: "large", menu: [], popup: (c) => this.themesGallery(c) }] },
-        { id: "size", label: "Größe", key: "ZG", icon: "page-size", controls: [{ type: "dropdown", cmd: "design.slideSize", key: "S", size: "large", menu: [{ cmd: "design.slide4x3" }, { cmd: "design.slide16x9" }] }] },
-        { id: "close", label: "Schließen", key: "ZS", icon: "close", controls: [b("master.close", "C")] },
-      ],
-    };
+    const kind = this.masterKind;
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const app = this;
+    return this.cachedTab(`master-${kind}`, () => {
+      const b = (cmd: string, key: string, size: "large" | "small" = "large", label?: string): Control => ({ type: "button", cmd, key, size, label });
+      const check = (cmd: string, key: string): Control => ({ type: "check", cmd, key });
+      const ctx = this.ribbonContext();
+      const slideSize: Control = { type: "dropdown", cmd: "design.slideSize", key: "Ö", size: "large", menu: [{ cmd: "design.slide4x3" }, { cmd: "design.slide16x9" }, "-", { cmd: "design.slideCustom" }] };
+      const design: Group = { id: "edit2", label: "Design bearbeiten", key: "ZD", icon: "themes", controls: [{ type: "dropdown", cmd: "design.themes", key: "G", size: "large", menu: [], popup: (c) => this.themesGallery(c) }] };
+      const background: Group = { id: "bg", label: "Hintergrund", key: "ZH", icon: "page-color", controls: [
+        { type: "stack", items: [
+          { type: "dropdown", cmd: "design.colors", key: "F", size: "small", get menu() { return ctx.menus.colors(); } } as Control,
+          { type: "dropdown", cmd: "design.fonts", key: "6", size: "small", get menu() { return ctx.menus.fonts(); } } as Control,
+          b("design.effects", "E", "small")] },
+        { type: "stack", items: [b("design.background", "R", "small", "Hintergrundformate"), check("master.hideBg", "B")] },
+        b("master.formatBackground", "H", "small")] };
+      const close: Group = { id: "close", label: "Schließen", key: "ZS", icon: "close", controls: [b("master.close", "Q")] };
+      const orient = (cmd: string, key: string): Control => ({ type: "dropdown", cmd, key, size: "large", menu: [{ label: "Hochformat", run: () => this.setNotesOrientation(true) }, { label: "Querformat", run: () => this.setNotesOrientation(false) }] });
+      if (kind === "notes") return {
+        id: "notesMaster", label: "Notizenmaster", key: "O", contextual: true, shrink: [],
+        groups: [
+          { id: "page", label: "Seite einrichten", key: "ZE", icon: "page-size", controls: [orient("notesMaster.orientation", "N"), slideSize] },
+          { id: "ph", label: "Platzhalter", key: "ZP", icon: "placeholder-source", controls: [{ type: "stack", items: [check("masterPh.hdr", "K"), check("masterPh.sldImg", "O"), check("masterPh.ftr", "U")] }, { type: "stack", items: [check("masterPh.dt", "D"), check("masterPh.body", "T"), check("masterPh.sldNum", "I")] }] },
+          design, background, close],
+      };
+      if (kind === "handout") return {
+        id: "handoutMaster", label: "Handzettelmaster", key: "O", contextual: true, shrink: [],
+        groups: [
+          { id: "page", label: "Seite einrichten", key: "ZE", icon: "page-size", controls: [orient("handoutMaster.orientation", "A"), slideSize,
+            { type: "dropdown", cmd: "handoutMaster.perPage", key: "O", size: "large", get menu(): MenuEntry[] { return ([[1, "1 Folie"], [2, "2 Folien"], [3, "3 Folien"], [4, "4 Folien"], [6, "6 Folien"], [9, "9 Folien"], [0, "Foliengliederung"]] as const).map(([n, label]) => ({ label, checked: app.handoutPerPage === n, run: () => { app.handoutPerPage = n; app.editor.render(); } })); } } as Control] },
+          { id: "ph", label: "Platzhalter", key: "ZP", icon: "placeholder-source", controls: [{ type: "stack", items: [check("masterPh.hdr", "K"), check("masterPh.ftr", "U")] }, { type: "stack", items: [check("masterPh.dt", "D"), check("masterPh.sldNum", "I")] }] },
+          design, background, close],
+      };
+      return {
+        id: "slideMaster", label: "Folienmaster", key: "O", contextual: true, shrink: [],
+        groups: [
+          { id: "edit", label: "Master bearbeiten", key: "ZM", icon: "slide-layout", controls: [b("master.insertMaster", "N"), b("master.insertLayout", "L"), { type: "stack", items: [b("master.delete", "DL", "small"), b("master.rename", "A", "small"), b("master.preserve", "M", "small")] }] },
+          { id: "layout", label: "Masterlayout", key: "ZL", icon: "slide-layout", controls: [b("master.masterLayout", "O"), b("master.insertPlaceholder", "P"), { type: "stack", items: [check("master.title", "T"), check("master.footers", "U")] }] },
+          design, background,
+          { id: "size", label: "Größe", key: "ZG", icon: "page-size", controls: [slideSize] },
+          close],
+      };
+    });
+  }
+
+  /** The Handzettelmaster's slide places for Folien pro Seite (our drawing of PowerPoint's dashed frames). */
+  private handoutDecor(size: { cx: number; cy: number }): HTMLElement {
+    const el = h("div", { class: "handout-decor" });
+    const px = (v: number) => `${v / EMU_PX}px`;
+    const n = this.handoutPerPage, s = this.deck.pptx.slideSize, aspect = s.cx / s.cy;
+    const ax = size.cx * 0.08, ay = size.cy * 0.09, aw = size.cx * 0.84, ah = size.cy * 0.82;
+    const box = (x: number, y: number, w: number, hh: number, cls = "") => { const d = h("div", cls ? { class: cls } : null); d.style.cssText = `left:${px(x)};top:${px(y)};width:${px(w)};height:${px(hh)}`; el.append(d); };
+    if (n === 0) { box(ax, ay, aw, ah); return el; }
+    const cols = n >= 4 ? (n === 9 ? 3 : 2) : 1, rows = Math.ceil(n / cols);
+    const cellW = (n === 3 ? aw * 0.45 : aw) / cols, cellH = ah / rows;
+    for (let i = 0; i < n; i++) {
+      const c = i % cols, r = Math.floor(i / cols);
+      let w = cellW * 0.9, hh = w / aspect;
+      if (hh > cellH * 0.9) { hh = cellH * 0.9; w = hh * aspect; }
+      const x = ax + c * cellW + (cellW - w) / 2, y = ay + r * cellH + (cellH - hh) / 2;
+      box(x, y, w, hh);
+      // 3 Folien: lines for notes beside each slide.
+      if (n === 3) for (let k = 0; k < 6; k++) box(ax + aw * 0.5, y + (hh / 6) * k, aw * 0.5, hh / 6, "lines");
+    }
+    return el;
+  }
+
+  /** Notizenseitenausrichtung / Handzettelausrichtung: the notes page size (shared by both) turned, the masters' placeholders scaled. */
+  private setNotesOrientation(portrait: boolean): void {
+    const pres = this.deck.pptx.presentation;
+    const sz = PptxDom.at(pres, "notesSz");
+    const cx = PptxDom.num(sz, "cx") ?? 6858000, cy = PptxDom.num(sz, "cy") ?? 9144000;
+    if (!sz || (cx < cy) === portrait) return;
+    const masters = [this.deck.ensureNotesMasterPath(), this.deck.ensureHandoutMasterPath()].filter((p) => this.deck.pptx.has(p));
+    this.deck.change(portrait ? "Hochformat" : "Querformat", [this.deck.pptx.presPath, ...masters], () => {
+      sz.setAttribute("cx", String(cy)); sz.setAttribute("cy", String(cx));
+      const fx = cy / cx, fy = cx / cy;
+      for (const m of masters) for (const x of Array.from(this.deck.pptx.doc(m).getElementsByTagNameNS(PptxDom.NS_A, "xfrm"))) {
+        const off = PptxDom.kid(x, "off"), ext = PptxDom.kid(x, "ext");
+        if (off) { off.setAttribute("x", String(Math.round((PptxDom.num(off, "x") ?? 0) * fx))); off.setAttribute("y", String(Math.round((PptxDom.num(off, "y") ?? 0) * fy))); }
+        if (ext) { ext.setAttribute("cx", String(Math.round((PptxDom.num(ext, "cx") ?? 0) * fx))); ext.setAttribute("cy", String(Math.round((PptxDom.num(ext, "cy") ?? 0) * fy))); }
+      }
+    });
+    this.editor.fitZoom();
+    this.renderAll();
+  }
+
+  /** Platzhalter checkboxes of the notes and handout masters: the placeholder of that type is there or not. */
+  private masterPhOn(type: string): boolean {
+    const path = this.masterList()[0];
+    if (!path || !this.deck.pptx.has(path)) return false;
+    return Array.from(this.deck.pptx.doc(path).getElementsByTagNameNS(PptxDom.NS_P, "ph")).some((p) => p.getAttribute("type") === type);
+  }
+
+  private toggleMasterPh(type: string): void {
+    const path = this.masterList()[0];
+    const kind = this.masterKind;
+    if (!path || kind === "slides") return;
+    const on = this.masterPhOn(type);
+    this.deck.change(on ? "Platzhalter entfernen" : "Platzhalter einfügen", [path], () => {
+      const doc = this.deck.pptx.doc(path);
+      if (on) { for (const p of Array.from(doc.getElementsByTagNameNS(PptxDom.NS_P, "ph"))) if (p.getAttribute("type") === type) p.closest("sp")?.remove(); return; }
+      const xml = defaultMasterPlaceholder(kind, type);
+      const tree = doc.getElementsByTagNameNS(PptxDom.NS_P, "spTree")[0];
+      if (!xml || !tree) return;
+      const sp = PptxDom.fragment(doc, xml)[0];
+      const used = new Set(Array.from(doc.getElementsByTagNameNS(PptxDom.NS_P, "cNvPr")).map((c) => c.getAttribute("id")));
+      const c = sp.getElementsByTagNameNS(PptxDom.NS_P, "cNvPr")[0];
+      let id = 2; while (used.has(String(id))) id++;
+      c?.setAttribute("id", String(id));
+      tree.append(sp);
+    });
+    this.editor.render();
   }
 
   private ctxHost: import("./contexttabs").ContextTabHost | null = null;
@@ -1545,6 +1658,17 @@ export class PresentApp implements EditorHost, PanelHost {
     impl("view.normal", () => { if (this.masterMode) this.setMasterView(false); this.setView("normal"); }, undefined, () => this.view === "normal" && !this.masterMode);
     impl("view.slideMaster", () => this.setMasterView(true), undefined, () => this.masterMode && this.masterKind === "slides");
     impl("view.notesMaster", () => this.setMasterView(true, "notes"), undefined, () => this.masterMode && this.masterKind === "notes");
+    impl("view.handoutMaster", () => this.setMasterView(true, "handout"), undefined, () => this.masterMode && this.masterKind === "handout");
+    for (const t of ["hdr", "sldImg", "ftr", "dt", "body", "sldNum"]) impl(`masterPh.${t}`, () => this.toggleMasterPh(t), () => this.masterMode && this.masterKind !== "slides", () => this.masterMode && this.masterPhOn(t));
+    for (const id of ["notesMaster.orientation", "handoutMaster.orientation", "handoutMaster.perPage"]) impl(id, () => {}, () => this.masterMode);
+    impl("master.formatBackground", () => this.bgPane.open(), () => this.masterMode);
+    impl("master.hideBg", () => {
+      const p = this.masterList()[this.masterIndex];
+      if (!p) return;
+      const on = this.deck.pptx.doc(p).documentElement.getAttribute("showMasterSp") === "0";
+      this.deck.change("Hintergrundgrafiken ausblenden", [p], () => { const r = this.deck.pptx.doc(p).documentElement; if (on) r.removeAttribute("showMasterSp"); else r.setAttribute("showMasterSp", "0"); });
+      this.editor.render(); this.panel.render();
+    }, () => this.masterMode && this.masterKind === "slides" && this.masterIndex > 0, () => this.masterMode && this.deck.pptx.has(this.masterList()[this.masterIndex] ?? "") && this.deck.pptx.doc(this.masterList()[this.masterIndex]).documentElement.getAttribute("showMasterSp") === "0");
     impl("master.close", () => this.setMasterView(false));
     impl("master.rename", () => this.renameLayout(), () => this.masterMode && this.masterIndex > 0);
     impl("master.insertLayout", () => this.insertLayout(), () => this.masterMode);

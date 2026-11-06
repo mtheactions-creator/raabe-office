@@ -205,3 +205,8 @@ body.printing #print-root { display: block; position: fixed; left: 0; top: 0; z-
 
 /* A range of table cells (D-072): a grey veil over the cells, as PowerPoint's. */
 .shp td.cell-sel::after { content: ""; position: absolute; inset: 0; background: rgba(0, 0, 0, 0.16); pointer-events: none; }
+
+/* The Handzettelmaster's slide places (D-072): dashed frames that are not part of the page. */
+.handout-decor { position: absolute; inset: 0; pointer-events: none; }
+.handout-decor div { position: absolute; border: 1px dashed #808080; box-sizing: border-box; }
+.handout-decor .lines { border: none; border-bottom: 1px solid #a0a0a0; }

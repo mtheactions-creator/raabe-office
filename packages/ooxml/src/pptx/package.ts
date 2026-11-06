@@ -32,6 +32,7 @@ export const CT_PPTX = {
   slideMaster: "application/vnd.openxmlformats-officedocument.presentationml.slideMaster+xml",
   notesSlide: "application/vnd.openxmlformats-officedocument.presentationml.notesSlide+xml",
   notesMaster: "application/vnd.openxmlformats-officedocument.presentationml.notesMaster+xml",
+  handoutMaster: "application/vnd.openxmlformats-officedocument.presentationml.handoutMaster+xml",
   theme: "application/vnd.openxmlformats-officedocument.theme+xml",
   chart: "application/vnd.openxmlformats-officedocument.drawingml.chart+xml",
 };
@@ -228,7 +229,8 @@ export class Pptx {
     let list = at(pres, "sldIdLst");
     if (!list) {
       list = make(pres.ownerDocument, "p:sldIdLst");
-      const after = kid(pres, "notesMasterIdLst") ?? kid(pres, "sldMasterIdLst");
+      // Schema order: sldMasterIdLst, notesMasterIdLst, handoutMasterIdLst, sldIdLst.
+      const after = kid(pres, "handoutMasterIdLst") ?? kid(pres, "notesMasterIdLst") ?? kid(pres, "sldMasterIdLst");
       pres.insertBefore(list, after ? after.nextSibling : pres.firstChild);
     }
     const old = new Map(kids(list, "sldId").map((s) => [num(s, "id") ?? 0, s]));

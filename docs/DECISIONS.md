@@ -1728,3 +1728,7 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   PowerPoint writes merged cells (`gridSpan`, `rowSpan`, `hMerge`, `vMerge`).
 - **Raabeschule templates** in Datei > Neu: Referat and Unterrichtsstunde (six slides each, ordinary
   layouts in the Raabeschule design).
+- **Master views' tabs** are PowerPoint's recorded ones (key O, the same keytips, the Hintergrund group);
+  Folien pro Seite of the Handzettelmaster is a setting of the view (our drawing of the slide places) and
+  is not saved; Notizenseiten- and Handzettelausrichtung turn the notes page size, which both share, and
+  scale the two masters' placeholders.
