@@ -12,6 +12,7 @@ import { COMMANDS } from "./command-list";
 import { ribbonTabs, type RibbonContext } from "./ribbon-def";
 import { Deck, defaultMasterPlaceholder } from "./deck";
 import { LINE_DASHES, LINE_WEIGHTS } from "./lines";
+import { quickStylesPanel } from "./quickstyles";
 import { SlideEditor, flat, union, type EditorHost } from "./editor";
 import { SlidePanel, type PanelHost } from "./panel";
 import { renderSlide } from "./render/slide";
@@ -2176,6 +2177,7 @@ export class PresentApp implements EditorHost, PanelHost {
         table: (close) => this.tableGrid(close),
         chart: (close) => this.chartGallery(close),
         wordArt: (close) => this.wordArtGallery(close),
+        quickStyles: (close) => quickStylesPanel(this, close),
       },
       spin: {
         transDuration: { value: () => this.transitions.durationText(), commit: (v) => this.transitions.setDuration(v), step: (d) => this.transitions.stepDuration(d) },

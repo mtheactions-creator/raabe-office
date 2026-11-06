@@ -7,6 +7,7 @@ import { h, showDialog, type Control, type MenuEntry } from "@raabe/shell";
 import { PptxDom, type ShapeView } from "@raabe/ooxml";
 import type { PresentApp } from "./app";
 import { LINE_WEIGHTS } from "./lines";
+import { quickStylesPanel } from "./quickstyles";
 import type { ContextTabHost } from "./contexttabs";
 import * as T from "./textops";
 import * as S from "./shapeops";
@@ -23,6 +24,7 @@ export function contextHost(app: PresentApp): ContextTabHost {
     shapeGallery: (c) => app.shapeGallery(c),
     color: (cur, pick, cmd, key, label, extra) => ({ type: "color", cmd, key, palette: "font", current: cur, pick, showLabel: label, extra }),
     outlineExtra: () => app.outlineExtra(),
+    quickStyles: (c) => quickStylesPanel(app, c),
     textOutlineColor: () => app.textOutlineColor(), setTextOutline: (hex) => app.setTextOutline({ color: hex }), textOutlineExtra: () => app.textOutlineExtra(),
     fillColor: ctx.fillColor, setFill: ctx.setFill, lineColor: ctx.lineColor, setLine: ctx.setLine, fontColor: ctx.fontColor, setFontColor: ctx.setFontColor,
     effects: () => ctx.menus.effects,
@@ -232,6 +234,7 @@ export function implementContext(app: PresentApp): void {
   impl("shape.sizeDialog", () => void app.commands.run("draw.format"), shapes);
   impl("shape.heightBox", () => {}, shapes);
   impl("shape.widthBox", () => {}, shapes);
+  impl("shape.quickStyles", () => {}, shapes);
   impl("wordart.fill", () => void app.commands.run("font.color"), shapes);
   impl("wordart.outline", () => app.setTextOutline({ color: app.textOutlineColor() === "none" ? "000000" : app.textOutlineColor() }), shapes);
   impl("pic.corrections", () => {}, pic);

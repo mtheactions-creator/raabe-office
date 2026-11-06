@@ -210,3 +210,9 @@ body.printing #print-root { display: block; position: fixed; left: 0; top: 0; z-
 .handout-decor { position: absolute; inset: 0; pointer-events: none; }
 .handout-decor div { position: absolute; border: 1px dashed #808080; box-sizing: border-box; }
 .handout-decor .lines { border: none; border-bottom: 1px solid #a0a0a0; }
+
+/* Schnellformatvorlagen (D-072): tiles in the design's colours. */
+.quick-styles { padding: 4px 6px 8px; }
+.qs-grid { display: grid; grid-template-columns: repeat(7, 48px); gap: 6px; padding: 4px 2px; }
+.qs-tile { height: 34px; font: 12px Calibri, Carlito, sans-serif; border-radius: 2px; cursor: pointer; box-sizing: border-box; }
+.qs-tile:hover { outline: 2px solid #f5b56e; outline-offset: 1px; }
