@@ -1579,6 +1579,17 @@ that the catalogue only measured what we had thought of. Decided with the owner:
   (not under "Automatisch außer bei Datentabellen", then F9). The cells show
   {=MEHRFACHOPERATION(Zeile;Spalte)} and refuse single edits; the whole table can be cleared. Saved as
   Excel saves it (f t="dataTable" on the first result cell). `check_datatable.py`: 3/3 both ways.
+- **215 more functions** (statistics and distributions with the compatibility names, maths with
+  MINV/MDET/MEINHEIT/RÖMISCH/AGGREGAT, all finance functions, engineering with the complex IM*
+  functions and UMWANDELN, TEXTTEILEN and REGEX*, the new array functions such as VSTAPELN, ZUSPALTE,
+  GRUPPIERENNACH, PIVOTMIT), recorded in Excel with 1206 cases (`probe_excel_functions2.py`,
+  fixtures/excel-functions2.json, `formula-functions2.test.ts`): 1199 as Excel within 1E-9 relative,
+  the German names both ways and the _xlfn. prefixes. Deliberate differences, each with its reason in
+  the test's KNOWN list: RGP with constant x values, BESSELJ(10;1) (Excel's value is 5E-7 off),
+  "3.5" read as a date (changes every year), AUFGELZINS quarterly over several years (Excel divides
+  by 91 for a 90-day quarter), XINTZINSFUSS and RENDITE where Excel stops short of the root. Still
+  missing: LET, LAMBDA, MAP, REDUCE, SCAN, NACHSPALTE, NACHZEILE, MATRIXERSTELLEN (they need the
+  parser), the cloud and external ones, INFO, ZELLE, BLATT, BLÄTTER, HYPERLINK.
 - **Excel tables** (Einfügen > Tabelle, Strg+T / Strg+L, Start > Als Tabelle formatieren): a real
   table object instead of painted cells, saved as xl/tables/tableN.xml with <tableParts> (unchanged
   tables written back verbatim, removed ones with their parts). The 60 built-in table styles were
