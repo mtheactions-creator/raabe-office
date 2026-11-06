@@ -40,6 +40,19 @@ export class Deck {
 
   slideIndex(path: string): number { return this.slides.findIndex((s) => s.path === path); }
 
+  /** Forgets the undo and redo steps (a new test case, a file just opened). */
+  clearHistory(): void {
+    this.undoStack = [];
+    this.redoStack = [];
+  }
+
+  /** A part changed outside change() (Autofit after drawing): its cached view is dropped. */
+  invalidate(path: string): void {
+    this.version++;
+    this.partVersion.set(path, this.version);
+    this.pptx.touch(path);
+  }
+
   /** The slide's view, cached until one of its parts changes. */
   view(path: string): SlideView {
     const deps = [path, this.pptx.layoutOf(path) ?? "", this.pptx.presPath];

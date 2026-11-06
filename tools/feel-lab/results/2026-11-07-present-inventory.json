@@ -4269,13 +4269,13 @@
       {
        "name": "Handzettelmaster",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "button"
       },
       {
        "name": "Notizenmaster",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "button"
       }
      ]
@@ -7335,7 +7335,18 @@
        "type": "dropdown",
        "items": [
         {
-         "name": "Tabelle markieren",
+         "name": "Tabelle auswählen",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Spalte auswählen",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Zeile auswählen",
+         "deferred": false,
          "enabled": true
         }
        ]
@@ -7406,13 +7417,13 @@
       {
        "name": "Zellen verbinden",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "button"
       },
       {
        "name": "Zellen teilen...",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "button"
       }
      ]
@@ -9234,6 +9245,1132 @@
        "deferred": false,
        "enabled": true,
        "type": "spinner"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Folienmaster",
+   "contextual": true,
+   "groups": [
+    {
+     "name": "Master bearbeiten",
+     "controls": [
+      {
+       "name": "Folienmaster einfügen",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Layout einfügen",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Löschen",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Umbenennen",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Beibehalten",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Masterlayout",
+     "controls": [
+      {
+       "name": "Masterlayout...",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Platzhalter einfügen",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Titel",
+       "deferred": false,
+       "enabled": false,
+       "type": "check"
+      },
+      {
+       "name": "Fußzeilen",
+       "deferred": false,
+       "enabled": false,
+       "type": "check"
+      }
+     ]
+    },
+    {
+     "name": "Design bearbeiten",
+     "controls": [
+      {
+       "name": "Designs",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "panel": true,
+       "items": [
+        {
+         "name": "Office"
+        },
+        {
+         "name": "Raabeschule"
+        },
+        {
+         "name": "Klar"
+        },
+        {
+         "name": "Tafel"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Hintergrund",
+     "controls": [
+      {
+       "name": "Farben",
+       "deferred": false,
+       "enabled": false,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Office",
+         "enabled": true
+        },
+        {
+         "name": "Office 2013 – 2022",
+         "enabled": true
+        },
+        {
+         "name": "Office 2007 - 2010",
+         "enabled": true
+        },
+        {
+         "name": "Graustufe",
+         "enabled": true
+        },
+        {
+         "name": "Warmes Blau",
+         "enabled": true
+        },
+        {
+         "name": "Blau",
+         "enabled": true
+        },
+        {
+         "name": "Blau II",
+         "enabled": true
+        },
+        {
+         "name": "Blaugrün",
+         "enabled": true
+        },
+        {
+         "name": "Grün",
+         "enabled": true
+        },
+        {
+         "name": "Grüngelb",
+         "enabled": true
+        },
+        {
+         "name": "Gelb",
+         "enabled": true
+        },
+        {
+         "name": "Gelborange",
+         "enabled": true
+        },
+        {
+         "name": "Orange",
+         "enabled": true
+        },
+        {
+         "name": "Orangerot",
+         "enabled": true
+        },
+        {
+         "name": "Rotorange",
+         "enabled": true
+        },
+        {
+         "name": "Rot",
+         "enabled": true
+        },
+        {
+         "name": "Rotviolett",
+         "enabled": true
+        },
+        {
+         "name": "Violett",
+         "enabled": true
+        },
+        {
+         "name": "Violett II",
+         "enabled": true
+        },
+        {
+         "name": "Galathea",
+         "enabled": true
+        },
+        {
+         "name": "Papier",
+         "enabled": true
+        },
+        {
+         "name": "Laufschrift",
+         "enabled": true
+        },
+        {
+         "name": "Slipstream",
+         "enabled": true
+        },
+        {
+         "name": "Ganymed",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Schriftarten",
+       "deferred": false,
+       "enabled": false,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Office, Überschriftenschriftart: Aptos Display, Textschriftart: Aptos",
+         "enabled": true
+        },
+        {
+         "name": "Office 2013 – 2022, Überschriftenschriftart: Calibri Light, Textschriftart: Calibri",
+         "enabled": true
+        },
+        {
+         "name": "Office 2007 - 2010, Überschriftenschriftart: Calibri, Textschriftart: Calibri",
+         "enabled": true
+        },
+        {
+         "name": "Calibri, Überschriftenschriftart: Calibri, Textschriftart: Calibri",
+         "enabled": true
+        },
+        {
+         "name": "Arial, Überschriftenschriftart: Arial, Textschriftart: Arial",
+         "enabled": true
+        },
+        {
+         "name": "Corbel, Überschriftenschriftart: Corbel, Textschriftart: Corbel",
+         "enabled": true
+        },
+        {
+         "name": "Candara, Überschriftenschriftart: Candara, Textschriftart: Candara",
+         "enabled": true
+        },
+        {
+         "name": "Century Gothic, Überschriftenschriftart: Century Gothic, Textschriftart: Century Gothic",
+         "enabled": true
+        },
+        {
+         "name": "TW Cen MT, Überschriftenschriftart: Tw Cen MT, Textschriftart: Tw Cen MT",
+         "enabled": true
+        },
+        {
+         "name": "Cambria, Überschriftenschriftart: Cambria, Textschriftart: Cambria",
+         "enabled": true
+        },
+        {
+         "name": "Garamond, Überschriftenschriftart: Garamond, Textschriftart: Garamond",
+         "enabled": true
+        },
+        {
+         "name": "Georgia, Überschriftenschriftart: Georgia, Textschriftart: Georgia",
+         "enabled": true
+        },
+        {
+         "name": "Calibri-Cambria",
+         "enabled": true
+        },
+        {
+         "name": "Arial-Times New Roman",
+         "enabled": true
+        },
+        {
+         "name": "Calibri Light-Constantia",
+         "enabled": true
+        },
+        {
+         "name": "Century Gothic-Palatino Linotype",
+         "enabled": true
+        },
+        {
+         "name": "Tw Cen MT-Rockwell",
+         "enabled": true
+        },
+        {
+         "name": "Times New Roman-Arial",
+         "enabled": true
+        },
+        {
+         "name": "Constantia-Franklin Gothic Book",
+         "enabled": true
+        },
+        {
+         "name": "Consolas-Verdana",
+         "enabled": true
+        },
+        {
+         "name": "Arial Black-Arial",
+         "enabled": true
+        },
+        {
+         "name": "Garamond-TrebuchetMs",
+         "enabled": true
+        },
+        {
+         "name": "Gill Sans MT",
+         "enabled": true
+        },
+        {
+         "name": "TrebuchetMs",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Effekte",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Hintergrundformate",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Hintergrundgrafiken ausblenden",
+       "deferred": false,
+       "enabled": true,
+       "type": "check"
+      },
+      {
+       "name": "Hintergrund formatieren...",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Größe",
+     "controls": [
+      {
+       "name": "Foliengröße",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Standard (4:3)",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Breitbild (16:9)",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Benutzerdefinierte Foliengröße...",
+         "deferred": false,
+         "enabled": true
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Schließen",
+     "controls": [
+      {
+       "name": "Masteransicht schließen",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Notizenmaster",
+   "contextual": true,
+   "groups": [
+    {
+     "name": "Seite einrichten",
+     "controls": [
+      {
+       "name": "Notizenseitenausrichtung",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Hochformat",
+         "enabled": true
+        },
+        {
+         "name": "Querformat",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Foliengröße",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Standard (4:3)",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Breitbild (16:9)",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Benutzerdefinierte Foliengröße...",
+         "deferred": false,
+         "enabled": true
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Platzhalter",
+     "controls": [
+      {
+       "name": "Kopfzeile",
+       "deferred": false,
+       "enabled": true,
+       "type": "check"
+      },
+      {
+       "name": "Folienbild",
+       "deferred": false,
+       "enabled": true,
+       "type": "check"
+      },
+      {
+       "name": "Fußzeile",
+       "deferred": false,
+       "enabled": true,
+       "type": "check"
+      },
+      {
+       "name": "Datum",
+       "deferred": false,
+       "enabled": true,
+       "type": "check"
+      },
+      {
+       "name": "Textkörper",
+       "deferred": false,
+       "enabled": true,
+       "type": "check"
+      },
+      {
+       "name": "Seitenzahl",
+       "deferred": false,
+       "enabled": true,
+       "type": "check"
+      }
+     ]
+    },
+    {
+     "name": "Design bearbeiten",
+     "controls": [
+      {
+       "name": "Designs",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "panel": true,
+       "items": [
+        {
+         "name": "Office"
+        },
+        {
+         "name": "Raabeschule"
+        },
+        {
+         "name": "Klar"
+        },
+        {
+         "name": "Tafel"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Hintergrund",
+     "controls": [
+      {
+       "name": "Farben",
+       "deferred": false,
+       "enabled": false,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Office",
+         "enabled": true
+        },
+        {
+         "name": "Office 2013 – 2022",
+         "enabled": true
+        },
+        {
+         "name": "Office 2007 - 2010",
+         "enabled": true
+        },
+        {
+         "name": "Graustufe",
+         "enabled": true
+        },
+        {
+         "name": "Warmes Blau",
+         "enabled": true
+        },
+        {
+         "name": "Blau",
+         "enabled": true
+        },
+        {
+         "name": "Blau II",
+         "enabled": true
+        },
+        {
+         "name": "Blaugrün",
+         "enabled": true
+        },
+        {
+         "name": "Grün",
+         "enabled": true
+        },
+        {
+         "name": "Grüngelb",
+         "enabled": true
+        },
+        {
+         "name": "Gelb",
+         "enabled": true
+        },
+        {
+         "name": "Gelborange",
+         "enabled": true
+        },
+        {
+         "name": "Orange",
+         "enabled": true
+        },
+        {
+         "name": "Orangerot",
+         "enabled": true
+        },
+        {
+         "name": "Rotorange",
+         "enabled": true
+        },
+        {
+         "name": "Rot",
+         "enabled": true
+        },
+        {
+         "name": "Rotviolett",
+         "enabled": true
+        },
+        {
+         "name": "Violett",
+         "enabled": true
+        },
+        {
+         "name": "Violett II",
+         "enabled": true
+        },
+        {
+         "name": "Galathea",
+         "enabled": true
+        },
+        {
+         "name": "Papier",
+         "enabled": true
+        },
+        {
+         "name": "Laufschrift",
+         "enabled": true
+        },
+        {
+         "name": "Slipstream",
+         "enabled": true
+        },
+        {
+         "name": "Ganymed",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Schriftarten",
+       "deferred": false,
+       "enabled": false,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Office, Überschriftenschriftart: Aptos Display, Textschriftart: Aptos",
+         "enabled": true
+        },
+        {
+         "name": "Office 2013 – 2022, Überschriftenschriftart: Calibri Light, Textschriftart: Calibri",
+         "enabled": true
+        },
+        {
+         "name": "Office 2007 - 2010, Überschriftenschriftart: Calibri, Textschriftart: Calibri",
+         "enabled": true
+        },
+        {
+         "name": "Calibri, Überschriftenschriftart: Calibri, Textschriftart: Calibri",
+         "enabled": true
+        },
+        {
+         "name": "Arial, Überschriftenschriftart: Arial, Textschriftart: Arial",
+         "enabled": true
+        },
+        {
+         "name": "Corbel, Überschriftenschriftart: Corbel, Textschriftart: Corbel",
+         "enabled": true
+        },
+        {
+         "name": "Candara, Überschriftenschriftart: Candara, Textschriftart: Candara",
+         "enabled": true
+        },
+        {
+         "name": "Century Gothic, Überschriftenschriftart: Century Gothic, Textschriftart: Century Gothic",
+         "enabled": true
+        },
+        {
+         "name": "TW Cen MT, Überschriftenschriftart: Tw Cen MT, Textschriftart: Tw Cen MT",
+         "enabled": true
+        },
+        {
+         "name": "Cambria, Überschriftenschriftart: Cambria, Textschriftart: Cambria",
+         "enabled": true
+        },
+        {
+         "name": "Garamond, Überschriftenschriftart: Garamond, Textschriftart: Garamond",
+         "enabled": true
+        },
+        {
+         "name": "Georgia, Überschriftenschriftart: Georgia, Textschriftart: Georgia",
+         "enabled": true
+        },
+        {
+         "name": "Calibri-Cambria",
+         "enabled": true
+        },
+        {
+         "name": "Arial-Times New Roman",
+         "enabled": true
+        },
+        {
+         "name": "Calibri Light-Constantia",
+         "enabled": true
+        },
+        {
+         "name": "Century Gothic-Palatino Linotype",
+         "enabled": true
+        },
+        {
+         "name": "Tw Cen MT-Rockwell",
+         "enabled": true
+        },
+        {
+         "name": "Times New Roman-Arial",
+         "enabled": true
+        },
+        {
+         "name": "Constantia-Franklin Gothic Book",
+         "enabled": true
+        },
+        {
+         "name": "Consolas-Verdana",
+         "enabled": true
+        },
+        {
+         "name": "Arial Black-Arial",
+         "enabled": true
+        },
+        {
+         "name": "Garamond-TrebuchetMs",
+         "enabled": true
+        },
+        {
+         "name": "Gill Sans MT",
+         "enabled": true
+        },
+        {
+         "name": "TrebuchetMs",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Effekte",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Hintergrundformate",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Hintergrundgrafiken ausblenden",
+       "deferred": false,
+       "enabled": true,
+       "type": "check"
+      },
+      {
+       "name": "Hintergrund formatieren...",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Schließen",
+     "controls": [
+      {
+       "name": "Masteransicht schließen",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Handzettelmaster",
+   "contextual": true,
+   "groups": [
+    {
+     "name": "Seite einrichten",
+     "controls": [
+      {
+       "name": "Handzettelausrichtung",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Hochformat",
+         "enabled": true
+        },
+        {
+         "name": "Querformat",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Foliengröße",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Standard (4:3)",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Breitbild (16:9)",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Benutzerdefinierte Foliengröße...",
+         "deferred": false,
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Folien pro Seite",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "1 Folie",
+         "enabled": true
+        },
+        {
+         "name": "2 Folien",
+         "enabled": true
+        },
+        {
+         "name": "3 Folien",
+         "enabled": true
+        },
+        {
+         "name": "4 Folien",
+         "enabled": true
+        },
+        {
+         "name": "6 Folien",
+         "enabled": true
+        },
+        {
+         "name": "9 Folien",
+         "enabled": true
+        },
+        {
+         "name": "Foliengliederung",
+         "enabled": true
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Platzhalter",
+     "controls": [
+      {
+       "name": "Kopfzeile",
+       "deferred": false,
+       "enabled": true,
+       "type": "check"
+      },
+      {
+       "name": "Fußzeile",
+       "deferred": false,
+       "enabled": true,
+       "type": "check"
+      },
+      {
+       "name": "Datum",
+       "deferred": false,
+       "enabled": true,
+       "type": "check"
+      },
+      {
+       "name": "Seitenzahl",
+       "deferred": false,
+       "enabled": true,
+       "type": "check"
+      }
+     ]
+    },
+    {
+     "name": "Design bearbeiten",
+     "controls": [
+      {
+       "name": "Designs",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "panel": true,
+       "items": [
+        {
+         "name": "Office"
+        },
+        {
+         "name": "Raabeschule"
+        },
+        {
+         "name": "Klar"
+        },
+        {
+         "name": "Tafel"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Hintergrund",
+     "controls": [
+      {
+       "name": "Farben",
+       "deferred": false,
+       "enabled": false,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Office",
+         "enabled": true
+        },
+        {
+         "name": "Office 2013 – 2022",
+         "enabled": true
+        },
+        {
+         "name": "Office 2007 - 2010",
+         "enabled": true
+        },
+        {
+         "name": "Graustufe",
+         "enabled": true
+        },
+        {
+         "name": "Warmes Blau",
+         "enabled": true
+        },
+        {
+         "name": "Blau",
+         "enabled": true
+        },
+        {
+         "name": "Blau II",
+         "enabled": true
+        },
+        {
+         "name": "Blaugrün",
+         "enabled": true
+        },
+        {
+         "name": "Grün",
+         "enabled": true
+        },
+        {
+         "name": "Grüngelb",
+         "enabled": true
+        },
+        {
+         "name": "Gelb",
+         "enabled": true
+        },
+        {
+         "name": "Gelborange",
+         "enabled": true
+        },
+        {
+         "name": "Orange",
+         "enabled": true
+        },
+        {
+         "name": "Orangerot",
+         "enabled": true
+        },
+        {
+         "name": "Rotorange",
+         "enabled": true
+        },
+        {
+         "name": "Rot",
+         "enabled": true
+        },
+        {
+         "name": "Rotviolett",
+         "enabled": true
+        },
+        {
+         "name": "Violett",
+         "enabled": true
+        },
+        {
+         "name": "Violett II",
+         "enabled": true
+        },
+        {
+         "name": "Galathea",
+         "enabled": true
+        },
+        {
+         "name": "Papier",
+         "enabled": true
+        },
+        {
+         "name": "Laufschrift",
+         "enabled": true
+        },
+        {
+         "name": "Slipstream",
+         "enabled": true
+        },
+        {
+         "name": "Ganymed",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Schriftarten",
+       "deferred": false,
+       "enabled": false,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Office, Überschriftenschriftart: Aptos Display, Textschriftart: Aptos",
+         "enabled": true
+        },
+        {
+         "name": "Office 2013 – 2022, Überschriftenschriftart: Calibri Light, Textschriftart: Calibri",
+         "enabled": true
+        },
+        {
+         "name": "Office 2007 - 2010, Überschriftenschriftart: Calibri, Textschriftart: Calibri",
+         "enabled": true
+        },
+        {
+         "name": "Calibri, Überschriftenschriftart: Calibri, Textschriftart: Calibri",
+         "enabled": true
+        },
+        {
+         "name": "Arial, Überschriftenschriftart: Arial, Textschriftart: Arial",
+         "enabled": true
+        },
+        {
+         "name": "Corbel, Überschriftenschriftart: Corbel, Textschriftart: Corbel",
+         "enabled": true
+        },
+        {
+         "name": "Candara, Überschriftenschriftart: Candara, Textschriftart: Candara",
+         "enabled": true
+        },
+        {
+         "name": "Century Gothic, Überschriftenschriftart: Century Gothic, Textschriftart: Century Gothic",
+         "enabled": true
+        },
+        {
+         "name": "TW Cen MT, Überschriftenschriftart: Tw Cen MT, Textschriftart: Tw Cen MT",
+         "enabled": true
+        },
+        {
+         "name": "Cambria, Überschriftenschriftart: Cambria, Textschriftart: Cambria",
+         "enabled": true
+        },
+        {
+         "name": "Garamond, Überschriftenschriftart: Garamond, Textschriftart: Garamond",
+         "enabled": true
+        },
+        {
+         "name": "Georgia, Überschriftenschriftart: Georgia, Textschriftart: Georgia",
+         "enabled": true
+        },
+        {
+         "name": "Calibri-Cambria",
+         "enabled": true
+        },
+        {
+         "name": "Arial-Times New Roman",
+         "enabled": true
+        },
+        {
+         "name": "Calibri Light-Constantia",
+         "enabled": true
+        },
+        {
+         "name": "Century Gothic-Palatino Linotype",
+         "enabled": true
+        },
+        {
+         "name": "Tw Cen MT-Rockwell",
+         "enabled": true
+        },
+        {
+         "name": "Times New Roman-Arial",
+         "enabled": true
+        },
+        {
+         "name": "Constantia-Franklin Gothic Book",
+         "enabled": true
+        },
+        {
+         "name": "Consolas-Verdana",
+         "enabled": true
+        },
+        {
+         "name": "Arial Black-Arial",
+         "enabled": true
+        },
+        {
+         "name": "Garamond-TrebuchetMs",
+         "enabled": true
+        },
+        {
+         "name": "Gill Sans MT",
+         "enabled": true
+        },
+        {
+         "name": "TrebuchetMs",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Effekte",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Hintergrundformate",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Hintergrundgrafiken ausblenden",
+       "deferred": false,
+       "enabled": true,
+       "type": "check"
+      },
+      {
+       "name": "Hintergrund formatieren...",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Schließen",
+     "controls": [
+      {
+       "name": "Masteransicht schließen",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
       }
      ]
     }

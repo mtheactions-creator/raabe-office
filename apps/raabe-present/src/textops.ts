@@ -292,6 +292,30 @@ export function setRunColor(rPr: Element, color: string | null): void {
   rPr.insertBefore(fill, before ?? null);
 }
 
+/**
+ * Textkontur: the run's a:ln (first child of rPr by the schema). `color` null: Keine Kontur (a:ln with
+ * a:noFill, as PowerPoint writes it); width in EMU and dash keep what is there when left out.
+ */
+export function setRunOutline(rPr: Element, o: { color?: string | null; width?: number; dash?: string }): void {
+  const doc = rPr.ownerDocument;
+  let ln = kid(rPr, "ln");
+  if (!ln) { ln = make(doc, "a:ln"); rPr.insertBefore(ln, rPr.firstChild); }
+  if (o.width !== undefined) ln.setAttribute("w", String(o.width));
+  if (o.color !== undefined) {
+    for (const c of kids(ln)) if (["noFill", "solidFill", "gradFill", "pattFill"].includes(c.localName)) c.remove();
+    const fill = o.color === null ? make(doc, "a:noFill") : make(doc, "a:solidFill", {}, /^[0-9A-F]{6}$/i.test(o.color) ? make(doc, "a:srgbClr", { val: o.color.toUpperCase() }) : make(doc, "a:schemeClr", { val: o.color }));
+    ln.insertBefore(fill, ln.firstChild);
+  } else if (!kids(ln).some((c) => c.localName.endsWith("Fill"))) {
+    ln.insertBefore(make(doc, "a:solidFill", {}, make(doc, "a:schemeClr", { val: "tx1" })), ln.firstChild);
+  }
+  if (o.dash !== undefined) {
+    kid(ln, "prstDash")?.remove();
+    const d = make(doc, "a:prstDash", { val: o.dash });
+    const fill = kids(ln).find((c) => c.localName.endsWith("Fill"));
+    ln.insertBefore(d, fill ? fill.nextSibling : ln.firstChild);
+  }
+}
+
 /** Sets the latin typeface of an rPr (with ea and cs left alone). */
 export function setRunFont(rPr: Element, face: string): void {
   let latin = kid(rPr, "latin");

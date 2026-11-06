@@ -63,6 +63,8 @@ export function runCss(r: RunStyle, scale: number): string {
     "text-decoration": deco || undefined,
     "text-decoration-style": r.underline === "dbl" ? "double" : r.underline === "dotted" || r.underline === "dotDash" ? "dotted" : r.underline === "dash" ? "dashed" : r.underline === "wavy" ? "wavy" : undefined,
     color: hexA(r.color, r.alpha),
+    "-webkit-text-stroke": r.outline ? `${Math.max(0.5, r.outline.width * PT_PX * (scale < 1 ? scale : 1)).toFixed(2)}px #${r.outline.color}` : undefined,
+    "paint-order": r.outline ? "stroke fill" : undefined,
     "background-color": r.highlight ? `#${r.highlight}` : undefined,
     "text-transform": r.caps === "all" ? "uppercase" : undefined,
     "font-variant": r.caps === "small" ? "small-caps" : undefined,

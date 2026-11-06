@@ -8,7 +8,7 @@ descriptions (D-058). Cloud features are listed, marked and left out on purpose;
 
 **Recorded:** 21 tabs with 439 controls and 5771 menu and gallery entries; 13 context menus; 114 dialogs and panes; 4 backstage pages.
 
-**Coverage:** 1753 of 4503 controls and menu entries are in RaabePresent (38.9 %); 0 are there but greyed out as deferred, 2750 are missing; 8 cloud features are left out on purpose.
+**Coverage:** 1972 of 4503 controls and menu entries are in RaabePresent (43.8 %); 0 are there but greyed out as deferred, 2531 are missing; 8 cloud features are left out on purpose.
 
 ## Registerkarten
 
@@ -702,24 +702,24 @@ Menüs und Kataloge in Formel:
 
 | Gruppe | Steuerelement | Art | Zugriffstaste | RaabePresent | Einträge |
 |---|---|---|---|---|---|
-| Master bearbeiten | Folienmaster einfügen | Schaltfläche | Alt, O, N | fehlt |  |
-| Master bearbeiten | Layout einfügen | Schaltfläche | Alt, O, L | fehlt |  |
-| Master bearbeiten | Löschen | Schaltfläche, grau | Alt, O, D L | fehlt |  |
-| Master bearbeiten | Umbenennen | Schaltfläche | Alt, O, A | fehlt |  |
-| Master bearbeiten | Beibehalten | Schaltfläche | Alt, O, M | fehlt |  |
-| Masterlayout | Masterlayout... | Schaltfläche | Alt, O, O | fehlt | Dialog |
-| Masterlayout | Platzhalter einfügen | Unterteilte Schaltfläche, grau | Alt, O, P | fehlt |  |
-| Masterlayout | Titel | Kontrollkästchen, grau | Alt, O, T | fehlt |  |
-| Masterlayout | Fußzeilen | Kontrollkästchen, grau | Alt, O, U | fehlt |  |
-| Design bearbeiten | Designs | Menü | Alt, O, G | fehlt | 40 |
-| Hintergrund | Farben | Menü | Alt, O, F | fehlt | 30 |
-| Hintergrund | Schriftarten | Menü | Alt, O, 6 | fehlt | 29 |
-| Hintergrund | Effekte | Menü | Alt, O, E | fehlt | 15 |
-| Hintergrund | Hintergrundformate | Menü | Alt, O, R | fehlt | 14 |
-| Hintergrund | Hintergrundgrafiken ausblenden | Kontrollkästchen, grau | Alt, O, B | fehlt |  |
-| Hintergrund | Hintergrund formatieren... | Schaltfläche | Alt, O, H | fehlt |  |
-| Größe | Foliengröße | Menü | Alt, O, Ö | fehlt | 3 |
-| Schließen | Masteransicht schließen | Schaltfläche | Alt, O, Q | fehlt |  |
+| Master bearbeiten | Folienmaster einfügen | Schaltfläche | Alt, O, N | vorhanden |  |
+| Master bearbeiten | Layout einfügen | Schaltfläche | Alt, O, L | vorhanden |  |
+| Master bearbeiten | Löschen | Schaltfläche, grau | Alt, O, D L | vorhanden |  |
+| Master bearbeiten | Umbenennen | Schaltfläche | Alt, O, A | vorhanden |  |
+| Master bearbeiten | Beibehalten | Schaltfläche | Alt, O, M | vorhanden |  |
+| Masterlayout | Masterlayout... | Schaltfläche | Alt, O, O | vorhanden | Dialog |
+| Masterlayout | Platzhalter einfügen | Unterteilte Schaltfläche, grau | Alt, O, P | vorhanden |  |
+| Masterlayout | Titel | Kontrollkästchen, grau | Alt, O, T | vorhanden |  |
+| Masterlayout | Fußzeilen | Kontrollkästchen, grau | Alt, O, U | vorhanden |  |
+| Design bearbeiten | Designs | Menü | Alt, O, G | vorhanden | 40 |
+| Hintergrund | Farben | Menü | Alt, O, F | vorhanden | 30 |
+| Hintergrund | Schriftarten | Menü | Alt, O, 6 | vorhanden | 29 |
+| Hintergrund | Effekte | Menü | Alt, O, E | vorhanden | 15 |
+| Hintergrund | Hintergrundformate | Menü | Alt, O, R | vorhanden | 14 |
+| Hintergrund | Hintergrundgrafiken ausblenden | Kontrollkästchen, grau | Alt, O, B | vorhanden |  |
+| Hintergrund | Hintergrund formatieren... | Schaltfläche | Alt, O, H | vorhanden |  |
+| Größe | Foliengröße | Menü | Alt, O, Ö | vorhanden | 3 |
+| Schließen | Masteransicht schließen | Schaltfläche | Alt, O, Q | vorhanden |  |
 
 Menüs und Kataloge in Folienmaster:
 
@@ -734,21 +734,21 @@ Menüs und Kataloge in Folienmaster:
 
 | Gruppe | Steuerelement | Art | Zugriffstaste | RaabePresent | Einträge |
 |---|---|---|---|---|---|
-| Seite einrichten | Handzettelausrichtung | Menü | Alt, O, A | fehlt | 2 |
-| Seite einrichten | Foliengröße | Menü | Alt, O, Ö | fehlt | 3 |
-| Seite einrichten | Folien pro Seite | Menü | Alt, O, O | fehlt | 7 |
-| Platzhalter | Kopfzeile | Kontrollkästchen | Alt, O, K | fehlt |  |
-| Platzhalter | Fußzeile | Kontrollkästchen | Alt, O, U | fehlt |  |
-| Platzhalter | Datum | Kontrollkästchen | Alt, O, D | fehlt |  |
-| Platzhalter | Seitenzahl | Kontrollkästchen | Alt, O, I | fehlt |  |
-| Design bearbeiten | Designs | Menü | Alt, O, G | fehlt | 40 |
-| Hintergrund | Farben | Menü | Alt, O, F | fehlt | 30 |
-| Hintergrund | Schriftarten | Menü | Alt, O, 6 | fehlt | 29 |
-| Hintergrund | Effekte | Menü | Alt, O, E | fehlt | 15 |
-| Hintergrund | Hintergrundformate | Menü | Alt, O, R | fehlt | 14 |
-| Hintergrund | Hintergrundgrafiken ausblenden | Kontrollkästchen, grau | Alt, O, B | fehlt |  |
-| Hintergrund | Hintergrund formatieren... | Schaltfläche | Alt, O, H | fehlt |  |
-| Schließen | Masteransicht schließen | Schaltfläche | Alt, O, Q | fehlt |  |
+| Seite einrichten | Handzettelausrichtung | Menü | Alt, O, A | vorhanden | 2 |
+| Seite einrichten | Foliengröße | Menü | Alt, O, Ö | vorhanden | 3 |
+| Seite einrichten | Folien pro Seite | Menü | Alt, O, O | vorhanden | 7 |
+| Platzhalter | Kopfzeile | Kontrollkästchen | Alt, O, K | vorhanden |  |
+| Platzhalter | Fußzeile | Kontrollkästchen | Alt, O, U | vorhanden |  |
+| Platzhalter | Datum | Kontrollkästchen | Alt, O, D | vorhanden |  |
+| Platzhalter | Seitenzahl | Kontrollkästchen | Alt, O, I | vorhanden |  |
+| Design bearbeiten | Designs | Menü | Alt, O, G | vorhanden | 40 |
+| Hintergrund | Farben | Menü | Alt, O, F | vorhanden | 30 |
+| Hintergrund | Schriftarten | Menü | Alt, O, 6 | vorhanden | 29 |
+| Hintergrund | Effekte | Menü | Alt, O, E | vorhanden | 15 |
+| Hintergrund | Hintergrundformate | Menü | Alt, O, R | vorhanden | 14 |
+| Hintergrund | Hintergrundgrafiken ausblenden | Kontrollkästchen, grau | Alt, O, B | vorhanden |  |
+| Hintergrund | Hintergrund formatieren... | Schaltfläche | Alt, O, H | vorhanden |  |
+| Schließen | Masteransicht schließen | Schaltfläche | Alt, O, Q | vorhanden |  |
 
 Menüs und Kataloge in Handzettelmaster:
 
@@ -765,22 +765,22 @@ Menüs und Kataloge in Handzettelmaster:
 
 | Gruppe | Steuerelement | Art | Zugriffstaste | RaabePresent | Einträge |
 |---|---|---|---|---|---|
-| Seite einrichten | Notizenseitenausrichtung | Menü | Alt, O, N | fehlt | 2 |
-| Seite einrichten | Foliengröße | Menü | Alt, O, Ö | fehlt | 3 |
-| Platzhalter | Kopfzeile | Kontrollkästchen | Alt, O, K | fehlt |  |
-| Platzhalter | Folienbild | Kontrollkästchen | Alt, O, O | fehlt |  |
-| Platzhalter | Fußzeile | Kontrollkästchen | Alt, O, U | fehlt |  |
-| Platzhalter | Datum | Kontrollkästchen | Alt, O, D | fehlt |  |
-| Platzhalter | Textkörper | Kontrollkästchen | Alt, O, T | fehlt |  |
-| Platzhalter | Seitenzahl | Kontrollkästchen | Alt, O, I | fehlt |  |
-| Design bearbeiten | Designs | Menü | Alt, O, G | fehlt | 40 |
-| Hintergrund | Farben | Menü | Alt, O, F | fehlt | 30 |
-| Hintergrund | Schriftarten | Menü | Alt, O, 6 | fehlt | 29 |
-| Hintergrund | Effekte | Menü | Alt, O, E | fehlt | 15 |
-| Hintergrund | Hintergrundformate | Menü | Alt, O, R | fehlt | 14 |
-| Hintergrund | Hintergrundgrafiken ausblenden | Kontrollkästchen, grau | Alt, O, B | fehlt |  |
-| Hintergrund | Hintergrund formatieren... | Schaltfläche | Alt, O, H | fehlt |  |
-| Schließen | Masteransicht schließen | Schaltfläche | Alt, O, Q | fehlt |  |
+| Seite einrichten | Notizenseitenausrichtung | Menü | Alt, O, N | vorhanden | 2 |
+| Seite einrichten | Foliengröße | Menü | Alt, O, Ö | vorhanden | 3 |
+| Platzhalter | Kopfzeile | Kontrollkästchen | Alt, O, K | vorhanden |  |
+| Platzhalter | Folienbild | Kontrollkästchen | Alt, O, O | vorhanden |  |
+| Platzhalter | Fußzeile | Kontrollkästchen | Alt, O, U | vorhanden |  |
+| Platzhalter | Datum | Kontrollkästchen | Alt, O, D | vorhanden |  |
+| Platzhalter | Textkörper | Kontrollkästchen | Alt, O, T | vorhanden |  |
+| Platzhalter | Seitenzahl | Kontrollkästchen | Alt, O, I | vorhanden |  |
+| Design bearbeiten | Designs | Menü | Alt, O, G | vorhanden | 40 |
+| Hintergrund | Farben | Menü | Alt, O, F | vorhanden | 30 |
+| Hintergrund | Schriftarten | Menü | Alt, O, 6 | vorhanden | 29 |
+| Hintergrund | Effekte | Menü | Alt, O, E | vorhanden | 15 |
+| Hintergrund | Hintergrundformate | Menü | Alt, O, R | vorhanden | 14 |
+| Hintergrund | Hintergrundgrafiken ausblenden | Kontrollkästchen, grau | Alt, O, B | vorhanden |  |
+| Hintergrund | Hintergrund formatieren... | Schaltfläche | Alt, O, H | vorhanden |  |
+| Schließen | Masteransicht schließen | Schaltfläche | Alt, O, Q | vorhanden |  |
 
 Menüs und Kataloge in Notizenmaster:
 

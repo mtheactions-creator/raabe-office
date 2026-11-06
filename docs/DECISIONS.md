@@ -1700,6 +1700,21 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
 - **A click beside the text** of a text box selects the frame, a click on the text puts the caret there
   (behaviour catalogue, `click` cases).
 - **Vertical text** turns the whole frame; it is not broken word by word.
+- **What a click hits** (behaviour catalogue, first comparison 99/307): the letters of a text start editing
+  at once and a drag from them selects text (also with Umschalt, Strg or Alt); beside the letters, on a
+  line of text, the frame is selected and a drag moves it; an unfilled shape (text box, placeholder) is
+  passed through where it has no text; the outline is hit within 4 screen pixels, lines likewise; a click
+  in an empty placeholder starts editing; a double-click selects the word, a triple-click the paragraph
+  with its mark.
+- **Keys on a selected frame:** the arrow keys move by one pixel at the zoom (as Strg+Pfeil; the grid
+  spacing only with Am Raster ausrichten); Umschalt+Pfeil sizes about the centre by 10 % (Rechts/Oben
+  larger, Links/Unten smaller, a text box keeps the new height), Strg+Umschalt+Pfeil by 1 %;
+  Alt+Umschalt+Pfeil, Umschalt+Eingabe and Strg+Entf do nothing; Strg+Rücktaste puts the caret at the end
+  of the text; typing adds to the end of the text; Strg+E/L/R/J and Strg+Umschalt+F on an empty shape
+  start editing it; Strg+D and repeated Einfügen offset by 12 pt; Strg+Umschalt+G groups,
+  Strg+Umschalt+H ungroups, Strg+G does nothing; after Rückgängig the shapes it restores are selected;
+  Bild ab/auf, Pos1 and Ende with nothing selected go to another slide.
+- **Text boxes** (spAutoFit) take their text's height as soon as they are drawn or changed.
 - Equations and other `mc:AlternateContent` are drawn from their fallback picture, SmartArt from its
   drawing cache; editing either is open.
 

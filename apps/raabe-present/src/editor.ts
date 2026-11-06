@@ -5,7 +5,7 @@
 // arrow keys and every key of text editing. Typing goes through a hidden textarea (IME included).
 
 import type { Pptx, ShapeView, SlideView } from "@raabe/ooxml";
-import { PptxDom } from "@raabe/ooxml";
+import { PptxDom, slideView } from "@raabe/ooxml";
 import type { Deck } from "./deck";
 import { renderSlide, type Rendered } from "./render/slide";
 import { AUTOFIT_STEPS, EMU_PX, renderText, textHeight } from "./render/text";
@@ -32,6 +32,8 @@ export interface EditorHost {
   /** Comment markers of a slide (slide coordinates in EMU). */
   commentMarkers?(path: string): { x: number; y: number; n: number }[];
   toolDone(): void;
+  /** Bild ab / Bild auf, Pos1, Ende with nothing selected: another slide (PowerPoint). */
+  goSlide?(key: "PageDown" | "PageUp" | "Home" | "End"): void;
 }
 
 interface TextState {
@@ -96,7 +98,8 @@ export class SlideEditor {
     this.input.spellcheck = false;
     this.el.append(this.input);
     this.el.addEventListener("mousedown", (e) => this.onDown(e));
-    this.el.addEventListener("dblclick", (e) => this.onDouble(e));
+    // Double clicks are taken from the click count in onDown: the first click redraws the slide, after
+    // which the browser's dblclick may not arrive.
     this.el.addEventListener("contextmenu", (e) => this.onContext(e));
     this.el.addEventListener("mousemove", (e) => this.hover(e));
     this.input.addEventListener("keydown", (e) => this.onKey(e));
@@ -427,8 +430,8 @@ export class SlideEditor {
   edit(label: string, fn: () => void, merge?: string): void {
     const path = this.path;
     if (!path) return;
-    this.deck.change(label, [path], fn, merge);
-    if (this.text) this.updateAutofit(this.text.id);
+    // Autofit follows the text in the same undo step.
+    this.deck.change(label, [path], () => { fn(); if (this.text) this.updateAutofit(this.text.id); }, merge);
     this.render();
     this.host.selectionChanged();
   }
@@ -502,9 +505,67 @@ export class SlideEditor {
   }
 
   /** The top-level shape (or, inside a selected group, the member) under a client point. */
+  /**
+   * What a click hits, as PowerPoint decides it (behaviour catalogue D-072): the letters of a text (a run,
+   * a bullet, the prompt) start editing; otherwise the topmost shape whose outline is within 4 screen
+   * pixels, whose fill is under the pointer, or, without a fill (text boxes, placeholders), whose line of
+   * text is. Empty areas of an unfilled shape are passed through. Lines are hit within 4 pixels.
+   */
   private hit(e: MouseEvent): { v: ShapeView; text: boolean } | null {
     const t = document.elementFromPoint(e.clientX, e.clientY) as HTMLElement | null;
-    if (!t || !this.stage.contains(t)) return null;
+    if (!t || !this.el.contains(t)) return null;
+    const glyph = t.closest(".txt [data-o], .txt .bullet") as HTMLElement | null;
+    if (glyph && this.stage.contains(glyph)) {
+      const hit = this.glyphHit(glyph);
+      if (hit) return hit;
+    }
+    if (!this.view) return null;
+    const p = this.toSlide(e.clientX, e.clientY);
+    const tol = (4 / this.scale) * EMU_PX;
+    const shapes = this.view.shapes.filter((s) => !s.hidden);
+    for (let i = shapes.length - 1; i >= 0; i--) {
+      const r = this.hitShape(shapes[i], p, tol, e);
+      if (r) return r;
+    }
+    return null;
+  }
+
+  private hitShape(v: ShapeView, p: { x: number; y: number }, tol: number, e: MouseEvent): { v: ShapeView; text: boolean } | null {
+    if (v.kind === "grpSp" && v.children) {
+      for (let i = v.children.length - 1; i >= 0; i--) {
+        const r = this.hitShape(v.children[i], p, tol, e);
+        if (r) return this.sel.includes(v.id) || this.text?.id === v.id ? r : { v, text: false };
+      }
+      return null;
+    }
+    // The point in the shape's own frame (turned back about its centre).
+    const cx = v.x + v.w / 2, cy = v.y + v.h / 2, a = (-v.rot * Math.PI) / 180;
+    const dx = p.x - cx, dy = p.y - cy;
+    const lx = dx * Math.cos(a) - dy * Math.sin(a), ly = dx * Math.sin(a) + dy * Math.cos(a);
+    const hw = v.w / 2, hh = v.h / 2;
+    if (v.kind === "cxnSp" || v.geometry === "line" || v.geometry.startsWith("straightConnector")) {
+      const x1 = v.flipH ? hw : -hw, y1 = v.flipV ? hh : -hh;
+      return segmentDistance(lx, ly, x1, y1, -x1, -y1) <= tol ? { v, text: false } : null;
+    }
+    if (Math.abs(lx) > hw + tol || Math.abs(ly) > hh + tol) return null;
+    if (Math.abs(lx) > hw - tol || Math.abs(ly) > hh - tol) return { v, text: false };
+    // Inside: the text being edited takes the click (caret), an empty placeholder starts editing.
+    if (this.text?.id === v.id) return { v, text: true };
+    if (v.ph && v.text?.empty) return { v, text: true };
+    if (this.sel.includes(v.id) || filled(v)) return { v, text: false };
+    return this.onTextLine(v.id, e) ? { v, text: false } : null;
+  }
+
+  /** Whether the pointer is on one of the shape's lines of text (across the text area's width). */
+  private onTextLine(id: number, e: MouseEvent): boolean {
+    const txt = this.rendered?.shapes.get(id)?.querySelector(":scope > .txt") as HTMLElement | null;
+    if (!txt) return false;
+    const area = txt.getBoundingClientRect();
+    if (e.clientX < area.left || e.clientX > area.right) return false;
+    return Array.from(txt.querySelectorAll(".para")).some((p) => { const r = p.getBoundingClientRect(); return e.clientY >= r.top && e.clientY <= r.bottom; });
+  }
+
+  private glyphHit(t: HTMLElement): { v: ShapeView; text: boolean } | null {
     let shp = t.closest(".shp") as HTMLElement | null;
     if (!shp) return null;
     // Climb to the outermost shape unless its group is selected (then its member).
@@ -516,10 +577,8 @@ export class SlideEditor {
     shp = top;
     const v = this.shapeView(Number(shp.dataset.id));
     if (!v) return null;
-    // Only a click on the text itself (a run, the prompt, a bullet) starts editing; beside the text, in a
-    // text box as in a shape, the frame is selected (recorded in PowerPoint: catalogue "click textbox centre").
-    const inText = !!t.closest(".txt [data-o], .txt .bullet") && (t.closest(".shp") === shp);
-    return { v, text: inText };
+    // A group's member is hit as its group (unless the group is selected).
+    return { v, text: t.closest(".shp") === shp };
   }
 
   private onDown(e: MouseEvent): void {
@@ -550,6 +609,7 @@ export class SlideEditor {
       return;
     }
     const { v } = hit;
+    if (e.detail === 2) { this.onDouble(e); return; }
     const td = (e.target as HTMLElement).closest("td[data-r]") as HTMLElement | null;
     if (v.frame === "table" && td && e.shiftKey && !e.ctrlKey && this.text?.id === v.id && this.text.cell) {
       // Umschalt+Klick in another cell: the cells between.
@@ -579,6 +639,16 @@ export class SlideEditor {
       }
       return;
     }
+    // On the letters of a shape's text the caret goes there at once and a drag selects text; the frame
+    // moves only when dragged beside the text or by its outline (catalogue "drag rect plain").
+    const onLetters = hit.text && v.kind !== "grpSp" && !!v.text && !v.text.empty;
+    if (onLetters && !e.shiftKey && !e.ctrlKey) {
+      const pos = this.posAt(v.id, e.clientX, e.clientY);
+      if (this.text?.id !== v.id) this.endText();
+      this.enterText(v.id, pos ?? undefined);
+      this.dragText(e);
+      return;
+    }
     const multi = e.shiftKey || e.ctrlKey;
     const wasSelected = this.sel.includes(v.id);
     if (!multi && !wasSelected) { this.endText(); this.sel = [v.id]; this.render(); this.host.selectionChanged(); }
@@ -593,6 +663,14 @@ export class SlideEditor {
       moved = true;
       window.removeEventListener("mousemove", move);
       window.removeEventListener("mouseup", up);
+      if (onLetters) {
+        // Umschalt/Strg+drag on letters selects text too (PowerPoint).
+        const pos = this.posAt(v.id, start.x, start.y);
+        this.sel = [v.id];
+        this.enterText(v.id, pos ?? undefined);
+        this.dragText(e);
+        return;
+      }
       this.endText();
       this.render();
       this.dragMove(e, true, m);
@@ -687,7 +765,8 @@ export class SlideEditor {
     const hit = this.hit(e);
     if (!hit) return;
     const v = hit.v;
-    if (this.host.doubleClick(v)) return;
+    const onLetters = hit.text && !!v.text && !v.text.empty;
+    if (!onLetters && this.host.doubleClick(v)) return;
     if (!v.text && v.kind !== "sp") return;
     const body = this.textBody(v.id);
     const pos = this.posAt(v.id, e.clientX, e.clientY) ?? { p: 0, o: 0 };
@@ -706,8 +785,10 @@ export class SlideEditor {
     if (!this.text) return;
     const body = this.textBody(this.text.id)!;
     const p = this.text.caret.p;
+    const ps = T.paras(body);
+    // With its paragraph mark, as PowerPoint selects it (17 characters for "Erste Zeile hier").
     this.text.anchor = { p, o: 0 };
-    this.text.caret = { p, o: T.paraLength(T.paras(body)[p]) };
+    this.text.caret = p + 1 < ps.length ? { p: p + 1, o: 0 } : { p, o: T.paraLength(ps[p]) };
     this.render();
   }
 
@@ -726,6 +807,13 @@ export class SlideEditor {
       const t = this.text;
       const inSel = pos && T.cmpPos(T.minPos(t.caret, t.anchor), pos) <= 0 && T.cmpPos(pos, T.maxPos(t.caret, t.anchor)) <= 0;
       if (pos && !inSel) { t.caret = pos; t.anchor = pos; this.render(); }
+      this.host.contextMenu(e, "text");
+      return;
+    }
+    if (hit.text && hit.v.text && !hit.v.text.empty) {
+      // On the letters: the caret goes there (PowerPoint), then the text menu.
+      this.endText();
+      this.enterText(hit.v.id, this.posAt(hit.v.id, e.clientX, e.clientY) ?? undefined);
       this.host.contextMenu(e, "text");
       return;
     }
@@ -1202,15 +1290,16 @@ export class SlideEditor {
     this.typeText(v);
   }
 
-  /** Typed characters: into the text being edited; with a frame selected they replace its text (PowerPoint). */
+  /** Typed characters: into the text being edited; with a frame selected at the end of its text (measured: "Form" + "xy" gives "Formxy"). */
   typeText(v: string): void {
     const text = v.replace(/\r?\n/g, "\n");
     if (!this.text) {
       const id = this.sel[0];
       const el = id !== undefined ? this.shapeEl(id) : undefined;
       if (!el || this.sel.length !== 1 || (el.localName !== "sp")) return;
-      this.edit("Eingeben", () => { S.ensureTxBody(el); T.replaceAll(S.txBodyOf(el)!, ""); }, `type:${id}`);
-      this.text = { id, caret: { p: 0, o: 0 }, anchor: { p: 0, o: 0 }, pending: null };
+      if (!S.txBodyOf(el)) this.edit("Eingeben", () => { S.ensureTxBody(el); }, `type:${id}`);
+      const end = T.endPos(S.txBodyOf(el)!);
+      this.text = { id, caret: end, anchor: end, pending: null };
     }
     const t = this.text!;
     const body = this.textBody(t.id);
@@ -1229,6 +1318,14 @@ export class SlideEditor {
 
   private onKey(e: KeyboardEvent): void {
     if (this.composing || e.isComposing) return;
+    // A key an open menu already took (Esc closing the context menu) does nothing on the slide.
+    if (e.defaultPrevented) return;
+    // Text shortcuts on an empty shape start editing it (PowerPoint: Strg+E on a selected ellipse).
+    const lk = e.key.toLowerCase();
+    if (!this.text && e.ctrlKey && !e.altKey && this.sel.length === 1 && ((!e.shiftKey && ["e", "l", "r", "j"].includes(lk)) || (e.shiftKey && lk === "f"))) {
+      const v = this.selectedViews[0];
+      if (v && v.kind === "sp" && !v.ph && (!v.text || v.text.empty)) this.enterText(v.id, { p: 0, o: 0 });
+    }
     if (this.host.shortcut(e)) { e.preventDefault(); return; }
     const handled = this.text ? this.textKey(e) : this.frameKey(e);
     if (handled) e.preventDefault();
@@ -1244,18 +1341,50 @@ export class SlideEditor {
       return false;
     }
     if (k === "Tab" && !ctrl) { this.cycle(e.shiftKey ? -1 : 1); return true; }
-    if (!views.length) return false;
+    if (!views.length) {
+      if ((k === "PageDown" || k === "PageUp" || k === "Home" || k === "End") && !ctrl && this.host.goSlide) { this.host.goSlide(k); return true; }
+      return false;
+    }
     if (k.startsWith("Arrow")) {
-      // Arrow keys nudge by the grid spacing, Strg+arrow by one pixel at the zoom (PowerPoint).
-      const step = ctrl ? (1 / this.scale) * EMU_PX : this.gridSpacing;
+      if (e.altKey) {
+        // Alt+Pfeil turns by 15 degrees (Strg: 1); Alt+Umschalt+Pfeil does nothing on a frame (measured).
+        if (!e.shiftKey) this.rotateBy(k === "ArrowLeft" ? -15 : k === "ArrowRight" ? 15 : 0, ctrl);
+        return true;
+      }
+      if (e.shiftKey) {
+        // Umschalt+Pfeil sizes about the centre: 10 % per press, Strg+Umschalt 1 % (measured: 200 pt to 220,
+        // three presses 360 to 479.2). Rechts/Oben larger, Links/Unten smaller.
+        const f = 1 + (ctrl ? 0.01 : 0.1);
+        const sx = k === "ArrowRight" ? f : k === "ArrowLeft" ? 1 / f : 1, sy = k === "ArrowUp" ? f : k === "ArrowDown" ? 1 / f : 1;
+        this.edit("Größe ändern", () => { for (const v of views) this.scaleShape(v, sx, sy); }, "nudge-size");
+        return true;
+      }
+      // Arrow keys move by one pixel at the zoom, by the grid spacing when Am Raster ausrichten is on
+      // (measured: 0.8 pt at the catalogue's zoom, as Strg+Pfeil).
+      const step = ctrl || !this.snapToGrid ? (1 / this.scale) * EMU_PX : this.gridSpacing;
       const dx = k === "ArrowLeft" ? -step : k === "ArrowRight" ? step : 0, dy = k === "ArrowUp" ? -step : k === "ArrowDown" ? step : 0;
-      if (e.altKey) { this.rotateBy(k === "ArrowLeft" ? -15 : k === "ArrowRight" ? 15 : 0, ctrl); return true; }
       this.edit("Verschieben", () => { for (const v of views) this.moveShape(v, dx, dy); }, "nudge");
       return true;
     }
+    if (k === "Delete" && ctrl) return true;
+    if (k === "Backspace" && ctrl) {
+      // Strg+Rücktaste on a frame: editing at the end of its text (measured).
+      if (views.length === 1 && (views[0].text || views[0].kind === "sp")) this.enterText(views[0].id);
+      return true;
+    }
     if (k === "Delete" || k === "Backspace") { this.deleteSelected(); return true; }
+    if (k === "Enter" && e.shiftKey) return true;
     if ((k === "F2" || k === "Enter") && views.length === 1 && (views[0].text || views[0].kind === "sp")) { this.enterText(views[0].id, "all"); return true; }
     return false;
+  }
+
+  /** Sizes a shape about its centre (Umschalt+Pfeil); a text box keeps the new height (measured: 29.1 to 32 pt). */
+  private scaleShape(v: ShapeView, sx: number, sy: number): void {
+    const el = this.shapeEl(v.id);
+    if (!el) return;
+    const own = this.ownXfrm(el, v);
+    const w = Math.round(own.w * sx), hh = Math.round(own.h * sy);
+    S.setXfrm(el, { ...own, x: Math.round(own.x - (w - own.w) / 2), y: Math.round(own.y - (hh - own.h) / 2), w, h: hh });
   }
 
   private rotateBy(deg: number, fine: boolean): void {
@@ -1494,7 +1623,8 @@ export class SlideEditor {
 
   /** After a change of text: PowerPoint's Autofit for "Text bei Überlauf verkleinern", and growing text boxes. */
   updateAutofit(id: number): void {
-    const v = this.deck.view(this.path!);
+    // A fresh view: inside a change the cached one still shows the text before it.
+    const v = slideView(this.pptx, this.path!);
     const sv = flat(v.shapes).find((s) => s.id === id);
     if (!sv?.text) return;
     const el = this.shapeEl(id);
@@ -1512,7 +1642,7 @@ export class SlideEditor {
           probe.replaceChildren(renderText(sv.text, rect.w, rect.h, { prompt: false, fit: st }));
           if (textHeight(probe.firstElementChild as HTMLElement) <= rect.h + 0.5) { found = st; break; }
         }
-        if (S.setAutofit(el, found)) this.pptx.touch(this.path!);
+        if (S.setAutofit(el, found)) this.deck.invalidate(this.path!);
       } else if (body.autofit === "shape") {
         probe.replaceChildren(renderText(sv.text, body.wrap ? rect.w : 100000, 100000, { prompt: false }));
         const col = probe.querySelector(".txt-col") as HTMLElement;
@@ -1523,7 +1653,7 @@ export class SlideEditor {
           const width = Math.ceil(Math.max(...Array.from(col.querySelectorAll(".para")).map((p) => (p as HTMLElement).scrollWidth)) * EMU_PX + body.l + body.r);
           next.w = width;
         }
-        if (Math.abs((next.h ?? 0) - own.h) > 1 || Math.abs((next.w ?? 0) - own.w) > 1) S.setXfrm(el, next);
+        if (Math.abs((next.h ?? 0) - own.h) > 1 || Math.abs((next.w ?? 0) - own.w) > 1) { S.setXfrm(el, next); this.deck.invalidate(this.path!); }
       }
     } finally {
       probe.remove();
@@ -1605,4 +1735,18 @@ function resize(v: ShapeView, k: Exclude<Handle, "rot">, p: { x: number; y: numb
   const ncx = cx + mx * cos - my * sin, ncy = cy + mx * sin + my * cos;
   const W = nr - nl, H = nb - nt;
   return { x: ncx - W / 2, y: ncy - H / 2, w: W, h: H, rot: v.rot, flipH: v.kind === "pic" ? v.flipH : flipH, flipV: v.kind === "pic" ? v.flipV : flipV };
+}
+
+/** Whether a shape has a fill that takes clicks (pictures, tables and charts always do). */
+function filled(v: ShapeView): boolean {
+  if (v.kind !== "sp") return true;
+  const f = v.format?.fill ?? v.info?.styleFill;
+  return !!f && f.kind !== "none";
+}
+
+/** Distance of a point from a line segment. */
+function segmentDistance(px: number, py: number, x1: number, y1: number, x2: number, y2: number): number {
+  const dx = x2 - x1, dy = y2 - y1, len = dx * dx + dy * dy;
+  const t = len ? Math.max(0, Math.min(1, ((px - x1) * dx + (py - y1) * dy) / len)) : 0;
+  return Math.hypot(px - (x1 + t * dx), py - (y1 + t * dy));
 }

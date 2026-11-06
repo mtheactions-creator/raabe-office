@@ -332,6 +332,11 @@ export class PresentApp implements EditorHost, PanelHost {
     return this.comments?.markers(path) ?? [];
   }
 
+  goSlide(key: "PageDown" | "PageUp" | "Home" | "End"): void {
+    const i = this.active.current, n = this.deck.slides.length;
+    this.setCurrent(key === "PageDown" ? i + 1 : key === "PageUp" ? i - 1 : key === "Home" ? 0 : n - 1);
+  }
+
   doubleClick(v: ShapeView): boolean {
     // Pictures, tables and charts: their contextual tab (PowerPoint); shapes and text enter their text.
     if (v.kind === "pic") { this.editor.select([v.id]); this.ribbon.select("pictureFormat"); return true; }
@@ -1555,7 +1560,17 @@ export class PresentApp implements EditorHost, PanelHost {
     impl("file.close", () => this.closeDoc(this.active));
     impl("file.exportPdf", () => this.exportPdf());
     impl("file.print", () => { this.backstage.open("print"); });
-    impl("edit.undo", () => { ed().endText(); this.deck.undo(); }, () => this.deck.canUndo);
+    // After Rückgängig the shapes it brings back are selected (PowerPoint: Entf, then Strg+Z).
+    const reselect = (step: () => void) => {
+      const path = this.slidePath();
+      const before = new Set(path ? this.deck.view(path).shapes.map((s) => s.id) : []);
+      ed().endText();
+      step();
+      const now = path && this.slidePath() === path && this.deck.pptx.has(path) ? this.deck.view(path).shapes.map((s) => s.id) : [];
+      const back = now.filter((id) => !before.has(id));
+      if (back.length) ed().select(back);
+    };
+    impl("edit.undo", () => reselect(() => this.deck.undo()), () => this.deck.canUndo);
     impl("edit.redo", () => { ed().endText(); this.deck.redo(); }, () => this.deck.canRedo);
     impl("edit.copy", () => this.copy(false), () => has());
     impl("edit.cut", () => this.copy(true), () => has());
@@ -1921,8 +1936,8 @@ export class PresentApp implements EditorHost, PanelHost {
         if (!el) continue;
         const copy = el.cloneNode(true) as Element;
         S.renumber(copy, () => ++next);
-        // PowerPoint's Strg+D offset: 0,48 cm right and down (to be confirmed by the catalogue).
-        S.setXfrm(copy, { x: v.x + 172720, y: v.y + 172720, w: v.w, h: v.h });
+        // PowerPoint's Strg+D offset: 12 pt right and down (behaviour catalogue).
+        S.setXfrm(copy, { x: v.x + 152400, y: v.y + 152400, w: v.w, h: v.h });
         tree.append(copy);
         ids.push(S.shapeId(copy));
       }
@@ -1994,7 +2009,9 @@ export class PresentApp implements EditorHost, PanelHost {
         case "u": return run("font.underline");
         case "c": this.pickFormat(false); return true;
         case "v": this.applyPainterNow(); return true;
-        case "g": return run("arrange.ungroup");
+        // German PowerPoint (measured): Strg+Umschalt+G groups, Strg+Umschalt+H ungroups; Strg+G alone does nothing.
+        case "g": return run("arrange.group");
+        case "h": return run("arrange.ungroup");
         case ">": return run("font.grow");
         case "<": return run("font.shrink");
       }
@@ -2015,7 +2032,7 @@ export class PresentApp implements EditorHost, PanelHost {
       case "v": return run("edit.paste");
       case "d": return run("edit.duplicate");
       case "m": return run("slide.new");
-      case "g": return run("arrange.group");
+      case "g": return true;
       case "a": if (!this.editor.text) { this.selectAll(); return true; } return false;
       case "l": return run("para.left");
       case "e": return run("para.center");
@@ -2613,6 +2630,7 @@ export class PresentApp implements EditorHost, PanelHost {
         });
         // Text boxes take the height of their text at once, as PowerPoint's AddTextbox does (spAutoFit).
         for (const v of deck.view(path).shapes) if (v.textBox) app.editor.updateAutofit(v.id);
+        deck.clearHistory();
         doc.savedVersion = deck.version;
         app.editor.render(); app.panel.render();
         if (spec.zoom) app.setZoom(spec.zoom);
@@ -2690,7 +2708,10 @@ export class PresentApp implements EditorHost, PanelHost {
           const own = ("popup" in c && c.popup) || c.type === "color" ? { panel: true, ...(panelItems.length ? { items: [...(("items" in menu && menu.items) || []), ...panelItems] } : {}) } : {};
           return [{ ...base, type: (c as { type: string }).type, ...menu, ...own }];
         };
-        const tabs = [...ribbonTabs(app.ribbonContext()), app.shapeTab(), app.pictureTab(), app.tableTab(), app.tableLayoutTab(), app.chartTab(), app.chartFormatTab()];
+        const kind = app.masterKind;
+        const masters = (["slides", "notes", "handout"] as const).map((k) => { app.masterKind = k; return app.masterTab(); });
+        app.masterKind = kind;
+        const tabs = [...ribbonTabs(app.ribbonContext()), app.shapeTab(), app.pictureTab(), app.tableTab(), app.tableLayoutTab(), app.chartTab(), app.chartFormatTab(), ...masters];
         return tabs.map((t) => ({
           name: t.label, contextual: !!t.contextual,
           groups: t.groups.map((g) => ({ name: g.label, launcher: g.launcher ? cmdItem(g.launcher.cmd) : undefined, controls: g.controls.flatMap(ctl) })),

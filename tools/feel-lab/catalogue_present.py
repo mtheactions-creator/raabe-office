@@ -67,7 +67,9 @@ def cases() -> list[Case]:
         # Keys with the frame selected.
         sel = [("click", (0, .5, 0))]
         for key in ("left", "right", "up", "down", "ctrl+left", "ctrl+down", "shift+right", "alt+right", "alt+left", "delete", "backspace", "ctrl+d", "tab", "shift+tab", "esc",
-                    "enter", "f2", "ctrl+a", "ctrl+c", "ctrl+x", "ctrl+z", "ctrl+shift+f", "ctrl+e", "ctrl+r", "ctrl+l"):
+                    "enter", "f2", "ctrl+a", "ctrl+c", "ctrl+x", "ctrl+z", "ctrl+shift+f", "ctrl+e", "ctrl+r", "ctrl+l",
+                    # Added after the first comparison (D-072): the keys still guessed.
+                    "shift+left", "shift+up", "shift+down", "ctrl+shift+right", "alt+shift+right", "shift+enter", "ctrl+delete", "ctrl+backspace", "ctrl+b"):
             add(f"frame {nm} {key}", "framekeys", [obj, OTHER], sel + [("keys", key)])
         add(f"frame {nm} type", "framekeys", [obj], sel + [("type", "xy")])
         add(f"frame {nm} ctrl+d twice", "framekeys", [obj], sel + [("keys", "ctrl+d"), ("keys", "ctrl+d")])
@@ -112,8 +114,10 @@ def cases() -> list[Case]:
     for key in ("ctrl+g", "delete", "right", "ctrl+d", "esc", "tab", "ctrl+a"):
         add(f"multi {key}", "multikeys", two_shapes, msel + [("keys", key)])
     add("multi group ungroup", "multikeys", two_shapes, msel + [("keys", "ctrl+g"), ("keys", "ctrl+shift+g")])
+    add("multi ctrl+shift+g twice", "multikeys", two_shapes, msel + [("keys", "ctrl+shift+g"), ("keys", "ctrl+shift+g")])
+    add("multi ctrl+shift+g ctrl+shift+h", "multikeys", two_shapes, msel + [("keys", "ctrl+shift+g"), ("keys", "ctrl+shift+h")])
     add("multi drag", "multikeys", two_shapes, msel + [("drag", (0, .5, .5), 30, 30)])
-    add("group click member", "group", two_shapes, msel + [("keys", "ctrl+g"), ("click", ("slide", 80, 480)), ("click", (0, .5, .5)), ("click", (0, .5, .5))])
+    add("group click member", "group", two_shapes, msel + [("keys", "ctrl+shift+g"), ("click", ("slide", 80, 480)), ("click", (0, .5, .5)), ("click", (0, .5, .5))])
     add("marquee", "marquee", two_shapes, [("drag", ("slide", 250, 100), 550, 350)])
     add("marquee partial", "marquee", two_shapes, [("drag", ("slide", 250, 100), 300, 150)])
 
