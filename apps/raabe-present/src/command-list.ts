@@ -264,7 +264,7 @@ export const COMMANDS: Command[] = [
   cmd("ink.toMath", "Freihand in Gleichung", "equation"),
   cmd("ink.replay", "Wiedergabe in Freihand", "play"),
   // ----- contextual tabs --------------------------------------------------------------------------
-  cmd("table.firstRow", "Kopfzeile", "check"),
+  cmd("table.firstRow", "Überschrift", "check"),
   cmd("table.lastRow", "Ergebniszeile", "check"),
   cmd("table.bandRow", "Gebänderte Zeilen", "check"),
   cmd("table.firstCol", "Erste Spalte", "check"),

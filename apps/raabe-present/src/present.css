@@ -200,3 +200,5 @@ body.printing #print-root { display: block; position: fixed; left: 0; top: 0; z-
 .sym { width: 28px; height: 28px; border: 1px solid transparent; background: #fff; font: 16px "Segoe UI Symbol", "Segoe UI", sans-serif; padding: 0; }
 .sym:hover { border-color: #c6c6c6; } .sym.on { background: #fbeaea; border-color: #b3141b; }
 .sym-recent { display: flex; gap: 1px; min-height: 30px; }
+.table-gridlines .slide .tbl td { outline: 1px dashed rgba(120,120,120,.6); outline-offset: -1px; }
+.chart-data td { padding: 0; } .chart-data input { width: 90px; border: 1px solid #d0d0d0; padding: 2px 4px; font: 12px var(--font); }

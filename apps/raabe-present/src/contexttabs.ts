@@ -1,0 +1,195 @@
+// The contextual tabs as PowerPoint 365 shows them (D-070; groups, labels and keytips recorded in
+// results/2026-11-06-powerpoint-inventory.json): Formformat, Bildformat, Tabellenentwurf, Tabellenlayout,
+// Diagrammentwurf and Format. Their commands are registered here with PowerPoint's labels and attached
+// in app.ts / contextcmds.ts; those without behaviour stay greyed with "Noch nicht verfügbar".
+
+import type { Command, Control, MenuEntry, Tab } from "@raabe/shell";
+
+type C = Omit<Command, "id">;
+const cmd = (id: string, label: string, icon?: string, extra: Partial<C> = {}): Command => ({ id, label, icon, ...extra });
+
+export const CONTEXT_COMMANDS: Command[] = [
+  cmd("shape.editShape", "Form bearbeiten", "edit-shape"),
+  cmd("shape.merge", "Formen zusammenführen", "shapes"),
+  cmd("shape.quickStyles", "Schnellformatvorlagen", "styles"),
+  cmd("wordart.quickStyles", "Schnellformatvorlagen", "wordart"),
+  cmd("wordart.fill", "Textfüllung", "text-fill"),
+  cmd("wordart.outline", "Textkontur", "text-outline"),
+  cmd("wordart.effects", "Texteffekte", "text-effects"),
+  cmd("wordart.dialog", "Texteffekte formatieren...", "launcher"),
+  cmd("shape.altTextPane", "Alternativtext", "alt-text"),
+  cmd("shape.heightBox", "Formenhöhe", "shape-height"),
+  cmd("shape.widthBox", "Formenbreite", "shape-width"),
+  cmd("shape.sizeDialog", "Größe und Position...", "launcher"),
+  cmd("pic.edit", "Bild bearbeiten", "edit"),
+  cmd("pic.removeBg", "Hintergrund entfernen", "remove-background"),
+  cmd("pic.corrections", "Korrekturen", "corrections"),
+  cmd("pic.color", "Farbe", "picture-color"),
+  cmd("pic.artistic", "Künstlerische Effekte", "artistic"),
+  cmd("pic.transparency", "Transparenz", "transparency"),
+  cmd("pic.compress", "Bilder komprimieren...", "compress"),
+  cmd("pic.quickStyles", "Schnellformatvorlagen", "picture-styles"),
+  cmd("pic.border", "Bildrahmen", "picture-border"),
+  cmd("pic.effects", "Bildeffekte", "picture-effects"),
+  cmd("pic.layout", "Bildlayout", "picture-layout"),
+  cmd("pic.dialog", "Bild...", "launcher"),
+  cmd("table.headerRow", "Überschrift", "check"),
+  cmd("table.styles", "Tabellenformate", "table-style"),
+  cmd("table.shading", "Schattierung", "shading"),
+  cmd("table.borders", "Rahmen", "borders"),
+  cmd("table.effects", "Effekte", "effects"),
+  cmd("table.penStyle", "Stiftart", "line-style"),
+  cmd("table.penWeight", "Stiftstärke", "line-weight-pen"),
+  cmd("table.penColor", "Stiftfarbe", "pen"),
+  cmd("table.draw", "Tabelle zeichnen", "table-draw"),
+  cmd("table.eraser", "Radierer", "table-eraser"),
+  cmd("table.select", "Auswählen", "table-select"),
+  cmd("table.gridlines", "Gitternetzlinien anzeigen", "gridlines"),
+  cmd("table.deleteMenu", "Löschen", "table-delete"),
+  cmd("table.rowAbove", "Zeile Oberhalb", "table-above"),
+  cmd("table.rowBelow", "Zeile unterhalb einfügen", "table-below"),
+  cmd("table.colLeft", "Spalte Links", "table-left"),
+  cmd("table.colRight", "Spalte rechts einfügen", "table-right"),
+  cmd("table.rowHeight", "Tabellenzeilenhöhe", "shape-height"),
+  cmd("table.colWidth", "Tabellenspaltenbreite", "shape-width"),
+  cmd("table.distRows", "Zeilen verteilen", "table-rows-even"),
+  cmd("table.distCols", "Spalten verteilen", "table-cols-even"),
+  cmd("table.alignLeft", "Linksbündig", "align-left"),
+  cmd("table.alignCenter", "Zentriert", "align-center"),
+  cmd("table.alignRight", "Rechtsbündig", "align-right"),
+  cmd("table.top", "Oben ausrichten", "cell-top-center"),
+  cmd("table.middle", "Vertikal zentrieren", "cell-middle-center"),
+  cmd("table.bottom", "Unten ausrichten", "cell-bottom-center"),
+  cmd("table.direction", "Textrichtung", "text-direction"),
+  cmd("table.margins", "Zellenbegrenzungen", "cell-margins"),
+  cmd("table.height", "Höhe", "shape-height"),
+  cmd("table.width", "Breite", "shape-width"),
+  cmd("table.lockRatio", "Seitenverhältnis sperren", "check"),
+  cmd("table.arrange", "Anordnen", "bring-forward"),
+  cmd("chart.addElement", "Diagrammelement hinzufügen", "chart-recommended"),
+  cmd("chart.quickLayout", "Schnelllayout", "chart-recommended"),
+  cmd("chart.colors", "Farben ändern", "colors"),
+  cmd("chart.styles", "Schnellformatvorlagen", "styles"),
+  cmd("chart.switchRowCol", "Zeile/Spalte tauschen", "table"),
+  cmd("chart.selectData", "Daten auswählen...", "table"),
+  cmd("chart.refresh", "Daten aktualisieren", "update"),
+];
+
+const b = (cmd: string, key: string, size: "large" | "small" = "small"): Control => ({ type: "button", cmd, key, size });
+const dd = (cmd: string, key: string, size: "large" | "small", menu: MenuEntry[] | (() => MenuEntry[])): Control =>
+  typeof menu === "function" ? { type: "dropdown", cmd, key, size, get menu() { return menu(); } } : { type: "dropdown", cmd, key, size, menu };
+const stack = (...items: Control[]): Control => ({ type: "stack", items });
+const check = (cmd: string, key: string): Control => ({ type: "check", cmd, key });
+
+export interface ContextTabHost {
+  shapeGallery(close: () => void): HTMLElement;
+  color(cur: () => string, pick: (hex: string) => void, cmd: string, key: string, label?: boolean): Control;
+  fillColor(): string; setFill(hex: string): void;
+  lineColor(): string; setLine(hex: string): void;
+  fontColor(): string; setFontColor(hex: string): void;
+  effects(): MenuEntry[];
+  alignMenu(): MenuEntry[];
+  sizeSpin(kind: "h" | "w"): Control;
+  pictureColor(): MenuEntry[];
+  pictureTransparency(): MenuEntry[];
+  pictureCorrections(): MenuEntry[];
+  lineWeights(): MenuEntry[];
+  chartKinds(): MenuEntry[];
+  quickLayouts(): MenuEntry[];
+  chartColors(): MenuEntry[];
+  tableSpin(kind: "row" | "col" | "h" | "w"): Control;
+}
+
+const arrange = (pic: boolean): Control[] => [stack(
+  { type: "split", cmd: "arrange.forward", key: "GE", size: "small", menu: [{ cmd: "arrange.forward" }, { cmd: "arrange.front" }] },
+  { type: "split", cmd: "arrange.backward", key: "GH", size: "small", menu: [{ cmd: "arrange.backward" }, { cmd: "arrange.back" }] },
+  b("arrange.selectionPane", pic ? "Q2" : "Q")), stack(
+  { type: "dropdown", cmd: "arrange.align", key: "DA", size: "small", menu: [{ cmd: "arrange.alignLeft" }, { cmd: "arrange.alignCenter" }, { cmd: "arrange.alignRight" }, "-", { cmd: "arrange.alignTop" }, { cmd: "arrange.alignMiddle" }, { cmd: "arrange.alignBottom" }, "-", { cmd: "arrange.distH" }, { cmd: "arrange.distV" }, "-", { cmd: "arrange.toSlide" }, { cmd: "arrange.toSelected" }] },
+  { type: "dropdown", cmd: "arrange.group", key: "GR", size: "small", menu: [{ cmd: "arrange.group" }, { cmd: "arrange.regroup" }, { cmd: "arrange.ungroup" }] },
+  { type: "dropdown", cmd: "arrange.rotate", key: "DR", size: "small", menu: [{ cmd: "arrange.rotRight" }, { cmd: "arrange.rotLeft" }, { cmd: "arrange.flipV" }, { cmd: "arrange.flipH" }] })];
+
+const wordArt = (h: ContextTabHost): Control[] => [b("wordart.quickStyles", "C", "large"),
+  stack(h.color(() => h.fontColor(), (c) => h.setFontColor(c), "wordart.fill", "4", true), b("wordart.outline", "TE"), b("wordart.effects", "IE"))];
+
+export function shapeFormatTab(h: ContextTabHost): Tab {
+  return {
+    id: "shapeFormat", label: "Formformat", key: "JD", contextual: true, shrink: [],
+    groups: [
+      { id: "insert", label: "Formen einfügen", key: "ZE", icon: "shapes", controls: [{ type: "dropdown", cmd: "insert.shapes", key: "2", size: "large", menu: [], popup: (c) => h.shapeGallery(c) }, stack(b("shape.editShape", "F"), b("insert.textBox", "LT"), b("shape.merge", "Y"))] },
+      { id: "styles", label: "Formenarten", key: "ZF", icon: "shape-fill", launcher: { cmd: "draw.format", key: "BB" }, controls: [b("shape.quickStyles", "NC", "large"),
+        stack(h.color(() => h.fillColor(), (c) => h.setFill(c), "draw.fill", "Ü", true), h.color(() => h.lineColor(), (c) => h.setLine(c), "draw.outline", "V", true), dd("draw.effects", "MO", "small", () => h.effects()))] },
+      { id: "wordart", label: "WordArt-Formate", key: "ZW", icon: "wordart", launcher: { cmd: "wordart.dialog", key: "O" }, controls: wordArt(h) },
+      { id: "access", label: "Barrierefreiheit", key: "ZB", icon: "alt-text", controls: [b("shape.altTextPane", "AT", "large")] },
+      { id: "arrange", label: "Anordnen", key: "ZA", icon: "bring-forward", controls: arrange(false) },
+      { id: "size", label: "Größe", key: "ZG", icon: "size-position", launcher: { cmd: "shape.sizeDialog", key: "ß" }, controls: [stack(h.sizeSpin("h"), h.sizeSpin("w"))] },
+    ],
+  };
+}
+
+export function pictureFormatTab(h: ContextTabHost): Tab {
+  return {
+    id: "pictureFormat", label: "Bildformat", key: "JP", contextual: true, shrink: [],
+    groups: [
+      { id: "adjust", label: "Anpassen", key: "ZA", icon: "corrections", controls: [b("pic.removeBg", "N", "large"), dd("pic.corrections", "O", "large", () => h.pictureCorrections()), stack(dd("pic.color", "F", "small", () => h.pictureColor()), b("pic.artistic", "Ü"), dd("pic.transparency", "T", "small", () => h.pictureTransparency())),
+        stack(b("pic.compress", "M"), b("pic.change", "Q1"), b("pic.reset", "U"))] },
+      { id: "styles", label: "Bildformatvorlagen", key: "ZB", icon: "picture-styles", launcher: { cmd: "pic.dialog", key: "P" }, controls: [b("pic.quickStyles", "S", "large"),
+        stack(h.color(() => h.lineColor(), (c) => h.setLine(c), "pic.border", "V", true), dd("pic.effects", "E", "small", () => h.effects()), b("pic.layout", "A1"))] },
+      { id: "access", label: "Barrierefreiheit", key: "ZR", icon: "alt-text", controls: [b("shape.altTextPane", "AT", "large")] },
+      { id: "arrange", label: "Anordnen", key: "ZO", icon: "bring-forward", controls: arrange(true) },
+      { id: "size", label: "Größe", key: "ZG", icon: "crop", launcher: { cmd: "shape.sizeDialog", key: "ß" }, controls: [b("pic.crop", "C", "large"), stack(h.sizeSpin("h"), h.sizeSpin("w"))] },
+    ],
+  };
+}
+
+export function tableDesignTab(h: ContextTabHost): Tab {
+  return {
+    id: "tableDesign", label: "Tabellenentwurf", key: "JT", contextual: true, shrink: [],
+    groups: [
+      { id: "options", label: "Tabellenformatoptionen", key: "ZO", icon: "table-style", controls: [stack(check("table.firstRow", "Ü"), check("table.lastRow", "Ä"), check("table.bandRow", "U")), stack(check("table.firstCol", "P"), check("table.lastCol", "L"), check("table.bandCol", "V"))] },
+      { id: "styles", label: "Tabellenformatvorlagen", key: "ZT", icon: "table-style", controls: [b("table.styles", "M", "large"), stack(h.color(() => h.fillColor(), (c) => h.setFill(c), "table.shading", "NC"), b("table.borders", "DA"), b("table.effects", "F"))] },
+      { id: "wordart", label: "WordArt-Formate", key: "ZW", icon: "wordart", launcher: { cmd: "wordart.dialog", key: "O" }, controls: wordArt(h) },
+      { id: "draw", label: "Rahmenlinien zeichnen", key: "ZR", icon: "table-draw", controls: [stack(b("table.penStyle", "B"), dd("table.penWeight", "6", "small", () => h.lineWeights()), h.color(() => h.lineColor(), (c) => h.setLine(c), "table.penColor", "G")), b("table.draw", "AA", "large"), b("table.eraser", "R", "large")] },
+    ],
+  };
+}
+
+export function tableLayoutTab(h: ContextTabHost): Tab {
+  return {
+    id: "tableLayout", label: "Tabellenlayout", key: "JL", contextual: true, shrink: [],
+    groups: [
+      { id: "table", label: "Tabelle", key: "ZT", icon: "table", controls: [dd("table.select", "W", "large", [{ label: "Tabelle markieren", run: () => void 0 }]), b("table.gridlines", "ß", "large")] },
+      { id: "rows", label: "Zeilen und Spalten", key: "ZZ", icon: "table-insert-row", controls: [dd("table.deleteMenu", "Ö", "large", [{ cmd: "table.deleteCols" }, { cmd: "table.deleteRows" }, { cmd: "table.delete" }]),
+        b("table.rowAbove", "Y1", "large"), b("table.rowBelow", "E", "small"), b("table.colLeft", "Y2", "small"), b("table.colRight", "I1", "small")] },
+      { id: "merge", label: "Zusammenführen", key: "ZU", icon: "table-merge", controls: [b("table.merge", "LE", "large"), b("table.split", "NE", "large")] },
+      { id: "cellSize", label: "Zellengröße", key: "ZG", icon: "table-autofit", controls: [stack(h.tableSpin("row"), h.tableSpin("col")), stack(b("table.distRows", "V"), b("table.distCols", "SP"))] },
+      { id: "align", label: "Ausrichtung", key: "ZA", icon: "cell-middle-center", controls: [stack(b("table.alignLeft", "II"), b("table.top", "C")), stack(b("table.alignCenter", "RZ"), b("table.middle", "K")), stack(b("table.alignRight", "RE"), b("table.bottom", "A")),
+        b("table.direction", "MT", "large"), b("table.margins", "NZ", "large")] },
+      { id: "size", label: "Tabellengröße", key: "ZS", icon: "size-position", controls: [stack(h.tableSpin("h"), h.tableSpin("w"), check("table.lockRatio", "T"))] },
+      { id: "arrange", label: "Anordnen", key: "ZO", icon: "bring-forward", controls: [dd("table.arrange", "ZA", "large", [{ cmd: "arrange.forward" }, { cmd: "arrange.backward" }, { cmd: "arrange.selectionPane" }, "-", { label: "Ausrichten", submenu: () => h.alignMenu() }])] },
+    ],
+  };
+}
+
+export function chartDesignTab(h: ContextTabHost): Tab {
+  return {
+    id: "chartDesign", label: "Diagrammentwurf", key: "JC", contextual: true, shrink: [],
+    groups: [
+      { id: "layouts", label: "Diagrammlayouts", key: "ZL", icon: "chart-recommended", controls: [b("chart.addElement", "D", "large"), dd("chart.quickLayout", "C", "large", () => h.quickLayouts())] },
+      { id: "styles", label: "Diagrammformatvorlagen", key: "ZS", icon: "styles", controls: [dd("chart.colors", "F", "large", () => h.chartColors()), b("chart.styles", "S", "large")] },
+      { id: "data", label: "Daten", key: "ZD", icon: "table", controls: [b("chart.switchRowCol", "E", "large"), b("chart.selectData", "T", "large"), b("chart.editData", "A", "large"), b("chart.refresh", "N", "large")] },
+      { id: "type", label: "Typ", key: "ZT", icon: "chart-column", controls: [dd("chart.changeType", "I", "large", () => h.chartKinds())] },
+    ],
+  };
+}
+
+export function chartFormatTab(h: ContextTabHost): Tab {
+  return {
+    id: "chartFormat", label: "Format", key: "JY", contextual: true, shrink: [],
+    groups: [
+      { id: "current", label: "Aktuelle Auswahl", key: "ZA", icon: "format-picture", controls: [b("draw.format", "M", "large")] },
+      { id: "styles", label: "Formenarten", key: "ZF", icon: "shape-fill", controls: [stack(h.color(() => h.fillColor(), (c) => h.setFill(c), "draw.fill", "Ü", true), h.color(() => h.lineColor(), (c) => h.setLine(c), "draw.outline", "V", true))] },
+      { id: "arrange", label: "Anordnen", key: "ZO", icon: "bring-forward", controls: arrange(false) },
+      { id: "size", label: "Größe", key: "ZG", icon: "size-position", controls: [stack(h.sizeSpin("h"), h.sizeSpin("w"))] },
+    ],
+  };
+}

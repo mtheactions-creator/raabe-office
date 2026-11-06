@@ -1,0 +1,8433 @@
+{
+ "tabs": [
+  {
+   "name": "Start",
+   "contextual": false,
+   "groups": [
+    {
+     "name": "Zwischenablage",
+     "controls": [
+      {
+       "name": "Einfügen",
+       "deferred": false,
+       "enabled": true,
+       "type": "split",
+       "items": [
+        {
+         "name": "Zieldesign verwenden",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Ursprüngliche Formatierung beibehalten",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Grafik",
+         "deferred": false,
+         "enabled": false
+        },
+        {
+         "name": "Nur den Text übernehmen",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Inhalte einfügen...",
+         "deferred": false,
+         "enabled": false
+        }
+       ]
+      },
+      {
+       "name": "Ausschneiden",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Kopieren",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Format übertragen",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Folien",
+     "controls": [
+      {
+       "name": "Neue Folie",
+       "deferred": false,
+       "enabled": true,
+       "type": "split",
+       "panel": true,
+       "items": [
+        {
+         "name": "Titelfolie"
+        },
+        {
+         "name": "Titel und Inhalt"
+        },
+        {
+         "name": "Abschnitts-\nüberschrift"
+        },
+        {
+         "name": "Zwei Inhalte"
+        },
+        {
+         "name": "Vergleich"
+        },
+        {
+         "name": "Nur Titel"
+        },
+        {
+         "name": "Leer"
+        },
+        {
+         "name": "Inhalt mit Überschrift"
+        },
+        {
+         "name": "Bild mit Überschrift"
+        },
+        {
+         "name": "Titel und vertikaler Text"
+        },
+        {
+         "name": "Vertikaler Titel und Text"
+        },
+        {
+         "name": "Ausgewählte Folien duplizieren"
+        }
+       ]
+      },
+      {
+       "name": "Layout",
+       "deferred": false,
+       "enabled": false,
+       "type": "dropdown",
+       "panel": true,
+       "items": [
+        {
+         "name": "Titelfolie"
+        },
+        {
+         "name": "Titel und Inhalt"
+        },
+        {
+         "name": "Abschnitts-\nüberschrift"
+        },
+        {
+         "name": "Zwei Inhalte"
+        },
+        {
+         "name": "Vergleich"
+        },
+        {
+         "name": "Nur Titel"
+        },
+        {
+         "name": "Leer"
+        },
+        {
+         "name": "Inhalt mit Überschrift"
+        },
+        {
+         "name": "Bild mit Überschrift"
+        },
+        {
+         "name": "Titel und vertikaler Text"
+        },
+        {
+         "name": "Vertikaler Titel und Text"
+        },
+        {
+         "name": "Ausgewählte Folien duplizieren"
+        }
+       ]
+      },
+      {
+       "name": "Zurücksetzen",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Abschnitt",
+       "deferred": false,
+       "enabled": false,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Abschnitt hinzufügen",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Abschnitt umbenennen",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Abschnitt entfernen",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Alle Abschnitte entfernen",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Alle reduzieren",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Alle erweitern",
+         "deferred": false,
+         "enabled": true
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Schriftart",
+     "launcher": {
+      "name": "Schriftart...",
+      "deferred": false,
+      "enabled": true
+     },
+     "controls": [
+      {
+       "name": "Schriftart",
+       "deferred": false,
+       "enabled": true,
+       "type": "combo"
+      },
+      {
+       "name": "Schriftgrad",
+       "deferred": false,
+       "enabled": true,
+       "type": "combo"
+      },
+      {
+       "name": "Schriftgrad vergrößern",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Schriftgrad verkleinern",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Formatierung löschen",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Fett",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Kursiv",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Unterstreichen",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Schatten",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Durchstreichen",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Zeichenabstand",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Sehr eng",
+         "enabled": true
+        },
+        {
+         "name": "Eng",
+         "enabled": true
+        },
+        {
+         "name": "Normal",
+         "enabled": true
+        },
+        {
+         "name": "Weit",
+         "enabled": true
+        },
+        {
+         "name": "Sehr weit",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Groß-/Kleinschreibung",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Ersten Buchstaben im Satz großschreiben.",
+         "enabled": true
+        },
+        {
+         "name": "kleinbuchstaben",
+         "enabled": true
+        },
+        {
+         "name": "GROSSBUCHSTABEN",
+         "enabled": true
+        },
+        {
+         "name": "Ersten Buchstaben Im Wort Großschreiben",
+         "enabled": true
+        },
+        {
+         "name": "gROSS-/kLEINSCHREIBUNG UMKEHREN",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Texthervorhebungsfarbe",
+       "deferred": false,
+       "enabled": true,
+       "type": "color",
+       "panel": true,
+       "items": [
+        {
+         "name": "Weiß, Hintergrund 1"
+        },
+        {
+         "name": "Schwarz, Text 1"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2"
+        },
+        {
+         "name": "Blaugrau, Text 2"
+        },
+        {
+         "name": "Blau, Akzent 1"
+        },
+        {
+         "name": "Orange, Akzent 2"
+        },
+        {
+         "name": "Grau, Akzent 3"
+        },
+        {
+         "name": "Gold, Akzent 4"
+        },
+        {
+         "name": "Blau, Akzent 5"
+        },
+        {
+         "name": "Grün, Akzent 6"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 5%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 50%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 10%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 80%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 80%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 80%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 80%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 80%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 80%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 80%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 15%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 35%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 25%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 60%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 60%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 60%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 60%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 60%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 60%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 60%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 25%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 25%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 50%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 40%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 40%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 40%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 40%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 40%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 40%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 40%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 35%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 15%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 75%"
+        },
+        {
+         "name": "Blaugrau, Text 2, dunkler 25%"
+        },
+        {
+         "name": "Blau, Akzent 1, dunkler 25%"
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 25%"
+        },
+        {
+         "name": "Grau, Akzent 3, dunkler 25%"
+        },
+        {
+         "name": "Gold, Akzent 4, dunkler 25%"
+        },
+        {
+         "name": "Blau, Akzent 5, dunkler 25%"
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 25%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 50%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 5%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 90%"
+        },
+        {
+         "name": "Blaugrau, Text 2, dunkler 50%"
+        },
+        {
+         "name": "Blau, Akzent 1, dunkler 50%"
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 50%"
+        },
+        {
+         "name": "Grau, Akzent 3, dunkler 50%"
+        },
+        {
+         "name": "Gold, Akzent 4, dunkler 50%"
+        },
+        {
+         "name": "Blau, Akzent 5, dunkler 50%"
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 50%"
+        },
+        {
+         "name": "Dunkelrot"
+        },
+        {
+         "name": "Rot"
+        },
+        {
+         "name": "Orange"
+        },
+        {
+         "name": "Gelb"
+        },
+        {
+         "name": "Hellgrün"
+        },
+        {
+         "name": "Grün"
+        },
+        {
+         "name": "Hellblau"
+        },
+        {
+         "name": "Blau"
+        },
+        {
+         "name": "Dunkelblau"
+        },
+        {
+         "name": "Lila"
+        }
+       ]
+      },
+      {
+       "name": "Schriftfarbe",
+       "deferred": false,
+       "enabled": true,
+       "type": "color",
+       "panel": true,
+       "items": [
+        {
+         "name": "Weiß, Hintergrund 1"
+        },
+        {
+         "name": "Schwarz, Text 1"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2"
+        },
+        {
+         "name": "Blaugrau, Text 2"
+        },
+        {
+         "name": "Blau, Akzent 1"
+        },
+        {
+         "name": "Orange, Akzent 2"
+        },
+        {
+         "name": "Grau, Akzent 3"
+        },
+        {
+         "name": "Gold, Akzent 4"
+        },
+        {
+         "name": "Blau, Akzent 5"
+        },
+        {
+         "name": "Grün, Akzent 6"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 5%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 50%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 10%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 80%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 80%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 80%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 80%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 80%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 80%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 80%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 15%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 35%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 25%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 60%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 60%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 60%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 60%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 60%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 60%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 60%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 25%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 25%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 50%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 40%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 40%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 40%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 40%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 40%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 40%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 40%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 35%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 15%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 75%"
+        },
+        {
+         "name": "Blaugrau, Text 2, dunkler 25%"
+        },
+        {
+         "name": "Blau, Akzent 1, dunkler 25%"
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 25%"
+        },
+        {
+         "name": "Grau, Akzent 3, dunkler 25%"
+        },
+        {
+         "name": "Gold, Akzent 4, dunkler 25%"
+        },
+        {
+         "name": "Blau, Akzent 5, dunkler 25%"
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 25%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 50%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 5%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 90%"
+        },
+        {
+         "name": "Blaugrau, Text 2, dunkler 50%"
+        },
+        {
+         "name": "Blau, Akzent 1, dunkler 50%"
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 50%"
+        },
+        {
+         "name": "Grau, Akzent 3, dunkler 50%"
+        },
+        {
+         "name": "Gold, Akzent 4, dunkler 50%"
+        },
+        {
+         "name": "Blau, Akzent 5, dunkler 50%"
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 50%"
+        },
+        {
+         "name": "Dunkelrot"
+        },
+        {
+         "name": "Rot"
+        },
+        {
+         "name": "Orange"
+        },
+        {
+         "name": "Gelb"
+        },
+        {
+         "name": "Hellgrün"
+        },
+        {
+         "name": "Grün"
+        },
+        {
+         "name": "Hellblau"
+        },
+        {
+         "name": "Blau"
+        },
+        {
+         "name": "Dunkelblau"
+        },
+        {
+         "name": "Lila"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Absatz",
+     "launcher": {
+      "name": "Absatz...",
+      "deferred": false,
+      "enabled": true
+     },
+     "controls": [
+      {
+       "name": "Aufzählungszeichen",
+       "deferred": false,
+       "enabled": true,
+       "type": "split",
+       "items": [
+        {
+         "name": "Ohne",
+         "enabled": true
+        },
+        {
+         "name": "Gefüllte runde Aufzählungszeichen",
+         "enabled": true
+        },
+        {
+         "name": "Leere runde Aufzählungszeichen",
+         "enabled": true
+        },
+        {
+         "name": "Gefüllte quadratische Aufzählungszeichen",
+         "enabled": true
+        },
+        {
+         "name": "Pfeil-Aufzählungszeichen",
+         "enabled": true
+        },
+        {
+         "name": "Häkchen-Aufzählungszeichen",
+         "enabled": true
+        },
+        {
+         "name": "Gefüllte Raute",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Nummerierung",
+       "deferred": false,
+       "enabled": true,
+       "type": "split",
+       "items": [
+        {
+         "name": "Ohne",
+         "enabled": true
+        },
+        {
+         "name": "1. 2. 3.",
+         "enabled": true
+        },
+        {
+         "name": "1) 2) 3)",
+         "enabled": true
+        },
+        {
+         "name": "I. II. III.",
+         "enabled": true
+        },
+        {
+         "name": "A. B. C.",
+         "enabled": true
+        },
+        {
+         "name": "a) b) c)",
+         "enabled": true
+        },
+        {
+         "name": "a. b. c.",
+         "enabled": true
+        },
+        {
+         "name": "i. ii. iii.",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Einzug verkleinern",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Einzug vergrößern",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Zeilenabstand",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "1,0",
+         "enabled": true
+        },
+        {
+         "name": "1,5",
+         "enabled": true
+        },
+        {
+         "name": "2,0",
+         "enabled": true
+        },
+        {
+         "name": "2,5",
+         "enabled": true
+        },
+        {
+         "name": "3,0",
+         "enabled": true
+        },
+        {
+         "name": "Zeilenabstandsoptionen...",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Textrichtung",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Horizontal",
+         "enabled": true
+        },
+        {
+         "name": "Alle Texte um 90° drehen",
+         "enabled": true
+        },
+        {
+         "name": "Alle Texte um 270° drehen",
+         "enabled": true
+        },
+        {
+         "name": "Gestapelt",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Linksbündig",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Zentriert",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Rechtsbündig",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Blocksatz",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Spalten",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Eine Spalte",
+         "enabled": true
+        },
+        {
+         "name": "Zwei Spalten",
+         "enabled": true
+        },
+        {
+         "name": "Drei Spalten",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Text ausrichten",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Oben",
+         "enabled": true
+        },
+        {
+         "name": "Mitte",
+         "enabled": true
+        },
+        {
+         "name": "Unten",
+         "enabled": true
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Zeichnen",
+     "launcher": {
+      "name": "Objekt formatieren...",
+      "deferred": false,
+      "enabled": true
+     },
+     "controls": [
+      {
+       "name": "Formen",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "panel": true,
+       "items": [
+        {
+         "name": "Linie"
+        },
+        {
+         "name": "Linienpfeil"
+        },
+        {
+         "name": "Linienpfeil: doppelt"
+        },
+        {
+         "name": "Verbinder: gewinkelt"
+        },
+        {
+         "name": "Verbinder: gewinkelt mit Pfeil"
+        },
+        {
+         "name": "Verbinder: gewinkelt mit Doppelpfeil"
+        },
+        {
+         "name": "Verbinder: gekrümmt"
+        },
+        {
+         "name": "Verbinder: gekrümmter Pfeil"
+        },
+        {
+         "name": "Verbinder: gekrümmter Doppelpfeil"
+        },
+        {
+         "name": "Kurve"
+        },
+        {
+         "name": "Freihandform: Form"
+        },
+        {
+         "name": "Freihand: Skizze"
+        },
+        {
+         "name": "Rechteck"
+        },
+        {
+         "name": "Rechteck: abgerundete Ecken"
+        },
+        {
+         "name": "Rechteck: eine Ecke abgeschnitten"
+        },
+        {
+         "name": "Rechteck: obere Ecken abgeschnitten"
+        },
+        {
+         "name": "Rechteck: diagonal liegende Ecken abgeschnitten"
+        },
+        {
+         "name": "Rechteck: obere Ecken, eine abgerundet, eine abgeschnitten"
+        },
+        {
+         "name": "Rechteck: eine Ecke abgerundet"
+        },
+        {
+         "name": "Rechteck: obere Ecken abgerundet"
+        },
+        {
+         "name": "Rechteck: diagonal liegende Ecken abgerundet"
+        },
+        {
+         "name": "Textfeld"
+        },
+        {
+         "name": "Ellipse"
+        },
+        {
+         "name": "Gleichschenkliges Dreieck"
+        },
+        {
+         "name": "Rechtwinkliges Dreieck"
+        },
+        {
+         "name": "Parallelogramm"
+        },
+        {
+         "name": "Trapez"
+        },
+        {
+         "name": "Raute"
+        },
+        {
+         "name": "Fünfeck"
+        },
+        {
+         "name": "Sechseck"
+        },
+        {
+         "name": "Siebeneck"
+        },
+        {
+         "name": "Achteck"
+        },
+        {
+         "name": "Zehneck"
+        },
+        {
+         "name": "Zwölfeck"
+        },
+        {
+         "name": "Teilkreis"
+        },
+        {
+         "name": "Sehne"
+        },
+        {
+         "name": "Träne"
+        },
+        {
+         "name": "Rahmen"
+        },
+        {
+         "name": "Halber Rahmen"
+        },
+        {
+         "name": "L-Form"
+        },
+        {
+         "name": "Diagonaler Streifen"
+        },
+        {
+         "name": "Kreuz"
+        },
+        {
+         "name": "Zierrahmen"
+        },
+        {
+         "name": "Zylinder"
+        },
+        {
+         "name": "Würfel"
+        },
+        {
+         "name": "Rechteck: abgeschrägt"
+        },
+        {
+         "name": "Kreis: nicht ausgefüllt"
+        },
+        {
+         "name": "Verbotsymbol"
+        },
+        {
+         "name": "Halbbogen"
+        },
+        {
+         "name": "Rechteck: gefaltete Ecke"
+        },
+        {
+         "name": "Smiley"
+        },
+        {
+         "name": "Herz"
+        },
+        {
+         "name": "Gewitterblitz"
+        },
+        {
+         "name": "Sonne"
+        },
+        {
+         "name": "Mond"
+        },
+        {
+         "name": "Wolke"
+        },
+        {
+         "name": "Bogen"
+        },
+        {
+         "name": "Runde Klammer links/rechts"
+        },
+        {
+         "name": "Geschweifte Klammer links/rechts"
+        },
+        {
+         "name": "Eckige Klammer links"
+        },
+        {
+         "name": "Eckige Klammer rechts"
+        },
+        {
+         "name": "Geschweifte Klammer links"
+        },
+        {
+         "name": "Geschweifte Klammer rechts"
+        },
+        {
+         "name": "Pfeil: nach rechts"
+        },
+        {
+         "name": "Pfeil: nach links"
+        },
+        {
+         "name": "Pfeil: nach oben"
+        },
+        {
+         "name": "Pfeil: nach unten"
+        },
+        {
+         "name": "Pfeil: nach links und rechts"
+        },
+        {
+         "name": "Pfeil: nach oben und unten"
+        },
+        {
+         "name": "Pfeil: in vier Richtungen"
+        },
+        {
+         "name": "Pfeil: nach links, rechts und oben"
+        },
+        {
+         "name": "Pfeil: gebogen"
+        },
+        {
+         "name": "Pfeil: 180-Grad"
+        },
+        {
+         "name": "Pfeil: nach links und oben"
+        },
+        {
+         "name": "Pfeil: nach oben gebogen"
+        },
+        {
+         "name": "Pfeil: nach rechts gekrümmt"
+        },
+        {
+         "name": "Pfeil: nach links gekrümmt"
+        },
+        {
+         "name": "Pfeil: nach oben gekrümmt"
+        },
+        {
+         "name": "Pfeil: nach unten gekrümmt"
+        },
+        {
+         "name": "Pfeil: gestreift nach rechts"
+        },
+        {
+         "name": "Pfeil: eingekerbt nach rechts"
+        },
+        {
+         "name": "Pfeil: Fünfeck"
+        },
+        {
+         "name": "Pfeil: Chevron"
+        },
+        {
+         "name": "Legende: mit Pfeil nach rechts"
+        },
+        {
+         "name": "Legende: mit Pfeil nach unten"
+        },
+        {
+         "name": "Legende: mit Pfeil nach links"
+        },
+        {
+         "name": "Legende: mit Pfeil nach oben"
+        },
+        {
+         "name": "Legende: mit Pfeil nach links und rechts"
+        },
+        {
+         "name": "Legende: mit Pfeil in vier Richtungen"
+        },
+        {
+         "name": "Pfeil: gebogen"
+        },
+        {
+         "name": "Additionszeichen"
+        },
+        {
+         "name": "Minuszeichen"
+        },
+        {
+         "name": "Multiplikationszeichen"
+        },
+        {
+         "name": "Divisionszeichen"
+        },
+        {
+         "name": "Gleich"
+        },
+        {
+         "name": "Ungleich"
+        },
+        {
+         "name": "Flussdiagramm: Prozess"
+        },
+        {
+         "name": "Flussdiagramm: Alternativer Prozess"
+        },
+        {
+         "name": "Flussdiagramm: Verzweigung"
+        },
+        {
+         "name": "Flussdiagramm: Daten"
+        },
+        {
+         "name": "Flussdiagramm: Vordefinierter Prozess"
+        },
+        {
+         "name": "Flussdiagramm: Zentralspeicher"
+        },
+        {
+         "name": "Flussdiagramm: Dokument"
+        },
+        {
+         "name": "Flussdiagramm: Mehrere Dokumente"
+        },
+        {
+         "name": "Flussdiagramm: Grenzstelle"
+        },
+        {
+         "name": "Flussdiagramm: Vorbereitung"
+        },
+        {
+         "name": "Flussdiagramm: Manuelle Eingabe"
+        },
+        {
+         "name": "Flussdiagramm: Manuelle Verarbeitung"
+        },
+        {
+         "name": "Flussdiagramm: Verbinder"
+        },
+        {
+         "name": "Flussdiagramm: Verbinder zu einer anderen Seite"
+        },
+        {
+         "name": "Flussdiagramm: Karte"
+        },
+        {
+         "name": "Flussdiagramm: Lochstreifen"
+        },
+        {
+         "name": "Flussdiagramm: Zusammenführung"
+        },
+        {
+         "name": "Flussdiagramm: Oder"
+        },
+        {
+         "name": "Flussdiagramm: Zusammenstellen"
+        },
+        {
+         "name": "Flussdiagramm: Sortieren"
+        },
+        {
+         "name": "Flussdiagramm: Auszug"
+        },
+        {
+         "name": "Flussdiagramm: Zusammenführen"
+        },
+        {
+         "name": "Flussdiagramm: Gespeicherte Daten"
+        },
+        {
+         "name": "Flussdiagramm: Verzögerung"
+        },
+        {
+         "name": "Flussdiagramm: Datenträger mit sequenziellem Zugriff"
+        },
+        {
+         "name": "Flussdiagramm: Magnetplattenspeicher"
+        },
+        {
+         "name": "Flussdiagramm: Datenträger mit direktem Zugriff"
+        },
+        {
+         "name": "Flussdiagramm: Anzeige"
+        },
+        {
+         "name": "Explosion: 8 Zacken"
+        },
+        {
+         "name": "Explosion: 14 Zacken"
+        },
+        {
+         "name": "Stern: 4 Zacken"
+        },
+        {
+         "name": "Stern: 5 Zacken"
+        },
+        {
+         "name": "Stern: 6 Zacken"
+        },
+        {
+         "name": "Stern: 7 Zacken"
+        },
+        {
+         "name": "Stern: 8 Zacken"
+        },
+        {
+         "name": "Stern: 10 Zacken"
+        },
+        {
+         "name": "Stern: 12 Zacken"
+        },
+        {
+         "name": "Stern: 16 Zacken"
+        },
+        {
+         "name": "Stern: 24 Zacken"
+        },
+        {
+         "name": "Stern: 32 Zacken"
+        },
+        {
+         "name": "Band: nach oben gekippt"
+        },
+        {
+         "name": "Band: nach unten gekippt"
+        },
+        {
+         "name": "Band: nach oben gekrümmt und gekippt"
+        },
+        {
+         "name": "Band: nach unten gekrümmt und gekippt"
+        },
+        {
+         "name": "Scrollen: vertikal"
+        },
+        {
+         "name": "Scrollen: horizontal"
+        },
+        {
+         "name": "Welle"
+        },
+        {
+         "name": "Doppelte Welle"
+        },
+        {
+         "name": "Sprechblase: rechteckig"
+        },
+        {
+         "name": "Sprechblase: rechteckig mit abgerundeten Ecken"
+        },
+        {
+         "name": "Sprechblase: oval"
+        },
+        {
+         "name": "Denkblase: wolkenförmig"
+        },
+        {
+         "name": "Legende: Linie"
+        },
+        {
+         "name": "Legende: mit gebogener Linie"
+        },
+        {
+         "name": "Legende: mit gebogener Doppellinie"
+        },
+        {
+         "name": "Legende: mit Linie mit Akzentuierungsbalken"
+        },
+        {
+         "name": "Legende: mit gebogener Linie mit Akzentuierungsbalken"
+        },
+        {
+         "name": "Legende: mit gebogener Doppellinie mit Akzentuierungsbalken"
+        },
+        {
+         "name": "Legende: mit Linie ohne Rahmen"
+        },
+        {
+         "name": "Legende: mit gebogener Linie ohne Rahmen"
+        },
+        {
+         "name": "Legende: mit gebogener Doppellinie ohne Rahmen"
+        },
+        {
+         "name": "Legende: mit Linie mit Rahmen und Akzentuierungsbalken"
+        },
+        {
+         "name": "Legende: mit gebogener Linie mit Rahmen und Akzentuierungsbalken"
+        },
+        {
+         "name": "Legende: mit gebogener Doppellinie mit Rahmen und Akzentuierungsbalken"
+        }
+       ]
+      },
+      {
+       "name": "Anordnen",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "In den Vordergrund",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "In den Hintergrund",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Ebene nach vorne",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Ebene nach hinten",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Gruppieren",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Gruppierung aufheben",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Gruppierung wiederherstellen",
+         "deferred": false,
+         "enabled": false
+        },
+        {
+         "name": "Ausrichten",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Linksbündig ausrichten",
+           "deferred": false,
+           "enabled": true
+          },
+          {
+           "name": "Horizontal zentrieren",
+           "deferred": false,
+           "enabled": true
+          },
+          {
+           "name": "Rechtsbündig ausrichten",
+           "deferred": false,
+           "enabled": true
+          },
+          {
+           "name": "Oben ausrichten",
+           "deferred": false,
+           "enabled": true
+          },
+          {
+           "name": "Vertikal zentrieren",
+           "deferred": false,
+           "enabled": true
+          },
+          {
+           "name": "Unten ausrichten",
+           "deferred": false,
+           "enabled": true
+          },
+          {
+           "name": "Horizontal verteilen",
+           "deferred": false,
+           "enabled": true
+          },
+          {
+           "name": "Vertikal verteilen",
+           "deferred": false,
+           "enabled": true
+          },
+          {
+           "name": "An Folie ausrichten",
+           "deferred": false,
+           "enabled": true
+          },
+          {
+           "name": "Ausgewählte Objekte ausrichten",
+           "deferred": false,
+           "enabled": true
+          }
+         ]
+        },
+        {
+         "name": "Drehen",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Rechtsdrehung 90°",
+           "deferred": false,
+           "enabled": true
+          },
+          {
+           "name": "Linksdrehung 90°",
+           "deferred": false,
+           "enabled": true
+          },
+          {
+           "name": "Vertikal kippen",
+           "deferred": false,
+           "enabled": true
+          },
+          {
+           "name": "Horizontal kippen",
+           "deferred": false,
+           "enabled": true
+          }
+         ]
+        },
+        {
+         "name": "Auswahlbereich...",
+         "deferred": false,
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Schnellformatvorlagen",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown"
+      },
+      {
+       "name": "Fülleffekt",
+       "deferred": false,
+       "enabled": true,
+       "type": "color",
+       "panel": true,
+       "items": [
+        {
+         "name": "Weiß, Hintergrund 1"
+        },
+        {
+         "name": "Schwarz, Text 1"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2"
+        },
+        {
+         "name": "Blaugrau, Text 2"
+        },
+        {
+         "name": "Blau, Akzent 1"
+        },
+        {
+         "name": "Orange, Akzent 2"
+        },
+        {
+         "name": "Grau, Akzent 3"
+        },
+        {
+         "name": "Gold, Akzent 4"
+        },
+        {
+         "name": "Blau, Akzent 5"
+        },
+        {
+         "name": "Grün, Akzent 6"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 5%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 50%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 10%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 80%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 80%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 80%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 80%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 80%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 80%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 80%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 15%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 35%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 25%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 60%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 60%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 60%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 60%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 60%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 60%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 60%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 25%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 25%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 50%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 40%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 40%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 40%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 40%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 40%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 40%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 40%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 35%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 15%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 75%"
+        },
+        {
+         "name": "Blaugrau, Text 2, dunkler 25%"
+        },
+        {
+         "name": "Blau, Akzent 1, dunkler 25%"
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 25%"
+        },
+        {
+         "name": "Grau, Akzent 3, dunkler 25%"
+        },
+        {
+         "name": "Gold, Akzent 4, dunkler 25%"
+        },
+        {
+         "name": "Blau, Akzent 5, dunkler 25%"
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 25%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 50%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 5%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 90%"
+        },
+        {
+         "name": "Blaugrau, Text 2, dunkler 50%"
+        },
+        {
+         "name": "Blau, Akzent 1, dunkler 50%"
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 50%"
+        },
+        {
+         "name": "Grau, Akzent 3, dunkler 50%"
+        },
+        {
+         "name": "Gold, Akzent 4, dunkler 50%"
+        },
+        {
+         "name": "Blau, Akzent 5, dunkler 50%"
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 50%"
+        },
+        {
+         "name": "Dunkelrot"
+        },
+        {
+         "name": "Rot"
+        },
+        {
+         "name": "Orange"
+        },
+        {
+         "name": "Gelb"
+        },
+        {
+         "name": "Hellgrün"
+        },
+        {
+         "name": "Grün"
+        },
+        {
+         "name": "Hellblau"
+        },
+        {
+         "name": "Blau"
+        },
+        {
+         "name": "Dunkelblau"
+        },
+        {
+         "name": "Lila"
+        }
+       ]
+      },
+      {
+       "name": "Formkontur",
+       "deferred": false,
+       "enabled": true,
+       "type": "color",
+       "panel": true,
+       "items": [
+        {
+         "name": "Weiß, Hintergrund 1"
+        },
+        {
+         "name": "Schwarz, Text 1"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2"
+        },
+        {
+         "name": "Blaugrau, Text 2"
+        },
+        {
+         "name": "Blau, Akzent 1"
+        },
+        {
+         "name": "Orange, Akzent 2"
+        },
+        {
+         "name": "Grau, Akzent 3"
+        },
+        {
+         "name": "Gold, Akzent 4"
+        },
+        {
+         "name": "Blau, Akzent 5"
+        },
+        {
+         "name": "Grün, Akzent 6"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 5%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 50%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 10%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 80%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 80%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 80%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 80%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 80%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 80%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 80%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 15%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 35%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 25%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 60%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 60%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 60%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 60%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 60%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 60%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 60%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 25%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 25%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 50%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 40%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 40%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 40%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 40%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 40%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 40%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 40%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 35%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 15%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 75%"
+        },
+        {
+         "name": "Blaugrau, Text 2, dunkler 25%"
+        },
+        {
+         "name": "Blau, Akzent 1, dunkler 25%"
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 25%"
+        },
+        {
+         "name": "Grau, Akzent 3, dunkler 25%"
+        },
+        {
+         "name": "Gold, Akzent 4, dunkler 25%"
+        },
+        {
+         "name": "Blau, Akzent 5, dunkler 25%"
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 25%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 50%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 5%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 90%"
+        },
+        {
+         "name": "Blaugrau, Text 2, dunkler 50%"
+        },
+        {
+         "name": "Blau, Akzent 1, dunkler 50%"
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 50%"
+        },
+        {
+         "name": "Grau, Akzent 3, dunkler 50%"
+        },
+        {
+         "name": "Gold, Akzent 4, dunkler 50%"
+        },
+        {
+         "name": "Blau, Akzent 5, dunkler 50%"
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 50%"
+        },
+        {
+         "name": "Dunkelrot"
+        },
+        {
+         "name": "Rot"
+        },
+        {
+         "name": "Orange"
+        },
+        {
+         "name": "Gelb"
+        },
+        {
+         "name": "Hellgrün"
+        },
+        {
+         "name": "Grün"
+        },
+        {
+         "name": "Hellblau"
+        },
+        {
+         "name": "Blau"
+        },
+        {
+         "name": "Dunkelblau"
+        },
+        {
+         "name": "Lila"
+        }
+       ]
+      },
+      {
+       "name": "Formeffekte",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Schatten",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Kein Schatten",
+           "enabled": true
+          },
+          {
+           "name": "Außen: Versatz unten rechts",
+           "enabled": true
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Bearbeiten",
+     "controls": [
+      {
+       "name": "Suchen",
+       "deferred": false,
+       "enabled": true,
+       "type": "split",
+       "items": [
+        {
+         "name": "Suchen",
+         "deferred": false,
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Ersetzen",
+       "deferred": false,
+       "enabled": true,
+       "type": "split",
+       "items": [
+        {
+         "name": "Ersetzen",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Schriftarten ersetzen...",
+         "deferred": false,
+         "enabled": false
+        }
+       ]
+      },
+      {
+       "name": "Markieren",
+       "deferred": false,
+       "enabled": false,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Alle markieren",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Objekte markieren",
+         "enabled": true
+        },
+        {
+         "name": "Auswahlbereich...",
+         "deferred": false,
+         "enabled": true
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Einfügen",
+   "contextual": false,
+   "groups": [
+    {
+     "name": "Folien",
+     "controls": [
+      {
+       "name": "Neue Folie",
+       "deferred": false,
+       "enabled": true,
+       "type": "split",
+       "panel": true,
+       "items": [
+        {
+         "name": "Titelfolie"
+        },
+        {
+         "name": "Titel und Inhalt"
+        },
+        {
+         "name": "Abschnitts-\nüberschrift"
+        },
+        {
+         "name": "Zwei Inhalte"
+        },
+        {
+         "name": "Vergleich"
+        },
+        {
+         "name": "Nur Titel"
+        },
+        {
+         "name": "Leer"
+        },
+        {
+         "name": "Inhalt mit Überschrift"
+        },
+        {
+         "name": "Bild mit Überschrift"
+        },
+        {
+         "name": "Titel und vertikaler Text"
+        },
+        {
+         "name": "Vertikaler Titel und Text"
+        },
+        {
+         "name": "Ausgewählte Folien duplizieren"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Tabellen",
+     "controls": [
+      {
+       "name": "Tabelle",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "panel": true,
+       "items": [
+        {
+         "name": "Tabelle einfügen..."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Bilder",
+     "controls": [
+      {
+       "name": "Bilder",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Dieses Gerät...",
+         "deferred": false,
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Screenshot",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Fotoalbum...",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Illustrationen",
+     "controls": [
+      {
+       "name": "Formen",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "panel": true,
+       "items": [
+        {
+         "name": "Linie"
+        },
+        {
+         "name": "Linienpfeil"
+        },
+        {
+         "name": "Linienpfeil: doppelt"
+        },
+        {
+         "name": "Verbinder: gewinkelt"
+        },
+        {
+         "name": "Verbinder: gewinkelt mit Pfeil"
+        },
+        {
+         "name": "Verbinder: gewinkelt mit Doppelpfeil"
+        },
+        {
+         "name": "Verbinder: gekrümmt"
+        },
+        {
+         "name": "Verbinder: gekrümmter Pfeil"
+        },
+        {
+         "name": "Verbinder: gekrümmter Doppelpfeil"
+        },
+        {
+         "name": "Kurve"
+        },
+        {
+         "name": "Freihandform: Form"
+        },
+        {
+         "name": "Freihand: Skizze"
+        },
+        {
+         "name": "Rechteck"
+        },
+        {
+         "name": "Rechteck: abgerundete Ecken"
+        },
+        {
+         "name": "Rechteck: eine Ecke abgeschnitten"
+        },
+        {
+         "name": "Rechteck: obere Ecken abgeschnitten"
+        },
+        {
+         "name": "Rechteck: diagonal liegende Ecken abgeschnitten"
+        },
+        {
+         "name": "Rechteck: obere Ecken, eine abgerundet, eine abgeschnitten"
+        },
+        {
+         "name": "Rechteck: eine Ecke abgerundet"
+        },
+        {
+         "name": "Rechteck: obere Ecken abgerundet"
+        },
+        {
+         "name": "Rechteck: diagonal liegende Ecken abgerundet"
+        },
+        {
+         "name": "Textfeld"
+        },
+        {
+         "name": "Ellipse"
+        },
+        {
+         "name": "Gleichschenkliges Dreieck"
+        },
+        {
+         "name": "Rechtwinkliges Dreieck"
+        },
+        {
+         "name": "Parallelogramm"
+        },
+        {
+         "name": "Trapez"
+        },
+        {
+         "name": "Raute"
+        },
+        {
+         "name": "Fünfeck"
+        },
+        {
+         "name": "Sechseck"
+        },
+        {
+         "name": "Siebeneck"
+        },
+        {
+         "name": "Achteck"
+        },
+        {
+         "name": "Zehneck"
+        },
+        {
+         "name": "Zwölfeck"
+        },
+        {
+         "name": "Teilkreis"
+        },
+        {
+         "name": "Sehne"
+        },
+        {
+         "name": "Träne"
+        },
+        {
+         "name": "Rahmen"
+        },
+        {
+         "name": "Halber Rahmen"
+        },
+        {
+         "name": "L-Form"
+        },
+        {
+         "name": "Diagonaler Streifen"
+        },
+        {
+         "name": "Kreuz"
+        },
+        {
+         "name": "Zierrahmen"
+        },
+        {
+         "name": "Zylinder"
+        },
+        {
+         "name": "Würfel"
+        },
+        {
+         "name": "Rechteck: abgeschrägt"
+        },
+        {
+         "name": "Kreis: nicht ausgefüllt"
+        },
+        {
+         "name": "Verbotsymbol"
+        },
+        {
+         "name": "Halbbogen"
+        },
+        {
+         "name": "Rechteck: gefaltete Ecke"
+        },
+        {
+         "name": "Smiley"
+        },
+        {
+         "name": "Herz"
+        },
+        {
+         "name": "Gewitterblitz"
+        },
+        {
+         "name": "Sonne"
+        },
+        {
+         "name": "Mond"
+        },
+        {
+         "name": "Wolke"
+        },
+        {
+         "name": "Bogen"
+        },
+        {
+         "name": "Runde Klammer links/rechts"
+        },
+        {
+         "name": "Geschweifte Klammer links/rechts"
+        },
+        {
+         "name": "Eckige Klammer links"
+        },
+        {
+         "name": "Eckige Klammer rechts"
+        },
+        {
+         "name": "Geschweifte Klammer links"
+        },
+        {
+         "name": "Geschweifte Klammer rechts"
+        },
+        {
+         "name": "Pfeil: nach rechts"
+        },
+        {
+         "name": "Pfeil: nach links"
+        },
+        {
+         "name": "Pfeil: nach oben"
+        },
+        {
+         "name": "Pfeil: nach unten"
+        },
+        {
+         "name": "Pfeil: nach links und rechts"
+        },
+        {
+         "name": "Pfeil: nach oben und unten"
+        },
+        {
+         "name": "Pfeil: in vier Richtungen"
+        },
+        {
+         "name": "Pfeil: nach links, rechts und oben"
+        },
+        {
+         "name": "Pfeil: gebogen"
+        },
+        {
+         "name": "Pfeil: 180-Grad"
+        },
+        {
+         "name": "Pfeil: nach links und oben"
+        },
+        {
+         "name": "Pfeil: nach oben gebogen"
+        },
+        {
+         "name": "Pfeil: nach rechts gekrümmt"
+        },
+        {
+         "name": "Pfeil: nach links gekrümmt"
+        },
+        {
+         "name": "Pfeil: nach oben gekrümmt"
+        },
+        {
+         "name": "Pfeil: nach unten gekrümmt"
+        },
+        {
+         "name": "Pfeil: gestreift nach rechts"
+        },
+        {
+         "name": "Pfeil: eingekerbt nach rechts"
+        },
+        {
+         "name": "Pfeil: Fünfeck"
+        },
+        {
+         "name": "Pfeil: Chevron"
+        },
+        {
+         "name": "Legende: mit Pfeil nach rechts"
+        },
+        {
+         "name": "Legende: mit Pfeil nach unten"
+        },
+        {
+         "name": "Legende: mit Pfeil nach links"
+        },
+        {
+         "name": "Legende: mit Pfeil nach oben"
+        },
+        {
+         "name": "Legende: mit Pfeil nach links und rechts"
+        },
+        {
+         "name": "Legende: mit Pfeil in vier Richtungen"
+        },
+        {
+         "name": "Pfeil: gebogen"
+        },
+        {
+         "name": "Additionszeichen"
+        },
+        {
+         "name": "Minuszeichen"
+        },
+        {
+         "name": "Multiplikationszeichen"
+        },
+        {
+         "name": "Divisionszeichen"
+        },
+        {
+         "name": "Gleich"
+        },
+        {
+         "name": "Ungleich"
+        },
+        {
+         "name": "Flussdiagramm: Prozess"
+        },
+        {
+         "name": "Flussdiagramm: Alternativer Prozess"
+        },
+        {
+         "name": "Flussdiagramm: Verzweigung"
+        },
+        {
+         "name": "Flussdiagramm: Daten"
+        },
+        {
+         "name": "Flussdiagramm: Vordefinierter Prozess"
+        },
+        {
+         "name": "Flussdiagramm: Zentralspeicher"
+        },
+        {
+         "name": "Flussdiagramm: Dokument"
+        },
+        {
+         "name": "Flussdiagramm: Mehrere Dokumente"
+        },
+        {
+         "name": "Flussdiagramm: Grenzstelle"
+        },
+        {
+         "name": "Flussdiagramm: Vorbereitung"
+        },
+        {
+         "name": "Flussdiagramm: Manuelle Eingabe"
+        },
+        {
+         "name": "Flussdiagramm: Manuelle Verarbeitung"
+        },
+        {
+         "name": "Flussdiagramm: Verbinder"
+        },
+        {
+         "name": "Flussdiagramm: Verbinder zu einer anderen Seite"
+        },
+        {
+         "name": "Flussdiagramm: Karte"
+        },
+        {
+         "name": "Flussdiagramm: Lochstreifen"
+        },
+        {
+         "name": "Flussdiagramm: Zusammenführung"
+        },
+        {
+         "name": "Flussdiagramm: Oder"
+        },
+        {
+         "name": "Flussdiagramm: Zusammenstellen"
+        },
+        {
+         "name": "Flussdiagramm: Sortieren"
+        },
+        {
+         "name": "Flussdiagramm: Auszug"
+        },
+        {
+         "name": "Flussdiagramm: Zusammenführen"
+        },
+        {
+         "name": "Flussdiagramm: Gespeicherte Daten"
+        },
+        {
+         "name": "Flussdiagramm: Verzögerung"
+        },
+        {
+         "name": "Flussdiagramm: Datenträger mit sequenziellem Zugriff"
+        },
+        {
+         "name": "Flussdiagramm: Magnetplattenspeicher"
+        },
+        {
+         "name": "Flussdiagramm: Datenträger mit direktem Zugriff"
+        },
+        {
+         "name": "Flussdiagramm: Anzeige"
+        },
+        {
+         "name": "Explosion: 8 Zacken"
+        },
+        {
+         "name": "Explosion: 14 Zacken"
+        },
+        {
+         "name": "Stern: 4 Zacken"
+        },
+        {
+         "name": "Stern: 5 Zacken"
+        },
+        {
+         "name": "Stern: 6 Zacken"
+        },
+        {
+         "name": "Stern: 7 Zacken"
+        },
+        {
+         "name": "Stern: 8 Zacken"
+        },
+        {
+         "name": "Stern: 10 Zacken"
+        },
+        {
+         "name": "Stern: 12 Zacken"
+        },
+        {
+         "name": "Stern: 16 Zacken"
+        },
+        {
+         "name": "Stern: 24 Zacken"
+        },
+        {
+         "name": "Stern: 32 Zacken"
+        },
+        {
+         "name": "Band: nach oben gekippt"
+        },
+        {
+         "name": "Band: nach unten gekippt"
+        },
+        {
+         "name": "Band: nach oben gekrümmt und gekippt"
+        },
+        {
+         "name": "Band: nach unten gekrümmt und gekippt"
+        },
+        {
+         "name": "Scrollen: vertikal"
+        },
+        {
+         "name": "Scrollen: horizontal"
+        },
+        {
+         "name": "Welle"
+        },
+        {
+         "name": "Doppelte Welle"
+        },
+        {
+         "name": "Sprechblase: rechteckig"
+        },
+        {
+         "name": "Sprechblase: rechteckig mit abgerundeten Ecken"
+        },
+        {
+         "name": "Sprechblase: oval"
+        },
+        {
+         "name": "Denkblase: wolkenförmig"
+        },
+        {
+         "name": "Legende: Linie"
+        },
+        {
+         "name": "Legende: mit gebogener Linie"
+        },
+        {
+         "name": "Legende: mit gebogener Doppellinie"
+        },
+        {
+         "name": "Legende: mit Linie mit Akzentuierungsbalken"
+        },
+        {
+         "name": "Legende: mit gebogener Linie mit Akzentuierungsbalken"
+        },
+        {
+         "name": "Legende: mit gebogener Doppellinie mit Akzentuierungsbalken"
+        },
+        {
+         "name": "Legende: mit Linie ohne Rahmen"
+        },
+        {
+         "name": "Legende: mit gebogener Linie ohne Rahmen"
+        },
+        {
+         "name": "Legende: mit gebogener Doppellinie ohne Rahmen"
+        },
+        {
+         "name": "Legende: mit Linie mit Rahmen und Akzentuierungsbalken"
+        },
+        {
+         "name": "Legende: mit gebogener Linie mit Rahmen und Akzentuierungsbalken"
+        },
+        {
+         "name": "Legende: mit gebogener Doppellinie mit Rahmen und Akzentuierungsbalken"
+        }
+       ]
+      },
+      {
+       "name": "SmartArt...",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Diagramm...",
+       "deferred": false,
+       "enabled": false,
+       "type": "dropdown",
+       "panel": true,
+       "items": [
+        {
+         "name": "Gruppierte Säulen"
+        },
+        {
+         "name": "Linie"
+        },
+        {
+         "name": "Kreis"
+        },
+        {
+         "name": "Gruppierte Balken"
+        },
+        {
+         "name": "Fläche"
+        },
+        {
+         "name": "Punkt (X Y)"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Links",
+     "controls": [
+      {
+       "name": "Zoom",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Link",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Aktion",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Kommentare",
+     "controls": [
+      {
+       "name": "Kommentar",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Text",
+     "controls": [
+      {
+       "name": "Textfeld",
+       "deferred": false,
+       "enabled": true,
+       "type": "split",
+       "items": [
+        {
+         "name": "Horizontales Textfeld zeichnen",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Vertikales Textfeld",
+         "deferred": false,
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Kopf- und Fußzeile...",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "WordArt",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "panel": true,
+       "items": [
+        {
+         "name": "Füllung: Schwarz, Textfarbe 1; Schatten"
+        },
+        {
+         "name": "Füllung: Blau, Akzentfarbe 1; Schatten"
+        },
+        {
+         "name": "Füllung: Orange, Akzentfarbe 2; Kontur: Orange, Akzentfarbe 2"
+        },
+        {
+         "name": "Füllung: Weiß; Kontur: Blau, Akzentfarbe 1; Schatten"
+        },
+        {
+         "name": "Füllung: Grau, Akzentfarbe 3; scharfe Abschrägung"
+        },
+        {
+         "name": "Muster-Füllung: Weiß; dunkler oberer Schatten"
+        }
+       ]
+      },
+      {
+       "name": "Datum und Uhrzeit...",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Foliennummer",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Objekt...",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Symbole",
+     "controls": [
+      {
+       "name": "Symbole",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Formel",
+         "deferred": false,
+         "enabled": false
+        },
+        {
+         "name": "Symbol",
+         "deferred": false,
+         "enabled": true
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Medien",
+     "controls": [
+      {
+       "name": "Medien",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Video",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Audio",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Bildschirmaufzeichnung",
+         "deferred": false,
+         "enabled": false
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Zeichnen",
+   "contextual": false,
+   "groups": [
+    {
+     "name": "Rückgängig",
+     "controls": [
+      {
+       "name": "Rückgängig",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Wiederholen",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Zeichentools",
+     "controls": [
+      {
+       "name": "Auswählen",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Lassoauswahl",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Radierer",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Stift: Schwarz, 0.35 mm",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Stift: Rot, 3.5 mm",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Bleistift: Grau, 0.5 mm",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Textmarker: Gelb, 6 mm",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Hinzufügen",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Schablonen",
+     "controls": [
+      {
+       "name": "Lineal",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Konvertieren",
+     "controls": [
+      {
+       "name": "Freihand zu Form",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Freihand in Gleichung",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Wiedergeben",
+     "controls": [
+      {
+       "name": "Wiedergabe in Freihand",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Entwurf",
+   "contextual": false,
+   "groups": [
+    {
+     "name": "Designs",
+     "controls": [
+      {
+       "name": "Designs",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "panel": true,
+       "items": [
+        {
+         "name": "Office"
+        },
+        {
+         "name": "Raabeschule"
+        },
+        {
+         "name": "Klar"
+        },
+        {
+         "name": "Tafel"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Anpassen",
+     "controls": [
+      {
+       "name": "Varianten",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Farben",
+       "deferred": false,
+       "enabled": false,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Office",
+         "enabled": true
+        },
+        {
+         "name": "Raabeschule",
+         "enabled": true
+        },
+        {
+         "name": "Klar",
+         "enabled": true
+        },
+        {
+         "name": "Tafel",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Schriftarten",
+       "deferred": false,
+       "enabled": false,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Office: Calibri Light / Calibri",
+         "enabled": true
+        },
+        {
+         "name": "Raabeschule: Calibri Light / Calibri",
+         "enabled": true
+        },
+        {
+         "name": "Klar: Segoe UI Semibold / Segoe UI",
+         "enabled": true
+        },
+        {
+         "name": "Tafel: Calibri Light / Calibri",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Effekte",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Hintergrundformate",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Folien",
+     "controls": [
+      {
+       "name": "Layout",
+       "deferred": false,
+       "enabled": false,
+       "type": "dropdown",
+       "panel": true,
+       "items": [
+        {
+         "name": "Titelfolie"
+        },
+        {
+         "name": "Titel und Inhalt"
+        },
+        {
+         "name": "Abschnitts-\nüberschrift"
+        },
+        {
+         "name": "Zwei Inhalte"
+        },
+        {
+         "name": "Vergleich"
+        },
+        {
+         "name": "Nur Titel"
+        },
+        {
+         "name": "Leer"
+        },
+        {
+         "name": "Inhalt mit Überschrift"
+        },
+        {
+         "name": "Bild mit Überschrift"
+        },
+        {
+         "name": "Titel und vertikaler Text"
+        },
+        {
+         "name": "Vertikaler Titel und Text"
+        },
+        {
+         "name": "Ausgewählte Folien duplizieren"
+        }
+       ]
+      },
+      {
+       "name": "Foliengröße",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Standard (4:3)",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Breitbild (16:9)",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Benutzerdefinierte Foliengröße...",
+         "deferred": false,
+         "enabled": true
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Übergänge",
+   "contextual": false,
+   "groups": [
+    {
+     "name": "Vorschau",
+     "controls": [
+      {
+       "name": "Vorschau",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Übergang zu dieser Folie",
+     "controls": [
+      {
+       "name": "Übergangseffekte",
+       "deferred": false,
+       "enabled": false,
+       "type": "dropdown",
+       "panel": true
+      },
+      {
+       "name": "Effektoptionen",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown"
+      }
+     ]
+    },
+    {
+     "name": "Anzeigedauer",
+     "controls": [
+      {
+       "name": "Sound",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Dauer:",
+       "deferred": false,
+       "enabled": false,
+       "type": "spinner"
+      },
+      {
+       "name": "Auf alle anwenden",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Bei Mausklick",
+       "deferred": false,
+       "enabled": false,
+       "type": "check"
+      },
+      {
+       "name": "Nach",
+       "deferred": false,
+       "enabled": false,
+       "type": "check"
+      },
+      {
+       "name": "",
+       "deferred": false,
+       "enabled": false,
+       "type": "spinner"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Animationen",
+   "contextual": false,
+   "groups": [
+    {
+     "name": "Vorschau",
+     "controls": [
+      {
+       "name": "Vorschau",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Animation",
+     "launcher": {
+      "name": "Weitere Optionen...",
+      "deferred": false,
+      "enabled": false
+     },
+     "controls": [
+      {
+       "name": "Animationsstil",
+       "deferred": false,
+       "enabled": false,
+       "type": "dropdown",
+       "panel": true
+      },
+      {
+       "name": "Effektoptionen",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown"
+      }
+     ]
+    },
+    {
+     "name": "Erweiterte Animation",
+     "controls": [
+      {
+       "name": "Animation hinzufügen",
+       "deferred": false,
+       "enabled": false,
+       "type": "dropdown",
+       "panel": true
+      },
+      {
+       "name": "Animationsbereich",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Trigger",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Animation übertragen",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Anzeigedauer",
+     "controls": [
+      {
+       "name": "Start:",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Beim Klicken",
+         "enabled": true
+        },
+        {
+         "name": "Mit Vorherigen",
+         "enabled": true
+        },
+        {
+         "name": "Nach Vorherigen",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Dauer:",
+       "deferred": false,
+       "enabled": false,
+       "type": "spinner"
+      },
+      {
+       "name": "Verzögerung:",
+       "deferred": false,
+       "enabled": false,
+       "type": "spinner"
+      },
+      {
+       "name": "Früher",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Später",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Bildschirmpräsentation",
+   "contextual": false,
+   "groups": [
+    {
+     "name": "Bildschirmpräsentation starten",
+     "controls": [
+      {
+       "name": "Von Beginn an",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Ab aktueller Folie",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Benutzerdefinierte Bildschirmpräsentation",
+       "deferred": false,
+       "enabled": false,
+       "type": "dropdown"
+      }
+     ]
+    },
+    {
+     "name": "Einrichten",
+     "controls": [
+      {
+       "name": "Bildschirmpräsentation einrichten...",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Folie ausblenden",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Anzeigedauern testen",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Aufzeichnen",
+       "deferred": false,
+       "enabled": false,
+       "type": "dropdown"
+      },
+      {
+       "name": "Kommentare wiedergeben",
+       "deferred": false,
+       "enabled": false,
+       "type": "check"
+      },
+      {
+       "name": "Anzeigedauern verwenden",
+       "deferred": false,
+       "enabled": true,
+       "type": "check"
+      },
+      {
+       "name": "Mediensteuerelemente anzeigen",
+       "deferred": false,
+       "enabled": false,
+       "type": "check"
+      }
+     ]
+    },
+    {
+     "name": "Bildschirme",
+     "controls": [
+      {
+       "name": "Bildschirme",
+       "deferred": false,
+       "enabled": false,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Referentenansicht verwenden",
+         "deferred": false,
+         "enabled": false
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Überprüfen",
+   "contextual": false,
+   "groups": [
+    {
+     "name": "Rechtschreibung",
+     "controls": [
+      {
+       "name": "Rechtschreibung...",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Thesaurus...",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Barrierefreiheit",
+     "controls": [
+      {
+       "name": "Barrierefreiheit überprüfen",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Sprache",
+     "controls": [
+      {
+       "name": "Sprache",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Kommentare",
+     "controls": [
+      {
+       "name": "Neuer Kommentar",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Löschen",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Zurück",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Weiter",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Kommentare anzeigen",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Freihand",
+     "controls": [
+      {
+       "name": "Freihand ausblenden",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Ansicht",
+   "contextual": false,
+   "groups": [
+    {
+     "name": "Präsentationsansichten",
+     "controls": [
+      {
+       "name": "Normal",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Gliederungsansicht",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Foliensortierung",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Notizenseite",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Leseansicht",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Masteransichten",
+     "controls": [
+      {
+       "name": "Folienmaster",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Handzettelmaster",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Notizenmaster",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Anzeigen",
+     "launcher": {
+      "name": "Rastereinstellungen...",
+      "deferred": false,
+      "enabled": true
+     },
+     "controls": [
+      {
+       "name": "Lineal",
+       "deferred": false,
+       "enabled": false,
+       "type": "check"
+      },
+      {
+       "name": "Gitternetzlinien",
+       "deferred": false,
+       "enabled": true,
+       "type": "check"
+      },
+      {
+       "name": "Führungslinien",
+       "deferred": false,
+       "enabled": true,
+       "type": "check"
+      },
+      {
+       "name": "Notizen",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Zoom",
+     "controls": [
+      {
+       "name": "Zoom...",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "An Fenster anpassen",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Farbe/Graustufe",
+     "controls": [
+      {
+       "name": "Farbe",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Graustufe",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Schwarzweiß",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Fenster",
+     "controls": [
+      {
+       "name": "Neues Fenster",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Alle anordnen",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Überlappend",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Teilung verschieben",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Fenster wechseln",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Makros",
+     "controls": [
+      {
+       "name": "Makros",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Formformat",
+   "contextual": true,
+   "groups": [
+    {
+     "name": "Formen einfügen",
+     "controls": [
+      {
+       "name": "Formen",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "panel": true,
+       "items": [
+        {
+         "name": "Linie"
+        },
+        {
+         "name": "Linienpfeil"
+        },
+        {
+         "name": "Linienpfeil: doppelt"
+        },
+        {
+         "name": "Verbinder: gewinkelt"
+        },
+        {
+         "name": "Verbinder: gewinkelt mit Pfeil"
+        },
+        {
+         "name": "Verbinder: gewinkelt mit Doppelpfeil"
+        },
+        {
+         "name": "Verbinder: gekrümmt"
+        },
+        {
+         "name": "Verbinder: gekrümmter Pfeil"
+        },
+        {
+         "name": "Verbinder: gekrümmter Doppelpfeil"
+        },
+        {
+         "name": "Kurve"
+        },
+        {
+         "name": "Freihandform: Form"
+        },
+        {
+         "name": "Freihand: Skizze"
+        },
+        {
+         "name": "Rechteck"
+        },
+        {
+         "name": "Rechteck: abgerundete Ecken"
+        },
+        {
+         "name": "Rechteck: eine Ecke abgeschnitten"
+        },
+        {
+         "name": "Rechteck: obere Ecken abgeschnitten"
+        },
+        {
+         "name": "Rechteck: diagonal liegende Ecken abgeschnitten"
+        },
+        {
+         "name": "Rechteck: obere Ecken, eine abgerundet, eine abgeschnitten"
+        },
+        {
+         "name": "Rechteck: eine Ecke abgerundet"
+        },
+        {
+         "name": "Rechteck: obere Ecken abgerundet"
+        },
+        {
+         "name": "Rechteck: diagonal liegende Ecken abgerundet"
+        },
+        {
+         "name": "Textfeld"
+        },
+        {
+         "name": "Ellipse"
+        },
+        {
+         "name": "Gleichschenkliges Dreieck"
+        },
+        {
+         "name": "Rechtwinkliges Dreieck"
+        },
+        {
+         "name": "Parallelogramm"
+        },
+        {
+         "name": "Trapez"
+        },
+        {
+         "name": "Raute"
+        },
+        {
+         "name": "Fünfeck"
+        },
+        {
+         "name": "Sechseck"
+        },
+        {
+         "name": "Siebeneck"
+        },
+        {
+         "name": "Achteck"
+        },
+        {
+         "name": "Zehneck"
+        },
+        {
+         "name": "Zwölfeck"
+        },
+        {
+         "name": "Teilkreis"
+        },
+        {
+         "name": "Sehne"
+        },
+        {
+         "name": "Träne"
+        },
+        {
+         "name": "Rahmen"
+        },
+        {
+         "name": "Halber Rahmen"
+        },
+        {
+         "name": "L-Form"
+        },
+        {
+         "name": "Diagonaler Streifen"
+        },
+        {
+         "name": "Kreuz"
+        },
+        {
+         "name": "Zierrahmen"
+        },
+        {
+         "name": "Zylinder"
+        },
+        {
+         "name": "Würfel"
+        },
+        {
+         "name": "Rechteck: abgeschrägt"
+        },
+        {
+         "name": "Kreis: nicht ausgefüllt"
+        },
+        {
+         "name": "Verbotsymbol"
+        },
+        {
+         "name": "Halbbogen"
+        },
+        {
+         "name": "Rechteck: gefaltete Ecke"
+        },
+        {
+         "name": "Smiley"
+        },
+        {
+         "name": "Herz"
+        },
+        {
+         "name": "Gewitterblitz"
+        },
+        {
+         "name": "Sonne"
+        },
+        {
+         "name": "Mond"
+        },
+        {
+         "name": "Wolke"
+        },
+        {
+         "name": "Bogen"
+        },
+        {
+         "name": "Runde Klammer links/rechts"
+        },
+        {
+         "name": "Geschweifte Klammer links/rechts"
+        },
+        {
+         "name": "Eckige Klammer links"
+        },
+        {
+         "name": "Eckige Klammer rechts"
+        },
+        {
+         "name": "Geschweifte Klammer links"
+        },
+        {
+         "name": "Geschweifte Klammer rechts"
+        },
+        {
+         "name": "Pfeil: nach rechts"
+        },
+        {
+         "name": "Pfeil: nach links"
+        },
+        {
+         "name": "Pfeil: nach oben"
+        },
+        {
+         "name": "Pfeil: nach unten"
+        },
+        {
+         "name": "Pfeil: nach links und rechts"
+        },
+        {
+         "name": "Pfeil: nach oben und unten"
+        },
+        {
+         "name": "Pfeil: in vier Richtungen"
+        },
+        {
+         "name": "Pfeil: nach links, rechts und oben"
+        },
+        {
+         "name": "Pfeil: gebogen"
+        },
+        {
+         "name": "Pfeil: 180-Grad"
+        },
+        {
+         "name": "Pfeil: nach links und oben"
+        },
+        {
+         "name": "Pfeil: nach oben gebogen"
+        },
+        {
+         "name": "Pfeil: nach rechts gekrümmt"
+        },
+        {
+         "name": "Pfeil: nach links gekrümmt"
+        },
+        {
+         "name": "Pfeil: nach oben gekrümmt"
+        },
+        {
+         "name": "Pfeil: nach unten gekrümmt"
+        },
+        {
+         "name": "Pfeil: gestreift nach rechts"
+        },
+        {
+         "name": "Pfeil: eingekerbt nach rechts"
+        },
+        {
+         "name": "Pfeil: Fünfeck"
+        },
+        {
+         "name": "Pfeil: Chevron"
+        },
+        {
+         "name": "Legende: mit Pfeil nach rechts"
+        },
+        {
+         "name": "Legende: mit Pfeil nach unten"
+        },
+        {
+         "name": "Legende: mit Pfeil nach links"
+        },
+        {
+         "name": "Legende: mit Pfeil nach oben"
+        },
+        {
+         "name": "Legende: mit Pfeil nach links und rechts"
+        },
+        {
+         "name": "Legende: mit Pfeil in vier Richtungen"
+        },
+        {
+         "name": "Pfeil: gebogen"
+        },
+        {
+         "name": "Additionszeichen"
+        },
+        {
+         "name": "Minuszeichen"
+        },
+        {
+         "name": "Multiplikationszeichen"
+        },
+        {
+         "name": "Divisionszeichen"
+        },
+        {
+         "name": "Gleich"
+        },
+        {
+         "name": "Ungleich"
+        },
+        {
+         "name": "Flussdiagramm: Prozess"
+        },
+        {
+         "name": "Flussdiagramm: Alternativer Prozess"
+        },
+        {
+         "name": "Flussdiagramm: Verzweigung"
+        },
+        {
+         "name": "Flussdiagramm: Daten"
+        },
+        {
+         "name": "Flussdiagramm: Vordefinierter Prozess"
+        },
+        {
+         "name": "Flussdiagramm: Zentralspeicher"
+        },
+        {
+         "name": "Flussdiagramm: Dokument"
+        },
+        {
+         "name": "Flussdiagramm: Mehrere Dokumente"
+        },
+        {
+         "name": "Flussdiagramm: Grenzstelle"
+        },
+        {
+         "name": "Flussdiagramm: Vorbereitung"
+        },
+        {
+         "name": "Flussdiagramm: Manuelle Eingabe"
+        },
+        {
+         "name": "Flussdiagramm: Manuelle Verarbeitung"
+        },
+        {
+         "name": "Flussdiagramm: Verbinder"
+        },
+        {
+         "name": "Flussdiagramm: Verbinder zu einer anderen Seite"
+        },
+        {
+         "name": "Flussdiagramm: Karte"
+        },
+        {
+         "name": "Flussdiagramm: Lochstreifen"
+        },
+        {
+         "name": "Flussdiagramm: Zusammenführung"
+        },
+        {
+         "name": "Flussdiagramm: Oder"
+        },
+        {
+         "name": "Flussdiagramm: Zusammenstellen"
+        },
+        {
+         "name": "Flussdiagramm: Sortieren"
+        },
+        {
+         "name": "Flussdiagramm: Auszug"
+        },
+        {
+         "name": "Flussdiagramm: Zusammenführen"
+        },
+        {
+         "name": "Flussdiagramm: Gespeicherte Daten"
+        },
+        {
+         "name": "Flussdiagramm: Verzögerung"
+        },
+        {
+         "name": "Flussdiagramm: Datenträger mit sequenziellem Zugriff"
+        },
+        {
+         "name": "Flussdiagramm: Magnetplattenspeicher"
+        },
+        {
+         "name": "Flussdiagramm: Datenträger mit direktem Zugriff"
+        },
+        {
+         "name": "Flussdiagramm: Anzeige"
+        },
+        {
+         "name": "Explosion: 8 Zacken"
+        },
+        {
+         "name": "Explosion: 14 Zacken"
+        },
+        {
+         "name": "Stern: 4 Zacken"
+        },
+        {
+         "name": "Stern: 5 Zacken"
+        },
+        {
+         "name": "Stern: 6 Zacken"
+        },
+        {
+         "name": "Stern: 7 Zacken"
+        },
+        {
+         "name": "Stern: 8 Zacken"
+        },
+        {
+         "name": "Stern: 10 Zacken"
+        },
+        {
+         "name": "Stern: 12 Zacken"
+        },
+        {
+         "name": "Stern: 16 Zacken"
+        },
+        {
+         "name": "Stern: 24 Zacken"
+        },
+        {
+         "name": "Stern: 32 Zacken"
+        },
+        {
+         "name": "Band: nach oben gekippt"
+        },
+        {
+         "name": "Band: nach unten gekippt"
+        },
+        {
+         "name": "Band: nach oben gekrümmt und gekippt"
+        },
+        {
+         "name": "Band: nach unten gekrümmt und gekippt"
+        },
+        {
+         "name": "Scrollen: vertikal"
+        },
+        {
+         "name": "Scrollen: horizontal"
+        },
+        {
+         "name": "Welle"
+        },
+        {
+         "name": "Doppelte Welle"
+        },
+        {
+         "name": "Sprechblase: rechteckig"
+        },
+        {
+         "name": "Sprechblase: rechteckig mit abgerundeten Ecken"
+        },
+        {
+         "name": "Sprechblase: oval"
+        },
+        {
+         "name": "Denkblase: wolkenförmig"
+        },
+        {
+         "name": "Legende: Linie"
+        },
+        {
+         "name": "Legende: mit gebogener Linie"
+        },
+        {
+         "name": "Legende: mit gebogener Doppellinie"
+        },
+        {
+         "name": "Legende: mit Linie mit Akzentuierungsbalken"
+        },
+        {
+         "name": "Legende: mit gebogener Linie mit Akzentuierungsbalken"
+        },
+        {
+         "name": "Legende: mit gebogener Doppellinie mit Akzentuierungsbalken"
+        },
+        {
+         "name": "Legende: mit Linie ohne Rahmen"
+        },
+        {
+         "name": "Legende: mit gebogener Linie ohne Rahmen"
+        },
+        {
+         "name": "Legende: mit gebogener Doppellinie ohne Rahmen"
+        },
+        {
+         "name": "Legende: mit Linie mit Rahmen und Akzentuierungsbalken"
+        },
+        {
+         "name": "Legende: mit gebogener Linie mit Rahmen und Akzentuierungsbalken"
+        },
+        {
+         "name": "Legende: mit gebogener Doppellinie mit Rahmen und Akzentuierungsbalken"
+        }
+       ]
+      },
+      {
+       "name": "Form bearbeiten",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Textfeld",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Formen zusammenführen",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Formenarten",
+     "launcher": {
+      "name": "Objekt formatieren...",
+      "deferred": false,
+      "enabled": true
+     },
+     "controls": [
+      {
+       "name": "Schnellformatvorlagen",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Fülleffekt",
+       "deferred": false,
+       "enabled": true,
+       "type": "color",
+       "panel": true,
+       "items": [
+        {
+         "name": "Weiß, Hintergrund 1"
+        },
+        {
+         "name": "Schwarz, Text 1"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2"
+        },
+        {
+         "name": "Blaugrau, Text 2"
+        },
+        {
+         "name": "Blau, Akzent 1"
+        },
+        {
+         "name": "Orange, Akzent 2"
+        },
+        {
+         "name": "Grau, Akzent 3"
+        },
+        {
+         "name": "Gold, Akzent 4"
+        },
+        {
+         "name": "Blau, Akzent 5"
+        },
+        {
+         "name": "Grün, Akzent 6"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 5%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 50%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 10%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 80%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 80%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 80%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 80%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 80%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 80%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 80%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 15%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 35%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 25%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 60%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 60%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 60%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 60%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 60%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 60%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 60%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 25%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 25%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 50%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 40%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 40%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 40%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 40%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 40%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 40%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 40%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 35%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 15%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 75%"
+        },
+        {
+         "name": "Blaugrau, Text 2, dunkler 25%"
+        },
+        {
+         "name": "Blau, Akzent 1, dunkler 25%"
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 25%"
+        },
+        {
+         "name": "Grau, Akzent 3, dunkler 25%"
+        },
+        {
+         "name": "Gold, Akzent 4, dunkler 25%"
+        },
+        {
+         "name": "Blau, Akzent 5, dunkler 25%"
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 25%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 50%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 5%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 90%"
+        },
+        {
+         "name": "Blaugrau, Text 2, dunkler 50%"
+        },
+        {
+         "name": "Blau, Akzent 1, dunkler 50%"
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 50%"
+        },
+        {
+         "name": "Grau, Akzent 3, dunkler 50%"
+        },
+        {
+         "name": "Gold, Akzent 4, dunkler 50%"
+        },
+        {
+         "name": "Blau, Akzent 5, dunkler 50%"
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 50%"
+        },
+        {
+         "name": "Dunkelrot"
+        },
+        {
+         "name": "Rot"
+        },
+        {
+         "name": "Orange"
+        },
+        {
+         "name": "Gelb"
+        },
+        {
+         "name": "Hellgrün"
+        },
+        {
+         "name": "Grün"
+        },
+        {
+         "name": "Hellblau"
+        },
+        {
+         "name": "Blau"
+        },
+        {
+         "name": "Dunkelblau"
+        },
+        {
+         "name": "Lila"
+        }
+       ]
+      },
+      {
+       "name": "Formkontur",
+       "deferred": false,
+       "enabled": true,
+       "type": "color",
+       "panel": true,
+       "items": [
+        {
+         "name": "Weiß, Hintergrund 1"
+        },
+        {
+         "name": "Schwarz, Text 1"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2"
+        },
+        {
+         "name": "Blaugrau, Text 2"
+        },
+        {
+         "name": "Blau, Akzent 1"
+        },
+        {
+         "name": "Orange, Akzent 2"
+        },
+        {
+         "name": "Grau, Akzent 3"
+        },
+        {
+         "name": "Gold, Akzent 4"
+        },
+        {
+         "name": "Blau, Akzent 5"
+        },
+        {
+         "name": "Grün, Akzent 6"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 5%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 50%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 10%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 80%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 80%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 80%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 80%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 80%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 80%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 80%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 15%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 35%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 25%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 60%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 60%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 60%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 60%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 60%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 60%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 60%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 25%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 25%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 50%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 40%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 40%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 40%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 40%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 40%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 40%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 40%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 35%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 15%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 75%"
+        },
+        {
+         "name": "Blaugrau, Text 2, dunkler 25%"
+        },
+        {
+         "name": "Blau, Akzent 1, dunkler 25%"
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 25%"
+        },
+        {
+         "name": "Grau, Akzent 3, dunkler 25%"
+        },
+        {
+         "name": "Gold, Akzent 4, dunkler 25%"
+        },
+        {
+         "name": "Blau, Akzent 5, dunkler 25%"
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 25%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 50%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 5%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 90%"
+        },
+        {
+         "name": "Blaugrau, Text 2, dunkler 50%"
+        },
+        {
+         "name": "Blau, Akzent 1, dunkler 50%"
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 50%"
+        },
+        {
+         "name": "Grau, Akzent 3, dunkler 50%"
+        },
+        {
+         "name": "Gold, Akzent 4, dunkler 50%"
+        },
+        {
+         "name": "Blau, Akzent 5, dunkler 50%"
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 50%"
+        },
+        {
+         "name": "Dunkelrot"
+        },
+        {
+         "name": "Rot"
+        },
+        {
+         "name": "Orange"
+        },
+        {
+         "name": "Gelb"
+        },
+        {
+         "name": "Hellgrün"
+        },
+        {
+         "name": "Grün"
+        },
+        {
+         "name": "Hellblau"
+        },
+        {
+         "name": "Blau"
+        },
+        {
+         "name": "Dunkelblau"
+        },
+        {
+         "name": "Lila"
+        }
+       ]
+      },
+      {
+       "name": "Formeffekte",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Schatten",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Kein Schatten",
+           "enabled": true
+          },
+          {
+           "name": "Außen: Versatz unten rechts",
+           "enabled": true
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "WordArt-Formate",
+     "launcher": {
+      "name": "Texteffekte formatieren...",
+      "deferred": false,
+      "enabled": false
+     },
+     "controls": [
+      {
+       "name": "Schnellformatvorlagen",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Textfüllung",
+       "deferred": false,
+       "enabled": true,
+       "type": "color",
+       "panel": true,
+       "items": [
+        {
+         "name": "Weiß, Hintergrund 1"
+        },
+        {
+         "name": "Schwarz, Text 1"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2"
+        },
+        {
+         "name": "Blaugrau, Text 2"
+        },
+        {
+         "name": "Blau, Akzent 1"
+        },
+        {
+         "name": "Orange, Akzent 2"
+        },
+        {
+         "name": "Grau, Akzent 3"
+        },
+        {
+         "name": "Gold, Akzent 4"
+        },
+        {
+         "name": "Blau, Akzent 5"
+        },
+        {
+         "name": "Grün, Akzent 6"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 5%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 50%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 10%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 80%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 80%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 80%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 80%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 80%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 80%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 80%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 15%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 35%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 25%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 60%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 60%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 60%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 60%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 60%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 60%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 60%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 25%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 25%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 50%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 40%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 40%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 40%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 40%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 40%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 40%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 40%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 35%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 15%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 75%"
+        },
+        {
+         "name": "Blaugrau, Text 2, dunkler 25%"
+        },
+        {
+         "name": "Blau, Akzent 1, dunkler 25%"
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 25%"
+        },
+        {
+         "name": "Grau, Akzent 3, dunkler 25%"
+        },
+        {
+         "name": "Gold, Akzent 4, dunkler 25%"
+        },
+        {
+         "name": "Blau, Akzent 5, dunkler 25%"
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 25%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 50%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 5%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 90%"
+        },
+        {
+         "name": "Blaugrau, Text 2, dunkler 50%"
+        },
+        {
+         "name": "Blau, Akzent 1, dunkler 50%"
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 50%"
+        },
+        {
+         "name": "Grau, Akzent 3, dunkler 50%"
+        },
+        {
+         "name": "Gold, Akzent 4, dunkler 50%"
+        },
+        {
+         "name": "Blau, Akzent 5, dunkler 50%"
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 50%"
+        },
+        {
+         "name": "Dunkelrot"
+        },
+        {
+         "name": "Rot"
+        },
+        {
+         "name": "Orange"
+        },
+        {
+         "name": "Gelb"
+        },
+        {
+         "name": "Hellgrün"
+        },
+        {
+         "name": "Grün"
+        },
+        {
+         "name": "Hellblau"
+        },
+        {
+         "name": "Blau"
+        },
+        {
+         "name": "Dunkelblau"
+        },
+        {
+         "name": "Lila"
+        }
+       ]
+      },
+      {
+       "name": "Textkontur",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Texteffekte",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Barrierefreiheit",
+     "controls": [
+      {
+       "name": "Alternativtext",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Anordnen",
+     "controls": [
+      {
+       "name": "Ebene nach vorne",
+       "deferred": false,
+       "enabled": true,
+       "type": "split",
+       "items": [
+        {
+         "name": "Ebene nach vorne",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "In den Vordergrund",
+         "deferred": false,
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Ebene nach hinten",
+       "deferred": false,
+       "enabled": true,
+       "type": "split",
+       "items": [
+        {
+         "name": "Ebene nach hinten",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "In den Hintergrund",
+         "deferred": false,
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Auswahlbereich...",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Ausrichten",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Linksbündig ausrichten",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Horizontal zentrieren",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Rechtsbündig ausrichten",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Oben ausrichten",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Vertikal zentrieren",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Unten ausrichten",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Horizontal verteilen",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Vertikal verteilen",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "An Folie ausrichten",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Ausgewählte Objekte ausrichten",
+         "deferred": false,
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Gruppieren",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Gruppieren",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Gruppierung wiederherstellen",
+         "deferred": false,
+         "enabled": false
+        },
+        {
+         "name": "Gruppierung aufheben",
+         "deferred": false,
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Drehen",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Rechtsdrehung 90°",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Linksdrehung 90°",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Vertikal kippen",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Horizontal kippen",
+         "deferred": false,
+         "enabled": true
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Größe",
+     "launcher": {
+      "name": "Größe und Position...",
+      "deferred": false,
+      "enabled": true
+     },
+     "controls": [
+      {
+       "name": "Formenhöhe:",
+       "deferred": false,
+       "enabled": true,
+       "type": "spinner"
+      },
+      {
+       "name": "Formenbreite:",
+       "deferred": false,
+       "enabled": true,
+       "type": "spinner"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Bildformat",
+   "contextual": true,
+   "groups": [
+    {
+     "name": "Anpassen",
+     "controls": [
+      {
+       "name": "Hintergrund entfernen",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Korrekturen",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Helligkeit: -40 %  Kontrast: -40 %",
+         "enabled": true
+        },
+        {
+         "name": "Helligkeit: -20 %  Kontrast: -40 %",
+         "enabled": true
+        },
+        {
+         "name": "Helligkeit: 0 %  Kontrast: -40 %",
+         "enabled": true
+        },
+        {
+         "name": "Helligkeit: +20 %  Kontrast: -40 %",
+         "enabled": true
+        },
+        {
+         "name": "Helligkeit: +40 %  Kontrast: -40 %",
+         "enabled": true
+        },
+        {
+         "name": "Helligkeit: -40 %  Kontrast: -20 %",
+         "enabled": true
+        },
+        {
+         "name": "Helligkeit: -20 %  Kontrast: -20 %",
+         "enabled": true
+        },
+        {
+         "name": "Helligkeit: 0 %  Kontrast: -20 %",
+         "enabled": true
+        },
+        {
+         "name": "Helligkeit: +20 %  Kontrast: -20 %",
+         "enabled": true
+        },
+        {
+         "name": "Helligkeit: +40 %  Kontrast: -20 %",
+         "enabled": true
+        },
+        {
+         "name": "Helligkeit: -40 %  Kontrast: 0 %",
+         "enabled": true
+        },
+        {
+         "name": "Helligkeit: -20 %  Kontrast: 0 %",
+         "enabled": true
+        },
+        {
+         "name": "Helligkeit: 0 %  Kontrast: 0 %",
+         "enabled": true
+        },
+        {
+         "name": "Helligkeit: +20 %  Kontrast: 0 %",
+         "enabled": true
+        },
+        {
+         "name": "Helligkeit: +40 %  Kontrast: 0 %",
+         "enabled": true
+        },
+        {
+         "name": "Helligkeit: -40 %  Kontrast: +20 %",
+         "enabled": true
+        },
+        {
+         "name": "Helligkeit: -20 %  Kontrast: +20 %",
+         "enabled": true
+        },
+        {
+         "name": "Helligkeit: 0 %  Kontrast: +20 %",
+         "enabled": true
+        },
+        {
+         "name": "Helligkeit: +20 %  Kontrast: +20 %",
+         "enabled": true
+        },
+        {
+         "name": "Helligkeit: +40 %  Kontrast: +20 %",
+         "enabled": true
+        },
+        {
+         "name": "Helligkeit: -40 %  Kontrast: +40 %",
+         "enabled": true
+        },
+        {
+         "name": "Helligkeit: -20 %  Kontrast: +40 %",
+         "enabled": true
+        },
+        {
+         "name": "Helligkeit: 0 %  Kontrast: +40 %",
+         "enabled": true
+        },
+        {
+         "name": "Helligkeit: +20 %  Kontrast: +40 %",
+         "enabled": true
+        },
+        {
+         "name": "Helligkeit: +40 %  Kontrast: +40 %",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Farbe",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Keine Neueinfärbung",
+         "enabled": true
+        },
+        {
+         "name": "Graustufe",
+         "enabled": true
+        },
+        {
+         "name": "Schwarzweiß: 50 %",
+         "enabled": true
+        },
+        {
+         "name": "Ausgewaschen",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Künstlerische Effekte",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Transparenz",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Transparenz: 0 %",
+         "enabled": true
+        },
+        {
+         "name": "Transparenz: 15 %",
+         "enabled": true
+        },
+        {
+         "name": "Transparenz: 30 %",
+         "enabled": true
+        },
+        {
+         "name": "Transparenz: 50 %",
+         "enabled": true
+        },
+        {
+         "name": "Transparenz: 65 %",
+         "enabled": true
+        },
+        {
+         "name": "Transparenz: 80 %",
+         "enabled": true
+        },
+        {
+         "name": "Transparenz: 95 %",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Bilder komprimieren...",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Bild ändern",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Bild zurücksetzen",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Bildformatvorlagen",
+     "launcher": {
+      "name": "Bild...",
+      "deferred": false,
+      "enabled": false
+     },
+     "controls": [
+      {
+       "name": "Schnellformatvorlagen",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Bildrahmen",
+       "deferred": false,
+       "enabled": true,
+       "type": "color",
+       "panel": true,
+       "items": [
+        {
+         "name": "Weiß, Hintergrund 1"
+        },
+        {
+         "name": "Schwarz, Text 1"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2"
+        },
+        {
+         "name": "Blaugrau, Text 2"
+        },
+        {
+         "name": "Blau, Akzent 1"
+        },
+        {
+         "name": "Orange, Akzent 2"
+        },
+        {
+         "name": "Grau, Akzent 3"
+        },
+        {
+         "name": "Gold, Akzent 4"
+        },
+        {
+         "name": "Blau, Akzent 5"
+        },
+        {
+         "name": "Grün, Akzent 6"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 5%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 50%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 10%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 80%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 80%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 80%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 80%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 80%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 80%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 80%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 15%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 35%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 25%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 60%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 60%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 60%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 60%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 60%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 60%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 60%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 25%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 25%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 50%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 40%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 40%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 40%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 40%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 40%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 40%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 40%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 35%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 15%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 75%"
+        },
+        {
+         "name": "Blaugrau, Text 2, dunkler 25%"
+        },
+        {
+         "name": "Blau, Akzent 1, dunkler 25%"
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 25%"
+        },
+        {
+         "name": "Grau, Akzent 3, dunkler 25%"
+        },
+        {
+         "name": "Gold, Akzent 4, dunkler 25%"
+        },
+        {
+         "name": "Blau, Akzent 5, dunkler 25%"
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 25%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 50%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 5%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 90%"
+        },
+        {
+         "name": "Blaugrau, Text 2, dunkler 50%"
+        },
+        {
+         "name": "Blau, Akzent 1, dunkler 50%"
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 50%"
+        },
+        {
+         "name": "Grau, Akzent 3, dunkler 50%"
+        },
+        {
+         "name": "Gold, Akzent 4, dunkler 50%"
+        },
+        {
+         "name": "Blau, Akzent 5, dunkler 50%"
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 50%"
+        },
+        {
+         "name": "Dunkelrot"
+        },
+        {
+         "name": "Rot"
+        },
+        {
+         "name": "Orange"
+        },
+        {
+         "name": "Gelb"
+        },
+        {
+         "name": "Hellgrün"
+        },
+        {
+         "name": "Grün"
+        },
+        {
+         "name": "Hellblau"
+        },
+        {
+         "name": "Blau"
+        },
+        {
+         "name": "Dunkelblau"
+        },
+        {
+         "name": "Lila"
+        }
+       ]
+      },
+      {
+       "name": "Bildeffekte",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Schatten",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Kein Schatten",
+           "enabled": true
+          },
+          {
+           "name": "Außen: Versatz unten rechts",
+           "enabled": true
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Bildlayout",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Barrierefreiheit",
+     "controls": [
+      {
+       "name": "Alternativtext",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Anordnen",
+     "controls": [
+      {
+       "name": "Ebene nach vorne",
+       "deferred": false,
+       "enabled": true,
+       "type": "split",
+       "items": [
+        {
+         "name": "Ebene nach vorne",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "In den Vordergrund",
+         "deferred": false,
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Ebene nach hinten",
+       "deferred": false,
+       "enabled": true,
+       "type": "split",
+       "items": [
+        {
+         "name": "Ebene nach hinten",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "In den Hintergrund",
+         "deferred": false,
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Auswahlbereich...",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Ausrichten",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Linksbündig ausrichten",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Horizontal zentrieren",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Rechtsbündig ausrichten",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Oben ausrichten",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Vertikal zentrieren",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Unten ausrichten",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Horizontal verteilen",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Vertikal verteilen",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "An Folie ausrichten",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Ausgewählte Objekte ausrichten",
+         "deferred": false,
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Gruppieren",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Gruppieren",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Gruppierung wiederherstellen",
+         "deferred": false,
+         "enabled": false
+        },
+        {
+         "name": "Gruppierung aufheben",
+         "deferred": false,
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Drehen",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Rechtsdrehung 90°",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Linksdrehung 90°",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Vertikal kippen",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Horizontal kippen",
+         "deferred": false,
+         "enabled": true
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Größe",
+     "launcher": {
+      "name": "Größe und Position...",
+      "deferred": false,
+      "enabled": true
+     },
+     "controls": [
+      {
+       "name": "Zuschneiden",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Formenhöhe:",
+       "deferred": false,
+       "enabled": true,
+       "type": "spinner"
+      },
+      {
+       "name": "Formenbreite:",
+       "deferred": false,
+       "enabled": true,
+       "type": "spinner"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Tabellenentwurf",
+   "contextual": true,
+   "groups": [
+    {
+     "name": "Tabellenformatoptionen",
+     "controls": [
+      {
+       "name": "Überschrift",
+       "deferred": false,
+       "enabled": true,
+       "type": "check"
+      },
+      {
+       "name": "Ergebniszeile",
+       "deferred": false,
+       "enabled": true,
+       "type": "check"
+      },
+      {
+       "name": "Gebänderte Zeilen",
+       "deferred": false,
+       "enabled": true,
+       "type": "check"
+      },
+      {
+       "name": "Erste Spalte",
+       "deferred": false,
+       "enabled": true,
+       "type": "check"
+      },
+      {
+       "name": "Letzte Spalte",
+       "deferred": false,
+       "enabled": true,
+       "type": "check"
+      },
+      {
+       "name": "Gebänderte Spalten",
+       "deferred": false,
+       "enabled": true,
+       "type": "check"
+      }
+     ]
+    },
+    {
+     "name": "Tabellenformatvorlagen",
+     "controls": [
+      {
+       "name": "Tabellenformate",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Schattierung",
+       "deferred": false,
+       "enabled": true,
+       "type": "color",
+       "panel": true,
+       "items": [
+        {
+         "name": "Weiß, Hintergrund 1"
+        },
+        {
+         "name": "Schwarz, Text 1"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2"
+        },
+        {
+         "name": "Blaugrau, Text 2"
+        },
+        {
+         "name": "Blau, Akzent 1"
+        },
+        {
+         "name": "Orange, Akzent 2"
+        },
+        {
+         "name": "Grau, Akzent 3"
+        },
+        {
+         "name": "Gold, Akzent 4"
+        },
+        {
+         "name": "Blau, Akzent 5"
+        },
+        {
+         "name": "Grün, Akzent 6"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 5%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 50%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 10%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 80%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 80%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 80%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 80%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 80%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 80%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 80%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 15%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 35%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 25%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 60%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 60%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 60%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 60%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 60%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 60%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 60%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 25%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 25%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 50%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 40%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 40%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 40%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 40%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 40%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 40%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 40%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 35%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 15%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 75%"
+        },
+        {
+         "name": "Blaugrau, Text 2, dunkler 25%"
+        },
+        {
+         "name": "Blau, Akzent 1, dunkler 25%"
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 25%"
+        },
+        {
+         "name": "Grau, Akzent 3, dunkler 25%"
+        },
+        {
+         "name": "Gold, Akzent 4, dunkler 25%"
+        },
+        {
+         "name": "Blau, Akzent 5, dunkler 25%"
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 25%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 50%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 5%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 90%"
+        },
+        {
+         "name": "Blaugrau, Text 2, dunkler 50%"
+        },
+        {
+         "name": "Blau, Akzent 1, dunkler 50%"
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 50%"
+        },
+        {
+         "name": "Grau, Akzent 3, dunkler 50%"
+        },
+        {
+         "name": "Gold, Akzent 4, dunkler 50%"
+        },
+        {
+         "name": "Blau, Akzent 5, dunkler 50%"
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 50%"
+        },
+        {
+         "name": "Dunkelrot"
+        },
+        {
+         "name": "Rot"
+        },
+        {
+         "name": "Orange"
+        },
+        {
+         "name": "Gelb"
+        },
+        {
+         "name": "Hellgrün"
+        },
+        {
+         "name": "Grün"
+        },
+        {
+         "name": "Hellblau"
+        },
+        {
+         "name": "Blau"
+        },
+        {
+         "name": "Dunkelblau"
+        },
+        {
+         "name": "Lila"
+        }
+       ]
+      },
+      {
+       "name": "Rahmen",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Effekte",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "WordArt-Formate",
+     "launcher": {
+      "name": "Texteffekte formatieren...",
+      "deferred": false,
+      "enabled": false
+     },
+     "controls": [
+      {
+       "name": "Schnellformatvorlagen",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Textfüllung",
+       "deferred": false,
+       "enabled": true,
+       "type": "color",
+       "panel": true,
+       "items": [
+        {
+         "name": "Weiß, Hintergrund 1"
+        },
+        {
+         "name": "Schwarz, Text 1"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2"
+        },
+        {
+         "name": "Blaugrau, Text 2"
+        },
+        {
+         "name": "Blau, Akzent 1"
+        },
+        {
+         "name": "Orange, Akzent 2"
+        },
+        {
+         "name": "Grau, Akzent 3"
+        },
+        {
+         "name": "Gold, Akzent 4"
+        },
+        {
+         "name": "Blau, Akzent 5"
+        },
+        {
+         "name": "Grün, Akzent 6"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 5%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 50%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 10%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 80%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 80%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 80%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 80%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 80%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 80%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 80%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 15%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 35%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 25%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 60%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 60%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 60%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 60%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 60%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 60%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 60%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 25%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 25%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 50%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 40%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 40%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 40%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 40%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 40%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 40%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 40%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 35%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 15%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 75%"
+        },
+        {
+         "name": "Blaugrau, Text 2, dunkler 25%"
+        },
+        {
+         "name": "Blau, Akzent 1, dunkler 25%"
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 25%"
+        },
+        {
+         "name": "Grau, Akzent 3, dunkler 25%"
+        },
+        {
+         "name": "Gold, Akzent 4, dunkler 25%"
+        },
+        {
+         "name": "Blau, Akzent 5, dunkler 25%"
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 25%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 50%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 5%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 90%"
+        },
+        {
+         "name": "Blaugrau, Text 2, dunkler 50%"
+        },
+        {
+         "name": "Blau, Akzent 1, dunkler 50%"
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 50%"
+        },
+        {
+         "name": "Grau, Akzent 3, dunkler 50%"
+        },
+        {
+         "name": "Gold, Akzent 4, dunkler 50%"
+        },
+        {
+         "name": "Blau, Akzent 5, dunkler 50%"
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 50%"
+        },
+        {
+         "name": "Dunkelrot"
+        },
+        {
+         "name": "Rot"
+        },
+        {
+         "name": "Orange"
+        },
+        {
+         "name": "Gelb"
+        },
+        {
+         "name": "Hellgrün"
+        },
+        {
+         "name": "Grün"
+        },
+        {
+         "name": "Hellblau"
+        },
+        {
+         "name": "Blau"
+        },
+        {
+         "name": "Dunkelblau"
+        },
+        {
+         "name": "Lila"
+        }
+       ]
+      },
+      {
+       "name": "Textkontur",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Texteffekte",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Rahmenlinien zeichnen",
+     "controls": [
+      {
+       "name": "Stiftart",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Stiftstärke",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "0,25 Pt.",
+         "enabled": true
+        },
+        {
+         "name": "0,5 Pt.",
+         "enabled": true
+        },
+        {
+         "name": "0,75 Pt.",
+         "enabled": true
+        },
+        {
+         "name": "1 Pt.",
+         "enabled": true
+        },
+        {
+         "name": "1,5 Pt.",
+         "enabled": true
+        },
+        {
+         "name": "2,25 Pt.",
+         "enabled": true
+        },
+        {
+         "name": "3 Pt.",
+         "enabled": true
+        },
+        {
+         "name": "4,5 Pt.",
+         "enabled": true
+        },
+        {
+         "name": "6 Pt.",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Stiftfarbe",
+       "deferred": false,
+       "enabled": true,
+       "type": "color",
+       "panel": true,
+       "items": [
+        {
+         "name": "Weiß, Hintergrund 1"
+        },
+        {
+         "name": "Schwarz, Text 1"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2"
+        },
+        {
+         "name": "Blaugrau, Text 2"
+        },
+        {
+         "name": "Blau, Akzent 1"
+        },
+        {
+         "name": "Orange, Akzent 2"
+        },
+        {
+         "name": "Grau, Akzent 3"
+        },
+        {
+         "name": "Gold, Akzent 4"
+        },
+        {
+         "name": "Blau, Akzent 5"
+        },
+        {
+         "name": "Grün, Akzent 6"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 5%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 50%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 10%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 80%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 80%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 80%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 80%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 80%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 80%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 80%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 15%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 35%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 25%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 60%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 60%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 60%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 60%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 60%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 60%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 60%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 25%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 25%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 50%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 40%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 40%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 40%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 40%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 40%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 40%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 40%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 35%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 15%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 75%"
+        },
+        {
+         "name": "Blaugrau, Text 2, dunkler 25%"
+        },
+        {
+         "name": "Blau, Akzent 1, dunkler 25%"
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 25%"
+        },
+        {
+         "name": "Grau, Akzent 3, dunkler 25%"
+        },
+        {
+         "name": "Gold, Akzent 4, dunkler 25%"
+        },
+        {
+         "name": "Blau, Akzent 5, dunkler 25%"
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 25%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 50%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 5%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 90%"
+        },
+        {
+         "name": "Blaugrau, Text 2, dunkler 50%"
+        },
+        {
+         "name": "Blau, Akzent 1, dunkler 50%"
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 50%"
+        },
+        {
+         "name": "Grau, Akzent 3, dunkler 50%"
+        },
+        {
+         "name": "Gold, Akzent 4, dunkler 50%"
+        },
+        {
+         "name": "Blau, Akzent 5, dunkler 50%"
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 50%"
+        },
+        {
+         "name": "Dunkelrot"
+        },
+        {
+         "name": "Rot"
+        },
+        {
+         "name": "Orange"
+        },
+        {
+         "name": "Gelb"
+        },
+        {
+         "name": "Hellgrün"
+        },
+        {
+         "name": "Grün"
+        },
+        {
+         "name": "Hellblau"
+        },
+        {
+         "name": "Blau"
+        },
+        {
+         "name": "Dunkelblau"
+        },
+        {
+         "name": "Lila"
+        }
+       ]
+      },
+      {
+       "name": "Tabelle zeichnen",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Radierer",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Tabellenlayout",
+   "contextual": true,
+   "groups": [
+    {
+     "name": "Tabelle",
+     "controls": [
+      {
+       "name": "Auswählen",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Tabelle markieren",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Gitternetzlinien anzeigen",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Zeilen und Spalten",
+     "controls": [
+      {
+       "name": "Löschen",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Spalten löschen",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Zeilen löschen",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Tabelle löschen",
+         "deferred": false,
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Zeile Oberhalb",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Zeile unterhalb einfügen",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Spalte Links",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Spalte rechts einfügen",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Zusammenführen",
+     "controls": [
+      {
+       "name": "Zellen verbinden",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Zellen teilen...",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Zellengröße",
+     "controls": [
+      {
+       "name": "Höhe:",
+       "deferred": false,
+       "enabled": true,
+       "type": "spinner"
+      },
+      {
+       "name": "Breite:",
+       "deferred": false,
+       "enabled": true,
+       "type": "spinner"
+      },
+      {
+       "name": "Zeilen verteilen",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Spalten verteilen",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Ausrichtung",
+     "controls": [
+      {
+       "name": "Linksbündig",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Oben ausrichten",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Zentriert",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Vertikal zentrieren",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Rechtsbündig",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Unten ausrichten",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Textrichtung",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Zellenbegrenzungen",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Tabellengröße",
+     "controls": [
+      {
+       "name": "Höhe:",
+       "deferred": false,
+       "enabled": true,
+       "type": "spinner"
+      },
+      {
+       "name": "Breite:",
+       "deferred": false,
+       "enabled": true,
+       "type": "spinner"
+      },
+      {
+       "name": "Seitenverhältnis sperren",
+       "deferred": false,
+       "enabled": false,
+       "type": "check"
+      }
+     ]
+    },
+    {
+     "name": "Anordnen",
+     "controls": [
+      {
+       "name": "Anordnen",
+       "deferred": false,
+       "enabled": false,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Ebene nach vorne",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Ebene nach hinten",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Auswahlbereich...",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Ausrichten",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Linksbündig ausrichten",
+           "deferred": false,
+           "enabled": true
+          },
+          {
+           "name": "Horizontal zentrieren",
+           "deferred": false,
+           "enabled": true
+          },
+          {
+           "name": "Rechtsbündig ausrichten",
+           "deferred": false,
+           "enabled": true
+          },
+          {
+           "name": "Oben ausrichten",
+           "deferred": false,
+           "enabled": true
+          },
+          {
+           "name": "Vertikal zentrieren",
+           "deferred": false,
+           "enabled": true
+          },
+          {
+           "name": "Unten ausrichten",
+           "deferred": false,
+           "enabled": true
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Diagrammentwurf",
+   "contextual": true,
+   "groups": [
+    {
+     "name": "Diagrammlayouts",
+     "controls": [
+      {
+       "name": "Diagrammelement hinzufügen",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Schnelllayout",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Layout 1",
+         "enabled": true
+        },
+        {
+         "name": "Layout 2",
+         "enabled": true
+        },
+        {
+         "name": "Layout 3",
+         "enabled": true
+        },
+        {
+         "name": "Layout 4",
+         "enabled": true
+        },
+        {
+         "name": "Layout 5",
+         "enabled": true
+        },
+        {
+         "name": "Layout 6",
+         "enabled": true
+        },
+        {
+         "name": "Layout 7",
+         "enabled": true
+        },
+        {
+         "name": "Layout 8",
+         "enabled": true
+        },
+        {
+         "name": "Layout 9",
+         "enabled": true
+        },
+        {
+         "name": "Layout 10",
+         "enabled": true
+        },
+        {
+         "name": "Layout 11",
+         "enabled": true
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Diagrammformatvorlagen",
+     "controls": [
+      {
+       "name": "Farben ändern",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Farbige Palette 1",
+         "enabled": true
+        },
+        {
+         "name": "Farbige Palette 2",
+         "enabled": true
+        },
+        {
+         "name": "Farbige Palette 3",
+         "enabled": true
+        },
+        {
+         "name": "Farbige Palette 4",
+         "enabled": true
+        },
+        {
+         "name": "Monochromatische Palette 1",
+         "enabled": true
+        },
+        {
+         "name": "Monochromatische Palette 2",
+         "enabled": true
+        },
+        {
+         "name": "Monochromatische Palette 3",
+         "enabled": true
+        },
+        {
+         "name": "Monochromatische Palette 4",
+         "enabled": true
+        },
+        {
+         "name": "Monochromatische Palette 5",
+         "enabled": true
+        },
+        {
+         "name": "Monochromatische Palette 6",
+         "enabled": true
+        },
+        {
+         "name": "Monochromatische Palette 7",
+         "enabled": true
+        },
+        {
+         "name": "Monochromatische Palette 8",
+         "enabled": true
+        },
+        {
+         "name": "Monochromatische Palette 9",
+         "enabled": true
+        },
+        {
+         "name": "Monochromatische Palette 10",
+         "enabled": true
+        },
+        {
+         "name": "Monochromatische Palette 11",
+         "enabled": true
+        },
+        {
+         "name": "Monochromatische Palette 12",
+         "enabled": true
+        },
+        {
+         "name": "Monochromatische Palette 13",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Schnellformatvorlagen",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Daten",
+     "controls": [
+      {
+       "name": "Zeile/Spalte tauschen",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Daten auswählen...",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Daten bearbeiten",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Daten aktualisieren",
+       "deferred": false,
+       "enabled": false,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Typ",
+     "controls": [
+      {
+       "name": "Diagrammtyp ändern...",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Gruppierte Säulen",
+         "enabled": true
+        },
+        {
+         "name": "Gestapelte Säulen",
+         "enabled": true
+        },
+        {
+         "name": "Gruppierte Balken",
+         "enabled": true
+        },
+        {
+         "name": "Gestapelte Balken",
+         "enabled": true
+        },
+        {
+         "name": "Linie",
+         "enabled": true
+        },
+        {
+         "name": "Linie mit Datenpunkten",
+         "enabled": true
+        },
+        {
+         "name": "Fläche",
+         "enabled": true
+        },
+        {
+         "name": "Kreis",
+         "enabled": true
+        },
+        {
+         "name": "Ring",
+         "enabled": true
+        },
+        {
+         "name": "Punkt (X Y)",
+         "enabled": true
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Format",
+   "contextual": true,
+   "groups": [
+    {
+     "name": "Aktuelle Auswahl",
+     "controls": [
+      {
+       "name": "Objekt formatieren...",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Formenarten",
+     "controls": [
+      {
+       "name": "Fülleffekt",
+       "deferred": false,
+       "enabled": true,
+       "type": "color",
+       "panel": true,
+       "items": [
+        {
+         "name": "Weiß, Hintergrund 1"
+        },
+        {
+         "name": "Schwarz, Text 1"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2"
+        },
+        {
+         "name": "Blaugrau, Text 2"
+        },
+        {
+         "name": "Blau, Akzent 1"
+        },
+        {
+         "name": "Orange, Akzent 2"
+        },
+        {
+         "name": "Grau, Akzent 3"
+        },
+        {
+         "name": "Gold, Akzent 4"
+        },
+        {
+         "name": "Blau, Akzent 5"
+        },
+        {
+         "name": "Grün, Akzent 6"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 5%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 50%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 10%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 80%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 80%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 80%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 80%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 80%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 80%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 80%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 15%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 35%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 25%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 60%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 60%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 60%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 60%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 60%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 60%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 60%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 25%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 25%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 50%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 40%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 40%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 40%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 40%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 40%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 40%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 40%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 35%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 15%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 75%"
+        },
+        {
+         "name": "Blaugrau, Text 2, dunkler 25%"
+        },
+        {
+         "name": "Blau, Akzent 1, dunkler 25%"
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 25%"
+        },
+        {
+         "name": "Grau, Akzent 3, dunkler 25%"
+        },
+        {
+         "name": "Gold, Akzent 4, dunkler 25%"
+        },
+        {
+         "name": "Blau, Akzent 5, dunkler 25%"
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 25%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 50%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 5%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 90%"
+        },
+        {
+         "name": "Blaugrau, Text 2, dunkler 50%"
+        },
+        {
+         "name": "Blau, Akzent 1, dunkler 50%"
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 50%"
+        },
+        {
+         "name": "Grau, Akzent 3, dunkler 50%"
+        },
+        {
+         "name": "Gold, Akzent 4, dunkler 50%"
+        },
+        {
+         "name": "Blau, Akzent 5, dunkler 50%"
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 50%"
+        },
+        {
+         "name": "Dunkelrot"
+        },
+        {
+         "name": "Rot"
+        },
+        {
+         "name": "Orange"
+        },
+        {
+         "name": "Gelb"
+        },
+        {
+         "name": "Hellgrün"
+        },
+        {
+         "name": "Grün"
+        },
+        {
+         "name": "Hellblau"
+        },
+        {
+         "name": "Blau"
+        },
+        {
+         "name": "Dunkelblau"
+        },
+        {
+         "name": "Lila"
+        }
+       ]
+      },
+      {
+       "name": "Formkontur",
+       "deferred": false,
+       "enabled": true,
+       "type": "color",
+       "panel": true,
+       "items": [
+        {
+         "name": "Weiß, Hintergrund 1"
+        },
+        {
+         "name": "Schwarz, Text 1"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2"
+        },
+        {
+         "name": "Blaugrau, Text 2"
+        },
+        {
+         "name": "Blau, Akzent 1"
+        },
+        {
+         "name": "Orange, Akzent 2"
+        },
+        {
+         "name": "Grau, Akzent 3"
+        },
+        {
+         "name": "Gold, Akzent 4"
+        },
+        {
+         "name": "Blau, Akzent 5"
+        },
+        {
+         "name": "Grün, Akzent 6"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 5%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 50%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 10%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 80%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 80%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 80%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 80%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 80%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 80%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 80%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 15%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 35%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 25%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 60%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 60%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 60%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 60%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 60%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 60%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 60%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 25%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 25%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 50%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 40%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 40%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 40%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 40%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 40%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 40%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 40%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 35%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 15%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 75%"
+        },
+        {
+         "name": "Blaugrau, Text 2, dunkler 25%"
+        },
+        {
+         "name": "Blau, Akzent 1, dunkler 25%"
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 25%"
+        },
+        {
+         "name": "Grau, Akzent 3, dunkler 25%"
+        },
+        {
+         "name": "Gold, Akzent 4, dunkler 25%"
+        },
+        {
+         "name": "Blau, Akzent 5, dunkler 25%"
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 25%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 50%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 5%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 90%"
+        },
+        {
+         "name": "Blaugrau, Text 2, dunkler 50%"
+        },
+        {
+         "name": "Blau, Akzent 1, dunkler 50%"
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 50%"
+        },
+        {
+         "name": "Grau, Akzent 3, dunkler 50%"
+        },
+        {
+         "name": "Gold, Akzent 4, dunkler 50%"
+        },
+        {
+         "name": "Blau, Akzent 5, dunkler 50%"
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 50%"
+        },
+        {
+         "name": "Dunkelrot"
+        },
+        {
+         "name": "Rot"
+        },
+        {
+         "name": "Orange"
+        },
+        {
+         "name": "Gelb"
+        },
+        {
+         "name": "Hellgrün"
+        },
+        {
+         "name": "Grün"
+        },
+        {
+         "name": "Hellblau"
+        },
+        {
+         "name": "Blau"
+        },
+        {
+         "name": "Dunkelblau"
+        },
+        {
+         "name": "Lila"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Anordnen",
+     "controls": [
+      {
+       "name": "Ebene nach vorne",
+       "deferred": false,
+       "enabled": true,
+       "type": "split",
+       "items": [
+        {
+         "name": "Ebene nach vorne",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "In den Vordergrund",
+         "deferred": false,
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Ebene nach hinten",
+       "deferred": false,
+       "enabled": true,
+       "type": "split",
+       "items": [
+        {
+         "name": "Ebene nach hinten",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "In den Hintergrund",
+         "deferred": false,
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Auswahlbereich...",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Ausrichten",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Linksbündig ausrichten",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Horizontal zentrieren",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Rechtsbündig ausrichten",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Oben ausrichten",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Vertikal zentrieren",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Unten ausrichten",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Horizontal verteilen",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Vertikal verteilen",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "An Folie ausrichten",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Ausgewählte Objekte ausrichten",
+         "deferred": false,
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Gruppieren",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Gruppieren",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Gruppierung wiederherstellen",
+         "deferred": false,
+         "enabled": false
+        },
+        {
+         "name": "Gruppierung aufheben",
+         "deferred": false,
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Drehen",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Rechtsdrehung 90°",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Linksdrehung 90°",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Vertikal kippen",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Horizontal kippen",
+         "deferred": false,
+         "enabled": true
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Größe",
+     "controls": [
+      {
+       "name": "Formenhöhe:",
+       "deferred": false,
+       "enabled": true,
+       "type": "spinner"
+      },
+      {
+       "name": "Formenbreite:",
+       "deferred": false,
+       "enabled": true,
+       "type": "spinner"
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "context_menus": {
+  "Folienminiatur": [
+   {
+    "name": "Ausschneiden"
+   },
+   {
+    "name": "Kopieren"
+   },
+   {
+    "name": "Einfügeoptionen"
+   },
+   {
+    "name": "Neue Folie"
+   },
+   {
+    "name": "Folie duplizieren"
+   },
+   {
+    "name": "Folie löschen"
+   },
+   {
+    "name": "Abschnitt hinzufügen"
+   },
+   {
+    "name": "Layout",
+    "items": [
+     {
+      "name": "Titelfolie"
+     },
+     {
+      "name": "Titel und Inhalt"
+     },
+     {
+      "name": "Abschnitts-überschrift"
+     },
+     {
+      "name": "Zwei Inhalte"
+     },
+     {
+      "name": "Vergleich"
+     },
+     {
+      "name": "Nur Titel"
+     },
+     {
+      "name": "Leer"
+     },
+     {
+      "name": "Inhalt mit Überschrift"
+     },
+     {
+      "name": "Bild mit Überschrift"
+     },
+     {
+      "name": "Titel und vertikaler Text"
+     },
+     {
+      "name": "Vertikaler Titel und Text"
+     }
+    ]
+   },
+   {
+    "name": "Folie zurücksetzen"
+   },
+   {
+    "name": "Hintergrund formatieren..."
+   },
+   {
+    "name": "Fotoalbum..."
+   },
+   {
+    "name": "Folie ausblenden"
+   },
+   {
+    "name": "Link zu dieser Folie"
+   },
+   {
+    "name": "Neuer Kommentar"
+   }
+  ],
+  "Leerer Bereich im Folienbereich": [
+   {
+    "name": "Einfügeoptionen"
+   },
+   {
+    "name": "Neue Folie"
+   },
+   {
+    "name": "Abschnitt hinzufügen"
+   }
+  ],
+  "Platzhalterrahmen": [
+   {
+    "name": "Ausschneiden"
+   },
+   {
+    "name": "Kopieren"
+   },
+   {
+    "name": "Einfügeoptionen"
+   },
+   {
+    "name": "Text bearbeiten"
+   },
+   {
+    "name": "Gruppieren",
+    "items": [
+     {
+      "name": "Gruppieren"
+     },
+     {
+      "name": "Gruppierung wiederherstellen"
+     },
+     {
+      "name": "Gruppierung aufheben"
+     }
+    ]
+   },
+   {
+    "name": "In den Vordergrund",
+    "items": [
+     {
+      "name": "In den Vordergrund"
+     },
+     {
+      "name": "Ebene nach vorne"
+     }
+    ]
+   },
+   {
+    "name": "In den Hintergrund",
+    "items": [
+     {
+      "name": "In den Hintergrund"
+     },
+     {
+      "name": "Ebene nach hinten"
+     }
+    ]
+   },
+   {
+    "name": "Sperren"
+   },
+   {
+    "name": "Link"
+   },
+   {
+    "name": "Als Grafik speichern..."
+   },
+   {
+    "name": "Alternativtext anzeigen..."
+   },
+   {
+    "name": "Größe und Position..."
+   },
+   {
+    "name": "Form formatieren..."
+   },
+   {
+    "name": "Neuer Kommentar"
+   }
+  ],
+  "Text in Bearbeitung": [
+   {
+    "name": "Ausschneiden"
+   },
+   {
+    "name": "Kopieren"
+   },
+   {
+    "name": "Einfügeoptionen"
+   },
+   {
+    "name": "Textbearbeitung beenden"
+   },
+   {
+    "name": "Schriftart..."
+   },
+   {
+    "name": "Absatz..."
+   },
+   {
+    "name": "Aufzählungszeichen",
+    "items": [
+     {
+      "name": "Ohne"
+     },
+     {
+      "name": "Gefüllte runde Aufzählungszeichen"
+     },
+     {
+      "name": "Leere runde Aufzählungszeichen"
+     },
+     {
+      "name": "Gefüllte quadratische Aufzählungszeichen"
+     },
+     {
+      "name": "Pfeil-Aufzählungszeichen"
+     },
+     {
+      "name": "Häkchen-Aufzählungszeichen"
+     },
+     {
+      "name": "Gefüllte Raute"
+     }
+    ]
+   },
+   {
+    "name": "Nummerierung",
+    "items": [
+     {
+      "name": "Ohne"
+     },
+     {
+      "name": "1. 2. 3."
+     },
+     {
+      "name": "1) 2) 3)"
+     },
+     {
+      "name": "I. II. III."
+     },
+     {
+      "name": "A. B. C."
+     },
+     {
+      "name": "a) b) c)"
+     },
+     {
+      "name": "a. b. c."
+     },
+     {
+      "name": "i. ii. iii."
+     }
+    ]
+   },
+   {
+    "name": "In SmartArt konvertieren"
+   },
+   {
+    "name": "Sperren"
+   },
+   {
+    "name": "Link"
+   },
+   {
+    "name": "Synonyme"
+   },
+   {
+    "name": "Texteffekte formatieren..."
+   },
+   {
+    "name": "Form formatieren..."
+   },
+   {
+    "name": "Neuer Kommentar"
+   }
+  ],
+  "Form": [
+   {
+    "name": "Ausschneiden"
+   },
+   {
+    "name": "Kopieren"
+   },
+   {
+    "name": "Einfügeoptionen"
+   },
+   {
+    "name": "Text bearbeiten"
+   },
+   {
+    "name": "Punkte bearbeiten"
+   },
+   {
+    "name": "Gruppieren",
+    "items": [
+     {
+      "name": "Gruppieren"
+     },
+     {
+      "name": "Gruppierung wiederherstellen"
+     },
+     {
+      "name": "Gruppierung aufheben"
+     }
+    ]
+   },
+   {
+    "name": "In den Vordergrund",
+    "items": [
+     {
+      "name": "In den Vordergrund"
+     },
+     {
+      "name": "Ebene nach vorne"
+     }
+    ]
+   },
+   {
+    "name": "In den Hintergrund",
+    "items": [
+     {
+      "name": "In den Hintergrund"
+     },
+     {
+      "name": "Ebene nach hinten"
+     }
+    ]
+   },
+   {
+    "name": "Sperren"
+   },
+   {
+    "name": "Link"
+   },
+   {
+    "name": "Als Grafik speichern..."
+   },
+   {
+    "name": "Alternativtext anzeigen..."
+   },
+   {
+    "name": "Als Standardformformat festlegen"
+   },
+   {
+    "name": "Größe und Position..."
+   },
+   {
+    "name": "Form formatieren..."
+   },
+   {
+    "name": "Neuer Kommentar"
+   }
+  ],
+  "Textfeld": [
+   {
+    "name": "Ausschneiden"
+   },
+   {
+    "name": "Kopieren"
+   },
+   {
+    "name": "Einfügeoptionen"
+   },
+   {
+    "name": "Text bearbeiten"
+   },
+   {
+    "name": "Punkte bearbeiten"
+   },
+   {
+    "name": "Gruppieren",
+    "items": [
+     {
+      "name": "Gruppieren"
+     },
+     {
+      "name": "Gruppierung wiederherstellen"
+     },
+     {
+      "name": "Gruppierung aufheben"
+     }
+    ]
+   },
+   {
+    "name": "In den Vordergrund",
+    "items": [
+     {
+      "name": "In den Vordergrund"
+     },
+     {
+      "name": "Ebene nach vorne"
+     }
+    ]
+   },
+   {
+    "name": "In den Hintergrund",
+    "items": [
+     {
+      "name": "In den Hintergrund"
+     },
+     {
+      "name": "Ebene nach hinten"
+     }
+    ]
+   },
+   {
+    "name": "Sperren"
+   },
+   {
+    "name": "Link"
+   },
+   {
+    "name": "Als Grafik speichern..."
+   },
+   {
+    "name": "Alternativtext anzeigen..."
+   },
+   {
+    "name": "Als Standardtextfeld-Format festlegen"
+   },
+   {
+    "name": "Größe und Position..."
+   },
+   {
+    "name": "Form formatieren..."
+   },
+   {
+    "name": "Neuer Kommentar"
+   }
+  ],
+  "Tabelle": [
+   {
+    "name": "Ausschneiden"
+   },
+   {
+    "name": "Kopieren"
+   },
+   {
+    "name": "Einfügeoptionen"
+   },
+   {
+    "name": "Schriftart..."
+   },
+   {
+    "name": "Aufzählungszeichen",
+    "items": [
+     {
+      "name": "Ohne"
+     },
+     {
+      "name": "Gefüllte runde Aufzählungszeichen"
+     },
+     {
+      "name": "Leere runde Aufzählungszeichen"
+     },
+     {
+      "name": "Gefüllte quadratische Aufzählungszeichen"
+     },
+     {
+      "name": "Pfeil-Aufzählungszeichen"
+     },
+     {
+      "name": "Häkchen-Aufzählungszeichen"
+     },
+     {
+      "name": "Gefüllte Raute"
+     }
+    ]
+   },
+   {
+    "name": "Nummerierung",
+    "items": [
+     {
+      "name": "Ohne"
+     },
+     {
+      "name": "1. 2. 3."
+     },
+     {
+      "name": "1) 2) 3)"
+     },
+     {
+      "name": "I. II. III."
+     },
+     {
+      "name": "A. B. C."
+     },
+     {
+      "name": "a) b) c)"
+     },
+     {
+      "name": "a. b. c."
+     },
+     {
+      "name": "i. ii. iii."
+     }
+    ]
+   },
+   {
+    "name": "Sperren"
+   },
+   {
+    "name": "Link"
+   },
+   {
+    "name": "Synonyme"
+   },
+   {
+    "name": "Einfügen",
+    "items": [
+     {
+      "name": "Oberhalb einfügen"
+     },
+     {
+      "name": "Unterhalb einfügen"
+     },
+     {
+      "name": "Links einfügen"
+     },
+     {
+      "name": "Rechts einfügen"
+     }
+    ]
+   },
+   {
+    "name": "Löschen",
+    "items": [
+     {
+      "name": "Zeilen löschen"
+     },
+     {
+      "name": "Spalten löschen"
+     },
+     {
+      "name": "Tabelle löschen"
+     }
+    ]
+   },
+   {
+    "name": "Zellen verbinden"
+   },
+   {
+    "name": "Zellen teilen..."
+   },
+   {
+    "name": "Tabelle auswählen"
+   },
+   {
+    "name": "Form formatieren..."
+   },
+   {
+    "name": "Neuer Kommentar"
+   }
+  ],
+  "Leerer Folienbereich": [
+   {
+    "name": "Layout",
+    "items": [
+     {
+      "name": "Titelfolie"
+     },
+     {
+      "name": "Titel und Inhalt"
+     },
+     {
+      "name": "Abschnitts-überschrift"
+     },
+     {
+      "name": "Zwei Inhalte"
+     },
+     {
+      "name": "Vergleich"
+     },
+     {
+      "name": "Nur Titel"
+     },
+     {
+      "name": "Leer"
+     },
+     {
+      "name": "Inhalt mit Überschrift"
+     },
+     {
+      "name": "Bild mit Überschrift"
+     },
+     {
+      "name": "Titel und vertikaler Text"
+     },
+     {
+      "name": "Vertikaler Titel und Text"
+     }
+    ]
+   },
+   {
+    "name": "Folie zurücksetzen"
+   },
+   {
+    "name": "Raster und Führungslinien..."
+   },
+   {
+    "name": "Lineal"
+   },
+   {
+    "name": "Hintergrund formatieren..."
+   },
+   {
+    "name": "Neuer Kommentar"
+   }
+  ]
+ }
+}

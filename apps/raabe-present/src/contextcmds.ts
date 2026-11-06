@@ -1,0 +1,248 @@
+// What the contextual tabs' commands do (D-070): picture colour, transparency and corrections as
+// DrawingML blip effects (a:grayscl, a:biLevel, a:lum, a:alphaModFix, as PowerPoint writes them),
+// Alternativtext (descr), table cells (alignment, vertical anchor, rows and columns at the cell,
+// distributing, sizes), charts through chartops.ts.
+
+import { h, showDialog, type Control, type MenuEntry } from "@raabe/shell";
+import { PptxDom, type ShapeView } from "@raabe/ooxml";
+import type { PresentApp } from "./app";
+import type { ContextTabHost } from "./contexttabs";
+import * as T from "./textops";
+import * as S from "./shapeops";
+import * as CH from "./chartops";
+
+const { kid, kids, make, num } = PptxDom;
+
+export function contextHost(app: PresentApp): ContextTabHost {
+  const ctx = app.ribbonContext();
+  const spin = (value: () => string, commit: (v: string) => void, step: (d: 1 | -1) => void, label: string, cmd: string, icon: string, key: string): Control =>
+    ({ type: "spinner", cmd, label, icon, key, value, commit, step });
+  return {
+    shapeGallery: (c) => app.shapeGallery(c),
+    color: (cur, pick, cmd, key, label) => ({ type: "color", cmd, key, palette: "font", current: cur, pick, showLabel: label }),
+    fillColor: ctx.fillColor, setFill: ctx.setFill, lineColor: ctx.lineColor, setLine: ctx.setLine, fontColor: ctx.fontColor, setFontColor: ctx.setFontColor,
+    effects: () => ctx.menus.effects,
+    alignMenu: () => [{ cmd: "arrange.alignLeft" }, { cmd: "arrange.alignCenter" }, { cmd: "arrange.alignRight" }, "-", { cmd: "arrange.alignTop" }, { cmd: "arrange.alignMiddle" }, { cmd: "arrange.alignBottom" }],
+    sizeSpin: (k) => spin(() => sizeText(app, k), (v) => setSize(app, k, cmText(v)), (d) => { const v = app.editor.selectedViews[0]; if (v) setSize(app, k, Math.max(0, (k === "h" ? v.h : v.w) + d * 36000)); },
+      k === "h" ? "Formenhöhe:" : "Formenbreite:", k === "h" ? "shape.heightBox" : "shape.widthBox", k === "h" ? "shape-height" : "shape-width", k === "h" ? "H" : "RR"),
+    pictureColor: () => pictureColor(app),
+    pictureTransparency: () => [0, 15, 30, 50, 65, 80, 95].map((p) => ({ label: `Transparenz: ${p} %`, run: () => blipEffect(app, "Transparenz", (blip) => { remove(blip, "alphaModFix"); if (p) blip.prepend(make(blip.ownerDocument, "a:alphaModFix", { amt: (100 - p) * 1000 })); }) })),
+    pictureCorrections: () => {
+      const out: MenuEntry[] = [{ heading: "Helligkeit/Kontrast" }];
+      for (const c of [-40, -20, 0, 20, 40]) for (const br of [-40, -20, 0, 20, 40]) out.push({ label: `Helligkeit: ${br > 0 ? "+" : ""}${br} %  Kontrast: ${c > 0 ? "+" : ""}${c} %`, run: () => blipEffect(app, "Korrekturen", (blip) => { remove(blip, "lum"); if (br || c) blip.append(make(blip.ownerDocument, "a:lum", { bright: br * 1000, contrast: c * 1000 })); }) });
+      return out;
+    },
+    lineWeights: () => [0.25, 0.5, 0.75, 1, 1.5, 2.25, 3, 4.5, 6].map((w) => ({ label: `${String(w).replace(".", ",")} Pt.`, run: () => app.setLineWidth(w) })),
+    chartKinds: () => CH.CHART_KINDS.map(([label, k]) => ({ label, run: () => CH.changeType(app, k) })),
+    quickLayouts: () => Array.from({ length: 11 }, (_, i) => ({ label: `Layout ${i + 1}`, run: () => CH.quickLayout(app, i + 1) })),
+    chartColors: () => [{ heading: "Farbig" }, ...[10, 11, 12, 13].map((k) => ({ label: `Farbige Palette ${k - 9}`, run: () => CH.setColors(app, k) })),
+      { heading: "Monochromatisch" }, ...Array.from({ length: 13 }, (_, i) => ({ label: `Monochromatische Palette ${i + 1}`, run: () => CH.setColors(app, 14 + i) }))],
+    tableSpin: (k) => {
+      const labels = { row: "Höhe:", col: "Breite:", h: "Höhe:", w: "Breite:" }, cmds = { row: "table.rowHeight", col: "table.colWidth", h: "table.height", w: "table.width" };
+      return spin(() => tableSizeText(app, k), (v) => setTableSize(app, k, cmText(v)), (d) => setTableSize(app, k, Math.max(36000, tableSize(app, k) + d * 36000)), labels[k], cmds[k], k === "row" || k === "h" ? "shape-height" : "shape-width", { row: "P", col: "B", h: "X", w: "LB" }[k]);
+    },
+  };
+}
+
+const cm = (emu: number) => `${(emu / 360000).toFixed(2).replace(".", ",")} cm`;
+const cmText = (v: string) => Math.round(Number(v.replace(",", ".").replace(/[^\d.]/g, "")) * 360000);
+function remove(el: Element, name: string): void { for (const c of kids(el, name)) c.remove(); }
+
+function sizeText(app: PresentApp, k: "h" | "w"): string {
+  const v = app.editor.selectedViews[0];
+  return v ? cm(k === "h" ? v.h : v.w) : "";
+}
+
+function setSize(app: PresentApp, k: "h" | "w", emu: number): void {
+  if (!(emu > 0)) return;
+  const views = app.editor.selectedViews;
+  app.editor.edit("Größe", () => {
+    for (const v of views) {
+      const el = app.editor.shapeEl(v.id);
+      if (!el) continue;
+      // Pictures keep their proportions (Seitenverhältnis sperren is on for them, as in PowerPoint).
+      const keep = v.kind === "pic";
+      const r = v.h ? v.w / v.h : 1;
+      S.setXfrm(el, { x: v.x, y: v.y, w: k === "w" ? emu : keep ? emu * r : v.w, h: k === "h" ? emu : keep ? emu / r : v.h });
+    }
+  });
+}
+
+function blipEffect(app: PresentApp, label: string, fn: (blip: Element) => void): void {
+  const views = app.editor.selectedViews.filter((v) => v.kind === "pic");
+  app.editor.edit(label, () => {
+    for (const v of views) {
+      const blip = PptxDom.at(app.editor.shapeEl(v.id)!, "blipFill/blip");
+      if (blip) fn(blip);
+    }
+  });
+}
+
+function pictureColor(app: PresentApp): MenuEntry[] {
+  const clear = (blip: Element) => { for (const n of ["grayscl", "biLevel", "duotone", "clrChange", "lum"]) remove(blip, n); };
+  return [{ heading: "Neu einfärben" },
+    { label: "Keine Neueinfärbung", run: () => blipEffect(app, "Farbe", clear) },
+    { label: "Graustufe", run: () => blipEffect(app, "Farbe", (b) => { clear(b); b.append(make(b.ownerDocument, "a:grayscl")); }) },
+    { label: "Schwarzweiß: 50 %", run: () => blipEffect(app, "Farbe", (b) => { clear(b); b.append(make(b.ownerDocument, "a:biLevel", { thresh: 50000 })); }) },
+    { label: "Ausgewaschen", run: () => blipEffect(app, "Farbe", (b) => { clear(b); b.append(make(b.ownerDocument, "a:lum", { bright: 70000, contrast: -70000 })); }) }];
+}
+
+// ----- tables --------------------------------------------------------------------------------------
+
+function tableOf(app: PresentApp): { v: ShapeView; el: Element; tbl: Element } | null {
+  const v = app.editor.selectedViews.find((x) => x.frame === "table");
+  const el = v ? app.editor.shapeEl(v.id) : undefined;
+  const tbl = el?.getElementsByTagNameNS(PptxDom.NS_A, "tbl")[0];
+  return v && el && tbl ? { v, el, tbl } : null;
+}
+
+/** The cells a command acts on: the one being edited, else all. */
+function cells(app: PresentApp, tbl: Element): Element[] {
+  const c = app.editor.text?.cell;
+  const rows = kids(tbl, "tr");
+  if (c) { const tc = kids(rows[c.r], "tc")[c.c]; return tc ? [tc] : []; }
+  return rows.flatMap((r) => kids(r, "tc"));
+}
+
+export function tableAlign(app: PresentApp, algn: "l" | "ctr" | "r"): void {
+  const t = tableOf(app);
+  if (!t) return;
+  app.editor.edit("Ausrichten", () => { for (const tc of cells(app, t.tbl)) { const body = kid(tc, "txBody"); if (body) T.paraProps(body, 0, T.paras(body).length - 1, (p) => p.setAttribute("algn", algn)); } });
+}
+
+export function tableAnchor(app: PresentApp, anchor: "t" | "ctr" | "b"): void {
+  const t = tableOf(app);
+  if (!t) return;
+  app.editor.edit("Ausrichten", () => {
+    for (const tc of cells(app, t.tbl)) {
+      let pr = kid(tc, "tcPr");
+      if (!pr) { pr = make(tc.ownerDocument, "a:tcPr"); tc.append(pr); }
+      if (anchor === "t") pr.removeAttribute("anchor"); else pr.setAttribute("anchor", anchor);
+    }
+  });
+}
+
+/** Zeile oberhalb / unterhalb, Spalte links / rechts of the cell being edited. */
+export function tableInsertAt(app: PresentApp, where: "above" | "below" | "left" | "right"): void {
+  const t = tableOf(app);
+  if (!t) return;
+  const c = app.editor.text?.cell ?? { r: where === "above" ? 0 : kids(t.tbl, "tr").length - 1, c: where === "left" ? 0 : kids(kids(t.tbl, "tr")[0], "tc").length - 1 };
+  app.editor.edit(where === "above" || where === "below" ? "Zeile einfügen" : "Spalte einfügen", () => {
+    const rows = kids(t.tbl, "tr");
+    const empty = (tc: Element) => { const x = tc.cloneNode(true) as Element; const b2 = kid(x, "txBody"); if (b2) T.replaceAll(b2, ""); x.removeAttribute("gridSpan"); x.removeAttribute("hMerge"); return x; };
+    const ext = kid(kid(t.el, "xfrm"), "ext");
+    if (where === "above" || where === "below") {
+      const ref = rows[c.r];
+      const nr = ref.cloneNode(false) as Element;
+      for (const tc of kids(ref, "tc")) nr.append(empty(tc));
+      if (where === "above") ref.before(nr); else ref.after(nr);
+      if (ext) ext.setAttribute("cy", String((num(ext, "cy") ?? 0) + (num(ref, "h") ?? 370840)));
+    } else {
+      const col = kids(kid(t.tbl, "tblGrid"), "gridCol")[c.c];
+      const nc = col.cloneNode(false) as Element;
+      if (where === "left") col.before(nc); else col.after(nc);
+      for (const tr of rows) { const tc = kids(tr, "tc")[c.c]; if (!tc) continue; const x = empty(tc); if (where === "left") tc.before(x); else tc.after(x); }
+      if (ext) ext.setAttribute("cx", String((num(ext, "cx") ?? 0) + (num(col, "w") ?? 0)));
+    }
+  });
+}
+
+export function distribute(app: PresentApp, what: "rows" | "cols"): void {
+  const t = tableOf(app);
+  if (!t) return;
+  app.editor.edit(what === "rows" ? "Zeilen verteilen" : "Spalten verteilen", () => {
+    const list = what === "rows" ? kids(t.tbl, "tr") : kids(kid(t.tbl, "tblGrid"), "gridCol");
+    const attr = what === "rows" ? "h" : "w";
+    const total = list.reduce((s, x) => s + (num(x, attr) ?? 0), 0);
+    for (const x of list) x.setAttribute(attr, String(Math.round(total / list.length)));
+  });
+}
+
+function tableSize(app: PresentApp, k: "row" | "col" | "h" | "w"): number {
+  const t = tableOf(app);
+  if (!t) return 0;
+  const c = app.editor.text?.cell ?? { r: 0, c: 0 };
+  if (k === "row") return num(kids(t.tbl, "tr")[c.r], "h") ?? 0;
+  if (k === "col") return num(kids(kid(t.tbl, "tblGrid"), "gridCol")[c.c], "w") ?? 0;
+  return k === "h" ? t.v.h : t.v.w;
+}
+
+function tableSizeText(app: PresentApp, k: "row" | "col" | "h" | "w"): string {
+  return tableOf(app) ? cm(tableSize(app, k)) : "";
+}
+
+function setTableSize(app: PresentApp, k: "row" | "col" | "h" | "w", emu: number): void {
+  const t = tableOf(app);
+  if (!t || !(emu > 0)) return;
+  const c = app.editor.text?.cell ?? { r: 0, c: 0 };
+  app.editor.edit("Größe", () => {
+    const rows = kids(t.tbl, "tr"), cols = kids(kid(t.tbl, "tblGrid"), "gridCol");
+    const ext = kid(kid(t.el, "xfrm"), "ext");
+    if (k === "row") rows[c.r]?.setAttribute("h", String(emu));
+    else if (k === "col") cols[c.c]?.setAttribute("w", String(emu));
+    else if (k === "h") { const f = emu / Math.max(1, t.v.h); for (const r of rows) r.setAttribute("h", String(Math.round((num(r, "h") ?? 0) * f))); }
+    else { const f = emu / Math.max(1, t.v.w); for (const g of cols) g.setAttribute("w", String(Math.round((num(g, "w") ?? 0) * f))); }
+    if (ext) { ext.setAttribute("cx", String(cols.reduce((s, g) => s + (num(g, "w") ?? 0), 0))); ext.setAttribute("cy", String(rows.reduce((s, r) => s + (num(r, "h") ?? 0), 0))); }
+  });
+}
+
+/** Alternativtext: the description PowerPoint keeps in cNvPr/@descr (and "Als dekorativ markieren"). */
+export async function altText(app: PresentApp): Promise<void> {
+  const v = app.editor.selectedViews[0];
+  if (!v) return;
+  const c = S.cNvPr(v.el);
+  const text = h("textarea", { style: "width:320px;height:90px" }) as HTMLTextAreaElement;
+  text.value = c?.getAttribute("descr") ?? "";
+  const ok = await showDialog({ title: "Alternativtext", body: h("div", { class: "form" }, h("label", null, "Beschreiben Sie das Objekt für Menschen, die es nicht sehen können:"), text), buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
+  if (!ok) return;
+  app.editor.edit("Alternativtext", () => { const el = S.cNvPr(app.editor.shapeEl(v.id)!); if (!el) return; if (text.value) el.setAttribute("descr", text.value); else el.removeAttribute("descr"); });
+}
+
+export function implementContext(app: PresentApp): void {
+  const c = app.commands;
+  const impl = (id: string, run: () => void | Promise<void>, enabled?: () => boolean, checked?: () => boolean) => c.implement(id, { run, enabled, checked });
+  const shapes = () => app.editor.sel.length > 0;
+  const pic = () => app.editor.selectedViews.some((v) => v.kind === "pic");
+  const table = () => !!tableOf(app);
+  const chart = () => CH.hasChart(app);
+  impl("shape.altTextPane", () => altText(app), shapes);
+  impl("shape.altText", () => altText(app), shapes);
+  impl("shape.sizeDialog", () => void app.commands.run("draw.format"), shapes);
+  impl("shape.heightBox", () => {}, shapes);
+  impl("shape.widthBox", () => {}, shapes);
+  impl("wordart.fill", () => void app.commands.run("font.color"), shapes);
+  impl("pic.corrections", () => {}, pic);
+  impl("pic.color", () => {}, pic);
+  impl("pic.transparency", () => {}, pic);
+  impl("pic.border", () => void app.commands.run("draw.outline"), pic);
+  impl("pic.effects", () => {}, pic);
+  impl("table.alignLeft", () => tableAlign(app, "l"), table);
+  impl("table.alignCenter", () => tableAlign(app, "ctr"), table);
+  impl("table.alignRight", () => tableAlign(app, "r"), table);
+  impl("table.top", () => tableAnchor(app, "t"), table);
+  impl("table.middle", () => tableAnchor(app, "ctr"), table);
+  impl("table.bottom", () => tableAnchor(app, "b"), table);
+  impl("table.rowAbove", () => tableInsertAt(app, "above"), table);
+  impl("table.rowBelow", () => tableInsertAt(app, "below"), table);
+  impl("table.colLeft", () => tableInsertAt(app, "left"), table);
+  impl("table.colRight", () => tableInsertAt(app, "right"), table);
+  impl("table.insertAbove", () => tableInsertAt(app, "above"), table);
+  impl("table.insertBelow", () => tableInsertAt(app, "below"), table);
+  impl("table.insertLeft", () => tableInsertAt(app, "left"), table);
+  impl("table.insertRight", () => tableInsertAt(app, "right"), table);
+  impl("table.distRows", () => distribute(app, "rows"), table);
+  impl("table.distCols", () => distribute(app, "cols"), table);
+  impl("table.deleteMenu", () => {}, table);
+  impl("table.select", () => {}, table);
+  impl("table.shading", () => {}, table);
+  impl("table.penWeight", () => {}, table);
+  impl("table.penColor", () => {}, table);
+  for (const id of ["table.rowHeight", "table.colWidth", "table.height", "table.width"]) impl(id, () => {}, table);
+  impl("table.gridlines", () => { document.body.classList.toggle("table-gridlines"); }, table, () => document.body.classList.contains("table-gridlines"));
+  impl("chart.changeType", () => {}, chart);
+  impl("chart.quickLayout", () => {}, chart);
+  impl("chart.colors", () => {}, chart);
+  impl("chart.switchRowCol", () => CH.switchRowCol(app), chart);
+  impl("chart.editData", () => CH.editData(app), chart);
+  impl("chart.selectData", () => CH.editData(app), chart);
+}

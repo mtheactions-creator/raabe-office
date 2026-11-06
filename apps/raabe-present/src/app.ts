@@ -4,7 +4,7 @@
 
 import { Pptx, newPptx, PptxDom, type ShapeView, type DesignSpec } from "@raabe/ooxml";
 import {
-  Backstage, Commands, Keytips, Ribbon, TitleBar, baseName, h, icon, installTooltips, messageBox, showDialog, showMenu, showPopup, closePopup,
+  Backstage, Commands, Keytips, Ribbon, TitleBar, baseName, colorGrid, h, icon, installTooltips, messageBox, showDialog, showMenu, showPopup, closePopup,
   type BackstageEntry, type MenuEntry, type Platform, type Tab,
 } from "@raabe/shell";
 import { SHAPE_GALLERY, shapeIcon } from "@raabe/text-engine";
@@ -26,6 +26,8 @@ import { FindDialog } from "./find";
 import { AnimationPane, effects } from "./animpane";
 import { Comments } from "./comments";
 import { BackgroundPane } from "./background";
+import * as CT from "./contexttabs";
+import { contextHost, implementContext } from "./contextcmds";
 import { Sorter } from "./sorter";
 import { addRecent, loadRecent, loadSettings, removeRecent, setPinned, type Settings } from "./store";
 import appIconUrl from "../../../branding/raabe-present-small.svg?url";
@@ -90,7 +92,7 @@ export class PresentApp implements EditorHost, PanelHost {
 
   constructor(readonly platform: Platform) {
     void platform.listFonts().then((f) => { this.fontList = f; }).catch(() => {});
-    this.commands.register(...COMMANDS);
+    this.commands.register(...COMMANDS, ...CT.CONTEXT_COMMANDS);
     this.untitled = 1;
     const first = this.makeDoc(new Deck(), "Präsentation1", null);
     this.docs.push(first);
@@ -636,7 +638,7 @@ export class PresentApp implements EditorHost, PanelHost {
     });
   }
 
-  private setLine(hex: string | null, width?: number, dash?: string): void {
+  private setLine(hex: string | null | undefined, width?: number, dash?: string): void {
     const views = this.editor.selectedViews.filter((v) => v.kind === "sp" || v.kind === "pic" || v.kind === "cxnSp");
     if (!views.length) return;
     if (hex) this.lastLine = hex;
@@ -1167,69 +1169,23 @@ export class PresentApp implements EditorHost, PanelHost {
     };
   }
 
-  private shapeTabDef: Tab | null = null;
-  shapeTab(): Tab {
-    const b = (cmd: string, key: string, size: "large" | "small" = "small") => ({ type: "button" as const, cmd, key, size });
-    return this.shapeTabDef ??= {
-      id: "shapeFormat", label: "Formformat", key: "JD", contextual: true, shrink: [],
-      groups: [
-        { id: "insert", label: "Formen einfügen", key: "ZE", icon: "shapes", controls: [{ type: "dropdown", cmd: "insert.shapes", key: "SH", size: "large", menu: [], popup: (c) => this.shapeGallery(c) }, { type: "stack", items: [b("insert.textBox", "X")] }] },
-        { id: "styles", label: "Formenarten", key: "ZF", icon: "shape-fill", launcher: { cmd: "draw.format" }, controls: [{ type: "stack", items: [
-          { type: "color", cmd: "draw.fill", key: "SF", palette: "font", current: () => `#${this.lastFill}`, pick: (c) => this.setFill(c.replace("#", "")), showLabel: true },
-          { type: "color", cmd: "draw.outline", key: "SO", palette: "font", current: () => `#${this.lastLine}`, pick: (c) => this.setLine(c.replace("#", "")), showLabel: true },
-          { type: "dropdown", cmd: "draw.effects", key: "SE", size: "small", menu: this.effectsMenu() }] }] },
-        { id: "arrange", label: "Anordnen", key: "ZA", icon: "bring-forward", controls: [{ type: "stack", items: [
-          { type: "split", cmd: "arrange.forward", key: "AF", size: "small", menu: [{ cmd: "arrange.forward" }, { cmd: "arrange.front" }] },
-          { type: "split", cmd: "arrange.backward", key: "AE", size: "small", menu: [{ cmd: "arrange.backward" }, { cmd: "arrange.back" }] },
-          b("arrange.selectionPane", "AP")] }, { type: "stack", items: [
-          { type: "dropdown", cmd: "arrange.align", key: "AA", size: "small", get menu() { return []; } },
-          { type: "dropdown", cmd: "arrange.group", key: "AG", size: "small", menu: [{ cmd: "arrange.group" }, { cmd: "arrange.regroup" }, { cmd: "arrange.ungroup" }] },
-          { type: "dropdown", cmd: "arrange.rotate", key: "AY", size: "small", menu: [{ cmd: "arrange.rotRight" }, { cmd: "arrange.rotLeft" }, { cmd: "arrange.flipV" }, { cmd: "arrange.flipH" }] }] }] },
-        { id: "size", label: "Größe", key: "ZG", icon: "size-position", controls: [{ type: "stack", items: [
-          { type: "spinner", cmd: "shape.height", label: "Höhe:", icon: "shape-height", key: "HE", value: () => this.sizeText("h"), commit: (v) => this.setSizeText("h", v), step: (d) => this.stepSizeCm("h", d) },
-          { type: "spinner", cmd: "shape.width", label: "Breite:", icon: "shape-width", key: "WI", value: () => this.sizeText("w"), commit: (v) => this.setSizeText("w", v), step: (d) => this.stepSizeCm("w", d) }] }] },
-      ],
-    };
+  private ctxHost: import("./contexttabs").ContextTabHost | null = null;
+  private host2(): import("./contexttabs").ContextTabHost { return this.ctxHost ??= contextHost(this); }
+  private tabCache = new Map<string, Tab>();
+  private cachedTab(id: string, make: () => Tab): Tab {
+    let t = this.tabCache.get(id);
+    if (!t) { t = make(); this.tabCache.set(id, t); }
+    return t;
   }
+  shapeTab(): Tab { return this.cachedTab("shape", () => CT.shapeFormatTab(this.host2())); }
+  pictureTab(): Tab { return this.cachedTab("pic", () => CT.pictureFormatTab(this.host2())); }
+  tableTab(): Tab { return this.cachedTab("tableD", () => CT.tableDesignTab(this.host2())); }
+  tableLayoutTab(): Tab { return this.cachedTab("tableL", () => CT.tableLayoutTab(this.host2())); }
+  chartTab(): Tab { return this.cachedTab("chartD", () => CT.chartDesignTab(this.host2())); }
+  chartFormatTab(): Tab { return this.cachedTab("chartF", () => CT.chartFormatTab(this.host2())); }
 
-  private pictureTabDef: Tab | null = null;
-  pictureTab(): Tab {
-    return this.pictureTabDef ??= {
-      id: "pictureFormat", label: "Bildformat", key: "JP", contextual: true, shrink: [],
-      groups: [
-        { id: "adjust", label: "Anpassen", key: "ZA", icon: "corrections", controls: [{ type: "button", cmd: "pic.change", key: "G", size: "large" }, { type: "button", cmd: "pic.reset", key: "Q", size: "small" }] },
-        { id: "styles", label: "Bildformatvorlagen", key: "ZB", icon: "picture-styles", controls: [{ type: "color", cmd: "draw.outline", key: "SO", palette: "font", current: () => `#${this.lastLine}`, pick: (c) => this.setLine(c.replace("#", "")), showLabel: true }] },
-        { id: "arrange", label: "Anordnen", key: "ZO", icon: "bring-forward", controls: [{ type: "stack", items: [
-          { type: "split", cmd: "arrange.forward", key: "AF", size: "small", menu: [{ cmd: "arrange.forward" }, { cmd: "arrange.front" }] },
-          { type: "split", cmd: "arrange.backward", key: "AE", size: "small", menu: [{ cmd: "arrange.backward" }, { cmd: "arrange.back" }] },
-          { type: "dropdown", cmd: "arrange.rotate", key: "AY", size: "small", menu: [{ cmd: "arrange.rotRight" }, { cmd: "arrange.rotLeft" }, { cmd: "arrange.flipV" }, { cmd: "arrange.flipH" }] }] }] },
-        { id: "size", label: "Größe", key: "ZG", icon: "crop", controls: [{ type: "button", cmd: "pic.crop", key: "C", size: "large" }, { type: "stack", items: [
-          { type: "spinner", cmd: "shape.height", label: "Höhe:", icon: "shape-height", key: "HE", value: () => this.sizeText("h"), commit: (v) => this.setSizeText("h", v), step: (d) => this.stepSizeCm("h", d) },
-          { type: "spinner", cmd: "shape.width", label: "Breite:", icon: "shape-width", key: "WI", value: () => this.sizeText("w"), commit: (v) => this.setSizeText("w", v), step: (d) => this.stepSizeCm("w", d) }] }] },
-      ],
-    };
-  }
-
-  tableTab(): Tab {
-    return { id: "tableDesign", label: "Tabellenentwurf", key: "JT", contextual: true, shrink: [], groups: [
-      { id: "options", label: "Tabellenformatoptionen", key: "ZO", icon: "table-style", controls: [{ type: "stack", items: [{ type: "check", cmd: "table.firstRow", key: "A" }, { type: "check", cmd: "table.lastRow", key: "T" }, { type: "check", cmd: "table.bandRow", key: "R" }] }, { type: "stack", items: [{ type: "check", cmd: "table.firstCol", key: "F" }, { type: "check", cmd: "table.lastCol", key: "L" }, { type: "check", cmd: "table.bandCol", key: "C" }] }] },
-    ] };
-  }
-
-  tableLayoutTab(): Tab {
-    const b = (cmd: string, key: string) => ({ type: "button" as const, cmd, key, size: "large" as const });
-    return { id: "tableLayout", label: "Layout", key: "JL", contextual: true, shrink: [], groups: [
-      { id: "rows", label: "Zeilen und Spalten", key: "ZZ", icon: "table-insert-row", controls: [b("table.insertAbove", "A"), b("table.insertBelow", "BE"), b("table.insertLeft", "L"), b("table.insertRight", "R")] },
-    ] };
-  }
-
-  chartTab(): Tab {
-    return { id: "chartDesign", label: "Diagrammentwurf", key: "JC", contextual: true, shrink: [], groups: [{ id: "data", label: "Daten", key: "ZD", icon: "table", controls: [{ type: "button", cmd: "chart.editData", key: "D", size: "large" }] }] };
-  }
-
-  chartFormatTab(): Tab {
-    return { id: "chartFormat", label: "Format", key: "JO", contextual: true, shrink: [], groups: [{ id: "current", label: "Aktuelle Auswahl", key: "ZA", icon: "format-picture", controls: [{ type: "button", cmd: "draw.format", key: "M", size: "large" }] }] };
-  }
+  /** Linienstärke for the selected shapes (Formkontur > Stärke, Stiftstärke). */
+  setLineWidth(pt: number): void { this.setLine(undefined as unknown as string, pt); }
 
   private effectsMenu(): MenuEntry[] {
     return [{ label: "Schatten", submenu: [{ label: "Kein Schatten", run: () => this.setShadow(null) }, { label: "Außen: Versatz unten rechts", run: () => this.setShadow("outer") }] }];
@@ -1248,37 +1204,13 @@ export class PresentApp implements EditorHost, PanelHost {
     });
   }
 
-  private sizeText(k: "w" | "h"): string {
-    const v = this.editor.selectedViews[0];
-    if (!v) return "";
-    return `${((k === "w" ? v.w : v.h) / 360000).toFixed(2).replace(".", ",")} cm`;
-  }
 
-  private setSizeText(k: "w" | "h", text: string): void {
-    const cm = Number(text.replace(",", ".").replace(/[^\d.]/g, ""));
-    if (!Number.isFinite(cm) || cm <= 0) return;
-    this.setSizeEmu(k, cm * 360000);
-  }
 
-  private stepSizeCm(k: "w" | "h", d: 1 | -1): void {
-    const v = this.editor.selectedViews[0];
-    if (!v) return;
-    this.setSizeEmu(k, Math.max(0, (k === "w" ? v.w : v.h) + d * 36000));
-  }
 
-  private setSizeEmu(k: "w" | "h", emu: number): void {
-    const views = this.editor.selectedViews;
-    this.editor.edit("Größe", () => {
-      for (const v of views) {
-        const el = this.editor.shapeEl(v.id);
-        if (!el) continue;
-        const keep = v.kind === "pic";
-        const ratio = v.h ? v.w / v.h : 1;
-        const w = k === "w" ? emu : keep ? emu * ratio : v.w, hh = k === "h" ? emu : keep ? emu / ratio : v.h;
-        S.setXfrm(el, { x: v.x, y: v.y, w, h: hh });
-      }
-    });
-  }
+
+
+
+
 
   // ----- galleries -------------------------------------------------------------------------------------------
 
@@ -1369,6 +1301,13 @@ export class PresentApp implements EditorHost, PanelHost {
 
   // ----- context menus --------------------------------------------------------------------------------------
 
+  /** Context menus go through here, so the inventory can collect their entries without showing them. */
+  private capture: MenuEntry[][] | null = null;
+  private menu(entries: MenuEntry[], at: DOMRect, before?: HTMLElement): void {
+    if (this.capture) { this.capture.push(entries); return; }
+    showMenu(this.commands, entries, at, before);
+  }
+
   /** PowerPoint's Minileiste above the context menu (recorded): text formatting, or the shape's look. */
   private miniBar(kind: "text" | "shape"): HTMLElement | undefined {
     const ctx = this.ribbonContext();
@@ -1394,14 +1333,14 @@ export class PresentApp implements EditorHost, PanelHost {
     if (kind === "text") {
       const inTable = !!this.editor.text?.cell;
       if (inTable) {
-        showMenu(this.commands, [{ cmd: "edit.cut" }, { cmd: "edit.copy" }, paste("Ursprüngliche Formatierung beibehalten (U)"), "-", { cmd: "font.dialog" },
+        this.menu([{ cmd: "edit.cut" }, { cmd: "edit.copy" }, paste("Ursprüngliche Formatierung beibehalten (U)"), "-", { cmd: "font.dialog" },
           { label: "Aufzählungszeichen", submenu: this.bulletMenu() }, { label: "Nummerierung", submenu: this.numberMenu() }, "-", { cmd: "shape.lock" }, { cmd: "insert.link", label: "Link" }, { cmd: "review.synonyms" }, "-",
           { label: "Einfügen", submenu: [{ cmd: "table.insertAbove" }, { cmd: "table.insertBelow" }, { cmd: "table.insertLeft" }, { cmd: "table.insertRight" }] },
           { label: "Löschen", submenu: [{ cmd: "table.deleteRows" }, { cmd: "table.deleteCols" }, { cmd: "table.delete" }] },
           { cmd: "table.merge" }, { cmd: "table.split" }, { cmd: "table.selectAll" }, "-", { cmd: "draw.format", label: "Form formatieren..." }, { cmd: "review.newComment" }], at2, this.miniBar("text"));
         return;
       }
-      showMenu(this.commands, [{ cmd: "edit.cut" }, { cmd: "edit.copy" }, paste("Ursprüngliche Formatierung beibehalten (U)"), "-",
+      this.menu([{ cmd: "edit.cut" }, { cmd: "edit.copy" }, paste("Ursprüngliche Formatierung beibehalten (U)"), "-",
         { cmd: "text.endEdit" }, "-", { cmd: "font.dialog" }, { cmd: "para.dialog" }, { label: "Aufzählungszeichen", submenu: this.bulletMenu() }, { label: "Nummerierung", submenu: this.numberMenu() },
         { cmd: "para.smartArt" }, "-", { cmd: "shape.lock" }, { cmd: "insert.link", label: "Link" }, { cmd: "review.synonyms" }, "-",
         { cmd: "text.effectsDialog" }, { cmd: "draw.format", label: "Form formatieren..." }, { cmd: "review.newComment" }], at2, this.miniBar("text"));
@@ -1411,17 +1350,17 @@ export class PresentApp implements EditorHost, PanelHost {
       const v = this.editor.selectedViews[0];
       const entries: MenuEntry[] = [{ cmd: "edit.cut" }, { cmd: "edit.copy" }, paste("Ursprüngliche Formatierung beibehalten (U)"), "-"];
       if (v?.kind === "graphicFrame" && v.frame === "chart") {
-        showMenu(this.commands, [{ cmd: "edit.delete" }, { cmd: "chart.reset" }, "-", { cmd: "font.dialog" }, { cmd: "chart.changeType" }, { cmd: "chart.editData" }, "-", { cmd: "draw.format", label: "Diagrammbereich formatieren..." }, { cmd: "review.newComment" }], at2);
+        this.menu([{ cmd: "edit.delete" }, { cmd: "chart.reset" }, "-", { cmd: "font.dialog" }, { cmd: "chart.changeType" }, { cmd: "chart.editData" }, "-", { cmd: "draw.format", label: "Diagrammbereich formatieren..." }, { cmd: "review.newComment" }], at2);
         return;
       }
       if (v?.kind === "pic") entries.push({ cmd: "pic.change" }, "-", group, ...order, "-", { cmd: "shape.lock" }, { cmd: "shape.link", label: "Link" }, { cmd: "pic.save" }, "-", { cmd: "shape.altText" }, { cmd: "shape.sizePosition" }, { cmd: "pic.format" }, { cmd: "review.newComment" });
       else if (v?.kind === "grpSp") entries.push(group, ...order, "-", { cmd: "shape.lock" }, { cmd: "shape.link", label: "Link" }, { cmd: "pic.save" }, "-", { cmd: "shape.altText" }, { cmd: "shape.sizePosition" }, { cmd: "draw.format", label: "Form formatieren..." }, { cmd: "review.newComment" });
       else entries.push({ cmd: "shape.editText" }, ...(v?.ph ? [] : [{ cmd: "shape.editPoints" } as MenuEntry]), "-", group, ...order, "-", { cmd: "shape.lock" }, { cmd: "shape.link", label: "Link" }, { cmd: "pic.save" }, "-",
         { cmd: "shape.altText" }, ...(v?.ph ? [] : [{ cmd: v?.textBox ? "shape.setDefaultText" : "shape.setDefault" } as MenuEntry]), { cmd: "shape.sizePosition" }, { cmd: "draw.format", label: "Form formatieren..." }, { cmd: "review.newComment" });
-      showMenu(this.commands, entries, at2, v?.kind === "pic" ? undefined : this.miniBar("shape"));
+      this.menu(entries, at2, v?.kind === "pic" ? undefined : this.miniBar("shape"));
       return;
     }
-    showMenu(this.commands, [{ label: "Layout", submenu: () => this.deck.layouts().map((l) => ({ label: l.name.replace("\n", ""), run: () => this.deck.setLayout([this.active.current], l.path) })) },
+    this.menu([{ label: "Layout", submenu: () => this.deck.layouts().map((l) => ({ label: l.name.replace("\n", ""), run: () => this.deck.setLayout([this.active.current], l.path) })) },
       { cmd: "slide.reset", label: "Folie zurücksetzen" }, "-", { cmd: "view.gridDialog", label: "Raster und Führungslinien..." }, { cmd: "view.ruler" }, { cmd: "slide.formatBackground" }, { cmd: "review.newComment" }], at2);
   }
 
@@ -1433,7 +1372,7 @@ export class PresentApp implements EditorHost, PanelHost {
         { label: "Layout", submenu: () => this.deck.layouts().map((l) => ({ label: l.name.replace("\n", ""), run: () => this.deck.setLayout([...this.panel.selected], l.path) })) },
         { cmd: "slide.reset", label: "Folie zurücksetzen" }, "-", { cmd: "slide.formatBackground" }, { cmd: "insert.photoAlbum" }, { cmd: "show.hideSlide" }, { cmd: "slide.linkTo" }, "-", { cmd: "review.newComment" }]
       : [paste, "-", { cmd: "slide.new" }, { cmd: "slide.addSection" }];
-    showMenu(this.commands, entries, at2);
+    this.menu(entries, at2);
   }
 
   private bulletMenu(): MenuEntry[] {
@@ -1587,6 +1526,7 @@ export class PresentApp implements EditorHost, PanelHost {
     const finder = new FindDialog(this);
     impl("edit.find", () => finder.open(false));
     impl("design.slideCustom", () => this.slideSizeDialog());
+    implementContext(this);
     impl("insert.symbol", () => import("./symbols").then((m) => m.symbolDialog(this)), () => this.editor.sel.length > 0 || !!this.editor.text);
     impl("insert.symbols", () => {}, () => !!this.slidePath());
     impl("insert.video", () => import("./media").then((m) => m.insertMedia(this, "video")), () => !!this.slidePath());
@@ -2524,6 +2464,30 @@ export class PresentApp implements EditorHost, PanelHost {
         const size = app.deck.pptx.slideSize;
         return { x: r.left + (xpt * 12700 / size.cx) * r.width, y: r.top + (ypt * 12700 / size.cy) * r.height };
       },
+      /** The context menus by the names of PowerPoint's inventory (results/*-powerpoint-inventory.json). */
+      contextMenus: () => {
+        const ev = new MouseEvent("contextmenu", { clientX: 10, clientY: 10 });
+        const names = (menu: MenuEntry[]): { name: string; items?: unknown[] }[] => menu.flatMap((m) => {
+          if (m === "-" || "heading" in m || "block" in m) return [];
+          if ("cmd" in m) return [{ name: m.label ?? app.commands.get(m.cmd).label }];
+          if ("icons" in m) return [{ name: "Einfügeoptionen" }];
+          const sub = "submenu" in m ? (typeof m.submenu === "function" ? m.submenu() : m.submenu) : undefined;
+          return [{ name: m.label, ...(sub ? { items: names(sub) } : {}) }];
+        });
+        const grab = (fn: () => void) => { app.capture = []; try { fn(); } finally { /* keep */ } const got = app.capture[0] ?? []; app.capture = null; return names(got); };
+        const out: Record<string, unknown> = {};
+        const setup = (shapes: { kind: string; box?: number[]; text?: string; ph?: number }[], layout = "Leer") => (window as unknown as { __present: { setupCase: (x: unknown) => void } }).__present.setupCase({ layout, shapes });
+        out["Folienminiatur"] = grab(() => app.panelMenu(ev, true));
+        out["Leerer Bereich im Folienbereich"] = grab(() => app.panelMenu(ev, false));
+        setup([{ kind: "ph", ph: 0, text: "Titel" }], "Titelfolie");
+        app.editor.select([2]); out["Platzhalterrahmen"] = grab(() => app.contextMenu(ev, "shape"));
+        app.editor.enterText(2); out["Text in Bearbeitung"] = grab(() => app.contextMenu(ev, "text"));
+        setup([{ kind: "rect", box: [100, 100, 100, 100] }]); app.editor.select([2]); out["Form"] = grab(() => app.contextMenu(ev, "shape"));
+        setup([{ kind: "textbox", box: [100, 100, 200, 40], text: "x" }]); app.editor.select([2]); out["Textfeld"] = grab(() => app.contextMenu(ev, "shape"));
+        setup([{ kind: "table", box: [100, 100, 300, 80] }]); app.editor.enterText(2, undefined, { r: 0, c: 0 }); out["Tabelle"] = grab(() => app.contextMenu(ev, "text"));
+        setup([]); out["Leerer Folienbereich"] = grab(() => app.contextMenu(ev, "slide"));
+        return out;
+      },
       /** RaabePresent's ribbon as data for the inventory against PowerPoint (D-070), as RaabeCalc's (D-066). */
       inventory: () => {
         type Item = { name: string; type?: string; deferred?: boolean; enabled?: boolean; items?: Item[]; submenu?: Item[]; panel?: boolean };
@@ -2544,7 +2508,13 @@ export class PresentApp implements EditorHost, PanelHost {
           if (c.type === "gallery") return c.items.map((i) => ({ ...cmdItem(i.cmd), type: "gallery" }));
           const base: Item = "cmd" in c ? cmdItem(c.cmd, "label" in c ? c.label : undefined) : { name: "?" };
           const menu = "menu" in c && c.menu.length ? { items: entries(c.menu) } : {};
-          const own = ("popup" in c && c.popup) || c.type === "color" ? { panel: true } : {};
+          // Own panels (galleries, palettes): their entries as drawn, by their names.
+          let panelItems: Item[] = [];
+          try {
+            const el = "popup" in c && c.popup ? c.popup(() => {}) : c.type === "color" ? h("div", null, ...colorGrid(() => {}, undefined)) : null;
+            if (el) panelItems = Array.from(el.querySelectorAll("button, [role=menuitem], [data-tip]")).map((b) => ({ name: (b.getAttribute("aria-label") || (b as HTMLElement).dataset.tip || b.textContent || "").trim() })).filter((x) => x.name);
+          } catch { /* a panel that needs a selection */ }
+          const own = ("popup" in c && c.popup) || c.type === "color" ? { panel: true, ...(panelItems.length ? { items: [...(("items" in menu && menu.items) || []), ...panelItems] } : {}) } : {};
           return [{ ...base, type: (c as { type: string }).type, ...menu, ...own }];
         };
         const tabs = [...ribbonTabs(app.ribbonContext()), app.shapeTab(), app.pictureTab(), app.tableTab(), app.tableLayoutTab(), app.chartTab(), app.chartFormatTab()];
