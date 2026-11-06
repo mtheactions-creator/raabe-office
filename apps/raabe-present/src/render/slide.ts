@@ -16,7 +16,7 @@ export interface RenderOptions {
   /** Picture bytes by part path → object URL. */
   image(path: string): string | undefined;
   /** Text selection of the shape being edited. */
-  selection?: { id: number; sel: TextOptions["selection"] } | null;
+  selection?: { id: number; sel: TextOptions["selection"]; cell?: { r: number; c: number } } | null;
   /** Autofit computed while editing, by shape id. */
   fits?: Map<number, { fontScale: number; lnSpcReduction: number }>;
   pptx: Pptx;

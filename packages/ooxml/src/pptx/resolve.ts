@@ -619,8 +619,11 @@ export class SlideResolver {
       } else {
         lists.push(at(this.pptx.presentation, "defaultTextStyle"));
       }
+      // The shape style's text colour (fontRef: white on a new shape) comes after the inherited text
+      // styles and before the shape's own list style and runs.
+      if (styleBits.fontColor) lists.push(colorList(styleBits.fontColor));
       lists.push(kid(kid(el, "txBody"), "lstStyle"));
-      const text = readText(kid(el, "txBody"), { theme: this.theme, lists, fontColor: styleBits.fontColor }, body);
+      const text = readText(kid(el, "txBody"), { theme: this.theme, lists }, body);
       if (ph && text.empty) text.prompt = this.prompt(ph, inh.chain[0]);
       v.text = text;
     }
@@ -671,6 +674,11 @@ export class SlideResolver {
     const t = PROMPTS[ph.type] ?? PROMPTS.body;
     return [t];
   }
+}
+
+/** A list style whose every level has this text colour (the shape style's fontRef, a table style's text). */
+export function colorList(hex: string, bold?: boolean): Element {
+  return new DOMParser().parseFromString(`<a:lstStyle xmlns:a="${NS_A}"><a:defPPr><a:defRPr${bold === undefined ? "" : ` b="${bold ? 1 : 0}"`}><a:solidFill><a:srgbClr val="${hex}"/></a:solidFill></a:defRPr></a:defPPr></a:lstStyle>`, "application/xml").documentElement;
 }
 
 export class GroupMap {

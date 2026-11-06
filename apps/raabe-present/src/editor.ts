@@ -32,6 +32,8 @@ export interface EditorHost {
 
 interface TextState {
   id: number;
+  /** A table cell being edited (row, column). */
+  cell?: { r: number; c: number };
   caret: Pos;
   anchor: Pos;
   /** Formatting set at a caret for the text typed next (Strg+Umschalt+F with nothing selected). */
@@ -113,7 +115,7 @@ export class SlideEditor {
     const all = new Set(flat(this.view.shapes).map((s) => s.id));
     this.sel = this.sel.filter((id) => all.has(id));
     if (this.text && !all.has(this.text.id)) this.text = null;
-    const sel = this.text ? { id: this.text.id, sel: T.cmpPos(this.text.caret, this.text.anchor) ? { from: T.minPos(this.text.caret, this.text.anchor), to: T.maxPos(this.text.caret, this.text.anchor) } : null } : null;
+    const sel = this.text ? { id: this.text.id, cell: this.text.cell, sel: T.cmpPos(this.text.caret, this.text.anchor) ? { from: T.minPos(this.text.caret, this.text.anchor), to: T.maxPos(this.text.caret, this.text.anchor) } : null } : null;
     this.rendered = renderSlide(this.view, this.pptx.slideSize, { editing: true, slideNumber: this.host.slideNumber(), image: (p) => this.host.image(p), selection: sel, fits: this.fits, pptx: this.pptx });
     if (this.showGrid) this.rendered.el.append(this.gridLayer());
     this.stage.replaceChildren(this.rendered.el);
@@ -215,6 +217,8 @@ export class SlideEditor {
   // ----- caret -----------------------------------------------------------------------------------------
 
   private textEl(id: number): HTMLElement | null {
+    const cell = this.text?.id === id ? this.text.cell : undefined;
+    if (cell) return (this.rendered?.shapes.get(id)?.querySelector(`td[data-r="${cell.r}"][data-c="${cell.c}"] .txt`) as HTMLElement | null) ?? null;
     return (this.rendered?.shapes.get(id)?.querySelector(":scope > .txt") as HTMLElement | null) ?? null;
   }
 
@@ -356,6 +360,8 @@ export class SlideEditor {
 
   textBody(id: number): Element | undefined {
     const el = this.shapeEl(id);
+    const cell = this.text?.id === id ? this.text.cell : undefined;
+    if (cell && el) return cellBody(el, cell.r, cell.c);
     return el ? S.txBodyOf(el) : undefined;
   }
 
@@ -386,9 +392,21 @@ export class SlideEditor {
   }
 
   /** Text editing of shape `id`, the caret at `pos` (end when missing), or all text selected. */
-  enterText(id: number, pos?: Pos | "all"): void {
+  enterText(id: number, pos?: Pos | "all", cell?: { r: number; c: number }): void {
     const el = this.shapeEl(id);
     if (!el) return;
+    if (cell) {
+      const body = cellBody(el, cell.r, cell.c);
+      if (!body) return;
+      const end = T.endPos(body);
+      const caret = pos === "all" || !pos ? end : pos;
+      this.sel = [id];
+      this.text = { id, cell, caret, anchor: pos === "all" ? { p: 0, o: 0 } : caret, pending: null };
+      this.deck.breakMerge();
+      this.render();
+      this.host.selectionChanged();
+      return;
+    }
     if (!S.txBodyOf(el)) {
       if (el.localName !== "sp") return;
       this.deck.change("Text", [this.path!], () => { S.ensureTxBody(el); });
@@ -468,6 +486,15 @@ export class SlideEditor {
       return;
     }
     const { v } = hit;
+    const td = (e.target as HTMLElement).closest("td[data-r]") as HTMLElement | null;
+    if (v.frame === "table" && td && !e.shiftKey && !e.ctrlKey) {
+      const cell = { r: Number(td.dataset.r), c: Number(td.dataset.c) };
+      const same = this.text?.id === v.id && this.text.cell?.r === cell.r && this.text.cell?.c === cell.c;
+      if (!same) { this.endText(); this.enterText(v.id, undefined, cell); }
+      const pos = this.posAt(v.id, e.clientX, e.clientY);
+      if (pos && this.text) { this.text.caret = pos; this.text.anchor = pos; this.render(); this.dragText(e); }
+      return;
+    }
     // Clicks in the text being edited move the caret or select.
     if (this.text && this.text.id === v.id && hit.text) {
       const pos = this.posAt(v.id, e.clientX, e.clientY);
@@ -1044,6 +1071,7 @@ export class SlideEditor {
         return true;
       }
       case "Tab": {
+        if (t.cell) { this.nextCell(shift ? -1 : 1); return true; }
         if (ctrl) { this.typeText("\t"); return true; }
         // At the start of a paragraph (or with several selected) Tab changes the level, else it types a tab.
         const allSel = hasSel && T.minPos(t.caret, t.anchor).p !== T.maxPos(t.caret, t.anchor).p;
@@ -1058,6 +1086,32 @@ export class SlideEditor {
     }
     if (e.altKey && shift && (k === "ArrowRight" || k === "ArrowLeft")) { this.changeLevel(k === "ArrowRight" ? 1 : -1); return true; }
     return false;
+  }
+
+  /** Tab / Umschalt+Tab in a table: the next (previous) cell, its text selected; Tab in the last cell adds a row. */
+  private nextCell(d: 1 | -1): void {
+    const t = this.text;
+    if (!t?.cell) return;
+    const el = this.shapeEl(t.id)!;
+    const tbl = el.getElementsByTagNameNS(PptxDom.NS_A, "tbl")[0];
+    const rows = PptxDom.kids(tbl, "tr");
+    const cols = PptxDom.kids(rows[0], "tc").length;
+    let { r, c } = t.cell;
+    c += d;
+    if (c >= cols) { c = 0; r++; }
+    if (c < 0) { c = cols - 1; r--; }
+    if (r < 0) return;
+    if (r >= rows.length) {
+      this.edit("Zeile einfügen", () => {
+        const last = rows[rows.length - 1];
+        const nr = last.cloneNode(true) as Element;
+        for (const tc of PptxDom.kids(nr, "tc")) { const b = PptxDom.kid(tc, "txBody"); if (b) T.replaceAll(b, ""); }
+        last.after(nr);
+        const ext = PptxDom.kid(PptxDom.kid(el, "xfrm"), "ext");
+        if (ext) ext.setAttribute("cy", String((PptxDom.num(ext, "cy") ?? 0) + (PptxDom.num(last, "h") ?? 370840)));
+      });
+    }
+    this.enterText(t.id, "all", { r, c });
   }
 
   /** Listenebene erhöhen / verringern for the paragraphs of the selection (0…8). */
@@ -1153,6 +1207,16 @@ function h(tag: string, cls: string): HTMLElement {
   const e = document.createElement(tag);
   e.className = cls;
   return e;
+}
+
+/** The text body of table cell (r, c) of a graphic frame. */
+function cellBody(el: Element, r: number, c: number): Element | undefined {
+  const tbl = el.getElementsByTagNameNS(PptxDom.NS_A, "tbl")[0];
+  const tc = PptxDom.kids(PptxDom.kids(tbl, "tr")[r], "tc")[c];
+  if (!tc) return undefined;
+  let b = PptxDom.kid(tc, "txBody");
+  if (!b) { b = PptxDom.fragment(el.ownerDocument, '<a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:endParaRPr lang="de-DE"/></a:p></a:txBody>')[0]; tc.insertBefore(b, tc.firstChild); }
+  return b;
 }
 
 export function flat(shapes: ShapeView[]): ShapeView[] {

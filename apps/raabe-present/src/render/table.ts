@@ -2,7 +2,7 @@
 // (whole table, banded rows and columns, first and last row and column) in PowerPoint's order of
 // precedence, then each cell's own fill and borders. Rows grow to fit their text as PowerPoint's do.
 
-import { PptxDom, readBodyProps, readColor, readText, readThemeInfo, SlideResolver, type ShapeView } from "@raabe/ooxml";
+import { PptxDom, colorList, readBodyProps, readColor, readText, readThemeInfo, SlideResolver, type ShapeView } from "@raabe/ooxml";
 import { EMU_PX, renderText } from "./text";
 import type { RenderOptions } from "./slide";
 
@@ -115,6 +115,8 @@ export function renderTable(s: ShapeView, o: RenderOptions): HTMLElement {
         if (v !== undefined) look.borders[side] = v;
       }
       const td = document.createElement("td");
+      td.dataset.r = String(ri);
+      td.dataset.c = String(ci);
       if (span > 1) td.colSpan = span;
       if (rspan > 1) td.rowSpan = rspan;
       const bd = (k: string) => { const b = look.borders[k]; return b ? `${Math.max(b.width, 0.5)}px solid #${b.color}` : "none"; };
@@ -123,13 +125,14 @@ export function renderTable(s: ShapeView, o: RenderOptions): HTMLElement {
       const anchor = tcPr?.getAttribute("anchor");
       const body = readBodyProps([kid(kid(tc, "txBody"), "bodyPr")]);
       body.anchor = anchor === "ctr" ? "ctr" : anchor === "b" ? "b" : "t";
-      const lstOverride = PptxDom.parseXml(`<a:lstStyle xmlns:a="${NS_A}"><a:lvl1pPr><a:defRPr${look.bold ? ' b="1"' : ""}/></a:lvl1pPr></a:lstStyle>`).documentElement;
-      const text = readText(kid(tc, "txBody"), { theme, lists: [defaults, lstOverride, kid(kid(tc, "txBody"), "lstStyle")], fontColor: look.color }, body);
+      const lstOverride = colorList(look.color ?? theme.colors.tx1, !!look.bold);
+      const text = readText(kid(tc, "txBody"), { theme, lists: [defaults, lstOverride, kid(kid(tc, "txBody"), "lstStyle")] }, body);
       const w = cols.slice(ci, ci + span).reduce((a, b) => a + b, 0);
       const inner = document.createElement("div");
       const l = mar("marL", 91440), r = mar("marR", 91440), t = mar("marT", 45720), b = mar("marB", 45720);
       inner.style.cssText = `position:relative;padding:${t}px ${r}px ${b}px ${l}px;min-height:${Math.max(0, (num(tr, "h") ?? 0) / EMU_PX - t - b)}px;box-sizing:content-box`;
-      const tEl = renderText(text, w - l - r, 0, { prompt: false, slideNumber: o.slideNumber });
+      const editing = o.selection && o.selection.id === s.id && o.selection.cell?.r === ri && o.selection.cell?.c === ci;
+      const tEl = renderText(text, w - l - r, 0, { prompt: false, slideNumber: o.slideNumber, selection: editing ? o.selection!.sel : null });
       tEl.style.position = "relative";
       tEl.style.height = "auto";
       inner.append(tEl);
