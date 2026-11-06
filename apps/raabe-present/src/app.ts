@@ -1366,6 +1366,22 @@ export class PresentApp implements EditorHost, PanelHost {
 
   // ----- context menus --------------------------------------------------------------------------------------
 
+  /** PowerPoint's Minileiste above the context menu (recorded): text formatting, or the shape's look. */
+  private miniBar(kind: "text" | "shape"): HTMLElement | undefined {
+    const ctx = this.ribbonContext();
+    const b = (cmd: string) => ({ type: "button" as const, cmd, key: "", size: "small" as const });
+    const controls: import("@raabe/shell").Control[] = kind === "text"
+      ? [{ type: "rows", rows: [
+        [{ type: "combo", cmd: "font.name", width: 104, value: ctx.fontName, options: ctx.fontOptions, commit: ctx.setFont }, { type: "combo", cmd: "font.size", width: 44, value: ctx.fontSize, options: () => [{ items: ["8", "10", "12", "14", "18", "24", "28", "32", "36", "44", "54", "60", "72"] }], commit: ctx.setSize },
+          b("font.grow"), b("font.shrink"), b("para.levelDown"), b("para.levelUp")],
+        [b("font.bold"), b("font.italic"), b("font.underline"), b("para.left"), b("para.center"), b("para.right"),
+          { type: "color", cmd: "font.highlight", palette: "highlight", current: ctx.highlight, pick: ctx.setHighlight }, { type: "color", cmd: "font.color", palette: "font", current: ctx.fontColor, pick: ctx.setFontColor }],
+      ] }]
+      : [{ type: "color", cmd: "draw.fill", palette: "font", current: ctx.fillColor, pick: ctx.setFill, showLabel: true }, { type: "color", cmd: "draw.outline", palette: "font", current: ctx.lineColor, pick: ctx.setLine, showLabel: true },
+        { type: "button", cmd: "review.newComment", key: "", size: "large" }];
+    return this.ribbon.toolbar(controls).el;
+  }
+
   /** Context menus as PowerPoint's (recorded: results/2026-11-06-powerpoint-inventory.json); Übersetzen is left out (cloud). */
   contextMenu(e: MouseEvent, kind: "shape" | "text" | "slide"): void {
     const at2 = new DOMRect(e.clientX, e.clientY, 0, 0);
@@ -1379,13 +1395,13 @@ export class PresentApp implements EditorHost, PanelHost {
           { label: "Aufzählungszeichen", submenu: this.bulletMenu() }, { label: "Nummerierung", submenu: this.numberMenu() }, "-", { cmd: "shape.lock" }, { cmd: "insert.link", label: "Link" }, { cmd: "review.synonyms" }, "-",
           { label: "Einfügen", submenu: [{ cmd: "table.insertAbove" }, { cmd: "table.insertBelow" }, { cmd: "table.insertLeft" }, { cmd: "table.insertRight" }] },
           { label: "Löschen", submenu: [{ cmd: "table.deleteRows" }, { cmd: "table.deleteCols" }, { cmd: "table.delete" }] },
-          { cmd: "table.merge" }, { cmd: "table.split" }, { cmd: "table.selectAll" }, "-", { cmd: "draw.format", label: "Form formatieren..." }, { cmd: "review.newComment" }], at2);
+          { cmd: "table.merge" }, { cmd: "table.split" }, { cmd: "table.selectAll" }, "-", { cmd: "draw.format", label: "Form formatieren..." }, { cmd: "review.newComment" }], at2, this.miniBar("text"));
         return;
       }
       showMenu(this.commands, [{ cmd: "edit.cut" }, { cmd: "edit.copy" }, paste("Ursprüngliche Formatierung beibehalten (U)"), "-",
         { cmd: "text.endEdit" }, "-", { cmd: "font.dialog" }, { cmd: "para.dialog" }, { label: "Aufzählungszeichen", submenu: this.bulletMenu() }, { label: "Nummerierung", submenu: this.numberMenu() },
         { cmd: "para.smartArt" }, "-", { cmd: "shape.lock" }, { cmd: "insert.link", label: "Link" }, { cmd: "review.synonyms" }, "-",
-        { cmd: "text.effectsDialog" }, { cmd: "draw.format", label: "Form formatieren..." }, { cmd: "review.newComment" }], at2);
+        { cmd: "text.effectsDialog" }, { cmd: "draw.format", label: "Form formatieren..." }, { cmd: "review.newComment" }], at2, this.miniBar("text"));
       return;
     }
     if (kind === "shape") {
@@ -1399,7 +1415,7 @@ export class PresentApp implements EditorHost, PanelHost {
       else if (v?.kind === "grpSp") entries.push(group, ...order, "-", { cmd: "shape.lock" }, { cmd: "shape.link", label: "Link" }, { cmd: "pic.save" }, "-", { cmd: "shape.altText" }, { cmd: "shape.sizePosition" }, { cmd: "draw.format", label: "Form formatieren..." }, { cmd: "review.newComment" });
       else entries.push({ cmd: "shape.editText" }, ...(v?.ph ? [] : [{ cmd: "shape.editPoints" } as MenuEntry]), "-", group, ...order, "-", { cmd: "shape.lock" }, { cmd: "shape.link", label: "Link" }, { cmd: "pic.save" }, "-",
         { cmd: "shape.altText" }, ...(v?.ph ? [] : [{ cmd: v?.textBox ? "shape.setDefaultText" : "shape.setDefault" } as MenuEntry]), { cmd: "shape.sizePosition" }, { cmd: "draw.format", label: "Form formatieren..." }, { cmd: "review.newComment" });
-      showMenu(this.commands, entries, at2);
+      showMenu(this.commands, entries, at2, v?.kind === "pic" ? undefined : this.miniBar("shape"));
       return;
     }
     showMenu(this.commands, [{ label: "Layout", submenu: () => this.deck.layouts().map((l) => ({ label: l.name.replace("\n", ""), run: () => this.deck.setLayout([this.active.current], l.path) })) },
