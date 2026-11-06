@@ -9,7 +9,7 @@ import { PptxDom } from "@raabe/ooxml";
 import type { Deck } from "./deck";
 import { renderSlide, type Rendered } from "./render/slide";
 import { AUTOFIT_STEPS, EMU_PX, renderText, textHeight } from "./render/text";
-import { shapeTextRect } from "@raabe/text-engine";
+import { presetAdjust, presetGeometry, shapeTextRect } from "@raabe/text-engine";
 import * as T from "./textops";
 import * as S from "./shapeops";
 import type { Pos } from "./textops";
@@ -188,6 +188,19 @@ export class SlideEditor {
         f.append(this.handle(k, v));
       }
       if (v.kind !== "graphicFrame" || v.frame !== "table") f.append(this.handle("rot", v));
+      // The yellow handles that change a preset's adjust values (Rechteck: abgerundete Ecken, arrows ...).
+      if (v.kind === "sp" && !v.ph && v.geometry !== "custom" && primary) {
+        const w = v.w / EMU_PX, hh = v.h / EMU_PX;
+        const g = presetGeometry(v.geometry, w, hh, { ...presetAdjust(v.geometry), ...(v.info.adjust ?? {}) });
+        g?.handles.forEach((hd, k) => {
+          const el = h("div", "handle h-adj");
+          el.dataset.handle = `adj${k}`;
+          el.dataset.id = String(v.id);
+          el.style.left = `${((v.flipH ? w - hd.x : hd.x) / w) * 100}%`;
+          el.style.top = `${((v.flipV ? hh - hd.y : hd.y) / hh) * 100}%`;
+          f.append(el);
+        });
+      }
     }
     return f;
   }
@@ -468,6 +481,7 @@ export class SlideEditor {
     this.focus();
     if (this.tool) { this.drawTool(e); return; }
     const handle = target.closest(".handle") as HTMLElement | null;
+    if (handle?.dataset.handle?.startsWith("adj")) { this.dragAdjust(Number(handle.dataset.id), Number(handle.dataset.handle.slice(3))); return; }
     if (handle) { this.dragHandle(e, handle.dataset.handle as Handle, Number(handle.dataset.id)); return; }
     const edge = target.closest(".edge") as HTMLElement | null;
     if (edge) {
@@ -824,6 +838,80 @@ export class SlideEditor {
         // A sized text box no longer grows sideways with its text: it wraps (PowerPoint).
         const bp = S.bodyPrOf(sh);
         if (bp && k !== "rot" && bp.getAttribute("wrap") === "none" && (k === "e" || k === "w" || k.length === 2)) bp.setAttribute("wrap", "square");
+      });
+    };
+    window.addEventListener("mousemove", move);
+    window.addEventListener("mouseup", up);
+  }
+
+  /**
+   * A yellow handle: the adjust value is searched so that the handle lies where the pointer is, through
+   * the evaluated geometry (every preset follows its own formulas, as in RaabeWrite and RaabeCalc).
+   */
+  private dragAdjust(id: number, i: number): void {
+    const v = this.shapeView(id);
+    if (!v) return;
+    this.endText();
+    const w = v.w / EMU_PX, hh = v.h / EMU_PX;
+    const base = { ...presetAdjust(v.geometry), ...(v.info.adjust ?? {}) };
+    const hd = presetGeometry(v.geometry, w, hh, base)?.handles[i];
+    if (!hd) return;
+    const at = (a: Record<string, number>) => presetGeometry(v.geometry, w, hh, a)?.handles[i];
+    const search = (adj: Record<string, number>, key: string, lo: number, hi: number, pos: (a: Record<string, number>) => number, target: number) => {
+      let best = adj[key] ?? lo, bestD = Infinity;
+      let a = Math.min(lo, hi), c = Math.max(lo, hi);
+      for (let round = 0; round < 3; round++) {
+        for (let k = 0; k <= 48; k++) {
+          const val = a + ((c - a) * k) / 48;
+          const d = Math.abs(pos({ ...adj, [key]: val }) - target);
+          if (d < bestD) { bestD = d; best = val; }
+        }
+        const span = (c - a) / 48;
+        a = Math.max(Math.min(lo, hi), best - span);
+        c = Math.min(Math.max(lo, hi), best + span);
+      }
+      return Math.round(best);
+    };
+    let adj = base;
+    const move = (ev: MouseEvent) => {
+      const p = this.toSlide(ev.clientX, ev.clientY);
+      const cx = v.x + v.w / 2, cy = v.y + v.h / 2, rad = (-v.rot * Math.PI) / 180;
+      const dx = (p.x - cx) / EMU_PX, dy = (p.y - cy) / EMU_PX;
+      let qx = dx * Math.cos(rad) - dy * Math.sin(rad) + w / 2, qy = dx * Math.sin(rad) + dy * Math.cos(rad) + hh / 2;
+      if (v.flipH) qx = w - qx;
+      if (v.flipV) qy = hh - qy;
+      const next: Record<string, number> = { ...base };
+      if (hd.kind === "polar") {
+        if (hd.gdY) {
+          let ang = (Math.atan2(qy - hh / 2, qx - w / 2) * 180) / Math.PI;
+          if (ang < 0) ang += 360;
+          next[hd.gdY] = Math.max(hd.minY ?? 0, Math.min(hd.maxY ?? 21599999, Math.round(ang * 60000)));
+        }
+        if (hd.gdX) next[hd.gdX] = search(next, hd.gdX, hd.minX ?? 0, hd.maxX ?? 50000, (a) => { const q = at(a); return q ? Math.hypot(q.x - w / 2, q.y - hh / 2) : 0; }, Math.hypot(qx - w / 2, qy - hh / 2));
+      } else {
+        const big = (x: number | undefined, fallback: number) => (x === undefined || Math.abs(x) > 1e8 ? fallback : x);
+        if (hd.gdX) next[hd.gdX] = search(next, hd.gdX, big(hd.minX, -400000), big(hd.maxX, 400000), (a) => at(a)?.x ?? 0, qx);
+        if (hd.gdY) next[hd.gdY] = search(next, hd.gdY, big(hd.minY, -400000), big(hd.maxY, 400000), (a) => at(a)?.y ?? 0, qy);
+      }
+      adj = next;
+      // Preview: the handle follows; the shape is drawn on release.
+      const q = at(adj);
+      const hEl = this.overlay.querySelector(`.handle[data-id="${id}"][data-handle="adj${i}"]`) as HTMLElement | null;
+      if (q && hEl) { hEl.style.left = `${((v.flipH ? w - q.x : q.x) / w) * 100}%`; hEl.style.top = `${((v.flipV ? hh - q.y : q.y) / hh) * 100}%`; }
+    };
+    const up = () => {
+      window.removeEventListener("mousemove", move);
+      window.removeEventListener("mouseup", up);
+      if (JSON.stringify(adj) === JSON.stringify(base)) { this.render(); return; }
+      this.edit("Form anpassen", () => {
+        const el = this.shapeEl(id);
+        const prst = el && PptxDom.at(el, "spPr/prstGeom");
+        if (!prst) return;
+        let av = PptxDom.kid(prst, "avLst");
+        if (!av) { av = PptxDom.make(el.ownerDocument, "a:avLst"); prst.append(av); }
+        while (av.firstChild) av.firstChild.remove();
+        // PowerPoint writes the values it was given, also the defaults of the others it moved.
+        for (const [k, val] of Object.entries(adj)) if (k in (v.info.adjust ?? {}) || val !== presetAdjust(v.geometry)[k]) av.append(PptxDom.make(el.ownerDocument, "a:gd", { name: k, fmla: `val ${val}` }));
       });
     };
     window.addEventListener("mousemove", move);

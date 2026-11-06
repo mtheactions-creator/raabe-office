@@ -53,7 +53,7 @@ export function fitSize(size: number, scale: number): number {
 }
 
 export function runCss(r: RunStyle, scale: number): string {
-  const deco = [r.underline !== "none" ? "underline" : "", r.strike !== "noStrike" ? "line-through" : ""].filter(Boolean).join(" ");
+  const deco = [r.underline !== "none" || r.link ? "underline" : "", r.strike !== "noStrike" ? "line-through" : ""].filter(Boolean).join(" ");
   const size = fitSize(r.size, scale) * (r.baseline ? 2 / 3 : 1);
   return css({
     "font-family": `"${r.font}", Calibri, Carlito, sans-serif`,
@@ -183,6 +183,7 @@ export function renderText(t: TextInfo, w: number, h: number, o: TextOptions): H
         const sp = document.createElement("span");
         sp.dataset.o = String(off);
         sp.className = r.kind === "br" ? "br" : "run";
+        if (r.link) sp.dataset.link = r.link;
         sp.style.cssText = runCss(r, fit.fontScale);
         const text = r.kind === "br" ? "\n" : r.kind === "fld" ? fieldText(r, o) : r.text;
         if (o.selection) appendSelected(sp, text, pi, off, o.selection);

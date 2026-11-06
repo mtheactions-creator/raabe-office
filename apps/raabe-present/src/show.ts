@@ -284,10 +284,21 @@ export class SlideShow {
       return;
     }
     if (this.tool === "laser") return;
+    // A link on the slide is followed instead of going on (PowerPoint).
+    const link = (e.target as HTMLElement).closest?.("[data-link]") as HTMLElement | null;
+    if (link) {
+      void import("./links").then(({ linkTarget }) => {
+        const t = linkTarget(this.app, this.app.deck.slides[this.index].path, link.dataset.link!);
+        if (t.slide !== undefined) this.goto(t.slide);
+        else if (t.url) void this.app.platform.openExternal?.(t.url);
+      });
+      return;
+    }
     this.next();
   }
 
   private move(e: MouseEvent): void {
+    if (this.tool === "arrow") this.root.style.cursor = (e.target as HTMLElement).closest?.("[data-link]") ? "pointer" : "";
     if (this.tool === "laser") { this.laser.style.left = `${e.clientX}px`; this.laser.style.top = `${e.clientY}px`; }
   }
 
