@@ -500,7 +500,9 @@ export class SlideEditor {
     shp = top;
     const v = this.shapeView(Number(shp.dataset.id));
     if (!v) return null;
-    const inText = !!t.closest(".txt") && (t.closest(".shp") === shp);
+    // Only a click on the text itself (a run, the prompt, a bullet) starts editing; beside the text, in a
+    // text box as in a shape, the frame is selected (recorded in PowerPoint: catalogue "click textbox centre").
+    const inText = !!t.closest(".txt [data-o], .txt .bullet") && (t.closest(".shp") === shp);
     return { v, text: inText };
   }
 

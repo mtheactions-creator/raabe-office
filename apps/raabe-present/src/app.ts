@@ -2469,6 +2469,8 @@ export class PresentApp implements EditorHost, PanelHost {
             if (body && sh.text) { let pos = { p: 0, o: 0 }; sh.text.split("\r").forEach((line, i) => { if (i) pos = T.splitPara(body, pos); if (line) pos = T.insertText(body, pos, line); }); }
           }
         });
+        // Text boxes take the height of their text at once, as PowerPoint's AddTextbox does (spAutoFit).
+        for (const v of deck.view(path).shapes) if (v.textBox) app.editor.updateAutofit(v.id);
         doc.savedVersion = deck.version;
         app.editor.render(); app.panel.render();
         if (spec.zoom) app.setZoom(spec.zoom);
