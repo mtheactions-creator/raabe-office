@@ -703,6 +703,33 @@ export class PresentApp implements EditorHost, PanelHost {
 
   private alignToSlide = false;
 
+  /** Zeilen / Spalten löschen: the row or column of the cell being edited (the whole table when it is the last). */
+  private tableDelete(what: "row" | "col"): void {
+    const t = this.editor.text;
+    if (!t?.cell) return;
+    const { r, c } = t.cell;
+    const id = t.id;
+    this.editor.endText();
+    this.editor.edit(what === "row" ? "Zeilen löschen" : "Spalten löschen", () => {
+      const el = this.editor.shapeEl(id)!;
+      const tbl = el.getElementsByTagNameNS(PptxDom.NS_A, "tbl")[0];
+      const rows = kids(tbl, "tr");
+      const ext = kid(kid(el, "xfrm"), "ext");
+      if (what === "row") {
+        if (rows.length <= 1) { el.remove(); return; }
+        if (ext) ext.setAttribute("cy", String(Math.max(0, (num(ext, "cy") ?? 0) - (num(rows[r], "h") ?? 0))));
+        rows[r].remove();
+      } else {
+        const cols = kids(kid(tbl, "tblGrid"), "gridCol");
+        if (cols.length <= 1) { el.remove(); return; }
+        if (ext) ext.setAttribute("cx", String(Math.max(0, (num(ext, "cx") ?? 0) - (num(cols[c], "w") ?? 0))));
+        cols[c].remove();
+        for (const tr of rows) kids(tr, "tc")[c]?.remove();
+      }
+    });
+    this.editor.select(this.editor.shapeEl(id) ? [id] : []);
+  }
+
   private selectedHasAnimation(): boolean {
     const p = this.slidePath();
     if (!p || !this.editor.sel.length) return false;
@@ -1339,43 +1366,54 @@ export class PresentApp implements EditorHost, PanelHost {
 
   // ----- context menus --------------------------------------------------------------------------------------
 
+  /** Context menus as PowerPoint's (recorded: results/2026-11-06-powerpoint-inventory.json); Übersetzen is left out (cloud). */
   contextMenu(e: MouseEvent, kind: "shape" | "text" | "slide"): void {
     const at2 = new DOMRect(e.clientX, e.clientY, 0, 0);
+    const paste = (tip: string): MenuEntry => ({ label: "Einfügeoptionen:", icons: [{ icon: "paste-keep", tip, run: () => void this.paste() }, { icon: "paste-text", tip: "Nur den Text übernehmen (T)", run: () => void this.paste("text") }] });
+    const order: MenuEntry[] = [{ label: "In den Vordergrund", submenu: [{ cmd: "arrange.front" }, { cmd: "arrange.forward" }] }, { label: "In den Hintergrund", submenu: [{ cmd: "arrange.back" }, { cmd: "arrange.backward" }] }];
+    const group: MenuEntry = { label: "Gruppieren", submenu: [{ cmd: "arrange.group" }, { cmd: "arrange.regroup" }, { cmd: "arrange.ungroup" }] };
     if (kind === "text") {
-      showMenu(this.commands, [{ cmd: "edit.cut" }, { cmd: "edit.copy" }, { label: "Einfügeoptionen:", icons: [
-        { icon: "paste-keep", tip: "Ursprüngliche Formatierung beibehalten (U)", run: () => void this.paste() },
-        { icon: "paste-text", tip: "Nur den Text übernehmen (T)", run: () => void this.paste("text") }] }, "-",
-        { cmd: "font.dialog" }, { cmd: "para.dialog" }, { label: "Aufzählungszeichen", submenu: this.bulletMenu() }, { label: "Nummerierung", submenu: this.numberMenu() }, "-",
-        { cmd: "insert.link" }, "-", { cmd: "draw.format" }, { cmd: "review.newComment" }], at2);
+      const inTable = !!this.editor.text?.cell;
+      if (inTable) {
+        showMenu(this.commands, [{ cmd: "edit.cut" }, { cmd: "edit.copy" }, paste("Ursprüngliche Formatierung beibehalten (U)"), "-", { cmd: "font.dialog" },
+          { label: "Aufzählungszeichen", submenu: this.bulletMenu() }, { label: "Nummerierung", submenu: this.numberMenu() }, "-", { cmd: "shape.lock" }, { cmd: "insert.link", label: "Link" }, { cmd: "review.synonyms" }, "-",
+          { label: "Einfügen", submenu: [{ cmd: "table.insertAbove" }, { cmd: "table.insertBelow" }, { cmd: "table.insertLeft" }, { cmd: "table.insertRight" }] },
+          { label: "Löschen", submenu: [{ cmd: "table.deleteRows" }, { cmd: "table.deleteCols" }, { cmd: "table.delete" }] },
+          { cmd: "table.merge" }, { cmd: "table.split" }, { cmd: "table.selectAll" }, "-", { cmd: "draw.format", label: "Form formatieren..." }, { cmd: "review.newComment" }], at2);
+        return;
+      }
+      showMenu(this.commands, [{ cmd: "edit.cut" }, { cmd: "edit.copy" }, paste("Ursprüngliche Formatierung beibehalten (U)"), "-",
+        { cmd: "text.endEdit" }, "-", { cmd: "font.dialog" }, { cmd: "para.dialog" }, { label: "Aufzählungszeichen", submenu: this.bulletMenu() }, { label: "Nummerierung", submenu: this.numberMenu() },
+        { cmd: "para.smartArt" }, "-", { cmd: "shape.lock" }, { cmd: "insert.link", label: "Link" }, { cmd: "review.synonyms" }, "-",
+        { cmd: "text.effectsDialog" }, { cmd: "draw.format", label: "Form formatieren..." }, { cmd: "review.newComment" }], at2);
       return;
     }
     if (kind === "shape") {
       const v = this.editor.selectedViews[0];
-      const pic = v?.kind === "pic";
-      const entries: MenuEntry[] = [{ cmd: "edit.cut" }, { cmd: "edit.copy" }, { label: "Einfügeoptionen:", icons: [{ icon: "paste-keep", tip: "Ursprüngliche Formatierung beibehalten (U)", run: () => void this.paste() }] }, "-"];
-      if (pic) entries.push({ cmd: "pic.change" }, { cmd: "pic.save" }, "-");
-      else if (v && (v.kind === "sp")) entries.push({ cmd: "shape.editText" }, ...(v.ph ? [] : [{ cmd: "shape.editPoints" } as MenuEntry]), "-");
-      entries.push({ label: "Gruppieren", submenu: [{ cmd: "arrange.group" }, { cmd: "arrange.regroup" }, { cmd: "arrange.ungroup" }] },
-        { label: "In den Vordergrund", submenu: [{ cmd: "arrange.front" }, { cmd: "arrange.forward" }] },
-        { label: "In den Hintergrund", submenu: [{ cmd: "arrange.back" }, { cmd: "arrange.backward" }] }, "-",
-        { cmd: "shape.link" }, "-", { cmd: "shape.altText" }, ...(v?.ph || pic ? [] : [{ cmd: "shape.setDefault" } as MenuEntry]), { cmd: "shape.sizePosition" },
-        { cmd: pic ? "pic.format" : "draw.format" }, { cmd: "review.newComment" });
+      const entries: MenuEntry[] = [{ cmd: "edit.cut" }, { cmd: "edit.copy" }, paste("Ursprüngliche Formatierung beibehalten (U)"), "-"];
+      if (v?.kind === "graphicFrame" && v.frame === "chart") {
+        showMenu(this.commands, [{ cmd: "edit.delete" }, { cmd: "chart.reset" }, "-", { cmd: "font.dialog" }, { cmd: "chart.changeType" }, { cmd: "chart.editData" }, "-", { cmd: "draw.format", label: "Diagrammbereich formatieren..." }, { cmd: "review.newComment" }], at2);
+        return;
+      }
+      if (v?.kind === "pic") entries.push({ cmd: "pic.change" }, "-", group, ...order, "-", { cmd: "shape.lock" }, { cmd: "shape.link", label: "Link" }, { cmd: "pic.save" }, "-", { cmd: "shape.altText" }, { cmd: "shape.sizePosition" }, { cmd: "pic.format" }, { cmd: "review.newComment" });
+      else if (v?.kind === "grpSp") entries.push(group, ...order, "-", { cmd: "shape.lock" }, { cmd: "shape.link", label: "Link" }, { cmd: "pic.save" }, "-", { cmd: "shape.altText" }, { cmd: "shape.sizePosition" }, { cmd: "draw.format", label: "Form formatieren..." }, { cmd: "review.newComment" });
+      else entries.push({ cmd: "shape.editText" }, ...(v?.ph ? [] : [{ cmd: "shape.editPoints" } as MenuEntry]), "-", group, ...order, "-", { cmd: "shape.lock" }, { cmd: "shape.link", label: "Link" }, { cmd: "pic.save" }, "-",
+        { cmd: "shape.altText" }, ...(v?.ph ? [] : [{ cmd: v?.textBox ? "shape.setDefaultText" : "shape.setDefault" } as MenuEntry]), { cmd: "shape.sizePosition" }, { cmd: "draw.format", label: "Form formatieren..." }, { cmd: "review.newComment" });
       showMenu(this.commands, entries, at2);
       return;
     }
-    showMenu(this.commands, [{ cmd: "edit.cut" }, { cmd: "edit.copy" }, { label: "Einfügeoptionen:", icons: [{ icon: "paste-keep", tip: "Zieldesign verwenden (H)", run: () => void this.paste() }] }, "-",
-      { label: "Layout", submenu: () => this.deck.layouts().map((l) => ({ label: l.name, run: () => this.deck.setLayout([this.active.current], l.path) })) },
-      { cmd: "slide.reset" }, "-", { cmd: "view.gridDialog" }, { cmd: "slide.formatBackground" }, { cmd: "review.newComment" }], at2);
+    showMenu(this.commands, [{ label: "Layout", submenu: () => this.deck.layouts().map((l) => ({ label: l.name.replace("\n", ""), run: () => this.deck.setLayout([this.active.current], l.path) })) },
+      { cmd: "slide.reset", label: "Folie zurücksetzen" }, "-", { cmd: "view.gridDialog", label: "Raster und Führungslinien..." }, { cmd: "view.ruler" }, { cmd: "slide.formatBackground" }, { cmd: "review.newComment" }], at2);
   }
 
   panelMenu(e: MouseEvent, onSlide: boolean): void {
     const at2 = new DOMRect(e.clientX, e.clientY, 0, 0);
+    const paste: MenuEntry = { label: "Einfügeoptionen:", icons: [{ icon: "paste", tip: "Zieldesign verwenden (H)", run: () => this.pasteSlides() }, { icon: "paste-keep", tip: "Ursprüngliche Formatierung beibehalten (U)", run: () => this.pasteSlides() }] };
     const entries: MenuEntry[] = onSlide
-      ? [{ cmd: "edit.cut" }, { cmd: "edit.copy" }, { label: "Einfügeoptionen:", icons: [{ icon: "paste", tip: "Zieldesign verwenden (H)", run: () => this.pasteSlides() }] }, "-",
-        { cmd: "slide.new" }, { cmd: "slide.duplicate" }, { cmd: "slide.delete" }, "-", { cmd: "slide.addSection" }, "-",
-        { label: "Layout", submenu: () => this.deck.layouts().map((l) => ({ label: l.name, run: () => this.deck.setLayout([...this.panel.selected], l.path) })) },
-        { cmd: "slide.reset" }, "-", { cmd: "slide.formatBackground" }, { cmd: "show.hideSlide" }, "-", { cmd: "review.newComment" }]
-      : [{ label: "Einfügeoptionen:", icons: [{ icon: "paste", tip: "Zieldesign verwenden (H)", run: () => this.pasteSlides() }] }, "-", { cmd: "slide.new" }, { cmd: "slide.addSection" }];
+      ? [{ cmd: "edit.cut" }, { cmd: "edit.copy" }, paste, "-", { cmd: "slide.new" }, { cmd: "slide.duplicate", label: "Folie duplizieren" }, { cmd: "slide.delete" }, "-", { cmd: "slide.addSection" }, "-",
+        { label: "Layout", submenu: () => this.deck.layouts().map((l) => ({ label: l.name.replace("\n", ""), run: () => this.deck.setLayout([...this.panel.selected], l.path) })) },
+        { cmd: "slide.reset", label: "Folie zurücksetzen" }, "-", { cmd: "slide.formatBackground" }, { cmd: "insert.photoAlbum" }, { cmd: "show.hideSlide" }, { cmd: "slide.linkTo" }, "-", { cmd: "review.newComment" }]
+      : [paste, "-", { cmd: "slide.new" }, { cmd: "slide.addSection" }];
     showMenu(this.commands, entries, at2);
   }
 
@@ -1529,6 +1567,12 @@ export class PresentApp implements EditorHost, PanelHost {
     const dlgHost = () => ({ runStyle: () => this.runStyle(), paraStyle: () => this.paraStyle(), fonts: () => this.fontList, formatRuns: (l: string, f: (r: Element) => void) => this.formatRuns(l, f), formatParas: (l: string, f: (p: Element) => void) => this.formatParas(l, f) });
     const finder = new FindDialog(this);
     impl("edit.find", () => finder.open(false));
+    const cellAt = () => this.editor.text?.cell;
+    impl("table.deleteRows", () => this.tableDelete("row"), () => !!cellAt());
+    impl("table.deleteCols", () => this.tableDelete("col"), () => !!cellAt());
+    impl("table.delete", () => { const t = this.editor.text; if (t) { this.editor.endText(); this.editor.select([t.id]); this.editor.deleteSelected(); } }, () => !!cellAt());
+    impl("text.endEdit", () => { this.editor.endText(); this.editor.render(); this.updateChrome(); }, () => !!this.editor.text);
+    impl("table.selectAll", () => { const v = this.editor.selectedViews.find((x) => x.frame === "table"); if (v) this.editor.select([v.id]); }, () => this.editor.selectedViews.some((x) => x.frame === "table"));
     const newComment = () => { this.comments.open(); setTimeout(() => (document.querySelector(".comment-input") as HTMLTextAreaElement | null)?.focus(), 50); };
     impl("review.newComment", newComment, () => !!this.slidePath());
     impl("insert.comment", newComment, () => !!this.slidePath());
