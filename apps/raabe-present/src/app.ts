@@ -19,6 +19,7 @@ import { DEFAULT_TABLE_STYLE_ID, DEFAULT_TABLE_STYLE_XML } from "./render/table"
 import * as T from "./textops";
 import * as S from "./shapeops";
 import { DESIGNS } from "./designs";
+import { PRESENT_TEMPLATES, templateDeck } from "./templates";
 import { TRANSITION_GROUPS } from "./transitions";
 import { ANIMATION_GROUPS } from "./animations";
 import { COLOR_SETS, FONT_SETS } from "./themesets.gen";
@@ -2314,6 +2315,15 @@ export class PresentApp implements EditorHost, PanelHost {
       r.el.style.transform = `scale(${s})`; r.el.style.transformOrigin = "0 0";
       thumb.append(r.el);
       return h("button", { class: "template", onclick: () => { this.backstage.close(); this.newDoc(i === 0 ? undefined : d); } }, thumb, h("span", null, i === 0 ? "Leere Präsentation" : d.name));
+    }), ...PRESENT_TEMPLATES.map((t) => {
+      const sample = templateDeck(t);
+      const size = sample.pptx.slideSize;
+      const tw = 176, s = tw / (size.cx / EMU_PX);
+      const thumb = h("div", { class: "thumb present-thumb", style: `width:${tw}px;height:${(size.cy / EMU_PX) * s}px;position:relative;overflow:hidden` });
+      const r = renderSlide(sample.view(sample.slides[0].path), size, { editing: false, image: () => undefined, pptx: sample.pptx });
+      r.el.style.transform = `scale(${s})`; r.el.style.transformOrigin = "0 0";
+      thumb.append(r.el);
+      return h("button", { class: "template", onclick: () => { this.backstage.close(); this.untitled++; const doc = this.makeDoc(templateDeck(t), `${t.name}${this.untitled}`, null); this.docs.push(doc); this.activate(doc); } }, thumb, h("span", null, t.name));
     }));
     return [
       { id: "home", label: "Startseite", icon: "home", page: () => h("div", null, h("h1", null, greeting()), h("h2", null, "Neu"), designs(), h("h2", null, "Zuletzt verwendet"), this.recentTable()) },

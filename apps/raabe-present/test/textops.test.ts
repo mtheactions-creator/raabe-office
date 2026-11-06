@@ -99,3 +99,16 @@ describe("slides", () => {
     expect(back.sections().map((s) => s.name)).toEqual(["A", "B"]);
   });
 });
+
+describe("Raabeschule templates", () => {
+  it("builds the Referat with its slides and texts in the Raabeschule design", async () => {
+    const { PRESENT_TEMPLATES, templateDeck } = await import("../src/templates");
+    const d = templateDeck(PRESENT_TEMPLATES[0]);
+    expect(d.slides.length).toBe(6);
+    const v = slideView(d.pptx, d.slides[1].path);
+    expect(v.theme.name).toBe("Raabeschule");
+    expect(v.shapes.map((s) => s.text?.paras.map((p) => p.runs.map((r) => r.text).join("")))).toEqual([["Gliederung"], ["Einleitung", "Hauptteil", "Ergebnis", "Quellen"]]);
+    const back = Pptx.read(d.write());
+    expect(back.slides.length).toBe(6);
+  });
+});
