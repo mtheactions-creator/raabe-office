@@ -2150,6 +2150,15 @@ export class PresentApp implements EditorHost, PanelHost {
     }
   }
 
+  private printSettings: import("./print").PrintSettings = { layout: "full", which: "all", range: "", frame: false };
+  private printMod: typeof import("./print") | null = null;
+  private printPageEl(): HTMLElement {
+    if (this.printMod) return this.printMod.printPage(this, this.printSettings);
+    const box = h("div", null, h("h1", null, "Drucken"));
+    void import("./print").then((m) => { this.printMod = m; box.replaceWith(m.printPage(this, this.printSettings)); });
+    return box;
+  }
+
   /** PDF: every slide as a page of the slide's size (Datei > Exportieren). */
   async exportPdf(): Promise<void> {
     const path = await this.platform.saveFileDialog(`${this.active.name}.pdf`, "pdf");
@@ -2179,8 +2188,7 @@ export class PresentApp implements EditorHost, PanelHost {
       { id: "info", label: "Informationen", icon: "info", divider: true, page: () => this.infoPage() },
       { id: "save", label: "Speichern", icon: "save", cmd: "file.save" },
       { id: "saveAs", label: "Speichern unter", icon: "save-as", cmd: "file.saveAs" },
-      { id: "print", label: "Drucken", icon: "print", page: () => h("div", null, h("h1", null, "Drucken"), h("button", { class: "bigbtn", onclick: () => void this.exportPdf() }, icon("print", "l"), "Drucken (als PDF)"),
-        h("p", { class: "muted" }, "Ganzseitige Folien, eine pro Seite. Handzettel-Layouts folgen.")) },
+      { id: "print", label: "Drucken", icon: "print", page: () => this.printPageEl() },
       { id: "export", label: "Exportieren", icon: "export", page: () => h("div", null, h("h1", null, "Exportieren"), h("button", { class: "bigbtn", style: "width:220px", onclick: () => void this.exportPdf() }, icon("export", "l"), "PDF/XPS-Dokument erstellen"), h("p", { class: "muted" }, "Die Folien als PDF, so wie sie in der Bildschirmpräsentation aussehen.")) },
       { id: "close", label: "Schließen", icon: "close-doc", cmd: "file.close" },
       { id: "options", label: "Optionen", icon: "settings", cmd: "file.options", bottom: true },

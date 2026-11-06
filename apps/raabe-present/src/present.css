@@ -178,3 +178,9 @@ body.printing #print-root { display: block; position: fixed; left: 0; top: 0; z-
 .anim-emph .anim-icon { background: #c9a400; } .anim-exit .anim-icon { background: #c0392b; }
 .anim-name { flex: 1; }
 .anim-row button { border: 0; background: none; font-size: 9px; color: #666; }
+
+/* Datei > Drucken */
+.print-layout { display: flex; gap: 32px; }
+.print-settings { display: flex; flex-direction: column; gap: 8px; width: 260px; }
+.print-right { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.print-nav { display: flex; gap: 8px; align-items: center; }
