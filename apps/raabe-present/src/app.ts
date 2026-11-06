@@ -22,6 +22,7 @@ import { DESIGNS } from "./designs";
 import { SlideShow } from "./show";
 import { FormatPane } from "./formatpane";
 import { NotesPageView, OutlineView } from "./views";
+import { FindDialog } from "./find";
 import { Sorter } from "./sorter";
 import { addRecent, loadRecent, loadSettings, removeRecent, setPinned, type Settings } from "./store";
 import appIconUrl from "../../../branding/raabe-present-small.svg?url";
@@ -1463,6 +1464,10 @@ export class PresentApp implements EditorHost, PanelHost {
     impl("draw.format", () => this.formatPane.open(), shapes);
     impl("pic.format", () => this.formatPane.open(), shapes);
     const dlgHost = () => ({ runStyle: () => this.runStyle(), paraStyle: () => this.paraStyle(), fonts: () => this.fontList, formatRuns: (l: string, f: (r: Element) => void) => this.formatRuns(l, f), formatParas: (l: string, f: (p: Element) => void) => this.formatParas(l, f) });
+    const finder = new FindDialog(this);
+    impl("edit.find", () => finder.open(false));
+    impl("review.spelling", () => import("./spelling").then((m) => m.checkSpelling(this)));
+    impl("edit.replace", () => finder.open(true));
     impl("font.dialog", () => import("./dialogs").then((m) => m.fontDialog(dlgHost())), text);
     impl("para.dialog", () => import("./dialogs").then((m) => m.paragraphDialog(dlgHost())), text);
     impl("shape.height", () => {}, shapes);

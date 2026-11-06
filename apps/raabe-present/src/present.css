@@ -147,3 +147,19 @@ body.printing #print-root { display: block; position: fixed; left: 0; top: 0; z-
   body.printing #print-root { position: static; z-index: auto; }
   .print-page { break-after: page; page-break-after: always; }
 }
+
+/* Suchen / Ersetzen: a dialog that stays open beside the work (not modal), as PowerPoint's. */
+.find-layer { position: fixed; right: 40px; top: 160px; z-index: 900; }
+.find-dialog { position: static; min-width: 440px; }
+.find-body { display: flex; gap: 12px; padding: 10px 12px 12px; }
+.find-fields { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+.find-buttons { display: flex; flex-direction: column; gap: 6px; }
+.find-buttons button { min-width: 110px; }
+.dlg-row { display: flex; align-items: center; gap: 8px; margin: 3px 0; }
+.dlg-label { min-width: 170px; }
+.dlg-tabs { display: flex; gap: 2px; border-bottom: 1px solid #d0d0d0; margin-bottom: 8px; }
+.dlg-tabs button { border: 0; background: none; padding: 4px 10px; }
+.dlg-tabs button.on { border-bottom: 2px solid var(--accent-text, #b3141b); font-weight: 600; }
+.dlg-check { display: block; margin: 2px 0; }
+.font-dialog fieldset, .para-dialog fieldset { border: 1px solid #d0d0d0; margin: 6px 0; padding: 4px 8px; }
+.thumb-item.layout { padding-left: 34px; }
