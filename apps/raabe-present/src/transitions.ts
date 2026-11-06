@@ -105,3 +105,36 @@ export function setAdvanceAfter(app: PresentApp, seconds: number): void {
     }
   });
 }
+
+/** Effektoptionen of a transition: its directions as PowerPoint names them. */
+export function transitionOptions(app: PresentApp): { label: string; run: () => void; checked?: boolean }[] {
+  const p = app.slidePath();
+  if (!p) return [];
+  const root = app.deck.pptx.doc(p).documentElement;
+  const t = readTransition(root);
+  if (!t) return [];
+  const dirs: Record<string, [string, string][]> = {
+    push: [["Von unten", "u"], ["Von links", "r"], ["Von rechts", "l"], ["Von oben", "d"]],
+    wipe: [["Von rechts", "l"], ["Von oben", "d"], ["Von links", "r"], ["Von unten", "u"]],
+    cover: [["Von rechts", "l"], ["Von oben", "d"], ["Von links", "r"], ["Von unten", "u"]],
+    uncover: [["Von rechts", "l"], ["Von oben", "d"], ["Von links", "r"], ["Von unten", "u"]],
+    split: [["Vertikal nach innen", "in"], ["Vertikal nach außen", "out"]],
+  };
+  const list = dirs[t.kind];
+  if (!list) return [];
+  return list.map(([label, dir]) => ({
+    label, checked: (t.dir ?? (t.kind === "split" ? "out" : list[0][1])) === dir,
+    run: () => {
+      const paths = [...app.panel.selected].map((i) => app.deck.slides[i].path);
+      app.deck.change("Effektoptionen", paths, () => {
+        for (const path of paths) {
+          const r = app.deck.pptx.doc(path).documentElement;
+          for (const tr of Array.from(r.getElementsByTagNameNS(NS_P, "transition"))) {
+            const child = kids(tr).find((c) => c.localName === t.kind);
+            if (child) child.setAttribute("dir", dir);
+          }
+        }
+      });
+    },
+  }));
+}

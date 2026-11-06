@@ -180,3 +180,33 @@ function retime(app: PresentApp, what: "dur" | "delay", seconds: number): void {
     }
   });
 }
+
+/** Effektoptionen of the selected shapes' entrance or exit effect: Einfliegen's directions. */
+export function animationOptions(app: PresentApp): { label: string; run: () => void; checked?: boolean }[] {
+  const path = app.slidePath();
+  const ids = new Set(app.editor.sel);
+  if (!path || !ids.size) return [];
+  const root = app.deck.pptx.doc(path).documentElement;
+  const ctns = Array.from(root.getElementsByTagNameNS(PptxDom.NS_P, "cTn")).filter((c) => c.getAttribute("presetID") === "2" && ids.has(Number(c.getElementsByTagNameNS(PptxDom.NS_P, "spTgt")[0]?.getAttribute("spid"))));
+  if (!ctns.length) return [];
+  // presetSubtype: 1 von oben, 2 von rechts, 4 von unten, 8 von links (PowerPoint's Einfliegen).
+  const dirs: [string, number, string, string][] = [["Von unten", 4, "#ppt_x", "1+#ppt_h/2"], ["Von links", 8, "0-#ppt_w/2", "#ppt_y"], ["Von rechts", 2, "1+#ppt_w/2", "#ppt_y"], ["Von oben", 1, "#ppt_x", "0-#ppt_h/2"]];
+  const cur = Number(ctns[0].getAttribute("presetSubtype") ?? 4);
+  return dirs.map(([label, sub, x, y]) => ({
+    label, checked: cur === sub,
+    run: () => app.editor.edit("Effektoptionen", () => {
+      for (const c of ctns) {
+        c.setAttribute("presetSubtype", String(sub));
+        const exit = c.getAttribute("presetClass") === "exit";
+        for (const anim of Array.from(c.getElementsByTagNameNS(PptxDom.NS_P, "anim"))) {
+          const attr = anim.getElementsByTagNameNS(PptxDom.NS_P, "attrName")[0]?.textContent;
+          const vals = Array.from(anim.getElementsByTagNameNS(PptxDom.NS_P, "strVal"));
+          if (vals.length < 2) continue;
+          const away = attr === "ppt_x" ? x : y, home = attr === "ppt_x" ? "#ppt_x" : "#ppt_y";
+          vals[exit ? 1 : 0].setAttribute("val", away);
+          vals[exit ? 0 : 1].setAttribute("val", home);
+        }
+      }
+    }),
+  }));
+}

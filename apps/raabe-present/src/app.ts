@@ -1587,6 +1587,10 @@ export class PresentApp implements EditorHost, PanelHost {
     const finder = new FindDialog(this);
     impl("edit.find", () => finder.open(false));
     impl("design.slideCustom", () => this.slideSizeDialog());
+    void import("./transitions").then((m) => { this.transMod = m; });
+    void import("./animations").then((m) => { this.animMod = m; });
+    impl("trans.options", () => {}, () => (this.transMod?.transitionOptions(this).length ?? 0) > 0);
+    impl("anim.options", () => {}, () => (this.animMod?.animationOptions(this).length ?? 0) > 0);
     impl("insert.wordArt", () => {}, () => !!this.slidePath());
     impl("slide.formatBackground", () => this.bgPane.open(), () => !!this.slidePath());
     impl("design.formatBackground", () => this.bgPane.open(), () => !!this.slidePath());
@@ -1996,7 +2000,7 @@ export class PresentApp implements EditorHost, PanelHost {
         textBox: [{ cmd: "insert.textBoxH" }, { cmd: "insert.textBoxV" }],
         slideSize: [{ cmd: "design.slide4x3" }, { cmd: "design.slide16x9" }, "-", { cmd: "design.slideCustom" }],
         showCustom: [], record: [],
-        transOptions: () => [], animOptions: () => [], animStart: [{ label: "Beim Klicken", run: () => this.animPane.setStart("clickEffect") }, { label: "Mit Vorherigen", run: () => this.animPane.setStart("withEffect") }, { label: "Nach Vorherigen", run: () => this.animPane.setStart("afterEffect") }],
+        transOptions: () => this.transMod?.transitionOptions(this) ?? [], animOptions: () => this.animMod?.animationOptions(this) ?? [], animStart: [{ label: "Beim Klicken", run: () => this.animPane.setStart("clickEffect") }, { label: "Mit Vorherigen", run: () => this.animPane.setStart("withEffect") }, { label: "Nach Vorherigen", run: () => this.animPane.setStart("afterEffect") }],
         colors: () => DESIGNS.map((d) => ({ label: d.name === "Office" ? "Office" : d.name, run: () => this.applyDesign(d) })),
         fonts: () => DESIGNS.map((d) => ({ label: `${d.name}: ${d.major} / ${d.minor}`, run: () => this.applyDesign(d) })),
         underline: [], outlineWeight: [], outlineDash: [], effects: this.effectsMenu(), quickStyles: () => [], zoomFit: [],
@@ -2287,6 +2291,8 @@ export class PresentApp implements EditorHost, PanelHost {
     }
   }
 
+  private transMod: typeof import("./transitions") | null = null;
+  private animMod: typeof import("./animations") | null = null;
   private printSettings: import("./print").PrintSettings = { layout: "full", which: "all", range: "", frame: false };
   private printMod: typeof import("./print") | null = null;
   private printPageEl(): HTMLElement {
