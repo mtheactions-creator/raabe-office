@@ -95,8 +95,8 @@
   {
    "file": "pptx-shapes",
    "slide": 1,
-   "mean": 1.0,
-   "differ": 0.72
+   "mean": 0.83,
+   "differ": 0.64
   },
   {
    "file": "pptx-group",
@@ -113,14 +113,14 @@
   {
    "file": "pptx-table",
    "slide": 1,
-   "mean": 5.3,
-   "differ": 2.87
+   "mean": 5.06,
+   "differ": 2.79
   },
   {
    "file": "pptx-table",
    "slide": 2,
-   "mean": 0.79,
-   "differ": 0.42
+   "mean": 0.59,
+   "differ": 0.35
   },
   {
    "file": "pptx-autofit",
@@ -173,7 +173,7 @@
  ],
  "summary": {
   "slides": 28,
-  "mean": 2.75,
-  "differ": 1.52
+  "mean": 2.73,
+  "differ": 1.51
  }
 }

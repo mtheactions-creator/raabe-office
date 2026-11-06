@@ -169,7 +169,9 @@ def run(side_name: str, areas: list[str]) -> None:
                 st = normalise(side.state(), c.tol)
                 out[c.name] = {"area": c.area, "state": st}
             except Exception as e:  # noqa: BLE001
-                out[c.name] = {"area": c.area, "error": repr(e)[:300]}
+                import traceback
+                where = traceback.extract_tb(e.__traceback__)[-1]
+                out[c.name] = {"area": c.area, "error": f"{e!r} at {Path(where.filename).name}:{where.lineno}"[:300]}
             print(f"{i + 1}/{len(todo)} {c.name}: {'ok' if 'state' in out[c.name] else out[c.name]['error']}", flush=True)
             LOCK.touch()
     finally:

@@ -1,0 +1,130 @@
+{
+ "date": "2026-11-07",
+ "fixtures": {
+  "pptx-blank": {
+   "result": "same"
+  },
+  "pptx-layouts": {
+   "result": "same"
+  },
+  "pptx-bullets": {
+   "result": "same"
+  },
+  "pptx-textbox": {
+   "result": "same"
+  },
+  "pptx-shapes": {
+   "result": "same"
+  },
+  "pptx-group": {
+   "result": "same"
+  },
+  "pptx-picture": {
+   "result": "same"
+  },
+  "pptx-table": {
+   "result": "same"
+  },
+  "pptx-autofit": {
+   "result": "same"
+  },
+  "pptx-show": {
+   "result": "same"
+  },
+  "pptx-equation": {
+   "result": "same"
+  }
+ },
+ "scenarios": {
+  "title text": {
+   "result": "same",
+   "diff": []
+  },
+  "bullets levels": {
+   "result": "same",
+   "diff": []
+  },
+  "shapes": {
+   "result": "same",
+   "diff": []
+  },
+  "rotate flip": {
+   "result": "same",
+   "diff": []
+  },
+  "bold part": {
+   "result": "different",
+   "diff": [
+    "box ours [100.0, 100.0, 400.0, 40.0] PowerPoint [100.0, 100.0, 400.0, 29.0]"
+   ]
+  },
+  "size color": {
+   "result": "same",
+   "diff": []
+  },
+  "align center": {
+   "result": "same",
+   "diff": []
+  },
+  "table": {
+   "result": "same",
+   "diff": []
+  },
+  "group": {
+   "result": "same",
+   "diff": []
+  },
+  "notes": {
+   "result": "same",
+   "diff": []
+  },
+  "hidden slide": {
+   "result": "same",
+   "diff": []
+  },
+  "sections": {
+   "result": "same",
+   "diff": []
+  },
+  "move duplicate delete": {
+   "result": "same",
+   "diff": []
+  },
+  "layout change": {
+   "result": "same",
+   "diff": []
+  },
+  "transition": {
+   "result": "same",
+   "diff": []
+  },
+  "animation": {
+   "result": "same",
+   "diff": []
+  },
+  "design raabe": {
+   "result": "same",
+   "diff": []
+  },
+  "picture": {
+   "result": "same",
+   "diff": []
+  },
+  "chart": {
+   "result": "same",
+   "diff": []
+  },
+  "comment": {
+   "result": "same",
+   "diff": []
+  },
+  "undo redo": {
+   "result": "same",
+   "diff": []
+  }
+ },
+ "summary": {
+  "fixtures": "11/11",
+  "scenarios": "20/21"
+ }
+}

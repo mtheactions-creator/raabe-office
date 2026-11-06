@@ -326,18 +326,18 @@ class PresentSide(Side):
         p = self.js(f"__present.slidePointToClient({xpt}, {ypt})")
         return self._client(p["x"], p["y"])
 
-    def _id(self, idx) -> int:
+    def _sid(self, idx) -> int:
         if isinstance(idx, str) and idx.startswith("ph"):
             return self.phs[int(idx[2:])]
         return self.ids[idx]
 
     def shape_box(self, idx):
-        sid = self._id(idx)
+        sid = self._sid(idx)
         s = next(s for s in self.js("__present.state()")["shapes"] if s["id"] == sid)
         return s["x"] / 12700, s["y"] / 12700, s["w"] / 12700, s["h"] / 12700
 
     def handle_point(self, idx, k):
-        p = self.js(f"__present.handlePoint({self._id(idx)}, {json.dumps(k)})")
+        p = self.js(f"__present.handlePoint({self._sid(idx)}, {json.dumps(k)})")
         if p is None:
             raise RuntimeError(f"no handle {k}")
         return self._client(p["x"], p["y"])

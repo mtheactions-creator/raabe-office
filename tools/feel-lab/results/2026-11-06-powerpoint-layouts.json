@@ -1,0 +1,6209 @@
+{
+ "date": "2026-11-06",
+ "built_by": "PowerPoint 16.0 build 20326",
+ "default": {
+  "design": "Office",
+  "colors": {
+   "Dark1": "#000000",
+   "Light1": "#FFFFFF",
+   "Dark2": "#0E2841",
+   "Light2": "#E8E8E8",
+   "Accent1": "#156082",
+   "Accent2": "#E97132",
+   "Accent3": "#196B24",
+   "Accent4": "#0F9ED5",
+   "Accent5": "#A02B93",
+   "Accent6": "#4EA72E",
+   "Hyperlink": "#467886",
+   "FollowedHyperlink": "#96607D"
+  },
+  "fonts": {
+   "major": {
+    "latin": "Aptos Display",
+    "east_asian": "",
+    "complex": ""
+   },
+   "minor": {
+    "latin": "Aptos",
+    "east_asian": "",
+    "complex": ""
+   }
+  },
+  "master": {
+   "name": "SlideMaster",
+   "placeholders": [
+    {
+     "name": "Title Placeholder 1",
+     "type": "Title",
+     "pt": [
+      66.0,
+      28.75,
+      828.0,
+      104.375
+     ],
+     "emu": [
+      838200,
+      365125,
+      10515600,
+      1325563
+     ],
+     "text": [
+      {
+       "text": "Mastertitelformat bearbeiten",
+       "level": 1,
+       "size": 44.0,
+       "font": "Aptos Display"
+      }
+     ],
+     "anchor": 3,
+     "margins_pt": [
+      7.199999809265137,
+      3.5999999046325684,
+      7.199999809265137,
+      3.5999999046325684
+     ],
+     "autosize": "Mixed"
+    },
+    {
+     "name": "Text Placeholder 2",
+     "type": "Body",
+     "pt": [
+      66.0,
+      143.75,
+      828.0,
+      342.625
+     ],
+     "emu": [
+      838200,
+      1825625,
+      10515600,
+      4351338
+     ],
+     "text": [
+      {
+       "text": "Mastertextformat bearbeiten",
+       "level": 1,
+       "size": 28.0,
+       "font": "Aptos",
+       "bullet": 8226
+      },
+      {
+       "text": "Zweite Ebene",
+       "level": 2,
+       "size": 24.0,
+       "font": "Aptos",
+       "bullet": 8226
+      },
+      {
+       "text": "Dritte Ebene",
+       "level": 3,
+       "size": 20.0,
+       "font": "Aptos",
+       "bullet": 8226
+      },
+      {
+       "text": "Vierte Ebene",
+       "level": 4,
+       "size": 18.0,
+       "font": "Aptos",
+       "bullet": 8226
+      },
+      {
+       "text": "Fünfte Ebene",
+       "level": 5,
+       "size": 18.0,
+       "font": "Aptos",
+       "bullet": 8226
+      }
+     ],
+     "anchor": 1,
+     "margins_pt": [
+      7.199999809265137,
+      3.5999999046325684,
+      7.199999809265137,
+      3.5999999046325684
+     ],
+     "autosize": "Mixed"
+    },
+    {
+     "name": "Date Placeholder 3",
+     "type": "Date",
+     "pt": [
+      66.0,
+      500.5,
+      216.0,
+      28.75
+     ],
+     "emu": [
+      838200,
+      6356350,
+      2743200,
+      365125
+     ],
+     "text": [
+      {
+       "text": "06.11.2026",
+       "level": 1,
+       "size": 12.0,
+       "font": "Aptos"
+      }
+     ],
+     "anchor": 3,
+     "margins_pt": [
+      7.199999809265137,
+      3.5999999046325684,
+      7.199999809265137,
+      3.5999999046325684
+     ],
+     "autosize": "None"
+    },
+    {
+     "name": "Footer Placeholder 4",
+     "type": "Footer",
+     "pt": [
+      318.0,
+      500.5,
+      324.0,
+      28.75
+     ],
+     "emu": [
+      4038600,
+      6356350,
+      4114800,
+      365125
+     ],
+     "anchor": 3,
+     "margins_pt": [
+      7.199999809265137,
+      3.5999999046325684,
+      7.199999809265137,
+      3.5999999046325684
+     ],
+     "autosize": "None"
+    },
+    {
+     "name": "Slide Number Placeholder 5",
+     "type": "SlideNumber",
+     "pt": [
+      678.0,
+      500.5,
+      216.0,
+      28.75
+     ],
+     "emu": [
+      8610600,
+      6356350,
+      2743200,
+      365125
+     ],
+     "text": [
+      {
+       "text": "‹Nr.›",
+       "level": 1,
+       "size": 12.0,
+       "font": "Aptos"
+      }
+     ],
+     "anchor": 3,
+     "margins_pt": [
+      7.199999809265137,
+      3.5999999046325684,
+      7.199999809265137,
+      3.5999999046325684
+     ],
+     "autosize": "None"
+    }
+   ],
+   "background": "#FFFFFF"
+  },
+  "layouts": [
+   {
+    "index": 1,
+    "name": "Titelfolie",
+    "placeholders": [
+     {
+      "name": "Title 1",
+      "type": "CenterTitle",
+      "pt": [
+       120.0,
+       88.375,
+       720.0,
+       188.0
+      ],
+      "emu": [
+       1524000,
+       1122363,
+       9144000,
+       2387600
+      ],
+      "text": [
+       {
+        "text": "Mastertitelformat bearbeiten",
+        "level": 1,
+        "size": 60.0,
+        "font": "Aptos Display"
+       }
+      ],
+      "anchor": 4,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Subtitle 2",
+      "type": "Subtitle",
+      "pt": [
+       120.0,
+       283.625,
+       720.0,
+       130.375
+      ],
+      "emu": [
+       1524000,
+       3602038,
+       9144000,
+       1655762
+      ],
+      "text": [
+       {
+        "text": "Master-Untertitelformat bearbeiten",
+        "level": 1,
+        "size": 24.0,
+        "font": "Aptos"
+       }
+      ],
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Date Placeholder 3",
+      "type": "Date",
+      "pt": [
+       66.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       838200,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "06.11.2026",
+        "level": 1,
+        "size": 12.0,
+        "font": "Aptos"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Footer Placeholder 4",
+      "type": "Footer",
+      "pt": [
+       318.0,
+       500.5,
+       324.0,
+       28.75
+      ],
+      "emu": [
+       4038600,
+       6356350,
+       4114800,
+       365125
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Slide Number Placeholder 5",
+      "type": "SlideNumber",
+      "pt": [
+       678.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       8610600,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "‹Nr.›",
+        "level": 1,
+        "size": 12.0,
+        "font": "Aptos"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     }
+    ],
+    "other_shapes": []
+   },
+   {
+    "index": 2,
+    "name": "Titel und Inhalt",
+    "placeholders": [
+     {
+      "name": "Title 1",
+      "type": "Title",
+      "pt": [
+       66.0,
+       28.75,
+       828.0,
+       104.375
+      ],
+      "emu": [
+       838200,
+       365125,
+       10515600,
+       1325563
+      ],
+      "text": [
+       {
+        "text": "Mastertitelformat bearbeiten",
+        "level": 1,
+        "size": 44.0,
+        "font": "Aptos Display"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Content Placeholder 2",
+      "type": "Object",
+      "pt": [
+       66.0,
+       143.75,
+       828.0,
+       342.625
+      ],
+      "emu": [
+       838200,
+       1825625,
+       10515600,
+       4351338
+      ],
+      "text": [
+       {
+        "text": "Mastertextformat bearbeiten",
+        "level": 1,
+        "size": 28.0,
+        "font": "Aptos",
+        "bullet": 8226
+       },
+       {
+        "text": "Zweite Ebene",
+        "level": 2,
+        "size": 24.0,
+        "font": "Aptos",
+        "bullet": 8226
+       },
+       {
+        "text": "Dritte Ebene",
+        "level": 3,
+        "size": 20.0,
+        "font": "Aptos",
+        "bullet": 8226
+       },
+       {
+        "text": "Vierte Ebene",
+        "level": 4,
+        "size": 18.0,
+        "font": "Aptos",
+        "bullet": 8226
+       },
+       {
+        "text": "Fünfte Ebene",
+        "level": 5,
+        "size": 18.0,
+        "font": "Aptos",
+        "bullet": 8226
+       }
+      ],
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Date Placeholder 3",
+      "type": "Date",
+      "pt": [
+       66.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       838200,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "06.11.2026",
+        "level": 1,
+        "size": 12.0,
+        "font": "Aptos"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Footer Placeholder 4",
+      "type": "Footer",
+      "pt": [
+       318.0,
+       500.5,
+       324.0,
+       28.75
+      ],
+      "emu": [
+       4038600,
+       6356350,
+       4114800,
+       365125
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Slide Number Placeholder 5",
+      "type": "SlideNumber",
+      "pt": [
+       678.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       8610600,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "‹Nr.›",
+        "level": 1,
+        "size": 12.0,
+        "font": "Aptos"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     }
+    ],
+    "other_shapes": []
+   },
+   {
+    "index": 3,
+    "name": "Abschnitts- überschrift",
+    "placeholders": [
+     {
+      "name": "Title 1",
+      "type": "Title",
+      "pt": [
+       65.5,
+       134.625,
+       828.0,
+       224.625
+      ],
+      "emu": [
+       831850,
+       1709738,
+       10515600,
+       2852737
+      ],
+      "text": [
+       {
+        "text": "Mastertitelformat bearbeiten",
+        "level": 1,
+        "size": 60.0,
+        "font": "Aptos Display"
+       }
+      ],
+      "anchor": 4,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Text Placeholder 2",
+      "type": "Body",
+      "pt": [
+       65.5,
+       361.375,
+       828.0,
+       118.125
+      ],
+      "emu": [
+       831850,
+       4589463,
+       10515600,
+       1500187
+      ],
+      "text": [
+       {
+        "text": "Mastertextformat bearbeiten",
+        "level": 1,
+        "size": 24.0,
+        "font": "Aptos"
+       }
+      ],
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Date Placeholder 3",
+      "type": "Date",
+      "pt": [
+       66.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       838200,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "06.11.2026",
+        "level": 1,
+        "size": 12.0,
+        "font": "Aptos"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Footer Placeholder 4",
+      "type": "Footer",
+      "pt": [
+       318.0,
+       500.5,
+       324.0,
+       28.75
+      ],
+      "emu": [
+       4038600,
+       6356350,
+       4114800,
+       365125
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Slide Number Placeholder 5",
+      "type": "SlideNumber",
+      "pt": [
+       678.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       8610600,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "‹Nr.›",
+        "level": 1,
+        "size": 12.0,
+        "font": "Aptos"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     }
+    ],
+    "other_shapes": []
+   },
+   {
+    "index": 4,
+    "name": "Zwei Inhalte",
+    "placeholders": [
+     {
+      "name": "Title 1",
+      "type": "Title",
+      "pt": [
+       66.0,
+       28.75,
+       828.0,
+       104.375
+      ],
+      "emu": [
+       838200,
+       365125,
+       10515600,
+       1325563
+      ],
+      "text": [
+       {
+        "text": "Mastertitelformat bearbeiten",
+        "level": 1,
+        "size": 44.0,
+        "font": "Aptos Display"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Content Placeholder 2",
+      "type": "Object",
+      "pt": [
+       66.0,
+       143.75,
+       408.0,
+       342.625
+      ],
+      "emu": [
+       838200,
+       1825625,
+       5181600,
+       4351338
+      ],
+      "text": [
+       {
+        "text": "Mastertextformat bearbeiten",
+        "level": 1,
+        "size": 28.0,
+        "font": "Aptos",
+        "bullet": 8226
+       },
+       {
+        "text": "Zweite Ebene",
+        "level": 2,
+        "size": 24.0,
+        "font": "Aptos",
+        "bullet": 8226
+       },
+       {
+        "text": "Dritte Ebene",
+        "level": 3,
+        "size": 20.0,
+        "font": "Aptos",
+        "bullet": 8226
+       },
+       {
+        "text": "Vierte Ebene",
+        "level": 4,
+        "size": 18.0,
+        "font": "Aptos",
+        "bullet": 8226
+       },
+       {
+        "text": "Fünfte Ebene",
+        "level": 5,
+        "size": 18.0,
+        "font": "Aptos",
+        "bullet": 8226
+       }
+      ],
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Content Placeholder 3",
+      "type": "Object",
+      "pt": [
+       486.0,
+       143.75,
+       408.0,
+       342.625
+      ],
+      "emu": [
+       6172200,
+       1825625,
+       5181600,
+       4351338
+      ],
+      "text": [
+       {
+        "text": "Mastertextformat bearbeiten",
+        "level": 1,
+        "size": 28.0,
+        "font": "Aptos",
+        "bullet": 8226
+       },
+       {
+        "text": "Zweite Ebene",
+        "level": 2,
+        "size": 24.0,
+        "font": "Aptos",
+        "bullet": 8226
+       },
+       {
+        "text": "Dritte Ebene",
+        "level": 3,
+        "size": 20.0,
+        "font": "Aptos",
+        "bullet": 8226
+       },
+       {
+        "text": "Vierte Ebene",
+        "level": 4,
+        "size": 18.0,
+        "font": "Aptos",
+        "bullet": 8226
+       },
+       {
+        "text": "Fünfte Ebene",
+        "level": 5,
+        "size": 18.0,
+        "font": "Aptos",
+        "bullet": 8226
+       }
+      ],
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Date Placeholder 4",
+      "type": "Date",
+      "pt": [
+       66.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       838200,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "06.11.2026",
+        "level": 1,
+        "size": 12.0,
+        "font": "Aptos"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Footer Placeholder 5",
+      "type": "Footer",
+      "pt": [
+       318.0,
+       500.5,
+       324.0,
+       28.75
+      ],
+      "emu": [
+       4038600,
+       6356350,
+       4114800,
+       365125
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Slide Number Placeholder 6",
+      "type": "SlideNumber",
+      "pt": [
+       678.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       8610600,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "‹Nr.›",
+        "level": 1,
+        "size": 12.0,
+        "font": "Aptos"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     }
+    ],
+    "other_shapes": []
+   },
+   {
+    "index": 5,
+    "name": "Vergleich",
+    "placeholders": [
+     {
+      "name": "Title 1",
+      "type": "Title",
+      "pt": [
+       66.125,
+       28.75,
+       828.0,
+       104.375
+      ],
+      "emu": [
+       839788,
+       365125,
+       10515600,
+       1325563
+      ],
+      "text": [
+       {
+        "text": "Mastertitelformat bearbeiten",
+        "level": 1,
+        "size": 44.0,
+        "font": "Aptos Display"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Text Placeholder 2",
+      "type": "Body",
+      "pt": [
+       66.125,
+       132.375,
+       406.125,
+       64.875
+      ],
+      "emu": [
+       839788,
+       1681163,
+       5157787,
+       823912
+      ],
+      "text": [
+       {
+        "text": "Mastertextformat bearbeiten",
+        "level": 1,
+        "size": 24.0,
+        "font": "Aptos"
+       }
+      ],
+      "anchor": 4,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Content Placeholder 3",
+      "type": "Object",
+      "pt": [
+       66.125,
+       197.25,
+       406.125,
+       290.125
+      ],
+      "emu": [
+       839788,
+       2505075,
+       5157787,
+       3684588
+      ],
+      "text": [
+       {
+        "text": "Mastertextformat bearbeiten",
+        "level": 1,
+        "size": 28.0,
+        "font": "Aptos",
+        "bullet": 8226
+       },
+       {
+        "text": "Zweite Ebene",
+        "level": 2,
+        "size": 24.0,
+        "font": "Aptos",
+        "bullet": 8226
+       },
+       {
+        "text": "Dritte Ebene",
+        "level": 3,
+        "size": 20.0,
+        "font": "Aptos",
+        "bullet": 8226
+       },
+       {
+        "text": "Vierte Ebene",
+        "level": 4,
+        "size": 18.0,
+        "font": "Aptos",
+        "bullet": 8226
+       },
+       {
+        "text": "Fünfte Ebene",
+        "level": 5,
+        "size": 18.0,
+        "font": "Aptos",
+        "bullet": 8226
+       }
+      ],
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Text Placeholder 4",
+      "type": "Body",
+      "pt": [
+       486.0,
+       132.375,
+       408.125,
+       64.875
+      ],
+      "emu": [
+       6172200,
+       1681163,
+       5183188,
+       823912
+      ],
+      "text": [
+       {
+        "text": "Mastertextformat bearbeiten",
+        "level": 1,
+        "size": 24.0,
+        "font": "Aptos"
+       }
+      ],
+      "anchor": 4,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Content Placeholder 5",
+      "type": "Object",
+      "pt": [
+       486.0,
+       197.25,
+       408.125,
+       290.125
+      ],
+      "emu": [
+       6172200,
+       2505075,
+       5183188,
+       3684588
+      ],
+      "text": [
+       {
+        "text": "Mastertextformat bearbeiten",
+        "level": 1,
+        "size": 28.0,
+        "font": "Aptos",
+        "bullet": 8226
+       },
+       {
+        "text": "Zweite Ebene",
+        "level": 2,
+        "size": 24.0,
+        "font": "Aptos",
+        "bullet": 8226
+       },
+       {
+        "text": "Dritte Ebene",
+        "level": 3,
+        "size": 20.0,
+        "font": "Aptos",
+        "bullet": 8226
+       },
+       {
+        "text": "Vierte Ebene",
+        "level": 4,
+        "size": 18.0,
+        "font": "Aptos",
+        "bullet": 8226
+       },
+       {
+        "text": "Fünfte Ebene",
+        "level": 5,
+        "size": 18.0,
+        "font": "Aptos",
+        "bullet": 8226
+       }
+      ],
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Date Placeholder 6",
+      "type": "Date",
+      "pt": [
+       66.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       838200,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "06.11.2026",
+        "level": 1,
+        "size": 12.0,
+        "font": "Aptos"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Footer Placeholder 7",
+      "type": "Footer",
+      "pt": [
+       318.0,
+       500.5,
+       324.0,
+       28.75
+      ],
+      "emu": [
+       4038600,
+       6356350,
+       4114800,
+       365125
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Slide Number Placeholder 8",
+      "type": "SlideNumber",
+      "pt": [
+       678.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       8610600,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "‹Nr.›",
+        "level": 1,
+        "size": 12.0,
+        "font": "Aptos"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     }
+    ],
+    "other_shapes": []
+   },
+   {
+    "index": 6,
+    "name": "Nur Titel",
+    "placeholders": [
+     {
+      "name": "Title 1",
+      "type": "Title",
+      "pt": [
+       66.0,
+       28.75,
+       828.0,
+       104.375
+      ],
+      "emu": [
+       838200,
+       365125,
+       10515600,
+       1325563
+      ],
+      "text": [
+       {
+        "text": "Mastertitelformat bearbeiten",
+        "level": 1,
+        "size": 44.0,
+        "font": "Aptos Display"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Date Placeholder 2",
+      "type": "Date",
+      "pt": [
+       66.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       838200,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "06.11.2026",
+        "level": 1,
+        "size": 12.0,
+        "font": "Aptos"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Footer Placeholder 3",
+      "type": "Footer",
+      "pt": [
+       318.0,
+       500.5,
+       324.0,
+       28.75
+      ],
+      "emu": [
+       4038600,
+       6356350,
+       4114800,
+       365125
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Slide Number Placeholder 4",
+      "type": "SlideNumber",
+      "pt": [
+       678.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       8610600,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "‹Nr.›",
+        "level": 1,
+        "size": 12.0,
+        "font": "Aptos"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     }
+    ],
+    "other_shapes": []
+   },
+   {
+    "index": 7,
+    "name": "Leer",
+    "placeholders": [
+     {
+      "name": "Date Placeholder 1",
+      "type": "Date",
+      "pt": [
+       66.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       838200,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "06.11.2026",
+        "level": 1,
+        "size": 12.0,
+        "font": "Aptos"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Footer Placeholder 2",
+      "type": "Footer",
+      "pt": [
+       318.0,
+       500.5,
+       324.0,
+       28.75
+      ],
+      "emu": [
+       4038600,
+       6356350,
+       4114800,
+       365125
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Slide Number Placeholder 3",
+      "type": "SlideNumber",
+      "pt": [
+       678.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       8610600,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "‹Nr.›",
+        "level": 1,
+        "size": 12.0,
+        "font": "Aptos"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     }
+    ],
+    "other_shapes": []
+   },
+   {
+    "index": 8,
+    "name": "Inhalt mit Überschrift",
+    "placeholders": [
+     {
+      "name": "Title 1",
+      "type": "Title",
+      "pt": [
+       66.125,
+       36.0,
+       309.625,
+       126.0
+      ],
+      "emu": [
+       839788,
+       457200,
+       3932237,
+       1600200
+      ],
+      "text": [
+       {
+        "text": "Mastertitelformat bearbeiten",
+        "level": 1,
+        "size": 32.0,
+        "font": "Aptos Display"
+       }
+      ],
+      "anchor": 4,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Content Placeholder 2",
+      "type": "Object",
+      "pt": [
+       408.125,
+       77.75,
+       486.0,
+       383.75
+      ],
+      "emu": [
+       5183188,
+       987425,
+       6172200,
+       4873625
+      ],
+      "text": [
+       {
+        "text": "Mastertextformat bearbeiten",
+        "level": 1,
+        "size": 32.0,
+        "font": "Aptos",
+        "bullet": 8226
+       },
+       {
+        "text": "Zweite Ebene",
+        "level": 2,
+        "size": 28.0,
+        "font": "Aptos",
+        "bullet": 8226
+       },
+       {
+        "text": "Dritte Ebene",
+        "level": 3,
+        "size": 24.0,
+        "font": "Aptos",
+        "bullet": 8226
+       },
+       {
+        "text": "Vierte Ebene",
+        "level": 4,
+        "size": 20.0,
+        "font": "Aptos",
+        "bullet": 8226
+       },
+       {
+        "text": "Fünfte Ebene",
+        "level": 5,
+        "size": 20.0,
+        "font": "Aptos",
+        "bullet": 8226
+       }
+      ],
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Text Placeholder 3",
+      "type": "Body",
+      "pt": [
+       66.125,
+       162.0,
+       309.625,
+       300.125
+      ],
+      "emu": [
+       839788,
+       2057400,
+       3932237,
+       3811588
+      ],
+      "text": [
+       {
+        "text": "Mastertextformat bearbeiten",
+        "level": 1,
+        "size": 16.0,
+        "font": "Aptos"
+       }
+      ],
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Date Placeholder 4",
+      "type": "Date",
+      "pt": [
+       66.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       838200,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "06.11.2026",
+        "level": 1,
+        "size": 12.0,
+        "font": "Aptos"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Footer Placeholder 5",
+      "type": "Footer",
+      "pt": [
+       318.0,
+       500.5,
+       324.0,
+       28.75
+      ],
+      "emu": [
+       4038600,
+       6356350,
+       4114800,
+       365125
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Slide Number Placeholder 6",
+      "type": "SlideNumber",
+      "pt": [
+       678.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       8610600,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "‹Nr.›",
+        "level": 1,
+        "size": 12.0,
+        "font": "Aptos"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     }
+    ],
+    "other_shapes": []
+   },
+   {
+    "index": 9,
+    "name": "Bild mit Überschrift",
+    "placeholders": [
+     {
+      "name": "Title 1",
+      "type": "Title",
+      "pt": [
+       66.125,
+       36.0,
+       309.625,
+       126.0
+      ],
+      "emu": [
+       839788,
+       457200,
+       3932237,
+       1600200
+      ],
+      "text": [
+       {
+        "text": "Mastertitelformat bearbeiten",
+        "level": 1,
+        "size": 32.0,
+        "font": "Aptos Display"
+       }
+      ],
+      "anchor": 4,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Picture Placeholder 2",
+      "type": "Picture",
+      "pt": [
+       408.125,
+       77.75,
+       486.0,
+       383.75
+      ],
+      "emu": [
+       5183188,
+       987425,
+       6172200,
+       4873625
+      ]
+     },
+     {
+      "name": "Text Placeholder 3",
+      "type": "Body",
+      "pt": [
+       66.125,
+       162.0,
+       309.625,
+       300.125
+      ],
+      "emu": [
+       839788,
+       2057400,
+       3932237,
+       3811588
+      ],
+      "text": [
+       {
+        "text": "Mastertextformat bearbeiten",
+        "level": 1,
+        "size": 16.0,
+        "font": "Aptos"
+       }
+      ],
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Date Placeholder 4",
+      "type": "Date",
+      "pt": [
+       66.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       838200,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "06.11.2026",
+        "level": 1,
+        "size": 12.0,
+        "font": "Aptos"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Footer Placeholder 5",
+      "type": "Footer",
+      "pt": [
+       318.0,
+       500.5,
+       324.0,
+       28.75
+      ],
+      "emu": [
+       4038600,
+       6356350,
+       4114800,
+       365125
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Slide Number Placeholder 6",
+      "type": "SlideNumber",
+      "pt": [
+       678.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       8610600,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "‹Nr.›",
+        "level": 1,
+        "size": 12.0,
+        "font": "Aptos"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     }
+    ],
+    "other_shapes": []
+   },
+   {
+    "index": 10,
+    "name": "Titel und vertikaler Text",
+    "placeholders": [
+     {
+      "name": "Title 1",
+      "type": "Title",
+      "pt": [
+       66.0,
+       28.75,
+       828.0,
+       104.375
+      ],
+      "emu": [
+       838200,
+       365125,
+       10515600,
+       1325563
+      ],
+      "text": [
+       {
+        "text": "Mastertitelformat bearbeiten",
+        "level": 1,
+        "size": 44.0,
+        "font": "Aptos Display"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Vertical Text Placeholder 2",
+      "type": "VerticalBody",
+      "pt": [
+       66.0,
+       143.75,
+       828.0,
+       342.625
+      ],
+      "emu": [
+       838200,
+       1825625,
+       10515600,
+       4351338
+      ],
+      "text": [
+       {
+        "text": "Mastertextformat bearbeiten",
+        "level": 1,
+        "size": 28.0,
+        "font": "Aptos",
+        "bullet": 8226
+       },
+       {
+        "text": "Zweite Ebene",
+        "level": 2,
+        "size": 24.0,
+        "font": "Aptos",
+        "bullet": 8226
+       },
+       {
+        "text": "Dritte Ebene",
+        "level": 3,
+        "size": 20.0,
+        "font": "Aptos",
+        "bullet": 8226
+       },
+       {
+        "text": "Vierte Ebene",
+        "level": 4,
+        "size": 18.0,
+        "font": "Aptos",
+        "bullet": 8226
+       },
+       {
+        "text": "Fünfte Ebene",
+        "level": 5,
+        "size": 18.0,
+        "font": "Aptos",
+        "bullet": 8226
+       }
+      ],
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Date Placeholder 3",
+      "type": "Date",
+      "pt": [
+       66.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       838200,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "06.11.2026",
+        "level": 1,
+        "size": 12.0,
+        "font": "Aptos"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Footer Placeholder 4",
+      "type": "Footer",
+      "pt": [
+       318.0,
+       500.5,
+       324.0,
+       28.75
+      ],
+      "emu": [
+       4038600,
+       6356350,
+       4114800,
+       365125
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Slide Number Placeholder 5",
+      "type": "SlideNumber",
+      "pt": [
+       678.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       8610600,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "‹Nr.›",
+        "level": 1,
+        "size": 12.0,
+        "font": "Aptos"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     }
+    ],
+    "other_shapes": []
+   },
+   {
+    "index": 11,
+    "name": "Vertikaler Titel und Text",
+    "placeholders": [
+     {
+      "name": "Vertical Title 1",
+      "type": "VerticalTitle",
+      "pt": [
+       687.0,
+       28.75,
+       207.0,
+       457.625
+      ],
+      "emu": [
+       8724900,
+       365125,
+       2628900,
+       5811838
+      ],
+      "text": [
+       {
+        "text": "Mastertitelformat bearbeiten",
+        "level": 1,
+        "size": 44.0,
+        "font": "Aptos Display"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Vertical Text Placeholder 2",
+      "type": "VerticalBody",
+      "pt": [
+       66.0,
+       28.75,
+       609.0,
+       457.625
+      ],
+      "emu": [
+       838200,
+       365125,
+       7734300,
+       5811838
+      ],
+      "text": [
+       {
+        "text": "Mastertextformat bearbeiten",
+        "level": 1,
+        "size": 28.0,
+        "font": "Aptos",
+        "bullet": 8226
+       },
+       {
+        "text": "Zweite Ebene",
+        "level": 2,
+        "size": 24.0,
+        "font": "Aptos",
+        "bullet": 8226
+       },
+       {
+        "text": "Dritte Ebene",
+        "level": 3,
+        "size": 20.0,
+        "font": "Aptos",
+        "bullet": 8226
+       },
+       {
+        "text": "Vierte Ebene",
+        "level": 4,
+        "size": 18.0,
+        "font": "Aptos",
+        "bullet": 8226
+       },
+       {
+        "text": "Fünfte Ebene",
+        "level": 5,
+        "size": 18.0,
+        "font": "Aptos",
+        "bullet": 8226
+       }
+      ],
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Date Placeholder 3",
+      "type": "Date",
+      "pt": [
+       66.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       838200,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "06.11.2026",
+        "level": 1,
+        "size": 12.0,
+        "font": "Aptos"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Footer Placeholder 4",
+      "type": "Footer",
+      "pt": [
+       318.0,
+       500.5,
+       324.0,
+       28.75
+      ],
+      "emu": [
+       4038600,
+       6356350,
+       4114800,
+       365125
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Slide Number Placeholder 5",
+      "type": "SlideNumber",
+      "pt": [
+       678.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       8610600,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "‹Nr.›",
+        "level": 1,
+        "size": 12.0,
+        "font": "Aptos"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     }
+    ],
+    "other_shapes": []
+   }
+  ]
+ },
+ "default_slide_size": {
+  "type": 7,
+  "pt": [
+   960.0,
+   540.0
+  ],
+  "emu": [
+   12192000,
+   6858000
+  ]
+ },
+ "slide_sizes": [
+  {
+   "constant": "ppSlideSizeOnScreen",
+   "type": 1,
+   "pt": [
+    720.0,
+    540.0
+   ]
+  },
+  {
+   "constant": "ppSlideSizeLetterPaper",
+   "type": 2,
+   "pt": [
+    720.0,
+    540.0
+   ]
+  },
+  {
+   "constant": "ppSlideSizeA4Paper",
+   "type": 3,
+   "pt": [
+    780.0,
+    540.0
+   ]
+  },
+  {
+   "constant": "ppSlideSize35MM",
+   "type": 4,
+   "pt": [
+    810.0,
+    540.0
+   ]
+  },
+  {
+   "constant": "ppSlideSizeOverhead",
+   "type": 5,
+   "pt": [
+    720.0,
+    540.0
+   ]
+  },
+  {
+   "constant": "ppSlideSizeBanner",
+   "type": 6,
+   "pt": [
+    576.0,
+    72.0
+   ]
+  },
+  {
+   "constant": "ppSlideSizeCustom",
+   "type": 7,
+   "pt": [
+    576.0,
+    72.0
+   ]
+  },
+  {
+   "constant": "ppSlideSizeLedgerPaper",
+   "type": 8,
+   "pt": [
+    959.0,
+    719.25
+   ]
+  },
+  {
+   "constant": "ppSlideSizeA3Paper",
+   "type": 9,
+   "pt": [
+    1008.0,
+    756.0
+   ]
+  },
+  {
+   "constant": "ppSlideSizeB4ISOPaper",
+   "type": 10,
+   "pt": [
+    852.5,
+    639.375
+   ]
+  },
+  {
+   "constant": "ppSlideSizeB5ISOPaper",
+   "type": 11,
+   "pt": [
+    564.5,
+    423.375
+   ]
+  },
+  {
+   "constant": "ppSlideSizeB4JISPaper",
+   "type": 12,
+   "pt": [
+    864.0,
+    648.0
+   ]
+  },
+  {
+   "constant": "ppSlideSizeB5JISPaper",
+   "type": 13,
+   "pt": [
+    576.0,
+    432.0
+   ]
+  },
+  {
+   "constant": "ppSlideSizeHagakiCard",
+   "type": 14,
+   "pt": [
+    360.0,
+    234.0
+   ]
+  },
+  {
+   "constant": "ppSlideSizeOnScreen16x9",
+   "type": 15,
+   "pt": [
+    720.0,
+    405.0
+   ]
+  },
+  {
+   "constant": "ppSlideSizeOnScreen16x10",
+   "type": 16,
+   "pt": [
+    720.0,
+    450.0
+   ]
+  }
+ ],
+ "office_2013_2022": {
+  "design": "Office 2013 – 2022-Design",
+  "colors": {
+   "Dark1": "#000000",
+   "Light1": "#FFFFFF",
+   "Dark2": "#44546A",
+   "Light2": "#E7E6E6",
+   "Accent1": "#4472C4",
+   "Accent2": "#ED7D31",
+   "Accent3": "#A5A5A5",
+   "Accent4": "#FFC000",
+   "Accent5": "#5B9BD5",
+   "Accent6": "#70AD47",
+   "Hyperlink": "#0563C1",
+   "FollowedHyperlink": "#954F72"
+  },
+  "fonts": {
+   "major": {
+    "latin": "Calibri Light",
+    "east_asian": "",
+    "complex": ""
+   },
+   "minor": {
+    "latin": "Calibri",
+    "east_asian": "",
+    "complex": ""
+   }
+  },
+  "master": {
+   "name": "SlideMaster",
+   "placeholders": [
+    {
+     "name": "Title Placeholder 1",
+     "type": "Title",
+     "pt": [
+      66.0,
+      28.75,
+      828.0,
+      104.375
+     ],
+     "emu": [
+      838200,
+      365125,
+      10515600,
+      1325563
+     ],
+     "text": [
+      {
+       "text": "Mastertitelformat bearbeiten",
+       "level": 1,
+       "size": 44.0,
+       "font": "Calibri Light"
+      }
+     ],
+     "anchor": 3,
+     "margins_pt": [
+      7.199999809265137,
+      3.5999999046325684,
+      7.199999809265137,
+      3.5999999046325684
+     ],
+     "autosize": "Mixed"
+    },
+    {
+     "name": "Text Placeholder 2",
+     "type": "Body",
+     "pt": [
+      66.0,
+      143.75,
+      828.0,
+      342.625
+     ],
+     "emu": [
+      838200,
+      1825625,
+      10515600,
+      4351338
+     ],
+     "text": [
+      {
+       "text": "Mastertextformat bearbeiten",
+       "level": 1,
+       "size": 28.0,
+       "font": "Calibri",
+       "bullet": 8226
+      },
+      {
+       "text": "Zweite Ebene",
+       "level": 2,
+       "size": 24.0,
+       "font": "Calibri",
+       "bullet": 8226
+      },
+      {
+       "text": "Dritte Ebene",
+       "level": 3,
+       "size": 20.0,
+       "font": "Calibri",
+       "bullet": 8226
+      },
+      {
+       "text": "Vierte Ebene",
+       "level": 4,
+       "size": 18.0,
+       "font": "Calibri",
+       "bullet": 8226
+      },
+      {
+       "text": "Fünfte Ebene",
+       "level": 5,
+       "size": 18.0,
+       "font": "Calibri",
+       "bullet": 8226
+      }
+     ],
+     "anchor": 1,
+     "margins_pt": [
+      7.199999809265137,
+      3.5999999046325684,
+      7.199999809265137,
+      3.5999999046325684
+     ],
+     "autosize": "Mixed"
+    },
+    {
+     "name": "Date Placeholder 3",
+     "type": "Date",
+     "pt": [
+      66.0,
+      500.5,
+      216.0,
+      28.75
+     ],
+     "emu": [
+      838200,
+      6356350,
+      2743200,
+      365125
+     ],
+     "text": [
+      {
+       "text": "06.11.2026",
+       "level": 1,
+       "size": 12.0,
+       "font": "Calibri"
+      }
+     ],
+     "anchor": 3,
+     "margins_pt": [
+      7.199999809265137,
+      3.5999999046325684,
+      7.199999809265137,
+      3.5999999046325684
+     ],
+     "autosize": "None"
+    },
+    {
+     "name": "Footer Placeholder 4",
+     "type": "Footer",
+     "pt": [
+      318.0,
+      500.5,
+      324.0,
+      28.75
+     ],
+     "emu": [
+      4038600,
+      6356350,
+      4114800,
+      365125
+     ],
+     "anchor": 3,
+     "margins_pt": [
+      7.199999809265137,
+      3.5999999046325684,
+      7.199999809265137,
+      3.5999999046325684
+     ],
+     "autosize": "None"
+    },
+    {
+     "name": "Slide Number Placeholder 5",
+     "type": "SlideNumber",
+     "pt": [
+      678.0,
+      500.5,
+      216.0,
+      28.75
+     ],
+     "emu": [
+      8610600,
+      6356350,
+      2743200,
+      365125
+     ],
+     "text": [
+      {
+       "text": "‹Nr.›",
+       "level": 1,
+       "size": 12.0,
+       "font": "Calibri"
+      }
+     ],
+     "anchor": 3,
+     "margins_pt": [
+      7.199999809265137,
+      3.5999999046325684,
+      7.199999809265137,
+      3.5999999046325684
+     ],
+     "autosize": "None"
+    }
+   ],
+   "background": "#FFFFFF"
+  },
+  "layouts": [
+   {
+    "index": 1,
+    "name": "Titelfolie",
+    "placeholders": [
+     {
+      "name": "Title 1",
+      "type": "CenterTitle",
+      "pt": [
+       120.0,
+       88.375,
+       720.0,
+       188.0
+      ],
+      "emu": [
+       1524000,
+       1122363,
+       9144000,
+       2387600
+      ],
+      "text": [
+       {
+        "text": "Mastertitelformat bearbeiten",
+        "level": 1,
+        "size": 60.0,
+        "font": "Calibri Light"
+       }
+      ],
+      "anchor": 4,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Subtitle 2",
+      "type": "Subtitle",
+      "pt": [
+       120.0,
+       283.625,
+       720.0,
+       130.375
+      ],
+      "emu": [
+       1524000,
+       3602038,
+       9144000,
+       1655762
+      ],
+      "text": [
+       {
+        "text": "Master-Untertitelformat bearbeiten",
+        "level": 1,
+        "size": 24.0,
+        "font": "Calibri"
+       }
+      ],
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Date Placeholder 3",
+      "type": "Date",
+      "pt": [
+       66.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       838200,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "06.11.2026",
+        "level": 1,
+        "size": 12.0,
+        "font": "Calibri"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Footer Placeholder 4",
+      "type": "Footer",
+      "pt": [
+       318.0,
+       500.5,
+       324.0,
+       28.75
+      ],
+      "emu": [
+       4038600,
+       6356350,
+       4114800,
+       365125
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Slide Number Placeholder 5",
+      "type": "SlideNumber",
+      "pt": [
+       678.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       8610600,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "‹Nr.›",
+        "level": 1,
+        "size": 12.0,
+        "font": "Calibri"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     }
+    ],
+    "other_shapes": []
+   },
+   {
+    "index": 2,
+    "name": "Titel und Inhalt",
+    "placeholders": [
+     {
+      "name": "Title 1",
+      "type": "Title",
+      "pt": [
+       66.0,
+       28.75,
+       828.0,
+       104.375
+      ],
+      "emu": [
+       838200,
+       365125,
+       10515600,
+       1325563
+      ],
+      "text": [
+       {
+        "text": "Mastertitelformat bearbeiten",
+        "level": 1,
+        "size": 44.0,
+        "font": "Calibri Light"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Content Placeholder 2",
+      "type": "Object",
+      "pt": [
+       66.0,
+       143.75,
+       828.0,
+       342.625
+      ],
+      "emu": [
+       838200,
+       1825625,
+       10515600,
+       4351338
+      ],
+      "text": [
+       {
+        "text": "Mastertextformat bearbeiten",
+        "level": 1,
+        "size": 28.0,
+        "font": "Calibri",
+        "bullet": 8226
+       },
+       {
+        "text": "Zweite Ebene",
+        "level": 2,
+        "size": 24.0,
+        "font": "Calibri",
+        "bullet": 8226
+       },
+       {
+        "text": "Dritte Ebene",
+        "level": 3,
+        "size": 20.0,
+        "font": "Calibri",
+        "bullet": 8226
+       },
+       {
+        "text": "Vierte Ebene",
+        "level": 4,
+        "size": 18.0,
+        "font": "Calibri",
+        "bullet": 8226
+       },
+       {
+        "text": "Fünfte Ebene",
+        "level": 5,
+        "size": 18.0,
+        "font": "Calibri",
+        "bullet": 8226
+       }
+      ],
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Date Placeholder 3",
+      "type": "Date",
+      "pt": [
+       66.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       838200,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "06.11.2026",
+        "level": 1,
+        "size": 12.0,
+        "font": "Calibri"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Footer Placeholder 4",
+      "type": "Footer",
+      "pt": [
+       318.0,
+       500.5,
+       324.0,
+       28.75
+      ],
+      "emu": [
+       4038600,
+       6356350,
+       4114800,
+       365125
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Slide Number Placeholder 5",
+      "type": "SlideNumber",
+      "pt": [
+       678.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       8610600,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "‹Nr.›",
+        "level": 1,
+        "size": 12.0,
+        "font": "Calibri"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     }
+    ],
+    "other_shapes": []
+   },
+   {
+    "index": 3,
+    "name": "Abschnitts- überschrift",
+    "placeholders": [
+     {
+      "name": "Title 1",
+      "type": "Title",
+      "pt": [
+       65.5,
+       134.625,
+       828.0,
+       224.625
+      ],
+      "emu": [
+       831850,
+       1709738,
+       10515600,
+       2852737
+      ],
+      "text": [
+       {
+        "text": "Mastertitelformat bearbeiten",
+        "level": 1,
+        "size": 60.0,
+        "font": "Calibri Light"
+       }
+      ],
+      "anchor": 4,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Text Placeholder 2",
+      "type": "Body",
+      "pt": [
+       65.5,
+       361.375,
+       828.0,
+       118.125
+      ],
+      "emu": [
+       831850,
+       4589463,
+       10515600,
+       1500187
+      ],
+      "text": [
+       {
+        "text": "Mastertextformat bearbeiten",
+        "level": 1,
+        "size": 24.0,
+        "font": "Calibri"
+       }
+      ],
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Date Placeholder 3",
+      "type": "Date",
+      "pt": [
+       66.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       838200,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "06.11.2026",
+        "level": 1,
+        "size": 12.0,
+        "font": "Calibri"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Footer Placeholder 4",
+      "type": "Footer",
+      "pt": [
+       318.0,
+       500.5,
+       324.0,
+       28.75
+      ],
+      "emu": [
+       4038600,
+       6356350,
+       4114800,
+       365125
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Slide Number Placeholder 5",
+      "type": "SlideNumber",
+      "pt": [
+       678.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       8610600,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "‹Nr.›",
+        "level": 1,
+        "size": 12.0,
+        "font": "Calibri"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     }
+    ],
+    "other_shapes": []
+   },
+   {
+    "index": 4,
+    "name": "Zwei Inhalte",
+    "placeholders": [
+     {
+      "name": "Title 1",
+      "type": "Title",
+      "pt": [
+       66.0,
+       28.75,
+       828.0,
+       104.375
+      ],
+      "emu": [
+       838200,
+       365125,
+       10515600,
+       1325563
+      ],
+      "text": [
+       {
+        "text": "Mastertitelformat bearbeiten",
+        "level": 1,
+        "size": 44.0,
+        "font": "Calibri Light"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Content Placeholder 2",
+      "type": "Object",
+      "pt": [
+       66.0,
+       143.75,
+       408.0,
+       342.625
+      ],
+      "emu": [
+       838200,
+       1825625,
+       5181600,
+       4351338
+      ],
+      "text": [
+       {
+        "text": "Mastertextformat bearbeiten",
+        "level": 1,
+        "size": 28.0,
+        "font": "Calibri",
+        "bullet": 8226
+       },
+       {
+        "text": "Zweite Ebene",
+        "level": 2,
+        "size": 24.0,
+        "font": "Calibri",
+        "bullet": 8226
+       },
+       {
+        "text": "Dritte Ebene",
+        "level": 3,
+        "size": 20.0,
+        "font": "Calibri",
+        "bullet": 8226
+       },
+       {
+        "text": "Vierte Ebene",
+        "level": 4,
+        "size": 18.0,
+        "font": "Calibri",
+        "bullet": 8226
+       },
+       {
+        "text": "Fünfte Ebene",
+        "level": 5,
+        "size": 18.0,
+        "font": "Calibri",
+        "bullet": 8226
+       }
+      ],
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Content Placeholder 3",
+      "type": "Object",
+      "pt": [
+       486.0,
+       143.75,
+       408.0,
+       342.625
+      ],
+      "emu": [
+       6172200,
+       1825625,
+       5181600,
+       4351338
+      ],
+      "text": [
+       {
+        "text": "Mastertextformat bearbeiten",
+        "level": 1,
+        "size": 28.0,
+        "font": "Calibri",
+        "bullet": 8226
+       },
+       {
+        "text": "Zweite Ebene",
+        "level": 2,
+        "size": 24.0,
+        "font": "Calibri",
+        "bullet": 8226
+       },
+       {
+        "text": "Dritte Ebene",
+        "level": 3,
+        "size": 20.0,
+        "font": "Calibri",
+        "bullet": 8226
+       },
+       {
+        "text": "Vierte Ebene",
+        "level": 4,
+        "size": 18.0,
+        "font": "Calibri",
+        "bullet": 8226
+       },
+       {
+        "text": "Fünfte Ebene",
+        "level": 5,
+        "size": 18.0,
+        "font": "Calibri",
+        "bullet": 8226
+       }
+      ],
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Date Placeholder 4",
+      "type": "Date",
+      "pt": [
+       66.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       838200,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "06.11.2026",
+        "level": 1,
+        "size": 12.0,
+        "font": "Calibri"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Footer Placeholder 5",
+      "type": "Footer",
+      "pt": [
+       318.0,
+       500.5,
+       324.0,
+       28.75
+      ],
+      "emu": [
+       4038600,
+       6356350,
+       4114800,
+       365125
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Slide Number Placeholder 6",
+      "type": "SlideNumber",
+      "pt": [
+       678.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       8610600,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "‹Nr.›",
+        "level": 1,
+        "size": 12.0,
+        "font": "Calibri"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     }
+    ],
+    "other_shapes": []
+   },
+   {
+    "index": 5,
+    "name": "Vergleich",
+    "placeholders": [
+     {
+      "name": "Title 1",
+      "type": "Title",
+      "pt": [
+       66.125,
+       28.75,
+       828.0,
+       104.375
+      ],
+      "emu": [
+       839788,
+       365125,
+       10515600,
+       1325563
+      ],
+      "text": [
+       {
+        "text": "Mastertitelformat bearbeiten",
+        "level": 1,
+        "size": 44.0,
+        "font": "Calibri Light"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Text Placeholder 2",
+      "type": "Body",
+      "pt": [
+       66.125,
+       132.375,
+       406.125,
+       64.875
+      ],
+      "emu": [
+       839788,
+       1681163,
+       5157787,
+       823912
+      ],
+      "text": [
+       {
+        "text": "Mastertextformat bearbeiten",
+        "level": 1,
+        "size": 24.0,
+        "font": "Calibri"
+       }
+      ],
+      "anchor": 4,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Content Placeholder 3",
+      "type": "Object",
+      "pt": [
+       66.125,
+       197.25,
+       406.125,
+       290.125
+      ],
+      "emu": [
+       839788,
+       2505075,
+       5157787,
+       3684588
+      ],
+      "text": [
+       {
+        "text": "Mastertextformat bearbeiten",
+        "level": 1,
+        "size": 28.0,
+        "font": "Calibri",
+        "bullet": 8226
+       },
+       {
+        "text": "Zweite Ebene",
+        "level": 2,
+        "size": 24.0,
+        "font": "Calibri",
+        "bullet": 8226
+       },
+       {
+        "text": "Dritte Ebene",
+        "level": 3,
+        "size": 20.0,
+        "font": "Calibri",
+        "bullet": 8226
+       },
+       {
+        "text": "Vierte Ebene",
+        "level": 4,
+        "size": 18.0,
+        "font": "Calibri",
+        "bullet": 8226
+       },
+       {
+        "text": "Fünfte Ebene",
+        "level": 5,
+        "size": 18.0,
+        "font": "Calibri",
+        "bullet": 8226
+       }
+      ],
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Text Placeholder 4",
+      "type": "Body",
+      "pt": [
+       486.0,
+       132.375,
+       408.125,
+       64.875
+      ],
+      "emu": [
+       6172200,
+       1681163,
+       5183188,
+       823912
+      ],
+      "text": [
+       {
+        "text": "Mastertextformat bearbeiten",
+        "level": 1,
+        "size": 24.0,
+        "font": "Calibri"
+       }
+      ],
+      "anchor": 4,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Content Placeholder 5",
+      "type": "Object",
+      "pt": [
+       486.0,
+       197.25,
+       408.125,
+       290.125
+      ],
+      "emu": [
+       6172200,
+       2505075,
+       5183188,
+       3684588
+      ],
+      "text": [
+       {
+        "text": "Mastertextformat bearbeiten",
+        "level": 1,
+        "size": 28.0,
+        "font": "Calibri",
+        "bullet": 8226
+       },
+       {
+        "text": "Zweite Ebene",
+        "level": 2,
+        "size": 24.0,
+        "font": "Calibri",
+        "bullet": 8226
+       },
+       {
+        "text": "Dritte Ebene",
+        "level": 3,
+        "size": 20.0,
+        "font": "Calibri",
+        "bullet": 8226
+       },
+       {
+        "text": "Vierte Ebene",
+        "level": 4,
+        "size": 18.0,
+        "font": "Calibri",
+        "bullet": 8226
+       },
+       {
+        "text": "Fünfte Ebene",
+        "level": 5,
+        "size": 18.0,
+        "font": "Calibri",
+        "bullet": 8226
+       }
+      ],
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Date Placeholder 6",
+      "type": "Date",
+      "pt": [
+       66.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       838200,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "06.11.2026",
+        "level": 1,
+        "size": 12.0,
+        "font": "Calibri"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Footer Placeholder 7",
+      "type": "Footer",
+      "pt": [
+       318.0,
+       500.5,
+       324.0,
+       28.75
+      ],
+      "emu": [
+       4038600,
+       6356350,
+       4114800,
+       365125
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Slide Number Placeholder 8",
+      "type": "SlideNumber",
+      "pt": [
+       678.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       8610600,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "‹Nr.›",
+        "level": 1,
+        "size": 12.0,
+        "font": "Calibri"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     }
+    ],
+    "other_shapes": []
+   },
+   {
+    "index": 6,
+    "name": "Nur Titel",
+    "placeholders": [
+     {
+      "name": "Title 1",
+      "type": "Title",
+      "pt": [
+       66.0,
+       28.75,
+       828.0,
+       104.375
+      ],
+      "emu": [
+       838200,
+       365125,
+       10515600,
+       1325563
+      ],
+      "text": [
+       {
+        "text": "Mastertitelformat bearbeiten",
+        "level": 1,
+        "size": 44.0,
+        "font": "Calibri Light"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Date Placeholder 2",
+      "type": "Date",
+      "pt": [
+       66.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       838200,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "06.11.2026",
+        "level": 1,
+        "size": 12.0,
+        "font": "Calibri"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Footer Placeholder 3",
+      "type": "Footer",
+      "pt": [
+       318.0,
+       500.5,
+       324.0,
+       28.75
+      ],
+      "emu": [
+       4038600,
+       6356350,
+       4114800,
+       365125
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Slide Number Placeholder 4",
+      "type": "SlideNumber",
+      "pt": [
+       678.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       8610600,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "‹Nr.›",
+        "level": 1,
+        "size": 12.0,
+        "font": "Calibri"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     }
+    ],
+    "other_shapes": []
+   },
+   {
+    "index": 7,
+    "name": "Leer",
+    "placeholders": [
+     {
+      "name": "Date Placeholder 1",
+      "type": "Date",
+      "pt": [
+       66.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       838200,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "06.11.2026",
+        "level": 1,
+        "size": 12.0,
+        "font": "Calibri"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Footer Placeholder 2",
+      "type": "Footer",
+      "pt": [
+       318.0,
+       500.5,
+       324.0,
+       28.75
+      ],
+      "emu": [
+       4038600,
+       6356350,
+       4114800,
+       365125
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Slide Number Placeholder 3",
+      "type": "SlideNumber",
+      "pt": [
+       678.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       8610600,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "‹Nr.›",
+        "level": 1,
+        "size": 12.0,
+        "font": "Calibri"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     }
+    ],
+    "other_shapes": []
+   },
+   {
+    "index": 8,
+    "name": "Inhalt mit Überschrift",
+    "placeholders": [
+     {
+      "name": "Title 1",
+      "type": "Title",
+      "pt": [
+       66.125,
+       36.0,
+       309.625,
+       126.0
+      ],
+      "emu": [
+       839788,
+       457200,
+       3932237,
+       1600200
+      ],
+      "text": [
+       {
+        "text": "Mastertitelformat bearbeiten",
+        "level": 1,
+        "size": 32.0,
+        "font": "Calibri Light"
+       }
+      ],
+      "anchor": 4,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Content Placeholder 2",
+      "type": "Object",
+      "pt": [
+       408.125,
+       77.75,
+       486.0,
+       383.75
+      ],
+      "emu": [
+       5183188,
+       987425,
+       6172200,
+       4873625
+      ],
+      "text": [
+       {
+        "text": "Mastertextformat bearbeiten",
+        "level": 1,
+        "size": 32.0,
+        "font": "Calibri",
+        "bullet": 8226
+       },
+       {
+        "text": "Zweite Ebene",
+        "level": 2,
+        "size": 28.0,
+        "font": "Calibri",
+        "bullet": 8226
+       },
+       {
+        "text": "Dritte Ebene",
+        "level": 3,
+        "size": 24.0,
+        "font": "Calibri",
+        "bullet": 8226
+       },
+       {
+        "text": "Vierte Ebene",
+        "level": 4,
+        "size": 20.0,
+        "font": "Calibri",
+        "bullet": 8226
+       },
+       {
+        "text": "Fünfte Ebene",
+        "level": 5,
+        "size": 20.0,
+        "font": "Calibri",
+        "bullet": 8226
+       }
+      ],
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Text Placeholder 3",
+      "type": "Body",
+      "pt": [
+       66.125,
+       162.0,
+       309.625,
+       300.125
+      ],
+      "emu": [
+       839788,
+       2057400,
+       3932237,
+       3811588
+      ],
+      "text": [
+       {
+        "text": "Mastertextformat bearbeiten",
+        "level": 1,
+        "size": 16.0,
+        "font": "Calibri"
+       }
+      ],
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Date Placeholder 4",
+      "type": "Date",
+      "pt": [
+       66.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       838200,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "06.11.2026",
+        "level": 1,
+        "size": 12.0,
+        "font": "Calibri"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Footer Placeholder 5",
+      "type": "Footer",
+      "pt": [
+       318.0,
+       500.5,
+       324.0,
+       28.75
+      ],
+      "emu": [
+       4038600,
+       6356350,
+       4114800,
+       365125
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Slide Number Placeholder 6",
+      "type": "SlideNumber",
+      "pt": [
+       678.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       8610600,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "‹Nr.›",
+        "level": 1,
+        "size": 12.0,
+        "font": "Calibri"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     }
+    ],
+    "other_shapes": []
+   },
+   {
+    "index": 9,
+    "name": "Bild mit Überschrift",
+    "placeholders": [
+     {
+      "name": "Title 1",
+      "type": "Title",
+      "pt": [
+       66.125,
+       36.0,
+       309.625,
+       126.0
+      ],
+      "emu": [
+       839788,
+       457200,
+       3932237,
+       1600200
+      ],
+      "text": [
+       {
+        "text": "Mastertitelformat bearbeiten",
+        "level": 1,
+        "size": 32.0,
+        "font": "Calibri Light"
+       }
+      ],
+      "anchor": 4,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Picture Placeholder 2",
+      "type": "Picture",
+      "pt": [
+       408.125,
+       77.75,
+       486.0,
+       383.75
+      ],
+      "emu": [
+       5183188,
+       987425,
+       6172200,
+       4873625
+      ],
+      "text": [
+       {
+        "text": "Bild durch Klicken auf Symbol hinzufügen",
+        "level": 1,
+        "size": 32.0,
+        "font": "Calibri"
+       }
+      ],
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Text Placeholder 3",
+      "type": "Body",
+      "pt": [
+       66.125,
+       162.0,
+       309.625,
+       300.125
+      ],
+      "emu": [
+       839788,
+       2057400,
+       3932237,
+       3811588
+      ],
+      "text": [
+       {
+        "text": "Mastertextformat bearbeiten",
+        "level": 1,
+        "size": 16.0,
+        "font": "Calibri"
+       }
+      ],
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Date Placeholder 4",
+      "type": "Date",
+      "pt": [
+       66.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       838200,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "06.11.2026",
+        "level": 1,
+        "size": 12.0,
+        "font": "Calibri"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Footer Placeholder 5",
+      "type": "Footer",
+      "pt": [
+       318.0,
+       500.5,
+       324.0,
+       28.75
+      ],
+      "emu": [
+       4038600,
+       6356350,
+       4114800,
+       365125
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Slide Number Placeholder 6",
+      "type": "SlideNumber",
+      "pt": [
+       678.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       8610600,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "‹Nr.›",
+        "level": 1,
+        "size": 12.0,
+        "font": "Calibri"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     }
+    ],
+    "other_shapes": []
+   },
+   {
+    "index": 10,
+    "name": "Titel und vertikaler Text",
+    "placeholders": [
+     {
+      "name": "Title 1",
+      "type": "Title",
+      "pt": [
+       66.0,
+       28.75,
+       828.0,
+       104.375
+      ],
+      "emu": [
+       838200,
+       365125,
+       10515600,
+       1325563
+      ],
+      "text": [
+       {
+        "text": "Mastertitelformat bearbeiten",
+        "level": 1,
+        "size": 44.0,
+        "font": "Calibri Light"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Vertical Text Placeholder 2",
+      "type": "VerticalBody",
+      "pt": [
+       66.0,
+       143.75,
+       828.0,
+       342.625
+      ],
+      "emu": [
+       838200,
+       1825625,
+       10515600,
+       4351338
+      ],
+      "text": [
+       {
+        "text": "Mastertextformat bearbeiten",
+        "level": 1,
+        "size": 28.0,
+        "font": "Calibri",
+        "bullet": 8226
+       },
+       {
+        "text": "Zweite Ebene",
+        "level": 2,
+        "size": 24.0,
+        "font": "Calibri",
+        "bullet": 8226
+       },
+       {
+        "text": "Dritte Ebene",
+        "level": 3,
+        "size": 20.0,
+        "font": "Calibri",
+        "bullet": 8226
+       },
+       {
+        "text": "Vierte Ebene",
+        "level": 4,
+        "size": 18.0,
+        "font": "Calibri",
+        "bullet": 8226
+       },
+       {
+        "text": "Fünfte Ebene",
+        "level": 5,
+        "size": 18.0,
+        "font": "Calibri",
+        "bullet": 8226
+       }
+      ],
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Date Placeholder 3",
+      "type": "Date",
+      "pt": [
+       66.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       838200,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "06.11.2026",
+        "level": 1,
+        "size": 12.0,
+        "font": "Calibri"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Footer Placeholder 4",
+      "type": "Footer",
+      "pt": [
+       318.0,
+       500.5,
+       324.0,
+       28.75
+      ],
+      "emu": [
+       4038600,
+       6356350,
+       4114800,
+       365125
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Slide Number Placeholder 5",
+      "type": "SlideNumber",
+      "pt": [
+       678.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       8610600,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "‹Nr.›",
+        "level": 1,
+        "size": 12.0,
+        "font": "Calibri"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     }
+    ],
+    "other_shapes": []
+   },
+   {
+    "index": 11,
+    "name": "Vertikaler Titel und Text",
+    "placeholders": [
+     {
+      "name": "Vertical Title 1",
+      "type": "VerticalTitle",
+      "pt": [
+       687.0,
+       28.75,
+       207.0,
+       457.625
+      ],
+      "emu": [
+       8724900,
+       365125,
+       2628900,
+       5811838
+      ],
+      "text": [
+       {
+        "text": "Mastertitelformat bearbeiten",
+        "level": 1,
+        "size": 44.0,
+        "font": "Calibri Light"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Vertical Text Placeholder 2",
+      "type": "VerticalBody",
+      "pt": [
+       66.0,
+       28.75,
+       609.0,
+       457.625
+      ],
+      "emu": [
+       838200,
+       365125,
+       7734300,
+       5811838
+      ],
+      "text": [
+       {
+        "text": "Mastertextformat bearbeiten",
+        "level": 1,
+        "size": 28.0,
+        "font": "Calibri",
+        "bullet": 8226
+       },
+       {
+        "text": "Zweite Ebene",
+        "level": 2,
+        "size": 24.0,
+        "font": "Calibri",
+        "bullet": 8226
+       },
+       {
+        "text": "Dritte Ebene",
+        "level": 3,
+        "size": 20.0,
+        "font": "Calibri",
+        "bullet": 8226
+       },
+       {
+        "text": "Vierte Ebene",
+        "level": 4,
+        "size": 18.0,
+        "font": "Calibri",
+        "bullet": 8226
+       },
+       {
+        "text": "Fünfte Ebene",
+        "level": 5,
+        "size": 18.0,
+        "font": "Calibri",
+        "bullet": 8226
+       }
+      ],
+      "anchor": 1,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "Mixed"
+     },
+     {
+      "name": "Date Placeholder 3",
+      "type": "Date",
+      "pt": [
+       66.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       838200,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "06.11.2026",
+        "level": 1,
+        "size": 12.0,
+        "font": "Calibri"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Footer Placeholder 4",
+      "type": "Footer",
+      "pt": [
+       318.0,
+       500.5,
+       324.0,
+       28.75
+      ],
+      "emu": [
+       4038600,
+       6356350,
+       4114800,
+       365125
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     },
+     {
+      "name": "Slide Number Placeholder 5",
+      "type": "SlideNumber",
+      "pt": [
+       678.0,
+       500.5,
+       216.0,
+       28.75
+      ],
+      "emu": [
+       8610600,
+       6356350,
+       2743200,
+       365125
+      ],
+      "text": [
+       {
+        "text": "‹Nr.›",
+        "level": 1,
+        "size": 12.0,
+        "font": "Calibri"
+       }
+      ],
+      "anchor": 3,
+      "margins_pt": [
+       7.199999809265137,
+       3.5999999046325684,
+       7.199999809265137,
+       3.5999999046325684
+      ],
+      "autosize": "None"
+     }
+    ],
+    "other_shapes": []
+   }
+  ]
+ },
+ "autoshapes": [
+  {
+   "type": 1,
+   "constant": "msoShapeRectangle",
+   "shape_name": "Rectangle"
+  },
+  {
+   "type": 2,
+   "constant": "msoShapeParallelogram",
+   "shape_name": "Parallelogram",
+   "adjustments": [
+    0.25
+   ]
+  },
+  {
+   "type": 3,
+   "constant": "msoShapeTrapezoid",
+   "shape_name": "Trapezoid",
+   "adjustments": [
+    0.25
+   ]
+  },
+  {
+   "type": 4,
+   "constant": "msoShapeDiamond",
+   "shape_name": "Diamond"
+  },
+  {
+   "type": 5,
+   "constant": "msoShapeRoundedRectangle",
+   "shape_name": "Rounded Rectangle",
+   "adjustments": [
+    0.16667
+   ]
+  },
+  {
+   "type": 6,
+   "constant": "msoShapeOctagon",
+   "shape_name": "Octagon",
+   "adjustments": [
+    0.29289
+   ]
+  },
+  {
+   "type": 7,
+   "constant": "msoShapeIsoscelesTriangle",
+   "shape_name": "Isosceles Triangle",
+   "adjustments": [
+    0.5
+   ]
+  },
+  {
+   "type": 8,
+   "constant": "msoShapeRightTriangle",
+   "shape_name": "Right Triangle"
+  },
+  {
+   "type": 9,
+   "constant": "msoShapeOval",
+   "shape_name": "Oval"
+  },
+  {
+   "type": 10,
+   "constant": "msoShapeHexagon",
+   "shape_name": "Hexagon",
+   "adjustments": [
+    0.25,
+    1.1547
+   ]
+  },
+  {
+   "type": 11,
+   "constant": "msoShapeCross",
+   "shape_name": "Cross",
+   "adjustments": [
+    0.25
+   ]
+  },
+  {
+   "type": 12,
+   "constant": "msoShapeRegularPentagon",
+   "shape_name": "Regular Pentagon",
+   "adjustments": [
+    1.05146,
+    1.10557
+   ]
+  },
+  {
+   "type": 13,
+   "constant": "msoShapeCan",
+   "shape_name": "Can",
+   "adjustments": [
+    0.25
+   ]
+  },
+  {
+   "type": 14,
+   "constant": "msoShapeCube",
+   "shape_name": "Cube",
+   "adjustments": [
+    0.25
+   ]
+  },
+  {
+   "type": 15,
+   "constant": "msoShapeBevel",
+   "shape_name": "Bevel",
+   "adjustments": [
+    0.125
+   ]
+  },
+  {
+   "type": 16,
+   "constant": "msoShapeFoldedCorner",
+   "shape_name": "Folded Corner",
+   "adjustments": [
+    0.16667
+   ]
+  },
+  {
+   "type": 17,
+   "constant": "msoShapeSmileyFace",
+   "shape_name": "Smiley Face",
+   "adjustments": [
+    0.04653
+   ]
+  },
+  {
+   "type": 18,
+   "constant": "msoShapeDonut",
+   "shape_name": "Donut",
+   "adjustments": [
+    0.25
+   ]
+  },
+  {
+   "type": 19,
+   "constant": "msoShapeNoSymbol",
+   "shape_name": "\"No\" Symbol",
+   "adjustments": [
+    0.1875
+   ]
+  },
+  {
+   "type": 20,
+   "constant": "msoShapeBlockArc",
+   "shape_name": "Block Arc",
+   "adjustments": [
+    180.0,
+    0.0,
+    0.25
+   ]
+  },
+  {
+   "type": 21,
+   "constant": "msoShapeHeart",
+   "shape_name": "Heart"
+  },
+  {
+   "type": 22,
+   "constant": "msoShapeLightningBolt",
+   "shape_name": "Lightning Bolt"
+  },
+  {
+   "type": 23,
+   "constant": "msoShapeSun",
+   "shape_name": "Sun",
+   "adjustments": [
+    0.25
+   ]
+  },
+  {
+   "type": 24,
+   "constant": "msoShapeMoon",
+   "shape_name": "Moon",
+   "adjustments": [
+    0.5
+   ]
+  },
+  {
+   "type": 25,
+   "constant": "msoShapeArc",
+   "shape_name": "Arc",
+   "adjustments": [
+    -90.0,
+    0.0
+   ]
+  },
+  {
+   "type": 26,
+   "constant": "msoShapeDoubleBracket",
+   "shape_name": "Double Bracket",
+   "adjustments": [
+    0.16667
+   ]
+  },
+  {
+   "type": 27,
+   "constant": "msoShapeDoubleBrace",
+   "shape_name": "Double Brace",
+   "adjustments": [
+    0.08333
+   ]
+  },
+  {
+   "type": 28,
+   "constant": "msoShapePlaque",
+   "shape_name": "Plaque",
+   "adjustments": [
+    0.16667
+   ]
+  },
+  {
+   "type": 29,
+   "constant": "msoShapeLeftBracket",
+   "shape_name": "Left Bracket",
+   "adjustments": [
+    0.08333
+   ]
+  },
+  {
+   "type": 30,
+   "constant": "msoShapeRightBracket",
+   "shape_name": "Right Bracket",
+   "adjustments": [
+    0.08333
+   ]
+  },
+  {
+   "type": 31,
+   "constant": "msoShapeLeftBrace",
+   "shape_name": "Left Brace",
+   "adjustments": [
+    0.08333,
+    0.5
+   ]
+  },
+  {
+   "type": 32,
+   "constant": "msoShapeRightBrace",
+   "shape_name": "Right Brace",
+   "adjustments": [
+    0.08333,
+    0.5
+   ]
+  },
+  {
+   "type": 33,
+   "constant": "msoShapeRightArrow",
+   "shape_name": "Right Arrow",
+   "adjustments": [
+    0.5,
+    0.5
+   ]
+  },
+  {
+   "type": 34,
+   "constant": "msoShapeLeftArrow",
+   "shape_name": "Left Arrow",
+   "adjustments": [
+    0.5,
+    0.5
+   ]
+  },
+  {
+   "type": 35,
+   "constant": "msoShapeUpArrow",
+   "shape_name": "Up Arrow",
+   "adjustments": [
+    0.5,
+    0.5
+   ]
+  },
+  {
+   "type": 36,
+   "constant": "msoShapeDownArrow",
+   "shape_name": "Down Arrow",
+   "adjustments": [
+    0.5,
+    0.5
+   ]
+  },
+  {
+   "type": 37,
+   "constant": "msoShapeLeftRightArrow",
+   "shape_name": "Left-Right Arrow",
+   "adjustments": [
+    0.5,
+    0.5
+   ]
+  },
+  {
+   "type": 38,
+   "constant": "msoShapeUpDownArrow",
+   "shape_name": "Up-Down Arrow",
+   "adjustments": [
+    0.5,
+    0.5
+   ]
+  },
+  {
+   "type": 39,
+   "constant": "msoShapeQuadArrow",
+   "shape_name": "Quad Arrow",
+   "adjustments": [
+    0.225,
+    0.225,
+    0.225
+   ]
+  },
+  {
+   "type": 40,
+   "constant": "msoShapeLeftRightUpArrow",
+   "shape_name": "Left-Right-Up Arrow",
+   "adjustments": [
+    0.25,
+    0.25,
+    0.25
+   ]
+  },
+  {
+   "type": 41,
+   "constant": "msoShapeBentArrow",
+   "shape_name": "Bent Arrow",
+   "adjustments": [
+    0.25,
+    0.25,
+    0.25,
+    0.4375
+   ]
+  },
+  {
+   "type": 42,
+   "constant": "msoShapeUTurnArrow",
+   "shape_name": "U-Turn Arrow",
+   "adjustments": [
+    0.25,
+    0.25,
+    0.25,
+    0.4375,
+    0.75
+   ]
+  },
+  {
+   "type": 43,
+   "constant": "msoShapeLeftUpArrow",
+   "shape_name": "Left-Up Arrow",
+   "adjustments": [
+    0.25,
+    0.25,
+    0.25
+   ]
+  },
+  {
+   "type": 44,
+   "constant": "msoShapeBentUpArrow",
+   "shape_name": "Bent-Up Arrow",
+   "adjustments": [
+    0.25,
+    0.25,
+    0.25
+   ]
+  },
+  {
+   "type": 45,
+   "constant": "msoShapeCurvedRightArrow",
+   "shape_name": "Curved Right Arrow",
+   "adjustments": [
+    0.25,
+    0.5,
+    0.25
+   ]
+  },
+  {
+   "type": 46,
+   "constant": "msoShapeCurvedLeftArrow",
+   "shape_name": "Curved Left Arrow",
+   "adjustments": [
+    0.25,
+    0.5,
+    0.25
+   ]
+  },
+  {
+   "type": 47,
+   "constant": "msoShapeCurvedUpArrow",
+   "shape_name": "Curved Up Arrow",
+   "adjustments": [
+    0.25,
+    0.5,
+    0.25
+   ]
+  },
+  {
+   "type": 48,
+   "constant": "msoShapeCurvedDownArrow",
+   "shape_name": "Curved Down Arrow",
+   "adjustments": [
+    0.25,
+    0.5,
+    0.25
+   ]
+  },
+  {
+   "type": 49,
+   "constant": "msoShapeStripedRightArrow",
+   "shape_name": "Striped Right Arrow",
+   "adjustments": [
+    0.5,
+    0.5
+   ]
+  },
+  {
+   "type": 50,
+   "constant": "msoShapeNotchedRightArrow",
+   "shape_name": "Notched Right Arrow",
+   "adjustments": [
+    0.5,
+    0.5
+   ]
+  },
+  {
+   "type": 51,
+   "constant": "msoShapePentagon",
+   "shape_name": "Pentagon",
+   "adjustments": [
+    0.5
+   ]
+  },
+  {
+   "type": 52,
+   "constant": "msoShapeChevron",
+   "shape_name": "Chevron",
+   "adjustments": [
+    0.5
+   ]
+  },
+  {
+   "type": 53,
+   "constant": "msoShapeRightArrowCallout",
+   "shape_name": "Right Arrow Callout",
+   "adjustments": [
+    0.25,
+    0.25,
+    0.25,
+    0.64977
+   ]
+  },
+  {
+   "type": 54,
+   "constant": "msoShapeLeftArrowCallout",
+   "shape_name": "Left Arrow Callout",
+   "adjustments": [
+    0.25,
+    0.25,
+    0.25,
+    0.64977
+   ]
+  },
+  {
+   "type": 55,
+   "constant": "msoShapeUpArrowCallout",
+   "shape_name": "Up Arrow Callout",
+   "adjustments": [
+    0.25,
+    0.25,
+    0.25,
+    0.64977
+   ]
+  },
+  {
+   "type": 56,
+   "constant": "msoShapeDownArrowCallout",
+   "shape_name": "Down Arrow Callout",
+   "adjustments": [
+    0.25,
+    0.25,
+    0.25,
+    0.64977
+   ]
+  },
+  {
+   "type": 57,
+   "constant": "msoShapeLeftRightArrowCallout",
+   "shape_name": "Left-Right Arrow Callout",
+   "adjustments": [
+    0.25,
+    0.25,
+    0.25,
+    0.48123
+   ]
+  },
+  {
+   "type": 58,
+   "constant": "msoShapeUpDownArrowCallout",
+   "shape_name": "Up-Down Arrow Callout",
+   "adjustments": [
+    0.25,
+    0.25,
+    0.25,
+    0.48123
+   ]
+  },
+  {
+   "type": 59,
+   "constant": "msoShapeQuadArrowCallout",
+   "shape_name": "Quad Arrow Callout",
+   "adjustments": [
+    0.18515,
+    0.18515,
+    0.18515,
+    0.48123
+   ]
+  },
+  {
+   "type": 60,
+   "constant": "msoShapeCircularArrow",
+   "shape_name": "Circular Arrow",
+   "adjustments": [
+    0.125,
+    19.03865,
+    -19.03865,
+    180.0,
+    0.125
+   ]
+  },
+  {
+   "type": 61,
+   "constant": "msoShapeFlowchartProcess",
+   "shape_name": "Flowchart: Process"
+  },
+  {
+   "type": 62,
+   "constant": "msoShapeFlowchartAlternateProcess",
+   "shape_name": "Flowchart: Alternate Process"
+  },
+  {
+   "type": 63,
+   "constant": "msoShapeFlowchartDecision",
+   "shape_name": "Flowchart: Decision"
+  },
+  {
+   "type": 64,
+   "constant": "msoShapeFlowchartData",
+   "shape_name": "Flowchart: Data"
+  },
+  {
+   "type": 65,
+   "constant": "msoShapeFlowchartPredefinedProcess",
+   "shape_name": "Flowchart: Predefined Process"
+  },
+  {
+   "type": 66,
+   "constant": "msoShapeFlowchartInternalStorage",
+   "shape_name": "Flowchart: Internal Storage"
+  },
+  {
+   "type": 67,
+   "constant": "msoShapeFlowchartDocument",
+   "shape_name": "Flowchart: Document"
+  },
+  {
+   "type": 68,
+   "constant": "msoShapeFlowchartMultidocument",
+   "shape_name": "Flowchart: Multidocument"
+  },
+  {
+   "type": 69,
+   "constant": "msoShapeFlowchartTerminator",
+   "shape_name": "Flowchart: Terminator"
+  },
+  {
+   "type": 70,
+   "constant": "msoShapeFlowchartPreparation",
+   "shape_name": "Flowchart: Preparation"
+  },
+  {
+   "type": 71,
+   "constant": "msoShapeFlowchartManualInput",
+   "shape_name": "Flowchart: Manual Input"
+  },
+  {
+   "type": 72,
+   "constant": "msoShapeFlowchartManualOperation",
+   "shape_name": "Flowchart: Manual Operation"
+  },
+  {
+   "type": 73,
+   "constant": "msoShapeFlowchartConnector",
+   "shape_name": "Flowchart: Connector"
+  },
+  {
+   "type": 74,
+   "constant": "msoShapeFlowchartOffpageConnector",
+   "shape_name": "Flowchart: Off-page Connector"
+  },
+  {
+   "type": 75,
+   "constant": "msoShapeFlowchartCard",
+   "shape_name": "Flowchart: Card"
+  },
+  {
+   "type": 76,
+   "constant": "msoShapeFlowchartPunchedTape",
+   "shape_name": "Flowchart: Punched Tape"
+  },
+  {
+   "type": 77,
+   "constant": "msoShapeFlowchartSummingJunction",
+   "shape_name": "Flowchart: Summing Junction"
+  },
+  {
+   "type": 78,
+   "constant": "msoShapeFlowchartOr",
+   "shape_name": "Flowchart: Or"
+  },
+  {
+   "type": 79,
+   "constant": "msoShapeFlowchartCollate",
+   "shape_name": "Flowchart: Collate"
+  },
+  {
+   "type": 80,
+   "constant": "msoShapeFlowchartSort",
+   "shape_name": "Flowchart: Sort"
+  },
+  {
+   "type": 81,
+   "constant": "msoShapeFlowchartExtract",
+   "shape_name": "Flowchart: Extract"
+  },
+  {
+   "type": 82,
+   "constant": "msoShapeFlowchartMerge",
+   "shape_name": "Flowchart: Merge"
+  },
+  {
+   "type": 83,
+   "constant": "msoShapeFlowchartStoredData",
+   "shape_name": "Flowchart: Stored Data"
+  },
+  {
+   "type": 84,
+   "constant": "msoShapeFlowchartDelay",
+   "shape_name": "Flowchart: Delay"
+  },
+  {
+   "type": 85,
+   "constant": "msoShapeFlowchartSequentialAccessStorage",
+   "shape_name": "Flowchart: Sequential Access Storage"
+  },
+  {
+   "type": 86,
+   "constant": "msoShapeFlowchartMagneticDisk",
+   "shape_name": "Flowchart: Magnetic Disk"
+  },
+  {
+   "type": 87,
+   "constant": "msoShapeFlowchartDirectAccessStorage",
+   "shape_name": "Flowchart: Direct Access Storage"
+  },
+  {
+   "type": 88,
+   "constant": "msoShapeFlowchartDisplay",
+   "shape_name": "Flowchart: Display"
+  },
+  {
+   "type": 89,
+   "constant": "msoShapeExplosion1",
+   "shape_name": "Explosion 1"
+  },
+  {
+   "type": 90,
+   "constant": "msoShapeExplosion2",
+   "shape_name": "Explosion 2"
+  },
+  {
+   "type": 91,
+   "constant": "msoShape4pointStar",
+   "shape_name": "4-Point Star",
+   "adjustments": [
+    0.125
+   ]
+  },
+  {
+   "type": 92,
+   "constant": "msoShape5pointStar",
+   "shape_name": "5-Point Star",
+   "adjustments": [
+    0.19098,
+    1.05146,
+    1.10557
+   ]
+  },
+  {
+   "type": 93,
+   "constant": "msoShape8pointStar",
+   "shape_name": "8-Point Star",
+   "adjustments": [
+    0.375
+   ]
+  },
+  {
+   "type": 94,
+   "constant": "msoShape16pointStar",
+   "shape_name": "16-Point Star",
+   "adjustments": [
+    0.375
+   ]
+  },
+  {
+   "type": 95,
+   "constant": "msoShape24pointStar",
+   "shape_name": "24-Point Star",
+   "adjustments": [
+    0.375
+   ]
+  },
+  {
+   "type": 96,
+   "constant": "msoShape32pointStar",
+   "shape_name": "32-Point Star",
+   "adjustments": [
+    0.375
+   ]
+  },
+  {
+   "type": 97,
+   "constant": "msoShapeUpRibbon",
+   "shape_name": "Up Ribbon",
+   "adjustments": [
+    0.16667,
+    0.5
+   ]
+  },
+  {
+   "type": 98,
+   "constant": "msoShapeDownRibbon",
+   "shape_name": "Down Ribbon",
+   "adjustments": [
+    0.16667,
+    0.5
+   ]
+  },
+  {
+   "type": 99,
+   "constant": "msoShapeCurvedUpRibbon",
+   "shape_name": "Curved Up Ribbon",
+   "adjustments": [
+    0.25,
+    0.5,
+    0.125
+   ]
+  },
+  {
+   "type": 100,
+   "constant": "msoShapeCurvedDownRibbon",
+   "shape_name": "Curved Down Ribbon",
+   "adjustments": [
+    0.25,
+    0.5,
+    0.125
+   ]
+  },
+  {
+   "type": 101,
+   "constant": "msoShapeVerticalScroll",
+   "shape_name": "Vertical Scroll",
+   "adjustments": [
+    0.125
+   ]
+  },
+  {
+   "type": 102,
+   "constant": "msoShapeHorizontalScroll",
+   "shape_name": "Horizontal Scroll",
+   "adjustments": [
+    0.125
+   ]
+  },
+  {
+   "type": 103,
+   "constant": "msoShapeWave",
+   "shape_name": "Wave",
+   "adjustments": [
+    0.125,
+    0.0
+   ]
+  },
+  {
+   "type": 104,
+   "constant": "msoShapeDoubleWave",
+   "shape_name": "Double Wave",
+   "adjustments": [
+    0.0625,
+    0.0
+   ]
+  },
+  {
+   "type": 105,
+   "constant": "msoShapeRectangularCallout",
+   "shape_name": "Rectangular Callout",
+   "adjustments": [
+    -0.20833,
+    0.625
+   ]
+  },
+  {
+   "type": 106,
+   "constant": "msoShapeRoundedRectangularCallout",
+   "shape_name": "Rounded Rectangular Callout",
+   "adjustments": [
+    -0.20833,
+    0.625,
+    0.16667
+   ]
+  },
+  {
+   "type": 107,
+   "constant": "msoShapeOvalCallout",
+   "shape_name": "Oval Callout",
+   "adjustments": [
+    -0.20833,
+    0.625
+   ]
+  },
+  {
+   "type": 108,
+   "constant": "msoShapeCloudCallout",
+   "shape_name": "Cloud Callout",
+   "adjustments": [
+    -0.20833,
+    0.625
+   ]
+  },
+  {
+   "type": 109,
+   "constant": "msoShapeLineCallout1",
+   "shape_name": "Line Callout 1",
+   "adjustments": [
+    0.1875,
+    -0.08333,
+    1.125,
+    -0.38333
+   ]
+  },
+  {
+   "type": 110,
+   "constant": "msoShapeLineCallout2",
+   "shape_name": "Line Callout 1",
+   "adjustments": [
+    0.1875,
+    -0.08333,
+    1.125,
+    -0.38333
+   ]
+  },
+  {
+   "type": 111,
+   "constant": "msoShapeLineCallout3",
+   "shape_name": "Line Callout 2",
+   "adjustments": [
+    0.1875,
+    -0.08333,
+    0.1875,
+    -0.16667,
+    1.125,
+    -0.46667
+   ]
+  },
+  {
+   "type": 112,
+   "constant": "msoShapeLineCallout4",
+   "shape_name": "Line Callout 3",
+   "adjustments": [
+    0.1875,
+    -0.08333,
+    0.1875,
+    -0.16667,
+    1.0,
+    -0.16667,
+    1.12963,
+    -0.08333
+   ]
+  },
+  {
+   "type": 113,
+   "constant": "msoShapeLineCallout1AccentBar",
+   "shape_name": "Line Callout 1 (No Border)",
+   "adjustments": [
+    0.1875,
+    -0.08333,
+    1.125,
+    -0.38333
+   ]
+  },
+  {
+   "type": 114,
+   "constant": "msoShapeLineCallout2AccentBar",
+   "shape_name": "Line Callout 1 (Accent Bar)",
+   "adjustments": [
+    0.1875,
+    -0.08333,
+    1.125,
+    -0.38333
+   ]
+  },
+  {
+   "type": 115,
+   "constant": "msoShapeLineCallout3AccentBar",
+   "shape_name": "Line Callout 2 (Accent Bar)",
+   "adjustments": [
+    0.1875,
+    -0.08333,
+    0.1875,
+    -0.16667,
+    1.125,
+    -0.46667
+   ]
+  },
+  {
+   "type": 116,
+   "constant": "msoShapeLineCallout4AccentBar",
+   "shape_name": "Line Callout 3 (Accent Bar)",
+   "adjustments": [
+    0.1875,
+    -0.08333,
+    0.1875,
+    -0.16667,
+    1.0,
+    -0.16667,
+    1.12963,
+    -0.08333
+   ]
+  },
+  {
+   "type": 117,
+   "constant": "msoShapeLineCallout1NoBorder",
+   "shape_name": "Line Callout 1 (No Border)",
+   "adjustments": [
+    0.1875,
+    -0.08333,
+    1.125,
+    -0.38333
+   ]
+  },
+  {
+   "type": 118,
+   "constant": "msoShapeLineCallout2NoBorder",
+   "shape_name": "Line Callout 1 (No Border)",
+   "adjustments": [
+    0.1875,
+    -0.08333,
+    1.125,
+    -0.38333
+   ]
+  },
+  {
+   "type": 119,
+   "constant": "msoShapeLineCallout3NoBorder",
+   "shape_name": "Line Callout 2 (No Border)",
+   "adjustments": [
+    0.1875,
+    -0.08333,
+    0.1875,
+    -0.16667,
+    1.125,
+    -0.46667
+   ]
+  },
+  {
+   "type": 120,
+   "constant": "msoShapeLineCallout4NoBorder",
+   "shape_name": "Line Callout 3 (No Border)",
+   "adjustments": [
+    0.1875,
+    -0.08333,
+    0.1875,
+    -0.16667,
+    1.0,
+    -0.16667,
+    1.12963,
+    -0.08333
+   ]
+  },
+  {
+   "type": 121,
+   "constant": "msoShapeLineCallout1BorderandAccentBar",
+   "shape_name": "Line Callout 1",
+   "adjustments": [
+    0.1875,
+    -0.08333,
+    1.125,
+    -0.38333
+   ]
+  },
+  {
+   "type": 122,
+   "constant": "msoShapeLineCallout2BorderandAccentBar",
+   "shape_name": "Line Callout 1 (Border and Accent Bar)",
+   "adjustments": [
+    0.1875,
+    -0.08333,
+    1.125,
+    -0.38333
+   ]
+  },
+  {
+   "type": 123,
+   "constant": "msoShapeLineCallout3BorderandAccentBar",
+   "shape_name": "Line Callout 2 (Border and Accent Bar)",
+   "adjustments": [
+    0.1875,
+    -0.08333,
+    0.1875,
+    -0.16667,
+    1.125,
+    -0.46667
+   ]
+  },
+  {
+   "type": 124,
+   "constant": "msoShapeLineCallout4BorderandAccentBar",
+   "shape_name": "Line Callout 3 (Border and Accent Bar)",
+   "adjustments": [
+    0.1875,
+    -0.08333,
+    0.1875,
+    -0.16667,
+    1.0,
+    -0.16667,
+    1.12963,
+    -0.08333
+   ]
+  },
+  {
+   "type": 125,
+   "constant": "msoShapeActionButtonCustom",
+   "shape_name": "Action Button: Custom"
+  },
+  {
+   "type": 126,
+   "constant": "msoShapeActionButtonHome",
+   "shape_name": "Action Button: Home"
+  },
+  {
+   "type": 127,
+   "constant": "msoShapeActionButtonHelp",
+   "shape_name": "Action Button: Help"
+  },
+  {
+   "type": 128,
+   "constant": "msoShapeActionButtonInformation",
+   "shape_name": "Action Button: Information"
+  },
+  {
+   "type": 129,
+   "constant": "msoShapeActionButtonBackorPrevious",
+   "shape_name": "Action Button: Back or Previous"
+  },
+  {
+   "type": 130,
+   "constant": "msoShapeActionButtonForwardorNext",
+   "shape_name": "Action Button: Forward or Next"
+  },
+  {
+   "type": 131,
+   "constant": "msoShapeActionButtonBeginning",
+   "shape_name": "Action Button: Beginning"
+  },
+  {
+   "type": 132,
+   "constant": "msoShapeActionButtonEnd",
+   "shape_name": "Action Button: End"
+  },
+  {
+   "type": 133,
+   "constant": "msoShapeActionButtonReturn",
+   "shape_name": "Action Button: Return"
+  },
+  {
+   "type": 134,
+   "constant": "msoShapeActionButtonDocument",
+   "shape_name": "Action Button: Document"
+  },
+  {
+   "type": 135,
+   "constant": "msoShapeActionButtonSound",
+   "shape_name": "Action Button: Sound"
+  },
+  {
+   "type": 136,
+   "constant": "msoShapeActionButtonMovie",
+   "shape_name": "Action Button: Movie"
+  },
+  {
+   "type": 137,
+   "constant": "msoShapeBalloon",
+   "shape_name": "Rounded Rectangular Callout",
+   "adjustments": [
+    -0.20833,
+    0.625,
+    0.16667
+   ]
+  },
+  {
+   "type": 138,
+   "constant": "msoShapeNotPrimitive",
+   "error": true
+  },
+  {
+   "type": 139,
+   "constant": "msoShapeFlowchartOfflineStorage",
+   "shape_name": ""
+  },
+  {
+   "type": 140,
+   "constant": "msoShapeLeftRightRibbon",
+   "shape_name": "Shape",
+   "adjustments": [
+    0.5,
+    0.5,
+    0.16667
+   ]
+  },
+  {
+   "type": 141,
+   "constant": "msoShapeDiagonalStripe",
+   "shape_name": "Diagonal Stripe",
+   "adjustments": [
+    0.5
+   ]
+  },
+  {
+   "type": 142,
+   "constant": "msoShapePie",
+   "shape_name": "Pie",
+   "adjustments": [
+    0.0,
+    -90.0
+   ]
+  },
+  {
+   "type": 143,
+   "constant": "msoShapeNonIsoscelesTrapezoid",
+   "shape_name": "Shape",
+   "adjustments": [
+    0.25,
+    0.25
+   ]
+  },
+  {
+   "type": 144,
+   "constant": "msoShapeDecagon",
+   "shape_name": "Decagon",
+   "adjustments": [
+    1.05146
+   ]
+  },
+  {
+   "type": 145,
+   "constant": "msoShapeHeptagon",
+   "shape_name": "Heptagon",
+   "adjustments": [
+    1.02572,
+    1.0521
+   ]
+  },
+  {
+   "type": 146,
+   "constant": "msoShapeDodecagon",
+   "shape_name": "Dodecagon"
+  },
+  {
+   "type": 147,
+   "constant": "msoShape6pointStar",
+   "shape_name": "6-Point Star",
+   "adjustments": [
+    0.28868,
+    1.1547
+   ]
+  },
+  {
+   "type": 148,
+   "constant": "msoShape7pointStar",
+   "shape_name": "7-Point Star",
+   "adjustments": [
+    0.34601,
+    1.02572,
+    1.0521
+   ]
+  },
+  {
+   "type": 149,
+   "constant": "msoShape10pointStar",
+   "shape_name": "10-Point Star",
+   "adjustments": [
+    0.42533,
+    1.05146
+   ]
+  },
+  {
+   "type": 150,
+   "constant": "msoShape12pointStar",
+   "shape_name": "12-Point Star",
+   "adjustments": [
+    0.375
+   ]
+  },
+  {
+   "type": 151,
+   "constant": "msoShapeRound1Rectangle",
+   "shape_name": "Round Single Corner Rectangle",
+   "adjustments": [
+    0.16667
+   ]
+  },
+  {
+   "type": 152,
+   "constant": "msoShapeRound2SameRectangle",
+   "shape_name": "Round Same Side Corner Rectangle",
+   "adjustments": [
+    0.16667,
+    0.0
+   ]
+  },
+  {
+   "type": 153,
+   "constant": "msoShapeRound2DiagRectangle",
+   "shape_name": "Round Diagonal Corner Rectangle",
+   "adjustments": [
+    0.16667,
+    0.0
+   ]
+  },
+  {
+   "type": 154,
+   "constant": "msoShapeSnipRoundRectangle",
+   "shape_name": "Snip and Round Single Corner Rectangle",
+   "adjustments": [
+    0.16667,
+    0.16667
+   ]
+  },
+  {
+   "type": 155,
+   "constant": "msoShapeSnip1Rectangle",
+   "shape_name": "Snip Single Corner Rectangle",
+   "adjustments": [
+    0.16667
+   ]
+  },
+  {
+   "type": 156,
+   "constant": "msoShapeSnip2SameRectangle",
+   "shape_name": "Snip Same Side Corner Rectangle",
+   "adjustments": [
+    0.16667,
+    0.0
+   ]
+  },
+  {
+   "type": 157,
+   "constant": "msoShapeSnip2DiagRectangle",
+   "shape_name": "Snip Diagonal Corner Rectangle",
+   "adjustments": [
+    0.0,
+    0.16667
+   ]
+  },
+  {
+   "type": 158,
+   "constant": "msoShapeFrame",
+   "shape_name": "Frame",
+   "adjustments": [
+    0.125
+   ]
+  },
+  {
+   "type": 159,
+   "constant": "msoShapeHalfFrame",
+   "shape_name": "Half Frame",
+   "adjustments": [
+    0.33333,
+    0.33333
+   ]
+  },
+  {
+   "type": 160,
+   "constant": "msoShapeTear",
+   "shape_name": "Teardrop",
+   "adjustments": [
+    1.0
+   ]
+  },
+  {
+   "type": 161,
+   "constant": "msoShapeChord",
+   "shape_name": "Chord",
+   "adjustments": [
+    45.0,
+    -90.0
+   ]
+  },
+  {
+   "type": 162,
+   "constant": "msoShapeCorner",
+   "shape_name": "L-Shape",
+   "adjustments": [
+    0.5,
+    0.5
+   ]
+  },
+  {
+   "type": 163,
+   "constant": "msoShapeMathPlus",
+   "shape_name": "Plus",
+   "adjustments": [
+    0.2352
+   ]
+  },
+  {
+   "type": 164,
+   "constant": "msoShapeMathMinus",
+   "shape_name": "Minus",
+   "adjustments": [
+    0.2352
+   ]
+  },
+  {
+   "type": 165,
+   "constant": "msoShapeMathMultiply",
+   "shape_name": "Multiply",
+   "adjustments": [
+    0.2352
+   ]
+  },
+  {
+   "type": 166,
+   "constant": "msoShapeMathDivide",
+   "shape_name": "Division",
+   "adjustments": [
+    0.2352,
+    0.0588,
+    0.1176
+   ]
+  },
+  {
+   "type": 167,
+   "constant": "msoShapeMathEqual",
+   "shape_name": "Equal",
+   "adjustments": [
+    0.2352,
+    0.1176
+   ]
+  },
+  {
+   "type": 168,
+   "constant": "msoShapeMathNotEqual",
+   "shape_name": "Not Equal",
+   "adjustments": [
+    0.2352,
+    110.0,
+    0.1176
+   ]
+  },
+  {
+   "type": 169,
+   "constant": "msoShapeCornerTabs",
+   "shape_name": ""
+  },
+  {
+   "type": 170,
+   "constant": "msoShapeSquareTabs",
+   "shape_name": ""
+  },
+  {
+   "type": 171,
+   "constant": "msoShapePlaqueTabs",
+   "shape_name": ""
+  },
+  {
+   "type": 172,
+   "constant": "msoShapeGear6",
+   "shape_name": "Shape",
+   "adjustments": [
+    0.15,
+    0.03526
+   ]
+  },
+  {
+   "type": 173,
+   "constant": "msoShapeGear9",
+   "shape_name": "Shape",
+   "adjustments": [
+    0.1,
+    0.01763
+   ]
+  },
+  {
+   "type": 174,
+   "constant": "msoShapeFunnel",
+   "shape_name": "Shape"
+  },
+  {
+   "type": 175,
+   "constant": "msoShapePieWedge",
+   "shape_name": "Pie"
+  },
+  {
+   "type": 176,
+   "constant": "msoShapeLeftCircularArrow",
+   "shape_name": "Shape",
+   "adjustments": [
+    0.125,
+    -19.03865,
+    19.03865,
+    180.0,
+    0.125
+   ]
+  },
+  {
+   "type": 177,
+   "constant": "msoShapeLeftRightCircularArrow",
+   "shape_name": "Shape",
+   "adjustments": [
+    0.125,
+    19.03865,
+    -19.03865,
+    -160.96135,
+    0.125
+   ]
+  },
+  {
+   "type": 178,
+   "constant": "msoShapeSwooshArrow",
+   "shape_name": "Shape",
+   "adjustments": [
+    0.25,
+    0.16667
+   ]
+  },
+  {
+   "type": 179,
+   "constant": "msoShapeCloud",
+   "shape_name": "Cloud"
+  },
+  {
+   "type": 180,
+   "constant": "msoShapeChartX",
+   "shape_name": ""
+  },
+  {
+   "type": 181,
+   "constant": "msoShapeChartStar",
+   "shape_name": ""
+  },
+  {
+   "type": 182,
+   "constant": "msoShapeChartPlus",
+   "shape_name": ""
+  },
+  {
+   "type": 183,
+   "constant": "msoShapeLineInverse",
+   "shape_name": "Straight Connector"
+  }
+ ],
+ "placeholder_types": {
+  "1": "Title",
+  "2": "Body",
+  "3": "CenterTitle",
+  "4": "Subtitle",
+  "5": "VerticalTitle",
+  "6": "VerticalBody",
+  "7": "Object",
+  "8": "Chart",
+  "9": "Bitmap",
+  "10": "MediaClip",
+  "11": "OrgChart",
+  "12": "Table",
+  "13": "SlideNumber",
+  "14": "Header",
+  "15": "Footer",
+  "16": "Date",
+  "17": "VerticalObject",
+  "18": "Picture",
+  "19": "Cameo",
+  "0": "Mixed"
+ }
+}
