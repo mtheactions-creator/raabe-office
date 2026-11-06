@@ -166,3 +166,15 @@ body.printing #print-root { display: block; position: fixed; left: 0; top: 0; z-
 .dlg-check { display: block; margin: 2px 0; }
 .font-dialog fieldset, .para-dialog fieldset { border: 1px solid #d0d0d0; margin: 6px 0; padding: 4px 8px; }
 .thumb-item.layout { padding-left: 34px; }
+
+/* Animationsbereich */
+.anim-list { display: flex; flex-direction: column; gap: 2px; }
+.anim-list > button { align-self: flex-start; margin-bottom: 6px; }
+.anim-row { display: flex; align-items: center; gap: 6px; padding: 3px 4px; cursor: default; outline: none; }
+.anim-row:hover, .anim-row:focus { background: #f0f0f0; }
+.anim-row.on { background: #fbeaea; }
+.anim-num { width: 14px; text-align: right; color: #555; }
+.anim-icon { width: 10px; height: 10px; border-radius: 2px; background: #2e8b2e; }
+.anim-emph .anim-icon { background: #c9a400; } .anim-exit .anim-icon { background: #c0392b; }
+.anim-name { flex: 1; }
+.anim-row button { border: 0; background: none; font-size: 9px; color: #666; }

@@ -23,6 +23,7 @@ import { SlideShow } from "./show";
 import { FormatPane } from "./formatpane";
 import { NotesPageView, OutlineView } from "./views";
 import { FindDialog } from "./find";
+import { AnimationPane, effects } from "./animpane";
 import { Sorter } from "./sorter";
 import { addRecent, loadRecent, loadSettings, removeRecent, setPinned, type Settings } from "./store";
 import appIconUrl from "../../../branding/raabe-present-small.svg?url";
@@ -81,6 +82,7 @@ export class PresentApp implements EditorHost, PanelHost {
   private lastLine = "000000";
   private show: SlideShow | null = null;
   private formatPane!: FormatPane;
+  private animPane!: AnimationPane;
 
   constructor(readonly platform: Platform) {
     void platform.listFonts().then((f) => { this.fontList = f; }).catch(() => {});
@@ -118,6 +120,7 @@ export class PresentApp implements EditorHost, PanelHost {
     this.notesPage = new NotesPageView(this);
     this.main = h("div", { class: "present-main" }, this.panel.el, this.outline.el, h("div", { class: "splitter" }), this.center, this.sorter.el, this.notesPage.el);
     this.formatPane = new FormatPane(this.editor, this.main);
+    this.animPane = new AnimationPane(this, this.main);
     this.statusSlide = h("span", { class: "cell" });
     this.zoomPct = h("button", { class: "cell pct", "data-tip": "Zoom", onclick: () => void this.commands.run("view.zoom") });
     this.zoomSlider = h("input", { type: "range", min: "0", max: "100", step: "0.5", "aria-label": "Zoom" }) as HTMLInputElement;
@@ -289,6 +292,7 @@ export class PresentApp implements EditorHost, PanelHost {
 
   selectionChanged(): void {
     this.formatPane?.sync();
+    this.animPane?.refresh();
     this.updateChrome();
   }
 
@@ -690,6 +694,20 @@ export class PresentApp implements EditorHost, PanelHost {
   }
 
   private alignToSlide = false;
+
+  private selectedHasAnimation(): boolean {
+    const p = this.slidePath();
+    if (!p || !this.editor.sel.length) return false;
+    return effects(this.deck.pptx.doc(p).documentElement).list.some((e) => this.editor.sel.includes(e.spid));
+  }
+
+  private moveAnimation(d: -1 | 1): void {
+    const p = this.slidePath();
+    if (!p) return;
+    const list = effects(this.deck.pptx.doc(p).documentElement).list;
+    const i = list.findIndex((e) => this.editor.sel.includes(e.spid));
+    if (i >= 0) this.animPane.move(i, d);
+  }
 
   /** Bild zurücksetzen: the picture's formatting goes (crop, effects, outline); place and size stay. */
   private resetPicture(): void {
@@ -1503,6 +1521,12 @@ export class PresentApp implements EditorHost, PanelHost {
     const dlgHost = () => ({ runStyle: () => this.runStyle(), paraStyle: () => this.paraStyle(), fonts: () => this.fontList, formatRuns: (l: string, f: (r: Element) => void) => this.formatRuns(l, f), formatParas: (l: string, f: (p: Element) => void) => this.formatParas(l, f) });
     const finder = new FindDialog(this);
     impl("edit.find", () => finder.open(false));
+    impl("anim.pane", () => this.animPane.toggle(), undefined, () => this.animPane.isOpen);
+    impl("anim.start", () => {}, () => this.selectedHasAnimation());
+    impl("anim.earlier", () => this.moveAnimation(-1), () => this.selectedHasAnimation());
+    impl("anim.later", () => this.moveAnimation(1), () => this.selectedHasAnimation());
+    impl("anim.preview", () => this.startShow(this.active.current), () => !!this.slidePath());
+    impl("trans.preview", () => this.startShow(this.active.current), () => !!this.slidePath());
     impl("pic.crop", () => this.editor.toggleCrop(), () => this.editor.selectedViews[0]?.kind === "pic", () => this.editor.crop !== null);
     impl("pic.reset", () => this.resetPicture(), () => this.editor.selectedViews.some((v) => v.kind === "pic"));
     impl("pic.change", () => this.changePicture(), () => this.editor.selectedViews.length === 1 && this.editor.selectedViews[0].kind === "pic");
@@ -1869,7 +1893,7 @@ export class PresentApp implements EditorHost, PanelHost {
         textBox: [{ cmd: "insert.textBoxH" }, { cmd: "insert.textBoxV" }],
         slideSize: [{ cmd: "design.slide4x3" }, { cmd: "design.slide16x9" }, "-", { cmd: "design.slideCustom" }],
         showCustom: [], record: [],
-        transOptions: () => [], animOptions: () => [], animStart: [{ label: "Beim Klicken", run: () => {} }, { label: "Mit Vorherigen", run: () => {} }, { label: "Nach Vorherigen", run: () => {} }],
+        transOptions: () => [], animOptions: () => [], animStart: [{ label: "Beim Klicken", run: () => this.animPane.setStart("clickEffect") }, { label: "Mit Vorherigen", run: () => this.animPane.setStart("withEffect") }, { label: "Nach Vorherigen", run: () => this.animPane.setStart("afterEffect") }],
         colors: () => DESIGNS.map((d) => ({ label: d.name === "Office" ? "Office" : d.name, run: () => this.applyDesign(d) })),
         fonts: () => DESIGNS.map((d) => ({ label: `${d.name}: ${d.major} / ${d.minor}`, run: () => this.applyDesign(d) })),
         underline: [], outlineWeight: [], outlineDash: [], effects: this.effectsMenu(), quickStyles: () => [], zoomFit: [],

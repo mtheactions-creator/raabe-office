@@ -122,6 +122,8 @@ export class SlideShow {
     } else old?.remove();
     this.clearInk();
     this.layout();
+    if (!back && seq.auto) this.play(seq.auto);
+    else if (back && seq.auto) this.finishStep(seq.auto);
     this.renderPresenter();
     // Nach: the slide goes on by itself after its time (when nothing waits for a click).
     clearTimeout(this.timer);

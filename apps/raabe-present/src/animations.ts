@@ -120,11 +120,12 @@ export function removeEffects(timing: Element, spid: number): void {
 }
 
 /** A click step of the main sequence: the effects that start with it, in order (with "Mit/Nach Vorherigen"). */
-export interface Step { effects: { spid: number; cls: string; effect: string; dur: number; delay: number; after: boolean }[] }
+export interface Step { effects: { spid: number; cls: string; effect: string; dur: number; delay: number; after: boolean; node?: string }[] }
 
 /** The main sequence as click steps, and the shapes hidden at the start (those with an entrance first). */
-export function mainSequence(root: Element): { steps: Step[]; hidden: Set<number> } {
+export function mainSequence(root: Element): { steps: Step[]; hidden: Set<number>; auto: Step | null } {
   const steps: Step[] = [];
+  let auto: Step | null = null;
   const hidden = new Set<number>();
   const seen = new Set<number>();
   const timing = kid(root, "timing");
@@ -140,13 +141,23 @@ export function mainSequence(root: Element): { steps: Step[]; hidden: Set<number
       const preset = Number(c.getAttribute("presetID") ?? 0);
       const effect = preset === 1 ? "appear" : preset === 2 ? "fly" : preset === 8 ? "spin" : preset === 53 ? "zoom" : fx.split("(")[0] || (cls === "emph" ? "pulse" : "fade");
       const delay = Number(at(c, "stCondLst/cond")?.getAttribute("delay") ?? 0) || 0;
-      step.effects.push({ spid, cls, effect, dur: Math.max(1, ...durs), delay, after: c.getAttribute("nodeType") === "afterEffect" });
+      step.effects.push({ spid, cls, effect, dur: Math.max(1, ...durs), delay, after: c.getAttribute("nodeType") === "afterEffect", node: c.getAttribute("nodeType") ?? "clickEffect" });
       if (cls === "entr" && !seen.has(spid)) hidden.add(spid);
       seen.add(spid);
     }
-    if (step.effects.length) steps.push(step);
+    if (!step.effects.length) continue;
+    // Effects that start "Mit Vorherigen" / "Nach Vorherigen" join the click before them (or play at once).
+    const byClick = step.effects.some((x) => !x.after && x.node === "clickEffect");
+    if (!byClick && steps.length) {
+      const prev = steps[steps.length - 1];
+      const end = Math.max(0, ...prev.effects.map((x) => x.delay + x.dur));
+      for (const x of step.effects) prev.effects.push({ ...x, delay: x.delay + (x.after ? end : 0) });
+    } else if (!byClick) {
+      auto ??= { effects: [] };
+      auto.effects.push(...step.effects);
+    } else steps.push(step);
   }
-  return { steps, hidden };
+  return { steps, hidden, auto };
 }
 
 export function setDuration(app: PresentApp, seconds: number): void { retime(app, "dur", seconds); }
