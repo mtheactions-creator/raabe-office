@@ -107,6 +107,15 @@ export class SlideEditor {
   get path(): string | null { return this.host.slidePath(); }
   get scale(): number { return this.zoom / 100; }
 
+  /** The page being edited: a slide's size, or the notes page's for the Notizenmaster. */
+  get pageSize(): { cx: number; cy: number } {
+    if (this.path && /notesMasters\//.test(this.path)) {
+      const n = PptxDom.at(this.pptx.presentation, "notesSz");
+      return { cx: PptxDom.num(n, "cx") ?? 6858000, cy: PptxDom.num(n, "cy") ?? 9144000 };
+    }
+    return this.pptx.slideSize;
+  }
+
   focus(): void { this.input.focus({ preventScroll: true }); }
 
   // ----- drawing -----------------------------------------------------------------------------------
@@ -121,7 +130,7 @@ export class SlideEditor {
     this.sel = this.sel.filter((id) => all.has(id));
     if (this.text && !all.has(this.text.id)) this.text = null;
     const sel = this.text ? { id: this.text.id, cell: this.text.cell, sel: T.cmpPos(this.text.caret, this.text.anchor) ? { from: T.minPos(this.text.caret, this.text.anchor), to: T.maxPos(this.text.caret, this.text.anchor) } : null } : null;
-    this.rendered = renderSlide(this.view, this.pptx.slideSize, { editing: true, slideNumber: this.host.slideNumber(), image: (p) => this.host.image(p), selection: sel, fits: this.fits, pptx: this.pptx });
+    this.rendered = renderSlide(this.view, this.pageSize, { editing: true, slideNumber: this.host.slideNumber(), image: (p) => this.host.image(p), selection: sel, fits: this.fits, pptx: this.pptx });
     if (this.showGrid) this.rendered.el.append(this.gridLayer());
     this.stage.replaceChildren(this.rendered.el);
     this.layout();
@@ -130,7 +139,7 @@ export class SlideEditor {
   }
 
   private gridLayer(): HTMLElement {
-    const size = this.pptx.slideSize;
+    const size = this.pageSize;
     const g = h("div", "grid-layer");
     const step = this.gridSpacing / EMU_PX;
     g.style.cssText = `position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(circle, #808080 0.6px, transparent 0.8px);background-size:${step}px ${step}px;background-position:${(size.cx / EMU_PX / 2) % step}px ${(size.cy / EMU_PX / 2) % step}px`;
@@ -138,7 +147,7 @@ export class SlideEditor {
   }
 
   fitZoom(): void {
-    const size = this.pptx.slideSize;
+    const size = this.pageSize;
     const w = size.cx / EMU_PX, hh = size.cy / EMU_PX;
     const r = this.el.getBoundingClientRect();
     if (!r.width || !r.height) return;
@@ -158,7 +167,7 @@ export class SlideEditor {
   }
 
   private layout(): void {
-    const size = this.pptx.slideSize;
+    const size = this.pageSize;
     const w = (size.cx / EMU_PX) * this.scale, hh = (size.cy / EMU_PX) * this.scale;
     const r = this.el.getBoundingClientRect();
     const padX = Math.max(24, (r.width - w) / 2), padY = Math.max(16, (r.height - hh) / 2);
@@ -700,7 +709,7 @@ export class SlideEditor {
   private snap(box: { x: number; y: number; w: number; h: number }, skip: Set<number>, noSnap: boolean): { dx: number; dy: number; lines: { x?: number; y?: number; from: number; to: number }[] } {
     const lines: { x?: number; y?: number; from: number; to: number }[] = [];
     if (!this.view || noSnap || !this.smartGuides) return { dx: 0, dy: 0, lines };
-    const size = this.pptx.slideSize;
+    const size = this.pageSize;
     const tol = (SNAP_PX / this.scale) * EMU_PX;
     const others = this.view.shapes.filter((s) => !skip.has(s.id) && !s.hidden);
     const xs: { v: number; from: number; to: number }[] = [{ v: 0, from: 0, to: size.cy }, { v: size.cx / 2, from: 0, to: size.cy }, { v: size.cx, from: 0, to: size.cy }];

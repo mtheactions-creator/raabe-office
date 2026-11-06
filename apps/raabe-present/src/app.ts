@@ -246,20 +246,27 @@ export class PresentApp implements EditorHost, PanelHost {
   /** Folienmaster view (Ansicht > Folienmaster): the panel lists the master and its layouts. */
   private masterMode = false;
   private masterIndex = 0;
+  private masterKind: "slides" | "notes" = "slides";
   private masterList(): string[] {
+    if (this.masterKind === "notes") return [this.deck.ensureNotesMasterPath()];
     const m = this.deck.pptx.masters()[0];
     return m ? [m, ...this.deck.pptx.layouts(m)] : [];
   }
   masterPaths(): string[] | null { return this.masterMode ? this.masterList() : null; }
 
-  setMasterView(on: boolean): void {
+  setMasterView(on: boolean, kind: "slides" | "notes" = "slides"): void {
+    this.masterKind = kind;
+    if (on && kind === "notes") {
+      const nm = this.deck.ensureNotesMasterPath();
+      if (!this.deck.pptx.has(nm)) this.deck.change("Notizenmaster", [nm], () => this.deck.ensureNotesMaster(nm));
+    }
     this.editor.endText();
     this.editor.sel = [];
     this.masterMode = on;
     document.body.classList.toggle("master-view", on);
     if (on) {
       // PowerPoint opens the master view at the current slide's layout.
-      const lay = this.deck.pptx.layoutOf(this.deck.slides[this.active.current]?.path ?? "");
+      const lay = kind === "slides" ? this.deck.pptx.layoutOf(this.deck.slides[this.active.current]?.path ?? "") : undefined;
       const list = this.masterList();
       this.masterIndex = Math.max(0, lay ? list.indexOf(lay) : 0);
       this.panel.selected = new Set([this.masterIndex]);
@@ -1535,7 +1542,8 @@ export class PresentApp implements EditorHost, PanelHost {
     impl("show.fromStart", () => this.startShow(0));
     impl("show.fromCurrent", () => this.startShow(this.active.current));
     impl("view.normal", () => { if (this.masterMode) this.setMasterView(false); this.setView("normal"); }, undefined, () => this.view === "normal" && !this.masterMode);
-    impl("view.slideMaster", () => this.setMasterView(true), undefined, () => this.masterMode);
+    impl("view.slideMaster", () => this.setMasterView(true), undefined, () => this.masterMode && this.masterKind === "slides");
+    impl("view.notesMaster", () => this.setMasterView(true, "notes"), undefined, () => this.masterMode && this.masterKind === "notes");
     impl("master.close", () => this.setMasterView(false));
     impl("master.rename", () => this.renameLayout(), () => this.masterMode && this.masterIndex > 0);
     impl("master.insertLayout", () => this.insertLayout(), () => this.masterMode);

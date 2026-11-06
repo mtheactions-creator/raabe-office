@@ -378,13 +378,13 @@ export class Deck {
     }, `notes:${slidePath}`);
   }
 
-  private ensureNotesMasterPath(): string {
+  ensureNotesMasterPath(): string {
     const rels = this.pptx.rels(this.pptx.presPath);
     const r = rels.list.find((x) => /notesMaster$/.test(x.type));
     return r ? this.pptx.target(this.pptx.presPath, r.id)! : "ppt/notesMasters/notesMaster1.xml";
   }
 
-  private ensureNotesMaster(path: string): void {
+  ensureNotesMaster(path: string): void {
     if (this.pptx.has(path)) return;
     const theme = this.pptx.freeName("ppt/theme/theme#.xml");
     const masterTheme = this.pptx.themeOf(this.pptx.masters()[0]);

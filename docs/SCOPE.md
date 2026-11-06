@@ -115,23 +115,23 @@ BINOM.VERT/BINOM.DIST, NORM.VERT/NORM.DIST.
 
 ## RaabePresent (PowerPoint)
 
-| Feature | Prio | Notes |
+Since D-070 (2026-11-06): everything PowerPoint offers except the cloud, measured against PowerPoint.
+The earlier priorities are replaced by that scope; this table says what each part is now.
+
+| Feature | Status | Notes |
 |---|---|---|
-| Slides with layouts (Titel, Titel und Inhalt, Zwei Inhalte, Nur Titel, Leer …) | M | |
-| Designs (themes) with colour variants | M | A curated set, incl. a Raabeschule design |
-| Text boxes, bullet levels, formatting | M | |
-| Images, shapes, tables, charts (from the RaabeCalc chart engine) | M | |
-| Align, distribute, group, arrange (bring to front …) | M | Smart guides while dragging |
-| Slide sorter, sections | M | |
-| Transitions (a curated set of ~10) | M | |
-| Animations: entrance, emphasis, exit (curated set), animation order | M | |
-| Speaker notes, presenter view, slide show with pen/laser pointer | M | |
-| Export as PDF | M | |
-| Video and audio insertion (local files) | L | |
-| Morph transition | L | Students like it; technically demanding |
-| Slide master editing | L | |
-| Recording, live captions, rehearse timings | X | |
-| SmartArt, 3D models | X | Preserved in files |
+| Slides with PowerPoint's eleven layouts, placeholders, prompts, Neue Folie, Layout, Zurücksetzen, Abschnitte | built | Layout positions identical to PowerPoint's blank presentation |
+| Designs: Office-Design (2013-2022), Raabeschule, Klar, Tafel; Office's 24 colour and 24 font sets | built | PowerPoint's own artwork designs are not copied (D-070) |
+| Text: bullets and levels, formatting, Schriftart/Absatz dialogs, Autofit, vertical text, Suchen/Ersetzen, Rechtschreibung | built | Line breaks as PowerPoint's in 127/127 measured lines |
+| Shapes, text boxes, pictures (crop, colour, transparency), tables (cells, styles, rows/columns), charts (RaabeCalc's engine, Daten bearbeiten), SmartArt (drawn from its cache), equations (drawn from their fallback) | built / partly | Editing SmartArt and equations, table cell ranges and merging: open |
+| Moving, sizing, rotating, adjust handles, smart guides, grid, Ausrichten, Verteilen, Gruppieren, Anordnen, Auswahl, Format übertragen | built | Measured by the behaviour catalogue |
+| Foliensortierung, Gliederungsansicht, Notizenseite, Folienmaster | built | Handzettel- and Notizenmaster: open |
+| Übergänge (49 named as PowerPoint), Animationen (entrance, emphasis, exit; Animationsbereich, Start, timing) | built | Our own drawing of each effect; Morphen and Animationspfade: open |
+| Bildschirmpräsentation: PowerPoint's keys, pen, highlighter, laser, black/white screen, Referentenansicht (one screen), Einrichten | built | Second monitor: open |
+| Kommentare, Links, Kopf- und Fußzeile, Zeichnen (ink as freeform shapes), Video and Audio from files | built | |
+| PDF and printing with Handzettel layouts | built | |
+| Aufzeichnen (narration, camera), live captions, Designer, Copilot, cloud | X | Left out (D-070) |
+| Macros | later | Last (D-070) |
 
 ## Deferred commands shown in the ribbon
 

@@ -19,6 +19,16 @@ The harness lives in `tools/feel-lab/`.
 | F6 | **Text rendering** | The same lines in Word and our app at 100 %, captured from the screen (`run.py rendering`): edge sharpness, ink, colour fringes (ClearType) and the horizontal ink profile of each line. | Sharpness ≥ 95 % of Word's, same smoothing, profile correlation ≥ 0.95 |
 | F7 | **Memory** | Working set of the whole process tree with the same document open (`run.py memory`). | Not far above Word |
 
+### RaabePresent (Step 8, D-070)
+
+| ID | Metric | Method | Target |
+|---|---|---|---|
+| P1 | **Behaviour conformance** | `catalogue_present.py`: the same real input in a PowerPoint of our own and in RaabePresent (clicks, double- and right-clicks, drags with Umschalt/Strg/Alt, handles, keys with a frame selected, text being edited and several shapes selected); slide shapes (points), rotation, text and the selection as PowerPoint's COM reports it are compared. | 100 % of the catalogue |
+| P2 | **Round trips** | `check_present_roundtrip.py`: PowerPoint opens RaabePresent's files (PowerPoint's fixtures written back, scenarios built through the app's commands) and its read-back is compared. | All the same |
+| P3 | **Slide rendering** | `check_present_render.py`: PowerPoint's PNG export of its own fixtures against RaabePresent's drawing at 1280 px; mean pixel difference. | Mean below 3 of 255 |
+| P4 | **Line breaks** | `check_present_lines.py`: where each line starts (PowerPoint's TextRange.Lines) against ours. | 100 % |
+| P5 | **Inventory coverage** | `inventory_report_present.py`: PowerPoint's recorded ribbon, menus, galleries, context menus and dialogs against RaabePresent's. | Everything except the cloud |
+
 ## Conditions
 
 - Development PC: Intel i5-8600K, 32 GB RAM, GTX 1070, Windows 10 Pro, 3840×2160 at
