@@ -11,15 +11,19 @@ const NS_MC = "http://schemas.openxmlformats.org/markup-compatibility/2006";
 const NS_P14 = "http://schemas.microsoft.com/office/powerpoint/2010/main";
 
 export const TRANSITION_GROUPS: { title: string; items: [string, string][] }[] = [
-  { title: "Dezent", items: [["Ohne", "none"], ["Morphen", "morph"], ["Verblassen", "fade"], ["Schieben", "push"], ["Wischen", "wipe"], ["Teilen", "split"], ["Enthüllen", "reveal"], ["Schnitt", "cut"], ["Zufällige Balken", "randomBar"], ["Form", "circle"], ["Aufdecken", "uncover"], ["Bedecken", "cover"], ["Blitz", "flash"]] },
-  { title: "Spektakulär", items: [["Fallen", "fall"], ["Vorhänge", "curtains"], ["Zerknittern", "crush"], ["Zerreißen", "peelOff"], ["Umblättern", "pageCurl"], ["Flugzeug", "airplane"], ["Origami", "origami"], ["Auflösen", "dissolve"], ["Schachbrett", "checker"], ["Jalousie", "blinds"], ["Uhr", "wheel"], ["Welligkeit", "ripple"], ["Wabe", "honeycomb"], ["Glitzer", "glitter"], ["Strudel", "vortex"], ["Zersplittern", "shred"], ["Wechseln", "switch"], ["Kippen", "flip"], ["Galerie", "gallery"], ["Würfel", "cube"], ["Türen", "doors"], ["Feld", "box"], ["Kamm", "comb"], ["Zoom", "zoom"], ["Zufall", "random"]] },
-  { title: "Dynamischer Inhalt", items: [["Verschieben", "pan"], ["Riesenrad", "ferris"], ["Förderband", "conveyor"], ["Drehen", "rotate"], ["Fenster", "window"], ["Umlaufbahn", "orbit"], ["Durchfliegen", "flythrough"]] },
+  { title: "Dezent", items: [["Ohne", "none"], ["Morphen", "morph"], ["Verblassen", "fade"], ["Schieben", "push"], ["Wischen", "wipe"], ["Teilen", "split"], ["Anzeigen", "reveal"], ["Schnitt", "cut"],
+    ["Zufällige Balken", "randomBar"], ["Form", "circle"], ["Aufdecken", "uncover"], ["Bedecken", "cover"], ["Blitz", "flash"]] },
+  { title: "Spektakulär", items: [["Umfallen", "fall"], ["Verhängen", "drape"], ["Vorhänge", "curtains"], ["Verwehen", "wind"], ["Wegziehen", "prestige"], ["Zersplittern", "fracture"], ["Zerknüllen", "crush"],
+    ["Blatt abziehen", "peelOff"], ["Seite einrollen", "pageCurl"], ["Papierflieger", "airplane"], ["Origami", "origami"], ["Auflösen", "dissolve"], ["Schachbrett", "checker"], ["Jalousie", "blinds"],
+    ["Uhr", "wheel"], ["Wellen", "ripple"], ["Bienenwabe", "honeycomb"], ["Glitzern", "glitter"], ["Wirbel", "vortex"], ["Fetzen", "shred"], ["Wechseln", "switch"], ["Spiegeln", "flip"],
+    ["Katalog", "gallery"], ["Würfel", "cube"], ["Türen", "doors"], ["Kästchen", "box"], ["Kamm", "comb"], ["Zoom", "zoom"], ["Zufällig", "random"]] },
+  { title: "Dynamischer Inhalt", items: [["Schwenken", "pan"], ["Riesenrad", "ferris"], ["Förderband", "conveyor"], ["Drehen", "prism"], ["Fenster", "window"], ["Orbit", "orbit"], ["Hindurchfliegen", "flythrough"]] },
 ];
 
 /** Elements of the p14 namespace (the newer transitions); the rest are p: elements. */
 const P14_KINDS = new Set(["vortex", "switch", "flip", "ripple", "honeycomb", "prism", "doors", "window", "ferris", "gallery", "conveyor", "pan", "glitter", "warp", "flythrough", "flash", "shred", "reveal", "wheelReverse"]);
 /** Kinds PowerPoint writes with p15 (prstTrans) and their preset names. */
-const PRST = new Map([["fall", "fallOver"], ["curtains", "curtains"], ["crush", "crush"], ["peelOff", "peelOff"], ["pageCurl", "pageCurlDouble"], ["airplane", "airplane"], ["origami", "origami"]]);
+const PRST = new Map([["fall", "fallOver"], ["drape", "drape"], ["curtains", "curtains"], ["wind", "wind"], ["prestige", "prestige"], ["fracture", "fracture"], ["crush", "crush"], ["peelOff", "peelOff"], ["pageCurl", "pageCurlDouble"], ["airplane", "airplane"], ["origami", "origami"], ["orbit", "orbit"]]);
 
 /** The slide's transition element (inside an AlternateContent's Choice when there is one). */
 export function transitionOf(root: Element): { el: Element | null; wrap: Element | null } {

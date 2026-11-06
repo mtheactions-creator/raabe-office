@@ -10,21 +10,26 @@ const { kid, kids, num, at, fragment } = PptxDom;
 
 export interface AnimItem { label: string; preset: number; subtype?: number; effect: string }
 
-export const ANIMATION_GROUPS: { title: string; cls: "entr" | "emph" | "exit"; items: AnimItem[] }[] = [
+export const ANIMATION_GROUPS: { title: string; cls: "entr" | "emph" | "exit" | "path"; items: AnimItem[] }[] = [
   { title: "Eingang", cls: "entr", items: [
     { label: "Erscheinen", preset: 1, effect: "appear" }, { label: "Verblassen", preset: 10, effect: "fade" }, { label: "Einfliegen", preset: 2, subtype: 4, effect: "fly" },
     { label: "Hineinschweben", preset: 42, effect: "float" }, { label: "Teilen", preset: 16, subtype: 21, effect: "split" }, { label: "Wischen", preset: 22, subtype: 4, effect: "wipe" },
     { label: "Form", preset: 6, effect: "circle" }, { label: "Rad", preset: 21, subtype: 1, effect: "wheel" }, { label: "Zufällige Balken", preset: 14, subtype: 10, effect: "randombar" },
-    { label: "Vergrößern und drehen", preset: 31, effect: "growturn" }, { label: "Zoom", preset: 53, subtype: 16, effect: "zoom" }, { label: "Drehen", preset: 49, effect: "swivel" }, { label: "Hüpfen", preset: 26, effect: "bounce" }] },
+    { label: "Wachsen und Bewegen", preset: 31, effect: "growturn" }, { label: "Zoom", preset: 53, subtype: 16, effect: "zoom" }, { label: "Drehen", preset: 49, effect: "swivel" }, { label: "Springen", preset: 26, effect: "bounce" }] },
   { title: "Hervorheben", cls: "emph", items: [
-    { label: "Impuls", preset: 26, effect: "pulse" }, { label: "Farbpulse", preset: 27, effect: "colorpulse" }, { label: "Wippen", preset: 32, effect: "teeter" }, { label: "Rotieren", preset: 8, effect: "spin" },
-    { label: "Vergrößern/Verkleinern", preset: 6, effect: "grow" }, { label: "Entsättigen", preset: 19, effect: "desaturate" }, { label: "Abdunkeln", preset: 20, effect: "darken" }, { label: "Aufhellen", preset: 21, effect: "lighten" },
-    { label: "Transparenz", preset: 9, effect: "transparency" }, { label: "Objektfarbe", preset: 54, effect: "objcolor" }] },
+    { label: "Impuls", preset: 26, effect: "pulse" }, { label: "Farbimpuls", preset: 27, effect: "colorpulse" }, { label: "Schwanken", preset: 32, effect: "teeter" }, { label: "Rotieren", preset: 8, effect: "spin" },
+    { label: "Vergrößern/Verkleinern", preset: 6, effect: "grow" }, { label: "Durchtränken", preset: 19, effect: "desaturate" }, { label: "Verdunkeln", preset: 20, effect: "darken" }, { label: "Erhellen", preset: 21, effect: "lighten" },
+    { label: "Transparent", preset: 9, effect: "transparency" }, { label: "Objektfarbe", preset: 54, effect: "objcolor" }, { label: "Komplementärfarbe", preset: 55, effect: "objcolor" }, { label: "Linienfarbe", preset: 7, effect: "objcolor" },
+    { label: "Füllfarbe", preset: 1, effect: "objcolor" }, { label: "Pinselfarbe", preset: 16, effect: "objcolor" }, { label: "Schriftfarbe", preset: 3, effect: "objcolor" }, { label: "Unterstreichen", preset: 18, effect: "pulse" },
+    { label: "Deutlicher Blitz", preset: 35, effect: "pulse" }, { label: "Fett anzeigen", preset: 15, effect: "pulse" }, { label: "Welle", preset: 34, effect: "teeter" }] },
   { title: "Beenden", cls: "exit", items: [
     { label: "Verschwinden", preset: 1, effect: "appear" }, { label: "Verblassen", preset: 10, effect: "fade" }, { label: "Hinausfliegen", preset: 2, subtype: 4, effect: "fly" },
-    { label: "Hinausschweben", preset: 42, effect: "float" }, { label: "Teilen", preset: 16, subtype: 21, effect: "split" }, { label: "Wischen", preset: 22, subtype: 4, effect: "wipe" },
+    { label: "Herausschweben", preset: 42, effect: "float" }, { label: "Teilen", preset: 16, subtype: 21, effect: "split" }, { label: "Wischen", preset: 22, subtype: 4, effect: "wipe" },
     { label: "Form", preset: 6, effect: "circle" }, { label: "Rad", preset: 21, subtype: 1, effect: "wheel" }, { label: "Zufällige Balken", preset: 14, subtype: 10, effect: "randombar" },
-    { label: "Verkleinern und drehen", preset: 31, effect: "growturn" }, { label: "Zoom", preset: 53, subtype: 16, effect: "zoom" }, { label: "Drehen", preset: 49, effect: "swivel" }, { label: "Hüpfen", preset: 26, effect: "bounce" }] },
+    { label: "Verkleinern und Drehen", preset: 31, effect: "growturn" }, { label: "Zoom", preset: 53, subtype: 16, effect: "zoom" }, { label: "Drehen", preset: 49, effect: "swivel" }, { label: "Springen", preset: 26, effect: "bounce" }] },
+  { title: "Animationspfade", cls: "path", items: [
+    { label: "Linien", preset: 42, effect: "path" }, { label: "Bögen", preset: 37, effect: "path" }, { label: "Wendungen", preset: 39, effect: "path" }, { label: "Formen", preset: 35, effect: "path" },
+    { label: "Schleifen", preset: 36, effect: "path" }, { label: "Benutzerdefinierter Pfad", preset: 0, effect: "path" }] },
 ];
 
 const TIMING_HEAD = '<p:timing><p:tnLst><p:par><p:cTn id="1" dur="indefinite" restart="never" nodeType="tmRoot"><p:childTnLst><p:seq concurrent="1" nextAc="seek"><p:cTn id="2" dur="indefinite" nodeType="mainSeq"><p:childTnLst>';
@@ -61,7 +66,8 @@ function maxCtnId(root: Element): number {
 }
 
 /** Animation (replace the selected shapes' effects) or Animation hinzufügen (add another), as a click effect. */
-export function addAnimation(app: PresentApp, cls: "entr" | "emph" | "exit", it: AnimItem, add: boolean): void {
+export function addAnimation(app: PresentApp, cls: "entr" | "emph" | "exit" | "path", it: AnimItem, add: boolean): void {
+  if (cls === "path") return; // Animationspfade: not built yet (greyed in the gallery).
   const ed = app.editor;
   const ids = ed.text ? [ed.text.id] : ed.sel;
   const path = app.slidePath();

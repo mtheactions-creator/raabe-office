@@ -19,6 +19,9 @@ import { DEFAULT_TABLE_STYLE_ID, DEFAULT_TABLE_STYLE_XML } from "./render/table"
 import * as T from "./textops";
 import * as S from "./shapeops";
 import { DESIGNS } from "./designs";
+import { TRANSITION_GROUPS } from "./transitions";
+import { ANIMATION_GROUPS } from "./animations";
+import { COLOR_SETS, FONT_SETS } from "./themesets.gen";
 import { SlideShow } from "./show";
 import { FormatPane } from "./formatpane";
 import { NotesPageView, OutlineView } from "./views";
@@ -1068,6 +1071,35 @@ export class PresentApp implements EditorHost, PanelHost {
 
   // ----- designs ------------------------------------------------------------------------------------------------
 
+  /** Entwurf > Farben: one of Office's colour sets into the theme (a:clrScheme). */
+  applyColorSet(name: string, colors: Record<string, string>): void {
+    const theme = this.deck.pptx.themeOf(this.deck.pptx.masters()[0] ?? "");
+    if (!theme) return;
+    this.deck.change("Farben", [theme], () => {
+      const scheme = this.deck.pptx.doc(theme).getElementsByTagNameNS(PptxDom.NS_A, "clrScheme")[0];
+      if (!scheme) return;
+      scheme.setAttribute("name", name);
+      for (const c of kids(scheme)) {
+        const hex = colors[c.localName];
+        if (!hex) continue;
+        while (c.firstChild) c.firstChild.remove();
+        c.append(c.localName === "dk1" ? make(c.ownerDocument, "a:sysClr", { val: "windowText", lastClr: hex }) : c.localName === "lt1" ? make(c.ownerDocument, "a:sysClr", { val: "window", lastClr: hex }) : make(c.ownerDocument, "a:srgbClr", { val: hex }));
+      }
+    });
+  }
+
+  /** Entwurf > Schriftarten: the theme's heading and body fonts. */
+  applyFontSet(name: string, major: string, minor: string): void {
+    const theme = this.deck.pptx.themeOf(this.deck.pptx.masters()[0] ?? "");
+    if (!theme) return;
+    this.deck.change("Schriftarten", [theme], () => {
+      const doc = this.deck.pptx.doc(theme);
+      const fs = doc.getElementsByTagNameNS(PptxDom.NS_A, "fontScheme")[0];
+      fs?.setAttribute("name", name);
+      for (const [tag, face] of [["majorFont", major], ["minorFont", minor]] as const) doc.getElementsByTagNameNS(PptxDom.NS_A, tag)[0]?.getElementsByTagNameNS(PptxDom.NS_A, "latin")[0]?.setAttribute("typeface", face);
+    });
+  }
+
   /** Entwurf > Designs: the theme's colours and fonts and the master's design shapes of `d`. */
   applyDesign(d: DesignSpec): void {
     const pptx = this.deck.pptx;
@@ -1264,7 +1296,7 @@ export class PresentApp implements EditorHost, PanelHost {
     const grid = h("div", { class: "table-grid" });
     const cells: HTMLElement[] = [];
     for (let r = 0; r < 8; r++) for (let c = 0; c < 10; c++) {
-      const cell = h("div", { class: "tg-cell" });
+      const cell = h("div", { class: "tg-cell", role: "button", "aria-label": `${c + 1}x${r + 1} Tabelle` });
       cell.onmouseenter = () => { label.textContent = `${c + 1}x${r + 1}-Tabelle`; cells.forEach((x, i) => x.classList.toggle("on", Math.floor(i / 10) <= r && i % 10 <= c)); };
       cell.onclick = () => { close(); this.insertTable(r + 1, c + 1); };
       cells.push(cell);
@@ -1955,8 +1987,8 @@ export class PresentApp implements EditorHost, PanelHost {
         slideSize: [{ cmd: "design.slide4x3" }, { cmd: "design.slide16x9" }, "-", { cmd: "design.slideCustom" }],
         showCustom: [], record: [],
         transOptions: () => this.transMod?.transitionOptions(this) ?? [], animOptions: () => this.animMod?.animationOptions(this) ?? [], animStart: [{ label: "Beim Klicken", run: () => this.animPane.setStart("clickEffect") }, { label: "Mit Vorherigen", run: () => this.animPane.setStart("withEffect") }, { label: "Nach Vorherigen", run: () => this.animPane.setStart("afterEffect") }],
-        colors: () => DESIGNS.map((d) => ({ label: d.name === "Office" ? "Office" : d.name, run: () => this.applyDesign(d) })),
-        fonts: () => DESIGNS.map((d) => ({ label: `${d.name}: ${d.major} / ${d.minor}`, run: () => this.applyDesign(d) })),
+        colors: () => COLOR_SETS.map((c) => ({ label: c.name, run: () => this.applyColorSet(c.name, c.colors) })),
+        fonts: () => FONT_SETS.map((f) => ({ label: f.label, run: () => this.applyFontSet(f.name, f.major, f.minor) })),
         underline: [], outlineWeight: [], outlineDash: [], effects: this.effectsMenu(), quickStyles: () => [], zoomFit: [],
       },
       panels: {
@@ -2095,15 +2127,12 @@ export class PresentApp implements EditorHost, PanelHost {
 
   transitionGallery(close: () => void): HTMLElement {
     const grid = h("div", { class: "fx-gallery" });
-    const add = (title: string, items: [string, string][]) => {
-      grid.append(h("div", { class: "gal-head" }, title));
+    for (const g of TRANSITION_GROUPS) {
+      grid.append(h("div", { class: "gal-head" }, g.title));
       const row = h("div", { class: "fx-row" });
-      for (const [label, kind] of items) row.append(h("button", { class: "fx-item", "aria-label": label, onclick: () => { close(); void import("./transitions").then((m) => m.setTransition(this, kind)); } }, icon(kind === "none" ? "close-x" : "transition"), h("span", null, label)));
+      for (const [label, kind] of g.items) row.append(h("button", { class: "fx-item", "aria-label": label, onclick: () => { close(); void import("./transitions").then((m) => m.setTransition(this, kind)); } }, icon(kind === "none" ? "close-x" : "transition"), h("span", null, label)));
       grid.append(row);
-    };
-    void import("./transitions").then((m) => {
-      for (const g of m.TRANSITION_GROUPS) add(g.title, g.items);
-    });
+    }
     return grid;
   }
 
@@ -2125,16 +2154,16 @@ export class PresentApp implements EditorHost, PanelHost {
 
   animationGallery(close: () => void, add: boolean): HTMLElement {
     const grid = h("div", { class: "fx-gallery" });
-    void import("./animations").then((m) => {
-      for (const g of m.ANIMATION_GROUPS) {
-        grid.append(h("div", { class: "gal-head" }, g.title));
-        const row = h("div", { class: "fx-row" });
-        for (const it of g.items) row.append(h("button", { class: `fx-item fx-${g.cls}`, "aria-label": it.label, onclick: () => { close(); m.addAnimation(this, g.cls, it, add); } }, icon("animation"), h("span", null, it.label)));
-        grid.append(row);
-      }
-    });
+    if (!add) grid.append(h("div", { class: "fx-row" }, h("button", { class: "fx-item", "aria-label": "Ohne", onclick: () => { close(); void import("./animations").then((m) => { const p = this.slidePath(); const root = p ? this.deck.pptx.doc(p).documentElement : null; const timing = root && kid(root, "timing"); if (timing) this.editor.edit("Animation entfernen", () => { for (const id of this.editor.sel) m.removeEffects(timing, id); }); }); } }, icon("close-x"), h("span", null, "Ohne"))));
+    for (const g of ANIMATION_GROUPS) {
+      grid.append(h("div", { class: "gal-head" }, g.title));
+      const row = h("div", { class: "fx-row" });
+      for (const it of g.items) row.append(h("button", { class: `fx-item fx-${g.cls}`, "aria-label": it.label, disabled: g.cls === "path" || undefined, onclick: () => { close(); void import("./animations").then((m) => m.addAnimation(this, g.cls, it, add)); } }, icon("animation"), h("span", null, it.label)));
+      grid.append(row);
+    }
     return grid;
   }
+
   animationDuration(): string { return "00,50"; }
   setAnimationDuration(v: string): void { void import("./animations").then((m) => m.setDuration(this, parseSeconds(v))); }
   stepAnimationDuration(d: 1 | -1): void { void import("./animations").then((m) => m.setDuration(this, Math.max(0.01, parseSeconds(this.animationDuration()) + d * 0.25))); }

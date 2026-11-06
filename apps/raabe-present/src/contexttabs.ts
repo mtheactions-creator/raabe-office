@@ -187,7 +187,10 @@ export function chartFormatTab(h: ContextTabHost): Tab {
     id: "chartFormat", label: "Format", key: "JY", contextual: true, shrink: [],
     groups: [
       { id: "current", label: "Aktuelle Auswahl", key: "ZA", icon: "format-picture", controls: [b("draw.format", "M", "large")] },
-      { id: "styles", label: "Formenarten", key: "ZF", icon: "shape-fill", controls: [stack(h.color(() => h.fillColor(), (c) => h.setFill(c), "draw.fill", "Ü", true), h.color(() => h.lineColor(), (c) => h.setLine(c), "draw.outline", "V", true))] },
+      { id: "insert", label: "Formen einfügen", key: "ZE", icon: "shapes", controls: [{ type: "dropdown", cmd: "insert.shapes", key: "2", size: "large", menu: [], popup: (c) => h.shapeGallery(c) }] },
+      { id: "styles", label: "Formenarten", key: "ZF", icon: "shape-fill", controls: [b("shape.quickStyles", "NC", "large"), stack(h.color(() => h.fillColor(), (c) => h.setFill(c), "draw.fill", "Ü", true), h.color(() => h.lineColor(), (c) => h.setLine(c), "draw.outline", "V", true), dd("draw.effects", "MO", "small", () => h.effects()))] },
+      { id: "wordart", label: "WordArt-Formate", key: "ZW", icon: "wordart", launcher: { cmd: "wordart.dialog", key: "O" }, controls: wordArt(h) },
+      { id: "access", label: "Barrierefreiheit", key: "ZB", icon: "alt-text", controls: [b("shape.altTextPane", "AT", "large")] },
       { id: "arrange", label: "Anordnen", key: "ZO", icon: "bring-forward", controls: arrange(false) },
       { id: "size", label: "Größe", key: "ZG", icon: "size-position", controls: [stack(h.sizeSpin("h"), h.sizeSpin("w"))] },
     ],
