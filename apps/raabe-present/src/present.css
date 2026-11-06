@@ -50,6 +50,8 @@
 .overlay .edge-l { top: 0; bottom: 0; left: -4px; width: 7px; }
 .overlay .edge-r { top: 0; bottom: 0; right: -4px; width: 7px; }
 .overlay .handle { position: absolute; width: 9px; height: 9px; margin: -5px 0 0 -5px; border: 1px solid #6f6f6f; border-radius: 50%; background: #fff; pointer-events: auto; box-sizing: border-box; }
+.overlay .crop-ghost { position: absolute; background-size: 100% 100%; opacity: 0.35; pointer-events: none; outline: 1px solid #9a9a9a; z-index: -1; }
+.overlay .h-crop { border-radius: 0; width: 10px; height: 10px; margin: -5px 0 0 -5px; background: #000; border: 1px solid #fff; }
 .overlay .h-adj { background: #ffd800; border-color: #5f5f5f; cursor: default; }
 .overlay .h-rot { left: 50%; top: -24px; width: 18px; height: 18px; margin: -9px 0 0 -9px; border: 0; background: transparent; color: #555; cursor: grab; display: flex; align-items: center; justify-content: center; }
 .overlay .h-rot svg { background: #fff; border-radius: 50%; }

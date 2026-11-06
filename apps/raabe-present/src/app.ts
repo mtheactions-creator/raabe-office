@@ -691,6 +691,43 @@ export class PresentApp implements EditorHost, PanelHost {
 
   private alignToSlide = false;
 
+  /** Bild zurücksetzen: the picture's formatting goes (crop, effects, outline); place and size stay. */
+  private resetPicture(): void {
+    const views = this.editor.selectedViews.filter((v) => v.kind === "pic");
+    this.editor.edit("Bild zurücksetzen", () => {
+      for (const v of views) {
+        const el = this.editor.shapeEl(v.id)!;
+        const bf = kid(el, "blipFill");
+        kid(bf, "srcRect")?.remove();
+        const blip = kid(bf, "blip");
+        if (blip) for (const c of kids(blip)) if (c.localName !== "extLst") c.remove();
+        const sp = kid(el, "spPr");
+        if (sp) for (const c of kids(sp)) if (!["xfrm", "prstGeom"].includes(c.localName)) c.remove();
+        const pg = kid(sp, "prstGeom");
+        if (pg) pg.setAttribute("prst", "rect");
+      }
+    });
+  }
+
+  /** Grafik ändern: another picture file in the same place, keeping the size of the old one's width. */
+  private async changePicture(): Promise<void> {
+    const v = this.editor.selectedViews[0];
+    const path = await this.platform.openImageDialog();
+    if (!path || !v) return;
+    const bytes = await this.platform.readFile(path);
+    const type = mimeOf(path);
+    const ext = type === "image/jpeg" ? "jpeg" : type === "image/gif" ? "gif" : "png";
+    const media = this.deck.pptx.freeName(`ppt/media/image#.${ext}`);
+    const slide = this.slidePath()!;
+    this.editor.edit("Grafik ändern", () => {
+      this.deck.pptx.put(media, bytes);
+      this.deck.pptx.setType(media, type, true);
+      const rid = this.deck.pptx.link(slide, "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image", media);
+      const blip = at(this.editor.shapeEl(v.id)!, "blipFill/blip");
+      blip?.setAttributeNS(PptxDom.NS_R, "r:embed", rid);
+    });
+  }
+
   /** Zeilen und Spalten: a row above / below the first / last row, a column left / right (PowerPoint copies the neighbour's formatting). */
   private tableInsert(where: "above" | "below" | "left" | "right"): void {
     const v = this.editor.selectedViews.find((x) => x.frame === "table");
@@ -1466,6 +1503,9 @@ export class PresentApp implements EditorHost, PanelHost {
     const dlgHost = () => ({ runStyle: () => this.runStyle(), paraStyle: () => this.paraStyle(), fonts: () => this.fontList, formatRuns: (l: string, f: (r: Element) => void) => this.formatRuns(l, f), formatParas: (l: string, f: (p: Element) => void) => this.formatParas(l, f) });
     const finder = new FindDialog(this);
     impl("edit.find", () => finder.open(false));
+    impl("pic.crop", () => this.editor.toggleCrop(), () => this.editor.selectedViews[0]?.kind === "pic", () => this.editor.crop !== null);
+    impl("pic.reset", () => this.resetPicture(), () => this.editor.selectedViews.some((v) => v.kind === "pic"));
+    impl("pic.change", () => this.changePicture(), () => this.editor.selectedViews.length === 1 && this.editor.selectedViews[0].kind === "pic");
     impl("insert.link", () => import("./links").then((m) => m.insertLink(this)), () => this.editor.sel.length > 0);
     impl("shape.link", () => import("./links").then((m) => m.insertLink(this)), () => this.editor.sel.length > 0);
     impl("review.spelling", () => import("./spelling").then((m) => m.checkSpelling(this)));

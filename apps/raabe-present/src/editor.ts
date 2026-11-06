@@ -65,6 +65,8 @@ export class SlideEditor {
   /** Autofit steps found while editing, by shape id. */
   private fits = new Map<number, { fontScale: number; lnSpcReduction: number }>();
   private blinkTimer = 0;
+  /** Zuschneiden: the picture being cropped (its crop handles replace the sizing handles). */
+  crop: number | null = null;
   /** Smart guides are on (Ansicht > Raster und Führungslinien). */
   smartGuides = true;
   snapToGrid = false;
@@ -179,6 +181,23 @@ export class SlideEditor {
     // The outline itself can be grabbed to move the shape (PowerPoint's four-headed arrow).
     for (const side of ["t", "r", "b", "l"]) { const b = h("div", `edge edge-${side}`); b.dataset.edge = side; f.append(b); }
     if (!primary && !editing) return f;
+    if (this.crop === v.id && v.pic) {
+      // Crop mode: the whole picture faded behind, black crop handles on the kept part (PowerPoint).
+      const c = v.pic.crop, s2 = this.scale;
+      const fw = v.w / Math.max(0.01, 1 - c.l - c.r), fh = v.h / Math.max(0.01, 1 - c.t - c.b);
+      const ghost = h("div", "crop-ghost");
+      ghost.style.cssText = `left:${(-c.l * fw / EMU_PX) * s2}px;top:${(-c.t * fh / EMU_PX) * s2}px;width:${(fw / EMU_PX) * s2}px;height:${(fh / EMU_PX) * s2}px`;
+      const url = v.pic.path ? this.host.image(v.pic.path) : undefined;
+      if (url) ghost.style.backgroundImage = `url("${url}")`;
+      f.append(ghost);
+      for (const k of Object.keys(HANDLE_POS) as Exclude<Handle, "rot">[]) {
+        const hd = this.handle(k, v);
+        hd.classList.add("h-crop");
+        hd.dataset.handle = `crop-${k}`;
+        f.append(hd);
+      }
+      return f;
+    }
     if (v.kind === "cxnSp") {
       for (const k of ["nw", "se"] as const) f.append(this.handle(k, v));
     } else {
@@ -392,6 +411,7 @@ export class SlideEditor {
 
   select(ids: number[]): void {
     this.endText();
+    if (this.crop !== null && !ids.includes(this.crop)) this.crop = null;
     this.sel = ids;
     this.render();
     this.host.selectionChanged();
@@ -399,6 +419,7 @@ export class SlideEditor {
 
   clear(): void {
     this.endText();
+    this.crop = null;
     this.sel = [];
     this.render();
     this.host.selectionChanged();
@@ -481,6 +502,7 @@ export class SlideEditor {
     this.focus();
     if (this.tool) { this.drawTool(e); return; }
     const handle = target.closest(".handle") as HTMLElement | null;
+    if (handle?.dataset.handle?.startsWith("crop-")) { this.dragCrop(Number(handle.dataset.id), handle.dataset.handle.slice(5) as Exclude<Handle, "rot">); return; }
     if (handle?.dataset.handle?.startsWith("adj")) { this.dragAdjust(Number(handle.dataset.id), Number(handle.dataset.handle.slice(3))); return; }
     if (handle) { this.dragHandle(e, handle.dataset.handle as Handle, Number(handle.dataset.id)); return; }
     const edge = target.closest(".edge") as HTMLElement | null;
@@ -918,6 +940,51 @@ export class SlideEditor {
     window.addEventListener("mouseup", up);
   }
 
+  /** Starts or ends Zuschneiden for the selected picture. */
+  toggleCrop(): void {
+    const v = this.selectedViews[0];
+    this.crop = this.crop === null && v?.kind === "pic" ? v.id : null;
+    this.render();
+    this.host.selectionChanged();
+  }
+
+  /** A crop handle: the edge moves over the picture, which stays where it is (a:srcRect and the frame change). */
+  private dragCrop(id: number, k: Exclude<Handle, "rot">): void {
+    const v = this.shapeView(id);
+    if (!v?.pic) return;
+    const c0 = v.pic.crop;
+    const fw = v.w / Math.max(0.01, 1 - c0.l - c0.r), fh = v.h / Math.max(0.01, 1 - c0.t - c0.b);
+    const start = { x: v.x, y: v.y, r: v.x + v.w, b: v.y + v.h };
+    let box = { ...start };
+    const move = (ev: MouseEvent) => {
+      const p = this.toSlide(ev.clientX, ev.clientY);
+      box = { ...start };
+      if (k.includes("w")) box.x = Math.min(p.x, start.r - 1);
+      if (k.includes("e")) box.r = Math.max(p.x, start.x + 1);
+      if (k.includes("n")) box.y = Math.min(p.y, start.b - 1);
+      if (k.includes("s")) box.b = Math.max(p.y, start.y + 1);
+      const fr = this.overlay.querySelector(`.frame[data-id="${id}"]`) as HTMLElement | null;
+      const s = this.scale / EMU_PX;
+      if (fr) { fr.style.left = `${box.x * s}px`; fr.style.top = `${box.y * s}px`; fr.style.width = `${(box.r - box.x) * s}px`; fr.style.height = `${(box.b - box.y) * s}px`; }
+    };
+    const up = () => {
+      window.removeEventListener("mousemove", move);
+      window.removeEventListener("mouseup", up);
+      const l = c0.l + (box.x - start.x) / fw, t = c0.t + (box.y - start.y) / fh, r = c0.r + (start.r - box.r) / fw, b = c0.b + (start.b - box.b) / fh;
+      this.edit("Zuschneiden", () => {
+        const el = this.shapeEl(id)!;
+        const bf = PptxDom.kid(el, "blipFill")!;
+        let src = PptxDom.kid(bf, "srcRect");
+        if (!src) { src = PptxDom.make(el.ownerDocument, "a:srcRect"); bf.insertBefore(src, PptxDom.kid(bf, "stretch") ?? PptxDom.kid(bf, "tile") ?? null); }
+        const set = (n: string, x: number) => { const val = Math.round(x * 100000); if (val) src!.setAttribute(n, String(val)); else src!.removeAttribute(n); };
+        set("l", l); set("t", t); set("r", r); set("b", b);
+        S.setXfrm(el, { x: box.x, y: box.y, w: box.r - box.x, h: box.b - box.y });
+      });
+    };
+    window.addEventListener("mousemove", move);
+    window.addEventListener("mouseup", up);
+  }
+
   private groupView(g: Element): ShapeView {
     return this.shapeView(S.shapeId(g))!;
   }
@@ -1022,6 +1089,7 @@ export class SlideEditor {
     const k = e.key, ctrl = e.ctrlKey;
     const views = this.selectedViews;
     if (k === "Escape") {
+      if (this.crop !== null) { this.crop = null; this.render(); return true; }
       if (this.tool) { this.tool = null; this.host.toolDone(); return true; }
       if (this.sel.length) { this.clear(); return true; }
       return false;
