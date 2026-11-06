@@ -25,6 +25,7 @@ import { NotesPageView, OutlineView } from "./views";
 import { FindDialog } from "./find";
 import { AnimationPane, effects } from "./animpane";
 import { Comments } from "./comments";
+import { BackgroundPane } from "./background";
 import { Sorter } from "./sorter";
 import { addRecent, loadRecent, loadSettings, removeRecent, setPinned, type Settings } from "./store";
 import appIconUrl from "../../../branding/raabe-present-small.svg?url";
@@ -85,6 +86,7 @@ export class PresentApp implements EditorHost, PanelHost {
   private formatPane!: FormatPane;
   private animPane!: AnimationPane;
   private comments!: Comments;
+  private bgPane!: BackgroundPane;
 
   constructor(readonly platform: Platform) {
     void platform.listFonts().then((f) => { this.fontList = f; }).catch(() => {});
@@ -124,6 +126,7 @@ export class PresentApp implements EditorHost, PanelHost {
     this.formatPane = new FormatPane(this.editor, this.main);
     this.animPane = new AnimationPane(this, this.main);
     this.comments = new Comments(this, this.main, () => this.settings.userName);
+    this.bgPane = new BackgroundPane(this, this.main);
     this.statusSlide = h("span", { class: "cell" });
     this.zoomPct = h("button", { class: "cell pct", "data-tip": "Zoom", onclick: () => void this.commands.run("view.zoom") });
     this.zoomSlider = h("input", { type: "range", min: "0", max: "100", step: "0.5", "aria-label": "Zoom" }) as HTMLInputElement;
@@ -1583,6 +1586,11 @@ export class PresentApp implements EditorHost, PanelHost {
     const dlgHost = () => ({ runStyle: () => this.runStyle(), paraStyle: () => this.paraStyle(), fonts: () => this.fontList, formatRuns: (l: string, f: (r: Element) => void) => this.formatRuns(l, f), formatParas: (l: string, f: (p: Element) => void) => this.formatParas(l, f) });
     const finder = new FindDialog(this);
     impl("edit.find", () => finder.open(false));
+    impl("design.slideCustom", () => this.slideSizeDialog());
+    impl("insert.wordArt", () => {}, () => !!this.slidePath());
+    impl("slide.formatBackground", () => this.bgPane.open(), () => !!this.slidePath());
+    impl("design.formatBackground", () => this.bgPane.open(), () => !!this.slidePath());
+    impl("design.background", () => this.bgPane.open(), () => !!this.slidePath());
     const cellAt = () => this.editor.text?.cell;
     impl("table.deleteRows", () => this.tableDelete("row"), () => !!cellAt());
     impl("table.deleteCols", () => this.tableDelete("col"), () => !!cellAt());
@@ -1751,6 +1759,22 @@ export class PresentApp implements EditorHost, PanelHost {
     setTimeout(() => input.select(), 0);
     const r = await showDialog({ title, body: h("div", { class: "form" }, h("label", null, label), input), buttons: [{ label: "Umbenennen", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
     return r ? input.value : null;
+  }
+
+  /** Benutzerdefinierte Foliengröße: PowerPoint's sizes for screens and paper, or one of your own (cm). */
+  private async slideSizeDialog(): Promise<void> {
+    const sizes: [string, number, number][] = [["Bildschirmpräsentation (4:3)", 25.4, 19.05], ["Bildschirmpräsentation (16:9)", 25.4, 14.288], ["Bildschirmpräsentation (16:10)", 25.4, 15.875],
+      ["Breitbild", 33.867, 19.05], ["A4-Papier (210 x 297 mm)", 27.517, 19.05], ["Benutzerdefiniert", 0, 0]];
+    const cur = this.deck.pptx.slideSize;
+    const cm = (emu: number) => (emu / 360000).toFixed(2).replace(".", ",");
+    const w = h("input", { type: "text", value: `${cm(cur.cx)} cm`, style: "width:90px" }) as HTMLInputElement;
+    const hh = h("input", { type: "text", value: `${cm(cur.cy)} cm`, style: "width:90px" }) as HTMLInputElement;
+    const sel = h("select", { onchange: () => { const s2 = sizes[sel.selectedIndex]; if (s2[1]) { w.value = `${s2[1].toFixed(2).replace(".", ",")} cm`; hh.value = `${s2[2].toFixed(2).replace(".", ",")} cm`; } } }, ...sizes.map(([l]) => h("option", null, l))) as HTMLSelectElement;
+    sel.selectedIndex = cur.cx === 12192000 ? 3 : cur.cx === 9144000 && cur.cy === 6858000 ? 0 : 5;
+    const ok = await showDialog({ title: "Foliengröße", body: h("div", { class: "form" }, h("label", null, "Foliengröße für:"), sel, h("label", null, "Breite: ", w), h("label", null, "Höhe: ", hh)), buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
+    if (!ok) return;
+    const n = (v: string) => Math.round(Number(v.replace(",", ".").replace(/[^\d.]/g, "")) * 360000);
+    if (n(w.value) > 0 && n(hh.value) > 0) this.setSlideSize(n(w.value), n(hh.value));
   }
 
   private setSlideSize(cx: number, cy: number): void {
@@ -1987,6 +2011,7 @@ export class PresentApp implements EditorHost, PanelHost {
         addAnim: (close) => this.animations.gallery(close, true),
         table: (close) => this.tableGrid(close),
         chart: (close) => this.chartGallery(close),
+        wordArt: (close) => this.wordArtGallery(close),
       },
       spin: {
         transDuration: { value: () => this.transitions.durationText(), commit: (v) => this.transitions.setDuration(v), step: (d) => this.transitions.stepDuration(d) },
@@ -2039,6 +2064,41 @@ export class PresentApp implements EditorHost, PanelHost {
 
   private setColumns(n: number): void {
     this.setBodyAttr("numCol", n > 1 ? String(n) : null);
+  }
+
+  /** Einfügen > WordArt: a text box "Hier steht Ihr Text" in 54 pt with one of the text styles (our selection of Office's). */
+  private wordArtGallery(close: () => void): HTMLElement {
+    const styles: [string, string][] = [
+      ["Füllung: Schwarz, Textfarbe 1; Schatten", '<a:solidFill><a:schemeClr val="tx1"/></a:solidFill><a:effectLst><a:outerShdw blurRad="38100" dist="38100" dir="2700000" algn="tl"><a:srgbClr val="000000"><a:alpha val="43137"/></a:srgbClr></a:outerShdw></a:effectLst>'],
+      ["Füllung: Blau, Akzentfarbe 1; Schatten", '<a:solidFill><a:schemeClr val="accent1"/></a:solidFill><a:effectLst><a:outerShdw blurRad="38100" dist="38100" dir="2700000" algn="tl"><a:srgbClr val="000000"><a:alpha val="43137"/></a:srgbClr></a:outerShdw></a:effectLst>'],
+      ["Füllung: Orange, Akzentfarbe 2; Kontur: Orange, Akzentfarbe 2", '<a:ln w="12700"><a:solidFill><a:schemeClr val="accent2"/></a:solidFill></a:ln><a:solidFill><a:schemeClr val="accent2"><a:lumMod val="40000"/><a:lumOff val="60000"/></a:schemeClr></a:solidFill>'],
+      ["Füllung: Weiß; Kontur: Blau, Akzentfarbe 1; Schatten", '<a:ln w="12700"><a:solidFill><a:schemeClr val="accent1"/></a:solidFill></a:ln><a:solidFill><a:schemeClr val="bg1"/></a:solidFill><a:effectLst><a:outerShdw blurRad="38100" dist="38100" dir="2700000" algn="tl"><a:srgbClr val="000000"><a:alpha val="43137"/></a:srgbClr></a:outerShdw></a:effectLst>'],
+      ["Füllung: Grau, Akzentfarbe 3; scharfe Abschrägung", '<a:solidFill><a:schemeClr val="accent3"/></a:solidFill>'],
+      ["Muster-Füllung: Weiß; dunkler oberer Schatten", '<a:solidFill><a:schemeClr val="tx1"><a:lumMod val="75000"/><a:lumOff val="25000"/></a:schemeClr></a:solidFill>'],
+    ];
+    const box = h("div", { class: "fx-gallery", style: "width:420px" }, h("div", { class: "gal-head" }, "WordArt"));
+    const row = h("div", { class: "fx-row" });
+    for (const [name, rpr] of styles) row.append(h("button", { class: "fx-item", "aria-label": name, "data-tip": name, onclick: () => { close(); this.insertWordArt(rpr); } }, h("span", { style: "font:bold 22px Calibri" }, "A")));
+    box.append(row);
+    return box;
+  }
+
+  private insertWordArt(rpr: string): void {
+    const slide = this.slidePath();
+    if (!slide) return;
+    const size = this.deck.pptx.slideSize;
+    let id = 0;
+    this.editor.edit("WordArt einfügen", () => {
+      const doc = this.deck.pptx.doc(slide);
+      const tree = S.treeOf(doc);
+      id = S.maxId(tree) + 1;
+      const w = 6096000, hh = 923330;
+      const el = fragment(doc, `<p:sp><p:nvSpPr><p:cNvPr id="${id}" name="Rechteck ${id - 1}"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr><p:spPr><a:xfrm><a:off x="${(size.cx - w) / 2}" y="${(size.cy - hh) / 2}"/><a:ext cx="${w}" cy="${hh}"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom><a:noFill/></p:spPr>` +
+        `<p:txBody><a:bodyPr wrap="none" lIns="91440" tIns="45720" rIns="91440" bIns="45720"><a:spAutoFit/></a:bodyPr><a:lstStyle/><a:p><a:pPr algn="ctr"/><a:r><a:rPr lang="de-DE" sz="5400" b="1" cap="none" spc="0">${rpr}</a:rPr><a:t>Hier steht Ihr Text</a:t></a:r></a:p></p:txBody></p:sp>`)[0];
+      tree.append(el);
+    });
+    this.editor.updateAutofit(id);
+    this.editor.enterText(id, "all");
   }
 
   private chartGallery(close: () => void): HTMLElement {

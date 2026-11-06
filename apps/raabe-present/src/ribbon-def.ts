@@ -30,7 +30,7 @@ export interface RibbonContext {
     animStart: MenuEntry[]; colors: () => MenuEntry[]; fonts: () => MenuEntry[]; underline: MenuEntry[];
     outlineWeight: MenuEntry[]; outlineDash: MenuEntry[]; effects: MenuEntry[]; quickStyles: () => MenuEntry[]; zoomFit: MenuEntry[];
   };
-  panels: { newSlide: Popup; layout: Popup; shapes: Popup; themes: Popup; transitions: Popup; animations: Popup; table: Popup; chart: Popup; addAnim: Popup };
+  panels: { newSlide: Popup; layout: Popup; shapes: Popup; themes: Popup; transitions: Popup; animations: Popup; table: Popup; chart: Popup; addAnim: Popup; wordArt: Popup };
   spin: {
     transDuration: { value(): string; commit(v: string): void; step(d: 1 | -1): void };
     transAfter: { value(): string; commit(v: string): void; step(d: 1 | -1): void };
@@ -99,7 +99,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
         { id: "illustrations", label: "Illustrationen", key: "ZI", icon: "shapes", controls: [panel("insert.shapes", "2", "large", p.shapes), b("insert.smartArt", "M", "large"), panel("insert.chart", "I", "large", p.chart)] },
         { id: "links", label: "Links", key: "ZL", icon: "link", controls: [b("insert.zoom", "Y", "large"), b("insert.link", "H1", "large"), b("insert.action", "T", "large")] },
         { id: "comments", label: "Kommentare", key: "ZK", icon: "comment", controls: [b("insert.comment", "N", "large")] },
-        { id: "text", label: "Text", key: "ZX", icon: "text-box", controls: [split("insert.textBox", "LT", "large", m.textBox), b("insert.headerFooter", "KO", "large"), b("insert.wordArt", "W", "large"),
+        { id: "text", label: "Text", key: "ZX", icon: "text-box", controls: [split("insert.textBox", "LT", "large", m.textBox), b("insert.headerFooter", "KO", "large"), panel("insert.wordArt", "W", "large", p.wordArt),
           stack(b("insert.dateTime", "D"), b("insert.slideNumber", "H2"), b("insert.object", "9"))] },
         { id: "symbols", label: "Symbole", key: "ZS", icon: "equation", controls: [dd("insert.symbols", "ZS", "large", [{ cmd: "insert.equation" }, { cmd: "insert.symbol" }])] },
         { id: "media", label: "Medien", key: "ZM", icon: "picture", controls: [dd("insert.media", "ZM", "large", [{ cmd: "insert.video" }, { cmd: "insert.audio" }, { cmd: "insert.screenRecording" }])] },
