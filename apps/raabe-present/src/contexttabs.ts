@@ -83,7 +83,9 @@ const check = (cmd: string, key: string): Control => ({ type: "check", cmd, key 
 
 export interface ContextTabHost {
   shapeGallery(close: () => void): HTMLElement;
-  color(cur: () => string, pick: (hex: string) => void, cmd: string, key: string, label?: boolean): Control;
+  color(cur: () => string, pick: (hex: string) => void, cmd: string, key: string, label?: boolean, extra?: () => MenuEntry[]): Control;
+  outlineExtra(): MenuEntry[];
+  textOutlineColor(): string; setTextOutline(hex: string): void; textOutlineExtra(): MenuEntry[];
   fillColor(): string; setFill(hex: string): void;
   lineColor(): string; setLine(hex: string): void;
   fontColor(): string; setFontColor(hex: string): void;
@@ -109,7 +111,7 @@ const arrange = (pic: boolean): Control[] => [stack(
   { type: "dropdown", cmd: "arrange.rotate", key: "DR", size: "small", menu: [{ cmd: "arrange.rotRight" }, { cmd: "arrange.rotLeft" }, { cmd: "arrange.flipV" }, { cmd: "arrange.flipH" }] })];
 
 const wordArt = (h: ContextTabHost): Control[] => [b("wordart.quickStyles", "C", "large"),
-  stack(h.color(() => h.fontColor(), (c) => h.setFontColor(c), "wordart.fill", "4", true), b("wordart.outline", "TE"), b("wordart.effects", "IE"))];
+  stack(h.color(() => h.fontColor(), (c) => h.setFontColor(c), "wordart.fill", "4", true), h.color(() => h.textOutlineColor(), (c) => h.setTextOutline(c), "wordart.outline", "TE", true, () => h.textOutlineExtra()), b("wordart.effects", "IE"))];
 
 export function shapeFormatTab(h: ContextTabHost): Tab {
   return {
@@ -117,7 +119,7 @@ export function shapeFormatTab(h: ContextTabHost): Tab {
     groups: [
       { id: "insert", label: "Formen einfügen", key: "ZE", icon: "shapes", controls: [{ type: "dropdown", cmd: "insert.shapes", key: "2", size: "large", menu: [], popup: (c) => h.shapeGallery(c) }, stack(b("shape.editShape", "F"), b("insert.textBox", "LT"), b("shape.merge", "Y"))] },
       { id: "styles", label: "Formenarten", key: "ZF", icon: "shape-fill", launcher: { cmd: "draw.format", key: "BB" }, controls: [b("shape.quickStyles", "NC", "large"),
-        stack(h.color(() => h.fillColor(), (c) => h.setFill(c), "draw.fill", "Ü", true), h.color(() => h.lineColor(), (c) => h.setLine(c), "draw.outline", "V", true), dd("draw.effects", "MO", "small", () => h.effects()))] },
+        stack(h.color(() => h.fillColor(), (c) => h.setFill(c), "draw.fill", "Ü", true), h.color(() => h.lineColor(), (c) => h.setLine(c), "draw.outline", "V", true, () => h.outlineExtra()), dd("draw.effects", "MO", "small", () => h.effects()))] },
       { id: "wordart", label: "WordArt-Formate", key: "ZW", icon: "wordart", launcher: { cmd: "wordart.dialog", key: "O" }, controls: wordArt(h) },
       { id: "access", label: "Barrierefreiheit", key: "ZB", icon: "alt-text", controls: [b("shape.altTextPane", "AT", "large")] },
       { id: "arrange", label: "Anordnen", key: "ZA", icon: "bring-forward", controls: arrange(false) },
@@ -188,7 +190,7 @@ export function chartFormatTab(h: ContextTabHost): Tab {
     groups: [
       { id: "current", label: "Aktuelle Auswahl", key: "ZA", icon: "format-picture", controls: [b("draw.format", "M", "large")] },
       { id: "insert", label: "Formen einfügen", key: "ZE", icon: "shapes", controls: [{ type: "dropdown", cmd: "insert.shapes", key: "2", size: "large", menu: [], popup: (c) => h.shapeGallery(c) }] },
-      { id: "styles", label: "Formenarten", key: "ZF", icon: "shape-fill", controls: [b("shape.quickStyles", "NC", "large"), stack(h.color(() => h.fillColor(), (c) => h.setFill(c), "draw.fill", "Ü", true), h.color(() => h.lineColor(), (c) => h.setLine(c), "draw.outline", "V", true), dd("draw.effects", "MO", "small", () => h.effects()))] },
+      { id: "styles", label: "Formenarten", key: "ZF", icon: "shape-fill", controls: [b("shape.quickStyles", "NC", "large"), stack(h.color(() => h.fillColor(), (c) => h.setFill(c), "draw.fill", "Ü", true), h.color(() => h.lineColor(), (c) => h.setLine(c), "draw.outline", "V", true, () => h.outlineExtra()), dd("draw.effects", "MO", "small", () => h.effects()))] },
       { id: "wordart", label: "WordArt-Formate", key: "ZW", icon: "wordart", launcher: { cmd: "wordart.dialog", key: "O" }, controls: wordArt(h) },
       { id: "access", label: "Barrierefreiheit", key: "ZB", icon: "alt-text", controls: [b("shape.altTextPane", "AT", "large")] },
       { id: "arrange", label: "Anordnen", key: "ZO", icon: "bring-forward", controls: arrange(false) },

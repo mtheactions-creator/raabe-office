@@ -6,6 +6,7 @@
 import { h, showDialog, type Control, type MenuEntry } from "@raabe/shell";
 import { PptxDom, type ShapeView } from "@raabe/ooxml";
 import type { PresentApp } from "./app";
+import { LINE_WEIGHTS } from "./lines";
 import type { ContextTabHost } from "./contexttabs";
 import * as T from "./textops";
 import * as S from "./shapeops";
@@ -20,7 +21,9 @@ export function contextHost(app: PresentApp): ContextTabHost {
     ({ type: "spinner", cmd, label, icon, key, value, commit, step });
   return {
     shapeGallery: (c) => app.shapeGallery(c),
-    color: (cur, pick, cmd, key, label) => ({ type: "color", cmd, key, palette: "font", current: cur, pick, showLabel: label }),
+    color: (cur, pick, cmd, key, label, extra) => ({ type: "color", cmd, key, palette: "font", current: cur, pick, showLabel: label, extra }),
+    outlineExtra: () => app.outlineExtra(),
+    textOutlineColor: () => app.textOutlineColor(), setTextOutline: (hex) => app.setTextOutline({ color: hex }), textOutlineExtra: () => app.textOutlineExtra(),
     fillColor: ctx.fillColor, setFill: ctx.setFill, lineColor: ctx.lineColor, setLine: ctx.setLine, fontColor: ctx.fontColor, setFontColor: ctx.setFontColor,
     effects: () => ctx.menus.effects,
     alignMenu: () => [{ cmd: "arrange.alignLeft" }, { cmd: "arrange.alignCenter" }, { cmd: "arrange.alignRight" }, "-", { cmd: "arrange.alignTop" }, { cmd: "arrange.alignMiddle" }, { cmd: "arrange.alignBottom" }],
@@ -33,7 +36,7 @@ export function contextHost(app: PresentApp): ContextTabHost {
       for (const c of [-40, -20, 0, 20, 40]) for (const br of [-40, -20, 0, 20, 40]) out.push({ label: `Helligkeit: ${br > 0 ? "+" : ""}${br} %  Kontrast: ${c > 0 ? "+" : ""}${c} %`, run: () => blipEffect(app, "Korrekturen", (blip) => { remove(blip, "lum"); if (br || c) blip.append(make(blip.ownerDocument, "a:lum", { bright: br * 1000, contrast: c * 1000 })); }) });
       return out;
     },
-    lineWeights: () => [0.25, 0.5, 0.75, 1, 1.5, 2.25, 3, 4.5, 6].map((w) => ({ label: `${String(w).replace(".", ",")} Pt.`, run: () => app.setLineWidth(w) })),
+    lineWeights: () => LINE_WEIGHTS.map(([label, w]) => ({ label, run: () => app.setLineWidth(w) })),
     chartKinds: () => CH.CHART_KINDS.map(([label, k]) => ({ label, run: () => CH.changeType(app, k) })),
     quickLayouts: () => Array.from({ length: 11 }, (_, i) => ({ label: `Layout ${i + 1}`, run: () => CH.quickLayout(app, i + 1) })),
     chartColors: () => [{ heading: "Farbig" }, ...[10, 11, 12, 13].map((k) => ({ label: `Farbige Palette ${k - 9}`, run: () => CH.setColors(app, k) })),
@@ -230,6 +233,7 @@ export function implementContext(app: PresentApp): void {
   impl("shape.heightBox", () => {}, shapes);
   impl("shape.widthBox", () => {}, shapes);
   impl("wordart.fill", () => void app.commands.run("font.color"), shapes);
+  impl("wordart.outline", () => app.setTextOutline({ color: app.textOutlineColor() === "none" ? "000000" : app.textOutlineColor() }), shapes);
   impl("pic.corrections", () => {}, pic);
   impl("pic.color", () => {}, pic);
   impl("pic.transparency", () => {}, pic);

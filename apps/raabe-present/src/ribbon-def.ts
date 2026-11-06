@@ -21,6 +21,8 @@ export interface RibbonContext {
   setFill(hex: string): void;
   lineColor(): string;
   setLine(hex: string): void;
+  /** Keine Kontur, Stärke, Striche under the Formkontur palette. */
+  outlineExtra(): MenuEntry[];
   preview: { font(name: string): void; size(value: string): void };
   menus: {
     paste: MenuEntry[]; layouts: () => MenuEntry[]; section: MenuEntry[]; spacing: MenuEntry[]; case: MenuEntry[];
@@ -84,7 +86,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
         {
           id: "drawing", label: "Zeichnen", key: "ZD", icon: "shapes", launcher: { cmd: "draw.format", key: "BB" },
           controls: [panel("draw.shapes", "23", "large", p.shapes), lazy("draw.arrange", "G", "large", m.arrange), lazy("draw.quickStyles", "NC", "large", m.quickStyles),
-            stack(color("draw.fill", "Ü", ctx.fillColor, ctx.setFill, "font", true), color("draw.outline", "V2", ctx.lineColor, ctx.setLine, "font", true), dd("draw.effects", "MO", "small", m.effects))],
+            stack(color("draw.fill", "Ü", ctx.fillColor, ctx.setFill, "font", true), { ...color("draw.outline", "V2", ctx.lineColor, ctx.setLine, "font", true), extra: () => ctx.outlineExtra() } as Control, dd("draw.effects", "MO", "small", m.effects))],
         },
         { id: "editing", label: "Bearbeiten", key: "ZB", icon: "find", controls: [stack(split("edit.find", "FD", "small", m.find), split("edit.replace", "R", "small", [{ cmd: "edit.replace" }, { cmd: "edit.replaceFonts" }]), dd("edit.select", "SL", "small", m.select))] },
       ],

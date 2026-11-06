@@ -44,6 +44,8 @@ export type Control =
       value?: () => string; commit?: (v: string) => void; step?: (dir: 1 | -1) => void;
     }
   | { type: "color"; cmd: string; key?: string; palette: "font" | "highlight"; current: () => string; pick: (c: string) => void; showLabel?: boolean;
+      /** Entries below the palette (PowerPoint's Formkontur: Keine Kontur, Stärke ▸, Striche ▸); submenus open beside. */
+      extra?: () => MenuEntry[];
       /** Livevorschau of a colour under the mouse (without remembering it as the button's colour). */
       preview?: (c: string) => void }
   /**
@@ -323,6 +325,23 @@ export class Ribbon {
     return h("div", { class: "rgroup collapsed", "data-group": g.id }, h("div", { class: "content" }, btn));
   }
 
+  /** The entries under a colour palette as buttons; a submenu opens as its own menu at its button. */
+  private paletteExtra(entries: MenuEntry[]): HTMLElement[] {
+    const out: HTMLElement[] = [h("hr")];
+    for (const m of entries) {
+      if (m === "-") { out.push(h("hr")); continue; }
+      if ("cmd" in m) { const id = m.cmd; out.push(h("button", { onclick: () => { closePopup(); void this.commands.run(id); } }, m.label ?? this.commands.get(id).label)); continue; }
+      if ("submenu" in m) {
+        const sub = m.submenu;
+        const b: HTMLElement = h("button", { class: "has-sub", onclick: () => showMenu(this.commands, typeof sub === "function" ? sub() : sub, b.getBoundingClientRect()) }, m.label);
+        out.push(b);
+        continue;
+      }
+      if ("run" in m) { const run = m.run; out.push(h("button", { onclick: () => { closePopup(); run(); this.opts.onDone?.(); } }, m.label)); }
+    }
+    return out;
+  }
+
   private scope(): string {
     return this.current.id;
   }
@@ -553,7 +572,7 @@ export class Ribbon {
           onclick: () => {
             const pick = (v: string) => { c2.pick(v); this.opts.onDone?.(); };
             const hover = c2.preview ? { commands: this.commands, apply: c2.preview } : undefined;
-            if (c2.palette === "font") showFontColors(arrow.getBoundingClientRect(), pick, hover);
+            if (c2.palette === "font") showFontColors(arrow.getBoundingClientRect(), pick, hover, c2.extra ? this.paletteExtra(c2.extra()) : undefined);
             else showHighlights(arrow.getBoundingClientRect(), pick, hover);
           },
         }, chev());

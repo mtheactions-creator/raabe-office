@@ -130,7 +130,7 @@ export function colorGrid(pick: (hex: string, themeRef?: string) => void, theme?
   return [h("div", { class: "palette-title" }, "Designfarben"), grid, h("div", { class: "palette-title" }, "Standardfarben"), std];
 }
 
-export function showFontColors(anchor: DOMRect, pick: (hex: string) => void, hover?: PaletteHover): void {
+export function showFontColors(anchor: DOMRect, pick: (hex: string) => void, hover?: PaletteHover, extra?: HTMLElement[]): void {
   const hv = (hex: string) => (hover ? { commands: hover.commands, apply: () => hover.apply(hex) } : undefined);
   const grid = h("div", { class: "swatches", style: "grid-template-columns:repeat(10, 18px)" });
   for (const [hex, label] of THEME) grid.append(swatch(hex, label, () => pick(hex), hv(hex)));
@@ -150,7 +150,7 @@ export function showFontColors(anchor: DOMRect, pick: (hex: string) => void, hov
     h("div", { class: "palette-title" }, "Designfarben"), grid,
     h("div", { class: "palette-title" }, "Standardfarben"), std,
     h("hr"),
-    h("button", { onclick: () => custom.click() }, "Weitere Farben..."), custom);
+    h("button", { onclick: () => custom.click() }, "Weitere Farben..."), custom, ...(extra ?? []));
   showPopup(box, anchor);
 }
 

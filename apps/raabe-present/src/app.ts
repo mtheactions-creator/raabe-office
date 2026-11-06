@@ -11,6 +11,7 @@ import { SHAPE_GALLERY, shapeIcon } from "@raabe/text-engine";
 import { COMMANDS } from "./command-list";
 import { ribbonTabs, type RibbonContext } from "./ribbon-def";
 import { Deck, defaultMasterPlaceholder } from "./deck";
+import { LINE_DASHES, LINE_WEIGHTS } from "./lines";
 import { SlideEditor, flat, union, type EditorHost } from "./editor";
 import { SlidePanel, type PanelHost } from "./panel";
 import { renderSlide } from "./render/slide";
@@ -660,6 +661,28 @@ export class PresentApp implements EditorHost, PanelHost {
         sp.insertBefore(f, after ? after.nextSibling : sp.firstChild);
       }
     });
+  }
+
+  /** The entries under Formkontur's palette. */
+  outlineExtra(): MenuEntry[] {
+    return [{ label: "Keine Kontur", run: () => this.setLine(null) },
+      { label: "Stärke", submenu: () => LINE_WEIGHTS.map(([label, w]) => ({ label, run: () => this.setLine(undefined, w) })) },
+      { label: "Striche", submenu: () => LINE_DASHES.map(([label, d]) => ({ label, run: () => this.setLine(undefined, undefined, d) })) }];
+  }
+
+  /** Textkontur (WordArt-Formate): the runs' outline colour, Keine Kontur, Stärke, Striche. */
+  private lastTextOutline = "none";
+  textOutlineColor(): string { return this.lastTextOutline === "none" ? "none" : `#${this.lastTextOutline}`; }
+  setTextOutline(o: { color?: string | null; width?: number; dash?: string }): void {
+    if (o.color) this.lastTextOutline = o.color.replace("#", "").toUpperCase();
+    if (o.color === null) this.lastTextOutline = "none";
+    const color = o.color ? o.color.replace("#", "").toUpperCase() : o.color;
+    this.formatRuns("Textkontur", (r) => T.setRunOutline(r, { ...o, color, width: o.width ?? (o.color && !r.getElementsByTagNameNS(PptxDom.NS_A, "ln")[0]?.getAttribute("w") ? 9525 : o.width) }));
+  }
+  textOutlineExtra(): MenuEntry[] {
+    return [{ label: "Keine Kontur", run: () => this.setTextOutline({ color: null }) },
+      { label: "Stärke", submenu: () => LINE_WEIGHTS.map(([label, w]) => ({ label, run: () => this.setTextOutline({ width: Math.round(w * 12700) }) })) },
+      { label: "Striche", submenu: () => LINE_DASHES.map(([label, d]) => ({ label, run: () => this.setTextOutline({ dash: d }) })) }];
   }
 
   private setLine(hex: string | null | undefined, width?: number, dash?: string): void {
@@ -1477,7 +1500,7 @@ export class PresentApp implements EditorHost, PanelHost {
         [b("font.bold"), b("font.italic"), b("font.underline"), b("para.left"), b("para.center"), b("para.right"),
           { type: "color", cmd: "font.highlight", palette: "highlight", current: ctx.highlight, pick: ctx.setHighlight }, { type: "color", cmd: "font.color", palette: "font", current: ctx.fontColor, pick: ctx.setFontColor }],
       ] }]
-      : [{ type: "color", cmd: "draw.fill", palette: "font", current: ctx.fillColor, pick: ctx.setFill, showLabel: true }, { type: "color", cmd: "draw.outline", palette: "font", current: ctx.lineColor, pick: ctx.setLine, showLabel: true },
+      : [{ type: "color", cmd: "draw.fill", palette: "font", current: ctx.fillColor, pick: ctx.setFill, showLabel: true }, { type: "color", cmd: "draw.outline", palette: "font", current: ctx.lineColor, pick: ctx.setLine, showLabel: true, extra: () => this.outlineExtra() },
         { type: "button", cmd: "review.newComment", key: "", size: "large" }];
     return this.ribbon.toolbar(controls).el;
   }
@@ -2112,6 +2135,7 @@ export class PresentApp implements EditorHost, PanelHost {
       fillColor: () => `#${this.lastFill}`,
       setFill: (hex) => this.setFill(hex.replace("#", "").toUpperCase()),
       lineColor: () => `#${this.lastLine}`,
+      outlineExtra: () => this.outlineExtra(),
       setLine: (hex) => this.setLine(hex.replace("#", "").toUpperCase()),
       preview: { font: () => {}, size: () => {} },
       menus: {
@@ -2705,6 +2729,7 @@ export class PresentApp implements EditorHost, PanelHost {
             const el = "popup" in c && c.popup ? c.popup(() => {}) : c.type === "color" ? h("div", null, ...colorGrid(() => {}, undefined)) : null;
             if (el) panelItems = Array.from(el.querySelectorAll("button, [role=menuitem], [data-tip]")).map((b) => ({ name: (b.getAttribute("aria-label") || (b as HTMLElement).dataset.tip || b.textContent || "").trim() })).filter((x) => x.name);
           } catch { /* a panel that needs a selection */ }
+          if (c.type === "color" && c.extra) panelItems.push(...entries(c.extra()));
           const own = ("popup" in c && c.popup) || c.type === "color" ? { panel: true, ...(panelItems.length ? { items: [...(("items" in menu && menu.items) || []), ...panelItems] } : {}) } : {};
           return [{ ...base, type: (c as { type: string }).type, ...menu, ...own }];
         };
