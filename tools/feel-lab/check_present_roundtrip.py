@@ -53,6 +53,7 @@ SCENARIOS: dict[str, str] = {
     "design raabe": """p.newDoc(); const a = p.app; const d = await import('/src/designs.ts'); a.applyDesign(d.RAABE_DESIGN); await new Promise(r => setTimeout(r, 300));""",
     "picture": f"""p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); const bin = atob('{PNG}'); const b = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) b[i] = bin.charCodeAt(i); a.insertPictureBytes(b, 'image/png'); await new Promise(r => setTimeout(r, 500));""",
     "chart": """p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); const m = await import('/src/charts.ts'); m.insertChart(a, 'column');""",
+    "comment": """p.newDoc(); p.app.comments.add('Bitte prüfen');""",
     "undo redo": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]}]}); const a = p.app; a.editor.select([2]); a.editor.deleteSelected(); await p.run('edit.undo'); await p.run('edit.redo'); await p.run('edit.undo');""",
 }
 
@@ -94,7 +95,7 @@ def ppt_read(pres) -> dict:
                     notes = str(ph.TextFrame.TextRange.Text)
         except Exception:  # noqa: BLE001
             pass
-        slides.append({"layout": str(sl.CustomLayout.Name), "hidden": bool(sl.SlideShowTransition.Hidden), "transition": int(sl.SlideShowTransition.EntryEffect),
+        slides.append({"comments": int(sl.Comments.Count), "layout": str(sl.CustomLayout.Name), "hidden": bool(sl.SlideShowTransition.Hidden), "transition": int(sl.SlideShowTransition.EntryEffect),
                        "animations": int(sl.TimeLine.MainSequence.Count), "notes": notes, "shapes": ppt_shapes(sl)})
     sp = pres.SectionProperties
     return {"slides": slides, "sections": [str(sp.Name(k)) for k in range(1, sp.Count + 1)], "design": str(pres.SlideMaster.Theme.ThemeColorScheme.Colors(5).RGB) if False else str(pres.SlideMaster.Design.Name),
@@ -149,6 +150,8 @@ def check(name: str, r: dict, ours: dict) -> list[str]:
         want(any(x["type"] == 13 for x in sh), f"types {[x['type'] for x in sh]}")
     elif name == "chart":
         want(any("chart" in x for x in sh), f"chart {[x.get('chart') for x in sh]}")
+    elif name == "comment":
+        want(s0["comments"] == 1, f"comments {s0['comments']}")
     elif name == "undo redo":
         want(len(sh) == 1, f"shapes {len(sh)}")
     # The shapes' places as RaabePresent has them.

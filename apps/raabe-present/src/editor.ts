@@ -27,6 +27,8 @@ export interface EditorHost {
   contextMenu(e: MouseEvent, kind: "shape" | "text" | "slide"): void;
   shortcut(e: KeyboardEvent): boolean;
   doubleClick(v: ShapeView): boolean;
+  /** Comment markers of a slide (slide coordinates in EMU). */
+  commentMarkers?(path: string): { x: number; y: number; n: number }[];
   toolDone(): void;
 }
 
@@ -244,6 +246,13 @@ export class SlideEditor {
     if (!this.view) return;
     const views = this.selectedViews;
     views.forEach((v, i) => this.overlay.append(this.frameEl(v, this.text?.id === v.id, i === 0 || views.length > 1)));
+    for (const m of this.path && this.host.commentMarkers ? this.host.commentMarkers(this.path) : []) {
+      const el = h("div", "comment-marker");
+      el.textContent = String(m.n);
+      el.style.left = `${(m.x / EMU_PX) * this.scale}px`;
+      el.style.top = `${(m.y / EMU_PX) * this.scale}px`;
+      this.overlay.append(el);
+    }
   }
 
   // ----- caret -----------------------------------------------------------------------------------------

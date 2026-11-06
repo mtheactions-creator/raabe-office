@@ -184,3 +184,12 @@ body.printing #print-root { display: block; position: fixed; left: 0; top: 0; z-
 .print-settings { display: flex; flex-direction: column; gap: 8px; width: 260px; }
 .print-right { display: flex; flex-direction: column; align-items: center; gap: 8px; }
 .print-nav { display: flex; gap: 8px; align-items: center; }
+
+/* Kommentare */
+.overlay .comment-marker { position: absolute; width: 18px; height: 16px; margin-left: 2px; background: #fbe1a8; border: 1px solid #c89a2c; border-radius: 2px; font: 10px var(--font); text-align: center; line-height: 16px; color: #5a4100; }
+.comments-pane { display: flex; flex-direction: column; gap: 8px; }
+.comment-card { border: 1px solid #d6d6d6; border-radius: 4px; padding: 6px 8px; background: #fff; }
+.comment-head { display: flex; justify-content: space-between; font: 600 12px var(--font); color: #333; }
+.comment-head button { border: 0; background: none; color: #777; }
+.comment-text { white-space: pre-wrap; margin-top: 4px; }
+.comment-input { min-height: 60px; resize: vertical; font: 13px var(--font); }

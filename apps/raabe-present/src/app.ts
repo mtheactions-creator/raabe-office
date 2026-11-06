@@ -24,6 +24,7 @@ import { FormatPane } from "./formatpane";
 import { NotesPageView, OutlineView } from "./views";
 import { FindDialog } from "./find";
 import { AnimationPane, effects } from "./animpane";
+import { Comments } from "./comments";
 import { Sorter } from "./sorter";
 import { addRecent, loadRecent, loadSettings, removeRecent, setPinned, type Settings } from "./store";
 import appIconUrl from "../../../branding/raabe-present-small.svg?url";
@@ -83,6 +84,7 @@ export class PresentApp implements EditorHost, PanelHost {
   private show: SlideShow | null = null;
   private formatPane!: FormatPane;
   private animPane!: AnimationPane;
+  private comments!: Comments;
 
   constructor(readonly platform: Platform) {
     void platform.listFonts().then((f) => { this.fontList = f; }).catch(() => {});
@@ -121,6 +123,7 @@ export class PresentApp implements EditorHost, PanelHost {
     this.main = h("div", { class: "present-main" }, this.panel.el, this.outline.el, h("div", { class: "splitter" }), this.center, this.sorter.el, this.notesPage.el);
     this.formatPane = new FormatPane(this.editor, this.main);
     this.animPane = new AnimationPane(this, this.main);
+    this.comments = new Comments(this, this.main, () => this.settings.userName);
     this.statusSlide = h("span", { class: "cell" });
     this.zoomPct = h("button", { class: "cell pct", "data-tip": "Zoom", onclick: () => void this.commands.run("view.zoom") });
     this.zoomSlider = h("input", { type: "range", min: "0", max: "100", step: "0.5", "aria-label": "Zoom" }) as HTMLInputElement;
@@ -291,6 +294,7 @@ export class PresentApp implements EditorHost, PanelHost {
   }
 
   selectionChanged(): void {
+    if (this.comments?.pane.isOpen) this.comments.pane.refresh();
     this.formatPane?.sync();
     this.animPane?.refresh();
     this.updateChrome();
@@ -298,6 +302,10 @@ export class PresentApp implements EditorHost, PanelHost {
 
   toolDone(): void {
     this.updateChrome();
+  }
+
+  commentMarkers(path: string): { x: number; y: number; n: number }[] {
+    return this.comments?.markers(path) ?? [];
   }
 
   doubleClick(v: ShapeView): boolean {
@@ -1521,6 +1529,15 @@ export class PresentApp implements EditorHost, PanelHost {
     const dlgHost = () => ({ runStyle: () => this.runStyle(), paraStyle: () => this.paraStyle(), fonts: () => this.fontList, formatRuns: (l: string, f: (r: Element) => void) => this.formatRuns(l, f), formatParas: (l: string, f: (p: Element) => void) => this.formatParas(l, f) });
     const finder = new FindDialog(this);
     impl("edit.find", () => finder.open(false));
+    const newComment = () => { this.comments.open(); setTimeout(() => (document.querySelector(".comment-input") as HTMLTextAreaElement | null)?.focus(), 50); };
+    impl("review.newComment", newComment, () => !!this.slidePath());
+    impl("insert.comment", newComment, () => !!this.slidePath());
+    impl("review.showComments", () => this.comments.toggle(), undefined, () => this.comments.pane.isOpen);
+    impl("view.comments", () => this.comments.toggle(), undefined, () => this.comments.pane.isOpen);
+    impl("review.deleteComment", () => { const p = this.slidePath(); const n = p ? this.comments.list(p).length : 0; if (n) this.comments.remove(n - 1); }, () => !!this.slidePath() && this.comments.list(this.slidePath()!).length > 0);
+    const jump = (d: 1 | -1) => { const n = this.deck.slides.length; for (let k = 1; k <= n; k++) { const i = (this.active.current + d * k + n * 2) % n; if (this.comments.list(this.deck.slides[i].path).length) { this.setCurrent(i); this.comments.open(); return; } } };
+    impl("review.nextComment", () => jump(1));
+    impl("review.prevComment", () => jump(-1));
     impl("show.setup", () => import("./showsetup").then((m) => m.showSetupDialog(this.deck)));
     impl("show.useTimings", () => {}, undefined, () => true);
     impl("anim.pane", () => this.animPane.toggle(), undefined, () => this.animPane.isOpen);
