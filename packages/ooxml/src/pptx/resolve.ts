@@ -68,6 +68,8 @@ export interface RunStyle {
   spacing: number;
   lang?: string;
   link?: string;
+  /** Textkontur: the run's outline (a:ln with a solid fill), width in points. */
+  outline?: { color: string; width: number };
 }
 
 export interface TextRun extends RunStyle {
@@ -332,6 +334,8 @@ function runStyle(m: MergedR, theme: ThemeInfo, fontColor?: string): RunStyle {
   const hl = m.groups.highlight ? readColor(m.groups.highlight, theme.colors)?.hex : undefined;
   const latin = m.groups.latin?.getAttribute("typeface") ?? undefined;
   const link = m.groups.hlinkClick?.getAttributeNS(NS_R, "id") ?? undefined;
+  const ln = m.groups.ln, lnFill = ln ? kid(ln, "solidFill") : undefined;
+  const lnColor = lnFill ? readColor(lnFill, theme.colors)?.hex : undefined;
   return {
     size: (Number(a.sz ?? 1800)) / 100,
     bold: a.b === "1" || a.b === "true",
@@ -347,6 +351,7 @@ function runStyle(m: MergedR, theme: ThemeInfo, fontColor?: string): RunStyle {
     spacing: Number(a.spc ?? 0) / 100,
     lang: a.lang,
     link,
+    ...(lnColor ? { outline: { color: lnColor, width: (num(ln, "w") ?? 12700) / 12700 } } : {}),
   };
 }
 
