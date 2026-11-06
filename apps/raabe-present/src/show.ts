@@ -12,6 +12,7 @@ import { EMU_PX } from "./render/text";
 import { mainSequence, type Step } from "./animations";
 import { readTransition } from "./transitions";
 import { readShowSetup, type ShowSetup } from "./showsetup";
+import { mediaOf, mediaType } from "./media";
 
 type Tool = "arrow" | "pen" | "highlighter" | "laser" | "eraser";
 
@@ -126,6 +127,20 @@ export class SlideShow {
     const tr = readTransition(root);
     const old = this.stageEl.firstElementChild as HTMLElement | null;
     this.stageEl.append(r.el);
+    // Video and audio play in their box with the browser's controls.
+    for (const s of view.shapes) {
+      if (s.kind !== "pic") continue;
+      const m = mediaOf(this.app, path, s.el);
+      const bytes = m ? this.app.deck.pptx.files[m.path] : undefined;
+      if (!m || !bytes) continue;
+      const el = document.createElement(m.kind);
+      el.src = URL.createObjectURL(new Blob([bytes as BlobPart], { type: mediaType(m.path) }));
+      el.controls = true;
+      el.style.cssText = "position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:auto;background:#000";
+      if (m.kind === "audio") el.style.cssText = "position:absolute;left:0;bottom:-40px;width:300px;pointer-events:auto";
+      el.addEventListener("mousedown", (ev) => ev.stopPropagation());
+      r.shapes.get(s.id)?.append(el);
+    }
     if (old && transition && tr && tr.kind !== "cut" && tr.kind !== "none") {
       r.el.animate(transitionKeyframes(tr.kind, tr.dir), { duration: tr.dur, easing: "ease-in-out" }).finished.then(() => old.remove()).catch(() => old.remove());
     } else old?.remove();

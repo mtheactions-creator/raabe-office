@@ -1587,6 +1587,9 @@ export class PresentApp implements EditorHost, PanelHost {
     const finder = new FindDialog(this);
     impl("edit.find", () => finder.open(false));
     impl("design.slideCustom", () => this.slideSizeDialog());
+    impl("insert.video", () => import("./media").then((m) => m.insertMedia(this, "video")), () => !!this.slidePath());
+    impl("insert.audio", () => import("./media").then((m) => m.insertMedia(this, "audio")), () => !!this.slidePath());
+    impl("insert.media", () => {}, () => !!this.slidePath());
     const tool = () => this.editor.tool;
     const ink = (color: string, width: number, alpha?: number) => () => { this.editor.endText(); this.editor.tool = { kind: "ink", color, width, alpha }; this.editor.render(); this.updateChrome(); };
     const isInk = (color: string) => () => tool()?.kind === "ink" && (tool() as { color: string }).color === color;
