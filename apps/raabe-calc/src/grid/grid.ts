@@ -20,6 +20,8 @@ export type Mode = "ready" | "enter" | "edit" | "point";
 
 export interface GridHost {
   workbook(): Workbook;
+  /** Excel tables: the table style under a cell's own formatting. */
+  tableStyle?(row: number, col: number, st: import("@raabe/sheet-engine").CellStyle): import("@raabe/sheet-engine").CellStyle;
   /** Typed input committed into `targets` (Strg+Eingabe: every selected cell). */
   commit(targets: Rect, text: string, opts: { array?: boolean }): void;
   clearContents(): void;
@@ -272,6 +274,7 @@ export class Grid {
       marqueePhase: this.marqueePhase, ghost: this.ghost, insertLine: this.insertLine, refs: this.refHighlights(), showGrid: this.view.showGrid,
       showHeaders: this.view.showHeaders, textCache: this.previewState ? new Map() : this.textCache, cond: this.condEval(), showFormulas: this.host.showFormulas(),
       preview: this.previewState, arrows: this.host.arrows?.(), circles: this.host.circles?.(), pageBreaks: this.host.pageBreaks?.(),
+      tableStyle: this.sheet.tables?.length && this.host.tableStyle ? (r, c, x) => this.host.tableStyle!(r, c, x) : undefined,
     };
     draw(this.ctx, st);
     if (this.editing && !this.editing.viaBar) this.placeEditor();

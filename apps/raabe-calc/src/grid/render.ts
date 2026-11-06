@@ -64,6 +64,8 @@ export interface DrawState {
   textCache: Map<number, Shown>;
   /** Bedingte Formatierung of the sheet (null without rules). */
   cond: CondEval | null;
+  /** Excel tables: the cell's style with the table style under its own formatting. */
+  tableStyle?: (row: number, col: number, st: CellStyle) => CellStyle;
   /** Formulas instead of results (Formeln anzeigen, Strg+#). */
   showFormulas?: boolean;
   /** Livevorschau: the format under the mouse in a list or palette, shown on the selection. */
@@ -206,7 +208,7 @@ function drawPane(ctx: CanvasRenderingContext2D, s: DrawState, pane: Pane): void
   const styleOf = (cell: Cell | undefined, row: number, col: number): CellStyle => {
     const id = cell?.s ?? sheet.rows.get(row)?.s ?? sheet.cols.get(col)?.s;
     const p = s.preview;
-    if (!p || !p.ranges.some((r) => inRect(r, row, col))) return s.styles.get(id);
+    if (!p || !p.ranges.some((r) => inRect(r, row, col))) return s.tableStyle ? s.tableStyle(row, col, s.styles.get(id)) : s.styles.get(id);
     let st = previewed.get(id);
     if (!st) { st = structuredClone(s.styles.get(id)); p.change(st); previewed.set(id, st); }
     return st;

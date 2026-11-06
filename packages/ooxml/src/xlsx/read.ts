@@ -15,6 +15,7 @@ import { readStyles, canon, type StylesRaw } from "./styles";
 import { MDW, widthFromBase, widthFromFile } from "./units";
 import { readCharts, readPictures, type DrawingRaw } from "./drawing";
 import { readPivots } from "./pivots";
+import { readTables } from "./tables";
 import { RT_PERSON, RT_THREADS, readPersons, readThreads } from "./threads";
 import { FILTER_DB, PRINT_AREA, PRINT_TITLES, ownRange, readSparklines, readTitles, readAutoFilter, readConditional, readPage, readValidations, type CfRaw, type DvRaw } from "./sheetparts";
 import { attrs, child, children, decodeX, element, outer, root, split, text, unesc, type El, type Split } from "./xml";
@@ -400,6 +401,7 @@ function readSheet(xml: string, name: string, c: SheetContext): Sheet {
   const charts = readCharts(c.files, sheet, c.part, rels);
   raw.pics = readPictures(c.files, sheet, c.part, rels);
   readPivots(c.files, sheet, c.part, rels);
+  readTables(c.files, sheet, c.part, rels);
   if (charts) raw.drawing = charts;
 
   // View.

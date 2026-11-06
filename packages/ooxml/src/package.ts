@@ -159,6 +159,13 @@ export class PackageWriter {
     }
   }
 
+  /** Removes a part and its content type. */
+  removePart(path: string): void {
+    delete this.files[path];
+    delete this.files[relsPath(path)];
+    if (this.overrides.delete(path)) this.typesChanged = true;
+  }
+
   /** A free part name like word/header3.xml. */
   freeName(prefix: string, ext = "xml"): string {
     let n = 1;

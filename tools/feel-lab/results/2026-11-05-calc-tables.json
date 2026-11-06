@@ -1,0 +1,38 @@
+{
+ "raabe->excel": [
+  {
+   "table": "Noten",
+   "ok": true
+  },
+  {
+   "table": "Erste",
+   "ok": true
+  },
+  {
+   "table": "Summe",
+   "ok": true
+  },
+  {
+   "table": "Dunkel",
+   "ok": true
+  }
+ ],
+ "excel->raabe": [
+  {
+   "table": "Noten",
+   "ok": true
+  },
+  {
+   "table": "Erste",
+   "ok": true
+  },
+  {
+   "table": "Summe",
+   "ok": true
+  },
+  {
+   "table": "Dunkel",
+   "ok": true
+  }
+ ]
+}

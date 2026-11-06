@@ -1579,6 +1579,19 @@ that the catalogue only measured what we had thought of. Decided with the owner:
   (not under "Automatisch außer bei Datentabellen", then F9). The cells show
   {=MEHRFACHOPERATION(Zeile;Spalte)} and refuse single edits; the whole table can be cleared. Saved as
   Excel saves it (f t="dataTable" on the first result cell). `check_datatable.py`: 3/3 both ways.
+- **Excel tables** (Einfügen > Tabelle, Strg+T / Strg+L, Start > Als Tabelle formatieren): a real
+  table object instead of painted cells, saved as xl/tables/tableN.xml with <tableParts> (unchanged
+  tables written back verbatim, removed ones with their parts). The 60 built-in table styles were
+  recorded from Excel element by element with theme-relative colours (`probe_excel_tablestyles.py`,
+  `gen_tablestyles.py` -> table-styles.gen.ts) and are drawn under the cells' own formatting in
+  Excel's element order. The contextual tab Tabellenentwurf: Tabellenname, Tabellengröße ändern, Mit
+  PivotTable zusammenfassen, Duplikate entfernen, In Bereich konvertieren (the look stays as the
+  cells' formatting), the seven Tabellenformatoptionen (Kopfzeile, Ergebniszeile with "Ergebnis" and
+  TEILERGEBNIS(109) in the last column, Gebänderte Zeilen/Spalten, Erste/Letzte Spalte, Schaltfläche
+  "Filter") and the style gallery drawn from the data. `check_calc_tables.py`: 4/4 both ways (name,
+  range, style, options, columns, total row). Not yet: structured references (Tabelle1[Note], [@Note]),
+  calculated columns, growing the table while typing next to it, Datenschnitt; the ribbon keytips of
+  Tabellenentwurf are not yet recorded from Excel.
 - **Inventory of the contextual tabs** (Diagramm, Tabelle, Bild, Form, Textfeld, Sparkline,
   PivotTable; Datenschnitt's setup and SmartArt failed and are still open) and the report
   `docs/EXCEL-INVENTORY.md` with RaabeCalc's contextual tabs and own panels counted: 766 of 2422

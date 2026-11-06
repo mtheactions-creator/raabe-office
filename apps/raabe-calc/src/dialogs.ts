@@ -745,46 +745,24 @@ export function dialogs(app: CalcApp) {
 
   // ----- tables and styles ---------------------------------------------------------------------------
 
-  const TABLE_STYLES: { name: string; head: string; band: string; line: string }[] = [
-    { name: "Hellblau, Tabellenformat hell 9", head: "#4472C4", band: "#D9E1F2", line: "#8EA9DB" },
-    { name: "Orange, Tabellenformat hell 10", head: "#ED7D31", band: "#FCE4D6", line: "#F4B084" },
-    { name: "Grau, Tabellenformat hell 11", head: "#A5A5A5", band: "#EDEDED", line: "#C9C9C9" },
-    { name: "Gold, Tabellenformat hell 12", head: "#FFC000", band: "#FFF2CC", line: "#FFD966" },
-    { name: "Blau, Tabellenformat hell 13", head: "#5B9BD5", band: "#DDEBF7", line: "#9BC2E6" },
-    { name: "Grün, Tabellenformat hell 14", head: "#70AD47", band: "#E2EFDA", line: "#A9D08E" },
-  ];
-
+  /** Als Tabelle formatieren: Excel's table styles; in a table it changes that table's style. */
   function tableStylesPanel(close: () => void): HTMLElement {
-    return h("div", { class: "tile-panel" }, h("div", { class: "fc-label" }, "Hell"), h("div", { class: "tiles" }, ...TABLE_STYLES.map((t) =>
-      h("button", { class: "table-tile", "data-tip": t.name, onclick: () => { close(); void formatAsTable(t); } },
-        ...Array.from({ length: 5 }, (_, i) => h("div", { style: `height:5px;margin:1px 0;background:${i === 0 ? t.head : i % 2 ? t.band : "#fff"};border-top:1px solid ${t.line}` }))))));
+    return app.tables.stylesPanel(close, (name) => {
+      if (app.tables.current()) app.tables.setStyle(name);
+      else void formatAsTable(name);
+    });
   }
 
-  /** Als Tabelle formatieren; `direct` (Schnellanalyse > Tabelle) skips the dialog as Excel does. */
-  async function formatAsTable(style = TABLE_STYLES[0], direct = false): Promise<void> {
+  /** Als Tabelle formatieren / Einfügen > Tabelle (Strg+T): Tabelle erstellen, then a real Excel table;
+   *  `direct` (Schnellanalyse > Tabelle) skips the dialog as Excel does. */
+  async function formatAsTable(style?: string, direct = false): Promise<void> {
     const { rect, header } = sortRange();
     const ref = text(rangeName(rect).replace(/([A-Z]+)(\d+)/g, "$$$1$$$2"), 160);
     const hasHeader = checkbox("Tabelle hat Überschriften", header);
     const ok = direct || await showDialog({ title: "Tabelle erstellen", body: h("div", null, field("Wo sind die Daten für die Tabelle?", ref), hasHeader.el), buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
     if (!ok) return;
     const r = parseRange(ref.value.replace(/\$/g, "")) ?? rect;
-    // Formats the range like Excel's table style (banded rows, header in the accent colour) and adds a filter.
-    app.change("Als Tabelle formatieren", () => {
-      app.history.whole(sheet());
-      for (let row = r.r0; row <= r.r1; row++) for (let col = r.c0; col <= r.c1; col++) {
-        const c = sheet().get(row, col) ?? { v: null };
-        const head = hasHeader.input.checked && row === r.r0;
-        const band = (row - r.r0 - (hasHeader.input.checked ? 1 : 0)) % 2 === 0;
-        const s = app.wb.styles.derive(c.s, (st) => {
-          st.fill = head ? style.head : band ? style.band : undefined;
-          if (head) { st.font.bold = true; st.font.color = "#FFFFFF"; }
-          st.borders = { ...st.borders, top: { style: "thin", color: style.line }, bottom: { style: "thin", color: style.line } };
-        });
-        sheet().set(row, col, { ...c, s });
-      }
-      if (!hasHeader.input.checked) return;
-      sheet().autoFilter = { ref: r, columns: {} };
-    });
+    app.tables.create(r, hasHeader.input.checked, style);
   }
 
   const CELL_STYLES: { name: string; fill?: string; color?: string; bold?: boolean; italic?: boolean; size?: number; border?: string }[] = [

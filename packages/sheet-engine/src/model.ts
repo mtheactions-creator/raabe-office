@@ -412,6 +412,8 @@ export class Sheet {
   threads?: CommentThread[];
   /** Pictures of the drawing (read only: shown, kept in the file as they are). */
   pictures?: SheetPicture[];
+  /** Excel tables (Tabellen) on this sheet. */
+  tables?: import("./table").SheetTable[];
   /** PivotTables whose report is on this sheet. */
   pivots?: import("./pivot").PivotTable[];
   /** Shapes and text boxes of the drawing. */

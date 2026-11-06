@@ -44,6 +44,7 @@ import { picturesFeature } from "./pictures";
 import { shapesFeature } from "./shapes";
 import { borderDrawFeature } from "./borderdraw";
 import { whatIfFeature } from "./whatif";
+import { tablesFeature } from "./tables";
 import { pivotsFeature } from "./pivots";
 import { commentsFeature } from "./comments";
 import { iconRule } from "./dialogs";
@@ -104,6 +105,7 @@ export class CalcApp {
   readonly shapes = shapesFeature(this);
   readonly borderDraw = borderDrawFeature(this);
   readonly whatIf = whatIfFeature(this);
+  readonly tables = tablesFeature(this);
   readonly pivots = pivotsFeature(this);
   private comments = commentsFeature(this, () => this.settings.userName);
   private errorCheck = errorCheckFeature(this, () => void this.evaluator.open());
@@ -696,6 +698,7 @@ export class CalcApp {
   private gridHost(): GridHost {
     return {
       workbook: () => this.wb,
+      tableStyle: (r, c, st) => this.tables.styleFor(r, c, st),
       commit: (targets, text) => {
         if (!this.protection.guardRects([targets])) return;
         if (!this.pivots.guard(targets)) return;
@@ -758,6 +761,7 @@ export class CalcApp {
       selectionChanged: () => {
         this.charts.deselect();
         this.pivotTabs();
+        this.tableTabs();
         this.validation.afterSelect();
         if (this.painter) this.applyPainter();
         this.scheduleChrome();
@@ -1886,6 +1890,17 @@ export class CalcApp {
     run("data.fromText", () => void this.openDialog());
 
     run("insert.table", () => void this.dlg.formatAsTable());
+    const inTable = () => !!this.tables.current();
+    run("table.name", () => {}, inTable);
+    run("table.resize", () => void this.tables.resizeDialog(), inTable);
+    run("table.pivot", () => void this.commands.run("insert.pivot"), inTable);
+    run("table.removeDuplicates", () => void this.commands.run("data.removeDuplicates"), inTable);
+    run("table.convert", () => void this.tables.convert(), inTable);
+    run("table.styles", () => {}, inTable);
+    const opt = (id: string, k: "header" | "totals" | "firstColumn" | "lastColumn" | "rowStripes" | "columnStripes" | "filterButton") =>
+      this.commands.implement(id, { run: () => { const t = this.tables.current(); if (t) this.tables.setOption(k, !t[k]); }, enabled: inTable, checked: () => !!this.tables.current()?.[k] });
+    opt("table.optHeader", "header"); opt("table.optTotals", "totals"); opt("table.optRowStripes", "rowStripes"); opt("table.optFirstColumn", "firstColumn");
+    opt("table.optLastColumn", "lastColumn"); opt("table.optColumnStripes", "columnStripes"); opt("table.optFilter", "filterButton");
     run("insert.link", () => void this.dlg.link());
     run("insert.note", () => this.notes.edit());
     run("insert.symbol", () => void this.dlg.symbol());
@@ -2047,6 +2062,38 @@ export class CalcApp {
   }
 
   /** Diagrammentwurf appears while a chart is selected, as Excel's contextual tab does. */
+  /** Tabellenentwurf appears while the active cell is in an Excel table. */
+  private tableWas = false;
+  private tableTabs(): void {
+    const on = !!this.tables.current();
+    if (on === this.tableWas || this.charts.selected() || this.shapes.selected() || this.pivots.current()) return;
+    this.tableWas = on;
+    this.ribbon.setContextual(on ? [this.tableDesignTab()] : []);
+  }
+
+  private tableDesignDef: import("@raabe/shell").Tab | null = null;
+  private tableDesignTab(): import("@raabe/shell").Tab {
+    const b = (cmd: string, key: string, size: "large" | "small" = "small"): import("@raabe/shell").Control => ({ type: "button", cmd, key, size });
+    const ck = (cmd: string, key: string): import("@raabe/shell").Control => ({ type: "check", cmd, key });
+    return this.tableDesignDef ??= {
+      id: "tableDesign", label: "Tabellenentwurf", key: "JT", contextual: true, shrink: [],
+      groups: [
+        { id: "props", label: "Eigenschaften", key: "ZE", icon: "table", controls: [{ type: "stack", items: [
+          { type: "combo", cmd: "table.name", width: 110, key: "A", label: "Tabellenname:", value: () => this.tables.current()?.name ?? "", commit: (v) => { this.tables.rename(v.trim()); } },
+          b("table.resize", "RE")] }] },
+        { id: "tools", label: "Tools", key: "ZT", icon: "table", controls: [{ type: "stack", items: [b("table.pivot", "P"), b("table.removeDuplicates", "M"), b("table.convert", "G")] },
+          b("table.slicer", "SL", "large")] },
+        { id: "external", label: "Externe Tabellendaten", key: "ZX", icon: "table", controls: [b("table.export", "X", "large"), b("table.refresh", "F", "large")] },
+        { id: "options", label: "Tabellenformatoptionen", key: "ZO", icon: "table", controls: [
+          { type: "stack", items: [ck("table.optHeader", "C"), ck("table.optTotals", "T"), ck("table.optRowStripes", "R")] },
+          { type: "stack", items: [ck("table.optFirstColumn", "H"), ck("table.optLastColumn", "L"), ck("table.optColumnStripes", "O")] },
+          { type: "stack", items: [ck("table.optFilter", "B")] }] },
+        { id: "styles", label: "Tabellenformatvorlagen", key: "ZS", icon: "format-table", controls: [
+          { type: "dropdown", cmd: "table.styles", key: "S", size: "large", menu: [], popup: (close) => this.tables.stylesPanel(close) }] },
+      ],
+    };
+  }
+
   /** PivotTable-Analyse and Entwurf appear while the active cell is in a PivotTable (Excel). */
   private pivotWas = false;
   private pivotTabs(): void {

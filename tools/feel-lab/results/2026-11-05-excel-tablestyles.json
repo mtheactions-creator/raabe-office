@@ -1,0 +1,5936 @@
+{
+ "styles": {
+  "TableStyleLight1": {
+   "local": "Tabellenformat - Hell 1",
+   "wholeTable": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "000000",
+      "theme": 2
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "headerRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "D9D9D9",
+     "theme": 1,
+     "tint": -0.15
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "D9D9D9",
+     "theme": 1,
+     "tint": -0.15
+    }
+   }
+  },
+  "TableStyleLight2": {
+   "local": "Tabellenformat - Hell 2",
+   "wholeTable": {
+    "font": {
+     "rgb": "305496",
+     "theme": 5,
+     "tint": -0.25
+    },
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "4472C4",
+      "theme": 5
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "4472C4",
+      "theme": 5
+     }
+    }
+   },
+   "headerRow": {
+    "font": {
+     "rgb": "305496",
+     "theme": 5,
+     "tint": -0.25
+    },
+    "bold": true,
+    "borders": {
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "4472C4",
+      "theme": 5
+     }
+    }
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "305496",
+     "theme": 5,
+     "tint": -0.25
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "4472C4",
+      "theme": 5
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "305496",
+     "theme": 5,
+     "tint": -0.25
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "305496",
+     "theme": 5,
+     "tint": -0.25
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "D9E1F2",
+     "theme": 5,
+     "tint": 0.8
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "D9E1F2",
+     "theme": 5,
+     "tint": 0.8
+    }
+   }
+  },
+  "TableStyleLight3": {
+   "local": "Tabellenformat - Hell 3",
+   "wholeTable": {
+    "font": {
+     "rgb": "C65911",
+     "theme": 6,
+     "tint": -0.25
+    },
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "ED7D31",
+      "theme": 6
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "ED7D31",
+      "theme": 6
+     }
+    }
+   },
+   "headerRow": {
+    "font": {
+     "rgb": "C65911",
+     "theme": 6,
+     "tint": -0.25
+    },
+    "bold": true,
+    "borders": {
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "ED7D31",
+      "theme": 6
+     }
+    }
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "C65911",
+     "theme": 6,
+     "tint": -0.25
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "ED7D31",
+      "theme": 6
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "C65911",
+     "theme": 6,
+     "tint": -0.25
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "C65911",
+     "theme": 6,
+     "tint": -0.25
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "FCE4D6",
+     "theme": 6,
+     "tint": 0.8
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "FCE4D6",
+     "theme": 6,
+     "tint": 0.8
+    }
+   }
+  },
+  "TableStyleLight4": {
+   "local": "Tabellenformat - Hell 4",
+   "wholeTable": {
+    "font": {
+     "rgb": "7B7B7B",
+     "theme": 7,
+     "tint": -0.25
+    },
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A5A5A5",
+      "theme": 7
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A5A5A5",
+      "theme": 7
+     }
+    }
+   },
+   "headerRow": {
+    "font": {
+     "rgb": "7B7B7B",
+     "theme": 7,
+     "tint": -0.25
+    },
+    "bold": true,
+    "borders": {
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A5A5A5",
+      "theme": 7
+     }
+    }
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "7B7B7B",
+     "theme": 7,
+     "tint": -0.25
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A5A5A5",
+      "theme": 7
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "7B7B7B",
+     "theme": 7,
+     "tint": -0.25
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "7B7B7B",
+     "theme": 7,
+     "tint": -0.25
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "EDEDED",
+     "theme": 7,
+     "tint": 0.8
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "EDEDED",
+     "theme": 7,
+     "tint": 0.8
+    }
+   }
+  },
+  "TableStyleLight5": {
+   "local": "Tabellenformat - Hell 5",
+   "wholeTable": {
+    "font": {
+     "rgb": "BF8F00",
+     "theme": 8,
+     "tint": -0.25
+    },
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFC000",
+      "theme": 8
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFC000",
+      "theme": 8
+     }
+    }
+   },
+   "headerRow": {
+    "font": {
+     "rgb": "BF8F00",
+     "theme": 8,
+     "tint": -0.25
+    },
+    "bold": true,
+    "borders": {
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFC000",
+      "theme": 8
+     }
+    }
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "BF8F00",
+     "theme": 8,
+     "tint": -0.25
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFC000",
+      "theme": 8
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "BF8F00",
+     "theme": 8,
+     "tint": -0.25
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "BF8F00",
+     "theme": 8,
+     "tint": -0.25
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "FFF2CC",
+     "theme": 8,
+     "tint": 0.8
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "FFF2CC",
+     "theme": 8,
+     "tint": 0.8
+    }
+   }
+  },
+  "TableStyleLight6": {
+   "local": "Tabellenformat - Hell 6",
+   "wholeTable": {
+    "font": {
+     "rgb": "2F75B5",
+     "theme": 9,
+     "tint": -0.25
+    },
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "5B9BD5",
+      "theme": 9
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "5B9BD5",
+      "theme": 9
+     }
+    }
+   },
+   "headerRow": {
+    "font": {
+     "rgb": "2F75B5",
+     "theme": 9,
+     "tint": -0.25
+    },
+    "bold": true,
+    "borders": {
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "5B9BD5",
+      "theme": 9
+     }
+    }
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "2F75B5",
+     "theme": 9,
+     "tint": -0.25
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "5B9BD5",
+      "theme": 9
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "2F75B5",
+     "theme": 9,
+     "tint": -0.25
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "2F75B5",
+     "theme": 9,
+     "tint": -0.25
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "DDEBF7",
+     "theme": 9,
+     "tint": 0.8
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "DDEBF7",
+     "theme": 9,
+     "tint": 0.8
+    }
+   }
+  },
+  "TableStyleLight7": {
+   "local": "Tabellenformat - Hell 7",
+   "wholeTable": {
+    "font": {
+     "rgb": "548235",
+     "theme": 10,
+     "tint": -0.25
+    },
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "70AD47",
+      "theme": 10
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "70AD47",
+      "theme": 10
+     }
+    }
+   },
+   "headerRow": {
+    "font": {
+     "rgb": "548235",
+     "theme": 10,
+     "tint": -0.25
+    },
+    "bold": true,
+    "borders": {
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "70AD47",
+      "theme": 10
+     }
+    }
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "548235",
+     "theme": 10,
+     "tint": -0.25
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "70AD47",
+      "theme": 10
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "548235",
+     "theme": 10,
+     "tint": -0.25
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "548235",
+     "theme": 10,
+     "tint": -0.25
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "E2EFDA",
+     "theme": 10,
+     "tint": 0.8
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "E2EFDA",
+     "theme": 10,
+     "tint": 0.8
+    }
+   }
+  },
+  "TableStyleLight8": {
+   "local": "Tabellenformat - Hell 8",
+   "wholeTable": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "000000",
+      "theme": 2
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "000000",
+      "theme": 2
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "000000",
+      "theme": 2
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": -4119,
+      "weight": 4,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "secondRowStripe": {
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "firstColumnStripe": {
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "secondColumnStripe": {
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   }
+  },
+  "TableStyleLight9": {
+   "local": "Tabellenformat - Hell 9",
+   "wholeTable": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "4472C4",
+      "theme": 5
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "4472C4",
+      "theme": 5
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "4472C4",
+      "theme": 5
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "4472C4",
+      "theme": 5
+     }
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "4472C4",
+     "theme": 5
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": -4119,
+      "weight": 4,
+      "rgb": "4472C4",
+      "theme": 5
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "4472C4",
+      "theme": 5
+     }
+    }
+   },
+   "secondRowStripe": {
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "4472C4",
+      "theme": 5
+     }
+    }
+   },
+   "firstColumnStripe": {
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "4472C4",
+      "theme": 5
+     }
+    }
+   },
+   "secondColumnStripe": {
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "4472C4",
+      "theme": 5
+     }
+    }
+   }
+  },
+  "TableStyleLight10": {
+   "local": "Tabellenformat - Hell 10",
+   "wholeTable": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "ED7D31",
+      "theme": 6
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "ED7D31",
+      "theme": 6
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "ED7D31",
+      "theme": 6
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "ED7D31",
+      "theme": 6
+     }
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "ED7D31",
+     "theme": 6
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": -4119,
+      "weight": 4,
+      "rgb": "ED7D31",
+      "theme": 6
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "ED7D31",
+      "theme": 6
+     }
+    }
+   },
+   "secondRowStripe": {
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "ED7D31",
+      "theme": 6
+     }
+    }
+   },
+   "firstColumnStripe": {
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "ED7D31",
+      "theme": 6
+     }
+    }
+   },
+   "secondColumnStripe": {
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "ED7D31",
+      "theme": 6
+     }
+    }
+   }
+  },
+  "TableStyleLight11": {
+   "local": "Tabellenformat - Hell 11",
+   "wholeTable": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A5A5A5",
+      "theme": 7
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A5A5A5",
+      "theme": 7
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A5A5A5",
+      "theme": 7
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A5A5A5",
+      "theme": 7
+     }
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "A5A5A5",
+     "theme": 7
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": -4119,
+      "weight": 4,
+      "rgb": "A5A5A5",
+      "theme": 7
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A5A5A5",
+      "theme": 7
+     }
+    }
+   },
+   "secondRowStripe": {
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A5A5A5",
+      "theme": 7
+     }
+    }
+   },
+   "firstColumnStripe": {
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A5A5A5",
+      "theme": 7
+     }
+    }
+   },
+   "secondColumnStripe": {
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A5A5A5",
+      "theme": 7
+     }
+    }
+   }
+  },
+  "TableStyleLight12": {
+   "local": "Tabellenformat - Hell 12",
+   "wholeTable": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFC000",
+      "theme": 8
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFC000",
+      "theme": 8
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFC000",
+      "theme": 8
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFC000",
+      "theme": 8
+     }
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "FFC000",
+     "theme": 8
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": -4119,
+      "weight": 4,
+      "rgb": "FFC000",
+      "theme": 8
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFC000",
+      "theme": 8
+     }
+    }
+   },
+   "secondRowStripe": {
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFC000",
+      "theme": 8
+     }
+    }
+   },
+   "firstColumnStripe": {
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFC000",
+      "theme": 8
+     }
+    }
+   },
+   "secondColumnStripe": {
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFC000",
+      "theme": 8
+     }
+    }
+   }
+  },
+  "TableStyleLight13": {
+   "local": "Tabellenformat - Hell 13",
+   "wholeTable": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "5B9BD5",
+      "theme": 9
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "5B9BD5",
+      "theme": 9
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "5B9BD5",
+      "theme": 9
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "5B9BD5",
+      "theme": 9
+     }
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "5B9BD5",
+     "theme": 9
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": -4119,
+      "weight": 4,
+      "rgb": "5B9BD5",
+      "theme": 9
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "5B9BD5",
+      "theme": 9
+     }
+    }
+   },
+   "secondRowStripe": {
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "5B9BD5",
+      "theme": 9
+     }
+    }
+   },
+   "firstColumnStripe": {
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "5B9BD5",
+      "theme": 9
+     }
+    }
+   },
+   "secondColumnStripe": {
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "5B9BD5",
+      "theme": 9
+     }
+    }
+   }
+  },
+  "TableStyleLight14": {
+   "local": "Tabellenformat - Hell 14",
+   "wholeTable": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "70AD47",
+      "theme": 10
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "70AD47",
+      "theme": 10
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "70AD47",
+      "theme": 10
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "70AD47",
+      "theme": 10
+     }
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "70AD47",
+     "theme": 10
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": -4119,
+      "weight": 4,
+      "rgb": "70AD47",
+      "theme": 10
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "70AD47",
+      "theme": 10
+     }
+    }
+   },
+   "secondRowStripe": {
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "70AD47",
+      "theme": 10
+     }
+    }
+   },
+   "firstColumnStripe": {
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "70AD47",
+      "theme": 10
+     }
+    }
+   },
+   "secondColumnStripe": {
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "70AD47",
+      "theme": 10
+     }
+    }
+   }
+  },
+  "TableStyleLight15": {
+   "local": "Tabellenformat - Hell 15",
+   "wholeTable": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "000000",
+      "theme": 2
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "000000",
+      "theme": 2
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "000000",
+      "theme": 2
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "000000",
+      "theme": 2
+     },
+     "insideV": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "000000",
+      "theme": 2
+     },
+     "insideH": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "headerRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "bottom": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": -4119,
+      "weight": 4,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "D9D9D9",
+     "theme": 1,
+     "tint": -0.15
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "D9D9D9",
+     "theme": 1,
+     "tint": -0.15
+    }
+   }
+  },
+  "TableStyleLight16": {
+   "local": "Tabellenformat - Hell 16",
+   "wholeTable": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "4472C4",
+      "theme": 5
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "4472C4",
+      "theme": 5
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "4472C4",
+      "theme": 5
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "4472C4",
+      "theme": 5
+     },
+     "insideV": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "4472C4",
+      "theme": 5
+     },
+     "insideH": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "4472C4",
+      "theme": 5
+     }
+    }
+   },
+   "headerRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "bottom": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "4472C4",
+      "theme": 5
+     }
+    }
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": -4119,
+      "weight": 4,
+      "rgb": "4472C4",
+      "theme": 5
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "D9E1F2",
+     "theme": 5,
+     "tint": 0.8
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "D9E1F2",
+     "theme": 5,
+     "tint": 0.8
+    }
+   }
+  },
+  "TableStyleLight17": {
+   "local": "Tabellenformat - Hell 17",
+   "wholeTable": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "ED7D31",
+      "theme": 6
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "ED7D31",
+      "theme": 6
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "ED7D31",
+      "theme": 6
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "ED7D31",
+      "theme": 6
+     },
+     "insideV": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "ED7D31",
+      "theme": 6
+     },
+     "insideH": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "ED7D31",
+      "theme": 6
+     }
+    }
+   },
+   "headerRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "bottom": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "ED7D31",
+      "theme": 6
+     }
+    }
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": -4119,
+      "weight": 4,
+      "rgb": "ED7D31",
+      "theme": 6
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "FCE4D6",
+     "theme": 6,
+     "tint": 0.8
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "FCE4D6",
+     "theme": 6,
+     "tint": 0.8
+    }
+   }
+  },
+  "TableStyleLight18": {
+   "local": "Tabellenformat - Hell 18",
+   "wholeTable": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A5A5A5",
+      "theme": 7
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A5A5A5",
+      "theme": 7
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A5A5A5",
+      "theme": 7
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A5A5A5",
+      "theme": 7
+     },
+     "insideV": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A5A5A5",
+      "theme": 7
+     },
+     "insideH": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A5A5A5",
+      "theme": 7
+     }
+    }
+   },
+   "headerRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "bottom": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "A5A5A5",
+      "theme": 7
+     }
+    }
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": -4119,
+      "weight": 4,
+      "rgb": "A5A5A5",
+      "theme": 7
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "EDEDED",
+     "theme": 7,
+     "tint": 0.8
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "EDEDED",
+     "theme": 7,
+     "tint": 0.8
+    }
+   }
+  },
+  "TableStyleLight19": {
+   "local": "Tabellenformat - Hell 19",
+   "wholeTable": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFC000",
+      "theme": 8
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFC000",
+      "theme": 8
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFC000",
+      "theme": 8
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFC000",
+      "theme": 8
+     },
+     "insideV": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFC000",
+      "theme": 8
+     },
+     "insideH": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFC000",
+      "theme": 8
+     }
+    }
+   },
+   "headerRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "bottom": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "FFC000",
+      "theme": 8
+     }
+    }
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": -4119,
+      "weight": 4,
+      "rgb": "FFC000",
+      "theme": 8
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "FFF2CC",
+     "theme": 8,
+     "tint": 0.8
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "FFF2CC",
+     "theme": 8,
+     "tint": 0.8
+    }
+   }
+  },
+  "TableStyleLight20": {
+   "local": "Tabellenformat - Hell 20",
+   "wholeTable": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "5B9BD5",
+      "theme": 9
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "5B9BD5",
+      "theme": 9
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "5B9BD5",
+      "theme": 9
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "5B9BD5",
+      "theme": 9
+     },
+     "insideV": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "5B9BD5",
+      "theme": 9
+     },
+     "insideH": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "5B9BD5",
+      "theme": 9
+     }
+    }
+   },
+   "headerRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "bottom": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "5B9BD5",
+      "theme": 9
+     }
+    }
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": -4119,
+      "weight": 4,
+      "rgb": "5B9BD5",
+      "theme": 9
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "DDEBF7",
+     "theme": 9,
+     "tint": 0.8
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "DDEBF7",
+     "theme": 9,
+     "tint": 0.8
+    }
+   }
+  },
+  "TableStyleLight21": {
+   "local": "Tabellenformat - Hell 21",
+   "wholeTable": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "70AD47",
+      "theme": 10
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "70AD47",
+      "theme": 10
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "70AD47",
+      "theme": 10
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "70AD47",
+      "theme": 10
+     },
+     "insideV": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "70AD47",
+      "theme": 10
+     },
+     "insideH": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "70AD47",
+      "theme": 10
+     }
+    }
+   },
+   "headerRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "bottom": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "70AD47",
+      "theme": 10
+     }
+    }
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": -4119,
+      "weight": 4,
+      "rgb": "70AD47",
+      "theme": 10
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "E2EFDA",
+     "theme": 10,
+     "tint": 0.8
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "E2EFDA",
+     "theme": 10,
+     "tint": 0.8
+    }
+   }
+  },
+  "TableStyleMedium1": {
+   "local": "Tabellenformat - Mittel 1",
+   "wholeTable": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "000000",
+      "theme": 2
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "000000",
+      "theme": 2
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "000000",
+      "theme": 2
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "000000",
+      "theme": 2
+     },
+     "insideH": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": -4119,
+      "weight": 4,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "D9D9D9",
+     "theme": 1,
+     "tint": -0.15
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "D9D9D9",
+     "theme": 1,
+     "tint": -0.15
+    }
+   }
+  },
+  "TableStyleMedium2": {
+   "local": "Tabellenformat - Mittel 2",
+   "wholeTable": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "8EA9DB",
+      "theme": 5,
+      "tint": 0.4
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "8EA9DB",
+      "theme": 5,
+      "tint": 0.4
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "8EA9DB",
+      "theme": 5,
+      "tint": 0.4
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "8EA9DB",
+      "theme": 5,
+      "tint": 0.4
+     },
+     "insideH": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "8EA9DB",
+      "theme": 5,
+      "tint": 0.4
+     }
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "4472C4",
+     "theme": 5
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": -4119,
+      "weight": 4,
+      "rgb": "4472C4",
+      "theme": 5
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "D9E1F2",
+     "theme": 5,
+     "tint": 0.8
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "D9E1F2",
+     "theme": 5,
+     "tint": 0.8
+    }
+   }
+  },
+  "TableStyleMedium3": {
+   "local": "Tabellenformat - Mittel 3",
+   "wholeTable": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "F4B084",
+      "theme": 6,
+      "tint": 0.4
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "F4B084",
+      "theme": 6,
+      "tint": 0.4
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "F4B084",
+      "theme": 6,
+      "tint": 0.4
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "F4B084",
+      "theme": 6,
+      "tint": 0.4
+     },
+     "insideH": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "F4B084",
+      "theme": 6,
+      "tint": 0.4
+     }
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "ED7D31",
+     "theme": 6
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": -4119,
+      "weight": 4,
+      "rgb": "ED7D31",
+      "theme": 6
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "FCE4D6",
+     "theme": 6,
+     "tint": 0.8
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "FCE4D6",
+     "theme": 6,
+     "tint": 0.8
+    }
+   }
+  },
+  "TableStyleMedium4": {
+   "local": "Tabellenformat - Mittel 4",
+   "wholeTable": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "C9C9C9",
+      "theme": 7,
+      "tint": 0.4
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "C9C9C9",
+      "theme": 7,
+      "tint": 0.4
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "C9C9C9",
+      "theme": 7,
+      "tint": 0.4
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "C9C9C9",
+      "theme": 7,
+      "tint": 0.4
+     },
+     "insideH": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "C9C9C9",
+      "theme": 7,
+      "tint": 0.4
+     }
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "A5A5A5",
+     "theme": 7
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": -4119,
+      "weight": 4,
+      "rgb": "A5A5A5",
+      "theme": 7
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "EDEDED",
+     "theme": 7,
+     "tint": 0.8
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "EDEDED",
+     "theme": 7,
+     "tint": 0.8
+    }
+   }
+  },
+  "TableStyleMedium5": {
+   "local": "Tabellenformat - Mittel 5",
+   "wholeTable": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFD966",
+      "theme": 8,
+      "tint": 0.4
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFD966",
+      "theme": 8,
+      "tint": 0.4
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFD966",
+      "theme": 8,
+      "tint": 0.4
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFD966",
+      "theme": 8,
+      "tint": 0.4
+     },
+     "insideH": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFD966",
+      "theme": 8,
+      "tint": 0.4
+     }
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "FFC000",
+     "theme": 8
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": -4119,
+      "weight": 4,
+      "rgb": "FFC000",
+      "theme": 8
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "FFF2CC",
+     "theme": 8,
+     "tint": 0.8
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "FFF2CC",
+     "theme": 8,
+     "tint": 0.8
+    }
+   }
+  },
+  "TableStyleMedium6": {
+   "local": "Tabellenformat - Mittel 6",
+   "wholeTable": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "9BC2E6",
+      "theme": 9,
+      "tint": 0.4
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "9BC2E6",
+      "theme": 9,
+      "tint": 0.4
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "9BC2E6",
+      "theme": 9,
+      "tint": 0.4
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "9BC2E6",
+      "theme": 9,
+      "tint": 0.4
+     },
+     "insideH": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "9BC2E6",
+      "theme": 9,
+      "tint": 0.4
+     }
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "5B9BD5",
+     "theme": 9
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": -4119,
+      "weight": 4,
+      "rgb": "5B9BD5",
+      "theme": 9
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "DDEBF7",
+     "theme": 9,
+     "tint": 0.8
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "DDEBF7",
+     "theme": 9,
+     "tint": 0.8
+    }
+   }
+  },
+  "TableStyleMedium7": {
+   "local": "Tabellenformat - Mittel 7",
+   "wholeTable": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A9D08E",
+      "theme": 10,
+      "tint": 0.4
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A9D08E",
+      "theme": 10,
+      "tint": 0.4
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A9D08E",
+      "theme": 10,
+      "tint": 0.4
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A9D08E",
+      "theme": 10,
+      "tint": 0.4
+     },
+     "insideH": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A9D08E",
+      "theme": 10,
+      "tint": 0.4
+     }
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "70AD47",
+     "theme": 10
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": -4119,
+      "weight": 4,
+      "rgb": "70AD47",
+      "theme": 10
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "E2EFDA",
+     "theme": 10,
+     "tint": 0.8
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "E2EFDA",
+     "theme": 10,
+     "tint": 0.8
+    }
+   }
+  },
+  "TableStyleMedium8": {
+   "local": "Tabellenformat - Mittel 8",
+   "wholeTable": {
+    "fill": {
+     "rgb": "D9D9D9",
+     "theme": 1,
+     "tint": -0.15
+    },
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "insideV": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFFFFF",
+      "theme": 1
+     },
+     "insideH": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "bottom": {
+      "style": 1,
+      "weight": 4,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "totalRow": {
+    "fill": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": 4,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "firstColumn": {
+    "fill": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "fill": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "A6A6A6",
+     "theme": 1,
+     "tint": -0.35
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "A6A6A6",
+     "theme": 1,
+     "tint": -0.35
+    }
+   }
+  },
+  "TableStyleMedium9": {
+   "local": "Tabellenformat - Mittel 9",
+   "wholeTable": {
+    "fill": {
+     "rgb": "D9E1F2",
+     "theme": 5,
+     "tint": 0.8
+    },
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "insideV": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFFFFF",
+      "theme": 1
+     },
+     "insideH": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "4472C4",
+     "theme": 5
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "bottom": {
+      "style": 1,
+      "weight": 4,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "totalRow": {
+    "fill": {
+     "rgb": "4472C4",
+     "theme": 5
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": 4,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "firstColumn": {
+    "fill": {
+     "rgb": "4472C4",
+     "theme": 5
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "fill": {
+     "rgb": "4472C4",
+     "theme": 5
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "B4C6E7",
+     "theme": 5,
+     "tint": 0.6
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "B4C6E7",
+     "theme": 5,
+     "tint": 0.6
+    }
+   }
+  },
+  "TableStyleMedium10": {
+   "local": "Tabellenformat - Mittel 10",
+   "wholeTable": {
+    "fill": {
+     "rgb": "FCE4D6",
+     "theme": 6,
+     "tint": 0.8
+    },
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "insideV": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFFFFF",
+      "theme": 1
+     },
+     "insideH": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "ED7D31",
+     "theme": 6
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "bottom": {
+      "style": 1,
+      "weight": 4,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "totalRow": {
+    "fill": {
+     "rgb": "ED7D31",
+     "theme": 6
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": 4,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "firstColumn": {
+    "fill": {
+     "rgb": "ED7D31",
+     "theme": 6
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "fill": {
+     "rgb": "ED7D31",
+     "theme": 6
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "F8CBAD",
+     "theme": 6,
+     "tint": 0.6
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "F8CBAD",
+     "theme": 6,
+     "tint": 0.6
+    }
+   }
+  },
+  "TableStyleMedium11": {
+   "local": "Tabellenformat - Mittel 11",
+   "wholeTable": {
+    "fill": {
+     "rgb": "EDEDED",
+     "theme": 7,
+     "tint": 0.8
+    },
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "insideV": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFFFFF",
+      "theme": 1
+     },
+     "insideH": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "A5A5A5",
+     "theme": 7
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "bottom": {
+      "style": 1,
+      "weight": 4,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "totalRow": {
+    "fill": {
+     "rgb": "A5A5A5",
+     "theme": 7
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": 4,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "firstColumn": {
+    "fill": {
+     "rgb": "A5A5A5",
+     "theme": 7
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "fill": {
+     "rgb": "A5A5A5",
+     "theme": 7
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "DBDBDB",
+     "theme": 7,
+     "tint": 0.6
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "DBDBDB",
+     "theme": 7,
+     "tint": 0.6
+    }
+   }
+  },
+  "TableStyleMedium12": {
+   "local": "Tabellenformat - Mittel 12",
+   "wholeTable": {
+    "fill": {
+     "rgb": "FFF2CC",
+     "theme": 8,
+     "tint": 0.8
+    },
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "insideV": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFFFFF",
+      "theme": 1
+     },
+     "insideH": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "FFC000",
+     "theme": 8
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "bottom": {
+      "style": 1,
+      "weight": 4,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "totalRow": {
+    "fill": {
+     "rgb": "FFC000",
+     "theme": 8
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": 4,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "firstColumn": {
+    "fill": {
+     "rgb": "FFC000",
+     "theme": 8
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "fill": {
+     "rgb": "FFC000",
+     "theme": 8
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "FFE699",
+     "theme": 8,
+     "tint": 0.6
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "FFE699",
+     "theme": 8,
+     "tint": 0.6
+    }
+   }
+  },
+  "TableStyleMedium13": {
+   "local": "Tabellenformat - Mittel 13",
+   "wholeTable": {
+    "fill": {
+     "rgb": "DDEBF7",
+     "theme": 9,
+     "tint": 0.8
+    },
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "insideV": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFFFFF",
+      "theme": 1
+     },
+     "insideH": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "5B9BD5",
+     "theme": 9
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "bottom": {
+      "style": 1,
+      "weight": 4,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "totalRow": {
+    "fill": {
+     "rgb": "5B9BD5",
+     "theme": 9
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": 4,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "firstColumn": {
+    "fill": {
+     "rgb": "5B9BD5",
+     "theme": 9
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "fill": {
+     "rgb": "5B9BD5",
+     "theme": 9
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "BDD7EE",
+     "theme": 9,
+     "tint": 0.6
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "BDD7EE",
+     "theme": 9,
+     "tint": 0.6
+    }
+   }
+  },
+  "TableStyleMedium14": {
+   "local": "Tabellenformat - Mittel 14",
+   "wholeTable": {
+    "fill": {
+     "rgb": "E2EFDA",
+     "theme": 10,
+     "tint": 0.8
+    },
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "insideV": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFFFFF",
+      "theme": 1
+     },
+     "insideH": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "70AD47",
+     "theme": 10
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "bottom": {
+      "style": 1,
+      "weight": 4,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "totalRow": {
+    "fill": {
+     "rgb": "70AD47",
+     "theme": 10
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": 4,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "firstColumn": {
+    "fill": {
+     "rgb": "70AD47",
+     "theme": 10
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "fill": {
+     "rgb": "70AD47",
+     "theme": 10
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "C6E0B4",
+     "theme": 10,
+     "tint": 0.6
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "C6E0B4",
+     "theme": 10,
+     "tint": 0.6
+    }
+   }
+  },
+  "TableStyleMedium15": {
+   "local": "Tabellenformat - Mittel 15",
+   "wholeTable": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "000000",
+      "theme": 2
+     },
+     "top": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "000000",
+      "theme": 2
+     },
+     "bottom": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "000000",
+      "theme": 2
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "000000",
+      "theme": 2
+     },
+     "insideV": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "000000",
+      "theme": 2
+     },
+     "insideH": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "bottom": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "totalRow": {
+    "borders": {
+     "top": {
+      "style": -4119,
+      "weight": 4,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "firstColumn": {
+    "fill": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "fill": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "D9D9D9",
+     "theme": 1,
+     "tint": -0.15
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "D9D9D9",
+     "theme": 1,
+     "tint": -0.15
+    }
+   }
+  },
+  "TableStyleMedium16": {
+   "local": "Tabellenformat - Mittel 16",
+   "wholeTable": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "000000",
+      "theme": 2
+     },
+     "bottom": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "4472C4",
+     "theme": 5
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "bottom": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "totalRow": {
+    "borders": {
+     "top": {
+      "style": -4119,
+      "weight": 4,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "firstColumn": {
+    "fill": {
+     "rgb": "4472C4",
+     "theme": 5
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "fill": {
+     "rgb": "4472C4",
+     "theme": 5
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "D9D9D9",
+     "theme": 1,
+     "tint": -0.15
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "D9D9D9",
+     "theme": 1,
+     "tint": -0.15
+    }
+   }
+  },
+  "TableStyleMedium17": {
+   "local": "Tabellenformat - Mittel 17",
+   "wholeTable": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "000000",
+      "theme": 2
+     },
+     "bottom": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "ED7D31",
+     "theme": 6
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "bottom": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "totalRow": {
+    "borders": {
+     "top": {
+      "style": -4119,
+      "weight": 4,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "firstColumn": {
+    "fill": {
+     "rgb": "ED7D31",
+     "theme": 6
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "fill": {
+     "rgb": "ED7D31",
+     "theme": 6
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "D9D9D9",
+     "theme": 1,
+     "tint": -0.15
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "D9D9D9",
+     "theme": 1,
+     "tint": -0.15
+    }
+   }
+  },
+  "TableStyleMedium18": {
+   "local": "Tabellenformat - Mittel 18",
+   "wholeTable": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "000000",
+      "theme": 2
+     },
+     "bottom": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "A5A5A5",
+     "theme": 7
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "bottom": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "totalRow": {
+    "borders": {
+     "top": {
+      "style": -4119,
+      "weight": 4,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "firstColumn": {
+    "fill": {
+     "rgb": "A5A5A5",
+     "theme": 7
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "fill": {
+     "rgb": "A5A5A5",
+     "theme": 7
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "D9D9D9",
+     "theme": 1,
+     "tint": -0.15
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "D9D9D9",
+     "theme": 1,
+     "tint": -0.15
+    }
+   }
+  },
+  "TableStyleMedium19": {
+   "local": "Tabellenformat - Mittel 19",
+   "wholeTable": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "000000",
+      "theme": 2
+     },
+     "bottom": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "FFC000",
+     "theme": 8
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "bottom": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "totalRow": {
+    "borders": {
+     "top": {
+      "style": -4119,
+      "weight": 4,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "firstColumn": {
+    "fill": {
+     "rgb": "FFC000",
+     "theme": 8
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "fill": {
+     "rgb": "FFC000",
+     "theme": 8
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "D9D9D9",
+     "theme": 1,
+     "tint": -0.15
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "D9D9D9",
+     "theme": 1,
+     "tint": -0.15
+    }
+   }
+  },
+  "TableStyleMedium20": {
+   "local": "Tabellenformat - Mittel 20",
+   "wholeTable": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "000000",
+      "theme": 2
+     },
+     "bottom": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "5B9BD5",
+     "theme": 9
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "bottom": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "totalRow": {
+    "borders": {
+     "top": {
+      "style": -4119,
+      "weight": 4,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "firstColumn": {
+    "fill": {
+     "rgb": "5B9BD5",
+     "theme": 9
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "fill": {
+     "rgb": "5B9BD5",
+     "theme": 9
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "D9D9D9",
+     "theme": 1,
+     "tint": -0.15
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "D9D9D9",
+     "theme": 1,
+     "tint": -0.15
+    }
+   }
+  },
+  "TableStyleMedium21": {
+   "local": "Tabellenformat - Mittel 21",
+   "wholeTable": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "000000",
+      "theme": 2
+     },
+     "bottom": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "70AD47",
+     "theme": 10
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "bottom": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "totalRow": {
+    "borders": {
+     "top": {
+      "style": -4119,
+      "weight": 4,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "firstColumn": {
+    "fill": {
+     "rgb": "70AD47",
+     "theme": 10
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "fill": {
+     "rgb": "70AD47",
+     "theme": 10
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "D9D9D9",
+     "theme": 1,
+     "tint": -0.15
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "D9D9D9",
+     "theme": 1,
+     "tint": -0.15
+    }
+   }
+  },
+  "TableStyleMedium22": {
+   "local": "Tabellenformat - Mittel 22",
+   "wholeTable": {
+    "fill": {
+     "rgb": "D9D9D9",
+     "theme": 1,
+     "tint": -0.15
+    },
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "000000",
+      "theme": 2
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "000000",
+      "theme": 2
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "000000",
+      "theme": 2
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "000000",
+      "theme": 2
+     },
+     "insideV": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "000000",
+      "theme": 2
+     },
+     "insideH": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "headerRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "A6A6A6",
+     "theme": 1,
+     "tint": -0.35
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "A6A6A6",
+     "theme": 1,
+     "tint": -0.35
+    }
+   }
+  },
+  "TableStyleMedium23": {
+   "local": "Tabellenformat - Mittel 23",
+   "wholeTable": {
+    "fill": {
+     "rgb": "D9E1F2",
+     "theme": 5,
+     "tint": 0.8
+    },
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "8EA9DB",
+      "theme": 5,
+      "tint": 0.4
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "8EA9DB",
+      "theme": 5,
+      "tint": 0.4
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "8EA9DB",
+      "theme": 5,
+      "tint": 0.4
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "8EA9DB",
+      "theme": 5,
+      "tint": 0.4
+     },
+     "insideV": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "8EA9DB",
+      "theme": 5,
+      "tint": 0.4
+     },
+     "insideH": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "8EA9DB",
+      "theme": 5,
+      "tint": 0.4
+     }
+    }
+   },
+   "headerRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "4472C4",
+      "theme": 5
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "B4C6E7",
+     "theme": 5,
+     "tint": 0.6
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "B4C6E7",
+     "theme": 5,
+     "tint": 0.6
+    }
+   }
+  },
+  "TableStyleMedium24": {
+   "local": "Tabellenformat - Mittel 24",
+   "wholeTable": {
+    "fill": {
+     "rgb": "FCE4D6",
+     "theme": 6,
+     "tint": 0.8
+    },
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "F4B084",
+      "theme": 6,
+      "tint": 0.4
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "F4B084",
+      "theme": 6,
+      "tint": 0.4
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "F4B084",
+      "theme": 6,
+      "tint": 0.4
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "F4B084",
+      "theme": 6,
+      "tint": 0.4
+     },
+     "insideV": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "F4B084",
+      "theme": 6,
+      "tint": 0.4
+     },
+     "insideH": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "F4B084",
+      "theme": 6,
+      "tint": 0.4
+     }
+    }
+   },
+   "headerRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "ED7D31",
+      "theme": 6
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "F8CBAD",
+     "theme": 6,
+     "tint": 0.6
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "F8CBAD",
+     "theme": 6,
+     "tint": 0.6
+    }
+   }
+  },
+  "TableStyleMedium25": {
+   "local": "Tabellenformat - Mittel 25",
+   "wholeTable": {
+    "fill": {
+     "rgb": "EDEDED",
+     "theme": 7,
+     "tint": 0.8
+    },
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "C9C9C9",
+      "theme": 7,
+      "tint": 0.4
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "C9C9C9",
+      "theme": 7,
+      "tint": 0.4
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "C9C9C9",
+      "theme": 7,
+      "tint": 0.4
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "C9C9C9",
+      "theme": 7,
+      "tint": 0.4
+     },
+     "insideV": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "C9C9C9",
+      "theme": 7,
+      "tint": 0.4
+     },
+     "insideH": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "C9C9C9",
+      "theme": 7,
+      "tint": 0.4
+     }
+    }
+   },
+   "headerRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "A5A5A5",
+      "theme": 7
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "DBDBDB",
+     "theme": 7,
+     "tint": 0.6
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "DBDBDB",
+     "theme": 7,
+     "tint": 0.6
+    }
+   }
+  },
+  "TableStyleMedium26": {
+   "local": "Tabellenformat - Mittel 26",
+   "wholeTable": {
+    "fill": {
+     "rgb": "FFF2CC",
+     "theme": 8,
+     "tint": 0.8
+    },
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFD966",
+      "theme": 8,
+      "tint": 0.4
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFD966",
+      "theme": 8,
+      "tint": 0.4
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFD966",
+      "theme": 8,
+      "tint": 0.4
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFD966",
+      "theme": 8,
+      "tint": 0.4
+     },
+     "insideV": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFD966",
+      "theme": 8,
+      "tint": 0.4
+     },
+     "insideH": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "FFD966",
+      "theme": 8,
+      "tint": 0.4
+     }
+    }
+   },
+   "headerRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "FFC000",
+      "theme": 8
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "FFE699",
+     "theme": 8,
+     "tint": 0.6
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "FFE699",
+     "theme": 8,
+     "tint": 0.6
+    }
+   }
+  },
+  "TableStyleMedium27": {
+   "local": "Tabellenformat - Mittel 27",
+   "wholeTable": {
+    "fill": {
+     "rgb": "DDEBF7",
+     "theme": 9,
+     "tint": 0.8
+    },
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "9BC2E6",
+      "theme": 9,
+      "tint": 0.4
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "9BC2E6",
+      "theme": 9,
+      "tint": 0.4
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "9BC2E6",
+      "theme": 9,
+      "tint": 0.4
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "9BC2E6",
+      "theme": 9,
+      "tint": 0.4
+     },
+     "insideV": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "9BC2E6",
+      "theme": 9,
+      "tint": 0.4
+     },
+     "insideH": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "9BC2E6",
+      "theme": 9,
+      "tint": 0.4
+     }
+    }
+   },
+   "headerRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "5B9BD5",
+      "theme": 9
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "BDD7EE",
+     "theme": 9,
+     "tint": 0.6
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "BDD7EE",
+     "theme": 9,
+     "tint": 0.6
+    }
+   }
+  },
+  "TableStyleMedium28": {
+   "local": "Tabellenformat - Mittel 28",
+   "wholeTable": {
+    "fill": {
+     "rgb": "E2EFDA",
+     "theme": 10,
+     "tint": 0.8
+    },
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A9D08E",
+      "theme": 10,
+      "tint": 0.4
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A9D08E",
+      "theme": 10,
+      "tint": 0.4
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A9D08E",
+      "theme": 10,
+      "tint": 0.4
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A9D08E",
+      "theme": 10,
+      "tint": 0.4
+     },
+     "insideV": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A9D08E",
+      "theme": 10,
+      "tint": 0.4
+     },
+     "insideH": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A9D08E",
+      "theme": 10,
+      "tint": 0.4
+     }
+    }
+   },
+   "headerRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "70AD47",
+      "theme": 10
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "C6E0B4",
+     "theme": 10,
+     "tint": 0.6
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "C6E0B4",
+     "theme": 10,
+     "tint": 0.6
+    }
+   }
+  },
+  "TableStyleDark1": {
+   "local": "Tabellenformat - Dunkel 1",
+   "wholeTable": {
+    "fill": {
+     "rgb": "737373",
+     "theme": 2,
+     "tint": 0.45
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "bottom": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "totalRow": {
+    "fill": {
+     "rgb": "262626",
+     "theme": 2,
+     "tint": 0.15
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "firstColumn": {
+    "fill": {
+     "rgb": "404040",
+     "theme": 2,
+     "tint": 0.25
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "right": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "lastColumn": {
+    "fill": {
+     "rgb": "404040",
+     "theme": 2,
+     "tint": 0.25
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "404040",
+     "theme": 2,
+     "tint": 0.25
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "404040",
+     "theme": 2,
+     "tint": 0.25
+    }
+   }
+  },
+  "TableStyleDark2": {
+   "local": "Tabellenformat - Dunkel 2",
+   "wholeTable": {
+    "fill": {
+     "rgb": "4472C4",
+     "theme": 5
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "bottom": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "totalRow": {
+    "fill": {
+     "rgb": "203764",
+     "theme": 5,
+     "tint": -0.5
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "firstColumn": {
+    "fill": {
+     "rgb": "305496",
+     "theme": 5,
+     "tint": -0.25
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "right": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "lastColumn": {
+    "fill": {
+     "rgb": "305496",
+     "theme": 5,
+     "tint": -0.25
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "305496",
+     "theme": 5,
+     "tint": -0.25
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "305496",
+     "theme": 5,
+     "tint": -0.25
+    }
+   }
+  },
+  "TableStyleDark3": {
+   "local": "Tabellenformat - Dunkel 3",
+   "wholeTable": {
+    "fill": {
+     "rgb": "ED7D31",
+     "theme": 6
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "bottom": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "totalRow": {
+    "fill": {
+     "rgb": "833C0C",
+     "theme": 6,
+     "tint": -0.5
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "firstColumn": {
+    "fill": {
+     "rgb": "C65911",
+     "theme": 6,
+     "tint": -0.25
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "right": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "lastColumn": {
+    "fill": {
+     "rgb": "C65911",
+     "theme": 6,
+     "tint": -0.25
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "C65911",
+     "theme": 6,
+     "tint": -0.25
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "C65911",
+     "theme": 6,
+     "tint": -0.25
+    }
+   }
+  },
+  "TableStyleDark4": {
+   "local": "Tabellenformat - Dunkel 4",
+   "wholeTable": {
+    "fill": {
+     "rgb": "A5A5A5",
+     "theme": 7
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "bottom": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "totalRow": {
+    "fill": {
+     "rgb": "525252",
+     "theme": 7,
+     "tint": -0.5
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "firstColumn": {
+    "fill": {
+     "rgb": "7B7B7B",
+     "theme": 7,
+     "tint": -0.25
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "right": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "lastColumn": {
+    "fill": {
+     "rgb": "7B7B7B",
+     "theme": 7,
+     "tint": -0.25
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "7B7B7B",
+     "theme": 7,
+     "tint": -0.25
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "7B7B7B",
+     "theme": 7,
+     "tint": -0.25
+    }
+   }
+  },
+  "TableStyleDark5": {
+   "local": "Tabellenformat - Dunkel 5",
+   "wholeTable": {
+    "fill": {
+     "rgb": "FFC000",
+     "theme": 8
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "bottom": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "totalRow": {
+    "fill": {
+     "rgb": "806000",
+     "theme": 8,
+     "tint": -0.5
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "firstColumn": {
+    "fill": {
+     "rgb": "BF8F00",
+     "theme": 8,
+     "tint": -0.25
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "right": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "lastColumn": {
+    "fill": {
+     "rgb": "BF8F00",
+     "theme": 8,
+     "tint": -0.25
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "BF8F00",
+     "theme": 8,
+     "tint": -0.25
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "BF8F00",
+     "theme": 8,
+     "tint": -0.25
+    }
+   }
+  },
+  "TableStyleDark6": {
+   "local": "Tabellenformat - Dunkel 6",
+   "wholeTable": {
+    "fill": {
+     "rgb": "5B9BD5",
+     "theme": 9
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "bottom": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "totalRow": {
+    "fill": {
+     "rgb": "1F4E78",
+     "theme": 9,
+     "tint": -0.5
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "firstColumn": {
+    "fill": {
+     "rgb": "2F75B5",
+     "theme": 9,
+     "tint": -0.25
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "right": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "lastColumn": {
+    "fill": {
+     "rgb": "2F75B5",
+     "theme": 9,
+     "tint": -0.25
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "2F75B5",
+     "theme": 9,
+     "tint": -0.25
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "2F75B5",
+     "theme": 9,
+     "tint": -0.25
+    }
+   }
+  },
+  "TableStyleDark7": {
+   "local": "Tabellenformat - Dunkel 7",
+   "wholeTable": {
+    "fill": {
+     "rgb": "70AD47",
+     "theme": 10
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "bottom": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "totalRow": {
+    "fill": {
+     "rgb": "375623",
+     "theme": 10,
+     "tint": -0.5
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "firstColumn": {
+    "fill": {
+     "rgb": "548235",
+     "theme": 10,
+     "tint": -0.25
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "right": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "lastColumn": {
+    "fill": {
+     "rgb": "548235",
+     "theme": 10,
+     "tint": -0.25
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    },
+    "bold": true,
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": -4138,
+      "rgb": "FFFFFF",
+      "theme": 1
+     }
+    }
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "548235",
+     "theme": 10,
+     "tint": -0.25
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "548235",
+     "theme": 10,
+     "tint": -0.25
+    }
+   }
+  },
+  "TableStyleDark8": {
+   "local": "Tabellenformat - Dunkel 8",
+   "wholeTable": {
+    "fill": {
+     "rgb": "D9D9D9",
+     "theme": 1,
+     "tint": -0.15
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    }
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": -4119,
+      "weight": 4,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "A6A6A6",
+     "theme": 1,
+     "tint": -0.35
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "A6A6A6",
+     "theme": 1,
+     "tint": -0.35
+    }
+   }
+  },
+  "TableStyleDark9": {
+   "local": "Tabellenformat - Dunkel 9",
+   "wholeTable": {
+    "fill": {
+     "rgb": "D9E1F2",
+     "theme": 5,
+     "tint": 0.8
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "ED7D31",
+     "theme": 6
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    }
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": -4119,
+      "weight": 4,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "B4C6E7",
+     "theme": 5,
+     "tint": 0.6
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "B4C6E7",
+     "theme": 5,
+     "tint": 0.6
+    }
+   }
+  },
+  "TableStyleDark10": {
+   "local": "Tabellenformat - Dunkel 10",
+   "wholeTable": {
+    "fill": {
+     "rgb": "EDEDED",
+     "theme": 7,
+     "tint": 0.8
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "FFC000",
+     "theme": 8
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    }
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": -4119,
+      "weight": 4,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "DBDBDB",
+     "theme": 7,
+     "tint": 0.6
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "DBDBDB",
+     "theme": 7,
+     "tint": 0.6
+    }
+   }
+  },
+  "TableStyleDark11": {
+   "local": "Tabellenformat - Dunkel 11",
+   "wholeTable": {
+    "fill": {
+     "rgb": "DDEBF7",
+     "theme": 9,
+     "tint": 0.8
+    }
+   },
+   "headerRow": {
+    "fill": {
+     "rgb": "70AD47",
+     "theme": 10
+    },
+    "font": {
+     "rgb": "FFFFFF",
+     "theme": 1
+    }
+   },
+   "totalRow": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true,
+    "borders": {
+     "top": {
+      "style": -4119,
+      "weight": 4,
+      "rgb": "000000",
+      "theme": 2
+     }
+    }
+   },
+   "firstColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "lastColumn": {
+    "font": {
+     "rgb": "000000",
+     "theme": 2
+    },
+    "bold": true
+   },
+   "firstRowStripe": {
+    "fill": {
+     "rgb": "BDD7EE",
+     "theme": 9,
+     "tint": 0.6
+    }
+   },
+   "firstColumnStripe": {
+    "fill": {
+     "rgb": "BDD7EE",
+     "theme": 9,
+     "tint": 0.6
+    }
+   }
+  }
+ },
+ "default": "TableStyleMedium2"
+}

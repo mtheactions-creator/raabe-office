@@ -9,3 +9,4 @@ export * from "./input";
 export * from "./csv";
 export * from "./validation";
 export * from "./pivot";
+export * from "./table";

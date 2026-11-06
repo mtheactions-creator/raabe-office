@@ -5,6 +5,7 @@
 // a fresh shared-string table; calcChain.xml is dropped (Excel rebuilds it).
 
 import { writePivots, type PivotCacheRef } from "./pivots";
+import { writeTables } from "./tables";
 import { strFromU8, strToU8, zipSync } from "fflate";
 import {
   CellError, cellName, fromXlsxFormula, keyCell, rangeName, toXlsxFormula,
@@ -102,6 +103,8 @@ export function writePackage(wb: Workbook, options: XlsxWriteOptions = {}): Reco
     }
     return rows;
   };
+  // Table ids are unique in the workbook: new tables count on from the highest.
+  let tableId = Math.max(0, ...wb.sheets.flatMap((sh) => (sh.tables ?? []).map((t) => t.id ?? 0))) + 1;
   wb.sheets.forEach((sheet, i) => {
     const sr = sheet.raw as SheetRaw | undefined;
     const own = !!sr && !used.has(sr.part) && !!raw.files[sr.part];
@@ -109,6 +112,7 @@ export function writePackage(wb: Workbook, options: XlsxWriteOptions = {}): Reco
     used.add(part);
     const w = new SheetWriter(sheet, i === wb.active, own ? sr : undefined, sr, part, pw, sw, sst, raw, options.author ?? "", vmlIds);
     w.personOf = personOf;
+    w.nextTableId = () => tableId++;
     pw.setPart(part, w.xml(), CT.worksheet);
     if (w.formulaWithoutValue) needsCalc = true;
     caches.push(...writePivots(pw, sheet, part, raw.wbPath, pivotData, () => cacheId++));
@@ -221,6 +225,7 @@ class SheetWriter {
   formulaWithoutValue = false;
   /** Kommentare: the person id for an author's name (set by the package writer). */
   personOf: (name: string) => string = () => guid();
+  nextTableId: () => number = () => 1;
   private sp: Split;
   private readonly rels: Rels;
 
@@ -312,6 +317,8 @@ class SheetWriter {
     }
     const drawing = writeCharts(this.pw, s, this.part, this.own?.drawing, this.get("drawing"), this.own?.pics);
     if (drawing !== undefined) this.put("drawing", drawing);
+    const tableParts = writeTables(this.pw, s, this.part, this.nextTableId, this.get("tableParts"));
+    if (tableParts !== undefined) this.put("tableParts", tableParts);
     if (!snap || now.cf !== snap.cf) placeAll(this.sp, "conditionalFormatting", conditionalXml(s.conditional ?? [], this.own?.cf, this.sw), SHEET_ORDER);
     if (!snap || now.dv !== snap.dv) {
       const dv = validationsXml(s.validations ?? [], this.own?.dv, this.get("dataValidations"), this.get("extLst"));
