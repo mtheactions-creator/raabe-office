@@ -131,7 +131,9 @@ export function renderTable(s: ShapeView, o: RenderOptions): HTMLElement {
       const inner = document.createElement("div");
       const l = mar("marL", 91440), r = mar("marR", 91440), t = mar("marT", 45720), b = mar("marB", 45720);
       inner.style.cssText = `position:relative;padding:${t}px ${r}px ${b}px ${l}px;min-height:${Math.max(0, (num(tr, "h") ?? 0) / EMU_PX - t - b)}px;box-sizing:content-box`;
-      const editing = o.selection && o.selection.id === s.id && o.selection.cell?.r === ri && o.selection.cell?.c === ci;
+      const cells = o.selection && o.selection.id === s.id ? o.selection.cells : undefined;
+      if (cells && ri >= cells.r0 && ri <= cells.r1 && ci >= cells.c0 && ci <= cells.c1) td.classList.add("cell-sel");
+      const editing = !cells && o.selection && o.selection.id === s.id && o.selection.cell?.r === ri && o.selection.cell?.c === ci;
       const tEl = renderText(text, w - l - r, 0, { prompt: false, slideNumber: o.slideNumber, selection: editing ? o.selection!.sel : null });
       tEl.style.position = "relative";
       tEl.style.height = "auto";

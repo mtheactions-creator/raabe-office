@@ -297,6 +297,8 @@ export const COMMANDS: Command[] = [
   cmd("table.merge", "Zellen verbinden", "table-merge"),
   cmd("table.split", "Zellen teilen...", "table-split"),
   cmd("table.selectAll", "Tabelle auswählen", "table-select"),
+  cmd("table.selectCol", "Spalte auswählen", "table-select"),
+  cmd("table.selectRow", "Zeile auswählen", "table-select"),
   cmd("table.deleteRows", "Zeilen löschen", "table-delete-row"),
   cmd("table.deleteCols", "Spalten löschen", "table-delete-column"),
   cmd("table.delete", "Tabelle löschen", "table-delete"),

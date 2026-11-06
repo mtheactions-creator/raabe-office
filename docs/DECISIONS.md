@@ -1691,3 +1691,40 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
 - **Designs:** "Office-Design" (2013-2022), and our own "Raabeschule" (Raabe red band and titles), "Klar"
   and "Tafel" (dark). Applying a design changes the theme's colours and fonts and the master's design
   shapes and background; placeholders and layouts stay. School material can replace them.
+
+### D-072 RaabePresent: measured rules and further decisions of the run
+**Measured in PowerPoint** (and built that way):
+- **Line height** is the largest font size of the line times 1.2 times the line spacing; Autofit
+  (Text bei Überlauf verkleinern) rounds the shrunk size to whole points, reduces the line spacing by
+  `lnSpcReduction` and leaves Abstand vor/nach unchanged (`check_present_lines.py`: 127/127 line starts).
+- **A click beside the text** of a text box selects the frame, a click on the text puts the caret there
+  (behaviour catalogue, `click` cases).
+- **Vertical text** turns the whole frame; it is not broken word by word.
+- Equations and other `mc:AlternateContent` are drawn from their fallback picture, SmartArt from its
+  drawing cache; editing either is open.
+
+**Decided on our own** (for the owner to confirm or overturn):
+- **Keys:** arrow keys move a frame by the grid spacing (0,2 cm, 72008 EMU), Strg+Pfeil by one pixel;
+  Strg+D duplicates with PowerPoint's offset (172720 EMU); Strg+Mausrad zooms in 10 % steps.
+- **Kommentare** are written in the classic format (`p:cmLst`, `p:cmAuthorLst`) that every PowerPoint
+  since 2007 reads, not the newer threaded one (`p188`), so that no account or author id is needed.
+- **Rechtschreibung** checks in a dialog box (as RaabeWrite's) rather than a pane; the dictionary and the
+  native check are RaabeWrite's (`spell.rs`).
+- **Gliederungsansicht** edits titles and body text as plain lines; formatting is shown, not edited there.
+- **Keytips** of two letters are written joined as PowerPoint shows them ("ÄN"), the inventory's spaces left out.
+- **Zeichnen:** ink is stored as freeform shapes (`a:custGeom`), which every PowerPoint shows; PowerPoint's
+  own ink (content parts) is kept and drawn from its fallback picture.
+- **Colour and font sets** in Entwurf > Varianten are Office's own sets (from the files Office installs),
+  named with German PowerPoint's labels (`gen_present_themesets.py`).
+- **Diagramme:** RaabeCalc's chart engine writes the chart part with its values cached; Daten bearbeiten
+  edits them in a small grid inside RaabePresent. No embedded workbook is written yet, so PowerPoint shows
+  the chart but cannot open its data in Excel.
+- **Morphen** is our own drawing: shapes with the same name on both slides glide from their old place, size
+  and turn to the new one, the others fade; text and shape geometry are not morphed letter by letter.
+- **Table cells:** a drag over cells, Umschalt+Klick or Umschalt+Pfeil past the cell's text selects a range
+  (grown to whole merged cells, grey veil as PowerPoint's); Zellen verbinden puts the texts of the cells
+  as paragraphs into the first; Zellen teilen takes a merged cell apart and makes more columns or rows by
+  splitting the cell's column or row (the cells beside it then span the new grid line). Written as
+  PowerPoint writes merged cells (`gridSpan`, `rowSpan`, `hMerge`, `vMerge`).
+- **Raabeschule templates** in Datei > Neu: Referat and Unterrichtsstunde (six slides each, ordinary
+  layouts in the Raabeschule design).

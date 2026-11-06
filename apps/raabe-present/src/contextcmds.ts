@@ -10,6 +10,7 @@ import type { ContextTabHost } from "./contexttabs";
 import * as T from "./textops";
 import * as S from "./shapeops";
 import * as CH from "./chartops";
+import * as TC from "./tablecells";
 
 const { kid, kids, make, num } = PptxDom;
 
@@ -96,10 +97,11 @@ function tableOf(app: PresentApp): { v: ShapeView; el: Element; tbl: Element } |
   return v && el && tbl ? { v, el, tbl } : null;
 }
 
-/** The cells a command acts on: the one being edited, else all. */
+/** The cells a command acts on: the range, the one being edited, else all. */
 function cells(app: PresentApp, tbl: Element): Element[] {
-  const c = app.editor.text?.cell;
+  const c = app.editor.text?.cell, x = app.editor.text?.range;
   const rows = kids(tbl, "tr");
+  if (x) return rows.flatMap((r, ri) => kids(r, "tc").filter((_, ci) => TC.inRange(x, ri, ci)));
   if (c) { const tc = kids(rows[c.r], "tc")[c.c]; return tc ? [tc] : []; }
   return rows.flatMap((r) => kids(r, "tc"));
 }
@@ -198,6 +200,23 @@ export async function altText(app: PresentApp): Promise<void> {
   app.editor.edit("Alternativtext", () => { const el = S.cNvPr(app.editor.shapeEl(v.id)!); if (!el) return; if (text.value) el.setAttribute("descr", text.value); else el.removeAttribute("descr"); });
 }
 
+/** Zellen teilen: PowerPoint's dialog with Spaltenanzahl and Zeilenanzahl. */
+async function splitCells(app: PresentApp): Promise<void> {
+  const t = tableOf(app), cell = app.editor.text?.cell;
+  if (!t || !cell) return;
+  const field = (v: number) => h("input", { type: "number", min: "1", max: "75", value: String(v), style: "width:70px" }) as HTMLInputElement;
+  const g = TC.grid(t.tbl), o = TC.origin(g, cell.r, cell.c), e = TC.extent(g, o.r, o.c);
+  const merged = e.r1 > e.r0 || e.c1 > e.c0;
+  const cols = field(merged ? e.c1 - e.c0 + 1 : 2), rows = field(merged ? e.r1 - e.r0 + 1 : 1);
+  const ok = await showDialog({ title: "Zellen teilen", body: h("div", { class: "form" },
+    h("label", null, h("u", null, "S"), "paltenanzahl: ", cols), h("label", null, h("u", null, "Z"), "eilenanzahl: ", rows)),
+    buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
+  if (!ok) return;
+  const nc = Math.max(1, Math.min(75, Math.round(Number(cols.value) || 1))), nr = Math.max(1, Math.min(75, Math.round(Number(rows.value) || 1)));
+  app.editor.edit("Zellen teilen", () => TC.split(t.tbl, o.r, o.c, nc, nr));
+  app.editor.enterText(t.v.id, undefined, o);
+}
+
 export function implementContext(app: PresentApp): void {
   const c = app.commands;
   const impl = (id: string, run: () => void | Promise<void>, enabled?: () => boolean, checked?: () => boolean) => c.implement(id, { run, enabled, checked });
@@ -234,6 +253,16 @@ export function implementContext(app: PresentApp): void {
   impl("table.distCols", () => distribute(app, "cols"), table);
   impl("table.deleteMenu", () => {}, table);
   impl("table.select", () => {}, table);
+  const editingCell = () => !!app.editor.text?.cell;
+  impl("table.merge", () => {
+    const t = tableOf(app), x = app.editor.text?.range;
+    if (!t || !x) return;
+    app.editor.edit("Zellen verbinden", () => TC.merge(t.tbl, x));
+    app.editor.enterText(t.v.id, undefined, { r: x.r0, c: x.c0 });
+  }, () => !!app.editor.text?.range);
+  impl("table.split", () => splitCells(app), editingCell);
+  impl("table.selectCol", () => app.editor.selectLine("col"), editingCell);
+  impl("table.selectRow", () => app.editor.selectLine("row"), editingCell);
   impl("table.shading", () => {}, table);
   impl("table.penWeight", () => {}, table);
   impl("table.penColor", () => {}, table);

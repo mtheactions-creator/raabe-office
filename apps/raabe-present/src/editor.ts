@@ -11,6 +11,7 @@ import { renderSlide, type Rendered } from "./render/slide";
 import { AUTOFIT_STEPS, EMU_PX, renderText, textHeight } from "./render/text";
 import { presetAdjust, presetGeometry, shapeTextRect } from "@raabe/text-engine";
 import * as T from "./textops";
+import * as TC from "./tablecells";
 import * as S from "./shapeops";
 import type { Pos } from "./textops";
 
@@ -37,6 +38,8 @@ interface TextState {
   id: number;
   /** A table cell being edited (row, column). */
   cell?: { r: number; c: number };
+  /** A range of cells (drag across cells, Umschalt+Klick, Umschalt+Pfeil past the cell's text). */
+  range?: TC.CellRange;
   caret: Pos;
   anchor: Pos;
   /** Formatting set at a caret for the text typed next (Strg+Umschalt+F with nothing selected). */
@@ -129,7 +132,7 @@ export class SlideEditor {
     const all = new Set(flat(this.view.shapes).map((s) => s.id));
     this.sel = this.sel.filter((id) => all.has(id));
     if (this.text && !all.has(this.text.id)) this.text = null;
-    const sel = this.text ? { id: this.text.id, cell: this.text.cell, sel: T.cmpPos(this.text.caret, this.text.anchor) ? { from: T.minPos(this.text.caret, this.text.anchor), to: T.maxPos(this.text.caret, this.text.anchor) } : null } : null;
+    const sel = this.text ? { id: this.text.id, cell: this.text.cell, cells: this.text.range, sel: T.cmpPos(this.text.caret, this.text.anchor) ? { from: T.minPos(this.text.caret, this.text.anchor), to: T.maxPos(this.text.caret, this.text.anchor) } : null } : null;
     this.rendered = renderSlide(this.view, this.pageSize, { editing: true, slideNumber: this.host.slideNumber(), image: (p) => this.host.image(p), selection: sel, fits: this.fits, pptx: this.pptx });
     if (this.showGrid) this.rendered.el.append(this.gridLayer());
     this.stage.replaceChildren(this.rendered.el);
@@ -329,7 +332,7 @@ export class SlideEditor {
     clearInterval(this.blinkTimer);
     this.el.querySelectorAll(".caret").forEach((c) => c.remove());
     const t = this.text;
-    if (!t || T.cmpPos(t.caret, t.anchor) !== 0) { this.placeInput(null); return; }
+    if (!t || t.range || T.cmpPos(t.caret, t.anchor) !== 0) { this.placeInput(null); return; }
     const box = this.caretBox(t.id, t.caret);
     const txt = this.textEl(t.id);
     if (!box || !txt) return;
@@ -544,12 +547,17 @@ export class SlideEditor {
     }
     const { v } = hit;
     const td = (e.target as HTMLElement).closest("td[data-r]") as HTMLElement | null;
+    if (v.frame === "table" && td && e.shiftKey && !e.ctrlKey && this.text?.id === v.id && this.text.cell) {
+      // Umschalt+Klick in another cell: the cells between.
+      this.setRange({ r: Number(td.dataset.r), c: Number(td.dataset.c) });
+      return;
+    }
     if (v.frame === "table" && td && !e.shiftKey && !e.ctrlKey) {
       const cell = { r: Number(td.dataset.r), c: Number(td.dataset.c) };
       const same = this.text?.id === v.id && this.text.cell?.r === cell.r && this.text.cell?.c === cell.c;
       if (!same) { this.endText(); this.enterText(v.id, undefined, cell); }
       const pos = this.posAt(v.id, e.clientX, e.clientY);
-      if (pos && this.text) { this.text.caret = pos; this.text.anchor = pos; this.render(); this.dragText(e); }
+      if (pos && this.text) { this.text.range = undefined; this.text.caret = pos; this.text.anchor = pos; this.render(); this.dragCells(v.id, cell); }
       return;
     }
     // Clicks in the text being edited move the caret or select.
@@ -597,6 +605,66 @@ export class SlideEditor {
     };
     window.addEventListener("mousemove", move);
     window.addEventListener("mouseup", up);
+  }
+
+  /** Dragging from a table cell: text inside it, a range of cells once the pointer is over another cell. */
+  private dragCells(id: number, start: { r: number; c: number }): void {
+    const move = (m: MouseEvent) => {
+      const t = this.text;
+      if (!t || t.id !== id) return;
+      const td = (document.elementFromPoint(m.clientX, m.clientY) as HTMLElement | null)?.closest("td[data-r]") as HTMLElement | null;
+      const frame = this.rendered?.shapes.get(id);
+      if (td && frame?.contains(td) && (Number(td.dataset.r) !== start.r || Number(td.dataset.c) !== start.c)) {
+        const before = JSON.stringify(t.range);
+        this.setRange({ r: Number(td.dataset.r), c: Number(td.dataset.c) }, false);
+        if (JSON.stringify(t.range) !== before) this.render();
+        return;
+      }
+      if (t.range) { t.range = undefined; this.render(); }
+      const pos = this.posAt(id, m.clientX, m.clientY);
+      if (pos && T.cmpPos(pos, t.caret)) { t.caret = pos; this.render(); }
+    };
+    const up = () => { window.removeEventListener("mousemove", move); window.removeEventListener("mouseup", up); this.host.selectionChanged(); };
+    window.addEventListener("mousemove", move);
+    window.addEventListener("mouseup", up);
+  }
+
+  /** The table of the frame being edited, if a cell is. */
+  tableOf(): Element | undefined {
+    const t = this.text;
+    if (!t?.cell) return undefined;
+    return this.shapeEl(t.id)?.getElementsByTagNameNS(PptxDom.NS_A, "tbl")[0];
+  }
+
+  /** The cell range from the cell being edited to `to` (grown to whole merged cells). */
+  setRange(to: { r: number; c: number }, redraw = true): void {
+    const t = this.text, tbl = this.tableOf();
+    if (!t?.cell || !tbl) return;
+    const g = TC.grid(tbl);
+    const x = TC.normalize(g, t.cell, to);
+    t.range = TC.isMulti(g, x) ? x : undefined;
+    if (redraw) { this.render(); this.host.selectionChanged(); }
+  }
+
+  /** Tabelle auswählen while a cell is being edited: every cell. */
+  selectAllCells(): void {
+    const tbl = this.tableOf(), t = this.text;
+    if (!tbl || !t?.cell) return;
+    const g = TC.grid(tbl);
+    t.range = { r0: 0, c0: 0, r1: g.length - 1, c1: (g[0]?.length ?? 1) - 1 };
+    this.render();
+    this.host.selectionChanged();
+  }
+
+  /** Spalte / Zeile auswählen: the cells of the column or row of the cell being edited. */
+  selectLine(what: "row" | "col"): void {
+    const tbl = this.tableOf(), t = this.text;
+    if (!tbl || !t?.cell) return;
+    const g = TC.grid(tbl);
+    const x = what === "row" ? TC.normalize(g, { r: t.cell.r, c: 0 }, { r: t.cell.r, c: g[0].length - 1 }) : TC.normalize(g, { r: 0, c: t.cell.c }, { r: g.length - 1, c: t.cell.c });
+    t.range = TC.isMulti(g, x) ? x : undefined;
+    this.render();
+    this.host.selectionChanged();
   }
 
   private dragText(_e: MouseEvent): void {
@@ -1234,6 +1302,29 @@ export class SlideEditor {
     const collapse = (pos: Pos) => { t.caret = pos; if (!shift) t.anchor = pos; this.deck.breakMerge(); this.render(); this.host.selectionChanged(); };
     const hasSel = T.cmpPos(t.caret, t.anchor) !== 0;
     const ps = T.paras(body);
+    const DIRS: Record<string, [number, number]> = { ArrowUp: [-1, 0], ArrowDown: [1, 0], ArrowLeft: [0, -1], ArrowRight: [0, 1] };
+    if (t.range && t.cell) {
+      const tbl = this.tableOf()!;
+      if (k === "Delete" || k === "Backspace") { const x = t.range; this.edit("Löschen", () => TC.clear(tbl, x)); return true; }
+      if (shift && DIRS[k]) {
+        // Umschalt+Pfeil grows or shrinks the range from its far corner.
+        const x = t.range, far = { r: x.r0 === t.cell.r ? x.r1 : x.r0, c: x.c0 === t.cell.c ? x.c1 : x.c0 };
+        const g = TC.grid(tbl), d = DIRS[k];
+        this.setRange({ r: Math.max(0, Math.min(g.length - 1, far.r + d[0])), c: Math.max(0, Math.min(g[0].length - 1, far.c + d[1])) });
+        return true;
+      }
+      if (k === "Escape" || DIRS[k] || k.length === 1) { t.range = undefined; this.render(); this.host.selectionChanged(); if (k.length !== 1) return true; }
+    }
+    if (shift && t.cell && DIRS[k]) {
+      // Umschalt+Pfeil past the end (start) of the cell's text takes in the neighbouring cell (PowerPoint).
+      const atEnd = T.cmpPos(t.caret, T.endPos(body)) === 0, atStart = t.caret.p === 0 && t.caret.o === 0;
+      const tbl = this.tableOf();
+      if (tbl && ((atEnd && (k === "ArrowRight" || k === "ArrowDown")) || (atStart && (k === "ArrowLeft" || k === "ArrowUp")))) {
+        const g = TC.grid(tbl), d = DIRS[k];
+        const to = { r: t.cell.r + d[0], c: t.cell.c + d[1] };
+        if (to.r >= 0 && to.r < g.length && to.c >= 0 && to.c < g[0].length) { this.setRange(to); return true; }
+      }
+    }
     switch (k) {
       case "Escape":
         this.endText();

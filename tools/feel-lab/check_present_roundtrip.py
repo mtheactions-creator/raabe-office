@@ -42,6 +42,10 @@ SCENARIOS: dict[str, str] = {
     "size color": """p.setupCase({layout:'Leer', shapes:[{kind:'textbox',box:[100,100,400,40],text:'Gross und rot'}]}); const a = p.app; a.editor.select([2]); a.ribbonContext().setSize('32'); a.ribbonContext().setFontColor('#FF0000');""",
     "align center": """p.setupCase({layout:'Leer', shapes:[{kind:'textbox',box:[100,100,400,40],text:'Mitte'}]}); p.app.editor.select([2]); await p.run('para.center');""",
     "table": """p.newDoc(); const a = p.app; a.deck.deleteSlides([0]); a.deck.addSlide(-1, a.deck.layouts()[6].path); a.setCurrent(0); a.insertTable(2, 3);""",
+    "table merge": """p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); a.setCurrent(0); a.insertTable(2, 3); const id = a.deck.view(a.slidePath()).shapes.find(s => s.frame === 'table').id;
+        a.editor.enterText(id, undefined, {r:0,c:0}); a.editor.typeText('eins'); a.editor.setRange({r:1,c:1}); await p.run('table.merge'); a.editor.endText();""",
+    "table split": """p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); a.setCurrent(0); a.insertTable(2, 2); const id = a.deck.view(a.slidePath()).shapes.find(s => s.frame === 'table').id;
+        a.editor.enterText(id, undefined, {r:0,c:0}); const m = await import('/src/tablecells.ts'); a.editor.edit('Zellen teilen', () => m.split(a.editor.tableOf(), 0, 0, 2, 1)); a.editor.endText();""",
     "group": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,100,100]},{kind:'ellipse',box:[300,150,100,100]}]}); p.app.editor.select([2,3]); await p.run('arrange.group');""",
     "notes": """p.newDoc(); p.app.deck.setNotes(p.app.deck.slides[0].path, 'Meine Notiz\\nZweite Zeile');""",
     "hidden slide": """p.newDoc(); const a = p.app; a.newSlide(); a.panel.selected = new Set([1]); await p.run('slide.hide');""",
@@ -77,6 +81,10 @@ def ppt_shapes(slide) -> list[dict]:
             d["members"] = int(s.GroupItems.Count)
         if bool(s.HasTable):
             d["table"] = [int(s.Table.Rows.Count), int(s.Table.Columns.Count)]
+            t = s.Table
+            # Merged cells: PowerPoint reports the merged area's width for each of its cells.
+            d["cellw"] = [[round(float(t.Cell(r, c).Shape.Width)) for c in range(1, t.Columns.Count + 1)] for r in range(1, t.Rows.Count + 1)]
+            d["cellt"] = [[str(t.Cell(r, c).Shape.TextFrame.TextRange.Text) for c in range(1, t.Columns.Count + 1)] for r in range(1, t.Rows.Count + 1)]
         if bool(s.HasChart):
             d["chart"] = int(s.Chart.ChartType)
         out.append(d)
@@ -128,6 +136,14 @@ def check(name: str, r: dict, ours: dict) -> list[str]:
         want(sh[0]["paras"][0]["align"] == 2, f"align {sh[0]['paras'][0]['align']}")
     elif name == "table":
         want(any(x.get("table") == [2, 3] for x in sh), f"table {[x.get('table') for x in sh]}")
+    elif name == "table merge":
+        t = next((x for x in sh if x.get("table")), {})
+        w = t.get("cellw", [[0, 0, 0]])
+        want(t.get("table") == [2, 3] and w[0][0] == w[0][1] == w[1][0] == w[1][1] and w[0][0] > w[0][2] and t["cellt"][0][0] == "eins", f"merge {t.get('cellw')} {t.get('cellt')}")
+    elif name == "table split":
+        t = next((x for x in sh if x.get("table")), {})
+        w = t.get("cellw", [[0, 0, 0]])
+        want(t.get("table") == [2, 3] and w[0][0] == w[0][1] and w[0][0] * 2 - 1 <= w[0][2] <= w[0][0] * 2 + 1 and w[1][0] == w[1][1] == w[0][2], f"split {t.get('cellw')}")
     elif name == "group":
         want(len(sh) == 1 and sh[0].get("members") == 2, f"group {sh}")
     elif name == "notes":

@@ -1595,7 +1595,7 @@ export class PresentApp implements EditorHost, PanelHost {
     impl("table.deleteCols", () => this.tableDelete("col"), () => !!cellAt());
     impl("table.delete", () => { const t = this.editor.text; if (t) { this.editor.endText(); this.editor.select([t.id]); this.editor.deleteSelected(); } }, () => !!cellAt());
     impl("text.endEdit", () => { this.editor.endText(); this.editor.render(); this.updateChrome(); }, () => !!this.editor.text);
-    impl("table.selectAll", () => { const v = this.editor.selectedViews.find((x) => x.frame === "table"); if (v) this.editor.select([v.id]); }, () => this.editor.selectedViews.some((x) => x.frame === "table"));
+    impl("table.selectAll", () => { if (this.editor.text?.cell) { this.editor.selectAllCells(); return; } const v = this.editor.selectedViews.find((x) => x.frame === "table"); if (v) this.editor.select([v.id]); }, () => this.editor.selectedViews.some((x) => x.frame === "table"));
     const newComment = () => { this.comments.open(); setTimeout(() => (document.querySelector(".comment-input") as HTMLTextAreaElement | null)?.focus(), 50); };
     impl("review.newComment", newComment, () => !!this.slidePath());
     impl("insert.comment", newComment, () => !!this.slidePath());

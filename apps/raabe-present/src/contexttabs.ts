@@ -157,7 +157,7 @@ export function tableLayoutTab(h: ContextTabHost): Tab {
   return {
     id: "tableLayout", label: "Tabellenlayout", key: "JL", contextual: true, shrink: [],
     groups: [
-      { id: "table", label: "Tabelle", key: "ZT", icon: "table", controls: [dd("table.select", "W", "large", [{ label: "Tabelle markieren", run: () => void 0 }]), b("table.gridlines", "ß", "large")] },
+      { id: "table", label: "Tabelle", key: "ZT", icon: "table", controls: [dd("table.select", "W", "large", [{ cmd: "table.selectAll" }, { cmd: "table.selectCol" }, { cmd: "table.selectRow" }]), b("table.gridlines", "ß", "large")] },
       { id: "rows", label: "Zeilen und Spalten", key: "ZZ", icon: "table-insert-row", controls: [dd("table.deleteMenu", "Ö", "large", [{ cmd: "table.deleteCols" }, { cmd: "table.deleteRows" }, { cmd: "table.delete" }]),
         b("table.rowAbove", "Y1", "large"), b("table.rowBelow", "E", "small"), b("table.colLeft", "Y2", "small"), b("table.colRight", "I1", "small")] },
       { id: "merge", label: "Zusammenführen", key: "ZU", icon: "table-merge", controls: [b("table.merge", "LE", "large"), b("table.split", "NE", "large")] },
