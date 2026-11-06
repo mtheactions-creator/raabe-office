@@ -106,6 +106,17 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
       ],
     },
     {
+      id: "draw", label: "Zeichnen", key: "JI",
+      shrink: ["convert", "tools", "undo"],
+      groups: [
+        { id: "undo", label: "Rückgängig", key: "ZR", icon: "undo", controls: [stack(b("edit.undo", "AZ"), b("edit.redo", "AQ"))] },
+        { id: "tools", label: "Zeichentools", key: "ZZ", icon: "pen", controls: [b("ink.select", "G", "large"), b("ink.lasso", "G", "large"), b("ink.eraser", "G", "large"), b("ink.penBlack", "G", "large"), b("ink.penRed", "G", "large"), b("ink.pencil", "G", "large"), b("ink.highlighter", "G", "large"), b("ink.add", "A1", "large")] },
+        { id: "stencils", label: "Schablonen", key: "ZS", icon: "ruler", controls: [b("ink.ruler", "L", "large")] },
+        { id: "convert", label: "Konvertieren", key: "ZK", icon: "shapes", controls: [b("ink.toShape", "IS", "large"), b("ink.toMath", "F1", "large")] },
+        { id: "replay", label: "Wiedergeben", key: "ZW", icon: "play", controls: [b("ink.replay", "W", "large")] },
+      ],
+    },
+    {
       id: "design", label: "Entwurf", key: "U2",
       shrink: ["customize", "variants", "themes"],
       groups: [

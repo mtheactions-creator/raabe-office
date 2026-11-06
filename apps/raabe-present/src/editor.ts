@@ -16,7 +16,8 @@ import type { Pos } from "./textops";
 
 const ZWSP = String.fromCharCode(0x200b);
 
-export type Tool = { kind: "shape"; prst: string; head?: boolean; tail?: boolean; freeform?: string } | { kind: "textbox"; vertical?: boolean } | null;
+export type Tool = { kind: "shape"; prst: string; head?: boolean; tail?: boolean; freeform?: string } | { kind: "textbox"; vertical?: boolean }
+  | { kind: "ink"; color: string; width: number; alpha?: number } | { kind: "eraser" } | null;
 
 export interface EditorHost {
   readonly deck: Deck;
@@ -1007,6 +1008,21 @@ export class SlideEditor {
 
   private drawTool(e: MouseEvent): void {
     const tool = this.tool!;
+    if (tool.kind === "ink") { this.drawInk(e, tool); return; }
+    if (tool.kind === "eraser") {
+      // Radierer: a click (or a drag) over an ink stroke removes it.
+      const erase = (m: MouseEvent) => {
+        const t = document.elementFromPoint(m.clientX, m.clientY) as HTMLElement | null;
+        const id = Number(t?.closest(".shp")?.getAttribute("data-id"));
+        const v = id ? this.shapeView(id) : undefined;
+        if (v && v.name.startsWith("Freihand")) this.edit("Radierer", () => this.shapeEl(id)?.remove());
+      };
+      erase(e);
+      const up = () => { window.removeEventListener("mousemove", erase); window.removeEventListener("mouseup", up); };
+      window.addEventListener("mousemove", erase);
+      window.addEventListener("mouseup", up);
+      return;
+    }
     const start = this.toSlide(e.clientX, e.clientY);
     const ghost = h("div", "ghost");
     this.overlay.append(ghost);
@@ -1048,6 +1064,47 @@ export class SlideEditor {
       });
       if (tool.kind === "textbox") this.enterText(id, { p: 0, o: 0 });
       else this.select([id]);
+    };
+    window.addEventListener("mousemove", move);
+    window.addEventListener("mouseup", up);
+  }
+
+  /** Zeichnen: a stroke of the pen or highlighter becomes a freeform shape (custom geometry, no fill). */
+  private drawInk(e: MouseEvent, tool: { color: string; width: number; alpha?: number }): void {
+    const pts: { x: number; y: number }[] = [this.toSlide(e.clientX, e.clientY)];
+    const svgNs = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(svgNs, "svg");
+    svg.setAttribute("class", "ink-preview");
+    const path = document.createElementNS(svgNs, "path");
+    path.setAttribute("fill", "none");
+    path.setAttribute("stroke", `#${tool.color}`);
+    path.setAttribute("stroke-opacity", String(1 - (tool.alpha ?? 0)));
+    path.setAttribute("stroke-width", String((tool.width * 12700 / EMU_PX) * this.scale));
+    path.setAttribute("stroke-linecap", "round");
+    path.setAttribute("stroke-linejoin", "round");
+    svg.append(path);
+    this.overlay.append(svg);
+    const s = this.scale / EMU_PX;
+    const draw = () => path.setAttribute("d", pts.map((p, i) => `${i ? "L" : "M"}${(p.x * s).toFixed(1)} ${(p.y * s).toFixed(1)}`).join(" "));
+    const move = (m: MouseEvent) => { pts.push(this.toSlide(m.clientX, m.clientY)); draw(); };
+    const up = () => {
+      window.removeEventListener("mousemove", move);
+      window.removeEventListener("mouseup", up);
+      svg.remove();
+      if (pts.length < 2) pts.push({ x: pts[0].x + 1, y: pts[0].y + 1 });
+      const x0 = Math.min(...pts.map((p) => p.x)), y0 = Math.min(...pts.map((p) => p.y));
+      const w = Math.max(1, Math.max(...pts.map((p) => p.x)) - x0), hh = Math.max(1, Math.max(...pts.map((p) => p.y)) - y0);
+      const r = (v: number) => Math.round(v);
+      const body = pts.map((p, i) => `<a:${i ? "lnTo" : "moveTo"}><a:pt x="${r(p.x - x0)}" y="${r(p.y - y0)}"/></a:${i ? "lnTo" : "moveTo"}>`).join("");
+      const alpha = tool.alpha ? `<a:alpha val="${Math.round((1 - tool.alpha) * 100000)}"/>` : "";
+      this.edit("Freihand", () => {
+        const doc = this.pptx.doc(this.path!);
+        const tree = S.treeOf(doc);
+        const id = S.maxId(tree) + 1;
+        tree.append(PptxDom.fragment(doc, `<p:sp><p:nvSpPr><p:cNvPr id="${id}" name="Freihand ${id - 1}"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr><p:spPr><a:xfrm><a:off x="${r(x0)}" y="${r(y0)}"/><a:ext cx="${r(w)}" cy="${r(hh)}"/></a:xfrm>` +
+          `<a:custGeom><a:avLst/><a:gdLst/><a:ahLst/><a:cxnLst/><a:rect l="l" t="t" r="r" b="b"/><a:pathLst><a:path w="${r(w)}" h="${r(hh)}">${body}</a:path></a:pathLst></a:custGeom><a:noFill/>` +
+          `<a:ln w="${Math.round(tool.width * 12700)}" cap="rnd"><a:solidFill><a:srgbClr val="${tool.color}">${alpha}</a:srgbClr></a:solidFill><a:round/></a:ln></p:spPr></p:sp>`)[0]);
+      });
     };
     window.addEventListener("mousemove", move);
     window.addEventListener("mouseup", up);

@@ -1587,6 +1587,15 @@ export class PresentApp implements EditorHost, PanelHost {
     const finder = new FindDialog(this);
     impl("edit.find", () => finder.open(false));
     impl("design.slideCustom", () => this.slideSizeDialog());
+    const tool = () => this.editor.tool;
+    const ink = (color: string, width: number, alpha?: number) => () => { this.editor.endText(); this.editor.tool = { kind: "ink", color, width, alpha }; this.editor.render(); this.updateChrome(); };
+    const isInk = (color: string) => () => tool()?.kind === "ink" && (tool() as { color: string }).color === color;
+    impl("ink.select", () => { this.editor.tool = null; this.updateChrome(); }, undefined, () => !tool());
+    impl("ink.eraser", () => { this.editor.tool = { kind: "eraser" }; this.updateChrome(); }, undefined, () => tool()?.kind === "eraser");
+    impl("ink.penBlack", ink("000000", 1), undefined, isInk("000000"));
+    impl("ink.penRed", ink("FF0000", 10), undefined, isInk("FF0000"));
+    impl("ink.pencil", ink("808080", 1.4), undefined, isInk("808080"));
+    impl("ink.highlighter", ink("FFFF00", 17, 0.5), undefined, isInk("FFFF00"));
     void import("./transitions").then((m) => { this.transMod = m; });
     void import("./animations").then((m) => { this.animMod = m; });
     impl("trans.options", () => {}, () => (this.transMod?.transitionOptions(this).length ?? 0) > 0);
