@@ -1758,3 +1758,11 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   the design, as PowerPoint names them.
 - **Bild > Farbe:** Neu einfärben as PowerPoint's (Sepia, Ausgeblichen, Schwarzweiß 25/50/75 and the
   theme's dark and light recolourings as duotone); Farbsättigung and Farbton (a14 image effects) are open.
+- **Tabellenformate:** PowerPoint's 74 entries with their names and families, written into tableStyles.xml
+  when used. PowerPoint's own style ids are known only for its default (Mittlere Formatvorlage 2 -
+  Akzent 1); the others carry ids of our own, so PowerPoint lists them as the presentation's custom styles.
+  Their look is our reading of PowerPoint's gallery.
+- **Formel tab:** PowerPoint's (Word's) galleries from RaabeWrite's recording; a structure or symbol is
+  added at the end of the selected equation (no caret inside an equation yet), LaTeX in Mathematik and
+  Mathe nach LaTeX open the LaTeX box, Linear the linear box; Text, Formeloptionen and Freihandgleichung
+  are greyed.

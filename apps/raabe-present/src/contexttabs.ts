@@ -86,6 +86,7 @@ export interface ContextTabHost {
   color(cur: () => string, pick: (hex: string) => void, cmd: string, key: string, label?: boolean, extra?: () => MenuEntry[]): Control;
   outlineExtra(): MenuEntry[];
   quickStyles(close: () => void): HTMLElement;
+  tableStyles(close: () => void): HTMLElement;
   textOutlineColor(): string; setTextOutline(hex: string): void; textOutlineExtra(): MenuEntry[];
   fillColor(): string; setFill(hex: string): void;
   lineColor(): string; setLine(hex: string): void;
@@ -149,7 +150,7 @@ export function tableDesignTab(h: ContextTabHost): Tab {
     id: "tableDesign", label: "Tabellenentwurf", key: "JT", contextual: true, shrink: [],
     groups: [
       { id: "options", label: "Tabellenformatoptionen", key: "ZO", icon: "table-style", controls: [stack(check("table.firstRow", "Ü"), check("table.lastRow", "Ä"), check("table.bandRow", "U")), stack(check("table.firstCol", "P"), check("table.lastCol", "L"), check("table.bandCol", "V"))] },
-      { id: "styles", label: "Tabellenformatvorlagen", key: "ZT", icon: "table-style", controls: [b("table.styles", "M", "large"), stack(h.color(() => h.fillColor(), (c) => h.setFill(c), "table.shading", "NC"), b("table.borders", "DA"), b("table.effects", "F"))] },
+      { id: "styles", label: "Tabellenformatvorlagen", key: "ZT", icon: "table-style", controls: [{ type: "dropdown", cmd: "table.styles", key: "M", size: "large", menu: [], popup: (c) => h.tableStyles(c) }, stack(h.color(() => h.fillColor(), (c) => h.setFill(c), "table.shading", "NC"), b("table.borders", "DA"), b("table.effects", "F"))] },
       { id: "wordart", label: "WordArt-Formate", key: "ZW", icon: "wordart", launcher: { cmd: "wordart.dialog", key: "O" }, controls: wordArt(h) },
       { id: "draw", label: "Rahmenlinien zeichnen", key: "ZR", icon: "table-draw", controls: [stack(b("table.penStyle", "B"), dd("table.penWeight", "6", "small", () => h.lineWeights()), h.color(() => h.lineColor(), (c) => h.setLine(c), "table.penColor", "G")), b("table.draw", "AA", "large"), b("table.eraser", "R", "large")] },
     ],

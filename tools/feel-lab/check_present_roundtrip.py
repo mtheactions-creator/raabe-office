@@ -47,6 +47,7 @@ SCENARIOS: dict[str, str] = {
     "table split": """p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); a.setCurrent(0); a.insertTable(2, 2); const id = a.deck.view(a.slidePath()).shapes.find(s => s.frame === 'table').id;
         a.editor.enterText(id, undefined, {r:0,c:0}); const m = await import('/src/tablecells.ts'); a.editor.edit('Zellen teilen', () => m.split(a.editor.tableOf(), 0, 0, 2, 1)); a.editor.endText();""",
     "equation": """p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); a.setCurrent(0); const m = await import('/src/equations.ts'); const b = await import('/src/equations-builtin.ts'); await m.insertEquation(a, b.BUILT_IN.find(e => e.name === 'Satz des Pythagoras').seq);""",
+        "table style": """p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); a.setCurrent(0); a.insertTable(3, 3); const m = await import('/src/tablestyles.ts'); m.applyTableStyle(a, m.tableStyles().find(s => s.name === 'Helle Formatvorlage 2 - Akzent 2'));""",
         "group": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,100,100]},{kind:'ellipse',box:[300,150,100,100]}]}); p.app.editor.select([2,3]); await p.run('arrange.group');""",
     "notes": """p.newDoc(); p.app.deck.setNotes(p.app.deck.slides[0].path, 'Meine Notiz\\nZweite Zeile');""",
     "hidden slide": """p.newDoc(); const a = p.app; a.newSlide(); a.panel.selected = new Set([1]); await p.run('slide.hide');""",
@@ -84,6 +85,7 @@ def ppt_shapes(slide) -> list[dict]:
             d["table"] = [int(s.Table.Rows.Count), int(s.Table.Columns.Count)]
             t = s.Table
             # Merged cells: PowerPoint reports the merged area's width for each of its cells.
+            d["tstyle"] = str(t.Style.Name)
             d["cellw"] = [[round(float(t.Cell(r, c).Shape.Width)) for c in range(1, t.Columns.Count + 1)] for r in range(1, t.Rows.Count + 1)]
             d["cellt"] = [[str(t.Cell(r, c).Shape.TextFrame.TextRange.Text) for c in range(1, t.Columns.Count + 1)] for r in range(1, t.Rows.Count + 1)]
         if bool(s.HasChart):
@@ -148,6 +150,9 @@ def check(name: str, r: dict, ours: dict) -> list[str]:
     elif name == "equation":
         texts = [x.get("text", "") for x in sh]
         want(any("=" in t and "2" in t for t in texts), f"equation {texts}")
+    elif name == "table style":
+        t = next((x for x in sh if x.get("table")), {})
+        want(t.get("tstyle") == "Helle Formatvorlage 2 - Akzent 2", f"style {t.get('tstyle')}")
     elif name == "group":
         want(len(sh) == 1 and sh[0].get("members") == 2, f"group {sh}")
     elif name == "notes":
