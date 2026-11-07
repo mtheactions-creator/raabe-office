@@ -70,6 +70,8 @@ export function contextHost(app: PresentApp): ContextTabHost {
     lineWeights: () => LINE_WEIGHTS.map(([label, w]) => ({ label, run: () => app.setLineWidth(w) })),
     fillExtra: () => app.fillExtra(),
     cropMenu: () => app.cropMenu(),
+    // A chart element picked in Aktuelle Auswahl: the format pane for the chart (its parts are not selected one by one).
+    formatChartElement: () => void app.commands.run("draw.format"),
     penStyles: () => penMenus(app).styles(), penWeights: () => penMenus(app).weights(),
     penColor: () => `#${app.tablePen.color.length === 6 ? app.tablePen.color : "000000"}`,
     setPenColor: (c) => { app.tablePen.color = c.replace("#", "").toUpperCase(); app.editor.endText(); app.editor.tool = { kind: "tableDraw" }; app.editor.render(); app.updateChrome(); },
@@ -420,6 +422,9 @@ export function implementContext(app: PresentApp): void {
   impl("table.selectRow", () => app.editor.selectLine("row"), editingCell);
   impl("table.shading", () => {}, table);
   impl("table.penStyle", () => {}, table);
+  impl("chart.elements", () => {}, () => app.editor.selectedViews.some((v) => v.frame === "chart"));
+  // Form ändern on a chart's Format tab: greyed, as PowerPoint has it with the whole chart selected.
+  impl("shape.changeShapeChart", () => {}, () => false);
   impl("table.penWeight", () => {}, table);
   impl("table.penColor", () => {}, table);
   for (const id of ["table.rowHeight", "table.colWidth", "table.height", "table.width"]) impl(id, () => {}, table);

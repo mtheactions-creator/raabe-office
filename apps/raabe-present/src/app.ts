@@ -2233,6 +2233,20 @@ export class PresentApp implements EditorHost, PanelHost {
     const isInk = (color: string) => () => tool()?.kind === "ink" && (tool() as { color: string }).color === color;
     impl("ink.select", () => { this.editor.tool = null; this.updateChrome(); }, undefined, () => !tool());
     impl("ink.eraser", () => { this.editor.tool = { kind: "eraser" }; this.updateChrome(); }, undefined, () => tool()?.kind === "eraser");
+    impl("ink.add", () => {}, () => !!this.slidePath());
+    // Lassoauswahl: a loop drawn round shapes selects them (their middle inside the loop).
+    impl("ink.lasso", () => {
+      this.editor.endText();
+      this.editor.tool = { kind: "points", mode: "scribble", done: (pts) => {
+        const inside = (x: number, y: number) => { let c = false; for (let i = 0, j = pts.length - 1; i < pts.length; j = i++) { const a = pts[i], b = pts[j]; if ((a.y > y) !== (b.y > y) && x < ((b.x - a.x) * (y - a.y)) / (b.y - a.y) + a.x) c = !c; } return c; };
+        const p = this.slidePath();
+        const ids = p ? this.deck.view(p).shapes.filter((s) => !s.hidden && inside(s.x + s.w / 2, s.y + s.h / 2)).map((s) => s.id) : [];
+        this.editor.select(ids);
+        this.updateChrome();
+      } };
+      this.editor.render();
+      this.updateChrome();
+    }, () => !!this.slidePath(), () => tool()?.kind === "points");
     impl("ink.penBlack", ink("000000", 1), undefined, isInk("000000"));
     impl("ink.penRed", ink("FF0000", 10), undefined, isInk("FF0000"));
     impl("ink.pencil", ink("808080", 1.4), undefined, isInk("808080"));
@@ -2716,6 +2730,9 @@ export class PresentApp implements EditorHost, PanelHost {
         sounds: () => this.transMod?.soundMenu(this) ?? [],
         zooms: () => zoomMenu(this),
         bgStyles: () => bgStylesMenu(this),
+        // Zeichnen > Hinzufügen: PowerPoint's pen kinds; ours take up the pen at once (no own toolbox to add it to).
+        inkAdd: () => ([["Füllfederhalter", "1F3864", 1.4, 0], ["Textmarker", "FFFF00", 17, 0.5], ["Bleistift", "808080", 1.4, 0], ["Pinselstift", "00B050", 3, 0], ["Textstift", "000000", 1, 0], ["Stift", "000000", 1, 0]] as [string, string, number, number][])
+          .map(([label, color, width, alpha]) => ({ label, run: () => { this.editor.endText(); this.editor.tool = { kind: "ink", color, width, alpha: alpha || undefined }; this.editor.render(); this.updateChrome(); } })),
         // Trigger > Bei Klick auf: the slide's other shapes by name.
         triggers: () => {
           const p = this.slidePath();
@@ -2888,7 +2905,24 @@ export class PresentApp implements EditorHost, PanelHost {
       for (const it of g.items) row.append(h("button", { class: `fx-item fx-${g.cls}`, "aria-label": it.label, onclick: () => { close(); void import("./animations").then((m) => m.addAnimation(this, g.cls, it, add)); } }, icon("animation"), h("span", null, it.label)));
       grid.append(row);
     }
+    // Weitere …effekte: a list of each kind to pick from (PowerPoint's dialogs, ours with the same effects).
+    const more = (label: string, cls: string) => h("button", { class: "menu-item", onclick: () => { close(); void this.moreEffectsDialog(label.replace("...", ""), cls, add); } }, label);
+    grid.append(h("div", { class: "menu-sep" }), more("Weitere Eingangseffekte...", "entr"), more("Weitere Hervorhebungseffekte...", "emph"), more("Weitere Ausgangseffekte...", "exit"),
+      more("Weitere Animationspfade...", "path"), h("button", { class: "menu-item", disabled: true }, "OLE-Aktionsarten..."));
     return grid;
+  }
+
+  private async moreEffectsDialog(title: string, cls: string, add: boolean): Promise<void> {
+    const g = ANIMATION_GROUPS.find((x) => x.cls === cls);
+    if (!g) return;
+    const list = h("select", { size: "12", style: "width:260px" }, ...g.items.map((it, i) => h("option", { value: String(i) }, it.label))) as HTMLSelectElement;
+    list.selectedIndex = 0;
+    const TITLES: Record<string, string> = { entr: "Eingangseffekt ändern", emph: "Hervorhebungseffekt ändern", exit: "Ausgangseffekt ändern", path: "Animationspfad ändern" };
+    void title;
+    const ok = await showDialog({ title: TITLES[cls] ?? "Effekt ändern", body: h("div", { class: "form" }, list), buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
+    if (!ok || list.selectedIndex < 0) return;
+    const it = g.items[list.selectedIndex];
+    void import("./animations").then((m) => m.addAnimation(this, g.cls, it, add));
   }
 
   /** The selected shape's first effect: its duration and its delay (as PowerPoint shows them). */

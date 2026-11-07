@@ -39,6 +39,8 @@ export const CONTEXT_COMMANDS: Command[] = [
   cmd("table.borders", "Rahmen", "borders"),
   cmd("table.effects", "Effekte", "effects"),
   cmd("table.penStyle", "Stiftart", "line-style"),
+  cmd("chart.elements", "Diagrammelemente", "chart"),
+  cmd("shape.changeShapeChart", "Form ändern", "edit-shape"),
   cmd("table.penWeight", "Stiftstärke", "line-weight-pen"),
   cmd("table.penColor", "Stiftfarbe", "pen"),
   cmd("table.draw", "Tabelle zeichnen", "table-draw"),
@@ -112,6 +114,7 @@ export interface ContextTabHost {
   pictureTransparency(): MenuEntry[];
   pictureCorrections(): MenuEntry[];
   cropMenu(): MenuEntry[];
+  formatChartElement(name: string): void;
   pictureArtistic(): MenuEntry[];
   lineWeights(): MenuEntry[];
   fillExtra(): MenuEntry[];
@@ -128,7 +131,7 @@ const arrange = (pic: boolean): Control[] => [stack(
   b("arrange.selectionPane", pic ? "Q2" : "Q", "medium")), stack(
   { type: "dropdown", cmd: "arrange.align", key: "DA", size: "small", menu: [{ cmd: "arrange.alignLeft" }, { cmd: "arrange.alignCenter" }, { cmd: "arrange.alignRight" }, "-", { cmd: "arrange.alignTop" }, { cmd: "arrange.alignMiddle" }, { cmd: "arrange.alignBottom" }, "-", { cmd: "arrange.distH" }, { cmd: "arrange.distV" }, "-", { cmd: "arrange.toSlide" }, { cmd: "arrange.toSelected" }] },
   { type: "dropdown", cmd: "arrange.group", key: "GR", size: "small", menu: [{ cmd: "arrange.group" }, { cmd: "arrange.regroup" }, { cmd: "arrange.ungroup" }] },
-  { type: "dropdown", cmd: "arrange.rotate", key: "DR", size: "small", menu: [{ cmd: "arrange.rotRight" }, { cmd: "arrange.rotLeft" }, { cmd: "arrange.flipV" }, { cmd: "arrange.flipH" }] })];
+  { type: "dropdown", cmd: "arrange.rotate", key: "DR", size: "small", menu: [{ cmd: "arrange.rotRight" }, { cmd: "arrange.rotLeft" }, { cmd: "arrange.flipV" }, { cmd: "arrange.flipH" }, "-", { cmd: "shape.sizePosition", label: "Weitere Drehungsoptionen..." }] })];
 
 const wordArt = (h: ContextTabHost): Control[] => [h.wordArtTiles(),
   stack(h.color(() => h.fontColor(), (c) => h.setFontColor(c), "wordart.fill", "4", true), h.color(() => h.textOutlineColor(), (c) => h.setTextOutline(c), "wordart.outline", "TE", true, () => h.textOutlineExtra()), dd("wordart.effects", "IE", "small", () => h.textEffects()))];
@@ -208,13 +211,16 @@ export function chartFormatTab(h: ContextTabHost): Tab {
   return {
     id: "chartFormat", label: "Format", key: "JY", contextual: true, shrink: [],
     groups: [
-      { id: "current", label: "Aktuelle Auswahl", key: "ZA", icon: "format-picture", controls: [b("draw.format", "M", "large")] },
-      { id: "insert", label: "Formen einfügen", key: "ZE", icon: "shapes", controls: [{ type: "dropdown", cmd: "insert.shapes", key: "2", size: "large", menu: [], popup: (c) => h.shapeGallery(c) }] },
+      // Aktuelle Auswahl as PowerPoint's: the chart's elements (the format pane opens for the chart), Auswahl formatieren, Auf Formatvorl. zurücks.
+      { id: "current", label: "Aktuelle Auswahl", key: "ZA", icon: "format-picture", controls: [stack(
+        { type: "dropdown", cmd: "chart.elements", key: "A1", size: "small", menu: ["Diagrammbereich", "Zeichnungsfläche", "Diagrammtitel", "Legende", "Horizontal (Kategorie) Achse", "Vertikal (Wert) Achse", "Vertikal (Wert) Achse Hauptgitternetz"].map((label) => ({ label, run: () => h.formatChartElement(label) })) },
+        { type: "button", cmd: "draw.format", key: "U", size: "small", label: "Auswahl formatieren" }, b("chart.reset", "V1"))] },
+      { id: "insert", label: "Formen einfügen", key: "ZE", icon: "shapes", controls: [{ type: "dropdown", cmd: "insert.shapes", key: "2", size: "large", menu: [], popup: (c) => h.shapeGallery(c) }, b("shape.changeShapeChart", "Ä")] },
       { id: "styles", label: "Formenarten", key: "ZF", icon: "shape-fill", controls: [{ type: "dropdown", cmd: "shape.quickStyles", key: "NC", size: "large", menu: [], popup: (c) => h.quickStyles(c) }, stack(h.color(() => h.fillColor(), (c) => h.setFill(c), "draw.fill", "Ü", true), h.color(() => h.lineColor(), (c) => h.setLine(c), "draw.outline", "V", true, () => h.outlineExtra()), dd("draw.effects", "MO", "small", () => h.effects()))] },
       { id: "wordart", label: "WordArt-Formate", key: "ZW", icon: "wordart", launcher: { cmd: "wordart.dialog", key: "O" }, controls: wordArt(h) },
       { id: "access", label: "Barrierefreiheit", key: "ZB", icon: "alt-text", controls: [b("shape.altTextPane", "AT", "large")] },
       { id: "arrange", label: "Anordnen", key: "ZO", icon: "bring-forward", controls: arrange(false) },
-      { id: "size", label: "Größe", key: "ZG", icon: "size-position", controls: [stack(h.sizeSpin("h"), h.sizeSpin("w"))] },
+      { id: "size", label: "Größe", key: "ZG", icon: "size-position", launcher: { cmd: "shape.sizePosition", key: "ß" }, controls: [stack(h.sizeSpin("h"), h.sizeSpin("w"))] },
     ],
   };
 }

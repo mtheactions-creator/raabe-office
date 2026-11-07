@@ -1921,3 +1921,11 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   layout of the same name here (PowerPoint's Zieldesign verwenden; Ursprüngliche Formatierung beibehalten is
   not built). Our dialog instead of PowerPoint's pane. Pasted slides use the same way now, so pictures are no
   longer dropped when slides are pasted (also into another window). Folien aus Gliederung... is greyed.
+- **Smaller entries by the inventory:** Drehen with PowerPoint's names (Rechtsdrehung 90 Grad, Vertikal umdrehen,
+  Horizontal spiegeln, Weitere Drehungsoptionen...); Animation hinzufügen > Weitere Eingangs-, Hervorhebungs-,
+  Ausgangseffekte und Animationspfade (our lists in PowerPoint's dialogs' titles; OLE-Aktionsarten greyed);
+  the chart's Format tab with Aktuelle Auswahl (Diagrammelemente, Auswahl formatieren, Auf Formatvorl.
+  zurücks.), Form ändern (greyed, as PowerPoint with the whole chart) and Größe und Position; Zeichnen >
+  Hinzufügen (six pen kinds, taken up at once: there is no own pen toolbox to add them to) and Lassoauswahl (a
+  loop round shapes selects those whose middle is inside). Freihand zu Form, Lineal, Wiedergabe and Freihand
+  in Gleichung (handwriting recognition) are not built.

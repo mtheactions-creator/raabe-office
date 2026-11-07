@@ -37,7 +37,7 @@ export interface RibbonContext {
     arrange: () => MenuEntry[]; find: MenuEntry[]; select: MenuEntry[]; table: MenuEntry[]; pictures: MenuEntry[]; textBox: MenuEntry[];
     slideSize: MenuEntry[]; showCustom: MenuEntry[]; record: MenuEntry[]; transOptions: () => MenuEntry[]; animOptions: () => MenuEntry[];
     animStart: MenuEntry[]; colors: () => MenuEntry[]; fonts: () => MenuEntry[]; underline: MenuEntry[];
-    outlineWeight: MenuEntry[]; outlineDash: MenuEntry[]; effects: MenuEntry[]; quickStyles: () => MenuEntry[]; zoomFit: MenuEntry[]; equations: () => MenuEntry[]; sounds: () => MenuEntry[]; windows: () => MenuEntry[]; triggers: () => MenuEntry[]; zooms: () => MenuEntry[]; bgStyles: () => MenuEntry[];
+    outlineWeight: MenuEntry[]; outlineDash: MenuEntry[]; effects: MenuEntry[]; quickStyles: () => MenuEntry[]; zoomFit: MenuEntry[]; equations: () => MenuEntry[]; sounds: () => MenuEntry[]; windows: () => MenuEntry[]; triggers: () => MenuEntry[]; zooms: () => MenuEntry[]; bgStyles: () => MenuEntry[]; inkAdd: () => MenuEntry[];
   };
   panels: { newSlide: Popup; layout: Popup; shapes: Popup; themes: Popup; transitions: Popup; animations: Popup; table: Popup; chart: Popup; addAnim: Popup; wordArt: Popup; quickStyles: Popup };
   spin: {
@@ -119,7 +119,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
       shrink: ["convert", "tools", "undo"],
       groups: [
         { id: "undo", label: "Rückgängig", key: "ZR", icon: "undo", controls: [stack(b("edit.undo", "AZ"), b("edit.redo", "AQ"))] },
-        { id: "tools", label: "Zeichentools", key: "ZZ", icon: "pen", controls: [b("ink.select", "G", "large"), b("ink.lasso", "G", "large"), b("ink.eraser", "G", "large"), b("ink.penBlack", "G", "large"), b("ink.penRed", "G", "large"), b("ink.pencil", "G", "large"), b("ink.highlighter", "G", "large"), b("ink.add", "A1", "large")] },
+        { id: "tools", label: "Zeichentools", key: "ZZ", icon: "pen", controls: [b("ink.select", "G", "large"), b("ink.lasso", "G", "large"), b("ink.eraser", "G", "large"), b("ink.penBlack", "G", "large"), b("ink.penRed", "G", "large"), b("ink.pencil", "G", "large"), b("ink.highlighter", "G", "large"), lazy("ink.add", "A1", "large", m.inkAdd)] },
         { id: "stencils", label: "Schablonen", key: "ZS", icon: "ruler", controls: [b("ink.ruler", "L", "large")] },
         { id: "convert", label: "Konvertieren", key: "ZK", icon: "shapes", controls: [b("ink.toShape", "IS", "large"), b("ink.toMath", "F1", "large")] },
         { id: "replay", label: "Wiedergeben", key: "ZW", icon: "play", controls: [b("ink.replay", "W", "large")] },

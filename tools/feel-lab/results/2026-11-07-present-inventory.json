@@ -1640,22 +1640,22 @@
          "enabled": true,
          "submenu": [
           {
-           "name": "Rechtsdrehung 90°",
+           "name": "Rechtsdrehung 90 Grad",
            "deferred": false,
            "enabled": true
           },
           {
-           "name": "Linksdrehung 90°",
+           "name": "Linksdrehung 90 Grad",
            "deferred": false,
            "enabled": true
           },
           {
-           "name": "Vertikal kippen",
+           "name": "Vertikal umdrehen",
            "deferred": false,
            "enabled": true
           },
           {
-           "name": "Horizontal kippen",
+           "name": "Horizontal spiegeln",
            "deferred": false,
            "enabled": true
           }
@@ -4409,7 +4409,7 @@
       {
        "name": "Lassoauswahl",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "button"
       },
       {
@@ -4445,8 +4445,34 @@
       {
        "name": "Hinzufügen",
        "deferred": false,
-       "enabled": false,
-       "type": "button"
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Füllfederhalter",
+         "enabled": true
+        },
+        {
+         "name": "Textmarker",
+         "enabled": true
+        },
+        {
+         "name": "Bleistift",
+         "enabled": true
+        },
+        {
+         "name": "Pinselstift",
+         "enabled": true
+        },
+        {
+         "name": "Textstift",
+         "enabled": true
+        },
+        {
+         "name": "Stift",
+         "enabled": true
+        }
+       ]
       }
      ]
     },
@@ -5072,7 +5098,25 @@
        "name": "Sound",
        "deferred": false,
        "enabled": true,
-       "type": "dropdown"
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "[Ohne Sound]",
+         "enabled": true
+        },
+        {
+         "name": "[Vorherigen Sound anhalten]",
+         "enabled": true
+        },
+        {
+         "name": "Anderer Sound...",
+         "enabled": true
+        },
+        {
+         "name": "Bis zum nächsten Sound wiederholen",
+         "enabled": true
+        }
+       ]
       },
       {
        "name": "Dauer",
@@ -5305,6 +5349,21 @@
         },
         {
          "name": "Benutzerdefinierter Pfad"
+        },
+        {
+         "name": "Weitere Eingangseffekte..."
+        },
+        {
+         "name": "Weitere Hervorhebungseffekte..."
+        },
+        {
+         "name": "Weitere Ausgangseffekte..."
+        },
+        {
+         "name": "Weitere Animationspfade..."
+        },
+        {
+         "name": "OLE-Aktionsarten..."
         }
        ]
       },
@@ -5478,6 +5537,21 @@
         },
         {
          "name": "Benutzerdefinierter Pfad"
+        },
+        {
+         "name": "Weitere Eingangseffekte..."
+        },
+        {
+         "name": "Weitere Hervorhebungseffekte..."
+        },
+        {
+         "name": "Weitere Ausgangseffekte..."
+        },
+        {
+         "name": "Weitere Animationspfade..."
+        },
+        {
+         "name": "OLE-Aktionsarten..."
         }
        ]
       },
@@ -9404,22 +9478,27 @@
        "type": "dropdown",
        "items": [
         {
-         "name": "Rechtsdrehung 90°",
+         "name": "Rechtsdrehung 90 Grad",
          "deferred": false,
          "enabled": true
         },
         {
-         "name": "Linksdrehung 90°",
+         "name": "Linksdrehung 90 Grad",
          "deferred": false,
          "enabled": true
         },
         {
-         "name": "Vertikal kippen",
+         "name": "Vertikal umdrehen",
          "deferred": false,
          "enabled": true
         },
         {
-         "name": "Horizontal kippen",
+         "name": "Horizontal spiegeln",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Weitere Drehungsoptionen...",
          "deferred": false,
          "enabled": true
         }
@@ -11038,22 +11117,27 @@
        "type": "dropdown",
        "items": [
         {
-         "name": "Rechtsdrehung 90°",
+         "name": "Rechtsdrehung 90 Grad",
          "deferred": false,
          "enabled": true
         },
         {
-         "name": "Linksdrehung 90°",
+         "name": "Linksdrehung 90 Grad",
          "deferred": false,
          "enabled": true
         },
         {
-         "name": "Vertikal kippen",
+         "name": "Vertikal umdrehen",
          "deferred": false,
          "enabled": true
         },
         {
-         "name": "Horizontal kippen",
+         "name": "Horizontal spiegeln",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Weitere Drehungsoptionen...",
          "deferred": false,
          "enabled": true
         }
@@ -14727,9 +14811,51 @@
      "name": "Aktuelle Auswahl",
      "controls": [
       {
-       "name": "Objekt formatieren...",
+       "name": "Diagrammelemente",
        "deferred": false,
        "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Diagrammbereich",
+         "enabled": true
+        },
+        {
+         "name": "Zeichnungsfläche",
+         "enabled": true
+        },
+        {
+         "name": "Diagrammtitel",
+         "enabled": true
+        },
+        {
+         "name": "Legende",
+         "enabled": true
+        },
+        {
+         "name": "Horizontal (Kategorie) Achse",
+         "enabled": true
+        },
+        {
+         "name": "Vertikal (Wert) Achse",
+         "enabled": true
+        },
+        {
+         "name": "Vertikal (Wert) Achse Hauptgitternetz",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Auswahl formatieren",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Auf Formatvorl. zurücks.",
+       "deferred": false,
+       "enabled": false,
        "type": "button"
       }
      ]
@@ -15261,6 +15387,12 @@
          "name": "Interaktive Schaltfläche: Leer"
         }
        ]
+      },
+      {
+       "name": "Form ändern",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
       }
      ]
     },
@@ -18000,22 +18132,27 @@
        "type": "dropdown",
        "items": [
         {
-         "name": "Rechtsdrehung 90°",
+         "name": "Rechtsdrehung 90 Grad",
          "deferred": false,
          "enabled": true
         },
         {
-         "name": "Linksdrehung 90°",
+         "name": "Linksdrehung 90 Grad",
          "deferred": false,
          "enabled": true
         },
         {
-         "name": "Vertikal kippen",
+         "name": "Vertikal umdrehen",
          "deferred": false,
          "enabled": true
         },
         {
-         "name": "Horizontal kippen",
+         "name": "Horizontal spiegeln",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Weitere Drehungsoptionen...",
          "deferred": false,
          "enabled": true
         }
@@ -18025,6 +18162,11 @@
     },
     {
      "name": "Größe",
+     "launcher": {
+      "name": "Größe und Position...",
+      "deferred": false,
+      "enabled": true
+     },
      "controls": [
       {
        "name": "Formenhöhe",

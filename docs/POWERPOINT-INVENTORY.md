@@ -8,7 +8,7 @@ descriptions (D-058). Cloud features are listed, marked and left out on purpose;
 
 **Recorded:** 21 tabs with 439 controls and 5771 menu and gallery entries; 13 context menus; 114 dialogs and panes; 4 backstage pages.
 
-**Coverage:** 3702 of 4503 controls and menu entries are in RaabePresent (82.2 %); 3 are there but greyed out as deferred, 798 are missing; 8 cloud features are left out on purpose.
+**Coverage:** 3730 of 4503 controls and menu entries are in RaabePresent (82.8 %); 3 are there but greyed out as deferred, 770 are missing; 8 cloud features are left out on purpose.
 
 ## Registerkarten
 
@@ -581,18 +581,18 @@ Menüs und Kataloge in Diagrammentwurf:
 
 | Gruppe | Steuerelement | Art | Zugriffstaste | RaabePresent | Einträge |
 |---|---|---|---|---|---|
-| Aktuelle Auswahl | Diagrammelemente | Kombinationsfeld | Alt, J Y, A 1 | fehlt | 2 |
-| Aktuelle Auswahl | Auswahl formatieren | Schaltfläche | Alt, J Y, U | fehlt |  |
-| Aktuelle Auswahl | Auf Formatvorl. zurücks. | Schaltfläche | Alt, J Y, V 1 | fehlt |  |
+| Aktuelle Auswahl | Diagrammelemente | Kombinationsfeld | Alt, J Y, A 1 | vorhanden | 2 |
+| Aktuelle Auswahl | Auswahl formatieren | Schaltfläche | Alt, J Y, U | vorhanden |  |
+| Aktuelle Auswahl | Auf Formatvorl. zurücks. | Schaltfläche | Alt, J Y, V 1 | vorhanden |  |
 | Formen einfügen | Formen | Katalog |  | vorhanden | 171 |
 | Formen einfügen | Formen | Schaltfläche | Alt, J Y, 2 | vorhanden |  |
-| Formen einfügen | Form ändern | Menü, grau | Alt, J Y, Ä | fehlt |  |
+| Formen einfügen | Form ändern | Menü, grau | Alt, J Y, Ä | vorhanden |  |
 | Formenarten | Schnellformatvorlagen | Katalog |  | vorhanden | 77 |
 | Formenarten | Schnellformatvorlagen | Schaltfläche | Alt, J Y, N C | vorhanden |  |
 | Formenarten | Fülleffekt | Unterteilte Schaltfläche | Alt, J Y, Ü | vorhanden | 119 |
 | Formenarten | Formkontur | Unterteilte Schaltfläche | Alt, J Y, V 2 | vorhanden | 98 |
 | Formenarten | Formeffekte | Menü | Alt, J Y, M O | vorhanden | 46 |
-| Formenarten | Objekt formatieren... | Schaltfläche | Alt, J Y, B B | vorhanden |  |
+| Formenarten | Objekt formatieren... | Schaltfläche | Alt, J Y, B B | fehlt |  |
 | WordArt-Formate | Schnellformatvorlagen | Menü | Alt, J Y, C | vorhanden | 15 |
 | WordArt-Formate | Textfüllung | Unterteilte Schaltfläche | Alt, J Y, 4 | vorhanden | 119 |
 | WordArt-Formate | Textkontur | Unterteilte Schaltfläche | Alt, J Y, T E | vorhanden | 97 |
@@ -611,7 +611,7 @@ Menüs und Kataloge in Diagrammentwurf:
 | Größe | Formenbreite | Drehfeld | Alt, J Y, R R | vorhanden |  |
 | Größe | Mehr | Schaltfläche |  | vorhanden |  |
 | Größe | Weniger | Schaltfläche |  | vorhanden |  |
-| Größe | Größe und Position... | Schaltfläche | Alt, J Y, ß | fehlt |  |
+| Größe | Größe und Position... | Schaltfläche | Alt, J Y, ß | vorhanden |  |
 
 Menüs und Kataloge in Format:
 

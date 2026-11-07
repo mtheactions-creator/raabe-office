@@ -113,10 +113,10 @@ export const COMMANDS: Command[] = [
   cmd("arrange.toSlide", "An Folie ausrichten", "check"),
   cmd("arrange.toSelected", "Ausgewählte Objekte ausrichten", "check"),
   cmd("arrange.rotate", "Drehen", "rotate"),
-  cmd("arrange.rotRight", "Rechtsdrehung 90°", "rotate"),
-  cmd("arrange.rotLeft", "Linksdrehung 90°", "rotate"),
-  cmd("arrange.flipV", "Vertikal kippen", "flip-v"),
-  cmd("arrange.flipH", "Horizontal kippen", "flip-h"),
+  cmd("arrange.rotRight", "Rechtsdrehung 90 Grad", "rotate"),
+  cmd("arrange.rotLeft", "Linksdrehung 90 Grad", "rotate"),
+  cmd("arrange.flipV", "Vertikal umdrehen", "flip-v"),
+  cmd("arrange.flipH", "Horizontal spiegeln", "flip-h"),
   cmd("arrange.selectionPane", "Auswahlbereich...", "selection-pane"),
 
   // ----- Bearbeiten ------------------------------------------------------------------------------
