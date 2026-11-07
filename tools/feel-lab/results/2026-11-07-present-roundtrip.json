@@ -177,6 +177,26 @@
    "result": "same",
    "diff": []
   },
+  "narration": {
+   "result": "same",
+   "diff": []
+  },
+  "texture": {
+   "result": "same",
+   "diff": []
+  },
+  "transition sound": {
+   "result": "same",
+   "diff": []
+  },
+  "smartart": {
+   "result": "same",
+   "diff": []
+  },
+  "effects pane": {
+   "result": "same",
+   "diff": []
+  },
   "sketch": {
    "result": "same",
    "diff": []
@@ -250,8 +270,8 @@
    "diff": []
   },
   "smartart text": {
-   "result": "same",
-   "diff": []
+   "result": "error",
+   "error": "RuntimeError('{\"exceptionId\": 16, \"text\": \"Uncaught (in promise) TypeError: Cannot set properties of undefined (setting \\'value\\')\", \"lineNumber\": 0, \"columnNumber\": 0, \"exception\": {\"type\": \"object\", \"subtype\": \"error\", \"className\": \"TypeError\", \"description\": \"TypeError: Cannot set properties of undefined (setting \\'value\\')\\\\n    at <anonymous>:3:106\", \"objectId\": \"28673220974327816.1.1\"}}')"
   },
   "smartart convert": {
    "result": "same",
@@ -288,6 +308,6 @@
  },
  "summary": {
   "fixtures": "22/22",
-  "scenarios": "54/54"
+  "scenarios": "58/59"
  }
 }

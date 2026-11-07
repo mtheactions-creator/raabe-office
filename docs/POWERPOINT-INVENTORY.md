@@ -8,7 +8,7 @@ descriptions (D-058). Cloud features are listed, marked and left out on purpose;
 
 **Recorded:** 21 tabs with 439 controls and 5771 menu and gallery entries; 13 context menus; 114 dialogs and panes; 4 backstage pages.
 
-**Coverage:** 3895 of 4503 controls and menu entries are in RaabePresent (86.5 %); 2 are there but greyed out as deferred, 606 are missing; 8 cloud features are left out on purpose.
+**Coverage:** 4004 of 4503 controls and menu entries are in RaabePresent (88.9 %); 0 are there but greyed out as deferred, 499 are missing; 8 cloud features are left out on purpose.
 
 ## Registerkarten
 
@@ -78,7 +78,7 @@ descriptions (D-058). Cloud features are listed, marked and left out on purpose;
 | Absatz | Spalten | Menü | Alt, R, H S | vorhanden | 4 |
 | Absatz | Textrichtung | Menü | Alt, R, M T | vorhanden | 5 |
 | Absatz | Text ausrichten | Menü | Alt, R, P E | vorhanden | 4 |
-| Absatz | In SmartArt konvertieren | Menü | Alt, R, N I | fehlt | 21 |
+| Absatz | In SmartArt konvertieren | Menü | Alt, R, N I | vorhanden | 21 |
 | Absatz | Absatz... | Schaltfläche | Alt, R, B A | vorhanden | Dialog |
 | Zeichnen | Formen | Menü | Alt, R, 2 3 | vorhanden | 171 |
 | Zeichnen | Anordnen | Menü | Alt, R, G | vorhanden | 25 |
@@ -295,16 +295,16 @@ Menüs und Kataloge in Bildschirmpräsentation:
 
 | Gruppe | Steuerelement | Art | Zugriffstaste | RaabePresent | Einträge |
 |---|---|---|---|---|---|
-| Vorschau | Vorschau | Schaltfläche, grau | Alt, P 1, P | fehlt |  |
+| Vorschau | Vorschau | Schaltfläche, grau | Alt, P 1, P | vorhanden |  |
 | Kamera | Cameo | Unterteilte Schaltfläche | Alt, P 1, C 1 | Cloud |  |
-| Aufzeichnen | Von Beginn an... | Schaltfläche | Alt, P 1, B | fehlt |  |
-| Aufzeichnen | Ab Aktueller Folie... | Schaltfläche | Alt, P 1, C S | fehlt |  |
-| Aufzeichnen | Bildschirmaufzeichnung | Schaltfläche | Alt, P 1, R 1 | fehlt |  |
-| Aufzeichnen | Audio | Schaltfläche | Alt, P 1, O | fehlt |  |
-| Bearbeiten | Aufzeichnung löschen | Menü, grau | Alt, P 1, C R | fehlt |  |
+| Aufzeichnen | Von Beginn an... | Schaltfläche | Alt, P 1, B | vorhanden |  |
+| Aufzeichnen | Ab Aktueller Folie... | Schaltfläche | Alt, P 1, C S | vorhanden |  |
+| Aufzeichnen | Bildschirmaufzeichnung | Schaltfläche | Alt, P 1, R 1 | vorhanden |  |
+| Aufzeichnen | Audio | Schaltfläche | Alt, P 1, O | vorhanden |  |
+| Bearbeiten | Aufzeichnung löschen | Menü, grau | Alt, P 1, C R | vorhanden |  |
 | Bearbeiten | Zurücksetzen auf Cameo | Menü, grau | Alt, P 1, R S | fehlt |  |
-| Exportieren | Als Bildschirmpräsentation speichern | Schaltfläche | Alt, P 1, S | fehlt |  |
-| Exportieren | In Video | Menü | Alt, P 1, Y | fehlt |  |
+| Exportieren | Als Bildschirmpräsentation speichern | Schaltfläche | Alt, P 1, S | vorhanden |  |
+| Exportieren | In Video | Menü | Alt, P 1, Y | vorhanden |  |
 | Hilfe | Weitere Informationen | Schaltfläche | Alt, P 1, L | fehlt |  |
 
 ## Überprüfen
@@ -631,21 +631,21 @@ Menüs und Kataloge in Format:
 
 | Gruppe | Steuerelement | Art | Zugriffstaste | RaabePresent | Einträge |
 |---|---|---|---|---|---|
-| Grafik erstellen | Form hinzufügen | Unterteilte Schaltfläche | Alt, J S, O | fehlt | 7 |
-| Grafik erstellen | Aufzählungszeichen hinzufügen | Schaltfläche, grau | Alt, J S, A 1 | fehlt |  |
+| Grafik erstellen | Form hinzufügen | Unterteilte Schaltfläche | Alt, J S, O | vorhanden | 7 |
+| Grafik erstellen | Aufzählungszeichen hinzufügen | Schaltfläche, grau | Alt, J S, A 1 | vorhanden |  |
 | Grafik erstellen | Textbereich | Schaltfläche | Alt, J S, T | vorhanden |  |
-| Grafik erstellen | Höher stufen | Schaltfläche, grau | Alt, J S, H | fehlt |  |
-| Grafik erstellen | Tiefer stufen | Schaltfläche, grau | Alt, J S, I | fehlt |  |
-| Grafik erstellen | Von rechts nach links | Schaltfläche | Alt, J S, V | fehlt |  |
-| Grafik erstellen | Verschieben vor | Schaltfläche, grau | Alt, J S, M | fehlt |  |
-| Grafik erstellen | Verschieben nach | Schaltfläche, grau | Alt, J S, A 2 | fehlt |  |
+| Grafik erstellen | Höher stufen | Schaltfläche, grau | Alt, J S, H | vorhanden |  |
+| Grafik erstellen | Tiefer stufen | Schaltfläche, grau | Alt, J S, I | vorhanden |  |
+| Grafik erstellen | Von rechts nach links | Schaltfläche | Alt, J S, V | vorhanden |  |
+| Grafik erstellen | Verschieben vor | Schaltfläche, grau | Alt, J S, M | vorhanden |  |
+| Grafik erstellen | Verschieben nach | Schaltfläche, grau | Alt, J S, A 2 | vorhanden |  |
 | Grafik erstellen | Layout | Menü, grau | Alt, J S, U | fehlt |  |
-| Layouts | Layout ändern | Katalog |  | fehlt | 38 |
-| Layouts | Layout ändern | Schaltfläche | Alt, J S, L | fehlt |  |
-| SmartArt-Formatvorlagen | Farben ändern | Menü | Alt, J S, F | fehlt | 43 |
+| Layouts | Layout ändern | Katalog |  | vorhanden | 38 |
+| Layouts | Layout ändern | Schaltfläche | Alt, J S, L | vorhanden |  |
+| SmartArt-Formatvorlagen | Farben ändern | Menü | Alt, J S, F | vorhanden | 43 |
 | SmartArt-Formatvorlagen | Schnellformatvorlagen | Katalog |  | fehlt | 14 |
 | SmartArt-Formatvorlagen | Schnellformatvorlagen | Schaltfläche | Alt, J S, S | fehlt |  |
-| Zurücksetzen | Grafik zurücksetzen | Schaltfläche | Alt, J S, G | fehlt |  |
+| Zurücksetzen | Grafik zurücksetzen | Schaltfläche | Alt, J S, G | vorhanden |  |
 | Zurücksetzen | Konvertieren | Menü | Alt, J S, K | vorhanden | 2 |
 
 Menüs und Kataloge in SmartArt-Design:
@@ -661,13 +661,13 @@ Menüs und Kataloge in SmartArt-Design:
 | Gruppe | Steuerelement | Art | Zugriffstaste | RaabePresent | Einträge |
 |---|---|---|---|---|---|
 | Tools | Formel | Menü | Alt, J E, A | vorhanden | 9 |
-| Tools | Freihandgleichung | Schaltfläche | Alt, J E, H 1 | zurückgestellt |  |
+| Tools | Freihandgleichung | Schaltfläche | Alt, J E, H 1 | vorhanden |  |
 | Konvertierungen | LaTeX in Mathematik | Schaltfläche | Alt, J E, J | vorhanden |  |
 | Konvertierungen | Mathe nach LaTeX | Schaltfläche | Alt, J E, H 2 | vorhanden |  |
 | Konvertierungen | Professionell | Schaltfläche | Alt, J E, P | vorhanden |  |
 | Konvertierungen | Linear | Schaltfläche | Alt, J E, L | vorhanden |  |
 | Konvertierungen | Text | Schaltfläche | Alt, J E, N | vorhanden |  |
-| Konvertierungen | Formeloptionen... | Schaltfläche | Alt, J E, F | zurückgestellt | Dialog |
+| Konvertierungen | Formeloptionen... | Schaltfläche | Alt, J E, F | vorhanden | Dialog |
 | Symbole | Formelsymbole | Katalog |  | vorhanden | 71 |
 | Symbole | Formelsymbole | Schaltfläche | Alt, J E, O | vorhanden |  |
 | Strukturen | Bruch | Menü | Alt, J E, B | vorhanden | 9 |

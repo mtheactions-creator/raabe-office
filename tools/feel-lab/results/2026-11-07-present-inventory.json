@@ -863,6 +863,98 @@
          "enabled": true
         }
        ]
+      },
+      {
+       "name": "In SmartArt konvertieren",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Vertikale Aufzählung",
+         "enabled": true
+        },
+        {
+         "name": "Vertikale Blockliste",
+         "enabled": true
+        },
+        {
+         "name": "Vertikale Bildakzentliste",
+         "enabled": true
+        },
+        {
+         "name": "Zielliste",
+         "enabled": true
+        },
+        {
+         "name": "Horizontale Aufzählung",
+         "enabled": true
+        },
+        {
+         "name": "Organigramm",
+         "enabled": true
+        },
+        {
+         "name": "Hierarchieliste",
+         "enabled": true
+        },
+        {
+         "name": "Fortlaufende Bildliste",
+         "enabled": true
+        },
+        {
+         "name": "Radialliste",
+         "enabled": true
+        },
+        {
+         "name": "Einfacher Kreis",
+         "enabled": true
+        },
+        {
+         "name": "Vertikale Chevronliste",
+         "enabled": true
+        },
+        {
+         "name": "Chevronliste",
+         "enabled": true
+        },
+        {
+         "name": "Fortlaufender Blockprozess",
+         "enabled": true
+        },
+        {
+         "name": "Einfache Zeitachse",
+         "enabled": true
+        },
+        {
+         "name": "Einfacher Prozess",
+         "enabled": true
+        },
+        {
+         "name": "Umgebrochene Bildakzentliste",
+         "enabled": true
+        },
+        {
+         "name": "Pyramidenliste",
+         "enabled": true
+        },
+        {
+         "name": "Einfache Matrix",
+         "enabled": true
+        },
+        {
+         "name": "Einfaches Venn",
+         "enabled": true
+        },
+        {
+         "name": "Einfaches Ziel",
+         "enabled": true
+        },
+        {
+         "name": "Weitere SmartArt-Grafiken...",
+         "enabled": true
+        }
+       ]
       }
      ]
     },
@@ -2117,6 +2209,112 @@
          ]
         },
         {
+         "name": "Struktur",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Papyrus",
+           "enabled": true
+          },
+          {
+           "name": "Leinen",
+           "enabled": true
+          },
+          {
+           "name": "Blaue Baumwolle",
+           "enabled": true
+          },
+          {
+           "name": "Gewebe",
+           "enabled": true
+          },
+          {
+           "name": "Wassertropfen",
+           "enabled": true
+          },
+          {
+           "name": "Papiertüte",
+           "enabled": true
+          },
+          {
+           "name": "Fischfossil",
+           "enabled": true
+          },
+          {
+           "name": "Sand",
+           "enabled": true
+          },
+          {
+           "name": "Grüner Marmor",
+           "enabled": true
+          },
+          {
+           "name": "Weißer Marmor",
+           "enabled": true
+          },
+          {
+           "name": "Brauner Marmor",
+           "enabled": true
+          },
+          {
+           "name": "Granit",
+           "enabled": true
+          },
+          {
+           "name": "Zeitungspapier",
+           "enabled": true
+          },
+          {
+           "name": "Recyclingpapier",
+           "enabled": true
+          },
+          {
+           "name": "Pergament",
+           "enabled": true
+          },
+          {
+           "name": "Briefpapier",
+           "enabled": true
+          },
+          {
+           "name": "Blaues Seidenpapier",
+           "enabled": true
+          },
+          {
+           "name": "Rosa Seidenpapier",
+           "enabled": true
+          },
+          {
+           "name": "Lila Netz",
+           "enabled": true
+          },
+          {
+           "name": "Blumenstrauß",
+           "enabled": true
+          },
+          {
+           "name": "Kork",
+           "enabled": true
+          },
+          {
+           "name": "Walnuss",
+           "enabled": true
+          },
+          {
+           "name": "Eiche",
+           "enabled": true
+          },
+          {
+           "name": "Nussbaum",
+           "enabled": true
+          },
+          {
+           "name": "Weitere Texturen...",
+           "enabled": true
+          }
+         ]
+        },
+        {
          "name": "Weitere Füllfarben..."
         }
        ]
@@ -2571,7 +2769,7 @@
           },
           {
            "name": "3D-Optionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -2677,7 +2875,7 @@
           },
           {
            "name": "Schattenoptionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -2727,7 +2925,7 @@
           },
           {
            "name": "Spiegelungsoptionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -2837,7 +3035,7 @@
           },
           {
            "name": "Leuchteffektoptionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -2875,7 +3073,7 @@
           },
           {
            "name": "Optionen für weiche Kanten...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -2937,7 +3135,7 @@
           },
           {
            "name": "3D-Optionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -3051,7 +3249,7 @@
           },
           {
            "name": "3D-Drehungsoptionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         }
@@ -4007,7 +4205,7 @@
       {
        "name": "SmartArt...",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "button"
       },
       {
@@ -4272,7 +4470,7 @@
         {
          "name": "Bildschirmaufzeichnung",
          "deferred": false,
-         "enabled": false
+         "enabled": true
         }
        ]
       }
@@ -4446,6 +4644,24 @@
         },
         {
          "name": "Tafel"
+        },
+        {
+         "name": "Wellenband"
+        },
+        {
+         "name": "Kreisbögen"
+        },
+        {
+         "name": "Keil"
+        },
+        {
+         "name": "Punkteraster"
+        },
+        {
+         "name": "Schräge Streifen"
+        },
+        {
+         "name": "Abendblau"
         }
        ]
       }
@@ -5010,7 +5226,101 @@
        "name": "Sound",
        "deferred": false,
        "enabled": true,
-       "type": "dropdown"
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "[Ohne Sound]",
+         "enabled": true
+        },
+        {
+         "name": "[Vorherigen Sound anhalten]",
+         "enabled": true
+        },
+        {
+         "name": "Applaus",
+         "enabled": true
+        },
+        {
+         "name": "Bombe",
+         "enabled": true
+        },
+        {
+         "name": "Brise",
+         "enabled": true
+        },
+        {
+         "name": "Explosion",
+         "enabled": true
+        },
+        {
+         "name": "Glocken",
+         "enabled": true
+        },
+        {
+         "name": "Hammer",
+         "enabled": true
+        },
+        {
+         "name": "Kamera",
+         "enabled": true
+        },
+        {
+         "name": "Kasse",
+         "enabled": true
+        },
+        {
+         "name": "Klick",
+         "enabled": true
+        },
+        {
+         "name": "Laser",
+         "enabled": true
+        },
+        {
+         "name": "Münze",
+         "enabled": true
+        },
+        {
+         "name": "Pfeil",
+         "enabled": true
+        },
+        {
+         "name": "Schreibmaschine",
+         "enabled": true
+        },
+        {
+         "name": "Sog",
+         "enabled": true
+        },
+        {
+         "name": "Spannung",
+         "enabled": true
+        },
+        {
+         "name": "Stoß",
+         "enabled": true
+        },
+        {
+         "name": "Trommelwirbel",
+         "enabled": true
+        },
+        {
+         "name": "Wind",
+         "enabled": true
+        },
+        {
+         "name": "Zischen",
+         "enabled": true
+        },
+        {
+         "name": "Anderer Sound...",
+         "enabled": true
+        },
+        {
+         "name": "Wiederholen bis zum nächsten Sound",
+         "enabled": true
+        }
+       ]
       },
       {
        "name": "Dauer",
@@ -5603,14 +5913,24 @@
       {
        "name": "Anzeigedauern testen",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "button"
       },
       {
        "name": "Aufzeichnen",
        "deferred": false,
-       "enabled": false,
-       "type": "dropdown"
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Von Beginn an...",
+         "enabled": true
+        },
+        {
+         "name": "Ab Aktueller Folie...",
+         "enabled": true
+        }
+       ]
       },
       {
        "name": "Kommentare wiedergeben",
@@ -5642,11 +5962,109 @@
        "type": "dropdown",
        "items": [
         {
+         "name": "Bildschirm",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Automatisch",
+           "enabled": true
+          },
+          {
+           "name": "Primärer Monitor",
+           "enabled": true
+          }
+         ]
+        },
+        {
          "name": "Referentenansicht",
          "deferred": false,
-         "enabled": false
+         "enabled": true
         }
        ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Aufzeichnen",
+   "contextual": false,
+   "groups": [
+    {
+     "name": "Vorschau",
+     "controls": [
+      {
+       "name": "Vorschau",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Aufzeichnen",
+     "controls": [
+      {
+       "name": "Von Beginn an...",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Ab Aktueller Folie...",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Bildschirmaufzeichnung",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Audio",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Bearbeiten",
+     "controls": [
+      {
+       "name": "Aufzeichnung löschen",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Aufzeichnung auf aktueller Folie löschen",
+         "enabled": true
+        },
+        {
+         "name": "Aufzeichnung auf allen Folien löschen",
+         "enabled": true
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Exportieren",
+     "controls": [
+      {
+       "name": "Als Bildschirmpräsentation speichern",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "In Video",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
       }
      ]
     }
@@ -5932,13 +6350,13 @@
       {
        "name": "Alle anordnen",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "button"
       },
       {
        "name": "Überlappend",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "button"
       },
       {
@@ -5967,7 +6385,7 @@
       {
        "name": "Makros",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "button"
       }
      ]
@@ -7136,6 +7554,112 @@
          ]
         },
         {
+         "name": "Struktur",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Papyrus",
+           "enabled": true
+          },
+          {
+           "name": "Leinen",
+           "enabled": true
+          },
+          {
+           "name": "Blaue Baumwolle",
+           "enabled": true
+          },
+          {
+           "name": "Gewebe",
+           "enabled": true
+          },
+          {
+           "name": "Wassertropfen",
+           "enabled": true
+          },
+          {
+           "name": "Papiertüte",
+           "enabled": true
+          },
+          {
+           "name": "Fischfossil",
+           "enabled": true
+          },
+          {
+           "name": "Sand",
+           "enabled": true
+          },
+          {
+           "name": "Grüner Marmor",
+           "enabled": true
+          },
+          {
+           "name": "Weißer Marmor",
+           "enabled": true
+          },
+          {
+           "name": "Brauner Marmor",
+           "enabled": true
+          },
+          {
+           "name": "Granit",
+           "enabled": true
+          },
+          {
+           "name": "Zeitungspapier",
+           "enabled": true
+          },
+          {
+           "name": "Recyclingpapier",
+           "enabled": true
+          },
+          {
+           "name": "Pergament",
+           "enabled": true
+          },
+          {
+           "name": "Briefpapier",
+           "enabled": true
+          },
+          {
+           "name": "Blaues Seidenpapier",
+           "enabled": true
+          },
+          {
+           "name": "Rosa Seidenpapier",
+           "enabled": true
+          },
+          {
+           "name": "Lila Netz",
+           "enabled": true
+          },
+          {
+           "name": "Blumenstrauß",
+           "enabled": true
+          },
+          {
+           "name": "Kork",
+           "enabled": true
+          },
+          {
+           "name": "Walnuss",
+           "enabled": true
+          },
+          {
+           "name": "Eiche",
+           "enabled": true
+          },
+          {
+           "name": "Nussbaum",
+           "enabled": true
+          },
+          {
+           "name": "Weitere Texturen...",
+           "enabled": true
+          }
+         ]
+        },
+        {
          "name": "Weitere Füllfarben..."
         }
        ]
@@ -7590,7 +8114,7 @@
           },
           {
            "name": "3D-Optionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -7696,7 +8220,7 @@
           },
           {
            "name": "Schattenoptionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -7746,7 +8270,7 @@
           },
           {
            "name": "Spiegelungsoptionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -7856,7 +8380,7 @@
           },
           {
            "name": "Leuchteffektoptionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -7894,7 +8418,7 @@
           },
           {
            "name": "Optionen für weiche Kanten...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -7956,7 +8480,7 @@
           },
           {
            "name": "3D-Optionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -8070,7 +8594,7 @@
           },
           {
            "name": "3D-Drehungsoptionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         }
@@ -8917,7 +9441,7 @@
           },
           {
            "name": "Schattenoptionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -8967,7 +9491,7 @@
           },
           {
            "name": "Spiegelungsoptionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -9077,7 +9601,7 @@
           },
           {
            "name": "Leuchteffektoptionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -9139,7 +9663,7 @@
           },
           {
            "name": "3D-Optionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -9253,7 +9777,7 @@
           },
           {
            "name": "3D-Drehungsoptionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -10629,7 +11153,7 @@
           },
           {
            "name": "3D-Optionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -10735,7 +11259,7 @@
           },
           {
            "name": "Schattenoptionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -10785,7 +11309,7 @@
           },
           {
            "name": "Spiegelungsoptionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -10895,7 +11419,7 @@
           },
           {
            "name": "Leuchteffektoptionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -10933,7 +11457,7 @@
           },
           {
            "name": "Optionen für weiche Kanten...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -10995,7 +11519,7 @@
           },
           {
            "name": "3D-Optionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -11109,7 +11633,7 @@
           },
           {
            "name": "3D-Drehungsoptionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         }
@@ -13615,7 +14139,7 @@
           },
           {
            "name": "Schattenoptionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -13665,7 +14189,7 @@
           },
           {
            "name": "Spiegelungsoptionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -13775,7 +14299,7 @@
           },
           {
            "name": "Leuchteffektoptionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -13837,7 +14361,7 @@
           },
           {
            "name": "3D-Optionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -13951,7 +14475,7 @@
           },
           {
            "name": "3D-Drehungsoptionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -16862,7 +17386,7 @@
           },
           {
            "name": "3D-Optionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -16968,7 +17492,7 @@
           },
           {
            "name": "Schattenoptionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -17018,7 +17542,7 @@
           },
           {
            "name": "Spiegelungsoptionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -17128,7 +17652,7 @@
           },
           {
            "name": "Leuchteffektoptionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -17166,7 +17690,7 @@
           },
           {
            "name": "Optionen für weiche Kanten...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -17228,7 +17752,7 @@
           },
           {
            "name": "3D-Optionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -17342,7 +17866,7 @@
           },
           {
            "name": "3D-Drehungsoptionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         }
@@ -18189,7 +18713,7 @@
           },
           {
            "name": "Schattenoptionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -18239,7 +18763,7 @@
           },
           {
            "name": "Spiegelungsoptionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -18349,7 +18873,7 @@
           },
           {
            "name": "Leuchteffektoptionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -18411,7 +18935,7 @@
           },
           {
            "name": "3D-Optionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -18525,7 +19049,7 @@
           },
           {
            "name": "3D-Drehungsoptionen...",
-           "enabled": false
+           "enabled": true
           }
          ]
         },
@@ -19000,6 +19524,24 @@
         },
         {
          "name": "Tafel"
+        },
+        {
+         "name": "Wellenband"
+        },
+        {
+         "name": "Kreisbögen"
+        },
+        {
+         "name": "Keil"
+        },
+        {
+         "name": "Punkteraster"
+        },
+        {
+         "name": "Schräge Streifen"
+        },
+        {
+         "name": "Abendblau"
         }
        ]
       }
@@ -19451,6 +19993,24 @@
         },
         {
          "name": "Tafel"
+        },
+        {
+         "name": "Wellenband"
+        },
+        {
+         "name": "Kreisbögen"
+        },
+        {
+         "name": "Keil"
+        },
+        {
+         "name": "Punkteraster"
+        },
+        {
+         "name": "Schräge Streifen"
+        },
+        {
+         "name": "Abendblau"
         }
        ]
       }
@@ -19898,6 +20458,24 @@
         },
         {
          "name": "Tafel"
+        },
+        {
+         "name": "Wellenband"
+        },
+        {
+         "name": "Kreisbögen"
+        },
+        {
+         "name": "Keil"
+        },
+        {
+         "name": "Punkteraster"
+        },
+        {
+         "name": "Schräge Streifen"
+        },
+        {
+         "name": "Abendblau"
         }
        ]
       }
@@ -20264,8 +20842,8 @@
       },
       {
        "name": "Freihandgleichung",
-       "deferred": true,
-       "enabled": false,
+       "deferred": false,
+       "enabled": true,
        "type": "button"
       }
      ]
@@ -20305,8 +20883,8 @@
       },
       {
        "name": "Formeloptionen...",
-       "deferred": true,
-       "enabled": false,
+       "deferred": false,
+       "enabled": true,
        "type": "button"
       }
      ]
@@ -21631,7 +22209,71 @@
      "name": "Grafik erstellen",
      "controls": [
       {
+       "name": "Form hinzufügen",
+       "deferred": false,
+       "enabled": true,
+       "type": "split",
+       "items": [
+        {
+         "name": "Form danach hinzufügen",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Form davor hinzufügen",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Form oberhalb hinzufügen",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Form unterhalb hinzufügen",
+         "deferred": false,
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Aufzählungszeichen hinzufügen",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
        "name": "Textbereich",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Von rechts nach links",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Höher stufen",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Tiefer stufen",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Verschieben vor",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Verschieben nach",
        "deferred": false,
        "enabled": true,
        "type": "button"
@@ -21639,8 +22281,188 @@
      ]
     },
     {
+     "name": "Layouts",
+     "controls": [
+      {
+       "name": "Layout ändern",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Einfache Blockliste",
+         "enabled": true
+        },
+        {
+         "name": "Alternierende Sechsecke",
+         "enabled": true
+        },
+        {
+         "name": "Bildbeschriftungsliste",
+         "enabled": true
+        },
+        {
+         "name": "Liste mit Linien",
+         "enabled": true
+        },
+        {
+         "name": "Vertikale Aufzählung",
+         "enabled": true
+        },
+        {
+         "name": "Vertikale Feldliste",
+         "enabled": true
+        },
+        {
+         "name": "Horizontale Aufzählung",
+         "enabled": true
+        },
+        {
+         "name": "Liste mit quadratischen Akzenten",
+         "enabled": true
+        },
+        {
+         "name": "Bildakzentliste",
+         "enabled": true
+        },
+        {
+         "name": "Umgebrochene Bildakzentliste",
+         "enabled": true
+        },
+        {
+         "name": "Gestapelte Liste",
+         "enabled": true
+        },
+        {
+         "name": "Vertikale Aktionsliste",
+         "enabled": true
+        },
+        {
+         "name": "Zunehmender Kreisprozess",
+         "enabled": true
+        },
+        {
+         "name": "Kreisdiagrammprozess",
+         "enabled": true
+        },
+        {
+         "name": "Detaillierter Prozess",
+         "enabled": true
+        },
+        {
+         "name": "Gruppierte Liste",
+         "enabled": true
+        },
+        {
+         "name": "Horizontale Bildliste",
+         "enabled": true
+        },
+        {
+         "name": "Fortlaufende Bildliste",
+         "enabled": true
+        },
+        {
+         "name": "Bildstreifen",
+         "enabled": true
+        },
+        {
+         "name": "Vertikale Bildliste",
+         "enabled": true
+        },
+        {
+         "name": "Weitere Layouts...",
+         "enabled": true
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "SmartArt-Formatvorlagen",
+     "controls": [
+      {
+       "name": "Farben ändern",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Dunkle 1-Kontur",
+         "enabled": true
+        },
+        {
+         "name": "Dunkel 2-Kontur",
+         "enabled": true
+        },
+        {
+         "name": "Dunkel 2-Füllung",
+         "enabled": true
+        },
+        {
+         "name": "Farbig - Akzentfarben",
+         "enabled": true
+        },
+        {
+         "name": "Farbige Kontur - Akzent 1",
+         "enabled": true
+        },
+        {
+         "name": "Farbige Füllung - Akzent 1",
+         "enabled": true
+        },
+        {
+         "name": "Farbige Kontur - Akzent 2",
+         "enabled": true
+        },
+        {
+         "name": "Farbige Füllung - Akzent 2",
+         "enabled": true
+        },
+        {
+         "name": "Farbige Kontur - Akzent 3",
+         "enabled": true
+        },
+        {
+         "name": "Farbige Füllung - Akzent 3",
+         "enabled": true
+        },
+        {
+         "name": "Farbige Kontur - Akzent 4",
+         "enabled": true
+        },
+        {
+         "name": "Farbige Füllung - Akzent 4",
+         "enabled": true
+        },
+        {
+         "name": "Farbige Kontur - Akzent 5",
+         "enabled": true
+        },
+        {
+         "name": "Farbige Füllung - Akzent 5",
+         "enabled": true
+        },
+        {
+         "name": "Farbige Kontur - Akzent 6",
+         "enabled": true
+        },
+        {
+         "name": "Farbige Füllung - Akzent 6",
+         "enabled": true
+        }
+       ]
+      }
+     ]
+    },
+    {
      "name": "Zurücksetzen",
      "controls": [
+      {
+       "name": "Grafik zurücksetzen",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
       {
        "name": "Konvertieren",
        "deferred": false,
@@ -21965,7 +22787,72 @@
     ]
    },
    {
-    "name": "In SmartArt konvertieren"
+    "name": "In SmartArt konvertieren",
+    "items": [
+     {
+      "name": "Vertikale Aufzählung"
+     },
+     {
+      "name": "Vertikale Blockliste"
+     },
+     {
+      "name": "Vertikale Bildakzentliste"
+     },
+     {
+      "name": "Zielliste"
+     },
+     {
+      "name": "Horizontale Aufzählung"
+     },
+     {
+      "name": "Organigramm"
+     },
+     {
+      "name": "Hierarchieliste"
+     },
+     {
+      "name": "Fortlaufende Bildliste"
+     },
+     {
+      "name": "Radialliste"
+     },
+     {
+      "name": "Einfacher Kreis"
+     },
+     {
+      "name": "Vertikale Chevronliste"
+     },
+     {
+      "name": "Chevronliste"
+     },
+     {
+      "name": "Fortlaufender Blockprozess"
+     },
+     {
+      "name": "Einfache Zeitachse"
+     },
+     {
+      "name": "Einfacher Prozess"
+     },
+     {
+      "name": "Umgebrochene Bildakzentliste"
+     },
+     {
+      "name": "Pyramidenliste"
+     },
+     {
+      "name": "Einfache Matrix"
+     },
+     {
+      "name": "Einfaches Venn"
+     },
+     {
+      "name": "Einfaches Ziel"
+     },
+     {
+      "name": "Weitere SmartArt-Grafiken..."
+     }
+    ]
    },
    {
     "name": "Sperren"
