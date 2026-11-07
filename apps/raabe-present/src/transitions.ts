@@ -75,12 +75,16 @@ export function setTransition(app: PresentApp, kind: string): void {
 function writeTransition(root: Element, kind: string, dur: number): void {
   const cur = readTransition(root);
   const { el, wrap } = transitionOf(root);
+  // The transition's sound stays when the effect changes (PowerPoint).
+  const sound = kid(el, "sndAc");
   (wrap ?? el)?.remove();
   if (kind === "none") return;
   const xml = transitionXml(kind, dur, { advClick: cur?.advClick, advTm: cur?.advTm });
   // Schema order: after clrMapOvr, before timing.
   const timing = kid(root, "timing") ?? kid(root, "extLst") ?? null;
-  root.insertBefore(fragment(root.ownerDocument, xml)[0], timing);
+  const added = fragment(root.ownerDocument, xml)[0];
+  root.insertBefore(added, timing);
+  if (sound) for (const tr of [added, ...Array.from(added.getElementsByTagNameNS(NS_P, "transition"))]) if (tr.localName === "transition") tr.append(sound.cloneNode(true));
 }
 
 export function setTransitionDuration(app: PresentApp, seconds: number): void {
@@ -141,4 +145,77 @@ export function transitionOptions(app: PresentApp): { label: string; run: () => 
       });
     },
   }));
+}
+
+// ----- Sound (D-072) ---------------------------------------------------------------------------------------
+// PowerPoint's entries without its own sound files (Microsoft content): [Ohne Sound], [Vorherigen Sound
+// anhalten], Anderer Sound... (a WAV file of the user's, embedded) and Bis zum nächsten Sound wiederholen,
+// stored as PowerPoint stores them (p:sndAc in every p:transition of the slide).
+
+const RT_AUDIO = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/audio";
+
+function setSoundXml(app: PresentApp, label: string, make: (path: string, tr: Element) => string | null): void {
+  const deck = app.deck;
+  const paths = [...app.panel.selected].map((i) => deck.slides[i].path);
+  deck.change(label, paths, () => {
+    for (const p of paths) {
+      const root = deck.pptx.doc(p).documentElement;
+      if (!transitionOf(root).el) root.insertBefore(fragment(root.ownerDocument, "<p:transition/>")[0], kid(root, "timing") ?? kid(root, "extLst") ?? null);
+      for (const tr of [transitionOf(root).el, ...Array.from(root.getElementsByTagNameNS(NS_P, "transition"))]) {
+        if (!tr) continue;
+        kid(tr, "sndAc")?.remove();
+        const xml = make(p, tr);
+        if (xml) tr.append(...fragment(tr.ownerDocument, xml));
+      }
+    }
+  });
+}
+
+export function soundMenu(app: PresentApp): { label: string; run: () => void; checked?: boolean }[] {
+  const root = app.slidePath() ? app.deck.pptx.doc(app.slidePath()!).documentElement : null;
+  const snd = root ? kid(transitionOf(root).el, "sndAc") : undefined;
+  const st = kid(snd, "stSnd");
+  return [
+    { label: "[Ohne Sound]", checked: !snd, run: () => setSoundXml(app, "Sound", () => null) },
+    { label: "[Vorherigen Sound anhalten]", checked: !!kid(snd, "endSnd"), run: () => setSoundXml(app, "Sound", () => "<p:sndAc><p:endSnd/></p:sndAc>") },
+    { label: "Anderer Sound...", run: () => void otherSound(app) },
+    { label: "Bis zum nächsten Sound wiederholen", checked: st?.getAttribute("loop") === "1", run: () => {
+      if (!st) return;
+      const on = st.getAttribute("loop") !== "1";
+      const deck = app.deck;
+      const paths = [...app.panel.selected].map((i) => deck.slides[i].path);
+      deck.change("Sound", paths, () => {
+        for (const p of paths) for (const tr of Array.from(deck.pptx.doc(p).getElementsByTagNameNS(NS_P, "transition"))) {
+          const s1 = kid(kid(tr, "sndAc"), "stSnd");
+          if (s1) { if (on) s1.setAttribute("loop", "1"); else s1.removeAttribute("loop"); }
+        }
+      });
+    } },
+  ];
+}
+
+async function otherSound(app: PresentApp): Promise<void> {
+  const path = await app.platform.openAnyDialog?.("Audio hinzufügen", [{ name: "Audiodateien", extensions: ["wav"] }]);
+  if (!path) return;
+  const bytes = await app.platform.readFile(path);
+  const name = path.split(/[\\/]/).pop() ?? "sound.wav";
+  const pptx = app.deck.pptx;
+  const media = pptx.freeName("ppt/media/audio#.wav");
+  pptx.put(media, bytes, "audio/wav");
+  setSoundXml(app, "Sound", (p) => {
+    const rid = pptx.link(p, RT_AUDIO, media);
+    return `<p:sndAc><p:stSnd><p:snd r:embed="${rid}" name="${PptxDom.esc(name)}"/></p:stSnd></p:sndAc>`;
+  });
+}
+
+/** The sound a slide's transition plays: the media part, or "stop" for [Vorherigen Sound anhalten]. */
+export function transitionSound(app: PresentApp, path: string): { media?: string; stop?: boolean; loop?: boolean } | null {
+  const root = app.deck.pptx.doc(path).documentElement;
+  const snd = kid(transitionOf(root).el, "sndAc");
+  if (!snd) return null;
+  if (kid(snd, "endSnd")) return { stop: true };
+  const st = kid(snd, "stSnd"), s = kid(st, "snd");
+  const rid = s?.getAttributeNS(PptxDom.NS_R, "embed");
+  const media = rid ? app.deck.pptx.target(path, rid) : undefined;
+  return media ? { media, loop: st?.getAttribute("loop") === "1" } : null;
 }

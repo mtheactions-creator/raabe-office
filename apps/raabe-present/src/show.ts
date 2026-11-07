@@ -10,7 +10,7 @@ import type { PresentApp } from "./app";
 import { renderSlide } from "./render/slide";
 import { EMU_PX } from "./render/text";
 import { mainSequence, type Step } from "./animations";
-import { readTransition } from "./transitions";
+import { readTransition, transitionSound } from "./transitions";
 import { readShowSetup, type ShowSetup } from "./showsetup";
 import { mediaOf, mediaType } from "./media";
 
@@ -126,6 +126,7 @@ export class SlideShow {
     this.stepIdx = back ? this.steps.length : 0;
     if (!back && !this.setup.noAnimations) for (const id of seq.hidden) { const el = r.shapes.get(id); if (el) el.style.visibility = "hidden"; }
     const tr = readTransition(root);
+    if (transition) this.playTransitionSound(path);
     const old = this.stageEl.firstElementChild as HTMLElement | null;
     this.stageEl.append(r.el);
     // Video and audio play in their box with the browser's controls.
@@ -184,6 +185,20 @@ export class SlideShow {
       const s = this.prevView?.shapes.find((x) => x.id === id);
       if (s && names.has(s.name)) (el as HTMLElement).style.visibility = "hidden";
     }
+  }
+
+  /** The transition's sound (D-072): started with the slide, [Vorherigen Sound anhalten] stops the one playing. */
+  private sound: HTMLAudioElement | null = null;
+  private playTransitionSound(path: string): void {
+    const snd = transitionSound(this.app, path);
+    if (!snd) return;
+    if (snd.stop || snd.media) { this.sound?.pause(); this.sound = null; }
+    const bytes = snd.media ? this.app.deck.pptx.files[snd.media] : undefined;
+    if (!bytes) return;
+    const a = new Audio(URL.createObjectURL(new Blob([bytes as BlobPart], { type: "audio/wav" })));
+    a.loop = !!snd.loop;
+    void a.play().catch(() => {});
+    this.sound = a;
   }
 
   private play(step: Step): void {
@@ -265,6 +280,7 @@ export class SlideShow {
   private unblank(): void { this.blank.hidden = true; }
 
   end(): void {
+    this.sound?.pause(); this.sound = null;
     removeEventListener("keydown", this.keyHandler, true);
     removeEventListener("resize", this.onResize);
     clearTimeout(this.timer);

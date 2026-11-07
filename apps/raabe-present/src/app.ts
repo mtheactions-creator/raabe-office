@@ -2174,6 +2174,7 @@ export class PresentApp implements EditorHost, PanelHost {
         fonts: () => FONT_SETS.map((f) => ({ label: f.label, run: () => this.applyFontSet(f.name, f.major, f.minor) })),
         underline: [], outlineWeight: [], outlineDash: [], effects: this.effectsMenu(), quickStyles: () => [], zoomFit: [],
         equations: () => BUILT_IN.map((e) => ({ label: e.name, run: () => void insertEquation(this, e.seq) })),
+        sounds: () => this.transMod?.soundMenu(this) ?? [],
       },
       panels: {
         newSlide: (close) => this.layoutGallery(close, (p) => this.newSlide(p), this.designName()),

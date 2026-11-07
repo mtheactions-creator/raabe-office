@@ -30,7 +30,7 @@ export interface RibbonContext {
     arrange: () => MenuEntry[]; find: MenuEntry[]; select: MenuEntry[]; table: MenuEntry[]; pictures: MenuEntry[]; textBox: MenuEntry[];
     slideSize: MenuEntry[]; showCustom: MenuEntry[]; record: MenuEntry[]; transOptions: () => MenuEntry[]; animOptions: () => MenuEntry[];
     animStart: MenuEntry[]; colors: () => MenuEntry[]; fonts: () => MenuEntry[]; underline: MenuEntry[];
-    outlineWeight: MenuEntry[]; outlineDash: MenuEntry[]; effects: MenuEntry[]; quickStyles: () => MenuEntry[]; zoomFit: MenuEntry[]; equations: () => MenuEntry[];
+    outlineWeight: MenuEntry[]; outlineDash: MenuEntry[]; effects: MenuEntry[]; quickStyles: () => MenuEntry[]; zoomFit: MenuEntry[]; equations: () => MenuEntry[]; sounds: () => MenuEntry[];
   };
   panels: { newSlide: Popup; layout: Popup; shapes: Popup; themes: Popup; transitions: Popup; animations: Popup; table: Popup; chart: Popup; addAnim: Popup; wordArt: Popup; quickStyles: Popup };
   spin: {
@@ -134,7 +134,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
         { id: "preview", label: "Vorschau", key: "ZV", icon: "eye", controls: [b("trans.preview", "V", "large")] },
         { id: "gallery", label: "Übergang zu dieser Folie", key: "ZU", icon: "transition", controls: [panel("trans.gallery", "Ü", "large", p.transitions), lazy("trans.options", "E", "large", m.transOptions)] },
         { id: "timing", label: "Anzeigedauer", key: "ZA", icon: "time", controls: [
-          stack(b("trans.sound", "S"), spin("trans.duration", "Dauer:", "D", ctx.spin.transDuration), b("trans.applyAll", "F")),
+          stack(lazy("trans.sound", "S", "small", m.sounds), spin("trans.duration", "Dauer:", "D", ctx.spin.transDuration), b("trans.applyAll", "F")),
           stack({ type: "check", cmd: "trans.onClick", key: "B" }, rows([{ type: "check", cmd: "trans.after", key: "N" }, spin("trans.afterTime", "", "A", ctx.spin.transAfter)]))] },
       ],
     },
