@@ -13,7 +13,7 @@ import { ribbonTabs, type RibbonContext } from "./ribbon-def";
 import { Deck, defaultMasterPlaceholder } from "./deck";
 import { LINE_DASHES, LINE_WEIGHTS } from "./lines";
 import { quickStylesPanel } from "./quickstyles";
-import { editEquation, hasEquation, insertEquation } from "./equations";
+import { editEquation, equationTab, hasEquation, implementEquationCommands, insertEquation, selectedEquation } from "./equations";
 import { BUILT_IN } from "./equations-builtin";
 import { SlideEditor, flat, union, type EditorHost } from "./editor";
 import { SlidePanel, type PanelHost } from "./panel";
@@ -1222,7 +1222,7 @@ export class PresentApp implements EditorHost, PanelHost {
   private updateContextual(): void {
     const views = this.editor.selectedViews;
     const kinds = new Set(views.map((v) => (v.kind === "graphicFrame" ? v.frame : v.kind)));
-    const key = [...kinds].sort().join(",") + (this.editor.text ? "+t" : "") + (this.masterMode ? `+m${this.masterKind}` : "");
+    const key = [...kinds].sort().join(",") + (this.editor.text ? "+t" : "") + (this.masterMode ? `+m${this.masterKind}` : "") + (selectedEquation(this) !== null ? "+eq" : "");
     if (key === this.ctxKey) return;
     this.ctxKey = key;
     const tabs: Tab[] = [];
@@ -1230,6 +1230,7 @@ export class PresentApp implements EditorHost, PanelHost {
     if (kinds.has("pic")) tabs.push(this.pictureTab());
     if (kinds.has("table")) tabs.push(this.tableTab(), this.tableLayoutTab());
     if (kinds.has("chart")) tabs.push(this.chartTab(), this.chartFormatTab());
+    if (selectedEquation(this) !== null) tabs.push(this.cachedTab("equation", () => equationTab(this)));
     if (this.masterMode) tabs.unshift(this.masterTab());
     this.ribbon.setContextual(tabs);
     if (this.masterMode && !kinds.size) this.ribbon.select(this.masterKind === "slides" ? "slideMaster" : `${this.masterKind}Master`);
@@ -1737,6 +1738,7 @@ export class PresentApp implements EditorHost, PanelHost {
     implementContext(this);
     impl("insert.symbol", () => import("./symbols").then((m) => m.symbolDialog(this)), () => this.editor.sel.length > 0 || !!this.editor.text);
     impl("insert.equation", () => insertEquation(this), () => !!this.slidePath());
+    implementEquationCommands(this);
     impl("insert.symbols", () => {}, () => !!this.slidePath());
     impl("insert.video", () => import("./media").then((m) => m.insertMedia(this, "video")), () => !!this.slidePath());
     impl("insert.audio", () => import("./media").then((m) => m.insertMedia(this, "audio")), () => !!this.slidePath());
@@ -2730,6 +2732,8 @@ export class PresentApp implements EditorHost, PanelHost {
           if (c.type === "stack") return c.items.flatMap(ctl);
           if (c.type === "rows") return c.rows.flat().flatMap((x) => (x === "gap" ? [] : ctl(x)));
           if (c.type === "gallery") return c.items.map((i) => ({ ...cmdItem(i.cmd), type: "gallery" }));
+          // A spin box: its label as PowerPoint names it (no colon) and its two arrow buttons.
+          if (c.type === "spinner") return [{ ...cmdItem(c.cmd, c.label.replace(/:$/, "")), type: "spinner" }, { name: "Mehr" }, { name: "Weniger" }];
           const base: Item = "cmd" in c ? cmdItem(c.cmd, "label" in c ? c.label : undefined) : { name: "?" };
           const menu = "menu" in c && c.menu.length ? { items: entries(c.menu) } : {};
           // Own panels (galleries, palettes): their entries as drawn, by their names.
@@ -2745,7 +2749,7 @@ export class PresentApp implements EditorHost, PanelHost {
         const kind = app.masterKind;
         const masters = (["slides", "notes", "handout"] as const).map((k) => { app.masterKind = k; return app.masterTab(); });
         app.masterKind = kind;
-        const tabs = [...ribbonTabs(app.ribbonContext()), app.shapeTab(), app.pictureTab(), app.tableTab(), app.tableLayoutTab(), app.chartTab(), app.chartFormatTab(), ...masters];
+        const tabs = [...ribbonTabs(app.ribbonContext()), app.shapeTab(), app.pictureTab(), app.tableTab(), app.tableLayoutTab(), app.chartTab(), app.chartFormatTab(), ...masters, equationTab(app)];
         return tabs.map((t) => ({
           name: t.label, contextual: !!t.contextual,
           groups: t.groups.map((g) => ({ name: g.label, launcher: g.launcher ? cmdItem(g.launcher.cmd) : undefined, controls: g.controls.flatMap(ctl) })),

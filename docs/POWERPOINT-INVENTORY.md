@@ -8,7 +8,7 @@ descriptions (D-058). Cloud features are listed, marked and left out on purpose;
 
 **Recorded:** 21 tabs with 439 controls and 5771 menu and gallery entries; 13 context menus; 114 dialogs and panes; 4 backstage pages.
 
-**Coverage:** 1972 of 4503 controls and menu entries are in RaabePresent (43.8 %); 0 are there but greyed out as deferred, 2531 are missing; 8 cloud features are left out on purpose.
+**Coverage:** 2607 of 4503 controls and menu entries are in RaabePresent (57.9 %); 3 are there but greyed out as deferred, 1893 are missing; 8 cloud features are left out on purpose.
 
 ## Registerkarten
 
@@ -224,15 +224,15 @@ Menüs und Kataloge in Entwurf:
 | Übergang zu dieser Folie | Übergangseffekte | Schaltfläche | Alt, Ä, Ü | vorhanden |  |
 | Übergang zu dieser Folie | Effektoptionen | Menü, grau | Alt, Ä, E | vorhanden |  |
 | Anzeigedauer | Sound | Kombinationsfeld | Alt, Ä, S | vorhanden | 24 |
-| Anzeigedauer | Dauer | Drehfeld | Alt, Ä, D | fehlt |  |
-| Anzeigedauer | Mehr | Schaltfläche |  | fehlt |  |
-| Anzeigedauer | Weniger | Schaltfläche |  | fehlt |  |
+| Anzeigedauer | Dauer | Drehfeld | Alt, Ä, D | vorhanden |  |
+| Anzeigedauer | Mehr | Schaltfläche |  | vorhanden |  |
+| Anzeigedauer | Weniger | Schaltfläche |  | vorhanden |  |
 | Anzeigedauer | Auf alle anwenden | Schaltfläche | Alt, Ä, F | vorhanden |  |
 | Anzeigedauer | Bei Mausklick | Kontrollkästchen | Alt, Ä, B | vorhanden |  |
 | Anzeigedauer | Nach | Kontrollkästchen | Alt, Ä, N | vorhanden |  |
 | Anzeigedauer | Automatisch nach | Drehfeld | Alt, Ä, A | fehlt |  |
-| Anzeigedauer | Mehr | Schaltfläche |  | fehlt |  |
-| Anzeigedauer | Weniger | Schaltfläche |  | fehlt |  |
+| Anzeigedauer | Mehr | Schaltfläche |  | vorhanden |  |
+| Anzeigedauer | Weniger | Schaltfläche |  | vorhanden |  |
 
 Menüs und Kataloge in Übergänge:
 
@@ -254,11 +254,11 @@ Menüs und Kataloge in Übergänge:
 | Erweiterte Animation | Animation übertragen | Schaltfläche, grau | Alt, V, M | vorhanden |  |
 | Anzeigedauer | Start | Kombinationsfeld, grau | Alt, V, S | fehlt |  |
 | Anzeigedauer | Animationsdauer | Drehfeld, grau | Alt, V, D | fehlt |  |
-| Anzeigedauer | Mehr | Schaltfläche, grau |  | fehlt |  |
-| Anzeigedauer | Weniger | Schaltfläche, grau |  | fehlt |  |
+| Anzeigedauer | Mehr | Schaltfläche, grau |  | vorhanden |  |
+| Anzeigedauer | Weniger | Schaltfläche, grau |  | vorhanden |  |
 | Anzeigedauer | Animationsverzögerung | Drehfeld, grau | Alt, V, R | fehlt |  |
-| Anzeigedauer | Mehr | Schaltfläche, grau |  | fehlt |  |
-| Anzeigedauer | Weniger | Schaltfläche, grau |  | fehlt |  |
+| Anzeigedauer | Mehr | Schaltfläche, grau |  | vorhanden |  |
+| Anzeigedauer | Weniger | Schaltfläche, grau |  | vorhanden |  |
 | Anzeigedauer | Früher | Schaltfläche, grau | Alt, V, F | vorhanden |  |
 | Anzeigedauer | Später | Schaltfläche, grau | Alt, V, P | vorhanden |  |
 
@@ -392,12 +392,12 @@ Menüs und Kataloge in Ansicht:
 | Anordnen | Ausrichten | Menü | Alt, J D, D A | vorhanden | 10 |
 | Anordnen | Gruppieren | Menü, grau | Alt, J D, G R | vorhanden |  |
 | Anordnen | Drehen | Menü | Alt, J D, D R | vorhanden | 5 |
-| Größe | Formenhöhe | Drehfeld | Alt, J D, H | fehlt |  |
-| Größe | Mehr | Schaltfläche |  | fehlt |  |
-| Größe | Weniger | Schaltfläche |  | fehlt |  |
-| Größe | Formenbreite | Drehfeld | Alt, J D, R R | fehlt |  |
-| Größe | Mehr | Schaltfläche |  | fehlt |  |
-| Größe | Weniger | Schaltfläche |  | fehlt |  |
+| Größe | Formenhöhe | Drehfeld | Alt, J D, H | vorhanden |  |
+| Größe | Mehr | Schaltfläche |  | vorhanden |  |
+| Größe | Weniger | Schaltfläche |  | vorhanden |  |
+| Größe | Formenbreite | Drehfeld | Alt, J D, R R | vorhanden |  |
+| Größe | Mehr | Schaltfläche |  | vorhanden |  |
+| Größe | Weniger | Schaltfläche |  | vorhanden |  |
 | Größe | Größe und Position... | Schaltfläche | Alt, J D, ß | vorhanden |  |
 
 Menüs und Kataloge in Formformat:
@@ -443,12 +443,12 @@ Menüs und Kataloge in Formformat:
 | Anordnen | Gruppieren | Menü, grau | Alt, J P, G R | vorhanden |  |
 | Anordnen | Drehen | Menü | Alt, J P, D R | vorhanden | 5 |
 | Größe | Zuschneiden | Unterteilte Schaltfläche | Alt, J P, C | vorhanden | 176 |
-| Größe | Formenhöhe | Drehfeld | Alt, J P, H | fehlt |  |
-| Größe | Mehr | Schaltfläche |  | fehlt |  |
-| Größe | Weniger | Schaltfläche |  | fehlt |  |
-| Größe | Formenbreite | Drehfeld | Alt, J P, R R | fehlt |  |
-| Größe | Mehr | Schaltfläche |  | fehlt |  |
-| Größe | Weniger | Schaltfläche |  | fehlt |  |
+| Größe | Formenhöhe | Drehfeld | Alt, J P, H | vorhanden |  |
+| Größe | Mehr | Schaltfläche |  | vorhanden |  |
+| Größe | Weniger | Schaltfläche |  | vorhanden |  |
+| Größe | Formenbreite | Drehfeld | Alt, J P, R R | vorhanden |  |
+| Größe | Mehr | Schaltfläche |  | vorhanden |  |
+| Größe | Weniger | Schaltfläche |  | vorhanden |  |
 | Größe | Größe und Position... | Schaltfläche | Alt, J P, ß | vorhanden |  |
 
 Menüs und Kataloge in Bildformat:
@@ -523,11 +523,11 @@ Menüs und Kataloge in Tabellenentwurf:
 | Zusammenführen | Zellen verbinden | Schaltfläche, grau | Alt, J L, L E | vorhanden |  |
 | Zusammenführen | Zellen teilen... | Schaltfläche | Alt, J L, N E | vorhanden | Dialog |
 | Zellengröße | Tabellenzeilenhöhe | Drehfeld | Alt, J L, P | fehlt |  |
-| Zellengröße | Mehr | Schaltfläche |  | fehlt |  |
-| Zellengröße | Weniger | Schaltfläche |  | fehlt |  |
+| Zellengröße | Mehr | Schaltfläche |  | vorhanden |  |
+| Zellengröße | Weniger | Schaltfläche |  | vorhanden |  |
 | Zellengröße | Tabellenspaltenbreite | Drehfeld | Alt, J L, B | fehlt |  |
-| Zellengröße | Mehr | Schaltfläche |  | fehlt |  |
-| Zellengröße | Weniger | Schaltfläche |  | fehlt |  |
+| Zellengröße | Mehr | Schaltfläche |  | vorhanden |  |
+| Zellengröße | Weniger | Schaltfläche |  | vorhanden |  |
 | Zellengröße | Zeilen verteilen | Schaltfläche | Alt, J L, V | vorhanden |  |
 | Zellengröße | Spalten verteilen | Schaltfläche | Alt, J L, S P | vorhanden |  |
 | Ausrichtung | Linksbündig | Schaltfläche | Alt, J L, I I | vorhanden |  |
@@ -538,12 +538,12 @@ Menüs und Kataloge in Tabellenentwurf:
 | Ausrichtung | Unten ausrichten | Schaltfläche | Alt, J L, A | vorhanden |  |
 | Ausrichtung | Textrichtung | Menü | Alt, J L, M T | vorhanden | 5 |
 | Ausrichtung | Zellenbegrenzungen | Menü | Alt, J L, N Z | vorhanden | 5 |
-| Tabellengröße | Höhe | Drehfeld | Alt, J L, X | fehlt |  |
-| Tabellengröße | Mehr | Schaltfläche |  | fehlt |  |
-| Tabellengröße | Weniger | Schaltfläche |  | fehlt |  |
-| Tabellengröße | Breite | Drehfeld | Alt, J L, L B | fehlt |  |
-| Tabellengröße | Mehr | Schaltfläche |  | fehlt |  |
-| Tabellengröße | Weniger | Schaltfläche |  | fehlt |  |
+| Tabellengröße | Höhe | Drehfeld | Alt, J L, X | vorhanden |  |
+| Tabellengröße | Mehr | Schaltfläche |  | vorhanden |  |
+| Tabellengröße | Weniger | Schaltfläche |  | vorhanden |  |
+| Tabellengröße | Breite | Drehfeld | Alt, J L, L B | vorhanden |  |
+| Tabellengröße | Mehr | Schaltfläche |  | vorhanden |  |
+| Tabellengröße | Weniger | Schaltfläche |  | vorhanden |  |
 | Tabellengröße | Seitenverhältnis sperren | Kontrollkästchen | Alt, J L, T | vorhanden |  |
 | Anordnen | Anordnen | Menü | Alt, J L, Z A | vorhanden | 19 |
 
@@ -605,12 +605,12 @@ Menüs und Kataloge in Diagrammentwurf:
 | Anordnen | Ausrichten | Menü | Alt, J Y, D A | vorhanden | 10 |
 | Anordnen | Gruppieren | Menü, grau | Alt, J Y, G R | vorhanden |  |
 | Anordnen | Drehen | Menü, grau | Alt, J Y, D R | vorhanden |  |
-| Größe | Formenhöhe | Drehfeld | Alt, J Y, H | fehlt |  |
-| Größe | Mehr | Schaltfläche |  | fehlt |  |
-| Größe | Weniger | Schaltfläche |  | fehlt |  |
-| Größe | Formenbreite | Drehfeld | Alt, J Y, R R | fehlt |  |
-| Größe | Mehr | Schaltfläche |  | fehlt |  |
-| Größe | Weniger | Schaltfläche |  | fehlt |  |
+| Größe | Formenhöhe | Drehfeld | Alt, J Y, H | vorhanden |  |
+| Größe | Mehr | Schaltfläche |  | vorhanden |  |
+| Größe | Weniger | Schaltfläche |  | vorhanden |  |
+| Größe | Formenbreite | Drehfeld | Alt, J Y, R R | vorhanden |  |
+| Größe | Mehr | Schaltfläche |  | vorhanden |  |
+| Größe | Weniger | Schaltfläche |  | vorhanden |  |
 | Größe | Größe und Position... | Schaltfläche | Alt, J Y, ß | fehlt |  |
 
 Menüs und Kataloge in Format:
@@ -660,27 +660,27 @@ Menüs und Kataloge in SmartArt-Design:
 
 | Gruppe | Steuerelement | Art | Zugriffstaste | RaabePresent | Einträge |
 |---|---|---|---|---|---|
-| Tools | Formel | Menü | Alt, J E, A | fehlt | 9 |
-| Tools | Freihandgleichung | Schaltfläche | Alt, J E, H 1 | fehlt |  |
-| Konvertierungen | LaTeX in Mathematik | Schaltfläche | Alt, J E, J | fehlt |  |
-| Konvertierungen | Mathe nach LaTeX | Schaltfläche | Alt, J E, H 2 | fehlt |  |
-| Konvertierungen | Professionell | Schaltfläche | Alt, J E, P | fehlt |  |
-| Konvertierungen | Linear | Schaltfläche | Alt, J E, L | fehlt |  |
-| Konvertierungen | Text | Schaltfläche | Alt, J E, N | fehlt |  |
-| Konvertierungen | Formeloptionen... | Schaltfläche | Alt, J E, F | fehlt | Dialog |
-| Symbole | Formelsymbole | Katalog |  | fehlt | 71 |
-| Symbole | Formelsymbole | Schaltfläche | Alt, J E, O | fehlt |  |
-| Strukturen | Bruch | Menü | Alt, J E, B | fehlt | 9 |
-| Strukturen | Hoch/Tief | Menü | Alt, J E, T | fehlt | 8 |
-| Strukturen | Wurzel | Menü | Alt, J E, W | fehlt | 5 |
-| Strukturen | Integral | Menü | Alt, J E, I | fehlt | 21 |
-| Strukturen | Großer Operator | Menü | Alt, J E, R | fehlt | 44 |
-| Strukturen | Eckige Klammer | Menü | Alt, J E, C | fehlt | 45 |
-| Strukturen | Funktion | Menü | Alt, J E, U | fehlt | 31 |
-| Strukturen | Akzent | Menü | Alt, J E, K | fehlt | 27 |
-| Strukturen | Grenzwert und Logarithmus | Menü | Alt, J E, G | fehlt | 8 |
-| Strukturen | Operator | Menü | Alt, J E, E | fehlt | 21 |
-| Strukturen | Matrix | Menü | Alt, J E, M | fehlt | 22 |
+| Tools | Formel | Menü | Alt, J E, A | vorhanden | 9 |
+| Tools | Freihandgleichung | Schaltfläche | Alt, J E, H 1 | zurückgestellt |  |
+| Konvertierungen | LaTeX in Mathematik | Schaltfläche | Alt, J E, J | vorhanden |  |
+| Konvertierungen | Mathe nach LaTeX | Schaltfläche | Alt, J E, H 2 | vorhanden |  |
+| Konvertierungen | Professionell | Schaltfläche | Alt, J E, P | vorhanden |  |
+| Konvertierungen | Linear | Schaltfläche | Alt, J E, L | vorhanden |  |
+| Konvertierungen | Text | Schaltfläche | Alt, J E, N | zurückgestellt |  |
+| Konvertierungen | Formeloptionen... | Schaltfläche | Alt, J E, F | zurückgestellt | Dialog |
+| Symbole | Formelsymbole | Katalog |  | vorhanden | 71 |
+| Symbole | Formelsymbole | Schaltfläche | Alt, J E, O | vorhanden |  |
+| Strukturen | Bruch | Menü | Alt, J E, B | vorhanden | 9 |
+| Strukturen | Hoch/Tief | Menü | Alt, J E, T | vorhanden | 8 |
+| Strukturen | Wurzel | Menü | Alt, J E, W | vorhanden | 5 |
+| Strukturen | Integral | Menü | Alt, J E, I | vorhanden | 21 |
+| Strukturen | Großer Operator | Menü | Alt, J E, R | vorhanden | 44 |
+| Strukturen | Eckige Klammer | Menü | Alt, J E, C | vorhanden | 45 |
+| Strukturen | Funktion | Menü | Alt, J E, U | vorhanden | 31 |
+| Strukturen | Akzent | Menü | Alt, J E, K | vorhanden | 27 |
+| Strukturen | Grenzwert und Logarithmus | Menü | Alt, J E, G | vorhanden | 8 |
+| Strukturen | Operator | Menü | Alt, J E, E | vorhanden | 21 |
+| Strukturen | Matrix | Menü | Alt, J E, M | vorhanden | 22 |
 
 Menüs und Kataloge in Formel:
 

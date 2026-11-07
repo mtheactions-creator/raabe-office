@@ -4,9 +4,11 @@
 // RaabeWrite). Editing happens in PowerPoint's linear format (UnicodeMath, "Aktuell – Linear"): the
 // equation's linear text in a box with the professional form shown live; OK writes it back as OMML.
 
-import { h, showDialog } from "@raabe/shell";
+import { h, showDialog, type Control, type MenuEntry, type Tab } from "@raabe/shell";
 import { ommlToSeq, seqToOmml, PptxDom, type ShapeView } from "@raabe/ooxml";
-import { buildLinear, seqToLinear, seqToMathml, type Seq } from "@raabe/text-engine";
+import { buildLinear, parseLatex, seqToLatex, seqToLinear, seqToMathml, type Seq } from "@raabe/text-engine";
+import { BUILT_IN } from "./equations-builtin";
+import { MATH_GALLERIES, SYMBOL_CATEGORIES } from "./equations-gallery";
 import type { PresentApp } from "./app";
 import * as S from "./shapeops";
 
@@ -96,4 +98,86 @@ export function removeShapeEl(el: Element): void {
   const choice = el.parentElement;
   if (choice?.namespaceURI === NS_MC && choice.parentElement?.namespaceURI === NS_MC) choice.parentElement.remove();
   else el.remove();
+}
+
+/** Writes a new tree into a shape's equation (Choice) and its Fallback text, in one undo step. */
+function writeEquation(app: PresentApp, id: number, f: (old: Seq) => Seq | null): void {
+  const ed = app.editor;
+  const sp = ed.shapeEl(id);
+  const m = equationOf(sp);
+  if (!sp || !m) return;
+  const next = f(ommlToSeq(m) ?? []);
+  if (!next) return;
+  ed.edit("Formel", () => {
+    const a14m = m.parentElement!;
+    a14m.replaceChildren(PptxDom.fragment(a14m.ownerDocument, slideOmml(next))[0]);
+    const ac = sp.parentElement?.parentElement;
+    const t = ac?.namespaceURI === NS_MC ? ac.getElementsByTagNameNS(NS_MC, "Fallback")[0]?.getElementsByTagNameNS(PptxDom.NS_A, "t")[0] : undefined;
+    if (t) t.textContent = seqToLinear(next);
+  });
+  ed.updateAutofit(id);
+  ed.render();
+}
+
+/** The selected equation's shape id, if one equation is selected. */
+export function selectedEquation(app: PresentApp): number | null {
+  const vs = app.editor.selectedViews;
+  return vs.length === 1 && hasEquation(vs[0]) ? vs[0].id : null;
+}
+
+/** A structure or symbol from the tab's galleries goes at the end of the selected equation. */
+function appendTo(app: PresentApp, seq: Seq): void {
+  const id = selectedEquation(app);
+  if (id === null) { void insertEquation(app, seq); return; }
+  writeEquation(app, id, (old) => [...old, ...JSON.parse(JSON.stringify(seq))]);
+}
+
+async function latexDialog(app: PresentApp): Promise<void> {
+  const id = selectedEquation(app);
+  if (id === null) return;
+  const m = equationOf(app.editor.shapeEl(id));
+  const input = h("input", { type: "text", value: seqToLatex(m ? ommlToSeq(m) ?? [] : []), style: "width:420px;font:14px Consolas, monospace" }) as HTMLInputElement;
+  setTimeout(() => input.focus(), 30);
+  const ok = await showDialog({ title: "Formel", body: h("div", { class: "form" }, h("label", null, "LaTeX: ", input)),
+    buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
+  if (ok) writeEquation(app, id, () => parseLatex(input.value));
+}
+
+const STRUCTS: [string, string, string][] = [["eq.fraction", "math.fraction", "B"], ["eq.script", "math.script", "T"], ["eq.radical", "math.radical", "W"], ["eq.integral", "math.integral", "I"],
+  ["eq.nary", "math.nary", "R"], ["eq.bracket", "math.bracket", "C"], ["eq.function", "math.function", "U"], ["eq.accent", "math.accent", "K"],
+  ["eq.limit", "math.limit", "G"], ["eq.operator", "math.operator", "E"], ["eq.matrix", "math.matrix", "M"]];
+
+/** Formel, the contextual tab of a selected equation, with PowerPoint's groups, keytips and entry names. */
+export function equationTab(app: PresentApp): Tab {
+  const b = (cmd: string, key: string, size: "large" | "small" = "small"): Control => ({ type: "button", cmd, key, size });
+  const dd = (cmd: string, key: string, menu: () => MenuEntry[]): Control => ({ type: "dropdown", cmd, key, size: "large", get menu() { return menu(); } } as Control);
+  const structMenu = (gal: string) => (): MenuEntry[] => (MATH_GALLERIES[gal] ?? []).flatMap((g): MenuEntry[] => [
+    ...(g.heading ? [{ heading: g.heading } as MenuEntry] : []),
+    ...g.items.map((it) => ({ label: `Formelstruktur ${it.label}`, run: () => appendTo(app, it.seq) })),
+  ]);
+  const symbols = (): MenuEntry[] => (SYMBOL_CATEGORIES[0]?.groups ?? []).flatMap((g) => g.items.map(([ch, name]) => ({ label: `Formelsymbol ${name}`, run: () => appendTo(app, [{ k: "t", s: ch }]) })));
+  return {
+    id: "equation", label: "Formel", key: "JE", contextual: true, shrink: [],
+    groups: [
+      { id: "tools", label: "Tools", key: "ZT", icon: "equation", controls: [dd("eq.builtin", "A", () => BUILT_IN.map((e) => ({ label: e.name, run: () => void insertEquation(app, e.seq) }))), b("eq.ink", "H1", "large")] },
+      { id: "conv", label: "Konvertierungen", key: "ZK", icon: "math-convert", controls: [
+        { type: "stack", items: [b("eq.latexToMath", "J"), b("eq.mathToLatex", "H2")] },
+        { type: "stack", items: [b("eq.professional", "P"), b("eq.linear", "L"), b("eq.text", "N")] }, b("eq.options", "F")] },
+      { id: "symbols", label: "Symbole", key: "ZS", icon: "math-symbols", controls: [dd("eq.symbols", "O", symbols)] },
+      { id: "struct", label: "Strukturen", key: "ZU", icon: "math-fraction", controls: STRUCTS.map(([cmd, gal, key]) => dd(cmd, key, structMenu(gal))) },
+    ],
+  };
+}
+
+/** The tab's commands. */
+export function implementEquationCommands(app: PresentApp): void {
+  const on = () => selectedEquation(app) !== null;
+  const impl = (id: string, run: () => void | Promise<void>, enabled = on) => app.commands.implement(id, { run, enabled });
+  impl("eq.builtin", () => {}, () => !!app.slidePath());
+  impl("eq.latexToMath", () => latexDialog(app));
+  impl("eq.mathToLatex", () => latexDialog(app));
+  impl("eq.professional", () => {});
+  impl("eq.linear", () => { const id = selectedEquation(app); if (id !== null) return editEquation(app, id); });
+  impl("eq.symbols", () => {}, () => !!app.slidePath());
+  for (const [cmd] of STRUCTS) impl(cmd, () => {}, () => !!app.slidePath());
 }

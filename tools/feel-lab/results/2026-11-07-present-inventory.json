@@ -1612,7 +1612,241 @@
        "name": "Schnellformatvorlagen",
        "deferred": false,
        "enabled": true,
-       "type": "dropdown"
+       "type": "dropdown",
+       "panel": true,
+       "items": [
+        {
+         "name": "Farbige Kontur - Schwarz, Dunkel 1"
+        },
+        {
+         "name": "Farbige Kontur - Blau, Akzent 1"
+        },
+        {
+         "name": "Farbige Kontur - Orange, Akzent 2"
+        },
+        {
+         "name": "Farbige Kontur - Grau, Akzent 3"
+        },
+        {
+         "name": "Farbige Kontur - Gold, Akzent 4"
+        },
+        {
+         "name": "Farbige Kontur - Blau, Akzent 5"
+        },
+        {
+         "name": "Farbige Kontur - Grün, Akzent 6"
+        },
+        {
+         "name": "Farbige Füllung - Schwarz, Dunkel 1"
+        },
+        {
+         "name": "Farbige Füllung - Blau, Akzent 1"
+        },
+        {
+         "name": "Farbige Füllung - Orange, Akzent 2"
+        },
+        {
+         "name": "Farbige Füllung - Grau, Akzent 3"
+        },
+        {
+         "name": "Farbige Füllung - Gold, Akzent 4"
+        },
+        {
+         "name": "Farbige Füllung - Blau, Akzent 5"
+        },
+        {
+         "name": "Farbige Füllung - Grün, Akzent 6"
+        },
+        {
+         "name": "Hell 1 Kontur, Farbige Füllung - Schwarz, Dunkel 1"
+        },
+        {
+         "name": "Hell 1 Kontur, Farbige Füllung - Blau, Akzent 1"
+        },
+        {
+         "name": "Hell 1 Kontur, Farbige Füllung - Orange, Akzent 2"
+        },
+        {
+         "name": "Hell 1 Kontur, Farbige Füllung - Grau, Akzent 3"
+        },
+        {
+         "name": "Hell 1 Kontur, Farbige Füllung - Gold, Akzent 4"
+        },
+        {
+         "name": "Hell 1 Kontur, Farbige Füllung - Blau, Akzent 5"
+        },
+        {
+         "name": "Hell 1 Kontur, Farbige Füllung - Grün, Akzent 6"
+        },
+        {
+         "name": "Subtiler Effekt - Schwarz, Dunkel 1"
+        },
+        {
+         "name": "Subtiler Effekt - Blau, Akzent 1"
+        },
+        {
+         "name": "Subtiler Effekt - Orange, Akzent 2"
+        },
+        {
+         "name": "Subtiler Effekt - Grau, Akzent 3"
+        },
+        {
+         "name": "Subtiler Effekt - Gold, Akzent 4"
+        },
+        {
+         "name": "Subtiler Effekt - Blau, Akzent 5"
+        },
+        {
+         "name": "Subtiler Effekt - Grün, Akzent 6"
+        },
+        {
+         "name": "Moderater Effekt - Schwarz, Dunkel 1"
+        },
+        {
+         "name": "Moderater Effekt - Blau, Akzent 1"
+        },
+        {
+         "name": "Moderater Effekt - Orange, Akzent 2"
+        },
+        {
+         "name": "Moderater Effekt - Grau, Akzent 3"
+        },
+        {
+         "name": "Moderater Effekt - Gold, Akzent 4"
+        },
+        {
+         "name": "Moderater Effekt - Blau, Akzent 5"
+        },
+        {
+         "name": "Moderater Effekt - Grün, Akzent 6"
+        },
+        {
+         "name": "Intensiver Effekt - Schwarz, Dunkel 1"
+        },
+        {
+         "name": "Intensiver Effekt - Blau, Akzent 1"
+        },
+        {
+         "name": "Intensiver Effekt - Orange, Akzent 2"
+        },
+        {
+         "name": "Intensiver Effekt - Grau, Akzent 3"
+        },
+        {
+         "name": "Intensiver Effekt - Gold, Akzent 4"
+        },
+        {
+         "name": "Intensiver Effekt - Blau, Akzent 5"
+        },
+        {
+         "name": "Intensiver Effekt - Grün, Akzent 6"
+        },
+        {
+         "name": "Transparent - Schwarz, Dunkel 1"
+        },
+        {
+         "name": "Transparent - Blau, Akzent 1"
+        },
+        {
+         "name": "Transparent - Orange, Akzent 2"
+        },
+        {
+         "name": "Transparent - Grau, Akzent 3"
+        },
+        {
+         "name": "Transparent - Gold, Akzent 4"
+        },
+        {
+         "name": "Transparent - Blau, Akzent 5"
+        },
+        {
+         "name": "Transparent - Grün, Akzent 6"
+        },
+        {
+         "name": "Transparent, Farbige Kontur - Schwarz, Dunkel 1"
+        },
+        {
+         "name": "Transparent, Farbige Kontur - Blau, Akzent 1"
+        },
+        {
+         "name": "Transparent, Farbige Kontur - Orange, Akzent 2"
+        },
+        {
+         "name": "Transparent, Farbige Kontur - Grau, Akzent 3"
+        },
+        {
+         "name": "Transparent, Farbige Kontur - Gold, Akzent 4"
+        },
+        {
+         "name": "Transparent, Farbige Kontur - Blau, Akzent 5"
+        },
+        {
+         "name": "Transparent, Farbige Kontur - Grün, Akzent 6"
+        },
+        {
+         "name": "Halbtransparent - Schwarz, Dunkel 1, Keine Kontur"
+        },
+        {
+         "name": "Halbtransparent - Blau, Akzent 1, Keine Kontur"
+        },
+        {
+         "name": "Halbtransparent - Orange, Akzent 2, Keine Kontur"
+        },
+        {
+         "name": "Halbtransparent - Grau, Akzent 3, Keine Kontur"
+        },
+        {
+         "name": "Halbtransparent - Gold, Akzent 4, Keine Kontur"
+        },
+        {
+         "name": "Halbtransparent - Blau, Akzent 5, Keine Kontur"
+        },
+        {
+         "name": "Halbtransparent - Grün, Akzent 6, Keine Kontur"
+        },
+        {
+         "name": "Farbige Füllung - Schwarz, Dunkel 1, Keine Kontur"
+        },
+        {
+         "name": "Farbige Füllung - Blau, Akzent 1, Keine Kontur"
+        },
+        {
+         "name": "Farbige Füllung - Orange, Akzent 2, Keine Kontur"
+        },
+        {
+         "name": "Farbige Füllung - Grau, Akzent 3, Keine Kontur"
+        },
+        {
+         "name": "Farbige Füllung - Gold, Akzent 4, Keine Kontur"
+        },
+        {
+         "name": "Farbige Füllung - Blau, Akzent 5, Keine Kontur"
+        },
+        {
+         "name": "Farbige Füllung - Grün, Akzent 6, Keine Kontur"
+        },
+        {
+         "name": "Farbverlauf - Schwarz, Dunkel 1, Keine Kontur"
+        },
+        {
+         "name": "Farbverlauf - Blau, Akzent 1, Keine Kontur"
+        },
+        {
+         "name": "Farbverlauf - Orange, Akzent 2, Keine Kontur"
+        },
+        {
+         "name": "Farbverlauf - Grau, Akzent 3, Keine Kontur"
+        },
+        {
+         "name": "Farbverlauf - Gold, Akzent 4, Keine Kontur"
+        },
+        {
+         "name": "Farbverlauf - Blau, Akzent 5, Keine Kontur"
+        },
+        {
+         "name": "Farbverlauf - Grün, Akzent 6, Keine Kontur"
+        }
+       ]
       },
       {
        "name": "Fülleffekt",
@@ -2049,6 +2283,90 @@
         },
         {
          "name": "Lila"
+        },
+        {
+         "name": "Keine Kontur",
+         "enabled": true
+        },
+        {
+         "name": "Stärke",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "1/4 Pt.",
+           "enabled": true
+          },
+          {
+           "name": "½ Pt.",
+           "enabled": true
+          },
+          {
+           "name": "3/4 Pt.",
+           "enabled": true
+          },
+          {
+           "name": "1 Pt.",
+           "enabled": true
+          },
+          {
+           "name": "1½ Pt.",
+           "enabled": true
+          },
+          {
+           "name": "2¼ Pt.",
+           "enabled": true
+          },
+          {
+           "name": "3 Pt.",
+           "enabled": true
+          },
+          {
+           "name": "4½ Pt.",
+           "enabled": true
+          },
+          {
+           "name": "6 Pt.",
+           "enabled": true
+          }
+         ]
+        },
+        {
+         "name": "Striche",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Uni",
+           "enabled": true
+          },
+          {
+           "name": "Runder Punkt",
+           "enabled": true
+          },
+          {
+           "name": "Viereckiger Punkt",
+           "enabled": true
+          },
+          {
+           "name": "Strich",
+           "enabled": true
+          },
+          {
+           "name": "Strichpunkt",
+           "enabled": true
+          },
+          {
+           "name": "Langer Strich",
+           "enabled": true
+          },
+          {
+           "name": "Langer Strichpunkt",
+           "enabled": true
+          },
+          {
+           "name": "Langer Strichpunkt-Punkt",
+           "enabled": true
+          }
+         ]
         }
        ]
       },
@@ -2884,7 +3202,49 @@
         {
          "name": "Formel",
          "deferred": false,
-         "enabled": false
+         "enabled": true
+        },
+        {
+         "name": "Integriert",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Binomischer Lehrsatz",
+           "enabled": true
+          },
+          {
+           "name": "Erweiterung einer Summe",
+           "enabled": true
+          },
+          {
+           "name": "Fourierreihe",
+           "enabled": true
+          },
+          {
+           "name": "Kreisoberfläche",
+           "enabled": true
+          },
+          {
+           "name": "Quadratische Gleichung",
+           "enabled": true
+          },
+          {
+           "name": "Satz des Pythagoras",
+           "enabled": true
+          },
+          {
+           "name": "Taylorentwicklung",
+           "enabled": true
+          },
+          {
+           "name": "Trig. Identität 1",
+           "enabled": true
+          },
+          {
+           "name": "Trig. Identität 2",
+           "enabled": true
+          }
+         ]
         },
         {
          "name": "Symbol",
@@ -3568,10 +3928,16 @@
        "type": "button"
       },
       {
-       "name": "Dauer:",
+       "name": "Dauer",
        "deferred": false,
        "enabled": false,
        "type": "spinner"
+      },
+      {
+       "name": "Mehr"
+      },
+      {
+       "name": "Weniger"
       },
       {
        "name": "Auf alle anwenden",
@@ -3596,6 +3962,12 @@
        "deferred": false,
        "enabled": false,
        "type": "spinner"
+      },
+      {
+       "name": "Mehr"
+      },
+      {
+       "name": "Weniger"
       }
      ]
     }
@@ -4006,16 +4378,28 @@
        ]
       },
       {
-       "name": "Dauer:",
+       "name": "Dauer",
        "deferred": false,
        "enabled": false,
        "type": "spinner"
       },
       {
-       "name": "Verzögerung:",
+       "name": "Mehr"
+      },
+      {
+       "name": "Weniger"
+      },
+      {
+       "name": "Verzögerung",
        "deferred": false,
        "enabled": false,
        "type": "spinner"
+      },
+      {
+       "name": "Mehr"
+      },
+      {
+       "name": "Weniger"
       },
       {
        "name": "Früher",
@@ -4929,8 +5313,242 @@
       {
        "name": "Schnellformatvorlagen",
        "deferred": false,
-       "enabled": false,
-       "type": "button"
+       "enabled": true,
+       "type": "dropdown",
+       "panel": true,
+       "items": [
+        {
+         "name": "Farbige Kontur - Schwarz, Dunkel 1"
+        },
+        {
+         "name": "Farbige Kontur - Blau, Akzent 1"
+        },
+        {
+         "name": "Farbige Kontur - Orange, Akzent 2"
+        },
+        {
+         "name": "Farbige Kontur - Grau, Akzent 3"
+        },
+        {
+         "name": "Farbige Kontur - Gold, Akzent 4"
+        },
+        {
+         "name": "Farbige Kontur - Blau, Akzent 5"
+        },
+        {
+         "name": "Farbige Kontur - Grün, Akzent 6"
+        },
+        {
+         "name": "Farbige Füllung - Schwarz, Dunkel 1"
+        },
+        {
+         "name": "Farbige Füllung - Blau, Akzent 1"
+        },
+        {
+         "name": "Farbige Füllung - Orange, Akzent 2"
+        },
+        {
+         "name": "Farbige Füllung - Grau, Akzent 3"
+        },
+        {
+         "name": "Farbige Füllung - Gold, Akzent 4"
+        },
+        {
+         "name": "Farbige Füllung - Blau, Akzent 5"
+        },
+        {
+         "name": "Farbige Füllung - Grün, Akzent 6"
+        },
+        {
+         "name": "Hell 1 Kontur, Farbige Füllung - Schwarz, Dunkel 1"
+        },
+        {
+         "name": "Hell 1 Kontur, Farbige Füllung - Blau, Akzent 1"
+        },
+        {
+         "name": "Hell 1 Kontur, Farbige Füllung - Orange, Akzent 2"
+        },
+        {
+         "name": "Hell 1 Kontur, Farbige Füllung - Grau, Akzent 3"
+        },
+        {
+         "name": "Hell 1 Kontur, Farbige Füllung - Gold, Akzent 4"
+        },
+        {
+         "name": "Hell 1 Kontur, Farbige Füllung - Blau, Akzent 5"
+        },
+        {
+         "name": "Hell 1 Kontur, Farbige Füllung - Grün, Akzent 6"
+        },
+        {
+         "name": "Subtiler Effekt - Schwarz, Dunkel 1"
+        },
+        {
+         "name": "Subtiler Effekt - Blau, Akzent 1"
+        },
+        {
+         "name": "Subtiler Effekt - Orange, Akzent 2"
+        },
+        {
+         "name": "Subtiler Effekt - Grau, Akzent 3"
+        },
+        {
+         "name": "Subtiler Effekt - Gold, Akzent 4"
+        },
+        {
+         "name": "Subtiler Effekt - Blau, Akzent 5"
+        },
+        {
+         "name": "Subtiler Effekt - Grün, Akzent 6"
+        },
+        {
+         "name": "Moderater Effekt - Schwarz, Dunkel 1"
+        },
+        {
+         "name": "Moderater Effekt - Blau, Akzent 1"
+        },
+        {
+         "name": "Moderater Effekt - Orange, Akzent 2"
+        },
+        {
+         "name": "Moderater Effekt - Grau, Akzent 3"
+        },
+        {
+         "name": "Moderater Effekt - Gold, Akzent 4"
+        },
+        {
+         "name": "Moderater Effekt - Blau, Akzent 5"
+        },
+        {
+         "name": "Moderater Effekt - Grün, Akzent 6"
+        },
+        {
+         "name": "Intensiver Effekt - Schwarz, Dunkel 1"
+        },
+        {
+         "name": "Intensiver Effekt - Blau, Akzent 1"
+        },
+        {
+         "name": "Intensiver Effekt - Orange, Akzent 2"
+        },
+        {
+         "name": "Intensiver Effekt - Grau, Akzent 3"
+        },
+        {
+         "name": "Intensiver Effekt - Gold, Akzent 4"
+        },
+        {
+         "name": "Intensiver Effekt - Blau, Akzent 5"
+        },
+        {
+         "name": "Intensiver Effekt - Grün, Akzent 6"
+        },
+        {
+         "name": "Transparent - Schwarz, Dunkel 1"
+        },
+        {
+         "name": "Transparent - Blau, Akzent 1"
+        },
+        {
+         "name": "Transparent - Orange, Akzent 2"
+        },
+        {
+         "name": "Transparent - Grau, Akzent 3"
+        },
+        {
+         "name": "Transparent - Gold, Akzent 4"
+        },
+        {
+         "name": "Transparent - Blau, Akzent 5"
+        },
+        {
+         "name": "Transparent - Grün, Akzent 6"
+        },
+        {
+         "name": "Transparent, Farbige Kontur - Schwarz, Dunkel 1"
+        },
+        {
+         "name": "Transparent, Farbige Kontur - Blau, Akzent 1"
+        },
+        {
+         "name": "Transparent, Farbige Kontur - Orange, Akzent 2"
+        },
+        {
+         "name": "Transparent, Farbige Kontur - Grau, Akzent 3"
+        },
+        {
+         "name": "Transparent, Farbige Kontur - Gold, Akzent 4"
+        },
+        {
+         "name": "Transparent, Farbige Kontur - Blau, Akzent 5"
+        },
+        {
+         "name": "Transparent, Farbige Kontur - Grün, Akzent 6"
+        },
+        {
+         "name": "Halbtransparent - Schwarz, Dunkel 1, Keine Kontur"
+        },
+        {
+         "name": "Halbtransparent - Blau, Akzent 1, Keine Kontur"
+        },
+        {
+         "name": "Halbtransparent - Orange, Akzent 2, Keine Kontur"
+        },
+        {
+         "name": "Halbtransparent - Grau, Akzent 3, Keine Kontur"
+        },
+        {
+         "name": "Halbtransparent - Gold, Akzent 4, Keine Kontur"
+        },
+        {
+         "name": "Halbtransparent - Blau, Akzent 5, Keine Kontur"
+        },
+        {
+         "name": "Halbtransparent - Grün, Akzent 6, Keine Kontur"
+        },
+        {
+         "name": "Farbige Füllung - Schwarz, Dunkel 1, Keine Kontur"
+        },
+        {
+         "name": "Farbige Füllung - Blau, Akzent 1, Keine Kontur"
+        },
+        {
+         "name": "Farbige Füllung - Orange, Akzent 2, Keine Kontur"
+        },
+        {
+         "name": "Farbige Füllung - Grau, Akzent 3, Keine Kontur"
+        },
+        {
+         "name": "Farbige Füllung - Gold, Akzent 4, Keine Kontur"
+        },
+        {
+         "name": "Farbige Füllung - Blau, Akzent 5, Keine Kontur"
+        },
+        {
+         "name": "Farbige Füllung - Grün, Akzent 6, Keine Kontur"
+        },
+        {
+         "name": "Farbverlauf - Schwarz, Dunkel 1, Keine Kontur"
+        },
+        {
+         "name": "Farbverlauf - Blau, Akzent 1, Keine Kontur"
+        },
+        {
+         "name": "Farbverlauf - Orange, Akzent 2, Keine Kontur"
+        },
+        {
+         "name": "Farbverlauf - Grau, Akzent 3, Keine Kontur"
+        },
+        {
+         "name": "Farbverlauf - Gold, Akzent 4, Keine Kontur"
+        },
+        {
+         "name": "Farbverlauf - Blau, Akzent 5, Keine Kontur"
+        },
+        {
+         "name": "Farbverlauf - Grün, Akzent 6, Keine Kontur"
+        }
+       ]
       },
       {
        "name": "Fülleffekt",
@@ -5367,6 +5985,90 @@
         },
         {
          "name": "Lila"
+        },
+        {
+         "name": "Keine Kontur",
+         "enabled": true
+        },
+        {
+         "name": "Stärke",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "1/4 Pt.",
+           "enabled": true
+          },
+          {
+           "name": "½ Pt.",
+           "enabled": true
+          },
+          {
+           "name": "3/4 Pt.",
+           "enabled": true
+          },
+          {
+           "name": "1 Pt.",
+           "enabled": true
+          },
+          {
+           "name": "1½ Pt.",
+           "enabled": true
+          },
+          {
+           "name": "2¼ Pt.",
+           "enabled": true
+          },
+          {
+           "name": "3 Pt.",
+           "enabled": true
+          },
+          {
+           "name": "4½ Pt.",
+           "enabled": true
+          },
+          {
+           "name": "6 Pt.",
+           "enabled": true
+          }
+         ]
+        },
+        {
+         "name": "Striche",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Uni",
+           "enabled": true
+          },
+          {
+           "name": "Runder Punkt",
+           "enabled": true
+          },
+          {
+           "name": "Viereckiger Punkt",
+           "enabled": true
+          },
+          {
+           "name": "Strich",
+           "enabled": true
+          },
+          {
+           "name": "Strichpunkt",
+           "enabled": true
+          },
+          {
+           "name": "Langer Strich",
+           "enabled": true
+          },
+          {
+           "name": "Langer Strichpunkt",
+           "enabled": true
+          },
+          {
+           "name": "Langer Strichpunkt-Punkt",
+           "enabled": true
+          }
+         ]
         }
        ]
       },
@@ -5630,8 +6332,305 @@
       {
        "name": "Textkontur",
        "deferred": false,
-       "enabled": false,
-       "type": "button"
+       "enabled": true,
+       "type": "color",
+       "panel": true,
+       "items": [
+        {
+         "name": "Weiß, Hintergrund 1"
+        },
+        {
+         "name": "Schwarz, Text 1"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2"
+        },
+        {
+         "name": "Blaugrau, Text 2"
+        },
+        {
+         "name": "Blau, Akzent 1"
+        },
+        {
+         "name": "Orange, Akzent 2"
+        },
+        {
+         "name": "Grau, Akzent 3"
+        },
+        {
+         "name": "Gold, Akzent 4"
+        },
+        {
+         "name": "Blau, Akzent 5"
+        },
+        {
+         "name": "Grün, Akzent 6"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 5%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 50%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 10%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 80%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 80%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 80%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 80%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 80%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 80%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 80%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 15%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 35%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 25%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 60%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 60%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 60%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 60%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 60%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 60%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 60%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 25%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 25%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 50%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 40%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 40%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 40%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 40%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 40%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 40%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 40%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 35%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 15%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 75%"
+        },
+        {
+         "name": "Blaugrau, Text 2, dunkler 25%"
+        },
+        {
+         "name": "Blau, Akzent 1, dunkler 25%"
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 25%"
+        },
+        {
+         "name": "Grau, Akzent 3, dunkler 25%"
+        },
+        {
+         "name": "Gold, Akzent 4, dunkler 25%"
+        },
+        {
+         "name": "Blau, Akzent 5, dunkler 25%"
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 25%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 50%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 5%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 90%"
+        },
+        {
+         "name": "Blaugrau, Text 2, dunkler 50%"
+        },
+        {
+         "name": "Blau, Akzent 1, dunkler 50%"
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 50%"
+        },
+        {
+         "name": "Grau, Akzent 3, dunkler 50%"
+        },
+        {
+         "name": "Gold, Akzent 4, dunkler 50%"
+        },
+        {
+         "name": "Blau, Akzent 5, dunkler 50%"
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 50%"
+        },
+        {
+         "name": "Dunkelrot"
+        },
+        {
+         "name": "Rot"
+        },
+        {
+         "name": "Orange"
+        },
+        {
+         "name": "Gelb"
+        },
+        {
+         "name": "Hellgrün"
+        },
+        {
+         "name": "Grün"
+        },
+        {
+         "name": "Hellblau"
+        },
+        {
+         "name": "Blau"
+        },
+        {
+         "name": "Dunkelblau"
+        },
+        {
+         "name": "Lila"
+        },
+        {
+         "name": "Keine Kontur",
+         "enabled": true
+        },
+        {
+         "name": "Stärke",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "1/4 Pt.",
+           "enabled": true
+          },
+          {
+           "name": "½ Pt.",
+           "enabled": true
+          },
+          {
+           "name": "3/4 Pt.",
+           "enabled": true
+          },
+          {
+           "name": "1 Pt.",
+           "enabled": true
+          },
+          {
+           "name": "1½ Pt.",
+           "enabled": true
+          },
+          {
+           "name": "2¼ Pt.",
+           "enabled": true
+          },
+          {
+           "name": "3 Pt.",
+           "enabled": true
+          },
+          {
+           "name": "4½ Pt.",
+           "enabled": true
+          },
+          {
+           "name": "6 Pt.",
+           "enabled": true
+          }
+         ]
+        },
+        {
+         "name": "Striche",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Uni",
+           "enabled": true
+          },
+          {
+           "name": "Runder Punkt",
+           "enabled": true
+          },
+          {
+           "name": "Viereckiger Punkt",
+           "enabled": true
+          },
+          {
+           "name": "Strich",
+           "enabled": true
+          },
+          {
+           "name": "Strichpunkt",
+           "enabled": true
+          },
+          {
+           "name": "Langer Strich",
+           "enabled": true
+          },
+          {
+           "name": "Langer Strichpunkt",
+           "enabled": true
+          },
+          {
+           "name": "Langer Strichpunkt-Punkt",
+           "enabled": true
+          }
+         ]
+        }
+       ]
       },
       {
        "name": "Texteffekte",
@@ -5817,16 +6816,28 @@
      },
      "controls": [
       {
-       "name": "Formenhöhe:",
+       "name": "Formenhöhe",
        "deferred": false,
        "enabled": true,
        "type": "spinner"
       },
       {
-       "name": "Formenbreite:",
+       "name": "Mehr"
+      },
+      {
+       "name": "Weniger"
+      },
+      {
+       "name": "Formenbreite",
        "deferred": false,
        "enabled": true,
        "type": "spinner"
+      },
+      {
+       "name": "Mehr"
+      },
+      {
+       "name": "Weniger"
       }
      ]
     }
@@ -5852,103 +6863,107 @@
        "type": "dropdown",
        "items": [
         {
-         "name": "Helligkeit: -40 %  Kontrast: -40 %",
+         "name": "Helligkeit: -40 % Kontrast: -40 %",
          "enabled": true
         },
         {
-         "name": "Helligkeit: -20 %  Kontrast: -40 %",
+         "name": "Helligkeit: -20 % Kontrast: -40 %",
          "enabled": true
         },
         {
-         "name": "Helligkeit: 0 %  Kontrast: -40 %",
+         "name": "Helligkeit: 0 % (Normal) Kontrast: -40 %",
          "enabled": true
         },
         {
-         "name": "Helligkeit: +20 %  Kontrast: -40 %",
+         "name": "Helligkeit: +20 % Kontrast: -40 %",
          "enabled": true
         },
         {
-         "name": "Helligkeit: +40 %  Kontrast: -40 %",
+         "name": "Helligkeit: +40 % Kontrast: -40 %",
          "enabled": true
         },
         {
-         "name": "Helligkeit: -40 %  Kontrast: -20 %",
+         "name": "Helligkeit: -40 % Kontrast: -20 %",
          "enabled": true
         },
         {
-         "name": "Helligkeit: -20 %  Kontrast: -20 %",
+         "name": "Helligkeit: -20 % Kontrast: -20 %",
          "enabled": true
         },
         {
-         "name": "Helligkeit: 0 %  Kontrast: -20 %",
+         "name": "Helligkeit: 0 % (Normal) Kontrast: -20 %",
          "enabled": true
         },
         {
-         "name": "Helligkeit: +20 %  Kontrast: -20 %",
+         "name": "Helligkeit: +20 % Kontrast: -20 %",
          "enabled": true
         },
         {
-         "name": "Helligkeit: +40 %  Kontrast: -20 %",
+         "name": "Helligkeit: +40 % Kontrast: -20 %",
          "enabled": true
         },
         {
-         "name": "Helligkeit: -40 %  Kontrast: 0 %",
+         "name": "Helligkeit: -40 % Kontrast: 0 % (Normal)",
          "enabled": true
         },
         {
-         "name": "Helligkeit: -20 %  Kontrast: 0 %",
+         "name": "Helligkeit: -20 % Kontrast: 0 % (Normal)",
          "enabled": true
         },
         {
-         "name": "Helligkeit: 0 %  Kontrast: 0 %",
+         "name": "Helligkeit: 0 % (Normal) Kontrast: 0 % (Normal)",
          "enabled": true
         },
         {
-         "name": "Helligkeit: +20 %  Kontrast: 0 %",
+         "name": "Helligkeit: +20 % Kontrast: 0 % (Normal)",
          "enabled": true
         },
         {
-         "name": "Helligkeit: +40 %  Kontrast: 0 %",
+         "name": "Helligkeit: +40 % Kontrast: 0 % (Normal)",
          "enabled": true
         },
         {
-         "name": "Helligkeit: -40 %  Kontrast: +20 %",
+         "name": "Helligkeit: -40 % Kontrast: +20 %",
          "enabled": true
         },
         {
-         "name": "Helligkeit: -20 %  Kontrast: +20 %",
+         "name": "Helligkeit: -20 % Kontrast: +20 %",
          "enabled": true
         },
         {
-         "name": "Helligkeit: 0 %  Kontrast: +20 %",
+         "name": "Helligkeit: 0 % (Normal) Kontrast: +20 %",
          "enabled": true
         },
         {
-         "name": "Helligkeit: +20 %  Kontrast: +20 %",
+         "name": "Helligkeit: +20 % Kontrast: +20 %",
          "enabled": true
         },
         {
-         "name": "Helligkeit: +40 %  Kontrast: +20 %",
+         "name": "Helligkeit: +40 % Kontrast: +20 %",
          "enabled": true
         },
         {
-         "name": "Helligkeit: -40 %  Kontrast: +40 %",
+         "name": "Helligkeit: -40 % Kontrast: +40 %",
          "enabled": true
         },
         {
-         "name": "Helligkeit: -20 %  Kontrast: +40 %",
+         "name": "Helligkeit: -20 % Kontrast: +40 %",
          "enabled": true
         },
         {
-         "name": "Helligkeit: 0 %  Kontrast: +40 %",
+         "name": "Helligkeit: 0 % (Normal) Kontrast: +40 %",
          "enabled": true
         },
         {
-         "name": "Helligkeit: +20 %  Kontrast: +40 %",
+         "name": "Helligkeit: +20 % Kontrast: +40 %",
          "enabled": true
         },
         {
-         "name": "Helligkeit: +40 %  Kontrast: +40 %",
+         "name": "Helligkeit: +40 % Kontrast: +40 %",
+         "enabled": true
+        },
+        {
+         "name": "Bildkorrekturoptionen...",
          "enabled": true
         }
        ]
@@ -5968,11 +6983,83 @@
          "enabled": true
         },
         {
+         "name": "Sepia",
+         "enabled": true
+        },
+        {
+         "name": "Ausgeblichen",
+         "enabled": true
+        },
+        {
+         "name": "Schwarzweiß: 25 %",
+         "enabled": true
+        },
+        {
          "name": "Schwarzweiß: 50 %",
          "enabled": true
         },
         {
-         "name": "Ausgewaschen",
+         "name": "Schwarzweiß: 75 %",
+         "enabled": true
+        },
+        {
+         "name": "Blau, Textfarbe 2 dunkel",
+         "enabled": true
+        },
+        {
+         "name": "Blau, Akzentfarbe 1 dunkel",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzentfarbe 2 dunkel",
+         "enabled": true
+        },
+        {
+         "name": "Grau, Akzentfarbe 3 dunkel",
+         "enabled": true
+        },
+        {
+         "name": "Gold, Akzentfarbe 4 dunkel",
+         "enabled": true
+        },
+        {
+         "name": "Blau, Akzentfarbe 5 dunkel",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzentfarbe 6 dunkel",
+         "enabled": true
+        },
+        {
+         "name": "Hellgrau, Hintergrundfarbe 2 hell",
+         "enabled": true
+        },
+        {
+         "name": "Blau, Akzentfarbe 1 hell",
+         "enabled": true
+        },
+        {
+         "name": "Orange, Akzentfarbe 2 hell",
+         "enabled": true
+        },
+        {
+         "name": "Grau, Akzentfarbe 3 hell",
+         "enabled": true
+        },
+        {
+         "name": "Gold, Akzentfarbe 4 hell",
+         "enabled": true
+        },
+        {
+         "name": "Blau, Akzentfarbe 5 hell",
+         "enabled": true
+        },
+        {
+         "name": "Grün, Akzentfarbe 6 hell",
+         "enabled": true
+        },
+        {
+         "name": "Bildfarboptionen...",
          "enabled": true
         }
        ]
@@ -5990,31 +7077,31 @@
        "type": "dropdown",
        "items": [
         {
-         "name": "Transparenz: 0 %",
+         "name": "Transparenz: 0%",
          "enabled": true
         },
         {
-         "name": "Transparenz: 15 %",
+         "name": "Transparenz: 15%",
          "enabled": true
         },
         {
-         "name": "Transparenz: 30 %",
+         "name": "Transparenz: 30%",
          "enabled": true
         },
         {
-         "name": "Transparenz: 50 %",
+         "name": "Transparenz: 50%",
          "enabled": true
         },
         {
-         "name": "Transparenz: 65 %",
+         "name": "Transparenz: 65%",
          "enabled": true
         },
         {
-         "name": "Transparenz: 80 %",
+         "name": "Transparenz: 80%",
          "enabled": true
         },
         {
-         "name": "Transparenz: 95 %",
+         "name": "Transparenz: 95%",
          "enabled": true
         }
        ]
@@ -6484,16 +7571,28 @@
        "type": "button"
       },
       {
-       "name": "Formenhöhe:",
+       "name": "Formenhöhe",
        "deferred": false,
        "enabled": true,
        "type": "spinner"
       },
       {
-       "name": "Formenbreite:",
+       "name": "Mehr"
+      },
+      {
+       "name": "Weniger"
+      },
+      {
+       "name": "Formenbreite",
        "deferred": false,
        "enabled": true,
        "type": "spinner"
+      },
+      {
+       "name": "Mehr"
+      },
+      {
+       "name": "Weniger"
       }
      ]
     }
@@ -7022,8 +8121,305 @@
       {
        "name": "Textkontur",
        "deferred": false,
-       "enabled": false,
-       "type": "button"
+       "enabled": true,
+       "type": "color",
+       "panel": true,
+       "items": [
+        {
+         "name": "Weiß, Hintergrund 1"
+        },
+        {
+         "name": "Schwarz, Text 1"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2"
+        },
+        {
+         "name": "Blaugrau, Text 2"
+        },
+        {
+         "name": "Blau, Akzent 1"
+        },
+        {
+         "name": "Orange, Akzent 2"
+        },
+        {
+         "name": "Grau, Akzent 3"
+        },
+        {
+         "name": "Gold, Akzent 4"
+        },
+        {
+         "name": "Blau, Akzent 5"
+        },
+        {
+         "name": "Grün, Akzent 6"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 5%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 50%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 10%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 80%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 80%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 80%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 80%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 80%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 80%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 80%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 15%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 35%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 25%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 60%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 60%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 60%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 60%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 60%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 60%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 60%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 25%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 25%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 50%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 40%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 40%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 40%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 40%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 40%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 40%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 40%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 35%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 15%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 75%"
+        },
+        {
+         "name": "Blaugrau, Text 2, dunkler 25%"
+        },
+        {
+         "name": "Blau, Akzent 1, dunkler 25%"
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 25%"
+        },
+        {
+         "name": "Grau, Akzent 3, dunkler 25%"
+        },
+        {
+         "name": "Gold, Akzent 4, dunkler 25%"
+        },
+        {
+         "name": "Blau, Akzent 5, dunkler 25%"
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 25%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 50%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 5%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 90%"
+        },
+        {
+         "name": "Blaugrau, Text 2, dunkler 50%"
+        },
+        {
+         "name": "Blau, Akzent 1, dunkler 50%"
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 50%"
+        },
+        {
+         "name": "Grau, Akzent 3, dunkler 50%"
+        },
+        {
+         "name": "Gold, Akzent 4, dunkler 50%"
+        },
+        {
+         "name": "Blau, Akzent 5, dunkler 50%"
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 50%"
+        },
+        {
+         "name": "Dunkelrot"
+        },
+        {
+         "name": "Rot"
+        },
+        {
+         "name": "Orange"
+        },
+        {
+         "name": "Gelb"
+        },
+        {
+         "name": "Hellgrün"
+        },
+        {
+         "name": "Grün"
+        },
+        {
+         "name": "Hellblau"
+        },
+        {
+         "name": "Blau"
+        },
+        {
+         "name": "Dunkelblau"
+        },
+        {
+         "name": "Lila"
+        },
+        {
+         "name": "Keine Kontur",
+         "enabled": true
+        },
+        {
+         "name": "Stärke",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "1/4 Pt.",
+           "enabled": true
+          },
+          {
+           "name": "½ Pt.",
+           "enabled": true
+          },
+          {
+           "name": "3/4 Pt.",
+           "enabled": true
+          },
+          {
+           "name": "1 Pt.",
+           "enabled": true
+          },
+          {
+           "name": "1½ Pt.",
+           "enabled": true
+          },
+          {
+           "name": "2¼ Pt.",
+           "enabled": true
+          },
+          {
+           "name": "3 Pt.",
+           "enabled": true
+          },
+          {
+           "name": "4½ Pt.",
+           "enabled": true
+          },
+          {
+           "name": "6 Pt.",
+           "enabled": true
+          }
+         ]
+        },
+        {
+         "name": "Striche",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Uni",
+           "enabled": true
+          },
+          {
+           "name": "Runder Punkt",
+           "enabled": true
+          },
+          {
+           "name": "Viereckiger Punkt",
+           "enabled": true
+          },
+          {
+           "name": "Strich",
+           "enabled": true
+          },
+          {
+           "name": "Strichpunkt",
+           "enabled": true
+          },
+          {
+           "name": "Langer Strich",
+           "enabled": true
+          },
+          {
+           "name": "Langer Strichpunkt",
+           "enabled": true
+          },
+          {
+           "name": "Langer Strichpunkt-Punkt",
+           "enabled": true
+          }
+         ]
+        }
+       ]
       },
       {
        "name": "Texteffekte",
@@ -7049,15 +8445,15 @@
        "type": "dropdown",
        "items": [
         {
-         "name": "0,25 Pt.",
+         "name": "1/4 Pt.",
          "enabled": true
         },
         {
-         "name": "0,5 Pt.",
+         "name": "½ Pt.",
          "enabled": true
         },
         {
-         "name": "0,75 Pt.",
+         "name": "3/4 Pt.",
          "enabled": true
         },
         {
@@ -7065,11 +8461,11 @@
          "enabled": true
         },
         {
-         "name": "1,5 Pt.",
+         "name": "1½ Pt.",
          "enabled": true
         },
         {
-         "name": "2,25 Pt.",
+         "name": "2¼ Pt.",
          "enabled": true
         },
         {
@@ -7077,7 +8473,7 @@
          "enabled": true
         },
         {
-         "name": "4,5 Pt.",
+         "name": "4½ Pt.",
          "enabled": true
         },
         {
@@ -7432,16 +8828,28 @@
      "name": "Zellengröße",
      "controls": [
       {
-       "name": "Höhe:",
+       "name": "Höhe",
        "deferred": false,
        "enabled": true,
        "type": "spinner"
       },
       {
-       "name": "Breite:",
+       "name": "Mehr"
+      },
+      {
+       "name": "Weniger"
+      },
+      {
+       "name": "Breite",
        "deferred": false,
        "enabled": true,
        "type": "spinner"
+      },
+      {
+       "name": "Mehr"
+      },
+      {
+       "name": "Weniger"
       },
       {
        "name": "Zeilen verteilen",
@@ -7514,16 +8922,28 @@
      "name": "Tabellengröße",
      "controls": [
       {
-       "name": "Höhe:",
+       "name": "Höhe",
        "deferred": false,
        "enabled": true,
        "type": "spinner"
       },
       {
-       "name": "Breite:",
+       "name": "Mehr"
+      },
+      {
+       "name": "Weniger"
+      },
+      {
+       "name": "Breite",
        "deferred": false,
        "enabled": true,
        "type": "spinner"
+      },
+      {
+       "name": "Mehr"
+      },
+      {
+       "name": "Weniger"
       },
       {
        "name": "Seitenverhältnis sperren",
@@ -8352,8 +9772,242 @@
       {
        "name": "Schnellformatvorlagen",
        "deferred": false,
-       "enabled": false,
-       "type": "button"
+       "enabled": true,
+       "type": "dropdown",
+       "panel": true,
+       "items": [
+        {
+         "name": "Farbige Kontur - Schwarz, Dunkel 1"
+        },
+        {
+         "name": "Farbige Kontur - Blau, Akzent 1"
+        },
+        {
+         "name": "Farbige Kontur - Orange, Akzent 2"
+        },
+        {
+         "name": "Farbige Kontur - Grau, Akzent 3"
+        },
+        {
+         "name": "Farbige Kontur - Gold, Akzent 4"
+        },
+        {
+         "name": "Farbige Kontur - Blau, Akzent 5"
+        },
+        {
+         "name": "Farbige Kontur - Grün, Akzent 6"
+        },
+        {
+         "name": "Farbige Füllung - Schwarz, Dunkel 1"
+        },
+        {
+         "name": "Farbige Füllung - Blau, Akzent 1"
+        },
+        {
+         "name": "Farbige Füllung - Orange, Akzent 2"
+        },
+        {
+         "name": "Farbige Füllung - Grau, Akzent 3"
+        },
+        {
+         "name": "Farbige Füllung - Gold, Akzent 4"
+        },
+        {
+         "name": "Farbige Füllung - Blau, Akzent 5"
+        },
+        {
+         "name": "Farbige Füllung - Grün, Akzent 6"
+        },
+        {
+         "name": "Hell 1 Kontur, Farbige Füllung - Schwarz, Dunkel 1"
+        },
+        {
+         "name": "Hell 1 Kontur, Farbige Füllung - Blau, Akzent 1"
+        },
+        {
+         "name": "Hell 1 Kontur, Farbige Füllung - Orange, Akzent 2"
+        },
+        {
+         "name": "Hell 1 Kontur, Farbige Füllung - Grau, Akzent 3"
+        },
+        {
+         "name": "Hell 1 Kontur, Farbige Füllung - Gold, Akzent 4"
+        },
+        {
+         "name": "Hell 1 Kontur, Farbige Füllung - Blau, Akzent 5"
+        },
+        {
+         "name": "Hell 1 Kontur, Farbige Füllung - Grün, Akzent 6"
+        },
+        {
+         "name": "Subtiler Effekt - Schwarz, Dunkel 1"
+        },
+        {
+         "name": "Subtiler Effekt - Blau, Akzent 1"
+        },
+        {
+         "name": "Subtiler Effekt - Orange, Akzent 2"
+        },
+        {
+         "name": "Subtiler Effekt - Grau, Akzent 3"
+        },
+        {
+         "name": "Subtiler Effekt - Gold, Akzent 4"
+        },
+        {
+         "name": "Subtiler Effekt - Blau, Akzent 5"
+        },
+        {
+         "name": "Subtiler Effekt - Grün, Akzent 6"
+        },
+        {
+         "name": "Moderater Effekt - Schwarz, Dunkel 1"
+        },
+        {
+         "name": "Moderater Effekt - Blau, Akzent 1"
+        },
+        {
+         "name": "Moderater Effekt - Orange, Akzent 2"
+        },
+        {
+         "name": "Moderater Effekt - Grau, Akzent 3"
+        },
+        {
+         "name": "Moderater Effekt - Gold, Akzent 4"
+        },
+        {
+         "name": "Moderater Effekt - Blau, Akzent 5"
+        },
+        {
+         "name": "Moderater Effekt - Grün, Akzent 6"
+        },
+        {
+         "name": "Intensiver Effekt - Schwarz, Dunkel 1"
+        },
+        {
+         "name": "Intensiver Effekt - Blau, Akzent 1"
+        },
+        {
+         "name": "Intensiver Effekt - Orange, Akzent 2"
+        },
+        {
+         "name": "Intensiver Effekt - Grau, Akzent 3"
+        },
+        {
+         "name": "Intensiver Effekt - Gold, Akzent 4"
+        },
+        {
+         "name": "Intensiver Effekt - Blau, Akzent 5"
+        },
+        {
+         "name": "Intensiver Effekt - Grün, Akzent 6"
+        },
+        {
+         "name": "Transparent - Schwarz, Dunkel 1"
+        },
+        {
+         "name": "Transparent - Blau, Akzent 1"
+        },
+        {
+         "name": "Transparent - Orange, Akzent 2"
+        },
+        {
+         "name": "Transparent - Grau, Akzent 3"
+        },
+        {
+         "name": "Transparent - Gold, Akzent 4"
+        },
+        {
+         "name": "Transparent - Blau, Akzent 5"
+        },
+        {
+         "name": "Transparent - Grün, Akzent 6"
+        },
+        {
+         "name": "Transparent, Farbige Kontur - Schwarz, Dunkel 1"
+        },
+        {
+         "name": "Transparent, Farbige Kontur - Blau, Akzent 1"
+        },
+        {
+         "name": "Transparent, Farbige Kontur - Orange, Akzent 2"
+        },
+        {
+         "name": "Transparent, Farbige Kontur - Grau, Akzent 3"
+        },
+        {
+         "name": "Transparent, Farbige Kontur - Gold, Akzent 4"
+        },
+        {
+         "name": "Transparent, Farbige Kontur - Blau, Akzent 5"
+        },
+        {
+         "name": "Transparent, Farbige Kontur - Grün, Akzent 6"
+        },
+        {
+         "name": "Halbtransparent - Schwarz, Dunkel 1, Keine Kontur"
+        },
+        {
+         "name": "Halbtransparent - Blau, Akzent 1, Keine Kontur"
+        },
+        {
+         "name": "Halbtransparent - Orange, Akzent 2, Keine Kontur"
+        },
+        {
+         "name": "Halbtransparent - Grau, Akzent 3, Keine Kontur"
+        },
+        {
+         "name": "Halbtransparent - Gold, Akzent 4, Keine Kontur"
+        },
+        {
+         "name": "Halbtransparent - Blau, Akzent 5, Keine Kontur"
+        },
+        {
+         "name": "Halbtransparent - Grün, Akzent 6, Keine Kontur"
+        },
+        {
+         "name": "Farbige Füllung - Schwarz, Dunkel 1, Keine Kontur"
+        },
+        {
+         "name": "Farbige Füllung - Blau, Akzent 1, Keine Kontur"
+        },
+        {
+         "name": "Farbige Füllung - Orange, Akzent 2, Keine Kontur"
+        },
+        {
+         "name": "Farbige Füllung - Grau, Akzent 3, Keine Kontur"
+        },
+        {
+         "name": "Farbige Füllung - Gold, Akzent 4, Keine Kontur"
+        },
+        {
+         "name": "Farbige Füllung - Blau, Akzent 5, Keine Kontur"
+        },
+        {
+         "name": "Farbige Füllung - Grün, Akzent 6, Keine Kontur"
+        },
+        {
+         "name": "Farbverlauf - Schwarz, Dunkel 1, Keine Kontur"
+        },
+        {
+         "name": "Farbverlauf - Blau, Akzent 1, Keine Kontur"
+        },
+        {
+         "name": "Farbverlauf - Orange, Akzent 2, Keine Kontur"
+        },
+        {
+         "name": "Farbverlauf - Grau, Akzent 3, Keine Kontur"
+        },
+        {
+         "name": "Farbverlauf - Gold, Akzent 4, Keine Kontur"
+        },
+        {
+         "name": "Farbverlauf - Blau, Akzent 5, Keine Kontur"
+        },
+        {
+         "name": "Farbverlauf - Grün, Akzent 6, Keine Kontur"
+        }
+       ]
       },
       {
        "name": "Fülleffekt",
@@ -8790,6 +10444,90 @@
         },
         {
          "name": "Lila"
+        },
+        {
+         "name": "Keine Kontur",
+         "enabled": true
+        },
+        {
+         "name": "Stärke",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "1/4 Pt.",
+           "enabled": true
+          },
+          {
+           "name": "½ Pt.",
+           "enabled": true
+          },
+          {
+           "name": "3/4 Pt.",
+           "enabled": true
+          },
+          {
+           "name": "1 Pt.",
+           "enabled": true
+          },
+          {
+           "name": "1½ Pt.",
+           "enabled": true
+          },
+          {
+           "name": "2¼ Pt.",
+           "enabled": true
+          },
+          {
+           "name": "3 Pt.",
+           "enabled": true
+          },
+          {
+           "name": "4½ Pt.",
+           "enabled": true
+          },
+          {
+           "name": "6 Pt.",
+           "enabled": true
+          }
+         ]
+        },
+        {
+         "name": "Striche",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Uni",
+           "enabled": true
+          },
+          {
+           "name": "Runder Punkt",
+           "enabled": true
+          },
+          {
+           "name": "Viereckiger Punkt",
+           "enabled": true
+          },
+          {
+           "name": "Strich",
+           "enabled": true
+          },
+          {
+           "name": "Strichpunkt",
+           "enabled": true
+          },
+          {
+           "name": "Langer Strich",
+           "enabled": true
+          },
+          {
+           "name": "Langer Strichpunkt",
+           "enabled": true
+          },
+          {
+           "name": "Langer Strichpunkt-Punkt",
+           "enabled": true
+          }
+         ]
         }
        ]
       },
@@ -9053,8 +10791,305 @@
       {
        "name": "Textkontur",
        "deferred": false,
-       "enabled": false,
-       "type": "button"
+       "enabled": true,
+       "type": "color",
+       "panel": true,
+       "items": [
+        {
+         "name": "Weiß, Hintergrund 1"
+        },
+        {
+         "name": "Schwarz, Text 1"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2"
+        },
+        {
+         "name": "Blaugrau, Text 2"
+        },
+        {
+         "name": "Blau, Akzent 1"
+        },
+        {
+         "name": "Orange, Akzent 2"
+        },
+        {
+         "name": "Grau, Akzent 3"
+        },
+        {
+         "name": "Gold, Akzent 4"
+        },
+        {
+         "name": "Blau, Akzent 5"
+        },
+        {
+         "name": "Grün, Akzent 6"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 5%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 50%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 10%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 80%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 80%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 80%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 80%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 80%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 80%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 80%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 15%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 35%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 25%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 60%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 60%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 60%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 60%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 60%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 60%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 60%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 25%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 25%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 50%"
+        },
+        {
+         "name": "Blaugrau, Text 2, heller 40%"
+        },
+        {
+         "name": "Blau, Akzent 1, heller 40%"
+        },
+        {
+         "name": "Orange, Akzent 2, heller 40%"
+        },
+        {
+         "name": "Grau, Akzent 3, heller 40%"
+        },
+        {
+         "name": "Gold, Akzent 4, heller 40%"
+        },
+        {
+         "name": "Blau, Akzent 5, heller 40%"
+        },
+        {
+         "name": "Grün, Akzent 6, heller 40%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 35%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 15%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 75%"
+        },
+        {
+         "name": "Blaugrau, Text 2, dunkler 25%"
+        },
+        {
+         "name": "Blau, Akzent 1, dunkler 25%"
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 25%"
+        },
+        {
+         "name": "Grau, Akzent 3, dunkler 25%"
+        },
+        {
+         "name": "Gold, Akzent 4, dunkler 25%"
+        },
+        {
+         "name": "Blau, Akzent 5, dunkler 25%"
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 25%"
+        },
+        {
+         "name": "Weiß, Hintergrund 1, dunkler 50%"
+        },
+        {
+         "name": "Schwarz, Text 1, heller 5%"
+        },
+        {
+         "name": "Hellgrau, Hintergrund 2, dunkler 90%"
+        },
+        {
+         "name": "Blaugrau, Text 2, dunkler 50%"
+        },
+        {
+         "name": "Blau, Akzent 1, dunkler 50%"
+        },
+        {
+         "name": "Orange, Akzent 2, dunkler 50%"
+        },
+        {
+         "name": "Grau, Akzent 3, dunkler 50%"
+        },
+        {
+         "name": "Gold, Akzent 4, dunkler 50%"
+        },
+        {
+         "name": "Blau, Akzent 5, dunkler 50%"
+        },
+        {
+         "name": "Grün, Akzent 6, dunkler 50%"
+        },
+        {
+         "name": "Dunkelrot"
+        },
+        {
+         "name": "Rot"
+        },
+        {
+         "name": "Orange"
+        },
+        {
+         "name": "Gelb"
+        },
+        {
+         "name": "Hellgrün"
+        },
+        {
+         "name": "Grün"
+        },
+        {
+         "name": "Hellblau"
+        },
+        {
+         "name": "Blau"
+        },
+        {
+         "name": "Dunkelblau"
+        },
+        {
+         "name": "Lila"
+        },
+        {
+         "name": "Keine Kontur",
+         "enabled": true
+        },
+        {
+         "name": "Stärke",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "1/4 Pt.",
+           "enabled": true
+          },
+          {
+           "name": "½ Pt.",
+           "enabled": true
+          },
+          {
+           "name": "3/4 Pt.",
+           "enabled": true
+          },
+          {
+           "name": "1 Pt.",
+           "enabled": true
+          },
+          {
+           "name": "1½ Pt.",
+           "enabled": true
+          },
+          {
+           "name": "2¼ Pt.",
+           "enabled": true
+          },
+          {
+           "name": "3 Pt.",
+           "enabled": true
+          },
+          {
+           "name": "4½ Pt.",
+           "enabled": true
+          },
+          {
+           "name": "6 Pt.",
+           "enabled": true
+          }
+         ]
+        },
+        {
+         "name": "Striche",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Uni",
+           "enabled": true
+          },
+          {
+           "name": "Runder Punkt",
+           "enabled": true
+          },
+          {
+           "name": "Viereckiger Punkt",
+           "enabled": true
+          },
+          {
+           "name": "Strich",
+           "enabled": true
+          },
+          {
+           "name": "Strichpunkt",
+           "enabled": true
+          },
+          {
+           "name": "Langer Strich",
+           "enabled": true
+          },
+          {
+           "name": "Langer Strichpunkt",
+           "enabled": true
+          },
+          {
+           "name": "Langer Strichpunkt-Punkt",
+           "enabled": true
+          }
+         ]
+        }
+       ]
       },
       {
        "name": "Texteffekte",
@@ -9235,16 +11270,28 @@
      "name": "Größe",
      "controls": [
       {
-       "name": "Formenhöhe:",
+       "name": "Formenhöhe",
        "deferred": false,
        "enabled": true,
        "type": "spinner"
       },
       {
-       "name": "Formenbreite:",
+       "name": "Mehr"
+      },
+      {
+       "name": "Weniger"
+      },
+      {
+       "name": "Formenbreite",
        "deferred": false,
        "enabled": true,
        "type": "spinner"
+      },
+      {
+       "name": "Mehr"
+      },
+      {
+       "name": "Weniger"
       }
      ]
     }
@@ -10371,6 +12418,1418 @@
        "deferred": false,
        "enabled": true,
        "type": "button"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Formel",
+   "contextual": true,
+   "groups": [
+    {
+     "name": "Tools",
+     "controls": [
+      {
+       "name": "Formel",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Binomischer Lehrsatz",
+         "enabled": true
+        },
+        {
+         "name": "Erweiterung einer Summe",
+         "enabled": true
+        },
+        {
+         "name": "Fourierreihe",
+         "enabled": true
+        },
+        {
+         "name": "Kreisoberfläche",
+         "enabled": true
+        },
+        {
+         "name": "Quadratische Gleichung",
+         "enabled": true
+        },
+        {
+         "name": "Satz des Pythagoras",
+         "enabled": true
+        },
+        {
+         "name": "Taylorentwicklung",
+         "enabled": true
+        },
+        {
+         "name": "Trig. Identität 1",
+         "enabled": true
+        },
+        {
+         "name": "Trig. Identität 2",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Freihandgleichung",
+       "deferred": true,
+       "enabled": false,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Konvertierungen",
+     "controls": [
+      {
+       "name": "LaTeX in Mathematik",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Mathe nach LaTeX",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Professionell",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Linear",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Text",
+       "deferred": true,
+       "enabled": false,
+       "type": "button"
+      },
+      {
+       "name": "Formeloptionen...",
+       "deferred": true,
+       "enabled": false,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Symbole",
+     "controls": [
+      {
+       "name": "Formelsymbole",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Formelsymbol Plus Minus",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Unendlich",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Gleich",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Nicht gleich",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Ungefähr",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Multiplikationszeichen",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Divisionszeichen",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Faktoriell",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Proportional zu",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Kleiner als",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Viel kleiner als",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Größer als",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Viel größer als",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Kleiner oder gleich",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Größer oder gleich",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Minus Plus",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Ungefähr gleich",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Fast gleich (asymptotisch zu)",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Identisch mit",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Für alle",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Komplement",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Partielles Differenzial",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Wurzelzeichen",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Kubikwurzel",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Vierte Wurzel",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Vereinigung",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Schnittmenge",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Leere Menge",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Prozentsatz",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Grad",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Grad Fahrenheit",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Grad Celsius",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Erhöhung",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Nabla",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Es gibt",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Es gibt nicht",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Element von",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Enthält als Element",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Pfeil nach links",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Pfeil nach oben",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Pfeil nach rechts",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Pfeil nach unten",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Pfeil nach links und rechts",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Folglich",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Plus",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Minus",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol NICHT-Zeichen",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Alpha",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Beta",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Gamma",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Delta",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Epsilon",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Epsilon Variant",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Theta",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Theta Variant",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Mu",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Pi",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Rho",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Sigma",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Tau",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Phi",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Omega",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Sternchenoperator",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Aufzählungsoperator",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Vertikale Ellipse",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Horizontale Ellipse (Mittellinie)",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Diagonale Ellipse nach oben rechts",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Diagonale Ellipse nach unten rechts",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Alef",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Bet",
+         "enabled": true
+        },
+        {
+         "name": "Formelsymbol Ende des Beweises (Q.E.D.)",
+         "enabled": true
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Strukturen",
+     "controls": [
+      {
+       "name": "Bruch",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Formelstruktur Bruch mit waagerechtem Bruchstrich",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Versetzter Bruch mit schrägem Bruchstrich",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Bruch mit schrägem Bruchstrich",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Kleine Bruchzahl",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur dy über dx",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Großes Delta y über großem Delta x",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur partielles y über partiellem x",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Delta y über Delta x",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Pi Über 2",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Hoch/Tief",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Formelstruktur Hochgestellt",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Tiefgestellt",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Tiefgestellt-hochgestellt",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Links tiefgestellt-hochgestellt",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur x tiefgestellt y quadriert",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur e bis Minus i Omega t",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur x hoch 2",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Y links hochgestellt n links tiefgestellt eins",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Wurzel",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Formelstruktur Quadratwurzel",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur n-te Wurzel",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Quadratwurzel",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Kubikwurzel",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Rechte Seite einer quadratischen Gleichung",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Quadratwurzel aus a hoch 2 plus b hoch 2",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Integral",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Formelstruktur Integral",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Integral mit Grenzwerten",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Integral mit gestapelten Grenzwerten",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Doppelintegral",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Doppelintegral mit Grenzwerten",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Doppelintegral mit gestapelten Grenzwerten",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Dreifachintegral",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Dreifachintegral mit Grenzwerten",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Dreifachintegral mit gestapelten Grenzwerten",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Konturenintegral",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Konturenintegral mit Grenzwerten",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Konturenintegral mit gestapelten Grenzwerten",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Oberflächenintegral",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Oberflächenintegral mit Grenzwerten",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Oberflächenintegral mit gestapelten Grenzwerten",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Volumenintegral",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Volumenintegral mit Grenzwerten",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Volumenintegral mit gestapelten Grenzwerten",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Differenzial x",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Differenzial y",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Differenzial θ",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Großer Operator",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Formelstruktur Summenbildung",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Addition mit Grenzwerten",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Addition mit tiefgestellten/hochgestellten Grenzwerten",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Addition mit unterem Grenzwert",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Addition mit tiefgestelltem unterem Grenzwert",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Produkt",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Produkt mit Grenzwerten",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Produkt mit tiefgestellten/hochgestellten Grenzwerten",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Produkt mit unterem Grenzwert",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Produkt mit tiefgestelltem unterem Grenzwert",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Koprodukt",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Koprodukt mit Grenzwerten",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Koprodukt mit tiefgestellten/hochgestellten Grenzwerten",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Koprodukt mit unterem Grenzwert",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Koprodukt mit tiefgestelltem unterem Grenzwert",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Vereinigung",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Vereinigungsmenge mit Grenzwerten",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Vereinigungsmenge mit tiefgestellten/hochgestellten Grenzwerten",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Vereinigungsmenge mit unterem Grenzwert",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Vereinigungsmenge mit tiefgestelltem unterem Grenzwert",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Schnittmenge",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Schnittmenge mit Grenzwerten",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Schnittmenge mit tiefgestellten/hochgestellten Grenzwerten",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Schnittmenge mit unterem Grenzwert",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Schnittmenge mit tiefgestelltem unterem Grenzwert",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Logisches Oder",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Logisches Oder mit Grenzwerten",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Logisches Oder mit tiefgestellten/hochgestellten Grenzwerten",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Logisches Oder mit unterem Grenzwert",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Logisches Oder mit tiefgestelltem unterem Grenzwert",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Logisches Und",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Logisches Und mit Grenzwerten",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Logisches Und mit tiefgestellten/hochgestellten Grenzwerten",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Logisches Und mit unterem Grenzwert",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Logisches Und mit tiefgestelltem unterem Grenzwert",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Addition über k von n über k",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Addition von i gleich null bis n",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Additionsbeispiel unter Verwendung zweier Indizes",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Produktbeispiel",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Vereinigungsmengenbeispiel",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Eckige Klammer",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Formelstruktur Klammern",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Eckige Klammern",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Geschweifte Klammern",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Spitze Klammern",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Untergrenzenklammern (halbe eckige Klammern)",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Obergrenzenklammern (Quine Corners)",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Vertikale Balken",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Doppelte vertikale Balken",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Platzhalter zwischen zwei linken eckigen Klammern",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Platzhalter zwischen zwei rechten eckigen Klammern",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Umgekehrte eckige Klammern",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Doppelte eckige Klammern",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Eckige Klammern mit Trennlinien",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Geschweifte Klammern mit Trennzeichen",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Spitze Klammern mit Trennzeichen",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Spitze Klammern mit zwei Trennzeichen",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Nur linke Klammer",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Nur runde Klammer rechts",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Nur eckige Klammer links",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Nur eckige Klammer rechts",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Nur geschweifte Klammer links",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Nur geschweifte Klammer rechts",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Nur spitze Klammer links",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Nur spitze Klammer rechts",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Nur Untergrenzenklammer links",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Nur Untergrenzenklammer rechts",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Nur Obergrenzenklammer links",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Nur Obergrenzenklammer rechts",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Nur vertikaler Balken links",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Nur vertikaler Balken rechts",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Nur doppelter vertikaler Balken links",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Nur doppelter vertikaler Balken rechts",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Doppelte eckige Klammer links",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Nur doppelte eckige Klammer rechts",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Fälle (zwei Bedingungen)",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Fälle (drei Bedingungen)",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Stapelobjekt",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Stapelobjekt in Klammern",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Beispielgleichung mit Fällen",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Binomialkoeffizient",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Binomialkoeffizient in spitzen Klammern",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Funktion",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Formelstruktur Sinusfunktion",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Kosinusfunktion",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Tangensfunktion",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Kosekansfunktion",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Sekansfunktion",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Kotangensfunktion",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Umgekehrte Sinusfunktion",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Umgekehrte Kosinusfunktion",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Umgekehrte Tangensfunktion",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Umgekehrte Kosekansfunktion",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Umgekehrte Sekansfunktion",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Umgekehrte Kotangensfunktion",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Hyperbolische Sinusfunktion",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Hyperbolische Kosinusfunktion",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Hyperbolische Tangensfunktion",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Hyperbolische Kosekansfunktion",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Hyperbolische Sekansfunktion",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Hyperbolische Kotangensfunktion",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Umgekehrte hyperbolische Sinusfunktion",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Umgekehrte hyperbolische Kosinusfunktion",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Umgekehrte hyperbolische Tangensfunktion",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Umgekehrte hyperbolische Kosekansfunktion",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Umgekehrte hyperbolische Sekansfunktion",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Umgekehrte hyperbolische Kotangensfunktion",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Sinus θ",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Kosinus 2x",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Tangensformel",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Akzent",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Formelstruktur Punkt",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Doppelter Punkt",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Dreifacher Punkt",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Dach",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Häkchen",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Akut",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Gravis",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Brevis",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Tilde",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Strich",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Doppelter Überstrich",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Horizontale geschweifte Klammer (oben)",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Horizontale geschweifte Klammer (unten)",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Gruppierungszeichen oben",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Gruppierungszeichen unten",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Pfeil nach links oben",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Pfeil nach rechts oben",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Pfeil nach links und rechts oben",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Harpune nach links oben",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Harpune nach rechts oben",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Geschachtelte Formel (mit Platzhalter)",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Geschachtelte Formel (Beispiel)",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Überstrich",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Unterstrich",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Vektor A",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur ABC mit Überstrich",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur x XOR y mit Überstrich",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Grenzwert und Logarithmus",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Formelstruktur Logarithmus mit leerer Basis",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Logarithmus ohne Basis",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Grenzwert",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Minimum",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Maximum",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Natürlicher Logarithmus",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Beispiel für Grenzwert",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Beispiel für Maximum",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Operator",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Formelstruktur Doppelpunkt Gleich",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Gleich Gleich",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Plus Gleich",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Minus Gleich",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Gleich gemäß Definition",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Gemessen mit",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Delta gleich",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Pfeil nach links oben",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Pfeil nach rechts oben",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Pfeil nach links unten",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Pfeil nach rechts unten",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Doppelpfeil nach links oben",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Doppelpfeil nach rechts oben",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Doppelpfeil nach links unten",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Doppelpfeil nach rechts unten",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Pfeil nach links und rechts oben",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Pfeil nach links und rechts unten",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Doppelpfeil nach links und rechts oben",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Doppelpfeil nach links und rechts unten",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Ergibt",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Delta Ergibt",
+         "enabled": true
+        }
+       ]
+      },
+      {
+       "name": "Matrix",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Formelstruktur 1x2 Leere Matrix",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur 2x1 Leere Matrix",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur 1x3 Leere Matrix",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur 3x1 Leere Matrix",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur 2x2 Leere Matrix",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur 2x3 Leere Matrix",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur 3x2 Leere Matrix",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur 3x3 Leere Matrix",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Mittellinienpunkte",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Grundlinienpunkte",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Vertikale Punkte",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Diagonale Punkte",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur 2x2 Identitätsmatrix mit Nullen",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur 2x2 Identitätsmatrix mit leeren Außerdiagonalzellen",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur 3x3 Identitätsmatrix mit Nullen",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur 3x3 Identitätsmatrix mit leeren Außerdiagonalzellen",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Leere 2x2-Matrix in Klammern",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Leere 2x2-Matrix in eckigen Klammern",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Leere 2x2-Determinante",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Leere 2x2-Matrix in doppelten vertikalen Balken",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Spärliche Matrix in Klammern",
+         "enabled": true
+        },
+        {
+         "name": "Formelstruktur Spärliche Matrix in eckigen Klammern",
+         "enabled": true
+        }
+       ]
       }
      ]
     }
