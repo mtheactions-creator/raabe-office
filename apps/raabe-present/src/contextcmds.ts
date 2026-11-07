@@ -3,7 +3,7 @@
 // Alternativtext (descr), table cells (alignment, vertical anchor, rows and columns at the cell,
 // distributing, sizes), charts through chartops.ts.
 
-import { h, showDialog, type Control, type MenuEntry } from "@raabe/shell";
+import { closePopup, h, showDialog, type Control, type MenuEntry } from "@raabe/shell";
 import { PptxDom, type ShapeView } from "@raabe/ooxml";
 import type { PresentApp } from "./app";
 import { LINE_WEIGHTS } from "./lines";
@@ -34,6 +34,8 @@ export function contextHost(app: PresentApp): ContextTabHost {
     tableBorders: () => tableBorders(app),
     textEffects: () => textEffects(app),
     chartElements: () => CH.chartElementsMenu(app),
+    editShapeMenu: () => [{ label: "Form ändern", flyout: () => app.shapeGallery(() => closePopup(), (g) => app.changeShape(g)) },
+      { label: "Punkte bearbeiten", run: () => {}, disabled: true }, { label: "Verbindungen umleiten", run: () => {}, disabled: true }],
     wordArtTiles: () => wordArtTiles(app),
     // Textrichtung and Zellenbegrenzungen of the cells (the one being edited, the range, else all), as PowerPoint's entries.
     cellDirections: () => ([["Horizontal", null], ["Text um 90° drehen", "vert"], ["Text um 270° drehen", "vert270"], ["Gestapelt", "wordArtVert"]] as [string, string | null][])
@@ -391,6 +393,7 @@ export function implementContext(app: PresentApp): void {
   impl("table.styles", () => {}, table);
   impl("table.borders", () => {}, table);
   impl("chart.addElement", () => {}, chart);
+  impl("shape.editShape", () => {}, () => app.editor.selectedViews.some((v) => v.kind === "sp"));
   impl("wordart.effects", () => {}, () => shapes() || !!app.editor.text);
   impl("table.direction", () => {}, table);
   impl("table.margins", () => {}, table);

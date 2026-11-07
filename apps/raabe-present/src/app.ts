@@ -1465,7 +1465,23 @@ export class PresentApp implements EditorHost, PanelHost {
     };
   }
 
-  shapeGallery(close: () => void): HTMLElement {
+  /** Form bearbeiten > Form ändern: the selected shapes take another geometry (text and look stay). */
+  changeShape(geometry: string): void {
+    const views = this.editor.selectedViews.filter((v) => v.kind === "sp");
+    if (!views.length) return;
+    this.editor.edit("Form ändern", () => {
+      for (const v of views) {
+        const sp = kid(this.editor.shapeEl(v.id), "spPr");
+        if (!sp) continue;
+        for (const g of kids(sp)) if (g.localName === "prstGeom" || g.localName === "custGeom") g.remove();
+        const geom = fragment(sp.ownerDocument, `<a:prstGeom prst="${geometry}"><a:avLst/></a:prstGeom>`)[0];
+        const xf = kid(sp, "xfrm");
+        sp.insertBefore(geom, xf ? xf.nextSibling : sp.firstChild);
+      }
+    });
+  }
+
+  shapeGallery(close: () => void, pick?: (geometry: string) => void): HTMLElement {
     const wrap = h("div", { class: "shape-gallery-wrap" });
     for (const group of SHAPE_GALLERY) {
       wrap.append(h("div", { class: "gal-head" }, group.title));
@@ -1473,6 +1489,7 @@ export class PresentApp implements EditorHost, PanelHost {
       for (const it of group.items) {
         const btn = h("button", { "data-tip": it.label, "aria-label": it.label, onclick: () => {
           close();
+          if (pick) { if (it.tool.kind !== "textbox" && it.tool.geometry && !it.tool.freeform) pick(it.tool.geometry); return; }
           if (it.tool.kind === "textbox") this.startTool({ kind: "textbox" });
           else this.startTool({ kind: "shape", prst: it.tool.geometry, head: !!it.tool.pic?.line?.head, tail: !!it.tool.pic?.line?.tail, freeform: it.tool.freeform });
         } });

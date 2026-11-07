@@ -98,6 +98,7 @@ export interface ContextTabHost {
   tableBorders(): MenuEntry[];
   textEffects(): MenuEntry[];
   chartElements(): MenuEntry[];
+  editShapeMenu(): MenuEntry[];
   tableStyles(close: () => void): HTMLElement;
   picStyles(close: () => void): HTMLElement;
   textOutlineColor(): string; setTextOutline(hex: string): void; textOutlineExtra(): MenuEntry[];
@@ -132,7 +133,7 @@ export function shapeFormatTab(h: ContextTabHost): Tab {
   return {
     id: "shapeFormat", label: "Formformat", key: "JD", contextual: true, shrink: [],
     groups: [
-      { id: "insert", label: "Formen einfügen", key: "ZE", icon: "shapes", controls: [h.shapeTiles(), stack(b("shape.editShape", "F"), b("insert.textBox", "LT"), b("shape.merge", "Y"))] },
+      { id: "insert", label: "Formen einfügen", key: "ZE", icon: "shapes", controls: [h.shapeTiles(), stack(dd("shape.editShape", "F", "small", () => h.editShapeMenu()), b("insert.textBox", "LT"), b("shape.merge", "Y"))] },
       { id: "styles", label: "Formenarten", key: "ZF", icon: "shape-fill", launcher: { cmd: "draw.format", key: "BB" }, controls: [h.quickStyleTiles(),
         stack(h.color(() => h.fillColor(), (c) => h.setFill(c), "draw.fill", "Ü", true), h.color(() => h.lineColor(), (c) => h.setLine(c), "draw.outline", "V", true, () => h.outlineExtra()), dd("draw.effects", "MO", "medium", () => h.effects()))] },
       { id: "wordart", label: "WordArt-Formate", key: "ZW", icon: "wordart", launcher: { cmd: "wordart.dialog", key: "O" }, controls: wordArt(h) },
