@@ -2012,3 +2012,7 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
 - **Format > Fülleffekt and Formkontur on a chart fixed:** with the whole chart selected they did nothing; they
   now set the Diagrammbereich's fill and line through the chart model (RGB, as the model keeps colours; a
   design colour picked is written as its RGB value). A round-trip scenario checks PowerPoint reads both.
+- **Tabellenentwurf > Effekte:** Zellenabschrägung, Schatten and Spiegelung with Office's presets (the
+  Formeffekte galleries). Shadow and reflection go to the table (a:tblPr > a:effectLst) and are drawn; the
+  bevel goes to the cells being worked on (a:tcPr > a:cell3D with the light rig the schema requires) and is
+  written but not drawn by us (PowerPoint draws it).

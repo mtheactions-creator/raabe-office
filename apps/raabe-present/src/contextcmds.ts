@@ -3,6 +3,7 @@
 // Alternativtext (descr), table cells (alignment, vertical anchor, rows and columns at the cell,
 // distributing, sizes), charts through chartops.ts.
 
+import { tableEffectsMenu } from "./tablefx";
 import { MORE_COLORS } from "./colors";
 import { colorXml } from "./colors";
 import { closePopup, h, showDialog, type Control, type MenuEntry } from "@raabe/shell";
@@ -53,6 +54,7 @@ export function contextHost(app: PresentApp): ContextTabHost {
     picStyles: (c) => picStylesPanel(app, c),
     textOutlineColor: () => app.textOutlineColor(), setTextOutline: (hex) => app.setTextOutline({ color: hex }), textOutlineExtra: () => app.textOutlineExtra(),
     setShading: (hex) => setShading(app, hex ? hex.replace("#", "").toUpperCase() : null),
+    tableEffects: () => tableEffectsMenu(app, () => { const t = tableOf(app); return t ? cells(app, t.tbl) : []; }),
     shadingExtra: () => [{ label: "Keine Füllung", run: () => setShading(app, null) }, app.pipette((hex) => setShading(app, hex))],
     fillColor: ctx.fillColor, setFill: ctx.setFill, lineColor: ctx.lineColor, setLine: ctx.setLine, fontColor: ctx.fontColor, setFontColor: ctx.setFontColor, fontColorExtra: () => app.fontColorExtra(),
     effects: () => ctx.menus.effects,
@@ -436,6 +438,7 @@ export function implementContext(app: PresentApp): void {
   impl("table.selectCol", () => app.editor.selectLine("col"), editingCell);
   impl("table.selectRow", () => app.editor.selectLine("row"), editingCell);
   impl("table.shading", () => {}, table);
+  impl("table.effects", () => {}, table);
   impl("table.penStyle", () => {}, table);
   impl("chart.elements", () => {}, () => app.editor.selectedViews.some((v) => v.frame === "chart"));
   // Form ändern on a chart's Format tab: greyed, as PowerPoint has it with the whole chart selected.

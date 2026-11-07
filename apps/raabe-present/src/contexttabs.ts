@@ -96,7 +96,7 @@ export interface ContextTabHost {
   quickStyleTiles(): Control;
   picStyleTiles(): Control;
   tableStyleTiles(): Control;
-  setShading(hex: string | null): void; shadingExtra(): MenuEntry[];
+  setShading(hex: string | null): void; shadingExtra(): MenuEntry[]; tableEffects(): MenuEntry[];
   wordArtTiles(): Control;
   cellDirections(): MenuEntry[];
   cellMargins(): MenuEntry[];
@@ -174,7 +174,7 @@ export function tableDesignTab(h: ContextTabHost): Tab {
     id: "tableDesign", label: "Tabellenentwurf", key: "JT", contextual: true, shrink: [],
     groups: [
       { id: "options", label: "Tabellenformatoptionen", key: "ZO", icon: "table-style", controls: [stack(check("table.firstRow", "Ü"), check("table.lastRow", "Ä"), check("table.bandRow", "U")), stack(check("table.firstCol", "P"), check("table.lastCol", "L"), check("table.bandCol", "V"))] },
-      { id: "styles", label: "Tabellenformatvorlagen", key: "ZT", icon: "table-style", controls: [h.tableStyleTiles(), stack(h.color(() => h.fillColor(), (c) => h.setShading(c), "table.shading", "NC", false, () => h.shadingExtra()), dd("table.borders", "DA", "small", () => h.tableBorders()), b("table.effects", "F"))] },
+      { id: "styles", label: "Tabellenformatvorlagen", key: "ZT", icon: "table-style", controls: [h.tableStyleTiles(), stack(h.color(() => h.fillColor(), (c) => h.setShading(c), "table.shading", "NC", false, () => h.shadingExtra()), dd("table.borders", "DA", "small", () => h.tableBorders()), dd("table.effects", "F", "small", () => h.tableEffects()))] },
       { id: "wordart", label: "WordArt-Formate", key: "ZW", icon: "wordart", launcher: { cmd: "wordart.dialog", key: "O" }, controls: wordArt(h) },
       { id: "draw", label: "Rahmenlinien zeichnen", key: "ZR", icon: "table-draw", controls: [stack(dd("table.penStyle", "B", "medium", () => h.penStyles()), dd("table.penWeight", "6", "medium", () => h.penWeights()), h.color(() => h.penColor(), (c) => h.setPenColor(c), "table.penColor", "G", true)), b("table.draw", "AA", "large"), b("table.eraser", "R", "large")] },
     ],

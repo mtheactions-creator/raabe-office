@@ -173,6 +173,12 @@
    "result": "same",
    "diff": []
   },
+  "table effects": {
+   "result": "different",
+   "diff": [
+    "bevel None shadow None"
+   ]
+  },
   "table pen": {
    "result": "same",
    "diff": []
@@ -280,6 +286,6 @@
  },
  "summary": {
   "fixtures": "22/22",
-  "scenarios": "52/52"
+  "scenarios": "52/53"
  }
 }

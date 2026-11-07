@@ -2,7 +2,7 @@
 // (whole table, banded rows and columns, first and last row and column) in PowerPoint's order of
 // precedence, then each cell's own fill and borders. Rows grow to fit their text as PowerPoint's do.
 
-import { PptxDom, colorList, readBodyProps, readColor, readText, readThemeInfo, SlideResolver, type ShapeView } from "@raabe/ooxml";
+import { PptxDom, colorList, readBodyProps, readColor, readEffects, readText, readThemeInfo, SlideResolver, type ShapeView } from "@raabe/ooxml";
 import { EMU_PX, renderText } from "./text";
 import type { RenderOptions } from "./slide";
 
@@ -146,5 +146,19 @@ export function renderTable(s: ShapeView, o: RenderOptions): HTMLElement {
     table.append(row);
   });
   box.append(table);
+  // Tabellenentwurf > Effekte: the table's shadow and reflection (a:tblPr > a:effectLst).
+  const fxl = kid(pr, "effectLst");
+  if (fxl) {
+    const fx = readEffects(fxl, theme.colors);
+    const sh = fx.shadow;
+    if (sh?.kind === "outer") {
+      const a = (sh.dir * Math.PI) / 180, d = sh.dist * (96 / 72);
+      const c = sh.color.replace("#", "");
+      const rgb = [0, 2, 4].map((k) => parseInt(c.slice(k, k + 2), 16) || 0).join(",");
+      box.style.filter = `drop-shadow(${Math.cos(a) * d}px ${Math.sin(a) * d}px ${sh.blur * (96 / 72) * 0.5}px rgba(${rgb},${1 - (sh.transparency ?? 0)}))`;
+    }
+    const rf = fx.reflection;
+    if (rf && rf.size > 0) box.style.setProperty("-webkit-box-reflect", `below ${rf.dist * (96 / 72)}px linear-gradient(transparent ${(1 - rf.size) * 100}%, rgba(255,255,255,${(1 - rf.transparency) * 0.9}))`);
+  }
   return box;
 }

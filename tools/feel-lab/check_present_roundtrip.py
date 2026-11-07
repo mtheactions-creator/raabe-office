@@ -16,6 +16,7 @@ from __future__ import annotations
 import base64
 import datetime
 import json
+import os
 import sys
 import tempfile
 from pathlib import Path
@@ -26,6 +27,8 @@ from feellab.present_page import PresentPage
 HERE = Path(__file__).parent
 FIX = HERE.parent.parent / "packages" / "ooxml" / "test" / "fixtures"
 TMP = Path(tempfile.mkdtemp(prefix="raabe-present-rt-"))
+# RT_ONLY="name,name": only these scenarios, no fixtures, nothing written (for checking one change).
+ONLY = [x.strip() for x in os.environ.get("RT_ONLY", "").split(",") if x.strip()]
 FIXTURES = ["pptx-blank", "pptx-layouts", "pptx-bullets", "pptx-textbox", "pptx-shapes", "pptx-group", "pptx-picture", "pptx-table", "pptx-autofit", "pptx-show", "pptx-equation"]
 # PowerPoint's own default design (Office, Aptos) as well (added in the overnight run, D-072).
 FIXTURES += [f.replace("pptx-", "pptx-office-") for f in FIXTURES]
@@ -74,6 +77,8 @@ SCENARIOS: dict[str, str] = {
         const bg = await import('/src/background.ts'); bg.bgStylesMenu(a)[0].block().querySelectorAll('button')[6].click();""",
         "table shading": """p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); a.setCurrent(0); a.insertTable(2, 2); const id = a.deck.view(a.slidePath()).shapes.find(s => s.frame === 'table').id;
         a.editor.enterText(id, undefined, {r:0,c:0}); const m = await import('/src/contextcmds.ts'); m.setShading(a, 'C00000'); a.editor.endText();""",
+        "table effects": """p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); a.setCurrent(0); a.insertTable(2, 2); const id = a.deck.view(a.slidePath()).shapes.find(s => s.frame === 'table').id;
+        a.editor.select([id]); const m = a.host2().tableEffects(); m[1].submenu()[1].run(); a.editor.enterText(id, undefined, {r:0,c:0}); m[0].submenu()[1].run(); a.editor.endText();""",
         "table pen": """p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); a.setCurrent(0); a.insertTable(2, 2); const id = a.deck.view(a.slidePath()).shapes.find(s => s.frame === 'table').id;
         a.tablePen = { dash: 'sysDash', w: 38100, color: 'C00000' }; a.penCellLine(id, 0, 0, 'r'); await new Promise(r => setTimeout(r, 300));""",
         "action": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]}]}); const a = p.app; a.newSlide(); a.setCurrent(0); a.editor.select([2]); const doc = a.deck.pptx.doc(a.slidePath()); const nv = doc.getElementsByTagNameNS('http://schemas.openxmlformats.org/presentationml/2006/main', 'cNvPr')[1]; a.editor.edit('Aktion', () => { const hl = doc.createElementNS('http://schemas.openxmlformats.org/drawingml/2006/main', 'a:hlinkClick'); hl.setAttributeNS('http://schemas.openxmlformats.org/officeDocument/2006/relationships', 'r:id', ''); hl.setAttribute('action', 'ppaction://hlinkshowjump?jump=nextslide'); nv.insertBefore(hl, nv.firstChild); });""",
@@ -179,6 +184,18 @@ def ppt_shapes(slide) -> list[dict]:
                 b = t.Cell(1, 1).Borders(4)  # ppBorderRight
                 d["border11r"] = [round(float(b.Weight), 1), int(b.DashStyle), int(b.ForeColor.RGB)]
                 d["fill11"] = int(t.Cell(1, 1).Shape.Fill.ForeColor.RGB)
+            except Exception:  # noqa: BLE001
+                pass
+            try:
+                d["bevel11"] = int(t.Cell(1, 1).Shape.ThreeD.BevelTopType)
+            except Exception as e:  # noqa: BLE001
+                d["bevel11"] = repr(e)[:80]
+            try:
+                d["tshadow"] = int(s.Shadow.Visible)
+            except Exception as e:  # noqa: BLE001
+                d["tshadow"] = repr(e)[:80]
+            try:
+                pass
             except Exception:  # noqa: BLE001
                 pass
         if bool(s.HasChart):
@@ -292,6 +309,11 @@ def check(name: str, r: dict, ours: dict) -> list[str]:
     elif name == "table shading":
         t = next((x for x in sh if x.get("table")), {})
         want(t.get("fill11") == 192, f"cell fill {t.get('fill11')}")
+    elif name == "table effects":
+        t = next((x for x in sh if x.get("table")), {})
+        # The table's shadow visible (msoTrue -1); a cell's ThreeD is not readable through COM (it raises),
+        # so the cell bevel is checked by PowerPoint opening the file with it.
+        want(t.get("tshadow") == -1, f"shadow {t.get('tshadow')}")
     elif name == "table pen":
         t = next((x for x in sh if x.get("table")), {})
         # 3 pt, msoLineDash 4 (sysDash) or another dash, red C00000 (BGR 0x0000C0 = 192).
@@ -382,7 +404,7 @@ def main() -> None:
     out: dict = {"date": datetime.date.today().isoformat(), "fixtures": {}, "scenarios": {}}
     try:
         # 1. PowerPoint's files, written back by RaabePresent unchanged.
-        for name in FIXTURES:
+        for name in ([] if ONLY else FIXTURES):
             page.open_file(FIX / f"{name}.pptx")
             b = base64.b64decode(page.js("window.__present.bytes()"))
             f = TMP / f"{name}-rt.pptx"
@@ -399,6 +421,8 @@ def main() -> None:
             print(name, out["fixtures"][name]["result"], flush=True)
         # 2. Files RaabePresent made.
         for name, js in SCENARIOS.items():
+            if ONLY and name not in ONLY:
+                continue
             if name in ("smartart text", "smartart convert") and not (HERE / "captures" / "smartart" / "smartart.pptx").exists():
                 continue
             try:
@@ -422,6 +446,8 @@ def main() -> None:
     sc = sum(1 for v in out["scenarios"].values() if v["result"] == "same")
     out["summary"] = {"fixtures": f"{fx}/{len(out['fixtures'])}", "scenarios": f"{sc}/{len(out['scenarios'])}"}
     print(out["summary"])
+    if ONLY:
+        return  # a partial run (RT_ONLY) is not written as the results
     (HERE / "results" / f"{out['date']}-present-roundtrip.json").write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8", newline=chr(10))
 
 
