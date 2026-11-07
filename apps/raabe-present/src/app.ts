@@ -2078,6 +2078,12 @@ export class PresentApp implements EditorHost, PanelHost {
         this.menu([{ cmd: "edit.delete" }, { cmd: "chart.reset" }, "-", { cmd: "font.dialog" }, { cmd: "chart.changeType" }, { cmd: "chart.editData" }, "-", { cmd: "draw.format", label: "Diagrammbereich formatieren..." }, { cmd: "review.newComment" }], at2);
         return;
       }
+      if (v?.kind === "graphicFrame" && v.frame === "diagram") {
+        // SmartArt (PowerPoint's recorded menu; Layout ändern... and Grafik zurücksetzen are not built, D-072).
+        this.menu([...entries, { cmd: "smartart.textPane", label: "Textbereich anzeigen" }, "-", group, ...order, "-", { cmd: "shape.lock" }, { cmd: "shape.link", label: "Link" }, { cmd: "pic.save" }, "-",
+          { cmd: "shape.altText" }, { cmd: "smartart.toText" }, { cmd: "smartart.toShapes" }, { cmd: "shape.sizePosition" }, { cmd: "draw.format" }, { cmd: "review.newComment" }], at2);
+        return;
+      }
       if (v?.kind === "pic") entries.push({ cmd: "pic.change" }, "-", group, ...order, "-", { cmd: "shape.lock" }, { cmd: "shape.link", label: "Link" }, { cmd: "pic.save" }, "-", { cmd: "shape.altText" }, { cmd: "shape.sizePosition" }, { cmd: "pic.format" }, { cmd: "review.newComment" });
       else if (v?.kind === "grpSp") entries.push(group, ...order, "-", { cmd: "shape.lock" }, { cmd: "shape.link", label: "Link" }, { cmd: "pic.save" }, "-", { cmd: "shape.altText" }, { cmd: "shape.sizePosition" }, { cmd: "draw.format", label: "Form formatieren..." }, { cmd: "review.newComment" });
       else entries.push({ cmd: "shape.editText" }, ...(v?.ph ? [] : [{ cmd: "shape.editPoints" } as MenuEntry]), "-", group, ...order, "-", { cmd: "shape.lock" }, { cmd: "shape.link", label: "Link" }, { cmd: "pic.save" }, "-",
@@ -3459,6 +3465,12 @@ export class PresentApp implements EditorHost, PanelHost {
           const doc = app.deck.pptx.doc(app.slidePath()!); const tree = S.treeOf(doc);
           tree.append(S.newPicture(doc, S.maxId(tree) + 1, "rIdX", { x: 0, y: 0, w: 914400, h: 914400 }));
         };
+        // SmartArt: a frame of the diagram kind is enough for its menu (the parts are not read for it).
+        setup([]); app.editor.edit("SmartArt", () => {
+          const doc = app.deck.pptx.doc(app.slidePath()!); const tree = S.treeOf(doc); const id = S.maxId(tree) + 1;
+          tree.append(fragment(doc, `<p:graphicFrame><p:nvGraphicFramePr><p:cNvPr id="${id}" name="Diagramm ${id}"/><p:cNvGraphicFramePr/><p:nvPr/></p:nvGraphicFramePr><p:xfrm><a:off x="0" y="0"/><a:ext cx="914400" cy="914400"/></p:xfrm><a:graphic><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/diagram"/></a:graphic></p:graphicFrame>`)[0]);
+        });
+        const sa = app.deck.view(app.slidePath()!).shapes.find((s) => s.frame === "diagram"); if (sa) { app.editor.select([sa.id]); out["SmartArt"] = grab(() => app.contextMenu(ev, "shape")); }
         setup([]); app.editor.edit("Bild", fakePic); const pic = app.deck.view(app.slidePath()!).shapes.find((s) => s.kind === "pic"); if (pic) { app.editor.select([pic.id]); out["Bild"] = grab(() => app.contextMenu(ev, "shape")); }
         return out;
       },
@@ -3504,7 +3516,7 @@ export class PresentApp implements EditorHost, PanelHost {
         const kind = app.masterKind;
         const masters = (["slides", "notes", "handout"] as const).map((k) => { app.masterKind = k; return app.masterTab(); });
         app.masterKind = kind;
-        const tabs = [...ribbonTabs(app.ribbonContext()), app.shapeTab(), app.pictureTab(), app.tableTab(), app.tableLayoutTab(), app.chartTab(), app.chartFormatTab(), ...masters, equationTab(app)];
+        const tabs = [...ribbonTabs(app.ribbonContext()), app.shapeTab(), app.pictureTab(), app.tableTab(), app.tableLayoutTab(), app.chartTab(), app.chartFormatTab(), ...masters, equationTab(app), smartArtTab(app), freistellenTab()];
         return tabs.map((t) => ({
           name: t.label, contextual: !!t.contextual,
           groups: t.groups.map((g) => ({ name: g.label, launcher: g.launcher ? cmdItem(g.launcher.cmd) : undefined, controls: g.controls.flatMap(ctl) })),

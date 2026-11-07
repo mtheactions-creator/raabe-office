@@ -1979,3 +1979,6 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   has it). The next click on the slide takes the colour of our own drawing of the slide at that point (without
   selection marks), written as an RGB colour as PowerPoint does; Esc stops it. PowerPoint's live preview of the
   colour beside the pointer is not drawn.
+- **SmartArt's context menu** as PowerPoint's recorded one, without Layout ändern... and Grafik zurücksetzen
+  (they need the layout definitions, see SmartArt above); our Textbereich is a dialog, so its entry reads
+  "Textbereich anzeigen" where PowerPoint toggles a pane.
