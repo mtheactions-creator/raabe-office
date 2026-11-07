@@ -88,8 +88,10 @@ SCENARIOS: dict[str, str] = {
         await m.setEffect(a, 'saturation', {{name: 'saturation', attrs: {{sat: '0'}}}}, 'Farbsättigung'); await m.setEffect(a, 'artistic', {{name: 'artisticBlur', attrs: {{}}}}, 'Künstlerische Effekte'); await m.setEffect(a, 'sharpenSoften', {{name: 'sharpenSoften', attrs: {{amount: '25000'}}}}, 'Schärfen');""",
     "background removal": f"""p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); const bin = atob('{PNG}'); const b = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) b[i] = bin.charCodeAt(i); a.insertPictureBytes(b, 'image/png'); await new Promise(r => setTimeout(r, 500));
         const v = a.deck.view(a.slidePath()).shapes.find(s => s.kind === 'pic'); a.editor.select([v.id]); await p.run('pic.removeBg'); await new Promise(r => setTimeout(r, 500));""",
+    "reuse slides": f"""p.newDoc(); const a = p.app; const r = await fetch('/@fs/{(FIX / "pptx-picture.pptx").as_posix()}'); const bytes = new Uint8Array(await r.arrayBuffer());
+        const src = a.deck.pptx.constructor.read(bytes); const m = await import('/src/slideimport.ts'); m.importSlide(a.deck, src, src.slides[0].path, 0); a.setCurrent(1);""",
     "picture crop": f"""p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); const bin = atob('{PNG}'); const b = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) b[i] = bin.charCodeAt(i); a.insertPictureBytes(b, 'image/png'); await new Promise(r => setTimeout(r, 500));
-        const v = a.deck.view(a.slidePath()).shapes.find(s => s.kind === 'pic'); const S = await import('/src/shapeops.ts'); a.editor.edit('Größe', () => S.setXfrm(a.editor.shapeEl(v.id), {x: 1000000, y: 1000000, w: 3810000, h: 3810000})); a.editor.select([v.id]); await a['cropToRatio'](16 / 9); a.changeShape('ellipse', true);""",
+        const v = a.deck.view(a.slidePath()).shapes.find(s => s.kind === 'pic'); const S = await import('/src/shapeops.ts'); a.editor.edit('Größe', () => S.setXfrm(a.editor.shapeEl(v.id), {{x: 1000000, y: 1000000, w: 3810000, h: 3810000}})); a.editor.select([v.id]); await a['cropToRatio'](16 / 9); a.changeShape('ellipse', true);""",
     "picture effects removed": f"""p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); const bin = atob('{PNG}'); const b = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) b[i] = bin.charCodeAt(i); a.insertPictureBytes(b, 'image/png'); await new Promise(r => setTimeout(r, 500));
         const v = a.deck.view(a.slidePath()).shapes.find(s => s.kind === 'pic'); a.editor.select([v.id]); const m = await import('/src/picfx.ts');
         await m.setEffect(a, 'colorTemperature', {{name: 'colorTemperature', attrs: {{colorTemp: '4700'}}}}, 'Farbton'); await m.setEffect(a, 'colorTemperature', null, 'Farbton');""",
@@ -289,6 +291,9 @@ def check(name: str, r: dict, ours: dict) -> list[str]:
     elif name == "background removal":
         fx = next((x.get("fx") for x in sh if x["type"] == 13), None)
         want(fx == [1], f"effects {fx}")
+    elif name == "reuse slides":
+        s1 = r["slides"][1]["shapes"] if len(r["slides"]) > 1 else []
+        want(len(r["slides"]) == 2 and any(x["type"] == 13 for x in s1), f"slides {len(r['slides'])} types {[x['type'] for x in s1]}")
     elif name == "picture crop":
         p = next((x for x in sh if x["type"] == 13), None)
         want(p is not None and abs(p["box"][2] / p["box"][3] - 16 / 9) < 0.02 and p.get("auto") == 9, f"picture {p}")

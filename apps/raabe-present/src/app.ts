@@ -119,7 +119,7 @@ export class PresentApp implements EditorHost, PanelHost {
   private fontList: string[] = [];
   private imageUrls = new Map<string, { bytes: Uint8Array; url: string }>();
   private clipboard: { xml: string[]; text: string; slide: string; pastes: number } | null = null;
-  private slideClipboard: { xml: string; layout: string; text: string } [] | null = null;
+  private slideClipboard: { xml: string; layout: string; text: string; src?: Pptx; path?: string }[] | null = null;
   private painter: { rPr: Element | null; pPr: Element | null; spPr: Element | null; keep: boolean } | null = null;
   private lastFontColor = "FF0000";
   private lastHighlight = "FFFF00";
@@ -471,7 +471,7 @@ export class PresentApp implements EditorHost, PanelHost {
     const sel = [...this.panel.selected].sort((a, b) => a - b);
     this.slideClipboard = sel.map((i) => {
       const p = this.deck.slides[i].path;
-      return { xml: PptxDom.serialize(this.deck.pptx.doc(p)), layout: this.deck.pptx.layoutOf(p) ?? "", text: "" };
+      return { xml: PptxDom.serialize(this.deck.pptx.doc(p)), layout: this.deck.pptx.layoutOf(p) ?? "", text: "", src: this.deck.pptx, path: p };
     });
     this.clipboard = null;
     void this.platform.clipboardWrite(sel.map((i) => this.slideText(i)).join("\r\n")).catch(() => {});
@@ -481,7 +481,12 @@ export class PresentApp implements EditorHost, PanelHost {
   private pasteSlides(): void {
     if (!this.slideClipboard) return;
     const at2 = this.active.current;
-    // Pasted slides keep the copied XML; pictures and charts of another presentation are not carried yet.
+    // Pasted slides come with their pictures, media and charts (slideimport.ts), also from another presentation.
+    const clip = this.slideClipboard;
+    if (clip.every((s) => s.src && s.path && s.src.has(s.path))) {
+      void import("./slideimport").then((m) => { clip.forEach((s, k) => m.importSlide(this.deck, s.src!, s.path!, at2 + k)); this.setCurrent(at2 + 1); });
+      return;
+    }
     for (const [k, s] of this.slideClipboard.entries()) {
       const layout = this.deck.pptx.has(s.layout) ? s.layout : this.deck.layouts()[1]?.path;
       const path = this.deck.addSlide(at2 + k, layout);
@@ -1823,7 +1828,9 @@ export class PresentApp implements EditorHost, PanelHost {
     }
     wrap.append(grid);
     if (title === "Office-Design" || title.endsWith("Design")) {
-      wrap.append(h("div", { class: "menu-sep" }), h("button", { class: "menu-item", onclick: () => { close(); this.duplicateSlides([...this.panel.selected]); } }, "Ausgewählte Folien duplizieren"));
+      wrap.append(h("div", { class: "menu-sep" }), h("button", { class: "menu-item", onclick: () => { close(); this.duplicateSlides([...this.panel.selected]); } }, "Ausgewählte Folien duplizieren"),
+        h("button", { class: "menu-item", disabled: true }, "Folien aus Gliederung..."),
+        h("button", { class: "menu-item", onclick: () => { close(); void import("./slideimport").then((m) => m.reuseSlidesDialog(this)); } }, "Folien wiederverwenden..."));
     }
     return wrap;
   }

@@ -1915,3 +1915,9 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   reading; their names are from knowledge of PowerPoint, the inventory did not open that submenu); Ersetzen >
   Schriftarten ersetzen... (text and design fonts throughout); Farben > Farben anpassen... (the twelve design
   colours and a name, applied like a colour set). Formkontur > Skizziert and the Pipette are not built.
+- **Folien wiederverwenden and pasting slides between presentations:** Neue Folie > Folien wiederverwenden...
+  opens a presentation and shows its slides to pick (or Alle Folien einfügen); they come after the current
+  slide with what they refer to (pictures, media, charts without their workbook, external links) and take the
+  layout of the same name here (PowerPoint's Zieldesign verwenden; Ursprüngliche Formatierung beibehalten is
+  not built). Our dialog instead of PowerPoint's pane. Pasted slides use the same way now, so pictures are no
+  longer dropped when slides are pasted (also into another window). Folien aus Gliederung... is greyed.

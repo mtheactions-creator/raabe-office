@@ -196,6 +196,14 @@
    "result": "same",
    "diff": []
   },
+  "reuse slides": {
+   "result": "same",
+   "diff": []
+  },
+  "picture crop": {
+   "result": "same",
+   "diff": []
+  },
   "picture effects removed": {
    "result": "same",
    "diff": []
@@ -215,6 +223,6 @@
  },
  "summary": {
   "fixtures": "11/11",
-  "scenarios": "44/44"
+  "scenarios": "46/46"
  }
 }

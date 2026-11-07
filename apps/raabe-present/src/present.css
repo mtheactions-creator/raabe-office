@@ -275,3 +275,7 @@ body.view-bw .slide { filter: grayscale(1) contrast(4) brightness(1.2); }
 .menu button.bgs-tile { width: 64px; height: 36px; border: 1px solid #c8c8c8; padding: 0; }
 .menu button.bgs-tile:hover { outline: 2px solid #f5b56e; }
 
+/* Folien wiederverwenden: the other presentation's slides to pick. */
+.reuse-grid { display: grid; grid-template-columns: repeat(3, 172px); gap: 8px; max-height: 420px; overflow: auto; padding: 4px; }
+.reuse-tile { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 4px; border: 2px solid transparent; background: #f3f3f3; cursor: pointer; }
+.reuse-tile[aria-pressed="true"] { border-color: #c43e1c; }

@@ -105,6 +105,12 @@
         },
         {
          "name": "Ausgewählte Folien duplizieren"
+        },
+        {
+         "name": "Folien aus Gliederung..."
+        },
+        {
+         "name": "Folien wiederverwenden..."
         }
        ]
       },
@@ -150,6 +156,12 @@
         },
         {
          "name": "Ausgewählte Folien duplizieren"
+        },
+        {
+         "name": "Folien aus Gliederung..."
+        },
+        {
+         "name": "Folien wiederverwenden..."
         }
        ]
       },
@@ -778,31 +790,35 @@
        "type": "split",
        "items": [
         {
-         "name": "Ohne",
+         "name": "Keine",
          "enabled": true
         },
         {
-         "name": "Gefüllte runde Aufzählungszeichen",
+         "name": "Ausgefüllte runde Aufzählungszeichen",
          "enabled": true
         },
         {
-         "name": "Leere runde Aufzählungszeichen",
+         "name": "Hohle runde Aufzählungszeichen",
          "enabled": true
         },
         {
-         "name": "Gefüllte quadratische Aufzählungszeichen",
+         "name": "Ausgefüllte quadratische Aufzählungszeichen",
          "enabled": true
         },
         {
-         "name": "Pfeil-Aufzählungszeichen",
+         "name": "Silbentrennung-Aufzählungszeichen",
          "enabled": true
         },
         {
-         "name": "Häkchen-Aufzählungszeichen",
+         "name": "Sternförmige Aufzählungszeichen",
          "enabled": true
         },
         {
-         "name": "Gefüllte Raute",
+         "name": "Pfeilförmige Aufzählungszeichen",
+         "enabled": true
+        },
+        {
+         "name": "Häkchenaufzählungszeichen",
          "enabled": true
         }
        ]
@@ -814,7 +830,7 @@
        "type": "split",
        "items": [
         {
-         "name": "Ohne",
+         "name": "Keine",
          "enabled": true
         },
         {
@@ -830,7 +846,7 @@
          "enabled": true
         },
         {
-         "name": "A. B. C.",
+         "name": "Nummern in Klammern",
          "enabled": true
         },
         {
@@ -843,6 +859,10 @@
         },
         {
          "name": "i. ii. iii.",
+         "enabled": true
+        },
+        {
+         "name": "Aufzählungszeichen und Nummerierung...",
          "enabled": true
         }
        ]
@@ -2533,6 +2553,60 @@
            "enabled": true
           }
          ]
+        },
+        {
+         "name": "Pfeile",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Pfeilart 1",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 2",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 3",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 4",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 5",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 6",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 7",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 8",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 9",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 10",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 11",
+           "enabled": true
+          },
+          {
+           "name": "Weitere Pfeile...",
+           "enabled": true
+          }
+         ]
         }
        ]
       },
@@ -3118,7 +3192,7 @@
         {
          "name": "Schriftarten ersetzen...",
          "deferred": false,
-         "enabled": false
+         "enabled": true
         }
        ]
       },
@@ -3197,6 +3271,12 @@
         },
         {
          "name": "Ausgewählte Folien duplizieren"
+        },
+        {
+         "name": "Folien aus Gliederung..."
+        },
+        {
+         "name": "Folien wiederverwenden..."
         }
        ]
       }
@@ -4551,6 +4631,10 @@
         {
          "name": "Ganymed",
          "enabled": true
+        },
+        {
+         "name": "Farben anpassen...",
+         "enabled": true
         }
        ]
       },
@@ -4763,6 +4847,12 @@
         },
         {
          "name": "Ausgewählte Folien duplizieren"
+        },
+        {
+         "name": "Folien aus Gliederung..."
+        },
+        {
+         "name": "Folien wiederverwenden..."
         }
        ]
       },
@@ -4982,25 +5072,7 @@
        "name": "Sound",
        "deferred": false,
        "enabled": true,
-       "type": "dropdown",
-       "items": [
-        {
-         "name": "[Ohne Sound]",
-         "enabled": true
-        },
-        {
-         "name": "[Vorherigen Sound anhalten]",
-         "enabled": true
-        },
-        {
-         "name": "Anderer Sound...",
-         "enabled": true
-        },
-        {
-         "name": "Bis zum nächsten Sound wiederholen",
-         "enabled": true
-        }
-       ]
+       "type": "dropdown"
       },
       {
        "name": "Dauer",
@@ -7355,6 +7427,60 @@
           },
           {
            "name": "Langer Strichpunkt-Punkt",
+           "enabled": true
+          }
+         ]
+        },
+        {
+         "name": "Pfeile",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Pfeilart 1",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 2",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 3",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 4",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 5",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 6",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 7",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 8",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 9",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 10",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 11",
+           "enabled": true
+          },
+          {
+           "name": "Weitere Pfeile...",
            "enabled": true
           }
          ]
@@ -10153,6 +10279,60 @@
            "enabled": true
           }
          ]
+        },
+        {
+         "name": "Pfeile",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Pfeilart 1",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 2",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 3",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 4",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 5",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 6",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 7",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 8",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 9",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 10",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 11",
+           "enabled": true
+          },
+          {
+           "name": "Weitere Pfeile...",
+           "enabled": true
+          }
+         ]
         }
        ]
       },
@@ -10893,7 +11073,665 @@
        "name": "Zuschneiden",
        "deferred": false,
        "enabled": true,
-       "type": "button"
+       "type": "split",
+       "items": [
+        {
+         "name": "Zuschneiden",
+         "enabled": true
+        },
+        {
+         "name": "Auf Form zuschneiden",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Rechteck",
+           "enabled": true
+          },
+          {
+           "name": "Rechteck: abgerundete Ecken",
+           "enabled": true
+          },
+          {
+           "name": "Rechteck: eine Ecke abgeschnitten",
+           "enabled": true
+          },
+          {
+           "name": "Rechteck: obere Ecken abgeschnitten",
+           "enabled": true
+          },
+          {
+           "name": "Rechteck: diagonal liegende Ecken abgeschnitten",
+           "enabled": true
+          },
+          {
+           "name": "Rechteck: obere Ecken, eine abgerundet, eine abgeschnitten",
+           "enabled": true
+          },
+          {
+           "name": "Rechteck: eine Ecke abgerundet",
+           "enabled": true
+          },
+          {
+           "name": "Rechteck: obere Ecken abgerundet",
+           "enabled": true
+          },
+          {
+           "name": "Rechteck: diagonal liegende Ecken abgerundet",
+           "enabled": true
+          },
+          {
+           "name": "Ellipse",
+           "enabled": true
+          },
+          {
+           "name": "Gleichschenkliges Dreieck",
+           "enabled": true
+          },
+          {
+           "name": "Rechtwinkliges Dreieck",
+           "enabled": true
+          },
+          {
+           "name": "Parallelogramm",
+           "enabled": true
+          },
+          {
+           "name": "Trapez",
+           "enabled": true
+          },
+          {
+           "name": "Raute",
+           "enabled": true
+          },
+          {
+           "name": "Fünfeck",
+           "enabled": true
+          },
+          {
+           "name": "Sechseck",
+           "enabled": true
+          },
+          {
+           "name": "Siebeneck",
+           "enabled": true
+          },
+          {
+           "name": "Achteck",
+           "enabled": true
+          },
+          {
+           "name": "Zehneck",
+           "enabled": true
+          },
+          {
+           "name": "Zwölfeck",
+           "enabled": true
+          },
+          {
+           "name": "Teilkreis",
+           "enabled": true
+          },
+          {
+           "name": "Sehne",
+           "enabled": true
+          },
+          {
+           "name": "Träne",
+           "enabled": true
+          },
+          {
+           "name": "Rahmen",
+           "enabled": true
+          },
+          {
+           "name": "Halber Rahmen",
+           "enabled": true
+          },
+          {
+           "name": "L-Form",
+           "enabled": true
+          },
+          {
+           "name": "Diagonaler Streifen",
+           "enabled": true
+          },
+          {
+           "name": "Kreuz",
+           "enabled": true
+          },
+          {
+           "name": "Zierrahmen",
+           "enabled": true
+          },
+          {
+           "name": "Zylinder",
+           "enabled": true
+          },
+          {
+           "name": "Würfel",
+           "enabled": true
+          },
+          {
+           "name": "Rechteck: abgeschrägt",
+           "enabled": true
+          },
+          {
+           "name": "Kreis: nicht ausgefüllt",
+           "enabled": true
+          },
+          {
+           "name": "Verbotsymbol",
+           "enabled": true
+          },
+          {
+           "name": "Halbbogen",
+           "enabled": true
+          },
+          {
+           "name": "Rechteck: gefaltete Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Smiley",
+           "enabled": true
+          },
+          {
+           "name": "Herz",
+           "enabled": true
+          },
+          {
+           "name": "Gewitterblitz",
+           "enabled": true
+          },
+          {
+           "name": "Sonne",
+           "enabled": true
+          },
+          {
+           "name": "Mond",
+           "enabled": true
+          },
+          {
+           "name": "Wolke",
+           "enabled": true
+          },
+          {
+           "name": "Bogen",
+           "enabled": true
+          },
+          {
+           "name": "Runde Klammer links/rechts",
+           "enabled": true
+          },
+          {
+           "name": "Geschweifte Klammer links/rechts",
+           "enabled": true
+          },
+          {
+           "name": "Eckige Klammer links",
+           "enabled": true
+          },
+          {
+           "name": "Eckige Klammer rechts",
+           "enabled": true
+          },
+          {
+           "name": "Geschweifte Klammer links",
+           "enabled": true
+          },
+          {
+           "name": "Geschweifte Klammer rechts",
+           "enabled": true
+          },
+          {
+           "name": "Pfeil: nach rechts",
+           "enabled": true
+          },
+          {
+           "name": "Pfeil: nach links",
+           "enabled": true
+          },
+          {
+           "name": "Pfeil: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Pfeil: nach unten",
+           "enabled": true
+          },
+          {
+           "name": "Pfeil: nach links und rechts",
+           "enabled": true
+          },
+          {
+           "name": "Pfeil: nach oben und unten",
+           "enabled": true
+          },
+          {
+           "name": "Pfeil: in vier Richtungen",
+           "enabled": true
+          },
+          {
+           "name": "Pfeil: nach links, rechts und oben",
+           "enabled": true
+          },
+          {
+           "name": "Pfeil: gebogen",
+           "enabled": true
+          },
+          {
+           "name": "Pfeil: 180-Grad",
+           "enabled": true
+          },
+          {
+           "name": "Pfeil: nach links und oben",
+           "enabled": true
+          },
+          {
+           "name": "Pfeil: nach oben gebogen",
+           "enabled": true
+          },
+          {
+           "name": "Pfeil: nach rechts gekrümmt",
+           "enabled": true
+          },
+          {
+           "name": "Pfeil: nach links gekrümmt",
+           "enabled": true
+          },
+          {
+           "name": "Pfeil: nach oben gekrümmt",
+           "enabled": true
+          },
+          {
+           "name": "Pfeil: nach unten gekrümmt",
+           "enabled": true
+          },
+          {
+           "name": "Pfeil: gestreift nach rechts",
+           "enabled": true
+          },
+          {
+           "name": "Pfeil: eingekerbt nach rechts",
+           "enabled": true
+          },
+          {
+           "name": "Pfeil: Fünfeck",
+           "enabled": true
+          },
+          {
+           "name": "Pfeil: Chevron",
+           "enabled": true
+          },
+          {
+           "name": "Legende: mit Pfeil nach rechts",
+           "enabled": true
+          },
+          {
+           "name": "Legende: mit Pfeil nach unten",
+           "enabled": true
+          },
+          {
+           "name": "Legende: mit Pfeil nach links",
+           "enabled": true
+          },
+          {
+           "name": "Legende: mit Pfeil nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Legende: mit Pfeil nach links und rechts",
+           "enabled": true
+          },
+          {
+           "name": "Legende: mit Pfeil in vier Richtungen",
+           "enabled": true
+          },
+          {
+           "name": "Pfeil: gebogen",
+           "enabled": true
+          },
+          {
+           "name": "Additionszeichen",
+           "enabled": true
+          },
+          {
+           "name": "Minuszeichen",
+           "enabled": true
+          },
+          {
+           "name": "Multiplikationszeichen",
+           "enabled": true
+          },
+          {
+           "name": "Divisionszeichen",
+           "enabled": true
+          },
+          {
+           "name": "Gleich",
+           "enabled": true
+          },
+          {
+           "name": "Ungleich",
+           "enabled": true
+          },
+          {
+           "name": "Flussdiagramm: Prozess",
+           "enabled": true
+          },
+          {
+           "name": "Flussdiagramm: Alternativer Prozess",
+           "enabled": true
+          },
+          {
+           "name": "Flussdiagramm: Verzweigung",
+           "enabled": true
+          },
+          {
+           "name": "Flussdiagramm: Daten",
+           "enabled": true
+          },
+          {
+           "name": "Flussdiagramm: Vordefinierter Prozess",
+           "enabled": true
+          },
+          {
+           "name": "Flussdiagramm: Zentralspeicher",
+           "enabled": true
+          },
+          {
+           "name": "Flussdiagramm: Dokument",
+           "enabled": true
+          },
+          {
+           "name": "Flussdiagramm: Mehrere Dokumente",
+           "enabled": true
+          },
+          {
+           "name": "Flussdiagramm: Grenzstelle",
+           "enabled": true
+          },
+          {
+           "name": "Flussdiagramm: Vorbereitung",
+           "enabled": true
+          },
+          {
+           "name": "Flussdiagramm: Manuelle Eingabe",
+           "enabled": true
+          },
+          {
+           "name": "Flussdiagramm: Manuelle Verarbeitung",
+           "enabled": true
+          },
+          {
+           "name": "Flussdiagramm: Verbinder",
+           "enabled": true
+          },
+          {
+           "name": "Flussdiagramm: Verbinder zu einer anderen Seite",
+           "enabled": true
+          },
+          {
+           "name": "Flussdiagramm: Karte",
+           "enabled": true
+          },
+          {
+           "name": "Flussdiagramm: Lochstreifen",
+           "enabled": true
+          },
+          {
+           "name": "Flussdiagramm: Zusammenführung",
+           "enabled": true
+          },
+          {
+           "name": "Flussdiagramm: Oder",
+           "enabled": true
+          },
+          {
+           "name": "Flussdiagramm: Zusammenstellen",
+           "enabled": true
+          },
+          {
+           "name": "Flussdiagramm: Sortieren",
+           "enabled": true
+          },
+          {
+           "name": "Flussdiagramm: Auszug",
+           "enabled": true
+          },
+          {
+           "name": "Flussdiagramm: Zusammenführen",
+           "enabled": true
+          },
+          {
+           "name": "Flussdiagramm: Gespeicherte Daten",
+           "enabled": true
+          },
+          {
+           "name": "Flussdiagramm: Verzögerung",
+           "enabled": true
+          },
+          {
+           "name": "Flussdiagramm: Datenträger mit sequenziellem Zugriff",
+           "enabled": true
+          },
+          {
+           "name": "Flussdiagramm: Magnetplattenspeicher",
+           "enabled": true
+          },
+          {
+           "name": "Flussdiagramm: Datenträger mit direktem Zugriff",
+           "enabled": true
+          },
+          {
+           "name": "Flussdiagramm: Anzeige",
+           "enabled": true
+          },
+          {
+           "name": "Explosion: 8 Zacken",
+           "enabled": true
+          },
+          {
+           "name": "Explosion: 14 Zacken",
+           "enabled": true
+          },
+          {
+           "name": "Stern: 4 Zacken",
+           "enabled": true
+          },
+          {
+           "name": "Stern: 5 Zacken",
+           "enabled": true
+          },
+          {
+           "name": "Stern: 6 Zacken",
+           "enabled": true
+          },
+          {
+           "name": "Stern: 7 Zacken",
+           "enabled": true
+          },
+          {
+           "name": "Stern: 8 Zacken",
+           "enabled": true
+          },
+          {
+           "name": "Stern: 10 Zacken",
+           "enabled": true
+          },
+          {
+           "name": "Stern: 12 Zacken",
+           "enabled": true
+          },
+          {
+           "name": "Stern: 16 Zacken",
+           "enabled": true
+          },
+          {
+           "name": "Stern: 24 Zacken",
+           "enabled": true
+          },
+          {
+           "name": "Stern: 32 Zacken",
+           "enabled": true
+          },
+          {
+           "name": "Band: nach oben gekippt",
+           "enabled": true
+          },
+          {
+           "name": "Band: nach unten gekippt",
+           "enabled": true
+          },
+          {
+           "name": "Band: nach oben gekrümmt und gekippt",
+           "enabled": true
+          },
+          {
+           "name": "Band: nach unten gekrümmt und gekippt",
+           "enabled": true
+          },
+          {
+           "name": "Scrollen: vertikal",
+           "enabled": true
+          },
+          {
+           "name": "Scrollen: horizontal",
+           "enabled": true
+          },
+          {
+           "name": "Welle",
+           "enabled": true
+          },
+          {
+           "name": "Doppelte Welle",
+           "enabled": true
+          },
+          {
+           "name": "Sprechblase: rechteckig",
+           "enabled": true
+          },
+          {
+           "name": "Sprechblase: rechteckig mit abgerundeten Ecken",
+           "enabled": true
+          },
+          {
+           "name": "Sprechblase: oval",
+           "enabled": true
+          },
+          {
+           "name": "Denkblase: wolkenförmig",
+           "enabled": true
+          },
+          {
+           "name": "Legende: Linie",
+           "enabled": true
+          },
+          {
+           "name": "Legende: mit gebogener Linie",
+           "enabled": true
+          },
+          {
+           "name": "Legende: mit gebogener Doppellinie",
+           "enabled": true
+          },
+          {
+           "name": "Legende: mit Linie mit Akzentuierungsbalken",
+           "enabled": true
+          },
+          {
+           "name": "Legende: mit gebogener Linie mit Akzentuierungsbalken",
+           "enabled": true
+          },
+          {
+           "name": "Legende: mit gebogener Doppellinie mit Akzentuierungsbalken",
+           "enabled": true
+          },
+          {
+           "name": "Legende: mit Linie ohne Rahmen",
+           "enabled": true
+          },
+          {
+           "name": "Legende: mit gebogener Linie ohne Rahmen",
+           "enabled": true
+          },
+          {
+           "name": "Legende: mit gebogener Doppellinie ohne Rahmen",
+           "enabled": true
+          },
+          {
+           "name": "Legende: mit Linie mit Rahmen und Akzentuierungsbalken",
+           "enabled": true
+          },
+          {
+           "name": "Legende: mit gebogener Linie mit Rahmen und Akzentuierungsbalken",
+           "enabled": true
+          },
+          {
+           "name": "Legende: mit gebogener Doppellinie mit Rahmen und Akzentuierungsbalken",
+           "enabled": true
+          }
+         ]
+        },
+        {
+         "name": "Seitenverhältnis",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "1:1",
+           "enabled": true
+          },
+          {
+           "name": "2:3",
+           "enabled": true
+          },
+          {
+           "name": "3:4",
+           "enabled": true
+          },
+          {
+           "name": "3:5",
+           "enabled": true
+          },
+          {
+           "name": "4:5",
+           "enabled": true
+          },
+          {
+           "name": "3:2",
+           "enabled": true
+          },
+          {
+           "name": "4:3",
+           "enabled": true
+          },
+          {
+           "name": "5:3",
+           "enabled": true
+          },
+          {
+           "name": "5:4",
+           "enabled": true
+          },
+          {
+           "name": "16:9",
+           "enabled": true
+          },
+          {
+           "name": "16:10",
+           "enabled": true
+          }
+         ]
+        },
+        {
+         "name": "Ausfüllen",
+         "enabled": true
+        },
+        {
+         "name": "Einpassen",
+         "enabled": true
+        }
+       ]
       },
       {
        "name": "Formenhöhe",
@@ -15188,6 +16026,60 @@
            "enabled": true
           }
          ]
+        },
+        {
+         "name": "Pfeile",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Pfeilart 1",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 2",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 3",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 4",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 5",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 6",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 7",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 8",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 9",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 10",
+           "enabled": true
+          },
+          {
+           "name": "Pfeilart 11",
+           "enabled": true
+          },
+          {
+           "name": "Weitere Pfeile...",
+           "enabled": true
+          }
+         ]
         }
        ]
       },
@@ -17360,6 +18252,10 @@
         {
          "name": "Ganymed",
          "enabled": true
+        },
+        {
+         "name": "Farben anpassen...",
+         "enabled": true
         }
        ]
       },
@@ -17799,6 +18695,10 @@
         {
          "name": "Ganymed",
          "enabled": true
+        },
+        {
+         "name": "Farben anpassen...",
+         "enabled": true
         }
        ]
       },
@@ -18233,6 +19133,10 @@
         },
         {
          "name": "Ganymed",
+         "enabled": true
+        },
+        {
+         "name": "Farben anpassen...",
          "enabled": true
         }
        ]
@@ -20024,25 +20928,28 @@
     "name": "Aufzählungszeichen",
     "items": [
      {
-      "name": "Ohne"
+      "name": "Keine"
      },
      {
-      "name": "Gefüllte runde Aufzählungszeichen"
+      "name": "Ausgefüllte runde Aufzählungszeichen"
      },
      {
-      "name": "Leere runde Aufzählungszeichen"
+      "name": "Hohle runde Aufzählungszeichen"
      },
      {
-      "name": "Gefüllte quadratische Aufzählungszeichen"
+      "name": "Ausgefüllte quadratische Aufzählungszeichen"
      },
      {
-      "name": "Pfeil-Aufzählungszeichen"
+      "name": "Silbentrennung-Aufzählungszeichen"
      },
      {
-      "name": "Häkchen-Aufzählungszeichen"
+      "name": "Sternförmige Aufzählungszeichen"
      },
      {
-      "name": "Gefüllte Raute"
+      "name": "Pfeilförmige Aufzählungszeichen"
+     },
+     {
+      "name": "Häkchenaufzählungszeichen"
      }
     ]
    },
@@ -20050,7 +20957,7 @@
     "name": "Nummerierung",
     "items": [
      {
-      "name": "Ohne"
+      "name": "Keine"
      },
      {
       "name": "1. 2. 3."
@@ -20062,7 +20969,7 @@
       "name": "I. II. III."
      },
      {
-      "name": "A. B. C."
+      "name": "Nummern in Klammern"
      },
      {
       "name": "a) b) c)"
@@ -20072,6 +20979,9 @@
      },
      {
       "name": "i. ii. iii."
+     },
+     {
+      "name": "Aufzählungszeichen und Nummerierung..."
      }
     ]
    },
@@ -20268,25 +21178,28 @@
     "name": "Aufzählungszeichen",
     "items": [
      {
-      "name": "Ohne"
+      "name": "Keine"
      },
      {
-      "name": "Gefüllte runde Aufzählungszeichen"
+      "name": "Ausgefüllte runde Aufzählungszeichen"
      },
      {
-      "name": "Leere runde Aufzählungszeichen"
+      "name": "Hohle runde Aufzählungszeichen"
      },
      {
-      "name": "Gefüllte quadratische Aufzählungszeichen"
+      "name": "Ausgefüllte quadratische Aufzählungszeichen"
      },
      {
-      "name": "Pfeil-Aufzählungszeichen"
+      "name": "Silbentrennung-Aufzählungszeichen"
      },
      {
-      "name": "Häkchen-Aufzählungszeichen"
+      "name": "Sternförmige Aufzählungszeichen"
      },
      {
-      "name": "Gefüllte Raute"
+      "name": "Pfeilförmige Aufzählungszeichen"
+     },
+     {
+      "name": "Häkchenaufzählungszeichen"
      }
     ]
    },
@@ -20294,7 +21207,7 @@
     "name": "Nummerierung",
     "items": [
      {
-      "name": "Ohne"
+      "name": "Keine"
      },
      {
       "name": "1. 2. 3."
@@ -20306,7 +21219,7 @@
       "name": "I. II. III."
      },
      {
-      "name": "A. B. C."
+      "name": "Nummern in Klammern"
      },
      {
       "name": "a) b) c)"
@@ -20316,6 +21229,9 @@
      },
      {
       "name": "i. ii. iii."
+     },
+     {
+      "name": "Aufzählungszeichen und Nummerierung..."
      }
     ]
    },
