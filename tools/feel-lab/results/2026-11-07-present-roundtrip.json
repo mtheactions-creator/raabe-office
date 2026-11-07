@@ -53,10 +53,8 @@
    "diff": []
   },
   "bold part": {
-   "result": "different",
-   "diff": [
-    "box ours [100.0, 100.0, 400.0, 40.0] PowerPoint [100.0, 100.0, 400.0, 29.0]"
-   ]
+   "result": "same",
+   "diff": []
   },
   "size color": {
    "result": "same",
@@ -67,6 +65,18 @@
    "diff": []
   },
   "table": {
+   "result": "same",
+   "diff": []
+  },
+  "table merge": {
+   "result": "same",
+   "diff": []
+  },
+  "table split": {
+   "result": "same",
+   "diff": []
+  },
+  "equation": {
    "result": "same",
    "diff": []
   },
@@ -125,6 +135,6 @@
  },
  "summary": {
   "fixtures": "11/11",
-  "scenarios": "20/21"
+  "scenarios": "24/24"
  }
 }
