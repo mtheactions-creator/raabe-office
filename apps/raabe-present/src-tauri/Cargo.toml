@@ -19,6 +19,8 @@ tauri = { version = "2.12.3", features = [] }
 tauri-plugin-dialog = "2"
 tauri-plugin-clipboard-manager = "2"
 spellbook = "0.4"
+serde = { version = "1", features = ["derive"] }
+flate2 = "1"
 
 [profile.release]
 codegen-units = 1

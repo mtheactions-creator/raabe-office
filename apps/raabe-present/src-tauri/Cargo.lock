@@ -2881,7 +2881,9 @@ dependencies = [
 name = "raabe-present"
 version = "0.1.0"
 dependencies = [
+ "flate2",
  "raabe-host",
+ "serde",
  "spellbook",
  "tauri",
  "tauri-build",

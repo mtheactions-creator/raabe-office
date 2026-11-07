@@ -1770,6 +1770,7 @@ export class PresentApp implements EditorHost, PanelHost {
 
     impl("draw.shapes", () => {});
     impl("insert.shapes", () => {});
+    impl("insert.chart", () => {}, () => !!this.slidePath());
     impl("draw.arrange", () => {});
     impl("draw.fill", () => this.setFill(this.lastFill), shapes);
     impl("draw.outline", () => this.setLine(this.lastLine), shapes);
@@ -1910,6 +1911,7 @@ export class PresentApp implements EditorHost, PanelHost {
     impl("view.grayscale", colorMode("gray"), undefined, () => document.body.classList.contains("view-gray"));
     impl("view.bw", colorMode("bw"), undefined, () => document.body.classList.contains("view-bw"));
     impl("review.language", () => {}, () => !!this.slidePath());
+    impl("review.thesaurus", () => import("./thesaurus").then((m) => m.thesaurusDialog(this)), () => !!this.slidePath());
     impl("review.setLanguage", () => import("./review").then((m) => m.languageDialog(this)), () => !!this.slidePath());
     impl("review.accessibility", () => import("./review").then((m) => m.accessibilityCheck(this)), () => this.deck.slides.length > 0);
     impl("anim.add", () => {}, () => this.editor.sel.length > 0);
@@ -2177,6 +2179,7 @@ export class PresentApp implements EditorHost, PanelHost {
     if (e.altKey && shift && !e.ctrlKey && e.code === "Digit0") return run("insert.equation");
     if (k === "F12") return run("file.saveAs");
     if (k === "F7" && !shift) return run("review.spelling");
+    if (k === "F7" && shift && !ctrl) return run("review.thesaurus");
     if (this.painter && k === "Escape") { this.painter = null; document.body.classList.remove("painting"); this.updateChrome(); return true; }
     if (!ctrl) return false;
     const key = k.length === 1 ? k.toLowerCase() : k;
