@@ -262,3 +262,6 @@ body.view-bw .slide { filter: grayscale(1) contrast(4) brightness(1.2); }
 .wa-grid { display: grid; grid-template-columns: repeat(5, 48px); gap: 6px; }
 .wa-item { height: 48px; display: flex; align-items: center; justify-content: center; background: #fff; border: 1px solid transparent; cursor: pointer; }
 .wa-item:hover { border-color: #f5b56e; }
+
+/* Animationspfade in the editing view (D-072). */
+.overlay .motion-path { position: absolute; left: 0; top: 0; pointer-events: none; overflow: visible; }

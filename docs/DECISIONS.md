@@ -1782,3 +1782,8 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   fractions of the slide); the curves of Bögen, Wendungen, Formen and Schleifen are our own; the path is not
   drawn in the editing view yet; Benutzerdefinierter Pfad (drawing one) is open.
 - **WordArt styles:** PowerPoint's 20 names with the design's colour words; bevels not drawn.
+- **Found by the UI screenshots:** several commands had no implementation behind them and stayed greyed
+  (Übergänge > Dauer, Bei Mausklick, Nach, Auf alle anwenden, Sound; Animationen > Dauer, Verzögerung; the
+  Layout, Abschnitt, Markieren, Farben and Schriftarten dropdowns; Gruppierung wiederherstellen). They work
+  now; Rahmen (13 entries) and Texteffekte (Schatten, Spiegelung, Leuchten; no 3-D) were added, and in the
+  Folienmaster Titel, Fußzeilen and Beibehalten.

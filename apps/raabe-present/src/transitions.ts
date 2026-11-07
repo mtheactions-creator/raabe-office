@@ -219,3 +219,52 @@ export function transitionSound(app: PresentApp, path: string): { media?: string
   const media = rid ? app.deck.pptx.target(path, rid) : undefined;
   return media ? { media, loop: st?.getAttribute("loop") === "1" } : null;
 }
+
+// ----- Anzeigedauer: Bei Mausklick, Nach, Auf alle anwenden (D-072) ----------------------------------------
+
+function selectedPaths(app: PresentApp): string[] {
+  return [...app.panel.selected].map((i) => app.deck.slides[i]?.path).filter((p): p is string => !!p);
+}
+
+function eachTransition(app: PresentApp, label: string, fn: (tr: Element) => void): void {
+  const deck = app.deck, paths = selectedPaths(app);
+  deck.change(label, paths, () => {
+    for (const p of paths) {
+      const root = deck.pptx.doc(p).documentElement;
+      if (!transitionOf(root).el) root.insertBefore(fragment(root.ownerDocument, "<p:transition/>")[0], kid(root, "timing") ?? kid(root, "extLst") ?? null);
+      for (const tr of Array.from(root.getElementsByTagNameNS(NS_P, "transition"))) fn(tr);
+    }
+  });
+}
+
+export function advanceOnClick(app: PresentApp): boolean {
+  const p = app.slidePath();
+  return !p || transitionOf(app.deck.pptx.doc(p).documentElement).el?.getAttribute("advClick") !== "0";
+}
+export function setAdvanceOnClick(app: PresentApp, on: boolean): void {
+  eachTransition(app, "Bei Mausklick", (tr) => { if (on) tr.removeAttribute("advClick"); else tr.setAttribute("advClick", "0"); });
+}
+export function advanceAfter(app: PresentApp): boolean {
+  const p = app.slidePath();
+  return !!p && !!transitionOf(app.deck.pptx.doc(p).documentElement).el?.hasAttribute("advTm");
+}
+export function setAdvanceAfterOn(app: PresentApp, on: boolean): void {
+  eachTransition(app, "Nach", (tr) => { if (on) { if (!tr.hasAttribute("advTm")) tr.setAttribute("advTm", "0"); } else tr.removeAttribute("advTm"); });
+}
+
+/** Auf alle anwenden: the current slide's transition (effect, duration, sound, Anzeigedauer) on every slide. */
+export function applyToAll(app: PresentApp): void {
+  const deck = app.deck, cur = app.slidePath();
+  if (!cur) return;
+  const src = transitionOf(deck.pptx.doc(cur).documentElement);
+  const node = src.wrap ?? src.el;
+  const paths = deck.slides.map((s) => s.path).filter((p) => p !== cur);
+  deck.change("Auf alle anwenden", paths, () => {
+    for (const p of paths) {
+      const root = deck.pptx.doc(p).documentElement;
+      const { el, wrap } = transitionOf(root);
+      (wrap ?? el)?.remove();
+      if (node) root.insertBefore(root.ownerDocument.importNode(node, true), kid(root, "timing") ?? kid(root, "extLst") ?? null);
+    }
+  });
+}

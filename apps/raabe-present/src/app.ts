@@ -2,7 +2,7 @@
 // presentation is a document tab (D-010) shown in Normalansicht: the slide panel at the left, the
 // slide in the middle, the notes below. Files are .pptx; everything not edited is kept (D-024).
 
-import { Pptx, newPptx, PptxDom, type ShapeView, type DesignSpec } from "@raabe/ooxml";
+import { Pptx, newPptx, PptxDom, phOf, type ShapeView, type DesignSpec } from "@raabe/ooxml";
 import {
   Backstage, Commands, Keytips, Ribbon, TitleBar, baseName, colorGrid, h, icon, installTooltips, messageBox, showDialog, showMenu, showPopup, closePopup,
   type BackstageEntry, type Control, type Group, type MenuEntry, type Platform, type Tab,
@@ -336,6 +336,15 @@ export class PresentApp implements EditorHost, PanelHost {
 
   commentMarkers(path: string): { x: number; y: number; n: number }[] {
     return this.comments?.markers(path) ?? [];
+  }
+
+  motionPaths(path: string, id: number): string[] {
+    const root = this.deck.pptx.doc(path).documentElement;
+    const timing = kid(root, "timing");
+    if (!timing) return [];
+    return Array.from(timing.getElementsByTagNameNS(PptxDom.NS_P, "animMotion"))
+      .filter((m) => m.getElementsByTagNameNS(PptxDom.NS_P, "spTgt")[0]?.getAttribute("spid") === String(id))
+      .map((m) => m.getAttribute("path") ?? "").filter(Boolean);
   }
 
   goSlide(key: "PageDown" | "PageUp" | "Home" | "End"): void {
@@ -915,6 +924,30 @@ export class PresentApp implements EditorHost, PanelHost {
     ed.select([gid]);
   }
 
+  /** The members of the group last taken apart (Gruppierung wiederherstellen). */
+  private lastUngrouped: number[] = [];
+
+  /** Puts the master's placeholders of these types on a layout, or takes them off (Folienmaster > Titel, Fußzeilen). */
+  private toggleLayoutPh(layout: string | undefined, types: string[]): void {
+    if (!layout) return;
+    const master = this.deck.pptx.masterOf(layout);
+    if (!master) return;
+    this.deck.change(types.includes("title") ? "Titel" : "Fußzeilen", [layout], () => {
+      const doc = this.deck.pptx.doc(layout);
+      const tree = S.treeOf(doc);
+      const mine = S.shapeEls(tree).filter((sp) => types.includes(phOf(sp)?.type ?? ""));
+      if (mine.length) { for (const sp of mine) sp.remove(); return; }
+      let next = S.maxId(tree);
+      for (const sp of S.shapeEls(S.treeOf(this.deck.pptx.doc(master)))) {
+        if (!types.includes(phOf(sp)?.type ?? "")) continue;
+        const copy = doc.importNode(sp, true) as Element;
+        S.renumber(copy, () => ++next);
+        tree.append(copy);
+      }
+    });
+    this.editor.render(); this.panel.render(); this.updateChrome();
+  }
+
   private ungroup(): void {
     const ed = this.editor;
     const groups = ed.selectedViews.filter((v) => v.kind === "grpSp");
@@ -934,6 +967,7 @@ export class PresentApp implements EditorHost, PanelHost {
         g.remove();
       }
     });
+    this.lastUngrouped = members;
     ed.select(members);
   }
 
@@ -1747,6 +1781,17 @@ export class PresentApp implements EditorHost, PanelHost {
     impl("arrange.backward", () => this.order("backward"), shapes);
     impl("arrange.group", () => this.group(), () => this.editor.sel.length > 1);
     impl("arrange.ungroup", () => this.ungroup(), () => this.editor.selectedViews.some((v) => v.kind === "grpSp"));
+    // Gruppierung wiederherstellen: the shapes last ungrouped, grouped again (while they are all still there).
+    impl("arrange.regroup", () => { this.editor.select(this.lastUngrouped); this.group(); }, () => this.lastUngrouped.length > 1 && this.lastUngrouped.every((id) => !!this.editor.shapeView(id)));
+    // Dropdowns whose menus do the work (they were greyed without a command).
+    for (const id of ["slide.layout", "slide.section", "edit.select", "design.colors", "design.fonts"]) impl(id, () => {}, () => !!this.slidePath());
+    // Folienmaster > Masterlayout: Titel and Fußzeilen on the layout; Master bearbeiten > Beibehalten.
+    const layoutPath = () => (this.masterMode && this.masterKind === "slides" && this.masterIndex > 0 ? this.masterList()[this.masterIndex] : undefined);
+    const hasPh = (types: string[]) => { const p = layoutPath(); return !!p && Array.from(this.deck.pptx.doc(p).getElementsByTagNameNS(PptxDom.NS_P, "ph")).some((x) => types.includes(x.getAttribute("type") ?? "")); };
+    impl("master.title", () => this.toggleLayoutPh(layoutPath(), ["title"]), () => !!layoutPath(), () => hasPh(["title"]));
+    impl("master.footers", () => this.toggleLayoutPh(layoutPath(), ["dt", "ftr", "sldNum"]), () => !!layoutPath(), () => hasPh(["dt", "ftr", "sldNum"]));
+    const masterRoot = () => { const m = this.deck.pptx.masters()[0]; return m ? this.deck.pptx.doc(m).documentElement : null; };
+    impl("master.preserve", () => { const m = this.deck.pptx.masters()[0]; if (!m) return; const on = masterRoot()?.getAttribute("preserve") === "1"; this.deck.change("Beibehalten", [m], () => { const r = this.deck.pptx.doc(m).documentElement; if (on) r.removeAttribute("preserve"); else r.setAttribute("preserve", "1"); }); this.updateChrome(); }, () => this.masterMode, () => masterRoot()?.getAttribute("preserve") === "1");
     impl("arrange.align", () => {}, shapes);
     impl("arrange.rotate", () => {}, shapes);
     for (const [id, k] of [["arrange.alignLeft", "l"], ["arrange.alignCenter", "c"], ["arrange.alignRight", "r"], ["arrange.alignTop", "t"], ["arrange.alignMiddle", "m"], ["arrange.alignBottom", "b"]] as const) impl(id, () => this.alignShapes(k), shapes);
@@ -1870,6 +1915,15 @@ export class PresentApp implements EditorHost, PanelHost {
     impl("anim.add", () => {}, () => this.editor.sel.length > 0);
     impl("anim.gallery", () => {}, () => this.editor.sel.length > 0);
     impl("trans.gallery", () => {}, () => !!this.slidePath());
+    const slide = () => !!this.slidePath();
+    impl("trans.sound", () => {}, slide);
+    impl("trans.duration", () => {}, slide);
+    impl("trans.afterTime", () => {}, slide);
+    impl("trans.applyAll", () => this.transMod?.applyToAll(this), slide);
+    impl("trans.onClick", () => this.transMod?.setAdvanceOnClick(this, !this.transMod.advanceOnClick(this)), slide, () => this.transMod?.advanceOnClick(this) ?? true);
+    impl("trans.after", () => this.transMod?.setAdvanceAfterOn(this, !this.transMod.advanceAfter(this)), slide, () => this.transMod?.advanceAfter(this) ?? false);
+    impl("anim.duration", () => {}, () => this.selectedHasAnimation());
+    impl("anim.delay", () => {}, () => this.selectedHasAnimation());
     impl("anim.start", () => {}, () => this.selectedHasAnimation());
     impl("anim.earlier", () => this.moveAnimation(-1), () => this.selectedHasAnimation());
     impl("anim.later", () => this.moveAnimation(1), () => this.selectedHasAnimation());
@@ -2432,10 +2486,20 @@ export class PresentApp implements EditorHost, PanelHost {
     return grid;
   }
 
-  animationDuration(): string { return "00,50"; }
+  /** The selected shape's first effect: its duration and its delay (as PowerPoint shows them). */
+  private selectedEffectTiming(): { dur: number; delay: number } | null {
+    const p = this.slidePath();
+    if (!p) return null;
+    const e = effects(this.deck.pptx.doc(p).documentElement).list.find((x) => this.editor.sel.includes(x.spid));
+    if (!e) return null;
+    const durs = Array.from(e.ctn.getElementsByTagNameNS(PptxDom.NS_P, "cTn")).map((x) => Number(x.getAttribute("dur") ?? 0)).filter((d) => Number.isFinite(d) && d > 1);
+    const delay = Number(e.ctn.getElementsByTagNameNS(PptxDom.NS_P, "cond")[0]?.getAttribute("delay") ?? 0) || 0;
+    return { dur: durs.length ? Math.max(...durs) : 500, delay };
+  }
+  animationDuration(): string { return ((this.selectedEffectTiming()?.dur ?? 500) / 1000).toFixed(2).padStart(5, "0").replace(".", ","); }
   setAnimationDuration(v: string): void { void import("./animations").then((m) => m.setDuration(this, parseSeconds(v))); }
   stepAnimationDuration(d: 1 | -1): void { void import("./animations").then((m) => m.setDuration(this, Math.max(0.01, parseSeconds(this.animationDuration()) + d * 0.25))); }
-  animationDelay(): string { return "00,00"; }
+  animationDelay(): string { return ((this.selectedEffectTiming()?.delay ?? 0) / 1000).toFixed(2).padStart(5, "0").replace(".", ","); }
   setAnimationDelay(v: string): void { void import("./animations").then((m) => m.setDelay(this, parseSeconds(v))); }
   stepAnimationDelay(d: 1 | -1): void { void import("./animations").then((m) => m.setDelay(this, Math.max(0, parseSeconds(this.animationDelay()) + d * 0.25))); }
 

@@ -31,6 +31,8 @@ export function contextHost(app: PresentApp): ContextTabHost {
     quickStyleTiles: () => quickStyleTiles(app),
     picStyleTiles: () => picStyleTiles(app),
     tableStyleTiles: () => tableStyleTiles(app),
+    tableBorders: () => tableBorders(app),
+    textEffects: () => textEffects(app),
     wordArtTiles: () => wordArtTiles(app),
     // Textrichtung and Zellenbegrenzungen of the cells (the one being edited, the range, else all), as PowerPoint's entries.
     cellDirections: () => ([["Horizontal", null], ["Text um 90° drehen", "vert"], ["Text um 270° drehen", "vert270"], ["Gestapelt", "wordArtVert"]] as [string, string | null][])
@@ -161,6 +163,84 @@ function cellPr(app: PresentApp, label: string, fn: (pr: Element) => void): void
       fn(pr);
     }
   });
+}
+
+/**
+ * Tabellenentwurf > Rahmen (PowerPoint's 13 entries): the cells' own lines (a:lnL ... a:lnBlToTr) over the
+ * cell range being edited, the cell, or the whole table, in the pen colour.
+ */
+const LINE_TAGS = ["lnL", "lnR", "lnT", "lnB", "lnTlToBr", "lnBlToTr"];
+function setCellLine(pr: Element, tag: string, color: string | null): void {
+  kid(pr, tag)?.remove();
+  const el = fragment(pr.ownerDocument, color ? `<a:${tag} w="12700" cap="flat" cmpd="sng" algn="ctr"><a:solidFill><a:srgbClr val="${color}"/></a:solidFill><a:prstDash val="solid"/><a:round/></a:${tag}>` : `<a:${tag} w="12700" cmpd="sng"><a:noFill/></a:${tag}>`)[0];
+  const after = LINE_TAGS.slice(LINE_TAGS.indexOf(tag) + 1);
+  const before = kids(pr).find((c) => after.includes(c.localName) || !LINE_TAGS.includes(c.localName)) ?? null;
+  pr.insertBefore(el, before);
+}
+
+export function tableBorders(app: PresentApp): MenuEntry[] {
+  const apply = (label: string, sides: (edge: { top: boolean; bottom: boolean; left: boolean; right: boolean }) => Partial<Record<string, boolean | null>>) => () => {
+    const t = tableOf(app);
+    if (!t) return;
+    const rows = kids(t.tbl, "tr"), cols = kids(rows[0], "tc").length;
+    const x = app.editor.text?.range, c = app.editor.text?.cell;
+    const blk = x ?? (c ? { r0: c.r, c0: c.c, r1: c.r, c1: c.c } : { r0: 0, c0: 0, r1: rows.length - 1, c1: cols - 1 });
+    const color = app.ribbonContext().lineColor().replace("#", "").toUpperCase();
+    app.editor.edit(label, () => {
+      rows.forEach((tr, r) => kids(tr, "tc").forEach((tc, ci) => {
+        if (r < blk.r0 || r > blk.r1 || ci < blk.c0 || ci > blk.c1) return;
+        let pr = kid(tc, "tcPr");
+        if (!pr) { pr = make(tc.ownerDocument, "a:tcPr"); tc.append(pr); }
+        const want = sides({ top: r === blk.r0, bottom: r === blk.r1, left: ci === blk.c0, right: ci === blk.c1 });
+        for (const [tag, on] of Object.entries(want)) if (on !== undefined) setCellLine(pr, tag, on ? color : null);
+      }));
+    });
+  };
+  const all = { lnL: true, lnR: true, lnT: true, lnB: true };
+  return [
+    { label: "Kein Rahmen", run: apply("Rahmen", () => ({ lnL: false, lnR: false, lnT: false, lnB: false })) },
+    { label: "Alle Rahmenlinien", run: apply("Rahmen", () => all) },
+    { label: "Rahmenlinien außen", run: apply("Rahmen", (e) => ({ lnL: e.left || undefined, lnR: e.right || undefined, lnT: e.top || undefined, lnB: e.bottom || undefined })) },
+    { label: "Rahmenlinien innen", run: apply("Rahmen", (e) => ({ lnL: !e.left || undefined, lnR: !e.right || undefined, lnT: !e.top || undefined, lnB: !e.bottom || undefined })) },
+    { label: "Rahmenlinie oben", run: apply("Rahmen", (e) => ({ lnT: e.top || undefined })) },
+    { label: "Rahmenlinie unten", run: apply("Rahmen", (e) => ({ lnB: e.bottom || undefined })) },
+    { label: "Rahmenlinie links", run: apply("Rahmen", (e) => ({ lnL: e.left || undefined })) },
+    { label: "Rahmenlinie rechts", run: apply("Rahmen", (e) => ({ lnR: e.right || undefined })) },
+    { label: "Horizontale Rahmenlinie innen", run: apply("Rahmen", (e) => ({ lnT: !e.top || undefined, lnB: !e.bottom || undefined })) },
+    { label: "Vertikale Rahmenlinie innen", run: apply("Rahmen", (e) => ({ lnL: !e.left || undefined, lnR: !e.right || undefined })) },
+    { label: "Rahmenlinien diagonal nach unten", run: apply("Rahmen", () => ({ lnTlToBr: true })) },
+    { label: "Rahmenlinien diagonal nach oben", run: apply("Rahmen", () => ({ lnBlToTr: true })) },
+  ];
+}
+
+/** Texteffekte (WordArt-Formate): Schatten, Spiegelung, Leuchten on the text's runs (a:effectLst in a:rPr). */
+export function textEffects(app: PresentApp): MenuEntry[] {
+  const ORDER = ["blur", "fillOverlay", "glow", "innerShdw", "outerShdw", "prstShdw", "reflection", "softEdge"];
+  const set = (label: string, tag: string, xml: string | null) => () => app.formatText(label, (r) => {
+    let fx = kid(r, "effectLst");
+    if (!fx) {
+      fx = make(r.ownerDocument, "a:effectLst");
+      const after = kids(r).find((c) => !["ln", "noFill", "solidFill", "gradFill", "pattFill", "blipFill", "grpFill"].includes(c.localName)) ?? null;
+      r.insertBefore(fx, after);
+    }
+    kid(fx, tag)?.remove();
+    if (xml) {
+      const el = fragment(r.ownerDocument, xml)[0];
+      const next = kids(fx).find((c) => ORDER.indexOf(c.localName) > ORDER.indexOf(tag)) ?? null;
+      fx.insertBefore(el, next);
+    }
+    if (!fx.children.length) fx.remove();
+  });
+  const sh = (dir: number, name: string) => ({ label: name, run: set("Schatten", "outerShdw", `<a:outerShdw blurRad="38100" dist="38100" dir="${dir}" algn="tl" rotWithShape="0"><a:prstClr val="black"><a:alpha val="40000"/></a:prstClr></a:outerShdw>`) });
+  return [
+    { label: "Schatten", submenu: [{ label: "Kein Schatten", run: set("Schatten", "outerShdw", null) }, sh(2700000, "Außen: Versatz unten rechts"), sh(5400000, "Außen: Versatz unten"), sh(8100000, "Außen: Versatz unten links"), sh(0, "Außen: Versatz rechts")] },
+    { label: "Spiegelung", submenu: [{ label: "Keine Spiegelung", run: set("Spiegelung", "reflection", null) },
+      { label: "Enge Spiegelung: Berührung", run: set("Spiegelung", "reflection", '<a:reflection blurRad="6350" stA="55000" endA="300" endPos="45500" dir="5400000" sy="-100000" algn="bl" rotWithShape="0"/>') },
+      { label: "Halbe Spiegelung: Berührung", run: set("Spiegelung", "reflection", '<a:reflection blurRad="6350" stA="50000" endA="300" endPos="55000" dir="5400000" sy="-100000" algn="bl" rotWithShape="0"/>') }] },
+    { label: "Leuchten", submenu: [{ label: "Kein Leuchten", run: set("Leuchten", "glow", null) },
+      ...[1, 2, 3, 4, 5, 6].map((n) => ({ label: `Leuchten: 8 Pt.; Akzentfarbe ${n}`, run: set("Leuchten", "glow", `<a:glow rad="101600"><a:schemeClr val="accent${n}"><a:alpha val="40000"/></a:schemeClr></a:glow>`) }))] },
+    { label: "Abschrägung", disabled: true, submenu: [] }, { label: "3D-Drehung", disabled: true, submenu: [] }, { label: "Transformieren", disabled: true, submenu: [] },
+  ];
 }
 
 export function tableAnchor(app: PresentApp, anchor: "t" | "ctr" | "b"): void {
@@ -308,6 +388,8 @@ export function implementContext(app: PresentApp): void {
   impl("table.deleteMenu", () => {}, table);
   impl("table.select", () => {}, table);
   impl("table.styles", () => {}, table);
+  impl("table.borders", () => {}, table);
+  impl("wordart.effects", () => {}, () => shapes() || !!app.editor.text);
   impl("table.direction", () => {}, table);
   impl("table.margins", () => {}, table);
   impl("pic.quickStyles", () => {}, pic);

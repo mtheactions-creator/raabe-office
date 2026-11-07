@@ -13,6 +13,7 @@ import { presetAdjust, presetGeometry, shapeTextRect } from "@raabe/text-engine"
 import * as T from "./textops";
 import * as TC from "./tablecells";
 import { removeShapeEl } from "./equations";
+import { samplePath } from "./animations";
 import * as S from "./shapeops";
 import type { Pos } from "./textops";
 
@@ -33,6 +34,8 @@ export interface EditorHost {
   /** Comment markers of a slide (slide coordinates in EMU). */
   commentMarkers?(path: string): { x: number; y: number; n: number }[];
   toolDone(): void;
+  /** Motion paths of a shape (PowerPoint notation), drawn while it is selected. */
+  motionPaths?(path: string, id: number): string[];
   /** Bild ab / Bild auf, Pos1, Ende with nothing selected: another slide (PowerPoint). */
   goSlide?(key: "PageDown" | "PageUp" | "Home" | "End"): void;
 }
@@ -268,6 +271,8 @@ export class SlideEditor {
     if (!this.view) return;
     const views = this.selectedViews;
     views.forEach((v, i) => this.overlay.append(this.frameEl(v, this.text?.id === v.id, i === 0 || views.length > 1)));
+    // Animationspfade of the selected shapes: a dotted line from the shape's centre, green start, red end (as PowerPoint).
+    for (const v of views) for (const mp of (this.path && this.host.motionPaths?.(this.path, v.id)) || []) this.overlay.append(this.motionPathEl(v, mp));
     for (const m of this.path && this.host.commentMarkers ? this.host.commentMarkers(this.path) : []) {
       const el = h("div", "comment-marker");
       el.textContent = String(m.n);
@@ -275,6 +280,23 @@ export class SlideEditor {
       el.style.top = `${(m.y / EMU_PX) * this.scale}px`;
       this.overlay.append(el);
     }
+  }
+
+  private motionPathEl(v: ShapeView, path: string): SVGSVGElement {
+    const size = this.pageSize, s = this.scale;
+    const w = (size.cx / EMU_PX) * s, hh = (size.cy / EMU_PX) * s;
+    const cx = ((v.x + v.w / 2) / EMU_PX) * s, cy = ((v.y + v.h / 2) / EMU_PX) * s;
+    const pts = samplePath(path).map(([x, y]) => `${(cx + x * w).toFixed(1)},${(cy + y * hh).toFixed(1)}`);
+    const NS = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(NS, "svg");
+    svg.setAttribute("class", "motion-path");
+    svg.setAttribute("width", String(w)); svg.setAttribute("height", String(hh));
+    const line = document.createElementNS(NS, "polyline");
+    line.setAttribute("points", pts.join(" ")); line.setAttribute("fill", "none"); line.setAttribute("stroke", "#7f7f7f"); line.setAttribute("stroke-dasharray", "3 3");
+    svg.append(line);
+    const end = (p: string, color: string) => { const [x, y] = p.split(",").map(Number); const c = document.createElementNS(NS, "circle"); c.setAttribute("cx", String(x)); c.setAttribute("cy", String(y)); c.setAttribute("r", "4"); c.setAttribute("fill", color); svg.append(c); };
+    end(pts[0], "#00b050"); end(pts[pts.length - 1], "#ff0000");
+    return svg;
   }
 
   // ----- caret -----------------------------------------------------------------------------------------
