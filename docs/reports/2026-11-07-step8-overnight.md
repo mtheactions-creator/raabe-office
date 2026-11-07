@@ -11,18 +11,18 @@ PowerPoint of our own (invisible through COM, or with real input under the lock)
 way and compared automatically. PowerPoint runs as one process per user, so every probe first checked
 that no POWERPNT.EXE was running and worked only on presentations it created (CLAUDE.md, D-070).
 
-## Numbers (final run, @FINALTIME@)
+## Numbers (final run, 06:06-06:21, one build, commit 76a6c51)
 
 | Measure | Result | Target |
 |---|---|---|
-| P1 behaviour catalogue (`catalogue_present.py`, the same real input in PowerPoint and RaabePresent) | run 1: 99/307 · run 2: 270/336 · run 3: 305/336 · with caret keys: 337/370 · with AutoKorrektur: 344/377 · rotation and drag start measured: 355/377 · final: **@CAT@** (91 %) | 100 % |
-| P2 round trips with PowerPoint (`check_present_roundtrip.py`) | fixtures **@FIX@** (both designs), scenarios **@RT@** the same (first count tonight 24; every feature added after midnight got a scenario PowerPoint checks) | all the same |
-| P3 slide rendering against PowerPoint's PNG export | mean **@RENDER@** of 255 | below 3 |
-| P4 line starts against PowerPoint (`check_present_lines.py`) | **@LINES@** (Office 2013-2022 design) | 100 % |
-| P5 inventory coverage (`inventory_report_present.py`) | **@INV@** of 4511 controls and entries (first count tonight 1757). Measured in PowerPoint's default colours (see below) | everything but the cloud |
+| P1 behaviour catalogue (`catalogue_present.py`, the same real input in PowerPoint and RaabePresent) | run 1: 99/307 · run 2: 270/336 · run 3: 305/336 · with caret keys: 337/370 · with AutoKorrektur: 344/377 · rotation and drag start measured: 355/377 · final: **356/377** (94 %) | 100 % |
+| P2 round trips with PowerPoint (`check_present_roundtrip.py`) | fixtures **22/22** (both designs), scenarios **54/54** the same (first count tonight 24; every feature added after midnight got a scenario PowerPoint checks) | all the same |
+| P3 slide rendering against PowerPoint's PNG export | mean **2.75 (28 slides)** of 255 | below 3 |
+| P4 line starts against PowerPoint (`check_present_lines.py`) | **127/127 (Aptos design 112/116)** (Office 2013-2022 design) | 100 % |
+| P5 inventory coverage (`inventory_report_present.py`) | **3895 (86 %)** of 4511 controls and entries (first count tonight 1757). Measured in PowerPoint's default colours (see below) | everything but the cloud |
 | Picture effects against PowerPoint's own pictures (`results/2026-11-07-present-picfx-compare.json`) | Sättigung 0.0-0.2 of 255, Temperatur below 1, Weichzeichnen 0.08, Schärfen 0.38; Hintergrund entfernen the same pixels as PowerPoint on the probe's picture; artistic effects 0.5-48 (our own drawing) | for looking at |
 | Speed, 149 slides with pictures (dev build) | open 70 ms, change slide 23 ms, duplicate 20 slides 89 ms | for looking at |
-| Unit tests, type check | **@TESTS@** passed (5 skipped), type check clean, all apps | green |
+| Unit tests, type check | **623** passed (5 skipped), type check clean, all apps | green |
 
 ### What the catalogue taught (D-072)
 - What a click hits: the letters of a text start editing and a drag from them selects text, by whole words
@@ -38,13 +38,20 @@ that no POWERPNT.EXE was running and worked only on presentations it created (CL
   20 steps is lost); frames selected already and size handles move by the whole way. Both are copied now.
 
 ### Remaining differences, and why
-@REMAINING@
+Of the 21 cases that differ: 10 size-handle cases 0.5-2 pt apart (with Umschalt or Strg, where PowerPoint
+counts a little less of the pointer's way; and the Strg copy of a text box, which PowerPoint places 6 pt
+higher) and one edge drag 1.8 pt apart; 6 Strg+Z cases where PowerPoint's undo includes the harness's own COM
+set-up (a harness matter); the text box rotation 1.3 degrees apart; Umschalt+Ende (PowerPoint's COM counts
+the paragraph mark); a pasted text box that PowerPoint puts into text editing; the click on a group member
+(the harness's group set-up differs between the two sides).
 
 ### The inventory, and how it is measured
 PowerPoint was recorded in its default design (Office, Aptos colours: "Dunkelblaugrün, Akzent 1"). Our
 untitled presentation starts in Office 2013-2022, so colour entries had other names. The harness now applies
 the Office colour set before reading our controls; with that, and with the palettes now showing the design's
-colours (a real fix, below), coverage rose from 65 % to 80 %. The rest is mostly what is left out on purpose:
+colours (a real fix, below), coverage rose from 65 % to 80 %. After 05:00 the gaps the report listed were
+closed where they were not cloud or Microsoft content (86 %); 66 of those entries came from a counting fix
+(two controls of one name, the parts of a split button), the rest from features. The rest is mostly what is left out on purpose:
 SmartArt creation (21 + 38 + 43 + 14 entries), PowerPoint's own designs (32 + 39 × 3), theme effects (15 × 4),
 transition sounds (21), Microsoft textures, chart and SmartArt styles, the Aufzeichnen tab and cloud features.
 
@@ -71,7 +78,12 @@ transition sounds (21), Microsoft textures, chart and SmartArt styles, the Aufze
   Gliederung; pasted slides keep their pictures; **equations edited in place with a caret** (RaabeWrite's
   editor model); SmartArt texts editable (Textbereich) and SmartArt In Formen / In Text konvertieren; notes
   keep their formatting when edited; Freihand zu Form and Lassoauswahl; Exportieren as PNG or JPEG; Benutzerdefinierte Bildschirmpräsentation;
-  the Pipette.
+  the Pipette; Formkontur > Skizziert (PowerPoint's format recorded by a probe); Tabellenentwurf > Effekte;
+  Textfüllung (Keine Füllung, Farbverlauf); Schriftarten anpassen and Farben des Foliendesigns zurücksetzen; Bild
+  und Größe zurücksetzen, Bild ändern > Aus Zwischenablage; SmartArt's context menu; the rotation handle and the
+  start of a drag as measured in PowerPoint.
+- **Two bugs found and fixed after 05:00:** Tabellenentwurf > Schattierung and Fülleffekt/Formkontur on a chart
+  did nothing; both now work and a round-trip scenario checks each in PowerPoint.
 - **Exe and installer:** `apps/raabe-present/src-tauri/target/release/raabe-present.exe` and the NSIS
   installer in `target/release/bundle/nsis/` (built at the end of the run).
 
@@ -120,6 +132,13 @@ D-071 and D-072 hold them with reasons. In short:
 32. Formkontur > Pfeile: eleven Pfeilarten by name from knowledge (the inventory did not open that submenu).
 33. Exported slide pictures go beside the chosen name ("Name-Folie1.png"), not into a folder.
 34. Notes are still edited as plain text, but unchanged paragraphs keep their formatting.
+35. Pipette takes the colour of our own drawing of the slide; no live preview beside the pointer.
+36. Skizziert is drawn by a displacement of our own (PowerPoint's sketch drawing is not documented).
+37. Text gradients and table cell bevels are written as PowerPoint writes them but drawn plainly by us.
+38. Drags: a shape body moves from the pointer's first movement (PowerPoint's way, measured); the rotation
+    handle sits 31 px above the frame and Umschalt snaps to the last 15-degree step passed (measured).
+39. The inventory counts two controls of one name together and the parts of a split button (66 entries).
+40. Colours picked for a chart's Diagrammbereich are written as RGB (the chart model keeps RGB colours).
 
 ## Not done (open)
 - SmartArt: creating it, layouts, styles, adding shapes (see 27).

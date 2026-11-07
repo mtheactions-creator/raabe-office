@@ -79,8 +79,8 @@ Formen and Textfelder (8/8 both ways with Excel), PivotTables (8/8 computed, 8/8
 Agreed with the owner on 2026-11-06 (D-070): everything PowerPoint offers except the cloud, measured
 against PowerPoint (behaviour catalogue, round trips, slide renders, inventory coverage). **Overnight run 2026-11-06/07**
 (D-071, D-072, report `docs/reports/2026-11-07-step8-overnight.md`): packages A-F built; behaviour catalogue
-@CAT@, round trips with PowerPoint 22/22 fixtures and @RT@ scenarios, slide renders 2.75 of 255, line starts
-127/127, inventory @INV@ of 4511. Open: SmartArt creation, Formeloptionen, text warps drawn, second-monitor
+356/377, round trips with PowerPoint 22/22 fixtures and 54/54 scenarios, slide renders 2.75 of 255, line starts
+127/127, inventory 3895 of 4511. Open: SmartArt creation, Formeloptionen, text warps drawn, second-monitor
 Referentenansicht, formatted notes, Video/GIF export. The original
 proposal of 2026-10-27, kept for reference: Packages as in Step 4b: A. PowerPoint reference side for the harness (fixtures built by
 PowerPoint, line positions through COM, slides exported as PDF/PNG) and `apps/raabe-present`;
