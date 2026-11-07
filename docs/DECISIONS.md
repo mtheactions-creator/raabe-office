@@ -2163,10 +2163,13 @@ Package 3 of Step 8b (D-073).
   shapes' boxes): for the measured numbers of items our drawing takes PowerPoint's arrangement (positions and
   sizes as numbers, not definitions); other numbers, and items with sub-items, are carried over by the family.
   PowerPoint lists 159 layouts through COM; 146 could be drawn (13 refused by COM).
-- **Measured:** with 3 items 127 of 129 layouts match PowerPoint's boxes (overlap 0.7 or more, mean 0.985); the
-  families' guess for 5 items from the 3 matched 27 of 120 (mean 0.375): PowerPoint's layouts differ too much
-  (some wrap into two rows, some keep their size, some shrink). Hence the arrangements are measured for 1 to 8
-  items (the counts a school diagram has), and the family only goes beyond that.
+- **Measured** (check_present_smartart.py, the item boxes against PowerPoint's, a layout matching at a mean overlap
+  of 0.7 or more): PowerPoint's arrangements were measured for 1 to 8 items (probe runs --items 1 … 8; 140 to 150 of
+  the 159 layouts drawable through COM per count), so our drawing equals PowerPoint's for those counts: 127 of 129
+  layouts with 3 items (mean overlap 0.985), 118 of 120 with 5 (0.983). The families alone, as used for 9 items
+  and more and for items with sub-items, are much weaker: 27 of 120 for 5 items (0.38), because PowerPoint's
+  layouts differ too much (some wrap into two rows, some keep their size, some shrink). The catalog with the
+  arrangements is 845 KB of numbers.
 - **UI:** Einfügen > SmartArt with "SmartArt-Grafik auswählen" (PowerPoint's categories, pictures drawn by our
   engine); Start > In SmartArt konvertieren with PowerPoint's 20 entries and Weitere SmartArt-Grafiken...;
   SmartArt-Design: Form hinzufügen (danach, davor, oberhalb, unterhalb), Aufzählungszeichen hinzufügen,
@@ -2204,3 +2207,33 @@ Package 4 of Step 8b (D-073).
 - **App CSP:** fetch to the app's own files and to blob: and data: URLs, and media from blob: and data:, are now
   allowed (connect-src, media-src): the sounds, textures and the video export need them; before, media from blob:
   URLs could not have played in the real app.
+
+## D-079 RaabePresent: Freihandgleichung and macros (2026-11-07)
+
+Package 5 of Step 8b (D-073).
+- **Freihandgleichung:** handwriting is recognised by Windows' own Math Input Panel (mip.exe, part of Windows, its
+  recogniser runs on the device): Formel > Freihandgleichung starts it, the user writes and clicks its "Einfügen",
+  and the equation arrives on the clipboard as MathML ("MathML Presentation" format, read by a small command of
+  RaabePresent's own native side, src-tauri/src/inkmath.rs) and becomes an equation on the slide through our
+  MathML reader (packages/text-engine/src/math/mathml-read.ts, add-only; also used when MathML is pasted). Where the
+  Math Input Panel is missing (iPad, browser) the command says so; recognition there needs a recogniser of our own
+  (open). RaabeWrite's Freihandgleichung can use the same pieces (open).
+- **Macros, as for RaabeCalc (D-066):** a new shared package @raabe/vba: the VBA project format (compound file
+  read and write, MS-OVBA compression, dir stream, modules; written projects carry no compiled code, so Office
+  compiles the source) and our interpreter (Sub, Function, ByRef/ByVal, Dim/ReDim/Const, If, Select Case, For,
+  For Each, Do/Loop, While, With, Exit, On Error Resume Next, arrays, the common built-in functions, MsgBox and
+  InputBox as our dialogs; endless loops stopped after 5 million steps). Measured with PowerPoint
+  (check_present_macros.py): PowerPoint opens a .pptm whose project RaabePresent wrote, saves it with its own
+  compiled project, and our reader reads the module and its code back from PowerPoint's file (4/4); nothing is run
+  and no security setting is changed.
+- **In RaabePresent (macros.ts):** a PowerPoint-like object model (Application, ActivePresentation, Slides, Slide,
+  Shapes with AddTextbox and AddShape, Shape with Name, Left/Top/Width/Height, Rotation, Visible, TextFrame(2).
+  TextRange.Text and Font, Fill and Line colours, Delete, Increment...; SlideShowWindow.View with Next, Previous,
+  GotoSlide, CurrentShowPosition, Exit). Macros of an opened file are off until "Inhalt aktivieren" in the message bar
+  (SICHERHEITSWARNUNG); Ansicht > Makros (Alt+F8): Makroname, Ausführen, Bearbeiten, Erstellen, Löschen; our editor
+  (Alt+F11) with the modules, Modul einfügen, Kompilieren (the syntax check); Aktionseinstellungen > Makro ausführen,
+  run in the show with the show as SlideShowWindow.View. One macro run is one undo step. Macros cannot reach outside
+  the app: Shell, CreateObject, file statements, SendKeys and Declare stop with a message.
+- **Not yet:** UserForms, class modules' own objects (New), events (PowerPoint has few), Debug in the editor
+  (breakpoints, single steps: Schrittweise is greyed), RaabeCalc's Excel object model (the interpreter is ready for
+  it), and recognising handwriting on the iPad.

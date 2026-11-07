@@ -10,12 +10,14 @@ mod spell;
 #[path = "../../../raabe-write/src-tauri/src/thesaurus.rs"]
 mod thesaurus;
 
+mod inkmath;
+
 const CONFIG: raabe_host::AppConfig = raabe_host::AppConfig { title: "RaabePresent", id: "raabe-present", extensions: &["pptx", "pptm", "ppsx", "ppsm", "potx", "potm"] };
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     let host = raabe_host::handler();
-    let own: Box<dyn Fn(tauri::ipc::Invoke<tauri::Wry>) -> bool + Send + Sync> = Box::new(tauri::generate_handler![spell::spell_check, spell::spell_suggest, thesaurus::thesaurus_lookup]);
+    let own: Box<dyn Fn(tauri::ipc::Invoke<tauri::Wry>) -> bool + Send + Sync> = Box::new(tauri::generate_handler![spell::spell_check, spell::spell_suggest, thesaurus::thesaurus_lookup, inkmath::math_input_available, inkmath::math_input_start, inkmath::clipboard_read_mathml]);
     raabe_host::builder_with_show_windows(CONFIG)
         .invoke_handler(move |invoke| if raabe_host::handles(invoke.message.command()) { host(invoke) } else { own(invoke) })
         .run(tauri::generate_context!())

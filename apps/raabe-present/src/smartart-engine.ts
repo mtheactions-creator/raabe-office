@@ -25,6 +25,8 @@ export interface LayoutSpec {
   items3?: number[][];
   /** …and its other shapes (connectors, rings, backgrounds). */
   extras3?: { prst: string; box: number[]; rot: number; look: "bg" | "conn" | "line" }[];
+  /** PowerPoint's whole drawing for 1 to 8 items (measured), by the number of items. */
+  tpl?: Record<string, { items: number[][]; extras: { prst: string; box: number[]; rot: number; look: "bg" | "conn" | "line"; before: boolean }[] }>;
 }
 
 export interface Node { text: string; level: number; index: number; children: Node[] }
@@ -94,6 +96,15 @@ export function layout(spec: LayoutSpec, items: { text: string; level: number }[
   const n = Math.max(1, roots.length);
   const out: DrawShape[] = [];
   const T = spec.items3;
+  // A measured number of items without sub-items: PowerPoint's own drawing of it, as it is.
+  const tp = spec.tpl?.[String(n)];
+  if (tp && tp.items.length === n && !roots.some((r) => r.children.length)) {
+    const put = (e: { prst: string; box: number[]; rot: number; look: "bg" | "conn" | "line" }) => out.push(box(e.prst, e.box[0] * w, e.box[1] * h, e.box[2] * w, e.box[3] * h, undefined, e.look, { rot: e.rot || undefined }));
+    for (const e of tp.extras) if (e.before) put(e);
+    roots.forEach((it, i) => out.push(box(spec.node, tp.items[i][0] * w, tp.items[i][1] * h, tp.items[i][2] * w, tp.items[i][3] * h, it.index)));
+    for (const e of tp.extras) if (!e.before) put(e);
+    return out;
+  }
   // Three items: PowerPoint's own arrangement (measured), with its connectors and other shapes.
   if (T && T.length === 3 && n === 3) {
     for (const e of spec.extras3 ?? []) if (e.look === "bg") out.push(box(e.prst, e.box[0] * w, e.box[1] * h, e.box[2] * w, e.box[3] * h, undefined, e.look, { rot: e.rot || undefined }));

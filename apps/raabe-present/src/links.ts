@@ -110,8 +110,18 @@ export async function actionDialog(app: PresentApp): Promise<void> {
   app.deck.slides.forEach((s, i) => { const title = app.deck.view(s.path).shapes.find((x) => x.ph && (x.ph.type === "title" || x.ph.type === "ctrTitle"))?.text?.paras.map((p) => p.runs.map((r) => r.text).join("")).join(" ") ?? ""; sel.append(h("option", { value: `s:${i}` }, `Folie ${i + 1}${title ? `: ${title}` : ""}`)); });
   if (curJump) sel.value = `j:${curJump}`;
   sel.addEventListener("change", () => { link.checked = true; });
+  // Makro ausführen (D-079): the presentation's macros.
+  const { modulesOf } = await import("./macros");
+  const { VbaRuntime } = await import("@raabe/vba");
+  let macroNames: string[] = [];
+  try { macroNames = new VbaRuntime({ global: () => undefined, msgBox: async () => 1, inputBox: async () => "" }, modulesOf(app).map((m) => m.code)).macros(); } catch { /* none */ }
+  const runM = h("input", { type: "radio", name: "act", disabled: !macroNames.length }) as HTMLInputElement;
+  const macroSel = h("select", { style: "min-width:260px", disabled: !macroNames.length }, ...macroNames.map((n) => h("option", { value: n }, n))) as HTMLSelectElement;
+  const curMacro = /^ppaction:\/\/macro\?name=(.+)$/i.exec(cur?.getAttribute("action") ?? "")?.[1];
+  if (curMacro) { runM.checked = true; link.checked = false; macroSel.value = decodeURIComponent(curMacro); }
+  macroSel.addEventListener("change", () => { runM.checked = true; });
   const ok = await showDialog({ title: "Aktionseinstellungen", body: h("div", { class: "form" }, h("b", null, "Aktion bei Mausklick"),
-    h("label", { class: "dlg-check" }, none, " Keine"), h("label", { class: "dlg-check" }, link, " Hyperlink zu: "), sel),
+    h("label", { class: "dlg-check" }, none, " Keine"), h("label", { class: "dlg-check" }, link, " Hyperlink zu: "), sel, h("label", { class: "dlg-check" }, runM, " Makro ausführen: "), macroSel),
     buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
   if (!ok) return;
   const path = app.slidePath()!;
@@ -119,6 +129,7 @@ export async function actionDialog(app: PresentApp): Promise<void> {
     PptxDom.kid(cNvPr, "hlinkClick")?.remove();
     if (none.checked) return;
     const hl = PptxDom.make(cNvPr.ownerDocument, "a:hlinkClick");
+    if (runM.checked && macroSel.value) { hl.setAttributeNS(PptxDom.NS_R, "r:id", ""); hl.setAttribute("action", `ppaction://macro?name=${macroSel.value}`); cNvPr.insertBefore(hl, cNvPr.firstChild); return; }
     const [kind, val] = sel.value.split(":");
     if (kind === "j") { hl.setAttributeNS(PptxDom.NS_R, "r:id", ""); hl.setAttribute("action", `ppaction://hlinkshowjump?jump=${val}`); }
     else { const rid = app.deck.pptx.link(path, "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slide", app.deck.slides[Number(val)].path); hl.setAttributeNS(PptxDom.NS_R, "r:id", rid); hl.setAttribute("action", "ppaction://hlinksldjump"); }

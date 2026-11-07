@@ -342,3 +342,12 @@ body.view-bw .slide { filter: grayscale(1) contrast(4) brightness(1.2); }
 .rec-btn.rec-start.on { background: #b7472a; border-color: #d0604a; }
 .rec-time { min-width: 48px; text-align: right; font-variant-numeric: tabular-nums; }
 .rec-cam { position: fixed; right: 16px; bottom: 16px; width: 240px; border-radius: 6px; box-shadow: 0 2px 10px rgba(0,0,0,.5); }
+
+/* Makros (D-079): the message bar and our VBA editor. */
+.macro-bar { display: flex; align-items: center; gap: 12px; padding: 6px 12px; background: #fff4ce; border-bottom: 1px solid #e6d28a; font: 13px var(--font); }
+.macro-bar .btn { padding: 2px 10px; }
+.macro-bar-close { margin-left: auto; background: none; border: none; font-size: 16px; }
+.vba-editor { width: 760px; display: flex; flex-direction: column; gap: 6px; }
+.vba-tools { display: flex; gap: 8px; align-items: center; }
+.vba-status { flex: 1; text-align: right; }
+.vba-code { width: 100%; box-sizing: border-box; font: 13px Consolas, "Cascadia Mono", monospace; white-space: pre; tab-size: 4; }

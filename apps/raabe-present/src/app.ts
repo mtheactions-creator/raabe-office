@@ -270,6 +270,8 @@ export class PresentApp implements EditorHost, PanelHost {
     this.editor.fitZoom();
     this.updateTabs();
     this.windows?.render();
+    // A presentation with macros: the message bar (D-079).
+    void import("./macros").then((m) => m.messageBar(this, this.main));
     this.focusMain();
   }
 
@@ -287,7 +289,7 @@ export class PresentApp implements EditorHost, PanelHost {
     this.updateTabs();
   }
 
-  private renderAll(): void {
+  renderAll(): void {
     this.editor.render();
     this.panel.render();
     if (this.view === "sorter") this.sorter.render();
@@ -1371,6 +1373,12 @@ export class PresentApp implements EditorHost, PanelHost {
     const ed = this.editor;
     const sys = await this.platform.clipboardRead().catch(() => "");
     const own = this.clipboard && (sys === (this.clipboard.text || " ") || sys === "");
+    // MathML on the clipboard (Windows' Math Input Panel, Freihandgleichung; other programs) becomes an equation (D-079).
+    if (!own && mode === "auto" && /<(\w+:)?math[\s>]/.test(sys)) {
+      const { mathmlToSeq } = await import("@raabe/text-engine");
+      const seq = mathmlToSeq(sys);
+      if (seq) { await insertEquation(this, seq); return; }
+    }
     if (ed.text) {
       // Into the text being edited: plain text, line breaks as paragraphs.
       const text = own && this.clipboard ? this.clipboard.text : sys;
@@ -2623,6 +2631,8 @@ export class PresentApp implements EditorHost, PanelHost {
     impl("insert.screenRecording", () => this.recordMedia("screen"), onSlide);
     impl("rec.audio", () => this.recordMedia("audio"), onSlide);
     impl("rec.clear", () => {}, onSlide);
+    // Makros (D-079).
+    impl("view.macros", () => import("./macros").then((m) => m.macroDialog(this)), onSlide);
     impl("rec.preview", () => this.startShow(this.active.current), onSlide);
     impl("rec.saveShow", () => this.saveAs(), onSlide);
     impl("rec.video", () => { this.backstage.open?.("export"); }, onSlide);
@@ -2980,6 +2990,8 @@ export class PresentApp implements EditorHost, PanelHost {
     const ctrl = e.ctrlKey && !e.altKey, shift = e.shiftKey, k = e.key;
     const run = (id: string) => { void this.commands.run(id); return true; };
     if (k === "F5" && !ctrl) return run(shift ? "show.fromCurrent" : "show.fromStart");
+    if (k === "F8" && e.altKey) return run("view.macros");
+    if (k === "F11" && e.altKey) { e.preventDefault(); void import("./macros").then((m) => m.editor(this)); return true; }
     if (e.altKey && shift && !e.ctrlKey && e.code === "Digit0") return run("insert.equation");
     if (k === "F12") return run("file.saveAs");
     if (k === "F7" && !shift) return run("review.spelling");

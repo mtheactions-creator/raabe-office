@@ -50,6 +50,11 @@ def main() -> None:
                 return c.SMARTART_LAYOUTS.map((l) => ({{ id: l.id, shapes: e.layout(l.spec, items, {W}, {H}).filter((s) => s.item !== undefined).map((s) => ({{ item: s.item, x: s.x, y: s.y, w: s.w, h: s.h }})) }})); }})()""")
             ppt5 = json.loads(SRC5[-1].read_text(encoding="utf-8"))
             out["layouts5"] = compare_all(ppt5, {o["id"]: o for o in ours5}, ["Eins", "Zwei", "Drei", "Vier", "Fünf"])
+            # The same without the measured five (the family alone, as for nine items and more).
+            hold = page.js(f"""(async () => {{ const e = await import('/src/smartart-engine.ts'); const c = await import('/src/smartart-catalog.gen.ts');
+                const items = ['Eins','Zwei','Drei','Vier','Fünf'].map((t) => ({{text:t,level:0}}));
+                return c.SMARTART_LAYOUTS.map((l) => {{ const spec = {{ ...l.spec, tpl: undefined }}; return {{ id: l.id, shapes: e.layout(spec, items, {W}, {H}).filter((s) => s.item !== undefined).map((s) => ({{ item: s.item, x: s.x, y: s.y, w: s.w, h: s.h }})) }}; }}); }})()""")
+            out["layouts5_family"] = compare_all(ppt5, {o["id"]: o for o in hold}, ["Eins", "Zwei", "Drei", "Vier", "Fünf"])
         # Our diagram opened by PowerPoint: written by the app and read back through COM.
         b64 = page.js("""(async () => { const P = window.__present; P.newDoc(); const a = P.app; a.deck.setLayout([0], a.deck.layouts()[6].path); a.setCurrent(0);
             const m = await import('/src/smartart-create.ts'); const c = await import('/src/smartart-catalog.gen.ts');
@@ -61,7 +66,7 @@ def main() -> None:
     finally:
         page.close()
     out["summary"] = {}
-    for key in ("layouts", "layouts5"):
+    for key in ("layouts", "layouts5", "layouts5_family"):
         ls = out.get(key) or []
         ok = sum(1 for x in ls if x["iou"] >= 0.7)
         out["summary"][key] = {"layouts": len(ls), "matched": ok, "mean_iou": round(sum(x["iou"] for x in ls) / max(1, len(ls)), 3)}

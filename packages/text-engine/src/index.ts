@@ -131,6 +131,7 @@ export function probeFor(getEditor: () => Editor, load: (name: string) => Partia
 }
 export * from "./math/ast";
 export { latexToMathml as mathmlFromLatex, lines, seqToMathml } from "./math/mathml";
+export { mathmlToSeq } from "./math/mathml-read";
 export { mathElements } from "./view";
 export { TEXTFX_ORDER, W14_NS, fxColor, fxColorXml, fxJoin, fxNumbers, fxParts, fxSet, outlineXml, textFxCss, type TextFxPart } from "./textfx";
 export { sortDate, sortNumber, sortOrder, type SortKey, type SortSpec, type SortType } from "./sort";

@@ -118,6 +118,19 @@ export class Deck {
     this.changed(paths);
   }
 
+  /** As change, for work that waits (a macro with its dialogs, D-079): one undo step for all it changed. */
+  async changeAsync(label: string, paths: string[], fn: () => Promise<void>): Promise<void> {
+    const before = this.snap(paths);
+    try { await fn(); } finally {
+      for (const p of paths) this.pptx.touch(p);
+      this.pptx.touch(this.pptx.presPath);
+      this.undoStack.push({ label, before, after: this.snap(paths), time: Date.now() });
+      if (this.undoStack.length > 200) this.undoStack.shift();
+      this.redoStack = [];
+      this.changed(paths);
+    }
+  }
+
   /** Ends typing's merging (a click, a command). */
   breakMerge(): void {
     const last = this.undoStack[this.undoStack.length - 1];

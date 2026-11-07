@@ -1,0 +1,24 @@
+{
+ "date": "2026-11-07",
+ "opened": true,
+ "close": {
+  "closed": 1,
+  "quit": true,
+  "left_open": 0
+ },
+ "powerpoint_kept_project": true,
+ "read_back": [
+  {
+   "name": "Modul1",
+   "kind": "standard",
+   "code": "Sub Quiz()\n    MsgBox \"Grüße aus RaabePresent\"\nEnd Sub\n\nFunction Doppelt(x)\n    Doppelt = 2 * x\nEnd Function"
+  }
+ ],
+ "checks": {
+  "powerpoint_opens": true,
+  "project_kept": true,
+  "module_back": true,
+  "code_back": true
+ },
+ "summary": "4/4"
+}

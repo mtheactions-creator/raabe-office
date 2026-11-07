@@ -76,7 +76,7 @@ export function renderShape(s: ShapeView, o: RenderOptions, map: Map<number, HTM
   // Einfügen > Aktion: the shape's click action, followed in the show.
   const nv = Array.from(s.el.children).find((c) => c.localName.startsWith("nv"));
   const act = nv?.firstElementChild ? Array.from(nv.firstElementChild.children).find((c) => c.localName === "hlinkClick") : undefined;
-  if (act && !o.editing) { const jump = /jump=(\w+)/.exec(act.getAttribute("action") ?? "")?.[1]; if (jump) box.dataset.action = jump; else box.dataset.link = act.getAttributeNS("http://schemas.openxmlformats.org/officeDocument/2006/relationships", "id") ?? ""; }
+  if (act && !o.editing) { const a = act.getAttribute("action") ?? ""; const jump = /jump=(\w+)/.exec(a)?.[1]; const macro = /^ppaction:\/\/macro\?name=(.+)$/i.exec(a)?.[1]; if (jump) box.dataset.action = jump; else if (macro) box.dataset.macro = decodeURIComponent(macro); else box.dataset.link = act.getAttributeNS("http://schemas.openxmlformats.org/officeDocument/2006/relationships", "id") ?? ""; }
   const px = parent ? x - parent.x / EMU_PX : x, py = parent ? y - parent.y / EMU_PX : y;
   box.style.cssText = `position:absolute;left:${px}px;top:${py}px;width:${w}px;height:${h}px;transform:${transformOf(s) || "none"};transform-origin:50% 50%`;
   map?.set(s.id, box);

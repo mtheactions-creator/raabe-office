@@ -513,6 +513,13 @@ export class SlideShow {
       if (idx.length) { this.zoomReturn = zoom.dataset.zoomBack ? { from: this.index, to: Math.max(...idx) } : null; this.goto(Math.min(...idx)); }
       return;
     }
+    // Makro ausführen (D-079): the macro runs with this show as its SlideShowWindow.View.
+    const macro = (e.target as HTMLElement).closest?.("[data-macro]") as HTMLElement | null;
+    if (macro) {
+      const ctl = { position: () => this.index + 1, next: () => this.next(), prev: () => this.prev(), goto: (i: number) => this.goto(i), end: () => this.end(), refresh: () => this.show(this.index, true, false) };
+      void import("./macros").then((m) => m.runMacro(this.app, macro.dataset.macro!, ctl));
+      return;
+    }
     // A shape's action (Einfügen > Aktion) or a link is followed instead of going on (PowerPoint).
     const action = (e.target as HTMLElement).closest?.("[data-action]") as HTMLElement | null;
     if (action) {
@@ -535,7 +542,7 @@ export class SlideShow {
   }
 
   private move(e: MouseEvent, ink: SVGSVGElement = this.ink): void {
-    if (this.tool === "arrow") this.root.style.cursor = (e.target as HTMLElement).closest?.("[data-link], [data-action]") ? "pointer" : "";
+    if (this.tool === "arrow") this.root.style.cursor = (e.target as HTMLElement).closest?.("[data-link], [data-action], [data-macro]") ? "pointer" : "";
     if (this.tool !== "laser") return;
     // The laser shows on both screens at the same place of the slide.
     const from = ink.getBoundingClientRect();

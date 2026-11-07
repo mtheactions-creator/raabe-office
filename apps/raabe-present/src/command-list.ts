@@ -151,7 +151,7 @@ export const COMMANDS: Command[] = [
   cmd("insert.equation", "Formel", "equation", { shortcut: "Alt+Umschalt+0" }),
   // The contextual tab Formel (D-072), as PowerPoint's recorded one.
   cmd("eq.builtin", "Formel", "equation"),
-  cmd("eq.ink", "Freihandgleichung", "ink-equation", { deferred: true }),
+  cmd("eq.ink", "Freihandgleichung", "ink-equation"),
   cmd("eq.latexToMath", "LaTeX in Mathematik", "math-latex"),
   cmd("eq.mathToLatex", "Mathe nach LaTeX", "math-latex"),
   cmd("eq.professional", "Professionell", "math-convert"),
