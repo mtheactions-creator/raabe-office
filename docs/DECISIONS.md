@@ -1798,3 +1798,7 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   Bild, Zugeschnittene Bildbereiche löschen) with labels only; the picture is resampled at the size it is
   shown into a new media part. When writing, picture relationships an edited slide no longer refers to are
   left out with their pictures (as PowerPoint does); they stay in memory so Rückgängig still works.
+- **Trigger and Animation übertragen:** Trigger > Bei Klick auf <Form> moves the selected shapes' effects into
+  an interactive sequence started by that shape (as PowerPoint writes it); in the show a click on the shape
+  plays its next step, shapes it shows start hidden. Animation übertragen copies a shape's effects to the next
+  shape clicked. Removing effects now tidies the timing (no empty lists, which PowerPoint rejects).

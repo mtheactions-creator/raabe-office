@@ -34,7 +34,7 @@ export interface RibbonContext {
     arrange: () => MenuEntry[]; find: MenuEntry[]; select: MenuEntry[]; table: MenuEntry[]; pictures: MenuEntry[]; textBox: MenuEntry[];
     slideSize: MenuEntry[]; showCustom: MenuEntry[]; record: MenuEntry[]; transOptions: () => MenuEntry[]; animOptions: () => MenuEntry[];
     animStart: MenuEntry[]; colors: () => MenuEntry[]; fonts: () => MenuEntry[]; underline: MenuEntry[];
-    outlineWeight: MenuEntry[]; outlineDash: MenuEntry[]; effects: MenuEntry[]; quickStyles: () => MenuEntry[]; zoomFit: MenuEntry[]; equations: () => MenuEntry[]; sounds: () => MenuEntry[]; windows: () => MenuEntry[];
+    outlineWeight: MenuEntry[]; outlineDash: MenuEntry[]; effects: MenuEntry[]; quickStyles: () => MenuEntry[]; zoomFit: MenuEntry[]; equations: () => MenuEntry[]; sounds: () => MenuEntry[]; windows: () => MenuEntry[]; triggers: () => MenuEntry[];
   };
   panels: { newSlide: Popup; layout: Popup; shapes: Popup; themes: Popup; transitions: Popup; animations: Popup; table: Popup; chart: Popup; addAnim: Popup; wordArt: Popup; quickStyles: Popup };
   spin: {
@@ -149,7 +149,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
       groups: [
         { id: "preview", label: "Vorschau", key: "ZV", icon: "eye", controls: [b("anim.preview", "U", "large")] },
         { id: "gallery", label: "Animation", key: "ZA", icon: "animation", launcher: { cmd: "anim.more", key: "W" }, controls: [ctx.fxTiles("anim"), lazy("anim.options", "E", "large", m.animOptions)] },
-        { id: "advanced", label: "Erweiterte Animation", key: "ZE", icon: "animation", controls: [panel("anim.add", "Q", "large", p.addAnim), stack(b("anim.pane", "I", "medium"), b("anim.trigger", "T", "medium"), b("anim.painter", "M", "medium"))] },
+        { id: "advanced", label: "Erweiterte Animation", key: "ZE", icon: "animation", controls: [panel("anim.add", "Q", "large", p.addAnim), stack(b("anim.pane", "I", "medium"), lazy("anim.trigger", "T", "medium", m.triggers), b("anim.painter", "M", "medium"))] },
         { id: "timing", label: "Anzeigedauer", key: "ZD", icon: "time", controls: [
           stack(dd("anim.start", "S", "medium", m.animStart, "Start:"), spin("anim.duration", "Dauer:", "D", ctx.spin.animDuration), spin("anim.delay", "Verzögerung:", "R", ctx.spin.animDelay)),
           { type: "stack", title: "Animation neu anordnen", items: [b("anim.earlier", "F", "medium"), b("anim.later", "P", "medium")] }] },

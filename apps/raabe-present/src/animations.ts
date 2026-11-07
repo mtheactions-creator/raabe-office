@@ -114,8 +114,7 @@ export function addAnimation(app: PresentApp, cls: "entr" | "emph" | "exit" | "p
       timing = fragment(root.ownerDocument, TIMING_HEAD + TIMING_TAIL)[0];
       root.insertBefore(timing, kid(root, "extLst") ?? null);
     }
-    const main = Array.from(timing.getElementsByTagNameNS(PptxDom.NS_P, "cTn")).find((c) => c.getAttribute("nodeType") === "mainSeq");
-    const list = kid(main, "childTnLst")!;
+    const list = mainList(timing);
     if (!add) for (const id of ids) removeEffects(timing, id);
     let next = maxCtnId(root);
     const nid = () => ++next;
@@ -131,8 +130,48 @@ export function addAnimation(app: PresentApp, cls: "entr" | "emph" | "exit" | "p
       const isSp = app.editor.shapeView(spid)?.kind === "sp";
       if (isSp && !kids(bld, "bldP").some((b) => b.getAttribute("spid") === String(spid) && b.getAttribute("grpId") === String(grp))) bld.append(PptxDom.make(root.ownerDocument, "p:bldP", { spid, grpId: grp }));
     }
-    if (!kids(list).length) timing.remove();
+    if (!kids(list).length) {
+      // No clicks left: without interactive sequences the timing goes, else only the empty main sequence.
+      if (Array.from(timing.getElementsByTagNameNS(PptxDom.NS_P, "cTn")).some((c) => c.getAttribute("nodeType") === "interactiveSeq")) dropEmptyMain(timing);
+      else timing.remove();
+    }
   });
+}
+
+/** The main sequence's list of clicks, made again when a slide has only interactive sequences (Trigger). */
+function mainList(timing: Element): Element {
+  const main = Array.from(timing.getElementsByTagNameNS(PptxDom.NS_P, "cTn")).find((c) => c.getAttribute("nodeType") === "mainSeq");
+  if (main) return kid(main, "childTnLst")!;
+  const tmRoot = Array.from(timing.getElementsByTagNameNS(PptxDom.NS_P, "cTn")).find((c) => c.getAttribute("nodeType") === "tmRoot")!;
+  const head = TIMING_HEAD.slice(TIMING_HEAD.indexOf("<p:seq"));
+  const tail = TIMING_TAIL.slice(0, TIMING_TAIL.indexOf("</p:seq>") + "</p:seq>".length);
+  const seq = fragment(timing.ownerDocument, head.replace('id="2"', `id="${maxCtnId(timing.ownerDocument.documentElement) + 1}"`) + tail)[0];
+  const rootList = kid(tmRoot, "childTnLst")!;
+  rootList.insertBefore(seq, rootList.firstChild);
+  return kid(kid(seq, "cTn"), "childTnLst")!;
+}
+
+/**
+ * After effects were removed: empty interactive sequences go, an empty main sequence goes when there are
+ * interactive ones, and with nothing left the whole timing (an empty list is not valid in the file).
+ */
+export function tidyTiming(root: Element): void {
+  const timing = kid(root, "timing");
+  if (!timing) return;
+  for (const c of Array.from(timing.getElementsByTagNameNS(PptxDom.NS_P, "cTn"))) {
+    if (c.getAttribute("nodeType") === "interactiveSeq" && !kids(kid(c, "childTnLst")).length) c.parentElement?.remove();
+  }
+  const anyInteractive = Array.from(timing.getElementsByTagNameNS(PptxDom.NS_P, "cTn")).some((c) => c.getAttribute("nodeType") === "interactiveSeq");
+  const main = Array.from(timing.getElementsByTagNameNS(PptxDom.NS_P, "cTn")).find((c) => c.getAttribute("nodeType") === "mainSeq");
+  const mainEmpty = !main || !kids(kid(main, "childTnLst")).length;
+  if (mainEmpty && !anyInteractive) timing.remove();
+  else if (mainEmpty) dropEmptyMain(timing);
+}
+
+/** A main sequence without clicks is left out (PowerPoint's files have none; an empty one is not valid). */
+function dropEmptyMain(timing: Element): void {
+  const main = Array.from(timing.getElementsByTagNameNS(PptxDom.NS_P, "cTn")).find((c) => c.getAttribute("nodeType") === "mainSeq");
+  if (main && !kids(kid(main, "childTnLst")).length) main.parentElement?.remove();
 }
 
 function nextGrp(timing: Element, spid: number): number {
@@ -151,10 +190,14 @@ export function removeEffects(timing: Element, spid: number): void {
     if (!c.hasAttribute("presetClass")) continue;
     const t = c.getElementsByTagNameNS(PptxDom.NS_P, "spTgt")[0];
     if (t?.getAttribute("spid") !== String(spid)) continue;
-    let par = c.parentElement;
-    c.parentElement?.remove();
-    // Climb: a par whose childTnLst is empty goes too.
-    while (par && par.localName === "childTnLst" && !par.children.length) { const up = par.parentElement?.parentElement; up?.remove(); par = up?.parentElement ?? null; }
+    // The effect's par, then every container left empty (up to the sequence's own list).
+    let p: Element | null = c.parentElement;
+    while (p && p.localName === "par") {
+      const parent: Element | null = p.parentElement;
+      p.remove();
+      const owner = parent?.parentElement?.getAttribute("nodeType");
+      p = parent && parent.localName === "childTnLst" && !parent.children.length && owner !== "mainSeq" && owner !== "interactiveSeq" ? parent.parentElement?.parentElement ?? null : null;
+    }
   }
   const bld = kid(timing, "bldLst");
   for (const b of kids(bld, "bldP")) if (b.getAttribute("spid") === String(spid)) b.remove();
@@ -289,4 +332,79 @@ export function copyAnimation(app: PresentApp, fromId: number, toId: number): vo
       if (app.editor.shapeView(toId)?.kind === "sp") bld.append(PptxDom.make(root.ownerDocument, "p:bldP", { spid: toId, grpId: grp }));
     }
   });
+}
+
+// ----- Trigger (D-072): effects that start on a click on another shape ----------------------------------------
+// PowerPoint keeps them in an interactive sequence beside the main one: p:seq with a cTn of nodeType
+// "interactiveSeq" that starts on the trigger shape's onClick.
+
+/** Trigger > Bei Klick auf <shape>: the selected shapes' effects move into the trigger's interactive sequence. */
+export function setTrigger(app: PresentApp, triggerId: number | null): void {
+  const path = app.slidePath();
+  const ids = app.editor.sel;
+  if (!path || !ids.length) return;
+  app.editor.edit("Trigger", () => {
+    const root = app.deck.pptx.doc(path).documentElement;
+    const timing = kid(root, "timing");
+    const tmRoot = timing ? Array.from(timing.getElementsByTagNameNS(PptxDom.NS_P, "cTn")).find((c) => c.getAttribute("nodeType") === "tmRoot") : undefined;
+    const rootList = kid(tmRoot, "childTnLst");
+    if (!timing || !rootList) return;
+    // The effects (their outer click pars) of the selected shapes, wherever they are now.
+    const effects = Array.from(timing.getElementsByTagNameNS(PptxDom.NS_P, "cTn")).filter((c) => c.hasAttribute("presetClass") && ids.includes(Number(c.getElementsByTagNameNS(PptxDom.NS_P, "spTgt")[0]?.getAttribute("spid") ?? 0)));
+    if (!effects.length) return;
+    const clicks = new Set<Element>();
+    for (const e of effects) { let p: Element | null = e.parentElement; while (p && p.parentElement && !(p.parentElement.parentElement?.localName === "cTn" && ["mainSeq", "interactiveSeq"].includes(p.parentElement.parentElement.getAttribute("nodeType") ?? ""))) p = p.parentElement; if (p) clicks.add(p); }
+    const moved = [...clicks];
+    for (const c of moved) c.remove();
+    // Empty interactive sequences go.
+    for (const seq of Array.from(rootList.children)) {
+      const ctn = kid(seq, "cTn");
+      if (ctn?.getAttribute("nodeType") === "interactiveSeq" && !kids(kid(ctn, "childTnLst")).length) seq.remove();
+    }
+    const target = triggerId === null ? mainList(timing) : (() => {
+      const existing = Array.from(rootList.children).find((seq) => kid(seq, "cTn")?.getAttribute("nodeType") === "interactiveSeq" && seq.getElementsByTagNameNS(PptxDom.NS_P, "spTgt")[0]?.getAttribute("spid") === String(triggerId));
+      if (existing) return kid(kid(existing, "cTn"), "childTnLst")!;
+      const id = maxCtnId(root) + 1;
+      const tgt = `<p:tgtEl><p:spTgt spid="${triggerId}"/></p:tgtEl>`;
+      const seq = fragment(root.ownerDocument, `<p:seq concurrent="1" nextAc="seek"><p:cTn id="${id}" restart="whenNotActive" fill="hold" evtFilter="cancelBubble" nodeType="interactiveSeq"><p:stCondLst><p:cond evt="onClick" delay="0">${tgt}</p:cond></p:stCondLst><p:endSync evt="end" delay="0"><p:rtn val="all"/></p:endSync><p:childTnLst/></p:cTn><p:nextCondLst><p:cond evt="onClick" delay="0">${tgt}</p:cond></p:nextCondLst></p:seq>`)[0];
+      rootList.append(seq);
+      return kid(kid(seq, "cTn"), "childTnLst")!;
+    })();
+    for (const c of moved) target.append(c);
+    dropEmptyMain(timing);
+  });
+}
+
+/** The trigger of a shape's effects, if they are in an interactive sequence. */
+export function triggerOf(root: Element, spid: number): number | null {
+  const timing = kid(root, "timing");
+  if (!timing) return null;
+  for (const ctn of Array.from(timing.getElementsByTagNameNS(PptxDom.NS_P, "cTn"))) {
+    if (ctn.getAttribute("nodeType") !== "interactiveSeq") continue;
+    const has = Array.from(ctn.getElementsByTagNameNS(PptxDom.NS_P, "spTgt")).slice(1).some((t) => t.getAttribute("spid") === String(spid));
+    if (has) return Number(kid(kid(ctn, "stCondLst"), "cond")?.getElementsByTagNameNS(PptxDom.NS_P, "spTgt")[0]?.getAttribute("spid") ?? 0) || null;
+  }
+  return null;
+}
+
+/** The interactive sequences of a slide, for the show: the trigger shape and its click steps; shapes first shown by them start hidden. */
+export function interactiveSequences(root: Element): { trigger: number; steps: Step[]; hidden: Set<number> }[] {
+  const timing = kid(root, "timing");
+  if (!timing) return [];
+  const out: { trigger: number; steps: Step[]; hidden: Set<number> }[] = [];
+  for (const ctn of Array.from(timing.getElementsByTagNameNS(PptxDom.NS_P, "cTn"))) {
+    if (ctn.getAttribute("nodeType") !== "interactiveSeq") continue;
+    const trigger = Number(kid(kid(ctn, "stCondLst"), "cond")?.getElementsByTagNameNS(PptxDom.NS_P, "spTgt")[0]?.getAttribute("spid") ?? 0);
+    // Read like the main sequence: wrap the interactive cTn's children as a stand-in main sequence.
+    const fake = root.ownerDocument.createElementNS(PptxDom.NS_P, "p:timing");
+    const main = root.ownerDocument.createElementNS(PptxDom.NS_P, "p:cTn");
+    main.setAttribute("nodeType", "mainSeq");
+    main.append(kid(ctn, "childTnLst")!.cloneNode(true));
+    fake.append(main);
+    const holder = root.ownerDocument.createElementNS(PptxDom.NS_P, "p:sld");
+    holder.append(fake);
+    const seq = mainSequence(holder);
+    out.push({ trigger, steps: seq.auto ? [seq.auto, ...seq.steps] : seq.steps, hidden: seq.hidden });
+  }
+  return out;
 }

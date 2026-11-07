@@ -4,6 +4,7 @@
 // the slide. Start (Beim Klicken, Mit Vorherigen, Nach Vorherigen) and Früher / Später in the ribbon act
 // on the effects of the selected shapes. The timing tree is changed as PowerPoint writes it.
 
+import { tidyTiming } from "./animations";
 import { TaskPane } from "@raabe/shell";
 import { PptxDom } from "@raabe/ooxml";
 import type { PresentApp } from "./app";
@@ -117,6 +118,7 @@ export class AnimationPane {
         if (parent && parent.localName === "childTnLst" && !parent.children.length && parent.parentElement?.getAttribute("nodeType") !== "mainSeq") p = parent.parentElement?.parentElement ?? null;
         else p = null;
       }
+      tidyTiming(root);
     });
     this.refresh();
   }

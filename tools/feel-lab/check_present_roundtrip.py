@@ -51,6 +51,7 @@ SCENARIOS: dict[str, str] = {
         "motion path": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]}]}); const a = p.app; a.editor.select([2]); const m = await import('/src/animations.ts'); const g = m.ANIMATION_GROUPS.find(x => x.cls === 'path'); m.addAnimation(a, 'path', g.items[0], false);""",
         "action": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]}]}); const a = p.app; a.newSlide(); a.setCurrent(0); a.editor.select([2]); const doc = a.deck.pptx.doc(a.slidePath()); const nv = doc.getElementsByTagNameNS('http://schemas.openxmlformats.org/presentationml/2006/main', 'cNvPr')[1]; a.editor.edit('Aktion', () => { const hl = doc.createElementNS('http://schemas.openxmlformats.org/drawingml/2006/main', 'a:hlinkClick'); hl.setAttributeNS('http://schemas.openxmlformats.org/officeDocument/2006/relationships', 'r:id', ''); hl.setAttribute('action', 'ppaction://hlinkshowjump?jump=nextslide'); nv.insertBefore(hl, nv.firstChild); });""",
         "animation copy": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]},{kind:'ellipse',box:[400,100,150,150]}]}); const a = p.app; a.editor.select([2]); const m = await import('/src/animations.ts'); m.addAnimation(a, 'entr', m.ANIMATION_GROUPS[0].items[2], false); m.copyAnimation(a, 2, 3);""",
+        "trigger": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]},{kind:'ellipse',box:[400,100,150,150]}]}); const a = p.app; a.editor.select([3]); const m = await import('/src/animations.ts'); m.addAnimation(a, 'entr', m.ANIMATION_GROUPS[0].items[2], false); m.setTrigger(a, 2);""",
         "group": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,100,100]},{kind:'ellipse',box:[300,150,100,100]}]}); p.app.editor.select([2,3]); await p.run('arrange.group');""",
     "notes": """p.newDoc(); p.app.deck.setNotes(p.app.deck.slides[0].path, 'Meine Notiz\\nZweite Zeile');""",
     "hidden slide": """p.newDoc(); const a = p.app; a.newSlide(); a.panel.selected = new Set([1]); await p.run('slide.hide');""",
@@ -115,6 +116,7 @@ def ppt_read(pres) -> dict:
             pass
         slides.append({"comments": int(sl.Comments.Count), "layout": str(sl.CustomLayout.Name), "hidden": bool(sl.SlideShowTransition.Hidden), "transition": int(sl.SlideShowTransition.EntryEffect),
                        "animations": int(sl.TimeLine.MainSequence.Count),
+                       "interactive": [int(sl.TimeLine.InteractiveSequences(k).Count) for k in range(1, sl.TimeLine.InteractiveSequences.Count + 1)],
                        "motion": [str(sl.TimeLine.MainSequence(k).Behaviors(1).MotionEffect.Path) for k in range(1, sl.TimeLine.MainSequence.Count + 1) if int(sl.TimeLine.MainSequence(k).Behaviors(1).Type) == 1], "notes": notes, "shapes": ppt_shapes(sl)})
     sp = pres.SectionProperties
     return {"slides": slides, "sections": [str(sp.Name(k)) for k in range(1, sp.Count + 1)], "design": str(pres.SlideMaster.Theme.ThemeColorScheme.Colors(5).RGB) if False else str(pres.SlideMaster.Design.Name),
@@ -167,6 +169,8 @@ def check(name: str, r: dict, ours: dict) -> list[str]:
         want(any(x.get("action") == 1 for x in sh), f"action {[x.get('action') for x in sh]}")
     elif name == "animation copy":
         want(s0["animations"] == 2, f"animations {s0['animations']}")
+    elif name == "trigger":
+        want(s0["animations"] == 0 and s0.get("interactive") == [1], f"trigger main {s0['animations']} interactive {s0.get('interactive')}")
     elif name == "group":
         want(len(sh) == 1 and sh[0].get("members") == 2, f"group {sh}")
     elif name == "notes":

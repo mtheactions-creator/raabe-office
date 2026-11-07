@@ -9,7 +9,7 @@ import { showMenu } from "@raabe/shell";
 import type { PresentApp } from "./app";
 import { renderSlide } from "./render/slide";
 import { EMU_PX } from "./render/text";
-import { samplePath, mainSequence, type Step } from "./animations";
+import { interactiveSequences, samplePath, mainSequence, type Step } from "./animations";
 import { readTransition, transitionSound } from "./transitions";
 import { showFlag } from "./showsetup";
 import { readShowSetup, type ShowSetup } from "./showsetup";
@@ -38,6 +38,7 @@ export class SlideShow {
   private presenter = false;
   private started = Date.now();
   private history: number[] = [];
+  private triggers: { trigger: number; steps: Step[]; hidden: Set<number>; at: number }[] = [];
   lastIndex: number;
   private keyHandler = (e: KeyboardEvent) => this.key(e);
   private setup: ShowSetup;
@@ -126,6 +127,9 @@ export class SlideShow {
     this.shapes = r.shapes;
     this.stepIdx = back ? this.steps.length : 0;
     if (!back && !this.setup.noAnimations) for (const id of seq.hidden) { const el = r.shapes.get(id); if (el) el.style.visibility = "hidden"; }
+    // Trigger: effects started by a click on a shape; their shapes that appear start hidden.
+    this.triggers = this.setup.noAnimations ? [] : interactiveSequences(root).map((x) => ({ ...x, at: 0 }));
+    for (const t of this.triggers) for (const id of t.hidden) { const el = r.shapes.get(id); if (el) el.style.visibility = "hidden"; }
     const tr = readTransition(root);
     if (transition) this.playTransitionSound(path);
     const old = this.stageEl.firstElementChild as HTMLElement | null;
@@ -372,6 +376,10 @@ export class SlideShow {
       return;
     }
     if (this.tool === "laser") return;
+    // A trigger shape plays its next step instead of going on.
+    const shp = (e.target as HTMLElement).closest?.(".shp[data-id]") as HTMLElement | null;
+    const trig = shp ? this.triggers.find((t) => t.trigger === Number(shp.dataset.id) && t.at < t.steps.length) : undefined;
+    if (trig) { this.play(trig.steps[trig.at++]); return; }
     // A shape's action (Einfügen > Aktion) or a link is followed instead of going on (PowerPoint).
     const action = (e.target as HTMLElement).closest?.("[data-action]") as HTMLElement | null;
     if (action) {

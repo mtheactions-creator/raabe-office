@@ -96,6 +96,10 @@
    "result": "same",
    "diff": []
   },
+  "trigger": {
+   "result": "same",
+   "diff": []
+  },
   "group": {
    "result": "same",
    "diff": []
@@ -151,6 +155,6 @@
  },
  "summary": {
   "fixtures": "11/11",
-  "scenarios": "28/28"
+  "scenarios": "29/29"
  }
 }

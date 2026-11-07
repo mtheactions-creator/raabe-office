@@ -1579,7 +1579,7 @@ export class PresentApp implements EditorHost, PanelHost {
     type Fx = { label: string; run: () => void };
     const items: Fx[] = kind === "trans"
       ? TRANSITION_GROUPS.flatMap((g) => g.items.map(([label, k]) => ({ label, run: () => void import("./transitions").then((m) => m.setTransition(this, k)) })))
-      : [{ label: "Ohne", run: () => void import("./animations").then((m) => { const p = this.slidePath(); const root = p ? this.deck.pptx.doc(p).documentElement : null; const timing = root && kid(root, "timing"); if (timing) this.editor.edit("Animation entfernen", () => { for (const id of this.editor.sel) m.removeEffects(timing, id); }); }) },
+      : [{ label: "Ohne", run: () => void import("./animations").then((m) => { const p = this.slidePath(); const root = p ? this.deck.pptx.doc(p).documentElement : null; const timing = root && kid(root, "timing"); if (timing) this.editor.edit("Animation entfernen", () => { for (const id of this.editor.sel) m.removeEffects(timing, id); m.tidyTiming(root!); }); }) },
         ...ANIMATION_GROUPS.flatMap((g) => g.items.filter((it) => g.cls !== "path" || it.preset !== 0).map((it) => ({ label: it.label, run: () => void import("./animations").then((m) => m.addAnimation(this, g.cls, it, false)) })))];
     return {
       type: "tiles", cmd: kind === "trans" ? "trans.gallery" : "anim.gallery", key: kind === "trans" ? "Ü" : "N", count: items.length, visible: 6, size: [62, 58], cls: "fx-tiles",
@@ -1931,6 +1931,7 @@ export class PresentApp implements EditorHost, PanelHost {
     impl("review.setLanguage", () => import("./review").then((m) => m.languageDialog(this)), () => !!this.slidePath());
     impl("review.accessibility", () => import("./review").then((m) => m.accessibilityCheck(this)), () => this.deck.slides.length > 0);
     impl("anim.add", () => {}, () => this.editor.sel.length > 0);
+    impl("anim.trigger", () => {}, () => this.selectedHasAnimation() || (!!this.slidePath() && this.editor.sel.length > 0 && this.animMod?.triggerOf(this.deck.pptx.doc(this.slidePath()!).documentElement, this.editor.sel[0]) != null));
     impl("anim.painter", () => { this.animBrush = this.animBrush === null ? this.editor.sel[0] ?? null : null; document.body.classList.toggle("painting", this.animBrush !== null); this.updateChrome(); },
       () => this.selectedHasAnimation() || this.animBrush !== null, () => this.animBrush !== null);
     impl("anim.gallery", () => {}, () => this.editor.sel.length > 0);
@@ -2344,6 +2345,16 @@ export class PresentApp implements EditorHost, PanelHost {
         underline: [], outlineWeight: [], outlineDash: [], effects: this.effectsMenu(), quickStyles: () => [], zoomFit: [],
         equations: () => BUILT_IN.map((e) => ({ label: e.name, run: () => void insertEquation(this, e.seq) })),
         sounds: () => this.transMod?.soundMenu(this) ?? [],
+        // Trigger > Bei Klick auf: the slide's other shapes by name.
+        triggers: () => {
+          const p = this.slidePath();
+          if (!p) return [];
+          const sel = this.editor.sel;
+          const cur = sel.length ? this.animMod?.triggerOf(this.deck.pptx.doc(p).documentElement, sel[0]) ?? null : null;
+          const shapes = this.deck.view(p).shapes.filter((s) => !sel.includes(s.id));
+          return [{ label: "Bei Klick auf", submenu: () => [{ label: "Bei Mausklick (kein Trigger)", checked: cur === null, run: () => this.animMod?.setTrigger(this, null) },
+            ...shapes.map((s) => ({ label: s.name, checked: cur === s.id, run: () => this.animMod?.setTrigger(this, s.id) }))] }];
+        },
         // Fenster wechseln: the open presentations, numbered as PowerPoint lists its windows.
         windows: () => this.docs.map((d, i) => ({ label: `${i + 1} ${d.name}`, checked: d === this.active, run: () => this.activate(d) })),
       },
@@ -2499,7 +2510,7 @@ export class PresentApp implements EditorHost, PanelHost {
 
   animationGallery(close: () => void, add: boolean): HTMLElement {
     const grid = h("div", { class: "fx-gallery" });
-    if (!add) grid.append(h("div", { class: "fx-row" }, h("button", { class: "fx-item", "aria-label": "Ohne", onclick: () => { close(); void import("./animations").then((m) => { const p = this.slidePath(); const root = p ? this.deck.pptx.doc(p).documentElement : null; const timing = root && kid(root, "timing"); if (timing) this.editor.edit("Animation entfernen", () => { for (const id of this.editor.sel) m.removeEffects(timing, id); }); }); } }, icon("close-x"), h("span", null, "Ohne"))));
+    if (!add) grid.append(h("div", { class: "fx-row" }, h("button", { class: "fx-item", "aria-label": "Ohne", onclick: () => { close(); void import("./animations").then((m) => { const p = this.slidePath(); const root = p ? this.deck.pptx.doc(p).documentElement : null; const timing = root && kid(root, "timing"); if (timing) this.editor.edit("Animation entfernen", () => { for (const id of this.editor.sel) m.removeEffects(timing, id); m.tidyTiming(root!); }); }); } }, icon("close-x"), h("span", null, "Ohne"))));
     for (const g of ANIMATION_GROUPS) {
       grid.append(h("div", { class: "gal-head" }, g.title));
       const row = h("div", { class: "fx-row" });
