@@ -228,6 +228,7 @@ export function implementEquationCommands(app: PresentApp): void {
   impl("eq.latexToMath", () => latexDialog(app));
   impl("eq.mathToLatex", () => latexDialog(app));
   impl("eq.professional", () => {});
+  impl("eq.options", () => void import("./mathopts").then((m) => m.mathOptionsDialog()));
   // Formel > Text: what is typed next stays plain text (not built up), while an equation is edited.
   app.commands.implement("eq.text", { run: () => { const s = activeMath(); if (s) { s.me.normal = !s.me.normal; s.redraw(); } }, enabled: () => !!activeMath(), checked: () => !!activeMath()?.me.normal });
   impl("eq.linear", () => { const id = selectedEquation(app); if (id !== null) linearInPlace(app, id, false); });

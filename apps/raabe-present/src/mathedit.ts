@@ -5,7 +5,8 @@
 // geometry is RaabeWrite's, features/math.ts). Esc, Eingabe or a click outside ends editing; the result is
 // written back as OMML in one undo step. A new equation that stays empty goes again.
 
-import { MathEditor, seqToMathml, type MathPos, type MathStep, type Seq } from "@raabe/text-engine";
+import { MathEditor, seqToLinear, seqToMathml, type MathPos, type MathStep, type Seq } from "@raabe/text-engine";
+import { mathUserOptions } from "./mathopts";
 import { ommlToSeq } from "@raabe/ooxml";
 import type { PresentApp } from "./app";
 
@@ -139,6 +140,9 @@ export function startMathEdit(app: PresentApp, id: number, o: { isNew?: boolean;
   const before = JSON.stringify(seq);
   const display = o.m.localName === "oMathPara";
   const me = new MathEditor(seq, "end");
+  // Formeloptionen (D-075): automatic build-up and what Kopieren puts on the clipboard as text.
+  const opts = mathUserOptions();
+  me.autoBuild = opts.autoBuild;
   const cs = getComputedStyle(span);
   const overlay = document.createElement("span");
   overlay.className = "math-edit";
@@ -198,6 +202,14 @@ export function startMathEdit(app: PresentApp, id: number, o: { isNew?: boolean;
     else if (k === "Backspace") me.backspace();
     else if (k === "Delete") me.del();
     else if (ctrl && (k === "a" || k === "A")) me.selectAll();
+    else if (ctrl && (k === "c" || k === "C" || k === "x" || k === "X")) {
+      if (me.hasSelection) {
+        const r = me.range();
+        const part = structuredClone(me.seqAt(r.path).slice(r.from, r.to)) as Seq;
+        void app.platform.clipboardWrite(opts.copyMathml ? seqToMathml(part, false, false) : seqToLinear(part));
+        if (k === "x" || k === "X") me.backspace();
+      }
+    }
     else if (k === "Enter" && shift) me.newLine();
     else if (k.length === 1 && !ctrl && !e.altKey) { me.type(k); column = null; }
     else if (k === "Tab") { /* stays in the equation */ }

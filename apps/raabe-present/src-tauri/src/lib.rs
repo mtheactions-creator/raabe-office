@@ -16,7 +16,7 @@ const CONFIG: raabe_host::AppConfig = raabe_host::AppConfig { title: "RaabePrese
 pub fn run() {
     let host = raabe_host::handler();
     let own: Box<dyn Fn(tauri::ipc::Invoke<tauri::Wry>) -> bool + Send + Sync> = Box::new(tauri::generate_handler![spell::spell_check, spell::spell_suggest, thesaurus::thesaurus_lookup]);
-    raabe_host::builder(CONFIG)
+    raabe_host::builder_with_show_windows(CONFIG)
         .invoke_handler(move |invoke| if raabe_host::handles(invoke.message.command()) { host(invoke) } else { own(invoke) })
         .run(tauri::generate_context!())
         .expect("error while running RaabePresent");

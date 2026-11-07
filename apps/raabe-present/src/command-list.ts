@@ -165,7 +165,7 @@ export const COMMANDS: Command[] = [
   cmd("smartart.convert", "Konvertieren", "shapes"),
   cmd("smartart.toText", "In Text konvertieren", "text-box"),
   cmd("smartart.toShapes", "In Formen konvertieren", "shapes"),
-  cmd("eq.options", "Formeloptionen...", "launcher", { deferred: true }),
+  cmd("eq.options", "Formeloptionen...", "launcher"),
   cmd("eq.symbols", "Formelsymbole", "math-symbols"),
   cmd("eq.fraction", "Bruch", "math-fraction"),
   cmd("eq.script", "Hoch/Tief", "math-script"),

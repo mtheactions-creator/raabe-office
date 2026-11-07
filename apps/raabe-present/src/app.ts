@@ -31,7 +31,8 @@ import { PRESENT_TEMPLATES, templateDeck } from "./templates";
 import { TRANSITION_GROUPS } from "./transitions";
 import { ANIMATION_GROUPS } from "./animations";
 import { COLOR_SETS, FONT_SETS } from "./themesets.gen";
-import { SlideShow } from "./show";
+import { SlideShow, type ShowScreens } from "./show";
+import { closeShowWindows, mainPosition, monitorMenu, openShowWindow, presenterViewOn, restoreMain, setMainFullscreen, setPresenterView, showTarget, swapWindows } from "./screens";
 import { FormatPane } from "./formatpane";
 import { NotesPageView, OutlineView } from "./views";
 import { FindDialog } from "./find";
@@ -47,6 +48,7 @@ import { sketchMenu } from "./sketch";
 import { customShowMenu } from "./custshow";
 import { endFreistellen, freistellenActive, freistellenTab, markTool } from "./freistellen";
 import { fileTypeSection } from "./exportimg";
+import { gifSection, videoSection } from "./videoui";
 import { convertSmartArt, smartArtTab, textPane } from "./smartart";
 import { bgStylesMenu } from "./background";
 import { shapeEffectsMenu } from "./shapefx";
@@ -1739,11 +1741,28 @@ export class PresentApp implements EditorHost, PanelHost {
     await this.startShow(slides[0], false, slides);
   }
 
+  private showStarting = false;
   async startShow(from: number, reading = false, only: number[] | null = null): Promise<void> {
-    if (this.show) return;
+    if (this.show || this.showStarting) return;
     this.editor.endText();
-    this.show = new SlideShow(this, from, reading, only);
+    // Two screens and Referentenansicht on (D-074): the show in a window of its own on the other monitor,
+    // the Referentenansicht here in full screen.
+    let screens: ShowScreens | null = null;
+    let mainAt: { x: number; y: number } | null = null;
+    let swapped = false;
+    this.showStarting = true;
+    try {
+      const target = reading ? null : await showTarget();
+      const popup = target ? openShowWindow(target.show) : null;
+      if (popup) {
+        mainAt = await mainPosition();
+        screens = { popup, swap: async () => { const ok = await swapWindows(); if (ok) swapped = !swapped; return ok; } };
+        await setMainFullscreen(true);
+      }
+    } catch { screens = null; } finally { this.showStarting = false; }
+    this.show = new SlideShow(this, from, reading, only, screens);
     await this.show.done;
+    if (screens) { await closeShowWindows(); await restoreMain(swapped ? mainAt : null); }
     this.active.current = Math.min(this.show.lastIndex, this.deck.slides.length - 1);
     this.show = null;
     this.renderAll();
@@ -2480,6 +2499,7 @@ export class PresentApp implements EditorHost, PanelHost {
     flag("timings", "show.useTimings"); flag("narration", "show.playNarrations"); flag("media", "show.mediaControls");
     impl("show.custom", () => {}, () => !!this.slidePath());
     impl("show.monitor", () => {}, () => !!this.slidePath());
+    impl("show.presenterView", () => { setPresenterView(!presenterViewOn()); this.updateChrome(); }, undefined, () => presenterViewOn());
     impl("anim.pane", () => this.animPane.toggle(), undefined, () => this.animPane.isOpen);
     // Ansicht > Farbe/Graustufe: how slides are shown while editing (the file is unchanged, as in PowerPoint).
     const colorMode = (m: "color" | "gray" | "bw") => () => { document.body.classList.remove("view-gray", "view-bw"); if (m !== "color") document.body.classList.add(`view-${m}`); this.updateChrome(); };
@@ -2951,6 +2971,8 @@ export class PresentApp implements EditorHost, PanelHost {
         },
         // Fenster wechseln: the open presentations, numbered as PowerPoint lists its windows.
         windows: () => this.docs.map((d, i) => ({ label: `${i + 1} ${d.name}`, checked: d === this.active, run: () => this.activate(d) })),
+        // Bildschirme: the show's monitor and Referentenansicht (D-074).
+        monitors: () => [{ label: "Bildschirm", submenu: () => monitorMenu(() => this.updateChrome()) }, { cmd: "show.presenterView" }],
       },
       panels: {
         newSlide: (close) => this.layoutGallery(close, (p) => this.newSlide(p), this.designName()),
@@ -3350,7 +3372,7 @@ export class PresentApp implements EditorHost, PanelHost {
       { id: "save", label: "Speichern", icon: "save", cmd: "file.save" },
       { id: "saveAs", label: "Speichern unter", icon: "save-as", cmd: "file.saveAs" },
       { id: "print", label: "Drucken", icon: "print", page: () => this.printPageEl() },
-      { id: "export", label: "Exportieren", icon: "export", page: () => h("div", null, h("h1", null, "Exportieren"), h("button", { class: "bigbtn", style: "width:220px", onclick: () => void this.exportPdf() }, icon("export", "l"), "PDF/XPS-Dokument erstellen"), h("p", { class: "muted" }, "Die Folien als PDF, so wie sie in der Bildschirmpräsentation aussehen."), fileTypeSection(this)) },
+      { id: "export", label: "Exportieren", icon: "export", page: () => h("div", null, h("h1", null, "Exportieren"), h("button", { class: "bigbtn", style: "width:220px", onclick: () => void this.exportPdf() }, icon("export", "l"), "PDF/XPS-Dokument erstellen"), h("p", { class: "muted" }, "Die Folien als PDF, so wie sie in der Bildschirmpräsentation aussehen."), videoSection(this), gifSection(this), fileTypeSection(this)) },
       { id: "close", label: "Schließen", icon: "close-doc", cmd: "file.close" },
       { id: "options", label: "Optionen", icon: "settings", cmd: "file.options", bottom: true },
     ];
@@ -3404,6 +3426,8 @@ export class PresentApp implements EditorHost, PanelHost {
       },
       bytes: () => { const b = app.deck.write(); let s = ""; for (let i = 0; i < b.length; i += 0x8000) s += String.fromCharCode(...b.subarray(i, i + 0x8000)); return btoa(s); },
       newDoc: () => { const doc = app.makeDoc(new Deck(), "Test", null); app.docs.push(doc); app.activate(doc); },
+      /** Video erstellen / Animiertes GIF erstellen without the save dialog: the file's size and first bytes (D-074). */
+      makeMedia: async (kind: "mp4" | "gif", o: { height: number; fps: number; secs: number; useTimings: boolean }) => { const m = await import("./video"); const b = kind === "mp4" ? await m.makeVideo(app, o) : await m.makeGif(app, o); return b ? { bytes: b.length, head: Array.from(b.subarray(0, 12)), audio: kind === "mp4" && new TextDecoder("latin1").decode(b).includes("mp4a") } : null; },
       openBytes: (name: string, bytes: Uint8Array) => { const doc = app.makeDoc(new Deck(Pptx.read(bytes)), stripExt(name), null); app.docs.push(doc); app.activate(doc); return doc.deck.slides.length; },
       /** Slide i (1-based) drawn as in the show at `width` CSS px, alone at the page's top left (render comparison). */
       renderAlone: (i: number, width: number) => {

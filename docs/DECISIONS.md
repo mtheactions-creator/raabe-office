@@ -2053,3 +2053,60 @@ The owner went through the Step 8 report's open items and decided:
   by the owner), or one we generate. Each file's source and licence is listed next to it.
 - **Macros:** the same way as RaabeCalc (D-066): an interpreter of our own, shared by both apps; macros are off
   until "Inhalt aktivieren", and they cannot reach outside the app.
+
+## D-074 RaabePresent: Referentenansicht on a second screen, Video erstellen, Animiertes GIF erstellen (2026-11-07)
+
+Package 1 of Step 8b (D-073).
+- **Two screens:** with two or more monitors and Bildschirmpräsentation > Bildschirme > Referentenansicht on
+  (PowerPoint's default), the show opens a borderless full-screen window on the show monitor and the main
+  window shows the Referentenansicht in full screen. The show window is made by the native side
+  (`raabe_host::builder_with_show_windows`, add-only: `window.open("about:blank#raabe-show:<n>")` from the
+  page opens it on monitor n, any other `window.open` stays refused) and the page draws into it, so the show
+  has one state: keys and clicks on either screen go on, ink and the laser show on both, the Referentenansicht's
+  slide is a second drawing animated with the audience's. Bildschirme > Bildschirm: Automatisch (a monitor the
+  main window is not on, a secondary first, as PowerPoint puts the show on the secondary), Primärer Monitor,
+  Monitor 2 …; this user's setting, as in PowerPoint. Esc or Alt+F4 on the show window ends the show and closes
+  it through the native side (a page's `window.close` does not reach it).
+- **Referentenansicht (one or two screens):** PowerPoint's parts: Anzeigeeinstellungen (Referentenansicht und
+  Bildschirmpräsentation tauschen, Bildschirmpräsentation duplizieren), Bildschirmpräsentation beenden; the timer
+  with anhalten/fortsetzen and neu starten, the clock; the current slide with Stift- und Laserpointertools, Alle
+  Folien anzeigen, schwarz schalten, weitere Optionen below; Vorherige/Nächste and "Folie n von m"; the next slide
+  (or the current one while click animations remain) and the notes with Text vergrößern/verkleinern. A
+  right-click on the audience's screen opens its menu in the Referentenansicht (one page draws both).
+  Labels follow PowerPoint as far as known; the exact tooltips are to be recorded from PowerPoint's
+  Referentenansicht in a run when the owner is away (it takes over the screens).
+- **Tested** with the virtual display (`check_present_screens.py`): RaabePresent off screen, the show window
+  full screen on the virtual monitor, keys through DevTools, so the owner's screen is never covered.
+- **Video erstellen:** PowerPoint's choices (Ultra HD (4K), Full HD (1080p), HD (720p), Standard (480p); Keine
+  aufgezeichneten / Aufgezeichnete Anzeigedauern und Kommentare verwenden; In jeder Folie verbrachte Sekunden,
+  05,00). The timeline is PowerPoint's, measured with its own CreateVideo (probe_powerpoint_video.py): a slide
+  takes its transition plus its seconds (or Nach with recorded timings); steps after the previous start with
+  it; click steps come at equal shares of the seconds (two clicks in 2 s at 0.67 and 1.33 s); the animations'
+  own durations add nothing. The width is the height times the slide's proportions rounded down to a multiple of
+  4 (480p: 852, as PowerPoint). 30 frames per second; H.264 High profile and AAC from the WebView's encoders
+  (WebCodecs) in an MP4 written by our own code (mp4.ts, D-073), videos on slides drawn into their frames,
+  transition sounds and the sound of audio and video mixed into one track. Only MP4 (PowerPoint also offers
+  WMV, a Microsoft format).
+- **Animiertes GIF erstellen:** Extra groß (1080p), Groß (720p), Mittel (480p, the default), Klein (240p);
+  Hintergrund transparent machen; In jeder Folie verbrachte Sekunden (01,00); Zu exportierende Folien von-bis.
+  Our GIF writer (gif.ts): 15 frames per second, a colour table of up to 256 colours per frame (median cut),
+  only the changed rectangle of each frame, equal frames merged into a longer delay, endless loop. PowerPoint's
+  own GIF cannot be made through COM (CreateVideo writes an MP4 under any name, measured); its frame rate and
+  sizes are to be recorded through its UI in a run when the owner is away.
+- **Verblassen durch Schwarz:** PowerPoint writes `thruBlk="1"`; the show and the video now go through black as
+  PowerPoint does (the video comparison found it).
+- **Measured:** `check_present_video.py` reads PowerPoint's video and ours frame by frame (each frame named by
+  the colours of the test deck's slides and shapes): all 9 clear states of PowerPoint's video appear in ours
+  within 0.2 s, without and with recorded timings; PowerPoint's slide with a fade-through-black transition and a
+  click fade is 0.1 s longer than ours (11.12 s against 11.0 s in all), reason not found.
+
+## D-075 RaabePresent: Formeloptionen (2026-11-07)
+
+Package 2 of Step 8b (D-073). PowerPoint's Formeloptionen dialog is smaller than Word's (the inventory recorded
+it): Allgemein with Beim Kopieren einer Formel (MathML / Lineares Format als Nur-Text in die Zwischenablage),
+Zeilen mit binären und relationalen Operatoren umbrechen (Vor, Nach, Doppelt), Operatoren für die Subtraktion
+duplizieren als (only with Doppelt) and Math. AutoKorrektur... RaabePresent's dialog has exactly these
+(mathopts.ts), with RaabeWrite's settings key and meanings (D-047) as this user's settings. Strg+C and Strg+X
+inside an equation now put the selected part on the clipboard as text in the chosen format; the automatic
+build-up follows RaabeWrite's setting. The break settings are kept for equations that wrap (our text boxes do
+not break equations at operators yet, as before).

@@ -1,0 +1,73 @@
+{
+ "date": "2026-11-07",
+ "slides": [
+  {
+   "slide": 1,
+   "color": [
+    230,
+    30,
+    30
+   ]
+  },
+  {
+   "slide": 2,
+   "color": [
+    30,
+    170,
+    60
+   ],
+   "clicks": 2
+  },
+  {
+   "slide": 3,
+   "color": [
+    40,
+    70,
+    220
+   ],
+   "transition": "fade 1 s",
+   "clicks": 1
+  },
+  {
+   "slide": 4,
+   "color": [
+    240,
+    210,
+    30
+   ],
+   "afterPrevious": 1
+  },
+  {
+   "slide": 5,
+   "color": [
+    220,
+    40,
+    200
+   ],
+   "advanceAfter": 3
+  }
+ ],
+ "videos": {
+  "untimed": {
+   "status": 3,
+   "seconds_to_make": 2.0,
+   "bytes": 93162,
+   "duration": 11.1213
+  },
+  "timed": {
+   "status": 3,
+   "seconds_to_make": 2.0,
+   "bytes": 95157,
+   "duration": 12.1113
+  },
+  "gif": {
+   "status": 3,
+   "bytes": 83179
+  }
+ },
+ "close": {
+  "closed": 1,
+  "quit": true,
+  "left_open": 0
+ }
+}

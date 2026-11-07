@@ -1,0 +1,56 @@
+{
+ "date": "2026-11-07",
+ "checks": {
+  "dual": true,
+  "show_window_on_other_monitor": true,
+  "presenter_view_in_main": true,
+  "audience_has_slide": true,
+  "next_moves_both": true,
+  "mirror_matches_audience": true,
+  "ink_on_both": true,
+  "esc_ends": true,
+  "show_window_closed": true
+ },
+ "monitors_before": 1,
+ "monitors_during": 2,
+ "state_start": {
+  "slide": 1,
+  "step": 0,
+  "steps": 0,
+  "end": false,
+  "blank": null,
+  "tool": "arrow",
+  "presenter": true,
+  "dual": true
+ },
+ "show_window": [
+  3840,
+  0,
+  800,
+  600
+ ],
+ "other_monitor": [
+  3840,
+  0,
+  800,
+  600
+ ],
+ "audience_slides": 1,
+ "presenter_text": "Anzeigeeinstellungen ▾ Bildschirmpräsentation beenden ❚❚ 0:00:02 ↻ 11:44 ✎ ▦ ■ … ◀ Folie 1 von 4 ▶ Nächste Folie Ein Übergang​ • Punkt 2.1​ • Punkt 2.2​ Notizen zur Folie 1 Zweite Zeile der Notizen A⁺",
+ "state_after_next": {
+  "slide": 2,
+  "step": 0,
+  "steps": 0,
+  "end": false,
+  "blank": null,
+  "tool": "arrow",
+  "presenter": true,
+  "dual": true
+ },
+ "ink_paths": [
+  1,
+  1
+ ],
+ "monitors_after": 1,
+ "summary": "9/9"
+}

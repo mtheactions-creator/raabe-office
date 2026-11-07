@@ -36,7 +36,7 @@ export function transitionOf(root: Element): { el: Element | null; wrap: Element
 }
 
 /** The kind of transition (the first child element's local name) and its duration in ms. */
-export function readTransition(root: Element): { kind: string; dur: number; advClick: boolean; advTm?: number; dir?: string } | null {
+export function readTransition(root: Element): { kind: string; dur: number; advClick: boolean; advTm?: number; dir?: string; thruBlk?: boolean } | null {
   const { el } = transitionOf(root);
   if (!el) return null;
   const child = kids(el).find((c) => c.localName !== "sndAc" && c.localName !== "extLst");
@@ -48,6 +48,8 @@ export function readTransition(root: Element): { kind: string; dur: number; advC
     advClick: el.getAttribute("advClick") !== "0",
     advTm: num(el, "advTm"),
     dir: child?.getAttribute("dir") ?? undefined,
+    // Verblassen > Durch Schwarz (PowerPoint writes thruBlk="1").
+    thruBlk: child?.getAttribute("thruBlk") === "1" || child?.getAttribute("thruBlk") === "true" || undefined,
   };
 }
 

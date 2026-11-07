@@ -339,6 +339,44 @@ const BROWSER_ARGS: &str = "--disable-features=msWebOOUI,msPdfOOUI,msSmartScreen
 
 /// The app with its window, plugins and single-instance handling; the app adds its handler and runs it.
 pub fn builder(cfg: AppConfig) -> tauri::Builder<Wry> {
+    builder_opts(cfg, false)
+}
+
+/// As `builder`, and the main window may open show windows (RaabePresent, D-074): `window.open` with the
+/// URL `about:blank#raabe-show:<n>` opens a borderless full-screen window on monitor n (Tauri's monitor
+/// order), scriptable by the main window (same WebView2 environment, the page draws into it). Any other
+/// `window.open` is refused, as before.
+pub fn builder_with_show_windows(cfg: AppConfig) -> tauri::Builder<Wry> {
+    builder_opts(cfg, true)
+}
+
+static SHOW_WINDOWS: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
+
+fn show_window(app: &AppHandle, url: &tauri::Url, features: tauri::webview::NewWindowFeatures) -> tauri::webview::NewWindowResponse<Wry> {
+    use tauri::webview::NewWindowResponse;
+    let n = url.fragment().and_then(|f| f.strip_prefix("raabe-show:")).and_then(|n| n.parse::<usize>().ok());
+    let monitors = app.available_monitors().unwrap_or_default();
+    let Some(m) = n.and_then(|n| monitors.get(n)) else { return NewWindowResponse::Deny };
+    let label = format!("show-{}", SHOW_WINDOWS.fetch_add(1, std::sync::atomic::Ordering::Relaxed));
+    let built = WebviewWindowBuilder::new(app, label, WebviewUrl::External("about:blank".parse().unwrap()))
+        .window_features(features)
+        .title("Bildschirmpräsentation")
+        .decorations(false)
+        .skip_taskbar(true)
+        .visible(false)
+        .background_color(Color(0, 0, 0, 255))
+        .disable_drag_drop_handler()
+        .build();
+    let Ok(w) = built else { return NewWindowResponse::Deny };
+    // Physical position first (monitors may differ in scaling), then full screen on that monitor.
+    let _ = w.set_position(tauri::PhysicalPosition::new(m.position().x, m.position().y));
+    let _ = w.set_size(tauri::PhysicalSize::new(m.size().width, m.size().height));
+    let _ = w.set_fullscreen(true);
+    let _ = w.show();
+    NewWindowResponse::Create { window: w }
+}
+
+fn builder_opts(cfg: AppConfig, show_windows: bool) -> tauri::Builder<Wry> {
     let args: Vec<String> = std::env::args().skip(1).collect();
     fonts::preload();
     let mut builder = tauri::Builder::default();
@@ -398,6 +436,10 @@ pub fn builder(cfg: AppConfig) -> tauri::Builder<Wry> {
                         window = window.initialization_script(&format!("window.__FEEL = {fixture:?};"));
                     }
                 }
+            }
+            if show_windows {
+                let handle = app.handle().clone();
+                window = window.on_new_window(move |url, features| show_window(&handle, &url, features));
             }
             window.build()?;
             Ok(())

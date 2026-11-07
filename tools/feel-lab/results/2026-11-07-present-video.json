@@ -1,0 +1,387 @@
+{
+ "date": "2026-11-07",
+ "untimed": {
+  "powerpoint": {
+   "width": 852,
+   "height": 480,
+   "duration": 11.1213
+  },
+  "ours": {
+   "width": 852,
+   "height": 480,
+   "duration": 11
+  },
+  "compare": {
+   "matched": "9/9",
+   "states": [
+    {
+     "state": "RRRR",
+     "powerpoint": 0,
+     "ours": 0,
+     "diff": 0
+    },
+    {
+     "state": "GGGG",
+     "powerpoint": 2,
+     "ours": 2,
+     "diff": 0
+    },
+    {
+     "state": "GkGG",
+     "powerpoint": 2.7,
+     "ours": 2.7,
+     "diff": 0.0
+    },
+    {
+     "state": "GkwG",
+     "powerpoint": 3.367,
+     "ours": 3.333,
+     "diff": -0.034
+    },
+    {
+     "state": "kkkk",
+     "powerpoint": 4.433,
+     "ours": 4.467,
+     "diff": 0.034
+    },
+    {
+     "state": "BBBB",
+     "powerpoint": 4.933,
+     "ours": 4.8,
+     "diff": -0.133
+    },
+    {
+     "state": "BBBk",
+     "powerpoint": 6.267,
+     "ours": 6.3,
+     "diff": 0.033
+    },
+    {
+     "state": "YYYw",
+     "powerpoint": 7.1,
+     "ours": 7,
+     "diff": -0.1
+    },
+    {
+     "state": "MMMM",
+     "powerpoint": 9.1,
+     "ours": 9,
+     "diff": -0.1
+    }
+   ]
+  },
+  "powerpoint_rows": [
+   [
+    0,
+    "RRRR"
+   ],
+   [
+    2,
+    "GGGG"
+   ],
+   [
+    2.7,
+    "GkGG"
+   ],
+   [
+    3.367,
+    "GkwG"
+   ],
+   [
+    4.167,
+    "Gk?G"
+   ],
+   [
+    4.233,
+    "?k??"
+   ],
+   [
+    4.4,
+    "kk?k"
+   ],
+   [
+    4.433,
+    "kkkk"
+   ],
+   [
+    4.7,
+    "????"
+   ],
+   [
+    4.933,
+    "BBBB"
+   ],
+   [
+    5.933,
+    "BBB?"
+   ],
+   [
+    6.267,
+    "BBBk"
+   ],
+   [
+    7.1,
+    "YYYw"
+   ],
+   [
+    9.1,
+    "MMMM"
+   ]
+  ],
+  "our_rows": [
+   [
+    0,
+    "RRRR"
+   ],
+   [
+    2,
+    "GGGG"
+   ],
+   [
+    2.7,
+    "GkGG"
+   ],
+   [
+    3.333,
+    "GkwG"
+   ],
+   [
+    4.2,
+    "Gk?G"
+   ],
+   [
+    4.3,
+    "?k??"
+   ],
+   [
+    4.433,
+    "kk?k"
+   ],
+   [
+    4.467,
+    "kkkk"
+   ],
+   [
+    4.6,
+    "????"
+   ],
+   [
+    4.8,
+    "BBBB"
+   ],
+   [
+    6.067,
+    "BBB?"
+   ],
+   [
+    6.3,
+    "BBBk"
+   ],
+   [
+    7,
+    "YYYw"
+   ],
+   [
+    9,
+    "MMMM"
+   ]
+  ]
+ },
+ "timed": {
+  "powerpoint": {
+   "width": 852,
+   "height": 480,
+   "duration": 12.1113
+  },
+  "ours": {
+   "width": 852,
+   "height": 480,
+   "duration": 12
+  },
+  "compare": {
+   "matched": "9/9",
+   "states": [
+    {
+     "state": "RRRR",
+     "powerpoint": 0,
+     "ours": 0,
+     "diff": 0
+    },
+    {
+     "state": "GGGG",
+     "powerpoint": 2,
+     "ours": 2,
+     "diff": 0
+    },
+    {
+     "state": "GkGG",
+     "powerpoint": 2.7,
+     "ours": 2.7,
+     "diff": 0.0
+    },
+    {
+     "state": "GkwG",
+     "powerpoint": 3.367,
+     "ours": 3.333,
+     "diff": -0.034
+    },
+    {
+     "state": "kkkk",
+     "powerpoint": 4.433,
+     "ours": 4.467,
+     "diff": 0.034
+    },
+    {
+     "state": "BBBB",
+     "powerpoint": 4.933,
+     "ours": 4.8,
+     "diff": -0.133
+    },
+    {
+     "state": "BBBk",
+     "powerpoint": 6.267,
+     "ours": 6.3,
+     "diff": 0.033
+    },
+    {
+     "state": "YYYw",
+     "powerpoint": 7.1,
+     "ours": 7,
+     "diff": -0.1
+    },
+    {
+     "state": "MMMM",
+     "powerpoint": 9.1,
+     "ours": 9,
+     "diff": -0.1
+    }
+   ]
+  },
+  "powerpoint_rows": [
+   [
+    0,
+    "RRRR"
+   ],
+   [
+    2,
+    "GGGG"
+   ],
+   [
+    2.7,
+    "GkGG"
+   ],
+   [
+    3.367,
+    "GkwG"
+   ],
+   [
+    4.167,
+    "Gk?G"
+   ],
+   [
+    4.233,
+    "?k??"
+   ],
+   [
+    4.4,
+    "kk?k"
+   ],
+   [
+    4.433,
+    "kkkk"
+   ],
+   [
+    4.7,
+    "????"
+   ],
+   [
+    4.933,
+    "BBBB"
+   ],
+   [
+    5.933,
+    "BBB?"
+   ],
+   [
+    6.267,
+    "BBBk"
+   ],
+   [
+    7.1,
+    "YYYw"
+   ],
+   [
+    9.1,
+    "MMMM"
+   ]
+  ],
+  "our_rows": [
+   [
+    0,
+    "RRRR"
+   ],
+   [
+    2,
+    "GGGG"
+   ],
+   [
+    2.7,
+    "GkGG"
+   ],
+   [
+    3.333,
+    "GkwG"
+   ],
+   [
+    4.2,
+    "Gk?G"
+   ],
+   [
+    4.3,
+    "?k??"
+   ],
+   [
+    4.433,
+    "kk?k"
+   ],
+   [
+    4.467,
+    "kkkk"
+   ],
+   [
+    4.6,
+    "????"
+   ],
+   [
+    4.8,
+    "BBBB"
+   ],
+   [
+    6.067,
+    "BBB?"
+   ],
+   [
+    6.3,
+    "BBBk"
+   ],
+   [
+    7,
+    "YYYw"
+   ],
+   [
+    9,
+    "MMMM"
+   ]
+  ]
+ },
+ "gif": {
+  "size": [
+   424,
+   240
+  ],
+  "frames": 28,
+  "loop": 0,
+  "total_ms": 6080,
+  "bytes": 20743
+ }
+}
