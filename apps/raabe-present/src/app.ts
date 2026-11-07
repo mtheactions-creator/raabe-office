@@ -1848,7 +1848,7 @@ export class PresentApp implements EditorHost, PanelHost {
     wrap.append(grid);
     if (title === "Office-Design" || title.endsWith("Design")) {
       wrap.append(h("div", { class: "menu-sep" }), h("button", { class: "menu-item", onclick: () => { close(); this.duplicateSlides([...this.panel.selected]); } }, "Ausgewählte Folien duplizieren"),
-        h("button", { class: "menu-item", disabled: true }, "Folien aus Gliederung..."),
+        h("button", { class: "menu-item", onclick: () => { close(); void import("./slideimport").then((m) => m.outlineDialog(this)); } }, "Folien aus Gliederung..."),
         h("button", { class: "menu-item", onclick: () => { close(); void import("./slideimport").then((m) => m.reuseSlidesDialog(this)); } }, "Folien wiederverwenden..."));
     }
     return wrap;

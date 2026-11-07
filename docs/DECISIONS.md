@@ -1920,7 +1920,9 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   slide with what they refer to (pictures, media, charts without their workbook, external links) and take the
   layout of the same name here (PowerPoint's Zieldesign verwenden; Ursprüngliche Formatierung beibehalten is
   not built). Our dialog instead of PowerPoint's pane. Pasted slides use the same way now, so pictures are no
-  longer dropped when slides are pasted (also into another window). Folien aus Gliederung... is greyed.
+  longer dropped when slides are pasted (also into another window). **Folien aus Gliederung...** takes a Word
+  document (Überschrift 1: a slide's title, lower headings its bullet levels, other text left out) or a text
+  file (lines starting with tabs for the level), as PowerPoint imports an outline; RTF is not read.
 - **Smaller entries by the inventory:** Drehen with PowerPoint's names (Rechtsdrehung 90 Grad, Vertikal umdrehen,
   Horizontal spiegeln, Weitere Drehungsoptionen...); Animation hinzufügen > Weitere Eingangs-, Hervorhebungs-,
   Ausgangseffekte und Animationspfade (our lists in PowerPoint's dialogs' titles; OLE-Aktionsarten greyed);

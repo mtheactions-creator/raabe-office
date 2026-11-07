@@ -106,3 +106,62 @@ export async function reuseSlidesDialog(app: PresentApp): Promise<void> {
   for (const i of list) { importSlide(app.deck, src, src.slides[i].path, at); at++; }
   if (list.length) app.setCurrent(at);
 }
+
+/**
+ * Start > Neue Folie > Folien aus Gliederung...: a Word document's headings (Überschrift 1: a slide's title,
+ * Überschrift 2 and lower: its bullet levels), or a text file whose lines start with tabs for the level
+ * (no tab: a new slide), as PowerPoint imports an outline. The slides come after the current one in the
+ * layout Titel und Inhalt.
+ */
+export async function outlineDialog(app: PresentApp): Promise<void> {
+  const file = app.platform.openAnyDialog
+    ? await app.platform.openAnyDialog("Gliederung einfügen", [{ name: "Alle Gliederungen", extensions: ["docx", "txt"] }])
+    : null;
+  if (!file) return;
+  const bytes = await app.platform.readFile(file);
+  const items: { level: number; text: string }[] = [];
+  if (/\.docx$/i.test(file)) {
+    const { readDocx } = await import("@raabe/ooxml");
+    const st = readDocx(bytes).state;
+    for (const p of st.paras) {
+      const lvl = p.props.outline ?? st.styles.outlineLevel(st.styles.resolvePara(p.props).style);
+      const text = p.text.replace(/[\u000b\u000c￼]/g, " ").trim();
+      if (lvl !== undefined && lvl <= 8 && text) items.push({ level: lvl, text });
+    }
+  } else {
+    for (const line of new TextDecoder().decode(bytes).split(/\r?\n/)) {
+      const m = /^(\t*)(.*)$/.exec(line)!;
+      if (m[2].trim()) items.push({ level: m[1].length, text: m[2].trim() });
+    }
+  }
+  if (!items.length) return;
+  const deck = app.deck;
+  const layout = deck.layouts().find((l) => l.name === "Titel und Inhalt")?.path ?? deck.layouts()[1]?.path;
+  let at = app.slideNumber() - 1;
+  const slides: { title: string; body: { level: number; text: string }[] }[] = [];
+  for (const it of items) {
+    if (it.level === 0 || !slides.length) slides.push({ title: it.level === 0 ? it.text : "", body: it.level === 0 ? [] : [{ level: 0, text: it.text }] });
+    else slides[slides.length - 1].body.push({ level: Math.min(8, it.level - 1), text: it.text });
+  }
+  const T = await import("./textops");
+  const S = await import("./shapeops");
+  for (const s of slides) {
+    const path = deck.addSlide(at, layout);
+    at++;
+    deck.change("Folien aus Gliederung", [path], () => {
+      const tree = S.treeOf(deck.pptx.doc(path));
+      const bodies = S.shapeEls(tree).map((e) => ({ e, ph: e.getElementsByTagNameNS(PptxDom.NS_P, "ph")[0] })).filter((x) => x.ph);
+      const titleEl = bodies.find((x) => ["title", "ctrTitle"].includes(x.ph.getAttribute("type") ?? ""))?.e;
+      const bodyEl = bodies.find((x) => !["title", "ctrTitle", "dt", "ftr", "sldNum"].includes(x.ph.getAttribute("type") ?? ""))?.e;
+      const tb = titleEl ? S.txBodyOf(titleEl) : undefined;
+      if (tb && s.title) T.insertText(tb, { p: 0, o: 0 }, s.title);
+      const bb = bodyEl ? S.txBodyOf(bodyEl) : undefined;
+      if (bb && s.body.length) {
+        // One paragraph per line of the outline, at its level.
+        let pos = { p: 0, o: 0 };
+        s.body.forEach((b, i) => { if (i) pos = T.splitPara(bb, pos); pos = T.insertText(bb, pos, b.text); if (b.level) T.paraProps(bb, pos.p, pos.p, (pr) => pr.setAttribute("lvl", String(b.level))); });
+      }
+    });
+  }
+  app.setCurrent(at);
+}
