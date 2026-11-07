@@ -1,0 +1,861 @@
+{
+ "date": "2026-11-07",
+ "what": "SmartArt parts as PowerPoint writes them, and whether minimal definition parts open",
+ "layouts": [
+  {
+   "key": "default",
+   "name": "Einfache Blockliste",
+   "category": "list",
+   "nodes": 5,
+   "shape": "Diagram 1"
+  },
+  {
+   "key": "process1",
+   "name": "Einfacher Prozess",
+   "category": "process",
+   "nodes": 3,
+   "shape": "Diagram 1"
+  },
+  {
+   "key": "cycle2",
+   "name": "Einfacher Kreis",
+   "category": "cycle",
+   "nodes": 5,
+   "shape": "Diagram 1"
+  },
+  {
+   "key": "hierarchy1",
+   "name": "Hierarchie",
+   "category": "hierarchy",
+   "nodes": 6,
+   "shape": "Diagram 1"
+  },
+  {
+   "key": "vList2",
+   "name": "Vertikale Aufzählung",
+   "category": "list",
+   "nodes": 4,
+   "shape": "Diagram 1"
+  },
+  {
+   "key": "radial1",
+   "name": "Einfaches Radial",
+   "category": "relationship",
+   "nodes": 5,
+   "shape": "Diagram 1"
+  }
+ ],
+ "layout_count": 159,
+ "layout_names": {
+  "default": [
+   "Einfache Blockliste",
+   "list"
+  ],
+  "AlternatingHexagons": [
+   "Alternierende Sechsecke",
+   "list"
+  ],
+  "pList1": [
+   "Bildbeschriftungsliste",
+   "list"
+  ],
+  "LinedList": [
+   "Liste mit Linien",
+   "hierarchy"
+  ],
+  "vList2": [
+   "Vertikale Aufzählung",
+   "list"
+  ],
+  "list1": [
+   "Vertikale Feldliste",
+   "list"
+  ],
+  "hList1": [
+   "Horizontale Aufzählung",
+   "list"
+  ],
+  "SquareAccentList": [
+   "Liste mit quadratischen Akzenten",
+   "list"
+  ],
+  "hList2": [
+   "Bildakzentliste",
+   "list"
+  ],
+  "bList2": [
+   "Umgebrochene Bildakzentliste",
+   "list"
+  ],
+  "hList9": [
+   "Gestapelte Liste",
+   "list"
+  ],
+  "VerticalActionList": [
+   "Vertikale Aktionsliste",
+   "list"
+  ],
+  "IncreasingCircleProcess": [
+   "Zunehmender Kreisprozess",
+   "list"
+  ],
+  "PieProcess": [
+   "Kreisdiagrammprozess",
+   "list"
+  ],
+  "hProcess7": [
+   "Detaillierter Prozess",
+   "process"
+  ],
+  "lProcess2": [
+   "Gruppierte Liste",
+   "list"
+  ],
+  "pList2": [
+   "Horizontale Bildliste",
+   "list"
+  ],
+  "hList7": [
+   "Fortlaufende Bildliste",
+   "list"
+  ],
+  "PictureStrips": [
+   "Bildstreifen",
+   "list"
+  ],
+  "vList4": [
+   "Vertikale Bildliste",
+   "list"
+  ],
+  "AlternatingPictureBlocks": [
+   "Alternierende Bildblöcke",
+   "picture"
+  ],
+  "vList3": [
+   "Vertikale Bildakzentliste",
+   "list"
+  ],
+  "PictureAccentList": [
+   "Bildakzentliste mit Titel",
+   "picture"
+  ],
+  "vList5": [
+   "Vertikale Blockliste",
+   "list"
+  ],
+  "chevron2": [
+   "Vertikale Chevronliste",
+   "process"
+  ],
+  "VerticalAccentList": [
+   "Liste mit vertikalen Akzenten",
+   "list"
+  ],
+  "vList6": [
+   "Vertikale Pfeilliste",
+   "process"
+  ],
+  "hList6": [
+   "Trapezförmige Liste",
+   "list"
+  ],
+  "BlockDescendingList": [
+   "Absteigende Blockliste",
+   "list"
+  ],
+  "IconCircleLabelList": [
+   "Symbolkreis-Beschriftungsliste",
+   "list"
+  ],
+  "hList3": [
+   "Tabellenliste",
+   "list"
+  ],
+  "process4": [
+   "Segmentierter Prozess",
+   "process"
+  ],
+  "VerticalCurvedList": [
+   "Liste mit vertikalen Kurven",
+   "list"
+  ],
+  "pyramid2": [
+   "Pyramidenliste",
+   "pyramid"
+  ],
+  "target3": [
+   "Zielliste",
+   "relationship"
+  ],
+  "hierarchy3": [
+   "Hierarchieliste",
+   "hierarchy"
+  ],
+  "VerticalCircleList": [
+   "Liste mit vertikalen Kreisakzenten",
+   "list"
+  ],
+  "hierarchy4": [
+   "Tabellenhierarchie",
+   "hierarchy"
+  ],
+  "process1": [
+   "Einfacher Prozess",
+   "process"
+  ],
+  "StepUpProcess": [
+   "Prozess mit aufsteigenden Schritten",
+   "process"
+  ],
+  "StepDownProcess": [
+   "Prozess mit absteigenden Schritten",
+   "process"
+  ],
+  "NumberedLinearArrowProcess": [
+   "Nummerierter linearer Pfeilprozess",
+   "process"
+  ],
+  "process3": [
+   "Akzentprozess",
+   "process"
+  ],
+  "hProcess10": [
+   "Bildakzentprozess",
+   "process"
+  ],
+  "hProcess4": [
+   "Alternierender Fluss",
+   "process"
+  ],
+  "hProcess9": [
+   "Fortlaufender Blockprozess",
+   "process"
+  ],
+  "IncreasingArrowsProcess": [
+   "Zunehmender Pfeilprozess",
+   "process"
+  ],
+  "hProcess3": [
+   "Fortlaufender Pfeilprozess",
+   "process"
+  ],
+  "hProcess6": [
+   "Prozesspfeile",
+   "process"
+  ],
+  "BulletTimeline": [
+   "Aufzählungszeichen-Zeitachse",
+   "process"
+  ],
+  "BulletTimelineInverted": [
+   "Invertierte Aufzählungszeitachse",
+   "process"
+  ],
+  "CircleAccentTimeline": [
+   "Zeitachse mit Kreisakzent",
+   "process"
+  ],
+  "hProcess11": [
+   "Einfache Zeitachse",
+   "process"
+  ],
+  "chevron1": [
+   "Einfacher Chevronprozess",
+   "process"
+  ],
+  "hChevron3": [
+   "Geschlossener Chevronprozess",
+   "process"
+  ],
+  "lProcess3": [
+   "Chevronliste",
+   "process"
+  ],
+  "SubStepProcess": [
+   "Unterschrittprozess",
+   "process"
+  ],
+  "PhasedProcess": [
+   "Phasenprozess",
+   "process"
+  ],
+  "RandomtoResultProcess": [
+   "Zufallsergebnisprozess",
+   "process"
+  ],
+  "process2": [
+   "Vertikaler Prozess",
+   "process"
+  ],
+  "vProcess5": [
+   "Gestaffelter Prozess",
+   "process"
+  ],
+  "lProcess1": [
+   "Prozessliste",
+   "process"
+  ],
+  "CircleArrowProcess": [
+   "Kreisförmiger Pfeilprozess",
+   "process"
+  ],
+  "process5": [
+   "Einfacher umgebrochener Prozess",
+   "process"
+  ],
+  "bProcess3": [
+   "Wiederholter umgebrochener Prozess",
+   "process"
+  ],
+  "bProcess4": [
+   "Vertikaler umgebrochener Prozess",
+   "process"
+  ],
+  "AscendingPictureAccentProcess": [
+   "Aufsteigender Prozess mit Bildakzenten",
+   "process"
+  ],
+  "arrow2": [
+   "Pfeil nach oben",
+   "process"
+  ],
+  "DescendingProcess": [
+   "Absteigender Prozess",
+   "process"
+  ],
+  "bProcess2": [
+   "Kreisförmiger umgebrochener Prozess",
+   "process"
+  ],
+  "equation1": [
+   "Formel",
+   "relationship"
+  ],
+  "equation2": [
+   "Vertikale Formel",
+   "relationship"
+  ],
+  "funnel1": [
+   "Trichter",
+   "relationship"
+  ],
+  "gear1": [
+   "Zahnrad",
+   "relationship"
+  ],
+  "arrow6": [
+   "Pfeilband",
+   "relationship"
+  ],
+  "arrow4": [
+   "Entgegengesetzte Pfeile",
+   "relationship"
+  ],
+  "arrow5": [
+   "Zusammenlaufende Pfeile",
+   "relationship"
+  ],
+  "arrow1": [
+   "Auseinanderlaufende Pfeile",
+   "relationship"
+  ],
+  "cycle2": [
+   "Einfacher Kreis",
+   "cycle"
+  ],
+  "cycle1": [
+   "Textkreis",
+   "cycle"
+  ],
+  "cycle5": [
+   "Blockkreis",
+   "cycle"
+  ],
+  "cycle6": [
+   "Richtungsloser Kreis",
+   "cycle"
+  ],
+  "cycle3": [
+   "Fortlaufender Kreis",
+   "cycle"
+  ],
+  "cycle7": [
+   "Kreis mit mehreren Richtungen",
+   "cycle"
+  ],
+  "cycle8": [
+   "Segmentierter Kreis",
+   "cycle"
+  ],
+  "chart3": [
+   "Einfaches Kreisdiagramm",
+   "relationship"
+  ],
+  "radial6": [
+   "Radialkreis",
+   "cycle"
+  ],
+  "radial1": [
+   "Einfaches Radial",
+   "relationship"
+  ],
+  "radial5": [
+   "Auseinanderlaufendes Radial ",
+   "relationship"
+  ],
+  "radial3": [
+   "Radialvenn",
+   "relationship"
+  ],
+  "cycle4": [
+   "Zyklus-Matrix",
+   "relationship"
+  ],
+  "RadialCluster": [
+   "Radialer Cluster",
+   "relationship"
+  ],
+  "orgChart1": [
+   "Organigramm",
+   "hierarchy"
+  ],
+  "NameandTitleOrganizationalChart": [
+   "Organigramm mit Name und Titel",
+   "hierarchy"
+  ],
+  "HalfCircleOrganizationChart": [
+   "Halbkreisorganigramm",
+   "hierarchy"
+  ],
+  "CirclePictureHierarchy": [
+   "Bilderhierarchie mit Kreisakzent",
+   "hierarchy"
+  ],
+  "hierarchy1": [
+   "Hierarchie",
+   "hierarchy"
+  ],
+  "hierarchy6": [
+   "Beschriftete Hierarchie",
+   "hierarchy"
+  ],
+  "HorizontalOrganizationChart": [
+   "Horizontales Organigramm",
+   "hierarchy"
+  ],
+  "HorizontalMultiLevelHierarchy": [
+   "Horizontale Hierarchie mit mehreren Ebenen",
+   "hierarchy"
+  ],
+  "hierarchy2": [
+   "Horizontale Hierarchie",
+   "hierarchy"
+  ],
+  "hierarchy5": [
+   "Horizontal beschriftete Hierarchie",
+   "hierarchy"
+  ],
+  "balance1": [
+   "Balance",
+   "relationship"
+  ],
+  "CircleRelationship": [
+   "Kreisbeziehung",
+   "relationship"
+  ],
+  "HexagonCluster": [
+   "Sechseckcluster",
+   "picture"
+  ],
+  "OpposingIdeas": [
+   "Konträre Ansichten",
+   "relationship"
+  ],
+  "PlusandMinus": [
+   "Pro und Kontra",
+   "relationship"
+  ],
+  "ReverseList": [
+   "Umgekehrte Liste",
+   "relationship"
+  ],
+  "arrow3": [
+   "Gegengewichtspfeile",
+   "relationship"
+  ],
+  "pyramid4": [
+   "Segmentierte Pyramide",
+   "pyramid"
+  ],
+  "target2": [
+   "Geschachteltes Ziel",
+   "relationship"
+  ],
+  "radial4": [
+   "Zusammenlaufendes Radial",
+   "relationship"
+  ],
+  "radial2": [
+   "Radialliste",
+   "relationship"
+  ],
+  "target1": [
+   "Einfaches Ziel",
+   "relationship"
+  ],
+  "venn1": [
+   "Einfaches Venn",
+   "relationship"
+  ],
+  "venn3": [
+   "Lineares Venn",
+   "relationship"
+  ],
+  "venn2": [
+   "Gestapeltes Venn",
+   "relationship"
+  ],
+  "matrix3": [
+   "Einfache Matrix",
+   "matrix"
+  ],
+  "matrix1": [
+   "Betitelte Matrix",
+   "matrix"
+  ],
+  "matrix2": [
+   "Rastermatrix",
+   "matrix"
+  ],
+  "pyramid1": [
+   "Einfache Pyramide",
+   "pyramid"
+  ],
+  "pyramid3": [
+   "Invertierte Pyramide",
+   "pyramid"
+  ],
+  "AccentedPicture": [
+   "Bild mit Akzenten",
+   "picture"
+  ],
+  "CircularPictureCallout": [
+   "Bildlegende mit Kreisakzent",
+   "picture"
+  ],
+  "SnapshotPictureList": [
+   "Momentaufnahmen-Bildliste",
+   "picture"
+  ],
+  "SpiralPicture": [
+   "Spiralförmige Grafik",
+   "picture"
+  ],
+  "CaptionedPictures": [
+   "Bilder mit Beschriftungen",
+   "picture"
+  ],
+  "BendingPictureCaption": [
+   "Umgebrochene Bildbeschriftung",
+   "picture"
+  ],
+  "BendingPictureSemiTransparentText": [
+   "Umgebrochener halbtransparenter Bildtext",
+   "picture"
+  ],
+  "BendingPictureBlocks": [
+   "Umgebrochene Bildblöcke",
+   "picture"
+  ],
+  "BendingPictureCaptionList": [
+   "Umgebrochene Bildbeschriftungsliste",
+   "picture"
+  ],
+  "TitledPictureBlocks": [
+   "Titelbildblöcke",
+   "picture"
+  ],
+  "PictureGrid": [
+   "Bildraster",
+   "picture"
+  ],
+  "PictureAccentBlocks": [
+   "Bildakzentblöcke",
+   "picture"
+  ],
+  "AlternatingPictureCircles": [
+   "Alternierende Bildkreise",
+   "picture"
+  ],
+  "TitlePictureLineup": [
+   "Titelbildanordnung",
+   "picture"
+  ],
+  "PictureLineup": [
+   "Bildanordnung",
+   "picture"
+  ],
+  "FramedTextPicture": [
+   "Umrahmte Textgrafik",
+   "picture"
+  ],
+  "BubblePictureList": [
+   "Blasenbildliste",
+   "picture"
+  ],
+  "AlternatingCircleProcess": [
+   "Verfahren mit wechselnden Kreisen",
+   "timeline"
+  ],
+  "NumberedDotsHorizontal": [
+   "Nummerierte horizontale Punkte",
+   "timeline"
+  ],
+  "NumberedDotsVertical": [
+   "Nummerierte vertikale Punkte",
+   "timeline"
+  ],
+  "SmallDotsHorizontal": [
+   "Kleine horizontale Punkte",
+   "timeline"
+  ],
+  "SmallDotsVertical": [
+   "Kleine Punkte vertikal",
+   "timeline"
+  ],
+  "MeetTheTeam": [
+   "Das Team kennenlernen",
+   "meettheteam"
+  ],
+  "MeetTheTeamCard": [
+   "Karte zum Kennenlernen des Teams",
+   "meettheteam"
+  ],
+  "MeetTheTeamCardVertical": [
+   "Vertikale Karte zum Kennenlernen des Teams",
+   "meettheteam"
+  ],
+  "MeetTheTeamOval": [
+   "Ovale Karte zum Kennenlernen des Teams",
+   "meettheteam"
+  ],
+  "TextCardSideLineNumbered": [
+   "Textkarte Seitenlinie nummeriert",
+   "textcard"
+  ],
+  "TextCardSideLineIcon": [
+   "Textkarte Seitenlinien-Symbol",
+   "textcard"
+  ],
+  "TextCardSideLineQuote": [
+   "Textkarte Seitenlinie Zitat",
+   "textcard"
+  ],
+  "TextCardSideLineWideImage": [
+   "Textkarte Seitenlinie Breites Bild",
+   "textcard"
+  ],
+  "TextCardShortLine": [
+   "Textkarte kurze Linie",
+   "textcard"
+  ],
+  "TextCardShortLineNumber": [
+   "Textkarte kurze Zeilennummer",
+   "textcard"
+  ],
+  "TextCardShortLineQuote": [
+   "Textkarte kurze Linie Zitat",
+   "textcard"
+  ],
+  "TextCardShortLineWide": [
+   "Textkarte kurze Linie breit",
+   "textcard"
+  ],
+  "HorizontalActionList": [
+   "Horizontale Aktionsliste",
+   "textcard"
+  ],
+  "NumberedTitleCardList": [
+   "Nummerierte Kartenliste",
+   "textcard"
+  ],
+  "NumberedTitleList": [
+   "Nummerierte Titelliste",
+   "textcard"
+  ]
+ },
+ "parts": {
+  "ppt/diagrams/data5.xml": 8686,
+  "ppt/diagrams/data1.xml": 12193,
+  "ppt/diagrams/data2.xml": 9498,
+  "ppt/diagrams/data4.xml": 27196,
+  "ppt/diagrams/data3.xml": 17901,
+  "ppt/diagrams/data6.xml": 16378,
+  "ppt/diagrams/quickStyle6.xml": 23787,
+  "ppt/diagrams/colors6.xml": 19066,
+  "ppt/diagrams/drawing6.xml": 14538,
+  "ppt/diagrams/quickStyle3.xml": 23787,
+  "ppt/diagrams/layout3.xml": 6370,
+  "ppt/diagrams/drawing2.xml": 8065,
+  "ppt/diagrams/colors2.xml": 19066,
+  "ppt/diagrams/quickStyle2.xml": 23787,
+  "ppt/diagrams/drawing1.xml": 8233,
+  "ppt/diagrams/colors1.xml": 19066,
+  "ppt/diagrams/quickStyle1.xml": 23787,
+  "ppt/diagrams/layout1.xml": 4376,
+  "ppt/diagrams/layout4.xml": 19264,
+  "ppt/diagrams/quickStyle4.xml": 23787,
+  "ppt/diagrams/layout2.xml": 4598,
+  "ppt/diagrams/colors4.xml": 19066,
+  "ppt/diagrams/drawing4.xml": 21365,
+  "ppt/diagrams/drawing3.xml": 15394,
+  "ppt/diagrams/layout5.xml": 5288,
+  "ppt/diagrams/quickStyle5.xml": 23787,
+  "ppt/diagrams/colors5.xml": 19066,
+  "ppt/diagrams/drawing5.xml": 5882,
+  "ppt/diagrams/colors3.xml": 19066,
+  "ppt/diagrams/layout6.xml": 7323
+ },
+ "slide1_frame": "<p:graphicFrame><p:nvGraphicFramePr><p:cNvPr id=\"2\" name=\"Diagramm 1\"><a:extLst><a:ext uri=\"{FF2B5EF4-FFF2-40B4-BE49-F238E27FC236}\"><a16:creationId xmlns:a16=\"http://schemas.microsoft.com/office/drawing/2014/main\" id=\"{E632AA18-A3FB-4F6F-F1B2-5E868304367C}\"/></a:ext></a:extLst></p:cNvPr><p:cNvGraphicFramePr/><p:nvPr><p:extLst><p:ext uri=\"{D42A27DB-BD31-4B8C-83A1-F6EECF244321}\"><p14:modId xmlns:p14=\"http://schemas.microsoft.com/office/powerpoint/2010/main\" val=\"2177153915\"/></p:ext></p:extLst></p:nvPr></p:nvGraphicFramePr><p:xfrm><a:off x=\"1270000\" y=\"1016000\"/><a:ext cx=\"7620000\" cy=\"4826000\"/></p:xfrm><a:graphic><a:graphicData uri=\"http://schemas.openxmlformats.org/drawingml/2006/diagram\"><dgm:relIds xmlns:dgm=\"http://schemas.openxmlformats.org/drawingml/2006/diagram\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" r:dm=\"rId2\" r:lo=\"rId3\" r:qs=\"rId4\" r:cs=\"rId5\"/></a:graphicData></a:graphic></p:graphicFrame>",
+ "slide1_rels": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n<Relationships xmlns=\"http://schemas.openxmlformats.org/package/2006/relationships\"><Relationship Id=\"rId3\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/diagramLayout\" Target=\"../diagrams/layout1.xml\"/><Relationship Id=\"rId2\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/diagramData\" Target=\"../diagrams/data1.xml\"/><Relationship Id=\"rId1\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout\" Target=\"../slideLayouts/slideLayout7.xml\"/><Relationship Id=\"rId6\" Type=\"http://schemas.microsoft.com/office/2007/relationships/diagramDrawing\" Target=\"../diagrams/drawing1.xml\"/><Relationship Id=\"rId5\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/diagramColors\" Target=\"../diagrams/colors1.xml\"/><Relationship Id=\"rId4\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/diagramQuickStyle\" Target=\"../diagrams/quickStyle1.xml\"/></Relationships>",
+ "data1": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n<dgm:dataModel xmlns:dgm=\"http://schemas.openxmlformats.org/drawingml/2006/diagram\" xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\"><dgm:ptLst><dgm:pt modelId=\"{0E34951B-B2AF-4496-AAA3-C71BF25565F6}\" type=\"doc\"><dgm:prSet loTypeId=\"urn:microsoft.com/office/officeart/2005/8/layout/default\" loCatId=\"list\" qsTypeId=\"urn:microsoft.com/office/officeart/2005/8/quickstyle/simple1\" qsCatId=\"simple\" csTypeId=\"urn:microsoft.com/office/officeart/2005/8/colors/accent1_2\" csCatId=\"accent1\" phldr=\"1\"/><dgm:spPr/><dgm:t><a:bodyPr/><a:lstStyle/><a:p><a:endParaRPr lang=\"de-DE\"/></a:p></dgm:t></dgm:pt><dgm:pt modelId=\"{FE91951F-0F30-4E92-83AF-C83697D7B4F4}\"><dgm:prSet phldrT=\"[Text]\"/><dgm:spPr/><dgm:t><a:bodyPr/><a:lstStyle/><a:p><a:r><a:rPr lang=\"de-DE\"/><a:t>Punkt 1</a:t></a:r></a:p></dgm:t></dgm:pt><dgm:pt modelId=\"{67986E9E-0756-4F52-868D-8594C6A0EEAB}\" type=\"parTrans\" cxnId=\"{EB64E7EC-3A74-476C-9A19-FAE005AB3AB9}\"><dgm:prSet/><dgm:spPr/><dgm:t><a:bodyPr/><a:lstStyle/><a:p><a:endParaRPr lang=\"de-DE\"/></a:p></dgm:t></dgm:pt><dgm:pt modelId=\"{267E7FAD-6A76-4509-80BF-B3AF478A36F1}\" type=\"sibTrans\" cxnId=\"{EB64E7EC-3A74-476C-9A19-FAE005AB3AB9}\"><dgm:prSet/><dgm:spPr/><dgm:t><a:bodyPr/><a:lstStyle/><a:p><a:endParaRPr lang=\"de-DE\"/></a:p></dgm:t></dgm:pt><dgm:pt modelId=\"{ACAC754E-8C43-4F22-8AC9-B134A4A658A0}\"><dgm:prSet phldrT=\"[Text]\"/><dgm:spPr/><dgm:t><a:bodyPr/><a:lstStyle/><a:p><a:r><a:rPr lang=\"de-DE\"/><a:t>Punkt 2</a:t></a:r></a:p></dgm:t></dgm:pt><dgm:pt modelId=\"{559CA70F-44C9-4252-9D5F-CFF6B0E7E0BD}\" type=\"parTrans\" cxnId=\"{17255D48-5657-4B99-9213-30E9B8B895AC}\"><dgm:prSet/><dgm:spPr/><dgm:t><a:bodyPr/><a:lstStyle/><a:p><a:endParaRPr lang=\"de-DE\"/></a:p></dgm:t></dgm:pt><dgm:pt modelId=\"{F02C3942-8F35-4860-AFF3-2D12DE305A3E}\" type=\"sibTrans\" cxnId=\"{17255D48-5657-4B99-9213-30E9B8B895AC}\"><dgm:prSet/><dgm:spPr/><dgm:t><a:bodyPr/><a:lstStyle/><a:p><a:endParaRPr lang=\"de-DE\"/></a:p></dgm:t></dgm:pt><dgm:pt modelId=\"{3EF79005-1ABB-4653-9A73-E87C81A680C5}\"><dgm:prSet phldrT=\"[Text]\"/><dgm:spPr/><dgm:t><a:bodyPr/><a:lstStyle/><a:p><a:r><a:rPr lang=\"de-DE\"/><a:t>Punkt 3</a:t></a:r></a:p></dgm:t></dgm:pt><dgm:pt modelId=\"{A99FC110-83CB-4F5F-A669-CD1D2451A6E7}\" type=\"parTrans\" cxnId=\"{6AE55437-A251-465B-ABEF-077C764EC786}\"><dgm:prSet/><dgm:spPr/><dgm:t><a:bodyPr/><a:lstStyle/><a:p><a:endParaRPr lang=\"de-DE\"/></a:p></dgm:t></dgm:pt><dgm:pt modelId=\"{A0637FAA-275F-4F17-8B18-1B5B005BA8FF}\" type=\"sibTrans\" cxnId=\"{6AE55437-A251-465B-ABEF-077C764EC786}\"><dgm:prSet/><dgm:spPr/><dgm:t><a:bodyPr/><a:lstStyle/><a:p><a:endParaRPr lang=\"de-DE\"/></a:p></dgm:t></dgm:pt><dgm:pt modelId=\"{3FF76372-86FA-4266-9F47-DE4E7A24E10E}\"><dgm:prSet phldrT=\"[Text]\"/><dgm:spPr/><dgm:t><a:bodyPr/><a:lstStyle/><a:p><a:r><a:rPr lang=\"de-DE\"/><a:t>Punkt 4</a:t></a:r></a:p></dgm:t></dgm:pt><dgm:pt modelId=\"{F3D60C96-D59E-4625-9EE7-8BBD0D12B3C4}\" type=\"parTrans\" cxnId=\"{5E34EA0B-9759-4991-B5F0-6E75381B7A81}\"><dgm:prSet/><dgm:spPr/><dgm:t><a:bodyPr/><a:lstStyle/><a:p><a:endParaRPr lang=\"de-DE\"/></a:p></dgm:t></dgm:pt><dgm:pt modelId=\"{9A37027E-6AD6-4316-BEFF-6B3313F38CBA}\" type=\"sibTrans\" cxnId=\"{5E34EA0B-9759-4991-B5F0-6E75381B7A81}\"><dgm:prSet/><dgm:spPr/><dgm:t><a:bodyPr/><a:lstStyle/><a:p><a:endParaRPr lang=\"de-DE\"/></a:p></dgm:t></dgm:pt><dgm:pt modelId=\"{9BD2D782-2BAD-47B4-8786-3FA777A9CDCE}\"><dgm:prSet phldrT=\"[Text]\"/><dgm:spPr/><dgm:t><a:bodyPr/><a:lstStyle/><a:p><a:r><a:rPr lang=\"de-DE\"/><a:t>Punkt 5</a:t></a:r></a:p></dgm:t></dgm:pt><dgm:pt modelId=\"{8674570E-269B-4E7E-A4FB-073FE1201460}\" type=\"parTrans\" cxnId=\"{87DF1C3E-DEB1-44E4-BE09-AEC8B86352CB}\"><dgm:prSet/><dgm:spPr/><dgm:t><a:bodyPr/><a:lstStyle/><a:p><a:endParaRPr lang=\"de-DE\"/></a:p></dgm:t></dgm:pt><dgm:pt modelId=\"{12EA68A7-C45E-450E-AAFB-83579BC43BC0}\" type=\"sibTrans\" cxnId=\"{87DF1C3E-DEB1-44E4-BE09-AEC8B86352CB}\"><dgm:prSet/><dgm:spPr/><dgm:t><a:bodyPr/><a:lstStyle/><a:p><a:endParaRPr lang=\"de-DE\"/></a:p></dgm:t></dgm:pt><dgm:pt modelId=\"{0079401F-2614-4830-985C-9D6D32ACD94D}\" type=\"pres\"><dgm:prSet presAssocID=\"{0E34951B-B2AF-4496-AAA3-C71BF25565F6}\" presName=\"diagram\" presStyleCnt=\"0\"><dgm:presLayoutVars><dgm:dir/><dgm:resizeHandles val=\"exact\"/></dgm:presLayoutVars></dgm:prSet><dgm:spPr/></dgm:pt><dgm:pt modelId=\"{8CB11FCD-CFCB-42E0-BB1D-9A910C90374D}\" type=\"pres\"><dgm:prSet presAssocID=\"{FE91951F-0F30-4E92-83AF-C83697D7B4F4}\" presName=\"node\" presStyleLbl=\"node1\" presStyleIdx=\"0\" presStyleCnt=\"5\"><dgm:presLayoutVars><dgm:bulletEnabled val=\"1\"/></dgm:presLayoutVars></dgm:prSet><dgm:spPr/></dgm:pt><dgm:pt modelId=\"{7474D10C-06FD-46F1-9D2C-A267F9D542C2}\" type=\"pres\"><dgm:prSet presAssocID=\"{267E7FAD-6A76-4509-80BF-B3AF478A36F1}\" presName=\"sibTrans\" presStyleCnt=\"0\"/><dgm:spPr/></dgm:pt><dgm:pt modelId=\"{BD6B5CFC-94D7-44C0-9DF9-6B8BAD467A92}\" type=\"pres\"><dgm:prSet presAssocID=\"{ACAC754E-8C43-4F22-8AC9-B134A4A658A0}\" presName=\"node\" presStyleLbl=\"node1\" presStyleIdx=\"1\" presStyleCnt=\"5\"><dgm:presLayoutVars><dgm:bulletEnabled val=\"1\"/></dgm:presLayoutVars></dgm:prSet><dgm:spPr/></dgm:pt><dgm:pt modelId=\"{20DAD9BB-2E0E-4136-9860-7FBCBF2ED1EF}\" type=\"pres\"><dgm:prSet presAssocID=\"{F02C3942-8F35-4860-AFF3-2D12DE305A3E}\" presName=\"sibTrans\" presStyleCnt=\"0\"/><dgm:spPr/></dgm:pt><dgm:pt modelId=\"{F9CBA354-2E3F-432C-873C-34179C322354}\" type=\"pres\"><dgm:prSet presAssocID=\"{3EF79005-1ABB-4653-9A73-E87C81A680C5}\" presName=\"node\" presStyleLbl=\"node1\" presStyleIdx=\"2\" presStyleCnt=\"5\"><dgm:presLayoutVars><dgm:bulletEnabled val=\"1\"/></dgm:presLayoutVars></dgm:prSet><dgm:spPr/></dgm:pt><dgm:pt modelId=\"{D9EBB326-83E7-4E4B-B168-D51737B8FE26}\" type=\"pres\"><dgm:prSet presAssocID=\"{A0637FAA-275F-4F17-8B18-1B5B005BA8FF}\" presName=\"sibTrans\" presStyleCnt=\"0\"/><dgm:spPr/></dgm:pt><dgm:pt modelId=\"{DBCC3350-59BA-44DB-8051-BEEDCB2D4A54}\" type=\"pres\"><dgm:prSet presAssocID=\"{3FF76372-86FA-4266-9F47-DE4E7A24E10E}\" presName=\"node\" presStyleLbl=\"node1\" presStyleIdx=\"3\" presStyleCnt=\"5\"><dgm:presLayoutVars><dgm:bulletEnabled val=\"1\"/></dgm:presLayoutVars></dgm:prSet><dgm:spPr/></dgm:pt><dgm:pt modelId=\"{98FD5A48-23CD-45DA-B931-8E3962B95DDB}\" type=\"pres\"><dgm:prSet presAssocID=\"{9A37027E-6AD6-4316-BEFF-6B3313F38CBA}\" presName=\"sibTrans\" presStyleCnt=\"0\"/><dgm:spPr/></dgm:pt><dgm:pt modelId=\"{9CA0E0E5-BDDF-4735-9BB1-C43CADAB07A2}\" type=\"pres\"><dgm:prSet presAssocID=\"{9BD2D782-2BAD-47B4-8786-3FA777A9CDCE}\" presName=\"node\" presStyleLbl=\"node1\" presStyleIdx=\"4\" presStyleCnt=\"5\"><dgm:presLayoutVars><dgm:bulletEnabled val=\"1\"/></dgm:presLayoutVars></dgm:prSet><dgm:spPr/></dgm:pt></dgm:ptLst><dgm:cxnLst><dgm:cxn modelId=\"{4B44CA04-A4A3-4CF8-BFE6-007E32BA3149}\" type=\"presOf\" srcId=\"{0E34951B-B2AF-4496-AAA3-C71BF25565F6}\" destId=\"{0079401F-2614-4830-985C-9D6D32ACD94D}\" srcOrd=\"0\" destOrd=\"0\" presId=\"urn:microsoft.com/office/officeart/2005/8/layout/default\"/><dgm:cxn modelId=\"{5E34EA0B-9759-4991-B5F0-6E75381B7A81}\" srcId=\"{0E34951B-B2AF-4496-AAA3-C71BF25565F6}\" destId=\"{3FF76372-86FA-4266-9F47-DE4E7A24E10E}\" srcOrd=\"3\" destOrd=\"0\" parTransId=\"{F3D60C96-D59E-4625-9EE7-8BBD0D12B3C4}\" sibTransId=\"{9A37027E-6AD6-4316-BEFF-6B3313F38CBA}\"/><dgm:cxn modelId=\"{6AE55437-A251-465B-ABEF-077C764EC786}\" srcId=\"{0E34951B-B2AF-4496-AAA3-C71BF25565F6}\" destId=\"{3EF79005-1ABB-4653-9A73-E87C81A680C5}\" srcOrd=\"2\" destOrd=\"0\" parTransId=\"{A99FC110-83CB-4F5F-A669-CD1D2451A6E7}\" sibTransId=\"{A0637FAA-275F-4F17-8B18-1B5B005BA8FF}\"/><dgm:cxn modelId=\"{87DF1C3E-DEB1-44E4-BE09-AEC8B86352CB}\" srcId=\"{0E34951B-B2AF-4496-AAA3-C71BF25565F6}\" destId=\"{9BD2D782-2BAD-47B4-8786-3FA777A9CDCE}\" srcOrd=\"4\" destOrd=\"0\" parTransId=\"{8674570E-269B-4E7E-A4FB-073FE1201460}\" sibTransId=\"{12EA68A7-C45E-450E-AAFB-83579BC43BC0}\"/><dgm:cxn modelId=\"{EFF0985B-FB79-4A0C-9CBC-DAB1736B4F2C}\" type=\"presOf\" srcId=\"{3FF76372-86FA-4266-9F47-DE4E7A24E10E}\" destId=\"{DBCC3350-59BA-44DB-8051-BEEDCB2D4A54}\" srcOrd=\"0\" destOrd=\"0\" presId=\"urn:microsoft.com/office/officeart/2005/8/layout/default\"/><dgm:cxn modelId=\"{1FF74245-8C44-4FF0-BBE8-2A949B6C82DD}\" type=\"presOf\" srcId=\"{FE91951F-0F30-4E92-83AF-C83697D7B4F4}\" destId=\"{8CB11FCD-CFCB-42E0-BB1D-9A910C90374D}\" srcOrd=\"0\" destOrd=\"0\" presId=\"urn:microsoft.com/office/officeart/2005/8/layout/default\"/><dgm:cxn modelId=\"{17255D48-5657-4B99-9213-30E9B8B895AC}\" srcId=\"{0E34951B-B2AF-4496-AAA3-C71BF25565F6}\" destId=\"{ACAC754E-8C43-4F22-8AC9-B134A4A658A0}\" srcOrd=\"1\" destOrd=\"0\" parTransId=\"{559CA70F-44C9-4252-9D5F-CFF6B0E7E0BD}\" sibTransId=\"{F02C3942-8F35-4860-AFF3-2D12DE305A3E}\"/><dgm:cxn modelId=\"{FD33A74F-EBD2-4D4E-94E4-B66E6B2A9E91}\" type=\"presOf\" srcId=\"{9BD2D782-2BAD-47B4-8786-3FA777A9CDCE}\" destId=\"{9CA0E0E5-BDDF-4735-9BB1-C43CADAB07A2}\" srcOrd=\"0\" destOrd=\"0\" presId=\"urn:microsoft.com/office/officeart/2005/8/layout/default\"/><dgm:cxn modelId=\"{6326169B-FC4B-45D1-8435-6A074CCE3C21}\" type=\"presOf\" srcId=\"{ACAC754E-8C43-4F22-8AC9-B134A4A658A0}\" destId=\"{BD6B5CFC-94D7-44C0-9DF9-6B8BAD467A92}\" srcOrd=\"0\" destOrd=\"0\" presId=\"urn:microsoft.com/office/officeart/2005/8/layout/default\"/><dgm:cxn modelId=\"{865898B9-F410-4EBB-85E3-F07B0CB0C532}\" type=\"presOf\" srcId=\"{3EF79005-1ABB-4653-9A73-E87C81A680C5}\" destId=\"{F9CBA354-2E3F-432C-873C-34179C322354}\" srcOrd=\"0\" destOrd=\"0\" presId=\"urn:microsoft.com/office/officeart/2005/8/layout/default\"/><dgm:cxn modelId=\"{EB64E7EC-3A74-476C-9A19-FAE005AB3AB9}\" srcId=\"{0E34951B-B2AF-4496-AAA3-C71BF25565F6}\" destId=\"{FE91951F-0F30-4E92-83AF-C83697D7B4F4}\" srcOrd=\"0\" destOrd=\"0\" parTransId=\"{67986E9E-0756-4F52-868D-8594C6A0EEAB}\" sibTransId=\"{267E7FAD-6A76-4509-80BF-B3AF478A36F1}\"/><dgm:cxn modelId=\"{14D88CDB-74D5-4B15-B0AC-F2A7DF8C8B7D}\" type=\"presParOf\" srcId=\"{0079401F-2614-4830-985C-9D6D32ACD94D}\" destId=\"{8CB11FCD-CFCB-42E0-BB1D-9A910C90374D}\" srcOrd=\"0\" destOrd=\"0\" presId=\"urn:microsoft.com/office/officeart/2005/8/layout/default\"/><dgm:cxn modelId=\"{C33739C8-3037-4658-A434-2E72D3DB9E71}\" type=\"presParOf\" srcId=\"{0079401F-2614-4830-985C-9D6D32ACD94D}\" destId=\"{7474D10C-06FD-46F1-9D2C-A267F9D542C2}\" srcOrd=\"1\" destOrd=\"0\" presId=\"urn:microsoft.com/office/officeart/2005/8/layout/default\"/><dgm:cxn modelId=\"{7CDA2B54-ED31-46B3-8B89-0CA2169693D1}\" type=\"presParOf\" srcId=\"{0079401F-2614-4830-985C-9D6D32ACD94D}\" destId=\"{BD6B5CFC-94D7-44C0-9DF9-6B8BAD467A92}\" srcOrd=\"2\" destOrd=\"0\" presId=\"urn:microsoft.com/office/officeart/2005/8/layout/default\"/><dgm:cxn modelId=\"{4FFBDEBA-965B-4B83-A562-DD51B7E20F7C}\" type=\"presParOf\" srcId=\"{0079401F-2614-4830-985C-9D6D32ACD94D}\" destId=\"{20DAD9BB-2E0E-4136-9860-7FBCBF2ED1EF}\" srcOrd=\"3\" destOrd=\"0\" presId=\"urn:microsoft.com/office/officeart/2005/8/layout/default\"/><dgm:cxn modelId=\"{2E094588-E939-4BE3-97D6-ECE8B1588CE5}\" type=\"presParOf\" srcId=\"{0079401F-2614-4830-985C-9D6D32ACD94D}\" destId=\"{F9CBA354-2E3F-432C-873C-34179C322354}\" srcOrd=\"4\" destOrd=\"0\" presId=\"urn:microsoft.com/office/officeart/2005/8/layout/default\"/><dgm:cxn modelId=\"{39AA0CAA-74E0-4A82-8649-D56433678059}\" type=\"presParOf\" srcId=\"{0079401F-2614-4830-985C-9D6D32ACD94D}\" destId=\"{D9EBB326-83E7-4E4B-B168-D51737B8FE26}\" srcOrd=\"5\" destOrd=\"0\" presId=\"urn:microsoft.com/office/officeart/2005/8/layout/default\"/><dgm:cxn modelId=\"{57CB2787-B361-4F93-A377-5E57665FD6F4}\" type=\"presParOf\" srcId=\"{0079401F-2614-4830-985C-9D6D32ACD94D}\" destId=\"{DBCC3350-59BA-44DB-8051-BEEDCB2D4A54}\" srcOrd=\"6\" destOrd=\"0\" presId=\"urn:microsoft.com/office/officeart/2005/8/layout/default\"/><dgm:cxn modelId=\"{BB7CFF1E-326F-46AA-AD7D-234A332E98F5}\" type=\"presParOf\" srcId=\"{0079401F-2614-4830-985C-9D6D32ACD94D}\" destId=\"{98FD5A48-23CD-45DA-B931-8E3962B95DDB}\" srcOrd=\"7\" destOrd=\"0\" presId=\"urn:microsoft.com/office/officeart/2005/8/layout/default\"/><dgm:cxn modelId=\"{A9A26452-30A4-4B52-BAEC-CBA4393BBA9C}\" type=\"presParOf\" srcId=\"{0079401F-2614-4830-985C-9D6D32ACD94D}\" destId=\"{9CA0E0E5-BDDF-4735-9BB1-C43CADAB07A2}\" srcOrd=\"8\" destOrd=\"0\" presId=\"urn:microsoft.com/office/officeart/2005/8/layout/default\"/></dgm:cxnLst><dgm:bg/><dgm:whole/><dgm:extLst><a:ext uri=\"http://schemas.microsoft.com/office/drawing/2008/diagram\"><dsp:dataModelExt xmlns:dsp=\"http://schemas.microsoft.com/office/drawing/2008/diagram\" relId=\"rId6\" minVer=\"http://schemas.openxmlformats.org/drawingml/2006/diagram\"/></a:ext></dgm:extLst></dgm:dataModel>",
+ "content_types": [
+  "<Override PartName=\"/ppt/diagrams/data1.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.drawingml.diagramData+xml\"/>",
+  "<Override PartName=\"/ppt/diagrams/layout1.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.drawingml.diagramLayout+xml\"/>",
+  "<Override PartName=\"/ppt/diagrams/quickStyle1.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.drawingml.diagramStyle+xml\"/>",
+  "<Override PartName=\"/ppt/diagrams/colors1.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.drawingml.diagramColors+xml\"/>",
+  "<Override PartName=\"/ppt/diagrams/drawing1.xml\" ContentType=\"application/vnd.ms-office.drawingml.diagramDrawing+xml\"/>",
+  "<Override PartName=\"/ppt/diagrams/data2.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.drawingml.diagramData+xml\"/>",
+  "<Override PartName=\"/ppt/diagrams/layout2.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.drawingml.diagramLayout+xml\"/>",
+  "<Override PartName=\"/ppt/diagrams/quickStyle2.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.drawingml.diagramStyle+xml\"/>",
+  "<Override PartName=\"/ppt/diagrams/colors2.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.drawingml.diagramColors+xml\"/>",
+  "<Override PartName=\"/ppt/diagrams/drawing2.xml\" ContentType=\"application/vnd.ms-office.drawingml.diagramDrawing+xml\"/>",
+  "<Override PartName=\"/ppt/diagrams/data3.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.drawingml.diagramData+xml\"/>",
+  "<Override PartName=\"/ppt/diagrams/layout3.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.drawingml.diagramLayout+xml\"/>",
+  "<Override PartName=\"/ppt/diagrams/quickStyle3.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.drawingml.diagramStyle+xml\"/>",
+  "<Override PartName=\"/ppt/diagrams/colors3.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.drawingml.diagramColors+xml\"/>",
+  "<Override PartName=\"/ppt/diagrams/drawing3.xml\" ContentType=\"application/vnd.ms-office.drawingml.diagramDrawing+xml\"/>",
+  "<Override PartName=\"/ppt/diagrams/data4.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.drawingml.diagramData+xml\"/>",
+  "<Override PartName=\"/ppt/diagrams/layout4.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.drawingml.diagramLayout+xml\"/>",
+  "<Override PartName=\"/ppt/diagrams/quickStyle4.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.drawingml.diagramStyle+xml\"/>",
+  "<Override PartName=\"/ppt/diagrams/colors4.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.drawingml.diagramColors+xml\"/>",
+  "<Override PartName=\"/ppt/diagrams/drawing4.xml\" ContentType=\"application/vnd.ms-office.drawingml.diagramDrawing+xml\"/>",
+  "<Override PartName=\"/ppt/diagrams/data5.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.drawingml.diagramData+xml\"/>",
+  "<Override PartName=\"/ppt/diagrams/layout5.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.drawingml.diagramLayout+xml\"/>",
+  "<Override PartName=\"/ppt/diagrams/quickStyle5.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.drawingml.diagramStyle+xml\"/>",
+  "<Override PartName=\"/ppt/diagrams/colors5.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.drawingml.diagramColors+xml\"/>",
+  "<Override PartName=\"/ppt/diagrams/drawing5.xml\" ContentType=\"application/vnd.ms-office.drawingml.diagramDrawing+xml\"/>",
+  "<Override PartName=\"/ppt/diagrams/data6.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.drawingml.diagramData+xml\"/>",
+  "<Override PartName=\"/ppt/diagrams/layout6.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.drawingml.diagramLayout+xml\"/>",
+  "<Override PartName=\"/ppt/diagrams/quickStyle6.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.drawingml.diagramStyle+xml\"/>",
+  "<Override PartName=\"/ppt/diagrams/colors6.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.drawingml.diagramColors+xml\"/>",
+  "<Override PartName=\"/ppt/diagrams/drawing6.xml\" ContentType=\"application/vnd.ms-office.drawingml.diagramDrawing+xml\"/>"
+ ],
+ "minimal_test": {
+  "opened": true,
+  "smartart": [
+   {
+    "slide": 1,
+    "layout": "default",
+    "nodes": 5,
+    "texts": [
+     "Punkt 1",
+     "Punkt 2",
+     "Punkt 3",
+     "Punkt 4",
+     "Punkt 5"
+    ]
+   },
+   {
+    "slide": 2,
+    "layout": "default",
+    "nodes": 3,
+    "texts": [
+     "Punkt 1",
+     "Punkt 2",
+     "Punkt 3"
+    ]
+   },
+   {
+    "slide": 3,
+    "layout": "default",
+    "nodes": 5,
+    "texts": [
+     "Punkt 1",
+     "Punkt 2",
+     "Punkt 3",
+     "Punkt 4",
+     "Punkt 5"
+    ]
+   },
+   {
+    "slide": 4,
+    "layout": "default",
+    "nodes": 6,
+    "texts": [
+     "Punkt 1",
+     "Punkt 2",
+     "Punkt 3",
+     "Punkt 4",
+     "Punkt 5",
+     "Punkt 6"
+    ]
+   },
+   {
+    "slide": 5,
+    "layout": "default",
+    "nodes": 4,
+    "texts": [
+     "Punkt 1",
+     "Punkt 2",
+     "Punkt 3",
+     "Punkt 4"
+    ]
+   },
+   {
+    "slide": 6,
+    "layout": "default",
+    "nodes": 5,
+    "texts": [
+     "Punkt 1",
+     "Punkt 2",
+     "Punkt 3",
+     "Punkt 4",
+     "Punkt 5"
+    ]
+   }
+  ],
+  "parts_after_save": {
+   "ppt/diagrams/data5.xml": 7944,
+   "ppt/diagrams/data1.xml": 12195,
+   "ppt/diagrams/data2.xml": 7370,
+   "ppt/diagrams/data4.xml": 9339,
+   "ppt/diagrams/data3.xml": 12196,
+   "ppt/diagrams/data6.xml": 8139,
+   "ppt/diagrams/quickStyle6.xml": 23787,
+   "ppt/diagrams/colors6.xml": 306,
+   "ppt/diagrams/drawing6.xml": 3031,
+   "ppt/diagrams/quickStyle3.xml": 23787,
+   "ppt/diagrams/layout3.xml": 4376,
+   "ppt/diagrams/drawing2.xml": 4575,
+   "ppt/diagrams/colors2.xml": 306,
+   "ppt/diagrams/quickStyle2.xml": 23787,
+   "ppt/diagrams/drawing1.xml": 7373,
+   "ppt/diagrams/colors1.xml": 306,
+   "ppt/diagrams/quickStyle1.xml": 23787,
+   "ppt/diagrams/layout1.xml": 4376,
+   "ppt/diagrams/layout4.xml": 4376,
+   "ppt/diagrams/quickStyle4.xml": 23787,
+   "ppt/diagrams/layout2.xml": 4376,
+   "ppt/diagrams/colors4.xml": 306,
+   "ppt/diagrams/drawing4.xml": 3344,
+   "ppt/diagrams/drawing3.xml": 7373,
+   "ppt/diagrams/layout5.xml": 4376,
+   "ppt/diagrams/quickStyle5.xml": 23787,
+   "ppt/diagrams/colors5.xml": 306,
+   "ppt/diagrams/drawing5.xml": 3806,
+   "ppt/diagrams/colors3.xml": 306,
+   "ppt/diagrams/layout6.xml": 4376
+  }
+ }
+}

@@ -1850,3 +1850,8 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   PowerPoint; in RaabePresent it is another tab of the window (own slide and view, shared undo and file).
   Closing one window does not ask to save while another shows the presentation. Alle anordnen stays greyed
   (one window with tabs).
+- **SmartArt creation stays open (measured):** `probe_powerpoint_smartart.py` made six SmartArts in PowerPoint
+  and cut the layout, style and colour parts down to their uniqueId. PowerPoint opened the file but laid every
+  SmartArt out again as Einfache Blockliste: it needs its full layout definitions inside the file. Writing them
+  would mean copying Microsoft's 159 layout definitions (D-070: no Microsoft content), so creating SmartArt (and
+  In SmartArt konvertieren) is not built; SmartArt from PowerPoint's files is drawn and kept unchanged.
