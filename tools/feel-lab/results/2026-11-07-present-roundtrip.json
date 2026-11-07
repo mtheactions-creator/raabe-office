@@ -169,6 +169,10 @@
    "result": "same",
    "diff": []
   },
+  "table shading": {
+   "result": "same",
+   "diff": []
+  },
   "table pen": {
    "result": "same",
    "diff": []
@@ -272,6 +276,6 @@
  },
  "summary": {
   "fixtures": "22/22",
-  "scenarios": "50/50"
+  "scenarios": "51/51"
  }
 }

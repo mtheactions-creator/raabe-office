@@ -15,7 +15,7 @@ that no POWERPNT.EXE was running and worked only on presentations it created (CL
 
 | Measure | Result | Target |
 |---|---|---|
-| P1 behaviour catalogue (`catalogue_present.py`, the same real input in PowerPoint and RaabePresent) | run 1: 99/307 · run 2: 270/336 · run 3: 305/336 · with caret keys: 337/370 · with AutoKorrektur: 344/377 · final: **@CAT@** (91 %) | 100 % |
+| P1 behaviour catalogue (`catalogue_present.py`, the same real input in PowerPoint and RaabePresent) | run 1: 99/307 · run 2: 270/336 · run 3: 305/336 · with caret keys: 337/370 · with AutoKorrektur: 344/377 · rotation and drag start measured: 355/377 · final: **@CAT@** (91 %) | 100 % |
 | P2 round trips with PowerPoint (`check_present_roundtrip.py`) | fixtures **@FIX@** (both designs), scenarios **@RT@** the same (first count tonight 24; every feature added after midnight got a scenario PowerPoint checks) | all the same |
 | P3 slide rendering against PowerPoint's PNG export | mean **@RENDER@** of 255 | below 3 |
 | P4 line starts against PowerPoint (`check_present_lines.py`) | **@LINES@** (Office 2013-2022 design) | 100 % |
@@ -32,12 +32,13 @@ that no POWERPNT.EXE was running and worked only on presentations it created (CL
   Strg+D and repeated pasting offset 12 pt, Strg+Umschalt+G/H group and ungroup (Strg+G does nothing).
 - Text boxes take their text's height at once; AutoKorrektur as PowerPoint (7 of 7 cases).
 
+- The rotation handle (probe_powerpoint_rothandle.py): PowerPoint's sits 31 screen pixels above the frame,
+  turns by the handle's centre and with Umschalt snaps to the last 15-degree step passed. The "94 %" drags:
+  PowerPoint measures a drag that selects the shape from the pointer's first movement (the harness's first of
+  20 steps is lost); frames selected already and size handles move by the whole way. Both are copied now.
+
 ### Remaining differences, and why
-Of the 33 cases that differ: 6 rotation cases where the harness does not grab PowerPoint's rotation handle;
-8 Strg+Z cases where PowerPoint's undo includes the harness's own COM set-up; 12 drags and handle drags
-1.5-3.4 pt apart (PowerPoint moves about 94 % of the pointer's way in these cases; not understood yet,
-perhaps the harness's zoom); the group-member case; Umschalt+Ende (PowerPoint's COM counts the paragraph
-mark); a pasted text box that PowerPoint puts into text editing.
+@REMAINING@
 
 ### The inventory, and how it is measured
 PowerPoint was recorded in its default design (Office, Aptos colours: "Dunkelblaugrün, Akzent 1"). Our

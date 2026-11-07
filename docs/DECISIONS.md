@@ -2006,3 +2006,6 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   frame selected already and the size handles move by the whole way (measured, both). Ours does the same, and
   the rotation handle turns from the first movement too; with a hand on the mouse the first movement is a
   pixel or two, so nobody feels it. Catalogue 344 -> 355 of 377.
+- **Tabellenentwurf > Schattierung fixed:** it went to the shapes' fill and so did nothing on a table (found while
+  closing the inventory's gaps). It now fills the cells being edited (or the table), in a:tcPr as PowerPoint
+  writes it, with Keine Füllung and Pipette below the palette; a round-trip scenario checks PowerPoint reads it.

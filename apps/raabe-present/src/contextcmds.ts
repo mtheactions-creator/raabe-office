@@ -52,6 +52,8 @@ export function contextHost(app: PresentApp): ContextTabHost {
     tableStyles: (c) => tableStylesPanel(app, c),
     picStyles: (c) => picStylesPanel(app, c),
     textOutlineColor: () => app.textOutlineColor(), setTextOutline: (hex) => app.setTextOutline({ color: hex }), textOutlineExtra: () => app.textOutlineExtra(),
+    setShading: (hex) => setShading(app, hex ? hex.replace("#", "").toUpperCase() : null),
+    shadingExtra: () => [{ label: "Keine Füllung", run: () => setShading(app, null) }, app.pipette((hex) => setShading(app, hex))],
     fillColor: ctx.fillColor, setFill: ctx.setFill, lineColor: ctx.lineColor, setLine: ctx.setLine, fontColor: ctx.fontColor, setFontColor: ctx.setFontColor, fontColorExtra: () => app.fontColorExtra(),
     effects: () => ctx.menus.effects,
     alignMenu: () => [{ cmd: "arrange.alignLeft" }, { cmd: "arrange.alignCenter" }, { cmd: "arrange.alignRight" }, "-", { cmd: "arrange.alignTop" }, { cmd: "arrange.alignMiddle" }, { cmd: "arrange.alignBottom" }],
@@ -165,6 +167,18 @@ export function tableAlign(app: PresentApp, algn: "l" | "ctr" | "r"): void {
   const t = tableOf(app);
   if (!t) return;
   app.editor.edit("Ausrichten", () => { for (const tc of cells(app, t.tbl)) { const body = kid(tc, "txBody"); if (body) T.paraProps(body, 0, T.paras(body).length - 1, (p) => p.setAttribute("algn", algn)); } });
+}
+
+/**
+ * Tabellenentwurf > Schattierung: the fill of the cells a command acts on (the cell range being edited, the
+ * cell, or the whole table), in a:tcPr after the cell lines and cell3D, as PowerPoint writes it.
+ */
+export function setShading(app: PresentApp, hex: string | null): void {
+  cellPr(app, "Schattierung", (pr) => {
+    for (const c of kids(pr)) if (["noFill", "solidFill", "gradFill", "blipFill", "pattFill", "grpFill"].includes(c.localName)) c.remove();
+    const f = hex ? fragment(pr.ownerDocument, `<a:solidFill>${colorXml(hex)}</a:solidFill>`)[0] : make(pr.ownerDocument, "a:noFill");
+    pr.insertBefore(f, kids(pr).find((c) => c.localName === "headers" || c.localName === "extLst") ?? null);
+  });
 }
 
 /** A change to the a:tcPr of the cells a command acts on. */
