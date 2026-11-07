@@ -83,6 +83,8 @@ export class SlideEditor {
   smartGuides = true;
   snapToGrid = false;
   gridSpacing = 72008;
+  /** Ansicht > Lineal: rulers above and beside the slide in cm, 0 at the slide's centre (as PowerPoint). */
+  showRuler = false;
   /** Drawn over the page and not part of it (the Handzettelmaster's slide places). */
   pageDecor: ((size: { cx: number; cy: number }) => HTMLElement | null) | null = null;
   showGrid = false;
@@ -166,7 +168,8 @@ export class SlideEditor {
     const r = this.el.getBoundingClientRect();
     if (!r.width || !r.height) return;
     // PowerPoint leaves a margin around the slide when it fits it to the window.
-    const z = Math.min((r.width - 48) / w, (r.height - 32) / hh) * 100;
+    const room = this.showRuler ? 48 : 0;
+    const z = Math.min((r.width - 48 - room) / w, (r.height - 32 - room) / hh) * 100;
     this.zoom = Math.max(10, Math.floor(z));
     this.layout();
     this.drawOverlay();
@@ -184,10 +187,43 @@ export class SlideEditor {
     const size = this.pageSize;
     const w = (size.cx / EMU_PX) * this.scale, hh = (size.cy / EMU_PX) * this.scale;
     const r = this.el.getBoundingClientRect();
-    const padX = Math.max(24, (r.width - w) / 2), padY = Math.max(16, (r.height - hh) / 2);
+    const room = this.showRuler ? 24 : 0;
+    const padX = Math.max(24 + room, (r.width - w) / 2), padY = Math.max(16 + room, (r.height - hh) / 2);
     this.canvas.style.cssText = `position:relative;width:${w + padX * 2}px;height:${hh + padY * 2}px`;
     this.stage.style.cssText = `position:absolute;left:${padX}px;top:${padY}px;transform:scale(${this.scale});transform-origin:0 0;--s:${this.scale}`;
     this.overlay.style.cssText = `position:absolute;left:${padX}px;top:${padY}px;width:${w}px;height:${hh}px;pointer-events:none`;
+    this.canvas.querySelectorAll(".ruler").forEach((x) => x.remove());
+    if (this.showRuler) this.canvas.append(this.ruler("h", padX, padY, w, size.cx), this.ruler("v", padX, padY, hh, size.cy));
+  }
+
+  private ruler(dir: "h" | "v", padX: number, padY: number, len: number, emu: number): HTMLCanvasElement {
+    const c = document.createElement("canvas");
+    c.className = "ruler";
+    const dpr = window.devicePixelRatio || 1, thick = 18;
+    const w = dir === "h" ? len : thick, hh = dir === "h" ? thick : len;
+    c.width = Math.round(w * dpr); c.height = Math.round(hh * dpr);
+    c.style.cssText = `position:absolute;width:${w}px;height:${hh}px;${dir === "h" ? `left:${padX}px;top:${Math.max(0, padY - thick - 4)}px` : `left:${Math.max(0, padX - thick - 4)}px;top:${padY}px`}`;
+    const g = c.getContext("2d");
+    if (!g) return c;
+    g.scale(dpr, dpr);
+    g.fillStyle = "#ffffff"; g.fillRect(0, 0, w, hh);
+    g.strokeStyle = "#8a8a8a"; g.fillStyle = "#505050"; g.font = "9px Segoe UI, sans-serif"; g.textAlign = "center"; g.textBaseline = "middle";
+    const pxPerCm = (360000 / EMU_PX) * this.scale, mid = len / 2, half = emu / 360000 / 2;
+    for (let k = -Math.ceil(half * 4); k <= Math.ceil(half * 4); k++) {
+      const pos = mid + (k / 4) * pxPerCm;
+      if (pos < 0 || pos > len) continue;
+      const cm = k / 4, whole = k % 4 === 0, halfMark = k % 2 === 0;
+      if (whole && k !== 0) {
+        const label = String(Math.abs(cm));
+        if (dir === "h") g.fillText(label, pos, thick / 2); else { g.save(); g.translate(thick / 2, pos); g.rotate(-Math.PI / 2); g.fillText(label, 0, 0); g.restore(); }
+        continue;
+      }
+      const t = k === 0 ? thick * 0.6 : halfMark ? thick * 0.35 : thick * 0.18;
+      g.beginPath();
+      if (dir === "h") { g.moveTo(pos + 0.5, (thick - t) / 2); g.lineTo(pos + 0.5, (thick + t) / 2); } else { g.moveTo((thick - t) / 2, pos + 0.5); g.lineTo((thick + t) / 2, pos + 0.5); }
+      g.stroke();
+    }
+    return c;
   }
 
   /** The shape view of an id (members of groups included). */
