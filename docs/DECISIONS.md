@@ -1957,3 +1957,8 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   every paragraph whose text did not change as it was (bold, colours, bullets set in PowerPoint), and a changed
   paragraph keeps its paragraph properties and its first run's look. Before, any edit rewrote all notes as
   plain text. Formatting notes in RaabePresent itself is not built.
+- **Exportieren > Dateityp ändern:** Präsentation, PowerPoint-Vorlage and PowerPoint-Bildschirmpräsentation
+  (through Speichern unter) and the slides as pictures, PNG or JPEG, 1920 pixels wide, as PowerPoint offers
+  them ("Welche Folien möchten Sie exportieren?" Alle Folien / Nur diese). PowerPoint puts all slides into a
+  folder; we write them beside the chosen name ("Name-Folie1.png" …), since the platform has no folder
+  creation. Video, animiertes GIF and Für CD verpacken are not built.

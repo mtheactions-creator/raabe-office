@@ -42,6 +42,7 @@ import * as CT from "./contexttabs";
 import { contextHost, implementContext } from "./contextcmds";
 import { Sorter } from "./sorter";
 import { zoomMenu } from "./zoom";
+import { fileTypeSection } from "./exportimg";
 import { smartArtTab, textPane } from "./smartart";
 import { bgStylesMenu } from "./background";
 import { shapeEffectsMenu } from "./shapefx";
@@ -1383,6 +1384,12 @@ export class PresentApp implements EditorHost, PanelHost {
       for (const part of [...parts, ...themes]) for (const n of ["latin", "ea", "cs"]) for (const e of Array.from(pptx.doc(part).getElementsByTagNameNS(PptxDom.NS_A, n))) if (e.getAttribute("typeface") === from.value) e.setAttribute("typeface", to.value);
     });
   }
+
+  /** The active presentation's name (Exportieren). */
+  docName(): string { return this.active.name.replace(/:\d+$/, ""); }
+
+  /** Speichern unter (Exportieren > Dateityp ändern). */
+  async saveAs(): Promise<void> { this.backstage.close(); await this.save(this.active, true); }
 
   /** Whether the presentation carries a VBA project (an opened .pptm): kept, never run (D-072). */
   hasMacros(deck: Deck): boolean {
@@ -3171,7 +3178,7 @@ export class PresentApp implements EditorHost, PanelHost {
       { id: "save", label: "Speichern", icon: "save", cmd: "file.save" },
       { id: "saveAs", label: "Speichern unter", icon: "save-as", cmd: "file.saveAs" },
       { id: "print", label: "Drucken", icon: "print", page: () => this.printPageEl() },
-      { id: "export", label: "Exportieren", icon: "export", page: () => h("div", null, h("h1", null, "Exportieren"), h("button", { class: "bigbtn", style: "width:220px", onclick: () => void this.exportPdf() }, icon("export", "l"), "PDF/XPS-Dokument erstellen"), h("p", { class: "muted" }, "Die Folien als PDF, so wie sie in der Bildschirmpräsentation aussehen.")) },
+      { id: "export", label: "Exportieren", icon: "export", page: () => h("div", null, h("h1", null, "Exportieren"), h("button", { class: "bigbtn", style: "width:220px", onclick: () => void this.exportPdf() }, icon("export", "l"), "PDF/XPS-Dokument erstellen"), h("p", { class: "muted" }, "Die Folien als PDF, so wie sie in der Bildschirmpräsentation aussehen."), fileTypeSection(this)) },
       { id: "close", label: "Schließen", icon: "close-doc", cmd: "file.close" },
       { id: "options", label: "Optionen", icon: "settings", cmd: "file.options", bottom: true },
     ];
