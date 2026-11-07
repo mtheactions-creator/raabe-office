@@ -87,3 +87,50 @@ export function linkTarget(app: PresentApp, slidePath: string, rid: string): { u
   const i = app.deck.slides.findIndex((s) => s.path === to);
   return i >= 0 ? { slide: i } : {};
 }
+
+// ----- Einfügen > Aktion (D-072): a click on the shape in the show does something -------------------------
+// Written as PowerPoint writes it: a:hlinkClick in the shape's p:cNvPr, with action="ppaction://hlinkshowjump?
+// jump=nextslide" (and the other jumps), or ppaction://hlinksldjump with a relationship to a slide.
+
+const JUMPS: [string, string][] = [["nextslide", "Nächste Folie"], ["previousslide", "Vorherige Folie"], ["firstslide", "Erste Folie"], ["lastslide", "Letzte Folie"], ["lastslideviewed", "Letzte angezeigte Folie"], ["endshow", "Bildschirmpräsentation beenden"]];
+
+export async function actionDialog(app: PresentApp): Promise<void> {
+  const ed = app.editor;
+  const v = ed.selectedViews[0];
+  const el = v ? ed.shapeEl(v.id) : undefined;
+  const nv = el ? PptxDom.kids(el).find((c) => c.localName.startsWith("nv")) : undefined;
+  const cNvPr = nv?.firstElementChild;
+  if (!el || !cNvPr) return;
+  const cur = PptxDom.kid(cNvPr, "hlinkClick");
+  const curJump = /jump=(\w+)/.exec(cur?.getAttribute("action") ?? "")?.[1];
+  const none = h("input", { type: "radio", name: "act" }) as HTMLInputElement, link = h("input", { type: "radio", name: "act" }) as HTMLInputElement;
+  none.checked = !cur; link.checked = !!cur;
+  const sel = h("select", { style: "min-width:260px" }) as HTMLSelectElement;
+  for (const [k, label] of JUMPS) sel.append(h("option", { value: `j:${k}` }, label));
+  app.deck.slides.forEach((s, i) => { const title = app.deck.view(s.path).shapes.find((x) => x.ph && (x.ph.type === "title" || x.ph.type === "ctrTitle"))?.text?.paras.map((p) => p.runs.map((r) => r.text).join("")).join(" ") ?? ""; sel.append(h("option", { value: `s:${i}` }, `Folie ${i + 1}${title ? `: ${title}` : ""}`)); });
+  if (curJump) sel.value = `j:${curJump}`;
+  sel.addEventListener("change", () => { link.checked = true; });
+  const ok = await showDialog({ title: "Aktionseinstellungen", body: h("div", { class: "form" }, h("b", null, "Aktion bei Mausklick"),
+    h("label", { class: "dlg-check" }, none, " Keine"), h("label", { class: "dlg-check" }, link, " Hyperlink zu: "), sel),
+    buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
+  if (!ok) return;
+  const path = app.slidePath()!;
+  ed.edit("Aktion", () => {
+    PptxDom.kid(cNvPr, "hlinkClick")?.remove();
+    if (none.checked) return;
+    const hl = PptxDom.make(cNvPr.ownerDocument, "a:hlinkClick");
+    const [kind, val] = sel.value.split(":");
+    if (kind === "j") { hl.setAttributeNS(PptxDom.NS_R, "r:id", ""); hl.setAttribute("action", `ppaction://hlinkshowjump?jump=${val}`); }
+    else { const rid = app.deck.pptx.link(path, "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slide", app.deck.slides[Number(val)].path); hl.setAttributeNS(PptxDom.NS_R, "r:id", rid); hl.setAttribute("action", "ppaction://hlinksldjump"); }
+    cNvPr.insertBefore(hl, cNvPr.firstChild);
+  });
+}
+
+/** A shape's click action for the show: a jump ("nextslide" ...) or a relationship id. */
+export function shapeAction(el: Element): { jump?: string; rid?: string } | null {
+  const nv = PptxDom.kids(el).find((c) => c.localName.startsWith("nv"));
+  const hl = nv?.firstElementChild ? PptxDom.kid(nv.firstElementChild, "hlinkClick") : undefined;
+  if (!hl) return null;
+  const jump = /jump=(\w+)/.exec(hl.getAttribute("action") ?? "")?.[1];
+  return jump ? { jump } : { rid: hl.getAttributeNS(PptxDom.NS_R, "id") ?? undefined };
+}

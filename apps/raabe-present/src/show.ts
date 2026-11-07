@@ -372,7 +372,15 @@ export class SlideShow {
       return;
     }
     if (this.tool === "laser") return;
-    // A link on the slide is followed instead of going on (PowerPoint).
+    // A shape's action (Einfügen > Aktion) or a link is followed instead of going on (PowerPoint).
+    const action = (e.target as HTMLElement).closest?.("[data-action]") as HTMLElement | null;
+    if (action) {
+      const j = action.dataset.action;
+      if (j === "nextslide") this.next(); else if (j === "previousslide") this.prev(); else if (j === "firstslide") this.goto(0);
+      else if (j === "lastslide") this.goto(this.count - 1); else if (j === "endshow") this.end();
+      else if (j === "lastslideviewed") { const last = this.history[this.history.length - 2]; if (last !== undefined) this.goto(last); }
+      return;
+    }
     const link = (e.target as HTMLElement).closest?.("[data-link]") as HTMLElement | null;
     if (link) {
       void import("./links").then(({ linkTarget }) => {
@@ -386,7 +394,7 @@ export class SlideShow {
   }
 
   private move(e: MouseEvent): void {
-    if (this.tool === "arrow") this.root.style.cursor = (e.target as HTMLElement).closest?.("[data-link]") ? "pointer" : "";
+    if (this.tool === "arrow") this.root.style.cursor = (e.target as HTMLElement).closest?.("[data-link], [data-action]") ? "pointer" : "";
     if (this.tool === "laser") { this.laser.style.left = `${e.clientX}px`; this.laser.style.top = `${e.clientY}px`; }
   }
 

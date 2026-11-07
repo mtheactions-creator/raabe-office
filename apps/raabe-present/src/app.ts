@@ -1771,6 +1771,7 @@ export class PresentApp implements EditorHost, PanelHost {
     impl("draw.shapes", () => {});
     impl("insert.shapes", () => {});
     impl("insert.chart", () => {}, () => !!this.slidePath());
+    impl("insert.action", () => import("./links").then((m) => m.actionDialog(this)), () => this.editor.sel.length === 1);
     impl("view.ruler", () => { this.editor.showRuler = !this.editor.showRuler; this.editor.fitZoom(); this.editor.render(); this.updateChrome(); }, () => this.view === "normal", () => this.editor.showRuler);
     impl("draw.arrange", () => {});
     impl("draw.fill", () => this.setFill(this.lastFill), shapes);

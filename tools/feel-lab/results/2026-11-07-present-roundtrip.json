@@ -88,6 +88,10 @@
    "result": "same",
    "diff": []
   },
+  "action": {
+   "result": "same",
+   "diff": []
+  },
   "group": {
    "result": "same",
    "diff": []
@@ -143,6 +147,6 @@
  },
  "summary": {
   "fixtures": "11/11",
-  "scenarios": "26/26"
+  "scenarios": "27/27"
  }
 }

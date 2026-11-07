@@ -1787,3 +1787,9 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   Layout, Abschnitt, Markieren, Farben and Schriftarten dropdowns; Gruppierung wiederherstellen). They work
   now; Rahmen (13 entries) and Texteffekte (Schatten, Spiegelung, Leuchten; no 3-D) were added, and in the
   Folienmaster Titel, Fußzeilen and Beibehalten.
+- **Einfügen > Aktion:** Aktionseinstellungen with Mausklick only (Keine; Hyperlink zu Nächste, Vorherige,
+  Erste, Letzte, Letzte angezeigte Folie, Bildschirmpräsentation beenden, or a slide), written as PowerPoint
+  writes it (a:hlinkClick in p:cNvPr) and followed in the show; the dialog's labels are from knowledge of
+  PowerPoint, not from a recording (it was not opened by the inventory probe). Mouseover, programs, macros
+  and sounds are open. **Thesaurus** (Umschalt+F7) is RaabeWrite's (open thesauri) in a box; **Lineal**
+  shows cm rulers with 0 at the slide's centre.
