@@ -119,7 +119,7 @@ class Geometry {
 
 // ----- the session ------------------------------------------------------------------------------------------
 
-interface Session { id: number; me: MathEditor; insert(seq: Seq): void; finish(commit: boolean): void }
+interface Session { id: number; me: MathEditor; insert(seq: Seq): void; finish(commit: boolean): void; redraw(): void }
 let active: Session | null = null;
 
 /** The equation being edited in place, if any (the Formel tab inserts at its caret). */
@@ -180,6 +180,10 @@ export function startMathEdit(app: PresentApp, id: number, o: { isNew?: boolean;
     ed.focus();
   };
   const onKey = (e: KeyboardEvent) => {
+    // Keys typed into a field of the ribbon or a dialog are theirs.
+    const t = e.target as HTMLElement | null;
+    if (t && t !== document.body && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.tagName === "SELECT" || t.isContentEditable) && !t.closest(".slide-editor")) return;
+    if (document.querySelector(".dialog-backdrop, [role=dialog][aria-modal=true]")) return;
     const k = e.key, shift = e.shiftKey, ctrl = e.ctrlKey || e.metaKey;
     let handled = true;
     if (k === "Escape" || (k === "Enter" && !shift)) finish(true);
@@ -204,6 +208,8 @@ export function startMathEdit(app: PresentApp, id: number, o: { isNew?: boolean;
     if (active === session) draw();
   };
   const onDown = (e: MouseEvent) => {
+    // The ribbon (Formel tab), menus and dialogs keep the equation in editing, as in PowerPoint.
+    if (!ed.el.contains(e.target as Node)) return;
     const r = overlay.getBoundingClientRect();
     if (g && e.clientX >= r.left - 4 && e.clientX <= r.right + 4 && e.clientY >= r.top - 4 && e.clientY <= r.bottom + 4) {
       e.preventDefault(); e.stopPropagation();
@@ -218,7 +224,9 @@ export function startMathEdit(app: PresentApp, id: number, o: { isNew?: boolean;
   };
   const session: Session = {
     id, me, finish,
-    insert(s: Seq) { me.insertAtoms(JSON.parse(JSON.stringify(s)) as Seq); draw(); },
+    // A structure from the Formel tab: the selection goes into it, the caret into its first empty slot (as in PowerPoint).
+    insert(s: Seq) { const copy = JSON.parse(JSON.stringify(s)) as Seq; if (copy.length === 1 && copy[0].k !== "t") me.insertStructure(copy[0]); else me.insertAtoms(copy); draw(); },
+    redraw: () => draw(),
   };
   active = session;
   window.addEventListener("keydown", onKey, true);

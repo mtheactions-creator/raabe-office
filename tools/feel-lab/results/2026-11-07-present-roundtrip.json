@@ -80,6 +80,10 @@
    "result": "same",
    "diff": []
   },
+  "equation typed": {
+   "result": "same",
+   "diff": []
+  },
   "table style": {
    "result": "same",
    "diff": []
@@ -223,6 +227,6 @@
  },
  "summary": {
   "fixtures": "11/11",
-  "scenarios": "46/46"
+  "scenarios": "47/47"
  }
 }

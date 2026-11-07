@@ -1941,4 +1941,6 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   editing model is text-engine's MathEditor (RaabeWrite's, measured against Word's equation editor, D-059);
   the caret geometry is RaabeWrite's (copied into mathedit.ts). A new equation starts empty with its prompt
   (before it started as "x" in the linear field). Structures from the Formel tab go in at the caret. The
-  linear field stays for Formel > Linear. Not built: Formel > Text, Formeloptionen, Freihandgleichung.
+  linear field stays for Formel > Linear. Formel > Text types plain text while it is on. The ribbon, menus and
+  dialogs keep the equation in editing (a structure goes in at the caret, the caret into its first empty slot).
+  Not built: Formeloptionen, Freihandgleichung.
