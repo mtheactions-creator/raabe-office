@@ -45,6 +45,8 @@ export interface Platform {
   openImageDialog(): Promise<string | null>;
   /** Chooses a file of the given kinds (Entwurf > Designs > Nach Designs suchen …). */
   openAnyDialog?(title: string, filters: { name: string; extensions: string[] }[]): Promise<string | null>;
+  /** Several pictures at once (Fotoalbum); optional, added for RaabePresent. */
+  openImagesDialog?(title: string): Promise<string[]>;
   saveFileDialog(defaultName: string, kind: "docx" | "pdf" | "xlsx" | "csv" | "pptx"): Promise<string | null>;
   /** Chooses where to save a file of the given kinds (Als Grafik speichern …). */
   saveAnyDialog?(title: string, defaultName: string, filters: { name: string; extensions: string[] }[]): Promise<string | null>;

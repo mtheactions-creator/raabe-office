@@ -30,6 +30,10 @@ export function tauriPlatform(): Platform {
       const r = await open({ multiple: false, directory: false, filters: kind === "xlsx" ? FILTERS.xlsxOpen : kind === "pptx" ? FILTERS.pptx : FILTERS.docx, title: "Öffnen" });
       return typeof r === "string" ? r : null;
     },
+    async openImagesDialog(title) {
+      const r = await open({ multiple: true, directory: false, filters: FILTERS.image, title });
+      return Array.isArray(r) ? r.map(String) : r ? [String(r)] : [];
+    },
     async openImageDialog() {
       const r = await open({ multiple: false, directory: false, filters: FILTERS.image, title: "Grafik einfügen" });
       return typeof r === "string" ? r : null;
