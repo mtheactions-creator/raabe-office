@@ -180,8 +180,10 @@ export function soundMenu(app: PresentApp): { label: string; run: () => void; ch
   return [
     { label: "[Ohne Sound]", checked: !snd, run: () => setSoundXml(app, "Sound", () => null) },
     { label: "[Vorherigen Sound anhalten]", checked: !!kid(snd, "endSnd"), run: () => setSoundXml(app, "Sound", () => "<p:sndAc><p:endSnd/></p:sndAc>") },
+    // PowerPoint's 19 sounds by its names; the files are our own (D-078), embedded under PowerPoint's file names.
+    ...BUILT_IN_SOUNDS.map(([label, file]) => ({ label, checked: kid(st, "snd")?.getAttribute("name") === file, run: () => void builtInSound(app, file) })),
     { label: "Anderer Sound...", run: () => void otherSound(app) },
-    { label: "Bis zum nächsten Sound wiederholen", checked: st?.getAttribute("loop") === "1", run: () => {
+    { label: "Wiederholen bis zum nächsten Sound", checked: st?.getAttribute("loop") === "1", run: () => {
       if (!st) return;
       const on = st.getAttribute("loop") !== "1";
       const deck = app.deck;
@@ -194,6 +196,31 @@ export function soundMenu(app: PresentApp): { label: string; run: () => void; ch
       });
     } },
   ];
+}
+
+/** Übergänge > Sound: PowerPoint's names and the file names it embeds them under (measured, probe_powerpoint_sounds.py). */
+export const BUILT_IN_SOUNDS: [string, string][] = [["Applaus", "applause.wav"], ["Bombe", "bomb.wav"], ["Brise", "breeze.wav"], ["Explosion", "explode.wav"],
+  ["Glocken", "chimes.wav"], ["Hammer", "hammer.wav"], ["Kamera", "camera.wav"], ["Kasse", "cashreg.wav"], ["Klick", "click.wav"], ["Laser", "laser.wav"],
+  ["Münze", "coin.wav"], ["Pfeil", "arrow.wav"], ["Schreibmaschine", "type.wav"], ["Sog", "suction.wav"], ["Spannung", "voltage.wav"], ["Stoß", "push.wav"],
+  ["Trommelwirbel", "drumroll.wav"], ["Wind", "wind.wav"], ["Zischen", "whoosh.wav"]];
+
+/** One of the built-in sounds: our file (public/sounds), embedded once per presentation and shared by its slides. */
+async function builtInSound(app: PresentApp, file: string): Promise<void> {
+  const pptx = app.deck.pptx;
+  let bytes: Uint8Array;
+  try { bytes = new Uint8Array(await (await fetch(`sounds/${file}`)).arrayBuffer()); } catch { return; }
+  // A slide that has this sound already shares its part.
+  let media: string | undefined;
+  for (const s of app.deck.slides) {
+    const snd = kid(kid(transitionOf(pptx.doc(s.path).documentElement).el, "sndAc"), "stSnd");
+    const el = kid(snd, "snd");
+    if (el?.getAttribute("name") === file) { media = pptx.target(s.path, el.getAttributeNS(PptxDom.NS_R, "embed") ?? ""); break; }
+  }
+  if (!media) { media = pptx.freeName("ppt/media/audio#.wav"); pptx.put(media, bytes, "audio/wav"); }
+  setSoundXml(app, "Sound", (p) => {
+    const rid = pptx.link(p, RT_AUDIO, media!);
+    return `<p:sndAc><p:stSnd><p:snd r:embed="${rid}" name="${file}"/></p:stSnd></p:sndAc>`;
+  });
 }
 
 async function otherSound(app: PresentApp): Promise<void> {

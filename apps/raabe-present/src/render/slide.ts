@@ -120,8 +120,22 @@ export function renderShape(s: ShapeView, o: RenderOptions, map: Map<number, HTM
     else box.append(placeholderBox(w, h));
   } else if (s.kind === "sp" || s.kind === "cxnSp") {
     const url = s.pic?.path ? o.image(s.pic.path) : undefined;
-    if (url) box.append(pictureElement(url, w, h, { ...s.format, fill: undefined, crop: s.pic?.crop }));
-    else {
+    if (url) {
+      const pe = pictureElement(url, w, h, { ...s.format, fill: undefined, crop: s.pic?.crop });
+      // Fülleffekt > Struktur (D-078): a tiled picture (a:tile) repeats at its own size, as PowerPoint draws textures.
+      const tile = Array.from(s.el.getElementsByTagNameNS("http://schemas.openxmlformats.org/drawingml/2006/main", "tile"))[0];
+      const img = pe.querySelector("img");
+      if (tile && img) {
+        const k = Number(tile.getAttribute("sx") ?? 100000) / 100000;
+        const frame = img.parentElement as HTMLElement;
+        img.remove();
+        frame.style.backgroundImage = `url("${url}")`;
+        frame.style.backgroundRepeat = "repeat";
+        if (k !== 1) frame.style.backgroundSize = `${k * 100}% auto`;
+      }
+      box.append(pe);
+      if (tile && s.format.line) { const look = shapeElement(w, h, { ...s.format, fill: undefined }, s.info); if (look) box.append(look); }
+    } else {
       const look = s.ph && !s.format.fill && !s.format.line ? null : shapeElement(w, h, s.format, s.info);
       if (look) box.append(look);
     }

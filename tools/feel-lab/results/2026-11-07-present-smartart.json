@@ -1,0 +1,1280 @@
+{
+ "date": "2026-11-07",
+ "layouts": [
+  {
+   "name": "Einfache Blockliste",
+   "category": "list",
+   "iou": 1.0
+  },
+  {
+   "name": "Alternierende Sechsecke",
+   "category": "list",
+   "iou": 1.0
+  },
+  {
+   "name": "Bildbeschriftungsliste",
+   "category": "list",
+   "iou": 1.0
+  },
+  {
+   "name": "Liste mit Linien",
+   "category": "hierarchy",
+   "iou": 1.0
+  },
+  {
+   "name": "Vertikale Aufzählung",
+   "category": "list",
+   "iou": 1.0
+  },
+  {
+   "name": "Vertikale Feldliste",
+   "category": "list",
+   "iou": 1.0
+  },
+  {
+   "name": "Horizontale Aufzählung",
+   "category": "list",
+   "iou": 1.0
+  },
+  {
+   "name": "Liste mit quadratischen Akzenten",
+   "category": "list",
+   "iou": 1.0
+  },
+  {
+   "name": "Bildakzentliste",
+   "category": "list",
+   "iou": 1.0
+  },
+  {
+   "name": "Umgebrochene Bildakzentliste",
+   "category": "list",
+   "iou": 0.999
+  },
+  {
+   "name": "Gestapelte Liste",
+   "category": "list",
+   "iou": 1.0
+  },
+  {
+   "name": "Vertikale Aktionsliste",
+   "category": "list",
+   "iou": 0.16
+  },
+  {
+   "name": "Zunehmender Kreisprozess",
+   "category": "list",
+   "iou": 1.0
+  },
+  {
+   "name": "Kreisdiagrammprozess",
+   "category": "list",
+   "iou": 1.0
+  },
+  {
+   "name": "Detaillierter Prozess",
+   "category": "process",
+   "iou": 1.0
+  },
+  {
+   "name": "Gruppierte Liste",
+   "category": "list",
+   "iou": 1.0
+  },
+  {
+   "name": "Horizontale Bildliste",
+   "category": "list",
+   "iou": 1.0
+  },
+  {
+   "name": "Fortlaufende Bildliste",
+   "category": "list",
+   "iou": 1.0
+  },
+  {
+   "name": "Bildstreifen",
+   "category": "list",
+   "iou": 1.0
+  },
+  {
+   "name": "Vertikale Bildliste",
+   "category": "list",
+   "iou": 1.0
+  },
+  {
+   "name": "Alternierende Bildblöcke",
+   "category": "picture",
+   "iou": 1.0
+  },
+  {
+   "name": "Vertikale Bildakzentliste",
+   "category": "list",
+   "iou": 1.0
+  },
+  {
+   "name": "Bildakzentliste mit Titel",
+   "category": "picture",
+   "iou": 0.999
+  },
+  {
+   "name": "Vertikale Blockliste",
+   "category": "list",
+   "iou": 1.0
+  },
+  {
+   "name": "Vertikale Chevronliste",
+   "category": "process",
+   "iou": 0.999
+  },
+  {
+   "name": "Liste mit vertikalen Akzenten",
+   "category": "list",
+   "iou": 1.0
+  },
+  {
+   "name": "Vertikale Pfeilliste",
+   "category": "process",
+   "iou": 1.0
+  },
+  {
+   "name": "Trapezförmige Liste",
+   "category": "list",
+   "iou": 1.0
+  },
+  {
+   "name": "Absteigende Blockliste",
+   "category": "list",
+   "iou": 1.0
+  },
+  {
+   "name": "Symbolkreis-Beschriftungsliste",
+   "category": "list",
+   "iou": 0.999
+  },
+  {
+   "name": "Segmentierter Prozess",
+   "category": "process",
+   "iou": 1.0
+  },
+  {
+   "name": "Liste mit vertikalen Kurven",
+   "category": "list",
+   "iou": 1.0
+  },
+  {
+   "name": "Pyramidenliste",
+   "category": "pyramid",
+   "iou": 0.999
+  },
+  {
+   "name": "Zielliste",
+   "category": "relationship",
+   "iou": 1.0
+  },
+  {
+   "name": "Einfacher Prozess",
+   "category": "process",
+   "iou": 1.0
+  },
+  {
+   "name": "Prozess mit aufsteigenden Schritten",
+   "category": "process",
+   "iou": 1.0
+  },
+  {
+   "name": "Prozess mit absteigenden Schritten",
+   "category": "process",
+   "iou": 1.0
+  },
+  {
+   "name": "Nummerierter linearer Pfeilprozess",
+   "category": "process",
+   "iou": 0.0
+  },
+  {
+   "name": "Akzentprozess",
+   "category": "process",
+   "iou": 1.0
+  },
+  {
+   "name": "Bildakzentprozess",
+   "category": "process",
+   "iou": 1.0
+  },
+  {
+   "name": "Alternierender Fluss",
+   "category": "process",
+   "iou": 0.999
+  },
+  {
+   "name": "Fortlaufender Blockprozess",
+   "category": "process",
+   "iou": 1.0
+  },
+  {
+   "name": "Zunehmender Pfeilprozess",
+   "category": "process",
+   "iou": 1.0
+  },
+  {
+   "name": "Fortlaufender Pfeilprozess",
+   "category": "process",
+   "iou": 1.0
+  },
+  {
+   "name": "Prozesspfeile",
+   "category": "process",
+   "iou": 0.999
+  },
+  {
+   "name": "Aufzählungszeichen-Zeitachse",
+   "category": "process",
+   "iou": 1.0
+  },
+  {
+   "name": "Invertierte Aufzählungszeitachse",
+   "category": "process",
+   "iou": 1.0
+  },
+  {
+   "name": "Zeitachse mit Kreisakzent",
+   "category": "process",
+   "iou": 0.999
+  },
+  {
+   "name": "Einfache Zeitachse",
+   "category": "process",
+   "iou": 1.0
+  },
+  {
+   "name": "Einfacher Chevronprozess",
+   "category": "process",
+   "iou": 1.0
+  },
+  {
+   "name": "Geschlossener Chevronprozess",
+   "category": "process",
+   "iou": 0.999
+  },
+  {
+   "name": "Chevronliste",
+   "category": "process",
+   "iou": 1.0
+  },
+  {
+   "name": "Unterschrittprozess",
+   "category": "process",
+   "iou": 1.0
+  },
+  {
+   "name": "Phasenprozess",
+   "category": "process",
+   "iou": 1.0
+  },
+  {
+   "name": "Zufallsergebnisprozess",
+   "category": "process",
+   "iou": 0.999
+  },
+  {
+   "name": "Vertikaler Prozess",
+   "category": "process",
+   "iou": 1.0
+  },
+  {
+   "name": "Gestaffelter Prozess",
+   "category": "process",
+   "iou": 1.0
+  },
+  {
+   "name": "Prozessliste",
+   "category": "process",
+   "iou": 0.999
+  },
+  {
+   "name": "Kreisförmiger Pfeilprozess",
+   "category": "process",
+   "iou": 1.0
+  },
+  {
+   "name": "Einfacher umgebrochener Prozess",
+   "category": "process",
+   "iou": 1.0
+  },
+  {
+   "name": "Wiederholter umgebrochener Prozess",
+   "category": "process",
+   "iou": 1.0
+  },
+  {
+   "name": "Vertikaler umgebrochener Prozess",
+   "category": "process",
+   "iou": 1.0
+  },
+  {
+   "name": "Aufsteigender Prozess mit Bildakzenten",
+   "category": "process",
+   "iou": 0.999
+  },
+  {
+   "name": "Pfeil nach oben",
+   "category": "process",
+   "iou": 1.0
+  },
+  {
+   "name": "Absteigender Prozess",
+   "category": "process",
+   "iou": 1.0
+  },
+  {
+   "name": "Formel",
+   "category": "relationship",
+   "iou": 0.999
+  },
+  {
+   "name": "Vertikale Formel",
+   "category": "relationship",
+   "iou": 0.999
+  },
+  {
+   "name": "Zahnrad",
+   "category": "relationship",
+   "iou": 1.0
+  },
+  {
+   "name": "Zusammenlaufende Pfeile",
+   "category": "relationship",
+   "iou": 1.0
+  },
+  {
+   "name": "Auseinanderlaufende Pfeile",
+   "category": "relationship",
+   "iou": 1.0
+  },
+  {
+   "name": "Einfacher Kreis",
+   "category": "cycle",
+   "iou": 1.0
+  },
+  {
+   "name": "Textkreis",
+   "category": "cycle",
+   "iou": 1.0
+  },
+  {
+   "name": "Blockkreis",
+   "category": "cycle",
+   "iou": 1.0
+  },
+  {
+   "name": "Richtungsloser Kreis",
+   "category": "cycle",
+   "iou": 1.0
+  },
+  {
+   "name": "Fortlaufender Kreis",
+   "category": "cycle",
+   "iou": 1.0
+  },
+  {
+   "name": "Kreis mit mehreren Richtungen",
+   "category": "cycle",
+   "iou": 1.0
+  },
+  {
+   "name": "Segmentierter Kreis",
+   "category": "cycle",
+   "iou": 1.0
+  },
+  {
+   "name": "Einfaches Kreisdiagramm",
+   "category": "relationship",
+   "iou": 1.0
+  },
+  {
+   "name": "Zyklus-Matrix",
+   "category": "relationship",
+   "iou": 1.0
+  },
+  {
+   "name": "Beschriftete Hierarchie",
+   "category": "hierarchy",
+   "iou": 1.0
+  },
+  {
+   "name": "Horizontal beschriftete Hierarchie",
+   "category": "hierarchy",
+   "iou": 1.0
+  },
+  {
+   "name": "Sechseckcluster",
+   "category": "picture",
+   "iou": 1.0
+  },
+  {
+   "name": "Segmentierte Pyramide",
+   "category": "pyramid",
+   "iou": 1.0
+  },
+  {
+   "name": "Geschachteltes Ziel",
+   "category": "relationship",
+   "iou": 1.0
+  },
+  {
+   "name": "Radialliste",
+   "category": "relationship",
+   "iou": 0.999
+  },
+  {
+   "name": "Einfaches Ziel",
+   "category": "relationship",
+   "iou": 0.999
+  },
+  {
+   "name": "Einfaches Venn",
+   "category": "relationship",
+   "iou": 1.0
+  },
+  {
+   "name": "Lineares Venn",
+   "category": "relationship",
+   "iou": 1.0
+  },
+  {
+   "name": "Gestapeltes Venn",
+   "category": "relationship",
+   "iou": 1.0
+  },
+  {
+   "name": "Einfache Matrix",
+   "category": "matrix",
+   "iou": 1.0
+  },
+  {
+   "name": "Rastermatrix",
+   "category": "matrix",
+   "iou": 1.0
+  },
+  {
+   "name": "Einfache Pyramide",
+   "category": "pyramid",
+   "iou": 1.0
+  },
+  {
+   "name": "Invertierte Pyramide",
+   "category": "pyramid",
+   "iou": 1.0
+  },
+  {
+   "name": "Bild mit Akzenten",
+   "category": "picture",
+   "iou": 1.0
+  },
+  {
+   "name": "Bildlegende mit Kreisakzent",
+   "category": "picture",
+   "iou": 1.0
+  },
+  {
+   "name": "Momentaufnahmen-Bildliste",
+   "category": "picture",
+   "iou": 0.998
+  },
+  {
+   "name": "Spiralförmige Grafik",
+   "category": "picture",
+   "iou": 1.0
+  },
+  {
+   "name": "Bilder mit Beschriftungen",
+   "category": "picture",
+   "iou": 0.999
+  },
+  {
+   "name": "Umgebrochene Bildbeschriftung",
+   "category": "picture",
+   "iou": 0.999
+  },
+  {
+   "name": "Umgebrochener halbtransparenter Bildtext",
+   "category": "picture",
+   "iou": 0.999
+  },
+  {
+   "name": "Umgebrochene Bildblöcke",
+   "category": "picture",
+   "iou": 0.999
+  },
+  {
+   "name": "Umgebrochene Bildbeschriftungsliste",
+   "category": "picture",
+   "iou": 1.0
+  },
+  {
+   "name": "Titelbildblöcke",
+   "category": "picture",
+   "iou": 0.999
+  },
+  {
+   "name": "Bildraster",
+   "category": "picture",
+   "iou": 0.999
+  },
+  {
+   "name": "Bildakzentblöcke",
+   "category": "picture",
+   "iou": 0.999
+  },
+  {
+   "name": "Alternierende Bildkreise",
+   "category": "picture",
+   "iou": 0.999
+  },
+  {
+   "name": "Titelbildanordnung",
+   "category": "picture",
+   "iou": 1.0
+  },
+  {
+   "name": "Bildanordnung",
+   "category": "picture",
+   "iou": 1.0
+  },
+  {
+   "name": "Umrahmte Textgrafik",
+   "category": "picture",
+   "iou": 1.0
+  },
+  {
+   "name": "Blasenbildliste",
+   "category": "picture",
+   "iou": 1.0
+  },
+  {
+   "name": "Verfahren mit wechselnden Kreisen",
+   "category": "timeline",
+   "iou": 1.0
+  },
+  {
+   "name": "Nummerierte horizontale Punkte",
+   "category": "timeline",
+   "iou": 1.0
+  },
+  {
+   "name": "Kleine horizontale Punkte",
+   "category": "timeline",
+   "iou": 1.0
+  },
+  {
+   "name": "Kleine Punkte vertikal",
+   "category": "timeline",
+   "iou": 1.0
+  },
+  {
+   "name": "Das Team kennenlernen",
+   "category": "meettheteam",
+   "iou": 0.999
+  },
+  {
+   "name": "Karte zum Kennenlernen des Teams",
+   "category": "meettheteam",
+   "iou": 0.999
+  },
+  {
+   "name": "Vertikale Karte zum Kennenlernen des Teams",
+   "category": "meettheteam",
+   "iou": 0.999
+  },
+  {
+   "name": "Ovale Karte zum Kennenlernen des Teams",
+   "category": "meettheteam",
+   "iou": 0.998
+  },
+  {
+   "name": "Textkarte Seitenlinie nummeriert",
+   "category": "textcard",
+   "iou": 1.0
+  },
+  {
+   "name": "Textkarte Seitenlinien-Symbol",
+   "category": "textcard",
+   "iou": 1.0
+  },
+  {
+   "name": "Textkarte Seitenlinie Zitat",
+   "category": "textcard",
+   "iou": 1.0
+  },
+  {
+   "name": "Textkarte Seitenlinie Breites Bild",
+   "category": "textcard",
+   "iou": 1.0
+  },
+  {
+   "name": "Textkarte kurze Linie",
+   "category": "textcard",
+   "iou": 1.0
+  },
+  {
+   "name": "Textkarte kurze Zeilennummer",
+   "category": "textcard",
+   "iou": 1.0
+  },
+  {
+   "name": "Textkarte kurze Linie Zitat",
+   "category": "textcard",
+   "iou": 1.0
+  },
+  {
+   "name": "Textkarte kurze Linie breit",
+   "category": "textcard",
+   "iou": 1.0
+  },
+  {
+   "name": "Horizontale Aktionsliste",
+   "category": "textcard",
+   "iou": 0.999
+  },
+  {
+   "name": "Nummerierte Kartenliste",
+   "category": "textcard",
+   "iou": 1.0
+  },
+  {
+   "name": "Nummerierte Titelliste",
+   "category": "textcard",
+   "iou": 1.0
+  }
+ ],
+ "layouts5": [
+  {
+   "name": "Einfache Blockliste",
+   "category": "list",
+   "iou": 1.0
+  },
+  {
+   "name": "Alternierende Sechsecke",
+   "category": "list",
+   "iou": 0.067
+  },
+  {
+   "name": "Bildbeschriftungsliste",
+   "category": "list",
+   "iou": 0.0
+  },
+  {
+   "name": "Liste mit Linien",
+   "category": "hierarchy",
+   "iou": 0.998
+  },
+  {
+   "name": "Vertikale Aufzählung",
+   "category": "list",
+   "iou": 0.976
+  },
+  {
+   "name": "Vertikale Feldliste",
+   "category": "list",
+   "iou": 0.783
+  },
+  {
+   "name": "Horizontale Aufzählung",
+   "category": "list",
+   "iou": 0.995
+  },
+  {
+   "name": "Liste mit quadratischen Akzenten",
+   "category": "list",
+   "iou": 0.309
+  },
+  {
+   "name": "Bildakzentliste",
+   "category": "list",
+   "iou": 0.588
+  },
+  {
+   "name": "Umgebrochene Bildakzentliste",
+   "category": "list",
+   "iou": 0.0
+  },
+  {
+   "name": "Gestapelte Liste",
+   "category": "list",
+   "iou": 0.398
+  },
+  {
+   "name": "Vertikale Aktionsliste",
+   "category": "list",
+   "iou": 0.0
+  },
+  {
+   "name": "Zunehmender Kreisprozess",
+   "category": "list",
+   "iou": 0.393
+  },
+  {
+   "name": "Kreisdiagrammprozess",
+   "category": "list",
+   "iou": 0.166
+  },
+  {
+   "name": "Detaillierter Prozess",
+   "category": "process",
+   "iou": 0.997
+  },
+  {
+   "name": "Gruppierte Liste",
+   "category": "list",
+   "iou": 0.593
+  },
+  {
+   "name": "Horizontale Bildliste",
+   "category": "list",
+   "iou": 0.592
+  },
+  {
+   "name": "Fortlaufende Bildliste",
+   "category": "list",
+   "iou": 0.597
+  },
+  {
+   "name": "Bildstreifen",
+   "category": "list",
+   "iou": 0.209
+  },
+  {
+   "name": "Vertikale Bildliste",
+   "category": "list",
+   "iou": 0.996
+  },
+  {
+   "name": "Alternierende Bildblöcke",
+   "category": "picture",
+   "iou": 0.043
+  },
+  {
+   "name": "Vertikale Bildakzentliste",
+   "category": "list",
+   "iou": 0.951
+  },
+  {
+   "name": "Bildakzentliste mit Titel",
+   "category": "picture",
+   "iou": 0.996
+  },
+  {
+   "name": "Vertikale Blockliste",
+   "category": "list",
+   "iou": 1.0
+  },
+  {
+   "name": "Vertikale Chevronliste",
+   "category": "process",
+   "iou": 0.546
+  },
+  {
+   "name": "Liste mit vertikalen Akzenten",
+   "category": "list",
+   "iou": 0.175
+  },
+  {
+   "name": "Vertikale Pfeilliste",
+   "category": "process",
+   "iou": 0.998
+  },
+  {
+   "name": "Trapezförmige Liste",
+   "category": "list",
+   "iou": 0.611
+  },
+  {
+   "name": "Absteigende Blockliste",
+   "category": "list",
+   "iou": 0.636
+  },
+  {
+   "name": "Symbolkreis-Beschriftungsliste",
+   "category": "list",
+   "iou": 0.0
+  },
+  {
+   "name": "Segmentierter Prozess",
+   "category": "process",
+   "iou": 0.744
+  },
+  {
+   "name": "Liste mit vertikalen Kurven",
+   "category": "list",
+   "iou": 0.699
+  },
+  {
+   "name": "Pyramidenliste",
+   "category": "pyramid",
+   "iou": 0.23
+  },
+  {
+   "name": "Zielliste",
+   "category": "relationship",
+   "iou": 0.476
+  },
+  {
+   "name": "Einfacher Prozess",
+   "category": "process",
+   "iou": 0.996
+  },
+  {
+   "name": "Prozess mit aufsteigenden Schritten",
+   "category": "process",
+   "iou": 0.0
+  },
+  {
+   "name": "Prozess mit absteigenden Schritten",
+   "category": "process",
+   "iou": 0.074
+  },
+  {
+   "name": "Nummerierter linearer Pfeilprozess",
+   "category": "process",
+   "iou": 0.0
+  },
+  {
+   "name": "Akzentprozess",
+   "category": "process",
+   "iou": 0.836
+  },
+  {
+   "name": "Bildakzentprozess",
+   "category": "process",
+   "iou": 0.876
+  },
+  {
+   "name": "Alternierender Fluss",
+   "category": "process",
+   "iou": 0.018
+  },
+  {
+   "name": "Fortlaufender Blockprozess",
+   "category": "process",
+   "iou": 0.587
+  },
+  {
+   "name": "Zunehmender Pfeilprozess",
+   "category": "process",
+   "iou": 0.063
+  },
+  {
+   "name": "Fortlaufender Pfeilprozess",
+   "category": "process",
+   "iou": 0.818
+  },
+  {
+   "name": "Prozesspfeile",
+   "category": "process",
+   "iou": 0.35
+  },
+  {
+   "name": "Aufzählungszeichen-Zeitachse",
+   "category": "process",
+   "iou": 0.099
+  },
+  {
+   "name": "Invertierte Aufzählungszeitachse",
+   "category": "process",
+   "iou": 0.011
+  },
+  {
+   "name": "Zeitachse mit Kreisakzent",
+   "category": "process",
+   "iou": 0.197
+  },
+  {
+   "name": "Einfache Zeitachse",
+   "category": "process",
+   "iou": 0.083
+  },
+  {
+   "name": "Einfacher Chevronprozess",
+   "category": "process",
+   "iou": 1.0
+  },
+  {
+   "name": "Geschlossener Chevronprozess",
+   "category": "process",
+   "iou": 0.998
+  },
+  {
+   "name": "Unterschrittprozess",
+   "category": "process",
+   "iou": 0.997
+  },
+  {
+   "name": "Zufallsergebnisprozess",
+   "category": "process",
+   "iou": 0.407
+  },
+  {
+   "name": "Vertikaler Prozess",
+   "category": "process",
+   "iou": 0.571
+  },
+  {
+   "name": "Gestaffelter Prozess",
+   "category": "process",
+   "iou": 0.083
+  },
+  {
+   "name": "Prozessliste",
+   "category": "process",
+   "iou": 0.995
+  },
+  {
+   "name": "Kreisförmiger Pfeilprozess",
+   "category": "process",
+   "iou": 0.01
+  },
+  {
+   "name": "Einfacher umgebrochener Prozess",
+   "category": "process",
+   "iou": 0.193
+  },
+  {
+   "name": "Wiederholter umgebrochener Prozess",
+   "category": "process",
+   "iou": 0.104
+  },
+  {
+   "name": "Vertikaler umgebrochener Prozess",
+   "category": "process",
+   "iou": 0.133
+  },
+  {
+   "name": "Aufsteigender Prozess mit Bildakzenten",
+   "category": "process",
+   "iou": 0.036
+  },
+  {
+   "name": "Pfeil nach oben",
+   "category": "process",
+   "iou": 0.022
+  },
+  {
+   "name": "Absteigender Prozess",
+   "category": "process",
+   "iou": 0.155
+  },
+  {
+   "name": "Formel",
+   "category": "relationship",
+   "iou": 0.992
+  },
+  {
+   "name": "Vertikale Formel",
+   "category": "relationship",
+   "iou": 0.0
+  },
+  {
+   "name": "Zusammenlaufende Pfeile",
+   "category": "relationship",
+   "iou": 0.668
+  },
+  {
+   "name": "Auseinanderlaufende Pfeile",
+   "category": "relationship",
+   "iou": 0.652
+  },
+  {
+   "name": "Einfacher Kreis",
+   "category": "cycle",
+   "iou": 0.655
+  },
+  {
+   "name": "Textkreis",
+   "category": "cycle",
+   "iou": 0.167
+  },
+  {
+   "name": "Blockkreis",
+   "category": "cycle",
+   "iou": 0.731
+  },
+  {
+   "name": "Richtungsloser Kreis",
+   "category": "cycle",
+   "iou": 0.731
+  },
+  {
+   "name": "Fortlaufender Kreis",
+   "category": "cycle",
+   "iou": 0.542
+  },
+  {
+   "name": "Kreis mit mehreren Richtungen",
+   "category": "cycle",
+   "iou": 0.341
+  },
+  {
+   "name": "Segmentierter Kreis",
+   "category": "cycle",
+   "iou": 0.904
+  },
+  {
+   "name": "Einfaches Kreisdiagramm",
+   "category": "relationship",
+   "iou": 0.699
+  },
+  {
+   "name": "Sechseckcluster",
+   "category": "picture",
+   "iou": 0.049
+  },
+  {
+   "name": "Segmentierte Pyramide",
+   "category": "pyramid",
+   "iou": 0.191
+  },
+  {
+   "name": "Radialliste",
+   "category": "relationship",
+   "iou": 0.088
+  },
+  {
+   "name": "Einfaches Ziel",
+   "category": "relationship",
+   "iou": 0.476
+  },
+  {
+   "name": "Einfaches Venn",
+   "category": "relationship",
+   "iou": 0.121
+  },
+  {
+   "name": "Lineares Venn",
+   "category": "relationship",
+   "iou": 0.998
+  },
+  {
+   "name": "Gestapeltes Venn",
+   "category": "relationship",
+   "iou": 0.17
+  },
+  {
+   "name": "Einfache Pyramide",
+   "category": "pyramid",
+   "iou": 0.624
+  },
+  {
+   "name": "Invertierte Pyramide",
+   "category": "pyramid",
+   "iou": 0.422
+  },
+  {
+   "name": "Bild mit Akzenten",
+   "category": "picture",
+   "iou": 0.1
+  },
+  {
+   "name": "Bildlegende mit Kreisakzent",
+   "category": "picture",
+   "iou": 0.032
+  },
+  {
+   "name": "Momentaufnahmen-Bildliste",
+   "category": "picture",
+   "iou": 0.0
+  },
+  {
+   "name": "Spiralförmige Grafik",
+   "category": "picture",
+   "iou": 0.022
+  },
+  {
+   "name": "Bilder mit Beschriftungen",
+   "category": "picture",
+   "iou": 0.0
+  },
+  {
+   "name": "Umgebrochene Bildbeschriftung",
+   "category": "picture",
+   "iou": 0.015
+  },
+  {
+   "name": "Umgebrochener halbtransparenter Bildtext",
+   "category": "picture",
+   "iou": 0.0
+  },
+  {
+   "name": "Umgebrochene Bildblöcke",
+   "category": "picture",
+   "iou": 0.13
+  },
+  {
+   "name": "Umgebrochene Bildbeschriftungsliste",
+   "category": "picture",
+   "iou": 0.0
+  },
+  {
+   "name": "Titelbildblöcke",
+   "category": "picture",
+   "iou": 0.0
+  },
+  {
+   "name": "Bildraster",
+   "category": "picture",
+   "iou": 0.0
+  },
+  {
+   "name": "Bildakzentblöcke",
+   "category": "picture",
+   "iou": 0.023
+  },
+  {
+   "name": "Alternierende Bildkreise",
+   "category": "picture",
+   "iou": 0.522
+  },
+  {
+   "name": "Titelbildanordnung",
+   "category": "picture",
+   "iou": 0.0
+  },
+  {
+   "name": "Bildanordnung",
+   "category": "picture",
+   "iou": 0.559
+  },
+  {
+   "name": "Umrahmte Textgrafik",
+   "category": "picture",
+   "iou": 0.305
+  },
+  {
+   "name": "Blasenbildliste",
+   "category": "picture",
+   "iou": 0.0
+  },
+  {
+   "name": "Verfahren mit wechselnden Kreisen",
+   "category": "timeline",
+   "iou": 0.031
+  },
+  {
+   "name": "Nummerierte horizontale Punkte",
+   "category": "timeline",
+   "iou": 0.055
+  },
+  {
+   "name": "Kleine horizontale Punkte",
+   "category": "timeline",
+   "iou": 0.158
+  },
+  {
+   "name": "Kleine Punkte vertikal",
+   "category": "timeline",
+   "iou": 0.235
+  },
+  {
+   "name": "Das Team kennenlernen",
+   "category": "meettheteam",
+   "iou": 0.0
+  },
+  {
+   "name": "Karte zum Kennenlernen des Teams",
+   "category": "meettheteam",
+   "iou": 0.152
+  },
+  {
+   "name": "Vertikale Karte zum Kennenlernen des Teams",
+   "category": "meettheteam",
+   "iou": 0.03
+  },
+  {
+   "name": "Ovale Karte zum Kennenlernen des Teams",
+   "category": "meettheteam",
+   "iou": 0.0
+  },
+  {
+   "name": "Textkarte Seitenlinie nummeriert",
+   "category": "textcard",
+   "iou": 0.0
+  },
+  {
+   "name": "Textkarte Seitenlinien-Symbol",
+   "category": "textcard",
+   "iou": 0.0
+  },
+  {
+   "name": "Textkarte Seitenlinie Zitat",
+   "category": "textcard",
+   "iou": 0.0
+  },
+  {
+   "name": "Textkarte Seitenlinie Breites Bild",
+   "category": "textcard",
+   "iou": 0.507
+  },
+  {
+   "name": "Textkarte kurze Linie",
+   "category": "textcard",
+   "iou": 0.0
+  },
+  {
+   "name": "Textkarte kurze Zeilennummer",
+   "category": "textcard",
+   "iou": 0.0
+  },
+  {
+   "name": "Textkarte kurze Linie Zitat",
+   "category": "textcard",
+   "iou": 0.0
+  },
+  {
+   "name": "Textkarte kurze Linie breit",
+   "category": "textcard",
+   "iou": 0.434
+  },
+  {
+   "name": "Horizontale Aktionsliste",
+   "category": "textcard",
+   "iou": 0.0
+  },
+  {
+   "name": "Nummerierte Kartenliste",
+   "category": "textcard",
+   "iou": 0.996
+  },
+  {
+   "name": "Nummerierte Titelliste",
+   "category": "textcard",
+   "iou": 0.997
+  }
+ ],
+ "powerpoint_opens": {
+  "smartart": true,
+  "nodes": 4,
+  "texts": [
+   "Eins",
+   "Zwei",
+   "Unterpunkt",
+   "Drei"
+  ],
+  "layout": "Einfache Blockliste",
+  "close": {
+   "closed": 1,
+   "quit": true,
+   "left_open": 0
+  }
+ },
+ "summary": {
+  "layouts": {
+   "layouts": 129,
+   "matched": 127,
+   "mean_iou": 0.985
+  },
+  "layouts5": {
+   "layouts": 120,
+   "matched": 27,
+   "mean_iou": 0.375
+  }
+ }
+}

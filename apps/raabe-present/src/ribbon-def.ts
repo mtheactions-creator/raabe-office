@@ -42,9 +42,9 @@ export interface RibbonContext {
     paste: MenuEntry[]; layouts: () => MenuEntry[]; section: MenuEntry[]; spacing: MenuEntry[]; case: MenuEntry[];
     bullets: MenuEntry[]; numbering: MenuEntry[]; lineSpacing: MenuEntry[]; columns: MenuEntry[]; direction: MenuEntry[]; alignText: MenuEntry[];
     arrange: () => MenuEntry[]; find: MenuEntry[]; select: MenuEntry[]; table: MenuEntry[]; pictures: MenuEntry[]; textBox: MenuEntry[];
-    slideSize: MenuEntry[]; showCustom: MenuEntry[]; record: MenuEntry[]; transOptions: () => MenuEntry[]; animOptions: () => MenuEntry[];
+    slideSize: MenuEntry[]; showCustom: MenuEntry[]; record: MenuEntry[]; recordClear: MenuEntry[]; transOptions: () => MenuEntry[]; animOptions: () => MenuEntry[];
     animStart: MenuEntry[]; colors: () => MenuEntry[]; fonts: () => MenuEntry[]; underline: MenuEntry[];
-    outlineWeight: MenuEntry[]; outlineDash: MenuEntry[]; effects: MenuEntry[]; quickStyles: () => MenuEntry[]; zoomFit: MenuEntry[]; equations: () => MenuEntry[]; sounds: () => MenuEntry[]; windows: () => MenuEntry[]; monitors: () => MenuEntry[]; triggers: () => MenuEntry[]; zooms: () => MenuEntry[]; bgStyles: () => MenuEntry[]; inkAdd: () => MenuEntry[]; customShows: () => MenuEntry[];
+    outlineWeight: MenuEntry[]; outlineDash: MenuEntry[]; effects: MenuEntry[]; quickStyles: () => MenuEntry[]; zoomFit: MenuEntry[]; equations: () => MenuEntry[]; sounds: () => MenuEntry[]; windows: () => MenuEntry[]; monitors: () => MenuEntry[]; smartArtConvert: () => MenuEntry[]; triggers: () => MenuEntry[]; zooms: () => MenuEntry[]; bgStyles: () => MenuEntry[]; inkAdd: () => MenuEntry[]; customShows: () => MenuEntry[];
   };
   panels: { newSlide: Popup; layout: Popup; shapes: Popup; themes: Popup; transitions: Popup; animations: Popup; table: Popup; chart: Popup; addAnim: Popup; wordArt: Popup; quickStyles: Popup };
   spin: {
@@ -95,7 +95,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
           id: "paragraph", label: "Absatz", key: "ZA", icon: "paragraph-spacing", launcher: { cmd: "para.dialog", key: "BA" },
           controls: [rows(
             [split("para.bullets", "ÖU", "small", m.bullets), split("para.numbering", "AN", "small", m.numbering), b("para.levelDown", "DI"), b("para.levelUp", "ÄI"), dd("para.lineSpacing", "IZ", "small", m.lineSpacing), "gap", dd("para.direction", "MT", "small", m.direction)],
-            [b("para.left", "II"), b("para.center", "RZ"), b("para.right", "RE"), b("para.justify", "OL"), dd("para.columns", "HS", "small", m.columns), "gap", dd("para.alignText", "PE", "small", m.alignText)])],
+            [b("para.left", "II"), b("para.center", "RZ"), b("para.right", "RE"), b("para.justify", "OL"), dd("para.columns", "HS", "small", m.columns), "gap", dd("para.alignText", "PE", "small", m.alignText), lazy("para.smartArt", "NI", "small", m.smartArtConvert)])],
         },
         {
           id: "drawing", label: "Zeichnen", key: "ZD", icon: "shapes", launcher: { cmd: "draw.format", key: "BB" },
@@ -173,6 +173,17 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
         { id: "setup", label: "Einrichten", key: "ZE", icon: "settings", controls: [b("show.setup", "I1", "large"), stack(b("show.hideSlide", "H", "medium"), b("show.rehearse", "U1", "medium"), dd("show.record", "N1", "medium", m.record)),
           stack(check("show.playNarrations", "K")), stack(check("show.useTimings", "N2"), check("show.mediaControls", "D"))] },
         { id: "monitors", label: "Bildschirme", key: "ZM", icon: "app", controls: [lazy("show.monitor", "ZM", "large", m.monitors)] },
+      ],
+    },
+    {
+      // Aufzeichnen (D-078): PowerPoint's groups and keytips (Cameo is a cloud feature and left out).
+      id: "record", label: "Aufzeichnen", key: "P1",
+      shrink: ["export", "edit", "rec"],
+      groups: [
+        { id: "preview", label: "Vorschau", key: "ZV", icon: "slideshow", controls: [b("rec.preview", "P", "large")] },
+        { id: "rec", label: "Aufzeichnen", key: "ZA", icon: "dictate", controls: [b("rec.fromStart", "B", "large"), b("rec.fromCurrent", "CS", "large"), b("rec.screen", "R1", "large"), b("rec.audio", "O", "large")] },
+        { id: "edit", label: "Bearbeiten", key: "ZB", icon: "close-x", controls: [dd("rec.clear", "CR", "large", m.recordClear)] },
+        { id: "export", label: "Exportieren", key: "ZE", icon: "export", controls: [b("rec.saveShow", "S", "large"), b("rec.video", "Y", "large")] },
       ],
     },
     {

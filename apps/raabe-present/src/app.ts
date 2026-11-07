@@ -114,6 +114,13 @@ const GRAD_DIRS: [string, string][] = [
   ["Linear diagonal - unten links nach oben rechts", '<a:lin ang="18900000" scaled="1"/>'], ["Linear oben", '<a:lin ang="16200000" scaled="1"/>'],
   ["Linear diagonal - unten rechts nach oben links", '<a:lin ang="13500000" scaled="1"/>']];
 
+/** Fülleffekt > Struktur: PowerPoint's 24 names and our texture files (public/textures, D-078). */
+const TEXTURES: [string, string][] = [["papyrus", "Papyrus"], ["linen", "Leinen"], ["denim", "Blaue Baumwolle"], ["wovenmat", "Gewebe"], ["waterdrops", "Wassertropfen"],
+  ["paperbag", "Papiertüte"], ["fossil", "Fischfossil"], ["sand", "Sand"], ["greenmarble", "Grüner Marmor"], ["whitemarble", "Weißer Marmor"], ["brownmarble", "Brauner Marmor"],
+  ["granite", "Granit"], ["newsprint", "Zeitungspapier"], ["recycledpaper", "Recyclingpapier"], ["parchment", "Pergament"], ["stationery", "Briefpapier"],
+  ["bluetissuepaper", "Blaues Seidenpapier"], ["pinktissuepaper", "Rosa Seidenpapier"], ["purplemesh", "Lila Netz"], ["bouquet", "Blumenstrauß"], ["cork", "Kork"],
+  ["walnut", "Walnuss"], ["oak", "Eiche"], ["mediumwood", "Nussbaum"]];
+
 export class PresentApp implements EditorHost, PanelHost {
   readonly commands = new Commands();
   private docs: Doc[] = [];
@@ -882,7 +889,34 @@ export class PresentApp implements EditorHost, PanelHost {
         { heading: "Helle Varianten" }, ...GRAD_DIRS.map(([label, dir]) => ({ label, run: () => setXml("Farbverlauf", grad(true, dir)) })),
         { heading: "Dunkle Varianten" }, ...GRAD_DIRS.map(([label, dir]) => ({ label, run: () => setXml("Farbverlauf", grad(false, dir)) })),
         "-", { label: "Weitere Farbverläufe...", run: () => void this.commands.run("draw.format") }] },
+      { label: "Struktur", submenu: () => [...TEXTURES.map(([key, label]) => ({ label, run: () => void this.textureFill(key, label) })), "-" as const,
+        { label: "Weitere Texturen...", run: () => void this.commands.run("draw.format") }] },
     ];
+  }
+
+  /** Fülleffekt > Struktur (D-078): our texture, embedded once per presentation, tiled as PowerPoint writes textures. */
+  private async textureFill(key: string, label: string): Promise<void> {
+    const slide = this.slidePath();
+    if (!slide) return;
+    let bytes: Uint8Array;
+    try { bytes = new Uint8Array(await (await fetch(`textures/${key}.png`)).arrayBuffer()); } catch { return; }
+    const views = this.editor.selectedViews.filter((v) => v.kind === "sp");
+    const pptx = this.deck.pptx;
+    this.editor.edit(label, () => {
+      // The same texture already in the presentation is shared (its bytes are equal).
+      const same = Object.keys(pptx.files).find((f) => f.startsWith("ppt/media/") && f.endsWith(".png") && pptx.files[f].length === bytes.length && pptx.files[f].every((b, i) => b === bytes[i]));
+      const media = same ?? pptx.freeName("ppt/media/image#.png");
+      if (!same) { pptx.put(media, bytes); pptx.setType(media, "image/png", true); }
+      const rid = pptx.link(slide, "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image", media);
+      for (const v of views) {
+        const sp = kid(this.editor.shapeEl(v.id), "spPr");
+        if (!sp) continue;
+        for (const c of kids(sp)) if (["noFill", "solidFill", "gradFill", "blipFill", "pattFill", "grpFill"].includes(c.localName)) c.remove();
+        const f = fragment(sp.ownerDocument, `<a:blipFill dpi="0" rotWithShape="1"><a:blip r:embed="${rid}"/><a:srcRect/><a:tile tx="0" ty="0" sx="100000" sy="100000" flip="none" algn="tl"/></a:blipFill>`)[0];
+        const after = kids(sp).find((c) => c.localName === "prstGeom" || c.localName === "custGeom") ?? kid(sp, "xfrm");
+        sp.insertBefore(f, after ? after.nextSibling : sp.firstChild);
+      }
+    });
   }
 
   /** Fülleffekt > Bild...: a picture file fills the selected shapes (a:blipFill, stretched). */
@@ -1744,6 +1778,99 @@ export class PresentApp implements EditorHost, PanelHost {
     this.updateChrome();
   }
 
+  /**
+   * Aufzeichnen (D-078): the show with a recording bar (Aufzeichnen, Anhalten, Beenden; Kamera; the time), the
+   * microphone (and camera) recorded per slide; at the end the narrations and the slides' times are written.
+   * "rehearse" (Neue Anzeigedauern testen) records only the times and asks whether to keep them.
+   */
+  async startRecording(from: number, mode: "record" | "rehearse" = "record"): Promise<void> {
+    if (this.show) return;
+    const rec = await import("./record");
+    let camera = false;
+    if (mode === "record") {
+      const pick = await showDialog({ title: "Aufzeichnen", body: h("div", null, "Die Bildschirmpräsentation wird mit Ihrer Stimme aufgezeichnet. Sie können dazu die Kamera einschalten."),
+        buttons: [{ label: "Nur Mikrofon", value: "mic", primary: true }, { label: "Mit Kamera", value: "cam" }, { label: "Abbrechen", value: "" }], cancel: "" });
+      if (!pick) return;
+      camera = pick === "cam";
+    }
+    const stream = mode === "record" ? await rec.getStream(camera) : null;
+    if (mode === "record" && !stream) return;
+    const recorder = stream ? new rec.StreamRecorder(stream) : null;
+    const takes: import("./record").Take[] = [];
+    let cur = from, t0 = 0, running = mode === "rehearse", paused = false, pausedMs = 0, pauseAt = 0;
+    if (running) t0 = performance.now();
+    const bar = h("div", { class: "rec-bar" });
+    const time = h("span", { class: "rec-time" }, "0:00");
+    const recBtn = h("button", { class: "rec-btn rec-start", title: "Aufzeichnen" }, "\u25CF Aufzeichnen");
+    const pauseBtn = h("button", { class: "rec-btn", title: "Anhalten", disabled: !running }, "\u275A\u275A Anhalten");
+    const stopBtn = h("button", { class: "rec-btn", title: "Beenden" }, "\u25A0 Beenden");
+    if (mode === "rehearse") recBtn.hidden = true;
+    bar.append(recBtn, pauseBtn, stopBtn, time);
+    if (stream && camera) { const v = h("video", { class: "rec-cam", muted: true, autoplay: true }) as HTMLVideoElement; v.srcObject = stream; bar.append(v); }
+    const cut = async (next: number) => {
+      if (running && !paused) {
+        const ms = performance.now() - t0 - pausedMs;
+        const r = recorder ? await recorder.stop() : {};
+        takes.push({ slide: cur, ms, ...r });
+        if (recorder) recorder.start();
+        t0 = performance.now(); pausedMs = 0;
+      }
+      cur = next;
+    };
+    recBtn.addEventListener("click", (e) => { e.stopPropagation(); if (running) return; running = true; t0 = performance.now(); recorder?.start(); recBtn.classList.add("on"); pauseBtn.removeAttribute("disabled"); });
+    pauseBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (!running) return;
+      paused = !paused;
+      if (paused) { pauseAt = performance.now(); recorder?.pause(); pauseBtn.textContent = "\u25B6 Fortsetzen"; }
+      else { pausedMs += performance.now() - pauseAt; recorder?.resume(); pauseBtn.textContent = "\u275A\u275A Anhalten"; }
+    });
+    const tick = window.setInterval(() => { if (running && !paused) { const s = Math.floor((performance.now() - t0 - pausedMs) / 1000); time.textContent = `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`; } }, 500);
+    for (const b of [recBtn, pauseBtn, stopBtn]) b.addEventListener("mousedown", (e) => e.stopPropagation());
+    const started = this.startShow(from);
+    await new Promise((r) => setTimeout(r, 50));
+    const show = this.show as SlideShow | null;
+    if (!show) { clearInterval(tick); stream?.getTracks().forEach((t) => t.stop()); return; }
+    show.addOverlay(bar);
+    show.onSlideChange = (i) => void cut(i);
+    stopBtn.addEventListener("click", (e) => { e.stopPropagation(); show.end(); });
+    await started;
+    clearInterval(tick);
+    await cut(-1);
+    stream?.getTracks().forEach((t) => t.stop());
+    const kept = takes.filter((t) => t.slide >= 0 && t.ms > 300);
+    if (!kept.length) return;
+    if (mode === "rehearse") {
+      const total = Math.round(kept.reduce((s, t) => s + t.ms, 0) / 1000);
+      const yes = await showDialog({ title: "RaabePresent", body: h("div", null, `Die Bildschirmpräsentation hat insgesamt ${Math.floor(total / 60)}:${String(total % 60).padStart(2, "0")} gedauert. Möchten Sie die neuen Anzeigedauern beibehalten?`),
+        buttons: [{ label: "Ja", value: true, primary: true }, { label: "Nein", value: false }], cancel: false });
+      if (!yes) return;
+    }
+    await rec.saveTakes(this, kept);
+    this.renderAll();
+  }
+
+  /** Bildschirmaufzeichnung and Audio (aufnehmen): a recording put on the current slide as video or audio. */
+  async recordMedia(kind: "screen" | "audio"): Promise<void> {
+    const rec = await import("./record");
+    const stream = await rec.getStream(false, kind === "screen");
+    const slide = this.slidePath();
+    if (!stream || !slide) return;
+    const r = new rec.StreamRecorder(stream);
+    r.start();
+    await showDialog({ title: kind === "screen" ? "Bildschirmaufzeichnung" : "Audio aufnehmen", body: h("div", null, "Die Aufnahme läuft. Zum Beenden auf „Beenden“ klicken."),
+      buttons: [{ label: "Beenden", value: true, primary: true }], cancel: true });
+    const out = await r.stop();
+    stream.getTracks().forEach((t) => t.stop());
+    const poster = await rec.posterPng(kind === "screen" ? "video" : "audio");
+    let id = 0;
+    this.editor.edit(kind === "screen" ? "Bildschirmaufzeichnung" : "Audio aufnehmen", () => {
+      if (kind === "screen" && out.mp4) id = rec.addMediaToSlide(this, slide, out.mp4, "video", { narration: false, poster, name: "Bildschirmaufzeichnung", box: { x: 838200, y: 1325563, w: this.deck.pptx.slideSize.cx - 1676400, h: Math.round((this.deck.pptx.slideSize.cx - 1676400) * 9 / 16) } });
+      else if (out.pcm && out.rate) id = rec.addMediaToSlide(this, slide, rec.wav(out.pcm, out.rate), "audio", { narration: false, poster, name: "Aufgezeichneter Sound" });
+    });
+    if (id) this.editor.select([id]);
+  }
+
   /** Benutzerdefinierte Bildschirmpräsentation: only these slides, in this order. */
   async startCustomShow(slides: number[]): Promise<void> {
     if (!slides.length) return;
@@ -1938,6 +2065,15 @@ export class PresentApp implements EditorHost, PanelHost {
 
   /** Linienstärke for the selected shapes (Formkontur > Stärke, Stiftstärke). */
   setLineWidth(pt: number): void { this.setLine(undefined as unknown as string, pt); }
+
+  /** In SmartArt konvertieren (D-077): the layouts PowerPoint's menu offers, by name, then Weitere SmartArt-Grafiken... */
+  private smartArtConvertMenu(): MenuEntry[] {
+    const names = ["Vertikale Aufzählung", "Vertikale Blockliste", "Vertikale Bildakzentliste", "Zielliste", "Horizontale Aufzählung", "Organigramm", "Hierarchieliste", "Fortlaufende Bildliste", "Radialliste", "Einfacher Kreis",
+      "Vertikale Chevronliste", "Chevronliste", "Fortlaufender Blockprozess", "Einfache Zeitachse", "Einfacher Prozess", "Umgebrochene Bildakzentliste", "Pyramidenliste", "Einfache Matrix", "Einfaches Venn", "Einfaches Ziel"];
+    const conv = (id: string) => void import("./smartart-create").then((m) => m.convertToSmartArt(this, id));
+    return [...names.map((n) => ({ label: n, run: () => void import("./smartart-catalog.gen").then((c) => { const e = c.SMARTART_LAYOUTS.find((x) => x.name === n) ?? c.SMARTART_LAYOUTS[0]; conv(e.id); }) })), "-" as const,
+      { label: "Weitere SmartArt-Grafiken...", run: () => void import("./smartart-create").then((m) => m.chooseLayout().then((e) => { if (e) conv(e.id); })) }];
+  }
 
   private effectsMenu(): MenuEntry[] {
     return shapeEffectsMenu(this);
@@ -2181,7 +2317,7 @@ export class PresentApp implements EditorHost, PanelHost {
       }
       this.menu([{ cmd: "edit.cut" }, { cmd: "edit.copy" }, paste("Ursprüngliche Formatierung beibehalten (U)"), "-",
         { cmd: "text.endEdit" }, "-", { cmd: "font.dialog" }, { cmd: "para.dialog" }, { label: "Aufzählungszeichen", submenu: this.bulletMenu() }, { label: "Nummerierung", submenu: this.numberMenu() },
-        { cmd: "para.smartArt" }, "-", { cmd: "shape.lock" }, { cmd: "insert.link", label: "Link" }, { cmd: "review.synonyms" }, "-",
+        { label: "In SmartArt konvertieren", submenu: () => this.smartArtConvertMenu() }, "-", { cmd: "shape.lock" }, { cmd: "insert.link", label: "Link" }, { cmd: "review.synonyms" }, "-",
         { cmd: "text.effectsDialog" }, { cmd: "draw.format", label: "Form formatieren..." }, { cmd: "review.newComment" }], at2, this.miniBar("text"));
       return;
     }
@@ -2351,6 +2487,27 @@ export class PresentApp implements EditorHost, PanelHost {
     impl("smartart.toText", () => { const v = diagram(); if (v) convertSmartArt(this, v.id, "text"); }, () => !!diagram());
     impl("smartart.toShapes", () => { const v = diagram(); if (v) convertSmartArt(this, v.id, "shapes"); }, () => !!diagram());
     impl("smartart.textPane", () => { const v = this.editor.selectedViews.find((x) => x.frame === "diagram"); if (v) void textPane(this, v.id); }, () => this.editor.selectedViews.some((x) => x.frame === "diagram"));
+    // SmartArt (D-077): the commands work on the selected diagram's last item (the Textbereich edits any).
+    const dg = () => diagram()?.id ?? null;
+    const items = (op: "add" | "addBefore" | "promote" | "demote" | "up" | "down") => () => { const id = dg(); if (id !== null) void import("./smartart-create").then((m) => m.editItems(this, id, op)); };
+    const hasDg = () => dg() !== null;
+    impl("insert.smartArt", () => void import("./smartart-create").then((m) => m.insertSmartArt(this)), () => !!this.slidePath());
+    impl("smartart.addShape", items("add"), hasDg);
+    impl("smartart.addAfter", items("add"), hasDg);
+    impl("smartart.addBefore", items("addBefore"), hasDg);
+    impl("smartart.addAbove", items("promote"), hasDg);
+    impl("smartart.addBelow", () => { const id = dg(); if (id !== null) void import("./smartart-create").then((m) => { m.editItems(this, id, "add"); const id2 = dg(); if (id2 !== null) m.editItems(this, id2, "demote"); }); }, hasDg);
+    impl("smartart.addBullet", () => { const id = dg(); if (id !== null) void import("./smartart-create").then((m) => { m.editItems(this, id, "add"); const id2 = dg(); if (id2 !== null) m.editItems(this, id2, "demote"); }); }, hasDg);
+    impl("smartart.promote", items("promote"), hasDg);
+    impl("smartart.demote", items("demote"), hasDg);
+    impl("smartart.moveUp", items("up"), hasDg);
+    impl("smartart.moveDown", items("down"), hasDg);
+    impl("smartart.rtl", () => {}, () => false);
+    // Start > In SmartArt konvertieren: PowerPoint's 20 layouts of the menu (recorded), then Weitere SmartArt-Grafiken...
+    impl("para.smartArt", () => {}, () => this.editor.selectedViews.length === 1 && !!this.editor.selectedViews[0].text);
+    impl("smartart.layouts", () => {}, hasDg);
+    impl("smartart.colors", () => {}, hasDg);
+    impl("smartart.reset", () => { const id = dg(); if (id !== null) void import("./smartart-create").then((m) => { const d = m.diagramOf(this, id); if (d) m.relayout(this, id, d.items, undefined, "accent1"); }); }, hasDg);
     impl("insert.action", () => import("./links").then((m) => m.actionDialog(this)), () => this.editor.sel.length === 1);
     impl("view.ruler", () => { this.editor.showRuler = !this.editor.showRuler; this.editor.fitZoom(); this.editor.render(); this.updateChrome(); }, () => this.view === "normal", () => this.editor.showRuler);
     impl("draw.arrange", () => {});
@@ -2456,6 +2613,19 @@ export class PresentApp implements EditorHost, PanelHost {
     impl("insert.symbols", () => {}, () => !!this.slidePath());
     impl("insert.video", () => import("./media").then((m) => m.insertMedia(this, "video")), () => !!this.slidePath());
     impl("insert.audio", () => import("./media").then((m) => m.insertMedia(this, "audio")), () => !!this.slidePath());
+    // Aufzeichnen (D-078).
+    const onSlide = () => !!this.slidePath();
+    impl("rec.fromStart", () => this.startRecording(0), onSlide);
+    impl("rec.fromCurrent", () => this.startRecording(this.active.current), onSlide);
+    impl("show.record", () => this.startRecording(this.active.current), onSlide);
+    impl("show.rehearse", () => this.startRecording(0, "rehearse"), onSlide);
+    impl("rec.screen", () => this.recordMedia("screen"), onSlide);
+    impl("insert.screenRecording", () => this.recordMedia("screen"), onSlide);
+    impl("rec.audio", () => this.recordMedia("audio"), onSlide);
+    impl("rec.clear", () => {}, onSlide);
+    impl("rec.preview", () => this.startShow(this.active.current), onSlide);
+    impl("rec.saveShow", () => this.saveAs(), onSlide);
+    impl("rec.video", () => { this.backstage.open?.("export"); }, onSlide);
     impl("insert.media", () => {}, () => !!this.slidePath());
     const tool = () => this.editor.tool;
     const ink = (color: string, width: number, alpha?: number) => () => { this.editor.endText(); this.editor.tool = { kind: "ink", color, width, alpha }; this.editor.render(); this.updateChrome(); };
@@ -2957,7 +3127,10 @@ export class PresentApp implements EditorHost, PanelHost {
         pictures: [{ cmd: "insert.pictureFile" }],
         textBox: [{ cmd: "insert.textBoxH" }, { cmd: "insert.textBoxV" }],
         slideSize: [{ cmd: "design.slide4x3" }, { cmd: "design.slide16x9" }, "-", { cmd: "design.slideCustom" }],
-        showCustom: [], record: [], customShows: () => customShowMenu(this),
+        showCustom: [], customShows: () => customShowMenu(this),
+        record: [{ label: "Von Beginn an...", run: () => void this.startRecording(0) }, { label: "Ab Aktueller Folie...", run: () => void this.startRecording(this.active.current) }],
+        recordClear: [{ label: "Aufzeichnung auf aktueller Folie löschen", run: () => void import("./record").then((m) => m.clearRecording(this, false)) },
+          { label: "Aufzeichnung auf allen Folien löschen", run: () => void import("./record").then((m) => m.clearRecording(this, true)) }],
         transOptions: () => this.transMod?.transitionOptions(this) ?? [], animOptions: () => this.animMod?.animationOptions(this) ?? [], animStart: [{ label: "Beim Klicken", run: () => this.animPane.setStart("clickEffect") }, { label: "Mit Vorherigen", run: () => this.animPane.setStart("withEffect") }, { label: "Nach Vorherigen", run: () => this.animPane.setStart("afterEffect") }],
         colors: () => [...COLOR_SETS.map((c) => ({ label: c.name, run: () => this.applyColorSet(c.name, c.colors) })), "-", { label: "Farben anpassen...", run: () => void this.customColorsDialog() },
           { label: "Farben des Foliendesigns zurücksetzen", disabled: !this.ownDesign(), run: () => { const d = this.ownDesign(); if (d) this.applyColorSet(d.colorName ?? d.name, d.colors as Record<string, string>); } }],
@@ -2980,6 +3153,7 @@ export class PresentApp implements EditorHost, PanelHost {
           return [{ label: "Bei Klick auf", submenu: () => [{ label: "Bei Mausklick (kein Trigger)", checked: cur === null, run: () => this.animMod?.setTrigger(this, null) },
             ...shapes.map((s) => ({ label: s.name, checked: cur === s.id, run: () => this.animMod?.setTrigger(this, s.id) }))] }];
         },
+        smartArtConvert: () => this.smartArtConvertMenu(),
         // Fenster wechseln: the open presentations, numbered as PowerPoint lists its windows.
         windows: () => this.docs.map((d, i) => ({ label: `${i + 1} ${d.name}`, checked: d === this.active, run: () => this.activate(d) })),
         // Bildschirme: the show's monitor and Referentenansicht (D-074).

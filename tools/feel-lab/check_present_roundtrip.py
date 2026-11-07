@@ -79,6 +79,14 @@ SCENARIOS: dict[str, str] = {
         a.editor.enterText(id, undefined, {r:0,c:0}); const m = await import('/src/contextcmds.ts'); m.setShading(a, 'C00000'); a.editor.endText();""",
         "table effects": """p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); a.setCurrent(0); a.insertTable(2, 2); const id = a.deck.view(a.slidePath()).shapes.find(s => s.frame === 'table').id;
         a.editor.select([id]); const m = a.host2().tableEffects(); m[1].submenu()[1].run(); a.editor.enterText(id, undefined, {r:0,c:0}); m[0].submenu()[1].run(); a.editor.endText();""",
+        "narration": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]}]}); const a = p.app; const m = await import('/src/record.ts');
+        const rate = 22050, pcm = new Float32Array(rate * 2); for (let i = 0; i < pcm.length; i++) pcm[i] = Math.sin(i * 0.05) * 0.3;
+        await m.saveTakes(a, [{ slide: 0, ms: 4500, pcm, rate }]);""",
+        "texture": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,300,200]}]}); const a = p.app; a.editor.select([2]); await a.textureFill('oak', 'Eiche');""",
+        "transition sound": """p.newDoc(); const a = p.app; const m = await import('/src/transitions.ts'); a.panel.selected = new Set([0]); m.setTransition(a, 'fade');
+        const it = m.soundMenu(a).find((x) => x.label === 'Applaus'); it.run(); await new Promise(r => setTimeout(r, 500));""",
+        "smartart": """p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); a.setCurrent(0); const m = await import('/src/smartart-create.ts'); const c = await import('/src/smartart-catalog.gen.ts');
+        const e = c.SMARTART_LAYOUTS.find((x) => x.name === 'Einfacher Prozess'); m.createDiagram(a, e, [{text:'Planen',level:0},{text:'Bauen',level:0},{text:'Prüfen',level:0}], { x: 838200, y: 1825625, w: 10515600, h: 4351338 });""",
         "effects pane": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,300,200]}]}); const a = p.app; a.editor.select([2]);
         const secs = () => a.formatPane.spec().sets[0].tabs.find(t => t.id === 'effects').sections(); const c = (i, j) => secs()[i].controls()[j];
         c(0, 0).set(true); c(0, 5).set(90); c(0, 6).set(6); c(2, 0).set(true); c(2, 2).set(10); c(3, 0).set(5); c(4, 0).set('circle'); c(4, 1).set(8); c(5, 0).set(30);""",
@@ -172,6 +180,20 @@ def ppt_shapes(slide) -> list[dict]:
             d["action"] = int(s.ActionSettings(1).Action)
         except Exception:  # noqa: BLE001
             pass
+        try:
+            if int(s.Type) == 16:  # msoMedia
+                d["media"] = {"type": int(s.MediaType), "playOnEntry": int(s.AnimationSettings.PlaySettings.PlayOnEntry), "hide": int(s.AnimationSettings.PlaySettings.HideWhileNotPlaying)}
+        except Exception:  # noqa: BLE001
+            pass
+        try:
+            d["fillType"] = int(s.Fill.Type)
+        except Exception:  # noqa: BLE001
+            pass
+        try:
+            if int(s.HasSmartArt):
+                d["smartart"] = {"layout": str(s.SmartArt.Layout.Name), "texts": [str(s.SmartArt.AllNodes(k).TextFrame2.TextRange.Text) for k in range(1, s.SmartArt.AllNodes.Count + 1)]}
+        except Exception:  # noqa: BLE001
+            pass
         if int(s.Type) == 1:
             try:
                 d["filltype"] = int(s.Fill.Type)
@@ -231,7 +253,8 @@ def ppt_read(pres) -> dict:
                     notes = str(ph.TextFrame.TextRange.Text)
         except Exception:  # noqa: BLE001
             pass
-        slides.append({"comments": int(sl.Comments.Count), "layout": str(sl.CustomLayout.Name), "hidden": bool(sl.SlideShowTransition.Hidden), "transition": int(sl.SlideShowTransition.EntryEffect),
+        slides.append({"comments": int(sl.Comments.Count), "layout": str(sl.CustomLayout.Name), "hidden": bool(sl.SlideShowTransition.Hidden), "transition": int(sl.SlideShowTransition.EntryEffect), "advance": [int(sl.SlideShowTransition.AdvanceOnTime), round(float(sl.SlideShowTransition.AdvanceTime), 1)],
+                       "sound": str(sl.SlideShowTransition.SoundEffect.Name) if int(sl.SlideShowTransition.SoundEffect.Type) else "",
                        "animations": int(sl.TimeLine.MainSequence.Count),
                        "interactive": [int(sl.TimeLine.InteractiveSequences(k).Count) for k in range(1, sl.TimeLine.InteractiveSequences.Count + 1)],
                        "motion": [str(sl.TimeLine.MainSequence(k).Behaviors(1).MotionEffect.Path) for k in range(1, sl.TimeLine.MainSequence.Count + 1) if int(sl.TimeLine.MainSequence(k).Behaviors(1).Type) == 1], "notes": notes, "shapes": ppt_shapes(sl)})
@@ -324,6 +347,18 @@ def check(name: str, r: dict, ours: dict) -> list[str]:
         # The table's shadow visible (msoTrue -1); a cell's ThreeD is not readable through COM (it raises),
         # so the cell bevel is checked by PowerPoint opening the file with it.
         want(t.get("tshadow") == -1, f"shadow {t.get('tshadow')}")
+    elif name == "narration":
+        # A sound (ppMediaTypeSound 2) that plays on entry and hides while not playing; Nach 4.5 s (AdvanceOnTime -1).
+        med = [x.get("media") for x in sh if x.get("media")]
+        want(bool(med) and med[0]["type"] == 2 and med[0]["playOnEntry"] == -1 and med[0]["hide"] == -1 and s0["advance"] == [-1, 4.5], f"media {med} advance {s0['advance']}")
+    elif name == "texture":
+        # msoFillTextured 4 (or msoFillPicture 6 if PowerPoint reads the tile as a picture).
+        want(any(x.get("fillType") in (4, 6) for x in sh), f"fill {[x.get('fillType') for x in sh]}")
+    elif name == "transition sound":
+        want(s0["sound"] in ("applause.wav", "Applaus"), f"sound {s0['sound']!r}")
+    elif name == "smartart":
+        sa = next((x["smartart"] for x in sh if x.get("smartart")), None)
+        want(bool(sa) and sa["layout"] == "Einfacher Prozess" and sa["texts"] == ["Planen", "Bauen", "Prüfen"], f"smartart {sa}")
     elif name == "effects pane":
         # Set through Form formatieren > Effekte: shadow at 90 degrees, 6 pt away (offset 0, 6); glow 10 pt; soft edges 5 pt;
         # top bevel Kreis (msoBevelCircle 3) 8 pt wide; X rotation 30 degrees (lon 1800000), which COM's RotationX

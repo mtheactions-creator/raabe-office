@@ -225,6 +225,9 @@ export class SlideShow {
       if (m.kind === "audio") el.style.cssText = "position:absolute;left:0;bottom:-40px;width:300px;pointer-events:auto";
       el.addEventListener("mousedown", (ev) => ev.stopPropagation());
       r.shapes.get(s.id)?.append(el);
+      // A narration is heard, not seen (PowerPoint hides its icon in the show: showWhenStopped="0").
+      const node = Array.from(root.getElementsByTagNameNS("http://schemas.openxmlformats.org/presentationml/2006/main", "cMediaNode")).find((c) => c.getElementsByTagNameNS("http://schemas.openxmlformats.org/presentationml/2006/main", "spTgt")[0]?.getAttribute("spid") === String(s.id));
+      if (node?.getAttribute("showWhenStopped") === "0") { const box = r.shapes.get(s.id); if (box) { box.style.opacity = "0"; box.style.pointerEvents = "none"; } }
     }
     if (old && transition && tr && tr.kind === "morph" && this.prevView) {
       this.morph(old, r, view, tr.dur);
@@ -237,6 +240,7 @@ export class SlideShow {
     if (!back && seq.auto) this.play(seq.auto);
     else if (back && seq.auto) this.finishStep(seq.auto);
     this.renderPresenter();
+    if (this.onSlideChange && this.history.length > 1 && this.history[this.history.length - 1] !== i) this.onSlideChange(i);
     // Nach: the slide goes on by itself after its time (when nothing waits for a click).
     clearTimeout(this.timer);
     if (tr?.advTm !== undefined && !this.reading && this.setup.useTimings) this.timer = window.setTimeout(() => this.next(), tr.advTm + (tr.dur ?? 0));
@@ -286,6 +290,8 @@ export class SlideShow {
 
   private play(step: Step): void {
     for (const fx of step.effects) this.each(fx.spid, (el) => {
+      // A media call (Wiedergabe, a narration): the shape's video or audio plays (D-078).
+      if (fx.cls === "mediacall") { const m = el.querySelector("video, audio") as HTMLMediaElement | null; if (m && el.ownerDocument === this.doc) window.setTimeout(() => void m.play().catch(() => {}), fx.delay); return; }
       if (fx.path) {
         // An Animationspfad: the shape follows the path (fractions of the slide) and stays at its end.
         const size = this.app.deck.pptx.slideSize, w = size.cx / 9525, hh = size.cy / 9525;
@@ -384,6 +390,10 @@ export class SlideShow {
   }
 
   private unblank(): void { this.blank.hidden = true; }
+
+  /** Aufzeichnen (D-078): told when the show moves to another slide; an overlay (the recording bar) on the presenter's screen. */
+  onSlideChange: ((index: number) => void) | null = null;
+  addOverlay(el: HTMLElement): void { (this.proot ?? this.root).append(el); }
 
   private ended = false;
   end(): void {

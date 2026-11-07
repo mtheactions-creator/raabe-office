@@ -101,7 +101,7 @@ class SlideStage {
     const size = app.deck.pptx.slideSize, W = size.cx / 9525, H = size.cy / 9525;
     for (const act of seg.acts) for (const fx of act.step.effects) {
       const el = this.shapes.get(fx.spid);
-      if (!el) continue;
+      if (!el || fx.cls === "mediacall") continue;
       const kf = fx.path ? samplePath(fx.path).map(([px, py]) => ({ translate: `${px * W}px ${py * H}px` })) : effectKeyframes(fx.cls, fx.effect);
       const a = el.animate(kf, { duration: Math.max(1, fx.dur), fill: "both", easing: fx.path ? "ease-in-out" : "ease-out" });
       a.pause();

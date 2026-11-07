@@ -7,6 +7,7 @@
 import { h, showDialog, type Control, type Tab } from "@raabe/shell";
 import { PptxDom } from "@raabe/ooxml";
 import type { PresentApp } from "./app";
+import * as sc from "./smartart-create";
 
 const { kid, kids } = PptxDom;
 const NS_DGM = "http://schemas.openxmlformats.org/drawingml/2006/diagram";
@@ -59,18 +60,38 @@ function setText(body: Element, text: string): void {
   p.insertBefore(nr, kid(p, "endParaRPr") ?? null);
 }
 
-/** SmartArt-Design > Textbereich: the SmartArt's texts, one line per point. */
+/**
+ * SmartArt-Design > Textbereich (D-077): the items as lines, as PowerPoint's text pane: Eingabe makes a new item,
+ * Tab moves an item a level down and Umschalt+Tab up (shown by its indent). When only texts changed, they go
+ * into the data model and into the drawing's shapes (PowerPoint's own drawing stays); when items were added,
+ * removed or moved between levels, the diagram is laid out again.
+ */
 export async function textPane(app: PresentApp, id: number): Promise<void> {
   const parts = partsOf(app, id);
-  if (!parts) return;
+  const d = sc.diagramOf(app, id);
+  if (!parts || !d) return;
   const pptx = app.deck.pptx;
   const points = textPoints(pptx.doc(parts.data));
-  if (!points.length) return;
-  const inputs = points.map((p) => h("input", { type: "text", value: p.text, style: `width:${320 - p.level * 20}px;margin-left:${p.level * 20}px` }) as HTMLInputElement);
-  const ok = await showDialog({ title: "Text hier eingeben", body: h("div", { class: "form", style: "max-height:420px;overflow:auto" }, ...inputs.map((i) => h("div", null, "• ", i))),
-    buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
+  const TAB = String.fromCharCode(9);
+  const area = h("textarea", { class: "sa-textpane", rows: 12, spellcheck: "true", "aria-label": "Text hier eingeben" }) as HTMLTextAreaElement;
+  area.value = d.items.map((i) => TAB.repeat(i.level) + i.text).join(String.fromCharCode(10));
+  area.addEventListener("keydown", (e) => {
+    if (e.key !== "Tab") return;
+    e.preventDefault();
+    const v = area.value, at = area.selectionStart;
+    const start = v.lastIndexOf(String.fromCharCode(10), at - 1) + 1;
+    if (e.shiftKey) { if (v[start] === TAB) { area.value = v.slice(0, start) + v.slice(start + 1); area.selectionStart = area.selectionEnd = Math.max(start, at - 1); } }
+    else { area.value = v.slice(0, start) + TAB + v.slice(start); area.selectionStart = area.selectionEnd = at + 1; }
+  });
+  const ok = await showDialog({ title: "Text hier eingeben", body: h("div", { class: "form" }, area), buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
   if (!ok) return;
-  const changed = points.map((p, i) => ({ ...p, next: inputs[i].value })).filter((x) => x.next !== x.text);
+  const lines = area.value.split(String.fromCharCode(10));
+  const items = lines.map((l) => { const lvl = /^\t*/.exec(l)![0].length; return { text: l.slice(lvl).trim(), level: lvl }; }).filter((x, _i, all) => x.text || all.length === 1);
+  // Levels never jump by more than one below the item before.
+  items.forEach((it, i) => { it.level = i === 0 ? 0 : Math.min(it.level, items[i - 1].level + 1); });
+  const sameShape = items.length === d.items.length && items.every((it, i) => it.level === d.items[i].level);
+  if (!sameShape) { sc.relayout(app, id, items); return; }
+  const changed = points.map((p, i) => ({ ...p, next: items[i]?.text ?? p.text })).filter((x) => x.next !== x.text);
   if (!changed.length) return;
   const path = app.slidePath()!;
   app.deck.change("SmartArt-Text", [path, parts.data, ...(parts.drawing ? [parts.drawing] : [])], () => {
@@ -81,7 +102,7 @@ export async function textPane(app: PresentApp, id: number): Promise<void> {
       if (!t) { t = PptxDom.fragment(c.pt.ownerDocument, `<dgm:t xmlns:dgm="${NS_DGM}" xmlns:a="${PptxDom.NS_A}"><a:bodyPr/><a:lstStyle/><a:p><a:endParaRPr lang="de-DE"/></a:p></dgm:t>`)[0]; c.pt.append(t); }
       setText(t, c.next);
       // The drawing's shape for a node is one of its presentation points (dgm:pt type "pres" whose prSet names
-      // the node in presAssocID); the one that carries text gets it.
+      // the node in presAssocID), or (our diagrams) the node itself; the one that carries text gets it.
       const mid = c.pt.getAttribute("modelId") ?? "";
       const pres = new Set([mid, ...Array.from(c.pt.ownerDocument.getElementsByTagNameNS(NS_DGM, "pt"))
         .filter((p) => kid(p, "prSet")?.getAttribute("presAssocID") === mid).map((p) => p.getAttribute("modelId") ?? "")]);
@@ -94,15 +115,45 @@ export async function textPane(app: PresentApp, id: number): Promise<void> {
   app.editor.render();
 }
 
-/** SmartArt-Design: the contextual tab, with what works on PowerPoint's SmartArt here (Textbereich). */
+/** SmartArt-Design: the contextual tab as PowerPoint's (D-077). */
 export function smartArtTab(app: PresentApp): Tab {
-  const b = (cmd: string, key: string): Control => ({ type: "button", cmd, key, size: "large" });
+  const b = (cmd: string, key: string, size: "large" | "small" = "large"): Control => ({ type: "button", cmd, key, size });
   void app;
   return {
-    id: "smartartDesign", label: "SmartArt-Design", key: "JS", contextual: true, shrink: [],
-    groups: [{ id: "create", label: "Grafik erstellen", key: "ZE", icon: "slide-text", controls: [b("smartart.textPane", "T")] },
-      { id: "reset", label: "Zurücksetzen", key: "ZZ", icon: "slide-text", controls: [{ type: "dropdown", cmd: "smartart.convert", key: "K", size: "large", menu: [{ cmd: "smartart.toText" }, { cmd: "smartart.toShapes" }] }] }],
+    id: "smartartDesign", label: "SmartArt-Design", key: "JS", contextual: true, shrink: ["styles", "layouts"],
+    groups: [
+      { id: "create", label: "Grafik erstellen", key: "ZE", icon: "slide-text", controls: [
+        { type: "split", cmd: "smartart.addShape", key: "O", size: "large", menu: [{ cmd: "smartart.addAfter" }, { cmd: "smartart.addBefore" }, { cmd: "smartart.addAbove" }, { cmd: "smartart.addBelow" }] },
+        { type: "stack", items: [b("smartart.addBullet", "A1", "small"), b("smartart.textPane", "T", "small"), b("smartart.rtl", "V", "small")] },
+        { type: "stack", items: [b("smartart.promote", "H", "small"), b("smartart.demote", "I", "small")] },
+        { type: "stack", items: [b("smartart.moveUp", "M", "small"), b("smartart.moveDown", "A2", "small")] }] },
+      { id: "layouts", label: "Layouts", key: "ZL", icon: "shapes", controls: [{ type: "dropdown", cmd: "smartart.layouts", key: "L", size: "large", get menu() { return smartArtLayoutMenu(app); } }] },
+      { id: "styles", label: "SmartArt-Formatvorlagen", key: "ZF", icon: "shapes", controls: [{ type: "dropdown", cmd: "smartart.colors", key: "F", size: "large", get menu() { return smartArtColorMenu(app); } }] },
+      { id: "reset", label: "Zurücksetzen", key: "ZZ", icon: "slide-text", controls: [b("smartart.reset", "G"), { type: "dropdown", cmd: "smartart.convert", key: "K", size: "large", menu: [{ cmd: "smartart.toText" }, { cmd: "smartart.toShapes" }] }] }],
   };
+}
+
+/** The selected diagram's id. */
+export const selectedDiagram = (app: PresentApp): number | null => app.editor.selectedViews.find((v) => v.frame === "diagram")?.id ?? null;
+
+/** Layouts: the selected diagram's category's layouts, and Weitere Layouts... (the dialog). */
+function smartArtLayoutMenu(app: PresentApp) {
+  const id = selectedDiagram(app);
+  const d = id !== null ? sc.diagramOf(app, id) : null;
+  const cur = d ? sc.entryById(d.layoutId) : undefined;
+  return [...sc.layoutsFor(cur?.category).map((e) => ({ label: e.name, checked: e.id === cur?.id, run: () => { if (id !== null && d) sc.relayout(app, id, d.items, e.id); } })), "-" as const,
+    { label: "Weitere Layouts...", run: () => void sc.chooseLayout(cur?.id).then((e) => { if (e && id !== null && d) sc.relayout(app, id, d.items, e.id); }) }];
+}
+
+/** Farben ändern: PowerPoint's colour sets by name; the drawing takes the chosen accent. */
+function smartArtColorMenu(app: PresentApp) {
+  const id = selectedDiagram(app);
+  const out: ({ label: string; run: () => void } | { heading: string })[] = [];
+  const set = (scheme: string) => () => { if (id !== null) sc.setColors(app, id, scheme); };
+  out.push({ heading: "Primärdesignfarben" }, { label: "Dunkle 1-Kontur", run: set("dk1-outline") }, { label: "Dunkel 2-Kontur", run: set("dk2-outline") }, { label: "Dunkel 2-Füllung", run: set("dk2") });
+  out.push({ heading: "Bunt" }, { label: "Farbig - Akzentfarben", run: set("colorful") });
+  for (const k of [1, 2, 3, 4, 5, 6]) out.push({ heading: `Akzent ${k}` }, { label: `Farbige Kontur - Akzent ${k}`, run: set(`accent${k}-outline`) }, { label: `Farbige Füllung - Akzent ${k}`, run: set(`accent${k}`) });
+  return out;
 }
 
 /**

@@ -1,0 +1,124 @@
+{
+ "date": "2026-11-07",
+ "sounds": [
+  {
+   "name": "Applaus",
+   "sndAc": "<p:sndAc><p:stSnd><p:snd r:embed=\"rId2\" name=\"applause.wav\"/></p:stSnd></p:sndAc>",
+   "part": "ppt/media/audio1.wav",
+   "bytes": 28074
+  },
+  {
+   "name": "Bombe",
+   "sndAc": "<p:sndAc><p:stSnd><p:snd r:embed=\"rId2\" name=\"bomb.wav\"/></p:stSnd></p:sndAc>",
+   "part": "ppt/media/audio2.wav",
+   "bytes": 194166
+  },
+  {
+   "name": "Brise",
+   "sndAc": "<p:sndAc><p:stSnd><p:snd r:embed=\"rId2\" name=\"breeze.wav\"/></p:stSnd></p:sndAc>",
+   "part": "ppt/media/audio3.wav",
+   "bytes": 4290
+  },
+  {
+   "name": "Explosion",
+   "sndAc": "<p:sndAc><p:stSnd><p:snd r:embed=\"rId2\" name=\"explode.wav\"/></p:stSnd></p:sndAc>",
+   "part": "ppt/media/audio4.wav",
+   "bytes": 23584
+  },
+  {
+   "name": "Glocken",
+   "sndAc": "<p:sndAc><p:stSnd><p:snd r:embed=\"rId2\" name=\"chimes.wav\"/></p:stSnd></p:sndAc>",
+   "part": "ppt/media/audio5.wav",
+   "bytes": 37310
+  },
+  {
+   "name": "Hammer",
+   "sndAc": "<p:sndAc><p:stSnd><p:snd r:embed=\"rId2\" name=\"hammer.wav\"/></p:stSnd></p:sndAc>",
+   "part": "ppt/media/audio6.wav",
+   "bytes": 4028
+  },
+  {
+   "name": "Kamera",
+   "sndAc": "<p:sndAc><p:stSnd><p:snd r:embed=\"rId2\" name=\"camera.wav\"/></p:stSnd></p:sndAc>",
+   "part": "ppt/media/audio7.wav",
+   "bytes": 5524
+  },
+  {
+   "name": "Kasse",
+   "sndAc": "<p:sndAc><p:stSnd><p:snd r:embed=\"rId2\" name=\"cashreg.wav\"/></p:stSnd></p:sndAc>",
+   "part": "ppt/media/audio8.wav",
+   "bytes": 7551
+  },
+  {
+   "name": "Klick",
+   "sndAc": "<p:sndAc><p:stSnd><p:snd r:embed=\"rId2\" name=\"click.wav\"/></p:stSnd></p:sndAc>",
+   "part": "ppt/media/audio9.wav",
+   "bytes": 616
+  },
+  {
+   "name": "Laser",
+   "sndAc": "<p:sndAc><p:stSnd><p:snd r:embed=\"rId2\" name=\"laser.wav\"/></p:stSnd></p:sndAc>",
+   "part": "ppt/media/audio10.wav",
+   "bytes": 1837
+  },
+  {
+   "name": "Münze",
+   "sndAc": "<p:sndAc><p:stSnd><p:snd r:embed=\"rId2\" name=\"coin.wav\"/></p:stSnd></p:sndAc>",
+   "part": "ppt/media/audio11.wav",
+   "bytes": 5564
+  },
+  {
+   "name": "Pfeil",
+   "sndAc": "<p:sndAc><p:stSnd><p:snd r:embed=\"rId2\" name=\"arrow.wav\"/></p:stSnd></p:sndAc>",
+   "part": "ppt/media/audio12.wav",
+   "bytes": 23030
+  },
+  {
+   "name": "Schreibmaschine",
+   "sndAc": "<p:sndAc><p:stSnd><p:snd r:embed=\"rId2\" name=\"type.wav\"/></p:stSnd></p:sndAc>",
+   "part": "ppt/media/audio13.wav",
+   "bytes": 4636
+  },
+  {
+   "name": "Sog",
+   "sndAc": "<p:sndAc><p:stSnd><p:snd r:embed=\"rId2\" name=\"suction.wav\"/></p:stSnd></p:sndAc>",
+   "part": "ppt/media/audio14.wav",
+   "bytes": 5732
+  },
+  {
+   "name": "Spannung",
+   "sndAc": "<p:sndAc><p:stSnd><p:snd r:embed=\"rId2\" name=\"voltage.wav\"/></p:stSnd></p:sndAc>",
+   "part": "ppt/media/audio15.wav",
+   "bytes": 13766
+  },
+  {
+   "name": "Stoß",
+   "sndAc": "<p:sndAc><p:stSnd><p:snd r:embed=\"rId2\" name=\"push.wav\"/></p:stSnd></p:sndAc>",
+   "part": "ppt/media/audio16.wav",
+   "bytes": 15748
+  },
+  {
+   "name": "Trommelwirbel",
+   "sndAc": "<p:sndAc><p:stSnd><p:snd r:embed=\"rId2\" name=\"drumroll.wav\"/></p:stSnd></p:sndAc>",
+   "part": "ppt/media/audio17.wav",
+   "bytes": 19426
+  },
+  {
+   "name": "Wind",
+   "sndAc": "<p:sndAc><p:stSnd><p:snd r:embed=\"rId2\" name=\"wind.wav\"/></p:stSnd></p:sndAc>",
+   "part": "ppt/media/audio18.wav",
+   "bytes": 11140
+  },
+  {
+   "name": "Zischen",
+   "sndAc": "<p:sndAc><p:stSnd><p:snd r:embed=\"rId2\" name=\"whoosh.wav\"/></p:stSnd></p:sndAc>",
+   "part": "ppt/media/audio19.wav",
+   "bytes": 1758
+  }
+ ],
+ "close": {
+  "closed": 1,
+  "quit": true,
+  "left_open": 0
+ }
+}

@@ -2143,3 +2143,64 @@ Package 2 of Step 8b (D-073).
   own pane shows for X-Drehung are to be recorded in a run when the owner is away (the pane needs the UI).
 - **Zellenabschrägung drawn:** a cell's a:cell3D bevel as a light edge at the top left and a shade at the bottom
   right over the bevel's width (inset profiles the other way round). Not yet measured against PowerPoint.
+
+## D-077 RaabePresent: creating SmartArt (2026-11-07)
+
+Package 3 of Step 8b (D-073).
+- **What PowerPoint does with our files (measured):** PowerPoint opens a SmartArt that RaabePresent made and lays
+  it out with its own built-in layout, found by the layout id we write (loTypeId, the layout part's uniqueId),
+  with our items' texts and levels ("Einfache Blockliste", 4 nodes, check_present_smartart.py; round trip
+  "smartart": "Einfacher Prozess" with its three texts). So our parts carry PowerPoint's ids (layout, quick style
+  "simple1", colour set) and our own minimal content; none of PowerPoint's layout definitions is copied.
+- **The parts:** a data model as PowerPoint writes it (document point, one point per item with parTrans and
+  sibTrans, parOf connections ordered by srcOrd), layout, quick style and colours parts, and the drawing part
+  (dsp:drawing) with our engine's shapes, which RaabePresent draws (as it already drew PowerPoint's drawings) and
+  which PowerPoint shows until it lays the diagram out again. Laying a diagram out again keeps its parts.
+- **Our layout engine (smartart-engine.ts):** families of our own (grid, row, column, process, cycle, hierarchy,
+  venn, pyramid, target, radial, matrix). The catalog (smartart-catalog.gen.ts, made by make_smartart_catalog.py)
+  holds for each of PowerPoint's layouts its name, category and id and what PowerPoint's own drawing of it
+  measures (probe_powerpoint_smartart.py: every layout with 3 and with 5 items in a 640 x 360 pt frame, the
+  shapes' boxes): for the measured numbers of items our drawing takes PowerPoint's arrangement (positions and
+  sizes as numbers, not definitions); other numbers, and items with sub-items, are carried over by the family.
+  PowerPoint lists 159 layouts through COM; 146 could be drawn (13 refused by COM).
+- **Measured:** with 3 items 127 of 129 layouts match PowerPoint's boxes (overlap 0.7 or more, mean 0.985); the
+  families' guess for 5 items from the 3 matched 27 of 120 (mean 0.375): PowerPoint's layouts differ too much
+  (some wrap into two rows, some keep their size, some shrink). Hence the arrangements are measured for 1 to 8
+  items (the counts a school diagram has), and the family only goes beyond that.
+- **UI:** Einfügen > SmartArt with "SmartArt-Grafik auswählen" (PowerPoint's categories, pictures drawn by our
+  engine); Start > In SmartArt konvertieren with PowerPoint's 20 entries and Weitere SmartArt-Grafiken...;
+  SmartArt-Design: Form hinzufügen (danach, davor, oberhalb, unterhalb), Aufzählungszeichen hinzufügen,
+  Textbereich (Eingabe makes an item, Tab and Umschalt+Tab change its level; only texts changed: PowerPoint's own
+  drawing stays), Höher/Tiefer stufen, Verschieben vor/nach (on the last item), Layouts, Farben ändern (PowerPoint's
+  colour sets by name and id, our drawing in the accent), Grafik zurücksetzen, Konvertieren. Von rechts nach links
+  and the Schnellformatvorlagen gallery are not built yet.
+
+## D-078 RaabePresent: our own sounds, textures and designs; Aufzeichnen (2026-11-07)
+
+Package 4 of Step 8b (D-073).
+- **Sounds:** the owner left the choice open ("was besser ist"). Chosen: our own sounds, synthesised from noise and
+  tones by tools/sounds/make_sounds.py (no download, no licence to track, rebuilt at any time), one for each of
+  PowerPoint's 19 names, embedded under PowerPoint's file names (applause.wav, type.wav ... measured with
+  probe_powerpoint_sounds.py) as ppt/media/audioN.wav and shared by the slides that use them. PowerPoint reads
+  them (round trip "transition sound"). "Wiederholen bis zum nächsten Sound" now has PowerPoint's label.
+- **Textures:** Fülleffekt > Struktur with PowerPoint's 24 names and our own tiles (tools/textures/make_textures.py,
+  periodic noise, so they repeat without a seam), written as PowerPoint writes textures (a:blipFill with a:tile)
+  and drawn tiled. PowerPoint reads them as a textured fill (round trip "texture").
+- **Designs:** six designs with artwork of our own (vector shapes on the master in the design's colours):
+  Wellenband, Kreisbögen, Keil, Punkteraster, Schräge Streifen, Abendblau. PowerPoint's design artwork is not copied.
+- **Aufzeichnen tab:** PowerPoint's groups and keytips (Cameo, a cloud feature, left out). Von Beginn an / Ab
+  Aktueller Folie (also Bildschirmpräsentation > Aufzeichnen): the show with a recording bar (Aufzeichnen,
+  Anhalten/Fortsetzen, Beenden, the time) and, when chosen, the camera; the microphone is recorded per slide
+  (MediaRecorder, decoded to PCM, saved as WAV), the camera into an MP4 by our own writer (H.264 and AAC from the
+  WebView's encoders). Each recorded slide gets its narration as PowerPoint stores narrations (an audio object
+  that plays on entry and hides while not playing: a mediacall at the main sequence's start and an audio node
+  with isNarration) and its time as Nach, with Anzeigedauern verwenden on. Round trip "narration": PowerPoint
+  reads a sound that plays on entry and hides, and the slide's 4.5 s. Neue Anzeigedauern testen records only the
+  times and asks whether to keep them. Aufzeichnung löschen (this slide, all slides), Bildschirmaufzeichnung
+  (getDisplayMedia, as an MP4 video on the slide), Audio (a recording on the slide), Als Bildschirmpräsentation
+  speichern, In Video (Exportieren). The show now plays a media object's mediacall (narrations at the slide's
+  start) and hides narration icons. Ink drawn while recording is not kept as an animation yet.
+  The microphone and camera need the user's permission in WebView2; recordings stay on the device.
+- **App CSP:** fetch to the app's own files and to blob: and data: URLs, and media from blob: and data:, are now
+  allowed (connect-src, media-src): the sounds, textures and the video export need them; before, media from blob:
+  URLs could not have played in the real app.

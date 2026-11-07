@@ -1,15 +1,13 @@
-"""Probe: SmartArt in PowerPoint's files (Step 8, D-072), in a PowerPoint of our own without a window.
+"""SmartArt as PowerPoint lays it out (Step 8b, D-077). An invisible PowerPoint of our own (only when no
+POWERPNT.EXE runs) lists its SmartArt layouts (name, category, the layout's id) and puts each on a slide of its
+own (a 640 x 360 pt frame), with three top-level items "Eins", "Zwei", "Drei" (and each item's own sub-items
+removed), then saves the presentation and reads PowerPoint's drawing of each (the shapes it made: geometry,
+position, size relative to the frame, and which item's text each carries).
 
-1. Record: a SmartArt per layout (Shapes.AddSmartArt with PowerPoint's own layouts) with three nodes; the
-   parts PowerPoint writes (data model, layout, style, colours, drawing), their sizes and the data model.
-2. Test: the same file with the layout, style and colour parts cut down to their root element with only the
-   uniqueId (no definitions of Microsoft's copied). Does PowerPoint open it, still see a SmartArt with its
-   layout and nodes, and can it draw it (PNG export)?
+    .venv/Scripts/python.exe probe_powerpoint_smartart.py [--limit N]
 
-    python probe_powerpoint_smartart.py
-
-Result: results/<date>-powerpoint-smartart.json (part names, sizes, the data model of one layout, the test
-outcome; no layout definitions). The files stay in captures/smartart/.
+Result: results/<date>-powerpoint-smartart.json (names, ids and numbers only: the layout definitions in the saved
+file are PowerPoint's content and stay in captures/, which is not committed).
 """
 from __future__ import annotations
 
@@ -18,116 +16,119 @@ import json
 import re
 import shutil
 import sys
+import time
 import zipfile
 from pathlib import Path
 
-from feellab.powerpoint import OwnerPowerPointRunning, PowerPointTarget
+from feellab import winapi
+from feellab.powerpoint import PowerPointTarget
+from check_present_screens import display, monitors
 
 HERE = Path(__file__).parent
-CAPT = HERE / "captures" / "smartart"
-LAYOUTS = ["default", "process1", "cycle2", "hierarchy1", "vList2", "radial1"]
+CAP = HERE / "captures" / "smartart"
+FRAME = (40.0, 60.0, 640.0, 360.0)
+TEXTS = ["Eins", "Zwei", "Drei", "Vier", "Fünf", "Sechs", "Sieben", "Acht"]
+COUNT = 3  # items per layout (--items 5 for the second pass)
+EMU = 12700
 
 
-def main() -> int:
-    # Application.SmartArtLayouts needs a visible PowerPoint ("Object does not exist" without one): the probe
-    # shows its window (no input is sent) and therefore takes the real-input lock like the input probes.
-    import tempfile, time
-    lock = Path(tempfile.gettempdir()) / "raabe-real-input.lock"
-    if lock.exists() and time.time() - lock.stat().st_mtime < 1800:
-        print("real-input lock held: try later")
-        return 3
-    lock.write_text(f"step8-probe-smartart {datetime.datetime.now().isoformat(timespec='seconds')}", encoding="utf-8")
+def drawing_shapes(xml: str) -> list[dict]:
+    """The shapes of a drawing part: preset geometry, box (EMU) and text."""
+    out = []
+    for sp in re.findall(r"<dsp:sp\b.*?</dsp:sp>", xml, re.S):
+        off = re.search(r'<a:off x="(-?\d+)" y="(-?\d+)"', sp)
+        ext = re.search(r'<a:ext cx="(\d+)" cy="(\d+)"', sp)
+        prst = re.search(r'prstGeom prst="(\w+)"', sp)
+        rot = re.search(r'<a:xfrm[^>]*rot="(-?\d+)"', sp)
+        text = "".join(re.findall(r"<a:t>([^<]*)</a:t>", sp))
+        if off and ext:
+            out.append({"prst": prst.group(1) if prst else "cust", "x": int(off.group(1)), "y": int(off.group(2)), "w": int(ext.group(1)), "h": int(ext.group(2)),
+                        "rot": int(rot.group(1)) / 60000 if rot else 0, "text": text})
+    return out
+
+
+def main() -> None:
+    global COUNT
+    limit = int(sys.argv[sys.argv.index("--limit") + 1]) if "--limit" in sys.argv else 10_000
+    COUNT = int(sys.argv[sys.argv.index("--items") + 1]) if "--items" in sys.argv else 3
+    suffix = "" if COUNT == 3 else f"-{COUNT}"
+    CAP.mkdir(parents=True, exist_ok=True)
+    out: dict = {"date": datetime.date.today().isoformat(), "frame_pt": FRAME, "layouts": []}
+    # SmartArtLayouts needs a document window: PowerPoint's window goes to the virtual display (D-073), so it never
+    # covers the owner's screen; the display is switched off again at the end.
+    before = monitors()
+    mons = display("extend", 2)
+    virtual = [m for m in mons if m not in before] or mons[1:]
+    t = PowerPointTarget(visible=True, place=False)
+    res = HERE / "results" / f"{out['date']}-powerpoint-smartart{suffix}.json"
     try:
-        return run()
+        first = t.new_presentation(with_window=True, name="smartart")
+        if virtual and t.hwnd:
+            vx, vy, vw, vh = virtual[0]
+            t.app.WindowState = 1
+            winapi.place(t.hwnd, vx, vy, vw, vh)
+        lays = t.app.SmartArtLayouts
+        n = min(int(lays.Count), limit)
+        start = int(sys.argv[sys.argv.index("--start") + 1]) if "--start" in sys.argv else 1
+        if start > 1 and res.exists():
+            out["layouts"] = [x for x in json.loads(res.read_text(encoding="utf-8"))["layouts"] if x["index"] < start]
+        # Batches of 30 layouts per presentation: saved, read and closed before the next (a large presentation
+        # slows PowerPoint down), the results written after each batch.
+        for b0 in range(start, n + 1, 30):
+            pres = t.new_presentation(with_window=True, name=f"smartart{b0}")
+            batch = []
+            for i in range(b0, min(n, b0 + 29) + 1):
+                lay = lays(i)
+                info = {"index": i, "name": str(lay.Name), "id": str(lay.Id), "category": str(lay.Category)}
+                try:
+                    sl = pres.Slides.Add(pres.Slides.Count + 1, 12)  # ppLayoutBlank
+                    sh = sl.Shapes.AddSmartArt(lay, *FRAME)
+                    sa = sh.SmartArt
+                    top = [nd for nd in (sa.AllNodes(k) for k in range(1, sa.AllNodes.Count + 1)) if int(nd.Level) == 1]
+                    info["default_items"] = len(top)
+                    while sa.AllNodes.Count and len(top) > COUNT:
+                        top[-1].Delete(); top = top[:-1]
+                    tries = 0
+                    while len(top) < COUNT and tries < COUNT + 1:
+                        # Some layouts add the new item below another (Nodes.Add): a few tries, then as it is.
+                        tries += 1
+                        sa.Nodes.Add(); top = [nd for nd in (sa.AllNodes(k) for k in range(1, sa.AllNodes.Count + 1)) if int(nd.Level) == 1]
+                    for k in range(sa.AllNodes.Count, 0, -1):
+                        if int(sa.AllNodes(k).Level) > 1:
+                            sa.AllNodes(k).Delete()
+                    for nd, txt in zip(top, TEXTS[:COUNT]):
+                        nd.TextFrame2.TextRange.Text = txt
+                    info["slide"] = int(sl.SlideIndex)
+                except Exception as e:  # noqa: BLE001
+                    info["error"] = str(e)[:160]
+                batch.append(info)
+            path = CAP / f"smartart-probe{suffix}-{b0}.pptx"
+            t.save_copy(pres, path)
+            with zipfile.ZipFile(path) as z:
+                names = set(z.namelist())
+                for info in batch:
+                    if "slide" not in info:
+                        continue
+                    rels = z.read(f"ppt/slides/_rels/slide{info['slide']}.xml.rels").decode()
+                    d = re.search(r'Target="\.\./diagrams/(drawing\d+\.xml)"', rels)
+                    if d and f"ppt/diagrams/{d.group(1)}" in names:
+                        info["shapes"] = drawing_shapes(z.read(f"ppt/diagrams/{d.group(1)}").decode("utf-8"))
+            for i in range(1, pres.Slides.Count + 1):
+                t.export_png(pres, i, CAP / f"smartart{suffix}-{b0 + i - 1}.png", 960)
+            pres.Saved = -1
+            pres.Close()
+            t.own.remove(pres)
+            out["layouts"] += batch
+            res.write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
+            print("batch", b0, "done", flush=True)
+        del first
     finally:
-        lock.unlink(missing_ok=True)
-
-
-def run() -> int:
-    try:
-        ppt = PowerPointTarget(visible=True)
-    except OwnerPowerPointRunning as e:
-        print("skipped:", e)
-        return 2
-    out: dict = {"date": datetime.date.today().isoformat(), "what": "SmartArt parts as PowerPoint writes them, and whether minimal definition parts open", "layouts": []}
-    CAPT.mkdir(parents=True, exist_ok=True)
-    try:
-        app = ppt.app
-        pres = ppt.new_presentation(name="smartart", with_window=True)
-        lay_by_id = {}
-        for i in range(1, app.SmartArtLayouts.Count + 1):
-            lay = app.SmartArtLayouts(i)
-            lay_by_id[str(lay.Id).rsplit("/", 1)[-1]] = (i, str(lay.Name), str(lay.Category))
-        out["layout_count"] = len(lay_by_id)
-        out["layout_names"] = {k: [v[1], v[2]] for k, v in lay_by_id.items()}
-        for n, key in enumerate(LAYOUTS, start=1):
-            slide = pres.Slides.Add(n, 12)
-            if key not in lay_by_id:
-                out["layouts"].append({"key": key, "error": "not found"})
-                continue
-            sh = slide.Shapes.AddSmartArt(app.SmartArtLayouts(lay_by_id[key][0]), 100, 80, 600, 380)
-            nodes = sh.SmartArt.AllNodes
-            texts = []
-            for k in range(1, nodes.Count + 1):
-                nodes(k).TextFrame2.TextRange.Text = f"Punkt {k}"
-                texts.append(f"Punkt {k}")
-            out["layouts"].append({"key": key, "name": lay_by_id[key][1], "category": lay_by_id[key][2], "nodes": nodes.Count, "shape": str(sh.Name)})
-        path = ppt.tmp / "smartart.pptx"
-        ppt.save_copy(pres, path)
-        shutil.copy(path, CAPT / "smartart.pptx")
-        z = zipfile.ZipFile(path)
-        out["parts"] = {n: len(z.read(n)) for n in z.namelist() if "diagram" in n}
-        out["slide1_frame"] = re.search(r"<p:graphicFrame>.*?</p:graphicFrame>", z.read("ppt/slides/slide1.xml").decode("utf-8"), re.S).group(0)
-        out["slide1_rels"] = z.read("ppt/slides/_rels/slide1.xml.rels").decode("utf-8")
-        data1 = next(n for n in z.namelist() if re.match(r"ppt/diagrams/data1\.xml$", n))
-        out["data1"] = z.read(data1).decode("utf-8")
-        out["content_types"] = [m for m in re.findall(r"<Override [^>]*>", z.read("[Content_Types].xml").decode("utf-8")) if "diagram" in m.lower()]
-        # 2. The same file with the definition parts cut down to their uniqueId.
-        cut = ppt.tmp / "smartart-min.pptx"
-        with zipfile.ZipFile(path) as src, zipfile.ZipFile(cut, "w", zipfile.ZIP_DEFLATED) as dst:
-            for item in src.infolist():
-                data = src.read(item.filename)
-                m = re.match(r"ppt/diagrams/(layout|quickStyle|colors)\d+\.xml$", item.filename)
-                if m:
-                    xml = data.decode("utf-8")
-                    root = re.search(r"<(dgm:(?:layoutDef|styleDef|colorsDef))\b([^>]*)>", xml)
-                    attrs = root.group(2)
-                    uid = re.search(r'uniqueId="[^"]*"', attrs)
-                    ns = " ".join(re.findall(r'xmlns(?::\w+)?="[^"]*"', attrs))
-                    data = f'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<{root.group(1)} {ns} {uid.group(0) if uid else ""}/>'.encode("utf-8")
-                dst.writestr(item, data)
-        shutil.copy(cut, CAPT / "smartart-min.pptx")
-        test: dict = {}
-        try:
-            p2 = ppt.open_copy(cut, with_window=False)
-            res = []
-            for n in range(1, p2.Slides.Count + 1):
-                s = p2.Slides(n)
-                for k in range(1, s.Shapes.Count + 1):
-                    sh = s.Shapes(k)
-                    if int(sh.HasSmartArt):
-                        res.append({"slide": n, "layout": str(sh.SmartArt.Layout.Id).rsplit("/", 1)[-1], "nodes": int(sh.SmartArt.AllNodes.Count),
-                                    "texts": [str(sh.SmartArt.AllNodes(i).TextFrame2.TextRange.Text) for i in range(1, sh.SmartArt.AllNodes.Count + 1)]})
-            test["opened"] = True
-            test["smartart"] = res
-            for n in range(1, p2.Slides.Count + 1):
-                ppt.export_png(p2, n, CAPT / f"min-slide{n}.png", width=960)
-            # Saved again by PowerPoint: does it write the definitions back in full?
-            again = ppt.tmp / "smartart-min-saved.pptx"
-            ppt.save_copy(p2, again)
-            z2 = zipfile.ZipFile(again)
-            test["parts_after_save"] = {n: len(z2.read(n)) for n in z2.namelist() if "diagram" in n}
-        except Exception as e:  # noqa: BLE001
-            test["opened"] = False
-            test["error"] = repr(e)[:300]
-        out["minimal_test"] = test
-    finally:
-        print(ppt.close(kill_if_unreachable=True))
-    res = HERE / "results" / f"{out['date']}-powerpoint-smartart.json"
-    res.write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding="utf-8", newline="\n")
-    print("wrote", res.name, json.dumps(out.get("minimal_test", {}))[:600])
-    return 0
+        out["close"] = t.close(kill_if_unreachable=True)
+        display("internal", 1)
+    res.write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
+    ok = sum(1 for x in out["layouts"] if x.get("shapes"))
+    print(f"{len(out['layouts'])} layouts, {ok} with a drawing")
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()

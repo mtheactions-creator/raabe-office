@@ -1,0 +1,7843 @@
+{
+ "date": "2026-11-07",
+ "frame_pt": [
+  40.0,
+  60.0,
+  640.0,
+  360.0
+ ],
+ "layouts": [
+  {
+   "index": 1,
+   "name": "Einfache Blockliste",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/default",
+   "category": "list",
+   "default_items": 5,
+   "slide": 1,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 254000,
+     "y": 0,
+     "w": 7619999,
+     "h": 4572000,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 2,
+   "name": "Alternierende Sechsecke",
+   "id": "urn:microsoft.com/office/officeart/2008/layout/AlternatingHexagons",
+   "category": "list",
+   "default_items": 3,
+   "slide": 2,
+   "shapes": [
+    {
+     "prst": "hexagon",
+     "x": 3594269,
+     "y": 112098,
+     "w": 1693333,
+     "h": 1473200,
+     "rot": 90.0,
+     "text": "Eins"
+    },
+    {
+     "prst": "rect",
+     "x": 5222239,
+     "y": 340698,
+     "w": 1889760,
+     "h": 1016000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "hexagon",
+     "x": 2003213,
+     "y": 112098,
+     "w": 1693333,
+     "h": 1473200,
+     "rot": 90.0,
+     "text": ""
+    },
+    {
+     "prst": "hexagon",
+     "x": 2795693,
+     "y": 1549399,
+     "w": 1693333,
+     "h": 1473200,
+     "rot": 90.0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 1016000,
+     "y": 1778000,
+     "w": 1828800,
+     "h": 1016000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "hexagon",
+     "x": 4386749,
+     "y": 1549399,
+     "w": 1693333,
+     "h": 1473200,
+     "rot": 90.0,
+     "text": ""
+    },
+    {
+     "prst": "hexagon",
+     "x": 3594269,
+     "y": 2986701,
+     "w": 1693333,
+     "h": 1473200,
+     "rot": 90.0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5222239,
+     "y": 3215301,
+     "w": 1889760,
+     "h": 1016000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "hexagon",
+     "x": 2003213,
+     "y": 2986701,
+     "w": 1693333,
+     "h": 1473200,
+     "rot": 90.0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 3,
+   "name": "Bildbeschriftungsliste",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/pList1",
+   "category": "list",
+   "default_items": 4,
+   "slide": 3,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 1909873,
+     "y": 2626,
+     "w": 4308252,
+     "h": 2968385,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 1909873,
+     "y": 2971012,
+     "w": 4308252,
+     "h": 1598361,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 4,
+   "name": "Liste mit Linien",
+   "id": "urn:microsoft.com/office/officeart/2008/layout/LinedList",
+   "category": "hierarchy",
+   "default_items": 1,
+   "slide": 4,
+   "shapes": [
+    {
+     "prst": "line",
+     "x": 0,
+     "y": 0,
+     "w": 8128000,
+     "h": 0,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 0,
+     "y": 0,
+     "w": 8128000,
+     "h": 4572000,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 5,
+   "name": "Vertikale Aufzählung",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/vList2",
+   "category": "list",
+   "default_items": 2,
+   "slide": 5,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 0,
+     "y": 595349,
+     "w": 8128000,
+     "h": 1597050,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "roundRect",
+     "x": 0,
+     "y": 2379599,
+     "w": 8128000,
+     "h": 1597050,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 6,
+   "name": "Vertikale Feldliste",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/list1",
+   "category": "list",
+   "default_items": 3,
+   "slide": 6,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 0,
+     "y": 1946700,
+     "w": 8128000,
+     "h": 1638000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 406400,
+     "y": 987299,
+     "w": 5689600,
+     "h": 1918800,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 7,
+   "name": "Horizontale Aufzählung",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/hList1",
+   "category": "list",
+   "default_items": 3,
+   "slide": 7,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 2540,
+     "y": 824459,
+     "w": 2476500,
+     "h": 990600,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "rect",
+     "x": 2540,
+     "y": 1815060,
+     "w": 2476500,
+     "h": 1932480,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2825750,
+     "y": 824459,
+     "w": 2476500,
+     "h": 990600,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2825750,
+     "y": 1815060,
+     "w": 2476500,
+     "h": 1932480,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5648960,
+     "y": 824459,
+     "w": 2476500,
+     "h": 990600,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5648960,
+     "y": 1815060,
+     "w": 2476500,
+     "h": 1932480,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 8,
+   "name": "Liste mit quadratischen Akzenten",
+   "id": "urn:microsoft.com/office/officeart/2008/layout/SquareAccentList",
+   "category": "list",
+   "default_items": 2,
+   "slide": 8,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 2098,
+     "y": 837518,
+     "w": 3962831,
+     "h": 466215,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2098,
+     "y": 1012610,
+     "w": 291123,
+     "h": 291123,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2098,
+     "y": 0,
+     "w": 3962831,
+     "h": 837518,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "rect",
+     "x": 4163070,
+     "y": 837518,
+     "w": 3962831,
+     "h": 466215,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 4163070,
+     "y": 1012610,
+     "w": 291123,
+     "h": 291123,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 4163070,
+     "y": 0,
+     "w": 3962831,
+     "h": 837518,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 9,
+   "name": "Bildakzentliste",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/hList2",
+   "category": "list",
+   "default_items": 3,
+   "slide": 9,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": -1538338,
+     "y": 2348628,
+     "w": 3566160,
+     "h": 391428,
+     "rot": 270.0,
+     "text": "Eins"
+    },
+    {
+     "prst": "rect",
+     "x": 440455,
+     "y": 761262,
+     "w": 1949728,
+     "h": 3566160,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 49027,
+     "y": 244577,
+     "w": 782856,
+     "h": 782856,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 1306055,
+     "y": 2348628,
+     "w": 3566160,
+     "h": 391428,
+     "rot": 270.0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 3284850,
+     "y": 761262,
+     "w": 1949728,
+     "h": 3566160,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2893421,
+     "y": 244577,
+     "w": 782856,
+     "h": 782856,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 4150450,
+     "y": 2348628,
+     "w": 3566160,
+     "h": 391428,
+     "rot": 270.0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 6129244,
+     "y": 761262,
+     "w": 1949728,
+     "h": 3566160,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5737815,
+     "y": 244577,
+     "w": 782856,
+     "h": 782856,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 10,
+   "name": "Umgebrochene Bildakzentliste",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/bList2",
+   "category": "list",
+   "default_items": 3,
+   "slide": 10,
+   "shapes": [
+    {
+     "prst": "round2SameRect",
+     "x": 1911682,
+     "y": 4543,
+     "w": 3976516,
+     "h": 2968385,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 1911682,
+     "y": 2972929,
+     "w": 3976516,
+     "h": 1276405,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "ellipse",
+     "x": 4824536,
+     "y": 3175675,
+     "w": 1391780,
+     "h": 1391780,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 11,
+   "name": "Gestapelte Liste",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/hList9",
+   "category": "list",
+   "default_items": 2,
+   "slide": 11,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 1355724,
+     "y": 1777775,
+     "w": 2539007,
+     "h": 1693518,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 1587,
+     "y": 1100706,
+     "w": 1692671,
+     "h": 1692671,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "rect",
+     "x": 5587404,
+     "y": 1777775,
+     "w": 2539007,
+     "h": 1693518,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 4233267,
+     "y": 1100706,
+     "w": 1692671,
+     "h": 1692671,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 12,
+   "name": "Vertikale Aktionsliste",
+   "id": "urn:microsoft.com/office/officeart/2024/layout/VerticalActionList",
+   "category": "list",
+   "default_items": 5,
+   "slide": 12,
+   "shapes": [
+    {
+     "prst": "round2SameRect",
+     "x": 4400279,
+     "y": -2853972,
+     "w": 871760,
+     "h": 6583680,
+     "rot": 90.0,
+     "text": "Eins"
+    },
+    {
+     "prst": "round2SameRect",
+     "x": 376919,
+     "y": -374932,
+     "w": 871760,
+     "h": 1625600,
+     "rot": 270.0,
+     "text": "Eins"
+    },
+    {
+     "prst": "round2SameRect",
+     "x": 4400279,
+     "y": -1929906,
+     "w": 871760,
+     "h": 6583680,
+     "rot": 90.0,
+     "text": ""
+    },
+    {
+     "prst": "round2SameRect",
+     "x": 376919,
+     "y": 549133,
+     "w": 871760,
+     "h": 1625600,
+     "rot": 270.0,
+     "text": ""
+    },
+    {
+     "prst": "round2SameRect",
+     "x": 4400279,
+     "y": -1005840,
+     "w": 871760,
+     "h": 6583680,
+     "rot": 90.0,
+     "text": ""
+    },
+    {
+     "prst": "round2SameRect",
+     "x": 376919,
+     "y": 1473199,
+     "w": 871760,
+     "h": 1625600,
+     "rot": 270.0,
+     "text": ""
+    },
+    {
+     "prst": "round2SameRect",
+     "x": 4400279,
+     "y": -81773,
+     "w": 871760,
+     "h": 6583680,
+     "rot": 90.0,
+     "text": ""
+    },
+    {
+     "prst": "round2SameRect",
+     "x": 376919,
+     "y": 2397266,
+     "w": 871760,
+     "h": 1625600,
+     "rot": 270.0,
+     "text": ""
+    },
+    {
+     "prst": "round2SameRect",
+     "x": 4400279,
+     "y": 842292,
+     "w": 871760,
+     "h": 6583680,
+     "rot": 90.0,
+     "text": ""
+    },
+    {
+     "prst": "round2SameRect",
+     "x": 376919,
+     "y": 3321332,
+     "w": 871760,
+     "h": 1625600,
+     "rot": 270.0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 13,
+   "name": "Zunehmender Kreisprozess",
+   "id": "urn:microsoft.com/office/officeart/2008/layout/IncreasingCircleProcess",
+   "category": "list",
+   "default_items": 3,
+   "slide": 13,
+   "shapes": [
+    {
+     "prst": "ellipse",
+     "x": 277,
+     "y": 0,
+     "w": 629221,
+     "h": 629221,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "chord",
+     "x": 63199,
+     "y": 62922,
+     "w": 503377,
+     "h": 503377,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 760587,
+     "y": 0,
+     "w": 1861446,
+     "h": 629221,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "ellipse",
+     "x": 2753121,
+     "y": 0,
+     "w": 629221,
+     "h": 629221,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "chord",
+     "x": 2816044,
+     "y": 62922,
+     "w": 503377,
+     "h": 503377,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 3513431,
+     "y": 0,
+     "w": 1861446,
+     "h": 629221,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 5505965,
+     "y": 0,
+     "w": 629221,
+     "h": 629221,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "chord",
+     "x": 5568888,
+     "y": 62922,
+     "w": 503377,
+     "h": 503377,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 6266275,
+     "y": 0,
+     "w": 1861446,
+     "h": 629221,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 14,
+   "name": "Kreisdiagrammprozess",
+   "id": "urn:microsoft.com/office/officeart/2009/3/layout/PieProcess",
+   "category": "list",
+   "default_items": 3,
+   "slide": 14,
+   "shapes": [
+    {
+     "prst": "chord",
+     "x": 2349500,
+     "y": 0,
+     "w": 1143000,
+     "h": 1143000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "pie",
+     "x": 2463799,
+     "y": 114299,
+     "w": 914400,
+     "h": 914400,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 1035049,
+     "y": 2571750,
+     "w": 3314700,
+     "h": 685800,
+     "rot": 270.0,
+     "text": "Eins"
+    },
+    {
+     "prst": "chord",
+     "x": 3492500,
+     "y": 0,
+     "w": 1143000,
+     "h": 1143000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "pie",
+     "x": 3606800,
+     "y": 114299,
+     "w": 914400,
+     "h": 914400,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2178049,
+     "y": 2571750,
+     "w": 3314700,
+     "h": 685800,
+     "rot": 270.0,
+     "text": ""
+    },
+    {
+     "prst": "chord",
+     "x": 4635500,
+     "y": 0,
+     "w": 1143000,
+     "h": 1143000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "pie",
+     "x": 4749800,
+     "y": 114299,
+     "w": 914400,
+     "h": 914400,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 3321049,
+     "y": 2571750,
+     "w": 3314700,
+     "h": 685800,
+     "rot": 270.0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 15,
+   "name": "Detaillierter Prozess",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/hProcess7",
+   "category": "process",
+   "default_items": 3,
+   "slide": 15,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 615,
+     "y": 697706,
+     "w": 2647156,
+     "h": 3176587,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "roundRect",
+     "x": 2740421,
+     "y": 697706,
+     "w": 2647156,
+     "h": 3176587,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "flowChartExtract",
+     "x": 2520202,
+     "y": 3222817,
+     "w": 466911,
+     "h": 397073,
+     "rot": 90.0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 5480228,
+     "y": 697706,
+     "w": 2647156,
+     "h": 3176587,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "flowChartExtract",
+     "x": 5260008,
+     "y": 3222817,
+     "w": 466911,
+     "h": 397073,
+     "rot": 90.0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 16,
+   "name": "Gruppierte Liste",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/lProcess2",
+   "category": "list",
+   "default_items": 3,
+   "slide": 16,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 992,
+     "y": 0,
+     "w": 2579687,
+     "h": 4572000,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "roundRect",
+     "x": 2774156,
+     "y": 0,
+     "w": 2579687,
+     "h": 4572000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 5547320,
+     "y": 0,
+     "w": 2579687,
+     "h": 4572000,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 17,
+   "name": "Horizontale Bildliste",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/pList2",
+   "category": "list",
+   "default_items": 3,
+   "slide": 17,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 0,
+     "y": 0,
+     "w": 8128000,
+     "h": 2057400,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 243839,
+     "y": 274320,
+     "w": 7640320,
+     "h": 1508760,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "round2SameRect",
+     "x": 243839,
+     "y": 2057399,
+     "w": 7640320,
+     "h": 2514600,
+     "rot": 180.0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 18,
+   "name": "Fortlaufende Bildliste",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/hList7",
+   "category": "list",
+   "default_items": 3,
+   "slide": 18,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 0,
+     "y": 0,
+     "w": 8128000,
+     "h": 4572000,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "ellipse",
+     "x": 3302762,
+     "y": 274320,
+     "w": 1522476,
+     "h": 1522476,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "leftRightArrow",
+     "x": 325119,
+     "y": 3657600,
+     "w": 7477760,
+     "h": 685800,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 19,
+   "name": "Bildstreifen",
+   "id": "urn:microsoft.com/office/officeart/2008/layout/PictureStrips",
+   "category": "list",
+   "default_items": 3,
+   "slide": 19,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 325120,
+     "y": 1242906,
+     "w": 7802880,
+     "h": 2438400,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "rect",
+     "x": 0,
+     "y": 890693,
+     "w": 1706880,
+     "h": 2560320,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 20,
+   "name": "Vertikale Bildliste",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/vList4",
+   "category": "list",
+   "default_items": 3,
+   "slide": 20,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 0,
+     "y": 0,
+     "w": 8128000,
+     "h": 1428749,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "roundRect",
+     "x": 142875,
+     "y": 142875,
+     "w": 1625600,
+     "h": 1142999,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 0,
+     "y": 1571624,
+     "w": 8128000,
+     "h": 1428749,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 142875,
+     "y": 1714499,
+     "w": 1625600,
+     "h": 1142999,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 0,
+     "y": 3143249,
+     "w": 8128000,
+     "h": 1428749,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 142875,
+     "y": 3286124,
+     "w": 1625600,
+     "h": 1142999,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 21,
+   "name": "Alternierende Bildblöcke",
+   "id": "urn:microsoft.com/office/officeart/2008/layout/AlternatingPictureBlocks",
+   "category": "picture",
+   "default_items": 3,
+   "slide": 21,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 2682239,
+     "y": 1054484,
+     "w": 5445760,
+     "h": 2463030,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "rect",
+     "x": 0,
+     "y": 1054484,
+     "w": 2438400,
+     "h": 2463030,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 22,
+   "name": "Vertikale Bildakzentliste",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/vList3",
+   "category": "list",
+   "default_items": 3,
+   "slide": 22,
+   "shapes": [
+    {
+     "prst": "homePlate",
+     "x": 2042159,
+     "y": 924559,
+     "w": 5405120,
+     "h": 2722880,
+     "rot": 180.0,
+     "text": "Eins"
+    },
+    {
+     "prst": "ellipse",
+     "x": 680719,
+     "y": 924559,
+     "w": 2722880,
+     "h": 2722880,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 23,
+   "name": "Bildakzentliste mit Titel",
+   "id": "urn:microsoft.com/office/officeart/2008/layout/PictureAccentList",
+   "category": "picture",
+   "default_items": 1,
+   "slide": 23,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 0,
+     "y": 1714500,
+     "w": 8128000,
+     "h": 1143000,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 24,
+   "name": "Vertikale Blockliste",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/vList5",
+   "category": "list",
+   "default_items": 3,
+   "slide": 24,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 2600960,
+     "y": 2232,
+     "w": 2926080,
+     "h": 1473398,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "roundRect",
+     "x": 2600960,
+     "y": 1549300,
+     "w": 2926080,
+     "h": 1473398,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 2600960,
+     "y": 3096369,
+     "w": 2926080,
+     "h": 1473398,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 25,
+   "name": "Vertikale Chevronliste",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/chevron2",
+   "category": "process",
+   "default_items": 3,
+   "slide": 25,
+   "shapes": [
+    {
+     "prst": "chevron",
+     "x": -247798,
+     "y": 249366,
+     "w": 1651992,
+     "h": 1156394,
+     "rot": 90.0,
+     "text": "Eins"
+    },
+    {
+     "prst": "round2SameRect",
+     "x": 4105299,
+     "y": -2947337,
+     "w": 1073794,
+     "h": 6971605,
+     "rot": 90.0,
+     "text": ""
+    },
+    {
+     "prst": "chevron",
+     "x": -247798,
+     "y": 1707802,
+     "w": 1651992,
+     "h": 1156394,
+     "rot": 90.0,
+     "text": ""
+    },
+    {
+     "prst": "round2SameRect",
+     "x": 4105299,
+     "y": -1488901,
+     "w": 1073794,
+     "h": 6971605,
+     "rot": 90.0,
+     "text": ""
+    },
+    {
+     "prst": "chevron",
+     "x": -247798,
+     "y": 3166238,
+     "w": 1651992,
+     "h": 1156394,
+     "rot": 90.0,
+     "text": ""
+    },
+    {
+     "prst": "round2SameRect",
+     "x": 4105299,
+     "y": -30465,
+     "w": 1073794,
+     "h": 6971605,
+     "rot": 90.0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 26,
+   "name": "Liste mit vertikalen Akzenten",
+   "id": "urn:microsoft.com/office/officeart/2008/layout/VerticalAccentList",
+   "category": "list",
+   "default_items": 3,
+   "slide": 26,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 406400,
+     "y": 953192,
+     "w": 7315200,
+     "h": 665018,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "parallelogram",
+     "x": 406400,
+     "y": 1618210,
+     "w": 975360,
+     "h": 162560,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "parallelogram",
+     "x": 1438655,
+     "y": 1618210,
+     "w": 975360,
+     "h": 162560,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "parallelogram",
+     "x": 2470911,
+     "y": 1618210,
+     "w": 975360,
+     "h": 162560,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "parallelogram",
+     "x": 3503168,
+     "y": 1618210,
+     "w": 975360,
+     "h": 162560,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "parallelogram",
+     "x": 4535423,
+     "y": 1618210,
+     "w": 975360,
+     "h": 162560,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "parallelogram",
+     "x": 5567680,
+     "y": 1618210,
+     "w": 975360,
+     "h": 162560,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "parallelogram",
+     "x": 6599936,
+     "y": 1618210,
+     "w": 975360,
+     "h": 162560,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 406400,
+     "y": 1872210,
+     "w": 7315200,
+     "h": 665018,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "parallelogram",
+     "x": 406400,
+     "y": 2537229,
+     "w": 975360,
+     "h": 162560,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "parallelogram",
+     "x": 1438655,
+     "y": 2537229,
+     "w": 975360,
+     "h": 162560,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "parallelogram",
+     "x": 2470911,
+     "y": 2537229,
+     "w": 975360,
+     "h": 162560,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "parallelogram",
+     "x": 3503168,
+     "y": 2537229,
+     "w": 975360,
+     "h": 162560,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "parallelogram",
+     "x": 4535423,
+     "y": 2537229,
+     "w": 975360,
+     "h": 162560,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "parallelogram",
+     "x": 5567680,
+     "y": 2537229,
+     "w": 975360,
+     "h": 162560,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "parallelogram",
+     "x": 6599936,
+     "y": 2537229,
+     "w": 975360,
+     "h": 162560,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 406400,
+     "y": 2791229,
+     "w": 7315200,
+     "h": 665018,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "parallelogram",
+     "x": 406400,
+     "y": 3456247,
+     "w": 975360,
+     "h": 162560,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "parallelogram",
+     "x": 1438655,
+     "y": 3456247,
+     "w": 975360,
+     "h": 162560,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "parallelogram",
+     "x": 2470911,
+     "y": 3456247,
+     "w": 975360,
+     "h": 162560,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "parallelogram",
+     "x": 3503168,
+     "y": 3456247,
+     "w": 975360,
+     "h": 162560,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "parallelogram",
+     "x": 4535423,
+     "y": 3456247,
+     "w": 975360,
+     "h": 162560,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "parallelogram",
+     "x": 5567680,
+     "y": 3456247,
+     "w": 975360,
+     "h": 162560,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "parallelogram",
+     "x": 6599936,
+     "y": 3456247,
+     "w": 975360,
+     "h": 162560,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 27,
+   "name": "Vertikale Pfeilliste",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/vList6",
+   "category": "process",
+   "default_items": 2,
+   "slide": 27,
+   "shapes": [
+    {
+     "prst": "rightArrow",
+     "x": 3251199,
+     "y": 558,
+     "w": 4876800,
+     "h": 2176611,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 0,
+     "y": 558,
+     "w": 3251200,
+     "h": 2176611,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "rightArrow",
+     "x": 3251199,
+     "y": 2394830,
+     "w": 4876800,
+     "h": 2176611,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 0,
+     "y": 2394830,
+     "w": 3251200,
+     "h": 2176611,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 28,
+   "name": "Trapezförmige Liste",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/hList6",
+   "category": "list",
+   "default_items": 3,
+   "slide": 28,
+   "shapes": [
+    {
+     "prst": "flowChartManualOperation",
+     "x": -995164,
+     "y": 996156,
+     "w": 4572000,
+     "h": 2579687,
+     "rot": 270.0,
+     "text": "Eins"
+    },
+    {
+     "prst": "flowChartManualOperation",
+     "x": 1778000,
+     "y": 996156,
+     "w": 4572000,
+     "h": 2579687,
+     "rot": 270.0,
+     "text": ""
+    },
+    {
+     "prst": "flowChartManualOperation",
+     "x": 4551164,
+     "y": 996156,
+     "w": 4572000,
+     "h": 2579687,
+     "rot": 270.0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 29,
+   "name": "Absteigende Blockliste",
+   "id": "urn:microsoft.com/office/officeart/2009/3/layout/BlockDescendingList",
+   "category": "list",
+   "default_items": 3,
+   "slide": 29,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 5129060,
+     "y": 1123340,
+     "w": 1802063,
+     "h": 3428542,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 3165868,
+     "y": 544982,
+     "w": 1802063,
+     "h": 4005072,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 1196875,
+     "y": 0,
+     "w": 1802063,
+     "h": 4550054,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 30,
+   "name": "Symbolkreis-Beschriftungsliste",
+   "id": "urn:microsoft.com/office/officeart/2024/layout/IconCircleLabelList",
+   "category": "list",
+   "default_items": 3,
+   "slide": 30,
+   "shapes": [
+    {
+     "prst": "ellipse",
+     "x": 2966000,
+     "y": 485999,
+     "w": 2196000,
+     "h": 2196000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 3290000,
+     "y": 809999,
+     "w": 1548000,
+     "h": 1548000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2264000,
+     "y": 3366000,
+     "w": 3600000,
+     "h": 720000,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 31,
+   "name": "Tabellenliste",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/hList3",
+   "category": "list",
+   "default_items": 1,
+   "slide": 1,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 0,
+     "y": 0,
+     "w": 8128000,
+     "h": 1371600,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "rect",
+     "x": 0,
+     "y": 1371600,
+     "w": 8128000,
+     "h": 2880360,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 0,
+     "y": 4251960,
+     "w": 8128000,
+     "h": 320040,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 32,
+   "name": "Segmentierter Prozess",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/process4",
+   "category": "process",
+   "default_items": 3,
+   "slide": 2,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 0,
+     "y": 3441586,
+     "w": 8128000,
+     "h": 1129605,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "upArrowCallout",
+     "x": 0,
+     "y": 1721197,
+     "w": 8128000,
+     "h": 1737333,
+     "rot": 180.0,
+     "text": ""
+    },
+    {
+     "prst": "upArrowCallout",
+     "x": 0,
+     "y": 808,
+     "w": 8128000,
+     "h": 1737333,
+     "rot": 180.0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 33,
+   "name": "Liste mit vertikalen Kurven",
+   "id": "urn:microsoft.com/office/officeart/2008/layout/VerticalCurvedList",
+   "category": "list",
+   "default_items": 3,
+   "slide": 3,
+   "shapes": [
+    {
+     "prst": "blockArc",
+     "x": -4753620,
+     "y": -791784,
+     "w": 6155568,
+     "h": 6155568,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 1361946,
+     "y": 1196442,
+     "w": 6766053,
+     "h": 2179114,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "ellipse",
+     "x": 0,
+     "y": 924053,
+     "w": 2723893,
+     "h": 2723893,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 34,
+   "name": "Pyramidenliste",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/pyramid2",
+   "category": "pyramid",
+   "default_items": 3,
+   "slide": 4,
+   "shapes": [
+    {
+     "prst": "triangle",
+     "x": 1435099,
+     "y": 0,
+     "w": 4572000,
+     "h": 4572000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 3721100,
+     "y": 457646,
+     "w": 2971800,
+     "h": 3250406,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 35,
+   "name": "Zielliste",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/target3",
+   "category": "relationship",
+   "default_items": 3,
+   "slide": 5,
+   "shapes": [
+    {
+     "prst": "pie",
+     "x": 0,
+     "y": 0,
+     "w": 4572000,
+     "h": 4572000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2286000,
+     "y": 0,
+     "w": 5842000,
+     "h": 4572000,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "pie",
+     "x": 800101,
+     "y": 1371602,
+     "w": 2971797,
+     "h": 2971797,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2286000,
+     "y": 1371602,
+     "w": 5842000,
+     "h": 2971797,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "pie",
+     "x": 1600200,
+     "y": 2743201,
+     "w": 1371598,
+     "h": 1371598,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2286000,
+     "y": 2743201,
+     "w": 5842000,
+     "h": 1371598,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 36,
+   "name": "Hierarchieliste",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/hierarchy3",
+   "category": "hierarchy",
+   "default_items": 2,
+   "slide": 6,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 992,
+     "y": 1383109,
+     "w": 3611562,
+     "h": 1805781,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "roundRect",
+     "x": 4515445,
+     "y": 1383109,
+     "w": 3611562,
+     "h": 1805781,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 37,
+   "name": "Liste mit vertikalen Kreisakzenten",
+   "id": "urn:microsoft.com/office/officeart/2008/layout/VerticalCircleList",
+   "category": "list",
+   "default_items": 2,
+   "error": "(-2147352567, 'Ausnahmefehler aufgetreten.', (0, None, None, None, 0, -2146827864), None)"
+  },
+  {
+   "index": 38,
+   "name": "Tabellenhierarchie",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/hierarchy4",
+   "category": "hierarchy",
+   "default_items": 1,
+   "slide": 8,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 0,
+     "y": 0,
+     "w": 8128000,
+     "h": 4572000,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 39,
+   "name": "Einfacher Prozess",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/process1",
+   "category": "process",
+   "default_items": 3,
+   "slide": 9,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 3968,
+     "y": 0,
+     "w": 8120062,
+     "h": 4572000,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 40,
+   "name": "Prozess mit aufsteigenden Schritten",
+   "id": "urn:microsoft.com/office/officeart/2009/3/layout/StepUpProcess",
+   "category": "process",
+   "default_items": 3,
+   "slide": 10,
+   "shapes": [
+    {
+     "prst": "corner",
+     "x": 2879573,
+     "y": -247294,
+     "w": 2360980,
+     "h": 3928619,
+     "rot": 90.0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2485466,
+     "y": 926515,
+     "w": 3546779,
+     "h": 3108960,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 41,
+   "name": "Prozess mit absteigenden Schritten",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/StepDownProcess",
+   "category": "process",
+   "default_items": 3,
+   "slide": 11,
+   "shapes": [
+    {
+     "prst": "bentUpArrow",
+     "x": 1733701,
+     "y": 1335797,
+     "w": 1181397,
+     "h": 1344979,
+     "rot": 90.0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 1420702,
+     "y": 26194,
+     "w": 1988778,
+     "h": 1392080,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "rect",
+     "x": 3409480,
+     "y": 158961,
+     "w": 1446447,
+     "h": 1125140,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "bentUpArrow",
+     "x": 3382609,
+     "y": 2899562,
+     "w": 1181397,
+     "h": 1344979,
+     "rot": 90.0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 3069610,
+     "y": 1589959,
+     "w": 1988778,
+     "h": 1392080,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5058389,
+     "y": 1722726,
+     "w": 1446447,
+     "h": 1125140,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 4718519,
+     "y": 3153725,
+     "w": 1988778,
+     "h": 1392080,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 42,
+   "name": "Nummerierter linearer Pfeilprozess",
+   "id": "urn:microsoft.com/office/officeart/2024/layout/NumberedLinearArrowProcess",
+   "category": "process",
+   "default_items": 3,
+   "slide": 12,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 3968,
+     "y": 1033704,
+     "w": 0,
+     "h": 72,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 3492723,
+     "y": 462463,
+     "w": 1142553,
+     "h": 1142553,
+     "rot": 0,
+     "text": "1"
+    },
+    {
+     "prst": "rect",
+     "x": 4063964,
+     "y": 1677016,
+     "w": 72,
+     "h": 657720,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 409971,
+     "y": 2338199,
+     "w": 7308056,
+     "h": 1774800,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 43,
+   "name": "Akzentprozess",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/process3",
+   "category": "process",
+   "default_items": 3,
+   "slide": 13,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 4042,
+     "y": 1083182,
+     "w": 1838086,
+     "h": 1252799,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "roundRect",
+     "x": 380518,
+     "y": 1818417,
+     "w": 1838086,
+     "h": 1670400,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rightArrow",
+     "x": 2120776,
+     "y": 1221984,
+     "w": 590732,
+     "h": 457630,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 2956718,
+     "y": 1083182,
+     "w": 1838086,
+     "h": 1252799,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 3333194,
+     "y": 1818417,
+     "w": 1838086,
+     "h": 1670400,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rightArrow",
+     "x": 5073452,
+     "y": 1221984,
+     "w": 590732,
+     "h": 457630,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 5909394,
+     "y": 1083182,
+     "w": 1838086,
+     "h": 1252799,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 6285870,
+     "y": 1818417,
+     "w": 1838086,
+     "h": 1670400,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 44,
+   "name": "Bildakzentprozess",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/hProcess10",
+   "category": "process",
+   "default_items": 3,
+   "slide": 14,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 4042,
+     "y": 762380,
+     "w": 1904523,
+     "h": 1904523,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 314081,
+     "y": 1905095,
+     "w": 1904523,
+     "h": 1904523,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "rightArrow",
+     "x": 2275419,
+     "y": 1485827,
+     "w": 366853,
+     "h": 457630,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 2956718,
+     "y": 762380,
+     "w": 1904523,
+     "h": 1904523,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 3266757,
+     "y": 1905095,
+     "w": 1904523,
+     "h": 1904523,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rightArrow",
+     "x": 5228095,
+     "y": 1485827,
+     "w": 366853,
+     "h": 457630,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 5909394,
+     "y": 762381,
+     "w": 1904523,
+     "h": 1904523,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 6219433,
+     "y": 1905095,
+     "w": 1904523,
+     "h": 1904523,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 45,
+   "name": "Alternierender Fluss",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/hProcess4",
+   "category": "process",
+   "default_items": 3,
+   "slide": 15,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 2645,
+     "y": 1363853,
+     "w": 2236073,
+     "h": 1844293,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "leftCircularArrow",
+     "x": 1270102,
+     "y": 1842047,
+     "w": 2408447,
+     "h": 2408447,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 499550,
+     "y": 2812940,
+     "w": 1987620,
+     "h": 790411,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "roundRect",
+     "x": 2821736,
+     "y": 1363853,
+     "w": 2236073,
+     "h": 1844293,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "circularArrow",
+     "x": 4070560,
+     "y": 249192,
+     "w": 2694167,
+     "h": 2694167,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 3318642,
+     "y": 968647,
+     "w": 1987620,
+     "h": 790411,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 5640828,
+     "y": 1363853,
+     "w": 2236073,
+     "h": 1844293,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 6137733,
+     "y": 2812940,
+     "w": 1987620,
+     "h": 790411,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 46,
+   "name": "Fortlaufender Blockprozess",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/hProcess9",
+   "category": "process",
+   "default_items": 3,
+   "slide": 16,
+   "shapes": [
+    {
+     "prst": "rightArrow",
+     "x": 609599,
+     "y": 0,
+     "w": 6908800,
+     "h": 4572000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 2844799,
+     "y": 1371599,
+     "w": 2438400,
+     "h": 1828800,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 47,
+   "name": "Zunehmender Pfeilprozess",
+   "id": "urn:microsoft.com/office/officeart/2009/3/layout/IncreasingArrowsProcess",
+   "category": "process",
+   "default_items": 3,
+   "slide": 17,
+   "shapes": [
+    {
+     "prst": "rightArrow",
+     "x": 0,
+     "y": 1299544,
+     "w": 8128000,
+     "h": 1183746,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "rightArrow",
+     "x": 2503423,
+     "y": 1694126,
+     "w": 5624576,
+     "h": 1183746,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rightArrow",
+     "x": 5006848,
+     "y": 2088708,
+     "w": 3121152,
+     "h": 1183746,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 48,
+   "name": "Fortlaufender Pfeilprozess",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/hProcess3",
+   "category": "process",
+   "default_items": 3,
+   "slide": 18,
+   "shapes": [
+    {
+     "prst": "rightArrow",
+     "x": 0,
+     "y": 18000,
+     "w": 8128000,
+     "h": 4536000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 655637,
+     "y": 1152000,
+     "w": 6659562,
+     "h": 2268000,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 49,
+   "name": "Prozesspfeile",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/hProcess6",
+   "category": "process",
+   "default_items": 3,
+   "slide": 19,
+   "shapes": [
+    {
+     "prst": "rightArrow",
+     "x": 527843,
+     "y": 1370134,
+     "w": 2095500,
+     "h": 1831730,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 3968,
+     "y": 1762124,
+     "w": 1047750,
+     "h": 1047750,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "rightArrow",
+     "x": 3278187,
+     "y": 1370134,
+     "w": 2095500,
+     "h": 1831730,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 2754312,
+     "y": 1762124,
+     "w": 1047750,
+     "h": 1047750,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rightArrow",
+     "x": 6028531,
+     "y": 1370134,
+     "w": 2095500,
+     "h": 1831730,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 5504656,
+     "y": 1762124,
+     "w": 1047750,
+     "h": 1047750,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 50,
+   "name": "Aufzählungszeichen-Zeitachse",
+   "id": "urn:microsoft.com/office/officeart/2024/layout/BulletTimeline",
+   "category": "process",
+   "default_items": 5,
+   "slide": 20,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 0,
+     "y": 2263140,
+     "w": 8095488,
+     "h": 45720,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "chevron",
+     "x": 7853680,
+     "y": 2103119,
+     "w": 274320,
+     "h": 365760,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 563335,
+     "y": 1042416,
+     "w": 2147320,
+     "h": 1060704,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 563335,
+     "y": 493775,
+     "w": 2147320,
+     "h": 548640,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "rect",
+     "x": 266172,
+     "y": 457199,
+     "w": 34960,
+     "h": 1828800,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 1916679,
+     "y": 3218688,
+     "w": 2147320,
+     "h": 859535,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 1916679,
+     "y": 2651760,
+     "w": 2147320,
+     "h": 566927,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 1619515,
+     "y": 2286000,
+     "w": 34960,
+     "h": 1828800,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 192755,
+     "y": 2195102,
+     "w": 181794,
+     "h": 181794,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 1546098,
+     "y": 2195102,
+     "w": 181794,
+     "h": 181794,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 3270023,
+     "y": 1042416,
+     "w": 2147320,
+     "h": 1060704,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 3270023,
+     "y": 493775,
+     "w": 2147320,
+     "h": 548640,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2972859,
+     "y": 457199,
+     "w": 34960,
+     "h": 1828800,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 4623367,
+     "y": 3218688,
+     "w": 2147320,
+     "h": 859535,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 4623367,
+     "y": 2651760,
+     "w": 2147320,
+     "h": 566927,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 4326203,
+     "y": 2286000,
+     "w": 34960,
+     "h": 1828800,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 2899442,
+     "y": 2195102,
+     "w": 181794,
+     "h": 181794,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 4252786,
+     "y": 2195102,
+     "w": 181794,
+     "h": 181794,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5976710,
+     "y": 1042416,
+     "w": 2147320,
+     "h": 1060704,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5976710,
+     "y": 493775,
+     "w": 2147320,
+     "h": 548640,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5679547,
+     "y": 457199,
+     "w": 34960,
+     "h": 1828800,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 5606130,
+     "y": 2195102,
+     "w": 181794,
+     "h": 181794,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 51,
+   "name": "Invertierte Aufzählungszeitachse",
+   "id": "urn:microsoft.com/office/officeart/2024/layout/BulletTimelineInverted",
+   "category": "process",
+   "default_items": 5,
+   "slide": 21,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 0,
+     "y": 2263140,
+     "w": 8095488,
+     "h": 45720,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "chevron",
+     "x": 7853680,
+     "y": 2103119,
+     "w": 274320,
+     "h": 365760,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 563335,
+     "y": 1149481,
+     "w": 2147320,
+     "h": 1007921,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 563335,
+     "y": 628142,
+     "w": 2147320,
+     "h": 521338,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "rect",
+     "x": 266172,
+     "y": 593386,
+     "w": 34960,
+     "h": 1703040,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 1916679,
+     "y": 3149604,
+     "w": 2147320,
+     "h": 837754,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 1916679,
+     "y": 2597042,
+     "w": 2147320,
+     "h": 552561,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 1619515,
+     "y": 2276200,
+     "w": 34960,
+     "h": 1746807,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 192755,
+     "y": 503020,
+     "w": 181794,
+     "h": 180730,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 1546098,
+     "y": 3932110,
+     "w": 181794,
+     "h": 181794,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 3270023,
+     "y": 1149481,
+     "w": 2147320,
+     "h": 1007921,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 3270023,
+     "y": 628142,
+     "w": 2147320,
+     "h": 521338,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2972859,
+     "y": 593386,
+     "w": 34960,
+     "h": 1703040,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 4623367,
+     "y": 3149604,
+     "w": 2147320,
+     "h": 837754,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 4623367,
+     "y": 2597042,
+     "w": 2147320,
+     "h": 552561,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 4326203,
+     "y": 2276200,
+     "w": 34960,
+     "h": 1746807,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 2899442,
+     "y": 503020,
+     "w": 181794,
+     "h": 180730,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 4252786,
+     "y": 3932110,
+     "w": 181794,
+     "h": 181794,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5976710,
+     "y": 1149481,
+     "w": 2147320,
+     "h": 1007921,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5976710,
+     "y": 628142,
+     "w": 2147320,
+     "h": 521338,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5679547,
+     "y": 593386,
+     "w": 34960,
+     "h": 1703040,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 5606130,
+     "y": 503020,
+     "w": 181794,
+     "h": 180730,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 52,
+   "name": "Zeitachse mit Kreisakzent",
+   "id": "urn:microsoft.com/office/officeart/2008/layout/CircleAccentTimeline",
+   "category": "process",
+   "default_items": 2,
+   "slide": 22,
+   "shapes": [
+    {
+     "prst": "donut",
+     "x": 2111409,
+     "y": 1822349,
+     "w": 1511602,
+     "h": 1511602,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2644029,
+     "y": 590085,
+     "w": 1879089,
+     "h": 905575,
+     "rot": 295.0,
+     "text": "Eins"
+    },
+    {
+     "prst": "donut",
+     "x": 3736991,
+     "y": 1822349,
+     "w": 1511602,
+     "h": 1511602,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 4269611,
+     "y": 590085,
+     "w": 1879089,
+     "h": 905575,
+     "rot": 295.0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 53,
+   "name": "Einfache Zeitachse",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/hProcess11",
+   "category": "process",
+   "default_items": 3,
+   "slide": 23,
+   "shapes": [
+    {
+     "prst": "notchedRightArrow",
+     "x": 0,
+     "y": 1371599,
+     "w": 8128000,
+     "h": 1828800,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 0,
+     "y": 0,
+     "w": 7315200,
+     "h": 1828800,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "ellipse",
+     "x": 3429000,
+     "y": 2057400,
+     "w": 457200,
+     "h": 457200,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 54,
+   "name": "Einfacher Chevronprozess",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/chevron1",
+   "category": "process",
+   "default_items": 3,
+   "slide": 24,
+   "shapes": [
+    {
+     "prst": "chevron",
+     "x": 0,
+     "y": 660399,
+     "w": 8128000,
+     "h": 3251200,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 55,
+   "name": "Geschlossener Chevronprozess",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/hChevron3",
+   "category": "process",
+   "default_items": 3,
+   "slide": 25,
+   "shapes": [
+    {
+     "prst": "homePlate",
+     "x": 0,
+     "y": 660399,
+     "w": 8128000,
+     "h": 3251200,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 56,
+   "name": "Chevronliste",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/lProcess3",
+   "category": "process",
+   "default_items": 3,
+   "slide": 26,
+   "shapes": [
+    {
+     "prst": "chevron",
+     "x": 2321718,
+     "y": 127,
+     "w": 3484562,
+     "h": 1393824,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "chevron",
+     "x": 2321718,
+     "y": 1589087,
+     "w": 3484562,
+     "h": 1393824,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "chevron",
+     "x": 2321718,
+     "y": 3178047,
+     "w": 3484562,
+     "h": 1393824,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 57,
+   "name": "Unterschrittprozess",
+   "id": "urn:microsoft.com/office/officeart/2009/3/layout/SubStepProcess",
+   "category": "process",
+   "default_items": 3,
+   "slide": 27,
+   "shapes": [
+    {
+     "prst": "ellipse",
+     "x": 1778000,
+     "y": 0,
+     "w": 4572000,
+     "h": 4572000,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 58,
+   "name": "Phasenprozess",
+   "id": "urn:microsoft.com/office/officeart/2009/3/layout/PhasedProcess",
+   "category": "process",
+   "default_items": 3,
+   "slide": 28,
+   "shapes": [
+    {
+     "prst": "blockArc",
+     "x": 206,
+     "y": 850562,
+     "w": 2685891,
+     "h": 2686304,
+     "rot": 90.0,
+     "text": ""
+    },
+    {
+     "prst": "blockArc",
+     "x": 2764539,
+     "y": 850562,
+     "w": 2685891,
+     "h": 2686304,
+     "rot": 270.0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 3082137,
+     "y": 3183880,
+     "w": 2039315,
+     "h": 537350,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "blockArc",
+     "x": 2678382,
+     "y": 850562,
+     "w": 2685891,
+     "h": 2686304,
+     "rot": 90.0,
+     "text": ""
+    },
+    {
+     "prst": "blockArc",
+     "x": 5441902,
+     "y": 850562,
+     "w": 2685891,
+     "h": 2686304,
+     "rot": 270.0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5563616,
+     "y": 3183880,
+     "w": 2039315,
+     "h": 537350,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 504748,
+     "y": 3183880,
+     "w": 2039315,
+     "h": 537350,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 59,
+   "name": "Zufallsergebnisprozess",
+   "id": "urn:microsoft.com/office/officeart/2009/3/layout/RandomtoResultProcess",
+   "category": "process",
+   "default_items": 2,
+   "slide": 29,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 199940,
+     "y": 1866451,
+     "w": 2996774,
+     "h": 987573,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "ellipse",
+     "x": 196535,
+     "y": 1566093,
+     "w": 238379,
+     "h": 238379,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 363400,
+     "y": 1232361,
+     "w": 238379,
+     "h": 238379,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 763879,
+     "y": 1299107,
+     "w": 374596,
+     "h": 374596,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 1097610,
+     "y": 932002,
+     "w": 238379,
+     "h": 238379,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 1531461,
+     "y": 798510,
+     "w": 238379,
+     "h": 238379,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 2065432,
+     "y": 1032122,
+     "w": 238379,
+     "h": 238379,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 2399164,
+     "y": 1198988,
+     "w": 374596,
+     "h": 374596,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 2866388,
+     "y": 1566093,
+     "w": 238379,
+     "h": 238379,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 3066627,
+     "y": 1933197,
+     "w": 238379,
+     "h": 238379,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 1331222,
+     "y": 1232361,
+     "w": 612976,
+     "h": 612976,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 29669,
+     "y": 2500541,
+     "w": 238379,
+     "h": 238379,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 229908,
+     "y": 2800900,
+     "w": 374596,
+     "h": 374596,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 730505,
+     "y": 3067885,
+     "w": 544868,
+     "h": 544868,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 1431342,
+     "y": 3501736,
+     "w": 238379,
+     "h": 238379,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 1564835,
+     "y": 3067885,
+     "w": 374596,
+     "h": 374596,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 1898566,
+     "y": 3535110,
+     "w": 238379,
+     "h": 238379,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 2198925,
+     "y": 3001139,
+     "w": 544868,
+     "h": 544868,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 2933135,
+     "y": 2867646,
+     "w": 374596,
+     "h": 374596,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "chevron",
+     "x": 3307731,
+     "y": 1298552,
+     "w": 1100137,
+     "h": 2100282,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "chevron",
+     "x": 4207844,
+     "y": 1298552,
+     "w": 1100137,
+     "h": 2100282,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 5427996,
+     "y": 1124980,
+     "w": 2550318,
+     "h": 2550318,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 60,
+   "name": "Vertikaler Prozess",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/process2",
+   "category": "process",
+   "default_items": 3,
+   "slide": 30,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 0,
+     "y": 2232,
+     "w": 8128000,
+     "h": 4567535,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 61,
+   "name": "Gestaffelter Prozess",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/vProcess5",
+   "category": "process",
+   "default_items": 3,
+   "error": "(-2147352567, 'Ausnahmefehler aufgetreten.', (0, None, None, None, 0, -2146827864), None)"
+  },
+  {
+   "index": 62,
+   "name": "Prozessliste",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/lProcess1",
+   "category": "process",
+   "default_items": 2,
+   "slide": 2,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 3224,
+     "y": 1811610,
+     "w": 3795117,
+     "h": 948779,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "roundRect",
+     "x": 4329658,
+     "y": 1811610,
+     "w": 3795117,
+     "h": 948779,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 63,
+   "name": "Kreisförmiger Pfeilprozess",
+   "id": "urn:microsoft.com/office/officeart/2009/layout/CircleArrowProcess",
+   "category": "process",
+   "default_items": 3,
+   "slide": 3,
+   "shapes": [
+    {
+     "prst": "circularArrow",
+     "x": 1778508,
+     "y": 0,
+     "w": 4570982,
+     "h": 4572000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2787943,
+     "y": 1655064,
+     "w": 2550650,
+     "h": 1275130,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 64,
+   "name": "Einfacher umgebrochener Prozess",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/process5",
+   "category": "process",
+   "default_items": 5,
+   "slide": 4,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 254000,
+     "y": 0,
+     "w": 7619999,
+     "h": 4572000,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 65,
+   "name": "Wiederholter umgebrochener Prozess",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/bProcess3",
+   "category": "process",
+   "default_items": 5,
+   "slide": 5,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 254000,
+     "y": 0,
+     "w": 7619999,
+     "h": 4572000,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 66,
+   "name": "Vertikaler umgebrochener Prozess",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/bProcess4",
+   "category": "process",
+   "default_items": 9,
+   "slide": 6,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 254000,
+     "y": 0,
+     "w": 7619999,
+     "h": 4572000,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 67,
+   "name": "Aufsteigender Prozess mit Bildakzenten",
+   "id": "urn:microsoft.com/office/officeart/2008/layout/AscendingPictureAccentProcess",
+   "category": "process",
+   "default_items": 2,
+   "slide": 7,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 1952548,
+     "y": 2270455,
+     "w": 5843219,
+     "h": 1567078,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "ellipse",
+     "x": 332231,
+     "y": 734466,
+     "w": 2709062,
+     "h": 2709468,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 68,
+   "name": "Pfeil nach oben",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/arrow2",
+   "category": "process",
+   "default_items": 3,
+   "error": "(-2147352567, 'Ausnahmefehler aufgetreten.', (0, None, None, None, 0, -2146827864), None)"
+  },
+  {
+   "index": 69,
+   "name": "Absteigender Prozess",
+   "id": "urn:microsoft.com/office/officeart/2009/3/layout/DescendingProcess",
+   "category": "process",
+   "default_items": 5,
+   "slide": 9,
+   "shapes": [
+    {
+     "prst": "swooshArrow",
+     "x": 2266611,
+     "y": 909792,
+     "w": 3946821,
+     "h": 2752415,
+     "rot": 73.2729,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2002027,
+     "y": 0,
+     "w": 1860804,
+     "h": 731520,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 70,
+   "name": "Kreisförmiger umgebrochener Prozess",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/bProcess2",
+   "category": "process",
+   "default_items": 9,
+   "error": "(-2147352567, 'Ausnahmefehler aufgetreten.', (0, None, None, None, 0, -2146827864), None)"
+  },
+  {
+   "index": 71,
+   "name": "Formel",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/equation1",
+   "category": "relationship",
+   "default_items": 3,
+   "slide": 11,
+   "shapes": [
+    {
+     "prst": "ellipse",
+     "x": 1778000,
+     "y": 0,
+     "w": 4572000,
+     "h": 4572000,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 72,
+   "name": "Vertikale Formel",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/equation2",
+   "category": "relationship",
+   "default_items": 3,
+   "error": "(-2147352567, 'Ausnahmefehler aufgetreten.', (0, None, None, None, 0, -2146827864), None)"
+  },
+  {
+   "index": 73,
+   "name": "Trichter",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/funnel1",
+   "category": "relationship",
+   "default_items": 4,
+   "error": "(-2147352567, 'Ausnahmefehler aufgetreten.', (0, None, None, None, 0, -2146827864), None)"
+  },
+  {
+   "index": 74,
+   "name": "Zahnrad",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/gear1",
+   "category": "relationship",
+   "default_items": 3,
+   "slide": 14,
+   "shapes": [
+    {
+     "prst": "gear9",
+     "x": 2921000,
+     "y": 1142999,
+     "w": 2514600,
+     "h": 2514600,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "circularArrow",
+     "x": 3047892,
+     "y": 708954,
+     "w": 3092958,
+     "h": 3092958,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 75,
+   "name": "Pfeilband",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/arrow6",
+   "category": "relationship",
+   "default_items": 2,
+   "slide": 15,
+   "shapes": [
+    {
+     "prst": "leftRightRibbon",
+     "x": 0,
+     "y": 660400,
+     "w": 8128000,
+     "h": 3251199,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 975360,
+     "y": 1229360,
+     "w": 2682239,
+     "h": 1593088,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 76,
+   "name": "Entgegengesetzte Pfeile",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/arrow4",
+   "category": "relationship",
+   "default_items": 2,
+   "slide": 16,
+   "shapes": [
+    {
+     "prst": "upArrow",
+     "x": 406806,
+     "y": 0,
+     "w": 2682240,
+     "h": 4572000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 3169513,
+     "y": 0,
+     "w": 4551680,
+     "h": 4572000,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 77,
+   "name": "Zusammenlaufende Pfeile",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/arrow5",
+   "category": "relationship",
+   "default_items": 2,
+   "slide": 17,
+   "shapes": [
+    {
+     "prst": "downArrow",
+     "x": 1778000,
+     "y": 0,
+     "w": 4572000,
+     "h": 4572000,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 78,
+   "name": "Auseinanderlaufende Pfeile",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/arrow1",
+   "category": "relationship",
+   "default_items": 2,
+   "slide": 18,
+   "shapes": [
+    {
+     "prst": "upArrow",
+     "x": 1777999,
+     "y": 0,
+     "w": 4572000,
+     "h": 4572000,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 79,
+   "name": "Einfacher Kreis",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/cycle2",
+   "category": "cycle",
+   "default_items": 5,
+   "slide": 19,
+   "shapes": [
+    {
+     "prst": "ellipse",
+     "x": 1778000,
+     "y": 0,
+     "w": 4572000,
+     "h": 4572000,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 80,
+   "name": "Textkreis",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/cycle1",
+   "category": "cycle",
+   "default_items": 5,
+   "slide": 20,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 1778000,
+     "y": 0,
+     "w": 4572000,
+     "h": 4572000,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 81,
+   "name": "Blockkreis",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/cycle5",
+   "category": "cycle",
+   "default_items": 5,
+   "slide": 21,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 547687,
+     "y": 396,
+     "w": 7032624,
+     "h": 4571206,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 82,
+   "name": "Richtungsloser Kreis",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/cycle6",
+   "category": "cycle",
+   "default_items": 5,
+   "slide": 22,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 547687,
+     "y": 396,
+     "w": 7032624,
+     "h": 4571206,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 83,
+   "name": "Fortlaufender Kreis",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/cycle3",
+   "category": "cycle",
+   "default_items": 5,
+   "error": "(-2147352567, 'Ausnahmefehler aufgetreten.', (0, None, None, None, 0, -2146827864), None)"
+  },
+  {
+   "index": 84,
+   "name": "Kreis mit mehreren Richtungen",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/cycle7",
+   "category": "cycle",
+   "default_items": 3,
+   "slide": 24,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 0,
+     "y": 253999,
+     "w": 8128000,
+     "h": 4064000,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 85,
+   "name": "Segmentierter Kreis",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/cycle8",
+   "category": "cycle",
+   "default_items": 3,
+   "slide": 25,
+   "shapes": [
+    {
+     "prst": "ellipse",
+     "x": 2143759,
+     "y": 365759,
+     "w": 3840480,
+     "h": 3840480,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "circularArrow",
+     "x": 1924015,
+     "y": 127931,
+     "w": 4315968,
+     "h": 4315968,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 86,
+   "name": "Einfaches Kreisdiagramm",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/chart3",
+   "category": "relationship",
+   "default_items": 3,
+   "slide": 26,
+   "shapes": [
+    {
+     "prst": "ellipse",
+     "x": 2143759,
+     "y": 365759,
+     "w": 3840480,
+     "h": 3840480,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 87,
+   "name": "Radialkreis",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/radial6",
+   "category": "cycle",
+   "default_items": 1,
+   "slide": 27,
+   "shapes": [
+    {
+     "prst": "ellipse",
+     "x": 1778000,
+     "y": 0,
+     "w": 4572000,
+     "h": 4572000,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 88,
+   "name": "Einfaches Radial",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/radial1",
+   "category": "relationship",
+   "default_items": 1,
+   "slide": 28,
+   "shapes": [
+    {
+     "prst": "ellipse",
+     "x": 1778000,
+     "y": 0,
+     "w": 4572000,
+     "h": 4572000,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 89,
+   "name": "Auseinanderlaufendes Radial ",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/radial5",
+   "category": "relationship",
+   "default_items": 1,
+   "slide": 29,
+   "shapes": [
+    {
+     "prst": "ellipse",
+     "x": 1778000,
+     "y": 0,
+     "w": 4572000,
+     "h": 4572000,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 90,
+   "name": "Radialvenn",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/radial3",
+   "category": "relationship",
+   "default_items": 1,
+   "slide": 30,
+   "shapes": [
+    {
+     "prst": "ellipse",
+     "x": 1778000,
+     "y": 0,
+     "w": 4572000,
+     "h": 4572000,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 91,
+   "name": "Zyklus-Matrix",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/cycle4",
+   "category": "relationship",
+   "default_items": 4,
+   "slide": 1,
+   "shapes": [
+    {
+     "prst": "pieWedge",
+     "x": 2038603,
+     "y": 260603,
+     "w": 1979676,
+     "h": 1979676,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "pieWedge",
+     "x": 4109720,
+     "y": 260603,
+     "w": 1979676,
+     "h": 1979676,
+     "rot": 90.0,
+     "text": ""
+    },
+    {
+     "prst": "pieWedge",
+     "x": 4109720,
+     "y": 2331719,
+     "w": 1979676,
+     "h": 1979676,
+     "rot": 180.0,
+     "text": ""
+    },
+    {
+     "prst": "pieWedge",
+     "x": 2038603,
+     "y": 2331719,
+     "w": 1979676,
+     "h": 1979676,
+     "rot": 270.0,
+     "text": ""
+    },
+    {
+     "prst": "circularArrow",
+     "x": 3722243,
+     "y": 1874520,
+     "w": 683514,
+     "h": 594360,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "circularArrow",
+     "x": 3722243,
+     "y": 2103119,
+     "w": 683514,
+     "h": 594360,
+     "rot": 180.0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 92,
+   "name": "Radialer Cluster",
+   "id": "urn:microsoft.com/office/officeart/2008/layout/RadialCluster",
+   "category": "relationship",
+   "default_items": 1,
+   "slide": 2,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 1778000,
+     "y": 0,
+     "w": 4572000,
+     "h": 4572000,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 93,
+   "name": "Organigramm",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/orgChart1",
+   "category": "hierarchy",
+   "default_items": 1,
+   "slide": 3,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 992,
+     "y": 254496,
+     "w": 8126015,
+     "h": 4063007,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 94,
+   "name": "Organigramm mit Name und Titel",
+   "id": "urn:microsoft.com/office/officeart/2008/layout/NameandTitleOrganizationalChart",
+   "category": "hierarchy",
+   "default_items": 1,
+   "slide": 4,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 94191,
+     "y": 209847,
+     "w": 7217833,
+     "h": 3737074,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "rect",
+     "x": 1537758,
+     "y": 3116460,
+     "w": 6496050,
+     "h": 1245691,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 95,
+   "name": "Halbkreisorganigramm",
+   "id": "urn:microsoft.com/office/officeart/2008/layout/HalfCircleOrganizationChart",
+   "category": "hierarchy",
+   "default_items": 1,
+   "slide": 5,
+   "shapes": [
+    {
+     "prst": "arc",
+     "x": 2032496,
+     "y": 254496,
+     "w": 4063007,
+     "h": 4063007,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "arc",
+     "x": 2032496,
+     "y": 254496,
+     "w": 4063007,
+     "h": 4063007,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 992,
+     "y": 985837,
+     "w": 8126015,
+     "h": 2600325,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 96,
+   "name": "Bilderhierarchie mit Kreisakzent",
+   "id": "urn:microsoft.com/office/officeart/2009/layout/CirclePictureHierarchy",
+   "category": "hierarchy",
+   "default_items": 1,
+   "slide": 6,
+   "shapes": [
+    {
+     "prst": "ellipse",
+     "x": 0,
+     "y": 701039,
+     "w": 3251200,
+     "h": 3251200,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 3251199,
+     "y": 619759,
+     "w": 4876800,
+     "h": 3251200,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 97,
+   "name": "Hierarchie",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/hierarchy1",
+   "category": "hierarchy",
+   "default_items": 1,
+   "slide": 7,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 635000,
+     "y": 571,
+     "w": 6172199,
+     "h": 3919346,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 1320800,
+     "y": 652081,
+     "w": 6172199,
+     "h": 3919346,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 98,
+   "name": "Beschriftete Hierarchie",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/hierarchy6",
+   "category": "hierarchy",
+   "default_items": 4,
+   "slide": 8,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 638968,
+     "y": 2645,
+     "w": 6850062,
+     "h": 4566708,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 99,
+   "name": "Horizontales Organigramm",
+   "id": "urn:microsoft.com/office/officeart/2009/3/layout/HorizontalOrganizationChart",
+   "category": "hierarchy",
+   "default_items": 1,
+   "slide": 9,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 992,
+     "y": 1046782,
+     "w": 8126015,
+     "h": 2478434,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 100,
+   "name": "Horizontale Hierarchie mit mehreren Ebenen",
+   "id": "urn:microsoft.com/office/officeart/2008/layout/HorizontalMultiLevelHierarchy",
+   "category": "hierarchy",
+   "default_items": 1,
+   "slide": 10,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 1778000,
+     "y": 1851660,
+     "w": 4572000,
+     "h": 868680,
+     "rot": 270.0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 101,
+   "name": "Horizontale Hierarchie",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/hierarchy2",
+   "category": "hierarchy",
+   "default_items": 1,
+   "slide": 11,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 992,
+     "y": 254496,
+     "w": 8126015,
+     "h": 4063007,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 102,
+   "name": "Horizontal beschriftete Hierarchie",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/hierarchy5",
+   "category": "hierarchy",
+   "default_items": 4,
+   "slide": 12,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 992,
+     "y": 254496,
+     "w": 8126015,
+     "h": 4063007,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 103,
+   "name": "Balance",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/balance1",
+   "category": "relationship",
+   "default_items": 2,
+   "slide": 13,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 2052320,
+     "y": 0,
+     "w": 1645920,
+     "h": 914400,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "roundRect",
+     "x": 4429760,
+     "y": 0,
+     "w": 1645920,
+     "h": 914400,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "triangle",
+     "x": 3721100,
+     "y": 3886200,
+     "w": 685800,
+     "h": 685800,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2006600,
+     "y": 3599078,
+     "w": 4114800,
+     "h": 277977,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 104,
+   "name": "Kreisbeziehung",
+   "id": "urn:microsoft.com/office/officeart/2009/3/layout/CircleRelationship",
+   "category": "relationship",
+   "default_items": 1,
+   "slide": 14,
+   "shapes": [
+    {
+     "prst": "ellipse",
+     "x": 1823719,
+     "y": 178307,
+     "w": 3913321,
+     "h": 3913632,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "ellipse",
+     "x": 4056831,
+     "y": 0,
+     "w": 435510,
+     "h": 435254,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 3026302,
+     "y": 3801160,
+     "w": 315431,
+     "h": 315468,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 5988848,
+     "y": 1766620,
+     "w": 315431,
+     "h": 315468,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 4481140,
+     "y": 4136745,
+     "w": 435510,
+     "h": 435254,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 3115465,
+     "y": 618591,
+     "w": 315431,
+     "h": 315468,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 2122125,
+     "y": 2423160,
+     "w": 315431,
+     "h": 315468,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 105,
+   "name": "Sechseckcluster",
+   "id": "urn:microsoft.com/office/officeart/2008/layout/HexagonCluster",
+   "category": "picture",
+   "default_items": 3,
+   "slide": 15,
+   "shapes": [
+    {
+     "prst": "hexagon",
+     "x": 3762763,
+     "y": 1581911,
+     "w": 3472147,
+     "h": 2990088,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "hexagon",
+     "x": 3843304,
+     "y": 2902305,
+     "w": 405242,
+     "h": 349758,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "hexagon",
+     "x": 893089,
+     "y": 0,
+     "w": 3467707,
+     "h": 2989173,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "hexagon",
+     "x": 3240831,
+     "y": 2575407,
+     "w": 405242,
+     "h": 349758,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 106,
+   "name": "Konträre Ansichten",
+   "id": "urn:microsoft.com/office/officeart/2009/3/layout/OpposingIdeas",
+   "category": "relationship",
+   "default_items": 2,
+   "slide": 16,
+   "shapes": [
+    {
+     "prst": "round2DiagRect",
+     "x": 1258392,
+     "y": 777239,
+     "w": 5611215,
+     "h": 3017520,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "line",
+     "x": 4064000,
+     "y": 1097279,
+     "w": 748,
+     "h": 2377440,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rightArrow",
+     "x": -855129,
+     "y": 1178318,
+     "w": 3291840,
+     "h": 935202,
+     "rot": 270.0,
+     "text": "Eins"
+    },
+    {
+     "prst": "rightArrow",
+     "x": 5691289,
+     "y": 2458478,
+     "w": 3291840,
+     "h": 935202,
+     "rot": 90.0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 107,
+   "name": "Pro und Kontra",
+   "id": "urn:microsoft.com/office/officeart/2009/3/layout/PlusandMinus",
+   "category": "relationship",
+   "default_items": 2,
+   "slide": 17,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 731520,
+     "y": 824448,
+     "w": 7071360,
+     "h": 3654435,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 942848,
+     "y": 1251839,
+     "w": 3283712,
+     "h": 3126325,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "rect",
+     "x": 4299712,
+     "y": 1251839,
+     "w": 3283712,
+     "h": 3126325,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "plus",
+     "x": 0,
+     "y": 93115,
+     "w": 1381760,
+     "h": 1381760,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 6827520,
+     "y": 590029,
+     "w": 1300480,
+     "h": 445662,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "line",
+     "x": 4267200,
+     "y": 1258524,
+     "w": 812,
+     "h": 2985941,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 108,
+   "name": "Umgekehrte Liste",
+   "id": "urn:microsoft.com/office/officeart/2009/layout/ReverseList",
+   "category": "relationship",
+   "default_items": 2,
+   "slide": 18,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 2921800,
+     "y": 0,
+     "w": 2284399,
+     "h": 4572000,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 109,
+   "name": "Gegengewichtspfeile",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/arrow3",
+   "category": "relationship",
+   "default_items": 2,
+   "slide": 19,
+   "shapes": [
+    {
+     "prst": "downArrow",
+     "x": 325120,
+     "y": 228600,
+     "w": 3251200,
+     "h": 3657600,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 4064000,
+     "y": 0,
+     "w": 4064000,
+     "h": 4572000,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 110,
+   "name": "Segmentierte Pyramide",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/pyramid4",
+   "category": "pyramid",
+   "default_items": 4,
+   "slide": 20,
+   "shapes": [
+    {
+     "prst": "triangle",
+     "x": 1778000,
+     "y": 0,
+     "w": 4572000,
+     "h": 4572000,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 111,
+   "name": "Geschachteltes Ziel",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/target2",
+   "category": "relationship",
+   "default_items": 3,
+   "slide": 21,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 0,
+     "y": 0,
+     "w": 8128000,
+     "h": 4572000,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "roundRect",
+     "x": 203200,
+     "y": 1143000,
+     "w": 7721600,
+     "h": 3200400,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 406400,
+     "y": 2286000,
+     "w": 7315200,
+     "h": 1828800,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 112,
+   "name": "Zusammenlaufendes Radial",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/radial4",
+   "category": "relationship",
+   "default_items": 1,
+   "slide": 22,
+   "shapes": [
+    {
+     "prst": "ellipse",
+     "x": 1854200,
+     "y": 76200,
+     "w": 4419599,
+     "h": 4419599,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 113,
+   "name": "Radialliste",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/radial2",
+   "category": "relationship",
+   "default_items": 3,
+   "slide": 23,
+   "shapes": [
+    {
+     "prst": "cust",
+     "x": 2808795,
+     "y": 3206010,
+     "w": 688813,
+     "h": 48691,
+     "rot": 42.72326666666667,
+     "text": ""
+    },
+    {
+     "prst": "cust",
+     "x": 2900187,
+     "y": 2261654,
+     "w": 766556,
+     "h": 48691,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "cust",
+     "x": 2808795,
+     "y": 1317298,
+     "w": 688813,
+     "h": 48691,
+     "rot": 317.2767333333333,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 1031303,
+     "y": 1186656,
+     "w": 2198687,
+     "h": 2198687,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 3231183,
+     "y": 856,
+     "w": 1319212,
+     "h": 1319212,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "ellipse",
+     "x": 3666744,
+     "y": 1626393,
+     "w": 1319212,
+     "h": 1319212,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 3231183,
+     "y": 3251930,
+     "w": 1319212,
+     "h": 1319212,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 114,
+   "name": "Einfaches Ziel",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/target1",
+   "category": "relationship",
+   "default_items": 3,
+   "slide": 24,
+   "shapes": [
+    {
+     "prst": "ellipse",
+     "x": 1206499,
+     "y": 1142999,
+     "w": 3429000,
+     "h": 3429000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5207000,
+     "y": 0,
+     "w": 1714500,
+     "h": 1428750,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "line",
+     "x": 4778375,
+     "y": 714374,
+     "w": 428624,
+     "h": 0,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "line",
+     "x": 2776839,
+     "y": 857392,
+     "w": 2144268,
+     "h": 1855946,
+     "rot": 90.0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 115,
+   "name": "Einfaches Venn",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/venn1",
+   "category": "relationship",
+   "default_items": 3,
+   "error": "(-2147352567, 'Ausnahmefehler aufgetreten.', (0, None, None, None, 0, -2146827864), None)"
+  },
+  {
+   "index": 116,
+   "name": "Lineares Venn",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/venn3",
+   "category": "relationship",
+   "default_items": 4,
+   "slide": 26,
+   "shapes": [
+    {
+     "prst": "ellipse",
+     "x": 1778000,
+     "y": 0,
+     "w": 4572000,
+     "h": 4572000,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 117,
+   "name": "Gestapeltes Venn",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/venn2",
+   "category": "relationship",
+   "default_items": 4,
+   "slide": 27,
+   "shapes": [
+    {
+     "prst": "ellipse",
+     "x": 1778000,
+     "y": 0,
+     "w": 4572000,
+     "h": 4572000,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 118,
+   "name": "Einfache Matrix",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/matrix3",
+   "category": "matrix",
+   "default_items": 4,
+   "slide": 28,
+   "shapes": [
+    {
+     "prst": "diamond",
+     "x": 1778000,
+     "y": 0,
+     "w": 4572000,
+     "h": 4572000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 2212339,
+     "y": 434340,
+     "w": 1783080,
+     "h": 1783080,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "roundRect",
+     "x": 4132580,
+     "y": 434340,
+     "w": 1783080,
+     "h": 1783080,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 2212339,
+     "y": 2354580,
+     "w": 1783080,
+     "h": 1783080,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 4132580,
+     "y": 2354580,
+     "w": 1783080,
+     "h": 1783080,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 119,
+   "name": "Betitelte Matrix",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/matrix1",
+   "category": "matrix",
+   "default_items": 1,
+   "slide": 29,
+   "shapes": [
+    {
+     "prst": "round1Rect",
+     "x": 889000,
+     "y": -889000,
+     "w": 2286000,
+     "h": 4064000,
+     "rot": 270.0,
+     "text": ""
+    },
+    {
+     "prst": "round1Rect",
+     "x": 4064000,
+     "y": 0,
+     "w": 4064000,
+     "h": 2286000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "round1Rect",
+     "x": 0,
+     "y": 2286000,
+     "w": 4064000,
+     "h": 2286000,
+     "rot": 180.0,
+     "text": ""
+    },
+    {
+     "prst": "round1Rect",
+     "x": 4952999,
+     "y": 1397000,
+     "w": 2286000,
+     "h": 4064000,
+     "rot": 90.0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 2844799,
+     "y": 1714500,
+     "w": 2438400,
+     "h": 1143000,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 120,
+   "name": "Rastermatrix",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/matrix2",
+   "category": "matrix",
+   "default_items": 4,
+   "slide": 30,
+   "shapes": [
+    {
+     "prst": "quadArrow",
+     "x": 1778000,
+     "y": 0,
+     "w": 4572000,
+     "h": 4572000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 2075180,
+     "y": 297180,
+     "w": 1828800,
+     "h": 1828800,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "roundRect",
+     "x": 4224020,
+     "y": 297180,
+     "w": 1828800,
+     "h": 1828800,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 2075180,
+     "y": 2446019,
+     "w": 1828800,
+     "h": 1828800,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 4224020,
+     "y": 2446019,
+     "w": 1828800,
+     "h": 1828800,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 121,
+   "name": "Einfache Pyramide",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/pyramid1",
+   "category": "pyramid",
+   "default_items": 3,
+   "slide": 1,
+   "shapes": [
+    {
+     "prst": "trapezoid",
+     "x": 0,
+     "y": 0,
+     "w": 8128000,
+     "h": 4572000,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 122,
+   "name": "Invertierte Pyramide",
+   "id": "urn:microsoft.com/office/officeart/2005/8/layout/pyramid3",
+   "category": "pyramid",
+   "default_items": 3,
+   "slide": 2,
+   "shapes": [
+    {
+     "prst": "trapezoid",
+     "x": 0,
+     "y": 0,
+     "w": 8128000,
+     "h": 4572000,
+     "rot": 180.0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 123,
+   "name": "Bild mit Akzenten",
+   "id": "urn:microsoft.com/office/officeart/2008/layout/AccentedPicture",
+   "category": "picture",
+   "default_items": 4,
+   "slide": 3,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 2271776,
+     "y": 0,
+     "w": 3584448,
+     "h": 4572000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2415153,
+     "y": 1828799,
+     "w": 2760024,
+     "h": 2743200,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 124,
+   "name": "Bildlegende mit Kreisakzent",
+   "id": "urn:microsoft.com/office/officeart/2008/layout/CircularPictureCallout",
+   "category": "picture",
+   "default_items": 4,
+   "slide": 4,
+   "shapes": [
+    {
+     "prst": "ellipse",
+     "x": 2032000,
+     "y": 254000,
+     "w": 4064000,
+     "h": 4064000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2763520,
+     "y": 2411984,
+     "w": 2600960,
+     "h": 1341120,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 125,
+   "name": "Momentaufnahmen-Bildliste",
+   "id": "urn:microsoft.com/office/officeart/2009/3/layout/SnapshotPictureList",
+   "category": "picture",
+   "default_items": 1,
+   "slide": 5,
+   "shapes": [
+    {
+     "prst": "frame",
+     "x": 193446,
+     "y": 710355,
+     "w": 5031232,
+     "h": 3580281,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 0,
+     "y": 281363,
+     "w": 4837785,
+     "h": 3386633,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 390144,
+     "y": 3669199,
+     "w": 4641088,
+     "h": 424982,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "rect",
+     "x": 5429504,
+     "y": 710355,
+     "w": 2300224,
+     "h": 3580281,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 126,
+   "name": "Spiralförmige Grafik",
+   "id": "urn:microsoft.com/office/officeart/2009/3/layout/SpiralPicture",
+   "category": "picture",
+   "default_items": 5,
+   "slide": 6,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 600709,
+     "y": 0,
+     "w": 4251960,
+     "h": 4251960,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 4706366,
+     "y": 4105656,
+     "w": 73152,
+     "h": 73152,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 4942098,
+     "y": 0,
+     "w": 2585191,
+     "h": 2585191,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5949812,
+     "y": 2674482,
+     "w": 1577477,
+     "h": 1577477,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 4942098,
+     "y": 3333536,
+     "w": 918423,
+     "h": 918423,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 4942098,
+     "y": 2674482,
+     "w": 918423,
+     "h": 565510,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 6727387,
+     "y": 4375404,
+     "w": 73152,
+     "h": 73152,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 6800540,
+     "y": 4251960,
+     "w": 726750,
+     "h": 320040,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 127,
+   "name": "Bilder mit Beschriftungen",
+   "id": "urn:microsoft.com/office/officeart/2008/layout/CaptionedPictures",
+   "category": "picture",
+   "default_items": 3,
+   "slide": 7,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 3497,
+     "y": 888503,
+     "w": 2375743,
+     "h": 2794992,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 122284,
+     "y": 1000303,
+     "w": 2138169,
+     "h": 1816744,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 122284,
+     "y": 2817048,
+     "w": 2138169,
+     "h": 754647,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "rect",
+     "x": 2876128,
+     "y": 888503,
+     "w": 2375743,
+     "h": 2794992,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2994915,
+     "y": 1000303,
+     "w": 2138169,
+     "h": 1816744,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2994915,
+     "y": 2817048,
+     "w": 2138169,
+     "h": 754647,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5748759,
+     "y": 888503,
+     "w": 2375743,
+     "h": 2794992,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5867546,
+     "y": 1000303,
+     "w": 2138169,
+     "h": 1816744,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5867546,
+     "y": 2817048,
+     "w": 2138169,
+     "h": 754647,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 128,
+   "name": "Umgebrochene Bildbeschriftung",
+   "id": "urn:microsoft.com/office/officeart/2008/layout/BendingPictureCaption",
+   "category": "picture",
+   "default_items": 2,
+   "slide": 8,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 1069339,
+     "y": 0,
+     "w": 5629960,
+     "h": 4160520,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2207310,
+     "y": 3406140,
+     "w": 4851349,
+     "h": 1165860,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 129,
+   "name": "Umgebrochener halbtransparenter Bildtext",
+   "id": "urn:microsoft.com/office/officeart/2008/layout/BendingPictureSemiTransparentText",
+   "category": "picture",
+   "default_items": 3,
+   "slide": 9,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 1396923,
+     "y": 0,
+     "w": 5334152,
+     "h": 4572000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 1396923,
+     "y": 3200400,
+     "w": 5334152,
+     "h": 1097280,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 130,
+   "name": "Umgebrochene Bildblöcke",
+   "id": "urn:microsoft.com/office/officeart/2008/layout/BendingPictureBlocks",
+   "category": "picture",
+   "default_items": 3,
+   "slide": 10,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 2612837,
+     "y": 214857,
+     "w": 4625483,
+     "h": 3890361,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 889679,
+     "y": 1850295,
+     "w": 2506846,
+     "h": 2506846,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 131,
+   "name": "Umgebrochene Bildbeschriftungsliste",
+   "id": "urn:microsoft.com/office/officeart/2008/layout/BendingPictureCaptionList",
+   "category": "picture",
+   "default_items": 3,
+   "slide": 11,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 1778000,
+     "y": 0,
+     "w": 4572000,
+     "h": 3657600,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "wedgeRectCallout",
+     "x": 2189480,
+     "y": 3291840,
+     "w": 4069079,
+     "h": 1280159,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 132,
+   "name": "Titelbildblöcke",
+   "id": "urn:microsoft.com/office/officeart/2008/layout/TitledPictureBlocks",
+   "category": "picture",
+   "default_items": 3,
+   "slide": 12,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 1089120,
+     "y": 385640,
+     "w": 2078383,
+     "h": 1761001,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 1089120,
+     "y": 49855,
+     "w": 2078383,
+     "h": 303237,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "rect",
+     "x": 4251721,
+     "y": 385640,
+     "w": 2078383,
+     "h": 1761001,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 4251721,
+     "y": 49855,
+     "w": 2078383,
+     "h": 303237,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2670421,
+     "y": 2761143,
+     "w": 2078383,
+     "h": 1761001,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2670421,
+     "y": 2425357,
+     "w": 2078383,
+     "h": 303237,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 133,
+   "name": "Bildraster",
+   "id": "urn:microsoft.com/office/officeart/2008/layout/PictureGrid",
+   "category": "picture",
+   "default_items": 4,
+   "slide": 13,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 2333955,
+     "y": 213055,
+     "w": 3460089,
+     "h": 519013,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "rect",
+     "x": 2333955,
+     "y": 898855,
+     "w": 3460089,
+     "h": 3460089,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 134,
+   "name": "Bildakzentblöcke",
+   "id": "urn:microsoft.com/office/officeart/2008/layout/PictureAccentBlocks",
+   "category": "picture",
+   "default_items": 3,
+   "slide": 14,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 3556000,
+     "y": 0,
+     "w": 4572000,
+     "h": 4572000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 812799,
+     "y": 1828800,
+     "w": 4572000,
+     "h": 914400,
+     "rot": 270.0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 135,
+   "name": "Alternierende Bildkreise",
+   "id": "urn:microsoft.com/office/officeart/2008/layout/AlternatingPictureCircles",
+   "category": "picture",
+   "default_items": 3,
+   "slide": 15,
+   "shapes": [
+    {
+     "prst": "donut",
+     "x": 4012829,
+     "y": 229939,
+     "w": 4112301,
+     "h": 4112121,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2869,
+     "y": 373857,
+     "w": 5057732,
+     "h": 3824105,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 4465239,
+     "y": 682252,
+     "w": 3207481,
+     "h": 3207340,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 136,
+   "name": "Titelbildanordnung",
+   "id": "urn:microsoft.com/office/officeart/2008/layout/TitlePictureLineup",
+   "category": "picture",
+   "default_items": 3,
+   "slide": 16,
+   "shapes": [
+    {
+     "prst": "line",
+     "x": 228599,
+     "y": 457200,
+     "w": 0,
+     "h": 4114800,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 342899,
+     "y": 594360,
+     "w": 2164156,
+     "h": 1851660,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 342899,
+     "y": 2446020,
+     "w": 2164156,
+     "h": 2125980,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 228599,
+     "y": 0,
+     "w": 2286000,
+     "h": 457200,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "line",
+     "x": 2921000,
+     "y": 457200,
+     "w": 0,
+     "h": 4114800,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 3035299,
+     "y": 594360,
+     "w": 2164156,
+     "h": 1851660,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 3035299,
+     "y": 2446020,
+     "w": 2164156,
+     "h": 2125980,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2921000,
+     "y": 0,
+     "w": 2286000,
+     "h": 457200,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "line",
+     "x": 5613400,
+     "y": 457200,
+     "w": 0,
+     "h": 4114800,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5727700,
+     "y": 594360,
+     "w": 2164156,
+     "h": 1851660,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5727700,
+     "y": 2446020,
+     "w": 2164156,
+     "h": 2125980,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5613400,
+     "y": 0,
+     "w": 2286000,
+     "h": 457200,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 137,
+   "name": "Bildanordnung",
+   "id": "urn:microsoft.com/office/officeart/2008/layout/PictureLineup",
+   "category": "picture",
+   "default_items": 3,
+   "slide": 17,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 2921000,
+     "y": 0,
+     "w": 2286000,
+     "h": 2286000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "line",
+     "x": 2921000,
+     "y": 0,
+     "w": 228,
+     "h": 4572000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2921000,
+     "y": 2286000,
+     "w": 2286000,
+     "h": 2286000,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 138,
+   "name": "Umrahmte Textgrafik",
+   "id": "urn:microsoft.com/office/officeart/2009/3/layout/FramedTextPicture",
+   "category": "picture",
+   "default_items": 1,
+   "slide": 18,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 594080,
+     "y": 0,
+     "w": 2676001,
+     "h": 1783994,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 3381813,
+     "y": 1895551,
+     "w": 3791233,
+     "h": 2341778,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "halfFrame",
+     "x": 3047313,
+     "y": 1561338,
+     "w": 910506,
+     "h": 910742,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "halfFrame",
+     "x": 6623294,
+     "y": 1561455,
+     "w": 910742,
+     "h": 910506,
+     "rot": 90.0,
+     "text": ""
+    },
+    {
+     "prst": "halfFrame",
+     "x": 3047195,
+     "y": 3661375,
+     "w": 910742,
+     "h": 910506,
+     "rot": 270.0,
+     "text": ""
+    },
+    {
+     "prst": "halfFrame",
+     "x": 6623412,
+     "y": 3661257,
+     "w": 910506,
+     "h": 910742,
+     "rot": 180.0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 139,
+   "name": "Blasenbildliste",
+   "id": "urn:microsoft.com/office/officeart/2008/layout/BubblePictureList",
+   "category": "picture",
+   "default_items": 3,
+   "slide": 19,
+   "shapes": [
+    {
+     "prst": "ellipse",
+     "x": 3510377,
+     "y": 1105052,
+     "w": 3466714,
+     "h": 3466947,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "donut",
+     "x": 7018513,
+     "y": 681685,
+     "w": 1028384,
+     "h": 1028700,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 3631457,
+     "y": 1238554,
+     "w": 3200656,
+     "h": 3200400,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 81102,
+     "y": 0,
+     "w": 5143514,
+     "h": 1028700,
+     "rot": 0,
+     "text": "Eins"
+    }
+   ]
+  },
+  {
+   "index": 140,
+   "name": "Verfahren mit wechselnden Kreisen",
+   "id": "urn:microsoft.com/office/officeart/2024/layout/AlternatingCircleProcess",
+   "category": "timeline",
+   "default_items": 5,
+   "slide": 20,
+   "shapes": [
+    {
+     "prst": "ellipse",
+     "x": 4572804,
+     "y": 1198810,
+     "w": 2174378,
+     "h": 2174378,
+     "rot": 0,
+     "text": "4"
+    },
+    {
+     "prst": "ellipse",
+     "x": 1380816,
+     "y": 1198810,
+     "w": 2174378,
+     "h": 2174378,
+     "rot": 0,
+     "text": "2"
+    },
+    {
+     "prst": "ellipse",
+     "x": 2260,
+     "y": 1416248,
+     "w": 1739503,
+     "h": 1739503,
+     "rot": 0,
+     "text": "1"
+    },
+    {
+     "prst": "roundRect",
+     "x": 837221,
+     "y": 3622809,
+     "w": 69580,
+     "h": 69580,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 866793,
+     "y": 3155751,
+     "w": 10437,
+     "h": 467058,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2260,
+     "y": 3749040,
+     "w": 1739503,
+     "h": 365760,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "roundRect",
+     "x": 2424518,
+     "y": 870912,
+     "w": 86975,
+     "h": 86975,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2461482,
+     "y": 957887,
+     "w": 13046,
+     "h": 240922,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 1380816,
+     "y": 457200,
+     "w": 2174378,
+     "h": 365760,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 3194248,
+     "y": 1416248,
+     "w": 1739503,
+     "h": 1739503,
+     "rot": 0,
+     "text": "3"
+    },
+    {
+     "prst": "roundRect",
+     "x": 4029209,
+     "y": 3622809,
+     "w": 69580,
+     "h": 69580,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 4058781,
+     "y": 3155751,
+     "w": 10437,
+     "h": 467058,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 3194248,
+     "y": 3749040,
+     "w": 1739503,
+     "h": 365760,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 5616506,
+     "y": 870912,
+     "w": 86975,
+     "h": 86975,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5653470,
+     "y": 957887,
+     "w": 13046,
+     "h": 240922,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 4572804,
+     "y": 457200,
+     "w": 2174378,
+     "h": 365760,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 6386236,
+     "y": 1416248,
+     "w": 1739503,
+     "h": 1739503,
+     "rot": 0,
+     "text": "5"
+    },
+    {
+     "prst": "roundRect",
+     "x": 7221198,
+     "y": 3622809,
+     "w": 69580,
+     "h": 69580,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 7250769,
+     "y": 3155751,
+     "w": 10437,
+     "h": 467058,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 6386236,
+     "y": 3749040,
+     "w": 1739503,
+     "h": 365760,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 141,
+   "name": "Nummerierte horizontale Punkte",
+   "id": "urn:microsoft.com/office/officeart/2026/layout/NumberedDotsHorizontal",
+   "category": "timeline",
+   "default_items": 5,
+   "slide": 21,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 409614,
+     "y": 1005840,
+     "w": 1405532,
+     "h": 594360,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "ellipse",
+     "x": 563741,
+     "y": 1645920,
+     "w": 1097280,
+     "h": 1097280,
+     "rot": 0,
+     "text": "1"
+    },
+    {
+     "prst": "rect",
+     "x": 1661021,
+     "y": 2180272,
+     "w": 378529,
+     "h": 28575,
+     "rot": 0,
+     "text": "1"
+    },
+    {
+     "prst": "rect",
+     "x": 1885424,
+     "y": 1005840,
+     "w": 1405532,
+     "h": 594360,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 2039550,
+     "y": 1645920,
+     "w": 1097280,
+     "h": 1097280,
+     "rot": 0,
+     "text": "2"
+    },
+    {
+     "prst": "rect",
+     "x": 3136830,
+     "y": 2180272,
+     "w": 378529,
+     "h": 28575,
+     "rot": 0,
+     "text": "2"
+    },
+    {
+     "prst": "rect",
+     "x": 3361233,
+     "y": 1005840,
+     "w": 1405532,
+     "h": 594360,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 3515359,
+     "y": 1645920,
+     "w": 1097280,
+     "h": 1097280,
+     "rot": 0,
+     "text": "3"
+    },
+    {
+     "prst": "rect",
+     "x": 4612640,
+     "y": 2180272,
+     "w": 378529,
+     "h": 28575,
+     "rot": 0,
+     "text": "3"
+    },
+    {
+     "prst": "rect",
+     "x": 4837043,
+     "y": 1005840,
+     "w": 1405532,
+     "h": 594360,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 4991169,
+     "y": 1645920,
+     "w": 1097280,
+     "h": 1097280,
+     "rot": 0,
+     "text": "4"
+    },
+    {
+     "prst": "rect",
+     "x": 6088449,
+     "y": 2180272,
+     "w": 378529,
+     "h": 28575,
+     "rot": 0,
+     "text": "4"
+    },
+    {
+     "prst": "rect",
+     "x": 6312852,
+     "y": 1005840,
+     "w": 1405532,
+     "h": 594360,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 6466978,
+     "y": 1645920,
+     "w": 1097280,
+     "h": 1097280,
+     "rot": 0,
+     "text": "5"
+    }
+   ]
+  },
+  {
+   "index": 142,
+   "name": "Nummerierte vertikale Punkte",
+   "id": "urn:microsoft.com/office/officeart/2026/layout/NumberedDotsVertical",
+   "category": "timeline",
+   "default_items": 5,
+   "error": "(-2147352567, 'Ausnahmefehler aufgetreten.', (0, None, None, None, 0, -2146827864), None)"
+  },
+  {
+   "index": 143,
+   "name": "Kleine horizontale Punkte",
+   "id": "urn:microsoft.com/office/officeart/2026/layout/SmallDotsHorizontal",
+   "category": "timeline",
+   "default_items": 4,
+   "slide": 23,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 162560,
+     "y": 2186432,
+     "w": 7802880,
+     "h": 16256,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 166465,
+     "y": 448055,
+     "w": 1878330,
+     "h": 1399032,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "ellipse",
+     "x": 1023334,
+     "y": 2112264,
+     "w": 164592,
+     "h": 164592,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2138711,
+     "y": 448055,
+     "w": 1878330,
+     "h": 1399032,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 2995580,
+     "y": 2112264,
+     "w": 164592,
+     "h": 164592,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 4110958,
+     "y": 448055,
+     "w": 1878330,
+     "h": 1399032,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 4967827,
+     "y": 2112264,
+     "w": 164592,
+     "h": 164592,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 6083204,
+     "y": 448055,
+     "w": 1878330,
+     "h": 1399032,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 6940073,
+     "y": 2112264,
+     "w": 164592,
+     "h": 164592,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 144,
+   "name": "Kleine Punkte vertikal",
+   "id": "urn:microsoft.com/office/officeart/2026/layout/SmallDotsVertical",
+   "category": "timeline",
+   "default_items": 4,
+   "slide": 24,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 2796032,
+     "y": 91440,
+     "w": 16256,
+     "h": 4389120,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 0,
+     "y": 92511,
+     "w": 2535936,
+     "h": 985837,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "ellipse",
+     "x": 2735151,
+     "y": 516421,
+     "w": 138017,
+     "h": 138017,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 0,
+     "y": 1226224,
+     "w": 2535936,
+     "h": 985837,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 2735151,
+     "y": 1650134,
+     "w": 138017,
+     "h": 138017,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 0,
+     "y": 2359937,
+     "w": 2535936,
+     "h": 985837,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 2735151,
+     "y": 2783847,
+     "w": 138017,
+     "h": 138017,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 0,
+     "y": 3493650,
+     "w": 2535936,
+     "h": 985837,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 2735151,
+     "y": 3917561,
+     "w": 138017,
+     "h": 138017,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 145,
+   "name": "Das Team kennenlernen",
+   "id": "urn:microsoft.com/office/officeart/2024/layout/MeetTheTeam",
+   "category": "meettheteam",
+   "default_items": 4,
+   "slide": 25,
+   "shapes": [
+    {
+     "prst": "ellipse",
+     "x": 469399,
+     "y": 1151099,
+     "w": 1584000,
+     "h": 1584000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 406399,
+     "y": 2826900,
+     "w": 1710000,
+     "h": 324000,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "rect",
+     "x": 406399,
+     "y": 3150900,
+     "w": 1710000,
+     "h": 270000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 2337799,
+     "y": 1151099,
+     "w": 1584000,
+     "h": 1584000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2274799,
+     "y": 2826900,
+     "w": 1710000,
+     "h": 324000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2274799,
+     "y": 3150900,
+     "w": 1710000,
+     "h": 270000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 4206200,
+     "y": 1151099,
+     "w": 1584000,
+     "h": 1584000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 4143200,
+     "y": 2826900,
+     "w": 1710000,
+     "h": 324000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 4143200,
+     "y": 3150900,
+     "w": 1710000,
+     "h": 270000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 6074600,
+     "y": 1151099,
+     "w": 1584000,
+     "h": 1584000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 6011600,
+     "y": 2826900,
+     "w": 1710000,
+     "h": 324000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 6011600,
+     "y": 3150900,
+     "w": 1710000,
+     "h": 270000,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 146,
+   "name": "Karte zum Kennenlernen des Teams",
+   "id": "urn:microsoft.com/office/officeart/2024/layout/MeetTheTeamCard",
+   "category": "meettheteam",
+   "default_items": 4,
+   "slide": 26,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 13220,
+     "y": 1129091,
+     "w": 3975249,
+     "h": 1097280,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 106489,
+     "y": 1222360,
+     "w": 910742,
+     "h": 910742,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 1198282,
+     "y": 1129091,
+     "w": 2186387,
+     "h": 658368,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "rect",
+     "x": 1198282,
+     "y": 1787459,
+     "w": 2186387,
+     "h": 0,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 4139529,
+     "y": 1129091,
+     "w": 3975249,
+     "h": 1097280,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 4232798,
+     "y": 1222360,
+     "w": 910742,
+     "h": 910742,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5324592,
+     "y": 1129091,
+     "w": 2186387,
+     "h": 658368,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5324592,
+     "y": 1787459,
+     "w": 2186387,
+     "h": 0,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 13220,
+     "y": 2345628,
+     "w": 3975249,
+     "h": 1097280,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 106489,
+     "y": 2438897,
+     "w": 910742,
+     "h": 910742,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 1198282,
+     "y": 2345628,
+     "w": 2186387,
+     "h": 658368,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 1198282,
+     "y": 3003996,
+     "w": 2186387,
+     "h": 0,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 4139529,
+     "y": 2345628,
+     "w": 3975249,
+     "h": 1097280,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 4232798,
+     "y": 2438897,
+     "w": 910742,
+     "h": 910742,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5324592,
+     "y": 2345628,
+     "w": 2186387,
+     "h": 658368,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5324592,
+     "y": 3003996,
+     "w": 2186387,
+     "h": 0,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 147,
+   "name": "Vertikale Karte zum Kennenlernen des Teams",
+   "id": "urn:microsoft.com/office/officeart/2024/layout/MeetTheTeamCardVertical",
+   "category": "meettheteam",
+   "default_items": 4,
+   "slide": 27,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 53600,
+     "y": 666000,
+     "w": 1800000,
+     "h": 3240000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 98600,
+     "y": 1184400,
+     "w": 1710000,
+     "h": 360000,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "rect",
+     "x": 98600,
+     "y": 1544400,
+     "w": 1710000,
+     "h": 266400,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 53600,
+     "y": 2106000,
+     "w": 1800000,
+     "h": 1800000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 2127200,
+     "y": 666000,
+     "w": 1800000,
+     "h": 3240000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2172200,
+     "y": 1184400,
+     "w": 1710000,
+     "h": 360000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2172200,
+     "y": 1544400,
+     "w": 1710000,
+     "h": 266400,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 2127200,
+     "y": 2106000,
+     "w": 1800000,
+     "h": 1800000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 4200800,
+     "y": 666000,
+     "w": 1800000,
+     "h": 3240000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 4245800,
+     "y": 1184400,
+     "w": 1710000,
+     "h": 360000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 4245800,
+     "y": 1544400,
+     "w": 1710000,
+     "h": 266400,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 4200800,
+     "y": 2106000,
+     "w": 1800000,
+     "h": 1800000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 6274400,
+     "y": 666000,
+     "w": 1800000,
+     "h": 3240000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 6319400,
+     "y": 1184400,
+     "w": 1710000,
+     "h": 360000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 6319400,
+     "y": 1544400,
+     "w": 1710000,
+     "h": 266400,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "ellipse",
+     "x": 6274400,
+     "y": 2106000,
+     "w": 1800000,
+     "h": 1800000,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 148,
+   "name": "Ovale Karte zum Kennenlernen des Teams",
+   "id": "urn:microsoft.com/office/officeart/2024/layout/MeetTheTeamOval",
+   "category": "meettheteam",
+   "default_items": 4,
+   "slide": 28,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 478399,
+     "y": 768599,
+     "w": 1566000,
+     "h": 2349000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 406399,
+     "y": 3209400,
+     "w": 1710000,
+     "h": 324000,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "rect",
+     "x": 406399,
+     "y": 3533400,
+     "w": 1710000,
+     "h": 270000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 2346799,
+     "y": 768599,
+     "w": 1566000,
+     "h": 2349000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2274799,
+     "y": 3209400,
+     "w": 1710000,
+     "h": 324000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2274799,
+     "y": 3533400,
+     "w": 1710000,
+     "h": 270000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 4215200,
+     "y": 768599,
+     "w": 1566000,
+     "h": 2349000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 4143200,
+     "y": 3209400,
+     "w": 1710000,
+     "h": 324000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 4143200,
+     "y": 3533400,
+     "w": 1710000,
+     "h": 270000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "roundRect",
+     "x": 6083600,
+     "y": 768599,
+     "w": 1566000,
+     "h": 2349000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 6011600,
+     "y": 3209400,
+     "w": 1710000,
+     "h": 324000,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 6011600,
+     "y": 3533400,
+     "w": 1710000,
+     "h": 270000,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 149,
+   "name": "Textkarte Seitenlinie nummeriert",
+   "id": "urn:microsoft.com/office/officeart/2026/layout/TextCardSideLineNumbered",
+   "category": "textcard",
+   "default_items": 3,
+   "slide": 29,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 221081,
+     "y": 891539,
+     "w": 19507,
+     "h": 2788920,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 391769,
+     "y": 947318,
+     "w": 2267712,
+     "h": 836676,
+     "rot": 0,
+     "text": "1"
+    },
+    {
+     "prst": "rect",
+     "x": 391769,
+     "y": 1839772,
+     "w": 2267712,
+     "h": 613562,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "rect",
+     "x": 391769,
+     "y": 2509113,
+     "w": 2267712,
+     "h": 1171346,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2844799,
+     "y": 891539,
+     "w": 19507,
+     "h": 2788920,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 3015487,
+     "y": 947318,
+     "w": 2267712,
+     "h": 836676,
+     "rot": 0,
+     "text": "2"
+    },
+    {
+     "prst": "rect",
+     "x": 3015487,
+     "y": 1839772,
+     "w": 2267712,
+     "h": 613562,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 3015487,
+     "y": 2509113,
+     "w": 2267712,
+     "h": 1171346,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5468518,
+     "y": 891539,
+     "w": 19507,
+     "h": 2788920,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5639206,
+     "y": 947318,
+     "w": 2267712,
+     "h": 836676,
+     "rot": 0,
+     "text": "3"
+    },
+    {
+     "prst": "rect",
+     "x": 5639206,
+     "y": 1839772,
+     "w": 2267712,
+     "h": 613562,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5639206,
+     "y": 2509113,
+     "w": 2267712,
+     "h": 1171346,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 150,
+   "name": "Textkarte Seitenlinien-Symbol",
+   "id": "urn:microsoft.com/office/officeart/2026/layout/TextCardSideLineIcon",
+   "category": "textcard",
+   "default_items": 3,
+   "slide": 30,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 221081,
+     "y": 891539,
+     "w": 19507,
+     "h": 2788920,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 391769,
+     "y": 947318,
+     "w": 557784,
+     "h": 557784,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 391769,
+     "y": 1616659,
+     "w": 2267712,
+     "h": 613562,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "rect",
+     "x": 391769,
+     "y": 2341778,
+     "w": 2267712,
+     "h": 1338681,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2844799,
+     "y": 891539,
+     "w": 19507,
+     "h": 2788920,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 3015487,
+     "y": 947318,
+     "w": 557784,
+     "h": 557784,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 3015487,
+     "y": 1616659,
+     "w": 2267712,
+     "h": 613562,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 3015487,
+     "y": 2341778,
+     "w": 2267712,
+     "h": 1338681,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5468518,
+     "y": 891539,
+     "w": 19507,
+     "h": 2788920,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5639206,
+     "y": 947318,
+     "w": 557784,
+     "h": 557784,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5639206,
+     "y": 1616659,
+     "w": 2267712,
+     "h": 613562,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5639206,
+     "y": 2341778,
+     "w": 2267712,
+     "h": 1338681,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 151,
+   "name": "Textkarte Seitenlinie Zitat",
+   "id": "urn:microsoft.com/office/officeart/2026/layout/TextCardSideLineQuote",
+   "category": "textcard",
+   "default_items": 3,
+   "slide": 1,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 221081,
+     "y": 1030985,
+     "w": 19507,
+     "h": 2510028,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 391769,
+     "y": 1114653,
+     "w": 2267712,
+     "h": 1896465,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 391769,
+     "y": 3150565,
+     "w": 2267712,
+     "h": 390448,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "rect",
+     "x": 2844799,
+     "y": 1030985,
+     "w": 19507,
+     "h": 2510028,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 3015487,
+     "y": 1114653,
+     "w": 2267712,
+     "h": 1896465,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 3015487,
+     "y": 3150565,
+     "w": 2267712,
+     "h": 390448,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5468518,
+     "y": 1030985,
+     "w": 19507,
+     "h": 2510028,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5639206,
+     "y": 1114653,
+     "w": 2267712,
+     "h": 1896465,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5639206,
+     "y": 3150565,
+     "w": 2267712,
+     "h": 390448,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 152,
+   "name": "Textkarte Seitenlinie Breites Bild",
+   "id": "urn:microsoft.com/office/officeart/2026/layout/TextCardSideLineWideImage",
+   "category": "textcard",
+   "default_items": 3,
+   "slide": 2,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 4876800,
+     "y": 2179,
+     "w": 3251200,
+     "h": 1409765,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 0,
+     "y": 2179,
+     "w": 40640,
+     "h": 1409765,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 365759,
+     "y": 72667,
+     "w": 4064000,
+     "h": 634394,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "rect",
+     "x": 365759,
+     "y": 735257,
+     "w": 4064000,
+     "h": 676687,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 4876800,
+     "y": 1581117,
+     "w": 3251200,
+     "h": 1409765,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 0,
+     "y": 1581117,
+     "w": 40640,
+     "h": 1409765,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 365759,
+     "y": 1651605,
+     "w": 4064000,
+     "h": 634394,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 365759,
+     "y": 2314195,
+     "w": 4064000,
+     "h": 676687,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 4876800,
+     "y": 3160054,
+     "w": 3251200,
+     "h": 1409765,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 0,
+     "y": 3160054,
+     "w": 40640,
+     "h": 1409765,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 365759,
+     "y": 3230542,
+     "w": 4064000,
+     "h": 634394,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 365759,
+     "y": 3893132,
+     "w": 4064000,
+     "h": 676687,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 153,
+   "name": "Textkarte kurze Linie",
+   "id": "urn:microsoft.com/office/officeart/2026/layout/TextCardShortLine",
+   "category": "textcard",
+   "default_items": 3,
+   "slide": 3,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 221081,
+     "y": 761237,
+     "w": 536448,
+     "h": 36594,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 221081,
+     "y": 1014348,
+     "w": 2438400,
+     "h": 680043,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "rect",
+     "x": 221081,
+     "y": 1694392,
+     "w": 2438400,
+     "h": 2116369,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2844799,
+     "y": 761237,
+     "w": 536448,
+     "h": 36594,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2844799,
+     "y": 1014348,
+     "w": 2438400,
+     "h": 680043,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2844799,
+     "y": 1694392,
+     "w": 2438400,
+     "h": 2116369,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5468518,
+     "y": 761237,
+     "w": 536448,
+     "h": 36594,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5468518,
+     "y": 1014348,
+     "w": 2438400,
+     "h": 680043,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5468518,
+     "y": 1694392,
+     "w": 2438400,
+     "h": 2116369,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 154,
+   "name": "Textkarte kurze Zeilennummer",
+   "id": "urn:microsoft.com/office/officeart/2026/layout/TextCardShortLineNumber",
+   "category": "textcard",
+   "default_items": 3,
+   "slide": 4,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 221081,
+     "y": 201167,
+     "w": 682752,
+     "h": 36576,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 221081,
+     "y": 338327,
+     "w": 2438400,
+     "h": 868680,
+     "rot": 0,
+     "text": "01"
+    },
+    {
+     "prst": "rect",
+     "x": 221081,
+     "y": 1188719,
+     "w": 2438400,
+     "h": 685800,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "rect",
+     "x": 221081,
+     "y": 1947672,
+     "w": 2438400,
+     "h": 2423160,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2844799,
+     "y": 201167,
+     "w": 682752,
+     "h": 36576,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2844799,
+     "y": 338327,
+     "w": 2438400,
+     "h": 868680,
+     "rot": 0,
+     "text": "02"
+    },
+    {
+     "prst": "rect",
+     "x": 2844799,
+     "y": 1188719,
+     "w": 2438400,
+     "h": 685800,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2844799,
+     "y": 1947672,
+     "w": 2438400,
+     "h": 2423160,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5468518,
+     "y": 201167,
+     "w": 682752,
+     "h": 36576,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5468518,
+     "y": 338327,
+     "w": 2438400,
+     "h": 868680,
+     "rot": 0,
+     "text": "03"
+    },
+    {
+     "prst": "rect",
+     "x": 5468518,
+     "y": 1188719,
+     "w": 2438400,
+     "h": 685800,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5468518,
+     "y": 1947672,
+     "w": 2438400,
+     "h": 2423160,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 155,
+   "name": "Textkarte kurze Linie Zitat",
+   "id": "urn:microsoft.com/office/officeart/2026/layout/TextCardShortLineQuote",
+   "category": "textcard",
+   "default_items": 3,
+   "slide": 5,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 221081,
+     "y": 498347,
+     "w": 2438400,
+     "h": 2642616,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 221081,
+     "y": 3296412,
+     "w": 536448,
+     "h": 97155,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 221081,
+     "y": 3529584,
+     "w": 2438400,
+     "h": 544068,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "rect",
+     "x": 2844799,
+     "y": 498347,
+     "w": 2438400,
+     "h": 2642616,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2844799,
+     "y": 3296412,
+     "w": 536448,
+     "h": 97155,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 2844799,
+     "y": 3529584,
+     "w": 2438400,
+     "h": 544068,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5468518,
+     "y": 498347,
+     "w": 2438400,
+     "h": 2642616,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5468518,
+     "y": 3296412,
+     "w": 536448,
+     "h": 97155,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 5468518,
+     "y": 3529584,
+     "w": 2438400,
+     "h": 544068,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 156,
+   "name": "Textkarte kurze Linie breit",
+   "id": "urn:microsoft.com/office/officeart/2026/layout/TextCardShortLineWide",
+   "category": "textcard",
+   "default_items": 3,
+   "slide": 6,
+   "shapes": [
+    {
+     "prst": "rect",
+     "x": 162559,
+     "y": 492,
+     "w": 894080,
+     "h": 41554,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 162559,
+     "y": 263671,
+     "w": 7802880,
+     "h": 470953,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "rect",
+     "x": 162559,
+     "y": 706921,
+     "w": 7802880,
+     "h": 678726,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 162559,
+     "y": 1593421,
+     "w": 894080,
+     "h": 41554,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 162559,
+     "y": 1856601,
+     "w": 7802880,
+     "h": 470953,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 162559,
+     "y": 2299851,
+     "w": 7802880,
+     "h": 678726,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 162559,
+     "y": 3186351,
+     "w": 894080,
+     "h": 41554,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 162559,
+     "y": 3449531,
+     "w": 7802880,
+     "h": 470953,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "rect",
+     "x": 162559,
+     "y": 3892781,
+     "w": 7802880,
+     "h": 678726,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 157,
+   "name": "Horizontale Aktionsliste",
+   "id": "urn:microsoft.com/office/officeart/2024/layout/HorizontalActionList",
+   "category": "textcard",
+   "default_items": 3,
+   "slide": 7,
+   "shapes": [
+    {
+     "prst": "round2SameRect",
+     "x": 3124,
+     "y": 1411261,
+     "w": 2635250,
+     "h": 2516334,
+     "rot": 180.0,
+     "text": ""
+    },
+    {
+     "prst": "round2SameRect",
+     "x": 3124,
+     "y": 644403,
+     "w": 2635250,
+     "h": 790575,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "round2SameRect",
+     "x": 2746375,
+     "y": 1411261,
+     "w": 2635250,
+     "h": 2516334,
+     "rot": 180.0,
+     "text": ""
+    },
+    {
+     "prst": "round2SameRect",
+     "x": 2746375,
+     "y": 644403,
+     "w": 2635250,
+     "h": 790575,
+     "rot": 0,
+     "text": ""
+    },
+    {
+     "prst": "round2SameRect",
+     "x": 5489625,
+     "y": 1411261,
+     "w": 2635250,
+     "h": 2516334,
+     "rot": 180.0,
+     "text": ""
+    },
+    {
+     "prst": "round2SameRect",
+     "x": 5489625,
+     "y": 644403,
+     "w": 2635250,
+     "h": 790575,
+     "rot": 0,
+     "text": ""
+    }
+   ]
+  },
+  {
+   "index": 158,
+   "name": "Nummerierte Kartenliste",
+   "id": "urn:microsoft.com/office/officeart/2024/layout/NumberedTitleCardList",
+   "category": "textcard",
+   "default_items": 3,
+   "slide": 8,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 0,
+     "y": 0,
+     "w": 8128000,
+     "h": 4572000,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "rect",
+     "x": 0,
+     "y": 0,
+     "w": 8128000,
+     "h": 1828800,
+     "rot": 0,
+     "text": "01"
+    }
+   ]
+  },
+  {
+   "index": 159,
+   "name": "Nummerierte Titelliste",
+   "id": "urn:microsoft.com/office/officeart/2024/layout/NumberedTitleList",
+   "category": "textcard",
+   "default_items": 3,
+   "slide": 9,
+   "shapes": [
+    {
+     "prst": "roundRect",
+     "x": 0,
+     "y": 0,
+     "w": 8128000,
+     "h": 4572000,
+     "rot": 0,
+     "text": "Eins"
+    },
+    {
+     "prst": "ellipse",
+     "x": 3149599,
+     "y": 342900,
+     "w": 1828800,
+     "h": 1828800,
+     "rot": 0,
+     "text": "1"
+    }
+   ]
+  }
+ ],
+ "close": {
+  "closed": 1,
+  "quit": true,
+  "left_open": 0
+ }
+}
