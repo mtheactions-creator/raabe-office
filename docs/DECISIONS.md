@@ -1962,3 +1962,6 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   them ("Welche Folien möchten Sie exportieren?" Alle Folien / Nur diese). PowerPoint puts all slides into a
   folder; we write them beside the chosen name ("Name-Folie1.png" …), since the platform has no folder
   creation. Video, animiertes GIF and Für CD verpacken are not built.
+- **SmartArt-Design > Konvertieren:** In Formen konvertieren puts PowerPoint's drawing of the SmartArt on the
+  slide as a group of ordinary shapes (same look; they can then be edited freely); In Text konvertieren makes a
+  text box with the points as a bulleted list by level. Both replace the SmartArt as in PowerPoint.

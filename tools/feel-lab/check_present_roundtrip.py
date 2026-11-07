@@ -96,6 +96,9 @@ SCENARIOS: dict[str, str] = {
     "smartart text": f"""const r = await fetch('/@fs/{(HERE / "captures" / "smartart" / "smartart.pptx").as_posix()}'); p.openBytes('smartart.pptx', new Uint8Array(await r.arrayBuffer())); await new Promise(r => setTimeout(r, 800));
         const a = p.app; a.setCurrent(1); await new Promise(r => setTimeout(r, 300)); const v = a.deck.view(a.slidePath()).shapes.find(s => s.frame === 'diagram'); a.editor.select([v.id]); await a.commands.run('smartart.textPane'); await new Promise(r => setTimeout(r, 300));
         const inputs = [...document.querySelectorAll('[role=dialog] input[type=text]')]; inputs[0].value = 'Planen'; inputs[1].value = 'Bauen'; [...document.querySelectorAll('[role=dialog] button')].find(x => x.textContent === 'OK').click(); await new Promise(r => setTimeout(r, 400));""",
+    "smartart convert": f"""const r = await fetch('/@fs/{(HERE / "captures" / "smartart" / "smartart.pptx").as_posix()}'); p.openBytes('smartart.pptx', new Uint8Array(await r.arrayBuffer())); await new Promise(r => setTimeout(r, 800));
+        const a = p.app; a.setCurrent(1); await new Promise(r => setTimeout(r, 300)); let v = a.deck.view(a.slidePath()).shapes.find(s => s.frame === 'diagram'); a.editor.select([v.id]); await a.commands.run('smartart.toShapes');
+        a.setCurrent(3); await new Promise(r => setTimeout(r, 300)); v = a.deck.view(a.slidePath()).shapes.find(s => s.frame === 'diagram'); a.editor.select([v.id]); await a.commands.run('smartart.toText'); await new Promise(r => setTimeout(r, 300));""",
     "picture crop": f"""p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); const bin = atob('{PNG}'); const b = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) b[i] = bin.charCodeAt(i); a.insertPictureBytes(b, 'image/png'); await new Promise(r => setTimeout(r, 500));
         const v = a.deck.view(a.slidePath()).shapes.find(s => s.kind === 'pic'); const S = await import('/src/shapeops.ts'); a.editor.edit('Größe', () => S.setXfrm(a.editor.shapeEl(v.id), {{x: 1000000, y: 1000000, w: 3810000, h: 3810000}})); a.editor.select([v.id]); await a['cropToRatio'](16 / 9); a.changeShape('ellipse', true);""",
     "picture effects removed": f"""p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); const bin = atob('{PNG}'); const b = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) b[i] = bin.charCodeAt(i); a.insertPictureBytes(b, 'image/png'); await new Promise(r => setTimeout(r, 500));
@@ -312,6 +315,10 @@ def check(name: str, r: dict, ours: dict) -> list[str]:
         s1 = r["slides"][1]["shapes"] if len(r["slides"]) > 1 else []
         sa = next((x.get("sa") for x in s1 if x.get("sa")), None)
         want(sa is not None and sa[:3] == ["Planen", "Bauen", "Punkt 3"], f"smartart {sa}")
+    elif name == "smartart convert":
+        s1 = r["slides"][1]["shapes"] if len(r["slides"]) > 3 else []
+        s3 = r["slides"][3]["shapes"] if len(r["slides"]) > 3 else []
+        want([x.get("members") for x in s1] == [5] and len(s3) == 1 and s3[0].get("text", "").count("Punkt") >= 4, f"slide 2 {[(x['type'], x.get('members')) for x in s1]} slide 4 {[x.get('text') for x in s3]}")
     elif name == "picture crop":
         p = next((x for x in sh if x["type"] == 13), None)
         want(p is not None and abs(p["box"][2] / p["box"][3] - 16 / 9) < 0.02 and p.get("auto") == 9, f"picture {p}")
@@ -362,7 +369,7 @@ def main() -> None:
             print(name, out["fixtures"][name]["result"], flush=True)
         # 2. Files RaabePresent made.
         for name, js in SCENARIOS.items():
-            if name == "smartart text" and not (HERE / "captures" / "smartart" / "smartart.pptx").exists():
+            if name in ("smartart text", "smartart convert") and not (HERE / "captures" / "smartart" / "smartart.pptx").exists():
                 continue
             try:
                 page.js(f"(async () => {{ const p = window.__present; {js} }})()")

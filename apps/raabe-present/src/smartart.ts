@@ -100,6 +100,54 @@ export function smartArtTab(app: PresentApp): Tab {
   void app;
   return {
     id: "smartartDesign", label: "SmartArt-Design", key: "JS", contextual: true, shrink: [],
-    groups: [{ id: "create", label: "Grafik erstellen", key: "ZE", icon: "slide-text", controls: [b("smartart.textPane", "T")] }],
+    groups: [{ id: "create", label: "Grafik erstellen", key: "ZE", icon: "slide-text", controls: [b("smartart.textPane", "T")] },
+      { id: "reset", label: "Zurücksetzen", key: "ZZ", icon: "slide-text", controls: [{ type: "dropdown", cmd: "smartart.convert", key: "K", size: "large", menu: [{ cmd: "smartart.toText" }, { cmd: "smartart.toShapes" }] }] }],
   };
+}
+
+/**
+ * SmartArt-Design > Konvertieren: In Formen konvertieren puts PowerPoint's drawing of the SmartArt on the slide
+ * as a group of ordinary shapes; In Text konvertieren makes a text box with its points as a bulleted list (by
+ * level). Both replace the SmartArt, as in PowerPoint.
+ */
+export function convertSmartArt(app: PresentApp, id: number, to: "shapes" | "text"): void {
+  const parts = partsOf(app, id);
+  const el = app.editor.shapeEl(id);
+  if (!parts || !el) return;
+  const pptx = app.deck.pptx;
+  const xf = kid(el, "xfrm");
+  const off = kid(xf, "off"), ext = kid(xf, "ext");
+  const x = off?.getAttribute("x") ?? "0", y = off?.getAttribute("y") ?? "0", cx = ext?.getAttribute("cx") ?? "0", cy = ext?.getAttribute("cy") ?? "0";
+  const doc = el.ownerDocument;
+  const P = PptxDom.NS_P, A = PptxDom.NS_A;
+  app.editor.edit(to === "shapes" ? "In Formen konvertieren" : "In Text konvertieren", () => {
+    let made: Element;
+    if (to === "shapes" && parts.drawing) {
+      const drawing = pptx.doc(parts.drawing);
+      const ser = new XMLSerializer();
+      let n = id;
+      const shapes = Array.from(drawing.getElementsByTagNameNS(NS_DSP, "sp")).map((sp) => {
+        n++;
+        const part = (name: string) => { const c = kid(sp, name); return c ? Array.from(c.childNodes).map((x) => ser.serializeToString(x)).join("") : ""; };
+        const bodyPr = kid(sp, "txBody") ? `<p:txBody>${part("txBody")}</p:txBody>` : "";
+        const style = kid(sp, "style") ? `<p:style>${part("style")}</p:style>` : "";
+        return `<p:sp><p:nvSpPr><p:cNvPr id="${n}" name="Form ${n - 1}"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr><p:spPr>${part("spPr")}</p:spPr>${style}${bodyPr}</p:sp>`;
+      });
+      made = PptxDom.fragment(doc, `<p:grpSp xmlns:p="${P}" xmlns:a="${A}"><p:nvGrpSpPr><p:cNvPr id="${id}" name="Gruppieren ${id - 1}"/><p:cNvGrpSpPr/><p:nvPr/></p:nvGrpSpPr>` +
+        `<p:grpSpPr><a:xfrm><a:off x="${x}" y="${y}"/><a:ext cx="${cx}" cy="${cy}"/><a:chOff x="0" y="0"/><a:chExt cx="${cx}" cy="${cy}"/></a:xfrm></p:grpSpPr>${shapes.join("")}</p:grpSp>`)[0];
+      // New ids must not clash with the slide's other shapes.
+      const tree = el.parentElement!;
+      let next = Math.max(...Array.from(tree.getElementsByTagNameNS(P, "cNvPr")).map((c) => Number(c.getAttribute("id")) || 0)) + 1;
+      for (const c of Array.from(made.getElementsByTagNameNS(P, "cNvPr")).slice(1)) c.setAttribute("id", String(next++));
+    } else {
+      const pts = textPoints(pptx.doc(parts.data));
+      const esc = PptxDom.esc;
+      const paras = pts.map((p) => `<a:p><a:pPr marL="${285750 + p.level * 457200}" lvl="${Math.min(8, p.level)}" indent="-285750"><a:buFont typeface="Arial"/><a:buChar char="•"/></a:pPr><a:r><a:rPr lang="de-DE"/><a:t>${esc(p.text)}</a:t></a:r></a:p>`).join("");
+      made = PptxDom.fragment(doc, `<p:sp xmlns:p="${P}" xmlns:a="${A}"><p:nvSpPr><p:cNvPr id="${id}" name="Textfeld ${id - 1}"/><p:cNvSpPr txBox="1"/><p:nvPr/></p:nvSpPr>` +
+        `<p:spPr><a:xfrm><a:off x="${x}" y="${y}"/><a:ext cx="${cx}" cy="${cy}"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom><a:noFill/></p:spPr>` +
+        `<p:txBody><a:bodyPr wrap="square" rtlCol="0"><a:spAutoFit/></a:bodyPr><a:lstStyle/>${paras || '<a:p><a:endParaRPr lang="de-DE"/></a:p>'}</p:txBody></p:sp>`)[0];
+    }
+    el.replaceWith(made);
+  });
+  app.editor.select([id]);
 }
