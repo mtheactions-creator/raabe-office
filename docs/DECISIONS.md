@@ -1934,3 +1934,11 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   other names as an optional parameter and RaabePresent passes PowerPoint's. Barrierefreiheit überprüfen and
   Kommentare anzeigen are split buttons as in PowerPoint (Alternativtext, Lesereihenfolgebereich as the
   Auswahlbereich; Kommentarbereich, Markup anzeigen to show or hide the comment markers).
+- **Editing equations in place:** a click into an equation (or a double-click, Eingabe on it, or a new
+  equation) puts a caret into the drawn equation, as PowerPoint does: typing builds structures up as it goes,
+  the arrows walk through the slots, Rücktaste and Entf take structures apart, Umschalt+Eingabe starts a new
+  line, Esc, Eingabe or a click outside end editing and write the equation back as OMML in one undo step. The
+  editing model is text-engine's MathEditor (RaabeWrite's, measured against Word's equation editor, D-059);
+  the caret geometry is RaabeWrite's (copied into mathedit.ts). A new equation starts empty with its prompt
+  (before it started as "x" in the linear field). Structures from the Formel tab go in at the caret. The
+  linear field stays for Formel > Linear. Not built: Formel > Text, Formeloptionen, Freihandgleichung.

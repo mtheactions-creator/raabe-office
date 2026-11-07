@@ -47,6 +47,8 @@ SCENARIOS: dict[str, str] = {
     "table split": """p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); a.setCurrent(0); a.insertTable(2, 2); const id = a.deck.view(a.slidePath()).shapes.find(s => s.frame === 'table').id;
         a.editor.enterText(id, undefined, {r:0,c:0}); const m = await import('/src/tablecells.ts'); a.editor.edit('Zellen teilen', () => m.split(a.editor.tableOf(), 0, 0, 2, 1)); a.editor.endText();""",
     "equation": """p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); a.setCurrent(0); const m = await import('/src/equations.ts'); const b = await import('/src/equations-builtin.ts'); await m.insertEquation(a, b.BUILT_IN.find(e => e.name === 'Satz des Pythagoras').seq);""",
+        "equation typed": """p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); a.setCurrent(0); const m = await import('/src/equations.ts'); await m.insertEquation(a); await new Promise(r => setTimeout(r, 300));
+        const key = (k) => window.dispatchEvent(new KeyboardEvent('keydown', {key: k, bubbles: true, cancelable: true})); for (const ch of 'a^2 +b^2 =c^2 ') key(ch); key('Enter'); await new Promise(r => setTimeout(r, 300));""",
         "table style": """p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); a.setCurrent(0); a.insertTable(3, 3); const m = await import('/src/tablestyles.ts'); m.applyTableStyle(a, m.tableStyles().find(s => s.name === 'Helle Formatvorlage 2 - Akzent 2'));""",
         "motion path": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]}]}); const a = p.app; a.editor.select([2]); const m = await import('/src/animations.ts'); const g = m.ANIMATION_GROUPS.find(x => x.cls === 'path'); m.addAnimation(a, 'path', g.items[0], false);""",
         "custom path": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]}]}); const a = p.app; a.editor.select([2]); const m = await import('/src/animations.ts'); const g = m.ANIMATION_GROUPS.find(x => x.cls === 'path'); m.addAnimation(a, 'path', {...g.items.find(i => i.preset === 0), path: 'M 0 0 L 0.2 0 L 0.2 0.25 L 0.4 0.25 E'}, false);""",
@@ -219,6 +221,9 @@ def check(name: str, r: dict, ours: dict) -> list[str]:
         t = next((x for x in sh if x.get("table")), {})
         w = t.get("cellw", [[0, 0, 0]])
         want(t.get("table") == [2, 3] and w[0][0] == w[0][1] and w[0][0] * 2 - 1 <= w[0][2] <= w[0][0] * 2 + 1 and w[1][0] == w[1][1] == w[0][2], f"split {t.get('cellw')}")
+    elif name == "equation typed":
+        texts = [x.get("text", "") for x in sh]
+        want(any("=" in t and "+" in t for t in texts), f"equation {texts}")
     elif name == "equation":
         texts = [x.get("text", "") for x in sh]
         want(any("=" in t and "2" in t for t in texts), f"equation {texts}")

@@ -11,6 +11,7 @@ import { BUILT_IN } from "./equations-builtin";
 import { MATH_GALLERIES, SYMBOL_CATEGORIES } from "./equations-gallery";
 import type { PresentApp } from "./app";
 import * as S from "./shapeops";
+import { activeMath, startMathEdit } from "./mathedit";
 
 const NS_A14 = "http://schemas.microsoft.com/office/drawing/2010/main";
 const NS_MC = "http://schemas.openxmlformats.org/markup-compatibility/2006";
@@ -48,17 +49,24 @@ export async function insertEquation(app: PresentApp, seq?: Seq): Promise<void> 
   const isNew = !seq;
   const size = app.deck.pptx.slideSize;
   const id = S.maxId(tree) + 1;
-  const eq: Seq = seq ?? [{ k: "t", s: "x" }];
+  // A new equation starts empty and shows its prompt; typing goes in at once (mathedit.ts).
+  const eq: Seq = seq ?? [];
   ed.edit("Formel", () => { tree.append(PptxDom.fragment(tree.ownerDocument, equationXml(id, Math.round(size.cx / 2 - 1000000), Math.round(size.cy / 2 - 200000), eq))[0]); });
   ed.updateAutofit(id);
   ed.select([id]);
   // Alt+Umschalt+0 / Formel: typed at once in the linear format, in place.
-  if (isNew) { ed.render(); setTimeout(() => linearInPlace(app, id, true), 0); }
+  if (isNew) { ed.render(); setTimeout(() => editEquation(app, id, true), 0); }
 }
 
-/** Editing an equation: its linear form in the box; OK writes the new tree into the Choice and the Fallback's text. */
-export async function editEquation(app: PresentApp, id: number): Promise<void> {
-  linearInPlace(app, id, false);
+/**
+ * Editing an equation in place with a caret (PowerPoint's professional editing, mathedit.ts); `point` puts
+ * the caret where the equation was clicked. The linear field stays for Formel > Linear.
+ */
+export async function editEquation(app: PresentApp, id: number, isNew = false, point?: { x: number; y: number }): Promise<void> {
+  const ed = app.editor;
+  const m = equationOf(ed.shapeEl(id));
+  if (!m) return;
+  startMathEdit(app, id, { isNew, point, m, write: (seq) => writeEquation(app, id, () => seq), remove: () => { ed.select([id]); ed.deleteSelected(); } });
 }
 
 /**
@@ -167,6 +175,9 @@ export function selectedEquation(app: PresentApp): number | null {
 
 /** A structure or symbol from the tab's galleries goes at the end of the selected equation. */
 function appendTo(app: PresentApp, seq: Seq): void {
+  // While an equation is edited, a structure goes in at its caret (as in PowerPoint).
+  const editing = activeMath();
+  if (editing) { editing.insert(seq); return; }
   const id = selectedEquation(app);
   if (id === null) { void insertEquation(app, seq); return; }
   writeEquation(app, id, (old) => [...old, ...JSON.parse(JSON.stringify(seq))]);
@@ -217,7 +228,7 @@ export function implementEquationCommands(app: PresentApp): void {
   impl("eq.latexToMath", () => latexDialog(app));
   impl("eq.mathToLatex", () => latexDialog(app));
   impl("eq.professional", () => {});
-  impl("eq.linear", () => { const id = selectedEquation(app); if (id !== null) return editEquation(app, id); });
+  impl("eq.linear", () => { const id = selectedEquation(app); if (id !== null) linearInPlace(app, id, false); });
   impl("eq.symbols", () => {}, () => !!app.slidePath());
   for (const [cmd] of STRUCTS) impl(cmd, () => {}, () => !!app.slidePath());
 }

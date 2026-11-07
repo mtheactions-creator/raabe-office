@@ -404,6 +404,14 @@ export class PresentApp implements EditorHost, PanelHost {
     this.setCurrent(key === "PageDown" ? i + 1 : key === "PageUp" ? i - 1 : key === "Home" ? 0 : n - 1);
   }
 
+  equationClick(v: ShapeView, at: { x: number; y: number }): boolean {
+    if (!hasEquation(v)) return false;
+    this.editor.endText();
+    this.editor.select([v.id]);
+    void editEquation(this, v.id, false, at);
+    return true;
+  }
+
   doubleClick(v: ShapeView): boolean {
     // An equation: its linear box (D-072).
     if (hasEquation(v)) { void editEquation(this, v.id); return true; }

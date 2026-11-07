@@ -279,3 +279,7 @@ body.view-bw .slide { filter: grayscale(1) contrast(4) brightness(1.2); }
 .reuse-grid { display: grid; grid-template-columns: repeat(3, 172px); gap: 8px; max-height: 420px; overflow: auto; padding: 4px; }
 .reuse-tile { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 4px; border: 2px solid transparent; background: #f3f3f3; cursor: pointer; }
 .reuse-tile[aria-pressed="true"] { border-color: #c43e1c; }
+/* Editing an equation in place: the caret blinks as the text caret does. */
+.math-edit-caret { animation: math-caret 1.06s steps(1) infinite; }
+@keyframes math-caret { 50% { opacity: 0; } }
+

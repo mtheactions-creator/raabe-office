@@ -36,6 +36,8 @@ export interface EditorHost {
   contextMenu(e: MouseEvent, kind: "shape" | "text" | "slide"): void;
   shortcut(e: KeyboardEvent): boolean;
   doubleClick(v: ShapeView): boolean;
+  /** A click on a drawn equation: editing it in place at that point (true when taken). */
+  equationClick?(v: ShapeView, at: { x: number; y: number }): boolean;
   /** Comment markers of a slide (slide coordinates in EMU). */
   commentMarkers?(path: string): { x: number; y: number; n: number }[];
   toolDone(): void;
@@ -711,6 +713,8 @@ export class SlideEditor {
       }
       return;
     }
+    // A click on a drawn equation puts the caret into it (PowerPoint's in-place equation editing).
+    if (!e.shiftKey && !e.ctrlKey && (e.target as HTMLElement).closest?.(".math") && this.host.equationClick?.(v, { x: e.clientX, y: e.clientY })) return;
     // On the letters of a shape's text the caret goes there at once and a drag selects text; the frame
     // moves only when dragged beside the text or by its outline (catalogue "drag rect plain").
     const onLetters = hit.text && v.kind !== "grpSp" && !!v.text && !v.text.empty;
