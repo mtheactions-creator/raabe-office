@@ -1931,7 +1931,7 @@ export class PresentApp implements EditorHost, PanelHost {
   shapeTiles(): Control {
     const items = PRESENT_SHAPES.flatMap((g) => g.items);
     return {
-      type: "tiles", cmd: "insert.shapes", key: "2", count: items.length, visible: 18, size: [22, 22], cls: "shape-tiles-ribbon",
+      type: "tiles", cmd: "insert.shapes", key: "2", count: items.length, visible: 18, size: [22, 22], cls: "shape-tiles-ribbon pp-rows",
       render: (i) => h("span", { class: "shape-ico" }, shapeIcon(items[i])),
       tip: (i) => items[i].label,
       pick: (i) => { const it = items[i]; if (it.tool.kind === "textbox") this.startTool({ kind: "textbox" }); else this.startTool({ kind: "shape", prst: it.tool.geometry, head: !!it.tool.pic?.line?.head, tail: !!it.tool.pic?.line?.tail, freeform: it.tool.freeform }); },
@@ -2328,10 +2328,19 @@ export class PresentApp implements EditorHost, PanelHost {
     impl("draw.outline", () => this.setLine(this.lastLine), shapes);
     impl("draw.effects", () => {}, shapes);
     impl("draw.quickStyles", () => {}, shapes);
-    impl("arrange.front", () => this.order("front"), shapes);
-    impl("arrange.back", () => this.order("back"), shapes);
-    impl("arrange.forward", () => this.order("forward"), shapes);
-    impl("arrange.backward", () => this.order("backward"), shapes);
+    // Greyed when the selection is at the front or back already (as PowerPoint, compare_present_ui.py).
+    const canMove = (up: boolean) => () => {
+      const p = this.slidePath(), sel = this.editor.sel;
+      if (!p || !sel.length) return false;
+      const list = this.deck.view(p).shapes.map((x) => x.id);
+      if (sel.some((id) => !list.includes(id))) return true; // group members
+      const idx = sel.map((id) => list.indexOf(id));
+      return up ? !idx.every((i) => i >= list.length - sel.length) : !idx.every((i) => i < sel.length);
+    };
+    impl("arrange.front", () => this.order("front"), canMove(true));
+    impl("arrange.back", () => this.order("back"), canMove(false));
+    impl("arrange.forward", () => this.order("forward"), canMove(true));
+    impl("arrange.backward", () => this.order("backward"), canMove(false));
     impl("arrange.group", () => this.group(), () => this.editor.sel.length > 1);
     impl("arrange.ungroup", () => this.ungroup(), () => this.editor.selectedViews.some((v) => v.kind === "grpSp"));
     // Gruppierung wiederherstellen: the shapes last ungrouped, grouped again (while they are all still there).

@@ -2024,3 +2024,8 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   ask:lineSketchStyleProps, a random seed, a copy of the geometry and the type (lineSketchCurved, Freehand,
   Scribble). Ours writes the same (Keine removes it) for shapes, lines and pictures, and draws the shape through
   a displacement of our own, stronger from Gekrümmt to Skizze; PowerPoint's own sketch drawing is not documented.
+- **From the UI screenshots (compare_present_ui.py):** Formformat's shape gallery fills row by row as
+  PowerPoint's (6 per row; the shell's shared rule fills columns as Word's, so RaabePresent overrides it in its
+  own CSS); Ebene nach vorne/hinten and In den Vordergrund/Hintergrund are greyed when the selection is at the
+  front or back already, as in PowerPoint. PowerPoint's three-row Schriftart and Absatz groups in the
+  screenshots are its narrower layout (its cloud groups take the width); ours is its wide layout.

@@ -283,3 +283,6 @@ body.view-bw .slide { filter: grayscale(1) contrast(4) brightness(1.2); }
 .math-edit-caret { animation: math-caret 1.06s steps(1) infinite; }
 @keyframes math-caret { 50% { opacity: 0; } }
 
+/* Formformat > Formen einfügen: PowerPoint fills the gallery row by row (6 per row, 3 rows); the shell's
+   shared rule fills columns, as Word's does (compare_present_ui.py). */
+.rgallery.tiles.shape-tiles-ribbon.pp-rows .items { grid-template-rows: none; grid-template-columns: repeat(6, 22px); grid-auto-flow: row; }
