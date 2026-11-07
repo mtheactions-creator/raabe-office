@@ -2,7 +2,7 @@
 // placeholders, which get their own xfrm once moved), new shapes, text boxes, pictures, tables and
 // charts with PowerPoint's German names ("Rechteck 3": the id less one), copies, order, groups.
 
-import { PptxDom, phOf, spTreeOf } from "@raabe/ooxml";
+import { PptxDom, alternateShapes, phOf, spTreeOf } from "@raabe/ooxml";
 import { SHAPE_NAMES } from "@raabe/text-engine";
 
 const { kid, kids, at, num, make, fragment } = PptxDom;
@@ -16,7 +16,8 @@ export function treeOf(doc: Document): Element {
 }
 
 export function shapeEls(tree: Element): Element[] {
-  return kids(tree).filter((c) => SHAPE_TAGS.includes(c.localName));
+  // Shapes inside mc:AlternateContent (equations) are found where they are drawn from (D-072).
+  return kids(tree).flatMap((c) => (SHAPE_TAGS.includes(c.localName) ? [c] : c.localName === "AlternateContent" ? alternateShapes(c) : []));
 }
 
 export function cNvPr(el: Element): Element | undefined {

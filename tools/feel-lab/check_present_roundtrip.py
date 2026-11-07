@@ -46,7 +46,8 @@ SCENARIOS: dict[str, str] = {
         a.editor.enterText(id, undefined, {r:0,c:0}); a.editor.typeText('eins'); a.editor.setRange({r:1,c:1}); await p.run('table.merge'); a.editor.endText();""",
     "table split": """p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); a.setCurrent(0); a.insertTable(2, 2); const id = a.deck.view(a.slidePath()).shapes.find(s => s.frame === 'table').id;
         a.editor.enterText(id, undefined, {r:0,c:0}); const m = await import('/src/tablecells.ts'); a.editor.edit('Zellen teilen', () => m.split(a.editor.tableOf(), 0, 0, 2, 1)); a.editor.endText();""",
-    "group": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,100,100]},{kind:'ellipse',box:[300,150,100,100]}]}); p.app.editor.select([2,3]); await p.run('arrange.group');""",
+    "equation": """p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); a.setCurrent(0); const m = await import('/src/equations.ts'); const b = await import('/src/equations-builtin.ts'); await m.insertEquation(a, b.BUILT_IN.find(e => e.name === 'Satz des Pythagoras').seq);""",
+        "group": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,100,100]},{kind:'ellipse',box:[300,150,100,100]}]}); p.app.editor.select([2,3]); await p.run('arrange.group');""",
     "notes": """p.newDoc(); p.app.deck.setNotes(p.app.deck.slides[0].path, 'Meine Notiz\\nZweite Zeile');""",
     "hidden slide": """p.newDoc(); const a = p.app; a.newSlide(); a.panel.selected = new Set([1]); await p.run('slide.hide');""",
     "sections": """p.newDoc(); const a = p.app; a.newSlide(); a.newSlide(); a.deck.setSections([{name:'Anfang', id:'{11111111-1111-1111-1111-111111111111}', slides:[a.deck.slides[0].id]},{name:'Teil 2', id:'{22222222-2222-2222-2222-222222222222}', slides:[a.deck.slides[1].id, a.deck.slides[2].id]}]);""",
@@ -144,6 +145,9 @@ def check(name: str, r: dict, ours: dict) -> list[str]:
         t = next((x for x in sh if x.get("table")), {})
         w = t.get("cellw", [[0, 0, 0]])
         want(t.get("table") == [2, 3] and w[0][0] == w[0][1] and w[0][0] * 2 - 1 <= w[0][2] <= w[0][0] * 2 + 1 and w[1][0] == w[1][1] == w[0][2], f"split {t.get('cellw')}")
+    elif name == "equation":
+        texts = [x.get("text", "") for x in sh]
+        want(any("=" in t and "2" in t for t in texts), f"equation {texts}")
     elif name == "group":
         want(len(sh) == 1 and sh[0].get("members") == 2, f"group {sh}")
     elif name == "notes":

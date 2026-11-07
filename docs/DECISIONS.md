@@ -1747,3 +1747,14 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   Folien pro Seite of the Handzettelmaster is a setting of the view (our drawing of the slide places) and
   is not saved; Notizenseiten- and Handzettelausrichtung turn the notes page size, which both share, and
   scale the two masters' placeholders.
+- **Formeln:** an equation is drawn from its Office Math (the shared converter, MathML in Cambria Math)
+  instead of its fallback picture; Einfügen > Formel (Alt+Umschalt+0) offers the built-in equations
+  (RaabeWrite's list) and writes them as PowerPoint does (text box with a14:m in mc:AlternateContent, a
+  plain-text Fallback). Editing is in PowerPoint's linear format in a box with the professional form shown
+  live (double-click the equation); PowerPoint's in-place structure editing and the Formel tab are open.
+- **Schnellformatvorlagen:** the 77 entries as PowerPoint's gallery; the six Designformatvorlagen rows are
+  shape styles (references into the theme's format matrix), the five Voreinstellungen rows set fill and
+  outline on the shape; how each looks in detail is our reading of PowerPoint's tiles. Colour words follow
+  the design, as PowerPoint names them.
+- **Bild > Farbe:** Neu einfärben as PowerPoint's (Sepia, Ausgeblichen, Schwarzweiß 25/50/75 and the
+  theme's dark and light recolourings as duotone); Farbsättigung and Farbton (a14 image effects) are open.

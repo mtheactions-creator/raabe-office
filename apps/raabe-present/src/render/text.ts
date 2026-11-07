@@ -5,6 +5,8 @@
 // (check_present_render.py). Every run is a span carrying its paragraph offset (data-o), so the
 // editor maps between the caret and the DOM.
 
+import { ommlToSeq } from "@raabe/ooxml";
+import { seqToMathml } from "@raabe/text-engine";
 import type { BodyProps, RunStyle, TextInfo, TextPara, TextRun } from "@raabe/ooxml";
 
 export const EMU_PX = 9525;
@@ -182,6 +184,7 @@ export function renderText(t: TextInfo, w: number, h: number, o: TextOptions): H
     } else {
       let off = 0;
       for (const r of p.runs) {
+        if (r.kind === "math") { div.append(mathSpan(r, fit.fontScale)); continue; }
         const sp = document.createElement("span");
         sp.dataset.o = String(off);
         sp.className = r.kind === "br" ? "br" : "run";
@@ -239,4 +242,15 @@ export function textHeight(el: HTMLElement): number {
 
 export function bodyInsets(b: BodyProps): { l: number; t: number; r: number; b: number } {
   return { l: b.l / EMU_PX, t: b.t / EMU_PX, r: b.r / EMU_PX, b: b.b / EMU_PX };
+}
+
+/** An equation (a14:m) drawn as MathML in Cambria Math; one the converter does not know shows its text. */
+function mathSpan(r: TextRun, scale: number): HTMLElement {
+  const sp = document.createElement("span");
+  sp.className = "math";
+  sp.style.cssText = runCss(r, scale) + ";font-family:'Cambria Math', serif";
+  const seq = r.math ? ommlToSeq(r.math) : null;
+  if (seq) sp.innerHTML = seqToMathml(seq, r.math?.localName === "oMathPara");
+  else sp.textContent = r.math?.textContent ?? "";
+  return sp;
 }

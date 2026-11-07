@@ -11,7 +11,7 @@ export { Pptx, RT as PPTX_RT, CT_PPTX, relTarget, type SlideRef } from "./pptx/p
 export * as PptxDom from "./pptx/dom";
 export { newPptx, newPptxFiles, OFFICE_DESIGN, LAYOUT_NAMES, masterXml, designTheme, type DesignSpec } from "./pptx/template";
 export {
-  SlideResolver, slideView, colorList, readThemeInfo, readText, readBodyProps, levelProps, matchPlaceholder, phOf, spTreeOf, pathKind, GroupMap, PROMPTS,
+  SlideResolver, slideView, colorList, readThemeInfo, readText, allShapes, alternateShapes, readBodyProps, levelProps, matchPlaceholder, phOf, spTreeOf, pathKind, GroupMap, PROMPTS,
   type SlideView, type ShapeView, type TextInfo, type TextPara, type TextRun, type RunStyle, type ParaStyle, type BodyProps, type Bullet, type ThemeInfo, type PicInfo, type TextContext,
 } from "./pptx/resolve";
 export { chartFromXml, chartToXml, chartStyleXml, chartColorsXml } from "./xlsx/chart";

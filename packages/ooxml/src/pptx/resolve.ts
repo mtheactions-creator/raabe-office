@@ -73,7 +73,9 @@ export interface RunStyle {
 }
 
 export interface TextRun extends RunStyle {
-  kind: "r" | "br" | "fld";
+  kind: "r" | "br" | "fld" | "math";
+  /** An equation (a14:m): its m:oMathPara or m:oMath element. */
+  math?: Element;
   text: string;
   /** For fields: slidenum, datetime… */
   fieldType?: string;
@@ -239,9 +241,21 @@ export function allShapes(tree: Element): Element[] {
   const out: Element[] = [];
   for (const c of kids(tree)) {
     if (SHAPES.includes(c.localName)) out.push(c);
-    else if (c.localName === "AlternateContent") out.push(...kids(kid(c, "Fallback")).filter((x) => SHAPES.includes(x.localName)));
+    else if (c.localName === "AlternateContent") out.push(...alternateShapes(c));
   }
   return out;
+}
+
+const NS_A14 = "http://schemas.microsoft.com/office/drawing/2010/main";
+
+/**
+ * The shapes of an mc:AlternateContent that are drawn and edited: the Choice of an equation (a text
+ * box with a14:m, which is understood), else the Fallback PowerPoint writes for older readers.
+ */
+export function alternateShapes(ac: Element): Element[] {
+  const choice = kid(ac, "Choice");
+  const pick = choice && choice.getAttribute("Requires") === "a14" && choice.getElementsByTagNameNS(NS_A14, "m").length ? choice : kid(ac, "Fallback");
+  return kids(pick).filter((x) => SHAPES.includes(x.localName));
 }
 
 export function spTreeOf(doc: Document): Element | undefined {
@@ -399,6 +413,16 @@ export function readText(txBody: Element | undefined, ctx: TextContext, body: Bo
     const ps = paraStyle(m, lvl, ctx.theme);
     const runs: TextRun[] = [];
     for (const r of kids(p)) {
+      if (r.localName === "m" && r.namespaceURI === NS_A14) {
+        // An equation: its size from the first run inside it.
+        const inner = r.getElementsByTagNameNS(NS_A, "rPr")[0];
+        const rm: MergedR = { attrs: { ...m.rpr.attrs }, groups: { ...m.rpr.groups } };
+        mergeR(rm, inner);
+        const st = runStyle(rm, ctx.theme, ctx.fontColor && !rm.groups.fill ? ctx.fontColor : undefined);
+        runs.push({ ...st, kind: "math", text: "", math: r.firstElementChild ?? undefined });
+        empty = false;
+        continue;
+      }
       if (r.localName !== "r" && r.localName !== "br" && r.localName !== "fld") continue;
       const rm: MergedR = { attrs: { ...m.rpr.attrs }, groups: { ...m.rpr.groups } };
       mergeR(rm, kid(r, "rPr"));

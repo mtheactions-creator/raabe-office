@@ -12,6 +12,7 @@ import { AUTOFIT_STEPS, EMU_PX, renderText, textHeight } from "./render/text";
 import { presetAdjust, presetGeometry, shapeTextRect } from "@raabe/text-engine";
 import * as T from "./textops";
 import * as TC from "./tablecells";
+import { removeShapeEl } from "./equations";
 import * as S from "./shapeops";
 import type { Pos } from "./textops";
 
@@ -1418,7 +1419,7 @@ export class SlideEditor {
         const el = this.shapeEl(v.id);
         if (!el) continue;
         if (v.ph && v.text && !v.text.empty) { T.replaceAll(S.txBodyOf(el)!, ""); continue; }
-        el.remove();
+        removeShapeEl(el);
       }
     });
     const keep = views.filter((v) => v.ph && v.text && !v.text.empty).map((v) => v.id);

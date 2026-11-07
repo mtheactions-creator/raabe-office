@@ -13,6 +13,8 @@ import { ribbonTabs, type RibbonContext } from "./ribbon-def";
 import { Deck, defaultMasterPlaceholder } from "./deck";
 import { LINE_DASHES, LINE_WEIGHTS } from "./lines";
 import { quickStylesPanel } from "./quickstyles";
+import { editEquation, hasEquation, insertEquation } from "./equations";
+import { BUILT_IN } from "./equations-builtin";
 import { SlideEditor, flat, union, type EditorHost } from "./editor";
 import { SlidePanel, type PanelHost } from "./panel";
 import { renderSlide } from "./render/slide";
@@ -340,6 +342,8 @@ export class PresentApp implements EditorHost, PanelHost {
   }
 
   doubleClick(v: ShapeView): boolean {
+    // An equation: its linear box (D-072).
+    if (hasEquation(v)) { void editEquation(this, v.id); return true; }
     // Pictures, tables and charts: their contextual tab (PowerPoint); shapes and text enter their text.
     if (v.kind === "pic") { this.editor.select([v.id]); this.ribbon.select("pictureFormat"); return true; }
     if (v.kind === "graphicFrame" && v.frame === "chart") { this.editor.select([v.id]); this.ribbon.select("chartDesign"); return true; }
@@ -1732,6 +1736,7 @@ export class PresentApp implements EditorHost, PanelHost {
     impl("design.slideCustom", () => this.slideSizeDialog());
     implementContext(this);
     impl("insert.symbol", () => import("./symbols").then((m) => m.symbolDialog(this)), () => this.editor.sel.length > 0 || !!this.editor.text);
+    impl("insert.equation", () => insertEquation(this), () => !!this.slidePath());
     impl("insert.symbols", () => {}, () => !!this.slidePath());
     impl("insert.video", () => import("./media").then((m) => m.insertMedia(this, "video")), () => !!this.slidePath());
     impl("insert.audio", () => import("./media").then((m) => m.insertMedia(this, "audio")), () => !!this.slidePath());
@@ -2021,6 +2026,7 @@ export class PresentApp implements EditorHost, PanelHost {
     const ctrl = e.ctrlKey && !e.altKey, shift = e.shiftKey, k = e.key;
     const run = (id: string) => { void this.commands.run(id); return true; };
     if (k === "F5" && !ctrl) return run(shift ? "show.fromCurrent" : "show.fromStart");
+    if (e.altKey && shift && !e.ctrlKey && e.code === "Digit0") return run("insert.equation");
     if (k === "F12") return run("file.saveAs");
     if (k === "F7" && !shift) return run("review.spelling");
     if (this.painter && k === "Escape") { this.painter = null; document.body.classList.remove("painting"); this.updateChrome(); return true; }
@@ -2165,6 +2171,7 @@ export class PresentApp implements EditorHost, PanelHost {
         colors: () => COLOR_SETS.map((c) => ({ label: c.name, run: () => this.applyColorSet(c.name, c.colors) })),
         fonts: () => FONT_SETS.map((f) => ({ label: f.label, run: () => this.applyFontSet(f.name, f.major, f.minor) })),
         underline: [], outlineWeight: [], outlineDash: [], effects: this.effectsMenu(), quickStyles: () => [], zoomFit: [],
+        equations: () => BUILT_IN.map((e) => ({ label: e.name, run: () => void insertEquation(this, e.seq) })),
       },
       panels: {
         newSlide: (close) => this.layoutGallery(close, (p) => this.newSlide(p), this.designName()),
