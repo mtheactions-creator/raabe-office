@@ -52,6 +52,8 @@ SCENARIOS: dict[str, str] = {
         "custom path": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]}]}); const a = p.app; a.editor.select([2]); const m = await import('/src/animations.ts'); const g = m.ANIMATION_GROUPS.find(x => x.cls === 'path'); m.addAnimation(a, 'path', {...g.items.find(i => i.preset === 0), path: 'M 0 0 L 0.2 0 L 0.2 0.25 L 0.4 0.25 E'}, false);""",
         "freeform": """p.setupCase({layout:'Leer', shapes:[]}); const a = p.app; a.editor['addFreeform']([{x:1000000,y:1000000},{x:3000000,y:1500000},{x:1500000,y:3000000}], true, false); a.editor['addFreeform']([{x:5000000,y:1000000},{x:6000000,y:2000000},{x:7000000,y:1200000},{x:8000000,y:2500000}], false, true);""",
         "zoom": """p.newDoc(); const a = p.app; a.newSlide(); a.newSlide(); a.setCurrent(0); const m = await import('/src/zoom.ts'); await m.insertSlideZooms(a, [2]); await new Promise(r => setTimeout(r, 300)); const v = a.deck.view(a.slidePath()).shapes.find(s => s.frame === 'zoom'); a.editor.select([v.id]); a.editor.edit('Verschieben', () => { const S = a.editor.shapeEl(v.id); const x = S.getElementsByTagNameNS('http://schemas.openxmlformats.org/drawingml/2006/main', 'off')[0]; x.setAttribute('x', '1000000'); });""",
+        "section zoom": """p.newDoc(); const a = p.app; a.newSlide(); a.newSlide(); a.deck.setSections([{name:'Anfang', id:'{11111111-1111-1111-1111-111111111111}', slides:[a.deck.slides[0].id]},{name:'Teil 2', id:'{22222222-2222-2222-2222-222222222222}', slides:[a.deck.slides[1].id, a.deck.slides[2].id]}]); a.setCurrent(0); const m = await import('/src/zoom.ts'); await m.insertZooms(a, [{slide: 1, section: '{22222222-2222-2222-2222-222222222222}'}]);""",
+        "summary zoom": """p.newDoc(); const a = p.app; a.newSlide(); a.newSlide(); const ed = a.editor; for (const i of [1, 2]) { a.setCurrent(i); const t = a.deck.view(a.slidePath()).shapes[0]; ed.enterText(t.id); ed.typeText('Teil ' + i); ed.endText(); } const m = await import('/src/zoom.ts'); await m.insertSummaryZoom(a, [1, 2]);""",
         "action": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]}]}); const a = p.app; a.newSlide(); a.setCurrent(0); a.editor.select([2]); const doc = a.deck.pptx.doc(a.slidePath()); const nv = doc.getElementsByTagNameNS('http://schemas.openxmlformats.org/presentationml/2006/main', 'cNvPr')[1]; a.editor.edit('Aktion', () => { const hl = doc.createElementNS('http://schemas.openxmlformats.org/drawingml/2006/main', 'a:hlinkClick'); hl.setAttributeNS('http://schemas.openxmlformats.org/officeDocument/2006/relationships', 'r:id', ''); hl.setAttribute('action', 'ppaction://hlinkshowjump?jump=nextslide'); nv.insertBefore(hl, nv.firstChild); });""",
         "animation copy": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]},{kind:'ellipse',box:[400,100,150,150]}]}); const a = p.app; a.editor.select([2]); const m = await import('/src/animations.ts'); m.addAnimation(a, 'entr', m.ANIMATION_GROUPS[0].items[2], false); m.copyAnimation(a, 2, 3);""",
         "trigger": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]},{kind:'ellipse',box:[400,100,150,150]}]}); const a = p.app; a.editor.select([3]); const m = await import('/src/animations.ts'); m.addAnimation(a, 'entr', m.ANIMATION_GROUPS[0].items[2], false); m.setTrigger(a, 2);""",
@@ -184,7 +186,11 @@ def check(name: str, r: dict, ours: dict) -> list[str]:
         want(s0["animations"] == 1 and s0.get("motion", [""])[0].startswith("M 0 0 L 0.2 0"), f"motion {s0.get('animations')} {s0.get('motion')}")
     elif name == "freeform":
         want([x["type"] for x in sh] == [5, 5], f"types {[x['type'] for x in sh]}")
-    elif name == "zoom":
+    elif name == "summary zoom":
+        s1 = r["slides"][1]["shapes"] if len(r["slides"]) > 1 else []
+        want(len(r["slides"]) == 4 and [x["type"] for x in s1].count(-2) == 1 and r["sections"] == ["Standardabschnitt", "Zusammenfassungsabschnitt", "Teil 1", "Teil 2"],
+             f"slides {len(r['slides'])} types {[x['type'] for x in s1]} sections {r['sections']}")
+    elif name in ("zoom", "section zoom"):
         # PowerPoint reports its zooms as type -2 (a picture, 13, would mean it fell back to the Fallback).
         z = [x for x in sh if x["type"] == -2]
         want(len(z) == 1, f"types {[x['type'] for x in sh]}")

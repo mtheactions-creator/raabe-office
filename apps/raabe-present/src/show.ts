@@ -386,8 +386,11 @@ export class SlideShow {
     // Folienzoom: to its slide (and back afterwards when Zurück zu Zoom is on).
     const zoom = (e.target as HTMLElement).closest?.("[data-zoom]") as HTMLElement | null;
     if (zoom) {
-      const to = this.app.deck.slides.findIndex((s) => s.id === Number(zoom.dataset.zoom));
-      if (to >= 0) { this.zoomReturn = zoom.dataset.zoomBack ? { from: this.index, to } : null; this.goto(to); }
+      // Abschnittszoom: the section's slides, then back.
+      const sec = zoom.dataset.zoomSection ? this.app.deck.sections().find((s) => s.id === zoom.dataset.zoomSection) : undefined;
+      const ids = sec ? sec.slides : [Number(zoom.dataset.zoom)];
+      const idx = ids.map((id) => this.app.deck.slides.findIndex((s) => s.id === id)).filter((i) => i >= 0);
+      if (idx.length) { this.zoomReturn = zoom.dataset.zoomBack ? { from: this.index, to: Math.max(...idx) } : null; this.goto(Math.min(...idx)); }
       return;
     }
     // A shape's action (Einfügen > Aktion) or a link is followed instead of going on (PowerPoint).

@@ -88,7 +88,19 @@ export function renderShape(s: ShapeView, o: RenderOptions, map: Map<number, HTM
   } else if (s.kind === "graphicFrame") {
     if (s.frame === "table") box.append(renderTable(s, o));
     else if (s.frame === "chart" && s.chart) box.append(renderChart(o.pptx, s.chart, w, h));
-    else if (s.frame === "zoom") {
+    else if (s.frame === "zoom" && s.zoom?.tiles) {
+      // Zusammenfassungszoom: each section's tile at its place in the frame (scaled with the frame).
+      const sx = s.w ? w / (s.w / EMU_PX) : 1, sy = s.h ? h / (s.h / EMU_PX) : 1;
+      for (const t of s.zoom.tiles) {
+        const tile = document.createElement("div");
+        const tw = (t.w / EMU_PX) * sx, th = (t.h / EMU_PX) * sy;
+        tile.style.cssText = `position:absolute;left:${(t.x / EMU_PX) * sx}px;top:${(t.y / EMU_PX) * sy}px;width:${tw}px;height:${th}px;box-shadow:inset 0 0 0 0.33px #d3d3d3`;
+        const url = t.path ? o.image(t.path) : undefined;
+        if (url) tile.append(pictureElement(url, tw, th, { ...s.format, crop: undefined }));
+        if (!o.editing) { tile.dataset.zoom = "0"; tile.dataset.zoomSection = t.section; tile.dataset.zoomBack = "1"; }
+        box.append(tile);
+      }
+    } else if (s.frame === "zoom") {
       // Folienzoom: its preview picture with a 0.25 pt light grey line; in the show a click goes to the slide.
       const url = s.pic?.path ? o.image(s.pic.path) : undefined;
       if (url) box.append(pictureElement(url, w, h, { ...s.format, crop: s.pic?.crop }));
@@ -96,7 +108,7 @@ export function renderShape(s: ShapeView, o: RenderOptions, map: Map<number, HTM
       const line = document.createElement("div");
       line.style.cssText = "position:absolute;inset:0;box-shadow:inset 0 0 0 0.33px #d3d3d3;pointer-events:none";
       box.append(line);
-      if (!o.editing && s.zoom) { box.dataset.zoom = String(s.zoom.sldId); if (s.zoom.back) box.dataset.zoomBack = "1"; }
+      if (!o.editing && s.zoom) { box.dataset.zoom = String(s.zoom.sldId); if (s.zoom.section) box.dataset.zoomSection = s.zoom.section; if (s.zoom.back) box.dataset.zoomBack = "1"; }
     } else if (s.frame === "diagram" && s.children) for (const c of s.children) box.append(renderShape({ ...c, rot: c.rot - s.rot }, { ...o, editing: false, selection: null }, null, s));
     else box.append(placeholderBox(w, h));
   } else if (s.kind === "sp" || s.kind === "cxnSp") {

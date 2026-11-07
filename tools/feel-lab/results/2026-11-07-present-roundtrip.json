@@ -100,6 +100,14 @@
    "result": "same",
    "diff": []
   },
+  "section zoom": {
+   "result": "same",
+   "diff": []
+  },
+  "summary zoom": {
+   "result": "same",
+   "diff": []
+  },
   "action": {
    "result": "same",
    "diff": []
@@ -175,6 +183,6 @@
  },
  "summary": {
   "fixtures": "11/11",
-  "scenarios": "34/34"
+  "scenarios": "36/36"
  }
 }

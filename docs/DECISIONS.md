@@ -1839,7 +1839,13 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   the target slide drawn by our renderer (its DOM in an SVG foreignObject onto a canvas); it is not redrawn
   when the target changes (PowerPoint redraws its previews). In the show a click goes to the slide and, with
   Zurück zu Zoom (returnToParent, read from PowerPoint's files), back afterwards. PowerPoint reads our zoom as
-  its own (round trip 34/34). Zusammenfassungszoom and Abschnittszoom are not built (greyed).
+  its own (round trip 34/34). **Abschnittszoom** (recorded the same way: psez:sectionZm with the section's id,
+  Zurück zu Zoom on) shows the section's first slide and plays the section in the show, then returns.
+  **Zusammenfassungszoom** (recorded): a new "Titel und Inhalt" slide before the first chosen slide, sections
+  "Standardabschnitt", "Zusammenfassungsabschnitt" and one per chosen slide named after its title, and in the
+  content placeholder's place one frame (psuz:summaryZm) with a tile per section in a grid; the grid's spacing
+  is PowerPoint's for two tiles (3.75 % gaps, centred in 91.7 % of the frame), other counts by the same rule
+  (our assumption). PowerPoint reads all three as its own (round trip 36/36).
 - **Ansicht > Neues Fenster:** another window onto the same presentation, named "Name:1", "Name:2" as in
   PowerPoint; in RaabePresent it is another tab of the window (own slide and view, shared undo and file).
   Closing one window does not ask to save while another shows the presentation. Alle anordnen stays greyed

@@ -1,0 +1,182 @@
+{
+ "date": "2026-11-07",
+ "what": "PowerPoint's XML for Einfügen > Zoom > Folienzoom",
+ "dialog_title": "Zusammenfassungszoom einfügen",
+ "checkboxes": [
+  "Folie 3 Folie 3",
+  "Folie 2 Folie 2",
+  "Folie 1 Folie 1"
+ ],
+ "slides": [
+  {
+   "layout": "Titelfolie",
+   "shapes": [
+    {
+     "name": "Title 1",
+     "type": 14,
+     "text": "Folie 1",
+     "box": [
+      120.0,
+      88.37503814697266,
+      720.0,
+      188.0
+     ]
+    },
+    {
+     "name": "Subtitle 2",
+     "type": 14,
+     "text": "",
+     "box": [
+      120.0,
+      283.6250305175781,
+      720.0,
+      130.3749542236328
+     ]
+    }
+   ]
+  },
+  {
+   "layout": "Titel und Inhalt",
+   "shapes": [
+    {
+     "name": "Title 1",
+     "type": 14,
+     "text": "",
+     "box": [
+      66.0,
+      28.75,
+      828.0,
+      104.37503814697266
+     ]
+    },
+    {
+     "name": "Summary Zoom 4",
+     "type": -2,
+     "text": null,
+     "box": [
+      66.0,
+      143.75,
+      828.0,
+      342.6250305175781
+     ]
+    }
+   ]
+  },
+  {
+   "layout": "Titel und Inhalt",
+   "shapes": [
+    {
+     "name": "Title 1",
+     "type": 14,
+     "text": "Folie 2",
+     "box": [
+      66.0,
+      28.75,
+      828.0,
+      104.37503814697266
+     ]
+    },
+    {
+     "name": "Content Placeholder 2",
+     "type": 14,
+     "text": "",
+     "box": [
+      66.0,
+      143.75,
+      828.0,
+      342.6250305175781
+     ]
+    }
+   ]
+  },
+  {
+   "layout": "Titel und Inhalt",
+   "shapes": [
+    {
+     "name": "Title 1",
+     "type": 14,
+     "text": "Folie 3",
+     "box": [
+      66.0,
+      28.75,
+      828.0,
+      104.37503814697266
+     ]
+    },
+    {
+     "name": "Content Placeholder 2",
+     "type": 14,
+     "text": "",
+     "box": [
+      66.0,
+      143.75,
+      828.0,
+      342.6250305175781
+     ]
+    }
+   ]
+  }
+ ],
+ "sections": [
+  [
+   "Standardabschnitt",
+   1,
+   1
+  ],
+  [
+   "Zusammenfassungsabschnitt",
+   2,
+   1
+  ],
+  [
+   "Folie 2",
+   3,
+   1
+  ],
+  [
+   "Folie 3",
+   4,
+   1
+  ]
+ ],
+ "shapes": [
+  {
+   "name": "Title 1",
+   "type": 14,
+   "box": [
+    120.0,
+    88.37503814697266,
+    720.0,
+    188.0
+   ]
+  },
+  {
+   "name": "Subtitle 2",
+   "type": 14,
+   "box": [
+    120.0,
+    283.6250305175781,
+    720.0,
+    130.3749542236328
+   ]
+  }
+ ],
+ "slide_xml": {
+  "ppt/slides/slide1.xml": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n<p:sld xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:p=\"http://schemas.openxmlformats.org/presentationml/2006/main\"><p:cSld><p:spTree><p:nvGrpSpPr><p:cNvPr id=\"1\" name=\"\"/><p:cNvGrpSpPr/><p:nvPr/></p:nvGrpSpPr><p:grpSpPr><a:xfrm><a:off x=\"0\" y=\"0\"/><a:ext cx=\"0\" cy=\"0\"/><a:chOff x=\"0\" y=\"0\"/><a:chExt cx=\"0\" cy=\"0\"/></a:xfrm></p:grpSpPr><p:sp><p:nvSpPr><p:cNvPr id=\"2\" name=\"Titel 1\"><a:extLst><a:ext uri=\"{FF2B5EF4-FFF2-40B4-BE49-F238E27FC236}\"><a16:creationId xmlns:a16=\"http://schemas.microsoft.com/office/drawing/2014/main\" id=\"{6514AFD4-2645-E38A-6C6A-35A8D9A133B3}\"/></a:ext></a:extLst></p:cNvPr><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"ctrTitle\"/></p:nvPr></p:nvSpPr><p:spPr/><p:txBody><a:bodyPr/><a:lstStyle/><a:p><a:r><a:rPr lang=\"de-DE\"/><a:t>Folie 1</a:t></a:r></a:p></p:txBody></p:sp><p:sp><p:nvSpPr><p:cNvPr id=\"3\" name=\"Untertitel 2\"><a:extLst><a:ext uri=\"{FF2B5EF4-FFF2-40B4-BE49-F238E27FC236}\"><a16:creationId xmlns:a16=\"http://schemas.microsoft.com/office/drawing/2014/main\" id=\"{37BBCB9A-FE72-DE09-9A52-FA75F71B34D6}\"/></a:ext></a:extLst></p:cNvPr><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"subTitle\" idx=\"1\"/></p:nvPr></p:nvSpPr><p:spPr/><p:txBody><a:bodyPr/><a:lstStyle/><a:p><a:endParaRPr lang=\"de-DE\"/></a:p></p:txBody></p:sp></p:spTree><p:extLst><p:ext uri=\"{BB962C8B-B14F-4D97-AF65-F5344CB8AC3E}\"><p14:creationId xmlns:p14=\"http://schemas.microsoft.com/office/powerpoint/2010/main\" val=\"578858042\"/></p:ext></p:extLst></p:cSld><p:clrMapOvr><a:masterClrMapping/></p:clrMapOvr></p:sld>",
+  "ppt/slides/slide2.xml": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n<p:sld xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:p=\"http://schemas.openxmlformats.org/presentationml/2006/main\"><p:cSld><p:spTree><p:nvGrpSpPr><p:cNvPr id=\"1\" name=\"\"/><p:cNvGrpSpPr/><p:nvPr/></p:nvGrpSpPr><p:grpSpPr><a:xfrm><a:off x=\"0\" y=\"0\"/><a:ext cx=\"0\" cy=\"0\"/><a:chOff x=\"0\" y=\"0\"/><a:chExt cx=\"0\" cy=\"0\"/></a:xfrm></p:grpSpPr><p:sp><p:nvSpPr><p:cNvPr id=\"2\" name=\"Titel 1\"><a:extLst><a:ext uri=\"{FF2B5EF4-FFF2-40B4-BE49-F238E27FC236}\"><a16:creationId xmlns:a16=\"http://schemas.microsoft.com/office/drawing/2014/main\" id=\"{8751C4F5-210D-680D-9EE2-1DF5DF089D99}\"/></a:ext></a:extLst></p:cNvPr><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"title\"/></p:nvPr></p:nvSpPr><p:spPr/><p:txBody><a:bodyPr/><a:lstStyle/><a:p><a:endParaRPr lang=\"de-DE\"/></a:p></p:txBody></p:sp><mc:AlternateContent xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\"><mc:Choice xmlns:psuz=\"http://schemas.microsoft.com/office/powerpoint/2016/summaryzoom\" Requires=\"psuz\"><p:graphicFrame><p:nvGraphicFramePr><p:cNvPr id=\"5\" name=\"Zusammenfassungszoom 4\"><a:extLst><a:ext uri=\"{FF2B5EF4-FFF2-40B4-BE49-F238E27FC236}\"><a16:creationId xmlns:a16=\"http://schemas.microsoft.com/office/drawing/2014/main\" id=\"{9DEB57FC-2EBA-7F62-F953-0C8F4534260D}\"/></a:ext></a:extLst></p:cNvPr><p:cNvGraphicFramePr><a:graphicFrameLocks noChangeAspect=\"1\"/></p:cNvGraphicFramePr><p:nvPr><p:extLst><p:ext uri=\"{D42A27DB-BD31-4B8C-83A1-F6EECF244321}\"><p14:modId xmlns:p14=\"http://schemas.microsoft.com/office/powerpoint/2010/main\" val=\"4116080509\"/></p:ext></p:extLst></p:nvPr></p:nvGraphicFramePr><p:xfrm><a:off x=\"838200\" y=\"1825625\"/><a:ext cx=\"10515600\" cy=\"4351338\"/></p:xfrm><a:graphic><a:graphicData uri=\"http://schemas.microsoft.com/office/powerpoint/2016/summaryzoom\"><psuz:summaryZm><psuz:summaryZmObj sectionId=\"{41818B55-A5CE-4C10-AD97-CCB19881AC6D}\"><psuz:zmPr id=\"{4C62572A-728A-42F2-B729-B5308FFA660C}\" transitionDur=\"1000\"><p166:blipFill xmlns:p166=\"http://schemas.microsoft.com/office/powerpoint/2016/6/main\"><a:blip r:embed=\"rId2\"/><a:stretch><a:fillRect/></a:stretch></p166:blipFill><p166:spPr xmlns:p166=\"http://schemas.microsoft.com/office/powerpoint/2016/6/main\"><a:xfrm><a:off x=\"437054\" y=\"844788\"/><a:ext cx=\"4732020\" cy=\"2661761\"/></a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom><a:ln w=\"3175\"><a:solidFill><a:prstClr val=\"ltGray\"/></a:solidFill></a:ln></p166:spPr></psuz:zmPr></psuz:summaryZmObj><psuz:summaryZmObj sectionId=\"{E8A7086A-C317-49C8-A631-9D21148DCAE0}\"><psuz:zmPr id=\"{96671F01-3957-4DC5-A1DE-FF3CE4688124}\" transitionDur=\"1000\"><p166:blipFill xmlns:p166=\"http://schemas.microsoft.com/office/powerpoint/2016/6/main\"><a:blip r:embed=\"rId3\"/><a:stretch><a:fillRect/></a:stretch></p166:blipFill><p166:spPr xmlns:p166=\"http://schemas.microsoft.com/office/powerpoint/2016/6/main\"><a:xfrm><a:off x=\"5346525\" y=\"844788\"/><a:ext cx=\"4732020\" cy=\"2661761\"/></a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom><a:ln w=\"3175\"><a:solidFill><a:prstClr val=\"ltGray\"/></a:solidFill></a:ln></p166:spPr></psuz:zmPr></psuz:summaryZmObj><psuz:gridLayout/></psuz:summaryZm></a:graphicData></a:graphic></p:graphicFrame></mc:Choice><mc:Fallback><p:grpSp><p:nvGrpSpPr><p:cNvPr id=\"5\" name=\"Zusammenfassungszoom 4\"><a:extLst><a:ext uri=\"{FF2B5EF4-FFF2-40B4-BE49-F238E27FC236}\"><a16:creationId xmlns:a16=\"http://schemas.microsoft.com/office/drawing/2014/main\" id=\"{9DEB57FC-2EBA-7F62-F953-0C8F4534260D}\"/></a:ext></a:extLst></p:cNvPr><p:cNvGrpSpPr><a:grpSpLocks noGrp=\"1\" noUngrp=\"1\" noRot=\"1\" noChangeAspect=\"1\" noMove=\"1\" noResize=\"1\"/></p:cNvGrpSpPr><p:nvPr/></p:nvGrpSpPr><p:grpSpPr><a:xfrm><a:off x=\"838200\" y=\"1825625\"/><a:ext cx=\"10515600\" cy=\"4351338\"/><a:chOff x=\"838200\" y=\"1825625\"/><a:chExt cx=\"10515600\" cy=\"4351338\"/></a:xfrm></p:grpSpPr><p:pic><p:nvPicPr><p:cNvPr id=\"6\" name=\"Grafik 6\"><a:hlinkClick r:id=\"rId4\" action=\"ppaction://hlinksldjump\"/></p:cNvPr><p:cNvPicPr><a:picLocks noSelect=\"1\" noRot=\"1\" noChangeAspect=\"1\" noMove=\"1\" noResize=\"1\" noEditPoints=\"1\" noAdjustHandles=\"1\" noChangeArrowheads=\"1\" noChangeShapeType=\"1\"/></p:cNvPicPr><p:nvPr/></p:nvPicPr><p:blipFill><a:blip r:embed=\"rId2\"/><a:stretch><a:fillRect/></a:stretch></p:blipFill><p:spPr><a:xfrm><a:off x=\"1275254\" y=\"2670413\"/><a:ext cx=\"4732020\" cy=\"2661761\"/></a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom><a:ln w=\"3175\"><a:solidFill><a:prstClr val=\"ltGray\"/></a:solidFill></a:ln></p:spPr></p:pic><p:pic><p:nvPicPr><p:cNvPr id=\"7\" name=\"Grafik 7\"><a:hlinkClick r:id=\"rId5\" action=\"ppaction://hlinksldjump\"/></p:cNvPr><p:cNvPicPr><a:picLocks noSelect=\"1\" noRot=\"1\" noChangeAspect=\"1\" noMove=\"1\" noResize=\"1\" noEditPoints=\"1\" noAdjustHandles=\"1\" noChangeArrowheads=\"1\" noChangeShapeType=\"1\"/></p:cNvPicPr><p:nvPr/></p:nvPicPr><p:blipFill><a:blip r:embed=\"rId3\"/><a:stretch><a:fillRect/></a:stretch></p:blipFill><p:spPr><a:xfrm><a:off x=\"6184725\" y=\"2670413\"/><a:ext cx=\"4732020\" cy=\"2661761\"/></a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom><a:ln w=\"3175\"><a:solidFill><a:prstClr val=\"ltGray\"/></a:solidFill></a:ln></p:spPr></p:pic></p:grpSp></mc:Fallback></mc:AlternateContent></p:spTree><p:extLst><p:ext uri=\"{BB962C8B-B14F-4D97-AF65-F5344CB8AC3E}\"><p14:creationId xmlns:p14=\"http://schemas.microsoft.com/office/powerpoint/2010/main\" val=\"4183215270\"/></p:ext></p:extLst></p:cSld><p:clrMapOvr><a:masterClrMapping/></p:clrMapOvr></p:sld>",
+  "ppt/slides/slide3.xml": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n<p:sld xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:p=\"http://schemas.openxmlformats.org/presentationml/2006/main\"><p:cSld><p:spTree><p:nvGrpSpPr><p:cNvPr id=\"1\" name=\"\"/><p:cNvGrpSpPr/><p:nvPr/></p:nvGrpSpPr><p:grpSpPr><a:xfrm><a:off x=\"0\" y=\"0\"/><a:ext cx=\"0\" cy=\"0\"/><a:chOff x=\"0\" y=\"0\"/><a:chExt cx=\"0\" cy=\"0\"/></a:xfrm></p:grpSpPr><p:sp><p:nvSpPr><p:cNvPr id=\"2\" name=\"Titel 1\"><a:extLst><a:ext uri=\"{FF2B5EF4-FFF2-40B4-BE49-F238E27FC236}\"><a16:creationId xmlns:a16=\"http://schemas.microsoft.com/office/drawing/2014/main\" id=\"{9BE344BC-49EB-D781-9F26-6B3A6FB58723}\"/></a:ext></a:extLst></p:cNvPr><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"title\"/></p:nvPr></p:nvSpPr><p:spPr/><p:txBody><a:bodyPr/><a:lstStyle/><a:p><a:r><a:rPr lang=\"de-DE\"/><a:t>Folie 2</a:t></a:r></a:p></p:txBody></p:sp><p:sp><p:nvSpPr><p:cNvPr id=\"3\" name=\"Inhaltsplatzhalter 2\"><a:extLst><a:ext uri=\"{FF2B5EF4-FFF2-40B4-BE49-F238E27FC236}\"><a16:creationId xmlns:a16=\"http://schemas.microsoft.com/office/drawing/2014/main\" id=\"{46379404-14A7-0CB1-5E58-D609CD2C852D}\"/></a:ext></a:extLst></p:cNvPr><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph idx=\"1\"/></p:nvPr></p:nvSpPr><p:spPr/><p:txBody><a:bodyPr/><a:lstStyle/><a:p><a:endParaRPr lang=\"de-DE\"/></a:p></p:txBody></p:sp></p:spTree><p:extLst><p:ext uri=\"{BB962C8B-B14F-4D97-AF65-F5344CB8AC3E}\"><p14:creationId xmlns:p14=\"http://schemas.microsoft.com/office/powerpoint/2010/main\" val=\"3229503079\"/></p:ext></p:extLst></p:cSld><p:clrMapOvr><a:masterClrMapping/></p:clrMapOvr></p:sld>",
+  "ppt/slides/slide4.xml": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n<p:sld xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:p=\"http://schemas.openxmlformats.org/presentationml/2006/main\"><p:cSld><p:spTree><p:nvGrpSpPr><p:cNvPr id=\"1\" name=\"\"/><p:cNvGrpSpPr/><p:nvPr/></p:nvGrpSpPr><p:grpSpPr><a:xfrm><a:off x=\"0\" y=\"0\"/><a:ext cx=\"0\" cy=\"0\"/><a:chOff x=\"0\" y=\"0\"/><a:chExt cx=\"0\" cy=\"0\"/></a:xfrm></p:grpSpPr><p:sp><p:nvSpPr><p:cNvPr id=\"2\" name=\"Titel 1\"><a:extLst><a:ext uri=\"{FF2B5EF4-FFF2-40B4-BE49-F238E27FC236}\"><a16:creationId xmlns:a16=\"http://schemas.microsoft.com/office/drawing/2014/main\" id=\"{3CB77B0E-AFD8-559C-CCA4-11D0AF00DE16}\"/></a:ext></a:extLst></p:cNvPr><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"title\"/></p:nvPr></p:nvSpPr><p:spPr/><p:txBody><a:bodyPr/><a:lstStyle/><a:p><a:r><a:rPr lang=\"de-DE\"/><a:t>Folie 3</a:t></a:r></a:p></p:txBody></p:sp><p:sp><p:nvSpPr><p:cNvPr id=\"3\" name=\"Inhaltsplatzhalter 2\"><a:extLst><a:ext uri=\"{FF2B5EF4-FFF2-40B4-BE49-F238E27FC236}\"><a16:creationId xmlns:a16=\"http://schemas.microsoft.com/office/drawing/2014/main\" id=\"{66D87792-CE4B-B5B6-4D93-AD371AF2AA37}\"/></a:ext></a:extLst></p:cNvPr><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph idx=\"1\"/></p:nvPr></p:nvSpPr><p:spPr/><p:txBody><a:bodyPr/><a:lstStyle/><a:p><a:endParaRPr lang=\"de-DE\"/></a:p></p:txBody></p:sp></p:spTree><p:extLst><p:ext uri=\"{BB962C8B-B14F-4D97-AF65-F5344CB8AC3E}\"><p14:creationId xmlns:p14=\"http://schemas.microsoft.com/office/powerpoint/2010/main\" val=\"927399685\"/></p:ext></p:extLst></p:cSld><p:clrMapOvr><a:masterClrMapping/></p:clrMapOvr></p:sld>"
+ },
+ "slide_root": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n<p:sld xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:p=\"http://schemas.openxmlformats.org/presentationml/2006/main\"><p:cSld><p:spTree><p:nvGrpSpPr><p:cNvPr id=\"1\" name=\"\"/><p:cNvGrpSpPr/><p:nvPr/></p:nvGrpSpPr><p:grpSpPr><a:xfrm><a:off x=\"0\" y=\"0\"/><a:ext cx=\"0\" cy=\"0\"/><a:chOff x=\"0\" y=\"0\"/><a:chExt cx=\"0\" cy=\"0\"/></a:xfrm></p:grpSpPr><p:sp><p:nvSpPr><p:cNvPr id=\"2\" name=\"Titel 1\"><a:extLst><a:ext uri=\"{FF2B5EF4-FFF2-40B4-BE49-F238E27FC",
+ "zoom_xml": null,
+ "rels": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n<Relationships xmlns=\"http://schemas.openxmlformats.org/package/2006/relationships\"><Relationship Id=\"rId1\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout\" Target=\"../slideLayouts/slideLayout1.xml\"/></Relationships>",
+ "content_types": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n<Types xmlns=\"http://schemas.openxmlformats.org/package/2006/content-types\"><Default Extension=\"jpeg\" ContentType=\"image/jpeg\"/><Default Extension=\"png\" ContentType=\"image/png\"/><Default Extension=\"rels\" ContentType=\"application/vnd.openxmlformats-package.relationships+xml\"/><Default Extension=\"xml\" ContentType=\"application/xml\"/><Override PartName=\"/ppt/presentation.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml\"/><Override PartName=\"/ppt/slideMasters/slideMaster1.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.presentationml.slideMaster+xml\"/><Override PartName=\"/ppt/slides/slide1.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.presentationml.slide+xml\"/><Override PartName=\"/ppt/slides/slide2.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.presentationml.slide+xml\"/><Override PartName=\"/ppt/slides/slide3.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.presentationml.slide+xml\"/><Override PartName=\"/ppt/slides/slide4.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.presentationml.slide+xml\"/><Override PartName=\"/ppt/presProps.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.presentationml.presProps+xml\"/><Override PartName=\"/ppt/viewProps.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.presentationml.viewProps+xml\"/><Override PartName=\"/ppt/theme/theme1.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.theme+xml\"/><Override PartName=\"/ppt/tableStyles.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.presentationml.tableStyles+xml\"/><Override PartName=\"/ppt/slideLayouts/slideLayout1.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.presentationml.slideLayout+xml\"/><Override PartName=\"/ppt/slideLayouts/slideLayout2.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.presentationml.slideLayout+xml\"/><Override PartName=\"/ppt/slideLayouts/slideLayout3.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.presentationml.slideLayout+xml\"/><Override PartName=\"/ppt/slideLayouts/slideLayout4.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.presentationml.slideLayout+xml\"/><Override PartName=\"/ppt/slideLayouts/slideLayout5.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.presentationml.slideLayout+xml\"/><Override PartName=\"/ppt/slideLayouts/slideLayout6.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.presentationml.slideLayout+xml\"/><Override PartName=\"/ppt/slideLayouts/slideLayout7.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.presentationml.slideLayout+xml\"/><Override PartName=\"/ppt/slideLayouts/slideLayout8.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.presentationml.slideLayout+xml\"/><Override PartName=\"/ppt/slideLayouts/slideLayout9.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.presentationml.slideLayout+xml\"/><Override PartName=\"/ppt/slideLayouts/slideLayout10.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.presentationml.slideLayout+xml\"/><Override PartName=\"/ppt/slideLayouts/slideLayout11.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.presentationml.slideLayout+xml\"/><Override PartName=\"/docProps/core.xml\" ContentType=\"application/vnd.openxmlformats-package.core-properties+xml\"/><Override PartName=\"/docProps/app.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.extended-properties+xml\"/></Types>",
+ "presentation_xml": null,
+ "presentation_ext": [
+  "<p:extLst><p:ext uri=\"{521415D9-36F7-43E2-AB2F-B90AF26B5E84}\"><p14:sectionLst xmlns:p14=\"http://schemas.microsoft.com/office/powerpoint/2010/main\"><p14:section name=\"Standardabschnitt\" id=\"{CF1DED9D-3E1A-4DC0-83C1-0674820AD68B}\"><p14:sldIdLst><p14:sldId id=\"256\"/></p14:sldIdLst></p14:section><p14:section name=\"Zusammenfassungsabschnitt\" id=\"{F00F8A36-213B-4534-BDAC-D930CA36F256}\"><p14:sldIdLst><p14:sldId id=\"259\"/></p14:sldIdLst></p14:section><p14:section name=\"Folie 2\" id=\"{41818B55-A5CE-4C10-AD97-CCB19881AC6D}\"><p14:sldIdLst><p14:sldId id=\"257\"/></p14:sldIdLst></p14:section><p14:section name=\"Folie 3\" id=\"{E8A7086A-C317-49C8-A631-9D21148DCAE0}\"><p14:sldIdLst><p14:sldId id=\"258\"/></p14:sldIdLst></p14:section></p14:sectionLst></p:ext></p:extLst>"
+ ],
+ "media": [
+  "ppt/media/image2.png",
+  "ppt/media/image1.png"
+ ]
+}

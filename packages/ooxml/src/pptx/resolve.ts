@@ -147,7 +147,7 @@ export interface ShapeView {
   /** Chart part path. */
   chart?: string;
   /** Folienzoom (frame "zoom"): the target slide's sldId and whether the show returns afterwards. */
-  zoom?: { sldId: number; back: boolean };
+  zoom?: { sldId: number; back: boolean; section?: string; tiles?: { section: string; path?: string; x: number; y: number; w: number; h: number }[] };
   children?: ShapeView[];
   /** Whether the shape is a text box (txBox="1"). */
   textBox: boolean;
@@ -251,6 +251,8 @@ export function allShapes(tree: Element): Element[] {
 }
 
 const NS_A14 = "http://schemas.microsoft.com/office/drawing/2010/main";
+const NS_PSEZ = "http://schemas.microsoft.com/office/powerpoint/2016/sectionzoom";
+const NS_PSUZ = "http://schemas.microsoft.com/office/powerpoint/2016/summaryzoom";
 const NS_PSLZ = "http://schemas.microsoft.com/office/powerpoint/2016/slidezoom";
 
 /**
@@ -261,7 +263,8 @@ export function alternateShapes(ac: Element): Element[] {
   const choice = kid(ac, "Choice");
   const req = choice?.getAttribute("Requires");
   // Understood Choices: equations (a14 with a14:m) and Folienzoom (pslz).
-  const ok = choice && ((req === "a14" && choice.getElementsByTagNameNS(NS_A14, "m").length) || (req === "pslz" && choice.getElementsByTagNameNS(NS_PSLZ, "sldZm").length));
+  const ok = choice && ((req === "a14" && choice.getElementsByTagNameNS(NS_A14, "m").length) || (req === "pslz" && choice.getElementsByTagNameNS(NS_PSLZ, "sldZm").length)
+    || (req === "psez" && choice.getElementsByTagNameNS(NS_PSEZ, "sectionZm").length) || (req === "psuz" && choice.getElementsByTagNameNS(NS_PSUZ, "summaryZm").length));
   const pick = ok ? choice : kid(ac, "Fallback");
   return kids(pick).filter((x) => SHAPES.includes(x.localName));
 }
@@ -684,13 +687,28 @@ export class SlideResolver {
     if (kind === "graphicFrame") {
       const gd = at(el, "graphic/graphicData");
       const uri = gd?.getAttribute("uri") ?? "";
-      v.frame = uri.endsWith("/table") ? "table" : uri.endsWith("/chart") ? "chart" : uri.endsWith("/diagram") ? "diagram" : uri.endsWith("/ole") ? "ole" : uri.endsWith("/slidezoom") ? "zoom" : "other";
-      if (v.frame === "zoom") {
-        const obj = gd?.getElementsByTagNameNS(NS_PSLZ, "sldZmObj")[0];
-        const zm = obj?.getElementsByTagNameNS(NS_PSLZ, "zmPr")[0];
+      v.frame = uri.endsWith("/table") ? "table" : uri.endsWith("/chart") ? "chart" : uri.endsWith("/diagram") ? "diagram" : uri.endsWith("/ole") ? "ole" : uri.endsWith("/slidezoom") || uri.endsWith("/sectionzoom") || uri.endsWith("/summaryzoom") ? "zoom" : "other";
+      if (uri.endsWith("/summaryzoom")) {
+        // Zusammenfassungszoom: one frame with a tile per section, placed inside the frame.
+        const tiles = Array.from(gd?.getElementsByTagNameNS(NS_PSUZ, "summaryZmObj") ?? []).map((o) => {
+          const blip = o.getElementsByTagNameNS(NS_A, "blip")[0];
+          const rid = blip?.getAttributeNS(NS_R, "embed");
+          const off = o.getElementsByTagNameNS(NS_A, "off")[0], ext = o.getElementsByTagNameNS(NS_A, "ext")[0];
+          return { section: o.getAttribute("sectionId") ?? "", path: rid ? this.pptx.target(this.path, rid) : undefined,
+            x: num(off, "x") ?? 0, y: num(off, "y") ?? 0, w: num(ext, "cx") ?? 0, h: num(ext, "cy") ?? 0 };
+        });
+        v.zoom = { sldId: 0, back: true, tiles };
+      }
+      if (v.frame === "zoom" && !v.zoom) {
+        const section = uri.endsWith("/sectionzoom");
+        const ns = section ? NS_PSEZ : NS_PSLZ;
+        const obj = gd?.getElementsByTagNameNS(ns, section ? "sectionZmObj" : "sldZmObj")[0];
+        const zm = obj?.getElementsByTagNameNS(ns, "zmPr")[0];
         const blip = zm?.getElementsByTagNameNS(NS_A, "blip")[0];
         const rid = blip?.getAttributeNS(NS_R, "embed");
-        v.zoom = { sldId: num(obj, "sldId") ?? 0, back: zm?.getAttribute("returnToParent") === "1" };
+        // Zurück zu Zoom: off by default for a slide zoom, on for a section zoom (as PowerPoint writes them).
+        const back = zm?.getAttribute("returnToParent");
+        v.zoom = section ? { sldId: 0, back: back !== "0", section: obj?.getAttribute("sectionId") ?? "" } : { sldId: num(obj, "sldId") ?? 0, back: back === "1" };
         v.pic = { path: rid ? this.pptx.target(this.path, rid) : undefined, crop: { l: 0, t: 0, r: 0, b: 0 } };
       }
       if (v.frame === "diagram") {

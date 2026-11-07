@@ -45,6 +45,10 @@ def toggle(el) -> None:
     p.QueryInterface(uia.U.IUIAutomationTogglePattern).Toggle()
 
 
+SECTION = "section" in sys.argv[1:]
+SUMMARY = "summary" in sys.argv[1:]
+
+
 def main() -> int:
     if not take_lock():
         print("real-input lock held: try later")
@@ -61,12 +65,16 @@ def main() -> int:
             for i in range(3):
                 s = ppt.add_slide(pres, layout=2 if i else 1)
                 s.Shapes(1).TextFrame.TextRange.Text = f"Folie {i + 1}"
+            if SECTION:
+                # Two sections: "Anfang" (slide 1) and "Teil 2" (slides 2-3).
+                pres.SectionProperties.AddBeforeSlide(1, "Anfang")
+                pres.SectionProperties.AddBeforeSlide(2, "Teil 2")
             pres.Save()
             pres.Windows(1).View.GotoSlide(1)
             main_hwnd = ppt.hwnd or ppt.main_window()
             before = set(ppt.windows())
             winapi.activate(main_hwnd, settle=0.5)
-            for k in ["alt", "i", "y", "f"]:
+            for k in ["alt", "i", "y", "a" if SECTION else "z" if SUMMARY else "f"]:
                 winapi.press(k)
                 time.sleep(0.6)
             # The dialog: a new window of our process.
@@ -98,11 +106,12 @@ def main() -> int:
                     boxes.append((d["name"], e))
                 stack.extend(uia.children(e))
             out["checkboxes"] = [n for n, _ in boxes]
-            target = next((e for n, e in boxes if "3" in n), boxes[-1][1] if boxes else None)
-            if target is None:
+            targets = [e for n, e in boxes if any(t in n for t in (["2", "3"] if SUMMARY else ["Teil 2"] if SECTION else ["3"]))][: 2 if SUMMARY else 1]
+            if not targets:
                 out["error"] = "no slide check boxes"
                 return 1
-            toggle(target)
+            for t in targets:
+                toggle(t)
             time.sleep(0.4)
             ok = uia.find(root, lambda d: d["type"] == "Button" and d["name"] == "Einfügen")
             if ok is None:
@@ -110,25 +119,33 @@ def main() -> int:
                 return 1
             uia.invoke(ok)
             time.sleep(2.0)
+            if SUMMARY:
+                out["slides"] = [{"layout": str(pres.Slides(k).CustomLayout.Name), "shapes": [{"name": str(sh.Name), "type": int(sh.Type), "text": str(sh.TextFrame.TextRange.Text) if sh.HasTextFrame else None,
+                                  "box": [float(sh.Left), float(sh.Top), float(sh.Width), float(sh.Height)]} for sh in pres.Slides(k).Shapes]} for k in range(1, pres.Slides.Count + 1)]
+                sp = pres.SectionProperties
+                out["sections"] = [[str(sp.Name(k)), int(sp.FirstSlide(k)), int(sp.SlidesCount(k))] for k in range(1, sp.Count + 1)]
             slide = pres.Slides(1)
             out["shapes"] = [{"name": str(slide.Shapes(k).Name), "type": int(slide.Shapes(k).Type), "box": [float(slide.Shapes(k).Left), float(slide.Shapes(k).Top), float(slide.Shapes(k).Width), float(slide.Shapes(k).Height)]} for k in range(1, slide.Shapes.Count + 1)]
             copy = ppt.tmp / "zoom-copy.pptx"
             ppt.save_copy(pres, copy)
-            cap = HERE / "captures" / "zoom"
+            cap = HERE / "captures" / ("zoom-section" if SECTION else "zoom-summary" if SUMMARY else "zoom")
             cap.mkdir(parents=True, exist_ok=True)
             shutil.copy(copy, cap / "zoom.pptx")
             z = zipfile.ZipFile(copy)
             xml = z.read("ppt/slides/slide1.xml").decode("utf-8")
+            if SUMMARY:
+                out["slide_xml"] = {n: z.read(n).decode("utf-8") for n in z.namelist() if re.match(r"ppt/slides/slide\d+\.xml$", n)}
             m = re.search(r"<mc:AlternateContent.*</mc:AlternateContent>", xml, re.S)
             out["slide_root"] = xml[:600]
             out["zoom_xml"] = m.group(0) if m else None
             out["rels"] = z.read("ppt/slides/_rels/slide1.xml.rels").decode("utf-8")
             out["content_types"] = z.read("[Content_Types].xml").decode("utf-8")
+            out["presentation_xml"] = z.read("ppt/presentation.xml").decode("utf-8")[-3000:] if SECTION else None
             out["presentation_ext"] = re.findall(r"<p:extLst>.*?</p:extLst>", z.read("ppt/presentation.xml").decode("utf-8"), re.S)
             out["media"] = [n for n in z.namelist() if "/media/" in n]
         finally:
             print(ppt.close(kill_if_unreachable=True))
-            res = HERE / "results" / f"{out['date']}-powerpoint-zoom.json"
+            res = HERE / "results" / f"{out['date']}-powerpoint-zoom{'-section' if SECTION else '-summary' if SUMMARY else ''}.json"
             res.write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding="utf-8", newline="\n")
             print("wrote", res.name, out.get("error", "ok"))
     finally:
