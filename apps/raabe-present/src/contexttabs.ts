@@ -92,6 +92,7 @@ export interface ContextTabHost {
   quickStyleTiles(): Control;
   picStyleTiles(): Control;
   tableStyleTiles(): Control;
+  wordArtTiles(): Control;
   cellDirections(): MenuEntry[];
   cellMargins(): MenuEntry[];
   tableStyles(close: () => void): HTMLElement;
@@ -121,7 +122,7 @@ const arrange = (pic: boolean): Control[] => [stack(
   { type: "dropdown", cmd: "arrange.group", key: "GR", size: "small", menu: [{ cmd: "arrange.group" }, { cmd: "arrange.regroup" }, { cmd: "arrange.ungroup" }] },
   { type: "dropdown", cmd: "arrange.rotate", key: "DR", size: "small", menu: [{ cmd: "arrange.rotRight" }, { cmd: "arrange.rotLeft" }, { cmd: "arrange.flipV" }, { cmd: "arrange.flipH" }] })];
 
-const wordArt = (h: ContextTabHost): Control[] => [b("wordart.quickStyles", "C", "large"),
+const wordArt = (h: ContextTabHost): Control[] => [h.wordArtTiles(),
   stack(h.color(() => h.fontColor(), (c) => h.setFontColor(c), "wordart.fill", "4", true), h.color(() => h.textOutlineColor(), (c) => h.setTextOutline(c), "wordart.outline", "TE", true, () => h.textOutlineExtra()), b("wordart.effects", "IE"))];
 
 export function shapeFormatTab(h: ContextTabHost): Tab {

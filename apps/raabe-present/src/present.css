@@ -255,3 +255,10 @@ body.view-bw .slide { filter: grayscale(1) contrast(4) brightness(1.2); }
 .rgallery.ts-tiles .ts-rtile { width: 58px; height: 38px; display: block; background: #fff; }
 .rgallery.ts-tiles .ts-row { display: block; height: 7px; box-sizing: border-box; }
 .rgroup[data-group="cellSize"] .rspinner .lbl { display: none; }
+
+/* WordArt styles (D-072). */
+.wa-a { font: bold 30px Calibri, Carlito, sans-serif; line-height: 1; }
+.wa-panel { padding: 6px; }
+.wa-grid { display: grid; grid-template-columns: repeat(5, 48px); gap: 6px; }
+.wa-item { height: 48px; display: flex; align-items: center; justify-content: center; background: #fff; border: 1px solid transparent; cursor: pointer; }
+.wa-item:hover { border-color: #f5b56e; }

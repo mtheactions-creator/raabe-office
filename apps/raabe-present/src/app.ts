@@ -13,6 +13,7 @@ import { ribbonTabs, type RibbonContext } from "./ribbon-def";
 import { Deck, defaultMasterPlaceholder } from "./deck";
 import { LINE_DASHES, LINE_WEIGHTS } from "./lines";
 import { quickStylesPanel } from "./quickstyles";
+import { wordArtInsertPanel } from "./wordart";
 import { setShowFlag, showFlag } from "./showsetup";
 import { editEquation, equationTab, hasEquation, implementEquationCommands, insertEquation, selectedEquation } from "./equations";
 import { BUILT_IN } from "./equations-builtin";
@@ -2337,19 +2338,7 @@ export class PresentApp implements EditorHost, PanelHost {
 
   /** Einfügen > WordArt: a text box "Hier steht Ihr Text" in 54 pt with one of the text styles (our selection of Office's). */
   private wordArtGallery(close: () => void): HTMLElement {
-    const styles: [string, string][] = [
-      ["Füllung: Schwarz, Textfarbe 1; Schatten", '<a:solidFill><a:schemeClr val="tx1"/></a:solidFill><a:effectLst><a:outerShdw blurRad="38100" dist="38100" dir="2700000" algn="tl"><a:srgbClr val="000000"><a:alpha val="43137"/></a:srgbClr></a:outerShdw></a:effectLst>'],
-      ["Füllung: Blau, Akzentfarbe 1; Schatten", '<a:solidFill><a:schemeClr val="accent1"/></a:solidFill><a:effectLst><a:outerShdw blurRad="38100" dist="38100" dir="2700000" algn="tl"><a:srgbClr val="000000"><a:alpha val="43137"/></a:srgbClr></a:outerShdw></a:effectLst>'],
-      ["Füllung: Orange, Akzentfarbe 2; Kontur: Orange, Akzentfarbe 2", '<a:ln w="12700"><a:solidFill><a:schemeClr val="accent2"/></a:solidFill></a:ln><a:solidFill><a:schemeClr val="accent2"><a:lumMod val="40000"/><a:lumOff val="60000"/></a:schemeClr></a:solidFill>'],
-      ["Füllung: Weiß; Kontur: Blau, Akzentfarbe 1; Schatten", '<a:ln w="12700"><a:solidFill><a:schemeClr val="accent1"/></a:solidFill></a:ln><a:solidFill><a:schemeClr val="bg1"/></a:solidFill><a:effectLst><a:outerShdw blurRad="38100" dist="38100" dir="2700000" algn="tl"><a:srgbClr val="000000"><a:alpha val="43137"/></a:srgbClr></a:outerShdw></a:effectLst>'],
-      ["Füllung: Grau, Akzentfarbe 3; scharfe Abschrägung", '<a:solidFill><a:schemeClr val="accent3"/></a:solidFill>'],
-      ["Muster-Füllung: Weiß; dunkler oberer Schatten", '<a:solidFill><a:schemeClr val="tx1"><a:lumMod val="75000"/><a:lumOff val="25000"/></a:schemeClr></a:solidFill>'],
-    ];
-    const box = h("div", { class: "fx-gallery", style: "width:420px" }, h("div", { class: "gal-head" }, "WordArt"));
-    const row = h("div", { class: "fx-row" });
-    for (const [name, rpr] of styles) row.append(h("button", { class: "fx-item", "aria-label": name, "data-tip": name, onclick: () => { close(); this.insertWordArt(rpr); } }, h("span", { style: "font:bold 22px Calibri" }, "A")));
-    box.append(row);
-    return box;
+    return wordArtInsertPanel(this, close, (rpr) => this.insertWordArt(rpr));
   }
 
   private insertWordArt(rpr: string): void {

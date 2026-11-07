@@ -9,6 +9,7 @@ import type { PresentApp } from "./app";
 import { LINE_WEIGHTS } from "./lines";
 import { colorWord, quickStyleTiles, quickStylesPanel } from "./quickstyles";
 import { tableStyleTiles, tableStylesPanel } from "./tablestyles";
+import { wordArtTiles } from "./wordart";
 import { picStyleTiles, picStylesPanel } from "./picstyles";
 import type { ContextTabHost } from "./contexttabs";
 import * as T from "./textops";
@@ -30,6 +31,7 @@ export function contextHost(app: PresentApp): ContextTabHost {
     quickStyleTiles: () => quickStyleTiles(app),
     picStyleTiles: () => picStyleTiles(app),
     tableStyleTiles: () => tableStyleTiles(app),
+    wordArtTiles: () => wordArtTiles(app),
     // Textrichtung and Zellenbegrenzungen of the cells (the one being edited, the range, else all), as PowerPoint's entries.
     cellDirections: () => ([["Horizontal", null], ["Text um 90° drehen", "vert"], ["Text um 270° drehen", "vert270"], ["Gestapelt", "wordArtVert"]] as [string, string | null][])
       .map(([label, v]): MenuEntry => ({ label, run: () => cellPr(app, "Textrichtung", (pr) => { if (v) pr.setAttribute("vert", v); else pr.removeAttribute("vert"); }) }))
@@ -279,6 +281,7 @@ export function implementContext(app: PresentApp): void {
   impl("shape.heightBox", () => {}, shapes);
   impl("shape.widthBox", () => {}, shapes);
   impl("shape.quickStyles", () => {}, shapes);
+  impl("wordart.quickStyles", () => {}, () => shapes() || !!app.editor.text);
   impl("wordart.fill", () => void app.commands.run("font.color"), shapes);
   impl("wordart.outline", () => app.setTextOutline({ color: app.textOutlineColor() === "none" ? "000000" : app.textOutlineColor() }), shapes);
   impl("pic.corrections", () => {}, pic);

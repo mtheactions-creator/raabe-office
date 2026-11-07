@@ -902,15 +902,19 @@
          "enabled": true
         },
         {
-         "name": "Alle Texte um 90° drehen",
+         "name": "Text um 90° drehen",
          "enabled": true
         },
         {
-         "name": "Alle Texte um 270° drehen",
+         "name": "Text um 270° drehen",
          "enabled": true
         },
         {
          "name": "Gestapelt",
+         "enabled": true
+        },
+        {
+         "name": "Weitere Optionen...",
          "enabled": true
         }
        ]
@@ -3160,13 +3164,37 @@
          "name": "Füllung: Orange, Akzentfarbe 2; Kontur: Orange, Akzentfarbe 2"
         },
         {
-         "name": "Füllung: Weiß; Kontur: Blau, Akzentfarbe 1; Schatten"
+         "name": "Füllung: Weiß; Kontur: Blau, Akzentfarbe 5; Schatten"
         },
         {
-         "name": "Füllung: Grau, Akzentfarbe 3; scharfe Abschrägung"
+         "name": "Füllung: Gold, Akzentfarbe 4; Sanfte Abschrägung"
         },
         {
-         "name": "Muster-Füllung: Weiß; dunkler oberer Schatten"
+         "name": "Farbverlauf, Grau"
+        },
+        {
+         "name": "Farbverlauf: Blau, Akzentfarbe 5; Spiegelung"
+        },
+        {
+         "name": "Farbverlauf: Gold, Akzentfarbe 4; Kontur: Gold, Akzentfarbe 4"
+        },
+        {
+         "name": "Füllung: Grau, Akzentfarbe 3; Steile Abschrägung"
+        },
+        {
+         "name": "Füllung: Weiß; Kontur: Orange, Akzentfarbe 2; Harter Schatten: Orange, Akzentfarbe 2"
+        },
+        {
+         "name": "Füllung: Hellgrau, Hintergrundfarbe 2; Innerer Schatten"
+        },
+        {
+         "name": "Musterfüllung: Weiß, Streifen diagonal dunkel nach oben; Schatten"
+        },
+        {
+         "name": "Musterfüllung: Grau, Akzentfarbe 3, Dünner horizontaler Streifen; Innerer Schatten"
+        },
+        {
+         "name": "Musterfüllung: Blau, Streifen diagonal dunkel nach oben; Harter Schatten"
         }
        ]
       },
@@ -4439,7 +4467,7 @@
       {
        "name": "Benutzerdefinierte Bildschirmpräsentation",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "dropdown"
       }
      ]
@@ -4474,7 +4502,7 @@
       {
        "name": "Kommentare wiedergeben",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "check"
       },
       {
@@ -4486,7 +4514,7 @@
       {
        "name": "Mediensteuerelemente anzeigen",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "check"
       }
      ]
@@ -4497,7 +4525,7 @@
       {
        "name": "Bildschirme",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "dropdown",
        "items": [
         {
@@ -4538,7 +4566,7 @@
       {
        "name": "Barrierefreiheit überprüfen",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "button"
       }
      ]
@@ -4549,8 +4577,20 @@
       {
        "name": "Sprache",
        "deferred": false,
-       "enabled": false,
-       "type": "button"
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Sprache für die Korrekturhilfen festlegen...",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Spracheinstellungen...",
+         "deferred": true,
+         "enabled": false
+        }
+       ]
       }
      ]
     },
@@ -4721,19 +4761,19 @@
       {
        "name": "Farbe",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "button"
       },
       {
        "name": "Graustufe",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "button"
       },
       {
        "name": "Schwarzweiß",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "button"
       }
      ]
@@ -4797,7 +4837,7 @@
        "name": "Formen",
        "deferred": false,
        "enabled": true,
-       "type": "dropdown",
+       "type": "tiles",
        "panel": true,
        "items": [
         {
@@ -5314,7 +5354,7 @@
        "name": "Schnellformatvorlagen",
        "deferred": false,
        "enabled": true,
-       "type": "dropdown",
+       "type": "tiles",
        "panel": true,
        "items": [
         {
@@ -6107,8 +6147,71 @@
       {
        "name": "Schnellformatvorlagen",
        "deferred": false,
-       "enabled": false,
-       "type": "button"
+       "enabled": true,
+       "type": "tiles",
+       "panel": true,
+       "items": [
+        {
+         "name": "Füllung: Schwarz, Textfarbe 1; Schatten"
+        },
+        {
+         "name": "Füllung: Blau, Akzentfarbe 1; Schatten"
+        },
+        {
+         "name": "Füllung: Orange, Akzentfarbe 2; Kontur: Orange, Akzentfarbe 2"
+        },
+        {
+         "name": "Füllung: Weiß; Kontur: Blau, Akzentfarbe 5; Schatten"
+        },
+        {
+         "name": "Füllung: Gold, Akzentfarbe 4; Sanfte Abschrägung"
+        },
+        {
+         "name": "Farbverlauf, Grau"
+        },
+        {
+         "name": "Farbverlauf: Blau, Akzentfarbe 5; Spiegelung"
+        },
+        {
+         "name": "Farbverlauf: Gold, Akzentfarbe 4; Kontur: Gold, Akzentfarbe 4"
+        },
+        {
+         "name": "Füllung: Weiß; Kontur: Blau, Akzentfarbe 1; Leuchteffekt: Blau, Akzentfarbe 1"
+        },
+        {
+         "name": "Füllung: Grau, Akzentfarbe 3; Steile Abschrägung"
+        },
+        {
+         "name": "Füllung: Schwarz, Textfarbe 1; Kontur: Weiß, Hintergrundfarbe 1, Harter Schatten: Weiß, Hintergrundfarbe 1"
+        },
+        {
+         "name": "Füllung: Schwarz, Textfarbe 1; Kontur: Weiß, Hintergrundfarbe 1; Harter Schatten: Blau, Akzentfarbe 5"
+        },
+        {
+         "name": "Füllung: Blau, Akzentfarbe 5; Kontur: Weiß, Hintergrundfarbe 1; Harter Schatten: Blau, Akzentfarbe 5"
+        },
+        {
+         "name": "Füllung: Weiß; Kontur: Orange, Akzentfarbe 2; Harter Schatten: Orange, Akzentfarbe 2"
+        },
+        {
+         "name": "Füllung: Hellgrau, Hintergrundfarbe 2; Innerer Schatten"
+        },
+        {
+         "name": "Musterfüllung: Weiß, Streifen diagonal dunkel nach oben; Schatten"
+        },
+        {
+         "name": "Musterfüllung: Grau, Akzentfarbe 3, Dünner horizontaler Streifen; Innerer Schatten"
+        },
+        {
+         "name": "Musterfüllung: Blau, Akzentfarbe 1, 50 %; Harter Schatten: Blau, Akzentfarbe 1"
+        },
+        {
+         "name": "Musterfüllung: Blau, Akzentfarbe 5, Streifen diagonal hell nach unten; Kontur: Blau, Akzentfarbe 5"
+        },
+        {
+         "name": "Musterfüllung: Blau, Streifen diagonal dunkel nach oben; Harter Schatten"
+        }
+       ]
       },
       {
        "name": "Textfüllung",
@@ -7138,7 +7241,7 @@
        "name": "Schnellformatvorlagen",
        "deferred": false,
        "enabled": true,
-       "type": "dropdown",
+       "type": "tiles",
        "panel": true,
        "items": [
         {
@@ -7443,6 +7546,90 @@
         },
         {
          "name": "Lila"
+        },
+        {
+         "name": "Keine Kontur",
+         "enabled": true
+        },
+        {
+         "name": "Stärke",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "1/4 Pt.",
+           "enabled": true
+          },
+          {
+           "name": "½ Pt.",
+           "enabled": true
+          },
+          {
+           "name": "3/4 Pt.",
+           "enabled": true
+          },
+          {
+           "name": "1 Pt.",
+           "enabled": true
+          },
+          {
+           "name": "1½ Pt.",
+           "enabled": true
+          },
+          {
+           "name": "2¼ Pt.",
+           "enabled": true
+          },
+          {
+           "name": "3 Pt.",
+           "enabled": true
+          },
+          {
+           "name": "4½ Pt.",
+           "enabled": true
+          },
+          {
+           "name": "6 Pt.",
+           "enabled": true
+          }
+         ]
+        },
+        {
+         "name": "Striche",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Uni",
+           "enabled": true
+          },
+          {
+           "name": "Runder Punkt",
+           "enabled": true
+          },
+          {
+           "name": "Viereckiger Punkt",
+           "enabled": true
+          },
+          {
+           "name": "Strich",
+           "enabled": true
+          },
+          {
+           "name": "Strichpunkt",
+           "enabled": true
+          },
+          {
+           "name": "Langer Strich",
+           "enabled": true
+          },
+          {
+           "name": "Langer Strichpunkt",
+           "enabled": true
+          },
+          {
+           "name": "Langer Strichpunkt-Punkt",
+           "enabled": true
+          }
+         ]
         }
        ]
       },
@@ -7737,7 +7924,7 @@
        "name": "Tabellenformate",
        "deferred": false,
        "enabled": true,
-       "type": "dropdown",
+       "type": "tiles",
        "panel": true,
        "items": [
         {
@@ -8208,8 +8395,71 @@
       {
        "name": "Schnellformatvorlagen",
        "deferred": false,
-       "enabled": false,
-       "type": "button"
+       "enabled": true,
+       "type": "tiles",
+       "panel": true,
+       "items": [
+        {
+         "name": "Füllung: Schwarz, Textfarbe 1; Schatten"
+        },
+        {
+         "name": "Füllung: Blau, Akzentfarbe 1; Schatten"
+        },
+        {
+         "name": "Füllung: Orange, Akzentfarbe 2; Kontur: Orange, Akzentfarbe 2"
+        },
+        {
+         "name": "Füllung: Weiß; Kontur: Blau, Akzentfarbe 5; Schatten"
+        },
+        {
+         "name": "Füllung: Gold, Akzentfarbe 4; Sanfte Abschrägung"
+        },
+        {
+         "name": "Farbverlauf, Grau"
+        },
+        {
+         "name": "Farbverlauf: Blau, Akzentfarbe 5; Spiegelung"
+        },
+        {
+         "name": "Farbverlauf: Gold, Akzentfarbe 4; Kontur: Gold, Akzentfarbe 4"
+        },
+        {
+         "name": "Füllung: Weiß; Kontur: Blau, Akzentfarbe 1; Leuchteffekt: Blau, Akzentfarbe 1"
+        },
+        {
+         "name": "Füllung: Grau, Akzentfarbe 3; Steile Abschrägung"
+        },
+        {
+         "name": "Füllung: Schwarz, Textfarbe 1; Kontur: Weiß, Hintergrundfarbe 1, Harter Schatten: Weiß, Hintergrundfarbe 1"
+        },
+        {
+         "name": "Füllung: Schwarz, Textfarbe 1; Kontur: Weiß, Hintergrundfarbe 1; Harter Schatten: Blau, Akzentfarbe 5"
+        },
+        {
+         "name": "Füllung: Blau, Akzentfarbe 5; Kontur: Weiß, Hintergrundfarbe 1; Harter Schatten: Blau, Akzentfarbe 5"
+        },
+        {
+         "name": "Füllung: Weiß; Kontur: Orange, Akzentfarbe 2; Harter Schatten: Orange, Akzentfarbe 2"
+        },
+        {
+         "name": "Füllung: Hellgrau, Hintergrundfarbe 2; Innerer Schatten"
+        },
+        {
+         "name": "Musterfüllung: Weiß, Streifen diagonal dunkel nach oben; Schatten"
+        },
+        {
+         "name": "Musterfüllung: Grau, Akzentfarbe 3, Dünner horizontaler Streifen; Innerer Schatten"
+        },
+        {
+         "name": "Musterfüllung: Blau, Akzentfarbe 1, 50 %; Harter Schatten: Blau, Akzentfarbe 1"
+        },
+        {
+         "name": "Musterfüllung: Blau, Akzentfarbe 5, Streifen diagonal hell nach unten; Kontur: Blau, Akzentfarbe 5"
+        },
+        {
+         "name": "Musterfüllung: Blau, Streifen diagonal dunkel nach oben; Harter Schatten"
+        }
+       ]
       },
       {
        "name": "Textfüllung",
@@ -9219,14 +9469,59 @@
       {
        "name": "Textrichtung",
        "deferred": false,
-       "enabled": false,
-       "type": "button"
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Horizontal",
+         "enabled": true
+        },
+        {
+         "name": "Text um 90° drehen",
+         "enabled": true
+        },
+        {
+         "name": "Text um 270° drehen",
+         "enabled": true
+        },
+        {
+         "name": "Gestapelt",
+         "enabled": true
+        },
+        {
+         "name": "Weitere Optionen...",
+         "enabled": true
+        }
+       ]
       },
       {
        "name": "Zellenbegrenzungen",
        "deferred": false,
-       "enabled": false,
-       "type": "button"
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Normal",
+         "enabled": true
+        },
+        {
+         "name": "Keine",
+         "enabled": true
+        },
+        {
+         "name": "Schmal",
+         "enabled": true
+        },
+        {
+         "name": "Breit",
+         "enabled": true
+        },
+        {
+         "name": "Benutzerdefinierte Seitenränder...",
+         "deferred": true,
+         "enabled": false
+        }
+       ]
       }
      ]
     },
@@ -10878,8 +11173,71 @@
       {
        "name": "Schnellformatvorlagen",
        "deferred": false,
-       "enabled": false,
-       "type": "button"
+       "enabled": true,
+       "type": "tiles",
+       "panel": true,
+       "items": [
+        {
+         "name": "Füllung: Schwarz, Textfarbe 1; Schatten"
+        },
+        {
+         "name": "Füllung: Blau, Akzentfarbe 1; Schatten"
+        },
+        {
+         "name": "Füllung: Orange, Akzentfarbe 2; Kontur: Orange, Akzentfarbe 2"
+        },
+        {
+         "name": "Füllung: Weiß; Kontur: Blau, Akzentfarbe 5; Schatten"
+        },
+        {
+         "name": "Füllung: Gold, Akzentfarbe 4; Sanfte Abschrägung"
+        },
+        {
+         "name": "Farbverlauf, Grau"
+        },
+        {
+         "name": "Farbverlauf: Blau, Akzentfarbe 5; Spiegelung"
+        },
+        {
+         "name": "Farbverlauf: Gold, Akzentfarbe 4; Kontur: Gold, Akzentfarbe 4"
+        },
+        {
+         "name": "Füllung: Weiß; Kontur: Blau, Akzentfarbe 1; Leuchteffekt: Blau, Akzentfarbe 1"
+        },
+        {
+         "name": "Füllung: Grau, Akzentfarbe 3; Steile Abschrägung"
+        },
+        {
+         "name": "Füllung: Schwarz, Textfarbe 1; Kontur: Weiß, Hintergrundfarbe 1, Harter Schatten: Weiß, Hintergrundfarbe 1"
+        },
+        {
+         "name": "Füllung: Schwarz, Textfarbe 1; Kontur: Weiß, Hintergrundfarbe 1; Harter Schatten: Blau, Akzentfarbe 5"
+        },
+        {
+         "name": "Füllung: Blau, Akzentfarbe 5; Kontur: Weiß, Hintergrundfarbe 1; Harter Schatten: Blau, Akzentfarbe 5"
+        },
+        {
+         "name": "Füllung: Weiß; Kontur: Orange, Akzentfarbe 2; Harter Schatten: Orange, Akzentfarbe 2"
+        },
+        {
+         "name": "Füllung: Hellgrau, Hintergrundfarbe 2; Innerer Schatten"
+        },
+        {
+         "name": "Musterfüllung: Weiß, Streifen diagonal dunkel nach oben; Schatten"
+        },
+        {
+         "name": "Musterfüllung: Grau, Akzentfarbe 3, Dünner horizontaler Streifen; Innerer Schatten"
+        },
+        {
+         "name": "Musterfüllung: Blau, Akzentfarbe 1, 50 %; Harter Schatten: Blau, Akzentfarbe 1"
+        },
+        {
+         "name": "Musterfüllung: Blau, Akzentfarbe 5, Streifen diagonal hell nach unten; Kontur: Blau, Akzentfarbe 5"
+        },
+        {
+         "name": "Musterfüllung: Blau, Streifen diagonal dunkel nach oben; Harter Schatten"
+        }
+       ]
       },
       {
        "name": "Textfüllung",
