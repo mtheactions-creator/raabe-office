@@ -1468,6 +1468,31 @@ export class PresentApp implements EditorHost, PanelHost {
     if (r) this.insertTable(Math.max(1, Math.min(75, Number(rows.value) || 2)), Math.max(1, Math.min(75, Number(cols.value) || 5)));
   }
 
+  /** Entwurf > Designs in the ribbon: each design's title slide, small; the arrow opens the full gallery. */
+  private designThumbs = new Map<number, HTMLElement>();
+  private designTiles(): Control {
+    const thumb = (i: number): HTMLElement => {
+      const d = DESIGNS[i];
+      const sample = new Deck(newPptx(d));
+      const size = sample.pptx.slideSize;
+      const tw = 80, s = tw / (size.cx / EMU_PX);
+      const box = h("div", { class: "design-tile", style: `width:${tw}px;height:${Math.round((size.cy / EMU_PX) * s)}px` });
+      const r = renderSlide(sample.view(sample.slides[0].path), size, { editing: false, image: () => undefined, pptx: sample.pptx });
+      r.el.style.transform = `scale(${s})`; r.el.style.transformOrigin = "0 0";
+      box.append(r.el, h("div", { class: "theme-label", style: `color:#${d.colors.accent1}` }, "Aa"));
+      return box;
+    };
+    return {
+      type: "tiles", cmd: "design.themes", key: "G", count: DESIGNS.length, visible: DESIGNS.length, size: [84, 50], cls: "design-tiles",
+      render: (i) => { let t = this.designThumbs.get(i); if (!t) { t = thumb(i); this.designThumbs.set(i, t); } return t.cloneNode(true) as HTMLElement; },
+      tip: (i) => (DESIGNS[i].name === "Office" ? "Office-Design" : DESIGNS[i].name),
+      pick: (i) => this.applyDesign(DESIGNS[i]),
+      current: () => { const n = this.designName(); const i = DESIGNS.findIndex((d) => d.name === n); return i < 0 ? undefined : i; },
+      redraw: () => "designs",
+      panel: (close) => this.themesGallery(close),
+    };
+  }
+
   private themesGallery(close: () => void): HTMLElement {
     const wrap = h("div", { class: "theme-gallery" }, h("div", { class: "gal-head" }, "Office"));
     const grid = h("div", { class: "layout-grid" });
@@ -2145,6 +2170,7 @@ export class PresentApp implements EditorHost, PanelHost {
       setFill: (hex) => this.setFill(hex.replace("#", "").toUpperCase()),
       lineColor: () => `#${this.lastLine}`,
       outlineExtra: () => this.outlineExtra(),
+      designTiles: () => this.designTiles(),
       setLine: (hex) => this.setLine(hex.replace("#", "").toUpperCase()),
       preview: { font: () => {}, size: () => {} },
       menus: {

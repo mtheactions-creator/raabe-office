@@ -23,6 +23,8 @@ export interface RibbonContext {
   setLine(hex: string): void;
   /** Keine Kontur, Stärke, Striche under the Formkontur palette. */
   outlineExtra(): MenuEntry[];
+  /** Entwurf > Designs: the gallery in the ribbon. */
+  designTiles(): Control;
   preview: { font(name: string): void; size(value: string): void };
   menus: {
     paste: MenuEntry[]; layouts: () => MenuEntry[]; section: MenuEntry[]; spacing: MenuEntry[]; case: MenuEntry[];
@@ -122,8 +124,9 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
       id: "design", label: "Entwurf", key: "U2",
       shrink: ["customize", "variants", "themes"],
       groups: [
-        { id: "themes", label: "Designs", key: "ZT", icon: "themes", controls: [panel("design.themes", "G", "large", p.themes)] },
-        { id: "variants", label: "Anpassen", key: "ZV", icon: "colors", controls: [b("design.variants", "V", "large"), stack(lazy("design.colors", "F", "small", m.colors), lazy("design.fonts", "6", "small", m.fonts), b("design.effects", "E"), b("design.background", "R"))] },
+        // PowerPoint shows the designs as a gallery in the ribbon and Anpassen as five large buttons (UI screenshot, D-072).
+        { id: "themes", label: "Designs", key: "ZT", icon: "themes", controls: [ctx.designTiles()] },
+        { id: "variants", label: "Anpassen", key: "ZV", icon: "colors", controls: [b("design.variants", "V", "large"), lazy("design.colors", "F", "large", m.colors), lazy("design.fonts", "6", "large", m.fonts), b("design.effects", "E", "large"), b("design.background", "R", "large")] },
         { id: "customize", label: "Folien", key: "ZA", icon: "page-size", controls: [panel("slide.layout", "OA", "large", p.layout), dd("design.slideSize", "Ö", "large", m.slideSize)] },
       ],
     },
