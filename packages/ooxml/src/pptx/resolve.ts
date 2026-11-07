@@ -146,6 +146,8 @@ export interface ShapeView {
   frame?: string;
   /** Chart part path. */
   chart?: string;
+  /** Folienzoom (frame "zoom"): the target slide's sldId and whether the show returns afterwards. */
+  zoom?: { sldId: number; back: boolean };
   children?: ShapeView[];
   /** Whether the shape is a text box (txBox="1"). */
   textBox: boolean;
@@ -249,6 +251,7 @@ export function allShapes(tree: Element): Element[] {
 }
 
 const NS_A14 = "http://schemas.microsoft.com/office/drawing/2010/main";
+const NS_PSLZ = "http://schemas.microsoft.com/office/powerpoint/2016/slidezoom";
 
 /**
  * The shapes of an mc:AlternateContent that are drawn and edited: the Choice of an equation (a text
@@ -256,7 +259,10 @@ const NS_A14 = "http://schemas.microsoft.com/office/drawing/2010/main";
  */
 export function alternateShapes(ac: Element): Element[] {
   const choice = kid(ac, "Choice");
-  const pick = choice && choice.getAttribute("Requires") === "a14" && choice.getElementsByTagNameNS(NS_A14, "m").length ? choice : kid(ac, "Fallback");
+  const req = choice?.getAttribute("Requires");
+  // Understood Choices: equations (a14 with a14:m) and Folienzoom (pslz).
+  const ok = choice && ((req === "a14" && choice.getElementsByTagNameNS(NS_A14, "m").length) || (req === "pslz" && choice.getElementsByTagNameNS(NS_PSLZ, "sldZm").length));
+  const pick = ok ? choice : kid(ac, "Fallback");
   return kids(pick).filter((x) => SHAPES.includes(x.localName));
 }
 
@@ -678,7 +684,15 @@ export class SlideResolver {
     if (kind === "graphicFrame") {
       const gd = at(el, "graphic/graphicData");
       const uri = gd?.getAttribute("uri") ?? "";
-      v.frame = uri.endsWith("/table") ? "table" : uri.endsWith("/chart") ? "chart" : uri.endsWith("/diagram") ? "diagram" : uri.endsWith("/ole") ? "ole" : "other";
+      v.frame = uri.endsWith("/table") ? "table" : uri.endsWith("/chart") ? "chart" : uri.endsWith("/diagram") ? "diagram" : uri.endsWith("/ole") ? "ole" : uri.endsWith("/slidezoom") ? "zoom" : "other";
+      if (v.frame === "zoom") {
+        const obj = gd?.getElementsByTagNameNS(NS_PSLZ, "sldZmObj")[0];
+        const zm = obj?.getElementsByTagNameNS(NS_PSLZ, "zmPr")[0];
+        const blip = zm?.getElementsByTagNameNS(NS_A, "blip")[0];
+        const rid = blip?.getAttributeNS(NS_R, "embed");
+        v.zoom = { sldId: num(obj, "sldId") ?? 0, back: zm?.getAttribute("returnToParent") === "1" };
+        v.pic = { path: rid ? this.pptx.target(this.path, rid) : undefined, crop: { l: 0, t: 0, r: 0, b: 0 } };
+      }
       if (v.frame === "diagram") {
         // SmartArt: drawn from the shapes PowerPoint caches in the diagram's drawing part
         // (dsp:drawing, linked from the data model's dataModelExt relId), placed in the frame.

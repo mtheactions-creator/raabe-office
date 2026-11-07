@@ -2,6 +2,7 @@
 // placeholders, which get their own xfrm once moved), new shapes, text boxes, pictures, tables and
 // charts with PowerPoint's German names ("Rechteck 3": the id less one), copies, order, groups.
 
+import { syncZoom } from "./zoom";
 import { PptxDom, alternateShapes, phOf, spTreeOf } from "@raabe/ooxml";
 import { SHAPE_NAMES } from "@raabe/text-engine";
 
@@ -76,6 +77,7 @@ export function setXfrm(el: Element, t: Partial<Xfrm>): void {
   }
   if (t.flipH !== undefined) { if (t.flipH) x.setAttribute("flipH", "1"); else x.removeAttribute("flipH"); }
   if (t.flipV !== undefined) { if (t.flipV) x.setAttribute("flipV", "1"); else x.removeAttribute("flipV"); }
+  if (el.localName === "graphicFrame") syncZoom(el);
 }
 
 /** For groups: moving or sizing the group keeps chOff/chExt, so the members follow (PowerPoint). */

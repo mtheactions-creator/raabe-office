@@ -34,7 +34,7 @@ export interface RibbonContext {
     arrange: () => MenuEntry[]; find: MenuEntry[]; select: MenuEntry[]; table: MenuEntry[]; pictures: MenuEntry[]; textBox: MenuEntry[];
     slideSize: MenuEntry[]; showCustom: MenuEntry[]; record: MenuEntry[]; transOptions: () => MenuEntry[]; animOptions: () => MenuEntry[];
     animStart: MenuEntry[]; colors: () => MenuEntry[]; fonts: () => MenuEntry[]; underline: MenuEntry[];
-    outlineWeight: MenuEntry[]; outlineDash: MenuEntry[]; effects: MenuEntry[]; quickStyles: () => MenuEntry[]; zoomFit: MenuEntry[]; equations: () => MenuEntry[]; sounds: () => MenuEntry[]; windows: () => MenuEntry[]; triggers: () => MenuEntry[];
+    outlineWeight: MenuEntry[]; outlineDash: MenuEntry[]; effects: MenuEntry[]; quickStyles: () => MenuEntry[]; zoomFit: MenuEntry[]; equations: () => MenuEntry[]; sounds: () => MenuEntry[]; windows: () => MenuEntry[]; triggers: () => MenuEntry[]; zooms: () => MenuEntry[];
   };
   panels: { newSlide: Popup; layout: Popup; shapes: Popup; themes: Popup; transitions: Popup; animations: Popup; table: Popup; chart: Popup; addAnim: Popup; wordArt: Popup; quickStyles: Popup };
   spin: {
@@ -103,7 +103,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
         { id: "tables", label: "Tabellen", key: "ZT", icon: "table", controls: [panel("insert.table", "LA", "large", p.table)] },
         { id: "images", label: "Bilder", key: "ZB", icon: "picture", controls: [dd("insert.pictures", "B", "large", m.pictures), b("insert.screenshot", "C1", "large"), b("insert.photoAlbum", "F", "large")] },
         { id: "illustrations", label: "Illustrationen", key: "ZI", icon: "shapes", controls: [panel("insert.shapes", "2", "large", p.shapes), b("insert.smartArt", "M", "large"), panel("insert.chart", "I", "large", p.chart)] },
-        { id: "links", label: "Links", key: "ZL", icon: "link", controls: [b("insert.zoom", "Y", "large"), b("insert.link", "H1", "large"), b("insert.action", "T", "large")] },
+        { id: "links", label: "Links", key: "ZL", icon: "link", controls: [lazy("insert.zoom", "Y", "large", m.zooms), b("insert.link", "H1", "large"), b("insert.action", "T", "large")] },
         { id: "comments", label: "Kommentare", key: "ZK", icon: "comment", controls: [b("insert.comment", "N", "large")] },
         { id: "text", label: "Text", key: "ZX", icon: "text-box", controls: [split("insert.textBox", "LT", "large", m.textBox), b("insert.headerFooter", "KO", "large"), panel("insert.wordArt", "W", "large", p.wordArt),
           stack(b("insert.dateTime", "D"), b("insert.slideNumber", "H2"), b("insert.object", "9"))] },

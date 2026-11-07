@@ -38,6 +38,8 @@ export class SlideShow {
   private presenter = false;
   private started = Date.now();
   private history: number[] = [];
+  /** Folienzoom with Zurück zu Zoom: after slide `to` the show goes back to `from`. */
+  private zoomReturn: { from: number; to: number } | null = null;
   private triggers: { trigger: number; steps: Step[]; hidden: Set<number>; at: number }[] = [];
   lastIndex: number;
   private keyHandler = (e: KeyboardEvent) => this.key(e);
@@ -228,6 +230,7 @@ export class SlideShow {
     if (!this.blank.hidden) { this.unblank(); return; }
     if (this.atEnd) { this.end(); return; }
     if (this.stepIdx < this.steps.length) { this.play(this.steps[this.stepIdx++]); this.renderPresenter(); return; }
+    if (this.zoomReturn && this.index === this.zoomReturn.to) { const back = this.zoomReturn.from; this.zoomReturn = null; this.show(back, false); return; }
     let i = this.index + 1;
     while (i <= this.last && this.hiddenSlide(i)) i++;
     if (i > this.last) {
@@ -380,6 +383,13 @@ export class SlideShow {
     const shp = (e.target as HTMLElement).closest?.(".shp[data-id]") as HTMLElement | null;
     const trig = shp ? this.triggers.find((t) => t.trigger === Number(shp.dataset.id) && t.at < t.steps.length) : undefined;
     if (trig) { this.play(trig.steps[trig.at++]); return; }
+    // Folienzoom: to its slide (and back afterwards when Zurück zu Zoom is on).
+    const zoom = (e.target as HTMLElement).closest?.("[data-zoom]") as HTMLElement | null;
+    if (zoom) {
+      const to = this.app.deck.slides.findIndex((s) => s.id === Number(zoom.dataset.zoom));
+      if (to >= 0) { this.zoomReturn = zoom.dataset.zoomBack ? { from: this.index, to } : null; this.goto(to); }
+      return;
+    }
     // A shape's action (Einfügen > Aktion) or a link is followed instead of going on (PowerPoint).
     const action = (e.target as HTMLElement).closest?.("[data-action]") as HTMLElement | null;
     if (action) {

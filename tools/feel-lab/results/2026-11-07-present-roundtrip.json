@@ -96,6 +96,10 @@
    "result": "same",
    "diff": []
   },
+  "zoom": {
+   "result": "same",
+   "diff": []
+  },
   "action": {
    "result": "same",
    "diff": []
@@ -171,6 +175,6 @@
  },
  "summary": {
   "fixtures": "11/11",
-  "scenarios": "33/33"
+  "scenarios": "34/34"
  }
 }

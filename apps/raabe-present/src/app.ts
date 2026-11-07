@@ -39,6 +39,7 @@ import { BackgroundPane } from "./background";
 import * as CT from "./contexttabs";
 import { contextHost, implementContext } from "./contextcmds";
 import { Sorter } from "./sorter";
+import { zoomMenu } from "./zoom";
 import { addRecent, loadRecent, loadSettings, removeRecent, saveSettings, setPinned, type Settings } from "./store";
 import appIconUrl from "../../../branding/raabe-present-small.svg?url";
 
@@ -1824,6 +1825,7 @@ export class PresentApp implements EditorHost, PanelHost {
     impl("insert.chart", () => {}, () => !!this.slidePath());
     impl("insert.photoAlbum", () => import("./photoalbum").then((m) => m.photoAlbumDialog(this)), () => !!this.platform.openImagesDialog);
     impl("view.switchWindow", () => {}, () => this.docs.length > 0);
+    impl("view.newWindow", () => this.newWindow(), () => this.docs.length > 0);
     impl("insert.action", () => import("./links").then((m) => m.actionDialog(this)), () => this.editor.sel.length === 1);
     impl("view.ruler", () => { this.editor.showRuler = !this.editor.showRuler; this.editor.fitZoom(); this.editor.render(); this.updateChrome(); }, () => this.view === "normal", () => this.editor.showRuler);
     impl("draw.arrange", () => {});
@@ -2406,6 +2408,7 @@ export class PresentApp implements EditorHost, PanelHost {
         underline: [], outlineWeight: [], outlineDash: [], effects: this.effectsMenu(), quickStyles: () => [], zoomFit: [],
         equations: () => BUILT_IN.map((e) => ({ label: e.name, run: () => void insertEquation(this, e.seq) })),
         sounds: () => this.transMod?.soundMenu(this) ?? [],
+        zooms: () => zoomMenu(this),
         // Trigger > Bei Klick auf: the slide's other shapes by name.
         triggers: () => {
           const p = this.slidePath();
@@ -2644,13 +2647,48 @@ export class PresentApp implements EditorHost, PanelHost {
     doc.name = stripExt(baseName(path));
     doc.savedVersion = doc.deck.version;
     doc.lastSaved = Date.now();
+    // Other windows of the same presentation (Neues Fenster) are saved with it.
+    for (const t of this.docs) if (t !== doc && t.deck === doc.deck) { t.path = path; t.savedVersion = doc.savedVersion; t.lastSaved = doc.lastSaved; }
+    this.nameWindows(doc.deck, doc.name);
     addRecent(path, baseName(path));
     void this.platform.deleteRecovery(doc.id).catch(() => {});
     this.updateTabs();
     return true;
   }
 
+  /**
+   * Ansicht > Neues Fenster: another window onto the same presentation (its own slide and view), named
+   * "Name:1", "Name:2" as in PowerPoint. RaabePresent shows it as another tab of the window; changes made in
+   * one show in the other.
+   */
+  private newWindow(): void {
+    const d = this.active;
+    const deck = d.deck;
+    const twin: Doc = { ...d, id: crypto.randomUUID() };
+    deck.onChange = () => { if (this.active.deck === deck) this.afterChange(); else this.updateTabs(); };
+    this.docs.splice(this.docs.indexOf(d) + 1, 0, twin);
+    this.nameWindows(deck, d.name);
+    this.activate(twin);
+  }
+
+  /** The windows of one presentation: "Name:1", "Name:2" … while there are several, else "Name". */
+  private nameWindows(deck: Deck, name: string): void {
+    const base = name.replace(/:\d+$/, "");
+    const wins = this.docs.filter((x) => x.deck === deck);
+    wins.forEach((w, i) => { w.name = wins.length > 1 ? `${base}:${i + 1}` : base; });
+    this.updateTabs();
+  }
+
   private async closeDoc(doc: Doc): Promise<void> {
+    // Another window still shows this presentation: this one closes without asking.
+    const twins = this.docs.filter((x) => x !== doc && x.deck === doc.deck);
+    if (twins.length) {
+      const i = this.docs.indexOf(doc);
+      this.docs.splice(i, 1);
+      this.nameWindows(doc.deck, doc.name);
+      if (doc === this.active) this.activate(twins[0]);
+      return;
+    }
     if (doc.deck.version !== doc.savedVersion) {
       const r = await showDialog({ title: "RaabePresent", body: `Möchten Sie die Änderungen an „${doc.name}“ speichern?`, buttons: [{ label: "Speichern", value: "save", primary: true }, { label: "Nicht speichern", value: "discard" }, { label: "Abbrechen", value: "cancel" }], cancel: "cancel" });
       if (r === "cancel") return;

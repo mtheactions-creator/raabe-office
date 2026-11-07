@@ -1831,3 +1831,16 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   the pen splits a cell in two by a line drawn across it (rows) or down it (columns), in the middle (PowerPoint
   splits where the line was drawn: our simplification), and draws a new one-cell table outside a table. Both
   stay on until Esc or the button again, as in PowerPoint.
+- **Einfügen > Zoom > Folienzoom:** recorded in PowerPoint (`probe_powerpoint_zoom.py`, keytips Alt, I, Y, F
+  under the real-input lock; the dialog's check box ticked through UI Automation): mc:AlternateContent with a
+  graphicFrame (pslz:sldZm: the target's sldId and p14:creationId, the preview picture, a 0.25 pt light grey
+  line) and as Fallback a picture with a slide-jump link. We write the same: a quarter of the slide in its
+  middle (several zooms 12 pt apart); a target slide without a creationId gets one. The preview picture is
+  the target slide drawn by our renderer (its DOM in an SVG foreignObject onto a canvas); it is not redrawn
+  when the target changes (PowerPoint redraws its previews). In the show a click goes to the slide and, with
+  Zurück zu Zoom (returnToParent, read from PowerPoint's files), back afterwards. PowerPoint reads our zoom as
+  its own (round trip 34/34). Zusammenfassungszoom and Abschnittszoom are not built (greyed).
+- **Ansicht > Neues Fenster:** another window onto the same presentation, named "Name:1", "Name:2" as in
+  PowerPoint; in RaabePresent it is another tab of the window (own slide and view, shared undo and file).
+  Closing one window does not ask to save while another shows the presentation. Alle anordnen stays greyed
+  (one window with tabs).
