@@ -214,19 +214,19 @@ body.printing #print-root { display: block; position: fixed; left: 0; top: 0; z-
 /* Schnellformatvorlagen (D-072): tiles in the design's colours. */
 .quick-styles { padding: 4px 6px 8px; }
 .qs-grid { display: grid; grid-template-columns: repeat(7, 48px); gap: 6px; padding: 4px 2px; }
-.qs-tile { height: 34px; font: 12px Calibri, Carlito, sans-serif; border-radius: 2px; cursor: pointer; box-sizing: border-box; }
+.quick-styles .qs-tile { height: 34px; font: 12px Calibri, Carlito, sans-serif; border-radius: 2px; cursor: pointer; box-sizing: border-box; }
 .qs-tile:hover { outline: 2px solid #f5b56e; outline-offset: 1px; }
 
 /* Tabellenformate (D-072): each style as a small table. */
 .table-styles { padding: 6px; max-height: 520px; overflow-y: auto; }
 .ts-grid { display: grid; grid-template-columns: repeat(7, 62px); gap: 6px; }
-.ts-tile { height: 44px; padding: 2px; display: flex; flex-direction: column; background: #fff; border: 1px solid #d0d0d0; cursor: pointer; }
+.table-styles .ts-tile { height: 44px; padding: 3px; display: block; background: #fff; border: 1px solid #d0d0d0; cursor: pointer; }
 .ts-tile:hover { outline: 2px solid #f5b56e; }
-.ts-row { flex: 1; }
+.table-styles .ts-row { display: block; height: 7px; box-sizing: border-box; }
 
 /* Bildformatvorlagen (D-072). */
 .pic-styles { padding: 6px; }
 .ps-grid { display: grid; grid-template-columns: repeat(7, 64px); gap: 8px; }
-.ps-tile { height: 56px; display: flex; align-items: center; justify-content: center; background: #fff; border: 1px solid transparent; cursor: pointer; }
+.pic-styles .ps-tile { height: 56px; display: flex; align-items: center; justify-content: center; background: #fff; border: 1px solid transparent; cursor: pointer; }
 .ps-tile:hover { border-color: #f5b56e; }
 .ps-img { width: 44px; height: 32px; background: linear-gradient(135deg, #8fb3d9, #4a7ab0 60%, #e2c27d); box-sizing: border-box; }
