@@ -5,7 +5,7 @@
 
 import { QUICK_LAYOUTS, type ChartKind, type ChartModel } from "@raabe/charts";
 import { chartFromXml, chartToXml } from "@raabe/ooxml";
-import { h, showDialog } from "@raabe/shell";
+import { h, showDialog, type MenuEntry } from "@raabe/shell";
 import type { PresentApp } from "./app";
 
 function chartPath(app: PresentApp): string | undefined {
@@ -97,4 +97,50 @@ export async function editData(app: PresentApp): Promise<void> {
     }
     c.series = series as ChartModel["series"];
   });
+}
+
+/**
+ * Diagrammelement hinzufügen (D-072): PowerPoint's menu (recorded) on the chart model RaabeCalc's engine
+ * keeps (title, axis titles, legend, data labels, gridlines, trend lines, error bars); what the model does not
+ * cover (axes on and off, data table, label positions, minor gridlines) is greyed, "Weitere ..." opens the pane.
+ */
+export function chartElementsMenu(app: PresentApp): MenuEntry[] {
+  const set = (label: string, fn: (m: ChartModel) => void) => () => edit(app, label, fn);
+  const more = (label: string): MenuEntry => ({ label, run: () => void app.commands.run("draw.format") });
+  const off = (label: string): MenuEntry => ({ label, run: () => {}, disabled: true });
+  return [
+    { label: "Achsen", submenu: [off("Primär horizontal"), off("Primär vertikal"), more("Weitere Achsenoptionen...")] },
+    { label: "Achsentitel", submenu: [
+      { label: "Primär horizontal", run: set("Achsentitel", (m) => { m.axisTitles = { ...m.axisTitles, cat: m.axisTitles.cat === undefined ? "" : undefined }; }) },
+      { label: "Primär vertikal", run: set("Achsentitel", (m) => { m.axisTitles = { ...m.axisTitles, val: m.axisTitles.val === undefined ? "" : undefined }; }) },
+      more("Weitere Optionen für Achsentitel...")] },
+    { label: "Diagrammtitel", submenu: [
+      { label: "Ohne", run: set("Diagrammtitel", (m) => { m.title.show = false; }) },
+      { label: "Über Diagramm", run: set("Diagrammtitel", (m) => { m.title.show = true; }) },
+      { label: "Mittig überlagert", run: set("Diagrammtitel", (m) => { m.title.show = true; }) },
+      more("Weitere Titeloptionen...")] },
+    { label: "Datenbeschriftungen", submenu: [
+      { label: "Keine", run: set("Datenbeschriftungen", (m) => { m.dataLabels = false; }) },
+      ...["Mitte", "Am Ende innerhalb", "Am Anfang innerhalb", "Am Ende außerhalb"].map((l) => ({ label: l, run: set("Datenbeschriftungen", (m) => { m.dataLabels = true; }) })),
+      off("Datenlegende"), more("Weitere Datenbeschriftungsoptionen...")] },
+    { label: "Datentabelle", submenu: [off("Keine"), off("Mit Legendensymbolen"), off("Ohne Legendensymbole"), more("Weitere Datentabellenoptionen...")] },
+    { label: "Fehlerindikatoren", submenu: [
+      { label: "Keine", run: set("Fehlerindikatoren", (m) => { for (const s of m.series) delete s.errorBars; }) },
+      ...([["Standardfehler", "stdErr", undefined], ["Prozentsatz", "percentage", 5], ["Standardabweichung", "stdDev", 1]] as [string, "stdErr" | "percentage" | "stdDev", number | undefined][])
+        .map(([l, type, value]) => ({ label: l, run: set("Fehlerindikatoren", (m) => { for (const s of m.series) s.errorBars = { dir: "both", type, ...(value !== undefined ? { value } : {}) }; }) })),
+      more("Weitere Fehlerindikatorenoptionen...")] },
+    { label: "Gitternetzlinien", submenu: [
+      { label: "Primäres Hauptgitter horizontal", run: set("Gitternetzlinien", (m) => { m.gridlines = !m.gridlines; }) },
+      off("Primäres Hauptgitter vertikal"), off("Primäres Hilfsgitter horizontal"), off("Primäres Hilfsgitter vertikal"), more("Weitere Optionen für Gitternetzlinien...")] },
+    { label: "Legende", submenu: [
+      ...([["Keine", "none"], ["Rechts", "r"], ["Oben", "t"], ["Links", "l"], ["Unten", "b"]] as [string, "none" | "r" | "t" | "l" | "b"][]).map(([l, pos]) => ({ label: l, run: set("Legende", (m) => { m.legend = pos; }) })),
+      more("Weitere Legendenoptionen...")] },
+    { label: "Linien", submenu: [off("Keine"), off("Bezugslinien"), off("Spannweitenlinien")] },
+    { label: "Trendlinie", submenu: [
+      { label: "Keine", run: set("Trendlinie", (m) => { for (const s of m.series) delete s.trendline; }) },
+      ...([["Linear", "linear"], ["Exponentiell", "exp"], ["Gleitender Durchschnitt", "movingAvg"]] as [string, "linear" | "exp" | "movingAvg"][])
+        .map(([l, type]) => ({ label: l, run: set("Trendlinie", (m) => { const s = m.series[0]; if (s) s.trendline = { type, showEq: false, showR2: false, ...(type === "movingAvg" ? { period: 2 } : {}) }; }) })),
+      more("Weitere Trendlinienoptionen...")] },
+    { label: "Pos./Neg. Abweichung", submenu: [off("Keine"), off("Pos./Neg. Abweichung")] },
+  ];
 }

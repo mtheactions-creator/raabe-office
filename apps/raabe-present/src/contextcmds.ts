@@ -33,6 +33,7 @@ export function contextHost(app: PresentApp): ContextTabHost {
     tableStyleTiles: () => tableStyleTiles(app),
     tableBorders: () => tableBorders(app),
     textEffects: () => textEffects(app),
+    chartElements: () => CH.chartElementsMenu(app),
     wordArtTiles: () => wordArtTiles(app),
     // Textrichtung and Zellenbegrenzungen of the cells (the one being edited, the range, else all), as PowerPoint's entries.
     cellDirections: () => ([["Horizontal", null], ["Text um 90° drehen", "vert"], ["Text um 270° drehen", "vert270"], ["Gestapelt", "wordArtVert"]] as [string, string | null][])
@@ -389,6 +390,7 @@ export function implementContext(app: PresentApp): void {
   impl("table.select", () => {}, table);
   impl("table.styles", () => {}, table);
   impl("table.borders", () => {}, table);
+  impl("chart.addElement", () => {}, chart);
   impl("wordart.effects", () => {}, () => shapes() || !!app.editor.text);
   impl("table.direction", () => {}, table);
   impl("table.margins", () => {}, table);

@@ -97,6 +97,7 @@ export interface ContextTabHost {
   cellMargins(): MenuEntry[];
   tableBorders(): MenuEntry[];
   textEffects(): MenuEntry[];
+  chartElements(): MenuEntry[];
   tableStyles(close: () => void): HTMLElement;
   picStyles(close: () => void): HTMLElement;
   textOutlineColor(): string; setTextOutline(hex: string): void; textOutlineExtra(): MenuEntry[];
@@ -190,7 +191,7 @@ export function chartDesignTab(h: ContextTabHost): Tab {
   return {
     id: "chartDesign", label: "Diagrammentwurf", key: "JC", contextual: true, shrink: [],
     groups: [
-      { id: "layouts", label: "Diagrammlayouts", key: "ZL", icon: "chart-recommended", controls: [b("chart.addElement", "D", "large"), dd("chart.quickLayout", "C", "large", () => h.quickLayouts())] },
+      { id: "layouts", label: "Diagrammlayouts", key: "ZL", icon: "chart-recommended", controls: [dd("chart.addElement", "D", "large", () => h.chartElements()), dd("chart.quickLayout", "C", "large", () => h.quickLayouts())] },
       { id: "styles", label: "Diagrammformatvorlagen", key: "ZS", icon: "styles", controls: [dd("chart.colors", "F", "large", () => h.chartColors()), b("chart.styles", "S", "large")] },
       { id: "data", label: "Daten", key: "ZD", icon: "table", controls: [b("chart.switchRowCol", "E", "large"), b("chart.selectData", "T", "large"), b("chart.editData", "A", "large"), b("chart.refresh", "N", "large")] },
       { id: "type", label: "Typ", key: "ZT", icon: "chart-column", controls: [dd("chart.changeType", "I", "large", () => h.chartKinds())] },
