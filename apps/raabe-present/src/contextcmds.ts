@@ -16,6 +16,7 @@ import * as T from "./textops";
 import * as S from "./shapeops";
 import * as CH from "./chartops";
 import * as TC from "./tablecells";
+import { artisticEntries, colorEntries, sharpenEntries } from "./picfx";
 
 const { kid, kids, make, num, fragment } = PptxDom;
 
@@ -54,9 +55,10 @@ export function contextHost(app: PresentApp): ContextTabHost {
     sizeSpin: (k) => spin(() => sizeText(app, k), (v) => setSize(app, k, cmText(v)), (d) => { const v = app.editor.selectedViews[0]; if (v) setSize(app, k, Math.max(0, (k === "h" ? v.h : v.w) + d * 36000)); },
       k === "h" ? "Formenhöhe:" : "Formenbreite:", k === "h" ? "shape.heightBox" : "shape.widthBox", k === "h" ? "shape-height" : "shape-width", k === "h" ? "H" : "RR"),
     pictureColor: () => pictureColor(app),
+    pictureArtistic: () => artisticEntries(app),
     pictureTransparency: () => [0, 15, 30, 50, 65, 80, 95].map((p) => ({ label: `Transparenz: ${p}%`, run: () => blipEffect(app, "Transparenz", (blip) => { remove(blip, "alphaModFix"); if (p) blip.prepend(make(blip.ownerDocument, "a:alphaModFix", { amt: (100 - p) * 1000 })); }) })),
     pictureCorrections: () => {
-      const out: MenuEntry[] = [{ heading: "Helligkeit/Kontrast" }];
+      const out: MenuEntry[] = [...sharpenEntries(app), { heading: "Helligkeit/Kontrast" }];
       // PowerPoint's names: "Helligkeit: 0 % (Normal) Kontrast: +20 %".
       const pct = (v: number) => `${v > 0 ? "+" : ""}${v} %${v === 0 ? " (Normal)" : ""}`;
       for (const c of [-40, -20, 0, 20, 40]) for (const br of [-40, -20, 0, 20, 40]) out.push({ label: `Helligkeit: ${pct(br)} Kontrast: ${pct(c)}`, run: () => blipEffect(app, "Korrekturen", (blip) => { remove(blip, "lum"); if (br || c) blip.append(make(blip.ownerDocument, "a:lum", { bright: br * 1000, contrast: c * 1000 })); }) });
@@ -118,7 +120,7 @@ function pictureColor(app: PresentApp): MenuEntry[] {
   const dark = (ref: string) => `<a:duotone><a:schemeClr val="${ref}"><a:shade val="45000"/><a:satMod val="135000"/></a:schemeClr><a:prstClr val="white"/></a:duotone>`;
   const light = (ref: string) => `<a:duotone><a:prstClr val="black"/><a:schemeClr val="${ref}"><a:tint val="45000"/><a:satMod val="400000"/></a:schemeClr></a:duotone>`;
   const accents = [1, 2, 3, 4, 5, 6];
-  return [{ heading: "Neu einfärben" },
+  return [...colorEntries(app), { heading: "Neu einfärben" },
     { label: "Keine Neueinfärbung", run: () => blipEffect(app, "Farbe", clear) },
     { label: "Graustufe", run: () => set("<a:grayscl/>") },
     { label: "Sepia", run: () => set('<a:duotone><a:prstClr val="black"/><a:srgbClr val="D9C3A5"><a:tint val="50000"/><a:satMod val="180000"/></a:srgbClr></a:duotone>') },
@@ -369,6 +371,7 @@ export function implementContext(app: PresentApp): void {
   impl("wordart.outline", () => app.setTextOutline({ color: app.textOutlineColor() === "none" ? "000000" : app.textOutlineColor() }), shapes);
   impl("pic.corrections", () => {}, pic);
   impl("pic.color", () => {}, pic);
+  impl("pic.artistic", () => {}, pic);
   impl("pic.transparency", () => {}, pic);
   impl("pic.border", () => void app.commands.run("draw.outline"), pic);
   impl("pic.effects", () => {}, pic);

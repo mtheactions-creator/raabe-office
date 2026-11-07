@@ -1808,3 +1808,16 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   Wingdings character U+F0E0 in a run with a:sym (drawn in that font). Rückgängig takes back the
   correction first. **Datei > Optionen** (had no implementation) is a short dialog of our own: Benutzername and
   Initialen (for comments), Touchmodus, AutoKorrektur on/off, AutoWiederherstellen interval.
+- **Picture effects (Farbsättigung, Farbton, Schärfen/Weichzeichnen, Künstlerische Effekte):** recorded in
+  PowerPoint (`probe_powerpoint_picfx.py`): the effects are a list in the blip (a14:imgProps > a14:imgLayer >
+  a14:imgEffect), the original stays behind the layer's hdphoto relationship and the picture shown becomes the
+  rendered result. We write the same (our original stays PNG/JPEG behind that relationship; PowerPoint accepts
+  it: round trip 31/31, PowerPoint lists the effects as its own). The adjustments follow PowerPoint's rendered
+  pixels: Sättigung scales HSL saturation by k/(1+(k-1)s) (mean difference 0.0-0.2 of 255), Temperatur uses
+  PowerPoint's per-channel curve fitted at 14 temperatures (below 1), Weichzeichnen a small Gaussian (0.08),
+  Schärfen an unsharp mask (0.38, PowerPoint's own sharpening not reproduced exactly). The 22 artistic effects
+  are our own drawings of each effect's look as PowerPoint renders it (texture, strokes, relief; differences
+  of 0.5-62 of 255, noisy textures cannot match pixel for pixel); PowerPoint redraws them its way when it
+  edits the picture. The menus are galleries of the selected picture in each effect, as in PowerPoint.
+  PowerPoint's own originals are HD Photo (.wdp), which a browser cannot read: on such pictures a new effect
+  is drawn on the picture as shown, and removing effects keeps the drawn picture until PowerPoint redraws it.

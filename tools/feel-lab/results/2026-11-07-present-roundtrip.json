@@ -140,6 +140,14 @@
    "result": "same",
    "diff": []
   },
+  "picture effects": {
+   "result": "same",
+   "diff": []
+  },
+  "picture effects removed": {
+   "result": "same",
+   "diff": []
+  },
   "chart": {
    "result": "same",
    "diff": []
@@ -155,6 +163,6 @@
  },
  "summary": {
   "fixtures": "11/11",
-  "scenarios": "29/29"
+  "scenarios": "31/31"
  }
 }

@@ -111,6 +111,7 @@ export interface ContextTabHost {
   pictureColor(): MenuEntry[];
   pictureTransparency(): MenuEntry[];
   pictureCorrections(): MenuEntry[];
+  pictureArtistic(): MenuEntry[];
   lineWeights(): MenuEntry[];
   chartKinds(): MenuEntry[];
   quickLayouts(): MenuEntry[];
@@ -148,7 +149,7 @@ export function pictureFormatTab(h: ContextTabHost): Tab {
   return {
     id: "pictureFormat", label: "Bildformat", key: "JP", contextual: true, shrink: [],
     groups: [
-      { id: "adjust", label: "Anpassen", key: "ZA", icon: "corrections", controls: [b("pic.removeBg", "N", "large"), dd("pic.corrections", "O", "large", () => h.pictureCorrections()), stack(dd("pic.color", "F", "medium", () => h.pictureColor()), b("pic.artistic", "Ü", "medium"), dd("pic.transparency", "T", "medium", () => h.pictureTransparency())),
+      { id: "adjust", label: "Anpassen", key: "ZA", icon: "corrections", controls: [b("pic.removeBg", "N", "large"), dd("pic.corrections", "O", "large", () => h.pictureCorrections()), stack(dd("pic.color", "F", "medium", () => h.pictureColor()), dd("pic.artistic", "Ü", "medium", () => h.pictureArtistic()), dd("pic.transparency", "T", "medium", () => h.pictureTransparency())),
         stack(b("pic.compress", "M"), b("pic.change", "Q1"), b("pic.reset", "U"))] },
       { id: "styles", label: "Bildformatvorlagen", key: "ZB", icon: "picture-styles", launcher: { cmd: "pic.dialog", key: "P" }, controls: [h.picStyleTiles(),
         stack(h.color(() => h.lineColor(), (c) => h.setLine(c), "pic.border", "V", true, () => h.outlineExtra()), dd("pic.effects", "E", "medium", () => h.effects()), b("pic.layout", "A1", "medium"))] },

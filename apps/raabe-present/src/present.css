@@ -265,3 +265,8 @@ body.view-bw .slide { filter: grayscale(1) contrast(4) brightness(1.2); }
 
 /* Animationspfade in the editing view (D-072). */
 .overlay .motion-path { position: absolute; left: 0; top: 0; pointer-events: none; overflow: visible; }
+/* Picture effect galleries (Korrekturen, Farbe, Künstlerische Effekte): the selected picture in each effect. */
+.pfx-grid { display: grid; gap: 4px; padding: 4px 8px; }
+.menu button.pfx-tile { width: auto; height: auto; padding: 3px; display: flex; align-items: center; justify-content: center; background: #fff; border: 1px solid transparent; cursor: pointer; }
+.menu button.pfx-tile:hover { border-color: #f5b56e; background: #fde9d2; }
+.pfx-tile canvas { display: block; width: 72px; height: 54px; background: #eee; }

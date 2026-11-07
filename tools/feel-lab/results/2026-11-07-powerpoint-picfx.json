@@ -1,0 +1,1020 @@
+{
+ "date": "2026-11-07",
+ "what": "PowerPoint's XML for picture effects",
+ "cases": [
+  {
+   "kind": 2,
+   "name": "Blur",
+   "value": null,
+   "params": [
+    {
+     "name": "Radius",
+     "value": 10.0
+    }
+   ],
+   "blip": "<a:blip r:embed=\"rId2\"><a:extLst><a:ext uri=\"{BEBA8EAE-BF5A-486C-A8C5-ECC9F3942E4B}\"><a14:imgProps xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a14:imgLayer r:embed=\"rId3\"><a14:imgEffect><a14:artisticBlur/>",
+   "effect": "<a14:artisticBlur/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image1.png",
+     "bytes": 45630,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 1
+  },
+  {
+   "kind": 4,
+   "name": "Cement",
+   "value": null,
+   "params": [
+    {
+     "name": "Transparency",
+     "value": 0.0
+    },
+    {
+     "name": "Crack Spacing",
+     "value": 24.0
+    }
+   ],
+   "blip": "<a:blip r:embed=\"rId2\"><a:extLst><a:ext uri=\"{BEBA8EAE-BF5A-486C-A8C5-ECC9F3942E4B}\"><a14:imgProps xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a14:imgLayer r:embed=\"rId3\"><a14:imgEffect><a14:artisticCement/>",
+   "effect": "<a14:artisticCement/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image2.png",
+     "bytes": 56765,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 2
+  },
+  {
+   "kind": 5,
+   "name": "CrisscrossEtching",
+   "value": null,
+   "params": [
+    {
+     "name": "Transparency",
+     "value": 0.75
+    },
+    {
+     "name": "Pressure",
+     "value": 30.0
+    }
+   ],
+   "blip": "<a:blip r:embed=\"rId2\"><a:extLst><a:ext uri=\"{BEBA8EAE-BF5A-486C-A8C5-ECC9F3942E4B}\"><a14:imgProps xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a14:imgLayer r:embed=\"rId3\"><a14:imgEffect><a14:artisticCrisscrossEtching/>",
+   "effect": "<a14:artisticCrisscrossEtching/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image3.png",
+     "bytes": 79934,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 3
+  },
+  {
+   "kind": 6,
+   "name": "ChalkSketch",
+   "value": null,
+   "params": [
+    {
+     "name": "Transparency",
+     "value": 0.0
+    },
+    {
+     "name": "Pressure",
+     "value": 0.0
+    }
+   ],
+   "blip": "<a:blip r:embed=\"rId2\"><a:extLst><a:ext uri=\"{BEBA8EAE-BF5A-486C-A8C5-ECC9F3942E4B}\"><a14:imgProps xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a14:imgLayer r:embed=\"rId3\"><a14:imgEffect><a14:artisticChalkSketch/>",
+   "effect": "<a14:artisticChalkSketch/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image4.png",
+     "bytes": 26873,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "P"
+    }
+   },
+   "slide": 4
+  },
+  {
+   "kind": 7,
+   "name": "ColorTemperature",
+   "value": null,
+   "params": [
+    {
+     "name": "ColorTemperature",
+     "value": 6500.0
+    }
+   ],
+   "blip": "<a:blip r:embed=\"rId2\"><a:extLst><a:ext uri=\"{BEBA8EAE-BF5A-486C-A8C5-ECC9F3942E4B}\"><a14:imgProps xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a14:imgLayer r:embed=\"rId3\"><a14:imgEffect><a14:colorTemperature/>",
+   "effect": "<a14:colorTemperature/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image5.png",
+     "bytes": 3888,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 5
+  },
+  {
+   "kind": 7,
+   "name": "ColorTemperature",
+   "value": 4700.0,
+   "params": [
+    {
+     "name": "ColorTemperature",
+     "value": 4700.0
+    }
+   ],
+   "blip": "<a:blip r:embed=\"rId2\"><a:extLst><a:ext uri=\"{BEBA8EAE-BF5A-486C-A8C5-ECC9F3942E4B}\"><a14:imgProps xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a14:imgLayer r:embed=\"rId3\"><a14:imgEffect><a14:colorTemperature colorTemp=\"4700\"/>",
+   "effect": "<a14:colorTemperature colorTemp=\"4700\"/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image6.png",
+     "bytes": 3854,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 6
+  },
+  {
+   "kind": 7,
+   "name": "ColorTemperature",
+   "value": 11200.0,
+   "params": [
+    {
+     "name": "ColorTemperature",
+     "value": 11200.0
+    }
+   ],
+   "blip": "<a:blip r:embed=\"rId2\"><a:extLst><a:ext uri=\"{BEBA8EAE-BF5A-486C-A8C5-ECC9F3942E4B}\"><a14:imgProps xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a14:imgLayer r:embed=\"rId3\"><a14:imgEffect><a14:colorTemperature colorTemp=\"11200\"/>",
+   "effect": "<a14:colorTemperature colorTemp=\"11200\"/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image7.png",
+     "bytes": 3858,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 7
+  },
+  {
+   "kind": 8,
+   "name": "Cutout",
+   "value": null,
+   "params": [
+    {
+     "name": "Transparency",
+     "value": 0.0
+    },
+    {
+     "name": "Number Of Shades",
+     "value": 2.0
+    }
+   ],
+   "blip": "<a:blip r:embed=\"rId2\"><a:extLst><a:ext uri=\"{BEBA8EAE-BF5A-486C-A8C5-ECC9F3942E4B}\"><a14:imgProps xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a14:imgLayer r:embed=\"rId3\"><a14:imgEffect><a14:artisticCutout/>",
+   "effect": "<a14:artisticCutout/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image8.png",
+     "bytes": 1180,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "P"
+    }
+   },
+   "slide": 8
+  },
+  {
+   "kind": 9,
+   "name": "FilmGrain",
+   "value": null,
+   "params": [
+    {
+     "name": "Transparency",
+     "value": 0.0
+    },
+    {
+     "name": "Grain Size",
+     "value": 40.0
+    }
+   ],
+   "blip": "<a:blip r:embed=\"rId2\"><a:extLst><a:ext uri=\"{BEBA8EAE-BF5A-486C-A8C5-ECC9F3942E4B}\"><a14:imgProps xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a14:imgLayer r:embed=\"rId3\"><a14:imgEffect><a14:artisticFilmGrain/>",
+   "effect": "<a14:artisticFilmGrain/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image9.png",
+     "bytes": 251348,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 9
+  },
+  {
+   "kind": 10,
+   "name": "Glass",
+   "value": null,
+   "params": [
+    {
+     "name": "Transparency",
+     "value": 0.0
+    },
+    {
+     "name": "Scaling",
+     "value": 34.0
+    }
+   ],
+   "blip": "<a:blip r:embed=\"rId2\"><a:extLst><a:ext uri=\"{BEBA8EAE-BF5A-486C-A8C5-ECC9F3942E4B}\"><a14:imgProps xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a14:imgLayer r:embed=\"rId3\"><a14:imgEffect><a14:artisticGlass/>",
+   "effect": "<a14:artisticGlass/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image10.png",
+     "bytes": 67132,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 10
+  },
+  {
+   "kind": 11,
+   "name": "GlowDiffused",
+   "value": null,
+   "params": [
+    {
+     "name": "Transparency",
+     "value": 0.0
+    },
+    {
+     "name": "Intensity",
+     "value": 5.0
+    }
+   ],
+   "blip": "<a:blip r:embed=\"rId2\"><a:extLst><a:ext uri=\"{BEBA8EAE-BF5A-486C-A8C5-ECC9F3942E4B}\"><a14:imgProps xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a14:imgLayer r:embed=\"rId3\"><a14:imgEffect><a14:artisticGlowDiffused/>",
+   "effect": "<a14:artisticGlowDiffused/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image11.png",
+     "bytes": 155489,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 11
+  },
+  {
+   "kind": 12,
+   "name": "GlowEdges",
+   "value": null,
+   "params": [
+    {
+     "name": "Transparency",
+     "value": 0.15
+    },
+    {
+     "name": "Smoothness",
+     "value": 3.0
+    }
+   ],
+   "blip": "<a:blip r:embed=\"rId2\"><a:extLst><a:ext uri=\"{BEBA8EAE-BF5A-486C-A8C5-ECC9F3942E4B}\"><a14:imgProps xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a14:imgLayer r:embed=\"rId3\"><a14:imgEffect><a14:artisticGlowEdges/>",
+   "effect": "<a14:artisticGlowEdges/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image12.png",
+     "bytes": 18196,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 12
+  },
+  {
+   "kind": 13,
+   "name": "LightScreen",
+   "value": null,
+   "params": [
+    {
+     "name": "Transparency",
+     "value": 0.0
+    },
+    {
+     "name": "Grid Size",
+     "value": 4.0
+    }
+   ],
+   "blip": "<a:blip r:embed=\"rId2\"><a:extLst><a:ext uri=\"{BEBA8EAE-BF5A-486C-A8C5-ECC9F3942E4B}\"><a14:imgProps xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a14:imgLayer r:embed=\"rId3\"><a14:imgEffect><a14:artisticLightScreen/>",
+   "effect": "<a14:artisticLightScreen/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image13.png",
+     "bytes": 81029,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 13
+  },
+  {
+   "kind": 14,
+   "name": "LineDrawing",
+   "value": null,
+   "params": [
+    {
+     "name": "Transparency",
+     "value": 0.25
+    },
+    {
+     "name": "Pencil Size",
+     "value": 0.0
+    }
+   ],
+   "blip": "<a:blip r:embed=\"rId2\"><a:extLst><a:ext uri=\"{BEBA8EAE-BF5A-486C-A8C5-ECC9F3942E4B}\"><a14:imgProps xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a14:imgLayer r:embed=\"rId3\"><a14:imgEffect><a14:artisticLineDrawing/>",
+   "effect": "<a14:artisticLineDrawing/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image14.png",
+     "bytes": 191666,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 14
+  },
+  {
+   "kind": 15,
+   "name": "Marker",
+   "value": null,
+   "params": [
+    {
+     "name": "Transparency",
+     "value": 0.0
+    },
+    {
+     "name": "Size",
+     "value": 97.0
+    }
+   ],
+   "blip": "<a:blip r:embed=\"rId2\"><a:extLst><a:ext uri=\"{BEBA8EAE-BF5A-486C-A8C5-ECC9F3942E4B}\"><a14:imgProps xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a14:imgLayer r:embed=\"rId3\"><a14:imgEffect><a14:artisticMarker/>",
+   "effect": "<a14:artisticMarker/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image15.png",
+     "bytes": 64581,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 15
+  },
+  {
+   "kind": 16,
+   "name": "MosaicBubbles",
+   "value": null,
+   "params": [
+    {
+     "name": "Transparency",
+     "value": 0.0
+    },
+    {
+     "name": "Pressure",
+     "value": 14.0
+    }
+   ],
+   "blip": "<a:blip r:embed=\"rId2\"><a:extLst><a:ext uri=\"{BEBA8EAE-BF5A-486C-A8C5-ECC9F3942E4B}\"><a14:imgProps xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a14:imgLayer r:embed=\"rId3\"><a14:imgEffect><a14:artisticMosiaicBubbles/>",
+   "effect": "<a14:artisticMosiaicBubbles/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image16.png",
+     "bytes": 176558,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 16
+  },
+  {
+   "kind": 17,
+   "name": "PaintBrush",
+   "value": null,
+   "params": [
+    {
+     "name": "Transparency",
+     "value": 0.0
+    },
+    {
+     "name": "Brush Size",
+     "value": 2.0
+    }
+   ],
+   "blip": "<a:blip r:embed=\"rId2\"><a:extLst><a:ext uri=\"{BEBA8EAE-BF5A-486C-A8C5-ECC9F3942E4B}\"><a14:imgProps xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a14:imgLayer r:embed=\"rId3\"><a14:imgEffect><a14:artisticPaintBrush/>",
+   "effect": "<a14:artisticPaintBrush/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image17.png",
+     "bytes": 8188,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 17
+  },
+  {
+   "kind": 18,
+   "name": "PaintStrokes",
+   "value": null,
+   "params": [
+    {
+     "name": "Transparency",
+     "value": 0.0
+    },
+    {
+     "name": "Intensity",
+     "value": 5.0
+    }
+   ],
+   "blip": "<a:blip r:embed=\"rId2\"><a:extLst><a:ext uri=\"{BEBA8EAE-BF5A-486C-A8C5-ECC9F3942E4B}\"><a14:imgProps xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a14:imgLayer r:embed=\"rId3\"><a14:imgEffect><a14:artisticPaintStrokes/>",
+   "effect": "<a14:artisticPaintStrokes/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image18.png",
+     "bytes": 8313,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 18
+  },
+  {
+   "kind": 19,
+   "name": "PastelsSmooth",
+   "value": null,
+   "params": [
+    {
+     "name": "Transparency",
+     "value": 0.0
+    },
+    {
+     "name": "Scaling",
+     "value": 34.0
+    }
+   ],
+   "blip": "<a:blip r:embed=\"rId2\"><a:extLst><a:ext uri=\"{BEBA8EAE-BF5A-486C-A8C5-ECC9F3942E4B}\"><a14:imgProps xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a14:imgLayer r:embed=\"rId3\"><a14:imgEffect><a14:artisticPastelsSmooth/>",
+   "effect": "<a14:artisticPastelsSmooth/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image19.png",
+     "bytes": 116168,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 19
+  },
+  {
+   "kind": 20,
+   "name": "PencilGrayscale",
+   "value": null,
+   "params": [
+    {
+     "name": "Transparency",
+     "value": 0.0
+    },
+    {
+     "name": "Pencil Size",
+     "value": 27.0
+    }
+   ],
+   "blip": "<a:blip r:embed=\"rId2\"><a:extLst><a:ext uri=\"{BEBA8EAE-BF5A-486C-A8C5-ECC9F3942E4B}\"><a14:imgProps xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a14:imgLayer r:embed=\"rId3\"><a14:imgEffect><a14:artisticPencilGrayscale/>",
+   "effect": "<a14:artisticPencilGrayscale/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image20.png",
+     "bytes": 127667,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 20
+  },
+  {
+   "kind": 21,
+   "name": "PencilSketch",
+   "value": null,
+   "params": [
+    {
+     "name": "Transparency",
+     "value": 0.0
+    },
+    {
+     "name": "Pressure",
+     "value": 22.0
+    }
+   ],
+   "blip": "<a:blip r:embed=\"rId2\"><a:extLst><a:ext uri=\"{BEBA8EAE-BF5A-486C-A8C5-ECC9F3942E4B}\"><a14:imgProps xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a14:imgLayer r:embed=\"rId3\"><a14:imgEffect><a14:artisticPencilSketch/>",
+   "effect": "<a14:artisticPencilSketch/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image21.png",
+     "bytes": 41732,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "P"
+    }
+   },
+   "slide": 21
+  },
+  {
+   "kind": 22,
+   "name": "Photocopy",
+   "value": null,
+   "params": [
+    {
+     "name": "Transparency",
+     "value": 0.3
+    },
+    {
+     "name": "Detail",
+     "value": 3.0
+    }
+   ],
+   "blip": "<a:blip r:embed=\"rId2\"><a:extLst><a:ext uri=\"{BEBA8EAE-BF5A-486C-A8C5-ECC9F3942E4B}\"><a14:imgProps xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a14:imgLayer r:embed=\"rId3\"><a14:imgEffect><a14:artisticPhotocopy/>",
+   "effect": "<a14:artisticPhotocopy/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image22.png",
+     "bytes": 12885,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 22
+  },
+  {
+   "kind": 23,
+   "name": "PlasticWrap",
+   "value": null,
+   "params": [
+    {
+     "name": "Transparency",
+     "value": 0.0
+    },
+    {
+     "name": "Smoothness",
+     "value": 5.0
+    }
+   ],
+   "blip": "<a:blip r:embed=\"rId2\"><a:extLst><a:ext uri=\"{BEBA8EAE-BF5A-486C-A8C5-ECC9F3942E4B}\"><a14:imgProps xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a14:imgLayer r:embed=\"rId3\"><a14:imgEffect><a14:artisticPlasticWrap/>",
+   "effect": "<a14:artisticPlasticWrap/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image23.png",
+     "bytes": 55648,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 23
+  },
+  {
+   "kind": 24,
+   "name": "Saturation",
+   "value": null,
+   "params": [
+    {
+     "name": "Saturation",
+     "value": 1.0
+    }
+   ],
+   "blip": "<a:blip r:embed=\"rId2\"><a:extLst><a:ext uri=\"{BEBA8EAE-BF5A-486C-A8C5-ECC9F3942E4B}\"><a14:imgProps xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a14:imgLayer r:embed=\"rId3\"><a14:imgEffect><a14:saturation/>",
+   "effect": "<a14:saturation/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image5.png",
+     "bytes": 3888,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 24
+  },
+  {
+   "kind": 24,
+   "name": "Saturation",
+   "value": 0.0,
+   "params": [
+    {
+     "name": "Saturation",
+     "value": 0.0
+    }
+   ],
+   "blip": "<a:blip r:embed=\"rId2\"><a:extLst><a:ext uri=\"{BEBA8EAE-BF5A-486C-A8C5-ECC9F3942E4B}\"><a14:imgProps xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a14:imgLayer r:embed=\"rId3\"><a14:imgEffect><a14:saturation sat=\"0\"/>",
+   "effect": "<a14:saturation sat=\"0\"/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image24.png",
+     "bytes": 1792,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "P"
+    }
+   },
+   "slide": 25
+  },
+  {
+   "kind": 24,
+   "name": "Saturation",
+   "value": 2.0,
+   "params": [
+    {
+     "name": "Saturation",
+     "value": 2.0
+    }
+   ],
+   "blip": "<a:blip r:embed=\"rId2\"><a:extLst><a:ext uri=\"{BEBA8EAE-BF5A-486C-A8C5-ECC9F3942E4B}\"><a14:imgProps xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a14:imgLayer r:embed=\"rId3\"><a14:imgEffect><a14:saturation sat=\"200000\"/>",
+   "effect": "<a14:saturation sat=\"200000\"/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image25.png",
+     "bytes": 3890,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 26
+  },
+  {
+   "kind": 25,
+   "name": "SharpenSoften",
+   "value": null,
+   "params": [
+    {
+     "name": "SharpenSoften",
+     "value": 0.0
+    }
+   ],
+   "blip": "<a:blip r:embed=\"rId2\"><a:extLst><a:ext uri=\"{BEBA8EAE-BF5A-486C-A8C5-ECC9F3942E4B}\"><a14:imgProps xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a14:imgLayer r:embed=\"rId3\"><a14:imgEffect><a14:sharpenSoften/>",
+   "effect": "<a14:sharpenSoften/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image5.png",
+     "bytes": 3888,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 27
+  },
+  {
+   "kind": 25,
+   "name": "SharpenSoften",
+   "value": -0.5,
+   "params": [
+    {
+     "name": "SharpenSoften",
+     "value": -0.5
+    }
+   ],
+   "blip": "<a:blip r:embed=\"rId2\"><a:extLst><a:ext uri=\"{BEBA8EAE-BF5A-486C-A8C5-ECC9F3942E4B}\"><a14:imgProps xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a14:imgLayer r:embed=\"rId3\"><a14:imgEffect><a14:sharpenSoften amount=\"-50000\"/>",
+   "effect": "<a14:sharpenSoften amount=\"-50000\"/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image26.png",
+     "bytes": 10583,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 28
+  },
+  {
+   "kind": 25,
+   "name": "SharpenSoften",
+   "value": 0.5,
+   "params": [
+    {
+     "name": "SharpenSoften",
+     "value": 0.5
+    }
+   ],
+   "blip": "<a:blip r:embed=\"rId2\"><a:extLst><a:ext uri=\"{BEBA8EAE-BF5A-486C-A8C5-ECC9F3942E4B}\"><a14:imgProps xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a14:imgLayer r:embed=\"rId3\"><a14:imgEffect><a14:sharpenSoften amount=\"50000\"/>",
+   "effect": "<a14:sharpenSoften amount=\"50000\"/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image27.png",
+     "bytes": 7062,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 29
+  },
+  {
+   "kind": 26,
+   "name": "Texturizer",
+   "value": null,
+   "params": [
+    {
+     "name": "Transparency",
+     "value": 0.0
+    },
+    {
+     "name": "Scaling",
+     "value": 34.0
+    }
+   ],
+   "blip": "<a:blip r:embed=\"rId2\"><a:extLst><a:ext uri=\"{BEBA8EAE-BF5A-486C-A8C5-ECC9F3942E4B}\"><a14:imgProps xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a14:imgLayer r:embed=\"rId3\"><a14:imgEffect><a14:artisticTexturizer/>",
+   "effect": "<a14:artisticTexturizer/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image28.png",
+     "bytes": 169073,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 30
+  },
+  {
+   "kind": 27,
+   "name": "WatercolorSponge",
+   "value": null,
+   "params": [
+    {
+     "name": "Transparency",
+     "value": 0.0
+    },
+    {
+     "name": "Brush Size",
+     "value": 2.0
+    }
+   ],
+   "blip": "<a:blip r:embed=\"rId2\"><a:extLst><a:ext uri=\"{BEBA8EAE-BF5A-486C-A8C5-ECC9F3942E4B}\"><a14:imgProps xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a14:imgLayer r:embed=\"rId3\"><a14:imgEffect><a14:artisticWatercolorSponge/>",
+   "effect": "<a14:artisticWatercolorSponge/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image29.png",
+     "bytes": 103389,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 31
+  }
+ ]
+}

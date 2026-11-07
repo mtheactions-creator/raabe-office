@@ -62,6 +62,12 @@ SCENARIOS: dict[str, str] = {
     "animation": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]}]}); const a = p.app; a.editor.select([2]); const m = await import('/src/animations.ts'); m.addAnimation(a, 'entr', m.ANIMATION_GROUPS[0].items[2], false);""",
     "design raabe": """p.newDoc(); const a = p.app; const d = await import('/src/designs.ts'); a.applyDesign(d.RAABE_DESIGN); await new Promise(r => setTimeout(r, 300));""",
     "picture": f"""p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); const bin = atob('{PNG}'); const b = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) b[i] = bin.charCodeAt(i); a.insertPictureBytes(b, 'image/png'); await new Promise(r => setTimeout(r, 500));""",
+    "picture effects": f"""p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); const bin = atob('{PNG}'); const b = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) b[i] = bin.charCodeAt(i); a.insertPictureBytes(b, 'image/png'); await new Promise(r => setTimeout(r, 500));
+        const v = a.deck.view(a.slidePath()).shapes.find(s => s.kind === 'pic'); a.editor.select([v.id]); const m = await import('/src/picfx.ts');
+        await m.setEffect(a, 'saturation', {{name: 'saturation', attrs: {{sat: '0'}}}}, 'Farbsättigung'); await m.setEffect(a, 'artistic', {{name: 'artisticBlur', attrs: {{}}}}, 'Künstlerische Effekte'); await m.setEffect(a, 'sharpenSoften', {{name: 'sharpenSoften', attrs: {{amount: '25000'}}}}, 'Schärfen');""",
+    "picture effects removed": f"""p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); const bin = atob('{PNG}'); const b = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) b[i] = bin.charCodeAt(i); a.insertPictureBytes(b, 'image/png'); await new Promise(r => setTimeout(r, 500));
+        const v = a.deck.view(a.slidePath()).shapes.find(s => s.kind === 'pic'); a.editor.select([v.id]); const m = await import('/src/picfx.ts');
+        await m.setEffect(a, 'colorTemperature', {{name: 'colorTemperature', attrs: {{colorTemp: '4700'}}}}, 'Farbton'); await m.setEffect(a, 'colorTemperature', null, 'Farbton');""",
     "chart": """p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); const m = await import('/src/charts.ts'); m.insertChart(a, 'column');""",
     "comment": """p.newDoc(); p.app.comments.add('Bitte prüfen');""",
     "undo redo": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]}]}); const a = p.app; a.editor.select([2]); a.editor.deleteSelected(); await p.run('edit.undo'); await p.run('edit.redo'); await p.run('edit.undo');""",
@@ -83,6 +89,12 @@ def ppt_shapes(slide) -> list[dict]:
                 d["runs"] = [{"text": str(tr.Runs(k).Text), "bold": int(tr.Runs(k).Font.Bold), "color": int(tr.Runs(k).Font.Color.RGB)} for k in range(1, tr.Runs().Count + 1)]
         except Exception:  # noqa: BLE001
             pass
+        if int(s.Type) == 13:
+            try:
+                fx = s.Fill.PictureEffects
+                d["fx"] = [int(fx(k).Type) for k in range(1, fx.Count + 1)]
+            except Exception:  # noqa: BLE001
+                d["fx"] = None
         if int(s.Type) == 6:
             d["members"] = int(s.GroupItems.Count)
         try:
@@ -191,6 +203,13 @@ def check(name: str, r: dict, ours: dict) -> list[str]:
         want(r["accent1"] == 0x1B14B3, f"accent1 {r['accent1']:06X}")
     elif name == "picture":
         want(any(x["type"] == 13 for x in sh), f"types {[x['type'] for x in sh]}")
+    elif name == "picture effects":
+        # MsoPictureEffectType: 2 Blur, 24 Saturation, 25 SharpenSoften (PowerPoint lists them in its own order).
+        fx = next((x.get("fx") for x in sh if x["type"] == 13), None)
+        want(fx is not None and sorted(fx) == [2, 24, 25], f"effects {fx}")
+    elif name == "picture effects removed":
+        fx = next((x.get("fx") for x in sh if x["type"] == 13), None)
+        want(fx == [], f"effects {fx}")
     elif name == "chart":
         want(any("chart" in x for x in sh), f"chart {[x.get('chart') for x in sh]}")
     elif name == "comment":

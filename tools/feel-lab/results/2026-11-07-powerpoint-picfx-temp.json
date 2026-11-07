@@ -1,0 +1,666 @@
+{
+ "date": "2026-11-07",
+ "what": "PowerPoint's Farbton (colour temperature): per channel out = a * in + b, fitted on a grey ramp",
+ "cases": [
+  {
+   "kind": 7,
+   "name": "ColorTemperature",
+   "value": 1500.0,
+   "params": [
+    {
+     "name": "ColorTemperature",
+     "value": 1500.0
+    }
+   ],
+   "effect": "<a14:colorTemperature colorTemp=\"1500\"/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image1.png",
+     "bytes": 3505,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 1
+  },
+  {
+   "kind": 7,
+   "name": "ColorTemperature",
+   "value": 2500.0,
+   "params": [
+    {
+     "name": "ColorTemperature",
+     "value": 2500.0
+    }
+   ],
+   "effect": "<a14:colorTemperature colorTemp=\"2500\"/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image2.png",
+     "bytes": 3644,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 2
+  },
+  {
+   "kind": 7,
+   "name": "ColorTemperature",
+   "value": 3500.0,
+   "params": [
+    {
+     "name": "ColorTemperature",
+     "value": 3500.0
+    }
+   ],
+   "effect": "<a14:colorTemperature colorTemp=\"3500\"/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image3.png",
+     "bytes": 3794,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 3
+  },
+  {
+   "kind": 7,
+   "name": "ColorTemperature",
+   "value": 4000.0,
+   "params": [
+    {
+     "name": "ColorTemperature",
+     "value": 4000.0
+    }
+   ],
+   "effect": "<a14:colorTemperature colorTemp=\"4000\"/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image4.png",
+     "bytes": 3825,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 4
+  },
+  {
+   "kind": 7,
+   "name": "ColorTemperature",
+   "value": 4700.0,
+   "params": [
+    {
+     "name": "ColorTemperature",
+     "value": 4700.0
+    }
+   ],
+   "effect": "<a14:colorTemperature colorTemp=\"4700\"/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image5.png",
+     "bytes": 3854,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 5
+  },
+  {
+   "kind": 7,
+   "name": "ColorTemperature",
+   "value": 5300.0,
+   "params": [
+    {
+     "name": "ColorTemperature",
+     "value": 5300.0
+    }
+   ],
+   "effect": "<a14:colorTemperature colorTemp=\"5300\"/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image6.png",
+     "bytes": 3875,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 6
+  },
+  {
+   "kind": 7,
+   "name": "ColorTemperature",
+   "value": 5900.0,
+   "params": [
+    {
+     "name": "ColorTemperature",
+     "value": 5900.0
+    }
+   ],
+   "effect": "<a14:colorTemperature colorTemp=\"5900\"/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image7.png",
+     "bytes": 3883,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 7
+  },
+  {
+   "kind": 7,
+   "name": "ColorTemperature",
+   "value": 6500.0,
+   "params": [
+    {
+     "name": "ColorTemperature",
+     "value": 6500.0
+    }
+   ],
+   "effect": "<a14:colorTemperature/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image8.png",
+     "bytes": 3888,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 8
+  },
+  {
+   "kind": 7,
+   "name": "ColorTemperature",
+   "value": 7200.0,
+   "params": [
+    {
+     "name": "ColorTemperature",
+     "value": 7200.0
+    }
+   ],
+   "effect": "<a14:colorTemperature colorTemp=\"7200\"/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image9.png",
+     "bytes": 3885,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 9
+  },
+  {
+   "kind": 7,
+   "name": "ColorTemperature",
+   "value": 8000.0,
+   "params": [
+    {
+     "name": "ColorTemperature",
+     "value": 8000.0
+    }
+   ],
+   "effect": "<a14:colorTemperature colorTemp=\"8000\"/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image10.png",
+     "bytes": 3880,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 10
+  },
+  {
+   "kind": 7,
+   "name": "ColorTemperature",
+   "value": 8800.0,
+   "params": [
+    {
+     "name": "ColorTemperature",
+     "value": 8800.0
+    }
+   ],
+   "effect": "<a14:colorTemperature colorTemp=\"8800\"/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image11.png",
+     "bytes": 3880,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 11
+  },
+  {
+   "kind": 7,
+   "name": "ColorTemperature",
+   "value": 10000.0,
+   "params": [
+    {
+     "name": "ColorTemperature",
+     "value": 10000.0
+    }
+   ],
+   "effect": "<a14:colorTemperature colorTemp=\"10000\"/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image12.png",
+     "bytes": 3866,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 12
+  },
+  {
+   "kind": 7,
+   "name": "ColorTemperature",
+   "value": 11200.0,
+   "params": [
+    {
+     "name": "ColorTemperature",
+     "value": 11200.0
+    }
+   ],
+   "effect": "<a14:colorTemperature colorTemp=\"11200\"/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image13.png",
+     "bytes": 3858,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 13
+  },
+  {
+   "kind": 7,
+   "name": "ColorTemperature",
+   "value": 11500.0,
+   "params": [
+    {
+     "name": "ColorTemperature",
+     "value": 11500.0
+    }
+   ],
+   "effect": "<a14:colorTemperature colorTemp=\"11500\"/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4394,
+     "size": null
+    },
+    "rId2": {
+     "part": "image14.png",
+     "bytes": 3858,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "RGBA"
+    }
+   },
+   "slide": 14
+  }
+ ],
+ "fits": [
+  {
+   "temp": 1500.0,
+   "r": {
+    "a": 0.6579,
+    "b": -7.45,
+    "maxerr": 8.69
+   },
+   "g": {
+    "a": 1.3125,
+    "b": 10.66,
+    "maxerr": 10.29
+   },
+   "b": {
+    "a": 21.5397,
+    "b": 104.82,
+    "maxerr": 59.36
+   }
+  },
+  {
+   "temp": 2500.0,
+   "r": {
+    "a": 0.7328,
+    "b": -6.87,
+    "maxerr": 7.01
+   },
+   "g": {
+    "a": 1.0942,
+    "b": 3.61,
+    "maxerr": 3.89
+   },
+   "b": {
+    "a": 1.9938,
+    "b": 25.4,
+    "maxerr": 24.4
+   }
+  },
+  {
+   "temp": 3500.0,
+   "r": {
+    "a": 0.8412,
+    "b": -5.11,
+    "maxerr": 5.06
+   },
+   "g": {
+    "a": 1.0385,
+    "b": 1.52,
+    "maxerr": 1.79
+   },
+   "b": {
+    "a": 1.3837,
+    "b": 12.8,
+    "maxerr": 12.57
+   }
+  },
+  {
+   "temp": 4000.0,
+   "r": {
+    "a": 0.8808,
+    "b": -4.14,
+    "maxerr": 4.09
+   },
+   "g": {
+    "a": 1.0245,
+    "b": 1.05,
+    "maxerr": 1.32
+   },
+   "b": {
+    "a": 1.2596,
+    "b": 9.16,
+    "maxerr": 8.94
+   }
+  },
+  {
+   "temp": 4700.0,
+   "r": {
+    "a": 0.9245,
+    "b": -2.75,
+    "maxerr": 3.05
+   },
+   "g": {
+    "a": 1.0124,
+    "b": 0.61,
+    "maxerr": 0.87
+   },
+   "b": {
+    "a": 1.1482,
+    "b": 5.46,
+    "maxerr": 5.2
+   }
+  },
+  {
+   "temp": 5300.0,
+   "r": {
+    "a": 0.9546,
+    "b": -1.74,
+    "maxerr": 2.02
+   },
+   "g": {
+    "a": 1.0088,
+    "b": 0.1,
+    "maxerr": 0.54
+   },
+   "b": {
+    "a": 1.083,
+    "b": 3.23,
+    "maxerr": 3.48
+   }
+  },
+  {
+   "temp": 5900.0,
+   "r": {
+    "a": 0.98,
+    "b": -0.86,
+    "maxerr": 1.14
+   },
+   "g": {
+    "a": 1.0058,
+    "b": -0.15,
+    "maxerr": 0.54
+   },
+   "b": {
+    "a": 1.0362,
+    "b": 1.4,
+    "maxerr": 1.69
+   }
+  },
+  {
+   "temp": 6500.0,
+   "r": {
+    "a": 1.0,
+    "b": 0.0,
+    "maxerr": 0.0
+   },
+   "g": {
+    "a": 1.0,
+    "b": 0.0,
+    "maxerr": 0.0
+   },
+   "b": {
+    "a": 1.0,
+    "b": 0.0,
+    "maxerr": 0.0
+   }
+  },
+  {
+   "temp": 7200.0,
+   "r": {
+    "a": 1.0203,
+    "b": 0.81,
+    "maxerr": 1.09
+   },
+   "g": {
+    "a": 0.9946,
+    "b": 0.34,
+    "maxerr": 0.55
+   },
+   "b": {
+    "a": 0.9669,
+    "b": -1.27,
+    "maxerr": 1.56
+   }
+  },
+  {
+   "temp": 8000.0,
+   "r": {
+    "a": 1.0399,
+    "b": 1.56,
+    "maxerr": 1.84
+   },
+   "g": {
+    "a": 0.9952,
+    "b": -0.11,
+    "maxerr": 0.54
+   },
+   "b": {
+    "a": 0.937,
+    "b": -2.35,
+    "maxerr": 2.6
+   }
+  },
+  {
+   "temp": 8800.0,
+   "r": {
+    "a": 1.0561,
+    "b": 2.19,
+    "maxerr": 2.47
+   },
+   "g": {
+    "a": 0.996,
+    "b": -0.27,
+    "maxerr": 0.5
+   },
+   "b": {
+    "a": 0.9127,
+    "b": -3.12,
+    "maxerr": 3.38
+   }
+  },
+  {
+   "temp": 10000.0,
+   "r": {
+    "a": 1.0757,
+    "b": 2.97,
+    "maxerr": 3.19
+   },
+   "g": {
+    "a": 0.9929,
+    "b": -0.11,
+    "maxerr": 0.57
+   },
+   "b": {
+    "a": 0.8851,
+    "b": -4.03,
+    "maxerr": 3.95
+   }
+  },
+  {
+   "temp": 11200.0,
+   "r": {
+    "a": 1.0915,
+    "b": 3.54,
+    "maxerr": 3.81
+   },
+   "g": {
+    "a": 0.9917,
+    "b": -0.09,
+    "maxerr": 0.55
+   },
+   "b": {
+    "a": 0.8637,
+    "b": -4.59,
+    "maxerr": 4.54
+   }
+  },
+  {
+   "temp": 11500.0,
+   "r": {
+    "a": 1.0954,
+    "b": 3.58,
+    "maxerr": 3.87
+   },
+   "g": {
+    "a": 0.9915,
+    "b": -0.09,
+    "maxerr": 0.55
+   },
+   "b": {
+    "a": 0.8589,
+    "b": -4.69,
+    "maxerr": 4.54
+   }
+  }
+ ]
+}
