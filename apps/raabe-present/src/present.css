@@ -245,3 +245,13 @@ body.printing #print-root { display: block; position: fixed; left: 0; top: 0; z-
 /* Ansicht > Graustufe / Schwarzweiß: the slides in the editor and the panel. */
 body.view-gray .slide { filter: grayscale(1); }
 body.view-bw .slide { filter: grayscale(1) contrast(4) brightness(1.2); }
+
+/* Formformat: the styles in the ribbon (D-072). */
+.rgallery.qs-tiles .qs-rtile { width: 56px; height: 38px; display: flex; align-items: center; justify-content: center; font: 12px Calibri, Carlito, sans-serif; border-radius: 2px; box-sizing: border-box; }
+.rgallery.ps-tiles .ps-rtile { width: 56px; height: 40px; display: flex; align-items: center; justify-content: center; }
+.rgallery.ps-tiles .ps-img, .pic-styles .ps-img { width: 44px; height: 32px; background: linear-gradient(135deg, #8fb3d9, #4a7ab0 60%, #e2c27d); box-sizing: border-box; }
+/* Größe in the format tabs: the spin boxes with their icon only, as PowerPoint's (the name stays for screen readers). */
+.rgroup[data-group="size"] .rspinner .lbl { display: none; }
+.rgallery.ts-tiles .ts-rtile { width: 58px; height: 38px; display: block; background: #fff; }
+.rgallery.ts-tiles .ts-row { display: block; height: 7px; box-sizing: border-box; }
+.rgroup[data-group="cellSize"] .rspinner .lbl { display: none; }

@@ -125,6 +125,8 @@ export function renderTable(s: ShapeView, o: RenderOptions): HTMLElement {
       const anchor = tcPr?.getAttribute("anchor");
       const body = readBodyProps([kid(kid(tc, "txBody"), "bodyPr")]);
       body.anchor = anchor === "ctr" ? "ctr" : anchor === "b" ? "b" : "t";
+      const vert = tcPr?.getAttribute("vert");
+      if (vert && vert !== "horz") body.vert = vert;
       const lstOverride = colorList(look.color ?? theme.colors.tx1, !!look.bold);
       const text = readText(kid(tc, "txBody"), { theme, lists: [defaults, lstOverride, kid(kid(tc, "txBody"), "lstStyle")] }, body);
       const w = cols.slice(ci, ci + span).reduce((a, b) => a + b, 0);

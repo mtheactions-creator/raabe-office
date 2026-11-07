@@ -7,9 +7,9 @@ import { h, showDialog, type Control, type MenuEntry } from "@raabe/shell";
 import { PptxDom, type ShapeView } from "@raabe/ooxml";
 import type { PresentApp } from "./app";
 import { LINE_WEIGHTS } from "./lines";
-import { colorWord, quickStylesPanel } from "./quickstyles";
-import { tableStylesPanel } from "./tablestyles";
-import { picStylesPanel } from "./picstyles";
+import { colorWord, quickStyleTiles, quickStylesPanel } from "./quickstyles";
+import { tableStyleTiles, tableStylesPanel } from "./tablestyles";
+import { picStyleTiles, picStylesPanel } from "./picstyles";
 import type { ContextTabHost } from "./contexttabs";
 import * as T from "./textops";
 import * as S from "./shapeops";
@@ -27,6 +27,17 @@ export function contextHost(app: PresentApp): ContextTabHost {
     color: (cur, pick, cmd, key, label, extra) => ({ type: "color", cmd, key, palette: "font", current: cur, pick, showLabel: label, extra }),
     outlineExtra: () => app.outlineExtra(),
     quickStyles: (c) => quickStylesPanel(app, c),
+    quickStyleTiles: () => quickStyleTiles(app),
+    picStyleTiles: () => picStyleTiles(app),
+    tableStyleTiles: () => tableStyleTiles(app),
+    // Textrichtung and Zellenbegrenzungen of the cells (the one being edited, the range, else all), as PowerPoint's entries.
+    cellDirections: () => ([["Horizontal", null], ["Text um 90° drehen", "vert"], ["Text um 270° drehen", "vert270"], ["Gestapelt", "wordArtVert"]] as [string, string | null][])
+      .map(([label, v]): MenuEntry => ({ label, run: () => cellPr(app, "Textrichtung", (pr) => { if (v) pr.setAttribute("vert", v); else pr.removeAttribute("vert"); }) }))
+      .concat([{ label: "Weitere Optionen...", run: () => void app.commands.run("draw.format") }]),
+    cellMargins: () => [...([["Normal", 91440, 45720], ["Keine", 0, 0], ["Schmal", 45720, 45720], ["Breit", 137160, 137160]] as [string, number, number][])
+      .map(([label, lr, tb]) => ({ label, run: () => cellPr(app, "Zellenbegrenzungen", (pr) => { for (const [a, v] of [["marL", lr], ["marR", lr], ["marT", tb], ["marB", tb]] as [string, number][]) { if (label === "Normal") pr.removeAttribute(a); else pr.setAttribute(a, String(v)); } }) })),
+      "-" as const, { cmd: "table.customMargins" }],
+    shapeTiles: () => app.shapeTiles(),
     tableStyles: (c) => tableStylesPanel(app, c),
     picStyles: (c) => picStylesPanel(app, c),
     textOutlineColor: () => app.textOutlineColor(), setTextOutline: (hex) => app.setTextOutline({ color: hex }), textOutlineExtra: () => app.textOutlineExtra(),
@@ -135,6 +146,19 @@ export function tableAlign(app: PresentApp, algn: "l" | "ctr" | "r"): void {
   const t = tableOf(app);
   if (!t) return;
   app.editor.edit("Ausrichten", () => { for (const tc of cells(app, t.tbl)) { const body = kid(tc, "txBody"); if (body) T.paraProps(body, 0, T.paras(body).length - 1, (p) => p.setAttribute("algn", algn)); } });
+}
+
+/** A change to the a:tcPr of the cells a command acts on. */
+function cellPr(app: PresentApp, label: string, fn: (pr: Element) => void): void {
+  const t = tableOf(app);
+  if (!t) return;
+  app.editor.edit(label, () => {
+    for (const tc of cells(app, t.tbl)) {
+      let pr = kid(tc, "tcPr");
+      if (!pr) { pr = make(tc.ownerDocument, "a:tcPr"); tc.append(pr); }
+      fn(pr);
+    }
+  });
 }
 
 export function tableAnchor(app: PresentApp, anchor: "t" | "ctr" | "b"): void {
@@ -281,6 +305,8 @@ export function implementContext(app: PresentApp): void {
   impl("table.deleteMenu", () => {}, table);
   impl("table.select", () => {}, table);
   impl("table.styles", () => {}, table);
+  impl("table.direction", () => {}, table);
+  impl("table.margins", () => {}, table);
   impl("pic.quickStyles", () => {}, pic);
   const editingCell = () => !!app.editor.text?.cell;
   impl("table.merge", () => {

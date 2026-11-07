@@ -1405,6 +1405,19 @@ export class PresentApp implements EditorHost, PanelHost {
 
   // ----- galleries -------------------------------------------------------------------------------------------
 
+  /** Formformat > Formen einfügen: the shapes as a gallery in the ribbon (three rows, as PowerPoint's). */
+  shapeTiles(): Control {
+    const items = SHAPE_GALLERY.flatMap((g) => g.items);
+    return {
+      type: "tiles", cmd: "insert.shapes", key: "2", count: items.length, visible: 18, size: [22, 22], cls: "shape-tiles-ribbon",
+      render: (i) => h("span", { class: "shape-ico" }, shapeIcon(items[i])),
+      tip: (i) => items[i].label,
+      pick: (i) => { const it = items[i]; if (it.tool.kind === "textbox") this.startTool({ kind: "textbox" }); else this.startTool({ kind: "shape", prst: it.tool.geometry, head: !!it.tool.pic?.line?.head, tail: !!it.tool.pic?.line?.tail, freeform: it.tool.freeform }); },
+      redraw: () => "shapes",
+      panel: (close) => this.shapeGallery(close),
+    };
+  }
+
   shapeGallery(close: () => void): HTMLElement {
     const wrap = h("div", { class: "shape-gallery-wrap" });
     for (const group of SHAPE_GALLERY) {
@@ -2237,7 +2250,7 @@ export class PresentApp implements EditorHost, PanelHost {
         numbering: this.numberMenu(),
         lineSpacing: [...[1, 1.5, 2, 2.5, 3].map((v) => ({ label: v.toFixed(1).replace(".", ","), run: () => this.lineSpacing(v) })), "-", { label: "Zeilenabstandsoptionen...", run: () => void this.commands.run("para.dialog") }],
         columns: [1, 2, 3].map((n) => ({ label: ["Eine Spalte", "Zwei Spalten", "Drei Spalten"][n - 1], run: () => this.setColumns(n) })),
-        direction: [["Horizontal", "horz"], ["Alle Texte um 90° drehen", "vert"], ["Alle Texte um 270° drehen", "vert270"], ["Gestapelt", "wordArtVert"]].map(([label, v]) => ({ label, run: () => this.setBodyAttr("vert", v === "horz" ? null : v) })),
+        direction: [...[["Horizontal", "horz"], ["Text um 90° drehen", "vert"], ["Text um 270° drehen", "vert270"], ["Gestapelt", "wordArtVert"]].map(([label, v]) => ({ label, run: () => this.setBodyAttr("vert", v === "horz" ? null : v) })), { label: "Weitere Optionen...", run: () => void this.commands.run("draw.format") }],
         alignText: [["Oben", "t"], ["Mitte", "ctr"], ["Unten", "b"]].map(([label, v]) => ({ label, run: () => this.setBodyAttr("anchor", v) })),
         arrange: () => [{ heading: "Objekte sortieren" }, { cmd: "arrange.front" }, { cmd: "arrange.back" }, { cmd: "arrange.forward" }, { cmd: "arrange.backward" }, { heading: "Objekte gruppieren" }, { cmd: "arrange.group" }, { cmd: "arrange.ungroup" }, { cmd: "arrange.regroup" },
           { heading: "Objekte positionieren" }, { label: "Ausrichten", submenu: () => [{ cmd: "arrange.alignLeft" }, { cmd: "arrange.alignCenter" }, { cmd: "arrange.alignRight" }, "-", { cmd: "arrange.alignTop" }, { cmd: "arrange.alignMiddle" }, { cmd: "arrange.alignBottom" }, "-", { cmd: "arrange.distH" }, { cmd: "arrange.distV" }, "-", { cmd: "arrange.toSlide" }, { cmd: "arrange.toSelected" }] },
@@ -2279,7 +2292,7 @@ export class PresentApp implements EditorHost, PanelHost {
     };
   }
 
-  private designName(): string {
+  designName(): string {
     const p = this.slidePath();
     const name = p ? this.deck.view(p).theme.name : "Office";
     return name === "Office" ? "Office-Design" : name;

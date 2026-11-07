@@ -75,6 +75,22 @@ export function applyQuickStyle(sp: Element, row: Row, col: number): void {
   spPr.after(st);
 }
 
+function tileCss(row: Row, col: string, hex: (ref: string) => string): string {
+  const look: Record<string, string> = {
+      "Farbige Kontur": `background:${hex("lt1")};border:2px solid ${col};color:${col}`,
+      "Farbige Füllung": row.suffix ? `background:${col};border:2px solid transparent;color:#fff` : `background:${col};border:2px solid ${col};color:#fff`,
+      "Hell 1 Kontur, Farbige Füllung": `background:${col};border:2px solid ${hex("lt1")};outline:1px solid ${col};color:#fff`,
+      "Subtiler Effekt": `background:color-mix(in srgb, ${col} 20%, white);border:1px solid ${col};color:${hex("dk1")}`,
+      "Moderater Effekt": `background:linear-gradient(${col}, color-mix(in srgb, ${col} 80%, black));border:1px solid ${col};color:#fff;box-shadow:0 1px 2px rgba(0,0,0,.4)`,
+      "Intensiver Effekt": `background:linear-gradient(color-mix(in srgb, ${col} 70%, white), ${col});border:none;color:#fff;box-shadow:0 2px 3px rgba(0,0,0,.5)`,
+      "Transparent": `background:transparent;border:1px dashed transparent;color:${col}`,
+      "Transparent, Farbige Kontur": `background:transparent;border:1px solid ${col};color:${col}`,
+      "Halbtransparent": `background:color-mix(in srgb, ${col} 40%, transparent);border:none;color:${hex("dk1")}`,
+      "Farbverlauf": `background:linear-gradient(color-mix(in srgb, ${col} 60%, white), ${col});border:none;color:#fff`,
+    };
+  return look[row.label] ?? "";
+}
+
 /** The gallery: Designformatvorlagen and Voreinstellungen, each tile drawn in the design's colours. */
 export function quickStylesPanel(app: PresentApp, close: () => void): HTMLElement {
   const view = app.slidePath() ? app.deck.view(app.slidePath()!) : null;
@@ -88,19 +104,7 @@ export function quickStylesPanel(app: PresentApp, close: () => void): HTMLElemen
       const name = quickName(row, ci, colors);
       const tile = h("button", { class: "qs-tile", "aria-label": name, "data-tip": name, onclick: () => { close(); apply(app, start + ri, ci); } }, "Abc");
       const col = hex(c);
-      const look: Record<string, string> = {
-        "Farbige Kontur": `background:${hex("lt1")};border:2px solid ${col};color:${col}`,
-        "Farbige Füllung": row.suffix ? `background:${col};border:2px solid transparent;color:#fff` : `background:${col};border:2px solid ${col};color:#fff`,
-        "Hell 1 Kontur, Farbige Füllung": `background:${col};border:2px solid ${hex("lt1")};outline:1px solid ${col};color:#fff`,
-        "Subtiler Effekt": `background:color-mix(in srgb, ${col} 20%, white);border:1px solid ${col};color:${hex("dk1")}`,
-        "Moderater Effekt": `background:linear-gradient(${col}, color-mix(in srgb, ${col} 80%, black));border:1px solid ${col};color:#fff;box-shadow:0 1px 2px rgba(0,0,0,.4)`,
-        "Intensiver Effekt": `background:linear-gradient(color-mix(in srgb, ${col} 70%, white), ${col});border:none;color:#fff;box-shadow:0 2px 3px rgba(0,0,0,.5)`,
-        "Transparent": `background:transparent;border:1px dashed transparent;color:${col}`,
-        "Transparent, Farbige Kontur": `background:transparent;border:1px solid ${col};color:${col}`,
-        "Halbtransparent": `background:color-mix(in srgb, ${col} 40%, transparent);border:none;color:${hex("dk1")}`,
-        "Farbverlauf": `background:linear-gradient(color-mix(in srgb, ${col} 60%, white), ${col});border:none;color:#fff`,
-      };
-      tile.style.cssText = look[row.label] ?? "";
+      tile.style.cssText = tileCss(row, col, hex);
       grid.append(tile);
     }));
     wrap.append(grid);
@@ -115,4 +119,19 @@ function apply(app: PresentApp, row: number, col: number): void {
   const views = ed.selectedViews.filter((v: ShapeView) => v.kind === "sp");
   if (!views.length) return;
   ed.edit("Schnellformatvorlage", () => { for (const v of views) { const el = ed.shapeEl(v.id); if (el) applyQuickStyle(el, QUICK_ROWS[row], col); } });
+}
+
+/** Formformat > Formenarten: the styles as a gallery in the ribbon (PowerPoint shows them there). */
+export function quickStyleTiles(app: PresentApp): import("@raabe/shell").Control {
+  const all = QUICK_ROWS.flatMap((row, ri) => COLS.map((c, ci) => ({ row, ri, c, ci })));
+  const colorsNow = () => (app.slidePath() ? app.deck.view(app.slidePath()!).theme.colors : {}) as Record<string, string>;
+  const hexOf = (colors: Record<string, string>) => (ref: string) => `#${colors[ref === "dk1" ? "tx1" : ref === "lt1" ? "bg1" : ref] ?? colors[ref] ?? "000000"}`;
+  return {
+    type: "tiles", cmd: "shape.quickStyles", key: "NC", count: all.length, visible: 3, size: [60, 44], cls: "qs-tiles",
+    render: (i) => { const t = all[i]; const d = h("div", { class: "qs-rtile" }, "Abc"); d.style.cssText = tileCss(t.row, hexOf(colorsNow())(t.c), hexOf(colorsNow())); return d; },
+    tip: (i) => quickName(all[i].row, all[i].ci, colorsNow()),
+    pick: (i) => apply(app, all[i].ri, all[i].ci),
+    redraw: () => app.designName(),
+    panel: (close) => quickStylesPanel(app, close),
+  };
 }

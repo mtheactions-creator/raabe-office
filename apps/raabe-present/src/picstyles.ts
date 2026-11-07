@@ -74,20 +74,36 @@ export function applyPicStyle(app: PresentApp, s: PicStyle): void {
   });
 }
 
+function picTileImg(s: PicStyle): HTMLElement {
+  const img = h("div", { class: "ps-img" });
+  const radius = s.geom === "ellipse" ? "50%" : s.geom === "roundRect" ? "8px" : s.geom === "round2DiagRect" ? "8px 0" : "0";
+  img.style.cssText = `border-radius:${radius};border:${s.line ? `${Math.max(1, s.line.w / 2)}px ${s.line.cmpd === "dbl" ? "double" : "solid"} #${s.line.color}` : "none"};` +
+    `box-shadow:${s.fx.includes(DROP) ? "3px 3px 0 rgba(0,0,0,.5)" : s.fx.includes(CENTER) ? "0 0 6px rgba(0,0,0,.7)" : s.fx.includes(SHADOW) ? "2px 2px 3px rgba(0,0,0,.4)" : "none"};` +
+    (s.fx.includes(SOFT) ? "filter:blur(1px);" : "") + (s.fx.includes(REFLECT) ? "-webkit-box-reflect:below 1px linear-gradient(transparent 55%, rgba(0,0,0,.35));" : "");
+  return img;
+}
+
 /** The gallery: a grey picture in each style. */
 export function picStylesPanel(app: PresentApp, close: () => void): HTMLElement {
   const wrap = h("div", { class: "menu pic-styles" });
   const grid = h("div", { class: "ps-grid" });
   for (const s of PIC_STYLES) {
     const t = h("button", { class: "ps-tile", "aria-label": s.name, "data-tip": s.name, onclick: () => { close(); applyPicStyle(app, s); } });
-    const img = h("div", { class: "ps-img" });
-    const radius = s.geom === "ellipse" ? "50%" : s.geom === "roundRect" ? "8px" : s.geom === "round2DiagRect" ? "8px 0" : "0";
-    img.style.cssText = `border-radius:${radius};border:${s.line ? `${Math.max(1, s.line.w / 2)}px ${s.line.cmpd === "dbl" ? "double" : "solid"} #${s.line.color}` : "none"};` +
-      `box-shadow:${s.fx.includes(DROP) ? "3px 3px 0 rgba(0,0,0,.5)" : s.fx.includes(CENTER) ? "0 0 6px rgba(0,0,0,.7)" : s.fx.includes(SHADOW) ? "2px 2px 3px rgba(0,0,0,.4)" : "none"};` +
-      (s.fx.includes(SOFT) ? "filter:blur(1px);" : "") + (s.fx.includes(REFLECT) ? "-webkit-box-reflect:below 1px linear-gradient(transparent 55%, rgba(0,0,0,.35));" : "");
-    t.append(img);
+    t.append(picTileImg(s));
     grid.append(t);
   }
   wrap.append(grid);
   return wrap;
+}
+
+/** Bildformat > Bildformatvorlagen in the ribbon (PowerPoint shows them there). */
+export function picStyleTiles(app: PresentApp): import("@raabe/shell").Control {
+  return {
+    type: "tiles", cmd: "pic.quickStyles", key: "S", count: PIC_STYLES.length, visible: 3, size: [60, 44], cls: "ps-tiles",
+    render: (i) => h("div", { class: "ps-rtile" }, picTileImg(PIC_STYLES[i])),
+    tip: (i) => PIC_STYLES[i].name,
+    pick: (i) => applyPicStyle(app, PIC_STYLES[i]),
+    redraw: () => "pic",
+    panel: (close) => picStylesPanel(app, close),
+  };
 }

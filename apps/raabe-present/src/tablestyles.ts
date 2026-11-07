@@ -162,3 +162,35 @@ export function tableStylesPanel(app: PresentApp, close: () => void): HTMLElemen
   wrap.append(grid);
   return wrap;
 }
+
+/** Tabellenentwurf > Tabellenformatvorlagen in the ribbon (seven visible, as PowerPoint's). */
+export function tableStyleTiles(app: PresentApp): import("@raabe/shell").Control {
+  const all = tableStyles();
+  return {
+    type: "tiles", cmd: "table.styles", key: "M", count: all.length, visible: 7, size: [62, 44], cls: "ts-tiles",
+    render: (i) => tableTile(app, all[i]),
+    tip: (i) => all[i].name,
+    pick: (i) => applyTableStyle(app, all[i]),
+    redraw: () => app.designName(),
+    panel: (close) => tableStylesPanel(app, close),
+  };
+}
+
+function tableTile(app: PresentApp, def: TableStyleDef): HTMLElement {
+  const colors = app.slidePath() ? app.deck.view(app.slidePath()!).theme.colors : {};
+  const col = (spec: string): string => {
+    if (spec === "none") return "transparent";
+    const [ref, amt] = spec.split(":");
+    const hex = `#${colors[ref === "dk1" ? "tx1" : ref === "lt1" ? "bg1" : ref] ?? colors[ref] ?? "000000"}`;
+    if (!amt) return hex;
+    return amt.startsWith("s") ? `color-mix(in srgb, ${hex} ${amt.slice(1)}%, black)` : `color-mix(in srgb, ${hex} ${amt}%, white)`;
+  };
+  const t = h("div", { class: "ts-rtile" });
+  for (let r = 0; r < 5; r++) {
+    const row = h("div", { class: "ts-row" });
+    row.style.background = r === 0 ? col(def.look.head) : r % 2 === 1 ? col(def.look.band) : col(def.look.body);
+    row.style.borderBottom = `1px solid ${col(def.look.line)}`;
+    t.append(row);
+  }
+  return t;
+}
