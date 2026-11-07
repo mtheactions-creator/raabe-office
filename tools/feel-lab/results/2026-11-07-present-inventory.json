@@ -111,7 +111,7 @@
       {
        "name": "Layout",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "dropdown",
        "panel": true,
        "items": [
@@ -162,7 +162,7 @@
       {
        "name": "Abschnitt",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "dropdown",
        "items": [
         {
@@ -1521,7 +1521,7 @@
         {
          "name": "Gruppierung wiederherstellen",
          "deferred": false,
-         "enabled": false
+         "enabled": true
         },
         {
          "name": "Ausrichten",
@@ -2435,7 +2435,7 @@
       {
        "name": "Markieren",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "dropdown",
        "items": [
         {
@@ -2554,7 +2554,7 @@
       {
        "name": "Fotoalbum...",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "button"
       }
      ]
@@ -3060,7 +3060,7 @@
       {
        "name": "Diagramm...",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "dropdown",
        "panel": true,
        "items": [
@@ -3104,7 +3104,7 @@
       {
        "name": "Aktion",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "button"
       }
      ]
@@ -3470,7 +3470,7 @@
       {
        "name": "Farben",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "dropdown",
        "items": [
         {
@@ -3574,7 +3574,7 @@
       {
        "name": "Schriftarten",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "dropdown",
        "items": [
         {
@@ -3695,7 +3695,7 @@
       {
        "name": "Layout",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "dropdown",
        "panel": true,
        "items": [
@@ -3952,13 +3952,31 @@
       {
        "name": "Sound",
        "deferred": false,
-       "enabled": false,
-       "type": "dropdown"
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "[Ohne Sound]",
+         "enabled": true
+        },
+        {
+         "name": "[Vorherigen Sound anhalten]",
+         "enabled": true
+        },
+        {
+         "name": "Anderer Sound...",
+         "enabled": true
+        },
+        {
+         "name": "Bis zum nächsten Sound wiederholen",
+         "enabled": true
+        }
+       ]
       },
       {
        "name": "Dauer",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "spinner"
       },
       {
@@ -3970,25 +3988,25 @@
       {
        "name": "Auf alle anwenden",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "button"
       },
       {
        "name": "Bei Mausklick",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "check"
       },
       {
        "name": "Nach",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "check"
       },
       {
        "name": "",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "spinner"
       },
       {
@@ -4408,7 +4426,7 @@
       {
        "name": "Dauer",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "spinner"
       },
       {
@@ -4420,7 +4438,7 @@
       {
        "name": "Verzögerung",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "spinner"
       },
       {
@@ -4555,7 +4573,7 @@
       {
        "name": "Thesaurus...",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "button"
       }
      ]
@@ -4715,7 +4733,7 @@
       {
        "name": "Lineal",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "check"
       },
       {
@@ -4808,8 +4826,14 @@
       {
        "name": "Fenster wechseln",
        "deferred": false,
-       "enabled": false,
-       "type": "button"
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "1 Präsentation1",
+         "enabled": true
+        }
+       ]
       }
      ]
     },
@@ -6738,8 +6762,103 @@
       {
        "name": "Texteffekte",
        "deferred": false,
-       "enabled": false,
-       "type": "button"
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Schatten",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Kein Schatten",
+           "enabled": true
+          },
+          {
+           "name": "Außen: Versatz unten rechts",
+           "enabled": true
+          },
+          {
+           "name": "Außen: Versatz unten",
+           "enabled": true
+          },
+          {
+           "name": "Außen: Versatz unten links",
+           "enabled": true
+          },
+          {
+           "name": "Außen: Versatz rechts",
+           "enabled": true
+          }
+         ]
+        },
+        {
+         "name": "Spiegelung",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine Spiegelung",
+           "enabled": true
+          },
+          {
+           "name": "Enge Spiegelung: Berührung",
+           "enabled": true
+          },
+          {
+           "name": "Halbe Spiegelung: Berührung",
+           "enabled": true
+          }
+         ]
+        },
+        {
+         "name": "Leuchten",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Kein Leuchten",
+           "enabled": true
+          },
+          {
+           "name": "Leuchten: 8 Pt.; Akzentfarbe 1",
+           "enabled": true
+          },
+          {
+           "name": "Leuchten: 8 Pt.; Akzentfarbe 2",
+           "enabled": true
+          },
+          {
+           "name": "Leuchten: 8 Pt.; Akzentfarbe 3",
+           "enabled": true
+          },
+          {
+           "name": "Leuchten: 8 Pt.; Akzentfarbe 4",
+           "enabled": true
+          },
+          {
+           "name": "Leuchten: 8 Pt.; Akzentfarbe 5",
+           "enabled": true
+          },
+          {
+           "name": "Leuchten: 8 Pt.; Akzentfarbe 6",
+           "enabled": true
+          }
+         ]
+        },
+        {
+         "name": "Abschrägung",
+         "enabled": false,
+         "submenu": []
+        },
+        {
+         "name": "3D-Drehung",
+         "enabled": false,
+         "submenu": []
+        },
+        {
+         "name": "Transformieren",
+         "enabled": false,
+         "submenu": []
+        }
+       ]
       }
      ]
     },
@@ -6871,7 +6990,7 @@
         {
          "name": "Gruppierung wiederherstellen",
          "deferred": false,
-         "enabled": false
+         "enabled": true
         },
         {
          "name": "Gruppierung aufheben",
@@ -7791,7 +7910,7 @@
         {
          "name": "Gruppierung wiederherstellen",
          "deferred": false,
-         "enabled": false
+         "enabled": true
         },
         {
          "name": "Gruppierung aufheben",
@@ -8373,8 +8492,58 @@
       {
        "name": "Rahmen",
        "deferred": false,
-       "enabled": false,
-       "type": "button"
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Kein Rahmen",
+         "enabled": true
+        },
+        {
+         "name": "Alle Rahmenlinien",
+         "enabled": true
+        },
+        {
+         "name": "Rahmenlinien außen",
+         "enabled": true
+        },
+        {
+         "name": "Rahmenlinien innen",
+         "enabled": true
+        },
+        {
+         "name": "Rahmenlinie oben",
+         "enabled": true
+        },
+        {
+         "name": "Rahmenlinie unten",
+         "enabled": true
+        },
+        {
+         "name": "Rahmenlinie links",
+         "enabled": true
+        },
+        {
+         "name": "Rahmenlinie rechts",
+         "enabled": true
+        },
+        {
+         "name": "Horizontale Rahmenlinie innen",
+         "enabled": true
+        },
+        {
+         "name": "Vertikale Rahmenlinie innen",
+         "enabled": true
+        },
+        {
+         "name": "Rahmenlinien diagonal nach unten",
+         "enabled": true
+        },
+        {
+         "name": "Rahmenlinien diagonal nach oben",
+         "enabled": true
+        }
+       ]
       },
       {
        "name": "Effekte",
@@ -8986,8 +9155,103 @@
       {
        "name": "Texteffekte",
        "deferred": false,
-       "enabled": false,
-       "type": "button"
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Schatten",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Kein Schatten",
+           "enabled": true
+          },
+          {
+           "name": "Außen: Versatz unten rechts",
+           "enabled": true
+          },
+          {
+           "name": "Außen: Versatz unten",
+           "enabled": true
+          },
+          {
+           "name": "Außen: Versatz unten links",
+           "enabled": true
+          },
+          {
+           "name": "Außen: Versatz rechts",
+           "enabled": true
+          }
+         ]
+        },
+        {
+         "name": "Spiegelung",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine Spiegelung",
+           "enabled": true
+          },
+          {
+           "name": "Enge Spiegelung: Berührung",
+           "enabled": true
+          },
+          {
+           "name": "Halbe Spiegelung: Berührung",
+           "enabled": true
+          }
+         ]
+        },
+        {
+         "name": "Leuchten",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Kein Leuchten",
+           "enabled": true
+          },
+          {
+           "name": "Leuchten: 8 Pt.; Akzentfarbe 1",
+           "enabled": true
+          },
+          {
+           "name": "Leuchten: 8 Pt.; Akzentfarbe 2",
+           "enabled": true
+          },
+          {
+           "name": "Leuchten: 8 Pt.; Akzentfarbe 3",
+           "enabled": true
+          },
+          {
+           "name": "Leuchten: 8 Pt.; Akzentfarbe 4",
+           "enabled": true
+          },
+          {
+           "name": "Leuchten: 8 Pt.; Akzentfarbe 5",
+           "enabled": true
+          },
+          {
+           "name": "Leuchten: 8 Pt.; Akzentfarbe 6",
+           "enabled": true
+          }
+         ]
+        },
+        {
+         "name": "Abschrägung",
+         "enabled": false,
+         "submenu": []
+        },
+        {
+         "name": "3D-Drehung",
+         "enabled": false,
+         "submenu": []
+        },
+        {
+         "name": "Transformieren",
+         "enabled": false,
+         "submenu": []
+        }
+       ]
       }
      ]
     },
@@ -11764,8 +12028,103 @@
       {
        "name": "Texteffekte",
        "deferred": false,
-       "enabled": false,
-       "type": "button"
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Schatten",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Kein Schatten",
+           "enabled": true
+          },
+          {
+           "name": "Außen: Versatz unten rechts",
+           "enabled": true
+          },
+          {
+           "name": "Außen: Versatz unten",
+           "enabled": true
+          },
+          {
+           "name": "Außen: Versatz unten links",
+           "enabled": true
+          },
+          {
+           "name": "Außen: Versatz rechts",
+           "enabled": true
+          }
+         ]
+        },
+        {
+         "name": "Spiegelung",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine Spiegelung",
+           "enabled": true
+          },
+          {
+           "name": "Enge Spiegelung: Berührung",
+           "enabled": true
+          },
+          {
+           "name": "Halbe Spiegelung: Berührung",
+           "enabled": true
+          }
+         ]
+        },
+        {
+         "name": "Leuchten",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Kein Leuchten",
+           "enabled": true
+          },
+          {
+           "name": "Leuchten: 8 Pt.; Akzentfarbe 1",
+           "enabled": true
+          },
+          {
+           "name": "Leuchten: 8 Pt.; Akzentfarbe 2",
+           "enabled": true
+          },
+          {
+           "name": "Leuchten: 8 Pt.; Akzentfarbe 3",
+           "enabled": true
+          },
+          {
+           "name": "Leuchten: 8 Pt.; Akzentfarbe 4",
+           "enabled": true
+          },
+          {
+           "name": "Leuchten: 8 Pt.; Akzentfarbe 5",
+           "enabled": true
+          },
+          {
+           "name": "Leuchten: 8 Pt.; Akzentfarbe 6",
+           "enabled": true
+          }
+         ]
+        },
+        {
+         "name": "Abschrägung",
+         "enabled": false,
+         "submenu": []
+        },
+        {
+         "name": "3D-Drehung",
+         "enabled": false,
+         "submenu": []
+        },
+        {
+         "name": "Transformieren",
+         "enabled": false,
+         "submenu": []
+        }
+       ]
       }
      ]
     },
@@ -11897,7 +12256,7 @@
         {
          "name": "Gruppierung wiederherstellen",
          "deferred": false,
-         "enabled": false
+         "enabled": true
         },
         {
          "name": "Gruppierung aufheben",
@@ -12001,7 +12360,7 @@
       {
        "name": "Beibehalten",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "button"
       }
      ]
@@ -12024,13 +12383,13 @@
       {
        "name": "Titel",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "check"
       },
       {
        "name": "Fußzeilen",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "check"
       }
      ]
@@ -12067,7 +12426,7 @@
       {
        "name": "Farben",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "dropdown",
        "items": [
         {
@@ -12171,7 +12530,7 @@
       {
        "name": "Schriftarten",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "dropdown",
        "items": [
         {
@@ -12460,7 +12819,7 @@
       {
        "name": "Farben",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "dropdown",
        "items": [
         {
@@ -12564,7 +12923,7 @@
       {
        "name": "Schriftarten",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "dropdown",
        "items": [
         {
@@ -12849,7 +13208,7 @@
       {
        "name": "Farben",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "dropdown",
        "items": [
         {
@@ -12953,7 +13312,7 @@
       {
        "name": "Schriftarten",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "dropdown",
        "items": [
         {
