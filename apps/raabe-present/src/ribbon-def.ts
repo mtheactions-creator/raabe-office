@@ -25,6 +25,8 @@ export interface RibbonContext {
   outlineExtra(): MenuEntry[];
   /** Entwurf > Designs: the gallery in the ribbon. */
   designTiles(): Control;
+  /** Übergänge / Animationen: the effects as a gallery in the ribbon (PowerPoint). */
+  fxTiles(kind: "trans" | "anim"): Control;
   preview: { font(name: string): void; size(value: string): void };
   menus: {
     paste: MenuEntry[]; layouts: () => MenuEntry[]; section: MenuEntry[]; spacing: MenuEntry[]; case: MenuEntry[];
@@ -135,9 +137,9 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
       shrink: ["timing", "gallery", "preview"],
       groups: [
         { id: "preview", label: "Vorschau", key: "ZV", icon: "eye", controls: [b("trans.preview", "V", "large")] },
-        { id: "gallery", label: "Übergang zu dieser Folie", key: "ZU", icon: "transition", controls: [panel("trans.gallery", "Ü", "large", p.transitions), lazy("trans.options", "E", "large", m.transOptions)] },
+        { id: "gallery", label: "Übergang zu dieser Folie", key: "ZU", icon: "transition", controls: [ctx.fxTiles("trans"), lazy("trans.options", "E", "large", m.transOptions)] },
         { id: "timing", label: "Anzeigedauer", key: "ZA", icon: "time", controls: [
-          stack(lazy("trans.sound", "S", "small", m.sounds), spin("trans.duration", "Dauer:", "D", ctx.spin.transDuration), b("trans.applyAll", "F")),
+          stack(lazy("trans.sound", "S", "medium", m.sounds), spin("trans.duration", "Dauer:", "D", ctx.spin.transDuration), b("trans.applyAll", "F", "medium")),
           stack({ type: "check", cmd: "trans.onClick", key: "B" }, rows([{ type: "check", cmd: "trans.after", key: "N" }, spin("trans.afterTime", "", "A", ctx.spin.transAfter)]))] },
       ],
     },
@@ -146,11 +148,11 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
       shrink: ["timing", "advanced", "gallery", "preview"],
       groups: [
         { id: "preview", label: "Vorschau", key: "ZV", icon: "eye", controls: [b("anim.preview", "U", "large")] },
-        { id: "gallery", label: "Animation", key: "ZA", icon: "animation", launcher: { cmd: "anim.more", key: "W" }, controls: [panel("anim.gallery", "N", "large", p.animations), lazy("anim.options", "E", "large", m.animOptions)] },
-        { id: "advanced", label: "Erweiterte Animation", key: "ZE", icon: "animation", controls: [panel("anim.add", "Q", "large", p.addAnim), stack(b("anim.pane", "I"), b("anim.trigger", "T"), b("anim.painter", "M"))] },
+        { id: "gallery", label: "Animation", key: "ZA", icon: "animation", launcher: { cmd: "anim.more", key: "W" }, controls: [ctx.fxTiles("anim"), lazy("anim.options", "E", "large", m.animOptions)] },
+        { id: "advanced", label: "Erweiterte Animation", key: "ZE", icon: "animation", controls: [panel("anim.add", "Q", "large", p.addAnim), stack(b("anim.pane", "I", "medium"), b("anim.trigger", "T", "medium"), b("anim.painter", "M", "medium"))] },
         { id: "timing", label: "Anzeigedauer", key: "ZD", icon: "time", controls: [
-          stack(dd("anim.start", "S", "small", m.animStart, "Start:"), spin("anim.duration", "Dauer:", "D", ctx.spin.animDuration), spin("anim.delay", "Verzögerung:", "R", ctx.spin.animDelay)),
-          stack(b("anim.earlier", "F"), b("anim.later", "P"))] },
+          stack(dd("anim.start", "S", "medium", m.animStart, "Start:"), spin("anim.duration", "Dauer:", "D", ctx.spin.animDuration), spin("anim.delay", "Verzögerung:", "R", ctx.spin.animDelay)),
+          { type: "stack", title: "Animation neu anordnen", items: [b("anim.earlier", "F", "medium"), b("anim.later", "P", "medium")] }] },
       ],
     },
     {

@@ -1493,6 +1493,23 @@ export class PresentApp implements EditorHost, PanelHost {
     };
   }
 
+  /** The effects in the ribbon: Übergänge (all named transitions), Animationen (Ohne and the entrance, emphasis and exit effects). */
+  private fxTiles(kind: "trans" | "anim"): Control {
+    type Fx = { label: string; run: () => void };
+    const items: Fx[] = kind === "trans"
+      ? TRANSITION_GROUPS.flatMap((g) => g.items.map(([label, k]) => ({ label, run: () => void import("./transitions").then((m) => m.setTransition(this, k)) })))
+      : [{ label: "Ohne", run: () => void import("./animations").then((m) => { const p = this.slidePath(); const root = p ? this.deck.pptx.doc(p).documentElement : null; const timing = root && kid(root, "timing"); if (timing) this.editor.edit("Animation entfernen", () => { for (const id of this.editor.sel) m.removeEffects(timing, id); }); }) },
+        ...ANIMATION_GROUPS.filter((g) => g.cls !== "path").flatMap((g) => g.items.map((it) => ({ label: it.label, run: () => void import("./animations").then((m) => m.addAnimation(this, g.cls, it, false)) })))];
+    return {
+      type: "tiles", cmd: kind === "trans" ? "trans.gallery" : "anim.gallery", key: kind === "trans" ? "Ü" : "N", count: items.length, visible: 6, size: [62, 58], cls: "fx-tiles",
+      render: (i) => h("div", { class: "pfx-tile" }, icon(i === 0 ? "close-x" : kind === "trans" ? "transition" : "animation"), h("span", null, items[i].label)),
+      tip: (i) => items[i].label,
+      pick: (i) => items[i].run(),
+      redraw: () => kind,
+      panel: (close) => (kind === "trans" ? this.transitionGallery(close) : this.animationGallery(close, false)),
+    };
+  }
+
   private themesGallery(close: () => void): HTMLElement {
     const wrap = h("div", { class: "theme-gallery" }, h("div", { class: "gal-head" }, "Office"));
     const grid = h("div", { class: "layout-grid" });
@@ -1803,6 +1820,9 @@ export class PresentApp implements EditorHost, PanelHost {
     impl("show.setup", () => import("./showsetup").then((m) => m.showSetupDialog(this.deck)));
     impl("show.useTimings", () => {}, undefined, () => true);
     impl("anim.pane", () => this.animPane.toggle(), undefined, () => this.animPane.isOpen);
+    impl("anim.add", () => {}, () => this.editor.sel.length > 0);
+    impl("anim.gallery", () => {}, () => this.editor.sel.length > 0);
+    impl("trans.gallery", () => {}, () => !!this.slidePath());
     impl("anim.start", () => {}, () => this.selectedHasAnimation());
     impl("anim.earlier", () => this.moveAnimation(-1), () => this.selectedHasAnimation());
     impl("anim.later", () => this.moveAnimation(1), () => this.selectedHasAnimation());
@@ -2171,6 +2191,7 @@ export class PresentApp implements EditorHost, PanelHost {
       lineColor: () => `#${this.lastLine}`,
       outlineExtra: () => this.outlineExtra(),
       designTiles: () => this.designTiles(),
+      fxTiles: (kind) => this.fxTiles(kind),
       setLine: (hex) => this.setLine(hex.replace("#", "").toUpperCase()),
       preview: { font: () => {}, size: () => {} },
       menus: {
@@ -2766,11 +2787,11 @@ export class PresentApp implements EditorHost, PanelHost {
           // Own panels (galleries, palettes): their entries as drawn, by their names.
           let panelItems: Item[] = [];
           try {
-            const el = "popup" in c && c.popup ? c.popup(() => {}) : c.type === "color" ? h("div", null, ...colorGrid(() => {}, undefined)) : null;
+            const el = "popup" in c && c.popup ? c.popup(() => {}) : c.type === "color" ? h("div", null, ...colorGrid(() => {}, undefined)) : c.type === "tiles" ? c.panel(() => {}) : null;
             if (el) panelItems = Array.from(el.querySelectorAll("button, [role=menuitem], [data-tip]")).map((b) => ({ name: (b.getAttribute("aria-label") || (b as HTMLElement).dataset.tip || b.textContent || "").trim() })).filter((x) => x.name);
           } catch { /* a panel that needs a selection */ }
           if (c.type === "color" && c.extra) panelItems.push(...entries(c.extra()));
-          const own = ("popup" in c && c.popup) || c.type === "color" ? { panel: true, ...(panelItems.length ? { items: [...(("items" in menu && menu.items) || []), ...panelItems] } : {}) } : {};
+          const own = ("popup" in c && c.popup) || c.type === "color" || c.type === "tiles" ? { panel: true, ...(panelItems.length ? { items: [...(("items" in menu && menu.items) || []), ...panelItems] } : {}) } : {};
           return [{ ...base, type: (c as { type: string }).type, ...menu, ...own }];
         };
         const kind = app.masterKind;

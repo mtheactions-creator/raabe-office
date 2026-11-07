@@ -3411,7 +3411,7 @@
        "name": "Designs",
        "deferred": false,
        "enabled": true,
-       "type": "dropdown",
+       "type": "tiles",
        "panel": true,
        "items": [
         {
@@ -3758,7 +3758,7 @@
        "name": "Übergangseffekte",
        "deferred": false,
        "enabled": false,
-       "type": "dropdown",
+       "type": "tiles",
        "panel": true,
        "items": [
         {
@@ -3925,7 +3925,7 @@
        "name": "Sound",
        "deferred": false,
        "enabled": false,
-       "type": "button"
+       "type": "dropdown"
       },
       {
        "name": "Dauer",
@@ -4000,7 +4000,7 @@
        "name": "Animationsstil",
        "deferred": false,
        "enabled": false,
-       "type": "dropdown",
+       "type": "tiles",
        "panel": true,
        "items": [
         {
@@ -7137,8 +7137,95 @@
       {
        "name": "Schnellformatvorlagen",
        "deferred": false,
-       "enabled": false,
-       "type": "button"
+       "enabled": true,
+       "type": "dropdown",
+       "panel": true,
+       "items": [
+        {
+         "name": "Einfacher Rahmen, weiß"
+        },
+        {
+         "name": "Abgeschrägt matt, weiß"
+        },
+        {
+         "name": "Metallrahmen"
+        },
+        {
+         "name": "Schlagschattenrechteck"
+        },
+        {
+         "name": "Reflektiertes abgerundetes Rechteck"
+        },
+        {
+         "name": "Rechteck mit weichen Kanten"
+        },
+        {
+         "name": "Doppelrahmen, schwarz"
+        },
+        {
+         "name": "Dick matt, schwarz"
+        },
+        {
+         "name": "Einfacher Rahmen, schwarz"
+        },
+        {
+         "name": "Abgeschrägtes Oval, schwarz"
+        },
+        {
+         "name": "Verbundrahmen, schwarz"
+        },
+        {
+         "name": "Moderater Rahmen, schwarz"
+        },
+        {
+         "name": "Schattenrechteck zentriert"
+        },
+        {
+         "name": "Abgerundete diagonale Ecken, weiß"
+        },
+        {
+         "name": "Diagonal liegende Ecken schneiden, weiß"
+        },
+        {
+         "name": "Moderater Rahmen, weiß"
+        },
+        {
+         "name": "Gedreht, weiß"
+        },
+        {
+         "name": "Perspektivischer Schatten, weiß"
+        },
+        {
+         "name": "Perspektive oberhalb, weiß"
+        },
+        {
+         "name": "Oval mit weichen Kanten"
+        },
+        {
+         "name": "Abgeschrägtes Rechteck"
+        },
+        {
+         "name": "Abgeschrägte Perspektive"
+        },
+        {
+         "name": "Reflektierte Perspektive rechts"
+        },
+        {
+         "name": "Abgeschrägte Perspektive links, weiß"
+        },
+        {
+         "name": "Reflektierte Abschrägung, schwarz"
+        },
+        {
+         "name": "Reflektierte Abschrägung, weiß"
+        },
+        {
+         "name": "Metallenes abgerundetes Rechteck"
+        },
+        {
+         "name": "Metallenes Oval"
+        }
+       ]
       },
       {
        "name": "Bildrahmen",
@@ -7649,8 +7736,233 @@
       {
        "name": "Tabellenformate",
        "deferred": false,
-       "enabled": false,
-       "type": "button"
+       "enabled": true,
+       "type": "dropdown",
+       "panel": true,
+       "items": [
+        {
+         "name": "Keine Formatvorlage, kein Raster"
+        },
+        {
+         "name": "Designformatvorlage 1 - Akzent 1"
+        },
+        {
+         "name": "Designformatvorlage 1 - Akzent 2"
+        },
+        {
+         "name": "Designformatvorlage 1 - Akzent 3"
+        },
+        {
+         "name": "Designformatvorlage 1 - Akzent 4"
+        },
+        {
+         "name": "Designformatvorlage 1 - Akzent 5"
+        },
+        {
+         "name": "Designformatvorlage 1 - Akzent 6"
+        },
+        {
+         "name": "Keine Formatvorlage, Tabellenraster"
+        },
+        {
+         "name": "Designformatvorlage 2 - Akzent 1"
+        },
+        {
+         "name": "Designformatvorlage 2 - Akzent 2"
+        },
+        {
+         "name": "Designformatvorlage 2 - Akzent 3"
+        },
+        {
+         "name": "Designformatvorlage 2 - Akzent 4"
+        },
+        {
+         "name": "Designformatvorlage 2 - Akzent 5"
+        },
+        {
+         "name": "Designformatvorlage 2 - Akzent 6"
+        },
+        {
+         "name": "Helle Formatvorlage 1"
+        },
+        {
+         "name": "Helle Formatvorlage 1 - Akzent 1"
+        },
+        {
+         "name": "Helle Formatvorlage 1 - Akzent 2"
+        },
+        {
+         "name": "Helle Formatvorlage 1 - Akzent 3"
+        },
+        {
+         "name": "Helle Formatvorlage 1 - Akzent 4"
+        },
+        {
+         "name": "Helle Formatvorlage 1 - Akzent 5"
+        },
+        {
+         "name": "Helle Formatvorlage 1 - Akzent 6"
+        },
+        {
+         "name": "Helle Formatvorlage 2"
+        },
+        {
+         "name": "Helle Formatvorlage 2 - Akzent 1"
+        },
+        {
+         "name": "Helle Formatvorlage 2 - Akzent 2"
+        },
+        {
+         "name": "Helle Formatvorlage 2 - Akzent 3"
+        },
+        {
+         "name": "Helle Formatvorlage 2 - Akzent 4"
+        },
+        {
+         "name": "Helle Formatvorlage 2 - Akzent 5"
+        },
+        {
+         "name": "Helle Formatvorlage 2 - Akzent 6"
+        },
+        {
+         "name": "Helle Formatvorlage 3"
+        },
+        {
+         "name": "Helle Formatvorlage 3 - Akzent 1"
+        },
+        {
+         "name": "Helle Formatvorlage 3 - Akzent 2"
+        },
+        {
+         "name": "Helle Formatvorlage 3 - Akzent 3"
+        },
+        {
+         "name": "Helle Formatvorlage 3 - Akzent 4"
+        },
+        {
+         "name": "Helle Formatvorlage 3 - Akzent 5"
+        },
+        {
+         "name": "Helle Formatvorlage 3 - Akzent 6"
+        },
+        {
+         "name": "Mittlere Formatvorlage 1"
+        },
+        {
+         "name": "Mittlere Formatvorlage 1 - Akzent 1"
+        },
+        {
+         "name": "Mittlere Formatvorlage 1 - Akzent 2"
+        },
+        {
+         "name": "Mittlere Formatvorlage 1 - Akzent 3"
+        },
+        {
+         "name": "Mittlere Formatvorlage 1 - Akzent 4"
+        },
+        {
+         "name": "Mittlere Formatvorlage 1 - Akzent 5"
+        },
+        {
+         "name": "Mittlere Formatvorlage 1 - Akzent 6"
+        },
+        {
+         "name": "Mittlere Formatvorlage 2"
+        },
+        {
+         "name": "Mittlere Formatvorlage 2 - Akzent 1"
+        },
+        {
+         "name": "Mittlere Formatvorlage 2 - Akzent 2"
+        },
+        {
+         "name": "Mittlere Formatvorlage 2 - Akzent 3"
+        },
+        {
+         "name": "Mittlere Formatvorlage 2 - Akzent 4"
+        },
+        {
+         "name": "Mittlere Formatvorlage 2 - Akzent 5"
+        },
+        {
+         "name": "Mittlere Formatvorlage 2 - Akzent 6"
+        },
+        {
+         "name": "Mittlere Formatvorlage 3"
+        },
+        {
+         "name": "Mittlere Formatvorlage 3 - Akzent 1"
+        },
+        {
+         "name": "Mittlere Formatvorlage 3 - Akzent 2"
+        },
+        {
+         "name": "Mittlere Formatvorlage 3 - Akzent 3"
+        },
+        {
+         "name": "Mittlere Formatvorlage 3 - Akzent 4"
+        },
+        {
+         "name": "Mittlere Formatvorlage 3 - Akzent 5"
+        },
+        {
+         "name": "Mittlere Formatvorlage 3 - Akzent 6"
+        },
+        {
+         "name": "Mittlere Formatvorlage 4"
+        },
+        {
+         "name": "Mittlere Formatvorlage 4 - Akzent 1"
+        },
+        {
+         "name": "Mittlere Formatvorlage 4 - Akzent 2"
+        },
+        {
+         "name": "Mittlere Formatvorlage 4 - Akzent 3"
+        },
+        {
+         "name": "Mittlere Formatvorlage 4 - Akzent 4"
+        },
+        {
+         "name": "Mittlere Formatvorlage 4 - Akzent 5"
+        },
+        {
+         "name": "Mittlere Formatvorlage 4 - Akzent 6"
+        },
+        {
+         "name": "Dunkle Formatvorlage 1"
+        },
+        {
+         "name": "Dunkle Formatvorlage 1 - Akzent 1"
+        },
+        {
+         "name": "Dunkle Formatvorlage 1 - Akzent 2"
+        },
+        {
+         "name": "Dunkle Formatvorlage 1 - Akzent 3"
+        },
+        {
+         "name": "Dunkle Formatvorlage 1 - Akzent 4"
+        },
+        {
+         "name": "Dunkle Formatvorlage 1 - Akzent 5"
+        },
+        {
+         "name": "Dunkle Formatvorlage 1 - Akzent 6"
+        },
+        {
+         "name": "Dunkle Formatvorlage 2"
+        },
+        {
+         "name": "Dunkle Formatvorlage 2 - Akzent 1/Akzent 2"
+        },
+        {
+         "name": "Dunkle Formatvorlage 2 - Akzent 3/Akzent 4"
+        },
+        {
+         "name": "Dunkle Formatvorlage 2 - Akzent 5/Akzent 6"
+        }
+       ]
       },
       {
        "name": "Schattierung",

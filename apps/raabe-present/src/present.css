@@ -234,3 +234,10 @@ body.printing #print-root { display: block; position: fixed; left: 0; top: 0; z-
 /* Entwurf > Designs in the ribbon (D-072). */
 .design-tile { position: relative; overflow: hidden; background: #fff; }
 .design-tile .theme-label { position: absolute; left: 6px; top: 4px; font: 16px "Calibri Light", Calibri, sans-serif; }
+
+/* Übergänge and Animationen: the effects in the ribbon (D-072). */
+.pfx-tile { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 11px; line-height: 1.1; text-align: center; overflow: hidden; }
+.pfx-tile span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 60px; }
+.rgallery.fx-tiles .item.tile-item { font: 11px "Segoe UI", sans-serif; padding: 2px; }
+.rgallery.fx-tiles .pfx-tile svg { width: 24px; height: 24px; }
+.rgallery.design-tiles .item.tile-item { padding: 2px; }
