@@ -9,6 +9,7 @@ import type { PresentApp } from "./app";
 import { LINE_WEIGHTS } from "./lines";
 import { colorWord, quickStylesPanel } from "./quickstyles";
 import { tableStylesPanel } from "./tablestyles";
+import { picStylesPanel } from "./picstyles";
 import type { ContextTabHost } from "./contexttabs";
 import * as T from "./textops";
 import * as S from "./shapeops";
@@ -27,6 +28,7 @@ export function contextHost(app: PresentApp): ContextTabHost {
     outlineExtra: () => app.outlineExtra(),
     quickStyles: (c) => quickStylesPanel(app, c),
     tableStyles: (c) => tableStylesPanel(app, c),
+    picStyles: (c) => picStylesPanel(app, c),
     textOutlineColor: () => app.textOutlineColor(), setTextOutline: (hex) => app.setTextOutline({ color: hex }), textOutlineExtra: () => app.textOutlineExtra(),
     fillColor: ctx.fillColor, setFill: ctx.setFill, lineColor: ctx.lineColor, setLine: ctx.setLine, fontColor: ctx.fontColor, setFontColor: ctx.setFontColor,
     effects: () => ctx.menus.effects,
@@ -279,6 +281,7 @@ export function implementContext(app: PresentApp): void {
   impl("table.deleteMenu", () => {}, table);
   impl("table.select", () => {}, table);
   impl("table.styles", () => {}, table);
+  impl("pic.quickStyles", () => {}, pic);
   const editingCell = () => !!app.editor.text?.cell;
   impl("table.merge", () => {
     const t = tableOf(app), x = app.editor.text?.range;

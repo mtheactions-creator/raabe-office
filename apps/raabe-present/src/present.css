@@ -223,3 +223,10 @@ body.printing #print-root { display: block; position: fixed; left: 0; top: 0; z-
 .ts-tile { height: 44px; padding: 2px; display: flex; flex-direction: column; background: #fff; border: 1px solid #d0d0d0; cursor: pointer; }
 .ts-tile:hover { outline: 2px solid #f5b56e; }
 .ts-row { flex: 1; }
+
+/* Bildformatvorlagen (D-072). */
+.pic-styles { padding: 6px; }
+.ps-grid { display: grid; grid-template-columns: repeat(7, 64px); gap: 8px; }
+.ps-tile { height: 56px; display: flex; align-items: center; justify-content: center; background: #fff; border: 1px solid transparent; cursor: pointer; }
+.ps-tile:hover { border-color: #f5b56e; }
+.ps-img { width: 44px; height: 32px; background: linear-gradient(135deg, #8fb3d9, #4a7ab0 60%, #e2c27d); box-sizing: border-box; }

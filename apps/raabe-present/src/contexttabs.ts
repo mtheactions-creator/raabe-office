@@ -87,6 +87,7 @@ export interface ContextTabHost {
   outlineExtra(): MenuEntry[];
   quickStyles(close: () => void): HTMLElement;
   tableStyles(close: () => void): HTMLElement;
+  picStyles(close: () => void): HTMLElement;
   textOutlineColor(): string; setTextOutline(hex: string): void; textOutlineExtra(): MenuEntry[];
   fillColor(): string; setFill(hex: string): void;
   lineColor(): string; setLine(hex: string): void;
@@ -136,7 +137,7 @@ export function pictureFormatTab(h: ContextTabHost): Tab {
     groups: [
       { id: "adjust", label: "Anpassen", key: "ZA", icon: "corrections", controls: [b("pic.removeBg", "N", "large"), dd("pic.corrections", "O", "large", () => h.pictureCorrections()), stack(dd("pic.color", "F", "small", () => h.pictureColor()), b("pic.artistic", "Ü"), dd("pic.transparency", "T", "small", () => h.pictureTransparency())),
         stack(b("pic.compress", "M"), b("pic.change", "Q1"), b("pic.reset", "U"))] },
-      { id: "styles", label: "Bildformatvorlagen", key: "ZB", icon: "picture-styles", launcher: { cmd: "pic.dialog", key: "P" }, controls: [b("pic.quickStyles", "S", "large"),
+      { id: "styles", label: "Bildformatvorlagen", key: "ZB", icon: "picture-styles", launcher: { cmd: "pic.dialog", key: "P" }, controls: [{ type: "dropdown", cmd: "pic.quickStyles", key: "S", size: "large", menu: [], popup: (c) => h.picStyles(c) },
         stack(h.color(() => h.lineColor(), (c) => h.setLine(c), "pic.border", "V", true), dd("pic.effects", "E", "small", () => h.effects()), b("pic.layout", "A1"))] },
       { id: "access", label: "Barrierefreiheit", key: "ZR", icon: "alt-text", controls: [b("shape.altTextPane", "AT", "large")] },
       { id: "arrange", label: "Anordnen", key: "ZO", icon: "bring-forward", controls: arrange(true) },

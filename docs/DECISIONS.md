@@ -1766,3 +1766,6 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   added at the end of the selected equation (no caret inside an equation yet), LaTeX in Mathematik and
   Mathe nach LaTeX open the LaTeX box, Linear the linear box; Text, Formeloptionen and Freihandgleichung
   are greyed.
+- **Bildformatvorlagen:** PowerPoint's 28 entries with their names; each sets outline, shape and effects
+  (shadow, reflection, soft edges). Bevels and 3-D perspectives are left out (no 3-D drawing), so those
+  entries keep only their frame and shadow.
