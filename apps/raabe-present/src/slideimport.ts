@@ -125,7 +125,7 @@ export async function outlineDialog(app: PresentApp): Promise<void> {
     const st = readDocx(bytes).state;
     for (const p of st.paras) {
       const lvl = p.props.outline ?? st.styles.outlineLevel(st.styles.resolvePara(p.props).style);
-      const text = p.text.replace(/[\u000b\u000c￼]/g, " ").trim();
+      const text = p.text.replace(/[\u000b\u000c\ufffc]/g, " ").trim();
       if (lvl !== undefined && lvl <= 8 && text) items.push({ level: lvl, text });
     }
   } else {
