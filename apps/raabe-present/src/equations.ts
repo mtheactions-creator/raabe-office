@@ -210,7 +210,7 @@ export function equationTab(app: PresentApp): Tab {
   return {
     id: "equation", label: "Formel", key: "JE", contextual: true, shrink: [],
     groups: [
-      { id: "tools", label: "Tools", key: "ZT", icon: "equation", controls: [dd("eq.builtin", "A", () => BUILT_IN.map((e) => ({ label: e.name, run: () => void insertEquation(app, e.seq) }))), b("eq.ink", "H1", "large")] },
+      { id: "tools", label: "Tools", key: "ZT", icon: "equation", controls: [dd("eq.builtin", "A", () => BUILT_IN.map((e) => ({ label: `Formelstruktur ${e.name}`, run: () => void insertEquation(app, e.seq) }))), b("eq.ink", "H1", "large")] },
       { id: "conv", label: "Konvertierungen", key: "ZK", icon: "math-convert", controls: [
         { type: "stack", items: [b("eq.latexToMath", "J"), b("eq.mathToLatex", "H2")] },
         { type: "stack", items: [b("eq.professional", "P"), b("eq.linear", "L"), b("eq.text", "N")] }, b("eq.options", "F")] },

@@ -50,7 +50,19 @@
        "name": "Kopieren",
        "deferred": false,
        "enabled": true,
-       "type": "button"
+       "type": "split",
+       "items": [
+        {
+         "name": "Kopieren",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Duplizieren",
+         "deferred": false,
+         "enabled": true
+        }
+       ]
       },
       {
        "name": "Format übertragen",
@@ -608,6 +620,13 @@
         },
         {
          "name": "Lila"
+        },
+        {
+         "name": "Pipette",
+         "enabled": true
+        },
+        {
+         "name": "Weitere Farben..."
         }
        ]
       }
@@ -657,6 +676,10 @@
         },
         {
          "name": "Häkchenaufzählungszeichen",
+         "enabled": true
+        },
+        {
+         "name": "Nummerierung und Aufzählungszeichen...",
          "enabled": true
         }
        ]
@@ -724,7 +747,7 @@
        "type": "dropdown",
        "items": [
         {
-         "name": "1,0",
+         "name": "1",
          "enabled": true
         },
         {
@@ -732,7 +755,7 @@
          "enabled": true
         },
         {
-         "name": "2,0",
+         "name": "2",
          "enabled": true
         },
         {
@@ -740,7 +763,7 @@
          "enabled": true
         },
         {
-         "name": "3,0",
+         "name": "3",
          "enabled": true
         },
         {
@@ -1422,7 +1445,7 @@
          "enabled": true,
          "submenu": [
           {
-           "name": "Linksbündig ausrichten",
+           "name": "Linksbündig",
            "deferred": false,
            "enabled": true
           },
@@ -1432,7 +1455,7 @@
            "enabled": true
           },
           {
-           "name": "Rechtsbündig ausrichten",
+           "name": "Rechtsbündig",
            "deferred": false,
            "enabled": true
           },
@@ -1968,6 +1991,10 @@
          "enabled": true
         },
         {
+         "name": "Pipette",
+         "enabled": true
+        },
+        {
          "name": "Bild...",
          "enabled": true
         },
@@ -2088,6 +2115,9 @@
            "enabled": true
           }
          ]
+        },
+        {
+         "name": "Weitere Füllfarben..."
         }
        ]
       },
@@ -2313,6 +2343,10 @@
          "enabled": true
         },
         {
+         "name": "Pipette",
+         "enabled": true
+        },
+        {
          "name": "Stärke",
          "enabled": true,
          "submenu": [
@@ -2445,6 +2479,9 @@
            "enabled": true
           }
          ]
+        },
+        {
+         "name": "Weitere Konturfarben..."
         }
        ]
       },
@@ -3406,7 +3443,14 @@
        "name": "Fotoalbum...",
        "deferred": false,
        "enabled": true,
-       "type": "button"
+       "type": "split",
+       "items": [
+        {
+         "name": "Neues Fotoalbum...",
+         "deferred": false,
+         "enabled": true
+        }
+       ]
       }
      ]
     },
@@ -4499,6 +4543,10 @@
         {
          "name": "Farben anpassen...",
          "enabled": true
+        },
+        {
+         "name": "Farben des Foliendesigns zurücksetzen",
+         "enabled": true
         }
        ]
       },
@@ -4602,6 +4650,10 @@
         },
         {
          "name": "TrebuchetMs",
+         "enabled": true
+        },
+        {
+         "name": "Schriftarten anpassen...",
          "enabled": true
         }
        ]
@@ -4936,7 +4988,25 @@
        "name": "Sound",
        "deferred": false,
        "enabled": true,
-       "type": "dropdown"
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "[Ohne Sound]",
+         "enabled": true
+        },
+        {
+         "name": "[Vorherigen Sound anhalten]",
+         "enabled": true
+        },
+        {
+         "name": "Anderer Sound...",
+         "enabled": true
+        },
+        {
+         "name": "Bis zum nächsten Sound wiederholen",
+         "enabled": true
+        }
+       ]
       },
       {
        "name": "Dauer",
@@ -5501,7 +5571,13 @@
        "name": "Benutzerdefinierte Bildschirmpräsentation",
        "deferred": false,
        "enabled": true,
-       "type": "dropdown"
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Zielgruppenorientierte Präsentationen...",
+         "enabled": true
+        }
+       ]
       }
      ]
     },
@@ -5562,7 +5638,7 @@
        "type": "dropdown",
        "items": [
         {
-         "name": "Referentenansicht verwenden",
+         "name": "Referentenansicht",
          "deferred": false,
          "enabled": false
         }
@@ -6930,6 +7006,10 @@
          "enabled": true
         },
         {
+         "name": "Pipette",
+         "enabled": true
+        },
+        {
          "name": "Bild...",
          "enabled": true
         },
@@ -7050,6 +7130,9 @@
            "enabled": true
           }
          ]
+        },
+        {
+         "name": "Weitere Füllfarben..."
         }
        ]
       },
@@ -7275,6 +7358,10 @@
          "enabled": true
         },
         {
+         "name": "Pipette",
+         "enabled": true
+        },
+        {
          "name": "Stärke",
          "enabled": true,
          "submenu": [
@@ -7407,6 +7494,9 @@
            "enabled": true
           }
          ]
+        },
+        {
+         "name": "Weitere Konturfarben..."
         }
        ]
       },
@@ -8255,6 +8345,13 @@
         },
         {
          "name": "Lila"
+        },
+        {
+         "name": "Pipette",
+         "enabled": true
+        },
+        {
+         "name": "Weitere Füllfarben..."
         }
        ]
       },
@@ -8480,6 +8577,10 @@
          "enabled": true
         },
         {
+         "name": "Pipette",
+         "enabled": true
+        },
+        {
          "name": "Stärke",
          "enabled": true,
          "submenu": [
@@ -8558,6 +8659,9 @@
            "enabled": true
           }
          ]
+        },
+        {
+         "name": "Weitere Konturfarben..."
         }
        ]
       },
@@ -9246,7 +9350,7 @@
        "type": "dropdown",
        "items": [
         {
-         "name": "Linksbündig ausrichten",
+         "name": "Linksbündig",
          "deferred": false,
          "enabled": true
         },
@@ -9256,7 +9360,7 @@
          "enabled": true
         },
         {
-         "name": "Rechtsbündig ausrichten",
+         "name": "Rechtsbündig",
          "deferred": false,
          "enabled": true
         },
@@ -9796,13 +9900,37 @@
        "name": "Bild ändern",
        "deferred": false,
        "enabled": true,
-       "type": "button"
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Dieses Gerät...",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Aus Zwischenablage...",
+         "deferred": false,
+         "enabled": true
+        }
+       ]
       },
       {
        "name": "Bild zurücksetzen",
        "deferred": false,
        "enabled": true,
-       "type": "button"
+       "type": "split",
+       "items": [
+        {
+         "name": "Bild zurücksetzen",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Bild und Größe zurücksetzen",
+         "deferred": false,
+         "enabled": true
+        }
+       ]
       }
      ]
     },
@@ -10129,6 +10257,10 @@
          "enabled": true
         },
         {
+         "name": "Pipette",
+         "enabled": true
+        },
+        {
          "name": "Stärke",
          "enabled": true,
          "submenu": [
@@ -10261,6 +10393,9 @@
            "enabled": true
           }
          ]
+        },
+        {
+         "name": "Weitere Konturfarben..."
         }
        ]
       },
@@ -10885,7 +11020,7 @@
        "type": "dropdown",
        "items": [
         {
-         "name": "Linksbündig ausrichten",
+         "name": "Linksbündig",
          "deferred": false,
          "enabled": true
         },
@@ -10895,7 +11030,7 @@
          "enabled": true
         },
         {
-         "name": "Rechtsbündig ausrichten",
+         "name": "Rechtsbündig",
          "deferred": false,
          "enabled": true
         },
@@ -12189,6 +12324,9 @@
         },
         {
          "name": "Lila"
+        },
+        {
+         "name": "Weitere Füllfarben..."
         }
        ]
       },
@@ -12549,6 +12687,13 @@
         },
         {
          "name": "Lila"
+        },
+        {
+         "name": "Pipette",
+         "enabled": true
+        },
+        {
+         "name": "Weitere Füllfarben..."
         }
        ]
       },
@@ -12774,6 +12919,10 @@
          "enabled": true
         },
         {
+         "name": "Pipette",
+         "enabled": true
+        },
+        {
          "name": "Stärke",
          "enabled": true,
          "submenu": [
@@ -12852,6 +13001,9 @@
            "enabled": true
           }
          ]
+        },
+        {
+         "name": "Weitere Konturfarben..."
         }
        ]
       },
@@ -13792,6 +13944,9 @@
         },
         {
          "name": "Lila"
+        },
+        {
+         "name": "Weitere Rahmenfarben..."
         }
        ]
       },
@@ -14121,7 +14276,7 @@
          "enabled": true,
          "submenu": [
           {
-           "name": "Linksbündig ausrichten",
+           "name": "Linksbündig",
            "deferred": false,
            "enabled": true
           },
@@ -14131,7 +14286,7 @@
            "enabled": true
           },
           {
-           "name": "Rechtsbündig ausrichten",
+           "name": "Rechtsbündig",
            "deferred": false,
            "enabled": true
           },
@@ -14147,6 +14302,53 @@
           },
           {
            "name": "Unten ausrichten",
+           "deferred": false,
+           "enabled": true
+          }
+         ]
+        },
+        {
+         "name": "Gruppieren",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Gruppieren",
+           "deferred": false,
+           "enabled": true
+          },
+          {
+           "name": "Gruppierung wiederherstellen",
+           "deferred": false,
+           "enabled": true
+          },
+          {
+           "name": "Gruppierung aufheben",
+           "deferred": false,
+           "enabled": true
+          }
+         ]
+        },
+        {
+         "name": "Drehen",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Rechtsdrehung 90 Grad",
+           "deferred": false,
+           "enabled": true
+          },
+          {
+           "name": "Linksdrehung 90 Grad",
+           "deferred": false,
+           "enabled": true
+          },
+          {
+           "name": "Vertikal umdrehen",
+           "deferred": false,
+           "enabled": true
+          },
+          {
+           "name": "Horizontal spiegeln",
            "deferred": false,
            "enabled": true
           }
@@ -15704,6 +15906,9 @@
         },
         {
          "name": "Lila"
+        },
+        {
+         "name": "Weitere Füllfarben..."
         }
        ]
       },
@@ -15929,6 +16134,10 @@
          "enabled": true
         },
         {
+         "name": "Pipette",
+         "enabled": true
+        },
+        {
          "name": "Stärke",
          "enabled": true,
          "submenu": [
@@ -16061,6 +16270,9 @@
            "enabled": true
           }
          ]
+        },
+        {
+         "name": "Weitere Konturfarben..."
         }
        ]
       },
@@ -16909,6 +17121,13 @@
         },
         {
          "name": "Lila"
+        },
+        {
+         "name": "Pipette",
+         "enabled": true
+        },
+        {
+         "name": "Weitere Füllfarben..."
         }
        ]
       },
@@ -17134,6 +17353,10 @@
          "enabled": true
         },
         {
+         "name": "Pipette",
+         "enabled": true
+        },
+        {
          "name": "Stärke",
          "enabled": true,
          "submenu": [
@@ -17212,6 +17435,9 @@
            "enabled": true
           }
          ]
+        },
+        {
+         "name": "Weitere Konturfarben..."
         }
        ]
       },
@@ -17900,7 +18126,7 @@
        "type": "dropdown",
        "items": [
         {
-         "name": "Linksbündig ausrichten",
+         "name": "Linksbündig",
          "deferred": false,
          "enabled": true
         },
@@ -17910,7 +18136,7 @@
          "enabled": true
         },
         {
-         "name": "Rechtsbündig ausrichten",
+         "name": "Rechtsbündig",
          "deferred": false,
          "enabled": true
         },
@@ -18247,6 +18473,10 @@
         {
          "name": "Farben anpassen...",
          "enabled": true
+        },
+        {
+         "name": "Farben des Foliendesigns zurücksetzen",
+         "enabled": true
         }
        ]
       },
@@ -18350,6 +18580,10 @@
         },
         {
          "name": "TrebuchetMs",
+         "enabled": true
+        },
+        {
+         "name": "Schriftarten anpassen...",
          "enabled": true
         }
        ]
@@ -18690,6 +18924,10 @@
         {
          "name": "Farben anpassen...",
          "enabled": true
+        },
+        {
+         "name": "Farben des Foliendesigns zurücksetzen",
+         "enabled": true
         }
        ]
       },
@@ -18793,6 +19031,10 @@
         },
         {
          "name": "TrebuchetMs",
+         "enabled": true
+        },
+        {
+         "name": "Schriftarten anpassen...",
          "enabled": true
         }
        ]
@@ -19129,6 +19371,10 @@
         {
          "name": "Farben anpassen...",
          "enabled": true
+        },
+        {
+         "name": "Farben des Foliendesigns zurücksetzen",
+         "enabled": true
         }
        ]
       },
@@ -19233,6 +19479,10 @@
         {
          "name": "TrebuchetMs",
          "enabled": true
+        },
+        {
+         "name": "Schriftarten anpassen...",
+         "enabled": true
         }
        ]
       },
@@ -19335,39 +19585,39 @@
        "type": "dropdown",
        "items": [
         {
-         "name": "Binomischer Lehrsatz",
+         "name": "Formelstruktur Binomischer Lehrsatz",
          "enabled": true
         },
         {
-         "name": "Erweiterung einer Summe",
+         "name": "Formelstruktur Erweiterung einer Summe",
          "enabled": true
         },
         {
-         "name": "Fourierreihe",
+         "name": "Formelstruktur Fourierreihe",
          "enabled": true
         },
         {
-         "name": "Kreisoberfläche",
+         "name": "Formelstruktur Kreisoberfläche",
          "enabled": true
         },
         {
-         "name": "Quadratische Gleichung",
+         "name": "Formelstruktur Quadratische Gleichung",
          "enabled": true
         },
         {
-         "name": "Satz des Pythagoras",
+         "name": "Formelstruktur Satz des Pythagoras",
          "enabled": true
         },
         {
-         "name": "Taylorentwicklung",
+         "name": "Formelstruktur Taylorentwicklung",
          "enabled": true
         },
         {
-         "name": "Trig. Identität 1",
+         "name": "Formelstruktur Trig. Identität 1",
          "enabled": true
         },
         {
-         "name": "Trig. Identität 2",
+         "name": "Formelstruktur Trig. Identität 2",
          "enabled": true
         }
        ]
@@ -20732,6 +20982,86 @@
      ]
     }
    ]
+  },
+  {
+   "name": "SmartArt-Design",
+   "contextual": true,
+   "groups": [
+    {
+     "name": "Grafik erstellen",
+     "controls": [
+      {
+       "name": "Textbereich",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Zurücksetzen",
+     "controls": [
+      {
+       "name": "Konvertieren",
+       "deferred": false,
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "In Text konvertieren",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "In Formen konvertieren",
+         "deferred": false,
+         "enabled": true
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Freistellen",
+   "contextual": true,
+   "groups": [
+    {
+     "name": "Verfeinern",
+     "controls": [
+      {
+       "name": "Zu behaltende Bereiche markieren",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Zu entfernende Bereiche markieren",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      }
+     ]
+    },
+    {
+     "name": "Schließen",
+     "controls": [
+      {
+       "name": "Alle Änderungen verwerfen",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      },
+      {
+       "name": "Änderungen beibehalten",
+       "deferred": false,
+       "enabled": true,
+       "type": "button"
+      }
+     ]
+    }
+   ]
   }
  ],
  "context_menus": {
@@ -20956,6 +21286,9 @@
      },
      {
       "name": "Häkchenaufzählungszeichen"
+     },
+     {
+      "name": "Nummerierung und Aufzählungszeichen..."
      }
     ]
    },
@@ -21290,6 +21623,9 @@
      },
      {
       "name": "Häkchenaufzählungszeichen"
+     },
+     {
+      "name": "Nummerierung und Aufzählungszeichen..."
      }
     ]
    },
@@ -21614,6 +21950,83 @@
    },
    {
     "name": "Diagrammbereich formatieren..."
+   },
+   {
+    "name": "Neuer Kommentar"
+   }
+  ],
+  "SmartArt": [
+   {
+    "name": "Ausschneiden"
+   },
+   {
+    "name": "Kopieren"
+   },
+   {
+    "name": "Einfügeoptionen"
+   },
+   {
+    "name": "Textbereich anzeigen"
+   },
+   {
+    "name": "Gruppieren",
+    "items": [
+     {
+      "name": "Gruppieren"
+     },
+     {
+      "name": "Gruppierung wiederherstellen"
+     },
+     {
+      "name": "Gruppierung aufheben"
+     }
+    ]
+   },
+   {
+    "name": "In den Vordergrund",
+    "items": [
+     {
+      "name": "In den Vordergrund"
+     },
+     {
+      "name": "Ebene nach vorne"
+     }
+    ]
+   },
+   {
+    "name": "In den Hintergrund",
+    "items": [
+     {
+      "name": "In den Hintergrund"
+     },
+     {
+      "name": "Ebene nach hinten"
+     }
+    ]
+   },
+   {
+    "name": "Sperren"
+   },
+   {
+    "name": "Link"
+   },
+   {
+    "name": "Als Grafik speichern..."
+   },
+   {
+    "name": "Alternativtext anzeigen..."
+   },
+   {
+    "name": "In Text konvertieren"
+   },
+   {
+    "name": "In Formen konvertieren"
+   },
+   {
+    "name": "Größe und Position..."
+   },
+   {
+    "name": "Objekt formatieren..."
    },
    {
     "name": "Neuer Kommentar"

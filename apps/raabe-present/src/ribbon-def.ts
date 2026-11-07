@@ -3,6 +3,7 @@
 // (the buttons are missing, not grey): Designer, Diktieren, Copilot, Stockbilder, Onlinebilder,
 // Piktogramme, Add-Ins, Cameo, Online vorführen, Untertitel, Übersetzen, Intelligente Suche, Teilen.
 
+import { MORE_COLORS } from "./colors";
 import type { Control, MenuEntry, Tab } from "@raabe/shell";
 
 type Popup = (close: () => void) => HTMLElement;
@@ -73,7 +74,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
     options: () => [{ items: ["8", "9", "10", "10,5", "11", "12", "14", "16", "18", "20", "24", "28", "32", "36", "40", "44", "48", "54", "60", "66", "72", "80", "88", "96"] }],
     commit: ctx.setSize, preview: ctx.preview.size };
   const color = (cmd: string, key: string, cur: () => string, pick: (c: string) => void, palette: "font" | "highlight" = "font", showLabel = false): Control =>
-    ({ type: "color", cmd, key, palette, current: cur, pick, showLabel, theme: ctx.paletteTheme });
+    ({ type: "color", cmd, key, palette, current: cur, pick, showLabel, theme: ctx.paletteTheme, more: MORE_COLORS[cmd] });
   const spin = (cmd: string, label: string, key: string, s: RibbonContext["spin"]["transDuration"], icon?: string): Control => ({ type: "spinner", cmd, label, key, icon, value: s.value, commit: s.commit, step: s.step });
 
   return [
@@ -81,7 +82,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
       id: "start", label: "Start", key: "R",
       shrink: ["editing", "drawing", "paragraph", "font", "slides", "clipboard"],
       groups: [
-        { id: "clipboard", label: "Zwischenablage", key: "ZZ", icon: "paste", controls: [split("edit.paste", "V1", "large", m.paste), stack(b("edit.cut", "X"), b("edit.copy", "C"), b("edit.formatPainter", "FO"))] },
+        { id: "clipboard", label: "Zwischenablage", key: "ZZ", icon: "paste", controls: [split("edit.paste", "V1", "large", m.paste), stack(b("edit.cut", "X"), split("edit.copy", "C", "small", [{ cmd: "edit.copy" }, { cmd: "edit.duplicate" }]), b("edit.formatPainter", "FO"))] },
         { id: "slides", label: "Folien", key: "ZF", icon: "slide-add", controls: [splitPanel("slide.new", "ÄN", "large", p.newSlide), stack(panel("slide.layout", "OA", "small", p.layout), b("slide.reset", "FF"), dd("slide.section", "TA", "small", m.section))] },
         {
           id: "font", label: "Schriftart", key: "ZS", icon: "fonts", launcher: { cmd: "font.dialog", key: "TC" },
@@ -110,7 +111,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
       groups: [
         { id: "slides", label: "Folien", key: "ZF", icon: "slide-add", controls: [splitPanel("slide.new", "SI", "large", p.newSlide)] },
         { id: "tables", label: "Tabellen", key: "ZT", icon: "table", controls: [panel("insert.table", "LA", "large", p.table)] },
-        { id: "images", label: "Bilder", key: "ZB", icon: "picture", controls: [dd("insert.pictures", "B", "large", m.pictures), b("insert.screenshot", "C1", "large"), b("insert.photoAlbum", "F", "large")] },
+        { id: "images", label: "Bilder", key: "ZB", icon: "picture", controls: [dd("insert.pictures", "B", "large", m.pictures), b("insert.screenshot", "C1", "large"), split("insert.photoAlbum", "F", "large", [{ cmd: "insert.photoAlbum", label: "Neues Fotoalbum..." }])] },
         { id: "illustrations", label: "Illustrationen", key: "ZI", icon: "shapes", controls: [panel("insert.shapes", "2", "large", p.shapes), b("insert.smartArt", "M", "large"), panel("insert.chart", "I", "large", p.chart)] },
         { id: "links", label: "Links", key: "ZL", icon: "link", controls: [lazy("insert.zoom", "Y", "large", m.zooms), b("insert.link", "H1", "large"), b("insert.action", "T", "large")] },
         { id: "comments", label: "Kommentare", key: "ZK", icon: "comment", controls: [b("insert.comment", "N", "large")] },

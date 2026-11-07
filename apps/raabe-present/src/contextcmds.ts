@@ -3,6 +3,7 @@
 // Alternativtext (descr), table cells (alignment, vertical anchor, rows and columns at the cell,
 // distributing, sizes), charts through chartops.ts.
 
+import { MORE_COLORS } from "./colors";
 import { colorXml } from "./colors";
 import { closePopup, h, showDialog, type Control, type MenuEntry } from "@raabe/shell";
 import { PptxDom, type ShapeView } from "@raabe/ooxml";
@@ -28,7 +29,7 @@ export function contextHost(app: PresentApp): ContextTabHost {
     ({ type: "spinner", cmd, label, icon, key, value, commit, step });
   return {
     shapeGallery: (c) => app.shapeGallery(c),
-    color: (cur, pick, cmd, key, label, extra) => ({ type: "color", cmd, key, palette: "font", current: cur, pick, showLabel: label, extra, theme: () => app.paletteTheme() }),
+    color: (cur, pick, cmd, key, label, extra) => ({ type: "color", cmd, key, palette: "font", current: cur, pick, showLabel: label, extra, theme: () => app.paletteTheme(), more: MORE_COLORS[cmd] }),
     outlineExtra: () => app.outlineExtra(),
     quickStyles: (c) => quickStylesPanel(app, c),
     quickStyleTiles: () => quickStyleTiles(app),

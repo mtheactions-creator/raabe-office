@@ -42,6 +42,7 @@ import * as CT from "./contexttabs";
 import { contextHost, implementContext } from "./contextcmds";
 import { Sorter } from "./sorter";
 import { slidePng, zoomMenu } from "./zoom";
+import { MORE_COLORS } from "./colors";
 import { customShowMenu } from "./custshow";
 import { endFreistellen, freistellenActive, freistellenTab, markTool } from "./freistellen";
 import { fileTypeSection } from "./exportimg";
@@ -1108,12 +1109,36 @@ export class PresentApp implements EditorHost, PanelHost {
     });
   }
 
+  /** Bild zurücksetzen > Bild und Größe zurücksetzen: as Bild zurücksetzen, and the picture's own size (96 dpi). */
+  private async resetPictureSize(): Promise<void> {
+    const views = this.editor.selectedViews.filter((v) => v.kind === "pic");
+    const sizes = new Map<number, { w: number; h: number }>();
+    for (const v of views) {
+      const slide = this.slidePath();
+      const rid = at(this.editor.shapeEl(v.id)!, "blipFill/blip")?.getAttributeNS(PptxDom.NS_R, "embed");
+      const media = slide && rid ? this.deck.pptx.target(slide, rid) : null;
+      const url = media ? this.image(media) : null;
+      if (!url) continue;
+      const img = await new Promise<HTMLImageElement | null>((res) => { const i = new Image(); i.onload = () => res(i); i.onerror = () => res(null); i.src = url; });
+      if (img) sizes.set(v.id, { w: img.naturalWidth * EMU_PX, h: img.naturalHeight * EMU_PX });
+    }
+    this.resetPicture();
+    this.editor.edit("Bild und Größe zurücksetzen", () => {
+      for (const [id, s] of sizes) {
+        const ext = at(this.editor.shapeEl(id)!, "spPr/xfrm/ext");
+        ext?.setAttribute("cx", String(Math.round(s.w)));
+        ext?.setAttribute("cy", String(Math.round(s.h)));
+      }
+    });
+  }
+
   /** Grafik ändern: another picture file in the same place, keeping the size of the old one's width. */
-  private async changePicture(): Promise<void> {
+  private async changePicture(fromClipboard = false): Promise<void> {
     const v = this.editor.selectedViews[0];
-    const path = await this.platform.openImageDialog();
+    const path = fromClipboard ? "Zwischenablage.png" : await this.platform.openImageDialog();
     if (!path || !v) return;
-    const bytes = await this.platform.readFile(path);
+    const bytes = fromClipboard ? await this.platform.clipboardReadImage?.().catch(() => null) : await this.platform.readFile(path);
+    if (!bytes) return;
     const type = mimeOf(path);
     const ext = type === "image/jpeg" ? "jpeg" : type === "image/gif" ? "gif" : "png";
     const media = this.deck.pptx.freeName(`ppt/media/image#.${ext}`);
@@ -1580,6 +1605,31 @@ export class PresentApp implements EditorHost, PanelHost {
   }
 
   /** Entwurf > Schriftarten: the theme's heading and body fonts. */
+  /** The design of ours the presentation uses (by the theme's name), for Farben des Foliendesigns zurücksetzen. */
+  ownDesign(): DesignSpec | undefined {
+    const theme = this.deck.pptx.themeOf(this.deck.pptx.masters()[0] ?? "");
+    const name = theme ? this.deck.pptx.doc(theme).documentElement.getAttribute("name") : null;
+    return DESIGNS.find((d) => d.name === name);
+  }
+
+  /** Entwurf > Schriftarten > Schriftarten anpassen...: the heading and body fonts and a name. */
+  private async customFontsDialog(): Promise<void> {
+    const theme = this.deck.pptx.themeOf(this.deck.pptx.masters()[0] ?? "");
+    const doc = theme ? this.deck.pptx.doc(theme) : null;
+    const cur = (tag: string) => doc?.getElementsByTagNameNS(PptxDom.NS_A, tag)[0]?.getElementsByTagNameNS(PptxDom.NS_A, "latin")[0]?.getAttribute("typeface") ?? "Calibri";
+    const pick = (value: string) => {
+      const sel = h("select", { style: "width:220px" }, ...[...new Set([value, ...this.fontList])].map((f) => h("option", { value: f }, f))) as HTMLSelectElement;
+      sel.value = value;
+      return sel;
+    };
+    const major = pick(cur("majorFont")), minor = pick(cur("minorFont"));
+    const name = h("input", { type: "text", value: "Benutzerdefiniert 1", style: "width:220px" }) as HTMLInputElement;
+    const ok = await showDialog({ title: "Neue Designschriftarten erstellen", body: h("div", { class: "form" },
+      h("label", null, "Überschriftenschriftart: ", major), h("label", null, "Textkörperschriftart: ", minor), h("label", null, "Name: ", name)),
+      buttons: [{ label: "Speichern", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
+    if (ok) this.applyFontSet(name.value.trim() || "Benutzerdefiniert 1", major.value, minor.value);
+  }
+
   applyFontSet(name: string, major: string, minor: string): void {
     const theme = this.deck.pptx.themeOf(this.deck.pptx.masters()[0] ?? "");
     if (!theme) return;
@@ -2044,7 +2094,7 @@ export class PresentApp implements EditorHost, PanelHost {
         [b("font.bold"), b("font.italic"), b("font.underline"), b("para.left"), b("para.center"), b("para.right"),
           { type: "color", cmd: "font.highlight", palette: "highlight", current: ctx.highlight, pick: ctx.setHighlight, names: PP_HIGHLIGHT_NAMES }, { type: "color", cmd: "font.color", palette: "font", current: ctx.fontColor, pick: ctx.setFontColor, theme: () => this.paletteTheme(), extra: () => this.fontColorExtra() }],
       ] }]
-      : [{ type: "color", cmd: "draw.fill", palette: "font", current: ctx.fillColor, pick: ctx.setFill, showLabel: true, theme: () => this.paletteTheme(), extra: () => this.fillExtra() }, { type: "color", cmd: "draw.outline", palette: "font", current: ctx.lineColor, pick: ctx.setLine, showLabel: true, extra: () => this.outlineExtra() , theme: () => this.paletteTheme() },
+      : [{ type: "color", cmd: "draw.fill", palette: "font", current: ctx.fillColor, pick: ctx.setFill, showLabel: true, theme: () => this.paletteTheme(), extra: () => this.fillExtra(), more: MORE_COLORS["draw.fill"] }, { type: "color", cmd: "draw.outline", palette: "font", current: ctx.lineColor, pick: ctx.setLine, showLabel: true, extra: () => this.outlineExtra() , theme: () => this.paletteTheme(), more: MORE_COLORS["draw.outline"] },
         { type: "button", cmd: "review.newComment", key: "", size: "large" }];
     return this.ribbon.toolbar(controls).el;
   }
@@ -2124,7 +2174,7 @@ export class PresentApp implements EditorHost, PanelHost {
   private bulletMenu(): MenuEntry[] {
     const chars: [string, string][] = [["Keine", ""], ["Ausgefüllte runde Aufzählungszeichen", "•"], ["Hohle runde Aufzählungszeichen", "o"], ["Ausgefüllte quadratische Aufzählungszeichen", "§"],
       ["Silbentrennung-Aufzählungszeichen", String.fromCharCode(0x2013)], ["Sternförmige Aufzählungszeichen", "v"], ["Pfeilförmige Aufzählungszeichen", "Ø"], ["Häkchenaufzählungszeichen", "ü"]];
-    return chars.map(([label, c]) => ({ label, run: () => c ? this.toggleBullets("char", c) : this.formatParas("Aufzählungszeichen", (pPr) => { for (const k of kids(pPr)) if (["buChar", "buAutoNum", "buFont"].includes(k.localName)) k.remove(); if (!kid(pPr, "buNone")) pPr.insertBefore(make(pPr.ownerDocument, "a:buNone"), kids(pPr).find((x) => ["tabLst", "defRPr", "extLst"].includes(x.localName)) ?? null); }) }));
+    return [...chars.map(([label, c]): MenuEntry => ({ label, run: () => c ? this.toggleBullets("char", c) : this.formatParas("Aufzählungszeichen", (pPr) => { for (const k of kids(pPr)) if (["buChar", "buAutoNum", "buFont"].includes(k.localName)) k.remove(); if (!kid(pPr, "buNone")) pPr.insertBefore(make(pPr.ownerDocument, "a:buNone"), kids(pPr).find((x) => ["tabLst", "defRPr", "extLst"].includes(x.localName)) ?? null); }) })), "-", { label: "Nummerierung und Aufzählungszeichen...", run: () => void this.commands.run("para.dialog") }];
   }
 
   private numberMenu(): MenuEntry[] {
@@ -2418,6 +2468,8 @@ export class PresentApp implements EditorHost, PanelHost {
     impl("pic.crop", () => this.editor.toggleCrop(), () => this.editor.selectedViews[0]?.kind === "pic", () => this.editor.crop !== null);
     impl("pic.reset", () => this.resetPicture(), () => this.editor.selectedViews.some((v) => v.kind === "pic"));
     impl("pic.change", () => this.changePicture(), () => this.editor.selectedViews.length === 1 && this.editor.selectedViews[0].kind === "pic");
+    impl("pic.changeClipboard", () => this.changePicture(true), () => !!this.platform.clipboardReadImage && this.editor.selectedViews.length === 1 && this.editor.selectedViews[0].kind === "pic");
+    impl("pic.resetSize", () => this.resetPictureSize(), () => this.editor.selectedViews.some((v) => v.kind === "pic"));
     impl("insert.link", () => import("./links").then((m) => m.insertLink(this)), () => this.editor.sel.length > 0);
     impl("shape.link", () => import("./links").then((m) => m.insertLink(this)), () => this.editor.sel.length > 0);
     impl("review.spelling", () => import("./spelling").then((m) => m.checkSpelling(this)));
@@ -2816,7 +2868,7 @@ export class PresentApp implements EditorHost, PanelHost {
         case: [{ label: "Ersten Buchstaben im Satz großschreiben.", run: () => this.changeCase("sentence") }, { label: "kleinbuchstaben", run: () => this.changeCase("lower") }, { label: "GROSSBUCHSTABEN", run: () => this.changeCase("upper") }, { label: "Ersten Buchstaben Im Wort Großschreiben", run: () => this.changeCase("title") }, { label: "gROSS-/kLEINSCHREIBUNG UMKEHREN", run: () => this.changeCase("toggle") }],
         bullets: this.bulletMenu(),
         numbering: this.numberMenu(),
-        lineSpacing: [...[1, 1.5, 2, 2.5, 3].map((v) => ({ label: v.toFixed(1).replace(".", ","), run: () => this.lineSpacing(v) })), "-", { label: "Zeilenabstandsoptionen...", run: () => void this.commands.run("para.dialog") }],
+        lineSpacing: [...[1, 1.5, 2, 2.5, 3].map((v) => ({ label: String(v).replace(".", ","), run: () => this.lineSpacing(v) })), "-", { label: "Zeilenabstandsoptionen...", run: () => void this.commands.run("para.dialog") }],
         columns: [1, 2, 3].map((n) => ({ label: ["Eine Spalte", "Zwei Spalten", "Drei Spalten"][n - 1], run: () => this.setColumns(n) })),
         direction: [...[["Horizontal", "horz"], ["Text um 90° drehen", "vert"], ["Text um 270° drehen", "vert270"], ["Gestapelt", "wordArtVert"]].map(([label, v]) => ({ label, run: () => this.setBodyAttr("vert", v === "horz" ? null : v) })), { label: "Weitere Optionen...", run: () => void this.commands.run("draw.format") }],
         alignText: [["Oben", "t"], ["Mitte", "ctr"], ["Unten", "b"]].map(([label, v]) => ({ label, run: () => this.setBodyAttr("anchor", v) })),
@@ -2831,8 +2883,9 @@ export class PresentApp implements EditorHost, PanelHost {
         slideSize: [{ cmd: "design.slide4x3" }, { cmd: "design.slide16x9" }, "-", { cmd: "design.slideCustom" }],
         showCustom: [], record: [], customShows: () => customShowMenu(this),
         transOptions: () => this.transMod?.transitionOptions(this) ?? [], animOptions: () => this.animMod?.animationOptions(this) ?? [], animStart: [{ label: "Beim Klicken", run: () => this.animPane.setStart("clickEffect") }, { label: "Mit Vorherigen", run: () => this.animPane.setStart("withEffect") }, { label: "Nach Vorherigen", run: () => this.animPane.setStart("afterEffect") }],
-        colors: () => [...COLOR_SETS.map((c) => ({ label: c.name, run: () => this.applyColorSet(c.name, c.colors) })), "-", { label: "Farben anpassen...", run: () => void this.customColorsDialog() }],
-        fonts: () => FONT_SETS.map((f) => ({ label: f.label, run: () => this.applyFontSet(f.name, f.major, f.minor) })),
+        colors: () => [...COLOR_SETS.map((c) => ({ label: c.name, run: () => this.applyColorSet(c.name, c.colors) })), "-", { label: "Farben anpassen...", run: () => void this.customColorsDialog() },
+          { label: "Farben des Foliendesigns zurücksetzen", disabled: !this.ownDesign(), run: () => { const d = this.ownDesign(); if (d) this.applyColorSet(d.colorName ?? d.name, d.colors as Record<string, string>); } }],
+        fonts: () => [...FONT_SETS.map((f) => ({ label: f.label, run: () => this.applyFontSet(f.name, f.major, f.minor) })), "-", { label: "Schriftarten anpassen...", run: () => void this.customFontsDialog() }],
         underline: [], outlineWeight: [], outlineDash: [], effects: this.effectsMenu(), quickStyles: () => [], zoomFit: [],
         equations: () => BUILT_IN.map((e) => ({ label: e.name, run: () => void insertEquation(this, e.seq) })),
         sounds: () => this.transMod?.soundMenu(this) ?? [],
@@ -3510,6 +3563,7 @@ export class PresentApp implements EditorHost, PanelHost {
             if (el) panelItems = Array.from(el.querySelectorAll("button, [role=menuitem], [role=button], [data-tip]")).map((b) => ({ name: (b.getAttribute("aria-label") || (b as HTMLElement).dataset.tip || b.textContent || "").trim() })).filter((x) => x.name);
           } catch { /* a panel that needs a selection */ }
           if (c.type === "color" && c.extra) panelItems.push(...entries(c.extra()));
+          if (c.type === "color" && c.palette === "font") panelItems.push({ name: c.more ?? "Weitere Farben..." });
           const own = ("popup" in c && c.popup) || c.type === "color" || c.type === "tiles" ? { panel: true, ...(panelItems.length ? { items: [...(("items" in menu && menu.items) || []), ...panelItems] } : {}) } : {};
           return [{ ...base, type: (c as { type: string }).type, ...menu, ...own }];
         };

@@ -148,7 +148,7 @@ function dmlRef(key: string, label?: string): string {
   return m[1] === "heller" ? `${val},${(100 - p) * 1000},${p * 1000}` : `${val},${(100 - p) * 1000}`;
 }
 
-export function showFontColors(anchor: DOMRect, pick: (hex: string) => void, hover?: PaletteHover, extra?: HTMLElement[], theme?: PaletteTheme): void {
+export function showFontColors(anchor: DOMRect, pick: (hex: string) => void, hover?: PaletteHover, extra?: HTMLElement[], theme?: PaletteTheme, more = "Weitere Farben..."): void {
   const hv = (hex: string) => (hover ? { commands: hover.commands, apply: () => hover.apply(hex) } : undefined);
   const grid = h("div", { class: "swatches", style: "grid-template-columns:repeat(10, 18px)" });
   if (theme) {
@@ -180,7 +180,7 @@ export function showFontColors(anchor: DOMRect, pick: (hex: string) => void, hov
     h("div", { class: "palette-title" }, "Designfarben"), grid,
     h("div", { class: "palette-title" }, "Standardfarben"), std,
     h("hr"),
-    h("button", { onclick: () => custom.click() }, "Weitere Farben..."), custom, ...(extra ?? []));
+    h("button", { onclick: () => custom.click() }, more), custom, ...(extra ?? []));
   showPopup(box, anchor);
 }
 

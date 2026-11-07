@@ -78,7 +78,18 @@ def load_present(arg: str | None):
     data = json.loads(path.read_text(encoding="utf-8"))
     tabs = data["tabs"] if isinstance(data, dict) else data
     cms = data.get("context_menus", {}) if isinstance(data, dict) else {}
-    return flatten_raabe(tabs), {k: {norm(i["name"]) for i in v} for k, v in cms.items()}, path.name
+    flat = flatten_raabe(tabs)
+    # Two controls of one name in a tab (PowerPoint's Formformat has two Schnellformatvorlagen, for shapes and
+    # for WordArt): flatten_raabe keeps the first; their entries are taken together.
+    for t in tabs:
+        seen: dict[str, list] = {}
+        for g in t["groups"]:
+            for c in g["controls"]:
+                seen.setdefault(norm(c["name"]), []).append(c)
+        for k, same in seen.items():
+            if len(same) > 1:
+                flat[t["name"]][k] = {**same[0], "items": [i for c in same for i in (c.get("items") or [])]}
+    return flat, {k: {norm(i["name"]) for i in v} for k, v in cms.items()}, path.name
 
 
 def main() -> None:
@@ -134,7 +145,13 @@ def main() -> None:
             n_entries += n + len(gallery)
             extra = f"{n}" if items else ("Dialog" if c.get("dialog") else (f"{len(gallery)}" if gallery else ""))
             if items and not c.get("cloud"):
-                have = entries(mine.get(norm(c["name"]), {}).get("items"))
+                ours = mine.get(norm(c["name"]), {})
+                have = entries(ours.get("items"))
+                # A split button's own part and its arrow ("Weitere Optionen") are entries in PowerPoint's list;
+                # ours has both when it is a split or colour control.
+                if ours.get("type") in ("split", "color"):
+                    have.setdefault(norm(c["name"]), {})
+                    have.setdefault(norm("Weitere Optionen"), {})
                 for k in {norm(i["name"]) for i in items if i["type"] in ENTRY_TYPES and i["name"].strip()}:
                     counts["vorhanden" if k in have and not have[k].get("deferred") else "fehlt"] += 1
                 menus.append(f"- **{clean(c['name'])}**: {menu_text(items)}")

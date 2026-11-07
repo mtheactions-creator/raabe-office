@@ -1982,3 +1982,15 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
 - **SmartArt's context menu** as PowerPoint's recorded one, without Layout ändern... and Grafik zurücksetzen
   (they need the layout definitions, see SmartArt above); our Textbereich is a dialog, so its entry reads
   "Textbereich anzeigen" where PowerPoint toggles a pane.
+- **Gaps from the inventory (04:50):** the palettes' custom colour entry carries PowerPoint's label per control
+  (Weitere Füllfarben..., Weitere Konturfarben..., Weitere Rahmenfarben...; the shell's palette takes the label as
+  an optional parameter, Word and Excel unchanged); Kopieren with Duplizieren; Fotoalbum as a split button
+  (Neues Fotoalbum...; editing an album is not built); Bild zurücksetzen with Bild und Größe zurücksetzen (the
+  picture's pixels at 96 dpi); Bild ändern with Dieses Gerät... and Aus Zwischenablage... (archive, online and icon
+  sources are cloud); Schriftarten anpassen... (our dialog) and Farben des Foliendesigns zurücksetzen (for our own
+  designs, found by the theme's name); Tabellenlayout > Anordnen with Gruppieren and Drehen; PowerPoint's names
+  for Zeilenabstand (1, 1,5 …), Linksbündig/Rechtsbündig, Referentenansicht, the Formel tab's Formelstruktur …
+  entries and Nummerierung und Aufzählungszeichen....
+- **Inventory counting:** two controls of one name in a tab (Formformat's two Schnellformatvorlagen) are compared
+  with both our controls' entries, and a split button's own part and its arrow (Weitere Optionen) count as there
+  when ours is a split or colour control. This counting fix alone moved 66 entries; the features above 53.

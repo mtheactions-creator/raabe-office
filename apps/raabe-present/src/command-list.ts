@@ -102,9 +102,9 @@ export const COMMANDS: Command[] = [
   cmd("arrange.ungroup", "Gruppierung aufheben", "ungroup-objects", { shortcut: "Strg+Umschalt+G" }),
   cmd("arrange.regroup", "Gruppierung wiederherstellen", "group-objects"),
   cmd("arrange.align", "Ausrichten", "align-objects"),
-  cmd("arrange.alignLeft", "Linksbündig ausrichten", "align-left"),
+  cmd("arrange.alignLeft", "Linksbündig", "align-left"),
   cmd("arrange.alignCenter", "Horizontal zentrieren", "align-center"),
-  cmd("arrange.alignRight", "Rechtsbündig ausrichten", "align-right"),
+  cmd("arrange.alignRight", "Rechtsbündig", "align-right"),
   cmd("arrange.alignTop", "Oben ausrichten", "text-align-top"),
   cmd("arrange.alignMiddle", "Vertikal zentrieren", "text-align-middle"),
   cmd("arrange.alignBottom", "Unten ausrichten", "text-align-bottom"),
@@ -231,7 +231,7 @@ export const COMMANDS: Command[] = [
   cmd("show.playNarrations", "Kommentare wiedergeben", "check"),
   cmd("show.useTimings", "Anzeigedauern verwenden", "check"),
   cmd("show.mediaControls", "Mediensteuerelemente anzeigen", "check"),
-  cmd("show.presenterView", "Referentenansicht verwenden", "check"),
+  cmd("show.presenterView", "Referentenansicht", "check"),
   cmd("show.monitor", "Bildschirme", "app"),
 
   // ----- Überprüfen ------------------------------------------------------------------------------

@@ -30,6 +30,8 @@ export const CONTEXT_COMMANDS: Command[] = [
   cmd("pic.compress", "Bilder komprimieren...", "compress"),
   cmd("pic.quickStyles", "Schnellformatvorlagen", "picture-styles"),
   cmd("pic.border", "Bildrahmen", "picture-border"),
+  cmd("pic.resetSize", "Bild und Größe zurücksetzen", "reset-picture"),
+  cmd("pic.changeClipboard", "Aus Zwischenablage...", "paste"),
   cmd("pic.effects", "Bildeffekte", "picture-effects"),
   cmd("pic.layout", "Bildlayout", "picture-layout"),
   cmd("pic.dialog", "Bild...", "launcher"),
@@ -156,7 +158,7 @@ export function pictureFormatTab(h: ContextTabHost): Tab {
     id: "pictureFormat", label: "Bildformat", key: "JP", contextual: true, shrink: [],
     groups: [
       { id: "adjust", label: "Anpassen", key: "ZA", icon: "corrections", controls: [b("pic.removeBg", "N", "large"), dd("pic.corrections", "O", "large", () => h.pictureCorrections()), stack(dd("pic.color", "F", "medium", () => h.pictureColor()), dd("pic.artistic", "Ü", "medium", () => h.pictureArtistic()), dd("pic.transparency", "T", "medium", () => h.pictureTransparency())),
-        stack(b("pic.compress", "M"), b("pic.change", "Q1"), b("pic.reset", "U"))] },
+        stack(b("pic.compress", "M"), dd("pic.change", "Q1", "small", [{ cmd: "pic.change", label: "Dieses Gerät..." }, { cmd: "pic.changeClipboard" }]), { type: "split", cmd: "pic.reset", key: "U", size: "small", menu: [{ cmd: "pic.reset" }, { cmd: "pic.resetSize" }] })] },
       { id: "styles", label: "Bildformatvorlagen", key: "ZB", icon: "picture-styles", launcher: { cmd: "pic.dialog", key: "P" }, controls: [h.picStyleTiles(),
         stack(h.color(() => h.lineColor(), (c) => h.setLine(c), "pic.border", "V", true, () => h.outlineExtra()), dd("pic.effects", "E", "medium", () => h.effects()), b("pic.layout", "A1", "medium"))] },
       { id: "access", label: "Barrierefreiheit", key: "ZR", icon: "alt-text", controls: [b("shape.altTextPane", "AT", "large")] },
@@ -190,7 +192,9 @@ export function tableLayoutTab(h: ContextTabHost): Tab {
       { id: "align", label: "Ausrichtung", key: "ZA", icon: "cell-middle-center", controls: [stack(b("table.alignLeft", "II"), b("table.top", "C")), stack(b("table.alignCenter", "RZ"), b("table.middle", "K")), stack(b("table.alignRight", "RE"), b("table.bottom", "A")),
         dd("table.direction", "MT", "large", () => h.cellDirections()), dd("table.margins", "NZ", "large", () => h.cellMargins())] },
       { id: "tableSize", label: "Tabellengröße", key: "ZS", icon: "size-position", controls: [stack(h.tableSpin("h"), h.tableSpin("w"), check("table.lockRatio", "T"))] },
-      { id: "arrange", label: "Anordnen", key: "ZO", icon: "bring-forward", controls: [dd("table.arrange", "ZA", "large", [{ cmd: "arrange.forward" }, { cmd: "arrange.backward" }, { cmd: "arrange.selectionPane" }, "-", { label: "Ausrichten", submenu: () => h.alignMenu() }])] },
+      { id: "arrange", label: "Anordnen", key: "ZO", icon: "bring-forward", controls: [dd("table.arrange", "ZA", "large", [{ cmd: "arrange.forward" }, { cmd: "arrange.backward" }, { cmd: "arrange.selectionPane" }, "-", { label: "Ausrichten", submenu: () => h.alignMenu() },
+        { label: "Gruppieren", submenu: [{ cmd: "arrange.group" }, { cmd: "arrange.regroup" }, { cmd: "arrange.ungroup" }] },
+        { label: "Drehen", submenu: [{ cmd: "arrange.rotRight" }, { cmd: "arrange.rotLeft" }, { cmd: "arrange.flipV" }, { cmd: "arrange.flipH" }] }])] },
     ],
   };
 }

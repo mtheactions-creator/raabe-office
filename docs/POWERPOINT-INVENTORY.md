@@ -8,7 +8,7 @@ descriptions (D-058). Cloud features are listed, marked and left out on purpose;
 
 **Recorded:** 21 tabs with 439 controls and 5771 menu and gallery entries; 13 context menus; 114 dialogs and panes; 4 backstage pages.
 
-**Coverage:** 3744 of 4503 controls and menu entries are in RaabePresent (83.1 %); 2 are there but greyed out as deferred, 757 are missing; 8 cloud features are left out on purpose.
+**Coverage:** 3884 of 4503 controls and menu entries are in RaabePresent (86.3 %); 2 are there but greyed out as deferred, 617 are missing; 8 cloud features are left out on purpose.
 
 ## Registerkarten
 
@@ -633,7 +633,7 @@ Menüs und Kataloge in Format:
 |---|---|---|---|---|---|
 | Grafik erstellen | Form hinzufügen | Unterteilte Schaltfläche | Alt, J S, O | fehlt | 7 |
 | Grafik erstellen | Aufzählungszeichen hinzufügen | Schaltfläche, grau | Alt, J S, A 1 | fehlt |  |
-| Grafik erstellen | Textbereich | Schaltfläche | Alt, J S, T | fehlt |  |
+| Grafik erstellen | Textbereich | Schaltfläche | Alt, J S, T | vorhanden |  |
 | Grafik erstellen | Höher stufen | Schaltfläche, grau | Alt, J S, H | fehlt |  |
 | Grafik erstellen | Tiefer stufen | Schaltfläche, grau | Alt, J S, I | fehlt |  |
 | Grafik erstellen | Von rechts nach links | Schaltfläche | Alt, J S, V | fehlt |  |
@@ -646,7 +646,7 @@ Menüs und Kataloge in Format:
 | SmartArt-Formatvorlagen | Schnellformatvorlagen | Katalog |  | fehlt | 14 |
 | SmartArt-Formatvorlagen | Schnellformatvorlagen | Schaltfläche | Alt, J S, S | fehlt |  |
 | Zurücksetzen | Grafik zurücksetzen | Schaltfläche | Alt, J S, G | fehlt |  |
-| Zurücksetzen | Konvertieren | Menü | Alt, J S, K | fehlt | 2 |
+| Zurücksetzen | Konvertieren | Menü | Alt, J S, K | vorhanden | 2 |
 
 Menüs und Kataloge in SmartArt-Design:
 
@@ -807,7 +807,7 @@ Rechtsklick auf …; die Einträge der Minisymbolleiste stehen mit in der Liste.
 - **Gruppe** (RaabePresent: 21/26 vorhanden): Ausschneiden · Kopieren · _Einfügeoptionen_ · Einfügen · Gruppieren · In den Vordergrund · In den Vordergrund · In den Vordergrund · In den Hintergrund · In den Hintergrund · In den Hintergrund · Sperren · Link · Link · Link · Als Grafik speichern... · Alternativtext anzeigen... · Größe und Position... · Form formatieren... · Neuer Kommentar · _Minileiste_ · Formatvorlage · Füllung Orange, Akzent 2 · Kontur Dunkelblaugrün, Akzent 1 · Neuer Kommentar
 - **Leerer Folienbereich** (RaabePresent: 8/11 vorhanden): _Einfügeoptionen_ · Einfügen · Layout · Folie zurücksetzen · Raster und Führungslinien... · Raster und Führungslinien... · Raster und Führungslinien... · Lineal · Hintergrund formatieren... · Neuer Kommentar
 - **Notizenbereich** (RaabePresent: 9/31 vorhanden): Ausschneiden · Kopieren · _Einfügeoptionen_ · Einfügen · Schriftart... · Absatz... · Synonyme · Übersetzen · Neuer Kommentar · _Minileiste_ · Öffnen · Schriftgrad vergrößern · Schriftgrad verkleinern · Einzug verkleinern · Einzug vergrößern · Fett · Kursiv · Unterstreichen · Linksbündig · Zentriert · Rechtsbündig · Texthervorhebungsfarbe · Texthervorhebungsfarbe Gelb · Weitere Optionen · Schriftfarbe · Schriftfarbe Rot · Format übertragen · Neuer Kommentar
-- **SmartArt** (RaabePresent: fehlt): Ausschneiden · Kopieren · _Einfügeoptionen_ · Einfügen · Layout ändern... · Textbereich ausblenden · Gruppieren · In den Vordergrund · In den Vordergrund · In den Vordergrund · In den Hintergrund · In den Hintergrund · In den Hintergrund · Sperren · Link · Link · Link · Als Grafik speichern... · Übersetzen · Alternativtext anzeigen... · Grafik zurücksetzen · In Text konvertieren · In Formen konvertieren · Größe und Position... · Objekt formatieren... · Neuer Kommentar · _Minileiste_ · Formatvorlage · Farbe · Layout · Neuer Kommentar
+- **SmartArt** (RaabePresent: 23/32 vorhanden): Ausschneiden · Kopieren · _Einfügeoptionen_ · Einfügen · Layout ändern... · Textbereich ausblenden · Gruppieren · In den Vordergrund · In den Vordergrund · In den Vordergrund · In den Hintergrund · In den Hintergrund · In den Hintergrund · Sperren · Link · Link · Link · Als Grafik speichern... · Übersetzen · Alternativtext anzeigen... · Grafik zurücksetzen · In Text konvertieren · In Formen konvertieren · Größe und Position... · Objekt formatieren... · Neuer Kommentar · _Minileiste_ · Formatvorlage · Farbe · Layout · Neuer Kommentar
 - **Textfeld** (RaabePresent: 24/30 vorhanden): Ausschneiden · Kopieren · _Einfügeoptionen_ · Einfügen · Text bearbeiten · Punkte bearbeiten · Gruppieren · In den Vordergrund · In den Vordergrund · In den Vordergrund · In den Hintergrund · In den Hintergrund · In den Hintergrund · Sperren · Link · Link · Link · Als Grafik speichern... · Übersetzen · Alternativtext anzeigen... · Als Standardtextfeld-Format festlegen · Größe und Position... · Form formatieren... · Neuer Kommentar · _Minileiste_ · Formatvorlage · Füllung Orange, Akzent 2 · Kontur Dunkelblaugrün, Akzent 1 · Neuer Kommentar
 
 ## Datei (Backstage)

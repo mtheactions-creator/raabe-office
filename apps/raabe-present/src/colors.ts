@@ -4,6 +4,13 @@
 
 import { PptxDom } from "@raabe/ooxml";
 
+/** PowerPoint's label of each palette's custom colour entry (by command). */
+export const MORE_COLORS: Readonly<Record<string, string>> = {
+  "draw.fill": "Weitere Füllfarben...", "draw.outline": "Weitere Konturfarben...", "pic.border": "Weitere Konturfarben...",
+  "wordart.fill": "Weitere Füllfarben...", "wordart.outline": "Weitere Konturfarben...", "table.shading": "Weitere Füllfarben...",
+  "table.penColor": "Weitere Rahmenfarben...",
+};
+
 const { make } = PptxDom;
 const HEX = /^[0-9A-F]{6}$/i;
 
