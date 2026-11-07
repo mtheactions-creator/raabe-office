@@ -9776,6 +9776,915 @@
      }
     ]
    }
+  },
+  "caret home": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret end": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 17,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret ctrl+home": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret ctrl+end": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 30,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret left": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 4,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret right": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 6,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret up": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 5,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret down": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 21,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret shift+right": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 5,
+     "length": 1
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret shift+left": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 4,
+     "length": 1
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret shift+end": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 5,
+     "length": 13
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret shift+home": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 4
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret shift+down": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 5,
+     "length": 16
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret ctrl+left": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret ctrl+right": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 7,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret ctrl+shift+right": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 5,
+     "length": 2
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret backspace": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 4,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erse Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret delete": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 5,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erst Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret ctrl+backspace": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "e Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret ctrl+delete": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 5,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erst Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret enter": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 6,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       72.7
+      ],
+      "rot": 0.0,
+      "text": "Erst\re Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret shift+enter": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 6,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       72.7
+      ],
+      "rot": 0.0,
+      "text": "Erst\u000be Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret tab": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 6,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erst\te Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret shift+tab": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 6,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erst\te Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret ctrl+a": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 29
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret esc": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret ctrl+b": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 5,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret ctrl+e": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 5,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret ctrl+z": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret alt+shift+right": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 5,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret alt+shift+left": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 5,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret f2": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret type": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 7,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "ErstXYe Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret type enter": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 21,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       72.7
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rneu\rZweite Zeile"
+     }
+    ]
+   }
   }
  }
 }

@@ -85,6 +85,14 @@ def cases() -> list[Case]:
                 "ctrl+z", "alt+shift+right", "alt+shift+left", "ctrl+up", "ctrl+down", "pagedown"):
         add(f"text {key}", "textkeys", [two], edit + [("keys", key)])
         add(f"text sel {key}", "textkeys", [two], edit + [("keys", "shift+right", 3), ("keys", key)])
+    # Keys in text being edited: the click on the letters of "Erste" puts the caret there (added in run 3, D-072).
+    caret = [("click", (0, .1, .3))]
+    for key in ("home", "end", "ctrl+home", "ctrl+end", "left", "right", "up", "down", "shift+right", "shift+left", "shift+end", "shift+home", "shift+down",
+                "ctrl+left", "ctrl+right", "ctrl+shift+right", "backspace", "delete", "ctrl+backspace", "ctrl+delete", "enter", "shift+enter", "tab", "shift+tab",
+                "ctrl+a", "esc", "ctrl+b", "ctrl+e", "ctrl+z", "alt+shift+right", "alt+shift+left", "f2"):
+        add(f"caret {key}", "caretkeys", [two], caret + [("keys", key)])
+    add("caret type", "caretkeys", [two], caret + [("type", "XY")])
+    add("caret type enter", "caretkeys", [two], caret + [("keys", "end"), ("keys", "enter"), ("type", "neu")])
     add("text type", "textkeys", [two], edit + [("type", "abc")])
     add("text type over selection", "textkeys", [two], edit + [("keys", "ctrl+shift+left"), ("type", "X")])
     add("text dblclick word", "textmouse", [two], [("dblclick", (0, .2, .3))])

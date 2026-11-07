@@ -1544,6 +1544,8 @@ export class SlideEditor {
     const hasSel = T.cmpPos(t.caret, t.anchor) !== 0;
     const ps = T.paras(body);
     const DIRS: Record<string, [number, number]> = { ArrowUp: [-1, 0], ArrowDown: [1, 0], ArrowLeft: [0, -1], ArrowRight: [0, 1] };
+    // Alt+Umschalt+Pfeil: Höher/Tiefer stufen, the caret stays (measured: no selection).
+    if (e.altKey && shift && (k === "ArrowRight" || k === "ArrowLeft")) { this.changeLevel(k === "ArrowRight" ? 1 : -1); return true; }
     if (t.range && t.cell) {
       const tbl = this.tableOf()!;
       if (k === "Delete" || k === "Backspace") { const x = t.range; this.edit("Löschen", () => TC.clear(tbl, x)); return true; }
@@ -1617,7 +1619,8 @@ export class SlideEditor {
             } else if (t.caret.o === 0) return true;
             else from = { p: t.caret.p, o: t.caret.o - 1 };
           } else {
-            if (ctrl) to = T.wordJump(body, t.caret, 1);
+            // Strg+Entf inside a word deletes the rest of the word, not the space after it (measured).
+            if (ctrl) { const w = T.wordAt(ps[t.caret.p], t.caret.o); to = t.caret.o > w.from && t.caret.o < w.to ? { p: t.caret.p, o: w.to } : T.wordJump(body, t.caret, 1); }
             else if (t.caret.o >= T.paraLength(ps[t.caret.p])) { if (t.caret.p + 1 >= ps.length) return true; to = { p: t.caret.p + 1, o: 0 }; }
             else to = { p: t.caret.p, o: t.caret.o + 1 };
             from = t.caret;
@@ -1640,6 +1643,9 @@ export class SlideEditor {
         if (ctrl) { this.typeText("\t"); return true; }
         // At the start of a paragraph (or with several selected) Tab changes the level, else it types a tab.
         const allSel = hasSel && T.minPos(t.caret, t.anchor).p !== T.maxPos(t.caret, t.anchor).p;
+        // Umschalt+Tab on the top level has no level to go to: it types a tab (measured).
+        const lvl = Number(PptxDom.kid(ps[t.caret.p], "pPr")?.getAttribute("lvl") ?? 0);
+        if (shift && !hasSel && !allSel && lvl === 0 && t.caret.o > 0) { this.typeText(String.fromCharCode(9)); return true; }
         if (t.caret.o === 0 && T.cmpPos(t.caret, t.anchor) === 0 || allSel || (shift && !hasSel)) { this.changeLevel(shift ? -1 : 1); return true; }
         this.typeText("\t");
         return true;
@@ -1708,7 +1714,9 @@ export class SlideEditor {
     const keep = t.goalX ?? box.x;
     let out = pos ?? t.caret;
     const nb = this.caretBox(t.id, out);
-    if (!pos || (nb && Math.abs(nb.y - box.y) < 1)) out = dir < 0 ? { p: 0, o: 0 } : T.endPos(body);
+    // On the first (last) line the caret stays where it is (measured in PowerPoint; Word would go to the start).
+    if (!pos || (nb && Math.abs(nb.y - box.y) < 1)) out = t.caret;
+    void body;
     t.goalX = keep;
     return out;
   }
