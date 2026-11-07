@@ -15,6 +15,7 @@ import * as TC from "./tablecells";
 import { AutoCorrect } from "@raabe/text-engine";
 import { removeShapeEl } from "./equations";
 import { samplePath } from "./animations";
+import { recognize } from "./inkshape";
 import * as S from "./shapeops";
 import type { Pos } from "./textops";
 
@@ -41,6 +42,8 @@ export interface EditorHost {
   /** Comment markers of a slide (slide coordinates in EMU). */
   commentMarkers?(path: string): { x: number; y: number; n: number }[];
   toolDone(): void;
+  /** Zeichnen > Freihand zu Form is on. */
+  inkToShape?(): boolean;
   /** An Interaktive Schaltfläche was drawn: its default action (inside the same undo step). */
   actionButtonDrawn?(el: Element, prst: string): void;
   openActionDialog?(): Promise<void>;
@@ -1542,6 +1545,24 @@ export class SlideEditor {
       window.removeEventListener("mouseup", up);
       svg.remove();
       if (pts.length < 2) pts.push({ x: pts[0].x + 1, y: pts[0].y + 1 });
+      // Freihand zu Form: a stroke that looks like a shape becomes it, outlined in the pen's colour.
+      const shape = this.host.inkToShape?.() ? recognize(pts) : null;
+      if (shape) {
+        let sid = 0;
+        this.edit("Freihand zu Form", () => {
+          const doc = this.pptx.doc(this.path!);
+          const tree = S.treeOf(doc);
+          sid = S.maxId(tree) + 1;
+          const el = S.newShape(doc, sid, shape.prst, { x: shape.x, y: shape.y, w: shape.w, h: shape.h, rot: 0, flipH: !!shape.flipH, flipV: !!shape.flipV });
+          const sp = PptxDom.kid(el, "spPr")!;
+          const fill = PptxDom.make(doc, "a:noFill");
+          sp.insertBefore(fill, PptxDom.kid(sp, "ln") ?? null);
+          for (const old of PptxDom.kids(sp).filter((c) => c.localName === "ln")) old.remove();
+          sp.append(PptxDom.fragment(doc, `<a:ln w="${Math.round(tool.width * 12700)}"><a:solidFill><a:srgbClr val="${tool.color}"/></a:solidFill></a:ln>`)[0]);
+          tree.append(el);
+        });
+        return;
+      }
       const x0 = Math.min(...pts.map((p) => p.x)), y0 = Math.min(...pts.map((p) => p.y));
       const w = Math.max(1, Math.max(...pts.map((p) => p.x)) - x0), hh = Math.max(1, Math.max(...pts.map((p) => p.y)) - y0);
       const r = (v: number) => Math.round(v);

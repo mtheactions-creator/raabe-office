@@ -1929,8 +1929,10 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   the chart's Format tab with Aktuelle Auswahl (Diagrammelemente, Auswahl formatieren, Auf Formatvorl.
   zurücks.), Form ändern (greyed, as PowerPoint with the whole chart) and Größe und Position; Zeichnen >
   Hinzufügen (six pen kinds, taken up at once: there is no own pen toolbox to add them to) and Lassoauswahl (a
-  loop round shapes selects those whose middle is inside). Freihand zu Form, Lineal, Wiedergabe and Freihand
-  in Gleichung (handwriting recognition) are not built.
+  loop round shapes selects those whose middle is inside). **Freihand zu Form**: while on, a pen stroke that
+  looks like a line, triangle, rectangle, rhombus or ellipse becomes that shape outlined in the pen's colour
+  and width (our recognition: the stroke simplified to its corners); other strokes stay ink. Lineal,
+  Wiedergabe and Freihand in Gleichung (handwriting recognition) are not built.
 - **Highlight colours, Barrierefreiheit überprüfen, Kommentare anzeigen:** PowerPoint names three highlight
   colours differently from Word (Grelles Grün, Grau-50 %, Grau-25 %); the shell's highlight palette takes
   other names as an optional parameter and RaabePresent passes PowerPoint's. Barrierefreiheit überprüfen and

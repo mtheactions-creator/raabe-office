@@ -383,6 +383,10 @@ export class PresentApp implements EditorHost, PanelHost {
     this.updateChrome();
   }
 
+  /** Zeichnen > Freihand zu Form: pen strokes become shapes where they look like one. */
+  private inkShapes = false;
+  inkToShape(): boolean { return this.inkShapes; }
+
   /** Markup anzeigen (Überprüfen > Kommentare anzeigen): the comment markers are shown. */
   showMarkup = true;
 
@@ -2254,6 +2258,7 @@ export class PresentApp implements EditorHost, PanelHost {
     impl("ink.select", () => { this.editor.tool = null; this.updateChrome(); }, undefined, () => !tool());
     impl("ink.eraser", () => { this.editor.tool = { kind: "eraser" }; this.updateChrome(); }, undefined, () => tool()?.kind === "eraser");
     impl("ink.add", () => {}, () => !!this.slidePath());
+    impl("ink.toShape", () => { this.inkShapes = !this.inkShapes; this.updateChrome(); }, () => !!this.slidePath(), () => this.inkShapes);
     // Lassoauswahl: a loop drawn round shapes selects them (their middle inside the loop).
     impl("ink.lasso", () => {
       this.editor.endText();

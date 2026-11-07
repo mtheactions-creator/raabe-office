@@ -1508,6 +1508,215 @@
    "result": "same",
    "diff": []
   },
+  "caret home": {
+   "area": "caretkeys",
+   "result": "same",
+   "diff": []
+  },
+  "caret end": {
+   "area": "caretkeys",
+   "result": "same",
+   "diff": []
+  },
+  "caret ctrl+home": {
+   "area": "caretkeys",
+   "result": "same",
+   "diff": []
+  },
+  "caret ctrl+end": {
+   "area": "caretkeys",
+   "result": "same",
+   "diff": []
+  },
+  "caret left": {
+   "area": "caretkeys",
+   "result": "same",
+   "diff": []
+  },
+  "caret right": {
+   "area": "caretkeys",
+   "result": "same",
+   "diff": []
+  },
+  "caret up": {
+   "area": "caretkeys",
+   "result": "same",
+   "diff": []
+  },
+  "caret down": {
+   "area": "caretkeys",
+   "result": "same",
+   "diff": []
+  },
+  "caret shift+right": {
+   "area": "caretkeys",
+   "result": "same",
+   "diff": []
+  },
+  "caret shift+left": {
+   "area": "caretkeys",
+   "result": "same",
+   "diff": []
+  },
+  "caret shift+end": {
+   "area": "caretkeys",
+   "result": "different",
+   "diff": [
+    "selection: {'type': 'Text', 'ids': [0], 'start': 5, 'length': 13} vs {'type': 'Text', 'ids': [0], 'start': 5, 'length': 12}"
+   ]
+  },
+  "caret shift+home": {
+   "area": "caretkeys",
+   "result": "same",
+   "diff": []
+  },
+  "caret shift+down": {
+   "area": "caretkeys",
+   "result": "same",
+   "diff": []
+  },
+  "caret ctrl+left": {
+   "area": "caretkeys",
+   "result": "same",
+   "diff": []
+  },
+  "caret ctrl+right": {
+   "area": "caretkeys",
+   "result": "same",
+   "diff": []
+  },
+  "caret ctrl+shift+right": {
+   "area": "caretkeys",
+   "result": "same",
+   "diff": []
+  },
+  "caret backspace": {
+   "area": "caretkeys",
+   "result": "same",
+   "diff": []
+  },
+  "caret delete": {
+   "area": "caretkeys",
+   "result": "same",
+   "diff": []
+  },
+  "caret ctrl+backspace": {
+   "area": "caretkeys",
+   "result": "same",
+   "diff": []
+  },
+  "caret ctrl+delete": {
+   "area": "caretkeys",
+   "result": "same",
+   "diff": []
+  },
+  "caret enter": {
+   "area": "caretkeys",
+   "result": "same",
+   "diff": []
+  },
+  "caret shift+enter": {
+   "area": "caretkeys",
+   "result": "same",
+   "diff": []
+  },
+  "caret tab": {
+   "area": "caretkeys",
+   "result": "same",
+   "diff": []
+  },
+  "caret shift+tab": {
+   "area": "caretkeys",
+   "result": "same",
+   "diff": []
+  },
+  "caret ctrl+a": {
+   "area": "caretkeys",
+   "result": "same",
+   "diff": []
+  },
+  "caret esc": {
+   "area": "caretkeys",
+   "result": "same",
+   "diff": []
+  },
+  "caret ctrl+b": {
+   "area": "caretkeys",
+   "result": "same",
+   "diff": []
+  },
+  "caret ctrl+e": {
+   "area": "caretkeys",
+   "result": "same",
+   "diff": []
+  },
+  "caret ctrl+z": {
+   "area": "caretkeys",
+   "result": "different",
+   "diff": [
+    "selection: {'type': 'None'} vs {'type': 'Text', 'ids': [0], 'start': 5, 'length': 0}"
+   ]
+  },
+  "caret alt+shift+right": {
+   "area": "caretkeys",
+   "result": "same",
+   "diff": []
+  },
+  "caret alt+shift+left": {
+   "area": "caretkeys",
+   "result": "same",
+   "diff": []
+  },
+  "caret f2": {
+   "area": "caretkeys",
+   "result": "same",
+   "diff": []
+  },
+  "caret type": {
+   "area": "caretkeys",
+   "result": "same",
+   "diff": []
+  },
+  "caret type enter": {
+   "area": "caretkeys",
+   "result": "same",
+   "diff": []
+  },
+  "autocorrect sentence": {
+   "area": "autocorrect",
+   "result": "same",
+   "diff": []
+  },
+  "autocorrect quotes": {
+   "area": "autocorrect",
+   "result": "same",
+   "diff": []
+  },
+  "autocorrect copyright": {
+   "area": "autocorrect",
+   "result": "same",
+   "diff": []
+  },
+  "autocorrect arrow": {
+   "area": "autocorrect",
+   "result": "same",
+   "diff": []
+  },
+  "autocorrect weekday": {
+   "area": "autocorrect",
+   "result": "same",
+   "diff": []
+  },
+  "autocorrect twocaps": {
+   "area": "autocorrect",
+   "result": "same",
+   "diff": []
+  },
+  "autocorrect dash": {
+   "area": "autocorrect",
+   "result": "same",
+   "diff": []
+  },
   "text type": {
    "area": "textkeys",
    "result": "same",
@@ -1758,215 +1967,6 @@
   },
   "end home": {
    "area": "slides",
-   "result": "same",
-   "diff": []
-  },
-  "caret home": {
-   "area": "caretkeys",
-   "result": "same",
-   "diff": []
-  },
-  "caret end": {
-   "area": "caretkeys",
-   "result": "same",
-   "diff": []
-  },
-  "caret ctrl+home": {
-   "area": "caretkeys",
-   "result": "same",
-   "diff": []
-  },
-  "caret ctrl+end": {
-   "area": "caretkeys",
-   "result": "same",
-   "diff": []
-  },
-  "caret left": {
-   "area": "caretkeys",
-   "result": "same",
-   "diff": []
-  },
-  "caret right": {
-   "area": "caretkeys",
-   "result": "same",
-   "diff": []
-  },
-  "caret up": {
-   "area": "caretkeys",
-   "result": "same",
-   "diff": []
-  },
-  "caret down": {
-   "area": "caretkeys",
-   "result": "same",
-   "diff": []
-  },
-  "caret shift+right": {
-   "area": "caretkeys",
-   "result": "same",
-   "diff": []
-  },
-  "caret shift+left": {
-   "area": "caretkeys",
-   "result": "same",
-   "diff": []
-  },
-  "caret shift+end": {
-   "area": "caretkeys",
-   "result": "different",
-   "diff": [
-    "selection: {'type': 'Text', 'ids': [0], 'start': 5, 'length': 13} vs {'type': 'Text', 'ids': [0], 'start': 5, 'length': 12}"
-   ]
-  },
-  "caret shift+home": {
-   "area": "caretkeys",
-   "result": "same",
-   "diff": []
-  },
-  "caret shift+down": {
-   "area": "caretkeys",
-   "result": "same",
-   "diff": []
-  },
-  "caret ctrl+left": {
-   "area": "caretkeys",
-   "result": "same",
-   "diff": []
-  },
-  "caret ctrl+right": {
-   "area": "caretkeys",
-   "result": "same",
-   "diff": []
-  },
-  "caret ctrl+shift+right": {
-   "area": "caretkeys",
-   "result": "same",
-   "diff": []
-  },
-  "caret backspace": {
-   "area": "caretkeys",
-   "result": "same",
-   "diff": []
-  },
-  "caret delete": {
-   "area": "caretkeys",
-   "result": "same",
-   "diff": []
-  },
-  "caret ctrl+backspace": {
-   "area": "caretkeys",
-   "result": "same",
-   "diff": []
-  },
-  "caret ctrl+delete": {
-   "area": "caretkeys",
-   "result": "same",
-   "diff": []
-  },
-  "caret enter": {
-   "area": "caretkeys",
-   "result": "same",
-   "diff": []
-  },
-  "caret shift+enter": {
-   "area": "caretkeys",
-   "result": "same",
-   "diff": []
-  },
-  "caret tab": {
-   "area": "caretkeys",
-   "result": "same",
-   "diff": []
-  },
-  "caret shift+tab": {
-   "area": "caretkeys",
-   "result": "same",
-   "diff": []
-  },
-  "caret ctrl+a": {
-   "area": "caretkeys",
-   "result": "same",
-   "diff": []
-  },
-  "caret esc": {
-   "area": "caretkeys",
-   "result": "same",
-   "diff": []
-  },
-  "caret ctrl+b": {
-   "area": "caretkeys",
-   "result": "same",
-   "diff": []
-  },
-  "caret ctrl+e": {
-   "area": "caretkeys",
-   "result": "same",
-   "diff": []
-  },
-  "caret ctrl+z": {
-   "area": "caretkeys",
-   "result": "different",
-   "diff": [
-    "selection: {'type': 'None'} vs {'type': 'Text', 'ids': [0], 'start': 5, 'length': 0}"
-   ]
-  },
-  "caret alt+shift+right": {
-   "area": "caretkeys",
-   "result": "same",
-   "diff": []
-  },
-  "caret alt+shift+left": {
-   "area": "caretkeys",
-   "result": "same",
-   "diff": []
-  },
-  "caret f2": {
-   "area": "caretkeys",
-   "result": "same",
-   "diff": []
-  },
-  "caret type": {
-   "area": "caretkeys",
-   "result": "same",
-   "diff": []
-  },
-  "caret type enter": {
-   "area": "caretkeys",
-   "result": "same",
-   "diff": []
-  },
-  "autocorrect sentence": {
-   "area": "autocorrect",
-   "result": "same",
-   "diff": []
-  },
-  "autocorrect quotes": {
-   "area": "autocorrect",
-   "result": "same",
-   "diff": []
-  },
-  "autocorrect copyright": {
-   "area": "autocorrect",
-   "result": "same",
-   "diff": []
-  },
-  "autocorrect arrow": {
-   "area": "autocorrect",
-   "result": "same",
-   "diff": []
-  },
-  "autocorrect weekday": {
-   "area": "autocorrect",
-   "result": "same",
-   "diff": []
-  },
-  "autocorrect twocaps": {
-   "area": "autocorrect",
-   "result": "same",
-   "diff": []
-  },
-  "autocorrect dash": {
-   "area": "autocorrect",
    "result": "same",
    "diff": []
   }
