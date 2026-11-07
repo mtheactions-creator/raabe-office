@@ -137,4 +137,6 @@ export { sortDate, sortNumber, sortOrder, type SortKey, type SortSpec, type Sort
 export { Hyphenator, hyphenationKey, hyphenatorFor, loadHyphenation } from "./hyphen";
 export { MathEditor, buildLinear, explode, getSlot, implode, mathAutoCorrect, slotsOf, type MathPos, type MathRange, type MathSignal, type MathStep } from "./math/edit";
 export { seqToLinear } from "./math/linear";
+/** AutoKorrektur rules on plain paragraph text (added for RaabePresent). */
+export * as AutoCorrect from "./autocorrect";
 export * from "./bibliography";

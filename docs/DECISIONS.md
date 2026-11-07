@@ -1802,3 +1802,9 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   an interactive sequence started by that shape (as PowerPoint writes it); in the show a click on the shape
   plays its next step, shapes it shows start hidden. Animation übertragen copies a shape's effects to the next
   shape clicked. Removing effects now tidies the timing (no empty lists, which PowerPoint rejects).
+- **AutoKorrektur while typing:** RaabeWrite's rules (text-engine `AutoCorrect`, now exported for both apps):
+  sentence start, two capitals, weekdays, quotes typographic, dash, (c) and the list's symbols. Measured
+  against PowerPoint in 7 catalogue cases, all the same: an arrow (`-->`) becomes, as in PowerPoint, the
+  Wingdings character U+F0E0 in a run with a:sym (drawn in that font). Rückgängig takes back the
+  correction first. **Datei > Optionen** (had no implementation) is a short dialog of our own: Benutzername and
+  Initialen (for comments), Touchmodus, AutoKorrektur on/off, AutoWiederherstellen interval.

@@ -1,7 +1,7 @@
 {
  "date": "2026-11-07",
- "same": 337,
- "of": 370,
+ "same": 344,
+ "of": 377,
  "cases": {
   "click rect centre": {
    "area": "click",
@@ -1932,6 +1932,41 @@
   },
   "caret type enter": {
    "area": "caretkeys",
+   "result": "same",
+   "diff": []
+  },
+  "autocorrect sentence": {
+   "area": "autocorrect",
+   "result": "same",
+   "diff": []
+  },
+  "autocorrect quotes": {
+   "area": "autocorrect",
+   "result": "same",
+   "diff": []
+  },
+  "autocorrect copyright": {
+   "area": "autocorrect",
+   "result": "same",
+   "diff": []
+  },
+  "autocorrect arrow": {
+   "area": "autocorrect",
+   "result": "same",
+   "diff": []
+  },
+  "autocorrect weekday": {
+   "area": "autocorrect",
+   "result": "same",
+   "diff": []
+  },
+  "autocorrect twocaps": {
+   "area": "autocorrect",
+   "result": "same",
+   "diff": []
+  },
+  "autocorrect dash": {
+   "area": "autocorrect",
    "result": "same",
    "diff": []
   }

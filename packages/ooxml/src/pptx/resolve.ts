@@ -68,6 +68,8 @@ export interface RunStyle {
   spacing: number;
   lang?: string;
   link?: string;
+  /** The symbol font (a:sym) for characters of the private use area (Wingdings arrows from AutoKorrektur). */
+  symFont?: string;
   /** Textkontur: the run's outline (a:ln with a solid fill), width in points. */
   outline?: { color: string; width: number };
 }
@@ -366,6 +368,7 @@ function runStyle(m: MergedR, theme: ThemeInfo, fontColor?: string): RunStyle {
     lang: a.lang,
     link,
     ...(lnColor ? { outline: { color: lnColor, width: (num(ln, "w") ?? 12700) / 12700 } } : {}),
+    ...(m.groups.sym?.getAttribute("typeface") ? { symFont: m.groups.sym.getAttribute("typeface")! } : {}),
   };
 }
 

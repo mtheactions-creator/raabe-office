@@ -5,6 +5,10 @@ export interface Settings {
   userName: string;
   autoRecoverSeconds: number;
   touchMode: boolean;
+  /** Initialen for comments (empty: from the user name). */
+  initials: string;
+  /** AutoKorrektur while typing. */
+  autoCorrect: boolean;
 }
 
 export interface RecentFile {
@@ -14,7 +18,7 @@ export interface RecentFile {
   pinned: boolean;
 }
 
-const DEFAULTS: Settings = { userName: "", autoRecoverSeconds: 30, touchMode: false };
+const DEFAULTS: Settings = { userName: "", autoRecoverSeconds: 30, touchMode: false, initials: "", autoCorrect: true };
 const KEY_SETTINGS = "raabe.present.settings";
 const KEY_RECENT = "raabe.present.recent";
 const MAX_RECENT = 50;

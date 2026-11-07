@@ -39,7 +39,7 @@ import { BackgroundPane } from "./background";
 import * as CT from "./contexttabs";
 import { contextHost, implementContext } from "./contextcmds";
 import { Sorter } from "./sorter";
-import { addRecent, loadRecent, loadSettings, removeRecent, setPinned, type Settings } from "./store";
+import { addRecent, loadRecent, loadSettings, removeRecent, saveSettings, setPinned, type Settings } from "./store";
 import appIconUrl from "../../../branding/raabe-present-small.svg?url";
 
 const { kid, kids, at, num, make, fragment } = PptxDom;
@@ -137,7 +137,7 @@ export class PresentApp implements EditorHost, PanelHost {
     this.main = h("div", { class: "present-main" }, this.panel.el, this.outline.el, h("div", { class: "splitter" }), this.center, this.sorter.el, this.notesPage.el);
     this.formatPane = new FormatPane(this.editor, this.main);
     this.animPane = new AnimationPane(this, this.main);
-    this.comments = new Comments(this, this.main, () => this.settings.userName);
+    this.comments = new Comments(this, this.main, () => this.settings.userName, () => this.settings.initials);
     this.bgPane = new BackgroundPane(this, this.main);
     this.statusSlide = h("span", { class: "cell" });
     this.zoomPct = h("button", { class: "cell pct", "data-tip": "Zoom", onclick: () => void this.commands.run("view.zoom") });
@@ -156,6 +156,7 @@ export class PresentApp implements EditorHost, PanelHost {
     document.body.append(this.titleBar.el, this.ribbon.tabRow, this.ribbon.card, this.main, this.status, this.backstage.el);
     document.body.classList.add("present");
     document.body.classList.toggle("touch", this.settings.touchMode);
+    this.editor.autoCorrectOn = this.settings.autoCorrect;
     installTooltips();
     new Keytips((el) => (el.dataset.keytipScope === "root" && el.getAttribute("role") === "tab" ? this.ribbon.activeTab : null), () => this.focusMain());
     this.installSplitter();
@@ -1729,6 +1730,7 @@ export class PresentApp implements EditorHost, PanelHost {
     impl("file.close", () => this.closeDoc(this.active));
     impl("file.exportPdf", () => this.exportPdf());
     impl("file.print", () => { this.backstage.open("print"); });
+    impl("file.options", () => { this.backstage.close(); void this.optionsDialog(); });
     // After Rückgängig the shapes it brings back are selected (PowerPoint: Entf, then Strg+Z).
     const reselect = (step: () => void) => {
       const path = this.slidePath();
@@ -2175,6 +2177,28 @@ export class PresentApp implements EditorHost, PanelHost {
     const views = [...this.deck.view(p).shapes].reverse();
     for (const v of views) list.append(h("div", { class: `sel-pane-row${this.editor.sel.includes(v.id) ? " on" : ""}`, onclick: () => this.editor.select([v.id]) }, h("span", { class: "sel-pane-name" }, v.name)));
     void showDialog({ title: "Auswahl", body: list, buttons: [{ label: "Schließen", value: 0, primary: true }], cancel: 0 });
+  }
+
+  /** Datei > Optionen: the few settings RaabePresent keeps, grouped as PowerPoint's categories. */
+  private async optionsDialog(): Promise<void> {
+    const s = this.settings;
+    const text = (v: string, w = 220) => h("input", { type: "text", value: v, style: `width:${w}px` }) as HTMLInputElement;
+    const check = (label: string, on: boolean) => { const c = h("input", { type: "checkbox" }) as HTMLInputElement; c.checked = on; return { c, el: h("label", { class: "dlg-check" }, c, ` ${label}`) }; };
+    const name = text(s.userName), ini = text(s.initials, 60);
+    const touch = check("Touchmodus (größere Abstände im Menüband)", s.touchMode);
+    const ac = check("Während der Eingabe korrigieren (AutoKorrektur)", s.autoCorrect);
+    const minutes = h("input", { type: "number", min: "1", max: "120", value: String(Math.max(1, Math.round(s.autoRecoverSeconds / 60))), style: "width:60px" }) as HTMLInputElement;
+    const ok = await showDialog({ title: "Optionen", body: h("div", { class: "form" },
+      h("b", null, "Allgemein"), h("label", null, "Benutzername: ", name), h("label", null, "Initialen: ", ini), touch.el,
+      h("b", null, "Dokumentprüfung"), ac.el,
+      h("b", null, "Speichern"), h("label", null, "AutoWiederherstellen-Informationen speichern alle ", minutes, " Minuten")),
+      buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
+    if (!ok) return;
+    this.settings = { ...s, userName: name.value.trim(), initials: ini.value.trim(), touchMode: touch.c.checked, autoCorrect: ac.c.checked,
+      autoRecoverSeconds: Math.max(1, Number(minutes.value) || 1) * 60 };
+    saveSettings(this.settings);
+    document.body.classList.toggle("touch", this.settings.touchMode);
+    this.editor.autoCorrectOn = this.settings.autoCorrect;
   }
 
   private async zoomDialog(): Promise<void> {

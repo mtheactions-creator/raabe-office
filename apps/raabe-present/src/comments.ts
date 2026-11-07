@@ -19,7 +19,7 @@ export interface Comment { author: string; initials: string; date: string; text:
 
 export class Comments {
   readonly pane: TaskPane;
-  constructor(private app: PresentApp, host: HTMLElement, private user: () => string) {
+  constructor(private app: PresentApp, host: HTMLElement, private user: () => string, private userInitials: () => string = () => "") {
     this.pane = new TaskPane(host);
   }
 
@@ -46,7 +46,7 @@ export class Comments {
     const slide = this.app.slidePath();
     if (!slide || !text.trim()) return;
     const name = this.user() || "Benutzer";
-    const initials = name.split(/\s+/).map((w) => w[0] ?? "").join("").slice(0, 3).toUpperCase();
+    const initials = this.userInitials() || name.split(/\s+/).map((w) => w[0] ?? "").join("").slice(0, 3).toUpperCase();
     const v = this.app.editor.selectedViews[0];
     // Positions in the classic format: 1/8 point (PowerPoint's comment units, 576 per inch).
     const x = v ? Math.round(((v.x + v.w) / 12700) * 8) : 80, y = v ? Math.round((v.y / 12700) * 8) : 80;

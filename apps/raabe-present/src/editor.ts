@@ -12,6 +12,7 @@ import { AUTOFIT_STEPS, EMU_PX, renderText, textHeight } from "./render/text";
 import { presetAdjust, presetGeometry, shapeTextRect } from "@raabe/text-engine";
 import * as T from "./textops";
 import * as TC from "./tablecells";
+import { AutoCorrect } from "@raabe/text-engine";
 import { removeShapeEl } from "./equations";
 import { samplePath } from "./animations";
 import * as S from "./shapeops";
@@ -1418,6 +1419,55 @@ export class SlideEditor {
       t.caret = pos; t.anchor = pos; t.goalX = undefined;
     }, `type:${t.id}`);
     t.pending = null;
+    if (text.length === 1 && this.autoCorrectOn) this.autoCorrect(text);
+  }
+
+  /** AutoKorrektur (Office's defaults, shared with RaabeWrite: D-042, D-072). */
+  autoCorrectOn = true;
+
+  /**
+   * After a typed character: the replacement list's symbols ((c), -->, ...) at once, the word just ended
+   * (sentence capitals, ZWei GRoßbuchstaben, weekdays, dashes) at a word end, typographic quotes for the
+   * text's language. Each correction is its own undo step, so Strg+Z brings back what was typed.
+   */
+  private autoCorrect(ch: string, typed = true): void {
+    const t = this.text;
+    const body = t ? this.textBody(t.id) : undefined;
+    if (!t || !body || T.cmpPos(t.caret, t.anchor) !== 0) return;
+    const para = T.paras(body)[t.caret.p];
+    if (!para) return;
+    const ptxt = T.paraText(para), at = t.caret.o;
+    const lang = para.getElementsByTagNameNS(PptxDom.NS_A, "rPr")[0]?.getAttribute("lang") ?? "de-DE";
+    let fixes: AutoCorrect.Fix[] = [];
+    if (!typed) fixes = AutoCorrect.wordFixes(ptxt, at, lang, { cellStart: !!t.cell });
+    else if (AutoCorrect.INSTANT_TRIGGERS.has(ch)) {
+      const f = AutoCorrect.instantFix(ptxt, at);
+      // A symbol (the arrows) is its character of the symbol font's private use area, as PowerPoint writes it.
+      if (f) fixes = [f.symbol ? { a: f.a, b: f.b, text: String.fromCharCode(f.symbol.char), symbol: f.symbol } : { a: f.a, b: f.b, text: f.text }];
+    }
+    if (typed && !fixes.length && AutoCorrect.TRIGGERS.has(ch)) {
+      fixes = AutoCorrect.wordFixes(ptxt, at - 1, lang, { cellStart: !!t.cell });
+      if (ch === "\"" || ch === "'") { const q = AutoCorrect.smartQuote(ptxt, at, lang); if (q) fixes.push(q); }
+    }
+    if (!fixes.length) return;
+    this.deck.breakMerge();
+    this.edit("AutoKorrektur", () => {
+      let caret = t.caret.o;
+      for (const f of [...fixes].sort((x, y) => y.a - x.a)) {
+        T.deleteRange(body, { p: t.caret.p, o: f.a }, { p: t.caret.p, o: f.b });
+        if (f.text) T.insertText(body, { p: t.caret.p, o: f.a }, f.text);
+        const sym = f.symbol;
+        if (sym) T.formatRange(body, { p: t.caret.p, o: f.a }, { p: t.caret.p, o: f.a + f.text.length }, (r) => {
+          PptxDom.kid(r, "sym")?.remove();
+          const el = PptxDom.make(r.ownerDocument, "a:sym", { typeface: sym.font, pitchFamily: 2, charset: 2 });
+          const before = Array.from(r.children).find((c) => ["hlinkClick", "hlinkMouseOver", "rtl", "extLst"].includes(c.localName)) ?? null;
+          r.insertBefore(el, before);
+        });
+        if (caret >= f.b) caret += f.text.length - (f.b - f.a);
+      }
+      t.caret = { p: t.caret.p, o: caret }; t.anchor = t.caret;
+    });
+    this.deck.breakMerge();
   }
 
   private onKey(e: KeyboardEvent): void {
@@ -1631,6 +1681,8 @@ export class SlideEditor {
       }
       case "Enter": {
         if (ctrl) return false;
+        // The word Eingabe ends is corrected first (AutoKorrektur).
+        if (!hasSel && !t.cell && this.autoCorrectOn) this.autoCorrect(String.fromCharCode(10), false);
         this.edit("Eingeben", () => {
           let pos = T.deleteRange(body, t.anchor, t.caret);
           pos = shift ? T.insertBreak(body, pos) : T.splitPara(body, pos);

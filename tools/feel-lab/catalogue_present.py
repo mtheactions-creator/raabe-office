@@ -93,6 +93,11 @@ def cases() -> list[Case]:
         add(f"caret {key}", "caretkeys", [two], caret + [("keys", key)])
     add("caret type", "caretkeys", [two], caret + [("type", "XY")])
     add("caret type enter", "caretkeys", [two], caret + [("keys", "end"), ("keys", "enter"), ("type", "neu")])
+    # AutoKorrektur while typing, in a new paragraph at the end of the text (added in run 3, D-072).
+    newpara = caret + [("keys", "ctrl+end"), ("keys", "enter")]
+    for nm, typed in (("sentence", "das ist gut. und so "), ("quotes", 'er sagt "hallo" '), ("copyright", "text (c) "), ("arrow", "a --> b "),
+                      ("weekday", "am montag "), ("twocaps", "ZWei mal "), ("dash", "rot - blau ")):
+        add(f"autocorrect {nm}", "autocorrect", [two], newpara + [("type", typed)])
     add("text type", "textkeys", [two], edit + [("type", "abc")])
     add("text type over selection", "textkeys", [two], edit + [("keys", "ctrl+shift+left"), ("type", "X")])
     add("text dblclick word", "textmouse", [two], [("dblclick", (0, .2, .3))])

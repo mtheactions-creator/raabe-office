@@ -190,6 +190,8 @@ export function renderText(t: TextInfo, w: number, h: number, o: TextOptions): H
         sp.className = r.kind === "br" ? "br" : "run";
         if (r.link) sp.dataset.link = r.link;
         sp.style.cssText = runCss(r, fit.fontScale);
+        // Symbol characters (U+F0xx) in their symbol font (a:sym), as PowerPoint draws them.
+        if (r.symFont && Array.from(r.text).some((c) => c.charCodeAt(0) >= 0xf000 && c.charCodeAt(0) <= 0xf0ff)) sp.style.fontFamily = `"${r.symFont}"`;
         const text = r.kind === "br" ? "\n" : r.kind === "fld" ? fieldText(r, o) : r.text;
         if (o.selection) appendSelected(sp, text, pi, off, o.selection);
         else sp.textContent = text;

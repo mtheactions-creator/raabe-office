@@ -10685,6 +10685,195 @@
      }
     ]
    }
+  },
+  "autocorrect sentence": {
+   "area": "autocorrect",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 51,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       72.7
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile\rDas ist gut. Und so "
+     }
+    ]
+   }
+  },
+  "autocorrect quotes": {
+   "area": "autocorrect",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 47,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       72.7
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile\rEr sagt „hallo“ "
+     }
+    ]
+   }
+  },
+  "autocorrect copyright": {
+   "area": "autocorrect",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 38,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       72.7
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile\rText © "
+     }
+    ]
+   }
+  },
+  "autocorrect arrow": {
+   "area": "autocorrect",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 37,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       72.7
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile\rA  b "
+     }
+    ]
+   }
+  },
+  "autocorrect weekday": {
+   "area": "autocorrect",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 41,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       72.7
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile\rAm Montag "
+     }
+    ]
+   }
+  },
+  "autocorrect twocaps": {
+   "area": "autocorrect",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 40,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       72.7
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile\rZwei mal "
+     }
+    ]
+   }
+  },
+  "autocorrect dash": {
+   "area": "autocorrect",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 42,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       72.7
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile\rRot – blau "
+     }
+    ]
+   }
   }
  }
 }
