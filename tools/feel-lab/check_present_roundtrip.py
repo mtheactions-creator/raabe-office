@@ -49,6 +49,8 @@ SCENARIOS: dict[str, str] = {
     "equation": """p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); a.setCurrent(0); const m = await import('/src/equations.ts'); const b = await import('/src/equations-builtin.ts'); await m.insertEquation(a, b.BUILT_IN.find(e => e.name === 'Satz des Pythagoras').seq);""",
         "table style": """p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); a.setCurrent(0); a.insertTable(3, 3); const m = await import('/src/tablestyles.ts'); m.applyTableStyle(a, m.tableStyles().find(s => s.name === 'Helle Formatvorlage 2 - Akzent 2'));""",
         "motion path": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]}]}); const a = p.app; a.editor.select([2]); const m = await import('/src/animations.ts'); const g = m.ANIMATION_GROUPS.find(x => x.cls === 'path'); m.addAnimation(a, 'path', g.items[0], false);""",
+        "custom path": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]}]}); const a = p.app; a.editor.select([2]); const m = await import('/src/animations.ts'); const g = m.ANIMATION_GROUPS.find(x => x.cls === 'path'); m.addAnimation(a, 'path', {...g.items.find(i => i.preset === 0), path: 'M 0 0 L 0.2 0 L 0.2 0.25 L 0.4 0.25 E'}, false);""",
+        "freeform": """p.setupCase({layout:'Leer', shapes:[]}); const a = p.app; a.editor['addFreeform']([{x:1000000,y:1000000},{x:3000000,y:1500000},{x:1500000,y:3000000}], true, false); a.editor['addFreeform']([{x:5000000,y:1000000},{x:6000000,y:2000000},{x:7000000,y:1200000},{x:8000000,y:2500000}], false, true);""",
         "action": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]}]}); const a = p.app; a.newSlide(); a.setCurrent(0); a.editor.select([2]); const doc = a.deck.pptx.doc(a.slidePath()); const nv = doc.getElementsByTagNameNS('http://schemas.openxmlformats.org/presentationml/2006/main', 'cNvPr')[1]; a.editor.edit('Aktion', () => { const hl = doc.createElementNS('http://schemas.openxmlformats.org/drawingml/2006/main', 'a:hlinkClick'); hl.setAttributeNS('http://schemas.openxmlformats.org/officeDocument/2006/relationships', 'r:id', ''); hl.setAttribute('action', 'ppaction://hlinkshowjump?jump=nextslide'); nv.insertBefore(hl, nv.firstChild); });""",
         "animation copy": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]},{kind:'ellipse',box:[400,100,150,150]}]}); const a = p.app; a.editor.select([2]); const m = await import('/src/animations.ts'); m.addAnimation(a, 'entr', m.ANIMATION_GROUPS[0].items[2], false); m.copyAnimation(a, 2, 3);""",
         "trigger": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]},{kind:'ellipse',box:[400,100,150,150]}]}); const a = p.app; a.editor.select([3]); const m = await import('/src/animations.ts'); m.addAnimation(a, 'entr', m.ANIMATION_GROUPS[0].items[2], false); m.setTrigger(a, 2);""",
@@ -177,6 +179,10 @@ def check(name: str, r: dict, ours: dict) -> list[str]:
         want(t.get("tstyle") == "Helle Formatvorlage 2 - Akzent 2", f"style {t.get('tstyle')}")
     elif name == "motion path":
         want(s0["animations"] == 1 and len(s0.get("motion", [])) == 1, f"motion {s0.get('animations')} {s0.get('motion')}")
+    elif name == "custom path":
+        want(s0["animations"] == 1 and s0.get("motion", [""])[0].startswith("M 0 0 L 0.2 0"), f"motion {s0.get('animations')} {s0.get('motion')}")
+    elif name == "freeform":
+        want([x["type"] for x in sh] == [5, 5], f"types {[x['type'] for x in sh]}")
     elif name == "action":
         want(any(x.get("action") == 1 for x in sh), f"action {[x.get('action') for x in sh]}")
     elif name == "animation copy":

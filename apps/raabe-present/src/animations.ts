@@ -8,7 +8,7 @@ import type { PresentApp } from "./app";
 
 const { kid, kids, num, at, fragment } = PptxDom;
 
-export interface AnimItem { label: string; preset: number; subtype?: number; effect: string }
+export interface AnimItem { label: string; preset: number; subtype?: number; effect: string; /** Benutzerdefinierter Pfad: the drawn path. */ path?: string }
 
 export const ANIMATION_GROUPS: { title: string; cls: "entr" | "emph" | "exit" | "path"; items: AnimItem[] }[] = [
   { title: "Eingang", cls: "entr", items: [
@@ -72,7 +72,7 @@ export function samplePath(path: string, n = 40): [number, number][] {
 
 function behaviours(cls: string, it: AnimItem, spid: number, id: () => number, dur: number): string {
   const tgt = `<p:tgtEl><p:spTgt spid="${spid}"/></p:tgtEl>`;
-  if (cls === "path") return `<p:animMotion origin="layout" path="${MOTION_PATHS[it.preset] ?? MOTION_PATHS[42]}" pathEditMode="relative" ptsTypes=""><p:cBhvr><p:cTn id="${id()}" dur="${dur}" fill="hold"/>${tgt}<p:attrNameLst><p:attrName>ppt_x</p:attrName><p:attrName>ppt_y</p:attrName></p:attrNameLst></p:cBhvr></p:animMotion>`;
+  if (cls === "path") return `<p:animMotion origin="layout" path="${it.path ?? MOTION_PATHS[it.preset] ?? MOTION_PATHS[42]}" pathEditMode="relative" ptsTypes=""><p:cBhvr><p:cTn id="${id()}" dur="${dur}" fill="hold"/>${tgt}<p:attrNameLst><p:attrName>ppt_x</p:attrName><p:attrName>ppt_y</p:attrName></p:attrNameLst></p:cBhvr></p:animMotion>`;
   const vis = (v: string, delay = 0) => `<p:set><p:cBhvr><p:cTn id="${id()}" dur="1" fill="hold"><p:stCondLst><p:cond delay="${delay}"/></p:stCondLst></p:cTn>${tgt}<p:attrNameLst><p:attrName>style.visibility</p:attrName></p:attrNameLst></p:cBhvr><p:to><p:strVal val="${v}"/></p:to></p:set>`;
   const fx = (filter: string, dir: string) => `<p:animEffect transition="${dir}" filter="${filter}"><p:cBhvr><p:cTn id="${id()}" dur="${dur}"/>${tgt}</p:cBhvr></p:animEffect>`;
   const anim = (attr: string, from: string, to: string) => `<p:anim calcmode="lin" valueType="num"><p:cBhvr additive="base"><p:cTn id="${id()}" dur="${dur}" fill="hold"/>${tgt}<p:attrNameLst><p:attrName>${attr}</p:attrName></p:attrNameLst></p:cBhvr><p:tavLst><p:tav tm="0"><p:val><p:strVal val="${from}"/></p:val></p:tav><p:tav tm="100000"><p:val><p:strVal val="${to}"/></p:val></p:tav></p:tavLst></p:anim>`;
@@ -102,7 +102,7 @@ function maxCtnId(root: Element): number {
 
 /** Animation (replace the selected shapes' effects) or Animation hinzufügen (add another), as a click effect. */
 export function addAnimation(app: PresentApp, cls: "entr" | "emph" | "exit" | "path", it: AnimItem, add: boolean): void {
-  if (cls === "path" && !MOTION_PATHS[it.preset]) return; // Benutzerdefinierter Pfad: drawing a path is not built yet (greyed).
+  if (cls === "path" && !MOTION_PATHS[it.preset] && !it.path) { drawCustomPath(app, it, add); return; }
   const ed = app.editor;
   const ids = ed.text ? [ed.text.id] : ed.sel;
   const path = app.slidePath();
@@ -408,3 +408,30 @@ export function interactiveSequences(root: Element): { trigger: number; steps: S
   }
   return out;
 }
+
+/**
+ * Benutzerdefinierter Pfad: the pointer draws the path as a Freihandform (clicks for corners, drag freehand,
+ * double-click or Enter ends); written relative to the shape's centre in fractions of the slide, as PowerPoint.
+ */
+function drawCustomPath(app: PresentApp, it: AnimItem, add: boolean): void {
+  const ed = app.editor;
+  const id = ed.text ? ed.text.id : ed.sel[0];
+  const v = id ? ed.shapeView(id) : undefined;
+  if (!v) return;
+  ed.endText();
+  ed.tool = {
+    kind: "points", mode: "polygon",
+    done: (pts, closed) => {
+      const size = app.deck.pptx.slideSize;
+      const cx = v.x + v.w / 2, cy = v.y + v.h / 2;
+      const f = (n: number) => String(Math.round(n * 100000) / 100000);
+      const xy = (p: { x: number; y: number }) => `${f((p.x - cx) / size.cx)} ${f((p.y - cy) / size.cy)}`;
+      const path = `M ${xy(pts[0])} ` + pts.slice(1).map((p) => `L ${xy(p)}`).join(" ") + (closed ? " Z" : " E");
+      ed.select([v.id]);
+      addAnimation(app, "path", { ...it, path }, add);
+    },
+  };
+  ed.render();
+  ed.focus();
+}
+

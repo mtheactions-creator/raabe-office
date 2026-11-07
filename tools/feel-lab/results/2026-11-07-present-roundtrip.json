@@ -88,6 +88,14 @@
    "result": "same",
    "diff": []
   },
+  "custom path": {
+   "result": "same",
+   "diff": []
+  },
+  "freeform": {
+   "result": "same",
+   "diff": []
+  },
   "action": {
    "result": "same",
    "diff": []
@@ -163,6 +171,6 @@
  },
  "summary": {
   "fixtures": "11/11",
-  "scenarios": "31/31"
+  "scenarios": "33/33"
  }
 }

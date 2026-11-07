@@ -1118,6 +1118,26 @@ export class PresentApp implements EditorHost, PanelHost {
     this.editor.select([id]);
   }
 
+  /** Tabelle zeichnen outside a table: one cell in the drawn box. */
+  drawTable(box: { x: number; y: number; w: number; h: number }): void {
+    const slide = this.slidePath();
+    if (!slide || box.w < 36000 || box.h < 36000) return;
+    let id = 0;
+    this.editor.edit("Tabelle zeichnen", () => {
+      this.ensureTableStyle();
+      const doc = this.deck.pptx.doc(slide);
+      const tree = S.treeOf(doc);
+      id = S.maxId(tree) + 1;
+      const el = S.newTable(doc, id, 1, 1, { x: box.x, y: box.y, w: box.w }, DEFAULT_TABLE_STYLE_ID);
+      const h = String(Math.round(box.h));
+      for (const tr of Array.from(el.getElementsByTagNameNS(PptxDom.NS_A, "tr"))) tr.setAttribute("h", h);
+      const ext = el.getElementsByTagNameNS(PptxDom.NS_A, "ext")[0];
+      ext?.setAttribute("cy", h);
+      tree.append(el);
+    });
+    this.editor.select([id]);
+  }
+
   ensureTableStyle(): void {
     const p = this.deck.pptx.related(this.deck.pptx.presPath, "http://schemas.openxmlformats.org/officeDocument/2006/relationships/tableStyles");
     if (!p) return;
@@ -2555,7 +2575,7 @@ export class PresentApp implements EditorHost, PanelHost {
     for (const g of ANIMATION_GROUPS) {
       grid.append(h("div", { class: "gal-head" }, g.title));
       const row = h("div", { class: "fx-row" });
-      for (const it of g.items) row.append(h("button", { class: `fx-item fx-${g.cls}`, "aria-label": it.label, disabled: (g.cls === "path" && it.preset === 0) || undefined, onclick: () => { close(); void import("./animations").then((m) => m.addAnimation(this, g.cls, it, add)); } }, icon("animation"), h("span", null, it.label)));
+      for (const it of g.items) row.append(h("button", { class: `fx-item fx-${g.cls}`, "aria-label": it.label, onclick: () => { close(); void import("./animations").then((m) => m.addAnimation(this, g.cls, it, add)); } }, icon("animation"), h("span", null, it.label)));
       grid.append(row);
     }
     return grid;

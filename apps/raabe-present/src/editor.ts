@@ -21,7 +21,11 @@ import type { Pos } from "./textops";
 const ZWSP = String.fromCharCode(0x200b);
 
 export type Tool = { kind: "shape"; prst: string; head?: boolean; tail?: boolean; freeform?: string } | { kind: "textbox"; vertical?: boolean }
-  | { kind: "ink"; color: string; width: number; alpha?: number } | { kind: "eraser" } | null;
+  | { kind: "ink"; color: string; width: number; alpha?: number } | { kind: "eraser" }
+  /** Tabellenentwurf > Tabelle zeichnen and Radierer (they stay on until Esc or another tool). */
+  | { kind: "tableDraw" } | { kind: "tableEraser" }
+  /** Drawing by points (Benutzerdefinierter Pfad): the points in EMU go to `done`. */
+  | { kind: "points"; mode: "curve" | "polygon" | "scribble"; done: (pts: { x: number; y: number }[], closed: boolean) => void } | null;
 
 export interface EditorHost {
   readonly deck: Deck;
@@ -35,6 +39,8 @@ export interface EditorHost {
   /** Comment markers of a slide (slide coordinates in EMU). */
   commentMarkers?(path: string): { x: number; y: number; n: number }[];
   toolDone(): void;
+  /** Tabelle zeichnen outside a table: a new table of one cell in the drawn box. */
+  drawTable?(box: { x: number; y: number; w: number; h: number }): void;
   /** Motion paths of a shape (PowerPoint notation), drawn while it is selected. */
   motionPaths?(path: string, id: number): string[];
   /** Bild ab / Bild auf, Pos1, Ende with nothing selected: another slide (PowerPoint). */
@@ -1285,6 +1291,14 @@ export class SlideEditor {
   private drawTool(e: MouseEvent): void {
     const tool = this.tool!;
     if (tool.kind === "ink") { this.drawInk(e, tool); return; }
+    if (tool.kind === "points") { this.drawPoints(e, tool.mode, tool.done); return; }
+    if (tool.kind === "tableDraw" || tool.kind === "tableEraser") { this.tableTool(e, tool.kind); return; }
+    if (tool.kind === "shape" && tool.freeform) {
+      // Kurve, Freihandform: Form, Freihand: Skizze: a custom geometry through the drawn points (closed: filled).
+      const mode = tool.freeform === "curve" ? "curve" : tool.freeform === "scribble" ? "scribble" : "polygon";
+      this.drawPoints(e, mode, (pts, closed) => this.addFreeform(pts, closed, mode === "curve"));
+      return;
+    }
     if (tool.kind === "eraser") {
       // Radierer: a click (or a drag) over an ink stroke removes it.
       const erase = (m: MouseEvent) => {
@@ -1346,6 +1360,145 @@ export class SlideEditor {
   }
 
   /** Zeichnen: a stroke of the pen or highlighter becomes a freeform shape (custom geometry, no fill). */
+  /**
+   * Drawing by points, as PowerPoint's Freihandform: a click sets a corner, a drag draws freehand while the
+   * button is down (Skizze: only the drag), a double-click, Enter or Esc ends; ending near the start closes.
+   */
+  private drawPoints(e: MouseEvent, mode: "curve" | "polygon" | "scribble", done: (pts: { x: number; y: number }[], closed: boolean) => void): void {
+    const svgNs = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(svgNs, "svg");
+    svg.setAttribute("class", "ink-preview");
+    const path = document.createElementNS(svgNs, "path");
+    path.setAttribute("fill", "none"); path.setAttribute("stroke", "#4472c4"); path.setAttribute("stroke-width", "1.5");
+    svg.append(path);
+    this.overlay.append(svg);
+    const s = this.scale / EMU_PX;
+    const pts: { x: number; y: number }[] = [this.toSlide(e.clientX, e.clientY)];
+    let pressed = true, downAt = { x: e.clientX, y: e.clientY }, hover: { x: number; y: number } | null = null, finished = false;
+    const shown = () => (mode === "curve" ? smoothPath : straightPath)(hover && !pressed ? [...pts, hover] : pts, s);
+    const draw = () => path.setAttribute("d", shown());
+    const finish = () => {
+      if (finished) return;
+      finished = true;
+      for (const [t, f] of handlers) window.removeEventListener(t, f as EventListener, true);
+      svg.remove();
+      this.tool = null;
+      this.host.toolDone();
+      // A double-click leaves its second click as a point: drop points that repeat.
+      const clean = pts.filter((p, i) => !i || Math.hypot((p.x - pts[i - 1].x) * s, (p.y - pts[i - 1].y) * s) > 2);
+      if (clean.length < 2) { this.render(); return; }
+      const first = clean[0], last = clean[clean.length - 1];
+      const closed = clean.length > 2 && Math.hypot((first.x - last.x) * s, (first.y - last.y) * s) < 8;
+      if (closed) clean.pop();
+      done(clean, closed);
+    };
+    const down = (m: MouseEvent) => {
+      if (m.button !== 0) return;
+      m.preventDefault(); m.stopPropagation();
+      pressed = true; downAt = { x: m.clientX, y: m.clientY };
+      pts.push(this.toSlide(m.clientX, m.clientY));
+      draw();
+    };
+    const move = (m: MouseEvent) => {
+      const p = this.toSlide(m.clientX, m.clientY);
+      if (pressed && (mode === "scribble" || Math.hypot(m.clientX - downAt.x, m.clientY - downAt.y) > 3)) pts.push(p);
+      else hover = p;
+      draw();
+    };
+    const up = (m: MouseEvent) => {
+      if (m.button !== 0) return;
+      pressed = false;
+      if (mode === "scribble") finish();
+    };
+    const dbl = (m: MouseEvent) => { m.preventDefault(); m.stopPropagation(); finish(); };
+    const key = (k: KeyboardEvent) => { if (k.key === "Enter" || k.key === "Escape") { k.preventDefault(); k.stopPropagation(); finish(); } };
+    const handlers: [string, (ev: never) => void][] = [["mousedown", down], ["mousemove", move], ["mouseup", up], ["dblclick", dbl], ["keydown", key]];
+    for (const [t, f] of handlers) window.addEventListener(t, f as EventListener, true);
+    draw();
+  }
+
+  /**
+   * Radierer: a click on the line between two cells joins them (Zellen verbinden). Tabelle zeichnen: a line
+   * drawn across a cell splits it, into two rows when it runs across, two columns when it runs down (in the
+   * middle; PowerPoint splits where the line was drawn); drawn outside a table it makes a new table.
+   */
+  private tableTool(e: MouseEvent, kind: "tableDraw" | "tableEraser"): void {
+    const cellAt = (x: number, y: number) => {
+      const td = (document.elementFromPoint(x, y) as HTMLElement | null)?.closest("td[data-r]") as HTMLElement | null;
+      const id = Number((td?.closest(".shp[data-id]") as HTMLElement | null)?.dataset.id);
+      return td && id ? { td, id, r: Number(td.dataset.r), c: Number(td.dataset.c) } : null;
+    };
+    const tblOf = (id: number) => this.shapeEl(id)?.getElementsByTagNameNS(PptxDom.NS_A, "tbl")[0];
+    const hit = cellAt(e.clientX, e.clientY);
+    if (kind === "tableEraser") {
+      if (!hit) return;
+      const rc = hit.td.getBoundingClientRect();
+      const d = { l: e.clientX - rc.left, r: rc.right - e.clientX, t: e.clientY - rc.top, b: rc.bottom - e.clientY };
+      const min = Math.min(d.l, d.r, d.t, d.b);
+      if (min > 6) return;
+      const tbl = tblOf(hit.id);
+      if (!tbl) return;
+      const g = TC.grid(tbl), o = TC.origin(g, hit.r, hit.c), x = TC.extent(g, o.r, o.c);
+      const other = min === d.l ? { r: o.r, c: x.c0 - 1 } : min === d.r ? { r: o.r, c: x.c1 + 1 } : min === d.t ? { r: x.r0 - 1, c: o.c } : { r: x.r1 + 1, c: o.c };
+      if (other.r < 0 || other.c < 0 || other.r >= g.length || other.c >= (g[0]?.length ?? 0)) return;
+      this.edit("Radierer", () => { const t = tblOf(hit.id)!; const gg = TC.grid(t); TC.merge(t, TC.normalize(gg, o, TC.origin(gg, other.r, other.c))); });
+      return;
+    }
+    const start = this.toSlide(e.clientX, e.clientY);
+    const ghost = h("div", "ghost");
+    this.overlay.append(ghost);
+    let endX = e.clientX, endY = e.clientY;
+    const s = this.scale / EMU_PX;
+    const move = (m: MouseEvent) => {
+      endX = m.clientX; endY = m.clientY;
+      const p = this.toSlide(m.clientX, m.clientY);
+      if (hit) {
+        // Inside a table the pen draws a line (horizontal or vertical, whichever is longer).
+        const across = Math.abs(m.clientX - e.clientX) >= Math.abs(m.clientY - e.clientY);
+        ghost.style.cssText = across ? `left:${Math.min(start.x, p.x) * s}px;top:${start.y * s}px;width:${Math.abs(p.x - start.x) * s}px;height:0` : `left:${start.x * s}px;top:${Math.min(start.y, p.y) * s}px;width:0;height:${Math.abs(p.y - start.y) * s}px`;
+      } else ghost.style.cssText = `left:${Math.min(start.x, p.x) * s}px;top:${Math.min(start.y, p.y) * s}px;width:${Math.abs(p.x - start.x) * s}px;height:${Math.abs(p.y - start.y) * s}px`;
+    };
+    const up = () => {
+      window.removeEventListener("mousemove", move);
+      window.removeEventListener("mouseup", up);
+      ghost.remove();
+      const dx = Math.abs(endX - e.clientX), dy = Math.abs(endY - e.clientY);
+      if (dx < 4 && dy < 4) return;
+      if (hit) {
+        const tbl = tblOf(hit.id);
+        if (!tbl) return;
+        const across = dx >= dy;
+        this.edit("Tabelle zeichnen", () => { const t = tblOf(hit.id)!; const o = TC.origin(TC.grid(t), hit.r, hit.c); const x = TC.extent(TC.grid(t), o.r, o.c); TC.split(t, o.r, o.c, across ? x.c1 - x.c0 + 1 : 2, across ? 2 : x.r1 - x.r0 + 1); });
+        return;
+      }
+      const p = this.toSlide(endX, endY);
+      this.host.drawTable?.({ x: Math.min(start.x, p.x), y: Math.min(start.y, p.y), w: Math.abs(p.x - start.x), h: Math.abs(p.y - start.y) });
+    };
+    window.addEventListener("mousemove", move);
+    window.addEventListener("mouseup", up);
+  }
+
+  /** A freeform shape through the points (EMU on the slide): filled when closed, a line otherwise. */
+  private addFreeform(pts: { x: number; y: number }[], closed: boolean, smooth: boolean): void {
+    const x0 = Math.min(...pts.map((p) => p.x)), y0 = Math.min(...pts.map((p) => p.y));
+    const w = Math.max(1, Math.max(...pts.map((p) => p.x)) - x0), hh = Math.max(1, Math.max(...pts.map((p) => p.y)) - y0);
+    const r = (v: number) => Math.round(v);
+    const rel = pts.map((p) => ({ x: p.x - x0, y: p.y - y0 }));
+    const pt = (p: { x: number; y: number }) => `<a:pt x="${r(p.x)}" y="${r(p.y)}"/>`;
+    let body = `<a:moveTo>${pt(rel[0])}</a:moveTo>`;
+    if (smooth) for (const [c1, c2, p] of bezierSegments(rel, closed)) body += `<a:cubicBezTo>${pt(c1)}${pt(c2)}${pt(p)}</a:cubicBezTo>`;
+    else for (const p of [...rel.slice(1), ...(closed ? [rel[0]] : [])]) body += `<a:lnTo>${pt(p)}</a:lnTo>`;
+    if (closed) body += "<a:close/>";
+    const geom = `<a:custGeom><a:avLst/><a:gdLst/><a:ahLst/><a:cxnLst/><a:rect l="l" t="t" r="r" b="b"/><a:pathLst><a:path w="${r(w)}" h="${r(hh)}">${body}</a:path></a:pathLst></a:custGeom>${closed ? "" : "<a:noFill/>"}`;
+    let id = 0;
+    this.edit("Form einfügen", () => {
+      const tree = S.treeOf(this.doc!);
+      id = S.maxId(tree) + 1;
+      tree.append(S.newShape(this.doc!, id, "rect", { x: x0, y: y0, w, h: hh, rot: 0, flipH: false, flipV: false }, geom));
+    });
+    this.select([id]);
+  }
+
   private drawInk(e: MouseEvent, tool: { color: string; width: number; alpha?: number }): void {
     const pts: { x: number; y: number }[] = [this.toSlide(e.clientX, e.clientY)];
     const svgNs = "http://www.w3.org/2000/svg";
@@ -1918,3 +2071,29 @@ function segmentDistance(px: number, py: number, x1: number, y1: number, x2: num
   const t = len ? Math.max(0, Math.min(1, ((px - x1) * dx + (py - y1) * dy) / len)) : 0;
   return Math.hypot(px - (x1 + t * dx), py - (y1 + t * dy));
 }
+
+// ----- drawing by points ----------------------------------------------------------------------------------------
+
+type Pt = { x: number; y: number };
+
+function straightPath(pts: Pt[], s: number): string {
+  return pts.map((p, i) => `${i ? "L" : "M"}${(p.x * s).toFixed(1)} ${(p.y * s).toFixed(1)}`).join(" ");
+}
+
+/** Cubic segments of a smooth curve through the points (Catmull-Rom), as PowerPoint's Kurve draws. */
+export function bezierSegments(pts: Pt[], closed: boolean): [Pt, Pt, Pt][] {
+  const n = pts.length, out: [Pt, Pt, Pt][] = [];
+  const at = (i: number) => (closed ? pts[(i + n) % n] : pts[Math.min(n - 1, Math.max(0, i))]);
+  for (let i = 0; i < (closed ? n : n - 1); i++) {
+    const p0 = at(i - 1), p1 = at(i), p2 = at(i + 1), p3 = at(i + 2);
+    out.push([{ x: p1.x + (p2.x - p0.x) / 6, y: p1.y + (p2.y - p0.y) / 6 }, { x: p2.x - (p3.x - p1.x) / 6, y: p2.y - (p3.y - p1.y) / 6 }, p2]);
+  }
+  return out;
+}
+
+function smoothPath(pts: Pt[], s: number): string {
+  if (pts.length < 3) return straightPath(pts, s);
+  const f = (p: Pt) => `${(p.x * s).toFixed(1)} ${(p.y * s).toFixed(1)}`;
+  return `M${f(pts[0])} ` + bezierSegments(pts, false).map(([a, b, c]) => `C${f(a)} ${f(b)} ${f(c)}`).join(" ");
+}
+

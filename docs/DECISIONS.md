@@ -1821,3 +1821,13 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   edits the picture. The menus are galleries of the selected picture in each effect, as in PowerPoint.
   PowerPoint's own originals are HD Photo (.wdp), which a browser cannot read: on such pictures a new effect
   is drawn on the picture as shown, and removing effects keeps the drawn picture until PowerPoint redraws it.
+- **Drawing by points (Kurve, Freihandform: Form, Freihand: Skizze, Benutzerdefinierter Pfad):** as
+  PowerPoint: a click sets a corner, dragging with the button down draws freehand (Skizze: one drag), a
+  double-click, Enter or Esc ends, ending near the start closes the shape (filled; open ones are lines).
+  Kurve goes smoothly through the clicked points (our Catmull-Rom curve). Before tonight these three shapes
+  drew a rectangle. Benutzerdefinierter Pfad writes p:animMotion with presetID 0 and the path relative to the
+  shape's centre in fractions of the slide; PowerPoint reads both back as its own (round trip 33/33).
+- **Tabelle zeichnen and Radierer:** the eraser joins the two cells on either side of the clicked cell line;
+  the pen splits a cell in two by a line drawn across it (rows) or down it (columns), in the middle (PowerPoint
+  splits where the line was drawn: our simplification), and draws a new one-cell table outside a table. Both
+  stay on until Esc or the button again, as in PowerPoint.

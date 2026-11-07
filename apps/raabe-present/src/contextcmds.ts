@@ -403,6 +403,10 @@ export function implementContext(app: PresentApp): void {
   impl("pic.quickStyles", () => {}, pic);
   impl("pic.compress", () => import("./compress").then((m) => m.compressDialog(app)), pic);
   const editingCell = () => !!app.editor.text?.cell;
+  // Tabelle zeichnen and Radierer stay on until Esc, another tool, or the button again.
+  const tableTool = (kind: "tableDraw" | "tableEraser") => () => { app.editor.endText(); app.editor.tool = app.editor.tool?.kind === kind ? null : { kind }; app.editor.render(); app.updateChrome(); };
+  impl("table.draw", tableTool("tableDraw"), () => !!app.slidePath(), () => app.editor.tool?.kind === "tableDraw");
+  impl("table.eraser", tableTool("tableEraser"), () => !!app.slidePath(), () => app.editor.tool?.kind === "tableEraser");
   impl("table.merge", () => {
     const t = tableOf(app), x = app.editor.text?.range;
     if (!t || !x) return;
