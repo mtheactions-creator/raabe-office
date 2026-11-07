@@ -208,6 +208,10 @@
    "result": "same",
    "diff": []
   },
+  "smartart convert": {
+   "result": "same",
+   "diff": []
+  },
   "picture crop": {
    "result": "same",
    "diff": []
@@ -231,6 +235,6 @@
  },
  "summary": {
   "fixtures": "11/11",
-  "scenarios": "48/48"
+  "scenarios": "49/49"
  }
 }

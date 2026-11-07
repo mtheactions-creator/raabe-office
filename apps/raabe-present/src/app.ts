@@ -1971,7 +1971,12 @@ export class PresentApp implements EditorHost, PanelHost {
   /** Context menus go through here, so the inventory can collect their entries without showing them. */
   private capture: MenuEntry[][] | null = null;
   private menu(entries: MenuEntry[], at: DOMRect, before?: HTMLElement): void {
-    if (this.capture) { this.capture.push(entries); return; }
+    // The inventory takes the menu and the mini toolbar above it (its controls by their names).
+    if (this.capture) {
+      const mini: MenuEntry[] = before ? Array.from(before.querySelectorAll("[aria-label]")).map((b) => b.getAttribute("aria-label") ?? "").filter(Boolean).map((label) => ({ label, run: () => {} })) : [];
+      this.capture.push([...entries, ...mini]);
+      return;
+    }
     showMenu(this.commands, entries, at, before);
   }
 

@@ -4331,7 +4331,7 @@
       {
        "name": "Freihand zu Form",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "button"
       },
       {
@@ -4936,25 +4936,7 @@
        "name": "Sound",
        "deferred": false,
        "enabled": true,
-       "type": "dropdown",
-       "items": [
-        {
-         "name": "[Ohne Sound]",
-         "enabled": true
-        },
-        {
-         "name": "[Vorherigen Sound anhalten]",
-         "enabled": true
-        },
-        {
-         "name": "Anderer Sound...",
-         "enabled": true
-        },
-        {
-         "name": "Bis zum nächsten Sound wiederholen",
-         "enabled": true
-        }
-       ]
+       "type": "dropdown"
       },
       {
        "name": "Dauer",
@@ -19427,8 +19409,8 @@
       },
       {
        "name": "Text",
-       "deferred": true,
-       "enabled": false,
+       "deferred": false,
+       "enabled": true,
        "type": "button"
       },
       {
@@ -20912,6 +20894,21 @@
    },
    {
     "name": "Neuer Kommentar"
+   },
+   {
+    "name": "Fülleffekt"
+   },
+   {
+    "name": "Weitere Optionen"
+   },
+   {
+    "name": "Formkontur"
+   },
+   {
+    "name": "Weitere Optionen"
+   },
+   {
+    "name": "Neuer Kommentar"
    }
   ],
   "Text in Bearbeitung": [
@@ -21014,6 +21011,60 @@
    },
    {
     "name": "Neuer Kommentar"
+   },
+   {
+    "name": "Schriftart"
+   },
+   {
+    "name": "Öffnen"
+   },
+   {
+    "name": "Schriftgrad"
+   },
+   {
+    "name": "Öffnen"
+   },
+   {
+    "name": "Schriftgrad vergrößern"
+   },
+   {
+    "name": "Schriftgrad verkleinern"
+   },
+   {
+    "name": "Einzug verkleinern"
+   },
+   {
+    "name": "Einzug vergrößern"
+   },
+   {
+    "name": "Fett"
+   },
+   {
+    "name": "Kursiv"
+   },
+   {
+    "name": "Unterstreichen"
+   },
+   {
+    "name": "Linksbündig"
+   },
+   {
+    "name": "Zentriert"
+   },
+   {
+    "name": "Rechtsbündig"
+   },
+   {
+    "name": "Texthervorhebungsfarbe"
+   },
+   {
+    "name": "Weitere Optionen"
+   },
+   {
+    "name": "Schriftfarbe"
+   },
+   {
+    "name": "Weitere Optionen"
    }
   ],
   "Form": [
@@ -21091,6 +21142,21 @@
    },
    {
     "name": "Neuer Kommentar"
+   },
+   {
+    "name": "Fülleffekt"
+   },
+   {
+    "name": "Weitere Optionen"
+   },
+   {
+    "name": "Formkontur"
+   },
+   {
+    "name": "Weitere Optionen"
+   },
+   {
+    "name": "Neuer Kommentar"
    }
   ],
   "Textfeld": [
@@ -21165,6 +21231,21 @@
    },
    {
     "name": "Form formatieren..."
+   },
+   {
+    "name": "Neuer Kommentar"
+   },
+   {
+    "name": "Fülleffekt"
+   },
+   {
+    "name": "Weitere Optionen"
+   },
+   {
+    "name": "Formkontur"
+   },
+   {
+    "name": "Weitere Optionen"
    },
    {
     "name": "Neuer Kommentar"
@@ -21298,6 +21379,60 @@
    },
    {
     "name": "Neuer Kommentar"
+   },
+   {
+    "name": "Schriftart"
+   },
+   {
+    "name": "Öffnen"
+   },
+   {
+    "name": "Schriftgrad"
+   },
+   {
+    "name": "Öffnen"
+   },
+   {
+    "name": "Schriftgrad vergrößern"
+   },
+   {
+    "name": "Schriftgrad verkleinern"
+   },
+   {
+    "name": "Einzug verkleinern"
+   },
+   {
+    "name": "Einzug vergrößern"
+   },
+   {
+    "name": "Fett"
+   },
+   {
+    "name": "Kursiv"
+   },
+   {
+    "name": "Unterstreichen"
+   },
+   {
+    "name": "Linksbündig"
+   },
+   {
+    "name": "Zentriert"
+   },
+   {
+    "name": "Rechtsbündig"
+   },
+   {
+    "name": "Texthervorhebungsfarbe"
+   },
+   {
+    "name": "Weitere Optionen"
+   },
+   {
+    "name": "Schriftfarbe"
+   },
+   {
+    "name": "Weitere Optionen"
    }
   ],
   "Leerer Folienbereich": [
@@ -21418,6 +21553,21 @@
    },
    {
     "name": "Form formatieren..."
+   },
+   {
+    "name": "Neuer Kommentar"
+   },
+   {
+    "name": "Fülleffekt"
+   },
+   {
+    "name": "Weitere Optionen"
+   },
+   {
+    "name": "Formkontur"
+   },
+   {
+    "name": "Weitere Optionen"
    },
    {
     "name": "Neuer Kommentar"
