@@ -393,6 +393,7 @@ export function implementContext(app: PresentApp): void {
   impl("table.direction", () => {}, table);
   impl("table.margins", () => {}, table);
   impl("pic.quickStyles", () => {}, pic);
+  impl("pic.compress", () => import("./compress").then((m) => m.compressDialog(app)), pic);
   const editingCell = () => !!app.editor.text?.cell;
   impl("table.merge", () => {
     const t = tableOf(app), x = app.editor.text?.range;

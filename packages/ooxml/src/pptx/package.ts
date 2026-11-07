@@ -256,12 +256,30 @@ export class Pptx {
 
   // ----- writing --------------------------------------------------------------------------------
 
+  /**
+   * Picture relationships of an edited part that its XML no longer refers to (a picture replaced, e.g. by
+   * Bilder komprimieren): left out when writing, as PowerPoint does, so the old picture goes too. The
+   * relationship itself stays in memory, so undoing the edit finds it again.
+   */
+  private unusedImages = new Map<string, Set<string>>();
+  private findUnusedImages(): void {
+    this.unusedImages.clear();
+    for (const p of this.dirty) {
+      if (!this.docs.has(p)) continue;
+      const imgs = this.rels(p).list.filter((r) => r.type === RT.image && !r.external);
+      if (!imgs.length) continue;
+      const xml = serialize(this.docs.get(p)!);
+      const unused = imgs.filter((r) => !xml.includes(`"${r.id}"`)).map((r) => r.id);
+      if (unused.length) this.unusedImages.set(p, new Set(unused));
+    }
+  }
+
   /** Parts reached through relationships from the package root. */
   private reachable(): Set<string> {
     const seen = new Set<string>();
     const walk = (part: string) => {
       for (const r of this.rels(part).list) {
-        if (r.external) continue;
+        if (r.external || this.unusedImages.get(part)?.has(r.id)) continue;
         const t = resolveTarget(part, r.target);
         if (seen.has(t) || !this.has(t)) continue;
         seen.add(t);
@@ -274,12 +292,18 @@ export class Pptx {
 
   write(): Uint8Array {
     const out: Record<string, Uint8Array> = {};
+    this.findUnusedImages();
     const live = this.reachable();
     for (const p of live) {
       out[p] = this.docs.has(p) && this.dirty.has(p) ? strToU8(serialize(this.docs.get(p)!)) : this.files[p] ?? strToU8(serialize(this.docs.get(p)!));
       const rp = relsPath(p);
       const rc = this.relsCache.get(rp);
-      if (rc && (rc.changed || !this.files[rp])) { if (rc.list.length) out[rp] = strToU8(rc.xml()); }
+      const drop = this.unusedImages.get(p);
+      if (rc && drop) {
+        const kept = new Rels(null);
+        kept.list.push(...rc.list.filter((r) => !drop.has(r.id)));
+        if (kept.list.length) out[rp] = strToU8(kept.xml());
+      } else if (rc && (rc.changed || !this.files[rp])) { if (rc.list.length) out[rp] = strToU8(rc.xml()); }
       else if (this.files[rp]) out[rp] = this.files[rp];
     }
     const rootRels = this.relsCache.get("_rels/.rels");

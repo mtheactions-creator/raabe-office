@@ -1794,3 +1794,7 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   PowerPoint, not from a recording (it was not opened by the inventory probe). Mouseover, programs, macros
   and sounds are open. **Thesaurus** (Umschalt+F7) is RaabeWrite's (open thesauri) in a box; **Lineal**
   shows cm rulers with 0 at the slide's centre.
+- **Bilder komprimieren:** PowerPoint's choices (HD 330, Drucken 220, Web 150, E-Mail 96 ppi, Nur für dieses
+  Bild, Zugeschnittene Bildbereiche löschen) with labels only; the picture is resampled at the size it is
+  shown into a new media part. When writing, picture relationships an edited slide no longer refers to are
+  left out with their pictures (as PowerPoint does); they stay in memory so Rückgängig still works.
