@@ -2009,3 +2009,6 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
 - **Tabellenentwurf > Schattierung fixed:** it went to the shapes' fill and so did nothing on a table (found while
   closing the inventory's gaps). It now fills the cells being edited (or the table), in a:tcPr as PowerPoint
   writes it, with Keine Füllung and Pipette below the palette; a round-trip scenario checks PowerPoint reads it.
+- **Format > Fülleffekt and Formkontur on a chart fixed:** with the whole chart selected they did nothing; they
+  now set the Diagrammbereich's fill and line through the chart model (RGB, as the model keeps colours; a
+  design colour picked is written as its RGB value). A round-trip scenario checks PowerPoint reads both.

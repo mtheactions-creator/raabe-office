@@ -265,6 +265,10 @@
    "result": "same",
    "diff": []
   },
+  "chart area": {
+   "result": "same",
+   "diff": []
+  },
   "comment": {
    "result": "same",
    "diff": []
@@ -276,6 +280,6 @@
  },
  "summary": {
   "fixtures": "22/22",
-  "scenarios": "51/51"
+  "scenarios": "52/52"
  }
 }

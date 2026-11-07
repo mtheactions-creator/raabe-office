@@ -48,6 +48,16 @@ export function quickLayout(app: PresentApp, n: number): void {
   });
 }
 
+/** Format > Fülleffekt and Formkontur with the whole chart selected: the Diagrammbereich (as PowerPoint). */
+export function setChartArea(app: PresentApp, what: "fill" | "line", hex: string | null): void {
+  edit(app, what === "fill" ? "Fülleffekt" : "Formkontur", (m) => {
+    const f = (m.format ??= {});
+    const chart = (f.chart ??= {});
+    if (what === "fill") chart.fill = hex ? { type: "solid", color: hex } : { type: "none" };
+    else chart.line = hex ? { ...(chart.line ?? {}), type: "solid", color: hex } : { type: "none" };
+  });
+}
+
 export function setColors(app: PresentApp, scheme: number): void {
   edit(app, "Farben ändern", (m) => { m.colors = scheme; });
 }

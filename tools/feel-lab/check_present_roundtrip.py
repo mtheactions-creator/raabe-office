@@ -111,6 +111,8 @@ SCENARIOS: dict[str, str] = {
         await m.setEffect(a, 'colorTemperature', {{name: 'colorTemperature', attrs: {{colorTemp: '4700'}}}}, 'Farbton'); await m.setEffect(a, 'colorTemperature', null, 'Farbton');""",
     "custom show": """p.newDoc(); const a = p.app; a.newSlide(); a.newSlide(); const m = await import('/src/custshow.ts'); m.writeShows(a, [{name: 'Kurz', slides: [2, 0]}]);""",
     "chart": """p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); const m = await import('/src/charts.ts'); m.insertChart(a, 'column');""",
+    "chart area": """p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); const m = await import('/src/charts.ts'); m.insertChart(a, 'column');
+        const ch = a.deck.view(a.slidePath()).shapes.find(s => s.frame === 'chart'); a.editor.select([ch.id]); const o = await import('/src/chartops.ts'); o.setChartArea(a, 'fill', 'ED7D31'); o.setChartArea(a, 'line', 'C00000');""",
     "comment": """p.newDoc(); p.app.comments.add('Bitte prüfen');""",
     "undo redo": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]}]}); const a = p.app; a.editor.select([2]); a.editor.deleteSelected(); await p.run('edit.undo'); await p.run('edit.redo'); await p.run('edit.undo');""",
 }
@@ -181,6 +183,11 @@ def ppt_shapes(slide) -> list[dict]:
                 pass
         if bool(s.HasChart):
             d["chart"] = int(s.Chart.ChartType)
+            try:
+                ca = s.Chart.ChartArea.Format
+                d["chartarea"] = [int(ca.Fill.ForeColor.RGB), int(ca.Line.ForeColor.RGB)]
+            except Exception:  # noqa: BLE001
+                pass
         out.append(d)
     return out
 
@@ -345,6 +352,9 @@ def check(name: str, r: dict, ours: dict) -> list[str]:
     elif name == "custom show":
         c = r.get("custom") or []
         want(len(c) == 1 and c[0][0] == "Kurz" and len(c[0][1]) == 2, f"custom shows {c}")
+    elif name == "chart area":
+        # ED7D31 and C00000 as BGR.
+        want(any(x.get("chartarea") == [0x317DED, 0x0000C0] for x in sh), f"chart area {[x.get('chartarea') for x in sh]}")
     elif name == "chart":
         want(any("chart" in x for x in sh), f"chart {[x.get('chart') for x in sh]}")
     elif name == "comment":

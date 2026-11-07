@@ -744,6 +744,7 @@ export class PresentApp implements EditorHost, PanelHost {
   // ----- shapes ---------------------------------------------------------------------------------------------
 
   private setFill(hex: string | null): void {
+    if (this.chartArea("fill", hex)) return;
     const views = this.editor.selectedViews.filter((v) => v.kind === "sp" || v.kind === "pic" || v.kind === "grpSp");
     if (!views.length) return;
     if (hex) this.lastFill = hex;
@@ -981,6 +982,7 @@ export class PresentApp implements EditorHost, PanelHost {
   }
 
   private setLine(hex: string | null | undefined, width?: number, dash?: string): void {
+    if (hex !== undefined && this.chartArea("line", hex)) return;
     const views = this.editor.selectedViews.filter((v) => v.kind === "sp" || v.kind === "pic" || v.kind === "cxnSp");
     if (!views.length) return;
     if (hex) this.lastLine = hex;
@@ -1605,6 +1607,14 @@ export class PresentApp implements EditorHost, PanelHost {
   }
 
   /** Entwurf > Schriftarten: the theme's heading and body fonts. */
+  /** A colour for a selected chart goes to its Diagrammbereich (the chart model keeps RGB colours). */
+  private chartArea(what: "fill" | "line", spec: string | null): boolean {
+    if (!this.editor.selectedViews.some((v) => v.frame === "chart")) return false;
+    const hex = spec ? specHex(spec, this.paletteTheme()?.colors ?? {}) : null;
+    void import("./chartops").then((m) => m.setChartArea(this, what, hex));
+    return true;
+  }
+
   /** The design of ours the presentation uses (by the theme's name), for Farben des Foliendesigns zurücksetzen. */
   ownDesign(): DesignSpec | undefined {
     const theme = this.deck.pptx.themeOf(this.deck.pptx.masters()[0] ?? "");
