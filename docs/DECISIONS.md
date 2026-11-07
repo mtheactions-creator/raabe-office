@@ -2016,3 +2016,6 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   Formeffekte galleries). Shadow and reflection go to the table (a:tblPr > a:effectLst) and are drawn; the
   bevel goes to the cells being worked on (a:tcPr > a:cell3D with the light rig the schema requires) and is
   written but not drawn by us (PowerPoint draws it).
+- **Textfüllung's own entries:** Keine Füllung (a:noFill on the runs), Pipette, Farbverlauf with the 13 light and
+  13 dark directions of Fülleffekt over the text colour. A text gradient is drawn in its first colour (our
+  renderer draws text in one colour); PowerPoint shows the gradient.

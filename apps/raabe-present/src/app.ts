@@ -100,6 +100,16 @@ const SAVE_FILTERS = [{ name: "PowerPoint-Präsentation", extensions: ["pptx"] }
 const samePath = (a: string, b: string) => a.toLowerCase() === b.toLowerCase();
 const SIZES = [8, 9, 10, 10.5, 11, 12, 14, 16, 18, 20, 24, 28, 32, 36, 40, 44, 48, 54, 60, 66, 72, 80, 88, 96];
 
+/** Farbverlauf's directions as PowerPoint names them (Fülleffekt and Textfüllung). */
+const GRAD_DIRS: [string, string][] = [
+  ["Linear diagonal - oben links nach unten rechts", '<a:lin ang="2700000" scaled="1"/>'], ["Linear unten", '<a:lin ang="5400000" scaled="1"/>'],
+  ["Linear diagonal - oben rechts nach unten links", '<a:lin ang="8100000" scaled="1"/>'], ["Von unterer rechter Ecke", '<a:path path="rect"><a:fillToRect l="100000" t="100000"/></a:path>'],
+  ["Von unterer linker Ecke", '<a:path path="rect"><a:fillToRect t="100000" r="100000"/></a:path>'], ["Linear rechts", '<a:lin ang="0" scaled="1"/>'],
+  ["Aus der Mitte", '<a:path path="circle"><a:fillToRect l="50000" t="50000" r="50000" b="50000"/></a:path>'], ["Linear links", '<a:lin ang="10800000" scaled="1"/>'],
+  ["Von oberer rechter Ecke", '<a:path path="rect"><a:fillToRect l="100000" b="100000"/></a:path>'], ["Von oberer linker Ecke", '<a:path path="rect"><a:fillToRect r="100000" b="100000"/></a:path>'],
+  ["Linear diagonal - unten links nach oben rechts", '<a:lin ang="18900000" scaled="1"/>'], ["Linear oben", '<a:lin ang="16200000" scaled="1"/>'],
+  ["Linear diagonal - unten rechts nach oben links", '<a:lin ang="13500000" scaled="1"/>']];
+
 export class PresentApp implements EditorHost, PanelHost {
   readonly commands = new Commands();
   private docs: Doc[] = [];
@@ -804,15 +814,29 @@ export class PresentApp implements EditorHost, PanelHost {
     return [this.pipette((hex) => { this.lastFontColor = hex; this.formatRuns("Schriftfarbe", (r) => T.setRunColor(r, hex)); })];
   }
 
+  /** Textfüllung's own entries: Keine Füllung, Pipette, Farbverlauf (light and dark variants of the text colour). */
+  textFillExtra(): MenuEntry[] {
+    const setFill = (label: string, xml: string | null) => this.formatRuns(label, (r) => {
+      for (const c of kids(r)) if (["solidFill", "noFill", "gradFill", "pattFill", "blipFill", "grpFill"].includes(c.localName)) c.remove();
+      const f = xml ? fragment(r.ownerDocument, xml)[0] : make(r.ownerDocument, "a:noFill");
+      r.insertBefore(f, kids(r).find((c) => c.localName !== "ln") ?? null);
+    });
+    const base = () => /^[0-9A-F]{6}$/i.test(this.lastFontColor) ? this.lastFontColor : "000000";
+    const grad = (light: boolean, dir: string) => {
+      const b = base(), st = (pos: number, mods: string) => `<a:gs pos="${pos}"><a:srgbClr val="${b}">${mods}</a:srgbClr></a:gs>`;
+      return `<a:gradFill flip="none" rotWithShape="1"><a:gsLst>${light ? st(0, '<a:lumMod val="20000"/><a:lumOff val="80000"/>') + st(100000, '<a:lumMod val="60000"/><a:lumOff val="40000"/>') : st(0, "") + st(100000, '<a:lumMod val="50000"/>')}</a:gsLst>${dir}<a:tileRect/></a:gradFill>`;
+    };
+    return [
+      { label: "Keine Füllung", run: () => setFill("Textfüllung", null) },
+      this.pipette((hex) => { this.lastFontColor = hex; this.formatRuns("Textfüllung", (r) => T.setRunColor(r, hex)); }),
+      { label: "Farbverlauf", submenu: () => [
+        { label: "Kein Farbverlauf", run: () => this.formatRuns("Textfüllung", (r) => T.setRunColor(r, base())) },
+        { heading: "Helle Varianten" }, ...GRAD_DIRS.map(([label, dir]) => ({ label, run: () => setFill("Textfüllung", grad(true, dir)) })),
+        { heading: "Dunkle Varianten" }, ...GRAD_DIRS.map(([label, dir]) => ({ label, run: () => setFill("Textfüllung", grad(false, dir)) }))] },
+    ];
+  }
+
   fillExtra(): MenuEntry[] {
-    const DIRS: [string, string][] = [
-      ["Linear diagonal - oben links nach unten rechts", '<a:lin ang="2700000" scaled="1"/>'], ["Linear unten", '<a:lin ang="5400000" scaled="1"/>'],
-      ["Linear diagonal - oben rechts nach unten links", '<a:lin ang="8100000" scaled="1"/>'], ["Von unterer rechter Ecke", '<a:path path="rect"><a:fillToRect l="100000" t="100000"/></a:path>'],
-      ["Von unterer linker Ecke", '<a:path path="rect"><a:fillToRect t="100000" r="100000"/></a:path>'], ["Linear rechts", '<a:lin ang="0" scaled="1"/>'],
-      ["Aus der Mitte", '<a:path path="circle"><a:fillToRect l="50000" t="50000" r="50000" b="50000"/></a:path>'], ["Linear links", '<a:lin ang="10800000" scaled="1"/>'],
-      ["Von oberer rechter Ecke", '<a:path path="rect"><a:fillToRect l="100000" b="100000"/></a:path>'], ["Von oberer linker Ecke", '<a:path path="rect"><a:fillToRect r="100000" b="100000"/></a:path>'],
-      ["Linear diagonal - unten links nach oben rechts", '<a:lin ang="18900000" scaled="1"/>'], ["Linear oben", '<a:lin ang="16200000" scaled="1"/>'],
-      ["Linear diagonal - unten rechts nach oben links", '<a:lin ang="13500000" scaled="1"/>']];
     const base = () => {
       // The shape's own colour, as written (a design colour stays one), else Akzent 1.
       const v = this.editor.selectedViews[0];
@@ -843,8 +867,8 @@ export class PresentApp implements EditorHost, PanelHost {
       { label: "Bild...", run: () => void this.pictureFill() },
       { label: "Farbverlauf", submenu: () => [
         { label: "Kein Farbverlauf", run: () => this.setFill(this.lastFill) },
-        { heading: "Helle Varianten" }, ...DIRS.map(([label, dir]) => ({ label, run: () => setXml("Farbverlauf", grad(true, dir)) })),
-        { heading: "Dunkle Varianten" }, ...DIRS.map(([label, dir]) => ({ label, run: () => setXml("Farbverlauf", grad(false, dir)) })),
+        { heading: "Helle Varianten" }, ...GRAD_DIRS.map(([label, dir]) => ({ label, run: () => setXml("Farbverlauf", grad(true, dir)) })),
+        { heading: "Dunkle Varianten" }, ...GRAD_DIRS.map(([label, dir]) => ({ label, run: () => setXml("Farbverlauf", grad(false, dir)) })),
         "-", { label: "Weitere Farbverläufe...", run: () => void this.commands.run("draw.format") }] },
     ];
   }
