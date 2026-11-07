@@ -69,7 +69,8 @@ transition sounds (21), Microsoft textures, chart and SmartArt styles, the Aufze
   Formkontur > Pfeile; Schriftarten ersetzen; Farben anpassen; Folien wiederverwenden and Folien aus
   Gliederung; pasted slides keep their pictures; **equations edited in place with a caret** (RaabeWrite's
   editor model); SmartArt texts editable (Textbereich) and SmartArt In Formen / In Text konvertieren; notes
-  keep their formatting when edited; Freihand zu Form and Lassoauswahl; Exportieren as PNG or JPEG.
+  keep their formatting when edited; Freihand zu Form and Lassoauswahl; Exportieren as PNG or JPEG; Benutzerdefinierte Bildschirmpräsentation;
+  the Pipette.
 - **Exe and installer:** `apps/raabe-present/src-tauri/target/release/raabe-present.exe` and the NSIS
   installer in `target/release/bundle/nsis/` (built at the end of the run).
 
@@ -125,7 +126,7 @@ D-071 and D-072 hold them with reasons. In short:
 - PowerPoint's own transition sounds and textures (Microsoft content); its designs with artwork (D-070).
 - Second-monitor Referentenansicht (this PC has one screen; one screen works), Alle anordnen, Video and
   animated GIF export, Aufzeichnen (out of scope by D-070), running macros (never).
-- Formatting notes in RaabePresent itself; Formkontur > Skizziert; the Pipette.
+- Formatting notes in RaabePresent itself; Formkontur > Skizziert; the Pipette's live preview.
 
 ## How it was run
 Real input only under `%TEMP%\raabe-real-input.lock`; PowerPoint started by our probes only when none was

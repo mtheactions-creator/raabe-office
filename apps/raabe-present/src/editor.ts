@@ -26,7 +26,9 @@ export type Tool = { kind: "shape"; prst: string; head?: boolean; tail?: boolean
   /** Tabellenentwurf > Tabelle zeichnen and Radierer (they stay on until Esc or another tool). */
   | { kind: "tableDraw" } | { kind: "tableEraser" }
   /** Drawing by points (Benutzerdefinierter Pfad): the points in EMU go to `done`. */
-  | { kind: "points"; mode: "curve" | "polygon" | "scribble"; done: (pts: { x: number; y: number }[], closed: boolean) => void } | null;
+  | { kind: "points"; mode: "curve" | "polygon" | "scribble"; done: (pts: { x: number; y: number }[], closed: boolean) => void }
+  /** Pipette: the next click's point (EMU) goes to `done`. */
+  | { kind: "pick"; done: (pt: { x: number; y: number }) => void } | null;
 
 export interface EditorHost {
   readonly deck: Deck;
@@ -1304,6 +1306,7 @@ export class SlideEditor {
     const tool = this.tool!;
     if (tool.kind === "ink") { this.drawInk(e, tool); return; }
     if (tool.kind === "points") { this.drawPoints(e, tool.mode, tool.done); return; }
+    if (tool.kind === "pick") { this.tool = null; this.host.toolDone(); tool.done(this.toSlide(e.clientX, e.clientY)); return; }
     if (tool.kind === "tableDraw" || tool.kind === "tableEraser") { this.tableTool(e, tool.kind); return; }
     if (tool.kind === "shape" && tool.freeform) {
       // Kurve, Freihandform: Form, Freihand: Skizze: a custom geometry through the drawn points (closed: filled).

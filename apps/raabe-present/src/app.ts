@@ -41,7 +41,7 @@ import { BackgroundPane } from "./background";
 import * as CT from "./contexttabs";
 import { contextHost, implementContext } from "./contextcmds";
 import { Sorter } from "./sorter";
-import { zoomMenu } from "./zoom";
+import { slidePng, zoomMenu } from "./zoom";
 import { customShowMenu } from "./custshow";
 import { endFreistellen, freistellenActive, freistellenTab, markTool } from "./freistellen";
 import { fileTypeSection } from "./exportimg";
@@ -765,6 +765,43 @@ export class PresentApp implements EditorHost, PanelHost {
    * variants of the shape's colour (our reading of each direction: lin with PowerPoint's angles, path for the
    * corners and the middle).
    */
+  /**
+   * Pipette (in PowerPoint's colour menus): the next click on the slide takes the colour drawn there (our
+   * renderer's drawing of the slide, without selection marks) and gives it to `apply`; Esc stops it.
+   */
+  pipette(apply: (hex: string) => void): MenuEntry {
+    return { label: "Pipette", run: () => {
+      const slide = this.slidePath();
+      if (!slide) return;
+      const sel = [...this.editor.sel];
+      this.editor.tool = { kind: "pick", done: (pt) => void (async () => {
+        const W = Math.round(this.deck.pptx.slideSize.cx / EMU_PX);
+        const png = await slidePng(this, slide, W);
+        if (!png) return;
+        const bmp = await createImageBitmap(new Blob([png as BlobPart], { type: "image/png" }));
+        const c = document.createElement("canvas");
+        c.width = bmp.width; c.height = bmp.height;
+        const g = c.getContext("2d");
+        if (!g) return;
+        g.drawImage(bmp, 0, 0);
+        const x = Math.max(0, Math.min(bmp.width - 1, Math.floor((pt.x / EMU_PX) * (bmp.width / W))));
+        const y = Math.max(0, Math.min(bmp.height - 1, Math.floor((pt.y / EMU_PX) * (bmp.width / W))));
+        const d = g.getImageData(x, y, 1, 1).data;
+        const hex = [d[0], d[1], d[2]].map((v) => v.toString(16).padStart(2, "0")).join("").toUpperCase();
+        if (sel.length) this.editor.select(sel);
+        apply(hex);
+        this.updateChrome();
+      })() };
+      this.editor.render();
+      this.updateChrome();
+    } };
+  }
+
+  /** Schriftfarbe's and Textfüllung's own entries. */
+  fontColorExtra(): MenuEntry[] {
+    return [this.pipette((hex) => { this.lastFontColor = hex; this.formatRuns("Schriftfarbe", (r) => T.setRunColor(r, hex)); })];
+  }
+
   fillExtra(): MenuEntry[] {
     const DIRS: [string, string][] = [
       ["Linear diagonal - oben links nach unten rechts", '<a:lin ang="2700000" scaled="1"/>'], ["Linear unten", '<a:lin ang="5400000" scaled="1"/>'],
@@ -800,6 +837,7 @@ export class PresentApp implements EditorHost, PanelHost {
     };
     return [
       { label: "Keine Füllung", run: () => this.setFill(null) },
+      this.pipette((hex) => this.setFill(hex)),
       { label: "Bild...", run: () => void this.pictureFill() },
       { label: "Farbverlauf", submenu: () => [
         { label: "Kein Farbverlauf", run: () => this.setFill(this.lastFill) },
@@ -858,6 +896,7 @@ export class PresentApp implements EditorHost, PanelHost {
 
   outlineExtra(): MenuEntry[] {
     return [{ label: "Keine Kontur", run: () => this.setLine(null) },
+      this.pipette((hex) => this.setLine(hex)),
       { label: "Stärke", submenu: () => LINE_WEIGHTS.map(([label, w]) => ({ label, run: () => this.setLine(undefined, w) })) },
       { label: "Striche", submenu: () => LINE_DASHES.map(([label, d]) => ({ label, run: () => this.setLine(undefined, undefined, d) })) },
       { label: "Pfeile", submenu: () => this.arrowEntries() }];
@@ -935,6 +974,7 @@ export class PresentApp implements EditorHost, PanelHost {
   }
   textOutlineExtra(): MenuEntry[] {
     return [{ label: "Keine Kontur", run: () => this.setTextOutline({ color: null }) },
+      this.pipette((hex) => this.setTextOutline({ color: hex })),
       { label: "Stärke", submenu: () => LINE_WEIGHTS.map(([label, w]) => ({ label, run: () => this.setTextOutline({ width: Math.round(w * 12700) }) })) },
       { label: "Striche", submenu: () => LINE_DASHES.map(([label, d]) => ({ label, run: () => this.setTextOutline({ dash: d }) })) }];
   }
@@ -2002,7 +2042,7 @@ export class PresentApp implements EditorHost, PanelHost {
         [{ type: "combo", cmd: "font.name", width: 104, value: ctx.fontName, options: ctx.fontOptions, commit: ctx.setFont }, { type: "combo", cmd: "font.size", width: 44, value: ctx.fontSize, options: () => [{ items: ["8", "10", "12", "14", "18", "24", "28", "32", "36", "44", "54", "60", "72"] }], commit: ctx.setSize },
           b("font.grow"), b("font.shrink"), b("para.levelDown"), b("para.levelUp")],
         [b("font.bold"), b("font.italic"), b("font.underline"), b("para.left"), b("para.center"), b("para.right"),
-          { type: "color", cmd: "font.highlight", palette: "highlight", current: ctx.highlight, pick: ctx.setHighlight, names: PP_HIGHLIGHT_NAMES }, { type: "color", cmd: "font.color", palette: "font", current: ctx.fontColor, pick: ctx.setFontColor, theme: () => this.paletteTheme() }],
+          { type: "color", cmd: "font.highlight", palette: "highlight", current: ctx.highlight, pick: ctx.setHighlight, names: PP_HIGHLIGHT_NAMES }, { type: "color", cmd: "font.color", palette: "font", current: ctx.fontColor, pick: ctx.setFontColor, theme: () => this.paletteTheme(), extra: () => this.fontColorExtra() }],
       ] }]
       : [{ type: "color", cmd: "draw.fill", palette: "font", current: ctx.fillColor, pick: ctx.setFill, showLabel: true, theme: () => this.paletteTheme(), extra: () => this.fillExtra() }, { type: "color", cmd: "draw.outline", palette: "font", current: ctx.lineColor, pick: ctx.setLine, showLabel: true, extra: () => this.outlineExtra() , theme: () => this.paletteTheme() },
         { type: "button", cmd: "review.newComment", key: "", size: "large" }];
@@ -2751,6 +2791,7 @@ export class PresentApp implements EditorHost, PanelHost {
       markup: () => this.showMarkup, toggleMarkup: () => { this.showMarkup = !this.showMarkup; this.editor.render(); this.updateChrome(); },
       fontColor: () => `#${this.colorHex(this.lastFontColor)}`,
       setFontColor: (hex) => { this.lastFontColor = hex.replace("#", "").toUpperCase(); this.formatRuns("Schriftfarbe", (r) => T.setRunColor(r, this.lastFontColor)); },
+      fontColorExtra: () => this.fontColorExtra(),
       highlight: () => `#${this.lastHighlight}`,
       setHighlight: (hex) => { const v = hex.replace("#", "").toUpperCase(); this.lastHighlight = v; this.formatRuns("Texthervorhebungsfarbe", (r) => T.setHighlight(r, v === "" ? null : v)); },
       fillColor: () => `#${this.colorHex(this.lastFill)}`,

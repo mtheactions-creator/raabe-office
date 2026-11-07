@@ -106,7 +106,7 @@ export interface ContextTabHost {
   textOutlineColor(): string; setTextOutline(hex: string): void; textOutlineExtra(): MenuEntry[];
   fillColor(): string; setFill(hex: string): void;
   lineColor(): string; setLine(hex: string): void;
-  fontColor(): string; setFontColor(hex: string): void;
+  fontColor(): string; setFontColor(hex: string): void; fontColorExtra(): MenuEntry[];
   effects(): MenuEntry[];
   alignMenu(): MenuEntry[];
   sizeSpin(kind: "h" | "w"): Control;
@@ -134,7 +134,7 @@ const arrange = (pic: boolean): Control[] => [stack(
   { type: "dropdown", cmd: "arrange.rotate", key: "DR", size: "small", menu: [{ cmd: "arrange.rotRight" }, { cmd: "arrange.rotLeft" }, { cmd: "arrange.flipV" }, { cmd: "arrange.flipH" }, "-", { cmd: "shape.sizePosition", label: "Weitere Drehungsoptionen..." }] })];
 
 const wordArt = (h: ContextTabHost): Control[] => [h.wordArtTiles(),
-  stack(h.color(() => h.fontColor(), (c) => h.setFontColor(c), "wordart.fill", "4", true), h.color(() => h.textOutlineColor(), (c) => h.setTextOutline(c), "wordart.outline", "TE", true, () => h.textOutlineExtra()), dd("wordart.effects", "IE", "small", () => h.textEffects()))];
+  stack(h.color(() => h.fontColor(), (c) => h.setFontColor(c), "wordart.fill", "4", true, () => h.fontColorExtra()), h.color(() => h.textOutlineColor(), (c) => h.setTextOutline(c), "wordart.outline", "TE", true, () => h.textOutlineExtra()), dd("wordart.effects", "IE", "small", () => h.textEffects()))];
 
 export function shapeFormatTab(h: ContextTabHost): Tab {
   return {

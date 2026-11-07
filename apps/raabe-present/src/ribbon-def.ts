@@ -22,6 +22,7 @@ export interface RibbonContext {
   setSize(value: string): void;
   fontColor(): string;
   setFontColor(hex: string): void;
+  fontColorExtra(): MenuEntry[];
   highlight(): string;
   setHighlight(hex: string): void;
   fillColor(): string;
@@ -87,7 +88,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
           controls: [rows(
             [fontName, fontSize, b("font.grow", "SV"), b("font.shrink", "J"), "gap", b("font.clear", "Q")],
             [b("font.bold", "1"), b("font.italic", "2"), b("font.underline", "3"), b("font.shadow", "5"), b("font.strike", "4"), dd("font.spacing", "6", "small", m.spacing), dd("font.case", "7", "small", m.case), "gap",
-              { ...color("font.highlight", "TF", ctx.highlight, ctx.setHighlight, "highlight"), names: ctx.highlightNames } as Control, color("font.color", "FC", ctx.fontColor, ctx.setFontColor)])],
+              { ...color("font.highlight", "TF", ctx.highlight, ctx.setHighlight, "highlight"), names: ctx.highlightNames } as Control, { ...color("font.color", "FC", ctx.fontColor, ctx.setFontColor), extra: () => ctx.fontColorExtra() } as Control])],
         },
         {
           id: "paragraph", label: "Absatz", key: "ZA", icon: "paragraph-spacing", launcher: { cmd: "para.dialog", key: "BA" },

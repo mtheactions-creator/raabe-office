@@ -51,7 +51,7 @@ export function contextHost(app: PresentApp): ContextTabHost {
     tableStyles: (c) => tableStylesPanel(app, c),
     picStyles: (c) => picStylesPanel(app, c),
     textOutlineColor: () => app.textOutlineColor(), setTextOutline: (hex) => app.setTextOutline({ color: hex }), textOutlineExtra: () => app.textOutlineExtra(),
-    fillColor: ctx.fillColor, setFill: ctx.setFill, lineColor: ctx.lineColor, setLine: ctx.setLine, fontColor: ctx.fontColor, setFontColor: ctx.setFontColor,
+    fillColor: ctx.fillColor, setFill: ctx.setFill, lineColor: ctx.lineColor, setLine: ctx.setLine, fontColor: ctx.fontColor, setFontColor: ctx.setFontColor, fontColorExtra: () => app.fontColorExtra(),
     effects: () => ctx.menus.effects,
     alignMenu: () => [{ cmd: "arrange.alignLeft" }, { cmd: "arrange.alignCenter" }, { cmd: "arrange.alignRight" }, "-", { cmd: "arrange.alignTop" }, { cmd: "arrange.alignMiddle" }, { cmd: "arrange.alignBottom" }],
     sizeSpin: (k) => spin(() => sizeText(app, k), (v) => setSize(app, k, cmText(v)), (d) => { const v = app.editor.selectedViews[0]; if (v) setSize(app, k, Math.max(0, (k === "h" ? v.h : v.w) + d * 36000)); },

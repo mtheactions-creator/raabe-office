@@ -1975,3 +1975,7 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   (p:custShowLst, slides by relationship) are listed to run, and Zielgruppenorientierte Präsentationen...
   makes, changes, copies and removes them (our dialogs; the labels from knowledge of PowerPoint, the
   inventory did not open them). A custom show plays only its slides in its order, Endlos as set up.
+- **Pipette:** in Fülleffekt, Formkontur, Schriftfarbe, Textfüllung and Textkontur (where PowerPoint's inventory
+  has it). The next click on the slide takes the colour of our own drawing of the slide at that point (without
+  selection marks), written as an RGB colour as PowerPoint does; Esc stops it. PowerPoint's live preview of the
+  colour beside the pointer is not drawn.
