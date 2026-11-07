@@ -68,6 +68,10 @@ export function contextHost(app: PresentApp): ContextTabHost {
       return out;
     },
     lineWeights: () => LINE_WEIGHTS.map(([label, w]) => ({ label, run: () => app.setLineWidth(w) })),
+    fillExtra: () => app.fillExtra(),
+    penStyles: () => penMenus(app).styles(), penWeights: () => penMenus(app).weights(),
+    penColor: () => `#${app.tablePen.color.length === 6 ? app.tablePen.color : "000000"}`,
+    setPenColor: (c) => { app.tablePen.color = c.replace("#", "").toUpperCase(); app.editor.endText(); app.editor.tool = { kind: "tableDraw" }; app.editor.render(); app.updateChrome(); },
     chartKinds: () => CH.CHART_KINDS.map(([label, k]) => ({ label, run: () => CH.changeType(app, k) })),
     quickLayouts: () => Array.from({ length: 11 }, (_, i) => ({ label: `Layout ${i + 1}`, run: () => CH.quickLayout(app, i + 1) })),
     chartColors: () => [{ heading: "Bunt" }, ...[10, 11, 12, 13].map((k) => ({ label: `Farbige Palette ${k - 9}`, run: () => CH.setColors(app, k) })),
@@ -177,12 +181,26 @@ function cellPr(app: PresentApp, label: string, fn: (pr: Element) => void): void
  * cell range being edited, the cell, or the whole table, in the pen colour.
  */
 const LINE_TAGS = ["lnL", "lnR", "lnT", "lnB", "lnTlToBr", "lnBlToTr"];
-function setCellLine(pr: Element, tag: string, color: string | null): void {
+export function setCellLine(pr: Element, tag: string, color: string | null, pen: { w: number; dash: string } = { w: 12700, dash: "solid" }): void {
   kid(pr, tag)?.remove();
-  const el = fragment(pr.ownerDocument, color ? `<a:${tag} w="12700" cap="flat" cmpd="sng" algn="ctr"><a:solidFill>${colorXml(color)}</a:solidFill><a:prstDash val="solid"/><a:round/></a:${tag}>` : `<a:${tag} w="12700" cmpd="sng"><a:noFill/></a:${tag}>`)[0];
+  const el = fragment(pr.ownerDocument, color ? `<a:${tag} w="${pen.w}" cap="flat" cmpd="sng" algn="ctr"><a:solidFill>${colorXml(color)}</a:solidFill><a:prstDash val="${pen.dash}"/><a:round/></a:${tag}>` : `<a:${tag} w="${pen.w}" cmpd="sng"><a:noFill/></a:${tag}>`)[0];
   const after = LINE_TAGS.slice(LINE_TAGS.indexOf(tag) + 1);
   const before = kids(pr).find((c) => after.includes(c.localName) || !LINE_TAGS.includes(c.localName)) ?? null;
   pr.insertBefore(el, before);
+}
+
+/** Tabellenentwurf > Stiftart and Stiftstärke: PowerPoint's entries; choosing one takes up the table pen. */
+export const PEN_STYLES: [string, string | null][] = [["Kein Rahmen", null], ["Durchgezogene Linie", "solid"], ["Gestrichelt", "sysDash"], ["Punktiert", "sysDot"],
+  ["Strich und Punkt", "sysDashDot"], ["Strich und 2 Punkte", "sysDashDotDot"], ["Punktiert (weiter Abstand)", "dot"], ["Gestrichelt (weiter Abstand)", "dash"],
+  ["Lang gestrichelt (w. Abstand)", "lgDash"], ["Strich und Punkt (w. Abstand)", "dashDot"], ["Lng. Strich u.Punkt (w. Abst.)", "lgDashDot"]];
+export const PEN_WEIGHTS: [string, number][] = [["¼ pt", 3175], ["½ pt", 6350], ["¾ pt", 9525], ["1 pt", 12700], ["1½ pt", 19050], ["2¼ pt", 28575], ["3 pt", 38100], ["4½ pt", 57150], ["6 pt", 76200]];
+
+export function penMenus(app: PresentApp): { styles: () => MenuEntry[]; weights: () => MenuEntry[] } {
+  const take = () => { app.editor.endText(); app.editor.tool = { kind: "tableDraw" }; app.editor.render(); app.updateChrome(); };
+  return {
+    styles: () => PEN_STYLES.map(([label, dash]) => ({ label, checked: app.tablePen.dash === dash, run: () => { app.tablePen.dash = dash; take(); } })),
+    weights: () => PEN_WEIGHTS.map(([label, w]) => ({ label, checked: app.tablePen.w === w, run: () => { app.tablePen.w = w; take(); } })),
+  };
 }
 
 export function tableBorders(app: PresentApp): MenuEntry[] {
@@ -400,6 +418,7 @@ export function implementContext(app: PresentApp): void {
   impl("table.selectCol", () => app.editor.selectLine("col"), editingCell);
   impl("table.selectRow", () => app.editor.selectLine("row"), editingCell);
   impl("table.shading", () => {}, table);
+  impl("table.penStyle", () => {}, table);
   impl("table.penWeight", () => {}, table);
   impl("table.penColor", () => {}, table);
   for (const id of ["table.rowHeight", "table.colWidth", "table.height", "table.width"]) impl(id, () => {}, table);

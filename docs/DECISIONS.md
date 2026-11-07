@@ -1898,3 +1898,12 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   design (Office, Aptos colours); `inventory_present.py` now applies the same colour set (Office) to the
   untitled presentation before reading RaabePresent's controls, so colour entries are compared by the same
   names. Coverage with it: see the report.
+- **Hintergrundformate, Fülleffekt's own entries, the table pen:** Entwurf > Hintergrundformate (and the
+  masters') is PowerPoint's menu: 12 styles (the design's three background fills, bgRef 1001-1003, in bg1,
+  bg2, tx2, tx1; written on the slide master, the slides' own backgrounds go, as PowerPoint applies a style
+  to all slides), Hintergrund formatieren..., Folienhintergrund zurücksetzen. Fülleffekt has Keine Füllung,
+  Bild... (a picture fill) and Farbverlauf with PowerPoint's 13 light and 13 dark variants by name (our own
+  stops from the shape's colour; PowerPoint's directions); Struktur (Microsoft's textures) and Pipette are not
+  built. Tabellenentwurf > Stiftart (11) and Stiftstärke (9) are PowerPoint's entries; choosing one, or a
+  Stiftfarbe, takes up the pen, and a click on a cell line with the pen gives that line the pen's look (both
+  cells beside it).

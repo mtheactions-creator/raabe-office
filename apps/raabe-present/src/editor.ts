@@ -42,6 +42,8 @@ export interface EditorHost {
   /** An Interaktive Schaltfläche was drawn: its default action (inside the same undo step). */
   actionButtonDrawn?(el: Element, prst: string): void;
   openActionDialog?(): Promise<void>;
+  /** Tabelle zeichnen: a click on a cell line paints it with the pen. */
+  penCellLine?(id: number, r: number, c: number, side: "l" | "r" | "t" | "b"): void;
   /** Tabelle zeichnen outside a table: a new table of one cell in the drawn box. */
   drawTable?(box: { x: number; y: number; w: number; h: number }): void;
   /** Motion paths of a shape (PowerPoint notation), drawn while it is selected. */
@@ -1469,7 +1471,16 @@ export class SlideEditor {
       window.removeEventListener("mouseup", up);
       ghost.remove();
       const dx = Math.abs(endX - e.clientX), dy = Math.abs(endY - e.clientY);
-      if (dx < 4 && dy < 4) return;
+      if (dx < 4 && dy < 4) {
+        // A click on a cell's line: the pen's line there.
+        if (hit) {
+          const rc = hit.td.getBoundingClientRect();
+          const d = { l: e.clientX - rc.left, r: rc.right - e.clientX, t: e.clientY - rc.top, b: rc.bottom - e.clientY };
+          const side = (Object.keys(d) as ("l" | "r" | "t" | "b")[]).reduce((a, k) => (d[k] < d[a] ? k : a), "l");
+          if (d[side] <= 6) this.host.penCellLine?.(hit.id, hit.r, hit.c, side);
+        }
+        return;
+      }
       if (hit) {
         const tbl = tblOf(hit.id);
         if (!tbl) return;

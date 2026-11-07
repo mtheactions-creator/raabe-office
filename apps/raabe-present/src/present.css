@@ -270,3 +270,8 @@ body.view-bw .slide { filter: grayscale(1) contrast(4) brightness(1.2); }
 .menu button.pfx-tile { width: auto; height: auto; padding: 3px; display: flex; align-items: center; justify-content: center; background: #fff; border: 1px solid transparent; cursor: pointer; }
 .menu button.pfx-tile:hover { border-color: #f5b56e; background: #fde9d2; }
 .pfx-tile canvas { display: block; width: 72px; height: 54px; background: #eee; }
+/* Hintergrundformate: 12 tiles, 4 to a row. */
+.bgs-grid { display: grid; grid-template-columns: repeat(4, 64px); gap: 6px; padding: 6px 8px; }
+.menu button.bgs-tile { width: 64px; height: 36px; border: 1px solid #c8c8c8; padding: 0; }
+.menu button.bgs-tile:hover { outline: 2px solid #f5b56e; }
+

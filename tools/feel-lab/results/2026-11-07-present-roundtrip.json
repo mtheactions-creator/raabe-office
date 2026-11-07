@@ -128,6 +128,14 @@
    "result": "same",
    "diff": []
   },
+  "fills and background": {
+   "result": "same",
+   "diff": []
+  },
+  "table pen": {
+   "result": "same",
+   "diff": []
+  },
   "action": {
    "result": "same",
    "diff": []
@@ -207,6 +215,6 @@
  },
  "summary": {
   "fixtures": "11/11",
-  "scenarios": "42/42"
+  "scenarios": "44/44"
  }
 }

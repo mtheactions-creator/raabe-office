@@ -3,7 +3,7 @@
 // buttons Auf alle anwenden and Hintergrund zurücksetzen. Written into the slide's p:cSld/p:bg as
 // PowerPoint does (p:bgPr with the fill and an empty a:effectLst).
 
-import { TaskPane, type PaneControl } from "@raabe/shell";
+import { closePopup, h, TaskPane, type MenuEntry, type PaneControl } from "@raabe/shell";
 import { PptxDom } from "@raabe/ooxml";
 import type { PresentApp } from "./app";
 
@@ -95,3 +95,43 @@ export class BackgroundPane {
 }
 
 export { make };
+
+/**
+ * Entwurf > Hintergrundformate: PowerPoint's 12 background styles, the design's three background fills
+ * (bgFillStyleLst, idx 1001-1003) in its four colours (bg1, bg2, tx2, tx1), written as p:bgRef on the slide
+ * master; the slides' own backgrounds go, as PowerPoint applies a style to all slides. Then Hintergrund
+ * formatieren... and Folienhintergrund zurücksetzen (the current slide's own background goes).
+ */
+export function bgStylesMenu(app: PresentApp): MenuEntry[] {
+  const COLORS = ["bg1", "bg2", "tx2", "tx1"];
+  const styles = [1001, 1002, 1003].flatMap((idx) => COLORS.map((c) => ({ idx, c })));
+  const apply = (idx: number, c: string) => {
+    const d = app.deck, master = d.pptx.masters()[0];
+    if (!master) return;
+    const slides = d.slides.map((s) => s.path);
+    d.change("Hintergrundformate", [master, ...slides], () => {
+      const cSld = kid(d.pptx.doc(master).documentElement, "cSld")!;
+      kid(cSld, "bg")?.remove();
+      cSld.insertBefore(fragment(cSld.ownerDocument, `<p:bg><p:bgRef idx="${idx}"><a:schemeClr val="${c}"/></p:bgRef></p:bg>`)[0], cSld.firstChild);
+      for (const p of slides) kid(kid(d.pptx.doc(p).documentElement, "cSld"), "bg")?.remove();
+    });
+  };
+  const colors = app.slidePath() ? app.deck.view(app.slidePath()!).theme.colors : {};
+  const hex = (c: string) => `#${colors[{ bg1: "lt1", bg2: "lt2", tx1: "dk1", tx2: "dk2" }[c]!] ?? "FFFFFF"}`;
+  const tile = (idx: number, c: string, n: number) => {
+    // The look in small: the colour, plain for the first fill, shaded for the second and third.
+    const base = hex(c);
+    const bg = idx === 1001 ? base : idx === 1002 ? `linear-gradient(${base}, color-mix(in srgb, ${base} 70%, black))` : `radial-gradient(color-mix(in srgb, ${base} 75%, white), color-mix(in srgb, ${base} 70%, black))`;
+    return h("button", { class: "bgs-tile", role: "menuitem", "aria-label": `Formatvorlage ${n}`, "data-tip": `Formatvorlage ${n}`, style: `background:${bg}`, onclick: () => { closePopup(); apply(idx, c); } });
+  };
+  return [
+    { block: () => h("div", { class: "bgs-grid" }, ...styles.map((s, i) => tile(s.idx, s.c, i + 1))) },
+    "-",
+    { label: "Hintergrund formatieren...", run: () => void app.commands.run("slide.formatBackground") },
+    { label: "Folienhintergrund zurücksetzen", run: () => {
+      const p = app.slidePath();
+      if (p) app.deck.change("Folienhintergrund zurücksetzen", [p], () => kid(kid(app.deck.pptx.doc(p).documentElement, "cSld"), "bg")?.remove());
+    } },
+  ];
+}
+

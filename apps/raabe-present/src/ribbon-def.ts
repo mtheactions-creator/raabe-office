@@ -24,6 +24,7 @@ export interface RibbonContext {
   lineColor(): string;
   setLine(hex: string): void;
   /** Keine Kontur, Stärke, Striche under the Formkontur palette. */
+  fillExtra(): MenuEntry[];
   outlineExtra(): MenuEntry[];
   /** Entwurf > Designs: the gallery in the ribbon. */
   designTiles(): Control;
@@ -36,7 +37,7 @@ export interface RibbonContext {
     arrange: () => MenuEntry[]; find: MenuEntry[]; select: MenuEntry[]; table: MenuEntry[]; pictures: MenuEntry[]; textBox: MenuEntry[];
     slideSize: MenuEntry[]; showCustom: MenuEntry[]; record: MenuEntry[]; transOptions: () => MenuEntry[]; animOptions: () => MenuEntry[];
     animStart: MenuEntry[]; colors: () => MenuEntry[]; fonts: () => MenuEntry[]; underline: MenuEntry[];
-    outlineWeight: MenuEntry[]; outlineDash: MenuEntry[]; effects: MenuEntry[]; quickStyles: () => MenuEntry[]; zoomFit: MenuEntry[]; equations: () => MenuEntry[]; sounds: () => MenuEntry[]; windows: () => MenuEntry[]; triggers: () => MenuEntry[]; zooms: () => MenuEntry[];
+    outlineWeight: MenuEntry[]; outlineDash: MenuEntry[]; effects: MenuEntry[]; quickStyles: () => MenuEntry[]; zoomFit: MenuEntry[]; equations: () => MenuEntry[]; sounds: () => MenuEntry[]; windows: () => MenuEntry[]; triggers: () => MenuEntry[]; zooms: () => MenuEntry[]; bgStyles: () => MenuEntry[];
   };
   panels: { newSlide: Popup; layout: Popup; shapes: Popup; themes: Popup; transitions: Popup; animations: Popup; table: Popup; chart: Popup; addAnim: Popup; wordArt: Popup; quickStyles: Popup };
   spin: {
@@ -92,7 +93,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
         {
           id: "drawing", label: "Zeichnen", key: "ZD", icon: "shapes", launcher: { cmd: "draw.format", key: "BB" },
           controls: [panel("draw.shapes", "23", "large", p.shapes), lazy("draw.arrange", "G", "large", m.arrange), panel("draw.quickStyles", "NC", "large", p.quickStyles),
-            stack(color("draw.fill", "Ü", ctx.fillColor, ctx.setFill, "font", true), { ...color("draw.outline", "V2", ctx.lineColor, ctx.setLine, "font", true), extra: () => ctx.outlineExtra() } as Control, dd("draw.effects", "MO", "small", m.effects))],
+            stack({ ...color("draw.fill", "Ü", ctx.fillColor, ctx.setFill, "font", true), extra: () => ctx.fillExtra() } as Control, { ...color("draw.outline", "V2", ctx.lineColor, ctx.setLine, "font", true), extra: () => ctx.outlineExtra() } as Control, dd("draw.effects", "MO", "small", m.effects))],
         },
         { id: "editing", label: "Bearbeiten", key: "ZB", icon: "find", controls: [stack(split("edit.find", "FD", "small", m.find), split("edit.replace", "R", "small", [{ cmd: "edit.replace" }, { cmd: "edit.replaceFonts" }]), dd("edit.select", "SL", "small", m.select))] },
       ],
@@ -130,7 +131,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
       groups: [
         // PowerPoint shows the designs as a gallery in the ribbon and Anpassen as five large buttons (UI screenshot, D-072).
         { id: "themes", label: "Designs", key: "ZT", icon: "themes", controls: [ctx.designTiles()] },
-        { id: "variants", label: "Anpassen", key: "ZV", icon: "colors", controls: [b("design.variants", "V", "large"), lazy("design.colors", "F", "large", m.colors), lazy("design.fonts", "6", "large", m.fonts), b("design.effects", "E", "large"), b("design.background", "R", "large")] },
+        { id: "variants", label: "Anpassen", key: "ZV", icon: "colors", controls: [b("design.variants", "V", "large"), lazy("design.colors", "F", "large", m.colors), lazy("design.fonts", "6", "large", m.fonts), b("design.effects", "E", "large"), lazy("design.background", "R", "large", m.bgStyles)] },
         { id: "customize", label: "Folien", key: "ZA", icon: "page-size", controls: [panel("slide.layout", "OA", "large", p.layout), dd("design.slideSize", "Ö", "large", m.slideSize)] },
       ],
     },

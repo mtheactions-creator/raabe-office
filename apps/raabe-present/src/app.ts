@@ -42,6 +42,7 @@ import * as CT from "./contexttabs";
 import { contextHost, implementContext } from "./contextcmds";
 import { Sorter } from "./sorter";
 import { zoomMenu } from "./zoom";
+import { bgStylesMenu } from "./background";
 import { shapeEffectsMenu } from "./shapefx";
 import { addRecent, loadRecent, loadSettings, removeRecent, saveSettings, setPinned, type Settings } from "./store";
 import appIconUrl from "../../../branding/raabe-present-small.svg?url";
@@ -727,6 +728,79 @@ export class PresentApp implements EditorHost, PanelHost {
   }
 
   /** The entries under Formkontur's palette. */
+  /**
+   * Fülleffekt's own entries (PowerPoint's): Keine Füllung, Bild..., Farbverlauf with 13 light and 13 dark
+   * variants of the shape's colour (our reading of each direction: lin with PowerPoint's angles, path for the
+   * corners and the middle).
+   */
+  fillExtra(): MenuEntry[] {
+    const DIRS: [string, string][] = [
+      ["Linear diagonal - oben links nach unten rechts", '<a:lin ang="2700000" scaled="1"/>'], ["Linear unten", '<a:lin ang="5400000" scaled="1"/>'],
+      ["Linear diagonal - oben rechts nach unten links", '<a:lin ang="8100000" scaled="1"/>'], ["Von unterer rechter Ecke", '<a:path path="rect"><a:fillToRect l="100000" t="100000"/></a:path>'],
+      ["Von unterer linker Ecke", '<a:path path="rect"><a:fillToRect t="100000" r="100000"/></a:path>'], ["Linear rechts", '<a:lin ang="0" scaled="1"/>'],
+      ["Aus der Mitte", '<a:path path="circle"><a:fillToRect l="50000" t="50000" r="50000" b="50000"/></a:path>'], ["Linear links", '<a:lin ang="10800000" scaled="1"/>'],
+      ["Von oberer rechter Ecke", '<a:path path="rect"><a:fillToRect l="100000" b="100000"/></a:path>'], ["Von oberer linker Ecke", '<a:path path="rect"><a:fillToRect r="100000" b="100000"/></a:path>'],
+      ["Linear diagonal - unten links nach oben rechts", '<a:lin ang="18900000" scaled="1"/>'], ["Linear oben", '<a:lin ang="16200000" scaled="1"/>'],
+      ["Linear diagonal - unten rechts nach oben links", '<a:lin ang="13500000" scaled="1"/>']];
+    const base = () => {
+      // The shape's own colour, as written (a design colour stays one), else Akzent 1.
+      const v = this.editor.selectedViews[0];
+      const sf = v ? kid(kid(this.editor.shapeEl(v.id), "spPr"), "solidFill") : undefined;
+      const clr = sf?.firstElementChild;
+      return clr ? { tag: clr.localName, val: clr.getAttribute("val") ?? "accent1" } : { tag: "schemeClr", val: "accent1" };
+    };
+    const stop = (pos: number, mods: string) => { const b = base(); return `<a:gs pos="${pos}"><a:${b.tag} val="${b.val}">${mods}</a:${b.tag}></a:gs>`; };
+    const grad = (light: boolean, dir: string) => `<a:gradFill flip="none" rotWithShape="1"><a:gsLst>${light
+      ? stop(0, '<a:lumMod val="20000"/><a:lumOff val="80000"/>') + stop(100000, '<a:lumMod val="60000"/><a:lumOff val="40000"/>')
+      : stop(0, "") + stop(100000, '<a:lumMod val="50000"/>')}</a:gsLst>${dir}<a:tileRect/></a:gradFill>`;
+    const setXml = (label: string, xml: string | null) => {
+      const views = this.editor.selectedViews.filter((v) => v.kind === "sp" || v.kind === "cxnSp");
+      this.editor.edit(label, () => {
+        for (const v of views) {
+          const sp = kid(this.editor.shapeEl(v.id), "spPr");
+          if (!sp) continue;
+          for (const c of kids(sp)) if (["noFill", "solidFill", "gradFill", "blipFill", "pattFill", "grpFill"].includes(c.localName)) c.remove();
+          const f = xml ? fragment(sp.ownerDocument, xml)[0] : make(sp.ownerDocument, "a:noFill");
+          const after = kids(sp).find((c) => c.localName === "prstGeom" || c.localName === "custGeom") ?? kid(sp, "xfrm");
+          sp.insertBefore(f, after ? after.nextSibling : sp.firstChild);
+        }
+      });
+    };
+    return [
+      { label: "Keine Füllung", run: () => this.setFill(null) },
+      { label: "Bild...", run: () => void this.pictureFill() },
+      { label: "Farbverlauf", submenu: () => [
+        { label: "Kein Farbverlauf", run: () => this.setFill(this.lastFill) },
+        { heading: "Helle Varianten" }, ...DIRS.map(([label, dir]) => ({ label, run: () => setXml("Farbverlauf", grad(true, dir)) })),
+        { heading: "Dunkle Varianten" }, ...DIRS.map(([label, dir]) => ({ label, run: () => setXml("Farbverlauf", grad(false, dir)) })),
+        "-", { label: "Weitere Farbverläufe...", run: () => void this.commands.run("draw.format") }] },
+    ];
+  }
+
+  /** Fülleffekt > Bild...: a picture file fills the selected shapes (a:blipFill, stretched). */
+  private async pictureFill(): Promise<void> {
+    const path = await this.platform.openImageDialog();
+    const slide = this.slidePath();
+    if (!path || !slide) return;
+    const bytes = await this.platform.readFile(path);
+    const ext = /\.jpe?g$/i.test(path) ? "jpeg" : "png";
+    const views = this.editor.selectedViews.filter((v) => v.kind === "sp");
+    this.editor.edit("Fülleffekt", () => {
+      const media = this.deck.pptx.freeName(`ppt/media/image#.${ext}`);
+      this.deck.pptx.put(media, bytes);
+      this.deck.pptx.setType(media, ext === "jpeg" ? "image/jpeg" : "image/png", true);
+      const rid = this.deck.pptx.link(slide, "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image", media);
+      for (const v of views) {
+        const sp = kid(this.editor.shapeEl(v.id), "spPr");
+        if (!sp) continue;
+        for (const c of kids(sp)) if (["noFill", "solidFill", "gradFill", "blipFill", "pattFill", "grpFill"].includes(c.localName)) c.remove();
+        const f = fragment(sp.ownerDocument, `<a:blipFill dpi="0" rotWithShape="1"><a:blip r:embed="${rid}"/><a:srcRect/><a:stretch><a:fillRect/></a:stretch></a:blipFill>`)[0];
+        const after = kids(sp).find((c) => c.localName === "prstGeom" || c.localName === "custGeom") ?? kid(sp, "xfrm");
+        sp.insertBefore(f, after ? after.nextSibling : sp.firstChild);
+      }
+    });
+  }
+
   outlineExtra(): MenuEntry[] {
     return [{ label: "Keine Kontur", run: () => this.setLine(null) },
       { label: "Stärke", submenu: () => LINE_WEIGHTS.map(([label, w]) => ({ label, run: () => this.setLine(undefined, w) })) },
@@ -1189,6 +1263,30 @@ export class PresentApp implements EditorHost, PanelHost {
     await (await import("./links")).actionDialog(this);
   }
 
+  /** Tabellenentwurf's pen: Stiftart (null: Kein Rahmen), Stiftstärke in EMU, Stiftfarbe (hex or design colour). */
+  tablePen: { dash: string | null; w: number; color: string } = { dash: "solid", w: 12700, color: "000000" };
+
+  /** Tabelle zeichnen: a click on a cell line gives it the pen's line (both cells beside it), as PowerPoint. */
+  penCellLine(id: number, r: number, c: number, side: "l" | "r" | "t" | "b"): void {
+    const el = this.editor.shapeEl(id);
+    const tbl = el?.getElementsByTagNameNS(PptxDom.NS_A, "tbl")[0];
+    if (!tbl) return;
+    const pen = this.tablePen;
+    void import("./contextcmds").then(({ setCellLine }) => this.editor.edit("Tabelle zeichnen", () => {
+      const rows = kids(tbl, "tr");
+      const tcAt = (rr: number, cc: number) => kids(rows[rr], "tc")[cc];
+      const prOf = (tc: Element) => { let pr = kid(tc, "tcPr"); if (!pr) { pr = make(tc.ownerDocument, "a:tcPr"); tc.append(pr); } return pr; };
+      const TAG = { l: "lnL", r: "lnR", t: "lnT", b: "lnB" }, OPP = { l: "lnR", r: "lnL", t: "lnB", b: "lnT" };
+      const color = pen.dash === null ? null : pen.color;
+      const opts = { w: pen.w, dash: pen.dash ?? "solid" };
+      const here = tcAt(r, c);
+      if (here) setCellLine(prOf(here), TAG[side], color, opts);
+      const nr = side === "t" ? r - 1 : side === "b" ? r + 1 : r, nc = side === "l" ? c - 1 : side === "r" ? c + 1 : c;
+      const there = rows[nr] ? tcAt(nr, nc) : undefined;
+      if (there) setCellLine(prOf(there), OPP[side], color, opts);
+    }));
+  }
+
   /** Tabelle zeichnen outside a table: one cell in the drawn box. */
   drawTable(box: { x: number; y: number; w: number; h: number }): void {
     const slide = this.slidePath();
@@ -1398,7 +1496,7 @@ export class PresentApp implements EditorHost, PanelHost {
           { type: "dropdown", cmd: "design.colors", key: "F", size: "small", get menu() { return ctx.menus.colors(); } } as Control,
           { type: "dropdown", cmd: "design.fonts", key: "6", size: "small", get menu() { return ctx.menus.fonts(); } } as Control,
           b("design.effects", "E", "small")] },
-        { type: "stack", items: [b("design.background", "R", "small", "Hintergrundformate"), check("master.hideBg", "B")] },
+        { type: "stack", items: [{ type: "dropdown", cmd: "design.background", key: "R", size: "small", label: "Hintergrundformate", get menu() { return bgStylesMenu(app); } } as Control, check("master.hideBg", "B")] },
         b("master.formatBackground", "H", "small")] };
       const close: Group = { id: "close", label: "Schließen", key: "ZS", icon: "close", controls: [b("master.close", "Q")] };
       const orient = (cmd: string, key: string): Control => ({ type: "dropdown", cmd, key, size: "large", menu: [{ label: "Hochformat", run: () => this.setNotesOrientation(true) }, { label: "Querformat", run: () => this.setNotesOrientation(false) }] });
@@ -1729,7 +1827,7 @@ export class PresentApp implements EditorHost, PanelHost {
         [b("font.bold"), b("font.italic"), b("font.underline"), b("para.left"), b("para.center"), b("para.right"),
           { type: "color", cmd: "font.highlight", palette: "highlight", current: ctx.highlight, pick: ctx.setHighlight }, { type: "color", cmd: "font.color", palette: "font", current: ctx.fontColor, pick: ctx.setFontColor, theme: () => this.paletteTheme() }],
       ] }]
-      : [{ type: "color", cmd: "draw.fill", palette: "font", current: ctx.fillColor, pick: ctx.setFill, showLabel: true, theme: () => this.paletteTheme() }, { type: "color", cmd: "draw.outline", palette: "font", current: ctx.lineColor, pick: ctx.setLine, showLabel: true, extra: () => this.outlineExtra() , theme: () => this.paletteTheme() },
+      : [{ type: "color", cmd: "draw.fill", palette: "font", current: ctx.fillColor, pick: ctx.setFill, showLabel: true, theme: () => this.paletteTheme(), extra: () => this.fillExtra() }, { type: "color", cmd: "draw.outline", palette: "font", current: ctx.lineColor, pick: ctx.setLine, showLabel: true, extra: () => this.outlineExtra() , theme: () => this.paletteTheme() },
         { type: "button", cmd: "review.newComment", key: "", size: "large" }];
     return this.ribbon.toolbar(controls).el;
   }
@@ -2015,7 +2113,7 @@ export class PresentApp implements EditorHost, PanelHost {
     impl("insert.wordArt", () => {}, () => !!this.slidePath());
     impl("slide.formatBackground", () => this.bgPane.open(), () => !!this.slidePath());
     impl("design.formatBackground", () => this.bgPane.open(), () => !!this.slidePath());
-    impl("design.background", () => this.bgPane.open(), () => !!this.slidePath());
+    impl("design.background", () => {}, () => !!this.slidePath());
     const cellAt = () => this.editor.text?.cell;
     impl("table.deleteRows", () => this.tableDelete("row"), () => !!cellAt());
     impl("table.deleteCols", () => this.tableDelete("col"), () => !!cellAt());
@@ -2452,7 +2550,7 @@ export class PresentApp implements EditorHost, PanelHost {
       fillColor: () => `#${this.colorHex(this.lastFill)}`,
       setFill: (hex) => this.setFill(hex.replace("#", "").toUpperCase()),
       lineColor: () => `#${this.colorHex(this.lastLine)}`,
-      outlineExtra: () => this.outlineExtra(),
+      outlineExtra: () => this.outlineExtra(), fillExtra: () => this.fillExtra(),
       designTiles: () => this.designTiles(),
       fxTiles: (kind) => this.fxTiles(kind),
       setLine: (hex) => this.setLine(hex.replace("#", "").toUpperCase()),
@@ -2486,6 +2584,7 @@ export class PresentApp implements EditorHost, PanelHost {
         equations: () => BUILT_IN.map((e) => ({ label: e.name, run: () => void insertEquation(this, e.seq) })),
         sounds: () => this.transMod?.soundMenu(this) ?? [],
         zooms: () => zoomMenu(this),
+        bgStyles: () => bgStylesMenu(this),
         // Trigger > Bei Klick auf: the slide's other shapes by name.
         triggers: () => {
           const p = this.slidePath();

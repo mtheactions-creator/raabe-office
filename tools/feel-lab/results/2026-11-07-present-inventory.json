@@ -2104,6 +2104,132 @@
         },
         {
          "name": "Lila"
+        },
+        {
+         "name": "Keine Füllung",
+         "enabled": true
+        },
+        {
+         "name": "Bild...",
+         "enabled": true
+        },
+        {
+         "name": "Farbverlauf",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Kein Farbverlauf",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - oben links nach unten rechts",
+           "enabled": true
+          },
+          {
+           "name": "Linear unten",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - oben rechts nach unten links",
+           "enabled": true
+          },
+          {
+           "name": "Von unterer rechter Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Von unterer linker Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Linear rechts",
+           "enabled": true
+          },
+          {
+           "name": "Aus der Mitte",
+           "enabled": true
+          },
+          {
+           "name": "Linear links",
+           "enabled": true
+          },
+          {
+           "name": "Von oberer rechter Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Von oberer linker Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - unten links nach oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Linear oben",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - unten rechts nach oben links",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - oben links nach unten rechts",
+           "enabled": true
+          },
+          {
+           "name": "Linear unten",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - oben rechts nach unten links",
+           "enabled": true
+          },
+          {
+           "name": "Von unterer rechter Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Von unterer linker Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Linear rechts",
+           "enabled": true
+          },
+          {
+           "name": "Aus der Mitte",
+           "enabled": true
+          },
+          {
+           "name": "Linear links",
+           "enabled": true
+          },
+          {
+           "name": "Von oberer rechter Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Von oberer linker Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - unten links nach oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Linear oben",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - unten rechts nach oben links",
+           "enabled": true
+          },
+          {
+           "name": "Weitere Farbverläufe...",
+           "enabled": true
+          }
+         ]
         }
        ]
       },
@@ -4542,7 +4668,53 @@
        "name": "Hintergrundformate",
        "deferred": false,
        "enabled": true,
-       "type": "button"
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Formatvorlage 1"
+        },
+        {
+         "name": "Formatvorlage 2"
+        },
+        {
+         "name": "Formatvorlage 3"
+        },
+        {
+         "name": "Formatvorlage 4"
+        },
+        {
+         "name": "Formatvorlage 5"
+        },
+        {
+         "name": "Formatvorlage 6"
+        },
+        {
+         "name": "Formatvorlage 7"
+        },
+        {
+         "name": "Formatvorlage 8"
+        },
+        {
+         "name": "Formatvorlage 9"
+        },
+        {
+         "name": "Formatvorlage 10"
+        },
+        {
+         "name": "Formatvorlage 11"
+        },
+        {
+         "name": "Formatvorlage 12"
+        },
+        {
+         "name": "Hintergrund formatieren...",
+         "enabled": true
+        },
+        {
+         "name": "Folienhintergrund zurücksetzen",
+         "enabled": true
+        }
+       ]
       }
      ]
     },
@@ -6757,6 +6929,132 @@
         },
         {
          "name": "Lila"
+        },
+        {
+         "name": "Keine Füllung",
+         "enabled": true
+        },
+        {
+         "name": "Bild...",
+         "enabled": true
+        },
+        {
+         "name": "Farbverlauf",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Kein Farbverlauf",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - oben links nach unten rechts",
+           "enabled": true
+          },
+          {
+           "name": "Linear unten",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - oben rechts nach unten links",
+           "enabled": true
+          },
+          {
+           "name": "Von unterer rechter Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Von unterer linker Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Linear rechts",
+           "enabled": true
+          },
+          {
+           "name": "Aus der Mitte",
+           "enabled": true
+          },
+          {
+           "name": "Linear links",
+           "enabled": true
+          },
+          {
+           "name": "Von oberer rechter Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Von oberer linker Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - unten links nach oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Linear oben",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - unten rechts nach oben links",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - oben links nach unten rechts",
+           "enabled": true
+          },
+          {
+           "name": "Linear unten",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - oben rechts nach unten links",
+           "enabled": true
+          },
+          {
+           "name": "Von unterer rechter Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Von unterer linker Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Linear rechts",
+           "enabled": true
+          },
+          {
+           "name": "Aus der Mitte",
+           "enabled": true
+          },
+          {
+           "name": "Linear links",
+           "enabled": true
+          },
+          {
+           "name": "Von oberer rechter Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Von oberer linker Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - unten links nach oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Linear oben",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - unten rechts nach oben links",
+           "enabled": true
+          },
+          {
+           "name": "Weitere Farbverläufe...",
+           "enabled": true
+          }
+         ]
         }
        ]
       },
@@ -12414,8 +12712,54 @@
       {
        "name": "Stiftart",
        "deferred": false,
-       "enabled": false,
-       "type": "button"
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Kein Rahmen",
+         "enabled": true
+        },
+        {
+         "name": "Durchgezogene Linie",
+         "enabled": true
+        },
+        {
+         "name": "Gestrichelt",
+         "enabled": true
+        },
+        {
+         "name": "Punktiert",
+         "enabled": true
+        },
+        {
+         "name": "Strich und Punkt",
+         "enabled": true
+        },
+        {
+         "name": "Strich und 2 Punkte",
+         "enabled": true
+        },
+        {
+         "name": "Punktiert (weiter Abstand)",
+         "enabled": true
+        },
+        {
+         "name": "Gestrichelt (weiter Abstand)",
+         "enabled": true
+        },
+        {
+         "name": "Lang gestrichelt (w. Abstand)",
+         "enabled": true
+        },
+        {
+         "name": "Strich und Punkt (w. Abstand)",
+         "enabled": true
+        },
+        {
+         "name": "Lng. Strich u.Punkt (w. Abst.)",
+         "enabled": true
+        }
+       ]
       },
       {
        "name": "Stiftstärke",
@@ -12424,39 +12768,39 @@
        "type": "dropdown",
        "items": [
         {
-         "name": "1/4 Pt.",
+         "name": "¼ pt",
          "enabled": true
         },
         {
-         "name": "½ Pt.",
+         "name": "½ pt",
          "enabled": true
         },
         {
-         "name": "3/4 Pt.",
+         "name": "¾ pt",
          "enabled": true
         },
         {
-         "name": "1 Pt.",
+         "name": "1 pt",
          "enabled": true
         },
         {
-         "name": "1½ Pt.",
+         "name": "1½ pt",
          "enabled": true
         },
         {
-         "name": "2¼ Pt.",
+         "name": "2¼ pt",
          "enabled": true
         },
         {
-         "name": "3 Pt.",
+         "name": "3 pt",
          "enabled": true
         },
         {
-         "name": "4½ Pt.",
+         "name": "4½ pt",
          "enabled": true
         },
         {
-         "name": "6 Pt.",
+         "name": "6 pt",
          "enabled": true
         }
        ]
@@ -17133,7 +17477,53 @@
        "name": "Hintergrundformate",
        "deferred": false,
        "enabled": true,
-       "type": "button"
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Formatvorlage 1"
+        },
+        {
+         "name": "Formatvorlage 2"
+        },
+        {
+         "name": "Formatvorlage 3"
+        },
+        {
+         "name": "Formatvorlage 4"
+        },
+        {
+         "name": "Formatvorlage 5"
+        },
+        {
+         "name": "Formatvorlage 6"
+        },
+        {
+         "name": "Formatvorlage 7"
+        },
+        {
+         "name": "Formatvorlage 8"
+        },
+        {
+         "name": "Formatvorlage 9"
+        },
+        {
+         "name": "Formatvorlage 10"
+        },
+        {
+         "name": "Formatvorlage 11"
+        },
+        {
+         "name": "Formatvorlage 12"
+        },
+        {
+         "name": "Hintergrund formatieren...",
+         "enabled": true
+        },
+        {
+         "name": "Folienhintergrund zurücksetzen",
+         "enabled": true
+        }
+       ]
       },
       {
        "name": "Hintergrundgrafiken ausblenden",
@@ -17526,7 +17916,53 @@
        "name": "Hintergrundformate",
        "deferred": false,
        "enabled": true,
-       "type": "button"
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Formatvorlage 1"
+        },
+        {
+         "name": "Formatvorlage 2"
+        },
+        {
+         "name": "Formatvorlage 3"
+        },
+        {
+         "name": "Formatvorlage 4"
+        },
+        {
+         "name": "Formatvorlage 5"
+        },
+        {
+         "name": "Formatvorlage 6"
+        },
+        {
+         "name": "Formatvorlage 7"
+        },
+        {
+         "name": "Formatvorlage 8"
+        },
+        {
+         "name": "Formatvorlage 9"
+        },
+        {
+         "name": "Formatvorlage 10"
+        },
+        {
+         "name": "Formatvorlage 11"
+        },
+        {
+         "name": "Formatvorlage 12"
+        },
+        {
+         "name": "Hintergrund formatieren...",
+         "enabled": true
+        },
+        {
+         "name": "Folienhintergrund zurücksetzen",
+         "enabled": true
+        }
+       ]
       },
       {
        "name": "Hintergrundgrafiken ausblenden",
@@ -17915,7 +18351,53 @@
        "name": "Hintergrundformate",
        "deferred": false,
        "enabled": true,
-       "type": "button"
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Formatvorlage 1"
+        },
+        {
+         "name": "Formatvorlage 2"
+        },
+        {
+         "name": "Formatvorlage 3"
+        },
+        {
+         "name": "Formatvorlage 4"
+        },
+        {
+         "name": "Formatvorlage 5"
+        },
+        {
+         "name": "Formatvorlage 6"
+        },
+        {
+         "name": "Formatvorlage 7"
+        },
+        {
+         "name": "Formatvorlage 8"
+        },
+        {
+         "name": "Formatvorlage 9"
+        },
+        {
+         "name": "Formatvorlage 10"
+        },
+        {
+         "name": "Formatvorlage 11"
+        },
+        {
+         "name": "Formatvorlage 12"
+        },
+        {
+         "name": "Hintergrund formatieren...",
+         "enabled": true
+        },
+        {
+         "name": "Folienhintergrund zurücksetzen",
+         "enabled": true
+        }
+       ]
       },
       {
        "name": "Hintergrundgrafiken ausblenden",

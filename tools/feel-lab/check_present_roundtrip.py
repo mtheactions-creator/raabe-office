@@ -64,6 +64,12 @@ SCENARIOS: dict[str, str] = {
         a.editor.select([4]); pick(m.transformMenu(a), ['Arch']); pick(m.textThreeD(a, 'bevel'), ['Konvex']);""",
         "action button": """p.setupCase({layout:'Leer', shapes:[]}); const a = p.app; a.newSlide(); a.setCurrent(0); const S = await import('/src/shapeops.ts');
         a.editor.edit('Form einfügen', () => { const doc = a.deck.pptx.doc(a.slidePath()); const tree = S.treeOf(doc); const el = S.newShape(doc, S.maxId(tree) + 1, 'actionButtonForwardNext', {x: 1000000, y: 1000000, w: 900000, h: 900000, rot: 0, flipH: false, flipV: false}); tree.append(el); a.actionButtonDrawn(el, 'actionButtonForwardNext'); });""",
+        "fills and background": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,120]},{kind:'ellipse',box:[400,100,160,160]}]}); const a = p.app;
+        const pick = (menu, path) => { let entries = menu; for (const lab of path.slice(0, -1)) { const e = entries.find(x => x.label === lab); entries = typeof e.submenu === 'function' ? e.submenu() : e.submenu; } entries.find(x => x.label === path[path.length - 1]).run(); };
+        a.editor.select([2]); pick(a.fillExtra(), ['Farbverlauf', 'Linear unten']); a.editor.select([3]); a.ribbonContext().setFill('accent2,60000,40000');
+        const bg = await import('/src/background.ts'); bg.bgStylesMenu(a)[0].block().querySelectorAll('button')[6].click();""",
+        "table pen": """p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); a.setCurrent(0); a.insertTable(2, 2); const id = a.deck.view(a.slidePath()).shapes.find(s => s.frame === 'table').id;
+        a.tablePen = { dash: 'sysDash', w: 38100, color: 'C00000' }; a.penCellLine(id, 0, 0, 'r'); await new Promise(r => setTimeout(r, 300));""",
         "action": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]}]}); const a = p.app; a.newSlide(); a.setCurrent(0); a.editor.select([2]); const doc = a.deck.pptx.doc(a.slidePath()); const nv = doc.getElementsByTagNameNS('http://schemas.openxmlformats.org/presentationml/2006/main', 'cNvPr')[1]; a.editor.edit('Aktion', () => { const hl = doc.createElementNS('http://schemas.openxmlformats.org/drawingml/2006/main', 'a:hlinkClick'); hl.setAttributeNS('http://schemas.openxmlformats.org/officeDocument/2006/relationships', 'r:id', ''); hl.setAttribute('action', 'ppaction://hlinkshowjump?jump=nextslide'); nv.insertBefore(hl, nv.firstChild); });""",
         "animation copy": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]},{kind:'ellipse',box:[400,100,150,150]}]}); const a = p.app; a.editor.select([2]); const m = await import('/src/animations.ts'); m.addAnimation(a, 'entr', m.ANIMATION_GROUPS[0].items[2], false); m.copyAnimation(a, 2, 3);""",
         "trigger": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]},{kind:'ellipse',box:[400,100,150,150]}]}); const a = p.app; a.editor.select([3]); const m = await import('/src/animations.ts'); m.addAnimation(a, 'entr', m.ANIMATION_GROUPS[0].items[2], false); m.setTrigger(a, 2);""",
@@ -130,6 +136,12 @@ def ppt_shapes(slide) -> list[dict]:
             d["action"] = int(s.ActionSettings(1).Action)
         except Exception:  # noqa: BLE001
             pass
+        if int(s.Type) == 1:
+            try:
+                d["filltype"] = int(s.Fill.Type)
+                d["fillcolor"] = int(s.Fill.ForeColor.ObjectThemeColor)
+            except Exception:  # noqa: BLE001
+                pass
         if bool(s.HasTable):
             d["table"] = [int(s.Table.Rows.Count), int(s.Table.Columns.Count)]
             t = s.Table
@@ -137,6 +149,11 @@ def ppt_shapes(slide) -> list[dict]:
             d["tstyle"] = str(t.Style.Name)
             d["cellw"] = [[round(float(t.Cell(r, c).Shape.Width)) for c in range(1, t.Columns.Count + 1)] for r in range(1, t.Rows.Count + 1)]
             d["cellt"] = [[str(t.Cell(r, c).Shape.TextFrame.TextRange.Text) for c in range(1, t.Columns.Count + 1)] for r in range(1, t.Rows.Count + 1)]
+            try:
+                b = t.Cell(1, 1).Borders(4)  # ppBorderRight
+                d["border11r"] = [round(float(b.Weight), 1), int(b.DashStyle), int(b.ForeColor.RGB)]
+            except Exception:  # noqa: BLE001
+                pass
         if bool(s.HasChart):
             d["chart"] = int(s.Chart.ChartType)
         out.append(d)
@@ -227,6 +244,13 @@ def check(name: str, r: dict, ours: dict) -> list[str]:
         # PowerPoint reports its zooms as type -2 (a picture, 13, would mean it fell back to the Fallback).
         z = [x for x in sh if x["type"] == -2]
         want(len(z) == 1, f"types {[x['type'] for x in sh]}")
+    elif name == "fills and background":
+        # msoFillGradient 3; the second shape msoThemeColorAccent2 6 (with lumMod/lumOff); the master's background a style (bgRef).
+        want(sh[0].get("filltype") == 3 and sh[1].get("filltype") == 1 and sh[1].get("fillcolor") == 6, f"{[(x.get('filltype'), x.get('fillcolor')) for x in sh]}")
+    elif name == "table pen":
+        t = next((x for x in sh if x.get("table")), {})
+        # 3 pt, msoLineDash 4 (sysDash) or another dash, red C00000 (BGR 0x0000C0 = 192).
+        want(t.get("border11r", [0])[0] == 3.0 and t.get("border11r", [0, 0, 0])[2] == 192, f"border {t.get('border11r')}")
     elif name == "action button":
         # msoShapeActionButtonForwardorNext 130, ppActionNextSlide 1.
         want(any(x.get("action") == 1 and x.get("auto") == 130 for x in sh), f"{[(x.get('auto'), x.get('action')) for x in sh]}")

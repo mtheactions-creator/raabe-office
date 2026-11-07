@@ -8,7 +8,7 @@ descriptions (D-058). Cloud features are listed, marked and left out on purpose;
 
 **Recorded:** 21 tabs with 439 controls and 5771 menu and gallery entries; 13 context menus; 114 dialogs and panes; 4 backstage pages.
 
-**Coverage:** 3596 of 4503 controls and menu entries are in RaabePresent (79.9 %); 3 are there but greyed out as deferred, 904 are missing; 8 cloud features are left out on purpose.
+**Coverage:** 3678 of 4503 controls and menu entries are in RaabePresent (81.7 %); 3 are there but greyed out as deferred, 822 are missing; 8 cloud features are left out on purpose.
 
 ## Registerkarten
 

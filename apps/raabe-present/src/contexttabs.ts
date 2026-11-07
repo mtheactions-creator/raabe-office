@@ -113,6 +113,8 @@ export interface ContextTabHost {
   pictureCorrections(): MenuEntry[];
   pictureArtistic(): MenuEntry[];
   lineWeights(): MenuEntry[];
+  fillExtra(): MenuEntry[];
+  penStyles(): MenuEntry[]; penWeights(): MenuEntry[]; penColor(): string; setPenColor(c: string): void;
   chartKinds(): MenuEntry[];
   quickLayouts(): MenuEntry[];
   chartColors(): MenuEntry[];
@@ -136,7 +138,7 @@ export function shapeFormatTab(h: ContextTabHost): Tab {
     groups: [
       { id: "insert", label: "Formen einfügen", key: "ZE", icon: "shapes", controls: [h.shapeTiles(), stack(dd("shape.editShape", "F", "small", () => h.editShapeMenu()), b("insert.textBox", "LT"), b("shape.merge", "Y"))] },
       { id: "styles", label: "Formenarten", key: "ZF", icon: "shape-fill", launcher: { cmd: "draw.format", key: "BB" }, controls: [h.quickStyleTiles(),
-        stack(h.color(() => h.fillColor(), (c) => h.setFill(c), "draw.fill", "Ü", true), h.color(() => h.lineColor(), (c) => h.setLine(c), "draw.outline", "V", true, () => h.outlineExtra()), dd("draw.effects", "MO", "medium", () => h.effects()))] },
+        stack(h.color(() => h.fillColor(), (c) => h.setFill(c), "draw.fill", "Ü", true, () => h.fillExtra()), h.color(() => h.lineColor(), (c) => h.setLine(c), "draw.outline", "V", true, () => h.outlineExtra()), dd("draw.effects", "MO", "medium", () => h.effects()))] },
       { id: "wordart", label: "WordArt-Formate", key: "ZW", icon: "wordart", launcher: { cmd: "wordart.dialog", key: "O" }, controls: wordArt(h) },
       { id: "access", label: "Barrierefreiheit", key: "ZB", icon: "alt-text", controls: [b("shape.altTextPane", "AT", "large")] },
       { id: "arrange", label: "Anordnen", key: "ZA", icon: "bring-forward", controls: arrange(false) },
@@ -167,7 +169,7 @@ export function tableDesignTab(h: ContextTabHost): Tab {
       { id: "options", label: "Tabellenformatoptionen", key: "ZO", icon: "table-style", controls: [stack(check("table.firstRow", "Ü"), check("table.lastRow", "Ä"), check("table.bandRow", "U")), stack(check("table.firstCol", "P"), check("table.lastCol", "L"), check("table.bandCol", "V"))] },
       { id: "styles", label: "Tabellenformatvorlagen", key: "ZT", icon: "table-style", controls: [h.tableStyleTiles(), stack(h.color(() => h.fillColor(), (c) => h.setFill(c), "table.shading", "NC"), dd("table.borders", "DA", "small", () => h.tableBorders()), b("table.effects", "F"))] },
       { id: "wordart", label: "WordArt-Formate", key: "ZW", icon: "wordart", launcher: { cmd: "wordart.dialog", key: "O" }, controls: wordArt(h) },
-      { id: "draw", label: "Rahmenlinien zeichnen", key: "ZR", icon: "table-draw", controls: [stack(b("table.penStyle", "B", "medium"), dd("table.penWeight", "6", "medium", () => h.lineWeights()), h.color(() => h.lineColor(), (c) => h.setLine(c), "table.penColor", "G", true)), b("table.draw", "AA", "large"), b("table.eraser", "R", "large")] },
+      { id: "draw", label: "Rahmenlinien zeichnen", key: "ZR", icon: "table-draw", controls: [stack(dd("table.penStyle", "B", "medium", () => h.penStyles()), dd("table.penWeight", "6", "medium", () => h.penWeights()), h.color(() => h.penColor(), (c) => h.setPenColor(c), "table.penColor", "G", true)), b("table.draw", "AA", "large"), b("table.eraser", "R", "large")] },
     ],
   };
 }
