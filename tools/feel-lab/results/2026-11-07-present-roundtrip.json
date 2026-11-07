@@ -108,6 +108,18 @@
    "result": "same",
    "diff": []
   },
+  "file pptm": {
+   "result": "same",
+   "diff": []
+  },
+  "file ppsx": {
+   "result": "same",
+   "diff": []
+  },
+  "file potx": {
+   "result": "same",
+   "diff": []
+  },
   "action": {
    "result": "same",
    "diff": []
@@ -183,6 +195,6 @@
  },
  "summary": {
   "fixtures": "11/11",
-  "scenarios": "36/36"
+  "scenarios": "39/39"
  }
 }

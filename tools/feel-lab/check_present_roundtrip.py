@@ -54,6 +54,9 @@ SCENARIOS: dict[str, str] = {
         "zoom": """p.newDoc(); const a = p.app; a.newSlide(); a.newSlide(); a.setCurrent(0); const m = await import('/src/zoom.ts'); await m.insertSlideZooms(a, [2]); await new Promise(r => setTimeout(r, 300)); const v = a.deck.view(a.slidePath()).shapes.find(s => s.frame === 'zoom'); a.editor.select([v.id]); a.editor.edit('Verschieben', () => { const S = a.editor.shapeEl(v.id); const x = S.getElementsByTagNameNS('http://schemas.openxmlformats.org/drawingml/2006/main', 'off')[0]; x.setAttribute('x', '1000000'); });""",
         "section zoom": """p.newDoc(); const a = p.app; a.newSlide(); a.newSlide(); a.deck.setSections([{name:'Anfang', id:'{11111111-1111-1111-1111-111111111111}', slides:[a.deck.slides[0].id]},{name:'Teil 2', id:'{22222222-2222-2222-2222-222222222222}', slides:[a.deck.slides[1].id, a.deck.slides[2].id]}]); a.setCurrent(0); const m = await import('/src/zoom.ts'); await m.insertZooms(a, [{slide: 1, section: '{22222222-2222-2222-2222-222222222222}'}]);""",
         "summary zoom": """p.newDoc(); const a = p.app; a.newSlide(); a.newSlide(); const ed = a.editor; for (const i of [1, 2]) { a.setCurrent(i); const t = a.deck.view(a.slidePath()).shapes[0]; ed.enterText(t.id); ed.typeText('Teil ' + i); ed.endText(); } const m = await import('/src/zoom.ts'); await m.insertSummaryZoom(a, [1, 2]);""",
+        "file pptm": """p.newDoc(); const a = p.app; const {PRES_TYPES} = await import('/src/app.ts'); a.deck.pptx.setType(a.deck.pptx.presPath, PRES_TYPES.pptm);""",
+        "file ppsx": """p.newDoc(); const a = p.app; a.newSlide(); const {PRES_TYPES} = await import('/src/app.ts'); a.deck.pptx.setType(a.deck.pptx.presPath, PRES_TYPES.ppsx);""",
+        "file potx": """p.newDoc(); const a = p.app; const {PRES_TYPES} = await import('/src/app.ts'); a.deck.pptx.setType(a.deck.pptx.presPath, PRES_TYPES.potx);""",
         "action": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]}]}); const a = p.app; a.newSlide(); a.setCurrent(0); a.editor.select([2]); const doc = a.deck.pptx.doc(a.slidePath()); const nv = doc.getElementsByTagNameNS('http://schemas.openxmlformats.org/presentationml/2006/main', 'cNvPr')[1]; a.editor.edit('Aktion', () => { const hl = doc.createElementNS('http://schemas.openxmlformats.org/drawingml/2006/main', 'a:hlinkClick'); hl.setAttributeNS('http://schemas.openxmlformats.org/officeDocument/2006/relationships', 'r:id', ''); hl.setAttribute('action', 'ppaction://hlinkshowjump?jump=nextslide'); nv.insertBefore(hl, nv.firstChild); });""",
         "animation copy": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]},{kind:'ellipse',box:[400,100,150,150]}]}); const a = p.app; a.editor.select([2]); const m = await import('/src/animations.ts'); m.addAnimation(a, 'entr', m.ANIMATION_GROUPS[0].items[2], false); m.copyAnimation(a, 2, 3);""",
         "trigger": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]},{kind:'ellipse',box:[400,100,150,150]}]}); const a = p.app; a.editor.select([3]); const m = await import('/src/animations.ts'); m.addAnimation(a, 'entr', m.ANIMATION_GROUPS[0].items[2], false); m.setTrigger(a, 2);""",
@@ -186,6 +189,10 @@ def check(name: str, r: dict, ours: dict) -> list[str]:
         want(s0["animations"] == 1 and s0.get("motion", [""])[0].startswith("M 0 0 L 0.2 0"), f"motion {s0.get('animations')} {s0.get('motion')}")
     elif name == "freeform":
         want([x["type"] for x in sh] == [5, 5], f"types {[x['type'] for x in sh]}")
+    elif name in ("file pptm", "file potx"):
+        want(len(r["slides"]) == 1, f"slides {len(r['slides'])}")
+    elif name == "file ppsx":
+        want(len(r["slides"]) == 2, f"slides {len(r['slides'])}")
     elif name == "summary zoom":
         s1 = r["slides"][1]["shapes"] if len(r["slides"]) > 1 else []
         want(len(r["slides"]) == 4 and [x["type"] for x in s1].count(-2) == 1 and r["sections"] == ["Standardabschnitt", "Zusammenfassungsabschnitt", "Teil 1", "Teil 2"],
@@ -275,7 +282,9 @@ def main() -> None:
                 page.js(f"(async () => {{ const p = window.__present; {js} }})()")
                 ours = page.js("window.__present.state()")
                 b = base64.b64decode(page.js("window.__present.bytes()"))
-                f = TMP / f"scenario-{len(out['scenarios'])}.pptx"
+                # File types (D-072): the scenario's name ends with the extension it is saved as.
+                ext = name.split()[-1] if name.startswith("file ") else "pptx"
+                f = TMP / f"scenario-{len(out['scenarios'])}.{ext}"
                 f.write_bytes(b)
                 r = ppt_read(ppt.open_copy(f, with_window=False))
                 errs = check(name, r, ours)

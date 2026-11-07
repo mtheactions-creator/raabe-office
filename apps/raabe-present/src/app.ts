@@ -58,7 +58,21 @@ interface Doc {
 
 type View = "normal" | "sorter" | "notesPage" | "reading" | "outline";
 
-const stripExt = (n: string) => n.replace(/\.pptx$/i, "");
+const stripExt = (n: string) => n.replace(/\.(pptx|pptm|ppsx|ppsm|potx|potm)$/i, "");
+
+/** The main part's content type per file type (PowerPoint's: with macros, Bildschirmpräsentation, Vorlage). */
+export const PRES_TYPES: Record<string, string> = {
+  pptx: "application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml",
+  pptm: "application/vnd.ms-powerpoint.presentation.macroEnabled.main+xml",
+  ppsx: "application/vnd.openxmlformats-officedocument.presentationml.slideshow.main+xml",
+  ppsm: "application/vnd.ms-powerpoint.slideshow.macroEnabled.main+xml",
+  potx: "application/vnd.openxmlformats-officedocument.presentationml.template.main+xml",
+  potm: "application/vnd.ms-powerpoint.template.macroEnabled.main+xml",
+};
+const RT_VBA = "http://schemas.microsoft.com/office/2006/relationships/vbaProject";
+const OPEN_FILTERS = [{ name: "Alle PowerPoint-Präsentationen", extensions: ["pptx", "pptm", "ppsx", "ppsm", "potx", "potm"] }];
+const SAVE_FILTERS = [{ name: "PowerPoint-Präsentation", extensions: ["pptx"] }, { name: "PowerPoint-Präsentation mit Makros", extensions: ["pptm"] },
+  { name: "PowerPoint-Bildschirmpräsentation", extensions: ["ppsx"] }, { name: "PowerPoint-Vorlage", extensions: ["potx"] }];
 const samePath = (a: string, b: string) => a.toLowerCase() === b.toLowerCase();
 const SIZES = [8, 9, 10, 10.5, 11, 12, 14, 16, 18, 20, 24, 28, 32, 36, 40, 44, 48, 54, 60, 66, 72, 80, 88, 96];
 
@@ -1117,6 +1131,18 @@ export class PresentApp implements EditorHost, PanelHost {
       tree.append(S.newTable(doc, id, rows, cols, { x: (size.cx - w) / 2, y: 1981200, w }, DEFAULT_TABLE_STYLE_ID));
     });
     this.editor.select([id]);
+  }
+
+  /** Whether the presentation carries a VBA project (an opened .pptm): kept, never run (D-072). */
+  hasMacros(deck: Deck): boolean {
+    return deck.pptx.rels(deck.pptx.presPath).list.some((r) => r.type === RT_VBA);
+  }
+
+  /** Saving with macros as a type without them: the VBA project is left out (unreachable parts are not written). */
+  private dropMacros(deck: Deck): void {
+    const rels = deck.pptx.rels(deck.pptx.presPath);
+    const i = rels.list.findIndex((r) => r.type === RT_VBA);
+    if (i >= 0) { rels.list.splice(i, 1); rels.changed = true; }
   }
 
   /** Tabelle zeichnen outside a table: one cell in the drawn box. */
@@ -2604,7 +2630,7 @@ export class PresentApp implements EditorHost, PanelHost {
   // ----- files ------------------------------------------------------------------------------------------------
 
   async openDialog(): Promise<void> {
-    const path = await this.platform.openFileDialog("pptx");
+    const path = this.platform.openAnyDialog ? await this.platform.openAnyDialog("Öffnen", OPEN_FILTERS) : await this.platform.openFileDialog("pptx");
     if (path) await this.openPath(path);
   }
 
@@ -2619,8 +2645,10 @@ export class PresentApp implements EditorHost, PanelHost {
       await messageBox("RaabePresent", `Die Datei „${baseName(path)}“ kann nicht geöffnet werden.\n\n${e instanceof Error ? e.message : String(e)}`);
       return;
     }
-    const doc = this.makeDoc(deck, stripExt(baseName(path)), path);
-    doc.lastSaved = Date.now();
+    // A template (.potx) opens as a new presentation based on it, as in PowerPoint.
+    const template = /\.pot[xm]$/i.test(path);
+    const doc = template ? this.makeDoc(deck, `Präsentation${++this.untitled}`, null) : this.makeDoc(deck, stripExt(baseName(path)), path);
+    if (!template) doc.lastSaved = Date.now();
     // An untouched new presentation makes room for the opened file (PowerPoint).
     if (this.docs.length === 1 && this.docs[0].path === null && this.docs[0].deck.version === 0) this.docs = [];
     this.docs.push(doc);
@@ -2633,10 +2661,22 @@ export class PresentApp implements EditorHost, PanelHost {
     this.editor.endText();
     let path = doc.path;
     if (as || !path) {
-      path = await this.platform.saveFileDialog(`${doc.name}.pptx`, "pptx");
+      // With macros (an opened .pptm) PowerPoint offers .pptm first.
+      const ext0 = this.hasMacros(doc.deck) ? "pptm" : "pptx";
+      const filters = ext0 === "pptm" ? [SAVE_FILTERS[1], SAVE_FILTERS[0], ...SAVE_FILTERS.slice(2)] : SAVE_FILTERS;
+      path = this.platform.saveAnyDialog ? await this.platform.saveAnyDialog("Speichern unter", `${doc.name}.${ext0}`, filters) : await this.platform.saveFileDialog(`${doc.name}.pptx`, "pptx");
       if (!path) return false;
-      if (!/\.pptx$/i.test(path)) path += ".pptx";
+      if (!/\.(pptx|pptm|ppsx|potx)$/i.test(path)) path += `.${ext0}`;
     }
+    const ext = path.slice(path.lastIndexOf(".") + 1).toLowerCase();
+    // Macros cannot go into a file type without them: PowerPoint asks first, and so do we (they are kept, never run).
+    if (this.hasMacros(doc.deck) && !ext.endsWith("m")) {
+      const ok = await showDialog({ title: "RaabePresent", body: "Diese Präsentation enthält Makros (ein VBA-Projekt), die in diesem Dateityp nicht gespeichert werden können. Ohne Makros speichern?",
+        buttons: [{ label: "Ja", value: true, primary: true }, { label: "Nein", value: false }], cancel: false });
+      if (!ok) return false;
+      this.dropMacros(doc.deck);
+    }
+    doc.deck.pptx.setType(doc.deck.pptx.presPath, PRES_TYPES[ext] ?? PRES_TYPES.pptx);
     try {
       await this.platform.writeFile(path, doc.deck.write());
     } catch (e) {

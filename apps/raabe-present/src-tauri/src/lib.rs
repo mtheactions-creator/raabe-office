@@ -10,7 +10,7 @@ mod spell;
 #[path = "../../../raabe-write/src-tauri/src/thesaurus.rs"]
 mod thesaurus;
 
-const CONFIG: raabe_host::AppConfig = raabe_host::AppConfig { title: "RaabePresent", id: "raabe-present", extensions: &["pptx"] };
+const CONFIG: raabe_host::AppConfig = raabe_host::AppConfig { title: "RaabePresent", id: "raabe-present", extensions: &["pptx", "pptm", "ppsx", "ppsm", "potx", "potm"] };
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {

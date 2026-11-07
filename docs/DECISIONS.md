@@ -1855,3 +1855,9 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   SmartArt out again as Einfache Blockliste: it needs its full layout definitions inside the file. Writing them
   would mean copying Microsoft's 159 layout definitions (D-070: no Microsoft content), so creating SmartArt (and
   In SmartArt konvertieren) is not built; SmartArt from PowerPoint's files is drawn and kept unchanged.
+- **Macros and file types:** Öffnen takes PowerPoint's types (.pptx, .pptm, .ppsx, .ppsm, .potx, .potm); a template
+  opens as a new presentation based on it. Speichern unter offers PowerPoint-Präsentation, ... mit Makros,
+  PowerPoint-Bildschirmpräsentation and PowerPoint-Vorlage and writes the main part's content type of the chosen
+  type. Macros (the VBA project of a .pptm) are kept and saved again, never run (RaabePresent has no VBA, and
+  running macros from files would be a risk at school); saving them as a type without macros asks first, as
+  PowerPoint does, and leaves the VBA project out. This is all of "macros" for Step 8 (D-070 put them last).
