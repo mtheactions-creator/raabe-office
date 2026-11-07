@@ -80,6 +80,14 @@
    "result": "same",
    "diff": []
   },
+  "table style": {
+   "result": "same",
+   "diff": []
+  },
+  "motion path": {
+   "result": "same",
+   "diff": []
+  },
   "group": {
    "result": "same",
    "diff": []
@@ -135,6 +143,6 @@
  },
  "summary": {
   "fixtures": "11/11",
-  "scenarios": "24/24"
+  "scenarios": "26/26"
  }
 }

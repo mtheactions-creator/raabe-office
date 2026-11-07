@@ -36,8 +36,43 @@ const TIMING_HEAD = '<p:timing><p:tnLst><p:par><p:cTn id="1" dur="indefinite" re
 const TIMING_TAIL = '</p:childTnLst></p:cTn><p:prevCondLst><p:cond evt="onPrev" delay="0"><p:tgtEl><p:sldTgt/></p:tgtEl></p:cond></p:prevCondLst><p:nextCondLst><p:cond evt="onNext" delay="0"><p:tgtEl><p:sldTgt/></p:tgtEl></p:cond></p:nextCondLst></p:seq></p:childTnLst></p:cTn></p:par></p:tnLst><p:bldLst/></p:timing>';
 
 /** One effect's behaviours, as PowerPoint writes them for the presets we offer. */
+/**
+ * Animationspfade (D-072): each preset's path in PowerPoint's notation (fractions of the slide, relative to
+ * the shape's place); our own curves for Bögen, Wendungen, Formen (a circle) and Schleifen.
+ */
+export const MOTION_PATHS: Record<number, string> = {
+  42: "M 0 0 L 0 0.25 E",
+  37: "M 0 0 C 0.069 0 0.125 0.07 0.125 0.157 E",
+  39: "M 0 0 L 0 0.12 C 0 0.17 0.03 0.2 0.08 0.2 L 0.25 0.2 E",
+  35: "M 0 0 C 0.069 0 0.125 0.056 0.125 0.125 C 0.125 0.194 0.069 0.25 0 0.25 C -0.069 0.25 -0.125 0.194 -0.125 0.125 C -0.125 0.056 -0.069 0 0 0 Z",
+  36: "M 0 0 C 0.1 0 0.15 0.08 0.1 0.15 C 0.05 0.22 -0.05 0.15 0 0.08 C 0.04 0.02 0.12 0.05 0.2 0.1 E",
+};
+
+/** Points along a motion path (fractions of the slide), for the show to follow. */
+export function samplePath(path: string, n = 40): [number, number][] {
+  const tok = path.trim().split(/\s+/);
+  const segs: ((t: number) => [number, number])[] = [];
+  let x = 0, y = 0, sx = 0, sy = 0;
+  for (let i = 0; i < tok.length;) {
+    const cmd = tok[i++];
+    const num = () => Number(tok[i++]);
+    if (cmd === "M") { x = num(); y = num(); sx = x; sy = y; }
+    else if (cmd === "L") { const x0 = x, y0 = y, x1 = num(), y1 = num(); segs.push((t) => [x0 + (x1 - x0) * t, y0 + (y1 - y0) * t]); x = x1; y = y1; }
+    else if (cmd === "C") {
+      const x0 = x, y0 = y, x1 = num(), y1 = num(), x2 = num(), y2 = num(), x3 = num(), y3 = num();
+      segs.push((t) => { const u = 1 - t; return [u * u * u * x0 + 3 * u * u * t * x1 + 3 * u * t * t * x2 + t * t * t * x3, u * u * u * y0 + 3 * u * u * t * y1 + 3 * u * t * t * y2 + t * t * t * y3]; });
+      x = x3; y = y3;
+    } else if (cmd === "Z") { const x0 = x, y0 = y; segs.push((t) => [x0 + (sx - x0) * t, y0 + (sy - y0) * t]); x = sx; y = sy; }
+  }
+  if (!segs.length) return [[0, 0]];
+  const out: [number, number][] = [];
+  for (let k = 0; k <= n; k++) { const f = (k / n) * segs.length, s = Math.min(segs.length - 1, Math.floor(f)); out.push(segs[s](f - s)); }
+  return out;
+}
+
 function behaviours(cls: string, it: AnimItem, spid: number, id: () => number, dur: number): string {
   const tgt = `<p:tgtEl><p:spTgt spid="${spid}"/></p:tgtEl>`;
+  if (cls === "path") return `<p:animMotion origin="layout" path="${MOTION_PATHS[it.preset] ?? MOTION_PATHS[42]}" pathEditMode="relative" ptsTypes=""><p:cBhvr><p:cTn id="${id()}" dur="${dur}" fill="hold"/>${tgt}<p:attrNameLst><p:attrName>ppt_x</p:attrName><p:attrName>ppt_y</p:attrName></p:attrNameLst></p:cBhvr></p:animMotion>`;
   const vis = (v: string, delay = 0) => `<p:set><p:cBhvr><p:cTn id="${id()}" dur="1" fill="hold"><p:stCondLst><p:cond delay="${delay}"/></p:stCondLst></p:cTn>${tgt}<p:attrNameLst><p:attrName>style.visibility</p:attrName></p:attrNameLst></p:cBhvr><p:to><p:strVal val="${v}"/></p:to></p:set>`;
   const fx = (filter: string, dir: string) => `<p:animEffect transition="${dir}" filter="${filter}"><p:cBhvr><p:cTn id="${id()}" dur="${dur}"/>${tgt}</p:cBhvr></p:animEffect>`;
   const anim = (attr: string, from: string, to: string) => `<p:anim calcmode="lin" valueType="num"><p:cBhvr additive="base"><p:cTn id="${id()}" dur="${dur}" fill="hold"/>${tgt}<p:attrNameLst><p:attrName>${attr}</p:attrName></p:attrNameLst></p:cBhvr><p:tavLst><p:tav tm="0"><p:val><p:strVal val="${from}"/></p:val></p:tav><p:tav tm="100000"><p:val><p:strVal val="${to}"/></p:val></p:tav></p:tavLst></p:anim>`;
@@ -67,7 +102,7 @@ function maxCtnId(root: Element): number {
 
 /** Animation (replace the selected shapes' effects) or Animation hinzufügen (add another), as a click effect. */
 export function addAnimation(app: PresentApp, cls: "entr" | "emph" | "exit" | "path", it: AnimItem, add: boolean): void {
-  if (cls === "path") return; // Animationspfade: not built yet (greyed in the gallery).
+  if (cls === "path" && !MOTION_PATHS[it.preset]) return; // Benutzerdefinierter Pfad: drawing a path is not built yet (greyed).
   const ed = app.editor;
   const ids = ed.text ? [ed.text.id] : ed.sel;
   const path = app.slidePath();
@@ -86,7 +121,7 @@ export function addAnimation(app: PresentApp, cls: "entr" | "emph" | "exit" | "p
     const nid = () => ++next;
     for (const spid of ids) {
       const grp = nextGrp(timing, spid);
-      const dur = it.effect === "appear" ? 1 : cls === "emph" ? 2000 : 500;
+      const dur = it.effect === "appear" ? 1 : cls === "emph" || cls === "path" ? 2000 : 500;
       const xml = `<p:par><p:cTn id="${nid()}" fill="hold"><p:stCondLst><p:cond delay="indefinite"/></p:stCondLst><p:childTnLst><p:par><p:cTn id="${nid()}" fill="hold"><p:stCondLst><p:cond delay="0"/></p:stCondLst><p:childTnLst>` +
         `<p:par><p:cTn id="${nid()}" presetID="${it.preset}" presetClass="${cls}" presetSubtype="${it.subtype ?? 0}" fill="hold" grpId="${grp}" nodeType="clickEffect"><p:stCondLst><p:cond delay="0"/></p:stCondLst><p:childTnLst>` +
         behaviours(cls, it, spid, nid, dur) + `</p:childTnLst></p:cTn></p:par></p:childTnLst></p:cTn></p:par></p:childTnLst></p:cTn></p:par>`;
@@ -126,7 +161,7 @@ export function removeEffects(timing: Element, spid: number): void {
 }
 
 /** A click step of the main sequence: the effects that start with it, in order (with "Mit/Nach Vorherigen"). */
-export interface Step { effects: { spid: number; cls: string; effect: string; dur: number; delay: number; after: boolean; node?: string }[] }
+export interface Step { effects: { spid: number; cls: string; effect: string; dur: number; delay: number; after: boolean; node?: string; path?: string }[] }
 
 /** The main sequence as click steps, and the shapes hidden at the start (those with an entrance first). */
 export function mainSequence(root: Element): { steps: Step[]; hidden: Set<number>; auto: Step | null } {
@@ -147,7 +182,8 @@ export function mainSequence(root: Element): { steps: Step[]; hidden: Set<number
       const preset = Number(c.getAttribute("presetID") ?? 0);
       const effect = preset === 1 ? "appear" : preset === 2 ? "fly" : preset === 8 ? "spin" : preset === 53 ? "zoom" : fx.split("(")[0] || (cls === "emph" ? "pulse" : "fade");
       const delay = Number(at(c, "stCondLst/cond")?.getAttribute("delay") ?? 0) || 0;
-      step.effects.push({ spid, cls, effect, dur: Math.max(1, ...durs), delay, after: c.getAttribute("nodeType") === "afterEffect", node: c.getAttribute("nodeType") ?? "clickEffect" });
+      const motion = c.getElementsByTagNameNS(PptxDom.NS_P, "animMotion")[0]?.getAttribute("path") ?? undefined;
+      step.effects.push({ spid, cls, effect: motion ? "path" : effect, dur: Math.max(1, ...durs), delay, after: c.getAttribute("nodeType") === "afterEffect", node: c.getAttribute("nodeType") ?? "clickEffect", path: motion });
       if (cls === "entr" && !seen.has(spid)) hidden.add(spid);
       seen.add(spid);
     }

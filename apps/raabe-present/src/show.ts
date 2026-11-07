@@ -9,7 +9,7 @@ import { showMenu } from "@raabe/shell";
 import type { PresentApp } from "./app";
 import { renderSlide } from "./render/slide";
 import { EMU_PX } from "./render/text";
-import { mainSequence, type Step } from "./animations";
+import { samplePath, mainSequence, type Step } from "./animations";
 import { readTransition, transitionSound } from "./transitions";
 import { showFlag } from "./showsetup";
 import { readShowSetup, type ShowSetup } from "./showsetup";
@@ -206,6 +206,13 @@ export class SlideShow {
     for (const fx of step.effects) {
       const el = this.shapes.get(fx.spid);
       if (!el) continue;
+      if (fx.path) {
+        // An Animationspfad: the shape follows the path (fractions of the slide) and stays at its end.
+        const size = this.app.deck.pptx.slideSize, w = size.cx / 9525, hh = size.cy / 9525;
+        const kf = samplePath(fx.path).map(([px, py]) => ({ translate: `${px * w}px ${py * hh}px` }));
+        el.animate(kf, { duration: Math.max(1, fx.dur), delay: fx.delay, fill: "forwards", easing: "ease-in-out" });
+        continue;
+      }
       const kf = effectKeyframes(fx.cls, fx.effect);
       if (fx.cls === "entr") el.style.visibility = "visible";
       const a = el.animate(kf, { duration: Math.max(1, fx.dur), delay: fx.delay, fill: "forwards", easing: "ease-out" });
@@ -249,6 +256,7 @@ export class SlideShow {
   private finishStep(step: Step): void {
     for (const fx of step.effects) {
       const el = this.shapes.get(fx.spid);
+      if (el && fx.path) { const p = samplePath(fx.path, 1).pop()!; const size = this.app.deck.pptx.slideSize; el.style.translate = `${(p[0] * size.cx) / 9525}px ${(p[1] * size.cy) / 9525}px`; continue; }
       if (el) el.style.visibility = fx.cls === "exit" ? "hidden" : "visible";
     }
   }

@@ -1534,7 +1534,7 @@ export class PresentApp implements EditorHost, PanelHost {
     const items: Fx[] = kind === "trans"
       ? TRANSITION_GROUPS.flatMap((g) => g.items.map(([label, k]) => ({ label, run: () => void import("./transitions").then((m) => m.setTransition(this, k)) })))
       : [{ label: "Ohne", run: () => void import("./animations").then((m) => { const p = this.slidePath(); const root = p ? this.deck.pptx.doc(p).documentElement : null; const timing = root && kid(root, "timing"); if (timing) this.editor.edit("Animation entfernen", () => { for (const id of this.editor.sel) m.removeEffects(timing, id); }); }) },
-        ...ANIMATION_GROUPS.filter((g) => g.cls !== "path").flatMap((g) => g.items.map((it) => ({ label: it.label, run: () => void import("./animations").then((m) => m.addAnimation(this, g.cls, it, false)) })))];
+        ...ANIMATION_GROUPS.flatMap((g) => g.items.filter((it) => g.cls !== "path" || it.preset !== 0).map((it) => ({ label: it.label, run: () => void import("./animations").then((m) => m.addAnimation(this, g.cls, it, false)) })))];
     return {
       type: "tiles", cmd: kind === "trans" ? "trans.gallery" : "anim.gallery", key: kind === "trans" ? "Ü" : "N", count: items.length, visible: 6, size: [62, 58], cls: "fx-tiles",
       render: (i) => h("div", { class: "pfx-tile" }, icon(i === 0 ? "close-x" : kind === "trans" ? "transition" : "animation"), h("span", null, items[i].label)),
@@ -2426,7 +2426,7 @@ export class PresentApp implements EditorHost, PanelHost {
     for (const g of ANIMATION_GROUPS) {
       grid.append(h("div", { class: "gal-head" }, g.title));
       const row = h("div", { class: "fx-row" });
-      for (const it of g.items) row.append(h("button", { class: `fx-item fx-${g.cls}`, "aria-label": it.label, disabled: g.cls === "path" || undefined, onclick: () => { close(); void import("./animations").then((m) => m.addAnimation(this, g.cls, it, add)); } }, icon("animation"), h("span", null, it.label)));
+      for (const it of g.items) row.append(h("button", { class: `fx-item fx-${g.cls}`, "aria-label": it.label, disabled: (g.cls === "path" && it.preset === 0) || undefined, onclick: () => { close(); void import("./animations").then((m) => m.addAnimation(this, g.cls, it, add)); } }, icon("animation"), h("span", null, it.label)));
       grid.append(row);
     }
     return grid;

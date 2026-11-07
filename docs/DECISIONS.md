@@ -1778,3 +1778,7 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   presentation's text, with a list of the school's languages); Barrierefreiheit überprüfen is our own short
   check (Alternativtext of pictures, charts, tables and SmartArt; slide titles).
 - **Ansicht > Graustufe / Schwarzweiß** change only how the slides are shown, as in PowerPoint.
+- **Animationspfade:** written as PowerPoint writes them (p:animMotion with a path relative to the shape, in
+  fractions of the slide); the curves of Bögen, Wendungen, Formen and Schleifen are our own; the path is not
+  drawn in the editing view yet; Benutzerdefinierter Pfad (drawing one) is open.
+- **WordArt styles:** PowerPoint's 20 names with the design's colour words; bevels not drawn.
