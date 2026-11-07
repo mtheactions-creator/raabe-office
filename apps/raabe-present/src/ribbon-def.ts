@@ -34,7 +34,7 @@ export interface RibbonContext {
     arrange: () => MenuEntry[]; find: MenuEntry[]; select: MenuEntry[]; table: MenuEntry[]; pictures: MenuEntry[]; textBox: MenuEntry[];
     slideSize: MenuEntry[]; showCustom: MenuEntry[]; record: MenuEntry[]; transOptions: () => MenuEntry[]; animOptions: () => MenuEntry[];
     animStart: MenuEntry[]; colors: () => MenuEntry[]; fonts: () => MenuEntry[]; underline: MenuEntry[];
-    outlineWeight: MenuEntry[]; outlineDash: MenuEntry[]; effects: MenuEntry[]; quickStyles: () => MenuEntry[]; zoomFit: MenuEntry[]; equations: () => MenuEntry[]; sounds: () => MenuEntry[];
+    outlineWeight: MenuEntry[]; outlineDash: MenuEntry[]; effects: MenuEntry[]; quickStyles: () => MenuEntry[]; zoomFit: MenuEntry[]; equations: () => MenuEntry[]; sounds: () => MenuEntry[]; windows: () => MenuEntry[];
   };
   panels: { newSlide: Popup; layout: Popup; shapes: Popup; themes: Popup; transitions: Popup; animations: Popup; table: Popup; chart: Popup; addAnim: Popup; wordArt: Popup; quickStyles: Popup };
   spin: {
@@ -185,7 +185,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
         { id: "show", label: "Anzeigen", key: "ZA", icon: "ruler", launcher: { cmd: "view.gridDialog", key: "R" }, controls: [stack(check("view.ruler", "L"), check("view.gridlines", "G"), check("view.guides", "H")), b("view.notes", "O", "large")] },
         { id: "zoom", label: "Zoom", key: "ZZ", icon: "zoom", controls: [b("view.zoom", "DO", "large"), b("view.fit", "F", "large")] },
         { id: "color", label: "Farbe/Graustufe", key: "ZF", icon: "colors", controls: [stack(b("view.color", "Q", "medium"), b("view.grayscale", "ß", "medium"), b("view.bw", "W", "medium"))] },
-        { id: "window", label: "Fenster", key: "ZW", icon: "app", controls: [b("view.newWindow", "N", "large"), stack(b("view.arrangeAll", "A"), b("view.cascade", "Ü"), b("view.moveSplit", "T")), b("view.switchWindow", "E", "large")] },
+        { id: "window", label: "Fenster", key: "ZW", icon: "app", controls: [b("view.newWindow", "N", "large"), stack(b("view.arrangeAll", "A"), b("view.cascade", "Ü"), b("view.moveSplit", "T")), lazy("view.switchWindow", "E", "large", m.windows)] },
         { id: "macros", label: "Makros", key: "Z0", icon: "settings", controls: [b("view.macros", "0", "large")] },
       ],
     },

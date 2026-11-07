@@ -1772,6 +1772,7 @@ export class PresentApp implements EditorHost, PanelHost {
     impl("insert.shapes", () => {});
     impl("insert.chart", () => {}, () => !!this.slidePath());
     impl("insert.photoAlbum", () => import("./photoalbum").then((m) => m.photoAlbumDialog(this)), () => !!this.platform.openImagesDialog);
+    impl("view.switchWindow", () => {}, () => this.docs.length > 0);
     impl("insert.action", () => import("./links").then((m) => m.actionDialog(this)), () => this.editor.sel.length === 1);
     impl("view.ruler", () => { this.editor.showRuler = !this.editor.showRuler; this.editor.fitZoom(); this.editor.render(); this.updateChrome(); }, () => this.view === "normal", () => this.editor.showRuler);
     impl("draw.arrange", () => {});
@@ -2329,6 +2330,8 @@ export class PresentApp implements EditorHost, PanelHost {
         underline: [], outlineWeight: [], outlineDash: [], effects: this.effectsMenu(), quickStyles: () => [], zoomFit: [],
         equations: () => BUILT_IN.map((e) => ({ label: e.name, run: () => void insertEquation(this, e.seq) })),
         sounds: () => this.transMod?.soundMenu(this) ?? [],
+        // Fenster wechseln: the open presentations, numbered as PowerPoint lists its windows.
+        windows: () => this.docs.map((d, i) => ({ label: `${i + 1} ${d.name}`, checked: d === this.active, run: () => this.activate(d) })),
       },
       panels: {
         newSlide: (close) => this.layoutGallery(close, (p) => this.newSlide(p), this.designName()),
