@@ -45,21 +45,61 @@ export async function insertEquation(app: PresentApp, seq?: Seq): Promise<void> 
   if (!path) return;
   const tree = S.treeOf(app.deck.pptx.doc(path));
   const ed = app.editor;
-  if (!seq) {
-    const typed = await linearDialog([]);
-    if (!typed) return;
-    seq = typed;
-  }
+  const isNew = !seq;
   const size = app.deck.pptx.slideSize;
   const id = S.maxId(tree) + 1;
-  const eq = seq;
+  const eq: Seq = seq ?? [{ k: "t", s: "x" }];
   ed.edit("Formel", () => { tree.append(PptxDom.fragment(tree.ownerDocument, equationXml(id, Math.round(size.cx / 2 - 1000000), Math.round(size.cy / 2 - 200000), eq))[0]); });
   ed.updateAutofit(id);
   ed.select([id]);
+  // Alt+Umschalt+0 / Formel: typed at once in the linear format, in place.
+  if (isNew) { ed.render(); setTimeout(() => linearInPlace(app, id, true), 0); }
 }
 
 /** Editing an equation: its linear form in the box; OK writes the new tree into the Choice and the Fallback's text. */
 export async function editEquation(app: PresentApp, id: number): Promise<void> {
+  linearInPlace(app, id, false);
+}
+
+/**
+ * The equation in PowerPoint's linear format, in place: its UnicodeMath text in a field over the shape;
+ * Eingabe or a click elsewhere converts it to the professional form, Esc leaves it as it was. A new
+ * equation that stays empty is removed again.
+ */
+export function linearInPlace(app: PresentApp, id: number, isNew: boolean): void {
+  const ed = app.editor;
+  const sp = ed.shapeEl(id);
+  const m = equationOf(sp);
+  const box = (ed.el.querySelector(`.shp[data-id="${id}"]`) as HTMLElement | null)?.getBoundingClientRect();
+  if (!sp || !m || !box) return;
+  const seq = ommlToSeq(m) ?? [];
+  const field = h("input", { type: "text", class: "eq-linear", value: seqToLinear(seq), spellcheck: false }) as HTMLInputElement;
+  const px = Math.max(14, Math.min(48, box.height * 0.55));
+  field.style.cssText = `position:fixed;left:${box.left}px;top:${box.top + box.height / 2 - px * 0.75}px;min-width:${Math.max(160, box.width)}px;height:${px * 1.5}px;font:${px}px 'Cambria Math', serif;z-index:50;border:1px solid #8a8a8a;background:#fff;padding:0 4px`;
+  document.body.append(field);
+  field.focus();
+  field.select();
+  let done = false;
+  const finish = (commit: boolean) => {
+    if (done) return;
+    done = true;
+    const text = field.value.trim();
+    field.remove();
+    if (commit && !text && isNew) { ed.select([id]); ed.deleteSelected(); return; }
+    if (commit && text !== seqToLinear(seq).trim()) writeEquation(app, id, () => buildLinear(text));
+    ed.select([id]);
+    ed.focus();
+  };
+  field.addEventListener("keydown", (e) => {
+    e.stopPropagation();
+    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); finish(true); }
+    else if (e.key === "Escape") { e.preventDefault(); finish(false); }
+  });
+  field.addEventListener("blur", () => finish(true));
+}
+
+/** The linear box (kept for the LaTeX-free path of older callers). */
+export async function editEquationInBox(app: PresentApp, id: number): Promise<void> {
   const ed = app.editor;
   const sp = ed.shapeEl(id);
   const m = equationOf(sp);

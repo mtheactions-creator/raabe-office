@@ -1750,8 +1750,9 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
 - **Formeln:** an equation is drawn from its Office Math (the shared converter, MathML in Cambria Math)
   instead of its fallback picture; Einfügen > Formel (Alt+Umschalt+0) offers the built-in equations
   (RaabeWrite's list) and writes them as PowerPoint does (text box with a14:m in mc:AlternateContent, a
-  plain-text Fallback). Editing is in PowerPoint's linear format in a box with the professional form shown
-  live (double-click the equation); PowerPoint's in-place structure editing and the Formel tab are open.
+  plain-text Fallback). Editing is in PowerPoint's linear format, in place over the equation (double-click it,
+  or Formel > Linear; Eingabe converts back, Esc cancels; Alt+Umschalt+0 starts a new one that way);
+  PowerPoint's professional in-place editing with a caret inside the structures is open.
 - **Schnellformatvorlagen:** the 77 entries as PowerPoint's gallery; the six Designformatvorlagen rows are
   shape styles (references into the theme's format matrix), the five Voreinstellungen rows set fill and
   outline on the shape; how each looks in detail is our reading of PowerPoint's tiles. Colour words follow
