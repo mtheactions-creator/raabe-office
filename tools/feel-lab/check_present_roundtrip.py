@@ -27,6 +27,8 @@ HERE = Path(__file__).parent
 FIX = HERE.parent.parent / "packages" / "ooxml" / "test" / "fixtures"
 TMP = Path(tempfile.mkdtemp(prefix="raabe-present-rt-"))
 FIXTURES = ["pptx-blank", "pptx-layouts", "pptx-bullets", "pptx-textbox", "pptx-shapes", "pptx-group", "pptx-picture", "pptx-table", "pptx-autofit", "pptx-show", "pptx-equation"]
+# PowerPoint's own default design (Office, Aptos) as well (added in the overnight run, D-072).
+FIXTURES += [f.replace("pptx-", "pptx-office-") for f in FIXTURES]
 
 # A tiny red PNG (2x2) for the picture scenario.
 PNG = "iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAAEklEQVR4nGP4z8DwnwEIGBgYAAA+5gT8uY8z6AAAAABJRU5ErkJggg=="

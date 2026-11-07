@@ -33,6 +33,39 @@
   },
   "pptx-equation": {
    "result": "same"
+  },
+  "pptx-office-blank": {
+   "result": "same"
+  },
+  "pptx-office-layouts": {
+   "result": "same"
+  },
+  "pptx-office-bullets": {
+   "result": "same"
+  },
+  "pptx-office-textbox": {
+   "result": "same"
+  },
+  "pptx-office-shapes": {
+   "result": "same"
+  },
+  "pptx-office-group": {
+   "result": "same"
+  },
+  "pptx-office-picture": {
+   "result": "same"
+  },
+  "pptx-office-table": {
+   "result": "same"
+  },
+  "pptx-office-autofit": {
+   "result": "same"
+  },
+  "pptx-office-show": {
+   "result": "same"
+  },
+  "pptx-office-equation": {
+   "result": "same"
   }
  },
  "scenarios": {
@@ -234,7 +267,7 @@
   }
  },
  "summary": {
-  "fixtures": "11/11",
+  "fixtures": "22/22",
   "scenarios": "49/49"
  }
 }
