@@ -57,6 +57,27 @@ describe("Hintergrund entfernen", () => {
   });
 });
 
+describe("Freistellen marks", () => {
+  const picture = () => {
+    // A red object left and a blue-grey one right on a light background.
+    const w = 30, h = 20, data = new Uint8Array(w * h * 4);
+    for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+      const left = x >= 5 && x < 12 && y >= 6 && y < 14, right = x >= 18 && x < 25 && y >= 6 && y < 14;
+      data.set(left ? [200, 30, 30, 255] : right ? [180, 190, 200, 255] : [200, 215, 230, 255], (y * w + x) * 4);
+    }
+    return { width: w, height: h, data: new Uint8ClampedArray(data) };
+  };
+  it("a line to remove takes an object away, a line to keep saves a background-like one", () => {
+    const at = (p: { data: Uint8ClampedArray }, x: number, y: number) => p.data[(y * 30 + x) * 4 + 3];
+    const plain = applyEffect(picture(), { name: "backgroundRemoval", attrs: {} });
+    expect(at(plain, 8, 10)).toBe(255);
+    const removed = applyEffect(picture(), { name: "backgroundRemoval", attrs: {}, marks: [{ keep: false, x1: 20000, y1: 50000, x2: 36000, y2: 50000 }] });
+    expect(at(removed, 8, 10)).toBe(0);
+    const kept = applyEffect(picture(), { name: "backgroundRemoval", attrs: {}, marks: [{ keep: true, x1: 63000, y1: 40000, x2: 80000, y2: 60000 }] });
+    expect(at(kept, 21, 10)).toBe(255);
+  });
+});
+
 describe("the effect list in the blip", () => {
   it("reads PowerPoint's imgProps", () => {
     const xml = `<a:blip xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" r:embed="rId2"><a:extLst><a:ext uri="{BEBA8EAE-BF5A-486C-A8C5-ECC9F3942E4B}"><a14:imgProps xmlns:a14="http://schemas.microsoft.com/office/drawing/2010/main"><a14:imgLayer r:embed="rId3"><a14:imgEffect><a14:artisticBlur/></a14:imgEffect><a14:imgEffect><a14:saturation sat="0"/></a14:imgEffect></a14:imgLayer></a14:imgProps></a:ext></a:extLst></a:blip>`;

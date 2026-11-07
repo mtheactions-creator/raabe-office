@@ -91,7 +91,8 @@ SCENARIOS: dict[str, str] = {
         const v = a.deck.view(a.slidePath()).shapes.find(s => s.kind === 'pic'); a.editor.select([v.id]); const m = await import('/src/picfx.ts');
         await m.setEffect(a, 'saturation', {{name: 'saturation', attrs: {{sat: '0'}}}}, 'Farbsättigung'); await m.setEffect(a, 'artistic', {{name: 'artisticBlur', attrs: {{}}}}, 'Künstlerische Effekte'); await m.setEffect(a, 'sharpenSoften', {{name: 'sharpenSoften', attrs: {{amount: '25000'}}}}, 'Schärfen');""",
     "background removal": f"""p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); const bin = atob('{PNG}'); const b = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) b[i] = bin.charCodeAt(i); a.insertPictureBytes(b, 'image/png'); await new Promise(r => setTimeout(r, 500));
-        const v = a.deck.view(a.slidePath()).shapes.find(s => s.kind === 'pic'); a.editor.select([v.id]); await p.run('pic.removeBg'); await new Promise(r => setTimeout(r, 500));""",
+        const v = a.deck.view(a.slidePath()).shapes.find(s => s.kind === 'pic'); a.editor.select([v.id]); await p.run('pic.removeBg'); await new Promise(r => setTimeout(r, 500));
+        await p.run('bg.markKeep'); a.editor.tool.done([{{x: v.x + 1, y: v.y + 1}}, {{x: v.x + v.w / 2, y: v.y + v.h / 2}}], false); await new Promise(r => setTimeout(r, 500)); await p.run('bg.keep');""",
     "reuse slides": f"""p.newDoc(); const a = p.app; const r = await fetch('/@fs/{(FIX / "pptx-picture.pptx").as_posix()}'); const bytes = new Uint8Array(await r.arrayBuffer());
         const src = a.deck.pptx.constructor.read(bytes); const m = await import('/src/slideimport.ts'); m.importSlide(a.deck, src, src.slides[0].path, 0); a.setCurrent(1);""",
     # SmartArt made by PowerPoint (probe_powerpoint_smartart.py, kept in captures/, not committed): its texts edited in the Textbereich.

@@ -1865,9 +1865,8 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   default rectangle (t 10 %, b 90 %, l 10 %, r 90 %) in the same effect list, the picture shown becomes the
   result with a transparent background. Our method is our own (region growing from outside the rectangle into
   similar colours that look like the background's, one pixel of edge kept); on the probe's test picture (two
-  objects on a graded sky) it keeps the same pixels as PowerPoint (100 %); real photos will differ. It is
-  applied at once; PowerPoint's Freistellen tab (marking areas to keep or remove) is not built, Rückgängig
-  takes it back.
+  objects on a graded sky) it keeps the same pixels as PowerPoint (100 %); real photos will differ. Marking
+  areas came later the same night (Freistellen, below).
 - **Formeffekte, Texteffekte > Abschrägung, 3D-Drehung, Transformieren:** the shape's Formeffekte had only two
   shadow entries. Now PowerPoint's whole menu (Voreinstellung 1-12, Schatten 24, Spiegelung 9, Leuchteffekt 24,
   Weiche Kanten 6, Abschrägung 12, 3D-Drehung 25) with PowerPoint's names from the inventory; the effects are
@@ -1965,3 +1964,10 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
 - **SmartArt-Design > Konvertieren:** In Formen konvertieren puts PowerPoint's drawing of the SmartArt on the
   slide as a group of ordinary shapes (same look; they can then be edited freely); In Text konvertieren makes a
   text box with the points as a bulleted list by level. Both replace the SmartArt as in PowerPoint.
+- **Freistellen:** Hintergrund entfernen now opens PowerPoint's Freistellen tab after the automatic removal:
+  Zu behaltende Bereiche markieren and Zu entfernende Bereiche markieren draw lines on the picture (written as
+  PowerPoint writes them, a14:foregroundMark/backgroundMark in 1/1000 % of the picture); after each line the
+  removal runs again with them (a "keep" line is never background and stops the background spreading, a
+  "remove" line becomes background and spreads into similar colours). Alle Änderungen verwerfen takes the
+  removal away, Änderungen beibehalten ends Freistellen. PowerPoint's magenta overlay is not drawn: the picture
+  shows the result directly.

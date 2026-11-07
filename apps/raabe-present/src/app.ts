@@ -42,6 +42,7 @@ import * as CT from "./contexttabs";
 import { contextHost, implementContext } from "./contextcmds";
 import { Sorter } from "./sorter";
 import { zoomMenu } from "./zoom";
+import { endFreistellen, freistellenActive, freistellenTab, markTool } from "./freistellen";
 import { fileTypeSection } from "./exportimg";
 import { convertSmartArt, smartArtTab, textPane } from "./smartart";
 import { bgStylesMenu } from "./background";
@@ -1385,6 +1386,9 @@ export class PresentApp implements EditorHost, PanelHost {
     });
   }
 
+  /** Brings a ribbon tab to the front (Freistellen when it opens). */
+  showTab(id: string): void { this.ribbon.select(id); }
+
   /** The active presentation's name (Exportieren). */
   docName(): string { return this.active.name.replace(/:\d+$/, ""); }
 
@@ -1619,7 +1623,7 @@ export class PresentApp implements EditorHost, PanelHost {
   private updateContextual(): void {
     const views = this.editor.selectedViews;
     const kinds = new Set(views.map((v) => (v.kind === "graphicFrame" ? v.frame : v.kind)));
-    const key = [...kinds].sort().join(",") + (this.editor.text ? "+t" : "") + (this.masterMode ? `+m${this.masterKind}` : "") + (selectedEquation(this) !== null ? "+eq" : "");
+    const key = [...kinds].sort().join(",") + (this.editor.text ? "+t" : "") + (this.masterMode ? `+m${this.masterKind}` : "") + (selectedEquation(this) !== null ? "+eq" : "") + (freistellenActive() !== null ? "+fs" : "");
     if (key === this.ctxKey) return;
     this.ctxKey = key;
     const tabs: Tab[] = [];
@@ -1628,6 +1632,8 @@ export class PresentApp implements EditorHost, PanelHost {
     if (kinds.has("table")) tabs.push(this.tableTab(), this.tableLayoutTab());
     if (kinds.has("chart")) tabs.push(this.chartTab(), this.chartFormatTab());
     if (kinds.has("diagram")) tabs.push(this.cachedTab("smartart", () => smartArtTab(this)));
+    // Freistellen while a picture's background is being removed (it comes first, as in PowerPoint).
+    if (freistellenActive() !== null && this.editor.sel.includes(freistellenActive()!)) tabs.unshift(this.cachedTab("freistellen", () => freistellenTab()));
     if (selectedEquation(this) !== null) tabs.push(this.cachedTab("equation", () => equationTab(this)));
     if (this.masterMode) tabs.unshift(this.masterTab());
     this.ribbon.setContextual(tabs);
@@ -2166,6 +2172,11 @@ export class PresentApp implements EditorHost, PanelHost {
     impl("view.switchWindow", () => {}, () => this.docs.length > 0);
     impl("view.newWindow", () => this.newWindow(), () => this.docs.length > 0);
     impl("edit.replaceFonts", () => void this.replaceFontsDialog(), () => this.docs.length > 0);
+    const fs = () => freistellenActive() !== null;
+    impl("bg.markKeep", () => markTool(this, true), fs, () => this.editor.tool?.kind === "points");
+    impl("bg.markRemove", () => markTool(this, false), fs);
+    impl("bg.discard", () => endFreistellen(this, false), fs);
+    impl("bg.keep", () => endFreistellen(this, true), fs);
     const diagram = () => this.editor.selectedViews.find((x) => x.frame === "diagram");
     impl("smartart.convert", () => {}, () => !!diagram());
     impl("smartart.toText", () => { const v = diagram(); if (v) convertSmartArt(this, v.id, "text"); }, () => !!diagram());

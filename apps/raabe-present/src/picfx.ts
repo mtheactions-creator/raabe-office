@@ -19,7 +19,9 @@ const EXT_IMGPROPS = "{BEBA8EAE-BF5A-486C-A8C5-ECC9F3942E4B}";
 const RT_IMAGE = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image";
 const RT_HDPHOTO = "http://schemas.microsoft.com/office/2007/relationships/hdphoto";
 
-export interface ImgEffect { name: string; attrs: Record<string, string> }
+/** Freistellen's marks (a14:foregroundMark / backgroundMark): lines in 1/1000 % of the picture. */
+export interface BgMark { keep: boolean; x1: number; y1: number; x2: number; y2: number }
+export interface ImgEffect { name: string; attrs: Record<string, string>; marks?: BgMark[] }
 
 /** The artistic effects in the order of PowerPoint's gallery, with its German names. */
 export const ARTISTIC: [string, string][] = [
@@ -56,6 +58,8 @@ export function effectsOf(blip: Element): ImgEffect[] {
   if (!layer) return [];
   return Array.from(layer.getElementsByTagNameNS(NS_A14, "imgEffect")).flatMap((e) => Array.from(e.children).map((c) => ({
     name: c.localName, attrs: Object.fromEntries(Array.from(c.attributes).map((a) => [a.name, a.value])),
+    ...(c.children.length ? { marks: Array.from(c.children).filter((m) => m.localName.endsWith("Mark")).map((m) => ({ keep: m.localName === "foregroundMark",
+      x1: Number(m.getAttribute("x1") ?? 0), y1: Number(m.getAttribute("y1") ?? 0), x2: Number(m.getAttribute("x2") ?? 0), y2: Number(m.getAttribute("y2") ?? 0) })) } : {}),
   })));
 }
 
@@ -74,6 +78,11 @@ function writeEffects(blip: Element, effects: ImgEffect[], originalRid: string |
     const wrap = doc.createElementNS(NS_A14, "a14:imgEffect");
     const el = doc.createElementNS(NS_A14, `a14:${fx.name}`);
     for (const [k, v] of Object.entries(fx.attrs)) el.setAttribute(k, v);
+    for (const m of fx.marks ?? []) {
+      const me = doc.createElementNS(NS_A14, m.keep ? "a14:foregroundMark" : "a14:backgroundMark");
+      for (const k of ["x1", "y1", "x2", "y2"] as const) me.setAttribute(k, String(Math.round(m[k])));
+      el.append(me);
+    }
     wrap.append(el);
     layer.append(wrap);
   }
@@ -188,7 +197,7 @@ export function applyEffect<P extends Pixels>(p: P, fx: ImgEffect): P {
     case "colorTemperature": temperature(d, num(fx, "colorTemp", 6500)); return p;
     case "backgroundRemoval": {
       const f = (k: string, def: number) => num(fx, k, def) / 100000;
-      removeBackground(p, { t: f("t", 10000), b: f("b", 90000), l: f("l", 10000), r: f("r", 90000) });
+      removeBackground(p, { t: f("t", 10000), b: f("b", 90000), l: f("l", 10000), r: f("r", 90000) }, fx.marks ?? []);
       return p;
     }
     case "sharpenSoften": {
@@ -207,10 +216,24 @@ export function applyEffect<P extends Pixels>(p: P, fx: ImgEffect): P {
  * neighbouring pixels of a similar colour that also look like the background's colours. What is left keeps
  * its pixels, the rest becomes transparent (hard edges, as in PowerPoint's result).
  */
-export function removeBackground(p: Pixels, rect: { t: number; b: number; l: number; r: number }): void {
+export function removeBackground(p: Pixels, rect: { t: number; b: number; l: number; r: number }, marks: BgMark[] = []): void {
   const { width: w, height: h, data: d } = p;
   const n = w * h;
   const bg = new Uint8Array(n);
+  // Freistellen's marks: pixels along a "keep" line never become background, along a "remove" line they are.
+  const keepMask = new Uint8Array(n), removeMask = new Uint8Array(n);
+  const rad = Math.max(1, Math.round(Math.min(w, h) / 100));
+  for (const m of marks) {
+    const ax = (m.x1 / 100000) * w, ay = (m.y1 / 100000) * h, bx = (m.x2 / 100000) * w, by = (m.y2 / 100000) * h;
+    const steps = Math.max(1, Math.ceil(Math.hypot(bx - ax, by - ay)));
+    for (let k = 0; k <= steps; k++) {
+      const cx = Math.round(ax + ((bx - ax) * k) / steps), cy = Math.round(ay + ((by - ay) * k) / steps);
+      for (let yy = cy - rad; yy <= cy + rad; yy++) for (let xx = cx - rad; xx <= cx + rad; xx++) {
+        if (xx < 0 || yy < 0 || xx >= w || yy >= h) continue;
+        (m.keep ? keepMask : removeMask)[yy * w + xx] = 1;
+      }
+    }
+  }
   const queue = new Int32Array(n);
   let qh = 0, qt = 0;
   const x0 = Math.floor(rect.l * w), x1 = Math.ceil(rect.r * w), y0 = Math.floor(rect.t * h), y1 = Math.ceil(rect.b * h);
@@ -218,7 +241,8 @@ export function removeBackground(p: Pixels, rect: { t: number; b: number; l: num
   const full = x0 <= 0 && y0 <= 0 && x1 >= w && y1 >= h;
   for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
     const seed = full ? x === 0 || y === 0 || x === w - 1 || y === h - 1 : outside(x, y);
-    if (seed) { const i = y * w + x; bg[i] = 1; queue[qt++] = i; }
+    const i = y * w + x;
+    if ((seed || removeMask[i]) && !keepMask[i]) { bg[i] = 1; queue[qt++] = i; }
   }
   // The background's colours: the seeds' colours in coarse bins, the 16 most frequent.
   const bins = new Map<number, { n: number; r: number; g: number; b: number }>();
@@ -235,7 +259,8 @@ export function removeBackground(p: Pixels, rect: { t: number; b: number; l: num
     const q = queue[qh++], x = q % w, y = (q - x) / w;
     for (const nb of [x > 0 ? q - 1 : -1, x < w - 1 ? q + 1 : -1, y > 0 ? q - w : -1, y < h - 1 ? q + w : -1]) {
       if (nb < 0 || bg[nb]) continue;
-      if (near(q * 4, nb * 4) && nearModel(nb * 4)) { bg[nb] = 1; queue[qt++] = nb; }
+      if (keepMask[nb]) continue;
+      if (near(q * 4, nb * 4) && (nearModel(nb * 4) || removeMask[q])) { bg[nb] = 1; queue[qt++] = nb; }
     }
   }
   // The kept areas keep a pixel of their edge (anti-aliased border pixels belong to the object, as in PowerPoint).

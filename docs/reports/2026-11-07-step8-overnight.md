@@ -60,7 +60,7 @@ transition sounds (21), Microsoft textures, chart and SmartArt styles, the Aufze
   audio, PDF and printing; Raabeschule templates.
 - **Added after midnight (each written as PowerPoint writes it and checked by PowerPoint where it is a file
   matter):** AutoKorrektur; Datei > Optionen; picture effects (Künstlerische Effekte, Farbsättigung, Farbton,
-  Schärfen/Weichzeichnen, Hintergrund entfernen); Benutzerdefinierter Pfad; Kurve, Freihandform and Skizze
+  Schärfen/Weichzeichnen, Hintergrund entfernen with Freistellen); Benutzerdefinierter Pfad; Kurve, Freihandform and Skizze
   (they drew rectangles before); Tabelle zeichnen, Radierer and the table pen; Folienzoom, Abschnittszoom,
   Zusammenfassungszoom; Neues Fenster; .pptm (macros kept, never run), .ppsx, .potx; Formeffekte and
   Texteffekte complete (Abschrägung, 3D-Drehung, Transformieren); Interaktive Schaltflächen; palettes in the
@@ -100,7 +100,8 @@ D-071 and D-072 hold them with reasons. In short:
 21. Artistic picture effects are our own drawing (PowerPoint's filters are not documented); the adjustments
     follow PowerPoint's measured pixels; our original picture stays PNG/JPEG behind PowerPoint's HD-Photo
     relationship (PowerPoint accepts it).
-22. Hintergrund entfernen is applied at once (no Freistellen marking).
+22. Hintergrund entfernen: our own region growing (the same pixels as PowerPoint on the probe's picture), with
+    PowerPoint's Freistellen marks; no magenta overlay.
 23. Tabelle zeichnen splits a cell in the middle (PowerPoint: where the line was drawn).
 24. Zoom previews are drawn by us and not redrawn later; Zusammenfassungszoom's grid for other counts than
     the measured two follows the same spacing (assumption).
@@ -120,7 +121,7 @@ D-071 and D-072 hold them with reasons. In short:
 
 ## Not done (open)
 - SmartArt: creating it, layouts, styles, adding shapes (see 27).
-- Formeloptionen and Freihandgleichung; drawing the text warps; the 3-D options panes; Freistellen.
+- Formeloptionen and Freihandgleichung; drawing the text warps; the 3-D options panes.
 - PowerPoint's own transition sounds and textures (Microsoft content); its designs with artwork (D-070).
 - Second-monitor Referentenansicht (this PC has one screen; one screen works), Alle anordnen, Video and
   animated GIF export, Aufzeichnen (out of scope by D-070), running macros (never).
