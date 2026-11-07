@@ -2031,3 +2031,25 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   own CSS); Ebene nach vorne/hinten and In den Vordergrund/Hintergrund are greyed when the selection is at the
   front or back already, as in PowerPoint. PowerPoint's three-row Schriftart and Absatz groups in the
   screenshots are its narrower layout (its cloud groups take the width); ours is its wide layout.
+
+## D-073 RaabePresent after Step 8: the open items, their order and the owner's answers (2026-11-07)
+
+The owner went through the Step 8 report's open items and decided:
+- **Everything is built, except the cloud,** including what Step 8 had left out on purpose: our own content in
+  place of Microsoft's (transition sounds under PowerPoint's names, textures, designs with artwork of our
+  own; Microsoft's own files are still never copied), Aufzeichnen, and macros.
+- **Order:** (1) Referentenansicht on a second screen, Video and animated GIF export, Alle anordnen (urgent);
+  (2) Formeloptionen taken over from RaabeWrite, and the drawing of text warps (Transformieren), text gradients,
+  bevels and 3-D (3-D last); (3) SmartArt creation with a layout engine of our own (layout descriptions of our
+  own under PowerPoint's layout ids, measured against SmartArt that PowerPoint lays out); (4) own sounds,
+  textures and designs, Aufzeichnen; (5) Freihandgleichung for RaabeWrite and RaabePresent together, macros.
+- **Second screen for testing:** a virtual display driver on the development PC (owner's OK). Chosen:
+  VirtualDrivers/Virtual-Display-Driver (MIT, signed driver, GitHub release). The owner confirms Windows' own
+  administrator prompt; the virtual screen is switched off again after each test, so it never catches the
+  owner's windows or mouse.
+- **MP4:** the file format (ISO base media: ftyp, moov, mdat) is written by our own code, no new package;
+  pictures and sound are encoded by the WebView's own encoders (WebCodecs, H.264 and AAC).
+- **Sounds:** whichever is better per sound: a recording in the public domain or under CC0 (downloads approved
+  by the owner), or one we generate. Each file's source and licence is listed next to it.
+- **Macros:** the same way as RaabeCalc (D-066): an interpreter of our own, shared by both apps; macros are off
+  until "Inhalt aktivieren", and they cannot reach outside the app.

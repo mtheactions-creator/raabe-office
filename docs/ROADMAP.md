@@ -18,6 +18,7 @@ owner's explicit go-ahead.
 | 7 | RaabeCalc (D-061): handles like Excel in every way, the controls first; packages A-F below | in progress since 2026-10-27 (owner's go for the whole step, overnight run): A-E built (D-062, D-063), behaviour catalogue 142/142 |
 | 7b | Diagramm in RaabeWrite: charts with their embedded workbook, drawn by RaabeCalc's chart engine (D-061) | right after Step 7; not to be forgotten |
 | 8 | RaabePresent (D-070): handles like PowerPoint in every way; packages A-F below | overnight run 2026-11-06/07 done (report docs/reports/2026-11-07-step8-overnight.md); waiting for the owner's list |
+| 8b | RaabePresent's open items (D-073): second-screen Referentenansicht, Video/GIF export, Alle anordnen; Formeloptionen and the drawing of warps, gradients, bevels and 3-D; SmartArt creation; own sounds, textures and designs, Aufzeichnen; Freihandgleichung and macros last | agreed 2026-11-07, waiting for the go |
 | 9 | Optional features: read aloud, translator, dictation, ink | |
 
 ## Step 7: RaabeCalc (plan)
