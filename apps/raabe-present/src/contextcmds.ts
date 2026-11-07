@@ -69,6 +69,7 @@ export function contextHost(app: PresentApp): ContextTabHost {
     },
     lineWeights: () => LINE_WEIGHTS.map(([label, w]) => ({ label, run: () => app.setLineWidth(w) })),
     fillExtra: () => app.fillExtra(),
+    cropMenu: () => app.cropMenu(),
     penStyles: () => penMenus(app).styles(), penWeights: () => penMenus(app).weights(),
     penColor: () => `#${app.tablePen.color.length === 6 ? app.tablePen.color : "000000"}`,
     setPenColor: (c) => { app.tablePen.color = c.replace("#", "").toUpperCase(); app.editor.endText(); app.editor.tool = { kind: "tableDraw" }; app.editor.render(); app.updateChrome(); },

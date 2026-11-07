@@ -638,7 +638,9 @@ export class PresentApp implements EditorHost, PanelHost {
       pPr.setAttribute("marL", String(marL));
       pPr.setAttribute("indent", String(kind === "char" ? -285750 : -342900));
       if (kind === "char") {
-        pPr.insertBefore(make(doc, "a:buFont", { typeface: value === "•" ? "Arial" : value === "§" || value === "Ø" || value === "ü" ? "Wingdings" : "Arial", panose: "020B0604020202020204", pitchFamily: "34", charset: "0" }), before);
+        // PowerPoint's fonts for its bullets: Wingdings for the square, star, arrow and tick, Courier New for the hollow circle.
+        const face = ["§", "Ø", "ü", "v"].includes(value) ? "Wingdings" : value === "o" ? "Courier New" : "Arial";
+        pPr.insertBefore(make(doc, "a:buFont", { typeface: face, panose: face === "Arial" ? "020B0604020202020204" : face === "Courier New" ? "02070309020205020404" : "05000000000000000000", pitchFamily: face === "Wingdings" ? "2" : "34", charset: face === "Wingdings" ? "2" : "0" }), before);
         pPr.insertBefore(make(doc, "a:buChar", { char: value }), before);
       } else pPr.insertBefore(make(doc, "a:buAutoNum", { type: value }), before);
     });
@@ -801,10 +803,95 @@ export class PresentApp implements EditorHost, PanelHost {
     });
   }
 
+  /** Formkontur > Pfeile: the arrowheads of the selected lines (our reading of PowerPoint's eleven Pfeilarten). */
+  private arrowEntries(): MenuEntry[] {
+    type End = string | null;
+    const ARROWS: [End, End][] = [[null, null], [null, "arrow"], ["arrow", null], ["arrow", "arrow"], [null, "triangle"], ["triangle", null], ["triangle", "triangle"],
+      ["oval", "triangle"], ["oval", "oval"], ["diamond", "diamond"], [null, "stealth"]];
+    const set = (head: End, tail: End) => {
+      const views = this.editor.selectedViews.filter((v) => v.kind === "cxnSp" || v.kind === "sp");
+      this.editor.edit("Pfeile", () => {
+        for (const v of views) {
+          const sp = kid(this.editor.shapeEl(v.id), "spPr");
+          if (!sp) continue;
+          let ln = kid(sp, "ln");
+          if (!ln) { ln = make(sp.ownerDocument, "a:ln"); sp.insertBefore(ln, kids(sp).find((c) => ["effectLst", "effectDag", "scene3d", "sp3d", "extLst"].includes(c.localName)) ?? null); }
+          for (const n of ["headEnd", "tailEnd"]) kid(ln, n)?.remove();
+          const after = kids(ln).find((c) => c.localName === "extLst") ?? null;
+          if (head) ln.insertBefore(make(sp.ownerDocument, "a:headEnd", { type: head }), after);
+          if (tail) ln.insertBefore(make(sp.ownerDocument, "a:tailEnd", { type: tail }), after);
+        }
+      });
+    };
+    return [...ARROWS.map(([hd, tl], i) => ({ label: `Pfeilart ${i + 1}`, run: () => set(hd, tl) })), "-", { label: "Weitere Pfeile...", run: () => void this.commands.run("draw.format") }];
+  }
+
   outlineExtra(): MenuEntry[] {
     return [{ label: "Keine Kontur", run: () => this.setLine(null) },
       { label: "Stärke", submenu: () => LINE_WEIGHTS.map(([label, w]) => ({ label, run: () => this.setLine(undefined, w) })) },
-      { label: "Striche", submenu: () => LINE_DASHES.map(([label, d]) => ({ label, run: () => this.setLine(undefined, undefined, d) })) }];
+      { label: "Striche", submenu: () => LINE_DASHES.map(([label, d]) => ({ label, run: () => this.setLine(undefined, undefined, d) })) },
+      { label: "Pfeile", submenu: () => this.arrowEntries() }];
+  }
+
+  /** Bildformat > Zuschneiden: PowerPoint's menu. */
+  cropMenu(): MenuEntry[] {
+    const ratios: [string, [number, number][]][] = [["Quadrat", [[1, 1]]], ["Hochformat", [[2, 3], [3, 4], [3, 5], [4, 5]]], ["Querformat", [[3, 2], [4, 3], [5, 3], [5, 4], [16, 9], [16, 10]]]];
+    return [
+      { label: "Zuschneiden", run: () => this.editor.toggleCrop() },
+      { label: "Auf Form zuschneiden", submenu: () => PRESENT_SHAPES.filter((g) => !["Linien", "Interaktive Schaltflächen"].includes(g.title)).flatMap((g) => [{ heading: g.title } as MenuEntry,
+        ...g.items.filter((it) => it.tool.kind === "shape" && !it.tool.freeform).map((it) => ({ label: it.label, run: () => this.changeShape(it.tool.geometry, true) }))]) },
+      { label: "Seitenverhältnis", submenu: () => ratios.flatMap(([head, list]) => [{ heading: head } as MenuEntry, ...list.map(([a, b]) => ({ label: `${a}:${b}`, run: () => void this.cropToRatio(a / b) }))]) },
+      "-",
+      { label: "Ausfüllen", run: () => void this.cropFill(true) },
+      { label: "Einpassen", run: () => void this.cropFill(false) },
+    ];
+  }
+
+  /** The picture's own size in pixels (for cropping by proportions). */
+  private async pictureSize(id: number): Promise<{ w: number; h: number } | null> {
+    const v = this.editor.shapeView(id);
+    const url = v?.pic?.path ? this.image(v.pic.path) : undefined;
+    if (!url) return null;
+    return await new Promise((res) => { const i = new Image(); i.onload = () => res({ w: i.naturalWidth || 1, h: i.naturalHeight || 1 }); i.onerror = () => res(null); i.src = url; });
+  }
+
+  /** Seitenverhältnis: the picture cropped about its middle to the proportion, its width kept. */
+  private async cropToRatio(ratio: number): Promise<void> {
+    const v = this.editor.selectedViews.find((x) => x.kind === "pic");
+    const size = v ? await this.pictureSize(v.id) : null;
+    if (!v || !size) return;
+    const a = size.w / size.h;
+    const crop = a > ratio ? { l: (1 - ratio / a) / 2, r: (1 - ratio / a) / 2, t: 0, b: 0 } : { l: 0, r: 0, t: (1 - a / ratio) / 2, b: (1 - a / ratio) / 2 };
+    this.setPictureCrop(v.id, crop, { x: v.x, y: v.y + (v.h - v.w / ratio) / 2, w: v.w, h: v.w / ratio }, "Seitenverhältnis");
+  }
+
+  /** Ausfüllen: the picture fills its frame (cropped about its middle); Einpassen: the frame takes the picture's proportions. */
+  private async cropFill(fill: boolean): Promise<void> {
+    const v = this.editor.selectedViews.find((x) => x.kind === "pic");
+    const size = v ? await this.pictureSize(v.id) : null;
+    if (!v || !size) return;
+    const a = size.w / size.h, f = v.w / v.h;
+    if (fill) {
+      const crop = a > f ? { l: (1 - f / a) / 2, r: (1 - f / a) / 2, t: 0, b: 0 } : { l: 0, r: 0, t: (1 - a / f) / 2, b: (1 - a / f) / 2 };
+      this.setPictureCrop(v.id, crop, { x: v.x, y: v.y, w: v.w, h: v.h }, "Ausfüllen");
+    } else {
+      const w = a > f ? v.w : v.h * a, h = a > f ? v.w / a : v.h;
+      this.setPictureCrop(v.id, { l: 0, r: 0, t: 0, b: 0 }, { x: v.x + (v.w - w) / 2, y: v.y + (v.h - h) / 2, w, h }, "Einpassen");
+    }
+  }
+
+  private setPictureCrop(id: number, c: { l: number; t: number; r: number; b: number }, box: { x: number; y: number; w: number; h: number }, label: string): void {
+    this.editor.edit(label, () => {
+      const el = this.editor.shapeEl(id);
+      const bf = el ? kid(el, "blipFill") : undefined;
+      if (!el || !bf) return;
+      kid(bf, "srcRect")?.remove();
+      const pc = (v: number) => String(Math.round(v * 100000));
+      const src = make(el.ownerDocument, "a:srcRect", {});
+      for (const [k, v] of Object.entries(c)) if (Math.abs(v) > 0.00001) src.setAttribute(k, pc(v));
+      bf.insertBefore(src, kid(bf, "stretch") ?? kid(bf, "tile") ?? null);
+      S.setXfrm(el, box);
+    });
   }
 
   /** Textkontur (WordArt-Formate): the runs' outline colour, Keine Kontur, Stärke, Striche. */
@@ -1235,6 +1322,41 @@ export class PresentApp implements EditorHost, PanelHost {
     return p ? specHex(spec, this.deck.view(p).theme.colors) : spec;
   }
 
+  /** Entwurf > Farben > Farben anpassen...: the design's twelve colours and a name, as PowerPoint's dialog asks. */
+  private async customColorsDialog(): Promise<void> {
+    const p = this.slidePath();
+    if (!p) return;
+    const cur = this.deck.view(p).theme.colors;
+    const SLOTS: [string, string][] = [["dk1", "Text/Hintergrund - Dunkel 1"], ["lt1", "Text/Hintergrund - Hell 1"], ["dk2", "Text/Hintergrund - Dunkel 2"], ["lt2", "Text/Hintergrund - Hell 2"],
+      ...[1, 2, 3, 4, 5, 6].map((n): [string, string] => [`accent${n}`, `Akzent ${n}`]), ["hlink", "Link"], ["folHlink", "Besuchter Link"]];
+    const inputs = SLOTS.map(([k, label]) => { const i = h("input", { type: "color", value: `#${cur[k] ?? "000000"}` }) as HTMLInputElement; return { k, i, el: h("label", { class: "dlg-row" }, h("span", { style: "display:inline-block;width:200px" }, label), i) }; });
+    const name = h("input", { type: "text", value: "Benutzerdefiniert 1", style: "width:220px" }) as HTMLInputElement;
+    const ok = await showDialog({ title: "Neue Designfarben erstellen", body: h("div", { class: "form" }, h("b", null, "Designfarben"), ...inputs.map((x) => x.el), h("label", null, "Name: ", name)),
+      buttons: [{ label: "Speichern", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
+    if (!ok) return;
+    const colors: Record<string, string> = { ...cur };
+    for (const x of inputs) colors[x.k] = x.i.value.slice(1).toUpperCase();
+    this.applyColorSet(name.value.trim() || "Benutzerdefiniert 1", colors);
+  }
+
+  /** Start > Ersetzen > Schriftarten ersetzen...: one font for another throughout the presentation (text and design fonts). */
+  private async replaceFontsDialog(): Promise<void> {
+    const pptx = this.deck.pptx;
+    const parts = [...this.deck.slides.map((s) => s.path), ...pptx.masters().flatMap((m) => [m, ...pptx.layouts(m)])].filter((x) => pptx.has(x));
+    const themes = [...new Set(pptx.masters().map((m) => pptx.themeOf(m)).filter((t): t is string => !!t))];
+    const used = new Set<string>();
+    for (const part of [...parts, ...themes]) for (const n of ["latin", "ea", "cs"]) for (const e of Array.from(pptx.doc(part).getElementsByTagNameNS(PptxDom.NS_A, n))) { const t = e.getAttribute("typeface"); if (t && !t.startsWith("+")) used.add(t); }
+    if (!used.size) return;
+    const from = h("select", null, ...[...used].sort().map((f) => h("option", { value: f }, f))) as HTMLSelectElement;
+    const to = h("select", null, ...this.ribbonContext().fontOptions().flatMap((g) => g.items).filter((f, i, a) => a.indexOf(f) === i).map((f) => h("option", { value: f }, f))) as HTMLSelectElement;
+    const ok = await showDialog({ title: "Schriftart ersetzen", body: h("div", { class: "form" }, h("label", null, "Ersetzen: ", from), h("label", null, "Durch: ", to)),
+      buttons: [{ label: "Ersetzen", value: true, primary: true }, { label: "Schließen", value: false }], cancel: false });
+    if (!ok || from.value === to.value) return;
+    this.deck.change("Schriftarten ersetzen", [...parts, ...themes], () => {
+      for (const part of [...parts, ...themes]) for (const n of ["latin", "ea", "cs"]) for (const e of Array.from(pptx.doc(part).getElementsByTagNameNS(PptxDom.NS_A, n))) if (e.getAttribute("typeface") === from.value) e.setAttribute("typeface", to.value);
+    });
+  }
+
   /** Whether the presentation carries a VBA project (an opened .pptm): kept, never run (D-072). */
   hasMacros(deck: Deck): boolean {
     return deck.pptx.rels(deck.pptx.presPath).list.some((r) => r.type === RT_VBA);
@@ -1644,9 +1766,9 @@ export class PresentApp implements EditorHost, PanelHost {
     };
   }
 
-  /** Form bearbeiten > Form ändern: the selected shapes take another geometry (text and look stay). */
-  changeShape(geometry: string): void {
-    const views = this.editor.selectedViews.filter((v) => v.kind === "sp");
+  /** Form bearbeiten > Form ändern: the selected shapes take another geometry (text and look stay); with `pictures` the pictures (Auf Form zuschneiden). */
+  changeShape(geometry: string, pictures = false): void {
+    const views = this.editor.selectedViews.filter((v) => v.kind === (pictures ? "pic" : "sp"));
     if (!views.length) return;
     this.editor.edit("Form ändern", () => {
       for (const v of views) {
@@ -1899,13 +2021,14 @@ export class PresentApp implements EditorHost, PanelHost {
   }
 
   private bulletMenu(): MenuEntry[] {
-    const chars: [string, string][] = [["Ohne", ""], ["Gefüllte runde Aufzählungszeichen", "•"], ["Leere runde Aufzählungszeichen", "o"], ["Gefüllte quadratische Aufzählungszeichen", "§"], ["Pfeil-Aufzählungszeichen", "Ø"], ["Häkchen-Aufzählungszeichen", "ü"], ["Gefüllte Raute", "v"]];
+    const chars: [string, string][] = [["Keine", ""], ["Ausgefüllte runde Aufzählungszeichen", "•"], ["Hohle runde Aufzählungszeichen", "o"], ["Ausgefüllte quadratische Aufzählungszeichen", "§"],
+      ["Silbentrennung-Aufzählungszeichen", String.fromCharCode(0x2013)], ["Sternförmige Aufzählungszeichen", "v"], ["Pfeilförmige Aufzählungszeichen", "Ø"], ["Häkchenaufzählungszeichen", "ü"]];
     return chars.map(([label, c]) => ({ label, run: () => c ? this.toggleBullets("char", c) : this.formatParas("Aufzählungszeichen", (pPr) => { for (const k of kids(pPr)) if (["buChar", "buAutoNum", "buFont"].includes(k.localName)) k.remove(); if (!kid(pPr, "buNone")) pPr.insertBefore(make(pPr.ownerDocument, "a:buNone"), kids(pPr).find((x) => ["tabLst", "defRPr", "extLst"].includes(x.localName)) ?? null); }) }));
   }
 
   private numberMenu(): MenuEntry[] {
-    const types: [string, string][] = [["1. 2. 3.", "arabicPeriod"], ["1) 2) 3)", "arabicParenR"], ["I. II. III.", "romanUcPeriod"], ["A. B. C.", "alphaUcPeriod"], ["a) b) c)", "alphaLcParenR"], ["a. b. c.", "alphaLcPeriod"], ["i. ii. iii.", "romanLcPeriod"]];
-    return [{ label: "Ohne", run: () => this.toggleBullets("auto", "none") }, ...types.map(([label, t]) => ({ label, run: () => this.toggleBullets("auto", t) }))];
+    const types: [string, string][] = [["1. 2. 3.", "arabicPeriod"], ["1) 2) 3)", "arabicParenR"], ["I. II. III.", "romanUcPeriod"], ["Nummern in Klammern", "arabicParenBoth"], ["a) b) c)", "alphaLcParenR"], ["a. b. c.", "alphaLcPeriod"], ["i. ii. iii.", "romanLcPeriod"]];
+    return [{ label: "Keine", run: () => this.toggleBullets("auto", "none") }, ...types.map(([label, t]) => ({ label, run: () => this.toggleBullets("auto", t) })), "-", { label: "Aufzählungszeichen und Nummerierung...", run: () => void this.commands.run("para.dialog") }];
   }
 
   // ----- commands ------------------------------------------------------------------------------------------
@@ -2000,6 +2123,7 @@ export class PresentApp implements EditorHost, PanelHost {
     impl("insert.photoAlbum", () => import("./photoalbum").then((m) => m.photoAlbumDialog(this)), () => !!this.platform.openImagesDialog);
     impl("view.switchWindow", () => {}, () => this.docs.length > 0);
     impl("view.newWindow", () => this.newWindow(), () => this.docs.length > 0);
+    impl("edit.replaceFonts", () => void this.replaceFontsDialog(), () => this.docs.length > 0);
     impl("insert.action", () => import("./links").then((m) => m.actionDialog(this)), () => this.editor.sel.length === 1);
     impl("view.ruler", () => { this.editor.showRuler = !this.editor.showRuler; this.editor.fitZoom(); this.editor.render(); this.updateChrome(); }, () => this.view === "normal", () => this.editor.showRuler);
     impl("draw.arrange", () => {});
@@ -2578,7 +2702,7 @@ export class PresentApp implements EditorHost, PanelHost {
         slideSize: [{ cmd: "design.slide4x3" }, { cmd: "design.slide16x9" }, "-", { cmd: "design.slideCustom" }],
         showCustom: [], record: [],
         transOptions: () => this.transMod?.transitionOptions(this) ?? [], animOptions: () => this.animMod?.animationOptions(this) ?? [], animStart: [{ label: "Beim Klicken", run: () => this.animPane.setStart("clickEffect") }, { label: "Mit Vorherigen", run: () => this.animPane.setStart("withEffect") }, { label: "Nach Vorherigen", run: () => this.animPane.setStart("afterEffect") }],
-        colors: () => COLOR_SETS.map((c) => ({ label: c.name, run: () => this.applyColorSet(c.name, c.colors) })),
+        colors: () => [...COLOR_SETS.map((c) => ({ label: c.name, run: () => this.applyColorSet(c.name, c.colors) })), "-", { label: "Farben anpassen...", run: () => void this.customColorsDialog() }],
         fonts: () => FONT_SETS.map((f) => ({ label: f.label, run: () => this.applyFontSet(f.name, f.major, f.minor) })),
         underline: [], outlineWeight: [], outlineDash: [], effects: this.effectsMenu(), quickStyles: () => [], zoomFit: [],
         equations: () => BUILT_IN.map((e) => ({ label: e.name, run: () => void insertEquation(this, e.seq) })),

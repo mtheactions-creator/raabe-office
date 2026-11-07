@@ -111,6 +111,7 @@ export interface ContextTabHost {
   pictureColor(): MenuEntry[];
   pictureTransparency(): MenuEntry[];
   pictureCorrections(): MenuEntry[];
+  cropMenu(): MenuEntry[];
   pictureArtistic(): MenuEntry[];
   lineWeights(): MenuEntry[];
   fillExtra(): MenuEntry[];
@@ -157,7 +158,7 @@ export function pictureFormatTab(h: ContextTabHost): Tab {
         stack(h.color(() => h.lineColor(), (c) => h.setLine(c), "pic.border", "V", true, () => h.outlineExtra()), dd("pic.effects", "E", "medium", () => h.effects()), b("pic.layout", "A1", "medium"))] },
       { id: "access", label: "Barrierefreiheit", key: "ZR", icon: "alt-text", controls: [b("shape.altTextPane", "AT", "large")] },
       { id: "arrange", label: "Anordnen", key: "ZO", icon: "bring-forward", controls: arrange(true) },
-      { id: "size", label: "Größe", key: "ZG", icon: "crop", launcher: { cmd: "shape.sizeDialog", key: "ß" }, controls: [b("pic.crop", "C", "large"), stack(h.sizeSpin("h"), h.sizeSpin("w"))] },
+      { id: "size", label: "Größe", key: "ZG", icon: "crop", launcher: { cmd: "shape.sizeDialog", key: "ß" }, controls: [{ type: "split", cmd: "pic.crop", key: "C", size: "large", get menu() { return h.cropMenu(); } } as Control, stack(h.sizeSpin("h"), h.sizeSpin("w"))] },
     ],
   };
 }

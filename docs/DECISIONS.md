@@ -1907,3 +1907,11 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   built. Tabellenentwurf > Stiftart (11) and Stiftstärke (9) are PowerPoint's entries; choosing one, or a
   Stiftfarbe, takes up the pen, and a click on a cell line with the pen gives that line the pen's look (both
   cells beside it).
+- **More of PowerPoint's menus by the inventory:** Aufzählungszeichen and Nummerierung with PowerPoint's entries
+  (Ausgefüllte/Hohle runde, quadratische, Silbentrennung-, Sternförmige, Pfeilförmige, Häkchen-; Nummern in
+  Klammern) in PowerPoint's bullet fonts (Wingdings, Courier New); Bildformat > Zuschneiden as PowerPoint's
+  split button (Zuschneiden, Auf Form zuschneiden with the Formen gallery, Seitenverhältnis 1:1 … 16:10 cropped
+  about the middle with the width kept, Ausfüllen, Einpassen); Formkontur > Pfeile (eleven Pfeilarten, our
+  reading; their names are from knowledge of PowerPoint, the inventory did not open that submenu); Ersetzen >
+  Schriftarten ersetzen... (text and design fonts throughout); Farben > Farben anpassen... (the twelve design
+  colours and a name, applied like a colour set). Formkontur > Skizziert and the Pipette are not built.
