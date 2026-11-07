@@ -1,0 +1,1838 @@
+{
+ "date": "2026-11-07",
+ "same": 270,
+ "of": 336,
+ "cases": {
+  "click rect centre": {
+   "area": "click",
+   "result": "same",
+   "diff": []
+  },
+  "click rect near left": {
+   "area": "click",
+   "result": "same",
+   "diff": []
+  },
+  "click rect top edge": {
+   "area": "click",
+   "result": "same",
+   "diff": []
+  },
+  "click rect then empty": {
+   "area": "click",
+   "result": "same",
+   "diff": []
+  },
+  "click rect twice": {
+   "area": "click",
+   "result": "same",
+   "diff": []
+  },
+  "dblclick rect": {
+   "area": "dblclick",
+   "result": "same",
+   "diff": []
+  },
+  "rclick rect": {
+   "area": "rclick",
+   "result": "same",
+   "diff": []
+  },
+  "click rect shift other": {
+   "area": "multi",
+   "result": "same",
+   "diff": []
+  },
+  "click rect ctrl other": {
+   "area": "multi",
+   "result": "same",
+   "diff": []
+  },
+  "click rect shift other twice": {
+   "area": "multi",
+   "result": "same",
+   "diff": []
+  },
+  "drag rect plain": {
+   "area": "drag",
+   "result": "different",
+   "diff": [
+    "selection: {'type': 'Text', 'ids': [0], 'start': 1, 'length': 4} vs {'type': 'Text', 'ids': [0], 'start': 3, 'length': 2}"
+   ]
+  },
+  "drag rect shift": {
+   "area": "drag",
+   "result": "different",
+   "diff": [
+    "selection: {'type': 'Text', 'ids': [0], 'start': 1, 'length': 4} vs {'type': 'Text', 'ids': [0], 'start': 3, 'length': 2}"
+   ]
+  },
+  "drag rect ctrl": {
+   "area": "drag",
+   "result": "different",
+   "diff": [
+    "selection: {'type': 'Text', 'ids': [0], 'start': 1, 'length': 4} vs {'type': 'Text', 'ids': [0], 'start': 3, 'length': 2}"
+   ]
+  },
+  "drag rect alt": {
+   "area": "drag",
+   "result": "different",
+   "diff": [
+    "selection: {'type': 'Text', 'ids': [0], 'start': 1, 'length': 4} vs {'type': 'Text', 'ids': [0], 'start': 3, 'length': 2}"
+   ]
+  },
+  "drag rect edge": {
+   "area": "drag",
+   "result": "same",
+   "diff": []
+  },
+  "handle rect se plain": {
+   "area": "handle",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [300.0, 150.0, 230.5, 139.5] vs [300.0, 150.0, 228.9, 139.3]"
+   ]
+  },
+  "handle rect se shift": {
+   "area": "handle",
+   "result": "same",
+   "diff": []
+  },
+  "handle rect se ctrl": {
+   "area": "handle",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [269.5, 130.5, 261.1, 159.0] vs [271.1, 130.7, 257.7, 158.6]"
+   ]
+  },
+  "handle rect e plain": {
+   "area": "handle",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [300.0, 150.0, 230.5, 120.0] vs [300.0, 150.0, 228.9, 120.0]"
+   ]
+  },
+  "handle rect e shift": {
+   "area": "handle",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [300.0, 150.0, 230.5, 120.0] vs [300.0, 150.0, 228.9, 120.0]"
+   ]
+  },
+  "handle rect e ctrl": {
+   "area": "handle",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [269.5, 150.0, 261.1, 120.0] vs [271.1, 150.0, 257.7, 120.0]"
+   ]
+  },
+  "handle rect s plain": {
+   "area": "handle",
+   "result": "same",
+   "diff": []
+  },
+  "handle rect s shift": {
+   "area": "handle",
+   "result": "same",
+   "diff": []
+  },
+  "handle rect s ctrl": {
+   "area": "handle",
+   "result": "same",
+   "diff": []
+  },
+  "handle rect nw plain": {
+   "area": "handle",
+   "result": "same",
+   "diff": []
+  },
+  "handle rect nw shift": {
+   "area": "handle",
+   "result": "same",
+   "diff": []
+  },
+  "handle rect nw ctrl": {
+   "area": "handle",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [330.4, 169.8, 139.1, 80.5] vs [328.9, 168.9, 142.3, 82.3]"
+   ]
+  },
+  "handle rect n plain": {
+   "area": "handle",
+   "result": "same",
+   "diff": []
+  },
+  "handle rect n shift": {
+   "area": "handle",
+   "result": "same",
+   "diff": []
+  },
+  "handle rect n ctrl": {
+   "area": "handle",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [300.0, 169.8, 200.0, 80.5] vs [300.0, 168.9, 200.0, 82.3]"
+   ]
+  },
+  "handle rect w plain": {
+   "area": "handle",
+   "result": "same",
+   "diff": []
+  },
+  "handle rect w shift": {
+   "area": "handle",
+   "result": "same",
+   "diff": []
+  },
+  "handle rect w ctrl": {
+   "area": "handle",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [330.4, 150.0, 139.1, 120.0] vs [328.9, 150.0, 142.3, 120.0]"
+   ]
+  },
+  "rotate rect": {
+   "area": "rotate",
+   "result": "different",
+   "diff": [
+    "selection: {'type': 'None'} vs {'type': 'Shapes', 'ids': [0]}",
+    "shape 0 rot: 0.0 vs 59.1"
+   ]
+  },
+  "rotate rect shift": {
+   "area": "rotate",
+   "result": "different",
+   "diff": [
+    "selection: {'type': 'None'} vs {'type': 'Shapes', 'ids': [0]}",
+    "shape 0 rot: 0.0 vs 60"
+   ]
+  },
+  "frame rect left": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect right": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect up": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect down": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect ctrl+left": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect ctrl+down": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect shift+right": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect alt+right": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect alt+left": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect delete": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect backspace": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect ctrl+d": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect tab": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect shift+tab": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect esc": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect enter": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect f2": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect ctrl+a": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect ctrl+c": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect ctrl+x": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect ctrl+z": {
+   "area": "framekeys",
+   "result": "different",
+   "diff": [
+    "selection: {'type': 'None'} vs {'type': 'Shapes', 'ids': [0]}",
+    "shapes: 1 vs 2",
+    "shape 0 box: [620.0, 330.0, 120.0, 80.0] vs [300.0, 150.0, 200.0, 120.0]",
+    "shape 0 text: '' vs 'Form'"
+   ]
+  },
+  "frame rect ctrl+shift+f": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect ctrl+e": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect ctrl+r": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect ctrl+l": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect shift+left": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect shift+up": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect shift+down": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect ctrl+shift+right": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect alt+shift+right": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect shift+enter": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect ctrl+delete": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect ctrl+backspace": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect ctrl+b": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect type": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect ctrl+d twice": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect copy paste": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect delete undo": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame rect nudge 3": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "click ellipse centre": {
+   "area": "click",
+   "result": "same",
+   "diff": []
+  },
+  "click ellipse near left": {
+   "area": "click",
+   "result": "same",
+   "diff": []
+  },
+  "click ellipse top edge": {
+   "area": "click",
+   "result": "same",
+   "diff": []
+  },
+  "click ellipse then empty": {
+   "area": "click",
+   "result": "same",
+   "diff": []
+  },
+  "click ellipse twice": {
+   "area": "click",
+   "result": "same",
+   "diff": []
+  },
+  "dblclick ellipse": {
+   "area": "dblclick",
+   "result": "same",
+   "diff": []
+  },
+  "rclick ellipse": {
+   "area": "rclick",
+   "result": "same",
+   "diff": []
+  },
+  "click ellipse shift other": {
+   "area": "multi",
+   "result": "same",
+   "diff": []
+  },
+  "click ellipse ctrl other": {
+   "area": "multi",
+   "result": "same",
+   "diff": []
+  },
+  "click ellipse shift other twice": {
+   "area": "multi",
+   "result": "same",
+   "diff": []
+  },
+  "drag ellipse plain": {
+   "area": "drag",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [356.8, 173.5, 200.0, 120.0] vs [360.2, 175.0, 200.0, 120.0]"
+   ]
+  },
+  "drag ellipse shift": {
+   "area": "drag",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [356.8, 150.0, 200.0, 120.0] vs [360.2, 150.0, 200.0, 120.0]"
+   ]
+  },
+  "drag ellipse ctrl": {
+   "area": "drag",
+   "result": "different",
+   "diff": [
+    "shape 1 box: [356.8, 173.5, 200.0, 120.0] vs [360.2, 175.0, 200.0, 120.0]"
+   ]
+  },
+  "drag ellipse alt": {
+   "area": "drag",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [356.8, 173.5, 200.0, 120.0] vs [360.2, 175.0, 200.0, 120.0]"
+   ]
+  },
+  "drag ellipse edge": {
+   "area": "drag",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [337.9, 187.9, 200.0, 120.0] vs [339.8, 189.8, 200.0, 120.0]"
+   ]
+  },
+  "handle ellipse se plain": {
+   "area": "handle",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [300.0, 150.0, 230.5, 139.5] vs [300.0, 150.0, 228.9, 139.3]"
+   ]
+  },
+  "handle ellipse se shift": {
+   "area": "handle",
+   "result": "same",
+   "diff": []
+  },
+  "handle ellipse se ctrl": {
+   "area": "handle",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [269.5, 130.5, 261.1, 159.0] vs [271.1, 130.7, 257.7, 158.6]"
+   ]
+  },
+  "handle ellipse e plain": {
+   "area": "handle",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [300.0, 150.0, 230.5, 120.0] vs [300.0, 150.0, 228.9, 120.0]"
+   ]
+  },
+  "handle ellipse e shift": {
+   "area": "handle",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [300.0, 150.0, 230.5, 120.0] vs [300.0, 150.0, 228.9, 120.0]"
+   ]
+  },
+  "handle ellipse e ctrl": {
+   "area": "handle",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [269.5, 150.0, 261.1, 120.0] vs [271.1, 150.0, 257.7, 120.0]"
+   ]
+  },
+  "handle ellipse s plain": {
+   "area": "handle",
+   "result": "same",
+   "diff": []
+  },
+  "handle ellipse s shift": {
+   "area": "handle",
+   "result": "same",
+   "diff": []
+  },
+  "handle ellipse s ctrl": {
+   "area": "handle",
+   "result": "same",
+   "diff": []
+  },
+  "handle ellipse nw plain": {
+   "area": "handle",
+   "result": "same",
+   "diff": []
+  },
+  "handle ellipse nw shift": {
+   "area": "handle",
+   "result": "same",
+   "diff": []
+  },
+  "handle ellipse nw ctrl": {
+   "area": "handle",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [330.4, 169.8, 139.1, 80.5] vs [328.9, 168.9, 142.3, 82.3]"
+   ]
+  },
+  "handle ellipse n plain": {
+   "area": "handle",
+   "result": "same",
+   "diff": []
+  },
+  "handle ellipse n shift": {
+   "area": "handle",
+   "result": "same",
+   "diff": []
+  },
+  "handle ellipse n ctrl": {
+   "area": "handle",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [300.0, 169.8, 200.0, 80.5] vs [300.0, 168.9, 200.0, 82.3]"
+   ]
+  },
+  "handle ellipse w plain": {
+   "area": "handle",
+   "result": "same",
+   "diff": []
+  },
+  "handle ellipse w shift": {
+   "area": "handle",
+   "result": "same",
+   "diff": []
+  },
+  "handle ellipse w ctrl": {
+   "area": "handle",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [330.4, 150.0, 139.1, 120.0] vs [328.9, 150.0, 142.3, 120.0]"
+   ]
+  },
+  "rotate ellipse": {
+   "area": "rotate",
+   "result": "different",
+   "diff": [
+    "selection: {'type': 'None'} vs {'type': 'Shapes', 'ids': [0]}",
+    "shape 0 rot: 0.0 vs 59.1"
+   ]
+  },
+  "rotate ellipse shift": {
+   "area": "rotate",
+   "result": "different",
+   "diff": [
+    "selection: {'type': 'None'} vs {'type': 'Shapes', 'ids': [0]}",
+    "shape 0 rot: 0.0 vs 60"
+   ]
+  },
+  "frame ellipse left": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse right": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse up": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse down": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse ctrl+left": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse ctrl+down": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse shift+right": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse alt+right": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse alt+left": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse delete": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse backspace": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse ctrl+d": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse tab": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse shift+tab": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse esc": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse enter": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse f2": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse ctrl+a": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse ctrl+c": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse ctrl+x": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse ctrl+z": {
+   "area": "framekeys",
+   "result": "different",
+   "diff": [
+    "selection: {'type': 'None'} vs {'type': 'Shapes', 'ids': [0]}",
+    "shapes: 1 vs 2",
+    "shape 0 box: [620.0, 330.0, 120.0, 80.0] vs [300.0, 150.0, 200.0, 120.0]"
+   ]
+  },
+  "frame ellipse ctrl+shift+f": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse ctrl+e": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse ctrl+r": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse ctrl+l": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse shift+left": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse shift+up": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse shift+down": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse ctrl+shift+right": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse alt+shift+right": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse shift+enter": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse ctrl+delete": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse ctrl+backspace": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse ctrl+b": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse type": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse ctrl+d twice": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse copy paste": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse delete undo": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame ellipse nudge 3": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "click textbox centre": {
+   "area": "click",
+   "result": "same",
+   "diff": []
+  },
+  "click textbox near left": {
+   "area": "click",
+   "result": "same",
+   "diff": []
+  },
+  "click textbox top edge": {
+   "area": "click",
+   "result": "same",
+   "diff": []
+  },
+  "click textbox then empty": {
+   "area": "click",
+   "result": "same",
+   "diff": []
+  },
+  "click textbox twice": {
+   "area": "click",
+   "result": "same",
+   "diff": []
+  },
+  "dblclick textbox": {
+   "area": "dblclick",
+   "result": "different",
+   "diff": [
+    "selection: {'type': 'Text', 'ids': [0], 'start': 11, 'length': 0} vs {'type': 'Text', 'ids': [0], 'start': 7, 'length': 4}"
+   ]
+  },
+  "rclick textbox": {
+   "area": "rclick",
+   "result": "same",
+   "diff": []
+  },
+  "click textbox shift other": {
+   "area": "multi",
+   "result": "same",
+   "diff": []
+  },
+  "click textbox ctrl other": {
+   "area": "multi",
+   "result": "same",
+   "diff": []
+  },
+  "click textbox shift other twice": {
+   "area": "multi",
+   "result": "same",
+   "diff": []
+  },
+  "drag textbox plain": {
+   "area": "drag",
+   "result": "same",
+   "diff": []
+  },
+  "drag textbox shift": {
+   "area": "drag",
+   "result": "same",
+   "diff": []
+  },
+  "drag textbox ctrl": {
+   "area": "drag",
+   "result": "same",
+   "diff": []
+  },
+  "drag textbox alt": {
+   "area": "drag",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [356.8, 173.5, 240.0, 29.1] vs [360.2, 175.0, 240.0, 28.9]"
+   ]
+  },
+  "drag textbox edge": {
+   "area": "drag",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [337.9, 187.9, 240.0, 29.1] vs [339.8, 189.8, 240.0, 28.9]"
+   ]
+  },
+  "handle textbox se plain": {
+   "area": "handle",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [300.0, 150.0, 270.7, 29.1] vs [300.0, 150.0, 268.6, 48.4]"
+   ]
+  },
+  "handle textbox se shift": {
+   "area": "handle",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [300.0, 150.0, 400.8, 29.1] vs [300.0, 150.0, 401.4, 48.4]"
+   ]
+  },
+  "handle textbox se ctrl": {
+   "area": "handle",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [269.3, 130.5, 301.4, 29.1] vs [271.4, 130.5, 297.3, 67.9]"
+   ]
+  },
+  "handle textbox e plain": {
+   "area": "handle",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [330.3, 169.7, 240.0, 29.1] vs [300.0, 150.0, 268.6, 28.9]"
+   ]
+  },
+  "handle textbox e shift": {
+   "area": "handle",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [330.3, 150.0, 240.0, 29.1] vs [300.0, 150.0, 268.6, 28.9]"
+   ]
+  },
+  "handle textbox e ctrl": {
+   "area": "handle",
+   "result": "different",
+   "diff": [
+    "selection: {'type': 'Shapes', 'ids': [1]} vs {'type': 'Shapes', 'ids': [0]}",
+    "shapes: 2 vs 1",
+    "shape 0 box: [300.0, 150.0, 240.0, 29.1] vs [271.4, 150.0, 297.3, 28.9]"
+   ]
+  },
+  "handle textbox s plain": {
+   "area": "handle",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [300.0, 150.0, 240.0, 29.1] vs [300.0, 150.0, 240.0, 48.4]"
+   ]
+  },
+  "handle textbox s shift": {
+   "area": "handle",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [300.0, 150.0, 240.0, 29.1] vs [300.0, 150.0, 240.0, 48.4]"
+   ]
+  },
+  "handle textbox s ctrl": {
+   "area": "handle",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [300.0, 150.0, 240.0, 29.1] vs [300.0, 130.5, 240.0, 67.9]"
+   ]
+  },
+  "handle textbox nw plain": {
+   "area": "handle",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [330.4, 169.8, 209.6, 29.1] vs [328.9, 168.9, 211.1, 10.1]"
+   ]
+  },
+  "handle textbox nw shift": {
+   "area": "handle",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [330.4, 153.7, 209.6, 29.1] vs [328.9, 153.5, 211.1, 25.5]"
+   ]
+  },
+  "handle textbox nw ctrl": {
+   "area": "handle",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [330.4, 159.3, 179.1, 29.1] vs [328.9, 160.1, 182.3, 8.8]"
+   ]
+  },
+  "handle textbox n plain": {
+   "area": "handle",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [300.0, 150.0, 240.0, 29.1] vs [300.0, 168.9, 240.0, 10.1]"
+   ]
+  },
+  "handle textbox n shift": {
+   "area": "handle",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [300.0, 150.0, 240.0, 29.1] vs [300.0, 168.9, 240.0, 10.1]"
+   ]
+  },
+  "handle textbox n ctrl": {
+   "area": "handle",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [300.0, 150.0, 240.0, 29.1] vs [300.0, 160.1, 240.0, 8.8]"
+   ]
+  },
+  "handle textbox w plain": {
+   "area": "handle",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [330.3, 169.7, 240.0, 29.1] vs [328.9, 150.0, 211.1, 28.9]"
+   ]
+  },
+  "handle textbox w shift": {
+   "area": "handle",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [330.3, 150.0, 240.0, 29.1] vs [328.9, 150.0, 211.1, 28.9]"
+   ]
+  },
+  "handle textbox w ctrl": {
+   "area": "handle",
+   "result": "different",
+   "diff": [
+    "selection: {'type': 'Shapes', 'ids': [1]} vs {'type': 'Shapes', 'ids': [0]}",
+    "shapes: 2 vs 1",
+    "shape 0 box: [300.0, 150.0, 240.0, 29.1] vs [328.9, 150.0, 182.3, 28.9]"
+   ]
+  },
+  "rotate textbox": {
+   "area": "rotate",
+   "result": "different",
+   "diff": [
+    "selection: {'type': 'None'} vs {'type': 'Shapes', 'ids': [0]}",
+    "shape 0 rot: 0.0 vs 88.2"
+   ]
+  },
+  "rotate textbox shift": {
+   "area": "rotate",
+   "result": "different",
+   "diff": [
+    "selection: {'type': 'None'} vs {'type': 'Shapes', 'ids': [0]}",
+    "shape 0 rot: 0.0 vs 90"
+   ]
+  },
+  "frame textbox left": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame textbox right": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame textbox up": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame textbox down": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame textbox ctrl+left": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame textbox ctrl+down": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame textbox shift+right": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame textbox alt+right": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame textbox alt+left": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame textbox delete": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame textbox backspace": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame textbox ctrl+d": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame textbox tab": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame textbox shift+tab": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame textbox esc": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame textbox enter": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame textbox f2": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame textbox ctrl+a": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame textbox ctrl+c": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame textbox ctrl+x": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame textbox ctrl+z": {
+   "area": "framekeys",
+   "result": "different",
+   "diff": [
+    "selection: {'type': 'None'} vs {'type': 'Shapes', 'ids': [0]}",
+    "shapes: 1 vs 2",
+    "shape 0 box: [620.0, 330.0, 120.0, 80.0] vs [300.0, 150.0, 240.0, 28.9]",
+    "shape 0 text: '' vs 'Hallo Welt'"
+   ]
+  },
+  "frame textbox ctrl+shift+f": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame textbox ctrl+e": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame textbox ctrl+r": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame textbox ctrl+l": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame textbox shift+left": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame textbox shift+up": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame textbox shift+down": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame textbox ctrl+shift+right": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame textbox alt+shift+right": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame textbox shift+enter": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame textbox ctrl+delete": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame textbox ctrl+backspace": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame textbox ctrl+b": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame textbox type": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame textbox ctrl+d twice": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame textbox copy paste": {
+   "area": "framekeys",
+   "result": "different",
+   "diff": [
+    "selection: {'type': 'Text', 'ids': [2], 'start': 1, 'length': 0} vs {'type': 'Shapes', 'ids': [2]}"
+   ]
+  },
+  "frame textbox delete undo": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "frame textbox nudge 3": {
+   "area": "framekeys",
+   "result": "same",
+   "diff": []
+  },
+  "text home": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text sel home": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text end": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text sel end": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text ctrl+home": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text sel ctrl+home": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text ctrl+end": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text sel ctrl+end": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text left": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text sel left": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text right": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text sel right": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text up": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text sel up": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text down": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text sel down": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text shift+home": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text sel shift+home": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text shift+end": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text sel shift+end": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text ctrl+left": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text sel ctrl+left": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text ctrl+right": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text sel ctrl+right": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text ctrl+shift+right": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text sel ctrl+shift+right": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text backspace": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text sel backspace": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text delete": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text sel delete": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text ctrl+backspace": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text sel ctrl+backspace": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text ctrl+delete": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text sel ctrl+delete": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text enter": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text sel enter": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text shift+enter": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text sel shift+enter": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text tab": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text sel tab": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text shift+tab": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text sel shift+tab": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text esc": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text sel esc": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text f2": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text sel f2": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text ctrl+a": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text sel ctrl+a": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text ctrl+shift+f": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text sel ctrl+shift+f": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text ctrl+e": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text sel ctrl+e": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text ctrl+z": {
+   "area": "textkeys",
+   "result": "different",
+   "diff": [
+    "selection: {'type': 'None'} vs {'type': 'Shapes', 'ids': [0]}",
+    "shape 0 box: [140.4, 150.0, 479.2, 50.9] vs [200.0, 150.0, 360.0, 50.7]"
+   ]
+  },
+  "text sel ctrl+z": {
+   "area": "textkeys",
+   "result": "different",
+   "diff": [
+    "shape 0 box: [162.2, 150.0, 435.6, 50.9] vs [200.0, 150.0, 360.0, 50.7]"
+   ]
+  },
+  "text alt+shift+right": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text sel alt+shift+right": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text alt+shift+left": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text sel alt+shift+left": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text ctrl+up": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text sel ctrl+up": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text ctrl+down": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text sel ctrl+down": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text pagedown": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text sel pagedown": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text type": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text type over selection": {
+   "area": "textkeys",
+   "result": "same",
+   "diff": []
+  },
+  "text dblclick word": {
+   "area": "textmouse",
+   "result": "different",
+   "diff": [
+    "selection: {'type': 'Text', 'ids': [0], 'start': 7, 'length': 5} vs {'type': 'Text', 'ids': [0], 'start': 7, 'length': 6}"
+   ]
+  },
+  "text triple": {
+   "area": "textmouse",
+   "result": "same",
+   "diff": []
+  },
+  "text shift click": {
+   "area": "textmouse",
+   "result": "same",
+   "diff": []
+  },
+  "text drag select": {
+   "area": "textmouse",
+   "result": "different",
+   "diff": [
+    "selection: {'type': 'Text', 'ids': [0], 'start': 1, 'length': 17} vs {'type': 'Text', 'ids': [0], 'start': 5, 'length': 12}"
+   ]
+  },
+  "text click other shape": {
+   "area": "textmouse",
+   "result": "same",
+   "diff": []
+  },
+  "text click empty": {
+   "area": "textmouse",
+   "result": "same",
+   "diff": []
+  },
+  "text esc esc": {
+   "area": "textmouse",
+   "result": "same",
+   "diff": []
+  },
+  "Titelfolie click ph0": {
+   "area": "placeholder",
+   "result": "same",
+   "diff": []
+  },
+  "Titelfolie click ph0 edge": {
+   "area": "placeholder",
+   "result": "same",
+   "diff": []
+  },
+  "Titelfolie empty click": {
+   "area": "placeholder",
+   "result": "same",
+   "diff": []
+  },
+  "Titelfolie empty type": {
+   "area": "placeholder",
+   "result": "same",
+   "diff": []
+  },
+  "Titelfolie delete text": {
+   "area": "placeholder",
+   "result": "different",
+   "diff": [
+    "selection: {'type': 'None'} vs {'type': 'Shapes', 'ids': [0]}",
+    "shape 0 box: [120.0, 283.6, 720.0, 130.4] vs [120.0, 88.4, 720.0, 188.0]",
+    "shape 1 box: [120.0, 88.4, 720.0, 188.0] vs [120.0, 283.6, 720.0, 130.4]"
+   ]
+  },
+  "Titelfolie delete twice": {
+   "area": "placeholder",
+   "result": "different",
+   "diff": [
+    "shapes: 2 vs 1"
+   ]
+  },
+  "Titelfolie drag ph0": {
+   "area": "placeholder",
+   "result": "same",
+   "diff": []
+  },
+  "Titelfolie tab level": {
+   "area": "placeholder",
+   "result": "same",
+   "diff": []
+  },
+  "Titel und Inhalt click ph1": {
+   "area": "placeholder",
+   "result": "same",
+   "diff": []
+  },
+  "Titel und Inhalt click ph1 edge": {
+   "area": "placeholder",
+   "result": "same",
+   "diff": []
+  },
+  "Titel und Inhalt empty click": {
+   "area": "placeholder",
+   "result": "same",
+   "diff": []
+  },
+  "Titel und Inhalt empty type": {
+   "area": "placeholder",
+   "result": "same",
+   "diff": []
+  },
+  "Titel und Inhalt delete text": {
+   "area": "placeholder",
+   "result": "different",
+   "diff": [
+    "selection: {'type': 'None'} vs {'type': 'Shapes', 'ids': [1]}"
+   ]
+  },
+  "Titel und Inhalt delete twice": {
+   "area": "placeholder",
+   "result": "different",
+   "diff": [
+    "shapes: 2 vs 1"
+   ]
+  },
+  "Titel und Inhalt drag ph1": {
+   "area": "placeholder",
+   "result": "same",
+   "diff": []
+  },
+  "Titel und Inhalt tab level": {
+   "area": "placeholder",
+   "result": "same",
+   "diff": []
+  },
+  "content enter tab": {
+   "area": "placeholder",
+   "result": "same",
+   "diff": []
+  },
+  "multi ctrl+g": {
+   "area": "multikeys",
+   "result": "same",
+   "diff": []
+  },
+  "multi delete": {
+   "area": "multikeys",
+   "result": "same",
+   "diff": []
+  },
+  "multi right": {
+   "area": "multikeys",
+   "result": "same",
+   "diff": []
+  },
+  "multi ctrl+d": {
+   "area": "multikeys",
+   "result": "same",
+   "diff": []
+  },
+  "multi esc": {
+   "area": "multikeys",
+   "result": "same",
+   "diff": []
+  },
+  "multi tab": {
+   "area": "multikeys",
+   "result": "same",
+   "diff": []
+  },
+  "multi ctrl+a": {
+   "area": "multikeys",
+   "result": "same",
+   "diff": []
+  },
+  "multi group ungroup": {
+   "area": "multikeys",
+   "result": "same",
+   "diff": []
+  },
+  "multi ctrl+shift+g twice": {
+   "area": "multikeys",
+   "result": "same",
+   "diff": []
+  },
+  "multi ctrl+shift+g ctrl+shift+h": {
+   "area": "multikeys",
+   "result": "same",
+   "diff": []
+  },
+  "multi drag": {
+   "area": "multikeys",
+   "result": "different",
+   "diff": [
+    "selection: {'type': 'Text', 'ids': [0], 'start': 1, 'length': 4} vs {'type': 'Text', 'ids': [0], 'start': 3, 'length': 2}"
+   ]
+  },
+  "group click member": {
+   "area": "group",
+   "result": "error",
+   "error": "StopIteration() at present_catalogue.py:336"
+  },
+  "marquee": {
+   "area": "marquee",
+   "result": "same",
+   "diff": []
+  },
+  "marquee partial": {
+   "area": "marquee",
+   "result": "same",
+   "diff": []
+  },
+  "line click": {
+   "area": "line",
+   "result": "same",
+   "diff": []
+  },
+  "line drag": {
+   "area": "line",
+   "result": "same",
+   "diff": []
+  },
+  "table click": {
+   "area": "table",
+   "result": "same",
+   "diff": []
+  },
+  "table type": {
+   "area": "table",
+   "result": "same",
+   "diff": []
+  },
+  "table tab": {
+   "area": "table",
+   "result": "same",
+   "diff": []
+  },
+  "ctrl+m": {
+   "area": "slides",
+   "result": "same",
+   "diff": []
+  },
+  "ctrl+m twice": {
+   "area": "slides",
+   "result": "same",
+   "diff": []
+  },
+  "pgdn slides": {
+   "area": "slides",
+   "result": "same",
+   "diff": []
+  },
+  "pgdn pgup": {
+   "area": "slides",
+   "result": "same",
+   "diff": []
+  },
+  "end home": {
+   "area": "slides",
+   "result": "same",
+   "diff": []
+  }
+ }
+}

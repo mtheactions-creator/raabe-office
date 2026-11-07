@@ -329,7 +329,9 @@ class PresentSide(Side):
     def _sid(self, idx) -> int:
         if isinstance(idx, str) and idx.startswith("ph"):
             return self.phs[int(idx[2:])]
-        return self.ids[idx]
+        # After grouping the setup's ids are gone: the shape at that place now (as PowerPoint's index).
+        now = [s["id"] for s in self.js("__present.state()")["shapes"] if not s["ph"]]
+        return self.ids[idx] if self.ids[idx] in now else now[idx]
 
     def shape_box(self, idx):
         sid = self._sid(idx)

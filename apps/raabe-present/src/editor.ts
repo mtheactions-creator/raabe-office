@@ -225,8 +225,9 @@ export class SlideEditor {
       for (const k of ["nw", "se"] as const) f.append(this.handle(k, v));
     } else {
       for (const k of Object.keys(HANDLE_POS) as Exclude<Handle, "rot">[]) {
-        if ((v.w / EMU_PX) * s < 16 && (k === "n" || k === "s")) continue;
-        if ((v.h / EMU_PX) * s < 16 && (k === "e" || k === "w")) continue;
+        // Side handles only on sides long enough (measured: none on a 29 pt high text box at 66 %).
+        if ((v.w / EMU_PX) * s < 30 && (k === "n" || k === "s")) continue;
+        if ((v.h / EMU_PX) * s < 30 && (k === "e" || k === "w")) continue;
         f.append(this.handle(k, v));
       }
       if (v.kind !== "graphicFrame" || v.frame !== "table") f.append(this.handle("rot", v));
@@ -750,12 +751,33 @@ export class SlideEditor {
     this.host.selectionChanged();
   }
 
+  /**
+   * Selecting by dragging: by characters inside the first word, by whole words once the pointer leaves it,
+   * with the paragraph mark when it goes past the end of a line (PowerPoint's "ganze Wörter markieren";
+   * measured: a drag from inside "Form" to beyond it selects "Form").
+   */
   private dragText(_e: MouseEvent): void {
     const id = this.text!.id;
+    const a0 = this.text!.anchor;
     const move = (m: MouseEvent) => {
-      if (!this.text || this.text.id !== id) return;
+      const t = this.text;
+      if (!t || t.id !== id) return;
       const pos = this.posAt(id, m.clientX, m.clientY);
-      if (pos && T.cmpPos(pos, this.text.caret)) { this.text.caret = pos; this.render(); }
+      if (!pos) return;
+      const body = this.textBody(id);
+      const ps = body ? T.paras(body) : [];
+      const w0 = ps[a0.p] ? T.wordAt(ps[a0.p], a0.o) : { from: a0.o, to: a0.o };
+      const inFirst = T.cmpPos(pos, a0) === 0 || (pos.p === a0.p && pos.o > w0.from && pos.o < w0.to);
+      let anchor = a0, caret = pos;
+      if (!inFirst && ps.length) {
+        const fwd = T.cmpPos(pos, a0) > 0;
+        anchor = { p: a0.p, o: fwd ? w0.from : w0.to };
+        const pp = ps[pos.p];
+        const len = T.paraLength(pp);
+        if (fwd && pos.o >= len && pos.p + 1 < ps.length) caret = { p: pos.p + 1, o: 0 };
+        else { const w = T.wordAt(pp, pos.o); caret = { p: pos.p, o: fwd ? Math.max(pos.o, w.to) : Math.min(pos.o, w.from) }; }
+      }
+      if (T.cmpPos(caret, t.caret) || T.cmpPos(anchor, t.anchor)) { t.caret = caret; t.anchor = anchor; this.render(); }
     };
     const up = () => { window.removeEventListener("mousemove", move); window.removeEventListener("mouseup", up); this.host.selectionChanged(); };
     window.addEventListener("mousemove", move);
@@ -768,6 +790,12 @@ export class SlideEditor {
     const v = hit.v;
     const onLetters = hit.text && !!v.text && !v.text.empty;
     if (!onLetters && this.host.doubleClick(v)) return;
+    if (!onLetters && v.text && !v.text.empty) {
+      // Beside the letters: the caret goes to the nearest place, nothing is selected (measured).
+      const pos = this.posAt(v.id, e.clientX, e.clientY) ?? undefined;
+      if (this.text?.id !== v.id) { this.endText(); this.enterText(v.id, pos); } else if (pos && this.text) { this.text.caret = pos; this.text.anchor = pos; this.render(); }
+      return;
+    }
     if (!v.text && v.kind !== "sp") return;
     const body = this.textBody(v.id);
     const pos = this.posAt(v.id, e.clientX, e.clientY) ?? { p: 0, o: 0 };
@@ -775,7 +803,8 @@ export class SlideEditor {
     if (!body || !this.text) return;
     const p = T.paras(body)[pos.p];
     if (!p) return;
-    const w = T.wordSelection(p, pos.o);
+    // The word without the space after it (measured: "Zeile" in "Erste Zeile hier", 5 characters).
+    const w = T.wordAt(p, pos.o);
     this.text.anchor = { p: pos.p, o: w.from };
     this.text.caret = { p: pos.p, o: w.to };
     this.render();
@@ -1007,8 +1036,22 @@ export class SlideEditor {
     const frame = this.overlay.querySelector(`.frame[data-id="${id}"]`) as HTMLElement | null;
     const keepRatio = v.kind === "pic" || (v.el.localName === "graphicFrame" && v.frame === "chart" ? false : !!PptxDom.at(v.el, "nvPicPr/cNvPicPr/picLocks")?.getAttribute("noChangeAspect"));
     let result: S.Xfrm | null = null;
+    // The handle follows the pointer's movement from where it was grabbed (not the pointer's place: the
+    // handle is drawn around the edge; measured, PowerPoint sizes by the full movement).
+    const grab = this.toSlide(_e.clientX, _e.clientY);
+    const [hfx, hfy] = k === "rot" ? [0.5, 0] : HANDLE_POS[k];
+    const ang0 = (v.rot * Math.PI) / 180, hlx = (hfx - 0.5) * v.w, hly = (hfy - 0.5) * v.h;
+    const off = k === "rot" ? { x: 0, y: 0 } : { x: cx + hlx * Math.cos(ang0) - hly * Math.sin(ang0) - grab.x, y: cy + hlx * Math.sin(ang0) + hly * Math.cos(ang0) - grab.y };
+    // A text box that takes its text's height (spAutoFit) keeps it: n and s change nothing (measured).
+    const autoHeight = v.text?.body.autofit === "shape";
+    if (autoHeight && (k === "n" || k === "s")) {
+      const done = () => { window.removeEventListener("mouseup", done); };
+      window.addEventListener("mouseup", done);
+      return;
+    }
     const move = (m: MouseEvent) => {
-      const p = this.toSlide(m.clientX, m.clientY);
+      const p0 = this.toSlide(m.clientX, m.clientY);
+      const p = { x: p0.x + off.x, y: p0.y + off.y };
       if (k === "rot") {
         let ang = (Math.atan2(p.y - cy, p.x - cx) * 180) / Math.PI + 90;
         if (m.shiftKey) ang = Math.round(ang / 15) * 15;
@@ -1042,6 +1085,8 @@ export class SlideEditor {
         // A sized text box no longer grows sideways with its text: it wraps (PowerPoint).
         const bp = S.bodyPrOf(sh);
         if (bp && k !== "rot" && bp.getAttribute("wrap") === "none" && (k === "e" || k === "w" || k.length === 2)) bp.setAttribute("wrap", "square");
+        // Its height follows its text again, the top staying where it was dragged.
+        if (autoHeight && k !== "rot") this.updateAutofit(id);
       });
     };
     window.addEventListener("mousemove", move);
@@ -1418,12 +1463,16 @@ export class SlideEditor {
       for (const v of views) {
         const el = this.shapeEl(v.id);
         if (!el) continue;
-        if (v.ph && v.text && !v.text.empty) { T.replaceAll(S.txBodyOf(el)!, ""); continue; }
+        if (v.ph && v.text && !v.text.empty) {
+          // The placeholder stays, empty, and comes to the top of the order (as PowerPoint re-creates it).
+          T.replaceAll(S.txBodyOf(el)!, "");
+          el.parentElement?.append(el);
+          continue;
+        }
         removeShapeEl(el);
       }
     });
-    const keep = views.filter((v) => v.ph && v.text && !v.text.empty).map((v) => v.id);
-    this.sel = keep;
+    this.sel = [];
     this.render();
     this.host.selectionChanged();
   }
