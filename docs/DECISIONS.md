@@ -1953,3 +1953,7 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   (PowerPoint's is a pane beside the graphic). A change goes into the data model and into PowerPoint's drawing
   of it (the shape of the node's presentation point, presAssocID), so both show the same; Rückgängig takes it
   back. Adding or removing shapes, layouts and SmartArt styles stay out (PowerPoint's layout definitions).
+- **Notes keep their formatting:** the notes pane edits plain text (as before); writing it back now keeps
+  every paragraph whose text did not change as it was (bold, colours, bullets set in PowerPoint), and a changed
+  paragraph keeps its paragraph properties and its first run's look. Before, any edit rewrote all notes as
+  plain text. Formatting notes in RaabePresent itself is not built.

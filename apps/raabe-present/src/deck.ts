@@ -381,13 +381,23 @@ export class Deck {
       }
       const doc = this.pptx.doc(notes);
       const body = kid(notesBody(doc), "txBody")!;
-      for (const p of kids(body, "p")) p.remove();
-      for (const line of text.split("\n")) {
+      // The notes are edited as plain text: a paragraph whose text did not change keeps its XML (bold, colours,
+      // bullets from PowerPoint); a changed one keeps its paragraph properties and its first run's look.
+      const old = kids(body, "p");
+      const textOf = (p: Element) => Array.from(p.getElementsByTagNameNS(PptxDom.NS_A, "t")).map((t) => t.textContent ?? "").join("");
+      for (const p of old) p.remove();
+      text.split("\n").forEach((line, i) => {
+        const prev = old[i];
+        if (prev && textOf(prev) === line) { body.append(prev); return; }
         const p = make(doc, "a:p");
-        if (line) p.append(make(doc, "a:r", {}, make(doc, "a:rPr", { lang: "de-DE", dirty: "0" }), make(doc, "a:t", {}, line)));
-        p.append(make(doc, "a:endParaRPr", { lang: "de-DE", dirty: "0" }));
+        const pPr = prev ? kid(prev, "pPr") : undefined;
+        if (pPr) p.append(pPr.cloneNode(true));
+        const rPr = prev ? kid(kid(prev, "r"), "rPr") : undefined;
+        if (line) p.append(make(doc, "a:r", {}, rPr ? (rPr.cloneNode(true) as Element) : make(doc, "a:rPr", { lang: "de-DE", dirty: "0" }), make(doc, "a:t", {}, line)));
+        const end = prev ? kid(prev, "endParaRPr") : undefined;
+        p.append(end ? (end.cloneNode(true) as Element) : make(doc, "a:endParaRPr", { lang: "de-DE", dirty: "0" }));
         body.append(p);
-      }
+      });
     }, `notes:${slidePath}`);
   }
 
