@@ -39,6 +39,9 @@ export interface EditorHost {
   /** Comment markers of a slide (slide coordinates in EMU). */
   commentMarkers?(path: string): { x: number; y: number; n: number }[];
   toolDone(): void;
+  /** An Interaktive Schaltfläche was drawn: its default action (inside the same undo step). */
+  actionButtonDrawn?(el: Element, prst: string): void;
+  openActionDialog?(): Promise<void>;
   /** Tabelle zeichnen outside a table: a new table of one cell in the drawn box. */
   drawTable?(box: { x: number; y: number; w: number; h: number }): void;
   /** Motion paths of a shape (PowerPoint notation), drawn while it is selected. */
@@ -1351,9 +1354,12 @@ export class SlideEditor {
         }
         if (tool.kind === "textbox" && tool.vertical) S.bodyPrOf(el)!.setAttribute("vert", "eaVert");
         tree.append(el);
+        if (tool.kind === "shape" && tool.prst.startsWith("actionButton")) this.host.actionButtonDrawn?.(el, tool.prst);
       });
       if (tool.kind === "textbox") this.enterText(id, { p: 0, o: 0 });
       else this.select([id]);
+      // PowerPoint opens Aktionseinstellungen right after an Interaktive Schaltfläche is drawn.
+      if (tool.kind === "shape" && tool.prst.startsWith("actionButton")) void this.host.openActionDialog?.();
     };
     window.addEventListener("mousemove", move);
     window.addEventListener("mouseup", up);

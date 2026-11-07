@@ -8,7 +8,7 @@ descriptions (D-058). Cloud features are listed, marked and left out on purpose;
 
 **Recorded:** 21 tabs with 439 controls and 5771 menu and gallery entries; 13 context menus; 114 dialogs and panes; 4 backstage pages.
 
-**Coverage:** 2808 of 4503 controls and menu entries are in RaabePresent (62.4 %); 3 are there but greyed out as deferred, 1692 are missing; 8 cloud features are left out on purpose.
+**Coverage:** 2959 of 4503 controls and menu entries are in RaabePresent (65.7 %); 3 are there but greyed out as deferred, 1541 are missing; 8 cloud features are left out on purpose.
 
 ## Registerkarten
 
@@ -230,7 +230,7 @@ Menüs und Kataloge in Entwurf:
 | Anzeigedauer | Auf alle anwenden | Schaltfläche | Alt, Ä, F | vorhanden |  |
 | Anzeigedauer | Bei Mausklick | Kontrollkästchen | Alt, Ä, B | vorhanden |  |
 | Anzeigedauer | Nach | Kontrollkästchen | Alt, Ä, N | vorhanden |  |
-| Anzeigedauer | Automatisch nach | Drehfeld | Alt, Ä, A | fehlt |  |
+| Anzeigedauer | Automatisch nach | Drehfeld | Alt, Ä, A | vorhanden |  |
 | Anzeigedauer | Mehr | Schaltfläche |  | vorhanden |  |
 | Anzeigedauer | Weniger | Schaltfläche |  | vorhanden |  |
 
@@ -253,10 +253,10 @@ Menüs und Kataloge in Übergänge:
 | Erweiterte Animation | Trigger | Menü, grau | Alt, V, T | vorhanden |  |
 | Erweiterte Animation | Animation übertragen | Schaltfläche, grau | Alt, V, M | vorhanden |  |
 | Anzeigedauer | Start | Kombinationsfeld, grau | Alt, V, S | fehlt |  |
-| Anzeigedauer | Animationsdauer | Drehfeld, grau | Alt, V, D | fehlt |  |
+| Anzeigedauer | Animationsdauer | Drehfeld, grau | Alt, V, D | vorhanden |  |
 | Anzeigedauer | Mehr | Schaltfläche, grau |  | vorhanden |  |
 | Anzeigedauer | Weniger | Schaltfläche, grau |  | vorhanden |  |
-| Anzeigedauer | Animationsverzögerung | Drehfeld, grau | Alt, V, R | fehlt |  |
+| Anzeigedauer | Animationsverzögerung | Drehfeld, grau | Alt, V, R | vorhanden |  |
 | Anzeigedauer | Mehr | Schaltfläche, grau |  | vorhanden |  |
 | Anzeigedauer | Weniger | Schaltfläche, grau |  | vorhanden |  |
 | Anzeigedauer | Früher | Schaltfläche, grau | Alt, V, F | vorhanden |  |
@@ -522,10 +522,10 @@ Menüs und Kataloge in Tabellenentwurf:
 | Zeilen und Spalten | Spalte rechts einfügen | Schaltfläche | Alt, J L, I 1 | vorhanden |  |
 | Zusammenführen | Zellen verbinden | Schaltfläche, grau | Alt, J L, L E | vorhanden |  |
 | Zusammenführen | Zellen teilen... | Schaltfläche | Alt, J L, N E | vorhanden | Dialog |
-| Zellengröße | Tabellenzeilenhöhe | Drehfeld | Alt, J L, P | fehlt |  |
+| Zellengröße | Tabellenzeilenhöhe | Drehfeld | Alt, J L, P | vorhanden |  |
 | Zellengröße | Mehr | Schaltfläche |  | vorhanden |  |
 | Zellengröße | Weniger | Schaltfläche |  | vorhanden |  |
-| Zellengröße | Tabellenspaltenbreite | Drehfeld | Alt, J L, B | fehlt |  |
+| Zellengröße | Tabellenspaltenbreite | Drehfeld | Alt, J L, B | vorhanden |  |
 | Zellengröße | Mehr | Schaltfläche |  | vorhanden |  |
 | Zellengröße | Weniger | Schaltfläche |  | vorhanden |  |
 | Zellengröße | Zeilen verteilen | Schaltfläche | Alt, J L, V | vorhanden |  |
@@ -801,12 +801,12 @@ Rechtsklick auf …; die Einträge der Minisymbolleiste stehen mit in der Liste.
 - **Platzhalterrahmen** (RaabePresent: 22/29 vorhanden): Ausschneiden · Kopieren · _Einfügeoptionen_ · Einfügen · Text bearbeiten · Punkte bearbeiten · Gruppieren · In den Vordergrund · In den Vordergrund · In den Vordergrund · In den Hintergrund · In den Hintergrund · In den Hintergrund · Sperren · Link · Link · Link · Als Grafik speichern... · Übersetzen · Alternativtext anzeigen... · Größe und Position... · Form formatieren... · Neuer Kommentar · _Minileiste_ · Formatvorlage · Füllung Orange, Akzent 2 · Kontur Dunkelblaugrün, Akzent 1 · Neuer Kommentar
 - **Text in Bearbeitung** (RaabePresent: 23/45 vorhanden): Ausschneiden · Kopieren · _Einfügeoptionen_ · Einfügen · Textbearbeitung beenden · Schriftart... · Absatz... · Aufzählungszeichen · Aufzählungszeichen · Aufzählungszeichen · Nummerierung · Nummerierung · Nummerierung · In SmartArt konvertieren · Sperren · Link · Link · Link · Synonyme · Übersetzen · Texteffekte formatieren... · Form formatieren... · Neuer Kommentar · _Minileiste_ · Öffnen · Schriftgrad vergrößern · Schriftgrad verkleinern · Einzug verkleinern · Einzug vergrößern · Fett · Kursiv · Unterstreichen · Linksbündig · Zentriert · Rechtsbündig · Texthervorhebungsfarbe · Texthervorhebungsfarbe Gelb · Weitere Optionen · Schriftfarbe · Schriftfarbe Rot · Format übertragen · Neuer Kommentar
 - **Form** (RaabePresent: 24/30 vorhanden): Ausschneiden · Kopieren · _Einfügeoptionen_ · Einfügen · Text bearbeiten · Punkte bearbeiten · Gruppieren · In den Vordergrund · In den Vordergrund · In den Vordergrund · In den Hintergrund · In den Hintergrund · In den Hintergrund · Sperren · Link · Link · Link · Als Grafik speichern... · Übersetzen · Alternativtext anzeigen... · Als Standardformformat festlegen · Größe und Position... · Form formatieren... · Neuer Kommentar · _Minileiste_ · Formatvorlage · Füllung Orange, Akzent 2 · Kontur Dunkelblaugrün, Akzent 1 · Neuer Kommentar
-- **Bild** (RaabePresent: fehlt): Ausschneiden · Kopieren · _Einfügeoptionen_ · Einfügen · Bild ändern · Gruppieren · In den Vordergrund · In den Vordergrund · In den Vordergrund · In den Hintergrund · In den Hintergrund · In den Hintergrund · Sperren · Link · Link · Link · Als Grafik speichern... · Alternativtext anzeigen... · Größe und Position... · Grafik formatieren... · Neuer Kommentar · _Minileiste_ · Bild bearbeiten · Formatvorlage · Zuschneiden · Neuer Kommentar
+- **Bild** (RaabePresent: 22/27 vorhanden): Ausschneiden · Kopieren · _Einfügeoptionen_ · Einfügen · Bild ändern · Gruppieren · In den Vordergrund · In den Vordergrund · In den Vordergrund · In den Hintergrund · In den Hintergrund · In den Hintergrund · Sperren · Link · Link · Link · Als Grafik speichern... · Alternativtext anzeigen... · Größe und Position... · Grafik formatieren... · Neuer Kommentar · _Minileiste_ · Bild bearbeiten · Formatvorlage · Zuschneiden · Neuer Kommentar
 - **Tabelle** (RaabePresent: 25/49 vorhanden): Ausschneiden · Kopieren · _Einfügeoptionen_ · Einfügen · Schriftart... · Aufzählungszeichen · Aufzählungszeichen · Aufzählungszeichen · Nummerierung · Nummerierung · Nummerierung · Sperren · Link · Link · Link · Synonyme · Übersetzen · Zellen verbinden · Zellen teilen... · Tabelle auswählen · Form formatieren... · Neuer Kommentar · _Minileiste_ · Öffnen · Schriftgrad vergrößern · Schriftgrad verkleinern · Format übertragen · Fett · Kursiv · Linksbündig · Zentriert · Rechtsbündig · Texthervorhebungsfarbe · Texthervorhebungsfarbe Gelb · Weitere Optionen · Schriftfarbe · Schriftfarbe Rot · Fülleffekt · Fülleffekt Orange, Akzent 2 · Rahmen · Kein Rahmen · Einfügen · Löschen · Neuer Kommentar
-- **Diagramm** (RaabePresent: fehlt): Löschen · Auf Formatvorl. zurücks. · Schriftart... · Diagrammtyp ändern... · Daten bearbeiten · Daten bearbeiten · Daten bearbeiten · 3D-Drehung... · Hilfsgitternetz hinzufügen · Hauptgitternetz formatieren... · Achse formatieren... · Neuer Kommentar · _Minileiste_ · Füllung Orange, Akzent 2 · Kontur Dunkelblaugrün, Akzent 1 · Öffnen · Neuer Kommentar
-- **Gruppe** (RaabePresent: fehlt): Ausschneiden · Kopieren · _Einfügeoptionen_ · Einfügen · Gruppieren · In den Vordergrund · In den Vordergrund · In den Vordergrund · In den Hintergrund · In den Hintergrund · In den Hintergrund · Sperren · Link · Link · Link · Als Grafik speichern... · Alternativtext anzeigen... · Größe und Position... · Form formatieren... · Neuer Kommentar · _Minileiste_ · Formatvorlage · Füllung Orange, Akzent 2 · Kontur Dunkelblaugrün, Akzent 1 · Neuer Kommentar
+- **Diagramm** (RaabePresent: 9/17 vorhanden): Löschen · Auf Formatvorl. zurücks. · Schriftart... · Diagrammtyp ändern... · Daten bearbeiten · Daten bearbeiten · Daten bearbeiten · 3D-Drehung... · Hilfsgitternetz hinzufügen · Hauptgitternetz formatieren... · Achse formatieren... · Neuer Kommentar · _Minileiste_ · Füllung Orange, Akzent 2 · Kontur Dunkelblaugrün, Akzent 1 · Öffnen · Neuer Kommentar
+- **Gruppe** (RaabePresent: 21/26 vorhanden): Ausschneiden · Kopieren · _Einfügeoptionen_ · Einfügen · Gruppieren · In den Vordergrund · In den Vordergrund · In den Vordergrund · In den Hintergrund · In den Hintergrund · In den Hintergrund · Sperren · Link · Link · Link · Als Grafik speichern... · Alternativtext anzeigen... · Größe und Position... · Form formatieren... · Neuer Kommentar · _Minileiste_ · Formatvorlage · Füllung Orange, Akzent 2 · Kontur Dunkelblaugrün, Akzent 1 · Neuer Kommentar
 - **Leerer Folienbereich** (RaabePresent: 8/11 vorhanden): _Einfügeoptionen_ · Einfügen · Layout · Folie zurücksetzen · Raster und Führungslinien... · Raster und Führungslinien... · Raster und Führungslinien... · Lineal · Hintergrund formatieren... · Neuer Kommentar
-- **Notizenbereich** (RaabePresent: fehlt): Ausschneiden · Kopieren · _Einfügeoptionen_ · Einfügen · Schriftart... · Absatz... · Synonyme · Übersetzen · Neuer Kommentar · _Minileiste_ · Öffnen · Schriftgrad vergrößern · Schriftgrad verkleinern · Einzug verkleinern · Einzug vergrößern · Fett · Kursiv · Unterstreichen · Linksbündig · Zentriert · Rechtsbündig · Texthervorhebungsfarbe · Texthervorhebungsfarbe Gelb · Weitere Optionen · Schriftfarbe · Schriftfarbe Rot · Format übertragen · Neuer Kommentar
+- **Notizenbereich** (RaabePresent: 9/31 vorhanden): Ausschneiden · Kopieren · _Einfügeoptionen_ · Einfügen · Schriftart... · Absatz... · Synonyme · Übersetzen · Neuer Kommentar · _Minileiste_ · Öffnen · Schriftgrad vergrößern · Schriftgrad verkleinern · Einzug verkleinern · Einzug vergrößern · Fett · Kursiv · Unterstreichen · Linksbündig · Zentriert · Rechtsbündig · Texthervorhebungsfarbe · Texthervorhebungsfarbe Gelb · Weitere Optionen · Schriftfarbe · Schriftfarbe Rot · Format übertragen · Neuer Kommentar
 - **SmartArt** (RaabePresent: fehlt): Ausschneiden · Kopieren · _Einfügeoptionen_ · Einfügen · Layout ändern... · Textbereich ausblenden · Gruppieren · In den Vordergrund · In den Vordergrund · In den Vordergrund · In den Hintergrund · In den Hintergrund · In den Hintergrund · Sperren · Link · Link · Link · Als Grafik speichern... · Übersetzen · Alternativtext anzeigen... · Grafik zurücksetzen · In Text konvertieren · In Formen konvertieren · Größe und Position... · Objekt formatieren... · Neuer Kommentar · _Minileiste_ · Formatvorlage · Farbe · Layout · Neuer Kommentar
 - **Textfeld** (RaabePresent: 24/30 vorhanden): Ausschneiden · Kopieren · _Einfügeoptionen_ · Einfügen · Text bearbeiten · Punkte bearbeiten · Gruppieren · In den Vordergrund · In den Vordergrund · In den Vordergrund · In den Hintergrund · In den Hintergrund · In den Hintergrund · Sperren · Link · Link · Link · Als Grafik speichern... · Übersetzen · Alternativtext anzeigen... · Als Standardtextfeld-Format festlegen · Größe und Position... · Form formatieren... · Neuer Kommentar · _Minileiste_ · Formatvorlage · Füllung Orange, Akzent 2 · Kontur Dunkelblaugrün, Akzent 1 · Neuer Kommentar
 

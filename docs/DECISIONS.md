@@ -1876,3 +1876,14 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   PowerPoint writes them. Drawn: shadows, reflection, glow, soft edges, bevel and the 3-D camera (CSS
   perspective, our approximation); the text warps are written for PowerPoint but our text stays straight. The
   "...optionen" entries (a format pane for 3-D) are greyed.
+- **Interaktive Schaltflächen:** PowerPoint's 12 action buttons as the Formen gallery's last group, with its
+  names (inventory). Their geometries are new presets in text-engine (added, nothing else changed; our own
+  icons in a darker shade on the button, PowerPoint's own shading not copied). Drawn, a button gets the jump
+  PowerPoint gives it (Weiter: nächste Folie, Zurück: vorherige, Anfang/Startseite: erste, Ende: letzte,
+  Zurückkehren: zuletzt angezeigte) and Aktionseinstellungen opens, as in PowerPoint.
+- **Context menus and the inventory:** the notes pane has its own context menu (Ausschneiden, Kopieren,
+  Einfügen, Neuer Kommentar; Schriftart and Absatz greyed, the notes are plain text). The inventory export
+  now also reads the picture, group, chart and notes context menus, the tiles inside menus (picture effect
+  galleries), the table grid's cells, and names spin boxes by their command (PowerPoint's accessible name,
+  "Animationsdauer" beside the visible "Dauer:"). Chart colours renamed to PowerPoint's (Bunt, Einfarbig,
+  Monochrome Palette n). Einfügen > Tabelle has Tabelle zeichnen.

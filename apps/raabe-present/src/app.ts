@@ -7,7 +7,7 @@ import {
   Backstage, Commands, Keytips, Ribbon, TitleBar, baseName, colorGrid, h, icon, installTooltips, messageBox, showDialog, showMenu, showPopup, closePopup,
   type BackstageEntry, type Control, type Group, type MenuEntry, type Platform, type Tab,
 } from "@raabe/shell";
-import { SHAPE_GALLERY, shapeIcon } from "@raabe/text-engine";
+import { SHAPE_GALLERY, shapeIcon, type GalleryEntry } from "@raabe/text-engine";
 import { COMMANDS } from "./command-list";
 import { ribbonTabs, type RibbonContext } from "./ribbon-def";
 import { Deck, defaultMasterPlaceholder } from "./deck";
@@ -58,6 +58,18 @@ interface Doc {
 }
 
 type View = "normal" | "sorter" | "notesPage" | "reading" | "outline";
+
+/** Interaktive Schaltflächen: PowerPoint's names and the action each gets when it is drawn (D-072). */
+export const ACTION_BUTTONS: [string, string, string | null][] = [
+  ["actionButtonBackPrevious", "Interaktive Schaltfläche: Zurück oder Vorherige(r)", "previousslide"], ["actionButtonForwardNext", "Interaktive Schaltfläche: Nächste(r) oder Weiter", "nextslide"],
+  ["actionButtonBeginning", "Interaktive Schaltfläche: Zum Anfang wechseln", "firstslide"], ["actionButtonEnd", "Interaktive Schaltfläche: Zum Ende wechseln", "lastslide"],
+  ["actionButtonHome", "Interaktive Schaltfläche: Zur Startseite wechseln", "firstslide"], ["actionButtonInformation", "Interaktive Schaltfläche: Informationen abrufen", null],
+  ["actionButtonReturn", "Interaktive Schaltfläche: Zurückkehren", "lastslideviewed"], ["actionButtonMovie", "Interaktive Schaltfläche: Video", null],
+  ["actionButtonDocument", "Interaktive Schaltfläche: Dokument", null], ["actionButtonSound", "Interaktive Schaltfläche: Sound", null],
+  ["actionButtonHelp", "Interaktive Schaltfläche: Hilfe", null], ["actionButtonBlank", "Interaktive Schaltfläche: Leer", null],
+];
+/** Office's Formen gallery and PowerPoint's own last group. */
+const PRESENT_SHAPES: { title: string; items: GalleryEntry[] }[] = [...SHAPE_GALLERY, { title: "Interaktive Schaltflächen", items: ACTION_BUTTONS.map(([geometry, label]): GalleryEntry => ({ tool: { geometry, kind: "shape" }, label })) }];
 
 const stripExt = (n: string) => n.replace(/\.(pptx|pptm|ppsx|ppsm|potx|potm)$/i, "");
 
@@ -146,6 +158,7 @@ export class PresentApp implements EditorHost, PanelHost {
       const p = this.slidePath();
       if (p) this.deck.setNotes(p, this.notes.value);
     });
+    this.notes.addEventListener("contextmenu", (e) => { e.preventDefault(); this.notesMenu(e); });
     this.notesWrap = h("div", { class: "notes-wrap" }, this.notes);
     this.center = h("div", { class: "center" }, this.editor.el, this.notesWrap);
     this.outline = new OutlineView(this);
@@ -1146,6 +1159,22 @@ export class PresentApp implements EditorHost, PanelHost {
     if (i >= 0) { rels.list.splice(i, 1); rels.changed = true; }
   }
 
+  /** An Interaktive Schaltfläche: the jump PowerPoint gives it (Weiter: nächste Folie …), as a click action. */
+  actionButtonDrawn(el: Element, prst: string): void {
+    const jump = ACTION_BUTTONS.find((b) => b[0] === prst)?.[2];
+    const nv = el.getElementsByTagNameNS(PptxDom.NS_P, "cNvPr")[0];
+    if (!jump || !nv) return;
+    const hl = el.ownerDocument.createElementNS(PptxDom.NS_A, "a:hlinkClick");
+    hl.setAttributeNS(PptxDom.NS_R, "r:id", "");
+    hl.setAttribute("action", `ppaction://hlinkshowjump?jump=${jump}`);
+    hl.setAttribute("highlightClick", "1");
+    nv.insertBefore(hl, nv.firstChild);
+  }
+
+  async openActionDialog(): Promise<void> {
+    await (await import("./links")).actionDialog(this);
+  }
+
   /** Tabelle zeichnen outside a table: one cell in the drawn box. */
   drawTable(box: { x: number; y: number; w: number; h: number }): void {
     const slide = this.slidePath();
@@ -1492,7 +1521,7 @@ export class PresentApp implements EditorHost, PanelHost {
 
   /** Formformat > Formen einfügen: the shapes as a gallery in the ribbon (three rows, as PowerPoint's). */
   shapeTiles(): Control {
-    const items = SHAPE_GALLERY.flatMap((g) => g.items);
+    const items = PRESENT_SHAPES.flatMap((g) => g.items);
     return {
       type: "tiles", cmd: "insert.shapes", key: "2", count: items.length, visible: 18, size: [22, 22], cls: "shape-tiles-ribbon",
       render: (i) => h("span", { class: "shape-ico" }, shapeIcon(items[i])),
@@ -1521,7 +1550,7 @@ export class PresentApp implements EditorHost, PanelHost {
 
   shapeGallery(close: () => void, pick?: (geometry: string) => void): HTMLElement {
     const wrap = h("div", { class: "shape-gallery-wrap" });
-    for (const group of SHAPE_GALLERY) {
+    for (const group of PRESENT_SHAPES) {
       wrap.append(h("div", { class: "gal-head" }, group.title));
       const grid = h("div", { class: "shape-gallery" });
       for (const it of group.items) {
@@ -1577,7 +1606,9 @@ export class PresentApp implements EditorHost, PanelHost {
       grid.append(cell);
     }
     return h("div", { class: "table-popup" }, label, grid, h("div", { class: "menu-sep" }),
-      h("button", { class: "menu-item", onclick: () => { close(); void this.tableDialog(); } }, icon("table"), " Tabelle einfügen..."));
+      h("button", { class: "menu-item", onclick: () => { close(); void this.tableDialog(); } }, icon("table"), " Tabelle einfügen..."),
+      // Tabelle zeichnen: the table pen (Tabellenentwurf's), as in PowerPoint's menu.
+      h("button", { class: "menu-item", onclick: () => { close(); void this.commands.run("table.draw"); } }, icon("table-draw"), " Tabelle zeichnen"));
   }
 
   private async tableDialog(): Promise<void> {
@@ -1727,6 +1758,21 @@ export class PresentApp implements EditorHost, PanelHost {
     }
     this.menu([{ label: "Layout", submenu: () => this.deck.layouts().map((l) => ({ label: l.name.replace("\n", ""), run: () => this.deck.setLayout([this.active.current], l.path) })) },
       { cmd: "slide.reset", label: "Folie zurücksetzen" }, "-", { cmd: "view.gridDialog", label: "Raster und Führungslinien..." }, { cmd: "view.ruler" }, { cmd: "slide.formatBackground" }, { cmd: "review.newComment" }], at2);
+  }
+
+  /** The notes pane's context menu (PowerPoint's Notizenbereich; the notes are plain text here). */
+  notesMenu(e: MouseEvent): void {
+    const ta = this.notes;
+    const sel = () => ta.value.slice(ta.selectionStart, ta.selectionEnd);
+    const put = (t: string) => { ta.setRangeText(t, ta.selectionStart, ta.selectionEnd, "end"); ta.dispatchEvent(new Event("input")); ta.focus(); };
+    const has = !!sel();
+    this.menu([
+      { label: "Ausschneiden", disabled: !has, run: () => { void this.platform.clipboardWrite(sel()); put(""); } },
+      { label: "Kopieren", disabled: !has, run: () => void this.platform.clipboardWrite(sel()) },
+      { label: "Einfügeoptionen:", icons: [{ icon: "paste-text", tip: "Nur den Text übernehmen (T)", run: () => void this.platform.clipboardRead().then(put) }] },
+      { label: "Einfügen", run: () => void this.platform.clipboardRead().then(put) }, "-",
+      { label: "Schriftart...", disabled: true, run: () => {} }, { label: "Absatz...", disabled: true, run: () => {} }, "-",
+      { cmd: "review.newComment" }], new DOMRect(e.clientX, e.clientY, 0, 0));
   }
 
   panelMenu(e: MouseEvent, onSlide: boolean): void {
@@ -3001,7 +3047,7 @@ export class PresentApp implements EditorHost, PanelHost {
         return { x: r.left + (xpt * 12700 / size.cx) * r.width, y: r.top + (ypt * 12700 / size.cy) * r.height };
       },
       /** The context menus by the names of PowerPoint's inventory (results/*-powerpoint-inventory.json). */
-      contextMenus: () => {
+      contextMenus: async () => {
         const ev = new MouseEvent("contextmenu", { clientX: 10, clientY: 10 });
         const names = (menu: MenuEntry[]): { name: string; items?: unknown[] }[] => menu.flatMap((m) => {
           if (m === "-" || "heading" in m || "block" in m) return [];
@@ -3022,6 +3068,17 @@ export class PresentApp implements EditorHost, PanelHost {
         setup([{ kind: "textbox", box: [100, 100, 200, 40], text: "x" }]); app.editor.select([2]); out["Textfeld"] = grab(() => app.contextMenu(ev, "shape"));
         setup([{ kind: "table", box: [100, 100, 300, 80] }]); app.editor.enterText(2, undefined, { r: 0, c: 0 }); out["Tabelle"] = grab(() => app.contextMenu(ev, "text"));
         setup([]); out["Leerer Folienbereich"] = grab(() => app.contextMenu(ev, "slide"));
+        // Picture, group, chart and the notes pane (added with the inventory's later run, D-072).
+        setup([{ kind: "rect", box: [100, 100, 100, 100] }, { kind: "ellipse", box: [300, 100, 100, 100] }]); app.editor.select([2, 3]); void app.commands.run("arrange.group");
+        const grp = app.deck.view(app.slidePath()!).shapes.find((s) => s.kind === "grpSp"); if (grp) { app.editor.select([grp.id]); out["Gruppe"] = grab(() => app.contextMenu(ev, "shape")); }
+        out["Notizenbereich"] = grab(() => app.notesMenu(ev));
+        setup([]); (await import("./charts")).insertChart(app, "column");
+        const chart = app.deck.view(app.slidePath()!).shapes.find((s) => s.frame === "chart"); if (chart) { app.editor.select([chart.id]); out["Diagramm"] = grab(() => app.contextMenu(ev, "shape")); }
+        const fakePic = (): void => {
+          const doc = app.deck.pptx.doc(app.slidePath()!); const tree = S.treeOf(doc);
+          tree.append(S.newPicture(doc, S.maxId(tree) + 1, "rIdX", { x: 0, y: 0, w: 914400, h: 914400 }));
+        };
+        setup([]); app.editor.edit("Bild", fakePic); const pic = app.deck.view(app.slidePath()!).shapes.find((s) => s.kind === "pic"); if (pic) { app.editor.select([pic.id]); out["Bild"] = grab(() => app.contextMenu(ev, "shape")); }
         return out;
       },
       /** RaabePresent's ribbon as data for the inventory against PowerPoint (D-070), as RaabeCalc's (D-066). */
@@ -3034,7 +3091,9 @@ export class PresentApp implements EditorHost, PanelHost {
           return { name: label ?? c.label, deferred: !!c.deferred, enabled: app.commands.isImplemented(id) };
         };
         const entries = (menu: MenuEntry[]): Item[] => menu.flatMap((m): Item[] => {
-          if (m === "-" || "heading" in m || "block" in m) return [];
+          if (m === "-" || "heading" in m) return [];
+          // Own content in a menu (the picture effect galleries): its tiles by their names.
+          if ("block" in m) { try { return Array.from(m.block().querySelectorAll("[aria-label]")).map((b) => ({ name: b.getAttribute("aria-label")!.trim() })).filter((x) => x.name); } catch { return []; } }
           if ("cmd" in m) return [cmdItem(m.cmd, m.label)];
           if ("icons" in m) return [{ name: m.label, items: m.icons.map((i) => ({ name: i.tip.replace(/ \(.\)$/, "") })) }];
           const sub = "submenu" in m ? (typeof m.submenu === "function" ? m.submenu() : m.submenu) : undefined;
@@ -3045,14 +3104,15 @@ export class PresentApp implements EditorHost, PanelHost {
           if (c.type === "rows") return c.rows.flat().flatMap((x) => (x === "gap" ? [] : ctl(x)));
           if (c.type === "gallery") return c.items.map((i) => ({ ...cmdItem(i.cmd), type: "gallery" }));
           // A spin box: its label as PowerPoint names it (no colon) and its two arrow buttons.
-          if (c.type === "spinner") return [{ ...cmdItem(c.cmd, c.label.replace(/:$/, "")), type: "spinner" }, { name: "Mehr" }, { name: "Weniger" }];
+          // A spinner's accessible name is its command's full name (PowerPoint: "Animationsdauer" beside "Dauer:").
+          if (c.type === "spinner") return [{ ...cmdItem(c.cmd), type: "spinner" }, { name: "Mehr" }, { name: "Weniger" }];
           const base: Item = "cmd" in c ? cmdItem(c.cmd, "label" in c ? c.label : undefined) : { name: "?" };
           const menu = "menu" in c && c.menu.length ? { items: entries(c.menu) } : {};
           // Own panels (galleries, palettes): their entries as drawn, by their names.
           let panelItems: Item[] = [];
           try {
             const el = "popup" in c && c.popup ? c.popup(() => {}) : c.type === "color" ? h("div", null, ...colorGrid(() => {}, undefined)) : c.type === "tiles" ? c.panel(() => {}) : null;
-            if (el) panelItems = Array.from(el.querySelectorAll("button, [role=menuitem], [data-tip]")).map((b) => ({ name: (b.getAttribute("aria-label") || (b as HTMLElement).dataset.tip || b.textContent || "").trim() })).filter((x) => x.name);
+            if (el) panelItems = Array.from(el.querySelectorAll("button, [role=menuitem], [role=button], [data-tip]")).map((b) => ({ name: (b.getAttribute("aria-label") || (b as HTMLElement).dataset.tip || b.textContent || "").trim() })).filter((x) => x.name);
           } catch { /* a panel that needs a selection */ }
           if (c.type === "color" && c.extra) panelItems.push(...entries(c.extra()));
           const own = ("popup" in c && c.popup) || c.type === "color" || c.type === "tiles" ? { panel: true, ...(panelItems.length ? { items: [...(("items" in menu && menu.items) || []), ...panelItems] } : {}) } : {};

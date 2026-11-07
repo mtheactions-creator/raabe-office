@@ -120,6 +120,14 @@
    "result": "same",
    "diff": []
   },
+  "shape effects": {
+   "result": "same",
+   "diff": []
+  },
+  "action button": {
+   "result": "same",
+   "diff": []
+  },
   "action": {
    "result": "same",
    "diff": []
@@ -199,6 +207,6 @@
  },
  "summary": {
   "fixtures": "11/11",
-  "scenarios": "40/40"
+  "scenarios": "42/42"
  }
 }

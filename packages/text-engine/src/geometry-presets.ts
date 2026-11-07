@@ -503,6 +503,320 @@ gd y3 +/ y2 b 2
 hxy - 0 0 adj 0 100000 l y2
 rect l t x3 y3
 path: M l y2 L x2 t L r t L l b Z`,
+  // Interaktive Schaltflächen (PowerPoint): our own icons in a darker shade on the button (D-072).
+  actionButtonBackPrevious: `
+gd dx2 */ ss 3 8
+gd g9 +- vc 0 dx2
+gd g10 +- vc dx2 0
+gd g11 +- hc 0 dx2
+gd g12 +- hc dx2 0
+gd e1 */ dx2 1 4
+gd e2 */ dx2 1 2
+gd e3 */ dx2 3 4
+gd xa +- hc 0 e1
+gd xb +- hc e1 0
+gd xc +- hc 0 e2
+gd xd +- hc e2 0
+gd xe +- hc 0 e3
+gd xf +- hc e3 0
+gd ya +- vc 0 e1
+gd yb +- vc e1 0
+gd yc +- vc 0 e2
+gd yd +- vc e2 0
+gd ye +- vc 0 e3
+gd yf +- vc e3 0
+rect l t r b
+path stroke=false: M l t L r t L r b L l b Z
+path stroke=false fill=darken: M g11 vc L g12 g9 L g12 g10 Z
+path fill=none: M g11 vc L g12 g9 L g12 g10 Z
+path fill=none: M l t L r t L r b L l b Z`,
+  actionButtonForwardNext: `
+gd dx2 */ ss 3 8
+gd g9 +- vc 0 dx2
+gd g10 +- vc dx2 0
+gd g11 +- hc 0 dx2
+gd g12 +- hc dx2 0
+gd e1 */ dx2 1 4
+gd e2 */ dx2 1 2
+gd e3 */ dx2 3 4
+gd xa +- hc 0 e1
+gd xb +- hc e1 0
+gd xc +- hc 0 e2
+gd xd +- hc e2 0
+gd xe +- hc 0 e3
+gd xf +- hc e3 0
+gd ya +- vc 0 e1
+gd yb +- vc e1 0
+gd yc +- vc 0 e2
+gd yd +- vc e2 0
+gd ye +- vc 0 e3
+gd yf +- vc e3 0
+rect l t r b
+path stroke=false: M l t L r t L r b L l b Z
+path stroke=false fill=darken: M g12 vc L g11 g9 L g11 g10 Z
+path fill=none: M g12 vc L g11 g9 L g11 g10 Z
+path fill=none: M l t L r t L r b L l b Z`,
+  actionButtonBeginning: `
+gd dx2 */ ss 3 8
+gd g9 +- vc 0 dx2
+gd g10 +- vc dx2 0
+gd g11 +- hc 0 dx2
+gd g12 +- hc dx2 0
+gd e1 */ dx2 1 4
+gd e2 */ dx2 1 2
+gd e3 */ dx2 3 4
+gd xa +- hc 0 e1
+gd xb +- hc e1 0
+gd xc +- hc 0 e2
+gd xd +- hc e2 0
+gd xe +- hc 0 e3
+gd xf +- hc e3 0
+gd ya +- vc 0 e1
+gd yb +- vc e1 0
+gd yc +- vc 0 e2
+gd yd +- vc e2 0
+gd ye +- vc 0 e3
+gd yf +- vc e3 0
+rect l t r b
+path stroke=false: M l t L r t L r b L l b Z
+path stroke=false fill=darken: M xe vc L g12 g9 L g12 g10 Z M g11 g9 L xe g9 L xe g10 L g11 g10 Z
+path fill=none: M xe vc L g12 g9 L g12 g10 Z M g11 g9 L xe g9 L xe g10 L g11 g10 Z
+path fill=none: M l t L r t L r b L l b Z`,
+  actionButtonEnd: `
+gd dx2 */ ss 3 8
+gd g9 +- vc 0 dx2
+gd g10 +- vc dx2 0
+gd g11 +- hc 0 dx2
+gd g12 +- hc dx2 0
+gd e1 */ dx2 1 4
+gd e2 */ dx2 1 2
+gd e3 */ dx2 3 4
+gd xa +- hc 0 e1
+gd xb +- hc e1 0
+gd xc +- hc 0 e2
+gd xd +- hc e2 0
+gd xe +- hc 0 e3
+gd xf +- hc e3 0
+gd ya +- vc 0 e1
+gd yb +- vc e1 0
+gd yc +- vc 0 e2
+gd yd +- vc e2 0
+gd ye +- vc 0 e3
+gd yf +- vc e3 0
+rect l t r b
+path stroke=false: M l t L r t L r b L l b Z
+path stroke=false fill=darken: M xf vc L g11 g9 L g11 g10 Z M xf g9 L g12 g9 L g12 g10 L xf g10 Z
+path fill=none: M xf vc L g11 g9 L g11 g10 Z M xf g9 L g12 g9 L g12 g10 L xf g10 Z
+path fill=none: M l t L r t L r b L l b Z`,
+  actionButtonHome: `
+gd dx2 */ ss 3 8
+gd g9 +- vc 0 dx2
+gd g10 +- vc dx2 0
+gd g11 +- hc 0 dx2
+gd g12 +- hc dx2 0
+gd e1 */ dx2 1 4
+gd e2 */ dx2 1 2
+gd e3 */ dx2 3 4
+gd xa +- hc 0 e1
+gd xb +- hc e1 0
+gd xc +- hc 0 e2
+gd xd +- hc e2 0
+gd xe +- hc 0 e3
+gd xf +- hc e3 0
+gd ya +- vc 0 e1
+gd yb +- vc e1 0
+gd yc +- vc 0 e2
+gd yd +- vc e2 0
+gd ye +- vc 0 e3
+gd yf +- vc e3 0
+rect l t r b
+path stroke=false: M l t L r t L r b L l b Z
+path stroke=false fill=darken: M hc g9 L g12 vc L xf vc L xf g10 L xe g10 L xe vc L g11 vc Z
+path fill=none: M hc g9 L g12 vc L xf vc L xf g10 L xe g10 L xe vc L g11 vc Z
+path fill=none: M l t L r t L r b L l b Z`,
+  actionButtonInformation: `
+gd dx2 */ ss 3 8
+gd g9 +- vc 0 dx2
+gd g10 +- vc dx2 0
+gd g11 +- hc 0 dx2
+gd g12 +- hc dx2 0
+gd e1 */ dx2 1 4
+gd e2 */ dx2 1 2
+gd e3 */ dx2 3 4
+gd xa +- hc 0 e1
+gd xb +- hc e1 0
+gd xc +- hc 0 e2
+gd xd +- hc e2 0
+gd xe +- hc 0 e3
+gd xf +- hc e3 0
+gd ya +- vc 0 e1
+gd yb +- vc e1 0
+gd yc +- vc 0 e2
+gd yd +- vc e2 0
+gd ye +- vc 0 e3
+gd yf +- vc e3 0
+rect l t r b
+path stroke=false: M l t L r t L r b L l b Z
+path stroke=false fill=darken: M g11 vc A dx2 dx2 cd2 cd2 A dx2 dx2 0 cd2 Z
+path stroke=false fill=lighten: M xa ye L xb ye L xb yc L xa yc Z M xa ya L xb ya L xb yf L xa yf Z
+path fill=none: M g11 vc A dx2 dx2 cd2 cd2 A dx2 dx2 0 cd2 Z
+path fill=none: M l t L r t L r b L l b Z`,
+  actionButtonReturn: `
+gd dx2 */ ss 3 8
+gd g9 +- vc 0 dx2
+gd g10 +- vc dx2 0
+gd g11 +- hc 0 dx2
+gd g12 +- hc dx2 0
+gd e1 */ dx2 1 4
+gd e2 */ dx2 1 2
+gd e3 */ dx2 3 4
+gd xa +- hc 0 e1
+gd xb +- hc e1 0
+gd xc +- hc 0 e2
+gd xd +- hc e2 0
+gd xe +- hc 0 e3
+gd xf +- hc e3 0
+gd ya +- vc 0 e1
+gd yb +- vc e1 0
+gd yc +- vc 0 e2
+gd yd +- vc e2 0
+gd ye +- vc 0 e3
+gd yf +- vc e3 0
+rect l t r b
+path stroke=false: M l t L r t L r b L l b Z
+path stroke=false fill=darken: M xc g9 L hc yc L g11 yc Z M xe yc L xa yc L xa yb L xe yb Z M xe yb L xd yb L xd yd L xe yd Z M xb ye L xd ye L xd yd L xb yd Z
+path fill=none: M xc g9 L hc yc L g11 yc Z M xe yc L xa yc L xa yb L xe yb Z M xe yb L xd yb L xd yd L xe yd Z M xb ye L xd ye L xd yd L xb yd Z
+path fill=none: M l t L r t L r b L l b Z`,
+  actionButtonMovie: `
+gd dx2 */ ss 3 8
+gd g9 +- vc 0 dx2
+gd g10 +- vc dx2 0
+gd g11 +- hc 0 dx2
+gd g12 +- hc dx2 0
+gd e1 */ dx2 1 4
+gd e2 */ dx2 1 2
+gd e3 */ dx2 3 4
+gd xa +- hc 0 e1
+gd xb +- hc e1 0
+gd xc +- hc 0 e2
+gd xd +- hc e2 0
+gd xe +- hc 0 e3
+gd xf +- hc e3 0
+gd ya +- vc 0 e1
+gd yb +- vc e1 0
+gd yc +- vc 0 e2
+gd yd +- vc e2 0
+gd ye +- vc 0 e3
+gd yf +- vc e3 0
+rect l t r b
+path stroke=false: M l t L r t L r b L l b Z
+path stroke=false fill=darken: M g11 ya L xb ya L xb yc L g12 g9 L g12 g10 L xb yd L xb yb L g11 yb Z
+path fill=none: M g11 ya L xb ya L xb yc L g12 g9 L g12 g10 L xb yd L xb yb L g11 yb Z
+path fill=none: M l t L r t L r b L l b Z`,
+  actionButtonDocument: `
+gd dx2 */ ss 3 8
+gd g9 +- vc 0 dx2
+gd g10 +- vc dx2 0
+gd g11 +- hc 0 dx2
+gd g12 +- hc dx2 0
+gd e1 */ dx2 1 4
+gd e2 */ dx2 1 2
+gd e3 */ dx2 3 4
+gd xa +- hc 0 e1
+gd xb +- hc e1 0
+gd xc +- hc 0 e2
+gd xd +- hc e2 0
+gd xe +- hc 0 e3
+gd xf +- hc e3 0
+gd ya +- vc 0 e1
+gd yb +- vc e1 0
+gd yc +- vc 0 e2
+gd yd +- vc e2 0
+gd ye +- vc 0 e3
+gd yf +- vc e3 0
+rect l t r b
+path stroke=false: M l t L r t L r b L l b Z
+path stroke=false fill=darken: M xe g9 L xb g9 L xf ye L xf g10 L xe g10 Z
+path stroke=false fill=lighten: M xb g9 L xb ye L xf ye Z
+path fill=none: M xe g9 L xb g9 L xf ye L xf g10 L xe g10 Z
+path fill=none: M l t L r t L r b L l b Z`,
+  actionButtonSound: `
+gd dx2 */ ss 3 8
+gd g9 +- vc 0 dx2
+gd g10 +- vc dx2 0
+gd g11 +- hc 0 dx2
+gd g12 +- hc dx2 0
+gd e1 */ dx2 1 4
+gd e2 */ dx2 1 2
+gd e3 */ dx2 3 4
+gd xa +- hc 0 e1
+gd xb +- hc e1 0
+gd xc +- hc 0 e2
+gd xd +- hc e2 0
+gd xe +- hc 0 e3
+gd xf +- hc e3 0
+gd ya +- vc 0 e1
+gd yb +- vc e1 0
+gd yc +- vc 0 e2
+gd yd +- vc e2 0
+gd ye +- vc 0 e3
+gd yf +- vc e3 0
+rect l t r b
+path stroke=false: M l t L r t L r b L l b Z
+path stroke=false fill=darken: M g11 ya L xc ya L xa g9 L xa g10 L xc yb L g11 yb Z M xb yc L xd yc L xd yd L xb yd Z M xd ye L xf ye L xf yf L xd yf Z
+path fill=none: M g11 ya L xc ya L xa g9 L xa g10 L xc yb L g11 yb Z M xb yc L xd yc L xd yd L xb yd Z M xd ye L xf ye L xf yf L xd yf Z
+path fill=none: M l t L r t L r b L l b Z`,
+  actionButtonHelp: `
+gd dx2 */ ss 3 8
+gd g9 +- vc 0 dx2
+gd g10 +- vc dx2 0
+gd g11 +- hc 0 dx2
+gd g12 +- hc dx2 0
+gd e1 */ dx2 1 4
+gd e2 */ dx2 1 2
+gd e3 */ dx2 3 4
+gd xa +- hc 0 e1
+gd xb +- hc e1 0
+gd xc +- hc 0 e2
+gd xd +- hc e2 0
+gd xe +- hc 0 e3
+gd xf +- hc e3 0
+gd ya +- vc 0 e1
+gd yb +- vc e1 0
+gd yc +- vc 0 e2
+gd yd +- vc e2 0
+gd ye +- vc 0 e3
+gd yf +- vc e3 0
+rect l t r b
+path stroke=false: M l t L r t L r b L l b Z
+path stroke=false fill=darken: M g11 vc A dx2 dx2 cd2 cd2 A dx2 dx2 0 cd2 Z
+path stroke=false fill=lighten: M xc ye L xd ye L xd yc L xc yc Z M xb yc L xd yc L xd ya L xb ya Z M xa ya L xd ya L xd vc L xa vc Z M xa vc L xb vc L xb yb L xa yb Z M xa yd L xb yd L xb yf L xa yf Z
+path fill=none: M g11 vc A dx2 dx2 cd2 cd2 A dx2 dx2 0 cd2 Z
+path fill=none: M l t L r t L r b L l b Z`,
+  actionButtonBlank: `
+gd dx2 */ ss 3 8
+gd g9 +- vc 0 dx2
+gd g10 +- vc dx2 0
+gd g11 +- hc 0 dx2
+gd g12 +- hc dx2 0
+gd e1 */ dx2 1 4
+gd e2 */ dx2 1 2
+gd e3 */ dx2 3 4
+gd xa +- hc 0 e1
+gd xb +- hc e1 0
+gd xc +- hc 0 e2
+gd xd +- hc e2 0
+gd xe +- hc 0 e3
+gd xf +- hc e3 0
+gd ya +- vc 0 e1
+gd yb +- vc e1 0
+gd yc +- vc 0 e2
+gd yd +- vc e2 0
+gd ye +- vc 0 e3
+gd yf +- vc e3 0
+rect l t r b
+path stroke=false: M l t L r t L r b L l b Z
+path fill=none: M l t L r t L r b L l b Z`,
   plus: `
 av adj 25000
 gd a pin 0 adj 50000

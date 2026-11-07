@@ -1479,6 +1479,42 @@
         },
         {
          "name": "Legende: mit gebogener Doppellinie mit Rahmen und Akzentuierungsbalken"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Zurück oder Vorherige(r)"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Nächste(r) oder Weiter"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Zum Anfang wechseln"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Zum Ende wechseln"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Zur Startseite wechseln"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Informationen abrufen"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Zurückkehren"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Video"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Dokument"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Sound"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Hilfe"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Leer"
         }
        ]
       },
@@ -3051,7 +3087,250 @@
        "panel": true,
        "items": [
         {
+         "name": "1x1 Tabelle"
+        },
+        {
+         "name": "2x1 Tabelle"
+        },
+        {
+         "name": "3x1 Tabelle"
+        },
+        {
+         "name": "4x1 Tabelle"
+        },
+        {
+         "name": "5x1 Tabelle"
+        },
+        {
+         "name": "6x1 Tabelle"
+        },
+        {
+         "name": "7x1 Tabelle"
+        },
+        {
+         "name": "8x1 Tabelle"
+        },
+        {
+         "name": "9x1 Tabelle"
+        },
+        {
+         "name": "10x1 Tabelle"
+        },
+        {
+         "name": "1x2 Tabelle"
+        },
+        {
+         "name": "2x2 Tabelle"
+        },
+        {
+         "name": "3x2 Tabelle"
+        },
+        {
+         "name": "4x2 Tabelle"
+        },
+        {
+         "name": "5x2 Tabelle"
+        },
+        {
+         "name": "6x2 Tabelle"
+        },
+        {
+         "name": "7x2 Tabelle"
+        },
+        {
+         "name": "8x2 Tabelle"
+        },
+        {
+         "name": "9x2 Tabelle"
+        },
+        {
+         "name": "10x2 Tabelle"
+        },
+        {
+         "name": "1x3 Tabelle"
+        },
+        {
+         "name": "2x3 Tabelle"
+        },
+        {
+         "name": "3x3 Tabelle"
+        },
+        {
+         "name": "4x3 Tabelle"
+        },
+        {
+         "name": "5x3 Tabelle"
+        },
+        {
+         "name": "6x3 Tabelle"
+        },
+        {
+         "name": "7x3 Tabelle"
+        },
+        {
+         "name": "8x3 Tabelle"
+        },
+        {
+         "name": "9x3 Tabelle"
+        },
+        {
+         "name": "10x3 Tabelle"
+        },
+        {
+         "name": "1x4 Tabelle"
+        },
+        {
+         "name": "2x4 Tabelle"
+        },
+        {
+         "name": "3x4 Tabelle"
+        },
+        {
+         "name": "4x4 Tabelle"
+        },
+        {
+         "name": "5x4 Tabelle"
+        },
+        {
+         "name": "6x4 Tabelle"
+        },
+        {
+         "name": "7x4 Tabelle"
+        },
+        {
+         "name": "8x4 Tabelle"
+        },
+        {
+         "name": "9x4 Tabelle"
+        },
+        {
+         "name": "10x4 Tabelle"
+        },
+        {
+         "name": "1x5 Tabelle"
+        },
+        {
+         "name": "2x5 Tabelle"
+        },
+        {
+         "name": "3x5 Tabelle"
+        },
+        {
+         "name": "4x5 Tabelle"
+        },
+        {
+         "name": "5x5 Tabelle"
+        },
+        {
+         "name": "6x5 Tabelle"
+        },
+        {
+         "name": "7x5 Tabelle"
+        },
+        {
+         "name": "8x5 Tabelle"
+        },
+        {
+         "name": "9x5 Tabelle"
+        },
+        {
+         "name": "10x5 Tabelle"
+        },
+        {
+         "name": "1x6 Tabelle"
+        },
+        {
+         "name": "2x6 Tabelle"
+        },
+        {
+         "name": "3x6 Tabelle"
+        },
+        {
+         "name": "4x6 Tabelle"
+        },
+        {
+         "name": "5x6 Tabelle"
+        },
+        {
+         "name": "6x6 Tabelle"
+        },
+        {
+         "name": "7x6 Tabelle"
+        },
+        {
+         "name": "8x6 Tabelle"
+        },
+        {
+         "name": "9x6 Tabelle"
+        },
+        {
+         "name": "10x6 Tabelle"
+        },
+        {
+         "name": "1x7 Tabelle"
+        },
+        {
+         "name": "2x7 Tabelle"
+        },
+        {
+         "name": "3x7 Tabelle"
+        },
+        {
+         "name": "4x7 Tabelle"
+        },
+        {
+         "name": "5x7 Tabelle"
+        },
+        {
+         "name": "6x7 Tabelle"
+        },
+        {
+         "name": "7x7 Tabelle"
+        },
+        {
+         "name": "8x7 Tabelle"
+        },
+        {
+         "name": "9x7 Tabelle"
+        },
+        {
+         "name": "10x7 Tabelle"
+        },
+        {
+         "name": "1x8 Tabelle"
+        },
+        {
+         "name": "2x8 Tabelle"
+        },
+        {
+         "name": "3x8 Tabelle"
+        },
+        {
+         "name": "4x8 Tabelle"
+        },
+        {
+         "name": "5x8 Tabelle"
+        },
+        {
+         "name": "6x8 Tabelle"
+        },
+        {
+         "name": "7x8 Tabelle"
+        },
+        {
+         "name": "8x8 Tabelle"
+        },
+        {
+         "name": "9x8 Tabelle"
+        },
+        {
+         "name": "10x8 Tabelle"
+        },
+        {
          "name": "Tabelle einfügen..."
+        },
+        {
+         "name": "Tabelle zeichnen"
         }
        ]
       }
@@ -3576,6 +3855,42 @@
         },
         {
          "name": "Legende: mit gebogener Doppellinie mit Rahmen und Akzentuierungsbalken"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Zurück oder Vorherige(r)"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Nächste(r) oder Weiter"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Zum Anfang wechseln"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Zum Ende wechseln"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Zur Startseite wechseln"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Informationen abrufen"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Zurückkehren"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Video"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Dokument"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Sound"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Hilfe"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Leer"
         }
        ]
       },
@@ -4546,7 +4861,7 @@
        "type": "check"
       },
       {
-       "name": "",
+       "name": "Automatisch nach",
        "deferred": false,
        "enabled": true,
        "type": "spinner"
@@ -4941,6 +5256,14 @@
           {
            "name": "Bei Mausklick (kein Trigger)",
            "enabled": true
+          },
+          {
+           "name": "Titel 1",
+           "enabled": true
+          },
+          {
+           "name": "Untertitel 2",
+           "enabled": true
           }
          ]
         }
@@ -4978,7 +5301,7 @@
        ]
       },
       {
-       "name": "Dauer",
+       "name": "Animationsdauer",
        "deferred": false,
        "enabled": true,
        "type": "spinner"
@@ -4990,7 +5313,7 @@
        "name": "Weniger"
       },
       {
-       "name": "Verzögerung",
+       "name": "Animationsverzögerung",
        "deferred": false,
        "enabled": true,
        "type": "spinner"
@@ -5384,7 +5707,7 @@
        "type": "dropdown",
        "items": [
         {
-         "name": "1 Katalog",
+         "name": "1 Präsentation1",
          "enabled": true
         }
        ]
@@ -5897,6 +6220,42 @@
         },
         {
          "name": "Legende: mit gebogener Doppellinie mit Rahmen und Akzentuierungsbalken"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Zurück oder Vorherige(r)"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Nächste(r) oder Weiter"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Zum Anfang wechseln"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Zum Ende wechseln"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Zur Startseite wechseln"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Informationen abrufen"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Zurückkehren"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Video"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Dokument"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Sound"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Hilfe"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Leer"
         }
        ]
       },
@@ -7866,24 +8225,104 @@
          "enabled": true,
          "submenu": [
           {
-           "name": "Kein Schatten",
+           "name": "Ohne",
            "enabled": true
           },
           {
-           "name": "Außen: Versatz unten rechts",
+           "name": "Offset: unten rechts",
            "enabled": true
           },
           {
-           "name": "Außen: Versatz unten",
+           "name": "Offset: unten",
            "enabled": true
           },
           {
-           "name": "Außen: Versatz unten links",
+           "name": "Offset: unten links",
            "enabled": true
           },
           {
-           "name": "Außen: Versatz rechts",
+           "name": "Offset: rechts",
            "enabled": true
+          },
+          {
+           "name": "Offset: Mitte",
+           "enabled": true
+          },
+          {
+           "name": "Offset: links",
+           "enabled": true
+          },
+          {
+           "name": "Offset: oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Offset: oben",
+           "enabled": true
+          },
+          {
+           "name": "Offset: oben links",
+           "enabled": true
+          },
+          {
+           "name": "Innen: oben links",
+           "enabled": true
+          },
+          {
+           "name": "Innen: oben",
+           "enabled": true
+          },
+          {
+           "name": "Innen: oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Innen: links",
+           "enabled": true
+          },
+          {
+           "name": "Innen: Mitte",
+           "enabled": true
+          },
+          {
+           "name": "Innen: rechts",
+           "enabled": true
+          },
+          {
+           "name": "Innen: unten links",
+           "enabled": true
+          },
+          {
+           "name": "Innen: unten",
+           "enabled": true
+          },
+          {
+           "name": "Innen: unten rechts",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: oben links",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: unterhalb",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: unten links",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: unten rechts",
+           "enabled": true
+          },
+          {
+           "name": "Schattenoptionen...",
+           "enabled": false
           }
          ]
         },
@@ -7892,16 +8331,48 @@
          "enabled": true,
          "submenu": [
           {
-           "name": "Keine Spiegelung",
+           "name": "Ohne",
            "enabled": true
           },
           {
-           "name": "Enge Spiegelung: Berührung",
+           "name": "Enge Spiegelung: mit Berührung",
            "enabled": true
           },
           {
-           "name": "Halbe Spiegelung: Berührung",
+           "name": "Halbe Spiegelung: mit Berührung",
            "enabled": true
+          },
+          {
+           "name": "Volle Spiegelung: mit Berührung",
+           "enabled": true
+          },
+          {
+           "name": "Enge Spiegelung: 4 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Halbe Spiegelung: 4 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Volle Spiegelung: 4 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Enge Spiegelung: 8 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Halbe Spiegelung: 8 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Volle Spiegelung: 8 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Spiegelungsoptionen...",
+           "enabled": false
           }
          ]
         },
@@ -7910,32 +8381,108 @@
          "enabled": true,
          "submenu": [
           {
-           "name": "Kein Leuchten",
+           "name": "Ohne",
            "enabled": true
           },
           {
-           "name": "Leuchten: 8 Pt.; Akzentfarbe 1",
+           "name": "Leuchteffekt: 5 Pt.; Dunkelblaugrün, Akzentfarbe 1",
            "enabled": true
           },
           {
-           "name": "Leuchten: 8 Pt.; Akzentfarbe 2",
+           "name": "Leuchteffekt: 5 Pt.; Orange, Akzentfarbe 2",
            "enabled": true
           },
           {
-           "name": "Leuchten: 8 Pt.; Akzentfarbe 3",
+           "name": "Leuchteffekt: 5 Pt.; Dunkelgrün, Akzentfarbe 3",
            "enabled": true
           },
           {
-           "name": "Leuchten: 8 Pt.; Akzentfarbe 4",
+           "name": "Leuchteffekt: 5 Pt.; Türkis, Akzentfarbe 4",
            "enabled": true
           },
           {
-           "name": "Leuchten: 8 Pt.; Akzentfarbe 5",
+           "name": "Leuchteffekt: 5 Pt.; Pflaume, Akzentfarbe 5",
            "enabled": true
           },
           {
-           "name": "Leuchten: 8 Pt.; Akzentfarbe 6",
+           "name": "Leuchteffekt: 5 Pt.; Grün, Akzentfarbe 6",
            "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Orange, Akzentfarbe 2",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Dunkelgrün, Akzentfarbe 3",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Türkis, Akzentfarbe 4",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Pflaume, Akzentfarbe 5",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Grün, Akzentfarbe 6",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Orange, Akzentfarbe 2",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Dunkelgrün, Akzentfarbe 3",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Türkis, Akzentfarbe 4",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Pflaume, Akzentfarbe 5",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Grün, Akzentfarbe 6",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Orange, Akzentfarbe 2",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Dunkelgrün, Akzentfarbe 3",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Türkis, Akzentfarbe 4",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Pflaume, Akzentfarbe 5",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Grün, Akzentfarbe 6",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffektoptionen...",
+           "enabled": false
           }
          ]
         },
@@ -8512,6 +9059,21 @@
        "type": "dropdown",
        "items": [
         {
+         "name": "Weichzeichnen: 50 %"
+        },
+        {
+         "name": "Weichzeichnen: 25 %"
+        },
+        {
+         "name": "Schärfen: 0 %"
+        },
+        {
+         "name": "Schärfen: 25 %"
+        },
+        {
+         "name": "Schärfen: 50 %"
+        },
+        {
          "name": "Helligkeit: -40 % Kontrast: -40 %",
          "enabled": true
         },
@@ -8624,6 +9186,48 @@
        "type": "dropdown",
        "items": [
         {
+         "name": "Sättigung: 0 %"
+        },
+        {
+         "name": "Sättigung: 33 %"
+        },
+        {
+         "name": "Sättigung: 66 %"
+        },
+        {
+         "name": "Sättigung: 100 %"
+        },
+        {
+         "name": "Sättigung: 200 %"
+        },
+        {
+         "name": "Sättigung: 300 %"
+        },
+        {
+         "name": "Sättigung: 400 %"
+        },
+        {
+         "name": "Temperatur: 4700 K"
+        },
+        {
+         "name": "Temperatur: 5300 K"
+        },
+        {
+         "name": "Temperatur: 5900 K"
+        },
+        {
+         "name": "Temperatur: 6500 K"
+        },
+        {
+         "name": "Temperatur: 7200 K"
+        },
+        {
+         "name": "Temperatur: 8800 K"
+        },
+        {
+         "name": "Temperatur: 11200 K"
+        },
+        {
          "name": "Keine Neueinfärbung",
          "enabled": true
         },
@@ -8719,6 +9323,75 @@
        "enabled": true,
        "type": "dropdown",
        "items": [
+        {
+         "name": "Keine"
+        },
+        {
+         "name": "Markierung"
+        },
+        {
+         "name": "Bleistift: Graustufen"
+        },
+        {
+         "name": "Bleistiftskizze"
+        },
+        {
+         "name": "Strichzeichnung"
+        },
+        {
+         "name": "Kreideskizze"
+        },
+        {
+         "name": "Farbstriche"
+        },
+        {
+         "name": "Pinsel"
+        },
+        {
+         "name": "Leuchteffekt: diffus"
+        },
+        {
+         "name": "Weichzeichnen"
+        },
+        {
+         "name": "Heller Bildschirm"
+        },
+        {
+         "name": "Wasserfarbe: Schwamm"
+        },
+        {
+         "name": "Filmkörnung"
+        },
+        {
+         "name": "Mosaik: Tupfen"
+        },
+        {
+         "name": "Glas"
+        },
+        {
+         "name": "Zement"
+        },
+        {
+         "name": "Strukturierung"
+        },
+        {
+         "name": "Kreuzschraffur: Radierung"
+        },
+        {
+         "name": "Pastellkreide: weich"
+        },
+        {
+         "name": "Plastikfolie"
+        },
+        {
+         "name": "Silhouette"
+        },
+        {
+         "name": "Fotokopie"
+        },
+        {
+         "name": "Leuchteffekt: Ränder"
+        },
         {
          "name": "Optionen für künstlerische Effekte...",
          "enabled": true
@@ -11124,24 +11797,104 @@
          "enabled": true,
          "submenu": [
           {
-           "name": "Kein Schatten",
+           "name": "Ohne",
            "enabled": true
           },
           {
-           "name": "Außen: Versatz unten rechts",
+           "name": "Offset: unten rechts",
            "enabled": true
           },
           {
-           "name": "Außen: Versatz unten",
+           "name": "Offset: unten",
            "enabled": true
           },
           {
-           "name": "Außen: Versatz unten links",
+           "name": "Offset: unten links",
            "enabled": true
           },
           {
-           "name": "Außen: Versatz rechts",
+           "name": "Offset: rechts",
            "enabled": true
+          },
+          {
+           "name": "Offset: Mitte",
+           "enabled": true
+          },
+          {
+           "name": "Offset: links",
+           "enabled": true
+          },
+          {
+           "name": "Offset: oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Offset: oben",
+           "enabled": true
+          },
+          {
+           "name": "Offset: oben links",
+           "enabled": true
+          },
+          {
+           "name": "Innen: oben links",
+           "enabled": true
+          },
+          {
+           "name": "Innen: oben",
+           "enabled": true
+          },
+          {
+           "name": "Innen: oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Innen: links",
+           "enabled": true
+          },
+          {
+           "name": "Innen: Mitte",
+           "enabled": true
+          },
+          {
+           "name": "Innen: rechts",
+           "enabled": true
+          },
+          {
+           "name": "Innen: unten links",
+           "enabled": true
+          },
+          {
+           "name": "Innen: unten",
+           "enabled": true
+          },
+          {
+           "name": "Innen: unten rechts",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: oben links",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: unterhalb",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: unten links",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: unten rechts",
+           "enabled": true
+          },
+          {
+           "name": "Schattenoptionen...",
+           "enabled": false
           }
          ]
         },
@@ -11150,16 +11903,48 @@
          "enabled": true,
          "submenu": [
           {
-           "name": "Keine Spiegelung",
+           "name": "Ohne",
            "enabled": true
           },
           {
-           "name": "Enge Spiegelung: Berührung",
+           "name": "Enge Spiegelung: mit Berührung",
            "enabled": true
           },
           {
-           "name": "Halbe Spiegelung: Berührung",
+           "name": "Halbe Spiegelung: mit Berührung",
            "enabled": true
+          },
+          {
+           "name": "Volle Spiegelung: mit Berührung",
+           "enabled": true
+          },
+          {
+           "name": "Enge Spiegelung: 4 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Halbe Spiegelung: 4 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Volle Spiegelung: 4 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Enge Spiegelung: 8 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Halbe Spiegelung: 8 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Volle Spiegelung: 8 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Spiegelungsoptionen...",
+           "enabled": false
           }
          ]
         },
@@ -11168,32 +11953,108 @@
          "enabled": true,
          "submenu": [
           {
-           "name": "Kein Leuchten",
+           "name": "Ohne",
            "enabled": true
           },
           {
-           "name": "Leuchten: 8 Pt.; Akzentfarbe 1",
+           "name": "Leuchteffekt: 5 Pt.; Dunkelblaugrün, Akzentfarbe 1",
            "enabled": true
           },
           {
-           "name": "Leuchten: 8 Pt.; Akzentfarbe 2",
+           "name": "Leuchteffekt: 5 Pt.; Orange, Akzentfarbe 2",
            "enabled": true
           },
           {
-           "name": "Leuchten: 8 Pt.; Akzentfarbe 3",
+           "name": "Leuchteffekt: 5 Pt.; Dunkelgrün, Akzentfarbe 3",
            "enabled": true
           },
           {
-           "name": "Leuchten: 8 Pt.; Akzentfarbe 4",
+           "name": "Leuchteffekt: 5 Pt.; Türkis, Akzentfarbe 4",
            "enabled": true
           },
           {
-           "name": "Leuchten: 8 Pt.; Akzentfarbe 5",
+           "name": "Leuchteffekt: 5 Pt.; Pflaume, Akzentfarbe 5",
            "enabled": true
           },
           {
-           "name": "Leuchten: 8 Pt.; Akzentfarbe 6",
+           "name": "Leuchteffekt: 5 Pt.; Grün, Akzentfarbe 6",
            "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Orange, Akzentfarbe 2",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Dunkelgrün, Akzentfarbe 3",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Türkis, Akzentfarbe 4",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Pflaume, Akzentfarbe 5",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Grün, Akzentfarbe 6",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Orange, Akzentfarbe 2",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Dunkelgrün, Akzentfarbe 3",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Türkis, Akzentfarbe 4",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Pflaume, Akzentfarbe 5",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Grün, Akzentfarbe 6",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Orange, Akzentfarbe 2",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Dunkelgrün, Akzentfarbe 3",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Türkis, Akzentfarbe 4",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Pflaume, Akzentfarbe 5",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Grün, Akzentfarbe 6",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffektoptionen...",
+           "enabled": false
           }
          ]
         },
@@ -11946,7 +12807,7 @@
      "name": "Zellengröße",
      "controls": [
       {
-       "name": "Höhe",
+       "name": "Tabellenzeilenhöhe",
        "deferred": false,
        "enabled": true,
        "type": "spinner"
@@ -11958,7 +12819,7 @@
        "name": "Weniger"
       },
       {
-       "name": "Breite",
+       "name": "Tabellenspaltenbreite",
        "deferred": false,
        "enabled": true,
        "type": "spinner"
@@ -12531,55 +13392,55 @@
          "enabled": true
         },
         {
-         "name": "Monochromatische Palette 1",
+         "name": "Monochrome Palette 1",
          "enabled": true
         },
         {
-         "name": "Monochromatische Palette 2",
+         "name": "Monochrome Palette 2",
          "enabled": true
         },
         {
-         "name": "Monochromatische Palette 3",
+         "name": "Monochrome Palette 3",
          "enabled": true
         },
         {
-         "name": "Monochromatische Palette 4",
+         "name": "Monochrome Palette 4",
          "enabled": true
         },
         {
-         "name": "Monochromatische Palette 5",
+         "name": "Monochrome Palette 5",
          "enabled": true
         },
         {
-         "name": "Monochromatische Palette 6",
+         "name": "Monochrome Palette 6",
          "enabled": true
         },
         {
-         "name": "Monochromatische Palette 7",
+         "name": "Monochrome Palette 7",
          "enabled": true
         },
         {
-         "name": "Monochromatische Palette 8",
+         "name": "Monochrome Palette 8",
          "enabled": true
         },
         {
-         "name": "Monochromatische Palette 9",
+         "name": "Monochrome Palette 9",
          "enabled": true
         },
         {
-         "name": "Monochromatische Palette 10",
+         "name": "Monochrome Palette 10",
          "enabled": true
         },
         {
-         "name": "Monochromatische Palette 11",
+         "name": "Monochrome Palette 11",
          "enabled": true
         },
         {
-         "name": "Monochromatische Palette 12",
+         "name": "Monochrome Palette 12",
          "enabled": true
         },
         {
-         "name": "Monochromatische Palette 13",
+         "name": "Monochrome Palette 13",
          "enabled": true
         }
        ]
@@ -13180,6 +14041,42 @@
         },
         {
          "name": "Legende: mit gebogener Doppellinie mit Rahmen und Akzentuierungsbalken"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Zurück oder Vorherige(r)"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Nächste(r) oder Weiter"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Zum Anfang wechseln"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Zum Ende wechseln"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Zur Startseite wechseln"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Informationen abrufen"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Zurückkehren"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Video"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Dokument"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Sound"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Hilfe"
+        },
+        {
+         "name": "Interaktive Schaltfläche: Leer"
         }
        ]
       }
@@ -15112,24 +16009,104 @@
          "enabled": true,
          "submenu": [
           {
-           "name": "Kein Schatten",
+           "name": "Ohne",
            "enabled": true
           },
           {
-           "name": "Außen: Versatz unten rechts",
+           "name": "Offset: unten rechts",
            "enabled": true
           },
           {
-           "name": "Außen: Versatz unten",
+           "name": "Offset: unten",
            "enabled": true
           },
           {
-           "name": "Außen: Versatz unten links",
+           "name": "Offset: unten links",
            "enabled": true
           },
           {
-           "name": "Außen: Versatz rechts",
+           "name": "Offset: rechts",
            "enabled": true
+          },
+          {
+           "name": "Offset: Mitte",
+           "enabled": true
+          },
+          {
+           "name": "Offset: links",
+           "enabled": true
+          },
+          {
+           "name": "Offset: oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Offset: oben",
+           "enabled": true
+          },
+          {
+           "name": "Offset: oben links",
+           "enabled": true
+          },
+          {
+           "name": "Innen: oben links",
+           "enabled": true
+          },
+          {
+           "name": "Innen: oben",
+           "enabled": true
+          },
+          {
+           "name": "Innen: oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Innen: links",
+           "enabled": true
+          },
+          {
+           "name": "Innen: Mitte",
+           "enabled": true
+          },
+          {
+           "name": "Innen: rechts",
+           "enabled": true
+          },
+          {
+           "name": "Innen: unten links",
+           "enabled": true
+          },
+          {
+           "name": "Innen: unten",
+           "enabled": true
+          },
+          {
+           "name": "Innen: unten rechts",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: oben links",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: unterhalb",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: unten links",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: unten rechts",
+           "enabled": true
+          },
+          {
+           "name": "Schattenoptionen...",
+           "enabled": false
           }
          ]
         },
@@ -15138,16 +16115,48 @@
          "enabled": true,
          "submenu": [
           {
-           "name": "Keine Spiegelung",
+           "name": "Ohne",
            "enabled": true
           },
           {
-           "name": "Enge Spiegelung: Berührung",
+           "name": "Enge Spiegelung: mit Berührung",
            "enabled": true
           },
           {
-           "name": "Halbe Spiegelung: Berührung",
+           "name": "Halbe Spiegelung: mit Berührung",
            "enabled": true
+          },
+          {
+           "name": "Volle Spiegelung: mit Berührung",
+           "enabled": true
+          },
+          {
+           "name": "Enge Spiegelung: 4 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Halbe Spiegelung: 4 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Volle Spiegelung: 4 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Enge Spiegelung: 8 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Halbe Spiegelung: 8 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Volle Spiegelung: 8 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Spiegelungsoptionen...",
+           "enabled": false
           }
          ]
         },
@@ -15156,32 +16165,108 @@
          "enabled": true,
          "submenu": [
           {
-           "name": "Kein Leuchten",
+           "name": "Ohne",
            "enabled": true
           },
           {
-           "name": "Leuchten: 8 Pt.; Akzentfarbe 1",
+           "name": "Leuchteffekt: 5 Pt.; Dunkelblaugrün, Akzentfarbe 1",
            "enabled": true
           },
           {
-           "name": "Leuchten: 8 Pt.; Akzentfarbe 2",
+           "name": "Leuchteffekt: 5 Pt.; Orange, Akzentfarbe 2",
            "enabled": true
           },
           {
-           "name": "Leuchten: 8 Pt.; Akzentfarbe 3",
+           "name": "Leuchteffekt: 5 Pt.; Dunkelgrün, Akzentfarbe 3",
            "enabled": true
           },
           {
-           "name": "Leuchten: 8 Pt.; Akzentfarbe 4",
+           "name": "Leuchteffekt: 5 Pt.; Türkis, Akzentfarbe 4",
            "enabled": true
           },
           {
-           "name": "Leuchten: 8 Pt.; Akzentfarbe 5",
+           "name": "Leuchteffekt: 5 Pt.; Pflaume, Akzentfarbe 5",
            "enabled": true
           },
           {
-           "name": "Leuchten: 8 Pt.; Akzentfarbe 6",
+           "name": "Leuchteffekt: 5 Pt.; Grün, Akzentfarbe 6",
            "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Orange, Akzentfarbe 2",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Dunkelgrün, Akzentfarbe 3",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Türkis, Akzentfarbe 4",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Pflaume, Akzentfarbe 5",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Grün, Akzentfarbe 6",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Orange, Akzentfarbe 2",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Dunkelgrün, Akzentfarbe 3",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Türkis, Akzentfarbe 4",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Pflaume, Akzentfarbe 5",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Grün, Akzentfarbe 6",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Orange, Akzentfarbe 2",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Dunkelgrün, Akzentfarbe 3",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Türkis, Akzentfarbe 4",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Pflaume, Akzentfarbe 5",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Grün, Akzentfarbe 6",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffektoptionen...",
+           "enabled": false
           }
          ]
         },
@@ -18858,6 +19943,191 @@
    },
    {
     "name": "Hintergrund formatieren..."
+   },
+   {
+    "name": "Neuer Kommentar"
+   }
+  ],
+  "Gruppe": [
+   {
+    "name": "Ausschneiden"
+   },
+   {
+    "name": "Kopieren"
+   },
+   {
+    "name": "Einfügeoptionen"
+   },
+   {
+    "name": "Gruppieren",
+    "items": [
+     {
+      "name": "Gruppieren"
+     },
+     {
+      "name": "Gruppierung wiederherstellen"
+     },
+     {
+      "name": "Gruppierung aufheben"
+     }
+    ]
+   },
+   {
+    "name": "In den Vordergrund",
+    "items": [
+     {
+      "name": "In den Vordergrund"
+     },
+     {
+      "name": "Ebene nach vorne"
+     }
+    ]
+   },
+   {
+    "name": "In den Hintergrund",
+    "items": [
+     {
+      "name": "In den Hintergrund"
+     },
+     {
+      "name": "Ebene nach hinten"
+     }
+    ]
+   },
+   {
+    "name": "Sperren"
+   },
+   {
+    "name": "Link"
+   },
+   {
+    "name": "Als Grafik speichern..."
+   },
+   {
+    "name": "Alternativtext anzeigen..."
+   },
+   {
+    "name": "Größe und Position..."
+   },
+   {
+    "name": "Form formatieren..."
+   },
+   {
+    "name": "Neuer Kommentar"
+   }
+  ],
+  "Notizenbereich": [
+   {
+    "name": "Ausschneiden"
+   },
+   {
+    "name": "Kopieren"
+   },
+   {
+    "name": "Einfügeoptionen"
+   },
+   {
+    "name": "Einfügen"
+   },
+   {
+    "name": "Schriftart..."
+   },
+   {
+    "name": "Absatz..."
+   },
+   {
+    "name": "Neuer Kommentar"
+   }
+  ],
+  "Diagramm": [
+   {
+    "name": "Löschen"
+   },
+   {
+    "name": "Auf Formatvorl. zurücks."
+   },
+   {
+    "name": "Schriftart..."
+   },
+   {
+    "name": "Diagrammtyp ändern..."
+   },
+   {
+    "name": "Daten bearbeiten"
+   },
+   {
+    "name": "Diagrammbereich formatieren..."
+   },
+   {
+    "name": "Neuer Kommentar"
+   }
+  ],
+  "Bild": [
+   {
+    "name": "Ausschneiden"
+   },
+   {
+    "name": "Kopieren"
+   },
+   {
+    "name": "Einfügeoptionen"
+   },
+   {
+    "name": "Bild ändern"
+   },
+   {
+    "name": "Gruppieren",
+    "items": [
+     {
+      "name": "Gruppieren"
+     },
+     {
+      "name": "Gruppierung wiederherstellen"
+     },
+     {
+      "name": "Gruppierung aufheben"
+     }
+    ]
+   },
+   {
+    "name": "In den Vordergrund",
+    "items": [
+     {
+      "name": "In den Vordergrund"
+     },
+     {
+      "name": "Ebene nach vorne"
+     }
+    ]
+   },
+   {
+    "name": "In den Hintergrund",
+    "items": [
+     {
+      "name": "In den Hintergrund"
+     },
+     {
+      "name": "Ebene nach hinten"
+     }
+    ]
+   },
+   {
+    "name": "Sperren"
+   },
+   {
+    "name": "Link"
+   },
+   {
+    "name": "Als Grafik speichern..."
+   },
+   {
+    "name": "Alternativtext anzeigen..."
+   },
+   {
+    "name": "Größe und Position..."
+   },
+   {
+    "name": "Grafik formatieren..."
    },
    {
     "name": "Neuer Kommentar"

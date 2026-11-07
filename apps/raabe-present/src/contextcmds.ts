@@ -69,8 +69,8 @@ export function contextHost(app: PresentApp): ContextTabHost {
     lineWeights: () => LINE_WEIGHTS.map(([label, w]) => ({ label, run: () => app.setLineWidth(w) })),
     chartKinds: () => CH.CHART_KINDS.map(([label, k]) => ({ label, run: () => CH.changeType(app, k) })),
     quickLayouts: () => Array.from({ length: 11 }, (_, i) => ({ label: `Layout ${i + 1}`, run: () => CH.quickLayout(app, i + 1) })),
-    chartColors: () => [{ heading: "Farbig" }, ...[10, 11, 12, 13].map((k) => ({ label: `Farbige Palette ${k - 9}`, run: () => CH.setColors(app, k) })),
-      { heading: "Monochromatisch" }, ...Array.from({ length: 13 }, (_, i) => ({ label: `Monochromatische Palette ${i + 1}`, run: () => CH.setColors(app, 14 + i) }))],
+    chartColors: () => [{ heading: "Bunt" }, ...[10, 11, 12, 13].map((k) => ({ label: `Farbige Palette ${k - 9}`, run: () => CH.setColors(app, k) })),
+      { heading: "Einfarbig" }, ...Array.from({ length: 13 }, (_, i) => ({ label: `Monochrome Palette ${i + 1}`, run: () => CH.setColors(app, 14 + i) }))],
     tableSpin: (k) => {
       const labels = { row: "Höhe:", col: "Breite:", h: "Höhe:", w: "Breite:" }, cmds = { row: "table.rowHeight", col: "table.colWidth", h: "table.height", w: "table.width" };
       return spin(() => tableSizeText(app, k), (v) => setTableSize(app, k, cmText(v)), (d) => setTableSize(app, k, Math.max(36000, tableSize(app, k) + d * 36000)), labels[k], cmds[k], k === "row" || k === "h" ? "shape-height" : "shape-width", { row: "P", col: "B", h: "X", w: "LB" }[k]);

@@ -62,6 +62,8 @@ SCENARIOS: dict[str, str] = {
         a.editor.select([2]); pick(m.shapeEffectsMenu(a), ['Abschrägung', 'Rund']); pick(m.shapeEffectsMenu(a), ['3D-Drehung', 'Perspektive: von links']); pick(m.shapeEffectsMenu(a), ['Schatten', 'Offset: unten rechts']);
         a.editor.select([3]); pick(m.shapeEffectsMenu(a), ['Leuchteffekt', 'Leuchteffekt: 11 Pt.; Orange, Akzentfarbe 2']); pick(m.shapeEffectsMenu(a), ['Spiegelung', 'Halbe Spiegelung: mit Berührung']);
         a.editor.select([4]); pick(m.transformMenu(a), ['Arch']); pick(m.textThreeD(a, 'bevel'), ['Konvex']);""",
+        "action button": """p.setupCase({layout:'Leer', shapes:[]}); const a = p.app; a.newSlide(); a.setCurrent(0); const S = await import('/src/shapeops.ts');
+        a.editor.edit('Form einfügen', () => { const doc = a.deck.pptx.doc(a.slidePath()); const tree = S.treeOf(doc); const el = S.newShape(doc, S.maxId(tree) + 1, 'actionButtonForwardNext', {x: 1000000, y: 1000000, w: 900000, h: 900000, rot: 0, flipH: false, flipV: false}); tree.append(el); a.actionButtonDrawn(el, 'actionButtonForwardNext'); });""",
         "action": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]}]}); const a = p.app; a.newSlide(); a.setCurrent(0); a.editor.select([2]); const doc = a.deck.pptx.doc(a.slidePath()); const nv = doc.getElementsByTagNameNS('http://schemas.openxmlformats.org/presentationml/2006/main', 'cNvPr')[1]; a.editor.edit('Aktion', () => { const hl = doc.createElementNS('http://schemas.openxmlformats.org/drawingml/2006/main', 'a:hlinkClick'); hl.setAttributeNS('http://schemas.openxmlformats.org/officeDocument/2006/relationships', 'r:id', ''); hl.setAttribute('action', 'ppaction://hlinkshowjump?jump=nextslide'); nv.insertBefore(hl, nv.firstChild); });""",
         "animation copy": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]},{kind:'ellipse',box:[400,100,150,150]}]}); const a = p.app; a.editor.select([2]); const m = await import('/src/animations.ts'); m.addAnimation(a, 'entr', m.ANIMATION_GROUPS[0].items[2], false); m.copyAnimation(a, 2, 3);""",
         "trigger": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]},{kind:'ellipse',box:[400,100,150,150]}]}); const a = p.app; a.editor.select([3]); const m = await import('/src/animations.ts'); m.addAnimation(a, 'entr', m.ANIMATION_GROUPS[0].items[2], false); m.setTrigger(a, 2);""",
@@ -120,6 +122,10 @@ def ppt_shapes(slide) -> list[dict]:
                 d["fx"] = None
         if int(s.Type) == 6:
             d["members"] = int(s.GroupItems.Count)
+        try:
+            d["auto"] = int(s.AutoShapeType)
+        except Exception:  # noqa: BLE001
+            pass
         try:
             d["action"] = int(s.ActionSettings(1).Action)
         except Exception:  # noqa: BLE001
@@ -221,6 +227,9 @@ def check(name: str, r: dict, ours: dict) -> list[str]:
         # PowerPoint reports its zooms as type -2 (a picture, 13, would mean it fell back to the Fallback).
         z = [x for x in sh if x["type"] == -2]
         want(len(z) == 1, f"types {[x['type'] for x in sh]}")
+    elif name == "action button":
+        # msoShapeActionButtonForwardorNext 130, ppActionNextSlide 1.
+        want(any(x.get("action") == 1 and x.get("auto") == 130 for x in sh), f"{[(x.get('auto'), x.get('action')) for x in sh]}")
     elif name == "action":
         want(any(x.get("action") == 1 for x in sh), f"action {[x.get('action') for x in sh]}")
     elif name == "animation copy":
