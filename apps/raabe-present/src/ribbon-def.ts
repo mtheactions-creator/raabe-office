@@ -42,7 +42,7 @@ export interface RibbonContext {
     arrange: () => MenuEntry[]; find: MenuEntry[]; select: MenuEntry[]; table: MenuEntry[]; pictures: MenuEntry[]; textBox: MenuEntry[];
     slideSize: MenuEntry[]; showCustom: MenuEntry[]; record: MenuEntry[]; transOptions: () => MenuEntry[]; animOptions: () => MenuEntry[];
     animStart: MenuEntry[]; colors: () => MenuEntry[]; fonts: () => MenuEntry[]; underline: MenuEntry[];
-    outlineWeight: MenuEntry[]; outlineDash: MenuEntry[]; effects: MenuEntry[]; quickStyles: () => MenuEntry[]; zoomFit: MenuEntry[]; equations: () => MenuEntry[]; sounds: () => MenuEntry[]; windows: () => MenuEntry[]; triggers: () => MenuEntry[]; zooms: () => MenuEntry[]; bgStyles: () => MenuEntry[]; inkAdd: () => MenuEntry[];
+    outlineWeight: MenuEntry[]; outlineDash: MenuEntry[]; effects: MenuEntry[]; quickStyles: () => MenuEntry[]; zoomFit: MenuEntry[]; equations: () => MenuEntry[]; sounds: () => MenuEntry[]; windows: () => MenuEntry[]; triggers: () => MenuEntry[]; zooms: () => MenuEntry[]; bgStyles: () => MenuEntry[]; inkAdd: () => MenuEntry[]; customShows: () => MenuEntry[];
   };
   panels: { newSlide: Popup; layout: Popup; shapes: Popup; themes: Popup; transitions: Popup; animations: Popup; table: Popup; chart: Popup; addAnim: Popup; wordArt: Popup; quickStyles: Popup };
   spin: {
@@ -167,7 +167,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
       id: "slideshow", label: "Bildschirmpräsentation", key: "L",
       shrink: ["monitors", "setup", "start"],
       groups: [
-        { id: "start", label: "Bildschirmpräsentation starten", key: "ZB", icon: "slideshow", controls: [b("show.fromStart", "V", "large"), b("show.fromCurrent", "T", "large"), dd("show.custom", "E", "large", m.showCustom)] },
+        { id: "start", label: "Bildschirmpräsentation starten", key: "ZB", icon: "slideshow", controls: [b("show.fromStart", "V", "large"), b("show.fromCurrent", "T", "large"), lazy("show.custom", "E", "large", m.customShows)] },
         { id: "setup", label: "Einrichten", key: "ZE", icon: "settings", controls: [b("show.setup", "I1", "large"), stack(b("show.hideSlide", "H", "medium"), b("show.rehearse", "U1", "medium"), dd("show.record", "N1", "medium", m.record)),
           stack(check("show.playNarrations", "K")), stack(check("show.useTimings", "N2"), check("show.mediaControls", "D"))] },
         { id: "monitors", label: "Bildschirme", key: "ZM", icon: "app", controls: [dd("show.monitor", "ZM", "large", [{ cmd: "show.presenterView" }])] },

@@ -1971,3 +1971,7 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   "remove" line becomes background and spreads into similar colours). Alle Änderungen verwerfen takes the
   removal away, Änderungen beibehalten ends Freistellen. PowerPoint's magenta overlay is not drawn: the picture
   shows the result directly.
+- **Benutzerdefinierte Bildschirmpräsentation:** the menu was empty. Now PowerPoint's custom shows
+  (p:custShowLst, slides by relationship) are listed to run, and Zielgruppenorientierte Präsentationen...
+  makes, changes, copies and removes them (our dialogs; the labels from knowledge of PowerPoint, the
+  inventory did not open them). A custom show plays only its slides in its order, Endlos as set up.

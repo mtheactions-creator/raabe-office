@@ -107,6 +107,7 @@ SCENARIOS: dict[str, str] = {
     "picture effects removed": f"""p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); const bin = atob('{PNG}'); const b = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) b[i] = bin.charCodeAt(i); a.insertPictureBytes(b, 'image/png'); await new Promise(r => setTimeout(r, 500));
         const v = a.deck.view(a.slidePath()).shapes.find(s => s.kind === 'pic'); a.editor.select([v.id]); const m = await import('/src/picfx.ts');
         await m.setEffect(a, 'colorTemperature', {{name: 'colorTemperature', attrs: {{colorTemp: '4700'}}}}, 'Farbton'); await m.setEffect(a, 'colorTemperature', null, 'Farbton');""",
+    "custom show": """p.newDoc(); const a = p.app; a.newSlide(); a.newSlide(); const m = await import('/src/custshow.ts'); m.writeShows(a, [{name: 'Kurz', slides: [2, 0]}]);""",
     "chart": """p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); const m = await import('/src/charts.ts'); m.insertChart(a, 'column');""",
     "comment": """p.newDoc(); p.app.comments.add('Bitte prüfen');""",
     "undo redo": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]}]}); const a = p.app; a.editor.select([2]); a.editor.deleteSelected(); await p.run('edit.undo'); await p.run('edit.redo'); await p.run('edit.undo');""",
@@ -197,8 +198,15 @@ def ppt_read(pres) -> dict:
                        "animations": int(sl.TimeLine.MainSequence.Count),
                        "interactive": [int(sl.TimeLine.InteractiveSequences(k).Count) for k in range(1, sl.TimeLine.InteractiveSequences.Count + 1)],
                        "motion": [str(sl.TimeLine.MainSequence(k).Behaviors(1).MotionEffect.Path) for k in range(1, sl.TimeLine.MainSequence.Count + 1) if int(sl.TimeLine.MainSequence(k).Behaviors(1).Type) == 1], "notes": notes, "shapes": ppt_shapes(sl)})
+    custom = []
+    try:
+        ns = pres.SlideShowSettings.NamedSlideShows
+        # SlideIDs: the show's slide ids (PowerPoint's array may carry an empty first element).
+        custom = [[str(ns(k).Name), [int(x) for x in ns(k).SlideIDs if x]] for k in range(1, ns.Count + 1)]
+    except Exception:  # noqa: BLE001
+        pass
     sp = pres.SectionProperties
-    return {"slides": slides, "sections": [str(sp.Name(k)) for k in range(1, sp.Count + 1)], "design": str(pres.SlideMaster.Theme.ThemeColorScheme.Colors(5).RGB) if False else str(pres.SlideMaster.Design.Name),
+    return {"custom": custom, "slides": slides, "sections": [str(sp.Name(k)) for k in range(1, sp.Count + 1)], "design": str(pres.SlideMaster.Theme.ThemeColorScheme.Colors(5).RGB) if False else str(pres.SlideMaster.Design.Name),
             "accent1": int(pres.SlideMaster.Theme.ThemeColorScheme(5).RGB)}
 
 
@@ -328,6 +336,9 @@ def check(name: str, r: dict, ours: dict) -> list[str]:
     elif name == "picture effects removed":
         fx = next((x.get("fx") for x in sh if x["type"] == 13), None)
         want(fx == [], f"effects {fx}")
+    elif name == "custom show":
+        c = r.get("custom") or []
+        want(len(c) == 1 and c[0][0] == "Kurz" and len(c[0][1]) == 2, f"custom shows {c}")
     elif name == "chart":
         want(any("chart" in x for x in sh), f"chart {[x.get('chart') for x in sh]}")
     elif name == "comment":

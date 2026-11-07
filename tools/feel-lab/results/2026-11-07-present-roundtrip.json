@@ -253,6 +253,10 @@
    "result": "same",
    "diff": []
   },
+  "custom show": {
+   "result": "same",
+   "diff": []
+  },
   "chart": {
    "result": "same",
    "diff": []
@@ -268,6 +272,6 @@
  },
  "summary": {
   "fixtures": "22/22",
-  "scenarios": "49/49"
+  "scenarios": "50/50"
  }
 }

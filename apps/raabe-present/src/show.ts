@@ -49,7 +49,11 @@ export class SlideShow {
   private last = 0;
   private timer = 0;
 
-  constructor(private app: PresentApp, from: number, private reading = false) {
+  /** A custom show: only these slides, in this order (Benutzerdefinierte Bildschirmpräsentation). */
+  private only: number[] | null = null;
+
+  constructor(private app: PresentApp, from: number, private reading = false, only: number[] | null = null) {
+    this.only = only && only.length ? only : null;
     this.done = new Promise((r) => { this.finish = r; });
     this.setup = readShowSetup(app.deck);
     this.first = this.setup.from !== undefined ? Math.max(0, this.setup.from - 1) : 0;
@@ -81,7 +85,8 @@ export class SlideShow {
     if (!reading) void document.documentElement.requestFullscreen?.().catch(() => {});
     this.root.focus();
     // Hidden slides are skipped, also as the first one (PowerPoint starts at the next shown).
-    while (this.index < this.count - 1 && this.hiddenSlide(this.index)) this.index++;
+    if (this.only) this.index = this.only[0];
+    else while (this.index < this.count - 1 && this.hiddenSlide(this.index)) this.index++;
     this.show(this.index, false);
   }
 
@@ -231,6 +236,13 @@ export class SlideShow {
     if (this.atEnd) { this.end(); return; }
     if (this.stepIdx < this.steps.length) { this.play(this.steps[this.stepIdx++]); this.renderPresenter(); return; }
     if (this.zoomReturn && this.index === this.zoomReturn.to) { const back = this.zoomReturn.from; this.zoomReturn = null; this.show(back, false); return; }
+    if (this.only) {
+      const k = this.only.indexOf(this.index);
+      if (k >= 0 && k < this.only.length - 1) { this.show(this.only[k + 1], false); return; }
+      if (this.setup.loop) { this.show(this.only[0], false); return; }
+      this.endScreen();
+      return;
+    }
     let i = this.index + 1;
     while (i <= this.last && this.hiddenSlide(i)) i++;
     if (i > this.last) {
@@ -252,6 +264,11 @@ export class SlideShow {
       this.show(this.index, false, false);
       for (let k = 0; k < keep; k++) this.finishStep(this.steps[k]);
       this.stepIdx = keep;
+      return;
+    }
+    if (this.only) {
+      const k = this.only.indexOf(this.index);
+      if (k > 0) this.show(this.only[k - 1], true, false);
       return;
     }
     let i = this.index - 1;

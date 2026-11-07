@@ -42,6 +42,7 @@ import * as CT from "./contexttabs";
 import { contextHost, implementContext } from "./contextcmds";
 import { Sorter } from "./sorter";
 import { zoomMenu } from "./zoom";
+import { customShowMenu } from "./custshow";
 import { endFreistellen, freistellenActive, freistellenTab, markTool } from "./freistellen";
 import { fileTypeSection } from "./exportimg";
 import { convertSmartArt, smartArtTab, textPane } from "./smartart";
@@ -1606,10 +1607,16 @@ export class PresentApp implements EditorHost, PanelHost {
     this.updateChrome();
   }
 
-  async startShow(from: number, reading = false): Promise<void> {
+  /** Benutzerdefinierte Bildschirmpräsentation: only these slides, in this order. */
+  async startCustomShow(slides: number[]): Promise<void> {
+    if (!slides.length) return;
+    await this.startShow(slides[0], false, slides);
+  }
+
+  async startShow(from: number, reading = false, only: number[] | null = null): Promise<void> {
     if (this.show) return;
     this.editor.endText();
-    this.show = new SlideShow(this, from, reading);
+    this.show = new SlideShow(this, from, reading, only);
     await this.show.done;
     this.active.current = Math.min(this.show.lastIndex, this.deck.slides.length - 1);
     this.show = null;
@@ -2775,7 +2782,7 @@ export class PresentApp implements EditorHost, PanelHost {
         pictures: [{ cmd: "insert.pictureFile" }],
         textBox: [{ cmd: "insert.textBoxH" }, { cmd: "insert.textBoxV" }],
         slideSize: [{ cmd: "design.slide4x3" }, { cmd: "design.slide16x9" }, "-", { cmd: "design.slideCustom" }],
-        showCustom: [], record: [],
+        showCustom: [], record: [], customShows: () => customShowMenu(this),
         transOptions: () => this.transMod?.transitionOptions(this) ?? [], animOptions: () => this.animMod?.animationOptions(this) ?? [], animStart: [{ label: "Beim Klicken", run: () => this.animPane.setStart("clickEffect") }, { label: "Mit Vorherigen", run: () => this.animPane.setStart("withEffect") }, { label: "Nach Vorherigen", run: () => this.animPane.setStart("afterEffect") }],
         colors: () => [...COLOR_SETS.map((c) => ({ label: c.name, run: () => this.applyColorSet(c.name, c.colors) })), "-", { label: "Farben anpassen...", run: () => void this.customColorsDialog() }],
         fonts: () => FONT_SETS.map((f) => ({ label: f.label, run: () => this.applyFontSet(f.name, f.major, f.minor) })),
