@@ -1861,3 +1861,10 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   type. Macros (the VBA project of a .pptm) are kept and saved again, never run (RaabePresent has no VBA, and
   running macros from files would be a risk at school); saving them as a type without macros asks first, as
   PowerPoint does, and leaves the VBA project out. This is all of "macros" for Step 8 (D-070 put them last).
+- **Hintergrund entfernen:** recorded (`probe_powerpoint_picfx.py bg`): a14:backgroundRemoval with PowerPoint's
+  default rectangle (t 10 %, b 90 %, l 10 %, r 90 %) in the same effect list, the picture shown becomes the
+  result with a transparent background. Our method is our own (region growing from outside the rectangle into
+  similar colours that look like the background's, one pixel of edge kept); on the probe's test picture (two
+  objects on a graded sky) it keeps the same pixels as PowerPoint (100 %); real photos will differ. It is
+  applied at once; PowerPoint's Freistellen tab (marking areas to keep or remove) is not built, Rückgängig
+  takes it back.

@@ -130,7 +130,7 @@ The earlier priorities are replaced by that scope; this table says what each par
 | Bildschirmpräsentation: PowerPoint's keys, pen, highlighter, laser, black/white screen, Referentenansicht (one screen), Einrichten | built | Second monitor: open |
 | Kommentare, Links, Kopf- und Fußzeile, Zeichnen (ink as freeform shapes), Video and Audio from files | built | |
 | Galleries as PowerPoint's: Schnellformatvorlagen (77), Tabellenformate (74), Bildformatvorlagen (28), Bild > Farbe and Korrekturen, Textkontur and Formkontur (Stärke, Striche), Formel tab | built | Our reading of each look (D-072); 3-D: open |
-| Bild > Künstlerische Effekte (22), Farbsättigung, Farbton, Schärfen/Weichzeichnen, written as PowerPoint writes them, galleries of the selected picture | built | Adjustments measured against PowerPoint's pixels; artistic effects our own drawing (D-072) |
+| Bild > Hintergrund entfernen (automatic; no Freistellen marking), Künstlerische Effekte (22), Farbsättigung, Farbton, Schärfen/Weichzeichnen, written as PowerPoint writes them, galleries of the selected picture | built | Adjustments measured against PowerPoint's pixels; artistic effects our own drawing (D-072) |
 | Einfügen > Zoom: Zusammenfassungszoom, Abschnittszoom, Folienzoom (PowerPoint's format, previews drawn by us, followed in the show); Ansicht > Neues Fenster | built | Alle anordnen: open (one window with tabs) (D-072) |
 | File types: open .pptx, .pptm, .ppsx, .ppsm, .potx, .potm; save as .pptx, .pptm, .ppsx, .potx; macros kept, never run | built | D-072 |
 | Übergänge > Sound: [Ohne Sound], [Vorherigen Sound anhalten], Anderer Sound..., wiederholen | built | PowerPoint's own sound files are not copied |

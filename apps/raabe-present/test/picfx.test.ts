@@ -43,6 +43,20 @@ describe("picture adjustments as PowerPoint renders them", () => {
   });
 });
 
+describe("Hintergrund entfernen", () => {
+  it("removes the plain background around an object and keeps the object", () => {
+    const w = 20, h = 20, data = new Uint8ClampedArray(w * h * 4);
+    for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+      const obj = x >= 7 && x < 13 && y >= 7 && y < 13;
+      data.set(obj ? [200, 30, 30, 255] : [200, 215, 230 - y], (y * w + x) * 4);
+    }
+    const p = applyEffect({ width: w, height: h, data }, { name: "backgroundRemoval", attrs: {} });
+    expect(p.data[3]).toBe(0);
+    expect(p.data[(10 * w + 10) * 4 + 3]).toBe(255);
+    expect(p.data[(10 * w + 3) * 4 + 3]).toBe(0);
+  });
+});
+
 describe("the effect list in the blip", () => {
   it("reads PowerPoint's imgProps", () => {
     const xml = `<a:blip xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" r:embed="rId2"><a:extLst><a:ext uri="{BEBA8EAE-BF5A-486C-A8C5-ECC9F3942E4B}"><a14:imgProps xmlns:a14="http://schemas.microsoft.com/office/drawing/2010/main"><a14:imgLayer r:embed="rId3"><a14:imgEffect><a14:artisticBlur/></a14:imgEffect><a14:imgEffect><a14:saturation sat="0"/></a14:imgEffect></a14:imgLayer></a14:imgProps></a:ext></a:extLst></a:blip>`;

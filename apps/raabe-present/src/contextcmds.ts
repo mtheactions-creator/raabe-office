@@ -372,6 +372,8 @@ export function implementContext(app: PresentApp): void {
   impl("pic.corrections", () => {}, pic);
   impl("pic.color", () => {}, pic);
   impl("pic.artistic", () => {}, pic);
+  // Hintergrund entfernen: PowerPoint's automatic removal at once (its default rectangle, 10 % in from each side).
+  impl("pic.removeBg", () => void import("./picfx").then((m) => m.setEffect(app, "backgroundRemoval", { name: "backgroundRemoval", attrs: { t: "10000", b: "90000", l: "10000", r: "90000" } }, "Hintergrund entfernen")), pic);
   impl("pic.transparency", () => {}, pic);
   impl("pic.border", () => void app.commands.run("draw.outline"), pic);
   impl("pic.effects", () => {}, pic);

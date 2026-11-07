@@ -26,7 +26,7 @@ from pathlib import Path
 from feellab.powerpoint import OwnerPowerPointRunning, PowerPointTarget
 
 HERE = Path(__file__).parent
-CAPT = HERE / "captures" / ("picfx-temp" if "temps" in sys.argv[1:] else "picfx")
+CAPT = HERE / "captures" / ("picfx-temp" if "temps" in sys.argv[1:] else "picfx-bg" if "bg" in sys.argv[1:] else "picfx")
 
 EFFECTS = {
     2: "Blur", 4: "Cement", 5: "CrisscrossEtching", 6: "ChalkSketch", 7: "ColorTemperature", 8: "Cutout",
@@ -57,6 +57,7 @@ def test_picture(path: Path) -> None:
     img.save(path)
 
 
+BG = "bg" in sys.argv[1:]
 TEMPS = [1500, 2500, 3500, 4000, 4700, 5300, 5900, 6500, 7200, 8000, 8800, 10000, 11200, 11500] if "temps" in sys.argv[1:] else []
 
 
@@ -90,10 +91,24 @@ def main() -> int:
     tmp = Path(tempfile.mkdtemp(prefix="raabe-picfx-"))
     try:
         src = tmp / "test.png"
-        test_picture(src)
+        if BG:
+            # An object on a plain, slightly uneven background: a light grey-blue sky with a red ball and a dark box.
+            from PIL import Image, ImageDraw
+            img = Image.new("RGB", (320, 240), (200, 215, 230))
+            d = ImageDraw.Draw(img)
+            for y in range(240):
+                d.line([(0, y), (319, y)], fill=(200 - y // 12, 215 - y // 16, 230 - y // 20))
+            d.ellipse([110, 60, 210, 160], fill=(210, 40, 40))
+            d.rectangle([150, 120, 250, 200], fill=(40, 50, 70))
+            img.save(src)
+        else:
+            test_picture(src)
         pres = ppt.new_presentation(name="picfx")
         cases: list[dict] = []
-        if TEMPS:
+        if BG:
+            # Hintergrund entfernen: PowerPoint's automatic removal on the test picture.
+            cases = [{"kind": 1, "name": "BackgroundRemoval", "value": None}]
+        elif TEMPS:
             # Farbton: the gains PowerPoint applies per temperature (fitted from the grey ramp afterwards).
             cases = [{"kind": 7, "name": "ColorTemperature", "value": float(k)} for k in TEMPS]
         else:
@@ -151,7 +166,7 @@ def main() -> int:
             out["fits"] = fit_temps(z, cases)
             for c in cases:
                 c.pop("blip", None)
-        res = HERE / "results" / f"{out['date']}-powerpoint-picfx{'-temp' if TEMPS else ''}.json"
+        res = HERE / "results" / f"{out['date']}-powerpoint-picfx{'-temp' if TEMPS else '-bg' if BG else ''}.json"
         res.write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding="utf-8", newline="\n")
         print("wrote", res.name, len(cases), "cases", sum(1 for c in cases if "error" in c), "errors")
     finally:

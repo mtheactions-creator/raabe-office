@@ -1,0 +1,31 @@
+{
+ "date": "2026-11-07",
+ "what": "PowerPoint's XML for picture effects",
+ "cases": [
+  {
+   "kind": 1,
+   "name": "BackgroundRemoval",
+   "value": null,
+   "error": "float() argument must be a string or a real number, not 'tuple'",
+   "blip": "<a:blip r:embed=\"rId2\"><a:extLst><a:ext uri=\"{BEBA8EAE-BF5A-486C-A8C5-ECC9F3942E4B}\"><a14:imgProps xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a14:imgLayer r:embed=\"rId3\"><a14:imgEffect><a14:backgroundRemoval t=\"10000\" b=\"90000\" l=\"10000\" r=\"90000\"/>",
+   "effect": "<a14:backgroundRemoval t=\"10000\" b=\"90000\" l=\"10000\" r=\"90000\"/>",
+   "media": {
+    "rId3": {
+     "part": "hdphoto1.wdp",
+     "bytes": 4000,
+     "size": null
+    },
+    "rId2": {
+     "part": "image1.png",
+     "bytes": 1069,
+     "size": [
+      320,
+      240
+     ],
+     "mode": "P"
+    }
+   },
+   "slide": 1
+  }
+ ]
+}

@@ -84,11 +84,11 @@ function writeEffects(blip: Element, effects: ImgEffect[], originalRid: string |
 }
 
 /** The order effects are drawn in: the artistic effect, then sharpness, temperature and saturation. */
-const ORDER = (n: string) => (n.startsWith("artistic") ? 0 : n === "sharpenSoften" ? 1 : n === "colorTemperature" ? 2 : n === "saturation" ? 3 : 4);
+const ORDER = (n: string) => (n === "backgroundRemoval" ? -1 : n.startsWith("artistic") ? 0 : n === "sharpenSoften" ? 1 : n === "colorTemperature" ? 2 : n === "saturation" ? 3 : 4);
 
 // ----- applying -----------------------------------------------------------------------------------------------
 
-type Group = "artistic" | "sharpenSoften" | "colorTemperature" | "saturation";
+type Group = "artistic" | "sharpenSoften" | "colorTemperature" | "saturation" | "backgroundRemoval";
 
 /** Sets (or with null removes) one kind of effect on the selected pictures and redraws them. */
 export async function setEffect(app: PresentApp, group: Group, fx: ImgEffect | null, label: string): Promise<void> {
@@ -186,6 +186,11 @@ export function applyEffect<P extends Pixels>(p: P, fx: ImgEffect): P {
   switch (fx.name) {
     case "saturation": saturate(d, num(fx, "sat", 100000) / 100000); return p;
     case "colorTemperature": temperature(d, num(fx, "colorTemp", 6500)); return p;
+    case "backgroundRemoval": {
+      const f = (k: string, def: number) => num(fx, k, def) / 100000;
+      removeBackground(p, { t: f("t", 10000), b: f("b", 90000), l: f("l", 10000), r: f("r", 90000) });
+      return p;
+    }
     case "sharpenSoften": {
       const a = num(fx, "amount", 0) / 100000;
       if (a < 0) d.set(blur(p, 1.6 * -a));
@@ -194,6 +199,53 @@ export function applyEffect<P extends Pixels>(p: P, fx: ImgEffect): P {
     }
     default: artistic(p, fx); return p;
   }
+}
+
+/**
+ * Hintergrund entfernen (our own method; PowerPoint's is not documented): everything outside the rectangle
+ * (PowerPoint's default: 10 % in from each side) is background; from there the background grows into
+ * neighbouring pixels of a similar colour that also look like the background's colours. What is left keeps
+ * its pixels, the rest becomes transparent (hard edges, as in PowerPoint's result).
+ */
+export function removeBackground(p: Pixels, rect: { t: number; b: number; l: number; r: number }): void {
+  const { width: w, height: h, data: d } = p;
+  const n = w * h;
+  const bg = new Uint8Array(n);
+  const queue = new Int32Array(n);
+  let qh = 0, qt = 0;
+  const x0 = Math.floor(rect.l * w), x1 = Math.ceil(rect.r * w), y0 = Math.floor(rect.t * h), y1 = Math.ceil(rect.b * h);
+  const outside = (x: number, y: number) => x < x0 || x >= x1 || y < y0 || y >= y1;
+  const full = x0 <= 0 && y0 <= 0 && x1 >= w && y1 >= h;
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    const seed = full ? x === 0 || y === 0 || x === w - 1 || y === h - 1 : outside(x, y);
+    if (seed) { const i = y * w + x; bg[i] = 1; queue[qt++] = i; }
+  }
+  // The background's colours: the seeds' colours in coarse bins, the 16 most frequent.
+  const bins = new Map<number, { n: number; r: number; g: number; b: number }>();
+  for (let k = 0; k < qt; k++) {
+    const i = queue[k] * 4, key = ((d[i] >> 4) << 8) | ((d[i + 1] >> 4) << 4) | (d[i + 2] >> 4);
+    const e = bins.get(key) ?? { n: 0, r: 0, g: 0, b: 0 };
+    e.n++; e.r += d[i]; e.g += d[i + 1]; e.b += d[i + 2];
+    bins.set(key, e);
+  }
+  const model = [...bins.values()].sort((a, b) => b.n - a.n).slice(0, 16).map((e) => [e.r / e.n, e.g / e.n, e.b / e.n]);
+  const nearModel = (i: number) => model.some(([r, g, b]) => Math.abs(d[i] - r) + Math.abs(d[i + 1] - g) + Math.abs(d[i + 2] - b) < 90);
+  const near = (i: number, j: number) => Math.abs(d[i] - d[j]) + Math.abs(d[i + 1] - d[j + 1]) + Math.abs(d[i + 2] - d[j + 2]) < 30;
+  while (qh < qt) {
+    const q = queue[qh++], x = q % w, y = (q - x) / w;
+    for (const nb of [x > 0 ? q - 1 : -1, x < w - 1 ? q + 1 : -1, y > 0 ? q - w : -1, y < h - 1 ? q + w : -1]) {
+      if (nb < 0 || bg[nb]) continue;
+      if (near(q * 4, nb * 4) && nearModel(nb * 4)) { bg[nb] = 1; queue[qt++] = nb; }
+    }
+  }
+  // The kept areas keep a pixel of their edge (anti-aliased border pixels belong to the object, as in PowerPoint).
+  const keep = new Uint8Array(n);
+  for (let i = 0; i < n; i++) {
+    if (!bg[i]) continue;
+    const x = i % w;
+    if ((x > 0 && !bg[i - 1]) || (x < w - 1 && !bg[i + 1]) || (i >= w && !bg[i - w]) || (i + w < n && !bg[i + w])) keep[i] = 1;
+  }
+  for (let i = 0; i < n; i++) if (bg[i] && !keep[i]) d[i * 4 + 3] = 0;
 }
 
 function saturate(d: Uint8ClampedArray, k: number): void {
