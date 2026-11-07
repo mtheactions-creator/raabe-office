@@ -174,10 +174,12 @@
    "diff": []
   },
   "table effects": {
-   "result": "different",
-   "diff": [
-    "bevel None shadow None"
-   ]
+   "result": "same",
+   "diff": []
+  },
+  "sketch": {
+   "result": "same",
+   "diff": []
   },
   "table pen": {
    "result": "same",
@@ -286,6 +288,6 @@
  },
  "summary": {
   "fixtures": "22/22",
-  "scenarios": "52/53"
+  "scenarios": "54/54"
  }
 }

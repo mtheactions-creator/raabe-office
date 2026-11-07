@@ -741,6 +741,9 @@ export class SlideEditor {
     const start = { x: e.clientX, y: e.clientY };
     let moved = false;
     let firstMove: MouseEvent | null = null;
+    // The browser merges pointer movements per display frame; the first one is the earliest of the first event.
+    const pm = (ev: PointerEvent) => { firstMove ??= ev.getCoalescedEvents?.()[0] ?? ev; window.removeEventListener("pointermove", pm); };
+    window.addEventListener("pointermove", pm);
     const move = (m: MouseEvent) => {
       if (moved) return;
       firstMove ??= m;
@@ -758,9 +761,13 @@ export class SlideEditor {
       }
       this.endText();
       this.render();
-      this.dragMove(e, true, firstMove ?? m, m);
+      // Measured: a shape's body (not a line, not a placeholder) moves from the first movement; lines and
+      // placeholders by the whole way from the button.
+      const fromFirst = v.kind === "sp" && !v.ph && !S.isLine(v.geometry);
+      this.dragMove(e, true, fromFirst ? firstMove ?? m : undefined, m);
     };
     const up = () => {
+      window.removeEventListener("pointermove", pm);
       window.removeEventListener("mousemove", move);
       window.removeEventListener("mouseup", up);
       if (moved) return;

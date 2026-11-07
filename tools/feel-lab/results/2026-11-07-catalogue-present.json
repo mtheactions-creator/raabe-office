@@ -1,6 +1,6 @@
 {
  "date": "2026-11-07",
- "same": 355,
+ "same": 356,
  "of": 377,
  "cases": {
   "click rect centre": {
@@ -818,10 +818,8 @@
   },
   "drag textbox plain": {
    "area": "drag",
-   "result": "different",
-   "diff": [
-    "shape 0 box: [360.0, 175.0, 240.0, 29.1] vs [360.0, 172.7, 240.0, 28.9]"
-   ]
+   "result": "same",
+   "diff": []
   },
   "drag textbox shift": {
    "area": "drag",

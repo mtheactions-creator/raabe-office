@@ -2389,6 +2389,28 @@
          ]
         },
         {
+         "name": "Skizziert",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": true
+          },
+          {
+           "name": "Gekrümmt",
+           "enabled": true
+          },
+          {
+           "name": "Freihand",
+           "enabled": true
+          },
+          {
+           "name": "Skizze",
+           "enabled": true
+          }
+         ]
+        },
+        {
          "name": "Striche",
          "enabled": true,
          "submenu": [
@@ -4988,25 +5010,7 @@
        "name": "Sound",
        "deferred": false,
        "enabled": true,
-       "type": "dropdown",
-       "items": [
-        {
-         "name": "[Ohne Sound]",
-         "enabled": true
-        },
-        {
-         "name": "[Vorherigen Sound anhalten]",
-         "enabled": true
-        },
-        {
-         "name": "Anderer Sound...",
-         "enabled": true
-        },
-        {
-         "name": "Bis zum nächsten Sound wiederholen",
-         "enabled": true
-        }
-       ]
+       "type": "dropdown"
       },
       {
        "name": "Dauer",
@@ -7404,6 +7408,28 @@
          ]
         },
         {
+         "name": "Skizziert",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": true
+          },
+          {
+           "name": "Gekrümmt",
+           "enabled": true
+          },
+          {
+           "name": "Freihand",
+           "enabled": true
+          },
+          {
+           "name": "Skizze",
+           "enabled": true
+          }
+         ]
+        },
+        {
          "name": "Striche",
          "enabled": true,
          "submenu": [
@@ -8347,8 +8373,126 @@
          "name": "Lila"
         },
         {
+         "name": "Keine Füllung",
+         "enabled": true
+        },
+        {
          "name": "Pipette",
          "enabled": true
+        },
+        {
+         "name": "Farbverlauf",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Kein Farbverlauf",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - oben links nach unten rechts",
+           "enabled": true
+          },
+          {
+           "name": "Linear unten",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - oben rechts nach unten links",
+           "enabled": true
+          },
+          {
+           "name": "Von unterer rechter Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Von unterer linker Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Linear rechts",
+           "enabled": true
+          },
+          {
+           "name": "Aus der Mitte",
+           "enabled": true
+          },
+          {
+           "name": "Linear links",
+           "enabled": true
+          },
+          {
+           "name": "Von oberer rechter Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Von oberer linker Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - unten links nach oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Linear oben",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - unten rechts nach oben links",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - oben links nach unten rechts",
+           "enabled": true
+          },
+          {
+           "name": "Linear unten",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - oben rechts nach unten links",
+           "enabled": true
+          },
+          {
+           "name": "Von unterer rechter Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Von unterer linker Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Linear rechts",
+           "enabled": true
+          },
+          {
+           "name": "Aus der Mitte",
+           "enabled": true
+          },
+          {
+           "name": "Linear links",
+           "enabled": true
+          },
+          {
+           "name": "Von oberer rechter Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Von oberer linker Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - unten links nach oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Linear oben",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - unten rechts nach oben links",
+           "enabled": true
+          }
+         ]
         },
         {
          "name": "Weitere Füllfarben..."
@@ -10298,6 +10442,28 @@
           },
           {
            "name": "6 Pt.",
+           "enabled": true
+          }
+         ]
+        },
+        {
+         "name": "Skizziert",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": true
+          },
+          {
+           "name": "Gekrümmt",
+           "enabled": true
+          },
+          {
+           "name": "Freihand",
+           "enabled": true
+          },
+          {
+           "name": "Skizze",
            "enabled": true
           }
          ]
@@ -12326,6 +12492,14 @@
          "name": "Lila"
         },
         {
+         "name": "Keine Füllung",
+         "enabled": true
+        },
+        {
+         "name": "Pipette",
+         "enabled": true
+        },
+        {
          "name": "Weitere Füllfarben..."
         }
        ]
@@ -12389,8 +12563,216 @@
       {
        "name": "Effekte",
        "deferred": false,
-       "enabled": false,
-       "type": "button"
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Zellenabschrägung",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": true
+          },
+          {
+           "name": "Rund",
+           "enabled": true
+          },
+          {
+           "name": "Leichte Absenkung",
+           "enabled": true
+          },
+          {
+           "name": "Säule",
+           "enabled": true
+          },
+          {
+           "name": "Schräge",
+           "enabled": true
+          },
+          {
+           "name": "Starke Abschrägung",
+           "enabled": true
+          },
+          {
+           "name": "Weiche Abrundung",
+           "enabled": true
+          },
+          {
+           "name": "Konvex",
+           "enabled": true
+          },
+          {
+           "name": "Silhouette",
+           "enabled": true
+          },
+          {
+           "name": "Ringförmige Absenkung",
+           "enabled": true
+          },
+          {
+           "name": "Säule auf abgerundetem Sockel",
+           "enabled": true
+          },
+          {
+           "name": "Gewölbter Rand",
+           "enabled": true
+          },
+          {
+           "name": "Rund konvex",
+           "enabled": true
+          }
+         ]
+        },
+        {
+         "name": "Schatten",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Ohne",
+           "enabled": true
+          },
+          {
+           "name": "Offset: unten rechts",
+           "enabled": true
+          },
+          {
+           "name": "Offset: unten",
+           "enabled": true
+          },
+          {
+           "name": "Offset: unten links",
+           "enabled": true
+          },
+          {
+           "name": "Offset: rechts",
+           "enabled": true
+          },
+          {
+           "name": "Offset: Mitte",
+           "enabled": true
+          },
+          {
+           "name": "Offset: links",
+           "enabled": true
+          },
+          {
+           "name": "Offset: oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Offset: oben",
+           "enabled": true
+          },
+          {
+           "name": "Offset: oben links",
+           "enabled": true
+          },
+          {
+           "name": "Innen: oben links",
+           "enabled": true
+          },
+          {
+           "name": "Innen: oben",
+           "enabled": true
+          },
+          {
+           "name": "Innen: oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Innen: links",
+           "enabled": true
+          },
+          {
+           "name": "Innen: Mitte",
+           "enabled": true
+          },
+          {
+           "name": "Innen: rechts",
+           "enabled": true
+          },
+          {
+           "name": "Innen: unten links",
+           "enabled": true
+          },
+          {
+           "name": "Innen: unten",
+           "enabled": true
+          },
+          {
+           "name": "Innen: unten rechts",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: oben links",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: unterhalb",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: unten links",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: unten rechts",
+           "enabled": true
+          }
+         ]
+        },
+        {
+         "name": "Spiegelung",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Ohne",
+           "enabled": true
+          },
+          {
+           "name": "Enge Spiegelung: mit Berührung",
+           "enabled": true
+          },
+          {
+           "name": "Halbe Spiegelung: mit Berührung",
+           "enabled": true
+          },
+          {
+           "name": "Volle Spiegelung: mit Berührung",
+           "enabled": true
+          },
+          {
+           "name": "Enge Spiegelung: 4 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Halbe Spiegelung: 4 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Volle Spiegelung: 4 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Enge Spiegelung: 8 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Halbe Spiegelung: 8 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Volle Spiegelung: 8 Pt. Offset",
+           "enabled": true
+          }
+         ]
+        }
+       ]
       }
      ]
     },
@@ -12689,8 +13071,126 @@
          "name": "Lila"
         },
         {
+         "name": "Keine Füllung",
+         "enabled": true
+        },
+        {
          "name": "Pipette",
          "enabled": true
+        },
+        {
+         "name": "Farbverlauf",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Kein Farbverlauf",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - oben links nach unten rechts",
+           "enabled": true
+          },
+          {
+           "name": "Linear unten",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - oben rechts nach unten links",
+           "enabled": true
+          },
+          {
+           "name": "Von unterer rechter Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Von unterer linker Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Linear rechts",
+           "enabled": true
+          },
+          {
+           "name": "Aus der Mitte",
+           "enabled": true
+          },
+          {
+           "name": "Linear links",
+           "enabled": true
+          },
+          {
+           "name": "Von oberer rechter Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Von oberer linker Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - unten links nach oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Linear oben",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - unten rechts nach oben links",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - oben links nach unten rechts",
+           "enabled": true
+          },
+          {
+           "name": "Linear unten",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - oben rechts nach unten links",
+           "enabled": true
+          },
+          {
+           "name": "Von unterer rechter Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Von unterer linker Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Linear rechts",
+           "enabled": true
+          },
+          {
+           "name": "Aus der Mitte",
+           "enabled": true
+          },
+          {
+           "name": "Linear links",
+           "enabled": true
+          },
+          {
+           "name": "Von oberer rechter Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Von oberer linker Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - unten links nach oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Linear oben",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - unten rechts nach oben links",
+           "enabled": true
+          }
+         ]
         },
         {
          "name": "Weitere Füllfarben..."
@@ -16180,6 +16680,28 @@
          ]
         },
         {
+         "name": "Skizziert",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": true
+          },
+          {
+           "name": "Gekrümmt",
+           "enabled": true
+          },
+          {
+           "name": "Freihand",
+           "enabled": true
+          },
+          {
+           "name": "Skizze",
+           "enabled": true
+          }
+         ]
+        },
+        {
          "name": "Striche",
          "enabled": true,
          "submenu": [
@@ -17123,8 +17645,126 @@
          "name": "Lila"
         },
         {
+         "name": "Keine Füllung",
+         "enabled": true
+        },
+        {
          "name": "Pipette",
          "enabled": true
+        },
+        {
+         "name": "Farbverlauf",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Kein Farbverlauf",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - oben links nach unten rechts",
+           "enabled": true
+          },
+          {
+           "name": "Linear unten",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - oben rechts nach unten links",
+           "enabled": true
+          },
+          {
+           "name": "Von unterer rechter Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Von unterer linker Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Linear rechts",
+           "enabled": true
+          },
+          {
+           "name": "Aus der Mitte",
+           "enabled": true
+          },
+          {
+           "name": "Linear links",
+           "enabled": true
+          },
+          {
+           "name": "Von oberer rechter Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Von oberer linker Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - unten links nach oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Linear oben",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - unten rechts nach oben links",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - oben links nach unten rechts",
+           "enabled": true
+          },
+          {
+           "name": "Linear unten",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - oben rechts nach unten links",
+           "enabled": true
+          },
+          {
+           "name": "Von unterer rechter Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Von unterer linker Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Linear rechts",
+           "enabled": true
+          },
+          {
+           "name": "Aus der Mitte",
+           "enabled": true
+          },
+          {
+           "name": "Linear links",
+           "enabled": true
+          },
+          {
+           "name": "Von oberer rechter Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Von oberer linker Ecke",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - unten links nach oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Linear oben",
+           "enabled": true
+          },
+          {
+           "name": "Linear diagonal - unten rechts nach oben links",
+           "enabled": true
+          }
+         ]
         },
         {
          "name": "Weitere Füllfarben..."
