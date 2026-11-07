@@ -306,3 +306,19 @@ body.view-bw .slide { filter: grayscale(1) contrast(4) brightness(1.2); }
 .export-progress { position: fixed; left: 50%; bottom: 40px; transform: translateX(-50%); z-index: 3000; background: var(--panel, #fff); border: 1px solid #c8c8c8; box-shadow: 0 4px 16px rgba(0,0,0,.2); padding: 10px 14px; display: flex; align-items: center; gap: 12px; font: 13px var(--font); }
 .export-bar { width: 220px; height: 6px; background: #e1e1e1; }
 .export-bar-fill { height: 100%; width: 0; background: #b7472a; }
+
+/* Alle anordnen / Überlappend (D-074): the presentations as frames inside the window. */
+.doc-windows { flex: 1; min-height: 0; display: grid; gap: 4px; padding: 4px; background: #d6d6d6; position: relative; }
+.doc-windows[data-mode="cascade"] { display: block; }
+.doc-windows[data-mode="cascade"] .doc-frame { position: absolute; }
+.doc-frame { display: flex; flex-direction: column; min-width: 0; min-height: 0; background: var(--chrome, #f3f3f3); border: 1px solid #a8a8a8; box-shadow: 0 1px 4px rgba(0,0,0,.18); }
+.doc-frame.active { border-color: #b7472a; }
+.doc-frame-title { flex: none; height: 26px; display: flex; align-items: center; padding: 0 4px 0 10px; font: 12px var(--font); background: #e8e8e8; color: #444; user-select: none; }
+.doc-frame.active .doc-frame-title { background: #b7472a; color: #fff; }
+.doc-frame-max { margin-left: auto; background: none; border: none; color: inherit; width: 28px; height: 22px; font-size: 13px; }
+.doc-frame-max:hover { background: rgba(0,0,0,.12); }
+.doc-frame-body { flex: 1; min-height: 0; display: flex; }
+.doc-frame-body > .present-main { flex: 1; min-width: 0; }
+.doc-frame-preview { flex: 1; min-width: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.doc-frame-slide { position: relative; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,.25); background: #fff; }
+.doc-frame-slide > .slide { position: absolute !important; left: 0; top: 0; }

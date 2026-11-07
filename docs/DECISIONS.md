@@ -2093,6 +2093,11 @@ Package 1 of Step 8b (D-073).
   only the changed rectangle of each frame, equal frames merged into a longer delay, endless loop. PowerPoint's
   own GIF cannot be made through COM (CreateVideo writes an MP4 under any name, measured); its frame rate and
   sizes are to be recorded through its UI in a run when the owner is away.
+- **Alle anordnen, Überlappend:** PowerPoint arranges its document windows; RaabePresent keeps its presentations
+  in one window (tabs), so the arrangement happens inside it (windows.ts): a frame per presentation (and per Neues
+  Fenster) with its name, side by side or offset one behind the other; the active frame holds the working area,
+  the others show their current slide and come forward with a click; a double-click on a frame's title or its
+  Maximieren button goes back to one presentation at a time.
 - **Verblassen durch Schwarz:** PowerPoint writes `thruBlk="1"`; the show and the video now go through black as
   PowerPoint does (the video comparison found it).
 - **Measured:** `check_present_video.py` reads PowerPoint's video and ours frame by frame (each frame named by

@@ -49,6 +49,7 @@ import { customShowMenu } from "./custshow";
 import { endFreistellen, freistellenActive, freistellenTab, markTool } from "./freistellen";
 import { fileTypeSection } from "./exportimg";
 import { gifSection, videoSection } from "./videoui";
+import { Windows, type WindowDoc } from "./windows";
 import { convertSmartArt, smartArtTab, textPane } from "./smartart";
 import { bgStylesMenu } from "./background";
 import { shapeEffectsMenu } from "./shapefx";
@@ -131,6 +132,8 @@ export class PresentApp implements EditorHost, PanelHost {
   private zoomPct: HTMLElement;
   private zoomSlider: HTMLInputElement;
   private main: HTMLElement;
+  /** Alle anordnen / Überlappend (D-074). */
+  private windows!: Windows;
   private center: HTMLElement;
   private sorter: Sorter;
   private outline!: OutlineView;
@@ -207,6 +210,10 @@ export class PresentApp implements EditorHost, PanelHost {
         this.zoomPct,
         h("button", { class: "cell", "aria-label": "Folie an aktuelles Fenster anpassen", "data-tip": "Folie an aktuelles Fenster anpassen", onclick: () => this.fitWindow() }, icon("page-width"))));
     document.body.append(this.titleBar.el, this.ribbon.tabRow, this.ribbon.card, this.main, this.status, this.backstage.el);
+    this.windows = new Windows({
+      docs: () => this.docs, active: () => this.active, activate: (d: WindowDoc) => this.activate(d as Doc), main: this.main,
+      image: (p) => this.image(p), pptx: (d: WindowDoc) => (d as Doc).deck.pptx, refit: () => { this.editor.fit = true; this.editor.fitZoom(); },
+    });
     document.body.classList.add("present");
     document.body.classList.toggle("touch", this.settings.touchMode);
     this.editor.autoCorrectOn = this.settings.autoCorrect;
@@ -254,6 +261,7 @@ export class PresentApp implements EditorHost, PanelHost {
     this.renderAll();
     this.editor.fitZoom();
     this.updateTabs();
+    this.windows?.render();
     this.focusMain();
   }
 
@@ -2328,6 +2336,8 @@ export class PresentApp implements EditorHost, PanelHost {
     impl("insert.chart", () => {}, () => !!this.slidePath());
     impl("insert.photoAlbum", () => import("./photoalbum").then((m) => m.photoAlbumDialog(this)), () => !!this.platform.openImagesDialog);
     impl("view.switchWindow", () => {}, () => this.docs.length > 0);
+    impl("view.arrangeAll", () => this.windows.arrange("tile"), () => this.docs.length > 0);
+    impl("view.cascade", () => this.windows.arrange("cascade"), () => this.docs.length > 0);
     impl("view.newWindow", () => this.newWindow(), () => this.docs.length > 0);
     impl("edit.replaceFonts", () => void this.replaceFontsDialog(), () => this.docs.length > 0);
     const fs = () => freistellenActive() !== null;
