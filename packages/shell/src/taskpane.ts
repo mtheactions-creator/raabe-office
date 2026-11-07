@@ -68,6 +68,17 @@ export class TaskPane {
     this.render();
   }
 
+  /** Shows a spec at one tab (by id) with one section opened (by title): the menus' "…optionen..." entries. */
+  showAt(spec: PaneSpec, tabId: string, section?: string): void {
+    this.show(spec);
+    spec.sets.forEach((s, si) => s.tabs.forEach((t, ti) => {
+      if (t.id !== tabId) return;
+      this.set = si; this.tab = ti;
+      if (section) { const key = `${t.id}/${section}`; this.closed.delete(key); this.opened.add(key); }
+    }));
+    this.render();
+  }
+
   close(): void {
     if (this.el.hidden) return;
     this.el.hidden = true;

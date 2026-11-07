@@ -122,6 +122,16 @@ export function renderTable(s: ShapeView, o: RenderOptions): HTMLElement {
       const bd = (k: string) => { const b = look.borders[k]; return b ? `${Math.max(b.width, 0.5)}px solid #${b.color}` : "none"; };
       const mar = (n: string, d: number) => (num(tcPr, n) ?? d) / EMU_PX;
       td.style.cssText = `padding:0;vertical-align:top;position:relative;background:${look.fill ? `#${look.fill}` : "transparent"};border-left:${bd("left")};border-right:${bd("right")};border-top:${bd("top")};border-bottom:${bd("bottom")}`;
+      // Zellenabschrägung (a:cell3D/a:bevel): the cell's edges lit from the top left and shaded at the bottom right
+      // over the bevel's width, our drawing of PowerPoint's (D-076).
+      const bev = kid(kid(tcPr, "cell3D"), "bevel");
+      if (bev) {
+        const bw = Math.max(1, (num(bev, "w") ?? 76200) / EMU_PX);
+        const prst = bev.getAttribute("prst") ?? "circle";
+        const inset = prst === "relaxedInset" || prst === "divot" || prst === "cross";
+        const light = inset ? "rgba(0,0,0,.28)" : "rgba(255,255,255,.55)", dark = inset ? "rgba(255,255,255,.45)" : "rgba(0,0,0,.30)";
+        td.style.boxShadow = `inset ${bw}px ${bw}px ${bw}px -${bw / 2}px ${light}, inset -${bw}px -${bw}px ${bw}px -${bw / 2}px ${dark}`;
+      }
       const anchor = tcPr?.getAttribute("anchor");
       const body = readBodyProps([kid(kid(tc, "txBody"), "bodyPr")]);
       body.anchor = anchor === "ctr" ? "ctr" : anchor === "b" ? "b" : "t";

@@ -75,6 +75,12 @@ function shapeFx(app: PresentApp, part: Part, p: PicturePreset | null, label: st
 }
 
 /** Group headings as PowerPoint's galleries show them. */
+const OPTION_SECTIONS: Record<string, string> = { "3D-Optionen...": "3D-Format", "Schattenoptionen...": "Schatten", "Spiegelungsoptionen...": "Spiegelung",
+  "Leuchteffektoptionen...": "Leuchten", "Optionen für weiche Kanten...": "Weiche Kanten", "3D-Drehungsoptionen...": "3D-Drehung" };
+let optionsHook: ((section: string) => void) | null = null;
+/** Set by the app: opens the pane's Effekte at a section. */
+export function setEffectOptionsHook(fn: (section: string) => void): void { optionsHook = fn; }
+
 function grouped(list: readonly (PicturePreset & { id: string })[], groups: [string, number][], run: (p: PicturePreset | null, label: string) => void, none: string, options: string): MenuEntry[] {
   const out: MenuEntry[] = [{ heading: none }, { label: list[0].label, run: () => run(null, list[0].label) }];
   let i = 1;
@@ -83,7 +89,8 @@ function grouped(list: readonly (PicturePreset & { id: string })[], groups: [str
     for (const p of list.slice(i, i + n)) out.push({ label: p.label, run: () => run(p, p.label) });
     i += n;
   }
-  out.push("-", { label: options, run: () => {} , disabled: true });
+  // The "…optionen..." entry opens Form formatieren at Effekte with its section (D-076).
+  out.push("-", { label: options, run: () => optionsHook?.(OPTION_SECTIONS[options] ?? "3D-Format") });
   return out;
 }
 

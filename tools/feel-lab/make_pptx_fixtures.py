@@ -348,10 +348,50 @@ def chart(t, pres, tmp):
     ch.Chart.ChartData.Workbook.Close()
 
 
+def texteffects(t, pres, tmp):
+    """Texteffekte > Transformieren (all MsoWarpFormat values PowerPoint takes, four per slide) and a text
+    Farbverlauf (D-076). Which warp each value gives is read from the saved XML by the render check."""
+    k = 0
+    while k < 40:
+        s = t.add_slide(pres, 7)
+        for j in range(4):
+            x, y = 40 + (j % 2) * 460, 40 + (j // 2) * 250
+            b = s.Shapes.AddTextbox(1, x, y, 400, 200)
+            b.TextFrame2.AutoSize = 0
+            b.TextFrame2.WordWrap = 0
+            b.Width, b.Height = 400, 200
+            b.TextFrame.TextRange.Text = "WordArt Text"
+            f = b.TextFrame.TextRange.Font
+            f.Size = 40
+            f.Bold = -1
+            f.Color.RGB = rgb(192, 0, 0)
+            try:
+                b.TextFrame2.WarpFormat = k
+            except Exception:  # noqa: BLE001
+                b.TextFrame.TextRange.Text = f"(kein {k})"
+            k += 1
+    s = t.add_slide(pres, 7)
+    g = s.Shapes.AddTextbox(1, 60, 60, 800, 120)
+    g.TextFrame.TextRange.Text = "Farbverlauf im Text"
+    g.TextFrame.TextRange.Font.Size = 60
+    g.TextFrame.TextRange.Font.Bold = -1
+    fill = g.TextFrame2.TextRange.Font.Fill
+    fill.TwoColorGradient(1, 1)  # msoGradientHorizontal, variant 1
+    fill.ForeColor.RGB = rgb(0, 112, 192)
+    fill.BackColor.RGB = rgb(255, 192, 0)
+    h = s.Shapes.AddTextbox(1, 60, 260, 800, 120)
+    h.TextFrame.TextRange.Text = "Vertikaler Verlauf"
+    h.TextFrame.TextRange.Font.Size = 60
+    fill = h.TextFrame2.TextRange.Font.Fill
+    fill.TwoColorGradient(2, 1)  # msoGradientVertical
+    fill.ForeColor.RGB = rgb(112, 48, 160)
+    fill.BackColor.RGB = rgb(0, 176, 80)
+
+
 FIXTURES = {
     "blank": (blank, False), "layouts": (layouts, False), "bullets": (bullets, False), "autofit": (autofit, True),
     "textbox": (textbox, False), "shapes": (shapes, False), "group": (group, False), "picture": (picture, False),
-    "table": (table, False), "equation": (equation, True), "show": (show_fixture, False),
+    "table": (table, False), "equation": (equation, True), "show": (show_fixture, False), "texteffects": (texteffects, False),
 }
 OPT_IN = {"chart": (chart, True)}
 

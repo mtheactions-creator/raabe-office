@@ -2115,3 +2115,31 @@ duplizieren als (only with Doppelt) and Math. AutoKorrektur... RaabePresent's di
 inside an equation now put the selected part on the clipboard as text in the chosen format; the automatic
 build-up follows RaabeWrite's setting. The break settings are kept for equations that wrap (our text boxes do
 not break equations at operators yet, as before).
+
+## D-076 RaabePresent: text warps and text gradients drawn, Form formatieren > Effekte, cell bevels (2026-11-07)
+
+Package 2 of Step 8b (D-073).
+- **Texteffekte > Transformieren drawn:** the 40 warps are ECMA-376's presetTextWarpDefinitions (the standard's
+  formulas, read from the published file through GitHub and converted to the compact geometry syntax of
+  geometry.ts, `textwarps.gen.ts`), evaluated with the text engine's guide formulas. Measured against PowerPoint
+  (`make_pptx_fixtures.py --texteffects`: every warp PowerPoint takes through COM, four per slide, and two text
+  gradients; `check_present_render.py pptx-texteffects`): PowerPoint spreads warped text over the whole shape
+  without its insets and stretches the letters' ink (not their em box) between the curves; a band that runs
+  backwards (the far side of a ring) mirrors the letters; open paths are read left to right (some of the
+  standard's run right to left). Our letters are placed, turned and scaled one by one from the curves (SVG text),
+  PowerPoint bends their outlines: mean pixel difference 9.0 over the 11 slides (24.5 at the first try; plain
+  slides of the other fixtures unchanged at 2.75). With one line and several bands PowerPoint uses the first band
+  (measured), as we do. While its text is edited, a warped shape shows the text plain (to type into).
+- **Textfüllung Farbverlauf drawn:** a run's a:gradFill paints its letters (CSS background clip for plain text,
+  an SVG gradient for warped text); measured: mean difference 0.75 on the gradient slide.
+- **Form formatieren > Effekte:** the pane's third tab with PowerPoint's sections Schatten (Farbe, Transparenz,
+  Größe, Weichzeichnen, Winkel, Abstand), Spiegelung (Transparenz, Größe, Weichzeichnen, Abstand), Leuchten (Farbe,
+  Größe, Transparenz), Weiche Kanten (Größe), 3D-Format (Abschrägung oben/unten with Breite and Höhe, Tiefe and
+  Kontur with Farbe and Größe, Material, Beleuchtung, Winkel) and 3D-Drehung (X-, Y-, Z-Drehung, Perspektive,
+  Abstand vom Boden). The Formeffekte menus' "…optionen..." entries open it at their section (they were greyed).
+  Round trip "effects pane": PowerPoint reads what the pane wrote (shadow 90 degrees 6 pt, glow 10 pt, soft edges
+  5 pt, Kreis bevel 8 pt, X rotation 30 degrees). COM's RotationX counts the other way (RotationX 30 writes lon
+  19800000, measured); the pane writes the value as entered into lon. The exact labels and the sign PowerPoint's
+  own pane shows for X-Drehung are to be recorded in a run when the owner is away (the pane needs the UI).
+- **Zellenabschrägung drawn:** a cell's a:cell3D bevel as a light edge at the top left and a shade at the bottom
+  right over the bevel's width (inset profiles the other way round). Not yet measured against PowerPoint.

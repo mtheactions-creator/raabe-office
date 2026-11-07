@@ -79,6 +79,9 @@ SCENARIOS: dict[str, str] = {
         a.editor.enterText(id, undefined, {r:0,c:0}); const m = await import('/src/contextcmds.ts'); m.setShading(a, 'C00000'); a.editor.endText();""",
         "table effects": """p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); a.setCurrent(0); a.insertTable(2, 2); const id = a.deck.view(a.slidePath()).shapes.find(s => s.frame === 'table').id;
         a.editor.select([id]); const m = a.host2().tableEffects(); m[1].submenu()[1].run(); a.editor.enterText(id, undefined, {r:0,c:0}); m[0].submenu()[1].run(); a.editor.endText();""",
+        "effects pane": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,300,200]}]}); const a = p.app; a.editor.select([2]);
+        const secs = () => a.formatPane.spec().sets[0].tabs.find(t => t.id === 'effects').sections(); const c = (i, j) => secs()[i].controls()[j];
+        c(0, 0).set(true); c(0, 5).set(90); c(0, 6).set(6); c(2, 0).set(true); c(2, 2).set(10); c(3, 0).set(5); c(4, 0).set('circle'); c(4, 1).set(8); c(5, 0).set(30);""",
         "sketch": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]},{kind:'ellipse',box:[400,100,150,150]},{kind:'rect',box:[600,300,200,100]}]}); const a = p.app;
         const sk = a.outlineExtra().find(x => x.label === 'Skizziert').submenu(); [[2,1],[3,2],[4,3]].forEach(([id,i]) => { a.editor.select([id]); sk[i].run(); });""",
         "table pen": """p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); a.setCurrent(0); a.insertTable(2, 2); const id = a.deck.view(a.slidePath()).shapes.find(s => s.frame === 'table').id;
@@ -143,6 +146,11 @@ def ppt_shapes(slide) -> list[dict]:
         try:
             if int(s.ThreeD.BevelTopType) > 1 or int(s.Glow.Radius) or int(s.Reflection.Type) or int(s.Shadow.Visible):
                 d["fx"] = {"bevel": int(s.ThreeD.BevelTopType), "camera": int(s.ThreeD.PresetCamera), "shadow": int(s.Shadow.Visible), "glow": round(float(s.Glow.Radius)), "reflection": int(s.Reflection.Type)}
+                try:
+                    d["fx"].update({"rotx": round(float(s.ThreeD.RotationX)), "bevelw": round(float(s.ThreeD.BevelTopInset), 1), "softedge": round(float(s.SoftEdge.Radius), 1),
+                                    "shadowoff": [round(float(s.Shadow.OffsetX), 1), round(float(s.Shadow.OffsetY), 1)]})
+                except Exception:  # noqa: BLE001
+                    pass
             if s.HasTextFrame and int(s.TextFrame2.WarpFormat) not in (-2, 36):
                 d["warp"] = int(s.TextFrame2.WarpFormat)
                 d["textBevel"] = int(s.TextFrame2.ThreeD.BevelTopType)
@@ -316,6 +324,12 @@ def check(name: str, r: dict, ours: dict) -> list[str]:
         # The table's shadow visible (msoTrue -1); a cell's ThreeD is not readable through COM (it raises),
         # so the cell bevel is checked by PowerPoint opening the file with it.
         want(t.get("tshadow") == -1, f"shadow {t.get('tshadow')}")
+    elif name == "effects pane":
+        # Set through Form formatieren > Effekte: shadow at 90 degrees, 6 pt away (offset 0, 6); glow 10 pt; soft edges 5 pt;
+        # top bevel Kreis (msoBevelCircle 3) 8 pt wide; X rotation 30 degrees (lon 1800000), which COM's RotationX
+        # reports as -30 (measured: RotationX 30 writes lon 19800000).
+        fx = (sh[0] if sh else {}).get("fx", {})
+        want(fx.get("shadow") == -1 and fx.get("shadowoff") == [0.0, 6.0] and fx.get("glow") == 10 and fx.get("softedge") == 5.0 and fx.get("bevel") == 3 and fx.get("bevelw") == 8.0 and fx.get("rotx") == -30, f"fx {fx}")
     elif name == "sketch":
         # COM has no property for sketched lines: PowerPoint opens the file with all three and keeps the shapes.
         want(len(sh) == 3, f"shapes {len(sh)}")

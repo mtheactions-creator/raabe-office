@@ -9,6 +9,7 @@ import type { Pptx, ShapeView, SlideView } from "@raabe/ooxml";
 import { EMU_PX, renderText, type TextOptions } from "./text";
 import { renderTable } from "./table";
 import { renderChart } from "./chart";
+import { applyTextGradients, drawWarp, warpOf } from "./warp";
 
 export interface RenderOptions {
   /** Normalansicht: prompts and outlines of empty placeholders. */
@@ -21,6 +22,8 @@ export interface RenderOptions {
   /** Autofit computed while editing, by shape id. */
   fits?: Map<number, { fontScale: number; lnSpcReduction: number }>;
   pptx: Pptx;
+  /** The slide's theme colours (set by renderSlide; text gradients and warps resolve their colours with them). */
+  themeColors?: Record<string, string>;
 }
 
 export interface Rendered {
@@ -48,6 +51,7 @@ export function renderSlide(v: SlideView, size: { cx: number; cy: number }, o: R
     if (url) el.style.background = `url("${url}") center / cover no-repeat`;
   }
   const shapes = new Map<number, HTMLElement>();
+  o = { ...o, themeColors: v.theme.colors };
   for (const s of v.behind) if (!s.hidden) el.append(renderShape(s, { ...o, editing: false, selection: null }, null));
   for (const s of v.shapes) {
     if (s.hidden) continue;
@@ -127,9 +131,14 @@ export function renderShape(s: ShapeView, o: RenderOptions, map: Map<number, HTM
     // An empty placeholder shows its prompt and a dashed outline in Normalansicht.
     if (o.editing && s.ph && s.text.empty) box.classList.add("ph-empty");
     const r = shapeTextRect(s.format, { ...s.info, body: { l: s.text.body.l / 12700, t: s.text.body.t / 12700, r: s.text.body.r / 12700, b: s.text.body.b / 12700, anchor: "t", wrap: true, autofit: "none" } }, w, h);
-    const t = renderText(s.text, r.w, r.h, { prompt: o.editing && !editing, slideNumber: o.slideNumber, selection: editing ? o.selection!.sel : null, fit: o.fits?.get(s.id) });
-    t.style.left = `${r.x}px`;
-    t.style.top = `${r.y}px`;
+    // Texteffekte > Transformieren (D-076): drawn bent unless the text is being edited (then plain, to type into).
+    const warp = !editing && s.kind === "sp" ? warpOf(s.el) : null;
+    const t = warp ? document.createElement("div") : renderText(s.text, r.w, r.h, { prompt: o.editing && !editing, slideNumber: o.slideNumber, selection: editing ? o.selection!.sel : null, fit: o.fits?.get(s.id) });
+    // PowerPoint spreads warped text over the whole shape, without the insets (measured, pptx-texteffects).
+    if (warp) { t.className = "txt txt-warped"; t.style.cssText = `position:absolute;width:${w}px;height:${h}px`; t.append(drawWarp(s.text, warp, w, h, s.el, o.themeColors ?? {})); }
+    else applyTextGradients(t, s.el, o.themeColors ?? {});
+    t.style.left = `${warp ? 0 : r.x}px`;
+    t.style.top = `${warp ? 0 : r.y}px`;
     // Text is not mirrored with the outline: Horizontal kippen leaves it readable, Vertikal kippen
     // turns it upside down (PowerPoint), so one flip is undone sideways and two not at all.
     if (s.flipH !== s.flipV) t.style.transform = "scaleX(-1)";

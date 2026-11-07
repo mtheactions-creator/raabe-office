@@ -8,6 +8,7 @@ import { TaskPane, type PaneControl, type PaneSection, type PaneSpec } from "@ra
 import type { SlideEditor } from "./editor";
 import * as S from "./shapeops";
 import * as T from "./textops";
+import { effectsTab } from "./effectpane";
 
 const { kid, kids, make, fragment } = PptxDom;
 const FILLS = ["noFill", "solidFill", "gradFill", "blipFill", "pattFill", "grpFill"];
@@ -116,6 +117,7 @@ export class FormatPane {
     } };
     const tabs = [
       { id: "fill", label: "Füllung und Linie", icon: "pane-fill-line", sections: () => (v()?.kind === "cxnSp" ? [lineSec] : [fillSec, lineSec]) },
+      effectsTab(() => { const x = v(); const el = x && this.ed.shapeEl(x.id); return el ? kid(el, x.kind === "grpSp" ? "grpSpPr" : "spPr") ?? undefined : undefined; }, (fn, label) => this.spPrs((sp) => fn(sp), label)),
       { id: "size", label: "Größe und Eigenschaften", icon: "pane-layout", sections: () => (v()?.text ? [sizeSec, posSec, textSec] : [sizeSec, posSec]) },
     ];
     return { title: pic ? "Grafik formatieren" : "Form formatieren", sets: [{ label: pic ? "Grafik" : "Formoptionen", tabs }] };
@@ -135,6 +137,12 @@ export class FormatPane {
   open(): void {
     if (!this.views().length) return;
     this.pane.show(this.spec());
+  }
+
+  /** Opens the pane at Effekte with one section open (Schattenoptionen..., 3D-Optionen... and so on). */
+  openEffects(section: string): void {
+    if (!this.views().length) return;
+    this.pane.showAt(this.spec(), "effects", section);
   }
 
   /** The selection changed: the open pane shows the new shape (or closes when nothing is selected). */

@@ -52,7 +52,7 @@ import { gifSection, videoSection } from "./videoui";
 import { Windows, type WindowDoc } from "./windows";
 import { convertSmartArt, smartArtTab, textPane } from "./smartart";
 import { bgStylesMenu } from "./background";
-import { shapeEffectsMenu } from "./shapefx";
+import { setEffectOptionsHook, shapeEffectsMenu } from "./shapefx";
 import { addRecent, loadRecent, loadSettings, removeRecent, saveSettings, setPinned, type Settings } from "./store";
 import appIconUrl from "../../../branding/raabe-present-small.svg?url";
 
@@ -192,6 +192,7 @@ export class PresentApp implements EditorHost, PanelHost {
     this.notesPage = new NotesPageView(this);
     this.main = h("div", { class: "present-main" }, this.panel.el, this.outline.el, h("div", { class: "splitter" }), this.center, this.sorter.el, this.notesPage.el);
     this.formatPane = new FormatPane(this.editor, this.main);
+    setEffectOptionsHook((section) => this.formatPane.openEffects(section));
     this.animPane = new AnimationPane(this, this.main);
     this.comments = new Comments(this, this.main, () => this.settings.userName, () => this.settings.initials);
     this.bgPane = new BackgroundPane(this, this.main);
