@@ -13,6 +13,7 @@ import { ribbonTabs, type RibbonContext } from "./ribbon-def";
 import { Deck, defaultMasterPlaceholder } from "./deck";
 import { LINE_DASHES, LINE_WEIGHTS } from "./lines";
 import { quickStylesPanel } from "./quickstyles";
+import { setShowFlag, showFlag } from "./showsetup";
 import { editEquation, equationTab, hasEquation, implementEquationCommands, insertEquation, selectedEquation } from "./equations";
 import { BUILT_IN } from "./equations-builtin";
 import { SlideEditor, flat, union, type EditorHost } from "./editor";
@@ -1835,7 +1836,11 @@ export class PresentApp implements EditorHost, PanelHost {
     impl("review.nextComment", () => jump(1));
     impl("review.prevComment", () => jump(-1));
     impl("show.setup", () => import("./showsetup").then((m) => m.showSetupDialog(this.deck)));
-    impl("show.useTimings", () => {}, undefined, () => true);
+    // Einrichten's checkboxes, kept in presProps.xml as PowerPoint keeps them.
+    const flag = (f: "narration" | "timings" | "media", id: string) => impl(id, () => { setShowFlag(this.deck, f, !showFlag(this.deck, f)); this.updateChrome(); }, () => !!this.slidePath(), () => showFlag(this.deck, f));
+    flag("timings", "show.useTimings"); flag("narration", "show.playNarrations"); flag("media", "show.mediaControls");
+    impl("show.custom", () => {}, () => !!this.slidePath());
+    impl("show.monitor", () => {}, () => !!this.slidePath());
     impl("anim.pane", () => this.animPane.toggle(), undefined, () => this.animPane.isOpen);
     // Ansicht > Farbe/Graustufe: how slides are shown while editing (the file is unchanged, as in PowerPoint).
     const colorMode = (m: "color" | "gray" | "bw") => () => { document.body.classList.remove("view-gray", "view-bw"); if (m !== "color") document.body.classList.add(`view-${m}`); this.updateChrome(); };

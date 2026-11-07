@@ -59,3 +59,43 @@ export async function showSetupDialog(deck: Deck): Promise<void> {
     root.insertBefore(sp, root.firstChild);
   });
 }
+
+// ----- the checkboxes of Bildschirmpräsentation > Einrichten (D-072) ---------------------------------------
+// Kommentare wiedergeben (showNarration), Anzeigedauern verwenden (useTimings), Mediensteuerelemente anzeigen
+// (p14:showMediaCtrls in showPr's extLst), on by default as in a new PowerPoint presentation.
+
+const NS_P14 = "http://schemas.microsoft.com/office/powerpoint/2010/main";
+const MEDIA_EXT = "{2FDB2607-1784-4EEB-B798-7EB5836EED8A}";
+export type ShowFlag = "narration" | "timings" | "media";
+
+export function showFlag(deck: Deck, f: ShowFlag): boolean {
+  const p = propsPath(deck);
+  const show = p && deck.pptx.has(p) ? at(deck.pptx.doc(p).documentElement, "showPr") : undefined;
+  if (!show) return true;
+  if (f === "narration") return show.getAttribute("showNarration") === "1";
+  if (f === "timings") return show.getAttribute("useTimings") !== "0";
+  const m = show.getElementsByTagNameNS(NS_P14, "showMediaCtrls")[0];
+  return !m || m.getAttribute("val") !== "0";
+}
+
+export function setShowFlag(deck: Deck, f: ShowFlag, on: boolean): void {
+  const p = propsPath(deck);
+  if (!p) return;
+  deck.change("Bildschirmpräsentation", [p], () => {
+    const root = deck.pptx.doc(p).documentElement;
+    const doc = root.ownerDocument;
+    let show = kid(root, "showPr");
+    if (!show) { show = make(doc, "p:showPr", { showNarration: 1 }); show.append(make(doc, "p:present"), make(doc, "p:sldAll")); root.insertBefore(show, root.firstChild); }
+    if (f === "narration") show.setAttribute("showNarration", on ? "1" : "0");
+    else if (f === "timings") { if (on) show.removeAttribute("useTimings"); else show.setAttribute("useTimings", "0"); }
+    else {
+      let m = show.getElementsByTagNameNS(NS_P14, "showMediaCtrls")[0];
+      if (!m) {
+        const ext = PptxDom.fragment(doc, `<p:extLst><p:ext uri="${MEDIA_EXT}"><p14:showMediaCtrls xmlns:p14="${NS_P14}" val="1"/></p:ext></p:extLst>`)[0];
+        (kid(show, "extLst") ?? show).append(...(kid(show, "extLst") ? Array.from(ext.children) : [ext]));
+        m = show.getElementsByTagNameNS(NS_P14, "showMediaCtrls")[0];
+      }
+      m.setAttribute("val", on ? "1" : "0");
+    }
+  });
+}

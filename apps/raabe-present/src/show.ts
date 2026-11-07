@@ -11,6 +11,7 @@ import { renderSlide } from "./render/slide";
 import { EMU_PX } from "./render/text";
 import { mainSequence, type Step } from "./animations";
 import { readTransition, transitionSound } from "./transitions";
+import { showFlag } from "./showsetup";
 import { readShowSetup, type ShowSetup } from "./showsetup";
 import { mediaOf, mediaType } from "./media";
 
@@ -137,7 +138,7 @@ export class SlideShow {
       if (!m || !bytes) continue;
       const el = document.createElement(m.kind);
       el.src = URL.createObjectURL(new Blob([bytes as BlobPart], { type: mediaType(m.path) }));
-      el.controls = true;
+      el.controls = showFlag(this.app.deck, "media");
       el.style.cssText = "position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:auto;background:#000";
       if (m.kind === "audio") el.style.cssText = "position:absolute;left:0;bottom:-40px;width:300px;pointer-events:auto";
       el.addEventListener("mousedown", (ev) => ev.stopPropagation());

@@ -160,8 +160,8 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
       shrink: ["monitors", "setup", "start"],
       groups: [
         { id: "start", label: "Bildschirmpräsentation starten", key: "ZB", icon: "slideshow", controls: [b("show.fromStart", "V", "large"), b("show.fromCurrent", "T", "large"), dd("show.custom", "E", "large", m.showCustom)] },
-        { id: "setup", label: "Einrichten", key: "ZE", icon: "settings", controls: [b("show.setup", "I1", "large"), b("show.hideSlide", "H", "large"), b("show.rehearse", "U1", "large"), dd("show.record", "N1", "large", m.record),
-          stack(check("show.playNarrations", "K"), check("show.useTimings", "N2"), check("show.mediaControls", "D"))] },
+        { id: "setup", label: "Einrichten", key: "ZE", icon: "settings", controls: [b("show.setup", "I1", "large"), stack(b("show.hideSlide", "H", "medium"), b("show.rehearse", "U1", "medium"), dd("show.record", "N1", "medium", m.record)),
+          stack(check("show.playNarrations", "K")), stack(check("show.useTimings", "N2"), check("show.mediaControls", "D"))] },
         { id: "monitors", label: "Bildschirme", key: "ZM", icon: "app", controls: [dd("show.monitor", "ZM", "large", [{ cmd: "show.presenterView" }])] },
       ],
     },
