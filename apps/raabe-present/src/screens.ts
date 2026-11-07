@@ -129,6 +129,7 @@ export async function mainPosition(): Promise<{ x: number; y: number } | null> {
 export async function setMainFullscreen(on: boolean): Promise<void> {
   // Harness runs keep the main window where it is (off screen), so a test never covers the owner's screen.
   if (window.__presentKeepWindow) return;
+  if (!on && document.fullscreenElement) await document.exitFullscreen().catch(() => {});
   if (!isTauri()) { if (on) await document.documentElement.requestFullscreen?.().catch(() => {}); return; }
   const { getCurrentWindow } = await import("@tauri-apps/api/window");
   await getCurrentWindow().setFullscreen(on).catch(() => {});

@@ -157,6 +157,11 @@ Display: 4K at 150 % scaling, currently 30 Hz.
 - Office dropdowns: UI Automation shows a gallery's entries below the expanded ribbon control
   in the window's tree, not in the popup window; nested menus (Katalogfilter, context
   submenus) only via `ElementFromPoint`. Submenus open on click, not reliably on hover.
+- Real input goes wherever the foreground window is: a probe sends keys or clicks only after checking that the
+  window in front belongs to its own Office process (`probe_powerpoint_8b_ui.py` `ours()`), fills dialogs
+  through UI Automation (ValuePattern, Invoke) instead of typing, and takes screenshots only of a window it
+  verified in front. Office's title bar shows the signed-in account's name: read labels only from the region of
+  the control you probe, and scan results case-insensitively for names before committing.
 - pywin32 out parameters: `Window.GetPoint(0, 0, 0, 0, range)`. `Range.Text` of an equation
   gives math italic letters (𝑥, 𝜃); `winapi.press(combo, hold)` takes a hold time, not a count.
 

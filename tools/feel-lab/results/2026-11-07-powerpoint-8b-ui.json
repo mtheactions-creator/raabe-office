@@ -1,0 +1,1936 @@
+{
+ "date": "2026-11-07",
+ "effects": {
+  "heads": [
+   "Schatten",
+   "Spiegelung",
+   "Leuchten",
+   "Weiche Kanten",
+   "3D-Format",
+   "3D-Drehung"
+  ],
+  "labels": [
+   {
+    "type": "TabItem",
+    "name": "Formoptionen",
+    "enabled": true
+   },
+   {
+    "type": "TabItem",
+    "name": "Textoptionen",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Füllung und Linie",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Effekte",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Größe und Eigenschaften",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Schatten",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Schatten",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Schatten",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Voreinstellungen",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Voreinstellungen",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Farbe",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Schattenfarbe RGB(0, 0, 0)",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Transparenz",
+    "enabled": true
+   },
+   {
+    "type": "Slider",
+    "name": "Transparenz",
+    "enabled": true,
+    "value": "0"
+   },
+   {
+    "type": "Button",
+    "name": "Seite nach rechts",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Spinner",
+    "name": "Transparenz",
+    "enabled": true,
+    "value": "0.000000"
+   },
+   {
+    "type": "Edit",
+    "name": "Transparenz",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Text",
+    "name": "Größe",
+    "enabled": true
+   },
+   {
+    "type": "Slider",
+    "name": "Größe",
+    "enabled": true,
+    "value": "1"
+   },
+   {
+    "type": "Button",
+    "name": "Seite nach rechts",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Spinner",
+    "name": "Größe",
+    "enabled": true,
+    "value": "1.000000"
+   },
+   {
+    "type": "Edit",
+    "name": "Größe",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Text",
+    "name": "Weichzeichnen",
+    "enabled": true
+   },
+   {
+    "type": "Slider",
+    "name": "Weichzeichnen",
+    "enabled": true,
+    "value": "0"
+   },
+   {
+    "type": "Button",
+    "name": "Seite nach rechts",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Spinner",
+    "name": "Weichzeichnen",
+    "enabled": true,
+    "value": "0.000000"
+   },
+   {
+    "type": "Edit",
+    "name": "Weichzeichnen",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Text",
+    "name": "Winkel",
+    "enabled": true
+   },
+   {
+    "type": "Slider",
+    "name": "Winkel",
+    "enabled": true,
+    "value": "0"
+   },
+   {
+    "type": "Button",
+    "name": "Seite nach rechts",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Spinner",
+    "name": "Winkel",
+    "enabled": true,
+    "value": "0.000000"
+   },
+   {
+    "type": "Edit",
+    "name": "Winkel",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Text",
+    "name": "Abstand",
+    "enabled": true
+   },
+   {
+    "type": "Slider",
+    "name": "Abstand",
+    "enabled": true,
+    "value": "0"
+   },
+   {
+    "type": "Button",
+    "name": "Seite nach rechts",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Spinner",
+    "name": "Abstand",
+    "enabled": true,
+    "value": "0.000000"
+   },
+   {
+    "type": "Edit",
+    "name": "Abstand",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Group",
+    "name": "Spiegelung",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Spiegelung",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Spiegelung",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Voreinstellungen",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Voreinstellungen",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Transparenz",
+    "enabled": true
+   },
+   {
+    "type": "Slider",
+    "name": "Transparenz",
+    "enabled": true,
+    "value": "0"
+   },
+   {
+    "type": "Button",
+    "name": "Seite nach rechts",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Spinner",
+    "name": "Transparenz",
+    "enabled": true,
+    "value": "0.000000"
+   },
+   {
+    "type": "Edit",
+    "name": "Transparenz",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Text",
+    "name": "Größe",
+    "enabled": true
+   },
+   {
+    "type": "Slider",
+    "name": "Größe",
+    "enabled": true,
+    "value": "0"
+   },
+   {
+    "type": "Button",
+    "name": "Seite nach rechts",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Spinner",
+    "name": "Größe",
+    "enabled": true,
+    "value": "0.000000"
+   },
+   {
+    "type": "Edit",
+    "name": "Größe",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Text",
+    "name": "Weichzeichnen",
+    "enabled": true
+   },
+   {
+    "type": "Slider",
+    "name": "Weichzeichnen",
+    "enabled": true,
+    "value": "0"
+   },
+   {
+    "type": "Button",
+    "name": "Seite nach rechts",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Spinner",
+    "name": "Weichzeichnen",
+    "enabled": true,
+    "value": "0.000000"
+   },
+   {
+    "type": "Edit",
+    "name": "Weichzeichnen",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Text",
+    "name": "Abstand",
+    "enabled": true
+   },
+   {
+    "type": "Slider",
+    "name": "Abstand",
+    "enabled": true,
+    "value": "0"
+   },
+   {
+    "type": "Button",
+    "name": "Seite nach rechts",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Spinner",
+    "name": "Abstand",
+    "enabled": true,
+    "value": "0.000000"
+   },
+   {
+    "type": "Edit",
+    "name": "Abstand",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Group",
+    "name": "Leuchten",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Leuchten",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Leuchten",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Voreinstellungen",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Voreinstellungen",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Farbe",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Leuchtfarbe RGB(0, 0, 0)",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Größe",
+    "enabled": true
+   },
+   {
+    "type": "Slider",
+    "name": "Größe",
+    "enabled": true,
+    "value": "0"
+   },
+   {
+    "type": "Button",
+    "name": "Seite nach rechts",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Spinner",
+    "name": "Größe",
+    "enabled": true,
+    "value": "0.000000"
+   },
+   {
+    "type": "Edit",
+    "name": "Größe",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Text",
+    "name": "Transparenz",
+    "enabled": true
+   },
+   {
+    "type": "Slider",
+    "name": "Transparenz",
+    "enabled": true,
+    "value": "0"
+   },
+   {
+    "type": "Button",
+    "name": "Seite nach rechts",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Spinner",
+    "name": "Transparenz",
+    "enabled": true,
+    "value": "0.000000"
+   },
+   {
+    "type": "Edit",
+    "name": "Transparenz",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Group",
+    "name": "Weiche Kanten",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Weiche Kanten",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Weiche Kanten",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Voreinstellungen",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Voreinstellungen",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Größe",
+    "enabled": true
+   },
+   {
+    "type": "Slider",
+    "name": "Größe",
+    "enabled": true,
+    "value": "0"
+   },
+   {
+    "type": "Button",
+    "name": "Seite nach rechts",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Spinner",
+    "name": "Größe",
+    "enabled": true,
+    "value": "0.000000"
+   },
+   {
+    "type": "Edit",
+    "name": "Größe",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Group",
+    "name": "3D-Format",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "3D-Format",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "3D-Format",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Abschrägung oben",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Abschrägung oben",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Abschrägung oben",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Breite",
+    "enabled": true
+   },
+   {
+    "type": "Spinner",
+    "name": "Breite",
+    "enabled": true,
+    "value": "0.000000"
+   },
+   {
+    "type": "Edit",
+    "name": "Breite",
+    "enabled": true,
+    "value": "0 Pt."
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Text",
+    "name": "Höhe",
+    "enabled": true
+   },
+   {
+    "type": "Spinner",
+    "name": "Höhe",
+    "enabled": true,
+    "value": "0.000000"
+   },
+   {
+    "type": "Edit",
+    "name": "Höhe",
+    "enabled": true,
+    "value": "0 Pt."
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Group",
+    "name": "Abschrägung unten",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Abschrägung unten",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Abschrägung unten",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Breite",
+    "enabled": true
+   },
+   {
+    "type": "Spinner",
+    "name": "Breite",
+    "enabled": true,
+    "value": "0.000000"
+   },
+   {
+    "type": "Edit",
+    "name": "Breite",
+    "enabled": true,
+    "value": "0 Pt."
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Text",
+    "name": "Höhe",
+    "enabled": true
+   },
+   {
+    "type": "Spinner",
+    "name": "Höhe",
+    "enabled": true,
+    "value": "0.000000"
+   },
+   {
+    "type": "Edit",
+    "name": "Höhe",
+    "enabled": true,
+    "value": "0 Pt."
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Group",
+    "name": "Tiefe",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Tiefe",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Tiefe RGB(0, 0, 0)",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Größe",
+    "enabled": true
+   },
+   {
+    "type": "Spinner",
+    "name": "Größe",
+    "enabled": true,
+    "value": "0.000000"
+   },
+   {
+    "type": "Edit",
+    "name": "Größe",
+    "enabled": true,
+    "value": "0 Pt."
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Group",
+    "name": "Kontur",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Kontur",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Kontur RGB(0, 0, 0)",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Größe",
+    "enabled": true
+   },
+   {
+    "type": "Spinner",
+    "name": "Größe",
+    "enabled": true,
+    "value": "0.000000"
+   },
+   {
+    "type": "Edit",
+    "name": "Größe",
+    "enabled": true,
+    "value": "0 Pt."
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Group",
+    "name": "Material",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Material",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Material",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Beleuchtung",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Beleuchtung",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Beleuchtung",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Winkel",
+    "enabled": true
+   },
+   {
+    "type": "Spinner",
+    "name": "Winkel",
+    "enabled": true,
+    "value": "0.000000"
+   },
+   {
+    "type": "Edit",
+    "name": "Winkel",
+    "enabled": true,
+    "value": "0°"
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Zurücksetzen",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "3D-Drehung",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "3D-Drehung",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "3D-Drehung",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Zeile nach oben",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Seite nach unten",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Zeile nach unten",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Leseansicht",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Bildschirmpräsentation",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Verkleinern",
+    "enabled": true,
+    "value": "66"
+   },
+   {
+    "type": "Slider",
+    "name": "Zoom",
+    "enabled": true,
+    "value": "66"
+   },
+   {
+    "type": "Button",
+    "name": "Verkleinern",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Vergrößern",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Vergrößern",
+    "enabled": true,
+    "value": "66"
+   },
+   {
+    "type": "Button",
+    "name": "Zoom 66 %",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "An Fenstergröße anpassen ",
+    "enabled": true
+   }
+  ],
+  "x_rotation_shown": null,
+  "com_rotation_x": 30.0
+ },
+ "export": {
+  "Video erstellen": {
+   "labels": [
+    {
+     "type": "ListItem",
+     "name": "Startseite",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Neu",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Öffnen",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Informationen",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Speichern",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Speichern unter",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Drucken",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Freigeben",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Exportieren",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Weitere Optionen",
+     "enabled": true
+    },
+    {
+     "type": "Text",
+     "name": "Exportieren",
+     "enabled": true
+    },
+    {
+     "type": "Group",
+     "name": "Veröffentlichungsfunktionen",
+     "enabled": true
+    },
+    {
+     "type": "TabItem",
+     "name": "PDF/XPS-Dokument erstellen",
+     "enabled": true
+    },
+    {
+     "type": "TabItem",
+     "name": "Video erstellen",
+     "enabled": true
+    },
+    {
+     "type": "TabItem",
+     "name": "Animiertes GIF erstellen",
+     "enabled": true
+    },
+    {
+     "type": "TabItem",
+     "name": "Bildschirmpräsentation für CD verpacken",
+     "enabled": true
+    },
+    {
+     "type": "TabItem",
+     "name": "Handzettel erstellen",
+     "enabled": true
+    },
+    {
+     "type": "TabItem",
+     "name": "Dateityp ändern",
+     "enabled": true
+    },
+    {
+     "type": "Group",
+     "name": "Video erstellen",
+     "enabled": true
+    },
+    {
+     "type": "Group",
+     "name": "Ausführliche Informationen",
+     "enabled": true
+    },
+    {
+     "type": "Hyperlink",
+     "name": "Weitere Informationen",
+     "enabled": true,
+     "value": ""
+    },
+    {
+     "type": "Group",
+     "name": "Ausführliche Informationen",
+     "enabled": true
+    },
+    {
+     "type": "ComboBox",
+     "name": "Videoqualität",
+     "enabled": true,
+     "value": "Full HD (1080p)"
+    },
+    {
+     "type": "Button",
+     "name": "Öffnen",
+     "enabled": true
+    },
+    {
+     "type": "ComboBox",
+     "name": "Zeitabläufe und Kommentare",
+     "enabled": true,
+     "value": "Aufgezeichnete Zeitabläufe und Kommentare verwenden"
+    },
+    {
+     "type": "Button",
+     "name": "Öffnen",
+     "enabled": true
+    },
+    {
+     "type": "Text",
+     "name": "Anzeigedauer der einzelnen Folien in Sekunden",
+     "enabled": true
+    },
+    {
+     "type": "Spinner",
+     "name": "Anzeigedauer der einzelnen Folien in Sekunden",
+     "enabled": true,
+     "value": "500.000000"
+    },
+    {
+     "type": "Edit",
+     "name": "Anzeigedauer der einzelnen Folien in Sekunden",
+     "enabled": true,
+     "value": "05,00"
+    },
+    {
+     "type": "Button",
+     "name": "Mehr",
+     "enabled": true,
+     "value": ""
+    },
+    {
+     "type": "Button",
+     "name": "Weniger",
+     "enabled": true,
+     "value": ""
+    },
+    {
+     "type": "Button",
+     "name": "Video erstellen",
+     "enabled": true
+    }
+   ],
+   "choices": {
+    "Videoqualität": [
+     "Ultra HD (4K)",
+     "Full HD (1080p)",
+     "HD (720p)",
+     "Standard (480p)"
+    ],
+    "Zeitabläufe und Kommentare": [
+     "Aufgezeichnete Zeitabläufe und Kommentare nicht verwenden",
+     "Aufgezeichnete Zeitabläufe und Kommentare verwenden"
+    ]
+   }
+  },
+  "Animiertes GIF erstellen": {
+   "labels": [
+    {
+     "type": "ListItem",
+     "name": "Startseite",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Neu",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Öffnen",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Informationen",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Speichern",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Speichern unter",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Drucken",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Freigeben",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Exportieren",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Weitere Optionen",
+     "enabled": true
+    },
+    {
+     "type": "Text",
+     "name": "Exportieren",
+     "enabled": true
+    },
+    {
+     "type": "Group",
+     "name": "Veröffentlichungsfunktionen",
+     "enabled": true
+    },
+    {
+     "type": "TabItem",
+     "name": "PDF/XPS-Dokument erstellen",
+     "enabled": true
+    },
+    {
+     "type": "TabItem",
+     "name": "Video erstellen",
+     "enabled": true
+    },
+    {
+     "type": "TabItem",
+     "name": "Animiertes GIF erstellen",
+     "enabled": true
+    },
+    {
+     "type": "TabItem",
+     "name": "Bildschirmpräsentation für CD verpacken",
+     "enabled": true
+    },
+    {
+     "type": "TabItem",
+     "name": "Handzettel erstellen",
+     "enabled": true
+    },
+    {
+     "type": "TabItem",
+     "name": "Dateityp ändern",
+     "enabled": true
+    },
+    {
+     "type": "Group",
+     "name": "Animierte GIF-Datei erstellen",
+     "enabled": true
+    },
+    {
+     "type": "Group",
+     "name": "Ausführliche Informationen",
+     "enabled": true
+    },
+    {
+     "type": "ComboBox",
+     "name": "GIF-Qualität",
+     "enabled": true,
+     "value": "Mittel"
+    },
+    {
+     "type": "Button",
+     "name": "Öffnen",
+     "enabled": true
+    },
+    {
+     "type": "CheckBox",
+     "name": "Transparenter Hintergrund",
+     "enabled": true
+    },
+    {
+     "type": "Text",
+     "name": "Wieviel Sekunden für jede Folie benötigt werden",
+     "enabled": true
+    },
+    {
+     "type": "Spinner",
+     "name": "Wieviel Sekunden für jede Folie benötigt werden",
+     "enabled": true,
+     "value": "100.000000"
+    },
+    {
+     "type": "Edit",
+     "name": "Wieviel Sekunden für jede Folie benötigt werden",
+     "enabled": true,
+     "value": "01,00"
+    },
+    {
+     "type": "Button",
+     "name": "Mehr",
+     "enabled": true,
+     "value": ""
+    },
+    {
+     "type": "Button",
+     "name": "Weniger",
+     "enabled": true,
+     "value": ""
+    },
+    {
+     "type": "Text",
+     "name": "Folien",
+     "enabled": true
+    },
+    {
+     "type": "Spinner",
+     "name": "Erste Folie im Exportbereich",
+     "enabled": true,
+     "value": "1.000000"
+    },
+    {
+     "type": "Edit",
+     "name": "Erste Folie im Exportbereich",
+     "enabled": true,
+     "value": "1"
+    },
+    {
+     "type": "Button",
+     "name": "Mehr",
+     "enabled": true,
+     "value": ""
+    },
+    {
+     "type": "Button",
+     "name": "Weniger",
+     "enabled": true,
+     "value": ""
+    },
+    {
+     "type": "Text",
+     "name": "bis",
+     "enabled": true
+    },
+    {
+     "type": "Spinner",
+     "name": "Letzte Folie im Exportbereich",
+     "enabled": true,
+     "value": "5.000000"
+    },
+    {
+     "type": "Edit",
+     "name": "Letzte Folie im Exportbereich",
+     "enabled": true,
+     "value": "5"
+    },
+    {
+     "type": "Button",
+     "name": "Mehr",
+     "enabled": true,
+     "value": ""
+    },
+    {
+     "type": "Button",
+     "name": "Weniger",
+     "enabled": true,
+     "value": ""
+    },
+    {
+     "type": "Button",
+     "name": "GIF erstellen",
+     "enabled": true
+    }
+   ],
+   "choices": {
+    "GIF-Qualität": [
+     "Sehr groß",
+     "Groß",
+     "Mittel",
+     "Klein"
+    ]
+   },
+   "gif": {
+    "size": [
+     853,
+     480
+    ],
+    "frames": 29,
+    "loop": 0,
+    "delays_ms": [
+     60,
+     260,
+     330,
+     400,
+     460,
+     530,
+     1070,
+     1130,
+     3140
+    ],
+    "total_ms": 8580,
+    "bytes": 47790
+   }
+  }
+ },
+ "close": {
+  "closed": 1,
+  "quit": true,
+  "left_open": 0
+ },
+ "presenter_windows": [
+  {
+   "title": "presenter-1.pptx - PowerPoint-Referentenansicht",
+   "class": "PodiumParent",
+   "rect": [
+    0,
+    0,
+    3840,
+    2160
+   ]
+  },
+  {
+   "title": "PowerPoint-Bildschirmpräsentation  -  presenter-1.pptx",
+   "class": "screenClass",
+   "rect": [
+    3840,
+    0,
+    4640,
+    600
+   ]
+  },
+  {
+   "title": "presenter-1.pptx - PowerPoint",
+   "class": "PPTFrameClass",
+   "rect": [
+    0,
+    0,
+    2000,
+    2050
+   ]
+  },
+  {
+   "title": "",
+   "class": "MSO_BORDEREFFECT_WINDOW_CLASS",
+   "rect": [
+    -8,
+    2050,
+    2008,
+    2058
+   ]
+  },
+  {
+   "title": "",
+   "class": "MSO_BORDEREFFECT_WINDOW_CLASS",
+   "rect": [
+    2000,
+    -8,
+    2008,
+    2058
+   ]
+  },
+  {
+   "title": "",
+   "class": "MSO_BORDEREFFECT_WINDOW_CLASS",
+   "rect": [
+    -8,
+    -8,
+    0,
+    2058
+   ]
+  },
+  {
+   "title": "",
+   "class": "MSO_BORDEREFFECT_WINDOW_CLASS",
+   "rect": [
+    -8,
+    -8,
+    2008,
+    0
+   ]
+  }
+ ],
+ "presenter": {
+  "labels": []
+ },
+ "note": "Labels only: Office's descriptions and add-in entries removed before committing (D-058).",
+ "effects3d": {
+  "heads": [
+   "3D-Drehung"
+  ],
+  "labels": [
+   {
+    "type": "TabItem",
+    "name": "Formoptionen",
+    "enabled": true
+   },
+   {
+    "type": "TabItem",
+    "name": "Textoptionen",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Füllung und Linie",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Effekte",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Größe und Eigenschaften",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Schatten",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Schatten",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Schatten",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Spiegelung",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Spiegelung",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Spiegelung",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Leuchten",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Leuchten",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Leuchten",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Weiche Kanten",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Weiche Kanten",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Weiche Kanten",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "3D-Format",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "3D-Format",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "3D-Format",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "3D-Drehung",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "3D-Drehung",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "3D-Drehung",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Voreinstellungen",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Voreinstellungen",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "X-Drehung",
+    "enabled": true
+   },
+   {
+    "type": "Spinner",
+    "name": "X-Drehung",
+    "enabled": true,
+    "value": "330.000000"
+   },
+   {
+    "type": "Edit",
+    "name": "X-Drehung",
+    "enabled": true,
+    "value": "330°"
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Links",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Rechts",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Y-Drehung",
+    "enabled": true
+   },
+   {
+    "type": "Spinner",
+    "name": "Y-Drehung",
+    "enabled": true,
+    "value": "0.000000"
+   },
+   {
+    "type": "Edit",
+    "name": "Y-Drehung",
+    "enabled": true,
+    "value": "0°"
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Nach oben",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Nach unten",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Z-Drehung",
+    "enabled": true
+   },
+   {
+    "type": "Spinner",
+    "name": "Z-Drehung",
+    "enabled": true,
+    "value": "0.000000"
+   },
+   {
+    "type": "Edit",
+    "name": "Z-Drehung",
+    "enabled": true,
+    "value": "0°"
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Uhrzeigersinn",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Gegen Uhrzeigersinn",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Perspektive",
+    "enabled": false
+   },
+   {
+    "type": "Spinner",
+    "name": "Perspektive",
+    "enabled": false,
+    "value": "0.000000"
+   },
+   {
+    "type": "Edit",
+    "name": "Perspektive",
+    "enabled": false,
+    "value": "0°"
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "enabled": false,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "enabled": false,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Blickfeld verengen",
+    "enabled": false
+   },
+   {
+    "type": "Button",
+    "name": "Blickfeld verbreitern",
+    "enabled": false
+   },
+   {
+    "type": "CheckBox",
+    "name": "Text nicht drehen",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Abstand vom Boden",
+    "enabled": true
+   },
+   {
+    "type": "Spinner",
+    "name": "Abstand vom Boden",
+    "enabled": true,
+    "value": "0.000000"
+   },
+   {
+    "type": "Edit",
+    "name": "Abstand vom Boden",
+    "enabled": true,
+    "value": "0 Pt."
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Zurücksetzen",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Leseansicht",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Bildschirmpräsentation",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Verkleinern",
+    "enabled": true,
+    "value": "66"
+   },
+   {
+    "type": "Slider",
+    "name": "Zoom",
+    "enabled": true,
+    "value": "66"
+   },
+   {
+    "type": "Button",
+    "name": "Verkleinern",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Vergrößern",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Vergrößern",
+    "enabled": true,
+    "value": "66"
+   },
+   {
+    "type": "Button",
+    "name": "Zoom 66 %",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "An Fenstergröße anpassen ",
+    "enabled": true
+   }
+  ],
+  "x_rotation_shown": "330.000000",
+  "com_rotation_x": 30.0
+ }
+}

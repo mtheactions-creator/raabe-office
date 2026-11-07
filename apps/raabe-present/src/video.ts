@@ -30,6 +30,8 @@ export interface MediaOptions {
   to?: number;
   /** GIF: Hintergrund transparent machen. */
   transparent?: boolean;
+  /** GIF: the width rounded to the nearest pixel (PowerPoint's GIF 853 wide at 480, its video 852). */
+  roundWidth?: boolean;
   /** Called with the share done (0..1); returning false stops the export. */
   progress?: (done: number) => boolean | void;
 }
@@ -285,8 +287,9 @@ async function playFrames(app: PresentApp, o: MediaOptions, width: number, heigh
 }
 
 /** Width for a height: the slide's proportions (H.264 needs even sizes). */
-export function frameSize(app: PresentApp, height: number): { width: number; height: number } {
+export function frameSize(app: PresentApp, height: number, round = false): { width: number; height: number } {
   const s = app.deck.pptx.slideSize;
+  if (round) return { width: Math.round((height * s.cx) / s.cy), height };
   // PowerPoint's width: rounded down to a multiple of 4 (480p 16:9: 852).
   const w = Math.floor((height * s.cx) / s.cy / 4) * 4;
   return { width: w, height: height - (height % 2) };
@@ -426,7 +429,7 @@ async function encodeSound(mp4: Mp4Writer, buf: AudioBuffer): Promise<void> {
 
 /** The presentation as an animated GIF (null when stopped). */
 export async function makeGif(app: PresentApp, o: MediaOptions): Promise<Uint8Array | null> {
-  const { width, height } = frameSize(app, o.height);
+  const { width, height } = frameSize(app, o.height, o.roundWidth);
   // A frame is written when the next differs (equal frames lengthen its delay).
   const st: { writer: GifWriter | null; pending: { rgba: Uint8ClampedArray; delay: number } | null } = { writer: null, pending: null };
   const done = await playFrames(app, o, width, height, async (canvas, _time, dur, same) => {

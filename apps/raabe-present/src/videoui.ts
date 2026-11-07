@@ -40,13 +40,13 @@ async function save(app: PresentApp, ext: "mp4" | "gif", bytes: Uint8Array): Pro
 
 /** The Video erstellen section. */
 export function videoSection(app: PresentApp): HTMLElement {
-  const quality = h("select", { "aria-label": "Qualität" },
+  const quality = h("select", { "aria-label": "Videoqualität" },
     ...[["2160", "Ultra HD (4K)"], ["1080", "Full HD (1080p)"], ["720", "HD (720p)"], ["480", "Standard (480p)"]].map(([v, l]) => h("option", { value: v, selected: v === "1080" }, l)));
   const timed = hasTimings(app);
-  const timings = h("select", { "aria-label": "Anzeigedauern" },
-    h("option", { value: "0", selected: !timed }, "Keine aufgezeichneten Anzeigedauern und Kommentare verwenden"),
-    h("option", { value: "1", selected: timed, disabled: !timed }, "Aufgezeichnete Anzeigedauern und Kommentare verwenden"));
-  const secs = h("input", { type: "text", value: fmt(5), style: "width:64px", "aria-label": "In jeder Folie verbrachte Sekunden" });
+  const timings = h("select", { "aria-label": "Zeitabläufe und Kommentare" },
+    h("option", { value: "0", selected: !timed }, "Aufgezeichnete Zeitabläufe und Kommentare nicht verwenden"),
+    h("option", { value: "1", selected: timed, disabled: !timed }, "Aufgezeichnete Zeitabläufe und Kommentare verwenden"));
+  const secs = h("input", { type: "text", value: fmt(5), style: "width:64px", "aria-label": "Anzeigedauer der einzelnen Folien in Sekunden" });
   const go = async () => {
     if (!videoSupported()) { await showDialog({ title: "RaabePresent", body: "Videos kann RaabePresent auf diesem Gerät nicht erstellen.", buttons: [{ label: "OK", value: "", primary: true }], cancel: "" }); return; }
     const o: MediaOptions = { height: Number(quality.value), fps: 30, secs: Math.max(0.01, num(secs.value) || 5), useTimings: timings.value === "1" };
@@ -56,30 +56,31 @@ export function videoSection(app: PresentApp): HTMLElement {
   return h("div", { class: "export-section" }, h("h2", null, "Video erstellen"),
     h("p", { class: "muted" }, "Die Präsentation als Videodatei mit Übergängen, Animationen, Videos und Klängen, zum Abspielen ohne RaabePresent."),
     h("div", { class: "export-row" }, quality), h("div", { class: "export-row" }, timings),
-    h("div", { class: "export-row" }, h("label", null, "In jeder Folie verbrachte Sekunden: "), secs),
+    h("div", { class: "export-row" }, h("label", null, "Anzeigedauer der einzelnen Folien in Sekunden: "), secs),
     h("button", { class: "bigbtn", style: "width:160px", onclick: () => void go() }, "Video erstellen"));
 }
 
 /** The Animiertes GIF erstellen section. */
 export function gifSection(app: PresentApp): HTMLElement {
   const n = app.deck.slides.length;
-  const quality = h("select", { "aria-label": "Qualität" },
-    ...[["1080", "Extra groß (1080p)"], ["720", "Groß (720p)"], ["480", "Mittel (480p)"], ["240", "Klein (240p)"]].map(([v, l]) => h("option", { value: v, selected: v === "480" }, l)));
+  const quality = h("select", { "aria-label": "GIF-Qualität" },
+    ...[["1080", "Sehr groß"], ["720", "Groß"], ["480", "Mittel"], ["240", "Klein"]].map(([v, l]) => h("option", { value: v, selected: v === "480" }, l)));
   const transparent = h("input", { type: "checkbox", id: "gif-transparent" });
-  const secs = h("input", { type: "text", value: fmt(1), style: "width:64px", "aria-label": "In jeder Folie verbrachte Sekunden" });
-  const from = h("input", { type: "number", min: "1", max: String(n), value: "1", style: "width:56px", "aria-label": "Von" });
-  const to = h("input", { type: "number", min: "1", max: String(n), value: String(n), style: "width:56px", "aria-label": "Bis" });
+  const secs = h("input", { type: "text", value: fmt(1), style: "width:64px", "aria-label": "Wieviel Sekunden für jede Folie benötigt werden" });
+  const from = h("input", { type: "number", min: "1", max: String(n), value: "1", style: "width:56px", "aria-label": "Erste Folie im Exportbereich" });
+  const to = h("input", { type: "number", min: "1", max: String(n), value: String(n), style: "width:56px", "aria-label": "Letzte Folie im Exportbereich" });
   const go = async () => {
     const a = Math.max(1, Math.min(n, Number(from.value) || 1)), b = Math.max(a, Math.min(n, Number(to.value) || n));
-    const o: MediaOptions = { height: Number(quality.value), fps: 15, secs: Math.max(0.01, num(secs.value) || 1), useTimings: false, from: a, to: b, transparent: transparent.checked };
+    // PowerPoint's GIF: about 16 frames per second, and a slide's Nach time is kept (measured).
+    const o: MediaOptions = { height: Number(quality.value), fps: 16, secs: Math.max(0.01, num(secs.value) || 1), useTimings: true, from: a, to: b, transparent: transparent.checked, roundWidth: true };
     const bytes = await withProgress("GIF wird erstellt", (progress) => makeGif(app, { ...o, progress }));
     if (bytes) await save(app, "gif", bytes);
   };
-  return h("div", { class: "export-section" }, h("h2", null, "Animiertes GIF erstellen"),
+  return h("div", { class: "export-section" }, h("h2", null, "Animierte GIF-Datei erstellen"),
     h("p", { class: "muted" }, "Die Folien als GIF-Animation, die sich in Webseiten, Chats und andere Dokumente einfügen lässt."),
     h("div", { class: "export-row" }, quality),
-    h("div", { class: "export-row" }, transparent, h("label", { for: "gif-transparent" }, " Hintergrund transparent machen")),
-    h("div", { class: "export-row" }, h("label", null, "In jeder Folie verbrachte Sekunden: "), secs),
-    h("div", { class: "export-row" }, h("label", null, "Zu exportierende Folien: "), from, h("span", null, " bis "), to),
+    h("div", { class: "export-row" }, transparent, h("label", { for: "gif-transparent" }, " Transparenter Hintergrund")),
+    h("div", { class: "export-row" }, h("label", null, "Wieviel Sekunden für jede Folie benötigt werden: "), secs),
+    h("div", { class: "export-row" }, h("label", null, "Folien "), from, h("span", null, " bis "), to),
     h("button", { class: "bigbtn", style: "width:160px", onclick: () => void go() }, "GIF erstellen"));
 }

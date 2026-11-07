@@ -13,7 +13,7 @@ const { kid, kids, make, fragment } = PptxDom;
 const FX_ORDER = ["blur", "fillOverlay", "glow", "innerShdw", "outerShdw", "prstShdw", "reflection", "softEdge"];
 const AFTER_FX = ["scene3d", "sp3d", "extLst"];
 
-type Part = "shadow" | "reflection" | "glow" | "softEdge" | "bevel" | "rotation" | "preset";
+export type Part = "shadow" | "reflection" | "glow" | "softEdge" | "bevel" | "rotation" | "preset";
 const FX_TAGS: Record<string, string[]> = { shadow: ["outerShdw", "innerShdw", "prstShdw"], reflection: ["reflection"], glow: ["glow"], softEdge: ["softEdge"] };
 
 /** The preset's elements, parsed (a wrapper holds its spPr children). */
@@ -23,7 +23,7 @@ function presetEls(doc: Document, p: PicturePreset): Element[] {
 }
 
 /** Applies one part of a preset to a properties element (spPr, or bodyPr for text with `text`). */
-function applyPart(pr: Element, part: Part, p: PicturePreset | null, text = false): void {
+export function applyPart(pr: Element, part: Part, p: PicturePreset | null, text = false): void {
   const doc = pr.ownerDocument;
   const els = p ? presetEls(doc, p) : [];
   const pick = (name: string) => els.find((e) => e.localName === name);

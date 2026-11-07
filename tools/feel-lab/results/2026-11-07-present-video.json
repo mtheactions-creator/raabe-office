@@ -376,12 +376,73 @@
  },
  "gif": {
   "size": [
-   424,
-   240
+   853,
+   480
   ],
-  "frames": 28,
+  "frames": 29,
   "loop": 0,
-  "total_ms": 6080,
-  "bytes": 20743
+  "total_ms": 7940,
+  "bytes": 43973
+ },
+ "gif_vs_powerpoint": {
+  "powerpoint_size": [
+   853,
+   480
+  ],
+  "powerpoint_total_ms": 8580,
+  "our_total_ms": 7940,
+  "compare": {
+   "matched": "6/8",
+   "states": [
+    {
+     "state": "RRRR",
+     "powerpoint": 0.0,
+     "ours": 0.0,
+     "diff": 0.0
+    },
+    {
+     "state": "GGGG",
+     "powerpoint": 1.07,
+     "ours": 1.0,
+     "diff": -0.07
+    },
+    {
+     "state": "GkGG",
+     "powerpoint": 1.53,
+     "ours": 1.38,
+     "diff": -0.15
+    },
+    {
+     "state": "GkwG",
+     "powerpoint": 1.86,
+     "ours": 1.69,
+     "diff": -0.17
+    },
+    {
+     "state": "BBBB",
+     "powerpoint": 2.8,
+     "ours": 2.78,
+     "diff": -0.02
+    },
+    {
+     "state": "BBBk",
+     "powerpoint": 3.99,
+     "ours": 3.82,
+     "diff": -0.17
+    },
+    {
+     "state": "YYYw",
+     "powerpoint": 4.31,
+     "ours": 3.94,
+     "diff": -0.37
+    },
+    {
+     "state": "MMMM",
+     "powerpoint": 5.44,
+     "ours": 4.94,
+     "diff": -0.5
+    }
+   ]
+  }
  }
 }

@@ -2073,13 +2073,20 @@ Package 1 of Step 8b (D-073).
   Folien anzeigen, schwarz schalten, weitere Optionen below; Vorherige/Nächste and "Folie n von m"; the next slide
   (or the current one while click animations remain) and the notes with Text vergrößern/verkleinern. A
   right-click on the audience's screen opens its menu in the Referentenansicht (one page draws both).
-  Labels follow PowerPoint as far as known; the exact tooltips are to be recorded from PowerPoint's
-  Referentenansicht in a run when the owner is away (it takes over the screens).
+  Recorded from PowerPoint's own Referentenansicht on the virtual display (probe_powerpoint_8b_ui.py presenter;
+  its window, class PodiumParent, shows no controls to UI Automation, so its layout was measured from a
+  screenshot): the bar at the top in capitals with Taskleiste anzeigen (ours: the main window leaves full screen
+  so Windows' taskbar shows), Anzeigeeinstellungen, Bildschirmpräsentation beenden; the timer and the clock above
+  the slide; the current slide 65 % of the width, at the top, its tools right below it on the left (Stift- und
+  Laserpointertools, Alle Folien anzeigen, Folie zoomen, schwarz schalten, weitere Optionen); the navigation
+  centred at the bottom with round buttons; the next slide and, below a line, the notes in the right column.
+  **Folie zoomen** as PowerPoint's: the button, then a click on the slide shows the slide at twice its size
+  around that point on both screens; another click goes back.
 - **Tested** with the virtual display (`check_present_screens.py`): RaabePresent off screen, the show window
   full screen on the virtual monitor, keys through DevTools, so the owner's screen is never covered.
-- **Video erstellen:** PowerPoint's choices (Ultra HD (4K), Full HD (1080p), HD (720p), Standard (480p); Keine
-  aufgezeichneten / Aufgezeichnete Anzeigedauern und Kommentare verwenden; In jeder Folie verbrachte Sekunden,
-  05,00). The timeline is PowerPoint's, measured with its own CreateVideo (probe_powerpoint_video.py): a slide
+- **Video erstellen:** PowerPoint's choices (Videoqualität: Ultra HD (4K), Full HD (1080p), HD (720p), Standard
+  (480p); Aufgezeichnete Zeitabläufe und Kommentare nicht verwenden / verwenden; Anzeigedauer der einzelnen Folien
+  in Sekunden, 05,00; labels recorded from its Exportieren page). The timeline is PowerPoint's, measured with its own CreateVideo (probe_powerpoint_video.py): a slide
   takes its transition plus its seconds (or Nach with recorded timings); steps after the previous start with
   it; click steps come at equal shares of the seconds (two clicks in 2 s at 0.67 and 1.33 s); the animations'
   own durations add nothing. The width is the height times the slide's proportions rounded down to a multiple of
@@ -2087,12 +2094,17 @@ Package 1 of Step 8b (D-073).
   (WebCodecs) in an MP4 written by our own code (mp4.ts, D-073), videos on slides drawn into their frames,
   transition sounds and the sound of audio and video mixed into one track. Only MP4 (PowerPoint also offers
   WMV, a Microsoft format).
-- **Animiertes GIF erstellen:** Extra groß (1080p), Groß (720p), Mittel (480p, the default), Klein (240p);
-  Hintergrund transparent machen; In jeder Folie verbrachte Sekunden (01,00); Zu exportierende Folien von-bis.
-  Our GIF writer (gif.ts): 15 frames per second, a colour table of up to 256 colours per frame (median cut),
-  only the changed rectangle of each frame, equal frames merged into a longer delay, endless loop. PowerPoint's
-  own GIF cannot be made through COM (CreateVideo writes an MP4 under any name, measured); its frame rate and
-  sizes are to be recorded through its UI in a run when the owner is away.
+- **Animierte GIF-Datei erstellen:** PowerPoint's page (recorded): GIF-Qualität Sehr groß, Groß, Mittel (the
+  default), Klein; Transparenter Hintergrund; Wieviel Sekunden für jede Folie benötigt werden (01,00); Folien
+  von-bis. Our GIF writer (gif.ts): a colour table of up to 256 colours per frame (median cut), only the changed
+  rectangle of each frame, equal frames merged into a longer delay, endless loop. PowerPoint's own GIF cannot be
+  made through COM (CreateVideo writes an MP4 under any name), so it was made through its page with the test
+  deck (UI Automation only, nothing typed): 853 x 480 at Mittel (the width rounded, the video's 852 is a
+  multiple of 4), about 16 frames per second, and a slide's Nach time is kept although the page offers no
+  timings choice. Ours now does the same (16 frames per second, Nach kept, width rounded). Compared frame by
+  frame (`check_present_video.py`): same size, 6 of PowerPoint's 8 clear states within 0.25 s; from slide 4 ours
+  is 0.4-0.5 s early, and the whole GIF lasts 7.94 s against PowerPoint's 8.58 s. Reason not found yet (PowerPoint
+  seems to give the GIF's animations more time than the video's).
 - **Alle anordnen, Überlappend:** PowerPoint arranges its document windows; RaabePresent keeps its presentations
   in one window (tabs), so the arrangement happens inside it (windows.ts): a frame per presentation (and per Neues
   Fenster) with its name, side by side or offset one behind the other; the active frame holds the working area,
@@ -2139,8 +2151,14 @@ Package 2 of Step 8b (D-073).
   Abstand vom Boden). The Formeffekte menus' "…optionen..." entries open it at their section (they were greyed).
   Round trip "effects pane": PowerPoint reads what the pane wrote (shadow 90 degrees 6 pt, glow 10 pt, soft edges
   5 pt, Kreis bevel 8 pt, X rotation 30 degrees). COM's RotationX counts the other way (RotationX 30 writes lon
-  19800000, measured); the pane writes the value as entered into lon. The exact labels and the sign PowerPoint's
-  own pane shows for X-Drehung are to be recorded in a run when the owner is away (the pane needs the UI).
+  19800000, measured); the pane writes the value as entered into lon. PowerPoint's own pane, recorded through UI
+  Automation (probe_powerpoint_8b_ui.py effects), shows 330° for that shape, so the pane and lon agree with ours.
+  The recording also gave the pane's parts, now built as PowerPoint's: each of Schatten, Spiegelung, Leuchten,
+  Weiche Kanten and 3D-Drehung begins with a **Voreinstellungen** list (the Formeffekte menu's presets, "Ohne" /
+  "Keine" first, Benutzerdefiniert when the shape's effect is none of them) instead of our check box; 3D-Format
+  groups Material and Beleuchtung under their own headings and ends with **Zurücksetzen** (no 3-D format left, a
+  rotation stays); 3D-Drehung has buttons beside each angle (Links/Rechts, Nach oben/Nach unten, Uhrzeigersinn/
+  Gegen Uhrzeigersinn, 10 degrees each; which way PowerPoint's turn was not measured) and Zurücksetzen.
 - **Zellenabschrägung drawn:** a cell's a:cell3D bevel as a light edge at the top left and a shade at the bottom
   right over the bevel's width (inset profiles the other way round). Not yet measured against PowerPoint.
 

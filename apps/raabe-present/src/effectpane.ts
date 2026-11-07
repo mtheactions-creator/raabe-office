@@ -6,6 +6,8 @@
 
 import { PptxDom } from "@raabe/ooxml";
 import type { PaneControl, PaneSection, PaneTab } from "@raabe/shell";
+import { GLOWS, REFLECTIONS, ROTATIONS_3D, SHADOWS, SOFT_EDGES, type PicturePreset } from "./effect-presets";
+import { applyPart, type Part } from "./shapefx";
 
 const { kid, kids, make } = PptxDom;
 const PT = 12700;
@@ -52,19 +54,37 @@ const RIGS: [string, string][] = [["threePt", "Drei Punkte"], ["balanced", "Ausg
 const BEVELS: [string, string][] = [["circle", "Kreis"], ["relaxedInset", "Leicht eingesetzt"], ["cross", "Kreuz"], ["coolSlant", "Kühle Neigung"], ["angle", "Winkel"], ["softRound", "Weiche Rundung"],
   ["convex", "Konvex"], ["slope", "Schräge"], ["divot", "Kerbe"], ["riblet", "Rippe"], ["hardEdge", "Harte Kante"], ["artDeco", "Art déco"]];
 
+/** An element's XML without namespace declarations, to compare an effect with a preset's. */
+const plain = (el: Element): string => new XMLSerializer().serializeToString(el).replace(/ xmlns(:\w+)?="[^"]*"/g, "");
+
+/** The preset's element of one kind (outerShdw, reflection ...), parsed. */
+function presetEl(p: PicturePreset, tag: string): Element | undefined {
+  const doc = new DOMParser().parseFromString(`<w xmlns:a="${PptxDom.NS_A}">${p.xml}</w>`, "application/xml");
+  return doc.getElementsByTagNameNS(PptxDom.NS_A, tag)[0];
+}
+
 /** The Effekte tab for the pane: `spPr` gives the first selected shape's, `edit` changes every selected one. */
 export function effectsTab(spPr: () => Element | undefined, edit: Edit): PaneTab {
   const eff = (name: string) => { const s = spPr(); const l = s ? kid(s, "effectLst") : undefined; return l ? kid(l, name) : undefined; };
   const withEffect = (name: string, fn: (e: Element) => void, label: string, attrs?: Record<string, string>) =>
     edit((sp) => fn(ensure(ensure(sp, "effectLst", SPPR_ORDER), name, EFFECT_ORDER, attrs)), label);
   const remove = (name: string, label: string) => edit((sp) => { const l = kid(sp, "effectLst"); kid(l, name)?.remove(); }, label);
+  /** Voreinstellungen (PowerPoint's list at the top of each section, D-076): the menu's presets, the first one "none". */
+  const presets = (list: readonly (PicturePreset & { id: string })[], tag: string, part: Part, label: string, el: Element | undefined): PaneControl => {
+    const cur = el ? plain(el) : "";
+    const hit = el ? list.slice(1).find((p) => { const x = presetEl(p, tag); return !!x && plain(x) === cur; }) : undefined;
+    const options = list.map((p, i) => ({ value: i ? p.id : "", label: p.label }));
+    if (el && !hit) options.push({ value: "custom", label: "Benutzerdefiniert" });
+    return { type: "select", label: "Voreinstellungen", options, value: () => (el ? (hit?.id ?? "custom") : ""),
+      set: (v) => { if (v === "custom") return; edit((sp) => applyPart(sp, part, list.find((p) => p.id === v && v) ?? null), label); } };
+  };
 
   const shadow: PaneSection = { title: "Schatten", open: false, controls: () => {
     const s = eff("outerShdw");
     const c = colorOf(s);
     const set = (fn: (e: Element) => void) => withEffect("outerShdw", (e) => { if (!kids(e).length) setColor(e, "#000000", 0.6); fn(e); }, "Schatten", { blurRad: "50800", dist: "38100", dir: "2700000", algn: "tl", rotWithShape: "0" });
     return [
-      { type: "check", label: "Schatten", value: () => !!s, set: (on) => (on ? set(() => {}) : remove("outerShdw", "Schatten")) },
+      presets(SHADOWS, "outerShdw", "shadow", "Schatten", s ?? eff("innerShdw") ?? eff("prstShdw")),
       { type: "color", label: "Farbe", value: () => c.hex, set: (hex) => set((e) => setColor(e, hex, colorOf(e).alpha)), disabled: () => !s },
       { type: "number", label: "Transparenz", unit: " %", min: 0, max: 100, slider: true, value: () => Math.round(c.alpha * 100), set: (v) => set((e) => setColor(e, colorOf(e).hex, v / 100)), disabled: () => !s },
       { type: "number", label: "Größe", unit: " %", min: 1, max: 200, value: () => Math.round(num(s, "sx", 100000) / 1000), set: (v) => set((e) => { e.setAttribute("sx", String(v * 1000)); e.setAttribute("sy", String(v * 1000)); }), disabled: () => !s },
@@ -78,7 +98,7 @@ export function effectsTab(spPr: () => Element | undefined, edit: Edit): PaneTab
     const r = eff("reflection");
     const set = (fn: (e: Element) => void) => withEffect("reflection", fn, "Spiegelung", { blurRad: "6350", stA: "50000", endA: "300", endPos: "55000", dir: "5400000", sy: "-100000", algn: "bl", rotWithShape: "0" });
     return [
-      { type: "check", label: "Spiegelung", value: () => !!r, set: (on) => (on ? set(() => {}) : remove("reflection", "Spiegelung")) },
+      presets(REFLECTIONS, "reflection", "reflection", "Spiegelung", r),
       { type: "number", label: "Transparenz", unit: " %", min: 0, max: 100, slider: true, value: () => Math.round(100 - num(r, "stA", 100000) / 1000), set: (v) => set((e) => e.setAttribute("stA", String(Math.round((100 - v) * 1000)))), disabled: () => !r },
       { type: "number", label: "Größe", unit: " %", min: 1, max: 100, slider: true, value: () => Math.round(num(r, "endPos", 100000) / 1000), set: (v) => set((e) => e.setAttribute("endPos", String(v * 1000))), disabled: () => !r },
       { type: "number", label: "Weichzeichnen", unit: " Pt.", min: 0, max: 100, step: 0.5, decimals: 1, value: () => num(r, "blurRad") / PT, set: (v) => set((e) => e.setAttribute("blurRad", String(Math.round(v * PT)))), disabled: () => !r },
@@ -91,7 +111,7 @@ export function effectsTab(spPr: () => Element | undefined, edit: Edit): PaneTab
     const c = colorOf(g);
     const set = (fn: (e: Element) => void) => withEffect("glow", (e) => { if (!kids(e).length) setColor(e, "#4472C4", 0.6); fn(e); }, "Leuchten", { rad: "63500" });
     return [
-      { type: "check", label: "Leuchten", value: () => !!g, set: (on) => (on ? set(() => {}) : remove("glow", "Leuchten")) },
+      presets(GLOWS, "glow", "glow", "Leuchten", g),
       { type: "color", label: "Farbe", value: () => c.hex, set: (hex) => set((e) => setColor(e, hex, colorOf(e).alpha)), disabled: () => !g },
       { type: "number", label: "Größe", unit: " Pt.", min: 0, max: 150, step: 0.5, decimals: 1, value: () => num(g, "rad") / PT, set: (v) => set((e) => e.setAttribute("rad", String(Math.round(v * PT)))), disabled: () => !g },
       { type: "number", label: "Transparenz", unit: " %", min: 0, max: 100, slider: true, value: () => Math.round(c.alpha * 100), set: (v) => set((e) => setColor(e, colorOf(e).hex, v / 100)), disabled: () => !g },
@@ -100,7 +120,8 @@ export function effectsTab(spPr: () => Element | undefined, edit: Edit): PaneTab
 
   const soft: PaneSection = { title: "Weiche Kanten", open: false, controls: () => {
     const s = eff("softEdge");
-    return [{ type: "number", label: "Größe", unit: " Pt.", min: 0, max: 100, step: 0.5, decimals: 1, value: () => num(s, "rad") / PT,
+    return [presets(SOFT_EDGES, "softEdge", "softEdge", "Weiche Kanten", s),
+      { type: "number", label: "Größe", unit: " Pt.", min: 0, max: 100, step: 0.5, decimals: 1, value: () => num(s, "rad") / PT,
       set: (v) => (v > 0 ? withEffect("softEdge", (e) => e.setAttribute("rad", String(Math.round(v * PT))), "Weiche Kanten", { rad: "0" }) : remove("softEdge", "Weiche Kanten")) }];
   } };
 
@@ -137,11 +158,20 @@ export function effectsTab(spPr: () => Element | undefined, edit: Edit): PaneTab
       { type: "heading", label: "Kontur" },
       { type: "color", label: "Farbe", value: () => clr("contourClr"), set: (hex) => with3d((e) => setColor(ensure(e, "contourClr", SP3D_ORDER), hex, 0), "3D-Format") },
       { type: "number", label: "Größe", unit: " Pt.", min: 0, max: 1584, step: 0.5, decimals: 1, value: () => num(s, "contourW") / PT, set: (v) => with3d((e) => e.setAttribute("contourW", String(Math.round(v * PT))), "3D-Format") },
+      { type: "heading", label: "Material" },
       { type: "select", label: "Material", options: MATERIALS.map(([value, label]) => ({ value, label })), value: () => s?.getAttribute("prstMaterial") ?? "warmMatte", set: (v) => with3d((e) => e.setAttribute("prstMaterial", v), "3D-Format") },
+      { type: "heading", label: "Beleuchtung" },
       { type: "select", label: "Beleuchtung", options: RIGS.map(([value, label]) => ({ value, label })), value: () => lr?.getAttribute("rig") ?? "threePt",
         set: (v) => with3d((e) => { const l = kid(kid(e.parentElement!, "scene3d"), "lightRig"); l?.setAttribute("rig", v); }, "3D-Format") },
       { type: "number", label: "Winkel", unit: "°", min: 0, max: 359.9, value: () => Math.round(num(lr ? kid(lr, "rot") : undefined, "rev") / ANG),
         set: (v) => with3d((e) => { const l = kid(kid(e.parentElement!, "scene3d"), "lightRig"); if (!l) return; let r = kid(l, "rot"); if (!r) { r = make(l.ownerDocument, "a:rot", { lat: "0", lon: "0", rev: "0" }); l.append(r); } r.setAttribute("rev", String(Math.round(v * ANG))); }, "3D-Format") },
+      // Zurücksetzen: no 3-D format left (sp3d gone); a camera rotation (3D-Drehung) stays, the light goes back to its default.
+      { type: "button", label: "Zurücksetzen", disabled: () => !s, run: () => edit((sp) => {
+        kid(sp, "sp3d")?.remove();
+        const sc = kid(sp, "scene3d"), cam = sc ? kid(sc, "camera") : undefined;
+        if (sc && cam?.getAttribute("prst") === "orthographicFront" && !kid(cam, "rot")) sc.remove();
+        else if (sc) { kid(sc, "lightRig")?.remove(); sc.append(make(sp.ownerDocument, "a:lightRig", { rig: "threePt", dir: "t" })); }
+      }, "3D-Format") },
     ];
   } };
 
@@ -158,14 +188,25 @@ export function effectsTab(spPr: () => Element | undefined, edit: Edit): PaneTab
       r.setAttribute(attr, String(Math.round((((v % 360) + 360) % 360) * ANG)));
     }, "3D-Drehung");
     const persp = !!cam && /perspective/i.test(cam.getAttribute("prst") ?? "");
+    // The buttons beside each angle turn it in steps of 10 degrees.
+    const nudge = (attr: "lon" | "lat" | "rev", d: number, a: string, b: string): PaneControl => ({ type: "row", items: [
+      { type: "button", label: a, run: () => setRot(attr, num(rot, attr) / ANG + d) },
+      { type: "button", label: b, run: () => setRot(attr, num(rot, attr) / ANG - d) }] });
+    const hasRot = !!rot && ["lon", "lat", "rev"].some((x) => num(rot, x) !== 0);
     return [
+      presets(ROTATIONS_3D, "camera", "rotation", "3D-Drehung", cam && (hasRot || cam.getAttribute("prst") !== "orthographicFront") ? cam : undefined),
       { type: "number", label: "X-Drehung", unit: "°", min: 0, max: 359.9, step: 1, value: () => num(rot, "lon") / ANG, set: (v) => setRot("lon", v) },
+      nudge("lon", 10, "Links", "Rechts"),
       { type: "number", label: "Y-Drehung", unit: "°", min: 0, max: 359.9, step: 1, value: () => num(rot, "lat") / ANG, set: (v) => setRot("lat", v) },
+      nudge("lat", 10, "Nach oben", "Nach unten"),
       { type: "number", label: "Z-Drehung", unit: "°", min: 0, max: 359.9, step: 1, value: () => num(rot, "rev") / ANG, set: (v) => setRot("rev", v) },
+      nudge("rev", 10, "Uhrzeigersinn", "Gegen Uhrzeigersinn"),
       { type: "number", label: "Perspektive", unit: "°", min: 0.1, max: 120, step: 1, value: () => (persp ? num(cam, "fov", 2700000) / ANG : null),
         set: (v) => edit((sp) => kid(kid(sp, "scene3d"), "camera")?.setAttribute("fov", String(Math.round(v * ANG))), "3D-Drehung"), disabled: () => !persp },
       { type: "number", label: "Abstand vom Boden", unit: " Pt.", min: -4000, max: 4000, step: 0.5, decimals: 1, value: () => num(sp3d(), "z") / PT,
         set: (v) => with3d((e) => (v ? e.setAttribute("z", String(Math.round(v * PT))) : e.removeAttribute("z")), "3D-Drehung") },
+      // Zurücksetzen: no rotation (the camera straight from the front), as the menu's "Keine Drehung".
+      { type: "button", label: "Zurücksetzen", disabled: () => !cam, run: () => edit((sp) => applyPart(sp, "rotation", null), "3D-Drehung") },
     ];
   } };
 

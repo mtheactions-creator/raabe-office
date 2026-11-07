@@ -57,6 +57,24 @@ def compare(ppt: list, ours: list, tol: float = 0.2) -> dict:
     return {"matched": f"{ok}/{len(found)}", "states": found}
 
 
+def gif_rows(im: Image.Image) -> tuple[list, int]:
+    """A GIF's frames named by the deck's colours (as the video's), with their start times in ms."""
+    W, H = im.size
+    def name(c):
+        r, g, b = c[:3]
+        return "R" if r > 200 and g < 80 and b < 80 else "G" if r < 80 and g > 130 and b < 100 else "B" if r < 90 and b > 180 else "Y" if r > 200 and g > 180 and b < 90 else "M" if r > 190 and g < 90 and b > 160 else "k" if r < 40 and g < 40 and b < 40 else "w" if r > 230 and g > 230 and b > 230 else "?"
+    t, rows, last = 0, [], ""
+    for i in range(im.n_frames):
+        im.seek(i)
+        f = im.convert("RGB")
+        s = "".join(name(f.getpixel((int(x * W), int(y * H)))) for x, y in ((0.02, 0.03), (225 / 960, 250 / 540), (625 / 960, 250 / 540), (450 / 960, 250 / 540)))
+        if s != last:
+            rows.append((t, s))
+            last = s
+        t += im.info.get("duration", 0)
+    return rows, t
+
+
 def main() -> None:
     CAP.mkdir(parents=True, exist_ok=True)
     for f in SRC.glob("*"):
@@ -74,7 +92,7 @@ def main() -> None:
             out[name] = {"powerpoint": {k: ppt[k] for k in ("width", "height", "duration")}, "ours": {k: ours[k] for k in ("width", "height", "duration")},
                          "compare": compare(ppt["rows"], ours["rows"]), "powerpoint_rows": ppt["rows"], "our_rows": ours["rows"]}
         b64 = page.js("""(async () => { const v = await import('/src/video.ts');
-            const b = await v.makeGif(window.__present.app, { height: 240, fps: 15, secs: 1, useTimings: false });
+            const b = await v.makeGif(window.__present.app, { height: 480, fps: 16, secs: 1, useTimings: true, roundWidth: true });
             let s = ''; for (let i = 0; i < b.length; i += 0x8000) s += String.fromCharCode(...b.subarray(i, i + 0x8000)); return btoa(s); })()""")
         gif = base64.b64decode(b64)
         (CAP / "ours.gif").write_bytes(gif)
@@ -84,11 +102,21 @@ def main() -> None:
             im.seek(i)
             delays.append(im.info.get("duration"))
         out["gif"] = {"size": list(im.size), "frames": im.n_frames, "loop": im.info.get("loop"), "total_ms": sum(d or 0 for d in delays), "bytes": len(gif)}
+        # PowerPoint's own GIF of the deck (made through its page, probe_powerpoint_8b_ui.py export), if there.
+        theirs = CAP / "powerpoint-ui.gif"
+        if theirs.exists():
+            ppt_rows, ppt_total = gif_rows(Image.open(theirs))
+            our_rows, our_total = gif_rows(Image.open(io.BytesIO(gif)))
+            out["gif_vs_powerpoint"] = {"powerpoint_size": list(Image.open(theirs).size), "powerpoint_total_ms": ppt_total, "our_total_ms": our_total,
+                                        "compare": compare([(t / 1000, s) for t, s in ppt_rows], [(t / 1000, s) for t, s in our_rows], tol=0.25)}
     finally:
         page.close()
     p = HERE / "results" / f"{out['date']}-present-video.json"
     p.write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
     print(json.dumps({k: (v["compare"]["matched"] if isinstance(v, dict) and "compare" in v else v) for k, v in out.items()}))
+    if "gif_vs_powerpoint" in out:
+        g = out["gif_vs_powerpoint"]
+        print("gif", g["powerpoint_size"], g["powerpoint_total_ms"], g["our_total_ms"], g["compare"]["matched"])
 
 
 if __name__ == "__main__":

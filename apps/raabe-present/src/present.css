@@ -139,21 +139,26 @@ body[data-view="sorter"] .center { display: none; }
 /* Referentenansicht (D-074): PowerPoint's dark layout; the current slide is placed by the show (presenterArea). */
 .presenter-ui { position: absolute; inset: 0; pointer-events: none; color: #eee; font: 14px var(--font); }
 .presenter-ui button { pointer-events: auto; }
-.presenter-bar { position: absolute; left: 0; right: 0; top: 0; height: 36px; display: flex; align-items: center; gap: 4px; padding: 0 12px; background: #2b2b2b; }
+/* Referentenansicht as PowerPoint's (D-074, measured): a bar of capitals, the timer and clock above the slide,
+   the slide 65 % wide with its tools below it on the left, the navigation centred at the bottom, the next slide
+   and the notes in the right column. */
+.presenter-bar { position: absolute; left: 0; right: 0; top: 0; height: 4%; min-height: 32px; display: flex; align-items: center; gap: 18px; padding: 0 1.5%; border-bottom: 1px solid #333; }
 .presenter-btn { background: none; border: 1px solid transparent; color: #eee; font: 18px var(--font); min-width: 34px; height: 30px; padding: 0 6px; border-radius: 2px; cursor: default; }
-.presenter-btn.text { font-size: 13px; }
+.presenter-btn.text { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .02em; }
 .presenter-btn:hover { background: #444; }
 .presenter-btn.on { background: #555; border-color: #777; }
-.presenter-timer { position: absolute; left: 16px; top: 46px; display: flex; align-items: center; gap: 8px; }
-.presenter-time { font: 26px var(--font); min-width: 110px; text-align: center; }
-.presenter-clock { position: absolute; left: calc(16px + 60%); transform: translateX(-100%); top: 48px; font: 26px var(--font); }
-.presenter-tools { position: absolute; left: 16px; width: 60%; bottom: 64px; display: flex; justify-content: center; gap: 10px; }
-.presenter-tools .presenter-btn { font-size: 20px; width: 40px; height: 36px; border-radius: 50%; border-color: #666; }
-.presenter-next { position: absolute; left: calc(16px + 60% + 24px); right: 16px; top: 92px; display: flex; flex-direction: column; gap: 6px; }
-.presenter-label { font-size: 13px; color: #bbb; }
-.presenter-notes { position: absolute; left: calc(16px + 60% + 24px); right: 16px; top: 330px; bottom: 60px; overflow: auto; font: 20px "Calibri", Carlito, sans-serif; white-space: pre-wrap; pointer-events: auto; }
-.presenter-notes-zoom { position: absolute; left: calc(16px + 60% + 24px); bottom: 18px; display: flex; gap: 6px; }
-.presenter-nav { position: absolute; left: 16px; width: 60%; bottom: 16px; display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 16px; }
+.presenter-timer { position: absolute; left: 16px; top: 5.3%; display: flex; align-items: center; gap: 8px; }
+.presenter-time { font: 15px var(--font); min-width: 60px; }
+.presenter-timer .presenter-btn { font-size: 13px; min-width: 22px; height: 22px; }
+.presenter-clock { position: absolute; left: calc(16px + 65%); transform: translateX(-100%); top: 6.2%; font: 15px var(--font); }
+.presenter-tools { position: absolute; left: 16px; width: 65%; top: 75.2%; display: flex; justify-content: flex-start; gap: 14px; }
+.presenter-tools .presenter-btn { font-size: 22px; width: 42px; height: 42px; border-radius: 50%; border-color: #666; }
+.presenter-next { position: absolute; left: 67.3%; right: 1.9%; top: 6.2%; display: flex; flex-direction: column; gap: 8px; }
+.presenter-label { font-size: 15px; color: #ccc; }
+.presenter-notes { position: absolute; left: 67.3%; right: 1.9%; top: 330px; bottom: 60px; overflow: auto; font: 20px "Calibri", Carlito, sans-serif; white-space: pre-wrap; pointer-events: auto; border-top: 1px solid #444; padding-top: 14px; }
+.presenter-notes-zoom { position: absolute; left: 67.3%; bottom: 18px; display: flex; gap: 6px; }
+.presenter-nav { position: absolute; left: 16px; width: 65%; bottom: 2.2%; display: flex; align-items: center; justify-content: center; gap: 14px; font-size: 18px; }
+.presenter-nav .presenter-btn { border-radius: 50%; border-color: #ccc; width: 40px; height: 40px; }
 
 /* Printing: the slides one per page. */
 #print-root { display: none; }

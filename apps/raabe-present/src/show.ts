@@ -67,6 +67,9 @@ export class SlideShow {
   private screens: ShowScreens | null = null;
   /** Timer of the Referentenansicht: paused time and when it was paused. */
   private pausedAt = 0;
+  /** Folie zoomen: the point (shares of the slide) shown at twice the size, and whether the next click picks it. */
+  private zoom: { fx: number; fy: number } | null = null;
+  private zoomPick = false;
   private notesSize = 20;
   private clock = 0;
 
@@ -148,11 +151,23 @@ export class SlideShow {
     const size = this.app.deck.pptx.slideSize;
     const w = size.cx / EMU_PX, h = size.cy / EMU_PX;
     const fit = (stage: HTMLElement, ink: SVGSVGElement, area: DOMRect) => {
-      const s = Math.min(area.width / w, area.height / h);
-      const left = area.left + (area.width - w * s) / 2, top = area.top + (area.height - h * s) / 2;
-      stage.style.cssText = `left:${left}px;top:${top}px;width:${w}px;height:${h}px;transform:scale(${s});transform-origin:0 0`;
+      const s0 = Math.min(area.width / w, area.height / h);
+      let s = s0;
+      let left = area.left + (area.width - w * s) / 2, top = area.top + (area.height - h * s) / 2;
+      let clip = "";
+      if (this.zoom) {
+        // Folie zoomen (D-074): twice the size, the chosen point in the middle of the slide's place.
+        const box = { l: left, t: top, w: w * s0, h: h * s0 };
+        s = s0 * 2;
+        left = Math.min(box.l, Math.max(box.l + box.w - w * s, box.l + box.w / 2 - this.zoom.fx * w * s));
+        top = Math.min(box.t, Math.max(box.t + box.h - h * s, box.t + box.h / 2 - this.zoom.fy * h * s));
+        const x0 = (box.l - left) / s, y0 = (box.t - top) / s, x1 = (box.l + box.w - left) / s, y1 = (box.t + box.h - top) / s;
+        clip = `clip-path:inset(${y0}px ${w - x1}px ${h - y1}px ${x0}px);`;
+        ink.style.clipPath = "";
+      }
+      stage.style.cssText = `left:${left}px;top:${top}px;width:${w}px;height:${h}px;transform:scale(${s});transform-origin:0 0;${clip}`;
       ink.setAttribute("viewBox", `0 0 ${w} ${h}`);
-      ink.style.cssText = `left:${left}px;top:${top}px;width:${w * s}px;height:${h * s}px`;
+      ink.style.cssText = `left:${left}px;top:${top}px;width:${w * s}px;height:${h * s}px;${this.zoom ? `clip-path:inset(${Math.max(0, area.top - top)}px ${Math.max(0, left + w * s - area.right)}px ${Math.max(0, top + h * s - area.bottom)}px ${Math.max(0, area.left - left)}px);` : ""}`;
     };
     if (this.mirror && this.proot) {
       fit(this.stageEl, this.ink, this.root.getBoundingClientRect());
@@ -165,7 +180,9 @@ export class SlideShow {
   /** The Referentenansicht's current slide: left, below the timer, above its tools (PowerPoint's layout). */
   private presenterArea(root: HTMLElement): DOMRect {
     const r = root.getBoundingClientRect();
-    return new DOMRect(r.left + 16, r.top + 92, r.width * 0.6, r.height - 92 - 110);
+    // The slide sits at the top of its place (its tools follow right below it).
+    const sz = this.app.deck.pptx.slideSize, w = r.width * 0.65;
+    return new DOMRect(r.left + 16, r.top + r.height * 0.084, w, Math.min(r.height * 0.66, (w * sz.cy) / sz.cx));
   }
 
   /** Every drawing of a shape: the audience's and the Referentenansicht's copy. */
@@ -499,6 +516,16 @@ export class SlideShow {
       return;
     }
     if (this.tool === "laser") return;
+    // Folie zoomen: the click picks the point; a click on the zoomed slide goes back.
+    if (this.zoomPick || this.zoom) {
+      if (this.zoom) this.zoom = null;
+      else { const r = ink.getBoundingClientRect(); this.zoom = { fx: (e.clientX - r.left) / r.width, fy: (e.clientY - r.top) / r.height }; }
+      this.zoomPick = false;
+      this.root.style.cursor = "";
+      this.layout();
+      this.renderPresenter();
+      return;
+    }
     // A trigger shape plays its next step instead of going on.
     const shp = (e.target as HTMLElement).closest?.(".shp[data-id]") as HTMLElement | null;
     const trig = shp ? this.triggers.find((t) => t.trigger === Number(shp.dataset.id) && t.at < t.steps.length) : undefined;
@@ -661,7 +688,10 @@ export class SlideShow {
     display.classList.add("text");
     const endBtn = btn("Bildschirmpräsentation beenden", "Bildschirmpräsentation beenden", () => this.end());
     endBtn.classList.add("text");
-    bar.append(display, endBtn);
+    // Taskleiste anzeigen: the main window leaves full screen (maximised), so Windows' taskbar shows.
+    const taskbar = btn("Taskleiste anzeigen", "Taskleiste anzeigen", () => void import("./screens").then((m) => m.setMainFullscreen(false)).then(() => this.layout()));
+    taskbar.classList.add("text");
+    bar.append(taskbar, display, endBtn);
     // Timer and clock.
     const timer = el("div", "presenter-timer");
     timer.append(
@@ -682,6 +712,7 @@ export class SlideShow {
         { label: "Alle Freihandanmerkungen auf der Folie löschen", run: () => this.clearInk() },
       ], at(ev)), this.tool !== "arrow"),
       btn("Alle Folien anzeigen", "\u25A6", () => this.allSlides()),
+      btn("Folie zoomen", "\u2315", () => { if (this.zoom) { this.zoom = null; this.layout(); } else { this.zoomPick = !this.zoomPick; (this.proot ?? this.root).style.cursor = this.zoomPick ? "zoom-in" : ""; } this.renderPresenter(); }, this.zoomPick || !!this.zoom),
       btn("Bildschirmpräsentation schwarz schalten oder nicht schwarz schalten", "\u25A0", () => this.blankScreen("black"), !this.blank.hidden),
       btn("Weitere Optionen für Bildschirmpräsentationen", "\u2026", (ev) => showMenu(this.app.commands, [
         { label: "Zuletzt angesehen", run: () => { const last = this.history[this.history.length - 2]; if (last !== undefined) this.goto(last); } }, "-",
@@ -690,6 +721,7 @@ export class SlideShow {
         { label: "Präsentation beenden", run: () => this.end() },
       ], at(ev))),
     );
+    tools.style.top = `${this.presenterArea(host).bottom - host.getBoundingClientRect().top + 14}px`;
     const nav = el("div", "presenter-nav");
     const shown = this.only ? this.only.indexOf(this.index) + 1 : this.index + 1;
     const total = this.only ? this.only.length : this.count;
@@ -698,7 +730,7 @@ export class SlideShow {
     const nextBox = el("div", "presenter-next");
     const size = this.app.deck.pptx.slideSize;
     const hostRect = host.getBoundingClientRect();
-    const tw = Math.max(200, Math.min(hostRect.width * 0.36 - 24, 520)), s = tw / (size.cx / EMU_PX);
+    const tw = Math.max(200, hostRect.width * 0.308), s = tw / (size.cx / EMU_PX);
     const ni = this.nextIndex();
     nextBox.append(el("div", "presenter-label", ni !== null ? (this.stepIdx < this.steps.length ? "Nächste Animation" : "Nächste Folie") : "Ende der Bildschirmpräsentation"));
     if (ni !== null) {
@@ -712,7 +744,7 @@ export class SlideShow {
     // The notes, with their text size.
     const notes = el("div", "presenter-notes", this.app.deck.notesText(this.app.deck.slides[this.index].path) || "Keine Notizen.");
     notes.style.fontSize = `${this.notesSize}px`;
-    notes.style.top = `${92 + (ni !== null ? (size.cy / EMU_PX) * s + 30 : 30)}px`;
+    notes.style.top = `${hostRect.height * 0.062 + 30 + (ni !== null ? (size.cy / EMU_PX) * s + 16 : 0)}px`;
     const zoom = el("div", "presenter-notes-zoom");
     zoom.append(btn("Text vergrößern", "A\u207A", () => { this.notesSize = Math.min(72, this.notesSize + 4); this.renderPresenter(); }),
       btn("Text verkleinern", "A\u207B", () => { this.notesSize = Math.max(8, this.notesSize - 4); this.renderPresenter(); }));
