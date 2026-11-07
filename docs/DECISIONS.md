@@ -2002,7 +2002,7 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   grabs the handle at 45 device pixels.
 - **Drags start at the first movement (measured):** PowerPoint's moves and handle drags in the catalogue land
   one of the harness's 20 steps short (56.8 of 60 pt, 38 of 40): it measures a drag from the pointer's first
-  movement after the button went down, not from the button. Ours does the same for moves and the rotation
-  handle (size handles do not lose the step in PowerPoint); with a hand on the mouse the first movement is a
-  pixel or two, so nobody feels it. Catalogue 344 -> 349 of 377; the ellipse drags are now 2.3 pt short of
-  PowerPoint where they were 3.4 pt beyond (the WebView reports the first movement a little later).
+  movement after the button went down, not from the button, when that button press also selects the shape; a
+  frame selected already and the size handles move by the whole way (measured, both). Ours does the same, and
+  the rotation handle turns from the first movement too; with a hand on the mouse the first movement is a
+  pixel or two, so nobody feels it. Catalogue 344 -> 355 of 377.

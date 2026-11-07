@@ -1018,10 +1018,10 @@ export class SlideEditor {
   private dragMove(_e: MouseEvent, started: boolean, first?: MouseEvent, now?: MouseEvent): void {
     const views = this.selectedViews;
     if (!views.length) return;
-    // PowerPoint measures a move from the pointer's first movement, not from where the button went down
-    // (measured: the catalogue's drags of 20 steps land one step short in PowerPoint). A drag recognised
-    // after the threshold (started) counts from the first move before it, and follows the pointer at once.
-    let start: { x: number; y: number } | null = started && first ? this.toSlide(first.clientX, first.clientY) : null;
+    // A shape that the button selects moves from the pointer's first movement, not from where the button went
+    // down (measured: those catalogue drags of 20 steps land one step short in PowerPoint); a frame that was
+    // selected already (dragged by its edge) moves by the whole way (measured too).
+    let start: { x: number; y: number } | null = started && first ? this.toSlide(first.clientX, first.clientY) : this.toSlide(_e.clientX, _e.clientY);
     const box = union(views);
     const skip = new Set(views.map((v) => v.id));
     let dx = 0, dy = 0, copy = false;
