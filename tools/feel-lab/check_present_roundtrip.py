@@ -79,6 +79,8 @@ SCENARIOS: dict[str, str] = {
         a.editor.enterText(id, undefined, {r:0,c:0}); const m = await import('/src/contextcmds.ts'); m.setShading(a, 'C00000'); a.editor.endText();""",
         "table effects": """p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); a.setCurrent(0); a.insertTable(2, 2); const id = a.deck.view(a.slidePath()).shapes.find(s => s.frame === 'table').id;
         a.editor.select([id]); const m = a.host2().tableEffects(); m[1].submenu()[1].run(); a.editor.enterText(id, undefined, {r:0,c:0}); m[0].submenu()[1].run(); a.editor.endText();""",
+        "sketch": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]},{kind:'ellipse',box:[400,100,150,150]},{kind:'rect',box:[600,300,200,100]}]}); const a = p.app;
+        const sk = a.outlineExtra().find(x => x.label === 'Skizziert').submenu(); [[2,1],[3,2],[4,3]].forEach(([id,i]) => { a.editor.select([id]); sk[i].run(); });""",
         "table pen": """p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); a.setCurrent(0); a.insertTable(2, 2); const id = a.deck.view(a.slidePath()).shapes.find(s => s.frame === 'table').id;
         a.tablePen = { dash: 'sysDash', w: 38100, color: 'C00000' }; a.penCellLine(id, 0, 0, 'r'); await new Promise(r => setTimeout(r, 300));""",
         "action": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]}]}); const a = p.app; a.newSlide(); a.setCurrent(0); a.editor.select([2]); const doc = a.deck.pptx.doc(a.slidePath()); const nv = doc.getElementsByTagNameNS('http://schemas.openxmlformats.org/presentationml/2006/main', 'cNvPr')[1]; a.editor.edit('Aktion', () => { const hl = doc.createElementNS('http://schemas.openxmlformats.org/drawingml/2006/main', 'a:hlinkClick'); hl.setAttributeNS('http://schemas.openxmlformats.org/officeDocument/2006/relationships', 'r:id', ''); hl.setAttribute('action', 'ppaction://hlinkshowjump?jump=nextslide'); nv.insertBefore(hl, nv.firstChild); });""",
@@ -314,6 +316,9 @@ def check(name: str, r: dict, ours: dict) -> list[str]:
         # The table's shadow visible (msoTrue -1); a cell's ThreeD is not readable through COM (it raises),
         # so the cell bevel is checked by PowerPoint opening the file with it.
         want(t.get("tshadow") == -1, f"shadow {t.get('tshadow')}")
+    elif name == "sketch":
+        # COM has no property for sketched lines: PowerPoint opens the file with all three and keeps the shapes.
+        want(len(sh) == 3, f"shapes {len(sh)}")
     elif name == "table pen":
         t = next((x for x in sh if x.get("table")), {})
         # 3 pt, msoLineDash 4 (sysDash) or another dash, red C00000 (BGR 0x0000C0 = 192).

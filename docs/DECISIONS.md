@@ -2019,3 +2019,8 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
 - **Textfüllung's own entries:** Keine Füllung (a:noFill on the runs), Pipette, Farbverlauf with the 13 light and
   13 dark directions of Fülleffekt over the text colour. A text gradient is drawn in its first colour (our
   renderer draws text in one colour); PowerPoint shows the gradient.
+- **Formkontur > Skizziert (measured):** probe_powerpoint_sketch.py recorded PowerPoint's format (keytips in a
+  PowerPoint of our own; Stärke and Skizziert share the keytip S): an a:ln extension with
+  ask:lineSketchStyleProps, a random seed, a copy of the geometry and the type (lineSketchCurved, Freehand,
+  Scribble). Ours writes the same (Keine removes it) for shapes, lines and pictures, and draws the shape through
+  a displacement of our own, stronger from Gekrümmt to Skizze; PowerPoint's own sketch drawing is not documented.

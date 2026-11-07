@@ -43,6 +43,7 @@ import { contextHost, implementContext } from "./contextcmds";
 import { Sorter } from "./sorter";
 import { slidePng, zoomMenu } from "./zoom";
 import { MORE_COLORS } from "./colors";
+import { sketchMenu } from "./sketch";
 import { customShowMenu } from "./custshow";
 import { endFreistellen, freistellenActive, freistellenTab, markTool } from "./freistellen";
 import { fileTypeSection } from "./exportimg";
@@ -924,6 +925,7 @@ export class PresentApp implements EditorHost, PanelHost {
     return [{ label: "Keine Kontur", run: () => this.setLine(null) },
       this.pipette((hex) => this.setLine(hex)),
       { label: "Stärke", submenu: () => LINE_WEIGHTS.map(([label, w]) => ({ label, run: () => this.setLine(undefined, w) })) },
+      { label: "Skizziert", submenu: () => sketchMenu(this) },
       { label: "Striche", submenu: () => LINE_DASHES.map(([label, d]) => ({ label, run: () => this.setLine(undefined, undefined, d) })) },
       { label: "Pfeile", submenu: () => this.arrowEntries() }];
   }

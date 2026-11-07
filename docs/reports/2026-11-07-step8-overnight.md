@@ -127,7 +127,7 @@ D-071 and D-072 hold them with reasons. In short:
 - PowerPoint's own transition sounds and textures (Microsoft content); its designs with artwork (D-070).
 - Second-monitor Referentenansicht (this PC has one screen; one screen works), Alle anordnen, Video and
   animated GIF export, Aufzeichnen (out of scope by D-070), running macros (never).
-- Formatting notes in RaabePresent itself; Formkontur > Skizziert; the Pipette's live preview.
+- Formatting notes in RaabePresent itself; the Pipette's live preview; drawing text gradients and cell bevels.
 
 ## How it was run
 Real input only under `%TEMP%\raabe-real-input.lock`; PowerPoint started by our probes only when none was

@@ -3,6 +3,7 @@
 // (shared with RaabeWrite and RaabeCalc), pictures with their crop and frame, tables, charts and
 // groups. Sizes are CSS pixels at 96 dpi (1 px = 9525 EMU); zoom scales the whole slide.
 
+import { NS_ASK, drawSketch } from "../sketch";
 import { cameraTransform, shapeElement, shapeTextRect, pictureElement, type PictureFormat } from "@raabe/text-engine";
 import type { Pptx, ShapeView, SlideView } from "@raabe/ooxml";
 import { EMU_PX, renderText, type TextOptions } from "./text";
@@ -134,6 +135,11 @@ export function renderShape(s: ShapeView, o: RenderOptions, map: Map<number, HTM
     if (s.flipH !== s.flipV) t.style.transform = "scaleX(-1)";
     if (s.text.body.rot) t.style.transform = `${t.style.transform} rotate(${s.text.body.rot}deg)`;
     box.append(t);
+  }
+  // Formkontur > Skizziert: the shape drawn with a sketched outline.
+  if (s.kind === "sp" || s.kind === "cxnSp" || s.kind === "pic") {
+    const t = s.el.getElementsByTagNameNS(NS_ASK, "type")[0]?.firstElementChild?.localName;
+    if (t) drawSketch(box, t, Number(s.el.getElementsByTagNameNS(NS_ASK, "lineSketchStyleProps")[0]?.getAttribute("sd") ?? 1));
   }
   return box;
 }
