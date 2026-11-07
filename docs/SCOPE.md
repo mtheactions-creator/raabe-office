@@ -130,6 +130,7 @@ The earlier priorities are replaced by that scope; this table says what each par
 | Bildschirmpräsentation: PowerPoint's keys, pen, highlighter, laser, black/white screen, Referentenansicht (one screen), Einrichten | built | Second monitor: open |
 | Kommentare, Links, Kopf- und Fußzeile, Zeichnen (ink as freeform shapes), Video and Audio from files | built | |
 | Galleries as PowerPoint's: Schnellformatvorlagen (77), Tabellenformate (74), Bildformatvorlagen (28), Bild > Farbe and Korrekturen, Textkontur and Formkontur (Stärke, Striche), Formel tab | built | Our reading of each look (D-072) |
+| SmartArt from PowerPoint: drawn and kept; its texts edited in the Textbereich (data model and drawing) | built | creating SmartArt, layouts, styles: not built (D-072) |
 | Equations edited in place with a caret (auto build-up, slots, the Formel tab inserting at the caret) | built | MathEditor shared with RaabeWrite (D-072) |
 | Formeffekte (Voreinstellung, Schatten, Spiegelung, Leuchteffekt, Weiche Kanten, Abschrägung, 3D-Drehung); Texteffekte > Abschrägung, 3D-Drehung, Transformieren | built | Office presets as recorded from Word; text warps not drawn by us (D-072) |
 | Bild > Hintergrund entfernen (automatic; no Freistellen marking), Künstlerische Effekte (22), Farbsättigung, Farbton, Schärfen/Weichzeichnen, written as PowerPoint writes them, galleries of the selected picture | built | Adjustments measured against PowerPoint's pixels; artistic effects our own drawing (D-072) |

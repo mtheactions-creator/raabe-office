@@ -42,6 +42,7 @@ import * as CT from "./contexttabs";
 import { contextHost, implementContext } from "./contextcmds";
 import { Sorter } from "./sorter";
 import { zoomMenu } from "./zoom";
+import { smartArtTab, textPane } from "./smartart";
 import { bgStylesMenu } from "./background";
 import { shapeEffectsMenu } from "./shapefx";
 import { addRecent, loadRecent, loadSettings, removeRecent, saveSettings, setPinned, type Settings } from "./store";
@@ -418,6 +419,8 @@ export class PresentApp implements EditorHost, PanelHost {
     // Pictures, tables and charts: their contextual tab (PowerPoint); shapes and text enter their text.
     if (v.kind === "pic") { this.editor.select([v.id]); this.ribbon.select("pictureFormat"); return true; }
     if (v.kind === "graphicFrame" && v.frame === "chart") { this.editor.select([v.id]); this.ribbon.select("chartDesign"); return true; }
+    // SmartArt: its texts in the Textbereich (D-072).
+    if (v.kind === "graphicFrame" && v.frame === "diagram") { this.editor.select([v.id]); void textPane(this, v.id); return true; }
     if (v.kind === "grpSp") return true;
     return false;
   }
@@ -1613,6 +1616,7 @@ export class PresentApp implements EditorHost, PanelHost {
     if (kinds.has("pic")) tabs.push(this.pictureTab());
     if (kinds.has("table")) tabs.push(this.tableTab(), this.tableLayoutTab());
     if (kinds.has("chart")) tabs.push(this.chartTab(), this.chartFormatTab());
+    if (kinds.has("diagram")) tabs.push(this.cachedTab("smartart", () => smartArtTab(this)));
     if (selectedEquation(this) !== null) tabs.push(this.cachedTab("equation", () => equationTab(this)));
     if (this.masterMode) tabs.unshift(this.masterTab());
     this.ribbon.setContextual(tabs);
@@ -2146,6 +2150,7 @@ export class PresentApp implements EditorHost, PanelHost {
     impl("view.switchWindow", () => {}, () => this.docs.length > 0);
     impl("view.newWindow", () => this.newWindow(), () => this.docs.length > 0);
     impl("edit.replaceFonts", () => void this.replaceFontsDialog(), () => this.docs.length > 0);
+    impl("smartart.textPane", () => { const v = this.editor.selectedViews.find((x) => x.frame === "diagram"); if (v) void textPane(this, v.id); }, () => this.editor.selectedViews.some((x) => x.frame === "diagram"));
     impl("insert.action", () => import("./links").then((m) => m.actionDialog(this)), () => this.editor.sel.length === 1);
     impl("view.ruler", () => { this.editor.showRuler = !this.editor.showRuler; this.editor.fitZoom(); this.editor.render(); this.updateChrome(); }, () => this.view === "normal", () => this.editor.showRuler);
     impl("draw.arrange", () => {});

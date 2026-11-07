@@ -92,6 +92,10 @@ SCENARIOS: dict[str, str] = {
         const v = a.deck.view(a.slidePath()).shapes.find(s => s.kind === 'pic'); a.editor.select([v.id]); await p.run('pic.removeBg'); await new Promise(r => setTimeout(r, 500));""",
     "reuse slides": f"""p.newDoc(); const a = p.app; const r = await fetch('/@fs/{(FIX / "pptx-picture.pptx").as_posix()}'); const bytes = new Uint8Array(await r.arrayBuffer());
         const src = a.deck.pptx.constructor.read(bytes); const m = await import('/src/slideimport.ts'); m.importSlide(a.deck, src, src.slides[0].path, 0); a.setCurrent(1);""",
+    # SmartArt made by PowerPoint (probe_powerpoint_smartart.py, kept in captures/, not committed): its texts edited in the Textbereich.
+    "smartart text": f"""const r = await fetch('/@fs/{(HERE / "captures" / "smartart" / "smartart.pptx").as_posix()}'); p.openBytes('smartart.pptx', new Uint8Array(await r.arrayBuffer())); await new Promise(r => setTimeout(r, 800));
+        const a = p.app; a.setCurrent(1); await new Promise(r => setTimeout(r, 300)); const v = a.deck.view(a.slidePath()).shapes.find(s => s.frame === 'diagram'); a.editor.select([v.id]); await a.commands.run('smartart.textPane'); await new Promise(r => setTimeout(r, 300));
+        const inputs = [...document.querySelectorAll('[role=dialog] input[type=text]')]; inputs[0].value = 'Planen'; inputs[1].value = 'Bauen'; [...document.querySelectorAll('[role=dialog] button')].find(x => x.textContent === 'OK').click(); await new Promise(r => setTimeout(r, 400));""",
     "picture crop": f"""p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); const bin = atob('{PNG}'); const b = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) b[i] = bin.charCodeAt(i); a.insertPictureBytes(b, 'image/png'); await new Promise(r => setTimeout(r, 500));
         const v = a.deck.view(a.slidePath()).shapes.find(s => s.kind === 'pic'); const S = await import('/src/shapeops.ts'); a.editor.edit('Größe', () => S.setXfrm(a.editor.shapeEl(v.id), {{x: 1000000, y: 1000000, w: 3810000, h: 3810000}})); a.editor.select([v.id]); await a['cropToRatio'](16 / 9); a.changeShape('ellipse', true);""",
     "picture effects removed": f"""p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); const bin = atob('{PNG}'); const b = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) b[i] = bin.charCodeAt(i); a.insertPictureBytes(b, 'image/png'); await new Promise(r => setTimeout(r, 500));
@@ -148,6 +152,11 @@ def ppt_shapes(slide) -> list[dict]:
                 d["fillcolor"] = int(s.Fill.ForeColor.ObjectThemeColor)
             except Exception:  # noqa: BLE001
                 pass
+        try:
+            if int(s.HasSmartArt):
+                d["sa"] = [str(s.SmartArt.AllNodes(i).TextFrame2.TextRange.Text) for i in range(1, s.SmartArt.AllNodes.Count + 1)]
+        except Exception:  # noqa: BLE001
+            pass
         if bool(s.HasTable):
             d["table"] = [int(s.Table.Rows.Count), int(s.Table.Columns.Count)]
             t = s.Table
@@ -299,6 +308,10 @@ def check(name: str, r: dict, ours: dict) -> list[str]:
     elif name == "reuse slides":
         s1 = r["slides"][1]["shapes"] if len(r["slides"]) > 1 else []
         want(len(r["slides"]) == 2 and any(x["type"] == 13 for x in s1), f"slides {len(r['slides'])} types {[x['type'] for x in s1]}")
+    elif name == "smartart text":
+        s1 = r["slides"][1]["shapes"] if len(r["slides"]) > 1 else []
+        sa = next((x.get("sa") for x in s1 if x.get("sa")), None)
+        want(sa is not None and sa[:3] == ["Planen", "Bauen", "Punkt 3"], f"smartart {sa}")
     elif name == "picture crop":
         p = next((x for x in sh if x["type"] == 13), None)
         want(p is not None and abs(p["box"][2] / p["box"][3] - 16 / 9) < 0.02 and p.get("auto") == 9, f"picture {p}")
@@ -349,6 +362,8 @@ def main() -> None:
             print(name, out["fixtures"][name]["result"], flush=True)
         # 2. Files RaabePresent made.
         for name, js in SCENARIOS.items():
+            if name == "smartart text" and not (HERE / "captures" / "smartart" / "smartart.pptx").exists():
+                continue
             try:
                 page.js(f"(async () => {{ const p = window.__present; {js} }})()")
                 ours = page.js("window.__present.state()")

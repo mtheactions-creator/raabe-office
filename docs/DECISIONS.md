@@ -1944,3 +1944,8 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   linear field stays for Formel > Linear. Formel > Text types plain text while it is on. The ribbon, menus and
   dialogs keep the equation in editing (a structure goes in at the caret, the caret into its first empty slot).
   Not built: Formeloptionen, Freihandgleichung.
+- **SmartArt from PowerPoint's files, its texts editable:** selecting a SmartArt shows SmartArt-Design with
+  Textbereich (also on a double-click): its points' texts, one line each, indented by level, in our dialog
+  (PowerPoint's is a pane beside the graphic). A change goes into the data model and into PowerPoint's drawing
+  of it (the shape of the node's presentation point, presAssocID), so both show the same; Rückgängig takes it
+  back. Adding or removing shapes, layouts and SmartArt styles stay out (PowerPoint's layout definitions).

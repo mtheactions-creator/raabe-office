@@ -157,6 +157,7 @@ export const COMMANDS: Command[] = [
   cmd("eq.professional", "Professionell", "math-convert"),
   cmd("eq.linear", "Linear", "math-linear"),
   cmd("eq.text", "Text", "math-normal-text"),
+  cmd("smartart.textPane", "Textbereich", "slide-text"),
   cmd("eq.options", "Formeloptionen...", "launcher", { deferred: true }),
   cmd("eq.symbols", "Formelsymbole", "math-symbols"),
   cmd("eq.fraction", "Bruch", "math-fraction"),
