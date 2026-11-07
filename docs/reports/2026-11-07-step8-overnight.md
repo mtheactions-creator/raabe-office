@@ -85,7 +85,8 @@ transition sounds (21), Microsoft textures, chart and SmartArt styles, the Aufze
 - **Two bugs found and fixed after 05:00:** Tabellenentwurf > Schattierung and Fülleffekt/Formkontur on a chart
   did nothing; both now work and a round-trip scenario checks each in PowerPoint.
 - **Exe and installer:** `apps/raabe-present/src-tauri/target/release/raabe-present.exe` and the NSIS
-  installer in `target/release/bundle/nsis/` (built at the end of the run).
+  installer `target/release/bundle/nsis/RaabePresent_0.1.0_x64-setup.exe` (10.1 MB, built 08:00-08:03 from commit
+  a62f33b; the code is that of 76a6c51, on which all numbers were measured).
 
 ## Decisions taken on my own (for the owner to confirm or overturn)
 D-071 and D-072 hold them with reasons. In short:
