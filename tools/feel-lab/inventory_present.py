@@ -20,6 +20,9 @@ HERE = Path(__file__).parent
 def main() -> None:
     page = PresentPage(1600, 1000, 1.0)
     try:
+        # PowerPoint was recorded in its default design's colours (Office: Dunkelblaugrün, Orange …); ours starts in
+        # Office 2013-2022. The same colour set is applied first, so colour entries are named alike (D-072).
+        page.js("(async () => { const m = await import('/src/themesets.gen.ts'); const s = m.COLOR_SETS.find((c) => c.name === 'Office'); __present.app.applyColorSet(s.name, s.colors); })()")
         tabs = page.js("__present.inventory()")
         menus = page.js("__present.contextMenus()")
     finally:

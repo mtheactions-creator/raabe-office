@@ -12,7 +12,7 @@ export { Keytips } from "./keytips";
 export { showDialog, messageBox, type DialogButton } from "./dialog";
 export { showMenu, showPopup, closePopup, hoverPreview, installTooltips, type MenuEntry } from "./popup";
 export { TaskPane, type PaneSpec, type PaneSet, type PaneTab, type PaneSection, type PaneControl } from "./taskpane";
-export { colorGrid, showFontColors, showHighlights, highlightHex, HIGHLIGHTS, type PaletteHover } from "./palette";
+export { colorGrid, showFontColors, showHighlights, highlightHex, HIGHLIGHTS, type PaletteHover, type PaletteTheme } from "./palette";
 export { baseName, dirName, type Platform, type RecoveryEntry, type FileInfo, type GrammarIssue, type ThesaurusResult } from "./platform";
 export { tauriPlatform } from "./platform-tauri";
 export { browserPlatform } from "./platform-browser";

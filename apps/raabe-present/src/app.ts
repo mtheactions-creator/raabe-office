@@ -2,6 +2,8 @@
 // presentation is a document tab (D-010) shown in Normalansicht: the slide panel at the left, the
 // slide in the middle, the notes below. Files are .pptx; everything not edited is kept (D-024).
 
+import { colorXml, specHex } from "./colors";
+import { colorWord } from "./quickstyles";
 import { Pptx, newPptx, PptxDom, phOf, type ShapeView, type DesignSpec } from "@raabe/ooxml";
 import {
   Backstage, Commands, Keytips, Ribbon, TitleBar, baseName, colorGrid, h, icon, installTooltips, messageBox, showDialog, showMenu, showPopup, closePopup,
@@ -717,7 +719,7 @@ export class PresentApp implements EditorHost, PanelHost {
         const sp = el && kid(el, v.kind === "grpSp" ? "grpSpPr" : "spPr");
         if (!sp) continue;
         for (const c of kids(sp)) if (["noFill", "solidFill", "gradFill", "blipFill", "pattFill", "grpFill"].includes(c.localName)) c.remove();
-        const f = hex ? fragment(el!.ownerDocument, `<a:solidFill><a:srgbClr val="${hex}"/></a:solidFill>`)[0] : make(el!.ownerDocument, "a:noFill");
+        const f = hex ? fragment(el!.ownerDocument, `<a:solidFill>${colorXml(hex)}</a:solidFill>`)[0] : make(el!.ownerDocument, "a:noFill");
         const after = kids(sp).find((c) => c.localName === "prstGeom" || c.localName === "custGeom") ?? kid(sp, "xfrm");
         sp.insertBefore(f, after ? after.nextSibling : sp.firstChild);
       }
@@ -763,7 +765,7 @@ export class PresentApp implements EditorHost, PanelHost {
         }
         if (hex !== undefined) {
           for (const c of kids(ln)) if (["noFill", "solidFill", "gradFill", "pattFill"].includes(c.localName)) c.remove();
-          ln.insertBefore(hex ? fragment(el!.ownerDocument, `<a:solidFill><a:srgbClr val="${hex}"/></a:solidFill>`)[0] : make(el!.ownerDocument, "a:noFill"), ln.firstChild);
+          ln.insertBefore(hex ? fragment(el!.ownerDocument, `<a:solidFill>${colorXml(hex)}</a:solidFill>`)[0] : make(el!.ownerDocument, "a:noFill"), ln.firstChild);
         }
         if (width !== undefined) ln.setAttribute("w", String(Math.round(width * 12700)));
         if (dash) { kid(ln, "prstDash")?.remove(); const after = kids(ln).find((c) => ["noFill", "solidFill", "gradFill", "pattFill"].includes(c.localName)); ln.insertBefore(make(el!.ownerDocument, "a:prstDash", { val: dash }), after ? after.nextSibling : ln.firstChild); }
@@ -1145,6 +1147,18 @@ export class PresentApp implements EditorHost, PanelHost {
       tree.append(S.newTable(doc, id, rows, cols, { x: (size.cx - w) / 2, y: 1981200, w }, DEFAULT_TABLE_STYLE_ID));
     });
     this.editor.select([id]);
+  }
+
+  /** The current slide's design for the colour palettes: its colours, named with PowerPoint's colour words. */
+  paletteTheme(): import("@raabe/shell").PaletteTheme | undefined {
+    const p = this.slidePath();
+    return p ? { colors: this.deck.view(p).theme.colors, word: colorWord } : undefined;
+  }
+
+  /** A remembered colour (hex or design reference) as hex, for the colour bars under the buttons. */
+  private colorHex(spec: string): string {
+    const p = this.slidePath();
+    return p ? specHex(spec, this.deck.view(p).theme.colors) : spec;
   }
 
   /** Whether the presentation carries a VBA project (an opened .pptm): kept, never run (D-072). */
@@ -1713,9 +1727,9 @@ export class PresentApp implements EditorHost, PanelHost {
         [{ type: "combo", cmd: "font.name", width: 104, value: ctx.fontName, options: ctx.fontOptions, commit: ctx.setFont }, { type: "combo", cmd: "font.size", width: 44, value: ctx.fontSize, options: () => [{ items: ["8", "10", "12", "14", "18", "24", "28", "32", "36", "44", "54", "60", "72"] }], commit: ctx.setSize },
           b("font.grow"), b("font.shrink"), b("para.levelDown"), b("para.levelUp")],
         [b("font.bold"), b("font.italic"), b("font.underline"), b("para.left"), b("para.center"), b("para.right"),
-          { type: "color", cmd: "font.highlight", palette: "highlight", current: ctx.highlight, pick: ctx.setHighlight }, { type: "color", cmd: "font.color", palette: "font", current: ctx.fontColor, pick: ctx.setFontColor }],
+          { type: "color", cmd: "font.highlight", palette: "highlight", current: ctx.highlight, pick: ctx.setHighlight }, { type: "color", cmd: "font.color", palette: "font", current: ctx.fontColor, pick: ctx.setFontColor, theme: () => this.paletteTheme() }],
       ] }]
-      : [{ type: "color", cmd: "draw.fill", palette: "font", current: ctx.fillColor, pick: ctx.setFill, showLabel: true }, { type: "color", cmd: "draw.outline", palette: "font", current: ctx.lineColor, pick: ctx.setLine, showLabel: true, extra: () => this.outlineExtra() },
+      : [{ type: "color", cmd: "draw.fill", palette: "font", current: ctx.fillColor, pick: ctx.setFill, showLabel: true, theme: () => this.paletteTheme() }, { type: "color", cmd: "draw.outline", palette: "font", current: ctx.lineColor, pick: ctx.setLine, showLabel: true, extra: () => this.outlineExtra() , theme: () => this.paletteTheme() },
         { type: "button", cmd: "review.newComment", key: "", size: "large" }];
     return this.ribbon.toolbar(controls).el;
   }
@@ -2430,13 +2444,14 @@ export class PresentApp implements EditorHost, PanelHost {
         this.formatRuns("Schriftart", (r) => T.setRunFont(r, face));
       },
       setSize: (v) => { const n = Number(v.replace(",", ".")); if (n > 0) this.setSizeAll(n); },
-      fontColor: () => `#${this.lastFontColor}`,
+      paletteTheme: () => this.paletteTheme(),
+      fontColor: () => `#${this.colorHex(this.lastFontColor)}`,
       setFontColor: (hex) => { this.lastFontColor = hex.replace("#", "").toUpperCase(); this.formatRuns("Schriftfarbe", (r) => T.setRunColor(r, this.lastFontColor)); },
       highlight: () => `#${this.lastHighlight}`,
       setHighlight: (hex) => { const v = hex.replace("#", "").toUpperCase(); this.lastHighlight = v; this.formatRuns("Texthervorhebungsfarbe", (r) => T.setHighlight(r, v === "" ? null : v)); },
-      fillColor: () => `#${this.lastFill}`,
+      fillColor: () => `#${this.colorHex(this.lastFill)}`,
       setFill: (hex) => this.setFill(hex.replace("#", "").toUpperCase()),
-      lineColor: () => `#${this.lastLine}`,
+      lineColor: () => `#${this.colorHex(this.lastLine)}`,
       outlineExtra: () => this.outlineExtra(),
       designTiles: () => this.designTiles(),
       fxTiles: (kind) => this.fxTiles(kind),
@@ -3111,7 +3126,7 @@ export class PresentApp implements EditorHost, PanelHost {
           // Own panels (galleries, palettes): their entries as drawn, by their names.
           let panelItems: Item[] = [];
           try {
-            const el = "popup" in c && c.popup ? c.popup(() => {}) : c.type === "color" ? h("div", null, ...colorGrid(() => {}, undefined)) : c.type === "tiles" ? c.panel(() => {}) : null;
+            const el = "popup" in c && c.popup ? c.popup(() => {}) : c.type === "color" ? h("div", null, ...colorGrid(() => {}, app.paletteTheme()?.colors)) : c.type === "tiles" ? c.panel(() => {}) : null;
             if (el) panelItems = Array.from(el.querySelectorAll("button, [role=menuitem], [role=button], [data-tip]")).map((b) => ({ name: (b.getAttribute("aria-label") || (b as HTMLElement).dataset.tip || b.textContent || "").trim() })).filter((x) => x.name);
           } catch { /* a panel that needs a selection */ }
           if (c.type === "color" && c.extra) panelItems.push(...entries(c.extra()));

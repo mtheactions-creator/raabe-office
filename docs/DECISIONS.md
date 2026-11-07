@@ -1887,3 +1887,14 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   galleries), the table grid's cells, and names spin boxes by their command (PowerPoint's accessible name,
   "Animationsdauer" beside the visible "Dauer:"). Chart colours renamed to PowerPoint's (Bunt, Einfarbig,
   Monochrome Palette n). Einfügen > Tabelle has Tabelle zeichnen.
+- **Colour palettes in the presentation's design:** the palettes (Schriftfarbe, Fülleffekt, Formkontur,
+  Textfüllung, Textkontur, Schattierung, Stiftfarbe …) showed the Office 2013-2022 colours whatever the design.
+  Now they show the current design's colours, named with PowerPoint's colour words ("Dunkelblaugrün, Akzent 1"),
+  and a pick of a design colour is written as PowerPoint writes it: a:schemeClr with lumMod/lumOff ("heller
+  60 %": lumMod 40000, lumOff 60000), so it follows a later change of design; the colour bars show the resolved
+  colour (Office's own values: "Orange, Akzent 2, heller 40 %" is F4B183). The shell palette takes the design as
+  an optional parameter (Word and Excel unchanged).
+- **Inventory measured in PowerPoint's default colours:** PowerPoint's inventory was recorded in its default
+  design (Office, Aptos colours); `inventory_present.py` now applies the same colour set (Office) to the
+  untitled presentation before reading RaabePresent's controls, so colour entries are compared by the same
+  names. Coverage with it: see the report.

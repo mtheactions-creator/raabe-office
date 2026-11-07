@@ -3,6 +3,7 @@
 // (PowerPoint takes the formatting of the character before), formatting splits runs at the range's
 // ends and keeps every other attribute of rPr and pPr as it was.
 
+import { colorEl } from "./colors";
 import { PptxDom } from "@raabe/ooxml";
 
 const { kid, kids, make, NS_A } = PptxDom;
@@ -285,8 +286,7 @@ export function setRunColor(rPr: Element, color: string | null): void {
   for (const c of kids(rPr)) if (["solidFill", "noFill", "gradFill", "pattFill", "blipFill", "grpFill"].includes(c.localName)) c.remove();
   if (color === null) return;
   const doc = rPr.ownerDocument;
-  const clr = /^[0-9A-F]{6}$/i.test(color) ? make(doc, "a:srgbClr", { val: color.toUpperCase() }) : make(doc, "a:schemeClr", { val: color });
-  const fill = make(doc, "a:solidFill", {}, clr);
+  const fill = make(doc, "a:solidFill", {}, colorEl(doc, color));
   // Schema order: ln, fills, effects, highlight, uLnTx…, latin…
   const before = kids(rPr).find((c) => !["ln"].includes(c.localName));
   rPr.insertBefore(fill, before ?? null);
@@ -303,7 +303,7 @@ export function setRunOutline(rPr: Element, o: { color?: string | null; width?: 
   if (o.width !== undefined) ln.setAttribute("w", String(o.width));
   if (o.color !== undefined) {
     for (const c of kids(ln)) if (["noFill", "solidFill", "gradFill", "pattFill"].includes(c.localName)) c.remove();
-    const fill = o.color === null ? make(doc, "a:noFill") : make(doc, "a:solidFill", {}, /^[0-9A-F]{6}$/i.test(o.color) ? make(doc, "a:srgbClr", { val: o.color.toUpperCase() }) : make(doc, "a:schemeClr", { val: o.color }));
+    const fill = o.color === null ? make(doc, "a:noFill") : make(doc, "a:solidFill", {}, colorEl(doc, o.color));
     ln.insertBefore(fill, ln.firstChild);
   } else if (!kids(ln).some((c) => c.localName.endsWith("Fill"))) {
     ln.insertBefore(make(doc, "a:solidFill", {}, make(doc, "a:schemeClr", { val: "tx1" })), ln.firstChild);

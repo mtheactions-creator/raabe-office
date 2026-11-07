@@ -5,7 +5,7 @@
 import { h, icon } from "./dom";
 import type { Commands } from "./commands";
 import { closePopup, hoverPreview, showMenu, showPopup, type MenuEntry } from "./popup";
-import { highlightHex, showFontColors, showHighlights } from "./palette";
+import { highlightHex, showFontColors, showHighlights, type PaletteTheme } from "./palette";
 
 export type Size = "large" | "medium" | "small";
 
@@ -47,7 +47,9 @@ export type Control =
       /** Entries below the palette (PowerPoint's Formkontur: Keine Kontur, Stärke ▸, Striche ▸); submenus open beside. */
       extra?: () => MenuEntry[];
       /** Livevorschau of a colour under the mouse (without remembering it as the button's colour). */
-      preview?: (c: string) => void }
+      preview?: (c: string) => void;
+      /** The document's design: the palette shows its colours and hands theme picks over as references (RaabePresent). */
+      theme?: () => PaletteTheme | undefined }
   /**
    * A gallery of drawn tiles (Bildformatvorlagen: the selected picture in each style).
    * `key` changes when the tiles must be drawn again; `panel` is the full gallery.
@@ -572,7 +574,7 @@ export class Ribbon {
           onclick: () => {
             const pick = (v: string) => { c2.pick(v); this.opts.onDone?.(); };
             const hover = c2.preview ? { commands: this.commands, apply: c2.preview } : undefined;
-            if (c2.palette === "font") showFontColors(arrow.getBoundingClientRect(), pick, hover, c2.extra ? this.paletteExtra(c2.extra()) : undefined);
+            if (c2.palette === "font") showFontColors(arrow.getBoundingClientRect(), pick, hover, c2.extra ? this.paletteExtra(c2.extra()) : undefined, c2.theme?.());
             else showHighlights(arrow.getBoundingClientRect(), pick, hover);
           },
         }, chev());

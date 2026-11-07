@@ -8,6 +8,8 @@ import type { Control, MenuEntry, Tab } from "@raabe/shell";
 type Popup = (close: () => void) => HTMLElement;
 
 export interface RibbonContext {
+  /** The design's colours for the palettes (PowerPoint shows the presentation's design there). */
+  paletteTheme?(): import("@raabe/shell").PaletteTheme | undefined;
   fontName(): string;
   fontSize(): string;
   fontOptions(): { heading?: string; items: string[] }[];
@@ -64,7 +66,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
     options: () => [{ items: ["8", "9", "10", "10,5", "11", "12", "14", "16", "18", "20", "24", "28", "32", "36", "40", "44", "48", "54", "60", "66", "72", "80", "88", "96"] }],
     commit: ctx.setSize, preview: ctx.preview.size };
   const color = (cmd: string, key: string, cur: () => string, pick: (c: string) => void, palette: "font" | "highlight" = "font", showLabel = false): Control =>
-    ({ type: "color", cmd, key, palette, current: cur, pick, showLabel });
+    ({ type: "color", cmd, key, palette, current: cur, pick, showLabel, theme: ctx.paletteTheme });
   const spin = (cmd: string, label: string, key: string, s: RibbonContext["spin"]["transDuration"], icon?: string): Control => ({ type: "spinner", cmd, label, key, icon, value: s.value, commit: s.commit, step: s.step });
 
   return [

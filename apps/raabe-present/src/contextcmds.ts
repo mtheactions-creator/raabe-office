@@ -3,6 +3,7 @@
 // Alternativtext (descr), table cells (alignment, vertical anchor, rows and columns at the cell,
 // distributing, sizes), charts through chartops.ts.
 
+import { colorXml } from "./colors";
 import { closePopup, h, showDialog, type Control, type MenuEntry } from "@raabe/shell";
 import { PptxDom, type ShapeView } from "@raabe/ooxml";
 import type { PresentApp } from "./app";
@@ -27,7 +28,7 @@ export function contextHost(app: PresentApp): ContextTabHost {
     ({ type: "spinner", cmd, label, icon, key, value, commit, step });
   return {
     shapeGallery: (c) => app.shapeGallery(c),
-    color: (cur, pick, cmd, key, label, extra) => ({ type: "color", cmd, key, palette: "font", current: cur, pick, showLabel: label, extra }),
+    color: (cur, pick, cmd, key, label, extra) => ({ type: "color", cmd, key, palette: "font", current: cur, pick, showLabel: label, extra, theme: () => app.paletteTheme() }),
     outlineExtra: () => app.outlineExtra(),
     quickStyles: (c) => quickStylesPanel(app, c),
     quickStyleTiles: () => quickStyleTiles(app),
@@ -178,7 +179,7 @@ function cellPr(app: PresentApp, label: string, fn: (pr: Element) => void): void
 const LINE_TAGS = ["lnL", "lnR", "lnT", "lnB", "lnTlToBr", "lnBlToTr"];
 function setCellLine(pr: Element, tag: string, color: string | null): void {
   kid(pr, tag)?.remove();
-  const el = fragment(pr.ownerDocument, color ? `<a:${tag} w="12700" cap="flat" cmpd="sng" algn="ctr"><a:solidFill><a:srgbClr val="${color}"/></a:solidFill><a:prstDash val="solid"/><a:round/></a:${tag}>` : `<a:${tag} w="12700" cmpd="sng"><a:noFill/></a:${tag}>`)[0];
+  const el = fragment(pr.ownerDocument, color ? `<a:${tag} w="12700" cap="flat" cmpd="sng" algn="ctr"><a:solidFill>${colorXml(color)}</a:solidFill><a:prstDash val="solid"/><a:round/></a:${tag}>` : `<a:${tag} w="12700" cmpd="sng"><a:noFill/></a:${tag}>`)[0];
   const after = LINE_TAGS.slice(LINE_TAGS.indexOf(tag) + 1);
   const before = kids(pr).find((c) => after.includes(c.localName) || !LINE_TAGS.includes(c.localName)) ?? null;
   pr.insertBefore(el, before);

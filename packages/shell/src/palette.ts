@@ -130,9 +130,38 @@ export function colorGrid(pick: (hex: string, themeRef?: string) => void, theme?
   return [h("div", { class: "palette-title" }, "Designfarben"), grid, h("div", { class: "palette-title" }, "Standardfarben"), std];
 }
 
-export function showFontColors(anchor: DOMRect, pick: (hex: string) => void, hover?: PaletteHover, extra?: HTMLElement[]): void {
+/**
+ * A presentation's design for the colour palette (RaabePresent): its colours, a word for a colour ("Orange")
+ * for the names, and theme picks handed over as DrawingML references: "accent1", or with a variant
+ * "accent1,20000,80000" (lumMod, lumOff), as PowerPoint writes them.
+ */
+export interface PaletteTheme { readonly colors: Readonly<Record<string, string>>; readonly word?: (hex: string) => string }
+
+const DML: Record<string, string> = { lt1: "bg1", dk1: "tx1", lt2: "bg2", dk2: "tx2" };
+
+/** DrawingML's lumMod/lumOff for a variant label ("heller 80%": 20000/80000, "dunkler 25%": 75000). */
+function dmlRef(key: string, label?: string): string {
+  const val = DML[key] ?? key;
+  const m = label ? /(heller|dunkler) (\d+) ?%/.exec(label) : null;
+  if (!m) return val;
+  const p = Number(m[2]);
+  return m[1] === "heller" ? `${val},${(100 - p) * 1000},${p * 1000}` : `${val},${(100 - p) * 1000}`;
+}
+
+export function showFontColors(anchor: DOMRect, pick: (hex: string) => void, hover?: PaletteHover, extra?: HTMLElement[], theme?: PaletteTheme): void {
   const hv = (hex: string) => (hover ? { commands: hover.commands, apply: () => hover.apply(hex) } : undefined);
   const grid = h("div", { class: "swatches", style: "grid-template-columns:repeat(10, 18px)" });
+  if (theme) {
+    // The design's colours, named as PowerPoint names them; a pick is the theme reference, not the hex.
+    const known = themeEntries(theme.colors);
+    const cols = ORDER.map(([k], i) => ({ key: k, hex: known[i].hex, label: /, /.test(known[i].label) || !theme.word ? known[i].label : `${theme.word(known[i].hex)}, ${known[i].label}` }));
+    for (const c of cols) grid.append(swatch(c.hex, c.label, () => pick(dmlRef(c.key)), hv(c.hex)));
+    const vars = cols.map((c) => variants(c.hex));
+    for (let row = 0; row < 5; row++) for (let col = 0; col < cols.length; col++) {
+      const v = vars[col][row];
+      grid.append(swatch(v.hex, `${cols[col].label}, ${v.label}`, () => pick(dmlRef(cols[col].key, v.label)), hv(v.hex)));
+    }
+  } else {
   for (const [hex, label] of THEME) grid.append(swatch(hex, label, () => pick(hex), hv(hex)));
   const vars = THEME.map(([hex]) => variants(hex));
   for (let row = 0; row < 5; row++) {
@@ -140,6 +169,7 @@ export function showFontColors(anchor: DOMRect, pick: (hex: string) => void, hov
       const v = vars[col][row];
       grid.append(swatch(v.hex, `${THEME[col][1]}, ${v.label}`, () => pick(v.hex), hv(v.hex)));
     }
+  }
   }
   const std = h("div", { class: "swatches", style: "grid-template-columns:repeat(10, 18px)" },
     ...STANDARD.map(([hex, label]) => swatch(hex, label, () => pick(hex), hv(hex))));
