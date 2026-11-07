@@ -3,7 +3,7 @@
 // (shared with RaabeWrite and RaabeCalc), pictures with their crop and frame, tables, charts and
 // groups. Sizes are CSS pixels at 96 dpi (1 px = 9525 EMU); zoom scales the whole slide.
 
-import { shapeElement, shapeTextRect, pictureElement, type PictureFormat } from "@raabe/text-engine";
+import { cameraTransform, shapeElement, shapeTextRect, pictureElement, type PictureFormat } from "@raabe/text-engine";
 import type { Pptx, ShapeView, SlideView } from "@raabe/ooxml";
 import { EMU_PX, renderText, type TextOptions } from "./text";
 import { renderTable } from "./table";
@@ -75,6 +75,8 @@ export function renderShape(s: ShapeView, o: RenderOptions, map: Map<number, HTM
   const px = parent ? x - parent.x / EMU_PX : x, py = parent ? y - parent.y / EMU_PX : y;
   box.style.cssText = `position:absolute;left:${px}px;top:${py}px;width:${w}px;height:${h}px;transform:${transformOf(s) || "none"};transform-origin:50% 50%`;
   map?.set(s.id, box);
+  // 3D-Drehung of a shape (pictures turn inside pictureElement).
+  if (s.kind === "sp" || s.kind === "cxnSp") { const cam = cameraTransform(s.format.scene3dXml); if (cam) box.style.transform = `${transformOf(s) || ""} ${cam}`.trim(); }
   if (s.kind === "grpSp") {
     // Group members are placed on the slide already (scaled); the group only turns them.
     for (const c of s.children ?? []) if (!c.hidden) box.append(renderShape({ ...c, rot: c.rot - s.rot }, o, map, s));

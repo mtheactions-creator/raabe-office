@@ -120,6 +120,16 @@ const CAMERA: Record<string, [number, number, number]> = {
   perspectiveRelaxed: [25, 0, 0], perspectiveRelaxedModerately: [15, 0, 0],
 };
 
+/** The CSS transform of a scene's camera (3D-Drehung) for any shape, or "" for a flat front view (RaabePresent). */
+export function cameraTransform(scene3dXml: string | undefined): string {
+  const cam = /<a:camera prst="([^"]+)"[^>]*?(?:\/>|>\s*<a:rot lat="(\d+)" lon="(\d+)" rev="(\d+)"\/>)/.exec(scene3dXml ?? "");
+  if (!cam) return "";
+  const deg = (v: string | undefined) => { const d = Number(v ?? 0) / 60000; return d > 180 ? d - 360 : d; };
+  const preset = CAMERA[cam[1]] ?? [0, 0, 0];
+  const lat = deg(cam[2]) + preset[0], lon = deg(cam[3]) + preset[1], rev = deg(cam[4]) + preset[2];
+  return lat || lon || rev ? `perspective(${cam[1].startsWith("perspective") ? 600 : 4000}px) rotateX(${-lat}deg) rotateY(${lon}deg) rotateZ(${rev}deg)` : "";
+}
+
 /** True when nothing about the picture's look is changed. */
 export function plainPicture(f: PictureFormat | undefined): boolean {
   return !f || Object.values(f).every((v) => v === undefined);

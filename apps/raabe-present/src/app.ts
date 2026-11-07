@@ -40,6 +40,7 @@ import * as CT from "./contexttabs";
 import { contextHost, implementContext } from "./contextcmds";
 import { Sorter } from "./sorter";
 import { zoomMenu } from "./zoom";
+import { shapeEffectsMenu } from "./shapefx";
 import { addRecent, loadRecent, loadSettings, removeRecent, saveSettings, setPinned, type Settings } from "./store";
 import appIconUrl from "../../../branding/raabe-present-small.svg?url";
 
@@ -1474,21 +1475,10 @@ export class PresentApp implements EditorHost, PanelHost {
   setLineWidth(pt: number): void { this.setLine(undefined as unknown as string, pt); }
 
   private effectsMenu(): MenuEntry[] {
-    return [{ label: "Schatten", submenu: [{ label: "Kein Schatten", run: () => this.setShadow(null) }, { label: "Außen: Versatz unten rechts", run: () => this.setShadow("outer") }] }];
+    return shapeEffectsMenu(this);
   }
 
-  private setShadow(kind: "outer" | null): void {
-    const views = this.editor.selectedViews.filter((v) => v.kind === "sp" || v.kind === "pic");
-    this.editor.edit("Formeffekte", () => {
-      for (const v of views) {
-        const sp = kid(this.editor.shapeEl(v.id)!, "spPr");
-        if (!sp) continue;
-        kid(sp, "effectLst")?.remove();
-        if (!kind) { sp.append(make(sp.ownerDocument, "a:effectLst")); continue; }
-        sp.append(fragment(sp.ownerDocument, '<a:effectLst><a:outerShdw blurRad="50800" dist="38100" dir="2700000" algn="tl" rotWithShape="0"><a:prstClr val="black"><a:alpha val="40000"/></a:prstClr></a:outerShdw></a:effectLst>')[0]);
-      }
-    });
-  }
+
 
 
 

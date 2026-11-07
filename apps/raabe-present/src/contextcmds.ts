@@ -17,6 +17,7 @@ import * as S from "./shapeops";
 import * as CH from "./chartops";
 import * as TC from "./tablecells";
 import { artisticEntries, colorEntries, sharpenEntries } from "./picfx";
+import { textEffectEntries, textThreeD, transformMenu } from "./shapefx";
 
 const { kid, kids, make, num, fragment } = PptxDom;
 
@@ -220,31 +221,10 @@ export function tableBorders(app: PresentApp): MenuEntry[] {
 
 /** Texteffekte (WordArt-Formate): Schatten, Spiegelung, Leuchten on the text's runs (a:effectLst in a:rPr). */
 export function textEffects(app: PresentApp): MenuEntry[] {
-  const ORDER = ["blur", "fillOverlay", "glow", "innerShdw", "outerShdw", "prstShdw", "reflection", "softEdge"];
-  const set = (label: string, tag: string, xml: string | null) => () => app.formatText(label, (r) => {
-    let fx = kid(r, "effectLst");
-    if (!fx) {
-      fx = make(r.ownerDocument, "a:effectLst");
-      const after = kids(r).find((c) => !["ln", "noFill", "solidFill", "gradFill", "pattFill", "blipFill", "grpFill"].includes(c.localName)) ?? null;
-      r.insertBefore(fx, after);
-    }
-    kid(fx, tag)?.remove();
-    if (xml) {
-      const el = fragment(r.ownerDocument, xml)[0];
-      const next = kids(fx).find((c) => ORDER.indexOf(c.localName) > ORDER.indexOf(tag)) ?? null;
-      fx.insertBefore(el, next);
-    }
-    if (!fx.children.length) fx.remove();
-  });
-  const sh = (dir: number, name: string) => ({ label: name, run: set("Schatten", "outerShdw", `<a:outerShdw blurRad="38100" dist="38100" dir="${dir}" algn="tl" rotWithShape="0"><a:prstClr val="black"><a:alpha val="40000"/></a:prstClr></a:outerShdw>`) });
+  // Schatten, Spiegelung, Leuchten: Office's presets on the runs; 3-D and Transformieren on the text body (shapefx.ts).
   return [
-    { label: "Schatten", submenu: [{ label: "Kein Schatten", run: set("Schatten", "outerShdw", null) }, sh(2700000, "Außen: Versatz unten rechts"), sh(5400000, "Außen: Versatz unten"), sh(8100000, "Außen: Versatz unten links"), sh(0, "Außen: Versatz rechts")] },
-    { label: "Spiegelung", submenu: [{ label: "Keine Spiegelung", run: set("Spiegelung", "reflection", null) },
-      { label: "Enge Spiegelung: Berührung", run: set("Spiegelung", "reflection", '<a:reflection blurRad="6350" stA="55000" endA="300" endPos="45500" dir="5400000" sy="-100000" algn="bl" rotWithShape="0"/>') },
-      { label: "Halbe Spiegelung: Berührung", run: set("Spiegelung", "reflection", '<a:reflection blurRad="6350" stA="50000" endA="300" endPos="55000" dir="5400000" sy="-100000" algn="bl" rotWithShape="0"/>') }] },
-    { label: "Leuchten", submenu: [{ label: "Kein Leuchten", run: set("Leuchten", "glow", null) },
-      ...[1, 2, 3, 4, 5, 6].map((n) => ({ label: `Leuchten: 8 Pt.; Akzentfarbe ${n}`, run: set("Leuchten", "glow", `<a:glow rad="101600"><a:schemeClr val="accent${n}"><a:alpha val="40000"/></a:schemeClr></a:glow>`) }))] },
-    { label: "Abschrägung", disabled: true, submenu: [] }, { label: "3D-Drehung", disabled: true, submenu: [] }, { label: "Transformieren", disabled: true, submenu: [] },
+    ...textEffectEntries(app),
+    { label: "Abschrägung", submenu: () => textThreeD(app, "bevel") }, { label: "3D-Drehung", submenu: () => textThreeD(app, "rotation") }, { label: "Transformieren", submenu: () => transformMenu(app) },
   ];
 }
 

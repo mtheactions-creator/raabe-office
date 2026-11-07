@@ -1868,3 +1868,11 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
   objects on a graded sky) it keeps the same pixels as PowerPoint (100 %); real photos will differ. It is
   applied at once; PowerPoint's Freistellen tab (marking areas to keep or remove) is not built, Rückgängig
   takes it back.
+- **Formeffekte, Texteffekte > Abschrägung, 3D-Drehung, Transformieren:** the shape's Formeffekte had only two
+  shadow entries. Now PowerPoint's whole menu (Voreinstellung 1-12, Schatten 24, Spiegelung 9, Leuchteffekt 24,
+  Weiche Kanten 6, Abschrägung 12, 3D-Drehung 25) with PowerPoint's names from the inventory; the effects are
+  Office's presets as RaabeWrite recorded them from Word (the same galleries; `effect-presets.ts` is a copy of
+  RaabeWrite's generated file). Text 3-D and Transformieren (40 warps) go into the text body (bodyPr), as
+  PowerPoint writes them. Drawn: shadows, reflection, glow, soft edges, bevel and the 3-D camera (CSS
+  perspective, our approximation); the text warps are written for PowerPoint but our text stays straight. The
+  "...optionen" entries (a format pane for 3-D) are greyed.

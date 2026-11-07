@@ -2381,16 +2381,544 @@
        "type": "dropdown",
        "items": [
         {
+         "name": "Voreinstellung",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 1",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 2",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 3",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 4",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 5",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 6",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 7",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 8",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 9",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 10",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 11",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 12",
+           "enabled": true
+          },
+          {
+           "name": "3D-Optionen...",
+           "enabled": false
+          }
+         ]
+        },
+        {
          "name": "Schatten",
          "enabled": true,
          "submenu": [
           {
-           "name": "Kein Schatten",
+           "name": "Ohne",
            "enabled": true
           },
           {
-           "name": "Außen: Versatz unten rechts",
+           "name": "Offset: unten rechts",
            "enabled": true
+          },
+          {
+           "name": "Offset: unten",
+           "enabled": true
+          },
+          {
+           "name": "Offset: unten links",
+           "enabled": true
+          },
+          {
+           "name": "Offset: rechts",
+           "enabled": true
+          },
+          {
+           "name": "Offset: Mitte",
+           "enabled": true
+          },
+          {
+           "name": "Offset: links",
+           "enabled": true
+          },
+          {
+           "name": "Offset: oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Offset: oben",
+           "enabled": true
+          },
+          {
+           "name": "Offset: oben links",
+           "enabled": true
+          },
+          {
+           "name": "Innen: oben links",
+           "enabled": true
+          },
+          {
+           "name": "Innen: oben",
+           "enabled": true
+          },
+          {
+           "name": "Innen: oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Innen: links",
+           "enabled": true
+          },
+          {
+           "name": "Innen: Mitte",
+           "enabled": true
+          },
+          {
+           "name": "Innen: rechts",
+           "enabled": true
+          },
+          {
+           "name": "Innen: unten links",
+           "enabled": true
+          },
+          {
+           "name": "Innen: unten",
+           "enabled": true
+          },
+          {
+           "name": "Innen: unten rechts",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: oben links",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: unterhalb",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: unten links",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: unten rechts",
+           "enabled": true
+          },
+          {
+           "name": "Schattenoptionen...",
+           "enabled": false
+          }
+         ]
+        },
+        {
+         "name": "Spiegelung",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Ohne",
+           "enabled": true
+          },
+          {
+           "name": "Enge Spiegelung: mit Berührung",
+           "enabled": true
+          },
+          {
+           "name": "Halbe Spiegelung: mit Berührung",
+           "enabled": true
+          },
+          {
+           "name": "Volle Spiegelung: mit Berührung",
+           "enabled": true
+          },
+          {
+           "name": "Enge Spiegelung: 4 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Halbe Spiegelung: 4 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Volle Spiegelung: 4 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Enge Spiegelung: 8 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Halbe Spiegelung: 8 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Volle Spiegelung: 8 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Spiegelungsoptionen...",
+           "enabled": false
+          }
+         ]
+        },
+        {
+         "name": "Leuchteffekt",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Ohne",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 5 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 5 Pt.; Orange, Akzentfarbe 2",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 5 Pt.; Dunkelgrün, Akzentfarbe 3",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 5 Pt.; Türkis, Akzentfarbe 4",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 5 Pt.; Pflaume, Akzentfarbe 5",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 5 Pt.; Grün, Akzentfarbe 6",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Orange, Akzentfarbe 2",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Dunkelgrün, Akzentfarbe 3",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Türkis, Akzentfarbe 4",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Pflaume, Akzentfarbe 5",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Grün, Akzentfarbe 6",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Orange, Akzentfarbe 2",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Dunkelgrün, Akzentfarbe 3",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Türkis, Akzentfarbe 4",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Pflaume, Akzentfarbe 5",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Grün, Akzentfarbe 6",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Orange, Akzentfarbe 2",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Dunkelgrün, Akzentfarbe 3",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Türkis, Akzentfarbe 4",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Pflaume, Akzentfarbe 5",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Grün, Akzentfarbe 6",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffektoptionen...",
+           "enabled": false
+          }
+         ]
+        },
+        {
+         "name": "Weiche Kanten",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": true
+          },
+          {
+           "name": "1 Punkt",
+           "enabled": true
+          },
+          {
+           "name": "2,5 Punkt",
+           "enabled": true
+          },
+          {
+           "name": "5 Punkt",
+           "enabled": true
+          },
+          {
+           "name": "10 Punkt",
+           "enabled": true
+          },
+          {
+           "name": "25 Punkt",
+           "enabled": true
+          },
+          {
+           "name": "50 Punkt",
+           "enabled": true
+          },
+          {
+           "name": "Optionen für weiche Kanten...",
+           "enabled": false
+          }
+         ]
+        },
+        {
+         "name": "Abschrägung",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": true
+          },
+          {
+           "name": "Rund",
+           "enabled": true
+          },
+          {
+           "name": "Leichte Absenkung",
+           "enabled": true
+          },
+          {
+           "name": "Säule",
+           "enabled": true
+          },
+          {
+           "name": "Schräge",
+           "enabled": true
+          },
+          {
+           "name": "Starke Abschrägung",
+           "enabled": true
+          },
+          {
+           "name": "Weiche Abrundung",
+           "enabled": true
+          },
+          {
+           "name": "Konvex",
+           "enabled": true
+          },
+          {
+           "name": "Silhouette",
+           "enabled": true
+          },
+          {
+           "name": "Ringförmige Absenkung",
+           "enabled": true
+          },
+          {
+           "name": "Säule auf abgerundetem Sockel",
+           "enabled": true
+          },
+          {
+           "name": "Gewölbter Rand",
+           "enabled": true
+          },
+          {
+           "name": "Rund konvex",
+           "enabled": true
+          },
+          {
+           "name": "3D-Optionen...",
+           "enabled": false
+          }
+         ]
+        },
+        {
+         "name": "3D-Drehung",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": true
+          },
+          {
+           "name": "Isometrisch: links abwärts",
+           "enabled": true
+          },
+          {
+           "name": "Isometrisch: rechts aufwärts",
+           "enabled": true
+          },
+          {
+           "name": "Isometrisch: oben aufwärts",
+           "enabled": true
+          },
+          {
+           "name": "Isometrisch: unten abwärts",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 1: nach links",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 1: nach rechts",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 1: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 2: nach links",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 2: nach rechts",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 2: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: von vorne",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: von links",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: von rechts",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: unterhalb",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: oberhalb",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: gemäßigt oberhalb",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: oberhalb",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: links kontrastierend",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: rechts kontrastierend",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: nach links gedreht, nach oben gekippt",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: nach rechts gedreht, nach oben gekippt",
+           "enabled": true
+          },
+          {
+           "name": "Schräg: oben links",
+           "enabled": true
+          },
+          {
+           "name": "Schräg: oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Schräg: unten links",
+           "enabled": true
+          },
+          {
+           "name": "Schräg: unten rechts",
+           "enabled": true
+          },
+          {
+           "name": "3D-Drehungsoptionen...",
+           "enabled": false
           }
          ]
         }
@@ -3093,7 +3621,21 @@
        "name": "Zoom",
        "deferred": false,
        "enabled": false,
-       "type": "button"
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Zusammenfassungszoom",
+         "enabled": true
+        },
+        {
+         "name": "Abschnittszoom",
+         "enabled": false
+        },
+        {
+         "name": "Folienzoom",
+         "enabled": true
+        }
+       ]
       },
       {
        "name": "Link",
@@ -4389,13 +4931,25 @@
       {
        "name": "Trigger",
        "deferred": false,
-       "enabled": false,
-       "type": "button"
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Bei Klick auf",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Bei Mausklick (kein Trigger)",
+           "enabled": true
+          }
+         ]
+        }
+       ]
       },
       {
        "name": "Animation übertragen",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "button"
       }
      ]
@@ -4802,7 +5356,7 @@
       {
        "name": "Neues Fenster",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "button"
       },
       {
@@ -4830,7 +5384,7 @@
        "type": "dropdown",
        "items": [
         {
-         "name": "1 Präsentation1",
+         "name": "1 Katalog",
          "enabled": true
         }
        ]
@@ -5349,8 +5903,22 @@
       {
        "name": "Form bearbeiten",
        "deferred": false,
-       "enabled": false,
-       "type": "button"
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Form ändern",
+         "enabled": true
+        },
+        {
+         "name": "Punkte bearbeiten",
+         "enabled": false
+        },
+        {
+         "name": "Verbindungen umleiten",
+         "enabled": false
+        }
+       ]
       },
       {
        "name": "Textfeld",
@@ -6143,16 +6711,544 @@
        "type": "dropdown",
        "items": [
         {
+         "name": "Voreinstellung",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 1",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 2",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 3",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 4",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 5",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 6",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 7",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 8",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 9",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 10",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 11",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 12",
+           "enabled": true
+          },
+          {
+           "name": "3D-Optionen...",
+           "enabled": false
+          }
+         ]
+        },
+        {
          "name": "Schatten",
          "enabled": true,
          "submenu": [
           {
-           "name": "Kein Schatten",
+           "name": "Ohne",
            "enabled": true
           },
           {
-           "name": "Außen: Versatz unten rechts",
+           "name": "Offset: unten rechts",
            "enabled": true
+          },
+          {
+           "name": "Offset: unten",
+           "enabled": true
+          },
+          {
+           "name": "Offset: unten links",
+           "enabled": true
+          },
+          {
+           "name": "Offset: rechts",
+           "enabled": true
+          },
+          {
+           "name": "Offset: Mitte",
+           "enabled": true
+          },
+          {
+           "name": "Offset: links",
+           "enabled": true
+          },
+          {
+           "name": "Offset: oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Offset: oben",
+           "enabled": true
+          },
+          {
+           "name": "Offset: oben links",
+           "enabled": true
+          },
+          {
+           "name": "Innen: oben links",
+           "enabled": true
+          },
+          {
+           "name": "Innen: oben",
+           "enabled": true
+          },
+          {
+           "name": "Innen: oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Innen: links",
+           "enabled": true
+          },
+          {
+           "name": "Innen: Mitte",
+           "enabled": true
+          },
+          {
+           "name": "Innen: rechts",
+           "enabled": true
+          },
+          {
+           "name": "Innen: unten links",
+           "enabled": true
+          },
+          {
+           "name": "Innen: unten",
+           "enabled": true
+          },
+          {
+           "name": "Innen: unten rechts",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: oben links",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: unterhalb",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: unten links",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: unten rechts",
+           "enabled": true
+          },
+          {
+           "name": "Schattenoptionen...",
+           "enabled": false
+          }
+         ]
+        },
+        {
+         "name": "Spiegelung",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Ohne",
+           "enabled": true
+          },
+          {
+           "name": "Enge Spiegelung: mit Berührung",
+           "enabled": true
+          },
+          {
+           "name": "Halbe Spiegelung: mit Berührung",
+           "enabled": true
+          },
+          {
+           "name": "Volle Spiegelung: mit Berührung",
+           "enabled": true
+          },
+          {
+           "name": "Enge Spiegelung: 4 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Halbe Spiegelung: 4 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Volle Spiegelung: 4 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Enge Spiegelung: 8 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Halbe Spiegelung: 8 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Volle Spiegelung: 8 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Spiegelungsoptionen...",
+           "enabled": false
+          }
+         ]
+        },
+        {
+         "name": "Leuchteffekt",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Ohne",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 5 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 5 Pt.; Orange, Akzentfarbe 2",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 5 Pt.; Dunkelgrün, Akzentfarbe 3",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 5 Pt.; Türkis, Akzentfarbe 4",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 5 Pt.; Pflaume, Akzentfarbe 5",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 5 Pt.; Grün, Akzentfarbe 6",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Orange, Akzentfarbe 2",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Dunkelgrün, Akzentfarbe 3",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Türkis, Akzentfarbe 4",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Pflaume, Akzentfarbe 5",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Grün, Akzentfarbe 6",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Orange, Akzentfarbe 2",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Dunkelgrün, Akzentfarbe 3",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Türkis, Akzentfarbe 4",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Pflaume, Akzentfarbe 5",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Grün, Akzentfarbe 6",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Orange, Akzentfarbe 2",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Dunkelgrün, Akzentfarbe 3",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Türkis, Akzentfarbe 4",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Pflaume, Akzentfarbe 5",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Grün, Akzentfarbe 6",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffektoptionen...",
+           "enabled": false
+          }
+         ]
+        },
+        {
+         "name": "Weiche Kanten",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": true
+          },
+          {
+           "name": "1 Punkt",
+           "enabled": true
+          },
+          {
+           "name": "2,5 Punkt",
+           "enabled": true
+          },
+          {
+           "name": "5 Punkt",
+           "enabled": true
+          },
+          {
+           "name": "10 Punkt",
+           "enabled": true
+          },
+          {
+           "name": "25 Punkt",
+           "enabled": true
+          },
+          {
+           "name": "50 Punkt",
+           "enabled": true
+          },
+          {
+           "name": "Optionen für weiche Kanten...",
+           "enabled": false
+          }
+         ]
+        },
+        {
+         "name": "Abschrägung",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": true
+          },
+          {
+           "name": "Rund",
+           "enabled": true
+          },
+          {
+           "name": "Leichte Absenkung",
+           "enabled": true
+          },
+          {
+           "name": "Säule",
+           "enabled": true
+          },
+          {
+           "name": "Schräge",
+           "enabled": true
+          },
+          {
+           "name": "Starke Abschrägung",
+           "enabled": true
+          },
+          {
+           "name": "Weiche Abrundung",
+           "enabled": true
+          },
+          {
+           "name": "Konvex",
+           "enabled": true
+          },
+          {
+           "name": "Silhouette",
+           "enabled": true
+          },
+          {
+           "name": "Ringförmige Absenkung",
+           "enabled": true
+          },
+          {
+           "name": "Säule auf abgerundetem Sockel",
+           "enabled": true
+          },
+          {
+           "name": "Gewölbter Rand",
+           "enabled": true
+          },
+          {
+           "name": "Rund konvex",
+           "enabled": true
+          },
+          {
+           "name": "3D-Optionen...",
+           "enabled": false
+          }
+         ]
+        },
+        {
+         "name": "3D-Drehung",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": true
+          },
+          {
+           "name": "Isometrisch: links abwärts",
+           "enabled": true
+          },
+          {
+           "name": "Isometrisch: rechts aufwärts",
+           "enabled": true
+          },
+          {
+           "name": "Isometrisch: oben aufwärts",
+           "enabled": true
+          },
+          {
+           "name": "Isometrisch: unten abwärts",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 1: nach links",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 1: nach rechts",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 1: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 2: nach links",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 2: nach rechts",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 2: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: von vorne",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: von links",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: von rechts",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: unterhalb",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: oberhalb",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: gemäßigt oberhalb",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: oberhalb",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: links kontrastierend",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: rechts kontrastierend",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: nach links gedreht, nach oben gekippt",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: nach rechts gedreht, nach oben gekippt",
+           "enabled": true
+          },
+          {
+           "name": "Schräg: oben links",
+           "enabled": true
+          },
+          {
+           "name": "Schräg: oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Schräg: unten links",
+           "enabled": true
+          },
+          {
+           "name": "Schräg: unten rechts",
+           "enabled": true
+          },
+          {
+           "name": "3D-Drehungsoptionen...",
+           "enabled": false
           }
          ]
         }
@@ -6845,18 +7941,349 @@
         },
         {
          "name": "Abschrägung",
-         "enabled": false,
-         "submenu": []
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": true
+          },
+          {
+           "name": "Rund",
+           "enabled": true
+          },
+          {
+           "name": "Leichte Absenkung",
+           "enabled": true
+          },
+          {
+           "name": "Säule",
+           "enabled": true
+          },
+          {
+           "name": "Schräge",
+           "enabled": true
+          },
+          {
+           "name": "Starke Abschrägung",
+           "enabled": true
+          },
+          {
+           "name": "Weiche Abrundung",
+           "enabled": true
+          },
+          {
+           "name": "Konvex",
+           "enabled": true
+          },
+          {
+           "name": "Silhouette",
+           "enabled": true
+          },
+          {
+           "name": "Ringförmige Absenkung",
+           "enabled": true
+          },
+          {
+           "name": "Säule auf abgerundetem Sockel",
+           "enabled": true
+          },
+          {
+           "name": "Gewölbter Rand",
+           "enabled": true
+          },
+          {
+           "name": "Rund konvex",
+           "enabled": true
+          },
+          {
+           "name": "3D-Optionen...",
+           "enabled": false
+          }
+         ]
         },
         {
          "name": "3D-Drehung",
-         "enabled": false,
-         "submenu": []
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": true
+          },
+          {
+           "name": "Isometrisch: links abwärts",
+           "enabled": true
+          },
+          {
+           "name": "Isometrisch: rechts aufwärts",
+           "enabled": true
+          },
+          {
+           "name": "Isometrisch: oben aufwärts",
+           "enabled": true
+          },
+          {
+           "name": "Isometrisch: unten abwärts",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 1: nach links",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 1: nach rechts",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 1: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 2: nach links",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 2: nach rechts",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 2: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: von vorne",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: von links",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: von rechts",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: unterhalb",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: oberhalb",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: gemäßigt oberhalb",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: oberhalb",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: links kontrastierend",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: rechts kontrastierend",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: nach links gedreht, nach oben gekippt",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: nach rechts gedreht, nach oben gekippt",
+           "enabled": true
+          },
+          {
+           "name": "Schräg: oben links",
+           "enabled": true
+          },
+          {
+           "name": "Schräg: oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Schräg: unten links",
+           "enabled": true
+          },
+          {
+           "name": "Schräg: unten rechts",
+           "enabled": true
+          },
+          {
+           "name": "3D-Drehungsoptionen...",
+           "enabled": false
+          }
+         ]
         },
         {
          "name": "Transformieren",
-         "enabled": false,
-         "submenu": []
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": true
+          },
+          {
+           "name": "Arch",
+           "enabled": true
+          },
+          {
+           "name": "Arch Down",
+           "enabled": true
+          },
+          {
+           "name": "Kreis",
+           "enabled": true
+          },
+          {
+           "name": "Schaltfläche",
+           "enabled": true
+          },
+          {
+           "name": "Rechteck",
+           "enabled": true
+          },
+          {
+           "name": "Anhalten",
+           "enabled": true
+          },
+          {
+           "name": "Dreieck: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Dreieck: nach unten",
+           "enabled": true
+          },
+          {
+           "name": "Chevron: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Chevron: nach unten",
+           "enabled": true
+          },
+          {
+           "name": "Kreis: innen",
+           "enabled": true
+          },
+          {
+           "name": "Kreis: außen",
+           "enabled": true
+          },
+          {
+           "name": "Bogen: verzerrt",
+           "enabled": true
+          },
+          {
+           "name": "Bogen: nach unten verzerrt",
+           "enabled": true
+          },
+          {
+           "name": "Verzerrter Kreis",
+           "enabled": true
+          },
+          {
+           "name": "Verzerrte Schaltfläche",
+           "enabled": true
+          },
+          {
+           "name": "Gekrümmt: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Gekrümmt: nach unten",
+           "enabled": true
+          },
+          {
+           "name": "Verzerrung nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Verzerrung nach unten",
+           "enabled": true
+          },
+          {
+           "name": "Welle: nach unten",
+           "enabled": true
+          },
+          {
+           "name": "Welle: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Doppelte Welle: nach unten und oben",
+           "enabled": true
+          },
+          {
+           "name": "Doppelte Welle: nach oben und unten",
+           "enabled": true
+          },
+          {
+           "name": "Vergrößern",
+           "enabled": true
+          },
+          {
+           "name": "Verkleinern",
+           "enabled": true
+          },
+          {
+           "name": "Vergrößern: nach unten",
+           "enabled": true
+          },
+          {
+           "name": "Verkleinern: nach unten",
+           "enabled": true
+          },
+          {
+           "name": "Vergrößern: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Verkleinern: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Verkleinern: nach oben, Vergrößern: nach unten",
+           "enabled": true
+          },
+          {
+           "name": "Vergrößern: zur Mitte, Verkleinern: nach oben und nach unten",
+           "enabled": true
+          },
+          {
+           "name": "Abnehmend: nach rechts",
+           "enabled": true
+          },
+          {
+           "name": "Abnehmend: nach links",
+           "enabled": true
+          },
+          {
+           "name": "Abnehmend: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Abnehmend: nach unten",
+           "enabled": true
+          },
+          {
+           "name": "Schräge: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Schräge: nach unten",
+           "enabled": true
+          },
+          {
+           "name": "Überlappend: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Überlappend: nach unten",
+           "enabled": true
+          }
+         ]
         }
        ]
       }
@@ -7075,7 +8502,7 @@
       {
        "name": "Hintergrund entfernen",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "button"
       },
       {
@@ -7289,8 +8716,14 @@
       {
        "name": "Künstlerische Effekte",
        "deferred": false,
-       "enabled": false,
-       "type": "button"
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Optionen für künstlerische Effekte...",
+         "enabled": true
+        }
+       ]
       },
       {
        "name": "Transparenz",
@@ -7331,7 +8764,7 @@
       {
        "name": "Bilder komprimieren...",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "button"
       },
       {
@@ -7759,16 +9192,544 @@
        "type": "dropdown",
        "items": [
         {
+         "name": "Voreinstellung",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 1",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 2",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 3",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 4",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 5",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 6",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 7",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 8",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 9",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 10",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 11",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 12",
+           "enabled": true
+          },
+          {
+           "name": "3D-Optionen...",
+           "enabled": false
+          }
+         ]
+        },
+        {
          "name": "Schatten",
          "enabled": true,
          "submenu": [
           {
-           "name": "Kein Schatten",
+           "name": "Ohne",
            "enabled": true
           },
           {
-           "name": "Außen: Versatz unten rechts",
+           "name": "Offset: unten rechts",
            "enabled": true
+          },
+          {
+           "name": "Offset: unten",
+           "enabled": true
+          },
+          {
+           "name": "Offset: unten links",
+           "enabled": true
+          },
+          {
+           "name": "Offset: rechts",
+           "enabled": true
+          },
+          {
+           "name": "Offset: Mitte",
+           "enabled": true
+          },
+          {
+           "name": "Offset: links",
+           "enabled": true
+          },
+          {
+           "name": "Offset: oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Offset: oben",
+           "enabled": true
+          },
+          {
+           "name": "Offset: oben links",
+           "enabled": true
+          },
+          {
+           "name": "Innen: oben links",
+           "enabled": true
+          },
+          {
+           "name": "Innen: oben",
+           "enabled": true
+          },
+          {
+           "name": "Innen: oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Innen: links",
+           "enabled": true
+          },
+          {
+           "name": "Innen: Mitte",
+           "enabled": true
+          },
+          {
+           "name": "Innen: rechts",
+           "enabled": true
+          },
+          {
+           "name": "Innen: unten links",
+           "enabled": true
+          },
+          {
+           "name": "Innen: unten",
+           "enabled": true
+          },
+          {
+           "name": "Innen: unten rechts",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: oben links",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: unterhalb",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: unten links",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: unten rechts",
+           "enabled": true
+          },
+          {
+           "name": "Schattenoptionen...",
+           "enabled": false
+          }
+         ]
+        },
+        {
+         "name": "Spiegelung",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Ohne",
+           "enabled": true
+          },
+          {
+           "name": "Enge Spiegelung: mit Berührung",
+           "enabled": true
+          },
+          {
+           "name": "Halbe Spiegelung: mit Berührung",
+           "enabled": true
+          },
+          {
+           "name": "Volle Spiegelung: mit Berührung",
+           "enabled": true
+          },
+          {
+           "name": "Enge Spiegelung: 4 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Halbe Spiegelung: 4 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Volle Spiegelung: 4 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Enge Spiegelung: 8 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Halbe Spiegelung: 8 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Volle Spiegelung: 8 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Spiegelungsoptionen...",
+           "enabled": false
+          }
+         ]
+        },
+        {
+         "name": "Leuchteffekt",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Ohne",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 5 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 5 Pt.; Orange, Akzentfarbe 2",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 5 Pt.; Dunkelgrün, Akzentfarbe 3",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 5 Pt.; Türkis, Akzentfarbe 4",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 5 Pt.; Pflaume, Akzentfarbe 5",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 5 Pt.; Grün, Akzentfarbe 6",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Orange, Akzentfarbe 2",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Dunkelgrün, Akzentfarbe 3",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Türkis, Akzentfarbe 4",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Pflaume, Akzentfarbe 5",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Grün, Akzentfarbe 6",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Orange, Akzentfarbe 2",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Dunkelgrün, Akzentfarbe 3",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Türkis, Akzentfarbe 4",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Pflaume, Akzentfarbe 5",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Grün, Akzentfarbe 6",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Orange, Akzentfarbe 2",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Dunkelgrün, Akzentfarbe 3",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Türkis, Akzentfarbe 4",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Pflaume, Akzentfarbe 5",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Grün, Akzentfarbe 6",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffektoptionen...",
+           "enabled": false
+          }
+         ]
+        },
+        {
+         "name": "Weiche Kanten",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": true
+          },
+          {
+           "name": "1 Punkt",
+           "enabled": true
+          },
+          {
+           "name": "2,5 Punkt",
+           "enabled": true
+          },
+          {
+           "name": "5 Punkt",
+           "enabled": true
+          },
+          {
+           "name": "10 Punkt",
+           "enabled": true
+          },
+          {
+           "name": "25 Punkt",
+           "enabled": true
+          },
+          {
+           "name": "50 Punkt",
+           "enabled": true
+          },
+          {
+           "name": "Optionen für weiche Kanten...",
+           "enabled": false
+          }
+         ]
+        },
+        {
+         "name": "Abschrägung",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": true
+          },
+          {
+           "name": "Rund",
+           "enabled": true
+          },
+          {
+           "name": "Leichte Absenkung",
+           "enabled": true
+          },
+          {
+           "name": "Säule",
+           "enabled": true
+          },
+          {
+           "name": "Schräge",
+           "enabled": true
+          },
+          {
+           "name": "Starke Abschrägung",
+           "enabled": true
+          },
+          {
+           "name": "Weiche Abrundung",
+           "enabled": true
+          },
+          {
+           "name": "Konvex",
+           "enabled": true
+          },
+          {
+           "name": "Silhouette",
+           "enabled": true
+          },
+          {
+           "name": "Ringförmige Absenkung",
+           "enabled": true
+          },
+          {
+           "name": "Säule auf abgerundetem Sockel",
+           "enabled": true
+          },
+          {
+           "name": "Gewölbter Rand",
+           "enabled": true
+          },
+          {
+           "name": "Rund konvex",
+           "enabled": true
+          },
+          {
+           "name": "3D-Optionen...",
+           "enabled": false
+          }
+         ]
+        },
+        {
+         "name": "3D-Drehung",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": true
+          },
+          {
+           "name": "Isometrisch: links abwärts",
+           "enabled": true
+          },
+          {
+           "name": "Isometrisch: rechts aufwärts",
+           "enabled": true
+          },
+          {
+           "name": "Isometrisch: oben aufwärts",
+           "enabled": true
+          },
+          {
+           "name": "Isometrisch: unten abwärts",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 1: nach links",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 1: nach rechts",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 1: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 2: nach links",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 2: nach rechts",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 2: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: von vorne",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: von links",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: von rechts",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: unterhalb",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: oberhalb",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: gemäßigt oberhalb",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: oberhalb",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: links kontrastierend",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: rechts kontrastierend",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: nach links gedreht, nach oben gekippt",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: nach rechts gedreht, nach oben gekippt",
+           "enabled": true
+          },
+          {
+           "name": "Schräg: oben links",
+           "enabled": true
+          },
+          {
+           "name": "Schräg: oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Schräg: unten links",
+           "enabled": true
+          },
+          {
+           "name": "Schräg: unten rechts",
+           "enabled": true
+          },
+          {
+           "name": "3D-Drehungsoptionen...",
+           "enabled": false
           }
          ]
         }
@@ -9238,18 +11199,349 @@
         },
         {
          "name": "Abschrägung",
-         "enabled": false,
-         "submenu": []
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": true
+          },
+          {
+           "name": "Rund",
+           "enabled": true
+          },
+          {
+           "name": "Leichte Absenkung",
+           "enabled": true
+          },
+          {
+           "name": "Säule",
+           "enabled": true
+          },
+          {
+           "name": "Schräge",
+           "enabled": true
+          },
+          {
+           "name": "Starke Abschrägung",
+           "enabled": true
+          },
+          {
+           "name": "Weiche Abrundung",
+           "enabled": true
+          },
+          {
+           "name": "Konvex",
+           "enabled": true
+          },
+          {
+           "name": "Silhouette",
+           "enabled": true
+          },
+          {
+           "name": "Ringförmige Absenkung",
+           "enabled": true
+          },
+          {
+           "name": "Säule auf abgerundetem Sockel",
+           "enabled": true
+          },
+          {
+           "name": "Gewölbter Rand",
+           "enabled": true
+          },
+          {
+           "name": "Rund konvex",
+           "enabled": true
+          },
+          {
+           "name": "3D-Optionen...",
+           "enabled": false
+          }
+         ]
         },
         {
          "name": "3D-Drehung",
-         "enabled": false,
-         "submenu": []
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": true
+          },
+          {
+           "name": "Isometrisch: links abwärts",
+           "enabled": true
+          },
+          {
+           "name": "Isometrisch: rechts aufwärts",
+           "enabled": true
+          },
+          {
+           "name": "Isometrisch: oben aufwärts",
+           "enabled": true
+          },
+          {
+           "name": "Isometrisch: unten abwärts",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 1: nach links",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 1: nach rechts",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 1: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 2: nach links",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 2: nach rechts",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 2: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: von vorne",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: von links",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: von rechts",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: unterhalb",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: oberhalb",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: gemäßigt oberhalb",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: oberhalb",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: links kontrastierend",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: rechts kontrastierend",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: nach links gedreht, nach oben gekippt",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: nach rechts gedreht, nach oben gekippt",
+           "enabled": true
+          },
+          {
+           "name": "Schräg: oben links",
+           "enabled": true
+          },
+          {
+           "name": "Schräg: oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Schräg: unten links",
+           "enabled": true
+          },
+          {
+           "name": "Schräg: unten rechts",
+           "enabled": true
+          },
+          {
+           "name": "3D-Drehungsoptionen...",
+           "enabled": false
+          }
+         ]
         },
         {
          "name": "Transformieren",
-         "enabled": false,
-         "submenu": []
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": true
+          },
+          {
+           "name": "Arch",
+           "enabled": true
+          },
+          {
+           "name": "Arch Down",
+           "enabled": true
+          },
+          {
+           "name": "Kreis",
+           "enabled": true
+          },
+          {
+           "name": "Schaltfläche",
+           "enabled": true
+          },
+          {
+           "name": "Rechteck",
+           "enabled": true
+          },
+          {
+           "name": "Anhalten",
+           "enabled": true
+          },
+          {
+           "name": "Dreieck: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Dreieck: nach unten",
+           "enabled": true
+          },
+          {
+           "name": "Chevron: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Chevron: nach unten",
+           "enabled": true
+          },
+          {
+           "name": "Kreis: innen",
+           "enabled": true
+          },
+          {
+           "name": "Kreis: außen",
+           "enabled": true
+          },
+          {
+           "name": "Bogen: verzerrt",
+           "enabled": true
+          },
+          {
+           "name": "Bogen: nach unten verzerrt",
+           "enabled": true
+          },
+          {
+           "name": "Verzerrter Kreis",
+           "enabled": true
+          },
+          {
+           "name": "Verzerrte Schaltfläche",
+           "enabled": true
+          },
+          {
+           "name": "Gekrümmt: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Gekrümmt: nach unten",
+           "enabled": true
+          },
+          {
+           "name": "Verzerrung nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Verzerrung nach unten",
+           "enabled": true
+          },
+          {
+           "name": "Welle: nach unten",
+           "enabled": true
+          },
+          {
+           "name": "Welle: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Doppelte Welle: nach unten und oben",
+           "enabled": true
+          },
+          {
+           "name": "Doppelte Welle: nach oben und unten",
+           "enabled": true
+          },
+          {
+           "name": "Vergrößern",
+           "enabled": true
+          },
+          {
+           "name": "Verkleinern",
+           "enabled": true
+          },
+          {
+           "name": "Vergrößern: nach unten",
+           "enabled": true
+          },
+          {
+           "name": "Verkleinern: nach unten",
+           "enabled": true
+          },
+          {
+           "name": "Vergrößern: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Verkleinern: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Verkleinern: nach oben, Vergrößern: nach unten",
+           "enabled": true
+          },
+          {
+           "name": "Vergrößern: zur Mitte, Verkleinern: nach oben und nach unten",
+           "enabled": true
+          },
+          {
+           "name": "Abnehmend: nach rechts",
+           "enabled": true
+          },
+          {
+           "name": "Abnehmend: nach links",
+           "enabled": true
+          },
+          {
+           "name": "Abnehmend: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Abnehmend: nach unten",
+           "enabled": true
+          },
+          {
+           "name": "Schräge: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Schräge: nach unten",
+           "enabled": true
+          },
+          {
+           "name": "Überlappend: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Überlappend: nach unten",
+           "enabled": true
+          }
+         ]
         }
        ]
       }
@@ -9530,13 +11822,13 @@
       {
        "name": "Tabelle zeichnen",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "button"
       },
       {
        "name": "Radierer",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "button"
       }
      ]
@@ -9900,8 +12192,264 @@
       {
        "name": "Diagrammelement hinzufügen",
        "deferred": false,
-       "enabled": false,
-       "type": "button"
+       "enabled": true,
+       "type": "dropdown",
+       "items": [
+        {
+         "name": "Achsen",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Primär horizontal",
+           "enabled": false
+          },
+          {
+           "name": "Primär vertikal",
+           "enabled": false
+          },
+          {
+           "name": "Weitere Achsenoptionen...",
+           "enabled": true
+          }
+         ]
+        },
+        {
+         "name": "Achsentitel",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Primär horizontal",
+           "enabled": true
+          },
+          {
+           "name": "Primär vertikal",
+           "enabled": true
+          },
+          {
+           "name": "Weitere Optionen für Achsentitel...",
+           "enabled": true
+          }
+         ]
+        },
+        {
+         "name": "Diagrammtitel",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Ohne",
+           "enabled": true
+          },
+          {
+           "name": "Über Diagramm",
+           "enabled": true
+          },
+          {
+           "name": "Mittig überlagert",
+           "enabled": true
+          },
+          {
+           "name": "Weitere Titeloptionen...",
+           "enabled": true
+          }
+         ]
+        },
+        {
+         "name": "Datenbeschriftungen",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": true
+          },
+          {
+           "name": "Mitte",
+           "enabled": true
+          },
+          {
+           "name": "Am Ende innerhalb",
+           "enabled": true
+          },
+          {
+           "name": "Am Anfang innerhalb",
+           "enabled": true
+          },
+          {
+           "name": "Am Ende außerhalb",
+           "enabled": true
+          },
+          {
+           "name": "Datenlegende",
+           "enabled": false
+          },
+          {
+           "name": "Weitere Datenbeschriftungsoptionen...",
+           "enabled": true
+          }
+         ]
+        },
+        {
+         "name": "Datentabelle",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": false
+          },
+          {
+           "name": "Mit Legendensymbolen",
+           "enabled": false
+          },
+          {
+           "name": "Ohne Legendensymbole",
+           "enabled": false
+          },
+          {
+           "name": "Weitere Datentabellenoptionen...",
+           "enabled": true
+          }
+         ]
+        },
+        {
+         "name": "Fehlerindikatoren",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": true
+          },
+          {
+           "name": "Standardfehler",
+           "enabled": true
+          },
+          {
+           "name": "Prozentsatz",
+           "enabled": true
+          },
+          {
+           "name": "Standardabweichung",
+           "enabled": true
+          },
+          {
+           "name": "Weitere Fehlerindikatorenoptionen...",
+           "enabled": true
+          }
+         ]
+        },
+        {
+         "name": "Gitternetzlinien",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Primäres Hauptgitter horizontal",
+           "enabled": true
+          },
+          {
+           "name": "Primäres Hauptgitter vertikal",
+           "enabled": false
+          },
+          {
+           "name": "Primäres Hilfsgitter horizontal",
+           "enabled": false
+          },
+          {
+           "name": "Primäres Hilfsgitter vertikal",
+           "enabled": false
+          },
+          {
+           "name": "Weitere Optionen für Gitternetzlinien...",
+           "enabled": true
+          }
+         ]
+        },
+        {
+         "name": "Legende",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": true
+          },
+          {
+           "name": "Rechts",
+           "enabled": true
+          },
+          {
+           "name": "Oben",
+           "enabled": true
+          },
+          {
+           "name": "Links",
+           "enabled": true
+          },
+          {
+           "name": "Unten",
+           "enabled": true
+          },
+          {
+           "name": "Weitere Legendenoptionen...",
+           "enabled": true
+          }
+         ]
+        },
+        {
+         "name": "Linien",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": false
+          },
+          {
+           "name": "Bezugslinien",
+           "enabled": false
+          },
+          {
+           "name": "Spannweitenlinien",
+           "enabled": false
+          }
+         ]
+        },
+        {
+         "name": "Trendlinie",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": true
+          },
+          {
+           "name": "Linear",
+           "enabled": true
+          },
+          {
+           "name": "Exponentiell",
+           "enabled": true
+          },
+          {
+           "name": "Gleitender Durchschnitt",
+           "enabled": true
+          },
+          {
+           "name": "Weitere Trendlinienoptionen...",
+           "enabled": true
+          }
+         ]
+        },
+        {
+         "name": "Pos./Neg. Abweichung",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": false
+          },
+          {
+           "name": "Pos./Neg. Abweichung",
+           "enabled": false
+          }
+         ]
+        }
+       ]
       },
       {
        "name": "Schnelllayout",
@@ -11409,16 +13957,544 @@
        "type": "dropdown",
        "items": [
         {
+         "name": "Voreinstellung",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 1",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 2",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 3",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 4",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 5",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 6",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 7",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 8",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 9",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 10",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 11",
+           "enabled": true
+          },
+          {
+           "name": "Voreinstellung 12",
+           "enabled": true
+          },
+          {
+           "name": "3D-Optionen...",
+           "enabled": false
+          }
+         ]
+        },
+        {
          "name": "Schatten",
          "enabled": true,
          "submenu": [
           {
-           "name": "Kein Schatten",
+           "name": "Ohne",
            "enabled": true
           },
           {
-           "name": "Außen: Versatz unten rechts",
+           "name": "Offset: unten rechts",
            "enabled": true
+          },
+          {
+           "name": "Offset: unten",
+           "enabled": true
+          },
+          {
+           "name": "Offset: unten links",
+           "enabled": true
+          },
+          {
+           "name": "Offset: rechts",
+           "enabled": true
+          },
+          {
+           "name": "Offset: Mitte",
+           "enabled": true
+          },
+          {
+           "name": "Offset: links",
+           "enabled": true
+          },
+          {
+           "name": "Offset: oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Offset: oben",
+           "enabled": true
+          },
+          {
+           "name": "Offset: oben links",
+           "enabled": true
+          },
+          {
+           "name": "Innen: oben links",
+           "enabled": true
+          },
+          {
+           "name": "Innen: oben",
+           "enabled": true
+          },
+          {
+           "name": "Innen: oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Innen: links",
+           "enabled": true
+          },
+          {
+           "name": "Innen: Mitte",
+           "enabled": true
+          },
+          {
+           "name": "Innen: rechts",
+           "enabled": true
+          },
+          {
+           "name": "Innen: unten links",
+           "enabled": true
+          },
+          {
+           "name": "Innen: unten",
+           "enabled": true
+          },
+          {
+           "name": "Innen: unten rechts",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: oben links",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: unterhalb",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: unten links",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: unten rechts",
+           "enabled": true
+          },
+          {
+           "name": "Schattenoptionen...",
+           "enabled": false
+          }
+         ]
+        },
+        {
+         "name": "Spiegelung",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Ohne",
+           "enabled": true
+          },
+          {
+           "name": "Enge Spiegelung: mit Berührung",
+           "enabled": true
+          },
+          {
+           "name": "Halbe Spiegelung: mit Berührung",
+           "enabled": true
+          },
+          {
+           "name": "Volle Spiegelung: mit Berührung",
+           "enabled": true
+          },
+          {
+           "name": "Enge Spiegelung: 4 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Halbe Spiegelung: 4 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Volle Spiegelung: 4 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Enge Spiegelung: 8 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Halbe Spiegelung: 8 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Volle Spiegelung: 8 Pt. Offset",
+           "enabled": true
+          },
+          {
+           "name": "Spiegelungsoptionen...",
+           "enabled": false
+          }
+         ]
+        },
+        {
+         "name": "Leuchteffekt",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Ohne",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 5 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 5 Pt.; Orange, Akzentfarbe 2",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 5 Pt.; Dunkelgrün, Akzentfarbe 3",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 5 Pt.; Türkis, Akzentfarbe 4",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 5 Pt.; Pflaume, Akzentfarbe 5",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 5 Pt.; Grün, Akzentfarbe 6",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Orange, Akzentfarbe 2",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Dunkelgrün, Akzentfarbe 3",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Türkis, Akzentfarbe 4",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Pflaume, Akzentfarbe 5",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 8 Pt.; Grün, Akzentfarbe 6",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Orange, Akzentfarbe 2",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Dunkelgrün, Akzentfarbe 3",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Türkis, Akzentfarbe 4",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Pflaume, Akzentfarbe 5",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 11 Pt.; Grün, Akzentfarbe 6",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Orange, Akzentfarbe 2",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Dunkelgrün, Akzentfarbe 3",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Türkis, Akzentfarbe 4",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Pflaume, Akzentfarbe 5",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffekt: 18 Pt.; Grün, Akzentfarbe 6",
+           "enabled": true
+          },
+          {
+           "name": "Leuchteffektoptionen...",
+           "enabled": false
+          }
+         ]
+        },
+        {
+         "name": "Weiche Kanten",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": true
+          },
+          {
+           "name": "1 Punkt",
+           "enabled": true
+          },
+          {
+           "name": "2,5 Punkt",
+           "enabled": true
+          },
+          {
+           "name": "5 Punkt",
+           "enabled": true
+          },
+          {
+           "name": "10 Punkt",
+           "enabled": true
+          },
+          {
+           "name": "25 Punkt",
+           "enabled": true
+          },
+          {
+           "name": "50 Punkt",
+           "enabled": true
+          },
+          {
+           "name": "Optionen für weiche Kanten...",
+           "enabled": false
+          }
+         ]
+        },
+        {
+         "name": "Abschrägung",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": true
+          },
+          {
+           "name": "Rund",
+           "enabled": true
+          },
+          {
+           "name": "Leichte Absenkung",
+           "enabled": true
+          },
+          {
+           "name": "Säule",
+           "enabled": true
+          },
+          {
+           "name": "Schräge",
+           "enabled": true
+          },
+          {
+           "name": "Starke Abschrägung",
+           "enabled": true
+          },
+          {
+           "name": "Weiche Abrundung",
+           "enabled": true
+          },
+          {
+           "name": "Konvex",
+           "enabled": true
+          },
+          {
+           "name": "Silhouette",
+           "enabled": true
+          },
+          {
+           "name": "Ringförmige Absenkung",
+           "enabled": true
+          },
+          {
+           "name": "Säule auf abgerundetem Sockel",
+           "enabled": true
+          },
+          {
+           "name": "Gewölbter Rand",
+           "enabled": true
+          },
+          {
+           "name": "Rund konvex",
+           "enabled": true
+          },
+          {
+           "name": "3D-Optionen...",
+           "enabled": false
+          }
+         ]
+        },
+        {
+         "name": "3D-Drehung",
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": true
+          },
+          {
+           "name": "Isometrisch: links abwärts",
+           "enabled": true
+          },
+          {
+           "name": "Isometrisch: rechts aufwärts",
+           "enabled": true
+          },
+          {
+           "name": "Isometrisch: oben aufwärts",
+           "enabled": true
+          },
+          {
+           "name": "Isometrisch: unten abwärts",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 1: nach links",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 1: nach rechts",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 1: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 2: nach links",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 2: nach rechts",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 2: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: von vorne",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: von links",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: von rechts",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: unterhalb",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: oberhalb",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: gemäßigt oberhalb",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: oberhalb",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: links kontrastierend",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: rechts kontrastierend",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: nach links gedreht, nach oben gekippt",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: nach rechts gedreht, nach oben gekippt",
+           "enabled": true
+          },
+          {
+           "name": "Schräg: oben links",
+           "enabled": true
+          },
+          {
+           "name": "Schräg: oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Schräg: unten links",
+           "enabled": true
+          },
+          {
+           "name": "Schräg: unten rechts",
+           "enabled": true
+          },
+          {
+           "name": "3D-Drehungsoptionen...",
+           "enabled": false
           }
          ]
         }
@@ -12111,18 +15187,349 @@
         },
         {
          "name": "Abschrägung",
-         "enabled": false,
-         "submenu": []
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": true
+          },
+          {
+           "name": "Rund",
+           "enabled": true
+          },
+          {
+           "name": "Leichte Absenkung",
+           "enabled": true
+          },
+          {
+           "name": "Säule",
+           "enabled": true
+          },
+          {
+           "name": "Schräge",
+           "enabled": true
+          },
+          {
+           "name": "Starke Abschrägung",
+           "enabled": true
+          },
+          {
+           "name": "Weiche Abrundung",
+           "enabled": true
+          },
+          {
+           "name": "Konvex",
+           "enabled": true
+          },
+          {
+           "name": "Silhouette",
+           "enabled": true
+          },
+          {
+           "name": "Ringförmige Absenkung",
+           "enabled": true
+          },
+          {
+           "name": "Säule auf abgerundetem Sockel",
+           "enabled": true
+          },
+          {
+           "name": "Gewölbter Rand",
+           "enabled": true
+          },
+          {
+           "name": "Rund konvex",
+           "enabled": true
+          },
+          {
+           "name": "3D-Optionen...",
+           "enabled": false
+          }
+         ]
         },
         {
          "name": "3D-Drehung",
-         "enabled": false,
-         "submenu": []
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": true
+          },
+          {
+           "name": "Isometrisch: links abwärts",
+           "enabled": true
+          },
+          {
+           "name": "Isometrisch: rechts aufwärts",
+           "enabled": true
+          },
+          {
+           "name": "Isometrisch: oben aufwärts",
+           "enabled": true
+          },
+          {
+           "name": "Isometrisch: unten abwärts",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 1: nach links",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 1: nach rechts",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 1: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 2: nach links",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 2: nach rechts",
+           "enabled": true
+          },
+          {
+           "name": "Von Achse 2: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: von vorne",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: von links",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: von rechts",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: unterhalb",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: oberhalb",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: gemäßigt oberhalb",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: oberhalb",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: links kontrastierend",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: rechts kontrastierend",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: nach links gedreht, nach oben gekippt",
+           "enabled": true
+          },
+          {
+           "name": "Perspektive: nach rechts gedreht, nach oben gekippt",
+           "enabled": true
+          },
+          {
+           "name": "Schräg: oben links",
+           "enabled": true
+          },
+          {
+           "name": "Schräg: oben rechts",
+           "enabled": true
+          },
+          {
+           "name": "Schräg: unten links",
+           "enabled": true
+          },
+          {
+           "name": "Schräg: unten rechts",
+           "enabled": true
+          },
+          {
+           "name": "3D-Drehungsoptionen...",
+           "enabled": false
+          }
+         ]
         },
         {
          "name": "Transformieren",
-         "enabled": false,
-         "submenu": []
+         "enabled": true,
+         "submenu": [
+          {
+           "name": "Keine",
+           "enabled": true
+          },
+          {
+           "name": "Arch",
+           "enabled": true
+          },
+          {
+           "name": "Arch Down",
+           "enabled": true
+          },
+          {
+           "name": "Kreis",
+           "enabled": true
+          },
+          {
+           "name": "Schaltfläche",
+           "enabled": true
+          },
+          {
+           "name": "Rechteck",
+           "enabled": true
+          },
+          {
+           "name": "Anhalten",
+           "enabled": true
+          },
+          {
+           "name": "Dreieck: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Dreieck: nach unten",
+           "enabled": true
+          },
+          {
+           "name": "Chevron: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Chevron: nach unten",
+           "enabled": true
+          },
+          {
+           "name": "Kreis: innen",
+           "enabled": true
+          },
+          {
+           "name": "Kreis: außen",
+           "enabled": true
+          },
+          {
+           "name": "Bogen: verzerrt",
+           "enabled": true
+          },
+          {
+           "name": "Bogen: nach unten verzerrt",
+           "enabled": true
+          },
+          {
+           "name": "Verzerrter Kreis",
+           "enabled": true
+          },
+          {
+           "name": "Verzerrte Schaltfläche",
+           "enabled": true
+          },
+          {
+           "name": "Gekrümmt: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Gekrümmt: nach unten",
+           "enabled": true
+          },
+          {
+           "name": "Verzerrung nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Verzerrung nach unten",
+           "enabled": true
+          },
+          {
+           "name": "Welle: nach unten",
+           "enabled": true
+          },
+          {
+           "name": "Welle: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Doppelte Welle: nach unten und oben",
+           "enabled": true
+          },
+          {
+           "name": "Doppelte Welle: nach oben und unten",
+           "enabled": true
+          },
+          {
+           "name": "Vergrößern",
+           "enabled": true
+          },
+          {
+           "name": "Verkleinern",
+           "enabled": true
+          },
+          {
+           "name": "Vergrößern: nach unten",
+           "enabled": true
+          },
+          {
+           "name": "Verkleinern: nach unten",
+           "enabled": true
+          },
+          {
+           "name": "Vergrößern: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Verkleinern: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Verkleinern: nach oben, Vergrößern: nach unten",
+           "enabled": true
+          },
+          {
+           "name": "Vergrößern: zur Mitte, Verkleinern: nach oben und nach unten",
+           "enabled": true
+          },
+          {
+           "name": "Abnehmend: nach rechts",
+           "enabled": true
+          },
+          {
+           "name": "Abnehmend: nach links",
+           "enabled": true
+          },
+          {
+           "name": "Abnehmend: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Abnehmend: nach unten",
+           "enabled": true
+          },
+          {
+           "name": "Schräge: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Schräge: nach unten",
+           "enabled": true
+          },
+          {
+           "name": "Überlappend: nach oben",
+           "enabled": true
+          },
+          {
+           "name": "Überlappend: nach unten",
+           "enabled": true
+          }
+         ]
         }
        ]
       }

@@ -57,6 +57,11 @@ SCENARIOS: dict[str, str] = {
         "file pptm": """p.newDoc(); const a = p.app; const {PRES_TYPES} = await import('/src/app.ts'); a.deck.pptx.setType(a.deck.pptx.presPath, PRES_TYPES.pptm);""",
         "file ppsx": """p.newDoc(); const a = p.app; a.newSlide(); const {PRES_TYPES} = await import('/src/app.ts'); a.deck.pptx.setType(a.deck.pptx.presPath, PRES_TYPES.ppsx);""",
         "file potx": """p.newDoc(); const a = p.app; const {PRES_TYPES} = await import('/src/app.ts'); a.deck.pptx.setType(a.deck.pptx.presPath, PRES_TYPES.potx);""",
+        "shape effects": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,120]},{kind:'ellipse',box:[450,100,160,160]},{kind:'textbox',box:[100,320,400,60],text:'Texteffekt'}]}); const a = p.app; const m = await import('/src/shapefx.ts');
+        const pick = (menu, path) => { let entries = menu; for (const lab of path.slice(0, -1)) { const e = entries.find(x => x.label === lab); entries = typeof e.submenu === 'function' ? e.submenu() : e.submenu; } entries.find(x => x.label === path[path.length - 1]).run(); };
+        a.editor.select([2]); pick(m.shapeEffectsMenu(a), ['Abschrägung', 'Rund']); pick(m.shapeEffectsMenu(a), ['3D-Drehung', 'Perspektive: von links']); pick(m.shapeEffectsMenu(a), ['Schatten', 'Offset: unten rechts']);
+        a.editor.select([3]); pick(m.shapeEffectsMenu(a), ['Leuchteffekt', 'Leuchteffekt: 11 Pt.; Orange, Akzentfarbe 2']); pick(m.shapeEffectsMenu(a), ['Spiegelung', 'Halbe Spiegelung: mit Berührung']);
+        a.editor.select([4]); pick(m.transformMenu(a), ['Arch']); pick(m.textThreeD(a, 'bevel'), ['Konvex']);""",
         "action": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]}]}); const a = p.app; a.newSlide(); a.setCurrent(0); a.editor.select([2]); const doc = a.deck.pptx.doc(a.slidePath()); const nv = doc.getElementsByTagNameNS('http://schemas.openxmlformats.org/presentationml/2006/main', 'cNvPr')[1]; a.editor.edit('Aktion', () => { const hl = doc.createElementNS('http://schemas.openxmlformats.org/drawingml/2006/main', 'a:hlinkClick'); hl.setAttributeNS('http://schemas.openxmlformats.org/officeDocument/2006/relationships', 'r:id', ''); hl.setAttribute('action', 'ppaction://hlinkshowjump?jump=nextslide'); nv.insertBefore(hl, nv.firstChild); });""",
         "animation copy": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]},{kind:'ellipse',box:[400,100,150,150]}]}); const a = p.app; a.editor.select([2]); const m = await import('/src/animations.ts'); m.addAnimation(a, 'entr', m.ANIMATION_GROUPS[0].items[2], false); m.copyAnimation(a, 2, 3);""",
         "trigger": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]},{kind:'ellipse',box:[400,100,150,150]}]}); const a = p.app; a.editor.select([3]); const m = await import('/src/animations.ts'); m.addAnimation(a, 'entr', m.ANIMATION_GROUPS[0].items[2], false); m.setTrigger(a, 2);""",
@@ -97,6 +102,14 @@ def ppt_shapes(slide) -> list[dict]:
                 d["paras"] = [{"text": str(tr.Paragraphs(k).Text).rstrip("\r"), "level": int(tr.Paragraphs(k).IndentLevel), "bold": int(tr.Paragraphs(k).Font.Bold),
                                "size": float(tr.Paragraphs(k).Font.Size), "align": int(tr.Paragraphs(k).ParagraphFormat.Alignment)} for k in range(1, tr.Paragraphs().Count + 1)]
                 d["runs"] = [{"text": str(tr.Runs(k).Text), "bold": int(tr.Runs(k).Font.Bold), "color": int(tr.Runs(k).Font.Color.RGB)} for k in range(1, tr.Runs().Count + 1)]
+        except Exception:  # noqa: BLE001
+            pass
+        try:
+            if int(s.ThreeD.BevelTopType) > 1 or int(s.Glow.Radius) or int(s.Reflection.Type) or int(s.Shadow.Visible):
+                d["fx"] = {"bevel": int(s.ThreeD.BevelTopType), "camera": int(s.ThreeD.PresetCamera), "shadow": int(s.Shadow.Visible), "glow": round(float(s.Glow.Radius)), "reflection": int(s.Reflection.Type)}
+            if s.HasTextFrame and int(s.TextFrame2.WarpFormat) not in (-2, 36):
+                d["warp"] = int(s.TextFrame2.WarpFormat)
+                d["textBevel"] = int(s.TextFrame2.ThreeD.BevelTopType)
         except Exception:  # noqa: BLE001
             pass
         if int(s.Type) == 13:
@@ -195,6 +208,11 @@ def check(name: str, r: dict, ours: dict) -> list[str]:
         want(len(r["slides"]) == 1, f"slides {len(r['slides'])}")
     elif name == "file ppsx":
         want(len(r["slides"]) == 2, f"slides {len(r['slides'])}")
+    elif name == "shape effects":
+        f = [x.get("fx") for x in sh]
+        # msoBevelCircle 3, msoCameraPerspectiveLeft 41 (any perspective camera is fine), glow 11 pt, a reflection; text: msoWarpFormat1 (Arch) 0, msoBevelConvex 8.
+        ok = f[0] and f[0]["bevel"] == 3 and f[0]["camera"] != 1 and f[0]["shadow"] == -1 and f[1] and f[1]["glow"] == 11 and f[1]["reflection"] != 0 and sh[2].get("warp") is not None and sh[2].get("textBevel") == 8
+        want(bool(ok), f"effects {f} warp {sh[2].get('warp')} {sh[2].get('textBevel')}")
     elif name == "summary zoom":
         s1 = r["slides"][1]["shapes"] if len(r["slides"]) > 1 else []
         want(len(r["slides"]) == 4 and [x["type"] for x in s1].count(-2) == 1 and r["sections"] == ["Standardabschnitt", "Zusammenfassungsabschnitt", "Teil 1", "Teil 2"],
