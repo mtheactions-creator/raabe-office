@@ -1,0 +1,55 @@
+{
+ "date": "2026-11-07",
+ "zoom": 66,
+ "scaling": "150 %",
+ "tried": [
+  {
+   "offset_px": 14,
+   "rotation": 0.0
+  },
+  {
+   "offset_px": 24,
+   "rotation": 0.0
+  },
+  {
+   "offset_px": 36,
+   "rotation": 0.0
+  },
+  {
+   "offset_px": 38,
+   "rotation": 43.8
+  },
+  {
+   "offset_px": 40,
+   "rotation": 43.1
+  },
+  {
+   "offset_px": 42,
+   "rotation": 42.4
+  },
+  {
+   "offset_px": 44,
+   "rotation": 41.8
+  },
+  {
+   "offset_px": 46,
+   "rotation": 41.1
+  },
+  {
+   "offset_px": 48,
+   "rotation": 40.5
+  },
+  {
+   "offset_px": 50,
+   "rotation": 39.8
+  },
+  {
+   "offset_px": 53,
+   "rotation": 38.9
+  },
+  {
+   "offset_px": 56,
+   "rotation": 38.0
+  }
+ ]
+}

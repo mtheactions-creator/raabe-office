@@ -1994,3 +1994,15 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
 - **Inventory counting:** two controls of one name in a tab (Formformat's two Schnellformatvorlagen) are compared
   with both our controls' entries, and a split button's own part and its arrow (Weitere Optionen) count as there
   when ours is a split or colour control. This counting fix alone moved 66 entries; the features above 53.
+- **Rotation handle (measured, replaces "our handle follows the pointer"):** probe_powerpoint_rothandle.py found
+  PowerPoint's handle 38-56 device pixels above the frame (66 % zoom, 150 % scaling), so 31 screen pixels to its
+  centre; ours is there now. PowerPoint turns the shape by the handle's centre, keeping the offset where it was
+  grabbed (rectangle and ellipse now the same as PowerPoint, the text box 1.3 degrees apart), and Umschalt snaps to the last
+  15-degree step passed (53.4 becomes 45, 82.2 becomes 75), not the nearest. The catalogue's PowerPoint side now
+  grabs the handle at 45 device pixels.
+- **Drags start at the first movement (measured):** PowerPoint's moves and handle drags in the catalogue land
+  one of the harness's 20 steps short (56.8 of 60 pt, 38 of 40): it measures a drag from the pointer's first
+  movement after the button went down, not from the button. Ours does the same for moves and the rotation
+  handle (size handles do not lose the step in PowerPoint); with a hand on the mouse the first movement is a
+  pixel or two, so nobody feels it. Catalogue 344 -> 349 of 377; the ellipse drags are now 2.3 pt short of
+  PowerPoint where they were 3.4 pt beyond (the WebView reports the first movement a little later).

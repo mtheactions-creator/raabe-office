@@ -209,7 +209,9 @@ class PowerPointSide(Side):
         x, y, w, h = self.shape_box(idx)
         if k == "rot":
             px, py = self.slide_point(x + w / 2, y)
-            return px, py - 27  # PowerPoint's rotation handle above the frame (device px at 150 %, estimate)
+            # PowerPoint's rotation handle above the frame: measured by probe_powerpoint_rothandle.py (a drag from
+            # 38 to 56 device px above the top edge rotates at 66 % zoom and 150 % scaling; the middle of that).
+            return px, py - 45
         fx = {"nw": 0, "n": .5, "ne": 1, "e": 1, "se": 1, "s": .5, "sw": 0, "w": 0}[k]
         fy = {"nw": 0, "n": 0, "ne": 0, "e": .5, "se": 1, "s": 1, "sw": 1, "w": .5}[k]
         return self.slide_point(x + w * fx, y + h * fy)

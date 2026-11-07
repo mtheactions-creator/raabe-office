@@ -879,7 +879,10 @@
     "slides": 1,
     "slide": 1,
     "selection": {
-     "type": "None"
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
     },
     "shapes": [
      {
@@ -889,7 +892,7 @@
        200.0,
        120.0
       ],
-      "rot": 0.0,
+      "rot": 53.4,
       "text": "Form"
      }
     ]
@@ -901,7 +904,10 @@
     "slides": 1,
     "slide": 1,
     "selection": {
-     "type": "None"
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
     },
     "shapes": [
      {
@@ -911,7 +917,7 @@
        200.0,
        120.0
       ],
-      "rot": 0.0,
+      "rot": 45.0,
       "text": "Form"
      }
     ]
@@ -2793,7 +2799,10 @@
     "slides": 1,
     "slide": 1,
     "selection": {
-     "type": "None"
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
     },
     "shapes": [
      {
@@ -2803,7 +2812,7 @@
        200.0,
        120.0
       ],
-      "rot": 0.0,
+      "rot": 53.4,
       "text": ""
      }
     ]
@@ -2815,7 +2824,10 @@
     "slides": 1,
     "slide": 1,
     "selection": {
-     "type": "None"
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
     },
     "shapes": [
      {
@@ -2825,7 +2837,7 @@
        200.0,
        120.0
       ],
-      "rot": 0.0,
+      "rot": 45.0,
       "text": ""
      }
     ]
@@ -4737,7 +4749,10 @@
     "slides": 1,
     "slide": 1,
     "selection": {
-     "type": "None"
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
     },
     "shapes": [
      {
@@ -4747,7 +4762,7 @@
        240.0,
        29.1
       ],
-      "rot": 0.0,
+      "rot": 82.2,
       "text": "Hallo Welt"
      }
     ]
@@ -4759,7 +4774,10 @@
     "slides": 1,
     "slide": 1,
     "selection": {
-     "type": "None"
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
     },
     "shapes": [
      {
@@ -4769,7 +4787,7 @@
        240.0,
        29.1
       ],
-      "rot": 0.0,
+      "rot": 75.0,
       "text": "Hallo Welt"
      }
     ]

@@ -73,6 +73,8 @@ interface TextState {
 }
 
 type Handle = "nw" | "n" | "ne" | "e" | "se" | "s" | "sw" | "w" | "rot";
+/** The rotation handle's centre above the frame's top edge in screen pixels (PowerPoint's: 31, measured). */
+const ROT_HANDLE_PX = 31;
 
 const HANDLE_POS: Record<Exclude<Handle, "rot">, [number, number]> = { nw: [0, 0], n: [0.5, 0], ne: [1, 0], e: [1, 0.5], se: [1, 1], s: [0.5, 1], sw: [0, 1], w: [0, 0.5] };
 const CURSORS: Record<string, string> = { nw: "nwse-resize", se: "nwse-resize", ne: "nesw-resize", sw: "nesw-resize", n: "ns-resize", s: "ns-resize", e: "ew-resize", w: "ew-resize" };
@@ -738,8 +740,10 @@ export class SlideEditor {
     const enterText = hit.text && textCapable && (v.ph || v.textBox || !!(v.text && !v.text.empty) || v.kind === "sp");
     const start = { x: e.clientX, y: e.clientY };
     let moved = false;
+    let firstMove: MouseEvent | null = null;
     const move = (m: MouseEvent) => {
       if (moved) return;
+      firstMove ??= m;
       if (Math.hypot(m.clientX - start.x, m.clientY - start.y) < 4) return;
       moved = true;
       window.removeEventListener("mousemove", move);
@@ -754,7 +758,7 @@ export class SlideEditor {
       }
       this.endText();
       this.render();
-      this.dragMove(e, true, m);
+      this.dragMove(e, true, firstMove ?? m, m);
     };
     const up = () => {
       window.removeEventListener("mousemove", move);
@@ -1011,10 +1015,13 @@ export class SlideEditor {
   }
 
   /** Drags the selected shapes; Umschalt keeps one direction, Strg copies, Alt switches snapping off. */
-  private dragMove(e: MouseEvent, started: boolean, first?: MouseEvent): void {
+  private dragMove(_e: MouseEvent, started: boolean, first?: MouseEvent, now?: MouseEvent): void {
     const views = this.selectedViews;
     if (!views.length) return;
-    const start = this.toSlide(e.clientX, e.clientY);
+    // PowerPoint measures a move from the pointer's first movement, not from where the button went down
+    // (measured: the catalogue's drags of 20 steps land one step short in PowerPoint). A drag recognised
+    // after the threshold (started) counts from the first move before it, and follows the pointer at once.
+    let start: { x: number; y: number } | null = started && first ? this.toSlide(first.clientX, first.clientY) : null;
     const box = union(views);
     const skip = new Set(views.map((v) => v.id));
     let dx = 0, dy = 0, copy = false;
@@ -1022,6 +1029,7 @@ export class SlideEditor {
     const frames = Array.from(this.overlay.querySelectorAll(".frame")) as HTMLElement[];
     const move = (m: MouseEvent) => {
       const p = this.toSlide(m.clientX, m.clientY);
+      if (!start) { start = p; return; }
       dx = p.x - start.x; dy = p.y - start.y;
       if (m.shiftKey) { if (Math.abs(dx) > Math.abs(dy)) dy = 0; else dx = 0; }
       const snapped = this.snap({ x: box.x + dx, y: box.y + dy, w: box.w, h: box.h }, skip, m.altKey);
@@ -1049,7 +1057,7 @@ export class SlideEditor {
     };
     window.addEventListener("mousemove", move);
     window.addEventListener("mouseup", up);
-    if (started && first) move(first);
+    if (started && now && now !== first) move(now);
   }
 
   /** Moves one shape (also a group member, through the group's child coordinates). */
@@ -1117,10 +1125,17 @@ export class SlideEditor {
     let result: S.Xfrm | null = null;
     // The handle follows the pointer's movement from where it was grabbed (not the pointer's place: the
     // handle is drawn around the edge; measured, PowerPoint sizes by the full movement).
-    const grab = this.toSlide(_e.clientX, _e.clientY);
+    let grab = this.toSlide(_e.clientX, _e.clientY);
     const [hfx, hfy] = k === "rot" ? [0.5, 0] : HANDLE_POS[k];
     const ang0 = (v.rot * Math.PI) / 180, hlx = (hfx - 0.5) * v.w, hly = (hfy - 0.5) * v.h;
-    const off = k === "rot" ? { x: 0, y: 0 } : { x: cx + hlx * Math.cos(ang0) - hly * Math.sin(ang0) - grab.x, y: cy + hlx * Math.sin(ang0) + hly * Math.cos(ang0) - grab.y };
+    // The rotation handle keeps where it was grabbed, too (measured: PowerPoint turns by the handle's centre,
+    // ROT_HANDLE_PX above the top edge, probe_powerpoint_rothandle.py).
+    const rl = -v.h / 2 - (ROT_HANDLE_PX / this.scale) * EMU_PX;
+    const offOf = () => k === "rot" ? { x: cx - rl * Math.sin(ang0) - grab.x, y: cy + rl * Math.cos(ang0) - grab.y }
+      : { x: cx + hlx * Math.cos(ang0) - hly * Math.sin(ang0) - grab.x, y: cy + hlx * Math.sin(ang0) + hly * Math.cos(ang0) - grab.y };
+    // The rotation handle turns from the pointer's first movement (as moves, see dragMove); the size handles
+    // from where the button went down (measured: they do not lose the first step).
+    let off: { x: number; y: number } | null = k === "rot" ? null : offOf();
     // A text box that takes its text's height (spAutoFit) keeps it: n and s change nothing (measured).
     const autoHeight = v.text?.body.autofit === "shape";
     if (autoHeight && (k === "n" || k === "s")) {
@@ -1130,10 +1145,17 @@ export class SlideEditor {
     }
     const move = (m: MouseEvent) => {
       const p0 = this.toSlide(m.clientX, m.clientY);
+      if (!off) { grab = p0; off = offOf(); return; }
       const p = { x: p0.x + off.x, y: p0.y + off.y };
       if (k === "rot") {
         let ang = (Math.atan2(p.y - cy, p.x - cx) * 180) / Math.PI + 90;
-        if (m.shiftKey) ang = Math.round(ang / 15) * 15;
+        // Umschalt: steps of 15 degrees, the last step passed (measured: 53.4 becomes 45, 82.2 becomes 75).
+        if (m.shiftKey) {
+          let a = ang;
+          while (a - v.rot > 180) a -= 360;
+          while (a - v.rot <= -180) a += 360;
+          ang = a >= v.rot ? Math.floor(a / 15) * 15 : Math.ceil(a / 15) * 15;
+        }
         ang = ((ang % 360) + 360) % 360;
         result = { x: v.x, y: v.y, w: v.w, h: v.h, rot: ang, flipH: v.flipH, flipV: v.flipV };
       } else result = resize(v, k, p, { shift: m.shiftKey, ctrl: m.ctrlKey, keepRatio: keepRatio && !m.shiftKey ? true : m.shiftKey && (k.length === 2) });
