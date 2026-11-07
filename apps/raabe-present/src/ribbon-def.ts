@@ -10,6 +10,11 @@ type Popup = (close: () => void) => HTMLElement;
 export interface RibbonContext {
   /** The design's colours for the palettes (PowerPoint shows the presentation's design there). */
   paletteTheme?(): import("@raabe/shell").PaletteTheme | undefined;
+  run(cmd: string): void;
+  /** Überprüfen > Kommentare anzeigen > Markup anzeigen: the comment markers on the slides. */
+  markup(): boolean; toggleMarkup(): void;
+  /** PowerPoint's names for some highlight colours. */
+  highlightNames?: Readonly<Record<string, string>>;
   fontName(): string;
   fontSize(): string;
   fontOptions(): { heading?: string; items: string[] }[];
@@ -82,7 +87,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
           controls: [rows(
             [fontName, fontSize, b("font.grow", "SV"), b("font.shrink", "J"), "gap", b("font.clear", "Q")],
             [b("font.bold", "1"), b("font.italic", "2"), b("font.underline", "3"), b("font.shadow", "5"), b("font.strike", "4"), dd("font.spacing", "6", "small", m.spacing), dd("font.case", "7", "small", m.case), "gap",
-              color("font.highlight", "TF", ctx.highlight, ctx.setHighlight, "highlight"), color("font.color", "FC", ctx.fontColor, ctx.setFontColor)])],
+              { ...color("font.highlight", "TF", ctx.highlight, ctx.setHighlight, "highlight"), names: ctx.highlightNames } as Control, color("font.color", "FC", ctx.fontColor, ctx.setFontColor)])],
         },
         {
           id: "paragraph", label: "Absatz", key: "ZA", icon: "paragraph-spacing", launcher: { cmd: "para.dialog", key: "BA" },
@@ -173,9 +178,9 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
       shrink: ["ink", "compare", "comments", "language", "accessibility", "proofing"],
       groups: [
         { id: "proofing", label: "Rechtschreibung", key: "ZD", icon: "spelling", controls: [b("review.spelling", "BE", "large"), b("review.thesaurus", "T", "large")] },
-        { id: "accessibility", label: "Barrierefreiheit", key: "ZB", icon: "check", controls: [b("review.accessibility", "B1", "large")] },
+        { id: "accessibility", label: "Barrierefreiheit", key: "ZB", icon: "check", controls: [split("review.accessibility", "B1", "large", [{ cmd: "review.accessibility" }, { label: "Alternativtext", run: () => ctx.run("shape.altTextPane") }, { label: "Lesereihenfolgebereich", run: () => ctx.run("arrange.selectionPane") }, "-", { label: "Optionen: Barrierefreiheit", disabled: true, run: () => {} }])] },
         { id: "language", label: "Sprache", key: "ZS", icon: "globe", controls: [dd("review.language", "SP", "large", [{ cmd: "review.setLanguage" }, { cmd: "review.languageOptions" }])] },
-        { id: "comments", label: "Kommentare", key: "ZK", icon: "comment", controls: [b("review.newComment", "N", "large"), b("review.deleteComment", "L", "large"), b("review.prevComment", "G", "large"), b("review.nextComment", "W", "large"), b("review.showComments", "O", "large")] },
+        { id: "comments", label: "Kommentare", key: "ZK", icon: "comment", controls: [b("review.newComment", "N", "large"), b("review.deleteComment", "L", "large"), b("review.prevComment", "G", "large"), b("review.nextComment", "W", "large"), split("review.showComments", "O", "large", [{ label: "Kommentarbereich", run: () => ctx.run("review.showComments") }, { label: "Markup anzeigen", checked: ctx.markup(), run: () => ctx.toggleMarkup() }])] },
                 { id: "ink", label: "Freihand", key: "ZF", icon: "pen", controls: [b("review.hideInk", "F", "large")] },
       ],
     },

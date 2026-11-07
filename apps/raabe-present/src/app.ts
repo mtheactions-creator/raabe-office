@@ -6,7 +6,7 @@ import { colorXml, specHex } from "./colors";
 import { colorWord } from "./quickstyles";
 import { Pptx, newPptx, PptxDom, phOf, type ShapeView, type DesignSpec } from "@raabe/ooxml";
 import {
-  Backstage, Commands, Keytips, Ribbon, TitleBar, baseName, colorGrid, h, icon, installTooltips, messageBox, showDialog, showMenu, showPopup, closePopup,
+  Backstage, Commands, Keytips, Ribbon, TitleBar, baseName, colorGrid, HIGHLIGHTS, h, icon, installTooltips, messageBox, showDialog, showMenu, showPopup, closePopup,
   type BackstageEntry, type Control, type Group, type MenuEntry, type Platform, type Tab,
 } from "@raabe/shell";
 import { SHAPE_GALLERY, shapeIcon, type GalleryEntry } from "@raabe/text-engine";
@@ -73,6 +73,9 @@ export const ACTION_BUTTONS: [string, string, string | null][] = [
 ];
 /** Office's Formen gallery and PowerPoint's own last group. */
 const PRESENT_SHAPES: { title: string; items: GalleryEntry[] }[] = [...SHAPE_GALLERY, { title: "Interaktive Schaltflächen", items: ACTION_BUTTONS.map(([geometry, label]): GalleryEntry => ({ tool: { geometry, kind: "shape" }, label })) }];
+
+/** PowerPoint's names for three of the highlight colours (Word's are the shell's). */
+export const PP_HIGHLIGHT_NAMES: Record<string, string> = { green: "Grelles Grün", darkGray: "Grau-50 %", lightGray: "Grau-25 %" };
 
 const stripExt = (n: string) => n.replace(/\.(pptx|pptm|ppsx|ppsm|potx|potm)$/i, "");
 
@@ -379,7 +382,11 @@ export class PresentApp implements EditorHost, PanelHost {
     this.updateChrome();
   }
 
+  /** Markup anzeigen (Überprüfen > Kommentare anzeigen): the comment markers are shown. */
+  showMarkup = true;
+
   commentMarkers(path: string): { x: number; y: number; n: number }[] {
+    if (!this.showMarkup) return [];
     return this.comments?.markers(path) ?? [];
   }
 
@@ -1954,7 +1961,7 @@ export class PresentApp implements EditorHost, PanelHost {
         [{ type: "combo", cmd: "font.name", width: 104, value: ctx.fontName, options: ctx.fontOptions, commit: ctx.setFont }, { type: "combo", cmd: "font.size", width: 44, value: ctx.fontSize, options: () => [{ items: ["8", "10", "12", "14", "18", "24", "28", "32", "36", "44", "54", "60", "72"] }], commit: ctx.setSize },
           b("font.grow"), b("font.shrink"), b("para.levelDown"), b("para.levelUp")],
         [b("font.bold"), b("font.italic"), b("font.underline"), b("para.left"), b("para.center"), b("para.right"),
-          { type: "color", cmd: "font.highlight", palette: "highlight", current: ctx.highlight, pick: ctx.setHighlight }, { type: "color", cmd: "font.color", palette: "font", current: ctx.fontColor, pick: ctx.setFontColor, theme: () => this.paletteTheme() }],
+          { type: "color", cmd: "font.highlight", palette: "highlight", current: ctx.highlight, pick: ctx.setHighlight, names: PP_HIGHLIGHT_NAMES }, { type: "color", cmd: "font.color", palette: "font", current: ctx.fontColor, pick: ctx.setFontColor, theme: () => this.paletteTheme() }],
       ] }]
       : [{ type: "color", cmd: "draw.fill", palette: "font", current: ctx.fillColor, pick: ctx.setFill, showLabel: true, theme: () => this.paletteTheme(), extra: () => this.fillExtra() }, { type: "color", cmd: "draw.outline", palette: "font", current: ctx.lineColor, pick: ctx.setLine, showLabel: true, extra: () => this.outlineExtra() , theme: () => this.paletteTheme() },
         { type: "button", cmd: "review.newComment", key: "", size: "large" }];
@@ -2687,7 +2694,9 @@ export class PresentApp implements EditorHost, PanelHost {
         this.formatRuns("Schriftart", (r) => T.setRunFont(r, face));
       },
       setSize: (v) => { const n = Number(v.replace(",", ".")); if (n > 0) this.setSizeAll(n); },
-      paletteTheme: () => this.paletteTheme(),
+      paletteTheme: () => this.paletteTheme(), highlightNames: PP_HIGHLIGHT_NAMES,
+      run: (cmd: string) => void this.commands.run(cmd),
+      markup: () => this.showMarkup, toggleMarkup: () => { this.showMarkup = !this.showMarkup; this.editor.render(); this.updateChrome(); },
       fontColor: () => `#${this.colorHex(this.lastFontColor)}`,
       setFontColor: (hex) => { this.lastFontColor = hex.replace("#", "").toUpperCase(); this.formatRuns("Schriftfarbe", (r) => T.setRunColor(r, this.lastFontColor)); },
       highlight: () => `#${this.lastHighlight}`,
@@ -3390,7 +3399,9 @@ export class PresentApp implements EditorHost, PanelHost {
           // Own panels (galleries, palettes): their entries as drawn, by their names.
           let panelItems: Item[] = [];
           try {
-            const el = "popup" in c && c.popup ? c.popup(() => {}) : c.type === "color" ? h("div", null, ...colorGrid(() => {}, app.paletteTheme()?.colors)) : c.type === "tiles" ? c.panel(() => {}) : null;
+            const el = "popup" in c && c.popup ? c.popup(() => {}) : c.type === "color" && c.palette === "highlight"
+              ? h("div", null, ...HIGHLIGHTS.map(([n, , label]) => h("button", { "aria-label": PP_HIGHLIGHT_NAMES[n] ?? label })), h("button", { "aria-label": "Keine Farbe" }))
+              : c.type === "color" ? h("div", null, ...colorGrid(() => {}, app.paletteTheme()?.colors)) : c.type === "tiles" ? c.panel(() => {}) : null;
             if (el) panelItems = Array.from(el.querySelectorAll("button, [role=menuitem], [role=button], [data-tip]")).map((b) => ({ name: (b.getAttribute("aria-label") || (b as HTMLElement).dataset.tip || b.textContent || "").trim() })).filter((x) => x.name);
           } catch { /* a panel that needs a selection */ }
           if (c.type === "color" && c.extra) panelItems.push(...entries(c.extra()));

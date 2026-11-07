@@ -184,9 +184,10 @@ export function showFontColors(anchor: DOMRect, pick: (hex: string) => void, hov
   showPopup(box, anchor);
 }
 
-export function showHighlights(anchor: DOMRect, pick: (name: string) => void, hover?: PaletteHover): void {
+/** `names`: other names for the colours (PowerPoint's "Grelles Grün" for Word's "Hellgrün"); Word's by default. */
+export function showHighlights(anchor: DOMRect, pick: (name: string) => void, hover?: PaletteHover, names?: Readonly<Record<string, string>>): void {
   const grid = h("div", { class: "swatches", style: "grid-template-columns:repeat(5, 22px)" },
-    ...HIGHLIGHTS.map(([name, hex, label]) => swatch(hex, label, () => pick(name), hover ? { commands: hover.commands, apply: () => hover.apply(name) } : undefined)));
+    ...HIGHLIGHTS.map(([name, hex, label]) => swatch(hex, names?.[name] ?? label, () => pick(name), hover ? { commands: hover.commands, apply: () => hover.apply(name) } : undefined)));
   const box = h("div", { class: "menu palette" }, grid, h("hr"),
     h("button", { onclick: () => { closePopup(); pick("none"); } }, "Keine Farbe"));
   showPopup(box, anchor);

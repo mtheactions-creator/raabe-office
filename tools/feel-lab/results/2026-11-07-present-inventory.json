@@ -343,214 +343,52 @@
        "panel": true,
        "items": [
         {
-         "name": "Weiß, Hintergrund 1"
-        },
-        {
-         "name": "Schwarz, Text 1"
-        },
-        {
-         "name": "Hellgrau, Hintergrund 2"
-        },
-        {
-         "name": "Dunkelblau, Text 2"
-        },
-        {
-         "name": "Dunkelblaugrün, Akzent 1"
-        },
-        {
-         "name": "Orange, Akzent 2"
-        },
-        {
-         "name": "Dunkelgrün, Akzent 3"
-        },
-        {
-         "name": "Türkis, Akzent 4"
-        },
-        {
-         "name": "Pflaume, Akzent 5"
-        },
-        {
-         "name": "Grün, Akzent 6"
-        },
-        {
-         "name": "Weiß, Hintergrund 1, dunkler 5%"
-        },
-        {
-         "name": "Schwarz, Text 1, heller 50%"
-        },
-        {
-         "name": "Hellgrau, Hintergrund 2, dunkler 10%"
-        },
-        {
-         "name": "Dunkelblau, Text 2, heller 90%"
-        },
-        {
-         "name": "Dunkelblaugrün, Akzent 1, heller 80%"
-        },
-        {
-         "name": "Orange, Akzent 2, heller 80%"
-        },
-        {
-         "name": "Dunkelgrün, Akzent 3, heller 80%"
-        },
-        {
-         "name": "Türkis, Akzent 4, heller 80%"
-        },
-        {
-         "name": "Pflaume, Akzent 5, heller 80%"
-        },
-        {
-         "name": "Grün, Akzent 6, heller 80%"
-        },
-        {
-         "name": "Weiß, Hintergrund 1, dunkler 15%"
-        },
-        {
-         "name": "Schwarz, Text 1, heller 35%"
-        },
-        {
-         "name": "Hellgrau, Hintergrund 2, dunkler 25%"
-        },
-        {
-         "name": "Dunkelblau, Text 2, heller 75%"
-        },
-        {
-         "name": "Dunkelblaugrün, Akzent 1, heller 60%"
-        },
-        {
-         "name": "Orange, Akzent 2, heller 60%"
-        },
-        {
-         "name": "Dunkelgrün, Akzent 3, heller 60%"
-        },
-        {
-         "name": "Türkis, Akzent 4, heller 60%"
-        },
-        {
-         "name": "Pflaume, Akzent 5, heller 60%"
-        },
-        {
-         "name": "Grün, Akzent 6, heller 60%"
-        },
-        {
-         "name": "Weiß, Hintergrund 1, dunkler 25%"
-        },
-        {
-         "name": "Schwarz, Text 1, heller 25%"
-        },
-        {
-         "name": "Hellgrau, Hintergrund 2, dunkler 50%"
-        },
-        {
-         "name": "Dunkelblau, Text 2, heller 50%"
-        },
-        {
-         "name": "Dunkelblaugrün, Akzent 1, heller 40%"
-        },
-        {
-         "name": "Orange, Akzent 2, heller 40%"
-        },
-        {
-         "name": "Dunkelgrün, Akzent 3, heller 40%"
-        },
-        {
-         "name": "Türkis, Akzent 4, heller 40%"
-        },
-        {
-         "name": "Pflaume, Akzent 5, heller 40%"
-        },
-        {
-         "name": "Grün, Akzent 6, heller 40%"
-        },
-        {
-         "name": "Weiß, Hintergrund 1, dunkler 35%"
-        },
-        {
-         "name": "Schwarz, Text 1, heller 15%"
-        },
-        {
-         "name": "Hellgrau, Hintergrund 2, dunkler 75%"
-        },
-        {
-         "name": "Dunkelblau, Text 2, heller 25%"
-        },
-        {
-         "name": "Dunkelblaugrün, Akzent 1, dunkler 25%"
-        },
-        {
-         "name": "Orange, Akzent 2, dunkler 25%"
-        },
-        {
-         "name": "Dunkelgrün, Akzent 3, dunkler 25%"
-        },
-        {
-         "name": "Türkis, Akzent 4, dunkler 25%"
-        },
-        {
-         "name": "Pflaume, Akzent 5, dunkler 25%"
-        },
-        {
-         "name": "Grün, Akzent 6, dunkler 25%"
-        },
-        {
-         "name": "Weiß, Hintergrund 1, dunkler 50%"
-        },
-        {
-         "name": "Schwarz, Text 1, heller 5%"
-        },
-        {
-         "name": "Hellgrau, Hintergrund 2, dunkler 90%"
-        },
-        {
-         "name": "Dunkelblau, Text 2, heller 10%"
-        },
-        {
-         "name": "Dunkelblaugrün, Akzent 1, dunkler 50%"
-        },
-        {
-         "name": "Orange, Akzent 2, dunkler 50%"
-        },
-        {
-         "name": "Dunkelgrün, Akzent 3, dunkler 50%"
-        },
-        {
-         "name": "Türkis, Akzent 4, dunkler 50%"
-        },
-        {
-         "name": "Pflaume, Akzent 5, dunkler 50%"
-        },
-        {
-         "name": "Grün, Akzent 6, dunkler 50%"
-        },
-        {
-         "name": "Dunkelrot"
-        },
-        {
-         "name": "Rot"
-        },
-        {
-         "name": "Orange"
-        },
-        {
          "name": "Gelb"
         },
         {
-         "name": "Hellgrün"
+         "name": "Grelles Grün"
         },
         {
-         "name": "Grün"
+         "name": "Türkis"
         },
         {
-         "name": "Hellblau"
+         "name": "Rosa"
         },
         {
          "name": "Blau"
         },
         {
+         "name": "Rot"
+        },
+        {
          "name": "Dunkelblau"
         },
         {
-         "name": "Lila"
+         "name": "Blaugrün"
+        },
+        {
+         "name": "Grün"
+        },
+        {
+         "name": "Violett"
+        },
+        {
+         "name": "Dunkelrot"
+        },
+        {
+         "name": "Dunkelgelb"
+        },
+        {
+         "name": "Grau-50 %"
+        },
+        {
+         "name": "Grau-25 %"
+        },
+        {
+         "name": "Schwarz"
+        },
+        {
+         "name": "Keine Farbe"
         }
        ]
       },
@@ -5780,7 +5618,26 @@
        "name": "Barrierefreiheit überprüfen",
        "deferred": false,
        "enabled": true,
-       "type": "button"
+       "type": "split",
+       "items": [
+        {
+         "name": "Barrierefreiheit überprüfen",
+         "deferred": false,
+         "enabled": true
+        },
+        {
+         "name": "Alternativtext",
+         "enabled": true
+        },
+        {
+         "name": "Lesereihenfolgebereich",
+         "enabled": true
+        },
+        {
+         "name": "Optionen: Barrierefreiheit",
+         "enabled": false
+        }
+       ]
       }
      ]
     },
@@ -5838,7 +5695,17 @@
        "name": "Kommentare anzeigen",
        "deferred": false,
        "enabled": true,
-       "type": "button"
+       "type": "split",
+       "items": [
+        {
+         "name": "Kommentarbereich",
+         "enabled": true
+        },
+        {
+         "name": "Markup anzeigen",
+         "enabled": true
+        }
+       ]
       }
      ]
     },

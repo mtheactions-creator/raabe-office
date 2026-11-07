@@ -49,7 +49,9 @@ export type Control =
       /** Livevorschau of a colour under the mouse (without remembering it as the button's colour). */
       preview?: (c: string) => void;
       /** The document's design: the palette shows its colours and hands theme picks over as references (RaabePresent). */
-      theme?: () => PaletteTheme | undefined }
+      theme?: () => PaletteTheme | undefined;
+      /** Other names for the highlight colours (PowerPoint's), by colour name. */
+      names?: Readonly<Record<string, string>> }
   /**
    * A gallery of drawn tiles (Bildformatvorlagen: the selected picture in each style).
    * `key` changes when the tiles must be drawn again; `panel` is the full gallery.
@@ -575,7 +577,7 @@ export class Ribbon {
             const pick = (v: string) => { c2.pick(v); this.opts.onDone?.(); };
             const hover = c2.preview ? { commands: this.commands, apply: c2.preview } : undefined;
             if (c2.palette === "font") showFontColors(arrow.getBoundingClientRect(), pick, hover, c2.extra ? this.paletteExtra(c2.extra()) : undefined, c2.theme?.());
-            else showHighlights(arrow.getBoundingClientRect(), pick, hover);
+            else showHighlights(arrow.getBoundingClientRect(), pick, hover, c2.names);
           },
         }, chev());
         this.updaters.push(() => {
