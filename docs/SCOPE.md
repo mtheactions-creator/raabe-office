@@ -129,6 +129,8 @@ The earlier priorities are replaced by that scope; this table says what each par
 | Übergänge (49 named as PowerPoint), Animationen (entrance, emphasis, exit; Animationsbereich, Start, timing) | built | Our own drawing of each effect; Morphen as our own drawing (shapes of the same name glide, others fade); Animationspfade: open |
 | Bildschirmpräsentation: PowerPoint's keys, pen, highlighter, laser, black/white screen, Referentenansicht (one screen), Einrichten | built | Second monitor: open |
 | Kommentare, Links, Kopf- und Fußzeile, Zeichnen (ink as freeform shapes), Video and Audio from files | built | |
+| Galleries as PowerPoint's: Schnellformatvorlagen (77), Tabellenformate (74), Bildformatvorlagen (28), Bild > Farbe and Korrekturen, Textkontur and Formkontur (Stärke, Striche), Formel tab | built | Our reading of each look (D-072); Künstlerische Effekte, Farbsättigung/Farbton, 3-D: open |
+| Übergänge > Sound: [Ohne Sound], [Vorherigen Sound anhalten], Anderer Sound..., wiederholen | built | PowerPoint's own sound files are not copied |
 | PDF and printing with Handzettel layouts | built | |
 | Aufzeichnen (narration, camera), live captions, Designer, Copilot, cloud | X | Left out (D-070) |
 | Macros | later | Last (D-070) |

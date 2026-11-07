@@ -340,6 +340,12 @@ class PresentSide(Side):
 
     def handle_point(self, idx, k):
         p = self.js(f"__present.handlePoint({self._sid(idx)}, {json.dumps(k)})")
+        if p is None and k != "rot":
+            # No handle there (a short side): the same point on the frame as on PowerPoint's side.
+            x, y, w, h = self.shape_box(idx)
+            fx = {"nw": 0, "n": .5, "ne": 1, "e": 1, "se": 1, "s": .5, "sw": 0, "w": 0}[k]
+            fy = {"nw": 0, "n": 0, "ne": 0, "e": .5, "se": 1, "s": 1, "sw": 1, "w": .5}[k]
+            return self.slide_point(x + w * fx, y + h * fy)
         if p is None:
             raise RuntimeError(f"no handle {k}")
         return self._client(p["x"], p["y"])
