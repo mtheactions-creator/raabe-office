@@ -252,3 +252,41 @@ export function animationOptions(app: PresentApp): { label: string; run: () => v
     }),
   }));
 }
+
+/**
+ * Animation übertragen (D-072): the effects of one shape put on another, each as its own click, as
+ * PowerPoint's brush does (the target's own effects are replaced).
+ */
+export function copyAnimation(app: PresentApp, fromId: number, toId: number): void {
+  const path = app.slidePath();
+  if (!path || fromId === toId) return;
+  app.editor.edit("Animation übertragen", () => {
+    const root = app.deck.pptx.doc(path).documentElement;
+    const timing = kid(root, "timing");
+    if (!timing) return;
+    const main = Array.from(timing.getElementsByTagNameNS(PptxDom.NS_P, "cTn")).find((c) => c.getAttribute("nodeType") === "mainSeq");
+    const list = kid(main, "childTnLst");
+    if (!list) return;
+    const sources = Array.from(timing.getElementsByTagNameNS(PptxDom.NS_P, "cTn"))
+      .filter((c) => c.hasAttribute("presetClass") && c.getElementsByTagNameNS(PptxDom.NS_P, "spTgt")[0]?.getAttribute("spid") === String(fromId))
+      .map((c) => c.parentElement!.cloneNode(true) as Element);
+    if (!sources.length) return;
+    removeEffects(timing, toId);
+    let next = maxCtnId(root);
+    for (const effect of sources) {
+      for (const t of Array.from(effect.getElementsByTagNameNS(PptxDom.NS_P, "spTgt"))) t.setAttribute("spid", String(toId));
+      for (const c of Array.from(effect.getElementsByTagNameNS(PptxDom.NS_P, "cTn"))) c.setAttribute("id", String(++next));
+      const top = effect.firstElementChild!;
+      const grp = nextGrp(timing, toId);
+      top.setAttribute("grpId", String(grp));
+      top.setAttribute("nodeType", "clickEffect");
+      top.setAttribute("id", String(++next));
+      const click = fragment(root.ownerDocument, `<p:par><p:cTn id="${++next}" fill="hold"><p:stCondLst><p:cond delay="indefinite"/></p:stCondLst><p:childTnLst><p:par><p:cTn id="${++next}" fill="hold"><p:stCondLst><p:cond delay="0"/></p:stCondLst><p:childTnLst/></p:cTn></p:par></p:childTnLst></p:cTn></p:par>`)[0];
+      click.getElementsByTagNameNS(PptxDom.NS_P, "childTnLst")[1].append(effect);
+      list.append(click);
+      let bld = kid(timing, "bldLst");
+      if (!bld) { bld = PptxDom.make(root.ownerDocument, "p:bldLst"); timing.append(bld); }
+      if (app.editor.shapeView(toId)?.kind === "sp") bld.append(PptxDom.make(root.ownerDocument, "p:bldP", { spid: toId, grpId: grp }));
+    }
+  });
+}

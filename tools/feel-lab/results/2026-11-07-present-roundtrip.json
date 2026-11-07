@@ -92,6 +92,10 @@
    "result": "same",
    "diff": []
   },
+  "animation copy": {
+   "result": "same",
+   "diff": []
+  },
   "group": {
    "result": "same",
    "diff": []
@@ -147,6 +151,6 @@
  },
  "summary": {
   "fixtures": "11/11",
-  "scenarios": "27/27"
+  "scenarios": "28/28"
  }
 }

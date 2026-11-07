@@ -323,7 +323,19 @@ export class PresentApp implements EditorHost, PanelHost {
     return url;
   }
 
+  /** Animation übertragen: the shape whose effects the next click takes (once, as PowerPoint's brush). */
+  private animBrush: number | null = null;
+
   selectionChanged(): void {
+    if (this.animBrush !== null) {
+      const sel = this.editor.sel;
+      if (sel.length === 1 && sel[0] !== this.animBrush) {
+        const from = this.animBrush;
+        this.animBrush = null;
+        document.body.classList.remove("painting");
+        void import("./animations").then((m) => { m.copyAnimation(this, from, sel[0]); this.animPane?.refresh(); });
+      }
+    }
     if (this.comments?.pane.isOpen) this.comments.pane.refresh();
     this.formatPane?.sync();
     this.animPane?.refresh();
@@ -1919,6 +1931,8 @@ export class PresentApp implements EditorHost, PanelHost {
     impl("review.setLanguage", () => import("./review").then((m) => m.languageDialog(this)), () => !!this.slidePath());
     impl("review.accessibility", () => import("./review").then((m) => m.accessibilityCheck(this)), () => this.deck.slides.length > 0);
     impl("anim.add", () => {}, () => this.editor.sel.length > 0);
+    impl("anim.painter", () => { this.animBrush = this.animBrush === null ? this.editor.sel[0] ?? null : null; document.body.classList.toggle("painting", this.animBrush !== null); this.updateChrome(); },
+      () => this.selectedHasAnimation() || this.animBrush !== null, () => this.animBrush !== null);
     impl("anim.gallery", () => {}, () => this.editor.sel.length > 0);
     impl("trans.gallery", () => {}, () => !!this.slidePath());
     const slide = () => !!this.slidePath();
