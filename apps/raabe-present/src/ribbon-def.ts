@@ -171,7 +171,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
       groups: [
         { id: "proofing", label: "Rechtschreibung", key: "ZD", icon: "spelling", controls: [b("review.spelling", "BE", "large"), b("review.thesaurus", "T", "large")] },
         { id: "accessibility", label: "Barrierefreiheit", key: "ZB", icon: "check", controls: [b("review.accessibility", "B1", "large")] },
-        { id: "language", label: "Sprache", key: "ZS", icon: "globe", controls: [b("review.language", "SP", "large")] },
+        { id: "language", label: "Sprache", key: "ZS", icon: "globe", controls: [dd("review.language", "SP", "large", [{ cmd: "review.setLanguage" }, { cmd: "review.languageOptions" }])] },
         { id: "comments", label: "Kommentare", key: "ZK", icon: "comment", controls: [b("review.newComment", "N", "large"), b("review.deleteComment", "L", "large"), b("review.prevComment", "G", "large"), b("review.nextComment", "W", "large"), b("review.showComments", "O", "large")] },
                 { id: "ink", label: "Freihand", key: "ZF", icon: "pen", controls: [b("review.hideInk", "F", "large")] },
       ],

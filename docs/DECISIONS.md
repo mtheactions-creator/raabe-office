@@ -1769,3 +1769,12 @@ Decided on our own during the overnight run, for the owner to confirm or overtur
 - **Bildformatvorlagen:** PowerPoint's 28 entries with their names; each sets outline, shape and effects
   (shadow, reflection, soft edges). Bevels and 3-D perspectives are left out (no 3-D drawing), so those
   entries keep only their frame and shadow.
+- **Ribbon by UI screenshots** (`compare_present_ui.py`, PowerPoint and RaabePresent side by side, captures not
+  committed): Entwurf shows the designs as a gallery and Anpassen as five large buttons; Übergänge and
+  Animationen show their effects in the ribbon; labelled stacks as PowerPoint's (Erweiterte Animation,
+  Animation neu anordnen, Masteransichten, Farbe/Graustufe, Einrichten with two columns of checkboxes);
+  ribbon buttons show no "..." (their accessible names keep it, as PowerPoint's).
+- **Überprüfen:** Sprache für die Korrekturhilfen festlegen (selected text, or the slide's or the whole
+  presentation's text, with a list of the school's languages); Barrierefreiheit überprüfen is our own short
+  check (Alternativtext of pictures, charts, tables and SmartArt; slide titles).
+- **Ansicht > Graustufe / Schwarzweiß** change only how the slides are shown, as in PowerPoint.

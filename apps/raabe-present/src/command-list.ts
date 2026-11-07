@@ -231,6 +231,8 @@ export const COMMANDS: Command[] = [
   cmd("review.thesaurus", "Thesaurus...", "thesaurus", { shortcut: "Umschalt+F7" }),
   cmd("review.accessibility", "Barrierefreiheit überprüfen", "check"),
   cmd("review.language", "Sprache", "globe"),
+  cmd("review.setLanguage", "Sprache für die Korrekturhilfen festlegen...", "globe"),
+  cmd("review.languageOptions", "Spracheinstellungen...", "globe", { deferred: true }),
   cmd("review.newComment", "Neuer Kommentar", "comment"),
   cmd("review.deleteComment", "Löschen", "comment-delete"),
   cmd("review.prevComment", "Zurück", "previous"),

@@ -448,6 +448,9 @@ export class PresentApp implements EditorHost, PanelHost {
   // ----- formatting ------------------------------------------------------------------------------------------
 
   /** Applies a run change to the selection: text being edited (the word at a bare caret), or every selected shape's text. */
+  /** formatRuns for the feature modules (Sprache). */
+  formatText(label: string, fn: (rPr: Element) => void): void { this.formatRuns(label, fn); }
+
   private formatRuns(label: string, fn: (rPr: Element) => void): void {
     const ed = this.editor, t = ed.text;
     if (t) {
@@ -1847,6 +1850,9 @@ export class PresentApp implements EditorHost, PanelHost {
     impl("view.color", colorMode("color"), undefined, () => !document.body.classList.contains("view-gray") && !document.body.classList.contains("view-bw"));
     impl("view.grayscale", colorMode("gray"), undefined, () => document.body.classList.contains("view-gray"));
     impl("view.bw", colorMode("bw"), undefined, () => document.body.classList.contains("view-bw"));
+    impl("review.language", () => {}, () => !!this.slidePath());
+    impl("review.setLanguage", () => import("./review").then((m) => m.languageDialog(this)), () => !!this.slidePath());
+    impl("review.accessibility", () => import("./review").then((m) => m.accessibilityCheck(this)), () => this.deck.slides.length > 0);
     impl("anim.add", () => {}, () => this.editor.sel.length > 0);
     impl("anim.gallery", () => {}, () => this.editor.sel.length > 0);
     impl("trans.gallery", () => {}, () => !!this.slidePath());
