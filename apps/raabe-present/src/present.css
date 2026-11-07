@@ -241,3 +241,7 @@ body.printing #print-root { display: block; position: fixed; left: 0; top: 0; z-
 .rgallery.fx-tiles .item.tile-item { font: 11px "Segoe UI", sans-serif; padding: 2px; }
 .rgallery.fx-tiles .pfx-tile svg { width: 24px; height: 24px; }
 .rgallery.design-tiles .item.tile-item { padding: 2px; }
+
+/* Ansicht > Graustufe / Schwarzweiß: the slides in the editor and the panel. */
+body.view-gray .slide { filter: grayscale(1); }
+body.view-bw .slide { filter: grayscale(1) contrast(4) brightness(1.2); }

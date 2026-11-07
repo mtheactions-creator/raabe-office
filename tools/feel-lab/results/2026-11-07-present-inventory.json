@@ -3757,7 +3757,7 @@
       {
        "name": "Übergangseffekte",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "tiles",
        "panel": true,
        "items": [
@@ -3999,7 +3999,7 @@
       {
        "name": "Animationsstil",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "tiles",
        "panel": true,
        "items": [
@@ -4175,7 +4175,7 @@
       {
        "name": "Animation hinzufügen",
        "deferred": false,
-       "enabled": false,
+       "enabled": true,
        "type": "dropdown",
        "panel": true,
        "items": [

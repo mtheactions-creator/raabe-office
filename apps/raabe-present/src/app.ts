@@ -117,7 +117,7 @@ export class PresentApp implements EditorHost, PanelHost {
       onNewDoc: () => this.newDoc(),
       onSearchDone: () => this.focusMain(),
     });
-    this.ribbon = new Ribbon(this.commands, ribbonTabs(this.ribbonContext()), { onFile: () => this.backstage.open("home"), onDone: () => this.focusMain(), tabRowRight: [] });
+    this.ribbon = new Ribbon(this.commands, this.ribbonLabels(ribbonTabs(this.ribbonContext())), { onFile: () => this.backstage.open("home"), onDone: () => this.focusMain(), tabRowRight: [] });
     this.backstage = new Backstage(this.commands, this.backstageEntries());
     this.backstage.onClose(() => this.focusMain());
     this.notes = document.createElement("textarea");
@@ -1361,7 +1361,7 @@ export class PresentApp implements EditorHost, PanelHost {
   private tabCache = new Map<string, Tab>();
   private cachedTab(id: string, make: () => Tab): Tab {
     let t = this.tabCache.get(id);
-    if (!t) { t = make(); this.tabCache.set(id, t); }
+    if (!t) { t = this.ribbonLabels([make()])[0]; this.tabCache.set(id, t); }
     return t;
   }
   shapeTab(): Tab { return this.cachedTab("shape", () => CT.shapeFormatTab(this.host2())); }
@@ -1466,6 +1466,23 @@ export class PresentApp implements EditorHost, PanelHost {
     const rows = h("input", { type: "number", value: "2", min: "1", max: "75", style: "width:60px" }) as HTMLInputElement;
     const r = await showDialog({ title: "Tabelle einfügen", body: h("div", { class: "form" }, h("label", null, "Spaltenanzahl: ", cols), h("label", null, "Zeilenanzahl: ", rows)), buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
     if (r) this.insertTable(Math.max(1, Math.min(75, Number(rows.value) || 2)), Math.max(1, Math.min(75, Number(cols.value) || 5)));
+  }
+
+  /**
+   * PowerPoint's ribbon shows no "..." on its buttons ("Zoom", "Kopf- und Fußzeile"), although the commands
+   * (and their accessible names) have it (UI screenshot, D-072): the visible labels lose it.
+   */
+  private ribbonLabels(tabs: Tab[]): Tab[] {
+    const fix = (c: Control): void => {
+      if (c.type === "stack") { c.items.forEach(fix); return; }
+      if (c.type === "rows") { c.rows.flat().forEach((x) => { if (x !== "gap") fix(x); }); return; }
+      if ((c.type === "button" || c.type === "dropdown" || c.type === "split") && !c.label && this.commands.has(c.cmd)) {
+        const l = this.commands.get(c.cmd).label;
+        if (l.endsWith("...")) (c as { label?: string }).label = l.slice(0, -3);
+      }
+    };
+    for (const t of tabs) for (const g of t.groups) g.controls.forEach(fix);
+    return tabs;
   }
 
   /** Entwurf > Designs in the ribbon: each design's title slide, small; the arrow opens the full gallery. */
@@ -1820,6 +1837,11 @@ export class PresentApp implements EditorHost, PanelHost {
     impl("show.setup", () => import("./showsetup").then((m) => m.showSetupDialog(this.deck)));
     impl("show.useTimings", () => {}, undefined, () => true);
     impl("anim.pane", () => this.animPane.toggle(), undefined, () => this.animPane.isOpen);
+    // Ansicht > Farbe/Graustufe: how slides are shown while editing (the file is unchanged, as in PowerPoint).
+    const colorMode = (m: "color" | "gray" | "bw") => () => { document.body.classList.remove("view-gray", "view-bw"); if (m !== "color") document.body.classList.add(`view-${m}`); this.updateChrome(); };
+    impl("view.color", colorMode("color"), undefined, () => !document.body.classList.contains("view-gray") && !document.body.classList.contains("view-bw"));
+    impl("view.grayscale", colorMode("gray"), undefined, () => document.body.classList.contains("view-gray"));
+    impl("view.bw", colorMode("bw"), undefined, () => document.body.classList.contains("view-bw"));
     impl("anim.add", () => {}, () => this.editor.sel.length > 0);
     impl("anim.gallery", () => {}, () => this.editor.sel.length > 0);
     impl("trans.gallery", () => {}, () => !!this.slidePath());
@@ -2767,6 +2789,8 @@ export class PresentApp implements EditorHost, PanelHost {
         type Item = { name: string; type?: string; deferred?: boolean; enabled?: boolean; items?: Item[]; submenu?: Item[]; panel?: boolean };
         const cmdItem = (id: string, label?: string): Item => {
           const c = app.commands.get(id);
+          // The accessible name keeps the "..." the visible label drops (as PowerPoint's).
+          if (label && c.label === `${label}...`) label = c.label;
           return { name: label ?? c.label, deferred: !!c.deferred, enabled: app.commands.isImplemented(id) };
         };
         const entries = (menu: MenuEntry[]): Item[] => menu.flatMap((m): Item[] => {

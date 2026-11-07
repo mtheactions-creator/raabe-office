@@ -181,10 +181,10 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
       shrink: ["window", "color", "zoom", "show", "master", "views"],
       groups: [
         { id: "views", label: "Präsentationsansichten", key: "ZP", icon: "print-layout", controls: [b("view.normal", "K", "large"), b("view.outline", "I", "large"), b("view.sorter", "U", "large"), b("view.notesPage", "P", "large"), b("view.reading", "C", "large")] },
-        { id: "master", label: "Masteransichten", key: "ZM", icon: "slide-layout", controls: [b("view.slideMaster", "M", "large"), b("view.handoutMaster", "B", "large"), b("view.notesMaster", "Ä", "large")] },
+        { id: "master", label: "Masteransichten", key: "ZM", icon: "slide-layout", controls: [stack(b("view.slideMaster", "M", "medium"), b("view.handoutMaster", "B", "medium"), b("view.notesMaster", "Ä", "medium"))] },
         { id: "show", label: "Anzeigen", key: "ZA", icon: "ruler", launcher: { cmd: "view.gridDialog", key: "R" }, controls: [stack(check("view.ruler", "L"), check("view.gridlines", "G"), check("view.guides", "H")), b("view.notes", "O", "large")] },
         { id: "zoom", label: "Zoom", key: "ZZ", icon: "zoom", controls: [b("view.zoom", "DO", "large"), b("view.fit", "F", "large")] },
-        { id: "color", label: "Farbe/Graustufe", key: "ZF", icon: "colors", controls: [stack(b("view.color", "Q"), b("view.grayscale", "ß"), b("view.bw", "W"))] },
+        { id: "color", label: "Farbe/Graustufe", key: "ZF", icon: "colors", controls: [stack(b("view.color", "Q", "medium"), b("view.grayscale", "ß", "medium"), b("view.bw", "W", "medium"))] },
         { id: "window", label: "Fenster", key: "ZW", icon: "app", controls: [b("view.newWindow", "N", "large"), stack(b("view.arrangeAll", "A"), b("view.cascade", "Ü"), b("view.moveSplit", "T")), b("view.switchWindow", "E", "large")] },
         { id: "macros", label: "Makros", key: "Z0", icon: "settings", controls: [b("view.macros", "0", "large")] },
       ],
