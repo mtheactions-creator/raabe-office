@@ -40,11 +40,6 @@ SHAPES = "__present.state().shapes.filter((s) => !s.ph).length"
 ASPECT = RECT["box"][3] / RECT["box"][2]  # the test rectangle's height / width
 
 
-def snap15(dx, dy, v0):
-    rx, ry = G["rot_rel"]
-    a = round((math.degrees(math.atan2(ry + dy, rx + dx)) + 90) / 15) * 15
-    return a - 360 if a > 180 else a
-
 
 def shape(name: str, kind: dict, prop: str, expect, start: str, setup: str = "", tol: float = 2.0, snap: float = 5.0, **kw) -> tuple[Anchor, dict]:
     probe = f"(() => {{ const r = __present.shapeRect({SID}); return r ? r.{prop} : null; }})()"

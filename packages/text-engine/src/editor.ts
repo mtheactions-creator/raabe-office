@@ -7018,8 +7018,16 @@ cropFill(fit: boolean): void {
       off();
       end();
       if (this.guides.length) { this.guides = []; this.update(); }
-      // Strg held when the button goes up: a copy goes there, the object stays where it was (Word; D-128).
-      if (!handle && floating && ev.ctrlKey && !first) this.copyMovedFloat(depth);
+      const outside = ev.clientX < 0 || ev.clientY < 0 || ev.clientX >= innerWidth || ev.clientY >= innerHeight;
+      if (!handle && floating && outside && !first && this.undoStack.length > depth) {
+        // Let go outside the window: Word hands the object to the system's drag and drop there, and it stays where it
+        // was when nothing takes it (recorded, D-128).
+        this.restoreSnapshot(this.undoStack.splice(depth)[0]);
+      } else if (!handle && floating && e.ctrlKey && ev.ctrlKey && !first) {
+        // Strg held from the press to the release: a copy goes there, the object stays where it was. Word moves the
+        // object when Strg is pressed only during the drag (recorded, D-128).
+        this.copyMovedFloat(depth);
+      }
       this.emit(true);
     };
     const off = this.escapable(end);

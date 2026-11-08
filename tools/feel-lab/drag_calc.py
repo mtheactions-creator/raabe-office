@@ -68,10 +68,6 @@ def corner_centre(dx: float, dy: float, v0: dict) -> dict:
     return {"x": v0["x"] + dx, "y": v0["y"] + dy, "l": v0["l"] - dx, "t": v0["t"] - dy}
 
 
-def snap15(dx: float, dy: float, v0: float, ctx: dict) -> float:
-    a = math.degrees(math.atan2(ctx["y"] + dy - ctx["cy"], ctx["x"] + dx - ctx["cx"])) + 90
-    return round(a / 15) * 15
-
 
 def col_border(col: int) -> Anchor:
     return Anchor(

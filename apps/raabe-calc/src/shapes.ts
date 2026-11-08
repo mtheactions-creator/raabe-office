@@ -9,6 +9,7 @@ import { h, icon, type MenuEntry, type PaneControl, type PaneSection, type PaneS
 import type { SheetShape } from "@raabe/sheet-engine";
 import { presetAdjust, presetGeometry, shadeLinear, SHAPE_GALLERY, SHAPE_NAMES, shapeElement, shapeIcon, shapeTextRect,
   type GalleryEntry, type PictureFormat, type ShapeInfo } from "@raabe/text-engine";
+import { sheetAxes } from "./grid/metrics";
 import type { CalcApp } from "./app";
 
 type Box = { x: number; y: number; w: number; h: number };
@@ -74,9 +75,17 @@ export function shapesFeature(app: CalcApp) {
   // ----- places ---------------------------------------------------------------------------------
 
   function anchorAt(x: number, y: number): SheetShape["from"] {
-    const hit = app.grid.hitCell(x, y);
+    const hit = app.grid.hitCell(Math.max(0, x), Math.max(0, y));
     const c = app.grid.rectOnCanvas({ r0: hit.row, c0: hit.col, r1: hit.row, c1: hit.col })!;
-    return { col: hit.col, row: hit.row, x: Math.max(0, (x - c.x) / z()), y: Math.max(0, (y - c.y) / z()) };
+    let col = hit.col, row = hit.row, ox = (x - c.x) / z(), oy = (y - c.y) / z();
+    // Left of or above the first cell shown (a part scrolled out of view, D-127): counted back through the sheet's
+    // columns and rows, so the object stays where it was dropped instead of jumping to the first cell shown.
+    if (ox < 0 || oy < 0) {
+      const ax = sheetAxes(app.sheet);
+      if (ox < 0) { const abs = Math.max(0, ax.cols.pos(col) + ox); col = ax.cols.at(abs); ox = abs - ax.cols.pos(col); }
+      if (oy < 0) { const abs = Math.max(0, ax.rows.pos(row) + oy); row = ax.rows.at(abs); oy = abs - ax.rows.pos(row); }
+    }
+    return { col, row, x: Math.max(0, ox), y: Math.max(0, oy) };
   }
 
   function boxOf(s: SheetShape): Box | null {

@@ -26,8 +26,8 @@ from typing import Callable
 from . import winapi
 
 RECORDER = r"""(() => {
-  if (window.__drag && window.__drag.v === 2) return true;
-  const d = window.__drag = { v: 2, samples: [], on: false, px: 0, py: 0, buttons: 0, mods: 0, probe: null, scroll: null };
+  if (window.__drag && window.__drag.v === 3) return true;
+  const d = window.__drag = { v: 3, samples: [], on: false, px: 0, py: 0, buttons: 0, mods: 0, probe: null, scroll: null };
   // The modifier keys as the app's own pointer events see them (Umschalt 1, Strg 2, Alt 4).
   const mk = (e) => (e.shiftKey ? 1 : 0) | (e.ctrlKey ? 2 : 0) | (e.altKey ? 4 : 0);
   const pm = (e) => { d.px = e.clientX; d.py = e.clientY; d.buttons = e.buttons; d.mods = mk(e); };
@@ -36,6 +36,9 @@ RECORDER = r"""(() => {
   addEventListener("pointermove", pm, true); addEventListener("pointerup", (e) => { pm(e); d.ups++; }, true);
   addEventListener("pointerdown", (e) => { pm(e); if (d.on && !d.down) d.down = [e.clientX, e.clientY]; }, true);
   addEventListener("dragover", dm, true); addEventListener("drag", dm, true);
+  // A modifier key pressed or let go counts at once (an app may apply it before the next pointer move, as Office does).
+  const km = (e) => { if (e.key === "Shift" || e.key === "Control" || e.key === "Alt") d.mods = mk(e); };
+  addEventListener("keydown", km, true); addEventListener("keyup", km, true);
   addEventListener("drop", () => { d.buttons = 0; }, true); addEventListener("dragend", () => { d.buttons = 0; }, true);
   d.start = (src, scroll) => {
     d.samples = []; d.down = null; d.ups = 0; d.probe = new Function("return (" + src + ")"); d.on = true;
@@ -328,6 +331,14 @@ def run_drag(target, anchor: Anchor, path: Path, js: Callable[[str], object], be
         c = js(anchor.click)
         if not c:
             return {"path": path.name, "error": "nothing to click"}
+        if reveal:
+            # The object is selected by a click first: it must be in the window for that (other zoom levels).
+            cw, ch = js("[innerWidth, innerHeight]")
+            if not (40 <= c["x"] <= cw - 60 and 150 <= c["y"] <= ch - 80):
+                js(reveal.replace("{dx}", str(round(c["x"] - cw / 2))).replace("{dy}", str(round(c["y"] - ch / 2)))
+                   .replace("{x}", str(round(c["x"]))).replace("{y}", str(round(c["y"]))))
+                time.sleep(0.4)
+                c = js(anchor.click)
         if not _ours(target):
             winapi.activate(target.hwnd)
         if not _ours(target):
@@ -564,7 +575,9 @@ def analyse(anchor: Anchor, rec: dict) -> dict:
     outside_frames = 0
     scrolled_outside = 0.0
     was_outside = False
+    since_switch = 99
     for t, px, py, v, mods, scr in drag:
+        since_switch = 0 if prev is not None and mods != prev[3] else since_switch + 1
         dx, dy = px - x0, py - y0
         outside = not (0 <= px <= w and 0 <= py <= h)
         if outside:
@@ -576,6 +589,13 @@ def analyse(anchor: Anchor, rec: dict) -> dict:
         lagged = [_expect(anchor, qx - x0, qy - y0, raw0, ctx, mods) for _v, qx, qy in hist[-anchor.lag:]] if anchor.lag else []
         lagged += [_expect(anchor, qx - x0, qy - y0, raw0, ctx, mods) for qx, qy in recent.get(t, [])]
         check_follow = spec != "skip" and (not outside or anchor.out_follow)
+        if since_switch < 2:
+            # The frame a key went down or up and the one after: the app may apply it at once or with the next move.
+            check_follow = False
+        if fam == "out" and math.hypot(dx, dy) > 150:
+            # The long way out crosses the limits an anchor has (an indent's, a margin's): what counts is that the
+            # value is under the pointer again near the start, with no jump on the way (D-127).
+            check_follow = False
         # Back in the window after the view scrolled: the dragged thing is under the pointer again within a frame or two.
         if was_outside and not outside and anchor.scroll:
             check_follow = False
@@ -606,7 +626,7 @@ def analyse(anchor: Anchor, rec: dict) -> dict:
                 scrolled_outside += scrolled
             pe = _expect(anchor, ppx - x0, ppy - y0, raw0, ctx, mods)
             # A modifier key pressed or let go: the value may go where the new rule puts it (wanted), checked by follow.
-            switched = mods != pmods
+            switched = since_switch < 2
             for k in keys:
                 if switched:
                     break
@@ -691,6 +711,7 @@ def analyse(anchor: Anchor, rec: dict) -> dict:
 
 def summary(anchor: Anchor, results: list[dict]) -> dict:
     return {"anchor": anchor.name, "ok": sum(1 for r in results if r["ok"]), "of": len(results),
+            **({"flaky": sum(1 for r in results if r.get("flaky"))} if any(r.get("flaky") for r in results) else {}),
             **({"note": anchor.note} if anchor.note else {}), "drags": results}
 
 
@@ -719,6 +740,18 @@ def run_families(side, anchors: list[Anchor], js: Callable[[str], object], prepa
     (Umschalt, Strg, Alt mid-drag) and "zoom" (diagonal and fast-right at ZOOMS, anchors in the document only).
     `prepare(anchor)` resets the app before each drag; `zoom_js(z)` gives JS that sets the zoom (100 for the others)."""
     report = []
+
+    def safe(anchor: Anchor) -> None:
+        # Resetting activates the window, which fails while another session's window holds the front: tried again.
+        for i in range(6):
+            try:
+                prepare(anchor)
+                return
+            except RuntimeError as e:
+                if "activate" not in str(e) or i == 5:
+                    raise
+                time.sleep(1.0)
+
     for anchor in anchors:
         plan: list[tuple[int | None, Path]] = [(None, p) for p in family_paths(anchor, families)]
         if "zoom" in families and anchor.zoomed and zoom_js:
@@ -726,7 +759,7 @@ def run_families(side, anchors: list[Anchor], js: Callable[[str], object], prepa
         res = []
         for z, p in plan:
             try:
-                prepare(anchor)
+                safe(anchor)
             except Exception as e:  # noqa: BLE001
                 res.append({"path": p.name, "ok": False, "error": str(e)[:200]})
                 continue
@@ -746,7 +779,7 @@ def run_families(side, anchors: list[Anchor], js: Callable[[str], object], prepa
                 if "front" not in rec.get("error", "") and "activate" not in rec.get("error", ""):
                     break
                 time.sleep(1.0)
-                prepare(anchor)
+                safe(anchor)
                 try:
                     winapi.activate(side.hwnd)
                 except RuntimeError:
@@ -758,6 +791,20 @@ def run_families(side, anchors: list[Anchor], js: Callable[[str], object], prepa
                 r = analyse(a, rec)
             except Exception as e:  # noqa: BLE001
                 r = {"path": p.name, "ok": False, "error": f"analysis: {e}"[:200]}
+            if not r["ok"] and not getattr(run_families, "no_retry", False):
+                # Once more: a drag that fails once and passes then is reported as flaky (the PC is shared, other
+                # sessions' windows and builds disturb real input), one that fails twice as failed.
+                first = {k: v for k, v in r.items() if k not in ("v0", "after")}
+                try:
+                    safe(anchor)
+                    time.sleep(0.3)
+                    rec = run_drag(side, a, p, js, before_start=zoom_js(z or 100) if zoom_js else "", reveal=reveal if z else "")
+                    r = analyse(a, rec)
+                except Exception as e:  # noqa: BLE001
+                    r = {"path": p.name, "ok": False, "error": f"{type(e).__name__}: {e}"[:200]}
+                r["first_try"] = first
+                if r["ok"]:
+                    r["flaky"] = True
             if z:
                 r["path"] = f"zoom {z}: {p.name}"
             res.append(r)

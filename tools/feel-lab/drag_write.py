@@ -86,10 +86,6 @@ def constrain(dx: float, dy: float, v0: dict) -> dict:
     return {"x": v0["x"] + dx, "y": v0["y"]} if abs(dx) >= abs(dy) else {"x": v0["x"], "y": v0["y"] + dy}
 
 
-def snap15(dx: float, dy: float, v0: float, ctx: dict) -> float:
-    a = math.degrees(math.atan2(ctx["y"] + dy - ctx["cy"], ctx["x"] + dx - ctx["cx"])) + 90
-    return round(a / 15) * 15
-
 
 # ----- anchors --------------------------------------------------------------------------------
 
@@ -165,15 +161,17 @@ def anchors() -> list[Anchor]:
         ruler("Linker Rand", lrand, y_at=4),
         ruler("Oberer Rand", orand, axis="y"),
         Anchor("picture corner handle (inline)", setup=f"__app.editor() && 0", start=rect_js("return { x: r.right, y: r.bottom };"),
-               probe=rect_js("return { w: r.width, h: r.height };"), expect=corner_expect, tol=1.5, per_px=1.6, out_follow=True,
-               note="word-images.docx, the inline picture (3:2); value: its size, proportional, so the width may grow 1.5 px per px down"),
+               probe=rect_js("return { w: r.width, h: r.height };"), expect=corner_expect, tol=1.5, per_px=1.6, out_follow=True, mods={"shift": "skip"},
+               note="word-images.docx, the inline picture (3:2); value: its size, proportional, so the width may grow 1.5 px per px down;"
+                    " Umschalt not checked (RaabeWrite frees the proportions, Word's not recorded)"),
         Anchor("picture side handle (floating)", start=rect_js("return { x: r.right, y: r.top + r.height / 2 };"),
                probe=rect_js("return r.width;"), expect=lambda dx, dy, v0: max(8.0, v0 + dx), tol=1.5, snap=6, out_follow=True,
                mods={"alt": "free", "ctrl": lambda dx, dy, v0: max(8.0, v0 + 2 * dx)},
                note="word-images.docx, the square-wrapped picture; snaps to the margins within 6 px"),
         Anchor("picture move (floating)", start=rect_js("return { x: r.left + r.width / 2, y: r.top + r.height / 2 };"),
                probe=rect_js("return { x: r.left, y: r.top };"), expect=lambda dx, dy, v0: {"x": v0["x"] + dx, "y": v0["y"] + dy}, tol=1.5, snap=6,
-               scroll=SCROLL, count=FLOATS, copies={"ctrl": 1}, mods={"shift": constrain, "alt": "free"}),
+               scroll=SCROLL, count=FLOATS, mods={"shift": constrain, "alt": "free"}, out_cancel=True,
+               note="word-images.docx; Word: Strg pressed during the drag moves (no copy), let go outside the window the picture stays (D-128)"),
         Anchor("picture rotation handle", start=rect_js("const z = e.view.zoom; return { x: r.left + r.width / 2, y: r.top - 17 * z, cx: r.left + r.width / 2, cy: r.top + r.height / 2 };"),
                probe=rot, expect=lambda dx, dy, v0, ctx: math.degrees(math.atan2(ctx["y"] + dy - ctx["cy"], ctx["x"] + dx - ctx["cx"])) + 90,
                tol=1.5, snap=0.5, wrap=360, per_px=1.2, out_follow=True, mods={"shift": ("snap", 15.0)},
