@@ -905,7 +905,9 @@ ALREADY = [
     # In a new, empty equation: nothing to convert; Unicode is the linear format already. Katalogfilter opens its
     # list inside the open panel (which the sweep does not count as a new popup).
     r"Konvertierungen / Unicode \[button\]$", r"Konvertierungen / Konvertieren \[split-main\]$", r"Konvertierungen / Weitere Optionen \[split-arrow\] > ",
-    r"> Katalogfilter$", r"Ansichten / Drucklayout \[button\]$", r"Zoom / 100% \[button\]$",
+    r"> Katalogfilter$",
+    # The target starts mid-sentence and has no capitals inside: Word's Satzanfang groß changes nothing (recorded).
+    r"Groß-/Kleinschreibung \[dropdown\] > Ersten Buchstaben im Satz großschreiben\.$", r"Ansichten / Drucklayout \[button\]$", r"Zoom / 100% \[button\]$",
 ]
 # Options Word does not take back with Strg+Z either (a setting, not an edit).
 NO_UNDO_IN_WORD = [r"Änderungen nachverfolgen \[split-main\]$", r"Änderungen nachverfolgen$",
