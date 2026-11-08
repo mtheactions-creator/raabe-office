@@ -160,7 +160,8 @@ export interface SlideView {
   layout?: string;
   master?: string;
   theme: ThemeInfo;
-  background: { fill: Fill; image?: string };
+  /** `duotone`: the picture recoloured from dark to light (theme backgrounds such as Ion's, D-108). */
+  background: { fill: Fill; image?: string; duotone?: { dark: string; light: string } };
   shapes: ShapeView[];
   /** Layout and master shapes drawn behind the slide's (not placeholders), unless hidden. */
   behind: ShapeView[];
@@ -483,14 +484,18 @@ export function readBodyProps(chain: (Element | undefined)[]): BodyProps {
 
 // ----- shapes ---------------------------------------------------------------------------------------------
 
-/** German PowerPoint's prompts for empty placeholders in Normalansicht. */
+/**
+ * German PowerPoint's prompts for empty placeholders in Normalansicht. Title, subtitle, text and picture as
+ * PowerPoint 365 shows them (recorded from its window, D-102: the picture placeholder shows a button with this
+ * label); the rarer kinds (table, chart, SmartArt, media, ClipArt placeholders) not recorded yet.
+ */
 export const PROMPTS: Record<string, string> = {
-  title: "Titel durch Klicken hinzufügen",
-  ctrTitle: "Titel durch Klicken hinzufügen",
-  subTitle: "Untertitel durch Klicken hinzufügen",
-  body: "Text durch Klicken hinzufügen",
-  obj: "Text durch Klicken hinzufügen",
-  pic: "Bild durch Klicken auf Symbol hinzufügen",
+  title: "Titel hinzufügen",
+  ctrTitle: "Titel hinzufügen",
+  subTitle: "Untertitel hinzufügen",
+  body: "Text hinzufügen",
+  obj: "Text hinzufügen",
+  pic: "Bild einfügen (Füllung)",
   tbl: "Tabelle durch Klicken auf Symbol hinzufügen",
   chart: "Diagramm durch Klicken auf Symbol hinzufügen",
   dgm: "SmartArt-Grafik durch Klicken auf Symbol hinzufügen",
@@ -575,7 +580,20 @@ export class SlideResolver {
     return r.shapes(tree, null).filter((s) => !s.ph);
   }
 
-  background(): { fill: Fill; image?: string } {
+  /** A picture fill's recolouring (a:duotone): its two colours, phClr being `ph` (theme backgrounds). */
+  private duotone(fill: Element, ph: string): { dark: string; light: string } | undefined {
+    const d = at(fill, "blip/duotone");
+    if (!d) return undefined;
+    const colors = { ...this.theme.colors, phClr: ph };
+    const cs = kids(d).map((c) => {
+      const w = d.ownerDocument.createElementNS(NS_A, "a:x");
+      w.append(c.cloneNode(true));
+      return readColor(w, colors)?.hex;
+    });
+    return cs[0] && cs[1] ? { dark: cs[0], light: cs[1] } : undefined;
+  }
+
+  background(): { fill: Fill; image?: string; duotone?: { dark: string; light: string } } {
     for (const [doc, path] of [[this.own.ownerDocument, this.path], [this.layoutDoc, this.layoutPath], [this.masterDoc, this.masterPath]] as const) {
       const bg = at(doc?.documentElement, "cSld/bg");
       if (!bg) continue;
@@ -594,6 +612,12 @@ export class SlideResolver {
         const idx = num(ref, "idx") ?? 1001;
         const color = readColor(ref, this.theme.colors)?.hex ?? "FFFFFF";
         const el = idx >= 1001 ? this.theme.matrix.bgFills[idx - 1001] : this.theme.matrix.fills[idx - 1];
+        // A picture in the theme's background styles (Ion, Facette …): its file is the theme part's (D-108).
+        if (el?.localName === "blipFill") {
+          const rid = at(el, "blip")?.getAttributeNS(NS_R, "embed");
+          const themePath = this.pptx.themeOf(this.masterPath ?? this.path);
+          return { fill: { kind: "solid", color }, image: rid && themePath ? this.pptx.target(themePath, rid) : undefined, duotone: this.duotone(el, color) };
+        }
         const fill = el ? readFillLocal(el, { ...this.theme, colors: { ...this.theme.colors, phClr: color } }) : undefined;
         return { fill: fill ?? { kind: "solid", color } };
       }

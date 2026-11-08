@@ -1,0 +1,69 @@
+{
+ "date": "2026-11-08",
+ "slide": {
+  "mean": 3.95,
+  "differ": 1.88
+ },
+ "cells": [
+  {
+   "bevel": 3,
+   "mean": 4.54,
+   "differ": 2.56
+  },
+  {
+   "bevel": 2,
+   "mean": 5.19,
+   "differ": 2.58
+  },
+  {
+   "bevel": 5,
+   "mean": 3.98,
+   "differ": 1.5
+  },
+  {
+   "bevel": 9,
+   "mean": 4.22,
+   "differ": 2.54
+  },
+  {
+   "bevel": 6,
+   "mean": 4.55,
+   "differ": 1.62
+  },
+  {
+   "bevel": 7,
+   "mean": 5.9,
+   "differ": 2.46
+  },
+  {
+   "bevel": 8,
+   "mean": 5.0,
+   "differ": 2.2
+  },
+  {
+   "bevel": 4,
+   "mean": 5.99,
+   "differ": 2.78
+  },
+  {
+   "bevel": 10,
+   "mean": 5.21,
+   "differ": 1.75
+  },
+  {
+   "bevel": 11,
+   "mean": 5.6,
+   "differ": 1.48
+  },
+  {
+   "bevel": 12,
+   "mean": 6.89,
+   "differ": 2.87
+  },
+  {
+   "bevel": 13,
+   "mean": 5.89,
+   "differ": 1.86
+  }
+ ]
+}

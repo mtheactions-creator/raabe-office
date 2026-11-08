@@ -1,0 +1,55 @@
+{
+ "date": "2026-11-08",
+ "checks": {
+  "editor_open": true,
+  "designer_adds_controls": true,
+  "dblclick_opens_click_proc": true,
+  "breakpoint_set": true,
+  "stops_at_breakpoint": true,
+  "locals_show_n": true,
+  "single_step": true,
+  "debug_print": true,
+  "form_shown": true,
+  "click_runs_code": true,
+  "saved_with_form": true
+ },
+ "designer_controls": [
+  "CommandButton1",
+  "TextBox1"
+ ],
+ "status_at_break": "[Unterbrechen] Zeige, Zeile 5",
+ "locals_at_break": [
+  [
+   "n",
+   "41",
+   "Integer"
+  ]
+ ],
+ "status_after_step": "[Unterbrechen] Zeige, Zeile 6",
+ "immediate": "n ist 42 \n",
+ "form_after_click": [
+  "geklickt",
+  "Fertig"
+ ],
+ "read_back": [
+  {
+   "name": "Modul1",
+   "kind": "standard",
+   "form": null
+  },
+  {
+   "name": "UserForm1",
+   "kind": "class",
+   "form": [
+    "CommandButton:CommandButton1",
+    "TextBox:TextBox1"
+   ]
+  },
+  {
+   "name": "Modul2",
+   "kind": "standard",
+   "form": null
+  }
+ ],
+ "summary": "11/11"
+}

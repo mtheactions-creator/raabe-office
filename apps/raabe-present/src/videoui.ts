@@ -72,7 +72,7 @@ export function gifSection(app: PresentApp): HTMLElement {
   const go = async () => {
     const a = Math.max(1, Math.min(n, Number(from.value) || 1)), b = Math.max(a, Math.min(n, Number(to.value) || n));
     // PowerPoint's GIF: about 16 frames per second, and a slide's Nach time is kept (measured).
-    const o: MediaOptions = { height: Number(quality.value), fps: 16, secs: Math.max(0.01, num(secs.value) || 1), useTimings: true, from: a, to: b, transparent: transparent.checked, roundWidth: true };
+    const o: MediaOptions = { height: Number(quality.value), fps: 16, secs: Math.max(0.01, num(secs.value) || 1), useTimings: true, from: a, to: b, transparent: transparent.checked, roundWidth: true, gifTiming: true };
     const bytes = await withProgress("GIF wird erstellt", (progress) => makeGif(app, { ...o, progress }));
     if (bytes) await save(app, "gif", bytes);
   };

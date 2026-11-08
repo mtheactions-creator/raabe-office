@@ -67,11 +67,13 @@ def cases() -> list[Case]:
         # Keys with the frame selected.
         sel = [("click", (0, .5, 0))]
         for key in ("left", "right", "up", "down", "ctrl+left", "ctrl+down", "shift+right", "alt+right", "alt+left", "delete", "backspace", "ctrl+d", "tab", "shift+tab", "esc",
-                    "enter", "f2", "ctrl+a", "ctrl+c", "ctrl+x", "ctrl+z", "ctrl+shift+f", "ctrl+e", "ctrl+r", "ctrl+l",
+                    "enter", "f2", "ctrl+a", "ctrl+c", "ctrl+x", "ctrl+shift+f", "ctrl+e", "ctrl+r", "ctrl+l",
                     # Added after the first comparison (D-072): the keys still guessed.
                     "shift+left", "shift+up", "shift+down", "ctrl+shift+right", "alt+shift+right", "shift+enter", "ctrl+delete", "ctrl+backspace", "ctrl+b"):
             add(f"frame {nm} {key}", "framekeys", [obj, OTHER], sel + [("keys", key)])
         add(f"frame {nm} type", "framekeys", [obj], sel + [("type", "xy")])
+        # Strg+Z after a nudge (Strg+Z alone would undo the harness's set-up in PowerPoint, D-107).
+        add(f"frame {nm} ctrl+z", "framekeys", [obj, OTHER], sel + [("keys", "right"), ("keys", "ctrl+z")])
         add(f"frame {nm} ctrl+d twice", "framekeys", [obj], sel + [("keys", "ctrl+d"), ("keys", "ctrl+d")])
         add(f"frame {nm} copy paste", "framekeys", [obj], sel + [("keys", "ctrl+c"), ("keys", "ctrl+v"), ("keys", "ctrl+v")])
         add(f"frame {nm} delete undo", "framekeys", [obj], sel + [("keys", "delete"), ("keys", "ctrl+z")])
@@ -83,14 +85,16 @@ def cases() -> list[Case]:
     for key in ("home", "end", "ctrl+home", "ctrl+end", "left", "right", "up", "down", "shift+home", "shift+end", "ctrl+left", "ctrl+right", "ctrl+shift+right",
                 "backspace", "delete", "ctrl+backspace", "ctrl+delete", "enter", "shift+enter", "tab", "shift+tab", "esc", "f2", "ctrl+a", "ctrl+shift+f", "ctrl+e",
                 "ctrl+z", "alt+shift+right", "alt+shift+left", "ctrl+up", "ctrl+down", "pagedown"):
-        add(f"text {key}", "textkeys", [two], edit + [("keys", key)])
-        add(f"text sel {key}", "textkeys", [two], edit + [("keys", "shift+right", 3), ("keys", key)])
+        # Strg+Z after typing (D-107).
+        before = [("type", "ab")] if key == "ctrl+z" else []
+        add(f"text {key}", "textkeys", [two], edit + before + [("keys", key)])
+        add(f"text sel {key}", "textkeys", [two], edit + [("keys", "shift+right", 3)] + before + [("keys", key)])
     # Keys in text being edited: the click on the letters of "Erste" puts the caret there (added in run 3, D-072).
     caret = [("click", (0, .1, .3))]
     for key in ("home", "end", "ctrl+home", "ctrl+end", "left", "right", "up", "down", "shift+right", "shift+left", "shift+end", "shift+home", "shift+down",
                 "ctrl+left", "ctrl+right", "ctrl+shift+right", "backspace", "delete", "ctrl+backspace", "ctrl+delete", "enter", "shift+enter", "tab", "shift+tab",
                 "ctrl+a", "esc", "ctrl+b", "ctrl+e", "ctrl+z", "alt+shift+right", "alt+shift+left", "f2"):
-        add(f"caret {key}", "caretkeys", [two], caret + [("keys", key)])
+        add(f"caret {key}", "caretkeys", [two], caret + ([("type", "XY")] if key == "ctrl+z" else []) + [("keys", key)])
     add("caret type", "caretkeys", [two], caret + [("type", "XY")])
     add("caret type enter", "caretkeys", [two], caret + [("keys", "end"), ("keys", "enter"), ("type", "neu")])
     # AutoKorrektur while typing, in a new paragraph at the end of the text (added in run 3, D-072).
@@ -196,13 +200,18 @@ def run(side_name: str, areas: list[str]) -> None:
             side.close()
         LOCK.unlink(missing_ok=True)
     if side_name == "powerpoint":
-        old = json.loads(rec_path.read_text(encoding="utf-8"))["cases"] if rec_path.exists() and areas else {}
+        # A partial run adds to the latest recording (today's, or the last one before).
+        prev = sorted((HERE / "results").glob("*-catalogue-present-powerpoint.json"))
+        base = rec_path if rec_path.exists() else (prev[-1] if prev else None)
+        old = json.loads(base.read_text(encoding="utf-8"))["cases"] if base and areas else {}
         old.update(out)
         rec_path.write_text(json.dumps({"date": date, "cases": old}, ensure_ascii=False, indent=1), encoding="utf-8", newline=chr(10))
         print(f"recorded {len(out)} cases")
         return
     res_path = HERE / "results" / f"{date}-catalogue-present.json"
-    report = json.loads(res_path.read_text(encoding="utf-8"))["cases"] if res_path.exists() and areas else {}
+    last = sorted((HERE / "results").glob("*-catalogue-present.json"))
+    rbase = res_path if res_path.exists() else (last[-1] if last else None)
+    report = json.loads(rbase.read_text(encoding="utf-8"))["cases"] if rbase and areas else {}
     for c in todo:
         r, o = rec.get(c.name), out.get(c.name)
         if not r or "state" not in r:

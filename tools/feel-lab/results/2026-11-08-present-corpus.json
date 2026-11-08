@@ -1,0 +1,119 @@
+{
+ "date": "2026-11-08",
+ "slides": [
+  {
+   "file": "abschnitt",
+   "slide": 1,
+   "mean": 1.62,
+   "differ": 0.78
+  },
+  {
+   "file": "abschnitt",
+   "slide": 2,
+   "mean": 0.0,
+   "differ": 0.0
+  },
+  {
+   "file": "bild",
+   "slide": 1,
+   "mean": 0.22,
+   "differ": 0.15
+  },
+  {
+   "file": "design_facette",
+   "slide": 1,
+   "mean": 0.34,
+   "differ": 0.21
+  },
+  {
+   "file": "design_facette",
+   "slide": 2,
+   "mean": 0.32,
+   "differ": 0.19
+  },
+  {
+   "file": "design_ion",
+   "slide": 1,
+   "mean": 1.08,
+   "differ": 0.21
+  },
+  {
+   "file": "design_ion",
+   "slide": 2,
+   "mean": 1.12,
+   "differ": 0.23
+  },
+  {
+   "file": "design_rueckblick",
+   "slide": 1,
+   "mean": 3.54,
+   "differ": 1.92
+  },
+  {
+   "file": "design_rueckblick",
+   "slide": 2,
+   "mean": 0.81,
+   "differ": 0.52
+  },
+  {
+   "file": "formen",
+   "slide": 1,
+   "mean": 0.32,
+   "differ": 0.2
+  },
+  {
+   "file": "gruppe",
+   "slide": 1,
+   "mean": 0.08,
+   "differ": 0.04
+  },
+  {
+   "file": "notizen",
+   "slide": 1,
+   "mean": 0.89,
+   "differ": 0.59
+  },
+  {
+   "file": "referat",
+   "slide": 1,
+   "mean": 2.23,
+   "differ": 1.15
+  },
+  {
+   "file": "referat",
+   "slide": 2,
+   "mean": 1.57,
+   "differ": 1.06
+  },
+  {
+   "file": "referat",
+   "slide": 3,
+   "mean": 3.23,
+   "differ": 2.06
+  },
+  {
+   "file": "tabelle",
+   "slide": 1,
+   "mean": 1.71,
+   "differ": 1.03
+  },
+  {
+   "file": "wordart",
+   "slide": 1,
+   "mean": 0.76,
+   "differ": 0.6
+  },
+  {
+   "file": "zwei_inhalte",
+   "slide": 1,
+   "mean": 1.02,
+   "differ": 0.65
+  }
+ ],
+ "cloud_faces": 25,
+ "summary": {
+  "slides": 18,
+  "mean": 1.16,
+  "differ": 0.64
+ }
+}

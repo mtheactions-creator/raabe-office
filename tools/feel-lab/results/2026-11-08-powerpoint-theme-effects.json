@@ -1,0 +1,85 @@
+{
+ "date": "2026-11-08",
+ "schemes": [
+  {
+   "name": "Office",
+   "file": null,
+   "bytes": 2662
+  },
+  {
+   "name": "Office 2007 - 2010",
+   "file": "Office 2007 - 2010",
+   "bytes": 3059
+  },
+  {
+   "name": "Subtile Körper",
+   "file": "Subtle Solids",
+   "bytes": 2118
+  },
+  {
+   "name": "Verbundene Kante",
+   "file": "Banded Edge",
+   "bytes": 2574
+  },
+  {
+   "name": "Rauchglas",
+   "file": "Smokey Glass",
+   "bytes": 2704
+  },
+  {
+   "name": "Leuchteffekt: Rand",
+   "file": "Glow Edge",
+   "bytes": 2211
+  },
+  {
+   "name": "Grunge-Muster",
+   "file": "Grunge Texture",
+   "bytes": 2506
+  },
+  {
+   "name": "Mattiertes Glas",
+   "file": "Frosted Glass",
+   "bytes": 4114
+  },
+  {
+   "name": "Schatten oben",
+   "file": "Top Shadow",
+   "bytes": 3218
+  },
+  {
+   "name": "Abgesenkt",
+   "file": "Inset",
+   "bytes": 3149
+  },
+  {
+   "name": "Milchglas",
+   "file": "Milk Glass",
+   "bytes": 3621
+  },
+  {
+   "name": "Säule auf abgerundetem Sockel",
+   "file": "Riblet",
+   "bytes": 2510
+  },
+  {
+   "name": "Spiegelung",
+   "file": "Reflection",
+   "bytes": 3389
+  },
+  {
+   "name": "Extreme Schatten",
+   "file": "Extreme Shadow",
+   "bytes": 3273
+  },
+  {
+   "name": "Glänzend",
+   "file": "Glossy",
+   "bytes": 3416
+  }
+ ],
+ "close": {
+  "closed": 15,
+  "quit": true,
+  "left_open": 0
+ }
+}

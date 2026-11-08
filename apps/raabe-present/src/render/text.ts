@@ -6,7 +6,11 @@
 // editor maps between the caret and the DOM.
 
 import { ommlToSeq } from "@raabe/ooxml";
-import { seqToMathml } from "@raabe/text-engine";
+import { ensureFontFamily, seqToMathml } from "@raabe/text-engine";
+
+/** A font family for CSS, made known to the browser first: Office's cloud fonts (Aptos …) and fonts known only by
+ *  their full names are registered by @raabe/text-engine (D-089, D-109). */
+const fam = (name: string | undefined): string => { ensureFontFamily(name); return `"${name ?? ""}"`; };
 import type { BodyProps, RunStyle, TextInfo, TextPara, TextRun } from "@raabe/ooxml";
 
 export const EMU_PX = 9525;
@@ -58,7 +62,7 @@ export function runCss(r: RunStyle, scale: number): string {
   const deco = [r.underline !== "none" || r.link ? "underline" : "", r.strike !== "noStrike" ? "line-through" : ""].filter(Boolean).join(" ");
   const size = fitSize(r.size, scale) * (r.baseline ? 2 / 3 : 1);
   return css({
-    "font-family": `"${r.font}", Calibri, Carlito, sans-serif`,
+    "font-family": `${fam(r.font)}, Calibri, Carlito, sans-serif`,
     "font-size": `${(size * PT_PX).toFixed(3)}px`,
     "font-weight": r.bold ? "bold" : undefined,
     "font-style": r.italic ? "italic" : undefined,
@@ -152,7 +156,7 @@ export function renderText(t: TextInfo, w: number, h: number, o: TextOptions): H
     div.style.cssText = css({
       position: "relative", "padding-left": `${marL}px`, "text-indent": p.bullet ? undefined : `${indent}px`,
       "text-align": p.algn === "ctr" ? "center" : p.algn === "r" ? "right" : p.algn === "just" || p.algn === "dist" ? "justify" : "left",
-      "line-height": `${lh.toFixed(3)}px`, "font-family": `"${mainRun(p).font}", Calibri, Carlito, sans-serif`, "font-size": `${(fitSize(largest(p), fit.fontScale) * PT_PX).toFixed(3)}px`, "margin-top": pi === 0 ? undefined : `${bef.toFixed(2)}px`, "margin-bottom": `${aft.toFixed(2)}px`,
+      "line-height": `${lh.toFixed(3)}px`, "font-family": `${fam(mainRun(p).font)}, Calibri, Carlito, sans-serif`, "font-size": `${(fitSize(largest(p), fit.fontScale) * PT_PX).toFixed(3)}px`, "margin-top": pi === 0 ? undefined : `${bef.toFixed(2)}px`, "margin-bottom": `${aft.toFixed(2)}px`,
       "white-space": body.wrap ? "pre-wrap" : "pre", "overflow-wrap": body.wrap ? "break-word" : undefined, "tab-size": `${p.defTab / EMU_PX}px`,
       direction: p.rtl ? "rtl" : undefined,
     });
@@ -170,7 +174,7 @@ export function renderText(t: TextInfo, w: number, h: number, o: TextOptions): H
       bu.contentEditable = "false";
       const size = p.bullet.sizePts ?? first.size * (p.bullet.sizePct ?? 1);
       bu.textContent = p.bullet.kind === "auto" ? autoNumber(p.bullet.autoType ?? "arabicPeriod", counters[p.lvl]) : p.bullet.char ?? "•";
-      bu.style.cssText = css({ position: "absolute", left: `${marL + indent}px`, top: "0", "font-family": p.bullet.kind === "char" && p.bullet.font ? `"${p.bullet.font}"` : `"${first.font}", Calibri, sans-serif`,
+      bu.style.cssText = css({ position: "absolute", left: `${marL + indent}px`, top: "0", "font-family": p.bullet.kind === "char" && p.bullet.font ? fam(p.bullet.font) : `${fam(first.font)}, Calibri, sans-serif`,
         "font-size": `${(size * fit.fontScale * PT_PX).toFixed(3)}px`, color: `#${p.bullet.color ?? first.color}`, "text-indent": "0", "white-space": "pre" });
       div.append(bu);
     }
@@ -191,7 +195,7 @@ export function renderText(t: TextInfo, w: number, h: number, o: TextOptions): H
         if (r.link) sp.dataset.link = r.link;
         sp.style.cssText = runCss(r, fit.fontScale);
         // Symbol characters (U+F0xx) in their symbol font (a:sym), as PowerPoint draws them.
-        if (r.symFont && Array.from(r.text).some((c) => c.charCodeAt(0) >= 0xf000 && c.charCodeAt(0) <= 0xf0ff)) sp.style.fontFamily = `"${r.symFont}"`;
+        if (r.symFont && Array.from(r.text).some((c) => c.charCodeAt(0) >= 0xf000 && c.charCodeAt(0) <= 0xf0ff)) sp.style.fontFamily = fam(r.symFont);
         const text = r.kind === "br" ? "\n" : r.kind === "fld" ? fieldText(r, o) : r.text;
         if (o.selection) appendSelected(sp, text, pi, off, o.selection);
         else sp.textContent = text;

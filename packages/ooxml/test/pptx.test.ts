@@ -48,7 +48,7 @@ describe("new presentation (Office 2013-2022 design)", () => {
     expect(back.slides.length).toBe(1);
     const v = slideView(back, back.slides[0].path);
     expect(v.shapes.map((s) => s.ph?.type)).toEqual(["ctrTitle", "subTitle"]);
-    expect(v.shapes[0].text?.prompt).toEqual(["Titel durch Klicken hinzufügen"]);
+    expect(v.shapes[0].text?.prompt).toEqual(["Titel hinzufügen"]);
     // The title inherits the Titelfolie layout's place and 60 pt, Calibri Light.
     expect([v.shapes[0].x, v.shapes[0].y, v.shapes[0].w, v.shapes[0].h]).toEqual([1524000, 1122363, 9144000, 2387600]);
     expect(v.shapes[0].text?.paras[0].end.size).toBe(60);

@@ -2,6 +2,7 @@
 // presentation is a document tab (D-010) shown in Normalansicht: the slide panel at the left, the
 // slide in the middle, the notes below. Files are .pptx; everything not edited is kept (D-024).
 
+import { onFontAlias, setCloudFonts } from "@raabe/text-engine";
 import { colorXml, specHex } from "./colors";
 import { colorWord } from "./quickstyles";
 import { Pptx, newPptx, PptxDom, phOf, type ShapeView, type DesignSpec } from "@raabe/ooxml";
@@ -30,6 +31,7 @@ import { DESIGNS } from "./designs";
 import { PRESENT_TEMPLATES, templateDeck } from "./templates";
 import { TRANSITION_GROUPS } from "./transitions";
 import { ANIMATION_GROUPS } from "./animations";
+import { THEME_EFFECTS } from "./themeeffects.gen";
 import { COLOR_SETS, FONT_SETS } from "./themesets.gen";
 import { SlideShow, type ShowScreens } from "./show";
 import { closeShowWindows, mainPosition, monitorMenu, openShowWindow, presenterViewOn, restoreMain, setMainFullscreen, setPresenterView, showTarget, swapWindows } from "./screens";
@@ -137,7 +139,10 @@ export class PresentApp implements EditorHost, PanelHost {
   private status: HTMLElement;
   private statusSlide: HTMLElement;
   private zoomPct: HTMLElement;
-  private zoomSlider: HTMLInputElement;
+  private zoomSlider: HTMLElement;
+  private zoomThumb!: HTMLElement;
+  private zoomValue = 50;
+  private zoomDragging = false;
   private main: HTMLElement;
   /** Alle anordnen / Überlappend (D-074). */
   private windows!: Windows;
@@ -163,6 +168,10 @@ export class PresentApp implements EditorHost, PanelHost {
   private bgPane!: BackgroundPane;
 
   constructor(readonly platform: Platform) {
+    // Office's cloud fonts (Aptos, Aptos Display …) from the native side; slides drawn before they loaded are drawn
+    // again once they are there (D-109).
+    if (platform.cloudFonts && platform.cloudFont) setCloudFonts({ list: platform.cloudFonts.bind(platform), bytes: platform.cloudFont.bind(platform) });
+    onFontAlias(() => { for (const s of this.deck?.slides ?? []) this.deck.invalidate(s.path); this.renderAll(); });
     void platform.listFonts().then((f) => { this.fontList = f; }).catch(() => {});
     this.commands.register(...COMMANDS, ...CT.CONTEXT_COMMANDS);
     this.untitled = 1;
@@ -193,7 +202,7 @@ export class PresentApp implements EditorHost, PanelHost {
       if (p) this.deck.setNotes(p, this.notes.value);
     });
     this.notes.addEventListener("contextmenu", (e) => { e.preventDefault(); this.notesMenu(e); });
-    this.notesWrap = h("div", { class: "notes-wrap" }, this.notes);
+    this.notesWrap = h("div", { class: "notes-wrap" }, h("div", { class: "notes-grip", "aria-label": "Notizen-Trennlinie" }), this.notes);
     this.center = h("div", { class: "center" }, this.editor.el, this.notesWrap);
     this.outline = new OutlineView(this);
     this.notesPage = new NotesPageView(this);
@@ -205,8 +214,48 @@ export class PresentApp implements EditorHost, PanelHost {
     this.bgPane = new BackgroundPane(this, this.main);
     this.statusSlide = h("span", { class: "cell" });
     this.zoomPct = h("button", { class: "cell pct", "data-tip": "Zoom", onclick: () => void this.commands.run("view.zoom") });
-    this.zoomSlider = h("input", { type: "range", min: "0", max: "100", step: "0.5", "aria-label": "Zoom" }) as HTMLInputElement;
-    this.zoomSlider.oninput = () => this.setZoom(sliderToZoom(Number(this.zoomSlider.value)));
+    // Our own zoom slider, as Office draws its own (D-110): the thumb keeps the point it was grabbed by (no jump on
+    // pressing), a press on the track brings the thumb there, the zoom follows once per display frame, Esc while
+    // dragging puts the zoom back, the arrow keys step.
+    this.zoomThumb = h("div", { class: "zoom-thumb" });
+    this.zoomSlider = h("div", { class: "zoom-track", role: "slider", tabindex: "0", "aria-label": "Zoom", "aria-valuemin": "10", "aria-valuemax": "400" }, this.zoomThumb);
+    let zoomFrame = 0, zoomStart: number | null = null, grab = 0;
+    const TRACK = 100, THUMB = 8;
+    const toValue = (x: number) => { const r = this.zoomSlider.getBoundingClientRect(); return Math.max(0, Math.min(100, ((x - grab - r.left - THUMB / 2) / (TRACK - THUMB)) * 100)); };
+    const follow = (v: number) => {
+      this.setSliderValue(v);
+      if (zoomFrame) return;
+      zoomFrame = requestAnimationFrame(() => { zoomFrame = 0; this.setZoom(sliderToZoom(this.zoomValue)); });
+    };
+    this.zoomSlider.addEventListener("pointerdown", (e) => {
+      if (e.button !== 0) return;
+      e.preventDefault();
+      this.zoomSlider.focus();
+      const t = this.zoomThumb.getBoundingClientRect();
+      // On the thumb: it keeps the grab point; on the track: the thumb comes to the pointer.
+      grab = e.clientX >= t.left - 1 && e.clientX <= t.right + 1 ? e.clientX - (t.left + t.width / 2) : 0;
+      zoomStart = this.editor.zoom;
+      this.zoomDragging = true;
+      this.zoomSlider.setPointerCapture(e.pointerId);
+      if (!grab && (e.clientX < t.left - 1 || e.clientX > t.right + 1)) follow(toValue(e.clientX));
+    });
+    this.zoomSlider.addEventListener("pointermove", (e) => { if (zoomStart !== null) follow(toValue(e.clientX)); });
+    const release = () => { zoomStart = null; this.zoomDragging = false; };
+    this.zoomSlider.addEventListener("pointerup", release);
+    this.zoomSlider.addEventListener("lostpointercapture", release);
+    this.zoomSlider.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && zoomStart !== null) {
+        e.preventDefault(); e.stopPropagation();
+        cancelAnimationFrame(zoomFrame); zoomFrame = 0;
+        const z = zoomStart;
+        zoomStart = null;
+        this.zoomDragging = false;
+        this.setZoom(z);
+        this.setSliderValue(zoomToSlider(z));
+        return;
+      }
+      if (e.key === "ArrowLeft" || e.key === "ArrowRight") { e.preventDefault(); this.setZoom(this.editor.zoom + (e.key === "ArrowLeft" ? -10 : 10)); }
+    });
     const viewBtn = (cmd: string) => { const c = this.commands.get(cmd); const btn = h("button", { class: "cell viewbtn", "aria-label": c.label, "data-tip": this.commands.tooltip(cmd), onclick: () => void this.commands.run(cmd) }, icon(c.icon)); this.commands.onRefresh(() => btn.classList.toggle("checked", this.commands.isChecked(cmd))); return btn; };
     this.status = h("div", { class: "statusbar", role: "status" }, this.statusSlide, h("button", { class: "cell", "data-tip": "Sprache: Deutsch (Deutschland)" }, "Deutsch (Deutschland)"),
       h("div", { class: "right" },
@@ -310,7 +359,7 @@ export class PresentApp implements EditorHost, PanelHost {
     const n = this.deck.slides.length;
     this.statusSlide.textContent = n ? `Folie ${this.active.current + 1} von ${n}` : "";
     this.zoomPct.textContent = `${this.editor.zoom} %`;
-    if (document.activeElement !== this.zoomSlider) this.zoomSlider.value = String(zoomToSlider(this.editor.zoom));
+    if (!this.zoomDragging) this.setSliderValue(zoomToSlider(this.editor.zoom));
     this.updateContextual();
     this.commands.refresh();
   }
@@ -1685,6 +1734,32 @@ export class PresentApp implements EditorHost, PanelHost {
     });
   }
 
+  /**
+   * Entwurf > Varianten > Effekte: Office's theme effect scheme (a:fmtScheme) in place of the theme's, as PowerPoint
+   * writes it (recorded, D-104). Fills with a picture of Office's (Grunge-Muster's texture) become plain fills: we do
+   * not ship Office's pictures.
+   */
+  applyThemeEffects(name: string, xml: string): void {
+    const theme = this.deck.pptx.themeOf(this.deck.pptx.masters()[0] ?? "");
+    if (!theme) return;
+    this.deck.change("Effekte", [theme], () => {
+      const doc = this.deck.pptx.doc(theme);
+      const old = doc.getElementsByTagNameNS(PptxDom.NS_A, "fmtScheme")[0];
+      if (!old) return;
+      const plain = xml.replace(/<a:blipFill\b[\s\S]*?<\/a:blipFill>/g, '<a:solidFill><a:schemeClr val="phClr"/></a:solidFill>');
+      const el = new DOMParser().parseFromString(`<r xmlns:a="${PptxDom.NS_A}">${plain}</r>`, "application/xml").documentElement.firstElementChild;
+      if (!el) return;
+      el.setAttribute("name", name);
+      old.replaceWith(doc.importNode(el, true));
+    });
+  }
+
+  /** The current theme effect scheme's name (for the Effekte gallery's check mark). */
+  themeEffectName(): string | undefined {
+    const theme = this.deck.pptx.themeOf(this.deck.pptx.masters()[0] ?? "");
+    return theme ? this.deck.pptx.doc(theme).getElementsByTagNameNS(PptxDom.NS_A, "fmtScheme")[0]?.getAttribute("name") ?? undefined : undefined;
+  }
+
   /** Entwurf > Schriftarten: the theme's heading and body fonts. */
   /** A colour for a selected chart goes to its Diagrammbereich (the chart model keeps RGB colours). */
   private chartArea(what: "fill" | "line", spec: string | null): boolean {
@@ -1772,6 +1847,13 @@ export class PresentApp implements EditorHost, PanelHost {
     if (v === "reading") { void this.startShow(this.active.current, true); this.view = "normal"; document.body.dataset.view = "normal"; this.center.hidden = false; this.panel.el.hidden = false; }
     this.renderAll();
     this.focusMain();
+  }
+
+  /** The zoom slider's thumb at a value 0..100 (the slider's scale, sliderToZoom). */
+  private setSliderValue(v: number): void {
+    this.zoomValue = v;
+    this.zoomThumb.style.left = `${(v / 100) * (100 - 8)}px`;
+    this.zoomSlider.setAttribute("aria-valuenow", String(Math.round(sliderToZoom(v))));
   }
 
   private setZoom(z: number): void {
@@ -1954,7 +2036,7 @@ export class PresentApp implements EditorHost, PanelHost {
         { type: "stack", items: [
           { type: "dropdown", cmd: "design.colors", key: "F", size: "small", get menu() { return ctx.menus.colors(); } } as Control,
           { type: "dropdown", cmd: "design.fonts", key: "6", size: "small", get menu() { return ctx.menus.fonts(); } } as Control,
-          b("design.effects", "E", "small")] },
+          { type: "dropdown", cmd: "design.effects", key: "E", size: "small", get menu() { return ctx.menus.themeEffects(); } } as Control] },
         { type: "stack", items: [{ type: "dropdown", cmd: "design.background", key: "R", size: "small", label: "Hintergrundformate", get menu() { return bgStylesMenu(app); } } as Control, check("master.hideBg", "B")] },
         b("master.formatBackground", "H", "small")] };
       const close: Group = { id: "close", label: "Schließen", key: "ZS", icon: "close", controls: [b("master.close", "Q")] };
@@ -2412,11 +2494,28 @@ export class PresentApp implements EditorHost, PanelHost {
     const reselect = (step: () => void) => {
       const path = this.slidePath();
       const before = new Set(path ? this.deck.view(path).shapes.map((s) => s.id) : []);
+      // Strg+Z while editing a text: PowerPoint stays in the text, the caret where the undone change began
+      // (behaviour catalogue, D-107). The text before and after tells where that is.
+      const editing = ed().text?.id;
+      const flat = (id: number) => { const b = ed().textBody(id); return b ? T.paras(b).map((p) => T.paraText(p)) : null; };
+      const was = editing !== undefined ? flat(editing) : null;
       ed().endText();
       step();
       const now = path && this.slidePath() === path && this.deck.pptx.has(path) ? this.deck.view(path).shapes.map((s) => s.id) : [];
       const back = now.filter((id) => !before.has(id));
       if (back.length) ed().select(back);
+      else if (editing !== undefined && now.includes(editing)) {
+        const is = flat(editing);
+        if (was && is) {
+          // The first paragraph and offset where the texts differ (the end of the shorter one if none).
+          let p = 0;
+          while (p < is.length - 1 && p < was.length && is[p] === was[p]) p++;
+          const a = is[p] ?? "", b = was[p] ?? "";
+          let o = 0;
+          while (o < a.length && o < b.length && a[o] === b[o]) o++;
+          ed().enterText(editing, { p, o });
+        }
+      }
     };
     impl("edit.undo", () => reselect(() => this.deck.undo()), () => this.deck.canUndo);
     impl("edit.redo", () => { ed().endText(); this.deck.redo(); }, () => this.deck.canRedo);
@@ -2510,12 +2609,13 @@ export class PresentApp implements EditorHost, PanelHost {
     impl("smartart.demote", items("demote"), hasDg);
     impl("smartart.moveUp", items("up"), hasDg);
     impl("smartart.moveDown", items("down"), hasDg);
-    impl("smartart.rtl", () => {}, () => false);
+    impl("smartart.rtl", () => { const id = dg(); if (id !== null) void import("./smartart-create").then((m) => m.toggleRtl(this, id)); }, hasDg);
     // Start > In SmartArt konvertieren: PowerPoint's 20 layouts of the menu (recorded), then Weitere SmartArt-Grafiken...
     impl("para.smartArt", () => {}, () => this.editor.selectedViews.length === 1 && !!this.editor.selectedViews[0].text);
     impl("smartart.layouts", () => {}, hasDg);
     impl("smartart.colors", () => {}, hasDg);
-    impl("smartart.reset", () => { const id = dg(); if (id !== null) void import("./smartart-create").then((m) => { const d = m.diagramOf(this, id); if (d) m.relayout(this, id, d.items, undefined, "accent1"); }); }, hasDg);
+    impl("smartart.styles", () => {}, hasDg);
+    impl("smartart.reset", () => { const id = dg(); if (id !== null) void import("./smartart-create").then((m) => { const d = m.diagramOf(this, id); if (d) m.relayout(this, id, d.items, undefined, "accent1_2", { style: "simple1", rtl: false }); }); }, hasDg);
     impl("insert.action", () => import("./links").then((m) => m.actionDialog(this)), () => this.editor.sel.length === 1);
     impl("view.ruler", () => { this.editor.showRuler = !this.editor.showRuler; this.editor.fitZoom(); this.editor.render(); this.updateChrome(); }, () => this.view === "normal", () => this.editor.showRuler);
     impl("draw.arrange", () => {});
@@ -2541,7 +2641,7 @@ export class PresentApp implements EditorHost, PanelHost {
     // Gruppierung wiederherstellen: the shapes last ungrouped, grouped again (while they are all still there).
     impl("arrange.regroup", () => { this.editor.select(this.lastUngrouped); this.group(); }, () => this.lastUngrouped.length > 1 && this.lastUngrouped.every((id) => !!this.editor.shapeView(id)));
     // Dropdowns whose menus do the work (they were greyed without a command).
-    for (const id of ["slide.layout", "slide.section", "edit.select", "design.colors", "design.fonts"]) impl(id, () => {}, () => !!this.slidePath());
+    for (const id of ["slide.layout", "slide.section", "edit.select", "design.colors", "design.fonts", "design.effects"]) impl(id, () => {}, () => !!this.slidePath());
     // Folienmaster > Masterlayout: Titel and Fußzeilen on the layout; Master bearbeiten > Beibehalten.
     const layoutPath = () => (this.masterMode && this.masterKind === "slides" && this.masterIndex > 0 ? this.masterList()[this.masterIndex] : undefined);
     const hasPh = (types: string[]) => { const p = layoutPath(); return !!p && Array.from(this.deck.pptx.doc(p).getElementsByTagNameNS(PptxDom.NS_P, "ph")).some((x) => types.includes(x.getAttribute("type") ?? "")); };
@@ -3067,14 +3167,32 @@ export class PresentApp implements EditorHost, PanelHost {
   }
 
   private installSplitter(): void {
+    // The border between slide and notes: dragged, the notes pane grows or shrinks (PowerPoint's); Esc puts it back (D-110).
+    const grip = this.notesWrap.querySelector(".notes-grip") as HTMLElement;
+    grip.addEventListener("mousedown", (e) => {
+      e.preventDefault();
+      const start = e.clientY, h0 = this.notesWrap.getBoundingClientRect().height;
+      const max = () => this.center.getBoundingClientRect().height * 0.8;
+      const move = (m: MouseEvent) => { this.notesWrap.style.height = `${Math.max(24, Math.min(max(), h0 - (m.clientY - start)))}px`; };
+      const end = () => { window.removeEventListener("mousemove", move); window.removeEventListener("mouseup", up); window.removeEventListener("keydown", esc, true); if (this.editor.fit) this.editor.fitZoom(); };
+      const up = () => end();
+      const esc = (k: KeyboardEvent) => { if (k.key !== "Escape") return; k.preventDefault(); k.stopPropagation(); this.notesWrap.style.height = `${h0}px`; end(); };
+      window.addEventListener("mousemove", move);
+      window.addEventListener("mouseup", up);
+      window.addEventListener("keydown", esc, true);
+    });
     const sp = this.main.querySelector(".splitter") as HTMLElement;
     sp.addEventListener("mousedown", (e) => {
       e.preventDefault();
       const start = e.clientX, w0 = this.panel.el.getBoundingClientRect().width;
       const move = (m: MouseEvent) => { this.panel.el.style.width = `${Math.max(90, Math.min(420, w0 + m.clientX - start))}px`; };
-      const up = () => { window.removeEventListener("mousemove", move); window.removeEventListener("mouseup", up); this.panel.render(); if (this.editor.fit) this.editor.fitZoom(); };
+      const end = () => { window.removeEventListener("mousemove", move); window.removeEventListener("mouseup", up); window.removeEventListener("keydown", esc, true); this.panel.render(); if (this.editor.fit) this.editor.fitZoom(); };
+      const up = () => end();
+      // Esc during the drag puts the pane back (D-110).
+      const esc = (k: KeyboardEvent) => { if (k.key !== "Escape") return; k.preventDefault(); k.stopPropagation(); this.panel.el.style.width = `${w0}px`; end(); };
       window.addEventListener("mousemove", move);
       window.addEventListener("mouseup", up);
+      window.addEventListener("keydown", esc, true);
     });
     // Format übertragen: the next click on a shape or text applies the picked formatting.
     this.editor.el.addEventListener("mouseup", () => { if (this.painter) setTimeout(() => this.applyPainter(), 0); });
@@ -3147,6 +3265,7 @@ export class PresentApp implements EditorHost, PanelHost {
         colors: () => [...COLOR_SETS.map((c) => ({ label: c.name, run: () => this.applyColorSet(c.name, c.colors) })), "-", { label: "Farben anpassen...", run: () => void this.customColorsDialog() },
           { label: "Farben des Foliendesigns zurücksetzen", disabled: !this.ownDesign(), run: () => { const d = this.ownDesign(); if (d) this.applyColorSet(d.colorName ?? d.name, d.colors as Record<string, string>); } }],
         fonts: () => [...FONT_SETS.map((f) => ({ label: f.label, run: () => this.applyFontSet(f.name, f.major, f.minor) })), "-", { label: "Schriftarten anpassen...", run: () => void this.customFontsDialog() }],
+        themeEffects: () => THEME_EFFECTS.map((e) => ({ label: e.name, checked: this.themeEffectName() === e.name, run: () => this.applyThemeEffects(e.name, e.xml) })),
         underline: [], outlineWeight: [], outlineDash: [], effects: this.effectsMenu(), quickStyles: () => [], zoomFit: [],
         equations: () => BUILT_IN.map((e) => ({ label: e.name, run: () => void insertEquation(this, e.seq) })),
         sounds: () => this.transMod?.soundMenu(this) ?? [],

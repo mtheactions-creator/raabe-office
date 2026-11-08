@@ -1,0 +1,1814 @@
+{
+ "date": "2026-11-08",
+ "anchors": [
+  {
+   "anchor": "move shape",
+   "ok": 10,
+   "of": 10,
+   "esc": "ok",
+   "undo_moved": true,
+   "undo": "ok",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 45,
+     "follow": 0.21,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 609.59375,
+     "after": 688.2575073242188
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 36,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 609.59375,
+     "after": 609.59375
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 8,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.01,
+     "v0": 609.59375,
+     "after": 725.5887451171875
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 609.59375,
+     "after": 553.5900268554688
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 609.59375,
+     "after": 611.2575073242188
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 76,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 609.59375,
+     "after": 628.2593994140625
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 30,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 609.59375,
+     "after": 679.9937744140625
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.21,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 609.59375,
+     "after": 688.6219482421875
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 609.59375,
+     "after": 636.5919189453125
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 32,
+     "follow": 0.21,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 609.59375,
+     "after": 1006.01318359375
+    }
+   ]
+  },
+  {
+   "anchor": "move text box",
+   "ok": 10,
+   "of": 10,
+   "esc": "ok",
+   "undo_moved": true,
+   "undo": "ok",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 46,
+     "follow": 0.75,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 609.59375,
+     "after": 689.59130859375
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 35,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 609.59375,
+     "after": 609.59375
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 609.59375,
+     "after": 729.5900268554688
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 609.59375,
+     "after": 549.5888061523438
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.01,
+     "v0": 609.59375,
+     "after": 613.588134765625
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 76,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 609.59375,
+     "after": 629.5931396484375
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 30,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 609.59375,
+     "after": 685.5900268554688
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 609.59375,
+     "after": 689.59130859375
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 26,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 609.59375,
+     "after": 641.5900268554688
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 31,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.01,
+     "v0": 609.59375,
+     "after": 1009.588134765625
+    }
+   ]
+  },
+  {
+   "anchor": "move picture",
+   "ok": 10,
+   "of": 10,
+   "esc": "ok",
+   "undo_moved": true,
+   "undo": "ok",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 45,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 688.7938232421875,
+     "after": 767.9938354492188
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 36,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 688.7938232421875,
+     "after": 688.7938232421875
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 688.7938232421875,
+     "after": 808.7900390625
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.01,
+     "v0": 688.7938232421875,
+     "after": 628.7887573242188
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 688.7938232421875,
+     "after": 688.7938232421875
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 76,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 688.7938232421875,
+     "after": 708.7931518554688
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 31,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 688.7938232421875,
+     "after": 762.7894287109375
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 688.7938232421875,
+     "after": 767.9938354492188
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 688.7938232421875,
+     "after": 718.7894287109375
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 32,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.01,
+     "v0": 688.7938232421875,
+     "after": 1088.7882080078125
+    }
+   ]
+  },
+  {
+   "anchor": "handle se",
+   "ok": 10,
+   "of": 10,
+   "esc": "ok",
+   "undo_moved": true,
+   "undo": "ok",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 45,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 176,
+     "after": 255.99755859375
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 35,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 176,
+     "after": 176
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 176,
+     "after": 295.99627685546875
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 6,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 176,
+     "after": 115.99495697021484
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 176,
+     "after": 179.994384765625
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 76,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 176,
+     "after": 195.99935913085938
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 30,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 176,
+     "after": 251.9962615966797
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 176,
+     "after": 255.99755859375
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 176,
+     "after": 207.9962615966797
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 32,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 176,
+     "after": 576.9981689453125
+    }
+   ]
+  },
+  {
+   "anchor": "handle e",
+   "ok": 10,
+   "of": 10,
+   "esc": "ok",
+   "undo_moved": true,
+   "undo": "ok",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 45,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 176,
+     "after": 255.99755859375
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 35,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 176,
+     "after": 176
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 176,
+     "after": 295.99627685546875
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 6,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 176,
+     "after": 115.99495697021484
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 176,
+     "after": 179.994384765625
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 76,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 176,
+     "after": 195.99935913085938
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 30,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 176,
+     "after": 251.9962615966797
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 176,
+     "after": 255.99755859375
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 26,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 176,
+     "after": 207.9962615966797
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 31,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 176,
+     "after": 576.9981689453125
+    }
+   ]
+  },
+  {
+   "anchor": "handle s",
+   "ok": 10,
+   "of": 10,
+   "esc": "ok",
+   "undo_moved": true,
+   "undo": "ok",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 45,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 105.60002136230469,
+     "after": 105.60002136230469
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 35,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 105.60002136230469,
+     "after": 165.59814453125
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 105.60002136230469,
+     "after": 105.60002136230469
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 105.60002136230469,
+     "after": 105.60002136230469
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 105.60002136230469,
+     "after": 106.59684753417969
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 75,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 105.60002136230469,
+     "after": 105.60002136230469
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 30,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 105.60002136230469,
+     "after": 155.59506225585938
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 105.60002136230469,
+     "after": 97.59749603271484
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 105.60002136230469,
+     "after": 106.59684753417969
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 31,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 105.60002136230469,
+     "after": 305.59375
+    }
+   ]
+  },
+  {
+   "anchor": "handle nw",
+   "ok": 10,
+   "of": 10,
+   "esc": "ok",
+   "undo_moved": true,
+   "undo": "ok",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 46,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 176,
+     "after": 95.99560546875
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 36,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 176,
+     "after": 176
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 176,
+     "after": 55.996910095214844
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 6,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 176,
+     "after": 235.99813842773438
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 176,
+     "after": 171.998779296875
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 76,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 176,
+     "after": 155.9937744140625
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 30,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 176,
+     "after": 99.99691009521484
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 176,
+     "after": 95.99560546875
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 176,
+     "after": 143.99691772460938
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 32,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 176,
+     "after": 224.9982147216797
+    }
+   ]
+  },
+  {
+   "anchor": "handle n",
+   "ok": 10,
+   "of": 10,
+   "esc": "ok",
+   "undo_moved": true,
+   "undo": "ok",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 45,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 105.60002136230469,
+     "after": 105.60002136230469
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 35,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 105.60002136230469,
+     "after": 45.594970703125
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 105.60002136230469,
+     "after": 105.60002136230469
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 105.60002136230469,
+     "after": 105.60002136230469
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 105.60002136230469,
+     "after": 103.599365234375
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 77,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 105.60002136230469,
+     "after": 105.60002136230469
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 30,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 105.60002136230469,
+     "after": 55.59806442260742
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 105.60002136230469,
+     "after": 113.5955810546875
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 26,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 105.60002136230469,
+     "after": 103.599365234375
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 33,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 105.60002136230469,
+     "after": 94.39372253417969
+    }
+   ]
+  },
+  {
+   "anchor": "handle w",
+   "ok": 10,
+   "of": 10,
+   "esc": "ok",
+   "undo_moved": true,
+   "undo": "ok",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 47,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 176,
+     "after": 95.99560546875
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 36,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 176,
+     "after": 176
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 8,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 176,
+     "after": 55.996910095214844
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 6,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 176,
+     "after": 235.99813842773438
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 176,
+     "after": 171.998779296875
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 77,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 176,
+     "after": 155.9937744140625
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 31,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 176,
+     "after": 99.99691009521484
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 26,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 176,
+     "after": 95.99560546875
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 176,
+     "after": 143.99691772460938
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 32,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 176,
+     "after": 224.9982147216797
+    }
+   ]
+  },
+  {
+   "anchor": "rotation handle",
+   "ok": 10,
+   "of": 10,
+   "esc": "ok",
+   "undo_moved": true,
+   "undo": "ok",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 45,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": 43.3112
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 35,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 0,
+     "after": 0
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": 54.1551
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 6,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": -33.752999999999986
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": 1.38368
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 76,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": 12.1228
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 30,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": 64.8138
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": 39.5559
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 26,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": 18.0339
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 32,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": 106.099
+    }
+   ]
+  },
+  {
+   "anchor": "table column border",
+   "ok": 10,
+   "of": 10,
+   "esc": "ok",
+   "undo_moved": true,
+   "undo": "ok",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 46,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 264,
+     "after": 343.99749755859375
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 35,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 264,
+     "after": 264
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 8,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 264,
+     "after": 383.99627685546875
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 6,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 264,
+     "after": 203.9949951171875
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 264,
+     "after": 265.9937438964844
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 75,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 264,
+     "after": 283.9993591308594
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 29,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 264,
+     "after": 337.99560546875
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 264,
+     "after": 343.99749755859375
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 264,
+     "after": 293.99560546875
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 31,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 264,
+     "after": 524.1981811523438
+    }
+   ]
+  },
+  {
+   "anchor": "slide thumbnail",
+   "ok": 10,
+   "of": 10,
+   "esc": "ok",
+   "undo_moved": false,
+   "undo": "ok",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 45,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 105.75001525878906,
+     "after": 105.08332824707031
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 35,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 101.75,
+     "v0": 105.75001525878906,
+     "after": 105.08332824707031
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 105.75001525878906,
+     "after": 105.08332824707031
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 6,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 105.75001525878906,
+     "after": 105.08332824707031
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 105.75001525878906,
+     "after": 105.08332824707031
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 75,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 105.75001525878906,
+     "after": 105.08332824707031
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 30,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 101.75,
+     "v0": 105.75001525878906,
+     "after": 105.08332824707031
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 105.75001525878906,
+     "after": 105.08332824707031
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 105.75001525878906,
+     "after": 105.08332824707031
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 32,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 101.75,
+     "v0": 105.75001525878906,
+     "after": 206.1666717529297
+    }
+   ]
+  },
+  {
+   "anchor": "zoom slider",
+   "ok": 10,
+   "of": 10,
+   "esc": "ok",
+   "undo": "n/a",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 45,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1150.4896240234375,
+     "after": 1213.875
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 35,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1150.4896240234375,
+     "after": 1150.4896240234375
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1150.4896240234375,
+     "after": 1213.875
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 6,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1150.4896240234375,
+     "after": 1121.875
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1150.4896240234375,
+     "after": 1153.15625
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 76,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1150.4896240234375,
+     "after": 1170.4896240234375
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 31,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1150.4896240234375,
+     "after": 1213.875
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1150.4896240234375,
+     "after": 1213.875
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1150.4896240234375,
+     "after": 1181.15625
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 31,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1150.4896240234375,
+     "after": 1213.875
+    }
+   ]
+  },
+  {
+   "anchor": "thumbnail pane splitter",
+   "ok": 10,
+   "of": 10,
+   "esc": "ok",
+   "undo": "n/a",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 45,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 200,
+     "after": 280
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 35,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 280,
+     "after": 280
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 280,
+     "after": 400
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 6,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 400,
+     "after": 340
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 340,
+     "after": 343
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 76,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 343,
+     "after": 363
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 30,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 363,
+     "after": 420
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 420,
+     "after": 420
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 420,
+     "after": 420
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 31,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 420,
+     "after": 420
+    }
+   ]
+  },
+  {
+   "anchor": "notes splitter",
+   "ok": 10,
+   "of": 10,
+   "esc": "ok",
+   "undo": "n/a",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 46,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 74,
+     "after": 74
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 36,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 74,
+     "after": 24
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 24,
+     "after": 24
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 24,
+     "after": 24
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 24,
+     "after": 24
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 75,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 24,
+     "after": 24
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 30,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 24,
+     "after": 24
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 24,
+     "after": 32
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 32,
+     "after": 32
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 31,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 32,
+     "after": 24
+    }
+   ]
+  }
+ ],
+ "measured": {
+  "rot_rel": [
+   0.0,
+   -83.80001068115234
+  ],
+  "zoom_lo": 1121.875,
+  "zoom_hi": 1213.875,
+  "notes_hi": 926.9333984375,
+  "col_min": 3.801600219726564,
+  "col_room": 260.19839978027346,
+  "thumb_pitch": 101.75001525878906
+ }
+}

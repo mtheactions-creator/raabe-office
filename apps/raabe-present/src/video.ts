@@ -32,6 +32,9 @@ export interface MediaOptions {
   transparent?: boolean;
   /** GIF: the width rounded to the nearest pixel (PowerPoint's GIF 853 wide at 480, its video 852). */
   roundWidth?: boolean;
+  /** GIF: PowerPoint's GIF timing (measured, D-107): transitions are cuts at their middle, and a slide lasts one
+   *  frame longer, one more per animation step, and the last slide one more. */
+  gifTiming?: boolean;
   /** Called with the share done (0..1); returning false stops the export. */
   progress?: (done: number) => boolean | void;
 }
@@ -49,7 +52,7 @@ const stepLength = (s: Step) => Math.max(0, ...s.effects.map((e) => e.delay + e.
  * after the previous start with it, the click steps come at equal shares of the seconds (two clicks in 2 s: at
  * 0.67 s and 1.33 s), and the animations' own durations add nothing unless they run past the slide's end.
  */
-export function timeline(app: PresentApp, o: Pick<MediaOptions, "secs" | "useTimings" | "from" | "to">): Segment[] {
+export function timeline(app: PresentApp, o: Pick<MediaOptions, "secs" | "useTimings" | "from" | "to"> & Partial<Pick<MediaOptions, "fps" | "gifTiming">>): Segment[] {
   const out: Segment[] = [];
   const slides = app.deck.slides;
   const first = Math.max(0, (o.from ?? 1) - 1), last = Math.min(slides.length - 1, (o.to ?? slides.length) - 1);
@@ -64,7 +67,9 @@ export function timeline(app: PresentApp, o: Pick<MediaOptions, "secs" | "useTim
     const seq = mainSequence(root);
     const acts: Act[] = [];
     const timed = o.useTimings && tr?.advTm !== undefined;
-    const hold = timed ? tr!.advTm! : o.secs * 1000;
+    let hold = timed ? tr!.advTm! : o.secs * 1000;
+    // PowerPoint's GIF: one frame more per slide and per step, one more on the last slide (measured, D-107).
+    if (o.gifTiming && o.fps) hold += (1000 / o.fps) * (1 + seq.steps.length + (seq.auto ? 1 : 0) + (i === last ? 1 : 0));
     let end = td + hold;
     if (seq.auto) { acts.push({ at: td, step: seq.auto }); end = Math.max(end, td + stepLength(seq.auto)); }
     const gap = hold / (seq.steps.length + 1);
@@ -260,17 +265,21 @@ async function playFrames(app: PresentApp, o: MediaOptions, width: number, heigh
       }
       const local = t - seg.start;
       const st = cur.seek(local);
-      // During a transition the slide before stays underneath.
-      const under = seg.trans && local < seg.trans.dur && prev ? [prev] : [];
-      if (!under.length && prev) { prev.remove(); prev = null; }
-      const key = `${seg.index}:${st.key}:${under.length}`;
+      // During a transition the slide before stays underneath; PowerPoint's GIF shows no transition, only a cut
+      // at its middle (the slide before until then).
+      const cutBefore = !!(o.gifTiming && seg.trans && local < seg.trans.dur / 2 && prev);
+      const under = seg.trans && local < seg.trans.dur && prev && !o.gifTiming ? [prev] : [];
+      if (!under.length && !cutBefore && prev) { prev.remove(); prev = null; }
+      const key = cutBefore ? `${prev!.seg.index}:end` : `${seg.index}:${o.gifTiming && seg.trans && local < seg.trans.dur ? "in" : st.key}:${under.length}`;
       const hasVideo = seg.media.some((m) => m.kind === "video");
       const same = key === lastKey && !hasVideo;
       if (!same) {
         g.fillStyle = "#000";
         g.fillRect(0, 0, width, height);
-        const restore = [cur, ...under].map((s) => s.bake());
-        const nodes = [...under.map((s) => s.el), cur.el];
+        const shown = cutBefore ? [prev!] : [...under, cur];
+        if (o.gifTiming && !cutBefore && seg.trans && local < seg.trans.dur) cur.seek(seg.trans.dur);
+        const restore = shown.map((s) => s.bake());
+        const nodes = shown.map((s) => s.el);
         try { await ras.draw(nodes, g, width, height); } finally { for (const r of restore) r(); }
         if (hasVideo) await videos.draw(seg, local, g, width / W);
       }
