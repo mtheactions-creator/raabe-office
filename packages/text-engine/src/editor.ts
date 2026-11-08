@@ -4021,9 +4021,34 @@ export class Editor {
       this.setPictureFormat({ rotation: a || undefined }, first);
       first = false;
     };
-    const up = () => { removeEventListener("mousemove", move, true); removeEventListener("mouseup", up, true); this.emit(true); };
+    const up = () => { off(); removeEventListener("mousemove", move, true); removeEventListener("mouseup", up, true); this.emit(true); };
+    const off = this.escapable(() => { removeEventListener("mousemove", move, true); removeEventListener("mouseup", up, true); });
     addEventListener("mousemove", move, true);
     addEventListener("mouseup", up, true);
+  }
+
+  /**
+   * Esc during a drag of a picture or shape (body, handles, rotation) or of a table's border: the
+   * drag ends and the document is as it was before it (Word, recorded in probe_word_drag_esc.py;
+   * D-096). `end` removes the drag's listeners; the returned function removes the Esc listener.
+   */
+  private escapable(end: () => void): () => void {
+    const depth = this.undoStack.length;
+    const key = (ev: KeyboardEvent) => {
+      if (ev.key !== "Escape") return;
+      ev.preventDefault();
+      ev.stopPropagation();
+      off();
+      end();
+      // The drag's first change made its undo step: back to that state, without the step.
+      const s = this.undoStack.length > depth ? this.undoStack.splice(depth)[0] : null;
+      this.guides = [];
+      if (s) this.restoreSnapshot(s); else this.update();
+      this.emit(true);
+    };
+    const off = () => removeEventListener("keydown", key, true);
+    addEventListener("keydown", key, true);
+    return off;
   }
 
   /** The host shows Word's layout options (wrapping) next to the picture. */
@@ -6969,10 +6994,12 @@ cropFill(fit: boolean): void {
       first = false;
     };
     const up = () => {
+      off();
       removeEventListener("mousemove", move, true); removeEventListener("mouseup", up, true);
       if (this.guides.length) { this.guides = []; this.update(); }
       this.emit(true);
     };
+    const off = this.escapable(() => { removeEventListener("mousemove", move, true); removeEventListener("mouseup", up, true); });
     addEventListener("mousemove", move, true);
     addEventListener("mouseup", up, true);
     this.update();
@@ -6996,7 +7023,8 @@ cropFill(fit: boolean): void {
       first = false;
       last = dx;
     };
-    const up = () => { removeEventListener("mousemove", move, true); removeEventListener("mouseup", up, true); this.emit(true); };
+    const up = () => { off(); removeEventListener("mousemove", move, true); removeEventListener("mouseup", up, true); this.emit(true); };
+    const off = this.escapable(() => { removeEventListener("mousemove", move, true); removeEventListener("mouseup", up, true); });
     addEventListener("mousemove", move, true);
     addEventListener("mouseup", up, true);
   }
@@ -7020,7 +7048,8 @@ cropFill(fit: boolean): void {
       E.updateRows(this.doc, at, at, (r) => ({ ...r, height: Math.round(h * 20) / 20, heightRule: "atLeast" }));
       this.update();
     };
-    const up = () => { removeEventListener("mousemove", move, true); removeEventListener("mouseup", up, true); this.emit(true); };
+    const up = () => { off(); removeEventListener("mousemove", move, true); removeEventListener("mouseup", up, true); this.emit(true); };
+    const off = this.escapable(() => { removeEventListener("mousemove", move, true); removeEventListener("mouseup", up, true); });
     addEventListener("mousemove", move, true);
     addEventListener("mouseup", up, true);
   }

@@ -47,6 +47,7 @@ import { pictureTab } from "./picture-tab";
 import { shapesFeature } from "./shapes";
 import { borderDrawFeature } from "./borderdraw";
 import { whatIfFeature } from "./whatif";
+import { macroDialog, messageBar, modulesOf, runMacro, setModules } from "./macros";
 import { scenarioFeature } from "./scenarios";
 import { consolidateFeature } from "./consolidate";
 import { tablesFeature } from "./tables";
@@ -54,11 +55,18 @@ import { sparklinesFeature } from "./sparklines";
 import { designsFeature } from "./designs";
 import { advancedFilterFeature } from "./advfilter";
 import { pivotsFeature } from "./pivots";
+import { slicersFeature } from "./slicers";
+import { getDataFeature } from "./getdata";
+import { forecastFeature } from "./forecast";
 import { commentsFeature } from "./comments";
 import { iconRule } from "./dialogs";
+import { windowsFeature } from "./windows";
+import { inkFeature } from "./ink";
+import { pageLayoutFeature } from "./pagelayout";
+import { freezeSplit, splitBars, toggleSplit, unfreezeToSplit } from "./split";
 import appIconUrl from "../../../branding/raabe-calc-small.svg?url";
 
-interface Doc {
+export interface Doc {
   id: string;
   name: string;
   path: string | null;
@@ -71,7 +79,14 @@ interface Doc {
   lastSaved: number | null;
 }
 
-const stripExt = (name: string) => name.replace(/\.(xlsx|csv)$/i, "");
+const stripExt = (name: string) => name.replace(/\.(xlsx|xlsm|csv)$/i, "");
+
+/** Saving a workbook with macros as .xlsx (Excel asks the same): true saves it without them. */
+async function keepWithoutMacros(): Promise<boolean> {
+  return showDialog({ title: "RaabeCalc", body: h("div", { style: "max-width:460px;white-space:pre-wrap" },
+    "Eine Arbeitsmappe im Format .xlsx kann keine Makros enthalten.\n\nMit „Ja“ wird sie ohne die Makros gespeichert. Mit „Nein“ können Sie einen anderen Dateityp wählen, etwa „Excel-Arbeitsmappe mit Makros“ (.xlsm)."),
+    buttons: [{ label: "Ja", value: true, primary: true }, { label: "Nein", value: false }], cancel: false });
+}
 /** A new GUID in Excel's form (Kommentar ids). */
 const newId = () => {
   const b = crypto.getRandomValues(new Uint8Array(16));
@@ -94,6 +109,8 @@ export class CalcApp {
   readonly grid: Grid;
   private sheetBar: SheetBar;
   private statusBar: CalcStatusBar;
+  /** The message bar of a workbook with macros (D-091). */
+  private macroSlot = h("div");
   private copied: Copied | null = null;
   private fontList: string[] = [];
   private lastFontColor = "#FF0000";
@@ -122,10 +139,26 @@ export class CalcApp {
   readonly designs = designsFeature(this);
   readonly advFilter = advancedFilterFeature(this);
   readonly pivots = pivotsFeature(this);
+  /** Datenschnitte (D-092). */
+  readonly slicers = slicersFeature(this);
+  /** Daten abrufen (local) and Prognoseblatt (D-092). */
+  readonly getData = getDataFeature(this);
+  readonly forecast = forecastFeature(this);
   private comments = commentsFeature(this, () => this.settings.userName);
   private errorCheck = errorCheckFeature(this, () => void this.evaluator.open());
   private quick = quickFeature(this, () => this.quickTiles());
   readonly validation = validationFeature(this, (t, text) => this.gridHost().commit(t, text, {}));
+  /** Ansicht > Fenster, Benutzerdefinierte Ansichten, Zeichnen, Seitenlayout (D-093). */
+  readonly windows = windowsFeature(this);
+  readonly ink = inkFeature(this);
+  readonly pageLayout = pageLayoutFeature(this);
+  private splitUi!: ReturnType<typeof splitBars>;
+  get docList(): readonly Doc[] { return this.docs; }
+  get activeDoc(): Doc { return this.active; }
+  /** A change outside the undo history (windows, views): the document counts as changed. */
+  markChanged(): void { this.active.version++; this.updateTabs(); }
+  refreshTabs(): void { this.updateTabs(); }
+  readonly tableStyleOf = (r: number, c: number, st: CellStyle) => this.tables.styleFor(r, c, st);
   get calc(): CalcLike { return this.active.calc; }
 
   constructor(readonly platform: Platform) {
@@ -138,6 +171,12 @@ export class CalcApp {
     applyTips(this.commands);
 
     this.grid = new Grid(this.gridHost());
+    this.grid.axesFor = (sheet, base) => this.pageLayout.axes(sheet, base);
+    this.pageLayout.install();
+    this.splitUi = splitBars({
+      el: this.grid.el, vscroll: () => this.grid.vScrollEl, view: () => this.sheet.view, geometry: () => this.grid.geometry(),
+      changed: () => { this.grid.refreshLayout(); }, done: () => { this.active.version++; this.updateTabs(); this.updateChrome(); this.grid.focus(); },
+    });
     // A font found only by its full name (Aptos Narrow …) draws differently once its alias has loaded (D-089).
     onFontAlias(() => this.grid.contentChanged());
     this.grid.setFunctions(FUNCTIONS_DE);
@@ -158,8 +197,9 @@ export class CalcApp {
         { cmd: "edit.undo", key: "2" },
         { cmd: "edit.redo", key: "3" },
       ],
-      onSelectDoc: (id) => this.activate(this.docs.find((d) => d.id === id)!),
-      onCloseDoc: (id) => void this.closeDoc(this.docs.find((d) => d.id === id)!),
+      // Neues Fenster: a document with several windows has a tab per window ("Mappe1  -  2", D-093).
+      onSelectDoc: (id) => this.windows.select(id),
+      onCloseDoc: (id) => { if (!this.windows.closeWindow(id)) void this.closeDoc(this.docs.find((d) => d.id === id.split("#")[0])!); },
       onNewDoc: () => this.newDoc(),
       onSearchDone: () => this.grid.focus(),
     });
@@ -181,7 +221,7 @@ export class CalcApp {
     }, this.grid.hscroll);
     this.statusBar = new CalcStatusBar(this.commands, (z) => this.setZoom(z), (v, st) => shown({ v }, this.wb.styles.get(st ?? 0)).text);
     const main = h("div", { class: "calc-main" }, this.grid.formulaBar, this.grid.el, this.sheetBar.el);
-    document.body.append(this.titleBar.el, this.ribbon.tabRow, this.ribbon.card, main, this.statusBar.el, this.backstage.el);
+    document.body.append(this.titleBar.el, this.ribbon.tabRow, this.ribbon.card, this.macroSlot, main, this.statusBar.el, this.backstage.el);
     document.body.classList.add("calc");
     document.body.classList.toggle("touch", this.settings.touchMode);
     installTooltips();
@@ -241,12 +281,13 @@ export class CalcApp {
     this.charts.refresh();
     this.updateTabs();
     this.updateChrome();
+    messageBar(this, this.macroSlot);
     this.grid.focus();
   }
 
   private updateTabs(): void {
-    this.titleBar.setDocs(this.docs.map((d) => ({ id: d.id, name: d.name, dirty: d.version !== d.savedVersion })), this.active.id);
-    document.title = `${this.active.name} - RaabeCalc`;
+    this.titleBar.setDocs(this.docs.flatMap((d) => this.windows.tabs(d)), this.windows.activeId(this.active));
+    document.title = `${this.windows.title(this.active)} - RaabeCalc`;
     this.platform.window.setTitle(document.title);
   }
 
@@ -889,7 +930,7 @@ export class CalcApp {
       circles: () => this.circles.get(this.sheet) ?? [],
       canEdit: (row, col) => this.protection.canEdit(row, col),
       validate: (row, col, text) => (this.validation.quickCheck(row, col, text) ? "ok" : this.validation.check(row, col, text)),
-      painted: () => { this.pictures.place(); this.shapes.place(); this.validation.place(); this.quick.place(); },
+      painted: () => { this.pageLayout.paint(); this.pictures.place(); this.slicers.place(); this.shapes.place(); this.ink.place(); this.splitUi?.place(); this.validation.place(); this.quick.place(); this.windows.painted(); },
       nextUnlocked: (row, col, back) => this.protection.nextUnlocked(row, col, back),
     };
   }
@@ -1309,12 +1350,16 @@ export class CalcApp {
     if (this.grid.isEditing) this.grid.commitEdit("none");
     let path = doc.path;
     if (as || !path || /\.csv$/i.test(path) && as) {
-      path = await this.platform.saveFileDialog(`${doc.name}.xlsx`, "xlsx");
+      const ext = doc.wb.vba ? "xlsm" : "xlsx";
+      path = await this.platform.saveFileDialog(`${doc.name}.${ext}`, ext);
       if (!path) return false;
-      if (!/\.(xlsx|csv)$/i.test(path)) path += ".xlsx";
+      if (!/\.(xlsx|xlsm|csv)$/i.test(path)) path += "." + ext;
     }
+    // Makros (D-091): an .xlsx cannot hold them; as in Excel, saving one without them needs a yes.
+    if (doc.wb.vba && /\.xlsx$/i.test(path) && !(await keepWithoutMacros())) return as ? this.save(doc, true) : false;
     try {
-      const bytes = /\.csv$/i.test(path) ? new TextEncoder().encode("\ufeff" + writeCsv(doc.wb.sheet(), { styles: doc.wb.styles, date1904: doc.wb.date1904 })) : writeXlsx(doc.wb);
+      const bytes = /\.csv$/i.test(path) ? new TextEncoder().encode("\ufeff" + writeCsv(doc.wb.sheet(), { styles: doc.wb.styles, date1904: doc.wb.date1904 }))
+        : writeXlsx(doc.wb, { macros: /\.xlsm$/i.test(path) });
       await this.platform.writeFile(path, bytes);
     } catch (e) {
       await messageBox("RaabeCalc", `Die Datei konnte nicht gespeichert werden.\n\n${e instanceof Error ? e.message : String(e)}`);
@@ -2047,6 +2092,9 @@ export class CalcApp {
     run("insert.sparkColumn", () => void this.sparklineDialog("column"), notEditing);
     run("insert.sparkWinLoss", () => void this.sparklineDialog("stacked"), notEditing);
     this.sparklines.implement(run);
+    this.slicers.implement(run);
+    this.getData.implement(run);
+    this.forecast.implement(run);
     run("insert.comment", () => this.comments.newComment(), notEditing);
     run("review.newComment", () => this.comments.newComment(), notEditing);
     run("review.deleteComment", () => this.comments.remove(), () => this.comments.has());
@@ -2098,17 +2146,50 @@ export class CalcApp {
     run("review.deleteNote", () => this.change("Notiz löschen", () => A.clearAll(this.ctx, this.sheet, this.grid.selection, "notes")), () => !!this.activeCellNote());
     run("review.showNotes", () => { this.showNotes = !this.showNotes; this.grid.contentChanged(); }, undefined, () => this.showNotes);
 
-    run("view.normal", () => this.setPageBreakView(false), undefined, () => !this.breakView.has(this.sheet));
-    run("view.pageBreak", () => this.setPageBreakView(true), undefined, () => this.breakView.has(this.sheet));
+    // Normal, Umbruchvorschau, Seitenlayout (D-093: the Seitenlayout view with its own zoom).
+    const layoutOff = () => { if (this.sheet.view.layout) { this.pageLayout.set(false); this.grid.refreshLayout(); this.active.version++; } };
+    run("view.normal", () => { layoutOff(); this.setPageBreakView(false); this.updateChrome(); }, undefined, () => !this.breakView.has(this.sheet) && !this.sheet.view.layout);
+    run("view.pageBreak", () => { layoutOff(); this.setPageBreakView(true); }, undefined, () => this.breakView.has(this.sheet));
+    run("view.pageLayout", () => {
+      this.setPageBreakView(false);
+      this.pageLayout.set(true);
+      this.active.version++;
+      this.grid.refreshLayout();
+      this.grid.contentChanged();
+      this.updateChrome();
+    }, undefined, () => !!this.sheet.view.layout);
+    run("view.ruler", () => { const v = this.sheet.view; if (v.noRuler) delete v.noRuler; else v.noRuler = true; this.active.version++; this.grid.contentChanged(); this.updateChrome(); },
+      () => !!this.sheet.view.layout, () => !!this.sheet.view.layout && !this.sheet.view.noRuler);
+    // Teilen (D-093).
+    run("view.split", () => {
+      const g = this.grid.geometry();
+      if (!g || !toggleSplit(this.sheet.view, g)) return;
+      this.active.version++;
+      this.grid.refreshLayout();
+      this.updateChrome();
+      this.grid.focus();
+    }, () => !this.sheet.view.layout, () => !!this.sheet.view.split || !!this.sheet.view.freeze);
+    this.windows.implement(run);
+    this.ink.implement(run);
     run("view.gridlines", () => this.toggleView("showGrid"), undefined, () => this.sheet.view.showGrid);
     run("view.headings", () => this.toggleView("showHeaders"), undefined, () => this.sheet.view.showHeaders);
     run("view.formulaBar", () => { document.body.classList.toggle("no-fbar"); }, undefined, () => !document.body.classList.contains("no-fbar"));
     run("view.zoomDialog", () => void this.dlg.zoom());
     run("view.zoom100", () => this.setZoom(100));
     run("view.zoomSelection", () => this.zoomToSelection());
+    run("view.macros", () => macroDialog(this));
     run("view.freeze", () => {});
-    run("view.freezePanes", () => this.freeze(this.sheet.view.active.row, this.sheet.view.active.col));
-    run("view.unfreeze", () => this.freeze(0, 0));
+    run("view.freezePanes", () => {
+      // Fenster fixieren on a split freezes at the bars; Fixierung aufheben gives the split back (recorded, D-093).
+      const v = this.sheet.view, g = this.grid.geometry();
+      if (v.split && !v.freeze && g) { freezeSplit(v, g); this.active.version++; this.grid.refreshLayout(); this.updateChrome(); return; }
+      this.freeze(v.active.row, v.active.col);
+    });
+    run("view.unfreeze", () => {
+      const v = this.sheet.view, g = this.grid.geometry();
+      if (v.splitFrozen && g) { unfreezeToSplit(v, g); this.active.version++; this.grid.refreshLayout(); this.updateChrome(); return; }
+      this.freeze(0, 0);
+    });
     run("view.freezeTop", () => this.freeze(1, 0));
     run("view.freezeFirst", () => this.freeze(0, 1));
 
@@ -2129,7 +2210,7 @@ export class CalcApp {
   private sparkWas = false;
   private sparkTabs(): void {
     const on = !!this.sparklines.current();
-    if (on === this.sparkWas || this.charts.selected() || this.shapes.selected()) return;
+    if (on === this.sparkWas || this.charts.selected() || this.shapes.selected() || this.slicers.selected()) return;
     this.sparkWas = on;
     this.ribbon.setContextual(on ? [this.sparklines.tab()] : []);
   }
@@ -2137,7 +2218,7 @@ export class CalcApp {
   private tableWas = false;
   private tableTabs(): void {
     const on = !!this.tables.current();
-    if (on === this.tableWas || this.charts.selected() || this.shapes.selected() || this.pictures.selected() || this.pivots.current()) return;
+    if (on === this.tableWas || this.charts.selected() || this.shapes.selected() || this.pictures.selected() || this.slicers.selected() || this.pivots.current()) return;
     this.tableWas = on;
     this.ribbon.setContextual(on ? [this.tableDesignTab()] : []);
   }
@@ -2149,16 +2230,17 @@ export class CalcApp {
     return this.tableDesignDef ??= {
       id: "tableDesign", label: "Tabellenentwurf", key: "JT", contextual: true, shrink: [],
       groups: [
-        { id: "props", label: "Eigenschaften", key: "ZE", icon: "table", controls: [{ type: "stack", items: [
-          { type: "combo", cmd: "table.name", width: 110, key: "A", label: "Tabellenname:", value: () => this.tables.current()?.name ?? "", commit: (v) => { this.tables.rename(v.trim()); } },
-          b("table.resize", "RE")] }] },
-        { id: "tools", label: "Tools", key: "ZT", icon: "table", controls: [{ type: "stack", items: [b("table.pivot", "P"), b("table.removeDuplicates", "M"), b("table.convert", "G")] },
-          b("table.slicer", "SL", "large")] },
-        { id: "external", label: "Externe Tabellendaten", key: "ZX", icon: "table", controls: [b("table.export", "X", "large"), b("table.refresh", "F", "large")] },
-        { id: "options", label: "Tabellenformatoptionen", key: "ZO", icon: "table", controls: [
-          { type: "stack", items: [ck("table.optHeader", "C"), ck("table.optTotals", "T"), ck("table.optRowStripes", "R")] },
-          { type: "stack", items: [ck("table.optFirstColumn", "H"), ck("table.optLastColumn", "L"), ck("table.optColumnStripes", "O")] },
-          { type: "stack", items: [ck("table.optFilter", "B")] }] },
+        // Keytips as recorded from Excel through UI Automation (probe_excel_slicer_ui.py, D-092).
+        { id: "props", label: "Eigenschaften", key: "ZP", icon: "table", controls: [{ type: "stack", items: [
+          { type: "combo", cmd: "table.name", width: 110, key: "N", label: "Tabellenname:", value: () => this.tables.current()?.name ?? "", commit: (v) => { this.tables.rename(v.trim()); } },
+          b("table.resize", "B")] }] },
+        { id: "tools", label: "Tools", key: "ZT", icon: "table", controls: [{ type: "stack", items: [b("table.pivot", "M"), b("table.removeDuplicates", "4"), b("table.convert", "C")] },
+          b("table.slicer", "T", "large")] },
+        { id: "external", label: "Externe Tabellendaten", key: "ZX", icon: "table", controls: [b("table.export", "X", "large"), b("table.refresh", "A", "large")] },
+        { id: "options", label: "Tabellenformatoptionen", key: "ZL", icon: "table", controls: [
+          { type: "stack", items: [ck("table.optHeader", "Ü"), ck("table.optTotals", "G"), ck("table.optRowStripes", "V")] },
+          { type: "stack", items: [ck("table.optFirstColumn", "E"), ck("table.optLastColumn", "L"), ck("table.optColumnStripes", "R")] },
+          { type: "stack", items: [ck("table.optFilter", "F")] }] },
         { id: "styles", label: "Tabellenformatvorlagen", key: "ZS", icon: "format-table", controls: [
           { type: "dropdown", cmd: "table.styles", key: "S", size: "large", menu: [], popup: (close) => this.tables.stylesPanel(close) }] },
       ],
@@ -2169,7 +2251,7 @@ export class CalcApp {
   private pivotWas = false;
   private pivotTabs(): void {
     const on = !!this.pivots.current();
-    if (on === this.pivotWas || this.charts.selected() || this.shapes.selected() || this.pictures.selected()) return;
+    if (on === this.pivotWas || this.charts.selected() || this.shapes.selected() || this.pictures.selected() || this.slicers.selected()) return;
     this.pivotWas = on;
     this.ribbon.setContextual(on ? [this.pivotAnalyzeTab(), this.pivotDesignTab()] : []);
   }
@@ -2180,9 +2262,11 @@ export class CalcApp {
     return this.pivotAnalyzeDef ??= {
       id: "pivotAnalyze", label: "PivotTable-Analyse", key: "JT", contextual: true, shrink: [],
       groups: [
+        // Group keytips as recorded (probe_excel_slicer_ui.py): Filtern Z S, Daten Z D, Aktionen Z C, Einblenden Z W.
+        { id: "filter", label: "Filtern", key: "ZS", icon: "filter", controls: [b("pivot.slicer", "9")] },
         { id: "data", label: "Daten", key: "ZD", icon: "reapply", controls: [b("pivot.refresh", "F")] },
-        { id: "actions", label: "Aktionen", key: "ZA", icon: "delete", controls: [b("pivot.delete", "C")] },
-        { id: "show", label: "Anzeigen", key: "ZS", icon: "table", controls: [b("pivot.fieldList", "L")] },
+        { id: "actions", label: "Aktionen", key: "ZC", icon: "delete", controls: [b("pivot.delete", "C")] },
+        { id: "show", label: "Einblenden", key: "ZW", icon: "table", controls: [b("pivot.fieldList", "L")] },
       ],
     };
   }
@@ -2210,6 +2294,16 @@ export class CalcApp {
         ] },
       ] }],
     };
+  }
+
+  /** Datenschnitt appears while a slicer is selected (Excel's contextual tab, D-092). */
+  slicerSelectionChanged(): void {
+    const on = !!this.slicers.selected();
+    if (on) { this.shapes.deselect(); this.pictures.deselect(); }
+    this.ribbon.setContextual(on ? [this.slicers.tab()] : []);
+    if (on) this.ribbon.select("slicer");
+    else { this.tableWas = false; this.pivotWas = false; this.sparkWas = false; this.tableTabs(); this.pivotTabs(); }
+    this.updateChrome();
   }
 
   /** Bildformat appears while a picture is selected (Excel's contextual tab, D-087). */
@@ -2425,6 +2519,7 @@ export class CalcApp {
     const run = (id: string) => { void this.commands.run(id); return true; };
     if (this.painter && k === "Escape") { this.painter = null; document.body.classList.remove("painting"); return true; }
     if (k === "F12" && !ctrl) return run("file.saveAs");
+    if (k === "F8" && e.altKey && !e.ctrlKey && !shift) return run("view.macros");
     if (k === "F7" && !ctrl && !shift && !e.altKey) return run("review.spelling");
     if (k === "F4" && !e.ctrlKey && !e.altKey && !shift) return run("edit.repeat");
     if (k === "F5" && e.altKey && ctrl) return run("data.refreshAll");
@@ -2560,6 +2655,8 @@ export class CalcApp {
       fillColor: () => this.designs.pick(this.lastFill)?.hex ?? this.lastFill,
       setFillColor: (hex) => this.setFillColor(hex),
       paletteTheme: () => this.designs.paletteTheme(),
+      drawTab: () => this.ink.tab(),
+      windowsMenu: () => this.windows.switchMenu(),
       numberFormat: () => {
         const code = this.activeStyle().numFmt;
         return RIBBON_FORMATS.find((f) => f.code === code)?.label ?? (code === "General" ? "Standard" : code === "0%" ? "Prozent" : /[dmy]/i.test(code) && !/h/.test(code) ? "Datum" : /0\.0*E/.test(code) ? "Wissenschaft" : "Benutzerdefiniert");
@@ -2739,11 +2836,43 @@ export class CalcApp {
   /** Test hooks for feel-lab (development and test runs only): the behaviour catalogue (catalogue_calc.py). */
   testApi() {
     const addr = (a: string) => { const r = parseRange(a)!; return r; };
+    const macroTests = {
+      /** The workbook's VBA modules (name, kind, code). */
+      macroModules: () => modulesOf(this).map((m) => ({ name: m.name, kind: m.kind, code: m.code })),
+      /** Gives the workbook these modules (a standard module "Modul1" when only code is passed). */
+      setMacros: (code: string | { name: string; kind?: string; code: string }[]) =>
+        setModules(this, typeof code === "string" ? [{ name: "Modul1", kind: "standard", code } as never] : code.map((m) => ({ kind: "standard", ...m }) as never)),
+      /** Runs a macro without dialogs: MsgBox and InputBox take `answers` in turn. */
+      runMacro: (name: string, answers: (string | number)[] = []) => runMacro(this, name, { answers }),
+      /** Every sheet as a macro left it: visibility, the cells (FormulaLocal, shown text, fill, font), hidden rows and columns. */
+      macroState: () => {
+        const active = this.wb.active;
+        const out = this.wb.sheets.map((sheet, si) => {
+          this.wb.active = si;
+          const cells: Record<string, unknown> = {};
+          for (const [k, c] of sheet.cells) {
+            const row = Math.floor(k / MAX_COLS), col = k % MAX_COLS;
+            const st = this.wb.styles.get(c.s);
+            if (c.v === null && !c.f && !st.fill && !st.font.bold && !st.font.color) continue;
+            cells[cellName(row, col)] = { formula: formulaLocal(c), text: this.shownInColumn(row, col), fill: st.fill ?? null, fontColor: st.font.color ?? null,
+              bold: !!st.font.bold, italic: !!st.font.italic };
+          }
+          const hiddenRows: number[] = [], hiddenCols: number[] = [];
+          for (const [r, i] of sheet.rows) if (i.hidden) hiddenRows.push(r + 1);
+          for (const [c, i] of sheet.cols) if (i.hidden) hiddenCols.push(c + 1);
+          return { name: sheet.name, visible: sheet.hidden === "very" ? 2 : sheet.hidden ? 0 : -1, cells, hiddenRows: hiddenRows.sort((a, b) => a - b), hiddenCols: hiddenCols.sort((a, b) => a - b),
+            protected: !!sheet.protection };
+        });
+        this.wb.active = active;
+        return { sheets: out, active: this.sheet.name };
+      },
+    };
     const excelAddress = (r: Rect) => (r.r0 === 0 && r.r1 === MAX_ROWS - 1 && r.c0 === 0 && r.c1 === MAX_COLS - 1 ? "1:1048576" : rangeName(r));
     const modeName = () => ({ ready: "Bereit", enter: "Eingeben", edit: "Bearbeiten", point: "Zeigen" })[this.grid.mode];
     return {
       app: this,
       grid: this.grid,
+      ...macroTests,
       /** A range address ("B2:C4") as a Rect. */
       parse: (a: string) => addr(a),
       /** A fresh workbook with the case's cells typed in, the start cell selected. */
@@ -2818,7 +2947,7 @@ export class CalcApp {
           const own = "popup" in c && c.popup ? { panel: true } : c.type === "color" ? { panel: true } : {};
           return [{ ...base, type: (c as { type: string }).type, ...menu, ...own }];
         };
-        const tabs = [...ribbonTabs(this.ribbonContext()), this.chartTab(), this.chartFormatTab(), this.shapeTab(), this.pictureUi.tab, this.pivotAnalyzeTab(), this.pivotDesignTab(), this.sparklines.tab()];
+        const tabs = [...ribbonTabs(this.ribbonContext()), this.chartTab(), this.chartFormatTab(), this.shapeTab(), this.pictureUi.tab, this.pivotAnalyzeTab(), this.pivotDesignTab(), this.sparklines.tab(), this.slicers.tab()];
         return tabs.map((t) => ({
           name: t.label, contextual: !!t.contextual,
           groups: t.groups.map((g) => ({ name: g.label, launcher: g.launcher ? cmdItem(g.launcher.cmd) : undefined, controls: g.controls.flatMap(ctl) })),

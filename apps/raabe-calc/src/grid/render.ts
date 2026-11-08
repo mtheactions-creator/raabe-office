@@ -85,9 +85,18 @@ export interface DrawState {
   circles?: { row: number; col: number }[];
   /** Spur zum Vorgänger/Nachfolger: arrows from referenced cells (null: another sheet) to formulas. */
   arrows?: { from: Rect | null; to: { row: number; col: number }; error?: boolean }[];
+  /**
+   * Printing (print.ts, D-094): only what Excel prints. No frozen-pane line, error triangles, note and comment
+   * corners or filter buttons; gridlines (if printed) in Excel's printed grey.
+   */
+  print?: boolean;
+  /** Printing: where Excel's printed text sits against ours, in px at 100 % (recorded from its PDF). */
+  textShift?: { x: number; y: number };
 }
 
 const PT = 96 / 72;
+/** Gridlines on paper (D-094): Excel prints them black, one printer pixel wide. */
+const PRINT_GRID = "#000000";
 
 /**
  * What a cell shows in a column of `colPx` CSS px, decided as Excel decides it: at the display's
@@ -149,10 +158,13 @@ function mixHex(a: string, b: string, t: number): string {
 export function placed(axis: Axis, first: number, start: number, length: number, zoom: number, limit = Infinity): Placed[] {
   const out: Placed[] = [];
   let at = start;
+  // From the axis' positions, so that an axis with gaps (Seitenlayout, D-093) places its pages.
+  const base = axis.pos(first);
   for (let i = first; i < axis.count && i < limit && at < start + length; i++) {
+    at = start + (axis.pos(i) - base) * zoom;
+    if (at >= start + length) break;
     const size = axis.size(i) * zoom;
     if (size > 0) out.push({ i, at, size });
-    at += size;
   }
   return out;
 }
@@ -164,7 +176,7 @@ export function draw(ctx: CanvasRenderingContext2D, s: DrawState): void {
   ctx.fillRect(0, 0, s.width, s.height);
   for (const pane of s.panes) drawPane(ctx, s, pane);
   // Fenster fixieren: a thin dark line where the frozen rows and columns end (Excel).
-  if (s.panes.length > 1) {
+  if (s.panes.length > 1 && !s.print) {
     const px = 1 / dpr;
     const main = s.panes[s.panes.length - 1];
     ctx.fillStyle = "#808080";
@@ -203,9 +215,15 @@ function drawPane(ctx: CanvasRenderingContext2D, s: DrawState, pane: Pane): void
 
   // Gridlines: the last device pixel of every row and column.
   if (s.showGrid) {
-    ctx.fillStyle = COLORS.grid;
-    for (const c of cols) ctx.fillRect(snap(c.at + c.size, dpr) - px, pane.y, px, pane.h);
-    for (const r of rows) ctx.fillRect(pane.x, snap(r.at + r.size, dpr) - px, pane.w, px);
+    ctx.fillStyle = s.print ? PRINT_GRID : COLORS.grid;
+    // On paper Excel draws each line in the first pixel of a cell (the closing ones are the printer's, print.ts).
+    if (s.print) {
+      for (const c of cols) ctx.fillRect(snap(c.at, dpr), pane.y, px, pane.h);
+      for (const r of rows) ctx.fillRect(pane.x, snap(r.at, dpr), pane.w, px);
+    } else {
+      for (const c of cols) ctx.fillRect(snap(c.at + c.size, dpr) - px, pane.y, px, pane.h);
+      for (const r of rows) ctx.fillRect(pane.x, snap(r.at + r.size, dpr) - px, pane.w, px);
+    }
   }
 
   // Fills (they cover the gridlines around the cell, as in Excel), merged areas white.
@@ -318,6 +336,7 @@ function drawPane(ctx: CanvasRenderingContext2D, s: DrawState, pane: Pane): void
       ctx.beginPath();
       ctx.rect(left, box.y, right - left, box.h);
       ctx.clip();
+      if (s.textShift) ctx.translate(s.textShift.x * zoom, s.textShift.y * zoom);
       ctx.fillStyle = look?.color ?? text.color ?? st.font.color ?? "#000000";
       ctx.font = font;
       // Ausrichtung in degrees (1-90 up, 91-180 down) and vertical text (255).
@@ -368,14 +387,18 @@ function drawPane(ctx: CanvasRenderingContext2D, s: DrawState, pane: Pane): void
     for (const c of cols) {
       const cell = sheet.get(r.i, c.i);
       const st = styleOf(cell, r.i, c.i);
-      const b = st.borders;
+      let b = st.borders;
       if (!b.left && !b.right && !b.top && !b.bottom && !b.diagonal) continue;
+      // Inside a merged area only its outline is drawn (Excel).
+      const mg = merges.length ? merges.find((m) => inRect(m, r.i, c.i)) : undefined;
+      if (mg) b = { ...b, left: c.i > mg.c0 ? undefined : b.left, right: c.i < mg.c1 ? undefined : b.right, top: r.i > mg.r0 ? undefined : b.top, bottom: r.i < mg.r1 ? undefined : b.bottom };
       const x0 = snap(c.at, dpr) - px, y0 = snap(r.at, dpr) - px;
       const x1 = snap(c.at + c.size, dpr) - px, y1 = snap(r.at + r.size, dpr) - px;
-      if (b.top) line(ctx, b.top, x0, y0, x1, y0, dpr, zoom);
-      if (b.bottom) line(ctx, b.bottom, x0, y1, x1, y1, dpr, zoom);
-      if (b.left) line(ctx, b.left, x0, y0, x0, y1, dpr, zoom);
-      if (b.right) line(ctx, b.right, x1, y0, x1, y1, dpr, zoom);
+      const pr = !!s.print;
+      if (b.top) line(ctx, b.top, x0, y0, x1, y0, dpr, zoom, pr);
+      if (b.bottom) line(ctx, b.bottom, x0, y1, x1, y1, dpr, zoom, pr);
+      if (b.left) line(ctx, b.left, x0, y0, x0, y1, dpr, zoom, pr);
+      if (b.right) line(ctx, b.right, x1, y0, x1, y1, dpr, zoom, pr);
       if (b.diagonal && b.diagonalDown) line(ctx, b.diagonal, x0, y0, x1, y1, dpr, zoom);
       if (b.diagonal && b.diagonalUp) line(ctx, b.diagonal, x0, y1, x1, y0, dpr, zoom);
     }
@@ -384,7 +407,7 @@ function drawPane(ctx: CanvasRenderingContext2D, s: DrawState, pane: Pane): void
   // Fehlerüberprüfung: a green triangle in the top left corner of numbers stored as text and of
   // formulas that give an error (Excel's rules that are on by default).
   ctx.fillStyle = "#18a043";
-  for (const r of rows) for (const c of cols) {
+  if (!s.print) for (const r of rows) for (const c of cols) {
     const cell = sheet.get(r.i, c.i);
     if (!cell || !errorIndicator(cell)) continue;
     const x = snap(c.at, dpr), y = snap(r.at, dpr);
@@ -399,7 +422,7 @@ function drawPane(ctx: CanvasRenderingContext2D, s: DrawState, pane: Pane): void
 
   // Notes: a small red triangle in the top right corner.
   ctx.fillStyle = "#c00000";
-  for (const r of rows) for (const c of cols) {
+  if (!s.print) for (const r of rows) for (const c of cols) {
     if (!sheet.get(r.i, c.i)?.note) continue;
     const x = snap(c.at + c.size, dpr) - px, y = snap(r.at, dpr);
     const t = 5 * zoom;
@@ -417,7 +440,7 @@ function drawPane(ctx: CanvasRenderingContext2D, s: DrawState, pane: Pane): void
 
   // Kommentare: a purple corner (Excel's colour for threads; notes are red).
   ctx.fillStyle = "#7719aa";
-  for (const t of sheet.threads ?? []) {
+  for (const t of s.print ? [] : sheet.threads ?? []) {
     if (t.row < r0 || t.row > r1 || t.col < c0 || t.col > c1) continue;
     const b = rectOf({ r0: t.row, c0: t.col, r1: t.row, c1: t.col });
     const x = snap(b.x + b.w, dpr) - px, y = snap(b.y, dpr);
@@ -431,7 +454,7 @@ function drawPane(ctx: CanvasRenderingContext2D, s: DrawState, pane: Pane): void
   }
 
   // AutoFilter buttons on the filter's first row (Excel: a small box with an arrow, a funnel when filtered).
-  const af = sheet.autoFilter;
+  const af = s.print ? undefined : sheet.autoFilter;
   if (af && af.ref.r0 >= r0 && af.ref.r0 <= r1) {
     const r = rows.find((x) => x.i === af.ref.r0);
     if (r) for (const c of cols) {
@@ -644,9 +667,17 @@ function frame(ctx: CanvasRenderingContext2D, b: { x: number; y: number; w: numb
 const BORDER_WIDTH: Record<string, number> = { hair: 1, thin: 1, dotted: 1, dashed: 1, dashDot: 1, dashDotDot: 1, medium: 2, mediumDashed: 2, mediumDashDot: 2, mediumDashDotDot: 2, slantDashDot: 2, thick: 3, double: 3 };
 const BORDER_DASH: Record<string, number[]> = { dotted: [1, 1], hair: [1, 1], dashed: [3, 1], mediumDashed: [6, 2], dashDot: [6, 2, 2, 2], mediumDashDot: [6, 2, 2, 2], dashDotDot: [6, 2, 2, 2, 2, 2], mediumDashDotDot: [6, 2, 2, 2, 2, 2], slantDashDot: [8, 2, 2, 2] };
 
-function line(ctx: CanvasRenderingContext2D, side: BorderSide, x0: number, y0: number, x1: number, y1: number, dpr: number, zoom: number): void {
+function line(ctx: CanvasRenderingContext2D, side: BorderSide, x0: number, y0: number, x1: number, y1: number, dpr: number, zoom: number, print = false): void {
   const px = 1 / dpr;
-  const w = Math.max(1, Math.round((BORDER_WIDTH[side.style] ?? 1) * zoom * Math.max(1, dpr * 0.75))) * px;
+  // On paper (600 dpi, D-094) Excel's lines are 8, 16 and 24 printer pixels wide, centred 4 pixels right of a
+  // column's edge and 4 pixels below a row's edge (recorded from its PDF).
+  const w = print ? Math.max(1, Math.round((BORDER_WIDTH[side.style] ?? 1) * zoom * dpr * 1.28)) * px
+    : Math.max(1, Math.round((BORDER_WIDTH[side.style] ?? 1) * zoom * Math.max(1, dpr * 0.75))) * px;
+  if (print && (x0 === x1 || y0 === y1) && side.style !== "double") {
+    const unit = dpr * 0.16;
+    if (x0 === x1) { x0 = x1 = x0 + px + Math.round(4 * unit) * px - Math.floor(w / px / 2) * px + Math.floor((w / px - 1) / 2) * px; y1 += px; }
+    else { y0 = y1 = y0 + px + Math.round(4 * unit) * px - Math.floor(w / px / 2) * px + Math.floor((w / px - 1) / 2) * px; x1 += px; }
+  }
   ctx.fillStyle = side.color ?? "#000000";
   const vertical = x0 === x1;
   const dash = BORDER_DASH[side.style];
@@ -871,14 +902,21 @@ function drawRotated(ctx: CanvasRenderingContext2D, text: string, st: CellStyle,
   const deg = st.rotation! <= 90 ? st.rotation! : 90 - st.rotation!;
   const rad = (-deg * Math.PI) / 180;
   const w = ctx.measureText(text).width;
+  const asc = m.fontBoundingBoxAscent, desc = m.fontBoundingBoxDescent;
+  // The turned text's box (baseline from (0, 0)), placed in the cell as Excel places it (D-094, recorded on
+  // paper): Standard alignment puts upward text at the cell's right and downward text at its left; the
+  // vertical alignment (unten by default) holds for the turned box.
+  const cos = Math.cos(rad), sin = Math.sin(rad);
+  const xs: number[] = [], ys: number[] = [];
+  for (const [x, y] of [[0, -asc], [w, -asc], [0, desc], [w, desc]]) { xs.push(x * cos - y * sin); ys.push(x * sin + y * cos); }
+  const minX = Math.min(...xs), maxX = Math.max(...xs), minY = Math.min(...ys), maxY = Math.max(...ys);
+  const h = st.h && st.h !== "general" ? align : deg > 0 ? "right" : "left";
+  const ox = h === "right" ? box.x + box.w - pad - maxX : h === "center" ? box.x + (box.w - (maxX - minX)) / 2 - minX : box.x + pad - minX;
+  const oy = st.v === "top" ? box.y + 2 * zoom - minY : st.v === "center" ? box.y + (box.h - (maxY - minY)) / 2 - minY : box.y + box.h - 2 * zoom - maxY;
   ctx.save();
-  // Anchor: upward text starts at the bottom (left), downward text at the top (left), as Excel draws it.
-  const ax = align === "right" ? box.x + box.w - pad : align === "center" ? box.x + box.w / 2 : box.x + pad;
-  const ay = deg > 0 ? box.y + box.h - 2 * zoom : box.y + 2 * zoom;
-  ctx.translate(ax, ay);
+  ctx.translate(ox, oy);
   ctx.rotate(rad);
-  const dx = align === "right" ? -w : align === "center" ? -w / 2 : 0;
-  ctx.fillText(text, dx, deg > 0 ? -m.fontBoundingBoxDescent : m.fontBoundingBoxAscent);
+  ctx.fillText(text, 0, 0);
   ctx.restore();
 }
 

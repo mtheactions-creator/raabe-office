@@ -288,6 +288,8 @@ export function pivotsFeature(app: CalcApp) {
 
   return {
     create, at, current,
+    /** The source records and writing the report (Datenschnitte filter through them, D-092). */
+    data, write,
     /** A PivotTable given as a model (tests, and pasting a report's definition). */
     add: (sheet: Sheet, p: PivotTable) => app.change("PivotTable einfügen", () => { app.history.whole(sheet); sheet.pivots = [...(sheet.pivots ?? []), p]; write(sheet, p); }),
     /** Aktualisieren (Alt+F5) and Alle aktualisieren. */

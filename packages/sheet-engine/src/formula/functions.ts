@@ -14,6 +14,7 @@ import "./fn-text2";
 import "./fn-finance";
 import "./fn-lambda";
 import "./fn-info";
+import "./fn-ets";
 import { type Rect } from "../address";
 import type { Value, Workbook } from "../model";
 import { serialOfDate } from "./dates";

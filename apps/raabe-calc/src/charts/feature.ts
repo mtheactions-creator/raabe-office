@@ -391,6 +391,15 @@ export function chartsFeature(app: CalcApp) {
   }
 
   function onKey(e: KeyboardEvent, m: ChartModel): void {
+    if (e.key === "Escape" && drag) {
+      // Esc while moving or sizing: the chart goes back to where it was (Excel; D-096).
+      e.preventDefault();
+      e.stopPropagation();
+      views.get(drag.m)?.el.classList.remove("dragging");
+      drag = null;
+      place();
+      return;
+    }
     if (e.ctrlKey && (e.key === "1" || e.code === "Digit1")) {
       // Strg+1: the Format pane of the selected element (Excel).
       e.preventDefault();
@@ -782,6 +791,11 @@ export function chartsFeature(app: CalcApp) {
   return {
     insert,
     refresh,
+    /** A chart drawn for printing at a size in page px (print.ts, D-094). */
+    printSvg: (m: ChartModel, w: number, hh: number): SVGSVGElement => {
+      readCaches(app.wb, m);
+      return renderChart(m, w, hh, { accents: accents(), format }) as SVGSVGElement;
+    },
     /** The selected chart, if any (for the ribbon's contextual tabs). */
     selected: (): ChartModel | null => selected,
     /** A cell was selected: the chart is no longer (Excel). */

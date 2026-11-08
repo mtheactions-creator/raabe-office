@@ -1,23 +1,19 @@
-// Printing and PDF as Excel lays sheets out on paper: the used range (or the Druckbereich),
-// cut into pages first down, then across, at the page's printable size with Excel's default
-// margins ("Normal": 1,9 cm top and bottom, 1,8 cm left and right), Skalierung or An Format
-// anpassen, optional gridlines and row/column headings, Drucktitel repeated on every page.
+// Printing and PDF as Excel lays sheets out on paper (D-063, D-094): from A1 to the end of the used range and the
+// drawing objects (or the Druckbereich), cut into pages first down, then across, at the page's printable size, Skalierung or An
+// Format anpassen as Excel's whole percent, Auf der Seite zentrieren, optional gridlines and headings, Drucktitel
+// repeated on every page. Columns and rows take Excel's printed sizes (print-metrics.ts); the cells are drawn by
+// the grid's own renderer into SVG (print-svg.ts), so the page shows what the screen shows, with real text.
 
-import { MAX_COLS, cellName, colName, parseRange, type PageSetup, type Rect, type Sheet } from "@raabe/sheet-engine";
+import { MAX_COLS, MAX_ROWS, colName, parseRange, type PageSetup, type Rect, type Sheet } from "@raabe/sheet-engine";
 import { h, icon, showDialog, type MenuEntry } from "@raabe/shell";
 import { pictureElement, type PictureFormat } from "@raabe/text-engine";
 import { pictureBakedKey } from "@raabe/ooxml";
 import type { CalcApp } from "./app";
-import { shown } from "./engine";
-import { DEFAULT_COL_CHARS, charsToPx96, ptToPx96 } from "./grid/metrics";
-
-/** A column's printed width in px at 96 dpi (the standard width rounded up to 8 px). */
-function colPx96(sheet: Sheet, c: number): number {
-  const w = sheet.cols.get(c)?.width;
-  if (sheet.cols.get(c)?.hidden) return 0;
-  if (w !== undefined) return charsToPx96(w);
-  return Math.ceil((Math.floor((sheet.defaultColWidth ?? DEFAULT_COL_CHARS) + 1e-6) * 7 + 5) / 8) * 8;
-}
+import { CondEval } from "./grid/cond";
+import { Axis, sheetAxes } from "./grid/metrics";
+import { cssFont, draw, fitCtx, wrapLines, type Pane } from "./grid/render";
+import { PRN, printColPx, printRowPx, printerDigit, rowHeights } from "./print-metrics";
+import { svgContext } from "./print-svg";
 
 const PAPERS: { code: number; name: string; w: number; h: number }[] = [
   { code: 9, name: "A4", w: 8.27, h: 11.69 },
@@ -33,17 +29,40 @@ const MARGINS: Record<string, NonNullable<PageSetup["margins"]>> = {
   "Schmale Seitenränder": { left: 0.25, right: 0.25, top: 0.75, bottom: 0.75, header: 0.3, footer: 0.3 },
 };
 
+/** The renderer's device scale for paper: Excel lays pages out at 600 dpi. */
+const PRINT_DPR = 600 / 96;
+
+const NL = String.fromCharCode(10);
+
 /**
- * Excel prints rows and columns slightly smaller than on screen: measured from its PDF export,
- * a 15-pt row takes 14,52 pt on paper (50 rows on an A4 page with the normal margins).
+ * The page as the browser's PDF can hold it without shrinking: it lays paper out in 1/300 inch and makes A4
+ * 594,96 x 841,92 pt; a page even slightly larger is scaled down (by 0,9992 for 8,27 in) and moved, so the
+ * pages are asked for two such units smaller than the paper (recorded, D-094). Everything is placed from the
+ * top left, so nothing moves.
  */
-const PRINT_SCALE = 14.522 / 15;
-/** Excel's PDF starts the cells 2,6 pt further right and down than the margins say (measured). */
-const PRINT_OFFSET = 2.6 / 72;
+export function sheetSize(sz: { w: number; h: number }): { w: number; h: number } {
+  return { w: (Math.floor(sz.w * 300 + 1e-6) - 2) / 300, h: (Math.floor(sz.h * 300 + 1e-6) - 2) / 300 };
+}
 
 const cm = (inch: number) => `${(inch * 2.54).toFixed(1).replace(".", ",")} cm`;
 
 type Page = { rows: [number, number]; cols: [number, number]; index?: number; count?: number };
+
+/** A sheet's printed geometry: Excel's sizes on paper (page px at 96 dpi, before the zoom). */
+interface Geometry {
+  rows: Axis;
+  cols: Axis;
+  /** The rows' and columns' own printed sizes (the axes' exceptions), for axes that end with a page. */
+  own: { rows: Map<number, number>; cols: Map<number, number> };
+  /** The screen's sizes (CSS px at 100 %), where drawing objects keep their offsets. */
+  screen: { rows: Axis; cols: Axis };
+  /** Skalierung as a fraction (An Format anpassen: Excel's whole percent). */
+  zoom: number;
+  area: Rect | null;
+  /** Printable width and height (page px). */
+  pw: number;
+  ph: number;
+}
 
 /**
  * Kopf- und Fußzeile: Excel's codes split into left, centre and right with the fields filled in
@@ -100,6 +119,36 @@ function readSpan(text: string, rows: boolean): [number, number] | undefined {
   return rows ? (r.c0 === 0 && r.c1 === MAX_COLS - 1 ? [r.r0, r.r1] : undefined) : (r.r1 - r.r0 > 1000000 ? [r.c0, r.c1] : undefined);
 }
 
+/** A drawing object's anchors (pictures, charts, shapes) and how it is drawn on paper. */
+type Anchor = { col: number; row: number; x: number; y: number };
+type Drawing = { from: Anchor; to?: Anchor; size?: { w: number; h: number }; kind: "picture" | "chart" | "shape"; obj: unknown; rot?: number };
+
+/**
+ * Excel's fit to pages: the largest whole percent (at most 100, at least 10) at which the area takes no more
+ * pages across and down than asked for (FitToPagesWide / FitToPagesTall; 0 or none: no limit that way).
+ */
+export function fitZoom(total: { w: number; h: number }, room: { w: number; h: number }, pages: { wide?: number; tall?: number }): number {
+  let z = 100;
+  if (pages.wide) z = Math.min(z, Math.floor((100 * pages.wide * room.w) / total.w + 1e-9));
+  if (pages.tall) z = Math.min(z, Math.floor((100 * pages.tall * room.h) / total.h + 1e-9));
+  return Math.max(10, z);
+}
+
+/** Cuts indices into pages of at most `room` (sizes add up in order; manual breaks start a page). */
+export function cutPages(from: number, to: number, size: (i: number) => number, room: number, breaks?: number[], titleRoom = 0, title?: [number, number]): [number, number][] {
+  const out: [number, number][] = [];
+  const manual = new Set(breaks ?? []);
+  let start = from, used = 0;
+  const roomFor = (s: number) => (title && s > title[1] ? room - titleRoom : room);
+  for (let i = from; i <= to; i++) {
+    const s = size(i);
+    if (i > start && (manual.has(i) || used + s > roomFor(start) + 1e-6)) { out.push([start, i - 1]); start = i; used = 0; }
+    used += s;
+  }
+  out.push([start, to]);
+  return out;
+}
+
 export function printFeature(app: CalcApp) {
   const page = (): PageSetup => app.sheet.page ?? {};
   const setPage = (label: string, fn: (p: PageSetup) => void) => app.change(label, () => {
@@ -114,137 +163,215 @@ export function printFeature(app: CalcApp) {
     return p.orientation === "landscape" ? { ...sz, w: sz.h, h: sz.w } : sz;
   }
 
-  /** The pages of a sheet: row and column ranges, Excel's order (down, then across). */
-  function paginate(sheet: Sheet): Page[] {
+  /** Pictures, charts and shapes of a sheet with their anchors (hidden ones are not printed). */
+  function drawings(sheet: Sheet): Drawing[] {
+    const out: Drawing[] = [];
+    for (const pic of sheet.pictures ?? []) if (!pic.hidden) out.push({ from: pic.from, to: pic.to, size: pic.size, kind: "picture", obj: pic, rot: (pic.format as PictureFormat | undefined)?.rotation });
+    for (const ch of sheet.charts ?? []) out.push({ from: ch.from, to: ch.to, kind: "chart", obj: ch });
+    for (const s of sheet.shapes ?? []) if (!(s as { hidden?: boolean }).hidden) out.push({ from: s.from, to: s.to, kind: "shape", obj: s, rot: s.rot });
+    return out;
+  }
+
+  /** Where a drawing ends (its bottom-right anchor; one-cell anchors through the screen's sizes). */
+  function endOf(d: Drawing, screen: { rows: Axis; cols: Axis }): Anchor {
+    if (d.to) return d.to;
+    const x = screen.cols.pos(d.from.col) + d.from.x + (d.size?.w ?? 0), y = screen.rows.pos(d.from.row) + d.from.y + (d.size?.h ?? 0);
+    const col = screen.cols.at(x), row = screen.rows.at(y);
+    return { col, row, x: x - screen.cols.pos(col), y: y - screen.rows.pos(row) };
+  }
+
+  /** Excel's printed sizes of a sheet's rows and columns, the printed area and the zoom. */
+  function geometry(sheet: Sheet): Geometry {
     const p = sheet.page ?? {};
-    // Without a Druckbereich: the used cells and the pictures (Excel prints pictures beyond the data too).
+    const screen = sheetAxes(sheet);
+    const std = app.wb.styles.get(undefined).font;
+    const digit = printerDigit(std.name, std.size);
+    const rowStd = rowHeights(std.name, std.size, sheet.defaultRowHeight);
+    const cols = new Axis(printColPx(screen.cols.def, digit), MAX_COLS);
+    const cx = new Map<number, number>();
+    for (const [c] of sheet.cols) {
+      const w = printColPx(screen.cols.size(c), digit);
+      if (w !== cols.def) cx.set(c, w);
+    }
+    cols.set(cx, cols.def);
+    const rows = new Axis(printRowPx(undefined, rowStd), MAX_ROWS);
+    const rx = new Map<number, number>();
+    for (const [r, info] of sheet.rows) {
+      const hgt = info.hidden ? 0 : printRowPx(info.height, rowStd);
+      if (hgt !== rows.def) rx.set(r, hgt);
+    }
+    // Rows with wrapped text and no height of their own are sized again (Excel does so when it opens a file).
+    for (const [r, hgt] of autoRows(sheet, screen.cols, rowStd)) if (!sheet.rows.get(r)?.hidden) rx.set(r, hgt);
+    rows.set(rx, rows.def);
+    // Without a Druckbereich: the used cells and the cells under drawing objects (Excel prints those too).
     let area: Rect | null = p.printArea ?? sheet.usedRange();
-    if (!p.printArea) for (const pic of sheet.pictures ?? []) {
-      const end = pic.to ?? pic.from;
-      const r = { r0: pic.from.row, c0: pic.from.col, r1: end.row, c1: end.col };
+    if (!p.printArea) for (const d of drawings(sheet)) {
+      const end = endOf(d, screen);
+      const r = { r0: d.from.row, c0: d.from.col, r1: end.row, c1: end.col };
       area = area ? { r0: Math.min(area.r0, r.r0), c0: Math.min(area.c0, r.c0), r1: Math.max(area.r1, r.r1), c1: Math.max(area.c1, r.c1) } : r;
     }
-    if (!area) return [];
+    // Excel prints from A1, whatever cell the used range starts at (recorded: a table from B2 keeps column A and row 1).
+    if (area && !p.printArea) area = { ...area, r0: 0, c0: 0 };
     const sz = paper(p);
     const m = p.margins ?? MARGINS["Normale Seitenränder"];
     const pw = (sz.w - m.left - m.right) * 96, ph = (sz.h - m.top - m.bottom) * 96;
-    const colW = (c: number) => colPx96(sheet, c);
-    const rowH = (r: number) => (sheet.rows.get(r)?.hidden ? 0 : ptToPx96(sheet.rows.get(r)?.height ?? sheet.defaultRowHeight));
-    let scale = ((p.scale ?? 100) / 100) * PRINT_SCALE;
-    if (p.fitWidth || p.fitHeight) {
-      let tw = 0, th = 0;
-      for (let c = area.c0; c <= area.c1; c++) tw += colW(c);
-      for (let r = area.r0; r <= area.r1; r++) th += rowH(r);
-      const sw = p.fitWidth ? (pw * p.fitWidth) / tw : Infinity, sh = p.fitHeight ? (ph * p.fitHeight) / th : Infinity;
-      scale = Math.max(0.1, Math.min(PRINT_SCALE, sw * PRINT_SCALE, sh * PRINT_SCALE));
+    let zoom = (p.scale ?? 100) / 100;
+    if (area && (p.fitWidth || p.fitHeight)) {
+      const tw = cols.pos(area.c1 + 1) - cols.pos(area.c0), th = rows.pos(area.r1 + 1) - rows.pos(area.r0);
+      zoom = fitZoom({ w: tw, h: th }, { w: pw, h: ph }, { wide: p.fitWidth, tall: p.fitHeight }) / 100;
     }
-    // Drucktitel take room on every page that does not already start with them.
-    const titleSize = (t: [number, number] | undefined, size: (i: number) => number) => {
-      let s = 0;
-      if (t) for (let i = t[0]; i <= t[1]; i++) s += size(i) * scale;
-      return s;
-    };
-    const cut = (from: number, to: number, size: (i: number) => number, room: number, title?: [number, number], breaks?: number[]) => {
-      const out: [number, number][] = [];
-      const extra = titleSize(title, size);
-      const manual = new Set(breaks ?? []);
-      let start = from, used = 0;
-      const roomFor = (s: number) => (title && s > title[1] ? room - extra : room);
-      for (let i = from; i <= to; i++) {
-        const s = size(i) * scale;
-        if (i > start && (manual.has(i) || used + s > roomFor(start))) { out.push([start, i - 1]); start = i; used = 0; }
-        used += s;
+    return { rows, cols, own: { rows: rx, cols: cx }, screen, zoom, area, pw, ph };
+  }
+
+  /**
+   * Printed heights (page px) of rows with wrapped text that Excel sizes by their content: Excel sizes them again
+   * when it opens a file (the file's height can be from other column widths), as lines at the screen's widths
+   * times the font's screen line height, and prints that as a row of that height (recorded: five wrapped lines
+   * in Aptos Narrow 11 print 76,2 pt where the file says 130,5 pt). Other rows print as their height says.
+   */
+  function autoRows(sheet: Sheet, cols: Axis, std: { printed: number; screen: number }): Map<number, number> {
+    const out = new Map<number, number>();
+    const auto = new Set<number>();
+    // Rows grown for thick borders (thickTop/thickBot) keep their height.
+    for (const [r, info] of sheet.rows) if (info.height !== undefined && !info.custom && !info.hidden && !/thick(Top|Bot)="(1|true)"/.test(info.raw ?? "")) auto.add(r);
+    if (!auto.size) return out;
+    const need = new Map<number, number>();
+    const wrapped = new Set<number>();
+    const keep = new Set<number>();
+    const ctx = fitCtx();
+    for (const [k, cell] of sheet.cells) {
+      const row = Math.floor(k / MAX_COLS);
+      if (!auto.has(row)) continue;
+      const col = k % MAX_COLS;
+      const merge = sheet.mergeAt(row, col);
+      if (merge && merge.r0 !== merge.r1) continue;
+      const st = app.wb.styles.get(cell.s ?? sheet.rows.get(row)?.s ?? sheet.cols.get(col)?.s);
+      if (st.rotation) { keep.add(row); continue; }
+      const lineH = rowHeights(st.font.name, st.font.size, (st.font.size * 15) / 11).screen;
+      let lines = 1;
+      if (typeof cell.v === "string" && cell.v !== "") {
+        if (st.wrap && !merge) {
+          ctx.font = cssFont(st, 1);
+          lines = cell.v.split(NL).reduce((n, para) => n + Math.max(1, wrapLines(ctx, para, cols.size(col) - 5).length), 0);
+          wrapped.add(row);
+        } else lines = cell.v.split(NL).length;
+      } else if (cell.v === null || cell.v === "") {
+        if (st.font.size <= 11) continue;
       }
-      out.push([start, to]);
-      return out;
-    };
-    const colPages = cut(area.c0, area.c1, colW, pw, p.titleCols, p.colBreaks);
-    const rowPages = cut(area.r0, area.r1, rowH, ph, p.titleRows, p.rowBreaks);
+      need.set(row, Math.max(need.get(row) ?? 0, lines * lineH));
+    }
+    for (const r of wrapped) {
+      if (keep.has(r)) continue;
+      out.set(r, printRowPx(Math.max(std.screen, need.get(r) ?? 0), std));
+    }
+    return out;
+  }
+
+  /** The pages of a sheet: row and column ranges, Excel's order (down, then across). */
+  function paginate(sheet: Sheet, g = geometry(sheet)): Page[] {
+    const p = sheet.page ?? {};
+    const area = g.area;
+    if (!area) return [];
+    const span = (t: [number, number] | undefined, ax: Axis) => (t ? ax.pos(t[1] + 1) - ax.pos(t[0]) : 0);
+    // Zeilen- und Spaltenüberschriften take their room on every page.
+    const hw = p.headings ? 30 : 0, hh = p.headings ? g.rows.def : 0;
+    const colPages = cutPages(area.c0, area.c1, (c) => g.cols.size(c), g.pw / g.zoom - hw, p.colBreaks, span(p.titleCols, g.cols), p.titleCols);
+    const rowPages = cutPages(area.r0, area.r1, (r) => g.rows.size(r), g.ph / g.zoom - hh, p.rowBreaks, span(p.titleRows, g.rows), p.titleRows);
     const pages: Page[] = [];
     for (const cols of colPages) for (const rows of rowPages) pages.push({ rows, cols });
     pages.forEach((pg, i) => { pg.index = i; pg.count = pages.length; });
-    (paginate as unknown as { scale: number }).scale = scale;
     return pages;
   }
 
-  /** One page as HTML at its printed size. */
-  function renderPage(sheet: Sheet, pg: Page): HTMLElement {
+  /** One page at its printed size: the cells drawn by the grid's renderer, then the drawing objects. */
+  function renderPage(sheet: Sheet, pg: Page, g: Geometry): HTMLElement {
     const p = sheet.page ?? {};
     const sz = paper(p);
     const m = p.margins ?? MARGINS["Normale Seitenränder"];
-    const scale = (paginate as unknown as { scale: number }).scale ?? 1;
-    const table = h("table", { class: "print-table", style: `zoom:${scale}` });
-    const colgroup = h("colgroup");
-    if (p.headings) colgroup.append(h("col", { style: "width:30px" }));
-    // Drucktitel first where the page does not start with them.
-    const withTitles = (span: [number, number], t: [number, number] | undefined) =>
-      [...(t && span[0] > t[1] ? range(t[0], t[1]) : []), ...range(span[0], span[1])];
-    const rows = withTitles(pg.rows, p.titleRows), cols = withTitles(pg.cols, p.titleCols);
-    for (const c of cols) {
-      const w = colPx96(sheet, c);
-      colgroup.append(h("col", { style: `width:${w}px` }));
+    const z = g.zoom;
+    const needRows = p.titleRows && pg.rows[0] > p.titleRows[1] ? p.titleRows : undefined;
+    const needCols = p.titleCols && pg.cols[0] > p.titleCols[1] ? p.titleCols : undefined;
+    const ext = (t: [number, number] | undefined, ax: Axis) => (t ? (ax.pos(t[1] + 1) - ax.pos(t[0])) * z : 0);
+    const th = ext(needRows, g.rows), tw = ext(needCols, g.cols);
+    const head = p.headings ? { w: 30 * z, h: (g.rows.def) * z } : { w: 0, h: 0 };
+    const bw = (g.cols.pos(pg.cols[1] + 1) - g.cols.pos(pg.cols[0])) * z, bh = (g.rows.pos(pg.rows[1] + 1) - g.rows.pos(pg.rows[0])) * z;
+    // Printed gridlines: a line in the first printer pixel of every cell and one after the last (the area grows by it).
+    const grid = !!p.gridLines, line = grid ? PRN : 0;
+    const W = head.w + tw + bw + line, H = head.h + th + bh + line;
+    // Lines on the area's edges reach a little beyond it (Excel's thick lines: 8 printer pixels before the edge,
+    // 16 after): the drawing has room around the cells, and the axes end with the page's last row and column.
+    const L = 2, E = 3;
+    const rowsAx = new Axis(g.rows.def, pg.rows[1] + 1), colsAx = new Axis(g.cols.def, pg.cols[1] + 1);
+    rowsAx.set(g.own.rows, g.rows.def);
+    colsAx.set(g.own.cols, g.cols.def);
+    const panes: Pane[] = [];
+    const x0 = L + head.w, y0 = L + head.h;
+    const eps = 1e-3;
+    if (needRows && needCols) panes.push({ row: needRows[0], col: needCols[0], x: x0, y: y0, w: tw - eps, h: th - eps });
+    if (needRows) panes.push({ row: needRows[0], col: pg.cols[0], x: x0 + tw, y: y0, w: bw + E, h: th - eps });
+    if (needCols) panes.push({ row: pg.rows[0], col: needCols[0], x: x0, y: y0 + th, w: tw - eps, h: bh + E });
+    panes.push({ row: pg.rows[0], col: pg.cols[0], x: x0 + tw, y: y0 + th, w: bw + E, h: bh + E });
+    const SW = L + W + E, SH = L + H + E;
+    const { ctx, svg } = svgContext(SW * PRINT_DPR, SH * PRINT_DPR, `p${pg.index ?? 0}`, true);
+    svg.setAttribute("width", String(SW));
+    svg.setAttribute("height", String(SH));
+    draw(ctx, {
+      sheet, styles: app.wb.styles, rows: rowsAx, cols: colsAx, zoom: z, dpr: PRINT_DPR, width: SW, height: SH, headerW: head.w, headerH: head.h, panes,
+      selection: [], active: { row: -1, col: -1 }, showGrid: !!p.gridLines, showHeaders: !!p.headings, textCache: new Map(),
+      cond: sheet.conditional?.length ? new CondEval(app.wb, sheet, app.wb.sheets.indexOf(sheet)) : null,
+      tableStyle: sheet.tables?.length && sheet === app.sheet ? (r, c, st) => app.tables.styleFor(r, c, st) : undefined, book: app.wb, print: true,
+      // Excel's text sits 6 printer pixels further right and 3 lower than the screen's padding puts it; printed
+      // gridlines move the cells by 4 pixels but not the text (recorded, D-094).
+      textShift: { x: (grid ? 2 : 6) * PRN, y: (grid ? -1 : 3) * PRN },
+    });
+    if (grid) {
+      // Excel closes the grid and frames the printed area with a line of eight printer pixels around its edge.
+      ctx.fillStyle = "#000000";
+      const x1 = Math.round((L + W - line) * PRINT_DPR) / PRINT_DPR, y1 = Math.round((L + H - line) * PRINT_DPR) / PRINT_DPR;
+      const f = 4 * PRN;
+      ctx.fillRect(x1, y0, line, y1 - y0);
+      ctx.fillRect(x0, y1, x1 - x0 + line, line);
+      ctx.fillRect(x0 - f, y0 - f, x1 - x0 + 2 * f, 2 * f);
+      ctx.fillRect(x0 - f, y1 - f, x1 - x0 + 2 * f, 2 * f);
+      ctx.fillRect(x0 - f, y0 - f, 2 * f, y1 - y0 + 2 * f);
+      ctx.fillRect(x1 - f, y0 - f, 2 * f, y1 - y0 + 2 * f);
     }
-    table.append(colgroup);
-    if (p.headings) table.append(h("tr", null, h("th"), ...cols.map((c) => h("th", null, colName(c)))));
-    for (const r of rows) {
-      if (sheet.rows.get(r)?.hidden) continue;
-      const tr = h("tr", { style: `height:${ptToPx96(sheet.rows.get(r)?.height ?? sheet.defaultRowHeight)}px` });
-      if (p.headings) tr.append(h("th", null, String(r + 1)));
-      for (const c of cols) {
-        const merge = sheet.mergeAt(r, c);
-        if (merge && (merge.r0 !== r || merge.c0 !== c)) continue;
-        const cell = sheet.get(r, c);
-        const st = app.wb.styles.get(cell?.s ?? sheet.rows.get(r)?.s ?? sheet.cols.get(c)?.s);
-        const s = shown(cell, st);
-        const css = [
-          `font:${st.font.italic ? "italic " : ""}${st.font.bold ? "bold " : ""}${st.font.size}pt "${st.font.name}",Carlito,sans-serif`,
-          st.font.color || s.color ? `color:${s.color ?? st.font.color}` : "", st.fill ? `background:${st.fill}` : "",
-          `text-align:${st.h && st.h !== "general" ? st.h : s.align}`, `vertical-align:${st.v === "top" ? "top" : st.v === "center" ? "middle" : "bottom"}`,
-          st.wrap ? "white-space:pre-wrap" : "white-space:pre", st.font.underline ? "text-decoration:underline" : "",
-          ...(["top", "right", "bottom", "left"] as const).map((k) => (st.borders[k] ? `border-${k}:${st.borders[k]!.style === "medium" ? 2 : st.borders[k]!.style === "thick" ? 3 : 1}px ${st.borders[k]!.style === "double" ? "double" : st.borders[k]!.style.includes("dash") ? "dashed" : st.borders[k]!.style.includes("dot") ? "dotted" : "solid"} ${st.borders[k]!.color ?? "#000"}` : "")),
-        ].filter(Boolean).join(";");
-        const attrs: Record<string, string> = { style: css };
-        if (merge) { attrs.rowspan = String(merge.r1 - merge.r0 + 1); attrs.colspan = String(merge.c1 - merge.c0 + 1); }
-        tr.append(h("td", attrs, s.text));
-      }
-      table.append(tr);
-    }
-    if (p.gridLines) table.classList.add("grid");
-    const el = h("div", { class: "print-page", style: `position:relative;width:${sz.w}in;height:${sz.h}in;padding:${m.top + PRINT_OFFSET}in ${m.right}in ${m.bottom}in ${m.left + PRINT_OFFSET}in` }, table);
-    // Pictures whose top-left cell is on this page, at their place among the printed rows and columns.
-    for (const pic of sheet.pictures ?? []) {
-      if (pic.hidden) continue;
-      const ci = cols.indexOf(pic.from.col), ri = rows.indexOf(pic.from.row);
-      if (ci < 0 || ri < 0) continue;
-      const rowH = (r: number) => (sheet.rows.get(r)?.hidden ? 0 : ptToPx96(sheet.rows.get(r)?.height ?? sheet.defaultRowHeight));
-      let x = (p.headings ? 30 : 0) + pic.from.x, y = (p.headings ? ptToPx96(sheet.defaultRowHeight) : 0) + pic.from.y;
-      for (const c of cols.slice(0, ci)) x += colPx96(sheet, c);
-      for (const r of rows.slice(0, ri)) y += rowH(r);
-      let w = pic.size?.w ?? 0, hgt = pic.size?.h ?? 0;
-      if (pic.to) {
-        w = pic.to.x - pic.from.x; hgt = pic.to.y - pic.from.y;
-        for (let c = pic.from.col; c < pic.to.col; c++) w += colPx96(sheet, c);
-        for (let r = pic.from.row; r < pic.to.row; r++) hgt += rowH(r);
-      }
-      // With its Bildformat (D-087), drawn at 100 % and scaled as on the screen.
-      let bx = x, by = y, bw = w, bh = hgt;
-      if (pic.group) { bx += pic.group.x * w; by += pic.group.y * hgt; bw = pic.group.w * w; bh = pic.group.h * hgt; }
-      const f = (pic.format ?? {}) as PictureFormat;
-      const holder = h("div", { style: `position:absolute;left:calc(${m.left + PRINT_OFFSET}in + ${bx * scale}px);top:calc(${m.top + PRINT_OFFSET}in + ${by * scale}px);width:${bw * scale}px;height:${bh * scale}px;${f.rotation ? `transform:rotate(${f.rotation}deg);` : ""}` });
-      const look = h("div", { style: `position:absolute;left:0;top:0;transform:scale(${scale});transform-origin:0 0` });
-      const baked = pic.baked !== undefined && pictureBakedKey(f) === pic.baked;
-      look.append(pictureElement(baked ? pic.bakedSrc ?? pic.src : pic.src, Math.max(1, bw), Math.max(1, bh),
-        { ...f, rotation: undefined, ...(baked ? { brightness: undefined, contrast: undefined, saturation: undefined, temperature: undefined, sharpen: undefined } : {}) }));
+    // Auf der Seite zentrieren.
+    // Excel starts printed gridlines four printer pixels inside the margins and centres the area with the
+    // lines around it (recorded); its places are whole printer pixels. The browser puts the drawing at whole
+    // CSS pixels, so the rest of the way is inside the drawing (lx, ly).
+    const offX = (p.centerH ? Math.max(0, (g.pw - W - 16 * PRN) / 2) : 0) + (grid ? 4 * PRN : 0), offY = (p.centerV ? Math.max(0, (g.ph - H - 16 * PRN) / 2) : 0) + (grid ? 4 * PRN : 0);
+    const ox = Math.round((m.left * 96 + offX) / PRN) * PRN, oy = Math.round((m.top * 96 + offY) / PRN) * PRN;
+    const bx = Math.floor(ox - L), by = Math.floor(oy - L);
+    svg.setAttribute("viewBox", `${(L - (ox - bx)) * PRINT_DPR} ${(L - (oy - by)) * PRINT_DPR} ${SW * PRINT_DPR} ${SH * PRINT_DPR}`);
+    const body = h("div", { style: `position:absolute;left:${bx}px;top:${by}px;width:${SW}px;height:${SH}px;overflow:hidden` }, svg);
+    svg.style.position = "absolute";
+    svg.style.left = svg.style.top = "0";
+    const out = sheetSize(sz);
+    const el = h("div", { class: "print-page", style: `position:relative;width:${out.w}in;height:${out.h}in` }, body);
+    // Drawing objects over the cells, at their cells' printed places (a part on each page they reach).
+    const X = (a: Anchor) => (ox - bx) + head.w + tw + ((g.cols.pos(a.col) - g.cols.pos(pg.cols[0])) + a.x * ratio(g.cols, g.screen.cols, a.col)) * z;
+    const Y = (a: Anchor) => (oy - by) + head.h + th + ((g.rows.pos(a.row) - g.rows.pos(pg.rows[0])) + a.y * ratio(g.rows, g.screen.rows, a.row)) * z;
+    for (const d of drawings(sheet)) {
+      const end = endOf(d, g.screen);
+      if (end.row < pg.rows[0] || d.from.row > pg.rows[1] || end.col < pg.cols[0] || d.from.col > pg.cols[1]) continue;
+      const x = X(d.from), y = Y(d.from), w = Math.max(1, X(end) - x), hh = Math.max(1, Y(end) - y);
+      const holder = h("div", { style: `position:absolute;left:${x}px;top:${y}px;width:${w}px;height:${hh}px;${d.rot && d.kind !== "shape" ? `transform:rotate(${d.rot}deg);` : ""}` });
+      const look = h("div", { style: `position:absolute;left:0;top:0;width:${w / z}px;height:${hh / z}px;transform:scale(${z});transform-origin:0 0` });
+      if (d.kind === "chart") look.append(app.charts.printSvg(d.obj as Parameters<typeof app.charts.printSvg>[0], w / z, hh / z));
+      else if (d.kind === "shape") look.append(app.shapes.printElement(d.obj as Parameters<typeof app.shapes.printElement>[0], w / z, hh / z));
+      else look.append(pictureLook(d.obj as NonNullable<Sheet["pictures"]>[number], w / z, hh / z));
       holder.append(look);
-      el.append(holder);
+      body.append(holder);
     }
-    // Kopf- und Fußzeile at Excel's header and footer distances, between the side margins (the
-    // footer's text sits 1,5 pt higher in Excel's PDF than the box's bottom).
+    // Kopf- und Fußzeile at Excel's header and footer distances, between the side margins (Excel's PDF: the
+    // text 0,96 pt inside the margins, the header's 1,48 pt below its distance, the footer's 1,5 pt above).
     const info = { page: (pg.index ?? 0) + 1, pages: pg.count ?? 1, sheet: sheet.name, file: document.title.replace(/ - RaabeCalc$/, "") };
+    const std = app.wb.styles.get(undefined).font;
     const band = (code: string | undefined, top: boolean) => {
       if (!code) return;
       const s = headerSections(code, info);
-      el.append(h("div", { class: "print-hf", style: `left:${m.left}in;right:${m.right}in;${top ? `top:${m.header}in` : `bottom:calc(${m.footer}in + 1.5pt)`}` },
+      el.append(h("div", { class: "print-hf", style: `left:calc(${m.left}in + 0.96pt);right:calc(${m.right}in + 0.96pt);font-family:"${std.name}",Carlito,sans-serif;${top ? `top:calc(${m.header}in + 1.48pt)` : `bottom:calc(${m.footer}in + 1.5pt)`}` },
         h("span", { style: "text-align:left" }, s.L), h("span", { style: "text-align:center" }, s.C), h("span", { style: "text-align:right" }, s.R)));
     };
     band(p.header, true);
@@ -252,8 +379,27 @@ export function printFeature(app: CalcApp) {
     return el;
   }
 
+  /** How much longer a row or column is on paper than on screen (offsets inside it scale alike). */
+  function ratio(print: Axis, screen: Axis, i: number): number {
+    const s = screen.size(i);
+    return s > 0 ? print.size(i) / s : 1;
+  }
+
+  /** A picture with its Bildformat (D-087) at a size in px at 100 %. */
+  function pictureLook(pic: NonNullable<Sheet["pictures"]>[number], w: number, hh: number): HTMLElement {
+    let bx = 0, by = 0, bw = w, bh = hh;
+    if (pic.group) { bx = pic.group.x * w; by = pic.group.y * hh; bw = pic.group.w * w; bh = pic.group.h * hh; }
+    const f = (pic.format ?? {}) as PictureFormat;
+    const baked = pic.baked !== undefined && pictureBakedKey(f) === pic.baked;
+    const el = pictureElement(baked ? pic.bakedSrc ?? pic.src : pic.src, Math.max(1, bw), Math.max(1, bh),
+      { ...f, rotation: undefined, ...(baked ? { brightness: undefined, contrast: undefined, saturation: undefined, temperature: undefined, sharpen: undefined } : {}) });
+    return h("div", { style: `position:absolute;left:${bx}px;top:${by}px;width:${bw}px;height:${bh}px` }, el);
+  }
+
   function pages(): HTMLElement[] {
-    return paginate(app.sheet).map((pg) => renderPage(app.sheet, pg));
+    const sheet = app.sheet;
+    const g = geometry(sheet);
+    return paginate(sheet, g).map((pg) => renderPage(sheet, pg, g));
   }
 
   async function exportPdf(to?: string): Promise<void> {
@@ -261,7 +407,7 @@ export function printFeature(app: CalcApp) {
     if (!path) return;
     const root = document.getElementById("print-root") ?? document.body.appendChild(h("div", { id: "print-root" }));
     root.replaceChildren(...pages());
-    const sz = paper(page());
+    const sz = sheetSize(paper(page()));
     // The page size for the PDF (the shell's print style sheet would otherwise make it A4 portrait).
     const style = h("style", null, `@page { size: ${sz.w}in ${sz.h}in; margin: 0 }`);
     document.head.append(style);
@@ -278,7 +424,7 @@ export function printFeature(app: CalcApp) {
   function printNow(): void {
     const root = document.getElementById("print-root") ?? document.body.appendChild(h("div", { id: "print-root" }));
     root.replaceChildren(...pages());
-    const sz = paper(page());
+    const sz = sheetSize(paper(page()));
     const style = h("style", null, `@page { size: ${sz.w}in ${sz.h}in; margin: 0 }`);
     document.head.append(style);
     document.body.classList.add("printing");
@@ -332,6 +478,8 @@ export function printFeature(app: CalcApp) {
     const scale = h("input", { type: "text", value: String(p.scale ?? 100), style: "width:60px" }) as HTMLInputElement;
     const grid = h("input", { type: "checkbox", checked: p.gridLines || undefined }) as HTMLInputElement;
     const heads = h("input", { type: "checkbox", checked: p.headings || undefined }) as HTMLInputElement;
+    const centerH = h("input", { type: "checkbox", checked: p.centerH || undefined }) as HTMLInputElement;
+    const centerV = h("input", { type: "checkbox", checked: p.centerV || undefined }) as HTMLInputElement;
     const span = (t: [number, number] | undefined, rows: boolean) => (t ? (rows ? `$${t[0] + 1}:$${t[1] + 1}` : `$${colName(t[0])}:$${colName(t[1])}`) : "");
     const titleRows = h("input", { type: "text", value: span(p.titleRows, true), style: "width:120px" }) as HTMLInputElement;
     const titleCols = h("input", { type: "text", value: span(p.titleCols, false), style: "width:120px" }) as HTMLInputElement;
@@ -344,6 +492,8 @@ export function printFeature(app: CalcApp) {
     const hfRow = (label: string, inputs: HTMLInputElement[]) => h("div", null, h("div", { class: "fc-label" }, label), h("div", { class: "hf-row" }, ...inputs));
     if (focusTitles === "header") setTimeout(() => head[1].focus());
     const body = h("div", null, h("div", { class: "fc-label" }, "Seitenränder (cm)"), ...inputs.map((x) => x.el),
+      h("div", { class: "fc-label" }, "Auf der Seite zentrieren"),
+      h("label", { class: "check" }, centerH, "Horizontal"), h("label", { class: "check" }, centerV, "Vertikal"),
       h("label", { class: "field" }, "Verkleinern/Vergrößern (%):", scale),
       h("div", { class: "fc-label" }, "Drucktitel"),
       h("label", { class: "field" }, "Wiederholungszeilen oben:", titleRows), h("label", { class: "field" }, "Wiederholungsspalten links:", titleCols),
@@ -361,6 +511,8 @@ export function printFeature(app: CalcApp) {
       if (s >= 10 && s <= 400) { x.scale = s; x.fitWidth = x.fitHeight = undefined; }
       x.gridLines = grid.checked || undefined;
       x.headings = heads.checked || undefined;
+      x.centerH = centerH.checked || undefined;
+      x.centerV = centerV.checked || undefined;
       x.titleRows = readSpan(titleRows.value, true);
       x.titleCols = readSpan(titleCols.value, false);
       const code = (inputs: HTMLInputElement[]) => {
@@ -412,11 +564,3 @@ export function printFeature(app: CalcApp) {
     setScale: (n: number) => setPage("Skalierung", (p) => { p.scale = Math.max(10, Math.min(400, n)); p.fitWidth = p.fitHeight = undefined; }),
   };
 }
-
-function range(a: number, b: number): number[] {
-  const out: number[] = [];
-  for (let i = a; i <= b; i++) out.push(i);
-  return out;
-}
-
-void MAX_COLS; void cellName;

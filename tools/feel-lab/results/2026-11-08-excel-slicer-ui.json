@@ -1,0 +1,1256 @@
+{
+ "tableDesign": {
+  "tab": "Alt, J T",
+  "controls": [
+   {
+    "type": "Button",
+    "name": "Kommentare",
+    "key": "Alt, Z C",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Tabellenentwurf",
+    "key": "Alt, J T",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Eigenschaften",
+    "key": "Alt, J T, Z P",
+    "enabled": true
+   },
+   {
+    "type": "Edit",
+    "name": "Tabellenname",
+    "key": "Alt, J T, N",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Tabellengröße ändern",
+    "key": "Alt, J T, B",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Tools",
+    "key": "Alt, J T, Z T",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Mit PivotTable zusammenfassen",
+    "key": "Alt, J T, M",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Duplikate entfernen",
+    "key": "Alt, J T, 4",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "In Bereich konvertieren ",
+    "key": "Alt, J T, C",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Datenschnitt einfügen...",
+    "key": "Alt, J T, T",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Externe Tabellendaten",
+    "key": "Alt, J T, Z X",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Exportieren",
+    "key": "Alt, J T, X",
+    "enabled": true
+   },
+   {
+    "type": "SplitButton",
+    "name": "Aktualisieren",
+    "key": "Alt, J T, A",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Aktualisieren",
+    "key": "Alt+F5",
+    "enabled": false
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Optionen",
+    "key": "Alt, J T, A",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Eigenschaften",
+    "key": "Alt, J T, J",
+    "enabled": false
+   },
+   {
+    "type": "Button",
+    "name": "Im Browser öffnen",
+    "key": "Alt, J T, I",
+    "enabled": false
+   },
+   {
+    "type": "Button",
+    "name": "Verknüpfung aufheben",
+    "key": "Alt, J T, K",
+    "enabled": false
+   },
+   {
+    "type": "Group",
+    "name": "Tabellenformatoptionen",
+    "key": "Alt, J T, Z L",
+    "enabled": true
+   },
+   {
+    "type": "CheckBox",
+    "name": "Kopfzeile",
+    "key": "Alt, J T, Ü",
+    "enabled": true
+   },
+   {
+    "type": "CheckBox",
+    "name": "Ergebniszeile",
+    "key": "Alt, J T, G",
+    "enabled": true
+   },
+   {
+    "type": "CheckBox",
+    "name": "Gebänderte Zeilen",
+    "key": "Alt, J T, V",
+    "enabled": true
+   },
+   {
+    "type": "CheckBox",
+    "name": "Erste Spalte",
+    "key": "Alt, J T, E",
+    "enabled": true
+   },
+   {
+    "type": "CheckBox",
+    "name": "Letzte Spalte",
+    "key": "Alt, J T, L",
+    "enabled": true
+   },
+   {
+    "type": "CheckBox",
+    "name": "Gebänderte Spalten",
+    "key": "Alt, J T, R",
+    "enabled": true
+   },
+   {
+    "type": "CheckBox",
+    "name": "Schaltfläche \"Filter\"",
+    "key": "Alt, J T, F",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Tabellenformatvorlagen",
+    "key": "Alt, J T, Z S",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Schnellformatvorlagen",
+    "key": "Alt, J T, S",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Schnellformatvorlagen",
+    "key": "Alt, J T, S",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Menüband-Anzeigeoptionen",
+    "key": "Alt, Z R",
+    "enabled": true
+   }
+  ]
+ },
+ "insertDialog": {
+  "title": "Datenschnitt auswählen",
+  "class": "NUIDialog",
+  "controls": [
+   {
+    "type": "Group",
+    "name": "Name. KontrollkästchenDeaktiviert",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Name. KontrollkästchenDeaktiviert",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "CheckBox",
+    "name": "Name",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Klasse. KontrollkästchenDeaktiviert",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Klasse. KontrollkästchenDeaktiviert",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "CheckBox",
+    "name": "Klasse",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Fach. KontrollkästchenDeaktiviert",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Fach. KontrollkästchenDeaktiviert",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "CheckBox",
+    "name": "Fach",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Note. KontrollkästchenDeaktiviert",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Note. KontrollkästchenDeaktiviert",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "CheckBox",
+    "name": "Note",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "OK",
+    "key": "",
+    "enabled": false
+   },
+   {
+    "type": "Button",
+    "name": "Abbrechen",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Direkthilfe",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Schließen",
+    "key": "",
+    "enabled": true
+   }
+  ]
+ },
+ "pivotAnalyze": {
+  "tab": "Alt, J T",
+  "controls": [
+   {
+    "type": "Group",
+    "name": "PivotTable",
+    "key": "Alt, J T, Z P"
+   },
+   {
+    "type": "Group",
+    "name": "Aktives Feld",
+    "key": "Alt, J T, Z A"
+   },
+   {
+    "type": "Group",
+    "name": "Gruppieren",
+    "key": "Alt, J T, Z G"
+   },
+   {
+    "type": "Group",
+    "name": "Filtern",
+    "key": "Alt, J T, Z S"
+   },
+   {
+    "type": "Button",
+    "name": "Datenschnitt einfügen...",
+    "key": "Alt, J T, 9"
+   },
+   {
+    "type": "Button",
+    "name": "Zeitachse einfügen...",
+    "key": "Alt, J T, C"
+   },
+   {
+    "type": "Button",
+    "name": "Filterverbindungen...",
+    "key": "Alt, J T, V"
+   },
+   {
+    "type": "Group",
+    "name": "Daten",
+    "key": "Alt, J T, Z D"
+   },
+   {
+    "type": "SplitButton",
+    "name": "Aktualisieren",
+    "key": "Alt, J T, A"
+   },
+   {
+    "type": "Group",
+    "name": "Aktionen",
+    "key": "Alt, J T, Z C"
+   },
+   {
+    "type": "MenuItem",
+    "name": "Löschen",
+    "key": "Alt, J T, ß"
+   },
+   {
+    "type": "Group",
+    "name": "Berechnungen",
+    "key": "Alt, J T, Z X"
+   },
+   {
+    "type": "Group",
+    "name": "Tools",
+    "key": "Alt, J T, Z T"
+   },
+   {
+    "type": "Group",
+    "name": "Einblenden",
+    "key": "Alt, J T, Z W"
+   },
+   {
+    "type": "Button",
+    "name": "Feldliste",
+    "key": "Alt, J T, L"
+   }
+  ],
+  "note": "second run (the first returned no controls)"
+ },
+ "insert": [
+  {
+   "type": "Group",
+   "name": "Filter",
+   "key": "Alt, I, Z F",
+   "enabled": true
+  },
+  {
+   "type": "Button",
+   "name": "Datenschnitt",
+   "key": "Alt, I, 9 1",
+   "enabled": true
+  },
+  {
+   "type": "Button",
+   "name": "Zeitachse",
+   "key": "Alt, I, Ö",
+   "enabled": true
+  }
+ ],
+ "slicerTab": {
+  "tab": "Alt, Y 3",
+  "controls": [
+   {
+    "type": "Button",
+    "name": "Kommentare",
+    "key": "Alt, Z C",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Datenschnitt",
+    "key": "Alt, Y 3",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Datenschnitt",
+    "key": "Alt, Y 3, Z S",
+    "enabled": true
+   },
+   {
+    "type": "Edit",
+    "name": "Datenschnittbeschriftung",
+    "key": "Alt, Y 3, T",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Datenschnitteinstellungen...",
+    "key": "Alt, Y 3, A",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Berichtsverbindungen...",
+    "key": "Alt, Y 3, E",
+    "enabled": false
+   },
+   {
+    "type": "Group",
+    "name": "Datenschnitt-Formatvorlagen",
+    "key": "Alt, Y 3, Z Q",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Schnellformatvorlagen",
+    "key": "Alt, Y 3, S",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Schnellformatvorlagen",
+    "key": "Alt, Y 3, S",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Anordnen",
+    "key": "Alt, Y 3, Z A",
+    "enabled": true
+   },
+   {
+    "type": "SplitButton",
+    "name": "Ebene nach vorne",
+    "key": "Alt, Y 3, G E",
+    "enabled": false
+   },
+   {
+    "type": "Button",
+    "name": "Ebene nach vorne",
+    "key": "",
+    "enabled": false
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Optionen",
+    "key": "Alt, Y 3, G E",
+    "enabled": false
+   },
+   {
+    "type": "SplitButton",
+    "name": "Ebene nach hinten",
+    "key": "Alt, Y 3, G H",
+    "enabled": false
+   },
+   {
+    "type": "Button",
+    "name": "Ebene nach hinten",
+    "key": "",
+    "enabled": false
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Optionen",
+    "key": "Alt, Y 3, G H",
+    "enabled": false
+   },
+   {
+    "type": "Button",
+    "name": "Auswahlbereich...",
+    "key": "Alt, Y 3, Q",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Ausrichten",
+    "key": "Alt, Y 3, D A",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Gruppieren",
+    "key": "Alt, Y 3, G R",
+    "enabled": false
+   },
+   {
+    "type": "MenuItem",
+    "name": "Drehen",
+    "key": "Alt, Y 3, D R",
+    "enabled": false
+   },
+   {
+    "type": "Group",
+    "name": "Schaltflächen",
+    "key": "Alt, Y 3, Z C",
+    "enabled": true
+   },
+   {
+    "type": "Spinner",
+    "name": "Spalten",
+    "key": "Alt, Y 3, N",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Spinner",
+    "name": "Höhe",
+    "key": "Alt, Y 3, Ö",
+    "enabled": true
+   },
+   {
+    "type": "Spinner",
+    "name": "Breite",
+    "key": "Alt, Y 3, B",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Größe",
+    "key": "Alt, Y 3, Z Z",
+    "enabled": true
+   },
+   {
+    "type": "Spinner",
+    "name": "Formenhöhe",
+    "key": "Alt, Y 3, H",
+    "enabled": true
+   },
+   {
+    "type": "Spinner",
+    "name": "Formenbreite",
+    "key": "Alt, Y 3, R R",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Größe und Eigenschaften...",
+    "key": "Alt, Y 3, ß",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Menüband-Anzeigeoptionen",
+    "key": "Alt, Z R",
+    "enabled": true
+   }
+  ]
+ },
+ "Datenschnitteinstellungen": {
+  "title": "Datenschnitteinstellungen",
+  "class": "NUIDialog",
+  "controls": [
+   {
+    "type": "Text",
+    "name": "Quellname",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Fach",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "In Formeln zu verwendender Name",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Datenschnitt_Fach",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Name",
+    "key": "ALT+N",
+    "enabled": true
+   },
+   {
+    "type": "Edit",
+    "name": "Name",
+    "key": "ALT+N",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Kopfzeile",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Kopfzeile",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "CheckBox",
+    "name": "Kopfzeile anzeigen",
+    "key": "ALT+K",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Beschriftung",
+    "key": "ALT+B",
+    "enabled": true
+   },
+   {
+    "type": "Edit",
+    "name": "Beschriftung",
+    "key": "ALT+B",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Elementsortierung und -filterung",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Elementsortierung und -filterung",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": " ",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "RadioButton",
+    "name": "Aufsteigend (A bis Z)",
+    "key": "ALT+A",
+    "enabled": true
+   },
+   {
+    "type": "RadioButton",
+    "name": "Absteigend (Z bis A)",
+    "key": "ALT+g",
+    "enabled": true
+   },
+   {
+    "type": "CheckBox",
+    "name": "Beim Sortieren benutzerdefinierte Listen verwenden",
+    "key": "ALT+m",
+    "enabled": true
+   },
+   {
+    "type": "CheckBox",
+    "name": "Elemente ohne Daten ausblenden",
+    "key": "ALT+E",
+    "enabled": true
+   },
+   {
+    "type": "CheckBox",
+    "name": "Elemente ohne Daten visuell kennzeichnen",
+    "key": "ALT+v",
+    "enabled": true
+   },
+   {
+    "type": "CheckBox",
+    "name": "Elemente ohne Daten zuletzt anzeigen",
+    "key": "ALT+l",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "OK",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Abbrechen",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Direkthilfe",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Schließen",
+    "key": "",
+    "enabled": true
+   }
+  ]
+ },
+ "missing": [
+  "Berichtsverbindungen",
+  "Zuletzt verwendete Quellen"
+ ],
+ "Berichtsverbindungen": null,
+ "slicerTabTwo": [
+  {
+   "type": "Button",
+   "name": "Kommentare",
+   "key": "Alt, Z C",
+   "enabled": true
+  },
+  {
+   "type": "Group",
+   "name": "Datenschnitt",
+   "key": "Alt, Y 3",
+   "enabled": true
+  },
+  {
+   "type": "Group",
+   "name": "Datenschnitt",
+   "key": "Alt, Y 3, Z S",
+   "enabled": true
+  },
+  {
+   "type": "Edit",
+   "name": "Datenschnittbeschriftung",
+   "key": "Alt, Y 3, T",
+   "enabled": true
+  },
+  {
+   "type": "Button",
+   "name": "Datenschnitteinstellungen...",
+   "key": "Alt, Y 3, A",
+   "enabled": true
+  },
+  {
+   "type": "Button",
+   "name": "Berichtsverbindungen...",
+   "key": "Alt, Y 3, E",
+   "enabled": false
+  },
+  {
+   "type": "Group",
+   "name": "Datenschnitt-Formatvorlagen",
+   "key": "Alt, Y 3, Z Q",
+   "enabled": true
+  },
+  {
+   "type": "Group",
+   "name": "Schnellformatvorlagen",
+   "key": "Alt, Y 3, S",
+   "enabled": true
+  },
+  {
+   "type": "Button",
+   "name": "Schnellformatvorlagen",
+   "key": "Alt, Y 3, S",
+   "enabled": true
+  },
+  {
+   "type": "Group",
+   "name": "Anordnen",
+   "key": "Alt, Y 3, Z A",
+   "enabled": true
+  },
+  {
+   "type": "SplitButton",
+   "name": "Ebene nach vorne",
+   "key": "Alt, Y 3, G E",
+   "enabled": true
+  },
+  {
+   "type": "Button",
+   "name": "Ebene nach vorne",
+   "key": "",
+   "enabled": true
+  },
+  {
+   "type": "MenuItem",
+   "name": "Weitere Optionen",
+   "key": "Alt, Y 3, G E",
+   "enabled": true
+  },
+  {
+   "type": "SplitButton",
+   "name": "Ebene nach hinten",
+   "key": "Alt, Y 3, G H",
+   "enabled": true
+  },
+  {
+   "type": "Button",
+   "name": "Ebene nach hinten",
+   "key": "",
+   "enabled": true
+  },
+  {
+   "type": "MenuItem",
+   "name": "Weitere Optionen",
+   "key": "Alt, Y 3, G H",
+   "enabled": true
+  },
+  {
+   "type": "Button",
+   "name": "Auswahlbereich...",
+   "key": "Alt, Y 3, Q",
+   "enabled": true
+  },
+  {
+   "type": "MenuItem",
+   "name": "Ausrichten",
+   "key": "Alt, Y 3, D A",
+   "enabled": true
+  },
+  {
+   "type": "MenuItem",
+   "name": "Gruppieren",
+   "key": "Alt, Y 3, G R",
+   "enabled": true
+  },
+  {
+   "type": "MenuItem",
+   "name": "Drehen",
+   "key": "Alt, Y 3, D R",
+   "enabled": false
+  },
+  {
+   "type": "Group",
+   "name": "Schaltflächen",
+   "key": "Alt, Y 3, Z C",
+   "enabled": true
+  },
+  {
+   "type": "Spinner",
+   "name": "Spalten",
+   "key": "Alt, Y 3, N",
+   "enabled": true
+  },
+  {
+   "type": "Button",
+   "name": "Mehr",
+   "key": "",
+   "enabled": true
+  },
+  {
+   "type": "Button",
+   "name": "Weniger",
+   "key": "",
+   "enabled": true
+  },
+  {
+   "type": "Spinner",
+   "name": "Höhe",
+   "key": "Alt, Y 3, Ö",
+   "enabled": true
+  },
+  {
+   "type": "Spinner",
+   "name": "Breite",
+   "key": "Alt, Y 3, B",
+   "enabled": true
+  },
+  {
+   "type": "Group",
+   "name": "Größe",
+   "key": "Alt, Y 3, Z Z",
+   "enabled": true
+  },
+  {
+   "type": "Spinner",
+   "name": "Formenhöhe",
+   "key": "Alt, Y 3, H",
+   "enabled": true
+  },
+  {
+   "type": "Spinner",
+   "name": "Formenbreite",
+   "key": "Alt, Y 3, R R",
+   "enabled": true
+  },
+  {
+   "type": "Button",
+   "name": "Größe und Eigenschaften...",
+   "key": "Alt, Y 3, ß",
+   "enabled": true
+  },
+  {
+   "type": "MenuItem",
+   "name": "Menüband-Anzeigeoptionen",
+   "key": "Alt, Z R",
+   "enabled": true
+  }
+ ],
+ "data": {
+  "tab": "Alt, V",
+  "controls": [
+   {
+    "type": "Button",
+    "name": "Kommentare",
+    "key": "Alt, Z C",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Daten",
+    "key": "Alt, V",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Daten abrufen und transformieren",
+    "key": "Alt, V, Z 1",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Daten abrufen",
+    "key": "Alt, V, D 1",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Aus Text/CSV",
+    "key": "Alt, V, F T",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Aus dem Web",
+    "key": "Alt, V, M",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Aus Tabelle/Bereich",
+    "key": "Alt, V, P T",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Von Bild",
+    "key": "Alt, V, V",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Zuletzt verwendete Quellen",
+    "key": "Alt, V, 6",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Vorhandene Verbindungen",
+    "key": "Alt, V, O",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Abfragen & Verbindungen",
+    "key": "Alt, V, Z C",
+    "enabled": true
+   },
+   {
+    "type": "SplitButton",
+    "name": "Alle aktualisieren",
+    "key": "Alt, V, K 1",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Alle aktualisieren",
+    "key": "Strg+Alt+F5",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Optionen",
+    "key": "Alt, V, K 1",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Abfragen und Verbindungen",
+    "key": "Alt, V, A",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Eigenschaften",
+    "key": "Alt, V, J",
+    "enabled": false
+   },
+   {
+    "type": "Button",
+    "name": "Workbook Links",
+    "key": "Alt, V, K 2",
+    "enabled": false
+   },
+   {
+    "type": "Group",
+    "name": "Datentypen",
+    "key": "Alt, V, Z 2",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Datentypen",
+    "key": "Alt, V, D 2",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Datentypen",
+    "key": "Alt, V, D 2",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Sortieren und Filtern",
+    "key": "Alt, V, Z S",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Von A bis Z sortieren",
+    "key": "Alt, V, U",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Von Z bis A sortieren",
+    "key": "Alt, V, F 1",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Sortieren...",
+    "key": "Alt, V, S",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Filtern",
+    "key": "Alt, V, 1",
+    "enabled": false
+   },
+   {
+    "type": "Button",
+    "name": "Löschen",
+    "key": "Alt, V, L",
+    "enabled": false
+   },
+   {
+    "type": "Button",
+    "name": "Erneut anwenden",
+    "key": "Alt, V, E",
+    "enabled": false
+   },
+   {
+    "type": "Button",
+    "name": "Erweitert...",
+    "key": "Alt, V, W",
+    "enabled": false
+   },
+   {
+    "type": "Group",
+    "name": "Datentools",
+    "key": "Alt, V, Z D",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Text in Spalten...",
+    "key": "Alt, V, T",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Blitzvorschau",
+    "key": "Alt, V, B",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Duplikate entfernen",
+    "key": "Alt, V, 4",
+    "enabled": true
+   },
+   {
+    "type": "SplitButton",
+    "name": "Datenüberprüfung...",
+    "key": "Alt, V, Ü",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Datenüberprüfung...",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Optionen",
+    "key": "Alt, V, Ü",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Konsolidieren...",
+    "key": "Alt, V, 8",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Datenmodell",
+    "key": "Alt, V, D M",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Datenanalyse",
+    "key": "Alt, V, F E",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Prognose",
+    "key": "Alt, V, Z 3",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Was-wäre-wenn-Analyse",
+    "key": "Alt, V, 5",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Prognoseblatt",
+    "key": "Alt, V, 3",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Gliederung",
+    "key": "Alt, V, Z O",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Gliederung",
+    "key": "Alt, V, Z O",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Menüband-Anzeigeoptionen",
+    "key": "Alt, Z R",
+    "enabled": true
+   }
+  ]
+ },
+ "dataMenus": {},
+ "Zuletzt verwendete Quellen": null,
+ "Vorhandene Verbindungen": {
+  "title": "Vorhandene Verbindungen",
+  "class": "NUIDialog",
+  "controls": [
+   {
+    "type": "TabItem",
+    "name": "Verbindungen",
+    "key": "ALT+V",
+    "enabled": true
+   },
+   {
+    "type": "TabItem",
+    "name": "Tabellen",
+    "key": "ALT+T",
+    "enabled": true
+   },
+   {
+    "type": "ComboBox",
+    "name": "Anzeigen",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Öffnen",
+    "key": "Alt+Pfeil nach unten",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Nach weiteren Elementen suchen...",
+    "key": "ALT+N",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Öffnen",
+    "key": "ALT+f",
+    "enabled": false
+   },
+   {
+    "type": "Button",
+    "name": "Abbrechen",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Direkthilfe",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Schließen",
+    "key": "",
+    "enabled": true
+   }
+  ]
+ },
+ "watchdogFired": false
+}

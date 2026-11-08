@@ -115,7 +115,7 @@ Sub Summe()
     Cells(letzte + 1, 1).Value = "Summe"
     Cells(letzte + 1, 2).Formula = "=SUM(B2:B" & letzte & ")"
     Cells(letzte + 1, 1).Font.Bold = True
-    Range("B2:B" & letzte + 1).NumberFormat = "#,##0.00 ""€"""
+    Range("B2:B" & letzte + 1).NumberFormat = "#,##0.00 ""€""\"
 End Sub"""},
     {"name": "einmaleins", "setup": {}, "macro": "Einmaleins", "code": """
 Sub Einmaleins()
@@ -263,7 +263,11 @@ End Sub"""},
 Sub Schutz()
     Range("B1").Locked = False
     ActiveSheet.Protect "raabe"
-    Range("C1").Value = ActiveSheet.ProtectContents
+    Range("B1").Value = ActiveSheet.ProtectContents
+    On Error Resume Next
+    Range("C1").Value = "gesperrt"
+    Range("B2").Value = Err.Number
+    On Error GoTo 0
     ActiveSheet.Unprotect "raabe"
     Range("C2").Value = ActiveSheet.ProtectContents
 End Sub"""},

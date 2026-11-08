@@ -1,9 +1,10 @@
 // RaabeCalc's ribbon, following Excel 365's German ribbon as recorded on 2026-10-27
 // (tools/feel-lab/capture_excel_ui.py, window of 1333 CSS px): same tabs, groups, order and
-// keytips. Left out on purpose, as in RaabeWrite: Zeichnen, Automatisieren, Hilfe and add-in
+// keytips. Left out on purpose, as in RaabeWrite: Automatisieren, Hilfe and add-in
 // tabs, cloud and online features. See docs/SCOPE.md.
 
 import type { Control, MenuEntry, Tab } from "@raabe/shell";
+import { getDataMenu } from "./getdata";
 
 type Popup = (close: () => void) => HTMLElement;
 
@@ -35,6 +36,10 @@ export interface RibbonContext {
     align(): MenuEntry[]; rotate: MenuEntry[]; group: MenuEntry[];
   };
   panels: { cellStyles: Popup; tableStyles: Popup; shapes: Popup; designs: Popup; designColors: Popup; designFonts: Popup };
+  /** The Zeichnen tab (ink.ts, D-093). */
+  drawTab?: () => Tab;
+  /** Fenster wechseln: the open windows, built when opened (D-093). */
+  windowsMenu?: () => MenuEntry[];
   /** The workbook's design colours for the colour buttons' palettes. */
   paletteTheme(): { colors: Record<string, string> };
   scale: { value(): string; commit(v: string): void; step(d: 1 | -1): void };
@@ -170,6 +175,8 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
         { id: "symbols", label: "Symbole", key: "ZS", icon: "symbol", controls: [b("insert.equation", "E2", "large"), b("insert.symbol", "SY", "large")] },
       ],
     },
+    // Zeichnen (D-093): built by ink.ts.
+    ...(ctx.drawTab ? [ctx.drawTab()] : []),
     {
       id: "layout", label: "Seitenlayout", key: "S",
       shrink: ["arrange", "sheetOptions", "scale", "themes"],
@@ -241,7 +248,10 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
       groups: [
         {
           id: "get", label: "Daten abrufen und transformieren", key: "Z1", icon: "document",
-          controls: [b("data.get", "D1", "large"), stack(b("data.fromText", "FT"), b("data.fromWeb", "M"))],
+          // As recorded (probe_excel_slicer_ui.py, D-092): Daten abrufen D 1, Aus Text/CSV F T, Aus dem Web M, Aus Tabelle/Bereich P T,
+          // Zuletzt verwendete Quellen 6, Vorhandene Verbindungen O; Von Bild (V) is left out (it reads pictures through the cloud).
+          controls: [{ type: "dropdown", cmd: "data.get", key: "D1", size: "large", get menu() { return getDataMenu(); } },
+            stack(b("data.fromText", "FT"), b("data.fromWeb", "M"), b("data.fromTable", "PT")), stack(b("data.recentSources", "6"), b("data.connections", "O"))],
         },
         { id: "queries", label: "Abfragen & Verbindungen", key: "ZC", icon: "reapply", controls: [b("data.refreshAll", "K1", "large")] },
         {
@@ -273,16 +283,21 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
       id: "view", label: "Ansicht", key: "F",
       shrink: ["show", "views", "window", "zoom"],
       groups: [
-        { id: "views", label: "Arbeitsmappenansichten", key: "ZV", icon: "document", controls: [b("view.normal", "C", "large"), b("view.pageBreak", "V1", "large"), b("view.pageLayout", "I", "large")] },
+        // Keytips recorded (captures/excel-ui/scale-Ansicht-2000.txt), D-093.
+        { id: "views", label: "Arbeitsmappenansichten", key: "ZV", icon: "document", controls: [b("view.normal", "C", "large"), b("view.pageBreak", "V1", "large"), stack(b("view.pageLayout", "I"), b("view.customViews", "F"))] },
         {
           id: "show", label: "Anzeigen", key: "ZS", icon: "eye",
-          controls: [stack(check("view.gridlines", "X"), check("view.formulaBar", "B"), check("view.headings", "A1"))],
+          controls: [stack(check("view.ruler", "Q"), check("view.gridlines", "X"), check("view.formulaBar", "B")), stack(check("view.headings", "A1"))],
         },
         { id: "zoom", label: "Zoom", key: "ZZ", icon: "zoom", controls: [b("view.zoomDialog", "DO", "large", "Zoom"), b("view.zoom100", "0", "large"), b("view.zoomSelection", "W", "large")] },
         {
           id: "window", label: "Fenster", key: "ZW", icon: "freeze",
-          controls: [b("view.newWindow", "N2", "large"), b("view.arrange", "A2", "large"), dd("view.freeze", "P", "large", m.freeze), stack(b("view.split", "T1"))],
+          controls: [stack(b("view.newWindow", "N2", "medium"), b("view.arrange", "A2", "medium"), dd("view.freeze", "P", "medium", m.freeze)),
+            stack(b("view.split", "T1"), b("view.hide", "L"), b("view.unhide", "E2")), stack(b("view.sideBySide", "G"), b("view.syncScroll", "S"), b("view.resetPosition", "R")),
+            { type: "dropdown", cmd: "view.switchWindows", key: "K2", size: "large", get menu() { return ctx.windowsMenu?.() ?? []; } }],
         },
+        // Makros (D-095): Makros anzeigen (Alt+F8); there is no recorder.
+        { id: "macros", label: "Makros", key: "ZM", icon: "settings", controls: [split("view.macros", "MA", "large", [{ cmd: "view.macros", label: "Makros anzeigen" }, { cmd: "view.recordMacro" }, { cmd: "view.relativeRefs" }])] },
       ],
     },
   ];

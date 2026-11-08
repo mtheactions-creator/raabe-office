@@ -1,0 +1,2233 @@
+{
+ "app": "raabe-write",
+ "anchors": [
+  {
+   "anchor": "ruler: Erstzeileneinzug",
+   "ok": 11,
+   "of": 11,
+   "note": "value: the guide line (client px); snaps to 0.25 cm (9.45 px at 100 %)",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 45,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 480.3206679382324,
+     "after": 555.9106679382325
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 35,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 480.3206679382324,
+     "after": 480.3206679382324
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 480.3206679382324,
+     "after": 603.1546679382325
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 6,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 480.3206679382324,
+     "after": 423.62766793823243
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 480.3206679382324,
+     "after": 480.3206679382324
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 76,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 480.3206679382324,
+     "after": 499.2176679382324
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 31,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 480.3206679382324,
+     "after": 555.9106679382325
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 480.3206679382324,
+     "after": 555.9106679382325
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 480.3206679382324,
+     "after": 508.6666679382324
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 32,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 480.3206679382324,
+     "after": 877.1696679382325
+    },
+    {
+     "path": "undo",
+     "ok": true,
+     "back": 0.0,
+     "v0": 480.3206679382324,
+     "after": 555.9106679382325,
+     "changed": 75.59,
+     "undone": 480.3206679382324
+    }
+   ]
+  },
+  {
+   "anchor": "ruler: Hängender Einzug",
+   "ok": 11,
+   "of": 11,
+   "note": "value: the guide line (client px); snaps to 0.25 cm (9.45 px at 100 %)",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 46,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 442.5256679382324,
+     "after": 518.1156679382325
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 35,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 442.5256679382324,
+     "after": 442.5256679382324
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 442.5256679382324,
+     "after": 565.3596679382324
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 442.5256679382324,
+     "after": 385.8326679382324
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 442.5256679382324,
+     "after": 442.5256679382324
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 76,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 442.5256679382324,
+     "after": 461.4226679382324
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 30,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 442.5256679382324,
+     "after": 518.1156679382325
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 442.5256679382324,
+     "after": 518.1156679382325
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 26,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 442.5256679382324,
+     "after": 470.8716679382324
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 32,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 442.5256679382324,
+     "after": 839.3736679382324
+    },
+    {
+     "path": "undo",
+     "ok": true,
+     "back": 0.0,
+     "v0": 442.5256679382324,
+     "after": 518.1156679382325,
+     "changed": 75.59,
+     "undone": 442.5256679382324
+    }
+   ]
+  },
+  {
+   "anchor": "ruler: Linker Einzug",
+   "ok": 11,
+   "of": 11,
+   "note": "value: the guide line (client px); snaps to 0.25 cm (9.45 px at 100 %)",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 46,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 442.5256679382324,
+     "after": 518.1156679382325
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 35,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 442.5256679382324,
+     "after": 442.5256679382324
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 442.5256679382324,
+     "after": 565.3596679382324
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 6,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 442.5256679382324,
+     "after": 385.8326679382324
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 442.5256679382324,
+     "after": 442.5256679382324
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 76,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 442.5256679382324,
+     "after": 461.4226679382324
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 30,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 442.5256679382324,
+     "after": 518.1156679382325
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 26,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 442.5256679382324,
+     "after": 518.1156679382325
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 442.5256679382324,
+     "after": 470.8716679382324
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 32,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 442.5256679382324,
+     "after": 839.3736679382324
+    },
+    {
+     "path": "undo",
+     "ok": true,
+     "back": 0.0,
+     "v0": 442.5256679382324,
+     "after": 518.1156679382325,
+     "changed": 75.59,
+     "undone": 442.5256679382324
+    }
+   ]
+  },
+  {
+   "anchor": "ruler: Rechter Einzug",
+   "ok": 11,
+   "of": 11,
+   "note": "value: the guide line (client px); snaps to 0.25 cm (9.45 px at 100 %)",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 46,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 933.9366679382324,
+     "after": 1009.5266679382324
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 36,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 933.9366679382324,
+     "after": 933.9366679382324
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 933.9366679382324,
+     "after": 1056.7666679382323
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 6,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 933.9366679382324,
+     "after": 877.2436679382324
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 933.9366679382324,
+     "after": 933.9366679382324
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 77,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 933.9366679382324,
+     "after": 952.8346679382324
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 30,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 933.9366679382324,
+     "after": 1009.5266679382324
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 933.9366679382324,
+     "after": 1009.5266679382324
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 26,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 933.9366679382324,
+     "after": 962.2826679382324
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 32,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 933.9366679382324,
+     "after": 1066.1966679382324
+    },
+    {
+     "path": "undo",
+     "ok": true,
+     "back": 0.0,
+     "v0": 933.9366679382324,
+     "after": 1009.5266679382324,
+     "changed": 75.59,
+     "undone": 933.9366679382324
+    }
+   ]
+  },
+  {
+   "anchor": "ruler: Tabstopp",
+   "ok": 11,
+   "of": 11,
+   "note": "value: the guide line (client px); snaps to 0.25 cm (9.45 px at 100 %)",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 45,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 669.2956679382324,
+     "after": 754.3346679382324
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 35,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": null,
+     "v0": 669.2956679382324,
+     "after": null
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 669.2956679382324,
+     "after": 792.1306679382325
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 6,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 669.2956679382324,
+     "after": 612.6036679382324
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 669.2956679382324,
+     "after": 669.2956679382324
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 76,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 669.2956679382324,
+     "after": 688.1936679382325
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 30,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": null,
+     "v0": 669.2956679382324,
+     "after": null
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 669.2956679382324,
+     "after": 754.3346679382324
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 669.2956679382324,
+     "after": 697.6426679382324
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 31,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": null,
+     "v0": 669.2956679382324,
+     "after": null
+    },
+    {
+     "path": "undo",
+     "ok": true,
+     "back": 0.0,
+     "v0": 669.2956679382324,
+     "after": 754.3346679382324,
+     "changed": 85.04,
+     "undone": 669.2956679382324
+    }
+   ]
+  },
+  {
+   "anchor": "ruler: Linker Rand",
+   "ok": 11,
+   "of": 11,
+   "note": "value: the guide line (client px); snaps to 0.25 cm (9.45 px at 100 %)",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 45,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 366.9346679382324,
+     "after": 442.5466679382324
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 35,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 366.9346679382324,
+     "after": 366.95666793823244
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 366.9346679382324,
+     "after": 489.79066793823245
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 366.9346679382324,
+     "after": 310.2636679382324
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 366.9346679382324,
+     "after": 366.95666793823244
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 76,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 366.9346679382324,
+     "after": 385.85366793823243
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 30,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 366.9346679382324,
+     "after": 442.5466679382324
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 366.9346679382324,
+     "after": 442.5466679382324
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 366.9346679382324,
+     "after": 395.30266793823245
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 31,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 366.9346679382324,
+     "after": 763.8056679382324
+    },
+    {
+     "path": "undo",
+     "ok": true,
+     "back": 0.0,
+     "v0": 366.9346679382324,
+     "after": 442.5466679382324,
+     "changed": 75.61,
+     "undone": 366.9346679382324
+    }
+   ]
+  },
+  {
+   "anchor": "picture side handle (floating)",
+   "ok": 12,
+   "of": 12,
+   "note": "word-images.docx, the square-wrapped picture; snaps to the margins within 6 px",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 45,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 200,
+     "after": 280
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 35,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 200,
+     "after": 200
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 200,
+     "after": 320
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 6,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 200,
+     "after": 140
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 200,
+     "after": 200
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 75,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 200,
+     "after": 220
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 30,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 200,
+     "after": 275
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 200,
+     "after": 280
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 200,
+     "after": 231
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 31,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 200,
+     "after": 601
+    },
+    {
+     "path": "escape",
+     "ok": true,
+     "back": 0.0,
+     "v0": 200,
+     "after": 200
+    },
+    {
+     "path": "undo",
+     "ok": true,
+     "back": 0.0,
+     "v0": 200,
+     "after": 280,
+     "changed": 80.0,
+     "undone": 200
+    }
+   ]
+  },
+  {
+   "anchor": "picture move (floating)",
+   "ok": 12,
+   "of": 12,
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 45,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 771.7354166666665,
+      "y": 496.939653523763
+     },
+     "after": {
+      "x": 851.7354166666667,
+      "y": 496.9396535237653
+     }
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 35,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 771.7354166666665,
+      "y": 496.939653523763
+     },
+     "after": {
+      "x": 771.7354166666667,
+      "y": 556.9396535237647
+     }
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 771.7354166666665,
+      "y": 496.939653523763
+     },
+     "after": {
+      "x": 891.7354166666667,
+      "y": 496.9396535237632
+     }
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 6,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 771.7354166666665,
+      "y": 496.939653523763
+     },
+     "after": {
+      "x": 711.7354166666667,
+      "y": 496.9396535237631
+     }
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 771.7354166666665,
+      "y": 496.939653523763
+     },
+     "after": {
+      "x": 771.7354166666667,
+      "y": 497.93965352376335
+     }
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 75,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 771.7354166666665,
+      "y": 496.939653523763
+     },
+     "after": {
+      "x": 791.7354166666667,
+      "y": 496.939653523767
+     }
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 30,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 771.7354166666665,
+      "y": 496.939653523763
+     },
+     "after": {
+      "x": 846.7354166666667,
+      "y": 546.9396535237645
+     }
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 771.7354166666665,
+      "y": 496.939653523763
+     },
+     "after": {
+      "x": 851.7354166666667,
+      "y": 488.9396535237642
+     }
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 771.7354166666665,
+      "y": 496.939653523763
+     },
+     "after": {
+      "x": 802.7354166666667,
+      "y": 497.9396535237642
+     }
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 31,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 771.7354166666665,
+      "y": 496.939653523763
+     },
+     "after": {
+      "x": 1172.7354166666664,
+      "y": 696.9396535237646
+     }
+    },
+    {
+     "path": "escape",
+     "ok": true,
+     "back": 0.0,
+     "v0": {
+      "x": 771.7354166666665,
+      "y": 496.939653523763
+     },
+     "after": {
+      "x": 771.7354166666665,
+      "y": 496.939653523763
+     }
+    },
+    {
+     "path": "undo",
+     "ok": true,
+     "back": 0.0,
+     "v0": {
+      "x": 771.7354166666665,
+      "y": 496.939653523763
+     },
+     "after": {
+      "x": 851.7354166666667,
+      "y": 496.93965352376534
+     },
+     "changed": 80.0,
+     "undone": {
+      "x": 771.7354166666665,
+      "y": 496.939653523763
+     }
+    }
+   ]
+  },
+  {
+   "anchor": "ruler: Oberer Rand",
+   "ok": 11,
+   "of": 11,
+   "note": "value: the guide line (client px); snaps to 0.25 cm (9.45 px at 100 %); Esc not checked (Word's not recorded)",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 45,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 317.1326717529297,
+     "after": 317.1546717529297
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 35,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 317.1326717529297,
+     "after": 373.8476717529297
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 317.1326717529297,
+     "after": 317.1546717529297
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 6,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 317.1326717529297,
+     "after": 317.1546717529297
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 317.1326717529297,
+     "after": 317.1546717529297
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 75,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 317.1326717529297,
+     "after": 317.1546717529297
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 30,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 317.1326717529297,
+     "after": 364.39867175292966
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 26,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 317.1326717529297,
+     "after": 307.7056717529297
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 317.1326717529297,
+     "after": 317.1546717529297
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 32,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 317.1326717529297,
+     "after": 515.5786717529297
+    },
+    {
+     "path": "undo",
+     "ok": true,
+     "back": 0.0,
+     "v0": 317.1326717529297,
+     "after": 373.8476717529297,
+     "changed": 56.72,
+     "undone": 317.1326717529297
+    }
+   ]
+  },
+  {
+   "anchor": "picture corner handle (inline)",
+   "ok": 12,
+   "of": 12,
+   "note": "word-images.docx, the inline picture (3:2); value: its size, proportional, so the width may grow 1.5 px per px down",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 46,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "w": 120,
+      "h": 80
+     },
+     "after": {
+      "w": 200,
+      "h": 133.33333333333331
+     }
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 36,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "w": 120,
+      "h": 80
+     },
+     "after": {
+      "w": 210,
+      "h": 140
+     }
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "w": 120,
+      "h": 80
+     },
+     "after": {
+      "w": 240,
+      "h": 160
+     }
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 6,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "w": 120,
+      "h": 80
+     },
+     "after": {
+      "w": 120,
+      "h": 80
+     }
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "w": 120,
+      "h": 80
+     },
+     "after": {
+      "w": 122.99999999999997,
+      "h": 81.99999999999999
+     }
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 77,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "w": 120,
+      "h": 80
+     },
+     "after": {
+      "w": 140,
+      "h": 93.33333333333333
+     }
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 31,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "w": 120,
+      "h": 80
+     },
+     "after": {
+      "w": 195,
+      "h": 130
+     }
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 26,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "w": 120,
+      "h": 80
+     },
+     "after": {
+      "w": 200,
+      "h": 133.33333333333331
+     }
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 26,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "w": 120,
+      "h": 80
+     },
+     "after": {
+      "w": 151,
+      "h": 100.66666666666666
+     }
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 33,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "w": 120,
+      "h": 80
+     },
+     "after": {
+      "w": 520,
+      "h": 346.66666666666663
+     }
+    },
+    {
+     "path": "escape",
+     "ok": true,
+     "back": 0.0,
+     "v0": {
+      "w": 120,
+      "h": 80
+     },
+     "after": {
+      "w": 120,
+      "h": 80
+     }
+    },
+    {
+     "path": "undo",
+     "ok": true,
+     "back": 0.0,
+     "v0": {
+      "w": 120,
+      "h": 80
+     },
+     "after": {
+      "w": 200,
+      "h": 133.33333333333331
+     },
+     "changed": 80.0,
+     "undone": {
+      "w": 120,
+      "h": 80
+     }
+    }
+   ]
+  },
+  {
+   "anchor": "picture rotation handle",
+   "ok": 12,
+   "of": 12,
+   "note": "value: degrees; expected: the angle of the pointer around the middle",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 46,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": 43
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 36,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": 358
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 8,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": 55
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": 324
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": 2
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 76,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": 13
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 30,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": 66
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": 41
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": 20
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 31,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": 106
+    },
+    {
+     "path": "escape",
+     "ok": true,
+     "back": 0.0,
+     "v0": 0,
+     "after": 0
+    },
+    {
+     "path": "undo",
+     "ok": true,
+     "back": 0.0,
+     "v0": 0,
+     "after": 43,
+     "changed": 43.0,
+     "undone": 0
+    }
+   ]
+  },
+  {
+   "anchor": "table column border",
+   "ok": 12,
+   "of": 12,
+   "note": "word-rich.docx, the border right of the first cell; the next column keeps at least 12 pt",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 45,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 499.3354166666666,
+     "after": 579.3354166666666
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 35,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 499.3354166666666,
+     "after": 499.3354166666666
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 499.3354166666666,
+     "after": 619.3354166666667
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 6,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 499.3354166666666,
+     "after": 439.3354166666667
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 499.3354166666666,
+     "after": 502.3354166666666
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 76,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 499.3354166666666,
+     "after": 519.3354166666666
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 30,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 499.3354166666666,
+     "after": 574.3354166666666
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 499.3354166666666,
+     "after": 579.3354166666666
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 26,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 499.3354166666666,
+     "after": 530.3354166666666
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 32,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 499.3354166666666,
+     "after": 785.7354166666667
+    },
+    {
+     "path": "escape",
+     "ok": true,
+     "back": 0.0,
+     "v0": 499.3354166666666,
+     "after": 499.3354166666666
+    },
+    {
+     "path": "undo",
+     "ok": true,
+     "back": 0.0,
+     "v0": 499.3354166666666,
+     "after": 579.3354166666666,
+     "changed": 80.0,
+     "undone": 499.3354166666666
+    }
+   ]
+  },
+  {
+   "anchor": "table row border",
+   "ok": 12,
+   "of": 12,
+   "note": "word-rich.docx, the first row's bottom border; the row never gets lower than its text",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 45,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 550.0089894612629,
+     "after": 550.0213049994575
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 35,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 550.0089894612629,
+     "after": 610.0213049994575
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 550.0089894612629,
+     "after": 550.0213049994575
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 550.0089894612629,
+     "after": 550.0213049994575
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 550.0089894612629,
+     "after": 550.0213049994575
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 75,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 550.0089894612629,
+     "after": 550.0213049994575
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 29,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 550.0089894612629,
+     "after": 600.0213049994575
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 550.0089894612629,
+     "after": 550.0089894612629
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 550.0089894612629,
+     "after": 550.0213049994575
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 31,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 550.0089894612629,
+     "after": 750.0213049994575
+    },
+    {
+     "path": "escape",
+     "ok": true,
+     "back": 0.0,
+     "v0": 550.0089894612629,
+     "after": 550.0089894612629
+    },
+    {
+     "path": "undo",
+     "ok": true,
+     "back": 0.0,
+     "v0": 550.0089894612629,
+     "after": 610.0213049994575,
+     "changed": 60.01,
+     "undone": 550.0089894612629
+    }
+   ]
+  },
+  {
+   "anchor": "select text",
+   "ok": 9,
+   "of": 9,
+   "note": "value: the caret (selection's head); Word's whole-word selection lets it run ahead by a word, a line; not the long path: it reaches the paragraph's short last line, where the caret rightly stops at the line's end",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 45,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 495.7400364583333,
+      "y": 370.210161336263
+     },
+     "after": {
+      "x": 575.3181614583334,
+      "y": 370.210161336263
+     }
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 35,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 495.7400364583333,
+      "y": 370.210161336263
+     },
+     "after": {
+      "x": 534.5651458333333,
+      "y": 428.217973836263
+     }
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 495.7400364583333,
+      "y": 370.210161336263
+     },
+     "after": {
+      "x": 641.0030572916667,
+      "y": 370.210161336263
+     }
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 6,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 495.7400364583333,
+      "y": 370.210161336263
+     },
+     "after": {
+      "x": 480.32141666666666,
+      "y": 370.210161336263
+     }
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 495.7400364583333,
+      "y": 370.210161336263
+     },
+     "after": {
+      "x": 495.7400364583333,
+      "y": 370.210161336263
+     }
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 75,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 495.7400364583333,
+      "y": 370.210161336263
+     },
+     "after": {
+      "x": 516.2647760416667,
+      "y": 370.210161336263
+     }
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 30,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 495.7400364583333,
+      "y": 370.210161336263
+     },
+     "after": {
+      "x": 606.8743906249999,
+      "y": 428.217973836263
+     }
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 495.7400364583333,
+      "y": 370.210161336263
+     },
+     "after": {
+      "x": 575.3181614583334,
+      "y": 370.210161336263
+     }
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 26,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 495.7400364583333,
+      "y": 370.210161336263
+     },
+     "after": {
+      "x": 523.5623020833333,
+      "y": 370.210161336263
+     }
+    }
+   ]
+  },
+  {
+   "anchor": "zoom slider",
+   "ok": 10,
+   "of": 10,
+   "note": "value: the thumb's middle (client px); Word cannot undo zooming",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 46,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1195.3333740234375,
+     "after": 1237.3333740234375
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 35,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1195.3333740234375,
+     "after": 1195.3333740234375
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1195.3333740234375,
+     "after": 1237.3333740234375
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1195.3333740234375,
+     "after": 1153.3333740234375
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1195.3333740234375,
+     "after": 1197.8533740234375
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 75,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1195.3333740234375,
+     "after": 1215.4933740234376
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 30,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1195.3333740234375,
+     "after": 1237.3333740234375
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1195.3333740234375,
+     "after": 1237.3333740234375
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1195.3333740234375,
+     "after": 1225.9933740234376
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 31,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1195.3333740234375,
+     "after": 1237.3333740234375
+    }
+   ]
+  },
+  {
+   "anchor": "vertical scroll bar thumb",
+   "ok": 9,
+   "of": 9,
+   "note": "value: the thumb's top (from scrollTop and the scroll bar's geometry); not the long path: Windows' scroll bars put the thumb back when the pointer goes far to the side",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 46,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 201.6666717529297,
+     "after": 201.6666717529297
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 35,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 201.6666717529297,
+     "after": 261.80251809773665
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 8,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 201.6666717529297,
+     "after": 201.6666717529297
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 5,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 201.6666717529297,
+     "after": 201.6666717529297
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 10,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 201.6666717529297,
+     "after": 202.33814781963844
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 76,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 201.6666717529297,
+     "after": 201.6666717529297
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 30,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 201.6666717529297,
+     "after": 251.78202631719796
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 24,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 201.6666717529297,
+     "after": 201.6666717529297
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 24,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 201.6666717529297,
+     "after": 202.33814781963844
+    }
+   ]
+  }
+ ]
+}

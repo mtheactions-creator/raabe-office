@@ -144,3 +144,4 @@ export { seqToLinear } from "./math/linear";
 export * as AutoCorrect from "./autocorrect";
 export * from "./bibliography";
 export { ensureFontFamily, onFontAlias, setCloudFonts, type CloudFonts } from "./font-alias";
+export * from "./inkshape";

@@ -15,6 +15,7 @@ import { POINTERS } from "./pointers";
 import { pxToChars, setDeviceScale, sheetAxes, type Axis } from "./metrics";
 import type { Shown } from "../engine";
 import { LANE, barSize, groups, maxLevel, showLevel, toggle, type Axis as OutlineAxis } from "./outline";
+import { activatePane, activeScroll, paneOf, splitPanes, type Geometry, type NamedPane } from "../split";
 
 export type Mode = "ready" | "enter" | "edit" | "point";
 
@@ -158,11 +159,16 @@ export class Grid {
   get active() { return this.view.active; }
   get isEditing(): boolean { return this.editing !== null; }
 
+  /** Seitenlayout (D-093): axes with the pages' margins and gaps instead of the sheet's own. */
+  axesFor?: (sheet: Sheet, base: { rows: Axis; cols: Axis }) => { rows: Axis; cols: Axis };
+
   /** Sizes changed (columns, rows, sheet switched): rebuild the axes. */
   refreshLayout(): void {
     this.usedCache = null;
     setDeviceScale(this.dpr);
-    const a = sheetAxes(this.sheet);
+    const a0 = sheetAxes(this.sheet);
+    // Seitenlayout (D-093): the rows and columns spread over pages.
+    const a = this.axesFor ? this.axesFor(this.sheet, a0) : a0;
     this.rows = a.rows;
     this.cols = a.cols;
     this.zoom = this.view.zoom / 100;
@@ -252,7 +258,25 @@ export class Grid {
     return this.view.showHeaders ? Math.round(this.rows.def * this.zoom) + this.outlineH() : 0;
   }
 
+  /** Sizes and axes for the split bars, the Seitenlayout view and the ink layer (D-093). */
+  geometry(): Geometry | null {
+    if (!this.rows || !this.width) return null;
+    const sh = this.sheet;
+    return { rows: this.rows, cols: this.cols, zoom: this.zoom, headerW: this.headerW(), headerH: this.headerH(), width: this.width, height: this.height,
+      rowPt: (r) => { const info = sh.rows.get(r); return info?.hidden ? 0 : info?.height ?? sh.defaultRowHeight; }, headPt: sh.defaultRowHeight };
+  }
+
+  /** Teilen (D-093): the split view's panes. */
+  private splitPanes(): NamedPane[] | null {
+    return this.view.split && !this.view.freeze && this.rows ? splitPanes(this.view, this.geometry()!) : null;
+  }
+
+  /** The vertical scroll bar (Teilen puts the top panes' own above it). */
+  get vScrollEl(): HTMLElement { return this.vscroll; }
+
   private panes(): Pane[] {
+    const sp = this.splitPanes();
+    if (sp) return sp;
     const hw = this.headerW(), hh = this.headerH();
     const fr = this.view.freeze?.row ?? 0, fc = this.view.freeze?.col ?? 0;
     const fy = fr ? this.rows.pos(fr) * this.zoom : 0;
@@ -263,7 +287,10 @@ export class Grid {
     if (fr && fc) out.push({ row: 0, col: 0, x: hw, y: hh, w: fx, h: fy });
     if (fr) out.push({ row: 0, col: left, x: hw + fx, y: hh, w: W, h: fy });
     if (fc) out.push({ row: top, col: 0, x: hw, y: hh + fy, w: fx, h: H });
-    out.push({ row: top, col: left, x: hw + fx, y: hh + fy, w: W, h: H });
+    // Seitenlayout (D-093): at the top (left) of the sheet the first page's margin shows above (left of) row 1 (A).
+    const ly = this.axesFor && !fr && top === 0 ? this.rows.pos(0) * this.zoom : 0;
+    const lx = this.axesFor && !fc && left === 0 ? this.cols.pos(0) * this.zoom : 0;
+    out.push({ row: top, col: left, x: hw + fx + lx, y: hh + fy + ly, w: W - lx, h: H - ly });
     return out;
   }
 
@@ -316,8 +343,9 @@ export class Grid {
   /** A range's rectangle on the canvas (CSS px); null when it is not visible. */
   rectOnCanvas(r: Rect): { x: number; y: number; w: number; h: number } | null {
     const fr = this.view.freeze?.row ?? 0, fc = this.view.freeze?.col ?? 0;
-    const panes = this.panes();
-    const pane = panes.find((p) => (r.r0 < fr ? p.row === 0 && fr > 0 : p.row !== 0 || fr === 0) && (r.c0 < fc ? p.col === 0 && fc > 0 : p.col !== 0 || fc === 0)) ?? panes[panes.length - 1];
+    const sp = this.splitPanes();
+    const panes = sp ?? this.panes();
+    const pane = sp ? paneOf(r, sp, this.geometry()!, this.view.split?.pane) : panes.find((p) => (r.r0 < fr ? p.row === 0 && fr > 0 : p.row !== 0 || fr === 0) && (r.c0 < fc ? p.col === 0 && fc > 0 : p.col !== 0 || fc === 0)) ?? panes[panes.length - 1];
     const x = pane.x + (this.cols.pos(r.c0) - this.cols.pos(pane.col)) * this.zoom;
     const y = pane.y + (this.rows.pos(r.r0) - this.rows.pos(pane.row)) * this.zoom;
     const w = (this.cols.pos(r.c1 + 1) - this.cols.pos(r.c0)) * this.zoom;
@@ -337,6 +365,8 @@ export class Grid {
 
   /** Scrolls so that a cell is fully visible (Excel scrolls by whole rows and columns). */
   reveal(row: number, col: number): void {
+    const sp = this.splitPanes();
+    if (sp) { this.revealSplit(row, col, sp); return; }
     const fr = this.view.freeze?.row ?? 0, fc = this.view.freeze?.col ?? 0;
     const p = this.panes().at(-1)!;
     if (row >= fr) {
@@ -358,6 +388,23 @@ export class Grid {
         this.view.left = left;
       }
     }
+    this.updateScrollbars();
+    this.invalidate();
+  }
+
+  /** Teilen: the active pane scrolls to show the cell (the top panes by the split's rows, the left by its columns). */
+  private revealSplit(row: number, col: number, panes: NamedPane[]): void {
+    const s = this.view.split!;
+    const p = panes.find((q) => q.name === (s.pane ?? "topLeft")) ?? panes[panes.length - 1];
+    const a = activeScroll(this.view);
+    const fit = (axis: Axis, first: number, i: number, len: number): number => {
+      if (i < first) return i;
+      let f = first;
+      while (f < i && (axis.pos(i + 1) - axis.pos(f)) * this.zoom > len) f = axis.step(f, 1);
+      return f;
+    };
+    if (a.top) s.top = fit(this.rows, s.top, row, p.h); else this.view.top = fit(this.rows, this.view.top, row, p.h);
+    if (a.left) s.left = fit(this.cols, s.left, col, p.w); else this.view.left = fit(this.cols, this.view.left, col, p.w);
     this.updateScrollbars();
     this.invalidate();
   }
@@ -1115,6 +1162,10 @@ export class Grid {
         let left = this.view.left;
         for (let i = 0; i < Math.abs(n); i++) left = this.cols.step(left, n > 0 ? 1 : -1);
         this.view.left = Math.max(this.view.freeze?.col ?? 0, left);
+      } else if (activeScroll(this.view).top) {
+        // Teilen: the wheel scrolls the active pane (D-093).
+        const s = this.view.split!;
+        for (let i = 0; i < Math.abs(lines); i++) s.top = this.rows.step(s.top, lines > 0 ? 1 : -1);
       } else {
         let top = this.view.top;
         for (let i = 0; i < Math.abs(lines); i++) top = this.rows.step(top, lines > 0 ? 1 : -1);
@@ -1315,6 +1366,9 @@ export class Grid {
     }
     const p = this.local(e);
     const t = this.target(p.x, p.y);
+    // Teilen: a click in a pane makes it the active one (D-093).
+    const sp = this.splitPanes();
+    if (sp && !this.editing) { const q = sp.find((x) => p.x >= x.x && p.x < x.x + x.w && p.y >= x.y && p.y < x.y + x.h); if (q) activatePane(this.view, q.name); }
     // The coloured frame of a reference in the formula: its corner sizes it, its border moves it (Excel).
     const frame = this.editing && !this.pointAway ? this.frameAt(p.x, p.y) : null;
     if (frame) {

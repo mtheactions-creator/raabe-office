@@ -2597,3 +2597,299 @@ package relationship to word/embeddings/Microsoft_Excel_WorksheetN.xlsx, c:exter
 a chart made in RaabeWrite. Daten bearbeiten (context menu) changes a chart's series and keeps its own look; a chart
 read from Word stays byte for byte until its data are changed. Not yet: the Diagrammentwurf and Format tabs in
 RaabeWrite (Diagrammformatvorlagen, Schnelllayout, Diagrammelemente) and floating (anchored) charts made here.
+
+## D-093 RaabeCalc: Zeichnen, Ansicht > Fenster (Teilen, Neues Fenster …), Arbeitsmappenansichten (2026-11-08)
+
+Package A of D-080, recorded in our own invisible Excel through COM only (`probe_excel_windows.py`, `probe_excel_ink.py`;
+Excel's saved files as fixtures `packages/ooxml/test/fixtures/excel-{split,windows,windows-hidden,customviews,pagelayout,ink}.xlsx`,
+save path and user name removed) and built the same way. Labels and keytips of both tabs are Excel's (inventory 2026-11-05,
+captures/excel-ui/tab-Zeichnen.txt and scale-Ansicht-2000.txt); no real input was used.
+- **Ink as Excel stores it** (`ooxml/xlsx/ink.ts`): Excel's object model cannot draw ink (no Shapes.AddInk), so the probe wrote
+  ink parts and let Excel open and save them. Recorded form: a twoCellAnchor editAs="oneCell" holding mc:AlternateContent,
+  Choice Requires="xdr14" with xdr:contentPart (r:id, relationship type customXml, part xl/ink/inkN.xml, application/inkml+xml)
+  and xdr14 children (cNvPr "Freihand N", xfrm = the box of the strokes' centre lines), Fallback a PNG picture of the ink; an
+  xdr14:contentPart is refused (the file does not open). Excel maps the strokes' box onto the anchor's box and saves the points
+  in 1/1000 cm with InkML's first and second differences; black is left out of the brush, the Textmarker has tip rectangle
+  and rasterOp maskPen. RaabeCalc reads these into `Sheet.inks` (before, Excel's ink showed as its fallback picture) and
+  writes new strokes in exactly that form (one drawing per stroke, PNG fallback drawn by us); unchanged ink is written back
+  verbatim, moved ink with new corners only.
+- **Zeichnen tab** (`ink.ts`, JI): Rückgängig, Zeichentools (Auswählen, Lassoauswahl, Radierer and the toolbox with Excel's
+  default pens as Office keeps them for Excel: Stift Schwarz and Rot #E71224 0.35 mm, Galaxie #AE198D 0.5 mm, Bleistift
+  #849398 0.5 mm, Textmarker #FFFC00 6 mm, Füllfederhalter #004F8B 1 mm, Pinselstift #008C3A 1 mm, Aktionsstift),
+  Hinzufügen, Freihand in Form (the recognition moved from RaabePresent to text-engine and shared), Freihand in Gleichung
+  (greyed: needs handwriting recognition), Wiedergabe in Freihand (the strokes drawn again in their recorded timing). A second
+  click on the chosen pen opens Stärke and colours. Radierer erases whole strokes, Lassoauswahl selects the drawings inside
+  the loop; ink is selected with a click, moved by dragging, deleted with Entf.
+- **Teilen** (`split.ts`, small grid hooks): recorded `<pane xSplit ySplit topLeftCell activePane/>` without state; xSplit and
+  ySplit are 1/20 pt from the window's edge with the headers, at the window's zoom (cols3: 4000 = 20 pt headers + 3 x 60 pt;
+  at 150 %: 6020); the sheetView's topLeftCell is the top-left pane's, the pane's the bottom-right one's; each inactive pane
+  keeps its own selection. Teilen splits above and left of the active cell, at A1 in the middle of the window (SplitRow 24 /
+  SplitColumn 12 of A1:X48); the pane with the active cell becomes active; Teilen again removes the split; Teilen while
+  frozen leaves a split at the frozen place; Fenster fixieren on a split freezes at the bars (state frozenSplit) and
+  Fixierung aufheben gives the split back (all recorded through Window.Split / FreezePanes). Up to four panes scroll on their
+  own (the top panes have their own scroll bar; wheel and arrow keys move the active pane); the bars are dragged, a
+  double-click or dragging one to the edge removes it. The horizontal bar counts rows in the file's pt, so it stays between
+  the same rows as in Excel.
+- **Neues Fenster and the Fenster group** (`windows.ts`): one workbookView per window, one sheetView per window on every sheet
+  (workbookViewId, tabSelected per window), visibility="hidden" for Ausblenden (recorded). Excel 365's captions are
+  "Mappe1  -  2" (Window.Caption; not "Mappe1:2"); closing a window numbers the others again and the last one is "Mappe1"
+  again. Each window is a document tab with its own sheet, selection, scroll and zoom; edits show in all. Alle anordnen
+  (Fenster anordnen: Unterteilt, Horizontal, Vertikal, Überlappend, Fenster der aktiven Arbeitsmappe; labels from our
+  knowledge of the dialog, not recorded) lays the windows out inside our window, the others drawn live by grids of their own;
+  a click makes one the active window. Einblenden..., Nebeneinander anzeigen (two windows above each other, as Excel),
+  Synchrones Scrollen, Fensterposition zurücksetzen, Fenster wechseln (numbered list as recorded: "1 Mappe2").
+- **Arbeitsmappenansichten**: Seitenlayout (`pagelayout.ts`) shows the sheet as pages: rows and columns are laid out with the
+  margins and the room between pages (an axis with gaps), so editing, pointing and scrolling work as in Normal; grey outside
+  the pages, each page's header and footer text, a click there opens Seite einrichten (Excel edits in place; its prompt texts
+  are its prose, ours say "Kopfzeile bearbeiten"), Lineal in cm. Stored as view="pageLayout" with its own zoom
+  (zoomScalePageLayoutView beside zoomScaleNormal) and showRuler="0" (recorded). Benutzerdefinierte Ansichten: Anzeigen,
+  Schließen, Hinzufügen... (Druckeinstellungen; Ausgeblendete Zeilen, Spalten und Filtereinstellungen), Löschen; stored as
+  Excel's customWorkbookViews / customSheetViews with the names Z_<guid>_.wvu.Rows/.Cols (windowWidth/windowHeight are
+  required: without them Excel refuses the file); greyed while the workbook has a table (Excel refuses CustomViews.Add then,
+  recorded). Normal and Umbruchvorschau were there already.
+- **Measured.** xlsx-windows.test 13 (12 recorded splits read and written as Excel writes them, both windows and the hidden
+  one, Seitenlayout with and without Lineal, the custom views unchanged, InkML decoded and encoded exactly as Excel's, Excel's
+  ink read and written back byte for byte, a new stroke in Excel's form); split.test 12 (the six recorded Teilen cases, freeze
+  and unfreeze, the bar between Excel's rows, A4 pages). `check_calc_windows.py` (RaabeCalc off screen with its own DevTools
+  port, one stroke drawn through synthesized pointer events): RaabeCalc -> Excel 20/20 (two windows with Excel's captions,
+  window 2's sheet, cell and zoom, the split at C5 with four panes from C5, the A1 split, Seitenlayout at 85 % without
+  Lineal, the custom view hiding rows 3:4, both strokes msoInk at H3 and B12 with Excel's sizes 131.25 / 114 pt exactly);
+  Excel -> RaabeCalc 25/25 (12/12 splits, the bars drawn between Excel's rows, both windows as tabs and switching, the
+  Seitenlayout view, Anzeigen of Excel's custom views giving Excel's hidden rows, zoom, cell and orientation, four ink
+  drawings at Excel's cells, saved again by RaabeCalc and opened by Excel as four msoInk). Excel at this PC's 150 % draws our
+  15 pt rows 14.5 pt high and so reports the C5 split as SplitRow 4.17 (allowed: a quarter row).
+- **Not built / differences:** the pen menus' colour and Stärke lists are ours (recording the menus needs Excel visible);
+  Hinzufügen takes the new pen at once instead of adding a tile (as RaabePresent); Galaxie, Bleistift, Füllfederhalter and
+  Pinselstift draw as plain strokes (Office's textures and pressure are not drawn); the Aktionsstift and Freihand in Gleichung
+  need handwriting recognition; Freihandhilfe (help) is left out; each stroke is its own drawing; ink is not printed yet. The
+  left panes of a split have no horizontal scroll bar of their own (keys and the wheel move them); pictures, shapes and ink
+  show in one pane of a split. The Seitenlayout view uses the screen's column widths (not the printer's), ignores Anpassen
+  scaling and draws its rulers over the sheet's top and left edge. Arranged windows stay inside our one window (no separate
+  OS windows; Überlappend is a cascade of tiles). Benutzerdefinierte Ansichten keep no filter settings (and, as in Excel, no
+  column widths). The EXCEL-INVENTORY.md rows for Zeichnen and Ansicht were not regenerated.
+
+## D-092 RaabeCalc: Datenschnitt, Daten abrufen (local), Prognoseblatt, Tabellenentwurf keytips (2026-11-08)
+
+Package A of D-080, recorded in our own Excel without real input and built the same way.
+- **Recorded:** `probe_excel_slicers.py` (COM, invisible: eleven slicer cases on tables and a PivotTable, every slicer's and
+  cache's properties, items with Selected/HasData in Excel's order, hidden rows, the 14 slicer styles' elements, Excel's
+  rendering by CopyPicture; fixture `excel-slicers.xlsx` with the save path removed and the fallback prose replaced),
+  `probe_excel_slicer_ui.py` (UI Automation of our Excel off screen: Tabellenentwurf, PivotTable-Analyse, the Datenschnitt
+  tab with keytips, the dialogs Datenschnitt auswählen, Datenschnitteinstellungen, Vorhandene Verbindungen),
+  `probe_excel_forecast.py` (Prognoseblatt through UI Automation, Excel's sheet read through COM and from its file),
+  `probe_excel_ets.py` (the four ETS functions on eight series).
+- **Datenschnitt** (`slicers.ts`, model `sheet-engine/slicer.ts`, file `ooxml/xlsx/slicers.ts`): Einfügen > Datenschnitt,
+  Tabellenentwurf > Datenschnitt einfügen (T), PivotTable-Analyse > Filtern > Datenschnitt einfügen (9) open Datenschnitt
+  auswählen; the slicer (144 x 206.25 pt, header 21 pt, buttons 0.7 cm, margins and gaps as measured) with Mehrfachauswahl and
+  Filter löschen, click / Strg+click, Elemente ohne Daten as recorded (data first, marked in place, unmarked, hidden), the 14
+  styles from COM (`slicer-styles.gen.ts`, `gen_slicer_styles.py`); a table slicer keeps its choice in the table's AutoFilter
+  (filterColumn, as Excel) and hides rows, a PivotTable slicer sets the PivotTables' hidden items. Tab Datenschnitt (Y3) with
+  Datenschnittbeschriftung, Datenschnitteinstellungen, Berichtsverbindungen (PivotTables of the same source; greyed for
+  tables, as Excel), Schnellformatvorlagen, Ebene nach vorne/hinten, Auswahlbereich, Spalten/Höhe/Breite, Formenhöhe/-breite,
+  Größe und Eigenschaften; moving, sizing, Entf, arrows. File: slicer and slicerCache parts, the x14/x15 extLst entries of
+  workbook and sheet, the drawing's AlternateContent anchor, the Datenschnitt_ names, x14 pivotCacheId and the field's items in
+  the PivotTable cache; kept byte for byte while unchanged, written anew after a change; slicer frames are no longer read as shapes.
+- **Daten abrufen, local** (`getdata.ts`): the Daten group as recorded (D 1, F T, M, P T, 6, O; Von Bild left out); Aus
+  Arbeitsmappe (Navigator with preview), Aus Text/CSV (now into this workbook, separator found from the first line) and Aus
+  Tabelle/Bereich load a table (TableStyleMedium2) on a new sheet named after the source ("Noten (2)", table "Noten_2"); the
+  values only, no query (D-080). Zuletzt verwendete Quellen, Vorhandene Verbindungen (the file's connections and tables).
+  Files with queries and a data model keep customXml, connections, queryTables and the model; a query table rewritten after an
+  edit keeps tableType, connectionId and queryTableFieldId.
+- **PROGNOSE.ETS, .KONFINT, .SAISONALITÄT, .STAT** (`sheet-engine/ets.ts`, `formula/fn-ets.ts`): AAA smoothing on a regular
+  timeline (calendar months found), gaps interpolated or zero, duplicates aggregated (1-7), argument errors as Excel, a target
+  inside the timeline gives the one-step value, between steps the share of trend and season. Excel's parameter search is not
+  documented; ours (start states from a centred moving average over the whole series, squared one-step errors on a grid refined
+  to 0.001, season = autocorrelation peak >= 0.4) gives the season length of all 8 series, forecasts within mean 0.38 % / max
+  2.17 % of Excel's, confidence intervals mean 19.5 % / max 42.4 % off (they grow with alpha, which is not Excel's).
+- **Prognoseblatt** (`forecast.ts`): the dialog with Excel's labels (explanation in our own words), the sheet before the data
+  with Excel's table, formulas, formats, statistics table and chart place.
+- **Tabellenentwurf keytips** corrected to Excel's (ZP: N, B; ZT: M, 4, C, T; ZX: X, A; ZL: Ü, G, V, E, L, R, F; ZS: S); the
+  PivotTable-Analyse groups got Excel's keys (Filtern ZS, Aktionen ZC, Einblenden ZW).
+- **Measured:** xlsx-slicers.test 7, slicer.test 12 (every recorded slicer's items, order, selected and no-data state),
+  ets-excel.test 11; `check_calc_slicers.py` RaabeCalc -> Excel 13/13 (caches, settings, items, hidden rows, PivotTable
+  report), Excel -> RaabeCalc 30/30 (and a click in RaabeCalc shown by Excel), look 12/12 (button fill within 3 of 255, top and
+  height within 1 px of Excel's rendering); `check_calc_forecast.py` 22/22 (both sheets: 104/104 cells with Excel's formulas,
+  Excel computes RaabeCalc's file to its own values exactly); `check_calc_query.py` 17/17 (Excel's query workbook unchanged and
+  edited: queries, connections, data model, loaded table, refresh).
+- **Not built / assumptions:** Zeitachse (greyed: a date slicer of its own); hover looks of the buttons; several slicers
+  selected at once (Ausrichten, Gruppieren greyed); "Aus der Datenquelle gelöschte Elemente anzeigen" for PivotTables; slicers do
+  not move with inserted rows or columns or copy with Strg+C. The Daten abrufen menu does not open through UI Automation, so its
+  entries, the slicer context menu, the Duplikate-aggregieren list, the default Prognoseende (half the points ahead) and the new
+  slicer's place (middle of the visible cells, next ones 26 px lower right) are not recorded. The column forecast chart has no
+  error bars yet (the chart model knows no custom ones). The Power Query editor, refreshing queries, cloud and database sources
+  stay out (D-080). EXCEL-INVENTORY.md was not regenerated.
+
+## D-094 RaabeCalc prints as Excel prints (look corpus, 2026-11-08)
+
+Driven by the look corpus (D-080 D, `compare_corpus.py excel`, 26 workbooks built by Excel). Excel's layout on paper was
+recorded in our own invisible Excel (`probe_excel_print.py`, results/2026-11-08-excel-print.json: PDF line positions for
+7 standard fonts and 12 fonts at 5 sizes, rows sized for large fonts, page breaks, used ranges and drawing objects of
+every corpus file) and built in `print.ts`, `print-metrics.ts` and `print-svg.ts`:
+- **The cells are drawn by the grid's own renderer** (render.ts `draw` with `print: true`) into SVG through a recording
+  canvas context, so conditional formats, data bars, colour scales, icons, table styles, sparklines, turned and shrunk
+  text print as they show, with text as text in the PDF (the old HTML table had none of these). On paper the renderer
+  leaves out the error triangles, note and comment corners, filter buttons and the frozen-pane line.
+- **Printed area:** from A1 (Excel prints row 1 and column A even when the used range starts later) to the end of the
+  used range and of every chart, shape and picture; charts and shapes are printed (they were missing), each on every
+  page it reaches.
+- **Sizes on paper** (Excel lays pages out at 600 dpi): a column is its screen width in digits times the standard font's
+  digit width at 600 dpi (Aptos Narrow / Calibri 11: 47 px), so the standard column prints 61,56 pt; a row prints at its
+  screen height times printed / screen standard height (Aptos Narrow 11: 127 px / 14,5 pt, so rows print 5 % taller
+  than their points say; Calibri 11 as they say), whole printer pixels. Rows with wrapped text and no height of their
+  own are sized again from their lines at the screen's widths, as Excel does when it opens a file. Fit to pages uses
+  Excel's whole percent. Type is set at whole printer pixels (11 pt prints as 11,04 pt).
+- **Lines:** borders 8 / 16 / 24 printer pixels wide (thin / medium / thick), centred 4 pixels after a cell edge; printed
+  gridlines black, one printer pixel, at each cell's first pixel, the area framed by an 8-pixel line and moved 4 pixels
+  in (the text does not move). Inside a merged area only its outline is drawn (also on screen).
+- **Text** sits 6 printer pixels right and 3 down of the screen's padding; turned text (Ausrichtung in degrees) is
+  placed as a turned box, upward text at the cell's right with Standard alignment (it was drawn outside the cell, also
+  on screen). Kopf-/Fußzeile in the standard font, 0,96 pt inside the margins. Auf der Seite zentrieren (horizontal /
+  vertikal) is read, written (printOptions) and offered in Seite einrichten; Excel centres the area with its lines.
+- **The PDF itself:** WebView2 makes A4 594,96 x 841,92 pt and shrank our 8,27-inch pages by 0,9992; pages are now
+  asked for in its 1/300-inch units, two units smaller than the paper, and the window's 1-px frame (body border) no
+  longer moves every page down. A table style's text colour now wins over the standard font's (white header text).
+
+Per document, coarse difference of 255 before -> after (pages Excel/RaabeCalc), worst first: langeliste 3/3 18,83 ->
+3/3 2,54; notenliste 1/1 12,3 -> 1,58; anwesenheit 10,55 -> 1,25; stundenplan 10,06 -> 0,66; skaliert 9,75 -> 2,93;
+vokabeln 8,59 -> 0,57; formen 2/1 8,41 -> 2/2 0,23; klassenkasse 6,29 -> 0,8; funktion 2/1 5,27 -> 2/2 0,99; ausrichtung
+4,77 -> 1,84; notenspiegel 2/1 4,41 -> 2/2 0,3; gestapelt 2/1 4,16 -> 2/2 0,77; rahmen 3,87 -> 0,62; zahlenformate 3,77 ->
+0,71; tabelle_ergebnis 3,54 -> 0,31; raender 3,29 -> 0,12; messreihe 2/1 3,21 -> 2/2 0,38; balken 2/1 2,7 -> 2/2 0,42;
+schriften 2,18 -> 1,2; sparklines 1,63 -> 0,26; design_ion 1,53 -> 0,95; fehler 0,92 -> 0,06; bild 0,87 -> 0,06; budget
+2/1 0,78 -> 2/2 0,12; ausgeblendet 0,75 -> 0,08; mehrere_blaetter 0,36 -> 0,03. Same page count 19/26 -> 26/26, mean
+coarse 5,11 -> 0,76 (the baseline was measured again with the same exe before the change; the pages one side lacked
+were not counted then, so the old mean flatters the old state).
+
+Still different: the glyphs themselves (Excel's PDF and Chromium's draw the same fonts with other hinting, which keeps
+dense lists such as langeliste at 2-3); under An Format anpassen (skaliert, 92 %) rows and lines drift by up to half a
+point; turned 45° text (Excel slants the cell's borders with it, we do not); the printed metrics are this PC's (Excel
+takes the column widths from the screen at 150 %, so another display scaling prints other widths in Excel too); fonts
+outside the recorded table print rows as their heights say; Zeilen- und Spaltenüberschriften are drawn like the
+screen's headers, not recorded from Excel. On screen, rows with wrapped text still show the file's height where Excel
+sizes them again on opening.
+
+## D-095 RaabeCalc: Makros (.xlsm), Excel's object model for the shared VBA interpreter (D-080, 2026-11-08)
+
+RaabeCalc opens and saves Excel workbooks with macros (.xlsm). The VBA project (xl/vbaProject.bin) is read and written
+with @raabe/vba (D-100) and run by its interpreter, the one RaabePresent uses. RaabeCalc gives it an object model under
+Excel's names (`macros.ts` on the facade `macro-app.ts`, which uses the app's own operations):
+- Application, ActiveWorkbook/ThisWorkbook.
+- Worksheets/Sheets: Add Before/After/Count, Copy, Move, Delete, Visible incl. xlSheetVeryHidden, Tab.Color,
+  Protect/Unprotect.
+- Range/Cells/Rows/Columns: Value, Value2, Formula, FormulaLocal, Text, Address, Offset, Resize, End, CurrentRegion,
+  EntireRow/Column, SpecialCells, Find, Replace, Sort with Key1/Order1/Header, Copy/Cut with Destination, Insert/Delete
+  with Shift, AutoFill, FillDown, Merge, Font, Interior, Borders/BorderAround, NumberFormat(Local), alignment,
+  ColumnWidth, RowHeight, Hidden, AutoFit, comments.
+- WorksheetFunction (worked out by our formula engine), Union, Intersect, InputBox (Type 1, 2, 8), StatusBar,
+  DisplayAlerts, Calculation and Excel's xl constants.
+Named arguments reach the place Excel's parameter lists give them.
+
+- **Security and running:**
+  - As in Excel, the macros of an opened file are off: the message bar below the ribbon says SICHERHEITSWARNUNG, Makros
+    wurden deaktiviert, with Inhalt aktivieren. Running a macro before that asks once more.
+  - Macros reach files only after asking (D-080).
+- **Ansicht > Makros:** the group Makros with Makros anzeigen (Alt+F8): Makroname, the list, Ausführen, Löschen. Makro
+  aufzeichnen and Relative Verweise verwenden are greyed (there is no recorder). The keytips ZM/MA are not recorded yet.
+- **Undo and errors:**
+  - A run is one undo step (History.stepAsync around the async run); formulas it writes are worked out at once.
+  - A runtime error shows Laufzeitfehler 'n' with VBA's number and our German message, with Beenden, as Excel's
+    Microsoft Visual Basic box does.
+  - Writing to a locked cell of a protected sheet is error 1004, as in Excel.
+- **Saving:**
+  - A workbook with macros is offered as .xlsm.
+  - Saving it as .xlsx asks first (Ja: without the macros; Nein: choose another type), as Excel does.
+  - The workbook part's content type follows the file name, because Excel refuses an .xlsm with the plain type.
+- **Fixes to @raabe/vba found by the Excel comparison (also taken over by RaabePresent):**
+  - The project's PROJECTLCID and PROJECTLCIDINVOKE are 0x0409, as MS-OVBA requires. VBA calls the host with
+    LCIDINVOKE; with 0x0407 Excel read a macro's `Range.Formula = "=SUM(...)"` and its NumberFormat as German text
+    (#NAME?, wrong formats).
+  - VBA dates are local wall-clock dates whose serial counts the calendar fields. They counted UTC, so
+    CDbl(DateSerial(2026,11,8)) was off by the time zone.
+- **Globals and the interpreter:**
+  - Range, Cells, Rows, Columns, Worksheets and Sheets as globals stand for Excel's method with or without an index
+    (`Cells(3, 2)` and `Rows.Count`).
+  - A property with arguments (`End(xlUp)`, `Offset(1)`) is answered as Excel's parameterised property, not as an
+    indexed collection.
+  - For Each over a whole sheet, row or column visits the cells in use.
+- **Measured:** `check_calc_macros.py` runs 24 macros, `macro_cases_excel.py`: our own versions of popular macros
+  (delete empty rows, mark duplicates, grade calculator, grade distribution, table of contents, unhide sheets, banded
+  rows, sum row, times table, clean names, Select Case, error handling, Do While, hide rows, count coloured cells,
+  copy sheet, sort, format, Offset/Address, WorksheetFunction, InputBox/MsgBox, dates, protection, SpecialCells).
+  - Each macro runs in our own invisible Excel on the .xlsm RaabeCalc wrote, and in RaabeCalc.
+  - Excel's copy gets a second module that answers MsgBox and InputBox from a list and catches errors, because a
+    dialog would wait in the hidden Excel.
+  - Excel is called with the US locale, as VBA itself calls it.
+  - Compared: sheets (order, names, visibility, the active one), every cell's FormulaLocal and shown text, fill and
+    font where asked, hidden rows and columns, messages, errors.
+  - Result: **24/24 the same**. Excel opens every .xlsm RaabeCalc wrote and runs its project.
+  - Before the fixes above: 16/24.
+  - `test/macros.test.ts` runs the same kinds of statements without the app.
+
+## D-096 Drag test: RaabeWrite and RaabeCalc anchors (2026-11-08)
+
+Part C of D-080 for RaabeWrite and RaabeCalc. The owner's first rule for dragging: no sudden, unwanted jumps, the
+dragged thing follows the mouse.
+
+- **What is measured:** `tools/feel-lab/drag_calc.py` and `drag_write.py` (on `feellab/dragtest.py`) drag every
+  anchor with real input (under the real-input lock) along ten pointer paths: slow right, slow down, fast right,
+  fast left, around the drag threshold, back and forth, diagonal, zigzag, jitter, long. At every displayed frame
+  the app's own value is recorded (a border's place, a picture's size, the fill range's far corner, the ruler's
+  guide line, the caret ...) together with the pointer as the app's own events see it. Checked per drag: the value
+  follows the pointer (within tolerance, snapping within its step, cell-valued anchors one cell), no frame moves it
+  more than the pointer moved, never against the motion, no jump on release. Two more drags per anchor: Esc
+  before the button goes up, and Strg+Z after a drag, compared with what Office does.
+- **Esc as Office does it** (recorded with real input in our own instances, `probe_excel_drag_esc.py`,
+  `probe_word_drag_esc.py`): in Excel, Esc does **not** cancel dragging a column or row border, the fill handle or
+  a selection's border (the drag goes on and is applied when the button goes up), but it puts a shape (moved,
+  sized, turned) or a chart (moved) back. In Word, Esc puts back a table's column border, a floating picture's
+  side handle and its rotation. Strg+Z undoes every one of these drags in both. Not recorded (the probe did not hit
+  the handle): Excel's chart corner, Word's row border, inline picture corner and picture move; they are treated
+  like their neighbours (chart move, column border, side handle). Word's ruler is not probed (its markers are not
+  in the object model), so its Esc is not checked; Strg+Z is.
+- **Anchors.** RaabeCalc (14): column border, row border, fill handle (value: the far corner of the fill range),
+  moving a selection by its border (the target's corner), selecting a range (the active corner cell), a chart
+  moved and sized by its corner, a shape moved (pressed while not selected), its corner and its rotation handle,
+  the zoom slider, the vertical scroll bar's thumb, reordering sheet tabs (HTML drag and drop), the splitter
+  between the sheet tabs and the horizontal scroll bar. RaabeCalc has no Namenfeld/formula bar splitter yet
+  (Excel's drag of the Namenfeld's width and of the formula bar's height): not built here. RaabeWrite (16): the
+  ruler's Erstzeileneinzug, Hängender Einzug, Linker Einzug, Rechter Einzug, a tab stop, Linker Rand and the
+  vertical ruler's Oberer Rand (value: the guide line, snapping to 0.25 cm), an inline picture's corner
+  (proportional), a floating picture's side handle, moving it, its rotation handle, a table's column border and
+  row border, selecting text with the mouse (the caret, with Word's whole-word selection), the zoom slider, the
+  scroll bar's thumb. Documents: the feel fixture "long", Word's own word-images.docx and word-rich.docx copied
+  to TEMP.
+- **Fixed in the apps:**
+  - Status bar (both apps, `packages/shell/src/theme.css`): the percentage beside the zoom slider had no fixed
+    width (its rule `.zoom .pct` never matched), so going from "106 %" to "97 %" moved the slider 5.75 px under
+    the pointer and the thumb leapt (back and forth: 8 px in one frame). The percentage now has a fixed width.
+  - RaabeCalc shapes and pictures (`shapes.ts`, `pictures.ts`): pressing an unselected shape and dragging did not
+    move it at all (12/12 drags failed): selecting rebuilt the shapes' elements, so the drag's listeners and
+    pointer capture were left on a removed element. The elements are rebuilt at once and the drag goes on with
+    the new one (the same code path in pictures).
+  - RaabeCalc Esc: a shape's or chart's drag (move, size, turn) is put back by Esc, as in Excel
+    (`shapes.ts`, `charts/feature.ts`). Cells, borders and the fill handle keep Excel's behaviour (Esc does not
+    cancel).
+  - RaabeWrite Esc (`packages/text-engine/src/editor.ts`, `escapable`): dragging a picture or shape (body,
+    handles), its rotation handle, a table's column or row border is put back by Esc, without an undo step, as
+    in Word.
+- **Harness, not the apps:** offsets count from where the press really landed (screen pixels round the planned
+  point by up to 0.7 px); values that may stop at a limit (slider ends, a column's 12 pt minimum, the splitter's
+  range, the right indent at the page edge, the scroll bar's top) are clamped in the expectation; the system's
+  drag loops (HTML drag and drop of sheet tabs, the native scroll bar thumb, whose pointer comes from the moves
+  sent) may trail the pointer by a few frames; the long path is left out for the scroll bars (Windows puts the
+  thumb back when the pointer goes far to the side) and for text selection (the caret rightly stops at the end
+  of a paragraph's short last line); a proportional corner may grow 1.5 px per px on its other side.
+- **Numbers** (ok / drags; the last run of each anchor with the final builds): RaabeCalc 158/158: column border
+  12/12, row border 12/12, fill handle 12/12, moving a selection 12/12, selecting a range 10/10, chart move 12/12,
+  chart corner 12/12, shape move 12/12 (before the fix 1/12), shape corner 12/12, shape rotation 12/12, zoom
+  slider 10/10 (before: back and forth failed with the 8 px leap), scroll bar thumb 9/9 (see below), sheet tabs
+  11/11, sheet bar splitter 10/10. RaabeWrite 177/177: the seven ruler markers 11/11 each, inline picture corner
+  12/12, floating picture side handle 12/12, move 12/12, rotation 12/12, table column border 12/12, row border
+  12/12, selecting text 9/9, zoom slider 10/10, scroll bar thumb 9/9. Before the Esc fixes every picture and table
+  anchor failed its Esc drag; before the status bar fix the zoom slider failed back and forth.
+- **Left open:** RaabeCalc's scroll bar thumb is flaky on the zigzag path: in 2 of 4 runs its last move (back up
+  past the start, beside the window's edge) was not applied by the native scroll bar, so the thumb stayed 8 px
+  down (no jump; RaabeCalc's own scroll code is not called during the drag). The ruler does not cancel on Esc
+  (Word's not recorded). RaabeCalc's pictures got the same fix as shapes but are not among the anchors yet; the
+  Namenfeld/formula bar splitter does not exist yet; the sheet tabs show the target tab highlighted where Excel
+  draws a small insertion mark (look not compared). D-080's paths out of the window and back, modifiers pressed
+  mid-drag and other zoom levels are not in these runs yet.

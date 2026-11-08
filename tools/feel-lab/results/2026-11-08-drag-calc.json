@@ -1,40 +1,41 @@
 {
+ "app": "raabe-calc",
  "anchors": [
   {
    "anchor": "column border B",
-   "ok": 10,
-   "of": 10,
+   "ok": 12,
+   "of": 12,
    "drags": [
     {
      "path": "slow-right",
      "ok": true,
-     "frames": 57,
+     "frames": 49,
      "follow": 0.0,
      "jump": 0.0,
      "against": 0,
-     "release": 0,
+     "release": 0.0,
      "v0": 80,
      "after": 160
     },
     {
      "path": "slow-down",
      "ok": true,
-     "frames": 50,
+     "frames": 39,
      "follow": 0.0,
      "jump": 0.0,
      "against": 0,
-     "release": 0,
+     "release": 0.0,
      "v0": 80,
      "after": 80
     },
     {
      "path": "fast-right",
      "ok": true,
-     "frames": 8,
+     "frames": 7,
      "follow": 0.0,
      "jump": 0.0,
      "against": 0,
-     "release": 0,
+     "release": 0.0,
      "v0": 80,
      "after": 200
     },
@@ -45,14 +46,14 @@
      "follow": 0.0,
      "jump": 0.0,
      "against": 0,
-     "release": 0,
+     "release": 0.0,
      "v0": 80,
      "after": 20
     },
     {
      "path": "threshold",
      "ok": true,
-     "frames": 23,
+     "frames": 13,
      "follow": 0.0,
      "jump": 0.0,
      "against": 0,
@@ -63,18 +64,18 @@
     {
      "path": "back-forth",
      "ok": true,
-     "frames": 101,
+     "frames": 87,
      "follow": 0.0,
      "jump": 0.0,
      "against": 0,
-     "release": 0,
+     "release": 0.0,
      "v0": 80,
      "after": 100
     },
     {
      "path": "diagonal",
      "ok": true,
-     "frames": 43,
+     "frames": 31,
      "follow": 0.0,
      "jump": 0.0,
      "against": 0,
@@ -85,18 +86,18 @@
     {
      "path": "zigzag",
      "ok": true,
-     "frames": 33,
+     "frames": 29,
      "follow": 0.0,
      "jump": 0.0,
      "against": 0,
-     "release": 0,
+     "release": 0.0,
      "v0": 80,
      "after": 160
     },
     {
      "path": "jitter",
      "ok": true,
-     "frames": 41,
+     "frames": 26,
      "follow": 0.0,
      "jump": 0.0,
      "against": 0,
@@ -107,69 +108,86 @@
     {
      "path": "long",
      "ok": true,
-     "frames": 34,
+     "frames": 33,
      "follow": 0.0,
      "jump": 0.0,
      "against": 0,
-     "release": 0,
+     "release": 0.0,
      "v0": 80,
      "after": 480
+    },
+    {
+     "path": "escape",
+     "ok": true,
+     "back": 80.0,
+     "v0": 80,
+     "after": 160,
+     "expect": "the drag goes on (Esc changes nothing)"
+    },
+    {
+     "path": "undo",
+     "ok": true,
+     "back": 0.0,
+     "v0": 80,
+     "after": 160,
+     "changed": 80.0,
+     "undone": 80
     }
    ]
   },
   {
    "anchor": "row border 3",
-   "ok": 10,
-   "of": 10,
+   "ok": 12,
+   "of": 12,
    "drags": [
     {
      "path": "slow-right",
      "ok": true,
-     "frames": 62,
+     "frames": 50,
      "follow": 0.0,
      "jump": 0.0,
      "against": 0,
-     "release": 0,
+     "release": 0.0,
      "v0": 20,
      "after": 20
     },
     {
      "path": "slow-down",
      "ok": true,
-     "frames": 47,
+     "frames": 40,
      "follow": 0.0,
      "jump": 0.0,
      "against": 0,
-     "release": 0,
+     "release": 0.0,
      "v0": 20,
      "after": 80
     },
     {
      "path": "fast-right",
      "ok": true,
-     "frames": 9,
+     "frames": 7,
      "follow": 0.0,
      "jump": 0.0,
      "against": 0,
-     "release": 0,
+     "release": 0.0,
      "v0": 20,
      "after": 20
     },
     {
      "path": "fast-left",
      "ok": true,
-     "frames": 8,
+     "frames": 6,
      "follow": 0.0,
      "jump": 0.0,
      "against": 0,
-     "release": 0,
+     "release": 0.0,
      "v0": 20,
      "after": 20
     },
     {
      "path": "threshold",
      "ok": true,
-     "frames": 22,
+     "frames": 14,
      "follow": 0.0,
      "jump": 0.0,
      "against": 0,
@@ -180,40 +198,40 @@
     {
      "path": "back-forth",
      "ok": true,
-     "frames": 107,
+     "frames": 82,
      "follow": 0.0,
      "jump": 0.0,
      "against": 0,
-     "release": 0,
+     "release": 0.0,
      "v0": 20,
      "after": 20
     },
     {
      "path": "diagonal",
      "ok": true,
-     "frames": 42,
+     "frames": 34,
      "follow": 0.0,
      "jump": 0.0,
      "against": 0,
-     "release": 0,
+     "release": 0.0,
      "v0": 20,
      "after": 70
     },
     {
      "path": "zigzag",
      "ok": true,
-     "frames": 28,
+     "frames": 27,
      "follow": 0.0,
      "jump": 0.0,
      "against": 0,
-     "release": 0,
+     "release": 0.0,
      "v0": 20,
      "after": 12
     },
     {
      "path": "jitter",
      "ok": true,
-     "frames": 33,
+     "frames": 31,
      "follow": 0.0,
      "jump": 0.0,
      "against": 0,
@@ -224,13 +242,2044 @@
     {
      "path": "long",
      "ok": true,
-     "frames": 34,
+     "frames": 32,
      "follow": 0.0,
      "jump": 0.0,
      "against": 0,
-     "release": 0,
+     "release": 0.0,
      "v0": 20,
      "after": 220
+    },
+    {
+     "path": "escape",
+     "ok": true,
+     "back": 60.0,
+     "v0": 20,
+     "after": 80,
+     "expect": "the drag goes on (Esc changes nothing)"
+    },
+    {
+     "path": "undo",
+     "ok": true,
+     "back": 0.0,
+     "v0": 20,
+     "after": 80,
+     "changed": 60.0,
+     "undone": 20
+    }
+   ]
+  },
+  {
+   "anchor": "fill handle",
+   "ok": 12,
+   "of": 12,
+   "note": "value: the far corner of the fill range (client px); one cell of tolerance per axis",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 52,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 187.66666668653488,
+      "y": 297.6666717529297
+     },
+     "after": {
+      "x": 267.6666666865349,
+      "y": 297.6666717529297
+     }
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 39,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 187.66666668653488,
+      "y": 297.6666717529297
+     },
+     "after": {
+      "x": 187.66666668653488,
+      "y": 357.6666717529297
+     }
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 187.66666668653488,
+      "y": 297.6666717529297
+     },
+     "after": {
+      "x": 347.6666666865349,
+      "y": 297.6666717529297
+     }
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 187.66666668653488,
+      "y": 297.6666717529297
+     },
+     "after": {
+      "x": 187.66666668653488,
+      "y": 297.6666717529297
+     }
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 13,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 187.66666668653488,
+      "y": 297.6666717529297
+     },
+     "after": {
+      "x": 187.66666668653488,
+      "y": 317.6666717529297
+     }
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 78,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 187.66666668653488,
+      "y": 297.6666717529297
+     },
+     "after": {
+      "x": 267.6666666865349,
+      "y": 297.6666717529297
+     }
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 31,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 187.66666668653488,
+      "y": 297.6666717529297
+     },
+     "after": {
+      "x": 187.66666668653488,
+      "y": 357.6666717529297
+     }
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 26,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 187.66666668653488,
+      "y": 297.6666717529297
+     },
+     "after": {
+      "x": 267.6666666865349,
+      "y": 297.6666717529297
+     }
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 26,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 187.66666668653488,
+      "y": 297.6666717529297
+     },
+     "after": {
+      "x": 187.66666668653488,
+      "y": 317.6666717529297
+     }
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 33,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 187.66666668653488,
+      "y": 297.6666717529297
+     },
+     "after": {
+      "x": 187.66666668653488,
+      "y": 497.6666717529297
+     }
+    },
+    {
+     "path": "escape",
+     "ok": true,
+     "back": 60.0,
+     "v0": {
+      "x": 187.66666668653488,
+      "y": 297.6666717529297
+     },
+     "after": {
+      "x": 187.66666668653488,
+      "y": 357.6666717529297
+     },
+     "expect": "the drag goes on (Esc changes nothing)"
+    },
+    {
+     "path": "undo",
+     "ok": true,
+     "back": 0.0,
+     "v0": 2560315,
+     "after": 3978744,
+     "changed": 1418429.0,
+     "undone": 2560315
+    }
+   ]
+  },
+  {
+   "anchor": "move selection by its border",
+   "ok": 12,
+   "of": 12,
+   "note": "value: the target range's top left corner",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 46,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 107.66666668653488,
+      "y": 277.6666717529297
+     },
+     "after": {
+      "x": 187.66666668653488,
+      "y": 277.6666717529297
+     }
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 41,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 107.66666668653488,
+      "y": 277.6666717529297
+     },
+     "after": {
+      "x": 107.66666668653488,
+      "y": 337.6666717529297
+     }
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 107.66666668653488,
+      "y": 277.6666717529297
+     },
+     "after": {
+      "x": 187.66666668653488,
+      "y": 277.6666717529297
+     }
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 4,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 107.66666668653488,
+      "y": 277.6666717529297
+     },
+     "after": {
+      "x": 27.66666668653488,
+      "y": 277.6666717529297
+     }
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 107.66666668653488,
+      "y": 277.6666717529297
+     },
+     "after": {
+      "x": 107.66666668653488,
+      "y": 277.6666717529297
+     }
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 79,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 107.66666668653488,
+      "y": 277.6666717529297
+     },
+     "after": {
+      "x": 107.66666668653488,
+      "y": 277.6666717529297
+     }
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 32,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 107.66666668653488,
+      "y": 277.6666717529297
+     },
+     "after": {
+      "x": 107.66666668653488,
+      "y": 317.6666717529297
+     }
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 26,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 107.66666668653488,
+      "y": 277.6666717529297
+     },
+     "after": {
+      "x": 187.66666668653488,
+      "y": 277.6666717529297
+     }
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 107.66666668653488,
+      "y": 277.6666717529297
+     },
+     "after": {
+      "x": 107.66666668653488,
+      "y": 277.6666717529297
+     }
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 32,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 107.66666668653488,
+      "y": 277.6666717529297
+     },
+     "after": {
+      "x": 507.6666666865349,
+      "y": 477.6666717529297
+     }
+    },
+    {
+     "path": "escape",
+     "ok": true,
+     "back": 40.0,
+     "v0": {
+      "x": 107.66666668653488,
+      "y": 277.6666717529297
+     },
+     "after": {
+      "x": 107.66666668653488,
+      "y": 317.6666717529297
+     },
+     "expect": "the drag goes on (Esc changes nothing)"
+    },
+    {
+     "path": "undo",
+     "ok": true,
+     "back": 0.0,
+     "v0": 2560315,
+     "after": 3012236,
+     "changed": 451921.0,
+     "undone": 2560315
+    }
+   ]
+  },
+  {
+   "anchor": "select a range",
+   "ok": 10,
+   "of": 10,
+   "note": "value: the middle of the active corner cell",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 47,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 147.66666668653488,
+      "y": 287.6666717529297
+     },
+     "after": {
+      "x": 227.66666668653488,
+      "y": 287.6666717529297
+     }
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 35,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 147.66666668653488,
+      "y": 287.6666717529297
+     },
+     "after": {
+      "x": 147.66666668653488,
+      "y": 347.6666717529297
+     }
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 147.66666668653488,
+      "y": 287.6666717529297
+     },
+     "after": {
+      "x": 227.66666668653488,
+      "y": 287.6666717529297
+     }
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 6,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 147.66666668653488,
+      "y": 287.6666717529297
+     },
+     "after": {
+      "x": 67.66666668653488,
+      "y": 287.6666717529297
+     }
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 147.66666668653488,
+      "y": 287.6666717529297
+     },
+     "after": {
+      "x": 147.66666668653488,
+      "y": 287.6666717529297
+     }
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 76,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 147.66666668653488,
+      "y": 287.6666717529297
+     },
+     "after": {
+      "x": 147.66666668653488,
+      "y": 287.6666717529297
+     }
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 30,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 147.66666668653488,
+      "y": 287.6666717529297
+     },
+     "after": {
+      "x": 227.66666668653488,
+      "y": 327.6666717529297
+     }
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 147.66666668653488,
+      "y": 287.6666717529297
+     },
+     "after": {
+      "x": 227.66666668653488,
+      "y": 287.6666717529297
+     }
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 147.66666668653488,
+      "y": 287.6666717529297
+     },
+     "after": {
+      "x": 147.66666668653488,
+      "y": 287.6666717529297
+     }
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 33,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 147.66666668653488,
+      "y": 287.6666717529297
+     },
+     "after": {
+      "x": 547.6666666865349,
+      "y": 487.6666717529297
+     }
+    }
+   ]
+  },
+  {
+   "anchor": "chart move",
+   "ok": 12,
+   "of": 12,
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 46,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 431.16668701171875,
+      "y": 630.6666870117188
+     },
+     "after": {
+      "x": 511.16668701171875,
+      "y": 630.6666870117188
+     }
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 36,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 431.16668701171875,
+      "y": 630.6666870117188
+     },
+     "after": {
+      "x": 431.16668701171875,
+      "y": 690.6666870117188
+     }
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 431.16668701171875,
+      "y": 630.6666870117188
+     },
+     "after": {
+      "x": 551.1666870117188,
+      "y": 630.6666870117188
+     }
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 6,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 431.16668701171875,
+      "y": 630.6666870117188
+     },
+     "after": {
+      "x": 371.16668701171875,
+      "y": 630.6666870117188
+     }
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 431.16668701171875,
+      "y": 630.6666870117188
+     },
+     "after": {
+      "x": 434.4895935058594,
+      "y": 631.3333740234375
+     }
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 77,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 431.16668701171875,
+      "y": 630.6666870117188
+     },
+     "after": {
+      "x": 451.16668701171875,
+      "y": 630.6666870117188
+     }
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 31,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 431.16668701171875,
+      "y": 630.6666870117188
+     },
+     "after": {
+      "x": 506.4895935058594,
+      "y": 680.6666870117188
+     }
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 26,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 431.16668701171875,
+      "y": 630.6666870117188
+     },
+     "after": {
+      "x": 511.16668701171875,
+      "y": 622.6666870117188
+     }
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 26,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 431.16668701171875,
+      "y": 630.6666870117188
+     },
+     "after": {
+      "x": 462.4895935058594,
+      "y": 631.3333740234375
+     }
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 32,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 431.16668701171875,
+      "y": 630.6666870117188
+     },
+     "after": {
+      "x": 831.8333740234375,
+      "y": 830.6666870117188
+     }
+    },
+    {
+     "path": "escape",
+     "ok": true,
+     "back": 0.0,
+     "v0": {
+      "x": 431.16668701171875,
+      "y": 630.6666870117188
+     },
+     "after": {
+      "x": 431.16668701171875,
+      "y": 630.6666870117188
+     }
+    },
+    {
+     "path": "undo",
+     "ok": true,
+     "back": 0.0,
+     "v0": {
+      "x": 431.16668701171875,
+      "y": 630.6666870117188
+     },
+     "after": {
+      "x": 511.16668701171875,
+      "y": 630.6666870117188
+     },
+     "changed": 80.0,
+     "undone": {
+      "x": 431.16668701171875,
+      "y": 630.6666870117188
+     }
+    }
+   ]
+  },
+  {
+   "anchor": "chart corner handle",
+   "ok": 12,
+   "of": 12,
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 45,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 911.1666870117188,
+      "y": 918.6666870117188
+     },
+     "after": {
+      "x": 991.1666870117188,
+      "y": 918.6666870117188
+     }
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 35,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 911.1666870117188,
+      "y": 918.6666870117188
+     },
+     "after": {
+      "x": 911.1666870117188,
+      "y": 978.6666870117188
+     }
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 911.1666870117188,
+      "y": 918.6666870117188
+     },
+     "after": {
+      "x": 1031.1666870117188,
+      "y": 918.6666870117188
+     }
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 6,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 911.1666870117188,
+      "y": 918.6666870117188
+     },
+     "after": {
+      "x": 851.1666870117188,
+      "y": 918.6666870117188
+     }
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 911.1666870117188,
+      "y": 918.6666870117188
+     },
+     "after": {
+      "x": 914.4896240234375,
+      "y": 919.3229370117188
+     }
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 76,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 911.1666870117188,
+      "y": 918.6666870117188
+     },
+     "after": {
+      "x": 931.1666870117188,
+      "y": 918.6666870117188
+     }
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 32,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 911.1666870117188,
+      "y": 918.6666870117188
+     },
+     "after": {
+      "x": 986.4896240234375,
+      "y": 968.6666870117188
+     }
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 26,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 911.1666870117188,
+      "y": 918.6666870117188
+     },
+     "after": {
+      "x": 991.1666870117188,
+      "y": 910.6666870117188
+     }
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 26,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 911.1666870117188,
+      "y": 918.6666870117188
+     },
+     "after": {
+      "x": 942.4896240234375,
+      "y": 919.3229370117188
+     }
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 32,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 911.1666870117188,
+      "y": 918.6666870117188
+     },
+     "after": {
+      "x": 1311.1666870117188,
+      "y": 1118.6666870117188
+     }
+    },
+    {
+     "path": "escape",
+     "ok": true,
+     "back": 0.0,
+     "v0": {
+      "x": 911.1666870117188,
+      "y": 918.6666870117188
+     },
+     "after": {
+      "x": 911.1666870117188,
+      "y": 918.6666870117188
+     }
+    },
+    {
+     "path": "undo",
+     "ok": true,
+     "back": 0.0,
+     "v0": {
+      "x": 911.1666870117188,
+      "y": 918.6666870117188
+     },
+     "after": {
+      "x": 991.1666870117188,
+      "y": 918.6666870117188
+     },
+     "changed": 80.0,
+     "undone": {
+      "x": 911.1666870117188,
+      "y": 918.6666870117188
+     }
+    }
+   ]
+  },
+  {
+   "anchor": "shape move (not selected before)",
+   "ok": 12,
+   "of": 12,
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 45,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 267.66668701171875,
+      "y": 317.66668701171875
+     },
+     "after": {
+      "x": 347.66668701171875,
+      "y": 317.66668701171875
+     }
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 35,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 267.66668701171875,
+      "y": 317.66668701171875
+     },
+     "after": {
+      "x": 267.66668701171875,
+      "y": 377.66668701171875
+     }
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 267.66668701171875,
+      "y": 317.66668701171875
+     },
+     "after": {
+      "x": 387.66668701171875,
+      "y": 317.66668701171875
+     }
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 6,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 267.66668701171875,
+      "y": 317.66668701171875
+     },
+     "after": {
+      "x": 207.6666717529297,
+      "y": 317.66668701171875
+     }
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 267.66668701171875,
+      "y": 317.66668701171875
+     },
+     "after": {
+      "x": 271,
+      "y": 319
+     }
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 76,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 267.66668701171875,
+      "y": 317.66668701171875
+     },
+     "after": {
+      "x": 287.66668701171875,
+      "y": 317.66668701171875
+     }
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 30,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 267.66668701171875,
+      "y": 317.66668701171875
+     },
+     "after": {
+      "x": 343,
+      "y": 367.66668701171875
+     }
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 267.66668701171875,
+      "y": 317.66668701171875
+     },
+     "after": {
+      "x": 347.66668701171875,
+      "y": 309.66668701171875
+     }
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 267.66668701171875,
+      "y": 317.66668701171875
+     },
+     "after": {
+      "x": 299,
+      "y": 319
+     }
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 32,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 267.66668701171875,
+      "y": 317.66668701171875
+     },
+     "after": {
+      "x": 667.6666870117188,
+      "y": 517.6666870117188
+     }
+    },
+    {
+     "path": "escape",
+     "ok": true,
+     "back": 0.0,
+     "v0": {
+      "x": 267.66668701171875,
+      "y": 317.66668701171875
+     },
+     "after": {
+      "x": 267.66668701171875,
+      "y": 317.66668701171875
+     }
+    },
+    {
+     "path": "undo",
+     "ok": true,
+     "back": 0.0,
+     "v0": {
+      "x": 267.66668701171875,
+      "y": 317.66668701171875
+     },
+     "after": {
+      "x": 347.66668701171875,
+      "y": 317.66668701171875
+     },
+     "changed": 80.0,
+     "undone": {
+      "x": 267.66668701171875,
+      "y": 317.66668701171875
+     }
+    }
+   ]
+  },
+  {
+   "anchor": "shape corner handle",
+   "ok": 12,
+   "of": 12,
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 45,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 427.66668701171875,
+      "y": 477.66668701171875
+     },
+     "after": {
+      "x": 507.66668701171875,
+      "y": 477.66668701171875
+     }
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 35,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 427.66668701171875,
+      "y": 477.66668701171875
+     },
+     "after": {
+      "x": 427.66668701171875,
+      "y": 537.6666870117188
+     }
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 427.66668701171875,
+      "y": 477.66668701171875
+     },
+     "after": {
+      "x": 547.6666870117188,
+      "y": 477.66668701171875
+     }
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 6,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 427.66668701171875,
+      "y": 477.66668701171875
+     },
+     "after": {
+      "x": 367.66668701171875,
+      "y": 477.66668701171875
+     }
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 427.66668701171875,
+      "y": 477.66668701171875
+     },
+     "after": {
+      "x": 430.32293701171875,
+      "y": 478.32293701171875
+     }
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 76,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 427.66668701171875,
+      "y": 477.66668701171875
+     },
+     "after": {
+      "x": 447.66668701171875,
+      "y": 477.66668701171875
+     }
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 30,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 427.66668701171875,
+      "y": 477.66668701171875
+     },
+     "after": {
+      "x": 502.32293701171875,
+      "y": 527.6666870117188
+     }
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 427.66668701171875,
+      "y": 477.66668701171875
+     },
+     "after": {
+      "x": 507.66668701171875,
+      "y": 469.66668701171875
+     }
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 427.66668701171875,
+      "y": 477.66668701171875
+     },
+     "after": {
+      "x": 458.32293701171875,
+      "y": 478.32293701171875
+     }
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 32,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 427.66668701171875,
+      "y": 477.66668701171875
+     },
+     "after": {
+      "x": 827.6666870117188,
+      "y": 677.6666870117188
+     }
+    },
+    {
+     "path": "escape",
+     "ok": true,
+     "back": 0.0,
+     "v0": {
+      "x": 427.66668701171875,
+      "y": 477.66668701171875
+     },
+     "after": {
+      "x": 427.66668701171875,
+      "y": 477.66668701171875
+     }
+    },
+    {
+     "path": "undo",
+     "ok": true,
+     "back": 0.0,
+     "v0": {
+      "x": 427.66668701171875,
+      "y": 477.66668701171875
+     },
+     "after": {
+      "x": 507.66668701171875,
+      "y": 477.66668701171875
+     },
+     "changed": 80.0,
+     "undone": {
+      "x": 427.66668701171875,
+      "y": 477.66668701171875
+     }
+    }
+   ]
+  },
+  {
+   "anchor": "zoom slider",
+   "ok": 10,
+   "of": 10,
+   "note": "value: the thumb's middle (client px); Excel cannot undo zooming",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 45,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1195.3333740234375,
+     "after": 1237.3333740234375
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 35,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1195.3333740234375,
+     "after": 1195.3333740234375
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 8,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1195.3333740234375,
+     "after": 1237.3333740234375
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1195.3333740234375,
+     "after": 1153.3333740234375
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1195.3333740234375,
+     "after": 1197.8533740234375
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 76,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1195.3333740234375,
+     "after": 1215.4933740234376
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 30,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1195.3333740234375,
+     "after": 1237.3333740234375
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1195.3333740234375,
+     "after": 1237.3333740234375
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 26,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1195.3333740234375,
+     "after": 1225.9933740234376
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 32,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1195.3333740234375,
+     "after": 1237.3333740234375
+    }
+   ]
+  },
+  {
+   "anchor": "sheet tab reorder",
+   "ok": 11,
+   "of": 11,
+   "note": "value: the middle of the tab the sheet would go to; Excel cannot undo moving a sheet",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 46,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 90.40625381469727,
+     "after": 166.01042938232422
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 35,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 90.40625381469727,
+     "after": 90.40625381469727
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 90.40625381469727,
+     "after": 241.61458587646484
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 6,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 90.40625381469727,
+     "after": 90.40625381469727
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 90.40625381469727,
+     "after": 90.40625381469727
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 75,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 90.40625381469727,
+     "after": 90.40625381469727
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 30,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 90.40625381469727,
+     "after": 90.40625381469727
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 90.40625381469727,
+     "after": 166.01042938232422
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 90.40625381469727,
+     "after": 90.40625381469727
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 32,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 90.40625381469727,
+     "after": 90.40625381469727
+    },
+    {
+     "path": "escape",
+     "ok": true,
+     "back": 0.0,
+     "v0": 90.40625381469727,
+     "after": 90.40625381469727
+    }
+   ]
+  },
+  {
+   "anchor": "sheet bar splitter",
+   "ok": 10,
+   "of": 10,
+   "note": "between the sheet tabs and the horizontal scroll bar (Excel has no Namenfeld splitter drag in RaabeCalc yet)",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 45,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 798.3958740234375,
+     "after": 878.3958740234375
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 35,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 878.3958740234375,
+     "after": 878.3958740234375
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 878.3958740234375,
+     "after": 998.3958740234375
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 6,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 998.3958740234375,
+     "after": 938.3958740234375
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 938.3958740234375,
+     "after": 941.0625
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 76,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 941.0625,
+     "after": 961.0625
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 31,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 961.0625,
+     "after": 1035.729248046875
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1035.729248046875,
+     "after": 1115.729248046875
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1115.729248046875,
+     "after": 1146.3958740234375
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 33,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1146.3958740234375,
+     "after": 1251
+    }
+   ]
+  },
+  {
+   "anchor": "shape rotation handle",
+   "ok": 12,
+   "of": 12,
+   "note": "value: degrees; expected: the angle of the pointer around the middle",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 46,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.49,
+     "v0": 0,
+     "after": 37
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 36,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.33,
+     "v0": 0,
+     "after": 359
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.12,
+     "v0": 0,
+     "after": 49
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.37,
+     "v0": 0,
+     "after": 329
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.07,
+     "v0": 0,
+     "after": 1
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 76,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.45,
+     "v0": 0,
+     "after": 10
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 30,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.27,
+     "v0": 0,
+     "after": 54
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 25,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.44,
+     "v0": 0,
+     "after": 35
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 26,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.17,
+     "v0": 0,
+     "after": 16
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 31,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.34,
+     "v0": 0,
+     "after": 104
+    },
+    {
+     "path": "escape",
+     "ok": true,
+     "back": 0.0,
+     "v0": 0,
+     "after": 0
+    },
+    {
+     "path": "undo",
+     "ok": true,
+     "back": 0.0,
+     "v0": 0,
+     "after": 37,
+     "changed": 37.0,
+     "undone": 0
+    }
+   ]
+  },
+  {
+   "anchor": "vertical scroll bar thumb",
+   "ok": 9,
+   "of": 9,
+   "note": "value: the thumb's top (from scrollTop and the scroll bar's geometry); not the long path: Windows' scroll bars put the thumb back when the pointer goes far to the side. Flaky: in 2 of 4 runs the zigzag's last move (back up past the start, beside the window's edge) was not applied by the native scroll bar (the thumb stays 8 px down; no jump; RaabeCalc's own scroll code is not called during the drag)",
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 45,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 234.6666717529297,
+     "after": 234.6666717529297
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 35,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 234.6666717529297,
+     "after": 294.8223792077869
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 234.6666717529297,
+     "after": 234.6666717529297
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 6,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 234.6666717529297,
+     "after": 234.6666717529297
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 10,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 234.6666717529297,
+     "after": 235.96968343086454
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 75,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 234.6666717529297,
+     "after": 234.6666717529297
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 30,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 234.6666717529297,
+     "after": 284.6154510835672
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 24,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 234.6666717529297,
+     "after": 234.6666717529297
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 23,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 234.6666717529297,
+     "after": 234.6666717529297
     }
    ]
   }

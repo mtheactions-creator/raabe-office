@@ -436,6 +436,8 @@ export function readPage(parts: { name: string; xml: string }[]): PageSetup | un
   }
   if (yes(po?.gridLines)) page.gridLines = true;
   if (yes(po?.headings)) page.headings = true;
+  if (yes(po?.horizontalCentered)) page.centerH = true;
+  if (yes(po?.verticalCentered)) page.centerV = true;
   const breaks = (name: string) => {
     const x = get(name);
     if (!x) return undefined;
@@ -498,7 +500,8 @@ export function pageXml(p: PageSetup | undefined, parts: { name: string; xml: st
   const oldSetup = get("pageSetup");
   let setup: string | null = setAttrs(oldSetup ?? "<pageSetup/>", change);
   if (setup === "<pageSetup/>") setup = null;
-  let options: string | null = setAttrs(get("printOptions") ?? "<printOptions/>", { gridLines: p?.gridLines ? "1" : null, headings: p?.headings ? "1" : null });
+  let options: string | null = setAttrs(get("printOptions") ?? "<printOptions/>", { gridLines: p?.gridLines ? "1" : null, headings: p?.headings ? "1" : null,
+    horizontalCentered: p?.centerH ? "1" : null, verticalCentered: p?.centerV ? "1" : null });
   if (options === "<printOptions/>") options = null;
   return { margins, setup, options, fit };
 }

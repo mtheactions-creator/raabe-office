@@ -16,7 +16,7 @@ describe("Blatt schützen", () => {
     expect(await sha512("Raabe", Uint8Array.from(atob(p.saltValue), (c) => c.charCodeAt(0)), Number(p.spinCount))).toBe(p.hashValue);
     expect(await sha512("raabe", Uint8Array.from(atob(p.saltValue), (c) => c.charCodeAt(0)), Number(p.spinCount))).not.toBe(p.hashValue);
     expect(wb.sheets[1].protection).toEqual({ sheet: "1", objects: "1", scenarios: "1" });
-  }, 60000);
+  }, 240000); // 100000 SHA-512 rounds each, slow when the whole suite runs at once
 
   it("writes the attributes in Excel's order with Excel's defaults", () => {
     const defaults = new Map([["selectLockedCells", true], ["selectUnlockedCells", true], ["formatCells", true], ["sort", true], ["objects", false], ["scenarios", false]]);
@@ -38,7 +38,7 @@ describe("Blatt schützen", () => {
     expect(readXlsx(out).protection).toEqual(wb.protection);
     expect(readXlsx(out).sheets[0].protection).toBeUndefined();
     if (process.env.PROTECTION_OUT) writeFileSync(process.env.PROTECTION_OUT, out);
-  }, 60000);
+  }, 240000); // 100000 SHA-512 rounds each, slow when the whole suite runs at once
 
   it("checks the old 16-bit password hash", () => {
     expect(legacyHash("")).toBe("CE4B");

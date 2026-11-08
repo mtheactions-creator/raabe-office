@@ -302,6 +302,9 @@ export function shapesFeature(app: CalcApp) {
     }
     if (selected !== s && !others.includes(s)) select(s);
     else if (others.includes(s)) { others = [selected!, ...others.filter((q) => q !== s)]; selected = s; }
+    // Selecting rebuilds the shapes' elements: the drag goes on with the new one, or it is lost
+    // with the old one (a press on an unselected shape moves it at once, as in Excel; D-096).
+    if (shown === undefined) { place(); el = els[(app.sheet.shapes ?? []).indexOf(s)] ?? el; }
     const b = boxOf(s);
     if (!b) return;
     const handle = (e.target as HTMLElement).dataset.h as Handle | undefined;
@@ -352,10 +355,24 @@ export function shapesFeature(app: CalcApp) {
       live = { s, box: { x: w < 0 ? x + w : x, y: hh < 0 ? y + hh : y, w: Math.abs(w), h: Math.abs(hh) } };
       place();
     };
-    const up = () => {
+    const stop = () => {
       el.removeEventListener("pointermove", move);
       el.removeEventListener("pointerup", up);
       el.removeEventListener("pointercancel", up);
+      removeEventListener("keydown", key, true);
+    };
+    // Esc while moving, sizing or turning: the shape stays as it was (Excel; D-096).
+    const key = (ev: KeyboardEvent) => {
+      if (ev.key !== "Escape") return;
+      ev.preventDefault();
+      ev.stopPropagation();
+      stop();
+      live = null;
+      moving = null;
+      place();
+    };
+    const up = () => {
+      stop();
       const l = live as (typeof live & { flip?: [boolean, boolean] }) | null;
       live = null;
       if (moving) {
@@ -378,6 +395,7 @@ export function shapesFeature(app: CalcApp) {
     el.addEventListener("pointermove", move);
     el.addEventListener("pointerup", up);
     el.addEventListener("pointercancel", up);
+    addEventListener("keydown", key, true);
   }
 
   /**
@@ -998,7 +1016,32 @@ export function shapesFeature(app: CalcApp) {
     { label: "Vertikal kippen", run: () => arrange.flip("flipV") }, { label: "Horizontal kippen", run: () => arrange.flip("flipH") },
   ];
 
+  /** A shape with its text at a size in page px, for printing (print.ts, D-094). */
+  function printElement(s: SheetShape, w: number, hh: number): HTMLElement {
+    css();
+    const box = h("div", { class: "shape-layer", style: `position:absolute;left:0;top:0;right:auto;bottom:auto;width:${w}px;height:${hh}px;overflow:visible;z-index:auto` });
+    const el = h("div", { class: "shp", style: `left:0;top:0;width:${w}px;height:${hh}px;${s.rot ? `transform:rotate(${s.rot}deg);` : ""}` });
+    const sv = h("div", { class: "shp-svg" }, drawn(s, Math.max(0.01, w), Math.max(0.01, hh)));
+    el.append(sv);
+    const line = isLinePreset(s.geom) || !!s.connector;
+    if (!line && s.geom !== "group" && s.text) {
+      const e = engineOf(s);
+      const r = shapeTextRect(e.fmt, e.info, w, hh);
+      const t = h("div", { class: "shp-text" }, s.text);
+      Object.assign(t.style, {
+        left: `${r.x}px`, top: `${r.y}px`, width: `${r.w}px`, height: `${r.h}px`, color: e.text, fontSize: `${(s.font?.size ?? 11) * 96 / 72}px`,
+        fontFamily: `"${app.wb.themeFonts.minor}", Carlito, sans-serif`,
+        fontWeight: s.font?.bold ? "bold" : "", fontStyle: s.font?.italic ? "italic" : "", textDecoration: s.font?.underline ? "underline" : "",
+        justifyContent: { t: "flex-start", ctr: "center", b: "flex-end" }[s.anchor ?? "t"], textAlign: { l: "left", ctr: "center", r: "right" }[s.align ?? "l"],
+      });
+      el.append(t);
+    }
+    box.append(el);
+    return box;
+  }
+
   return {
+    printElement,
     place, startDraw, gallery, openPane, arrange, rotateMenu,
     selected: (): SheetShape | null => selected,
     count: (): number => picked().length,

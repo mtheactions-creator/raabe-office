@@ -11,3 +11,5 @@ export * from "./validation";
 export * from "./pivot";
 export * from "./table";
 export * from "./advfilter";
+export * from "./slicer";
+export * from "./ets";

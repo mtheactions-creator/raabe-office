@@ -90,6 +90,37 @@ export class History {
     }
   }
 
+  /** Runs an async `fn` (a macro that waits for MsgBox …) as one undo step; nested steps join it. */
+  async stepAsync(label: string, fn: () => Promise<void>): Promise<void> {
+    let done!: () => void;
+    const finished = new Promise<void>((r) => { done = r; });
+    let inner: Promise<void> = Promise.resolve();
+    // The synchronous step stays open until the macro has finished: its writes (sync, inside) join it.
+    const outer = this.open === null;
+    if (!outer) { await fn(); return; }
+    this.open = { label, before: [], after: [], selBefore: this.selection() };
+    this.depth++;
+    try {
+      inner = fn();
+      await inner;
+    } finally {
+      this.depth--;
+      const st = this.open!;
+      this.open = null;
+      st.selAfter = this.selection();
+      st.after = st.before.map((b) => this.capture(b));
+      if (st.sheetsBefore) st.sheetsAfter = { list: [...this.wb.sheets], active: this.wb.active, protection: this.wb.protection, design: st.sheetsBefore.design ? this.designNow() : undefined };
+      if (st.before.length || st.sheetsBefore) {
+        this.undoStack.push(st);
+        if (this.undoStack.length > 100) this.undoStack.shift();
+        this.redoStack = [];
+        this.onChange(changeOf(st.before, !!st.sheetsBefore));
+      }
+      done();
+    }
+    await finished;
+  }
+
   private selection() {
     const s = this.wb.sheet();
     return { sheet: this.wb.active, sel: s.view.selection.map((r) => ({ ...r })), active: { ...s.view.active } };

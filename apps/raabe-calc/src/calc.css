@@ -140,6 +140,8 @@ body.printing #print-root { display: block; position: fixed; left: 0; top: 0; z-
   /* Pages one after the other in the flow (a fixed layer would print as one page). */
   body.printing #print-root { position: static; z-index: auto; }
   .print-page { break-after: page; page-break-after: always; }
+  /* The window's 1-px frame (body border) would move every printed page down by a pixel (D-094). */
+  body.printing { border: 0 !important; display: block !important; }
 }
 
 /* Einfügeoptionen / AutoAusfülloptionen beside a pasted or filled range. */

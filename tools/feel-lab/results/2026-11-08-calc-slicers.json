@@ -1,0 +1,636 @@
+{
+ "raabe->excel": [
+  {
+   "check": "Excel finds three slicer caches",
+   "ok": true
+  },
+  {
+   "check": "Fach: Excel has the slicer",
+   "ok": true
+  },
+  {
+   "check": "Fach: caption, columns, style",
+   "ok": true
+  },
+  {
+   "check": "Fach: items with Selected and HasData as RaabeCalc shows them",
+   "ok": true
+  },
+  {
+   "check": "Klasse: Excel has the slicer",
+   "ok": true
+  },
+  {
+   "check": "Klasse: caption, columns, style",
+   "ok": true
+  },
+  {
+   "check": "Klasse: items with Selected and HasData as RaabeCalc shows them",
+   "ok": true
+  },
+  {
+   "check": "Fach 1: Excel has the slicer",
+   "ok": true
+  },
+  {
+   "check": "Fach 1: caption, columns, style",
+   "ok": true
+  },
+  {
+   "check": "Fach 1: items with Selected and HasData as RaabeCalc shows them",
+   "ok": true
+  },
+  {
+   "check": "Klasse: absteigend and Elemente ohne Daten in place",
+   "ok": true
+  },
+  {
+   "check": "the table's hidden rows are RaabeCalc's",
+   "ok": true
+  },
+  {
+   "check": "the PivotTable's report after Excel's refresh is RaabeCalc's",
+   "ok": true
+  }
+ ],
+ "excel->raabe": [
+  {
+   "check": "default2 Fach: items",
+   "ok": true
+  },
+  {
+   "check": "default2 Klasse: items",
+   "ok": true
+  },
+  {
+   "check": "default2: hidden rows",
+   "ok": true
+  },
+  {
+   "check": "one-off Fach 1: items",
+   "ok": true
+  },
+  {
+   "check": "one-off Name: items",
+   "ok": true
+  },
+  {
+   "check": "one-off: hidden rows",
+   "ok": true
+  },
+  {
+   "check": "cleared Fach 2: items",
+   "ok": true
+  },
+  {
+   "check": "cleared Klasse 1: items",
+   "ok": true
+  },
+  {
+   "check": "cleared: hidden rows",
+   "ok": true
+  },
+  {
+   "check": "cross1 Fach 3: items",
+   "ok": true
+  },
+  {
+   "check": "cross1 Name 1: items",
+   "ok": true
+  },
+  {
+   "check": "cross1: hidden rows",
+   "ok": true
+  },
+  {
+   "check": "cross2 Fach 4: items",
+   "ok": true
+  },
+  {
+   "check": "cross2 Name 2: items",
+   "ok": true
+  },
+  {
+   "check": "cross2: hidden rows",
+   "ok": true
+  },
+  {
+   "check": "cross3 Fach 5: items",
+   "ok": true
+  },
+  {
+   "check": "cross3 Name 3: items",
+   "ok": true
+  },
+  {
+   "check": "cross3: hidden rows",
+   "ok": true
+  },
+  {
+   "check": "cross4 Fach 6: items",
+   "ok": true
+  },
+  {
+   "check": "cross4 Name 4: items",
+   "ok": true
+  },
+  {
+   "check": "cross4: hidden rows",
+   "ok": true
+  },
+  {
+   "check": "settings FachA: items",
+   "ok": true
+  },
+  {
+   "check": "settings Klasse 2: items",
+   "ok": true
+  },
+  {
+   "check": "settings: hidden rows",
+   "ok": true
+  },
+  {
+   "check": "numbers Note: items",
+   "ok": true
+  },
+  {
+   "check": "numbers: hidden rows",
+   "ok": true
+  },
+  {
+   "check": "pivot Fach 7: items",
+   "ok": true
+  },
+  {
+   "check": "clicked in RaabeCalc: Excel's Fach slicer shows only Mathe",
+   "ok": true,
+   "items": [
+    [
+     "Deutsch",
+     false,
+     true
+    ],
+    [
+     "Englisch",
+     false,
+     true
+    ],
+    [
+     "Mathe",
+     true,
+     true
+    ]
+   ]
+  },
+  {
+   "check": "clicked in RaabeCalc: Excel hides the other rows",
+   "ok": true,
+   "hidden": [
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  {
+   "check": "clicked in RaabeCalc: the other sheets' slicers unchanged",
+   "ok": true
+  }
+ ],
+ "look": [
+  {
+   "check": "Fach Deutsch: fill colour within 3 of Excel's",
+   "ok": true,
+   "excel": [
+    131,
+    204,
+    235
+   ],
+   "ours": [
+    131,
+    204,
+    235
+   ]
+  },
+  {
+   "check": "Fach Deutsch: top and height within 1 px of Excel's",
+   "ok": true,
+   "excel": [
+    33,
+    26
+   ],
+   "ours": [
+    33.7,
+    26.4
+   ]
+  },
+  {
+   "check": "Fach Englisch: fill colour within 3 of Excel's",
+   "ok": true,
+   "excel": [
+    131,
+    204,
+    235
+   ],
+   "ours": [
+    131,
+    204,
+    235
+   ]
+  },
+  {
+   "check": "Fach Englisch: top and height within 1 px of Excel's",
+   "ok": true,
+   "excel": [
+    62,
+    26
+   ],
+   "ours": [
+    62.8,
+    26.4
+   ]
+  },
+  {
+   "check": "Fach Mathe: fill colour within 3 of Excel's",
+   "ok": true,
+   "excel": [
+    131,
+    204,
+    235
+   ],
+   "ours": [
+    131,
+    204,
+    235
+   ]
+  },
+  {
+   "check": "Fach Mathe: top and height within 1 px of Excel's",
+   "ok": true,
+   "excel": [
+    91,
+    26
+   ],
+   "ours": [
+    91.9,
+    26.4
+   ]
+  },
+  {
+   "check": "Klasse 8a: fill colour within 3 of Excel's",
+   "ok": true,
+   "excel": [
+    131,
+    204,
+    235
+   ],
+   "ours": [
+    131,
+    204,
+    235
+   ]
+  },
+  {
+   "check": "Klasse 8a: top and height within 1 px of Excel's",
+   "ok": true,
+   "excel": [
+    33,
+    26
+   ],
+   "ours": [
+    33.7,
+    26.4
+   ]
+  },
+  {
+   "check": "Klasse 8b: fill colour within 3 of Excel's",
+   "ok": true,
+   "excel": [
+    131,
+    204,
+    235
+   ],
+   "ours": [
+    131,
+    204,
+    235
+   ]
+  },
+  {
+   "check": "Klasse 8b: top and height within 1 px of Excel's",
+   "ok": true,
+   "excel": [
+    62,
+    26
+   ],
+   "ours": [
+    62.8,
+    26.4
+   ]
+  },
+  {
+   "check": "Klasse 8c: fill colour within 3 of Excel's",
+   "ok": true,
+   "excel": [
+    131,
+    204,
+    235
+   ],
+   "ours": [
+    131,
+    204,
+    235
+   ]
+  },
+  {
+   "check": "Klasse 8c: top and height within 1 px of Excel's",
+   "ok": true,
+   "excel": [
+    91,
+    26
+   ],
+   "ours": [
+    91.9,
+    26.4
+   ]
+  }
+ ],
+ "ours": {
+  "Tabelle1": {
+   "hidden": [
+    7,
+    9
+   ],
+   "slicers": [
+    {
+     "name": "Fach",
+     "caption": "Fach",
+     "columns": 1,
+     "style": "SlicerStyleLight1",
+     "items": [
+      [
+       "Deutsch",
+       true,
+       true
+      ],
+      [
+       "Englisch",
+       false,
+       true
+      ],
+      [
+       "Mathe",
+       true,
+       true
+      ]
+     ]
+    },
+    {
+     "name": "Klasse",
+     "caption": "Klasse",
+     "columns": 2,
+     "style": "SlicerStyleDark2",
+     "items": [
+      [
+       "8c",
+       true,
+       false
+      ],
+      [
+       "8b",
+       true,
+       true
+      ],
+      [
+       "8a",
+       true,
+       true
+      ]
+     ]
+    }
+   ],
+   "cells": [
+    [
+     "Name",
+     "Klasse"
+    ],
+    [
+     "Anna",
+     "8a"
+    ],
+    [
+     "Ben",
+     "8a"
+    ],
+    [
+     "Cem",
+     "8b"
+    ],
+    [
+     "Dora",
+     "8b"
+    ],
+    [
+     "Anna",
+     "8a"
+    ],
+    [
+     "Ben",
+     "8a"
+    ],
+    [
+     "Cem",
+     "8b"
+    ]
+   ]
+  },
+  "Tabelle2": {
+   "hidden": [],
+   "slicers": [
+    {
+     "name": "Fach 1",
+     "caption": "Fach",
+     "columns": 1,
+     "style": "SlicerStyleLight1",
+     "items": [
+      [
+       "Deutsch",
+       false,
+       true
+      ],
+      [
+       "Englisch",
+       true,
+       true
+      ],
+      [
+       "Mathe",
+       false,
+       true
+      ]
+     ]
+    }
+   ],
+   "cells": [
+    [
+     null,
+     null
+    ],
+    [
+     null,
+     null
+    ],
+    [
+     "Zeilenbeschriftungen",
+     "Summe von Note"
+    ],
+    [
+     "8a",
+     2
+    ],
+    [
+     "8c",
+     5
+    ],
+    [
+     "Gesamtergebnis",
+     7
+    ],
+    [
+     null,
+     null
+    ],
+    [
+     null,
+     null
+    ]
+   ]
+  }
+ },
+ "excel": {
+  "caches": {
+   "Datenschnitt_Fach1": {
+    "source": "Fach",
+    "sort": 2,
+    "cross": "showItemsWithDataAtTop",
+    "items": [
+     [
+      "Deutsch",
+      false,
+      true
+     ],
+     [
+      "Englisch",
+      true,
+      true
+     ],
+     [
+      "Mathe",
+      false,
+      true
+     ]
+    ],
+    "slicers": [
+     {
+      "name": "Fach 1",
+      "caption": "Fach",
+      "columns": 1,
+      "style": "SlicerStyleLight1"
+     }
+    ]
+   },
+   "Datenschnitt_Fach": {
+    "source": "Fach",
+    "sort": 2,
+    "cross": "showItemsWithDataAtTop",
+    "items": [
+     [
+      "Deutsch",
+      true,
+      true
+     ],
+     [
+      "Englisch",
+      false,
+      true
+     ],
+     [
+      "Mathe",
+      true,
+      true
+     ]
+    ],
+    "slicers": [
+     {
+      "name": "Fach",
+      "caption": "Fach",
+      "columns": 1,
+      "style": "SlicerStyleLight1"
+     }
+    ]
+   },
+   "Datenschnitt_Klasse": {
+    "source": "Klasse",
+    "sort": 3,
+    "cross": "showItemsWithNoData",
+    "items": [
+     [
+      "8c",
+      true,
+      false
+     ],
+     [
+      "8b",
+      true,
+      true
+     ],
+     [
+      "8a",
+      true,
+      true
+     ]
+    ],
+    "slicers": [
+     {
+      "name": "Klasse",
+      "caption": "Klasse",
+      "columns": 2,
+      "style": "SlicerStyleDark2"
+     }
+    ]
+   }
+  },
+  "sheets": {
+   "Tabelle1": {
+    "hidden": [
+     7,
+     9
+    ],
+    "pivot": null
+   },
+   "Tabelle2": {
+    "hidden": [],
+    "pivot": [
+     [
+      "Zeilenbeschriftungen",
+      "Summe von Note"
+     ],
+     [
+      "8a",
+      2.0
+     ],
+     [
+      "8c",
+      5.0
+     ],
+     [
+      "Gesamtergebnis",
+      7.0
+     ]
+    ]
+   }
+  }
+ }
+}

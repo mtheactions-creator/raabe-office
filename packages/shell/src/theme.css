@@ -361,7 +361,8 @@ body.readmode .titlebar .qat, body.readmode .titlebar .search, body.readmode .ti
 .zoom button { width: 18px; height: 18px; display: inline-flex; align-items: center; justify-content: center; border-radius: 2px; font-size: 14px; }
 .zoom button:hover { background: #e3e3e3; }
 .zoom input[type=range] { width: 100px; height: 18px; accent-color: #5b5b5b; margin: 0; }
-.zoom .pct { width: 44px; text-align: right; }
+/* The percentage beside the slider has a fixed width: "97 %" after "100 %" must not move the slider under the pointer (D-096). */
+.zoom .pct, .statusbar .pct { width: 44px; box-sizing: content-box; justify-content: flex-end; text-align: right; }
 
 /* ----- backstage ------------------------------------------------------------------------ */
 
@@ -446,7 +447,8 @@ body.touch .qat button { height: 36px; min-width: 36px; }
 #print-root { display: none; }
 @media print {
   @page { size: A4; margin: 0; }
-  html, body { height: auto; overflow: visible; border: 0; background: #fff; }
+  /* The window's 1-px frame (body border, also set inline by the title bar) would move every page down (D-094). */
+  html, body { height: auto; overflow: visible; border: 0 !important; background: #fff; }
   body > *:not(#print-root) { display: none !important; }
   #print-root { display: block; }
   .print-page { break-after: page; page-break-after: always; }

@@ -23,7 +23,8 @@ const itemText = (v: PivotValue) => (v === null || v === "" ? "" : String(v));
 export interface PivotCacheRef { id: number; rid: string }
 
 /** Writes the sheet's new PivotTables; returns their caches for workbook.xml. */
-export function writePivots(pw: PackageWriter, sheet: Sheet, sheetPart: string, wbPath: string, data: (p: PivotTable) => PivotValue[][], nextId: () => number): PivotCacheRef[] {
+export function writePivots(pw: PackageWriter, sheet: Sheet, sheetPart: string, wbPath: string, data: (p: PivotTable) => PivotValue[][], nextId: () => number,
+  slicers?: { fields(p: PivotTable): string[]; cacheId(p: PivotTable): number | undefined }): PivotCacheRef[] {
   const out: PivotCacheRef[] = [];
   for (const p of sheet.pivots ?? []) {
     const kept = p as PivotTable & { raw?: string; rawKey?: string };
@@ -39,6 +40,9 @@ export function writePivots(pw: PackageWriter, sheet: Sheet, sheetPart: string, 
     const names = rows[0].map((v) => itemText(v) || "Feld");
     const records = rows.slice(1);
     const axis = new Set([...p.rows, ...p.cols, ...p.filters.map((f) => f.field)]);
+    // Fields a Datenschnitt filters (D-092): their items are listed in the cache and the table, as Excel lists them.
+    const sliced = new Set((slicers?.fields(p) ?? []).map((n) => names.indexOf(n)).filter((f) => f >= 0));
+    for (const f of sliced) axis.add(f);
     // Shared items of the fields on an axis (their items are referred to by index).
     const items = names.map((_, f) => (axis.has(f) ? [...new Map(records.map((r) => [itemText(r[f] ?? null), r[f] ?? null])).values()] : []));
     // The field lists its items sorted as Excel sorts a new PivotTable's items (numbers, text, empty last).
@@ -63,7 +67,9 @@ export function writePivots(pw: PackageWriter, sheet: Sheet, sheetPart: string, 
     const cachePart = pw.freeName("xl/pivotCache/pivotCacheDefinition");
     const s = p.source;
     pw.setPart(cachePart, HEAD + `<pivotCacheDefinition ${NS} refreshOnLoad="1" refreshedBy="RaabeCalc" createdVersion="8" refreshedVersion="8" minRefreshableVersion="3" recordCount="${records.length}" saveData="0">`
-      + `<cacheSource type="worksheet"><worksheetSource ref="${ref(s.r0, s.c0, s.r1, s.c1)}" sheet="${esc(s.sheet)}"/></cacheSource><cacheFields count="${names.length}">${cacheFields}</cacheFields></pivotCacheDefinition>`, CT_CACHE);
+      + `<cacheSource type="worksheet"><worksheetSource ref="${ref(s.r0, s.c0, s.r1, s.c1)}" sheet="${esc(s.sheet)}"/></cacheSource><cacheFields count="${names.length}">${cacheFields}</cacheFields>`
+      + (slicers?.cacheId(p) ? `<extLst><ext uri="{725AE2AE-9491-48be-B2B4-4EB974FC3084}" xmlns:x14="http://schemas.microsoft.com/office/spreadsheetml/2009/9/main"><x14:pivotCacheDefinition pivotCacheId="${slicers.cacheId(p)}"/></ext></extLst>` : "")
+      + `</pivotCacheDefinition>`, CT_CACHE);
     const rid = pw.link(wbPath, RT_PIVOT_CACHE, cachePart);
     const id = nextId();
     out.push({ id, rid });
@@ -75,11 +81,11 @@ export function writePivots(pw: PackageWriter, sheet: Sheet, sheetPart: string, 
     const pivotFields = names.map((_, f) => {
       const ax = p.rows.includes(f) ? "axisRow" : p.cols.includes(f) ? "axisCol" : p.filters.some((x) => x.field === f) ? "axisPage" : null;
       const data = p.values.some((v) => v.field === f) ? ' dataField="1"' : "";
-      if (!ax) return `<pivotField${data}${fieldAttrs} showAll="0"/>`;
+      if (!ax && !sliced.has(f)) return `<pivotField${data}${fieldAttrs} showAll="0"/>`;
       const hidden = new Set((p.hidden?.[f] ?? []));
       const filt = p.filters.find((x) => x.field === f);
       const its = order[f].map((k) => { const v = items[f][k]; return `<item${hidden.has(itemText(v)) || (filt?.items && !filt.items.includes(itemText(v) || "(Leer)")) ? ' h="1"' : ""} x="${k}"/>`; }).join("");
-      return `<pivotField axis="${ax}"${data}${fieldAttrs}${ax !== "axisPage" ? sub : ""} showAll="0"><items count="${items[f].length + 1}">${its}<item t="default"/></items></pivotField>`;
+      return `<pivotField${ax ? ` axis="${ax}"` : ""}${data}${fieldAttrs}${ax && ax !== "axisPage" ? sub : ""} showAll="0"><items count="${items[f].length + 1}">${its}<item t="default"/></items></pivotField>`;
     }).join("");
     const area = p.area ?? { r0: p.at.row, c0: p.at.col, r1: p.at.row + 1, c1: p.at.col + 1 };
     const top = p.at.row;

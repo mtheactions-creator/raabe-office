@@ -14,13 +14,45 @@ fn db() -> &'static fontdb::Database {
     DB.get_or_init(|| {
         let mut db = fontdb::Database::new();
         db.load_system_fonts();
-        // Office's cloud fonts (Aptos, Aptos Narrow, Aptos Display …) are not Windows fonts: Office keeps them per
-        // user in its font cache. They are this user's own fonts, used here only (D-089).
+        db
+    })
+}
+
+static CLOUD: OnceLock<fontdb::Database> = OnceLock::new();
+
+/// Office's cloud fonts (Aptos, Aptos Narrow, Aptos Display …), which are not Windows fonts: Office keeps them per user
+/// in its font cache. They are this user's own fonts, used here only (D-089). A database of their own, because the
+/// Display faces call themselves "Aptos": a face counts for its cache folder's name only.
+fn cloud_db() -> &'static fontdb::Database {
+    CLOUD.get_or_init(|| {
+        let mut db = fontdb::Database::new();
         if let Some(dir) = cloud_dir() {
             db.load_fonts_dir(dir);
         }
         db
     })
+}
+
+/// The cache folder (the family Office files a cloud face under) of a face.
+fn cloud_family(face: &fontdb::FaceInfo) -> Option<String> {
+    let dir = cloud_dir()?;
+    match &face.source {
+        fontdb::Source::File(p) => {
+            let rel = p.strip_prefix(&dir).ok()?;
+            if rel.components().count() < 2 { return None; }
+            rel.components().next().map(|c| c.as_os_str().to_string_lossy().into_owned())
+        }
+        _ => None,
+    }
+}
+
+/// The regular face of a cloud family (by its folder), else its nearest to regular.
+fn find_cloud_face(name: &str) -> Option<fontdb::ID> {
+    let db = cloud_db();
+    db.faces()
+        .filter(|f| cloud_family(f).is_some_and(|n| n.eq_ignore_ascii_case(name)))
+        .min_by_key(|f| (f.style != fontdb::Style::Normal, (f.weight.0 as i32 - 400).abs()))
+        .map(|f| f.id)
 }
 
 /// Office's per-user cloud font cache, when there is one.
@@ -45,25 +77,11 @@ pub struct CloudFace {
 #[tauri::command]
 pub fn cloud_fonts() -> Vec<CloudFace> {
     let Some(dir) = cloud_dir() else { return Vec::new() };
-    db().faces()
-        .filter_map(|f| match &f.source {
-            fontdb::Source::File(p) if p.starts_with(&dir) => Some(CloudFace {
-                // Office files a face under its folder's name ("Aptos Display", "Aptos Narrow"), while the font's own
-                // typographic family is "Aptos": both count.
-                families: {
-                    let mut names: Vec<String> = f.families.iter().map(|(n, _)| n.clone()).collect();
-                    if let Some(folder) = p.strip_prefix(&dir).ok().and_then(|r| r.components().next()).map(|c| c.as_os_str().to_string_lossy().into_owned()) {
-                        if !names.iter().any(|n| n.eq_ignore_ascii_case(&folder)) {
-                            names.insert(0, folder);
-                        }
-                    }
-                    names
-                },
-                weight: f.weight.0,
-                italic: f.style != fontdb::Style::Normal,
-                id: p.strip_prefix(&dir).ok()?.to_string_lossy().into_owned(),
-            }),
-            _ => None,
+    cloud_db().faces()
+        .filter_map(|f| {
+            let family = cloud_family(f)?;
+            let id = match &f.source { fontdb::Source::File(p) => p.strip_prefix(&dir).ok()?.to_string_lossy().into_owned(), _ => return None };
+            Some(CloudFace { families: vec![family], weight: f.weight.0, italic: f.style != fontdb::Style::Normal, id })
         })
         .collect()
 }
@@ -130,7 +148,8 @@ pub fn font_metrics(families: Vec<String>) -> HashMap<String, Metrics> {
     families
         .into_iter()
         .map(|name| {
-            let metrics = find_face(db, &name)
+            let (db, id) = match find_face(db, &name) { Some(id) => (db, Some(id)), None => (cloud_db(), find_cloud_face(&name)) };
+            let metrics = id
                 .and_then(|id| {
                     db.with_face_data(id, |data, index| {
                         let face = ttf_parser::Face::parse(data, index).ok()?;

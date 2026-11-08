@@ -1,0 +1,126 @@
+{
+ "cases": 24,
+ "same": 24,
+ "results": [
+  {
+   "case": "leere_zeilen_loeschen",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "case": "duplikate_markieren",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "case": "notenrechner",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "case": "notenspiegel",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "case": "inhaltsverzeichnis",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "case": "blaetter_einblenden",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "case": "zeilen_faerben",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "case": "summenzeile",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "case": "einmaleins",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "case": "text_bereinigen",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "case": "select_case",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "case": "fehlerbehandlung",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "case": "do_while",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "case": "zeilen_ausblenden",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "case": "farbige_zaehlen",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "case": "kopieren_neues_blatt",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "case": "sortieren",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "case": "formatieren",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "case": "adressen_offset",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "case": "worksheetfunction",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "case": "inputbox_msgbox",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "case": "datum_zeit",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "case": "schutz",
+   "ok": true,
+   "diff": []
+  },
+  {
+   "case": "spezialzellen",
+   "ok": true,
+   "diff": []
+  }
+ ]
+}

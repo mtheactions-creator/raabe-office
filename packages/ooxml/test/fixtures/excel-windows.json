@@ -1,0 +1,1066 @@
+{
+ "date": "2026-11-08",
+ "splits": [
+  {
+   "name": "cols3",
+   "setup": {},
+   "split": {
+    "col": 3
+   },
+   "pane_scroll": {},
+   "com": {
+    "caption": "Mappe3",
+    "zoom": 100.0,
+    "split": true,
+    "freeze": false,
+    "splitRow": 0,
+    "splitColumn": 3.0,
+    "splitHorizontal": 180.0,
+    "splitVertical": 0,
+    "scrollRow": 1.0,
+    "scrollColumn": 1.0,
+    "headers": true,
+    "view": 1,
+    "panes": [
+     {
+      "scrollRow": 1.0,
+      "scrollColumn": 1.0,
+      "visible": "A1:C48"
+     },
+     {
+      "scrollRow": 1.0,
+      "scrollColumn": 4.0,
+      "visible": "D1:X48"
+     }
+    ],
+    "visible": true,
+    "activeSheet": "cols3",
+    "activeCell": "A1",
+    "activePane": 1
+   },
+   "standardWidth": 10.27,
+   "colWidthPt": 60.0,
+   "rowHeightPt": 14.5,
+   "xml": {
+    "sheetViews": "<sheetViews><sheetView tabSelected=\"1\" zoomScaleNormal=\"100\" workbookViewId=\"0\"><pane xSplit=\"4000\" topLeftCell=\"D1\"/><selection pane=\"topRight\" activeCell=\"D1\" sqref=\"D1\"/></sheetView></sheetViews>",
+    "customSheetViews": null,
+    "sheetFormatPr": "<sheetFormatPr baseColWidth=\"10\" defaultRowHeight=\"14.5\" x14ac:dyDescent=\"0.35\"/>",
+    "cols": null
+   }
+  },
+  {
+   "name": "rows5",
+   "setup": {},
+   "split": {
+    "row": 5
+   },
+   "pane_scroll": {},
+   "com": {
+    "caption": "Mappe3",
+    "zoom": 100.0,
+    "split": true,
+    "freeze": false,
+    "splitRow": 5.0,
+    "splitColumn": 0,
+    "splitHorizontal": 0,
+    "splitVertical": 72.5,
+    "scrollRow": 1.0,
+    "scrollColumn": 1.0,
+    "headers": true,
+    "view": 1,
+    "panes": [
+     {
+      "scrollRow": 1.0,
+      "scrollColumn": 1.0,
+      "visible": "A1:X5"
+     },
+     {
+      "scrollRow": 6.0,
+      "scrollColumn": 1.0,
+      "visible": "A6:X47"
+     }
+    ],
+    "visible": true,
+    "activeSheet": "rows5",
+    "activeCell": "A1",
+    "activePane": 1
+   },
+   "standardWidth": 10.27,
+   "colWidthPt": 60.0,
+   "rowHeightPt": 14.5,
+   "xml": {
+    "sheetViews": "<sheetViews><sheetView zoomScaleNormal=\"100\" workbookViewId=\"0\"><pane ySplit=\"1740\" topLeftCell=\"A6\"/><selection pane=\"bottomLeft\" activeCell=\"A6\" sqref=\"A6\"/></sheetView></sheetViews>",
+    "customSheetViews": null,
+    "sheetFormatPr": "<sheetFormatPr baseColWidth=\"10\" defaultRowHeight=\"14.5\" x14ac:dyDescent=\"0.35\"/>",
+    "cols": null
+   }
+  },
+  {
+   "name": "both3x5",
+   "setup": {},
+   "split": {
+    "col": 3,
+    "row": 5
+   },
+   "pane_scroll": {},
+   "com": {
+    "caption": "Mappe3",
+    "zoom": 100.0,
+    "split": true,
+    "freeze": false,
+    "splitRow": 5.0,
+    "splitColumn": 3.0,
+    "splitHorizontal": 180.0,
+    "splitVertical": 72.5,
+    "scrollRow": 1.0,
+    "scrollColumn": 1.0,
+    "headers": true,
+    "view": 1,
+    "panes": [
+     {
+      "scrollRow": 1.0,
+      "scrollColumn": 1.0,
+      "visible": "A1:C5"
+     },
+     {
+      "scrollRow": 1.0,
+      "scrollColumn": 4.0,
+      "visible": "D1:X5"
+     },
+     {
+      "scrollRow": 6.0,
+      "scrollColumn": 1.0,
+      "visible": "A6:C47"
+     },
+     {
+      "scrollRow": 6.0,
+      "scrollColumn": 4.0,
+      "visible": "D6:X47"
+     }
+    ],
+    "visible": true,
+    "activeSheet": "both3x5",
+    "activeCell": "A1",
+    "activePane": 1
+   },
+   "standardWidth": 10.27,
+   "colWidthPt": 60.0,
+   "rowHeightPt": 14.5,
+   "xml": {
+    "sheetViews": "<sheetViews><sheetView zoomScaleNormal=\"100\" workbookViewId=\"0\"><pane xSplit=\"4000\" ySplit=\"1740\" topLeftCell=\"D6\"/><selection pane=\"topRight\" activeCell=\"D1\" sqref=\"D1\"/><selection pane=\"bottomLeft\" activeCell=\"A6\" sqref=\"A6\"/><selection pane=\"bottomRight\" activeCell=\"D6\" sqref=\"D6\"/></sheetView></sheetViews>",
+    "customSheetViews": null,
+    "sheetFormatPr": "<sheetFormatPr baseColWidth=\"10\" defaultRowHeight=\"14.5\" x14ac:dyDescent=\"0.35\"/>",
+    "cols": null
+   }
+  },
+  {
+   "name": "both-zoom150",
+   "setup": {
+    "zoom": 150
+   },
+   "split": {
+    "col": 3,
+    "row": 5
+   },
+   "pane_scroll": {},
+   "com": {
+    "caption": "Mappe3",
+    "zoom": 150.0,
+    "split": true,
+    "freeze": false,
+    "splitRow": 5.0,
+    "splitColumn": 3.0,
+    "splitHorizontal": 270.0,
+    "splitVertical": 110.0,
+    "scrollRow": 1.0,
+    "scrollColumn": 1.0,
+    "headers": true,
+    "view": 1,
+    "panes": [
+     {
+      "scrollRow": 1.0,
+      "scrollColumn": 1.0,
+      "visible": "A1:C5"
+     },
+     {
+      "scrollRow": 1.0,
+      "scrollColumn": 4.0,
+      "visible": "D1:P5"
+     },
+     {
+      "scrollRow": 6.0,
+      "scrollColumn": 1.0,
+      "visible": "A6:C31"
+     },
+     {
+      "scrollRow": 6.0,
+      "scrollColumn": 4.0,
+      "visible": "D6:P31"
+     }
+    ],
+    "visible": true,
+    "activeSheet": "both-zoom150",
+    "activeCell": "A1",
+    "activePane": 1
+   },
+   "standardWidth": 10.27,
+   "colWidthPt": 60.0,
+   "rowHeightPt": 14.5,
+   "xml": {
+    "sheetViews": "<sheetViews><sheetView zoomScale=\"150\" zoomScaleNormal=\"150\" workbookViewId=\"0\"><pane xSplit=\"6020\" ySplit=\"2630\" topLeftCell=\"D6\"/><selection pane=\"topRight\" activeCell=\"D1\" sqref=\"D1\"/><selection pane=\"bottomLeft\" activeCell=\"A6\" sqref=\"A6\"/><selection pane=\"bottomRight\" activeCell=\"D6\" sqref=\"D6\"/></sheetView></sheetViews>",
+    "customSheetViews": null,
+    "sheetFormatPr": "<sheetFormatPr baseColWidth=\"10\" defaultRowHeight=\"14.5\" x14ac:dyDescent=\"0.35\"/>",
+    "cols": null
+   }
+  },
+  {
+   "name": "both-zoom75",
+   "setup": {
+    "zoom": 75
+   },
+   "split": {
+    "col": 3,
+    "row": 5
+   },
+   "pane_scroll": {},
+   "com": {
+    "caption": "Mappe3",
+    "zoom": 75.0,
+    "split": true,
+    "freeze": false,
+    "splitRow": 5.0,
+    "splitColumn": 3.0,
+    "splitHorizontal": 135.0,
+    "splitVertical": 55.0,
+    "scrollRow": 1.0,
+    "scrollColumn": 1.0,
+    "headers": true,
+    "view": 1,
+    "panes": [
+     {
+      "scrollRow": 1.0,
+      "scrollColumn": 1.0,
+      "visible": "A1:C5"
+     },
+     {
+      "scrollRow": 1.0,
+      "scrollColumn": 4.0,
+      "visible": "D1:AF5"
+     },
+     {
+      "scrollRow": 6.0,
+      "scrollColumn": 1.0,
+      "visible": "A6:C63"
+     },
+     {
+      "scrollRow": 6.0,
+      "scrollColumn": 4.0,
+      "visible": "D6:AF63"
+     }
+    ],
+    "visible": true,
+    "activeSheet": "both-zoom75",
+    "activeCell": "A1",
+    "activePane": 1
+   },
+   "standardWidth": 10.27,
+   "colWidthPt": 60.0,
+   "rowHeightPt": 14.5,
+   "xml": {
+    "sheetViews": "<sheetViews><sheetView zoomScale=\"75\" zoomScaleNormal=\"75\" workbookViewId=\"0\"><pane xSplit=\"3040\" ySplit=\"1330\" topLeftCell=\"D6\"/><selection pane=\"topRight\" activeCell=\"D1\" sqref=\"D1\"/><selection pane=\"bottomLeft\" activeCell=\"A6\" sqref=\"A6\"/><selection pane=\"bottomRight\" activeCell=\"D6\" sqref=\"D6\"/></sheetView></sheetViews>",
+    "customSheetViews": null,
+    "sheetFormatPr": "<sheetFormatPr baseColWidth=\"10\" defaultRowHeight=\"14.5\" x14ac:dyDescent=\"0.35\"/>",
+    "cols": null
+   }
+  },
+  {
+   "name": "both-noheaders",
+   "setup": {
+    "headers": false
+   },
+   "split": {
+    "col": 3,
+    "row": 5
+   },
+   "pane_scroll": {},
+   "com": {
+    "caption": "Mappe3",
+    "zoom": 100.0,
+    "split": true,
+    "freeze": false,
+    "splitRow": 5.0,
+    "splitColumn": 3.0,
+    "splitHorizontal": 180.0,
+    "splitVertical": 72.5,
+    "scrollRow": 1.0,
+    "scrollColumn": 1.0,
+    "headers": false,
+    "view": 1,
+    "panes": [
+     {
+      "scrollRow": 1.0,
+      "scrollColumn": 1.0,
+      "visible": "A1:C5"
+     },
+     {
+      "scrollRow": 1.0,
+      "scrollColumn": 4.0,
+      "visible": "D1:X5"
+     },
+     {
+      "scrollRow": 6.0,
+      "scrollColumn": 1.0,
+      "visible": "A6:C48"
+     },
+     {
+      "scrollRow": 6.0,
+      "scrollColumn": 4.0,
+      "visible": "D6:X48"
+     }
+    ],
+    "visible": true,
+    "activeSheet": "both-noheaders",
+    "activeCell": "A1",
+    "activePane": 1
+   },
+   "standardWidth": 10.27,
+   "colWidthPt": 60.0,
+   "rowHeightPt": 14.5,
+   "xml": {
+    "sheetViews": "<sheetViews><sheetView showRowColHeaders=\"0\" zoomScaleNormal=\"100\" workbookViewId=\"0\"><pane xSplit=\"3600\" ySplit=\"1450\" topLeftCell=\"D6\"/><selection pane=\"topRight\" activeCell=\"D1\" sqref=\"D1\"/><selection pane=\"bottomLeft\" activeCell=\"A6\" sqref=\"A6\"/><selection pane=\"bottomRight\" activeCell=\"D6\" sqref=\"D6\"/></sheetView></sheetViews>",
+    "customSheetViews": null,
+    "sheetFormatPr": "<sheetFormatPr baseColWidth=\"10\" defaultRowHeight=\"14.5\" x14ac:dyDescent=\"0.35\"/>",
+    "cols": null
+   }
+  },
+  {
+   "name": "both-widecols",
+   "setup": {
+    "widths": {
+     "A": 20,
+     "B": 5
+    }
+   },
+   "split": {
+    "col": 3,
+    "row": 5
+   },
+   "pane_scroll": {},
+   "com": {
+    "caption": "Mappe3",
+    "zoom": 100.0,
+    "split": true,
+    "freeze": false,
+    "splitRow": 5.0,
+    "splitColumn": 3.0,
+    "splitHorizontal": 204.5,
+    "splitVertical": 72.5,
+    "scrollRow": 1.0,
+    "scrollColumn": 1.0,
+    "headers": true,
+    "view": 1,
+    "panes": [
+     {
+      "scrollRow": 1.0,
+      "scrollColumn": 1.0,
+      "visible": "A1:C5"
+     },
+     {
+      "scrollRow": 1.0,
+      "scrollColumn": 4.0,
+      "visible": "D1:W5"
+     },
+     {
+      "scrollRow": 6.0,
+      "scrollColumn": 1.0,
+      "visible": "A6:C47"
+     },
+     {
+      "scrollRow": 6.0,
+      "scrollColumn": 4.0,
+      "visible": "D6:W47"
+     }
+    ],
+    "visible": true,
+    "activeSheet": "both-widecols",
+    "activeCell": "A1",
+    "activePane": 1
+   },
+   "standardWidth": 10.27,
+   "colWidthPt": 113.5,
+   "rowHeightPt": 14.5,
+   "xml": {
+    "sheetViews": "<sheetViews><sheetView zoomScaleNormal=\"100\" workbookViewId=\"0\"><pane xSplit=\"4490\" ySplit=\"1740\" topLeftCell=\"D6\"/><selection pane=\"topRight\" activeCell=\"D1\" sqref=\"D1\"/><selection pane=\"bottomLeft\" activeCell=\"A6\" sqref=\"A6\"/><selection pane=\"bottomRight\" activeCell=\"D6\" sqref=\"D6\"/></sheetView></sheetViews>",
+    "customSheetViews": null,
+    "sheetFormatPr": "<sheetFormatPr baseColWidth=\"10\" defaultRowHeight=\"14.5\" x14ac:dyDescent=\"0.35\"/>",
+    "cols": "<cols><col min=\"1\" max=\"1\" width=\"20.6328125\" customWidth=\"1\"/><col min=\"2\" max=\"2\" width=\"5.6328125\" customWidth=\"1\"/></cols>"
+   }
+  },
+  {
+   "name": "both-scrolled",
+   "setup": {
+    "scroll": [
+     10,
+     4
+    ]
+   },
+   "split": {
+    "col": 3,
+    "row": 5
+   },
+   "pane_scroll": {},
+   "com": {
+    "caption": "Mappe3",
+    "zoom": 100.0,
+    "split": true,
+    "freeze": false,
+    "splitRow": 5.0,
+    "splitColumn": 3.0,
+    "splitHorizontal": 180.0,
+    "splitVertical": 72.5,
+    "scrollRow": 10.0,
+    "scrollColumn": 4.0,
+    "headers": true,
+    "view": 1,
+    "panes": [
+     {
+      "scrollRow": 10.0,
+      "scrollColumn": 4.0,
+      "visible": "D10:F14"
+     },
+     {
+      "scrollRow": 10.0,
+      "scrollColumn": 7.0,
+      "visible": "G10:AA14"
+     },
+     {
+      "scrollRow": 15.0,
+      "scrollColumn": 4.0,
+      "visible": "D15:F56"
+     },
+     {
+      "scrollRow": 15.0,
+      "scrollColumn": 7.0,
+      "visible": "G15:AA56"
+     }
+    ],
+    "visible": true,
+    "activeSheet": "both-scrolled",
+    "activeCell": "A1",
+    "activePane": 1
+   },
+   "standardWidth": 10.27,
+   "colWidthPt": 60.0,
+   "rowHeightPt": 14.5,
+   "xml": {
+    "sheetViews": "<sheetViews><sheetView topLeftCell=\"D10\" zoomScaleNormal=\"100\" workbookViewId=\"0\"><pane xSplit=\"4000\" ySplit=\"1740\" topLeftCell=\"G15\"/><selection pane=\"topRight\" activeCell=\"G10\" sqref=\"G10\"/><selection pane=\"bottomLeft\" activeCell=\"D15\" sqref=\"D15\"/><selection pane=\"bottomRight\" activeCell=\"G15\" sqref=\"G15\"/></sheetView></sheetViews>",
+    "customSheetViews": null,
+    "sheetFormatPr": "<sheetFormatPr baseColWidth=\"10\" defaultRowHeight=\"14.5\" x14ac:dyDescent=\"0.35\"/>",
+    "cols": null
+   }
+  },
+  {
+   "name": "points100x60",
+   "setup": {},
+   "split": {
+    "h": 100.0,
+    "v": 60.0
+   },
+   "pane_scroll": {},
+   "com": {
+    "caption": "Mappe3",
+    "zoom": 100.0,
+    "split": true,
+    "freeze": false,
+    "splitRow": 4.137931034482759,
+    "splitColumn": 1.6666666666666665,
+    "splitHorizontal": 100.0,
+    "splitVertical": 60.0,
+    "scrollRow": 1.0,
+    "scrollColumn": 1.0,
+    "headers": true,
+    "view": 1,
+    "panes": [
+     {
+      "scrollRow": 1.0,
+      "scrollColumn": 1.0,
+      "visible": "A1:B5"
+     },
+     {
+      "scrollRow": 1.0,
+      "scrollColumn": 2.0,
+      "visible": "B1:W5"
+     },
+     {
+      "scrollRow": 5.0,
+      "scrollColumn": 1.0,
+      "visible": "A5:B47"
+     },
+     {
+      "scrollRow": 5.0,
+      "scrollColumn": 2.0,
+      "visible": "B5:W47"
+     }
+    ],
+    "visible": true,
+    "activeSheet": "points100x60",
+    "activeCell": "A1",
+    "activePane": 1
+   },
+   "standardWidth": 10.27,
+   "colWidthPt": 60.0,
+   "rowHeightPt": 14.5,
+   "xml": {
+    "sheetViews": "<sheetViews><sheetView zoomScaleNormal=\"100\" workbookViewId=\"0\"><pane xSplit=\"2400\" ySplit=\"1490\" topLeftCell=\"B5\"/><selection pane=\"topRight\" activeCell=\"B1\" sqref=\"B1\"/><selection pane=\"bottomLeft\" activeCell=\"A5\" sqref=\"A5\"/><selection pane=\"bottomRight\" activeCell=\"B5\" sqref=\"B5\"/></sheetView></sheetViews>",
+    "customSheetViews": null,
+    "sheetFormatPr": "<sheetFormatPr baseColWidth=\"10\" defaultRowHeight=\"14.5\" x14ac:dyDescent=\"0.35\"/>",
+    "cols": null
+   }
+  },
+  {
+   "name": "points-zoom150",
+   "setup": {
+    "zoom": 150
+   },
+   "split": {
+    "h": 100.0,
+    "v": 60.0
+   },
+   "pane_scroll": {},
+   "com": {
+    "caption": "Mappe3",
+    "zoom": 150.0,
+    "split": true,
+    "freeze": false,
+    "splitRow": 3.1136363636363638,
+    "splitColumn": 1.1666666666666667,
+    "splitHorizontal": 105.0,
+    "splitVertical": 68.5,
+    "scrollRow": 1.0,
+    "scrollColumn": 1.0,
+    "headers": true,
+    "view": 1,
+    "panes": [
+     {
+      "scrollRow": 1.0,
+      "scrollColumn": 1.0,
+      "visible": "A1:B4"
+     },
+     {
+      "scrollRow": 1.0,
+      "scrollColumn": 2.0,
+      "visible": "B1:P4"
+     },
+     {
+      "scrollRow": 4.0,
+      "scrollColumn": 1.0,
+      "visible": "A4:B31"
+     },
+     {
+      "scrollRow": 4.0,
+      "scrollColumn": 2.0,
+      "visible": "B4:P31"
+     }
+    ],
+    "visible": true,
+    "activeSheet": "points-zoom150",
+    "activeCell": "A1",
+    "activePane": 1
+   },
+   "standardWidth": 10.27,
+   "colWidthPt": 60.0,
+   "rowHeightPt": 14.5,
+   "xml": {
+    "sheetViews": "<sheetViews><sheetView zoomScale=\"150\" zoomScaleNormal=\"150\" workbookViewId=\"0\"><pane xSplit=\"2720\" ySplit=\"1800\" topLeftCell=\"B4\"/><selection pane=\"topRight\" activeCell=\"B1\" sqref=\"B1\"/><selection pane=\"bottomLeft\" activeCell=\"A4\" sqref=\"A4\"/><selection pane=\"bottomRight\" activeCell=\"B4\" sqref=\"B4\"/></sheetView></sheetViews>",
+    "customSheetViews": null,
+    "sheetFormatPr": "<sheetFormatPr baseColWidth=\"10\" defaultRowHeight=\"14.5\" x14ac:dyDescent=\"0.35\"/>",
+    "cols": null
+   }
+  },
+  {
+   "name": "both-bigrow",
+   "setup": {
+    "heights": {
+     "2": 40
+    }
+   },
+   "split": {
+    "col": 2,
+    "row": 3
+   },
+   "pane_scroll": {},
+   "com": {
+    "caption": "Mappe3",
+    "zoom": 100.0,
+    "split": true,
+    "freeze": false,
+    "splitRow": 3.0,
+    "splitColumn": 2.0,
+    "splitHorizontal": 120.0,
+    "splitVertical": 69.0,
+    "scrollRow": 1.0,
+    "scrollColumn": 1.0,
+    "headers": true,
+    "view": 1,
+    "panes": [
+     {
+      "scrollRow": 1.0,
+      "scrollColumn": 1.0,
+      "visible": "A1:B3"
+     },
+     {
+      "scrollRow": 1.0,
+      "scrollColumn": 3.0,
+      "visible": "C1:X3"
+     },
+     {
+      "scrollRow": 4.0,
+      "scrollColumn": 1.0,
+      "visible": "A4:B46"
+     },
+     {
+      "scrollRow": 4.0,
+      "scrollColumn": 3.0,
+      "visible": "C4:X46"
+     }
+    ],
+    "visible": true,
+    "activeSheet": "both-bigrow",
+    "activeCell": "A1",
+    "activePane": 1
+   },
+   "standardWidth": 10.27,
+   "colWidthPt": 60.0,
+   "rowHeightPt": 14.5,
+   "xml": {
+    "sheetViews": "<sheetViews><sheetView zoomScaleNormal=\"100\" workbookViewId=\"0\"><pane xSplit=\"2800\" ySplit=\"1670\" topLeftCell=\"C4\"/><selection pane=\"topRight\" activeCell=\"C1\" sqref=\"C1\"/><selection pane=\"bottomLeft\" activeCell=\"A4\" sqref=\"A4\"/><selection pane=\"bottomRight\" activeCell=\"C4\" sqref=\"C4\"/></sheetView></sheetViews>",
+    "customSheetViews": null,
+    "sheetFormatPr": "<sheetFormatPr baseColWidth=\"10\" defaultRowHeight=\"14.5\" x14ac:dyDescent=\"0.35\"/>",
+    "cols": null
+   }
+  },
+  {
+   "name": "cols3-panescroll",
+   "setup": {},
+   "split": {
+    "col": 3,
+    "row": 5,
+    "active_pane": 4
+   },
+   "pane_scroll": {
+    "4": [
+     30,
+     12
+    ],
+    "1": [
+     2,
+     2
+    ]
+   },
+   "com": {
+    "caption": "Mappe3",
+    "zoom": 100.0,
+    "split": true,
+    "freeze": false,
+    "splitRow": 5.0,
+    "splitColumn": 3.0,
+    "splitHorizontal": 180.0,
+    "splitVertical": 72.5,
+    "scrollRow": 2.0,
+    "scrollColumn": 2.0,
+    "headers": true,
+    "view": 1,
+    "panes": [
+     {
+      "scrollRow": 2.0,
+      "scrollColumn": 2.0,
+      "visible": "B2:D6"
+     },
+     {
+      "scrollRow": 2.0,
+      "scrollColumn": 1.0,
+      "visible": "A2:U6"
+     },
+     {
+      "scrollRow": 1.0,
+      "scrollColumn": 2.0,
+      "visible": "B1:D42"
+     },
+     {
+      "scrollRow": 1.0,
+      "scrollColumn": 1.0,
+      "visible": "A1:U42"
+     }
+    ],
+    "visible": true,
+    "activeSheet": "cols3-panescroll",
+    "activeCell": "H20",
+    "activePane": 4
+   },
+   "standardWidth": 10.27,
+   "colWidthPt": 60.0,
+   "rowHeightPt": 14.5,
+   "xml": {
+    "sheetViews": "<sheetViews><sheetView topLeftCell=\"B2\" zoomScaleNormal=\"100\" workbookViewId=\"0\"><pane xSplit=\"4000\" ySplit=\"1740\" activePane=\"bottomRight\"/><selection pane=\"topRight\" activeCell=\"D1\" sqref=\"D1\"/><selection pane=\"bottomLeft\" activeCell=\"A6\" sqref=\"A6\"/><selection pane=\"bottomRight\" activeCell=\"H20\" sqref=\"H20\"/></sheetView></sheetViews>",
+    "customSheetViews": null,
+    "sheetFormatPr": "<sheetFormatPr baseColWidth=\"10\" defaultRowHeight=\"14.5\" x14ac:dyDescent=\"0.35\"/>",
+    "cols": null
+   }
+  }
+ ],
+ "windows": {
+  "caption_one": "Mappe4",
+  "captions_two": [
+   "Mappe4  -  2",
+   "Mappe4  -  1"
+  ],
+  "new_window_state": {
+   "caption": "Mappe4  -  2",
+   "zoom": 100.0,
+   "split": false,
+   "freeze": false,
+   "splitRow": 0,
+   "splitColumn": 0,
+   "splitHorizontal": 0,
+   "splitVertical": 0,
+   "scrollRow": 1.0,
+   "scrollColumn": 1.0,
+   "headers": true,
+   "view": 1,
+   "panes": [
+    {
+     "scrollRow": 1.0,
+     "scrollColumn": 1.0,
+     "visible": "A1:X48"
+    }
+   ],
+   "visible": true,
+   "activeSheet": "Tabelle1",
+   "activeCell": "A1",
+   "activePane": 1
+  },
+  "captions_three": [
+   "Mappe4  -  3",
+   "Mappe4  -  2",
+   "Mappe4  -  1"
+  ],
+  "active_caption": "Mappe4  -  3",
+  "closed": "window 2 of 3",
+  "captions_after_close3": [
+   "Mappe4  -  2",
+   "Mappe4  -  1"
+  ],
+  "shown_in_2": null,
+  "state1": {
+   "caption": "Mappe4  -  1",
+   "zoom": 100.0,
+   "split": false,
+   "freeze": false,
+   "splitRow": 0,
+   "splitColumn": 0,
+   "splitHorizontal": 0,
+   "splitVertical": 0,
+   "scrollRow": 1.0,
+   "scrollColumn": 1.0,
+   "headers": true,
+   "view": 1,
+   "panes": [
+    {
+     "scrollRow": 1.0,
+     "scrollColumn": 1.0,
+     "visible": "A1:X48"
+    }
+   ],
+   "visible": true,
+   "activeSheet": "Tabelle1",
+   "activeCell": "B2",
+   "activePane": 1
+  },
+  "state2": {
+   "caption": "Mappe4  -  2",
+   "zoom": 150.0,
+   "split": false,
+   "freeze": false,
+   "splitRow": 0,
+   "splitColumn": 0,
+   "splitHorizontal": 0,
+   "splitVertical": 0,
+   "scrollRow": 10.0,
+   "scrollColumn": 1.0,
+   "headers": true,
+   "view": 1,
+   "panes": [
+    {
+     "scrollRow": 10.0,
+     "scrollColumn": 1.0,
+     "visible": "A10:P40"
+    }
+   ],
+   "visible": true,
+   "activeSheet": "Tabelle2",
+   "activeCell": "C3",
+   "activePane": 1
+  },
+  "xml_two": {
+   "bookViews": "<bookViews><workbookView xWindow=\"4180\" yWindow=\"4180\" windowWidth=\"28800\" windowHeight=\"15460\" xr2:uid=\"{774963D4-4092-4AE4-9D0F-D3A526DFBB3F}\"/><workbookView xWindow=\"760\" yWindow=\"760\" windowWidth=\"28800\" windowHeight=\"15460\" activeTab=\"1\" xr2:uid=\"{2D8C4996-2AAF-4FD8-946E-C1A5DADE7C62}\"/></bookViews>",
+   "customWorkbookViews": null,
+   "definedNames": null,
+   "sheets": {
+    "sheet1": {
+     "sheetViews": "<sheetViews><sheetView tabSelected=\"1\" workbookViewId=\"0\"><selection activeCell=\"B2\" sqref=\"B2\"/></sheetView><sheetView workbookViewId=\"1\"/></sheetViews>",
+     "customSheetViews": null,
+     "sheetFormatPr": "<sheetFormatPr baseColWidth=\"10\" defaultRowHeight=\"14.5\" x14ac:dyDescent=\"0.35\"/>",
+     "cols": null
+    },
+    "sheet2": {
+     "sheetViews": "<sheetViews><sheetView workbookViewId=\"0\"/><sheetView tabSelected=\"1\" topLeftCell=\"A10\" zoomScale=\"150\" zoomScaleNormal=\"150\" workbookViewId=\"1\"><selection activeCell=\"C3\" sqref=\"C3\"/></sheetView></sheetViews>",
+     "customSheetViews": null,
+     "sheetFormatPr": "<sheetFormatPr baseColWidth=\"10\" defaultRowHeight=\"14.5\" x14ac:dyDescent=\"0.35\"/>",
+     "cols": null
+    }
+   }
+  },
+  "captions_saved": [
+   "raabe-excel-windows.xlsx  -  1",
+   "raabe-excel-windows.xlsx  -  2"
+  ],
+  "after_hide": {
+   "active": "raabe-excel-windows.xlsx  -  1",
+   "visible": [
+    true,
+    false
+   ]
+  },
+  "xml_hidden": {
+   "bookViews": "<bookViews><workbookView xWindow=\"4180\" yWindow=\"4180\" windowWidth=\"28800\" windowHeight=\"15460\" xr2:uid=\"{774963D4-4092-4AE4-9D0F-D3A526DFBB3F}\"/><workbookView visibility=\"hidden\" xWindow=\"760\" yWindow=\"760\" windowWidth=\"28800\" windowHeight=\"15460\" activeTab=\"1\" xr2:uid=\"{2D8C4996-2AAF-4FD8-946E-C1A5DADE7C62}\"/></bookViews>",
+   "customWorkbookViews": null,
+   "definedNames": null,
+   "sheets": {
+    "sheet1": {
+     "sheetViews": "<sheetViews><sheetView tabSelected=\"1\" workbookViewId=\"0\"><selection activeCell=\"B2\" sqref=\"B2\"/></sheetView><sheetView workbookViewId=\"1\"/></sheetViews>",
+     "customSheetViews": null,
+     "sheetFormatPr": "<sheetFormatPr baseColWidth=\"10\" defaultRowHeight=\"14.5\" x14ac:dyDescent=\"0.35\"/>",
+     "cols": null
+    },
+    "sheet2": {
+     "sheetViews": "<sheetViews><sheetView workbookViewId=\"0\"/><sheetView tabSelected=\"1\" topLeftCell=\"A10\" zoomScale=\"150\" zoomScaleNormal=\"150\" workbookViewId=\"1\"><selection activeCell=\"C3\" sqref=\"C3\"/></sheetView></sheetViews>",
+     "customSheetViews": null,
+     "sheetFormatPr": "<sheetFormatPr baseColWidth=\"10\" defaultRowHeight=\"14.5\" x14ac:dyDescent=\"0.35\"/>",
+     "cols": null
+    }
+   }
+  },
+  "arrange": {
+   "tiled": [
+    {
+     "caption": "raabe-excel-windows.xlsx  -  2",
+     "left": 0.0,
+     "top": 0.0,
+     "width": 960.5,
+     "height": 1052.0,
+     "state": -4143
+    },
+    {
+     "caption": "raabe-excel-windows.xlsx  -  1",
+     "left": 960.5,
+     "top": 0.0,
+     "width": 961.5,
+     "height": 1052.0,
+     "state": -4143
+    }
+   ],
+   "horizontal": [
+    {
+     "caption": "raabe-excel-windows.xlsx  -  2",
+     "left": 0.0,
+     "top": 0.0,
+     "width": 1922.0,
+     "height": 525.5,
+     "state": -4143
+    },
+    {
+     "caption": "raabe-excel-windows.xlsx  -  1",
+     "left": 0.0,
+     "top": 525.5,
+     "width": 1922.0,
+     "height": 526.5,
+     "state": -4143
+    }
+   ],
+   "vertical": [
+    {
+     "caption": "raabe-excel-windows.xlsx  -  2",
+     "left": 0.0,
+     "top": 0.0,
+     "width": 960.5,
+     "height": 1052.0,
+     "state": -4143
+    },
+    {
+     "caption": "raabe-excel-windows.xlsx  -  1",
+     "left": 960.5,
+     "top": 0.0,
+     "width": 961.5,
+     "height": 1052.0,
+     "state": -4143
+    }
+   ],
+   "cascade": [
+    {
+     "caption": "raabe-excel-windows.xlsx  -  2",
+     "left": 16.0,
+     "top": 17.5,
+     "width": 1906.0,
+     "height": 1034.5,
+     "state": -4143
+    },
+    {
+     "caption": "raabe-excel-windows.xlsx  -  1",
+     "left": 0.0,
+     "top": 0.0,
+     "width": 1906.0,
+     "height": 1034.5,
+     "state": -4143
+    }
+   ]
+  },
+  "caption_after_close1": [
+   "raabe-excel-windows.xlsx"
+  ],
+  "reopened": [
+   {
+    "caption": "raabe-excel-windows.xlsx  -  1",
+    "sheet": "Tabelle1",
+    "cell": "B2",
+    "zoom": 100.0
+   },
+   {
+    "caption": "raabe-excel-windows.xlsx  -  2",
+    "sheet": "Tabelle2",
+    "cell": "C3",
+    "zoom": 150.0
+   }
+  ]
+ },
+ "custom": {
+  "names": [
+   "Alles",
+   "Ohne Zeilen",
+   "Nur Anzeige"
+  ],
+  "flags": [
+   [
+    true,
+    true
+   ],
+   [
+    true,
+    true
+   ],
+   [
+    false,
+    false
+   ]
+  ],
+  "after_show_alles": {
+   "hidden3": false,
+   "widthC": 20.0,
+   "zoom": 100.0,
+   "cell": "B2",
+   "orientation": 1.0
+  },
+  "after_show_ohne": {
+   "hidden3": true,
+   "widthC": 20.0,
+   "zoom": 120.0,
+   "cell": "D5",
+   "orientation": 2.0
+  },
+  "xml": {
+   "bookViews": "<bookViews><workbookView xWindow=\"290\" yWindow=\"920\" windowWidth=\"38110\" windowHeight=\"20680\" xr2:uid=\"{A0BE8BB2-C913-45A2-A96C-319EFB0BE6ED}\"/></bookViews>",
+   "customWorkbookViews": "<customWorkbookViews><customWorkbookView name=\"Nur Anzeige\" guid=\"{F1FDA056-DF9C-4063-A31F-3675A04621DB}\" includePrintSettings=\"0\" includeHiddenRowCol=\"0\" xWindow=\"29\" yWindow=\"92\" windowWidth=\"3811\" windowHeight=\"2068\" activeSheetId=\"1\"/><customWorkbookView name=\"Ohne Zeilen\" guid=\"{679E9C4B-318A-4183-AA02-3E6A48990284}\" xWindow=\"29\" yWindow=\"92\" windowWidth=\"3811\" windowHeight=\"2068\" activeSheetId=\"1\"/><customWorkbookView name=\"Alles\" guid=\"{04C3B5B3-2302-4A0D-BAB9-7E4D2DA888AD}\" xWindow=\"29\" yWindow=\"92\" windowWidth=\"3811\" windowHeight=\"2068\" activeSheetId=\"1\"/></customWorkbookViews>",
+   "definedNames": "<definedNames><definedName name=\"Z_679E9C4B_318A_4183_AA02_3E6A48990284_.wvu.Rows\" localSheetId=\"0\" hidden=\"1\">Tabelle1!$3:$4</definedName></definedNames>",
+   "sheets": {
+    "sheet1": {
+     "sheetViews": "<sheetViews><sheetView tabSelected=\"1\" zoomScale=\"120\" zoomScaleNormal=\"120\" workbookViewId=\"0\"><selection activeCell=\"D5\" sqref=\"D5\"/></sheetView></sheetViews>",
+     "customSheetViews": "<customSheetViews><customSheetView guid=\"{F1FDA056-DF9C-4063-A31F-3675A04621DB}\" scale=\"120\" showPageBreaks=\"1\"/><customSheetView guid=\"{679E9C4B-318A-4183-AA02-3E6A48990284}\" scale=\"120\" showPageBreaks=\"1\" hiddenRows=\"1\"><selection activeCell=\"D5\" sqref=\"D5\"/><pageMargins left=\"0.7\" right=\"0.7\" top=\"0.78740157499999996\" bottom=\"0.78740157499999996\" header=\"0.3\" footer=\"0.3\"/><pageSetup paperSize=\"9\" orientation=\"landscape\" horizontalDpi=\"4294967293\" verticalDpi=\"0\" r:id=\"rId1\"/></customSheetView><customSheetView guid=\"{04C3B5B3-2302-4A0D-BAB9-7E4D2DA888AD}\"><selection activeCell=\"B2\" sqref=\"B2\"/><pageMargins left=\"0.7\" right=\"0.7\" top=\"0.78740157499999996\" bottom=\"0.78740157499999996\" header=\"0.3\" footer=\"0.3\"/></customSheetView></customSheetViews>",
+     "sheetFormatPr": "<sheetFormatPr baseColWidth=\"10\" defaultRowHeight=\"14.5\" x14ac:dyDescent=\"0.35\"/>",
+     "cols": "<cols><col min=\"3\" max=\"3\" width=\"20.6328125\" customWidth=\"1\"/></cols>"
+    }
+   }
+  },
+  "with_table": "refused: (-2147352567, 'Ausnahmefehler aufgetreten.', (0, None, None, None, 0, -2146827284), None)"
+ },
+ "pagelayout": {
+  "ruler_normal": true,
+  "view": 3,
+  "zoom_in_layout": 100.0,
+  "ruler": true,
+  "whitespace": true,
+  "xml": {
+   "bookViews": "<bookViews><workbookView xWindow=\"290\" yWindow=\"920\" windowWidth=\"38110\" windowHeight=\"20680\" xr2:uid=\"{1CA6C3BC-44C3-43DC-9E0F-5A6AB5A97561}\"/></bookViews>",
+   "customWorkbookViews": null,
+   "definedNames": null,
+   "sheets": {
+    "sheet1": {
+     "sheetViews": "<sheetViews><sheetView tabSelected=\"1\" view=\"pageLayout\" zoomScale=\"85\" zoomScaleNormal=\"100\" zoomScalePageLayoutView=\"85\" workbookViewId=\"0\"/></sheetViews>",
+     "customSheetViews": null,
+     "sheetFormatPr": "<sheetFormatPr baseColWidth=\"10\" defaultRowHeight=\"14.5\" x14ac:dyDescent=\"0.35\"/>",
+     "cols": null
+    }
+   }
+  },
+  "xml_noruler": {
+   "bookViews": "<bookViews><workbookView xWindow=\"290\" yWindow=\"920\" windowWidth=\"38110\" windowHeight=\"20680\" xr2:uid=\"{1CA6C3BC-44C3-43DC-9E0F-5A6AB5A97561}\"/></bookViews>",
+   "customWorkbookViews": null,
+   "definedNames": null,
+   "sheets": {
+    "sheet1": {
+     "sheetViews": "<sheetViews><sheetView tabSelected=\"1\" showRuler=\"0\" view=\"pageLayout\" zoomScale=\"85\" zoomScaleNormal=\"100\" zoomScalePageLayoutView=\"85\" workbookViewId=\"0\"/></sheetViews>",
+     "customSheetViews": null,
+     "sheetFormatPr": "<sheetFormatPr baseColWidth=\"10\" defaultRowHeight=\"14.5\" x14ac:dyDescent=\"0.35\"/>",
+     "cols": null
+    }
+   }
+  },
+  "xml_pagebreak": {
+   "bookViews": "<bookViews><workbookView xWindow=\"290\" yWindow=\"920\" windowWidth=\"38110\" windowHeight=\"20680\" xr2:uid=\"{1CA6C3BC-44C3-43DC-9E0F-5A6AB5A97561}\"/></bookViews>",
+   "customWorkbookViews": null,
+   "definedNames": null,
+   "sheets": {
+    "sheet1": {
+     "sheetViews": "<sheetViews><sheetView tabSelected=\"1\" view=\"pageBreakPreview\" zoomScale=\"60\" zoomScaleNormal=\"100\" zoomScalePageLayoutView=\"85\" workbookViewId=\"0\"/></sheetViews>",
+     "customSheetViews": null,
+     "sheetFormatPr": "<sheetFormatPr baseColWidth=\"10\" defaultRowHeight=\"14.5\" x14ac:dyDescent=\"0.35\"/>",
+     "cols": null
+    }
+   }
+  },
+  "zoom_back_normal": 100.0
+ },
+ "split_off": {
+  "caption": "raabe-excel-split.xlsx",
+  "zoom": 100.0,
+  "split": false,
+  "freeze": false,
+  "splitRow": 0,
+  "splitColumn": 0,
+  "splitHorizontal": 0,
+  "splitVertical": 0,
+  "scrollRow": 1.0,
+  "scrollColumn": 1.0,
+  "headers": true,
+  "view": 1,
+  "panes": [
+   {
+    "scrollRow": 1.0,
+    "scrollColumn": 1.0,
+    "visible": "A1:X48"
+   }
+  ],
+  "visible": true,
+  "activeSheet": "cols3",
+  "activeCell": "A1",
+  "activePane": 1
+ }
+}

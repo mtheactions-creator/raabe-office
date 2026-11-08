@@ -16,6 +16,7 @@ import {
 import { isRel } from "./read";
 import { canon } from "./styles";
 import { children, outer, root } from "./xml";
+import { inkKey, isInkAnchor, readInk, writeInk } from "./ink";
 
 /** The sheet's charts (the model's optional `charts` field). */
 export function chartsOf(s: Sheet): ChartModel[] | undefined {
@@ -89,7 +90,8 @@ export function writeCharts(pw: PackageWriter, sheet: Sheet, sheetPart: string, 
   const old = part ? strFromU8(pw.files[part]) : undefined;
   // The drawing's anchors in their order: pictures and shapes stay, a chart's slot is filled by
   // its model (or dropped); new charts come last.
-  const slots: { xml: string; chart?: ChartRead }[] = [];
+  const slots: { xml: string; chart?: ChartRead; ink?: NonNullable<Sheet["inks"]>[number] }[] = [];
+  const inkRaws = new Set((JSON.parse(picsSnap ?? "[]") as { ink?: string; raw?: string | null }[]).filter((p) => p.ink).map((p) => p.raw ?? ""));
   let head = "", tail = "";
   const keptPics = pics.filter((p) => p.raw && !p.group && old?.includes(p.raw));
   let nextPic = 0;
@@ -133,6 +135,13 @@ export function writeCharts(pw: PackageWriter, sheet: Sheet, sheetPart: string, 
     tail = old.slice(kids.length ? kids[kids.length - 1].end : r.close);
     for (const a of kids) {
       const ax = outer(old, a);
+      // Ink (D-093): the model's version, gone when deleted (written once the drawing's part is known).
+      if (isInkAnchor(ax)) {
+        const k = (sheet.inks ?? []).find((q) => q.raw === ax);
+        if (k) slots.push({ xml: "", ink: k });
+        else if (!inkRaws.has(ax)) slots.push({ xml: ax });
+        continue;
+      }
       // Pictures: kept as they are, with new corners when moved, with Excel's DrawingML when their
       // Bildformat changed, gone when deleted; the model's order fills the pictures' places (Ebene
       // nach vorne / nach hinten).
@@ -157,7 +166,8 @@ export function writeCharts(pw: PackageWriter, sheet: Sheet, sheetPart: string, 
   }
   const fresh = pics.filter((p) => !p.raw || !old?.includes(p.raw));
   const freshShapes = (sheet.shapes ?? []).filter((s) => !s.raw || !old?.includes(s.raw));
-  const others = [...slots.filter((x) => !x.chart), ...fresh, ...freshShapes];
+  const freshInks = (sheet.inks ?? []).filter((k) => !k.raw || !old?.includes(k.raw));
+  const others = [...slots.filter((x) => !x.chart), ...fresh, ...freshShapes, ...freshInks];
   if (!charts.length && !others.length) {
     if (drel) sheetRels.list.splice(sheetRels.list.indexOf(drel), 1), (sheetRels.changed = true);
     return null;
@@ -195,6 +205,9 @@ export function writeCharts(pw: PackageWriter, sheet: Sheet, sheetPart: string, 
   }
   // New shapes and text boxes.
   for (const s of freshShapes) added.push(shapeToXml({ ...s, raw: undefined }, id++, s.size ?? { w: 120, h: 80 }));
+  // Ink: kept anchors stay, changed and new ones get their InkML part (and picture) as Excel writes them.
+  for (const x of slots) if (x.ink) x.xml = writeInk(pw, part, x.ink, Number(/<xdr14:cNvPr\b[^>]*\bid="(\d+)"/.exec(x.ink.raw ?? "")?.[1] ?? id++), { x: 0, y: 0 });
+  for (const k of freshInks) added.push(writeInk(pw, part, { ...k, raw: undefined }, id++, { x: 0, y: 0 }));
   const all = [...slots.map((x) => (x.chart ? placed.get(x.chart) ?? "" : x.xml)), ...added].join("");
   // Relationships of removed charts.
   for (const r of [...drels.list]) {
@@ -230,6 +243,7 @@ export function picturesKey(sheet: Sheet): string {
   return canon([
     ...(sheet.pictures ?? []).map((p) => ({ from: p.from, to: p.to ?? null, size: p.size ?? null, name: p.name ?? null, raw: p.raw ?? null, look: lookKey(p) })),
     ...(sheet.shapes ?? []).map((s) => ({ shape: shapeKey(s), raw: s.raw ?? null })),
+    ...(sheet.inks ?? []).map((k) => ({ ink: inkKey(k), raw: k.raw ?? null })),
   ]);
 }
 
@@ -257,8 +271,15 @@ export function readPictures(files: Record<string, Uint8Array>, sheet: Sheet, sh
   const decls = rootDecls(xml);
   const out: NonNullable<Sheet["pictures"]> = [];
   const shapes: NonNullable<Sheet["shapes"]> = [];
+  const inks: NonNullable<Sheet["inks"]> = [];
   for (const a of children(xml, r.open, r.close)) {
     const ax = outer(xml, a);
+    // Ink (D-093): read before pictures, as its Fallback holds a picture.
+    if (isInkAnchor(ax)) {
+      const k = readInk(ax, part, rels, files);
+      if (k) inks.push(k);
+      continue;
+    }
     const sh = shapeFromXml(ax);
     if (sh) {
       const ext = /<a:ext cx="(\d+)" cy="(\d+)"/.exec(ax);
@@ -308,5 +329,6 @@ export function readPictures(files: Record<string, Uint8Array>, sheet: Sheet, sh
   }
   if (out.length) sheet.pictures = out;
   if (shapes.length) sheet.shapes = shapes;
+  if (inks.length) sheet.inks = inks;
   return picturesKey(sheet);
 }

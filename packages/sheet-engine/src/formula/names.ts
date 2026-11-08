@@ -158,6 +158,10 @@ FIXED|FEST|Zahl; [Dezimalstellen]; [Keine_Punkte]
 FLOOR|UNTERGRENZE|Zahl; Schritt
 FLOOR.MATH|UNTERGRENZE.MATHEMATIK|Zahl; [Schritt]; [Modus]
 FORECAST|SCHÄTZER|x; Y_Werte; X_Werte
+FORECAST.ETS|PROGNOSE.ETS|Ziel_Datum; Werte; Zeitachse; [Saisonalität]; [Datenvervollständigung]; [Aggregation]
+FORECAST.ETS.CONFINT|PROGNOSE.ETS.KONFINT|Ziel_Datum; Werte; Zeitachse; [Konfidenzniveau]; [Saisonalität]; [Datenvervollständigung]; [Aggregation]
+FORECAST.ETS.SEASONALITY|PROGNOSE.ETS.SAISONALITÄT|Werte; Zeitachse; [Datenvervollständigung]; [Aggregation]
+FORECAST.ETS.STAT|PROGNOSE.ETS.STAT|Werte; Zeitachse; Statistiktyp; [Saisonalität]; [Datenvervollständigung]; [Aggregation]
 FORECAST.LINEAR|PROGNOSE.LINEAR|x; Y_Werte; X_Werte
 FORMULATEXT|FORMELTEXT|Bezug
 FREQUENCY|HÄUFIGKEIT|Daten; Klassen
@@ -566,6 +570,10 @@ export const XLFN: Record<string, string> = {
   "F.TEST": "_xlfn.F.TEST",
   "FILTER": "_xlfn._xlws.FILTER",
   "FLOOR.MATH": "_xlfn.FLOOR.MATH",
+  "FORECAST.ETS": "_xlfn.FORECAST.ETS",
+  "FORECAST.ETS.CONFINT": "_xlfn.FORECAST.ETS.CONFINT",
+  "FORECAST.ETS.SEASONALITY": "_xlfn.FORECAST.ETS.SEASONALITY",
+  "FORECAST.ETS.STAT": "_xlfn.FORECAST.ETS.STAT",
   "FORECAST.LINEAR": "_xlfn.FORECAST.LINEAR",
   "FORMULATEXT": "_xlfn.FORMULATEXT",
   "GAMMA": "_xlfn.GAMMA",

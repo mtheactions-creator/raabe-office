@@ -160,6 +160,15 @@ export class PackageWriter {
     }
   }
 
+  /** A binary part (a VBA project …) with its content type. */
+  setBinary(path: string, bytes: Uint8Array, contentType?: string): void {
+    this.files[path] = bytes;
+    if (contentType && this.overrides.get(path) !== contentType) {
+      this.overrides.set(path, contentType);
+      this.typesChanged = true;
+    }
+  }
+
   /** Removes a part and its content type. */
   removePart(path: string): void {
     delete this.files[path];

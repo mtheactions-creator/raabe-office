@@ -209,6 +209,52 @@ export interface View {
   showHeaders: boolean;
   /** Fenster fixieren: rows above `row` and columns left of `col` stay put (0 = none). */
   freeze?: { row: number; col: number };
+  /**
+   * Teilen (D-093): the split bars' places as the file's pane xSplit/ySplit, in 1/20 pt from the window's
+   * left/top edge with the headers (0: no bar); `top`/`left` are the top-left pane's first row and column
+   * (`top`/`left` of the view are the bottom-right pane's); `pane` is the active pane.
+   */
+  split?: { x: number; y: number; top: number; left: number; pane?: "topLeft" | "topRight" | "bottomLeft" | "bottomRight";
+    /** The other panes' selections as the file has them (Excel keeps each pane's own). */
+    sels?: Record<string, { ac: string; sqref: string }> };
+  /** Fixed by Fenster fixieren while split: Fixierung aufheben gives the split back (recorded). */
+  splitFrozen?: boolean;
+  /**
+   * Seitenlayout view (sheetView view="pageLayout"): `zoom` is then the view's own zoom (zoomScalePageLayoutView)
+   * and `normalZoom` the Normal view's (zoomScaleNormal); Lineal off (showRuler="0").
+   */
+  layout?: boolean;
+  normalZoom?: number;
+  noRuler?: boolean;
+}
+
+/** An ink drawing (Zeichnen, D-093): one xdr:contentPart with its InkML part, as Excel stores ink. */
+export interface SheetInk {
+  from: { col: number; row: number; x: number; y: number };
+  to: { col: number; row: number; x: number; y: number };
+  /** Its box in px at 100 % (the strokes are drawn into it). */
+  size: { w: number; h: number };
+  /** The strokes: points in px at 100 % inside the box, t in ms from the drawing's start (Freihandwiedergabe). */
+  strokes: { pts: { x: number; y: number; t?: number }[]; brush: InkBrush }[];
+  name?: string;
+  /** The InkML's timestamp (timeString). */
+  time?: string;
+  /** The Fallback picture as a data: URL (PNG), for programs without ink. */
+  fallback?: string;
+  /** The anchor's XML and its InkML part as read: kept while unchanged. */
+  raw?: string;
+  part?: string;
+  rawKey?: string;
+}
+
+export interface InkBrush {
+  color: string;
+  /** Pen width in mm. */
+  width: number;
+  /** Textmarker (tip rectangle, rasterOp maskPen) and Bleistift (pencil texture). */
+  kind?: "pen" | "highlighter" | "pencil";
+  /** Further brush properties as the file has them (transparency, ignorePressure …). */
+  extra?: Record<string, string>;
 }
 
 /** One column's filter: chosen values, or Zahlenfilter/Textfilter (custom), Top 10, above/below the average. */
@@ -457,6 +503,9 @@ export interface PageSetup {
   /** Drucktitel: rows repeated at the top and columns at the left of every page (_xlnm.Print_Titles). */
   titleRows?: [number, number];
   titleCols?: [number, number];
+  /** Auf der Seite zentrieren: horizontally / vertically between the margins (printOptions). */
+  centerH?: boolean;
+  centerV?: boolean;
 }
 
 /**
@@ -527,8 +576,16 @@ export class Sheet {
   tables?: import("./table").SheetTable[];
   /** PivotTables whose report is on this sheet. */
   pivots?: import("./pivot").PivotTable[];
+  /** Datenschnitte on the sheet (D-092). */
+  slicers?: import("./slicer").Slicer[];
   /** Shapes and text boxes of the drawing. */
   shapes?: SheetShape[];
+  /** Ink drawn with the Zeichnen tab (D-093). */
+  inks?: SheetInk[];
+  /** Neues Fenster (D-093): this sheet's view in the workbook's further windows (views[i - 1] for window i). */
+  views?: View[];
+  /** Benutzerdefinierte Ansichten: the sheet's customSheetView elements by guid, as the file has them. */
+  customViews?: { guid: string; xml: string }[];
   /** Blatt schützen: the attributes of <sheetProtection> as the file has them (sheet="1" when on). */
   protection?: Record<string, string>;
   /** Bedingte Formatierung, in the file's order (priority decides). */
@@ -609,10 +666,26 @@ export class Workbook {
   themeNames: { theme: string; colors: string; fonts: string } = { theme: "Office", colors: "Office", fonts: "Office" };
   /** The number of the last sheet Excel would have named "TabelleN" (new sheets count on from it). */
   sheetSeq?: number;
+  /** The VBA project (xl/vbaProject.bin) of a workbook with macros (.xlsm); written back while it is set. */
+  vba?: Uint8Array;
+  /**
+   * Neues Fenster (D-093): every window of the workbook (bookViews' workbookView) when there are several or one
+   * is hidden; window 0's active sheet is `active`, the others' `active` here. `attrs` are the file's attributes.
+   */
+  windows?: { active: number; hidden?: boolean; attrs?: Record<string, string> }[];
+  /**
+   * The window whose views the sheets' `view` and `active` hold while it is shown (the app swaps them, see
+   * swapWindow); the file is written with window 0's in place.
+   */
+  shownWindow?: number;
+  /** Benutzerdefinierte Ansichten (customWorkbookView): name, guid, Druckeinstellungen, Ausgeblendete Zeilen/Spalten. */
+  customViews?: { name: string; guid: string; print: boolean; rowCol: boolean; attrs: Record<string, string> }[];
   /** The document's name without extension as the title bar shows it (ZELLE("Adresse") on another sheet). */
   docName?: string;
   /** The file's full path once saved or opened (ZELLE("Dateiname"), INFO("Verzeichnis")); never written to the file. */
   docPath?: string;
+  /** The workbook's slicer caches (Datenschnitte, D-092). */
+  slicerCaches?: import("./slicer").SlicerCache[];
   /** The .xlsx layer's package and parts it does not model. */
   raw?: unknown;
 
@@ -630,4 +703,22 @@ export class Workbook {
     wb.sheets.push(new Sheet(sheetName));
     return wb;
   }
+}
+
+/**
+ * Neues Fenster (D-093): swaps window k's views and active sheet with window 0's in place (`view`, `active`);
+ * doing it twice restores them.
+ */
+export function swapWindow(wb: Workbook, k: number): void {
+  const w = wb.windows?.[k];
+  if (!k || !w) return;
+  for (const s of wb.sheets) {
+    s.views ??= [];
+    const other = s.views[k - 1] ?? JSON.parse(JSON.stringify(s.view));
+    s.views[k - 1] = s.view;
+    s.view = other;
+  }
+  const a = w.active;
+  w.active = wb.active;
+  wb.active = Math.min(a, wb.sheets.length - 1);
 }

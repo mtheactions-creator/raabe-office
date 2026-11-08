@@ -33,6 +33,11 @@ export interface SheetTable {
   columnStripes: boolean;
   /** Schaltfläche "Filter". */
   filterButton: boolean;
+  /** The AutoFilter's chosen values per column (0-based; "" for empty cells), as Datenschnitte set them (D-092). */
+  filters?: Record<number, string[]>;
+  /** Attributes of a query's table (tableType, connectionId) and of its columns, kept for the file. */
+  fileAttrs?: string;
+  columnAttrs?: string[];
   /** The file's table id (unique in the workbook). */
   id?: number;
   /** The .xlsx layer's part and what the model held when read (written back verbatim while unchanged). */

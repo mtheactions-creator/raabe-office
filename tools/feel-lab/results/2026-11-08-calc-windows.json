@@ -1,0 +1,458 @@
+{
+ "raabe->excel": [
+  {
+   "check": "two windows",
+   "ok": true
+  },
+  {
+   "check": "captions as Excel's (Name  -  1/2)",
+   "ok": true
+  },
+  {
+   "check": "window 2 shows the second sheet, C3 at 150 %",
+   "ok": true
+  },
+  {
+   "check": "window 1 shows the first sheet",
+   "ok": true
+  },
+  {
+   "check": "Tabelle1 split at C5: 4 rows, 2 columns, 4 panes",
+   "ok": true
+  },
+  {
+   "check": "Tabelle1 split not frozen",
+   "ok": true
+  },
+  {
+   "check": "Tabelle1 bottom-right pane from C5",
+   "ok": true
+  },
+  {
+   "check": "Tabelle2 split at A1: 4 panes",
+   "ok": true
+  },
+  {
+   "check": "Tabelle3 Seitenlayout (View 3)",
+   "ok": true
+  },
+  {
+   "check": "Tabelle3 without Lineal",
+   "ok": true
+  },
+  {
+   "check": "Tabelle3 zoom 85",
+   "ok": true
+  },
+  {
+   "check": "custom view",
+   "ok": true
+  },
+  {
+   "check": "custom view hides rows 3:4",
+   "ok": true
+  },
+  {
+   "check": "two ink drawings",
+   "ok": true
+  },
+  {
+   "check": "both are msoInk (23)",
+   "ok": true
+  },
+  {
+   "check": "pen stroke at H3",
+   "ok": true
+  },
+  {
+   "check": "Textmarker at B12",
+   "ok": true
+  },
+  {
+   "check": "our pen stroke has the synthesized points",
+   "ok": true
+  },
+  {
+   "check": "ink 1 width within 1.5 pt",
+   "ok": true
+  },
+  {
+   "check": "ink 2 width within 1.5 pt",
+   "ok": true
+  }
+ ],
+ "excel->raabe": [
+  {
+   "check": "split cols3",
+   "ok": true
+  },
+  {
+   "check": "split rows5",
+   "ok": true
+  },
+  {
+   "check": "split both3x5",
+   "ok": true
+  },
+  {
+   "check": "split both-zoom150",
+   "ok": true
+  },
+  {
+   "check": "split both-zoom75",
+   "ok": true
+  },
+  {
+   "check": "split both-noheaders",
+   "ok": true
+  },
+  {
+   "check": "split both-widecols",
+   "ok": true
+  },
+  {
+   "check": "split both-scrolled",
+   "ok": true
+  },
+  {
+   "check": "split points100x60",
+   "ok": true
+  },
+  {
+   "check": "split points-zoom150",
+   "ok": true
+  },
+  {
+   "check": "split both-bigrow",
+   "ok": true
+  },
+  {
+   "check": "split cols3-panescroll",
+   "ok": true
+  },
+  {
+   "check": "both split bars shown (both3x5)",
+   "ok": true,
+   "bars": {
+    "above": 4,
+    "panes": 2,
+    "x": 266.6666666666667,
+    "y": 116,
+    "hw": 27,
+    "hh": 19
+   }
+  },
+  {
+   "check": "the horizontal bar below row 5 as in Excel (both3x5)",
+   "ok": true,
+   "bars": {
+    "above": 4,
+    "panes": 2,
+    "x": 266.6666666666667,
+    "y": 116,
+    "hw": 27,
+    "hh": 19
+   }
+  },
+  {
+   "check": "two windows as document tabs with Excel's captions",
+   "ok": true,
+   "got": [
+    "excel-windows  -  1",
+    "excel-windows  -  2"
+   ]
+  },
+  {
+   "check": "window 2 shows Tabelle2 at 150 %",
+   "ok": true
+  },
+  {
+   "check": "switching to window 2 shows its sheet, cell and zoom",
+   "ok": true,
+   "got": {
+    "sheet": "Tabelle2",
+    "zoom": 150,
+    "cell": [
+     2,
+     2
+    ],
+    "title": "excel-windows - 2 - RaabeCalc"
+   }
+  },
+  {
+   "check": "Seitenlayout view at 85 % (Normal 100 %)",
+   "ok": true,
+   "got": {
+    "layout": true,
+    "zoom": 85,
+    "normal": 100,
+    "pages": [
+     41,
+     11
+    ],
+    "overlay": true,
+    "checked": true
+   }
+  },
+  {
+   "check": "pages drawn",
+   "ok": true
+  },
+  {
+   "check": "Excel's three custom views listed",
+   "ok": true
+  },
+  {
+   "check": "Anzeigen 'Ohne Zeilen' as Excel (rows 3:4 hidden, 120 %, D5, landscape)",
+   "ok": true,
+   "got": [
+    true,
+    true,
+    120,
+    4,
+    3,
+    "landscape"
+   ]
+  },
+  {
+   "check": "Anzeigen 'Alles' as Excel (rows shown, 100 %, B2)",
+   "ok": true,
+   "got": [
+    false,
+    100,
+    1,
+    1
+   ]
+  },
+  {
+   "check": "Excel's four ink drawings read as ink (not pictures)",
+   "ok": true
+  },
+  {
+   "check": "ink at Excel's cells (COM TopLeftCell)",
+   "ok": true,
+   "got": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     0,
+     9
+    ],
+    [
+     2,
+     1
+    ]
+   ],
+   "want": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     0,
+     9
+    ],
+    [
+     2,
+     1
+    ]
+   ]
+  },
+  {
+   "check": "RaabeCalc's save of Excel's ink opens in Excel as four msoInk",
+   "ok": true,
+   "got": [
+    23,
+    23,
+    23,
+    23
+   ]
+  }
+ ],
+ "built": {
+  "split1": {
+   "x": 2805,
+   "y": 1500,
+   "top": 0,
+   "left": 0,
+   "pane": "bottomRight"
+  },
+  "split2": {
+   "x": 10005,
+   "y": 8400,
+   "top": 0,
+   "left": 0,
+   "pane": "topLeft"
+  },
+  "top1": [
+   4,
+   2
+  ]
+ },
+ "window2": {
+  "tabs": [
+   "Mappe1  -  1",
+   "Mappe1  -  2"
+  ],
+  "shown": 1,
+  "domTabs": [
+   "Mappe1  -  1",
+   "Mappe1  -  2"
+  ]
+ },
+ "ink": [
+  {
+   "from": [
+    7,
+    2
+   ],
+   "strokes": 1,
+   "pts": 25,
+   "color": "#E71224",
+   "kind": "pen",
+   "w": 175,
+   "h": 72.375
+  },
+  {
+   "from": [
+    1,
+    11
+   ],
+   "strokes": 1,
+   "pts": 20,
+   "color": "#FFFC00",
+   "kind": "highlighter",
+   "w": 152,
+   "h": 0.01
+  }
+ ],
+ "excel": {
+  "captions": [
+   "raabe-windows-ours.xlsx  -  2",
+   "raabe-windows-ours.xlsx  -  1"
+  ],
+  "w1": {
+   "sheet": "Tabelle1",
+   "cell": "C5",
+   "zoom": 100.0
+  },
+  "w2": {
+   "sheet": "Tabelle3",
+   "cell": "C3",
+   "zoom": 150.0
+  },
+  "names": [
+   "Tabelle1",
+   "Tabelle3",
+   "Tabelle4"
+  ],
+  "sheets": {
+   "Tabelle1": {
+    "split": true,
+    "freeze": false,
+    "splitRow": 4.172413793103448,
+    "splitColumn": 2.0,
+    "panes": 4,
+    "paneScroll": [
+     [
+      1.0,
+      1.0
+     ],
+     [
+      1.0,
+      3.0
+     ],
+     [
+      5.0,
+      1.0
+     ],
+     [
+      5.0,
+      3.0
+     ]
+    ],
+    "view": 1,
+    "ruler": true,
+    "zoom": 100.0
+   },
+   "Tabelle2": {
+    "split": true,
+    "freeze": false,
+    "splitRow": 27.96551724137931,
+    "splitColumn": 8.0,
+    "panes": 4,
+    "paneScroll": [
+     [
+      1.0,
+      1.0
+     ],
+     [
+      1.0,
+      9.0
+     ],
+     [
+      28.0,
+      1.0
+     ],
+     [
+      28.0,
+      9.0
+     ]
+    ],
+    "view": 1,
+    "ruler": true,
+    "zoom": 100.0
+   },
+   "Tabelle3": {
+    "split": false,
+    "freeze": false,
+    "splitRow": 0,
+    "splitColumn": 0,
+    "panes": 1,
+    "paneScroll": [
+     [
+      1.0,
+      1.0
+     ]
+    ],
+    "view": 3,
+    "ruler": false,
+    "zoom": 85.0
+   }
+  },
+  "custom": [
+   "Ohne Zeilen"
+  ],
+  "shapes": [
+   {
+    "name": "Ink 1",
+    "type": 23,
+    "tl": "H3",
+    "w": 131.25,
+    "h": 49.7812614440918
+   },
+   {
+    "name": "Ink 2",
+    "type": 23,
+    "tl": "B12",
+    "w": 114.0,
+    "h": 0.0074803149327635765
+   }
+  ],
+  "custom_shows_hidden": [
+   true,
+   true,
+   false
+  ]
+ }
+}

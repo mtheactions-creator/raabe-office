@@ -41,6 +41,21 @@ export function tableFromXml(xml: string, part?: string): SheetTable | null {
     filterButton: /<autoFilter\b/.test(xml) && !/<filterColumn\b[^>]*hiddenButton="1"/.test(xml),
     id: Number(attr(top, "id") ?? 0) || undefined,
   };
+  // The AutoFilter's chosen values (Datenschnitte set them, D-092).
+  const filters: Record<number, string[]> = {};
+  for (const m of xml.matchAll(/<filterColumn\b([^>]*)>([\s\S]*?)<\/filterColumn>/g)) {
+    const f = /<filters\b([^>]*)>([\s\S]*?)<\/filters>|<filters\b([^>]*)\/>/.exec(m[2]);
+    if (!f) continue;
+    const vals = [...(f[2] ?? "").matchAll(/<filter\b[^>]*\bval="([^"]*)"/g)].map((x) => unesc(x[1]));
+    if (/\bblank="1"/.test(f[1] ?? f[3] ?? "")) vals.push("");
+    filters[Number(attr(m[1], "colId") ?? 0)] = vals;
+  }
+  if (Object.keys(filters).length) t.filters = filters;
+  // A query's table (Daten abrufen) keeps its link to the query when it is written anew.
+  const keep = ["tableType", "connectionId"].map((k) => (attr(top, k) !== undefined ? ` ${k}="${attr(top, k)}"` : "")).join("");
+  if (keep) t.fileAttrs = keep;
+  const colKeep = [...xml.matchAll(/<tableColumn\b([^>]*?)\/?>/g)].map((m) => ["uniqueName", "queryTableFieldId"].map((k) => (attr(m[1], k) !== undefined ? ` ${k}="${attr(m[1], k)}"` : "")).join(""));
+  if (colKeep.some(Boolean)) t.columnAttrs = colKeep;
   // The column formula as Excel shows it ([@Note]*2; the file has Noten[[#This Row],[Note]]*2).
   for (const c of t.columns) if (c.formula !== undefined) c.formula = mapStructs(fromXlsxFormula(c.formula), (x) => structToShown(x, t.name));
   if (part) { t.raw = part; t.rawKey = tableKey(t); }
@@ -51,15 +66,27 @@ export function tableFromXml(xml: string, part?: string): SheetTable | null {
 export function tableToXml(t: SheetTable, id: number): string {
   const ref = rangeName(t.ref);
   const body = { r0: t.ref.r0, c0: t.ref.c0, r1: t.ref.r1 - (t.totals ? 1 : 0), c1: t.ref.c1 };
-  const filter = t.header && t.filterButton ? `<autoFilter ref="${rangeName(body)}"/>` : t.header && !t.filterButton
-    ? `<autoFilter ref="${rangeName(body)}">${t.columns.map((_, i) => `<filterColumn colId="${i}" hiddenButton="1"/>`).join("")}</autoFilter>` : "";
+  // Chosen values (Datenschnitte) as Excel writes them: <filters> with one <filter> per value, blank="1" for empty cells.
+  const chosen = (i: number) => {
+    const v = t.filters?.[i];
+    if (!v) return "";
+    const blank = v.includes("") ? ' blank="1"' : "";
+    return `<filters${blank}>${v.filter((x) => x !== "").map((x) => `<filter val="${esc(x)}"/>`).join("")}</filters>`;
+  };
+  const col = (i: number) => {
+    const hide = t.filterButton ? "" : ' hiddenButton="1"';
+    const inner = chosen(i);
+    return hide || inner ? (inner ? `<filterColumn colId="${i}"${hide}>${inner}</filterColumn>` : `<filterColumn colId="${i}"${hide}/>`) : "";
+  };
+  const fcols = t.header ? t.columns.map((_, i) => col(i)).join("") : "";
+  const filter = t.header ? (fcols ? `<autoFilter ref="${rangeName(body)}">${fcols}</autoFilter>` : `<autoFilter ref="${rangeName(body)}"/>`) : "";
   const cols = t.columns.map((c, i) => {
-    const a = `id="${i + 1}" name="${esc(c.name)}"${c.totalsLabel !== undefined ? ` totalsRowLabel="${esc(c.totalsLabel)}"` : ""}${c.totalsFunction ? ` totalsRowFunction="${c.totalsFunction}"` : ""}`;
+    const a = `id="${i + 1}"${t.columnAttrs?.[i] ?? ""} name="${esc(c.name)}"${c.totalsLabel !== undefined ? ` totalsRowLabel="${esc(c.totalsLabel)}"` : ""}${c.totalsFunction ? ` totalsRowFunction="${c.totalsFunction}"` : ""}`;
     return c.formula !== undefined ? `<tableColumn ${a}><calculatedColumnFormula>${esc(toXlsxFormula(mapStructs(c.formula, (x) => structToFile(x, t.name))))}</calculatedColumnFormula></tableColumn>` : `<tableColumn ${a}/>`;
   }).join("");
   const style = t.style ? `<tableStyleInfo name="${esc(t.style)}" showFirstColumn="${t.firstColumn ? 1 : 0}" showLastColumn="${t.lastColumn ? 1 : 0}" showRowStripes="${t.rowStripes ? 1 : 0}" showColumnStripes="${t.columnStripes ? 1 : 0}"/>`
     : `<tableStyleInfo showFirstColumn="${t.firstColumn ? 1 : 0}" showLastColumn="${t.lastColumn ? 1 : 0}" showRowStripes="${t.rowStripes ? 1 : 0}" showColumnStripes="${t.columnStripes ? 1 : 0}"/>`;
-  return HEAD + `<table ${NS} id="${id}" name="${esc(t.name)}" displayName="${esc(t.name)}" ref="${ref}"${t.header ? "" : ' headerRowCount="0"'}${t.totals ? ' totalsRowCount="1"' : ' totalsRowShown="0"'}>`
+  return HEAD + `<table ${NS} id="${id}" name="${esc(t.name)}" displayName="${esc(t.name)}" ref="${ref}"${t.fileAttrs ?? ""}${t.header ? "" : ' headerRowCount="0"'}${t.totals ? ' totalsRowCount="1"' : ' totalsRowShown="0"'}>`
     + `${filter}<tableColumns count="${t.columns.length}">${cols}</tableColumns>${style}</table>`;
 }
 

@@ -1,0 +1,121 @@
+{
+ "word": [
+  {
+   "case": "table column border",
+   "plain": {
+    "before": 226.6,
+    "after": 254.9,
+    "undone": 226.6,
+    "undo_restores": true
+   },
+   "esc": {
+    "before": 226.6,
+    "after": 226.6,
+    "changed": false
+   },
+   "esc_cancels": true
+  },
+  {
+   "case": "table row border",
+   "error": "the plain drag changed nothing"
+  },
+  {
+   "case": "picture corner handle (inline)",
+   "error": "the plain drag changed nothing"
+  },
+  {
+   "case": "picture move (floating)",
+   "error": "the plain drag changed nothing"
+  },
+  {
+   "case": "picture side handle (floating)",
+   "plain": {
+    "before": [
+     299.9,
+     20.0,
+     120.0,
+     80.0,
+     0.0
+    ],
+    "after": [
+     300.1,
+     20.1,
+     148.0,
+     80.0,
+     0.0
+    ],
+    "undone": [
+     299.9,
+     20.0,
+     120.0,
+     80.0,
+     0.0
+    ],
+    "undo_restores": true
+   },
+   "esc": {
+    "before": [
+     299.9,
+     20.0,
+     120.0,
+     80.0,
+     0.0
+    ],
+    "after": [
+     299.9,
+     20.0,
+     120.0,
+     80.0,
+     0.0
+    ],
+    "changed": false
+   },
+   "esc_cancels": true
+  },
+  {
+   "case": "picture rotation handle",
+   "plain": {
+    "before": [
+     299.9,
+     20.0,
+     120.0,
+     80.0,
+     0.0
+    ],
+    "after": [
+     299.9,
+     20.0,
+     120.0,
+     80.0,
+     26.6
+    ],
+    "undone": [
+     299.9,
+     20.0,
+     120.0,
+     80.0,
+     0.0
+    ],
+    "undo_restores": true
+   },
+   "esc": {
+    "before": [
+     299.9,
+     20.0,
+     120.0,
+     80.0,
+     0.0
+    ],
+    "after": [
+     299.9,
+     20.0,
+     120.0,
+     80.0,
+     0.0
+    ],
+    "changed": false
+   },
+   "esc_cancels": true
+  }
+ ]
+}

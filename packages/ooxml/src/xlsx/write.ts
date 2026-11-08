@@ -4,20 +4,22 @@
 // in schema order the way Excel writes it. Shared formulas are written per cell, strings into
 // a fresh shared-string table; calcChain.xml is dropped (Excel rebuilds it).
 
-import { writePivots, type PivotCacheRef } from "./pivots";
+import { pivotKey, writePivots, type PivotCacheRef } from "./pivots";
+import { planSlicers } from "./slicers";
 import { writeTables } from "./tables";
 import { consolidateXml, scenariosXml } from "./scenarios";
 import { strFromU8, strToU8, zipSync } from "fflate";
 import {
-  CellError, cellName, fromXlsxFormula, keyCell, mapStructs, rangeName, structToFile, structToShown, toXlsxFormula,
+  CellError, cellName, swapWindow, fromXlsxFormula, keyCell, mapStructs, rangeName, structToFile, structToShown, toXlsxFormula,
   type Cell, type ColInfo, type DefinedName, type RowInfo, type Sheet, type View, type Workbook,
 } from "@raabe/sheet-engine";
 import { PackageWriter, Rels, relsPath, resolveTarget } from "../package";
-import { RT, isRel, nameKey, readPackage, sheetNamesSnap, sheetSnap, type BookRaw, type SheetRaw } from "./read";
+import { CT_MAIN, CT_MAIN_MACROS, CT_VBA, RT, RT_VBA, isRel, nameKey, readPackage, sheetNamesSnap, sheetSnap, type BookRaw, type SheetRaw } from "./read";
 import { canon, StylesWriter } from "./styles";
 import { commentsXml, vmlBlocks, vmlXml, type NoteIn } from "./notes";
 import { colorXml, patchTheme, readTheme, themeNames } from "./colors";
 import { writeCharts } from "./drawing";
+import { bookViewsXml, customBookViewsXml, layoutAttrs, splitXml } from "./views";
 import { newPackage } from "./new";
 import { numText, widthFromBase, widthToFile } from "./units";
 import { esc, escText, encodeX, joinSplit, place, placeAll, setAttrs, split, tXml, type Split, XML_HEAD } from "./xml";
@@ -55,6 +57,9 @@ export interface XlsxWriteOptions {
   /** Author of new notes and last author in the document properties. */
   author?: string;
   now?: Date;
+  /** The file's kind: true an .xlsm (Excel opens an .xlsm only with the macro-enabled type), false an .xlsx
+   * without the VBA project; by default whatever the workbook has. */
+  macros?: boolean;
 }
 
 export function writeXlsx(wb: Workbook, options: XlsxWriteOptions = {}): Uint8Array {
@@ -63,6 +68,20 @@ export function writeXlsx(wb: Workbook, options: XlsxWriteOptions = {}): Uint8Ar
 
 /** The package's files for a workbook (before zipping). */
 export function writePackage(wb: Workbook, options: XlsxWriteOptions = {}): Record<string, Uint8Array> {
+  // Neues Fenster (D-093): the file holds window 0's views in place.
+  const shown = wb.shownWindow;
+  if (!shown) return writePackageNow(wb, options);
+  swapWindow(wb, shown);
+  wb.shownWindow = undefined;
+  try {
+    return writePackageNow(wb, options);
+  } finally {
+    swapWindow(wb, shown);
+    wb.shownWindow = shown;
+  }
+}
+
+function writePackageNow(wb: Workbook, options: XlsxWriteOptions): Record<string, Uint8Array> {
   const raw = (wb.raw as BookRaw | undefined) ?? (readPackage(newPackage(false)).raw as BookRaw);
   const pw = new PackageWriter(raw.files);
   const before = reachable(raw.files);
@@ -119,6 +138,8 @@ export function writePackage(wb: Workbook, options: XlsxWriteOptions = {}): Reco
   };
   // Table ids are unique in the workbook: new tables count on from the highest.
   let tableId = Math.max(0, ...wb.sheets.flatMap((sh) => (sh.tables ?? []).map((t) => t.id ?? 0))) + 1;
+  // Datenschnitte (D-092): kept as read, or all their parts written anew after a change.
+  const slicers = planSlicers(wb, pw, raw.wbPath, pivotKey as (p: never) => string);
   wb.sheets.forEach((sheet, i) => {
     const sr = sheet.raw as SheetRaw | undefined;
     const own = !!sr && !used.has(sr.part) && !!raw.files[sr.part];
@@ -126,11 +147,12 @@ export function writePackage(wb: Workbook, options: XlsxWriteOptions = {}): Reco
     used.add(part);
     const w = new SheetWriter(sheet, i === wb.active, own ? sr : undefined, sr, part, pw, sw, sst, raw, options.author ?? "", vmlIds);
     w.personOf = personOf;
+    w.windowTabs = (wb.windows ?? []).map((x, k) => (k === 0 ? i === wb.active : x.active === i));
     w.nextTableId = () => tableId++;
     w.tableNames = new Set(wb.sheets.flatMap((s) => (s.tables ?? []).map((t) => t.name.toLowerCase())));
-    pw.setPart(part, w.xml(), CT.worksheet);
+    pw.setPart(part, slicers.sheetXml(sheet, part, w.xml()), CT.worksheet);
     if (w.formulaWithoutValue) needsCalc = true;
-    caches.push(...writePivots(pw, sheet, part, raw.wbPath, pivotData, () => cacheId++));
+    caches.push(...writePivots(pw, sheet, part, raw.wbPath, pivotData, () => cacheId++, { fields: (p) => slicers.pivotFields(sheet.name, p.name), cacheId: (p) => slicers.pivotCacheId(sheet.name, p.name) }));
     let rid = own ? wbRels.list.find((r) => isRel(r.type, RT.worksheet) && resolveTarget(raw.wbPath, r.target) === part)?.id : undefined;
     if (!rid) rid = pw.link(raw.wbPath, RT.worksheet, part);
     const sheetId = own ? sr!.sheetId : ++maxId;
@@ -162,7 +184,19 @@ export function writePackage(wb: Workbook, options: XlsxWriteOptions = {}): Reco
   const stylesXml = sw.xml();
   if (stylesRel && stylesXml !== raw.styles.xml) pw.setPart(resolveTarget(raw.wbPath, stylesRel.target), stylesXml);
 
-  pw.setPart(raw.wbPath, workbookXml(wb, raw, entries, needsCalc, caches));
+  // Makros (D-091): the VBA project and the workbook's type (.xlsm) while the workbook has one; without it the
+  // project and its relationship go (saving as .xlsx drops the macros, as Excel does).
+  const vbaRel = wbRels.list.find((r) => isRel(r.type, RT_VBA));
+  const macroFile = options.macros ?? !!wb.vba;
+  if (wb.vba && macroFile) {
+    const vbaPath = vbaRel ? resolveTarget(raw.wbPath, vbaRel.target) : "xl/vbaProject.bin";
+    pw.setBinary(vbaPath, wb.vba, CT_VBA);
+    if (!vbaRel) pw.link(raw.wbPath, RT_VBA, vbaPath);
+  } else if (vbaRel) {
+    pw.removePart(resolveTarget(raw.wbPath, vbaRel.target));
+    removeRel(wbRels, vbaRel.id);
+  }
+  pw.setPart(raw.wbPath, slicers.finish(workbookXml(wb, raw, entries, needsCalc, caches), new Map(entries.map((e) => [e.name, e.sheetId]))), macroFile ? CT_MAIN_MACROS : CT_MAIN);
   props(pw, wb, raw, options);
 
   const files = pw.finish();
@@ -243,6 +277,8 @@ class SheetWriter {
   nextTableId: () => number = () => 1;
   /** The workbook's table names (lower case): a name alone is written as Noten[] (Excel). */
   tableNames = new Set<string>();
+  /** Neues Fenster (D-093): per window whether this sheet is its active one. */
+  windowTabs: boolean[] = [];
   private sp: Split;
   private readonly rels: Rels;
 
@@ -285,12 +321,16 @@ class SheetWriter {
     this.put("dimension", `<dimension ref="${used ? rangeName(used) : "A1"}"/>`);
     // View.
     let views = this.get("sheetViews");
-    if (!views || !snap || now.view !== snap.view) views = viewsXml(s.view, views, this.src);
+    const otherViews = canon(s.views ?? null) !== (this.own?.views ?? canon(null));
+    if (!views || !snap || now.view !== snap.view || otherViews) views = windowViewsXml(s, viewsXml(s.view, firstView(views), this.src), views, this.src);
     views = views.replace(/<sheetView\b[^>]*>/, (tag) => {
       const on = /\btabSelected="(1|true)"/.test(tag);
-      return on === this.selected ? tag : setAttrs(tag, { tabSelected: this.selected ? "1" : null });
+      return on === this.selected ? tag : viewAttrOrder(setAttrs(tag, { tabSelected: this.selected ? "1" : null }));
     });
+    if (s.views?.length) views = tabSelections(views, this.windowTabs);
     this.put("sheetViews", views);
+    // Benutzerdefinierte Ansichten (D-093): the sheet's customSheetViews as the model has them.
+    if (s.customViews) this.put("customSheetViews", s.customViews.length ? `<customSheetViews>${s.customViews.map((c) => c.xml).join("")}</customSheetViews>` : null);
     // Default sizes.
     if (!snap || now.defaults !== snap.defaults) {
       let fmt = this.get("sheetFormatPr") ?? '<sheetFormatPr baseColWidth="10" defaultRowHeight="15"/>';
@@ -552,12 +592,14 @@ const PANES = { both: "bottomRight", rows: "bottomLeft", cols: "topRight" } as c
 function viewsXml(v: View, old: string | undefined, raw: SheetRaw | undefined): string {
   const oldTag = old ? /<sheetView\b[^>]*?\/?>/.exec(old)?.[0] : undefined;
   let tag = oldTag ? oldTag.replace(/\/>$/, ">") : '<sheetView workbookViewId="0">';
-  const tl = v.freeze ? raw?.frozenTopLeft ?? { row: 0, col: 0 } : { row: v.top, col: v.left };
+  const tl = v.freeze ? raw?.frozenTopLeft ?? { row: 0, col: 0 } : v.split ? { row: v.split.top, col: v.split.left } : { row: v.top, col: v.left };
   tag = setAttrs(tag, {
     showGridLines: v.showGrid ? null : "0", showRowColHeaders: v.showHeaders ? null : "0",
     topLeftCell: tl.row || tl.col ? cellName(tl.row, tl.col) : null,
     zoomScale: v.zoom !== 100 ? String(v.zoom) : null, zoomScaleNormal: v.zoom !== 100 ? String(v.zoom) : null,
+    ...layoutAttrs(v, tag),
   });
+  tag = viewAttrOrder(tag);
   // Children other than pane and selection (pivotSelection, extLst) stay.
   const inner = old && oldTag && !oldTag.endsWith("/>") ? /<sheetView\b[^>]*>([\s\S]*?)<\/sheetView>/.exec(old)?.[1] ?? "" : "";
   const rest = inner.replace(/<pane\b[^>]*\/>/g, "").replace(/<selection\b[^>]*\/>/g, "");
@@ -568,12 +610,15 @@ function viewsXml(v: View, old: string | undefined, raw: SheetRaw | undefined): 
     const ys = v.freeze.row - tl.row, xs = v.freeze.col - tl.col;
     active = ys && xs ? PANES.both : ys ? PANES.rows : PANES.cols;
     const top = Math.max(v.top, v.freeze.row), left = Math.max(v.left, v.freeze.col);
-    pane = `<pane${xs ? ` xSplit="${xs}"` : ""}${ys ? ` ySplit="${ys}"` : ""} topLeftCell="${cellName(top, left)}" activePane="${active}" state="frozen"/>`;
-  } else if (oldPane && !/state="frozen/.test(oldPane)) {
-    // A split window (not modelled) stays as it was.
-    pane = oldPane;
-    active = /activePane="([^"]+)"/.exec(oldPane)?.[1] ?? "topLeft";
+    pane = `<pane${xs ? ` xSplit="${xs}"` : ""}${ys ? ` ySplit="${ys}"` : ""} topLeftCell="${cellName(top, left)}" activePane="${active}" state="${v.splitFrozen ? "frozenSplit" : "frozen"}"/>`;
+  } else if (v.split && (v.split.x || v.split.y)) {
+    // Teilen (D-093): as Excel writes a split window.
+    const sp = splitXml(v);
+    const head = old ? old.slice(0, old.indexOf(">") + 1) : "<sheetViews>";
+    const others = old ? (/<\/sheetView>([\s\S]*)<\/sheetViews>/.exec(old)?.[1] ?? /<sheetView\b[^>]*\/>([\s\S]*)<\/sheetViews>/.exec(old)?.[1] ?? "") : "";
+    return `${head}${tag}${sp.pane}${sp.sels}${rest}</sheetView>${others}</sheetViews>`;
   }
+  void oldPane;
   const sqref = v.selection.map(rangeName).join(" ") || cellName(v.active.row, v.active.col);
   const ac = cellName(v.active.row, v.active.col);
   const sel = `<selection${active !== "topLeft" ? ` pane="${active}"` : ""}${ac === "A1" && sqref === "A1" && !pane ? "" : ` activeCell="${ac}" sqref="${sqref}"`}/>`;
@@ -599,7 +644,10 @@ function workbookXml(wb: Workbook, raw: BookRaw, entries: { name: string; sheetI
   }
   const active = fileIndex.get(wb.active) ?? 0;
   const views = get("bookViews");
-  if (views) {
+  const wins = bookViewsXml(wb, (i) => fileIndex.get(i) ?? 0, views ? /<workbookView\b[^>]*?\/?>/.exec(views)?.[0] : undefined);
+  if (wb.customViews) put("customWorkbookViews", customBookViewsXml(wb));
+  if (wins) put("bookViews", wins);
+  else if (views) {
     put("bookViews", views.replace(/<workbookView\b[^>]*?\/?>/, (tag) => {
       const first = Number(/firstSheet="(\d+)"/.exec(tag)?.[1] ?? 0);
       return setAttrs(tag, {
@@ -677,4 +725,50 @@ function props(pw: PackageWriter, wb: Workbook, raw: BookRaw, o: XlsxWriteOption
 function readHf(xml: string | undefined, name: string): string {
   const m = xml ? new RegExp(`<${name}>([\\s\\S]*?)</${name}>`).exec(xml) : null;
   return m ? m[1].replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&amp;/g, "&") : "";
+}
+
+/** The first <sheetView> of a <sheetViews> (the main window's), as its own <sheetViews>. */
+function firstView(views: string | undefined): string | undefined {
+  if (!views) return undefined;
+  const one = /^<sheetViews\b[^>]*>(<sheetView\b[^>]*\/>|<sheetView\b[^>]*>[\s\S]*?<\/sheetView>)/.exec(views);
+  return one ? `${views.slice(0, views.indexOf(">") + 1)}${one[1]}</sheetViews>` : views;
+}
+
+/** <sheetViews> with the sheet's views in the workbook's other windows after the main one (Neues Fenster, D-093). */
+function windowViewsXml(s: Sheet, main: string, old: string | undefined, raw: SheetRaw | undefined): string {
+  if (!s.views?.length) return main;
+  const olds = old ? [...old.matchAll(/<sheetView\b[^>]*\/>|<sheetView\b[^>]*>[\s\S]*?<\/sheetView>/g)].map((m) => m[0]) : [];
+  const first = /^<sheetViews\b[^>]*>(<sheetView\b[^>]*\/>|<sheetView\b[^>]*>[\s\S]*?<\/sheetView>)/.exec(main)?.[1] ?? "";
+  const rest = s.views.map((v, i) => {
+    const o = olds[i + 1] ?? `<sheetView workbookViewId="${i + 1}"/>`;
+    const x = viewsXml(v, `<sheetViews>${o}</sheetViews>`, raw);
+    const one = /^<sheetViews>([\s\S]*)<\/sheetViews>$/.exec(x)?.[1] ?? o;
+    return one.replace(/^<sheetView\b[^>]*?\/?>/, (tag) => viewAttrOrder(setAttrs(tag, { workbookViewId: String(i + 1) })));
+  });
+  return `${main.slice(0, main.indexOf(">") + 1)}${first}${rest.join("")}</sheetViews>`;
+}
+
+/** tabSelected on each further window's sheetView of the sheets that window shows. */
+function tabSelections(views: string, tabs: boolean[]): string {
+  let i = 0;
+  return views.replace(/<sheetView\b[^>]*?\/?>/g, (tag) => {
+    const k = i++;
+    if (k === 0 || k >= tabs.length) return tag;
+    const on = /\btabSelected="(1|true)"/.test(tag);
+    return on === !!tabs[k] ? tag : viewAttrOrder(setAttrs(tag, { tabSelected: tabs[k] ? "1" : null }));
+  });
+}
+
+/** CT_SheetView's attributes in the schema's order (as Excel writes them). */
+const VIEW_ATTRS = ["windowProtection", "showFormulas", "showGridLines", "showRowColHeaders", "showZeros", "rightToLeft", "tabSelected", "showRuler",
+  "showOutlineSymbols", "defaultGridColor", "showWhiteSpace", "view", "topLeftCell", "colorId", "zoomScale", "zoomScaleNormal", "zoomScaleSheetLayoutView",
+  "zoomScalePageLayoutView", "workbookViewId"];
+
+function viewAttrOrder(tag: string): string {
+  const m = /^<sheetView\b([^>]*?)(\/?)>$/.exec(tag);
+  if (!m) return tag;
+  const list = [...m[1].matchAll(/([\w:]+)="([^"]*)"/g)].map((x) => [x[1], x[2]] as const);
+  const rank = (k: string) => { const i = VIEW_ATTRS.indexOf(k); return i < 0 ? VIEW_ATTRS.length : i; };
+  list.sort((a, b) => rank(a[0]) - rank(b[0]));
+  return `<sheetView${list.map(([k, v]) => ` ${k}="${v}"`).join("")}${m[2]}>`;
 }

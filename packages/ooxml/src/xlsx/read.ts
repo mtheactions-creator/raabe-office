@@ -14,14 +14,21 @@ import { shiftFormula } from "./shift";
 import { readStyles, canon, type StylesRaw } from "./styles";
 import { MDW, widthFromBase, widthFromFile } from "./units";
 import { readCharts, readPictures, type DrawingRaw } from "./drawing";
+import { readBookViews, readViewExtras } from "./views";
 import { readPivots } from "./pivots";
 import { readTables } from "./tables";
+import { readSlicers } from "./slicers";
 import { readConsolidate, readScenarios } from "./scenarios";
 import { RT_PERSON, RT_THREADS, readPersons, readThreads } from "./threads";
 import { FILTER_DB, PRINT_AREA, PRINT_TITLES, ownRange, readSparklines, readTitles, readAutoFilter, readConditional, readPage, readValidations, type CfRaw, type DvRaw } from "./sheetparts";
 import { attrs, child, children, decodeX, element, outer, root, split, text, unesc, type El, type Split } from "./xml";
 
 /** Whether a relationship type is `want`, also in Strict OOXML (same last segment). */
+export const RT_VBA = "http://schemas.microsoft.com/office/2006/relationships/vbaProject";
+export const CT_VBA = "application/vnd.ms-office.vbaProject";
+export const CT_MAIN = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml";
+export const CT_MAIN_MACROS = "application/vnd.ms-excel.sheet.macroEnabled.main+xml";
+
 export function isRel(type: string, want: string): boolean {
   return type === want || type.slice(type.lastIndexOf("/")) === want.slice(want.lastIndexOf("/"));
 }
@@ -89,6 +96,8 @@ export interface SheetRaw {
   dv?: DvRaw;
   /** The pictures as read (picturesKey), to see whether they changed. */
   pics?: string;
+  /** The sheet's views in the other windows as read (canon), D-093. */
+  views?: string;
   /** Sparklines as read (a snapshot) and each group's JSON with the XML it was read from (written back unchanged). */
   spark?: string;
   sparkXml?: [string, string][];
@@ -124,6 +133,9 @@ export function readPackage(files: Record<string, Uint8Array>): Workbook {
   const theme = readTheme(str(partOf(RT.theme)));
   wb.theme = Object.fromEntries(Object.entries(theme.colors).map(([k, v]) => [k, "#" + v]));
   wb.themeLines = theme.lines;
+  // Makros: the VBA project of a workbook with macros (.xlsm), kept as it is (D-091).
+  const vbaPath = partOf(RT_VBA);
+  if (vbaPath && files[vbaPath]) wb.vba = files[vbaPath];
   wb.themeFonts = { major: theme.major, minor: theme.minor };
   wb.themeNames = themeNames(str(partOf(RT.theme)));
   const { table, raw: stylesRaw } = readStyles(str(partOf(RT.styles)) || NO_STYLES, theme.colors);
@@ -172,6 +184,8 @@ export function readPackage(files: Record<string, Uint8Array>): Workbook {
   const view = find("bookViews") && children(wbXml, find("bookViews")!.open, find("bookViews")!.close)[0];
   const activeTab = view ? Number(attrs(wbXml, view).activeTab ?? 0) : 0;
   wb.active = fileToModel.get(activeTab) ?? 0;
+  // Windows and Benutzerdefinierte Ansichten (D-093).
+  readBookViews(wbXml, find("bookViews"), find("customWorkbookViews"), wb, (i) => fileToModel.get(i) ?? 0);
 
   // Defined names.
   const nameAttrs: Record<string, string> = {};
@@ -221,6 +235,8 @@ export function readPackage(files: Record<string, Uint8Array>): Workbook {
   // Snapshots again: print areas came from the names.
   for (const s of wb.sheets) if (s.raw) (s.raw as SheetRaw).snap = sheetSnap(s);
   wb.raw = raw;
+  // Datenschnitte (D-092): caches, slicers and their places.
+  readSlicers(wb);
   return wb;
 }
 
@@ -434,8 +450,18 @@ function readSheet(xml: string, name: string, c: SheetContext): Sheet {
 
   // View.
   const sv = get("sheetViews");
-  const v0 = sv ? children(xml, sv.open, sv.close)[0] : undefined;
+  const svs = sv ? children(xml, sv.open, sv.close).filter((k) => k.name === "sheetView") : [];
+  const v0 = svs[0];
   if (v0) readView(xml, v0, sheet, raw);
+  // Neues Fenster (D-093): the sheet's views in the workbook's other windows.
+  if (svs.length > 1) {
+    const main = sheet.view;
+    sheet.views = svs.slice(1).map((el) => { readView(xml, el, sheet, { ...raw }); return sheet.view; });
+    sheet.view = main;
+    raw.views = canon(sheet.views);
+  }
+  const csv = get("customSheetViews");
+  if (csv) sheet.customViews = children(xml, csv.open, csv.close).map((k) => ({ guid: attrs(xml, k).guid ?? "", xml: outer(xml, k) }));
 
   sheet.raw = raw;
   raw.snap = sheetSnap(sheet);
@@ -474,10 +500,13 @@ function readView(xml: string, el: El, sheet: Sheet, raw: SheetRaw): void {
     const ptl = parseCell(pa.topLeftCell ?? "") ?? { row: tl.row + ys, col: tl.col + xs };
     v.top = ptl.row;
     v.left = ptl.col;
+    if (pa.state === "frozenSplit") v.splitFrozen = true;
   }
+  readViewExtras(a, pane ? pa : undefined, v, kids.filter((k) => k.name === "selection").map((k) => attrs(xml, k)));
   const activePane = pa.activePane ?? "topLeft";
   const sels = kids.filter((k) => k.name === "selection").map((k) => attrs(xml, k));
-  const sel = sels.find((s) => (s.pane ?? "topLeft") === activePane) ?? sels.find((s) => !s.pane) ?? sels[0];
+  // A split window leaves out the active pane's selection when it is A1 (recorded).
+  const sel = sels.find((s) => (s.pane ?? "topLeft") === activePane) ?? (v.split ? undefined : sels.find((s) => !s.pane) ?? sels[0]);
   const ac = parseCell(sel?.activeCell ?? "A1") ?? { row: 0, col: 0 };
   v.active = ac;
   const ranges = (sel?.sqref ?? "").split(/\s+/).map((t) => parseRange(t)).filter((x): x is Rect => !!x);

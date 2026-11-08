@@ -40,7 +40,7 @@ function hlsToRgb(hh: number, l: number, s: number): [number, number, number] {
   const m1 = 2 * l - m2;
   return [hueToRgb(m1, m2, hh + HLS / 3), hueToRgb(m1, m2, hh), hueToRgb(m1, m2, hh - HLS / 3)].map((x) => idiv(x * RGB + HLS / 2, HLS)) as [number, number, number];
 }
-function tinted(hex: string, tint: number): string {
+export function tinted(hex: string, tint: number): string {
   const v = hex.replace("#", "");
   if (!tint) return "#" + v.toUpperCase();
   const [r, g, b] = [0, 2, 4].map((i) => parseInt(v.slice(i, i + 2), 16));
@@ -50,7 +50,7 @@ function tinted(hex: string, tint: number): string {
   return "#" + hlsToRgb(hh, Math.max(0, Math.min(HLS, l)), s).map((x) => Math.max(0, Math.min(255, x)).toString(16).padStart(2, "0")).join("").toUpperCase();
 }
 
-const OFFICE_2013: Record<string, string> = {
+export const OFFICE_2013: Record<string, string> = {
   dk1: "#000000", lt1: "#FFFFFF", dk2: "#44546A", lt2: "#E7E6E6", accent1: "#4472C4", accent2: "#ED7D31", accent3: "#A5A5A5",
   accent4: "#FFC000", accent5: "#5B9BD5", accent6: "#70AD47", hlink: "#0563C1", folHlink: "#954F72",
 };
@@ -139,7 +139,8 @@ export function tablesFeature(app: CalcApp) {
     if (!out) {
       out = structuredClone(st);
       if (!out.fill && lk.fill) out.fill = lk.fill;
-      if (!out.font.color && lk.color) out.font.color = lk.color;
+      // The standard font's colour (Text 1) gives way to the table style's, as in Excel (the white header text).
+      if ((!out.font.color || out.font.color === app.wb.styles.get(undefined).font.color) && lk.color) out.font.color = lk.color;
       if (lk.bold && !out.font.bold) out.font.bold = true;
       const b: Borders = { ...out.borders };
       for (const s of ["left", "right", "top", "bottom"] as const) if (!b[s] && lk.borders[s]) b[s] = lk.borders[s];

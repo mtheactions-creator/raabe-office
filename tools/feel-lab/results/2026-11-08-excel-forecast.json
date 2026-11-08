@@ -1,0 +1,2133 @@
+{
+ "data": [
+  [
+   "Monat",
+   "Besucher"
+  ],
+  [
+   45292,
+   120.0
+  ],
+  [
+   45323,
+   147.4
+  ],
+  [
+   45352,
+   153.1
+  ],
+  [
+   45383,
+   137.1
+  ],
+  [
+   45413,
+   121.1
+  ],
+  [
+   45444,
+   118.3
+  ],
+  [
+   45474,
+   145.7
+  ],
+  [
+   45505,
+   173.1
+  ],
+  [
+   45536,
+   178.8
+  ],
+  [
+   45566,
+   162.8
+  ],
+  [
+   45597,
+   138.3
+  ],
+  [
+   45627,
+   144.0
+  ],
+  [
+   45658,
+   171.4
+  ],
+  [
+   45689,
+   198.8
+  ],
+  [
+   45718,
+   204.5
+  ],
+  [
+   45749,
+   180.0
+  ],
+  [
+   45779,
+   164.0
+  ],
+  [
+   45810,
+   169.7
+  ],
+  [
+   45840,
+   197.1
+  ],
+  [
+   45871,
+   224.5
+  ],
+  [
+   45902,
+   221.7
+  ],
+  [
+   45932,
+   205.7
+  ],
+  [
+   45963,
+   189.7
+  ],
+  [
+   45993,
+   195.4
+  ]
+ ],
+ "runs": {
+  "default": {
+   "title": "Prognosearbeitsblatt erstellen",
+   "controls": [
+    {
+     "type": "Custom",
+     "name": "Prognosearbeitsblatt erstellen",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Text",
+     "name": "Historische Daten verwenden, um ein visuelles Prognosearbeitsblatt zu erstellen",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Liniendiagramm erstellen",
+     "key": "",
+     "enabled": true,
+     "toggle": 1
+    },
+    {
+     "type": "Button",
+     "name": "Säulendiagramm erstellen",
+     "key": "",
+     "enabled": true,
+     "toggle": 0
+    },
+    {
+     "type": "Text",
+     "name": "Prognoseende",
+     "key": "ALT+s",
+     "enabled": true
+    },
+    {
+     "type": "Edit",
+     "name": "Prognoseende",
+     "key": "",
+     "enabled": true,
+     "value": "02.12.2026"
+    },
+    {
+     "type": "Button",
+     "name": "Datumsauswahl",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Optionen",
+     "key": "ALT+O",
+     "enabled": true,
+     "toggle": 1
+    },
+    {
+     "type": "Text",
+     "name": "Optionen",
+     "key": "ALT+O",
+     "enabled": true
+    },
+    {
+     "type": "Text",
+     "name": "Prognosestart",
+     "key": "ALT+t",
+     "enabled": true
+    },
+    {
+     "type": "Edit",
+     "name": "Prognosestart",
+     "key": "",
+     "enabled": true,
+     "value": "02.12.2025"
+    },
+    {
+     "type": "Button",
+     "name": "Datumsauswahl",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "CheckBox",
+     "name": "Konfidenzintervall",
+     "key": "ALT+K",
+     "enabled": true,
+     "toggle": 1
+    },
+    {
+     "type": "Spinner",
+     "name": "Die für die Berechnung des Konfidenzintervalls verwendeten Prozentsätze.",
+     "key": "",
+     "enabled": true,
+     "value": "95.000000"
+    },
+    {
+     "type": "Edit",
+     "name": "Die für die Berechnung des Konfidenzintervalls verwendeten Prozentsätze.",
+     "key": "",
+     "enabled": true,
+     "value": "95 %"
+    },
+    {
+     "type": "Button",
+     "name": "Mehr",
+     "key": "",
+     "enabled": true,
+     "value": ""
+    },
+    {
+     "type": "Button",
+     "name": "Weniger",
+     "key": "",
+     "enabled": true,
+     "value": ""
+    },
+    {
+     "type": "Text",
+     "name": "Saisonalität",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Group",
+     "name": " ",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "RadioButton",
+     "name": "Automatisch erkennen",
+     "key": "ALT+A",
+     "enabled": true
+    },
+    {
+     "type": "RadioButton",
+     "name": "Manuell festlegen",
+     "key": "ALT+M",
+     "enabled": true
+    },
+    {
+     "type": "Spinner",
+     "name": "",
+     "key": "",
+     "enabled": false,
+     "value": "6.000000"
+    },
+    {
+     "type": "Edit",
+     "name": "",
+     "key": "",
+     "enabled": false,
+     "value": "6"
+    },
+    {
+     "type": "Button",
+     "name": "Mehr",
+     "key": "",
+     "enabled": false,
+     "value": ""
+    },
+    {
+     "type": "Button",
+     "name": "Weniger",
+     "key": "",
+     "enabled": false,
+     "value": ""
+    },
+    {
+     "type": "CheckBox",
+     "name": "Prognosestatistiken aufnehmen",
+     "key": "ALT+P",
+     "enabled": true,
+     "toggle": 0
+    },
+    {
+     "type": "Text",
+     "name": "Zeitachsenbereich",
+     "key": "ALT+Z",
+     "enabled": true
+    },
+    {
+     "type": "Edit",
+     "name": "Zeitachsenbereich",
+     "key": "ALT+Z",
+     "enabled": true,
+     "value": "Werte!$A$1:$A$25"
+    },
+    {
+     "type": "Text",
+     "name": "Wertebereich",
+     "key": "ALT+W",
+     "enabled": true
+    },
+    {
+     "type": "Edit",
+     "name": "Wertebereich",
+     "key": "ALT+W",
+     "enabled": true,
+     "value": "Werte!$B$1:$B$25"
+    },
+    {
+     "type": "Text",
+     "name": "Fehlende Punkte füllen mit",
+     "key": "ALT+F",
+     "enabled": true
+    },
+    {
+     "type": "ComboBox",
+     "name": "Fehlende Punkte füllen mit",
+     "key": "ALT+F",
+     "enabled": true,
+     "value": "Interpolation"
+    },
+    {
+     "type": "Button",
+     "name": "Öffnen",
+     "key": "Alt+Pfeil nach unten",
+     "enabled": true
+    },
+    {
+     "type": "Text",
+     "name": "Duplikate aggregieren mit",
+     "key": "ALT+u",
+     "enabled": true
+    },
+    {
+     "type": "ComboBox",
+     "name": "Duplikate aggregieren mit",
+     "key": "ALT+u",
+     "enabled": true,
+     "value": "Mittelwert"
+    },
+    {
+     "type": "Button",
+     "name": "Öffnen",
+     "key": "Alt+Pfeil nach unten",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Erstellen",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Abbrechen",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "TitleBar",
+     "name": "",
+     "key": "",
+     "enabled": true,
+     "value": "Prognosearbeitsblatt erstellen"
+    },
+    {
+     "type": "Button",
+     "name": "Direkthilfe",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Schließen",
+     "key": "",
+     "enabled": true
+    }
+   ],
+   "sheet": "Tabelle2",
+   "index": 1,
+   "cells": {
+    "A1": {
+     "f": "Monat",
+     "v": "Monat",
+     "fmt": "Standard",
+     "text": "Monat"
+    },
+    "B1": {
+     "f": "Besucher",
+     "v": "Besucher",
+     "fmt": "Standard",
+     "text": "Besucher"
+    },
+    "C1": {
+     "f": "Schätzer(Besucher)",
+     "v": "Schätzer(Besucher)",
+     "fmt": "Standard",
+     "text": "Schätzer(Besucher)"
+    },
+    "D1": {
+     "f": "Untere Konfidenzgrenze(Besucher)",
+     "v": "Untere Konfidenzgrenze(Besucher)",
+     "fmt": "Standard",
+     "text": "Untere Konfidenzgrenze(Besucher)"
+    },
+    "E1": {
+     "f": "Obere Konfidenzgrenze(Besucher)",
+     "v": "Obere Konfidenzgrenze(Besucher)",
+     "fmt": "Standard",
+     "text": "Obere Konfidenzgrenze(Besucher)"
+    },
+    "A2": {
+     "f": "45292",
+     "v": 45292.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "01.01.2024"
+    },
+    "B2": {
+     "f": "120",
+     "v": 120.0,
+     "fmt": "Standard",
+     "text": "120"
+    },
+    "A3": {
+     "f": "45323",
+     "v": 45323.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "01.02.2024"
+    },
+    "B3": {
+     "f": "147,4",
+     "v": 147.4,
+     "fmt": "Standard",
+     "text": "147,4"
+    },
+    "A4": {
+     "f": "45352",
+     "v": 45352.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "01.03.2024"
+    },
+    "B4": {
+     "f": "153,1",
+     "v": 153.1,
+     "fmt": "Standard",
+     "text": "153,1"
+    },
+    "A5": {
+     "f": "45383",
+     "v": 45383.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "01.04.2024"
+    },
+    "B5": {
+     "f": "137,1",
+     "v": 137.1,
+     "fmt": "Standard",
+     "text": "137,1"
+    },
+    "A6": {
+     "f": "45413",
+     "v": 45413.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "01.05.2024"
+    },
+    "B6": {
+     "f": "121,1",
+     "v": 121.1,
+     "fmt": "Standard",
+     "text": "121,1"
+    },
+    "A7": {
+     "f": "45444",
+     "v": 45444.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "01.06.2024"
+    },
+    "B7": {
+     "f": "118,3",
+     "v": 118.3,
+     "fmt": "Standard",
+     "text": "118,3"
+    },
+    "A8": {
+     "f": "45474",
+     "v": 45474.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "01.07.2024"
+    },
+    "B8": {
+     "f": "145,7",
+     "v": 145.7,
+     "fmt": "Standard",
+     "text": "145,7"
+    },
+    "A9": {
+     "f": "45505",
+     "v": 45505.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "01.08.2024"
+    },
+    "B9": {
+     "f": "173,1",
+     "v": 173.1,
+     "fmt": "Standard",
+     "text": "173,1"
+    },
+    "A10": {
+     "f": "45536",
+     "v": 45536.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "01.09.2024"
+    },
+    "B10": {
+     "f": "178,8",
+     "v": 178.8,
+     "fmt": "Standard",
+     "text": "178,8"
+    },
+    "A11": {
+     "f": "45566",
+     "v": 45566.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "01.10.2024"
+    },
+    "B11": {
+     "f": "162,8",
+     "v": 162.8,
+     "fmt": "Standard",
+     "text": "162,8"
+    },
+    "A12": {
+     "f": "45597",
+     "v": 45597.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "01.11.2024"
+    },
+    "B12": {
+     "f": "138,3",
+     "v": 138.3,
+     "fmt": "Standard",
+     "text": "138,3"
+    },
+    "A13": {
+     "f": "45627",
+     "v": 45627.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "01.12.2024"
+    },
+    "B13": {
+     "f": "144",
+     "v": 144.0,
+     "fmt": "Standard",
+     "text": "144"
+    },
+    "A14": {
+     "f": "45658",
+     "v": 45658.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "01.01.2025"
+    },
+    "B14": {
+     "f": "171,4",
+     "v": 171.4,
+     "fmt": "Standard",
+     "text": "171,4"
+    },
+    "A15": {
+     "f": "45689",
+     "v": 45689.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "01.02.2025"
+    },
+    "B15": {
+     "f": "198,8",
+     "v": 198.8,
+     "fmt": "Standard",
+     "text": "198,8"
+    },
+    "A16": {
+     "f": "45718",
+     "v": 45718.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.03.2025"
+    },
+    "B16": {
+     "f": "204,5",
+     "v": 204.5,
+     "fmt": "Standard",
+     "text": "204,5"
+    },
+    "A17": {
+     "f": "45749",
+     "v": 45749.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.04.2025"
+    },
+    "B17": {
+     "f": "180",
+     "v": 180.0,
+     "fmt": "Standard",
+     "text": "180"
+    },
+    "A18": {
+     "f": "45779",
+     "v": 45779.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.05.2025"
+    },
+    "B18": {
+     "f": "164",
+     "v": 164.0,
+     "fmt": "Standard",
+     "text": "164"
+    },
+    "A19": {
+     "f": "45810",
+     "v": 45810.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.06.2025"
+    },
+    "B19": {
+     "f": "169,7",
+     "v": 169.7,
+     "fmt": "Standard",
+     "text": "169,7"
+    },
+    "A20": {
+     "f": "45840",
+     "v": 45840.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.07.2025"
+    },
+    "B20": {
+     "f": "197,1",
+     "v": 197.1,
+     "fmt": "Standard",
+     "text": "197,1"
+    },
+    "A21": {
+     "f": "45871",
+     "v": 45871.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.08.2025"
+    },
+    "B21": {
+     "f": "224,5",
+     "v": 224.5,
+     "fmt": "Standard",
+     "text": "224,5"
+    },
+    "A22": {
+     "f": "45902",
+     "v": 45902.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.09.2025"
+    },
+    "B22": {
+     "f": "221,7",
+     "v": 221.7,
+     "fmt": "Standard",
+     "text": "221,7"
+    },
+    "A23": {
+     "f": "45932",
+     "v": 45932.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.10.2025"
+    },
+    "B23": {
+     "f": "205,7",
+     "v": 205.7,
+     "fmt": "Standard",
+     "text": "205,7"
+    },
+    "A24": {
+     "f": "45963",
+     "v": 45963.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.11.2025"
+    },
+    "B24": {
+     "f": "189,7",
+     "v": 189.7,
+     "fmt": "Standard",
+     "text": "189,7"
+    },
+    "A25": {
+     "f": "45993",
+     "v": 45993.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.12.2025"
+    },
+    "B25": {
+     "f": "195,4",
+     "v": 195.4,
+     "fmt": "Standard",
+     "text": "195,4"
+    },
+    "C25": {
+     "f": "195,4",
+     "v": 195.4,
+     "fmt": "Standard",
+     "text": "195,4"
+    },
+    "D25": {
+     "f": "195,4",
+     "v": 195.4,
+     "fmt": "0,00",
+     "text": "195,40"
+    },
+    "E25": {
+     "f": "195,4",
+     "v": 195.4,
+     "fmt": "0,00",
+     "text": "195,40"
+    },
+    "A26": {
+     "f": "46024",
+     "v": 46024.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.01.2026"
+    },
+    "C26": {
+     "f": "=PROGNOSE.ETS(A26;$B$2:$B$25;$A$2:$A$25;1;1)",
+     "v": 219.20319795047197,
+     "fmt": "Standard",
+     "text": "219,203198"
+    },
+    "D26": {
+     "f": "=C26-PROGNOSE.ETS.KONFINT(A26;$B$2:$B$25;$A$2:$A$25;0,95;1;1)",
+     "v": 213.68673965531795,
+     "fmt": "0,00",
+     "text": "213,69"
+    },
+    "E26": {
+     "f": "=C26+PROGNOSE.ETS.KONFINT(A26;$B$2:$B$25;$A$2:$A$25;0,95;1;1)",
+     "v": 224.719656245626,
+     "fmt": "0,00",
+     "text": "224,72"
+    },
+    "A27": {
+     "f": "46055",
+     "v": 46055.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.02.2026"
+    },
+    "C27": {
+     "f": "=PROGNOSE.ETS(A27;$B$2:$B$25;$A$2:$A$25;1;1)",
+     "v": 246.7454626374543,
+     "fmt": "Standard",
+     "text": "246,7454626"
+    },
+    "D27": {
+     "f": "=C27-PROGNOSE.ETS.KONFINT(A27;$B$2:$B$25;$A$2:$A$25;0,95;1;1)",
+     "v": 241.1846948167849,
+     "fmt": "0,00",
+     "text": "241,18"
+    },
+    "E27": {
+     "f": "=C27+PROGNOSE.ETS.KONFINT(A27;$B$2:$B$25;$A$2:$A$25;0,95;1;1)",
+     "v": 252.30623045812368,
+     "fmt": "0,00",
+     "text": "252,31"
+    },
+    "A28": {
+     "f": "46083",
+     "v": 46083.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.03.2026"
+    },
+    "C28": {
+     "f": "=PROGNOSE.ETS(A28;$B$2:$B$25;$A$2:$A$25;1;1)",
+     "v": 250.8155907537693,
+     "fmt": "Standard",
+     "text": "250,8155908"
+    },
+    "D28": {
+     "f": "=C28-PROGNOSE.ETS.KONFINT(A28;$B$2:$B$25;$A$2:$A$25;0,95;1;1)",
+     "v": 245.21017146764967,
+     "fmt": "0,00",
+     "text": "245,21"
+    },
+    "E28": {
+     "f": "=C28+PROGNOSE.ETS.KONFINT(A28;$B$2:$B$25;$A$2:$A$25;0,95;1;1)",
+     "v": 256.4210100398889,
+     "fmt": "0,00",
+     "text": "256,42"
+    },
+    "A29": {
+     "f": "46114",
+     "v": 46114.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.04.2026"
+    },
+    "C29": {
+     "f": "=PROGNOSE.ETS(A29;$B$2:$B$25;$A$2:$A$25;1;1)",
+     "v": 234.59702779062852,
+     "fmt": "Standard",
+     "text": "234,5970278"
+    },
+    "D29": {
+     "f": "=C29-PROGNOSE.ETS.KONFINT(A29;$B$2:$B$25;$A$2:$A$25;0,95;1;1)",
+     "v": 228.9466178198187,
+     "fmt": "0,00",
+     "text": "228,95"
+    },
+    "E29": {
+     "f": "=C29+PROGNOSE.ETS.KONFINT(A29;$B$2:$B$25;$A$2:$A$25;0,95;1;1)",
+     "v": 240.24743776143833,
+     "fmt": "0,00",
+     "text": "240,25"
+    },
+    "A30": {
+     "f": "46144",
+     "v": 46144.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.05.2026"
+    },
+    "C30": {
+     "f": "=PROGNOSE.ETS(A30;$B$2:$B$25;$A$2:$A$25;1;1)",
+     "v": 214.14642019970404,
+     "fmt": "Standard",
+     "text": "214,1464202"
+    },
+    "D30": {
+     "f": "=C30-PROGNOSE.ETS.KONFINT(A30;$B$2:$B$25;$A$2:$A$25;0,95;1;1)",
+     "v": 208.45068302062953,
+     "fmt": "0,00",
+     "text": "208,45"
+    },
+    "E30": {
+     "f": "=C30+PROGNOSE.ETS.KONFINT(A30;$B$2:$B$25;$A$2:$A$25;0,95;1;1)",
+     "v": 219.84215737877855,
+     "fmt": "0,00",
+     "text": "219,84"
+    },
+    "A31": {
+     "f": "46175",
+     "v": 46175.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.06.2026"
+    },
+    "C31": {
+     "f": "=PROGNOSE.ETS(A31;$B$2:$B$25;$A$2:$A$25;1;1)",
+     "v": 215.74727519712852,
+     "fmt": "Standard",
+     "text": "215,7472752"
+    },
+    "D31": {
+     "f": "=C31-PROGNOSE.ETS.KONFINT(A31;$B$2:$B$25;$A$2:$A$25;0,95;1;1)",
+     "v": 210.005876956245,
+     "fmt": "0,00",
+     "text": "210,01"
+    },
+    "E31": {
+     "f": "=C31+PROGNOSE.ETS.KONFINT(A31;$B$2:$B$25;$A$2:$A$25;0,95;1;1)",
+     "v": 221.48867343801203,
+     "fmt": "0,00",
+     "text": "221,49"
+    },
+    "A32": {
+     "f": "46205",
+     "v": 46205.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.07.2026"
+    },
+    "C32": {
+     "f": "=PROGNOSE.ETS(A32;$B$2:$B$25;$A$2:$A$25;1;1)",
+     "v": 243.63781914582032,
+     "fmt": "Standard",
+     "text": "243,6378191"
+    },
+    "D32": {
+     "f": "=C32-PROGNOSE.ETS.KONFINT(A32;$B$2:$B$25;$A$2:$A$25;0,95;1;1)",
+     "v": 237.84973196260083,
+     "fmt": "0,00",
+     "text": "237,85"
+    },
+    "E32": {
+     "f": "=C32+PROGNOSE.ETS.KONFINT(A32;$B$2:$B$25;$A$2:$A$25;0,95;1;1)",
+     "v": 249.4259063290398,
+     "fmt": "0,00",
+     "text": "249,43"
+    },
+    "A33": {
+     "f": "46236",
+     "v": 46236.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.08.2026"
+    },
+    "C33": {
+     "f": "=PROGNOSE.ETS(A33;$B$2:$B$25;$A$2:$A$25;1;1)",
+     "v": 271.18008383280267,
+     "fmt": "Standard",
+     "text": "271,1800838"
+    },
+    "D33": {
+     "f": "=C33-PROGNOSE.ETS.KONFINT(A33;$B$2:$B$25;$A$2:$A$25;0,95;1;1)",
+     "v": 265.3456813166337,
+     "fmt": "0,00",
+     "text": "265,35"
+    },
+    "E33": {
+     "f": "=C33+PROGNOSE.ETS.KONFINT(A33;$B$2:$B$25;$A$2:$A$25;0,95;1;1)",
+     "v": 277.0144863489716,
+     "fmt": "0,00",
+     "text": "277,01"
+    },
+    "A34": {
+     "f": "46267",
+     "v": 46267.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.09.2026"
+    },
+    "C34": {
+     "f": "=PROGNOSE.ETS(A34;$B$2:$B$25;$A$2:$A$25;1;1)",
+     "v": 275.25021194911767,
+     "fmt": "Standard",
+     "text": "275,2502119"
+    },
+    "D34": {
+     "f": "=C34-PROGNOSE.ETS.KONFINT(A34;$B$2:$B$25;$A$2:$A$25;0,95;1;1)",
+     "v": 269.36916804848704,
+     "fmt": "0,00",
+     "text": "269,37"
+    },
+    "E34": {
+     "f": "=C34+PROGNOSE.ETS.KONFINT(A34;$B$2:$B$25;$A$2:$A$25;0,95;1;1)",
+     "v": 281.1312558497483,
+     "fmt": "0,00",
+     "text": "281,13"
+    },
+    "A35": {
+     "f": "46297",
+     "v": 46297.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.10.2026"
+    },
+    "C35": {
+     "f": "=PROGNOSE.ETS(A35;$B$2:$B$25;$A$2:$A$25;1;1)",
+     "v": 259.03164898597686,
+     "fmt": "Standard",
+     "text": "259,031649"
+    },
+    "D35": {
+     "f": "=C35-PROGNOSE.ETS.KONFINT(A35;$B$2:$B$25;$A$2:$A$25;0,95;1;1)",
+     "v": 253.10364021198106,
+     "fmt": "0,00",
+     "text": "253,10"
+    },
+    "E35": {
+     "f": "=C35+PROGNOSE.ETS.KONFINT(A35;$B$2:$B$25;$A$2:$A$25;0,95;1;1)",
+     "v": 264.95965775997263,
+     "fmt": "0,00",
+     "text": "264,96"
+    },
+    "A36": {
+     "f": "46328",
+     "v": 46328.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.11.2026"
+    },
+    "C36": {
+     "f": "=PROGNOSE.ETS(A36;$B$2:$B$25;$A$2:$A$25;1;1)",
+     "v": 238.58104139505235,
+     "fmt": "Standard",
+     "text": "238,5810414"
+    },
+    "D36": {
+     "f": "=C36-PROGNOSE.ETS.KONFINT(A36;$B$2:$B$25;$A$2:$A$25;0,95;1;1)",
+     "v": 232.60574679364709,
+     "fmt": "0,00",
+     "text": "232,61"
+    },
+    "E36": {
+     "f": "=C36+PROGNOSE.ETS.KONFINT(A36;$B$2:$B$25;$A$2:$A$25;0,95;1;1)",
+     "v": 244.55633599645762,
+     "fmt": "0,00",
+     "text": "244,56"
+    },
+    "A37": {
+     "f": "46358",
+     "v": 46358.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.12.2026"
+    },
+    "C37": {
+     "f": "=PROGNOSE.ETS(A37;$B$2:$B$25;$A$2:$A$25;1;1)",
+     "v": 240.1818963924769,
+     "fmt": "Standard",
+     "text": "240,1818964"
+    },
+    "D37": {
+     "f": "=C37-PROGNOSE.ETS.KONFINT(A37;$B$2:$B$25;$A$2:$A$25;0,95;1;1)",
+     "v": 234.1589975164535,
+     "fmt": "0,00",
+     "text": "234,16"
+    },
+    "E37": {
+     "f": "=C37+PROGNOSE.ETS.KONFINT(A37;$B$2:$B$25;$A$2:$A$25;0,95;1;1)",
+     "v": 246.20479526850028,
+     "fmt": "0,00",
+     "text": "246,20"
+    }
+   },
+   "widths": {
+    "A": 10.27,
+    "B": 10.27,
+    "C": 18.55,
+    "D": 31.09,
+    "E": 30.45
+   },
+   "tables": [
+    {
+     "name": "Tabelle1",
+     "range": "A1:E37",
+     "style": "TableStyleMedium2",
+     "columns": [
+      "Monat",
+      "Besucher",
+      "Schätzer(Besucher)",
+      "Untere Konfidenzgrenze(Besucher)",
+      "Obere Konfidenzgrenze(Besucher)"
+     ]
+    }
+   ],
+   "charts": [
+    {
+     "name": "Chart 1",
+     "type": 4,
+     "left": 401.25,
+     "top": 107.5,
+     "width": 724.5,
+     "height": 346.5,
+     "tl": "E8",
+     "br": "O32",
+     "title": null,
+     "legend": -4107,
+     "series": [
+      {
+       "name": "Besucher",
+       "formula": "=SERIES(Tabelle2!$B$1,,Tabelle2!$B$2:$B$37,1)",
+       "type": 4
+      },
+      {
+       "name": "Schätzer(Besucher)",
+       "formula": "=SERIES(Tabelle2!$C$1,Tabelle2!$A$2:$A$37,Tabelle2!$C$2:$C$37,2)",
+       "type": 4
+      },
+      {
+       "name": "Untere Konfidenzgrenze(Besucher)",
+       "formula": "=SERIES(Tabelle2!$D$1,Tabelle2!$A$2:$A$37,Tabelle2!$D$2:$D$37,3)",
+       "type": 4
+      },
+      {
+       "name": "Obere Konfidenzgrenze(Besucher)",
+       "formula": "=SERIES(Tabelle2!$E$1,Tabelle2!$A$2:$A$37,Tabelle2!$E$2:$E$37,4)",
+       "type": 4
+      }
+     ]
+    }
+   ]
+  },
+  "options": {
+   "title": "Prognosearbeitsblatt erstellen",
+   "controls": [
+    {
+     "type": "Custom",
+     "name": "Prognosearbeitsblatt erstellen",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Text",
+     "name": "Historische Daten verwenden, um ein visuelles Prognosearbeitsblatt zu erstellen",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Liniendiagramm erstellen",
+     "key": "",
+     "enabled": true,
+     "toggle": 1
+    },
+    {
+     "type": "Button",
+     "name": "Säulendiagramm erstellen",
+     "key": "",
+     "enabled": true,
+     "toggle": 0
+    },
+    {
+     "type": "Text",
+     "name": "Prognoseende",
+     "key": "ALT+s",
+     "enabled": true
+    },
+    {
+     "type": "Edit",
+     "name": "Prognoseende",
+     "key": "",
+     "enabled": true,
+     "value": "02.12.2026"
+    },
+    {
+     "type": "Button",
+     "name": "Datumsauswahl",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Optionen",
+     "key": "ALT+O",
+     "enabled": true,
+     "toggle": 1
+    },
+    {
+     "type": "Text",
+     "name": "Optionen",
+     "key": "ALT+O",
+     "enabled": true
+    },
+    {
+     "type": "Text",
+     "name": "Prognosestart",
+     "key": "ALT+t",
+     "enabled": true
+    },
+    {
+     "type": "Edit",
+     "name": "Prognosestart",
+     "key": "",
+     "enabled": true,
+     "value": "02.12.2025"
+    },
+    {
+     "type": "Button",
+     "name": "Datumsauswahl",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "CheckBox",
+     "name": "Konfidenzintervall",
+     "key": "ALT+K",
+     "enabled": true,
+     "toggle": 1
+    },
+    {
+     "type": "Spinner",
+     "name": "Die für die Berechnung des Konfidenzintervalls verwendeten Prozentsätze.",
+     "key": "",
+     "enabled": true,
+     "value": "95.000000"
+    },
+    {
+     "type": "Edit",
+     "name": "Die für die Berechnung des Konfidenzintervalls verwendeten Prozentsätze.",
+     "key": "",
+     "enabled": true,
+     "value": "95 %"
+    },
+    {
+     "type": "Button",
+     "name": "Mehr",
+     "key": "",
+     "enabled": true,
+     "value": ""
+    },
+    {
+     "type": "Button",
+     "name": "Weniger",
+     "key": "",
+     "enabled": true,
+     "value": ""
+    },
+    {
+     "type": "Text",
+     "name": "Saisonalität",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Group",
+     "name": " ",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "RadioButton",
+     "name": "Automatisch erkennen",
+     "key": "ALT+A",
+     "enabled": true
+    },
+    {
+     "type": "RadioButton",
+     "name": "Manuell festlegen",
+     "key": "ALT+M",
+     "enabled": true
+    },
+    {
+     "type": "Spinner",
+     "name": "",
+     "key": "",
+     "enabled": false,
+     "value": "6.000000"
+    },
+    {
+     "type": "Edit",
+     "name": "",
+     "key": "",
+     "enabled": false,
+     "value": "6"
+    },
+    {
+     "type": "Button",
+     "name": "Mehr",
+     "key": "",
+     "enabled": false,
+     "value": ""
+    },
+    {
+     "type": "Button",
+     "name": "Weniger",
+     "key": "",
+     "enabled": false,
+     "value": ""
+    },
+    {
+     "type": "CheckBox",
+     "name": "Prognosestatistiken aufnehmen",
+     "key": "ALT+P",
+     "enabled": true,
+     "toggle": 0
+    },
+    {
+     "type": "Text",
+     "name": "Zeitachsenbereich",
+     "key": "ALT+Z",
+     "enabled": true
+    },
+    {
+     "type": "Edit",
+     "name": "Zeitachsenbereich",
+     "key": "ALT+Z",
+     "enabled": true,
+     "value": "Werte!$A$1:$A$25"
+    },
+    {
+     "type": "Text",
+     "name": "Wertebereich",
+     "key": "ALT+W",
+     "enabled": true
+    },
+    {
+     "type": "Edit",
+     "name": "Wertebereich",
+     "key": "ALT+W",
+     "enabled": true,
+     "value": "Werte!$B$1:$B$25"
+    },
+    {
+     "type": "Text",
+     "name": "Fehlende Punkte füllen mit",
+     "key": "ALT+F",
+     "enabled": true
+    },
+    {
+     "type": "ComboBox",
+     "name": "Fehlende Punkte füllen mit",
+     "key": "ALT+F",
+     "enabled": true,
+     "value": "Interpolation"
+    },
+    {
+     "type": "Button",
+     "name": "Öffnen",
+     "key": "Alt+Pfeil nach unten",
+     "enabled": true
+    },
+    {
+     "type": "Text",
+     "name": "Duplikate aggregieren mit",
+     "key": "ALT+u",
+     "enabled": true
+    },
+    {
+     "type": "ComboBox",
+     "name": "Duplikate aggregieren mit",
+     "key": "ALT+u",
+     "enabled": true,
+     "value": "Mittelwert"
+    },
+    {
+     "type": "Button",
+     "name": "Öffnen",
+     "key": "Alt+Pfeil nach unten",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Erstellen",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Abbrechen",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "TitleBar",
+     "name": "",
+     "key": "",
+     "enabled": true,
+     "value": "Prognosearbeitsblatt erstellen"
+    },
+    {
+     "type": "Button",
+     "name": "Direkthilfe",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Schließen",
+     "key": "",
+     "enabled": true
+    }
+   ],
+   "column": "set",
+   "edits_before": [
+    {
+     "type": "Edit",
+     "name": "Prognoseende",
+     "value": "02.12.2026"
+    },
+    {
+     "type": "Edit",
+     "name": "Prognosestart",
+     "value": "02.12.2025"
+    },
+    {
+     "type": "Spinner",
+     "name": "Die für die Berechnung des Konfidenzintervalls verwendeten Prozentsätze.",
+     "value": "95.000000"
+    },
+    {
+     "type": "Edit",
+     "name": "Die für die Berechnung des Konfidenzintervalls verwendeten Prozentsätze.",
+     "value": "95 %"
+    },
+    {
+     "type": "Spinner",
+     "name": "",
+     "value": "6.000000"
+    },
+    {
+     "type": "Edit",
+     "name": "",
+     "value": "6"
+    },
+    {
+     "type": "Edit",
+     "name": "Zeitachsenbereich",
+     "value": "Werte!$A$1:$A$25"
+    },
+    {
+     "type": "Edit",
+     "name": "Wertebereich",
+     "value": "Werte!$B$1:$B$25"
+    }
+   ],
+   "controls_set": [
+    {
+     "type": "Edit",
+     "name": "Prognoseende",
+     "value": "02.12.2026"
+    },
+    {
+     "type": "Edit",
+     "name": "Prognosestart",
+     "value": "02.12.2025"
+    },
+    {
+     "type": "CheckBox",
+     "name": "Konfidenzintervall",
+     "toggle": 1
+    },
+    {
+     "type": "Spinner",
+     "name": "Die für die Berechnung des Konfidenzintervalls verwendeten Prozentsätze.",
+     "value": "95.000000"
+    },
+    {
+     "type": "Edit",
+     "name": "Die für die Berechnung des Konfidenzintervalls verwendeten Prozentsätze.",
+     "value": "95 %"
+    },
+    {
+     "type": "RadioButton",
+     "name": "Automatisch erkennen"
+    },
+    {
+     "type": "RadioButton",
+     "name": "Manuell festlegen"
+    },
+    {
+     "type": "Spinner",
+     "name": "",
+     "value": "6.000000"
+    },
+    {
+     "type": "Edit",
+     "name": "",
+     "value": "6"
+    },
+    {
+     "type": "CheckBox",
+     "name": "Prognosestatistiken aufnehmen",
+     "toggle": 1
+    },
+    {
+     "type": "Edit",
+     "name": "Zeitachsenbereich",
+     "value": "Werte!$A$1:$A$25"
+    },
+    {
+     "type": "Edit",
+     "name": "Wertebereich",
+     "value": "Werte!$B$1:$B$25"
+    },
+    {
+     "type": "ComboBox",
+     "name": "Fehlende Punkte füllen mit",
+     "value": "Interpolation"
+    },
+    {
+     "type": "ComboBox",
+     "name": "Duplikate aggregieren mit",
+     "value": "Mittelwert"
+    }
+   ],
+   "sheet": "Tabelle3",
+   "index": 2,
+   "cells": {
+    "A1": {
+     "f": "Monat",
+     "v": "Monat",
+     "fmt": "Standard",
+     "text": "Monat"
+    },
+    "B1": {
+     "f": "Besucher",
+     "v": "Besucher",
+     "fmt": "Standard",
+     "text": "Besucher"
+    },
+    "C1": {
+     "f": "Schätzer(Besucher)",
+     "v": "Schätzer(Besucher)",
+     "fmt": "Standard",
+     "text": "Schätzer(Besucher)"
+    },
+    "D1": {
+     "f": "Konfidenzintervall(Besucher)",
+     "v": "Konfidenzintervall(Besucher)",
+     "fmt": "Standard",
+     "text": "Konfidenzintervall(Besucher)"
+    },
+    "G1": {
+     "f": "Statistik",
+     "v": "Statistik",
+     "fmt": "Standard",
+     "text": "Statistik"
+    },
+    "H1": {
+     "f": "Wert",
+     "v": "Wert",
+     "fmt": "Standard",
+     "text": "Wert"
+    },
+    "A2": {
+     "f": "45292",
+     "v": 45292.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "01.01.2024"
+    },
+    "B2": {
+     "f": "120",
+     "v": 120.0,
+     "fmt": "Standard",
+     "text": "120"
+    },
+    "G2": {
+     "f": "Alpha",
+     "v": "Alpha",
+     "fmt": "Standard",
+     "text": "Alpha"
+    },
+    "H2": {
+     "f": "=PROGNOSE.ETS.STAT($B$2:$B$25;$A$2:$A$25;1;6;1)",
+     "v": 0.126,
+     "fmt": "#.##0,00",
+     "text": "0,13"
+    },
+    "A3": {
+     "f": "45323",
+     "v": 45323.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "01.02.2024"
+    },
+    "B3": {
+     "f": "147,4",
+     "v": 147.4,
+     "fmt": "Standard",
+     "text": "147,4"
+    },
+    "G3": {
+     "f": "Beta",
+     "v": "Beta",
+     "fmt": "Standard",
+     "text": "Beta"
+    },
+    "H3": {
+     "f": "=PROGNOSE.ETS.STAT($B$2:$B$25;$A$2:$A$25;2;6;1)",
+     "v": 0.001,
+     "fmt": "#.##0,00",
+     "text": "0,00"
+    },
+    "A4": {
+     "f": "45352",
+     "v": 45352.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "01.03.2024"
+    },
+    "B4": {
+     "f": "153,1",
+     "v": 153.1,
+     "fmt": "Standard",
+     "text": "153,1"
+    },
+    "G4": {
+     "f": "Gamma",
+     "v": "Gamma",
+     "fmt": "Standard",
+     "text": "Gamma"
+    },
+    "H4": {
+     "f": "=PROGNOSE.ETS.STAT($B$2:$B$25;$A$2:$A$25;3;6;1)",
+     "v": 0.001,
+     "fmt": "#.##0,00",
+     "text": "0,00"
+    },
+    "A5": {
+     "f": "45383",
+     "v": 45383.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "01.04.2024"
+    },
+    "B5": {
+     "f": "137,1",
+     "v": 137.1,
+     "fmt": "Standard",
+     "text": "137,1"
+    },
+    "G5": {
+     "f": "MASE",
+     "v": "MASE",
+     "fmt": "Standard",
+     "text": "MASE"
+    },
+    "H5": {
+     "f": "=PROGNOSE.ETS.STAT($B$2:$B$25;$A$2:$A$25;4;6;1)",
+     "v": 0.1960849747688123,
+     "fmt": "#.##0,00",
+     "text": "0,20"
+    },
+    "A6": {
+     "f": "45413",
+     "v": 45413.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "01.05.2024"
+    },
+    "B6": {
+     "f": "121,1",
+     "v": 121.1,
+     "fmt": "Standard",
+     "text": "121,1"
+    },
+    "G6": {
+     "f": "SMAPE",
+     "v": "SMAPE",
+     "fmt": "Standard",
+     "text": "SMAPE"
+    },
+    "H6": {
+     "f": "=PROGNOSE.ETS.STAT($B$2:$B$25;$A$2:$A$25;5;6;1)",
+     "v": 0.01686972932758364,
+     "fmt": "#.##0,00",
+     "text": "0,02"
+    },
+    "A7": {
+     "f": "45444",
+     "v": 45444.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "01.06.2024"
+    },
+    "B7": {
+     "f": "118,3",
+     "v": 118.3,
+     "fmt": "Standard",
+     "text": "118,3"
+    },
+    "G7": {
+     "f": "MAE",
+     "v": "MAE",
+     "fmt": "Standard",
+     "text": "MAE"
+    },
+    "H7": {
+     "f": "=PROGNOSE.ETS.STAT($B$2:$B$25;$A$2:$A$25;6;6;1)",
+     "v": 3.2928269691534116,
+     "fmt": "#.##0,00",
+     "text": "3,29"
+    },
+    "A8": {
+     "f": "45474",
+     "v": 45474.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "01.07.2024"
+    },
+    "B8": {
+     "f": "145,7",
+     "v": 145.7,
+     "fmt": "Standard",
+     "text": "145,7"
+    },
+    "G8": {
+     "f": "RMSE",
+     "v": "RMSE",
+     "fmt": "Standard",
+     "text": "RMSE"
+    },
+    "H8": {
+     "f": "=PROGNOSE.ETS.STAT($B$2:$B$25;$A$2:$A$25;7;6;1)",
+     "v": 3.775514993881114,
+     "fmt": "#.##0,00",
+     "text": "3,78"
+    },
+    "A9": {
+     "f": "45505",
+     "v": 45505.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "01.08.2024"
+    },
+    "B9": {
+     "f": "173,1",
+     "v": 173.1,
+     "fmt": "Standard",
+     "text": "173,1"
+    },
+    "A10": {
+     "f": "45536",
+     "v": 45536.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "01.09.2024"
+    },
+    "B10": {
+     "f": "178,8",
+     "v": 178.8,
+     "fmt": "Standard",
+     "text": "178,8"
+    },
+    "A11": {
+     "f": "45566",
+     "v": 45566.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "01.10.2024"
+    },
+    "B11": {
+     "f": "162,8",
+     "v": 162.8,
+     "fmt": "Standard",
+     "text": "162,8"
+    },
+    "A12": {
+     "f": "45597",
+     "v": 45597.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "01.11.2024"
+    },
+    "B12": {
+     "f": "138,3",
+     "v": 138.3,
+     "fmt": "Standard",
+     "text": "138,3"
+    },
+    "A13": {
+     "f": "45627",
+     "v": 45627.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "01.12.2024"
+    },
+    "B13": {
+     "f": "144",
+     "v": 144.0,
+     "fmt": "Standard",
+     "text": "144"
+    },
+    "A14": {
+     "f": "45658",
+     "v": 45658.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "01.01.2025"
+    },
+    "B14": {
+     "f": "171,4",
+     "v": 171.4,
+     "fmt": "Standard",
+     "text": "171,4"
+    },
+    "A15": {
+     "f": "45689",
+     "v": 45689.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "01.02.2025"
+    },
+    "B15": {
+     "f": "198,8",
+     "v": 198.8,
+     "fmt": "Standard",
+     "text": "198,8"
+    },
+    "A16": {
+     "f": "45718",
+     "v": 45718.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.03.2025"
+    },
+    "B16": {
+     "f": "204,5",
+     "v": 204.5,
+     "fmt": "Standard",
+     "text": "204,5"
+    },
+    "A17": {
+     "f": "45749",
+     "v": 45749.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.04.2025"
+    },
+    "B17": {
+     "f": "180",
+     "v": 180.0,
+     "fmt": "Standard",
+     "text": "180"
+    },
+    "A18": {
+     "f": "45779",
+     "v": 45779.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.05.2025"
+    },
+    "B18": {
+     "f": "164",
+     "v": 164.0,
+     "fmt": "Standard",
+     "text": "164"
+    },
+    "A19": {
+     "f": "45810",
+     "v": 45810.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.06.2025"
+    },
+    "B19": {
+     "f": "169,7",
+     "v": 169.7,
+     "fmt": "Standard",
+     "text": "169,7"
+    },
+    "A20": {
+     "f": "45840",
+     "v": 45840.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.07.2025"
+    },
+    "B20": {
+     "f": "197,1",
+     "v": 197.1,
+     "fmt": "Standard",
+     "text": "197,1"
+    },
+    "A21": {
+     "f": "45871",
+     "v": 45871.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.08.2025"
+    },
+    "B21": {
+     "f": "224,5",
+     "v": 224.5,
+     "fmt": "Standard",
+     "text": "224,5"
+    },
+    "A22": {
+     "f": "45902",
+     "v": 45902.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.09.2025"
+    },
+    "B22": {
+     "f": "221,7",
+     "v": 221.7,
+     "fmt": "Standard",
+     "text": "221,7"
+    },
+    "A23": {
+     "f": "45932",
+     "v": 45932.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.10.2025"
+    },
+    "B23": {
+     "f": "205,7",
+     "v": 205.7,
+     "fmt": "Standard",
+     "text": "205,7"
+    },
+    "A24": {
+     "f": "45963",
+     "v": 45963.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.11.2025"
+    },
+    "B24": {
+     "f": "189,7",
+     "v": 189.7,
+     "fmt": "Standard",
+     "text": "189,7"
+    },
+    "A25": {
+     "f": "45993",
+     "v": 45993.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.12.2025"
+    },
+    "B25": {
+     "f": "195,4",
+     "v": 195.4,
+     "fmt": "Standard",
+     "text": "195,4"
+    },
+    "A26": {
+     "f": "46024",
+     "v": 46024.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.01.2026"
+    },
+    "C26": {
+     "f": "=PROGNOSE.ETS(A26;$B$2:$B$25;$A$2:$A$25;6;1)",
+     "v": 219.20319795047197,
+     "fmt": "Standard",
+     "text": "219,203198"
+    },
+    "D26": {
+     "f": "=PROGNOSE.ETS.KONFINT(A26;$B$2:$B$25;$A$2:$A$25;0,95;6;1)",
+     "v": 5.516458295154032,
+     "fmt": "Standard",
+     "text": "5,516458295"
+    },
+    "A27": {
+     "f": "46055",
+     "v": 46055.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.02.2026"
+    },
+    "C27": {
+     "f": "=PROGNOSE.ETS(A27;$B$2:$B$25;$A$2:$A$25;6;1)",
+     "v": 246.7454626374543,
+     "fmt": "Standard",
+     "text": "246,7454626"
+    },
+    "D27": {
+     "f": "=PROGNOSE.ETS.KONFINT(A27;$B$2:$B$25;$A$2:$A$25;0,95;6;1)",
+     "v": 5.560767820669397,
+     "fmt": "Standard",
+     "text": "5,560767821"
+    },
+    "A28": {
+     "f": "46083",
+     "v": 46083.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.03.2026"
+    },
+    "C28": {
+     "f": "=PROGNOSE.ETS(A28;$B$2:$B$25;$A$2:$A$25;6;1)",
+     "v": 250.8155907537693,
+     "fmt": "Standard",
+     "text": "250,8155908"
+    },
+    "D28": {
+     "f": "=PROGNOSE.ETS.KONFINT(A28;$B$2:$B$25;$A$2:$A$25;0,95;6;1)",
+     "v": 5.605419286119636,
+     "fmt": "Standard",
+     "text": "5,605419286"
+    },
+    "A29": {
+     "f": "46114",
+     "v": 46114.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.04.2026"
+    },
+    "C29": {
+     "f": "=PROGNOSE.ETS(A29;$B$2:$B$25;$A$2:$A$25;6;1)",
+     "v": 234.59702779062852,
+     "fmt": "Standard",
+     "text": "234,5970278"
+    },
+    "D29": {
+     "f": "=PROGNOSE.ETS.KONFINT(A29;$B$2:$B$25;$A$2:$A$25;0,95;6;1)",
+     "v": 5.6504099708098225,
+     "fmt": "Standard",
+     "text": "5,650409971"
+    },
+    "A30": {
+     "f": "46144",
+     "v": 46144.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.05.2026"
+    },
+    "C30": {
+     "f": "=PROGNOSE.ETS(A30;$B$2:$B$25;$A$2:$A$25;6;1)",
+     "v": 214.14642019970404,
+     "fmt": "Standard",
+     "text": "214,1464202"
+    },
+    "D30": {
+     "f": "=PROGNOSE.ETS.KONFINT(A30;$B$2:$B$25;$A$2:$A$25;0,95;6;1)",
+     "v": 5.6957371790745235,
+     "fmt": "Standard",
+     "text": "5,695737179"
+    },
+    "A31": {
+     "f": "46175",
+     "v": 46175.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.06.2026"
+    },
+    "C31": {
+     "f": "=PROGNOSE.ETS(A31;$B$2:$B$25;$A$2:$A$25;6;1)",
+     "v": 215.74727519712852,
+     "fmt": "Standard",
+     "text": "215,7472752"
+    },
+    "D31": {
+     "f": "=PROGNOSE.ETS.KONFINT(A31;$B$2:$B$25;$A$2:$A$25;0,95;6;1)",
+     "v": 5.741398240883524,
+     "fmt": "Standard",
+     "text": "5,741398241"
+    },
+    "A32": {
+     "f": "46205",
+     "v": 46205.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.07.2026"
+    },
+    "C32": {
+     "f": "=PROGNOSE.ETS(A32;$B$2:$B$25;$A$2:$A$25;6;1)",
+     "v": 243.63781914582032,
+     "fmt": "Standard",
+     "text": "243,6378191"
+    },
+    "D32": {
+     "f": "=PROGNOSE.ETS.KONFINT(A32;$B$2:$B$25;$A$2:$A$25;0,95;6;1)",
+     "v": 5.788087183219475,
+     "fmt": "Standard",
+     "text": "5,788087183"
+    },
+    "A33": {
+     "f": "46236",
+     "v": 46236.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.08.2026"
+    },
+    "C33": {
+     "f": "=PROGNOSE.ETS(A33;$B$2:$B$25;$A$2:$A$25;6;1)",
+     "v": 271.18008383280267,
+     "fmt": "Standard",
+     "text": "271,1800838"
+    },
+    "D33": {
+     "f": "=PROGNOSE.ETS.KONFINT(A33;$B$2:$B$25;$A$2:$A$25;0,95;6;1)",
+     "v": 5.83440251616896,
+     "fmt": "Standard",
+     "text": "5,834402516"
+    },
+    "A34": {
+     "f": "46267",
+     "v": 46267.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.09.2026"
+    },
+    "C34": {
+     "f": "=PROGNOSE.ETS(A34;$B$2:$B$25;$A$2:$A$25;6;1)",
+     "v": 275.25021194911767,
+     "fmt": "Standard",
+     "text": "275,2502119"
+    },
+    "D34": {
+     "f": "=PROGNOSE.ETS.KONFINT(A34;$B$2:$B$25;$A$2:$A$25;0,95;6;1)",
+     "v": 5.881043900630605,
+     "fmt": "Standard",
+     "text": "5,881043901"
+    },
+    "A35": {
+     "f": "46297",
+     "v": 46297.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.10.2026"
+    },
+    "C35": {
+     "f": "=PROGNOSE.ETS(A35;$B$2:$B$25;$A$2:$A$25;6;1)",
+     "v": 259.03164898597686,
+     "fmt": "Standard",
+     "text": "259,031649"
+    },
+    "D35": {
+     "f": "=PROGNOSE.ETS.KONFINT(A35;$B$2:$B$25;$A$2:$A$25;0,95;6;1)",
+     "v": 5.9280087739957885,
+     "fmt": "Standard",
+     "text": "5,928008774"
+    },
+    "A36": {
+     "f": "46328",
+     "v": 46328.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.11.2026"
+    },
+    "C36": {
+     "f": "=PROGNOSE.ETS(A36;$B$2:$B$25;$A$2:$A$25;6;1)",
+     "v": 238.58104139505235,
+     "fmt": "Standard",
+     "text": "238,5810414"
+    },
+    "D36": {
+     "f": "=PROGNOSE.ETS.KONFINT(A36;$B$2:$B$25;$A$2:$A$25;0,95;6;1)",
+     "v": 5.975294601405254,
+     "fmt": "Standard",
+     "text": "5,975294601"
+    },
+    "A37": {
+     "f": "46358",
+     "v": 46358.0,
+     "fmt": "TT.MM.JJJJ",
+     "text": "02.12.2026"
+    },
+    "C37": {
+     "f": "=PROGNOSE.ETS(A37;$B$2:$B$25;$A$2:$A$25;6;1)",
+     "v": 240.1818963924769,
+     "fmt": "Standard",
+     "text": "240,1818964"
+    },
+    "D37": {
+     "f": "=PROGNOSE.ETS.KONFINT(A37;$B$2:$B$25;$A$2:$A$25;0,95;6;1)",
+     "v": 6.022898876023394,
+     "fmt": "Standard",
+     "text": "6,022898876"
+    }
+   },
+   "widths": {
+    "A": 10.27,
+    "B": 10.27,
+    "C": 18.55,
+    "D": 26.55,
+    "E": 10.27,
+    "F": 10.27,
+    "G": 9.18,
+    "H": 6.09
+   },
+   "tables": [
+    {
+     "name": "Tabelle2",
+     "range": "A1:D37",
+     "style": "TableStyleMedium2",
+     "columns": [
+      "Monat",
+      "Besucher",
+      "Schätzer(Besucher)",
+      "Konfidenzintervall(Besucher)"
+     ]
+    },
+    {
+     "name": "Tabelle3",
+     "range": "G1:H8",
+     "style": "TableStyleMedium2",
+     "columns": [
+      "Statistik",
+      "Wert"
+     ]
+    }
+   ],
+   "charts": [
+    {
+     "name": "Chart 1",
+     "type": 51,
+     "left": 401.25,
+     "top": 107.5,
+     "width": 724.5,
+     "height": 346.5,
+     "tl": "E8",
+     "br": "Q32",
+     "title": null,
+     "legend": -4107,
+     "series": [
+      {
+       "name": "Besucher",
+       "formula": "=SERIES(Tabelle3!$B$1,,Tabelle3!$B$2:$B$37,1)",
+       "type": 51
+      },
+      {
+       "name": "Schätzer(Besucher)",
+       "formula": "=SERIES(Tabelle3!$C$1,Tabelle3!$A$2:$A$37,Tabelle3!$C$2:$C$37,2)",
+       "type": 51
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "watchdogFired": false
+}

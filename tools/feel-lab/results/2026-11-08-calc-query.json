@@ -1,0 +1,542 @@
+{
+ "checks": [
+  {
+   "check": "RaabeCalc shows Excel's sheets",
+   "ok": true
+  },
+  {
+   "check": "RaabeCalc reads the loaded table",
+   "ok": true
+  },
+  {
+   "check": "Vorhandene Verbindungen lists the file's connections",
+   "ok": true
+  },
+  {
+   "check": "Aus Arbeitsmappe: the table on a new sheet named after it (Noten (2), table Noten_2, TableStyleMedium2)",
+   "ok": true,
+   "got": {
+    "sheet": "Noten (2)",
+    "table": "Noten_2",
+    "ref": {
+     "r0": 0,
+     "c0": 0,
+     "r1": 4,
+     "c1": 2
+    },
+    "style": "TableStyleMedium2",
+    "rows": [
+     [
+      "Name",
+      "Fach",
+      "Note"
+     ],
+     [
+      "Anna",
+      "Mathe",
+      2
+     ],
+     [
+      "Ben",
+      "Deutsch",
+      3
+     ],
+     [
+      "Cem",
+      "Mathe",
+      1
+     ],
+     [
+      "Dora",
+      "Englisch",
+      4
+     ]
+    ],
+    "csv": {
+     "sheet": "raabe-query-noten",
+     "table": "raabe_query_noten",
+     "rows": [
+      [
+       "Name",
+       "Fach",
+       "Note"
+      ],
+      [
+       "Anna",
+       "Mathe",
+       2
+      ],
+      [
+       "Ben",
+       "Deutsch",
+       3
+      ],
+      [
+       "Cem",
+       "Mathe",
+       1
+      ],
+      [
+       "Dora",
+       "Englisch",
+       4
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "check": "Aus Text/CSV: the file's data as a table on a new sheet of this workbook",
+   "ok": true,
+   "got": {
+    "sheet": "raabe-query-noten",
+    "table": "raabe_query_noten",
+    "rows": [
+     [
+      "Name",
+      "Fach",
+      "Note"
+     ],
+     [
+      "Anna",
+      "Mathe",
+      2
+     ],
+     [
+      "Ben",
+      "Deutsch",
+      3
+     ],
+     [
+      "Cem",
+      "Mathe",
+      1
+     ],
+     [
+      "Dora",
+      "Englisch",
+      4
+     ]
+    ]
+   }
+  },
+  {
+   "check": "unchanged: query, connection and model parts kept",
+   "ok": true,
+   "missing": []
+  },
+  {
+   "check": "unchanged: Excel finds the queries",
+   "ok": true
+  },
+  {
+   "check": "unchanged: Excel finds the connections",
+   "ok": true
+  },
+  {
+   "check": "unchanged: Excel finds the data model's tables",
+   "ok": true
+  },
+  {
+   "check": "unchanged: the loaded table is the same",
+   "ok": true
+  },
+  {
+   "check": "unchanged: Excel refreshes the query",
+   "ok": true
+  },
+  {
+   "check": "edited: query, connection and model parts kept",
+   "ok": true,
+   "missing": []
+  },
+  {
+   "check": "edited: Excel finds the queries",
+   "ok": true
+  },
+  {
+   "check": "edited: Excel finds the connections",
+   "ok": true
+  },
+  {
+   "check": "edited: Excel finds the data model's tables",
+   "ok": true
+  },
+  {
+   "check": "edited: the loaded table is the same",
+   "ok": true
+  },
+  {
+   "check": "edited: Excel refreshes the query",
+   "ok": true
+  }
+ ],
+ "excel": {
+  "queries": [
+   {
+    "name": "Noten",
+    "formula": "let\n    Quelle = Csv.Document(File.Contents(\"<TEMP>\\raabe-query-noten.csv\"),[Delimiter=\";\", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),\n    Header = Table.PromoteHeaders(Quelle, [PromoteAllScalars=true]),\n    Typen = Table.TransformColumnTypes(Header,{{\"Name\", type text}, {\"Fach\", type text}, {\"Note\", Int64.Type}})\nin\n    Typen"
+   },
+   {
+    "name": "NotenModell",
+    "formula": "let\n    Quelle = Noten\nin\n    Quelle"
+   }
+  ],
+  "connections": [
+   {
+    "name": "Abfrage - NotenModell",
+    "type": 1,
+    "inModel": true
+   },
+   {
+    "name": "ThisWorkbookDataModel",
+    "type": 7,
+    "inModel": true
+   },
+   {
+    "name": "Verbindung",
+    "type": 1,
+    "inModel": false
+   }
+  ],
+  "model": [
+   "NotenModell"
+  ],
+  "tables": [
+   {
+    "sheet": "Noten",
+    "name": "Noten",
+    "range": "A1:C5",
+    "source": 3,
+    "values": [
+     [
+      "Name",
+      "Fach",
+      "Note"
+     ],
+     [
+      "Anna",
+      "Mathe",
+      2.0
+     ],
+     [
+      "Ben",
+      "Deutsch",
+      3.0
+     ],
+     [
+      "Cem",
+      "Mathe",
+      1.0
+     ],
+     [
+      "Dora",
+      "Englisch",
+      4.0
+     ]
+    ]
+   }
+  ],
+  "sheets": [
+   "Noten",
+   "Notizen"
+  ]
+ },
+ "calc": {
+  "sheets": [
+   "Noten",
+   "Notizen"
+  ],
+  "tables": [
+   {
+    "sheet": "Noten",
+    "name": "Noten",
+    "ref": {
+     "r0": 0,
+     "c0": 0,
+     "r1": 4,
+     "c1": 2
+    }
+   }
+  ],
+  "a2": "Anna",
+  "c3": 3,
+  "connections": [
+   "Abfrage - NotenModell",
+   "ThisWorkbookDataModel",
+   "Verbindung"
+  ]
+ },
+ "loaded": {
+  "sheet": "Noten (2)",
+  "table": "Noten_2",
+  "ref": {
+   "r0": 0,
+   "c0": 0,
+   "r1": 4,
+   "c1": 2
+  },
+  "style": "TableStyleMedium2",
+  "rows": [
+   [
+    "Name",
+    "Fach",
+    "Note"
+   ],
+   [
+    "Anna",
+    "Mathe",
+    2
+   ],
+   [
+    "Ben",
+    "Deutsch",
+    3
+   ],
+   [
+    "Cem",
+    "Mathe",
+    1
+   ],
+   [
+    "Dora",
+    "Englisch",
+    4
+   ]
+  ],
+  "csv": {
+   "sheet": "raabe-query-noten",
+   "table": "raabe_query_noten",
+   "rows": [
+    [
+     "Name",
+     "Fach",
+     "Note"
+    ],
+    [
+     "Anna",
+     "Mathe",
+     2
+    ],
+    [
+     "Ben",
+     "Deutsch",
+     3
+    ],
+    [
+     "Cem",
+     "Mathe",
+     1
+    ],
+    [
+     "Dora",
+     "Englisch",
+     4
+    ]
+   ]
+  }
+ },
+ "excel-unchanged": {
+  "queries": [
+   {
+    "name": "Noten",
+    "formula": "let\n    Quelle = Csv.Document(File.Contents(\"<TEMP>\\raabe-query-noten.csv\"),[Delimiter=\";\", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),\n    Header = Table.PromoteHeaders(Quelle, [PromoteAllScalars=true]),\n    Typen = Table.TransformColumnTypes(Header,{{\"Name\", type text}, {\"Fach\", type text}, {\"Note\", Int64.Type}})\nin\n    Typen"
+   },
+   {
+    "name": "NotenModell",
+    "formula": "let\n    Quelle = Noten\nin\n    Quelle"
+   }
+  ],
+  "connections": [
+   {
+    "name": "Abfrage - NotenModell",
+    "type": 1,
+    "inModel": true
+   },
+   {
+    "name": "ThisWorkbookDataModel",
+    "type": 7,
+    "inModel": true
+   },
+   {
+    "name": "Verbindung",
+    "type": 1,
+    "inModel": false
+   }
+  ],
+  "model": [
+   "NotenModell"
+  ],
+  "tables": [
+   {
+    "sheet": "Noten",
+    "name": "Noten",
+    "range": "A1:C5",
+    "source": 3,
+    "values": [
+     [
+      "Name",
+      "Fach",
+      "Note"
+     ],
+     [
+      "Anna",
+      "Mathe",
+      2.0
+     ],
+     [
+      "Ben",
+      "Deutsch",
+      3.0
+     ],
+     [
+      "Cem",
+      "Mathe",
+      1.0
+     ],
+     [
+      "Dora",
+      "Englisch",
+      4.0
+     ]
+    ]
+   }
+  ],
+  "sheets": [
+   "Noten",
+   "Notizen"
+  ],
+  "refreshed": true,
+  "afterRefresh": [
+   [
+    [
+     "Name",
+     "Fach",
+     "Note"
+    ],
+    [
+     "Anna",
+     "Mathe",
+     2.0
+    ],
+    [
+     "Ben",
+     "Deutsch",
+     3.0
+    ],
+    [
+     "Cem",
+     "Mathe",
+     1.0
+    ],
+    [
+     "Dora",
+     "Englisch",
+     4.0
+    ]
+   ]
+  ]
+ },
+ "excel-edited": {
+  "queries": [
+   {
+    "name": "Noten",
+    "formula": "let\n    Quelle = Csv.Document(File.Contents(\"<TEMP>\\raabe-query-noten.csv\"),[Delimiter=\";\", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),\n    Header = Table.PromoteHeaders(Quelle, [PromoteAllScalars=true]),\n    Typen = Table.TransformColumnTypes(Header,{{\"Name\", type text}, {\"Fach\", type text}, {\"Note\", Int64.Type}})\nin\n    Typen"
+   },
+   {
+    "name": "NotenModell",
+    "formula": "let\n    Quelle = Noten\nin\n    Quelle"
+   }
+  ],
+  "connections": [
+   {
+    "name": "Abfrage - NotenModell",
+    "type": 1,
+    "inModel": true
+   },
+   {
+    "name": "ThisWorkbookDataModel",
+    "type": 7,
+    "inModel": true
+   },
+   {
+    "name": "Verbindung",
+    "type": 1,
+    "inModel": false
+   }
+  ],
+  "model": [
+   "NotenModell"
+  ],
+  "tables": [
+   {
+    "sheet": "Noten",
+    "name": "Noten",
+    "range": "A1:C5",
+    "source": 3,
+    "values": [
+     [
+      "Name",
+      "Fach",
+      "Note"
+     ],
+     [
+      "Anna",
+      "Mathe",
+      2.0
+     ],
+     [
+      "Ben",
+      "Deutsch",
+      3.0
+     ],
+     [
+      "Cem",
+      "Mathe",
+      1.0
+     ],
+     [
+      "Dora",
+      "Englisch",
+      4.0
+     ]
+    ]
+   }
+  ],
+  "sheets": [
+   "Noten",
+   "Notizen"
+  ],
+  "refreshed": true,
+  "afterRefresh": [
+   [
+    [
+     "Name",
+     "Fach",
+     "Note"
+    ],
+    [
+     "Anna",
+     "Mathe",
+     2.0
+    ],
+    [
+     "Ben",
+     "Deutsch",
+     3.0
+    ],
+    [
+     "Cem",
+     "Mathe",
+     1.0
+    ],
+    [
+     "Dora",
+     "Englisch",
+     4.0
+    ]
+   ]
+  ]
+ },
+ "passed": "17/17"
+}

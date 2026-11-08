@@ -10,9 +10,10 @@ import type { FileInfo, GrammarIssue, Platform, RecoveryEntry, ThesaurusResult }
 
 const FILTERS = {
   docx: [{ name: "Word-Dokument", extensions: ["docx"] }],
-  xlsx: [{ name: "Excel-Arbeitsmappe", extensions: ["xlsx"] }],
+  xlsx: [{ name: "Excel-Arbeitsmappe", extensions: ["xlsx"] }, { name: "Excel-Arbeitsmappe mit Makros", extensions: ["xlsm"] }],
+  xlsm: [{ name: "Excel-Arbeitsmappe mit Makros", extensions: ["xlsm"] }, { name: "Excel-Arbeitsmappe", extensions: ["xlsx"] }],
   csv: [{ name: "CSV (Trennzeichen-getrennt)", extensions: ["csv"] }],
-  xlsxOpen: [{ name: "Alle Excel-Dateien", extensions: ["xlsx", "csv"] }],
+  xlsxOpen: [{ name: "Alle Excel-Dateien", extensions: ["xlsx", "xlsm", "csv"] }],
   pdf: [{ name: "PDF", extensions: ["pdf"] }],
   pptx: [{ name: "PowerPoint-Präsentation", extensions: ["pptx"] }],
   image: [{ name: "Alle Bilder", extensions: ["png", "jpg", "jpeg", "gif", "bmp", "svg", "webp"] }],

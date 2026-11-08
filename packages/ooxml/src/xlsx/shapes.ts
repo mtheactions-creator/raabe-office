@@ -37,6 +37,8 @@ function srgbOf(block: string | undefined): { color?: string; transparency?: num
 /** A shape anchor as a model (null: not a shape Excel's model covers: groups, pictures, charts). */
 export function shapeFromXml(ax: string): SheetShape | null {
   if (!/^<xdr:twoCellAnchor\b/.test(ax) || !/<xdr:(sp|cxnSp|grpSp)\b/.test(ax)) return null;
+  // A Datenschnitt's frame (its fallback is a plain shape): read by slicers.ts (D-092).
+  if (/<(sle|tsle):(slicer|timeslicer)\b/.test(ax)) return null;
   const from = point(ax, "from"), to = point(ax, "to");
   if (!from || !to) return null;
   if (/^<xdr:twoCellAnchor\b[^>]*>\s*<xdr:from>[\s\S]*?<\/xdr:to>\s*<xdr:grpSp\b/.test(ax)) return groupFromXml(ax, from, to);

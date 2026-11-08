@@ -1,0 +1,303 @@
+{
+ "excel": [
+  {
+   "case": "column border",
+   "esc": {
+    "before": 10.27,
+    "after": 15.73,
+    "changed": true
+   },
+   "plain": {
+    "before": 10.27,
+    "after": 15.73,
+    "changed": true,
+    "undone": 10.27,
+    "undo_restores": true
+   },
+   "esc_cancels": false
+  },
+  {
+   "case": "row border",
+   "esc": {
+    "before": 14.5,
+    "after": 29.5,
+    "changed": true
+   },
+   "plain": {
+    "before": 14.5,
+    "after": 29.5,
+    "changed": true,
+    "undone": 14.5,
+    "undo_restores": true
+   },
+   "esc_cancels": false
+  },
+  {
+   "case": "fill handle",
+   "esc": {
+    "before": [
+     "x1",
+     "",
+     "",
+     ""
+    ],
+    "after": [
+     "x1",
+     "x2",
+     "x3",
+     ""
+    ],
+    "changed": true
+   },
+   "plain": {
+    "before": [
+     "x1",
+     "",
+     "",
+     ""
+    ],
+    "after": [
+     "x1",
+     "x2",
+     "x3",
+     ""
+    ],
+    "changed": true,
+    "undone": [
+     "x1",
+     "",
+     "",
+     ""
+    ],
+    "undo_restores": true
+   },
+   "esc_cancels": false
+  },
+  {
+   "case": "move selection by its border",
+   "esc": {
+    "before": [
+     "x1",
+     "",
+     "",
+     ""
+    ],
+    "after": [
+     "",
+     "",
+     "x1",
+     ""
+    ],
+    "changed": true
+   },
+   "plain": {
+    "before": [
+     "x1",
+     "",
+     "",
+     ""
+    ],
+    "after": [
+     "",
+     "",
+     "x1",
+     ""
+    ],
+    "changed": true,
+    "undone": [
+     "x1",
+     "",
+     "",
+     ""
+    ],
+    "undo_restores": true
+   },
+   "esc_cancels": false
+  },
+  {
+   "case": "shape move",
+   "esc": {
+    "before": [
+     200.0,
+     120.0,
+     100.0,
+     80.0,
+     0.0
+    ],
+    "after": [
+     200.0,
+     120.0,
+     100.0,
+     80.0,
+     0.0
+    ],
+    "changed": false
+   },
+   "plain": {
+    "before": [
+     200.0,
+     120.0,
+     100.0,
+     80.0,
+     0.0
+    ],
+    "after": [
+     229.0,
+     134.5,
+     100.0,
+     80.0,
+     0.0
+    ],
+    "changed": true,
+    "undone": [
+     200.0,
+     120.0,
+     100.0,
+     80.0,
+     0.0
+    ],
+    "undo_restores": true
+   },
+   "esc_cancels": true
+  },
+  {
+   "case": "shape corner handle",
+   "esc": {
+    "before": [
+     200.0,
+     120.0,
+     100.0,
+     80.0,
+     0.0
+    ],
+    "after": [
+     200.0,
+     120.0,
+     100.0,
+     80.0,
+     0.0
+    ],
+    "changed": false
+   },
+   "plain": {
+    "before": [
+     200.0,
+     120.0,
+     100.0,
+     80.0,
+     0.0
+    ],
+    "after": [
+     200.0,
+     120.0,
+     129.5,
+     95.0,
+     0.0
+    ],
+    "changed": true,
+    "undone": [
+     200.0,
+     120.0,
+     100.0,
+     80.0,
+     0.0
+    ],
+    "undo_restores": true
+   },
+   "esc_cancels": true
+  },
+  {
+   "case": "shape rotation handle",
+   "point": 5,
+   "esc": {
+    "before": [
+     200.0,
+     120.0,
+     100.0,
+     80.0,
+     0.0
+    ],
+    "after": [
+     200.0,
+     120.0,
+     100.0,
+     80.0,
+     0.0
+    ],
+    "changed": false
+   },
+   "plain": {
+    "before": [
+     200.0,
+     120.0,
+     100.0,
+     80.0,
+     0.0
+    ],
+    "after": [
+     200.0,
+     120.0,
+     100.0,
+     80.0,
+     25.9
+    ],
+    "changed": true,
+    "undone": [
+     200.0,
+     120.0,
+     100.0,
+     80.0,
+     0.0
+    ],
+    "undo_restores": true
+   },
+   "esc_cancels": true
+  },
+  {
+   "case": "chart move",
+   "esc": {
+    "before": [
+     200.0,
+     120.0,
+     240.0,
+     160.0
+    ],
+    "after": [
+     200.0,
+     120.0,
+     240.0,
+     160.0
+    ],
+    "changed": false
+   },
+   "plain": {
+    "before": [
+     200.0,
+     120.0,
+     240.0,
+     160.0
+    ],
+    "after": [
+     229.0,
+     134.5,
+     240.0,
+     160.0
+    ],
+    "changed": true,
+    "undone": [
+     200.0,
+     120.0,
+     240.0,
+     160.0
+    ],
+    "undo_restores": true
+   },
+   "esc_cancels": true
+  },
+  {
+   "case": "chart corner handle",
+   "error": "no candidate point changed anything",
+   "esc_cancels": null
+  }
+ ]
+}

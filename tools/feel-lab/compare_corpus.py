@@ -85,8 +85,10 @@ def office_excel(files: list[Path]) -> dict[str, Path]:
 
 def raabe_calc(files: list[Path]) -> dict[str, Path]:
     from feellab.calc_catalogue import CalcSide
+    import os
     out = {}
-    c = CalcSide()
+    # Another harness may hold the default DevTools port: RAABE_CALC_PORT picks another one.
+    c = CalcSide(int(os.environ.get("RAABE_CALC_PORT", "9381")))
     try:
         for f in files:
             pdf = TMP / "raabe-corpus" / "pdf-raabe" / f"{f.stem}.pdf"

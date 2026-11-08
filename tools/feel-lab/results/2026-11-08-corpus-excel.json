@@ -2,45 +2,405 @@
  "app": "excel",
  "documents": [
   {
+   "name": "anwesenheit",
+   "pages_office": 1,
+   "pages_raabe": 1,
+   "diff": [
+    2.25
+   ],
+   "coarse": [
+    1.25
+   ],
+   "mean": 2.25,
+   "mean_coarse": 1.25
+  },
+  {
+   "name": "ausgeblendet",
+   "pages_office": 1,
+   "pages_raabe": 1,
+   "diff": [
+    0.31
+   ],
+   "coarse": [
+    0.08
+   ],
+   "mean": 0.31,
+   "mean_coarse": 0.08
+  },
+  {
+   "name": "ausrichtung",
+   "pages_office": 1,
+   "pages_raabe": 1,
+   "diff": [
+    2.11
+   ],
+   "coarse": [
+    1.84
+   ],
+   "mean": 2.11,
+   "mean_coarse": 1.84
+  },
+  {
+   "name": "balken",
+   "pages_office": 2,
+   "pages_raabe": 2,
+   "diff": [
+    1.04,
+    0.07
+   ],
+   "coarse": [
+    0.8,
+    0.04
+   ],
+   "mean": 0.56,
+   "mean_coarse": 0.42
+  },
+  {
+   "name": "bild",
+   "pages_office": 1,
+   "pages_raabe": 1,
+   "diff": [
+    0.13
+   ],
+   "coarse": [
+    0.06
+   ],
+   "mean": 0.13,
+   "mean_coarse": 0.06
+  },
+  {
+   "name": "budget",
+   "pages_office": 2,
+   "pages_raabe": 2,
+   "diff": [
+    0.51,
+    0.01
+   ],
+   "coarse": [
+    0.23,
+    0.01
+   ],
+   "mean": 0.26,
+   "mean_coarse": 0.12
+  },
+  {
+   "name": "design_ion",
+   "pages_office": 1,
+   "pages_raabe": 1,
+   "diff": [
+    1.4
+   ],
+   "coarse": [
+    0.95
+   ],
+   "mean": 1.4,
+   "mean_coarse": 0.95
+  },
+  {
+   "name": "fehler",
+   "pages_office": 1,
+   "pages_raabe": 1,
+   "diff": [
+    0.22
+   ],
+   "coarse": [
+    0.06
+   ],
+   "mean": 0.22,
+   "mean_coarse": 0.06
+  },
+  {
+   "name": "formen",
+   "pages_office": 2,
+   "pages_raabe": 2,
+   "diff": [
+    0.78,
+    0.07
+   ],
+   "coarse": [
+    0.41,
+    0.06
+   ],
+   "mean": 0.43,
+   "mean_coarse": 0.23
+  },
+  {
+   "name": "funktion",
+   "pages_office": 2,
+   "pages_raabe": 2,
+   "diff": [
+    2.22,
+    0.43
+   ],
+   "coarse": [
+    1.63,
+    0.36
+   ],
+   "mean": 1.33,
+   "mean_coarse": 0.99
+  },
+  {
+   "name": "gestapelt",
+   "pages_office": 2,
+   "pages_raabe": 2,
+   "diff": [
+    1.52,
+    0.35
+   ],
+   "coarse": [
+    1.26,
+    0.28
+   ],
+   "mean": 0.94,
+   "mean_coarse": 0.77
+  },
+  {
+   "name": "klassenkasse",
+   "pages_office": 1,
+   "pages_raabe": 1,
+   "diff": [
+    1.96
+   ],
+   "coarse": [
+    0.8
+   ],
+   "mean": 1.96,
+   "mean_coarse": 0.8
+  },
+  {
+   "name": "langeliste",
+   "pages_office": 3,
+   "pages_raabe": 3,
+   "diff": [
+    7.48,
+    7.0,
+    4.84
+   ],
+   "coarse": [
+    3.03,
+    2.73,
+    1.86
+   ],
+   "mean": 6.44,
+   "mean_coarse": 2.54
+  },
+  {
+   "name": "mehrere_blaetter",
+   "pages_office": 1,
+   "pages_raabe": 1,
+   "diff": [
+    0.08
+   ],
+   "coarse": [
+    0.03
+   ],
+   "mean": 0.08,
+   "mean_coarse": 0.03
+  },
+  {
+   "name": "messreihe",
+   "pages_office": 2,
+   "pages_raabe": 2,
+   "diff": [
+    1.49,
+    0.08
+   ],
+   "coarse": [
+    0.7,
+    0.06
+   ],
+   "mean": 0.79,
+   "mean_coarse": 0.38
+  },
+  {
    "name": "notenliste",
    "pages_office": 1,
    "pages_raabe": 1,
    "diff": [
-    14.92
+    2.85
    ],
    "coarse": [
-    12.3
+    1.58
    ],
-   "mean": 14.92,
-   "mean_coarse": 12.3
+   "mean": 2.85,
+   "mean_coarse": 1.58
+  },
+  {
+   "name": "notenspiegel",
+   "pages_office": 2,
+   "pages_raabe": 2,
+   "diff": [
+    1.25,
+    0.07
+   ],
+   "coarse": [
+    0.59,
+    0.02
+   ],
+   "mean": 0.66,
+   "mean_coarse": 0.3
+  },
+  {
+   "name": "raender",
+   "pages_office": 2,
+   "pages_raabe": 2,
+   "diff": [
+    0.4,
+    0.54
+   ],
+   "coarse": [
+    0.1,
+    0.14
+   ],
+   "mean": 0.47,
+   "mean_coarse": 0.12
+  },
+  {
+   "name": "rahmen",
+   "pages_office": 1,
+   "pages_raabe": 1,
+   "diff": [
+    0.9
+   ],
+   "coarse": [
+    0.62
+   ],
+   "mean": 0.9,
+   "mean_coarse": 0.62
+  },
+  {
+   "name": "schriften",
+   "pages_office": 2,
+   "pages_raabe": 2,
+   "diff": [
+    2.86,
+    1.61
+   ],
+   "coarse": [
+    1.59,
+    0.8
+   ],
+   "mean": 2.23,
+   "mean_coarse": 1.2
+  },
+  {
+   "name": "skaliert",
+   "pages_office": 1,
+   "pages_raabe": 1,
+   "diff": [
+    4.29
+   ],
+   "coarse": [
+    2.93
+   ],
+   "mean": 4.29,
+   "mean_coarse": 2.93
+  },
+  {
+   "name": "sparklines",
+   "pages_office": 1,
+   "pages_raabe": 1,
+   "diff": [
+    0.47
+   ],
+   "coarse": [
+    0.26
+   ],
+   "mean": 0.47,
+   "mean_coarse": 0.26
   },
   {
    "name": "stundenplan",
    "pages_office": 1,
    "pages_raabe": 1,
    "diff": [
-    11.48
+    1.49
    ],
    "coarse": [
-    10.06
+    0.66
    ],
-   "mean": 11.48,
-   "mean_coarse": 10.06
+   "mean": 1.49,
+   "mean_coarse": 0.66
+  },
+  {
+   "name": "tabelle_ergebnis",
+   "pages_office": 1,
+   "pages_raabe": 1,
+   "diff": [
+    0.59
+   ],
+   "coarse": [
+    0.31
+   ],
+   "mean": 0.59,
+   "mean_coarse": 0.31
+  },
+  {
+   "name": "vokabeln",
+   "pages_office": 1,
+   "pages_raabe": 1,
+   "diff": [
+    1.51
+   ],
+   "coarse": [
+    0.57
+   ],
+   "mean": 1.51,
+   "mean_coarse": 0.57
+  },
+  {
+   "name": "zahlenformate",
+   "pages_office": 2,
+   "pages_raabe": 2,
+   "diff": [
+    2.38,
+    1.59
+   ],
+   "coarse": [
+    0.9,
+    0.52
+   ],
+   "mean": 1.98,
+   "mean_coarse": 0.71
   }
  ],
  "summary": {
-  "documents": 2,
-  "same_page_count": 2,
-  "mean_diff": 13.2,
-  "mean_coarse": 11.18,
+  "documents": 26,
+  "same_page_count": 26,
+  "mean_diff": 1.41,
+  "mean_coarse": 0.76,
   "worst": [
    [
-    12.3,
+    2.93,
+    "skaliert"
+   ],
+   [
+    2.54,
+    "langeliste"
+   ],
+   [
+    1.84,
+    "ausrichtung"
+   ],
+   [
+    1.58,
     "notenliste"
    ],
    [
-    10.06,
-    "stundenplan"
+    1.25,
+    "anwesenheit"
+   ],
+   [
+    1.2,
+    "schriften"
+   ],
+   [
+    0.99,
+    "funktion"
+   ],
+   [
+    0.95,
+    "design_ion"
    ]
   ]
  }

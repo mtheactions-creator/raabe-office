@@ -47,7 +47,7 @@ export interface Platform {
   openAnyDialog?(title: string, filters: { name: string; extensions: string[] }[]): Promise<string | null>;
   /** Several pictures at once (Fotoalbum); optional, added for RaabePresent. */
   openImagesDialog?(title: string): Promise<string[]>;
-  saveFileDialog(defaultName: string, kind: "docx" | "pdf" | "xlsx" | "csv" | "pptx"): Promise<string | null>;
+  saveFileDialog(defaultName: string, kind: "docx" | "pdf" | "xlsx" | "xlsm" | "csv" | "pptx"): Promise<string | null>;
   /** Chooses where to save a file of the given kinds (Als Grafik speichern …). */
   saveAnyDialog?(title: string, defaultName: string, filters: { name: string; extensions: string[] }[]): Promise<string | null>;
   readFile(path: string): Promise<Uint8Array>;

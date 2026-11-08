@@ -318,6 +318,8 @@ export function picturesFeature(app: CalcApp) {
     if (app.grid.isEditing) app.grid.commitEdit("none");
     if (picking && p === selected) { void pickColor(e, p, el); return; }
     if (selected !== p) select(p);
+    // Selecting rebuilds the pictures' elements: the drag goes on with the new one (D-096).
+    if (shown === undefined) { place(); el = els[(app.sheet.pictures ?? []).indexOf(p)] ?? el; }
     if (crop?.p === p) { cropDrag(e, el); return; }
     const b = boxOf(p);
     if (!b) return;

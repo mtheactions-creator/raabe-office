@@ -2,45 +2,231 @@
  "app": "word",
  "documents": [
   {
+   "name": "arbeitsblatt",
+   "pages_office": 1,
+   "pages_raabe": 1,
+   "diff": [
+    2.43
+   ],
+   "coarse": [
+    0.99
+   ],
+   "mean": 2.43,
+   "mean_coarse": 0.99
+  },
+  {
+   "name": "bilder",
+   "pages_office": 1,
+   "pages_raabe": 1,
+   "diff": [
+    3.33
+   ],
+   "coarse": [
+    2.27
+   ],
+   "mean": 3.33,
+   "mean_coarse": 2.27
+  },
+  {
    "name": "elternbrief",
    "pages_office": 1,
    "pages_raabe": 1,
    "diff": [
-    4.88
+    7.6
    ],
    "coarse": [
-    1.27
+    2.63
    ],
-   "mean": 4.88,
-   "mean_coarse": 1.27
+   "mean": 7.6,
+   "mean_coarse": 2.63
+  },
+  {
+   "name": "formen",
+   "pages_office": 1,
+   "pages_raabe": 1,
+   "diff": [
+    0.63
+   ],
+   "coarse": [
+    0.23
+   ],
+   "mean": 0.63,
+   "mean_coarse": 0.23
+  },
+  {
+   "name": "fussnoten",
+   "pages_office": 1,
+   "pages_raabe": 1,
+   "diff": [
+    3.12
+   ],
+   "coarse": [
+    0.78
+   ],
+   "mean": 3.12,
+   "mean_coarse": 0.78
+  },
+  {
+   "name": "inhaltsverzeichnis",
+   "pages_office": 2,
+   "pages_raabe": 2,
+   "diff": [
+    8.06,
+    3.67
+   ],
+   "coarse": [
+    2.11,
+    0.8
+   ],
+   "mean": 5.87,
+   "mean_coarse": 1.46
+  },
+  {
+   "name": "klausur",
+   "pages_office": 1,
+   "pages_raabe": 1,
+   "diff": [
+    1.81
+   ],
+   "coarse": [
+    1.19
+   ],
+   "mean": 1.81,
+   "mean_coarse": 1.19
+  },
+  {
+   "name": "kopfzeile",
+   "pages_office": 2,
+   "pages_raabe": 2,
+   "diff": [
+    9.65,
+    2.45
+   ],
+   "coarse": [
+    3.33,
+    1.91
+   ],
+   "mean": 6.05,
+   "mean_coarse": 2.62
+  },
+  {
+   "name": "listen",
+   "pages_office": 1,
+   "pages_raabe": 1,
+   "diff": [
+    0.3
+   ],
+   "coarse": [
+    0.09
+   ],
+   "mean": 0.3,
+   "mean_coarse": 0.09
+  },
+  {
+   "name": "querformat",
+   "pages_office": 1,
+   "pages_raabe": 1,
+   "diff": [
+    1.15
+   ],
+   "coarse": [
+    0.41
+   ],
+   "mean": 1.15,
+   "mean_coarse": 0.41
   },
   {
    "name": "schriften",
    "pages_office": 1,
    "pages_raabe": 1,
    "diff": [
-    3.58
+    3.42
    ],
    "coarse": [
-    1.22
+    1.11
    ],
-   "mean": 3.58,
-   "mean_coarse": 1.22
+   "mean": 3.42,
+   "mean_coarse": 1.11
+  },
+  {
+   "name": "spalten",
+   "pages_office": 2,
+   "pages_raabe": 2,
+   "diff": [
+    13.14,
+    0.19
+   ],
+   "coarse": [
+    3.62,
+    0.05
+   ],
+   "mean": 6.67,
+   "mean_coarse": 1.83
+  },
+  {
+   "name": "tabelle",
+   "pages_office": 1,
+   "pages_raabe": 1,
+   "diff": [
+    1.07
+   ],
+   "coarse": [
+    0.56
+   ],
+   "mean": 1.07,
+   "mean_coarse": 0.56
+  },
+  {
+   "name": "textfeld",
+   "pages_office": 1,
+   "pages_raabe": 1,
+   "diff": [
+    3.39
+   ],
+   "coarse": [
+    0.85
+   ],
+   "mean": 3.39,
+   "mean_coarse": 0.85
   }
  ],
  "summary": {
-  "documents": 2,
-  "same_page_count": 2,
-  "mean_diff": 4.23,
-  "mean_coarse": 1.25,
+  "documents": 14,
+  "same_page_count": 14,
+  "mean_diff": 3.35,
+  "mean_coarse": 1.22,
   "worst": [
    [
-    1.27,
+    2.63,
     "elternbrief"
    ],
    [
-    1.22,
+    2.62,
+    "kopfzeile"
+   ],
+   [
+    2.27,
+    "bilder"
+   ],
+   [
+    1.83,
+    "spalten"
+   ],
+   [
+    1.46,
+    "inhaltsverzeichnis"
+   ],
+   [
+    1.19,
+    "klausur"
+   ],
+   [
+    1.11,
     "schriften"
+   ],
+   [
+    0.99,
+    "arbeitsblatt"
    ]
   ]
  }
