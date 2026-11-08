@@ -70,10 +70,15 @@ export function defaultGradient(color: string): Gradient {
 function gradientControls(key: string, g: Gradient, set: (g: Gradient) => void): PaneControl[] {
   const sel = Math.min(chosenStop.get(key) ?? 0, g.stops.length - 1);
   const stop = g.stops[sel];
-  const withStop = (patch: Partial<Gradient["stops"][number]>) => set({ ...g, stops: g.stops.map((s, i) => (i === sel ? { ...s, ...patch } : s)) });
+  const withStop = (patch: Partial<Gradient["stops"][number]>) => {
+    const changedStop = { ...g.stops[sel], ...patch };
+    const stops = g.stops.map((s, i) => (i === sel ? changedStop : s)).sort((a, b) => a.pos - b.pos);
+    chosenStop.set(key, stops.indexOf(changedStop));
+    set({ ...g, stops });
+  };
   const c: PaneControl[] = [
     { type: "select", label: "Typ", options: [{ label: "Linear", value: "linear" }, { label: "Radial", value: "radial" }, { label: "Rechteckig", value: "rect" }, { label: "Pfad", value: "path" }],
-      value: () => g.kind, set: (v) => set({ ...g, kind: v as Gradient["kind"] }) },
+      value: () => g.kind, set: (v) => set({ ...g, kind: v as Gradient["kind"], angle: v === "linear" ? g.angle ?? 90 : undefined }) },
   ];
   if (g.kind === "linear") {
     c.push({ type: "select", label: "Richtung", options: DIRECTIONS, value: () => String(g.angle ?? 0), set: (v) => set({ ...g, angle: Number(v) }) });
@@ -86,8 +91,10 @@ function gradientControls(key: string, g: Gradient, set: (g: Gradient) => void):
       // A new stop between the chosen one and the next, in the chosen one's colour.
       const next = g.stops[sel + 1] ?? g.stops[sel - 1];
       const pos = Math.round(((stop?.pos ?? 0) + (next?.pos ?? 100)) / 2);
-      const stops = [...g.stops, { pos, color: stop?.color ?? "#FFFFFF", ...(stop?.transparency ? { transparency: stop.transparency } : {}) }];
-      chosenStop.set(key, stops.length - 1);
+      // The stops stay in their order along the bar (as the file keeps them).
+      const added = { pos, color: stop?.color ?? "#FFFFFF", ...(stop?.transparency ? { transparency: stop.transparency } : {}) };
+      const stops = [...g.stops, added].sort((a, b) => a.pos - b.pos);
+      chosenStop.set(key, stops.indexOf(added));
       set({ ...g, stops });
     },
     remove: () => {
@@ -95,7 +102,12 @@ function gradientControls(key: string, g: Gradient, set: (g: Gradient) => void):
       chosenStop.set(key, Math.max(0, sel - 1));
       set({ ...g, stops: g.stops.filter((_, i) => i !== sel) });
     },
-    move: (i, pos) => set({ ...g, stops: g.stops.map((s, k) => (k === i ? { ...s, pos } : s)) }),
+    move: (i, pos) => {
+      const moved = { ...g.stops[i], pos };
+      const stops = g.stops.map((s, k) => (k === i ? moved : s)).sort((a, b) => a.pos - b.pos);
+      chosenStop.set(key, stops.indexOf(moved));
+      set({ ...g, stops });
+    },
   });
   if (stop) {
     c.push({ type: "color", label: "Farbe", value: () => stop.color, set: (hex) => withStop({ color: hex ?? stop.color }) });
@@ -253,7 +265,7 @@ export function lineSection(t: FmtTarget, o: LineOptions): PaneSection {
 const SHADOWS: { label: string; value: string; s?: Effects["shadow"] }[] = [
   { label: "Ohne", value: "none" },
   ...([["unten rechts", 45], ["unten", 90], ["unten links", 135], ["rechts", 0], ["Mitte", -1], ["links", 180], ["oben rechts", 315], ["oben", 270], ["oben links", 225]] as const).map(([n, a]) =>
-    ({ label: `Offset: ${n}`, value: `o-${n}`, s: a < 0 ? { color: "#000000", transparency: 60, size: 102, blur: 5, angle: 0, distance: 0 } : { color: "#000000", transparency: 60, size: 100, blur: 4, angle: a, distance: 3 } })),
+    ({ label: `Offset: ${n}`, value: `o-${n}`, s: a < 0 ? { color: "#000000", transparency: 60, size: 102, blur: 5, angle: 0, distance: 0 } : { color: "#000000", transparency: 60, blur: 4, angle: a, distance: 3 } })),
   ...([["oben links", 225], ["oben", 270], ["oben rechts", 315], ["links", 180], ["Mitte", -1], ["rechts", 0], ["unten links", 135], ["unten", 90], ["unten rechts", 45]] as const).map(([n, a]) =>
     ({ label: `Innen: ${n}`, value: `i-${n}`, s: a < 0 ? { inner: true, color: "#000000", transparency: 0, blur: 9, angle: 0, distance: 0 } : { inner: true, color: "#000000", transparency: 50, blur: 5, angle: a, distance: 4 } })),
 ];
@@ -296,7 +308,7 @@ export function effectSections(t: FmtTarget, o: EffectOptions): PaneSection[] {
         value: () => preset, set: (v) => set({ shadow: v === "none" ? undefined : { ...SHADOWS.find((p) => p.value === v)!.s! } }) },
       { type: "color", label: "Farbe", value: () => s?.color ?? "#000000", set: (hex) => patch({ color: hex ?? "#000000" }) },
       { type: "number", label: "Transparenz", unit: " %", min: 0, max: 100, slider: true, value: () => s?.transparency ?? 60, set: (v) => patch({ transparency: Math.round(v) }) },
-      { type: "number", label: "Größe", unit: " %", min: 1, max: 200, slider: true, value: () => s?.size ?? 100, set: (v) => patch({ size: Math.round(v) }), disabled: () => !!s?.inner },
+      { type: "number", label: "Größe", unit: " %", min: 1, max: 200, slider: true, value: () => s?.size ?? 100, set: (v) => patch({ size: Math.round(v) === 100 ? undefined : Math.round(v) }), disabled: () => !!s?.inner },
       { type: "number", label: "Weichzeichnen", unit: " Pt.", min: 0, max: 100, slider: true, value: () => s?.blur ?? 4, set: (v) => patch({ blur: v }) },
       { type: "number", label: "Winkel", unit: "°", min: 0, max: 359.9, slider: true, value: () => s?.angle ?? 45, set: (v) => patch({ angle: v }) },
       { type: "number", label: "Abstand", unit: " Pt.", min: 0, max: 200, slider: true, value: () => s?.distance ?? 3, set: (v) => patch({ distance: v }) },

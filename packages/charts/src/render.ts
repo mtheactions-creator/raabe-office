@@ -1443,7 +1443,8 @@ export function sceneMarkup(scene: Scene): string {
       const tr = p.rotate ? ` transform="rotate(${p.rotate} ${f(p.x)} ${f(p.y)})"` : "";
       const deco = [p.underline ? "underline" : "", p.strike ? "line-through" : ""].filter(Boolean).join(" ");
       const wt = `${p.bold ? ' font-weight="bold"' : ""}${p.italic ? ' font-style="italic"' : ""}${deco ? ` text-decoration="${deco}"` : ""}${p.font ? ` font-family="${esc(p.font)}"` : ""}`;
-      const ol = p.outline?.stroke ? ` stroke="${p.outline.stroke}" stroke-width="${f(p.outline.sw ?? 0.75)}" paint-order="stroke"${p.outline.dash ? ` stroke-dasharray="${p.outline.dash}"` : ""}` : "";
+      const o = p.outline;
+      const ol = o?.stroke ? ` stroke="${o.stroke}" stroke-width="${f(o.sw ?? 0.75)}" paint-order="stroke"${o.dash ? ` stroke-dasharray="${o.dash}"` : ""}${o.join ? ` stroke-linejoin="${o.join}"` : ""}${o.cap ? ` stroke-linecap="${o.cap}"` : ""}` : "";
       out.push(`<text x="${f(p.x)}" y="${f(p.y)}" font-size="${p.size}" fill="${p.fill}" text-anchor="${p.anchor}"${wt}${ol}${p.filter ? ` filter="${p.filter}"` : ""}${tr}${part(p)}>${esc(p.text)}</text>`);
       if (p.reflection) {
         // Mirrored at the line just below the text's descent, fading with its transparency.

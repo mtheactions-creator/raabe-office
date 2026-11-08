@@ -163,7 +163,7 @@ export class TaskPane {
         btn.addEventListener("click", () => {
           const pop = h("div", { class: "menu palette" });
           if (c.auto) pop.append(h("button", { type: "button", class: "item", onclick: () => { closePopup(); c.set(null); changed(); } }, "Automatisch"));
-          pop.append(...colorGrid((hex) => { closePopup(); c.set(hex); changed(); }));
+          pop.append(...colorGrid((hex) => { closePopup(); c.set(hex.startsWith("#") ? hex.toUpperCase() : `#${hex.toUpperCase()}`); changed(); }));
           showPopup(pop, btn.getBoundingClientRect());
         });
         return h("div", { class: "tp-line" }, h("span", { class: "tp-label" }, c.label), btn);
@@ -175,8 +175,9 @@ export class TaskPane {
         const commit = () => {
           const n = parseFloat(input.value.replace(",", ".").replace(/[^\d.-]/g, ""));
           if (!Number.isFinite(n)) { input.value = fmt(c.value()); return; }
-          // Enter commits, and Chromium fires change after it too: the same value is not set twice (one undo step).
-          if (n === c.value()) { input.value = fmt(n); return; }
+          // Enter commits, and Chromium fires change after it too: the same text is not set twice (one undo step).
+          if (input.dataset.done === input.value || n === c.value()) { input.value = fmt(n); return; }
+          input.dataset.done = input.value;
           c.set(Math.max(c.min ?? -Infinity, Math.min(c.max ?? Infinity, n)));
           changed();
         };

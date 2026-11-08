@@ -473,7 +473,8 @@ def diff(a, b, path: str = "") -> list[str]:
 def canon(x):
     """Model JSON without undefined-equivalents (empty objects, absent vs false defaults stay distinct)."""
     if isinstance(x, dict):
-        return {k: canon(v) for k, v in sorted(x.items()) if v is not None and v != {} and k != "raw"}
+        out = {k: canon(v) for k, v in sorted(x.items()) if v is not None and k != "raw"}
+        return {k: v for k, v in out.items() if v != {}}
     if isinstance(x, list):
         return [canon(v) for v in x]
     if isinstance(x, float) and x.is_integer():
