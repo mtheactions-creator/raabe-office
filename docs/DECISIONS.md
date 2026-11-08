@@ -3101,3 +3101,78 @@ Built or fixed on the way:
   pushed the slider about 6 px under the pointer.
 - The test's own errors found on the way (a flipped shape's size, the browser slider's mapping, a probe's braces, the
   thumbnail's place after the drop) were fixed in the test, not in the app.
+
+## D-133 RaabeWrite: every option triggered by hand, as a student does (2026-11-09)
+
+The owner found RaabeCalc's chart formatting broken although the automated checks passed: they drove the model
+through test APIs, not the controls. RaabeWrite now has a by-hand audit that goes through the controls only.
+- **Inventory** (`sweep_write.py inventory`, results/2026-11-09-write-options.json): the app's ribbon definition and
+  command list (`__app.inventory()`: all tabs with the contextual ones, menus, launchers) joined with what the running
+  exe really shows: each tab's visible controls, every menu, gallery, palette and dialog the sweep opened, the context
+  menus, the status bar, the Datei pages and the shortcuts. Defined but not reached, and reached but not defined, are
+  listed. The chart tabs (Diagrammentwurf, Format) are not built yet and listed as such.
+- **Sweep** (`sweep_write.py sweep`): our own release exe off screen, never focused. Every visible control of every
+  tab is clicked with trusted DevTools mouse input at its place; contextual tabs get their document set up by hand too
+  (caret in the table, a click on the picture, a double click into the header, a rectangle drawn from the Formen
+  gallery and typed into, Alt+Umschalt+0; Referenzen and Überprüfen once more with notes, a comment and tracked
+  changes). Then every entry of the menu, gallery, palette or list it opens (long panels are scrolled to the entry and
+  the click is hit-tested; galleries of more than 14 entries are sampled: first and last entries), each dialog's Esc
+  and OK, every entry of four context menus, the status bar, every Datei page and its buttons, every shortcut of the
+  command list. Per option: no exception or console error; a visible effect (document, selection, ribbon state, pane,
+  dialog, popup, backstage page, view, a system dialog asked for); Strg+Z (as a key) restores the document; the
+  document saves. Options that change nothing because the base document already is so (the current design, "Ohne",
+  removing what is not there, going to the next note when there is none) count as passed (`ALREADY`, each with its
+  reason); greyed options are listed, not failed. Two settings Word does not take back with Strg+Z either (Änderungen
+  nachverfolgen; closing a header opened empty) count as passed.
+- **Word** (`sweep_write.py word`): Word (own invisible instance) opens every file the sweep saved, and for the
+  options with a Word counterpart (feellab/word_ops.py) applies Word's own option to the same base document with the
+  same selection and compares what changed (feellab/word_summary.py: the target's character and paragraph formatting,
+  lists, table, page setup, objects, notes, fields, header, footer ...).
+- **Real input** (`real_input_write.py`, under the real-input lock, our window checked in front before every input):
+  lists that open and close, the style gallery, palettes and the Farben dialog, spinners and typed fields, Tab through
+  the Absatz dialog, a dialog dragged by its title, the table grid under the mouse, the context menu at the mouse,
+  keytips with the real Alt key, the zoom slider, the mouse wheel, the Schriftart dialog's lists.
+- The system's file dialogs and printing cannot be opened off screen: the sweep replaces them (`__app.stubNative()`,
+  test API only) and counts the request as the option's effect.
+- **Results** (2026-11-09): real input 9/15 before (three app faults: Weitere Farben, a dialog's title bar, the
+  Schriftart dialog's lists; three errors of the test itself), 15/15 after. The sweep before the fixes: Start,
+  Layout and the two table tabs 434 of 435 options passed; the other tabs' run found the faults of D-134 to D-136.
+  The run after the fixes is in results/2026-11-09-write-sweep-a.json and -b.json (numbers below when finished).
+
+## D-134 RaabeWrite: what the by-hand audit found broken (2026-11-09)
+
+- **Weitere Farben...** (every colour palette: Schriftfarbe, Schattierung, Seitenfarbe, the Format pane, text effects)
+  clicked a hidden browser colour input whose system dialog the app's web view never opened: nothing happened. It now
+  opens Office's **Farben** dialog in the window (packages/shell/src/color-dialog.ts): Standard (a grid of colours) and
+  Benutzerdefiniert (Farbmodell RGB, Rot, Grün, Blau, Hex), Neu and Aktuell side by side, OK and Abbrechen. The shell's
+  palette uses it, so RaabeCalc and RaabePresent get it too. (The other visible colour inputs in Bildformat, Formformat
+  and Entwurf > Farben anpassen are unchanged.)
+- **Dialogs move with their title bar**, as Office's do (`installDialogDrag`, shell); they could not be moved.
+- **Texteffekte > Ligaturen > Keine** removed the run's own setting, so the style's ligatures (Word's Normal has
+  "Standard und kontextbezogen") stayed: no effect. It now writes `w14:ligatures w14:val="none"`, as Word does.
+- **Formen > Neuer Zeichenbereich** was a button without a command (nothing happened); Word's drawing canvas is not
+  built, so it is greyed with a tooltip saying so.
+- The audit's own errors (popups closed by the reopen, panes left open, labels with check marks, long panels not
+  scrolled) were fixed in the harness, not the app.
+
+## D-135 RaabeWrite: options made to behave as Word's, recorded in Word (2026-11-09)
+
+- **Groß-/Kleinschreibung > Ersten Buchstaben im Satz großschreiben / Ersten Buchstaben jedes Wortes großschreiben**
+  lowered every other letter, so German nouns lost their capitals ("weitere Beobachtungen" became "weitere
+  beobachtungen"). Word (recorded with Range.Case) raises the first letter of a sentence (of each word) and leaves the
+  other letters as typed; only words with capitals inside (iPhone, McDonald) are lowered after their first letter, and
+  every word when the whole selection was in capitals. text-engine `wordCase`, with Word's cases as unit tests.
+- **Kopfzeile/Fußzeile > Leer** inserts Word's placeholder "[Hier eingeben]" (Word's building block has it as a
+  content control), selected so typing replaces it; it inserted an empty header.
+- **Status bar:** a click on the page number opens the Navigationsbereich, on the word count Wörter zählen, as in Word
+  (they did nothing).
+- **Schriftart dialog:** Schriftart and Schriftgrad have Word's lists under their fields (a click puts the entry into
+  the field); the dialog had only fields with suggestions, which the mouse could not use.
+
+## D-136 RaabeWrite: Strg+Z inside an equation (2026-11-09)
+
+An equation being edited was one undo step for the whole edit, so Strg+Z after inserting a symbol or structure into a
+new equation removed the equation itself. Word takes back one change at a time. The edit session now keeps the
+equation's values before each change: Strg+Z and Strg+Y step back and forth inside the equation (the caret goes to its
+end); with no change left, Strg+Z ends the edit and acts on the document (the next step removes a new equation, as in
+Word). The document still gets one undo step for the whole edit once it is left.
