@@ -95,22 +95,34 @@ HELPERS = r"""
       if (!p) return [];
       const out = [];
       const seen = new Map();
+      const els = (window.__swEls = []);
       for (const el of p.querySelectorAll("button, [role=menuitem], [role=option], .tile, .item, .grid > .cell, input, select")) {
         if (!vis(el)) continue;
         if (el.tagName !== "BUTTON" && el.closest("button")) continue;
         if (el.tagName === "INPUT" && el.type === "hidden") continue;
         const cells = el.classList.contains("cell") ? [...el.parentElement.children] : null;
-        const txt = cells ? `Zelle ${Math.floor(cells.indexOf(el) / 10) + 1}x${cells.indexOf(el) % 10 + 1}` : clean(el.textContent).slice(0, 90);
+        const txt = cells ? `Zelle ${Math.floor(cells.indexOf(el) / 10) + 1}x${cells.indexOf(el) % 10 + 1}` : clean(el.textContent).replace(/^✓\s*/, "").slice(0, 90);
         const lab = (cells ? txt : el.getAttribute("aria-label") ? label(el) : txt || label(el)) || (el.tagName === "INPUT" ? "[" + (el.placeholder || el.type) + "]" : "");
         const sub = el.classList.contains("has-sub") || el.getAttribute("aria-haspopup") === "true";
         const level = el.closest(".submenu") ? 1 : 0;
         const id = `${level}|${lab}`;
         const n = (seen.get(id) || 0) + 1;
         seen.set(id, n);
-        out.push({ id: n > 1 ? `${id}#${n}` : id, label: lab, tag: el.tagName, sub, level, disabled: !!el.disabled || el.classList.contains("disabled"),
+        els.push(el);
+        out.push({ idx: els.length - 1, id: n > 1 ? `${id}#${n}` : id, label: lab, tag: el.tagName, sub, level, disabled: !!el.disabled || el.classList.contains("disabled"),
           tip: (el.dataset?.tip || "").slice(0, 200), ...rect(el) });
       }
       return out;
+    },
+    /** Scrolls entry `idx` of the last popupItems() into view (as a student scrolls a long panel); its centre and
+     *  whether a click there reaches it. */
+    prep(idx) {
+      const el = (window.__swEls || [])[idx];
+      if (!el || !el.isConnected) return null;
+      el.scrollIntoView({ block: "nearest", inline: "nearest" });
+      const r = rect(el);
+      const top = document.elementFromPoint(r.x, r.y);
+      return { ...r, hits: !!top && (el === top || el.contains(top)) };
     },
     reveal(lab) {
       const ps = popups();
@@ -151,7 +163,9 @@ HELPERS = r"""
       return im ? rect(im) : null;
     },
     tabRect(name) {
-      const t = [...document.querySelectorAll(".tabrow .tab")].find((b) => clean(b.textContent) === name && vis(b));
+      const ctx = name === "Tabellenlayout";
+      const want = ctx ? "Layout" : name;
+      const t = [...document.querySelectorAll(".tabrow .tab")].find((b) => clean(b.textContent) === want && vis(b) && (!ctx || b.classList.contains("contextual")));
       return t ? rect(t) : null;
     },
     tabs() { return [...document.querySelectorAll(".tabrow .tab")].filter(vis).map((b) => ({ label: clean(b.textContent), contextual: b.classList.contains("contextual"), key: b.dataset.keytip || "", ...rect(b) })); },

@@ -118,7 +118,7 @@ def summarize(app, path: Path) -> dict:
         f.ClearFormatting()
         target = None
         rng = d.Content
-        if rng.Find.Execute(FindText=TARGET, MatchCase=True):
+        if rng.Find.Execute(FindText=TARGET, MatchCase=False):
             target = rng
         if target is not None:
             s["target"] = _font(target.Font)

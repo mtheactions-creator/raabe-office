@@ -1286,13 +1286,38 @@ export class WriteApp {
         `text-decoration:${underlineSel.value !== "none" ? "underline" : ""} ${fx.strike.cb.checked || fx.dstrike.cb.checked ? "line-through" : ""};` +
         `font-variant:${fx.smallCaps.cb.checked ? "small-caps" : "normal"};text-transform:${fx.caps.cb.checked ? "uppercase" : "none"}`;
     };
+    // Word's lists under Schriftart and Schriftgrad: a click puts the entry into the field (D-135).
+    const listBox = (items: string[], field: HTMLInputElement, rows: number, fontStyle = false) => {
+      const el = h("div", { class: "lbox", role: "listbox", "aria-label": field.getAttribute("aria-label") ?? "",
+        style: `height:${rows * 20 + 2}px;overflow-y:auto;border:1px solid #c7c7c7;border-top:none;background:#fff` });
+      const sync = () => {
+        for (const o of Array.from(el.children) as HTMLElement[]) {
+          const on = o.textContent === field.value;
+          o.setAttribute("aria-selected", String(on));
+          o.style.background = on ? "#cce4f7" : "";
+        }
+      };
+      for (const it of items) {
+        el.append(h("div", { role: "option", style: `height:20px;line-height:20px;padding:0 4px;white-space:nowrap;overflow:hidden;cursor:default${fontStyle ? `;font-family:"${it}"` : ""}`,
+          onmousedown: (ev: MouseEvent) => { ev.preventDefault(); field.value = it; sync(); update(); } }, it));
+      }
+      field.addEventListener("input", sync);
+      sync();
+      return { el, reveal: () => (Array.from(el.children) as HTMLElement[]).find((o) => o.textContent === field.value)?.scrollIntoView({ block: "nearest" }) };
+    };
+    fontInput.setAttribute("aria-label", "Schriftart:");
+    sizeInput.setAttribute("aria-label", "Schriftgrad:");
+    const fontList = listBox(fonts, fontInput, 6, true);
+    const sizeList = listBox(["8", "9", "10", "11", "12", "14", "16", "18", "20", "22", "24", "26", "28", "36", "48", "72"], sizeInput, 6);
+    sizeInput.style.width = "100%";
     for (const el of [fontInput, sizeInput, styleSel, underlineSel, ...Object.values(fx).map((x) => x.cb)]) el.addEventListener("input", update);
     update();
+    setTimeout(() => { fontList.reveal(); sizeList.reveal(); });
     const body = h("div", { style: "width:520px" },
       h("div", { class: "grid2", style: "grid-template-columns:2fr 1fr 80px" },
-        h("label", { class: "field" }, "Schriftart:", fontInput, datalist),
+        h("div", { class: "field" }, h("label", null, "Schriftart:", fontInput, datalist), fontList.el),
         h("label", { class: "field" }, "Schriftschnitt:", styleSel),
-        h("label", { class: "field" }, "Schriftgrad:", sizeInput)),
+        h("div", { class: "field" }, h("label", null, "Schriftgrad:", sizeInput), sizeList.el)),
       h("div", { style: "display:flex;gap:24px;margin:8px 0" },
         h("label", { class: "field" }, "Schriftfarbe:", colorBtn),
         h("label", { class: "field" }, "Unterstreichung:", underlineSel)),

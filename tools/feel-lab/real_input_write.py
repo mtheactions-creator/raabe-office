@@ -272,14 +272,12 @@ def cases(r: Real) -> None:
     r.fresh()
     r.tab("Start")
     r.click(r.control("Schriftart...", "launcher"))
-    # Our Schriftgrad is a field with a list of suggestions (Word: a field above a list): click, type, Enter.
-    opt = p.js("(() => { const d = document.querySelector('.dialog-layer .dialog'); const el = [...d.querySelectorAll('input')].find(i => /Schriftgrad/.test(i.closest('label')?.textContent || '')); if (!el) return null; const b = el.getBoundingClientRect(); return {x: b.left + b.width / 2, y: b.top + b.height / 2}; })()")
+    # Schriftgrad's list under the field (Word): a click on 16, then Enter for OK.
+    opt = p.js("(() => { const d = document.querySelector('.dialog-layer .dialog'); const lb = d.querySelector('[role=listbox][aria-label=\\'Schriftgrad:\\']'); const el = lb && [...lb.children].find(o => o.textContent === '16'); if (!el) return null; el.scrollIntoView({block: 'nearest'}); const b = el.getBoundingClientRect(); return {x: b.left + b.width / 2, y: b.top + b.height / 2}; })()")
     if opt:
-        r.click(opt, count=2)
-        r.press("ctrl+a")
-        r.type("16")
+        r.click(opt)
         r.press("enter")
-    check("Schriftart dialog: Schriftgrad 16 typed, Enter", opt is not None and r.fmt()["size"] == 16, f"opt {opt} size {r.fmt()['size']}", p.take_errors())
+    check("Schriftart dialog: 16 from the Schriftgrad list, Enter", opt is not None and r.fmt()["size"] == 16, f"opt {opt} size {r.fmt()['size']}", p.take_errors())
     r.press("esc")
 
 

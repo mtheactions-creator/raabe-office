@@ -40,20 +40,22 @@ from feellab.write_page import WritePage
 HERE = Path(__file__).parent
 TMP = Path(tempfile.gettempdir()) / os.environ.get("SWEEP_DIR", "raabe-sweep-write")
 BASE = TMP / "base.docx"
-DATE = datetime.date.today().isoformat()
+DATE = os.environ.get("SWEEP_DATE") or datetime.date.today().isoformat()
 PORT = int(os.environ.get("SWEEP_PORT", "9471"))
 
 # Which document set-up each tab needs.
 TAB_SETUP = {"Tabellenentwurf": "table", "Layout (Tabelle)": "table", "Kopf- und Fußzeile": "headerFooter",
              "Bildformat": "picture", "Formformat": "shape", "Formel": "math"}
-CONTEXT_TABS = {"table": ["Tabellenentwurf", "Layout"], "headerFooter": ["Kopf- und Fußzeile"], "picture": ["Bildformat"],
+CONTEXT_TABS = {"table": ["Tabellenentwurf", "Tabellenlayout"], "headerFooter": ["Kopf- und Fußzeile"], "picture": ["Bildformat"],
                 "shape": ["Formformat"], "math": ["Formel"]}
 # The parts of the UI a sweep step may leave changed (view, rulers, reduced ribbon ...).
 VIEW_JS = "(() => { const u = __sw.ui(); return JSON.stringify([u.view, u.shell, u.minimized, u.bodyCls]); })()"
 # Closes the open panes (Navigation, Formatvorlagen, Kommentare ...) by their own close buttons.
 CLOSE_PANES = """(() => { let n = 0; for (const p of document.querySelectorAll('.navpane, aside, .taskpane, [role=complementary], .tpane, .clippane, .fxpane')) {
   if (p.hidden || !p.getBoundingClientRect().width) continue;
-  const b = p.querySelector('.tp-close, .nav-close, button[aria-label="Schließen"], button[data-tip="Schließen"]'); if (b) { b.click(); n++; } } return n; })()"""
+  const b = p.querySelector('.tp-close, .nav-close, button[aria-label="Schließen"], button[data-tip="Schließen"], button[aria-label$="schließen"]'); if (b) { b.click(); n++; } } return n; })()"""
+# Back into the main text after typing into a note or a comment (the set-up's own step, not an option under test).
+BACK_TO_MAIN = "(() => { const e = __app.editor(); e.doc.activeStory = 'main'; e.select(e.doc.fromOffset(0), e.doc.fromOffset(0)); e.focus(); return true; })()"
 # Commands deliberately left out (docs/SCOPE.md: later / out of scope) are greyed with "Zurückgestellt" in the tip.
 DEFERRED_MARK = "Zurückgestellt"
 
@@ -144,6 +146,29 @@ class App:
                     for k in range(1, 11):
                         p.cdp("Input.dispatchMouseEvent", {"type": "mouseMoved", "x": pg["x"] + 12 * k, "y": pg["y"] + 8 * k, "button": "left", "buttons": 1})
                     p.cdp("Input.dispatchMouseEvent", {"type": "mouseReleased", "x": pg["x"] + 120, "y": pg["y"] + 80, "button": "left", "clickCount": 1, "buttons": 0})
+        elif setup in ("notes", "revisions"):
+            # Something to go to, accept or reject: two footnotes and an endnote, or a comment and tracked changes.
+            if setup == "notes":
+                for needle, cmd in (("Thema", "ref.footnote"), ("Schulgarten", "ref.footnote"), ("Messwerte", "ref.endnote")):
+                    p.js(f"__sw.selectText({json.dumps(needle)}, true)")
+                    p.js(f"__app.run({json.dumps(cmd)})")
+                    p.pump(0.15)
+                    p.type("Anmerkung")
+                    p.js(BACK_TO_MAIN)
+            else:
+                p.js("__sw.selectText('Thema', false)")
+                p.js("__app.run('review.newComment')")
+                p.pump(0.2)
+                p.type("Bitte prüfen")
+                p.js(BACK_TO_MAIN)
+                p.js("__probe.focus()")
+                p.js("__app.run('review.trackChanges')")
+                p.js("__sw.selectText('Schluss.', true)")
+                p.type("neu ")
+                p.js("__sw.selectText('Ende', false)")
+                p.key("Delete")
+                p.js("__app.run('review.trackChanges')")
+            p.js("__sw.selectText('weitere Beobachtungen')")
         elif setup == "math":
             p.js("__sw.selectText('Schluss.', true)")
             p.key(")", ctrl=False, shift=True, alt=True, vk=48, code="Digit0")  # Alt+Umschalt+0
@@ -154,7 +179,8 @@ class App:
         r = self.p.js(f"__sw.tabRect({json.dumps(name)})")
         if not r:
             return False
-        if self.p.js("document.querySelector('.tabrow .tab.active')?.textContent.trim()") != name:
+        active = self.p.js("(() => { const t = document.querySelector('.tabrow .tab.active'); return t ? (t.classList.contains('contextual') && t.textContent.trim() === 'Layout' ? 'Tabellenlayout' : t.textContent.trim()) : ''; })()")
+        if active != name:
             self.p.click(r["x"], r["y"])
             self.p.pump(0.1)
         return True
@@ -214,11 +240,15 @@ class Sweep:
         self.gallery = gallery
         self.rows: list[dict] = []
         self.saved = saved_index
+        self.last = time.perf_counter()
 
     def record(self, row: dict) -> None:
+        now = time.perf_counter()
+        row["secs"] = round(now - self.last, 1)
+        self.last = now
         self.rows.append(row)
         st = row["status"]
-        log(f"{st:9} {row['tab']} > {row['path']}  {row.get('effects', '')} {row.get('note', '')[:140]}")
+        log(f"{st:9} {row['tab']} > {row['path']}  {row.get('effects', '')} {row.get('note', '')[:140]} ({row['secs']} s)")
 
     def open_tab(self, tab: str, setup: str) -> bool:
         self.a.fresh(setup)
@@ -285,6 +315,9 @@ class Sweep:
         if c["kind"] in ("combo-input", "spinner-input"):
             self.combo_input(tab, setup, path, cc, before)
             return
+        if c["groupId"] == "clipboard" and c["label"] in ("Einfügen", "Weitere Optionen"):
+            self.prime_clipboard()
+            before = a.state()
         p.click(cc["x"], cc["y"])
         p.pump(0.35)
         after = a.state()
@@ -310,6 +343,13 @@ class Sweep:
                 row["status"], row["note"] = ("ok", f"clipboard {info}") if info and info.get("text") else ("noeffect", f"clipboard {info}")
             self.record(row)
 
+    def prime_clipboard(self) -> None:
+        """Einfügen needs something on the clipboard: the target text is copied first (Kopieren), the caret put after it."""
+        p = self.a.p
+        p.js("__app.run('edit.copy')")
+        p.pump(0.3)
+        p.js("__sw.selectText('Schluss.', true)")
+
     def combo_input(self, tab: str, setup: str, path: str, cc: dict, before: dict) -> None:
         """Types a value into a ribbon field (Schriftgrad, Einzug ...) and presses Enter."""
         p = self.a.p
@@ -329,6 +369,8 @@ class Sweep:
         a, p = self.a, self.a.p
         if not self.open_tab(tab, setup):
             return False
+        if chain and chain[0][0] == "control" and chain[0][1].get("groupId") == "clipboard":
+            self.prime_clipboard()
         for kind, x in chain:
             if kind == "control":
                 cc = a.find_control(x["label"], x["id"])
@@ -341,7 +383,7 @@ class Sweep:
                 if not it:
                     return False
                 p.click(it["x"], it["y"])
-            p.pump(0.3)
+            p.pump(0.22)
         return True
 
     def pick(self, items: list[dict]) -> list[dict]:
@@ -376,10 +418,17 @@ class Sweep:
                 self.record({"tab": tab, "path": ipath, "setup": setup, "status": "error", "note": "entry missing on reopen"})
                 p.key("Escape")
                 continue
+            pr = p.js(f"__sw.prep({hit['idx']})")
+            if pr:
+                hit = {**hit, "x": pr["x"], "y": pr["y"]}
+                if not pr["hits"]:
+                    self.record({"tab": tab, "path": ipath, "setup": setup, "status": "error", "note": "entry covered: a click at its place does not reach it"})
+                    p.key("Escape")
+                    continue
             before = a.state()
             n_pop = before["ui"]["popups"]
             p.move(hit["x"], hit["y"])
-            p.pump(0.15)
+            p.pump(0.08)
             p.click(hit["x"], hit["y"])
             p.pump(0.4)
             after = a.state()
@@ -398,6 +447,15 @@ class Sweep:
                 self.record(self.judge(tab, ipath, setup, before, after, errors, {"kind": "dialog", "dialog": info}, undo=False))
                 self.dialog_buttons(tab, setup, ipath, chain + [("item", it)], info)
                 continue
+            if ("Transparente Farbe bestimmen" in ipath or "Rahmenpipette" in ipath) and "doc" not in effects(before, after):
+                # Modes that wait for a click: on the picture (its colour) or on the table's first border.
+                tgt = p.js("__sw.pictureRect()") if "Transparente" in ipath else p.js(
+                    "(() => { const t = __probe.text(); const i = t.indexOf('Pflanze'); const a = __probe.pointAt(i); return {x: a.x - 3, y: a.y + a.h / 2}; })()")
+                if tgt:
+                    p.click(tgt["x"] + (25 if "Transparente" in ipath else 0), tgt["y"] + (-35 if "Transparente" in ipath else 0))
+                    p.pump(0.4)
+                    after = a.state()
+                    errors += p.take_errors()
             if ("Formen" in path or "Textfeld erstellen" in ipath) and not ("doc" in effects(before, after)) and not after["ui"]["dialogs"]:
                 pg = p.js("(() => { const b = document.querySelector('.page').getBoundingClientRect(); return {x: b.left + 300, y: b.top + 520}; })()")
                 p.cdp("Input.dispatchMouseEvent", {"type": "mousePressed", "x": pg["x"], "y": pg["y"], "button": "left", "clickCount": 1, "buttons": 1})
@@ -529,9 +587,12 @@ class Sweep:
                 self.record({"tab": tab, "path": ipath, "setup": setup, "status": "error", "note": "entry missing on reopen"})
                 p.key("Escape")
                 continue
+            pr = p.js(f"__sw.prep({hit['idx']})")
+            if pr:
+                hit = {**hit, "x": pr["x"], "y": pr["y"]}
             before = a.state()
             p.move(hit["x"], hit["y"])
-            p.pump(0.15)
+            p.pump(0.08)
             p.click(hit["x"], hit["y"])
             p.pump(0.4)
             after = a.state()
@@ -638,7 +699,7 @@ class Sweep:
         a, p = self.a, self.a.p
         skip = {"Strg+F1"}  # reduces the ribbon (checked with the ribbon's own button)
         names = {"Umschalt": "shift", "Strg": "ctrl", "Alt": "alt"}
-        vks = {">": (226, "IntlBackslash", True), "<": (226, "IntlBackslash", False), "#": (191, "Backslash", False), "+": (187, "BracketRight", False),
+        vks = {"*": (187, "BracketRight", True), ">": (226, "IntlBackslash", True), "<": (226, "IntlBackslash", False), "#": (191, "Backslash", False), "+": (187, "BracketRight", False),
                "-": (189, "Slash", False), "Leertaste": (32, "Space", False), "Eingabe": (13, "Enter", False), "Rücktaste": (8, "Backspace", False),
                "Entf": (46, "Delete", False), "Tab": (9, "Tab", False), "Pos1": (36, "Home", False), "Ende": (35, "End", False)}
         for c in commands:
@@ -686,6 +747,8 @@ def run_sweep(args) -> None:
         plan: list[tuple[str, str]] = [(t, "text") for t in tabs]
         for setup, names in CONTEXT_TABS.items():
             plan += [(n, setup) for n in names]
+        # Referenzen and Überprüfen once more with notes, a comment and tracked changes to go to, accept and reject.
+        plan += [("Referenzen", "notes"), ("Überprüfen", "revisions")]
         want = set(args.tabs.split(",")) if args.tabs else None
         for tab, setup in plan:
             if want and tab not in want and f"{tab}@{setup}" not in want:
@@ -779,6 +842,70 @@ def run_inventory(args) -> None:
     log(json.dumps(data["counts"]), "->", out.name)
 
 
+# Options that change nothing on the base document because it already is so (Word changes nothing either): the
+# entry for the current state, removing what is not there, Weitersuchen with an empty field ...
+ALREADY = [
+    r"> (Ohne|Keine Farbe|Automatisch|Keine|Kein Rahmen|Standard|Dokument|Office|Hochformat|Eins|Normal)$",
+    r"Zahlenformatvorlagen > Standard$", r"Stil-Sets > Standard$", r"Schriftarten \[dropdown\] > Office,", r"Format \[dropdown\] > A4",
+    r"entfernen$", r"Linksbündig \[button\]$", r"Einzug verkleinern \[button\]$", r"Formatvorlagen / Standard \[gallery-item\]$",
+    r"> (Weitersuchen|Suchen|Gehe zu|Ersetzen|Alle ersetzen)$", r"Gehe zu > Gehe zu$", r"Markieren \[dropdown\] > Objekte auswählen$",
+    r"Schriftgrad \[combo-input\] = 11$", r"Öffnen \[combo-arrow\] > 11$",
+    # Going to the next note, comment or change when the base document has none (Word: nothing happens).
+    r"(Nächste|Vorherige) (Fußnote|Endnote)", r"Nächste Fußnote \[split-main\]$", r"(Vorheriger|Nächster) Kommentar", r"(Vorherige|Nächste) Änderung",
+    # Showing or filtering comments when there are none; the markup mode already chosen.
+    r"Kommentare / Weitere Optionen \[split-arrow\] > (Kontextbezogen|Liste)$", r"Markup \[dropdown\] > Kommentare$", r"Markup filtern \[dropdown\] > Kommentare$",
+    r"> Markup: alle$",
+    # The picture as inserted (no correction, full saturation, no transparency, nothing to reset), no picture on the
+    # clipboard; the table already in Tabellenraster; the header already open.
+    r"Schärfen und Weichzeichnen: 0 %$", r"Sättigung: 100 %$", r"Transparenz: 0 %$", r"Bild zurücksetzen \[split-main\]$", r"> Bild (und Größe )?zurücksetzen$",
+    r"Bild ändern \[dropdown\] > Aus Zwischenablage$", r"Tabellenraster( \[gallery-item\])?$", r"Zur Kopfzeile wechseln \[button\]$",
+    r"Kopfzeile \[dropdown\] > Kopfzeile bearbeiten$",
+    # View gridlines of a table that has borders all round: nothing to see (Word neither).
+    r"> Gitternetzlinien anzeigen$", r"Ansichten / Drucklayout \[button\]$", r"Zoom / 100% \[button\]$",
+]
+# Options Word does not take back with Strg+Z either (a setting, not an edit).
+NO_UNDO_IN_WORD = [r"Änderungen nachverfolgen \[split-main\]$", r"Änderungen nachverfolgen$",
+                   # Closing a header opened empty drops the empty header again (no edit to take back; Word keeps an empty part).
+                   r"Kopf- und Fußzeile schließen \[button\]$"]
+FAIL = {"error", "undo", "crash", "esc", "docchange-on-open", "noeffect"}
+
+
+def classify(rows: list[dict]) -> dict:
+    """passed / failed / greyed per the sweep's rows (ALREADY counts as passed)."""
+    import re
+    out = {"options": len(rows), "passed": 0, "failed": 0, "greyed": 0, "deferred": 0, "fields": 0, "failures": []}
+    for r in rows:
+        st = r["status"]
+        key = f"{r['tab']} > {r['path']}"
+        if st == "noeffect" and not (r.get("setup") in ("notes", "revisions") and re.search(r"Fußnote|Endnote|Kommentar|Änderung", key)) \
+                and any(re.search(p, key) for p in ALREADY):
+            st = "ok"
+        if st == "undo" and any(re.search(p, key) for p in NO_UNDO_IN_WORD):
+            st = "ok"
+        if st in ("ok", "native"):
+            out["passed"] += 1
+        elif st == "deferred":
+            out["deferred"] += 1
+        elif st == "disabled":
+            out["greyed"] += 1
+        elif st == "field":
+            out["fields"] += 1
+        else:
+            out["failed"] += 1
+            out["failures"].append({"path": key, "status": st, "note": r.get("note", ""), "errors": r.get("errors", [])[:2]})
+    return out
+
+
+def run_report(args) -> None:
+    rows = []
+    for name in args.out.split(","):
+        rows += json.loads((HERE / "results" / f"{DATE}-{name}.json").read_text(encoding="utf-8"))["rows"]
+    c = classify(rows)
+    print(json.dumps({k: v for k, v in c.items() if k != "failures"}, ensure_ascii=False))
+    for f in c["failures"]:
+        print(f"{f['status']:9} {f['path']}  {f['note'][:120]}  {json.dumps(f['errors'], ensure_ascii=False)[:200]}")
+
+
 def word_select(app, d, setup: str):
     """The same selection as the sweep's set-up, in Word."""
     r = d.Content
@@ -861,7 +988,7 @@ def run_word(args) -> None:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("what", choices=["sweep", "inventory", "word", "base"])
+    ap.add_argument("what", choices=["sweep", "inventory", "word", "base", "report"])
     ap.add_argument("--tabs", default="")
     ap.add_argument("--gallery", type=int, default=None)
     ap.add_argument("--extra", default="", help="context,status,backstage,keys (all when no --tabs)")
@@ -875,6 +1002,8 @@ def main() -> None:
         run_word(args)
     elif args.what == "inventory":
         run_inventory(args)
+    elif args.what == "report":
+        run_report(args)
 
 
 if __name__ == "__main__":

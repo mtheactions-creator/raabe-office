@@ -68,7 +68,7 @@ import { SHAPE_NAMES, shadeLinear, shapeElement, shapeGeometry, shapeTextRect } 
 import { parseLatex, seqToLatex, type Seq } from "./math/ast";
 import { presetAdjust, presetGeometry } from "./geometry";
 import { effectExtent, type PictureFormat } from "./picture";
-import { countWords, isWordChar, nextTokenStart, prevTokenStart, sentenceAt, tokenAt } from "./words";
+import { allCapitals, countWords, isWordChar, nextTokenStart, prevTokenStart, sentenceAt, tokenAt, wordCase } from "./words";
 
 /** Formatting text typed at a position gets: as in Word, never hidden (hidden text is not shown). */
 function typedProps(p: Para, o: number): CharProps {
@@ -2614,7 +2614,13 @@ export class Editor {
     };
     let wordStart = true;
     let sentenceStart = from.o === 0 || /[.!?]\s*$/.test(this.doc.paras[from.p].text.slice(0, from.o));
+    // Satzanfang groß and Jedes Wort groß as Word (recorded 2026-11-09, D-135): they raise the first letter (of a
+    // sentence, of each word) and leave the other letters as typed, so nouns and acronyms keep their capitals. Only
+    // words with capitals inside (iPhone, McDonald) are lowered after their first letter, and everything when the
+    // whole selection is in capitals.
+    const caseState = { sentenceStart, allCaps: allCapitals(sample) };
     this.edit(() => this.doc.mapText(from, to, (s) => {
+      if (m === "sentence" || m === "title") return wordCase(s, m, caseState);
       let out = "";
       for (const ch of s) {
         let o = ch;
