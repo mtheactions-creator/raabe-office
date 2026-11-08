@@ -62,7 +62,10 @@ HELPERS = r"""
       return {
         tab, ctx, checked: H(checked), combos, backstage: !!bs && vis(bs), status, view, shell,
         panes: sw.panes(), dialogs: sw.dialogs(), popups: popups().length, sel: sw.sel(),
-        docs: window.__app.docs().length, native: (window.__nativeCalls || []).length, bodyCls: document.body.className, minimized: !!document.querySelector(".ribbon-card.hidden, .ribbon.minimized"),
+        docs: window.__app.docs().length, native: (window.__nativeCalls || []).length,
+        popSig: (() => { const ps = popups(); const q = ps[ps.length - 1]; return q ? H(q.className + "|" + clean(q.textContent).slice(0, 400)) : ""; })(),
+        bsPage: bs && vis(bs) ? H(clean(bs.querySelector("nav .active, nav [aria-current]")?.textContent) + "|" + clean(bs.querySelector(".page-body")?.textContent).slice(0, 2000)) : "",
+        overlay: document.querySelectorAll(".crop-handle, .crop, [class*=crop]").length, bodyCls: document.body.className, minimized: !!document.querySelector(".ribbon-card.hidden, .ribbon.minimized"),
       };
     },
     /** The visible controls of the active ribbon tab, in order. */

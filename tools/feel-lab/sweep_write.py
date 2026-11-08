@@ -233,7 +233,7 @@ def effects(before: dict, after: dict) -> list[str]:
     if after["doc"] != before["doc"]:
         out.append("doc")
     a, b = before["ui"], after["ui"]
-    for k in ("tab", "ctx", "checked", "combos", "backstage", "status", "view", "shell", "panes", "dialogs", "popups", "sel", "docs", "bodyCls", "minimized", "native"):
+    for k in ("tab", "ctx", "checked", "combos", "backstage", "status", "view", "shell", "panes", "dialogs", "popups", "sel", "docs", "bodyCls", "minimized", "native", "popSig", "bsPage", "overlay"):
         if a.get(k) != b.get(k):
             out.append(k)
     return out
@@ -407,7 +407,8 @@ class Sweep:
         return True
 
     def pick(self, items: list[dict]) -> list[dict]:
-        if self.gallery is None or len(items) <= self.gallery:
+        # Menus are taken whole; only long galleries (more than 14 entries) are sampled.
+        if self.gallery is None or len(items) <= max(self.gallery, 14):
             return items
         # Large galleries: the first entries, the last ones and the commands below the tiles.
         k = self.gallery
@@ -583,7 +584,7 @@ class Sweep:
     def menu_by_opener(self, tab: str, path: str, setup: str, opener, items: list[dict], depth: int = 0, via: list | None = None) -> None:
         a, p = self.a, self.a.p
         via = via or []
-        for it in self.pick(items):
+        for it in (items if depth == 0 else self.pick(items)):  # a context menu entry by entry
             ipath = f"{path} > {it['label'] or '(ohne Namen)'}"
             if it["disabled"]:
                 self.record({"tab": tab, "path": ipath, "setup": setup, "status": "deferred" if DEFERRED_MARK in it.get("tip", "") else "disabled"})
@@ -641,7 +642,7 @@ class Sweep:
     def statusbar(self) -> None:
         a, p = self.a, self.a.p
         a.fresh("text")
-        cells = p.js("[...document.querySelectorAll('.statusbar button, .statusbar input')].filter(b => b.getBoundingClientRect().width > 0).map((b, i) => ({i, label: (b.getAttribute('aria-label') || (b.dataset.tip || '').split('\\n')[0] || b.textContent).trim(), r: (() => { const r = b.getBoundingClientRect(); return {x: r.left + r.width / 2, y: r.top + r.height / 2}; })()}))")
+        cells = p.js("[...document.querySelectorAll('.statusbar button, .statusbar input, .statusbar [role=button]')].filter(b => b.getBoundingClientRect().width > 0).map((b, i) => ({i, label: (b.getAttribute('aria-label') || (b.dataset.tip || '').split('\\n')[0] || b.textContent).trim(), r: (() => { const r = b.getBoundingClientRect(); return {x: r.left + r.width / 2, y: r.top + r.height / 2}; })()}))")
         for c in cells:
             a.fresh("text")
             before = a.state()
@@ -676,6 +677,12 @@ class Sweep:
                 self.record({"tab": "Datei", "path": name, "setup": "text", "status": "native", "note": "system dialog or printer: real-input pass"})
                 continue
             open_bs()
+            if name == "Schließen":
+                p.key("Escape")
+                p.js("__app.newDoc()")
+                r0 = p.js("__sw.tabRect('Datei')")
+                p.click(r0["x"], r0["y"])
+                p.pump(0.4)
             before = a.state()
             r = p.js(f"(() => {{ const b = [...document.querySelectorAll('.backstage nav button, .backstage .bs-nav button, .backstage [role=tab]')].find(b => b.textContent.trim() === {json.dumps(name)}); if (!b) return null; const r = b.getBoundingClientRect(); return {{x: r.left + r.width / 2, y: r.top + r.height / 2}}; }})()")
             if not r:
@@ -736,6 +743,8 @@ class Sweep:
                 mods = {names[x] for x in parts[:-1] if x in names}
                 k = parts[-1]
                 a.fresh("table" if c["id"].startswith("table.") else "text")
+                if c["id"] == "file.close":
+                    p.js("__app.newDoc()")  # the last document would close the window
                 before = a.state()
                 if k in vks:
                     vk, code, shift = vks[k]
@@ -758,6 +767,7 @@ def run_sweep(args) -> None:
     out = HERE / "results" / f"{DATE}-{args.out}.json"
     app = App()
     rows: list[dict] = []
+    sw = None
     try:
         sw = Sweep(app, args.gallery, {})
         # Our save of the untouched base document: the reference for what each option changed.
@@ -785,7 +795,12 @@ def run_sweep(args) -> None:
             sw.shortcuts(app.p.js("__app.inventory().commands"))
         rows = sw.rows
     finally:
-        app.close()
+        if sw is not None:
+            rows = sw.rows
+        try:
+            app.close()
+        except Exception:  # noqa: BLE001
+            pass
         summary = {}
         for r in rows:
             summary[r["status"]] = summary.get(r["status"], 0) + 1
@@ -798,8 +813,13 @@ def run_inventory(args) -> None:
     exe (controls per tab, menu and gallery entries, dialogs and their controls, context menus, status bar, backstage,
     shortcuts). Defined but not reachable, and reachable but not defined, are listed."""
     import re
-    src = HERE / "results" / f"{DATE}-{args.out}.json"
-    rows = json.loads(src.read_text(encoding="utf-8"))["rows"]
+    rows = []
+    for name in args.out.split(","):
+        rows += json.loads((HERE / "results" / f"{DATE}-{name}.json").read_text(encoding="utf-8"))["rows"]
+
+    class _Src:
+        name = args.out
+    src = _Src()
     app = App()
     try:
         inv = app.p.js("__app.inventory()")

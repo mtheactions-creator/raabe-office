@@ -175,7 +175,8 @@ export class WriteApp {
       onDone: () => this.focusDoc(),
       tabRowRight: [comments],
     });
-    this.statusBar = new StatusBar(this.commands, (z) => this.setZoom(z), [{ cmd: "view.readMode" }, { cmd: "view.printLayout" }, { cmd: "view.webLayout" }], "view.zoomDialog");
+    this.statusBar = new StatusBar(this.commands, (z) => this.setZoom(z), [{ cmd: "view.readMode" }, { cmd: "view.printLayout" }, { cmd: "view.webLayout" }], "view.zoomDialog",
+      { page: "view.navPane", words: "review.wordCount" });
     this.backstage = new Backstage(this.commands, this.backstageEntries());
     this.backstage.onClose(() => this.active?.editor.focus());
     this.find = findFeature(this.api(), this.docArea);
