@@ -294,8 +294,10 @@ function writeCaches(pw: PackageWriter, wb: Workbook, wbPath: string, wbXml: str
   const wbRels = pw.relsOf(wbPath);
   for (const r of wbRels.list.filter((x) => isRel(x.type, RT_TIMELINE_CACHE))) { wbRels.list.splice(wbRels.list.indexOf(r), 1); wbRels.changed = true; }
   const ids: string[] = [];
+  const used = new Set(wb.sheets.flatMap((s) => (s.timelines ?? []).map((t) => t.cache)));
   for (const c of wb.timelineCaches ?? []) {
-    if (!c.pivots.length) continue;
+    // A cache no timeline shows any more (its timeline undone or removed) is left out.
+    if (!c.pivots.length || !used.has(c.name)) continue;
     const first = c.pivots[0];
     const sheet = wb.sheets.find((s) => s.name === first.sheet);
     const p = sheet?.pivots?.find((x) => x.name === first.name);

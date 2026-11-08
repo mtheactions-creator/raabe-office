@@ -1,0 +1,577 @@
+{
+ "excel->raabe": [
+  {
+   "case": "default",
+   "check": "selection",
+   "ok": true,
+   "info": "None / None"
+  },
+  {
+   "case": "default",
+   "check": "level",
+   "ok": true,
+   "info": "2 / 2"
+  },
+  {
+   "case": "default",
+   "check": "caption",
+   "ok": true,
+   "info": "Datum"
+  },
+  {
+   "case": "default",
+   "check": "style",
+   "ok": true,
+   "info": "TimeSlicerStyleLight1"
+  },
+  {
+   "case": "default",
+   "check": "options",
+   "ok": true,
+   "info": "[True, True, True, True]"
+  },
+  {
+   "case": "default",
+   "check": "report0",
+   "ok": true,
+   "info": ""
+  },
+  {
+   "case": "months",
+   "check": "selection",
+   "ok": true,
+   "info": "{'from': 45931, 'to': 46053} / {'from': 45931, 'to': 46053}"
+  },
+  {
+   "case": "months",
+   "check": "level",
+   "ok": true,
+   "info": "2 / 2"
+  },
+  {
+   "case": "months",
+   "check": "caption",
+   "ok": true,
+   "info": "Datum"
+  },
+  {
+   "case": "months",
+   "check": "style",
+   "ok": true,
+   "info": "TimeSlicerStyleLight1"
+  },
+  {
+   "case": "months",
+   "check": "options",
+   "ok": true,
+   "info": "[True, True, True, True]"
+  },
+  {
+   "case": "months",
+   "check": "report0",
+   "ok": true,
+   "info": ""
+  },
+  {
+   "case": "Jahre",
+   "check": "selection",
+   "ok": true,
+   "info": "{'from': 46023, 'to': 46387} / {'from': 46023, 'to': 46387}"
+  },
+  {
+   "case": "Jahre",
+   "check": "level",
+   "ok": true,
+   "info": "0 / 0"
+  },
+  {
+   "case": "Jahre",
+   "check": "caption",
+   "ok": true,
+   "info": "Datum"
+  },
+  {
+   "case": "Jahre",
+   "check": "style",
+   "ok": true,
+   "info": "TimeSlicerStyleLight1"
+  },
+  {
+   "case": "Jahre",
+   "check": "options",
+   "ok": true,
+   "info": "[True, True, True, True]"
+  },
+  {
+   "case": "Jahre",
+   "check": "report0",
+   "ok": true,
+   "info": ""
+  },
+  {
+   "case": "Quartale",
+   "check": "selection",
+   "ok": true,
+   "info": "{'from': 46023, 'to': 46203} / {'from': 46023, 'to': 46203}"
+  },
+  {
+   "case": "Quartale",
+   "check": "level",
+   "ok": true,
+   "info": "1 / 1"
+  },
+  {
+   "case": "Quartale",
+   "check": "caption",
+   "ok": true,
+   "info": "Datum"
+  },
+  {
+   "case": "Quartale",
+   "check": "style",
+   "ok": true,
+   "info": "TimeSlicerStyleLight1"
+  },
+  {
+   "case": "Quartale",
+   "check": "options",
+   "ok": true,
+   "info": "[True, True, True, True]"
+  },
+  {
+   "case": "Quartale",
+   "check": "report0",
+   "ok": true,
+   "info": ""
+  },
+  {
+   "case": "Tage",
+   "check": "selection",
+   "ok": true,
+   "info": "{'from': 45904, 'to': 45921} / {'from': 45904, 'to': 45921}"
+  },
+  {
+   "case": "Tage",
+   "check": "level",
+   "ok": true,
+   "info": "3 / 3"
+  },
+  {
+   "case": "Tage",
+   "check": "caption",
+   "ok": true,
+   "info": "Datum"
+  },
+  {
+   "case": "Tage",
+   "check": "style",
+   "ok": true,
+   "info": "TimeSlicerStyleLight1"
+  },
+  {
+   "case": "Tage",
+   "check": "options",
+   "ok": true,
+   "info": "[True, True, True, True]"
+  },
+  {
+   "case": "Tage",
+   "check": "report0",
+   "ok": true,
+   "info": ""
+  },
+  {
+   "case": "options",
+   "check": "selection",
+   "ok": true,
+   "info": "None / None"
+  },
+  {
+   "case": "options",
+   "check": "level",
+   "ok": true,
+   "info": "2 / 2"
+  },
+  {
+   "case": "options",
+   "check": "caption",
+   "ok": true,
+   "info": "Zeitraum der Noten"
+  },
+  {
+   "case": "options",
+   "check": "style",
+   "ok": true,
+   "info": "TimeSlicerStyleDark2"
+  },
+  {
+   "case": "options",
+   "check": "options",
+   "ok": true,
+   "info": "[False, False, False, False]"
+  },
+  {
+   "case": "options",
+   "check": "report0",
+   "ok": true,
+   "info": ""
+  },
+  {
+   "case": "connected",
+   "check": "selection",
+   "ok": true,
+   "info": "{'from': 46054, 'to': 46173} / {'from': 46054, 'to': 46173}"
+  },
+  {
+   "case": "connected",
+   "check": "level",
+   "ok": true,
+   "info": "2 / 2"
+  },
+  {
+   "case": "connected",
+   "check": "caption",
+   "ok": true,
+   "info": "Datum"
+  },
+  {
+   "case": "connected",
+   "check": "style",
+   "ok": true,
+   "info": "TimeSlicerStyleLight1"
+  },
+  {
+   "case": "connected",
+   "check": "options",
+   "ok": true,
+   "info": "[True, True, True, True]"
+  },
+  {
+   "case": "connected",
+   "check": "report0",
+   "ok": true,
+   "info": ""
+  },
+  {
+   "case": "connected",
+   "check": "report1",
+   "ok": true,
+   "info": ""
+  },
+  {
+   "case": "cleared",
+   "check": "selection",
+   "ok": true,
+   "info": "None / None"
+  },
+  {
+   "case": "cleared",
+   "check": "level",
+   "ok": true,
+   "info": "2 / 2"
+  },
+  {
+   "case": "cleared",
+   "check": "caption",
+   "ok": true,
+   "info": "Datum"
+  },
+  {
+   "case": "cleared",
+   "check": "style",
+   "ok": true,
+   "info": "TimeSlicerStyleLight1"
+  },
+  {
+   "case": "cleared",
+   "check": "options",
+   "ok": true,
+   "info": "[True, True, True, True]"
+  },
+  {
+   "case": "cleared",
+   "check": "report0",
+   "ok": true,
+   "info": ""
+  }
+ ],
+ "raabe->excel": [
+  {
+   "step": "inserted",
+   "check": "ours as intended",
+   "ok": true,
+   "info": "None 2 Alle Zeiträume"
+  },
+  {
+   "step": "inserted",
+   "check": "Excel finds the timeline",
+   "ok": true,
+   "info": ""
+  },
+  {
+   "step": "inserted",
+   "check": "Excel's filter",
+   "ok": true,
+   "info": "None"
+  },
+  {
+   "step": "inserted",
+   "check": "Excel's level",
+   "ok": true,
+   "info": "2"
+  },
+  {
+   "step": "inserted",
+   "check": "Excel's header",
+   "ok": true,
+   "info": "True"
+  },
+  {
+   "step": "inserted",
+   "check": "Excel's report",
+   "ok": true,
+   "info": "[['Zeilenbeschriftungen', 'Anzahl von Note'], ['Biologie', 6.0], ['Deutsch', 6.0], ['Englisch', 6.0], ['Mathe', 6.0], ['Gesamtergebnis', 24.0]] / [['Zeilenbeschriftungen', 'Anzahl von Note'], ['Biologie', 6], ['Deutsch', 6], ['Englisch', 6], ['Mathe', 6], ['Gesamtergebnis', 24]]"
+  },
+  {
+   "step": "click",
+   "check": "ours as intended",
+   "ok": true,
+   "info": "{'from': 45931, 'to': 45961} 2 Okt 2025"
+  },
+  {
+   "step": "click",
+   "check": "Excel finds the timeline",
+   "ok": true,
+   "info": ""
+  },
+  {
+   "step": "click",
+   "check": "Excel's filter",
+   "ok": true,
+   "info": "[45931, 45961]"
+  },
+  {
+   "step": "click",
+   "check": "Excel's level",
+   "ok": true,
+   "info": "2"
+  },
+  {
+   "step": "click",
+   "check": "Excel's header",
+   "ok": true,
+   "info": "True"
+  },
+  {
+   "step": "click",
+   "check": "Excel's report",
+   "ok": true,
+   "info": "[['Zeilenbeschriftungen', 'Anzahl von Note'], ['Biologie', 1.0], ['Mathe', 1.0], ['Gesamtergebnis', 2.0]] / [['Zeilenbeschriftungen', 'Anzahl von Note'], ['Biologie', 1], ['Mathe', 1], ['Gesamtergebnis', 2]]"
+  },
+  {
+   "step": "shiftclick",
+   "check": "ours as intended",
+   "ok": true,
+   "info": "{'from': 45931, 'to': 46053} 2 Okt 2025 - Jan 2026"
+  },
+  {
+   "step": "shiftclick",
+   "check": "Excel finds the timeline",
+   "ok": true,
+   "info": ""
+  },
+  {
+   "step": "shiftclick",
+   "check": "Excel's filter",
+   "ok": true,
+   "info": "[45931, 46053]"
+  },
+  {
+   "step": "shiftclick",
+   "check": "Excel's level",
+   "ok": true,
+   "info": "2"
+  },
+  {
+   "step": "shiftclick",
+   "check": "Excel's header",
+   "ok": true,
+   "info": "True"
+  },
+  {
+   "step": "shiftclick",
+   "check": "Excel's report",
+   "ok": true,
+   "info": "[['Zeilenbeschriftungen', 'Anzahl von Note'], ['Biologie', 2.0], ['Deutsch', 2.0], ['Englisch', 1.0], ['Mathe', 2.0], ['Gesamtergebnis', 7.0]] / [['Zeilenbeschriftungen', 'Anzahl von Note'], ['Biologie', 2], ['Deutsch', 2], ['Englisch', 1], ['Mathe', 2], ['Gesamtergebnis', 7]]"
+  },
+  {
+   "step": "edge",
+   "check": "ours as intended",
+   "ok": true,
+   "info": "{'from': 45931, 'to': 46112} 2 Okt 2025 - Mrz 2026"
+  },
+  {
+   "step": "edge",
+   "check": "Excel finds the timeline",
+   "ok": true,
+   "info": ""
+  },
+  {
+   "step": "edge",
+   "check": "Excel's filter",
+   "ok": true,
+   "info": "[45931, 46112]"
+  },
+  {
+   "step": "edge",
+   "check": "Excel's level",
+   "ok": true,
+   "info": "2"
+  },
+  {
+   "step": "edge",
+   "check": "Excel's header",
+   "ok": true,
+   "info": "True"
+  },
+  {
+   "step": "edge",
+   "check": "Excel's report",
+   "ok": true,
+   "info": "[['Zeilenbeschriftungen', 'Anzahl von Note'], ['Biologie', 3.0], ['Deutsch', 3.0], ['Englisch', 2.0], ['Mathe', 3.0], ['Gesamtergebnis', 11.0]] / [['Zeilenbeschriftungen', 'Anzahl von Note'], ['Biologie', 3], ['Deutsch', 3], ['Englisch', 2], ['Mathe', 3], ['Gesamtergebnis', 11]]"
+  },
+  {
+   "step": "quarters",
+   "check": "ours as intended",
+   "ok": true,
+   "info": "{'from': 46023, 'to': 46203} 1 Q1 - Q2 2026"
+  },
+  {
+   "step": "quarters",
+   "check": "Excel finds the timeline",
+   "ok": true,
+   "info": ""
+  },
+  {
+   "step": "quarters",
+   "check": "Excel's filter",
+   "ok": true,
+   "info": "[46023, 46203]"
+  },
+  {
+   "step": "quarters",
+   "check": "Excel's level",
+   "ok": true,
+   "info": "1"
+  },
+  {
+   "step": "quarters",
+   "check": "Excel's header",
+   "ok": true,
+   "info": "True"
+  },
+  {
+   "step": "quarters",
+   "check": "Excel's report",
+   "ok": true,
+   "info": "[['Zeilenbeschriftungen', 'Anzahl von Note'], ['Biologie', 2.0], ['Deutsch', 3.0], ['Englisch', 3.0], ['Mathe', 3.0], ['Gesamtergebnis', 11.0]] / [['Zeilenbeschriftungen', 'Anzahl von Note'], ['Biologie', 2], ['Deutsch', 3], ['Englisch', 3], ['Mathe', 3], ['Gesamtergebnis', 11]]"
+  },
+  {
+   "step": "cleared",
+   "check": "ours as intended",
+   "ok": true,
+   "info": "None 1 Alle Zeiträume"
+  },
+  {
+   "step": "cleared",
+   "check": "Excel finds the timeline",
+   "ok": true,
+   "info": ""
+  },
+  {
+   "step": "cleared",
+   "check": "Excel's filter",
+   "ok": true,
+   "info": "None"
+  },
+  {
+   "step": "cleared",
+   "check": "Excel's level",
+   "ok": true,
+   "info": "1"
+  },
+  {
+   "step": "cleared",
+   "check": "Excel's header",
+   "ok": true,
+   "info": "True"
+  },
+  {
+   "step": "cleared",
+   "check": "Excel's report",
+   "ok": true,
+   "info": "[['Zeilenbeschriftungen', 'Anzahl von Note'], ['Biologie', 6.0], ['Deutsch', 6.0], ['Englisch', 6.0], ['Mathe', 6.0], ['Gesamtergebnis', 24.0]] / [['Zeilenbeschriftungen', 'Anzahl von Note'], ['Biologie', 6], ['Deutsch', 6], ['Englisch', 6], ['Mathe', 6], ['Gesamtergebnis', 24]]"
+  },
+  {
+   "step": "noheader",
+   "check": "ours as intended",
+   "ok": true,
+   "info": "None 1 Alle Zeiträume"
+  },
+  {
+   "step": "noheader",
+   "check": "Excel finds the timeline",
+   "ok": true,
+   "info": ""
+  },
+  {
+   "step": "noheader",
+   "check": "Excel's filter",
+   "ok": true,
+   "info": "None"
+  },
+  {
+   "step": "noheader",
+   "check": "Excel's level",
+   "ok": true,
+   "info": "1"
+  },
+  {
+   "step": "noheader",
+   "check": "Excel's header",
+   "ok": true,
+   "info": "True"
+  },
+  {
+   "step": "noheader",
+   "check": "Excel's report",
+   "ok": true,
+   "info": "[['Zeilenbeschriftungen', 'Anzahl von Note'], ['Biologie', 6.0], ['Deutsch', 6.0], ['Englisch', 6.0], ['Mathe', 6.0], ['Gesamtergebnis', 24.0]] / [['Zeilenbeschriftungen', 'Anzahl von Note'], ['Biologie', 6], ['Deutsch', 6], ['Englisch', 6], ['Mathe', 6], ['Gesamtergebnis', 24]]"
+  }
+ ],
+ "labels": {
+  "default": "Alle Zeiträume",
+  "months": "Okt 2025 - Jan 2026",
+  "Jahre": "2026",
+  "Quartale": "Q1 - Q2 2026",
+  "Tage": "4 - 21 Sep 2025",
+  "options": null,
+  "connected": "Feb - Mai 2026",
+  "cleared": "Alle Zeiträume"
+ },
+ "dialog": {
+  "title": "",
+  "box": [
+   514.1666870117188,
+   663
+  ],
+  "ok": [
+   675.6666870117188,
+   715.75
+  ]
+ },
+ "summary": {
+  "excel->raabe": "49/49",
+  "raabe->excel": "42/42"
+ }
+}

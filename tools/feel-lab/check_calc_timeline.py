@@ -58,7 +58,7 @@ KEYS = {"Alt": ("AltLeft", 18), "Shift": ("ShiftLeft", 16), "ö": ("Semicolon", 
 
 
 def key(c: CalcSide, k: str, mods: int = 0) -> None:
-    code, vk = KEYS.get(k, (f"Key{k.upper()}", ord(k.upper())))
+    code, vk = KEYS[k] if k in KEYS else (f"Key{k.upper()}", ord(k.upper()))
     text = k if len(k) == 1 else ""
     c.cdp("Input.dispatchKeyEvent", {"type": "keyDown" if text else "rawKeyDown", "key": k, "code": code, "windowsVirtualKeyCode": vk, "modifiers": mods, **({"text": text} if text else {})})
     c.cdp("Input.dispatchKeyEvent", {"type": "keyUp", "key": k, "code": code, "windowsVirtualKeyCode": vk, "modifiers": mods})
@@ -116,6 +116,14 @@ STATE = r"""(() => { const app = __calc.app, t = app.timelines.byName("Datum"); 
 def block(c: CalcSide, y: int, m: int, d: int = 1) -> dict:
     s = (datetime.date(y, m, d) - EPOCH).days
     p = c.js(f"__calc.app.timelines.blockPoint('Datum', {s})")
+    # Not in view: the scroll bar's arrows, as a student would scroll back or on.
+    for _ in range(30):
+        if p:
+            break
+        first = int(c.js("Number(document.querySelector('.timeline').dataset.first)"))
+        a = c.js(f"(() => {{ const e = document.querySelector('.timeline [data-act={'left' if s < first else 'right'}]'); const r = e.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; }})()")
+        click(c, *a)
+        p = c.js(f"__calc.app.timelines.blockPoint('Datum', {s})")
     if not p:
         raise RuntimeError(f"block {y}-{m} not shown")
     return p
