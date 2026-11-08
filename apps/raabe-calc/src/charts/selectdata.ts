@@ -106,7 +106,10 @@ export function refField(_host: SelectDataHost, value: string, label: string, op
   const collapse = () => {
     const d = opts.dialog();
     if (!d) return;
+    // The dialogs below (Datenquelle auswählen under Datenreihe bearbeiten) go out of the way too, as in Excel.
+    const others = [...document.querySelectorAll<HTMLElement>(".dialog-layer")].filter((l) => !l.contains(d));
     if (d.classList.contains("rf-collapsed")) {
+      for (const l of others) l.style.visibility = "";
       d.classList.remove("rf-collapsed");
       if (home) home.parent.insertBefore(box, home.next);
       home = null;
@@ -118,6 +121,7 @@ export function refField(_host: SelectDataHost, value: string, label: string, op
       if (!bar) { bar = h("div", { class: "rf-bar sd-row" }); d.querySelector(".dlg-body")!.prepend(bar); }
       bar.replaceChildren(box);
       d.classList.add("rf-collapsed");
+      for (const l of others) l.style.visibility = "hidden";
       btn.innerHTML = EXPAND;
       btn.setAttribute("aria-label", "Dialog erweitern");
     }
@@ -150,9 +154,11 @@ export function pointThrough(host: SelectDataHost, layer: HTMLElement, dialog: H
     host.marquee(rect);
     active?.set("=" + refText(host.sheetName(), rect.r0, rect.c0, rect.r1, rect.c1));
   };
+  // Inside any dialog (this one or one opened from it) nothing is swallowed.
+  const inDialog = (t: EventTarget | null) => !!(t as Element | null)?.closest?.(".dialog");
   const down = (e: PointerEvent) => {
     const t = e.target as Node;
-    if (dialog.contains(t) || !layer.isConnected) return;
+    if (inDialog(t) || !layer.isConnected) return;
     e.preventDefault();
     e.stopPropagation();
     if (!grid.contains(t) || !active || !dialog.contains(active.input)) return;
@@ -177,7 +183,7 @@ export function pointThrough(host: SelectDataHost, layer: HTMLElement, dialog: H
     active?.input.closest(".rf")?.classList.remove("picking");
     active?.input.focus();
   };
-  const swallow = (e: Event) => { if (!dialog.contains(e.target as Node) && layer.isConnected) { e.stopPropagation(); e.preventDefault(); } };
+  const swallow = (e: Event) => { if (!inDialog(e.target) && layer.isConnected) { e.stopPropagation(); e.preventDefault(); } };
   addEventListener("pointerdown", down, true);
   addEventListener("pointermove", move, true);
   addEventListener("pointerup", up, true);
@@ -185,7 +191,8 @@ export function pointThrough(host: SelectDataHost, layer: HTMLElement, dialog: H
   addEventListener("click", swallow, true);
   addEventListener("dblclick", swallow, true);
   addEventListener("contextmenu", swallow, true);
-  addEventListener("wheel", (e) => { if (!grid.contains(e.target as Node) && !dialog.contains(e.target as Node)) e.preventDefault(); }, { capture: true, passive: false });
+  const wheel = (e: WheelEvent) => { if (!grid.contains(e.target as Node) && !inDialog(e.target)) e.preventDefault(); };
+  addEventListener("wheel", wheel, { capture: true, passive: false });
   return () => {
     removeEventListener("pointerdown", down, true);
     removeEventListener("pointermove", move, true);
@@ -194,6 +201,7 @@ export function pointThrough(host: SelectDataHost, layer: HTMLElement, dialog: H
     removeEventListener("click", swallow, true);
     removeEventListener("dblclick", swallow, true);
     removeEventListener("contextmenu", swallow, true);
+    removeEventListener("wheel", wheel, true);
     host.marquee(null);
   };
 }

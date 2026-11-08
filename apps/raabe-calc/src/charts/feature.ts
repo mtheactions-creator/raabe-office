@@ -230,7 +230,9 @@ export function chartsFeature(app: CalcApp) {
       select(m);
       const at = elementAt(m, e.target as Element) ?? { kind: "chart" as const };
       setElement(m, at);
-      contextMenu(m, at, e.clientX, e.clientY);
+      // After the ribbon has followed the selection (its update closes open popups).
+      const x = e.clientX, y = e.clientY;
+      setTimeout(() => contextMenu(m, at, x, y), 0);
     });
     el.addEventListener("keydown", (e) => onKey(e, m));
     el.addEventListener("wheel", () => buttons.close(), { passive: true });
@@ -320,6 +322,8 @@ export function chartsFeature(app: CalcApp) {
     const sheet = app.sheet;
     const list = sheet.charts ?? [];
     axes = null;
+    // Undo/redo replaces the models: the selection stays on the chart at the same place in the list (Excel).
+    const was = selected && sheet === shownSheet ? (shownList ?? []).indexOf(selected) : -1;
     shownSheet = sheet;
     shownList = sheet.charts;
     for (const m of list) readCaches(app.wb, m);
@@ -332,10 +336,18 @@ export function chartsFeature(app: CalcApp) {
     for (const [m, v] of views) if (!next.has(m)) v.el.remove();
     views = next;
     if (selected && !next.has(selected)) {
-      // Undo/redo replaces the models: keep the selection on the same chart by position.
-      selected = null;
+      const again = was >= 0 ? list[was] : undefined;
+      const flyout = buttons.isOpen() ? buttons.which() : null;
       buttons.close();
-      if (paneChart) { paneChart = null; app.taskPane.close(); }
+      if (again) {
+        selected = again;
+        if (paneChart) { paneChart = again; openPane(again); }
+        if (flyout) queueMicrotask(() => { const v = views.get(again); if (v && selected === again) buttons.show(flyout, again, v.el); });
+      } else {
+        selected = null;
+        if (paneChart) { paneChart = null; app.taskPane.close(); }
+      }
+      queueMicrotask(() => app.chartSelectionChanged());
     }
     for (const [m, v] of views) v.el.classList.toggle("sel", m === selected);
     // Drawing order: later charts on top.
@@ -755,11 +767,22 @@ export function chartsFeature(app: CalcApp) {
     openPane: (m, e) => paneFor(m, e),
     selectData: (m) => { select(m); void selectData(); },
     accents: () => accents() ?? ["#4472C4", "#ED7D31", "#A5A5A5", "#FFC000", "#5B9BD5", "#70AD47"],
-    tile: (m, w, hh) => { readCaches(app.wb, m); return renderChart(m, w, hh, { accents: accents(), format }) as SVGSVGElement; },
+    tile: (m, w, hh) => tileOf(m, w, hh),
     pickSeries: (m) => pickSeries(m),
     nameSources: (m) => nameSources(m),
     setNameSources: (m, series, cats) => setNameSources(m, series, cats),
   });
+
+  /** A gallery tile: the chart drawn at its own size and scaled down (Excel's tiles are small pictures of the chart). */
+  function tileOf(m: ChartModel, w: number, hh: number): SVGSVGElement {
+    readCaches(app.wb, m);
+    const sel = selected && views.has(selected) ? sheetBox(selected) : { w: NEW_W, h: NEW_H };
+    const svg = renderChart(m, sel.w, sel.h, { accents: accents(), format }) as SVGSVGElement;
+    const s = Math.min(w / sel.w, hh / sel.h);
+    svg.setAttribute("width", String(Math.round(sel.w * s)));
+    svg.setAttribute("height", String(Math.round(sel.h * s)));
+    return svg;
+  }
 
   /** Trendlinie hinzufügen: Excel asks which series when there are several. */
   async function pickSeries(m: ChartModel): Promise<number | null> {
@@ -805,7 +828,8 @@ export function chartsFeature(app: CalcApp) {
   // ----- context menus ----------------------------------------------------------------------------------
 
   function contextMenu(m: ChartModel, e: ChartElement, x: number, y: number): void {
-    const cmd = (id: string) => ({ cmd: id });
+    const labels: Record<string, string> = { "chart.changeType": "Diagrammtyp ändern...", "chart.selectData": "Daten auswählen...", "chart.move": "Diagramm verschieben..." };
+    const cmd = (id: string) => ({ cmd: id, label: labels[id] });
     const reset = { label: "Auf Formatvorl. zurücks.", run: () => resetElement(m, e) };
     const font = { label: "Schriftart...", run: () => openPane(m) };
     const common: MenuEntry[] = [cmd("chart.changeType"), cmd("chart.selectData"), { label: "3D-Drehung...", run: () => {}, disabled: true }];
@@ -1207,8 +1231,7 @@ export function chartsFeature(app: CalcApp) {
       setStyleTheme(app.wb.theme);
       const look = structuredClone({ ...selected, raw: undefined });
       applyStyle(look, i);
-      readCaches(app.wb, look);
-      return renderChart(look, w, hh, { accents: accents(), format }) as SVGSVGElement;
+      return tileOf(look, w, hh);
     },
     applyStyle: (i: number): void => { if (selected) { setStyleTheme(app.wb.theme); looks.delete(selected); edit(selected, (c) => applyStyle(c, i), "Diagrammformatvorlage"); } },
     previewStyle: (i: number | null): void => {

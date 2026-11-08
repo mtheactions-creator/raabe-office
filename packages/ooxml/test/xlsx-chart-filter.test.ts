@@ -59,7 +59,13 @@ describe("Diagrammfilter in the file", () => {
     const both = chartFromXml(fx("series-and-cat-filtered"));
     expect(both.series.map((s) => !!s.filtered)).toEqual([true, false, false]);
     expect(both.hiddenCats).toEqual([0]);
-    const again = chartFromXml(rewrite(both));
+    // The filtered series keeps its whole ranges (c15:fullRef and c15:formulaRef in one extension).
+    expect(both.series[0].val.ref).toBe("Daten!$B$2:$B$5");
+    expect(both.series[0].val.cache).toEqual([null, 5, 2, 4]);
+    const xml = rewrite(both);
+    expect(xml).toContain("<c15:fullRef><c15:sqref>Daten!$B$2:$B$5</c15:sqref></c15:fullRef><c15:formulaRef><c15:sqref>Daten!$B$3:$B$5</c15:sqref></c15:formulaRef>");
+    expect((xml.match(/<c:extLst><c:ext uri="\{02D57815[^>]*><c15:fullRef>/g) ?? []).length).toBe(6);
+    const again = chartFromXml(xml);
     expect(again.series.map((s) => !!s.filtered)).toEqual([true, false, false]);
     expect(again.hiddenCats).toEqual([0]);
     for (const [name, filtered] of [["line-series2-filtered", [false, true, false]], ["bar-series3-filtered", [false, false, true]],

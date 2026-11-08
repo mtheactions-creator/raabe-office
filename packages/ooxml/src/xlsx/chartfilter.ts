@@ -94,6 +94,9 @@ export function filterXml(xml: string, m: ChartModel, full: Map<string, string>)
     const end = xml.indexOf("</c:ser>", start) + "</c:ser>".length;
     let ser = xml.slice(start, end);
     xml = xml.slice(0, start) + xml.slice(end);
+    // A hidden category's whole range and the visible cells share one extension in a filtered series (Excel).
+    ser = ser.replace(/<c:extLst><c:ext uri="\{02D57815-91ED-43cb-92C2-25804820EDAC\}"[^>]*><c15:fullRef><c15:sqref>([^<]*)<\/c15:sqref><\/c15:fullRef><\/c:ext><\/c:extLst><c:f>([^<]*)<\/c:f>/g,
+      (_, whole, part) => `<c:extLst><c:ext uri="${C15_URI}"><c15:fullRef><c15:sqref>${whole}</c15:sqref></c15:fullRef><c15:formulaRef><c15:sqref>${part}</c15:sqref></c15:formulaRef></c:ext></c:extLst>`);
     ser = "<c15:ser>" + ser.slice("<c:ser>".length, -"</c:ser>".length).replace(/<c:f>([^<]*)<\/c:f>/g,
       (_, ref) => `<c:extLst><c:ext uri="${C15_URI}"><c15:formulaRef><c15:sqref>${ref}</c15:sqref></c15:formulaRef></c:ext></c:extLst>`) + "</c15:ser>";
     // The group the series was in: the next closing group tag.
@@ -155,7 +158,9 @@ export interface FilterRead {
 export function unfilterXml(xml: string): FilterRead {
   const out: FilterRead = { xml, filtered: [], partial: new Map() };
   const orig = xml;
-  // Whole ranges of hidden categories.
+  // Whole ranges of hidden categories; in a filtered series both forms share one extension.
+  xml = xml.replace(/<c:extLst><c:ext uri="\{02D57815-91ED-43cb-92C2-25804820EDAC\}"[^>]*><c15:fullRef><c15:sqref>([^<]*)<\/c15:sqref><\/c15:fullRef><c15:formulaRef><c15:sqref>([^<]*)<\/c15:sqref><\/c15:formulaRef><\/c:ext><\/c:extLst>/g,
+    (_, whole: string, part: string) => { out.partial.set(unescX(whole), unescX(part)); return `<c:f>${whole}</c:f>`; });
   xml = xml.replace(/<c:extLst><c:ext uri="\{02D57815-91ED-43cb-92C2-25804820EDAC\}"[^>]*><c15:fullRef><c15:sqref>([^<]*)<\/c15:sqref><\/c15:fullRef><\/c:ext><\/c:extLst><c:f>([^<]*)<\/c:f>/g,
     (_, whole: string, part: string) => { out.partial.set(unescX(whole), unescX(part)); return `<c:f>${whole}</c:f>`; });
   // Filtered series.

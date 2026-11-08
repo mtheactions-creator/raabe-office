@@ -56,7 +56,8 @@ const CSS = `
 .cb-row label { flex: 1; display: flex; align-items: center; gap: 9px; height: 100%; padding-left: 4px; }
 .cb-row.on label { background: #ebebeb; }
 .cb-row:hover label { background: #e1e1e1; }
-.cb-row input { margin: 0; width: 13px; height: 13px; }
+.cb-row input { margin: 0; width: 13px; height: 13px; appearance: none; -webkit-appearance: none; border: 1px solid #444; background: #fff; display: inline-grid; place-content: center; }
+.cb-row input:checked::before { content: ""; width: 9px; height: 7px; background: no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 7'%3E%3Cpath d='M.6 3.4 3.3 6 8.4.8' fill='none' stroke='%23262626' stroke-width='1.1'/%3E%3C/svg%3E"); }
 .cb-arrow { width: 30px; height: 100%; border: 0; background: transparent; padding: 0; visibility: hidden; display: flex; align-items: center; justify-content: center; }
 .cb-row:hover .cb-arrow, .cb-arrow.open { visibility: visible; }
 .cb-arrow:hover, .cb-arrow.open { background: #e1e1e1; }
@@ -436,6 +437,7 @@ export function chartButtons(host: ButtonsHost) {
     close,
     refresh,
     isOpen: () => !!open,
+    which: (): Which | null => open?.which ?? null,
     openFor: (): ChartModel | null => open?.m ?? null,
     /** The flyout of a button, for the ribbon or a test (as a click on the button). */
     show: (which: Which, m: ChartModel, view: HTMLElement) => {

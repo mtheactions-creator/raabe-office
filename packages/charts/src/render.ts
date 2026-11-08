@@ -20,6 +20,7 @@ import { draw3D, draw3DPie, drawSurface } from "./render3d";
 import { drawOfPie, drawRadar } from "./renderspecial";
 import { drawChartEx, chartExLegend } from "./renderex";
 import { visibleModel } from "./filter";
+import { withDataTable } from "./datatable";
 
 export type Measure = (text: string, sizePt: number) => number;
 
@@ -171,6 +172,8 @@ export function chartScene(full: ChartModel, W: number, H: number, opts: RenderO
   else if (info.family === "radar") scene = drawRadar(c, area);
   else if (info.family === "surface") scene = drawSurface(c, area);
   else if (info.d3 && info.family !== "bubble") scene = draw3D(c, area);
+  // Datentabelle under the plot (D-115, datatable.ts).
+  else if (m.dataTable && !isBar(m.kind) && !isScatter(m.kind)) scene = withDataTable(c, area, drawAxes, { catText: (i) => catText(c, m.series[0], i), seriesName: (i) => seriesName(m.series[i], i) });
   else scene = drawAxes(c, area);
   c.parts.push({ name: "plot", box: scene.plot });
   return { width: W, height: H, prims: c.prims, parts: c.parts, ...scene };
@@ -939,7 +942,8 @@ function drawLines(c: Ctx, catCenter: (i: number) => number, vPos: (v: number) =
     // Runs of points without gaps, drawn straight or smoothed (Linie glätten).
     const runs: [number, number][][] = [[]];
     vals.forEach((v, i) => {
-      if (v === null || !isFinite(v)) { if (runs.at(-1)!.length) runs.push([]); return; }
+      // Leere Zellen: a gap, unless "Datenpunkte mit einer Linie verbinden" (dispBlanksAs span, D-117).
+      if (v === null || !isFinite(v)) { if (runs.at(-1)!.length && c.m.dispBlanksAs !== "span") runs.push([]); return; }
       runs.at(-1)!.push([catCenter(i), vPos(v)]);
     });
     const d = runs.filter((r) => r.length).map((r) => (s.smooth && r.length > 2 ? smoothPath(r) : r.map(([x, y], i) => `${i ? "L" : "M"}${f(x)} ${f(y)}`).join(""))).join("");
