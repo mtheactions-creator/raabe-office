@@ -1087,7 +1087,12 @@ export class CalcApp {
   }
 
   formatSel(label: string, change: (s: CellStyle) => void): void {
-    this.change(label, () => A.format(this.ctx, this.sheet, this.grid.selection, change));
+    this.change(label, () => {
+      A.format(this.ctx, this.sheet, this.grid.selection, change);
+      // A number format from the ribbon widens columns of standard width whose numbers no longer fit (Excel:
+      // Datum, lang turns 10,27 into 21,27 rather than showing ####, D-142).
+      if (label === "Zahlenformat") this.autoWiden(this.grid.selection);
+    });
     // F4 and Strg+Y (with nothing to redo) repeat the last formatting on the new selection (Excel).
     this.lastRepeat = { label, run: () => this.formatSel(label, change) };
   }

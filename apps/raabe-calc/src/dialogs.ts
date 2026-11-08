@@ -288,6 +288,7 @@ export function dialogs(app: CalcApp) {
         if (changed("hidden")) s.hidden = hidden.input.checked || undefined;
       });
       if (changedBorders) applyBorderSides(borders, preset, lineStyle);
+      if (changed("code")) app.autoWiden(app.grid.selection);
       // Taller text (Schriftgrad, Zeilenumbruch, Drehung): the rows fit in the same step (Excel).
       if (changed("size") || changed("wrap") || changed("rot") || changed("name")) for (const r of app.grid.selection) app.autoRowHeights(r);
       const merged = app.sheet.merges.some((m) => A.overlaps(m, sel()));

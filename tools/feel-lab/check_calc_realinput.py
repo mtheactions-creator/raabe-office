@@ -136,7 +136,7 @@ def cases(r: Real) -> list[tuple[str, callable, str]]:
         ("Skalierung: Drehfeld Mehr", lambda: (r.click(tab("Seitenlayout")), r.click(ctrl("An Format anpassen|Skalierung: Mehr"))),
          "(__calc.app.sheet.page?.scale ?? 100) > 100"),
         ("Sortieren: Spalte markiert, Sortierwarnung, Enter erweitert", lambda: (r.reset("B2:B5"), r.click(tab("Start")), r.click(ctrl("Bearbeiten|Sortieren und Filtern")),
-                                                                         r.click(item("Von A bis Z sortieren")), r.keys("enter")),
+                                                                         r.click(item("Nach Größe sortieren (aufsteigend)")), r.keys("enter")),
          "__calc.app.sheet.get(1, 0)?.v === 'Ben' && __calc.app.sheet.get(1, 1)?.v === 7.5"),
         ("Rückgängig: Strg+Z nach dem Sortieren", lambda: r.keys("ctrl+z"), "__calc.app.sheet.get(1, 0)?.v === 'Anna'"),
     ]

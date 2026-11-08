@@ -128,7 +128,7 @@ CASES: list[tuple] = [
     ("AutoSumme unter Spalte", "D6", [T, ("ctrl", "Bearbeiten|AutoSumme"), ("key", "Enter")], ("mso", "AutoSum")),
     ("AutoSumme Auswahl", "B2:B5", [T, ("ctrl", "Bearbeiten|AutoSumme")], ("mso", "AutoSum")),
     ("AutoSumme Mittelwert", "D2:D5", [T, ("ctrl", "Bearbeiten|AutoSumme ▾"), ("item", "Mittelwert")], lambda app, ws: setattr(ws.Range("D6"), "FormulaLocal", "=MITTELWERT(D2:D5)")),
-    ("Von A bis Z sortieren", "B3", [T, ("ctrl", "Bearbeiten|Sortieren und Filtern"), ("item", "Von A bis Z sortieren")], ("mso", "SortAscendingExcel")),
+    ("Nach Größe sortieren (aufsteigend)", "B3", [T, ("ctrl", "Bearbeiten|Sortieren und Filtern"), ("item", "Nach Größe sortieren (aufsteigend)")], ("mso", "SortAscendingExcel")),
     ("Von Z bis A sortieren", "A3", [T, ("ctrl", "Bearbeiten|Sortieren und Filtern"), ("item", "Von Z bis A sortieren")], ("mso", "SortDescendingExcel")),
     ("Filtern", "B3", [T, ("ctrl", "Bearbeiten|Sortieren und Filtern"), ("item", "Filtern")], ("mso", "Filter")),
     ("Blattzeilen einfügen", "A3:B4", [T, ("ctrl", "Zellen|Einfügen ▾"), ("item", "Blattzeilen einfügen")], ("mso", "SheetRowsInsert")),
@@ -180,7 +180,7 @@ CASES: list[tuple] = [
     ("Zellen formatieren Fett Kursiv", "A2:B4", [T, ("ctrl", "Schriftart|Zellenschriftart formatieren"), ("select", "Schriftschnitt:", "Fett Kursiv"), ("ok",)],
      lambda app, ws: (setattr(app.Selection.Font, "Bold", True), setattr(app.Selection.Font, "Italic", True))),
     ("Zellen formatieren Zahl 2 Dezimalstellen", "D2:D5", [T, ("ctrl", "Zahl|Zellennummer formatieren"), ("selectlist", "Kategorie:", "Zahl"), ("ok",)], xl_numfmt("0,00")),
-    ("Sortieren mit Formeln", "B3", [T, ("ctrl", "Bearbeiten|Sortieren und Filtern"), ("item", "Von A bis Z sortieren")], ("mso", "SortAscendingExcel"), {"D2": "=B2*2", "D3": "=B3*2", "D4": "=B4*2", "D5": "=B5*2"}),
+    ("Sortieren mit Formeln", "B3", [T, ("ctrl", "Bearbeiten|Sortieren und Filtern"), ("item", "Nach Größe sortieren (aufsteigend)")], ("mso", "SortAscendingExcel"), {"D2": "=B2*2", "D3": "=B3*2", "D4": "=B4*2", "D5": "=B5*2"}),
 ]
 
 
