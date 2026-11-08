@@ -1,0 +1,238 @@
+{
+ "anchors": [
+  {
+   "anchor": "column border B",
+   "ok": 10,
+   "of": 10,
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 57,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 80,
+     "after": 160
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 50,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 80,
+     "after": 80
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 8,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 80,
+     "after": 200
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 7,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 80,
+     "after": 20
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 23,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.33,
+     "v0": 80,
+     "after": 82.66666666666669
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 101,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 80,
+     "after": 100
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 43,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.33,
+     "v0": 80,
+     "after": 154.66666666666666
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 33,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 80,
+     "after": 160
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 41,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.33,
+     "v0": 80,
+     "after": 110.66666666666669
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 34,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 80,
+     "after": 480
+    }
+   ]
+  },
+  {
+   "anchor": "row border 3",
+   "ok": 10,
+   "of": 10,
+   "drags": [
+    {
+     "path": "slow-right",
+     "ok": true,
+     "frames": 62,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 20,
+     "after": 20
+    },
+    {
+     "path": "slow-down",
+     "ok": true,
+     "frames": 47,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 20,
+     "after": 80
+    },
+    {
+     "path": "fast-right",
+     "ok": true,
+     "frames": 9,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 20,
+     "after": 20
+    },
+    {
+     "path": "fast-left",
+     "ok": true,
+     "frames": 8,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 20,
+     "after": 20
+    },
+    {
+     "path": "threshold",
+     "ok": true,
+     "frames": 22,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.33,
+     "v0": 20,
+     "after": 21.33333333333333
+    },
+    {
+     "path": "back-forth",
+     "ok": true,
+     "frames": 107,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 20,
+     "after": 20
+    },
+    {
+     "path": "diagonal",
+     "ok": true,
+     "frames": 42,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 20,
+     "after": 70
+    },
+    {
+     "path": "zigzag",
+     "ok": true,
+     "frames": 28,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 20,
+     "after": 12
+    },
+    {
+     "path": "jitter",
+     "ok": true,
+     "frames": 33,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.33,
+     "v0": 20,
+     "after": 21.33333333333333
+    },
+    {
+     "path": "long",
+     "ok": true,
+     "frames": 34,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0,
+     "v0": 20,
+     "after": 220
+    }
+   ]
+  }
+ ]
+}
