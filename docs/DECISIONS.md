@@ -3180,8 +3180,9 @@ slot, as in Excel.
 
 Measured (D-115 - D-117): `check_calc_chartui.py` drives the release exe off screen with trusted DevTools input
 (clicks, hovers, drags, typing, Strg+Z; no real input) and opens what RaabeCalc saved in our own Excel:
-122 of 122 cases on the release exe including 9 Excel readouts (106 of 106 on the development build after the last label changes). `check_calc_chartui_real.py` repeats the hover, flyout, filter, style preview, frame drag and range
-pointing with the real mouse under the lock: pending. Unit tests: `xlsx-chart-filter.test.ts` (10, Excel's own
+126 of 126 cases on the release exe, 20 of them Excel's readouts of the files RaabeCalc saved (elements, filter, styles, Datenquelle auswählen). `check_calc_chartui_real.py` repeats the hover, flyout, filter, style preview, frame drag and range
+pointing with the real mouse under the lock: 13 of 13. Side menus, context menus (chart area, plot area, title, legend,
+series, gridlines) and the dialog's labels are compared with Excel's recorded ones in these runs. Unit tests: `xlsx-chart-filter.test.ts` (10, Excel's own
 chart parts read and written), `chart-buttons.test.ts` (9).
 
 ## D-118 Diagrammformatvorlagen from the charts Excel saved (2026-11-09)

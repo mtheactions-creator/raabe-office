@@ -1,6 +1,6 @@
 {
- "passed": 122,
- "total": 122,
+ "passed": 126,
+ "total": 126,
  "cases": [
   {
    "case": "click selects the chart",
@@ -83,7 +83,7 @@
    "detail": ""
   },
   {
-   "case": "side menu Achsen: entries",
+   "case": "side menu Achsen: Excel's entries",
    "passed": true,
    "detail": ""
   },
@@ -93,7 +93,7 @@
    "detail": ""
   },
   {
-   "case": "side menu Achsentitel: entries",
+   "case": "side menu Achsentitel: Excel's entries",
    "passed": true,
    "detail": ""
   },
@@ -103,22 +103,22 @@
    "detail": ""
   },
   {
-   "case": "side menu Diagrammtitel: entries",
+   "case": "side menu Diagrammtitel: Excel's entries",
    "passed": true,
    "detail": ""
   },
   {
-   "case": "side menu Diagrammtitel > Zentriert überlagert",
+   "case": "side menu Diagrammtitel > Zentrierte Überlagerung",
    "passed": true,
    "detail": ""
   },
   {
-   "case": "side menu Datenbeschriftungen: entries",
+   "case": "side menu Datenbeschriftungen: Excel's entries",
    "passed": true,
    "detail": ""
   },
   {
-   "case": "side menu Datenbeschriftungen > Innerhalb Ende",
+   "case": "side menu Datenbeschriftungen > Am Ende innerhalb",
    "passed": true,
    "detail": ""
   },
@@ -128,7 +128,7 @@
    "detail": ""
   },
   {
-   "case": "side menu Datentabelle: entries",
+   "case": "side menu Datentabelle: Excel's entries",
    "passed": true,
    "detail": ""
   },
@@ -138,7 +138,7 @@
    "detail": ""
   },
   {
-   "case": "side menu Fehlerindikatoren: entries",
+   "case": "side menu Fehlerindikatoren: Excel's entries",
    "passed": true,
    "detail": ""
   },
@@ -148,7 +148,7 @@
    "detail": ""
   },
   {
-   "case": "side menu Gitternetzlinien: entries",
+   "case": "side menu Gitternetzlinien: Excel's entries",
    "passed": true,
    "detail": ""
   },
@@ -163,7 +163,7 @@
    "detail": ""
   },
   {
-   "case": "side menu Legende: entries",
+   "case": "side menu Legende: Excel's entries",
    "passed": true,
    "detail": ""
   },
@@ -174,6 +174,11 @@
   },
   {
    "case": "side menu Legende > Rechts",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "side menu Trendlinie: Excel's entries",
    "passed": true,
    "detail": ""
   },
@@ -439,6 +444,21 @@
   },
   {
    "case": "context menu of series:0: Excel's entries",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "context menu of the Diagrammbereich: Excel's entries",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "context menu of the Zeichnungsfläche: Excel's entries",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "context menu of the Vertikal (Wert) Achse Hauptgitternetz: Excel's entries",
    "passed": true,
    "detail": ""
   },
