@@ -30,6 +30,7 @@ import { DESIGNS } from "./designs";
 import { PRESENT_TEMPLATES, templateDeck } from "./templates";
 import { TRANSITION_GROUPS } from "./transitions";
 import { ANIMATION_GROUPS } from "./animations";
+import { THEME_EFFECTS } from "./themeeffects.gen";
 import { COLOR_SETS, FONT_SETS } from "./themesets.gen";
 import { SlideShow, type ShowScreens } from "./show";
 import { closeShowWindows, mainPosition, monitorMenu, openShowWindow, presenterViewOn, restoreMain, setMainFullscreen, setPresenterView, showTarget, swapWindows } from "./screens";
@@ -1685,6 +1686,32 @@ export class PresentApp implements EditorHost, PanelHost {
     });
   }
 
+  /**
+   * Entwurf > Varianten > Effekte: Office's theme effect scheme (a:fmtScheme) in place of the theme's, as PowerPoint
+   * writes it (recorded, D-104). Fills with a picture of Office's (Grunge-Muster's texture) become plain fills: we do
+   * not ship Office's pictures.
+   */
+  applyThemeEffects(name: string, xml: string): void {
+    const theme = this.deck.pptx.themeOf(this.deck.pptx.masters()[0] ?? "");
+    if (!theme) return;
+    this.deck.change("Effekte", [theme], () => {
+      const doc = this.deck.pptx.doc(theme);
+      const old = doc.getElementsByTagNameNS(PptxDom.NS_A, "fmtScheme")[0];
+      if (!old) return;
+      const plain = xml.replace(/<a:blipFill\b[\s\S]*?<\/a:blipFill>/g, '<a:solidFill><a:schemeClr val="phClr"/></a:solidFill>');
+      const el = new DOMParser().parseFromString(`<r xmlns:a="${PptxDom.NS_A}">${plain}</r>`, "application/xml").documentElement.firstElementChild;
+      if (!el) return;
+      el.setAttribute("name", name);
+      old.replaceWith(doc.importNode(el, true));
+    });
+  }
+
+  /** The current theme effect scheme's name (for the Effekte gallery's check mark). */
+  themeEffectName(): string | undefined {
+    const theme = this.deck.pptx.themeOf(this.deck.pptx.masters()[0] ?? "");
+    return theme ? this.deck.pptx.doc(theme).getElementsByTagNameNS(PptxDom.NS_A, "fmtScheme")[0]?.getAttribute("name") ?? undefined : undefined;
+  }
+
   /** Entwurf > Schriftarten: the theme's heading and body fonts. */
   /** A colour for a selected chart goes to its Diagrammbereich (the chart model keeps RGB colours). */
   private chartArea(what: "fill" | "line", spec: string | null): boolean {
@@ -1954,7 +1981,7 @@ export class PresentApp implements EditorHost, PanelHost {
         { type: "stack", items: [
           { type: "dropdown", cmd: "design.colors", key: "F", size: "small", get menu() { return ctx.menus.colors(); } } as Control,
           { type: "dropdown", cmd: "design.fonts", key: "6", size: "small", get menu() { return ctx.menus.fonts(); } } as Control,
-          b("design.effects", "E", "small")] },
+          { type: "dropdown", cmd: "design.effects", key: "E", size: "small", get menu() { return ctx.menus.themeEffects(); } } as Control] },
         { type: "stack", items: [{ type: "dropdown", cmd: "design.background", key: "R", size: "small", label: "Hintergrundformate", get menu() { return bgStylesMenu(app); } } as Control, check("master.hideBg", "B")] },
         b("master.formatBackground", "H", "small")] };
       const close: Group = { id: "close", label: "Schließen", key: "ZS", icon: "close", controls: [b("master.close", "Q")] };
@@ -2412,11 +2439,28 @@ export class PresentApp implements EditorHost, PanelHost {
     const reselect = (step: () => void) => {
       const path = this.slidePath();
       const before = new Set(path ? this.deck.view(path).shapes.map((s) => s.id) : []);
+      // Strg+Z while editing a text: PowerPoint stays in the text, the caret where the undone change began
+      // (behaviour catalogue, D-107). The text before and after tells where that is.
+      const editing = ed().text?.id;
+      const flat = (id: number) => { const b = ed().textBody(id); return b ? T.paras(b).map((p) => T.paraText(p)) : null; };
+      const was = editing !== undefined ? flat(editing) : null;
       ed().endText();
       step();
       const now = path && this.slidePath() === path && this.deck.pptx.has(path) ? this.deck.view(path).shapes.map((s) => s.id) : [];
       const back = now.filter((id) => !before.has(id));
       if (back.length) ed().select(back);
+      else if (editing !== undefined && now.includes(editing)) {
+        const is = flat(editing);
+        if (was && is) {
+          // The first paragraph and offset where the texts differ (the end of the shorter one if none).
+          let p = 0;
+          while (p < is.length - 1 && p < was.length && is[p] === was[p]) p++;
+          const a = is[p] ?? "", b = was[p] ?? "";
+          let o = 0;
+          while (o < a.length && o < b.length && a[o] === b[o]) o++;
+          ed().enterText(editing, { p, o });
+        }
+      }
     };
     impl("edit.undo", () => reselect(() => this.deck.undo()), () => this.deck.canUndo);
     impl("edit.redo", () => { ed().endText(); this.deck.redo(); }, () => this.deck.canRedo);
@@ -2510,12 +2554,13 @@ export class PresentApp implements EditorHost, PanelHost {
     impl("smartart.demote", items("demote"), hasDg);
     impl("smartart.moveUp", items("up"), hasDg);
     impl("smartart.moveDown", items("down"), hasDg);
-    impl("smartart.rtl", () => {}, () => false);
+    impl("smartart.rtl", () => { const id = dg(); if (id !== null) void import("./smartart-create").then((m) => m.toggleRtl(this, id)); }, hasDg);
     // Start > In SmartArt konvertieren: PowerPoint's 20 layouts of the menu (recorded), then Weitere SmartArt-Grafiken...
     impl("para.smartArt", () => {}, () => this.editor.selectedViews.length === 1 && !!this.editor.selectedViews[0].text);
     impl("smartart.layouts", () => {}, hasDg);
     impl("smartart.colors", () => {}, hasDg);
-    impl("smartart.reset", () => { const id = dg(); if (id !== null) void import("./smartart-create").then((m) => { const d = m.diagramOf(this, id); if (d) m.relayout(this, id, d.items, undefined, "accent1"); }); }, hasDg);
+    impl("smartart.styles", () => {}, hasDg);
+    impl("smartart.reset", () => { const id = dg(); if (id !== null) void import("./smartart-create").then((m) => { const d = m.diagramOf(this, id); if (d) m.relayout(this, id, d.items, undefined, "accent1_2", { style: "simple1", rtl: false }); }); }, hasDg);
     impl("insert.action", () => import("./links").then((m) => m.actionDialog(this)), () => this.editor.sel.length === 1);
     impl("view.ruler", () => { this.editor.showRuler = !this.editor.showRuler; this.editor.fitZoom(); this.editor.render(); this.updateChrome(); }, () => this.view === "normal", () => this.editor.showRuler);
     impl("draw.arrange", () => {});
@@ -2541,7 +2586,7 @@ export class PresentApp implements EditorHost, PanelHost {
     // Gruppierung wiederherstellen: the shapes last ungrouped, grouped again (while they are all still there).
     impl("arrange.regroup", () => { this.editor.select(this.lastUngrouped); this.group(); }, () => this.lastUngrouped.length > 1 && this.lastUngrouped.every((id) => !!this.editor.shapeView(id)));
     // Dropdowns whose menus do the work (they were greyed without a command).
-    for (const id of ["slide.layout", "slide.section", "edit.select", "design.colors", "design.fonts"]) impl(id, () => {}, () => !!this.slidePath());
+    for (const id of ["slide.layout", "slide.section", "edit.select", "design.colors", "design.fonts", "design.effects"]) impl(id, () => {}, () => !!this.slidePath());
     // Folienmaster > Masterlayout: Titel and Fußzeilen on the layout; Master bearbeiten > Beibehalten.
     const layoutPath = () => (this.masterMode && this.masterKind === "slides" && this.masterIndex > 0 ? this.masterList()[this.masterIndex] : undefined);
     const hasPh = (types: string[]) => { const p = layoutPath(); return !!p && Array.from(this.deck.pptx.doc(p).getElementsByTagNameNS(PptxDom.NS_P, "ph")).some((x) => types.includes(x.getAttribute("type") ?? "")); };
@@ -3147,6 +3192,7 @@ export class PresentApp implements EditorHost, PanelHost {
         colors: () => [...COLOR_SETS.map((c) => ({ label: c.name, run: () => this.applyColorSet(c.name, c.colors) })), "-", { label: "Farben anpassen...", run: () => void this.customColorsDialog() },
           { label: "Farben des Foliendesigns zurücksetzen", disabled: !this.ownDesign(), run: () => { const d = this.ownDesign(); if (d) this.applyColorSet(d.colorName ?? d.name, d.colors as Record<string, string>); } }],
         fonts: () => [...FONT_SETS.map((f) => ({ label: f.label, run: () => this.applyFontSet(f.name, f.major, f.minor) })), "-", { label: "Schriftarten anpassen...", run: () => void this.customFontsDialog() }],
+        themeEffects: () => THEME_EFFECTS.map((e) => ({ label: e.name, checked: this.themeEffectName() === e.name, run: () => this.applyThemeEffects(e.name, e.xml) })),
         underline: [], outlineWeight: [], outlineDash: [], effects: this.effectsMenu(), quickStyles: () => [], zoomFit: [],
         equations: () => BUILT_IN.map((e) => ({ label: e.name, run: () => void insertEquation(this, e.seq) })),
         sounds: () => this.transMod?.soundMenu(this) ?? [],

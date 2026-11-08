@@ -1,0 +1,683 @@
+{
+ "date": "2026-11-08",
+ "slides": [
+  {
+   "slide": 1,
+   "kind": "colors",
+   "name": "Dunkle 1-Kontur",
+   "powerpoint_drawing": {
+    "mean": 0.79,
+    "differ": 0.71
+   },
+   "our_drawing": {
+    "mean": 0.8,
+    "differ": 0.71
+   }
+  },
+  {
+   "slide": 2,
+   "kind": "colors",
+   "name": "Dunkel 2-Kontur",
+   "powerpoint_drawing": {
+    "mean": 0.7,
+    "differ": 0.71
+   },
+   "our_drawing": {
+    "mean": 0.7,
+    "differ": 0.71
+   }
+  },
+  {
+   "slide": 3,
+   "kind": "colors",
+   "name": "Dunkel 2-Füllung",
+   "powerpoint_drawing": {
+    "mean": 0.34,
+    "differ": 0.31
+   },
+   "our_drawing": {
+    "mean": 0.34,
+    "differ": 0.26
+   }
+  },
+  {
+   "slide": 4,
+   "kind": "colors",
+   "name": "Farbig - Akzentfarben",
+   "powerpoint_drawing": {
+    "mean": 0.22,
+    "differ": 0.26
+   },
+   "our_drawing": {
+    "mean": 0.22,
+    "differ": 0.26
+   }
+  },
+  {
+   "slide": 5,
+   "kind": "colors",
+   "name": "Farbiger Bereich - Akzentfarben 2 bis 3",
+   "powerpoint_drawing": {
+    "mean": 0.19,
+    "differ": 0.2
+   },
+   "our_drawing": {
+    "mean": 0.19,
+    "differ": 0.2
+   }
+  },
+  {
+   "slide": 6,
+   "kind": "colors",
+   "name": "Farbiger Bereich - Akzentfarben 3 bis 4",
+   "powerpoint_drawing": {
+    "mean": 0.23,
+    "differ": 0.26
+   },
+   "our_drawing": {
+    "mean": 0.23,
+    "differ": 0.26
+   }
+  },
+  {
+   "slide": 7,
+   "kind": "colors",
+   "name": "Farbiger Bereich - Akzentfarben 4 bis 5",
+   "powerpoint_drawing": {
+    "mean": 0.26,
+    "differ": 0.28
+   },
+   "our_drawing": {
+    "mean": 0.26,
+    "differ": 0.28
+   }
+  },
+  {
+   "slide": 8,
+   "kind": "colors",
+   "name": "Farbiger Bereich - Akzentfarben 5 bis 6",
+   "powerpoint_drawing": {
+    "mean": 0.24,
+    "differ": 0.26
+   },
+   "our_drawing": {
+    "mean": 0.23,
+    "differ": 0.26
+   }
+  },
+  {
+   "slide": 9,
+   "kind": "colors",
+   "name": "Farbige Kontur - Akzent 1",
+   "powerpoint_drawing": {
+    "mean": 0.58,
+    "differ": 0.52
+   },
+   "our_drawing": {
+    "mean": 0.58,
+    "differ": 0.52
+   }
+  },
+  {
+   "slide": 10,
+   "kind": "colors",
+   "name": "Farbige Füllung - Akzent 1",
+   "powerpoint_drawing": {
+    "mean": 0.27,
+    "differ": 0.26
+   },
+   "our_drawing": {
+    "mean": 0.27,
+    "differ": 0.26
+   }
+  },
+  {
+   "slide": 11,
+   "kind": "colors",
+   "name": "Farbverlaufbereich - Akzent 1",
+   "powerpoint_drawing": {
+    "mean": 0.21,
+    "differ": 0.2
+   },
+   "our_drawing": {
+    "mean": 0.21,
+    "differ": 0.2
+   }
+  },
+  {
+   "slide": 12,
+   "kind": "colors",
+   "name": "Farbverlaufschleife - Akzent 1",
+   "powerpoint_drawing": {
+    "mean": 0.21,
+    "differ": 0.18
+   },
+   "our_drawing": {
+    "mean": 0.3,
+    "differ": 0.18
+   }
+  },
+  {
+   "slide": 13,
+   "kind": "colors",
+   "name": "Transparenter Farbverlaufbereich - Akzent 1",
+   "powerpoint_drawing": {
+    "mean": 0.19,
+    "differ": 0.2
+   },
+   "our_drawing": {
+    "mean": 0.19,
+    "differ": 0.2
+   }
+  },
+  {
+   "slide": 14,
+   "kind": "colors",
+   "name": "Farbige Kontur - Akzent 2",
+   "powerpoint_drawing": {
+    "mean": 0.4,
+    "differ": 0.52
+   },
+   "our_drawing": {
+    "mean": 0.4,
+    "differ": 0.52
+   }
+  },
+  {
+   "slide": 15,
+   "kind": "colors",
+   "name": "Farbige Füllung - Akzent 2",
+   "powerpoint_drawing": {
+    "mean": 0.18,
+    "differ": 0.26
+   },
+   "our_drawing": {
+    "mean": 0.17,
+    "differ": 0.26
+   }
+  },
+  {
+   "slide": 16,
+   "kind": "colors",
+   "name": "Farbverlaufbereich - Akzent 2",
+   "powerpoint_drawing": {
+    "mean": 0.15,
+    "differ": 0.12
+   },
+   "our_drawing": {
+    "mean": 0.19,
+    "differ": 0.12
+   }
+  },
+  {
+   "slide": 17,
+   "kind": "colors",
+   "name": "Farbverlaufschleife - Akzent 2",
+   "powerpoint_drawing": {
+    "mean": 0.15,
+    "differ": 0.18
+   },
+   "our_drawing": {
+    "mean": 0.15,
+    "differ": 0.18
+   }
+  },
+  {
+   "slide": 18,
+   "kind": "colors",
+   "name": "Transparenter Farbverlaufbereich - Akzent 2",
+   "powerpoint_drawing": {
+    "mean": 0.12,
+    "differ": 0.06
+   },
+   "our_drawing": {
+    "mean": 0.12,
+    "differ": 0.06
+   }
+  },
+  {
+   "slide": 19,
+   "kind": "colors",
+   "name": "Farbige Kontur - Akzent 3",
+   "powerpoint_drawing": {
+    "mean": 0.59,
+    "differ": 0.57
+   },
+   "our_drawing": {
+    "mean": 0.59,
+    "differ": 0.57
+   }
+  },
+  {
+   "slide": 20,
+   "kind": "colors",
+   "name": "Farbige Füllung - Akzent 3",
+   "powerpoint_drawing": {
+    "mean": 0.28,
+    "differ": 0.26
+   },
+   "our_drawing": {
+    "mean": 0.28,
+    "differ": 0.26
+   }
+  },
+  {
+   "slide": 21,
+   "kind": "colors",
+   "name": "Farbverlaufbereich - Akzent 3",
+   "powerpoint_drawing": {
+    "mean": 0.21,
+    "differ": 0.2
+   },
+   "our_drawing": {
+    "mean": 0.3,
+    "differ": 0.2
+   }
+  },
+  {
+   "slide": 22,
+   "kind": "colors",
+   "name": "Farbverlaufschleife - Akzent 3",
+   "powerpoint_drawing": {
+    "mean": 0.21,
+    "differ": 0.18
+   },
+   "our_drawing": {
+    "mean": 0.21,
+    "differ": 0.18
+   }
+  },
+  {
+   "slide": 23,
+   "kind": "colors",
+   "name": "Transparenter Farbverlaufbereich - Akzent 3",
+   "powerpoint_drawing": {
+    "mean": 0.19,
+    "differ": 0.2
+   },
+   "our_drawing": {
+    "mean": 0.19,
+    "differ": 0.2
+   }
+  },
+  {
+   "slide": 24,
+   "kind": "colors",
+   "name": "Farbige Kontur - Akzent 4",
+   "powerpoint_drawing": {
+    "mean": 0.45,
+    "differ": 0.52
+   },
+   "our_drawing": {
+    "mean": 0.46,
+    "differ": 0.52
+   }
+  },
+  {
+   "slide": 25,
+   "kind": "colors",
+   "name": "Farbige Füllung - Akzent 4",
+   "powerpoint_drawing": {
+    "mean": 0.2,
+    "differ": 0.26
+   },
+   "our_drawing": {
+    "mean": 0.2,
+    "differ": 0.26
+   }
+  },
+  {
+   "slide": 26,
+   "kind": "colors",
+   "name": "Farbverlaufbereich - Akzent 4",
+   "powerpoint_drawing": {
+    "mean": 0.17,
+    "differ": 0.16
+   },
+   "our_drawing": {
+    "mean": 0.21,
+    "differ": 0.16
+   }
+  },
+  {
+   "slide": 27,
+   "kind": "colors",
+   "name": "Farbverlaufschleife - Akzent 4",
+   "powerpoint_drawing": {
+    "mean": 0.17,
+    "differ": 0.18
+   },
+   "our_drawing": {
+    "mean": 0.17,
+    "differ": 0.18
+   }
+  },
+  {
+   "slide": 28,
+   "kind": "colors",
+   "name": "Transparenter Farbverlaufbereich - Akzent 4",
+   "powerpoint_drawing": {
+    "mean": 0.14,
+    "differ": 0.12
+   },
+   "our_drawing": {
+    "mean": 0.14,
+    "differ": 0.12
+   }
+  },
+  {
+   "slide": 29,
+   "kind": "colors",
+   "name": "Farbige Kontur - Akzent 5",
+   "powerpoint_drawing": {
+    "mean": 0.54,
+    "differ": 0.52
+   },
+   "our_drawing": {
+    "mean": 0.55,
+    "differ": 0.52
+   }
+  },
+  {
+   "slide": 30,
+   "kind": "colors",
+   "name": "Farbige Füllung - Akzent 5",
+   "powerpoint_drawing": {
+    "mean": 0.25,
+    "differ": 0.26
+   },
+   "our_drawing": {
+    "mean": 0.25,
+    "differ": 0.26
+   }
+  },
+  {
+   "slide": 31,
+   "kind": "colors",
+   "name": "Farbverlaufbereich - Akzent 5",
+   "powerpoint_drawing": {
+    "mean": 0.2,
+    "differ": 0.2
+   },
+   "our_drawing": {
+    "mean": 0.2,
+    "differ": 0.2
+   }
+  },
+  {
+   "slide": 32,
+   "kind": "colors",
+   "name": "Farbverlaufschleife - Akzent 5",
+   "powerpoint_drawing": {
+    "mean": 0.2,
+    "differ": 0.18
+   },
+   "our_drawing": {
+    "mean": 0.29,
+    "differ": 0.18
+   }
+  },
+  {
+   "slide": 33,
+   "kind": "colors",
+   "name": "Transparenter Farbverlaufbereich - Akzent 5",
+   "powerpoint_drawing": {
+    "mean": 0.18,
+    "differ": 0.2
+   },
+   "our_drawing": {
+    "mean": 0.18,
+    "differ": 0.2
+   }
+  },
+  {
+   "slide": 34,
+   "kind": "colors",
+   "name": "Farbige Kontur - Akzent 6",
+   "powerpoint_drawing": {
+    "mean": 0.44,
+    "differ": 0.52
+   },
+   "our_drawing": {
+    "mean": 0.44,
+    "differ": 0.52
+   }
+  },
+  {
+   "slide": 35,
+   "kind": "colors",
+   "name": "Farbige Füllung - Akzent 6",
+   "powerpoint_drawing": {
+    "mean": 0.2,
+    "differ": 0.26
+   },
+   "our_drawing": {
+    "mean": 0.19,
+    "differ": 0.26
+   }
+  },
+  {
+   "slide": 36,
+   "kind": "colors",
+   "name": "Farbverlaufbereich - Akzent 6",
+   "powerpoint_drawing": {
+    "mean": 0.16,
+    "differ": 0.16
+   },
+   "our_drawing": {
+    "mean": 0.2,
+    "differ": 0.16
+   }
+  },
+  {
+   "slide": 37,
+   "kind": "colors",
+   "name": "Farbverlaufschleife - Akzent 6",
+   "powerpoint_drawing": {
+    "mean": 0.16,
+    "differ": 0.18
+   },
+   "our_drawing": {
+    "mean": 0.25,
+    "differ": 0.18
+   }
+  },
+  {
+   "slide": 38,
+   "kind": "colors",
+   "name": "Transparenter Farbverlaufbereich - Akzent 6",
+   "powerpoint_drawing": {
+    "mean": 0.14,
+    "differ": 0.12
+   },
+   "our_drawing": {
+    "mean": 0.14,
+    "differ": 0.12
+   }
+  },
+  {
+   "slide": 39,
+   "kind": "styles",
+   "name": "Einfache Füllung",
+   "powerpoint_drawing": {
+    "mean": 0.27,
+    "differ": 0.26
+   },
+   "our_drawing": {
+    "mean": 0.27,
+    "differ": 0.26
+   }
+  },
+  {
+   "slide": 40,
+   "kind": "styles",
+   "name": "Weiße Kontur",
+   "powerpoint_drawing": {
+    "mean": 0.23,
+    "differ": 0.0
+   },
+   "our_drawing": {
+    "mean": 0.23,
+    "differ": 0.08
+   }
+  },
+  {
+   "slide": 41,
+   "kind": "styles",
+   "name": "Subtiler Effekt",
+   "powerpoint_drawing": {
+    "mean": 12.72,
+    "differ": 23.05
+   },
+   "our_drawing": {
+    "mean": 12.71,
+    "differ": 23.05
+   }
+  },
+  {
+   "slide": 42,
+   "kind": "styles",
+   "name": "Moderater Effekt",
+   "powerpoint_drawing": {
+    "mean": 0.29,
+    "differ": 0.0
+   },
+   "our_drawing": {
+    "mean": 0.29,
+    "differ": 0.08
+   }
+  },
+  {
+   "slide": 43,
+   "kind": "styles",
+   "name": "Intensiver Effekt",
+   "powerpoint_drawing": {
+    "mean": 0.49,
+    "differ": 0.0
+   },
+   "our_drawing": {
+    "mean": 0.49,
+    "differ": 0.0
+   }
+  },
+  {
+   "slide": 44,
+   "kind": "styles",
+   "name": "Poliert",
+   "powerpoint_drawing": {
+    "mean": 11.62,
+    "differ": 18.46
+   },
+   "our_drawing": {
+    "mean": 11.61,
+    "differ": 18.54
+   }
+  },
+  {
+   "slide": 45,
+   "kind": "styles",
+   "name": "Abgesenkt",
+   "powerpoint_drawing": {
+    "mean": 10.88,
+    "differ": 8.19
+   },
+   "our_drawing": {
+    "mean": 10.87,
+    "differ": 8.19
+   }
+  },
+  {
+   "slide": 46,
+   "kind": "styles",
+   "name": "Cartoon",
+   "powerpoint_drawing": {
+    "mean": 13.32,
+    "differ": 20.57
+   },
+   "our_drawing": {
+    "mean": 13.32,
+    "differ": 20.57
+   }
+  },
+  {
+   "slide": 47,
+   "kind": "styles",
+   "name": "Pulver",
+   "powerpoint_drawing": {
+    "mean": 4.22,
+    "differ": 1.65
+   },
+   "our_drawing": {
+    "mean": 4.22,
+    "differ": 1.55
+   }
+  },
+  {
+   "slide": 48,
+   "kind": "styles",
+   "name": "Backsteinszene",
+   "powerpoint_drawing": {
+    "mean": 18.49,
+    "differ": 10.62
+   },
+   "our_drawing": {
+    "mean": 19.64,
+    "differ": 11.36
+   }
+  },
+  {
+   "slide": 49,
+   "kind": "styles",
+   "name": "Flache Szene",
+   "powerpoint_drawing": {
+    "mean": 19.48,
+    "differ": 18.61
+   },
+   "our_drawing": {
+    "mean": 19.62,
+    "differ": 18.57
+   }
+  },
+  {
+   "slide": 50,
+   "kind": "styles",
+   "name": "Metallische Szene",
+   "powerpoint_drawing": {
+    "mean": 13.96,
+    "differ": 8.38
+   },
+   "our_drawing": {
+    "mean": 13.82,
+    "differ": 8.47
+   }
+  },
+  {
+   "slide": 51,
+   "kind": "styles",
+   "name": "Sonnenuntergangszene",
+   "powerpoint_drawing": {
+    "mean": 22.75,
+    "differ": 22.49
+   },
+   "our_drawing": {
+    "mean": 23.52,
+    "differ": 21.06
+   }
+  },
+  {
+   "slide": 52,
+   "kind": "styles",
+   "name": "Vogelperspektiveszene",
+   "powerpoint_drawing": {
+    "mean": 28.25,
+    "differ": 24.83
+   },
+   "our_drawing": {
+    "mean": 28.53,
+    "differ": 24.45
+   }
+  }
+ ],
+ "mean_powerpoint_drawing": 3.22,
+ "mean_our_drawing": 3.27
+}

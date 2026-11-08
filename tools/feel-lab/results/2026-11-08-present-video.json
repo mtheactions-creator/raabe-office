@@ -1,0 +1,448 @@
+{
+ "date": "2026-11-08",
+ "untimed": {
+  "powerpoint": {
+   "width": 852,
+   "height": 480,
+   "duration": 11.1213
+  },
+  "ours": {
+   "width": 852,
+   "height": 480,
+   "duration": 11
+  },
+  "compare": {
+   "matched": "9/9",
+   "states": [
+    {
+     "state": "RRRR",
+     "powerpoint": 0,
+     "ours": 0,
+     "diff": 0
+    },
+    {
+     "state": "GGGG",
+     "powerpoint": 2,
+     "ours": 2,
+     "diff": 0
+    },
+    {
+     "state": "GkGG",
+     "powerpoint": 2.7,
+     "ours": 2.7,
+     "diff": 0.0
+    },
+    {
+     "state": "GkwG",
+     "powerpoint": 3.367,
+     "ours": 3.333,
+     "diff": -0.034
+    },
+    {
+     "state": "kkkk",
+     "powerpoint": 4.433,
+     "ours": 4.467,
+     "diff": 0.034
+    },
+    {
+     "state": "BBBB",
+     "powerpoint": 4.933,
+     "ours": 4.8,
+     "diff": -0.133
+    },
+    {
+     "state": "BBBk",
+     "powerpoint": 6.267,
+     "ours": 6.3,
+     "diff": 0.033
+    },
+    {
+     "state": "YYYw",
+     "powerpoint": 7.1,
+     "ours": 7,
+     "diff": -0.1
+    },
+    {
+     "state": "MMMM",
+     "powerpoint": 9.1,
+     "ours": 9,
+     "diff": -0.1
+    }
+   ]
+  },
+  "powerpoint_rows": [
+   [
+    0,
+    "RRRR"
+   ],
+   [
+    2,
+    "GGGG"
+   ],
+   [
+    2.7,
+    "GkGG"
+   ],
+   [
+    3.367,
+    "GkwG"
+   ],
+   [
+    4.167,
+    "Gk?G"
+   ],
+   [
+    4.233,
+    "?k??"
+   ],
+   [
+    4.4,
+    "kk?k"
+   ],
+   [
+    4.433,
+    "kkkk"
+   ],
+   [
+    4.7,
+    "????"
+   ],
+   [
+    4.933,
+    "BBBB"
+   ],
+   [
+    5.933,
+    "BBB?"
+   ],
+   [
+    6.267,
+    "BBBk"
+   ],
+   [
+    7.1,
+    "YYYw"
+   ],
+   [
+    9.1,
+    "MMMM"
+   ]
+  ],
+  "our_rows": [
+   [
+    0,
+    "RRRR"
+   ],
+   [
+    2,
+    "GGGG"
+   ],
+   [
+    2.7,
+    "GkGG"
+   ],
+   [
+    3.333,
+    "GkwG"
+   ],
+   [
+    4.2,
+    "Gk?G"
+   ],
+   [
+    4.3,
+    "?k??"
+   ],
+   [
+    4.433,
+    "kk?k"
+   ],
+   [
+    4.467,
+    "kkkk"
+   ],
+   [
+    4.6,
+    "????"
+   ],
+   [
+    4.8,
+    "BBBB"
+   ],
+   [
+    6.067,
+    "BBB?"
+   ],
+   [
+    6.3,
+    "BBBk"
+   ],
+   [
+    7,
+    "YYYw"
+   ],
+   [
+    9,
+    "MMMM"
+   ]
+  ]
+ },
+ "timed": {
+  "powerpoint": {
+   "width": 852,
+   "height": 480,
+   "duration": 12.1113
+  },
+  "ours": {
+   "width": 852,
+   "height": 480,
+   "duration": 12
+  },
+  "compare": {
+   "matched": "9/9",
+   "states": [
+    {
+     "state": "RRRR",
+     "powerpoint": 0,
+     "ours": 0,
+     "diff": 0
+    },
+    {
+     "state": "GGGG",
+     "powerpoint": 2,
+     "ours": 2,
+     "diff": 0
+    },
+    {
+     "state": "GkGG",
+     "powerpoint": 2.7,
+     "ours": 2.7,
+     "diff": 0.0
+    },
+    {
+     "state": "GkwG",
+     "powerpoint": 3.367,
+     "ours": 3.333,
+     "diff": -0.034
+    },
+    {
+     "state": "kkkk",
+     "powerpoint": 4.433,
+     "ours": 4.467,
+     "diff": 0.034
+    },
+    {
+     "state": "BBBB",
+     "powerpoint": 4.933,
+     "ours": 4.8,
+     "diff": -0.133
+    },
+    {
+     "state": "BBBk",
+     "powerpoint": 6.267,
+     "ours": 6.3,
+     "diff": 0.033
+    },
+    {
+     "state": "YYYw",
+     "powerpoint": 7.1,
+     "ours": 7,
+     "diff": -0.1
+    },
+    {
+     "state": "MMMM",
+     "powerpoint": 9.1,
+     "ours": 9,
+     "diff": -0.1
+    }
+   ]
+  },
+  "powerpoint_rows": [
+   [
+    0,
+    "RRRR"
+   ],
+   [
+    2,
+    "GGGG"
+   ],
+   [
+    2.7,
+    "GkGG"
+   ],
+   [
+    3.367,
+    "GkwG"
+   ],
+   [
+    4.167,
+    "Gk?G"
+   ],
+   [
+    4.233,
+    "?k??"
+   ],
+   [
+    4.4,
+    "kk?k"
+   ],
+   [
+    4.433,
+    "kkkk"
+   ],
+   [
+    4.7,
+    "????"
+   ],
+   [
+    4.933,
+    "BBBB"
+   ],
+   [
+    5.933,
+    "BBB?"
+   ],
+   [
+    6.267,
+    "BBBk"
+   ],
+   [
+    7.1,
+    "YYYw"
+   ],
+   [
+    9.1,
+    "MMMM"
+   ]
+  ],
+  "our_rows": [
+   [
+    0,
+    "RRRR"
+   ],
+   [
+    2,
+    "GGGG"
+   ],
+   [
+    2.7,
+    "GkGG"
+   ],
+   [
+    3.333,
+    "GkwG"
+   ],
+   [
+    4.2,
+    "Gk?G"
+   ],
+   [
+    4.3,
+    "?k??"
+   ],
+   [
+    4.433,
+    "kk?k"
+   ],
+   [
+    4.467,
+    "kkkk"
+   ],
+   [
+    4.6,
+    "????"
+   ],
+   [
+    4.8,
+    "BBBB"
+   ],
+   [
+    6.067,
+    "BBB?"
+   ],
+   [
+    6.3,
+    "BBBk"
+   ],
+   [
+    7,
+    "YYYw"
+   ],
+   [
+    9,
+    "MMMM"
+   ]
+  ]
+ },
+ "gif": {
+  "size": [
+   853,
+   480
+  ],
+  "frames": 15,
+  "loop": 0,
+  "total_ms": 8610,
+  "bytes": 12931
+ },
+ "gif_vs_powerpoint": {
+  "powerpoint_size": [
+   853,
+   480
+  ],
+  "powerpoint_total_ms": 8580,
+  "our_total_ms": 8610,
+  "compare": {
+   "matched": "8/8",
+   "states": [
+    {
+     "state": "RRRR",
+     "powerpoint": 0.0,
+     "ours": 0.0,
+     "diff": 0.0
+    },
+    {
+     "state": "GGGG",
+     "powerpoint": 1.07,
+     "ours": 1.06,
+     "diff": -0.01
+    },
+    {
+     "state": "GkGG",
+     "powerpoint": 1.53,
+     "ours": 1.5,
+     "diff": -0.03
+    },
+    {
+     "state": "GkwG",
+     "powerpoint": 1.86,
+     "ours": 1.88,
+     "diff": 0.02
+    },
+    {
+     "state": "BBBB",
+     "powerpoint": 2.8,
+     "ours": 2.76,
+     "diff": -0.04
+    },
+    {
+     "state": "BBBk",
+     "powerpoint": 3.99,
+     "ours": 4.18,
+     "diff": 0.19
+    },
+    {
+     "state": "YYYw",
+     "powerpoint": 4.31,
+     "ours": 4.36,
+     "diff": 0.05
+    },
+    {
+     "state": "MMMM",
+     "powerpoint": 5.44,
+     "ours": 5.48,
+     "diff": 0.04
+    }
+   ]
+  }
+ }
+}

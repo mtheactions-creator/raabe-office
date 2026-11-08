@@ -2,6 +2,7 @@
 // (whole table, banded rows and columns, first and last row and column) in PowerPoint's order of
 // precedence, then each cell's own fill and borders. Rows grow to fit their text as PowerPoint's do.
 
+import { CELL_BEVEL_PROFILES } from "./cellbevel.gen";
 import { PptxDom, colorList, readBodyProps, readColor, readEffects, readText, readThemeInfo, SlideResolver, type ShapeView } from "@raabe/ooxml";
 import { EMU_PX, renderText } from "./text";
 import type { RenderOptions } from "./slide";
@@ -122,15 +123,21 @@ export function renderTable(s: ShapeView, o: RenderOptions): HTMLElement {
       const bd = (k: string) => { const b = look.borders[k]; return b ? `${Math.max(b.width, 0.5)}px solid #${b.color}` : "none"; };
       const mar = (n: string, d: number) => (num(tcPr, n) ?? d) / EMU_PX;
       td.style.cssText = `padding:0;vertical-align:top;position:relative;background:${look.fill ? `#${look.fill}` : "transparent"};border-left:${bd("left")};border-right:${bd("right")};border-top:${bd("top")};border-bottom:${bd("bottom")}`;
-      // Zellenabschrägung (a:cell3D/a:bevel): the cell's edges lit from the top left and shaded at the bottom right
-      // over the bevel's width, our drawing of PowerPoint's (D-076).
+      // Zellenabschrägung (a:cell3D/a:bevel) as PowerPoint draws it (measured, D-103): the face lit 0.845 as bright,
+      // and across each edge over the bevel's width the brightness PowerPoint gives that bevel (cellbevel.gen.ts).
       const bev = kid(kid(tcPr, "cell3D"), "bevel");
+      const bevelEdges: HTMLElement[] = [];
       if (bev) {
         const bw = Math.max(1, (num(bev, "w") ?? 76200) / EMU_PX);
-        const prst = bev.getAttribute("prst") ?? "circle";
-        const inset = prst === "relaxedInset" || prst === "divot" || prst === "cross";
-        const light = inset ? "rgba(0,0,0,.28)" : "rgba(255,255,255,.55)", dark = inset ? "rgba(255,255,255,.45)" : "rgba(0,0,0,.30)";
-        td.style.boxShadow = `inset ${bw}px ${bw}px ${bw}px -${bw / 2}px ${light}, inset -${bw}px -${bw}px ${bw}px -${bw / 2}px ${dark}`;
+        const prof = CELL_BEVEL_PROFILES[bev.getAttribute("prst") ?? "circle"] ?? CELL_BEVEL_PROFILES.circle;
+        if (look.fill) td.style.background = `#${look.fill.match(/../g)!.map((h) => Math.round(parseInt(h, 16) * 0.845).toString(16).padStart(2, "0")).join("")}`;
+        const stops = (a: number[]) => a.map((v, i) => `${v >= 0 ? `rgba(255,255,255,${v})` : `rgba(0,0,0,${-v})`} ${((i + 0.5) / a.length) * 100}%`).join(",");
+        for (const [side, dir, box] of [["left", "to right", `left:0;top:0;bottom:0;width:${bw}px`], ["right", "to left", `right:0;top:0;bottom:0;width:${bw}px`],
+          ["top", "to bottom", `left:0;right:0;top:0;height:${bw}px`], ["bottom", "to top", `left:0;right:0;bottom:0;height:${bw}px`]] as const) {
+          const e = document.createElement("div");
+          e.style.cssText = `position:absolute;${box};pointer-events:none;background:linear-gradient(${dir},${stops(prof[side])})`;
+          bevelEdges.push(e);
+        }
       }
       const anchor = tcPr?.getAttribute("anchor");
       const body = readBodyProps([kid(kid(tc, "txBody"), "bodyPr")]);
@@ -150,7 +157,7 @@ export function renderTable(s: ShapeView, o: RenderOptions): HTMLElement {
       tEl.style.position = "relative";
       tEl.style.height = "auto";
       inner.append(tEl);
-      td.append(inner);
+      td.append(...bevelEdges, inner);
       row.append(td);
     });
     table.append(row);

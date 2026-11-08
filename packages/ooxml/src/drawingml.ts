@@ -91,7 +91,17 @@ export function readColor(parent: Element | undefined, theme: Record<string, str
   for (const m of kids(c)) {
     const val = Number(m.getAttribute("val") ?? 0) / 100000;
     if (m.localName === "alpha") alpha = val;
-    else if (m.localName === "lumMod" || m.localName === "lumOff" || m.localName === "satMod") {
+    // Offsets and factors PowerPoint writes for SmartArt colours spread over the nodes (D-101): alpha in shares,
+    // hue in 60000ths of a degree, saturation in shares.
+    else if (m.localName === "alphaOff") alpha = Math.max(0, Math.min(1, alpha + val));
+    else if (m.localName === "alphaMod") alpha = Math.max(0, Math.min(1, alpha * val));
+    else if (m.localName === "hueOff" || m.localName === "hueMod" || m.localName === "satOff") {
+      const [h, s, l] = rgbToHsl(r, g, b);
+      const raw = Number(m.getAttribute("val") ?? 0);
+      const nh = m.localName === "hueOff" ? h + raw / 60000 / 360 : m.localName === "hueMod" ? h * val : h;
+      const ns = m.localName === "satOff" ? Math.max(0, Math.min(1, s + val)) : s;
+      [r, g, b] = hslToRgb(((nh % 1) + 1) % 1, ns, l);
+    } else if (m.localName === "lumMod" || m.localName === "lumOff" || m.localName === "satMod") {
       const [h, s, l] = rgbToHsl(r, g, b);
       const next = m.localName === "lumMod" ? [h, s, l * val] : m.localName === "lumOff" ? [h, s, l + val] : [h, Math.min(1, s * val), l];
       [r, g, b] = hslToRgb(next[0], next[1], Math.max(0, Math.min(1, next[2])));

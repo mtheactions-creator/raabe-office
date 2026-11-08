@@ -6,14 +6,14 @@
 
 import { h, showDialog } from "@raabe/shell";
 import { PptxDom } from "@raabe/ooxml";
-import { NOT_A_METHOD, VbaError, VbaRuntime, readProject, visibleCode, vbaToNumber, vbaToString, writeProject, type VbaHost, type VbaModule, type VbaObject, type VbaValue } from "@raabe/vba";
+import { NOT_A_METHOD, VbaError, VbaRuntime, readProject, visibleCode, vbaToNumber, vbaToString, writeProject, type VbaForm, type VbaHost, type VbaModule, type VbaObject, type VbaValue } from "@raabe/vba";
 import type { PresentApp } from "./app";
 import * as S from "./shapeops";
 
 const RT_VBA = "http://schemas.microsoft.com/office/2006/relationships/vbaProject";
 const CT_VBA = "application/vnd.ms-office.vbaProject";
 const EMU = 12700;
-const { kid } = PptxDom;
+const { kid, kids } = PptxDom;
 
 /** Presentations whose macros were switched on (Inhalt aktivieren), by their deck. */
 const enabled = new WeakSet<object>();
@@ -65,6 +65,18 @@ const hexOf = (rgb: VbaValue) => { const n = vbaToNumber(rgb); return [n & 255, 
 /** msoAutoShapeType to preset geometry (the common ones). */
 const SHAPES: Record<number, string> = { 1: "rect", 5: "roundRect", 9: "ellipse", 7: "triangle", 4: "diamond", 33: "rightArrow", 34: "leftArrow", 35: "upArrow", 36: "downArrow", 12: "star5", 17: "smileyFace", 21: "heart", 51: "cloud", 92: "star5", 8: "rtTriangle", 10: "hexagon", 52: "flowChartProcess" };
 
+/**
+ * Shapes PowerPoint named itself carry German names in a German file ("Titel 1") but VBA sees them in English
+ * ("Title 1"), and either name finds them (measured, macro test FormNamen, D-105).
+ */
+const DEFAULT_NAMES: [string, string][] = [["Titel", "Title"], ["Untertitel", "Subtitle"], ["Inhaltsplatzhalter", "Content Placeholder"], ["Textplatzhalter", "Text Placeholder"],
+  ["Bildplatzhalter", "Picture Placeholder"], ["Datumsplatzhalter", "Date Placeholder"], ["Fußzeilenplatzhalter", "Footer Placeholder"], ["Foliennummernplatzhalter", "Slide Number Placeholder"],
+  ["Grafik", "Picture"], ["Textfeld", "TextBox"], ["Rechteck", "Rectangle"], ["Ellipse", "Oval"], ["Tabelle", "Table"], ["Diagramm", "Chart"], ["Gruppieren", "Group"]];
+export function vbaShapeName(name: string): string {
+  for (const [de, en] of DEFAULT_NAMES) if (new RegExp(`^${de} \\d+$`).test(name)) return en + name.slice(de.length);
+  return name;
+}
+
 /** The object model over the presentation; `show` is the running show's view (SlideShowWindow.View), if any. */
 function model(app: PresentApp, show: ShowControl | null): VbaHost["global"] {
   const deck = () => app.deck;
@@ -73,7 +85,7 @@ function model(app: PresentApp, show: ShowControl | null): VbaHost["global"] {
     const doc = () => deck().pptx.doc(ref().path);
     const shapesColl = (): VbaObject => {
       const list = () => deck().view(ref().path).shapes;
-      const item = (k: VbaValue) => { const l = list(); const v = typeof k === "number" ? l[k - 1] : l.find((s) => s.name.toLowerCase() === vbaToString(k).toLowerCase()); if (!v) throw new VbaError("Das Element wurde nicht gefunden.", -2147188160); return shapeObj(i, v.id); };
+      const item = (k: VbaValue) => { const l = list(); const key = vbaToString(k).toLowerCase(); const v = typeof k === "number" ? l[k - 1] : l.find((s) => s.name.toLowerCase() === key || vbaShapeName(s.name).toLowerCase() === key); if (!v) throw new VbaError("Das Element wurde nicht gefunden.", -2147188160); return shapeObj(i, v.id); };
       const add = (prst: string, l: VbaValue, t: VbaValue, w: VbaValue, hh: VbaValue, text: boolean) => {
         const tree = S.treeOf(doc());
         const id = S.maxId(tree) + 1;
@@ -93,6 +105,14 @@ function model(app: PresentApp, show: ShowControl | null): VbaHost["global"] {
     return obj({
       Shapes: () => shapesColl(), SlideIndex: () => i + 1, SlideNumber: () => i + 1, SlideID: () => ref().id, Name: () => `Folie${i + 1}`,
       Layout: () => 1, Parent: () => presentation(),
+      // NotesPage: its body placeholder (Placeholders(2)) holds the slide's notes (D-105).
+      NotesPage: () => {
+        const notesShape = () => obj({ HasTextFrame: () => true, Name: () => "Notizenplatzhalter 2", Type: () => 14,
+          TextFrame: () => obj({ HasText: () => deck().notesText(ref().path).length > 0,
+            TextRange: () => obj({ Text: () => deck().notesText(ref().path).replace(/\n/g, "\r") }, { Text: (v) => deck().setNotes(ref().path, vbaToString(v).replace(/\r\n?/g, "\n")) }) }) });
+        const phs = obj({ Count: () => 2 }, {}, {}, { default: (a) => { if (vbaToNumber(a[0]) !== 2) throw new VbaError("Index außerhalb des gültigen Bereichs", 9); return notesShape(); } });
+        return obj({ Shapes: () => obj({ Placeholders: () => phs, Count: () => 2 }) }, {}, {}, { default: () => obj({ Shapes: () => obj({ Placeholders: () => phs }) }) });
+      },
     }, {}, {
       Delete: () => { deck().deleteSlides([i]); return undefined; },
       Duplicate: () => { deck().duplicateSlides([i]); return slideObj(i + 1); },
@@ -103,7 +123,27 @@ function model(app: PresentApp, show: ShowControl | null): VbaHost["global"] {
     const path = () => deck().slides[slide].path;
     const el = () => { const e = Array.from(deck().pptx.doc(path()).getElementsByTagNameNS(PptxDom.NS_P, "cNvPr")).find((c) => c.getAttribute("id") === String(id))?.parentElement?.parentElement; if (!e) throw new VbaError("Die Form gibt es nicht mehr.", -2147188160); return e; };
     const view = () => deck().view(path()).shapes.find((s) => s.id === id)!;
-    const xf = (k: "x" | "y" | "w" | "h", v: VbaValue) => { const s = view(); S.setXfrm(el(), { x: s.x, y: s.y, w: s.w, h: s.h, [k]: Math.round(vbaToNumber(v) * EMU) }); deck().invalidate(path()); };
+    // LockAspectRatio: a picture's is on unless its file says otherwise; ours for other shapes kept here (D-105).
+    const locksEl = () => { const nv = kids(el()).find((c) => c.localName.startsWith("nv")); const c = nv ? kids(nv).find((x) => x.localName.startsWith("cNv") && x.localName !== "cNvPr") : undefined; return c; };
+    const locked = () => { const c = locksEl(); const l = c ? kids(c).find((x) => x.localName.endsWith("Locks")) : undefined; return l ? l.getAttribute("noChangeAspect") === "1" : view().kind === "pic"; };
+    const setLocked = (on: boolean) => {
+      const c = locksEl();
+      if (!c) return;
+      let l = kids(c).find((x) => x.localName.endsWith("Locks"));
+      if (!l) { l = PptxDom.make(c.ownerDocument, view().kind === "pic" ? "a:picLocks" : "a:spLocks"); c.prepend(l); }
+      if (on) l.setAttribute("noChangeAspect", "1"); else l.removeAttribute("noChangeAspect");
+    };
+    const xf = (k: "x" | "y" | "w" | "h", v: VbaValue) => {
+      const s = view();
+      const box = { x: s.x, y: s.y, w: s.w, h: s.h, [k]: Math.round(vbaToNumber(v) * EMU) };
+      // With the proportions locked PowerPoint keeps them: the other side follows (measured in the macro tests).
+      if (locked() && s.w && s.h) { if (k === "w") box.h = Math.round((box.w * s.h) / s.w); if (k === "h") box.w = Math.round((box.h * s.w) / s.h); }
+      S.setXfrm(el(), box);
+      deck().invalidate(path());
+    };
+    /** msoShapeType as PowerPoint reports it. */
+    const shapeType = (): number => { const v = view(); if (v.ph) return 14; if (v.kind === "pic") return 13; if (v.kind === "grpSp") return 6; if (v.frame === "table") return 19; if (v.frame === "chart") return 3; if (v.frame === "diagram") return 24; if (v.kind === "cxnSp" || v.geometry === "line") return 9; return v.textBox ? 17 : 1; };
+    const PH_TYPES: Record<string, number> = { title: 1, body: 2, ctrTitle: 3, subTitle: 4, dt: 16, sldNum: 13, ftr: 15, obj: 7, chart: 8, tbl: 12, clipArt: 10, dgm: 11, media: 17, pic: 18 };
     const spPr = () => kid(el(), "spPr")!;
     const setFill = (hex: string | null) => { const sp = spPr(); for (const c of Array.from(sp.children)) if (["noFill", "solidFill", "gradFill", "blipFill", "pattFill"].includes(c.localName)) c.remove(); const f = PptxDom.fragment(sp.ownerDocument, hex ? `<a:solidFill xmlns:a="${PptxDom.NS_A}"><a:srgbClr val="${hex}"/></a:solidFill>` : `<a:noFill xmlns:a="${PptxDom.NS_A}"/>`)[0]; const after = Array.from(sp.children).find((c) => c.localName === "prstGeom" || c.localName === "custGeom"); sp.insertBefore(f, after ? after.nextSibling : null); deck().invalidate(path()); };
     const runs = () => Array.from(el().getElementsByTagNameNS(PptxDom.NS_A, "rPr"));
@@ -115,8 +155,10 @@ function model(app: PresentApp, show: ShowControl | null): VbaHost["global"] {
           Italic: (v) => { for (const r of runs()) r.setAttribute("i", vbaToNumber(v) ? "1" : "0"); deck().invalidate(path()); }, Name: (v) => { for (const r of runs()) { r.querySelector("latin")?.remove(); r.append(PptxDom.make(r.ownerDocument, "a:latin", { typeface: vbaToString(v) })); } deck().invalidate(path()); } }),
     }, { Text: (v) => { setShapeText(el(), vbaToString(v)); deck().invalidate(path()); } });
     return obj({
-      Name: () => view().name, Id: () => id, Left: () => view().x / EMU, Top: () => view().y / EMU, Width: () => view().w / EMU, Height: () => view().h / EMU, Rotation: () => view().rot,
-      Visible: () => !view().hidden, HasTextFrame: () => !!kid(el(), "txBody"),
+      Name: () => vbaShapeName(view().name), Id: () => id, Left: () => view().x / EMU, Top: () => view().y / EMU, Width: () => view().w / EMU, Height: () => view().h / EMU, Rotation: () => view().rot,
+      Visible: () => !view().hidden, HasTextFrame: () => !!kid(el(), "txBody") || (!!view().ph && view().kind === "sp"),
+      Type: () => shapeType(), LockAspectRatio: () => (locked() ? -1 : 0),
+      PlaceholderFormat: () => { const p = view().ph; if (!p) throw new VbaError("Diese Form ist kein Platzhalter.", -2147188160); return obj({ Type: () => PH_TYPES[p.type ?? "body"] ?? 2 }); },
       TextFrame: () => obj({ TextRange: () => textRange(), HasText: () => !!view().text && !view().text!.empty }),
       TextFrame2: () => obj({ TextRange: () => textRange() }),
       Fill: () => obj({ ForeColor: () => obj({ RGB: () => { const f = view().format.fill; return bgr(f && f.kind === "solid" ? f.color : "FFFFFF"); } }, { RGB: (v) => setFill(hexOf(v)) }), Visible: () => view().format.fill?.kind !== "none" }, { Visible: (v) => { if (!vbaToNumber(v)) setFill(null); } }),
@@ -124,6 +166,7 @@ function model(app: PresentApp, show: ShowControl | null): VbaHost["global"] {
     }, {
       Name: (v) => { el().getElementsByTagNameNS(PptxDom.NS_P, "cNvPr")[0]?.setAttribute("name", vbaToString(v)); deck().invalidate(path()); },
       Left: (v) => xf("x", v), Top: (v) => xf("y", v), Width: (v) => xf("w", v), Height: (v) => xf("h", v),
+      LockAspectRatio: (v) => { setLocked(vbaToNumber(v) !== 0); deck().invalidate(path()); },
       Rotation: (v) => { const x = kid(spPr(), "xfrm"); x?.setAttribute("rot", String(Math.round(vbaToNumber(v) * 60000))); deck().invalidate(path()); },
       Visible: (v) => { const c = el().getElementsByTagNameNS(PptxDom.NS_P, "cNvPr")[0]; if (vbaToNumber(v)) c?.removeAttribute("hidden"); else c?.setAttribute("hidden", "1"); deck().invalidate(path()); show?.refresh(); },
     }, {
@@ -183,16 +226,37 @@ export interface ShowControl { position(): number; next(): void; prev(): void; g
 /** Runs a macro by name: one undo step; errors reported as VBA reports them. */
 export async function runMacro(app: PresentApp, name: string, show: ShowControl | null = null): Promise<void> {
   if (!macrosEnabled(app)) { await securityNotice(app); if (!macrosEnabled(app)) return; }
-  const mods = modulesOf(app);
-  let rt: VbaRuntime;
-  try { rt = new VbaRuntime(host(app, show), mods.map((m) => m.code)); } catch (e) { await report(e, name); return; }
+  // The code as the editor shows it (no Attribute lines), so error lines and breakpoints match the editor's.
+  const mods = modulesOf(app).map((m) => ({ ...m, code: visibleCode(m.code) }));
+  let rt: VbaRuntime | null = null;
+  const forms = new Map<VbaForm, () => void>();
+  const { showVbaForm } = await import("./vbaide");
+  const hst: VbaHost = { ...host(app, show), showForm: (f, modal) => { forms.set(f, showVbaForm(() => rt, f, modal)); }, hideForm: (f) => { forms.get(f)?.(); forms.delete(f); } };
+  try { rt = new VbaRuntime(hst, mods); } catch (e) { await report(app, e, name); return; }
+  const run = rt;
   const paths = app.deck.slides.map((s) => s.path);
   let failure: unknown = null;
   // The whole run is one undo step (the macro's changes are made inside it).
-  await app.deck.changeAsync(`Makro ${name}`, paths, async () => { try { await rt.run(name); } catch (e) { failure = e; } });
+  await app.deck.changeAsync(`Makro ${name}`, paths, async () => { try { await run.run(name); } catch (e) { failure = e; } });
   app.renderAll();
   show?.refresh();
-  if (failure) await report(failure, name);
+  if (failure) await report(app, failure, name);
+}
+
+/** Runs a macro without dialogs (the harness, D-105): macros enabled, MsgBox answered OK, the error returned. */
+export async function runMacroQuiet(app: PresentApp, name: string, extra: Partial<VbaHost> = {}): Promise<{ error?: { number: number; message: string; line?: number } }> {
+  enabled.add(app.deck);
+  const h0 = host(app, null);
+  const hst: VbaHost = { ...h0, msgBox: async () => 1, inputBox: async (_p, _t, d) => d, ...extra };
+  let failure: unknown = null;
+  try {
+    const rt = new VbaRuntime(hst, modulesOf(app).map((m) => ({ ...m, code: visibleCode(m.code) })));
+    await app.deck.changeAsync(`Makro ${name}`, app.deck.slides.map((s) => s.path), async () => { try { await rt.run(name); } catch (e) { failure = e; } });
+  } catch (e) { failure = e; }
+  app.renderAll();
+  if (!failure) return {};
+  const err = failure instanceof VbaError ? failure : new VbaError(String((failure as Error)?.message ?? failure));
+  return { error: { number: err.number, message: err.message, line: err.line } };
 }
 
 function host(app: PresentApp, show: ShowControl | null): VbaHost {
@@ -204,6 +268,17 @@ function host(app: PresentApp, show: ShowControl | null): VbaHost {
       const opts: [string, number][] = kind === 1 ? [["OK", 1], ["Abbrechen", 2]] : kind === 4 ? [["Ja", 6], ["Nein", 7]] : kind === 3 ? [["Ja", 6], ["Nein", 7], ["Abbrechen", 2]] : kind === 5 ? [["Wiederholen", 4], ["Abbrechen", 2]] : [["OK", 1]];
       return showDialog({ title, body: h("div", { style: "white-space:pre-wrap;max-width:420px" }, prompt), buttons: opts.map(([label, value], i) => ({ label, value, primary: i === 0 })), cancel: opts[opts.length - 1][1] });
     },
+    // Files only after asking, every time (D-080, D-100): the macro names the file and what it wants to do.
+    fileAccess: async (kind, path, target) => {
+      const what: Record<string, string> = { open: "lesen", save: "schreiben", append: "ergänzen", export: "schreiben", delete: "löschen", copy: "kopieren", rename: "umbenennen", mkdir: "als Ordner anlegen", rmdir: "als Ordner löschen", list: "auflisten" };
+      return showDialog({ title: "Makro: Dateizugriff", body: h("div", { style: "max-width:460px" }, h("div", null, `Ein Makro dieser Präsentation möchte ${kind === "list" ? "den Ordner" : "die Datei"}`),
+        h("div", { style: "margin:6px 0;font-family:Consolas,monospace;word-break:break-all" }, path + (target ? ` \u2192 ${target}` : "")), h("div", null, `${what[kind] ?? "verwenden"}. Zulassen?`)),
+        buttons: [{ label: "Zulassen", value: true }, { label: "Nicht zulassen", value: false, primary: true }], cancel: false });
+    },
+    files: {
+      read: (p) => app.platform.readFile(p),
+      write: (p, d) => app.platform.writeFile(p, d),
+    },
     inputBox: async (prompt, title, def) => {
       const input = h("input", { type: "text", value: def, style: "width:320px" }) as HTMLInputElement;
       const ok = await showDialog({ title, body: h("div", { class: "form" }, h("div", null, prompt), input), buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
@@ -212,10 +287,13 @@ function host(app: PresentApp, show: ShowControl | null): VbaHost {
   };
 }
 
-async function report(e: unknown, name: string): Promise<void> {
+/** A runtime error as Office's VBA shows it: Laufzeitfehler 'n': and the message; Beenden or Debuggen (D-106). */
+async function report(app: PresentApp, e: unknown, name: string): Promise<void> {
   const err = e instanceof VbaError ? e : new VbaError(String((e as Error)?.message ?? e));
-  await showDialog({ title: "RaabePresent", body: h("div", { style: "max-width:440px" }, h("b", null, `Laufzeitfehler ${err.number}:`), h("div", null, err.message), err.line ? h("div", { class: "muted" }, `Makro ${name}, Zeile ${err.line}`) : ""),
-    buttons: [{ label: "OK", value: true, primary: true }], cancel: true });
+  const debug = await showDialog({ title: "RaabePresent - Makros", body: h("div", { style: "max-width:440px" }, h("div", null, `Laufzeitfehler '${err.number}':`), h("div", { style: "margin-top:10px" }, err.message),
+    err.line ? h("div", { class: "muted", style: "margin-top:10px" }, `${err.proc ?? name}${err.module ? ` (${err.module})` : ""}, Zeile ${err.line}`) : ""),
+    buttons: [{ label: "Beenden", value: false, primary: true }, { label: "Debuggen", value: true }], cancel: false });
+  if (debug) await editor(app, err.proc ?? name);
 }
 
 /** The message bar of a presentation with macros (SICHERHEITSWARNUNG, Inhalt aktivieren). */
@@ -248,7 +326,7 @@ export async function macroDialog(app: PresentApp): Promise<void> {
   if (v === "run" && name) await runMacro(app, name);
   if (v === "edit") await editor(app, name);
   if (v === "create" && name) {
-    if (!/^[A-Za-zÄÖÜäöüß]\w*$/.test(name)) { await report(new VbaError("Ungültiger Makroname", 5), name); return; }
+    if (!/^[A-Za-zÄÖÜäöüß]\w*$/.test(name)) { await report(app, new VbaError("Ungültiger Makroname", 5), name); return; }
     const all = mods.length ? mods : [{ name: "Modul1", kind: "standard" as const, code: "" }];
     const m = all.find((x) => x.kind === "standard") ?? all[0];
     m.code = `${visibleCode(m.code).trimEnd()}\r\n\r\nSub ${name}()\r\n\r\nEnd Sub\r\n`.replace(/^\r\n\r\n/, "");
@@ -262,26 +340,15 @@ export async function macroDialog(app: PresentApp): Promise<void> {
 }
 
 /** Our VBA editor: the modules with their code (Attribute lines hidden); Speichern writes the project. */
+/** Entwickler > Visual Basic (Alt+F11): the macro editor over the app (vbaide.ts, D-106). */
 export async function editor(app: PresentApp, focus?: string): Promise<void> {
-  const mods = modulesOf(app);
-  if (!mods.length) mods.push({ name: "Modul1", kind: "standard", code: "" });
-  let cur = 0;
-  const codes = mods.map((m) => visibleCode(m.code));
-  const pick = h("select", { "aria-label": "Modul" }, ...mods.map((m, i) => h("option", { value: String(i) }, m.name))) as HTMLSelectElement;
-  const area = h("textarea", { class: "vba-code", spellcheck: "false", rows: 22, "aria-label": "Code" }) as HTMLTextAreaElement;
-  area.value = codes[0];
-  pick.addEventListener("change", () => { codes[cur] = area.value; cur = Number(pick.value); area.value = codes[cur]; });
-  const add = h("button", { class: "btn", type: "button", onclick: () => { codes[cur] = area.value; mods.push({ name: `Modul${mods.length + 1}`, kind: "standard", code: "" }); codes.push(""); pick.append(h("option", { value: String(mods.length - 1) }, mods[mods.length - 1].name)); pick.value = String(mods.length - 1); cur = mods.length - 1; area.value = ""; } }, "Modul einfügen");
-  const check = h("div", { class: "muted vba-status" });
-  const test = h("button", { class: "btn", type: "button", onclick: () => { codes[cur] = area.value; try { new VbaRuntime(host(app, null), codes); check.textContent = "Keine Fehler gefunden."; } catch (e) { check.textContent = e instanceof Error ? e.message : String(e); } } }, "Kompilieren");
-  if (focus) { const i = codes.findIndex((c) => new RegExp(`Sub ${focus}\\b`, "i").test(c)); if (i >= 0) { cur = i; pick.value = String(i); area.value = codes[i]; } }
-  area.addEventListener("keydown", (e) => { if (e.key === "Tab") { e.preventDefault(); const s = area.selectionStart; area.value = area.value.slice(0, s) + "    " + area.value.slice(area.selectionEnd); area.selectionStart = area.selectionEnd = s + 4; } });
-  const ok = await showDialog({ title: `RaabePresent - Makros - [${mods[cur].name} (Code)]`, body: h("div", { class: "vba-editor" }, h("div", { class: "vba-tools" }, pick, add, test, check), area),
-    buttons: [{ label: "Speichern", value: true, primary: true }, { label: "Schließen", value: false }], cancel: false });
-  if (!ok) return;
-  codes[cur] = area.value;
-  mods.forEach((m, i) => { m.code = codes[i]; });
-  setModules(app, mods);
+  const { openIde } = await import("./vbaide");
+  await openIde({
+    title: app.docName(),
+    modules: () => modulesOf(app),
+    save: (mods) => setModules(app, mods),
+    vbaHost: (extra) => ({ ...host(app, null), ...extra }),
+  }, focus);
 }
 
 /** Bildschirmpräsentation: a shape's action ppaction://macro?name=… */

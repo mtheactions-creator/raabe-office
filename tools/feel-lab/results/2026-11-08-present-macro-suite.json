@@ -1,0 +1,58 @@
+{
+ "date": "2026-11-08",
+ "tests": {
+  "FormNamen": {
+   "result": "same",
+   "diff": [],
+   "asked": []
+  },
+  "SchriftErsetzen": {
+   "result": "same",
+   "diff": [],
+   "asked": []
+  },
+  "BilderGleichGross": {
+   "result": "same",
+   "diff": [],
+   "asked": []
+  },
+  "NotizenExportieren": {
+   "result": "same",
+   "diff": [],
+   "asked": [
+    "save %TEMP%\\raabe-macro-suite\\notizen.txt"
+   ]
+  },
+  "LeerePlatzhalterLoeschen": {
+   "result": "same",
+   "diff": [],
+   "asked": []
+  },
+  "Countdown": {
+   "result": "same",
+   "diff": [],
+   "asked": []
+  },
+  "Quiz": {
+   "result": "same",
+   "diff": [],
+   "asked": []
+  },
+  "NamenZiehen": {
+   "result": "same",
+   "diff": [],
+   "asked": []
+  },
+  "Fehler": {
+   "result": "same",
+   "diff": [],
+   "asked": []
+  },
+  "Funktionen": {
+   "result": "same",
+   "diff": [],
+   "asked": []
+  }
+ },
+ "summary": "10/10"
+}

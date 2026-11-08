@@ -1,6 +1,6 @@
 // SmartArt creation (D-077) and recording (D-078): the parts we write and the engine's arrangement.
 import { describe, expect, it } from "vitest";
-import { dataModelXml, drawingXml, COLOR_SETS, schemeOfColors } from "../src/smartart-parts";
+import { dataModelXml, drawingXml, colorDef, colorKey, schemeOfColors } from "../src/smartart-parts";
 import { layout, tree, fitSize } from "../src/smartart-engine";
 import { wav } from "../src/record";
 
@@ -33,8 +33,11 @@ describe("SmartArt data model", () => {
   });
 
   it("keeps the colour set by its PowerPoint id", () => {
-    expect(schemeOfColors(COLOR_SETS.colorful.id)).toBe("colorful");
-    expect(schemeOfColors(undefined)).toBe("accent1");
+    expect(schemeOfColors("urn:microsoft.com/office/officeart/2005/8/colors/colorful1")).toBe("colorful1");
+    expect(schemeOfColors(undefined)).toBe("accent1_2");
+    // Step 8b's keys still name their sets (D-101).
+    expect(colorKey("colorful")).toBe("colorful1");
+    expect(colorDef("accent2-outline").name).toBe("Farbige Kontur - Akzent 2");
   });
 });
 

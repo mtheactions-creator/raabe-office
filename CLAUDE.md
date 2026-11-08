@@ -162,6 +162,13 @@ Display: 4K at 150 % scaling, currently 30 Hz.
   through UI Automation (ValuePattern, Invoke) instead of typing, and takes screenshots only of a window it
   verified in front. Office's title bar shows the signed-in account's name: read labels only from the region of
   the control you probe, and scan results case-insensitively for names before committing.
+- In Python patch strings `\b`, `\n`, `\r` are escapes even inside a JavaScript regex you are writing: use raw
+  strings or `chr(92)`; `check-chars.py` finds the stray control characters (a `\b` becomes a backspace).
+- A dev server that has served changed files gives the app `module.ts?t=…`; a test's `import('/src/module.ts')`
+  is then a second instance with its own state (macros enabled, caches). Restart the dev server before such tests.
+- PowerPoint under COM: `ActivePresentation` needs a document window (open with a window, on the virtual display);
+  a VBA error box in an invisible PowerPoint waits for ever (check_present_macro_suite.py's Watchdog ends it);
+  VBA and COM report shapes PowerPoint named itself in English ("Title 1") although the file says "Titel 1".
 - pywin32 out parameters: `Window.GetPoint(0, 0, 0, 0, range)`. `Range.Text` of an equation
   gives math italic letters (𝑥, 𝜃); `winapi.press(combo, hold)` takes a hold time, not a count.
 

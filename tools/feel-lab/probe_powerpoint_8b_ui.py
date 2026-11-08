@@ -161,6 +161,28 @@ def effects(t: PowerPointTarget, out: dict, key: str = "effects") -> None:
             items.append(i)
     xr = next((i for i in items if i["name"].startswith("X-Drehung") and "value" in i), None)
     out[key] = {"heads": heads, "labels": items, "x_rotation_shown": xr.get("value") if xr else None, "com_rotation_x": float(sh.ThreeD.RotationX)}
+    if key == "spin":
+        # The buttons beside X-, Y- and Z-Drehung, invoked through UI Automation (no input): the rotation before
+        # and after, through COM, and what the pane's boxes show (D-103).
+        def shown(name: str):
+            e = uia.find(uia.element_for(t.hwnd), lambda x: x["name"] == name and x["type"] == "Edit" and in_pane(x), 30)
+            try:
+                return e.GetCurrentPattern(uia.U.UIA_ValuePatternId).QueryInterface(uia.U.IUIAutomationValuePattern).CurrentValue if e is not None else None
+            except Exception:  # noqa: BLE001
+                return None
+        rot = lambda: [float(sh.ThreeD.RotationX), float(sh.ThreeD.RotationY), float(sh.ThreeD.RotationZ)]
+        res = []
+        for nm, box in (("Links", "X-Drehung"), ("Rechts", "X-Drehung"), ("Nach oben", "Y-Drehung"), ("Nach unten", "Y-Drehung"),
+                        ("Uhrzeigersinn", "Z-Drehung"), ("Gegen Uhrzeigersinn", "Z-Drehung")):
+            b = uia.find(uia.element_for(t.hwnd), lambda x: x["name"] == nm and x["type"] == "Button" and in_pane(x), 30)
+            if b is None:
+                res.append({"button": nm, "error": "not found"})
+                continue
+            before, sb = rot(), shown(box)
+            uia.invoke(b)
+            time.sleep(0.8)
+            res.append({"button": nm, "box": box, "com_before": before, "com_after": rot(), "shown_before": sb, "shown_after": shown(box)})
+        out[key]["spin"] = res
     pres.Saved = -1
 
 
@@ -326,7 +348,7 @@ def main() -> None:
         OWN_PID = t.pid
         for p in parts:
             try:
-                {"effects": effects, "effects3d": lambda t, o: effects(t, o, "effects3d"), "export": export, "presenter": presenter}[p](t, out)
+                {"effects": effects, "effects3d": lambda t, o: effects(t, o, "effects3d"), "spin": lambda t, o: effects(t, o, "spin"), "export": export, "presenter": presenter}[p](t, out)
             except NotOurs as e:
                 out[f"{p}_error"] = str(e)[:300]
                 break

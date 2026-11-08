@@ -1,0 +1,10948 @@
+{
+ "date": "2026-11-08",
+ "cases": {
+  "click rect centre": {
+   "area": "click",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 3,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "click rect near left": {
+   "area": "click",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "click rect top edge": {
+   "area": "click",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "click rect then empty": {
+   "area": "click",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "click rect twice": {
+   "area": "click",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 3,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "dblclick rect": {
+   "area": "dblclick",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 4
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "rclick rect": {
+   "area": "rclick",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 3,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "click rect shift other": {
+   "area": "multi",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0,
+      1
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "click rect ctrl other": {
+   "area": "multi",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0,
+      1
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "click rect shift other twice": {
+   "area": "multi",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      1
+     ],
+     "start": 1,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "drag rect plain": {
+   "area": "drag",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 4
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "drag rect shift": {
+   "area": "drag",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 4
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "drag rect ctrl": {
+   "area": "drag",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 4
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "drag rect alt": {
+   "area": "drag",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 4
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "drag rect edge": {
+   "area": "drag",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       188.0,
+       200.0,
+       82.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "handle rect se plain": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       230.5,
+       139.5
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "handle rect se shift": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       232.5,
+       139.5
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "handle rect se ctrl": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       269.5,
+       130.5,
+       261.1,
+       159.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "handle rect e plain": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       230.5,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "handle rect e shift": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       230.5,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "handle rect e ctrl": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       269.5,
+       150.0,
+       261.1,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "handle rect s plain": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       139.5
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "handle rect s shift": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       139.5
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "handle rect s ctrl": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       130.5,
+       200.0,
+       159.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "handle rect nw plain": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       330.4,
+       169.8,
+       169.6,
+       100.2
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "handle rect nw shift": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       330.4,
+       168.3,
+       169.6,
+       101.7
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "handle rect nw ctrl": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       330.4,
+       169.8,
+       139.1,
+       80.5
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "handle rect n plain": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       169.8,
+       200.0,
+       100.2
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "handle rect n shift": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       169.8,
+       200.0,
+       100.2
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "handle rect n ctrl": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       169.8,
+       200.0,
+       80.5
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "handle rect w plain": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       330.4,
+       150.0,
+       169.6,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "handle rect w shift": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       330.4,
+       150.0,
+       169.6,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "handle rect w ctrl": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       330.4,
+       150.0,
+       139.1,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "rotate rect": {
+   "area": "rotate",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 53.4,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "rotate rect shift": {
+   "area": "rotate",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 45.0,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "frame rect left": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       299.2,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame rect right": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.8,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame rect up": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       149.2,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame rect down": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.8,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame rect ctrl+left": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       299.2,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame rect ctrl+down": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.8,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame rect shift+right": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       290.0,
+       150.0,
+       220.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame rect alt+right": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 15.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame rect alt+left": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 345.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame rect delete": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": [
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame rect backspace": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": [
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame rect ctrl+d": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      2
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       312.0,
+       162.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "frame rect tab": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      1
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame rect shift+tab": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      1
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame rect esc": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame rect enter": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 4
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame rect f2": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 4
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame rect ctrl+a": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0,
+      1
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame rect ctrl+c": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame rect ctrl+x": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": [
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame rect ctrl+z": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame rect ctrl+shift+f": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame rect ctrl+e": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame rect ctrl+r": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame rect ctrl+l": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame rect type": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 7,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Formxy"
+     }
+    ]
+   }
+  },
+  "frame rect ctrl+d twice": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      2
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       312.0,
+       162.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       324.0,
+       174.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "frame rect copy paste": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      2
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       312.0,
+       162.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       324.0,
+       174.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "frame rect delete undo": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "frame rect nudge 3": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       302.3,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     }
+    ]
+   }
+  },
+  "click ellipse centre": {
+   "area": "click",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "click ellipse near left": {
+   "area": "click",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "click ellipse top edge": {
+   "area": "click",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "click ellipse then empty": {
+   "area": "click",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "click ellipse twice": {
+   "area": "click",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "dblclick ellipse": {
+   "area": "dblclick",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "rclick ellipse": {
+   "area": "rclick",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "click ellipse shift other": {
+   "area": "multi",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0,
+      1
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "click ellipse ctrl other": {
+   "area": "multi",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0,
+      1
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "click ellipse shift other twice": {
+   "area": "multi",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      1
+     ],
+     "start": 1,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "drag ellipse plain": {
+   "area": "drag",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       356.8,
+       173.5,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "drag ellipse shift": {
+   "area": "drag",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       356.8,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "drag ellipse ctrl": {
+   "area": "drag",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      1
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       356.8,
+       173.5,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "drag ellipse alt": {
+   "area": "drag",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       356.8,
+       173.5,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "drag ellipse edge": {
+   "area": "drag",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       337.9,
+       187.9,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "handle ellipse se plain": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       230.5,
+       139.5
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "handle ellipse se shift": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       232.5,
+       139.5
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "handle ellipse se ctrl": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       269.5,
+       130.5,
+       261.1,
+       159.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "handle ellipse e plain": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       230.5,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "handle ellipse e shift": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       230.5,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "handle ellipse e ctrl": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       269.5,
+       150.0,
+       261.1,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "handle ellipse s plain": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       139.5
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "handle ellipse s shift": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       139.5
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "handle ellipse s ctrl": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       130.5,
+       200.0,
+       159.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "handle ellipse nw plain": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       330.4,
+       169.8,
+       169.6,
+       100.2
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "handle ellipse nw shift": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       330.4,
+       168.3,
+       169.6,
+       101.7
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "handle ellipse nw ctrl": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       330.4,
+       169.8,
+       139.1,
+       80.5
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "handle ellipse n plain": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       169.8,
+       200.0,
+       100.2
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "handle ellipse n shift": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       169.8,
+       200.0,
+       100.2
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "handle ellipse n ctrl": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       169.8,
+       200.0,
+       80.5
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "handle ellipse w plain": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       330.4,
+       150.0,
+       169.6,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "handle ellipse w shift": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       330.4,
+       150.0,
+       169.6,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "handle ellipse w ctrl": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       330.4,
+       150.0,
+       139.1,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "rotate ellipse": {
+   "area": "rotate",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 53.4,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "rotate ellipse shift": {
+   "area": "rotate",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 45.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse left": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       299.2,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse right": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.8,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse up": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       149.2,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse down": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.8,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse ctrl+left": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       299.2,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse ctrl+down": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.8,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse shift+right": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       290.0,
+       150.0,
+       220.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse alt+right": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 15.0,
+      "text": ""
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse alt+left": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 345.0,
+      "text": ""
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse delete": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": [
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse backspace": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": [
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse ctrl+d": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      2
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       312.0,
+       162.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse tab": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      1
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse shift+tab": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      1
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse esc": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse enter": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse f2": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse ctrl+a": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0,
+      1
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse ctrl+c": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse ctrl+x": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": [
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse ctrl+z": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse ctrl+shift+f": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse ctrl+e": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse ctrl+r": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse ctrl+l": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse type": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 3,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "xy"
+     }
+    ]
+   }
+  },
+  "frame ellipse ctrl+d twice": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      2
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       312.0,
+       162.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       324.0,
+       174.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse copy paste": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      2
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       312.0,
+       162.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       324.0,
+       174.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse delete undo": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse nudge 3": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       302.3,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "click textbox centre": {
+   "area": "click",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "click textbox near left": {
+   "area": "click",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 3,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "click textbox top edge": {
+   "area": "click",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "click textbox then empty": {
+   "area": "click",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "click textbox twice": {
+   "area": "click",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "dblclick textbox": {
+   "area": "dblclick",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 11,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "rclick textbox": {
+   "area": "rclick",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "click textbox shift other": {
+   "area": "multi",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0,
+      1
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "click textbox ctrl other": {
+   "area": "multi",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0,
+      1
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "click textbox shift other twice": {
+   "area": "multi",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      1
+     ],
+     "start": 1,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "drag textbox plain": {
+   "area": "drag",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       360.0,
+       175.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "drag textbox shift": {
+   "area": "drag",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       360.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "drag textbox ctrl": {
+   "area": "drag",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      1
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       360.0,
+       173.5,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "drag textbox alt": {
+   "area": "drag",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       356.8,
+       173.5,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "drag textbox edge": {
+   "area": "drag",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       337.9,
+       187.9,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "handle textbox se plain": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       270.7,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "handle textbox se shift": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       400.8,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "handle textbox se ctrl": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       269.3,
+       130.5,
+       301.4,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "handle textbox e plain": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       330.3,
+       169.7,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "handle textbox e shift": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       330.3,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "handle textbox e ctrl": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      1
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       330.3,
+       164.5,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "handle textbox s plain": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "handle textbox s shift": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "handle textbox s ctrl": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "handle textbox nw plain": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       330.4,
+       169.8,
+       209.6,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "handle textbox nw shift": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       330.4,
+       153.7,
+       209.6,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "handle textbox nw ctrl": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       330.4,
+       159.3,
+       179.1,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "handle textbox n plain": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "handle textbox n shift": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "handle textbox n ctrl": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "handle textbox w plain": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       330.3,
+       169.7,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "handle textbox w shift": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       330.3,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "handle textbox w ctrl": {
+   "area": "handle",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      1
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       330.3,
+       164.5,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "rotate textbox": {
+   "area": "rotate",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 82.2,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "rotate textbox shift": {
+   "area": "rotate",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 75.0,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "frame textbox left": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       299.2,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame textbox right": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.8,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame textbox up": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       149.2,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame textbox down": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.8,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame textbox ctrl+left": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       299.2,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame textbox ctrl+down": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.8,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame textbox shift+right": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       288.0,
+       150.0,
+       264.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame textbox alt+right": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 15.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame textbox alt+left": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 345.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame textbox delete": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": [
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame textbox backspace": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": [
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame textbox ctrl+d": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      2
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       312.0,
+       162.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "frame textbox tab": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      1
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame textbox shift+tab": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      1
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame textbox esc": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame textbox enter": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 10
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame textbox f2": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 10
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame textbox ctrl+a": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0,
+      1
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame textbox ctrl+c": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame textbox ctrl+x": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": [
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame textbox ctrl+z": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame textbox ctrl+shift+f": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame textbox ctrl+e": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame textbox ctrl+r": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame textbox ctrl+l": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame textbox type": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 13,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Weltxy"
+     }
+    ]
+   }
+  },
+  "frame textbox ctrl+d twice": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      2
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       312.0,
+       162.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       324.0,
+       174.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "frame textbox copy paste": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      2
+     ],
+     "start": 1,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       312.0,
+       162.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       324.0,
+       174.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "frame textbox delete undo": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "frame textbox nudge 3": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       302.3,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     }
+    ]
+   }
+  },
+  "text home": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text sel home": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       140.4,
+       150.0,
+       479.2,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text end": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text sel end": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       140.4,
+       150.0,
+       479.2,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text ctrl+home": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text sel ctrl+home": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       140.4,
+       150.0,
+       479.2,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text ctrl+end": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text sel ctrl+end": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       140.4,
+       150.0,
+       479.2,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text left": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       199.2,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text sel left": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       139.7,
+       150.0,
+       479.2,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text right": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       200.8,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text sel right": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       141.2,
+       150.0,
+       479.2,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text up": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       149.2,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text sel up": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       140.4,
+       149.2,
+       479.2,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text down": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.8,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text sel down": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       140.4,
+       150.8,
+       479.2,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text shift+home": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text sel shift+home": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       140.4,
+       150.0,
+       479.2,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text shift+end": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text sel shift+end": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       140.4,
+       150.0,
+       479.2,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text ctrl+left": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       199.2,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text sel ctrl+left": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       139.7,
+       150.0,
+       479.2,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text ctrl+right": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       200.8,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text sel ctrl+right": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       141.2,
+       150.0,
+       479.2,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text ctrl+shift+right": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       198.2,
+       150.0,
+       363.6,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text sel ctrl+shift+right": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       138.0,
+       150.0,
+       484.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text backspace": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": []
+   }
+  },
+  "text sel backspace": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": []
+   }
+  },
+  "text delete": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": []
+   }
+  },
+  "text sel delete": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": []
+   }
+  },
+  "text ctrl+backspace": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 30,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text sel ctrl+backspace": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 30,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       140.4,
+       150.0,
+       479.2,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text ctrl+delete": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text sel ctrl+delete": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       140.4,
+       150.0,
+       479.2,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text enter": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 29
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text sel enter": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 29
+    },
+    "shapes": [
+     {
+      "box": [
+       140.4,
+       150.0,
+       479.2,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text shift+enter": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text sel shift+enter": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       140.4,
+       150.0,
+       479.2,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text tab": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text sel tab": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       140.4,
+       150.0,
+       479.2,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text shift+tab": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text sel shift+tab": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       140.4,
+       150.0,
+       479.2,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text esc": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text sel esc": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": [
+     {
+      "box": [
+       140.4,
+       150.0,
+       479.2,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text f2": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 29
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text sel f2": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 29
+    },
+    "shapes": [
+     {
+      "box": [
+       140.4,
+       150.0,
+       479.2,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text ctrl+a": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text sel ctrl+a": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       140.4,
+       150.0,
+       479.2,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text ctrl+shift+f": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text sel ctrl+shift+f": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       140.4,
+       150.0,
+       479.2,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text ctrl+e": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text sel ctrl+e": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       140.4,
+       150.0,
+       479.2,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text ctrl+z": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 30,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text sel ctrl+z": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 30,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       140.4,
+       150.0,
+       479.2,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text alt+shift+right": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text sel alt+shift+right": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       140.4,
+       150.0,
+       479.2,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text alt+shift+left": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text sel alt+shift+left": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       140.4,
+       150.0,
+       479.2,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text ctrl+up": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       149.2,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text sel ctrl+up": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       140.4,
+       149.2,
+       479.2,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text ctrl+down": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.8,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text sel ctrl+down": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       140.4,
+       150.8,
+       479.2,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text pagedown": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text sel pagedown": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       140.4,
+       150.0,
+       479.2,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text type": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 33,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeileabc"
+     }
+    ]
+   }
+  },
+  "text type over selection": {
+   "area": "textkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 31,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       201.8,
+       150.0,
+       356.4,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite ZeileX"
+     }
+    ]
+   }
+  },
+  "text dblclick word": {
+   "area": "textmouse",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 7,
+     "length": 5
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text triple": {
+   "area": "textmouse",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 17
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text shift click": {
+   "area": "textmouse",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text drag select": {
+   "area": "textmouse",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 17
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text click other shape": {
+   "area": "textmouse",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      1
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "text click empty": {
+   "area": "textmouse",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "text esc esc": {
+   "area": "textmouse",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "Titelfolie click ph0": {
+   "area": "placeholder",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": [
+     {
+      "box": [
+       120.0,
+       88.4,
+       720.0,
+       188.0
+      ],
+      "rot": 0.0,
+      "text": "Mein Titel"
+     },
+     {
+      "box": [
+       120.0,
+       283.6,
+       720.0,
+       130.4
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "Titelfolie click ph0 edge": {
+   "area": "placeholder",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       120.0,
+       88.4,
+       720.0,
+       188.0
+      ],
+      "rot": 0.0,
+      "text": "Mein Titel"
+     },
+     {
+      "box": [
+       120.0,
+       283.6,
+       720.0,
+       130.4
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "Titelfolie empty click": {
+   "area": "placeholder",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       120.0,
+       88.4,
+       720.0,
+       188.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       120.0,
+       283.6,
+       720.0,
+       130.4
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "Titelfolie empty type": {
+   "area": "placeholder",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 4,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       120.0,
+       88.4,
+       720.0,
+       188.0
+      ],
+      "rot": 0.0,
+      "text": "Neu"
+     },
+     {
+      "box": [
+       120.0,
+       283.6,
+       720.0,
+       130.4
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "Titelfolie delete text": {
+   "area": "placeholder",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": [
+     {
+      "box": [
+       120.0,
+       283.6,
+       720.0,
+       130.4
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       120.0,
+       88.4,
+       720.0,
+       188.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "Titelfolie delete twice": {
+   "area": "placeholder",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": [
+     {
+      "box": [
+       120.0,
+       283.6,
+       720.0,
+       130.4
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       120.0,
+       88.4,
+       720.0,
+       188.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "Titelfolie drag ph0": {
+   "area": "placeholder",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       160.2,
+       118.7,
+       720.0,
+       188.0
+      ],
+      "rot": 0.0,
+      "text": "Mein Titel"
+     },
+     {
+      "box": [
+       120.0,
+       283.6,
+       720.0,
+       130.4
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "Titelfolie tab level": {
+   "area": "placeholder",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       120.0,
+       88.4,
+       720.0,
+       188.0
+      ],
+      "rot": 0.0,
+      "text": "Mein Titel"
+     },
+     {
+      "box": [
+       120.0,
+       283.6,
+       720.0,
+       130.4
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "Titel und Inhalt click ph1": {
+   "area": "placeholder",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": [
+     {
+      "box": [
+       66.0,
+       28.8,
+       828.0,
+       104.4
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       66.0,
+       143.8,
+       828.0,
+       342.6
+      ],
+      "rot": 0.0,
+      "text": "Punkt eins\rPunkt zwei"
+     }
+    ]
+   }
+  },
+  "Titel und Inhalt click ph1 edge": {
+   "area": "placeholder",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      1
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       66.0,
+       28.8,
+       828.0,
+       104.4
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       66.0,
+       143.8,
+       828.0,
+       342.6
+      ],
+      "rot": 0.0,
+      "text": "Punkt eins\rPunkt zwei"
+     }
+    ]
+   }
+  },
+  "Titel und Inhalt empty click": {
+   "area": "placeholder",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      1
+     ],
+     "start": 1,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       66.0,
+       28.8,
+       828.0,
+       104.4
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       66.0,
+       143.8,
+       828.0,
+       342.6
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "Titel und Inhalt empty type": {
+   "area": "placeholder",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      1
+     ],
+     "start": 4,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       66.0,
+       28.8,
+       828.0,
+       104.4
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       66.0,
+       143.8,
+       828.0,
+       342.6
+      ],
+      "rot": 0.0,
+      "text": "Neu"
+     }
+    ]
+   }
+  },
+  "Titel und Inhalt delete text": {
+   "area": "placeholder",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": [
+     {
+      "box": [
+       66.0,
+       28.8,
+       828.0,
+       104.4
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       66.0,
+       143.8,
+       828.0,
+       342.6
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "Titel und Inhalt delete twice": {
+   "area": "placeholder",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": [
+     {
+      "box": [
+       66.0,
+       28.8,
+       828.0,
+       104.4
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       66.0,
+       143.8,
+       828.0,
+       342.6
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "Titel und Inhalt drag ph1": {
+   "area": "placeholder",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      1
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       66.0,
+       28.8,
+       828.0,
+       104.4
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       106.2,
+       174.1,
+       828.0,
+       342.6
+      ],
+      "rot": 0.0,
+      "text": "Punkt eins\rPunkt zwei"
+     }
+    ]
+   }
+  },
+  "Titel und Inhalt tab level": {
+   "area": "placeholder",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       66.0,
+       28.8,
+       828.0,
+       104.4
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       66.0,
+       143.8,
+       828.0,
+       342.6
+      ],
+      "rot": 0.0,
+      "text": "Punkt eins\rPunkt zwei"
+     }
+    ]
+   }
+  },
+  "content enter tab": {
+   "area": "placeholder",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 11,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       66.0,
+       28.8,
+       828.0,
+       104.4
+      ],
+      "rot": 0.0,
+      "text": "Unterpunkt"
+     },
+     {
+      "box": [
+       66.0,
+       143.8,
+       828.0,
+       342.6
+      ],
+      "rot": 0.0,
+      "text": "Eins"
+     }
+    ]
+   }
+  },
+  "multi ctrl+g": {
+   "area": "multikeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0,
+      1
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "multi delete": {
+   "area": "multikeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": []
+   }
+  },
+  "multi right": {
+   "area": "multikeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0,
+      1
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.8,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.8,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "multi ctrl+d": {
+   "area": "multikeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      2,
+      3
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       312.0,
+       162.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       632.0,
+       342.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "multi esc": {
+   "area": "multikeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "multi tab": {
+   "area": "multikeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "multi ctrl+a": {
+   "area": "multikeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0,
+      1
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "multi group ungroup": {
+   "area": "multikeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       440.0,
+       260.0
+      ],
+      "rot": 0.0,
+      "text": null
+     }
+    ]
+   }
+  },
+  "multi drag": {
+   "area": "multikeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 4
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "group click member": {
+   "area": "group",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      1
+     ],
+     "start": 1,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       440.0,
+       260.0
+      ],
+      "rot": 0.0,
+      "text": null
+     },
+     {
+      "box": [
+       519.9,
+       279.7,
+       14.5,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "marquee": {
+   "area": "marquee",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0,
+      1
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "marquee partial": {
+   "area": "marquee",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "line click": {
+   "area": "line",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       200.0,
+       200.0,
+       0.0
+      ],
+      "rot": 0.0,
+      "text": null
+     }
+    ]
+   }
+  },
+  "line drag": {
+   "area": "line",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       340.2,
+       230.3,
+       200.0,
+       0.0
+      ],
+      "rot": 0.0,
+      "text": null
+     }
+    ]
+   }
+  },
+  "table click": {
+   "area": "table",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       400.0,
+       58.4
+      ],
+      "rot": 0.0,
+      "text": null
+     }
+    ]
+   }
+  },
+  "table type": {
+   "area": "table",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 6,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       400.0,
+       58.4
+      ],
+      "rot": 0.0,
+      "text": null
+     }
+    ]
+   }
+  },
+  "table tab": {
+   "area": "table",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 2,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       400.0,
+       58.4
+      ],
+      "rot": 0.0,
+      "text": null
+     }
+    ]
+   }
+  },
+  "ctrl+m": {
+   "area": "slides",
+   "state": {
+    "slides": 2,
+    "slide": 2,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": []
+   }
+  },
+  "ctrl+m twice": {
+   "area": "slides",
+   "state": {
+    "slides": 3,
+    "slide": 3,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": [
+     {
+      "box": [
+       66.0,
+       28.8,
+       828.0,
+       104.4
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       66.0,
+       143.8,
+       828.0,
+       342.6
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "pgdn slides": {
+   "area": "slides",
+   "state": {
+    "slides": 3,
+    "slide": 2,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": []
+   }
+  },
+  "pgdn pgup": {
+   "area": "slides",
+   "state": {
+    "slides": 3,
+    "slide": 2,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": []
+   }
+  },
+  "end home": {
+   "area": "slides",
+   "state": {
+    "slides": 3,
+    "slide": 3,
+    "selection": {
+     "type": "None"
+    },
+    "shapes": []
+   }
+  },
+  "frame rect shift+left": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       309.1,
+       150.0,
+       181.8,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame rect shift+up": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       144.0,
+       200.0,
+       132.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame rect shift+down": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       155.5,
+       200.0,
+       109.1
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame rect ctrl+shift+right": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       299.0,
+       150.0,
+       202.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame rect alt+shift+right": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame rect shift+enter": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame rect ctrl+delete": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame rect ctrl+backspace": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 5,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame rect ctrl+b": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse shift+left": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       309.1,
+       150.0,
+       181.8,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse shift+up": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       144.0,
+       200.0,
+       132.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse shift+down": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       155.5,
+       200.0,
+       109.1
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse ctrl+shift+right": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       299.0,
+       150.0,
+       202.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse alt+shift+right": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse shift+enter": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse ctrl+delete": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse ctrl+backspace": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame ellipse ctrl+b": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame textbox shift+left": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       310.9,
+       150.0,
+       218.2,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame textbox shift+up": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       148.5,
+       240.0,
+       32.0
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame textbox shift+down": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       151.3,
+       240.0,
+       26.4
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame textbox ctrl+shift+right": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       298.8,
+       150.0,
+       242.4,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame textbox alt+shift+right": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame textbox shift+enter": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame textbox ctrl+delete": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame textbox ctrl+backspace": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 11,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "frame textbox ctrl+b": {
+   "area": "framekeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       240.0,
+       29.1
+      ],
+      "rot": 0.0,
+      "text": "Hallo Welt"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "multi ctrl+shift+g twice": {
+   "area": "multikeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       440.0,
+       260.0
+      ],
+      "rot": 0.0,
+      "text": null
+     }
+    ]
+   }
+  },
+  "multi ctrl+shift+g ctrl+shift+h": {
+   "area": "multikeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0,
+      1
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       300.0,
+       150.0,
+       200.0,
+       120.0
+      ],
+      "rot": 0.0,
+      "text": "Form"
+     },
+     {
+      "box": [
+       620.0,
+       330.0,
+       120.0,
+       80.0
+      ],
+      "rot": 0.0,
+      "text": ""
+     }
+    ]
+   }
+  },
+  "caret home": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret end": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 17,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret ctrl+home": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret ctrl+end": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 30,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret left": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 4,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret right": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 6,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret up": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 5,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret down": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 21,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret shift+right": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 5,
+     "length": 1
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret shift+left": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 4,
+     "length": 1
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret shift+end": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 5,
+     "length": 13
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret shift+home": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 4
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret shift+down": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 5,
+     "length": 16
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret ctrl+left": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret ctrl+right": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 7,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret ctrl+shift+right": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 5,
+     "length": 2
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret backspace": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 4,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erse Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret delete": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 5,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erst Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret ctrl+backspace": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "e Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret ctrl+delete": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 5,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erst Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret enter": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 6,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       72.7
+      ],
+      "rot": 0.0,
+      "text": "Erst\re Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret shift+enter": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 6,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       72.7
+      ],
+      "rot": 0.0,
+      "text": "Erst\u000be Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret tab": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 6,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erst\te Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret shift+tab": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 6,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erst\te Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret ctrl+a": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 1,
+     "length": 29
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret esc": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret ctrl+b": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 5,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret ctrl+e": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 5,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret ctrl+z": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 5,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret alt+shift+right": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 5,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret alt+shift+left": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 5,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret f2": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Shapes",
+     "ids": [
+      0
+     ]
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret type": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 7,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       50.9
+      ],
+      "rot": 0.0,
+      "text": "ErstXYe Zeile hier\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "caret type enter": {
+   "area": "caretkeys",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 21,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       72.7
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rneu\rZweite Zeile"
+     }
+    ]
+   }
+  },
+  "autocorrect sentence": {
+   "area": "autocorrect",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 51,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       72.7
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile\rDas ist gut. Und so "
+     }
+    ]
+   }
+  },
+  "autocorrect quotes": {
+   "area": "autocorrect",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 47,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       72.7
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile\rEr sagt „hallo“ "
+     }
+    ]
+   }
+  },
+  "autocorrect copyright": {
+   "area": "autocorrect",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 38,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       72.7
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile\rText © "
+     }
+    ]
+   }
+  },
+  "autocorrect arrow": {
+   "area": "autocorrect",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 37,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       72.7
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile\rA  b "
+     }
+    ]
+   }
+  },
+  "autocorrect weekday": {
+   "area": "autocorrect",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 41,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       72.7
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile\rAm Montag "
+     }
+    ]
+   }
+  },
+  "autocorrect twocaps": {
+   "area": "autocorrect",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 40,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       72.7
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile\rZwei mal "
+     }
+    ]
+   }
+  },
+  "autocorrect dash": {
+   "area": "autocorrect",
+   "state": {
+    "slides": 1,
+    "slide": 1,
+    "selection": {
+     "type": "Text",
+     "ids": [
+      0
+     ],
+     "start": 42,
+     "length": 0
+    },
+    "shapes": [
+     {
+      "box": [
+       200.0,
+       150.0,
+       360.0,
+       72.7
+      ],
+      "rot": 0.0,
+      "text": "Erste Zeile hier\rZweite Zeile\rRot – blau "
+     }
+    ]
+   }
+  }
+ }
+}

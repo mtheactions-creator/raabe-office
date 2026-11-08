@@ -1,0 +1,46 @@
+{
+ "date": "2026-11-08",
+ "checks": {
+  "opens_with_macros_off": true,
+  "asks_before_running": true,
+  "cancel_runs_nothing": true,
+  "bar_enables": true,
+  "asks_for_file": true,
+  "refusal_is_error_70": true,
+  "runtime_error_box": true
+ },
+ "bar": "SICHERHEITSWARNUNG Makros wurden deaktiviert. Inhalt aktivieren ×",
+ "notice": {
+  "text": "RaabePresent Die Makros dieser Präsentation sind deaktiviert. Aktivieren Sie sie nur, wenn Sie der Datei vertrauen. Inhalt aktivieren Abbrechen",
+  "buttons": [
+   "",
+   "Inhalt aktivieren",
+   "Abbrechen"
+  ]
+ },
+ "file_question": {
+  "text": "Makro: Dateizugriff Ein Makro dieser Präsentation möchte die Datei %TEMP%\\raabe-macro-suite\\notizen.txt schreiben. Zulassen? Zulassen Nicht zulassen",
+  "buttons": [
+   "",
+   "Zulassen",
+   "Nicht zulassen"
+  ]
+ },
+ "refused": {
+  "text": "RaabePresent - Makros Laufzeitfehler '70': Zugriff verweigert: %TEMP%\\raabe-macro-suite\\notizen.txt NotizenExportieren (Tests), Zeile 67 Beenden Debuggen",
+  "buttons": [
+   "",
+   "Beenden",
+   "Debuggen"
+  ]
+ },
+ "runtime_error": {
+  "text": "RaabePresent - Makros Laufzeitfehler '13': Typen unverträglich Kaputt (Kaputt), Zeile 3 Beenden Debuggen",
+  "buttons": [
+   "",
+   "Beenden",
+   "Debuggen"
+  ]
+ },
+ "summary": "7/7"
+}

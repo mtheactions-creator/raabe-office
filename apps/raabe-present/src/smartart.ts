@@ -4,6 +4,7 @@
 // and RaabePresent show the same. Layout changes, new shapes and SmartArt-Formatvorlagen need PowerPoint's
 // layout definitions, which we do not have (creating SmartArt is not built, see the decision).
 
+import { SMARTART_COLORS, SMARTART_STYLES } from "./smartart-styles.gen";
 import { h, showDialog, type Control, type Tab } from "@raabe/shell";
 import { PptxDom } from "@raabe/ooxml";
 import type { PresentApp } from "./app";
@@ -128,7 +129,8 @@ export function smartArtTab(app: PresentApp): Tab {
         { type: "stack", items: [b("smartart.promote", "H", "small"), b("smartart.demote", "I", "small")] },
         { type: "stack", items: [b("smartart.moveUp", "M", "small"), b("smartart.moveDown", "A2", "small")] }] },
       { id: "layouts", label: "Layouts", key: "ZL", icon: "shapes", controls: [{ type: "dropdown", cmd: "smartart.layouts", key: "L", size: "large", get menu() { return smartArtLayoutMenu(app); } }] },
-      { id: "styles", label: "SmartArt-Formatvorlagen", key: "ZF", icon: "shapes", controls: [{ type: "dropdown", cmd: "smartart.colors", key: "F", size: "large", get menu() { return smartArtColorMenu(app); } }] },
+      { id: "styles", label: "SmartArt-Formatvorlagen", key: "ZF", icon: "shapes", controls: [{ type: "dropdown", cmd: "smartart.colors", key: "F", size: "large", get menu() { return smartArtColorMenu(app); } },
+        { type: "dropdown", cmd: "smartart.styles", key: "S", size: "large", get menu() { return smartArtStyleMenu(app); } }] },
       { id: "reset", label: "Zurücksetzen", key: "ZZ", icon: "slide-text", controls: [b("smartart.reset", "G"), { type: "dropdown", cmd: "smartart.convert", key: "K", size: "large", menu: [{ cmd: "smartart.toText" }, { cmd: "smartart.toShapes" }] }] }],
   };
 }
@@ -145,15 +147,29 @@ function smartArtLayoutMenu(app: PresentApp) {
     { label: "Weitere Layouts...", run: () => void sc.chooseLayout(cur?.id).then((e) => { if (e && id !== null && d) sc.relayout(app, id, d.items, e.id); }) }];
 }
 
-/** Farben ändern: PowerPoint's colour sets by name; the drawing takes the chosen accent. */
+/** Farben ändern: PowerPoint's 38 colour sets by name under its headings (recorded, D-101). */
 function smartArtColorMenu(app: PresentApp) {
   const id = selectedDiagram(app);
-  const out: ({ label: string; run: () => void } | { heading: string })[] = [];
-  const set = (scheme: string) => () => { if (id !== null) sc.setColors(app, id, scheme); };
-  out.push({ heading: "Primärdesignfarben" }, { label: "Dunkle 1-Kontur", run: set("dk1-outline") }, { label: "Dunkel 2-Kontur", run: set("dk2-outline") }, { label: "Dunkel 2-Füllung", run: set("dk2") });
-  out.push({ heading: "Bunt" }, { label: "Farbig - Akzentfarben", run: set("colorful") });
-  for (const k of [1, 2, 3, 4, 5, 6]) out.push({ heading: `Akzent ${k}` }, { label: `Farbige Kontur - Akzent ${k}`, run: set(`accent${k}-outline`) }, { label: `Farbige Füllung - Akzent ${k}`, run: set(`accent${k}`) });
+  const cur = id !== null ? sc.diagramOf(app, id)?.scheme : undefined;
+  const out: ({ label: string; run: () => void; checked?: boolean } | { heading: string })[] = [];
+  let last = "";
+  for (const c of SMARTART_COLORS) {
+    const head = c.cat === "mainScheme" ? "Primärdesignfarben" : c.cat === "colorful" ? "Bunt" : `Akzent ${c.cat.replace("accent", "")}`;
+    if (head !== last) { out.push({ heading: head }); last = head; }
+    const key = c.id.split("/").pop()!;
+    out.push({ label: c.name, checked: key === cur, run: () => { if (id !== null) sc.setColors(app, id, key); } });
+  }
   return out;
+}
+
+/** SmartArt-Formatvorlagen: PowerPoint's 14 quick styles by name (recorded, D-101). */
+function smartArtStyleMenu(app: PresentApp) {
+  const id = selectedDiagram(app);
+  const cur = id !== null ? sc.diagramOf(app, id)?.style : undefined;
+  return SMARTART_STYLES.map((s) => {
+    const key = s.id.split("/").pop()!;
+    return { label: s.name, checked: key === cur, run: () => { if (id !== null) sc.setQuickStyle(app, id, key); } };
+  });
 }
 
 /**

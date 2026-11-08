@@ -1,0 +1,485 @@
+{
+ "date": "2026-11-08",
+ "spin": {
+  "heads": [
+   "3D-Drehung"
+  ],
+  "labels": [
+   {
+    "type": "TabItem",
+    "name": "Formoptionen",
+    "enabled": true
+   },
+   {
+    "type": "TabItem",
+    "name": "Textoptionen",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Füllung und Linie",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Effekte",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Größe und Eigenschaften",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Schatten",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Schatten",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Schatten",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Spiegelung",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Spiegelung",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Spiegelung",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Leuchten",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Leuchten",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Leuchten",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Weiche Kanten",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Weiche Kanten",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Weiche Kanten",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "3D-Format",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "3D-Format",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "3D-Format",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "3D-Drehung",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "3D-Drehung",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "3D-Drehung",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Voreinstellungen",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Voreinstellungen",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "X-Drehung",
+    "enabled": true
+   },
+   {
+    "type": "Spinner",
+    "name": "X-Drehung",
+    "enabled": true,
+    "value": "330.000000"
+   },
+   {
+    "type": "Edit",
+    "name": "X-Drehung",
+    "enabled": true,
+    "value": "330°"
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Links",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Rechts",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Y-Drehung",
+    "enabled": true
+   },
+   {
+    "type": "Spinner",
+    "name": "Y-Drehung",
+    "enabled": true,
+    "value": "0.000000"
+   },
+   {
+    "type": "Edit",
+    "name": "Y-Drehung",
+    "enabled": true,
+    "value": "0°"
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Nach oben",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Nach unten",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Z-Drehung",
+    "enabled": true
+   },
+   {
+    "type": "Spinner",
+    "name": "Z-Drehung",
+    "enabled": true,
+    "value": "0.000000"
+   },
+   {
+    "type": "Edit",
+    "name": "Z-Drehung",
+    "enabled": true,
+    "value": "0°"
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Uhrzeigersinn",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Gegen Uhrzeigersinn",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Perspektive",
+    "enabled": false
+   },
+   {
+    "type": "Spinner",
+    "name": "Perspektive",
+    "enabled": false,
+    "value": "0.000000"
+   },
+   {
+    "type": "Edit",
+    "name": "Perspektive",
+    "enabled": false,
+    "value": "0°"
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "enabled": false,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "enabled": false,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Blickfeld verengen",
+    "enabled": false
+   },
+   {
+    "type": "Button",
+    "name": "Blickfeld verbreitern",
+    "enabled": false
+   },
+   {
+    "type": "CheckBox",
+    "name": "Text nicht drehen",
+    "enabled": true
+   },
+   {
+    "type": "Text",
+    "name": "Abstand vom Boden",
+    "enabled": true
+   },
+   {
+    "type": "Spinner",
+    "name": "Abstand vom Boden",
+    "enabled": true,
+    "value": "0.000000"
+   },
+   {
+    "type": "Edit",
+    "name": "Abstand vom Boden",
+    "enabled": true,
+    "value": "0 Pt."
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Zurücksetzen",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Leseansicht",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Bildschirmpräsentation",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Verkleinern",
+    "enabled": true,
+    "value": "66"
+   },
+   {
+    "type": "Slider",
+    "name": "Zoom",
+    "enabled": true,
+    "value": "66"
+   },
+   {
+    "type": "Button",
+    "name": "Verkleinern",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Vergrößern",
+    "enabled": true,
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Vergrößern",
+    "enabled": true,
+    "value": "66"
+   },
+   {
+    "type": "Button",
+    "name": "Zoom 66 %",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "An Fenstergröße anpassen ",
+    "enabled": true
+   }
+  ],
+  "x_rotation_shown": "330.000000",
+  "com_rotation_x": 30.0,
+  "spin": [
+   {
+    "button": "Links",
+    "box": "X-Drehung",
+    "com_before": [
+     30.0,
+     0.0,
+     0.0
+    ],
+    "com_after": [
+     35.00001525878906,
+     0.0,
+     0.0
+    ],
+    "shown_before": "330°",
+    "shown_after": "325°"
+   },
+   {
+    "button": "Rechts",
+    "box": "X-Drehung",
+    "com_before": [
+     35.00001525878906,
+     0.0,
+     0.0
+    ],
+    "com_after": [
+     30.000032424926758,
+     0.0,
+     0.0
+    ],
+    "shown_before": "325°",
+    "shown_after": "330°"
+   },
+   {
+    "button": "Nach oben",
+    "box": "Y-Drehung",
+    "com_before": [
+     30.000032424926758,
+     0.0,
+     0.0
+    ],
+    "com_after": [
+     30.00006675720215,
+     5.0,
+     0.0
+    ],
+    "shown_before": "0°",
+    "shown_after": "5°"
+   },
+   {
+    "button": "Nach unten",
+    "box": "Y-Drehung",
+    "com_before": [
+     30.00006675720215,
+     5.0,
+     0.0
+    ],
+    "com_after": [
+     30.00006675720215,
+     0.0,
+     0.0
+    ],
+    "shown_before": "5°",
+    "shown_after": "0°"
+   },
+   {
+    "button": "Uhrzeigersinn",
+    "box": "Z-Drehung",
+    "com_before": [
+     30.00006675720215,
+     0.0,
+     0.0
+    ],
+    "com_after": [
+     30.00006675720215,
+     0.0,
+     5.000016689300537
+    ],
+    "shown_before": "0°",
+    "shown_after": "355°"
+   },
+   {
+    "button": "Gegen Uhrzeigersinn",
+    "box": "Z-Drehung",
+    "com_before": [
+     30.00006675720215,
+     0.0,
+     5.000016689300537
+    ],
+    "com_after": [
+     30.00006675720215,
+     0.0,
+     0.0
+    ],
+    "shown_before": "355°",
+    "shown_after": "0°"
+   }
+  ]
+ },
+ "close": {
+  "closed": 1,
+  "quit": true,
+  "left_open": 0
+ }
+}

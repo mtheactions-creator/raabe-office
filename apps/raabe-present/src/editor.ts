@@ -617,6 +617,12 @@ export class SlideEditor {
         const r = this.hitShape(v.children[i], p, tol, e);
         if (r) return this.sel.includes(v.id) || this.text?.id === v.id ? r : { v, text: false };
       }
+      // Between its members a group is hit within its frame; a second click there, the group selected, starts
+      // a text box at the point (PowerPoint, behaviour catalogue "group click member", D-107).
+      const gx = v.x + v.w / 2, gy = v.y + v.h / 2, ga = (-v.rot * Math.PI) / 180;
+      const gdx = p.x - gx, gdy = p.y - gy;
+      const glx = gdx * Math.cos(ga) - gdy * Math.sin(ga), gly = gdx * Math.sin(ga) + gdy * Math.cos(ga);
+      if (Math.abs(glx) <= v.w / 2 + tol && Math.abs(gly) <= v.h / 2 + tol) return { v, text: this.sel.includes(v.id) };
       return null;
     }
     // The point in the shape's own frame (turned back about its centre).
@@ -772,6 +778,7 @@ export class SlideEditor {
       window.removeEventListener("mouseup", up);
       if (moved) return;
       if (multi && wasSelected) { this.sel = this.sel.filter((x) => x !== v.id); this.render(); this.host.selectionChanged(); return; }
+      if (!multi && wasSelected && hit.text && v.kind === "grpSp") { this.textBoxAt(this.toSlide(start.x, start.y)); return; }
       if (!multi && enterText && v.kind !== "grpSp") {
         const pos = v.text && !v.text.empty ? this.posAt(v.id, start.x, start.y) : { p: 0, o: 0 };
         this.enterText(v.id, pos ?? undefined);
@@ -779,6 +786,17 @@ export class SlideEditor {
     };
     window.addEventListener("mousemove", move);
     window.addEventListener("mouseup", up);
+  }
+
+  /** A new growing text box at a slide point (EMU), editing its empty text: as a click with Textfeld. */
+  private textBoxAt(p: { x: number; y: number }): void {
+    let id = 0;
+    this.edit("Textfeld", () => {
+      const tree = S.treeOf(this.doc!);
+      id = S.maxId(tree) + 1;
+      tree.append(S.newTextBox(this.doc!, id, p.x, p.y, null, 369332));
+    });
+    this.enterText(id, { p: 0, o: 0 });
   }
 
   /** Dragging from a table cell: text inside it, a range of cells once the pointer is over another cell. */

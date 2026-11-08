@@ -2297,3 +2297,134 @@ Agreed with the owner, who leaves the PC (mouse and keyboard) to the run until t
 - **Two sessions:** real input only under the lock file; decisions D-080 to D-099 in this checkout, D-100
   upward in the RaabePresent session; the shared interpreter (packages/vba) belongs to the RaabePresent
   session, RaabeCalc adds its object model beside it.
+
+## D-100 RaabePresent (D-080): the shared VBA interpreter grows: classes, events, debugger, files after asking, UserForms (2026-11-08)
+
+Part A and B of D-080 for the interpreter @raabe/vba (this session owns it; RaabeCalc builds Excel's object model
+beside it). The public API only grew (listed in the commit message); old calls behave as before except where
+VBA behaves otherwise (below).
+- **Language:** class modules with `New`, `Nothing`, `Is`, `TypeOf … Is`, `Property Get/Let/Set`, `Me`,
+  `Class_Initialize/Terminate`, default members, `For Each` over classes, `Implements`, `Type`, `Enum`, `Static`,
+  `ParamArray`, named arguments, `Option Base/Compare`, `#If VBA7/Win64` (64-bit Office), typed variables that
+  coerce (Overflow 6), `On Error GoTo/Resume/Resume Next`, `Err.Raise`, `End`. `Collection` and
+  `Scripting.Dictionary` are built in (in memory). Events: `Public Event`, `RaiseEvent`, `WithEvents`; the app fires
+  procedures (`fire`) and its objects' events (`raise`).
+- **Class_Terminate** runs when the last reference goes (references in variables, arrays, members, collections are
+  counted), at the end of that statement; `End` and Zurücksetzen run none, as in VBA.
+- **Debugger:** breakpoints, Einzelschritt / Prozedurschritt / Prozedur abschließen, `Stop`, `Debug.Assert`,
+  pausing on request, call stack, local variables, expressions and Direktbereich statements while paused.
+  `Debug.Print` formats as VBA (print zones). Several statements on one line pause once.
+- **Files only after asking (D-080):** `Open … For Input/Output/Append`, `Print #`, `Write #`, `Input #`,
+  `Line Input #`, `Close`, `FreeFile`, `EOF`, `LOF`, `Dir`, `FileLen`, `FileDateTime`, `GetAttr`, `Kill`, `MkDir`,
+  `RmDir`, `FileCopy`, `Name … As` ask the app each time (`fileAccess`) before going through its file system; refused
+  is Laufzeitfehler 70. Text is Windows-1252, as VBA writes it. `GetSetting`/`SaveSetting` use the app's store,
+  never the registry. Still blocked: Shell, CreateObject (except Scripting.Dictionary and Collection), GetObject,
+  SendKeys, Environ, AppActivate, ChDir, Declare, AddressOf.
+- **UserForms:** the runtime model (Show modal or not, Hide, Load, Unload with QueryClose, `Controls`, the common
+  controls with their properties and events: Change and Click also when VBA sets a value, as Office does), and the
+  file format ([MS-OFORMS] designer storage, [MS-OVBA] records and the MSForms reference), written by our own code from
+  the published specifications. A form not edited is written back byte for byte; controls we do not model
+  (MultiPage, TabStrip, ActiveX) are kept as bytes.
+- **Behaviour changes callers may see:** module-level `Public x` now declares x; `Dim i As Integer` starts at 0;
+  arrays are copied on assignment; `End` ends the whole run; statements outside procedures are a syntax error.
+- **Measured in PowerPoint** (check_present_userform_office.py): PowerPoint opens a .pptm with two of our forms
+  (one with a Frame holding controls), loads them and reads every property as written, keeps them when saving, and
+  our reader reads PowerPoint's file back: 6/6. Not yet measured: a form shown in PowerPoint (it would need real
+  input), MultiPage written by us (refused: "cannot write a MultiPage yet").
+
+## D-101 RaabePresent: SmartArt-Formatvorlagen, all of Farben ändern, Von rechts nach links (2026-11-08)
+
+- **Recorded from PowerPoint** (probe_powerpoint_smartart_styles.py, our own invisible PowerPoint, its window on the
+  virtual display): all 38 colour sets and 14 quick styles applied to an "Einfache Blockliste"; for the five style
+  labels our drawing uses (node1, sibTrans2D1, parChTrans1D1, revTx, bgShp) the colour lists (method and colours)
+  and the quick styles' references to the theme's fill, line and effect styles with their 3-D scene and shape go
+  into smartart-styles.gen.ts (make_smartart_styles.py). Only these parameters are kept, as for the layouts
+  (D-077); the parts PowerPoint wrote stay in captures/.
+- **Drawing as PowerPoint draws:** a shape's colours come from its label's lists by the node's place (repeat:
+  the list in order, the last kept; span: from the first colour to the last over the nodes; cycle: there and back
+  by 2/n of the way, measured: 0, 0.4, 0.8, 0.8, 0.4 for five nodes), written as the first colour with hue,
+  saturation, luminance and alpha offsets, the hue by the plain difference of the two (accent 5 to 6: -202
+  degrees, measured); the fill, line and effects are the theme's styles by the quick style's references with the
+  placeholder colour replaced; 3-D from the label. The parts we write carry PowerPoint's ids and these parameters.
+- **@raabe/ooxml reads more colour modifiers** (add only): hueOff, hueMod, satOff, alphaOff, alphaMod (PowerPoint
+  writes them for such colours, so Office's SmartArt with spread colours was drawn in one colour before).
+- **Measured** (check_present_smartart_styles.py, 52 slides against PowerPoint's pictures): our drawing equals
+  PowerPoint's drawing as we render it for all 38 colour sets (mean pixel difference 0.12-0.8) and the five 2-D
+  quick styles (0.23-0.49). The nine 3-D quick styles are 4-28 off for PowerPoint's own drawing too: PowerPoint
+  shades the faces by its light rig and material, our renderer does not yet (open).
+- **Von rechts nach links:** the arrangement mirrored in its frame (shapes that are not symmetric flipped), stored
+  as PowerPoint stores it (the document point's layout variable dir = rev). Form darüber / darunter hinzufügen now
+  carry PowerPoint's labels.
+
+## D-102 RaabePresent: placeholder prompts as PowerPoint 365 shows them (2026-11-08)
+
+The prompts were written from memory ("Titel durch Klicken hinzufügen"). PowerPoint's prompts are not in the file
+and not visible to UI Automation, so a PowerPoint of our own on the virtual display was pictured window by window
+(PrintWindow: that window only) with a slide per layout, and the prompts read off the pictures: "Titel
+hinzufügen", "Untertitel hinzufügen", "Text hinzufügen", the picture placeholder a button "Bild einfügen
+(Füllung)", the notes "Klicken Sie, um Notizen hinzuzufügen" (ours already). PROMPTS in @raabe/ooxml's pptx
+reader changed accordingly (only RaabePresent reads it). Not recorded: the master-only kinds (table, chart, SmartArt,
+media), which keep the old wording.
+
+## D-103 RaabePresent: cell bevels and the 3D-Drehung buttons measured (2026-11-08)
+
+- **Zellenabschrägung:** PowerPoint drew a table with each of the twelve bevels (the bevels written by us into
+  PowerPoint's own table; COM refuses ThreeD on cells). Measured from its picture: the face 0.845 as bright, and
+  across each edge a profile of its own per bevel (softRound is dark on the left, angle a flat light band …). The
+  profiles (eight steps over the bevel's width, as blends towards white or black) are kept in cellbevel.gen.ts
+  (make_cellbevel_profiles.py) and drawn as gradients. Mean pixel difference 19.5 before, 3.95 after (cells
+  4.5-6.9). The profiles come from this one picture: other widths and colours are not checked separately.
+- **3D-Drehung's buttons** (probe_powerpoint_8b_ui.py spin, invoked through UI Automation, no input): 5 degrees
+  per click, not 10 as guessed; Links and Uhrzeigersinn lower the value shown, Rechts, Nach oben and Gegen
+  Uhrzeigersinn raise it (Nach unten lowers). Ours does the same.
+
+## D-104 RaabePresent: Entwurf > Varianten > Effekte (2026-11-08)
+
+Office's theme effect schemes as PowerPoint writes them: our own invisible PowerPoint loads each of the 14 effect
+files Office installs into a presentation of its own and saves it; the a:fmtScheme it wrote, with "Office" from a
+new presentation's theme, goes into themeeffects.gen.ts by PowerPoint's German names (their order in PowerPoint's
+gallery, recorded, matches the files'). As D-072 did for the effect presets: format data, no prose. Effekte (Entwurf,
+Folienmaster) replaces the theme's effect scheme. Grunge-Muster's texture is a picture of Office's, which we do not
+ship: that scheme is applied with plain fills in its place.
+
+## D-105 RaabePresent: macro tests against PowerPoint, VBA's random numbers, VBA's shape names (2026-11-08)
+
+- **Test macros of our own** (tools/feel-lab/macros/Tests.bas): replacing a font on all slides, pictures of one
+  width, notes into a file, deleting empty placeholders, a countdown, a quiz with a score (the buttons' macros), a
+  seeded name picker, runtime errors, functions and German formats, and how VBA names shapes. PowerPoint builds the
+  test presentation through COM; our VBA writer adds the module; each test runs on a fresh copy in PowerPoint (COM
+  Application.Run, our own instance, its window on the virtual display, no security setting changed; a watchdog
+  ends VBA's error boxes in that process) and in RaabePresent; the presentations afterwards, the file written and
+  errors are compared: 10/10 the same (check_present_macro_suite.py).
+- **Found and fixed on the way:** VBA's Rnd and Randomize are a 24-bit generator (Rnd with a negative number seeds
+  and steps once; Randomize mixes the halves of the number's high word into the seed), now ours too, so seeded
+  draws equal Office's. VBA sees shapes PowerPoint named itself by English names ("Title 1", "Picture 6",
+  "TextBox 3") although a German file says "Titel 1", and finds them by either name (measured): our object model
+  does the same. The object model gained Shape.Type, PlaceholderFormat, LockAspectRatio (Width keeps the
+  proportions when locked), NotesPage.
+- **Openly licensed code as a stress test:** VBA-JSON (MIT, with the BSD notice of its origin) is in
+  macros/thirdparty with its licence, but not run: the session's safety check refused running downloaded code. It
+  runs only after the owner allows it.
+- **Safety in use** (check_present_macro_security.py, 7/7): a .pptm opens with macros off and the message bar;
+  a macro started before asks first and Abbrechen runs nothing; Inhalt aktivieren enables them; writing a file
+  asks with the file's path every time; Nicht zulassen is Laufzeitfehler '70' and writes nothing; a runtime error
+  shows Office's box (Laufzeitfehler '13':, Beenden, Debuggen).
+
+## D-106 RaabePresent: the macro editor and UserForms in the app (2026-11-08)
+
+- **Editor** (vbaide.ts, Alt+F11 and Makros > Bearbeiten): a window over the app with the project (Formulare,
+  Module, Klassenmodule), code with line numbers and breakpoints (F9, a click in the margin), Ausführen (F5),
+  Unterbrechen, Zurücksetzen, Einzelschritt (F8), Prozedurschritt (Umschalt+F8), Prozedur abschließen
+  (Strg+Umschalt+F8), Direktbereich (Debug.Print; statements typed, while paused in the running macro) and
+  Lokal-Fenster; Einfügen > UserForm / Modul / Klassenmodul. The UserForm designer has Office's Werkzeugsammlung
+  (twelve controls), a 6-pt grid, moving and sizing by mouse, the Eigenschaften list, and a double-click that opens
+  the control's Click (or Change) procedure. The editor knows no PowerPoint: the app gives its modules, saving and
+  object model, so RaabeCalc can open it too.
+- **Shown forms** are windows over the app whose controls run the form's code (also when a macro runs from an
+  action button or the Makros dialog). Runs get the code as the editor shows it, so error lines and breakpoints
+  agree.
+- **Runtime errors** as Office's box: "Laufzeitfehler 'n':", the message, Beenden or Debuggen (opens the editor at
+  the procedure); ours adds the procedure and line.
+- **Measured** (check_present_vbaide.py, headless, 11/11): a form drawn in the designer, its Click written, a
+  breakpoint hit with the Lokal-Fenster showing n = 41, a single step to the next line, Debug.Print's output, the
+  form shown and its button running its code, the project saved with the form.

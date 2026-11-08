@@ -188,7 +188,8 @@ export function effectsTab(spPr: () => Element | undefined, edit: Edit): PaneTab
       r.setAttribute(attr, String(Math.round((((v % 360) + 360) % 360) * ANG)));
     }, "3D-Drehung");
     const persp = !!cam && /perspective/i.test(cam.getAttribute("prst") ?? "");
-    // The buttons beside each angle turn it in steps of 10 degrees.
+    // The buttons beside each angle turn it by 5 degrees, the way PowerPoint's do (measured, D-103: Links and
+    // Uhrzeigersinn lower the value shown, Nach oben raises it).
     const nudge = (attr: "lon" | "lat" | "rev", d: number, a: string, b: string): PaneControl => ({ type: "row", items: [
       { type: "button", label: a, run: () => setRot(attr, num(rot, attr) / ANG + d) },
       { type: "button", label: b, run: () => setRot(attr, num(rot, attr) / ANG - d) }] });
@@ -196,11 +197,11 @@ export function effectsTab(spPr: () => Element | undefined, edit: Edit): PaneTab
     return [
       presets(ROTATIONS_3D, "camera", "rotation", "3D-Drehung", cam && (hasRot || cam.getAttribute("prst") !== "orthographicFront") ? cam : undefined),
       { type: "number", label: "X-Drehung", unit: "°", min: 0, max: 359.9, step: 1, value: () => num(rot, "lon") / ANG, set: (v) => setRot("lon", v) },
-      nudge("lon", 10, "Links", "Rechts"),
+      nudge("lon", -5, "Links", "Rechts"),
       { type: "number", label: "Y-Drehung", unit: "°", min: 0, max: 359.9, step: 1, value: () => num(rot, "lat") / ANG, set: (v) => setRot("lat", v) },
-      nudge("lat", 10, "Nach oben", "Nach unten"),
+      nudge("lat", 5, "Nach oben", "Nach unten"),
       { type: "number", label: "Z-Drehung", unit: "°", min: 0, max: 359.9, step: 1, value: () => num(rot, "rev") / ANG, set: (v) => setRot("rev", v) },
-      nudge("rev", 10, "Uhrzeigersinn", "Gegen Uhrzeigersinn"),
+      nudge("rev", -5, "Uhrzeigersinn", "Gegen Uhrzeigersinn"),
       { type: "number", label: "Perspektive", unit: "°", min: 0.1, max: 120, step: 1, value: () => (persp ? num(cam, "fov", 2700000) / ANG : null),
         set: (v) => edit((sp) => kid(kid(sp, "scene3d"), "camera")?.setAttribute("fov", String(Math.round(v * ANG))), "3D-Drehung"), disabled: () => !persp },
       { type: "number", label: "Abstand vom Boden", unit: " Pt.", min: -4000, max: 4000, step: 0.5, decimals: 1, value: () => num(sp3d(), "z") / PT,

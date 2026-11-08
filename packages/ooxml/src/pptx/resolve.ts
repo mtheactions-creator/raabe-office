@@ -483,14 +483,18 @@ export function readBodyProps(chain: (Element | undefined)[]): BodyProps {
 
 // ----- shapes ---------------------------------------------------------------------------------------------
 
-/** German PowerPoint's prompts for empty placeholders in Normalansicht. */
+/**
+ * German PowerPoint's prompts for empty placeholders in Normalansicht. Title, subtitle, text and picture as
+ * PowerPoint 365 shows them (recorded from its window, D-102: the picture placeholder shows a button with this
+ * label); the rarer kinds (table, chart, SmartArt, media, ClipArt placeholders) not recorded yet.
+ */
 export const PROMPTS: Record<string, string> = {
-  title: "Titel durch Klicken hinzufügen",
-  ctrTitle: "Titel durch Klicken hinzufügen",
-  subTitle: "Untertitel durch Klicken hinzufügen",
-  body: "Text durch Klicken hinzufügen",
-  obj: "Text durch Klicken hinzufügen",
-  pic: "Bild durch Klicken auf Symbol hinzufügen",
+  title: "Titel hinzufügen",
+  ctrTitle: "Titel hinzufügen",
+  subTitle: "Untertitel hinzufügen",
+  body: "Text hinzufügen",
+  obj: "Text hinzufügen",
+  pic: "Bild einfügen (Füllung)",
   tbl: "Tabelle durch Klicken auf Symbol hinzufügen",
   chart: "Diagramm durch Klicken auf Symbol hinzufügen",
   dgm: "SmartArt-Grafik durch Klicken auf Symbol hinzufügen",

@@ -9,7 +9,7 @@ import type { PresentApp } from "./app";
 import * as S from "./shapeops";
 import { SMARTART_LAYOUTS, type CatalogEntry } from "./smartart-catalog.gen";
 import { fitSize, layout } from "./smartart-engine";
-import { CT, NS_DGM, NS_DSP, RT, colorsXml, dataModelXml, drawingXml, frameXml, layoutXml, quickStyleXml, schemeOfColors, type DItem } from "./smartart-parts";
+import { CT, NS_DGM, NS_DSP, RT, colorsXml, dataModelXml, drawingXml, frameXml, layoutXml, quickStyleXml, schemeOfColors, styleOfQuick, type DItem } from "./smartart-parts";
 
 const { kid, kids } = PptxDom;
 
@@ -76,7 +76,10 @@ export async function chooseLayout(current?: string): Promise<CatalogEntry | nul
 }
 
 /** Writes a new diagram's parts and its frame on the slide; returns the frame's id. */
-export function createDiagram(app: PresentApp, entry: CatalogEntry, items: DItem[], box: { x: number; y: number; w: number; h: number }, replace?: Element, scheme = "accent1"): number {
+/** A diagram's look: Farben ändern (colour set), SmartArt-Formatvorlage (quick style), Von rechts nach links. */
+export interface DiagramLook { scheme?: string; style?: string; rtl?: boolean }
+
+export function createDiagram(app: PresentApp, entry: CatalogEntry, items: DItem[], box: { x: number; y: number; w: number; h: number }, replace?: Element, scheme = "accent1_2", look: DiagramLook = {}): number {
   const pptx = app.deck.pptx;
   const slide = app.slidePath()!;
   // A diagram laid out again keeps its parts (the same names and relationships); a new one gets the next free.
@@ -95,12 +98,15 @@ export function createDiagram(app: PresentApp, entry: CatalogEntry, items: DItem
   app.editor.edit(replace ? "SmartArt" : "SmartArt einfügen", () => {
     const rids = { dm: pptx.link(slide, RT.data, p.data), lo: pptx.link(slide, RT.layout, p.layout), qs: pptx.link(slide, RT.style, p.style), cs: pptx.link(slide, RT.colors, p.colors) };
     const drawRel = pptx.link(slide, RT.drawing, p.drawing);
-    const { xml, ids } = dataModelXml(items, { layoutId: entry.id, layoutCat: entry.category, drawingRel: drawRel, scheme });
+    const { xml, ids } = dataModelXml(items, { layoutId: entry.id, layoutCat: entry.category, drawingRel: drawRel, scheme, style: look.style, rtl: look.rtl });
     pptx.put(p.data, xml, CT.data);
     pptx.put(p.layout, layoutXml(entry.id, entry.category, entry.name), CT.layout);
-    pptx.put(p.style, quickStyleXml(), CT.style);
+    pptx.put(p.style, quickStyleXml(look.style), CT.style);
     pptx.put(p.colors, colorsXml(scheme), CT.colors);
-    pptx.put(p.drawing, drawingXml(drawItems(entry, items, box.w, box.h), ids, items.map((i) => i.text), scheme), CT.drawing);
+    // The theme's colours and format matrix: the drawing resolves the quick style's references as PowerPoint does (D-101).
+    const th = app.deck.view(slide).theme;
+    const theme = { colors: th.colors, fills: th.matrix.fills, lines: th.matrix.lines, effects: th.matrix.effects };
+    pptx.put(p.drawing, drawingXml(drawItems(entry, items, box.w, box.h), ids, items.map((i) => i.text), scheme, { style: look.style, theme, rtl: look.rtl, width: box.w }), CT.drawing);
     const doc = pptx.doc(slide);
     const tree = S.treeOf(doc);
     id = replace ? Number(replace.getElementsByTagNameNS(PptxDom.NS_P, "cNvPr")[0]?.getAttribute("id")) || S.maxId(tree) + 1 : S.maxId(tree) + 1;
@@ -123,7 +129,7 @@ export async function insertSmartArt(app: PresentApp): Promise<void> {
 }
 
 /** The diagram's items (texts and levels) from its data model, and its parts. */
-export function diagramOf(app: PresentApp, id: number): { el: Element; data: string; drawing?: string; layoutId: string; scheme: string; items: DItem[] } | null {
+export function diagramOf(app: PresentApp, id: number): { el: Element; data: string; drawing?: string; layoutId: string; scheme: string; style: string; rtl: boolean; items: DItem[] } | null {
   const path = app.slidePath();
   const el = path ? app.editor.shapeEl(id) : undefined;
   const rel = el?.getElementsByTagNameNS(NS_DGM, "relIds")[0];
@@ -135,6 +141,9 @@ export function diagramOf(app: PresentApp, id: number): { el: Element; data: str
   const docPt = pts.find((p) => p.getAttribute("type") === "doc");
   const layoutId = kid(docPt, "prSet")?.getAttribute("loTypeId") ?? SMARTART_LAYOUTS[0].id;
   const scheme = schemeOfColors(kid(docPt, "prSet")?.getAttribute("csTypeId"));
+  const style = styleOfQuick(kid(docPt, "prSet")?.getAttribute("qsTypeId"));
+  const dir = kid(kid(kid(docPt, "prSet"), "presLayoutVars"), "dir");
+  const rtl = dir?.getAttribute("val") === "rev";
   const parent = new Map<string, { src: string; ord: number }>();
   for (const c of Array.from(doc.getElementsByTagNameNS(NS_DGM, "cxn"))) if ((c.getAttribute("type") ?? "parOf") === "parOf") parent.set(c.getAttribute("destId") ?? "", { src: c.getAttribute("srcId") ?? "", ord: Number(c.getAttribute("srcOrd") ?? 0) });
   const docId = docPt?.getAttribute("modelId") ?? "";
@@ -147,25 +156,37 @@ export function diagramOf(app: PresentApp, id: number): { el: Element; data: str
   walk(docId, 0);
   const ext = doc.getElementsByTagNameNS(NS_DSP, "dataModelExt")[0];
   const drawing = ext ? app.deck.pptx.target(path, ext.getAttribute("relId") ?? "") : undefined;
-  return { el, data, drawing, layoutId, scheme, items };
+  return { el, data, drawing, layoutId, scheme, style, rtl, items };
 }
 
 /**
  * Lays a diagram out again with new items or another layout: its data model and drawing are written anew (the
  * same frame, the same parts' names through a new diagram), in one undo step.
  */
-export function relayout(app: PresentApp, id: number, items: DItem[], layoutId?: string, scheme?: string): void {
+export function relayout(app: PresentApp, id: number, items: DItem[], layoutId?: string, scheme?: string, look: DiagramLook = {}): void {
   const d = diagramOf(app, id);
   if (!d) return;
   const xf = kid(kid(d.el, "xfrm"), "off"), ext = kid(kid(d.el, "xfrm"), "ext");
   const box = { x: Number(xf?.getAttribute("x") ?? 0), y: Number(xf?.getAttribute("y") ?? 0), w: Number(ext?.getAttribute("cx") ?? 0), h: Number(ext?.getAttribute("cy") ?? 0) };
-  createDiagram(app, entryById(layoutId ?? d.layoutId), items.length ? items : [{ text: "", level: 0 }], box, d.el, scheme ?? d.scheme);
+  createDiagram(app, entryById(layoutId ?? d.layoutId), items.length ? items : [{ text: "", level: 0 }], box, d.el, scheme ?? d.scheme, { style: look.style ?? d.style, rtl: look.rtl ?? d.rtl });
 }
 
 /** Farben ändern. */
 export function setColors(app: PresentApp, id: number, scheme: string): void {
   const d = diagramOf(app, id);
   if (d) relayout(app, id, d.items, undefined, scheme);
+}
+
+/** SmartArt-Formatvorlagen (D-101). */
+export function setQuickStyle(app: PresentApp, id: number, style: string): void {
+  const d = diagramOf(app, id);
+  if (d) relayout(app, id, d.items, undefined, undefined, { style });
+}
+
+/** Von rechts nach links: the arrangement mirrored, on and off (D-101). */
+export function toggleRtl(app: PresentApp, id: number): void {
+  const d = diagramOf(app, id);
+  if (d) relayout(app, id, d.items, undefined, undefined, { rtl: !d.rtl });
 }
 
 /** SmartArt-Design commands on the selected diagram's items (the item at `at`, from the Textbereich or the end). */

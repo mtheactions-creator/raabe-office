@@ -92,7 +92,7 @@ def main() -> None:
             out[name] = {"powerpoint": {k: ppt[k] for k in ("width", "height", "duration")}, "ours": {k: ours[k] for k in ("width", "height", "duration")},
                          "compare": compare(ppt["rows"], ours["rows"]), "powerpoint_rows": ppt["rows"], "our_rows": ours["rows"]}
         b64 = page.js("""(async () => { const v = await import('/src/video.ts');
-            const b = await v.makeGif(window.__present.app, { height: 480, fps: 16, secs: 1, useTimings: true, roundWidth: true });
+            const b = await v.makeGif(window.__present.app, { height: 480, fps: 16, secs: 1, useTimings: true, roundWidth: true, gifTiming: true });
             let s = ''; for (let i = 0; i < b.length; i += 0x8000) s += String.fromCharCode(...b.subarray(i, i + 0x8000)); return btoa(s); })()""")
         gif = base64.b64decode(b64)
         (CAP / "ours.gif").write_bytes(gif)

@@ -1,0 +1,46 @@
+{
+ "date": "2026-11-08",
+ "checks": {
+  "powerpoint_opens": true,
+  "form_loads_and_reads": true,
+  "frame_form_loads": true,
+  "ours_same": true,
+  "powerpoint_keeps_forms": true,
+  "frame_read_back": true
+ },
+ "opened": true,
+ "Pruefe": "5|Los|Name:|60|Gelesen",
+ "PruefeRahmen": "3|2|Ja",
+ "close": {
+  "closed": 1,
+  "quit": true,
+  "left_open": 0
+ },
+ "ours": [
+  "5|Los|Name:|60|Gelesen",
+  "3|2|Ja"
+ ],
+ "read_back": [
+  {
+   "name": "UserForm1",
+   "caption": "Anmeldung",
+   "controls": [
+    "CommandButton:CommandButton1:Los",
+    "Label:Label1:Name:",
+    "TextBox:TextBox1:",
+    "CheckBox:CheckBox1:Gelesen",
+    "ListBox:ListBox1:"
+   ]
+  },
+  {
+   "name": "UserForm2",
+   "caption": "UserForm2",
+   "controls": [
+    "Frame:Frame1:Auswahl",
+    "OptionButton:OptionButton1:Ja",
+    "TextBox:TextBox2:"
+   ]
+  }
+ ],
+ "summary": "6/6"
+}

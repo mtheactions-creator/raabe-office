@@ -7,7 +7,19 @@ const SIG = [0xd0, 0xcf, 0x11, 0xe0, 0xa1, 0xb1, 0x1a, 0xe1];
 const FREE = 0xffffffff, END = 0xfffffffe, FATSECT = 0xfffffffd, NOSTREAM = 0xffffffff;
 
 /** The streams of a compound file by path ("VBA/dir", "PROJECT" …). */
-export function readCfb(b: Uint8Array): Map<string, Uint8Array> {
+export function readCfb(b: Uint8Array): Map<string, Uint8Array> { return parseCfb(b).streams; }
+
+/** The class ids (CLSIDs) of the storages that have one, by path ("" is the root): a UserForm's designer storage
+ *  carries the form's class, a Frame's storage the Frame's. */
+export function readCfbStorages(b: Uint8Array): Map<string, string> { return parseCfb(b).clsids; }
+
+const clsidAt = (d: Uint8Array, o: number): string | null => {
+  if (d.subarray(o, o + 16).every((x) => x === 0)) return null;
+  const x = (i: number) => d[o + i].toString(16).padStart(2, "0").toUpperCase();
+  return `{${x(3)}${x(2)}${x(1)}${x(0)}-${x(5)}${x(4)}-${x(7)}${x(6)}-${x(8)}${x(9)}-${[10, 11, 12, 13, 14, 15].map(x).join("")}}`;
+};
+
+function parseCfb(b: Uint8Array): { streams: Map<string, Uint8Array>; clsids: Map<string, string> } {
   const v = new DataView(b.buffer, b.byteOffset, b.byteLength);
   for (let i = 0; i < 8; i++) if (b[i] !== SIG[i]) throw new Error("not a compound file");
   const ssz = 1 << v.getUint16(30, true), mssz = 1 << v.getUint16(32, true);
@@ -40,7 +52,7 @@ export function readCfb(b: Uint8Array): Map<string, Uint8Array> {
     const o = i * 128;
     const nl = dv.getUint16(o + 64, true);
     const name = String.fromCharCode(...Array.from({ length: Math.max(0, nl / 2 - 1) }, (_, k) => dv.getUint16(o + k * 2, true)));
-    return { name, type: dir[o + 66], left: dv.getUint32(o + 68, true), right: dv.getUint32(o + 72, true), child: dv.getUint32(o + 76, true), start: dv.getUint32(o + 116, true), size: dv.getUint32(o + 120, true) };
+    return { name, type: dir[o + 66], left: dv.getUint32(o + 68, true), right: dv.getUint32(o + 72, true), child: dv.getUint32(o + 76, true), start: dv.getUint32(o + 116, true), size: dv.getUint32(o + 120, true), clsid: clsidAt(dir, o + 80) };
   });
   // The mini stream (the root's data) and the mini FAT.
   const root = entries[0];
@@ -54,6 +66,8 @@ export function readCfb(b: Uint8Array): Map<string, Uint8Array> {
     return out;
   };
   const out = new Map<string, Uint8Array>();
+  const clsids = new Map<string, string>();
+  if (root.clsid) clsids.set("", root.clsid);
   const walk = (id: number, prefix: string, seen = new Set<number>()) => {
     if (id === NOSTREAM || id >= entries.length || seen.has(id)) return;
     seen.add(id);
@@ -62,10 +76,10 @@ export function readCfb(b: Uint8Array): Map<string, Uint8Array> {
     walk(e.right, prefix, seen);
     const path = prefix ? `${prefix}/${e.name}` : e.name;
     if (e.type === 2) out.set(path, e.size < cutoff ? readMini(e.start, e.size) : read(e.start, e.size));
-    else if (e.type === 1) walk(e.child, path, seen);
+    else if (e.type === 1) { if (e.clsid) clsids.set(path, e.clsid); walk(e.child, path, seen); }
   };
   walk(root.child, "");
-  return out;
+  return { streams: out, clsids };
 }
 
 /** Names compare as in MS-CFB: shorter first, then by upper case. */
@@ -75,18 +89,19 @@ function cmp(a: string, b: string): number {
   return A < B ? -1 : A > B ? 1 : 0;
 }
 
-/** A compound file with these streams (paths with "/" make storages). Small streams go into the mini stream. */
-export function writeCfb(streams: Map<string, Uint8Array>): Uint8Array {
+/** A compound file with these streams (paths with "/" make storages). Small streams go into the mini stream.
+ *  `clsids` gives storages their class id by path (a UserForm's designer storage, a Frame's storage). */
+export function writeCfb(streams: Map<string, Uint8Array>, clsids?: Map<string, string>): Uint8Array {
   const SSZ = 512, MSZ = 64, CUTOFF = 4096;
   // The tree of storages and streams.
-  interface Node { name: string; type: 1 | 2 | 5; data?: Uint8Array; kids: Node[]; id?: number; start?: number }
-  const root: Node = { name: "Root Entry", type: 5, kids: [] };
+  interface Node { name: string; type: 1 | 2 | 5; data?: Uint8Array; kids: Node[]; id?: number; start?: number; path: string }
+  const root: Node = { name: "Root Entry", type: 5, kids: [], path: "" };
   for (const [path, data] of streams) {
     const parts = path.split("/");
     let cur = root;
     parts.forEach((p, i) => {
       let next = cur.kids.find((k) => k.name === p);
-      if (!next) { next = { name: p, type: i === parts.length - 1 ? 2 : 1, kids: [], data: i === parts.length - 1 ? data : undefined }; cur.kids.push(next); }
+      if (!next) { next = { name: p, type: i === parts.length - 1 ? 2 : 1, kids: [], data: i === parts.length - 1 ? data : undefined, path: parts.slice(0, i + 1).join("/") }; cur.kids.push(next); }
       cur = next;
     });
   }
@@ -140,6 +155,8 @@ export function writeCfb(streams: Map<string, Uint8Array>): Uint8Array {
     dir[o + 67] = 1; // black
     dv.setUint32(o + 68, NOSTREAM, true); dv.setUint32(o + 72, NOSTREAM, true);
     dv.setUint32(o + 76, NOSTREAM, true);
+    const cls = n.type !== 2 ? clsids?.get(n.path) : undefined;
+    if (cls) { const h = cls.replace(/[{}-]/g, ""); const by = (i: number) => parseInt(h.slice(i * 2, i * 2 + 2), 16); [by(3), by(2), by(1), by(0), by(5), by(4), by(7), by(6), ...Array.from({ length: 8 }, (_, i) => by(8 + i))].forEach((x, i) => { dir[o + 80 + i] = x; }); }
     dv.setUint32(o + 116, n.type === 1 ? 0 : n.start ?? END, true);
     dv.setUint32(o + 120, n.type === 5 ? miniStream.length : n.data?.length ?? 0, true);
   }
