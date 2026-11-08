@@ -552,7 +552,7 @@ class Sweeper:
                     minidom.parseString(z.read(n))
                     # Values PowerPoint refuses although the XML is well formed (found by opening the sweep's files in
                     # PowerPoint, D-137): colours that are no hex value and no scheme colour.
-                    bad = BAD_COLOR.search(text) or BAD_SCHEME.search(text)
+                    bad = BAD_COLOR.search(text) or BAD_SCHEME.search(text) or BAD_AUTONUM.search(text)
                     if bad:
                         return {"ok": False, "why": f"invalid colour in {n}: {bad.group(0)[:80]}", "file": f.name}
         except Exception as e:  # noqa: BLE001
@@ -702,6 +702,7 @@ def walk_ribbon(sw: Sweeper, ctx: str, tab: str, args, results: list, inventory:
 SAMPLE = 12
 BAD_COLOR = re.compile(r'<a:srgbClr val="(?![0-9A-Fa-f]{6}")[^"]*"')
 SCHEME = "bg1|tx1|bg2|tx2|accent1|accent2|accent3|accent4|accent5|accent6|hlink|folHlink|phClr|dk1|lt1|dk2|lt2"
+BAD_AUTONUM = re.compile(r'<a:buAutoNum type="none"')
 BAD_SCHEME = re.compile(r'<a:schemeClr val="(?!(?:' + SCHEME + r')")[^"]*"')
 NONDET = {"smartart", "chart", "picture", "freistellen", "equation"}
 

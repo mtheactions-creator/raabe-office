@@ -770,7 +770,8 @@ export class PresentApp implements EditorHost, PanelHost {
   /** Aufzählungszeichen / Nummerierung on and off, as PowerPoint writes them. */
   private toggleBullets(kind: "char" | "auto", value = kind === "char" ? "•" : "arabicPeriod"): void {
     const p = this.paraStyle();
-    const on = !(p?.bullet && p.bullet.kind === kind && (kind === "char" ? p.bullet.char === value : p.bullet.autoType === value));
+    // Nummerierung > Keine switches the list off (by hand, D-140: it wrote buAutoNum type="none", which PowerPoint refuses).
+    const on = value !== "none" && !(p?.bullet && p.bullet.kind === kind && (kind === "char" ? p.bullet.char === value : p.bullet.autoType === value));
     this.formatParas(kind === "char" ? "Aufzählungszeichen" : "Nummerierung", (pPr) => {
       for (const c of kids(pPr)) if (["buNone", "buChar", "buAutoNum", "buBlip", "buFont", "buFontTx"].includes(c.localName)) c.remove();
       const doc = pPr.ownerDocument;

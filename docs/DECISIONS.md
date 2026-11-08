@@ -3193,4 +3193,5 @@ Automatisch written as `<a:schemeClr val="auto"/>`. Now: highlights are written 
 the run's own colour away (Schriftfarbe: the design's text colour shows), the shape's own fill or line colour away
 (Fülleffekt, Formkontur: the shape style's shows), and colorEl/colorXml never write "auto" (tx1 instead). The sweep's
 save check now refuses any srgbClr that is not six hex digits and any schemeClr outside the scheme's names, so this
-kind of fault shows without PowerPoint.
+kind of fault shows without PowerPoint. Opening 600 files of the exe sweep afterwards found one more: Nummerierung >
+Keine wrote `<a:buAutoNum type="none"/>`; it switches the list off now (buNone), and the save check refuses that too.
