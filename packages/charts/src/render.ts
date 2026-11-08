@@ -879,12 +879,16 @@ function drawAxes(c: Ctx, area: { left: number; right: number; top: number; bott
   const valLabelAt = va?.labelPos === "low" ? (xa?.reverse ? vEdgeEnd : vEdgeStart) : va?.labelPos === "high" ? (xa?.reverse ? vEdgeStart : vEdgeEnd) : valAxisAt;
   const valOutward = Math.abs(valLabelAt - vEdgeEnd) < 0.5 ? 1 : -1; // +1: right (bars: up)
   const vt = vt0;
+  // Benutzerdefinierter Winkel and Textrichtung of the value labels.
+  const vb = va?.text?.box;
+  const valRot = vb?.dir === "vert" ? 90 : vb?.dir === "vert270" ? -90 : vb?.rotation;
+  const vr = valRot ? { rotate: valRot } : {};
   vTicks.forEach((v, i) => {
     const t = vLabels[i];
     if (!t) return;
     const p = vPos(v);
-    if (bar) c.prims.push({ t: "text", x: p, y: valOutward > 0 ? valLabelAt - 5 : valLabelAt + 14 + (vt.size - LOOK.labelSize), text: t, ...textAttrs(vt), anchor: "middle", part: "axis:val" });
-    else c.prims.push({ t: "text", x: valLabelAt + (valOutward > 0 ? LABEL_GAP : -LABEL_GAP), y: p + 2.5, text: t, ...textAttrs(vt), anchor: valOutward > 0 ? "start" : "end", part: "axis:val" });
+    if (bar) c.prims.push({ t: "text", x: p, y: valOutward > 0 ? valLabelAt - 5 : valLabelAt + 14 + (vt.size - LOOK.labelSize), text: t, ...textAttrs(vt), anchor: "middle", ...vr, part: "axis:val" });
+    else c.prims.push({ t: "text", x: valLabelAt + (valOutward > 0 ? LABEL_GAP : -LABEL_GAP), y: p + 2.5, text: t, ...textAttrs(vt), anchor: valOutward > 0 ? "start" : "end", ...vr, part: "axis:val" });
   });
   if (unitLabel) {
     // Anzeigeeinheitenbeschriftung: beside the labels at the axis' far end.

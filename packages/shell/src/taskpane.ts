@@ -175,6 +175,8 @@ export class TaskPane {
         const commit = () => {
           const n = parseFloat(input.value.replace(",", ".").replace(/[^\d.-]/g, ""));
           if (!Number.isFinite(n)) { input.value = fmt(c.value()); return; }
+          // Enter commits, and Chromium fires change after it too: the same value is not set twice (one undo step).
+          if (n === c.value()) { input.value = fmt(n); return; }
           c.set(Math.max(c.min ?? -Infinity, Math.min(c.max ?? Infinity, n)));
           changed();
         };

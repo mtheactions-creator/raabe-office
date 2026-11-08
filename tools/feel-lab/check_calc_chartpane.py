@@ -45,8 +45,10 @@ KINDS = ["column", "bar", "lineMarkers", "pie", "scatter", "area", "combo"]
 # Buttons that open a native dialog or read the clipboard are not pressed by the sweep.
 SKIP_BUTTONS = {"Einfügen...", "Zwischenablage"}
 # Controls whose effect is not drawn (stored only): their unchanged picture is correct.
-INVISIBLE = {"Gesperrt", "Objekt drucken", "Titel", "Beschreibung", "Seitenverhältnis sperren", "Von Zellposition abhängig, nicht von Größe",
-             "Von Zellposition und -größe unabhängig", "Von Zellposition und -größe abhängig", "Mit Form drehen", "Bereich der Datenbeschriftung"}
+INVISIBLE = {"Gesperrt", "Objekt drucken", "Titel", "Beschreibung", "Seitenverhältnis sperren", "Nur von Zellposition abhängig",
+             "Von Zellposition und -größe unabhängig", "Von Zellposition und -größe abhängig", "Mit Form drehen", "Bereich der Datenbeschriftung",
+             # Vertical alignment inside a box that fits its text, a unit of tick marks or gridlines not shown: Excel shows no change either.
+             "Vertikale Ausrichtung", "Teilstriche"}
 
 
 def calc_side() -> CalcSide:
@@ -121,10 +123,11 @@ PANE = r"""(() => {
   const r = (el) => { const b = el.getBoundingClientRect(); return [b.left + b.width / 2, b.top + b.height / 2, b.width, b.height]; };
   const sets = [...p.querySelectorAll('.tp-set')].map((b) => ({ label: b.textContent.replace('˅', '').trim(), on: b.classList.contains('on'), at: r(b) }));
   const tabs = [...p.querySelectorAll('.tp-tab')].map((b) => ({ label: b.getAttribute('aria-label'), on: b.classList.contains('on'), at: r(b) }));
-  const secs = [...p.querySelectorAll('.tp-sec')].map((s) => {
+  const secs = [...p.querySelectorAll('.tp-sec')].map((s, si) => {
     const head = s.querySelector('.tp-sec-head');
     const ctrls = [];
-    for (const el of s.querySelectorAll('.tp-sec-body > *')) {
+    for (const [ci, el] of [...s.querySelectorAll('.tp-sec-body > *')].entries()) {
+      el.dataset.sweep = si + ':' + ci;
       const label = (el.querySelector('.tp-label')?.textContent ?? el.textContent ?? '').trim();
       const inp = el.querySelector('input,select,button');
       let kind = 'other';
@@ -140,7 +143,7 @@ PANE = r"""(() => {
       else if (el.classList.contains('tp-pattern-box')) kind = 'pattern';
       const disabled = !!(inp && inp.disabled);
       const checked = !!el.querySelector('input:checked');
-      const c = { kind, label, disabled, checked };
+      const c = { kind, label, disabled, checked, id: si + ':' + ci };
       if (kind === 'radio' || kind === 'check') c.at = r(el.querySelector('input'));
       if (kind === 'select') { const s = el.querySelector('select'); c.at = r(s); c.value = s.value; c.n = s.options.length; c.index = s.selectedIndex; }
       if (kind === 'number') { c.at = r(el.querySelector('input.tp-num')); c.value = el.querySelector('input.tp-num').value; const up = el.querySelector('.tp-spin button'); if (up) c.up = r(up); const sl = el.querySelector('.tp-slider'); if (sl) { c.slider = r(sl); } const rs = el.querySelector('.tp-reset'); if (rs && !rs.disabled) c.reset = r(rs); }
@@ -245,8 +248,6 @@ class Sweep:
             d.click(*c["at"][:2])
             return "click"
         if k == "select":
-            d.click(*c["at"][:2])
-            d.key("Escape")
             d.js(f"(() => {{ const s = [...document.querySelectorAll('.taskpane select')].find((x) => {{ const b = x.getBoundingClientRect(); return Math.abs(b.left + b.width / 2 - {c['at'][0]}) < 2 && Math.abs(b.top + b.height / 2 - {c['at'][1]}) < 2; }}); s && s.focus(); }})()")
             d.key("ArrowUp" if c["index"] == c["n"] - 1 else "ArrowDown")
             return "arrow key"
@@ -327,32 +328,35 @@ class Sweep:
                     self.sweep_section(el, p["sets"][si]["label"], tab, ki)
 
     def sweep_section(self, el: str, set_label: str, tab: str, ki: int) -> None:
-        n = len(self.pane()["secs"][ki]["controls"])
-        done: set[str] = set()
-        i = 0
-        while i < n and i < 80:
+        p = self.pane()
+        if not p or ki >= len(p["secs"]):
+            return
+        for i in range(len(p["secs"][ki]["controls"])):
             p = self.pane()
             if not p or ki >= len(p["secs"]):
                 break
             ctrls = p["secs"][ki]["controls"]
-            n = len(ctrls)
-            if i >= n:
+            if i >= len(ctrls):
                 break
-            c = ctrls[i]
-            key = f"{c['kind']}:{c['label']}:{i}"
-            i += 1
-            if key in done:
-                continue
-            done.add(key)
-            uses = [c]
-            if c["kind"] == "number" and c.get("up") and not c.get("disabled"):
-                uses.append({**c, "kind": "spin"})
-            for u in uses:
-                self.one(el, set_label, tab, p["secs"][ki]["title"], u)
+            self.use_all(el, set_label, tab, ki, ctrls[i], 0)
 
-    def one(self, el: str, set_label: str, tab: str, sec: str, c: dict) -> None:
+    def use_all(self, el: str, set_label: str, tab: str, ki: int, c: dict, depth: int) -> None:
+        sec = self.pane()["secs"][ki]["title"]
+        self.one(el, set_label, tab, sec, ki, c, depth)
+        if c["kind"] == "number" and c.get("up") and not c.get("disabled"):
+            self.one(el, set_label, tab, sec, ki, {**c, "kind": "spin"}, depth)
+
+    def one(self, el: str, set_label: str, tab: str, sec: str, ki: int, c: dict, depth: int) -> None:
         d = self.d
+        # The control into view (the pane's body scrolls), then its place again.
+        d.js(f"(() => {{ const e = document.querySelector('.taskpane [data-sweep=\"{c['id']}\"]'); e && e.scrollIntoView({{block: 'center'}}); }})()")
+        time.sleep(0.03)
+        p = self.pane()
+        fresh = next((x for x in (p["secs"][ki]["controls"] if p and ki < len(p["secs"]) else []) if x["id"] == c["id"] and x["label"] == c["label"]), None)
+        if fresh:
+            c = {**fresh, "kind": c["kind"]} if c["kind"] == "spin" else fresh
         before = self.state()
+        shown = {(x["kind"], x["label"]) for x in self.pane()["secs"][ki]["controls"]}
         if c["kind"] == "spin":
             d.click(*c["up"][:2])
             how = "spin up"
@@ -361,34 +365,45 @@ class Sweep:
         if how is None:
             if c["kind"] not in ("heading", "other") and not c.get("checked"):
                 self.results.append({"kind": self.kind, "element": el, "set": set_label, "tab": tab, "section": sec, "control": c["label"], "type": c["kind"], "skipped": True,
-                                     "why": "disabled" if c.get("disabled") else "not pressed"})
+                                     "why": "disabled" if c.get("disabled") else "not pressed", "depth": depth})
             return
         time.sleep(0.12)
-        # Close a popup a control left open (colour palette).
-        d.js("document.querySelector('.popup') && document.dispatchEvent(new KeyboardEvent('keydown', {key: 'Escape'}))")
         after = self.state()
         changed = after["model"] != before["model"] or after["from"] != before["from"]
         drawn = after["pic"] != before["pic"]
         rec = {"kind": self.kind, "element": el, "set": set_label, "tab": tab, "section": sec, "control": c["label"], "type": c["kind"], "how": how,
-               "changed": changed, "drawn": drawn}
+               "changed": changed, "drawn": drawn, "depth": depth}
+        self.results.append(rec)
         if changed:
             self.models.append({"label": f"{el} / {sec} / {c['label']} ({how})", "model": json.loads(after["model"]), "base": json.loads(before["model"]), "drawn": drawn})
             rec["file_index"] = len(self.models) - 1
+            # Controls this choice revealed (Farbverlauf's stops, Musterfüllung's tiles …) are used before it is undone.
+            if depth < 2 and c["kind"] in ("radio", "select", "check"):
+                p = self.pane()
+                if p and ki < len(p["secs"]):
+                    fresh = [(k, x) for k, x in enumerate(p["secs"][ki]["controls"]) if (x["kind"], x["label"]) not in shown]
+                    for k, _x in fresh:
+                        q = self.pane()
+                        if not q or ki >= len(q["secs"]) or k >= len(q["secs"][ki]["controls"]):
+                            break
+                        self.use_all(el, set_label, tab, ki, q["secs"][ki]["controls"][k], depth + 1)
             self.undo()
             back = self.state()
             rec["undo_model"] = back["model"] == before["model"] and back["from"] == before["from"]
             rec["undo_drawn"] = back["pic"] == before["pic"]
             rec["pane_after_undo"] = self.pane() is not None and back["el"] == before["el"]
-            if not rec["pane_after_undo"] and self.pane() is None:
+            if self.pane() is None:
                 # The pane closed: open it again on the same element.
                 d.click(*d.js("(() => { const b = document.querySelectorAll('.chart-obj')[document.querySelectorAll('.chart-obj').length - 1].getBoundingClientRect(); return [b.left + 12, b.top + 12]; })()"))
                 d.key("1", ctrl=True)
                 self.choose(el)
-        rec["ok"] = changed and (drawn or c["label"] in INVISIBLE or not visible_expected(rec)) and rec.get("undo_model", False) and rec.get("undo_drawn", False)
+        rec["ok"] = bool(changed and (drawn or c["label"] in INVISIBLE) and rec.get("undo_model") and rec.get("undo_drawn"))
         if not changed:
-            rec["ok"] = False
             rec["why"] = "no change"
-        self.results.append(rec)
+        elif not drawn and c["label"] not in INVISIBLE:
+            rec["why"] = "not drawn"
+        elif not (rec.get("undo_model") and rec.get("undo_drawn")):
+            rec["why"] = "undo"
 
 
 def visible_expected(rec: dict) -> bool:
@@ -428,7 +443,7 @@ def to_files(c: CalcSide, kind: str, models: list[dict]) -> Path | None:
     return path
 
 
-def reopen(c: CalcSide, path: Path, models: list[dict]) -> list[bool]:
+def reopen(c: CalcSide, path: Path, models: list[dict]) -> list[tuple[bool, str]]:
     c.js(f"__calc.open({json.dumps(str(path))})")
     time.sleep(0.5)
     got = c.js("JSON.parse(JSON.stringify(__calc.app.sheet.charts.map((m) => { const { raw, from, to, name, ...rest } = m; return rest; })))")
@@ -436,8 +451,23 @@ def reopen(c: CalcSide, path: Path, models: list[dict]) -> list[bool]:
     for m, g in zip(models, got or []):
         want = dict(m["model"])
         want.pop("name", None)
-        out.append(canon(want) == canon(g))
-    return out + [False] * (len(models) - len(got or []))
+        a, b = canon(want), canon(g)
+        out.append((a == b, "; ".join(diff(a, b))[:400]))
+    return out + [(False, "missing")] * (len(models) - len(got or []))
+
+
+def diff(a, b, path: str = "") -> list[str]:
+    if isinstance(a, dict) and isinstance(b, dict):
+        out = []
+        for k in sorted(set(a) | set(b)):
+            out += diff(a.get(k), b.get(k), f"{path}.{k}")
+        return out
+    if isinstance(a, list) and isinstance(b, list) and len(a) == len(b):
+        out = []
+        for i, (x, y) in enumerate(zip(a, b)):
+            out += diff(x, y, f"{path}[{i}]")
+        return out
+    return [] if a == b else [f"{path}: {json.dumps(a, ensure_ascii=False)[:80]} -> {json.dumps(b, ensure_ascii=False)[:80]}"]
 
 
 def canon(x):
@@ -503,7 +533,10 @@ def main() -> None:
             back = reopen(c, path, s.models) if path else []
             for r in s.results:
                 if "file_index" in r:
-                    r["reopened"] = back[r["file_index"]] if r["file_index"] < len(back) else False
+                    ok, why = back[r["file_index"]] if r["file_index"] < len(back) else (False, "missing")
+                    r["reopened"] = ok
+                    if not ok:
+                        r["reopen_diff"] = why
             report["kinds"][kind] = {"results": s.results, "file": path.name if path else None, "seconds": round(time.time() - t0)}
             if path and not a.no_excel:
                 report["kinds"][kind]["excel"] = excel_check(path, s.models, kind)
