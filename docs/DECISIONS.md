@@ -3204,3 +3204,20 @@ keeps them from the lowest up. probe_excel_cf_galleries.py was written to read e
 Excel with real clicks; it could not finish tonight (the foreground was taken by other runs twice), so the colours
 follow Excel's known defaults (F8696B, FFEB84, 63BE7B, 5A8AC6, FCFCFF, FFEF9C) and the same order as RaabeCalc's
 Schnellanalyse already used; the probe is there for the owner's next free evening.
+
+## D-144 RaabeCalc: Datei > Drucken with Excel's settings, and the real-input pass (2026-11-09)
+
+**Drucken** had Hochformat/Querformat and the paper size only. Added, as on Excel's page: what to print (Aktive
+Blätter drucken, Gesamte Arbeitsmappe drucken, Auswahl drucken), Seiten von ... bis, Seitenränder (Normale, Breite,
+Schmale, Benutzerdefinierte Seitenränder) and Skalierung (Keine Skalierung, Blatt auf einer Seite darstellen, Alle
+Spalten / Alle Zeilen auf einer Seite darstellen, Benutzerdefinierte Skalierungsoptionen...). What and which pages
+hold for this printing only, as in Excel; margins and scaling are the sheet's page setup (one undo step each, saved).
+The preview follows every choice. Exemplare and the printer stay with the system's print dialog.
+**Real input** (check_calc_realinput.py, under the real-input lock, every click only into our own window checked to be
+in front): the font list (open, scroll, pick), Schriftgrad typed with Enter, Füllfarbe (a colour, Keine Füllung),
+Schriftfarbe, Zellenformatvorlagen, Rahmen, a submenu of Bedingte Formatierung into its dialog with a value and Enter,
+Strg+1 with Tab staying inside Zellen formatieren and Esc closing it, the sheet tab's context menu with Registerfarbe,
+the Skalierung spinner, Sortieren of one column through the Sortierwarnung with Enter, and Strg+Z after it: 14 of 14
+on the release build of this night (12 of 14 on the first run, both misses in the test's own selectors).
+Number formats chosen on the ribbon or in Zellen formatieren now widen columns of standard width whose numbers no
+longer fit, as Excel does (Datum, lang showed ####).
