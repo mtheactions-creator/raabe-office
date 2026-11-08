@@ -139,6 +139,8 @@ export interface ChartFormat {
   minorGrid?: ElementFormat & { show?: boolean };
   /** Primäre vertikale Hauptgitternetzlinien (category axis). */
   catGrid?: ElementFormat & { show?: boolean };
+  /** Primäre vertikale Hilfsgitternetzlinien (category axis; Diagrammelemente > Gitternetzlinien, D-115). */
+  catMinorGrid?: ElementFormat & { show?: boolean };
   axisTitles?: { cat?: ElementFormat; val?: ElementFormat };
   /** Datenbeschriftungen of all series. */
   dataLabels?: DataLabelOptions;
@@ -171,6 +173,8 @@ export interface ChartSeries {
   levels?: (string | null)[][];
   /** Wasserfall: the points shown as Summe (Als Summe festlegen). */
   totals?: number[];
+  /** Hidden by Diagrammfilter (D-116): kept in the chart and the file (c15:filtered…Series) but not drawn. */
+  filtered?: boolean;
 }
 
 /** The 3-D view (Diagrammbereich formatieren > 3D-Drehung) of 3-D charts. */
@@ -209,6 +213,16 @@ export interface ChartModel {
   /** Diagrammformatvorlage (Excel's style number, 201 the default) and Farben ändern (colour scheme, 10 the default). */
   style?: number;
   colors?: number;
+  /** Diagrammfilter > Kategorien (D-116): the categories (0-based, of the full range) not drawn. */
+  hiddenCats?: number[];
+  /** Ausgeblendete und leere Zellen: leere Zellen als Lücken (default), Null or Datenpunkte mit Linie verbinden. */
+  dispBlanksAs?: "gap" | "zero" | "span";
+  /** Daten in ausgeblendeten Zeilen und Spalten anzeigen (c:plotVisOnly val="0"). */
+  showHidden?: boolean;
+  /** #NV als leere Zelle anzeigen (Excel 365's c16r3:dataDisplayOptions16). */
+  naAsBlank?: boolean;
+  /** Datentabelle below the plot area, with or without the legend keys (D-115). */
+  dataTable?: { legendKeys: boolean };
   from: CellAnchor;
   to: CellAnchor;
   /** Name of the drawing object ("Diagramm 1"). */

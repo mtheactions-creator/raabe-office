@@ -16,6 +16,7 @@ import {
   spPrXml, tickXml, trendlineXml, type Reader,
 } from "./chartfmt";
 import type { AxisOptions, ChartFormat, DataLabelOptions, ElementFormat, ErrorBars, MarkerSymbol, TextFormat, Trendline } from "@raabe/charts";
+import { applyFilterRead, filterXml, unfilterXml, withHiddenCats } from "./chartfilter";
 
 export const CHART_CONTENT_TYPE = "application/vnd.openxmlformats-officedocument.drawingml.chart+xml";
 export const CHART_REL_TYPE = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/chart";
@@ -372,9 +373,10 @@ function signature(m: ChartModel): string {
     kind: m.kind, title: m.title, axisTitles: m.axisTitles, legend: m.legend, dataLabels: m.dataLabels, gridlines: m.gridlines,
     format: m.format, gapWidth: m.gapWidth, overlap: m.overlap, firstSliceAngle: m.firstSliceAngle, holeSize: m.holeSize, colors: m.colors,
     view3D: m.view3D, splitCount: m.splitCount, secondSize: m.secondSize, bubbleScale: m.bubbleScale,
+    hiddenCats: m.hiddenCats, dispBlanksAs: m.dispBlanksAs, showHidden: m.showHidden, naAsBlank: m.naAsBlank, dataTable: m.dataTable,
     series: m.series.map((s) => ({ name: s.name?.ref ?? s.name?.text, cat: s.cat?.ref, val: s.val.ref, color: s.color, trendline: s.trendline,
       fill: s.fill, line: s.line, marker: s.marker, smooth: s.smooth, invertIfNegative: s.invertIfNegative, errorBars: s.errorBars,
-      kind: s.kind, secondary: s.secondary, size: s.size?.ref, totals: s.totals })),
+      kind: s.kind, secondary: s.secondary, size: s.size?.ref, totals: s.totals, filtered: s.filtered })),
   });
 }
 
@@ -389,6 +391,13 @@ function rawOf(m: ChartModel): RawChart | undefined {
 export function chartToXml(model: ChartModel): string {
   const raw = rawOf(model);
   if (raw && raw.sig === signature(model)) return raw.xml;
+  if (isChartEx(model)) return plainChartXml(model);
+  // Diagrammfilter, Datentabelle, Ausgeblendete und leere Zellen in Excel's form (D-116, chartfilter.ts).
+  const { model: shown, full } = withHiddenCats(model);
+  return filterXml(plainChartXml(shown), model, full);
+}
+
+function plainChartXml(model: ChartModel): string {
   // A Farben ändern scheme other than Farbig: its colours are written as the series' own (no colour part is written).
   const m: ChartModel = model.colors && model.colors !== 10 && !isPie(model.kind)
     ? { ...model, series: model.series.map((s, i) => (s.color ? s : { ...s, color: paletteColor(model, i, model.series.length, OFFICE_ACCENTS) })) }
@@ -749,6 +758,18 @@ function groupKind(xml: string, g: El, volume: boolean): ChartKind {
  * is written back unchanged unless it is edited.
  */
 export function chartFromXml(xml: string, anchor?: { from: CellAnchor; to: CellAnchor; name?: string }): ChartModel {
+  if (!xml.includes("c15:filtered") && !xml.includes("c15:fullRef") && !/<c:dTable>|<c:dispBlanksAs val="(?:zero|span)"|<c:plotVisOnly val="0"|dispNaAsBlank val="0"|<c:catAx>(?:(?!<\/c:catAx>)[\s\S])*<c:minorGridlines>/.test(xml)) {
+    return plainChartFromXml(xml, anchor);
+  }
+  // Diagrammfilter and the display options (D-116, chartfilter.ts): read in the plain form, the file's XML kept.
+  const r = unfilterXml(xml);
+  const m = plainChartFromXml(r.xml, anchor);
+  applyFilterRead(m, r);
+  if (rawOf(m)) m.raw = { xml, sig: signature(m) } satisfies RawChart;
+  return m;
+}
+
+function plainChartFromXml(xml: string, anchor?: { from: CellAnchor; to: CellAnchor; name?: string }): ChartModel {
   const from = anchor?.from ?? { col: 0, row: 0, x: 0, y: 0 }, to = anchor?.to ?? { col: 8, row: 15, x: 0, y: 0 };
   const rootEl = root(xml);
   if (rootEl.name === "cx:chartSpace") return chartExFromXml(xml, rootEl, from, to, anchor?.name);

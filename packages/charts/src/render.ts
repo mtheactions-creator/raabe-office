@@ -19,6 +19,7 @@ import { barDefaults, chartGroups, isChartExKind, kindInfo, type ChartGroup } fr
 import { draw3D, draw3DPie, drawSurface } from "./render3d";
 import { drawOfPie, drawRadar } from "./renderspecial";
 import { drawChartEx, chartExLegend } from "./renderex";
+import { visibleModel } from "./filter";
 
 export type Measure = (text: string, sizePt: number) => number;
 
@@ -115,8 +116,10 @@ export interface Ctx {
 }
 
 /** The chart's shapes for a size in pt. */
-export function chartScene(m: ChartModel, W: number, H: number, opts: RenderOptions = {}): Scene {
+export function chartScene(full: ChartModel, W: number, H: number, opts: RenderOptions = {}): Scene {
   const accents = opts.accents ?? OFFICE_ACCENTS;
+  // Diagrammfilter (D-116): what is filtered out is not drawn.
+  const m = visibleModel(full, accents).model;
   const fmt = (v: number, format?: string) => {
     if (opts.format && format && format !== "General") {
       try { return opts.format(v, format); } catch { /* fall back */ }

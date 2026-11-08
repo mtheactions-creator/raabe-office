@@ -1,0 +1,4402 @@
+{
+ "ribbon": {
+  "Diagrammentwurf": {
+   "key": "Alt, J C",
+   "controls": [
+    {
+     "type": "Group",
+     "name": "Diagrammentwurf",
+     "key": "Alt, J C",
+     "enabled": true,
+     "rect": [
+      -3980,
+      119,
+      2324,
+      149
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "Diagrammlayouts",
+     "key": "Alt, J C, Z L",
+     "enabled": true,
+     "rect": [
+      -3980,
+      122,
+      294,
+      143
+     ]
+    },
+    {
+     "type": "MenuItem",
+     "name": "Diagrammelement hinzufügen",
+     "key": "Alt, J C, D",
+     "enabled": true,
+     "rect": [
+      -3968,
+      125,
+      155,
+      114
+     ]
+    },
+    {
+     "type": "MenuItem",
+     "name": "Schnelllayout",
+     "key": "Alt, J C, C",
+     "enabled": true,
+     "rect": [
+      -3810,
+      125,
+      112,
+      114
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "Diagrammformatvorlagen",
+     "key": "Alt, J C, Z S",
+     "enabled": true,
+     "rect": [
+      -3686,
+      122,
+      1207,
+      143
+     ]
+    },
+    {
+     "type": "MenuItem",
+     "name": "Farben ändern",
+     "key": "Alt, J C, F",
+     "enabled": true,
+     "rect": [
+      -3674,
+      125,
+      80,
+      114
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "Schnellformatvorlagen",
+     "key": "Alt, J C, S",
+     "enabled": true,
+     "rect": [
+      -3591,
+      132,
+      1100,
+      94
+     ]
+    },
+    {
+     "type": "DataGrid",
+     "name": "Schnellformatvorlagen",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -3588,
+      139,
+      1056,
+      168
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Schnellformatvorlagen",
+     "key": "Alt, J C, S",
+     "enabled": true,
+     "rect": [
+      -2531,
+      136,
+      36,
+      90
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "Daten",
+     "key": "Alt, J C, Z D",
+     "enabled": true,
+     "rect": [
+      -2479,
+      122,
+      217,
+      143
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Zeile/Spalte tauschen",
+     "key": "Alt, J C, E",
+     "enabled": true,
+     "rect": [
+      -2467,
+      125,
+      100,
+      114
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Daten auswählen...",
+     "key": "Alt, J C, T",
+     "enabled": true,
+     "rect": [
+      -2364,
+      125,
+      90,
+      114
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "Typ",
+     "key": "Alt, J C, Z T",
+     "enabled": true,
+     "rect": [
+      -2262,
+      122,
+      142,
+      143
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Diagrammtyp ändern...",
+     "key": "Alt, J C, I",
+     "enabled": true,
+     "rect": [
+      -2250,
+      125,
+      118,
+      114
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "Ort",
+     "key": "Alt, J C, Z O",
+     "enabled": true,
+     "rect": [
+      -2120,
+      122,
+      125,
+      143
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Diagramm verschieben...",
+     "key": "Alt, J C, G",
+     "enabled": true,
+     "rect": [
+      -2108,
+      125,
+      101,
+      114
+     ]
+    },
+    {
+     "type": "MenuItem",
+     "name": "Menüband-Anzeigeoptionen",
+     "key": "Alt, Z R",
+     "enabled": true,
+     "rect": [
+      -1650,
+      232,
+      30,
+      30
+     ]
+    },
+    {
+     "type": "ComboBox",
+     "name": "Namenfeld",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -3985,
+      281,
+      150,
+      34
+     ]
+    },
+    {
+     "type": "Edit",
+     "name": "Namenfeld",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -3982,
+      284,
+      118,
+      28
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Öffnen",
+     "key": "Alt+Nach-Unten-Taste",
+     "enabled": true,
+     "rect": [
+      -3860,
+      282,
+      24,
+      32
+     ]
+    },
+    {
+     "type": "Edit",
+     "name": "Bearbeitungsleiste",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -3670,
+      268,
+      2068,
+      57
+     ]
+    }
+   ]
+  },
+  "Format": {
+   "key": "Alt, J Y",
+   "controls": [
+    {
+     "type": "Group",
+     "name": "Format",
+     "key": "Alt, J Y",
+     "enabled": true,
+     "rect": [
+      -3980,
+      119,
+      2324,
+      150
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "Aktuelle Auswahl",
+     "key": "Alt, J Y, Z L",
+     "enabled": true,
+     "rect": [
+      -3980,
+      122,
+      266,
+      144
+     ]
+    },
+    {
+     "type": "ComboBox",
+     "name": "Diagrammelemente",
+     "key": "Alt, J Y, A 1",
+     "enabled": true,
+     "rect": [
+      -3968,
+      125,
+      242,
+      36
+     ]
+    },
+    {
+     "type": "Edit",
+     "name": "Diagrammelemente",
+     "key": "Alt, J Y, A 1",
+     "enabled": true,
+     "rect": [
+      -3967,
+      127,
+      222,
+      31
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Öffnen",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -3745,
+      126,
+      18,
+      34
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Auswahl formatieren",
+     "key": "Alt, J Y, U",
+     "enabled": true,
+     "rect": [
+      -3968,
+      164,
+      213,
+      36
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Auf Formatvorl. zurücks.",
+     "key": "Alt, J Y, V 1",
+     "enabled": true,
+     "rect": [
+      -3968,
+      203,
+      242,
+      36
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "Formen einfügen",
+     "key": "Alt, J Y, Z H",
+     "enabled": true,
+     "rect": [
+      -3714,
+      122,
+      259,
+      144
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "Formen",
+     "key": "Alt, J Y, 2",
+     "enabled": true,
+     "rect": [
+      -3702,
+      125,
+      152,
+      113
+     ]
+    },
+    {
+     "type": "DataGrid",
+     "name": "Formen",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -3699,
+      129,
+      108,
+      2160
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Formen",
+     "key": "Alt, J Y, 2",
+     "enabled": true,
+     "rect": [
+      -3590,
+      128,
+      36,
+      110
+     ]
+    },
+    {
+     "type": "MenuItem",
+     "name": "Form ändern",
+     "key": "Alt, J Y, Ä",
+     "enabled": false,
+     "rect": [
+      -3547,
+      125,
+      80,
+      114
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "Formenarten",
+     "key": "Alt, J Y, Z Y",
+     "enabled": true,
+     "rect": [
+      -3455,
+      122,
+      486,
+      144
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "Schnellformatvorlagen",
+     "key": "Alt, J Y, N C",
+     "enabled": true,
+     "rect": [
+      -3443,
+      132,
+      296,
+      94
+     ]
+    },
+    {
+     "type": "DataGrid",
+     "name": "Schnellformatvorlagen",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -3440,
+      139,
+      252,
+      2184
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Schnellformatvorlagen",
+     "key": "Alt, J Y, N C",
+     "enabled": true,
+     "rect": [
+      -3187,
+      136,
+      36,
+      90
+     ]
+    },
+    {
+     "type": "SplitButton",
+     "name": "Fülleffekt",
+     "key": "Alt, J Y, Ü",
+     "enabled": true,
+     "rect": [
+      -3144,
+      125,
+      133,
+      36
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Fülleffekt Orange, Akzent 2",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -3144,
+      125,
+      36,
+      36
+     ]
+    },
+    {
+     "type": "MenuItem",
+     "name": "Weitere Optionen",
+     "key": "Alt, J Y, Ü",
+     "enabled": true,
+     "rect": [
+      -3108,
+      125,
+      97,
+      36
+     ]
+    },
+    {
+     "type": "SplitButton",
+     "name": "Formkontur",
+     "key": "Alt, J Y, V 2",
+     "enabled": true,
+     "rect": [
+      -3144,
+      164,
+      155,
+      36
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Formkontur Dunkelblaugrün, Akzent 1",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -3144,
+      164,
+      36,
+      36
+     ]
+    },
+    {
+     "type": "MenuItem",
+     "name": "Weitere Optionen",
+     "key": "Alt, J Y, V 2",
+     "enabled": true,
+     "rect": [
+      -3108,
+      164,
+      119,
+      36
+     ]
+    },
+    {
+     "type": "MenuItem",
+     "name": "Formeffekte",
+     "key": "Alt, J Y, M O",
+     "enabled": true,
+     "rect": [
+      -3144,
+      203,
+      163,
+      36
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Objekt formatieren...",
+     "key": "Alt, J Y, B B",
+     "enabled": true,
+     "rect": [
+      -2993,
+      242,
+      24,
+      24
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "WordArt-Formate",
+     "key": "Alt, J Y, Z S",
+     "enabled": true,
+     "rect": [
+      -2969,
+      122,
+      394,
+      144
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "Schnellformatvorlagen",
+     "key": "Alt, J Y, C",
+     "enabled": true,
+     "rect": [
+      -2957,
+      132,
+      296,
+      94
+     ]
+    },
+    {
+     "type": "DataGrid",
+     "name": "Schnellformatvorlagen",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -2954,
+      139,
+      252,
+      588
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Schnellformatvorlagen",
+     "key": "Alt, J Y, C",
+     "enabled": true,
+     "rect": [
+      -2701,
+      136,
+      36,
+      90
+     ]
+    },
+    {
+     "type": "SplitButton",
+     "name": "Textfüllung",
+     "key": "Alt, J Y, 4",
+     "enabled": true,
+     "rect": [
+      -2658,
+      125,
+      71,
+      36
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Textfüllung RGB(0, 0, 0)",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -2658,
+      125,
+      36,
+      36
+     ]
+    },
+    {
+     "type": "MenuItem",
+     "name": "Weitere Optionen",
+     "key": "Alt, J Y, 4",
+     "enabled": true,
+     "rect": [
+      -2622,
+      125,
+      35,
+      36
+     ]
+    },
+    {
+     "type": "SplitButton",
+     "name": "Textkontur",
+     "key": "Alt, J Y, T E",
+     "enabled": true,
+     "rect": [
+      -2658,
+      164,
+      71,
+      36
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Textkontur RGB(0, 0, 0)",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -2658,
+      164,
+      36,
+      36
+     ]
+    },
+    {
+     "type": "MenuItem",
+     "name": "Weitere Optionen",
+     "key": "Alt, J Y, T E",
+     "enabled": true,
+     "rect": [
+      -2622,
+      164,
+      35,
+      36
+     ]
+    },
+    {
+     "type": "MenuItem",
+     "name": "Texteffekte",
+     "key": "Alt, J Y, I E",
+     "enabled": true,
+     "rect": [
+      -2658,
+      203,
+      60,
+      36
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Texteffekte formatieren...",
+     "key": "Alt, J Y, O",
+     "enabled": true,
+     "rect": [
+      -2599,
+      242,
+      24,
+      24
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "Barrierefreiheit",
+     "key": "Alt, J Y, Z 1",
+     "enabled": true,
+     "rect": [
+      -2575,
+      122,
+      136,
+      144
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Alternativtext",
+     "key": "Alt, J Y, A T",
+     "enabled": true,
+     "rect": [
+      -2563,
+      125,
+      112,
+      114
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "Anordnen",
+     "key": "Alt, J Y, Z A",
+     "enabled": true,
+     "rect": [
+      -2439,
+      122,
+      411,
+      144
+     ]
+    },
+    {
+     "type": "SplitButton",
+     "name": "Ebene nach vorne",
+     "key": "Alt, J Y, G E",
+     "enabled": false,
+     "rect": [
+      -2427,
+      125,
+      225,
+      36
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Ebene nach vorne",
+     "key": "",
+     "enabled": false,
+     "rect": [
+      -2427,
+      125,
+      190,
+      36
+     ]
+    },
+    {
+     "type": "MenuItem",
+     "name": "Weitere Optionen",
+     "key": "Alt, J Y, G E",
+     "enabled": false,
+     "rect": [
+      -2237,
+      125,
+      35,
+      36
+     ]
+    },
+    {
+     "type": "SplitButton",
+     "name": "Ebene nach hinten",
+     "key": "Alt, J Y, G H",
+     "enabled": false,
+     "rect": [
+      -2427,
+      164,
+      229,
+      36
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Ebene nach hinten",
+     "key": "",
+     "enabled": false,
+     "rect": [
+      -2427,
+      164,
+      194,
+      36
+     ]
+    },
+    {
+     "type": "MenuItem",
+     "name": "Weitere Optionen",
+     "key": "Alt, J Y, G H",
+     "enabled": false,
+     "rect": [
+      -2233,
+      164,
+      35,
+      36
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Auswahlbereich...",
+     "key": "Alt, J Y, Q",
+     "enabled": true,
+     "rect": [
+      -2427,
+      203,
+      173,
+      36
+     ]
+    },
+    {
+     "type": "MenuItem",
+     "name": "Ausrichten",
+     "key": "Alt, J Y, D A",
+     "enabled": true,
+     "rect": [
+      -2195,
+      125,
+      150,
+      36
+     ]
+    },
+    {
+     "type": "MenuItem",
+     "name": "Gruppieren",
+     "key": "Alt, J Y, G R",
+     "enabled": false,
+     "rect": [
+      -2195,
+      164,
+      155,
+      36
+     ]
+    },
+    {
+     "type": "MenuItem",
+     "name": "Drehen",
+     "key": "Alt, J Y, D R",
+     "enabled": false,
+     "rect": [
+      -2195,
+      203,
+      124,
+      36
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "Größe",
+     "key": "Alt, J Y, Z Z",
+     "enabled": true,
+     "rect": [
+      -2028,
+      122,
+      169,
+      144
+     ]
+    },
+    {
+     "type": "Spinner",
+     "name": "Formenhöhe",
+     "key": "Alt, J Y, H",
+     "enabled": true,
+     "rect": [
+      -1983,
+      139,
+      85,
+      31
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Mehr",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -1898,
+      138,
+      26,
+      17
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Weniger",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -1898,
+      155,
+      26,
+      17
+     ]
+    },
+    {
+     "type": "Spinner",
+     "name": "Formenbreite",
+     "key": "Alt, J Y, R R",
+     "enabled": true,
+     "rect": [
+      -1983,
+      187,
+      85,
+      31
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Mehr",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -1898,
+      186,
+      26,
+      17
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Weniger",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -1898,
+      203,
+      26,
+      17
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Größe und Eigenschaften...",
+     "key": "Alt, J Y, ß",
+     "enabled": true,
+     "rect": [
+      -1883,
+      242,
+      24,
+      24
+     ]
+    },
+    {
+     "type": "MenuItem",
+     "name": "Menüband-Anzeigeoptionen",
+     "key": "Alt, Z R",
+     "enabled": true,
+     "rect": [
+      -1650,
+      233,
+      30,
+      30
+     ]
+    },
+    {
+     "type": "ComboBox",
+     "name": "Namenfeld",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -3985,
+      282,
+      150,
+      34
+     ]
+    },
+    {
+     "type": "Edit",
+     "name": "Namenfeld",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -3982,
+      285,
+      118,
+      28
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Öffnen",
+     "key": "Alt+Nach-Unten-Taste",
+     "enabled": true,
+     "rect": [
+      -3860,
+      283,
+      24,
+      32
+     ]
+    },
+    {
+     "type": "Edit",
+     "name": "Bearbeitungsleiste",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -3670,
+      269,
+      2068,
+      57
+     ]
+    }
+   ]
+  }
+ },
+ "scale": 1.5,
+ "chart_rect": [
+  740,
+  423,
+  722,
+  434
+ ],
+ "side_buttons": [
+  {
+   "uia_name": "Element hinzufügen",
+   "rect": [
+    1479,
+    424,
+    42,
+    42
+   ],
+   "css": {
+    "dx_from_chart_right": 11.3,
+    "dy_from_chart_top": 0.7,
+    "w": 28.0,
+    "h": 28.0
+   }
+  },
+  {
+   "uia_name": "Formatvorlagen",
+   "rect": [
+    1479,
+    481,
+    42,
+    42
+   ],
+   "css": {
+    "dx_from_chart_right": 11.3,
+    "dy_from_chart_top": 38.7,
+    "w": 28.0,
+    "h": 28.0
+   }
+  },
+  {
+   "uia_name": "Datenlayout",
+   "rect": [
+    1479,
+    538,
+    42,
+    42
+   ],
+   "css": {
+    "dx_from_chart_right": 11.3,
+    "dy_from_chart_top": 76.7,
+    "w": 28.0,
+    "h": 28.0
+   }
+  }
+ ],
+ "flyouts": {
+  "Element hinzufügen": {
+   "main": [
+    {
+     "window": {
+      "type": "Window",
+      "class": "MsoWorkPane",
+      "rect": [
+       1539,
+       431,
+       284,
+       334
+      ]
+     },
+     "items": [
+      {
+       "type": "Custom",
+       "name": "Diagrammelemente",
+       "enabled": true,
+       "rect": [
+        1539,
+        431,
+        284,
+        334
+       ]
+      },
+      {
+       "type": "Text",
+       "name": "Diagrammelemente",
+       "enabled": true,
+       "rect": [
+        1548,
+        442,
+        266,
+        28
+       ]
+      },
+      {
+       "type": "MenuItem",
+       "name": "Achsen",
+       "enabled": true,
+       "rect": [
+        1548,
+        475,
+        220,
+        31
+       ]
+      },
+      {
+       "type": "MenuItem",
+       "name": "Achsentitel",
+       "enabled": true,
+       "rect": [
+        1548,
+        506,
+        220,
+        31
+       ]
+      },
+      {
+       "type": "MenuItem",
+       "name": "Diagrammtitel",
+       "enabled": true,
+       "rect": [
+        1548,
+        537,
+        220,
+        31
+       ]
+      },
+      {
+       "type": "MenuItem",
+       "name": "Datenbeschriftungen",
+       "enabled": true,
+       "rect": [
+        1548,
+        568,
+        220,
+        31
+       ]
+      },
+      {
+       "type": "MenuItem",
+       "name": "Datentabelle",
+       "enabled": true,
+       "rect": [
+        1548,
+        599,
+        220,
+        31
+       ]
+      },
+      {
+       "type": "MenuItem",
+       "name": "Fehlerindikatoren",
+       "enabled": true,
+       "rect": [
+        1548,
+        630,
+        220,
+        31
+       ]
+      },
+      {
+       "type": "MenuItem",
+       "name": "Gitternetzlinien",
+       "enabled": true,
+       "rect": [
+        1548,
+        661,
+        220,
+        31
+       ]
+      },
+      {
+       "type": "MenuItem",
+       "name": "Legende",
+       "enabled": true,
+       "rect": [
+        1548,
+        692,
+        220,
+        31
+       ]
+      },
+      {
+       "type": "MenuItem",
+       "name": "Trendlinie",
+       "enabled": true,
+       "rect": [
+        1548,
+        723,
+        220,
+        31
+       ]
+      }
+     ]
+    },
+    {
+     "window": {
+      "type": "Menu",
+      "class": "NetUIGalleryContainer",
+      "rect": [
+       1548,
+       475,
+       220,
+       279
+      ]
+     },
+     "items": [
+      {
+       "type": "MenuItem",
+       "name": "Achsen",
+       "enabled": true,
+       "rect": [
+        1548,
+        475,
+        220,
+        31
+       ]
+      },
+      {
+       "type": "MenuItem",
+       "name": "Achsentitel",
+       "enabled": true,
+       "rect": [
+        1548,
+        506,
+        220,
+        31
+       ]
+      },
+      {
+       "type": "MenuItem",
+       "name": "Diagrammtitel",
+       "enabled": true,
+       "rect": [
+        1548,
+        537,
+        220,
+        31
+       ]
+      },
+      {
+       "type": "MenuItem",
+       "name": "Datenbeschriftungen",
+       "enabled": true,
+       "rect": [
+        1548,
+        568,
+        220,
+        31
+       ]
+      },
+      {
+       "type": "MenuItem",
+       "name": "Datentabelle",
+       "enabled": true,
+       "rect": [
+        1548,
+        599,
+        220,
+        31
+       ]
+      },
+      {
+       "type": "MenuItem",
+       "name": "Fehlerindikatoren",
+       "enabled": true,
+       "rect": [
+        1548,
+        630,
+        220,
+        31
+       ]
+      },
+      {
+       "type": "MenuItem",
+       "name": "Gitternetzlinien",
+       "enabled": true,
+       "rect": [
+        1548,
+        661,
+        220,
+        31
+       ]
+      },
+      {
+       "type": "MenuItem",
+       "name": "Legende",
+       "enabled": true,
+       "rect": [
+        1548,
+        692,
+        220,
+        31
+       ]
+      },
+      {
+       "type": "MenuItem",
+       "name": "Trendlinie",
+       "enabled": true,
+       "rect": [
+        1548,
+        723,
+        220,
+        31
+       ]
+      }
+     ]
+    },
+    {
+     "window": {
+      "type": "Menu",
+      "class": "NetUIGalleryContainer",
+      "rect": [
+       1768,
+       475,
+       46,
+       279
+      ]
+     },
+     "items": []
+    }
+   ],
+   "subs": {}
+  },
+  "Formatvorlagen": {
+   "main": [
+    {
+     "window": {
+      "type": "Window",
+      "class": "MsoWorkPane",
+      "rect": [
+       1539,
+       488,
+       337,
+       594
+      ]
+     },
+     "items": [
+      {
+       "type": "Custom",
+       "name": "Diagrammformatvorlagen",
+       "enabled": true,
+       "rect": [
+        1539,
+        488,
+        337,
+        594
+       ]
+      },
+      {
+       "type": "TabItem",
+       "name": "Formatvorlage",
+       "enabled": true,
+       "rect": [
+        1548,
+        494,
+        139,
+        45
+       ]
+      },
+      {
+       "type": "TabItem",
+       "name": "Farbe",
+       "enabled": true,
+       "rect": [
+        1687,
+        494,
+        67,
+        45
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 1",
+       "enabled": true,
+       "rect": [
+        1551,
+        548,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 2",
+       "enabled": true,
+       "rect": [
+        1551,
+        725,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 3",
+       "enabled": true,
+       "rect": [
+        1551,
+        902,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 4",
+       "enabled": true,
+       "rect": [
+        1551,
+        1079,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 5",
+       "enabled": true,
+       "rect": [
+        1551,
+        1256,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 6",
+       "enabled": true,
+       "rect": [
+        1551,
+        1433,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 7",
+       "enabled": true,
+       "rect": [
+        1551,
+        1610,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 8",
+       "enabled": true,
+       "rect": [
+        1551,
+        1787,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 9",
+       "enabled": true,
+       "rect": [
+        1551,
+        1964,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 10",
+       "enabled": true,
+       "rect": [
+        1551,
+        2141,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 11",
+       "enabled": true,
+       "rect": [
+        1551,
+        2318,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 12",
+       "enabled": true,
+       "rect": [
+        1551,
+        2495,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 13",
+       "enabled": true,
+       "rect": [
+        1551,
+        2672,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 14",
+       "enabled": true,
+       "rect": [
+        1551,
+        2849,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Zeile nach oben",
+       "enabled": true,
+       "rect": [
+        1838,
+        548,
+        26,
+        26
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Seite nach oben",
+       "enabled": true,
+       "rect": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "type": "Thumb",
+       "name": "Position",
+       "enabled": true,
+       "rect": [
+        1838,
+        574,
+        26,
+        102
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Seite nach unten",
+       "enabled": true,
+       "rect": [
+        1838,
+        676,
+        26,
+        377
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Zeile nach unten",
+       "enabled": true,
+       "rect": [
+        1838,
+        1053,
+        26,
+        26
+       ]
+      }
+     ]
+    },
+    {
+     "window": {
+      "type": "Menu",
+      "class": "NetUIGalleryContainer",
+      "rect": [
+       1548,
+       545,
+       319,
+       537
+      ]
+     },
+     "items": [
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 1",
+       "enabled": true,
+       "rect": [
+        1551,
+        548,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 2",
+       "enabled": true,
+       "rect": [
+        1551,
+        725,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 3",
+       "enabled": true,
+       "rect": [
+        1551,
+        902,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 4",
+       "enabled": true,
+       "rect": [
+        1551,
+        1079,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 5",
+       "enabled": true,
+       "rect": [
+        1551,
+        1256,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 6",
+       "enabled": true,
+       "rect": [
+        1551,
+        1433,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 7",
+       "enabled": true,
+       "rect": [
+        1551,
+        1610,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 8",
+       "enabled": true,
+       "rect": [
+        1551,
+        1787,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 9",
+       "enabled": true,
+       "rect": [
+        1551,
+        1964,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 10",
+       "enabled": true,
+       "rect": [
+        1551,
+        2141,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 11",
+       "enabled": true,
+       "rect": [
+        1551,
+        2318,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 12",
+       "enabled": true,
+       "rect": [
+        1551,
+        2495,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 13",
+       "enabled": true,
+       "rect": [
+        1551,
+        2672,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 14",
+       "enabled": true,
+       "rect": [
+        1551,
+        2849,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Zeile nach oben",
+       "enabled": true,
+       "rect": [
+        1838,
+        548,
+        26,
+        26
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Seite nach oben",
+       "enabled": true,
+       "rect": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "type": "Thumb",
+       "name": "Position",
+       "enabled": true,
+       "rect": [
+        1838,
+        574,
+        26,
+        102
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Seite nach unten",
+       "enabled": true,
+       "rect": [
+        1838,
+        676,
+        26,
+        377
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Zeile nach unten",
+       "enabled": true,
+       "rect": [
+        1838,
+        1053,
+        26,
+        26
+       ]
+      }
+     ]
+    }
+   ],
+   "tab:Formatvorlage": [
+    {
+     "window": {
+      "type": "Window",
+      "class": "MsoWorkPane",
+      "rect": [
+       1539,
+       488,
+       337,
+       594
+      ]
+     },
+     "items": [
+      {
+       "type": "Custom",
+       "name": "Diagrammformatvorlagen",
+       "enabled": true,
+       "rect": [
+        1539,
+        488,
+        337,
+        594
+       ]
+      },
+      {
+       "type": "TabItem",
+       "name": "Formatvorlage",
+       "enabled": true,
+       "rect": [
+        1548,
+        494,
+        139,
+        45
+       ]
+      },
+      {
+       "type": "TabItem",
+       "name": "Farbe",
+       "enabled": true,
+       "rect": [
+        1687,
+        494,
+        67,
+        45
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 1",
+       "enabled": true,
+       "rect": [
+        1551,
+        548,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 2",
+       "enabled": true,
+       "rect": [
+        1551,
+        725,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 3",
+       "enabled": true,
+       "rect": [
+        1551,
+        902,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 4",
+       "enabled": true,
+       "rect": [
+        1551,
+        1079,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 5",
+       "enabled": true,
+       "rect": [
+        1551,
+        1256,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 6",
+       "enabled": true,
+       "rect": [
+        1551,
+        1433,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 7",
+       "enabled": true,
+       "rect": [
+        1551,
+        1610,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 8",
+       "enabled": true,
+       "rect": [
+        1551,
+        1787,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 9",
+       "enabled": true,
+       "rect": [
+        1551,
+        1964,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 10",
+       "enabled": true,
+       "rect": [
+        1551,
+        2141,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 11",
+       "enabled": true,
+       "rect": [
+        1551,
+        2318,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 12",
+       "enabled": true,
+       "rect": [
+        1551,
+        2495,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 13",
+       "enabled": true,
+       "rect": [
+        1551,
+        2672,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 14",
+       "enabled": true,
+       "rect": [
+        1551,
+        2849,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Zeile nach oben",
+       "enabled": true,
+       "rect": [
+        1838,
+        548,
+        26,
+        26
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Seite nach oben",
+       "enabled": true,
+       "rect": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "type": "Thumb",
+       "name": "Position",
+       "enabled": true,
+       "rect": [
+        1838,
+        574,
+        26,
+        102
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Seite nach unten",
+       "enabled": true,
+       "rect": [
+        1838,
+        676,
+        26,
+        377
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Zeile nach unten",
+       "enabled": true,
+       "rect": [
+        1838,
+        1053,
+        26,
+        26
+       ]
+      }
+     ]
+    },
+    {
+     "window": {
+      "type": "Menu",
+      "class": "NetUIGalleryContainer",
+      "rect": [
+       1548,
+       545,
+       319,
+       537
+      ]
+     },
+     "items": [
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 1",
+       "enabled": true,
+       "rect": [
+        1551,
+        548,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 2",
+       "enabled": true,
+       "rect": [
+        1551,
+        725,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 3",
+       "enabled": true,
+       "rect": [
+        1551,
+        902,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 4",
+       "enabled": true,
+       "rect": [
+        1551,
+        1079,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 5",
+       "enabled": true,
+       "rect": [
+        1551,
+        1256,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 6",
+       "enabled": true,
+       "rect": [
+        1551,
+        1433,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 7",
+       "enabled": true,
+       "rect": [
+        1551,
+        1610,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 8",
+       "enabled": true,
+       "rect": [
+        1551,
+        1787,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 9",
+       "enabled": true,
+       "rect": [
+        1551,
+        1964,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 10",
+       "enabled": true,
+       "rect": [
+        1551,
+        2141,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 11",
+       "enabled": true,
+       "rect": [
+        1551,
+        2318,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 12",
+       "enabled": true,
+       "rect": [
+        1551,
+        2495,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 13",
+       "enabled": true,
+       "rect": [
+        1551,
+        2672,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 14",
+       "enabled": true,
+       "rect": [
+        1551,
+        2849,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Zeile nach oben",
+       "enabled": true,
+       "rect": [
+        1838,
+        548,
+        26,
+        26
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Seite nach oben",
+       "enabled": true,
+       "rect": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "type": "Thumb",
+       "name": "Position",
+       "enabled": true,
+       "rect": [
+        1838,
+        574,
+        26,
+        102
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Seite nach unten",
+       "enabled": true,
+       "rect": [
+        1838,
+        676,
+        26,
+        377
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Zeile nach unten",
+       "enabled": true,
+       "rect": [
+        1838,
+        1053,
+        26,
+        26
+       ]
+      }
+     ]
+    }
+   ],
+   "tab:Farbe": [
+    {
+     "window": {
+      "type": "Window",
+      "class": "MsoWorkPane",
+      "rect": [
+       1539,
+       488,
+       337,
+       594
+      ]
+     },
+     "items": [
+      {
+       "type": "Custom",
+       "name": "Diagrammformatvorlagen",
+       "enabled": true,
+       "rect": [
+        1539,
+        488,
+        337,
+        594
+       ]
+      },
+      {
+       "type": "TabItem",
+       "name": "Formatvorlage",
+       "enabled": true,
+       "rect": [
+        1548,
+        494,
+        139,
+        45
+       ]
+      },
+      {
+       "type": "TabItem",
+       "name": "Farbe",
+       "enabled": true,
+       "rect": [
+        1687,
+        494,
+        67,
+        45
+       ]
+      },
+      {
+       "type": "Group",
+       "name": "Bunt",
+       "enabled": true,
+       "rect": [
+        1551,
+        548,
+        286,
+        220
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Farbige Palette 1",
+       "enabled": true,
+       "rect": [
+        1551,
+        584,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Farbige Palette 2",
+       "enabled": true,
+       "rect": [
+        1551,
+        630,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Farbige Palette 3",
+       "enabled": true,
+       "rect": [
+        1551,
+        676,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Farbige Palette 4",
+       "enabled": true,
+       "rect": [
+        1551,
+        722,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "Group",
+       "name": "Einfarbig",
+       "enabled": true,
+       "rect": [
+        1551,
+        768,
+        286,
+        634
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 1",
+       "enabled": true,
+       "rect": [
+        1551,
+        804,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 2",
+       "enabled": true,
+       "rect": [
+        1551,
+        850,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 3",
+       "enabled": true,
+       "rect": [
+        1551,
+        896,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 4",
+       "enabled": true,
+       "rect": [
+        1551,
+        942,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 5",
+       "enabled": true,
+       "rect": [
+        1551,
+        988,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 6",
+       "enabled": true,
+       "rect": [
+        1551,
+        1034,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 7",
+       "enabled": true,
+       "rect": [
+        1551,
+        1080,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 8",
+       "enabled": true,
+       "rect": [
+        1551,
+        1126,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 9",
+       "enabled": true,
+       "rect": [
+        1551,
+        1172,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 10",
+       "enabled": true,
+       "rect": [
+        1551,
+        1218,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 11",
+       "enabled": true,
+       "rect": [
+        1551,
+        1264,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 12",
+       "enabled": true,
+       "rect": [
+        1551,
+        1310,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 13",
+       "enabled": true,
+       "rect": [
+        1551,
+        1356,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Zeile nach oben",
+       "enabled": true,
+       "rect": [
+        1837,
+        548,
+        26,
+        26
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Seite nach oben",
+       "enabled": true,
+       "rect": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "type": "Thumb",
+       "name": "Position",
+       "enabled": true,
+       "rect": [
+        1837,
+        574,
+        26,
+        246
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Seite nach unten",
+       "enabled": true,
+       "rect": [
+        1837,
+        820,
+        26,
+        188
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Zeile nach unten",
+       "enabled": true,
+       "rect": [
+        1837,
+        1008,
+        26,
+        26
+       ]
+      }
+     ]
+    },
+    {
+     "window": {
+      "type": "Menu",
+      "class": "NetUIGalleryContainer",
+      "rect": [
+       1548,
+       545,
+       318,
+       492
+      ]
+     },
+     "items": [
+      {
+       "type": "Group",
+       "name": "Bunt",
+       "enabled": true,
+       "rect": [
+        1551,
+        548,
+        286,
+        220
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Farbige Palette 1",
+       "enabled": true,
+       "rect": [
+        1551,
+        584,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Farbige Palette 2",
+       "enabled": true,
+       "rect": [
+        1551,
+        630,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Farbige Palette 3",
+       "enabled": true,
+       "rect": [
+        1551,
+        676,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Farbige Palette 4",
+       "enabled": true,
+       "rect": [
+        1551,
+        722,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "Group",
+       "name": "Einfarbig",
+       "enabled": true,
+       "rect": [
+        1551,
+        768,
+        286,
+        634
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 1",
+       "enabled": true,
+       "rect": [
+        1551,
+        804,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 2",
+       "enabled": true,
+       "rect": [
+        1551,
+        850,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 3",
+       "enabled": true,
+       "rect": [
+        1551,
+        896,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 4",
+       "enabled": true,
+       "rect": [
+        1551,
+        942,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 5",
+       "enabled": true,
+       "rect": [
+        1551,
+        988,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 6",
+       "enabled": true,
+       "rect": [
+        1551,
+        1034,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 7",
+       "enabled": true,
+       "rect": [
+        1551,
+        1080,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 8",
+       "enabled": true,
+       "rect": [
+        1551,
+        1126,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 9",
+       "enabled": true,
+       "rect": [
+        1551,
+        1172,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 10",
+       "enabled": true,
+       "rect": [
+        1551,
+        1218,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 11",
+       "enabled": true,
+       "rect": [
+        1551,
+        1264,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 12",
+       "enabled": true,
+       "rect": [
+        1551,
+        1310,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 13",
+       "enabled": true,
+       "rect": [
+        1551,
+        1356,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Zeile nach oben",
+       "enabled": true,
+       "rect": [
+        1837,
+        548,
+        26,
+        26
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Seite nach oben",
+       "enabled": true,
+       "rect": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "type": "Thumb",
+       "name": "Position",
+       "enabled": true,
+       "rect": [
+        1837,
+        574,
+        26,
+        246
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Seite nach unten",
+       "enabled": true,
+       "rect": [
+        1837,
+        820,
+        26,
+        188
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Zeile nach unten",
+       "enabled": true,
+       "rect": [
+        1837,
+        1008,
+        26,
+        26
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "Datenlayout": {
+   "main": [
+    {
+     "window": {
+      "type": "Window",
+      "class": "MsoWorkPane",
+      "rect": [
+       1539,
+       545,
+       333,
+       659
+      ]
+     },
+     "items": [
+      {
+       "type": "Custom",
+       "name": "Diagrammfilterung",
+       "enabled": true,
+       "rect": [
+        1539,
+        545,
+        333,
+        659
+       ]
+      },
+      {
+       "type": "TabItem",
+       "name": "Werte",
+       "enabled": true,
+       "rect": [
+        1548,
+        551,
+        64,
+        46
+       ]
+      },
+      {
+       "type": "TabItem",
+       "name": "Namen",
+       "enabled": true,
+       "rect": [
+        1612,
+        551,
+        78,
+        46
+       ]
+      },
+      {
+       "type": "Group",
+       "name": "Datenreihe",
+       "enabled": true,
+       "rect": [
+        1549,
+        604,
+        287,
+        207
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Datenreihe",
+       "enabled": true,
+       "rect": [
+        1549,
+        604,
+        287,
+        27
+       ]
+      },
+      {
+       "type": "Text",
+       "name": "Datenreihe",
+       "enabled": true,
+       "rect": [
+        1578,
+        605,
+        96,
+        25
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "(Alle auswählen)",
+       "enabled": true,
+       "rect": [
+        1581,
+        643,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "Nord",
+       "enabled": true,
+       "rect": [
+        1581,
+        687,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "Süd",
+       "enabled": true,
+       "rect": [
+        1581,
+        731,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "West",
+       "enabled": true,
+       "rect": [
+        1581,
+        775,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "Group",
+       "name": "Kategorien",
+       "enabled": true,
+       "rect": [
+        1549,
+        820,
+        287,
+        251
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Kategorien",
+       "enabled": true,
+       "rect": [
+        1549,
+        820,
+        287,
+        27
+       ]
+      },
+      {
+       "type": "Text",
+       "name": "Kategorien",
+       "enabled": true,
+       "rect": [
+        1578,
+        821,
+        96,
+        25
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "(Alle auswählen)",
+       "enabled": true,
+       "rect": [
+        1581,
+        859,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "Jan",
+       "enabled": true,
+       "rect": [
+        1581,
+        903,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "Feb",
+       "enabled": true,
+       "rect": [
+        1581,
+        947,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "Mrz",
+       "enabled": true,
+       "rect": [
+        1581,
+        991,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "Apr",
+       "enabled": true,
+       "rect": [
+        1581,
+        1035,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Anwenden",
+       "enabled": true,
+       "rect": [
+        1554,
+        1162,
+        100,
+        39
+       ]
+      },
+      {
+       "type": "Hyperlink",
+       "name": "Daten auswählen...",
+       "enabled": true,
+       "rect": [
+        1707,
+        1168,
+        150,
+        27
+       ]
+      }
+     ]
+    }
+   ],
+   "tab:Werte": [
+    {
+     "window": {
+      "type": "Window",
+      "class": "MsoWorkPane",
+      "rect": [
+       1539,
+       545,
+       333,
+       659
+      ]
+     },
+     "items": [
+      {
+       "type": "Custom",
+       "name": "Diagrammfilterung",
+       "enabled": true,
+       "rect": [
+        1539,
+        545,
+        333,
+        659
+       ]
+      },
+      {
+       "type": "TabItem",
+       "name": "Werte",
+       "enabled": true,
+       "rect": [
+        1548,
+        551,
+        64,
+        46
+       ]
+      },
+      {
+       "type": "TabItem",
+       "name": "Namen",
+       "enabled": true,
+       "rect": [
+        1612,
+        551,
+        78,
+        46
+       ]
+      },
+      {
+       "type": "Group",
+       "name": "Datenreihe",
+       "enabled": true,
+       "rect": [
+        1549,
+        604,
+        287,
+        207
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Datenreihe",
+       "enabled": true,
+       "rect": [
+        1549,
+        604,
+        287,
+        27
+       ]
+      },
+      {
+       "type": "Text",
+       "name": "Datenreihe",
+       "enabled": true,
+       "rect": [
+        1578,
+        605,
+        96,
+        25
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "(Alle auswählen)",
+       "enabled": true,
+       "rect": [
+        1581,
+        643,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "Nord",
+       "enabled": true,
+       "rect": [
+        1581,
+        687,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "Süd",
+       "enabled": true,
+       "rect": [
+        1581,
+        731,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "West",
+       "enabled": true,
+       "rect": [
+        1581,
+        775,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "Group",
+       "name": "Kategorien",
+       "enabled": true,
+       "rect": [
+        1549,
+        820,
+        287,
+        251
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Kategorien",
+       "enabled": true,
+       "rect": [
+        1549,
+        820,
+        287,
+        27
+       ]
+      },
+      {
+       "type": "Text",
+       "name": "Kategorien",
+       "enabled": true,
+       "rect": [
+        1578,
+        821,
+        96,
+        25
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "(Alle auswählen)",
+       "enabled": true,
+       "rect": [
+        1581,
+        859,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "Jan",
+       "enabled": true,
+       "rect": [
+        1581,
+        903,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "Feb",
+       "enabled": true,
+       "rect": [
+        1581,
+        947,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "Mrz",
+       "enabled": true,
+       "rect": [
+        1581,
+        991,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "Apr",
+       "enabled": true,
+       "rect": [
+        1581,
+        1035,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Anwenden",
+       "enabled": true,
+       "rect": [
+        1554,
+        1162,
+        100,
+        39
+       ]
+      },
+      {
+       "type": "Hyperlink",
+       "name": "Daten auswählen...",
+       "enabled": true,
+       "rect": [
+        1707,
+        1168,
+        150,
+        27
+       ]
+      }
+     ]
+    }
+   ],
+   "tab:Namen": [
+    {
+     "window": {
+      "type": "Window",
+      "class": "MsoWorkPane",
+      "rect": [
+       1539,
+       545,
+       333,
+       659
+      ]
+     },
+     "items": [
+      {
+       "type": "Custom",
+       "name": "Diagrammfilterung",
+       "enabled": true,
+       "rect": [
+        1539,
+        545,
+        333,
+        659
+       ]
+      },
+      {
+       "type": "TabItem",
+       "name": "Werte",
+       "enabled": true,
+       "rect": [
+        1548,
+        551,
+        64,
+        46
+       ]
+      },
+      {
+       "type": "TabItem",
+       "name": "Namen",
+       "enabled": true,
+       "rect": [
+        1612,
+        551,
+        78,
+        46
+       ]
+      },
+      {
+       "type": "Group",
+       "name": "Datenreihe",
+       "enabled": true,
+       "rect": [
+        1549,
+        604,
+        287,
+        146
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Datenreihe",
+       "enabled": true,
+       "rect": [
+        1549,
+        604,
+        287,
+        27
+       ]
+      },
+      {
+       "type": "Text",
+       "name": "Datenreihe",
+       "enabled": true,
+       "rect": [
+        1578,
+        605,
+        96,
+        25
+       ]
+      },
+      {
+       "type": "RadioButton",
+       "name": "Zeile 1\r\n    Nord; Süd; West",
+       "enabled": true,
+       "rect": [
+        1581,
+        652,
+        254,
+        53
+       ]
+      },
+      {
+       "type": "RadioButton",
+       "name": "(Keine)",
+       "enabled": true,
+       "rect": [
+        1581,
+        714,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "Group",
+       "name": "Kategorien",
+       "enabled": true,
+       "rect": [
+        1549,
+        759,
+        287,
+        146
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Kategorien",
+       "enabled": true,
+       "rect": [
+        1549,
+        759,
+        287,
+        27
+       ]
+      },
+      {
+       "type": "Text",
+       "name": "Kategorien",
+       "enabled": true,
+       "rect": [
+        1578,
+        760,
+        96,
+        25
+       ]
+      },
+      {
+       "type": "RadioButton",
+       "name": "Spalte A\r\n    Jan; Feb; Mrz; Apr",
+       "enabled": true,
+       "rect": [
+        1581,
+        807,
+        254,
+        53
+       ]
+      },
+      {
+       "type": "RadioButton",
+       "name": "(Keine)",
+       "enabled": true,
+       "rect": [
+        1581,
+        869,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Anwenden",
+       "enabled": true,
+       "rect": [
+        1554,
+        1162,
+        100,
+        39
+       ]
+      },
+      {
+       "type": "Hyperlink",
+       "name": "Daten auswählen...",
+       "enabled": true,
+       "rect": [
+        1707,
+        1168,
+        150,
+        27
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "context_menus": {
+  "Diagrammbereich": [],
+  "Diagrammtitel": [],
+  "Legende": [],
+  "Reihe \"Nord\" Legendeneintrag": [],
+  "Zeichnungsfläche": [],
+  "Vertikal (Wert) Achse": [],
+  "Horizontal (Kategorie) Achse": [],
+  "Vertikal (Wert) Achse Hauptgitternetz": [],
+  "Reihe \"Nord\"": []
+ },
+ "chart_parts": [
+  {
+   "type": "Group",
+   "name": "Diagrammbereich",
+   "rect": [
+    741,
+    424,
+    720,
+    432
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    741,
+    424,
+    720,
+    432
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    780,
+    498,
+    659,
+    266
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    780,
+    497,
+    660,
+    230
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    780,
+    498,
+    659,
+    266
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    811,
+    574,
+    523,
+    190
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    848,
+    536,
+    523,
+    228
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    884,
+    574,
+    524,
+    190
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    -2147483648,
+    -2147483648,
+    0,
+    0
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    754,
+    752,
+    9,
+    22
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    754,
+    714,
+    9,
+    22
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    754,
+    676,
+    9,
+    22
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    754,
+    638,
+    9,
+    22
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    754,
+    600,
+    9,
+    22
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    754,
+    562,
+    9,
+    22
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    754,
+    524,
+    9,
+    22
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    754,
+    486,
+    9,
+    22
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    780,
+    763,
+    660,
+    2
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    -2147483648,
+    -2147483648,
+    0,
+    0
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    850,
+    775,
+    24,
+    22
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    1014,
+    775,
+    26,
+    22
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    1179,
+    775,
+    26,
+    22
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    1344,
+    775,
+    25,
+    22
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    743,
+    746,
+    31,
+    40
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    743,
+    708,
+    31,
+    40
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    743,
+    670,
+    31,
+    40
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    743,
+    632,
+    31,
+    40
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    743,
+    594,
+    31,
+    40
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    743,
+    556,
+    31,
+    40
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    743,
+    518,
+    31,
+    40
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    743,
+    480,
+    31,
+    40
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    839,
+    769,
+    46,
+    40
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    1002,
+    769,
+    50,
+    40
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    1167,
+    769,
+    49,
+    40
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    1333,
+    769,
+    47,
+    40
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    1004,
+    430,
+    194,
+    60
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    1005,
+    810,
+    192,
+    34
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    1020,
+    822,
+    10,
+    10
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    1022,
+    809,
+    59,
+    40
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    1083,
+    822,
+    10,
+    10
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    1086,
+    809,
+    51,
+    40
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    1139,
+    822,
+    9,
+    10
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    1141,
+    809,
+    60,
+    40
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    740,
+    423,
+    722,
+    434
+   ]
+  },
+  {
+   "type": "Edit",
+   "name": "Diagrammtitel",
+   "rect": [
+    1004,
+    430,
+    194,
+    60
+   ]
+  },
+  {
+   "type": "List",
+   "name": "Legende",
+   "rect": [
+    1005,
+    809,
+    196,
+    40
+   ]
+  },
+  {
+   "type": "ListItem",
+   "name": "Reihe \"Nord\" Legendeneintrag",
+   "rect": [
+    1020,
+    809,
+    61,
+    40
+   ]
+  },
+  {
+   "type": "ListItem",
+   "name": "Reihe \"Süd\" Legendeneintrag",
+   "rect": [
+    1083,
+    809,
+    54,
+    40
+   ]
+  },
+  {
+   "type": "ListItem",
+   "name": "Reihe \"West\" Legendeneintrag",
+   "rect": [
+    1139,
+    809,
+    62,
+    40
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Zeichnungsfläche",
+   "rect": [
+    780,
+    498,
+    659,
+    266
+   ]
+  },
+  {
+   "type": "Header",
+   "name": "Vertikal (Wert) Achse",
+   "rect": [
+    754,
+    486,
+    9,
+    288
+   ]
+  },
+  {
+   "type": "HeaderItem",
+   "name": "Achsenbeschriftung Wert: 0",
+   "rect": [
+    743,
+    746,
+    31,
+    40
+   ]
+  },
+  {
+   "type": "HeaderItem",
+   "name": "Achsenbeschriftung Wert: 1",
+   "rect": [
+    743,
+    708,
+    31,
+    40
+   ]
+  },
+  {
+   "type": "HeaderItem",
+   "name": "Achsenbeschriftung Wert: 2",
+   "rect": [
+    743,
+    670,
+    31,
+    40
+   ]
+  },
+  {
+   "type": "HeaderItem",
+   "name": "Achsenbeschriftung Wert: 3",
+   "rect": [
+    743,
+    632,
+    31,
+    40
+   ]
+  },
+  {
+   "type": "HeaderItem",
+   "name": "Achsenbeschriftung Wert: 4",
+   "rect": [
+    743,
+    594,
+    31,
+    40
+   ]
+  },
+  {
+   "type": "HeaderItem",
+   "name": "Achsenbeschriftung Wert: 5",
+   "rect": [
+    743,
+    556,
+    31,
+    40
+   ]
+  },
+  {
+   "type": "HeaderItem",
+   "name": "Achsenbeschriftung Wert: 6",
+   "rect": [
+    743,
+    518,
+    31,
+    40
+   ]
+  },
+  {
+   "type": "HeaderItem",
+   "name": "Achsenbeschriftung Wert: 7",
+   "rect": [
+    743,
+    480,
+    31,
+    40
+   ]
+  },
+  {
+   "type": "Header",
+   "name": "Horizontal (Kategorie) Achse",
+   "rect": [
+    780,
+    763,
+    660,
+    34
+   ]
+  },
+  {
+   "type": "HeaderItem",
+   "name": "Achsenbeschriftung Kategorie: Jan",
+   "rect": [
+    839,
+    769,
+    46,
+    40
+   ]
+  },
+  {
+   "type": "HeaderItem",
+   "name": "Achsenbeschriftung Kategorie: Feb",
+   "rect": [
+    1002,
+    769,
+    50,
+    40
+   ]
+  },
+  {
+   "type": "HeaderItem",
+   "name": "Achsenbeschriftung Kategorie: Mrz",
+   "rect": [
+    1167,
+    769,
+    49,
+    40
+   ]
+  },
+  {
+   "type": "HeaderItem",
+   "name": "Achsenbeschriftung Kategorie: Apr",
+   "rect": [
+    1333,
+    769,
+    47,
+    40
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Vertikal (Wert) Achse Hauptgitternetz",
+   "rect": [
+    780,
+    497,
+    660,
+    230
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Reihe \"Nord\"",
+   "rect": [
+    811,
+    574,
+    523,
+    190
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Reihe \"Nord\" Punkt \"Jan\"\r\nWert: 3",
+   "rect": [
+    811,
+    650,
+    29,
+    115
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Reihe \"Nord\" Punkt \"Feb\"\r\nWert: 5",
+   "rect": [
+    976,
+    574,
+    29,
+    191
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Reihe \"Nord\" Punkt \"Mrz\"\r\nWert: 2",
+   "rect": [
+    1140,
+    688,
+    30,
+    77
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Reihe \"Nord\" Punkt \"Apr\"\r\nWert: 4",
+   "rect": [
+    1305,
+    612,
+    30,
+    153
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Reihe \"Süd\"",
+   "rect": [
+    848,
+    536,
+    523,
+    228
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Reihe \"Süd\" Punkt \"Jan\"\r\nWert: 4",
+   "rect": [
+    847,
+    612,
+    30,
+    153
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Reihe \"Süd\" Punkt \"Feb\"\r\nWert: 2",
+   "rect": [
+    1012,
+    688,
+    30,
+    77
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Reihe \"Süd\" Punkt \"Mrz\"\r\nWert: 6",
+   "rect": [
+    1177,
+    536,
+    30,
+    229
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Reihe \"Süd\" Punkt \"Apr\"\r\nWert: 3",
+   "rect": [
+    1342,
+    650,
+    29,
+    115
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Reihe \"West\"",
+   "rect": [
+    884,
+    574,
+    524,
+    190
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Reihe \"West\" Punkt \"Jan\"\r\nWert: 2",
+   "rect": [
+    884,
+    688,
+    30,
+    77
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Reihe \"West\" Punkt \"Feb\"\r\nWert: 3",
+   "rect": [
+    1049,
+    650,
+    29,
+    115
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Reihe \"West\" Punkt \"Mrz\"\r\nWert: 4",
+   "rect": [
+    1213,
+    612,
+    30,
+    153
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Reihe \"West\" Punkt \"Apr\"\r\nWert: 5",
+   "rect": [
+    1378,
+    574,
+    30,
+    191
+   ]
+  }
+ ],
+ "ranges_capture": {
+  "cells": "A1:E6",
+  "px": [
+   82,
+   395,
+   300,
+   87
+  ]
+ },
+ "ranges_cells": {
+  "A2": [
+   0,
+   14,
+   60,
+   29
+  ],
+  "B1": [
+   60,
+   0,
+   120,
+   14
+  ],
+  "B2": [
+   60,
+   14,
+   120,
+   29
+  ],
+  "C3": [
+   120,
+   29,
+   180,
+   43
+  ],
+  "D5": [
+   180,
+   58,
+   240,
+   72
+  ],
+  "A5": [
+   0,
+   58,
+   60,
+   72
+  ]
+ }
+}
