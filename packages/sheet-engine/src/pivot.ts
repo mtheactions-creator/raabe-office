@@ -28,6 +28,8 @@ export interface PivotTable {
   filters: { field: number; items?: string[] }[];
   /** Items hidden in row and column fields (Element filter of the field). */
   hidden?: Record<number, string[]>;
+  /** Date filters (a Zeitachse, D-121): whole days from..to, both included (Excel's dateBetween filter). */
+  dateFilters?: { field: number; from: number; to: number }[];
   layout?: "compact" | "outline" | "tabular";
   /** Gesamtergebnisse für Zeilen / Spalten (both on by default). */
   rowGrand?: boolean;
@@ -101,6 +103,7 @@ export function computePivot(p: PivotTable, data: PivotValue[][]): PivotOutput {
   let records = data.slice(1).filter((r) => r.some((v) => v !== null && v !== ""));
   for (const f of p.filters) if (f.items) records = records.filter((r) => f.items!.includes(itemText(r[f.field] ?? null)));
   for (const [k, hid] of Object.entries(p.hidden ?? {})) records = records.filter((r) => !hid.includes(itemText(r[Number(k)] ?? null)));
+  for (const df of p.dateFilters ?? []) records = records.filter((r) => { const v = r[df.field]; return typeof v === "number" && Math.floor(v) >= df.from && Math.floor(v) <= df.to; });
   const cells: PivotCell[] = [];
   const at = p.at;
   // Report filters above the table with an empty row between (the table stays where it is).

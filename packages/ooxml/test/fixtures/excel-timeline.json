@@ -1,0 +1,2987 @@
+{
+ "data": [
+  [
+   "Datum",
+   "Fach",
+   "Note"
+  ],
+  [
+   "2025-08-18",
+   "Mathe",
+   1
+  ],
+  [
+   "2025-09-04",
+   "Deutsch",
+   2
+  ],
+  [
+   "2025-09-21",
+   "Englisch",
+   3
+  ],
+  [
+   "2025-10-08",
+   "Biologie",
+   4
+  ],
+  [
+   "2025-10-25",
+   "Mathe",
+   5
+  ],
+  [
+   "2025-11-11",
+   "Deutsch",
+   6
+  ],
+  [
+   "2025-11-28",
+   "Englisch",
+   1
+  ],
+  [
+   "2025-12-15",
+   "Biologie",
+   2
+  ],
+  [
+   "2026-01-01",
+   "Mathe",
+   3
+  ],
+  [
+   "2026-01-18",
+   "Deutsch",
+   4
+  ],
+  [
+   "2026-02-04",
+   "Englisch",
+   5
+  ],
+  [
+   "2026-02-21",
+   "Biologie",
+   6
+  ],
+  [
+   "2026-03-10",
+   "Mathe",
+   1
+  ],
+  [
+   "2026-03-27",
+   "Deutsch",
+   2
+  ],
+  [
+   "2026-04-13",
+   "Englisch",
+   3
+  ],
+  [
+   "2026-04-30",
+   "Biologie",
+   4
+  ],
+  [
+   "2026-05-17",
+   "Mathe",
+   5
+  ],
+  [
+   "2026-06-03",
+   "Deutsch",
+   6
+  ],
+  [
+   "2026-06-20",
+   "Englisch",
+   1
+  ],
+  [
+   "2026-07-07",
+   "Biologie",
+   2
+  ],
+  [
+   "2026-07-24",
+   "Mathe",
+   3
+  ],
+  [
+   "2026-08-10",
+   "Deutsch",
+   4
+  ],
+  [
+   "2026-08-27",
+   "Englisch",
+   5
+  ],
+  [
+   "2026-09-13",
+   "Biologie",
+   6
+  ]
+ ],
+ "cases": {
+  "default": {
+   "sheet": "Standard",
+   "timelines": [
+    {
+     "name": "Datum",
+     "caption": "Datum",
+     "cache": "NativeZeitachse_Datum",
+     "sourceName": "Datum",
+     "cacheType": 2,
+     "top": 420.5,
+     "left": 360.0,
+     "width": 262.5,
+     "height": 108.0,
+     "style": "TimeSlicerStyleLight1",
+     "displayHeader": null,
+     "state": {
+      "startDate": null,
+      "endDate": null,
+      "filterType": null,
+      "singleRange": true,
+      "value1": null,
+      "value2": null
+     },
+     "view": {
+      "level": 2,
+      "showHeader": true,
+      "showSelectionLabel": true,
+      "showTimeLevel": true,
+      "showScrollbar": true
+     },
+     "shape": {
+      "name": "Datum",
+      "top": 420.5,
+      "left": 360.0,
+      "width": 262.5,
+      "height": 108.0,
+      "tl": "E30",
+      "br": "J37",
+      "placement": 2
+     }
+    }
+   ],
+   "reports": [
+    {
+     "at": "A3:B8",
+     "values": [
+      [
+       "Zeilenbeschriftungen",
+       "Anzahl von Note"
+      ],
+      [
+       "Biologie",
+       6.0
+      ],
+      [
+       "Deutsch",
+       6.0
+      ],
+      [
+       "Englisch",
+       6.0
+      ],
+      [
+       "Mathe",
+       6.0
+      ],
+      [
+       "Gesamtergebnis",
+       24.0
+      ]
+     ]
+    }
+   ]
+  },
+  "months": {
+   "sheet": "Filter",
+   "timelines": [
+    {
+     "name": "Datum 1",
+     "caption": "Datum",
+     "cache": "NativeZeitachse_Datum1",
+     "sourceName": "Datum",
+     "cacheType": 2,
+     "top": 10.0,
+     "left": 300.0,
+     "width": 262.5,
+     "height": 108.0,
+     "style": "TimeSlicerStyleLight1",
+     "displayHeader": null,
+     "state": {
+      "startDate": "2025-10-01 00:00:00",
+      "endDate": "2026-01-31 00:00:00",
+      "filterType": 35,
+      "singleRange": true,
+      "value1": "2025-10-01 00:00:00",
+      "value2": "2026-01-31 00:00:00"
+     },
+     "view": {
+      "level": 2,
+      "showHeader": true,
+      "showSelectionLabel": true,
+      "showTimeLevel": true,
+      "showScrollbar": true
+     },
+     "shape": {
+      "name": "Datum 1",
+      "top": 10.0,
+      "left": 300.0,
+      "width": 262.5,
+      "height": 108.0,
+      "tl": "D1",
+      "br": "I9",
+      "placement": 2
+     }
+    }
+   ],
+   "reports": [
+    {
+     "at": "A3:B8",
+     "values": [
+      [
+       "Zeilenbeschriftungen",
+       "Anzahl von Note"
+      ],
+      [
+       "Biologie",
+       2.0
+      ],
+      [
+       "Deutsch",
+       2.0
+      ],
+      [
+       "Englisch",
+       1.0
+      ],
+      [
+       "Mathe",
+       2.0
+      ],
+      [
+       "Gesamtergebnis",
+       7.0
+      ]
+     ]
+    }
+   ],
+   "pivotHidden": {
+    "Biologie": true,
+    "Deutsch": true,
+    "Englisch": true,
+    "Mathe": true
+   }
+  },
+  "Jahre": {
+   "sheet": "Jahre",
+   "timelines": [
+    {
+     "name": "Datum 2",
+     "caption": "Datum",
+     "cache": "NativeZeitachse_Datum2",
+     "sourceName": "Datum",
+     "cacheType": 2,
+     "top": 10.0,
+     "left": 300.0,
+     "width": 400.0,
+     "height": 120.0,
+     "style": "TimeSlicerStyleLight1",
+     "displayHeader": null,
+     "state": {
+      "startDate": "2026-01-01 00:00:00",
+      "endDate": "2026-12-31 00:00:00",
+      "filterType": 35,
+      "singleRange": true,
+      "value1": "2026-01-01 00:00:00",
+      "value2": "2026-12-31 00:00:00"
+     },
+     "view": {
+      "level": 0,
+      "showHeader": true,
+      "showSelectionLabel": true,
+      "showTimeLevel": true,
+      "showScrollbar": true
+     },
+     "shape": {
+      "name": "Datum 2",
+      "top": 10.0,
+      "left": 300.0,
+      "width": 400.0,
+      "height": 120.0,
+      "tl": "D1",
+      "br": "K9",
+      "placement": 2
+     }
+    }
+   ],
+   "reports": [
+    {
+     "at": "A3:B8",
+     "values": [
+      [
+       "Zeilenbeschriftungen",
+       "Anzahl von Note"
+      ],
+      [
+       "Biologie",
+       4.0
+      ],
+      [
+       "Deutsch",
+       4.0
+      ],
+      [
+       "Englisch",
+       4.0
+      ],
+      [
+       "Mathe",
+       4.0
+      ],
+      [
+       "Gesamtergebnis",
+       16.0
+      ]
+     ]
+    }
+   ]
+  },
+  "Quartale": {
+   "sheet": "Quartale",
+   "timelines": [
+    {
+     "name": "Datum 3",
+     "caption": "Datum",
+     "cache": "NativeZeitachse_Datum3",
+     "sourceName": "Datum",
+     "cacheType": 2,
+     "top": 10.0,
+     "left": 300.0,
+     "width": 400.0,
+     "height": 120.0,
+     "style": "TimeSlicerStyleLight1",
+     "displayHeader": null,
+     "state": {
+      "startDate": "2026-01-01 00:00:00",
+      "endDate": "2026-06-30 00:00:00",
+      "filterType": 35,
+      "singleRange": true,
+      "value1": "2026-01-01 00:00:00",
+      "value2": "2026-06-30 00:00:00"
+     },
+     "view": {
+      "level": 1,
+      "showHeader": true,
+      "showSelectionLabel": true,
+      "showTimeLevel": true,
+      "showScrollbar": true
+     },
+     "shape": {
+      "name": "Datum 3",
+      "top": 10.0,
+      "left": 300.0,
+      "width": 400.0,
+      "height": 120.0,
+      "tl": "D1",
+      "br": "K9",
+      "placement": 2
+     }
+    }
+   ],
+   "reports": [
+    {
+     "at": "A3:B8",
+     "values": [
+      [
+       "Zeilenbeschriftungen",
+       "Anzahl von Note"
+      ],
+      [
+       "Biologie",
+       2.0
+      ],
+      [
+       "Deutsch",
+       3.0
+      ],
+      [
+       "Englisch",
+       3.0
+      ],
+      [
+       "Mathe",
+       3.0
+      ],
+      [
+       "Gesamtergebnis",
+       11.0
+      ]
+     ]
+    }
+   ]
+  },
+  "Tage": {
+   "sheet": "Tage",
+   "timelines": [
+    {
+     "name": "Datum 4",
+     "caption": "Datum",
+     "cache": "NativeZeitachse_Datum4",
+     "sourceName": "Datum",
+     "cacheType": 2,
+     "top": 10.0,
+     "left": 300.0,
+     "width": 400.0,
+     "height": 120.0,
+     "style": "TimeSlicerStyleLight1",
+     "displayHeader": null,
+     "state": {
+      "startDate": "2025-09-04 00:00:00",
+      "endDate": "2025-09-21 00:00:00",
+      "filterType": 35,
+      "singleRange": true,
+      "value1": "2025-09-04 00:00:00",
+      "value2": "2025-09-21 00:00:00"
+     },
+     "view": {
+      "level": 3,
+      "showHeader": true,
+      "showSelectionLabel": true,
+      "showTimeLevel": true,
+      "showScrollbar": true
+     },
+     "shape": {
+      "name": "Datum 4",
+      "top": 10.0,
+      "left": 300.0,
+      "width": 400.0,
+      "height": 120.0,
+      "tl": "D1",
+      "br": "K9",
+      "placement": 2
+     }
+    }
+   ],
+   "reports": [
+    {
+     "at": "A3:B6",
+     "values": [
+      [
+       "Zeilenbeschriftungen",
+       "Anzahl von Note"
+      ],
+      [
+       "Deutsch",
+       1.0
+      ],
+      [
+       "Englisch",
+       1.0
+      ],
+      [
+       "Gesamtergebnis",
+       2.0
+      ]
+     ]
+    }
+   ]
+  },
+  "options": {
+   "sheet": "Optionen",
+   "timelines": [
+    {
+     "name": "Zeit",
+     "caption": "Zeitraum der Noten",
+     "cache": "NativeZeitachse_Datum5",
+     "sourceName": "Datum",
+     "cacheType": 2,
+     "top": 10.0,
+     "left": 300.0,
+     "width": 330.0,
+     "height": 52.5,
+     "style": "TimeSlicerStyleDark2",
+     "displayHeader": null,
+     "state": {
+      "startDate": null,
+      "endDate": null,
+      "filterType": null,
+      "singleRange": true,
+      "value1": null,
+      "value2": null
+     },
+     "view": {
+      "level": 2,
+      "showHeader": false,
+      "showSelectionLabel": false,
+      "showTimeLevel": false,
+      "showScrollbar": false
+     },
+     "shape": {
+      "name": "Zeit",
+      "top": 10.0,
+      "left": 300.0,
+      "width": 330.0,
+      "height": 52.5,
+      "tl": "D1",
+      "br": "J5",
+      "placement": 2
+     }
+    }
+   ],
+   "reports": [
+    {
+     "at": "A3:B8",
+     "values": [
+      [
+       "Zeilenbeschriftungen",
+       "Anzahl von Note"
+      ],
+      [
+       "Biologie",
+       6.0
+      ],
+      [
+       "Deutsch",
+       6.0
+      ],
+      [
+       "Englisch",
+       6.0
+      ],
+      [
+       "Mathe",
+       6.0
+      ],
+      [
+       "Gesamtergebnis",
+       24.0
+      ]
+     ]
+    }
+   ]
+  },
+  "connected": {
+   "sheet": "Verbunden",
+   "timelines": [
+    {
+     "name": "Datum 5",
+     "caption": "Datum",
+     "cache": "NativeZeitachse_Datum6",
+     "sourceName": "Datum",
+     "cacheType": 2,
+     "top": 200.0,
+     "left": 10.0,
+     "width": 262.5,
+     "height": 108.0,
+     "style": "TimeSlicerStyleLight1",
+     "displayHeader": null,
+     "state": {
+      "startDate": "2026-02-01 00:00:00",
+      "endDate": "2026-05-31 00:00:00",
+      "filterType": 35,
+      "singleRange": true,
+      "value1": "2026-02-01 00:00:00",
+      "value2": "2026-05-31 00:00:00"
+     },
+     "view": {
+      "level": 2,
+      "showHeader": true,
+      "showSelectionLabel": true,
+      "showTimeLevel": true,
+      "showScrollbar": true
+     },
+     "shape": {
+      "name": "Datum 5",
+      "top": 200.0,
+      "left": 10.0,
+      "width": 262.5,
+      "height": 108.0,
+      "tl": "A14",
+      "br": "D22",
+      "placement": 2
+     }
+    }
+   ],
+   "reports": [
+    {
+     "at": "A3:B8",
+     "values": [
+      [
+       "Zeilenbeschriftungen",
+       "Anzahl von Note"
+      ],
+      [
+       "Biologie",
+       2.0
+      ],
+      [
+       "Deutsch",
+       1.0
+      ],
+      [
+       "Englisch",
+       2.0
+      ],
+      [
+       "Mathe",
+       2.0
+      ],
+      [
+       "Gesamtergebnis",
+       7.0
+      ]
+     ]
+    },
+    {
+     "at": "E3:F10",
+     "values": [
+      [
+       "Zeilenbeschriftungen",
+       "Anzahl von Fach"
+      ],
+      [
+       1.0,
+       1.0
+      ],
+      [
+       2.0,
+       1.0
+      ],
+      [
+       3.0,
+       1.0
+      ],
+      [
+       4.0,
+       1.0
+      ],
+      [
+       5.0,
+       2.0
+      ],
+      [
+       6.0,
+       1.0
+      ],
+      [
+       "Gesamtergebnis",
+       7.0
+      ]
+     ]
+    }
+   ]
+  },
+  "beforeClear": {
+   "sheet": "Geloescht",
+   "timelines": [
+    {
+     "name": "Datum 6",
+     "caption": "Datum",
+     "cache": "NativeZeitachse_Datum7",
+     "sourceName": "Datum",
+     "cacheType": 2,
+     "top": 10.0,
+     "left": 300.0,
+     "width": 262.5,
+     "height": 108.0,
+     "style": "TimeSlicerStyleLight1",
+     "displayHeader": null,
+     "state": {
+      "startDate": "2026-03-01 00:00:00",
+      "endDate": "2026-03-31 00:00:00",
+      "filterType": 35,
+      "singleRange": true,
+      "value1": "2026-03-01 00:00:00",
+      "value2": "2026-03-31 00:00:00"
+     },
+     "view": {
+      "level": 2,
+      "showHeader": true,
+      "showSelectionLabel": true,
+      "showTimeLevel": true,
+      "showScrollbar": true
+     },
+     "shape": {
+      "name": "Datum 6",
+      "top": 10.0,
+      "left": 300.0,
+      "width": 262.5,
+      "height": 108.0,
+      "tl": "D1",
+      "br": "I9",
+      "placement": 2
+     }
+    }
+   ],
+   "reports": [
+    {
+     "at": "A3:B6",
+     "values": [
+      [
+       "Zeilenbeschriftungen",
+       "Anzahl von Note"
+      ],
+      [
+       "Deutsch",
+       1.0
+      ],
+      [
+       "Mathe",
+       1.0
+      ],
+      [
+       "Gesamtergebnis",
+       2.0
+      ]
+     ]
+    }
+   ]
+  },
+  "cleared": {
+   "sheet": "Geloescht",
+   "timelines": [
+    {
+     "name": "Datum 6",
+     "caption": "Datum",
+     "cache": "NativeZeitachse_Datum7",
+     "sourceName": "Datum",
+     "cacheType": 2,
+     "top": 10.0,
+     "left": 300.0,
+     "width": 262.5,
+     "height": 108.0,
+     "style": "TimeSlicerStyleLight1",
+     "displayHeader": null,
+     "state": {
+      "startDate": null,
+      "endDate": null,
+      "filterType": null,
+      "singleRange": true,
+      "value1": null,
+      "value2": null
+     },
+     "view": {
+      "level": 2,
+      "showHeader": true,
+      "showSelectionLabel": true,
+      "showTimeLevel": true,
+      "showScrollbar": true
+     },
+     "shape": {
+      "name": "Datum 6",
+      "top": 10.0,
+      "left": 300.0,
+      "width": 262.5,
+      "height": 108.0,
+      "tl": "D1",
+      "br": "I9",
+      "placement": 2
+     }
+    }
+   ],
+   "reports": [
+    {
+     "at": "A3:B8",
+     "values": [
+      [
+       "Zeilenbeschriftungen",
+       "Anzahl von Note"
+      ],
+      [
+       "Biologie",
+       6.0
+      ],
+      [
+       "Deutsch",
+       6.0
+      ],
+      [
+       "Englisch",
+       6.0
+      ],
+      [
+       "Mathe",
+       6.0
+      ],
+      [
+       "Gesamtergebnis",
+       24.0
+      ]
+     ]
+    }
+   ]
+  }
+ },
+ "styles": {
+  "TimeSlicerStyleLight1": {
+   "local": "Zeitachsen-Formatvorlage Hell 1",
+   "builtIn": true,
+   "0": {
+    "pattern": null,
+    "font": {
+     "rgb": "000000",
+     "theme": 2,
+     "tint": 0.0,
+     "bold": null,
+     "size": null,
+     "colorIndex": 1
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "156082",
+      "theme": 5,
+      "tint": 0.0
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "156082",
+      "theme": 5,
+      "tint": 0.0
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "156082",
+      "theme": 5,
+      "tint": 0.0
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "156082",
+      "theme": 5,
+      "tint": 0.0
+     }
+    }
+   },
+   "1": {
+    "pattern": null,
+    "font": {
+     "rgb": "000000",
+     "theme": 2,
+     "tint": 0.0,
+     "bold": true,
+     "size": 11.0,
+     "colorIndex": 1
+    }
+   },
+   "36": {
+    "pattern": null,
+    "font": {
+     "rgb": "104861",
+     "theme": 5,
+     "tint": -0.249977111117893,
+     "bold": null,
+     "size": 10.0,
+     "colorIndex": 49
+    }
+   },
+   "37": {
+    "pattern": null,
+    "font": {
+     "rgb": "808080",
+     "theme": 2,
+     "tint": 0.499984740745262,
+     "bold": null,
+     "size": 9.0,
+     "colorIndex": 16
+    }
+   },
+   "38": {
+    "pattern": null,
+    "font": {
+     "rgb": "808080",
+     "theme": 2,
+     "tint": 0.499984740745262,
+     "bold": null,
+     "size": 9.0,
+     "colorIndex": 16
+    }
+   },
+   "39": {
+    "pattern": null,
+    "font": {
+     "rgb": "808080",
+     "theme": 2,
+     "tint": 0.499984740745262,
+     "bold": null,
+     "size": 9.0,
+     "colorIndex": 16
+    }
+   },
+   "40": {
+    "pattern": 4000,
+    "gradient": {
+     "degree": 90.0,
+     "stops": [
+      {
+       "pos": 0.0,
+       "rgb": "83CCEB",
+       "theme": 5,
+       "tint": 0.5999938962981048
+      },
+      {
+       "pos": 1.0,
+       "rgb": "156082",
+       "theme": 5,
+       "tint": 0.0
+      }
+     ]
+    },
+    "font": {
+     "rgb": null,
+     "theme": null,
+     "tint": null,
+     "bold": null,
+     "size": null,
+     "colorIndex": null
+    }
+   },
+   "41": {
+    "pattern": 4000,
+    "gradient": {
+     "degree": 90.0,
+     "stops": [
+      {
+       "pos": 0.0,
+       "rgb": "D9D9D9",
+       "theme": 1,
+       "tint": -0.1499984740745262
+      },
+      {
+       "pos": 1.0,
+       "rgb": "D9D9D9",
+       "theme": 1,
+       "tint": -0.1499984740745262
+      }
+     ]
+    },
+    "font": {
+     "rgb": null,
+     "theme": null,
+     "tint": null,
+     "bold": null,
+     "size": null,
+     "colorIndex": null
+    }
+   },
+   "42": {
+    "pattern": 1,
+    "fill": {
+     "rgb": "44B3E1",
+     "theme": 5,
+     "tint": 0.3999755851924192
+    },
+    "font": {
+     "rgb": null,
+     "theme": null,
+     "tint": null,
+     "bold": null,
+     "size": null,
+     "colorIndex": null
+    }
+   }
+  },
+  "TimeSlicerStyleLight2": {
+   "local": "Zeitachsen-Formatvorlage Hell 2",
+   "builtIn": true,
+   "0": {
+    "pattern": null,
+    "font": {
+     "rgb": "000000",
+     "theme": 2,
+     "tint": 0.0,
+     "bold": null,
+     "size": null,
+     "colorIndex": 1
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "E97132",
+      "theme": 6,
+      "tint": 0.0
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "E97132",
+      "theme": 6,
+      "tint": 0.0
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "E97132",
+      "theme": 6,
+      "tint": 0.0
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "E97132",
+      "theme": 6,
+      "tint": 0.0
+     }
+    }
+   },
+   "1": {
+    "pattern": null,
+    "font": {
+     "rgb": "000000",
+     "theme": 2,
+     "tint": 0.0,
+     "bold": true,
+     "size": 11.0,
+     "colorIndex": 1
+    }
+   },
+   "36": {
+    "pattern": null,
+    "font": {
+     "rgb": "BE5014",
+     "theme": 6,
+     "tint": -0.249977111117893,
+     "bold": null,
+     "size": 10.0,
+     "colorIndex": 53
+    }
+   },
+   "37": {
+    "pattern": null,
+    "font": {
+     "rgb": "808080",
+     "theme": 2,
+     "tint": 0.499984740745262,
+     "bold": null,
+     "size": 9.0,
+     "colorIndex": 16
+    }
+   },
+   "38": {
+    "pattern": null,
+    "font": {
+     "rgb": "808080",
+     "theme": 2,
+     "tint": 0.499984740745262,
+     "bold": null,
+     "size": 9.0,
+     "colorIndex": 16
+    }
+   },
+   "39": {
+    "pattern": null,
+    "font": {
+     "rgb": "808080",
+     "theme": 2,
+     "tint": 0.499984740745262,
+     "bold": null,
+     "size": 9.0,
+     "colorIndex": 16
+    }
+   },
+   "40": {
+    "pattern": 4000,
+    "gradient": {
+     "degree": 90.0,
+     "stops": [
+      {
+       "pos": 0.0,
+       "rgb": "F7C7AC",
+       "theme": 6,
+       "tint": 0.5999938962981048
+      },
+      {
+       "pos": 1.0,
+       "rgb": "E97132",
+       "theme": 6,
+       "tint": 0.0
+      }
+     ]
+    },
+    "font": {
+     "rgb": null,
+     "theme": null,
+     "tint": null,
+     "bold": null,
+     "size": null,
+     "colorIndex": null
+    }
+   },
+   "41": {
+    "pattern": 4000,
+    "gradient": {
+     "degree": 90.0,
+     "stops": [
+      {
+       "pos": 0.0,
+       "rgb": "D9D9D9",
+       "theme": 1,
+       "tint": -0.1499984740745262
+      },
+      {
+       "pos": 1.0,
+       "rgb": "D9D9D9",
+       "theme": 1,
+       "tint": -0.1499984740745262
+      }
+     ]
+    },
+    "font": {
+     "rgb": null,
+     "theme": null,
+     "tint": null,
+     "bold": null,
+     "size": null,
+     "colorIndex": null
+    }
+   },
+   "42": {
+    "pattern": 1,
+    "fill": {
+     "rgb": "F1A983",
+     "theme": 6,
+     "tint": 0.3999755851924192
+    },
+    "font": {
+     "rgb": null,
+     "theme": null,
+     "tint": null,
+     "bold": null,
+     "size": null,
+     "colorIndex": null
+    }
+   }
+  },
+  "TimeSlicerStyleLight3": {
+   "local": "Zeitachsen-Formatvorlage Hell 3",
+   "builtIn": true,
+   "0": {
+    "pattern": null,
+    "font": {
+     "rgb": "000000",
+     "theme": 2,
+     "tint": 0.0,
+     "bold": null,
+     "size": null,
+     "colorIndex": 1
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "196B24",
+      "theme": 7,
+      "tint": 0.0
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "196B24",
+      "theme": 7,
+      "tint": 0.0
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "196B24",
+      "theme": 7,
+      "tint": 0.0
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "196B24",
+      "theme": 7,
+      "tint": 0.0
+     }
+    }
+   },
+   "1": {
+    "pattern": null,
+    "font": {
+     "rgb": "000000",
+     "theme": 2,
+     "tint": 0.0,
+     "bold": true,
+     "size": 11.0,
+     "colorIndex": 1
+    }
+   },
+   "36": {
+    "pattern": null,
+    "font": {
+     "rgb": "12501A",
+     "theme": 7,
+     "tint": -0.249977111117893,
+     "bold": null,
+     "size": 10.0,
+     "colorIndex": 51
+    }
+   },
+   "37": {
+    "pattern": null,
+    "font": {
+     "rgb": "808080",
+     "theme": 2,
+     "tint": 0.499984740745262,
+     "bold": null,
+     "size": 9.0,
+     "colorIndex": 16
+    }
+   },
+   "38": {
+    "pattern": null,
+    "font": {
+     "rgb": "808080",
+     "theme": 2,
+     "tint": 0.499984740745262,
+     "bold": null,
+     "size": 9.0,
+     "colorIndex": 16
+    }
+   },
+   "39": {
+    "pattern": null,
+    "font": {
+     "rgb": "808080",
+     "theme": 2,
+     "tint": 0.499984740745262,
+     "bold": null,
+     "size": 9.0,
+     "colorIndex": 16
+    }
+   },
+   "40": {
+    "pattern": 4000,
+    "gradient": {
+     "degree": 90.0,
+     "stops": [
+      {
+       "pos": 0.0,
+       "rgb": "83E28E",
+       "theme": 7,
+       "tint": 0.5999938962981048
+      },
+      {
+       "pos": 1.0,
+       "rgb": "196B24",
+       "theme": 7,
+       "tint": 0.0
+      }
+     ]
+    },
+    "font": {
+     "rgb": null,
+     "theme": null,
+     "tint": null,
+     "bold": null,
+     "size": null,
+     "colorIndex": null
+    }
+   },
+   "41": {
+    "pattern": 4000,
+    "gradient": {
+     "degree": 90.0,
+     "stops": [
+      {
+       "pos": 0.0,
+       "rgb": "D9D9D9",
+       "theme": 1,
+       "tint": -0.1499984740745262
+      },
+      {
+       "pos": 1.0,
+       "rgb": "D9D9D9",
+       "theme": 1,
+       "tint": -0.1499984740745262
+      }
+     ]
+    },
+    "font": {
+     "rgb": null,
+     "theme": null,
+     "tint": null,
+     "bold": null,
+     "size": null,
+     "colorIndex": null
+    }
+   },
+   "42": {
+    "pattern": 1,
+    "fill": {
+     "rgb": "47D359",
+     "theme": 7,
+     "tint": 0.3999755851924192
+    },
+    "font": {
+     "rgb": null,
+     "theme": null,
+     "tint": null,
+     "bold": null,
+     "size": null,
+     "colorIndex": null
+    }
+   }
+  },
+  "TimeSlicerStyleLight4": {
+   "local": "Zeitachsen-Formatvorlage Hell 4",
+   "builtIn": true,
+   "0": {
+    "pattern": null,
+    "font": {
+     "rgb": "000000",
+     "theme": 2,
+     "tint": 0.0,
+     "bold": null,
+     "size": null,
+     "colorIndex": 1
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "0F9ED5",
+      "theme": 8,
+      "tint": 0.0
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "0F9ED5",
+      "theme": 8,
+      "tint": 0.0
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "0F9ED5",
+      "theme": 8,
+      "tint": 0.0
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "0F9ED5",
+      "theme": 8,
+      "tint": 0.0
+     }
+    }
+   },
+   "1": {
+    "pattern": null,
+    "font": {
+     "rgb": "000000",
+     "theme": 2,
+     "tint": 0.0,
+     "bold": true,
+     "size": 11.0,
+     "colorIndex": 1
+    }
+   },
+   "36": {
+    "pattern": null,
+    "font": {
+     "rgb": "0C769E",
+     "theme": 8,
+     "tint": -0.249977111117893,
+     "bold": null,
+     "size": 10.0,
+     "colorIndex": 14
+    }
+   },
+   "37": {
+    "pattern": null,
+    "font": {
+     "rgb": "808080",
+     "theme": 2,
+     "tint": 0.499984740745262,
+     "bold": null,
+     "size": 9.0,
+     "colorIndex": 16
+    }
+   },
+   "38": {
+    "pattern": null,
+    "font": {
+     "rgb": "808080",
+     "theme": 2,
+     "tint": 0.499984740745262,
+     "bold": null,
+     "size": 9.0,
+     "colorIndex": 16
+    }
+   },
+   "39": {
+    "pattern": null,
+    "font": {
+     "rgb": "808080",
+     "theme": 2,
+     "tint": 0.499984740745262,
+     "bold": null,
+     "size": 9.0,
+     "colorIndex": 16
+    }
+   },
+   "40": {
+    "pattern": 4000,
+    "gradient": {
+     "degree": 90.0,
+     "stops": [
+      {
+       "pos": 0.0,
+       "rgb": "94DCF8",
+       "theme": 8,
+       "tint": 0.5999938962981048
+      },
+      {
+       "pos": 1.0,
+       "rgb": "0F9ED5",
+       "theme": 8,
+       "tint": 0.0
+      }
+     ]
+    },
+    "font": {
+     "rgb": null,
+     "theme": null,
+     "tint": null,
+     "bold": null,
+     "size": null,
+     "colorIndex": null
+    }
+   },
+   "41": {
+    "pattern": 4000,
+    "gradient": {
+     "degree": 90.0,
+     "stops": [
+      {
+       "pos": 0.0,
+       "rgb": "D9D9D9",
+       "theme": 1,
+       "tint": -0.1499984740745262
+      },
+      {
+       "pos": 1.0,
+       "rgb": "D9D9D9",
+       "theme": 1,
+       "tint": -0.1499984740745262
+      }
+     ]
+    },
+    "font": {
+     "rgb": null,
+     "theme": null,
+     "tint": null,
+     "bold": null,
+     "size": null,
+     "colorIndex": null
+    }
+   },
+   "42": {
+    "pattern": 1,
+    "fill": {
+     "rgb": "61CBF3",
+     "theme": 8,
+     "tint": 0.3999755851924192
+    },
+    "font": {
+     "rgb": null,
+     "theme": null,
+     "tint": null,
+     "bold": null,
+     "size": null,
+     "colorIndex": null
+    }
+   }
+  },
+  "TimeSlicerStyleLight5": {
+   "local": "Zeitachsen-Formatvorlage Hell 5",
+   "builtIn": true,
+   "0": {
+    "pattern": null,
+    "font": {
+     "rgb": "000000",
+     "theme": 2,
+     "tint": 0.0,
+     "bold": null,
+     "size": null,
+     "colorIndex": 1
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A02B93",
+      "theme": 9,
+      "tint": 0.0
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A02B93",
+      "theme": 9,
+      "tint": 0.0
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A02B93",
+      "theme": 9,
+      "tint": 0.0
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A02B93",
+      "theme": 9,
+      "tint": 0.0
+     }
+    }
+   },
+   "1": {
+    "pattern": null,
+    "font": {
+     "rgb": "000000",
+     "theme": 2,
+     "tint": 0.0,
+     "bold": true,
+     "size": 11.0,
+     "colorIndex": 1
+    }
+   },
+   "36": {
+    "pattern": null,
+    "font": {
+     "rgb": "782170",
+     "theme": 9,
+     "tint": -0.249977111117893,
+     "bold": null,
+     "size": 10.0,
+     "colorIndex": 13
+    }
+   },
+   "37": {
+    "pattern": null,
+    "font": {
+     "rgb": "808080",
+     "theme": 2,
+     "tint": 0.499984740745262,
+     "bold": null,
+     "size": 9.0,
+     "colorIndex": 16
+    }
+   },
+   "38": {
+    "pattern": null,
+    "font": {
+     "rgb": "808080",
+     "theme": 2,
+     "tint": 0.499984740745262,
+     "bold": null,
+     "size": 9.0,
+     "colorIndex": 16
+    }
+   },
+   "39": {
+    "pattern": null,
+    "font": {
+     "rgb": "808080",
+     "theme": 2,
+     "tint": 0.499984740745262,
+     "bold": null,
+     "size": 9.0,
+     "colorIndex": 16
+    }
+   },
+   "40": {
+    "pattern": 4000,
+    "gradient": {
+     "degree": 90.0,
+     "stops": [
+      {
+       "pos": 0.0,
+       "rgb": "E49EDD",
+       "theme": 9,
+       "tint": 0.5999938962981048
+      },
+      {
+       "pos": 1.0,
+       "rgb": "A02B93",
+       "theme": 9,
+       "tint": 0.0
+      }
+     ]
+    },
+    "font": {
+     "rgb": null,
+     "theme": null,
+     "tint": null,
+     "bold": null,
+     "size": null,
+     "colorIndex": null
+    }
+   },
+   "41": {
+    "pattern": 4000,
+    "gradient": {
+     "degree": 90.0,
+     "stops": [
+      {
+       "pos": 0.0,
+       "rgb": "D9D9D9",
+       "theme": 1,
+       "tint": -0.1499984740745262
+      },
+      {
+       "pos": 1.0,
+       "rgb": "D9D9D9",
+       "theme": 1,
+       "tint": -0.1499984740745262
+      }
+     ]
+    },
+    "font": {
+     "rgb": null,
+     "theme": null,
+     "tint": null,
+     "bold": null,
+     "size": null,
+     "colorIndex": null
+    }
+   },
+   "42": {
+    "pattern": 1,
+    "fill": {
+     "rgb": "D86DCD",
+     "theme": 9,
+     "tint": 0.3999755851924192
+    },
+    "font": {
+     "rgb": null,
+     "theme": null,
+     "tint": null,
+     "bold": null,
+     "size": null,
+     "colorIndex": null
+    }
+   }
+  },
+  "TimeSlicerStyleLight6": {
+   "local": "Zeitachsen-Formatvorlage Hell 6",
+   "builtIn": true,
+   "0": {
+    "pattern": null,
+    "font": {
+     "rgb": "000000",
+     "theme": 2,
+     "tint": 0.0,
+     "bold": null,
+     "size": null,
+     "colorIndex": 1
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "4EA72E",
+      "theme": 10,
+      "tint": 0.0
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "4EA72E",
+      "theme": 10,
+      "tint": 0.0
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "4EA72E",
+      "theme": 10,
+      "tint": 0.0
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "4EA72E",
+      "theme": 10,
+      "tint": 0.0
+     }
+    }
+   },
+   "1": {
+    "pattern": null,
+    "font": {
+     "rgb": "000000",
+     "theme": 2,
+     "tint": 0.0,
+     "bold": true,
+     "size": 11.0,
+     "colorIndex": 1
+    }
+   },
+   "36": {
+    "pattern": null,
+    "font": {
+     "rgb": "3C7D22",
+     "theme": 10,
+     "tint": -0.249977111117893,
+     "bold": null,
+     "size": 10.0,
+     "colorIndex": 10
+    }
+   },
+   "37": {
+    "pattern": null,
+    "font": {
+     "rgb": "808080",
+     "theme": 2,
+     "tint": 0.499984740745262,
+     "bold": null,
+     "size": 9.0,
+     "colorIndex": 16
+    }
+   },
+   "38": {
+    "pattern": null,
+    "font": {
+     "rgb": "808080",
+     "theme": 2,
+     "tint": 0.499984740745262,
+     "bold": null,
+     "size": 9.0,
+     "colorIndex": 16
+    }
+   },
+   "39": {
+    "pattern": null,
+    "font": {
+     "rgb": "808080",
+     "theme": 2,
+     "tint": 0.499984740745262,
+     "bold": null,
+     "size": 9.0,
+     "colorIndex": 16
+    }
+   },
+   "40": {
+    "pattern": 4000,
+    "gradient": {
+     "degree": 90.0,
+     "stops": [
+      {
+       "pos": 0.0,
+       "rgb": "B5E6A2",
+       "theme": 10,
+       "tint": 0.5999938962981048
+      },
+      {
+       "pos": 1.0,
+       "rgb": "4EA72E",
+       "theme": 10,
+       "tint": 0.0
+      }
+     ]
+    },
+    "font": {
+     "rgb": null,
+     "theme": null,
+     "tint": null,
+     "bold": null,
+     "size": null,
+     "colorIndex": null
+    }
+   },
+   "41": {
+    "pattern": 4000,
+    "gradient": {
+     "degree": 90.0,
+     "stops": [
+      {
+       "pos": 0.0,
+       "rgb": "D9D9D9",
+       "theme": 1,
+       "tint": -0.1499984740745262
+      },
+      {
+       "pos": 1.0,
+       "rgb": "D9D9D9",
+       "theme": 1,
+       "tint": -0.1499984740745262
+      }
+     ]
+    },
+    "font": {
+     "rgb": null,
+     "theme": null,
+     "tint": null,
+     "bold": null,
+     "size": null,
+     "colorIndex": null
+    }
+   },
+   "42": {
+    "pattern": 1,
+    "fill": {
+     "rgb": "8ED973",
+     "theme": 10,
+     "tint": 0.3999755851924192
+    },
+    "font": {
+     "rgb": null,
+     "theme": null,
+     "tint": null,
+     "bold": null,
+     "size": null,
+     "colorIndex": null
+    }
+   }
+  },
+  "TimeSlicerStyleDark1": {
+   "local": "Zeitachsen-Formatvorlage Dunkel 1",
+   "builtIn": true,
+   "0": {
+    "pattern": null,
+    "font": {
+     "rgb": "000000",
+     "theme": 2,
+     "tint": 0.0,
+     "bold": null,
+     "size": null,
+     "colorIndex": 1
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "156082",
+      "theme": 5,
+      "tint": 0.0
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "156082",
+      "theme": 5,
+      "tint": 0.0
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "156082",
+      "theme": 5,
+      "tint": 0.0
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "156082",
+      "theme": 5,
+      "tint": 0.0
+     }
+    }
+   },
+   "1": {
+    "pattern": null,
+    "font": {
+     "rgb": "000000",
+     "theme": 2,
+     "tint": 0.0,
+     "bold": true,
+     "size": 11.0,
+     "colorIndex": 1
+    }
+   },
+   "36": {
+    "pattern": null,
+    "font": {
+     "rgb": "104861",
+     "theme": 5,
+     "tint": -0.249977111117893,
+     "bold": null,
+     "size": 10.0,
+     "colorIndex": 49
+    }
+   },
+   "37": {
+    "pattern": null,
+    "font": {
+     "rgb": "808080",
+     "theme": 2,
+     "tint": 0.499984740745262,
+     "bold": null,
+     "size": 9.0,
+     "colorIndex": 16
+    }
+   },
+   "38": {
+    "pattern": null,
+    "font": {
+     "rgb": "808080",
+     "theme": 2,
+     "tint": 0.499984740745262,
+     "bold": null,
+     "size": 9.0,
+     "colorIndex": 16
+    }
+   },
+   "39": {
+    "pattern": null,
+    "font": {
+     "rgb": "808080",
+     "theme": 2,
+     "tint": 0.499984740745262,
+     "bold": null,
+     "size": 9.0,
+     "colorIndex": 16
+    }
+   },
+   "40": {
+    "pattern": 4000,
+    "gradient": {
+     "degree": 90.0,
+     "stops": [
+      {
+       "pos": 0.0,
+       "rgb": "156082",
+       "theme": 5,
+       "tint": 0.0
+      },
+      {
+       "pos": 1.0,
+       "rgb": "0B3040",
+       "theme": 5,
+       "tint": -0.499984740745262
+      }
+     ]
+    },
+    "font": {
+     "rgb": null,
+     "theme": null,
+     "tint": null,
+     "bold": null,
+     "size": null,
+     "colorIndex": null
+    }
+   },
+   "41": {
+    "pattern": 4000,
+    "gradient": {
+     "degree": 90.0,
+     "stops": [
+      {
+       "pos": 0.0,
+       "rgb": "BFBFBF",
+       "theme": 1,
+       "tint": -0.249977111117893
+      },
+      {
+       "pos": 1.0,
+       "rgb": "BFBFBF",
+       "theme": 1,
+       "tint": -0.249977111117893
+      }
+     ]
+    },
+    "font": {
+     "rgb": null,
+     "theme": null,
+     "tint": null,
+     "bold": null,
+     "size": null,
+     "colorIndex": null
+    }
+   },
+   "42": {
+    "pattern": 1,
+    "fill": {
+     "rgb": "44B3E1",
+     "theme": 5,
+     "tint": 0.3999755851924192
+    },
+    "font": {
+     "rgb": null,
+     "theme": null,
+     "tint": null,
+     "bold": null,
+     "size": null,
+     "colorIndex": null
+    }
+   }
+  },
+  "TimeSlicerStyleDark2": {
+   "local": "Zeitachsen-Formatvorlage Dunkel 2",
+   "builtIn": true,
+   "0": {
+    "pattern": null,
+    "font": {
+     "rgb": "000000",
+     "theme": 2,
+     "tint": 0.0,
+     "bold": null,
+     "size": null,
+     "colorIndex": 1
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "E97132",
+      "theme": 6,
+      "tint": 0.0
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "E97132",
+      "theme": 6,
+      "tint": 0.0
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "E97132",
+      "theme": 6,
+      "tint": 0.0
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "E97132",
+      "theme": 6,
+      "tint": 0.0
+     }
+    }
+   },
+   "1": {
+    "pattern": null,
+    "font": {
+     "rgb": "000000",
+     "theme": 2,
+     "tint": 0.0,
+     "bold": true,
+     "size": 11.0,
+     "colorIndex": 1
+    }
+   },
+   "36": {
+    "pattern": null,
+    "font": {
+     "rgb": "BE5014",
+     "theme": 6,
+     "tint": -0.249977111117893,
+     "bold": null,
+     "size": 10.0,
+     "colorIndex": 53
+    }
+   },
+   "37": {
+    "pattern": null,
+    "font": {
+     "rgb": "808080",
+     "theme": 2,
+     "tint": 0.499984740745262,
+     "bold": null,
+     "size": 9.0,
+     "colorIndex": 16
+    }
+   },
+   "38": {
+    "pattern": null,
+    "font": {
+     "rgb": "808080",
+     "theme": 2,
+     "tint": 0.499984740745262,
+     "bold": null,
+     "size": 9.0,
+     "colorIndex": 16
+    }
+   },
+   "39": {
+    "pattern": null,
+    "font": {
+     "rgb": "808080",
+     "theme": 2,
+     "tint": 0.499984740745262,
+     "bold": null,
+     "size": 9.0,
+     "colorIndex": 16
+    }
+   },
+   "40": {
+    "pattern": 4000,
+    "gradient": {
+     "degree": 90.0,
+     "stops": [
+      {
+       "pos": 0.0,
+       "rgb": "E97132",
+       "theme": 6,
+       "tint": 0.0
+      },
+      {
+       "pos": 1.0,
+       "rgb": "7E350E",
+       "theme": 6,
+       "tint": -0.499984740745262
+      }
+     ]
+    },
+    "font": {
+     "rgb": null,
+     "theme": null,
+     "tint": null,
+     "bold": null,
+     "size": null,
+     "colorIndex": null
+    }
+   },
+   "41": {
+    "pattern": 4000,
+    "gradient": {
+     "degree": 90.0,
+     "stops": [
+      {
+       "pos": 0.0,
+       "rgb": "BFBFBF",
+       "theme": 1,
+       "tint": -0.249977111117893
+      },
+      {
+       "pos": 1.0,
+       "rgb": "BFBFBF",
+       "theme": 1,
+       "tint": -0.249977111117893
+      }
+     ]
+    },
+    "font": {
+     "rgb": null,
+     "theme": null,
+     "tint": null,
+     "bold": null,
+     "size": null,
+     "colorIndex": null
+    }
+   },
+   "42": {
+    "pattern": 1,
+    "fill": {
+     "rgb": "F1A983",
+     "theme": 6,
+     "tint": 0.3999755851924192
+    },
+    "font": {
+     "rgb": null,
+     "theme": null,
+     "tint": null,
+     "bold": null,
+     "size": null,
+     "colorIndex": null
+    }
+   }
+  },
+  "TimeSlicerStyleDark3": {
+   "local": "Zeitachsen-Formatvorlage Dunkel 3",
+   "builtIn": true,
+   "0": {
+    "pattern": null,
+    "font": {
+     "rgb": "000000",
+     "theme": 2,
+     "tint": 0.0,
+     "bold": null,
+     "size": null,
+     "colorIndex": 1
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "196B24",
+      "theme": 7,
+      "tint": 0.0
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "196B24",
+      "theme": 7,
+      "tint": 0.0
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "196B24",
+      "theme": 7,
+      "tint": 0.0
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "196B24",
+      "theme": 7,
+      "tint": 0.0
+     }
+    }
+   },
+   "1": {
+    "pattern": null,
+    "font": {
+     "rgb": "000000",
+     "theme": 2,
+     "tint": 0.0,
+     "bold": true,
+     "size": 11.0,
+     "colorIndex": 1
+    }
+   },
+   "36": {
+    "pattern": null,
+    "font": {
+     "rgb": "12501A",
+     "theme": 7,
+     "tint": -0.249977111117893,
+     "bold": null,
+     "size": 10.0,
+     "colorIndex": 51
+    }
+   },
+   "37": {
+    "pattern": null,
+    "font": {
+     "rgb": "808080",
+     "theme": 2,
+     "tint": 0.499984740745262,
+     "bold": null,
+     "size": 9.0,
+     "colorIndex": 16
+    }
+   },
+   "38": {
+    "pattern": null,
+    "font": {
+     "rgb": "808080",
+     "theme": 2,
+     "tint": 0.499984740745262,
+     "bold": null,
+     "size": 9.0,
+     "colorIndex": 16
+    }
+   },
+   "39": {
+    "pattern": null,
+    "font": {
+     "rgb": "808080",
+     "theme": 2,
+     "tint": 0.499984740745262,
+     "bold": null,
+     "size": 9.0,
+     "colorIndex": 16
+    }
+   },
+   "40": {
+    "pattern": 4000,
+    "gradient": {
+     "degree": 90.0,
+     "stops": [
+      {
+       "pos": 0.0,
+       "rgb": "196B24",
+       "theme": 7,
+       "tint": 0.0
+      },
+      {
+       "pos": 1.0,
+       "rgb": "0D3512",
+       "theme": 7,
+       "tint": -0.499984740745262
+      }
+     ]
+    },
+    "font": {
+     "rgb": null,
+     "theme": null,
+     "tint": null,
+     "bold": null,
+     "size": null,
+     "colorIndex": null
+    }
+   },
+   "41": {
+    "pattern": 4000,
+    "gradient": {
+     "degree": 90.0,
+     "stops": [
+      {
+       "pos": 0.0,
+       "rgb": "BFBFBF",
+       "theme": 1,
+       "tint": -0.249977111117893
+      },
+      {
+       "pos": 1.0,
+       "rgb": "BFBFBF",
+       "theme": 1,
+       "tint": -0.249977111117893
+      }
+     ]
+    },
+    "font": {
+     "rgb": null,
+     "theme": null,
+     "tint": null,
+     "bold": null,
+     "size": null,
+     "colorIndex": null
+    }
+   },
+   "42": {
+    "pattern": 1,
+    "fill": {
+     "rgb": "47D359",
+     "theme": 7,
+     "tint": 0.3999755851924192
+    },
+    "font": {
+     "rgb": null,
+     "theme": null,
+     "tint": null,
+     "bold": null,
+     "size": null,
+     "colorIndex": null
+    }
+   }
+  },
+  "TimeSlicerStyleDark4": {
+   "local": "Zeitachsen-Formatvorlage Dunkel 4",
+   "builtIn": true,
+   "0": {
+    "pattern": null,
+    "font": {
+     "rgb": "000000",
+     "theme": 2,
+     "tint": 0.0,
+     "bold": null,
+     "size": null,
+     "colorIndex": 1
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "0F9ED5",
+      "theme": 8,
+      "tint": 0.0
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "0F9ED5",
+      "theme": 8,
+      "tint": 0.0
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "0F9ED5",
+      "theme": 8,
+      "tint": 0.0
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "0F9ED5",
+      "theme": 8,
+      "tint": 0.0
+     }
+    }
+   },
+   "1": {
+    "pattern": null,
+    "font": {
+     "rgb": "000000",
+     "theme": 2,
+     "tint": 0.0,
+     "bold": true,
+     "size": 11.0,
+     "colorIndex": 1
+    }
+   },
+   "36": {
+    "pattern": null,
+    "font": {
+     "rgb": "0C769E",
+     "theme": 8,
+     "tint": -0.249977111117893,
+     "bold": null,
+     "size": 10.0,
+     "colorIndex": 14
+    }
+   },
+   "37": {
+    "pattern": null,
+    "font": {
+     "rgb": "808080",
+     "theme": 2,
+     "tint": 0.499984740745262,
+     "bold": null,
+     "size": 9.0,
+     "colorIndex": 16
+    }
+   },
+   "38": {
+    "pattern": null,
+    "font": {
+     "rgb": "808080",
+     "theme": 2,
+     "tint": 0.499984740745262,
+     "bold": null,
+     "size": 9.0,
+     "colorIndex": 16
+    }
+   },
+   "39": {
+    "pattern": null,
+    "font": {
+     "rgb": "808080",
+     "theme": 2,
+     "tint": 0.499984740745262,
+     "bold": null,
+     "size": 9.0,
+     "colorIndex": 16
+    }
+   },
+   "40": {
+    "pattern": 4000,
+    "gradient": {
+     "degree": 90.0,
+     "stops": [
+      {
+       "pos": 0.0,
+       "rgb": "0F9ED5",
+       "theme": 8,
+       "tint": 0.0
+      },
+      {
+       "pos": 1.0,
+       "rgb": "074F69",
+       "theme": 8,
+       "tint": -0.499984740745262
+      }
+     ]
+    },
+    "font": {
+     "rgb": null,
+     "theme": null,
+     "tint": null,
+     "bold": null,
+     "size": null,
+     "colorIndex": null
+    }
+   },
+   "41": {
+    "pattern": 4000,
+    "gradient": {
+     "degree": 90.0,
+     "stops": [
+      {
+       "pos": 0.0,
+       "rgb": "BFBFBF",
+       "theme": 1,
+       "tint": -0.249977111117893
+      },
+      {
+       "pos": 1.0,
+       "rgb": "BFBFBF",
+       "theme": 1,
+       "tint": -0.249977111117893
+      }
+     ]
+    },
+    "font": {
+     "rgb": null,
+     "theme": null,
+     "tint": null,
+     "bold": null,
+     "size": null,
+     "colorIndex": null
+    }
+   },
+   "42": {
+    "pattern": 1,
+    "fill": {
+     "rgb": "61CBF3",
+     "theme": 8,
+     "tint": 0.3999755851924192
+    },
+    "font": {
+     "rgb": null,
+     "theme": null,
+     "tint": null,
+     "bold": null,
+     "size": null,
+     "colorIndex": null
+    }
+   }
+  },
+  "TimeSlicerStyleDark5": {
+   "local": "Zeitachsen-Formatvorlage Dunkel 5",
+   "builtIn": true,
+   "0": {
+    "pattern": null,
+    "font": {
+     "rgb": "000000",
+     "theme": 2,
+     "tint": 0.0,
+     "bold": null,
+     "size": null,
+     "colorIndex": 1
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A02B93",
+      "theme": 9,
+      "tint": 0.0
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A02B93",
+      "theme": 9,
+      "tint": 0.0
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A02B93",
+      "theme": 9,
+      "tint": 0.0
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "A02B93",
+      "theme": 9,
+      "tint": 0.0
+     }
+    }
+   },
+   "1": {
+    "pattern": null,
+    "font": {
+     "rgb": "000000",
+     "theme": 2,
+     "tint": 0.0,
+     "bold": true,
+     "size": 11.0,
+     "colorIndex": 1
+    }
+   },
+   "36": {
+    "pattern": null,
+    "font": {
+     "rgb": "782170",
+     "theme": 9,
+     "tint": -0.249977111117893,
+     "bold": null,
+     "size": 10.0,
+     "colorIndex": 13
+    }
+   },
+   "37": {
+    "pattern": null,
+    "font": {
+     "rgb": "808080",
+     "theme": 2,
+     "tint": 0.499984740745262,
+     "bold": null,
+     "size": 9.0,
+     "colorIndex": 16
+    }
+   },
+   "38": {
+    "pattern": null,
+    "font": {
+     "rgb": "808080",
+     "theme": 2,
+     "tint": 0.499984740745262,
+     "bold": null,
+     "size": 9.0,
+     "colorIndex": 16
+    }
+   },
+   "39": {
+    "pattern": null,
+    "font": {
+     "rgb": "808080",
+     "theme": 2,
+     "tint": 0.499984740745262,
+     "bold": null,
+     "size": 9.0,
+     "colorIndex": 16
+    }
+   },
+   "40": {
+    "pattern": 4000,
+    "gradient": {
+     "degree": 90.0,
+     "stops": [
+      {
+       "pos": 0.0,
+       "rgb": "A02B93",
+       "theme": 9,
+       "tint": 0.0
+      },
+      {
+       "pos": 1.0,
+       "rgb": "51154A",
+       "theme": 9,
+       "tint": -0.499984740745262
+      }
+     ]
+    },
+    "font": {
+     "rgb": null,
+     "theme": null,
+     "tint": null,
+     "bold": null,
+     "size": null,
+     "colorIndex": null
+    }
+   },
+   "41": {
+    "pattern": 4000,
+    "gradient": {
+     "degree": 90.0,
+     "stops": [
+      {
+       "pos": 0.0,
+       "rgb": "BFBFBF",
+       "theme": 1,
+       "tint": -0.249977111117893
+      },
+      {
+       "pos": 1.0,
+       "rgb": "BFBFBF",
+       "theme": 1,
+       "tint": -0.249977111117893
+      }
+     ]
+    },
+    "font": {
+     "rgb": null,
+     "theme": null,
+     "tint": null,
+     "bold": null,
+     "size": null,
+     "colorIndex": null
+    }
+   },
+   "42": {
+    "pattern": 1,
+    "fill": {
+     "rgb": "D86DCD",
+     "theme": 9,
+     "tint": 0.3999755851924192
+    },
+    "font": {
+     "rgb": null,
+     "theme": null,
+     "tint": null,
+     "bold": null,
+     "size": null,
+     "colorIndex": null
+    }
+   }
+  },
+  "TimeSlicerStyleDark6": {
+   "local": "Zeitachsen-Formatvorlage Dunkel 6",
+   "builtIn": true,
+   "0": {
+    "pattern": null,
+    "font": {
+     "rgb": "000000",
+     "theme": 2,
+     "tint": 0.0,
+     "bold": null,
+     "size": null,
+     "colorIndex": 1
+    },
+    "borders": {
+     "left": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "4EA72E",
+      "theme": 10,
+      "tint": 0.0
+     },
+     "top": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "4EA72E",
+      "theme": 10,
+      "tint": 0.0
+     },
+     "bottom": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "4EA72E",
+      "theme": 10,
+      "tint": 0.0
+     },
+     "right": {
+      "style": 1,
+      "weight": 2,
+      "rgb": "4EA72E",
+      "theme": 10,
+      "tint": 0.0
+     }
+    }
+   },
+   "1": {
+    "pattern": null,
+    "font": {
+     "rgb": "000000",
+     "theme": 2,
+     "tint": 0.0,
+     "bold": true,
+     "size": 11.0,
+     "colorIndex": 1
+    }
+   },
+   "36": {
+    "pattern": null,
+    "font": {
+     "rgb": "3C7D22",
+     "theme": 10,
+     "tint": -0.249977111117893,
+     "bold": null,
+     "size": 10.0,
+     "colorIndex": 10
+    }
+   },
+   "37": {
+    "pattern": null,
+    "font": {
+     "rgb": "808080",
+     "theme": 2,
+     "tint": 0.499984740745262,
+     "bold": null,
+     "size": 9.0,
+     "colorIndex": 16
+    }
+   },
+   "38": {
+    "pattern": null,
+    "font": {
+     "rgb": "808080",
+     "theme": 2,
+     "tint": 0.499984740745262,
+     "bold": null,
+     "size": 9.0,
+     "colorIndex": 16
+    }
+   },
+   "39": {
+    "pattern": null,
+    "font": {
+     "rgb": "808080",
+     "theme": 2,
+     "tint": 0.499984740745262,
+     "bold": null,
+     "size": 9.0,
+     "colorIndex": 16
+    }
+   },
+   "40": {
+    "pattern": 4000,
+    "gradient": {
+     "degree": 90.0,
+     "stops": [
+      {
+       "pos": 0.0,
+       "rgb": "4EA72E",
+       "theme": 10,
+       "tint": 0.0
+      },
+      {
+       "pos": 1.0,
+       "rgb": "275317",
+       "theme": 10,
+       "tint": -0.499984740745262
+      }
+     ]
+    },
+    "font": {
+     "rgb": null,
+     "theme": null,
+     "tint": null,
+     "bold": null,
+     "size": null,
+     "colorIndex": null
+    }
+   },
+   "41": {
+    "pattern": 4000,
+    "gradient": {
+     "degree": 90.0,
+     "stops": [
+      {
+       "pos": 0.0,
+       "rgb": "BFBFBF",
+       "theme": 1,
+       "tint": -0.249977111117893
+      },
+      {
+       "pos": 1.0,
+       "rgb": "BFBFBF",
+       "theme": 1,
+       "tint": -0.249977111117893
+      }
+     ]
+    },
+    "font": {
+     "rgb": null,
+     "theme": null,
+     "tint": null,
+     "bold": null,
+     "size": null,
+     "colorIndex": null
+    }
+   },
+   "42": {
+    "pattern": 1,
+    "fill": {
+     "rgb": "8ED973",
+     "theme": 10,
+     "tint": 0.3999755851924192
+    },
+    "font": {
+     "rgb": null,
+     "theme": null,
+     "tint": null,
+     "bold": null,
+     "size": null,
+     "colorIndex": null
+    }
+   }
+  }
+ },
+ "defaultTimelineStyle": "TimeSlicerStyleLight1",
+ "parts": [
+  "[Content_Types].xml",
+  "_rels/.rels",
+  "docProps/app.xml",
+  "docProps/core.xml",
+  "xl/_rels/workbook.xml.rels",
+  "xl/drawings/drawing1.xml",
+  "xl/drawings/drawing2.xml",
+  "xl/drawings/drawing3.xml",
+  "xl/drawings/drawing4.xml",
+  "xl/drawings/drawing5.xml",
+  "xl/drawings/drawing6.xml",
+  "xl/drawings/drawing7.xml",
+  "xl/drawings/drawing8.xml",
+  "xl/pivotCache/_rels/pivotCacheDefinition1.xml.rels",
+  "xl/pivotCache/_rels/pivotCacheDefinition2.xml.rels",
+  "xl/pivotCache/_rels/pivotCacheDefinition3.xml.rels",
+  "xl/pivotCache/_rels/pivotCacheDefinition4.xml.rels",
+  "xl/pivotCache/_rels/pivotCacheDefinition5.xml.rels",
+  "xl/pivotCache/_rels/pivotCacheDefinition6.xml.rels",
+  "xl/pivotCache/_rels/pivotCacheDefinition7.xml.rels",
+  "xl/pivotCache/_rels/pivotCacheDefinition8.xml.rels",
+  "xl/pivotCache/pivotCacheDefinition1.xml",
+  "xl/pivotCache/pivotCacheDefinition2.xml",
+  "xl/pivotCache/pivotCacheDefinition3.xml",
+  "xl/pivotCache/pivotCacheDefinition4.xml",
+  "xl/pivotCache/pivotCacheDefinition5.xml",
+  "xl/pivotCache/pivotCacheDefinition6.xml",
+  "xl/pivotCache/pivotCacheDefinition7.xml",
+  "xl/pivotCache/pivotCacheDefinition8.xml",
+  "xl/pivotCache/pivotCacheRecords1.xml",
+  "xl/pivotCache/pivotCacheRecords2.xml",
+  "xl/pivotCache/pivotCacheRecords3.xml",
+  "xl/pivotCache/pivotCacheRecords4.xml",
+  "xl/pivotCache/pivotCacheRecords5.xml",
+  "xl/pivotCache/pivotCacheRecords6.xml",
+  "xl/pivotCache/pivotCacheRecords7.xml",
+  "xl/pivotCache/pivotCacheRecords8.xml",
+  "xl/pivotTables/_rels/pivotTable1.xml.rels",
+  "xl/pivotTables/_rels/pivotTable2.xml.rels",
+  "xl/pivotTables/_rels/pivotTable3.xml.rels",
+  "xl/pivotTables/_rels/pivotTable4.xml.rels",
+  "xl/pivotTables/_rels/pivotTable5.xml.rels",
+  "xl/pivotTables/_rels/pivotTable6.xml.rels",
+  "xl/pivotTables/_rels/pivotTable7.xml.rels",
+  "xl/pivotTables/_rels/pivotTable8.xml.rels",
+  "xl/pivotTables/_rels/pivotTable9.xml.rels",
+  "xl/pivotTables/pivotTable1.xml",
+  "xl/pivotTables/pivotTable2.xml",
+  "xl/pivotTables/pivotTable3.xml",
+  "xl/pivotTables/pivotTable4.xml",
+  "xl/pivotTables/pivotTable5.xml",
+  "xl/pivotTables/pivotTable6.xml",
+  "xl/pivotTables/pivotTable7.xml",
+  "xl/pivotTables/pivotTable8.xml",
+  "xl/pivotTables/pivotTable9.xml",
+  "xl/sharedStrings.xml",
+  "xl/styles.xml",
+  "xl/tables/table1.xml",
+  "xl/theme/theme1.xml",
+  "xl/timelineCaches/timelineCache1.xml",
+  "xl/timelineCaches/timelineCache2.xml",
+  "xl/timelineCaches/timelineCache3.xml",
+  "xl/timelineCaches/timelineCache4.xml",
+  "xl/timelineCaches/timelineCache5.xml",
+  "xl/timelineCaches/timelineCache6.xml",
+  "xl/timelineCaches/timelineCache7.xml",
+  "xl/timelineCaches/timelineCache8.xml",
+  "xl/timelines/timeline1.xml",
+  "xl/timelines/timeline2.xml",
+  "xl/timelines/timeline3.xml",
+  "xl/timelines/timeline4.xml",
+  "xl/timelines/timeline5.xml",
+  "xl/timelines/timeline6.xml",
+  "xl/timelines/timeline7.xml",
+  "xl/timelines/timeline8.xml",
+  "xl/workbook.xml",
+  "xl/worksheets/_rels/sheet1.xml.rels",
+  "xl/worksheets/_rels/sheet2.xml.rels",
+  "xl/worksheets/_rels/sheet3.xml.rels",
+  "xl/worksheets/_rels/sheet4.xml.rels",
+  "xl/worksheets/_rels/sheet5.xml.rels",
+  "xl/worksheets/_rels/sheet6.xml.rels",
+  "xl/worksheets/_rels/sheet7.xml.rels",
+  "xl/worksheets/_rels/sheet8.xml.rels",
+  "xl/worksheets/_rels/sheet9.xml.rels",
+  "xl/worksheets/sheet1.xml",
+  "xl/worksheets/sheet2.xml",
+  "xl/worksheets/sheet3.xml",
+  "xl/worksheets/sheet4.xml",
+  "xl/worksheets/sheet5.xml",
+  "xl/worksheets/sheet6.xml",
+  "xl/worksheets/sheet7.xml",
+  "xl/worksheets/sheet8.xml",
+  "xl/worksheets/sheet9.xml"
+ ]
+}
