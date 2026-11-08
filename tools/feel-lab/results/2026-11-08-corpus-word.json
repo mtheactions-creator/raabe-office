@@ -1,0 +1,173 @@
+{
+ "app": "word",
+ "documents": [
+  {
+   "name": "arbeitsblatt",
+   "pages_office": 1,
+   "pages_raabe": 1,
+   "diff": [
+    3.04
+   ],
+   "mean": 3.04
+  },
+  {
+   "name": "bilder",
+   "pages_office": 1,
+   "pages_raabe": 1,
+   "diff": [
+    3.33
+   ],
+   "mean": 3.33
+  },
+  {
+   "name": "elternbrief",
+   "pages_office": 1,
+   "pages_raabe": 1,
+   "diff": [
+    9.1
+   ],
+   "mean": 9.1
+  },
+  {
+   "name": "formen",
+   "pages_office": 1,
+   "pages_raabe": 1,
+   "diff": [
+    0.63
+   ],
+   "mean": 0.63
+  },
+  {
+   "name": "fussnoten",
+   "pages_office": 1,
+   "pages_raabe": 1,
+   "diff": [
+    3.12
+   ],
+   "mean": 3.12
+  },
+  {
+   "name": "inhaltsverzeichnis",
+   "pages_office": 2,
+   "pages_raabe": 2,
+   "diff": [
+    8.06,
+    3.67
+   ],
+   "mean": 5.87
+  },
+  {
+   "name": "klausur",
+   "pages_office": 1,
+   "pages_raabe": 1,
+   "diff": [
+    2.35
+   ],
+   "mean": 2.35
+  },
+  {
+   "name": "kopfzeile",
+   "pages_office": 2,
+   "pages_raabe": 2,
+   "diff": [
+    9.65,
+    2.45
+   ],
+   "mean": 6.05
+  },
+  {
+   "name": "listen",
+   "pages_office": 1,
+   "pages_raabe": 1,
+   "diff": [
+    0.3
+   ],
+   "mean": 0.3
+  },
+  {
+   "name": "querformat",
+   "pages_office": 1,
+   "pages_raabe": 1,
+   "diff": [
+    1.15
+   ],
+   "mean": 1.15
+  },
+  {
+   "name": "schriften",
+   "pages_office": 1,
+   "pages_raabe": 1,
+   "diff": [
+    5.09
+   ],
+   "mean": 5.09
+  },
+  {
+   "name": "spalten",
+   "pages_office": 2,
+   "pages_raabe": 2,
+   "diff": [
+    13.14,
+    0.19
+   ],
+   "mean": 6.67
+  },
+  {
+   "name": "tabelle",
+   "pages_office": 1,
+   "pages_raabe": 1,
+   "diff": [
+    1.07
+   ],
+   "mean": 1.07
+  },
+  {
+   "name": "textfeld",
+   "pages_office": 1,
+   "pages_raabe": 1,
+   "diff": [
+    3.39
+   ],
+   "mean": 3.39
+  }
+ ],
+ "summary": {
+  "documents": 14,
+  "same_page_count": 14,
+  "mean_diff": 3.65,
+  "worst": [
+   [
+    9.1,
+    "elternbrief"
+   ],
+   [
+    6.67,
+    "spalten"
+   ],
+   [
+    6.05,
+    "kopfzeile"
+   ],
+   [
+    5.87,
+    "inhaltsverzeichnis"
+   ],
+   [
+    5.09,
+    "schriften"
+   ],
+   [
+    3.39,
+    "textfeld"
+   ],
+   [
+    3.33,
+    "bilder"
+   ],
+   [
+    3.12,
+    "fussnoten"
+   ]
+  ]
+ }
+}
