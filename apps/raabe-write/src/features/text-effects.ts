@@ -4,7 +4,7 @@
 // (text-effects.gen.ts, recorded with probe_word_texteffects.py); the rest (Kontur colours and
 // widths, Leuchten colours, the pane's settings) changes those elements as Word does.
 
-import { closePopup, colorGrid, h, hoverPreview, icon, type MenuEntry } from "@raabe/shell";
+import { closePopup, colorDialog, colorGrid, h, hoverPreview, icon, type MenuEntry } from "@raabe/shell";
 import { fxColor, fxColorXml, fxNumbers, fxParts, fxSet, outlineXml, textFxCss, type TextFxPart } from "@raabe/text-engine";
 import type { AppApi } from "./api";
 import type { Dock } from "./dock";
@@ -106,13 +106,8 @@ export function textEffectsFeature(api: AppApi, docArea: HTMLElement, dock: Dock
     })) },
   ];
 
-  const pickColor = (done: (hex: string) => void) => {
-    const input = h("input", { type: "color", style: "position:fixed;opacity:0;width:0;height:0" }) as HTMLInputElement;
-    document.body.append(input);
-    input.addEventListener("change", () => { done(input.value.slice(1).toUpperCase()); input.remove(); });
-    input.addEventListener("blur", () => setTimeout(() => input.remove(), 500));
-    input.click();
-  };
+  // Weitere Farben...: Office's Farben dialog (D-134).
+  const pickColor = (done: (hex: string) => void) => { void colorDialog().then((c) => { if (c) done(c); }); };
 
   // ----- Schatten, Spiegelung, Leuchten ------------------------------------------------------------------
   const gallery = (sections: { heading: string; items: { name: string; xml: string | null }[] }[], part: TextFxPart, cols: number, footer: MenuEntry[]) => () => {

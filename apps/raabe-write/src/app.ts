@@ -5,7 +5,7 @@
 import { Doc as TextDoc, Editor, Fonts, PT, setCloudFonts, seqToLatex, seqToLinear, type CharProps, type CopiedFormat, type DocState, type LineRule, type Para, type ParaProps } from "@raabe/text-engine";
 import { ommlToSeq, ommlToWordHtml, readDocx, seqToOmml, wordHtmlMath, writeDocx, type DocxPackage } from "@raabe/ooxml";
 import {
-  Backstage, Commands, Keytips, Ribbon, StatusBar, TitleBar, baseName, dirName, h, icon, installTooltips, messageBox,
+  Backstage, Commands, Keytips, Ribbon, StatusBar, TitleBar, baseName, dirName, h, icon, installDialogDrag, installTooltips, messageBox,
   showDialog, showFontColors, type BackstageEntry, type MenuEntry, type Platform,
 } from "@raabe/shell";
 import { COMMANDS } from "./command-list";
@@ -192,6 +192,7 @@ export class WriteApp {
       this.backstage.el, this.printRoot);
     document.body.classList.toggle("touch", this.settings.touchMode);
     installTooltips();
+    installDialogDrag();
     new Keytips(
       (el) => el.dataset.keytipScope === "root" && el.getAttribute("role") === "tab" ? this.ribbon.activeTab : null,
       () => this.active?.editor.focus(),

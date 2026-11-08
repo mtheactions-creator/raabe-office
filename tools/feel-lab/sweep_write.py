@@ -50,6 +50,10 @@ CONTEXT_TABS = {"table": ["Tabellenentwurf", "Layout"], "headerFooter": ["Kopf- 
                 "shape": ["Formformat"], "math": ["Formel"]}
 # The parts of the UI a sweep step may leave changed (view, rulers, reduced ribbon ...).
 VIEW_JS = "(() => { const u = __sw.ui(); return JSON.stringify([u.view, u.shell, u.minimized, u.bodyCls]); })()"
+# Closes the open panes (Navigation, Formatvorlagen, Kommentare ...) by their own close buttons.
+CLOSE_PANES = """(() => { let n = 0; for (const p of document.querySelectorAll('.navpane, aside, .taskpane, [role=complementary], .tpane, .clippane, .fxpane')) {
+  if (p.hidden || !p.getBoundingClientRect().width) continue;
+  const b = p.querySelector('.tp-close, .nav-close, button[aria-label="Schließen"], button[data-tip="Schließen"]'); if (b) { b.click(); n++; } } return n; })()"""
 # Commands deliberately left out (docs/SCOPE.md: later / out of scope) are greyed with "Zurückgestellt" in the tip.
 DEFERRED_MARK = "Zurückgestellt"
 
@@ -88,6 +92,7 @@ class App:
         if not (quick and self.base_fp and p.js("__sw.docFp()") == self.base_fp and p.js(VIEW_JS) == self.base_view):
             # A new empty document first, so the base document is read from its file again (openPath only
             # switches to a document that is already open).
+            p.js(CLOSE_PANES)
             p.js("__app.newDoc()")
             p.js("__app.closeOthers()")
             p.js(f"__app.openPath({json.dumps(str(BASE))})")
@@ -161,7 +166,7 @@ class App:
         return None
 
     def state(self) -> dict:
-        return {"doc": self.p.js("__sw.docFp()"), "ui": self.p.js("__sw.ui()")}
+        return {"doc": self.p.js("__sw.docFp()"), "doc2": self.p.js("__sw.docFp(true)"), "ui": self.p.js("__sw.ui()")}
 
     def save(self, name: str) -> str | None:
         self.n_saved += 1
@@ -242,6 +247,11 @@ class Sweep:
             p.pump(0.2)
             fp = p.js("__sw.docFp()")
             row["undo"] = fp == before["doc"]
+            if not row["undo"] and p.js("__sw.docFp(true)") == before.get("doc2"):
+                # Only the style sheet differs: a style used once stays defined (unused and invisible; Word leaves it out of the file).
+                row["undo"] = True
+                row["note"] = "undo: text restored; the unused style definition stays in the file (Word: left out)"
+
             if not row["undo"]:
                 # Some options take more than one step in Word too; a second Strg+Z must get there.
                 p.key("z", ctrl=True)
@@ -388,6 +398,15 @@ class Sweep:
                 self.record(self.judge(tab, ipath, setup, before, after, errors, {"kind": "dialog", "dialog": info}, undo=False))
                 self.dialog_buttons(tab, setup, ipath, chain + [("item", it)], info)
                 continue
+            if ("Formen" in path or "Textfeld erstellen" in ipath) and not ("doc" in effects(before, after)) and not after["ui"]["dialogs"]:
+                pg = p.js("(() => { const b = document.querySelector('.page').getBoundingClientRect(); return {x: b.left + 300, y: b.top + 520}; })()")
+                p.cdp("Input.dispatchMouseEvent", {"type": "mousePressed", "x": pg["x"], "y": pg["y"], "button": "left", "clickCount": 1, "buttons": 1})
+                for k in range(1, 9):
+                    p.cdp("Input.dispatchMouseEvent", {"type": "mouseMoved", "x": pg["x"] + 15 * k, "y": pg["y"] + 10 * k, "button": "left", "buttons": 1})
+                p.cdp("Input.dispatchMouseEvent", {"type": "mouseReleased", "x": pg["x"] + 120, "y": pg["y"] + 80, "button": "left", "clickCount": 1, "buttons": 0})
+                p.pump(0.4)
+                after = a.state()
+                errors += p.take_errors()
             row = self.judge(tab, ipath, setup, before, after, errors)
             # A click that only leaves the same menu open did nothing a student sees.
             if row["effects"] == ["popups"] and ui["popups"] < n_pop:
@@ -777,7 +796,8 @@ def word_select(app, d, setup: str):
 def run_word(args) -> None:
     """Word opens every file the sweep saved; where Word has the same option, its change is compared with ours."""
     import shutil
-    from feellab.word_ops import OPS
+    import re
+    from feellab.word_ops import OPS, OPS_NO_GROUP
     src = HERE / "results" / f"{DATE}-{args.out}.json"
     data = json.loads(src.read_text(encoding="utf-8"))
     rows = data["rows"]
@@ -806,7 +826,7 @@ def run_word(args) -> None:
                 continue
             dO = ws.delta(base_o, after_o)
             item["ours"] = dO
-            op = OPS.get(key)
+            op = OPS.get(key) or OPS_NO_GROUP.get(re.sub(r"> [^>]*? / ", "> ", key, count=1))
             if op:
                 n += 1
                 wf = wdir / f"w{n:04d}.docx"

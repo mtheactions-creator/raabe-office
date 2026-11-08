@@ -142,7 +142,11 @@ def summarize(app, path: Path) -> dict:
             t = d.Tables(1)
             s["table1"] = {"rows": t.Rows.Count, "cols": t.Columns.Count, "style": t.Style.NameLocal if t.Style else None,
                            "cell11": t.Cell(1, 1).Range.Text[:-2], "headRow": t.Rows(1).HeadingFormat,
-                           "shade11": t.Cell(1, 1).Shading.BackgroundPatternColor}
+                           "shade11": t.Cell(1, 1).Shading.BackgroundPatternColor,
+                           "hdr": t.ApplyStyleHeadingRows, "lastRow": t.ApplyStyleLastRow, "bandRows": t.ApplyStyleRowBands,
+                           "firstCol": t.ApplyStyleFirstColumn, "lastCol": t.ApplyStyleLastColumn, "bandCols": t.ApplyStyleColumnBands,
+                           "valign21": t.Cell(2, 1).VerticalAlignment, "align21": t.Cell(2, 1).Range.ParagraphFormat.Alignment,
+                           "autofit": t.AllowAutoFit, "w11": round(t.Cell(1, 1).Width, 0)}
         s["inlineShapes"] = d.InlineShapes.Count
         s["shapes"] = d.Shapes.Count
         if d.InlineShapes.Count:

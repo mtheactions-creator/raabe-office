@@ -208,3 +208,51 @@ OPS = {
     "Überprüfen > Kommentare / Neuer Kommentar [button]": _comment,
     "Überprüfen > Nachverfolgung / Änderungen nachverfolgen [split-main]": _track,
 }
+
+
+
+def _tbl(fn):
+    def f(app, d, s):
+        fn(s, s.Tables(1))
+    return f
+
+
+def _cellalign(v, h):
+    def f(app, d, s):
+        s.Cells.VerticalAlignment = v
+        s.ParagraphFormat.Alignment = h
+    return f
+
+
+# Keys without the group ("Tab > Label [kind] > Entry"): sweep_write.run_word tries these when the full path is not listed.
+OPS_NO_GROUP = {
+    "Layout > Zeile Oberhalb [button]": _call("InsertRowsAbove"),
+    "Layout > Zeile unterhalb einfügen [button]": _call("InsertRowsBelow"),
+    "Layout > Spalte Links [button]": _call("InsertColumns"),
+    "Layout > Spalte rechts einfügen [button]": _call("InsertColumnsRight"),
+    "Layout > Löschen [dropdown] > Spalten löschen": _call("Columns.Delete"),
+    "Layout > Löschen [dropdown] > Zeilen löschen": _call("Rows.Delete"),
+    "Layout > Löschen [dropdown] > Tabelle löschen": _tbl(lambda s, t: t.Delete()),
+    "Layout > Tabelle teilen [button]": _tbl(lambda s, t: t.Split(s.Rows(1))),
+    "Layout > AutoAnpassen [dropdown] > Automatisch an Inhalt anpassen": _tbl(lambda s, t: t.AutoFitBehavior(1)),
+    "Layout > AutoAnpassen [dropdown] > Automatisch an Fenster anpassen": _tbl(lambda s, t: t.AutoFitBehavior(2)),
+    "Layout > Oben links ausrichten [button]": _cellalign(0, 0),
+    "Layout > Oben zentrieren [button]": _cellalign(0, 1),
+    "Layout > Oben rechts ausrichten [button]": _cellalign(0, 2),
+    "Layout > Zentriert links ausrichten [button]": _cellalign(1, 0),
+    "Layout > Zentrieren [button]": _cellalign(1, 1),
+    "Layout > Zentriert rechts ausrichten [button]": _cellalign(1, 2),
+    "Layout > Unten links ausrichten [button]": _cellalign(3, 0),
+    "Layout > Unten zentrieren [button]": _cellalign(3, 1),
+    "Layout > Unten rechts ausrichten [button]": _cellalign(3, 2),
+    "Tabellenentwurf > Kopfzeile [check]": _tbl(lambda s, t: setattr(t, "ApplyStyleHeadingRows", not t.ApplyStyleHeadingRows)),
+    "Tabellenentwurf > Ergebniszeile [check]": _tbl(lambda s, t: setattr(t, "ApplyStyleLastRow", not t.ApplyStyleLastRow)),
+    "Tabellenentwurf > Gebänderte Zeilen [check]": _tbl(lambda s, t: setattr(t, "ApplyStyleRowBands", not t.ApplyStyleRowBands)),
+    "Tabellenentwurf > Erste Spalte [check]": _tbl(lambda s, t: setattr(t, "ApplyStyleFirstColumn", not t.ApplyStyleFirstColumn)),
+    "Tabellenentwurf > Letzte Spalte [check]": _tbl(lambda s, t: setattr(t, "ApplyStyleLastColumn", not t.ApplyStyleLastColumn)),
+    "Tabellenentwurf > Gebänderte Spalten [check]": _tbl(lambda s, t: setattr(t, "ApplyStyleColumnBands", not t.ApplyStyleColumnBands)),
+    "Layout > Ausrichtung [dropdown] > Querformat": _page(Orientation=1),
+    "Layout > Seitenränder [dropdown] > Schmal": _page(TopMargin=1.27 * CM, BottomMargin=1.27 * CM, LeftMargin=1.27 * CM, RightMargin=1.27 * CM),
+    "Layout > Seitenränder [dropdown] > Breit": _page(TopMargin=2.54 * CM, BottomMargin=2.54 * CM, LeftMargin=5.08 * CM, RightMargin=5.08 * CM),
+    "Layout > Seitenränder [dropdown] > Mittel": _page(TopMargin=2.54 * CM, BottomMargin=2.54 * CM, LeftMargin=1.91 * CM, RightMargin=1.91 * CM),
+}

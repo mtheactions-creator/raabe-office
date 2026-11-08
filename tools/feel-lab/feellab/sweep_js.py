@@ -37,10 +37,10 @@ HELPERS = r"""
   const sw = {
     H,
     markBase() { baseKids = new Set(document.body.children); },
-    docFp() {
+    docFp(noStyles) {
       const e = window.__app.editor();
       if (!e) return "none";
-      try { return H(JSON.stringify(e.doc.state(), repl)); } catch (x) { return "ERR " + x; }
+      try { const s = e.doc.state(); return H(JSON.stringify(noStyles ? { ...s, styles: undefined } : s, repl)); } catch (x) { return "ERR " + x; }
     },
     sel() { try { return JSON.stringify(window.__probe.selection()) + (window.__app.editor()?.storyKey ?? ""); } catch { return ""; } },
     dialogs() { return [...document.querySelectorAll(".dialog-layer .dialog, .dialog-layer [role=dialog], body > .dialog, body > [role=dialog]")].filter(vis).map((d) => d.getAttribute("aria-label") || clean(d.querySelector(".dlg-title")?.textContent)); },
@@ -95,12 +95,13 @@ HELPERS = r"""
       if (!p) return [];
       const out = [];
       const seen = new Map();
-      for (const el of p.querySelectorAll("button, [role=menuitem], [role=option], .tile, .item, input, select")) {
+      for (const el of p.querySelectorAll("button, [role=menuitem], [role=option], .tile, .item, .grid > .cell, input, select")) {
         if (!vis(el)) continue;
         if (el.tagName !== "BUTTON" && el.closest("button")) continue;
         if (el.tagName === "INPUT" && el.type === "hidden") continue;
-        const txt = clean(el.textContent).slice(0, 90);
-        const lab = (el.getAttribute("aria-label") ? label(el) : txt || label(el)) || (el.tagName === "INPUT" ? "[" + (el.placeholder || el.type) + "]" : "");
+        const cells = el.classList.contains("cell") ? [...el.parentElement.children] : null;
+        const txt = cells ? `Zelle ${Math.floor(cells.indexOf(el) / 10) + 1}x${cells.indexOf(el) % 10 + 1}` : clean(el.textContent).slice(0, 90);
+        const lab = (cells ? txt : el.getAttribute("aria-label") ? label(el) : txt || label(el)) || (el.tagName === "INPUT" ? "[" + (el.placeholder || el.type) + "]" : "");
         const sub = el.classList.contains("has-sub") || el.getAttribute("aria-haspopup") === "true";
         const level = el.closest(".submenu") ? 1 : 0;
         const id = `${level}|${lab}`;

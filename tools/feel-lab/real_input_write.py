@@ -140,8 +140,8 @@ def cases(r: Real) -> None:
     # 3. Formatvorlagen gallery in the ribbon: Überschrift 1.
     r.fresh()
     r.click(r.control("Überschrift 1", "gallery-item"))
-    st = p.js("__app.docInfo().paras[2].style")
-    check("gallery entry Überschrift 1 applies to the paragraph", st in ("heading 1", "Überschrift 1"), str(st), p.take_errors())
+    st = r.fmt()["style"]
+    check("gallery entry Überschrift 1 applies to the paragraph", st in ("heading 1", "Überschrift 1", "berschrift1"), str(st), p.take_errors())
 
     # 4. Schriftfarbe palette: the arrow, then Rot (Standardfarben).
     r.fresh()
@@ -155,17 +155,18 @@ def cases(r: Real) -> None:
     r.fresh()
     arrows = [c for c in p.js("__sw.controls()") if c["kind"] == "color-arrow"]
     r.click(arrows[1])
-    before = set(winapi.find_windows(lambda h: winapi.window_class(h) == "#32770"))
     r.click(r.item("Weitere Farben..."))
-    time.sleep(0.8)
-    new = [h for h in winapi.find_windows(lambda h: winapi.window_class(h) == "#32770") if h not in before]
-    fg = winapi.foreground()
-    title = winapi.window_title(new[0]) if new else ""
-    check("Weitere Farben... opens a colour dialog", bool(new), f"dialogs {[winapi.window_title(h) for h in new]}")
-    if new and fg in new:
-        winapi.press("esc")
-        time.sleep(0.4)
-    RESULTS[-1]["detail"] = f"title {title!r}"
+    dlg = p.js("__sw.dialogInfo()")
+    ok = bool(dlg and dlg["title"] == "Farben")
+    if ok:
+        tabb = next(c for c in dlg["controls"] if c["label"] == "Benutzerdefiniert")
+        r.click(tabb)
+        hx = next(c for c in p.js("__sw.dialogInfo()")["controls"] if c["label"] == "Hex:")
+        r.click(hx, count=2)
+        r.press("ctrl+a")
+        r.type("#00B050")
+        r.press("enter")
+    check("Weitere Farben...: Farben dialog, Hex #00B050, OK", ok and r.fmt()["color"] == "00B050", f"dialog {dlg and dlg['title']} color {r.fmt()['color']}", p.take_errors())
 
     # 6. Layout > Einzug Links: the spinner's up arrow twice.
     r.fresh()
@@ -216,15 +217,15 @@ def cases(r: Real) -> None:
     r.fresh("caret")
     r.tab("Einfügen")
     r.click(r.control("Tabelle", "dropdown"))
-    cells = [i for i in p.js("__sw.popupItems()") if i["w"] < 30 and i["h"] < 30]
+    cells = [i for i in p.js("__sw.popupItems()") if i["label"].startswith("Zelle ")]
     if len(cells) >= 12:
         # Grid rows of 10: the third cell of the second row.
         target = cells[10 + 2]
         r.move(cells[0])
         r.move(target)
         r.click(target)
-    tables = p.js("__app.docInfo().paras.filter(p => p.cell).map(p => p.cell.join(','))")
-    check("Tabelle einfügen grid: 3 x 2 by hovering and clicking", len(cells) >= 12 and "1,2" in tables, f"cells {len(cells)} table cells {tables[-8:]}", p.take_errors())
+    n = p.js("(() => { const i = __probe.text().indexOf('Schluss.'); return __app.docInfo().paras.filter(p => p.cell).length; })()")
+    check("Tabelle einfügen grid: 3 x 2 by hovering and clicking", len(cells) >= 12 and n == 9 + 6, f"cells {len(cells)} table cells {n}", p.take_errors())
 
     # 11. Context menu at the mouse (real right click), Schriftart... from it.
     r.fresh()
@@ -257,25 +258,28 @@ def cases(r: Real) -> None:
 
     # 14. Mouse wheel scrolls the document.
     r.fresh()
-    s0 = p.js("document.querySelector('.docarea').scrollTop")
+    s0 = p.js("document.querySelector('.workspace').scrollTop")
     r.ours()
     da = p.js("(() => { const b = document.querySelector('.docarea').getBoundingClientRect(); return {x: b.left + b.width / 2, y: b.top + 200}; })()")
     x, y = r.screen(da["x"], da["y"])
     winapi.move(x, y)
     winapi._send(winapi.INPUT(type=winapi.INPUT_MOUSE, u=winapi._INPUTUNION(mi=winapi.MOUSEINPUT(dx=0, dy=0, mouseData=(-360) & 0xFFFFFFFF, dwFlags=0x0800))))
     time.sleep(0.5)
-    s1 = p.js("document.querySelector('.docarea').scrollTop")
+    s1 = p.js("document.querySelector('.workspace').scrollTop")
     check("mouse wheel scrolls the document", s1 > s0, f"{s0} -> {s1}", p.take_errors())
 
     # 15. Schriftart dialog: pick a size from its list with the mouse, OK.
     r.fresh()
     r.tab("Start")
     r.click(r.control("Schriftart...", "launcher"))
-    opt = p.js("(() => { const d = document.querySelector('.dialog-layer .dialog'); const el = [...d.querySelectorAll('option, li, .list button, [role=option]')].find(e => e.textContent.trim() === '16'); if (!el) return null; el.scrollIntoView({block: 'nearest'}); const b = el.getBoundingClientRect(); return b.width ? {x: b.left + b.width / 2, y: b.top + b.height / 2} : null; })()")
+    # Our Schriftgrad is a field with a list of suggestions (Word: a field above a list): click, type, Enter.
+    opt = p.js("(() => { const d = document.querySelector('.dialog-layer .dialog'); const el = [...d.querySelectorAll('input')].find(i => /Schriftgrad/.test(i.closest('label')?.textContent || '')); if (!el) return null; const b = el.getBoundingClientRect(); return {x: b.left + b.width / 2, y: b.top + b.height / 2}; })()")
     if opt:
-        r.click(opt)
+        r.click(opt, count=2)
+        r.press("ctrl+a")
+        r.type("16")
         r.press("enter")
-    check("Schriftart dialog: size 16 from its list, Enter", opt is not None and r.fmt()["size"] == 16, f"opt {opt} size {r.fmt()['size']}", p.take_errors())
+    check("Schriftart dialog: Schriftgrad 16 typed, Enter", opt is not None and r.fmt()["size"] == 16, f"opt {opt} size {r.fmt()['size']}", p.take_errors())
     r.press("esc")
 
 

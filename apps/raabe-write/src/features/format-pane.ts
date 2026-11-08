@@ -5,7 +5,7 @@
 // and a value field per setting. Changes apply at once; dragging a slider is one undo step. The
 // "…optionen" entries of the ribbon's menus open their section here, as in Word.
 
-import { closePopup, colorGrid, h, icon, showMenu, showPopup } from "@raabe/shell";
+import { closePopup, colorDialog, colorGrid, h, icon, showMenu, showPopup } from "@raabe/shell";
 import type { PictureFormat, PictureShadow, ShapeInfo } from "@raabe/text-engine";
 import { DEFAULT_THEME_COLORS, pictureFromSpPr } from "@raabe/ooxml";
 import { CM, parseNum, type AppApi } from "./api";
@@ -183,13 +183,8 @@ export function formatPaneFeature(api: AppApi, docArea: HTMLElement, dock: Dock,
   const radios = (name: string, options: [string, string, boolean?][], cur: string, put: (v: string) => void): HTMLElement =>
     h("div", { class: "fp-radios", role: "radiogroup" }, ...options.map(([v, l, off]) =>
       h("label", { class: `fp-check${off ? " off" : ""}` }, h("input", { type: "radio", name, checked: v === cur, disabled: !!off, onchange: () => put(v) }), l)));
-  const pickColor = (done: (hex: string) => void) => {
-    const input = h("input", { type: "color", style: "position:fixed;opacity:0;width:0;height:0" }) as HTMLInputElement;
-    document.body.append(input);
-    input.addEventListener("change", () => { done(input.value.slice(1).toUpperCase()); input.remove(); });
-    input.addEventListener("blur", () => setTimeout(() => input.remove(), 500));
-    input.click();
-  };
+  // Weitere Farben...: Office's Farben dialog (D-134).
+  const pickColor = (done: (hex: string) => void) => { void colorDialog().then((c) => { if (c) done(c); }); };
   const colorRow = (label: string, get: () => string | null, put: (hex: string) => void, disabled = false): HTMLElement => {
     const sw = h("span", { class: "fp-swatch" });
     const b = h("button", { class: "fp-drop", "aria-label": label, "data-tip": label, disabled }, sw, icon("chevron-down")) as HTMLButtonElement;

@@ -3,7 +3,7 @@
 // horizontal ones 468 pt wide; the dialog Gedrucktes Wasserzeichen) and Seitenfarbe (theme and
 // standard colours, Keine Farbe, Weitere Farben). Seitenränder: see borders.ts.
 
-import { colorGrid, h, icon, showFontColors } from "@raabe/shell";
+import { colorDialog, colorGrid, h, icon, showFontColors } from "@raabe/shell";
 import { imageInfo, naturalSizePt, type Editor, type Watermark } from "@raabe/text-engine";
 import type { AppApi } from "./api";
 import { openModal } from "./modal";
@@ -151,12 +151,10 @@ export function backgroundFeature(api: AppApi) {
   const pageColorPanel = (close: () => void) => {
     const e = ed();
     const pick = (hex: string, ref?: string) => { close(); apply((x) => x.setBackground({ color: hex.toUpperCase(), ...(ref ? { colorTheme: ref } : {}) })); };
-    const custom = h("input", { type: "color", style: "position:absolute;opacity:0;width:0;height:0" }) as HTMLInputElement;
-    custom.addEventListener("change", () => pick(custom.value.slice(1)));
     const show = (hex: string, ref?: string) => ed()?.setBackground({ color: hex.toUpperCase(), ...(ref ? { colorTheme: ref } : {}) });
     return h("div", { class: "menu palette" }, ...colorGrid(pick, e?.theme.colors, { commands: c, apply: show }), h("hr"),
       h("button", { onclick: () => { close(); apply((x) => x.setBackground(undefined)); } }, h("span", { class: "auto-swatch none" }), "Keine Farbe"),
-      h("button", { onclick: () => custom.click() }, "Weitere Farben..."), custom,
+      h("button", { onclick: () => { close(); void colorDialog().then((hex) => { if (hex) apply((x) => x.setBackground({ color: hex })); }); } }, "Weitere Farben..."),
       h("button", { disabled: true, "data-tip": "Fülleffekte\nRaabeWrite füllt Seiten nur mit einer Farbe." }, "Fülleffekte..."));
   };
 

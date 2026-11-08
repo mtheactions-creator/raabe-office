@@ -10,6 +10,7 @@ export { StatusBar, type StatusInfo } from "./statusbar";
 export { Backstage, type BackstageEntry } from "./backstage";
 export { Keytips } from "./keytips";
 export { showDialog, messageBox, type DialogButton } from "./dialog";
+export { colorDialog, installDialogDrag } from "./color-dialog";
 export { showMenu, showPopup, closePopup, hoverPreview, installTooltips, type MenuEntry } from "./popup";
 export { TaskPane, type PaneSpec, type PaneSet, type PaneTab, type PaneSection, type PaneControl } from "./taskpane";
 export { colorGrid, showFontColors, showHighlights, highlightHex, HIGHLIGHTS, type PaletteHover, type PaletteTheme } from "./palette";
