@@ -3161,6 +3161,10 @@ Three open items of the Step 10 report, each recorded in our own invisible Excel
     before -> after): 3D-Säulen 18.4 -> 4.4, gruppiert 17.9 -> 4.7, gestapelt 18.7 -> 5.0, 100 % 23.4 -> 5.2; 3D-Balken
     gruppiert 11.3 -> 3.3, gestapelt 11.3 -> 3.6, 100 % 14.5 -> 4.5; 3D-Linie 11.3 -> 4.6; 3D-Fläche 21.5 -> 7.2,
     gestapelt 19.9 -> 6.9, 100 % 20.2 -> 7.9 (stacked areas take fewer value intervals, as Excel); 3D-Oberfläche 19.3 -> 7.8, Drahtmodell 6.4 -> 5.1; 3D-Kreis 9.2 -> 7.6.
+    In the release exe (`compare_calc_charttypes.py calc`, before -> after): 3D-Säulen 18.5 -> 5.1, gruppiert 18.7 -> 3.0,
+    gestapelt 19.2 -> 5.6, 100 % 23.9 -> 5.4; 3D-Balken 11.5 -> 5.9, 11.4 -> 5.2, 14.9 -> 6.7; 3D-Linie 11.3 -> 4.2;
+    3D-Fläche 21.8 -> 7.0, 20.3 -> 6.8, 20.6 -> 7.8; 3D-Oberfläche 19.4 -> 7.7, Drahtmodell 6.1 -> 5.0; 3D-Kreis 9.1 -> 8.1
+    (the worst 3-D chart now 8.1 of 255, it was 23.9).
     `render3d-geometry.test.ts` holds the recorded proportions (square columns, pitch, rows, bar thickness within 5-8 %).
   - Not matched: Excel's exact camera for every chart (the line and area charts' boxes stand at different margins;
     measured offsets), its smooth gradient light on surfaces and pie rims, Abstand in der Tiefe other than 150 % (not in
