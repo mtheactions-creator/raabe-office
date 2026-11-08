@@ -86,8 +86,8 @@ export async function context(app: PresentApp, api: Api, kind: string): Promise<
       app.deck.clearHistory();
       return "a picture in Freistellen";
     }
-    case "table": {
-      api.setupCase({ layout: "Leer", slides: 1, shapes: [{ kind: "table", box: [100, 120, 600, 120] }], zoom: 50 });
+    case "table": case "table-small": {
+      api.setupCase({ layout: "Leer", slides: 1, shapes: [{ kind: "table", box: kind === "table" ? [100, 120, 600, 120] : [100, 120, 300, 120] }], zoom: 50 });
       ed.enterText(shapeIds()[0], undefined, { r: 0, c: 0 });
       return "the caret in a table's first cell";
     }

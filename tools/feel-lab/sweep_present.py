@@ -98,6 +98,21 @@ HELPERS = r"""
   P.clipboardReadHtml = async () => sw.clip.html;
   P.clipboardWriteHtml = async (h, t) => { sw.clip = { text: t, html: h }; };
   P.clipboardReadImage = async () => null;
+  // Camera, microphone and screen: streams made in the page (a drawn canvas, a quiet tone), so no OS picker or
+  // permission prompt appears and the recording code runs as with real devices.
+  const fakeStream = (video, audio) => {
+    const out = new MediaStream();
+    if (video) { const c = document.createElement('canvas'); c.width = 320; c.height = 180; const g = c.getContext('2d'); let k = 0;
+      setInterval(() => { g.fillStyle = 'hsl(' + (k++ * 7 % 360) + ',60%,50%)'; g.fillRect(0, 0, 320, 180); }, 50);
+      for (const t of c.captureStream(20).getVideoTracks()) out.addTrack(t); }
+    if (audio) { const ac = new AudioContext(); const o = ac.createOscillator(); const gn = ac.createGain(); gn.gain.value = 0.01; const d = ac.createMediaStreamDestination();
+      o.connect(gn); gn.connect(d); o.start(); for (const t of d.stream.getAudioTracks()) out.addTrack(t); }
+    return out;
+  };
+  if (navigator.mediaDevices) {
+    navigator.mediaDevices.getDisplayMedia = async () => fakeStream(true, false);
+    navigator.mediaDevices.getUserMedia = async (c) => fakeStream(!!(c && c.video), !!(c && c.audio));
+  }
   const label = (e) => (e.getAttribute('aria-label') || (e.dataset && e.dataset.tip || '').split('\n')[0] || e.textContent || e.getAttribute('title') || '').replace(/\s+/g, ' ').trim();
   sw.label = label;
   const vis = (e) => { const r = e.getBoundingClientRect(); return r.width > 0 && r.height > 0 && getComputedStyle(e).visibility !== 'hidden'; };
@@ -193,6 +208,8 @@ HELPERS = r"""
     const a = window.__present.app, d = a.deck, p = d.pptx;
     // Only the parts the presentation reaches (a slide taken back by Strg+Z may stay in the package unwritten).
     // docProps: written by every save (the time of the last change), not by the option.
+    // The pictures no part uses any more, as writing finds them now (not as the last write left them).
+    p.findUnusedImages();
     const keys = Array.from(p.reachable()).filter((k) => /\.(xml|rels)$/.test(k) && !k.startsWith('docProps/')).sort();
     const out = { _slides: d.slides.map((s) => s.path).join(','), _docs: a.docs.length };
     for (const k of keys) {
@@ -340,13 +357,15 @@ def start(dev: bool, url: str, port: int) -> Page:
     if dev:
         prof = Path(tempfile.gettempdir()) / f"raabe-present-sweep-profile-{port}"
         proc = subprocess.Popen([EDGE, "--headless=new", "--inprivate", f"--remote-debugging-port={port}", f"--user-data-dir={prof}", "--window-size=2560,1300",
-                                 "--force-device-scale-factor=1", "--no-first-run", "--disable-sync", "about:blank"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        page = Page(_ws(port, lambda p: True, time.perf_counter() + 40), proc, "dev")
+                                 "--force-device-scale-factor=1", "--no-first-run", "--disable-sync", url], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        page = Page(_ws(port, lambda p: p.get("url", "").startswith(url), time.perf_counter() + 40), proc, "dev")
         page.profile = prof.name
-        # A built page (vite preview) exposes the test API only in feel runs, as the exe does.
+        # A built page (vite preview) exposes the test API only in feel runs, as the exe does: loaded once more with
+        # the flag set (a reload keeps the same page; a navigation from about:blank may swap it).
         page.cdp("Page.enable")
         page.cdp("Page.addScriptToEvaluateOnNewDocument", {"source": "window.__FEEL = 'present';"})
-        page.cdp("Page.navigate", {"url": url})
+        page.cdp("Page.reload", {"ignoreCache": False})
+        time.sleep(1.0)
     else:
         sys.path.insert(0, str(HERE))
         from feellab import winapi
@@ -360,9 +379,13 @@ def start(dev: bool, url: str, port: int) -> Page:
         # Wide enough that no group of the ribbon collapses (2560 CSS px at 150 %); never activated.
         winapi.place_quietly(hwnd, 0, 0, 3840, 2000)
         page = Page(_ws(port, lambda p: True, time.perf_counter() + 40), proc, "exe")
+        page.hwnd = hwnd
     for _ in range(300):
-        if page.js("typeof window.__present === 'object' && !!window.__present.app"):
-            break
+        try:
+            if page.js("typeof window.__present === 'object' && !!window.__present.app"):
+                break
+        except RuntimeError:
+            pass  # the page is loading again
         time.sleep(0.1)
     install(page)
     return page
@@ -414,7 +437,17 @@ def fixtures() -> dict:
 # ----- one option -----------------------------------------------------------------------------------------------
 
 def settle(page: Page, t: float = 0.25) -> None:
+    """Waits `t`, then until the document and the page stop changing (work that reads a file or draws a poster
+    finishes later than the click)."""
     time.sleep(t)
+    probe = "window.__sw ? window.__sw.ver() + '|' + document.querySelectorAll('body *').length : ''"
+    last = page.js(probe)
+    for _ in range(12):
+        time.sleep(0.15)
+        now = page.js(probe)
+        if now == last:
+            return
+        last = now
 
 
 class Sweeper:
@@ -516,7 +549,8 @@ class Sweeper:
         p = self.page
         v = p.js("window.__sw.ver()")
         hit = self.base.get(self.ctx)
-        if hit and hit[0].split(":")[0] == v.split(":")[0] and hit[0].split(":")[1] == v.split(":")[1]:
+        # Starting points with generated ids (a SmartArt's model ids, a chart, a picture's name) are read each time.
+        if hit and self.ctx not in NONDET and hit[0].split(":")[0] == v.split(":")[0] and hit[0].split(":")[1] == v.split(":")[1]:
             return v, hit[1]
         fp = p.js("window.__sw.fp()")
         if self.ctx not in self.base:
@@ -638,6 +672,7 @@ def walk_ribbon(sw: Sweeper, ctx: str, tab: str, args, results: list, inventory:
 
 
 SAMPLE = 12
+NONDET = {"smartart", "chart", "picture", "freistellen", "equation"}
 
 
 def pick(items: list, limit: int) -> list:

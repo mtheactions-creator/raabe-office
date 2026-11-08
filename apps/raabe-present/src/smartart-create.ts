@@ -95,7 +95,9 @@ export function createDiagram(app: PresentApp, entry: CatalogEntry, items: DItem
     drawing: (oldDrawRel && target(oldDrawRel)) || `ppt/diagrams/drawing${n}.xml`,
   };
   let id = 0;
-  app.editor.edit(replace ? "SmartArt" : "SmartArt einfügen", () => {
+  // The diagram's own parts belong to the undo step (by hand, D-137: Strg+Z after Layout ändern, Farben ändern or Form
+  // hinzufügen left the diagram changed, as the step held only the slide).
+  app.deck.change(replace ? "SmartArt" : "SmartArt einfügen", [slide, p.data, p.layout, p.style, p.colors, p.drawing], () => {
     const rids = { dm: pptx.link(slide, RT.data, p.data), lo: pptx.link(slide, RT.layout, p.layout), qs: pptx.link(slide, RT.style, p.style), cs: pptx.link(slide, RT.colors, p.colors) };
     const drawRel = pptx.link(slide, RT.drawing, p.drawing);
     const { xml, ids } = dataModelXml(items, { layoutId: entry.id, layoutCat: entry.category, drawingRel: drawRel, scheme, style: look.style, rtl: look.rtl });
@@ -115,6 +117,8 @@ export function createDiagram(app: PresentApp, entry: CatalogEntry, items: DItem
   });
   app.deck.invalidate(slide);
   app.editor.select([id]);
+  app.editor.render();
+  app.selectionChanged();
   return id;
 }
 

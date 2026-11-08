@@ -34,6 +34,11 @@ CM = 72 / 2.54
 # ("type", text) step types into the field; ("key", combo) presses keys. PowerPoint: ("mso", idMso) or ("com", fn).
 CASES: list[tuple] = [
     ("Fett", "shape-text", ["Start", "Fett"], ("mso", "Bold")),
+    # The caret alone (no selection): inside a word, and right after one (Office formats the word the caret is in).
+    ("Fett, Cursor im Wort", "caret-2", ["Start", "Fett"], ("mso", "Bold")),
+    ("Fett, Cursor am Wortende", "caret-5", ["Start", "Fett"], ("mso", "Bold")),
+    ("Kursiv, Cursor am Wortende", "caret-5", ["Start", "Kursiv"], ("mso", "Italic")),
+    ("Schriftgrad vergrößern, Cursor im Wort", "caret-2", ["Start", "Schriftgrad vergrößern"], ("mso", "FontSizeIncrease")),
     ("Kursiv", "shape-text", ["Start", "Kursiv"], ("mso", "Italic")),
     ("Unterstreichen", "shape-text", ["Start", "Unterstreichen"], ("mso", "Underline")),
     ("Durchstreichen", "shape-text", ["Start", "Durchstreichen"], ("mso", "Strikethrough")),
@@ -71,7 +76,7 @@ CASES: list[tuple] = [
     ("Folie duplizieren", "slides", ["Start", "Neue Folie (Pfeil)", "Ausgewählte Folien duplizieren"], ("mso", "DuplicateSelectedSlides")),
     # COM's EntryEffect does not set the duration the ribbon's gallery sets: only the kind of transition is compared.
     ("Übergang Verblassen", "slides", ["Übergänge", "Verblassen"], ("com", lambda c: setattr(c.slide.SlideShowTransition, "EntryEffect", 3849)), "kind"),
-    ("Übergang Wischen", "slides", ["Übergänge", "Wischen"], ("com", lambda c: setattr(c.slide.SlideShowTransition, "EntryEffect", 3852)), "kind"),
+    ("Übergang Wischen", "slides", ["Übergänge", "Wischen"], ("com", lambda c: setattr(c.slide.SlideShowTransition, "EntryEffect", 2820)), "kind"),
     ("Übergangsdauer 1,5", "slides", ["Übergänge", "Dauer", ("type", "01,50")], ("com", lambda c: setattr(c.slide.SlideShowTransition, "Duration", 1.5))),
     ("Foliengröße 4:3", "slides", ["Entwurf", "Foliengröße", "Standard (4:3)"], ("com", lambda c: setattr(c.pres.PageSetup, "SlideSize", 1))),
     ("Animation Erscheinen", "shape", ["Animationen", "Erscheinen"], ("com", lambda c: c.slide.TimeLine.MainSequence.AddEffect(c.sh, 1, 0, 1))),
@@ -79,9 +84,11 @@ CASES: list[tuple] = [
     ("Animation Einfliegen", "shape", ["Animationen", "Einfliegen"], ("com", lambda c: c.slide.TimeLine.MainSequence.AddEffect(c.sh, 2, 0, 1))),
     ("Zeile oberhalb einfügen", "table", ["Tabellenlayout", "Zeile Oberhalb"], ("mso", "TableInsertRowsAbove")),
     ("Spalte rechts einfügen", "table", ["Tabellenlayout", "Spalte rechts einfügen"], ("mso", "TableInsertColumnsRight")),
+    ("Spalte rechts einfügen, schmale Tabelle", "table-small", ["Tabellenlayout", "Spalte rechts einfügen"], ("mso", "TableInsertColumnsRight")),
+    ("Spalte links einfügen, schmale Tabelle", "table-small", ["Tabellenlayout", "Spalte Links"], ("mso", "TableInsertColumnsLeft")),
+    ("Zeile unterhalb einfügen", "table", ["Tabellenlayout", "Zeile unterhalb einfügen"], ("mso", "TableInsertRowsBelow")),
     ("Tabelle löschen", "table", ["Tabellenlayout", "Löschen", "Tabelle löschen"], ("mso", "TableDelete")),
     ("Bild Rechtsdrehung 90°", "picture", ["Bildformat", "Drehen", "Rechtsdrehung 90 Grad"], ("mso", "ObjectRotateRight90")),
-    ("Bild zurücksetzen", "picture-rotated", ["Bildformat", "Bild zurücksetzen"], ("mso", "PictureReset")),
 ]
 
 IGNORE_ATTRS = {"lang", "altLang", "dirty", "err", "smtClean", "smtId", "bmk", "kumimoji", "noProof", "kern"}
@@ -168,6 +175,7 @@ def shape_facts(sp, key: str, out: dict) -> None:
     tbl = sp.find(".//a:tbl", NS)
     if tbl is not None:
         out[f"{key}/table"] = (len(tbl.findall("a:tr", NS)), len(tbl.findall("a:tblGrid/a:gridCol", NS)))
+        out[f"{key}/grid"] = tuple(round(int(g.get("w", "0")) / 18000) for g in tbl.findall("a:tblGrid/a:gridCol", NS))
     for ch in sp.findall("p:sp", NS) + sp.findall("p:pic", NS) if tag == "grpSp" else []:
         cid = ch.find(".//p:cNvPr", NS).get("id")
         shape_facts(ch, f"{key}/{cid}", out)
@@ -258,6 +266,10 @@ def powerpoint_side(t, before: Path, ctx: str, action, out: Path) -> dict:
         c.sh = own[0] if ctx == "shape-text" else [s for s in shapes if s.Type == 14][1]
         c.tr = c.sh.TextFrame.TextRange
         c.tr.Select()
+    elif ctx.startswith("caret-"):
+        c.sh = own[0]
+        c.tr = c.sh.TextFrame.TextRange
+        c.tr.Characters(int(ctx[6:]) + 1, 0).Select()
     elif ctx in ("shape", "picture", "picture-rotated"):
         c.sh = own[0]
         c.sh.Select()
@@ -267,7 +279,7 @@ def powerpoint_side(t, before: Path, ctx: str, action, out: Path) -> dict:
     elif ctx in ("two-shapes-first", "two-shapes-second"):
         c.sh = own[0 if ctx == "two-shapes-first" else 1]
         c.sh.Select()
-    elif ctx == "table":
+    elif ctx in ("table", "table-small"):
         c.sh = own[0]
         c.sh.Table.Cell(1, 1).Shape.TextFrame.TextRange.Select()
     elif ctx == "slides":
@@ -298,9 +310,11 @@ def powerpoint_side(t, before: Path, ctx: str, action, out: Path) -> dict:
 
 def our_side(sw: Sweeper, ctx: str, steps: list) -> tuple[bytes, bytes, dict]:
     p = sw.page
-    real_ctx = {"two-shapes-first": "two-shapes", "two-shapes-second": "two-shapes", "picture-rotated": "picture"}.get(ctx, ctx)
+    real_ctx = {"two-shapes-first": "two-shapes", "two-shapes-second": "two-shapes", "picture-rotated": "picture", "caret-2": "shape", "caret-5": "shape"}.get(ctx, ctx)
     tab = steps[0]
     sw.reset(real_ctx, tab)
+    if ctx.startswith("caret-"):
+        p.js("(() => { const id = window.__present.state().selection.ids[0]; window.__present.app.editor.enterText(id, { p: 0, o: " + ctx[6:] + " }); })()")
     if ctx in ("two-shapes-first", "two-shapes-second"):
         k = 0 if ctx == "two-shapes-first" else 1
         p.js(f"(() => {{ const ids = window.__present.state().shapes.filter((s) => !s.ph).map((s) => s.id); window.__present.app.editor.select([ids[{k}]]); }})()")
