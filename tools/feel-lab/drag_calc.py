@@ -181,7 +181,8 @@ def anchors(cw: float, rh: float) -> list[Anchor]:
 
 
 def main_paths(families: list[str], want: list[str]) -> None:
-    out = HERE / "results" / "2026-11-09-drag-calc-paths.json"
+    # RAABE_DRAG_RESULTS: another file (runs on an older build, for the numbers before a fix).
+    out = Path(__import__("os").environ.get("RAABE_DRAG_RESULTS") or HERE / "results" / "2026-11-09-drag-calc-paths.json")
     report: dict = {"app": "raabe-calc", "families": families, "anchors": []}
     with (contextlib.nullcontext() if dragtest.INPUT == "cdp" else real_input("drag_calc.py --paths (drag-paths agent)")):
         side = CalcSide(port=int(__import__("os").environ.get("RAABE_DRAG_PORT", "9481")))  # a port of our own: other sessions' runs use the default

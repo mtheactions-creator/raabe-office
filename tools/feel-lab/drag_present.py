@@ -73,13 +73,16 @@ def rotation() -> tuple[Anchor, dict]:
     probe = (f"(() => {{ const e = document.querySelector('.stage .shp[data-id=\"' + {SID} + '\"]'); const m = /rotate\\(([-\\d.e]+)deg/.exec(e?.style.transform ?? '');"
              " const a = m ? Number(m[1]) : 0; return a > 180 ? a - 360 : a; })()")
 
-    def expect(dx, dy, v0):
-        rx, ry = G["rot_rel"]  # the handle relative to the shape's centre, px
+    def expect(dx, dy, v0, ctx):
+        # The handle relative to the shape's centre where the press was (px; it changes with the zoom, D-127).
+        rx, ry = ctx["x"] - ctx["cx"], ctx["y"] - ctx["cy"]
         a = math.degrees(math.atan2(ry + dy, rx + dx)) + 90
         return a - 360 if a > 180 else a
+    start = (f"(() => {{ const p = __present.handlePoint({SID}, 'rot'), r = __present.shapeRect({SID});"
+             " return { x: p.x, y: p.y, cx: r.x + r.w / 2, cy: r.y + r.h / 2 }; })()")
     # The angle may stay behind by the drag threshold (4 px of the first movement, about 2.7 degrees at this handle's
     # radius): the threshold PowerPoint's catalogue cases showed, not a jump (D-110).
-    return Anchor("rotation handle", start=f"__present.handlePoint({SID}, 'rot')", probe=probe, expect=expect, tol=1.5, snap=2.8, setup=SELECT,
+    return Anchor("rotation handle", start=start, probe=probe, expect=expect, tol=1.5, snap=2.8, setup=SELECT,
                   wrap=360, out_follow=True, mods={"shift": ("snap", 15.0)}), {"shapes": [RECT]}
 
 
@@ -226,10 +229,11 @@ def measure(side) -> None:
 
 
 def main_paths(families: list[str], names: list[str]) -> None:
-    out = HERE / "results" / "2026-11-09-drag-present-paths.json"
+    # RAABE_DRAG_RESULTS: another file (runs on an older build, for the numbers before a fix).
+    out = Path(__import__("os").environ.get("RAABE_DRAG_RESULTS") or HERE / "results" / "2026-11-09-drag-present-paths.json")
     report: dict = {"app": "raabe-present", "families": families, "anchors": []}
     with (contextlib.nullcontext() if dragtest.INPUT == "cdp" else real_input("drag_present.py --paths (drag-paths agent)")):
-        side = PresentSide(port=9491)  # a port of our own: other sessions' runs use the default
+        side = PresentSide(port=int(__import__("os").environ.get("RAABE_DRAG_PORT") or (9492 if dragtest.INPUT == "cdp" else 9491)))  # ports of our own (real input, cdp)
         guard = catcher(WINDOW) if dragtest.INPUT != "cdp" else contextlib.nullcontext()
         guard.__enter__()
         try:

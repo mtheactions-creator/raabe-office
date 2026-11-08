@@ -219,14 +219,15 @@ def own_side() -> RaabeSide:
     """RaabeWrite on a DevTools port of our own (other sessions' runs use RaabeSide's); off screen in cdp mode."""
     from feellab.targets import raabe_write
     side = RaabeSide.__new__(RaabeSide)
-    side.t = raabe_write("short", port=9472, background=dragtest.INPUT == "cdp")
+    side.t = raabe_write("short", port=int(__import__("os").environ.get("RAABE_DRAG_PORT") or (9473 if dragtest.INPUT == "cdp" else 9472)), background=dragtest.INPUT == "cdp")
     side.hwnd = side.t.hwnd
     winapi.place(side.hwnd, *WINDOW)
     return side
 
 
 def main_paths(families: list[str], want: list[str]) -> None:
-    out = HERE / "results" / "2026-11-09-drag-write-paths.json"
+    # RAABE_DRAG_RESULTS: another file (runs on an older build, for the numbers before a fix).
+    out = Path(__import__("os").environ.get("RAABE_DRAG_RESULTS") or HERE / "results" / "2026-11-09-drag-write-paths.json")
     report: dict = {"app": "raabe-write", "families": families, "anchors": []}
     with (contextlib.nullcontext() if dragtest.INPUT == "cdp" else real_input("drag_write.py --paths (drag-paths agent)")):
         side = own_side()
