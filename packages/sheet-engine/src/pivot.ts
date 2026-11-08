@@ -19,6 +19,8 @@ export interface PivotTable {
   name: string;
   /** The source range on a sheet (first row: field names). */
   source: { sheet: string; r0: number; c0: number; r1: number; c1: number };
+  /** The table the source is named by in the file (Excel's PivotTable from a table), kept for the file. */
+  sourceTable?: string;
   /** Where the report starts (top-left cell of its filters, or of the table without filters). */
   at: { row: number; col: number };
   rows: number[];

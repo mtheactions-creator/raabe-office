@@ -15,7 +15,8 @@ import { readStyles, canon, type StylesRaw } from "./styles";
 import { MDW, widthFromBase, widthFromFile } from "./units";
 import { readCharts, readPictures, type DrawingRaw } from "./drawing";
 import { readBookViews, readViewExtras } from "./views";
-import { readPivots } from "./pivots";
+import { readPivots, resolvePivotSources } from "./pivots";
+import { readTimelines } from "./timelines";
 import { readTables } from "./tables";
 import { readSlicers } from "./slicers";
 import { readConsolidate, readScenarios } from "./scenarios";
@@ -235,8 +236,12 @@ export function readPackage(files: Record<string, Uint8Array>): Workbook {
   // Snapshots again: print areas came from the names.
   for (const s of wb.sheets) if (s.raw) (s.raw as SheetRaw).snap = sheetSnap(s);
   wb.raw = raw;
+  // PivotTables made from a table name it as their source: the table's range (D-121).
+  resolvePivotSources(wb.sheets);
   // Datenschnitte (D-092): caches, slicers and their places.
   readSlicers(wb);
+  // Zeitachsen (D-121).
+  readTimelines(wb);
   return wb;
 }
 
