@@ -51,13 +51,13 @@ INVISIBLE = {"Gesperrt", "Objekt drucken", "Titel", "Beschreibung", "Seitenverh�
              "Vertikale Ausrichtung", "Teilstriche"}
 
 
-def calc_side() -> CalcSide:
+def calc_side(port: int = PORT) -> CalcSide:
     """RaabeCalc off screen and never focused (its window goes left of the screen)."""
     fg = winapi.foreground()
     real = calc_catalogue.winapi.place
     calc_catalogue.winapi.place = lambda hwnd, x, y, w, h: winapi.place_quietly(hwnd, -4200, 0, 1900, 1300)
     try:
-        c = CalcSide(PORT)
+        c = CalcSide(port)
     finally:
         calc_catalogue.winapi.place = real
     if fg and winapi.foreground() != fg:
@@ -198,6 +198,8 @@ class Sweep:
         if self.kind == "combo":
             # Verbund: series B as a line on the Sekundärachse (Diagrammtyp ändern does the same).
             d.js("__calc.app.charts.changeSelected((m) => { m.series[1].kind = 'lineMarkers'; m.series[1].secondary = true; })")
+        # Datenbeschriftungen, a Trendlinie and Fehlerindikatoren, so that their panes are in the element list (Diagrammelemente).
+        d.js("__calc.app.charts.changeSelected((m) => { m.dataLabels = true; if (!['pie','doughnut'].includes(m.kind)) { m.series[0].trendline = { type: 'linear', showEq: false, showR2: false }; m.series[0].errorBars = { dir: 'both', type: 'fixedVal', value: 1 }; } })")
         time.sleep(0.3)
         # Select the chart with a click on its area and open the pane with Strg+1.
         box = d.js("(() => { const b = document.querySelectorAll('.chart-obj')[document.querySelectorAll('.chart-obj').length - 1].getBoundingClientRect(); return [b.left + 12, b.top + 12]; })()")
@@ -290,9 +292,10 @@ class Sweep:
         return None
 
     def run(self, only: str | None = None) -> None:
+        import re
         self.setup()
         for el in self.elements():
-            if only and el != only:
+            if only and not re.search(only, el):
                 continue
             if not self.choose(el):
                 self.results.append({"kind": self.kind, "element": el, "control": "(element list)", "ok": False, "why": "not selectable in the pane's list"})
@@ -517,11 +520,14 @@ def main() -> None:
     ap.add_argument("--kinds", default=",".join(KINDS))
     ap.add_argument("--element", default=None)
     ap.add_argument("--no-excel", action="store_true")
+    ap.add_argument("--port", type=int, default=PORT)
+    ap.add_argument("--out", default="2026-11-09-calc-chartpane.json")
     a = ap.parse_args()
     TMP.mkdir(parents=True, exist_ok=True)
     report: dict = {"meta": {"date": datetime.date.today().isoformat(), "exe": "RAABE_CALC_EXE" if os.environ.get("RAABE_CALC_EXE") else "release", "kinds": a.kinds}, "kinds": {}}
-    c = calc_side()
+    c = calc_side(a.port)
     d = Driver(c)
+    out = HERE / "results" / a.out
     try:
         for kind in a.kinds.split(","):
             t0 = time.time()
@@ -542,9 +548,10 @@ def main() -> None:
             if path and not a.no_excel:
                 report["kinds"][kind]["excel"] = excel_check(path, s.models, kind)
             print(kind, summary(s.results, report["kinds"][kind].get("excel")), flush=True)
+            # Written after every chart type, so a stopped run keeps what it measured.
+            out.write_text(json.dumps(report, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
     finally:
         c.close()
-    out = HERE / "results" / "2026-11-09-calc-chartpane.json"
     out.write_text(json.dumps(report, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
     print("written", out)
 
