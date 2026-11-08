@@ -13,6 +13,7 @@ import * as A from "./actions";
 import { shown, editText } from "./engine";
 import { DEFAULT_COL_CHARS, charsToPx, shownChars, shownToChars } from "./grid/metrics";
 import type { Settings } from "./store";
+import { condRules, hexColor, textRule } from "./condrules";
 import { CUSTOM_OPS, NUMBER_FILTERS, TEXT_FILTERS, fromCustom, passes, prepare as prepareFilter, toCustom } from "./filters";
 
 const field = (label: string, input: HTMLElement) => h("label", { class: "field" }, label, input);
@@ -209,7 +210,8 @@ export function dialogs(app: CalcApp) {
     let lineStyle = "thin";
     const styleSel = h("select", null, ...[["thin", "Dünn"], ["medium", "Mittel"], ["thick", "Dick"], ["double", "Doppelt"], ["dotted", "Gepunktet"], ["dashed", "Gestrichelt"], ["hair", "Haarlinie"]]
       .map(([v, l]) => h("option", { value: v }, l))) as HTMLSelectElement;
-    styleSel.onchange = () => { lineStyle = styleSel.value; };
+    // The line style chosen applies to the sides already set as well (Excel draws the sides with the style picked).
+    styleSel.onchange = () => { lineStyle = styleSel.value; for (const k of ["top", "bottom", "left", "right"] as const) if (borders[k]) borders[k] = { style: lineStyle }; };
     const sideBox = (k: "top" | "bottom" | "left" | "right", label: string) => {
       const c = checkbox(label, !!borders[k]);
       c.input.onchange = () => { borders[k] = c.input.checked ? { style: lineStyle } : undefined; };
@@ -220,14 +222,14 @@ export function dialogs(app: CalcApp) {
     panels.Rahmen = h("div", null, field("Linienart:", styleSel), h("div", { class: "fc-label" }, "Voreinstellungen"),
       h("div", { class: "fc-presets" },
         h("button", { type: "button", onclick: () => { preset = "none"; for (const s of sides) s.input.checked = false; for (const k of ["top", "bottom", "left", "right"] as const) borders[k] = undefined; } }, "Keine"),
-        h("button", { type: "button", onclick: () => { preset = "outline"; for (const s of sides) s.input.checked = true; } }, "Außen"),
+        h("button", { type: "button", onclick: () => { preset = "outline"; for (const s of sides) s.input.checked = true; for (const k of ["top", "bottom", "left", "right"] as const) borders[k] = { style: lineStyle }; } }, "Außen"),
         h("button", { type: "button", onclick: () => { preset = "inside"; } }, "Innen")),
       h("div", { class: "fc-label" }, "Rahmen"), ...sides.map((s) => s.el));
 
     // Ausfüllen.
     let fill = st.fill ?? "";
     const fillSample = h("div", { class: "fc-fill-sample", style: `background:${fill || "#fff"}` });
-    const grid = colorGrid((c) => { fill = c; fillSample.style.background = c || "#fff"; });
+    const grid = colorGrid((c) => { fill = hexColor(c); fillSample.style.background = fill || "#fff"; });
     panels.Ausfüllen = h("div", null, h("button", { type: "button", onclick: () => { fill = ""; fillSample.style.background = "#fff"; } }, "Keine Farbe"),
       h("div", { class: "fc-palette" }, ...grid), h("div", { class: "fc-label" }, "Beispiel"), fillSample);
 
@@ -316,7 +318,7 @@ export function dialogs(app: CalcApp) {
 
   function openColors(anchor: HTMLElement, pick: (hex: string) => void): void {
     const pop = h("div", { class: "menu fc-pop" }, h("button", { type: "button", onclick: () => { pick(""); pop.remove(); } }, "Automatisch"),
-      h("div", { class: "fc-palette" }, ...colorGrid((c) => { pick(c); pop.remove(); })));
+      h("div", { class: "fc-palette" }, ...colorGrid((c) => { pick(hexColor(c)); pop.remove(); })));
     const r = anchor.getBoundingClientRect();
     pop.style.cssText = `position:fixed;left:${r.left}px;top:${r.bottom + 2}px;z-index:90`;
     document.body.append(pop);
@@ -599,11 +601,16 @@ export function dialogs(app: CalcApp) {
 
   function filterByActive(): void {
     const a = app.sheet.view.active;
-    if (!sheet().autoFilter) { const { rect } = sortRange(); app.change("Filtern", () => { app.history.whole(sheet()); sheet().autoFilter = { ref: rect, columns: {} }; }); }
-    const f = sheet().autoFilter!;
     const c = sheet().get(a.row, a.col);
     const t = shown(c, app.wb.styles.get(c?.s)).text;
-    app.change("Filtern", () => { app.history.whole(sheet()); f.columns[a.col - f.ref.c0] = { values: [t] }; applyFilter(); });
+    // One undo step, as in Excel: switching the AutoFilter on (when it was off) and filtering by the value (D-142).
+    app.change("Filtern", () => {
+      app.history.whole(sheet());
+      if (!sheet().autoFilter) sheet().autoFilter = { ref: sortRange().rect, columns: {} };
+      const f = sheet().autoFilter!;
+      f.columns[a.col - f.ref.c0] = { values: [t] };
+      applyFilter();
+    });
   }
 
   /**
@@ -901,6 +908,9 @@ export function dialogs(app: CalcApp) {
     });
   }
 
+  /** Neue Regel..., Weitere Regeln... and Regeln verwalten... (condrules.ts, D-143). */
+  const cr = condRules(app, addRule);
+
   const PRESETS: Record<string, CondRule["format"]> = {
     "Hellrote Füllung 2 mit dunkelrotem Text": { fill: "#FFC7CE", color: "#9C0006" },
     "Gelbe Füllung mit dunkelgelbem Text": { fill: "#FFEB9C", color: "#9C5700" },
@@ -927,9 +937,11 @@ export function dialogs(app: CalcApp) {
       { label: "Kleiner als...", run: () => void ruleDialog("Kleiner als", "Zellen formatieren, die KLEINER SIND ALS:", 1, (v, f) => ({ type: "cellIs", operator: "lessThan", formulas: [toFile(v[0])], format: f })) },
       { label: "Zwischen...", run: () => void ruleDialog("Zwischen", "Zellen formatieren, die ZWISCHEN folgenden Werten liegen:", 2, (v, f) => ({ type: "cellIs", operator: "between", formulas: [toFile(v[0]), toFile(v[1])], format: f })) },
       { label: "Gleich...", run: () => void ruleDialog("Gleich", "Zellen formatieren, die GLEICH SIND:", 1, (v, f) => ({ type: "cellIs", operator: "equal", formulas: [toFile(v[0])], format: f })) },
-      { label: "Textinhalt...", run: () => void ruleDialog("Textinhalt", "Zellen formatieren, die folgenden Text enthalten:", 1, (v, f) => ({ type: "containsText", operator: "containsText", text: v[0], format: f })) },
+      { label: "Textinhalt...", run: () => void ruleDialog("Textinhalt", "Zellen formatieren, die folgenden Text enthalten:", 1, (v, f) => textRule("containsText", v[0], app.grid.selection[0], f)) },
       { label: "Datum...", run: () => void dateRuleDialog() },
       { label: "Doppelte Werte...", run: () => void duplicateDialog() },
+      "-",
+      { label: "Weitere Regeln...", run: () => void cr.newRule(1) },
     ];
   }
 
@@ -997,6 +1009,8 @@ export function dialogs(app: CalcApp) {
       { label: "Untere 10 %...", run: () => void topDialog(true, true) },
       { label: "Über dem Durchschnitt...", run: () => void averageDialog(true) },
       { label: "Unter dem Durchschnitt...", run: () => void averageDialog(false) },
+      "-",
+      { label: "Weitere Regeln...", run: () => void cr.newRule(2) },
     ];
   }
 
@@ -1004,7 +1018,7 @@ export function dialogs(app: CalcApp) {
     // Excel's names (recorded in the inventory, D-143); the gradient bars (Farbverlauf). Einfarbige Füllung needs
     // Excel 2010's extension of the rule and is left for later.
     const bars: [string, string][] = [["Blauer Datenbalken", "#638EC6"], ["Grüner Datenbalken", "#63BE7B"], ["Roter Datenbalken", "#FF555A"], ["Orangefarbener Datenbalken", "#FFB628"], ["Hellblauer Datenbalken", "#008AEF"], ["Lilafarbener Datenbalken", "#D6007B"]];
-    return [{ heading: "Farbverlauf" }, ...bars.map(([l, c]): MenuEntry => ({ label: l, run: () => void addRule({ type: "dataBar", colors: [c] }) }))];
+    return [{ heading: "Farbverlauf" }, ...bars.map(([l, c]): MenuEntry => ({ label: l, run: () => void addRule({ type: "dataBar", colors: [c] }) })), "-", { label: "Weitere Regeln...", run: () => void cr.newRule(0) }];
   }
 
   function conditionalScaleMenu(): MenuEntry[] {
@@ -1016,7 +1030,7 @@ export function dialogs(app: CalcApp) {
       ["Blau-Weiß-Rot", [R, W, B]], ["Rot-Weiß-Blau", [B, W, R]], ["Weiß-Rot", [R, W]], ["Rot-Weiß", [W, R]],
       ["Grün-Weiß", [W, G]], ["Weiß-Grün", [G, W]], ["Grün-Gelb", [Y2, G]], ["Gelb-Grün", [G, Y2]],
     ];
-    return scales.map(([l, c]) => ({ label: `${l}-Farbskala`, run: () => void addRule({ type: "colorScale", colors: c }) }));
+    return [...scales.map(([l, c]): MenuEntry => ({ label: `${l}-Farbskala`, run: () => void addRule({ type: "colorScale", colors: c }) })), "-", { label: "Weitere Regeln...", run: () => void cr.newRule(0) }];
   }
 
   /** Symbolsätze, in the gallery's groups (Richtungen, Formen, Indikatoren, Bewertungen). */
@@ -1026,6 +1040,7 @@ export function dialogs(app: CalcApp) {
       out.push({ heading: group });
       for (const [label, set] of sets) out.push({ label, run: () => void addRule(iconRule(set)) });
     }
+    out.push("-", { label: "Weitere Regeln...", run: () => void cr.newRule(0) });
     return out;
   }
 
@@ -1261,7 +1276,7 @@ export function dialogs(app: CalcApp) {
   return {
     colWidth, defaultWidth, rowHeight, insertCells, deleteCells, formatCells, find, goto, sortQuick, sort, hasFilter, toggleFilter, clearFilter,
     reapplyFilter, filterByActive, filterMenu, textToColumns, removeDuplicates, series, tableStylesPanel, formatAsTable, cellStylesPanel,
-    addRule, conditionalIconMenu, conditionalHighlightMenu, conditionalTopMenu, conditionalBarMenu, conditionalScaleMenu, clearConditional, defineName, createFromSelection, nameManager, note, link,
+    addRule, newRule: cr.newRule, manageRules: cr.manager, conditionalIconMenu, conditionalHighlightMenu, conditionalTopMenu, conditionalBarMenu, conditionalScaleMenu, clearConditional, defineName, createFromSelection, nameManager, note, link,
     symbol, insertFunction, moveSheet, unhideSheet, zoom, statistics, options, pasteSpecial,
   };
 }

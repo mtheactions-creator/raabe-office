@@ -64,6 +64,18 @@ describe("undo of steps on the sheet list", () => {
   });
 });
 
+describe("undo of defined names", () => {
+  it("takes back a name made by Namen definieren, and brings it back with redo", () => {
+    const b = book({ A1: "1" });
+    b.history.step("Namen definieren", () => { b.wb.names = [...b.wb.names, { name: "Preis", ref: "Tabelle1!$A$1" }]; });
+    expect(b.history.undoLabel).toBe("Namen definieren");
+    b.history.undo();
+    expect(b.wb.names.some((n) => n.name === "Preis")).toBe(false);
+    b.history.redo();
+    expect(b.wb.names.some((n) => n.name === "Preis")).toBe(true);
+  });
+});
+
 describe("conditional formats", () => {
   it("evaluates a rule's formula relative to the format's top-left cell", () => {
     const b = book({ A1: "a", B1: "5", A2: "b", B2: "20", A3: "c", B3: "30" });

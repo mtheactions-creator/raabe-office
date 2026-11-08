@@ -10,7 +10,7 @@ import {
 import { readXlsx, writeXlsx, newWorkbook } from "@raabe/ooxml";
 import { onFontAlias, setCloudFonts } from "@raabe/text-engine";
 import {
-  Backstage, Commands, Keytips, Ribbon, TaskPane, TitleBar, baseName, h, icon, installTooltips, messageBox, showDialog, showMenu,
+  Backstage, Commands, Keytips, Ribbon, TaskPane, TitleBar, baseName, h, icon, installTooltips, messageBox, showDialog, showFontColors, showMenu,
   type BackstageEntry, type MenuEntry, type Platform,
 } from "@raabe/shell";
 import { COMMANDS } from "./command-list";
@@ -1621,9 +1621,20 @@ export class CalcApp {
     });
   }
 
+  /**
+   * Registerfarbe: Excel's colour palette (Designfarben, Standardfarben, Keine Farbe, Weitere Farben...) for the
+   * active sheet's tab. The menu showed the colours' codes as text ("#C00000") before (D-142).
+   */
+  tabColorPalette(anchor: DOMRect): void {
+    showFontColors(anchor, (v) => {
+      if (this.protection.bookLocked()) return;
+      const hex = v === "auto" ? undefined : this.designs.pick(v)?.hex;
+      this.change("Registerfarbe", () => { this.history.whole(this.sheet); this.sheet.tabColor = hex; });
+    }, undefined, undefined, this.designs.paletteTheme(), "Weitere Farben...", "Keine Farbe");
+  }
+
   private sheetMenu(e: MouseEvent): void {
     const i = this.wb.active;
-    const colors = ["#C00000", "#FF0000", "#FFC000", "#FFFF00", "#92D050", "#00B050", "#00B0F0", "#0070C0", "#002060", "#7030A0"];
     const entries: MenuEntry[] = [
       { label: "Einfügen...", run: () => void this.commands.run("cells.insertSheet") },
       { label: "Löschen", run: () => void this.commands.run("cells.deleteSheet"), disabled: this.wb.sheets.filter((s) => !s.hidden).length < 2 },
@@ -1631,11 +1642,9 @@ export class CalcApp {
       { label: "Verschieben oder kopieren...", run: () => void this.dlg.moveSheet() },
       "-",
       { label: "Code anzeigen", run: () => {}, disabled: true },
-      { label: "Blatt schützen...", run: () => {}, disabled: true },
-      { label: "Registerfarbe", submenu: [
-        { label: "Keine Farbe", disabled: this.protection.bookLocked(), run: () => this.change("Registerfarbe", () => { this.history.whole(this.sheet); this.sheet.tabColor = undefined; }) },
-        ...colors.map((c) => ({ label: c, icon: undefined, disabled: this.protection.bookLocked(), run: () => this.change("Registerfarbe", () => { this.history.whole(this.sheet); this.sheet.tabColor = c; }) })),
-      ] },
+      // Blatt schützen works here as on the ribbon (it was greyed out); Registerfarbe shows Excel's palette.
+      { label: "Blatt schützen...", run: () => void this.commands.run("cells.protectSheet"), disabled: !this.commands.isEnabled("cells.protectSheet") },
+      { label: "Registerfarbe", disabled: this.protection.bookLocked(), run: () => this.tabColorPalette(new DOMRect(e.clientX, e.clientY, 0, 0)) },
       "-",
       { label: "Ausblenden", run: () => void this.commands.run("cells.hideSheet"), disabled: this.wb.sheets.filter((s) => !s.hidden).length < 2 },
       { label: "Einblenden...", run: () => void this.commands.run("cells.unhideSheet"), disabled: !this.wb.sheets.some((s) => s.hidden) },
@@ -2658,11 +2667,11 @@ export class CalcApp {
         { label: "Filter", submenu: [{ cmd: "data.filterClear" }, { cmd: "data.filterReapply" }, { label: "Nach dem Wert der ausgewählten Zelle filtern", run: () => this.dlg.filterByActive() }] },
         { label: "Sortieren", submenu: [{ cmd: "data.sortAsc", label: "Nach Größe sortieren (aufsteigend)" }, { cmd: "data.sortDesc", label: "Nach Größe sortieren (absteigend)" }, { cmd: "data.sort", label: "Benutzerdefiniertes Sortieren..." }] },
         "-",
-        { label: "Neuer Kommentar", run: () => {}, disabled: true },
+        { label: "Neuer Kommentar", run: () => void this.commands.run("insert.comment"), disabled: !this.commands.isEnabled("insert.comment") },
         note ? { cmd: "review.editNote" } : { cmd: "review.newNote", label: "Neue Notiz" },
         ...(note ? [{ cmd: "review.deleteNote" } as MenuEntry] : []),
         { cmd: "cells.formatDialog" },
-        { label: "Dropdown-Auswahlliste...", run: () => {}, disabled: true },
+        { label: "Dropdown-Auswahlliste...", run: () => this.grid.pickList() },
         { label: "Namen definieren...", run: () => void this.dlg.defineName() },
         { cmd: "insert.link" }];
     }
@@ -2742,12 +2751,12 @@ export class CalcApp {
           { label: "Farbskalen", submenu: () => this.dlg.conditionalScaleMenu() },
           { label: "Symbolsätze", submenu: () => this.dlg.conditionalIconMenu() },
           "-",
-          { label: "Neue Regel...", run: () => {}, disabled: true },
+          { label: "Neue Regel...", run: () => void this.dlg.newRule(1) },
           { label: "Regeln löschen", submenu: [
             { label: "Regeln in ausgewählten Zellen löschen", run: () => this.dlg.clearConditional(true) },
             { label: "Regeln im gesamten Blatt löschen", run: () => this.dlg.clearConditional(false) },
           ] },
-          { label: "Regeln verwalten...", run: () => {}, disabled: true },
+          { label: "Regeln verwalten...", run: () => void this.dlg.manageRules() },
         ],
         insertCells: [{ cmd: "cells.insertDialog" }, { cmd: "cells.insertRows" }, { cmd: "cells.insertCols" }, "-", { cmd: "cells.insertSheet" }],
         deleteCells: [{ label: "Zellen löschen...", run: () => void this.dlg.deleteCells() }, { cmd: "cells.deleteRows" }, { cmd: "cells.deleteCols" }, "-", { cmd: "cells.deleteSheet" }],
@@ -2756,7 +2765,7 @@ export class CalcApp {
           { heading: "Sichtbarkeit" },
           { label: "Ausblenden und Einblenden", submenu: [{ cmd: "cells.hideRows" }, { cmd: "cells.hideCols" }, { cmd: "cells.hideSheet" }, "-", { cmd: "cells.unhideRows" }, { cmd: "cells.unhideCols" }, { cmd: "cells.unhideSheet" }] },
           { heading: "Blätter anordnen" }, { cmd: "cells.renameSheet" }, { cmd: "cells.moveSheet" },
-          { label: "Registerfarbe", submenu: ["#C00000", "#FF0000", "#FFC000", "#FFFF00", "#92D050", "#00B050", "#00B0F0", "#0070C0", "#002060", "#7030A0"].map((col) => ({ label: col, run: () => { if (this.protection.bookLocked()) return; this.change("Registerfarbe", () => { this.history.whole(this.sheet); this.sheet.tabColor = col; }); } })) },
+          { label: "Registerfarbe", run: () => this.tabColorPalette(document.querySelector("[data-keytip=FF]")?.getBoundingClientRect() ?? new DOMRect(200, 120, 0, 0)) },
           { heading: "Schutz" }, { cmd: "cells.protectSheet" }, { cmd: "cells.lock" }, { cmd: "cells.formatDialog" },
         ],
         autosum: [{ cmd: "edit.autosum" }, { cmd: "edit.autoAverage" }, { cmd: "edit.autoCount" }, { cmd: "edit.autoMax" }, { cmd: "edit.autoMin" }, "-", { cmd: "formulas.insertFunction", label: "Weitere Funktionen..." }],

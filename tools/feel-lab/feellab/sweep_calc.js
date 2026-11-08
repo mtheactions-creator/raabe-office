@@ -119,7 +119,8 @@
         for (const [k, c] of s.cells) { const { s: sid, ...rest } = c; cells.push([k, JSON.stringify(rest, rep), JSON.stringify(wb.styles.get(sid))]); }
         cells.sort((a, b) => a[0] - b[0]);
         const o = {};
-        for (const [k, v] of Object.entries(s)) if (!["cells", "view", "views", "raw"].includes(k)) o[k] = v;
+        // An empty list is the same as none (charts: [] after the last chart is undone).
+        for (const [k, v] of Object.entries(s)) if (!["cells", "view", "views", "raw"].includes(k) && v !== undefined && !(Array.isArray(v) && !v.length)) o[k] = v;
         let rest;
         try { rest = JSON.stringify(o, rep); } catch (e) { rest = "unserialisable:" + e; }
         return JSON.stringify(cells) + rest;
@@ -135,7 +136,7 @@
       const panes = [...document.querySelectorAll(".taskpane")].filter((p) => !p.hidden && vis(p)).map((p) => p.querySelector(".tp-title")?.textContent ?? "pane");
       return JSON.stringify({
         sel: app.grid.selection, active: v.active, zoom: v.zoom, grid: v.showGrid, heads: v.showHeaders, freeze: v.freeze ?? null, split: v.split ?? null, viewMode: v.mode ?? v.viewMode ?? null,
-        panes, backstage: !document.querySelector(".backstage")?.hidden, body: document.body.className, tab: document.querySelector(".tabrow .tab.active")?.textContent,
+        panes, backstage: !document.querySelector(".backstage")?.hidden, body: document.body.className, title: document.title, typing: (() => { const a = document.activeElement; return a && (a.tagName === "TEXTAREA" || a.tagName === "INPUT") ? a.className : null; })(), cursor: (() => { const c = document.querySelector(".grid canvas, canvas"); return c ? getComputedStyle(c).cursor : null; })(), tab: document.querySelector(".tabrow .tab.active")?.textContent,
         ctx: [...document.querySelectorAll(".tabrow .tab.contextual")].map((t) => t.textContent), editing: app.grid.isEditing,
         fx: !!document.querySelector(".fx-input") && vis(document.querySelector(".fx-input")),
         status: document.querySelector(".statusbar")?.textContent, sheetbar: document.querySelector(".sheetbar")?.textContent,

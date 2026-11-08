@@ -3101,3 +3101,106 @@ Built or fixed on the way:
   pushed the slider about 6 px under the pointer.
 - The test's own errors found on the way (a flipped shape's size, the browser slider's mapping, a probe's braces, the
   thumbnail's place after the drop) were fixed in the test, not in the app.
+
+## D-141 RaabeCalc: every option tried by hand, and against Excel (2026-11-09)
+
+The owner found chart formatting "downright broken in many parts" although the automated checks passed: those
+drove the model through test APIs, not through the controls. So RaabeCalc's options are now tried the way a student
+uses them. Three tools, all against the release exe:
+- **sweep_calc.py** starts an instance of our own off screen (RAABE_FEEL_BACKGROUND) and walks everything a user can
+  reach: every ribbon tab and control (buttons, split buttons and their arrows, dropdowns, galleries, combo lists,
+  colour palettes, spinners, launchers), every menu entry and submenu entry, the context menus of cells, row and
+  column headers, sheet tabs, the status bar and the AutoFilter button, and every page of Datei with its controls
+  (Drucken's lists entry by entry). Each option starts from the same small workbook (a bold header row, numbers with
+  a format, dates, a formula; a mixed selection A1:B4) and is triggered with trusted DevTools mouse clicks at the
+  control's position, which never touch the real mouse. Recorded per option: whether it was there, enabled and not
+  covered; what it opened (menu entries, a dialog with its controls); exceptions and console errors; the effect on
+  the workbook, the view and the drawn grid; and for a change, whether Strg+Z pressed as a key right then (where the
+  focus is) gives back the workbook as it was, and Strg+Y redoes it. Dialogs run twice: Esc, and OK as they open.
+  Options that open native windows (Öffnen, Speichern unter, Dieses Gerät, PDF and CSV export) or print are listed,
+  not clicked. Results: results/2026-11-09-calc-sweep-before.json, -after.json; the option inventory:
+  results/2026-11-09-calc-options.json.
+- **compare_calc_options.py** runs chosen options in RaabeCalc (by hand, as above, including typing into dialog
+  fields) and the same ribbon command in an invisible Excel of our own (CommandBars.ExecuteMso, or the dialog's
+  effect through COM where a command has no id), saves both, opens both in Excel and compares what Excel sees
+  (values, formulas, number formats, fonts, fills, alignment, borders, merges, sizes, frozen panes, AutoFilter,
+  conditional formats with the cells Excel shows them on, page setup). Differences already in the setup are left
+  out. Options without an Excel command (a palette colour) are checked against their own expectation.
+- **check_calc_realinput.py** (D-144) for what only the operating system's input shows.
+
+## D-142 RaabeCalc: what trying every option by hand found, and the fixes (2026-11-09)
+
+Found by sweep_calc.py and compare_calc_options.py (D-141), checked against Excel where Excel decides, fixed in the
+app, and pinned by apps/raabe-calc/test/audit.test.ts or a compare case:
+- **Zellen formatieren, OK** gave every selected cell the active cell's whole format: OK on a mixed selection made
+  all of it bold (the header's) or gave all the active cell's number format. Now OK changes only what was changed in
+  the dialog; the rest stays each cell's own (Excel).
+- **Colours that did not survive saving:** the standard font carries a design reference (Text 1); a colour set
+  through a cell style (Gut, Schlecht ...), Zellen formatieren or a hyperlink kept that reference, and the file then
+  said "Text 1": black in Excel. A colour set without a reference of its own now drops the old one (fills too).
+  The colour grid of Zellen formatieren > Ausfüllen and Schrift > Farbe handed over "C00000" without "#": the fill
+  was neither drawn nor saved. Hyperlinks get Excel's design colour (Link, theme 10).
+- **One Strg+Z for one action:** Schriftgrad (list, field, vergrößern), Textumbruch and the Ausrichtung menu's
+  rotations made two undo steps (the format, then the row heights), so Strg+Z took back only the row heights; now
+  one. Nach dem Wert der ausgewählten Zelle filtern made two (filter on, then filter). Undoing Blatt ausblenden left
+  the sheet hidden and active, undoing Umbenennen kept the new name, and defined names (Namen definieren, Aus
+  Auswahl erstellen, Name löschen, Spezialfilter) were not undone at all: a step now keeps the sheets' names,
+  visibility and tab colours and the workbook's names.
+- **Sortieren:** formulas moved with their rows without their references (=B3*2 sorted into row 2 still read row 3,
+  so every computed column was wrong after sorting); now they move as copied (Excel, checked through COM). A
+  selection of a column inside a table sorted that column alone and tore the rows apart; now the Sortierwarnung asks
+  first (Markierung erweitern, the default, or Mit bestehender Markierung fortfahren), as Excel does, for the quick
+  sort and Benutzerdefiniertes Sortieren.
+- **Verbinden:** the merged area keeps the top-left cell's format for all its cells (it kept each cell's own, so a
+  date format or bold reappeared after Zellverbund aufheben); before values other than the top-left one are lost,
+  RaabeCalc asks as Excel does.
+- **Unreachable or wrong controls:** Seitenlayout > Designs, Farben, Schriftarten had no command and stayed grey;
+  Aus Auswahl erstellen opened Neuer Name instead of Excel's dialog (Oberster Zeile, Linker Spalte, Unterster Zeile,
+  Rechter Spalte), now built; Registerfarbe (sheet tab and Format) listed colour codes as text ("#C00000"), now
+  Excel's palette with Keine Farbe; Füllfarbe offered "Automatisch" on top where Excel has "Keine Füllung" below
+  the colours (a shell palette option, `noColor`); the sheet tab's Blatt schützen..., the cell menu's Neuer
+  Kommentar and Dropdown-Auswahlliste... were grey although the commands exist; Drehen (Seitenlayout > Anordnen)
+  was enabled without a selected object.
+- **Names of controls:** the split buttons and menus of Start (Einfügen, Löschen, AutoSumme, Ausfüllen, Löschen,
+  Sortieren und Filtern, Suchen und Auswählen) were named after the command behind them ("Alle löschen",
+  "Sortieren...", "Suchen...") for screen readers and UI Automation; now as labelled, as in Excel.
+- **Formeln anzeigen** is a setting of the sheet's window, saved in the file (showFormulas), as in Excel (it was one
+  switch for the app, lost on saving).
+- **Zellen formatieren > Zahlen:** Dezimalstellen and 1.000er-Trennzeichen verwenden (.) for the number categories,
+  and a format like 0,000 is shown as Zahl with three decimals. **Rahmen:** Außen drew no lines (it ticked the
+  boxes but kept the old sides), and a line style picked after the sides now applies to them.
+- **Regeln in ausgewählten Zellen löschen** removed whole rules that only touched the selection; now it takes the
+  selected cells out of each rule's range (moving its formulas with the new top-left cell), and makes no undo step
+  when there is nothing to delete.
+- **Bedingte Formatierung, formulas:** rule formulas were evaluated for every cell as written for the top-left one
+  (=$B2>10 on A2:D9 tested row 2 everywhere); now relative references follow the cell as in Excel.
+Left as they are, with the reason: inserting a PivotTable and Daten > Aus Tabelle/Bereich are two undo steps (a new
+sheet, then the table; Excel's own behaviour there was not recorded tonight); the Zeichnen tab's pens have no
+accessible names; Zellen formatieren still lacks Excel's border colours and diagonals, pattern fills, the
+orientation dial and the font list.
+
+## D-143 RaabeCalc: Bedingte Formatierung with Excel's rule dialogs (2026-11-09)
+
+The galleries' entries ending in "..." applied a fixed rule at once (Obere 10 Elemente always 10, Doppelte Werte
+always light red); Excel opens a dialog for each. Built from the dialogs' controls in Excel's inventory
+(results/2026-11-05-excel-inventory.json): Obere/Untere 10 Elemente and 10 % (the number, then the format), Über
+and Unter dem Durchschnitt, Doppelte Werte (Doppelte or Eindeutige), and the new **Datum...** (Gestern, Heute,
+Morgen, In den letzten 7 Tagen, Letzte/Diese/Nächste Woche, Letzter/Dieser/Nächster Monat), written as Excel writes a
+timePeriod rule, with its formula, which RaabeCalc evaluates. Text rules (Textinhalt, and the new rule types) are
+written with Excel's formula as well; Excel tests the cells with it.
+**Neue Regel...** and every gallery's **Weitere Regeln...** open Neue Formatierungsregel with Excel's six rule types:
+Alle Zellen basierend auf ihren Werten formatieren (2-/3-Farben-Skala, Datenbalken with the colours), Nur Zellen
+formatieren, die enthalten (Zellwert with the eight operators, Bestimmter Text), obere oder untere Werte, über oder
+unter dem Durchschnitt, eindeutige oder doppelte Werte, and Formel zur Ermittlung der zu formatierenden Zellen
+verwenden; the format through Formatieren... (Schriftschnitt, Farbe, Hintergrundfarbe). **Regeln verwalten...**
+opens the manager: the rules of the selection or the sheet in the order they apply, Neue Regel..., Regel löschen,
+Nach oben, Nach unten; OK applies all as one undo step. Not built: Regel bearbeiten..., Regel duplizieren, the icon
+sets' and the values' types (Zahl, Prozent, Perzentil) in the first rule type.
+The galleries carry Excel's names: Blauer ... Lilafarbener Datenbalken under Farbverlauf (the bars of Einfarbige
+Füllung need Excel 2010's extension of the rule and are left for later), and all twelve colour scales,
+Grün-Gelb-Rot-Farbskala to Gelb-Grün-Farbskala (six were missing). The scales' colours were reversed: a name lists
+the colours from the highest value down, so Grün-Gelb-Rot gives the lowest value red and the highest green; the rule
+keeps them from the lowest up. probe_excel_cf_galleries.py was written to read every gallery entry's colours from
+Excel with real clicks; it could not finish tonight (the foreground was taken by other runs twice), so the colours
+follow Excel's known defaults (F8696B, FFEB84, 63BE7B, 5A8AC6, FCFCFF, FFEF9C) and the same order as RaabeCalc's
+Schnellanalyse already used; the probe is there for the owner's next free evening.

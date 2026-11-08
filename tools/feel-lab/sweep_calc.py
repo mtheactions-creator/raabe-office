@@ -87,6 +87,11 @@ class Sweep:
     # ----- setup ---------------------------------------------------------------------------------
     def reset(self, selection: str = SELECTION) -> None:
         p = self.p
+        # A page that loaded anew (the dev server reloads on source changes) needs the helpers again.
+        if not p.js("typeof window.__sweep === 'object' && typeof window.__calc === 'object'"):
+            while not p.js("typeof window.__calc === 'object'"):
+                time.sleep(0.2)
+            p.js(JS)
         for _ in range(4):
             # Popups, dialogs, the backstage: Esc as a user would; what stays is closed by its button.
             st = p.js("({dlg: !!document.querySelector('.dialog-layer'), pop: [...document.body.children].some(e => e.matches('.menu-root, .menu, .rpanel, .popup, .combo-list') ), bs: !document.querySelector('.backstage')?.hidden})")
@@ -139,7 +144,18 @@ class Sweep:
         return {"ok": True}
 
     def context_menu(self, where: str) -> dict:
-        """A right click on a cell, a row or column header, a sheet tab, the status bar."""
+        """A right click on a cell, a row or column header, a sheet tab, the status bar; "filterbutton": Daten >
+        Filtern, then a click on the AutoFilter button of B1 (its menu: sorting, filters, the list of values)."""
+        if where == "filterbutton":
+            for k, i in (("tab", "Daten"), ("ctrl", "Sortieren und Filtern|Filtern")):
+                r = self.step(k, i)
+                if not r["ok"]:
+                    return r
+            pt = self.p.js("__calc.point('B1', 'right')")
+            self.p.js("__sweep.mark()")
+            self.p.click(pt["x"] - 8, pt["y"])
+            self.p.pump(0.3)
+            return {"ok": True}
         pt = self.p.js(f"""(() => {{
           const w = {json.dumps(where)};
           if (w === "cell") return __calc.point("B3", "center");
@@ -185,6 +201,14 @@ class Sweep:
         self.reset()
         before = self.snap()
         res: dict = {"path": [i for _, i in path], "variant": variant}
+        if path and path[0] == ("ctx", "filterbutton"):
+            # The AutoFilter is the setup here: the option's effect (and its undo) is measured from it on.
+            r = self.context_menu("filterbutton")
+            if not r["ok"]:
+                res.update(outcome=r["why"], at="filterbutton")
+                return res
+            before = self.snap()
+            path = path[1:]
         r = self.replay(path)
         if not r["ok"]:
             res.update(outcome=r["why"], at=r.get("at"))
@@ -400,16 +424,32 @@ def main() -> None:
     t0 = time.perf_counter()
     try:
         tabs = [t for t in s.tabs() if not a.tabs or t in a.tabs.split(",")]
-        if not a.context:
-            for t in tabs:
-                s.sweep_tab(t, a.only)
+        # Context menus and Datei first: some ribbon options (Neues Fenster, Ansichten) leave the app in a
+        # state the reset between options does not undo.
         if a.context or not a.tabs:
-            for where in ("cell", "row", "col", "sheettab", "statusbar"):
+            for where in ("cell", "row", "col", "sheettab", "statusbar", "filterbutton"):
                 s.walk([("ctx", where)], 2, where, "context")
         if not a.context and (not a.tabs or "Datei" in a.tabs.split(",")):
             s.sweep_backstage()
+        if not a.context:
+            for t in tabs:
+                s.sweep_tab(t, a.only)
+        # Deferred commands (SCOPE: "later") by their labels, to tell them from options that fail.
+        deferred = set(s.p.js("""(() => { const out = []; const walk = (x) => { if (Array.isArray(x)) x.forEach(walk); else if (x && typeof x === 'object') {
+          if (x.deferred && x.name) out.push(x.name); for (const v of Object.values(x)) if (typeof v === 'object') walk(v); } }; walk(__calc.inventory()); return out; })()"""))
     finally:
         s.close()
+    options = []
+    for r in s.results:
+        if r.get("variant"):
+            continue
+        last = r["path"][-1] if r.get("path") else ""
+        status = r.get("outcome") or ("ok" if not r.get("errors") and not (r.get("model") and r.get("undo") is False) else "failed")
+        if status == "disabled" and last.split("|")[-1].replace(" ▾", "") in deferred:
+            status = "deferred (SCOPE: later)"
+        options.append({"path": " > ".join(r["path"]), "kind": r.get("kind"), "opens": r.get("dialog") or (f"menu ({len(r['popup'])})" if r.get("popup") else None), "status": status})
+    if not a.only and not a.tabs and not a.context:
+        (HERE / "results" / "2026-11-09-calc-options.json").write_text(json.dumps({"options": options}, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
     out = HERE / "results" / f"2026-11-09-{a.out}.json"
     summary = summarise(s.results)
     summary["seconds"] = round(time.perf_counter() - t0)

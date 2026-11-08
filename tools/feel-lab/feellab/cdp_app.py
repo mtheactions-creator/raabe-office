@@ -139,18 +139,23 @@ def _pid(hwnd: int) -> int:
 class AppExe:
     """The release exe of one app as a process of our own, off screen (RAABE_FEEL_BACKGROUND)."""
 
-    def __init__(self, app: str = "calc", port: int = 9441, exe: Path | None = None, size: tuple[int, int] = (2000, 2050)):
+    def __init__(self, app: str = "calc", port: int = 9441, exe: Path | None = None, size: tuple[int, int] = (2000, 2050), background: bool = True):
         name = {"calc": "raabe-calc", "write": "raabe-write", "present": "raabe-present"}[app]
         env_name = {"calc": "RAABE_CALC_EXE", "write": "RAABE_WRITE_EXE", "present": "RAABE_PRESENT_EXE"}[app]
         exe = Path(exe or os.environ.get(env_name) or ROOT / f"apps/{name}/src-tauri/target/release/{name}.exe")
         rec = Path(tempfile.gettempdir()) / f"{name}-feel-recovery"
         for f in rec.glob("*") if rec.exists() else []:
             f.unlink(missing_ok=True)
-        env = dict(os.environ, RAABE_FEEL_DEBUG_PORT=str(port), RAABE_FEEL_BACKGROUND="1")
+        env = dict(os.environ, RAABE_FEEL_DEBUG_PORT=str(port))
+        if background:
+            env["RAABE_FEEL_BACKGROUND"] = "1"
         self.proc = subprocess.Popen([str(exe), "--feel", app], env=env)
         suffix = {"calc": " - RaabeCalc", "write": " - RaabeWrite", "present": " - RaabePresent"}[app]
         self.hwnd = winapi.wait_for_window(lambda h: winapi.window_title(h).endswith(suffix) and _pid(h) == self.proc.pid)
-        winapi.place_quietly(self.hwnd, -4000, 0, *size)
+        if background:
+            winapi.place_quietly(self.hwnd, -4000, 0, *size)
+        else:
+            winapi.place(self.hwnd, 0, 0, *size)
         deadline = time.perf_counter() + 30
         while True:
             try:

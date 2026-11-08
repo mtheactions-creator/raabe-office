@@ -103,10 +103,10 @@ CASES: list[tuple] = [
     ("Einzug vergrößern und verkleinern", "A2:B4", [T, ("ctrl", "Ausrichtung|Einzug vergrößern"), ("ctrl", "Ausrichtung|Einzug vergrößern"), ("ctrl", "Ausrichtung|Einzug verkleinern")],
      lambda app, ws: [app.CommandBars.ExecuteMso(i) for i in ("IndentIncreaseExcel", "IndentIncreaseExcel", "IndentDecreaseExcel")]),
     ("Textumbruch", "A2:B4", [T, ("ctrl", "Ausrichtung|Textumbruch")], ("mso", "WrapText")),
-    ("Verbinden und zentrieren", "A1:D1", [T, ("ctrl", "Ausrichtung|Verbinden und zentrieren")], ("mso", "MergeCenter")),
-    ("Verbinden über", "A2:C3", [T, ("ctrl", "Ausrichtung|Verbinden und zentrieren ▾"), ("item", "Verbinden über")],
+    ("Verbinden und zentrieren", "A1:D1", [T, ("ctrl", "Ausrichtung|Verbinden und zentrieren"), ("ok",)], ("mso", "MergeCenter")),
+    ("Verbinden über", "A2:C3", [T, ("ctrl", "Ausrichtung|Verbinden und zentrieren ▾"), ("item", "Verbinden über"), ("ok",)],
      lambda app, ws: app.Selection.Merge(True)),
-    ("Zellen verbinden", "C1:D2", [T, ("ctrl", "Ausrichtung|Verbinden und zentrieren ▾"), ("item", "Zellen verbinden")], ("mso", "MergeCells")),
+    ("Zellen verbinden", "C1:D2", [T, ("ctrl", "Ausrichtung|Verbinden und zentrieren ▾"), ("item", "Zellen verbinden"), ("ok",)], ("mso", "MergeCells")),
     ("Gegen den Uhrzeigersinn drehen", "A1:D1", [T, ("ctrl", "Ausrichtung|Ausrichtung"), ("item", "Gegen den Uhrzeigersinn drehen")], xl_set("Orientation", 45)),
     ("Text nach oben drehen", "A1:D1", [T, ("ctrl", "Ausrichtung|Ausrichtung"), ("item", "Text nach oben drehen")], xl_set("Orientation", 90)),
     ("Prozentformat", "B2:B5", [T, ("ctrl", "Zahl|Prozentformat")], ("mso", "PercentStyle")),
@@ -152,7 +152,16 @@ CASES: list[tuple] = [
      lambda app, ws: xl_cf(app.Selection.FormatConditions.AddTop10(), top=2)),
     ("Bedingte Formatierung Über dem Durchschnitt", "B2:B5", [T, ("ctrl", "Formatvorlagen|Bedingte Formatierung"), ("item", "Regeln für oberste/unterste Werte"), ("item", "› Über dem Durchschnitt..."), ("ok",)],
      lambda app, ws: xl_cf(app.Selection.FormatConditions.AddAboveAverage())),
-    ("Zellen formatieren Schriftfarbe", "A2:A4", [T, ("ctrl", "Schriftart|Zellenschriftart formatieren"), ("btn", "Schrift"), ("click", ".fc-color"), ("popswatch", 5), ("ok",)], None),
+    ("Neue Regel Formel", "A2:B5", [T, ("ctrl", "Formatvorlagen|Bedingte Formatierung"), ("item", "Neue Regel..."), ("click", ".cf-type:nth-child(6)"),
+                                    ("field", "Werte formatieren", "=$B2>10"), ("ok",)],
+     lambda app, ws: app.Selection.FormatConditions.Add(2, None, "=$B2>10")),
+    ("Neue Regel Zellwert zwischen", "B2:B5", [T, ("ctrl", "Formatvorlagen|Bedingte Formatierung"), ("item", "Neue Regel..."),
+                                               ("field", "Erster Wert", "8"), ("field", "Zweiter Wert", "13"), ("ok",)],
+     lambda app, ws: app.Selection.FormatConditions.Add(1, 1, "=8", "=13")),
+    ("Bedingte Formatierung Datum heute", "C2:C5", [T, ("ctrl", "Formatvorlagen|Bedingte Formatierung"), ("item", "Regeln zum Hervorheben von Zellen"), ("item", "› Datum..."), ("ok",)],
+     lambda app, ws: xl_cf(app.Selection.FormatConditions.Add(11, None, None, None, None, None, 1))),
+    ("Zellen formatieren Schriftfarbe", "A2:A4", [T, ("ctrl", "Schriftart|Zellenschriftart formatieren"), ("btn", "Schrift"), ("click", ".fc-color"), ("popswatch", 5), ("ok",)], None, None,
+     lambda c: all(c[a]["Font"][8] not in (0, 0.0) for a in ("A2", "A3", "A4"))),
     ("Zellenformatvorlage Gut Schriftfarbe", "A2:A4", [T, ("ctrl", "Formatvorlagen|Zellenformatvorlagen"), ("item", "Gut")],
      lambda app, ws: (setattr(app.Selection.Interior, "Color", 0xCEEFC6), setattr(app.Selection.Font, "Color", 0x006100))),
     ("Formeln anzeigen", "A1", [("tab", "Formeln"), ("ctrl", "Formelüberwachung|Formeln anzeigen")], ("mso", "ShowFormulas")),
@@ -161,9 +170,11 @@ CASES: list[tuple] = [
     ("Erste Spalte fixieren", "B3", [("tab", "Ansicht"), ("ctrl", "Fenster|Fenster fixieren"), ("item", "Erste Spalte fixieren")], ("mso", "FreezeFirstColumn")),
     ("Querformat", "A1", [("tab", "Seitenlayout"), ("ctrl", "Seite einrichten|Ausrichtung"), ("item", "Querformat")], lambda app, ws: setattr(ws.PageSetup, "Orientation", 2)),
     ("Druckbereich festlegen", "A1:B4", [("tab", "Seitenlayout"), ("ctrl", "Seite einrichten|Druckbereich"), ("item", "Druckbereich festlegen")], ("mso", "PrintAreaSetPrintArea")),
-    ("Gruppieren Zeilen", "A2:A4", [("tab", "Daten"), ("ctrl", "Gliederung|Gruppieren")], lambda app, ws: app.Selection.EntireRow.Group()),
+    ("Gruppieren Zeilen", "A2:A4", [("tab", "Daten"), ("ctrl", "Gliederung|Gruppieren"), ("ok",)], lambda app, ws: app.Selection.EntireRow.Group()),
     ("Zelle sperren aus", "A2", [T, ("ctrl", "Zellen|Format"), ("item", "Zelle sperren")], xl_set("Locked", False)),
-    ("Zellen formatieren Ausfüllen gemischt", "A1:B3", [T, ("ctrl", "Zahl|Zellennummer formatieren"), ("btn", "Ausfüllen"), ("swatch", 12), ("ok",)], None),
+    ("Zellen formatieren Ausfüllen gemischt", "A1:B3", [T, ("ctrl", "Zahl|Zellennummer formatieren"), ("btn", "Ausfüllen"), ("swatch", 12), ("ok",)], None, None,
+     # Every cell gets the fill; the bold header stays bold, the others stay not bold (only the fill was changed).
+     lambda c: all(c[a]["Interior"][0] == 1 for a in ("A1", "B1", "A2", "B3")) and c["A1"]["Font"][2] and not c["A2"]["Font"][2]),
     ("Zellen formatieren OK ohne Änderung", "A1:B3", [T, ("ctrl", "Zahl|Zellennummer formatieren"), ("ok",)], lambda app, ws: None),
     ("Zellen formatieren Zeilenumbruch", "A2:A4", [T, ("ctrl", "Ausrichtung|Zellenausrichtung formatieren"), ("check", "Zeilenumbruch"), ("ok",)], xl_set("WrapText", True)),
     ("Zellen formatieren Fett Kursiv", "A2:B4", [T, ("ctrl", "Schriftart|Zellenschriftart formatieren"), ("select", "Schriftschnitt:", "Fett Kursiv"), ("ok",)],
@@ -181,7 +192,7 @@ class Raabe:
     def dialog_field(self, label: str, value: str) -> bool:
         el = self.p.js(f"""(() => {{ const d = [...document.querySelectorAll('.dialog-layer .dialog')].pop(); if (!d) return null;
           const l = {json.dumps(label)};
-          const f = l ? [...d.querySelectorAll('label.field, label, .field')].find(e => e.textContent.trim().startsWith(l))?.querySelector('input, textarea') : d.querySelector('.dlg-body input[type=text], .dlg-body input:not([type]), .dlg-body input[type=number]');
+          const f = l ? ([...d.querySelectorAll('label.field, label, .field')].find(e => e.textContent.trim().startsWith(l))?.querySelector('input, textarea') ?? [...d.querySelectorAll('input')].find(i => (i.getAttribute('aria-label') || '').startsWith(l))) : d.querySelector('.dlg-body input[type=text], .dlg-body input:not([type]), .dlg-body input[type=number]');
           if (!f) return null; const r = f.getBoundingClientRect(); return {{x: r.left + r.width / 2, y: r.top + r.height / 2}}; }})()""")
         if not el:
             return False
@@ -323,12 +334,19 @@ def props(app, path: Path) -> dict:
         for k in ("ScrollRow", "ScrollColumn", "Zoom"):
             p["window"].pop(k, None)
         p["cf"] = []
-        try:
-            for fc in ws.Cells.FormatConditions:
-                p["cf"].append([fc.Type, fc.AppliesTo.GetAddress(False, False), getattr(fc, "Operator", None), getattr(fc, "Formula1", None),
-                                fc.Interior.Color if fc.Interior.ColorIndex != -4142 else None, fc.Font.Color])
-        except Exception:  # noqa: BLE001
-            pass
+        def get(fn):
+            try:
+                return fn()
+            except Exception:  # noqa: BLE001 - a property the rule's type does not have
+                return None
+        # Every rule as Excel reads it, and which of the cells it shows as matching (DisplayFormat).
+        for fc in ws.Cells.FormatConditions:
+            p["cf"].append([get(lambda: fc.Type), get(lambda: fc.AppliesTo.GetAddress(False, False)), get(lambda: fc.Operator), get(lambda: fc.Formula1),
+                            get(lambda: fc.Formula2), get(lambda: fc.DateOperator), get(lambda: fc.TextOperator), get(lambda: fc.Text),
+                            get(lambda: fc.Interior.Color if fc.Interior.ColorIndex != -4142 else None), get(lambda: fc.Font.Color)])
+        if p["cf"]:
+            p["cfShown"] = [a for a in CELLS if get(lambda a=a: ws.Range(a).DisplayFormat.Interior.Color != ws.Range(a).Interior.Color
+                                                    or ws.Range(a).DisplayFormat.Font.Color != ws.Range(a).Font.Color)]
         return p
     finally:
         wb.Close(False)
@@ -374,10 +392,14 @@ def main() -> None:
             ours = TMP / f"{safe}-raabe.xlsx"
             raabe.save(ours)
             if action is None:
+                # No Excel command for it (a palette swatch): the saved file, opened in Excel, against an expectation.
                 res["excel"] = "no reference (checked by its own expectation)"
-                res["ours"] = props(app, ours)["cells"]
+                cells = props(app, ours)["cells"]
+                expect = case[5] if len(case) > 5 else None
+                res["pass"] = bool(expect and expect(cells)) and not r.get("failed") and not r.get("errors")
+                res["ours"] = {a: {k: cells[a][k] for k in ("Font", "Interior")} for a in ("A1", "A2", "B1", "B3")}
                 results.append(res)
-                print(name, "| ours only", r.get("failed", ""), flush=True)
+                print(name, "| ours only:", "ok" if res["pass"] else "FAILED", r.get("failed", ""), flush=True)
                 continue
             theirs = TMP / f"{safe}-excel.xlsx"
             err = excel_book(app, sel, action, extra, theirs)
