@@ -234,6 +234,16 @@ export function slicersFeature(app: CalcApp) {
     }
   }
 
+  /** The item Umschalt+click starts from: the one clicked last (D-122). */
+  let anchorItem: { s: Slicer; i: number } | null = null;
+
+  /** The items from i to j (in the order shown), with `keep` (Strg: the items chosen before). */
+  function rangeSelect(c: SlicerCache, list: SlicerItem[], i: number, j: number, keep: string[]): void {
+    const [a, b] = [Math.min(i, j), Math.max(i, j)];
+    const span = list.slice(a, b + 1).map((x) => x.text);
+    select(c, [...new Set([...keep, ...span])]);
+  }
+
   /** A click on a button: one item, or (Strg / Mehrfachauswahl) the item added or taken away. */
   function clickItem(s: Slicer, it: SlicerItem, add: boolean): void {
     const c = cacheOf(s);
@@ -618,8 +628,32 @@ export function slicersFeature(app: CalcApp) {
     if (act === "multi") { multi = !multi; refresh(); return; }
     if (act === "clear") { if (c) select(c, null, "Filter löschen"); return; }
     if (btn && c) {
-      const it = items(c)[Number(btn.dataset.item)];
-      if (it) clickItem(s, it, ev.ctrlKey);
+      // D-122: dragging over the buttons chooses the items between (with Strg: added to the choice); Umschalt+click
+      // chooses from the item clicked last to this one.
+      const list = items(c);
+      const i0 = Number(btn.dataset.item);
+      const before = list.filter((i) => i.selected).map((i) => i.text);
+      const filtered = before.length < list.length;
+      let i1 = i0, dragged = false;
+      const at = (m: PointerEvent): number | null => {
+        const el = (document.elementFromPoint(m.clientX, m.clientY) as HTMLElement | null)?.closest<HTMLElement>(".sl-btn");
+        return el && e.contains(el) ? Number(el.dataset.item) : null;
+      };
+      const mark = () => {
+        const [a, b] = [Math.min(i0, i1), Math.max(i0, i1)];
+        e.querySelectorAll<HTMLElement>(".sl-btn").forEach((x) => x.classList.toggle("sl-dragging", Number(x.dataset.item) >= a && Number(x.dataset.item) <= b));
+      };
+      const mv = (m: PointerEvent) => { const j = at(m); if (j === null || j === i1) return; i1 = j; dragged = true; mark(); };
+      const upb = () => {
+        removeEventListener("pointermove", mv);
+        removeEventListener("pointerup", upb);
+        if (dragged) rangeSelect(c, list, i0, i1, ev.ctrlKey && filtered ? before : []);
+        else if (ev.shiftKey && anchorItem && anchorItem.s === s) rangeSelect(c, list, anchorItem.i, i0, (ev.ctrlKey || multi) && filtered ? before : []);
+        else { const it = list[i0]; if (it) clickItem(s, it, ev.ctrlKey); }
+        if (!ev.shiftKey) anchorItem = { s, i: dragged ? i0 : i0 };
+      };
+      addEventListener("pointermove", mv);
+      addEventListener("pointerup", upb);
       return;
     }
     // Header, border or handle: move or size.

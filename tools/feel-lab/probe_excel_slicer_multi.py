@@ -69,7 +69,7 @@ def main() -> None:
                     ws.Cells(r, c).Value = v
             lo = ws.ListObjects.Add(1, ws.Range(f"A1:B{len(DATA)}"), None, 1)
             sc = app.ActiveWorkbook.SlicerCaches.Add2(lo, "Fach")
-            sl = sc.Slicers.Add(ws, None, None, None, 30, 250, 144, 220)
+            sl = sc.Slicers.Add(ws, Top=30, Left=250, Width=144, Height=220)
             win = app.ActiveWindow
             px = lambda pt: pt * 96 / 72 * 1.5  # noqa: E731
             x0, y0 = win.PointsToScreenPixelsX(0), win.PointsToScreenPixelsY(0)

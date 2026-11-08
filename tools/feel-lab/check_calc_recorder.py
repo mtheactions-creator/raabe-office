@@ -112,7 +112,7 @@ def record_by_hand(c: CalcSide, inp: Cdp, case: dict) -> dict:
     inp.click_el("document.querySelector('.statusbar .recbtn')")
     time.sleep(0.3)
     mods = c.js("__calc.macroModules()")
-    code = NL.join(m["code"] for m in mods)
+    code = NL.join(m["code"].replace(chr(13), "") for m in mods)
     m = re.search(r"^Sub Makro_" + case["name"] + r"\(\)$.*?^End Sub$", code, re.S | re.M)
     state = calc_state(c)
     return {"code": m.group(0) if m else None, "state": state, "relative": rel, "defaultName": default_name, "recording": c.js("__calc.app.recorder.recording")}
