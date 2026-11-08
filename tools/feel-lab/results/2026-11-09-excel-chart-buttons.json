@@ -3540,15 +3540,3568 @@
   }
  },
  "context_menus": {
-  "Diagrammbereich": [],
-  "Diagrammtitel": [],
-  "Legende": [],
-  "Reihe \"Nord\" Legendeneintrag": [],
-  "Zeichnungsfläche": [],
-  "Vertikal (Wert) Achse": [],
-  "Horizontal (Kategorie) Achse": [],
-  "Vertikal (Wert) Achse Hauptgitternetz": [],
-  "Reihe \"Nord\"": []
+  "Diagrammbereich": [
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIToolWindow",
+     "rect": [
+      750,
+      848,
+      343,
+      960
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Ausschneiden",
+      "enabled": true,
+      "rect": [
+       752,
+       896,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Kopieren",
+      "enabled": true,
+      "rect": [
+       752,
+       940,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "Menu",
+      "name": "Einfügeoptionen",
+      "enabled": true,
+      "rect": [
+       800,
+       987,
+       291,
+       87
+      ]
+     },
+     {
+      "type": "Group",
+      "name": "Einfügeoptionen",
+      "enabled": false,
+      "rect": [
+       800,
+       987,
+       291,
+       87
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Einfügen",
+      "enabled": false,
+      "rect": [
+       800,
+       1030,
+       44,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Inhalte einfügen...",
+      "enabled": false,
+      "rect": [
+       752,
+       1078,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Auf Formatvorl. zurücks.",
+      "enabled": true,
+      "rect": [
+       752,
+       1125,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Schriftart...",
+      "enabled": true,
+      "rect": [
+       752,
+       1172,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammtyp ändern...",
+      "enabled": true,
+      "rect": [
+       752,
+       1219,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Als Vorlage speichern...",
+      "enabled": true,
+      "rect": [
+       752,
+       1263,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Daten auswählen...",
+      "enabled": true,
+      "rect": [
+       752,
+       1307,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagramm verschieben...",
+      "enabled": true,
+      "rect": [
+       752,
+       1351,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "3D-Drehung...",
+      "enabled": false,
+      "rect": [
+       752,
+       1395,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Gruppieren",
+      "enabled": false,
+      "rect": [
+       752,
+       1442,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "SplitButton",
+      "name": "In den Vordergrund",
+      "enabled": false,
+      "rect": [
+       752,
+       1486,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "In den Vordergrund",
+      "enabled": false,
+      "rect": [
+       752,
+       1486,
+       305,
+       44
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "In den Vordergrund",
+      "enabled": true,
+      "rect": [
+       1058,
+       1486,
+       33,
+       44
+      ]
+     },
+     {
+      "type": "SplitButton",
+      "name": "In den Hintergrund",
+      "enabled": false,
+      "rect": [
+       752,
+       1530,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "In den Hintergrund",
+      "enabled": false,
+      "rect": [
+       752,
+       1530,
+       305,
+       44
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "In den Hintergrund",
+      "enabled": true,
+      "rect": [
+       1058,
+       1530,
+       33,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Als Grafik speichern...",
+      "enabled": true,
+      "rect": [
+       752,
+       1577,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Makro zuweisen...",
+      "enabled": true,
+      "rect": [
+       752,
+       1624,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Alternativtext anzeigen...",
+      "enabled": true,
+      "rect": [
+       752,
+       1671,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammbereich formatieren...",
+      "enabled": true,
+      "rect": [
+       752,
+       1715,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "PivotChart-Optionen...",
+      "enabled": false,
+      "rect": [
+       752,
+       1762,
+       339,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUITWMenuContainer",
+     "rect": [
+      752,
+      850,
+      339,
+      956
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Ausschneiden",
+      "enabled": true,
+      "rect": [
+       752,
+       896,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Kopieren",
+      "enabled": true,
+      "rect": [
+       752,
+       940,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "Menu",
+      "name": "Einfügeoptionen",
+      "enabled": true,
+      "rect": [
+       800,
+       987,
+       291,
+       87
+      ]
+     },
+     {
+      "type": "Group",
+      "name": "Einfügeoptionen",
+      "enabled": false,
+      "rect": [
+       800,
+       987,
+       291,
+       87
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Einfügen",
+      "enabled": false,
+      "rect": [
+       800,
+       1030,
+       44,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Inhalte einfügen...",
+      "enabled": false,
+      "rect": [
+       752,
+       1078,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Auf Formatvorl. zurücks.",
+      "enabled": true,
+      "rect": [
+       752,
+       1125,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Schriftart...",
+      "enabled": true,
+      "rect": [
+       752,
+       1172,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammtyp ändern...",
+      "enabled": true,
+      "rect": [
+       752,
+       1219,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Als Vorlage speichern...",
+      "enabled": true,
+      "rect": [
+       752,
+       1263,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Daten auswählen...",
+      "enabled": true,
+      "rect": [
+       752,
+       1307,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagramm verschieben...",
+      "enabled": true,
+      "rect": [
+       752,
+       1351,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "3D-Drehung...",
+      "enabled": false,
+      "rect": [
+       752,
+       1395,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Gruppieren",
+      "enabled": false,
+      "rect": [
+       752,
+       1442,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "SplitButton",
+      "name": "In den Vordergrund",
+      "enabled": false,
+      "rect": [
+       752,
+       1486,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "In den Vordergrund",
+      "enabled": false,
+      "rect": [
+       752,
+       1486,
+       305,
+       44
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "In den Vordergrund",
+      "enabled": true,
+      "rect": [
+       1058,
+       1486,
+       33,
+       44
+      ]
+     },
+     {
+      "type": "SplitButton",
+      "name": "In den Hintergrund",
+      "enabled": false,
+      "rect": [
+       752,
+       1530,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "In den Hintergrund",
+      "enabled": false,
+      "rect": [
+       752,
+       1530,
+       305,
+       44
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "In den Hintergrund",
+      "enabled": true,
+      "rect": [
+       1058,
+       1530,
+       33,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Als Grafik speichern...",
+      "enabled": true,
+      "rect": [
+       752,
+       1577,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Makro zuweisen...",
+      "enabled": true,
+      "rect": [
+       752,
+       1624,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Alternativtext anzeigen...",
+      "enabled": true,
+      "rect": [
+       752,
+       1671,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammbereich formatieren...",
+      "enabled": true,
+      "rect": [
+       752,
+       1715,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "PivotChart-Optionen...",
+      "enabled": false,
+      "rect": [
+       752,
+       1762,
+       339,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIGalleryContainer",
+     "rect": [
+      800,
+      987,
+      291,
+      87
+     ]
+    },
+    "items": [
+     {
+      "type": "Group",
+      "name": "Einfügeoptionen",
+      "enabled": false,
+      "rect": [
+       800,
+       987,
+       291,
+       87
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Einfügen",
+      "enabled": false,
+      "rect": [
+       800,
+       1030,
+       44,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "ToolBar",
+     "class": "NetUIToolWindow",
+     "rect": [
+      750,
+      729,
+      271,
+      96
+     ]
+    },
+    "items": [
+     {
+      "type": "Group",
+      "name": "Minileiste",
+      "enabled": true,
+      "rect": [
+       755,
+       734,
+       261,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Füllung Orange, Akzent 2",
+      "enabled": true,
+      "rect": [
+       758,
+       734,
+       63,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Kontur Dunkelblaugrün, Akzent 1",
+      "enabled": true,
+      "rect": [
+       824,
+       734,
+       59,
+       86
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Öffnen",
+      "enabled": true,
+      "rect": [
+       997,
+       759,
+       19,
+       36
+      ]
+     }
+    ]
+   }
+  ],
+  "Diagrammtitel": [
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIToolWindow",
+     "rect": [
+      1102,
+      460,
+      334,
+      411
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Löschen",
+      "enabled": true,
+      "rect": [
+       1104,
+       508,
+       330,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Auf Formatvorl. zurücks.",
+      "enabled": true,
+      "rect": [
+       1104,
+       552,
+       330,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Text bearbeiten",
+      "enabled": true,
+      "rect": [
+       1104,
+       599,
+       330,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Schriftart...",
+      "enabled": true,
+      "rect": [
+       1104,
+       643,
+       330,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammtyp ändern...",
+      "enabled": true,
+      "rect": [
+       1104,
+       690,
+       330,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Daten auswählen...",
+      "enabled": true,
+      "rect": [
+       1104,
+       734,
+       330,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "3D-Drehung...",
+      "enabled": false,
+      "rect": [
+       1104,
+       778,
+       330,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammtitel formatieren...",
+      "enabled": true,
+      "rect": [
+       1104,
+       825,
+       330,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUITWMenuContainer",
+     "rect": [
+      1104,
+      462,
+      330,
+      407
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Löschen",
+      "enabled": true,
+      "rect": [
+       1104,
+       508,
+       330,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Auf Formatvorl. zurücks.",
+      "enabled": true,
+      "rect": [
+       1104,
+       552,
+       330,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Text bearbeiten",
+      "enabled": true,
+      "rect": [
+       1104,
+       599,
+       330,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Schriftart...",
+      "enabled": true,
+      "rect": [
+       1104,
+       643,
+       330,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammtyp ändern...",
+      "enabled": true,
+      "rect": [
+       1104,
+       690,
+       330,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Daten auswählen...",
+      "enabled": true,
+      "rect": [
+       1104,
+       734,
+       330,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "3D-Drehung...",
+      "enabled": false,
+      "rect": [
+       1104,
+       778,
+       330,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammtitel formatieren...",
+      "enabled": true,
+      "rect": [
+       1104,
+       825,
+       330,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "ToolBar",
+     "class": "NetUIToolWindow",
+     "rect": [
+      1102,
+      341,
+      254,
+      96
+     ]
+    },
+    "items": [
+     {
+      "type": "Group",
+      "name": "Minileiste",
+      "enabled": true,
+      "rect": [
+       1107,
+       346,
+       244,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Formatvorlage",
+      "enabled": true,
+      "rect": [
+       1110,
+       346,
+       113,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Füllung Orange, Akzent 2",
+      "enabled": true,
+      "rect": [
+       1226,
+       346,
+       63,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Kontur Dunkelblaugrün, Akzent 1",
+      "enabled": true,
+      "rect": [
+       1292,
+       346,
+       59,
+       86
+      ]
+     }
+    ]
+   }
+  ],
+  "Legende": [
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIToolWindow",
+     "rect": [
+      1104,
+      829,
+      285,
+      321
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Löschen",
+      "enabled": true,
+      "rect": [
+       1106,
+       831,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Auf Formatvorl. zurücks.",
+      "enabled": true,
+      "rect": [
+       1106,
+       875,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Schriftart...",
+      "enabled": true,
+      "rect": [
+       1106,
+       922,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammtyp ändern...",
+      "enabled": true,
+      "rect": [
+       1106,
+       969,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Daten auswählen...",
+      "enabled": true,
+      "rect": [
+       1106,
+       1013,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "3D-Drehung...",
+      "enabled": false,
+      "rect": [
+       1106,
+       1057,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Legende formatieren...",
+      "enabled": true,
+      "rect": [
+       1106,
+       1104,
+       281,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUITWMenuContainer",
+     "rect": [
+      1106,
+      831,
+      281,
+      317
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Löschen",
+      "enabled": true,
+      "rect": [
+       1106,
+       831,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Auf Formatvorl. zurücks.",
+      "enabled": true,
+      "rect": [
+       1106,
+       875,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Schriftart...",
+      "enabled": true,
+      "rect": [
+       1106,
+       922,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammtyp ändern...",
+      "enabled": true,
+      "rect": [
+       1106,
+       969,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Daten auswählen...",
+      "enabled": true,
+      "rect": [
+       1106,
+       1013,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "3D-Drehung...",
+      "enabled": false,
+      "rect": [
+       1106,
+       1057,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Legende formatieren...",
+      "enabled": true,
+      "rect": [
+       1106,
+       1104,
+       281,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "ToolBar",
+     "class": "NetUIToolWindow",
+     "rect": [
+      1104,
+      710,
+      271,
+      96
+     ]
+    },
+    "items": [
+     {
+      "type": "Group",
+      "name": "Minileiste",
+      "enabled": true,
+      "rect": [
+       1109,
+       715,
+       261,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Füllung Orange, Akzent 2",
+      "enabled": true,
+      "rect": [
+       1112,
+       715,
+       63,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Kontur Dunkelblaugrün, Akzent 1",
+      "enabled": true,
+      "rect": [
+       1178,
+       715,
+       59,
+       86
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Öffnen",
+      "enabled": true,
+      "rect": [
+       1351,
+       740,
+       19,
+       36
+      ]
+     }
+    ]
+   }
+  ],
+  "Reihe \"Nord\" Legendeneintrag": [
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIToolWindow",
+     "rect": [
+      1051,
+      829,
+      285,
+      321
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Löschen",
+      "enabled": true,
+      "rect": [
+       1053,
+       831,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Auf Formatvorl. zurücks.",
+      "enabled": true,
+      "rect": [
+       1053,
+       875,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Schriftart...",
+      "enabled": true,
+      "rect": [
+       1053,
+       922,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammtyp ändern...",
+      "enabled": true,
+      "rect": [
+       1053,
+       969,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Daten auswählen...",
+      "enabled": true,
+      "rect": [
+       1053,
+       1013,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "3D-Drehung...",
+      "enabled": false,
+      "rect": [
+       1053,
+       1057,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Legende formatieren...",
+      "enabled": true,
+      "rect": [
+       1053,
+       1104,
+       281,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUITWMenuContainer",
+     "rect": [
+      1053,
+      831,
+      281,
+      317
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Löschen",
+      "enabled": true,
+      "rect": [
+       1053,
+       831,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Auf Formatvorl. zurücks.",
+      "enabled": true,
+      "rect": [
+       1053,
+       875,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Schriftart...",
+      "enabled": true,
+      "rect": [
+       1053,
+       922,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammtyp ändern...",
+      "enabled": true,
+      "rect": [
+       1053,
+       969,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Daten auswählen...",
+      "enabled": true,
+      "rect": [
+       1053,
+       1013,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "3D-Drehung...",
+      "enabled": false,
+      "rect": [
+       1053,
+       1057,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Legende formatieren...",
+      "enabled": true,
+      "rect": [
+       1053,
+       1104,
+       281,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "ToolBar",
+     "class": "NetUIToolWindow",
+     "rect": [
+      1051,
+      710,
+      271,
+      96
+     ]
+    },
+    "items": [
+     {
+      "type": "Group",
+      "name": "Minileiste",
+      "enabled": true,
+      "rect": [
+       1056,
+       715,
+       261,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Füllung Orange, Akzent 2",
+      "enabled": true,
+      "rect": [
+       1059,
+       715,
+       63,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Kontur Dunkelblaugrün, Akzent 1",
+      "enabled": true,
+      "rect": [
+       1125,
+       715,
+       59,
+       86
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Öffnen",
+      "enabled": true,
+      "rect": [
+       1298,
+       740,
+       19,
+       36
+      ]
+     }
+    ]
+   }
+  ],
+  "Zeichnungsfläche": [
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIToolWindow",
+     "rect": [
+      1110,
+      519,
+      338,
+      318
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Löschen",
+      "enabled": true,
+      "rect": [
+       1112,
+       521,
+       334,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Auf Formatvorl. zurücks.",
+      "enabled": true,
+      "rect": [
+       1112,
+       565,
+       334,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammtyp ändern...",
+      "enabled": true,
+      "rect": [
+       1112,
+       612,
+       334,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Als Vorlage speichern...",
+      "enabled": true,
+      "rect": [
+       1112,
+       656,
+       334,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Daten auswählen...",
+      "enabled": true,
+      "rect": [
+       1112,
+       700,
+       334,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "3D-Drehung...",
+      "enabled": false,
+      "rect": [
+       1112,
+       744,
+       334,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Zeichnungsfläche formatieren...",
+      "enabled": true,
+      "rect": [
+       1112,
+       791,
+       334,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUITWMenuContainer",
+     "rect": [
+      1112,
+      521,
+      334,
+      314
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Löschen",
+      "enabled": true,
+      "rect": [
+       1112,
+       521,
+       334,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Auf Formatvorl. zurücks.",
+      "enabled": true,
+      "rect": [
+       1112,
+       565,
+       334,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammtyp ändern...",
+      "enabled": true,
+      "rect": [
+       1112,
+       612,
+       334,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Als Vorlage speichern...",
+      "enabled": true,
+      "rect": [
+       1112,
+       656,
+       334,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Daten auswählen...",
+      "enabled": true,
+      "rect": [
+       1112,
+       700,
+       334,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "3D-Drehung...",
+      "enabled": false,
+      "rect": [
+       1112,
+       744,
+       334,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Zeichnungsfläche formatieren...",
+      "enabled": true,
+      "rect": [
+       1112,
+       791,
+       334,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "ToolBar",
+     "class": "NetUIToolWindow",
+     "rect": [
+      1110,
+      400,
+      271,
+      96
+     ]
+    },
+    "items": [
+     {
+      "type": "Group",
+      "name": "Minileiste",
+      "enabled": true,
+      "rect": [
+       1115,
+       405,
+       261,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Füllung Orange, Akzent 2",
+      "enabled": true,
+      "rect": [
+       1118,
+       405,
+       63,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Kontur Dunkelblaugrün, Akzent 1",
+      "enabled": true,
+      "rect": [
+       1184,
+       405,
+       59,
+       86
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Öffnen",
+      "enabled": true,
+      "rect": [
+       1357,
+       430,
+       19,
+       36
+      ]
+     }
+    ]
+   }
+  ],
+  "Vertikal (Wert) Achse": [
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIToolWindow",
+     "rect": [
+      759,
+      630,
+      343,
+      960
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Ausschneiden",
+      "enabled": true,
+      "rect": [
+       761,
+       678,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Kopieren",
+      "enabled": true,
+      "rect": [
+       761,
+       722,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "Menu",
+      "name": "Einfügeoptionen",
+      "enabled": true,
+      "rect": [
+       809,
+       769,
+       291,
+       87
+      ]
+     },
+     {
+      "type": "Group",
+      "name": "Einfügeoptionen",
+      "enabled": false,
+      "rect": [
+       809,
+       769,
+       291,
+       87
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Einfügen",
+      "enabled": false,
+      "rect": [
+       809,
+       812,
+       44,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Inhalte einfügen...",
+      "enabled": false,
+      "rect": [
+       761,
+       860,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Auf Formatvorl. zurücks.",
+      "enabled": true,
+      "rect": [
+       761,
+       907,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Schriftart...",
+      "enabled": true,
+      "rect": [
+       761,
+       954,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammtyp ändern...",
+      "enabled": true,
+      "rect": [
+       761,
+       1001,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Als Vorlage speichern...",
+      "enabled": true,
+      "rect": [
+       761,
+       1045,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Daten auswählen...",
+      "enabled": true,
+      "rect": [
+       761,
+       1089,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagramm verschieben...",
+      "enabled": true,
+      "rect": [
+       761,
+       1133,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "3D-Drehung...",
+      "enabled": false,
+      "rect": [
+       761,
+       1177,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Gruppieren",
+      "enabled": false,
+      "rect": [
+       761,
+       1224,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "SplitButton",
+      "name": "In den Vordergrund",
+      "enabled": false,
+      "rect": [
+       761,
+       1268,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "In den Vordergrund",
+      "enabled": false,
+      "rect": [
+       761,
+       1268,
+       305,
+       44
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "In den Vordergrund",
+      "enabled": true,
+      "rect": [
+       1067,
+       1268,
+       33,
+       44
+      ]
+     },
+     {
+      "type": "SplitButton",
+      "name": "In den Hintergrund",
+      "enabled": false,
+      "rect": [
+       761,
+       1312,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "In den Hintergrund",
+      "enabled": false,
+      "rect": [
+       761,
+       1312,
+       305,
+       44
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "In den Hintergrund",
+      "enabled": true,
+      "rect": [
+       1067,
+       1312,
+       33,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Als Grafik speichern...",
+      "enabled": true,
+      "rect": [
+       761,
+       1359,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Makro zuweisen...",
+      "enabled": true,
+      "rect": [
+       761,
+       1406,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Alternativtext anzeigen...",
+      "enabled": true,
+      "rect": [
+       761,
+       1453,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammbereich formatieren...",
+      "enabled": true,
+      "rect": [
+       761,
+       1497,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "PivotChart-Optionen...",
+      "enabled": false,
+      "rect": [
+       761,
+       1544,
+       339,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUITWMenuContainer",
+     "rect": [
+      761,
+      632,
+      339,
+      956
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Ausschneiden",
+      "enabled": true,
+      "rect": [
+       761,
+       678,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Kopieren",
+      "enabled": true,
+      "rect": [
+       761,
+       722,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "Menu",
+      "name": "Einfügeoptionen",
+      "enabled": true,
+      "rect": [
+       809,
+       769,
+       291,
+       87
+      ]
+     },
+     {
+      "type": "Group",
+      "name": "Einfügeoptionen",
+      "enabled": false,
+      "rect": [
+       809,
+       769,
+       291,
+       87
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Einfügen",
+      "enabled": false,
+      "rect": [
+       809,
+       812,
+       44,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Inhalte einfügen...",
+      "enabled": false,
+      "rect": [
+       761,
+       860,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Auf Formatvorl. zurücks.",
+      "enabled": true,
+      "rect": [
+       761,
+       907,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Schriftart...",
+      "enabled": true,
+      "rect": [
+       761,
+       954,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammtyp ändern...",
+      "enabled": true,
+      "rect": [
+       761,
+       1001,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Als Vorlage speichern...",
+      "enabled": true,
+      "rect": [
+       761,
+       1045,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Daten auswählen...",
+      "enabled": true,
+      "rect": [
+       761,
+       1089,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagramm verschieben...",
+      "enabled": true,
+      "rect": [
+       761,
+       1133,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "3D-Drehung...",
+      "enabled": false,
+      "rect": [
+       761,
+       1177,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Gruppieren",
+      "enabled": false,
+      "rect": [
+       761,
+       1224,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "SplitButton",
+      "name": "In den Vordergrund",
+      "enabled": false,
+      "rect": [
+       761,
+       1268,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "In den Vordergrund",
+      "enabled": false,
+      "rect": [
+       761,
+       1268,
+       305,
+       44
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "In den Vordergrund",
+      "enabled": true,
+      "rect": [
+       1067,
+       1268,
+       33,
+       44
+      ]
+     },
+     {
+      "type": "SplitButton",
+      "name": "In den Hintergrund",
+      "enabled": false,
+      "rect": [
+       761,
+       1312,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "In den Hintergrund",
+      "enabled": false,
+      "rect": [
+       761,
+       1312,
+       305,
+       44
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "In den Hintergrund",
+      "enabled": true,
+      "rect": [
+       1067,
+       1312,
+       33,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Als Grafik speichern...",
+      "enabled": true,
+      "rect": [
+       761,
+       1359,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Makro zuweisen...",
+      "enabled": true,
+      "rect": [
+       761,
+       1406,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Alternativtext anzeigen...",
+      "enabled": true,
+      "rect": [
+       761,
+       1453,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammbereich formatieren...",
+      "enabled": true,
+      "rect": [
+       761,
+       1497,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "PivotChart-Optionen...",
+      "enabled": false,
+      "rect": [
+       761,
+       1544,
+       339,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIGalleryContainer",
+     "rect": [
+      809,
+      769,
+      291,
+      87
+     ]
+    },
+    "items": [
+     {
+      "type": "Group",
+      "name": "Einfügeoptionen",
+      "enabled": false,
+      "rect": [
+       809,
+       769,
+       291,
+       87
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Einfügen",
+      "enabled": false,
+      "rect": [
+       809,
+       812,
+       44,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "ToolBar",
+     "class": "NetUIToolWindow",
+     "rect": [
+      759,
+      511,
+      271,
+      96
+     ]
+    },
+    "items": [
+     {
+      "type": "Group",
+      "name": "Minileiste",
+      "enabled": true,
+      "rect": [
+       764,
+       516,
+       261,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Füllung Orange, Akzent 2",
+      "enabled": true,
+      "rect": [
+       767,
+       516,
+       63,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Kontur Dunkelblaugrün, Akzent 1",
+      "enabled": true,
+      "rect": [
+       833,
+       516,
+       59,
+       86
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Öffnen",
+      "enabled": true,
+      "rect": [
+       1006,
+       541,
+       19,
+       36
+      ]
+     }
+    ]
+   }
+  ],
+  "Horizontal (Kategorie) Achse": [
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIToolWindow",
+     "rect": [
+      1111,
+      780,
+      343,
+      960
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Ausschneiden",
+      "enabled": true,
+      "rect": [
+       1113,
+       828,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Kopieren",
+      "enabled": true,
+      "rect": [
+       1113,
+       872,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "Menu",
+      "name": "Einfügeoptionen",
+      "enabled": true,
+      "rect": [
+       1161,
+       919,
+       291,
+       87
+      ]
+     },
+     {
+      "type": "Group",
+      "name": "Einfügeoptionen",
+      "enabled": false,
+      "rect": [
+       1161,
+       919,
+       291,
+       87
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Einfügen",
+      "enabled": false,
+      "rect": [
+       1161,
+       962,
+       44,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Inhalte einfügen...",
+      "enabled": false,
+      "rect": [
+       1113,
+       1010,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Auf Formatvorl. zurücks.",
+      "enabled": true,
+      "rect": [
+       1113,
+       1057,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Schriftart...",
+      "enabled": true,
+      "rect": [
+       1113,
+       1104,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammtyp ändern...",
+      "enabled": true,
+      "rect": [
+       1113,
+       1151,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Als Vorlage speichern...",
+      "enabled": true,
+      "rect": [
+       1113,
+       1195,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Daten auswählen...",
+      "enabled": true,
+      "rect": [
+       1113,
+       1239,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagramm verschieben...",
+      "enabled": true,
+      "rect": [
+       1113,
+       1283,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "3D-Drehung...",
+      "enabled": false,
+      "rect": [
+       1113,
+       1327,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Gruppieren",
+      "enabled": false,
+      "rect": [
+       1113,
+       1374,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "SplitButton",
+      "name": "In den Vordergrund",
+      "enabled": false,
+      "rect": [
+       1113,
+       1418,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "In den Vordergrund",
+      "enabled": false,
+      "rect": [
+       1113,
+       1418,
+       305,
+       44
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "In den Vordergrund",
+      "enabled": true,
+      "rect": [
+       1419,
+       1418,
+       33,
+       44
+      ]
+     },
+     {
+      "type": "SplitButton",
+      "name": "In den Hintergrund",
+      "enabled": false,
+      "rect": [
+       1113,
+       1462,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "In den Hintergrund",
+      "enabled": false,
+      "rect": [
+       1113,
+       1462,
+       305,
+       44
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "In den Hintergrund",
+      "enabled": true,
+      "rect": [
+       1419,
+       1462,
+       33,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Als Grafik speichern...",
+      "enabled": true,
+      "rect": [
+       1113,
+       1509,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Makro zuweisen...",
+      "enabled": true,
+      "rect": [
+       1113,
+       1556,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Alternativtext anzeigen...",
+      "enabled": true,
+      "rect": [
+       1113,
+       1603,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammbereich formatieren...",
+      "enabled": true,
+      "rect": [
+       1113,
+       1647,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "PivotChart-Optionen...",
+      "enabled": false,
+      "rect": [
+       1113,
+       1694,
+       339,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUITWMenuContainer",
+     "rect": [
+      1113,
+      782,
+      339,
+      956
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Ausschneiden",
+      "enabled": true,
+      "rect": [
+       1113,
+       828,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Kopieren",
+      "enabled": true,
+      "rect": [
+       1113,
+       872,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "Menu",
+      "name": "Einfügeoptionen",
+      "enabled": true,
+      "rect": [
+       1161,
+       919,
+       291,
+       87
+      ]
+     },
+     {
+      "type": "Group",
+      "name": "Einfügeoptionen",
+      "enabled": false,
+      "rect": [
+       1161,
+       919,
+       291,
+       87
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Einfügen",
+      "enabled": false,
+      "rect": [
+       1161,
+       962,
+       44,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Inhalte einfügen...",
+      "enabled": false,
+      "rect": [
+       1113,
+       1010,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Auf Formatvorl. zurücks.",
+      "enabled": true,
+      "rect": [
+       1113,
+       1057,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Schriftart...",
+      "enabled": true,
+      "rect": [
+       1113,
+       1104,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammtyp ändern...",
+      "enabled": true,
+      "rect": [
+       1113,
+       1151,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Als Vorlage speichern...",
+      "enabled": true,
+      "rect": [
+       1113,
+       1195,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Daten auswählen...",
+      "enabled": true,
+      "rect": [
+       1113,
+       1239,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagramm verschieben...",
+      "enabled": true,
+      "rect": [
+       1113,
+       1283,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "3D-Drehung...",
+      "enabled": false,
+      "rect": [
+       1113,
+       1327,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Gruppieren",
+      "enabled": false,
+      "rect": [
+       1113,
+       1374,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "SplitButton",
+      "name": "In den Vordergrund",
+      "enabled": false,
+      "rect": [
+       1113,
+       1418,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "In den Vordergrund",
+      "enabled": false,
+      "rect": [
+       1113,
+       1418,
+       305,
+       44
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "In den Vordergrund",
+      "enabled": true,
+      "rect": [
+       1419,
+       1418,
+       33,
+       44
+      ]
+     },
+     {
+      "type": "SplitButton",
+      "name": "In den Hintergrund",
+      "enabled": false,
+      "rect": [
+       1113,
+       1462,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "In den Hintergrund",
+      "enabled": false,
+      "rect": [
+       1113,
+       1462,
+       305,
+       44
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "In den Hintergrund",
+      "enabled": true,
+      "rect": [
+       1419,
+       1462,
+       33,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Als Grafik speichern...",
+      "enabled": true,
+      "rect": [
+       1113,
+       1509,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Makro zuweisen...",
+      "enabled": true,
+      "rect": [
+       1113,
+       1556,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Alternativtext anzeigen...",
+      "enabled": true,
+      "rect": [
+       1113,
+       1603,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammbereich formatieren...",
+      "enabled": true,
+      "rect": [
+       1113,
+       1647,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "PivotChart-Optionen...",
+      "enabled": false,
+      "rect": [
+       1113,
+       1694,
+       339,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIGalleryContainer",
+     "rect": [
+      1161,
+      919,
+      291,
+      87
+     ]
+    },
+    "items": [
+     {
+      "type": "Group",
+      "name": "Einfügeoptionen",
+      "enabled": false,
+      "rect": [
+       1161,
+       919,
+       291,
+       87
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Einfügen",
+      "enabled": false,
+      "rect": [
+       1161,
+       962,
+       44,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "ToolBar",
+     "class": "NetUIToolWindow",
+     "rect": [
+      1111,
+      661,
+      271,
+      96
+     ]
+    },
+    "items": [
+     {
+      "type": "Group",
+      "name": "Minileiste",
+      "enabled": true,
+      "rect": [
+       1116,
+       666,
+       261,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Füllung Orange, Akzent 2",
+      "enabled": true,
+      "rect": [
+       1119,
+       666,
+       63,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Kontur Dunkelblaugrün, Akzent 1",
+      "enabled": true,
+      "rect": [
+       1185,
+       666,
+       59,
+       86
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Öffnen",
+      "enabled": true,
+      "rect": [
+       1358,
+       691,
+       19,
+       36
+      ]
+     }
+    ]
+   }
+  ],
+  "Vertikal (Wert) Achse Hauptgitternetz": [
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIToolWindow",
+     "rect": [
+      1111,
+      612,
+      319,
+      318
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Löschen",
+      "enabled": true,
+      "rect": [
+       1113,
+       614,
+       315,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Auf Formatvorl. zurücks.",
+      "enabled": true,
+      "rect": [
+       1113,
+       658,
+       315,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammtyp ändern...",
+      "enabled": true,
+      "rect": [
+       1113,
+       705,
+       315,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Daten auswählen...",
+      "enabled": true,
+      "rect": [
+       1113,
+       749,
+       315,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "3D-Drehung...",
+      "enabled": false,
+      "rect": [
+       1113,
+       793,
+       315,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Gitternetzlinien formatieren...",
+      "enabled": true,
+      "rect": [
+       1113,
+       840,
+       315,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Achse formatieren...",
+      "enabled": true,
+      "rect": [
+       1113,
+       884,
+       315,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUITWMenuContainer",
+     "rect": [
+      1113,
+      614,
+      315,
+      314
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Löschen",
+      "enabled": true,
+      "rect": [
+       1113,
+       614,
+       315,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Auf Formatvorl. zurücks.",
+      "enabled": true,
+      "rect": [
+       1113,
+       658,
+       315,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammtyp ändern...",
+      "enabled": true,
+      "rect": [
+       1113,
+       705,
+       315,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Daten auswählen...",
+      "enabled": true,
+      "rect": [
+       1113,
+       749,
+       315,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "3D-Drehung...",
+      "enabled": false,
+      "rect": [
+       1113,
+       793,
+       315,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Gitternetzlinien formatieren...",
+      "enabled": true,
+      "rect": [
+       1113,
+       840,
+       315,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Achse formatieren...",
+      "enabled": true,
+      "rect": [
+       1113,
+       884,
+       315,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "ToolBar",
+     "class": "NetUIToolWindow",
+     "rect": [
+      1111,
+      493,
+      271,
+      96
+     ]
+    },
+    "items": [
+     {
+      "type": "Group",
+      "name": "Minileiste",
+      "enabled": true,
+      "rect": [
+       1116,
+       498,
+       261,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Füllung",
+      "enabled": false,
+      "rect": [
+       1119,
+       498,
+       63,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Kontur Dunkelblaugrün, Akzent 1",
+      "enabled": true,
+      "rect": [
+       1185,
+       498,
+       59,
+       86
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Öffnen",
+      "enabled": true,
+      "rect": [
+       1358,
+       523,
+       19,
+       36
+      ]
+     }
+    ]
+   }
+  ],
+  "Reihe \"Nord\"": [
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIToolWindow",
+     "rect": [
+      1073,
+      669,
+      377,
+      362
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Löschen",
+      "enabled": true,
+      "rect": [
+       1075,
+       671,
+       373,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Auf Formatvorl. zurücks.",
+      "enabled": true,
+      "rect": [
+       1075,
+       715,
+       373,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Datenreihen-Diagrammtyp ändern...",
+      "enabled": true,
+      "rect": [
+       1075,
+       762,
+       373,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Daten auswählen...",
+      "enabled": true,
+      "rect": [
+       1075,
+       806,
+       373,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "3D-Drehung...",
+      "enabled": false,
+      "rect": [
+       1075,
+       850,
+       373,
+       44
+      ]
+     },
+     {
+      "type": "SplitButton",
+      "name": "Datenbeschriftungen hinzufügen",
+      "enabled": true,
+      "rect": [
+       1075,
+       897,
+       373,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Datenbeschriftungen hinzufügen",
+      "enabled": true,
+      "rect": [
+       1075,
+       897,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Datenbeschriftungen hinzufügen",
+      "enabled": true,
+      "rect": [
+       1415,
+       897,
+       33,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Trendlinie hinzufügen...",
+      "enabled": true,
+      "rect": [
+       1075,
+       941,
+       373,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Datenreihen formatieren...",
+      "enabled": true,
+      "rect": [
+       1075,
+       985,
+       373,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUITWMenuContainer",
+     "rect": [
+      1075,
+      671,
+      373,
+      358
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Löschen",
+      "enabled": true,
+      "rect": [
+       1075,
+       671,
+       373,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Auf Formatvorl. zurücks.",
+      "enabled": true,
+      "rect": [
+       1075,
+       715,
+       373,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Datenreihen-Diagrammtyp ändern...",
+      "enabled": true,
+      "rect": [
+       1075,
+       762,
+       373,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Daten auswählen...",
+      "enabled": true,
+      "rect": [
+       1075,
+       806,
+       373,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "3D-Drehung...",
+      "enabled": false,
+      "rect": [
+       1075,
+       850,
+       373,
+       44
+      ]
+     },
+     {
+      "type": "SplitButton",
+      "name": "Datenbeschriftungen hinzufügen",
+      "enabled": true,
+      "rect": [
+       1075,
+       897,
+       373,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Datenbeschriftungen hinzufügen",
+      "enabled": true,
+      "rect": [
+       1075,
+       897,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Datenbeschriftungen hinzufügen",
+      "enabled": true,
+      "rect": [
+       1415,
+       897,
+       33,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Trendlinie hinzufügen...",
+      "enabled": true,
+      "rect": [
+       1075,
+       941,
+       373,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Datenreihen formatieren...",
+      "enabled": true,
+      "rect": [
+       1075,
+       985,
+       373,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "ToolBar",
+     "class": "NetUIToolWindow",
+     "rect": [
+      1073,
+      550,
+      271,
+      96
+     ]
+    },
+    "items": [
+     {
+      "type": "Group",
+      "name": "Minileiste",
+      "enabled": true,
+      "rect": [
+       1078,
+       555,
+       261,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Füllung Orange, Akzent 2",
+      "enabled": true,
+      "rect": [
+       1081,
+       555,
+       63,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Kontur Dunkelblaugrün, Akzent 1",
+      "enabled": true,
+      "rect": [
+       1147,
+       555,
+       59,
+       86
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Öffnen",
+      "enabled": true,
+      "rect": [
+       1320,
+       580,
+       19,
+       36
+      ]
+     }
+    ]
+   }
+  ]
  },
  "chart_parts": [
   {
@@ -4398,5 +7951,2143 @@
    60,
    72
   ]
+ },
+ "element_submenus": {
+  "Achsen": [
+   {
+    "window": {
+     "type": "Window",
+     "class": "MsoWorkPane",
+     "rect": [
+      1828,
+      476,
+      224,
+      115
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Primär horizontal",
+      "enabled": true,
+      "rect": [
+       1837,
+       487,
+       206,
+       31
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Primär vertikal",
+      "enabled": true,
+      "rect": [
+       1837,
+       518,
+       206,
+       31
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Weitere Optionen...",
+      "enabled": true,
+      "rect": [
+       1837,
+       549,
+       206,
+       31
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIGalleryContainer",
+     "rect": [
+      1837,
+      487,
+      206,
+      93
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Primär horizontal",
+      "enabled": true,
+      "rect": [
+       1837,
+       487,
+       206,
+       31
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Primär vertikal",
+      "enabled": true,
+      "rect": [
+       1837,
+       518,
+       206,
+       31
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Weitere Optionen...",
+      "enabled": true,
+      "rect": [
+       1837,
+       549,
+       206,
+       31
+      ]
+     }
+    ]
+   }
+  ],
+  "Achsentitel": [
+   {
+    "window": {
+     "type": "Window",
+     "class": "MsoWorkPane",
+     "rect": [
+      1828,
+      507,
+      224,
+      115
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Primär horizontal",
+      "enabled": true,
+      "rect": [
+       1837,
+       518,
+       206,
+       31
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Primär vertikal",
+      "enabled": true,
+      "rect": [
+       1837,
+       549,
+       206,
+       31
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Weitere Optionen...",
+      "enabled": true,
+      "rect": [
+       1837,
+       580,
+       206,
+       31
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIGalleryContainer",
+     "rect": [
+      1837,
+      518,
+      206,
+      93
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Primär horizontal",
+      "enabled": true,
+      "rect": [
+       1837,
+       518,
+       206,
+       31
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Primär vertikal",
+      "enabled": true,
+      "rect": [
+       1837,
+       549,
+       206,
+       31
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Weitere Optionen...",
+      "enabled": true,
+      "rect": [
+       1837,
+       580,
+       206,
+       31
+      ]
+     }
+    ]
+   }
+  ],
+  "Diagrammtitel": [
+   {
+    "window": {
+     "type": "Window",
+     "class": "MsoWorkPane",
+     "rect": [
+      1828,
+      538,
+      225,
+      130
+     ]
+    },
+    "items": [
+     {
+      "type": "ListItem",
+      "name": "Über Diagramm",
+      "enabled": true,
+      "rect": [
+       1837,
+       549,
+       207,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Zentrierte Überlagerung",
+      "enabled": true,
+      "rect": [
+       1837,
+       585,
+       207,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Weitere Optionen...",
+      "enabled": true,
+      "rect": [
+       1837,
+       621,
+       207,
+       36
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIGalleryContainer",
+     "rect": [
+      1837,
+      549,
+      207,
+      108
+     ]
+    },
+    "items": [
+     {
+      "type": "ListItem",
+      "name": "Über Diagramm",
+      "enabled": true,
+      "rect": [
+       1837,
+       549,
+       207,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Zentrierte Überlagerung",
+      "enabled": true,
+      "rect": [
+       1837,
+       585,
+       207,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Weitere Optionen...",
+      "enabled": true,
+      "rect": [
+       1837,
+       621,
+       207,
+       36
+      ]
+     }
+    ]
+   }
+  ],
+  "Datenbeschriftungen": [
+   {
+    "window": {
+     "type": "Window",
+     "class": "MsoWorkPane",
+     "rect": [
+      1828,
+      569,
+      206,
+      238
+     ]
+    },
+    "items": [
+     {
+      "type": "ListItem",
+      "name": "Zentriert",
+      "enabled": true,
+      "rect": [
+       1837,
+       580,
+       188,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Am Ende innerhalb",
+      "enabled": true,
+      "rect": [
+       1837,
+       616,
+       188,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Am Anfang innerhalb",
+      "enabled": true,
+      "rect": [
+       1837,
+       652,
+       188,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Am Ende außerhalb",
+      "enabled": true,
+      "rect": [
+       1837,
+       688,
+       188,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Datenlegende",
+      "enabled": true,
+      "rect": [
+       1837,
+       724,
+       188,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Weitere Optionen...",
+      "enabled": true,
+      "rect": [
+       1837,
+       760,
+       188,
+       36
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIGalleryContainer",
+     "rect": [
+      1837,
+      580,
+      188,
+      216
+     ]
+    },
+    "items": [
+     {
+      "type": "ListItem",
+      "name": "Zentriert",
+      "enabled": true,
+      "rect": [
+       1837,
+       580,
+       188,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Am Ende innerhalb",
+      "enabled": true,
+      "rect": [
+       1837,
+       616,
+       188,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Am Anfang innerhalb",
+      "enabled": true,
+      "rect": [
+       1837,
+       652,
+       188,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Am Ende außerhalb",
+      "enabled": true,
+      "rect": [
+       1837,
+       688,
+       188,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Datenlegende",
+      "enabled": true,
+      "rect": [
+       1837,
+       724,
+       188,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Weitere Optionen...",
+      "enabled": true,
+      "rect": [
+       1837,
+       760,
+       188,
+       36
+      ]
+     }
+    ]
+   }
+  ],
+  "Datentabelle": [
+   {
+    "window": {
+     "type": "Window",
+     "class": "MsoWorkPane",
+     "rect": [
+      1828,
+      600,
+      230,
+      130
+     ]
+    },
+    "items": [
+     {
+      "type": "ListItem",
+      "name": "Mit Legendensymbolen",
+      "enabled": true,
+      "rect": [
+       1837,
+       611,
+       212,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Ohne Legendensymbole",
+      "enabled": true,
+      "rect": [
+       1837,
+       647,
+       212,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Weitere Optionen...",
+      "enabled": true,
+      "rect": [
+       1837,
+       683,
+       212,
+       36
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIGalleryContainer",
+     "rect": [
+      1837,
+      611,
+      212,
+      108
+     ]
+    },
+    "items": [
+     {
+      "type": "ListItem",
+      "name": "Mit Legendensymbolen",
+      "enabled": true,
+      "rect": [
+       1837,
+       611,
+       212,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Ohne Legendensymbole",
+      "enabled": true,
+      "rect": [
+       1837,
+       647,
+       212,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Weitere Optionen...",
+      "enabled": true,
+      "rect": [
+       1837,
+       683,
+       212,
+       36
+      ]
+     }
+    ]
+   }
+  ],
+  "Fehlerindikatoren": [
+   {
+    "window": {
+     "type": "Window",
+     "class": "MsoWorkPane",
+     "rect": [
+      1828,
+      631,
+      203,
+      166
+     ]
+    },
+    "items": [
+     {
+      "type": "ListItem",
+      "name": "Standardfehler",
+      "enabled": true,
+      "rect": [
+       1837,
+       642,
+       185,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Prozentsatz",
+      "enabled": true,
+      "rect": [
+       1837,
+       678,
+       185,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Standardabweichung",
+      "enabled": true,
+      "rect": [
+       1837,
+       714,
+       185,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Weitere Optionen...",
+      "enabled": true,
+      "rect": [
+       1837,
+       750,
+       185,
+       36
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIGalleryContainer",
+     "rect": [
+      1837,
+      642,
+      185,
+      144
+     ]
+    },
+    "items": [
+     {
+      "type": "ListItem",
+      "name": "Standardfehler",
+      "enabled": true,
+      "rect": [
+       1837,
+       642,
+       185,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Prozentsatz",
+      "enabled": true,
+      "rect": [
+       1837,
+       678,
+       185,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Standardabweichung",
+      "enabled": true,
+      "rect": [
+       1837,
+       714,
+       185,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Weitere Optionen...",
+      "enabled": true,
+      "rect": [
+       1837,
+       750,
+       185,
+       36
+      ]
+     }
+    ]
+   }
+  ],
+  "Gitternetzlinien": [
+   {
+    "window": {
+     "type": "Window",
+     "class": "MsoWorkPane",
+     "rect": [
+      1828,
+      662,
+      321,
+      177
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Primäres Hauptgitter horizontal",
+      "enabled": true,
+      "rect": [
+       1837,
+       673,
+       303,
+       31
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Primäres Hauptgitter vertikal",
+      "enabled": true,
+      "rect": [
+       1837,
+       704,
+       303,
+       31
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Primäres Hilfsgitter horizontal",
+      "enabled": true,
+      "rect": [
+       1837,
+       735,
+       303,
+       31
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Primäres Hilfsgitter vertikal",
+      "enabled": true,
+      "rect": [
+       1837,
+       766,
+       303,
+       31
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Weitere Optionen...",
+      "enabled": true,
+      "rect": [
+       1837,
+       797,
+       303,
+       31
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIGalleryContainer",
+     "rect": [
+      1837,
+      673,
+      303,
+      155
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Primäres Hauptgitter horizontal",
+      "enabled": true,
+      "rect": [
+       1837,
+       673,
+       303,
+       31
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Primäres Hauptgitter vertikal",
+      "enabled": true,
+      "rect": [
+       1837,
+       704,
+       303,
+       31
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Primäres Hilfsgitter horizontal",
+      "enabled": true,
+      "rect": [
+       1837,
+       735,
+       303,
+       31
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Primäres Hilfsgitter vertikal",
+      "enabled": true,
+      "rect": [
+       1837,
+       766,
+       303,
+       31
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Weitere Optionen...",
+      "enabled": true,
+      "rect": [
+       1837,
+       797,
+       303,
+       31
+      ]
+     }
+    ]
+   }
+  ],
+  "Legende": [
+   {
+    "window": {
+     "type": "Window",
+     "class": "MsoWorkPane",
+     "rect": [
+      1828,
+      693,
+      188,
+      202
+     ]
+    },
+    "items": [
+     {
+      "type": "ListItem",
+      "name": "Rechts",
+      "enabled": true,
+      "rect": [
+       1837,
+       704,
+       170,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Oben",
+      "enabled": true,
+      "rect": [
+       1837,
+       740,
+       170,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Links",
+      "enabled": true,
+      "rect": [
+       1837,
+       776,
+       170,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Unten",
+      "enabled": true,
+      "rect": [
+       1837,
+       812,
+       170,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Weitere Optionen...",
+      "enabled": true,
+      "rect": [
+       1837,
+       848,
+       170,
+       36
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIGalleryContainer",
+     "rect": [
+      1837,
+      704,
+      170,
+      180
+     ]
+    },
+    "items": [
+     {
+      "type": "ListItem",
+      "name": "Rechts",
+      "enabled": true,
+      "rect": [
+       1837,
+       704,
+       170,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Oben",
+      "enabled": true,
+      "rect": [
+       1837,
+       740,
+       170,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Links",
+      "enabled": true,
+      "rect": [
+       1837,
+       776,
+       170,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Unten",
+      "enabled": true,
+      "rect": [
+       1837,
+       812,
+       170,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Weitere Optionen...",
+      "enabled": true,
+      "rect": [
+       1837,
+       848,
+       170,
+       36
+      ]
+     }
+    ]
+   }
+  ],
+  "Trendlinie": [
+   {
+    "window": {
+     "type": "Window",
+     "class": "MsoWorkPane",
+     "rect": [
+      1828,
+      724,
+      371,
+      202
+     ]
+    },
+    "items": [
+     {
+      "type": "ListItem",
+      "name": "Linear",
+      "enabled": true,
+      "rect": [
+       1837,
+       735,
+       353,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Exponential",
+      "enabled": true,
+      "rect": [
+       1837,
+       771,
+       353,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Lineare Prognose",
+      "enabled": true,
+      "rect": [
+       1837,
+       807,
+       353,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Gleitender Durchschnitt für zwei Zeiträume",
+      "enabled": true,
+      "rect": [
+       1837,
+       843,
+       353,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Weitere Optionen...",
+      "enabled": true,
+      "rect": [
+       1837,
+       879,
+       353,
+       36
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIGalleryContainer",
+     "rect": [
+      1837,
+      735,
+      353,
+      180
+     ]
+    },
+    "items": [
+     {
+      "type": "ListItem",
+      "name": "Linear",
+      "enabled": true,
+      "rect": [
+       1837,
+       735,
+       353,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Exponential",
+      "enabled": true,
+      "rect": [
+       1837,
+       771,
+       353,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Lineare Prognose",
+      "enabled": true,
+      "rect": [
+       1837,
+       807,
+       353,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Gleitender Durchschnitt für zwei Zeiträume",
+      "enabled": true,
+      "rect": [
+       1837,
+       843,
+       353,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Weitere Optionen...",
+      "enabled": true,
+      "rect": [
+       1837,
+       879,
+       353,
+       36
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "select_data": {
+  "window": {
+   "type": "Window",
+   "name": "Datenquelle auswählen",
+   "id": "",
+   "class": "NUIDialog",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    1506,
+    892,
+    937,
+    501
+   ]
+  },
+  "controls": [
+   {
+    "window": {
+     "type": "Window",
+     "class": "NUIDialog",
+     "rect": [
+      1506,
+      892,
+      937,
+      501
+     ]
+    },
+    "items": [
+     {
+      "type": "Window",
+      "name": "Datenquelle auswählen",
+      "enabled": true,
+      "rect": [
+       1517,
+       937,
+       915,
+       445
+      ]
+     },
+     {
+      "type": "Text",
+      "name": "Diagrammdatenbereich",
+      "enabled": true,
+      "rect": [
+       1541,
+       948,
+       169,
+       27
+      ]
+     },
+     {
+      "type": "Edit",
+      "name": "Diagrammdatenbereich",
+      "enabled": true,
+      "rect": [
+       1724,
+       948,
+       684,
+       29
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Zeile/Spalte tauschen",
+      "enabled": true,
+      "rect": [
+       1873,
+       1029,
+       203,
+       38
+      ]
+     },
+     {
+      "type": "Text",
+      "name": "Legendeneinträge (Reihen)",
+      "enabled": true,
+      "rect": [
+       1526,
+       1087,
+       189,
+       24
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Datenreihe hinzufügen",
+      "enabled": true,
+      "rect": [
+       1527,
+       1112,
+       135,
+       38
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Datenreihe bearbeiten",
+      "enabled": true,
+      "rect": [
+       1662,
+       1112,
+       129,
+       38
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Datenreihe entfernen",
+      "enabled": true,
+      "rect": [
+       1791,
+       1112,
+       122,
+       38
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Nach oben",
+      "enabled": false,
+      "rect": [
+       1913,
+       1112,
+       38,
+       38
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Nach unten",
+      "enabled": true,
+      "rect": [
+       1951,
+       1112,
+       38,
+       38
+      ]
+     },
+     {
+      "type": "List",
+      "name": "Legendeneinträge (Reihen)",
+      "enabled": true,
+      "rect": [
+       1527,
+       1156,
+       462,
+       160
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Nord",
+      "enabled": true,
+      "rect": [
+       1527,
+       1156,
+       462,
+       32
+      ]
+     },
+     {
+      "type": "CheckBox",
+      "name": "Nord",
+      "enabled": true,
+      "rect": [
+       1530,
+       1156,
+       36,
+       32
+      ]
+     },
+     {
+      "type": "Text",
+      "name": "Nord",
+      "enabled": true,
+      "rect": [
+       1580,
+       1156,
+       38,
+       32
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Süd",
+      "enabled": true,
+      "rect": [
+       1527,
+       1188,
+       462,
+       32
+      ]
+     },
+     {
+      "type": "CheckBox",
+      "name": "Süd",
+      "enabled": true,
+      "rect": [
+       1530,
+       1188,
+       36,
+       32
+      ]
+     },
+     {
+      "type": "Text",
+      "name": "Süd",
+      "enabled": true,
+      "rect": [
+       1580,
+       1188,
+       29,
+       32
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "West",
+      "enabled": true,
+      "rect": [
+       1527,
+       1220,
+       462,
+       32
+      ]
+     },
+     {
+      "type": "CheckBox",
+      "name": "West",
+      "enabled": true,
+      "rect": [
+       1530,
+       1220,
+       36,
+       32
+      ]
+     },
+     {
+      "type": "Text",
+      "name": "West",
+      "enabled": true,
+      "rect": [
+       1580,
+       1220,
+       37,
+       32
+      ]
+     },
+     {
+      "type": "Text",
+      "name": "Horizontale Achsenbeschriftungen (Rubrik)",
+      "enabled": true,
+      "rect": [
+       2004,
+       1087,
+       300,
+       24
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Kategorie bearbeiten",
+      "enabled": true,
+      "rect": [
+       2005,
+       1112,
+       129,
+       38
+      ]
+     },
+     {
+      "type": "List",
+      "name": "Horizontale Achsenbeschriftungen (Rubrik)",
+      "enabled": true,
+      "rect": [
+       2005,
+       1151,
+       417,
+       160
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Jan",
+      "enabled": true,
+      "rect": [
+       2005,
+       1151,
+       417,
+       32
+      ]
+     },
+     {
+      "type": "CheckBox",
+      "name": "Jan",
+      "enabled": true,
+      "rect": [
+       2008,
+       1151,
+       36,
+       32
+      ]
+     },
+     {
+      "type": "Text",
+      "name": "Jan",
+      "enabled": true,
+      "rect": [
+       2058,
+       1151,
+       25,
+       32
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Feb",
+      "enabled": true,
+      "rect": [
+       2005,
+       1183,
+       417,
+       32
+      ]
+     },
+     {
+      "type": "CheckBox",
+      "name": "Feb",
+      "enabled": true,
+      "rect": [
+       2008,
+       1183,
+       36,
+       32
+      ]
+     },
+     {
+      "type": "Text",
+      "name": "Feb",
+      "enabled": true,
+      "rect": [
+       2058,
+       1183,
+       27,
+       32
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Mrz",
+      "enabled": true,
+      "rect": [
+       2005,
+       1215,
+       417,
+       32
+      ]
+     },
+     {
+      "type": "CheckBox",
+      "name": "Mrz",
+      "enabled": true,
+      "rect": [
+       2008,
+       1215,
+       36,
+       32
+      ]
+     },
+     {
+      "type": "Text",
+      "name": "Mrz",
+      "enabled": true,
+      "rect": [
+       2058,
+       1215,
+       29,
+       32
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Apr",
+      "enabled": true,
+      "rect": [
+       2005,
+       1247,
+       417,
+       32
+      ]
+     },
+     {
+      "type": "CheckBox",
+      "name": "Apr",
+      "enabled": true,
+      "rect": [
+       2008,
+       1247,
+       36,
+       32
+      ]
+     },
+     {
+      "type": "Text",
+      "name": "Apr",
+      "enabled": true,
+      "rect": [
+       2058,
+       1247,
+       27,
+       32
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Ausgeblendete und leere Zellen",
+      "enabled": true,
+      "rect": [
+       1526,
+       1335,
+       246,
+       36
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "OK",
+      "enabled": true,
+      "rect": [
+       2183,
+       1335,
+       113,
+       36
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Abbrechen",
+      "enabled": true,
+      "rect": [
+       2310,
+       1335,
+       113,
+       36
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Direkthilfe",
+      "enabled": true,
+      "rect": [
+       2291,
+       893,
+       71,
+       44
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Schließen",
+      "enabled": true,
+      "rect": [
+       2362,
+       893,
+       71,
+       44
+      ]
+     }
+    ]
+   }
+  ],
+  "subs": {
+   "Hinzufügen": [
+    {
+     "window": {
+      "type": "ToolTip",
+      "class": "tooltips_class32",
+      "rect": [
+       1594,
+       1141,
+       211,
+       55
+      ]
+     },
+     "items": []
+    },
+    {
+     "window": {
+      "type": "Pane",
+      "class": "SysShadow",
+      "rect": [
+       1594,
+       1141,
+       216,
+       60
+      ]
+     },
+     "items": []
+    },
+    {
+     "window": {
+      "type": "Window",
+      "class": "NUIDialog",
+      "rect": [
+       1732,
+       1018,
+       485,
+       249
+      ]
+     },
+     "items": [
+      {
+       "type": "Window",
+       "name": "Datenreihe bearbeiten",
+       "enabled": true,
+       "rect": [
+        1743,
+        1063,
+        463,
+        193
+       ]
+      },
+      {
+       "type": "Text",
+       "name": "Reihenname",
+       "enabled": true,
+       "rect": [
+        1752,
+        1074,
+        92,
+        21
+       ]
+      },
+      {
+       "type": "Edit",
+       "name": "Reihenname",
+       "enabled": true,
+       "rect": [
+        1752,
+        1100,
+        300,
+        29
+       ]
+      },
+      {
+       "type": "Text",
+       "name": "Bereich auswählen",
+       "enabled": false,
+       "rect": [
+        2066,
+        1104,
+        131,
+        21
+       ]
+      },
+      {
+       "type": "Text",
+       "name": "Reihenwerte",
+       "enabled": true,
+       "rect": [
+        1752,
+        1139,
+        92,
+        21
+       ]
+      },
+      {
+       "type": "Edit",
+       "name": "Reihenwerte",
+       "enabled": true,
+       "rect": [
+        1752,
+        1165,
+        300,
+        29
+       ]
+      },
+      {
+       "type": "Text",
+       "name": "= 1",
+       "enabled": true,
+       "rect": [
+        2066,
+        1169,
+        131,
+        21
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "OK",
+       "enabled": true,
+       "rect": [
+        1957,
+        1209,
+        113,
+        36
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Abbrechen",
+       "enabled": true,
+       "rect": [
+        2084,
+        1209,
+        113,
+        36
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Direkthilfe",
+       "enabled": true,
+       "rect": [
+        2065,
+        1019,
+        71,
+        44
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Schließen",
+       "enabled": true,
+       "rect": [
+        2136,
+        1019,
+        71,
+        44
+       ]
+      }
+     ]
+    }
+   ],
+   "Bearbeiten": [
+    {
+     "window": {
+      "type": "ToolTip",
+      "class": "tooltips_class32",
+      "rect": [
+       1726,
+       1141,
+       211,
+       55
+      ]
+     },
+     "items": []
+    },
+    {
+     "window": {
+      "type": "Pane",
+      "class": "SysShadow",
+      "rect": [
+       1726,
+       1141,
+       216,
+       60
+      ]
+     },
+     "items": []
+    },
+    {
+     "window": {
+      "type": "Window",
+      "class": "NUIDialog",
+      "rect": [
+       1734,
+       1018,
+       480,
+       249
+      ]
+     },
+     "items": [
+      {
+       "type": "Window",
+       "name": "Datenreihe bearbeiten",
+       "enabled": true,
+       "rect": [
+        1745,
+        1063,
+        458,
+        193
+       ]
+      },
+      {
+       "type": "Text",
+       "name": "Reihenname",
+       "enabled": true,
+       "rect": [
+        1754,
+        1074,
+        92,
+        21
+       ]
+      },
+      {
+       "type": "Edit",
+       "name": "Reihenname",
+       "enabled": true,
+       "rect": [
+        1754,
+        1100,
+        300,
+        29
+       ]
+      },
+      {
+       "type": "Text",
+       "name": "= Nord",
+       "enabled": true,
+       "rect": [
+        2068,
+        1104,
+        53,
+        21
+       ]
+      },
+      {
+       "type": "Text",
+       "name": "Reihenwerte",
+       "enabled": true,
+       "rect": [
+        1754,
+        1139,
+        92,
+        21
+       ]
+      },
+      {
+       "type": "Edit",
+       "name": "Reihenwerte",
+       "enabled": true,
+       "rect": [
+        1754,
+        1165,
+        300,
+        29
+       ]
+      },
+      {
+       "type": "Text",
+       "name": "= 3; 5; 2; 4",
+       "enabled": true,
+       "rect": [
+        2068,
+        1169,
+        126,
+        21
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "OK",
+       "enabled": true,
+       "rect": [
+        1954,
+        1209,
+        113,
+        36
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Abbrechen",
+       "enabled": true,
+       "rect": [
+        2081,
+        1209,
+        113,
+        36
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Direkthilfe",
+       "enabled": true,
+       "rect": [
+        2062,
+        1019,
+        71,
+        44
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Schließen",
+       "enabled": true,
+       "rect": [
+        2133,
+        1019,
+        71,
+        44
+       ]
+      }
+     ]
+    }
+   ],
+   "Ausgeblendete und leere Zellen": [
+    {
+     "window": {
+      "type": "Window",
+      "class": "NUIDialog",
+      "rect": [
+       1709,
+       1008,
+       530,
+       269
+      ]
+     },
+     "items": [
+      {
+       "type": "Window",
+       "name": "Ausgeblendete und leere Zelleneinstellungen",
+       "enabled": true,
+       "rect": [
+        1720,
+        1053,
+        508,
+        213
+       ]
+      },
+      {
+       "type": "Text",
+       "name": "Leere Zellen anzeigen als",
+       "enabled": true,
+       "rect": [
+        1729,
+        1064,
+        178,
+        21
+       ]
+      },
+      {
+       "type": "Group",
+       "name": "Leere Zellen anzeigen als",
+       "enabled": true,
+       "rect": [
+        1921,
+        1064,
+        298,
+        88
+       ]
+      },
+      {
+       "type": "RadioButton",
+       "name": "Lücken",
+       "enabled": true,
+       "rect": [
+        1921,
+        1064,
+        81,
+        26
+       ]
+      },
+      {
+       "type": "RadioButton",
+       "name": "Null",
+       "enabled": true,
+       "rect": [
+        1921,
+        1095,
+        61,
+        26
+       ]
+      },
+      {
+       "type": "RadioButton",
+       "name": "Datenpunkte mit einer Linie verbinden",
+       "enabled": false,
+       "rect": [
+        1921,
+        1126,
+        298,
+        26
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "\"#N/V\" als leere Zelle anzeigen",
+       "enabled": true,
+       "rect": [
+        1729,
+        1157,
+        245,
+        26
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "Daten in ausgeblendeten Zeilen und Spalten anzeigen",
+       "enabled": true,
+       "rect": [
+        1729,
+        1188,
+        403,
+        26
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "OK",
+       "enabled": true,
+       "rect": [
+        1979,
+        1219,
+        113,
+        36
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Abbrechen",
+       "enabled": true,
+       "rect": [
+        2106,
+        1219,
+        113,
+        36
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Direkthilfe",
+       "enabled": true,
+       "rect": [
+        2087,
+        1009,
+        71,
+        44
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Schließen",
+       "enabled": true,
+       "rect": [
+        2158,
+        1009,
+        71,
+        44
+       ]
+      }
+     ]
+    }
+   ],
+   "Kategorie bearbeiten": [
+    {
+     "window": {
+      "type": "Window",
+      "class": "NUIDialog",
+      "rect": [
+       1734,
+       1055,
+       480,
+       174
+      ]
+     },
+     "items": [
+      {
+       "type": "Window",
+       "name": "Achsenbeschriftungen",
+       "enabled": true,
+       "rect": [
+        1745,
+        1100,
+        458,
+        118
+       ]
+      },
+      {
+       "type": "Text",
+       "name": "Achsenbeschriftungsbereich",
+       "enabled": true,
+       "rect": [
+        1754,
+        1111,
+        200,
+        21
+       ]
+      },
+      {
+       "type": "Edit",
+       "name": "Achsenbeschriftungsbereich",
+       "enabled": true,
+       "rect": [
+        1754,
+        1137,
+        300,
+        29
+       ]
+      },
+      {
+       "type": "Text",
+       "name": "= Jan; Feb; Mrz;...",
+       "enabled": true,
+       "rect": [
+        2068,
+        1141,
+        118,
+        21
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "OK",
+       "enabled": true,
+       "rect": [
+        1954,
+        1171,
+        113,
+        36
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Abbrechen",
+       "enabled": true,
+       "rect": [
+        2081,
+        1171,
+        113,
+        36
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Direkthilfe",
+       "enabled": true,
+       "rect": [
+        2062,
+        1056,
+        71,
+        44
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Schließen",
+       "enabled": true,
+       "rect": [
+        2133,
+        1056,
+        71,
+        44
+       ]
+      }
+     ]
+    }
+   ]
+  }
  }
 }

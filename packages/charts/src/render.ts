@@ -1087,6 +1087,8 @@ export function renderChart(model: ChartModel, width: number, height: number, op
   svg.setAttribute("height", String(height));
   svg.setAttribute("viewBox", `0 0 ${scene.width} ${scene.height}`);
   svg.setAttribute("font-family", LOOK.font);
+  // The plot area's box (pt) for hit tests: an unformatted plot area draws nothing to click on (D-115).
+  svg.dataset.plot = [scene.plot.x, scene.plot.y, scene.plot.w, scene.plot.h].map((v) => Math.round(v * 10) / 10).join(",");
   svg.innerHTML = sceneMarkup(scene);
   return svg;
 }

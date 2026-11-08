@@ -3101,3 +3101,101 @@ Built or fixed on the way:
   pushed the slider about 6 px under the pointer.
 - The test's own errors found on the way (a flipped shape's size, the browser slider's mapping, a probe's braces, the
   thumbnail's place after the drop) were fixed in the test, not in the app.
+
+## D-115 RaabeCalc: everything around a selected chart, as in Excel 365 (2026-11-09)
+
+The owner found no way to choose a chart's data sets ("Excel has an additional button for that next to the diagram").
+Recorded first in our own Excel (`probe_excel_chart_buttons.py`; the side buttons do not answer UI Automation, so
+they were opened with real input under the lock, the window in front checked before every click;
+`results/2026-11-09-excel-chart-buttons.json`, labels, places and sizes only), then built:
+- **The three buttons** beside a selected chart: 28 x 28 px, 11 px right of the frame, 38 px apart, the pressed one
+  green-tinted with its flyout beside it (`charts/buttons.ts`): Diagrammelemente, Diagrammformatvorlagen and
+  Diagrammfilter (D-116, D-118). They replace the old "+" list.
+- **Diagrammelemente** (`charts/elements.ts`): Excel's nine entries for a column chart (Achsen, Achsentitel,
+  Diagrammtitel, Datenbeschriftungen, Datentabelle, Fehlerindikatoren, Gitternetzlinien, Legende, Trendlinie; a pie
+  three), ticked as Excel ticks them; hovering an entry shows the arrow at its right end, which opens its side menu
+  (Primär horizontal/vertikal; Über Diagramm / Zentrierte Überlagerung; the label positions per chart type; Mit/Ohne
+  Legendensymbole; Standardfehler / Prozentsatz / Standardabweichung; the four gridlines; Rechts / Oben / Links /
+  Unten; Linear / Exponential / Lineare Prognose / Gleitender Durchschnitt für zwei Zeiträume) and "Weitere Optionen...", which opens the
+  element's Format pane. With several series a trendline asks for its series (Trendlinie hinzufügen), as Excel does.
+  Diagrammentwurf > Diagrammelement hinzufügen shows the same table as Excel's menu (the inventory's labels, "Keine"
+  first, "Weitere ...optionen..." last, Linien and Pos./Neg. Abweichung greyed out), with Livevorschau.
+- **Datentabelle** is drawn (`packages/charts/src/datatable.ts`: category names as the table's head, a row per series
+  with or without legend keys) and saved as c:dTable; the category axis' Hilfsgitternetz is new
+  (`format.catMinorGrid`).
+- **Diagrammentwurf** with Excel's keytips (D, C, F, S, E, T, I, G): Schnelllayout and Farben ändern with
+  Livevorschau, Excel's names "Bunt"/"Einfarbig"/"Monochrome Palette n" and "Zeile/Spalte tauschen" (ours said
+  "Farbig", "Monochromatisch", "wechseln"), the Diagrammformatvorlagen gallery in the ribbon (D-118).
+- **Format** (key JY) with Excel's groups: Aktuelle Auswahl, Formen einfügen (Formen; Form ändern greyed),
+  Formenarten (Fülleffekt and Formkontur on the selected element, Keine Füllung / Keine Kontur), WordArt-Formate
+  (Textfüllung), Barrierefreiheit, Anordnen (Ebene nach vorne/hinten, In den Vorder-/Hintergrund, Auswahlbereich;
+  Gruppieren and Drehen greyed for one chart, as in Excel), Größe (Höhe, Breite in cm). Not built (greyed,
+  "Zurückgestellt"): the Formenarten and WordArt galleries, Formeffekte, Textkontur, Texteffekte, Alternativtext,
+  Ausrichten, Form ändern; Formen inserts the shape into the sheet, not into the chart.
+- **Context menus** of the chart area, title, legend, axes, gridlines, plot area, series, labels, trendline and error
+  bars with Excel's entries (Löschen, Auf Formatvorl. zurücks., Text bearbeiten, Diagrammtyp ändern..., Daten
+  auswählen..., Hilfsgitternetz hinzufügen, Datenbeschriftungen hinzufügen ▸, Trendlinie hinzufügen..., ...
+  formatieren...); Entf deletes the selected element (the chart only from the chart area). Not built: the mini toolbar
+  above them, Als Vorlage speichern, Makro zuweisen.
+- Undo keeps the chart selected (it was deselected, so a flyout closed after every Strg+Z).
+Measured: see D-117.
+
+## D-116 Diagrammfilter, and filtered data in the file as Excel saves them (2026-11-09)
+
+The funnel button's flyout as Excel's: Werte with Datenreihe and Kategorien (each with "(Alle auswählen)", series
+with their colour), the entry under the mouse highlights its series or category in the chart (the rest fades),
+nothing changes before Anwenden, which is one undo step; Namen chooses where series names and categories come from
+(Zeile 1 / Spalte A or "(Keine)"); "Daten auswählen..." opens Datenquelle auswählen. A hidden series keeps its colour
+slot, as in Excel.
+- **Model** (`packages/charts`, additive): `ChartSeries.filtered`, `ChartModel.hiddenCats` (positions in the full
+  range), and the chart engine draws `visibleModel(m)` (`filter.ts`, one line in `chartScene`), so RaabeWrite,
+  RaabePresent and printing show filtered charts as Excel does.
+- **File** (`packages/ooxml/src/xlsx/chartfilter.ts`, two hooks in chart.ts): recorded in Excel by COM
+  (`probe_excel_chart_filter.py`, Series.IsFiltered and FullCategoryCollection(i).IsFiltered on column, line, bar,
+  area, pie and scatter charts; fixtures `test/fixtures/excel-chart-filter/`): a filtered series moves into the
+  group's extLst as `c15:filtered…Series/c15:ser` with `c15:formulaRef` instead of `c:f`; a hidden category leaves
+  each series' `c:f` as the visible cells "(Daten!$A$2:$A$3,Daten!$A$5)" with the whole range in `c15:fullRef`
+  and only the visible points cached; in a filtered series both share one extension. Read back into the same model,
+  written verbatim while unchanged (D-024).
+
+## D-117 Datenquelle auswählen with range picking; the source ranges in the sheet (2026-11-09)
+
+- **Datenquelle auswählen** (`charts/selectdata.ts`) as Excel's: Diagrammdatenbereich, Zeile/Spalte tauschen,
+  Legendeneinträge (Reihen) with Hinzufügen, Bearbeiten, Entfernen, Nach oben, Nach unten and a check box per series
+  (cleared = filtered, D-116), Horizontale Achsenbeschriftungen (Rubrik) with Bearbeiten (Achsenbeschriftungen:
+  Achsenbeschriftungsbereich) and a check box per category, Ausgeblendete und leere Zellen (Lücken / Null /
+  Datenpunkte mit einer Linie verbinden, #NV als leere Zelle anzeigen, Daten in ausgeblendeten Zeilen und Spalten
+  anzeigen; saved as c:dispBlanksAs, c:plotVisOnly and c16r3:dispNaAsBlank). Datenreihe bearbeiten has Reihenname and
+  Reihenwerte with Excel's "= Nord" / "= 3; 5; 2; 4" previews; a typed name, ="Text", a range or ={1;2;3} are accepted.
+  The chart follows the dialog while it is open; OK is one undo step, Abbrechen leaves the chart as it was.
+- **Range fields**: while a range field has the focus, a press and drag on the cells writes the range (absolute,
+  with the sheet's name, a dashed frame around it); the dialog lets those clicks through and swallows the rest. The
+  button at the field's end (Dialog reduzieren) shrinks the dialog to the field and hides the dialogs below it, as
+  Excel does; it, or Enter, grows it again. Our own choice: the shrunk dialog stays centred (Excel keeps its place).
+- **Source ranges in the sheet**: while a chart is selected its series names, categories and values are framed in
+  Excel's colours (red, purple, blue); a selected series frames only its own. Dragging a corner of the values frame
+  resizes the chart's data block (A1:D5 → A1:D4), dragging a frame's edge moves those references; one undo step each.
+- Unconnected line points (Datenpunkte mit einer Linie verbinden) are joined by the chart engine; Null reads empty
+  cells as 0.
+
+Measured (D-115 - D-117): `check_calc_chartui.py` drives the release exe off screen with trusted DevTools input
+(clicks, hovers, drags, typing, Strg+Z; no real input) and opens what RaabeCalc saved in our own Excel:
+122 of 122 cases on the release exe including 9 Excel readouts (106 of 106 on the development build after the last label changes). `check_calc_chartui_real.py` repeats the hover, flyout, filter, style preview, frame drag and range
+pointing with the real mouse under the lock: pending. Unit tests: `xlsx-chart-filter.test.ts` (10, Excel's own
+chart parts read and written), `chart-buttons.test.ts` (9).
+
+## D-118 Diagrammformatvorlagen from the charts Excel saved (2026-11-09)
+
+The brush button's Formatvorlage tab and the ribbon gallery offer Excel's styles: 14 for columns, 12 for bars, 13
+for lines, 12 for pies, recorded by applying each gallery entry through the ribbon (UI Automation, no input) and
+saving (`probe_excel_chart_filter.py`; Excel's style numbers 201-215, 340 … are kept in the model and the
+results). `gen_chart_styles.py` turns the saved chart parts into `charts/chart-styles.gen.ts`: per element its fill,
+line and text as theme references (tx1 65 % …), which elements show, data labels and their place, gap width and
+overlap, series lines and markers. A style is applied as the difference to the kind's first style (which the chart
+engine draws without settings), colours resolved in the workbook's theme; the series keep their automatic colours
+where the style uses the plain accent (Farben ändern keeps working). The tiles are the chart itself drawn small; the
+entry under the mouse is shown on the chart (Livevorschau). The Farbe tab lists Bunt (Farbige Palette 1-4) and
+Einfarbig (Monochrome Palette 1-13) with their colours. Not the same: gradient and pattern fills (styles 3, 4, 7-9,
+13 …) are drawn with their first colour; text in capitals and letter spacing of some styles are left out; other
+chart types use the column (area, combo …) or line (scatter, radar) styles; the chart style part is not written, so
+Excel reports ChartStyle 2 for our charts (the look itself is in the chart part).

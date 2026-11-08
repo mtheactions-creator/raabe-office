@@ -61,7 +61,7 @@ export function labelPositions(m: ChartModel): [string, string, DataLabelOptions
   const info = kindInfo(m.kind);
   if (isPie(m.kind)) {
     if (info.family === "doughnut") return [["Datenlegende", "Datenlegende", "callout"]];
-    return [["Zentriert", "Mitte", "ctr"], ["Innerhalb Ende", "Am Ende innerhalb", "inEnd"], ["Außerhalb Ende", "Am Ende außerhalb", "outEnd"],
+    return [["Zentriert", "Mitte", "ctr"], ["Am Ende innerhalb", "Am Ende innerhalb", "inEnd"], ["Am Ende außerhalb", "Am Ende außerhalb", "outEnd"],
       ["Optimale Anpassung", "Optimale Anpassung", "bestFit"], ["Datenlegende", "Datenlegende", "callout"]];
   }
   if (info.family === "line" || isScatter(m.kind)) {
@@ -70,11 +70,11 @@ export function labelPositions(m: ChartModel): [string, string, DataLabelOptions
   }
   if (info.family === "area") return [["Datenlegende", "Datenlegende", "callout"]];
   if (info.grouping === "stacked" || info.grouping === "percentStacked") {
-    return [["Zentriert", "Mitte", "ctr"], ["Innerhalb Ende", "Am Ende innerhalb", "inEnd"], ["Innerhalb Basis", "Am Anfang innerhalb", "inBase"],
+    return [["Zentriert", "Mitte", "ctr"], ["Am Ende innerhalb", "Am Ende innerhalb", "inEnd"], ["Am Anfang innerhalb", "Am Anfang innerhalb", "inBase"],
       ["Datenlegende", "Datenlegende", "callout"]];
   }
-  return [["Zentriert", "Mitte", "ctr"], ["Innerhalb Ende", "Am Ende innerhalb", "inEnd"], ["Innerhalb Basis", "Am Anfang innerhalb", "inBase"],
-    ["Außerhalb Ende", "Am Ende außerhalb", "outEnd"], ["Datenlegende", "Datenlegende", "callout"]];
+  return [["Zentriert", "Mitte", "ctr"], ["Am Ende innerhalb", "Am Ende innerhalb", "inEnd"], ["Am Anfang innerhalb", "Am Anfang innerhalb", "inBase"],
+    ["Am Ende außerhalb", "Am Ende außerhalb", "outEnd"], ["Datenlegende", "Datenlegende", "callout"]];
 }
 
 function setLabels(m: ChartModel, pos: DataLabelOptions["pos"] | "callout" | null) {
@@ -187,7 +187,7 @@ export function elementEntries(m: ChartModel, ribbon = false): ElementEntry[] {
     toggle: (c, on) => setTitle(c, on, false),
     choices: [
       { label: "Über Diagramm", on: (c) => c.title.show && !overlay(c), set: (c) => setTitle(c, true, false) },
-      { label: ["Zentriert überlagert", "Mittig überlagert"], on: (c) => c.title.show && overlay(c), set: (c) => setTitle(c, true, true) },
+      { label: ["Zentrierte Überlagerung", "Mittig überlagert"], on: (c) => c.title.show && overlay(c), set: (c) => setTitle(c, true, true) },
     ],
     pane: () => ({ kind: "title" }),
   });
@@ -283,9 +283,9 @@ export function elementEntries(m: ChartModel, ribbon = false): ElementEntry[] {
       toggle: (c, on) => set(c, on ? "linear" : null),
       choices: [
         { label: "Linear", on: (c) => tk(c) === "linear", set: (c) => set(c, "linear") },
-        { label: "Exponentiell", on: (c) => tk(c) === "exp", set: (c) => set(c, "exp") },
-        { label: ["Linear Prognose", "Lineare Prognose"], on: (c) => tk(c) === "forecast", set: (c) => set(c, "forecast") },
-        { label: "Gleitender Durchschnitt", on: (c) => tk(c) === "movingAvg", set: (c) => set(c, "movingAvg") },
+        { label: "Exponential", on: (c) => tk(c) === "exp", set: (c) => set(c, "exp") },
+        { label: "Lineare Prognose", on: (c) => tk(c) === "forecast", set: (c) => set(c, "forecast") },
+        { label: "Gleitender Durchschnitt für zwei Zeiträume", on: (c) => tk(c) === "movingAvg", set: (c) => set(c, "movingAvg") },
       ],
       pane: (c) => ({ kind: "trend", index: Math.max(0, c.series.findIndex((s) => s.trendline)) }),
     });

@@ -412,9 +412,9 @@ export async function selectDataDialog(host: SelectDataHost, m: ChartModel): Pro
     const hid = h("input", { type: "checkbox" }) as HTMLInputElement;
     hid.checked = !!draft.showHidden;
     const body = h("div", null, h("div", null, "Leere Zellen anzeigen als:"), gap.el, zero.el, span.el,
-      h("label", { class: "check", style: "margin:4px 0 4px 14px" }, na, "#NV als leere Zelle anzeigen"),
+      h("label", { class: "check", style: "margin:4px 0 4px 14px" }, na, '"#N/V" als leere Zelle anzeigen'),
       h("label", { class: "check" }, hid, "Daten in ausgeblendeten Zeilen und Spalten anzeigen"));
-    const ok = await showDialog({ title: "Einstellungen für ausgeblendete und leere Zellen", body, buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
+    const ok = await showDialog({ title: "Ausgeblendete und leere Zelleneinstellungen", body, buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
     if (!ok) return;
     const v = [gap, zero, span].find((x) => x.r.checked)?.r.value as "gap" | "zero" | "span" | undefined;
     if (!v || v === "gap") delete draft.dispBlanksAs; else draft.dispBlanksAs = v;

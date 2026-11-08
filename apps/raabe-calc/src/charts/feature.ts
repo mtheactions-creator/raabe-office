@@ -220,7 +220,7 @@ export function chartsFeature(app: CalcApp) {
       if ((e.target as HTMLElement).closest?.(".chart-btn")) return;
       select(m);
       // Excel: a double-click on an element opens its Format pane.
-      setElement(m, elementAt(m, e.target as Element) ?? element);
+      setElement(m, elementAt(m, e.target as Element, e) ?? element);
       openPane(m);
     });
     el.addEventListener("contextmenu", (e) => {
@@ -228,7 +228,7 @@ export function chartsFeature(app: CalcApp) {
       e.stopPropagation();
       if ((e.target as HTMLElement).closest?.(".chart-btn")) return;
       select(m);
-      const at = elementAt(m, e.target as Element) ?? { kind: "chart" as const };
+      const at = elementAt(m, e.target as Element, e) ?? { kind: "chart" as const };
       setElement(m, at);
       // After the ribbon has followed the selection (its update closes open popups).
       const x = e.clientX, y = e.clientY;
@@ -509,7 +509,7 @@ export function chartsFeature(app: CalcApp) {
     buttons.close();
     select(m);
     // A click on an element selects it; a click on the chart's handles keeps the chart area.
-    if (!(e.target as HTMLElement).closest?.(".chart-handle")) setElement(m, elementAt(m, e.target as Element) ?? { kind: "chart" });
+    if (!(e.target as HTMLElement).closest?.(".chart-handle")) setElement(m, elementAt(m, e.target as Element, e) ?? { kind: "chart" });
     const view = views.get(m)!;
     view.el.focus({ preventScroll: true });
     const handle = ((e.target as HTMLElement).closest?.(".chart-handle") as HTMLElement | null)?.dataset.h as Handle | undefined;
@@ -644,10 +644,21 @@ export function chartsFeature(app: CalcApp) {
   // ----- elements and the Format pane --------------------------------------------------------------
 
   /** The element under the pointer, from the drawing's data-part marks (series by their index in the full chart). */
-  function elementAt(m: ChartModel, target: Element): ChartElement | null {
+  function elementAt(m: ChartModel, target: Element, at?: { clientX: number; clientY: number }): ChartElement | null {
     const part = (target.closest?.("[data-part]") as SVGElement | null)?.dataset.part;
     if (!part) return null;
     const [kind, a] = part.split(":");
+    // The chart area's background inside the plot's box is the Zeichnungsfläche (Excel).
+    if (kind === "chart" && at) {
+      const svg = target.closest("svg") as SVGSVGElement | null;
+      const box = svg?.dataset.plot?.split(",").map(Number);
+      const vb = svg?.viewBox.baseVal;
+      if (svg && box?.length === 4 && vb && vb.width) {
+        const r = svg.getBoundingClientRect();
+        const x = ((at.clientX - r.left) / r.width) * vb.width, y = ((at.clientY - r.top) / r.height) * vb.height;
+        if (x >= box[0] && x <= box[0] + box[2] && y >= box[1] && y <= box[1] + box[3]) return { kind: "plot" };
+      }
+    }
     const full = (i: number) => visibleModel(m).index[i] ?? i;
     switch (kind) {
       case "chart": return { kind: "chart" };
@@ -856,7 +867,8 @@ export function chartsFeature(app: CalcApp) {
         break;
       }
       case "majorGrid": case "minorGrid": case "catGrid":
-        entries = [del, reset, "-", ...common, "-", fmt("Gitternetzlinien formatieren...")];
+        entries = [del, reset, "-", ...common, "-", fmt("Gitternetzlinien formatieren..."),
+          { label: "Achse formatieren...", run: () => paneFor(m, e.kind === "catGrid" ? { kind: "catAxis" } : { kind: "valAxis" }) }];
         break;
       case "series": {
         const s = m.series[e.index];
@@ -873,7 +885,8 @@ export function chartsFeature(app: CalcApp) {
         break;
       }
       case "plot":
-        entries = [reset, "-", font, "-", ...common, "-", fmt("Zeichnungsfläche formatieren...")];
+        entries = [del, reset, "-", cmd("chart.changeType"), { label: "Als Vorlage speichern...", run: () => {}, disabled: true }, cmd("chart.selectData"),
+          { label: "3D-Drehung...", run: () => {}, disabled: true }, "-", fmt("Zeichnungsfläche formatieren...")];
         break;
       case "labels":
         entries = [del, reset, "-", font, "-", ...common, "-", fmt("Datenbeschriftungen formatieren...")];
@@ -892,8 +905,12 @@ export function chartsFeature(app: CalcApp) {
         entries = [cmd("edit.cut"), cmd("edit.copy"), { label: "Inhalte einfügen...", run: () => {}, disabled: true }, "-", reset, font, cmd("chart.changeType"),
           { label: "Als Vorlage speichern...", run: () => {}, disabled: true }, cmd("chart.selectData"), cmd("chart.move"),
           { label: "3D-Drehung...", run: () => {}, disabled: true }, "-", { label: "Gruppieren", run: () => {}, disabled: true },
-          { label: "In den Vordergrund", run: () => arrange(m, "front") }, { label: "In den Hintergrund", run: () => arrange(m, "back") }, "-",
-          { label: "Diagrammbereich formatieren...", run: () => paneFor(m, { kind: "chart" }) }];
+          // Greyed out while the chart is the sheet's only chart (Excel).
+          { label: "In den Vordergrund", run: () => arrange(m, "front"), disabled: (app.sheet.charts ?? []).length < 2 },
+          { label: "In den Hintergrund", run: () => arrange(m, "back"), disabled: (app.sheet.charts ?? []).length < 2 }, "-",
+          { label: "Als Grafik speichern...", run: () => {}, disabled: true }, { label: "Makro zuweisen...", run: () => {}, disabled: true },
+          { label: "Alternativtext anzeigen...", run: () => {}, disabled: true },
+          { label: "Diagrammbereich formatieren...", run: () => paneFor(m, { kind: "chart" }) }, { label: "PivotChart-Optionen...", run: () => {}, disabled: true }];
     }
     showMenu(app.commands, entries, new DOMRect(x, y, 0, 0));
   }

@@ -288,22 +288,25 @@ def cases(ui: Ui, run: Run, saved: dict) -> None:
     side_expect = {
         "Achsen": (["Primär horizontal", "Primär vertikal", "Weitere Optionen..."], [("Primär vertikal", "(m) => m.format?.valAxis?.visible === false")]),
         "Achsentitel": (["Primär horizontal", "Primär vertikal", "Weitere Optionen..."], [("Primär horizontal", "(m) => m.axisTitles.cat === ''")]),
-        "Diagrammtitel": (["Über Diagramm", "Zentriert überlagert", "Weitere Optionen..."], [("Zentriert überlagert", "(m) => m.title.show && m.format?.title?.overlay === true")]),
-        "Datenbeschriftungen": (["Zentriert", "Innerhalb Ende", "Innerhalb Basis", "Außerhalb Ende", "Datenlegende", "Weitere Optionen..."],
-                                [("Innerhalb Ende", "(m) => m.dataLabels && m.format?.dataLabels?.pos === 'inEnd'"), ("Zentriert", "(m) => m.format?.dataLabels?.pos === 'ctr'")]),
+        "Diagrammtitel": (["Über Diagramm", "Zentrierte Überlagerung", "Weitere Optionen..."], [("Zentrierte Überlagerung", "(m) => m.title.show && m.format?.title?.overlay === true")]),
+        "Datenbeschriftungen": (["Zentriert", "Am Ende innerhalb", "Am Anfang innerhalb", "Am Ende außerhalb", "Datenlegende", "Weitere Optionen..."],
+                                [("Am Ende innerhalb", "(m) => m.dataLabels && m.format?.dataLabels?.pos === 'inEnd'"), ("Zentriert", "(m) => m.format?.dataLabels?.pos === 'ctr'")]),
         "Datentabelle": (["Mit Legendensymbolen", "Ohne Legendensymbole", "Weitere Optionen..."], [("Ohne Legendensymbole", "(m) => m.dataTable && m.dataTable.legendKeys === false")]),
         "Fehlerindikatoren": (["Standardfehler", "Prozentsatz", "Standardabweichung", "Weitere Optionen..."], [("Prozentsatz", "(m) => m.series.every((s) => s.errorBars?.type === 'percentage' && s.errorBars.value === 5)")]),
         "Gitternetzlinien": (["Primäres Hauptgitter horizontal", "Primäres Hauptgitter vertikal", "Primäres Hilfsgitter horizontal", "Primäres Hilfsgitter vertikal", "Weitere Optionen..."],
                              [("Primäres Hauptgitter vertikal", "(m) => m.format?.catGrid?.show === true"), ("Primäres Hilfsgitter vertikal", "(m) => m.format?.catMinorGrid?.show === true")]),
         "Legende": (["Rechts", "Oben", "Links", "Unten", "Weitere Optionen..."], [("Oben", "(m) => m.legend === 't'"), ("Rechts", "(m) => m.legend === 'r'")]),
     }
+    side_expect["Trendlinie"] = (["Linear", "Exponential", "Lineare Prognose", "Gleitender Durchschnitt für zwei Zeiträume", "Weitere Optionen..."], [])
     for label, (labels, picks) in side_expect.items():
         idx = [r[0] for r in flyout_rows(ui)].index(label)
         x, y, w, h = ui.center(".cb-fly .cb-row", idx)
         ui.move(x - 20, y)
         ui.click_sel(".cb-fly .cb-row .cb-arrow", idx)
         got = ui.texts(".cb-sub button")
-        run.check(f"side menu {label}: entries", got == labels, got)
+        recorded = [it["name"] for p in EXCEL.get("element_submenus", {}).get(label, []) for it in p["items"] if it["type"] in ("MenuItem", "CheckBox", "ListItem", "RadioButton")]
+        recorded = list(dict.fromkeys(recorded)) or labels
+        run.check(f"side menu {label}: Excel's entries", got == recorded, [got, recorded])
         for pick, probe in picks:
             if not ui.js("!!document.querySelector('.cb-sub')"):
                 ui.move(x - 20, y)
@@ -507,7 +510,7 @@ def cases(ui: Ui, run: Run, saved: dict) -> None:
     ui.click_sel('.dialog [aria-label="Ausgeblendete und leere Zellen"]')
     opts = ui.js("[...document.querySelectorAll('.dialog')].at(-1).textContent")
     run.check("Ausgeblendete und leere Zellen: Lücken, Null, verbinden, #NV, ausgeblendete Daten",
-              all(k in opts for k in ("Lücken", "Null", "Datenpunkte mit einer Linie verbinden", "#NV als leere Zelle anzeigen", "Daten in ausgeblendeten Zeilen und Spalten anzeigen")), opts[:200])
+              all(k in opts for k in ("Lücken", "Null", "Datenpunkte mit einer Linie verbinden", '"#N/V" als leere Zelle anzeigen', "Daten in ausgeblendeten Zeilen und Spalten anzeigen")), opts[:200])
     ui.js("(() => { const d = [...document.querySelectorAll('.dialog')].at(-1); d.querySelector('input[value=zero]').click(); [...d.querySelectorAll('input[type=checkbox]')].at(-1).click(); d.querySelector('.dlg-buttons button.primary').click(); })()")
     time.sleep(0.3)
     # Uncheck a category in the dialog's list (as the filter does).
@@ -582,9 +585,18 @@ def cases(ui: Ui, run: Run, saved: dict) -> None:
     for part, excel_name in (("title", "Diagrammtitel"), ("legend", "Legende"), ("series:0", 'Reihe "Nord"')):
         got = menu_after_right_click(part)
         want = list(dict.fromkeys(excel_menu(excel_name)))
-        # Our entries without "..." where Excel writes them (labels of dialogs) compare equal.
-        norm = lambda xs: [x.replace("...", "").strip() for x in xs]  # noqa: E731
-        run.check(f"context menu of {part}: Excel's entries", norm(got) == norm(want) or not want, [got, want])
+        run.check(f"context menu of {part}: Excel's entries", got == want and bool(want), [got, want])
+    # The chart area (near its lower left corner) and the plot area (its top middle, above the columns).
+    for name, js in (("Diagrammbereich", "(() => { const b = document.querySelector('.chart-obj').getBoundingClientRect(); return [b.left + 6, b.bottom - 6]; })()"),
+                     ("Zeichnungsfläche", "(() => { const s = document.querySelector('.chart-obj svg'), r = s.getBoundingClientRect(), k = r.width / s.viewBox.baseVal.width; const [x, y, w] = s.dataset.plot.split(',').map(Number); return [r.left + (x + w * 0.62) * k, r.top + (y + 6) * k]; })()"),
+                     ("Vertikal (Wert) Achse Hauptgitternetz", "(() => { const g = [...document.querySelectorAll('.chart-obj svg [data-part=\"grid\"]')].map((e) => e.getBoundingClientRect()).sort((a, b) => a.top - b.top)[0]; return [g.left + g.width * 0.62, g.top + 0.3]; })()")):
+        ui.key("Escape", "Escape", 27)
+        xy = ui.js(js)
+        ui.click(xy[0], xy[1], button="right")
+        got = ui.texts(".menu-root > .menu > button")
+        want = list(dict.fromkeys(excel_menu(name)))
+        run.check(f"context menu of the {name}: Excel's entries", got == want and bool(want), [got, want])
+    ui.key("Escape", "Escape", 27)
     got = menu_after_right_click("title")
     if "Löschen" not in got:
         got = menu_after_right_click("title")
