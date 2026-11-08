@@ -19,7 +19,7 @@ export type ChartKind =
   | "waterfall" | "funnel" | "treemap" | "sunburst" | "boxWhisker" | "pareto";
 
 /** Legend position as in the file (c:legendPos), or no legend. */
-export type LegendPos = "b" | "t" | "l" | "r" | "none";
+export type LegendPos = "b" | "t" | "l" | "r" | "tr" | "none";
 
 export interface ChartData<T> {
   /** Cell reference in the file's form ("Tabelle1!$A$2:$A$6"); undefined for literal data. */
@@ -34,19 +34,107 @@ export interface ChartData<T> {
 // Unset fields keep Excel's automatic look (style 201); what is set is written to the file as
 // DrawingML (c:spPr, c:txPr, c:scaling …) and read back.
 
-/** Füllung: Keine Füllung, Einfarbige Füllung (colour, Transparenz in %), Automatisch. */
-export interface Fill { type: "none" | "solid" | "auto"; color?: string; transparency?: number }
+/** A Farbverlaufsstopp: position 0-100 %, colour, Transparenz %. */
+export interface GradientStop { pos: number; color: string; transparency?: number }
+
+/** Farbverlauf: Typ (Linear, Radial, Rechteckig, Pfad), Richtung as an angle (linear, degrees), the stops. */
+export interface Gradient {
+  kind: "linear" | "radial" | "rect" | "path";
+  /** Winkel of a linear gradient in degrees (0: left to right, 90: top to bottom, DrawingML's a:lin ang). */
+  angle?: number;
+  stops: GradientStop[];
+  /** Mit Form drehen. */
+  rotWithShape?: boolean;
+}
+
+/** Musterfüllung: one of DrawingML's 48 preset patterns with Vordergrund and Hintergrund. */
+export interface Pattern { preset: string; fg: string; bg: string }
+
+/** Bild- oder Texturfüllung: a picture (data URL), stretched or tiled (Bild nebeneinander als Textur anordnen). */
+export interface PictureFill { src: string; tile?: boolean; transparency?: number; /** Offsets in % of the element (Strecken: links, rechts, oben, unten). */ offsets?: { l: number; t: number; r: number; b: number } }
+
+/** Füllung: Keine Füllung, Einfarbige Füllung (colour, Transparenz in %), Farbverlauf, Bild- oder Texturfüllung, Musterfüllung, Automatisch. */
+export interface Fill {
+  type: "none" | "solid" | "auto" | "gradient" | "picture" | "pattern";
+  color?: string;
+  transparency?: number;
+  gradient?: Gradient;
+  pattern?: Pattern;
+  picture?: PictureFill;
+}
 
 /** Strichtyp, as DrawingML's preset dashes. */
 export type Dash = "solid" | "dot" | "sysDot" | "sysDash" | "sysDashDot" | "sysDashDotDot" | "dash" | "dashDot" | "lgDash" | "lgDashDot" | "lgDashDotDot";
 
-/** Rahmen or Linie: Keine Linie, Einfarbige Linie, Automatisch; Breite in pt. */
-export interface Line { type: "none" | "solid" | "auto"; color?: string; transparency?: number; width?: number; dash?: Dash }
+/** Pfeiltyp of a line end (DrawingML's a:headEnd / a:tailEnd), with Pfeilgröße. */
+export interface Arrow { type: "triangle" | "stealth" | "diamond" | "oval" | "arrow"; w?: "sm" | "med" | "lg"; len?: "sm" | "med" | "lg" }
+
+/** Rahmen or Linie: Keine Linie, Einfarbige Linie, Farbverlaufslinie, Automatisch; Breite in pt. */
+export interface Line {
+  type: "none" | "solid" | "auto" | "gradient";
+  color?: string;
+  transparency?: number;
+  width?: number;
+  dash?: Dash;
+  gradient?: Gradient;
+  /** Verbundtyp: Einfach, Doppelt, Dick-dünn, Dünn-dick, Dreifach. */
+  compound?: "sng" | "dbl" | "thickThin" | "thinThick" | "tri";
+  /** Abschlusstyp: Quadrat, Rund, Flach. */
+  cap?: "sq" | "rnd" | "flat";
+  /** Anschlusstyp: Rund, Abgeschrägt, Gehrung. */
+  join?: "round" | "bevel" | "miter";
+  /** Anfangs- / Endpfeiltyp (lines only). */
+  head?: Arrow;
+  tail?: Arrow;
+}
+
+/** Schatten (a:outerShdw / a:innerShdw): Farbe, Transparenz %, Größe %, Weichzeichnen pt, Winkel °, Abstand pt. */
+export interface Shadow { inner?: boolean; color?: string; transparency?: number; size?: number; blur?: number; angle?: number; distance?: number }
+/** Leuchten: Farbe, Größe pt, Transparenz %. */
+export interface Glow { color: string; size: number; transparency?: number }
+/** 3D-Format: Abschrägung oben/unten (preset, Breite/Höhe pt), Tiefe, Kontur, Material, Beleuchtung. */
+export interface Format3D {
+  top?: { type: string; w?: number; h?: number };
+  bottom?: { type: string; w?: number; h?: number };
+  depth?: { color?: string; size: number };
+  contour?: { color?: string; size: number };
+  material?: string;
+  lighting?: string;
+}
+/** Effekte: Schatten, Leuchten, Weiche Kanten (pt), 3D-Format. */
+export interface Effects { shadow?: Shadow; glow?: Glow; softEdges?: number; format3d?: Format3D }
+
+/** Textfeld of an element: Vertikale Ausrichtung, Textrichtung, Benutzerdefinierter Winkel, Ränder (pt), Textumbruch. */
+export interface TextBox {
+  vAlign?: "t" | "ctr" | "b";
+  dir?: "horz" | "vert" | "vert270" | "wordArtVert";
+  /** Benutzerdefinierter Winkel in degrees (-90 … 90). */
+  rotation?: number;
+  margins?: { l: number; t: number; r: number; b: number };
+  wrap?: boolean;
+  autofit?: boolean;
+}
 
 /** Text of an element (Start > Schriftart while a chart element is selected; Textoptionen). */
-export interface TextFormat { size?: number; bold?: boolean; italic?: boolean; color?: string }
+export interface TextFormat {
+  size?: number;
+  bold?: boolean;
+  italic?: boolean;
+  /** Einfarbige Füllung's colour (also the colour of Start > Schriftfarbe). */
+  color?: string;
+  underline?: boolean;
+  strike?: boolean;
+  font?: string;
+  /** Textfüllung: Keine Füllung, Farbverlauf … (solid: `color`). */
+  fill?: Fill;
+  /** Textkontur. */
+  outline?: Line;
+  /** Texteffekte. */
+  effects?: Effects;
+  box?: TextBox;
+}
 
-export interface ElementFormat { fill?: Fill; line?: Line; text?: TextFormat }
+export interface ElementFormat { fill?: Fill; line?: Line; text?: TextFormat; effects?: Effects }
 
 /** Teilstriche: Ohne, Innen, Außen, Kreuz. */
 export type TickMark = "none" | "in" | "out" | "cross";
@@ -63,7 +151,11 @@ export interface AxisOptions extends ElementFormat {
   logBase?: number;
   /** Werte in umgekehrter Reihenfolge / Kategorien in umgekehrter Reihenfolge. */
   reverse?: boolean;
-  /** Horizontale Achse schneidet: Automatisch, Maximaler Achsenwert, or at a value. */
+  /**
+   * Where the other axis crosses this one, in this axis' units: the value axis' "Horizontale Achse
+   * schneidet" (Automatisch, Achsenwert, Maximaler Achsenwert), the category axis' "Vertikale Achse
+   * schneidet" (Automatisch, Bei Kategorienummer, Bei größter Kategorie).
+   */
   crosses?: "auto" | "max" | number;
   majorTick?: TickMark;
   minorTick?: TickMark;
@@ -73,6 +165,22 @@ export interface AxisOptions extends ElementFormat {
   numFmt?: string;
   /** The axis is shown (Diagrammelemente > Achsen). */
   visible?: boolean;
+  /** Achsentyp of a category axis: Automatisch aus Daten auswählen, Textachse, Datumsachse. */
+  axisType?: "auto" | "text" | "date";
+  /** Datumsachse: Basis and Haupt-/Hilfseinheit's time unit. */
+  baseTimeUnit?: "days" | "months" | "years";
+  majorTimeUnit?: "days" | "months" | "years";
+  minorTimeUnit?: "days" | "months" | "years";
+  /** Anzeigeeinheiten (value axes) and Anzeigeeinheitenbeschriftung im Diagramm anzeigen. */
+  dispUnits?: "hundreds" | "thousands" | "tenThousands" | "hundredThousands" | "millions" | "tenMillions" | "hundredMillions" | "billions" | "trillions" | number;
+  dispUnitsLabel?: boolean;
+  /** Intervall zwischen Teilstrichen / Intervall zwischen Beschriftungen (category axes); undefined: Automatisch. */
+  tickMarkSkip?: number;
+  tickLblSkip?: number;
+  /** Abstand von Achse (category axes, 0-1000, 100 the default). */
+  lblOffset?: number;
+  /** Achsenposition: Auf Teilstrichen (true) / Zwischen Teilstrichen (category axes). */
+  onTicks?: boolean;
 }
 
 /** Datenbeschriftungen: what they show and where (Beschriftungsoptionen). */
@@ -87,6 +195,12 @@ export interface DataLabelOptions extends ElementFormat {
   /** Trennzeichen between the parts: "; " ", " ". " line break. */
   separator?: string;
   numFmt?: string;
+  /** Blasengröße (bubble charts). */
+  showBubble?: boolean;
+  /** Führungslinien anzeigen (pies; Excel's default on). */
+  leaderLines?: boolean;
+  /** Wert aus Zellen: the range and its values last read (Excel 2013's c15:datalabelsRange). */
+  fromCells?: { ref: string; cache: (string | null)[] };
 }
 
 export type MarkerSymbol = "auto" | "none" | "circle" | "square" | "diamond" | "triangle" | "x" | "star" | "dash" | "dot" | "plus";
@@ -111,6 +225,7 @@ export interface Trendline {
   /** Bestimmtheitsmaß im Diagramm anzeigen. */
   showR2: boolean;
   line?: Line;
+  effects?: Effects;
 }
 
 /** Fehlerbalken (Fehlerindikatoren): direction, end style, amount. */
@@ -122,11 +237,15 @@ export interface ErrorBars {
   type: "fixedVal" | "percentage" | "stdDev" | "stdErr";
   value?: number;
   line?: Line;
+  effects?: Effects;
 }
 
 /** The formatting of the chart's elements that are not series. */
 export interface ChartFormat {
-  chart?: ElementFormat;
+  /** Diagrammbereich; roundedCorners: Abgerundete Ecken. */
+  chart?: ElementFormat & { roundedCorners?: boolean };
+  /** Sekundäre vertikale (Wert) Achse. */
+  valAxis2?: AxisOptions;
   plot?: ElementFormat;
   /** Diagrammtitel; overlay: Titel über dem Diagramm einblenden, ohne die Größe zu ändern. */
   title?: ElementFormat & { overlay?: boolean };
@@ -171,6 +290,30 @@ export interface ChartSeries {
   levels?: (string | null)[][];
   /** Wasserfall: the points shown as Summe (Als Summe festlegen). */
   totals?: number[];
+  /** Effekte of the series (Schatten, Leuchten, Weiche Kanten, 3D-Format). */
+  effects?: Effects;
+  /** Punktexplosion of pie and doughnut series in %. */
+  explosion?: number;
+  /** Datenpunkt formatieren: points with their own Füllung, Rahmen, Effekte, Explosion or Markierung. */
+  points?: DataPoint[];
+}
+
+/** A data point with its own format (c:dPt). */
+export interface DataPoint { idx: number; fill?: Fill; line?: Line; effects?: Effects; explosion?: number; marker?: MarkerOptions; invertIfNegative?: boolean }
+
+/** Eigenschaften of the chart object (Größe und Eigenschaften). */
+export interface ChartObjectProps {
+  /** Von Zellposition und -größe abhängig (twoCell, the default), Von Zellposition abhängig, nicht von Größe (oneCell), Von Zellposition und -größe unabhängig (absolute). */
+  placement?: "twoCell" | "oneCell" | "absolute";
+  /** Objekt drucken (default on). */
+  print?: boolean;
+  /** Gesperrt (default on). */
+  locked?: boolean;
+  /** Seitenverhältnis sperren. */
+  lockAspect?: boolean;
+  /** Alternativtext: Titel and Beschreibung. */
+  altTitle?: string;
+  altText?: string;
 }
 
 /** The 3-D view (Diagrammbereich formatieren > 3D-Drehung) of 3-D charts. */
@@ -213,6 +356,10 @@ export interface ChartModel {
   to: CellAnchor;
   /** Name of the drawing object ("Diagramm 1"). */
   name?: string;
+  /** Größe und Eigenschaften: Eigenschaften and Alternativtext. */
+  props?: ChartObjectProps;
+  /** Punkte nach Farbe unterscheiden (single-series charts other than pies). */
+  varyColors?: boolean;
   /** File parts the model does not cover, kept by the .xlsx layer. */
   raw?: unknown;
 }
@@ -253,6 +400,8 @@ export function seriesColor(i: number, accents: string[] = OFFICE_ACCENTS): stri
 
 /** DrawingML's lumMod/lumOff on a colour (in HSL lightness). */
 export function lum(hex: string, mod: number, off: number): string {
+  // Paint that is not a colour (a gradient or pattern reference) stays as it is.
+  if (!/^#[0-9a-f]{6}/i.test(hex)) return hex;
   const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
   const max = Math.max(r, g, b), min = Math.min(r, g, b);
   let h = 0, s = 0;

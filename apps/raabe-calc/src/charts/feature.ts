@@ -15,7 +15,7 @@ import {
 import { CellError, formatValue, type Rect, type Sheet, type Workbook } from "@raabe/sheet-engine";
 import { h, messageBox, showDialog } from "@raabe/shell";
 import type { CalcApp } from "../app";
-import { chartElements, elementName, formatPane, type ChartElement } from "./formatpane";
+import { chartElements, elementName, elementOfPart, formatPane, partsSelector, type ChartElement } from "./formatpane";
 import { sheetAxes, type Axis } from "../grid/metrics";
 
 export type ChartKind = Kind;
@@ -434,44 +434,14 @@ export function chartsFeature(app: CalcApp) {
 
   // ----- elements and the Format pane --------------------------------------------------------------
 
-  /** The element under the pointer, from the drawing's data-part marks. */
+  /** The element under the pointer, from the drawing's data-part marks (a second click on a series: its point). */
   function elementAt(target: Element): ChartElement | null {
-    const part = (target.closest?.("[data-part]") as SVGElement | null)?.dataset.part;
-    if (!part) return null;
-    const [kind, a] = part.split(":");
-    switch (kind) {
-      case "chart": return { kind: "chart" };
-      case "plot": return { kind: "plot" };
-      case "title": return { kind: "title" };
-      case "legend": return { kind: "legend" };
-      case "axis": return a === "val" ? { kind: "valAxis" } : { kind: "catAxis" };
-      case "axes": return { kind: "catAxis" };
-      case "grid": return { kind: "majorGrid" };
-      case "minorGrid": return { kind: "minorGrid" };
-      case "catGrid": return { kind: "catGrid" };
-      case "axisTitle": return { kind: "axisTitle", axis: a === "val" ? "val" : "cat" };
-      case "series": return { kind: "series", index: Number(a) };
-      case "labels": return { kind: "labels" };
-      case "trend": case "trendLabel": return { kind: "trend", index: Number(a) };
-      case "errbars": return { kind: "errorBars", index: Number(a) };
-      default: return null;
-    }
+    return elementOfPart((target.closest?.("[data-part]") as SVGElement | null)?.dataset.part, element);
   }
 
   /** The SVG parts that make up an element (for its selection frame). */
   function partsOf(e: ChartElement): string {
-    switch (e.kind) {
-      case "chart": return "";
-      case "valAxis": return '[data-part="axis:val"]';
-      case "catAxis": return '[data-part="axis:cat"],[data-part="axes"]';
-      case "majorGrid": return '[data-part="grid"]';
-      case "series": return `[data-part^="series:${e.index}"]`;
-      case "labels": return '[data-part^="labels:"]';
-      case "trend": return `[data-part="trend:${e.index}"]`;
-      case "errorBars": return `[data-part="errbars:${e.index}"]`;
-      case "axisTitle": return `[data-part="axisTitle:${e.axis}"]`;
-      default: return `[data-part="${e.kind}"]`;
-    }
+    return partsSelector(e);
   }
 
   function setElement(m: ChartModel, e: ChartElement): void {

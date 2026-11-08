@@ -6,14 +6,14 @@
 // so on. `chartScene` builds a list of shapes (testable without a DOM); `renderChart` turns it
 // into an SVG element sized in CSS px.
 
-import { autoScale, maxIntervals, ticks, type AxisScale } from "./scale";
+import { autoScale, maxIntervals, scaleFrac, ticks, type AxisScale } from "./scale";
 import { formatGeneral, r2Text, type NumberFormatter } from "./format";
 import { fitTrend, histogramBins } from "./stats";
-import { fillPaint, fixedScale, linePaint, textLook, withAlpha } from "./paint";
+import { beginDefs, effectFilter, endDefs, fillPaint, fixedScale, linePaint, textAttrs, textLook, unitDivisor, withAlpha, type Stroke } from "./paint";
 import { schemeColor } from "./colors";
 import {
   DEFAULT_AXIS_TITLE, LOOK, OFFICE_ACCENTS, isBar, isPie, isScatter, lum, seriesColor, titleText,
-  type AxisOptions, type ChartModel, type ChartSeries, type MarkerSymbol,
+  type AxisOptions, type ChartModel, type ChartSeries, type MarkerSymbol, type TextFormat, type Effects,
 } from "./model";
 import { barDefaults, chartGroups, isChartExKind, kindInfo, type ChartGroup } from "./kinds";
 import { draw3D, draw3DPie, drawSurface } from "./render3d";
@@ -31,11 +31,17 @@ export interface RenderOptions {
   measure?: Measure;
 }
 
+/** Stroke details beyond colour and width (Anschlusstyp, Pfeile, Verbundtyp) and an effect filter. */
+export interface PrimExtra { join?: "round" | "bevel" | "miter"; head?: string; tail?: string; compound?: "dbl" | "thickThin" | "thinThick" | "tri"; filter?: string; rx?: number }
+
 export type Prim =
-  | { t: "rect"; x: number; y: number; w: number; h: number; fill?: string; stroke?: string; sw?: number; dash?: string; part?: string }
-  | { t: "path"; d: string; fill?: string; stroke?: string; sw?: number; dash?: string; cap?: "round" | "butt"; part?: string }
-  | { t: "circle"; cx: number; cy: number; r: number; fill: string; stroke?: string; sw?: number; part?: string }
-  | { t: "text"; x: number; y: number; text: string; size: number; fill: string; anchor: "start" | "middle" | "end"; rotate?: number; part?: string; bold?: boolean; italic?: boolean };
+  | ({ t: "rect"; x: number; y: number; w: number; h: number; fill?: string; stroke?: string; sw?: number; dash?: string; cap?: "round" | "butt" | "square"; part?: string } & PrimExtra)
+  | ({ t: "path"; d: string; fill?: string; stroke?: string; sw?: number; dash?: string; cap?: "round" | "butt" | "square"; part?: string } & PrimExtra)
+  | ({ t: "circle"; cx: number; cy: number; r: number; fill: string; stroke?: string; sw?: number; dash?: string; cap?: "round" | "butt" | "square"; part?: string } & PrimExtra)
+  | {
+      t: "text"; x: number; y: number; text: string; size: number; fill: string; anchor: "start" | "middle" | "end"; rotate?: number; part?: string; bold?: boolean; italic?: boolean;
+      underline?: boolean; strike?: boolean; font?: string; outline?: Stroke; filter?: string;
+    };
 
 export interface Box { x: number; y: number; w: number; h: number }
 
@@ -54,6 +60,8 @@ export interface Scene {
   xScale?: AxisScale;
   /** Hit boxes of the chart's elements (title, legend, plot) for the UI. */
   parts: { name: string; box: Box }[];
+  /** SVG definitions (gradients, patterns, arrowheads, effect filters) the prims refer to. */
+  defs?: string[];
 }
 
 // ----- text measurement -------------------------------------------------------------------------
@@ -116,6 +124,39 @@ export interface Ctx {
 
 /** The chart's shapes for a size in pt. */
 export function chartScene(m: ChartModel, W: number, H: number, opts: RenderOptions = {}): Scene {
+  const defs = beginDefs();
+  try {
+    const scene = buildScene(m, W, H, opts);
+    if (defs.list.length) scene.defs = defs.list;
+    return scene;
+  } finally {
+    endDefs();
+  }
+}
+
+/** A text's rotation in SVG degrees (Textfeld: Benutzerdefinierter Winkel, Textrichtung gedreht). */
+export function textRotation(fmt: { text?: TextFormat } | undefined): number | undefined {
+  const b = fmt?.text?.box;
+  if (!b) return undefined;
+  if (b.dir === "vert") return 90;
+  if (b.dir === "vert270") return -90;
+  return b.rotation ? b.rotation : undefined;
+}
+
+/** A stroke's attributes for a primitive (none: no stroke). */
+export function strokeOf(s: Stroke | null | undefined): Partial<Pick<Extract<Prim, { t: "path" }>, "stroke" | "sw" | "dash" | "cap" | "join" | "head" | "tail" | "compound">> {
+  if (!s) return {};
+  const o: ReturnType<typeof strokeOf> = { stroke: s.stroke, sw: s.sw };
+  if (s.dash) o.dash = s.dash;
+  if (s.cap) o.cap = s.cap;
+  if (s.join) o.join = s.join;
+  if (s.head) o.head = s.head;
+  if (s.tail) o.tail = s.tail;
+  if (s.compound) o.compound = s.compound;
+  return o;
+}
+
+function buildScene(m: ChartModel, W: number, H: number, opts: RenderOptions): Scene {
   const accents = opts.accents ?? OFFICE_ACCENTS;
   const fmt = (v: number, format?: string) => {
     if (opts.format && format && format !== "General") {
@@ -132,7 +173,8 @@ export function chartScene(m: ChartModel, W: number, H: number, opts: RenderOpti
   const ca = m.format?.chart;
   const caLine = linePaint(ca?.line, { color: LOOK.border, width: 0.75 });
   const inset = (caLine?.sw ?? 0) / 2;
-  c.prims.push({ t: "rect", x: inset, y: inset, w: W - 2 * inset, h: H - 2 * inset, fill: fillPaint(ca?.fill, "#FFFFFF"), stroke: caLine?.stroke, sw: caLine?.sw, dash: caLine?.dash, part: "chart" });
+  c.prims.push({ t: "rect", x: inset, y: inset, w: W - 2 * inset, h: H - 2 * inset, fill: fillPaint(ca?.fill, "#FFFFFF"), ...strokeOf(caLine),
+    ...(ca?.roundedCorners ? { rx: Math.min(W, H) * 0.05 } : {}), ...(ca?.effects ? { filter: effectFilter(ca.effects) } : {}), part: "chart" });
   const hist = m.kind === "histogram";
   // Excel 2016's chart engine (chartex types) puts the title a little higher.
   const ex = isChartExKind(m.kind);
@@ -140,12 +182,14 @@ export function chartScene(m: ChartModel, W: number, H: number, opts: RenderOpti
   if (m.title.show) {
     const text = titleText(m);
     const y = ex ? 19 : 21.5;
-    const tl = textLook(m.format?.title?.text, { size: LOOK.titleSize, color: LOOK.text });
+    const tfm = m.format?.title;
+    const tl = textLook(tfm?.text, { size: LOOK.titleSize, color: LOOK.text });
     const tw = c.measure(text, tl.size);
     const box = { x: W / 2 - tw / 2 - 4, y: y - tl.size - 1, w: tw + 8, h: tl.size + 5 };
-    const tf = fillPaint(m.format?.title?.fill, undefined), tln = linePaint(m.format?.title?.line, null);
-    if ((tf && tf !== "none") || tln) c.prims.push({ t: "rect", ...box, fill: tf ?? "none", stroke: tln?.stroke, sw: tln?.sw, dash: tln?.dash, part: "title" });
-    c.prims.push({ t: "text", x: W / 2, y, text, size: tl.size, fill: tl.fill, bold: tl.bold, italic: tl.italic, anchor: "middle", part: "title" });
+    const tf = fillPaint(tfm?.fill, undefined), tln = linePaint(tfm?.line, null);
+    const rot = textRotation(tfm);
+    if ((tf && tf !== "none") || tln || tfm?.effects) c.prims.push({ t: "rect", ...box, fill: tf ?? "none", ...strokeOf(tln), filter: effectFilter(tfm?.effects), part: "title" });
+    c.prims.push({ t: "text", x: W / 2, y: y - (rot ? tl.size / 3 : 0), text, ...textAttrs(tl), anchor: "middle", ...(rot ? { rotate: rot } : {}), part: "title" });
     c.parts.push({ name: "title", box });
     // "Titel über dem Diagramm einblenden": the plot keeps the room.
     if (!m.format?.title?.overlay) top = (ex ? 31.75 : 37.5) + (tl.size - LOOK.titleSize);
@@ -295,7 +339,7 @@ function layoutLegend(c: Ctx, area: { left: number; right: number; top: number; 
   const boxUnder = () => {
     const b = c.parts.find((p) => p.name === "legend")?.box;
     const fl = fillPaint(lf?.fill, undefined), ln = linePaint(lf?.line, null);
-    if (b && ((fl && fl !== "none") || ln)) c.prims.splice(at, 0, { t: "rect", ...b, fill: fl ?? "none", stroke: ln?.stroke, sw: ln?.sw, dash: ln?.dash, part: "legend" });
+    if (b && ((fl && fl !== "none") || ln || lf?.effects)) c.prims.splice(at, 0, { t: "rect", ...b, fill: fl ?? "none", ...strokeOf(ln), filter: effectFilter(lf?.effects), part: "legend" });
   };
   const pos = c.m.legend;
   const textX = (it: LegendItem) => (isLineKey(it) ? 19 + 2.2 : LEGEND_SQUARE + 2.1);
@@ -325,7 +369,7 @@ function layoutLegend(c: Ctx, area: { left: number; right: number; top: number; 
       maxX = Math.max(maxX, x + rw);
       for (const it of row) {
         drawKey(c, it, x, base);
-        c.prims.push({ t: "text", x: x + textX(it), y: base, text: it.text, size: lt.size, fill: lt.fill, bold: lt.bold, italic: lt.italic, anchor: "start", part: "legend" });
+        c.prims.push({ t: "text", x: x + textX(it), y: base, text: it.text, ...textAttrs(lt), anchor: "start", part: "legend" });
         x += itemWidth(c, it) + gapAfter(it);
       }
       base += lineH;
@@ -337,18 +381,19 @@ function layoutLegend(c: Ctx, area: { left: number; right: number; top: number; 
   } else {
     const lineH = 17;
     const w = Math.max(...items.map((it) => itemWidth(c, it)));
-    const x = pos === "r" ? c.W - 10 - w : 10;
+    const x = pos === "r" || pos === "tr" ? c.W - 10 - w : 10;
     const total = items.length * lineH;
-    let base = (area.top + c.H) / 2 - total / 2 + 11;
+    // Oben rechts: the column in the top right corner.
+    let base = pos === "tr" ? area.top + 11 : (area.top + c.H) / 2 - total / 2 + 11;
     const y0 = base - 11;
     for (const it of items) {
       drawKey(c, it, x, base);
-      c.prims.push({ t: "text", x: x + textX(it), y: base, text: it.text, size: lt.size, fill: lt.fill, bold: lt.bold, italic: lt.italic, anchor: "start", part: "legend" });
+      c.prims.push({ t: "text", x: x + textX(it), y: base, text: it.text, ...textAttrs(lt), anchor: "start", part: "legend" });
       base += lineH;
     }
     c.parts.push({ name: "legend", box: { x: x - 4, y: y0, w: w + 8, h: total } });
     boxUnder();
-    if (pos === "r") area.right = x - 6;
+    if (pos === "r" || pos === "tr") area.right = x - 6;
     else area.left = x + w + 6;
   }
 }
@@ -362,9 +407,12 @@ function drawPie(c: Ctx, area: { left: number; right: number; top: number; botto
   const left = area.left + 10.5, right = area.right - 10.5;
   const d = Math.max(10, Math.min(bottom - top, right - left));
   const cx = (left + right) / 2, cy = top + (bottom - top) / 2;
-  const r = d / 2;
-  const plot = { x: cx - r, y: cy - r, w: d, h: d };
   const series = m.kind === "pie" ? m.series.slice(0, 1) : m.series;
+  // Punktexplosion: the pie shrinks so the slices pulled out still fit (Excel).
+  const explode = (s: ChartSeries, i: number) => (pointOf(s, i)?.explosion ?? s.explosion ?? 0) / 100;
+  const maxExp = m.kind === "pie" ? Math.max(0, ...series.flatMap((s) => s.val.cache.map((_, i) => explode(s, i)))) : 0;
+  const r = d / 2 / (1 + maxExp);
+  const plot = { x: cx - r, y: cy - r, w: 2 * r, h: 2 * r };
   const hole = m.kind === "doughnut" ? (m.holeSize ?? 75) / 100 : 0;
   const ringW = series.length ? (r * (1 - hole)) / series.length : 0;
   series.forEach((s, si) => {
@@ -378,11 +426,16 @@ function drawPie(c: Ctx, area: { left: number; right: number; top: number; botto
       if (v <= 0) return;
       const a1 = a0 + (v / sum) * Math.PI * 2;
       // Slices take the accents in order (Excel's "Punkte variieren"), unless the series has its own Füllung.
-      const color = fillPaint(s.fill, paletteColor(m, i, vals.length, c.accents));
-      c.prims.push({ t: "path", d: slice(cx, cy, ro, ri, a0, a1), fill: color, stroke: ln?.stroke, sw: ln?.sw, dash: ln?.dash, part: `series:${si}:${i}` });
+      const pt = pointOf(s, i);
+      const color = fillPaint(pt?.fill ?? s.fill, paletteColor(m, i, vals.length, c.accents));
+      const mid = (a0 + a1) / 2, ex = explode(s, i) * (ri ? ringW : r);
+      const ox = cx + ex * Math.sin(mid), oy = cy - ex * Math.cos(mid);
+      const pln = pt?.line ? linePaint(pt.line, { color: "#FFFFFF", width: 1.5 }) : ln;
+      const fx = effectFilter(pt?.effects ?? s.effects);
+      c.prims.push({ t: "path", d: slice(ox, oy, ro, ri, a0, a1), fill: color, ...strokeOf(pln), ...(fx ? { filter: fx } : {}), part: `series:${si}:${i}` });
       if (m.dataLabels) {
-        const mid = (a0 + a1) / 2, lr = ri ? (ro + ri) / 2 : ro * 0.7;
-        const tx = cx + lr * Math.sin(mid), ty = cy - lr * Math.cos(mid);
+        const lr = ri ? (ro + ri) / 2 : ro * 0.7;
+        const tx = ox + lr * Math.sin(mid), ty = oy - lr * Math.cos(mid);
         label(c, s, si, i, s.val.cache[i]!, tx, ty + 3.2, "middle", v / sum);
       }
       a0 = a1;
@@ -542,12 +595,65 @@ function axisScale(lo: number, hi: number, o: AxisOptions | undefined, limit: nu
 
 const Z_ORDER: Record<string, number> = { area: 0, bar: 1, stock: 2, line: 3 };
 
+/** Teilstriche: the length of a major and a minor tick mark in pt (Excel). */
+export const TICK_MAJOR = 3.75, TICK_MINOR = 2.25;
+
+/** Excel's serial date to a JS date (UTC) and back (1900 system). */
+const serialToDate = (v: number) => new Date(Date.UTC(1899, 11, 30) + Math.round(v) * 86400000);
+const dateToSerial = (d: Date) => Math.round((d.getTime() - Date.UTC(1899, 11, 30)) / 86400000);
+
+/** One axis line with its tick marks (Teilstriche), in the axis line's paint as Excel draws them. */
+function axisLineAndTicks(c: Ctx, o: { horizontal: boolean; at: number; from: number; to: number; line: Stroke | null; majors: number[]; minors: number[];
+  major?: AxisOptions["majorTick"]; minor?: AxisOptions["minorTick"]; out: 1 | -1; part: string; effects?: Effects }): void {
+  if (!o.line) return;
+  const ln = strokeOf(o.line);
+  const filter = o.effects ? effectFilter(o.effects) : undefined;
+  let d = o.horizontal ? `M${f(o.from)} ${f(o.at)}H${f(o.to)}` : `M${f(o.at)} ${f(o.from)}V${f(o.to)}`;
+  const tick = (p: number, kind: AxisOptions["majorTick"], len: number) => {
+    if (!kind || kind === "none") return;
+    const a = kind === "in" ? 0 : kind === "out" ? len * o.out : len * o.out;
+    const b = kind === "in" ? -len * o.out : kind === "out" ? 0 : -len * o.out;
+    d += o.horizontal ? `M${f(p)} ${f(o.at + a)}V${f(o.at + b)}` : `M${f(o.at + a)} ${f(p)}H${f(o.at + b)}`;
+  };
+  for (const p of o.minors) tick(p, o.minor, TICK_MINOR);
+  for (const p of o.majors) tick(p, o.major, TICK_MAJOR);
+  c.prims.push({ t: "path", d, ...ln, head: undefined, tail: undefined, ...(filter ? { filter } : {}), part: o.part });
+  // Pfeile: the arrowheads go on the axis line itself (a path of its own so the ticks do not take them).
+  if (o.line.head || o.line.tail) {
+    const line = o.horizontal ? `M${f(o.from)} ${f(o.at)}H${f(o.to)}` : `M${f(o.at)} ${f(o.to)}V${f(o.from)}`;
+    c.prims.push({ t: "path", d: line, stroke: "none", sw: ln.sw, head: o.line.head, tail: o.line.tail, part: o.part });
+  }
+}
+
+/** The minor tick values of a scale (the Hilfseinheit, else a fifth of the major unit; log: the multiples in each power). */
+function minorTicks(s: AxisScale, unit: number | undefined): number[] {
+  const out: number[] = [];
+  if (s.log) {
+    for (let p = s.min; p < s.max * (1 - 1e-9); p *= s.log) for (let k = 2; k < s.log; k++) out.push(p * k);
+    return out;
+  }
+  const u = unit ?? s.major / 5;
+  if (!(u > 0) || (s.max - s.min) / u > 2000) return out;
+  for (let v = s.min; v <= s.max + 1e-9; v += u) out.push(Number(v.toPrecision(12)));
+  return out;
+}
+
+/** Text of an Anzeigeeinheit's label (Excel's German names). */
+export function displayUnitText(o: AxisOptions | undefined): string {
+  const u = o?.dispUnits;
+  const names: Record<string, string> = {
+    hundreds: "Hunderte", thousands: "Tausende", tenThousands: "x 10000", hundredThousands: "x 100000", millions: "Millionen",
+    tenMillions: "x 10000000", hundredMillions: "x 100000000", billions: "Milliarden", trillions: "Billionen",
+  };
+  if (u === undefined) return "";
+  return typeof u === "number" ? `x ${formatGeneral(u)}` : names[u] ?? "";
+}
+
 function drawAxes(c: Ctx, area: { left: number; right: number; top: number; bottom: number }): Pick<Scene, "plot" | "valueScale" | "xScale"> {
   const { m } = c;
   const bar = isBar(m.kind), scatter = isScatter(m.kind);
   const groups = isScatter(m.kind) ? [{ kind: m.kind, idx: m.series.map((_, i) => i), secondary: false }] : chartGroups(m);
   const prim = groups.filter((g) => !g.secondary), sec = groups.filter((g) => g.secondary);
-  const nCat = Math.max(0, ...m.series.map((s) => s.val.cache.length));
   const percent = prim.some((g) => kindInfo(g.kind).grouping === "percentStacked");
   const percent2 = sec.some((g) => kindInfo(g.kind).grouping === "percentStacked");
   const valFormat = percent ? "0%" : m.series[prim[0]?.idx[0] ?? 0]?.val.format;
@@ -555,146 +661,290 @@ function drawAxes(c: Ctx, area: { left: number; right: number; top: number; bott
   const [lo, hi] = groupRange(m, prim.length ? prim : groups);
   const [lo2, hi2] = sec.length ? groupRange(m, sec) : [0, 0];
   const [xlo, xhi] = scatter ? xRange(m) : [0, 0];
-  const va = m.format?.valAxis, xa = m.format?.catAxis;
+  const va = m.format?.valAxis, xa = m.format?.catAxis, va2 = m.format?.valAxis2;
+  const hideVal = va?.labelPos === "none" || va?.visible === false;
   const hideCat = xa?.labelPos === "none" || xa?.visible === false;
-  const catLabels = scatter ? [] : Array.from({ length: nCat }, (_, i) => (hideCat ? "" : catText(c, m.series[0], i)));
+  const allArea = groups.every((g) => kindInfo(g.kind).family === "area");
+  // Achsenposition: Zwischen Teilstrichen (columns, lines) or Auf Teilstrichen (areas), or as the pane sets it.
+  const between = xa?.onTicks !== undefined ? !xa.onTicks : !allArea;
+
+  // Datumsachse: the categories stand at their dates, one slot per Basis unit.
+  const cat0 = m.series[0]?.cat;
+  const dateAxis = !scatter && xa?.axisType === "date" && !!cat0 && cat0.cache.some((v) => typeof v === "number");
+  const nPoints = Math.max(0, ...m.series.map((s) => s.val.cache.length));
+  let slotOf = (i: number) => i;
+  let nCat = nPoints;
+  let slotLabel: ((k: number) => string) | null = null;
+  if (dateAxis) {
+    const nums = cat0!.cache.map((v) => (typeof v === "number" ? v : null));
+    const valid = nums.filter((v): v is number => v !== null);
+    const d0 = Math.min(...valid);
+    const unit = xa?.baseTimeUnit ?? "days";
+    const months = (v: number) => { const a = serialToDate(d0), b = serialToDate(v); return (b.getUTCFullYear() - a.getUTCFullYear()) * 12 + b.getUTCMonth() - a.getUTCMonth(); };
+    const slot = (v: number) => (unit === "days" ? Math.round(v - d0) : unit === "months" ? months(v) : Math.floor(months(v) / 12));
+    slotOf = (i) => (nums[i] === null ? i : slot(nums[i]!));
+    nCat = Math.max(1, ...valid.map(slot).map((x) => x + 1));
+    slotLabel = (k) => {
+      const a = serialToDate(d0);
+      const d = unit === "days" ? new Date(a.getTime() + k * 86400000) : new Date(Date.UTC(a.getUTCFullYear() + (unit === "years" ? k : 0), a.getUTCMonth() + (unit === "months" ? k : 0), 1));
+      return c.fmt(dateToSerial(d), xa?.numFmt ?? cat0!.format ?? "TT.MM.JJJJ");
+    };
+  }
+  // Intervall zwischen Beschriftungen; Datumsachse: a label every Haupteinheit.
+  const lblSkip = Math.max(1, Math.round(xa?.tickLblSkip ?? (dateAxis ? xa?.majorUnit ?? 1 : 1)));
+  const catLabels = scatter ? [] : Array.from({ length: nCat }, (_, i) => (hideCat || i % lblSkip ? "" : slotLabel ? slotLabel(i) : catText(c, m.series[0], i)));
   const hasValTitle = m.axisTitles.val !== undefined, hasCatTitle = m.axisTitles.cat !== undefined;
   const titleRoom = 15;
-  const allArea = groups.every((g) => kindInfo(g.kind).family === "area");
+
+  // Which end of the plot each axis' labels stand at (Beschriftungsposition, where the other axis crosses, reversed orders).
+  // Value labels go with the value axis, which stands at the first category unless "Vertikale Achse schneidet" moves it.
+  const valAnchor = va?.labelPos === "high" ? "last" : va?.labelPos === "low" ? "first"
+    : xa?.crosses === "max" || (typeof xa?.crosses === "number" && !scatter && xa.crosses > nCat) ? "last" : "first";
+  const valLabelsEnd = (valAnchor === "last") !== !!xa?.reverse;
+  const catAnchor = xa?.labelPos === "high" ? "max" : xa?.labelPos === "low" ? "min" : va?.crosses === "max" ? "max" : "min";
+  const catLabelsEnd = (catAnchor === "max") !== !!va?.reverse;
+  // In the plot's terms: V labels left (start) or right (end), H labels below (start) or above (end).
+  const vEnd = bar ? catLabelsEnd : valLabelsEnd, hEnd = bar ? valLabelsEnd : catLabelsEnd;
+  const unitLabel = va?.dispUnitsLabel !== false && va?.dispUnits !== undefined && !hideVal ? displayUnitText(va) : "";
+  const offset = (xa?.lblOffset ?? 100) / 100;
+  const catRot = xa?.text?.box?.rotation ?? (xa?.text?.box?.dir === "vert270" ? -90 : xa?.text?.box?.dir === "vert" ? 90 : undefined);
+  const vt0 = textLook(va?.text, { size: LOOK.labelSize, color: LOOK.text });
+  const ct0 = textLook(xa?.text, { size: LOOK.labelSize, color: LOOK.text });
 
   // Pass 1 with a guessed length, pass 2 with the plot's real size (labels change the room).
   let plot: Box = { x: 0, y: area.top, w: c.W, h: c.H };
   let vScale = autoScale(lo, hi), xScale: AxisScale | undefined, vScale2: AxisScale | undefined;
   let vLabels: string[] = [], xLabels: string[] = [], vLabels2: string[] = [];
-  let leftLabelsW = 0;
+  const vDiv = unitDivisor(va), xDiv = unitDivisor(xa);
   for (let pass = 0; pass < 3; pass++) {
     const vLen = bar ? plot.w : plot.h;
     vScale = axisScale(lo, hi, va, maxIntervals(vLen, bar), percent);
-    vLabels = va?.labelPos === "none" || va?.visible === false ? ticks(vScale).map(() => "") : ticks(vScale).map((v) => c.fmt(v, va?.numFmt ?? valFormat));
+    vLabels = hideVal ? ticks(vScale).map(() => "") : ticks(vScale).map((v) => c.fmt(v / vDiv, va?.numFmt ?? valFormat));
     if (sec.length) {
-      vScale2 = axisScale(lo2, hi2, undefined, maxIntervals(vLen, bar), percent2);
-      vLabels2 = ticks(vScale2).map((v) => c.fmt(v, valFormat2));
+      vScale2 = axisScale(lo2, hi2, va2, maxIntervals(vLen, bar), percent2);
+      const hide2 = va2?.labelPos === "none" || va2?.visible === false;
+      vLabels2 = ticks(vScale2).map((v) => (hide2 ? "" : c.fmt(v / unitDivisor(va2), va2?.numFmt ?? valFormat2)));
     }
     if (scatter) {
       xScale = fixedScale(xlo, xhi, xa, maxIntervals(plot.w, true));
-      xLabels = xa?.labelPos === "none" || xa?.visible === false ? ticks(xScale).map(() => "") : ticks(xScale).map((v) => c.fmt(v, xa?.numFmt ?? m.series[0]?.cat?.format));
+      xLabels = hideCat ? ticks(xScale).map(() => "") : ticks(xScale).map((v) => c.fmt(v / xDiv, xa?.numFmt ?? m.series[0]?.cat?.format));
     }
-    // Labels left of the plot: values (columns, lines, scatter) or categories (bars).
-    const leftTexts = bar ? catLabels : vLabels;
-    leftLabelsW = Math.max(0, ...leftTexts.map((t) => c.measure(t, LOOK.labelSize)));
-    const bottomTexts = bar ? vLabels : scatter ? xLabels : catLabels;
-    let left = area.left + PAD + (hasValTitle && !bar ? titleRoom : 0) + (hasCatTitle && bar ? titleRoom : 0) + leftLabelsW + LABEL_GAP;
+    const hTexts = bar ? vLabels : scatter ? xLabels : catLabels;
+    const vTexts = bar ? catLabels : vLabels;
+    const vSize = bar ? ct0.size : vt0.size;
+    const vW = Math.max(0, ...vTexts.map((t) => c.measure(t, vSize)));
+    const titleLeft = (hasValTitle && !bar) || (hasCatTitle && bar) ? titleRoom : 0;
+    const unitRoom = unitLabel && !bar ? 12 : 0;
+    let left = area.left + PAD + titleLeft + (vEnd ? 0 : vW + LABEL_GAP + unitRoom);
+    if (vEnd) left = Math.max(left, area.left + 10.5 + titleLeft);
     let right = area.right - 10.5;
+    if (vEnd) right = area.right - PAD - vW - LABEL_GAP - unitRoom;
     // Sekundärachse: its labels right of the plot (bars: above it).
     if (sec.length && !bar) right -= Math.max(0, ...vLabels2.map((t) => c.measure(t, LOOK.labelSize))) + LABEL_GAP - 4;
     // Labels centred on the plot's edges (value axes across, area charts) need half their width.
-    const edgeLabels = bar || scatter || allArea;
-    if (edgeLabels && bottomTexts.length) {
-      right = Math.min(right, area.right - 8.2 - c.measure(bottomTexts.at(-1)!, LOOK.labelSize) / 2);
-      left = Math.max(left, area.left + 4 + c.measure(bottomTexts[0], LOOK.labelSize) / 2);
+    const edgeLabels = bar || scatter || !between;
+    if (edgeLabels && hTexts.length) {
+      right = Math.min(right, area.right - 8.2 - c.measure(hTexts.at(-1)!, LOOK.labelSize) / 2);
+      left = Math.max(left, area.left + 4 + c.measure(hTexts[0], LOOK.labelSize) / 2);
     }
     // Below the plot: its labels (22.6 pt to the legend or the chart's edge) and an axis title.
     const bottomTitle = (hasCatTitle && !bar) || (hasValTitle && bar);
-    const bottom = area.bottom - 22.6 - (bottomTitle ? titleRoom + 2 : 0);
-    const top = area.top + (sec.length && bar ? 14 : 0);
+    const hSize = bar ? vt0.size : ct0.size;
+    const hRoom = (hTexts.some((t) => t) ? 22.6 + (hSize - LOOK.labelSize) + (bar ? 0 : (offset - 1) * 7.25) : 10.5)
+      + (catRot && !bar ? Math.max(0, ...hTexts.map((t) => c.measure(t, hSize))) * Math.abs(Math.sin((catRot * Math.PI) / 180)) : 0)
+      + (unitLabel && bar ? 12 : 0);
+    const bottom = area.bottom - (hEnd ? 10.5 : hRoom) - (bottomTitle ? titleRoom + 2 : 0);
+    const top = area.top + (hEnd ? hRoom - 8.6 : 0) + (sec.length && bar ? 14 : 0);
     plot = { x: left, y: top, w: Math.max(10, right - left), h: Math.max(10, bottom - top) };
   }
 
   // Axis titles.
   if (hasValTitle || hasCatTitle) {
-    const vt = m.axisTitles.val, ct = m.axisTitles.cat;
-    const leftTitle = bar ? ct : vt, bottomTitle = bar ? vt : ct;
+    const vtt = m.axisTitles.val, ctt = m.axisTitles.cat;
+    const leftTitle = bar ? ctt : vtt, bottomTitle = bar ? vtt : ctt;
+    const fmtOf = (axis: "cat" | "val") => m.format?.axisTitles?.[axis];
     if (leftTitle !== undefined) {
+      const axis = bar ? "cat" : "val";
       const text = leftTitle || DEFAULT_AXIS_TITLE;
+      const look = textLook(fmtOf(axis)?.text, { size: LOOK.axisTitleSize, color: LOOK.text });
       const x = area.left + PAD + 7.5, y = plot.y + plot.h / 2;
-      c.prims.push({ t: "text", x, y, text, size: LOOK.axisTitleSize, fill: LOOK.text, anchor: "middle", rotate: -90, part: bar ? "axisTitle:cat" : "axisTitle:val" });
-      const tw = c.measure(text, LOOK.axisTitleSize);
-      c.parts.push({ name: bar ? "axisTitle:cat" : "axisTitle:val", box: { x: x - 9, y: y - tw / 2 - 3, w: 12, h: tw + 6 } });
+      const tw = c.measure(text, look.size);
+      const box = { x: x - 9, y: y - tw / 2 - 3, w: 12, h: tw + 6 };
+      axisTitleBox(c, fmtOf(axis), box, `axisTitle:${axis}`);
+      c.prims.push({ t: "text", x, y, text, ...textAttrs(look), anchor: "middle", rotate: textRotation(fmtOf(axis)) ?? -90, part: `axisTitle:${axis}` });
+      c.parts.push({ name: `axisTitle:${axis}`, box });
     }
     if (bottomTitle !== undefined) {
+      const axis = bar ? "val" : "cat";
       const text = bottomTitle || DEFAULT_AXIS_TITLE;
-      const y = plot.y + plot.h + 14 + 15;
-      c.prims.push({ t: "text", x: plot.x + plot.w / 2, y, text, size: LOOK.axisTitleSize, fill: LOOK.text, anchor: "middle", part: bar ? "axisTitle:val" : "axisTitle:cat" });
-      const tw = c.measure(text, LOOK.axisTitleSize);
-      c.parts.push({ name: bar ? "axisTitle:val" : "axisTitle:cat", box: { x: plot.x + plot.w / 2 - tw / 2 - 3, y: y - 10, w: tw + 6, h: 13 } });
+      const look = textLook(fmtOf(axis)?.text, { size: LOOK.axisTitleSize, color: LOOK.text });
+      const y = plot.y + plot.h + 14 + 15 + (hEnd ? -12 : 0);
+      const tw = c.measure(text, look.size);
+      const box = { x: plot.x + plot.w / 2 - tw / 2 - 3, y: y - 10, w: tw + 6, h: 13 };
+      axisTitleBox(c, fmtOf(axis), box, `axisTitle:${axis}`);
+      const rot = textRotation(fmtOf(axis));
+      c.prims.push({ t: "text", x: plot.x + plot.w / 2, y, text, ...textAttrs(look), anchor: "middle", ...(rot ? { rotate: rot } : {}), part: `axisTitle:${axis}` });
+      c.parts.push({ name: `axisTitle:${axis}`, box });
     }
   }
 
-  // Gridlines and value labels.
-  const leftLabelRight = plot.x - LABEL_GAP;
-  // Zeichnungsfläche: its own Füllung and Rahmen under everything inside it.
-  const pf = fillPaint(m.format?.plot?.fill, undefined), pl = linePaint(m.format?.plot?.line, null);
-  if ((pf && pf !== "none") || pl) c.prims.push({ t: "rect", ...plot, fill: pf ?? "none", stroke: pl?.stroke, sw: pl?.sw, dash: pl?.dash, part: "plot" });
-  gridAndValueLabels(c, vScale, vLabels, plot, bar, leftLabelRight, !!va?.reverse);
-  const vSpan = vScale.max - vScale.min || 1;
-  const vFrac = (v: number) => (va?.reverse ? 1 - (v - vScale.min) / vSpan : (v - vScale.min) / vSpan);
+  // Zeichnungsfläche: its own Füllung, Rahmen and Effekte under everything inside it.
+  const pfmt = m.format?.plot;
+  const pf = fillPaint(pfmt?.fill, undefined), pl = linePaint(pfmt?.line, null);
+  if ((pf && pf !== "none") || pl || pfmt?.effects) c.prims.push({ t: "rect", ...plot, fill: pf ?? "none", ...strokeOf(pl), filter: effectFilter(pfmt?.effects), part: "plot" });
+
+  // The value axis (scatter: Y) in the plot's terms.
+  const vFrac = (v: number) => { const p = scaleFrac(vScale, v); return va?.reverse ? 1 - p : p; };
   const vPos = (v: number) => (bar ? plot.x + vFrac(v) * plot.w : plot.y + plot.h - vFrac(v) * plot.h);
-  const base = vPos(Math.min(Math.max(0, vScale.min), vScale.max));
+  const vMinPos = vPos(vScale.min), vMaxPos = vPos(vScale.max);
+  // Where the category (scatter: X) axis crosses the value axis: Horizontale Achse schneidet.
+  const crossVal = typeof va?.crosses === "number" ? va.crosses : va?.crosses === "max" ? vScale.max : vScale.log ? vScale.min : Math.min(Math.max(0, vScale.min), vScale.max);
+  const catAxisAt = vPos(Math.min(Math.max(crossVal, vScale.min), vScale.max));
+  const base = catAxisAt;
+
+  // Gridlines (Haupt- and Hilfsgitternetzlinien of the value axis).
+  drawGridlines(c, vScale, plot, bar, !!va?.reverse, va?.minorUnit);
+  const vTicks = ticks(vScale);
+
+  // Category positions.
+  const n = Math.max(1, nCat);
+  const catLen = bar ? plot.h : plot.w;
+  const step = between ? catLen / n : n > 1 ? catLen / (n - 1) : catLen;
+  const along = (p: number) => (bar ? plot.y + plot.h - p : plot.x + p);
+  const catAt = (k: number) => { const j = xa?.reverse ? n - 1 - k : k; return along(between ? (j + 0.5) * step : n > 1 ? j * step : catLen / 2); };
+  const catCenter = (i: number) => catAt(slotOf(i));
+  /** Boundary k (0 … n) between categories (on-tick axes: the category itself). */
+  const catEdge = (k: number) => {
+    if (!between) return catAt(Math.min(Math.max(0, k), n - 1));
+    const j = xa?.reverse ? n - k : k;
+    return along(j * step);
+  };
+
   let vPos2 = vPos, base2 = base;
   if (vScale2) {
-    const s2 = vScale2, span2 = s2.max - s2.min || 1;
-    vPos2 = (v: number) => (bar ? plot.x + ((v - s2.min) / span2) * plot.w : plot.y + plot.h - ((v - s2.min) / span2) * plot.h);
-    base2 = vPos2(Math.min(Math.max(0, s2.min), s2.max));
+    const s2 = vScale2;
+    const f2 = (v: number) => { const p = scaleFrac(s2, v); return va2?.reverse ? 1 - p : p; };
+    vPos2 = (v: number) => (bar ? plot.x + f2(v) * plot.w : plot.y + plot.h - f2(v) * plot.h);
+    base2 = vPos2(s2.log ? s2.min : Math.min(Math.max(0, s2.min), s2.max));
     // Kurs with Volumen: the prices' axis has gridlines of its own (Excel).
     const grid2 = m.kind === "stockVHLC" || m.kind === "stockVOHLC";
+    const lt2 = textLook(va2?.text, { size: LOOK.labelSize, color: LOOK.text });
+    const at2 = bar ? plot.y : plot.x + plot.w;
     ticks(s2).forEach((v, i) => {
       const p = vPos2(v);
       if (grid2 && m.gridlines) c.prims.push(bar ? { t: "path", d: `M${f(p)} ${f(plot.y)}V${f(plot.y + plot.h)}`, stroke: LOOK.gridline, sw: 0.75, part: "grid" } : { t: "path", d: `M${f(plot.x)} ${f(p)}H${f(plot.x + plot.w)}`, stroke: LOOK.gridline, sw: 0.75, part: "grid" });
-      if (vLabels2[i]) c.prims.push(bar ? { t: "text", x: p, y: plot.y - 5, text: vLabels2[i], size: LOOK.labelSize, fill: LOOK.text, anchor: "middle", part: "axis:val2" }
-        : { t: "text", x: plot.x + plot.w + LABEL_GAP, y: p + 2.5, text: vLabels2[i], size: LOOK.labelSize, fill: LOOK.text, anchor: "start", part: "axis:val2" });
+      if (vLabels2[i]) c.prims.push(bar ? { t: "text", x: p, y: plot.y - 5, text: vLabels2[i], ...textAttrs(lt2), anchor: "middle", part: "axis:val2" }
+        : { t: "text", x: plot.x + plot.w + LABEL_GAP, y: p + 2.5, text: vLabels2[i], ...textAttrs(lt2), anchor: "start", part: "axis:val2" });
     });
+    if (va2?.visible !== false) {
+      axisLineAndTicks(c, { horizontal: bar, at: at2, from: bar ? plot.x : plot.y, to: bar ? plot.x + plot.w : plot.y + plot.h, line: linePaint(va2?.line, null),
+        majors: ticks(s2).map(vPos2), minors: minorTicks(s2, va2?.minorUnit).map(vPos2), major: va2?.majorTick, minor: va2?.minorTick, out: bar ? -1 : 1, part: "axis:val2", effects: va2?.effects });
+    }
   }
 
+  // Value labels and the value axis: the axis where the category axis puts it (Vertikale Achse schneidet).
+  let valAxisAt: number;
+  let xs: AxisScale | undefined, xPos: ((v: number) => number) | undefined;
   if (scatter && xScale) {
-    const xs = xScale;
-    const xSpan = xs.max - xs.min || 1;
-    const xPos = (v: number) => plot.x + ((v - xs.min) / xSpan) * plot.w;
-    ticks(xs).forEach((v, i) => {
-      if (m.gridlines) c.prims.push({ t: "path", d: `M${f(xPos(v))} ${f(plot.y)}V${f(plot.y + plot.h)}`, stroke: LOOK.gridline, sw: 0.75, part: "grid" });
-      c.prims.push({ t: "text", x: xPos(v), y: plot.y + plot.h + 14, text: xLabels[i], size: LOOK.labelSize, fill: LOOK.text, anchor: "middle", part: "axis:cat" });
+    const xsc = xScale;
+    xs = xsc;
+    const xFrac = (v: number) => { const p = scaleFrac(xsc, v); return xa?.reverse ? 1 - p : p; };
+    xPos = (v: number) => plot.x + xFrac(v) * plot.w;
+    const cx = typeof xa?.crosses === "number" ? xa.crosses : xa?.crosses === "max" ? xsc.max : xsc.log ? xsc.min : Math.min(Math.max(0, xsc.min), xsc.max);
+    valAxisAt = xPos(Math.min(Math.max(cx, xsc.min), xsc.max));
+  } else {
+    const k = xa?.crosses === "max" ? n : typeof xa?.crosses === "number" ? Math.min(n, Math.max(0, Math.round(xa.crosses) - 1)) : 0;
+    valAxisAt = catEdge(k);
+  }
+  // Labels "Achsennah" stand at the axis, "Tief" / "Hoch" at the plot's ends.
+  const vEdgeStart = bar ? plot.y + plot.h : plot.x, vEdgeEnd = bar ? plot.y : plot.x + plot.w;
+  const valLabelAt = va?.labelPos === "low" ? (xa?.reverse ? vEdgeEnd : vEdgeStart) : va?.labelPos === "high" ? (xa?.reverse ? vEdgeStart : vEdgeEnd) : valAxisAt;
+  const valOutward = Math.abs(valLabelAt - vEdgeEnd) < 0.5 ? 1 : -1; // +1: right (bars: up)
+  const vt = vt0;
+  vTicks.forEach((v, i) => {
+    const t = vLabels[i];
+    if (!t) return;
+    const p = vPos(v);
+    if (bar) c.prims.push({ t: "text", x: p, y: valOutward > 0 ? valLabelAt - 5 : valLabelAt + 14 + (vt.size - LOOK.labelSize), text: t, ...textAttrs(vt), anchor: "middle", part: "axis:val" });
+    else c.prims.push({ t: "text", x: valLabelAt + (valOutward > 0 ? LABEL_GAP : -LABEL_GAP), y: p + 2.5, text: t, ...textAttrs(vt), anchor: valOutward > 0 ? "start" : "end", part: "axis:val" });
+  });
+  if (unitLabel) {
+    // Anzeigeeinheitenbeschriftung: beside the labels at the axis' far end.
+    const w = Math.max(0, ...vLabels.map((t) => c.measure(t, vt.size)));
+    if (bar) c.prims.push({ t: "text", x: plot.x + plot.w, y: plot.y + plot.h + 26, text: unitLabel, ...textAttrs(vt), anchor: "end", part: "axis:val" });
+    else c.prims.push({ t: "text", x: valLabelAt + valOutward * (LABEL_GAP + w + 6), y: plot.y + 2, text: unitLabel, ...textAttrs(vt), anchor: "end", rotate: -90, part: "axis:val" });
+  }
+  if (va?.visible !== false) {
+    const auto = scatter ? { color: kindInfo(m.kind).family === "bubble" ? LOOK.gridline : LOOK.valueAxisLine, width: 0.75 } : null;
+    axisLineAndTicks(c, { horizontal: bar, at: valAxisAt, from: bar ? plot.x : plot.y, to: bar ? plot.x + plot.w : plot.y + plot.h, line: linePaint(va?.line, auto),
+      majors: vTicks.map(vPos), minors: minorTicks(vScale, va?.minorUnit).map(vPos), major: va?.majorTick, minor: va?.minorTick,
+      out: Math.abs(valAxisAt - vEdgeEnd) < 0.5 ? (bar ? -1 : 1) : (bar ? 1 : -1), part: "axis:val", effects: va?.effects });
+  }
+  void vMinPos; void vMaxPos;
+
+  // The category axis' labels (scatter: the X values) at their place: Achsennah at the axis, Tief / Hoch at the ends.
+  const hEdgeStart = bar ? plot.x : plot.y + plot.h, hEdgeEnd = bar ? plot.x + plot.w : plot.y;
+  const minEdge = va?.reverse ? hEdgeEnd : hEdgeStart, maxEdge = va?.reverse ? hEdgeStart : hEdgeEnd;
+  const catLabelAt = xa?.labelPos === "low" ? minEdge : xa?.labelPos === "high" ? maxEdge : catAxisAt;
+  const catOutward = Math.abs(catLabelAt - hEdgeEnd) < 0.5 ? 1 : -1; // +1: above (bars: right)
+  const ct = ct0;
+  if (scatter && xs && xPos) {
+    const xp = xPos;
+    const xt = ticks(xs);
+    xt.forEach((v, i) => {
+      if (m.gridlines) c.prims.push({ t: "path", d: `M${f(xp(v))} ${f(plot.y)}V${f(plot.y + plot.h)}`, ...strokeOf(linePaint(m.format?.majorGrid?.line, { color: LOOK.gridline, width: 0.75 })), part: "grid" });
+      if (xLabels[i]) c.prims.push({ t: "text", x: xp(v), y: catOutward > 0 ? catLabelAt - 5 : catLabelAt + 14 + (ct.size - LOOK.labelSize), text: xLabels[i], ...textAttrs(ct), anchor: "middle", part: "axis:cat" });
     });
-    // Both axes are drawn where the other crosses zero (or at its minimum).
-    const x0 = xPos(Math.min(Math.max(0, xs.min), xs.max));
-    c.prims.push({ t: "path", d: `M${f(plot.x)} ${f(base)}H${f(plot.x + plot.w)}M${f(x0)} ${f(plot.y)}V${f(plot.y + plot.h)}`, stroke: kindInfo(m.kind).family === "bubble" ? LOOK.gridline : LOOK.valueAxisLine, sw: 0.75, part: "axes" });
+    if (xa?.visible !== false) {
+      axisLineAndTicks(c, { horizontal: true, at: catAxisAt, from: plot.x, to: plot.x + plot.w, line: linePaint(xa?.line, { color: kindInfo(m.kind).family === "bubble" ? LOOK.gridline : LOOK.valueAxisLine, width: 0.75 }),
+        majors: xt.map(xp), minors: minorTicks(xs, xa?.minorUnit).map(xp), major: xa?.majorTick, minor: xa?.minorTick, out: Math.abs(catAxisAt - plot.y) < 0.5 ? -1 : 1, part: "axis:cat", effects: xa?.effects });
+    }
     clipStart(c, plot);
-    if (kindInfo(m.kind).family === "bubble") drawBubbles(c, plot, xPos, vPos);
-    else m.series.forEach((s, si) => drawScatterSeries(c, s, si, xPos, vPos));
-    m.series.forEach((s, si) => { if (s.errorBars) s.val.cache.forEach((v, i) => { const x = xOf(s, i); if (v !== null && x !== null) drawErrorBar(c, s, si, xPos(x), v, vPos, false); }); });
-    m.series.forEach((s, si) => { if (s.trendline) drawTrendline(c, s, si, plot, (v) => xPos(v), vPos, (i) => xOf(s, i)); });
+    if (kindInfo(m.kind).family === "bubble") drawBubbles(c, plot, xp, vPos);
+    else m.series.forEach((s, si) => drawScatterSeries(c, s, si, xp, vPos));
+    m.series.forEach((s, si) => { if (s.errorBars) s.val.cache.forEach((v, i) => { const x = xOf(s, i); if (v !== null && x !== null) drawErrorBar(c, s, si, xp(x), v, vPos, false); }); });
+    m.series.forEach((s, si) => { if (s.trendline) drawTrendline(c, s, si, plot, (v) => xp(v), vPos, (i) => xOf(s, i)); });
     clipEnd(c);
     return { plot, valueScale: vScale, xScale: xs };
   }
 
-  // Category axis: labels and the axis line.
-  const n = Math.max(1, nCat);
-  const between = !allArea;
-  const catLen = bar ? plot.h : plot.w;
-  const step = between ? catLen / n : n > 1 ? catLen / (n - 1) : catLen;
-  const catCenter = (i: number) => {
-    const j = xa?.reverse ? n - 1 - i : i;
-    const p = between ? (j + 0.5) * step : n > 1 ? j * step : catLen / 2;
-    return bar ? plot.y + plot.h - p : plot.x + p;
-  };
+  // Vertikale Hauptgitternetzlinien of the category axis.
   if (m.format?.catGrid?.show) {
     const cg = linePaint(m.format.catGrid.line, { color: LOOK.gridline, width: 0.75 });
-    if (cg) for (let i = 0; i <= n; i++) {
-      const p = between ? i * step : Math.min(i, n - 1) * step;
-      c.prims.push(bar ? { t: "path", d: `M${f(plot.x)} ${f(plot.y + plot.h - p)}H${f(plot.x + plot.w)}`, ...cg, part: "catGrid" }
-        : { t: "path", d: `M${f(plot.x + p)} ${f(plot.y)}V${f(plot.y + plot.h)}`, ...cg, part: "catGrid" });
+    if (cg) for (let k = 0; k <= (between ? n : n - 1); k++) {
+      const p = between ? catEdge(k) : catAt(k);
+      c.prims.push(bar ? { t: "path", d: `M${f(plot.x)} ${f(p)}H${f(plot.x + plot.w)}`, ...strokeOf(cg), part: "catGrid" }
+        : { t: "path", d: `M${f(p)} ${f(plot.y)}V${f(plot.y + plot.h)}`, ...strokeOf(cg), part: "catGrid" });
     }
   }
-  const maxCatW = Math.max(0, ...catLabels.map((t) => c.measure(t, LOOK.labelSize)));
-  const rotate = !bar && maxCatW > step - 2 && catLabels.length > 1;
-  const ct = textLook(xa?.text, { size: LOOK.labelSize, color: LOOK.text });
+  const maxCatW = Math.max(0, ...catLabels.map((t) => c.measure(t, ct.size)));
+  const spacing = step * lblSkip;
+  const rotate = catRot !== undefined ? catRot !== 0 : !bar && maxCatW > spacing - 2 && catLabels.filter(Boolean).length > 1;
+  const rot = catRot ?? -45;
+  const gap = 7.25 * offset;
   catLabels.forEach((t, i) => {
     if (!t) return;
-    const look = { size: ct.size, fill: ct.fill, bold: ct.bold, italic: ct.italic };
-    if (bar) c.prims.push({ t: "text", x: plot.x - LABEL_GAP, y: catCenter(i) + 3.2, text: t, ...look, anchor: "end", part: "axis:cat" });
-    else if (rotate) c.prims.push({ t: "text", x: catCenter(i) + 3, y: plot.y + plot.h + 7, text: t, ...look, anchor: "end", rotate: -45, part: "axis:cat" });
-    else c.prims.push({ t: "text", x: catCenter(i), y: plot.y + plot.h + 14, text: t, ...look, anchor: "middle", part: "axis:cat" });
+    const p = catAt(i);
+    if (bar) {
+      const x = catOutward > 0 ? catLabelAt + LABEL_GAP * offset : catLabelAt - LABEL_GAP * offset;
+      c.prims.push({ t: "text", x, y: p + 3.2, text: t, ...textAttrs(ct), anchor: catOutward > 0 ? "start" : "end", ...(catRot ? { rotate: catRot } : {}), part: "axis:cat" });
+    } else if (rotate) {
+      const y = catOutward > 0 ? catLabelAt - gap : catLabelAt + gap;
+      c.prims.push({ t: "text", x: p + 3, y, text: t, ...textAttrs(ct), anchor: (rot < 0) === (catOutward < 0) ? "end" : "start", rotate: rot, part: "axis:cat" });
+    } else {
+      const y = catOutward > 0 ? catLabelAt - gap - 1.5 : catLabelAt + gap + 6.75 + (ct.size - LOOK.labelSize);
+      c.prims.push({ t: "text", x: p, y, text: t, ...textAttrs(ct), anchor: "middle", part: "axis:cat" });
+    }
   });
-  const axLine = xa?.visible === false ? null : linePaint(xa?.line, { color: LOOK.gridline, width: 0.75 });
-  if (axLine) c.prims.push({ t: "path", d: bar ? `M${f(base)} ${f(plot.y)}V${f(plot.y + plot.h)}` : `M${f(plot.x)} ${f(base)}H${f(plot.x + plot.w)}`, ...axLine, part: "axes" });
+  if (xa?.visible !== false) {
+    // Teilstriche of a category axis stand between the categories (Auf Teilstrichen: at them), every Intervall zwischen Teilstrichen.
+    const skip = Math.max(1, Math.round(xa?.tickMarkSkip ?? 1));
+    const majors: number[] = [];
+    for (let k = 0; k <= (between ? n : n - 1); k += skip) majors.push(between ? catEdge(k) : catAt(k));
+    if (between && (n % skip) !== 0) majors.push(catEdge(n));
+    axisLineAndTicks(c, { horizontal: !bar, at: catAxisAt, from: bar ? plot.y : plot.x, to: bar ? plot.y + plot.h : plot.x + plot.w, line: linePaint(xa?.line, { color: LOOK.gridline, width: 0.75 }),
+      majors, minors: [], major: xa?.majorTick, minor: undefined, out: Math.abs(catAxisAt - hEdgeEnd) < 0.5 ? (bar ? 1 : -1) : (bar ? -1 : 1), part: "axis:cat", effects: xa?.effects });
+  }
 
   clipStart(c, plot);
   const ordered = [...groups].sort((a, b) => (Z_ORDER[kindInfo(a.kind).family] ?? 3) - (Z_ORDER[kindInfo(b.kind).family] ?? 3));
@@ -710,11 +960,11 @@ function drawAxes(c: Ctx, area: { left: number; right: number; top: number; bott
     if (!s.errorBars || bar) return;
     // Clustered columns: the bar's middle; other kinds: the category's centre.
     const k = m.kind === "column" ? m.series.length : 1;
-    const gap = (m.gapWidth ?? 219) / 100, ov = m.overlap !== undefined ? m.overlap / 100 : -0.27;
-    const bw = step / (k - (k - 1) * ov + gap);
+    const gp = (m.gapWidth ?? 219) / 100, ov = m.overlap !== undefined ? m.overlap / 100 : -0.27;
+    const bw = step / (k - (k - 1) * ov + gp);
     s.val.cache.forEach((v, i) => {
       if (v === null || !isFinite(v)) return;
-      const x = m.kind === "column" ? catCenter(i) - step / 2 + (bw * gap) / 2 + si * bw * (1 - ov) + bw / 2 : catCenter(i);
+      const x = m.kind === "column" ? catCenter(i) - step / 2 + (bw * gp) / 2 + si * bw * (1 - ov) + bw / 2 : catCenter(i);
       drawErrorBar(c, s, si, x, v, vPos, false);
     });
   });
@@ -723,6 +973,30 @@ function drawAxes(c: Ctx, area: { left: number; right: number; top: number; bott
   });
   clipEnd(c);
   return { plot, valueScale: vScale };
+}
+
+/** An axis title's own Füllung, Rahmen and Effekte. */
+function axisTitleBox(c: Ctx, fmt: { fill?: import("./model").Fill; line?: import("./model").Line; effects?: Effects } | undefined, box: Box, part: string): void {
+  const fl = fillPaint(fmt?.fill, undefined), ln = linePaint(fmt?.line, null);
+  if ((fl && fl !== "none") || ln || fmt?.effects) c.prims.push({ t: "rect", ...box, fill: fl ?? "none", ...strokeOf(ln), filter: effectFilter(fmt?.effects), part });
+}
+
+/** Haupt- and Hilfsgitternetzlinien of a value axis (logarithmic axes: at the powers and their multiples). */
+function drawGridlines(c: Ctx, scale: AxisScale, plot: Box, horizontal: boolean, reverse: boolean, minorUnit?: number): void {
+  const fmt = c.m.format;
+  const frac = (v: number) => { const p = scaleFrac(scale, v); return reverse ? 1 - p : p; };
+  const at = (v: number) => (horizontal ? plot.x + frac(v) * plot.w : plot.y + plot.h - frac(v) * plot.h);
+  const line = (p: number) => (horizontal ? `M${f(p)} ${f(plot.y)}V${f(plot.y + plot.h)}` : `M${f(plot.x)} ${f(p)}H${f(plot.x + plot.w)}`);
+  const minor = fmt?.minorGrid?.show ? linePaint(fmt.minorGrid.line, { color: "#F2F2F2", width: 0.75 }) : null;
+  if (minor) {
+    const fx = effectFilter(fmt?.minorGrid?.effects);
+    for (const v of minorTicks(scale, minorUnit)) c.prims.push({ t: "path", d: line(at(v)), ...strokeOf(minor), ...(fx ? { filter: fx } : {}), part: "minorGrid" });
+  }
+  const grid = linePaint(fmt?.majorGrid?.line, { color: LOOK.gridline, width: 0.75 });
+  if (c.m.gridlines && grid) {
+    const fx = effectFilter(fmt?.majorGrid?.effects);
+    for (const v of ticks(scale)) c.prims.push({ t: "path", d: line(at(v)), ...strokeOf(grid), ...(fx ? { filter: fx } : {}), part: "grid" });
+  }
 }
 
 /** A vertical Fehlerindikator at a point: the amount as the pane sets it, with or without caps. */
@@ -863,9 +1137,13 @@ function drawBars(c: Ctx, n: number, step: number, catCenter: (i: number) => num
         const x1 = start + off;
         rect = { x: x1, y: Math.min(from, to), w: bw, h: Math.abs(to - from) };
       }
-      const ln = linePaint(s.line, null);
-      const fill = v < 0 && s.invertIfNegative ? "#FFFFFF" : fillPaint(s.fill, c.color(si));
-      c.prims.push({ t: "rect", ...rect, fill, stroke: ln?.stroke ?? (v < 0 && s.invertIfNegative ? c.color(si) : undefined), sw: ln?.sw ?? 0.75, dash: ln?.dash, part: `series:${si}:${i}` });
+      // Datenpunkt formatieren: a point's own Füllung, Rahmen and Effekte before the series'.
+      const pt = pointOf(s, i);
+      const ln = linePaint(pt?.line ?? s.line, null);
+      const inv = v < 0 && (pt?.invertIfNegative ?? s.invertIfNegative);
+      const fill = inv ? "#FFFFFF" : fillPaint(pt?.fill ?? s.fill, autoColor(c, si, i));
+      const fx = effectFilter(pt?.effects ?? s.effects);
+      c.prims.push({ t: "rect", ...rect, fill, ...strokeOf(ln), stroke: ln?.stroke ?? (inv ? c.color(si) : undefined), sw: ln?.sw ?? 0.75, ...(fx ? { filter: fx } : {}), part: `series:${si}:${i}` });
       if (m.dataLabels) {
         // Beschriftungsposition: Außerhalb Ende by default (stacked: Zentriert), or the chosen one.
         const lpos = m.format?.dataLabels?.pos ?? (stacked ? "ctr" : "outEnd");
@@ -916,7 +1194,8 @@ function drawAreas(c: Ctx, catCenter: (i: number) => number, vPos: (v: number) =
       ? `M${f(pts[0][0])} ${f(pts[0][1])}` + pts.slice(1).map(([x, y]) => `L${f(x)} ${f(y)}`).join("") + [...below].reverse().map(([x, y]) => `L${f(x)} ${f(y)}`).join("") + "Z"
       : `M${f(pts[0][0])} ${f(base)}` + pts.map(([x, y]) => `L${f(x)} ${f(y)}`).join("") + `L${f(pts.at(-1)![0])} ${f(base)}Z`;
     const ln = linePaint(s.line, null);
-    c.prims.push({ t: "path", d, fill: fillPaint(s.fill, c.color(si)), stroke: ln?.stroke, sw: ln?.sw, dash: ln?.dash, part: `series:${si}` });
+    const fx = effectFilter(s.effects);
+    c.prims.push({ t: "path", d, fill: fillPaint(s.fill, c.color(si)), ...strokeOf(ln), ...(fx ? { filter: fx } : {}), part: `series:${si}` });
     const under = below;
     if (c.m.dataLabels) s.val.cache.forEach((v, i) => {
       if (v !== null) label(c, s, si, i, v, catCenter(i), (pts[i][1] + (under ? under[i][1] : base)) / 2 + 3.2, "middle");
@@ -940,7 +1219,8 @@ function drawLines(c: Ctx, catCenter: (i: number) => number, vPos: (v: number) =
       runs.at(-1)!.push([catCenter(i), vPos(v)]);
     });
     const d = runs.filter((r) => r.length).map((r) => (s.smooth && r.length > 2 ? smoothPath(r) : r.map(([x, y], i) => `${i ? "L" : "M"}${f(x)} ${f(y)}`).join(""))).join("");
-    if (d && ln) c.prims.push({ t: "path", d, ...ln, cap: "round", part: `series:${si}` });
+    const fx = effectFilter(s.effects);
+    if (d && ln) c.prims.push({ t: "path", d, ...strokeOf(ln), cap: ln.cap ?? "round", ...(fx ? { filter: fx } : {}), part: `series:${si}` });
     vals.forEach((v, i) => {
       if (v === null || !isFinite(v)) return;
       drawMarker(c, s, si, i, catCenter(i), vPos(v), markers ? "circle" : "none");
@@ -951,14 +1231,16 @@ function drawLines(c: Ctx, catCenter: (i: number) => number, vPos: (v: number) =
 
 /** A series' Markierung at a point: its own symbol, size, Füllung and Rahmen, else the chart kind's. */
 export function drawMarker(c: Ctx, s: ChartSeries, si: number, i: number, x: number, y: number, auto: MarkerSymbol): void {
-  const mk = s.marker;
+  const own = pointOf(s, i)?.marker;
+  const mk = own ? { ...s.marker, ...own } : s.marker;
   const sym = !mk?.symbol || mk.symbol === "auto" ? auto : mk.symbol;
   if (sym === "none") return;
   const color = seriesPaint(c, si);
   const r = (mk?.size ?? 5) / 2;
   const fill = fillPaint(mk?.fill, color) ?? color;
   const ln = linePaint(mk?.line, { color, width: 0.75 });
-  const st = { stroke: ln?.stroke, sw: ln?.sw, part: `series:${si}:${i}` };
+  const fx = effectFilter(pointOf(s, i)?.effects ?? s.effects);
+  const st = { ...strokeOf(ln), ...(fx ? { filter: fx } : {}), part: `series:${si}:${i}` };
   switch (sym) {
     case "square": c.prims.push({ t: "rect", x: x - r, y: y - r, w: 2 * r, h: 2 * r, fill, ...st }); break;
     case "diamond": c.prims.push({ t: "path", d: `M${f(x)} ${f(y - r)}L${f(x + r)} ${f(y)}L${f(x)} ${f(y + r)}L${f(x - r)} ${f(y)}Z`, fill, ...st }); break;
@@ -977,14 +1259,39 @@ export function label(c: Ctx, s: ChartSeries, si: number, i: number, v: number, 
   const o = c.m.format?.dataLabels;
   const pie = isPie(c.m.kind);
   const parts: string[] = [];
+  // Wert aus Zellen comes first, then Reihenname, Rubrikenname, Wert, Prozentsatz, Blasengröße (Excel's order).
+  const cell = o?.fromCells?.cache[i];
+  if (cell) parts.push(cell);
   if (o?.showSer) parts.push(seriesName(s, si));
   if (o?.showCat) parts.push(catText(c, s, i));
   if (o?.showVal ?? true) parts.push(c.fmt(v, o?.numFmt ?? s.val.format));
   if (o?.showPercent && pie && share !== undefined) parts.push(`${Math.round(share * 100)}%`);
+  const size = s.size?.cache[i];
+  if (o?.showBubble && size !== undefined && size !== null) parts.push(c.fmt(size, o?.numFmt ?? s.size?.format));
   if (!parts.length) return;
   const look = textLook(o?.text, { size: LOOK.labelSize, color: LOOK.dataLabel });
   const lines = (o?.separator ?? "; ").includes("\n") ? parts : [parts.join(o?.separator ?? "; ")];
-  lines.forEach((t, k) => c.prims.push({ t: "text", x, y: y + k * (look.size + 2), text: t, size: look.size, fill: look.fill, bold: look.bold, italic: look.italic, anchor, part: `labels:${si}` }));
+  const rot = textRotation(o);
+  // The label's own Füllung, Rahmen and Effekte as a box around its text.
+  const fl = fillPaint(o?.fill, undefined), ln = linePaint(o?.line, null);
+  if ((fl && fl !== "none") || ln || o?.effects) {
+    const w = Math.max(...lines.map((t) => c.measure(t, look.size))) + 6, h = lines.length * (look.size + 2) + 3;
+    const x0 = anchor === "start" ? x - 3 : anchor === "end" ? x - w + 3 : x - w / 2;
+    c.prims.push({ t: "rect", x: x0, y: y - look.size - 1, w, h, fill: fl ?? "none", ...strokeOf(ln), filter: effectFilter(o?.effects), part: `labels:${si}` });
+  }
+  lines.forEach((t, k) => c.prims.push({ t: "text", x, y: y + k * (look.size + 2), text: t, ...textAttrs(look), anchor, ...(rot ? { rotate: rot } : {}), part: `labels:${si}` }));
+}
+
+/** A data point's own format (Datenpunkt formatieren). */
+export function pointOf(s: ChartSeries | undefined, i: number): import("./model").DataPoint | undefined {
+  return s?.points?.find((p) => p.idx === i);
+}
+
+/** A point's automatic colour: the series', or the accents in turn with Punkte nach Farbe unterscheiden. */
+function autoColor(c: Ctx, si: number, i: number): string {
+  const m = c.m;
+  if (m.varyColors && m.series.length === 1 && !m.series[0].color) return paletteColor(m, i, m.series[0].val.cache.length, c.accents);
+  return c.color(si);
 }
 
 function drawScatterSeries(c: Ctx, s: ChartSeries, si: number, xPos: (v: number) => number, vPos: (v: number) => number): void {
@@ -1000,7 +1307,8 @@ function drawScatterSeries(c: Ctx, s: ChartSeries, si: number, xPos: (v: number)
   const ln = lineOn ? linePaint(s.line, { color, width: 1.5 }) : null;
   if (ln && pts.length > 1) {
     const d = info.lines === "smooth" || s.smooth ? smoothPath(pts) : pts.map(([x, y], i) => `${i ? "L" : "M"}${f(x)} ${f(y)}`).join("");
-    c.prims.push({ t: "path", d, ...ln, cap: "round", part: `series:${si}` });
+    const fx = effectFilter(s.effects);
+    c.prims.push({ t: "path", d, ...strokeOf(ln), cap: ln.cap ?? "round", ...(fx ? { filter: fx } : {}), part: `series:${si}` });
   }
   pts.forEach(([x, y], i) => drawMarker(c, s, si, i, x, y, info.markers ? "circle" : "none"));
   if (c.m.dataLabels) {
@@ -1088,32 +1396,47 @@ export function renderChart(model: ChartModel, width: number, height: number, op
 export function sceneMarkup(scene: Scene): string {
   const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   const out: string[] = [];
+  const defs: string[] = [...(scene.defs ?? [])];
   let clipId = 0;
+  const uniq = Math.random().toString(36).slice(2, 7);
   const part = (p: { part?: string }) => (p.part ? ` data-part="${esc(p.part)}"` : "");
+  const geometry = (p: Exclude<Prim, { t: "text" }>) => {
+    switch (p.t) {
+      case "rect": return `<rect x="${f(p.x)}" y="${f(p.y)}" width="${f(Math.max(0, p.w))}" height="${f(Math.max(0, p.h))}"${p.rx ? ` rx="${f(p.rx)}"` : ""}`;
+      case "path": return `<path d="${p.d}"`;
+      case "circle": return `<circle cx="${f(p.cx)}" cy="${f(p.cy)}" r="${f(p.r)}"`;
+    }
+  };
+  const strokeAttrs = (p: Exclude<Prim, { t: "text" }>, sw?: number) => `${p.stroke ? ` stroke="${p.stroke}" stroke-width="${f(sw ?? p.sw ?? 0.75)}" stroke-linejoin="${p.join ?? "round"}"${p.join === "miter" ? ' stroke-miterlimit="8"' : ""}` : ""}${p.cap ? ` stroke-linecap="${p.cap === "square" ? "square" : p.cap}"` : ""}${p.dash ? ` stroke-dasharray="${p.dash}"` : ""}`;
   for (const p of scene.prims) {
     if (p.t === "rect" && p.part === "clip:start") {
-      const id = `rc${++clipId}${Math.random().toString(36).slice(2, 7)}`;
+      const id = `rc${++clipId}${uniq}`;
       out.push(`<clipPath id="${id}"><rect x="${f(p.x)}" y="${f(p.y)}" width="${f(p.w)}" height="${f(p.h)}"/></clipPath><g clip-path="url(#${id})">`);
       continue;
     }
     if (p.t === "rect" && p.part === "clip:end") { out.push("</g>"); continue; }
-    switch (p.t) {
-      case "rect":
-        out.push(`<rect x="${f(p.x)}" y="${f(p.y)}" width="${f(Math.max(0, p.w))}" height="${f(Math.max(0, p.h))}" fill="${p.fill ?? "none"}"${p.stroke ? ` stroke="${p.stroke}" stroke-width="${p.sw ?? 0.75}"` : ""}${p.dash ? ` stroke-dasharray="${p.dash}"` : ""}${part(p)}/>`);
-        break;
-      case "path":
-        out.push(`<path d="${p.d}" fill="${p.fill ?? "none"}"${p.stroke ? ` stroke="${p.stroke}" stroke-width="${p.sw ?? 0.75}" stroke-linejoin="round"` : ""}${p.cap ? ` stroke-linecap="${p.cap}"` : ""}${p.dash ? ` stroke-dasharray="${p.dash}"` : ""}${part(p)}/>`);
-        break;
-      case "circle":
-        out.push(`<circle cx="${f(p.cx)}" cy="${f(p.cy)}" r="${f(p.r)}" fill="${p.fill}"${p.stroke ? ` stroke="${p.stroke}" stroke-width="${p.sw ?? 0.75}"` : ""}${part(p)}/>`);
-        break;
-      case "text": {
-        const tr = p.rotate ? ` transform="rotate(${p.rotate} ${f(p.x)} ${f(p.y)})"` : "";
-        const wt = `${p.bold ? ' font-weight="bold"' : ""}${p.italic ? ' font-style="italic"' : ""}`;
-        out.push(`<text x="${f(p.x)}" y="${f(p.y)}" font-size="${p.size}" fill="${p.fill}" text-anchor="${p.anchor}"${wt}${tr}${part(p)}>${esc(p.text)}</text>`);
-        break;
-      }
+    if (p.t === "text") {
+      const tr = p.rotate ? ` transform="rotate(${p.rotate} ${f(p.x)} ${f(p.y)})"` : "";
+      const deco = [p.underline ? "underline" : "", p.strike ? "line-through" : ""].filter(Boolean).join(" ");
+      const wt = `${p.bold ? ' font-weight="bold"' : ""}${p.italic ? ' font-style="italic"' : ""}${deco ? ` text-decoration="${deco}"` : ""}${p.font ? ` font-family="${esc(p.font)}"` : ""}`;
+      const ol = p.outline?.stroke ? ` stroke="${p.outline.stroke}" stroke-width="${f(p.outline.sw ?? 0.75)}" paint-order="stroke"${p.outline.dash ? ` stroke-dasharray="${p.outline.dash}"` : ""}` : "";
+      out.push(`<text x="${f(p.x)}" y="${f(p.y)}" font-size="${p.size}" fill="${p.fill}" text-anchor="${p.anchor}"${wt}${ol}${p.filter ? ` filter="${p.filter}"` : ""}${tr}${part(p)}>${esc(p.text)}</text>`);
+      continue;
     }
+    const filter = p.filter ? ` filter="${p.filter}"` : "";
+    const markers = `${p.head ? ` marker-start="${p.head}"` : ""}${p.tail ? ` marker-end="${p.tail}"` : ""}`;
+    if (p.compound && p.stroke) {
+      // Verbundtyp: the stroke through a mask that cuts its gaps (two or three lines along the path).
+      const id = `cm${++clipId}${uniq}`;
+      const w = p.sw ?? 0.75;
+      const cuts: [string, number][] = p.compound === "tri" ? [["white", w], ["black", w * 0.6], ["white", w * 0.2]]
+        : p.compound === "thickThin" || p.compound === "thinThick" ? [["white", w], ["black", w * 0.35]] : [["white", w], ["black", w / 3]];
+      const g = geometry(p);
+      defs.push(`<mask id="${id}" maskUnits="userSpaceOnUse" x="-10000" y="-10000" width="20000" height="20000">${cuts.map(([c, sw]) => `${g} fill="none" stroke="${c}" stroke-width="${f(sw)}" stroke-linejoin="${p.join ?? "round"}"/>`).join("")}</mask>`);
+      out.push(`<g${filter}${part(p)}>${p.fill && p.fill !== "none" ? `${g} fill="${p.fill}"/>` : ""}${g} fill="none"${strokeAttrs(p)} mask="url(#${id})"${markers}/></g>`);
+      continue;
+    }
+    out.push(`${geometry(p)} fill="${p.fill ?? "none"}"${strokeAttrs(p)}${markers}${filter}${part(p)}/>`);
   }
-  return out.join("");
+  return (defs.length ? `<defs>${defs.join("")}</defs>` : "") + out.join("");
 }
