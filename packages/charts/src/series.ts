@@ -9,7 +9,8 @@
 //   lines becomes the X values;
 // - histograms take every number of the block as one series.
 
-import type { ChartKind, ChartSeries } from "./model";
+import type { ChartKind, ChartModel, ChartSeries } from "./model";
+import { kindInfo } from "./kinds";
 
 export type CellValue = string | number | boolean | null;
 
@@ -60,6 +61,34 @@ const num = (v: CellValue): number | null => (typeof v === "number" && isFinite(
 /** The series Excel makes of a block for a chart of `kind`. */
 export function seriesFromBlock(b: Block, kind: ChartKind, orientation?: "rows" | "cols"): ChartSeries[] {
   const rows = b.r1 - b.r0 + 1, cols = b.c1 - b.c0 + 1;
+  const fam = kindInfo(kind).family;
+  if (fam === "treemap" || fam === "sunburst") return hierarchySeries(b);
+  // Wasserfall, Trichter and Pareto show one series (the first value column).
+  if (fam === "waterfall" || fam === "funnel" || fam === "pareto") return seriesFromBlock(b, "column", orientation).slice(0, 1);
+  if (fam === "bubble") {
+    // Blase: X values, then Y values and Blasengröße in pairs (Excel: one series of three columns).
+    const xy = seriesFromBlock(b, "scatter", orientation);
+    const out: ChartSeries[] = [];
+    for (let i = 0; i < xy.length; i += 2) {
+      const s = xy[i];
+      if (xy[i + 1]) s.size = { ref: xy[i + 1].val.ref, cache: xy[i + 1].val.cache };
+      out.push(s);
+    }
+    return out;
+  }
+  if (fam === "stock" && cols > 1 && rows > 1 && !orientation) {
+    // Kurs: the first column holds the dates (numbers) when there are more columns than the type has prices.
+    const need = { stockHLC: 3, stockOHLC: 4, stockVHLC: 4, stockVOHLC: 5 }[kind as "stockHLC"] ?? 3;
+    if (cols > need) {
+      const out = seriesFromBlock({ ...b, c0: b.c0 + 1 }, "line", "cols");
+      const head = isText(b.get(b.r0, b.c1));
+      const r0 = head ? b.r0 + 1 : b.r0;
+      const cache: (string | number | null)[] = [];
+      for (let r = r0; r <= b.r1; r++) { const v = b.get(r, b.c0); cache.push(v === null ? null : typeof v === "number" ? v : String(v)); }
+      for (const s of out) s.cat = { ref: refText(b.sheet, r0, b.c0, b.r1, b.c0), cache: [...cache] };
+      return out;
+    }
+  }
   if (kind === "histogram") {
     const vals: number[] = [];
     let name: ChartSeries["name"];
@@ -113,7 +142,7 @@ export function seriesFromBlock(b: Block, kind: ChartKind, orientation?: "rows" 
       cache.push(v === null ? null : typeof v === "number" ? v : String(v));
     }
     cat = { ref: ref(line, p0, p1), cache };
-  } else if ((kind === "scatter" || kind === "scatterSmooth" || kind === "scatterLines") && lines.length > 1) {
+  } else if (kindInfo(kind).family === "scatter" && lines.length > 1) {
     const line = lines.shift()!;
     cat = { ref: ref(line, p0, p1), cache: points(line) };
   }
@@ -129,6 +158,37 @@ export function seriesFromBlock(b: Block, kind: ChartKind, orientation?: "rows" 
   });
 }
 
+/**
+ * Treemap and Sunburst: the text columns are the category levels (outermost first, a blank cell
+ * repeats the one above), the last numeric column the values; a text first row holds the names.
+ */
+function hierarchySeries(b: Block): ChartSeries[] {
+  const head = b.r1 > b.r0 && isText(b.get(b.r0, b.c1));
+  const r0 = head ? b.r0 + 1 : b.r0;
+  let vc = b.c1;
+  while (vc > b.c0 && ![...Array(b.r1 - r0 + 1)].some((_, k) => typeof b.get(r0 + k, vc) === "number")) vc--;
+  const levels: (string | null)[][] = [];
+  for (let c = b.c0; c < vc; c++) {
+    const lv: (string | null)[] = [];
+    let last: string | null = null;
+    for (let r = r0; r <= b.r1; r++) {
+      const v = b.get(r, c);
+      if (v !== null && v !== "") last = String(v);
+      lv.push(v === null || v === "" ? (c < vc - 1 ? last : null) : String(v));
+    }
+    levels.push(lv);
+  }
+  const vals: (number | null)[] = [];
+  for (let r = r0; r <= b.r1; r++) vals.push(num(b.get(r, vc)));
+  const s: ChartSeries = { val: { ref: refText(b.sheet, r0, vc, b.r1, vc), cache: vals } };
+  if (levels.length) {
+    s.levels = levels;
+    s.cat = { ref: refText(b.sheet, r0, b.c0, b.r1, vc - 1), cache: levels.at(-1)! };
+  }
+  if (head) s.name = { ref: refText(b.sheet, b.r0, vc), text: String(b.get(b.r0, vc)) };
+  return [s];
+}
+
 /** The block a chart's series come from (the bounding range of their names, categories and values) and how they run. */
 export function sourceOf(series: ChartSeries[]): { ref: Ref; orientation: "rows" | "cols" } | null {
   const refs = series.flatMap((x) => [x.name?.ref, x.cat?.ref, x.val.ref]).filter((r): r is string => !!r).map(parseRef).filter((r): r is Ref => !!r);
@@ -139,4 +199,55 @@ export function sourceOf(series: ChartSeries[]): { ref: Ref; orientation: "rows"
   const v = parseRef(series[0].val.ref ?? "");
   const orientation = v && v.c0 === v.c1 && v.r1 > v.r0 ? "cols" : v && v.r0 === v.r1 && v.c1 > v.c0 ? "rows" : "cols";
   return { ref, orientation };
+}
+
+/** Cells of a range as read from the workbook: row by row, `cols` across. */
+export interface RangeRead { vals: CellValue[]; format?: string; cols: number }
+
+/**
+ * Re-reads a chart's names, categories, values and bubble sizes through `read` (Excel's caches).
+ * Treemap and Sunburst categories of several columns become their levels (a blank cell of an
+ * outer level repeats the one above).
+ */
+export function refreshCaches(m: ChartModel, read: (ref: string) => RangeRead | null, nameText: (v: CellValue, format?: string) => string): void {
+  const hier = m.kind === "treemap" || m.kind === "sunburst";
+  for (const s of m.series) {
+    if (s.name?.ref) {
+      const n = read(s.name.ref);
+      if (n) s.name.text = n.vals[0] === null || n.vals[0] === undefined ? "" : nameText(n.vals[0], n.format);
+    }
+    if (s.cat?.ref) {
+      const c = read(s.cat.ref);
+      if (c) {
+        const cells = c.vals.map((v) => (typeof v === "boolean" ? (v ? "WAHR" : "FALSCH") : v));
+        if (hier && c.cols > 1) {
+          const rows = Math.ceil(cells.length / c.cols);
+          const levels: (string | null)[][] = [];
+          for (let k = 0; k < c.cols; k++) {
+            let last: string | null = null;
+            levels.push(Array.from({ length: rows }, (_, r) => {
+              const v = cells[r * c.cols + k];
+              if (v !== null && v !== undefined && v !== "") last = String(v);
+              return v === null || v === undefined || v === "" ? (k < c.cols - 1 ? last : null) : String(v);
+            }));
+          }
+          s.levels = levels;
+          s.cat.cache = levels.at(-1)!;
+        } else {
+          s.cat.cache = cells;
+          if (hier) delete s.levels;
+        }
+        s.cat.format = c.format;
+      }
+    }
+    const v = read(s.val.ref ?? "");
+    if (v) {
+      s.val.cache = v.vals.map((x) => (typeof x === "number" ? x : null));
+      s.val.format = v.format;
+    }
+    if (s.size?.ref) {
+      const z = read(s.size.ref);
+      if (z) s.size.cache = z.vals.map((x) => (typeof x === "number" ? x : null));
+    }
+  }
 }

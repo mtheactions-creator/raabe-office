@@ -1,0 +1,938 @@
+{
+ "raabe->excel": [
+  {
+   "group": "J1,J3",
+   "ok": true
+  },
+  {
+   "group": "I1,I2",
+   "ok": true
+  },
+  {
+   "group": "I3",
+   "ok": true
+  },
+  {
+   "group": "H2",
+   "ok": true
+  },
+  {
+   "group": "G1,G2,G3",
+   "ok": true
+  },
+  {
+   "group": "F1,F2,F3",
+   "ok": true
+  },
+  {
+   "group": "number of groups",
+   "ok": true
+  }
+ ],
+ "excel->raabe": [
+  {
+   "sheet": "line",
+   "ok": true
+  },
+  {
+   "sheet": "column",
+   "ok": true
+  },
+  {
+   "sheet": "winloss",
+   "ok": true
+  },
+  {
+   "sheet": "single",
+   "ok": true
+  },
+  {
+   "sheet": "bycolumn",
+   "ok": true
+  },
+  {
+   "sheet": "show-Highpoint",
+   "ok": true
+  },
+  {
+   "sheet": "show-Lowpoint",
+   "ok": true
+  },
+  {
+   "sheet": "show-Firstpoint",
+   "ok": true
+  },
+  {
+   "sheet": "show-Lastpoint",
+   "ok": true
+  },
+  {
+   "sheet": "show-Negative",
+   "ok": true
+  },
+  {
+   "sheet": "show-Markers",
+   "ok": true
+  },
+  {
+   "sheet": "show-all",
+   "ok": true
+  },
+  {
+   "sheet": "everything",
+   "ok": true
+  },
+  {
+   "sheet": "column-negative",
+   "ok": true
+  },
+  {
+   "sheet": "series-rgb",
+   "ok": true
+  },
+  {
+   "sheet": "series-theme",
+   "ok": true
+  },
+  {
+   "sheet": "series-theme-tint",
+   "ok": true
+  },
+  {
+   "sheet": "high-rgb",
+   "ok": true
+  },
+  {
+   "sheet": "markers-theme",
+   "ok": true
+  },
+  {
+   "sheet": "weight-0.25",
+   "ok": true
+  },
+  {
+   "sheet": "weight-0.5",
+   "ok": true
+  },
+  {
+   "sheet": "weight-1",
+   "ok": true
+  },
+  {
+   "sheet": "weight-1.5",
+   "ok": true
+  },
+  {
+   "sheet": "weight-2.25",
+   "ok": true
+  },
+  {
+   "sheet": "weight-3",
+   "ok": true
+  },
+  {
+   "sheet": "weight-4.5",
+   "ok": true
+  },
+  {
+   "sheet": "weight-6",
+   "ok": true
+  },
+  {
+   "sheet": "blanks-zero",
+   "ok": true
+  },
+  {
+   "sheet": "blanks-span",
+   "ok": true
+  },
+  {
+   "sheet": "hidden",
+   "ok": true
+  },
+  {
+   "sheet": "axis",
+   "ok": true
+  },
+  {
+   "sheet": "axis-color",
+   "ok": true
+  },
+  {
+   "sheet": "rtl",
+   "ok": true
+  },
+  {
+   "sheet": "min-group",
+   "ok": true
+  },
+  {
+   "sheet": "max-group",
+   "ok": true
+  },
+  {
+   "sheet": "min-custom",
+   "ok": true
+  },
+  {
+   "sheet": "max-custom",
+   "ok": true
+  },
+  {
+   "sheet": "min-max-custom",
+   "ok": true
+  },
+  {
+   "sheet": "date-axis",
+   "ok": true
+  },
+  {
+   "sheet": "type-change",
+   "ok": true
+  },
+  {
+   "sheet": "modify-group",
+   "ok": true
+  },
+  {
+   "sheet": "modify-one",
+   "ok": true
+  },
+  {
+   "sheet": "two-groups",
+   "ok": true
+  },
+  {
+   "sheet": "group",
+   "ok": true
+  },
+  {
+   "sheet": "group-first",
+   "ok": true
+  },
+  {
+   "sheet": "ungroup",
+   "ok": true
+  },
+  {
+   "sheet": "ungroup-one",
+   "ok": true
+  },
+  {
+   "sheet": "clear-one",
+   "ok": true
+  },
+  {
+   "sheet": "clear-group",
+   "ok": true
+  },
+  {
+   "sheet": "other-sheet",
+   "ok": true
+  }
+ ],
+ "verbatim": [
+  {
+   "sheet": "line",
+   "ok": true
+  },
+  {
+   "sheet": "column",
+   "ok": true
+  },
+  {
+   "sheet": "winloss",
+   "ok": true
+  },
+  {
+   "sheet": "single",
+   "ok": true
+  },
+  {
+   "sheet": "bycolumn",
+   "ok": true
+  },
+  {
+   "sheet": "show-Highpoint",
+   "ok": true
+  },
+  {
+   "sheet": "show-Lowpoint",
+   "ok": true
+  },
+  {
+   "sheet": "show-Firstpoint",
+   "ok": true
+  },
+  {
+   "sheet": "show-Lastpoint",
+   "ok": true
+  },
+  {
+   "sheet": "show-Negative",
+   "ok": true
+  },
+  {
+   "sheet": "show-Markers",
+   "ok": true
+  },
+  {
+   "sheet": "show-all",
+   "ok": true
+  },
+  {
+   "sheet": "everything",
+   "ok": true
+  },
+  {
+   "sheet": "column-negative",
+   "ok": true
+  },
+  {
+   "sheet": "series-rgb",
+   "ok": true
+  },
+  {
+   "sheet": "series-theme",
+   "ok": true
+  },
+  {
+   "sheet": "series-theme-tint",
+   "ok": true
+  },
+  {
+   "sheet": "high-rgb",
+   "ok": true
+  },
+  {
+   "sheet": "markers-theme",
+   "ok": true
+  },
+  {
+   "sheet": "weight-0.25",
+   "ok": true
+  },
+  {
+   "sheet": "weight-0.5",
+   "ok": true
+  },
+  {
+   "sheet": "weight-1",
+   "ok": true
+  },
+  {
+   "sheet": "weight-1.5",
+   "ok": true
+  },
+  {
+   "sheet": "weight-2.25",
+   "ok": true
+  },
+  {
+   "sheet": "weight-3",
+   "ok": true
+  },
+  {
+   "sheet": "weight-4.5",
+   "ok": true
+  },
+  {
+   "sheet": "weight-6",
+   "ok": true
+  },
+  {
+   "sheet": "blanks-zero",
+   "ok": true
+  },
+  {
+   "sheet": "blanks-span",
+   "ok": true
+  },
+  {
+   "sheet": "hidden",
+   "ok": true
+  },
+  {
+   "sheet": "axis",
+   "ok": true
+  },
+  {
+   "sheet": "axis-color",
+   "ok": true
+  },
+  {
+   "sheet": "rtl",
+   "ok": true
+  },
+  {
+   "sheet": "min-group",
+   "ok": true
+  },
+  {
+   "sheet": "max-group",
+   "ok": true
+  },
+  {
+   "sheet": "min-custom",
+   "ok": true
+  },
+  {
+   "sheet": "max-custom",
+   "ok": true
+  },
+  {
+   "sheet": "min-max-custom",
+   "ok": true
+  },
+  {
+   "sheet": "date-axis",
+   "ok": true
+  },
+  {
+   "sheet": "type-change",
+   "ok": true
+  },
+  {
+   "sheet": "modify-group",
+   "ok": true
+  },
+  {
+   "sheet": "modify-one",
+   "ok": true
+  },
+  {
+   "sheet": "two-groups",
+   "ok": true
+  },
+  {
+   "sheet": "group",
+   "ok": true
+  },
+  {
+   "sheet": "group-first",
+   "ok": true
+  },
+  {
+   "sheet": "ungroup",
+   "ok": true
+  },
+  {
+   "sheet": "ungroup-one",
+   "ok": true
+  },
+  {
+   "sheet": "clear-one",
+   "ok": true
+  },
+  {
+   "sheet": "clear-group",
+   "ok": true
+  },
+  {
+   "sheet": "other-sheet",
+   "ok": true
+  }
+ ],
+ "excel-reopen": [
+  {
+   "sheet": "line",
+   "ok": true
+  },
+  {
+   "sheet": "column",
+   "ok": true
+  },
+  {
+   "sheet": "winloss",
+   "ok": true
+  },
+  {
+   "sheet": "single",
+   "ok": true
+  },
+  {
+   "sheet": "bycolumn",
+   "ok": true
+  },
+  {
+   "sheet": "show-Highpoint",
+   "ok": true
+  },
+  {
+   "sheet": "show-Lowpoint",
+   "ok": true
+  },
+  {
+   "sheet": "show-Firstpoint",
+   "ok": true
+  },
+  {
+   "sheet": "show-Lastpoint",
+   "ok": true
+  },
+  {
+   "sheet": "show-Negative",
+   "ok": true
+  },
+  {
+   "sheet": "show-Markers",
+   "ok": true
+  },
+  {
+   "sheet": "show-all",
+   "ok": true
+  },
+  {
+   "sheet": "everything",
+   "ok": true
+  },
+  {
+   "sheet": "column-negative",
+   "ok": true
+  },
+  {
+   "sheet": "series-rgb",
+   "ok": true
+  },
+  {
+   "sheet": "series-theme",
+   "ok": true
+  },
+  {
+   "sheet": "series-theme-tint",
+   "ok": true
+  },
+  {
+   "sheet": "high-rgb",
+   "ok": true
+  },
+  {
+   "sheet": "markers-theme",
+   "ok": true
+  },
+  {
+   "sheet": "weight-0.25",
+   "ok": true
+  },
+  {
+   "sheet": "weight-0.5",
+   "ok": true
+  },
+  {
+   "sheet": "weight-1",
+   "ok": true
+  },
+  {
+   "sheet": "weight-1.5",
+   "ok": true
+  },
+  {
+   "sheet": "weight-2.25",
+   "ok": true
+  },
+  {
+   "sheet": "weight-3",
+   "ok": true
+  },
+  {
+   "sheet": "weight-4.5",
+   "ok": true
+  },
+  {
+   "sheet": "weight-6",
+   "ok": true
+  },
+  {
+   "sheet": "blanks-zero",
+   "ok": true
+  },
+  {
+   "sheet": "blanks-span",
+   "ok": true
+  },
+  {
+   "sheet": "hidden",
+   "ok": true
+  },
+  {
+   "sheet": "axis",
+   "ok": true
+  },
+  {
+   "sheet": "axis-color",
+   "ok": true
+  },
+  {
+   "sheet": "rtl",
+   "ok": true
+  },
+  {
+   "sheet": "min-group",
+   "ok": true
+  },
+  {
+   "sheet": "max-group",
+   "ok": true
+  },
+  {
+   "sheet": "min-custom",
+   "ok": true
+  },
+  {
+   "sheet": "max-custom",
+   "ok": true
+  },
+  {
+   "sheet": "min-max-custom",
+   "ok": true
+  },
+  {
+   "sheet": "date-axis",
+   "ok": true
+  },
+  {
+   "sheet": "type-change",
+   "ok": true
+  },
+  {
+   "sheet": "modify-group",
+   "ok": true
+  },
+  {
+   "sheet": "modify-one",
+   "ok": true
+  },
+  {
+   "sheet": "two-groups",
+   "ok": true
+  },
+  {
+   "sheet": "group",
+   "ok": true
+  },
+  {
+   "sheet": "group-first",
+   "ok": true
+  },
+  {
+   "sheet": "ungroup",
+   "ok": true
+  },
+  {
+   "sheet": "ungroup-one",
+   "ok": true
+  },
+  {
+   "sheet": "clear-one",
+   "ok": true
+  },
+  {
+   "sheet": "clear-group",
+   "ok": true
+  },
+  {
+   "sheet": "other-sheet",
+   "ok": true
+  }
+ ],
+ "ours": [
+  {
+   "type": "line",
+   "colors": {
+    "series": {
+     "rgb": "#376092"
+    },
+    "negative": {
+     "rgb": "#D00000"
+    },
+    "axis": {
+     "rgb": "#000000"
+    },
+    "markers": {
+     "rgb": "#D00000"
+    },
+    "first": {
+     "rgb": "#D00000"
+    },
+    "last": {
+     "rgb": "#D00000"
+    },
+    "high": {
+     "rgb": "#D00000"
+    },
+    "low": {
+     "rgb": "#D00000"
+    }
+   },
+   "displayEmptyCellsAs": "gap",
+   "items": [
+    {
+     "row": 0,
+     "col": 9,
+     "f": "Tabelle1!A1:E1"
+    },
+    {
+     "row": 2,
+     "col": 9,
+     "f": "Tabelle1!A3:E3"
+    }
+   ]
+  },
+  {
+   "type": "line",
+   "colors": {
+    "series": {
+     "rgb": "#376092"
+    },
+    "negative": {
+     "rgb": "#D00000"
+    },
+    "axis": {
+     "rgb": "#000000"
+    },
+    "markers": {
+     "rgb": "#D00000"
+    },
+    "first": {
+     "rgb": "#D00000"
+    },
+    "last": {
+     "rgb": "#D00000"
+    },
+    "high": {
+     "rgb": "#D00000"
+    },
+    "low": {
+     "rgb": "#D00000"
+    }
+   },
+   "displayEmptyCellsAs": "gap",
+   "items": [
+    {
+     "row": 0,
+     "col": 8,
+     "f": "Tabelle1!A1:E1"
+    },
+    {
+     "row": 1,
+     "col": 8,
+     "f": "Tabelle1!A2:E2"
+    }
+   ]
+  },
+  {
+   "type": "line",
+   "colors": {
+    "series": {
+     "rgb": "#376092"
+    },
+    "negative": {
+     "rgb": "#D00000"
+    },
+    "axis": {
+     "rgb": "#000000"
+    },
+    "markers": {
+     "rgb": "#D00000"
+    },
+    "first": {
+     "rgb": "#D00000"
+    },
+    "last": {
+     "rgb": "#D00000"
+    },
+    "high": {
+     "rgb": "#D00000"
+    },
+    "low": {
+     "rgb": "#D00000"
+    }
+   },
+   "displayEmptyCellsAs": "gap",
+   "items": [
+    {
+     "row": 2,
+     "col": 8,
+     "f": "Tabelle1!A3:E3"
+    }
+   ]
+  },
+  {
+   "type": "stacked",
+   "colors": {
+    "series": {
+     "rgb": "#376092"
+    },
+    "negative": {
+     "rgb": "#D00000"
+    },
+    "axis": {
+     "rgb": "#000000"
+    },
+    "markers": {
+     "rgb": "#D00000"
+    },
+    "first": {
+     "rgb": "#D00000"
+    },
+    "last": {
+     "rgb": "#D00000"
+    },
+    "high": {
+     "rgb": "#D00000"
+    },
+    "low": {
+     "rgb": "#D00000"
+    }
+   },
+   "negative": true,
+   "displayEmptyCellsAs": "zero",
+   "items": [
+    {
+     "row": 1,
+     "col": 7,
+     "f": "Tabelle1!A2:E2"
+    }
+   ],
+   "dateRange": "Tabelle1!A8:E8",
+   "minAxisType": "group"
+  },
+  {
+   "type": "column",
+   "colors": {
+    "series": {
+     "rgb": "#C65911",
+     "theme": {
+      "t": 5,
+      "tint": -0.249977111117893
+     }
+    },
+    "negative": {
+     "rgb": "#D00000"
+    },
+    "axis": {
+     "rgb": "#000000"
+    },
+    "markers": {
+     "rgb": "#D00000"
+    },
+    "first": {
+     "rgb": "#D00000"
+    },
+    "last": {
+     "rgb": "#D00000"
+    },
+    "high": {
+     "rgb": "#FF0000"
+    },
+    "low": {
+     "rgb": "#D00000"
+    }
+   },
+   "displayEmptyCellsAs": "gap",
+   "items": [
+    {
+     "row": 0,
+     "col": 6,
+     "f": "Tabelle1!A1:E1"
+    },
+    {
+     "row": 1,
+     "col": 6,
+     "f": "Tabelle1!A2:E2"
+    },
+    {
+     "row": 2,
+     "col": 6,
+     "f": "Tabelle1!A3:E3"
+    }
+   ],
+   "high": true
+  },
+  {
+   "type": "line",
+   "colors": {
+    "series": {
+     "rgb": "#833C0C",
+     "theme": {
+      "t": 5,
+      "tint": -0.499984740745262
+     }
+    },
+    "negative": {
+     "rgb": "#A5A5A5",
+     "theme": {
+      "t": 6
+     }
+    },
+    "axis": {
+     "rgb": "#000000"
+    },
+    "markers": {
+     "rgb": "#833C0C",
+     "theme": {
+      "t": 5,
+      "tint": -0.499984740745262
+     }
+    },
+    "first": {
+     "rgb": "#F4B084",
+     "theme": {
+      "t": 5,
+      "tint": 0.3999755851924192
+     }
+    },
+    "last": {
+     "rgb": "#F4B084",
+     "theme": {
+      "t": 5,
+      "tint": 0.3999755851924192
+     }
+    },
+    "high": {
+     "rgb": "#ED7D31",
+     "theme": {
+      "t": 5
+     }
+    },
+    "low": {
+     "rgb": "#ED7D31",
+     "theme": {
+      "t": 5
+     }
+    }
+   },
+   "displayEmptyCellsAs": "span",
+   "items": [
+    {
+     "row": 0,
+     "col": 5,
+     "f": "Tabelle1!A1:E1"
+    },
+    {
+     "row": 1,
+     "col": 5,
+     "f": "Tabelle1!A2:E2"
+    },
+    {
+     "row": 2,
+     "col": 5,
+     "f": "Tabelle1!A3:E3"
+    }
+   ],
+   "high": true,
+   "low": true,
+   "negative": true,
+   "first": true,
+   "last": true,
+   "markers": true,
+   "lineWeight": 2.25,
+   "displayXAxis": true,
+   "rightToLeft": true,
+   "displayHidden": true,
+   "minAxisType": "custom",
+   "manualMin": -5,
+   "maxAxisType": "group"
+  }
+ ]
+}

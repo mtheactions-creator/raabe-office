@@ -287,7 +287,7 @@ function clone<T>(v: T): T {
 }
 
 /** Sheet settings a whole-sheet step restores besides the cells (page setup, filter, rules …). */
-const SETTINGS = ["page", "autoFilter", "conditional", "validations", "protection", "threads", "pictures", "shapes", "pivots", "tables", "tabColor", "sparklines"] as const;
+const SETTINGS = ["page", "autoFilter", "conditional", "validations", "protection", "threads", "pictures", "shapes", "pivots", "tables", "tabColor", "sparklines", "scenarios", "consolidate"] as const;
 type Settings = Partial<Pick<Sheet, (typeof SETTINGS)[number]>>;
 
 function snapshot(s: Sheet) {

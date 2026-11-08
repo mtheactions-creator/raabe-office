@@ -6,6 +6,7 @@
 
 import { writePivots, type PivotCacheRef } from "./pivots";
 import { writeTables } from "./tables";
+import { consolidateXml, scenariosXml } from "./scenarios";
 import { strFromU8, strToU8, zipSync } from "fflate";
 import {
   CellError, cellName, fromXlsxFormula, keyCell, mapStructs, rangeName, structToFile, structToShown, toXlsxFormula,
@@ -326,7 +327,7 @@ class SheetWriter {
       const af = s.autoFilter;
       this.put("autoFilter", af ? autoFilterXml(af, this.get("autoFilter"), this.sw) : null);
       // sheetPr filterMode: whether the filter hides rows.
-      const filtering = !!af && (Object.keys(af.columns).length > 0 || /<filterColumn\b/.test(af.rawXml ?? ""));
+      const filtering = (!!af && (Object.keys(af.columns).length > 0 || /<filterColumn\b/.test(af.rawXml ?? ""))) || (!af && !!s.filterMode);
       const pr = this.get("sheetPr") ?? "<sheetPr/>";
       const next = pr.replace(/^<sheetPr\b[^>]*?\/?>/, (t) => setAttrs(t, { filterMode: filtering ? "1" : null }));
       this.put("sheetPr", /^<sheetPr\s*\/>$|^<sheetPr>\s*<\/sheetPr>$/.test(next) ? null : next);
@@ -341,7 +342,10 @@ class SheetWriter {
       this.put("dataValidations", dv.main);
       this.put("extLst", dv.ext);
     }
-    if (JSON.stringify(s.sparklines ?? []) !== (this.own?.spark ?? "[]")) this.put("extLst", sparklinesExt(this.get("extLst"), s.sparklines ?? []));
+    if (JSON.stringify(s.sparklines ?? []) !== (this.own?.spark ?? "[]")) this.put("extLst", sparklinesExt(this.get("extLst"), s.sparklines ?? [], this.own?.sparkXml));
+    // Szenario-Manager and Konsolidieren: rewritten only when they changed.
+    if (canon([s.scenarios ?? null]) !== (this.own?.scen ?? canon([null]))) this.put("scenarios", scenariosXml(s.scenarios));
+    if (canon([s.consolidate ?? null]) !== (this.own?.cons ?? canon([null]))) this.put("dataConsolidate", consolidateXml(s.consolidate));
     if (!snap || now.prot !== snap.prot) {
       const p = s.protection;
       this.put("sheetProtection", p && Object.keys(p).length ? `<sheetProtection${Object.entries(p).map(([k, v]) => ` ${k}="${esc(v)}"`).join("")}/>` : null);

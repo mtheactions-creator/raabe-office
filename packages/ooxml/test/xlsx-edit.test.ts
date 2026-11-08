@@ -7,7 +7,7 @@ import { describe, expect, it } from "vitest";
 import { strFromU8, unzipSync } from "fflate";
 import { Sheet, cellKey, parseRange, type Workbook } from "@raabe/sheet-engine";
 import { newChart, type ChartModel } from "@raabe/charts";
-import { newWorkbook, readXlsx, writeXlsx } from "../src";
+import { defaultSparkColors, newWorkbook, readXlsx, writeXlsx } from "../src";
 
 const fixture = (name: string) => readXlsx(new Uint8Array(readFileSync(`packages/ooxml/test/fixtures/${name}`)));
 const cell = (s: Sheet, a: string) => { const r = parseRange(a)!; return s.get(r.r0, r.c0); };
@@ -174,7 +174,7 @@ describe("edited workbooks", () => {
     s.set(2, 0, { v: 46322, s: wb.styles.derive(0, (st) => { st.numFmt = "m/d/yyyy"; }) });
     s.set(3, 0, { v: 3, f: "A2*2" });
     s.set(4, 0, { v: "Link", link: "https://www.raabeschule.de/", note: "Eine Notiz" });
-    s.sparklines = [{ type: "column", color: "#376092", negative: "#D00000", items: [{ f: "Tabelle1!A2:A4", row: 5, col: 2 }] }];
+    s.sparklines = [{ type: "column", colors: defaultSparkColors(), displayEmptyCellsAs: "gap", items: [{ f: "Tabelle1!A2:A4", row: 5, col: 2 }] }];
     s.threads = [{ row: 0, col: 1, id: "{6E1A2B3C-0000-4000-8000-000000000001}", author: "Lehrkraft", date: "2026-10-28T03:40:00.00", text: "Bitte prüfen",
       replies: [{ id: "{6E1A2B3C-0000-4000-8000-000000000002}", author: "Anna", date: "2026-10-28T03:45:00.00", text: "Erledigt" }] }];
     s.cols.set(0, { width: 20 });
@@ -211,7 +211,7 @@ describe("edited workbooks", () => {
     expect(back.sheets[0].autoFilter?.columns[0]).toEqual({ color: { fill: "#FFFF00" } });
     expect(back.sheets[0].threads?.[0]).toMatchObject({ row: 0, col: 1, author: "Lehrkraft", text: "Bitte prüfen", replies: [{ author: "Anna", text: "Erledigt" }] });
     expect(cell(back.sheets[0], "B1")?.note).toBeUndefined();
-    expect(back.sheets[0].sparklines).toEqual([{ type: "column", color: "#376092", negative: "#D00000", items: [{ f: "Tabelle1!A2:A4", row: 5, col: 2 }] }]);
+    expect(back.sheets[0].sparklines).toEqual([{ type: "column", colors: defaultSparkColors(), displayEmptyCellsAs: "gap", items: [{ f: "Tabelle1!A2:A4", row: 5, col: 2 }] }]);
     expect(back.sheets[0].page).toMatchObject({ titleRows: [0, 1], titleCols: [0, 0], header: "&CKlasse 7b", footer: "&RSeite &P von &N", rowBreaks: [3] });
   });
 

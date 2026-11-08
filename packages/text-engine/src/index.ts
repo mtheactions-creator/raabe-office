@@ -26,7 +26,9 @@ export {
 export { AUTHOR_COLORS, HIGHLIGHT, MIN_ZOOM, MAX_ZOOM, imageUrl, storyIdOf, type TextMark } from "./view";
 export { countWords } from "./words";
 export { imageInfo, naturalSizePt, type ImageInfo } from "./images";
-export { cameraTransform, effectExtent, pictureElement, plainPicture, previewElement, type Fill, type LineEnd, type PictureFormat, type PictureShadow } from "./picture";
+export { bakePicture, cameraTransform, effectExtent, pictureElement, plainPicture, previewElement, type Fill, type LineEnd, type PictureFormat, type PictureShadow } from "./picture";
+export { BEVELS, EFFECT_PRESETS, GLOWS, PICTURE_STYLES, REFLECTIONS, ROTATIONS_3D, SHADOWS, SOFT_EDGES, type PicturePreset } from "./picture-presets";
+export { BRIGHT_CONTRAST, SATURATION, SHARPEN, TEMPERATURE, TRANSPARENCY, recolorGallery, removeBackground, type GalleryItem } from "./picture-galleries";
 export { customGeometry, flattenPath, hasPreset, presetAdjust, presetGeometry, presetNames, type GeomHandle, type GeomPath, type Geometry } from "./geometry";
 export { SHAPE_NAMES, shadeColor, shadeLinear, shapeElement, shapeGeometry, shapeLook, shapeTextRect } from "./shape";
 export { SHAPE_GALLERY, shapeIcon, type GalleryEntry } from "./shape-gallery";
@@ -141,3 +143,4 @@ export { seqToLinear } from "./math/linear";
 /** AutoKorrektur rules on plain paragraph text (added for RaabePresent). */
 export * as AutoCorrect from "./autocorrect";
 export * from "./bibliography";
+export { ensureFontFamily, onFontAlias, setCloudFonts, type CloudFonts } from "./font-alias";

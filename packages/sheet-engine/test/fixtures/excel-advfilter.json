@@ -1,0 +1,845 @@
+{
+ "list": [
+  [
+   "Name",
+   "Fach",
+   "Note",
+   "Datum"
+  ],
+  [
+   "Anna",
+   "Mathe",
+   2,
+   46082
+  ],
+  [
+   "Ben",
+   "Deutsch",
+   3,
+   46090
+  ],
+  [
+   "Cem",
+   "Mathematik",
+   1,
+   46100
+  ],
+  [
+   "Dora",
+   "Englisch",
+   4,
+   46050
+  ],
+  [
+   "Emil",
+   "Mathe",
+   5,
+   46120
+  ],
+  [
+   "Fiona",
+   "Deutsch",
+   2,
+   46075
+  ],
+  [
+   "Gül",
+   "Bio",
+   1,
+   46110
+  ],
+  [
+   "Hannes",
+   "Mathe",
+   2,
+   46082
+  ],
+  [
+   "Ida",
+   "Englisch",
+   3,
+   46095
+  ],
+  [
+   "Jonas",
+   "Deutsch",
+   4,
+   46130
+  ],
+  [
+   "Anna",
+   "Mathe",
+   2,
+   46082
+  ],
+  [
+   "Kai",
+   "",
+   3,
+   46100
+  ]
+ ],
+ "cases": [
+  {
+   "name": "prefix",
+   "action": "inplace",
+   "criteria": [
+    [
+     "Fach"
+    ],
+    [
+     "Mathe"
+    ]
+   ],
+   "hidden": [
+    3,
+    5,
+    7,
+    8,
+    10,
+    11,
+    13
+   ],
+   "names": {
+    "Tabelle1!_FilterDatabase": "=Tabelle1!$A$1:$D$13",
+    "Tabelle1!Criteria": "=Tabelle1!$H$1:$H$2"
+   },
+   "filter_mode": true
+  },
+  {
+   "name": "prefix",
+   "action": "copy",
+   "criteria": [
+    [
+     "Fach"
+    ],
+    [
+     "Mathe"
+    ]
+   ],
+   "output": [
+    [
+     "Name",
+     "Fach",
+     "Note",
+     "Datum"
+    ],
+    [
+     "Anna",
+     "Mathe",
+     2.0,
+     46082.0
+    ],
+    [
+     "Cem",
+     "Mathematik",
+     1.0,
+     46100.0
+    ],
+    [
+     "Emil",
+     "Mathe",
+     5.0,
+     46120.0
+    ],
+    [
+     "Hannes",
+     "Mathe",
+     2.0,
+     46082.0
+    ],
+    [
+     "Anna",
+     "Mathe",
+     2.0,
+     46082.0
+    ]
+   ],
+   "output_address": "M1:P6",
+   "names": {
+    "Tabelle1!_FilterDatabase": "=Tabelle1!$A$1:$D$13",
+    "Tabelle1!Criteria": "=Tabelle1!$H$1:$H$2",
+    "Tabelle1!Extract": "=Tabelle1!$M$1:$P$1"
+   },
+   "filter_mode": false
+  },
+  {
+   "name": "prefix",
+   "action": "copy_unique",
+   "criteria": [
+    [
+     "Fach"
+    ],
+    [
+     "Mathe"
+    ]
+   ],
+   "output": [
+    [
+     "Name",
+     "Fach",
+     "Note",
+     "Datum"
+    ],
+    [
+     "Anna",
+     "Mathe",
+     2.0,
+     46082.0
+    ],
+    [
+     "Cem",
+     "Mathematik",
+     1.0,
+     46100.0
+    ],
+    [
+     "Emil",
+     "Mathe",
+     5.0,
+     46120.0
+    ],
+    [
+     "Hannes",
+     "Mathe",
+     2.0,
+     46082.0
+    ]
+   ],
+   "output_address": "M1:P5",
+   "names": {
+    "Tabelle1!_FilterDatabase": "=Tabelle1!$A$1:$D$13",
+    "Tabelle1!Criteria": "=Tabelle1!$H$1:$H$2",
+    "Tabelle1!Extract": "=Tabelle1!$M$1:$P$1"
+   },
+   "filter_mode": false
+  },
+  {
+   "name": "exact",
+   "action": "inplace",
+   "criteria": [
+    [
+     "Fach"
+    ],
+    [
+     "=\"=Mathe\""
+    ]
+   ],
+   "hidden": [
+    3,
+    4,
+    5,
+    7,
+    8,
+    10,
+    11,
+    13
+   ],
+   "names": {
+    "Tabelle1!_FilterDatabase": "=Tabelle1!$A$1:$D$13",
+    "Tabelle1!Criteria": "=Tabelle1!$H$1:$H$2"
+   },
+   "filter_mode": true
+  },
+  {
+   "name": "and",
+   "action": "inplace",
+   "criteria": [
+    [
+     "Fach",
+     "Note"
+    ],
+    [
+     "Deutsch",
+     ">=3"
+    ]
+   ],
+   "hidden": [
+    2,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    12,
+    13
+   ],
+   "names": {
+    "Tabelle1!_FilterDatabase": "=Tabelle1!$A$1:$D$13",
+    "Tabelle1!Criteria": "=Tabelle1!$H$1:$I$2"
+   },
+   "filter_mode": true
+  },
+  {
+   "name": "and",
+   "action": "copy",
+   "criteria": [
+    [
+     "Fach",
+     "Note"
+    ],
+    [
+     "Deutsch",
+     ">=3"
+    ]
+   ],
+   "output": [
+    [
+     "Name",
+     "Fach",
+     "Note",
+     "Datum"
+    ],
+    [
+     "Ben",
+     "Deutsch",
+     3.0,
+     46090.0
+    ],
+    [
+     "Jonas",
+     "Deutsch",
+     4.0,
+     46130.0
+    ]
+   ],
+   "output_address": "M1:P3",
+   "names": {
+    "Tabelle1!_FilterDatabase": "=Tabelle1!$A$1:$D$13",
+    "Tabelle1!Criteria": "=Tabelle1!$H$1:$I$2",
+    "Tabelle1!Extract": "=Tabelle1!$M$1:$P$1"
+   },
+   "filter_mode": false
+  },
+  {
+   "name": "and",
+   "action": "copy_unique",
+   "criteria": [
+    [
+     "Fach",
+     "Note"
+    ],
+    [
+     "Deutsch",
+     ">=3"
+    ]
+   ],
+   "output": [
+    [
+     "Name",
+     "Fach",
+     "Note",
+     "Datum"
+    ],
+    [
+     "Ben",
+     "Deutsch",
+     3.0,
+     46090.0
+    ],
+    [
+     "Jonas",
+     "Deutsch",
+     4.0,
+     46130.0
+    ]
+   ],
+   "output_address": "M1:P3",
+   "names": {
+    "Tabelle1!_FilterDatabase": "=Tabelle1!$A$1:$D$13",
+    "Tabelle1!Criteria": "=Tabelle1!$H$1:$I$2",
+    "Tabelle1!Extract": "=Tabelle1!$M$1:$P$1"
+   },
+   "filter_mode": false
+  },
+  {
+   "name": "or",
+   "action": "inplace",
+   "criteria": [
+    [
+     "Fach",
+     "Note"
+    ],
+    [
+     "Mathe",
+     ""
+    ],
+    [
+     "",
+     "1"
+    ]
+   ],
+   "hidden": [
+    3,
+    5,
+    7,
+    10,
+    11,
+    13
+   ],
+   "names": {
+    "Tabelle1!_FilterDatabase": "=Tabelle1!$A$1:$D$13",
+    "Tabelle1!Criteria": "=Tabelle1!$H$1:$I$3"
+   },
+   "filter_mode": true
+  },
+  {
+   "name": "or",
+   "action": "copy",
+   "criteria": [
+    [
+     "Fach",
+     "Note"
+    ],
+    [
+     "Mathe",
+     ""
+    ],
+    [
+     "",
+     "1"
+    ]
+   ],
+   "output": [
+    [
+     "Name",
+     "Fach",
+     "Note",
+     "Datum"
+    ],
+    [
+     "Anna",
+     "Mathe",
+     2.0,
+     46082.0
+    ],
+    [
+     "Cem",
+     "Mathematik",
+     1.0,
+     46100.0
+    ],
+    [
+     "Emil",
+     "Mathe",
+     5.0,
+     46120.0
+    ],
+    [
+     "Gül",
+     "Bio",
+     1.0,
+     46110.0
+    ],
+    [
+     "Hannes",
+     "Mathe",
+     2.0,
+     46082.0
+    ],
+    [
+     "Anna",
+     "Mathe",
+     2.0,
+     46082.0
+    ]
+   ],
+   "output_address": "M1:P7",
+   "names": {
+    "Tabelle1!_FilterDatabase": "=Tabelle1!$A$1:$D$13",
+    "Tabelle1!Criteria": "=Tabelle1!$H$1:$I$3",
+    "Tabelle1!Extract": "=Tabelle1!$M$1:$P$1"
+   },
+   "filter_mode": false
+  },
+  {
+   "name": "or",
+   "action": "copy_unique",
+   "criteria": [
+    [
+     "Fach",
+     "Note"
+    ],
+    [
+     "Mathe",
+     ""
+    ],
+    [
+     "",
+     "1"
+    ]
+   ],
+   "output": [
+    [
+     "Name",
+     "Fach",
+     "Note",
+     "Datum"
+    ],
+    [
+     "Anna",
+     "Mathe",
+     2.0,
+     46082.0
+    ],
+    [
+     "Cem",
+     "Mathematik",
+     1.0,
+     46100.0
+    ],
+    [
+     "Emil",
+     "Mathe",
+     5.0,
+     46120.0
+    ],
+    [
+     "Gül",
+     "Bio",
+     1.0,
+     46110.0
+    ],
+    [
+     "Hannes",
+     "Mathe",
+     2.0,
+     46082.0
+    ]
+   ],
+   "output_address": "M1:P6",
+   "names": {
+    "Tabelle1!_FilterDatabase": "=Tabelle1!$A$1:$D$13",
+    "Tabelle1!Criteria": "=Tabelle1!$H$1:$I$3",
+    "Tabelle1!Extract": "=Tabelle1!$M$1:$P$1"
+   },
+   "filter_mode": false
+  },
+  {
+   "name": "wildcard",
+   "action": "inplace",
+   "criteria": [
+    [
+     "Name"
+    ],
+    [
+     "?a*"
+    ]
+   ],
+   "hidden": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    10,
+    11,
+    12
+   ],
+   "names": {
+    "Tabelle1!_FilterDatabase": "=Tabelle1!$A$1:$D$13",
+    "Tabelle1!Criteria": "=Tabelle1!$H$1:$H$2"
+   },
+   "filter_mode": true
+  },
+  {
+   "name": "not",
+   "action": "inplace",
+   "criteria": [
+    [
+     "Note"
+    ],
+    [
+     "<>2"
+    ]
+   ],
+   "hidden": [
+    2,
+    7,
+    9,
+    12
+   ],
+   "names": {
+    "Tabelle1!_FilterDatabase": "=Tabelle1!$A$1:$D$13",
+    "Tabelle1!Criteria": "=Tabelle1!$H$1:$H$2"
+   },
+   "filter_mode": true
+  },
+  {
+   "name": "formula",
+   "action": "inplace",
+   "criteria": [
+    [
+     "Gut"
+    ],
+    [
+     "=C2<3"
+    ]
+   ],
+   "hidden": [
+    3,
+    5,
+    6,
+    10,
+    11,
+    13
+   ],
+   "names": {
+    "Tabelle1!_FilterDatabase": "=Tabelle1!$A$1:$D$13",
+    "Tabelle1!Criteria": "=Tabelle1!$H$1:$H$2"
+   },
+   "filter_mode": true
+  },
+  {
+   "name": "formula",
+   "action": "copy",
+   "criteria": [
+    [
+     "Gut"
+    ],
+    [
+     "=C2<3"
+    ]
+   ],
+   "output": [
+    [
+     "Name",
+     "Fach",
+     "Note",
+     "Datum"
+    ],
+    [
+     "Anna",
+     "Mathe",
+     2.0,
+     46082.0
+    ],
+    [
+     "Cem",
+     "Mathematik",
+     1.0,
+     46100.0
+    ],
+    [
+     "Fiona",
+     "Deutsch",
+     2.0,
+     46075.0
+    ],
+    [
+     "Gül",
+     "Bio",
+     1.0,
+     46110.0
+    ],
+    [
+     "Hannes",
+     "Mathe",
+     2.0,
+     46082.0
+    ],
+    [
+     "Anna",
+     "Mathe",
+     2.0,
+     46082.0
+    ]
+   ],
+   "output_address": "M1:P7",
+   "names": {
+    "Tabelle1!_FilterDatabase": "=Tabelle1!$A$1:$D$13",
+    "Tabelle1!Criteria": "=Tabelle1!$H$1:$H$2",
+    "Tabelle1!Extract": "=Tabelle1!$M$1:$P$1"
+   },
+   "filter_mode": false
+  },
+  {
+   "name": "formula",
+   "action": "copy_unique",
+   "criteria": [
+    [
+     "Gut"
+    ],
+    [
+     "=C2<3"
+    ]
+   ],
+   "output": [
+    [
+     "Name",
+     "Fach",
+     "Note",
+     "Datum"
+    ],
+    [
+     "Anna",
+     "Mathe",
+     2.0,
+     46082.0
+    ],
+    [
+     "Cem",
+     "Mathematik",
+     1.0,
+     46100.0
+    ],
+    [
+     "Fiona",
+     "Deutsch",
+     2.0,
+     46075.0
+    ],
+    [
+     "Gül",
+     "Bio",
+     1.0,
+     46110.0
+    ],
+    [
+     "Hannes",
+     "Mathe",
+     2.0,
+     46082.0
+    ]
+   ],
+   "output_address": "M1:P6",
+   "names": {
+    "Tabelle1!_FilterDatabase": "=Tabelle1!$A$1:$D$13",
+    "Tabelle1!Criteria": "=Tabelle1!$H$1:$H$2",
+    "Tabelle1!Extract": "=Tabelle1!$M$1:$P$1"
+   },
+   "filter_mode": false
+  },
+  {
+   "name": "range",
+   "action": "inplace",
+   "criteria": [
+    [
+     "Note",
+     "Note"
+    ],
+    [
+     ">=2",
+     "<=3"
+    ]
+   ],
+   "hidden": [
+    4,
+    5,
+    6,
+    8,
+    11
+   ],
+   "names": {
+    "Tabelle1!_FilterDatabase": "=Tabelle1!$A$1:$D$13",
+    "Tabelle1!Criteria": "=Tabelle1!$H$1:$I$2"
+   },
+   "filter_mode": true
+  },
+  {
+   "name": "date",
+   "action": "inplace",
+   "criteria": [
+    [
+     "Datum"
+    ],
+    [
+     ">1.3.2026"
+    ]
+   ],
+   "hidden": [
+    2,
+    5,
+    7,
+    9,
+    12
+   ],
+   "names": {
+    "Tabelle1!_FilterDatabase": "=Tabelle1!$A$1:$D$13",
+    "Tabelle1!Criteria": "=Tabelle1!$H$1:$H$2"
+   },
+   "filter_mode": true
+  },
+  {
+   "name": "empty",
+   "action": "inplace",
+   "criteria": [
+    [
+     "Fach"
+    ],
+    [
+     "=\"=\""
+    ]
+   ],
+   "hidden": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "names": {
+    "Tabelle1!_FilterDatabase": "=Tabelle1!$A$1:$D$13",
+    "Tabelle1!Criteria": "=Tabelle1!$H$1:$H$2"
+   },
+   "filter_mode": true
+  },
+  {
+   "name": "blankrow",
+   "action": "inplace",
+   "criteria": [
+    [
+     "Fach",
+     "Note"
+    ],
+    [
+     "",
+     ""
+    ]
+   ],
+   "hidden": [],
+   "names": {
+    "Tabelle1!_FilterDatabase": "=Tabelle1!$A$1:$D$13",
+    "Tabelle1!Criteria": "=Tabelle1!$H$1:$I$2"
+   },
+   "filter_mode": false
+  },
+  {
+   "name": "text_gt",
+   "action": "inplace",
+   "criteria": [
+    [
+     "Name"
+    ],
+    [
+     ">H"
+    ]
+   ],
+   "hidden": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    12
+   ],
+   "names": {
+    "Tabelle1!_FilterDatabase": "=Tabelle1!$A$1:$D$13",
+    "Tabelle1!Criteria": "=Tabelle1!$H$1:$H$2"
+   },
+   "filter_mode": true
+  }
+ ]
+}

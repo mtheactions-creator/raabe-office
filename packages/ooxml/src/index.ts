@@ -6,8 +6,10 @@ export { DEFAULT_LINE_STYLE, DEFAULT_SHAPE_STYLE, shapePreset } from "./shapes";
 export { readXlsx } from "./xlsx/read";
 export { writeXlsx, type XlsxWriteOptions } from "./xlsx/write";
 export { newWorkbook } from "./xlsx/new";
+export { bakedKey as pictureBakedKey, lookKey as pictureLookKey } from "./xlsx/pictures";
 export { widthFromFile, widthToFile } from "./xlsx/units";
 export { resolveColor as resolveXlsxColor } from "./xlsx/colors";
+export { defaultSparkColors, readSparklines, sparklineGroupXml, sparklinesExt } from "./xlsx/sheetparts";
 export { Pptx, RT as PPTX_RT, CT_PPTX, relTarget, type SlideRef } from "./pptx/package";
 export * as PptxDom from "./pptx/dom";
 export { newPptx, newPptxFiles, OFFICE_DESIGN, LAYOUT_NAMES, masterXml, designTheme, type DesignSpec } from "./pptx/template";
@@ -17,3 +19,4 @@ export {
 } from "./pptx/resolve";
 export { chartFromXml, chartToXml, chartStyleXml, chartColorsXml } from "./xlsx/chart";
 export { Rels, relsPath, resolveTarget } from "./package";
+export { chartSvg, chartImage } from "./chart-preview";

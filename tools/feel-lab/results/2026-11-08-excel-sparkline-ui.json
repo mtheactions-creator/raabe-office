@@ -1,0 +1,378 @@
+{
+ "tab": {
+  "name": "Sparkline",
+  "key": "Alt, J D"
+ },
+ "controls": [
+  {
+   "type": "Button",
+   "name": "Kommentare",
+   "key": "Alt, Z C",
+   "enabled": true
+  },
+  {
+   "type": "Pane",
+   "name": "Unteres Menüband",
+   "key": "",
+   "enabled": true
+  },
+  {
+   "type": "Group",
+   "name": "Sparkline",
+   "key": "Alt, J D",
+   "enabled": true
+  },
+  {
+   "type": "Group",
+   "name": "Sparkline",
+   "key": "Alt, J D, Z S",
+   "enabled": true
+  },
+  {
+   "type": "SplitButton",
+   "name": "Daten bearbeiten",
+   "key": "Alt, J D, B",
+   "enabled": true
+  },
+  {
+   "type": "Button",
+   "name": "Gruppenspeicherort und -daten bearbeiten...",
+   "key": "",
+   "enabled": true
+  },
+  {
+   "type": "MenuItem",
+   "name": "Weitere Optionen",
+   "key": "Alt, J D, B",
+   "enabled": true
+  },
+  {
+   "type": "Group",
+   "name": "Typ",
+   "key": "Alt, J D, Z T",
+   "enabled": true
+  },
+  {
+   "type": "Button",
+   "name": "Linie",
+   "key": "Alt, J D, I",
+   "enabled": true
+  },
+  {
+   "type": "Button",
+   "name": "Säule",
+   "key": "Alt, J D, Ä",
+   "enabled": true
+  },
+  {
+   "type": "Button",
+   "name": "Gewinn/Verlust",
+   "key": "Alt, J D, G",
+   "enabled": true
+  },
+  {
+   "type": "Group",
+   "name": "Anzeigen",
+   "key": "Alt, J D, Z A",
+   "enabled": true
+  },
+  {
+   "type": "CheckBox",
+   "name": "Höchstpunkt",
+   "key": "Alt, J D, H",
+   "enabled": true
+  },
+  {
+   "type": "CheckBox",
+   "name": "Tiefpunkt",
+   "key": "Alt, J D, T",
+   "enabled": true
+  },
+  {
+   "type": "CheckBox",
+   "name": "Negative Punkte",
+   "key": "Alt, J D, N",
+   "enabled": true
+  },
+  {
+   "type": "CheckBox",
+   "name": "Erster Punkt",
+   "key": "Alt, J D, E",
+   "enabled": true
+  },
+  {
+   "type": "CheckBox",
+   "name": "Letzter Punkt",
+   "key": "Alt, J D, L",
+   "enabled": true
+  },
+  {
+   "type": "CheckBox",
+   "name": "Datenpunkte",
+   "key": "Alt, J D, M",
+   "enabled": true
+  },
+  {
+   "type": "Group",
+   "name": "Formatvorlage",
+   "key": "Alt, J D, Z F",
+   "enabled": true
+  },
+  {
+   "type": "Group",
+   "name": "Sparklineformatvorlage",
+   "key": "Alt, J D, S",
+   "enabled": true
+  },
+  {
+   "type": "Pane",
+   "name": "Sparklineformatvorlage",
+   "key": "",
+   "enabled": true
+  },
+  {
+   "type": "Button",
+   "name": "Sparklineformatvorlage",
+   "key": "Alt, J D, S",
+   "enabled": true
+  },
+  {
+   "type": "SplitButton",
+   "name": "Sparklinefarbe",
+   "key": "Alt, J D, P",
+   "enabled": true
+  },
+  {
+   "type": "Button",
+   "name": "Sparklinefarbe RGB(0, 0, 0)",
+   "key": "",
+   "enabled": true
+  },
+  {
+   "type": "MenuItem",
+   "name": "Weitere Optionen",
+   "key": "Alt, J D, P",
+   "enabled": true
+  },
+  {
+   "type": "MenuItem",
+   "name": "Datenpunktfarbe",
+   "key": "Alt, J D, D",
+   "enabled": true
+  },
+  {
+   "type": "Group",
+   "name": "Gruppieren",
+   "key": "Alt, J D, Z G",
+   "enabled": true
+  },
+  {
+   "type": "MenuItem",
+   "name": "Achse",
+   "key": "Alt, J D, A",
+   "enabled": true
+  },
+  {
+   "type": "Button",
+   "name": "Gruppieren",
+   "key": "Alt, J D, U",
+   "enabled": false
+  },
+  {
+   "type": "Button",
+   "name": "Gruppierung aufheben",
+   "key": "Alt, J D, R",
+   "enabled": true
+  },
+  {
+   "type": "SplitButton",
+   "name": "Löschen",
+   "key": "Alt, J D, Ö",
+   "enabled": true
+  },
+  {
+   "type": "Button",
+   "name": "Ausgewählte Sparklines löschen",
+   "key": "",
+   "enabled": true
+  },
+  {
+   "type": "MenuItem",
+   "name": "Weitere Optionen",
+   "key": "Alt, J D, Ö",
+   "enabled": true
+  },
+  {
+   "type": "MenuItem",
+   "name": "Menüband-Anzeigeoptionen",
+   "key": "Alt, Z R",
+   "enabled": true
+  }
+ ],
+ "states": {
+  "line group of 3, F1": {
+   "Daten bearbeiten": true,
+   "Linie": true,
+   "Säule": true,
+   "Gewinn/Verlust": true,
+   "Höchstpunkt": true,
+   "Tiefpunkt": true,
+   "Negative Punkte": true,
+   "Erster Punkt": true,
+   "Letzter Punkt": true,
+   "Datenpunkte": true,
+   "Sparklinefarbe": true,
+   "Datenpunktfarbe": true,
+   "Achse": true,
+   "Gruppieren": false,
+   "Gruppierung aufheben": true,
+   "Löschen": true
+  },
+  "column group of 1": {
+   "Daten bearbeiten": true,
+   "Linie": true,
+   "Säule": true,
+   "Gewinn/Verlust": true,
+   "Höchstpunkt": true,
+   "Tiefpunkt": true,
+   "Negative Punkte": true,
+   "Erster Punkt": true,
+   "Letzter Punkt": true,
+   "Datenpunkte": false,
+   "Sparklinefarbe": true,
+   "Datenpunktfarbe": true,
+   "Achse": true,
+   "Gruppieren": false,
+   "Gruppierung aufheben": false,
+   "Löschen": true
+  },
+  "winloss group of 1": {
+   "Daten bearbeiten": true,
+   "Linie": true,
+   "Säule": true,
+   "Gewinn/Verlust": true,
+   "Höchstpunkt": true,
+   "Tiefpunkt": true,
+   "Negative Punkte": true,
+   "Erster Punkt": true,
+   "Letzter Punkt": true,
+   "Datenpunkte": false,
+   "Sparklinefarbe": true,
+   "Datenpunktfarbe": true,
+   "Achse": true,
+   "Gruppieren": false,
+   "Gruppierung aufheben": false,
+   "Löschen": true
+  },
+  "line group of 1": {
+   "Daten bearbeiten": true,
+   "Linie": true,
+   "Säule": true,
+   "Gewinn/Verlust": true,
+   "Höchstpunkt": true,
+   "Tiefpunkt": true,
+   "Negative Punkte": true,
+   "Erster Punkt": true,
+   "Letzter Punkt": true,
+   "Datenpunkte": true,
+   "Sparklinefarbe": true,
+   "Datenpunktfarbe": true,
+   "Achse": true,
+   "Gruppieren": false,
+   "Gruppierung aufheben": false,
+   "Löschen": true
+  },
+  "two groups F3:F5": {
+   "Daten bearbeiten": false,
+   "Linie": true,
+   "Säule": true,
+   "Gewinn/Verlust": true,
+   "Höchstpunkt": true,
+   "Tiefpunkt": true,
+   "Negative Punkte": true,
+   "Erster Punkt": true,
+   "Letzter Punkt": true,
+   "Datenpunkte": true,
+   "Sparklinefarbe": true,
+   "Datenpunktfarbe": true,
+   "Achse": true,
+   "Gruppieren": true,
+   "Gruppierung aufheben": true,
+   "Löschen": true
+  },
+  "whole group F1:F3": {
+   "Daten bearbeiten": true,
+   "Linie": true,
+   "Säule": true,
+   "Gewinn/Verlust": true,
+   "Höchstpunkt": true,
+   "Tiefpunkt": true,
+   "Negative Punkte": true,
+   "Erster Punkt": true,
+   "Letzter Punkt": true,
+   "Datenpunkte": true,
+   "Sparklinefarbe": true,
+   "Datenpunktfarbe": true,
+   "Achse": true,
+   "Gruppieren": false,
+   "Gruppierung aufheben": true,
+   "Löschen": true
+  },
+  "no sparkline A1": {
+   "Daten bearbeiten": null,
+   "Linie": null,
+   "Säule": null,
+   "Gewinn/Verlust": null,
+   "Höchstpunkt": null,
+   "Tiefpunkt": null,
+   "Negative Punkte": null,
+   "Erster Punkt": null,
+   "Letzter Punkt": null,
+   "Datenpunkte": null,
+   "Sparklinefarbe": null,
+   "Datenpunktfarbe": null,
+   "Achse": null,
+   "Gruppieren": null,
+   "Gruppierung aufheben": null,
+   "Löschen": true
+  }
+ },
+ "styles": [
+  "Dunkelblaugrün, Sparklineformat Akzent 1, 50% dunkler",
+  "Braun, Sparklineformat Akzent 2, 50% dunkler",
+  "Dunkelgrün, Sparklineformat Akzent 3, 50% dunkler",
+  "Dunkelblaugrün, Sparklineformat Akzent 4, 50% dunkler",
+  "Pflaume, Sparklineformat Akzent 5, 50% dunkler",
+  "Dunkelgrün, Sparklineformat Akzent 6, 50% dunkler",
+  "Dunkelblaugrün, Sparklineformat Akzent 1, 25% dunkler",
+  "Braun, Sparklineformat Akzent 2, 25% dunkler",
+  "Dunkelgrün, Sparklineformat Akzent 3, 25% dunkler",
+  "Türkis, Sparklineformat Akzent 4, 25% dunkler",
+  "Pflaume, Sparklineformat Akzent 5, 25% dunkler",
+  "Dunkelgrün, Sparklineformat Akzent 6, 25% dunkler",
+  "Dunkelblaugrün, Sparklineformat Akzent 1, (weder dunkel noch hell)",
+  "Orange, Sparklineformat Akzent 2, (weder dunkel noch hell)",
+  "Dunkelgrün, Sparklineformat Akzent 3, (weder dunkel noch hell)",
+  "Türkis, Sparklineformat Akzent 4, (weder dunkel noch hell)",
+  "Pflaume, Sparklineformat Akzent 5, (weder dunkel noch hell)",
+  "Grün, Sparklineformat Akzent 6, (weder dunkel noch hell)",
+  "Türkis, Sparklineformat Akzent 1, 40% heller",
+  "Hellorange, Sparklineformat Akzent 2, 40% heller",
+  "Grün, Sparklineformat Akzent 3, 40% heller",
+  "Türkis, Sparklineformat Akzent 4, 40% heller",
+  "Rosa, Sparklineformat Akzent 5, 40% heller",
+  "Grün, Sparklineformat Akzent 6, 40% heller",
+  "Blau, Sparklineformat dunkel #1",
+  "Blau, Sparklineformat dunkel #2",
+  "Dunkelgrau, Sparklineformat dunkel #3",
+  "Schwarz, Sparklineformat dunkel #4",
+  "Blau, Sparklineformat dunkel #5",
+  "Dunkelblau, Sparklineformat dunkel #6",
+  "Dunkelgrau, Sparklineformat farbig #1",
+  "Blau, Sparklineformat farbig #2",
+  "Hellgrün, Sparklineformat farbig #3",
+  "Dunkelgrün, Sparklineformat farbig #4",
+  "Dunkelblau, Sparklineformat farbig #5",
+  "Dunkelblau, Sparklineformat farbig #6"
+ ]
+}

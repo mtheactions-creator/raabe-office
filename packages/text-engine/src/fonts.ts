@@ -4,6 +4,7 @@
 // measured pair adjustments.
 
 import type { ResolvedChar } from "./styles";
+import { ensureFontFamily, onFontAlias } from "./font-alias";
 
 export const PT = 4 / 3;
 
@@ -49,7 +50,10 @@ export class Fonts {
   private baselines = new Map<string, number>();
   installed: Set<string> | null = null;
 
-  constructor(private provider: MetricsProvider | null = null) {}
+  constructor(private provider: MetricsProvider | null = null) {
+    // A font found only by its full name measures differently once its alias has loaded: lay out again.
+    onFontAlias(() => { this.advances.clear(); this.pairs.clear(); this.baselines.clear(); for (const l of this.listeners) l(); });
+  }
 
   setProvider(p: MetricsProvider): void {
     this.provider = p;
@@ -123,6 +127,7 @@ export class Fonts {
   }
 
   cssFamily(family: string): string {
+    ensureFontFamily(family);
     const alt = COMPATIBLE[family.toLowerCase()];
     return `"${family}"${alt ? `, "${alt}"` : ""}, sans-serif`;
   }

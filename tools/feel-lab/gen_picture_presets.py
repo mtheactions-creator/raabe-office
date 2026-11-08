@@ -1,4 +1,4 @@
-"""Writes apps/raabe-write/src/features/picture-presets.ts from Word's recorded Bildformat
+"""Writes packages/text-engine/src/picture-presets.ts (shared by RaabeWrite and RaabeCalc) from Word's recorded Bildformat
 galleries (results/<date>-word-picture.json, probe_word_picture.py): for every entry the
 shape properties Word writes (geometry, fill, line, effects, 3D, without the transform), the
 space its effects take, and Word's name from the tooltip where it was recorded.
@@ -13,7 +13,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-OUT = ROOT / "apps/raabe-write/src/features/picture-presets.ts"
+OUT = ROOT / "packages/text-engine/src/picture-presets.ts"
 
 GROUPS = {
     "styles": "PICTURE_STYLES",

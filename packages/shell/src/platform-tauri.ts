@@ -69,6 +69,8 @@ export function tauriPlatform(): Platform {
     clipboardWriteHtml: (html, text) => invoke("clipboard_write_html", { html, text }),
     printToPdf: (path, size) => invoke("print_to_pdf", { path, width: size?.width ?? null, height: size?.height ?? null }),
     listFonts: () => invoke<string[]>("list_fonts"),
+    cloudFonts: () => invoke("cloud_fonts"),
+    cloudFont: (id) => invoke<ArrayBuffer>("cloud_font", { id }),
     fontChars: (family) => invoke("font_chars", { family }),
     listDir: (path) => invoke("list_dir", { path }),
     documentsDir: () => invoke<string>("documents_dir"),

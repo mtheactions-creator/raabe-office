@@ -355,6 +355,30 @@ export function previewElement(url: string, w: number, h: number, f: PictureForm
   return box;
 }
 
+/**
+ * The picture with its Office 2010 effects (Schärfen/Weichzeichnen, Helligkeit/Kontrast, Sättigung,
+ * Farbton) worked into its pixels, as a PNG data: URL; null when there is nothing to do or the
+ * browser cannot draw it. Excel and PowerPoint store pictures this way: the file's picture shows
+ * the effects, the untouched original sits beside it (a14:imgLayer), and Excel draws the stored
+ * picture as it is (recorded, D-087).
+ */
+export async function bakePicture(url: string, f: PictureFormat): Promise<string | null> {
+  const only: PictureFormat = { brightness: f.brightness, contrast: f.contrast, saturation: f.saturation, temperature: f.temperature, sharpen: f.sharpen };
+  const filter = colorFilter(only);
+  if (!filter) return null;
+  const img = new Image();
+  await new Promise<void>((resolve, reject) => { img.onload = () => resolve(); img.onerror = () => reject(new Error("image")); img.src = url; }).catch(() => undefined);
+  if (!img.naturalWidth) return null;
+  const c = document.createElement("canvas");
+  c.width = img.naturalWidth;
+  c.height = img.naturalHeight;
+  const g = c.getContext("2d");
+  if (!g) return null;
+  g.filter = filter;
+  g.drawImage(img, 0, 0);
+  return c.toDataURL("image/png");
+}
+
 const transparentCache = new Map<string, string>();
 
 /**

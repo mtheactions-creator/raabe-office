@@ -2367,3 +2367,233 @@ file, same page count, mean page difference against Word's PDF 2.06 / 1.83 / 0.3
 Einfügen > Diagramm, Daten bearbeiten (the embedded workbook) and the chart tabs in RaabeWrite; charts of the
 newer chartEx types follow the chart engine (D-086).
 
+
+## D-085 RaabeCalc: the Sparkline tab, every sparkline option, drawn as Excel draws (2026-11-08)
+
+Package A of D-080 (Sparklines), recorded in our own Excel and built the same way.
+- **Recorded:** `probe_excel_sparklines.py` (invisible Excel, COM only): 50 sheets, one per option (types, the six
+  Anzeigen boxes, RGB and design colours, eight Stärken, Lücken/Null/verbinden, ausgeblendete Zellen, Achse anzeigen
+  with colour, rechts nach links, vertical axis automatic/identisch/custom, date axis, Modify, Gruppieren,
+  Gruppierung aufheben, Löschen); the XML Excel saved and what COM reads back (fixture `excel-sparklines.json`).
+  `probe_excel_sparkline_ui.py`: the tab's keytips (JD; ZS B, ZT I Ä G, ZA H T N E L M, ZF S P D, ZG A U R Ö), which
+  controls are enabled per type and selection, and the 36 styles of the Sparklineformatvorlage gallery, each applied
+  through UI Automation (no real input) and read from Excel's file (`sparkline-styles.gen.ts`). Our Excel was made
+  visible off screen for this; selecting its tab and invoking a gallery item made it the foreground window for
+  under 0.1 s each time, and the probe handed the focus straight back. The Stärke submenu could not be read that
+  way (the menu reading picked up the whole window): its entries are PowerPoint's recorded Stärke labels (D-070).
+- **Model:** `SparklineGroup` holds every x14:sparklineGroup attribute (markers, high, low, first, last, negative,
+  displayXAxis, displayEmptyCellsAs, displayHidden, lineWeight, min/maxAxisType, manualMin/Max, rightToLeft, the
+  date range) and the eight colours (series, negative, axis, markers, first, last, high, low) with their design
+  colour reference. The file's default for displayEmptyCellsAs is "zero" (Excel then leaves the attribute out).
+  Read and written as Excel writes them (attribute order of the schema); unchanged groups are written back
+  verbatim (with Excel's xr2:uid), new groups come first in the file as in Excel.
+- **Behaviour as recorded:** new sparklines get Excel's colours (#376092, the others #D00000, axis black);
+  Gewinn/Verlust starts with Negative Punkte on; Gruppieren takes the settings of the active cell's group;
+  Gruppierung aufheben makes each selected sparkline a group of its own; Löschen takes the selected sparklines or
+  the whole groups they belong to; every other setting applies to all groups the selection touches. Gruppieren is
+  enabled for sparklines of two or more groups, Gruppierung aufheben when a touched group has several, Daten
+  bearbeiten only within one group, Datenpunkte only for lines. The tab appears while the active cell holds a
+  sparkline and is selected after Einfügen > Sparklines.
+- **Drawn as Excel draws** (measured on Excel's CopyPicture at 150 %, `apps/raabe-calc/test/sparklines.test.ts`):
+  plot area inset 1.25 pt left/right and 2 pt top/bottom; n values in n equal slots, line points at the slot
+  centres, columns 72 % of a slot; columns from zero, or from the bottom when all values are positive (the
+  smallest is a bar of one pixel); Gewinn/Verlust fills the upper or lower half; points as diamonds of 2 pt + 4/3 of
+  the Stärke; colour priority Höchstpunkt, Tiefpunkt, Erster, Letzter, Negative, Datenpunkte; negative columns in
+  the series colour unless Negative Punkte is on; the axis only where zero lies inside the vertical range.
+- **Measured:** xlsx-sparklines.test 104 cases (the 50 Excel files read as COM reports them, written as Excel wrote
+  them apart from the xr2:uid, verbatim when unchanged, a whole workbook through writeXlsx/readXlsx, the 36 styles);
+  raabe-calc sparklines.test 10 cases (operations against Excel's files, drawing against Excel's pixels);
+  `check_calc_sparklines.py`: RaabeCalc -> Excel 7/7 (six groups built through the tab with every option, read back
+  through COM), Excel -> RaabeCalc 50/50, saved again unchanged 50/50 sheets byte for byte, reopened in Excel 50/50.
+  Visual comparison of 36 cells (nine kinds x four rows, Excel's CopyPicture against RaabeCalc at 100 %): the drawn
+  ink of each side lies within 3 device pixels of the other's in all 36 (mean F1 1.0), mean grey difference 3.3 of 255.
+- **Not built:** Zeile/Spalte wechseln works only for square data blocks (Excel greys it out otherwise; not
+  recorded further); the reference fields of the dialogs take typed ranges, not a range picked with the mouse;
+  sparklines do not move with inserted or deleted rows and columns or follow a renamed sheet yet; the gallery's
+  tooltips leave out Excel's leading colour word (it names the colour in Excel's theme); keytips of the menu
+  entries were not recorded.
+
+## D-084 RaabeCalc: Szenario-Manager and Konsolidieren (2026-11-08)
+
+Package A of D-080, recorded in our own invisible Excel (`probe_excel_scenarios.py`, `probe_excel_consolidate.py`; no
+real input) and built the same way (`scenarios.ts`, `consolidate.ts`, the file parts in `ooxml/src/xlsx/scenarios.ts`).
+Dialog labels as Excel's dialog resources hold them (the inventory's Szenario-Manager and Konsolidieren, the sub-dialogs
+read from Excel's German resource DLL as strings, no UI opened); explanations in our own words.
+- **Szenario-Manager:** list, Anzeigen, Schließen, Hinzufügen..., Löschen, Bearbeiten..., Zusammenführen...,
+  Zusammenfassung...; Szenario hinzufügen/bearbeiten (Szenarioname, Veränderbare Zellen up to 32, Kommentar starting
+  "Erstellt von <Name> am <Datum>" as recorded, Bearbeiten adds a line "Geändert von …" (not recordable through COM), Schutz: Änderungen verhindern /
+  Ausblenden, which count while the sheet is protected with Szenarios bearbeiten off), Szenariowerte (with Hinzufügen).
+  Values are kept as typed: German Excel writes "0,25" into the file, Anzeigen enters them as if typed (a formula among
+  the cells is replaced, recorded), one undo step "Szenario anzeigen"; list changes are undo steps too.
+  Zusammenführen from another sheet of the workbook; a clashing name gets the date ("Gut 08.11.2026", recorded).
+- **Szenariobericht** (new sheet before the active one, "Szenariobericht", "Szenariobericht 2"): Excel's layout cell by
+  cell (purple title rows, grey labels, navy section labels, grey scenario cells, borders, font sizes 12/10/8, the
+  comments row grouped and hidden, D… grouped, no gridlines), names instead of $B$1 when a name refers to the cell,
+  result values as each scenario alone gives them. The three note rows are our own words (Excel's text is its prose).
+  Deliberate difference: RaabeCalc's outline has the summary row below its group, so the comments group's button sits on
+  row 5 (Excel: row 3, summaryBelow="0"). **Not built:** the PivotTable-Szenarioberichts (greyed out; Excel makes a
+  PivotTable with a scenario cache), Zusammenführen from other open workbooks (only this workbook is listed), pointing
+  into the sheet while the dialogs are open (references are typed, as in Zielwertsuche).
+- **Konsolidieren:** Funktion (Excel's 11), Verweis, Vorhandene Verweise (sorted as Excel's list; Excel also computes in
+  that order, recorded through the number format), Hinzufügen, Löschen, Beschriftung aus Oberster Zeile / Linker Spalte,
+  Verknüpfungen mit Quelldaten; Durchsuchen... is greyed (other files). Recorded rules: labels compared without case,
+  spelt as first seen; a new label goes before the next label of its own source already listed, else to the end (14
+  order cases); text counts only for Anzahl; a cell nothing counts for stays empty; a result cell takes the number format
+  of its first source cell; one cell / one row / one column grows, a larger range limits the result. Verknüpfungen: per
+  label one row per source with =Blatt!$B$2 links (a source's duplicate labels packed per column, as Excel), the
+  workbook's name beside each source's first row (labels from the left column only), =SUMME(…) below, detail rows
+  grouped and hidden. Deliberate difference: Excel narrows column A to 1.18 there; we leave it. The settings stay in the
+  sheet as Excel's <dataConsolidate>; Excel itself drops leftLabels when it reads any file (its own too, checked).
+- **File:** <scenarios> (CT_Scenarios) and <dataConsolidate> read into the model and written in Excel's form, left as they
+  were while unchanged.
+- **Measured:** scenarios.test 10 (Anzeigen in turn, a formula replaced, four reports cell by cell against Excel's,
+  names), consolidate.test 44 (28 recorded cases cell by cell with formulas, formats and outline, the settings, 14 label
+  orders), xlsx-scenarios.test 7 (Excel's file read, written back unchanged, edited as Excel writes it);
+  `check_calc_scenarios.py` RaabeCalc -> Excel 38/38 (scenarios, Excel showing ours, the report, Excel's own
+  Konsolidieren equal to ours, link formulas and outline), Excel -> RaabeCalc 15/15.
+
+## D-086 Charts: every chart type of Excel 365 except the map (2026-11-08)
+
+The owner's first priority is that Office documents look the same in our apps. The chart engine knew 13 types;
+Excel offers 56 (without Karte, a cloud feature that stays out, D-066).
+
+- **Recorded first** (`probe_excel_charttypes.py`, our own invisible Excel, Office 2013-2022 design, COM only):
+  one chart per type from a fixed data block, `AddChart2` with the default style; Chart.ChartType, SERIES formulas,
+  axis groups, title, legend, chart group options and the 3-D view went to `results/2026-11-08-excel-charttypes.json`,
+  Excel's workbook (user name and save path removed, `anonymize_office.py`) to
+  `packages/ooxml/test/fixtures/excel-charttypes.xlsx`, its PNG exports to TEMP. Menus and the dialog's categories
+  come from the inventory (`results/2026-11-05-excel-inventory.json`).
+- **Model** (`packages/charts`, additive; the 13 old kinds draw and write exactly as before, their tests unchanged):
+  43 new kinds (`kinds.ts`: family, direction, grouping, 3-D, xlChartType, German name), per-series `kind` and
+  `secondary` (Verbund, Sekundärachse), Blasengröße, category levels (Treemap, Sunburst), Wasserfall totals, the
+  3-D view, Kreis-aus-Kreis split and second plot size, Blasengröße skalieren.
+- **File** (`packages/ooxml/src/xlsx/chart.ts`): every c:chart group read (bar3D, line3D, area3D, pie3D, ofPie,
+  radar, bubble, stock with and without the volume columns, surface and surface3D, several groups = Verbund, groups
+  on a right/top value axis = secondary) and written as Excel writes them (view3D, floor and walls, series axis,
+  up/down and hi-lo lines, bandFmts left to Excel's defaults). The chartex part reads Wasserfall, Trichter, Treemap,
+  Sunburst, Kastengrafik, Pareto and Histogramm (Pareto is a clusteredColumn series with a paretoLine); Excel writes
+  their data only as hidden names (`_xlchart.v1.N`) without caches, so RaabeCalc resolves those names when it reads
+  the cells (`refreshCaches`). Unchanged charts are still written back verbatim (D-024); a chart Excel's maps or a type
+  we do not know stays in the drawing as it is.
+- **Drawn as Excel draws them**: 100 % and stacked columns, bars, lines and areas; Verbund with a secondary axis;
+  Kurs (hi-lo lines, white/dark up/down bars, the close as a dash, volume columns with the prices' axis at the right);
+  Blase (area-true sizes, the largest a quarter of the plot's shorter side, 75 % opacity; 3-D bubbles shaded);
+  Netz (polygon gridlines, spokes, values along the first spoke, filled or with markers, axis without headroom);
+  Kreis aus Kreis / Balken aus Kreis (the last three points gathered in a slice facing right, Verbindungslinien,
+  measured widths); 3D-Kreis (ellipse height = width x sin rotX, rim 0.244 x radius, darker); 3-D columns and bars
+  (oblique projection for Rechtwinklige Achsen: back and side wall gridlines, boxes with darker top and side);
+  3D-Linie, 3D-Fläche, 3D-Oberfläche and its Drahtmodell through a parallel rotation by rotX/rotY; Kontur as the top
+  view with Excel's lighting on the slope, Kontur (Drahtmodell) as iso lines (marching squares); bands of the surface
+  legend ("0-50" …) in the accents; Wasserfall (Anstieg/Abfall/Summe, connectors), Trichter, Treemap (squarified),
+  Sunburst, Kastengrafik (exclusive quartiles, mean x, whiskers to 1.5 x IQR, outliers), Pareto (sorted, cumulative
+  line on a 0-100 % axis). 3-D value axes end on the data (4.5 → 5) as Excel's do.
+- **Einfügen > Diagramme** (`apps/raabe-calc/src/charts/types.ts`): the seven menus with Excel's groups, names and
+  order, "Weitere …" opening Diagramm einfügen at the category; Verbund with the three presets. Diagrammentwurf >
+  Diagrammtyp ändern and Empfohlene Diagramme open Excel's dialog: Empfohlene Diagramme / Alle Diagramme, the 17
+  categories (Karte greyed), the types of each, a live preview, Kombi with the presets and Benutzerdefinierte
+  Kombination (type and Sekundärachse per series). Not built: Zuletzt verwendet and Vorlagen (no chart templates);
+  Empfohlene Diagramme lists Excel's four recorded picks instead of choosing by the data. The last Kombi menu entry
+  is not readable through UI Automation ("[Beschreibung]"); "Benutzerdefiniertes Kombinationsdiagramm erstellen..." is
+  our assumption.
+- **Measured.** `charttypes.test.ts` 115 tests: all 56 recorded charts read as their type with Excel's SERIES
+  formulas and write back byte for byte; every new type goes write → read; hierarchy, totals and bubble sizes from
+  the cells. `check_excel_charts.py`: Excel opens RaabeCalc's workbook of the 43 new types plus two Verbund charts
+  without repair and reports the same ChartType and SERIES for 45/45 (the old 26/26 still pass).
+  `compare_calc_charttypes.py calc` (the release exe against Excel's PNG; mean absolute greyscale difference, 0-255,
+  the old types for scale: Säulen 4.3, Linie 3.5, Kreis 1.3, Ring 1.2, Histogramm 2.2):
+  100 %/stacked 2-D 3.3-4.6 (Säulen 4.6, Balken 4.5, Linie 3.9-4.5, Fläche 3.3-3.6); Verbund 3.8-4.6; Punkte
+  4.4-4.6; Blase 3.4, 3D-Blase 4.9; Kurs HLC 4.2, OHLC 5.3, VHLC 9.5, VOHLC 9.6; Netz 5.6/5.7, gefüllt 3.3;
+  Balken aus Kreis 3.4, Kreis aus Kreis 7.0, 3D-Kreis 9.1; Kastengrafik 2.6, Pareto 7.2, Wasserfall 7.8,
+  Trichter 8.5, Sunburst 7.6, Treemap 10.5; Kontur (Drahtmodell) 2.8, 3D-Oberfläche (Drahtmodell) 6.1, Kontur 9.6,
+  3D-Oberfläche 19.4; 3D-Balken 11.4-14.9, 3D-Linie 11.3, 3D-Säulen 18.5-23.9, 3D-Fläche 20.3-21.8.
+- **Not matched:** Excel's 3-D engine (perspective, its light, label placement along tilted axes): we project in
+  parallel, so 3-D columns, areas and the surface sit a few points off and score highest; Kreis aus Kreis turns its
+  second pie slightly differently and splits the last three points where Excel's "automatic" split may choose
+  otherwise; Sunburst labels do not wrap; Kurs dates are categories (no gaps for missing days); the Format pane has
+  no entries yet for walls, floor, hi-lo lines, up/down bars and Verbindungslinien; RaabePresent and RaabeWrite read
+  the new types through the same engine but were not checked here.
+
+## D-087 RaabeCalc: pictures with Bildformat, the Bildformat tab, written as Excel writes them (2026-11-08)
+
+Recorded in our own Excel without real input (`probe_excel_pictures.py`): 30 pictures with one setting each plus a
+group, set through COM and saved as `xlsx-pictures.xlsx` / `excel-pictures.json` (anchors, COM readback, Excel's
+rendering by CopyPicture); the Bildformat tab's controls, keytips and menus through UI Automation; Excel's 28
+Schnellformatvorlagen applied one by one through UI Automation and read from the saved file.
+- **Look:** each picture's DrawingML is read with the shared reader (`readPicture`) into text-engine's PictureFormat
+  and drawn with RaabeWrite's renderer (`pictureElement`): crop, a:lum, Graustufe, Schwarzweiß, Ausgeblichen,
+  duotone, Transparente Farbe, Transparenz, a14 Korrekturen/Sättigung/Farbton, rotation, flips, Bildrahmen, shadow,
+  reflection, glow, soft edges, bevel, 3D rotation, frame shapes, Alternativtext, Ausgeblendet; pictures inside
+  a group are shown in their place (the group itself stays as the file has it, not editable). Printing uses
+  the same drawing.
+- **Recorded rule:** Excel stores Office 2010 effects (a14:imgEffect) worked into the stored picture, keeps the
+  original as an HD Photo (a14:imgLayer) and draws the stored picture as it is: a file whose effects or picture
+  differ shows the stored picture (three variants checked). So such pictures are drawn without applying the
+  effects again, and when RaabeCalc sets Korrekturen, Sättigung or Farbton it works them into a PNG copy (canvas
+  with the same filters) which the file stores, with the effects listed as Excel lists them (no HD Photo layer).
+- **Bildformat tab** (`picture-tab.ts`, labels and keytips as recorded, JP): Anpassen (Freistellen, Korrekturen,
+  Farbe with Neu einfärben in Excel's names and Transparente Farbe bestimmen, Transparenz, Bilder komprimieren...,
+  Bild ändern: Dieses Gerät... / Aus Zwischenablage..., Bild zurücksetzen / Bild und Größe zurücksetzen),
+  Bildformatvorlagen (the 28 styles with Livevorschau, Bildrahmen, Bildeffekte with Office's presets, launcher
+  Bild...), Alternativtext (pane), Anordnen (Ebene nach vorne/hinten among the pictures, Auswahlbereich lists
+  pictures too: select, show/hide, rename; Ausrichten: Am Raster ausrichten, Gitternetzlinien anzeigen; Drehen:
+  Rechts-/Linksdrehung 90 Grad, Vertikal umdrehen, Horizontal spiegeln), Größe (Zuschneiden with the picture
+  behind the frame and black crop handles, Auf Form zuschneiden, Seitenverhältnis, Ausfüllen, Einpassen;
+  Formenhöhe/-breite keeping proportions while Seitenverhältnis sperren is on; launcher Größe und Eigenschaften...).
+  Grafik formatieren pane: Füllung und Linie, Effekte, Größe und Eigenschaften, Bild. On the sheet: eight
+  handles and the turning handle, Strg+1, arrow keys, Entf. Every change is one undo step. Gallery entries,
+  presets and Freistellen are shared with RaabeWrite (moved to text-engine, RaabeWrite unchanged).
+- **Writing:** unchanged pictures verbatim, moved ones with new corners, changed ones with Excel's DrawingML;
+  a turned picture is anchored by its turned box (45° to 135°) as Excel does.
+- **Measured:** unit tests read all 30 settings; every picture rewritten from the model gives Excel's XML element
+  for element (30/30); Excel's 28 picture styles write exactly Word's recorded DrawingML (28/28).
+  `check_calc_pictures.py`: Excel -> RaabeCalc 31/31 settings read; rendering against Excel's mean grey difference
+  2.0-6.1 for 28 of 31 blocks (2.5 for the plain picture: grid and text; Bildrahmen dashes 7.0, the group 9.2, 3D
+  rotation 10.4), where drawing the pictures plainly (the state before) gave up to 23.5; RaabeCalc -> Excel 29/30 pictures read back through COM as Excel's own, rendered
+  by Excel within 0.2-1.5 of Excel's own except Helligkeit/Kontrast 4.5 (our filter is not Excel's formula);
+  Rechtsdrehung and Horizontal spiegeln from the tab read back as 90° / flipped; Rückgängig/Wiederholen checked.
+- **Not built / differences:** Künstlerische Effekte (Office's own filters; pictures having one show it as stored,
+  but a picture copied or rewritten loses the effect's name: the readback miss above), Bildlayout (SmartArt), In
+  Zelle, Skizziert, An Form ausrichten and aligning several objects (one picture is selected at a time, Gruppieren
+  greyed as in Excel for one object; pictures cannot join shape groups); Freistellen writes a new PNG instead of
+  Excel's marks beside the original. The shared renderer's inner shadow falls on the opposite edges, its bevel is
+  softer and its 3D rotation is mirrored compared with Excel (rotation3d block 10.4, bevel 5.3): left for a fix
+  shared with RaabeWrite. The tab's layouts for narrow windows were not recorded (groups collapse from the right).
+
+## D-089 Fonts found only by their full names: Aptos Narrow, Aptos Display, Calibri Light (2026-11-08)
+
+Found by the look corpus (D-080 D): RaabeCalc printed Excel 365's standard font Aptos Narrow as Arial, RaabeWrite
+Word's headings in Aptos Display as Arial (the PDFs embed ArialMT where Office's embed Aptos Narrow / Aptos Display).
+Aptos, Aptos Narrow and Aptos Display are not Windows fonts at all: Office keeps them per user in its cloud font cache
+(%LOCALAPPDATA%\Microsoft\FontCache\4\CloudFonts, found by the RaabePresent session), where neither the browser nor
+fontdb looked. The native host now loads that folder into its font database (metrics) and gives a face's bytes on
+request (`cloud_fonts`, `cloud_font`, only files inside the cache); `ensureFontFamily`
+(text-engine, used by RaabeWrite's Fonts.cssFamily and RaabeCalc's grid font; RaabePresent asked to use it too) tests
+whether the browser draws a family and, when it does not, registers the cloud font's faces with FontFace(bytes), else
+adds @font-face aliases that take installed faces by their full names (fonts Windows files under a shared typographic
+family); layouts and the grid are redone once they have loaded. Only this user's own Office fonts are used, on this PC;
+nothing is redistributed. Names the browser finds, and fonts that are not installed (the iPad), are left as they were.
+
+## D-090 Spezialfilter (Daten > Sortieren und Filtern > Erweitert...) (2026-11-08)
+
+Recorded in Excel (`probe_excel_advfilter.py`: twelve criteria ranges, in place, copied, Keine Duplikate; one case per
+Excel process, as copying to a place with chosen headings made Excel crash through COM) and built the same way
+(`sheet-engine/src/advfilter.ts`): the criteria's first row names list columns, each further row is an alternative,
+its cells all have to hold; a text without operator finds every entry beginning with it (="=Mathe" only "Mathe"),
+operators and wildcards as ZÄHLENWENN, a column whose heading is no list column holds a formula criterion written for
+the first record. The dialog (Spezialfilter: Liste an gleicher Stelle filtern / An eine andere Stelle kopieren,
+Listenbereich, Kriterienbereich, Kopieren nach, Keine Duplikate) keeps the ranges as Excel does in the sheet's names
+_FilterDatabase, Criteria and Extract, filters in place by hiding rows (sheetPr filterMode written and read), copies
+the records under the list's or the target row's own headings; Löschen and Erneut anwenden work on it. Measured: 20
+of 20 recorded cases the same rows and the same copies as Excel.
+
+## D-091 Diagramm in RaabeWrite, part 2: Einfügen > Diagramm and Daten bearbeiten (Step 7b, 2026-11-08)
+
+Einfügen > Diagramm opens Diagramm einfügen with the types of Word's dialog grouped as Word groups them (Säule, Linie,
+Kreis, Balken, Fläche, Punkt (X Y); previews drawn by the chart engine) and Word's sample data (Kategorie 1-4,
+Datenreihe 1-3). Word then opens the data in Excel; RaabeWrite opens Daten bearbeiten, a table of categories and
+series where rows and series can be added and removed. A chart keeps its chart part and an embedded workbook with the
+data in Tabelle1 (names in row 1, categories in column A), written as Word writes them (word/charts/chartN.xml, a
+package relationship to word/embeddings/Microsoft_Excel_WorksheetN.xlsx, c:externalData), so Word can edit the data of
+a chart made in RaabeWrite. Daten bearbeiten (context menu) changes a chart's series and keeps its own look; a chart
+read from Word stays byte for byte until its data are changed. Not yet: the Diagrammentwurf and Format tabs in
+RaabeWrite (Diagrammformatvorlagen, Schnelllayout, Diagrammelemente) and floating (anchored) charts made here.

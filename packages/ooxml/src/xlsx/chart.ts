@@ -6,7 +6,10 @@
 // A chart read from a file keeps its XML in `raw`; while the modelled parts stay unchanged it is
 // written back verbatim (D-024), with Excel recalculating the caches from the cells on opening.
 
-import { OFFICE_ACCENTS, isPie, paletteColor, type CellAnchor, type ChartKind, type ChartModel, type ChartSeries, type LegendPos } from "@raabe/charts";
+import {
+  OFFICE_ACCENTS, barDefaults, chartGroups, defaultView3D, isChartExKind, isCombo, isPie, kindInfo, kindOf, paletteColor, view3DOf,
+  type CellAnchor, type ChartGroup, type ChartKind, type ChartModel, type ChartSeries, type LegendPos, type View3D,
+} from "@raabe/charts";
 import { attrs, child, children, esc, escText, root, text, unesc, type El } from "./xml";
 import {
   crossesXml, defRPrAttrs, errBarsXml, labelFlags, lineXml, markerXml, readAxis, readFormat, readShape, readText, scalingXml,
@@ -29,9 +32,9 @@ const NS_CX = "http://schemas.microsoft.com/office/drawing/2014/chartex";
 /** EMU per CSS px at 96 dpi. */
 const EMU_PX = 9525;
 
-/** Histograms are chartex parts (another content and relationship type, see the constants). */
+/** Histograms, Pareto, Kastengrafik, Wasserfall, Trichter, Treemap and Sunburst are chartex parts (another content and relationship type, see the constants). */
 export function isChartEx(m: ChartModel): boolean {
-  return m.kind === "histogram";
+  return isChartExKind(m.kind);
 }
 
 // ----- writing ----------------------------------------------------------------------------------
@@ -68,6 +71,11 @@ function schemeColor(i: number): string {
   return `<a:schemeClr val="${accent}"><a:lumMod val="${mod}"/>${off ? `<a:lumOff val="${off}"/>` : ""}</a:schemeClr>`;
 }
 
+/** A scheme colour with an a:alpha (Transparenz). */
+function withAlpha(clr: string, alpha: number): string {
+  return clr.endsWith("/>") ? clr.slice(0, -2) + `><a:alpha val="${alpha}"/></a:schemeClr>` : clr.replace("</a:schemeClr>", `<a:alpha val="${alpha}"/></a:schemeClr>`);
+}
+
 function seriesText(s: ChartSeries): string {
   if (!s.name) return "";
   if (s.name.ref) return `<c:tx><c:strRef><c:f>${esc(s.name.ref)}</c:f><c:strCache><c:ptCount val="1"/><c:pt idx="0"><c:v>${escText(s.name.text ?? "")}</c:v></c:pt></c:strCache></c:strRef></c:tx>`;
@@ -98,12 +106,20 @@ function flags(val: boolean, leader = false): string {
 
 /** Datenbeschriftungen of a series with Excel's default position for the chart type, or the pane's options. */
 function seriesLabels(kind: ChartKind, o?: DataLabelOptions): string {
-  const pos: Partial<Record<ChartKind, string>> = {
-    column: "outEnd", bar: "outEnd", columnStacked: "ctr", barStacked: "ctr", line: "r", lineMarkers: "r",
-    scatter: "r", scatterSmooth: "r", scatterLines: "r", pie: "bestFit",
-  };
   const numFmt = o?.numFmt ? `<c:numFmt formatCode="${esc(o.numFmt)}" sourceLinked="0"/>` : "";
-  return `<c:dLbls>${numFmt}${spPrXml(o, NONE_FILL, NONE_LINE)}${txPr(900, "0", "", o?.text)}${labelFlags(o, pos[kind], kind === "pie" || kind === "doughnut")}</c:dLbls>`;
+  return `<c:dLbls>${numFmt}${spPrXml(o, NONE_FILL, NONE_LINE)}${txPr(900, "0", "", o?.text)}${labelFlags(o, defLabelPos(kind), isPie(kind))}</c:dLbls>`;
+}
+
+/** Excel's default Beschriftungsposition per chart type (3-D columns, areas, radar and surfaces have none). */
+export function defLabelPos(kind: ChartKind): string | undefined {
+  const i = kindInfo(kind);
+  if (i.d3 && i.family !== "pie") return undefined;
+  switch (i.family) {
+    case "bar": return i.grouping === "clustered" ? "outEnd" : "ctr";
+    case "line": case "scatter": case "bubble": case "stock": return "r";
+    case "pie": case "ofPie": return "bestFit";
+    default: return undefined;
+  }
 }
 
 function trendline(s: ChartSeries, i: number): string {
@@ -124,27 +140,51 @@ function marker(s: ChartSeries, i: number): string {
 
 function ser(m: ChartModel, s: ChartSeries, i: number): string {
   const head = `<c:ser><c:idx val="${i}"/><c:order val="${i}"/>${seriesText(s)}`;
-  const labels = m.dataLabels ? seriesLabels(m.kind, m.format?.dataLabels) : "";
+  const info = kindInfo(m.kind);
+  const labels = m.dataLabels && info.family !== "surface" ? seriesLabels(m.kind, m.format?.dataLabels) : "";
   const mk = (auto: string) => markerXml(s.marker, auto, fill(s, i), `<a:ln w="9525">${fill(s, i)}</a:ln>`);
-  switch (m.kind) {
-    case "column": case "columnStacked": case "bar": case "barStacked":
+  const family = info.family === "bar" ? "column" : info.family === "line" ? (info.d3 ? "line3D" : "line") : info.family === "area" ? "area"
+    : info.family === "pie" || info.family === "doughnut" || info.family === "ofPie" ? "pie" : info.family;
+  switch (family) {
+    case "column":
       return `${head}${spPrXml(s, fill(s, i), NONE_LINE)}<c:invertIfNegative val="${s.invertIfNegative ? 1 : 0}"/>${labels}${trendline(s, i)}${errBars(s, false)}${catData("cat", s.cat)}${numData("val", s.val)}</c:ser>`;
-    case "line": case "lineMarkers":
-      return `${head}<c:spPr>${lineXml(s.line, `<a:ln w="28575" cap="rnd">${fill(s, i)}<a:round/></a:ln>`)}<a:effectLst/></c:spPr>${mk(m.kind === "line" ? MARKER_NONE : marker(s, i))}${labels}${trendline(s, i)}${errBars(s, false)}${catData("cat", s.cat)}${numData("val", s.val)}<c:smooth val="${s.smooth ? 1 : 0}"/></c:ser>`;
+    case "line":
+      return `${head}<c:spPr>${lineXml(s.line, `<a:ln w="28575" cap="rnd">${fill(s, i)}<a:round/></a:ln>`)}<a:effectLst/></c:spPr>${mk(info.markers ? marker(s, i) : MARKER_NONE)}${labels}${trendline(s, i)}${errBars(s, false)}${catData("cat", s.cat)}${numData("val", s.val)}<c:smooth val="${s.smooth ? 1 : 0}"/></c:ser>`;
     case "area":
       return `${head}${spPrXml(s, fill(s, i), NONE_LINE)}${labels}${trendline(s, i)}${errBars(s, false)}${catData("cat", s.cat)}${numData("val", s.val)}</c:ser>`;
-    case "pie": case "doughnut": {
+    case "line3D":
+      return `${head}${spPrXml(s, fill(s, i), NONE_LINE)}${labels}${catData("cat", s.cat)}${numData("val", s.val)}<c:smooth val="0"/></c:ser>`;
+    case "pie": {
       // A series with its own Füllung has one colour; otherwise every slice takes the next accent.
       const own = s.fill && s.fill.type !== "auto";
       const ln = lineXml(s.line, '<a:ln w="19050"><a:solidFill><a:schemeClr val="lt1"/></a:solidFill></a:ln>');
       const slice = (k: number) => (m.colors && m.colors !== 10 ? `<a:srgbClr val="${paletteColor(m, k, s.val.cache.length, OFFICE_ACCENTS).slice(1)}"/>` : schemeColor(k));
-      const pts = own ? "" : s.val.cache.map((_, k) => `<c:dPt><c:idx val="${k}"/><c:bubble3D val="0"/><c:spPr><a:solidFill>${slice(k)}</a:solidFill>${ln}<a:effectLst/></c:spPr></c:dPt>`).join("");
+      // Kreis aus Kreis / Balken aus Kreis: one more point, the "Sonstige" slice of the first plot.
+      const n = s.val.cache.length + (info.family === "ofPie" ? 1 : 0);
+      const pts = own ? "" : Array.from({ length: n }, (_, k) => k).map((k) => `<c:dPt><c:idx val="${k}"/><c:bubble3D val="0"/><c:spPr><a:solidFill>${slice(k)}</a:solidFill>${ln}<a:effectLst/></c:spPr></c:dPt>`).join("");
       return `${head}${own ? spPrXml(s, "", ln) : ""}${pts}${labels}${catData("cat", s.cat)}${numData("val", s.val)}</c:ser>`;
     }
+    case "bubble": {
+      // Blase: the accent at 75 % opacity (Excel's style 201), 3-D bubbles shaded.
+      const auto = s.color ? `<a:solidFill><a:srgbClr val="${s.color.replace("#", "").toUpperCase()}"><a:alpha val="75000"/></a:srgbClr></a:solidFill>`
+        : `<a:solidFill>${withAlpha(schemeColor(i), 75000)}</a:solidFill>`;
+      return `${head}${spPrXml(s, auto, NONE_LINE)}<c:invertIfNegative val="0"/>${labels}${catData("xVal", s.cat)}${numData("yVal", s.val)}${s.size ? numData("bubbleSize", s.size) : ""}<c:bubble3D val="${info.d3 ? 1 : 0}"/></c:ser>`;
+    }
+    case "radar":
+      if (m.kind === "radarFilled") return `${head}${spPrXml(s, fill(s, i), NONE_LINE)}${labels}${catData("cat", s.cat)}${numData("val", s.val)}</c:ser>`;
+      return `${head}<c:spPr>${lineXml(s.line, `<a:ln w="28575" cap="rnd">${fill(s, i)}<a:round/></a:ln>`)}<a:effectLst/></c:spPr>${mk(info.markers ? marker(s, i) : MARKER_NONE)}${labels}${catData("cat", s.cat)}${numData("val", s.val)}</c:ser>`;
+    case "stock": {
+      // Kurs: the prices have no line (hi-lo lines and up/down bars show them); the close a dot.
+      const close = i === m.series.length - 1 && (m.kind === "stockHLC" || m.kind === "stockVHLC");
+      const sym = close ? `<c:marker><c:symbol val="dot"/><c:size val="3"/>${spPrXml(undefined, fill(s, i), `<a:ln w="9525">${fill(s, i)}</a:ln>`)}</c:marker>` : MARKER_NONE;
+      return `${head}<c:spPr>${lineXml(s.line, '<a:ln w="19050" cap="rnd"><a:noFill/><a:round/></a:ln>')}<a:effectLst/></c:spPr>${mk(sym)}${labels}${catData("cat", s.cat)}${numData("val", s.val)}<c:smooth val="0"/></c:ser>`;
+    }
+    case "surface":
+      return `${head}${spPrXml(s, fill(s, i), "<a:ln/>")}${catData("cat", s.cat)}${numData("val", s.val)}</c:ser>`;
     default: {
-      // Scatter charts: Punkte (no line), with smoothed or straight lines.
-      const auto = m.kind === "scatter" ? '<a:ln w="19050" cap="rnd"><a:noFill/><a:round/></a:ln>' : `<a:ln w="19050" cap="rnd">${fill(s, i)}<a:round/></a:ln>`;
-      return `${head}<c:spPr>${lineXml(s.line, auto)}<a:effectLst/></c:spPr>${mk(m.kind === "scatterSmooth" ? MARKER_NONE : marker(s, i))}${labels}${trendline(s, i)}${errBars(s, true)}${catData("xVal", s.cat)}${numData("yVal", s.val)}<c:smooth val="${m.kind === "scatterSmooth" || s.smooth ? 1 : 0}"/></c:ser>`;
+      // Scatter charts: Punkte (no line), with smoothed or straight lines, with or without markers.
+      const auto = info.lines === "none" ? '<a:ln w="19050" cap="rnd"><a:noFill/><a:round/></a:ln>' : `<a:ln w="19050" cap="rnd">${fill(s, i)}<a:round/></a:ln>`;
+      return `${head}<c:spPr>${lineXml(s.line, auto)}<a:effectLst/></c:spPr>${mk(info.markers ? marker(s, i) : MARKER_NONE)}${labels}${trendline(s, i)}${errBars(s, true)}${catData("xVal", s.cat)}${numData("yVal", s.val)}<c:smooth val="${info.lines === "smooth" || s.smooth ? 1 : 0}"/></c:ser>`;
     }
   }
 }
@@ -161,13 +201,13 @@ function gridXml(tag: "majorGridlines" | "minorGridlines", f: ElementFormat | un
 const GRID_LINE = `<a:ln w="9525" cap="flat" cmpd="sng" algn="ctr">${LINE_GREY}<a:round/></a:ln>`;
 const MINOR_GRID_LINE = '<a:ln w="9525" cap="flat" cmpd="sng" algn="ctr"><a:solidFill><a:schemeClr val="tx1"><a:lumMod val="5000"/><a:lumOff val="95000"/></a:schemeClr></a:solidFill><a:round/></a:ln>';
 
-const AX_CAT = 500000001, AX_VAL = 500000002;
+const AX_CAT = 500000001, AX_VAL = 500000002, AX_CAT2 = 500000003, AX_VAL2 = 500000004, AX_SER = 500000005;
 
-function catAx(pos: string, titleText: string | undefined, f?: ChartFormat): string {
-  const o = f?.catAxis;
+function catAx(pos: string, titleText: string | undefined, f?: ChartFormat, id = AX_CAT, cross = AX_VAL, deleted = false): string {
+  const o: AxisOptions | undefined = deleted ? { visible: false } : f?.catAxis;
   const grid = f?.catGrid?.show ? gridXml("majorGridlines", f.catGrid, GRID_LINE) : "";
   const numFmt = o?.numFmt ? `<c:numFmt formatCode="${esc(o.numFmt)}" sourceLinked="0"/>` : '<c:numFmt formatCode="General" sourceLinked="1"/>';
-  return `<c:catAx><c:axId val="${AX_CAT}"/>${scalingXml(o)}<c:delete val="${o?.visible === false ? 1 : 0}"/><c:axPos val="${pos}"/>${grid}${axisTitle(titleText, pos === "l", f?.axisTitles?.cat)}${numFmt}${tickXml("majorTickMark", o?.majorTick)}${tickXml("minorTickMark", o?.minorTick)}<c:tickLblPos val="${o?.labelPos ?? "nextTo"}"/><c:spPr>${NONE_FILL}${lineXml(o?.line, GRID_LINE)}<a:effectLst/></c:spPr>${txPr(900, "-60000000", "", o?.text)}<c:crossAx val="${AX_VAL}"/>${crossesXml(f?.valAxis)}<c:auto val="1"/><c:lblAlgn val="ctr"/><c:lblOffset val="100"/><c:noMultiLvlLbl val="0"/></c:catAx>`;
+  return `<c:catAx><c:axId val="${id}"/>${scalingXml(o)}<c:delete val="${o?.visible === false ? 1 : 0}"/><c:axPos val="${pos}"/>${grid}${axisTitle(titleText, pos === "l", f?.axisTitles?.cat)}${numFmt}${tickXml("majorTickMark", o?.majorTick)}${tickXml("minorTickMark", o?.minorTick)}<c:tickLblPos val="${o?.labelPos ?? "nextTo"}"/><c:spPr>${NONE_FILL}${lineXml(o?.line, GRID_LINE)}<a:effectLst/></c:spPr>${txPr(900, "-60000000", "", o?.text)}<c:crossAx val="${cross}"/>${crossesXml(deleted ? undefined : f?.valAxis)}<c:auto val="1"/><c:lblAlgn val="ctr"/><c:lblOffset val="100"/><c:noMultiLvlLbl val="0"/></c:catAx>`;
 }
 
 /**
@@ -184,7 +224,112 @@ function valAx(fmt: string | null, id: number, cross: number, pos: string, title
   return `<c:valAx><c:axId val="${id}"/>${scalingXml(o)}<c:delete val="${o?.visible === false ? 1 : 0}"/><c:axPos val="${pos}"/>${majorGrid}${minorGrid}${axisTitle(titleText, pos === "l", titleFmt)}${numFmt}${tickXml("majorTickMark", o?.majorTick)}${tickXml("minorTickMark", o?.minorTick)}<c:tickLblPos val="${o?.labelPos ?? "nextTo"}"/><c:spPr>${NONE_FILL}${lineXml(o?.line, autoLine)}<a:effectLst/></c:spPr>${txPr(900, "-60000000", "", o?.text)}<c:crossAx val="${cross}"/>${crossesXml(crossing)}<c:crossBetween val="${between}"/>${units}</c:valAx>`;
 }
 
+/** Series axis (Tiefenachse) of 3-D charts with series in depth and of surfaces. */
+function serAx(): string {
+  return `<c:serAx><c:axId val="${AX_SER}"/><c:scaling><c:orientation val="minMax"/></c:scaling><c:delete val="0"/><c:axPos val="b"/><c:majorTickMark val="none"/><c:minorTickMark val="none"/><c:tickLblPos val="nextTo"/><c:spPr>${NONE_FILL}${GRID_LINE}<a:effectLst/></c:spPr>${txPr(900)}<c:crossAx val="${AX_VAL}"/><c:crosses val="autoZero"/></c:serAx>`;
+}
+
+/** The kinds written by plotArea's switch as RaabeCalc always wrote them. */
+const LEGACY = new Set<ChartKind>(["column", "columnStacked", "bar", "barStacked", "line", "lineMarkers", "area", "pie", "doughnut", "scatter", "scatterSmooth", "scatterLines"]);
+
+const SER_LINES = '<c:serLines><c:spPr><a:ln w="9525" cap="flat" cmpd="sng" algn="ctr"><a:solidFill><a:schemeClr val="tx1"><a:lumMod val="35000"/><a:lumOff val="65000"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr></c:serLines>';
+const stockLine = (lum: string) => `<a:ln w="9525" cap="flat" cmpd="sng" algn="ctr"><a:solidFill><a:schemeClr val="tx1">${lum}</a:schemeClr></a:solidFill><a:round/></a:ln>`;
+const LUM65 = '<a:lumMod val="65000"/><a:lumOff val="35000"/>';
+const UP_DOWN = `<c:upDownBars><c:gapWidth val="150"/><c:upBars><c:spPr><a:solidFill><a:schemeClr val="lt1"/></a:solidFill>${stockLine(LUM65)}<a:effectLst/></c:spPr></c:upBars><c:downBars><c:spPr><a:solidFill><a:schemeClr val="dk1">${LUM65}</a:schemeClr></a:solidFill>${stockLine(LUM65)}<a:effectLst/></c:spPr></c:downBars></c:upDownBars>`;
+
+/** One chart group element (c:barChart, c:radarChart …) of a chart's series. */
+function groupXml(m: ChartModel, g: ChartGroup): string {
+  const sub: ChartModel = { ...m, kind: g.kind };
+  const series = g.idx.map((i) => ser(sub, m.series[i], i)).join("");
+  const info = kindInfo(g.kind);
+  const pieLike = info.family === "pie" || info.family === "ofPie" || info.family === "doughnut";
+  const groupLabels = `<c:dLbls>${flags(false, pieLike)}</c:dLbls>`;
+  const ids = g.secondary ? [AX_CAT2, AX_VAL2] : [AX_CAT, AX_VAL];
+  const depthAx = (standard: boolean) => `<c:axId val="${standard ? AX_SER : 0}"/>`;
+  const ax = ids.map((id) => `<c:axId val="${id}"/>`).join("");
+  const varied = m.series.some((s) => s.fill && s.fill.type !== "auto") ? 0 : 1;
+  switch (info.family) {
+    case "bar": {
+      const d = barDefaults(g.kind);
+      const gap = m.gapWidth ?? d.gap, overlap = info.d3 ? undefined : m.overlap ?? d.overlap;
+      const tag = info.d3 ? "c:bar3DChart" : "c:barChart";
+      return `<${tag}><c:barDir val="${info.dir}"/><c:grouping val="${info.grouping}"/><c:varyColors val="0"/>${series}${groupLabels}<c:gapWidth val="${gap}"/>${overlap ? `<c:overlap val="${overlap}"/>` : ""}${info.d3 ? '<c:shape val="box"/>' : ""}${ax}${info.d3 ? depthAx(info.grouping === "standard") : ""}</${tag}>`;
+    }
+    case "line":
+      if (info.d3) return `<c:line3DChart><c:grouping val="standard"/><c:varyColors val="0"/>${series}${groupLabels}${ax}${depthAx(true)}</c:line3DChart>`;
+      return `<c:lineChart><c:grouping val="${info.grouping}"/><c:varyColors val="0"/>${series}${groupLabels}<c:marker val="1"/>${ax}</c:lineChart>`;
+    case "area":
+      if (info.d3) return `<c:area3DChart><c:grouping val="${info.grouping}"/><c:varyColors val="0"/>${series}${groupLabels}${ax}${depthAx(info.grouping === "standard")}</c:area3DChart>`;
+      return `<c:areaChart><c:grouping val="${info.grouping}"/><c:varyColors val="0"/>${series}${groupLabels}${ax}</c:areaChart>`;
+    case "pie":
+      if (info.d3) return `<c:pie3DChart><c:varyColors val="${varied}"/>${series}${groupLabels}</c:pie3DChart>`;
+      return `<c:pieChart><c:varyColors val="${varied}"/>${series}${groupLabels}<c:firstSliceAng val="${m.firstSliceAngle ?? 0}"/></c:pieChart>`;
+    case "doughnut":
+      return `<c:doughnutChart><c:varyColors val="${varied}"/>${series}${groupLabels}<c:firstSliceAng val="${m.firstSliceAngle ?? 0}"/><c:holeSize val="${m.holeSize ?? 75}"/></c:doughnutChart>`;
+    case "ofPie": {
+      const split = m.splitCount !== undefined ? `<c:splitType val="pos"/><c:splitPos val="${m.splitCount}"/>` : "";
+      return `<c:ofPieChart><c:ofPieType val="${g.kind === "barOfPie" ? "bar" : "pie"}"/><c:varyColors val="${varied}"/>${series}${groupLabels}<c:gapWidth val="${m.gapWidth ?? 100}"/>${split}<c:secondPieSize val="${m.secondSize ?? 75}"/>${SER_LINES}</c:ofPieChart>`;
+    }
+    case "bubble":
+      return `<c:bubbleChart><c:varyColors val="0"/>${series}${groupLabels}<c:bubbleScale val="${m.bubbleScale ?? 100}"/><c:showNegBubbles val="0"/>${ax}</c:bubbleChart>`;
+    case "radar":
+      return `<c:radarChart><c:radarStyle val="${g.kind === "radarFilled" ? "filled" : "marker"}"/><c:varyColors val="0"/>${series}${groupLabels}${ax}</c:radarChart>`;
+    case "stock": {
+      const updown = g.kind === "stockOHLC" || g.kind === "stockVOHLC" ? UP_DOWN : "";
+      return `<c:stockChart>${series}${groupLabels}<c:hiLowLines><c:spPr>${stockLine('<a:lumMod val="75000"/><a:lumOff val="25000"/>')}<a:effectLst/></c:spPr></c:hiLowLines>${updown}${ax}</c:stockChart>`;
+    }
+    case "surface": {
+      const tag = info.d3 ? "c:surface3DChart" : "c:surfaceChart";
+      return `<${tag}><c:wireframe val="${g.kind === "surfaceWireframe" || g.kind === "surfaceContourWireframe" ? 1 : 0}"/>${series}${ax}${depthAx(true)}</${tag}>`;
+    }
+    default: {
+      const style = info.lines === "smooth" ? "smoothMarker" : "lineMarker";
+      return `<c:scatterChart><c:scatterStyle val="${style}"/><c:varyColors val="0"/>${series}${groupLabels}${ax}</c:scatterChart>`;
+    }
+  }
+}
+
+/** The plot area of every kind RaabeCalc did not write before, and of Verbund charts. */
+function plotAreaGroups(m: ChartModel): string {
+  const groups = chartGroups(m);
+  const main = kindInfo(m.kind);
+  const t = m.axisTitles, f = m.format, at = f?.axisTitles;
+  const first = groups.find((g) => !g.secondary)?.idx[0] ?? 0;
+  const vFmt = m.series[first]?.val.format ?? "General";
+  const out = groups.map((g) => groupXml(m, g)).join("");
+  if (main.family === "pie" || main.family === "ofPie" || main.family === "doughnut") return out;
+  if (main.family === "scatter" || main.family === "bubble") {
+    const cat = m.series[0]?.cat;
+    const xFmt = cat && cat.cache.some((v) => typeof v === "string") ? null : cat?.format ?? "General";
+    return out + valAx(xFmt, AX_CAT, AX_VAL, "b", t.cat, "midCat", true, m.gridlines, f?.catAxis, f?.valAxis, f, at?.cat, false)
+      + valAx(vFmt, AX_VAL, AX_CAT, "l", t.val, "midCat", true, m.gridlines, f?.valAxis, f?.catAxis, f, at?.val);
+  }
+  const bar = main.dir === "bar";
+  const between = main.family === "area" || main.family === "surface" ? "midCat" : "between";
+  const vf = main.grouping === "percentStacked" ? "0%" : vFmt;
+  let axes = catAx(bar ? "l" : "b", t.cat, f) + valAx(vf, AX_VAL, AX_CAT, bar ? "b" : "l", t.val, between, false, m.gridlines, f?.valAxis, f?.catAxis, f, at?.val);
+  const g2 = groups.find((g) => g.secondary);
+  if (g2) {
+    const k2 = kindInfo(g2.kind);
+    const fmt2 = k2.grouping === "percentStacked" ? "0%" : m.series[g2.idx[0]]?.val.format ?? "General";
+    // Sekundärachse: the value axis on the other side (crossing at the maximum), its category axis hidden.
+    axes += valAx(fmt2, AX_VAL2, AX_CAT2, bar ? "t" : "r", undefined, between, false, main.family === "stock", undefined, { crosses: "max" }, undefined, undefined, false)
+      + catAx(bar ? "l" : "b", undefined, undefined, AX_CAT2, AX_VAL2, true);
+  }
+  const depth = main.family === "surface" || (!!main.d3 && main.grouping === "standard");
+  return out + axes + (depth ? serAx() : "");
+}
+
+/** View3D, floor and walls of 3-D charts and surfaces (Excel's defaults: no fill, no line). */
+function view3DXml(m: ChartModel): string {
+  const v: View3D | undefined = view3DOf(m);
+  if (!v) return "";
+  const wall = (tag: string) => `<c:${tag}><c:thickness val="0"/><c:spPr><a:noFill/><a:ln><a:noFill/></a:ln><a:effectLst/><a:sp3d/></c:spPr></c:${tag}>`;
+  return `<c:view3D><c:rotX val="${v.rotX}"/><c:rotY val="${v.rotY}"/>${v.depthPercent !== undefined ? `<c:depthPercent val="${v.depthPercent}"/>` : ""}<c:rAngAx val="${v.rAngAx ? 1 : 0}"/>${v.perspective !== undefined ? `<c:perspective val="${v.perspective}"/>` : ""}</c:view3D>${wall("floor")}${wall("sideWall")}${wall("backWall")}`;
+}
+
 function plotArea(m: ChartModel): string {
+  if (!LEGACY.has(m.kind) || isCombo(m)) return plotAreaGroups(m);
   const series = m.series.map((s, i) => ser(m, s, i)).join("");
   const groupLabels = `<c:dLbls>${flags(false, m.kind === "pie" || m.kind === "doughnut")}</c:dLbls>`;
   const ax = `<c:axId val="${AX_CAT}"/><c:axId val="${AX_VAL}"/>`;
@@ -226,8 +371,10 @@ function signature(m: ChartModel): string {
   return JSON.stringify({
     kind: m.kind, title: m.title, axisTitles: m.axisTitles, legend: m.legend, dataLabels: m.dataLabels, gridlines: m.gridlines,
     format: m.format, gapWidth: m.gapWidth, overlap: m.overlap, firstSliceAngle: m.firstSliceAngle, holeSize: m.holeSize, colors: m.colors,
+    view3D: m.view3D, splitCount: m.splitCount, secondSize: m.secondSize, bubbleScale: m.bubbleScale,
     series: m.series.map((s) => ({ name: s.name?.ref ?? s.name?.text, cat: s.cat?.ref, val: s.val.ref, color: s.color, trendline: s.trendline,
-      fill: s.fill, line: s.line, marker: s.marker, smooth: s.smooth, invertIfNegative: s.invertIfNegative, errorBars: s.errorBars })),
+      fill: s.fill, line: s.line, marker: s.marker, smooth: s.smooth, invertIfNegative: s.invertIfNegative, errorBars: s.errorBars,
+      kind: s.kind, secondary: s.secondary, size: s.size?.ref, totals: s.totals })),
   });
 }
 
@@ -253,7 +400,7 @@ export function chartToXml(model: ChartModel): string {
     : '<c:autoTitleDeleted val="1"/>';
   const legend = m.legend === "none" ? "" : `<c:legend><c:legendPos val="${m.legend}"/><c:overlay val="${f?.legend?.overlay ? 1 : 0}"/>${spPrXml(f?.legend, NONE_FILL, NONE_LINE)}${txPr(900, "0", "", f?.legend?.text)}</c:legend>`;
   return HEAD + `<c:chartSpace xmlns:c="${NS_C}" xmlns:a="${NS_A}" xmlns:r="${NS_R}"><c:date1904 val="0"/><c:lang val="de-DE"/><c:roundedCorners val="0"/>`
-    + `<c:chart>${title}<c:plotArea><c:layout/>${plotArea(m)}${spPrXml(f?.plot, NONE_FILL, NONE_LINE)}</c:plotArea>${legend}<c:plotVisOnly val="1"/><c:dispBlanksAs val="gap"/></c:chart>`
+    + `<c:chart>${title}${view3DXml(m)}<c:plotArea><c:layout/>${plotArea(m)}${spPrXml(f?.plot, NONE_FILL, NONE_LINE)}</c:plotArea>${legend}<c:plotVisOnly val="1"/><c:dispBlanksAs val="gap"/></c:chart>`
     + spPrXml(f?.chart, '<a:solidFill><a:schemeClr val="bg1"/></a:solidFill>', `<a:ln w="9525" cap="flat" cmpd="sng" algn="ctr">${LINE_GREY}<a:round/></a:ln>`)
     + `<c:txPr><a:bodyPr/><a:lstStyle/><a:p><a:pPr><a:defRPr/></a:pPr><a:endParaRPr lang="de-DE"/></a:p></c:txPr>`
     + `<c:printSettings><c:headerFooter/><c:pageMargins b="0.78740157499999996" l="0.7" r="0.7" t="0.78740157499999996" header="0.3" footer="0.3"/><c:pageSetup/></c:printSettings></c:chartSpace>`;
@@ -261,6 +408,7 @@ export function chartToXml(model: ChartModel): string {
 
 /** A histogram as Excel 2016's chartex part (binning automatic, closed on the right). */
 export function chartExToXml(m: ChartModel): string {
+  if (m.kind !== "histogram") return chartExOtherXml(m);
   const s = m.series[0];
   const vals = s?.val.cache ?? [];
   const pts = vals.map((v, i) => (v === null ? "" : `<cx:pt idx="${i}">${num(v)}</cx:pt>`)).join("");
@@ -282,6 +430,76 @@ export function chartExToXml(m: ChartModel): string {
 function axisTitleEx(t: string | undefined): string {
   if (t === undefined) return "";
   return `<cx:title><cx:tx><cx:txData><cx:v>${escText(t || "Achsentitel")}</cx:v></cx:txData></cx:tx></cx:title>`;
+}
+
+/** The chartex title as the histogram writes it. */
+function titleEx(m: ChartModel): string {
+  if (!m.title.show) return "";
+  if (m.title.text === undefined) return '<cx:title pos="t" align="ctr" overlay="0"/>';
+  return `<cx:title pos="t" align="ctr" overlay="0"><cx:tx><cx:txData><cx:v>${escText(m.title.text)}</cx:v></cx:txData></cx:tx><cx:txPr><a:bodyPr spcFirstLastPara="1" vertOverflow="ellipsis" horzOverflow="overflow" wrap="square" lIns="0" tIns="0" rIns="0" bIns="0" anchor="ctr" anchorCtr="1"/><a:lstStyle/><a:p><a:pPr algn="ctr" rtl="0"><a:defRPr/></a:pPr><a:r><a:rPr lang="de-DE"/><a:t>${escText(m.title.text)}</a:t></a:r></a:p></cx:txPr></cx:title>`;
+}
+
+/** Category levels of a chartex data block: cx:lvl elements, the innermost level first. */
+function catDimEx(s: ChartSeries): string {
+  const levels = s.levels ?? (s.cat ? [s.cat.cache.map((v) => (v === null ? null : String(v)))] : []);
+  if (!levels.length) return "";
+  const lvls = [...levels].reverse().map((lv) => `<cx:lvl ptCount="${lv.length}">${lv.map((v, i) => (v === null ? "" : `<cx:pt idx="${i}">${escText(String(v))}</cx:pt>`)).join("")}</cx:lvl>`).join("");
+  return `<cx:strDim type="cat">${s.cat?.ref ? `<cx:f>${esc(s.cat.ref)}</cx:f>` : ""}${lvls}</cx:strDim>`;
+}
+
+function numDimEx(s: ChartSeries, type: "val" | "size"): string {
+  const vals = s.val.cache;
+  const pts = vals.map((v, i) => (v === null ? "" : `<cx:pt idx="${i}">${num(v)}</cx:pt>`)).join("");
+  return `<cx:numDim type="${type}">${s.val.ref ? `<cx:f>${esc(s.val.ref)}</cx:f>` : ""}<cx:lvl ptCount="${vals.length}" formatCode="${esc(s.val.format ?? "General")}">${pts}</cx:lvl></cx:numDim>`;
+}
+
+function nameEx(s: ChartSeries | undefined): string {
+  return s?.name ? `<cx:tx><cx:txData>${s.name.ref ? `<cx:f>${esc(s.name.ref)}</cx:f>` : ""}<cx:v>${escText(s.name.text ?? "")}</cx:v></cx:txData></cx:tx>` : "";
+}
+
+const uid = (i: number, n: number) => `{0000000${i.toString(16).toUpperCase()}-5243-4D4C-8000-00000000000${n}}`;
+
+/** Wasserfall, Trichter, Treemap, Sunburst, Kastengrafik and Pareto as Excel 365 writes them (style 201). */
+function chartExOtherXml(m: ChartModel): string {
+  const k = m.kind;
+  const hier = k === "treemap" || k === "sunburst";
+  const list = k === "boxWhisker" ? m.series : m.series.slice(0, 1);
+  const data = list.map((s, i) => `<cx:data id="${i}">${k === "boxWhisker" ? "" : catDimEx(s)}${numDimEx(s, hier ? "size" : "val")}</cx:data>`).join("");
+  const lbl = (pos: string | null, cat: boolean, value: boolean) => (m.dataLabels
+    ? `<cx:dataLabels${pos ? ` pos="${pos}"` : ""}><cx:visibility seriesName="0" categoryName="${cat ? 1 : 0}" value="${value ? 1 : 0}"/></cx:dataLabels>` : "");
+  const grid = m.gridlines ? "<cx:majorGridlines/>" : "";
+  const valAxis = (id: number) => `<cx:axis id="${id}"><cx:valScaling/>${axisTitleEx(m.axisTitles.val)}${grid}<cx:tickLabels/></cx:axis>`;
+  const catAxis = (id: number, gap: string) => `<cx:axis id="${id}"><cx:catScaling gapWidth="${gap}"/>${axisTitleEx(m.axisTitles.cat)}<cx:tickLabels/></cx:axis>`;
+  const s0 = list[0];
+  let series = "", axes = "";
+  switch (k) {
+    case "waterfall": {
+      const totals = s0?.totals?.length ? `<cx:subtotals>${s0.totals.map((t) => `<cx:idx val="${t}"/>`).join("")}</cx:subtotals>` : "";
+      series = `<cx:series layoutId="waterfall" uniqueId="${uid(0, 1)}">${nameEx(s0)}${lbl("outEnd", false, true)}<cx:dataId val="0"/><cx:layoutPr><cx:visibility connectorLines="1"/>${totals}</cx:layoutPr></cx:series>`;
+      axes = catAxis(0, "0.5") + valAxis(1);
+      break;
+    }
+    case "funnel":
+      series = `<cx:series layoutId="funnel" uniqueId="${uid(0, 2)}">${nameEx(s0)}${lbl(null, false, true)}<cx:dataId val="0"/></cx:series>`;
+      axes = `<cx:axis id="1"><cx:catScaling gapWidth="0.06"/><cx:tickLabels/></cx:axis>`;
+      break;
+    case "treemap":
+      series = `<cx:series layoutId="treemap" uniqueId="${uid(0, 3)}">${nameEx(s0)}${lbl("inEnd", true, false)}<cx:dataId val="0"/><cx:layoutPr><cx:parentLabelLayout val="overlapping"/></cx:layoutPr></cx:series>`;
+      break;
+    case "sunburst":
+      series = `<cx:series layoutId="sunburst" uniqueId="${uid(0, 4)}">${nameEx(s0)}${lbl("ctr", true, false)}<cx:dataId val="0"/></cx:series>`;
+      break;
+    case "boxWhisker":
+      series = list.map((s, i) => `<cx:series layoutId="boxWhisker" uniqueId="${uid(i, 5)}">${nameEx(s)}${lbl(null, false, true)}<cx:dataId val="${i}"/><cx:layoutPr><cx:visibility meanLine="0" meanMarker="1" nonoutliers="0" outliers="1"/><cx:statistics quartileMethod="exclusive"/></cx:layoutPr></cx:series>`).join("");
+      axes = catAxis(0, "1") + valAxis(1);
+      break;
+    default: // pareto
+      series = `<cx:series layoutId="clusteredColumn" uniqueId="${uid(0, 6)}">${nameEx(s0)}${lbl("outEnd", false, true)}<cx:dataId val="0"/><cx:layoutPr><cx:aggregation/></cx:layoutPr><cx:axisId val="1"/></cx:series><cx:series layoutId="paretoLine" ownerIdx="0" uniqueId="${uid(1, 6)}"><cx:axisId val="2"/></cx:series>`;
+      axes = catAxis(0, "0") + valAxis(1) + `<cx:axis id="2"><cx:valScaling max="1" min="0"/><cx:units unit="percentage"/><cx:tickLabels/></cx:axis>`;
+  }
+  return HEAD + `<cx:chartSpace xmlns:a="${NS_A}" xmlns:r="${NS_R}" xmlns:cx="${NS_CX}"><cx:chartData>${data}</cx:chartData>`
+    + `<cx:chart>${titleEx(m)}<cx:plotArea><cx:plotAreaRegion>${series}</cx:plotAreaRegion>${axes}</cx:plotArea>`
+    + `${m.legend !== "none" ? `<cx:legend pos="${m.legend}" align="ctr" overlay="0"/>` : ""}</cx:chart></cx:chartSpace>`;
 }
 
 // ----- the chart's style and colour parts ------------------------------------------------------------
@@ -488,6 +706,43 @@ function readColor(xml: string, spPr: El | undefined): string | undefined {
 
 const GROUPS = ["c:barChart", "c:lineChart", "c:areaChart", "c:pieChart", "c:doughnutChart", "c:scatterChart", "c:bar3DChart", "c:line3DChart", "c:area3DChart", "c:pie3DChart", "c:radarChart", "c:bubbleChart", "c:stockChart", "c:surfaceChart", "c:surface3DChart", "c:ofPieChart"];
 
+/** The chart type of one chart group element (Kurs groups next to a column group: the Volumen types). */
+function groupKind(xml: string, g: El, volume: boolean): ChartKind {
+  const v = (...path: string[]) => val(xml, find(xml, g, ...path));
+  const firstSer = find(xml, g, "c:ser");
+  const sym = val(xml, find(xml, firstSer, "c:marker", "c:symbol"));
+  const grouping = (v("c:grouping") ?? "standard") as "standard" | "clustered" | "stacked" | "percentStacked";
+  switch (g.name) {
+    case "c:barChart": case "c:bar3DChart":
+      return kindOf("bar", { dir: v("c:barDir") === "bar" ? "bar" : "col", grouping, d3: g.name === "c:bar3DChart" }) ?? "column";
+    case "c:lineChart": return kindOf("line", { grouping, markers: sym !== "none" }) ?? "line";
+    case "c:line3DChart": return "line3D";
+    case "c:areaChart": return kindOf("area", { grouping }) ?? "area";
+    case "c:area3DChart": return kindOf("area", { grouping, d3: true }) ?? "area3D";
+    case "c:pieChart": return "pie";
+    case "c:pie3DChart": return "pie3D";
+    case "c:ofPieChart": return v("c:ofPieType") === "bar" ? "barOfPie" : "pieOfPie";
+    case "c:doughnutChart": return "doughnut";
+    case "c:radarChart": return v("c:radarStyle") === "filled" ? "radarFilled" : sym === "none" ? "radar" : "radarMarkers";
+    case "c:bubbleChart": return val(xml, find(xml, firstSer, "c:bubble3D")) === "1" ? "bubble3D" : "bubble";
+    case "c:stockChart": {
+      const n = kidsOf(xml, g).filter((k) => k.name === "c:ser").length;
+      const open = !!find(xml, g, "c:upDownBars") || n >= 4;
+      return volume ? (open ? "stockVOHLC" : "stockVHLC") : open ? "stockOHLC" : "stockHLC";
+    }
+    case "c:surfaceChart": return v("c:wireframe") === "1" ? "surfaceContourWireframe" : "surfaceContour";
+    case "c:surface3DChart": return v("c:wireframe") === "1" ? "surfaceWireframe" : "surface3D";
+    default: {
+      // Scatter charts: Punkte (no line), lines smoothed or straight, with or without markers.
+      const smooth = val(xml, find(xml, firstSer, "c:smooth")) === "1" || /smooth/.test(v("c:scatterStyle") ?? "");
+      const noLine = firstSer ? /<c:spPr><a:ln\b[^>]*><a:noFill\/>/.test(xml.slice(firstSer.start, firstSer.end)) : true;
+      if (noLine) return "scatter";
+      if (smooth) return sym === "none" ? "scatterSmooth" : "scatterSmoothMarkers";
+      return sym === "none" ? "scatterLinesNoMarkers" : "scatterLines";
+    }
+  }
+}
+
 /**
  * A chart part as a model (without its anchor: pass the one read from the drawing). Chart types
  * the model does not cover come back as the nearest kind, with the XML kept in `raw` so the chart
@@ -499,33 +754,25 @@ export function chartFromXml(xml: string, anchor?: { from: CellAnchor; to: CellA
   if (rootEl.name === "cx:chartSpace") return chartExFromXml(xml, rootEl, from, to, anchor?.name);
   const chart = find(xml, rootEl, "c:chart");
   const plot = find(xml, chart, "c:plotArea");
-  const group = plot ? kidsOf(xml, plot).find((k) => GROUPS.includes(k.name)) : undefined;
-  let kind: ChartKind = "column";
-  if (group) {
-    const g = group.name;
-    if (g === "c:barChart" || g === "c:bar3DChart") {
-      const bar = val(xml, find(xml, group, "c:barDir")) === "bar";
-      const stacked = /stacked/i.test(val(xml, find(xml, group, "c:grouping")) ?? "");
-      kind = bar ? (stacked ? "barStacked" : "bar") : stacked ? "columnStacked" : "column";
-    } else if (g === "c:lineChart" || g === "c:line3DChart" || g === "c:radarChart" || g === "c:stockChart") {
-      const firstSer = find(xml, group, "c:ser");
-      const sym = val(xml, find(xml, firstSer, "c:marker", "c:symbol"));
-      kind = sym === "none" ? "line" : "lineMarkers";
-    } else if (g === "c:areaChart" || g === "c:area3DChart" || g === "c:surfaceChart" || g === "c:surface3DChart") kind = "area";
-    else if (g === "c:pieChart" || g === "c:pie3DChart" || g === "c:ofPieChart") kind = "pie";
-    else if (g === "c:doughnutChart") kind = "doughnut";
-    else if (g === "c:scatterChart" || g === "c:bubbleChart") {
-      const firstSer = find(xml, group, "c:ser");
-      const smooth = val(xml, find(xml, firstSer, "c:smooth")) === "1" || /smooth/.test(val(xml, find(xml, group, "c:scatterStyle")) ?? "");
-      const noLine = firstSer ? /<c:spPr><a:ln\b[^>]*><a:noFill\/>/.test(xml.slice(firstSer.start, firstSer.end)) : true;
-      kind = noLine ? "scatter" : smooth ? "scatterSmooth" : "scatterLines";
-    }
-  }
+  const groups = plot ? kidsOf(xml, plot).filter((k) => GROUPS.includes(k.name)) : [];
+  const group = groups[0];
+  // Kurs with Volumen: a column group and a stock group make one chart type.
+  const stockGroup = groups.find((g) => g.name === "c:stockChart");
+  const volume = !!stockGroup && groups.some((g) => g.name === "c:barChart");
+  const kindsOf = groups.map((g) => groupKind(xml, g, volume));
+  let kind: ChartKind = volume ? groupKind(xml, stockGroup!, true) : kindsOf[0] ?? "column";
+  if (volume) kindsOf.fill(kind);
+  // Value axes on the right (or top): the groups using them are on the Sekundärachse.
+  const axesEls = plot ? kidsOf(xml, plot).filter((k) => /^c:(cat|val|date|ser)Ax$/.test(k.name)) : [];
+  const secondaryIds = new Set(axesEls.filter((a) => a.name === "c:valAx" && ["r", "t"].includes(val(xml, find(xml, a, "c:axPos")) ?? "")).map((a) => val(xml, find(xml, a, "c:axId"))));
+  const isSecondary = (g: El) => !volume && kidsOf(xml, g).some((k) => k.name === "c:axId" && secondaryIds.has(val(xml, k)));
   const scatter = group?.name === "c:scatterChart" || group?.name === "c:bubbleChart";
   const rd: Reader = { xml, find: (el, ...path) => find(xml, el, ...path), val: (el) => val(xml, el) };
   const series: ChartSeries[] = [];
   let dataLabels = !!group && val(xml, find(xml, group, "c:dLbls", "c:showVal")) === "1";
-  for (const s of group ? kidsOf(xml, group).filter((k) => k.name === "c:ser") : []) {
+  const all = groups.flatMap((g, gi) => kidsOf(xml, g).filter((k) => k.name === "c:ser").map((s) => ({ s, g, gk: kindsOf[gi] })));
+  for (const { s, g: grp, gk } of all) {
+    const xy = grp.name === "c:scatterChart" || grp.name === "c:bubbleChart";
     const tx = find(xml, s, "c:tx");
     let name: ChartSeries["name"];
     if (tx) {
@@ -538,8 +785,8 @@ export function chartFromXml(xml: string, anchor?: { from: CellAnchor; to: CellA
         name = { text: v ? unesc(text(xml, v)) : "" };
       }
     }
-    const catEl = find(xml, s, scatter ? "c:xVal" : "c:cat");
-    const valEl = find(xml, s, scatter ? "c:yVal" : "c:val");
+    const catEl = find(xml, s, xy ? "c:xVal" : "c:cat");
+    const valEl = find(xml, s, xy ? "c:yVal" : "c:val");
     const cat = readData(xml, catEl);
     const v = readData(xml, valEl);
     const out: ChartSeries = { val: { ref: v?.ref, cache: (v?.cache ?? []).map((x) => (typeof x === "number" ? x : null)), format: v?.format } };
@@ -567,18 +814,23 @@ export function chartFromXml(xml: string, anchor?: { from: CellAnchor; to: CellA
     const shape = readShape(rd, find(xml, s, "c:spPr"));
     if (shape.fill?.type === "none" || shape.fill?.transparency) out.fill = shape.fill;
     // Columns, bars and areas have no border by default, Punkte-scatter no line: "none" is automatic there.
-    const noLineByDefault = kind === "scatter" || kind === "area" || kind.startsWith("column") || kind.startsWith("bar");
+    const fam = kindInfo(gk).family;
+    const noLineByDefault = gk === "scatter" || fam === "area" || fam === "bar" || fam === "bubble" || fam === "surface" || fam === "stock" || gk === "radarFilled";
     // A line in the series' colour at the kind's own width is the automatic one (the colour is kept as `color`).
-    const autoWidth = kind === "line" || kind === "lineMarkers" ? 2.25 : 1.5;
+    const autoWidth = fam === "line" || fam === "radar" ? 2.25 : 1.5;
     const plain = shape.line?.type === "solid" && !shape.line.dash && !shape.line.transparency && (shape.line.width ?? autoWidth) === autoWidth && shape.line.color === (color ?? shape.line.color);
     if (shape.line && !plain && (shape.line.width !== undefined || shape.line.dash || shape.line.type === "none") && !(noLineByDefault && shape.line.type === "none")) out.line = shape.line;
     const mkEl = find(xml, s, "c:marker");
     if (mkEl) {
       const sym = val(xml, find(xml, mkEl, "c:symbol")) as MarkerSymbol | undefined, size = val(xml, find(xml, mkEl, "c:size"));
-      const autoSym = kind === "line" || kind === "scatterSmooth" ? "none" : "circle";
+      const autoSym = ["line", "scatter", "radar", "stock"].includes(fam) && !kindInfo(gk).markers ? "none" : "circle";
       if ((sym && sym !== autoSym) || (size && size !== "5")) out.marker = { ...(sym ? { symbol: sym } : {}), ...(size ? { size: Number(size) } : {}) };
     }
-    if (val(xml, find(xml, s, "c:smooth")) === "1" && kind !== "scatterSmooth") out.smooth = true;
+    if (val(xml, find(xml, s, "c:smooth")) === "1" && kindInfo(gk).lines !== "smooth") out.smooth = true;
+    if (gk !== kind) out.kind = gk;
+    if (isSecondary(grp)) out.secondary = true;
+    const size = readData(xml, find(xml, s, "c:bubbleSize"));
+    if (size) out.size = { ref: size.ref, cache: size.cache.map((x) => (typeof x === "number" ? x : null)), format: size.format };
     if (val(xml, find(xml, s, "c:invertIfNegative")) === "1") out.invertIfNegative = true;
     const eb = find(xml, s, "c:errBars");
     if (eb) {
@@ -605,9 +857,19 @@ export function chartFromXml(xml: string, anchor?: { from: CellAnchor; to: CellA
   }
   const axisTitles: ChartModel["axisTitles"] = {};
   // Pies have no axes: keep the default for when the chart becomes another kind.
-  let gridlines = kind === "pie" || kind === "doughnut";
+  let gridlines = isPie(kind);
+  // The primary axes only (Excel writes them first; secondary ones follow, series axes are not modelled).
+  const primaryAxes = (): El[] => {
+    const out: El[] = [];
+    let cats = 0, vals = 0;
+    for (const a of axesEls) {
+      if (a.name === "c:serAx") continue;
+      if (a.name === "c:valAx" && (scatter ? vals < 2 : vals < 1)) { out.push(a); vals++; } else if (a.name !== "c:valAx" && cats < 1 && !scatter) { out.push(a); cats++; }
+    }
+    return out;
+  };
   if (plot) {
-    const axes = kidsOf(xml, plot).filter((k) => k.name === "c:catAx" || k.name === "c:valAx" || k.name === "c:dateAx");
+    const axes = primaryAxes();
     for (const ax of axes) {
       const pos = val(xml, find(xml, ax, "c:axPos"));
       const isVal = ax.name === "c:valAx" && (!scatter || pos === "l" || pos === "r");
@@ -652,7 +914,7 @@ export function chartFromXml(xml: string, anchor?: { from: CellAnchor; to: CellA
     put("legend", lf);
   }
   if (plot) {
-    for (const ax of kidsOf(xml, plot).filter((k) => k.name === "c:catAx" || k.name === "c:valAx" || k.name === "c:dateAx")) {
+    for (const ax of primaryAxes()) {
       const pos = val(xml, find(xml, ax, "c:axPos"));
       const isVal = ax.name === "c:valAx" && (!scatter || pos === "l" || pos === "r");
       const o = readAxis(rd, ax, ax.name === "c:valAx");
@@ -674,8 +936,7 @@ export function chartFromXml(xml: string, anchor?: { from: CellAnchor; to: CellA
     if (b("c:showPercent") === "1") o.showPercent = true;
     if (b("c:showLegendKey") === "1") o.showLegendKey = true;
     const pos = b("c:dLblPos");
-    const defPos: Partial<Record<ChartKind, string>> = { column: "outEnd", bar: "outEnd", columnStacked: "ctr", barStacked: "ctr", line: "r", lineMarkers: "r", scatter: "r", scatterSmooth: "r", scatterLines: "r", pie: "bestFit" };
-    if (pos && pos !== defPos[kind]) o.pos = pos as DataLabelOptions["pos"];
+    if (pos && pos !== defLabelPos(kind)) o.pos = pos as DataLabelOptions["pos"];
     const sep = find(xml, dl, "c:separator");
     if (sep) o.separator = unesc(text(xml, sep));
     const nf = find(xml, dl, "c:numFmt");
@@ -688,11 +949,31 @@ export function chartFromXml(xml: string, anchor?: { from: CellAnchor; to: CellA
     put("dataLabels", o);
   }
   if (Object.keys(fmt).length) model.format = fmt;
-  if (group?.name === "c:barChart") {
+  if ((group?.name === "c:barChart" || group?.name === "c:bar3DChart") && !volume) {
     const gw = val(xml, find(xml, group, "c:gapWidth")), ov = val(xml, find(xml, group, "c:overlap"));
-    const stacked = kind === "columnStacked" || kind === "barStacked", bar = kind === "bar" || kind === "barStacked";
-    if (gw !== undefined && Number(gw) !== (stacked ? 150 : bar ? 182 : 219)) model.gapWidth = Number(gw);
-    if (ov !== undefined && Number(ov) !== (stacked ? 100 : bar ? 0 : -27)) model.overlap = Number(ov);
+    const d = barDefaults(kind);
+    if (gw !== undefined && Number(gw) !== d.gap) model.gapWidth = Number(gw);
+    if (ov !== undefined && Number(ov) !== (d.overlap ?? 0)) model.overlap = Number(ov);
+  }
+  if (group?.name === "c:ofPieChart") {
+    const gw = val(xml, find(xml, group, "c:gapWidth")), sp = val(xml, find(xml, group, "c:secondPieSize"));
+    if (gw !== undefined && Number(gw) !== 100) model.gapWidth = Number(gw);
+    if (sp !== undefined && Number(sp) !== 75) model.secondSize = Number(sp);
+    const pos = val(xml, find(xml, group, "c:splitPos"));
+    if (pos !== undefined && val(xml, find(xml, group, "c:splitType")) === "pos") model.splitCount = Number(pos);
+  }
+  if (group?.name === "c:bubbleChart") {
+    const bs = val(xml, find(xml, group, "c:bubbleScale"));
+    if (bs !== undefined && Number(bs) !== 100) model.bubbleScale = Number(bs);
+  }
+  const v3 = find(xml, chart, "c:view3D");
+  if (v3) {
+    const n = (tag: string) => { const x = val(xml, find(xml, v3, tag)); return x === undefined ? undefined : Number(x); };
+    const v: View3D = { rotX: n("c:rotX") ?? 0, rotY: n("c:rotY") ?? 0, rAngAx: n("c:rAngAx") === 1 };
+    if (n("c:depthPercent") !== undefined) v.depthPercent = n("c:depthPercent");
+    if (n("c:perspective") !== undefined) v.perspective = n("c:perspective");
+    const def = defaultView3D(kind);
+    if (def && JSON.stringify(def) !== JSON.stringify(v)) model.view3D = v;
   }
   if (group && (kind === "pie" || kind === "doughnut")) {
     const fa = Number(val(xml, find(xml, group, "c:firstSliceAng")) ?? 0), hs = val(xml, find(xml, group, "c:holeSize"));
@@ -705,28 +986,66 @@ export function chartFromXml(xml: string, anchor?: { from: CellAnchor; to: CellA
 
 function chartExFromXml(xml: string, rootEl: El, from: CellAnchor, to: CellAnchor, name?: string): ChartModel {
   const body = xml.slice(rootEl.start, rootEl.end);
-  const f = /<cx:numDim type="val">\s*<cx:f[^>]*>([^<]*)<\/cx:f>/.exec(body);
-  const pts: (number | null)[] = [];
-  const lvl = /<cx:numDim type="val">[\s\S]*?<cx:lvl ptCount="(\d+)"(?: formatCode="([^"]*)")?>([\s\S]*?)<\/cx:lvl>/.exec(body);
-  if (lvl) {
-    for (let i = 0; i < Number(lvl[1]); i++) pts.push(null);
-    for (const m of lvl[3].matchAll(/<cx:pt idx="(\d+)">([^<]*)<\/cx:pt>/g)) pts[Number(m[1])] = Number(m[2]);
+  // The data blocks: category levels (innermost first in the file) and numbers.
+  interface Dim { ref?: string; levels: (string | null)[][]; nums: (number | null)[]; format?: string; numRef?: string }
+  const dims = new Map<string, Dim>();
+  for (const d of body.matchAll(/<cx:data id="(\d+)">([\s\S]*?)<\/cx:data>/g)) {
+    const dim: Dim = { levels: [], nums: [] };
+    const str = /<cx:strDim type="cat">([\s\S]*?)<\/cx:strDim>/.exec(d[2]);
+    if (str) {
+      const f = /<cx:f[^>]*>([^<]*)<\/cx:f>/.exec(str[1]);
+      if (f) dim.ref = unesc(f[1]);
+      for (const lv of str[1].matchAll(/<cx:lvl ptCount="(\d+)"[^>]*>([\s\S]*?)<\/cx:lvl>|<cx:lvl ptCount="(\d+)"[^>]*\/>/g)) {
+        const out: (string | null)[] = new Array(Number(lv[1] ?? lv[3])).fill(null);
+        for (const pt of (lv[2] ?? "").matchAll(/<cx:pt idx="(\d+)">([^<]*)<\/cx:pt>/g)) out[Number(pt[1])] = unesc(pt[2]);
+        dim.levels.unshift(out);
+      }
+    }
+    const nm = /<cx:numDim type="(?:val|size)">([\s\S]*?)<\/cx:numDim>/.exec(d[2]);
+    if (nm) {
+      const f = /<cx:f[^>]*>([^<]*)<\/cx:f>/.exec(nm[1]);
+      if (f) dim.numRef = unesc(f[1]);
+      const lvl = /<cx:lvl ptCount="(\d+)"(?: formatCode="([^"]*)")?[^>]*>([\s\S]*?)<\/cx:lvl>/.exec(nm[1]);
+      if (lvl) {
+        for (let i = 0; i < Number(lvl[1]); i++) dim.nums.push(null);
+        for (const m of lvl[3].matchAll(/<cx:pt idx="(\d+)">([^<]*)<\/cx:pt>/g)) dim.nums[Number(m[1])] = Number(m[2]);
+        if (lvl[2]) dim.format = unesc(lvl[2]);
+      }
+    }
+    dims.set(d[1], dim);
   }
-  const tx = /<cx:series\b[^>]*>\s*<cx:tx><cx:txData>(?:<cx:f[^>]*>([^<]*)<\/cx:f>)?<cx:v>([^<]*)<\/cx:v>/.exec(body);
-  const s: ChartSeries = { val: { ref: f ? unesc(f[1]) : undefined, cache: pts, format: lvl?.[2] ? unesc(lvl[2]) : undefined } };
-  if (tx) s.name = { ref: tx[1] ? unesc(tx[1]) : undefined, text: unesc(tx[2]) };
+  const seriesEls = [...body.matchAll(/<cx:series\b([^>]*)>([\s\S]*?)<\/cx:series>/g)].map((m) => ({ attrs: m[1], body: m[2], layout: /layoutId="(\w+)"/.exec(m[1])?.[1] ?? "" }));
+  const layouts = seriesEls.map((x) => x.layout);
+  if (layouts.includes("regionMap")) throw new Error("Karte (map charts) are not modelled");
+  const first = layouts.find((l) => l !== "paretoLine") ?? "clusteredColumn";
+  const kind: ChartKind = layouts.includes("paretoLine") ? "pareto"
+    : ({ waterfall: "waterfall", funnel: "funnel", treemap: "treemap", sunburst: "sunburst", boxWhisker: "boxWhisker" } as Record<string, ChartKind>)[first] ?? "histogram";
+  const series: ChartSeries[] = [];
+  for (const se of seriesEls) {
+    if (se.layout === "paretoLine") continue;
+    const id = /<cx:dataId val="(\d+)"/.exec(se.body)?.[1] ?? "0";
+    const dim = dims.get(id) ?? { levels: [], nums: [] };
+    const s: ChartSeries = { val: { ref: dim.numRef, cache: dim.nums, format: dim.format } };
+    const tx = /^\s*<cx:tx><cx:txData>(?:<cx:f[^>]*>([^<]*)<\/cx:f>)?<cx:v>([^<]*)<\/cx:v>/.exec(se.body);
+    if (tx) s.name = { ref: tx[1] ? unesc(tx[1]) : undefined, text: unesc(tx[2]) };
+    if (kind !== "histogram" && (dim.ref || dim.levels.length)) {
+      s.cat = { ref: dim.ref, cache: dim.levels.at(-1) ?? [] };
+      if (dim.levels.length > 1) s.levels = dim.levels;
+    }
+    const totals = [...(/<cx:subtotals>([\s\S]*?)<\/cx:subtotals>/.exec(se.body)?.[1] ?? "").matchAll(/<cx:idx val="(\d+)"/g)].map((m) => Number(m[1]));
+    if (totals.length) s.totals = totals;
+    series.push(s);
+  }
   const titleEl = /<cx:title\b[^>]*?(\/>|>([\s\S]*?)<\/cx:title>)/.exec(body.slice(body.indexOf("<cx:chart>")));
   const titleText = titleEl?.[2] ? /<cx:v>([^<]*)<\/cx:v>/.exec(titleEl[2]) : null;
   const legendPos = /<cx:legend\b[^>]*pos="(\w)"/.exec(body);
   const model: ChartModel = {
-    kind: "histogram", series: [s],
+    kind, series,
     title: { show: !!titleEl, ...(titleText ? { text: unesc(titleText[1]) } : {}) },
     axisTitles: {}, legend: (legendPos?.[1] as LegendPos) ?? "none",
     dataLabels: /<cx:dataLabels\b/.test(body), gridlines: /<cx:majorGridlines\b/.test(body), from, to,
   };
   if (name) model.name = name;
-  // Other chartex types (Wasserfall, Treemap …) are not modelled: they draw as a histogram of
-  // their values here and are written back unchanged unless edited.
   model.raw = { xml, sig: signature(model) } satisfies RawChart;
   return model;
 }

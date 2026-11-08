@@ -8,6 +8,7 @@ import {
   type CellStyle, type Rect,
 } from "@raabe/sheet-engine";
 import { readXlsx, writeXlsx, newWorkbook } from "@raabe/ooxml";
+import { onFontAlias, setCloudFonts } from "@raabe/text-engine";
 import {
   Backstage, Commands, Keytips, Ribbon, TaskPane, TitleBar, baseName, h, icon, installTooltips, messageBox, showDialog, showMenu,
   type BackstageEntry, type MenuEntry, type Platform,
@@ -28,6 +29,7 @@ import { parseClipboard, rangeHtml, rangeText, type Copied } from "./clipboard";
 import { addRecent, loadRecent, loadSettings, removeRecent, saveSettings, setPinned, type Settings } from "./store";
 import { dialogs } from "./dialogs";
 import { chartsFeature } from "./charts/feature";
+import { chartMenus, chartTypeDialog, type ChartTypeHost } from "./charts/types";
 import { printFeature } from "./print";
 import { notesFeature } from "./notes";
 import { traceFeature } from "./trace";
@@ -41,11 +43,16 @@ import { regroup } from "./grid/outline";
 import { seek } from "./goalseek";
 import { spellingFeature } from "./spelling";
 import { picturesFeature } from "./pictures";
+import { pictureTab } from "./picture-tab";
 import { shapesFeature } from "./shapes";
 import { borderDrawFeature } from "./borderdraw";
 import { whatIfFeature } from "./whatif";
+import { scenarioFeature } from "./scenarios";
+import { consolidateFeature } from "./consolidate";
 import { tablesFeature } from "./tables";
+import { sparklinesFeature } from "./sparklines";
 import { designsFeature } from "./designs";
+import { advancedFilterFeature } from "./advfilter";
 import { pivotsFeature } from "./pivots";
 import { commentsFeature } from "./comments";
 import { iconRule } from "./dialogs";
@@ -102,12 +109,18 @@ export class CalcApp {
   private protection = protectionFeature(this);
   private evaluator = evaluateFeature(this);
   private spelling = spellingFeature(this);
-  private pictures = picturesFeature(this);
+  readonly pictures = picturesFeature(this);
+  private pictureUi!: ReturnType<typeof pictureTab>;
   readonly shapes = shapesFeature(this);
   readonly borderDraw = borderDrawFeature(this);
   readonly whatIf = whatIfFeature(this);
+  /** Szenario-Manager and Konsolidieren (D-084). */
+  readonly scenarios = scenarioFeature(this, () => this.settings.userName);
+  readonly consolidation = consolidateFeature(this);
   readonly tables = tablesFeature(this);
+  readonly sparklines = sparklinesFeature(this);
   readonly designs = designsFeature(this);
+  readonly advFilter = advancedFilterFeature(this);
   readonly pivots = pivotsFeature(this);
   private comments = commentsFeature(this, () => this.settings.userName);
   private errorCheck = errorCheckFeature(this, () => void this.evaluator.open());
@@ -116,12 +129,17 @@ export class CalcApp {
   get calc(): CalcLike { return this.active.calc; }
 
   constructor(readonly platform: Platform) {
+    // Office's cloud fonts (Aptos …) for documents that use them (D-089).
+    if (platform.cloudFonts && platform.cloudFont) setCloudFonts({ list: platform.cloudFonts.bind(platform), bytes: platform.cloudFont.bind(platform) });
     void platform.listFonts().then((f) => { this.fontList = f; }).catch(() => {});
     this.commands.register(...COMMANDS);
     this.implementCommands();
+    this.pictureUi = pictureTab(this);
     applyTips(this.commands);
 
     this.grid = new Grid(this.gridHost());
+    // A font found only by its full name (Aptos Narrow …) draws differently once its alias has loaded (D-089).
+    onFontAlias(() => this.grid.contentChanged());
     this.grid.setFunctions(FUNCTIONS_DE);
     // Livevorschau: what the list or palette entry under the mouse would do, on the selection.
     this.commands.onHover((t) => {
@@ -581,21 +599,9 @@ export class CalcApp {
 
   /** One sparkline per row (or column) of `data`, placed in the cells of `place`. */
   private addSparklines(type: "line" | "column" | "stacked", data: Rect, place: Rect): boolean {
-    const cells: { row: number; col: number }[] = [];
-    for (let r = place.r0; r <= place.r1; r++) for (let c = place.c0; c <= place.c1; c++) cells.push({ row: r, col: c });
-    const byRow = place.c0 === place.c1 && cells.length === data.r1 - data.r0 + 1;
-    const byCol = !byRow && place.r0 === place.r1 && cells.length === data.c1 - data.c0 + 1;
-    if (!byRow && !byCol) return false;
-    const sheet = this.sheet;
-    const q = /^[A-Za-z_][A-Za-z0-9_.]*$/.test(sheet.name) ? sheet.name : `'${sheet.name.replace(/'/g, "''")}'`;
-    const items = cells.map((c, i) => ({ ...c, f: `${q}!${rangeName(byRow ? { ...data, r0: data.r0 + i, r1: data.r0 + i } : { ...data, c0: data.c0 + i, c1: data.c0 + i })}` }));
-    this.change("Sparklines", () => {
-      this.history.whole(sheet);
-      // A cell holds one sparkline: new ones replace those in their cells.
-      const taken = new Set(items.map((i) => `${i.row},${i.col}`));
-      const kept = (sheet.sparklines ?? []).map((g) => ({ ...g, items: g.items.filter((i) => !taken.has(`${i.row},${i.col}`)) })).filter((g) => g.items.length);
-      sheet.sparklines = [...kept, { type, color: "#376092", negative: "#D00000", items }];
-    });
+    if (!this.sparklines.add(type, data, place)) return false;
+    this.sparkTabs();
+    if (this.sparklines.current()) this.ribbon.select("sparkline");
     return true;
   }
 
@@ -789,6 +795,7 @@ export class CalcApp {
       autofitRows: (rows) => !this.protection.enabled("cells.autofitRows") ? undefined : this.change("Zeilenhöhe", () => this.autoRowHeights({ r0: Math.min(...rows), c0: 0, r1: Math.max(...rows), c1: MAX_COLS - 1 }, true)),
       selectionChanged: () => {
         this.charts.deselect();
+        this.sparkTabs();
         this.pivotTabs();
         this.tableTabs();
         this.validation.afterSelect();
@@ -1931,8 +1938,9 @@ export class CalcApp {
     run("data.sortDesc", () => this.dlg.sortQuick(false));
     run("data.sort", () => void this.dlg.sort());
     run("data.filter", () => this.dlg.toggleFilter(), undefined, () => this.dlg.hasFilter());
-    run("data.filterClear", () => this.dlg.clearFilter(), () => this.dlg.hasFilter());
-    run("data.filterReapply", () => this.dlg.reapplyFilter(), () => this.dlg.hasFilter());
+    run("data.filterClear", () => (this.advFilter.active() ? this.advFilter.clear() : this.dlg.clearFilter()), () => this.dlg.hasFilter() || this.advFilter.active());
+    run("data.filterReapply", () => (this.advFilter.active() ? this.advFilter.reapply() : this.dlg.reapplyFilter()), () => this.dlg.hasFilter() || this.advFilter.active());
+    run("data.advancedFilter", () => void this.advFilter.dialog());
     run("data.textToColumns", () => void this.dlg.textToColumns());
     run("data.removeDuplicates", () => void this.dlg.removeDuplicates());
     run("data.fromText", () => void this.openDialog());
@@ -1952,14 +1960,17 @@ export class CalcApp {
     run("insert.link", () => void this.dlg.link());
     run("insert.note", () => this.notes.edit());
     run("insert.symbol", () => void this.dlg.symbol());
-    run("insert.chartRecommended", () => this.charts.insert("column"));
+    run("insert.chartRecommended", () => void chartTypeDialog(this.chartTypeHost(), "insert"));
     run("insert.chartColumn", () => this.charts.insert("column"));
     run("insert.chartLine", () => this.charts.insert("line"));
     run("insert.chartPie", () => this.charts.insert("pie"));
     run("insert.chartScatter", () => this.charts.insert("scatter"));
     run("insert.chartStat", () => this.charts.insert("histogram"));
+    run("insert.chartHierarchy", () => this.charts.insert("treemap"));
+    run("insert.chartOther", () => this.charts.insert("waterfall"));
+    run("insert.chartCombo", () => void chartTypeDialog(this.chartTypeHost(), "insert", "Kombi"));
     run("chart.addElement", () => this.charts.elements(), () => !!this.charts.selected());
-    run("chart.changeType", () => {}, () => !!this.charts.selected());
+    run("chart.changeType", () => void chartTypeDialog(this.chartTypeHost(), "change"), () => !!this.charts.selected());
     run("chart.element", () => {}, () => !!this.charts.selected());
     run("insert.pivot", () => void this.pivots.create(), notEditing);
     run("pivot.refresh", () => this.pivots.refresh(), () => !!this.pivots.current());
@@ -2027,12 +2038,15 @@ export class CalcApp {
     run("data.subtotal", () => void this.subtotalDialog(), notEditing);
     run("data.whatIf", () => {});
     run("data.goalSeek", () => void this.goalSeek(), notEditing);
+    run("data.scenarios", () => void this.scenarios.manager(), notEditing);
+    run("data.consolidate", () => void this.consolidation.dialog(), notEditing);
     run("data.dataTable", () => void this.whatIf.dialog(), notEditing);
     run("review.spelling", () => void this.spelling.run(), notEditing);
     run("insert.pictures", () => {});
     run("insert.sparkLine", () => void this.sparklineDialog("line"), notEditing);
     run("insert.sparkColumn", () => void this.sparklineDialog("column"), notEditing);
     run("insert.sparkWinLoss", () => void this.sparklineDialog("stacked"), notEditing);
+    this.sparklines.implement(run);
     run("insert.comment", () => this.comments.newComment(), notEditing);
     run("review.newComment", () => this.comments.newComment(), notEditing);
     run("review.deleteComment", () => this.comments.remove(), () => this.comments.has());
@@ -2111,10 +2125,19 @@ export class CalcApp {
 
   /** Diagrammentwurf appears while a chart is selected, as Excel's contextual tab does. */
   /** Tabellenentwurf appears while the active cell is in an Excel table. */
+  /** Sparkline appears while the active cell holds a sparkline (D-085). */
+  private sparkWas = false;
+  private sparkTabs(): void {
+    const on = !!this.sparklines.current();
+    if (on === this.sparkWas || this.charts.selected() || this.shapes.selected()) return;
+    this.sparkWas = on;
+    this.ribbon.setContextual(on ? [this.sparklines.tab()] : []);
+  }
+
   private tableWas = false;
   private tableTabs(): void {
     const on = !!this.tables.current();
-    if (on === this.tableWas || this.charts.selected() || this.shapes.selected() || this.pivots.current()) return;
+    if (on === this.tableWas || this.charts.selected() || this.shapes.selected() || this.pictures.selected() || this.pivots.current()) return;
     this.tableWas = on;
     this.ribbon.setContextual(on ? [this.tableDesignTab()] : []);
   }
@@ -2146,7 +2169,7 @@ export class CalcApp {
   private pivotWas = false;
   private pivotTabs(): void {
     const on = !!this.pivots.current();
-    if (on === this.pivotWas || this.charts.selected() || this.shapes.selected()) return;
+    if (on === this.pivotWas || this.charts.selected() || this.shapes.selected() || this.pictures.selected()) return;
     this.pivotWas = on;
     this.ribbon.setContextual(on ? [this.pivotAnalyzeTab(), this.pivotDesignTab()] : []);
   }
@@ -2189,6 +2212,16 @@ export class CalcApp {
     };
   }
 
+  /** Bildformat appears while a picture is selected (Excel's contextual tab, D-087). */
+  pictureSelectionChanged(): void {
+    if (this.charts.selected() || this.shapes.selected()) return;
+    const on = !!this.pictures.selected();
+    this.ribbon.setContextual(on ? [this.pictureUi.tab] : []);
+    if (on) this.ribbon.select("pictureFormat");
+    else { this.tableWas = false; this.pivotWas = false; this.tableTabs(); this.pivotTabs(); }
+    this.updateChrome();
+  }
+
   /** Formformat appears while a shape is selected (Excel's contextual tab). */
   shapeSelectionChanged(): void {
     if (this.charts.selected()) return;
@@ -2222,7 +2255,7 @@ export class CalcApp {
 
   chartSelectionChanged(): void {
     const on = !!this.charts.selected();
-    if (on) this.shapes.deselect();
+    if (on) { this.shapes.deselect(); this.pictures.deselect(); }
     // No chart: a selected shape keeps its Formformat tab.
     if (!on && this.shapes.selected()) { this.shapeSelectionChanged(); return; }
     this.ribbon.setContextual(on ? [this.chartTab(), this.chartFormatTab()] : []);
@@ -2230,12 +2263,19 @@ export class CalcApp {
     this.updateChrome();
   }
 
+  /** What the chart type menus and the Diagrammtyp dialog act on (charts/types.ts). */
+  chartTypeHost(): ChartTypeHost {
+    return {
+      insert: (k, tweak) => this.charts.insert(k, tweak),
+      selected: () => this.charts.selected(),
+      change: (fn) => this.charts.changeSelected(fn),
+      previewSeries: (k) => this.charts.previewSeries(k),
+    };
+  }
+
   private chartTabDef: import("@raabe/shell").Tab | null = null;
   private chartTab(): import("@raabe/shell").Tab {
-    const kinds: [string, import("./charts/feature").ChartKind][] = [["Gruppierte Säulen", "column"], ["Gestapelte Säulen", "columnStacked"], ["Gruppierte Balken", "bar"],
-      ["Linie", "line"], ["Linie mit Datenpunkten", "lineMarkers"], ["Fläche", "area"], ["Kreis", "pie"], ["Ring", "doughnut"], ["Punkte (XY)", "scatter"],
-      ["Punkte mit geraden Linien", "scatterLines"], ["Histogramm", "histogram"]];
-    const b = (cmd: string, key: string): import("@raabe/shell").Control => ({ type: "button", cmd, key, size: "large" });
+    const b =(cmd: string, key: string): import("@raabe/shell").Control => ({ type: "button", cmd, key, size: "large" });
     return this.chartTabDef ??= {
       id: "chartDesign", label: "Diagrammentwurf", key: "JC", contextual: true, shrink: [],
       groups: [
@@ -2248,7 +2288,7 @@ export class CalcApp {
           ] },
           b("chart.styles", "S")] },
         { id: "data", label: "Daten", key: "ZD", icon: "table", controls: [b("chart.switchRowCol", "W"), b("chart.selectData", "E")] },
-        { id: "type", label: "Typ", key: "ZT", icon: "chart-column", controls: [{ type: "dropdown", cmd: "chart.changeType", key: "C", size: "large", menu: kinds.map(([label, k]) => ({ label, run: () => this.charts.changeKind(k) })) }] },
+        { id: "type", label: "Typ", key: "ZT", icon: "chart-column", controls: [b("chart.changeType", "C")] },
         { id: "place", label: "Ort", key: "ZO", icon: "position", controls: [b("chart.move", "V")] },
       ],
     };
@@ -2620,14 +2660,8 @@ export class CalcApp {
         ],
         fnFinancial: fnMenu(["BW", "KAPZ", "NBW", "RMZ", "ZINS", "ZINSZ", "ZW", "ZZR"]),
         fnRecent: fnMenu(["SUMME", "MITTELWERT", "WENN", "MAX", "MIN", "ANZAHL", "SVERWEIS", "RUNDEN", "ZÄHLENWENN", "SUMMEWENN"]),
-        chartColumn: [{ heading: "2D-Säule" }, { label: "Gruppierte Säulen", run: () => this.charts.insert("column") }, { label: "Gestapelte Säulen", run: () => this.charts.insert("columnStacked") },
-          { heading: "2D-Balken" }, { label: "Gruppierte Balken", run: () => this.charts.insert("bar") }, { label: "Gestapelte Balken", run: () => this.charts.insert("barStacked") }],
-        chartLine: [{ heading: "2D-Linie" }, { label: "Linie", run: () => this.charts.insert("line") }, { label: "Linie mit Datenpunkten", run: () => this.charts.insert("lineMarkers") },
-          { heading: "2D-Fläche" }, { label: "Fläche", run: () => this.charts.insert("area") }],
-        chartPie: [{ heading: "2D-Kreis" }, { label: "Kreis", run: () => this.charts.insert("pie") }, { heading: "Ring" }, { label: "Ring", run: () => this.charts.insert("doughnut") }],
-        chartScatter: [{ heading: "Punkt (XY)" }, { label: "Punkte", run: () => this.charts.insert("scatter") }, { label: "Punkte mit interpolierten Linien", run: () => this.charts.insert("scatterSmooth") },
-          { label: "Punkte mit geraden Linien und Datenpunkten", run: () => this.charts.insert("scatterLines") }],
-        chartStat: [{ heading: "Histogramm" }, { label: "Histogramm", run: () => this.charts.insert("histogram") }],
+        // Einfügen > Diagramme: every type of Excel's menus (charts/types.ts, D-086).
+        ...(chartMenus(this.chartTypeHost()) as Pick<RibbonContext["menus"], "chartColumn" | "chartLine" | "chartPie" | "chartScatter" | "chartStat" | "chartHierarchy" | "chartOther" | "chartCombo">),
         fitWidth: ["Automatisch", "1 Seite", "2 Seiten", "3 Seiten"].map((l, i) => ({ label: l, run: () => this.print.setFit("width", i) })),
         fitHeight: ["Automatisch", "1 Seite", "2 Seiten", "3 Seiten"].map((l, i) => ({ label: l, run: () => this.print.setFit("height", i) })),
         align: () => this.shapes.arrange.alignMenu(),
@@ -2737,7 +2771,9 @@ export class CalcApp {
       template: async (id: CalcTemplate, path: string) => { this.newDoc(id); await this.platform.writeFile(path, writeXlsx(this.wb)); },
       /** Als PDF exportieren into a given file (check_calc_print.py). */
       pdf: (path: string) => this.print.exportPdf(path),
-      save: (path: string) => this.platform.writeFile(path, writeXlsx(this.wb)),
+      save: async (path: string) => { await this.pictures.settle(); await this.platform.writeFile(path, writeXlsx(this.wb)); },
+      /** Pictures (D-087, check_calc_pictures.py). */
+      pictures: this.pictures,
       /** Opens a file as Öffnen does (compare_calc_files.py). */
       open: (path: string) => this.openPath(path),
       /** Where a cell is on the page (CSS px from the viewport's top left). */
@@ -2782,7 +2818,7 @@ export class CalcApp {
           const own = "popup" in c && c.popup ? { panel: true } : c.type === "color" ? { panel: true } : {};
           return [{ ...base, type: (c as { type: string }).type, ...menu, ...own }];
         };
-        const tabs = [...ribbonTabs(this.ribbonContext()), this.chartTab(), this.chartFormatTab(), this.shapeTab(), this.pivotAnalyzeTab(), this.pivotDesignTab()];
+        const tabs = [...ribbonTabs(this.ribbonContext()), this.chartTab(), this.chartFormatTab(), this.shapeTab(), this.pictureUi.tab, this.pivotAnalyzeTab(), this.pivotDesignTab(), this.sparklines.tab()];
         return tabs.map((t) => ({
           name: t.label, contextual: !!t.contextual,
           groups: t.groups.map((g) => ({ name: g.label, launcher: g.launcher ? cmdItem(g.launcher.cmd) : undefined, controls: g.controls.flatMap(ctl) })),

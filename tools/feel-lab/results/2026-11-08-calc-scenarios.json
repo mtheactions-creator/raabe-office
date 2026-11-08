@@ -1,0 +1,218 @@
+{
+ "raabe->excel": [
+  {
+   "check": "sheets in our order (report before Tabelle1)",
+   "ok": true
+  },
+  {
+   "check": "five scenarios",
+   "ok": true
+  },
+  {
+   "check": "Gut: name",
+   "ok": true
+  },
+  {
+   "check": "Gut: cells",
+   "ok": true
+  },
+  {
+   "check": "Gut: values",
+   "ok": true
+  },
+  {
+   "check": "Gut: comment",
+   "ok": true
+  },
+  {
+   "check": "Gut: Schutz",
+   "ok": true
+  },
+  {
+   "check": "Schlecht: name",
+   "ok": true
+  },
+  {
+   "check": "Schlecht: cells",
+   "ok": true
+  },
+  {
+   "check": "Schlecht: values",
+   "ok": true
+  },
+  {
+   "check": "Schlecht: comment",
+   "ok": true
+  },
+  {
+   "check": "Schlecht: Schutz",
+   "ok": true
+  },
+  {
+   "check": "Mittel: name",
+   "ok": true
+  },
+  {
+   "check": "Mittel: cells",
+   "ok": true
+  },
+  {
+   "check": "Mittel: values",
+   "ok": true
+  },
+  {
+   "check": "Mittel: comment",
+   "ok": true
+  },
+  {
+   "check": "Mittel: Schutz",
+   "ok": true
+  },
+  {
+   "check": "Text: name",
+   "ok": true
+  },
+  {
+   "check": "Text: cells",
+   "ok": true
+  },
+  {
+   "check": "Text: values",
+   "ok": true
+  },
+  {
+   "check": "Text: comment",
+   "ok": true
+  },
+  {
+   "check": "Text: Schutz",
+   "ok": true
+  },
+  {
+   "check": "Dezimal: name",
+   "ok": true
+  },
+  {
+   "check": "Dezimal: cells",
+   "ok": true
+  },
+  {
+   "check": "Dezimal: values",
+   "ok": true
+  },
+  {
+   "check": "Dezimal: comment",
+   "ok": true
+  },
+  {
+   "check": "Dezimal: Schutz",
+   "ok": true
+  },
+  {
+   "check": "Mittel shown: B1, B3, B4 as Excel computes",
+   "ok": true
+  },
+  {
+   "check": "Excel shows our scenario Gut: B1, B2, B4",
+   "ok": true
+  },
+  {
+   "check": "Excel shows our German decimal: B2 = 0.25",
+   "ok": true
+  },
+  {
+   "check": "report: 106 cells read back",
+   "ok": true
+  },
+  {
+   "check": "report: outline and the hidden comments row",
+   "ok": true
+  },
+  {
+   "check": "report: Excel's labels",
+   "ok": true
+  },
+  {
+   "check": "Konsolidieren: 16 cells read back",
+   "ok": true
+  },
+  {
+   "check": "Konsolidieren by labels: Excel's own result equals ours",
+   "ok": true
+  },
+  {
+   "check": "Verknüpfungen: 34 cells, formulas and values",
+   "ok": true
+  },
+  {
+   "check": "Verknüpfungen: 21 formulas as Excel shows them (=Süd!$B$4, =MITTELWERT(D2:D3))",
+   "ok": true
+  },
+  {
+   "check": "Verknüpfungen: outline",
+   "ok": true
+  }
+ ],
+ "excel->raabe": [
+  {
+   "check": "six scenarios",
+   "ok": true
+  },
+  {
+   "check": "Gut: as Excel reports it",
+   "ok": true
+  },
+  {
+   "check": "Schlecht: as Excel reports it",
+   "ok": true
+  },
+  {
+   "check": "Mittel: as Excel reports it",
+   "ok": true
+  },
+  {
+   "check": "Text: as Excel reports it",
+   "ok": true
+  },
+  {
+   "check": "Dezimal: as Excel reports it",
+   "ok": true
+  },
+  {
+   "check": "Excel: as Excel reports it",
+   "ok": true
+  },
+  {
+   "check": "Text shown last (E1 = abc)",
+   "ok": true
+  },
+  {
+   "check": "Excel's scenario shown in RaabeCalc: B3 = 250, B4 = -247",
+   "ok": true
+  },
+  {
+   "check": "Konsolidieren's settings as Excel keeps them (without Linker Spalte, Excel's glitch)",
+   "ok": true
+  },
+  {
+   "check": "fixture Gut",
+   "ok": true
+  },
+  {
+   "check": "fixture Schlecht",
+   "ok": true
+  },
+  {
+   "check": "fixture Mittel",
+   "ok": true
+  },
+  {
+   "check": "fixture Text",
+   "ok": true
+  },
+  {
+   "check": "fixture Leer",
+   "ok": true
+  }
+ ]
+}

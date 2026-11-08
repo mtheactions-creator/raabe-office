@@ -242,6 +242,7 @@ class DocWriter {
       return `<w:r>${rPr}${relink(this.repictured(this.resized(d.drawing, o.width, o.height), o, d.picRead), d.part, part, this.pw)}</w:r>`;
     }
     // Content created in RaabeWrite.
+    if (o.kind === "image" && o.chart) return `<w:r>${rPr}${this.newChart(o, part)}</w:r>`;
     if (o.kind === "image" && o.shape) return `<w:r>${rPr}${this.newShape(o, o.shape, part)}</w:r>`;
     if (o.kind === "image" && o.image) return `<w:r>${rPr}${this.newDrawing(o, part)}</w:r>`;
     // An equation alone in its paragraph is a display equation (m:oMathPara), as in Word.
@@ -305,6 +306,33 @@ class DocWriter {
       if (sp >= 0) out = out.slice(0, sp) + out.slice(sp).replace(/<a:ext cx="\d+" cy="\d+"/, `<a:ext cx="${cx}" cy="${cy}"`);
     }
     return out;
+  }
+
+  /**
+   * A chart made or changed in RaabeWrite (Step 7b): its chart part, the embedded workbook with the data (linked as
+   * Word links it, so Word's Daten bearbeiten finds it) and the inline drawing that shows it.
+   */
+  private newChart(o: InlineObject, part: string): string {
+    const ch = o.chart!;
+    const chartPath = this.pw.freeName("word/charts/chart");
+    let xml = ch.xml;
+    if (ch.workbook) {
+      const book = this.pw.addMedia(ch.workbook, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "word/embeddings/Microsoft_Excel_Worksheet");
+      const brid = this.pw.link(chartPath, "http://schemas.openxmlformats.org/officeDocument/2006/relationships/package", book);
+      xml = xml.replace(/<c:externalData\b[\s\S]*?<\/c:externalData>/, "");
+      const ext = `<c:externalData r:id="${brid}"><c:autoUpdate val="0"/></c:externalData>`;
+      const at = xml.search(/<c:(printSettings|userShapes|extLst)\b(?![\s\S]*<c:chart\b)/);
+      xml = at >= 0 ? xml.slice(0, at) + ext + xml.slice(at) : xml.replace("</c:chartSpace>", ext + "</c:chartSpace>");
+      if (!/xmlns:r=/.test(xml.slice(0, 400))) xml = xml.replace("<c:chartSpace ", `<c:chartSpace xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" `);
+    }
+    this.pw.setPart(chartPath, xml, "application/vnd.openxmlformats-officedocument.drawingml.chart+xml");
+    const rid = this.pw.link(part, "http://schemas.openxmlformats.org/officeDocument/2006/relationships/chart", chartPath);
+    const cx = Math.round((o.width ?? 300) * EMU), cy = Math.round((o.height ?? 180) * EMU);
+    const id = this.docPrId++;
+    const NS_C = "http://schemas.openxmlformats.org/drawingml/2006/chart";
+    return `<w:drawing><wp:inline distT="0" distB="0" distL="0" distR="0" xmlns:wp="${NS_WP}"><wp:extent cx="${cx}" cy="${cy}"/><wp:effectExtent l="0" t="0" r="0" b="0"/>` +
+      `<wp:docPr id="${id}" name="Diagramm ${id}"/><wp:cNvGraphicFramePr/><a:graphic xmlns:a="${NS_A}"><a:graphicData uri="${NS_C}">` +
+      `<c:chart xmlns:c="${NS_C}" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" r:id="${rid}"/></a:graphicData></a:graphic></wp:inline></w:drawing>`;
   }
 
   private newDrawing(o: { image?: InlineObject["image"]; width?: number; height?: number; pic?: PictureFormat; alt?: AltText }, part: string, anchor?: FloatObject): string {

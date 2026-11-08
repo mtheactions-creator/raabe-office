@@ -1,0 +1,3374 @@
+{
+ "excel": {
+  "version": "16.0",
+  "theme": "Office 2013 - 2022",
+  "size": [
+   360,
+   216
+  ],
+  "units": "points"
+ },
+ "types": {
+  "columnStacked100": {
+   "xlType": 53,
+   "chartType": 53,
+   "series": [
+    {
+     "name": "Reihe A",
+     "formula": "=SERIES(columnStacked100!$B$1,columnStacked100!$A$2:$A$6,columnStacked100!$B$2:$B$6,1)",
+     "type": 53,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe B",
+     "formula": "=SERIES(columnStacked100!$C$1,columnStacked100!$A$2:$A$6,columnStacked100!$C$2:$C$6,2)",
+     "type": 53,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe C",
+     "formula": "=SERIES(columnStacked100!$D$1,columnStacked100!$A$2:$A$6,columnStacked100!$D$2:$D$6,3)",
+     "type": 53,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 100.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 30.96,
+    "Top": 33.09,
+    "Width": 314.04,
+    "Height": 132.84
+   },
+   "chartStyle": 297
+  },
+  "barStacked100": {
+   "xlType": 59,
+   "chartType": 59,
+   "series": [
+    {
+     "name": "Reihe A",
+     "formula": "=SERIES(barStacked100!$B$1,barStacked100!$A$2:$A$6,barStacked100!$B$2:$B$6,1)",
+     "type": 59,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe B",
+     "formula": "=SERIES(barStacked100!$C$1,barStacked100!$A$2:$A$6,barStacked100!$C$2:$C$6,2)",
+     "type": 59,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe C",
+     "formula": "=SERIES(barStacked100!$D$1,barStacked100!$A$2:$A$6,barStacked100!$D$2:$D$6,3)",
+     "type": 59,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 100.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 25.24,
+    "Top": 33.09,
+    "Width": 309.7,
+    "Height": 132.84
+   },
+   "chartStyle": 297
+  },
+  "lineStacked": {
+   "xlType": 63,
+   "chartType": 63,
+   "series": [
+    {
+     "name": "Reihe A",
+     "formula": "=SERIES(lineStacked!$B$1,lineStacked!$A$2:$A$6,lineStacked!$B$2:$B$6,1)",
+     "type": 63,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe B",
+     "formula": "=SERIES(lineStacked!$C$1,lineStacked!$A$2:$A$6,lineStacked!$C$2:$C$6,2)",
+     "type": 63,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe C",
+     "formula": "=SERIES(lineStacked!$D$1,lineStacked!$A$2:$A$6,lineStacked!$D$2:$D$6,3)",
+     "type": 63,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 100.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 19.97,
+    "Top": 33.09,
+    "Width": 325.03,
+    "Height": 132.84
+   },
+   "chartStyle": 227
+  },
+  "lineStacked100": {
+   "xlType": 64,
+   "chartType": 64,
+   "series": [
+    {
+     "name": "Reihe A",
+     "formula": "=SERIES(lineStacked100!$B$1,lineStacked100!$A$2:$A$6,lineStacked100!$B$2:$B$6,1)",
+     "type": 64,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe B",
+     "formula": "=SERIES(lineStacked100!$C$1,lineStacked100!$A$2:$A$6,lineStacked100!$C$2:$C$6,2)",
+     "type": 64,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe C",
+     "formula": "=SERIES(lineStacked100!$D$1,lineStacked100!$A$2:$A$6,lineStacked100!$D$2:$D$6,3)",
+     "type": 64,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 100.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 30.96,
+    "Top": 33.09,
+    "Width": 314.04,
+    "Height": 132.84
+   },
+   "chartStyle": 227
+  },
+  "lineMarkersStacked": {
+   "xlType": 66,
+   "chartType": 66,
+   "series": [
+    {
+     "name": "Reihe A",
+     "formula": "=SERIES(lineMarkersStacked!$B$1,lineMarkersStacked!$A$2:$A$6,lineMarkersStacked!$B$2:$B$6,1)",
+     "type": 66,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe B",
+     "formula": "=SERIES(lineMarkersStacked!$C$1,lineMarkersStacked!$A$2:$A$6,lineMarkersStacked!$C$2:$C$6,2)",
+     "type": 66,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe C",
+     "formula": "=SERIES(lineMarkersStacked!$D$1,lineMarkersStacked!$A$2:$A$6,lineMarkersStacked!$D$2:$D$6,3)",
+     "type": 66,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 219.0,
+    "Overlap": -27.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 19.97,
+    "Top": 33.09,
+    "Width": 325.03,
+    "Height": 132.84
+   },
+   "chartStyle": 332
+  },
+  "lineMarkersStacked100": {
+   "xlType": 67,
+   "chartType": 67,
+   "series": [
+    {
+     "name": "Reihe A",
+     "formula": "=SERIES(lineMarkersStacked100!$B$1,lineMarkersStacked100!$A$2:$A$6,lineMarkersStacked100!$B$2:$B$6,1)",
+     "type": 67,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe B",
+     "formula": "=SERIES(lineMarkersStacked100!$C$1,lineMarkersStacked100!$A$2:$A$6,lineMarkersStacked100!$C$2:$C$6,2)",
+     "type": 67,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe C",
+     "formula": "=SERIES(lineMarkersStacked100!$D$1,lineMarkersStacked100!$A$2:$A$6,lineMarkersStacked100!$D$2:$D$6,3)",
+     "type": 67,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 219.0,
+    "Overlap": -27.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 30.96,
+    "Top": 33.09,
+    "Width": 314.04,
+    "Height": 132.84
+   },
+   "chartStyle": 332
+  },
+  "areaStacked": {
+   "xlType": 76,
+   "chartType": 76,
+   "series": [
+    {
+     "name": "Reihe A",
+     "formula": "=SERIES(areaStacked!$B$1,areaStacked!$A$2:$A$6,areaStacked!$B$2:$B$6,1)",
+     "type": 76,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe B",
+     "formula": "=SERIES(areaStacked!$C$1,areaStacked!$A$2:$A$6,areaStacked!$C$2:$C$6,2)",
+     "type": 76,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe C",
+     "formula": "=SERIES(areaStacked!$D$1,areaStacked!$A$2:$A$6,areaStacked!$D$2:$D$6,3)",
+     "type": 76,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 100.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 19.97,
+    "Top": 33.09,
+    "Width": 318.0,
+    "Height": 132.84
+   },
+   "chartStyle": 276
+  },
+  "areaStacked100": {
+   "xlType": 77,
+   "chartType": 77,
+   "series": [
+    {
+     "name": "Reihe A",
+     "formula": "=SERIES(areaStacked100!$B$1,areaStacked100!$A$2:$A$6,areaStacked100!$B$2:$B$6,1)",
+     "type": 77,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe B",
+     "formula": "=SERIES(areaStacked100!$C$1,areaStacked100!$A$2:$A$6,areaStacked100!$C$2:$C$6,2)",
+     "type": 77,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe C",
+     "formula": "=SERIES(areaStacked100!$D$1,areaStacked100!$A$2:$A$6,areaStacked100!$D$2:$D$6,3)",
+     "type": 77,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 100.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 30.96,
+    "Top": 33.09,
+    "Width": 307.0,
+    "Height": 132.84
+   },
+   "chartStyle": 276
+  },
+  "column3DClustered": {
+   "xlType": 54,
+   "chartType": 54,
+   "series": [
+    {
+     "name": "Reihe A",
+     "formula": "=SERIES(column3DClustered!$B$1,column3DClustered!$A$2:$A$6,column3DClustered!$B$2:$B$6,1)",
+     "type": 54,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe B",
+     "formula": "=SERIES(column3DClustered!$C$1,column3DClustered!$A$2:$A$6,column3DClustered!$C$2:$C$6,2)",
+     "type": 54,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe C",
+     "formula": "=SERIES(column3DClustered!$D$1,column3DClustered!$A$2:$A$6,column3DClustered!$D$2:$D$6,3)",
+     "type": 54,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 0.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": true,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 22.21,
+    "Top": 33.09,
+    "Width": 322.79,
+    "Height": 132.84
+   },
+   "chartStyle": 286
+  },
+  "column3DStacked": {
+   "xlType": 55,
+   "chartType": 55,
+   "series": [
+    {
+     "name": "Reihe A",
+     "formula": "=SERIES(column3DStacked!$B$1,column3DStacked!$A$2:$A$6,column3DStacked!$B$2:$B$6,1)",
+     "type": 55,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe B",
+     "formula": "=SERIES(column3DStacked!$C$1,column3DStacked!$A$2:$A$6,column3DStacked!$C$2:$C$6,2)",
+     "type": 55,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe C",
+     "formula": "=SERIES(column3DStacked!$D$1,column3DStacked!$A$2:$A$6,column3DStacked!$D$2:$D$6,3)",
+     "type": 55,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 100.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": true,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 19.97,
+    "Top": 33.09,
+    "Width": 325.03,
+    "Height": 132.84
+   },
+   "chartStyle": 286
+  },
+  "column3DStacked100": {
+   "xlType": 56,
+   "chartType": 56,
+   "series": [
+    {
+     "name": "Reihe A",
+     "formula": "=SERIES(column3DStacked100!$B$1,column3DStacked100!$A$2:$A$6,column3DStacked100!$B$2:$B$6,1)",
+     "type": 56,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe B",
+     "formula": "=SERIES(column3DStacked100!$C$1,column3DStacked100!$A$2:$A$6,column3DStacked100!$C$2:$C$6,2)",
+     "type": 56,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe C",
+     "formula": "=SERIES(column3DStacked100!$D$1,column3DStacked100!$A$2:$A$6,column3DStacked100!$D$2:$D$6,3)",
+     "type": 56,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 100.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": true,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 30.96,
+    "Top": 33.09,
+    "Width": 314.04,
+    "Height": 132.84
+   },
+   "chartStyle": 286
+  },
+  "column3D": {
+   "xlType": -4100,
+   "chartType": -4100,
+   "series": [
+    {
+     "name": "Reihe A",
+     "formula": "=SERIES(column3D!$B$1,column3D!$A$2:$A$6,column3D!$B$2:$B$6,1)",
+     "type": -4100,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe B",
+     "formula": "=SERIES(column3D!$C$1,column3D!$A$2:$A$6,column3D!$C$2:$C$6,2)",
+     "type": -4100,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe C",
+     "formula": "=SERIES(column3D!$D$1,column3D!$A$2:$A$6,column3D!$D$2:$D$6,3)",
+     "type": -4100,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 0.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": true,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 15.41,
+    "Top": 33.09,
+    "Width": 300.71,
+    "Height": 132.84
+   },
+   "chartStyle": 286
+  },
+  "bar3DClustered": {
+   "xlType": 60,
+   "chartType": 60,
+   "series": [
+    {
+     "name": "Reihe A",
+     "formula": "=SERIES(bar3DClustered!$B$1,bar3DClustered!$A$2:$A$6,bar3DClustered!$B$2:$B$6,1)",
+     "type": 60,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe B",
+     "formula": "=SERIES(bar3DClustered!$C$1,bar3DClustered!$A$2:$A$6,bar3DClustered!$C$2:$C$6,2)",
+     "type": 60,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe C",
+     "formula": "=SERIES(bar3DClustered!$D$1,bar3DClustered!$A$2:$A$6,bar3DClustered!$D$2:$D$6,3)",
+     "type": 60,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 0.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": true,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 25.24,
+    "Top": 33.09,
+    "Width": 317.48,
+    "Height": 132.84
+   },
+   "chartStyle": 286
+  },
+  "bar3DStacked": {
+   "xlType": 61,
+   "chartType": 61,
+   "series": [
+    {
+     "name": "Reihe A",
+     "formula": "=SERIES(bar3DStacked!$B$1,bar3DStacked!$A$2:$A$6,bar3DStacked!$B$2:$B$6,1)",
+     "type": 61,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe B",
+     "formula": "=SERIES(bar3DStacked!$C$1,bar3DStacked!$A$2:$A$6,bar3DStacked!$C$2:$C$6,2)",
+     "type": 61,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe C",
+     "formula": "=SERIES(bar3DStacked!$D$1,bar3DStacked!$A$2:$A$6,bar3DStacked!$D$2:$D$6,3)",
+     "type": 61,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 100.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": true,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 25.24,
+    "Top": 33.09,
+    "Width": 315.2,
+    "Height": 132.84
+   },
+   "chartStyle": 286
+  },
+  "bar3DStacked100": {
+   "xlType": 62,
+   "chartType": 62,
+   "series": [
+    {
+     "name": "Reihe A",
+     "formula": "=SERIES(bar3DStacked100!$B$1,bar3DStacked100!$A$2:$A$6,bar3DStacked100!$B$2:$B$6,1)",
+     "type": 62,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe B",
+     "formula": "=SERIES(bar3DStacked100!$C$1,bar3DStacked100!$A$2:$A$6,bar3DStacked100!$C$2:$C$6,2)",
+     "type": 62,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe C",
+     "formula": "=SERIES(bar3DStacked100!$D$1,bar3DStacked100!$A$2:$A$6,bar3DStacked100!$D$2:$D$6,3)",
+     "type": 62,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 100.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": true,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 25.24,
+    "Top": 33.09,
+    "Width": 309.7,
+    "Height": 132.84
+   },
+   "chartStyle": 286
+  },
+  "line3D": {
+   "xlType": -4101,
+   "chartType": -4101,
+   "series": [
+    {
+     "name": "Reihe A",
+     "formula": "=SERIES(line3D!$B$1,line3D!$A$2:$A$6,line3D!$B$2:$B$6,1)",
+     "type": -4101,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe B",
+     "formula": "=SERIES(line3D!$C$1,line3D!$A$2:$A$6,line3D!$C$2:$C$6,2)",
+     "type": -4101,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe C",
+     "formula": "=SERIES(line3D!$D$1,line3D!$A$2:$A$6,line3D!$D$2:$D$6,3)",
+     "type": -4101,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 100.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 15.41,
+    "Top": 33.09,
+    "Width": 300.71,
+    "Height": 132.84
+   },
+   "chartStyle": 307
+  },
+  "area3D": {
+   "xlType": -4098,
+   "chartType": -4098,
+   "series": [
+    {
+     "name": "Reihe A",
+     "formula": "=SERIES(area3D!$B$1,area3D!$A$2:$A$6,area3D!$B$2:$B$6,1)",
+     "type": -4098,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe B",
+     "formula": "=SERIES(area3D!$C$1,area3D!$A$2:$A$6,area3D!$C$2:$C$6,2)",
+     "type": -4098,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe C",
+     "formula": "=SERIES(area3D!$D$1,area3D!$A$2:$A$6,area3D!$D$2:$D$6,3)",
+     "type": -4098,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 100.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 15.41,
+    "Top": 33.09,
+    "Width": 300.71,
+    "Height": 132.84
+   },
+   "chartStyle": 276
+  },
+  "area3DStacked": {
+   "xlType": 78,
+   "chartType": 78,
+   "series": [
+    {
+     "name": "Reihe A",
+     "formula": "=SERIES(area3DStacked!$B$1,area3DStacked!$A$2:$A$6,area3DStacked!$B$2:$B$6,1)",
+     "type": 78,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe B",
+     "formula": "=SERIES(area3DStacked!$C$1,area3DStacked!$A$2:$A$6,area3DStacked!$C$2:$C$6,2)",
+     "type": 78,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe C",
+     "formula": "=SERIES(area3DStacked!$D$1,area3DStacked!$A$2:$A$6,area3DStacked!$D$2:$D$6,3)",
+     "type": 78,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 100.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 19.97,
+    "Top": 33.09,
+    "Width": 318.0,
+    "Height": 132.84
+   },
+   "chartStyle": 276
+  },
+  "area3DStacked100": {
+   "xlType": 79,
+   "chartType": 79,
+   "series": [
+    {
+     "name": "Reihe A",
+     "formula": "=SERIES(area3DStacked100!$B$1,area3DStacked100!$A$2:$A$6,area3DStacked100!$B$2:$B$6,1)",
+     "type": 79,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe B",
+     "formula": "=SERIES(area3DStacked100!$C$1,area3DStacked100!$A$2:$A$6,area3DStacked100!$C$2:$C$6,2)",
+     "type": 79,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe C",
+     "formula": "=SERIES(area3DStacked100!$D$1,area3DStacked100!$A$2:$A$6,area3DStacked100!$D$2:$D$6,3)",
+     "type": 79,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 100.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 30.96,
+    "Top": 33.09,
+    "Width": 307.0,
+    "Height": 132.84
+   },
+   "chartStyle": 276
+  },
+  "pie3D": {
+   "xlType": -4102,
+   "chartType": -4102,
+   "series": [
+    {
+     "name": "Umsatz",
+     "formula": "=SERIES(pie3D!$B$1,pie3D!$A$2:$A$6,pie3D!$B$2:$B$6,1)",
+     "type": -4102,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Umsatz",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 0.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": true,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 30.0,
+    "Rotation": 0.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 7.0,
+    "Top": 33.09,
+    "Width": 338.0,
+    "Height": 145.03
+   },
+   "chartStyle": 262
+  },
+  "pieOfPie": {
+   "xlType": 68,
+   "chartType": 68,
+   "series": [
+    {
+     "name": "Anteil",
+     "formula": "=SERIES(pieOfPie!$B$1,pieOfPie!$A$2:$A$8,pieOfPie!$B$2:$B$8,1)",
+     "type": 68,
+     "axisGroup": 1,
+     "points": 8
+    }
+   ],
+   "hasTitle": true,
+   "title": "Anteil",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 100.0,
+    "Overlap": 0.0,
+    "SplitType": 1.0,
+    "SplitValue": 3.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": true,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 75.0,
+    "Rotation": 0.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 7.0,
+    "Top": 33.58,
+    "Width": 338.0,
+    "Height": 144.55
+   },
+   "chartStyle": 333
+  },
+  "barOfPie": {
+   "xlType": 71,
+   "chartType": 71,
+   "series": [
+    {
+     "name": "Anteil",
+     "formula": "=SERIES(barOfPie!$B$1,barOfPie!$A$2:$A$8,barOfPie!$B$2:$B$8,1)",
+     "type": 71,
+     "axisGroup": 1,
+     "points": 8
+    }
+   ],
+   "hasTitle": true,
+   "title": "Anteil",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 100.0,
+    "Overlap": 0.0,
+    "SplitType": 1.0,
+    "SplitValue": 3.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": true,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 75.0,
+    "Rotation": 0.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 7.0,
+    "Top": 33.58,
+    "Width": 338.0,
+    "Height": 144.55
+   },
+   "chartStyle": 333
+  },
+  "radar": {
+   "xlType": -4151,
+   "chartType": -4151,
+   "series": [
+    {
+     "name": "Reihe A",
+     "formula": "=SERIES(radar!$B$1,radar!$A$2:$A$6,radar!$B$2:$B$6,1)",
+     "type": -4151,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe B",
+     "formula": "=SERIES(radar!$C$1,radar!$A$2:$A$6,radar!$C$2:$C$6,2)",
+     "type": -4151,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe C",
+     "formula": "=SERIES(radar!$D$1,radar!$A$2:$A$6,radar!$D$2:$D$6,3)",
+     "type": -4151,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4160,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 100.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "HasRadarAxisLabels": true,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 112.07,
+    "Top": 64.56,
+    "Width": 127.85,
+    "Height": 127.85
+   },
+   "chartStyle": 317
+  },
+  "radarMarkers": {
+   "xlType": 81,
+   "chartType": 81,
+   "series": [
+    {
+     "name": "Reihe A",
+     "formula": "=SERIES(radarMarkers!$B$1,radarMarkers!$A$2:$A$6,radarMarkers!$B$2:$B$6,1)",
+     "type": 81,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe B",
+     "formula": "=SERIES(radarMarkers!$C$1,radarMarkers!$A$2:$A$6,radarMarkers!$C$2:$C$6,2)",
+     "type": 81,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe C",
+     "formula": "=SERIES(radarMarkers!$D$1,radarMarkers!$A$2:$A$6,radarMarkers!$D$2:$D$6,3)",
+     "type": 81,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4160,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 100.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "HasRadarAxisLabels": true,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 112.07,
+    "Top": 64.56,
+    "Width": 127.85,
+    "Height": 127.85
+   },
+   "chartStyle": 317
+  },
+  "radarFilled": {
+   "xlType": 82,
+   "chartType": 82,
+   "series": [
+    {
+     "name": "Reihe A",
+     "formula": "=SERIES(radarFilled!$B$1,radarFilled!$A$2:$A$6,radarFilled!$B$2:$B$6,1)",
+     "type": 82,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe B",
+     "formula": "=SERIES(radarFilled!$C$1,radarFilled!$A$2:$A$6,radarFilled!$C$2:$C$6,2)",
+     "type": 82,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe C",
+     "formula": "=SERIES(radarFilled!$D$1,radarFilled!$A$2:$A$6,radarFilled!$D$2:$D$6,3)",
+     "type": 82,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4160,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 100.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "HasRadarAxisLabels": true,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 112.07,
+    "Top": 64.56,
+    "Width": 127.85,
+    "Height": 127.85
+   },
+   "chartStyle": 317
+  },
+  "bubble": {
+   "xlType": 15,
+   "chartType": 15,
+   "series": [
+    {
+     "name": "Y",
+     "formula": "=SERIES(bubble!$B$1,bubble!$A$2:$A$6,bubble!$B$2:$B$6,1,bubble!$C$2:$C$6)",
+     "type": 15,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Y",
+   "hasLegend": false,
+   "legendPos": null,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 100.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 15.41,
+    "Top": 33.09,
+    "Width": 327.31,
+    "Height": 155.71
+   },
+   "chartStyle": 269
+  },
+  "bubble3D": {
+   "xlType": 87,
+   "chartType": 87,
+   "series": [
+    {
+     "name": "Y",
+     "formula": "=SERIES(bubble3D!$B$1,bubble3D!$A$2:$A$6,bubble3D!$B$2:$B$6,1,bubble3D!$C$2:$C$6)",
+     "type": 87,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Y",
+   "hasLegend": false,
+   "legendPos": null,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 100.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 15.41,
+    "Top": 33.09,
+    "Width": 327.31,
+    "Height": 155.71
+   },
+   "chartStyle": 269
+  },
+  "scatterSmoothMarkers": {
+   "xlType": 72,
+   "chartType": 72,
+   "series": [
+    {
+     "name": "Y",
+     "formula": "=SERIES(scatterSmoothMarkers!$B$1,scatterSmoothMarkers!$A$2:$A$6,scatterSmoothMarkers!$B$2:$B$6,1)",
+     "type": 72,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Größe",
+     "formula": "=SERIES(scatterSmoothMarkers!$C$1,scatterSmoothMarkers!$A$2:$A$6,scatterSmoothMarkers!$C$2:$C$6,2)",
+     "type": 72,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 100.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 19.97,
+    "Top": 33.09,
+    "Width": 322.75,
+    "Height": 132.84
+   },
+   "chartStyle": 240
+  },
+  "scatterLinesNoMarkers": {
+   "xlType": 75,
+   "chartType": 75,
+   "series": [
+    {
+     "name": "Y",
+     "formula": "=SERIES(scatterLinesNoMarkers!$B$1,scatterLinesNoMarkers!$A$2:$A$6,scatterLinesNoMarkers!$B$2:$B$6,1)",
+     "type": 75,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Größe",
+     "formula": "=SERIES(scatterLinesNoMarkers!$C$1,scatterLinesNoMarkers!$A$2:$A$6,scatterLinesNoMarkers!$C$2:$C$6,2)",
+     "type": 75,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 100.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 19.97,
+    "Top": 33.09,
+    "Width": 322.75,
+    "Height": 132.84
+   },
+   "chartStyle": 240
+  },
+  "stockHLC": {
+   "xlType": 88,
+   "chartType": 88,
+   "series": [
+    {
+     "name": "Hoch",
+     "formula": "=SERIES(stockHLC!$B$1,stockHLC!$A$2:$A$6,stockHLC!$B$2:$B$6,1)",
+     "type": 88,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Tief",
+     "formula": "=SERIES(stockHLC!$C$1,stockHLC!$A$2:$A$6,stockHLC!$C$2:$C$6,2)",
+     "type": 88,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Schluss",
+     "formula": "=SERIES(stockHLC!$D$1,stockHLC!$A$2:$A$6,stockHLC!$D$2:$D$6,3)",
+     "type": 88,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 100.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": true,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 19.97,
+    "Top": 33.09,
+    "Width": 325.03,
+    "Height": 132.84
+   },
+   "chartStyle": 322
+  },
+  "stockOHLC": {
+   "xlType": 89,
+   "chartType": 89,
+   "series": [
+    {
+     "name": "Eröffnung",
+     "formula": "=SERIES(stockOHLC!$B$1,stockOHLC!$A$2:$A$6,stockOHLC!$B$2:$B$6,1)",
+     "type": 89,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Hoch",
+     "formula": "=SERIES(stockOHLC!$C$1,stockOHLC!$A$2:$A$6,stockOHLC!$C$2:$C$6,2)",
+     "type": 89,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Tief",
+     "formula": "=SERIES(stockOHLC!$D$1,stockOHLC!$A$2:$A$6,stockOHLC!$D$2:$D$6,3)",
+     "type": 89,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Schluss",
+     "formula": "=SERIES(stockOHLC!$E$1,stockOHLC!$A$2:$A$6,stockOHLC!$E$2:$E$6,4)",
+     "type": 89,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 100.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": true,
+    "HasUpDownBars": true,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 19.97,
+    "Top": 33.09,
+    "Width": 325.03,
+    "Height": 132.84
+   },
+   "chartStyle": 322
+  },
+  "stockVHLC": {
+   "xlType": 90,
+   "chartType": 90,
+   "series": [
+    {
+     "name": "Volumen",
+     "formula": "=SERIES(stockVHLC!$B$1,stockVHLC!$A$2:$A$6,stockVHLC!$B$2:$B$6,1)",
+     "type": 51,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Hoch",
+     "formula": "=SERIES(stockVHLC!$C$1,stockVHLC!$A$2:$A$6,stockVHLC!$C$2:$C$6,2)",
+     "type": 88,
+     "axisGroup": 2,
+     "points": 5
+    },
+    {
+     "name": "Tief",
+     "formula": "=SERIES(stockVHLC!$D$1,stockVHLC!$A$2:$A$6,stockVHLC!$D$2:$D$6,3)",
+     "type": 88,
+     "axisGroup": 2,
+     "points": 5
+    },
+    {
+     "name": "Schluss",
+     "formula": "=SERIES(stockVHLC!$E$1,stockVHLC!$A$2:$A$6,stockVHLC!$E$2:$E$6,4)",
+     "type": 88,
+     "axisGroup": 2,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 0.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 29.09,
+    "Top": 33.09,
+    "Width": 302.94,
+    "Height": 132.84
+   },
+   "chartStyle": 322
+  },
+  "stockVOHLC": {
+   "xlType": 91,
+   "chartType": 91,
+   "series": [
+    {
+     "name": "Volumen",
+     "formula": "=SERIES(stockVOHLC!$B$1,stockVOHLC!$A$2:$A$6,stockVOHLC!$B$2:$B$6,1)",
+     "type": 51,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Eröffnung",
+     "formula": "=SERIES(stockVOHLC!$C$1,stockVOHLC!$A$2:$A$6,stockVOHLC!$C$2:$C$6,2)",
+     "type": 89,
+     "axisGroup": 2,
+     "points": 5
+    },
+    {
+     "name": "Hoch",
+     "formula": "=SERIES(stockVOHLC!$D$1,stockVOHLC!$A$2:$A$6,stockVOHLC!$D$2:$D$6,3)",
+     "type": 89,
+     "axisGroup": 2,
+     "points": 5
+    },
+    {
+     "name": "Tief",
+     "formula": "=SERIES(stockVOHLC!$E$1,stockVOHLC!$A$2:$A$6,stockVOHLC!$E$2:$E$6,4)",
+     "type": 89,
+     "axisGroup": 2,
+     "points": 5
+    },
+    {
+     "name": "Schluss",
+     "formula": "=SERIES(stockVOHLC!$F$1,stockVOHLC!$A$2:$A$6,stockVOHLC!$F$2:$F$6,5)",
+     "type": 89,
+     "axisGroup": 2,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 0.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 29.09,
+    "Top": 33.09,
+    "Width": 302.94,
+    "Height": 132.84
+   },
+   "chartStyle": 322
+  },
+  "surface3D": {
+   "xlType": 83,
+   "chartType": 83,
+   "series": [
+    {
+     "name": "y1",
+     "formula": "=SERIES(surface3D!$A$2,surface3D!$B$1:$F$1,surface3D!$B$2:$F$2,1)",
+     "type": 83,
+     "axisGroup": 1,
+     "points": null
+    },
+    {
+     "name": "y2",
+     "formula": "=SERIES(surface3D!$A$3,surface3D!$B$1:$F$1,surface3D!$B$3:$F$3,2)",
+     "type": 83,
+     "axisGroup": 1,
+     "points": null
+    },
+    {
+     "name": "y3",
+     "formula": "=SERIES(surface3D!$A$4,surface3D!$B$1:$F$1,surface3D!$B$4:$F$4,3)",
+     "type": 83,
+     "axisGroup": 1,
+     "points": null
+    },
+    {
+     "name": "y4",
+     "formula": "=SERIES(surface3D!$A$5,surface3D!$B$1:$F$1,surface3D!$B$5:$F$5,4)",
+     "type": 83,
+     "axisGroup": 1,
+     "points": null
+    },
+    {
+     "name": "y5",
+     "formula": "=SERIES(surface3D!$A$6,surface3D!$B$1:$F$1,surface3D!$B$6:$F$6,5)",
+     "type": 83,
+     "axisGroup": 1,
+     "points": null
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 0.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 24.53,
+    "Top": 33.09,
+    "Width": 310.84,
+    "Height": 132.84
+   },
+   "chartStyle": 307
+  },
+  "surfaceWireframe": {
+   "xlType": 84,
+   "chartType": 84,
+   "series": [
+    {
+     "name": "y1",
+     "formula": "=SERIES(surfaceWireframe!$A$2,surfaceWireframe!$B$1:$F$1,surfaceWireframe!$B$2:$F$2,1)",
+     "type": 84,
+     "axisGroup": 1,
+     "points": null
+    },
+    {
+     "name": "y2",
+     "formula": "=SERIES(surfaceWireframe!$A$3,surfaceWireframe!$B$1:$F$1,surfaceWireframe!$B$3:$F$3,2)",
+     "type": 84,
+     "axisGroup": 1,
+     "points": null
+    },
+    {
+     "name": "y3",
+     "formula": "=SERIES(surfaceWireframe!$A$4,surfaceWireframe!$B$1:$F$1,surfaceWireframe!$B$4:$F$4,3)",
+     "type": 84,
+     "axisGroup": 1,
+     "points": null
+    },
+    {
+     "name": "y4",
+     "formula": "=SERIES(surfaceWireframe!$A$5,surfaceWireframe!$B$1:$F$1,surfaceWireframe!$B$5:$F$5,4)",
+     "type": 84,
+     "axisGroup": 1,
+     "points": null
+    },
+    {
+     "name": "y5",
+     "formula": "=SERIES(surfaceWireframe!$A$6,surfaceWireframe!$B$1:$F$1,surfaceWireframe!$B$6:$F$6,5)",
+     "type": 84,
+     "axisGroup": 1,
+     "points": null
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 0.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 24.53,
+    "Top": 33.09,
+    "Width": 310.84,
+    "Height": 132.84
+   },
+   "chartStyle": 307
+  },
+  "surfaceContour": {
+   "xlType": 85,
+   "chartType": 85,
+   "series": [
+    {
+     "name": "y1",
+     "formula": "=SERIES(surfaceContour!$A$2,surfaceContour!$B$1:$F$1,surfaceContour!$B$2:$F$2,1)",
+     "type": 85,
+     "axisGroup": 1,
+     "points": null
+    },
+    {
+     "name": "y2",
+     "formula": "=SERIES(surfaceContour!$A$3,surfaceContour!$B$1:$F$1,surfaceContour!$B$3:$F$3,2)",
+     "type": 85,
+     "axisGroup": 1,
+     "points": null
+    },
+    {
+     "name": "y3",
+     "formula": "=SERIES(surfaceContour!$A$4,surfaceContour!$B$1:$F$1,surfaceContour!$B$4:$F$4,3)",
+     "type": 85,
+     "axisGroup": 1,
+     "points": null
+    },
+    {
+     "name": "y4",
+     "formula": "=SERIES(surfaceContour!$A$5,surfaceContour!$B$1:$F$1,surfaceContour!$B$5:$F$5,4)",
+     "type": 85,
+     "axisGroup": 1,
+     "points": null
+    },
+    {
+     "name": "y5",
+     "formula": "=SERIES(surfaceContour!$A$6,surfaceContour!$B$1:$F$1,surfaceContour!$B$6:$F$6,5)",
+     "type": 85,
+     "axisGroup": 1,
+     "points": null
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 0.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 90.0,
+    "Rotation": 0.0,
+    "Perspective": 0.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 11.23,
+    "Top": 33.09,
+    "Width": 324.14,
+    "Height": 132.84
+   },
+   "chartStyle": 307
+  },
+  "surfaceContourWireframe": {
+   "xlType": 86,
+   "chartType": 86,
+   "series": [
+    {
+     "name": "y1",
+     "formula": "=SERIES(surfaceContourWireframe!$A$2,surfaceContourWireframe!$B$1:$F$1,surfaceContourWireframe!$B$2:$F$2,1)",
+     "type": 86,
+     "axisGroup": 1,
+     "points": null
+    },
+    {
+     "name": "y2",
+     "formula": "=SERIES(surfaceContourWireframe!$A$3,surfaceContourWireframe!$B$1:$F$1,surfaceContourWireframe!$B$3:$F$3,2)",
+     "type": 86,
+     "axisGroup": 1,
+     "points": null
+    },
+    {
+     "name": "y3",
+     "formula": "=SERIES(surfaceContourWireframe!$A$4,surfaceContourWireframe!$B$1:$F$1,surfaceContourWireframe!$B$4:$F$4,3)",
+     "type": 86,
+     "axisGroup": 1,
+     "points": null
+    },
+    {
+     "name": "y4",
+     "formula": "=SERIES(surfaceContourWireframe!$A$5,surfaceContourWireframe!$B$1:$F$1,surfaceContourWireframe!$B$5:$F$5,4)",
+     "type": 86,
+     "axisGroup": 1,
+     "points": null
+    },
+    {
+     "name": "y5",
+     "formula": "=SERIES(surfaceContourWireframe!$A$6,surfaceContourWireframe!$B$1:$F$1,surfaceContourWireframe!$B$6:$F$6,5)",
+     "type": 86,
+     "axisGroup": 1,
+     "points": null
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 0.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 90.0,
+    "Rotation": 0.0,
+    "Perspective": 0.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 11.23,
+    "Top": 33.09,
+    "Width": 324.14,
+    "Height": 132.84
+   },
+   "chartStyle": 307
+  },
+  "comboColumnLine": {
+   "xlType": 51,
+   "chartType": -4111,
+   "series": [
+    {
+     "name": "Reihe A",
+     "formula": "=SERIES(comboColumnLine!$B$1,comboColumnLine!$A$2:$A$6,comboColumnLine!$B$2:$B$6,1)",
+     "type": 51,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe B",
+     "formula": "=SERIES(comboColumnLine!$C$1,comboColumnLine!$A$2:$A$6,comboColumnLine!$C$2:$C$6,2)",
+     "type": 51,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe C",
+     "formula": "=SERIES(comboColumnLine!$D$1,comboColumnLine!$A$2:$A$6,comboColumnLine!$D$2:$D$6,3)",
+     "type": 4,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 219.0,
+    "Overlap": -27.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 15.41,
+    "Top": 33.09,
+    "Width": 329.59,
+    "Height": 132.84
+   },
+   "chartStyle": 201
+  },
+  "comboColumnLineSecondary": {
+   "xlType": 51,
+   "chartType": -4111,
+   "series": [
+    {
+     "name": "Reihe A",
+     "formula": "=SERIES(comboColumnLineSecondary!$B$1,comboColumnLineSecondary!$A$2:$A$6,comboColumnLineSecondary!$B$2:$B$6,1)",
+     "type": 51,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe B",
+     "formula": "=SERIES(comboColumnLineSecondary!$C$1,comboColumnLineSecondary!$A$2:$A$6,comboColumnLineSecondary!$C$2:$C$6,2)",
+     "type": 51,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe C",
+     "formula": "=SERIES(comboColumnLineSecondary!$D$1,comboColumnLineSecondary!$A$2:$A$6,comboColumnLineSecondary!$D$2:$D$6,3)",
+     "type": 4,
+     "axisGroup": 2,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 219.0,
+    "Overlap": -27.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 22.21,
+    "Top": 33.09,
+    "Width": 314.38,
+    "Height": 132.84
+   },
+   "chartStyle": 201
+  },
+  "comboAreaColumn": {
+   "xlType": 76,
+   "chartType": -4111,
+   "series": [
+    {
+     "name": "Reihe A",
+     "formula": "=SERIES(comboAreaColumn!$B$1,comboAreaColumn!$A$2:$A$6,comboAreaColumn!$B$2:$B$6,1)",
+     "type": 76,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe B",
+     "formula": "=SERIES(comboAreaColumn!$C$1,comboAreaColumn!$A$2:$A$6,comboAreaColumn!$C$2:$C$6,2)",
+     "type": 76,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe C",
+     "formula": "=SERIES(comboAreaColumn!$D$1,comboAreaColumn!$A$2:$A$6,comboAreaColumn!$D$2:$D$6,3)",
+     "type": 51,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 100.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 15.41,
+    "Top": 33.09,
+    "Width": 329.59,
+    "Height": 132.84
+   },
+   "chartStyle": 276
+  },
+  "waterfall": {
+   "xlType": 119,
+   "chartType": 119,
+   "series": [
+    {
+     "name": "Betrag",
+     "formula": null,
+     "type": 119,
+     "axisGroup": null,
+     "points": 6
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4160,
+   "axes": [],
+   "group": {
+    "GapWidth": 50.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false
+   },
+   "view3d": {},
+   "plotInside": {
+    "Left": 1.4,
+    "Top": 51.06,
+    "Width": 349.2,
+    "Height": 155.54
+   },
+   "chartStyle": 395
+  },
+  "funnel": {
+   "xlType": 123,
+   "chartType": 123,
+   "series": [
+    {
+     "name": "Anzahl",
+     "formula": null,
+     "type": 123,
+     "axisGroup": null,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": false,
+   "legendPos": null,
+   "axes": [],
+   "group": {
+    "GapWidth": 6.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false
+   },
+   "view3d": {},
+   "plotInside": {
+    "Left": 1.4,
+    "Top": 22.26,
+    "Width": 349.2,
+    "Height": 184.34
+   },
+   "chartStyle": 419
+  },
+  "treemap": {
+   "xlType": 117,
+   "chartType": 117,
+   "series": [
+    {
+     "name": "Wert",
+     "formula": null,
+     "type": 117,
+     "axisGroup": null,
+     "points": 10
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4160,
+   "axes": [],
+   "group": {
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": true,
+    "ShowNegativeBubbles": false
+   },
+   "view3d": {},
+   "plotInside": {
+    "Left": 1.4,
+    "Top": 51.06,
+    "Width": 349.2,
+    "Height": 155.54
+   },
+   "chartStyle": 410
+  },
+  "sunburst": {
+   "xlType": 120,
+   "chartType": 120,
+   "series": [
+    {
+     "name": "Wert",
+     "formula": null,
+     "type": 120,
+     "axisGroup": null,
+     "points": 10
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": false,
+   "legendPos": null,
+   "axes": [],
+   "group": {
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": true,
+    "ShowNegativeBubbles": false
+   },
+   "view3d": {},
+   "plotInside": {
+    "Left": 1.4,
+    "Top": 22.26,
+    "Width": 349.2,
+    "Height": 184.34
+   },
+   "chartStyle": 381
+  },
+  "boxWhisker": {
+   "xlType": 121,
+   "chartType": 121,
+   "series": [
+    {
+     "name": "Klasse 8a",
+     "formula": null,
+     "type": 121,
+     "axisGroup": null,
+     "points": 16
+    },
+    {
+     "name": "Klasse 8b",
+     "formula": null,
+     "type": 121,
+     "axisGroup": null,
+     "points": 16
+    },
+    {
+     "name": "Klasse 8c",
+     "formula": null,
+     "type": 121,
+     "axisGroup": null,
+     "points": 16
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": false,
+   "legendPos": null,
+   "axes": [],
+   "group": {
+    "GapWidth": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false
+   },
+   "view3d": {},
+   "plotInside": {
+    "Left": 1.4,
+    "Top": 22.26,
+    "Width": 349.2,
+    "Height": 184.34
+   },
+   "chartStyle": 406
+  },
+  "pareto": {
+   "xlType": 122,
+   "chartType": 122,
+   "series": [
+    {
+     "name": "Anzahl",
+     "formula": null,
+     "type": 122,
+     "axisGroup": null,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": false,
+   "legendPos": null,
+   "axes": [],
+   "group": {
+    "GapWidth": 0.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false
+   },
+   "view3d": {},
+   "plotInside": {
+    "Left": 1.4,
+    "Top": 22.26,
+    "Width": 349.2,
+    "Height": 184.34
+   },
+   "chartStyle": 366
+  },
+  "histogram": {
+   "xlType": 118,
+   "chartType": 118,
+   "series": [
+    {
+     "name": "Punkte",
+     "formula": null,
+     "type": 118,
+     "axisGroup": null,
+     "points": 3
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": false,
+   "legendPos": null,
+   "axes": [],
+   "group": {
+    "GapWidth": 0.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false
+   },
+   "view3d": {},
+   "plotInside": {
+    "Left": 1.4,
+    "Top": 22.26,
+    "Width": 349.2,
+    "Height": 184.34
+   },
+   "chartStyle": 366
+  },
+  "column": {
+   "xlType": 51,
+   "chartType": 51,
+   "series": [
+    {
+     "name": "Reihe A",
+     "formula": "=SERIES(column!$B$1,column!$A$2:$A$6,column!$B$2:$B$6,1)",
+     "type": 51,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe B",
+     "formula": "=SERIES(column!$C$1,column!$A$2:$A$6,column!$C$2:$C$6,2)",
+     "type": 51,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe C",
+     "formula": "=SERIES(column!$D$1,column!$A$2:$A$6,column!$D$2:$D$6,3)",
+     "type": 51,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 219.0,
+    "Overlap": -27.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 15.41,
+    "Top": 33.09,
+    "Width": 329.59,
+    "Height": 132.84
+   },
+   "chartStyle": 201
+  },
+  "columnStacked": {
+   "xlType": 52,
+   "chartType": 52,
+   "series": [
+    {
+     "name": "Reihe A",
+     "formula": "=SERIES(columnStacked!$B$1,columnStacked!$A$2:$A$6,columnStacked!$B$2:$B$6,1)",
+     "type": 52,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe B",
+     "formula": "=SERIES(columnStacked!$C$1,columnStacked!$A$2:$A$6,columnStacked!$C$2:$C$6,2)",
+     "type": 52,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe C",
+     "formula": "=SERIES(columnStacked!$D$1,columnStacked!$A$2:$A$6,columnStacked!$D$2:$D$6,3)",
+     "type": 52,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 100.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 19.97,
+    "Top": 33.09,
+    "Width": 325.03,
+    "Height": 132.84
+   },
+   "chartStyle": 297
+  },
+  "bar": {
+   "xlType": 57,
+   "chartType": 57,
+   "series": [
+    {
+     "name": "Reihe A",
+     "formula": "=SERIES(bar!$B$1,bar!$A$2:$A$6,bar!$B$2:$B$6,1)",
+     "type": 57,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe B",
+     "formula": "=SERIES(bar!$C$1,bar!$A$2:$A$6,bar!$C$2:$C$6,2)",
+     "type": 57,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe C",
+     "formula": "=SERIES(bar!$D$1,bar!$A$2:$A$6,bar!$D$2:$D$6,3)",
+     "type": 57,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 182.0,
+    "Overlap": 0.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 25.24,
+    "Top": 33.09,
+    "Width": 317.48,
+    "Height": 132.84
+   },
+   "chartStyle": 216
+  },
+  "barStacked": {
+   "xlType": 58,
+   "chartType": 58,
+   "series": [
+    {
+     "name": "Reihe A",
+     "formula": "=SERIES(barStacked!$B$1,barStacked!$A$2:$A$6,barStacked!$B$2:$B$6,1)",
+     "type": 58,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe B",
+     "formula": "=SERIES(barStacked!$C$1,barStacked!$A$2:$A$6,barStacked!$C$2:$C$6,2)",
+     "type": 58,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe C",
+     "formula": "=SERIES(barStacked!$D$1,barStacked!$A$2:$A$6,barStacked!$D$2:$D$6,3)",
+     "type": 58,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 100.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 25.24,
+    "Top": 33.09,
+    "Width": 315.2,
+    "Height": 132.84
+   },
+   "chartStyle": 297
+  },
+  "line": {
+   "xlType": 4,
+   "chartType": 4,
+   "series": [
+    {
+     "name": "Reihe A",
+     "formula": "=SERIES(line!$B$1,line!$A$2:$A$6,line!$B$2:$B$6,1)",
+     "type": 4,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe B",
+     "formula": "=SERIES(line!$C$1,line!$A$2:$A$6,line!$C$2:$C$6,2)",
+     "type": 4,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe C",
+     "formula": "=SERIES(line!$D$1,line!$A$2:$A$6,line!$D$2:$D$6,3)",
+     "type": 4,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 100.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 15.41,
+    "Top": 33.09,
+    "Width": 329.59,
+    "Height": 132.84
+   },
+   "chartStyle": 227
+  },
+  "lineMarkers": {
+   "xlType": 65,
+   "chartType": 65,
+   "series": [
+    {
+     "name": "Reihe A",
+     "formula": "=SERIES(lineMarkers!$B$1,lineMarkers!$A$2:$A$6,lineMarkers!$B$2:$B$6,1)",
+     "type": 65,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe B",
+     "formula": "=SERIES(lineMarkers!$C$1,lineMarkers!$A$2:$A$6,lineMarkers!$C$2:$C$6,2)",
+     "type": 65,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe C",
+     "formula": "=SERIES(lineMarkers!$D$1,lineMarkers!$A$2:$A$6,lineMarkers!$D$2:$D$6,3)",
+     "type": 65,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 219.0,
+    "Overlap": -27.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 15.41,
+    "Top": 33.09,
+    "Width": 329.59,
+    "Height": 132.84
+   },
+   "chartStyle": 332
+  },
+  "area": {
+   "xlType": 1,
+   "chartType": 1,
+   "series": [
+    {
+     "name": "Reihe A",
+     "formula": "=SERIES(area!$B$1,area!$A$2:$A$6,area!$B$2:$B$6,1)",
+     "type": 1,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe B",
+     "formula": "=SERIES(area!$C$1,area!$A$2:$A$6,area!$C$2:$C$6,2)",
+     "type": 1,
+     "axisGroup": 1,
+     "points": 5
+    },
+    {
+     "name": "Reihe C",
+     "formula": "=SERIES(area!$D$1,area!$A$2:$A$6,area!$D$2:$D$6,3)",
+     "type": 1,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Diagrammtitel",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 100.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": false,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 15.0,
+    "Rotation": 20.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 15.41,
+    "Top": 33.09,
+    "Width": 322.56,
+    "Height": 132.84
+   },
+   "chartStyle": 276
+  },
+  "pie": {
+   "xlType": 5,
+   "chartType": 5,
+   "series": [
+    {
+     "name": "Umsatz",
+     "formula": "=SERIES(pie!$B$1,pie!$A$2:$A$6,pie!$B$2:$B$6,1)",
+     "type": 5,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Umsatz",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 0.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 0.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": true,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 75.0,
+    "Rotation": 0.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 103.48,
+    "Top": 33.09,
+    "Width": 145.03,
+    "Height": 145.03
+   },
+   "chartStyle": 251
+  },
+  "doughnut": {
+   "xlType": -4120,
+   "chartType": -4120,
+   "series": [
+    {
+     "name": "Umsatz",
+     "formula": "=SERIES(doughnut!$B$1,doughnut!$A$2:$A$6,doughnut!$B$2:$B$6,1)",
+     "type": -4120,
+     "axisGroup": 1,
+     "points": 5
+    }
+   ],
+   "hasTitle": true,
+   "title": "Umsatz",
+   "hasLegend": true,
+   "legendPos": -4107,
+   "axes": [],
+   "group": {
+    "GapWidth": 150.0,
+    "Overlap": 0.0,
+    "SplitType": 1.0,
+    "SplitValue": 2.0,
+    "SecondPlotSize": 75.0,
+    "FirstSliceAngle": 0.0,
+    "DoughnutHoleSize": 75.0,
+    "BubbleScale": 100.0,
+    "HasHiLoLines": false,
+    "HasUpDownBars": false,
+    "HasDropLines": false,
+    "VaryByCategories": true,
+    "ShowNegativeBubbles": false,
+    "SizeRepresents": 1.0
+   },
+   "view3d": {
+    "Elevation": 75.0,
+    "Rotation": 0.0,
+    "Perspective": 30.0,
+    "RightAngleAxes": false,
+    "DepthPercent": 100.0,
+    "HeightPercent": 100.0,
+    "AutoScaling": true
+   },
+   "plotInside": {
+    "Left": 103.48,
+    "Top": 33.09,
+    "Width": 145.03,
+    "Height": 145.03
+   },
+   "chartStyle": 251
+  }
+ }
+}

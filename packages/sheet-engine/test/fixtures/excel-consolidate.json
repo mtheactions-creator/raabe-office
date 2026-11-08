@@ -1,0 +1,5182 @@
+{
+ "sources": {
+  "Nord": {
+   "B1": "Jan",
+   "C1": "Feb",
+   "A2": "Äpfel",
+   "B2": 10,
+   "C2": 20,
+   "A3": "Birnen",
+   "B3": 5,
+   "C3": 7,
+   "A4": "Kirschen",
+   "B4": 3,
+   "C4": "x"
+  },
+  "Süd": {
+   "B1": "Feb",
+   "C1": "Mär",
+   "A2": "birnen",
+   "B2": 1,
+   "C2": 2,
+   "A3": "Äpfel",
+   "B3": 4,
+   "A4": "Pflaumen",
+   "B4": 6,
+   "C4": 8,
+   "A5": "Äpfel",
+   "B5": 100,
+   "C5": 200
+  },
+  "West": {
+   "A1": 1,
+   "B1": 2,
+   "A2": 3,
+   "B2": 4,
+   "A3": 5,
+   "B3": 6,
+   "C3": 7,
+   "D3": 9
+  }
+ },
+ "cases": [
+  {
+   "used": "A1:B4",
+   "cells": {
+    "A1": {
+     "formula": "11",
+     "local": "11",
+     "value": 11,
+     "text": "011",
+     "format": "#.000",
+     "bold": false
+    },
+    "B1": {
+     "formula": "22",
+     "local": "22",
+     "value": 22,
+     "text": "22",
+     "format": "Standard",
+     "bold": false
+    },
+    "A2": {
+     "formula": "9",
+     "local": "9",
+     "value": 9,
+     "text": "9",
+     "format": "Standard",
+     "bold": false
+    },
+    "B2": {
+     "formula": "7",
+     "local": "7",
+     "value": 7,
+     "text": "7",
+     "format": "Standard",
+     "bold": false
+    },
+    "A3": {
+     "formula": "9",
+     "local": "9",
+     "value": 9,
+     "text": "9",
+     "format": "Standard",
+     "bold": false
+    },
+    "B3": {
+     "formula": "8",
+     "local": "8",
+     "value": 8,
+     "text": "8",
+     "format": "Standard",
+     "bold": false
+    },
+    "A4": {
+     "formula": "100",
+     "local": "100",
+     "value": 100,
+     "text": "100",
+     "format": "Standard",
+     "bold": false
+    },
+    "B4": {
+     "formula": "200",
+     "local": "200",
+     "value": 200,
+     "text": "200",
+     "format": "Standard",
+     "bold": false
+    }
+   },
+   "rows": {},
+   "cols": {
+    "1": [
+     1,
+     false,
+     10.27
+    ],
+    "2": [
+     1,
+     false,
+     10.27
+    ]
+   },
+   "summaryRow": 1,
+   "summaryColumn": -4152,
+   "name": "Position",
+   "sources": [
+    "Nord!R2C2:R4C3",
+    "Süd!R2C2:R5C3"
+   ],
+   "function": -4157,
+   "top": false,
+   "left": false,
+   "links": false,
+   "dest": "A1",
+   "dataConsolidate": "<dataConsolidate><dataRefs count=\"2\"><dataRef ref=\"B2:C4\" sheet=\"Nord\"/><dataRef ref=\"B2:C5\" sheet=\"Süd\"/></dataRefs></dataConsolidate>"
+  },
+  {
+   "used": "A1:D3",
+   "cells": {
+    "A1": {
+     "formula": "11",
+     "local": "11",
+     "value": 11,
+     "text": "011",
+     "format": "#.000",
+     "bold": false
+    },
+    "B1": {
+     "formula": "22",
+     "local": "22",
+     "value": 22,
+     "text": "22",
+     "format": "Standard",
+     "bold": false
+    },
+    "A2": {
+     "formula": "8",
+     "local": "8",
+     "value": 8,
+     "text": "8",
+     "format": "Standard",
+     "bold": false
+    },
+    "B2": {
+     "formula": "11",
+     "local": "11",
+     "value": 11,
+     "text": "11",
+     "format": "Standard",
+     "bold": false
+    },
+    "A3": {
+     "formula": "8",
+     "local": "8",
+     "value": 8,
+     "text": "8",
+     "format": "Standard",
+     "bold": false
+    },
+    "B3": {
+     "formula": "6",
+     "local": "6",
+     "value": 6,
+     "text": "6",
+     "format": "Standard",
+     "bold": false
+    },
+    "C3": {
+     "formula": "7",
+     "local": "7",
+     "value": 7,
+     "text": "7",
+     "format": "Standard",
+     "bold": false
+    },
+    "D3": {
+     "formula": "9",
+     "local": "9",
+     "value": 9,
+     "text": "9",
+     "format": "Standard",
+     "bold": false
+    }
+   },
+   "rows": {},
+   "cols": {
+    "1": [
+     1,
+     false,
+     10.27
+    ],
+    "2": [
+     1,
+     false,
+     10.27
+    ],
+    "3": [
+     1,
+     false,
+     10.27
+    ],
+    "4": [
+     1,
+     false,
+     10.27
+    ]
+   },
+   "summaryRow": 1,
+   "summaryColumn": -4152,
+   "name": "Position, verschieden groß",
+   "sources": [
+    "West!R1C1:R3C4",
+    "Nord!R2C2:R4C3"
+   ],
+   "function": -4157,
+   "top": false,
+   "left": false,
+   "links": false,
+   "dest": "A1",
+   "dataConsolidate": "<dataConsolidate><dataRefs count=\"2\"><dataRef ref=\"B2:C4\" sheet=\"Nord\"/><dataRef ref=\"A1:D3\" sheet=\"West\"/></dataRefs></dataConsolidate>"
+  },
+  {
+   "used": "A1:D5",
+   "cells": {
+    "B1": {
+     "formula": "Jan",
+     "local": "Jan",
+     "value": "Jan",
+     "text": "Jan",
+     "format": "Standard",
+     "bold": false
+    },
+    "C1": {
+     "formula": "Feb",
+     "local": "Feb",
+     "value": "Feb",
+     "text": "Feb",
+     "format": "Standard",
+     "bold": false
+    },
+    "D1": {
+     "formula": "Mär",
+     "local": "Mär",
+     "value": "Mär",
+     "text": "Mär",
+     "format": "Standard",
+     "bold": false
+    },
+    "A2": {
+     "formula": "Pflaumen",
+     "local": "Pflaumen",
+     "value": "Pflaumen",
+     "text": "Pflaumen",
+     "format": "Standard",
+     "bold": false
+    },
+    "C2": {
+     "formula": "6",
+     "local": "6",
+     "value": 6,
+     "text": "6",
+     "format": "Standard",
+     "bold": false
+    },
+    "D2": {
+     "formula": "8",
+     "local": "8",
+     "value": 8,
+     "text": "8",
+     "format": "Standard",
+     "bold": false
+    },
+    "A3": {
+     "formula": "Äpfel",
+     "local": "Äpfel",
+     "value": "Äpfel",
+     "text": "Äpfel",
+     "format": "Standard",
+     "bold": false
+    },
+    "B3": {
+     "formula": "10",
+     "local": "10",
+     "value": 10,
+     "text": "010",
+     "format": "#.000",
+     "bold": false
+    },
+    "C3": {
+     "formula": "124",
+     "local": "124",
+     "value": 124,
+     "text": "124",
+     "format": "Standard",
+     "bold": false
+    },
+    "D3": {
+     "formula": "200",
+     "local": "200",
+     "value": 200,
+     "text": "200",
+     "format": "Standard",
+     "bold": false
+    },
+    "A4": {
+     "formula": "Birnen",
+     "local": "Birnen",
+     "value": "Birnen",
+     "text": "Birnen",
+     "format": "Standard",
+     "bold": false
+    },
+    "B4": {
+     "formula": "5",
+     "local": "5",
+     "value": 5,
+     "text": "5",
+     "format": "Standard",
+     "bold": false
+    },
+    "C4": {
+     "formula": "8",
+     "local": "8",
+     "value": 8,
+     "text": "8",
+     "format": "Standard",
+     "bold": false
+    },
+    "D4": {
+     "formula": "2",
+     "local": "2",
+     "value": 2,
+     "text": "2",
+     "format": "Standard",
+     "bold": false
+    },
+    "A5": {
+     "formula": "Kirschen",
+     "local": "Kirschen",
+     "value": "Kirschen",
+     "text": "Kirschen",
+     "format": "Standard",
+     "bold": false
+    },
+    "B5": {
+     "formula": "3",
+     "local": "3",
+     "value": 3,
+     "text": "3",
+     "format": "Standard",
+     "bold": false
+    }
+   },
+   "rows": {},
+   "cols": {
+    "1": [
+     1,
+     false,
+     10.27
+    ],
+    "2": [
+     1,
+     false,
+     10.27
+    ],
+    "3": [
+     1,
+     false,
+     10.27
+    ],
+    "4": [
+     1,
+     false,
+     10.27
+    ]
+   },
+   "summaryRow": 1,
+   "summaryColumn": -4152,
+   "name": "Beschriftung oben und links",
+   "sources": [
+    "Nord!R1C1:R4C3",
+    "Süd!R1C1:R5C3"
+   ],
+   "function": -4157,
+   "top": true,
+   "left": true,
+   "links": false,
+   "dest": "A1",
+   "dataConsolidate": "<dataConsolidate leftLabels=\"1\" topLabels=\"1\"><dataRefs count=\"2\"><dataRef ref=\"A1:C4\" sheet=\"Nord\"/><dataRef ref=\"A1:C5\" sheet=\"Süd\"/></dataRefs></dataConsolidate>"
+  },
+  {
+   "used": "A1:C4",
+   "cells": {
+    "A1": {
+     "formula": "Pflaumen",
+     "local": "Pflaumen",
+     "value": "Pflaumen",
+     "text": "Pflaumen",
+     "format": "Standard",
+     "bold": false
+    },
+    "B1": {
+     "formula": "6",
+     "local": "6",
+     "value": 6,
+     "text": "6",
+     "format": "Standard",
+     "bold": false
+    },
+    "C1": {
+     "formula": "8",
+     "local": "8",
+     "value": 8,
+     "text": "8",
+     "format": "Standard",
+     "bold": false
+    },
+    "A2": {
+     "formula": "Äpfel",
+     "local": "Äpfel",
+     "value": "Äpfel",
+     "text": "Äpfel",
+     "format": "Standard",
+     "bold": false
+    },
+    "B2": {
+     "formula": "114",
+     "local": "114",
+     "value": 114,
+     "text": "114",
+     "format": "#.000",
+     "bold": false
+    },
+    "C2": {
+     "formula": "220",
+     "local": "220",
+     "value": 220,
+     "text": "220",
+     "format": "Standard",
+     "bold": false
+    },
+    "A3": {
+     "formula": "Birnen",
+     "local": "Birnen",
+     "value": "Birnen",
+     "text": "Birnen",
+     "format": "Standard",
+     "bold": false
+    },
+    "B3": {
+     "formula": "6",
+     "local": "6",
+     "value": 6,
+     "text": "6",
+     "format": "Standard",
+     "bold": false
+    },
+    "C3": {
+     "formula": "9",
+     "local": "9",
+     "value": 9,
+     "text": "9",
+     "format": "Standard",
+     "bold": false
+    },
+    "A4": {
+     "formula": "Kirschen",
+     "local": "Kirschen",
+     "value": "Kirschen",
+     "text": "Kirschen",
+     "format": "Standard",
+     "bold": false
+    },
+    "B4": {
+     "formula": "3",
+     "local": "3",
+     "value": 3,
+     "text": "3",
+     "format": "Standard",
+     "bold": false
+    }
+   },
+   "rows": {},
+   "cols": {
+    "1": [
+     1,
+     false,
+     10.27
+    ],
+    "2": [
+     1,
+     false,
+     10.27
+    ],
+    "3": [
+     1,
+     false,
+     10.27
+    ]
+   },
+   "summaryRow": 1,
+   "summaryColumn": -4152,
+   "name": "Beschriftung links",
+   "sources": [
+    "Nord!R2C1:R4C3",
+    "Süd!R2C1:R5C3"
+   ],
+   "function": -4157,
+   "top": false,
+   "left": true,
+   "links": false,
+   "dest": "A1",
+   "dataConsolidate": "<dataConsolidate leftLabels=\"1\"><dataRefs count=\"2\"><dataRef ref=\"A2:C4\" sheet=\"Nord\"/><dataRef ref=\"A2:C5\" sheet=\"Süd\"/></dataRefs></dataConsolidate>"
+  },
+  {
+   "used": "A1:C5",
+   "cells": {
+    "A1": {
+     "formula": "Jan",
+     "local": "Jan",
+     "value": "Jan",
+     "text": "Jan",
+     "format": "Standard",
+     "bold": false
+    },
+    "B1": {
+     "formula": "Feb",
+     "local": "Feb",
+     "value": "Feb",
+     "text": "Feb",
+     "format": "Standard",
+     "bold": false
+    },
+    "C1": {
+     "formula": "Mär",
+     "local": "Mär",
+     "value": "Mär",
+     "text": "Mär",
+     "format": "Standard",
+     "bold": false
+    },
+    "A2": {
+     "formula": "10",
+     "local": "10",
+     "value": 10,
+     "text": "010",
+     "format": "#.000",
+     "bold": false
+    },
+    "B2": {
+     "formula": "21",
+     "local": "21",
+     "value": 21,
+     "text": "21",
+     "format": "Standard",
+     "bold": false
+    },
+    "C2": {
+     "formula": "2",
+     "local": "2",
+     "value": 2,
+     "text": "2",
+     "format": "Standard",
+     "bold": false
+    },
+    "A3": {
+     "formula": "5",
+     "local": "5",
+     "value": 5,
+     "text": "5",
+     "format": "Standard",
+     "bold": false
+    },
+    "B3": {
+     "formula": "11",
+     "local": "11",
+     "value": 11,
+     "text": "11",
+     "format": "Standard",
+     "bold": false
+    },
+    "A4": {
+     "formula": "3",
+     "local": "3",
+     "value": 3,
+     "text": "3",
+     "format": "Standard",
+     "bold": false
+    },
+    "B4": {
+     "formula": "6",
+     "local": "6",
+     "value": 6,
+     "text": "6",
+     "format": "Standard",
+     "bold": false
+    },
+    "C4": {
+     "formula": "8",
+     "local": "8",
+     "value": 8,
+     "text": "8",
+     "format": "Standard",
+     "bold": false
+    },
+    "B5": {
+     "formula": "100",
+     "local": "100",
+     "value": 100,
+     "text": "100",
+     "format": "Standard",
+     "bold": false
+    },
+    "C5": {
+     "formula": "200",
+     "local": "200",
+     "value": 200,
+     "text": "200",
+     "format": "Standard",
+     "bold": false
+    }
+   },
+   "rows": {},
+   "cols": {
+    "1": [
+     1,
+     false,
+     10.27
+    ],
+    "2": [
+     1,
+     false,
+     10.27
+    ],
+    "3": [
+     1,
+     false,
+     10.27
+    ]
+   },
+   "summaryRow": 1,
+   "summaryColumn": -4152,
+   "name": "Beschriftung oben",
+   "sources": [
+    "Nord!R1C2:R4C3",
+    "Süd!R1C2:R5C3"
+   ],
+   "function": -4157,
+   "top": true,
+   "left": false,
+   "links": false,
+   "dest": "A1",
+   "dataConsolidate": "<dataConsolidate topLabels=\"1\"><dataRefs count=\"2\"><dataRef ref=\"B1:C4\" sheet=\"Nord\"/><dataRef ref=\"B1:C5\" sheet=\"Süd\"/></dataRefs></dataConsolidate>"
+  },
+  {
+   "used": "B2:E6",
+   "cells": {
+    "C2": {
+     "formula": "Jan",
+     "local": "Jan",
+     "value": "Jan",
+     "text": "Jan",
+     "format": "Standard",
+     "bold": false
+    },
+    "D2": {
+     "formula": "Feb",
+     "local": "Feb",
+     "value": "Feb",
+     "text": "Feb",
+     "format": "Standard",
+     "bold": false
+    },
+    "E2": {
+     "formula": "Mär",
+     "local": "Mär",
+     "value": "Mär",
+     "text": "Mär",
+     "format": "Standard",
+     "bold": false
+    },
+    "B3": {
+     "formula": "Pflaumen",
+     "local": "Pflaumen",
+     "value": "Pflaumen",
+     "text": "Pflaumen",
+     "format": "Standard",
+     "bold": false
+    },
+    "D3": {
+     "formula": "6",
+     "local": "6",
+     "value": 6,
+     "text": "6",
+     "format": "Standard",
+     "bold": false
+    },
+    "E3": {
+     "formula": "8",
+     "local": "8",
+     "value": 8,
+     "text": "8",
+     "format": "Standard",
+     "bold": false
+    },
+    "B4": {
+     "formula": "Äpfel",
+     "local": "Äpfel",
+     "value": "Äpfel",
+     "text": "Äpfel",
+     "format": "Standard",
+     "bold": false
+    },
+    "C4": {
+     "formula": "10",
+     "local": "10",
+     "value": 10,
+     "text": "010",
+     "format": "#.000",
+     "bold": false
+    },
+    "D4": {
+     "formula": "124",
+     "local": "124",
+     "value": 124,
+     "text": "124",
+     "format": "Standard",
+     "bold": false
+    },
+    "E4": {
+     "formula": "200",
+     "local": "200",
+     "value": 200,
+     "text": "200",
+     "format": "Standard",
+     "bold": false
+    },
+    "B5": {
+     "formula": "Birnen",
+     "local": "Birnen",
+     "value": "Birnen",
+     "text": "Birnen",
+     "format": "Standard",
+     "bold": false
+    },
+    "C5": {
+     "formula": "5",
+     "local": "5",
+     "value": 5,
+     "text": "5",
+     "format": "Standard",
+     "bold": false
+    },
+    "D5": {
+     "formula": "8",
+     "local": "8",
+     "value": 8,
+     "text": "8",
+     "format": "Standard",
+     "bold": false
+    },
+    "E5": {
+     "formula": "2",
+     "local": "2",
+     "value": 2,
+     "text": "2",
+     "format": "Standard",
+     "bold": false
+    },
+    "B6": {
+     "formula": "Kirschen",
+     "local": "Kirschen",
+     "value": "Kirschen",
+     "text": "Kirschen",
+     "format": "Standard",
+     "bold": false
+    },
+    "C6": {
+     "formula": "3",
+     "local": "3",
+     "value": 3,
+     "text": "3",
+     "format": "Standard",
+     "bold": false
+    }
+   },
+   "rows": {},
+   "cols": {
+    "1": [
+     1,
+     false,
+     10.27
+    ],
+    "2": [
+     1,
+     false,
+     10.27
+    ],
+    "3": [
+     1,
+     false,
+     10.27
+    ],
+    "4": [
+     1,
+     false,
+     10.27
+    ],
+    "5": [
+     1,
+     false,
+     10.27
+    ]
+   },
+   "summaryRow": 1,
+   "summaryColumn": -4152,
+   "name": "Beschriftung oben und links, Bereich mit Ecke",
+   "sources": [
+    "Nord!R1C1:R4C3",
+    "Süd!R1C1:R5C3"
+   ],
+   "function": -4157,
+   "top": true,
+   "left": true,
+   "links": false,
+   "dest": "B2",
+   "dataConsolidate": "<dataConsolidate leftLabels=\"1\" topLabels=\"1\"><dataRefs count=\"2\"><dataRef ref=\"A1:C4\" sheet=\"Nord\"/><dataRef ref=\"A1:C5\" sheet=\"Süd\"/></dataRefs></dataConsolidate>"
+  },
+  {
+   "used": "A1:D5",
+   "cells": {
+    "B1": {
+     "formula": "Jan",
+     "local": "Jan",
+     "value": "Jan",
+     "text": "Jan",
+     "format": "Standard",
+     "bold": false
+    },
+    "C1": {
+     "formula": "Feb",
+     "local": "Feb",
+     "value": "Feb",
+     "text": "Feb",
+     "format": "Standard",
+     "bold": false
+    },
+    "D1": {
+     "formula": "Mär",
+     "local": "Mär",
+     "value": "Mär",
+     "text": "Mär",
+     "format": "Standard",
+     "bold": false
+    },
+    "A2": {
+     "formula": "Pflaumen",
+     "local": "Pflaumen",
+     "value": "Pflaumen",
+     "text": "Pflaumen",
+     "format": "Standard",
+     "bold": false
+    },
+    "C2": {
+     "formula": "6",
+     "local": "6",
+     "value": 6,
+     "text": "6",
+     "format": "Standard",
+     "bold": false
+    },
+    "D2": {
+     "formula": "8",
+     "local": "8",
+     "value": 8,
+     "text": "8",
+     "format": "Standard",
+     "bold": false
+    },
+    "A3": {
+     "formula": "Äpfel",
+     "local": "Äpfel",
+     "value": "Äpfel",
+     "text": "Äpfel",
+     "format": "Standard",
+     "bold": false
+    },
+    "B3": {
+     "formula": "10",
+     "local": "10",
+     "value": 10,
+     "text": "010",
+     "format": "#.000",
+     "bold": false
+    },
+    "C3": {
+     "formula": "124",
+     "local": "124",
+     "value": 124,
+     "text": "124",
+     "format": "Standard",
+     "bold": false
+    },
+    "D3": {
+     "formula": "200",
+     "local": "200",
+     "value": 200,
+     "text": "200",
+     "format": "Standard",
+     "bold": false
+    },
+    "A4": {
+     "formula": "Birnen",
+     "local": "Birnen",
+     "value": "Birnen",
+     "text": "Birnen",
+     "format": "Standard",
+     "bold": false
+    },
+    "B4": {
+     "formula": "5",
+     "local": "5",
+     "value": 5,
+     "text": "5",
+     "format": "Standard",
+     "bold": false
+    },
+    "C4": {
+     "formula": "8",
+     "local": "8",
+     "value": 8,
+     "text": "8",
+     "format": "Standard",
+     "bold": false
+    },
+    "D4": {
+     "formula": "2",
+     "local": "2",
+     "value": 2,
+     "text": "2",
+     "format": "Standard",
+     "bold": false
+    },
+    "A5": {
+     "formula": "Kirschen",
+     "local": "Kirschen",
+     "value": "Kirschen",
+     "text": "Kirschen",
+     "format": "Standard",
+     "bold": false
+    },
+    "B5": {
+     "formula": "3",
+     "local": "3",
+     "value": 3,
+     "text": "3",
+     "format": "Standard",
+     "bold": false
+    }
+   },
+   "rows": {},
+   "cols": {
+    "1": [
+     1,
+     false,
+     10.27
+    ],
+    "2": [
+     1,
+     false,
+     10.27
+    ],
+    "3": [
+     1,
+     false,
+     10.27
+    ],
+    "4": [
+     1,
+     false,
+     10.27
+    ]
+   },
+   "summaryRow": 1,
+   "summaryColumn": -4152,
+   "name": "Funktion Summe",
+   "sources": [
+    "Nord!R1C1:R4C3",
+    "Süd!R1C1:R5C3"
+   ],
+   "function": -4157,
+   "top": true,
+   "left": true,
+   "links": false,
+   "dest": "A1",
+   "dataConsolidate": "<dataConsolidate leftLabels=\"1\" topLabels=\"1\"><dataRefs count=\"2\"><dataRef ref=\"A1:C4\" sheet=\"Nord\"/><dataRef ref=\"A1:C5\" sheet=\"Süd\"/></dataRefs></dataConsolidate>"
+  },
+  {
+   "used": "A1:D5",
+   "cells": {
+    "B1": {
+     "formula": "Jan",
+     "local": "Jan",
+     "value": "Jan",
+     "text": "Jan",
+     "format": "Standard",
+     "bold": false
+    },
+    "C1": {
+     "formula": "Feb",
+     "local": "Feb",
+     "value": "Feb",
+     "text": "Feb",
+     "format": "Standard",
+     "bold": false
+    },
+    "D1": {
+     "formula": "Mär",
+     "local": "Mär",
+     "value": "Mär",
+     "text": "Mär",
+     "format": "Standard",
+     "bold": false
+    },
+    "A2": {
+     "formula": "Pflaumen",
+     "local": "Pflaumen",
+     "value": "Pflaumen",
+     "text": "Pflaumen",
+     "format": "Standard",
+     "bold": false
+    },
+    "C2": {
+     "formula": "1",
+     "local": "1",
+     "value": 1,
+     "text": "1",
+     "format": "Standard",
+     "bold": false
+    },
+    "D2": {
+     "formula": "1",
+     "local": "1",
+     "value": 1,
+     "text": "1",
+     "format": "Standard",
+     "bold": false
+    },
+    "A3": {
+     "formula": "Äpfel",
+     "local": "Äpfel",
+     "value": "Äpfel",
+     "text": "Äpfel",
+     "format": "Standard",
+     "bold": false
+    },
+    "B3": {
+     "formula": "1",
+     "local": "1",
+     "value": 1,
+     "text": "001",
+     "format": "#.000",
+     "bold": false
+    },
+    "C3": {
+     "formula": "3",
+     "local": "3",
+     "value": 3,
+     "text": "3",
+     "format": "Standard",
+     "bold": false
+    },
+    "D3": {
+     "formula": "1",
+     "local": "1",
+     "value": 1,
+     "text": "1",
+     "format": "Standard",
+     "bold": false
+    },
+    "A4": {
+     "formula": "Birnen",
+     "local": "Birnen",
+     "value": "Birnen",
+     "text": "Birnen",
+     "format": "Standard",
+     "bold": false
+    },
+    "B4": {
+     "formula": "1",
+     "local": "1",
+     "value": 1,
+     "text": "1",
+     "format": "Standard",
+     "bold": false
+    },
+    "C4": {
+     "formula": "2",
+     "local": "2",
+     "value": 2,
+     "text": "2",
+     "format": "Standard",
+     "bold": false
+    },
+    "D4": {
+     "formula": "1",
+     "local": "1",
+     "value": 1,
+     "text": "1",
+     "format": "Standard",
+     "bold": false
+    },
+    "A5": {
+     "formula": "Kirschen",
+     "local": "Kirschen",
+     "value": "Kirschen",
+     "text": "Kirschen",
+     "format": "Standard",
+     "bold": false
+    },
+    "B5": {
+     "formula": "1",
+     "local": "1",
+     "value": 1,
+     "text": "1",
+     "format": "Standard",
+     "bold": false
+    },
+    "C5": {
+     "formula": "1",
+     "local": "1",
+     "value": 1,
+     "text": "1",
+     "format": "Standard",
+     "bold": false
+    }
+   },
+   "rows": {},
+   "cols": {
+    "1": [
+     1,
+     false,
+     10.27
+    ],
+    "2": [
+     1,
+     false,
+     10.27
+    ],
+    "3": [
+     1,
+     false,
+     10.27
+    ],
+    "4": [
+     1,
+     false,
+     10.27
+    ]
+   },
+   "summaryRow": 1,
+   "summaryColumn": -4152,
+   "name": "Funktion Anzahl",
+   "sources": [
+    "Nord!R1C1:R4C3",
+    "Süd!R1C1:R5C3"
+   ],
+   "function": -4112,
+   "top": true,
+   "left": true,
+   "links": false,
+   "dest": "A1",
+   "dataConsolidate": "<dataConsolidate function=\"count\" leftLabels=\"1\" topLabels=\"1\"><dataRefs count=\"2\"><dataRef ref=\"A1:C4\" sheet=\"Nord\"/><dataRef ref=\"A1:C5\" sheet=\"Süd\"/></dataRefs></dataConsolidate>"
+  },
+  {
+   "used": "A1:D5",
+   "cells": {
+    "B1": {
+     "formula": "Jan",
+     "local": "Jan",
+     "value": "Jan",
+     "text": "Jan",
+     "format": "Standard",
+     "bold": false
+    },
+    "C1": {
+     "formula": "Feb",
+     "local": "Feb",
+     "value": "Feb",
+     "text": "Feb",
+     "format": "Standard",
+     "bold": false
+    },
+    "D1": {
+     "formula": "Mär",
+     "local": "Mär",
+     "value": "Mär",
+     "text": "Mär",
+     "format": "Standard",
+     "bold": false
+    },
+    "A2": {
+     "formula": "Pflaumen",
+     "local": "Pflaumen",
+     "value": "Pflaumen",
+     "text": "Pflaumen",
+     "format": "Standard",
+     "bold": false
+    },
+    "C2": {
+     "formula": "6",
+     "local": "6",
+     "value": 6,
+     "text": "6",
+     "format": "Standard",
+     "bold": false
+    },
+    "D2": {
+     "formula": "8",
+     "local": "8",
+     "value": 8,
+     "text": "8",
+     "format": "Standard",
+     "bold": false
+    },
+    "A3": {
+     "formula": "Äpfel",
+     "local": "Äpfel",
+     "value": "Äpfel",
+     "text": "Äpfel",
+     "format": "Standard",
+     "bold": false
+    },
+    "B3": {
+     "formula": "10",
+     "local": "10",
+     "value": 10,
+     "text": "010",
+     "format": "#.000",
+     "bold": false
+    },
+    "C3": {
+     "formula": "41.3333333333333",
+     "local": "41,3333333333333",
+     "value": 41.333333333333336,
+     "text": "41,3333333",
+     "format": "Standard",
+     "bold": false
+    },
+    "D3": {
+     "formula": "200",
+     "local": "200",
+     "value": 200,
+     "text": "200",
+     "format": "Standard",
+     "bold": false
+    },
+    "A4": {
+     "formula": "Birnen",
+     "local": "Birnen",
+     "value": "Birnen",
+     "text": "Birnen",
+     "format": "Standard",
+     "bold": false
+    },
+    "B4": {
+     "formula": "5",
+     "local": "5",
+     "value": 5,
+     "text": "5",
+     "format": "Standard",
+     "bold": false
+    },
+    "C4": {
+     "formula": "4",
+     "local": "4",
+     "value": 4,
+     "text": "4",
+     "format": "Standard",
+     "bold": false
+    },
+    "D4": {
+     "formula": "2",
+     "local": "2",
+     "value": 2,
+     "text": "2",
+     "format": "Standard",
+     "bold": false
+    },
+    "A5": {
+     "formula": "Kirschen",
+     "local": "Kirschen",
+     "value": "Kirschen",
+     "text": "Kirschen",
+     "format": "Standard",
+     "bold": false
+    },
+    "B5": {
+     "formula": "3",
+     "local": "3",
+     "value": 3,
+     "text": "3",
+     "format": "Standard",
+     "bold": false
+    }
+   },
+   "rows": {},
+   "cols": {
+    "1": [
+     1,
+     false,
+     10.27
+    ],
+    "2": [
+     1,
+     false,
+     10.27
+    ],
+    "3": [
+     1,
+     false,
+     10.27
+    ],
+    "4": [
+     1,
+     false,
+     10.27
+    ]
+   },
+   "summaryRow": 1,
+   "summaryColumn": -4152,
+   "name": "Funktion Mittelwert",
+   "sources": [
+    "Nord!R1C1:R4C3",
+    "Süd!R1C1:R5C3"
+   ],
+   "function": -4106,
+   "top": true,
+   "left": true,
+   "links": false,
+   "dest": "A1",
+   "dataConsolidate": "<dataConsolidate function=\"average\" leftLabels=\"1\" topLabels=\"1\"><dataRefs count=\"2\"><dataRef ref=\"A1:C4\" sheet=\"Nord\"/><dataRef ref=\"A1:C5\" sheet=\"Süd\"/></dataRefs></dataConsolidate>"
+  },
+  {
+   "used": "A1:D5",
+   "cells": {
+    "B1": {
+     "formula": "Jan",
+     "local": "Jan",
+     "value": "Jan",
+     "text": "Jan",
+     "format": "Standard",
+     "bold": false
+    },
+    "C1": {
+     "formula": "Feb",
+     "local": "Feb",
+     "value": "Feb",
+     "text": "Feb",
+     "format": "Standard",
+     "bold": false
+    },
+    "D1": {
+     "formula": "Mär",
+     "local": "Mär",
+     "value": "Mär",
+     "text": "Mär",
+     "format": "Standard",
+     "bold": false
+    },
+    "A2": {
+     "formula": "Pflaumen",
+     "local": "Pflaumen",
+     "value": "Pflaumen",
+     "text": "Pflaumen",
+     "format": "Standard",
+     "bold": false
+    },
+    "C2": {
+     "formula": "6",
+     "local": "6",
+     "value": 6,
+     "text": "6",
+     "format": "Standard",
+     "bold": false
+    },
+    "D2": {
+     "formula": "8",
+     "local": "8",
+     "value": 8,
+     "text": "8",
+     "format": "Standard",
+     "bold": false
+    },
+    "A3": {
+     "formula": "Äpfel",
+     "local": "Äpfel",
+     "value": "Äpfel",
+     "text": "Äpfel",
+     "format": "Standard",
+     "bold": false
+    },
+    "B3": {
+     "formula": "10",
+     "local": "10",
+     "value": 10,
+     "text": "010",
+     "format": "#.000",
+     "bold": false
+    },
+    "C3": {
+     "formula": "100",
+     "local": "100",
+     "value": 100,
+     "text": "100",
+     "format": "Standard",
+     "bold": false
+    },
+    "D3": {
+     "formula": "200",
+     "local": "200",
+     "value": 200,
+     "text": "200",
+     "format": "Standard",
+     "bold": false
+    },
+    "A4": {
+     "formula": "Birnen",
+     "local": "Birnen",
+     "value": "Birnen",
+     "text": "Birnen",
+     "format": "Standard",
+     "bold": false
+    },
+    "B4": {
+     "formula": "5",
+     "local": "5",
+     "value": 5,
+     "text": "5",
+     "format": "Standard",
+     "bold": false
+    },
+    "C4": {
+     "formula": "7",
+     "local": "7",
+     "value": 7,
+     "text": "7",
+     "format": "Standard",
+     "bold": false
+    },
+    "D4": {
+     "formula": "2",
+     "local": "2",
+     "value": 2,
+     "text": "2",
+     "format": "Standard",
+     "bold": false
+    },
+    "A5": {
+     "formula": "Kirschen",
+     "local": "Kirschen",
+     "value": "Kirschen",
+     "text": "Kirschen",
+     "format": "Standard",
+     "bold": false
+    },
+    "B5": {
+     "formula": "3",
+     "local": "3",
+     "value": 3,
+     "text": "3",
+     "format": "Standard",
+     "bold": false
+    }
+   },
+   "rows": {},
+   "cols": {
+    "1": [
+     1,
+     false,
+     10.27
+    ],
+    "2": [
+     1,
+     false,
+     10.27
+    ],
+    "3": [
+     1,
+     false,
+     10.27
+    ],
+    "4": [
+     1,
+     false,
+     10.27
+    ]
+   },
+   "summaryRow": 1,
+   "summaryColumn": -4152,
+   "name": "Funktion Maximum",
+   "sources": [
+    "Nord!R1C1:R4C3",
+    "Süd!R1C1:R5C3"
+   ],
+   "function": -4136,
+   "top": true,
+   "left": true,
+   "links": false,
+   "dest": "A1",
+   "dataConsolidate": "<dataConsolidate function=\"max\" leftLabels=\"1\" topLabels=\"1\"><dataRefs count=\"2\"><dataRef ref=\"A1:C4\" sheet=\"Nord\"/><dataRef ref=\"A1:C5\" sheet=\"Süd\"/></dataRefs></dataConsolidate>"
+  },
+  {
+   "used": "A1:D5",
+   "cells": {
+    "B1": {
+     "formula": "Jan",
+     "local": "Jan",
+     "value": "Jan",
+     "text": "Jan",
+     "format": "Standard",
+     "bold": false
+    },
+    "C1": {
+     "formula": "Feb",
+     "local": "Feb",
+     "value": "Feb",
+     "text": "Feb",
+     "format": "Standard",
+     "bold": false
+    },
+    "D1": {
+     "formula": "Mär",
+     "local": "Mär",
+     "value": "Mär",
+     "text": "Mär",
+     "format": "Standard",
+     "bold": false
+    },
+    "A2": {
+     "formula": "Pflaumen",
+     "local": "Pflaumen",
+     "value": "Pflaumen",
+     "text": "Pflaumen",
+     "format": "Standard",
+     "bold": false
+    },
+    "C2": {
+     "formula": "6",
+     "local": "6",
+     "value": 6,
+     "text": "6",
+     "format": "Standard",
+     "bold": false
+    },
+    "D2": {
+     "formula": "8",
+     "local": "8",
+     "value": 8,
+     "text": "8",
+     "format": "Standard",
+     "bold": false
+    },
+    "A3": {
+     "formula": "Äpfel",
+     "local": "Äpfel",
+     "value": "Äpfel",
+     "text": "Äpfel",
+     "format": "Standard",
+     "bold": false
+    },
+    "B3": {
+     "formula": "10",
+     "local": "10",
+     "value": 10,
+     "text": "010",
+     "format": "#.000",
+     "bold": false
+    },
+    "C3": {
+     "formula": "4",
+     "local": "4",
+     "value": 4,
+     "text": "4",
+     "format": "Standard",
+     "bold": false
+    },
+    "D3": {
+     "formula": "200",
+     "local": "200",
+     "value": 200,
+     "text": "200",
+     "format": "Standard",
+     "bold": false
+    },
+    "A4": {
+     "formula": "Birnen",
+     "local": "Birnen",
+     "value": "Birnen",
+     "text": "Birnen",
+     "format": "Standard",
+     "bold": false
+    },
+    "B4": {
+     "formula": "5",
+     "local": "5",
+     "value": 5,
+     "text": "5",
+     "format": "Standard",
+     "bold": false
+    },
+    "C4": {
+     "formula": "1",
+     "local": "1",
+     "value": 1,
+     "text": "1",
+     "format": "Standard",
+     "bold": false
+    },
+    "D4": {
+     "formula": "2",
+     "local": "2",
+     "value": 2,
+     "text": "2",
+     "format": "Standard",
+     "bold": false
+    },
+    "A5": {
+     "formula": "Kirschen",
+     "local": "Kirschen",
+     "value": "Kirschen",
+     "text": "Kirschen",
+     "format": "Standard",
+     "bold": false
+    },
+    "B5": {
+     "formula": "3",
+     "local": "3",
+     "value": 3,
+     "text": "3",
+     "format": "Standard",
+     "bold": false
+    }
+   },
+   "rows": {},
+   "cols": {
+    "1": [
+     1,
+     false,
+     10.27
+    ],
+    "2": [
+     1,
+     false,
+     10.27
+    ],
+    "3": [
+     1,
+     false,
+     10.27
+    ],
+    "4": [
+     1,
+     false,
+     10.27
+    ]
+   },
+   "summaryRow": 1,
+   "summaryColumn": -4152,
+   "name": "Funktion Minimum",
+   "sources": [
+    "Nord!R1C1:R4C3",
+    "Süd!R1C1:R5C3"
+   ],
+   "function": -4139,
+   "top": true,
+   "left": true,
+   "links": false,
+   "dest": "A1",
+   "dataConsolidate": "<dataConsolidate function=\"min\" leftLabels=\"1\" topLabels=\"1\"><dataRefs count=\"2\"><dataRef ref=\"A1:C4\" sheet=\"Nord\"/><dataRef ref=\"A1:C5\" sheet=\"Süd\"/></dataRefs></dataConsolidate>"
+  },
+  {
+   "used": "A1:D5",
+   "cells": {
+    "B1": {
+     "formula": "Jan",
+     "local": "Jan",
+     "value": "Jan",
+     "text": "Jan",
+     "format": "Standard",
+     "bold": false
+    },
+    "C1": {
+     "formula": "Feb",
+     "local": "Feb",
+     "value": "Feb",
+     "text": "Feb",
+     "format": "Standard",
+     "bold": false
+    },
+    "D1": {
+     "formula": "Mär",
+     "local": "Mär",
+     "value": "Mär",
+     "text": "Mär",
+     "format": "Standard",
+     "bold": false
+    },
+    "A2": {
+     "formula": "Pflaumen",
+     "local": "Pflaumen",
+     "value": "Pflaumen",
+     "text": "Pflaumen",
+     "format": "Standard",
+     "bold": false
+    },
+    "C2": {
+     "formula": "6",
+     "local": "6",
+     "value": 6,
+     "text": "6",
+     "format": "Standard",
+     "bold": false
+    },
+    "D2": {
+     "formula": "8",
+     "local": "8",
+     "value": 8,
+     "text": "8",
+     "format": "Standard",
+     "bold": false
+    },
+    "A3": {
+     "formula": "Äpfel",
+     "local": "Äpfel",
+     "value": "Äpfel",
+     "text": "Äpfel",
+     "format": "Standard",
+     "bold": false
+    },
+    "B3": {
+     "formula": "10",
+     "local": "10",
+     "value": 10,
+     "text": "010",
+     "format": "#.000",
+     "bold": false
+    },
+    "C3": {
+     "formula": "8000",
+     "local": "8000",
+     "value": 8000,
+     "text": "8000",
+     "format": "Standard",
+     "bold": false
+    },
+    "D3": {
+     "formula": "200",
+     "local": "200",
+     "value": 200,
+     "text": "200",
+     "format": "Standard",
+     "bold": false
+    },
+    "A4": {
+     "formula": "Birnen",
+     "local": "Birnen",
+     "value": "Birnen",
+     "text": "Birnen",
+     "format": "Standard",
+     "bold": false
+    },
+    "B4": {
+     "formula": "5",
+     "local": "5",
+     "value": 5,
+     "text": "5",
+     "format": "Standard",
+     "bold": false
+    },
+    "C4": {
+     "formula": "7",
+     "local": "7",
+     "value": 7,
+     "text": "7",
+     "format": "Standard",
+     "bold": false
+    },
+    "D4": {
+     "formula": "2",
+     "local": "2",
+     "value": 2,
+     "text": "2",
+     "format": "Standard",
+     "bold": false
+    },
+    "A5": {
+     "formula": "Kirschen",
+     "local": "Kirschen",
+     "value": "Kirschen",
+     "text": "Kirschen",
+     "format": "Standard",
+     "bold": false
+    },
+    "B5": {
+     "formula": "3",
+     "local": "3",
+     "value": 3,
+     "text": "3",
+     "format": "Standard",
+     "bold": false
+    }
+   },
+   "rows": {},
+   "cols": {
+    "1": [
+     1,
+     false,
+     10.27
+    ],
+    "2": [
+     1,
+     false,
+     10.27
+    ],
+    "3": [
+     1,
+     false,
+     10.27
+    ],
+    "4": [
+     1,
+     false,
+     10.27
+    ]
+   },
+   "summaryRow": 1,
+   "summaryColumn": -4152,
+   "name": "Funktion Produkt",
+   "sources": [
+    "Nord!R1C1:R4C3",
+    "Süd!R1C1:R5C3"
+   ],
+   "function": -4149,
+   "top": true,
+   "left": true,
+   "links": false,
+   "dest": "A1",
+   "dataConsolidate": "<dataConsolidate function=\"product\" leftLabels=\"1\" topLabels=\"1\"><dataRefs count=\"2\"><dataRef ref=\"A1:C4\" sheet=\"Nord\"/><dataRef ref=\"A1:C5\" sheet=\"Süd\"/></dataRefs></dataConsolidate>"
+  },
+  {
+   "used": "A1:D5",
+   "cells": {
+    "B1": {
+     "formula": "Jan",
+     "local": "Jan",
+     "value": "Jan",
+     "text": "Jan",
+     "format": "Standard",
+     "bold": false
+    },
+    "C1": {
+     "formula": "Feb",
+     "local": "Feb",
+     "value": "Feb",
+     "text": "Feb",
+     "format": "Standard",
+     "bold": false
+    },
+    "D1": {
+     "formula": "Mär",
+     "local": "Mär",
+     "value": "Mär",
+     "text": "Mär",
+     "format": "Standard",
+     "bold": false
+    },
+    "A2": {
+     "formula": "Pflaumen",
+     "local": "Pflaumen",
+     "value": "Pflaumen",
+     "text": "Pflaumen",
+     "format": "Standard",
+     "bold": false
+    },
+    "C2": {
+     "formula": "1",
+     "local": "1",
+     "value": 1,
+     "text": "1",
+     "format": "Standard",
+     "bold": false
+    },
+    "D2": {
+     "formula": "1",
+     "local": "1",
+     "value": 1,
+     "text": "1",
+     "format": "Standard",
+     "bold": false
+    },
+    "A3": {
+     "formula": "Äpfel",
+     "local": "Äpfel",
+     "value": "Äpfel",
+     "text": "Äpfel",
+     "format": "Standard",
+     "bold": false
+    },
+    "B3": {
+     "formula": "1",
+     "local": "1",
+     "value": 1,
+     "text": "001",
+     "format": "#.000",
+     "bold": false
+    },
+    "C3": {
+     "formula": "3",
+     "local": "3",
+     "value": 3,
+     "text": "3",
+     "format": "Standard",
+     "bold": false
+    },
+    "D3": {
+     "formula": "1",
+     "local": "1",
+     "value": 1,
+     "text": "1",
+     "format": "Standard",
+     "bold": false
+    },
+    "A4": {
+     "formula": "Birnen",
+     "local": "Birnen",
+     "value": "Birnen",
+     "text": "Birnen",
+     "format": "Standard",
+     "bold": false
+    },
+    "B4": {
+     "formula": "1",
+     "local": "1",
+     "value": 1,
+     "text": "1",
+     "format": "Standard",
+     "bold": false
+    },
+    "C4": {
+     "formula": "2",
+     "local": "2",
+     "value": 2,
+     "text": "2",
+     "format": "Standard",
+     "bold": false
+    },
+    "D4": {
+     "formula": "1",
+     "local": "1",
+     "value": 1,
+     "text": "1",
+     "format": "Standard",
+     "bold": false
+    },
+    "A5": {
+     "formula": "Kirschen",
+     "local": "Kirschen",
+     "value": "Kirschen",
+     "text": "Kirschen",
+     "format": "Standard",
+     "bold": false
+    },
+    "B5": {
+     "formula": "1",
+     "local": "1",
+     "value": 1,
+     "text": "1",
+     "format": "Standard",
+     "bold": false
+    }
+   },
+   "rows": {},
+   "cols": {
+    "1": [
+     1,
+     false,
+     10.27
+    ],
+    "2": [
+     1,
+     false,
+     10.27
+    ],
+    "3": [
+     1,
+     false,
+     10.27
+    ],
+    "4": [
+     1,
+     false,
+     10.27
+    ]
+   },
+   "summaryRow": 1,
+   "summaryColumn": -4152,
+   "name": "Funktion Anzahl Zahlen",
+   "sources": [
+    "Nord!R1C1:R4C3",
+    "Süd!R1C1:R5C3"
+   ],
+   "function": -4113,
+   "top": true,
+   "left": true,
+   "links": false,
+   "dest": "A1",
+   "dataConsolidate": "<dataConsolidate function=\"countNums\" leftLabels=\"1\" topLabels=\"1\"><dataRefs count=\"2\"><dataRef ref=\"A1:C4\" sheet=\"Nord\"/><dataRef ref=\"A1:C5\" sheet=\"Süd\"/></dataRefs></dataConsolidate>"
+  },
+  {
+   "used": "A1:D5",
+   "cells": {
+    "B1": {
+     "formula": "Jan",
+     "local": "Jan",
+     "value": "Jan",
+     "text": "Jan",
+     "format": "Standard",
+     "bold": false
+    },
+    "C1": {
+     "formula": "Feb",
+     "local": "Feb",
+     "value": "Feb",
+     "text": "Feb",
+     "format": "Standard",
+     "bold": false
+    },
+    "D1": {
+     "formula": "Mär",
+     "local": "Mär",
+     "value": "Mär",
+     "text": "Mär",
+     "format": "Standard",
+     "bold": false
+    },
+    "A2": {
+     "formula": "Pflaumen",
+     "local": "Pflaumen",
+     "value": "Pflaumen",
+     "text": "Pflaumen",
+     "format": "Standard",
+     "bold": false
+    },
+    "C2": {
+     "formula": "#DIV/0!",
+     "local": "#DIV/0!",
+     "value": {
+      "error": "#DIV/0!"
+     },
+     "text": "#DIV/0!",
+     "format": "Standard",
+     "bold": false
+    },
+    "D2": {
+     "formula": "#DIV/0!",
+     "local": "#DIV/0!",
+     "value": {
+      "error": "#DIV/0!"
+     },
+     "text": "#DIV/0!",
+     "format": "Standard",
+     "bold": false
+    },
+    "A3": {
+     "formula": "Äpfel",
+     "local": "Äpfel",
+     "value": "Äpfel",
+     "text": "Äpfel",
+     "format": "Standard",
+     "bold": false
+    },
+    "B3": {
+     "formula": "#DIV/0!",
+     "local": "#DIV/0!",
+     "value": {
+      "error": "#DIV/0!"
+     },
+     "text": "#DIV/0!",
+     "format": "#.000",
+     "bold": false
+    },
+    "C3": {
+     "formula": "51.4328040586291",
+     "local": "51,4328040586291",
+     "value": 51.432804058629095,
+     "text": "51,4328041",
+     "format": "Standard",
+     "bold": false
+    },
+    "D3": {
+     "formula": "#DIV/0!",
+     "local": "#DIV/0!",
+     "value": {
+      "error": "#DIV/0!"
+     },
+     "text": "#DIV/0!",
+     "format": "Standard",
+     "bold": false
+    },
+    "A4": {
+     "formula": "Birnen",
+     "local": "Birnen",
+     "value": "Birnen",
+     "text": "Birnen",
+     "format": "Standard",
+     "bold": false
+    },
+    "B4": {
+     "formula": "#DIV/0!",
+     "local": "#DIV/0!",
+     "value": {
+      "error": "#DIV/0!"
+     },
+     "text": "#DIV/0!",
+     "format": "Standard",
+     "bold": false
+    },
+    "C4": {
+     "formula": "4.24264068711928",
+     "local": "4,24264068711928",
+     "value": 4.242640687119285,
+     "text": "4,24264069",
+     "format": "Standard",
+     "bold": false
+    },
+    "D4": {
+     "formula": "#DIV/0!",
+     "local": "#DIV/0!",
+     "value": {
+      "error": "#DIV/0!"
+     },
+     "text": "#DIV/0!",
+     "format": "Standard",
+     "bold": false
+    },
+    "A5": {
+     "formula": "Kirschen",
+     "local": "Kirschen",
+     "value": "Kirschen",
+     "text": "Kirschen",
+     "format": "Standard",
+     "bold": false
+    },
+    "B5": {
+     "formula": "#DIV/0!",
+     "local": "#DIV/0!",
+     "value": {
+      "error": "#DIV/0!"
+     },
+     "text": "#DIV/0!",
+     "format": "Standard",
+     "bold": false
+    }
+   },
+   "rows": {},
+   "cols": {
+    "1": [
+     1,
+     false,
+     10.27
+    ],
+    "2": [
+     1,
+     false,
+     10.27
+    ],
+    "3": [
+     1,
+     false,
+     10.27
+    ],
+    "4": [
+     1,
+     false,
+     10.27
+    ]
+   },
+   "summaryRow": 1,
+   "summaryColumn": -4152,
+   "name": "Funktion Standardabweichung (Stichprobe)",
+   "sources": [
+    "Nord!R1C1:R4C3",
+    "Süd!R1C1:R5C3"
+   ],
+   "function": -4155,
+   "top": true,
+   "left": true,
+   "links": false,
+   "dest": "A1",
+   "dataConsolidate": "<dataConsolidate function=\"stdDev\" leftLabels=\"1\" topLabels=\"1\"><dataRefs count=\"2\"><dataRef ref=\"A1:C4\" sheet=\"Nord\"/><dataRef ref=\"A1:C5\" sheet=\"Süd\"/></dataRefs></dataConsolidate>"
+  },
+  {
+   "used": "A1:D5",
+   "cells": {
+    "B1": {
+     "formula": "Jan",
+     "local": "Jan",
+     "value": "Jan",
+     "text": "Jan",
+     "format": "Standard",
+     "bold": false
+    },
+    "C1": {
+     "formula": "Feb",
+     "local": "Feb",
+     "value": "Feb",
+     "text": "Feb",
+     "format": "Standard",
+     "bold": false
+    },
+    "D1": {
+     "formula": "Mär",
+     "local": "Mär",
+     "value": "Mär",
+     "text": "Mär",
+     "format": "Standard",
+     "bold": false
+    },
+    "A2": {
+     "formula": "Pflaumen",
+     "local": "Pflaumen",
+     "value": "Pflaumen",
+     "text": "Pflaumen",
+     "format": "Standard",
+     "bold": false
+    },
+    "C2": {
+     "formula": "0",
+     "local": "0",
+     "value": 0,
+     "text": "0",
+     "format": "Standard",
+     "bold": false
+    },
+    "D2": {
+     "formula": "0",
+     "local": "0",
+     "value": 0,
+     "text": "0",
+     "format": "Standard",
+     "bold": false
+    },
+    "A3": {
+     "formula": "Äpfel",
+     "local": "Äpfel",
+     "value": "Äpfel",
+     "text": "Äpfel",
+     "format": "Standard",
+     "bold": false
+    },
+    "B3": {
+     "formula": "0",
+     "local": "0",
+     "value": 0,
+     "text": "000",
+     "format": "#.000",
+     "bold": false
+    },
+    "C3": {
+     "formula": "41.9947086613963",
+     "local": "41,9947086613963",
+     "value": 41.994708661396324,
+     "text": "41,9947087",
+     "format": "Standard",
+     "bold": false
+    },
+    "D3": {
+     "formula": "0",
+     "local": "0",
+     "value": 0,
+     "text": "0",
+     "format": "Standard",
+     "bold": false
+    },
+    "A4": {
+     "formula": "Birnen",
+     "local": "Birnen",
+     "value": "Birnen",
+     "text": "Birnen",
+     "format": "Standard",
+     "bold": false
+    },
+    "B4": {
+     "formula": "0",
+     "local": "0",
+     "value": 0,
+     "text": "0",
+     "format": "Standard",
+     "bold": false
+    },
+    "C4": {
+     "formula": "3",
+     "local": "3",
+     "value": 3,
+     "text": "3",
+     "format": "Standard",
+     "bold": false
+    },
+    "D4": {
+     "formula": "0",
+     "local": "0",
+     "value": 0,
+     "text": "0",
+     "format": "Standard",
+     "bold": false
+    },
+    "A5": {
+     "formula": "Kirschen",
+     "local": "Kirschen",
+     "value": "Kirschen",
+     "text": "Kirschen",
+     "format": "Standard",
+     "bold": false
+    },
+    "B5": {
+     "formula": "0",
+     "local": "0",
+     "value": 0,
+     "text": "0",
+     "format": "Standard",
+     "bold": false
+    }
+   },
+   "rows": {},
+   "cols": {
+    "1": [
+     1,
+     false,
+     10.27
+    ],
+    "2": [
+     1,
+     false,
+     10.27
+    ],
+    "3": [
+     1,
+     false,
+     10.27
+    ],
+    "4": [
+     1,
+     false,
+     10.27
+    ]
+   },
+   "summaryRow": 1,
+   "summaryColumn": -4152,
+   "name": "Funktion Standardabweichung (Grundgesamtheit)",
+   "sources": [
+    "Nord!R1C1:R4C3",
+    "Süd!R1C1:R5C3"
+   ],
+   "function": -4156,
+   "top": true,
+   "left": true,
+   "links": false,
+   "dest": "A1",
+   "dataConsolidate": "<dataConsolidate function=\"stdDevp\" leftLabels=\"1\" topLabels=\"1\"><dataRefs count=\"2\"><dataRef ref=\"A1:C4\" sheet=\"Nord\"/><dataRef ref=\"A1:C5\" sheet=\"Süd\"/></dataRefs></dataConsolidate>"
+  },
+  {
+   "used": "A1:D5",
+   "cells": {
+    "B1": {
+     "formula": "Jan",
+     "local": "Jan",
+     "value": "Jan",
+     "text": "Jan",
+     "format": "Standard",
+     "bold": false
+    },
+    "C1": {
+     "formula": "Feb",
+     "local": "Feb",
+     "value": "Feb",
+     "text": "Feb",
+     "format": "Standard",
+     "bold": false
+    },
+    "D1": {
+     "formula": "Mär",
+     "local": "Mär",
+     "value": "Mär",
+     "text": "Mär",
+     "format": "Standard",
+     "bold": false
+    },
+    "A2": {
+     "formula": "Pflaumen",
+     "local": "Pflaumen",
+     "value": "Pflaumen",
+     "text": "Pflaumen",
+     "format": "Standard",
+     "bold": false
+    },
+    "C2": {
+     "formula": "#DIV/0!",
+     "local": "#DIV/0!",
+     "value": {
+      "error": "#DIV/0!"
+     },
+     "text": "#DIV/0!",
+     "format": "Standard",
+     "bold": false
+    },
+    "D2": {
+     "formula": "#DIV/0!",
+     "local": "#DIV/0!",
+     "value": {
+      "error": "#DIV/0!"
+     },
+     "text": "#DIV/0!",
+     "format": "Standard",
+     "bold": false
+    },
+    "A3": {
+     "formula": "Äpfel",
+     "local": "Äpfel",
+     "value": "Äpfel",
+     "text": "Äpfel",
+     "format": "Standard",
+     "bold": false
+    },
+    "B3": {
+     "formula": "#DIV/0!",
+     "local": "#DIV/0!",
+     "value": {
+      "error": "#DIV/0!"
+     },
+     "text": "#DIV/0!",
+     "format": "#.000",
+     "bold": false
+    },
+    "C3": {
+     "formula": "2645.33333333333",
+     "local": "2645,33333333333",
+     "value": 2645.3333333333335,
+     "text": "2645,33333",
+     "format": "Standard",
+     "bold": false
+    },
+    "D3": {
+     "formula": "#DIV/0!",
+     "local": "#DIV/0!",
+     "value": {
+      "error": "#DIV/0!"
+     },
+     "text": "#DIV/0!",
+     "format": "Standard",
+     "bold": false
+    },
+    "A4": {
+     "formula": "Birnen",
+     "local": "Birnen",
+     "value": "Birnen",
+     "text": "Birnen",
+     "format": "Standard",
+     "bold": false
+    },
+    "B4": {
+     "formula": "#DIV/0!",
+     "local": "#DIV/0!",
+     "value": {
+      "error": "#DIV/0!"
+     },
+     "text": "#DIV/0!",
+     "format": "Standard",
+     "bold": false
+    },
+    "C4": {
+     "formula": "18",
+     "local": "18",
+     "value": 18,
+     "text": "18",
+     "format": "Standard",
+     "bold": false
+    },
+    "D4": {
+     "formula": "#DIV/0!",
+     "local": "#DIV/0!",
+     "value": {
+      "error": "#DIV/0!"
+     },
+     "text": "#DIV/0!",
+     "format": "Standard",
+     "bold": false
+    },
+    "A5": {
+     "formula": "Kirschen",
+     "local": "Kirschen",
+     "value": "Kirschen",
+     "text": "Kirschen",
+     "format": "Standard",
+     "bold": false
+    },
+    "B5": {
+     "formula": "#DIV/0!",
+     "local": "#DIV/0!",
+     "value": {
+      "error": "#DIV/0!"
+     },
+     "text": "#DIV/0!",
+     "format": "Standard",
+     "bold": false
+    }
+   },
+   "rows": {},
+   "cols": {
+    "1": [
+     1,
+     false,
+     10.27
+    ],
+    "2": [
+     1,
+     false,
+     10.27
+    ],
+    "3": [
+     1,
+     false,
+     10.27
+    ],
+    "4": [
+     1,
+     false,
+     10.27
+    ]
+   },
+   "summaryRow": 1,
+   "summaryColumn": -4152,
+   "name": "Funktion Varianz (Stichprobe)",
+   "sources": [
+    "Nord!R1C1:R4C3",
+    "Süd!R1C1:R5C3"
+   ],
+   "function": -4164,
+   "top": true,
+   "left": true,
+   "links": false,
+   "dest": "A1",
+   "dataConsolidate": "<dataConsolidate function=\"var\" leftLabels=\"1\" topLabels=\"1\"><dataRefs count=\"2\"><dataRef ref=\"A1:C4\" sheet=\"Nord\"/><dataRef ref=\"A1:C5\" sheet=\"Süd\"/></dataRefs></dataConsolidate>"
+  },
+  {
+   "used": "A1:D5",
+   "cells": {
+    "B1": {
+     "formula": "Jan",
+     "local": "Jan",
+     "value": "Jan",
+     "text": "Jan",
+     "format": "Standard",
+     "bold": false
+    },
+    "C1": {
+     "formula": "Feb",
+     "local": "Feb",
+     "value": "Feb",
+     "text": "Feb",
+     "format": "Standard",
+     "bold": false
+    },
+    "D1": {
+     "formula": "Mär",
+     "local": "Mär",
+     "value": "Mär",
+     "text": "Mär",
+     "format": "Standard",
+     "bold": false
+    },
+    "A2": {
+     "formula": "Pflaumen",
+     "local": "Pflaumen",
+     "value": "Pflaumen",
+     "text": "Pflaumen",
+     "format": "Standard",
+     "bold": false
+    },
+    "C2": {
+     "formula": "0",
+     "local": "0",
+     "value": 0,
+     "text": "0",
+     "format": "Standard",
+     "bold": false
+    },
+    "D2": {
+     "formula": "0",
+     "local": "0",
+     "value": 0,
+     "text": "0",
+     "format": "Standard",
+     "bold": false
+    },
+    "A3": {
+     "formula": "Äpfel",
+     "local": "Äpfel",
+     "value": "Äpfel",
+     "text": "Äpfel",
+     "format": "Standard",
+     "bold": false
+    },
+    "B3": {
+     "formula": "0",
+     "local": "0",
+     "value": 0,
+     "text": "000",
+     "format": "#.000",
+     "bold": false
+    },
+    "C3": {
+     "formula": "1763.55555555556",
+     "local": "1763,55555555556",
+     "value": 1763.5555555555557,
+     "text": "1763,55556",
+     "format": "Standard",
+     "bold": false
+    },
+    "D3": {
+     "formula": "0",
+     "local": "0",
+     "value": 0,
+     "text": "0",
+     "format": "Standard",
+     "bold": false
+    },
+    "A4": {
+     "formula": "Birnen",
+     "local": "Birnen",
+     "value": "Birnen",
+     "text": "Birnen",
+     "format": "Standard",
+     "bold": false
+    },
+    "B4": {
+     "formula": "0",
+     "local": "0",
+     "value": 0,
+     "text": "0",
+     "format": "Standard",
+     "bold": false
+    },
+    "C4": {
+     "formula": "9",
+     "local": "9",
+     "value": 9,
+     "text": "9",
+     "format": "Standard",
+     "bold": false
+    },
+    "D4": {
+     "formula": "0",
+     "local": "0",
+     "value": 0,
+     "text": "0",
+     "format": "Standard",
+     "bold": false
+    },
+    "A5": {
+     "formula": "Kirschen",
+     "local": "Kirschen",
+     "value": "Kirschen",
+     "text": "Kirschen",
+     "format": "Standard",
+     "bold": false
+    },
+    "B5": {
+     "formula": "0",
+     "local": "0",
+     "value": 0,
+     "text": "0",
+     "format": "Standard",
+     "bold": false
+    }
+   },
+   "rows": {},
+   "cols": {
+    "1": [
+     1,
+     false,
+     10.27
+    ],
+    "2": [
+     1,
+     false,
+     10.27
+    ],
+    "3": [
+     1,
+     false,
+     10.27
+    ],
+    "4": [
+     1,
+     false,
+     10.27
+    ]
+   },
+   "summaryRow": 1,
+   "summaryColumn": -4152,
+   "name": "Funktion Varianz (Grundgesamtheit)",
+   "sources": [
+    "Nord!R1C1:R4C3",
+    "Süd!R1C1:R5C3"
+   ],
+   "function": -4165,
+   "top": true,
+   "left": true,
+   "links": false,
+   "dest": "A1",
+   "dataConsolidate": "<dataConsolidate function=\"varp\" leftLabels=\"1\" topLabels=\"1\"><dataRefs count=\"2\"><dataRef ref=\"A1:C4\" sheet=\"Nord\"/><dataRef ref=\"A1:C5\" sheet=\"Süd\"/></dataRefs></dataConsolidate>"
+  },
+  {
+   "used": "A1:B4",
+   "cells": {
+    "A1": {
+     "formula": "2",
+     "local": "2",
+     "value": 2,
+     "text": "002",
+     "format": "#.000",
+     "bold": false
+    },
+    "B1": {
+     "formula": "2",
+     "local": "2",
+     "value": 2,
+     "text": "2",
+     "format": "Standard",
+     "bold": false
+    },
+    "A2": {
+     "formula": "2",
+     "local": "2",
+     "value": 2,
+     "text": "2",
+     "format": "Standard",
+     "bold": false
+    },
+    "B2": {
+     "formula": "1",
+     "local": "1",
+     "value": 1,
+     "text": "1",
+     "format": "Standard",
+     "bold": false
+    },
+    "A3": {
+     "formula": "2",
+     "local": "2",
+     "value": 2,
+     "text": "2",
+     "format": "Standard",
+     "bold": false
+    },
+    "B3": {
+     "formula": "2",
+     "local": "2",
+     "value": 2,
+     "text": "2",
+     "format": "Standard",
+     "bold": false
+    },
+    "A4": {
+     "formula": "1",
+     "local": "1",
+     "value": 1,
+     "text": "1",
+     "format": "Standard",
+     "bold": false
+    },
+    "B4": {
+     "formula": "1",
+     "local": "1",
+     "value": 1,
+     "text": "1",
+     "format": "Standard",
+     "bold": false
+    }
+   },
+   "rows": {},
+   "cols": {
+    "1": [
+     1,
+     false,
+     10.27
+    ],
+    "2": [
+     1,
+     false,
+     10.27
+    ]
+   },
+   "summaryRow": 1,
+   "summaryColumn": -4152,
+   "name": "Position, Funktion Anzahl",
+   "sources": [
+    "Nord!R2C2:R4C3",
+    "Süd!R2C2:R5C3"
+   ],
+   "function": -4112,
+   "top": false,
+   "left": false,
+   "links": false,
+   "dest": "A1",
+   "dataConsolidate": "<dataConsolidate function=\"count\"><dataRefs count=\"2\"><dataRef ref=\"B2:C4\" sheet=\"Nord\"/><dataRef ref=\"B2:C5\" sheet=\"Süd\"/></dataRefs></dataConsolidate>"
+  },
+  {
+   "used": "A1:B2",
+   "cells": {
+    "B1": {
+     "formula": "Jan",
+     "local": "Jan",
+     "value": "Jan",
+     "text": "Jan",
+     "format": "Standard",
+     "bold": false
+    },
+    "A2": {
+     "formula": "Äpfel",
+     "local": "Äpfel",
+     "value": "Äpfel",
+     "text": "Äpfel",
+     "format": "Standard",
+     "bold": false
+    },
+    "B2": {
+     "formula": "10",
+     "local": "10",
+     "value": 10,
+     "text": "010",
+     "format": "#.000",
+     "bold": false
+    }
+   },
+   "rows": {},
+   "cols": {
+    "1": [
+     1,
+     false,
+     10.27
+    ],
+    "2": [
+     1,
+     false,
+     10.27
+    ]
+   },
+   "summaryRow": 1,
+   "summaryColumn": -4152,
+   "name": "Zielbereich kleiner",
+   "sources": [
+    "Nord!R1C1:R4C3",
+    "Süd!R1C1:R5C3"
+   ],
+   "function": -4157,
+   "top": true,
+   "left": true,
+   "links": false,
+   "dest": "A1:B2",
+   "dataConsolidate": "<dataConsolidate leftLabels=\"1\" topLabels=\"1\"><dataRefs count=\"2\"><dataRef ref=\"A1:C4\" sheet=\"Nord\"/><dataRef ref=\"A1:C5\" sheet=\"Süd\"/></dataRefs></dataConsolidate>"
+  },
+  {
+   "used": "A1:B4",
+   "cells": {
+    "A1": {
+     "formula": "11",
+     "local": "11",
+     "value": 11,
+     "text": "011",
+     "format": "#.000",
+     "bold": false
+    },
+    "B1": {
+     "formula": "22",
+     "local": "22",
+     "value": 22,
+     "text": "22",
+     "format": "Standard",
+     "bold": false
+    },
+    "A2": {
+     "formula": "9",
+     "local": "9",
+     "value": 9,
+     "text": "9",
+     "format": "Standard",
+     "bold": false
+    },
+    "B2": {
+     "formula": "7",
+     "local": "7",
+     "value": 7,
+     "text": "7",
+     "format": "Standard",
+     "bold": false
+    },
+    "A3": {
+     "formula": "9",
+     "local": "9",
+     "value": 9,
+     "text": "9",
+     "format": "Standard",
+     "bold": false
+    },
+    "B3": {
+     "formula": "8",
+     "local": "8",
+     "value": 8,
+     "text": "8",
+     "format": "Standard",
+     "bold": false
+    },
+    "A4": {
+     "formula": "100",
+     "local": "100",
+     "value": 100,
+     "text": "100",
+     "format": "Standard",
+     "bold": false
+    },
+    "B4": {
+     "formula": "200",
+     "local": "200",
+     "value": 200,
+     "text": "200",
+     "format": "Standard",
+     "bold": false
+    }
+   },
+   "rows": {},
+   "cols": {
+    "1": [
+     1,
+     false,
+     10.27
+    ],
+    "2": [
+     1,
+     false,
+     10.27
+    ]
+   },
+   "summaryRow": 1,
+   "summaryColumn": -4152,
+   "name": "Zielbereich eine Zeile",
+   "sources": [
+    "Nord!R2C2:R4C3",
+    "Süd!R2C2:R5C3"
+   ],
+   "function": -4157,
+   "top": false,
+   "left": false,
+   "links": false,
+   "dest": "A1:C1",
+   "dataConsolidate": "<dataConsolidate><dataRefs count=\"2\"><dataRef ref=\"B2:C4\" sheet=\"Nord\"/><dataRef ref=\"B2:C5\" sheet=\"Süd\"/></dataRefs></dataConsolidate>"
+  },
+  {
+   "used": "A1:B11",
+   "cells": {
+    "A1": {
+     "formula": "11",
+     "local": "11",
+     "value": 11,
+     "text": "11",
+     "format": "Standard",
+     "bold": false
+    },
+    "B1": {
+     "formula": "22",
+     "local": "22",
+     "value": 22,
+     "text": "22",
+     "format": "Standard",
+     "bold": false
+    },
+    "A2": {
+     "formula": "8",
+     "local": "8",
+     "value": 8,
+     "text": "8",
+     "format": "Standard",
+     "bold": false
+    },
+    "B2": {
+     "formula": "11",
+     "local": "11",
+     "value": 11,
+     "text": "11",
+     "format": "Standard",
+     "bold": false
+    },
+    "A10": {
+     "formula": "1",
+     "local": "1",
+     "value": 1,
+     "text": "1",
+     "format": "Standard",
+     "bold": false
+    },
+    "B10": {
+     "formula": "2",
+     "local": "2",
+     "value": 2,
+     "text": "2",
+     "format": "Standard",
+     "bold": false
+    },
+    "A11": {
+     "formula": "3",
+     "local": "3",
+     "value": 3,
+     "text": "3",
+     "format": "Standard",
+     "bold": false
+    },
+    "B11": {
+     "formula": "4",
+     "local": "4",
+     "value": 4,
+     "text": "4",
+     "format": "Standard",
+     "bold": false
+    }
+   },
+   "rows": {},
+   "cols": {
+    "1": [
+     1,
+     false,
+     10.27
+    ],
+    "2": [
+     1,
+     false,
+     10.27
+    ]
+   },
+   "summaryRow": 1,
+   "summaryColumn": -4152,
+   "name": "Quelle auf dem Zielblatt",
+   "sources": [
+    "Gesamt!R10C1:R11C2",
+    "Nord!R2C2:R3C3"
+   ],
+   "function": -4157,
+   "top": false,
+   "left": false,
+   "links": false,
+   "dest": "A1",
+   "dataConsolidate": "<dataConsolidate><dataRefs count=\"2\"><dataRef ref=\"A10:B11\" sheet=\"Gesamt\"/><dataRef ref=\"B2:C3\" sheet=\"Nord\"/></dataRefs></dataConsolidate>"
+  },
+  {
+   "used": "A1:E12",
+   "cells": {
+    "C1": {
+     "formula": "Jan",
+     "local": "Jan",
+     "value": "Jan",
+     "text": "Jan",
+     "format": "Standard",
+     "bold": false
+    },
+    "D1": {
+     "formula": "Feb",
+     "local": "Feb",
+     "value": "Feb",
+     "text": "Feb",
+     "format": "Standard",
+     "bold": false
+    },
+    "E1": {
+     "formula": "Mär",
+     "local": "Mär",
+     "value": "Mär",
+     "text": "Mär",
+     "format": "Standard",
+     "bold": false
+    },
+    "B2": {
+     "formula": "Mappe3",
+     "local": "Mappe3",
+     "value": "Mappe3",
+     "text": "Mappe3",
+     "format": "Standard",
+     "bold": false
+    },
+    "D2": {
+     "formula": "=Süd!$B$4",
+     "local": "=Süd!$B$4",
+     "value": 6,
+     "text": "6",
+     "format": "Standard",
+     "bold": false
+    },
+    "E2": {
+     "formula": "=Süd!$C$4",
+     "local": "=Süd!$C$4",
+     "value": 8,
+     "text": "8",
+     "format": "Standard",
+     "bold": false
+    },
+    "A3": {
+     "formula": "Pflaumen",
+     "local": "Pflaumen",
+     "value": "Pflaumen",
+     "text": "Pflaumen",
+     "format": "Standard",
+     "bold": false
+    },
+    "D3": {
+     "formula": "=SUM(D2)",
+     "local": "=SUMME(D2)",
+     "value": 6,
+     "text": "6",
+     "format": "Standard",
+     "bold": false
+    },
+    "E3": {
+     "formula": "=SUM(E2)",
+     "local": "=SUMME(E2)",
+     "value": 8,
+     "text": "8",
+     "format": "Standard",
+     "bold": false
+    },
+    "B4": {
+     "formula": "Mappe3",
+     "local": "Mappe3",
+     "value": "Mappe3",
+     "text": "Mappe3",
+     "format": "Standard",
+     "bold": false
+    },
+    "C4": {
+     "formula": "=Nord!$B$2",
+     "local": "=Nord!$B$2",
+     "value": 10,
+     "text": "010",
+     "format": "#.000",
+     "bold": false
+    },
+    "D4": {
+     "formula": "=Nord!$C$2",
+     "local": "=Nord!$C$2",
+     "value": 20,
+     "text": "20",
+     "format": "Standard",
+     "bold": false
+    },
+    "B5": {
+     "formula": "Mappe3",
+     "local": "Mappe3",
+     "value": "Mappe3",
+     "text": "Mappe3",
+     "format": "Standard",
+     "bold": false
+    },
+    "D5": {
+     "formula": "=Süd!$B$3",
+     "local": "=Süd!$B$3",
+     "value": 4,
+     "text": "4",
+     "format": "Standard",
+     "bold": false
+    },
+    "E5": {
+     "formula": "=Süd!$C$5",
+     "local": "=Süd!$C$5",
+     "value": 200,
+     "text": "200",
+     "format": "Standard",
+     "bold": false
+    },
+    "D6": {
+     "formula": "=Süd!$B$5",
+     "local": "=Süd!$B$5",
+     "value": 100,
+     "text": "100",
+     "format": "Standard",
+     "bold": false
+    },
+    "A7": {
+     "formula": "Äpfel",
+     "local": "Äpfel",
+     "value": "Äpfel",
+     "text": "Äpfel",
+     "format": "Standard",
+     "bold": false
+    },
+    "C7": {
+     "formula": "=SUM(C4:C6)",
+     "local": "=SUMME(C4:C6)",
+     "value": 10,
+     "text": "010",
+     "format": "#.000",
+     "bold": false
+    },
+    "D7": {
+     "formula": "=SUM(D4:D6)",
+     "local": "=SUMME(D4:D6)",
+     "value": 124,
+     "text": "124",
+     "format": "Standard",
+     "bold": false
+    },
+    "E7": {
+     "formula": "=SUM(E4:E6)",
+     "local": "=SUMME(E4:E6)",
+     "value": 200,
+     "text": "200",
+     "format": "Standard",
+     "bold": false
+    },
+    "B8": {
+     "formula": "Mappe3",
+     "local": "Mappe3",
+     "value": "Mappe3",
+     "text": "Mappe3",
+     "format": "Standard",
+     "bold": false
+    },
+    "C8": {
+     "formula": "=Nord!$B$3",
+     "local": "=Nord!$B$3",
+     "value": 5,
+     "text": "5",
+     "format": "Standard",
+     "bold": false
+    },
+    "D8": {
+     "formula": "=Nord!$C$3",
+     "local": "=Nord!$C$3",
+     "value": 7,
+     "text": "7",
+     "format": "Standard",
+     "bold": false
+    },
+    "B9": {
+     "formula": "Mappe3",
+     "local": "Mappe3",
+     "value": "Mappe3",
+     "text": "Mappe3",
+     "format": "Standard",
+     "bold": false
+    },
+    "D9": {
+     "formula": "=Süd!$B$2",
+     "local": "=Süd!$B$2",
+     "value": 1,
+     "text": "1",
+     "format": "Standard",
+     "bold": false
+    },
+    "E9": {
+     "formula": "=Süd!$C$2",
+     "local": "=Süd!$C$2",
+     "value": 2,
+     "text": "2",
+     "format": "Standard",
+     "bold": false
+    },
+    "A10": {
+     "formula": "Birnen",
+     "local": "Birnen",
+     "value": "Birnen",
+     "text": "Birnen",
+     "format": "Standard",
+     "bold": false
+    },
+    "C10": {
+     "formula": "=SUM(C8:C9)",
+     "local": "=SUMME(C8:C9)",
+     "value": 5,
+     "text": "5",
+     "format": "Standard",
+     "bold": false
+    },
+    "D10": {
+     "formula": "=SUM(D8:D9)",
+     "local": "=SUMME(D8:D9)",
+     "value": 8,
+     "text": "8",
+     "format": "Standard",
+     "bold": false
+    },
+    "E10": {
+     "formula": "=SUM(E8:E9)",
+     "local": "=SUMME(E8:E9)",
+     "value": 2,
+     "text": "2",
+     "format": "Standard",
+     "bold": false
+    },
+    "B11": {
+     "formula": "Mappe3",
+     "local": "Mappe3",
+     "value": "Mappe3",
+     "text": "Mappe3",
+     "format": "Standard",
+     "bold": false
+    },
+    "C11": {
+     "formula": "=Nord!$B$4",
+     "local": "=Nord!$B$4",
+     "value": 3,
+     "text": "3",
+     "format": "Standard",
+     "bold": false
+    },
+    "A12": {
+     "formula": "Kirschen",
+     "local": "Kirschen",
+     "value": "Kirschen",
+     "text": "Kirschen",
+     "format": "Standard",
+     "bold": false
+    },
+    "C12": {
+     "formula": "=SUM(C11)",
+     "local": "=SUMME(C11)",
+     "value": 3,
+     "text": "3",
+     "format": "Standard",
+     "bold": false
+    }
+   },
+   "rows": {
+    "2": [
+     2,
+     true
+    ],
+    "4": [
+     2,
+     true
+    ],
+    "5": [
+     2,
+     true
+    ],
+    "6": [
+     2,
+     true
+    ],
+    "8": [
+     2,
+     true
+    ],
+    "9": [
+     2,
+     true
+    ],
+    "11": [
+     2,
+     true
+    ]
+   },
+   "cols": {
+    "1": [
+     1,
+     false,
+     1.18
+    ],
+    "2": [
+     1,
+     false,
+     8.45
+    ],
+    "3": [
+     1,
+     false,
+     10.27
+    ],
+    "4": [
+     1,
+     false,
+     10.27
+    ],
+    "5": [
+     1,
+     false,
+     10.27
+    ]
+   },
+   "summaryRow": 1,
+   "summaryColumn": -4152,
+   "name": "Verknüpfungen",
+   "sources": [
+    "Nord!R1C1:R4C3",
+    "Süd!R1C1:R5C3"
+   ],
+   "function": -4157,
+   "top": true,
+   "left": true,
+   "links": true,
+   "dest": "A1",
+   "dataConsolidate": "<dataConsolidate leftLabels=\"1\" topLabels=\"1\" link=\"1\"><dataRefs count=\"2\"><dataRef ref=\"A1:C4\" sheet=\"Nord\"/><dataRef ref=\"A1:C5\" sheet=\"Süd\"/></dataRefs></dataConsolidate>"
+  },
+  {
+   "used": "A1:E12",
+   "cells": {
+    "C1": {
+     "formula": "Jan",
+     "local": "Jan",
+     "value": "Jan",
+     "text": "Jan",
+     "format": "Standard",
+     "bold": false
+    },
+    "D1": {
+     "formula": "Feb",
+     "local": "Feb",
+     "value": "Feb",
+     "text": "Feb",
+     "format": "Standard",
+     "bold": false
+    },
+    "E1": {
+     "formula": "Mär",
+     "local": "Mär",
+     "value": "Mär",
+     "text": "Mär",
+     "format": "Standard",
+     "bold": false
+    },
+    "B2": {
+     "formula": "Mappe3",
+     "local": "Mappe3",
+     "value": "Mappe3",
+     "text": "Mappe3",
+     "format": "Standard",
+     "bold": false
+    },
+    "D2": {
+     "formula": "=Süd!$B$4",
+     "local": "=Süd!$B$4",
+     "value": 6,
+     "text": "6",
+     "format": "Standard",
+     "bold": false
+    },
+    "E2": {
+     "formula": "=Süd!$C$4",
+     "local": "=Süd!$C$4",
+     "value": 8,
+     "text": "8",
+     "format": "Standard",
+     "bold": false
+    },
+    "A3": {
+     "formula": "Pflaumen",
+     "local": "Pflaumen",
+     "value": "Pflaumen",
+     "text": "Pflaumen",
+     "format": "Standard",
+     "bold": false
+    },
+    "D3": {
+     "formula": "=AVERAGE(D2)",
+     "local": "=MITTELWERT(D2)",
+     "value": 6,
+     "text": "6",
+     "format": "Standard",
+     "bold": false
+    },
+    "E3": {
+     "formula": "=AVERAGE(E2)",
+     "local": "=MITTELWERT(E2)",
+     "value": 8,
+     "text": "8",
+     "format": "Standard",
+     "bold": false
+    },
+    "B4": {
+     "formula": "Mappe3",
+     "local": "Mappe3",
+     "value": "Mappe3",
+     "text": "Mappe3",
+     "format": "Standard",
+     "bold": false
+    },
+    "C4": {
+     "formula": "=Nord!$B$2",
+     "local": "=Nord!$B$2",
+     "value": 10,
+     "text": "010",
+     "format": "#.000",
+     "bold": false
+    },
+    "D4": {
+     "formula": "=Nord!$C$2",
+     "local": "=Nord!$C$2",
+     "value": 20,
+     "text": "20",
+     "format": "Standard",
+     "bold": false
+    },
+    "B5": {
+     "formula": "Mappe3",
+     "local": "Mappe3",
+     "value": "Mappe3",
+     "text": "Mappe3",
+     "format": "Standard",
+     "bold": false
+    },
+    "D5": {
+     "formula": "=Süd!$B$3",
+     "local": "=Süd!$B$3",
+     "value": 4,
+     "text": "4",
+     "format": "Standard",
+     "bold": false
+    },
+    "E5": {
+     "formula": "=Süd!$C$5",
+     "local": "=Süd!$C$5",
+     "value": 200,
+     "text": "200",
+     "format": "Standard",
+     "bold": false
+    },
+    "D6": {
+     "formula": "=Süd!$B$5",
+     "local": "=Süd!$B$5",
+     "value": 100,
+     "text": "100",
+     "format": "Standard",
+     "bold": false
+    },
+    "A7": {
+     "formula": "Äpfel",
+     "local": "Äpfel",
+     "value": "Äpfel",
+     "text": "Äpfel",
+     "format": "Standard",
+     "bold": false
+    },
+    "C7": {
+     "formula": "=AVERAGE(C4:C6)",
+     "local": "=MITTELWERT(C4:C6)",
+     "value": 10,
+     "text": "010",
+     "format": "#.000",
+     "bold": false
+    },
+    "D7": {
+     "formula": "=AVERAGE(D4:D6)",
+     "local": "=MITTELWERT(D4:D6)",
+     "value": 41.333333333333336,
+     "text": "41,3333333",
+     "format": "Standard",
+     "bold": false
+    },
+    "E7": {
+     "formula": "=AVERAGE(E4:E6)",
+     "local": "=MITTELWERT(E4:E6)",
+     "value": 200,
+     "text": "200",
+     "format": "Standard",
+     "bold": false
+    },
+    "B8": {
+     "formula": "Mappe3",
+     "local": "Mappe3",
+     "value": "Mappe3",
+     "text": "Mappe3",
+     "format": "Standard",
+     "bold": false
+    },
+    "C8": {
+     "formula": "=Nord!$B$3",
+     "local": "=Nord!$B$3",
+     "value": 5,
+     "text": "5",
+     "format": "Standard",
+     "bold": false
+    },
+    "D8": {
+     "formula": "=Nord!$C$3",
+     "local": "=Nord!$C$3",
+     "value": 7,
+     "text": "7",
+     "format": "Standard",
+     "bold": false
+    },
+    "B9": {
+     "formula": "Mappe3",
+     "local": "Mappe3",
+     "value": "Mappe3",
+     "text": "Mappe3",
+     "format": "Standard",
+     "bold": false
+    },
+    "D9": {
+     "formula": "=Süd!$B$2",
+     "local": "=Süd!$B$2",
+     "value": 1,
+     "text": "1",
+     "format": "Standard",
+     "bold": false
+    },
+    "E9": {
+     "formula": "=Süd!$C$2",
+     "local": "=Süd!$C$2",
+     "value": 2,
+     "text": "2",
+     "format": "Standard",
+     "bold": false
+    },
+    "A10": {
+     "formula": "Birnen",
+     "local": "Birnen",
+     "value": "Birnen",
+     "text": "Birnen",
+     "format": "Standard",
+     "bold": false
+    },
+    "C10": {
+     "formula": "=AVERAGE(C8:C9)",
+     "local": "=MITTELWERT(C8:C9)",
+     "value": 5,
+     "text": "5",
+     "format": "Standard",
+     "bold": false
+    },
+    "D10": {
+     "formula": "=AVERAGE(D8:D9)",
+     "local": "=MITTELWERT(D8:D9)",
+     "value": 4,
+     "text": "4",
+     "format": "Standard",
+     "bold": false
+    },
+    "E10": {
+     "formula": "=AVERAGE(E8:E9)",
+     "local": "=MITTELWERT(E8:E9)",
+     "value": 2,
+     "text": "2",
+     "format": "Standard",
+     "bold": false
+    },
+    "B11": {
+     "formula": "Mappe3",
+     "local": "Mappe3",
+     "value": "Mappe3",
+     "text": "Mappe3",
+     "format": "Standard",
+     "bold": false
+    },
+    "C11": {
+     "formula": "=Nord!$B$4",
+     "local": "=Nord!$B$4",
+     "value": 3,
+     "text": "3",
+     "format": "Standard",
+     "bold": false
+    },
+    "A12": {
+     "formula": "Kirschen",
+     "local": "Kirschen",
+     "value": "Kirschen",
+     "text": "Kirschen",
+     "format": "Standard",
+     "bold": false
+    },
+    "C12": {
+     "formula": "=AVERAGE(C11)",
+     "local": "=MITTELWERT(C11)",
+     "value": 3,
+     "text": "3",
+     "format": "Standard",
+     "bold": false
+    }
+   },
+   "rows": {
+    "2": [
+     2,
+     true
+    ],
+    "4": [
+     2,
+     true
+    ],
+    "5": [
+     2,
+     true
+    ],
+    "6": [
+     2,
+     true
+    ],
+    "8": [
+     2,
+     true
+    ],
+    "9": [
+     2,
+     true
+    ],
+    "11": [
+     2,
+     true
+    ]
+   },
+   "cols": {
+    "1": [
+     1,
+     false,
+     1.18
+    ],
+    "2": [
+     1,
+     false,
+     8.45
+    ],
+    "3": [
+     1,
+     false,
+     10.27
+    ],
+    "4": [
+     1,
+     false,
+     10.27
+    ],
+    "5": [
+     1,
+     false,
+     10.27
+    ]
+   },
+   "summaryRow": 1,
+   "summaryColumn": -4152,
+   "name": "Verknüpfungen, Mittelwert",
+   "sources": [
+    "Nord!R1C1:R4C3",
+    "Süd!R1C1:R5C3"
+   ],
+   "function": -4106,
+   "top": true,
+   "left": true,
+   "links": true,
+   "dest": "A1",
+   "dataConsolidate": "<dataConsolidate function=\"average\" leftLabels=\"1\" topLabels=\"1\" link=\"1\"><dataRefs count=\"2\"><dataRef ref=\"A1:C4\" sheet=\"Nord\"/><dataRef ref=\"A1:C5\" sheet=\"Süd\"/></dataRefs></dataConsolidate>"
+  },
+  {
+   "used": "A1:D11",
+   "cells": {
+    "B1": {
+     "formula": "Mappe3",
+     "local": "Mappe3",
+     "value": "Mappe3",
+     "text": "Mappe3",
+     "format": "Standard",
+     "bold": false
+    },
+    "C1": {
+     "formula": "=Süd!$B$4",
+     "local": "=Süd!$B$4",
+     "value": 6,
+     "text": "6",
+     "format": "Standard",
+     "bold": false
+    },
+    "D1": {
+     "formula": "=Süd!$C$4",
+     "local": "=Süd!$C$4",
+     "value": 8,
+     "text": "8",
+     "format": "Standard",
+     "bold": false
+    },
+    "A2": {
+     "formula": "Pflaumen",
+     "local": "Pflaumen",
+     "value": "Pflaumen",
+     "text": "Pflaumen",
+     "format": "Standard",
+     "bold": false
+    },
+    "C2": {
+     "formula": "=SUM(C1)",
+     "local": "=SUMME(C1)",
+     "value": 6,
+     "text": "6",
+     "format": "Standard",
+     "bold": false
+    },
+    "D2": {
+     "formula": "=SUM(D1)",
+     "local": "=SUMME(D1)",
+     "value": 8,
+     "text": "8",
+     "format": "Standard",
+     "bold": false
+    },
+    "B3": {
+     "formula": "Mappe3",
+     "local": "Mappe3",
+     "value": "Mappe3",
+     "text": "Mappe3",
+     "format": "Standard",
+     "bold": false
+    },
+    "C3": {
+     "formula": "=Nord!$B$2",
+     "local": "=Nord!$B$2",
+     "value": 10,
+     "text": "010",
+     "format": "#.000",
+     "bold": false
+    },
+    "D3": {
+     "formula": "=Nord!$C$2",
+     "local": "=Nord!$C$2",
+     "value": 20,
+     "text": "20",
+     "format": "Standard",
+     "bold": false
+    },
+    "B4": {
+     "formula": "Mappe3",
+     "local": "Mappe3",
+     "value": "Mappe3",
+     "text": "Mappe3",
+     "format": "Standard",
+     "bold": false
+    },
+    "C4": {
+     "formula": "=Süd!$B$3",
+     "local": "=Süd!$B$3",
+     "value": 4,
+     "text": "004",
+     "format": "#.000",
+     "bold": false
+    },
+    "D4": {
+     "formula": "=Süd!$C$5",
+     "local": "=Süd!$C$5",
+     "value": 200,
+     "text": "200",
+     "format": "Standard",
+     "bold": false
+    },
+    "C5": {
+     "formula": "=Süd!$B$5",
+     "local": "=Süd!$B$5",
+     "value": 100,
+     "text": "100",
+     "format": "#.000",
+     "bold": false
+    },
+    "A6": {
+     "formula": "Äpfel",
+     "local": "Äpfel",
+     "value": "Äpfel",
+     "text": "Äpfel",
+     "format": "Standard",
+     "bold": false
+    },
+    "C6": {
+     "formula": "=SUM(C3:C5)",
+     "local": "=SUMME(C3:C5)",
+     "value": 114,
+     "text": "114",
+     "format": "#.000",
+     "bold": false
+    },
+    "D6": {
+     "formula": "=SUM(D3:D5)",
+     "local": "=SUMME(D3:D5)",
+     "value": 220,
+     "text": "220",
+     "format": "Standard",
+     "bold": false
+    },
+    "B7": {
+     "formula": "Mappe3",
+     "local": "Mappe3",
+     "value": "Mappe3",
+     "text": "Mappe3",
+     "format": "Standard",
+     "bold": false
+    },
+    "C7": {
+     "formula": "=Nord!$B$3",
+     "local": "=Nord!$B$3",
+     "value": 5,
+     "text": "5",
+     "format": "Standard",
+     "bold": false
+    },
+    "D7": {
+     "formula": "=Nord!$C$3",
+     "local": "=Nord!$C$3",
+     "value": 7,
+     "text": "7",
+     "format": "Standard",
+     "bold": false
+    },
+    "B8": {
+     "formula": "Mappe3",
+     "local": "Mappe3",
+     "value": "Mappe3",
+     "text": "Mappe3",
+     "format": "Standard",
+     "bold": false
+    },
+    "C8": {
+     "formula": "=Süd!$B$2",
+     "local": "=Süd!$B$2",
+     "value": 1,
+     "text": "1",
+     "format": "Standard",
+     "bold": false
+    },
+    "D8": {
+     "formula": "=Süd!$C$2",
+     "local": "=Süd!$C$2",
+     "value": 2,
+     "text": "2",
+     "format": "Standard",
+     "bold": false
+    },
+    "A9": {
+     "formula": "Birnen",
+     "local": "Birnen",
+     "value": "Birnen",
+     "text": "Birnen",
+     "format": "Standard",
+     "bold": false
+    },
+    "C9": {
+     "formula": "=SUM(C7:C8)",
+     "local": "=SUMME(C7:C8)",
+     "value": 6,
+     "text": "6",
+     "format": "Standard",
+     "bold": false
+    },
+    "D9": {
+     "formula": "=SUM(D7:D8)",
+     "local": "=SUMME(D7:D8)",
+     "value": 9,
+     "text": "9",
+     "format": "Standard",
+     "bold": false
+    },
+    "B10": {
+     "formula": "Mappe3",
+     "local": "Mappe3",
+     "value": "Mappe3",
+     "text": "Mappe3",
+     "format": "Standard",
+     "bold": false
+    },
+    "C10": {
+     "formula": "=Nord!$B$4",
+     "local": "=Nord!$B$4",
+     "value": 3,
+     "text": "3",
+     "format": "Standard",
+     "bold": false
+    },
+    "A11": {
+     "formula": "Kirschen",
+     "local": "Kirschen",
+     "value": "Kirschen",
+     "text": "Kirschen",
+     "format": "Standard",
+     "bold": false
+    },
+    "C11": {
+     "formula": "=SUM(C10)",
+     "local": "=SUMME(C10)",
+     "value": 3,
+     "text": "3",
+     "format": "Standard",
+     "bold": false
+    }
+   },
+   "rows": {
+    "1": [
+     2,
+     true
+    ],
+    "3": [
+     2,
+     true
+    ],
+    "4": [
+     2,
+     true
+    ],
+    "5": [
+     2,
+     true
+    ],
+    "7": [
+     2,
+     true
+    ],
+    "8": [
+     2,
+     true
+    ],
+    "10": [
+     2,
+     true
+    ]
+   },
+   "cols": {
+    "1": [
+     1,
+     false,
+     1.18
+    ],
+    "2": [
+     1,
+     false,
+     8.45
+    ],
+    "3": [
+     1,
+     false,
+     10.27
+    ],
+    "4": [
+     1,
+     false,
+     10.27
+    ]
+   },
+   "summaryRow": 1,
+   "summaryColumn": -4152,
+   "name": "Verknüpfungen, nur links",
+   "sources": [
+    "Nord!R2C1:R4C3",
+    "Süd!R2C1:R5C3"
+   ],
+   "function": -4157,
+   "top": false,
+   "left": true,
+   "links": true,
+   "dest": "A1",
+   "dataConsolidate": "<dataConsolidate leftLabels=\"1\" link=\"1\"><dataRefs count=\"2\"><dataRef ref=\"A2:C4\" sheet=\"Nord\"/><dataRef ref=\"A2:C5\" sheet=\"Süd\"/></dataRefs></dataConsolidate>"
+  },
+  {
+   "used": "A1:C12",
+   "cells": {
+    "A1": {
+     "formula": "Jan",
+     "local": "Jan",
+     "value": "Jan",
+     "text": "Jan",
+     "format": "Standard",
+     "bold": false
+    },
+    "B1": {
+     "formula": "Feb",
+     "local": "Feb",
+     "value": "Feb",
+     "text": "Feb",
+     "format": "Standard",
+     "bold": false
+    },
+    "C1": {
+     "formula": "Mär",
+     "local": "Mär",
+     "value": "Mär",
+     "text": "Mär",
+     "format": "Standard",
+     "bold": false
+    },
+    "A2": {
+     "formula": "=Nord!$B$2",
+     "local": "=Nord!$B$2",
+     "value": 10,
+     "text": "010",
+     "format": "#.000",
+     "bold": false
+    },
+    "B2": {
+     "formula": "=Nord!$C$2",
+     "local": "=Nord!$C$2",
+     "value": 20,
+     "text": "20",
+     "format": "Standard",
+     "bold": false
+    },
+    "B3": {
+     "formula": "=Süd!$B$2",
+     "local": "=Süd!$B$2",
+     "value": 1,
+     "text": "1",
+     "format": "Standard",
+     "bold": false
+    },
+    "C3": {
+     "formula": "=Süd!$C$2",
+     "local": "=Süd!$C$2",
+     "value": 2,
+     "text": "2",
+     "format": "Standard",
+     "bold": false
+    },
+    "A4": {
+     "formula": "=SUM(A2:A3)",
+     "local": "=SUMME(A2:A3)",
+     "value": 10,
+     "text": "010",
+     "format": "#.000",
+     "bold": false
+    },
+    "B4": {
+     "formula": "=SUM(B2:B3)",
+     "local": "=SUMME(B2:B3)",
+     "value": 21,
+     "text": "21",
+     "format": "Standard",
+     "bold": false
+    },
+    "C4": {
+     "formula": "=SUM(C2:C3)",
+     "local": "=SUMME(C2:C3)",
+     "value": 2,
+     "text": "2",
+     "format": "Standard",
+     "bold": false
+    },
+    "A5": {
+     "formula": "=Nord!$B$3",
+     "local": "=Nord!$B$3",
+     "value": 5,
+     "text": "5",
+     "format": "Standard",
+     "bold": false
+    },
+    "B5": {
+     "formula": "=Nord!$C$3",
+     "local": "=Nord!$C$3",
+     "value": 7,
+     "text": "7",
+     "format": "Standard",
+     "bold": false
+    },
+    "B6": {
+     "formula": "=Süd!$B$3",
+     "local": "=Süd!$B$3",
+     "value": 4,
+     "text": "4",
+     "format": "Standard",
+     "bold": false
+    },
+    "A7": {
+     "formula": "=SUM(A5:A6)",
+     "local": "=SUMME(A5:A6)",
+     "value": 5,
+     "text": "5",
+     "format": "Standard",
+     "bold": false
+    },
+    "B7": {
+     "formula": "=SUM(B5:B6)",
+     "local": "=SUMME(B5:B6)",
+     "value": 11,
+     "text": "11",
+     "format": "Standard",
+     "bold": false
+    },
+    "A8": {
+     "formula": "=Nord!$B$4",
+     "local": "=Nord!$B$4",
+     "value": 3,
+     "text": "3",
+     "format": "Standard",
+     "bold": false
+    },
+    "B9": {
+     "formula": "=Süd!$B$4",
+     "local": "=Süd!$B$4",
+     "value": 6,
+     "text": "6",
+     "format": "Standard",
+     "bold": false
+    },
+    "C9": {
+     "formula": "=Süd!$C$4",
+     "local": "=Süd!$C$4",
+     "value": 8,
+     "text": "8",
+     "format": "Standard",
+     "bold": false
+    },
+    "A10": {
+     "formula": "=SUM(A8:A9)",
+     "local": "=SUMME(A8:A9)",
+     "value": 3,
+     "text": "3",
+     "format": "Standard",
+     "bold": false
+    },
+    "B10": {
+     "formula": "=SUM(B8:B9)",
+     "local": "=SUMME(B8:B9)",
+     "value": 6,
+     "text": "6",
+     "format": "Standard",
+     "bold": false
+    },
+    "C10": {
+     "formula": "=SUM(C8:C9)",
+     "local": "=SUMME(C8:C9)",
+     "value": 8,
+     "text": "8",
+     "format": "Standard",
+     "bold": false
+    },
+    "B11": {
+     "formula": "=Süd!$B$5",
+     "local": "=Süd!$B$5",
+     "value": 100,
+     "text": "100",
+     "format": "Standard",
+     "bold": false
+    },
+    "C11": {
+     "formula": "=Süd!$C$5",
+     "local": "=Süd!$C$5",
+     "value": 200,
+     "text": "200",
+     "format": "Standard",
+     "bold": false
+    },
+    "B12": {
+     "formula": "=SUM(B11)",
+     "local": "=SUMME(B11)",
+     "value": 100,
+     "text": "100",
+     "format": "Standard",
+     "bold": false
+    },
+    "C12": {
+     "formula": "=SUM(C11)",
+     "local": "=SUMME(C11)",
+     "value": 200,
+     "text": "200",
+     "format": "Standard",
+     "bold": false
+    }
+   },
+   "rows": {
+    "2": [
+     2,
+     true
+    ],
+    "3": [
+     2,
+     true
+    ],
+    "5": [
+     2,
+     true
+    ],
+    "6": [
+     2,
+     true
+    ],
+    "8": [
+     2,
+     true
+    ],
+    "9": [
+     2,
+     true
+    ],
+    "11": [
+     2,
+     true
+    ]
+   },
+   "cols": {
+    "1": [
+     1,
+     false,
+     10.27
+    ],
+    "2": [
+     1,
+     false,
+     10.27
+    ],
+    "3": [
+     1,
+     false,
+     10.27
+    ]
+   },
+   "summaryRow": 1,
+   "summaryColumn": -4152,
+   "name": "Verknüpfungen, nur oben",
+   "sources": [
+    "Nord!R1C2:R4C3",
+    "Süd!R1C2:R5C3"
+   ],
+   "function": -4157,
+   "top": true,
+   "left": false,
+   "links": true,
+   "dest": "A1",
+   "dataConsolidate": "<dataConsolidate topLabels=\"1\" link=\"1\"><dataRefs count=\"2\"><dataRef ref=\"B1:C4\" sheet=\"Nord\"/><dataRef ref=\"B1:C5\" sheet=\"Süd\"/></dataRefs></dataConsolidate>"
+  },
+  {
+   "used": "A1:B11",
+   "cells": {
+    "A1": {
+     "formula": "=Nord!$B$2",
+     "local": "=Nord!$B$2",
+     "value": 10,
+     "text": "010",
+     "format": "#.000",
+     "bold": false
+    },
+    "B1": {
+     "formula": "=Nord!$C$2",
+     "local": "=Nord!$C$2",
+     "value": 20,
+     "text": "20",
+     "format": "Standard",
+     "bold": false
+    },
+    "A2": {
+     "formula": "=Süd!$B$2",
+     "local": "=Süd!$B$2",
+     "value": 1,
+     "text": "001",
+     "format": "#.000",
+     "bold": false
+    },
+    "B2": {
+     "formula": "=Süd!$C$2",
+     "local": "=Süd!$C$2",
+     "value": 2,
+     "text": "2",
+     "format": "Standard",
+     "bold": false
+    },
+    "A3": {
+     "formula": "=SUM(A1:A2)",
+     "local": "=SUMME(A1:A2)",
+     "value": 11,
+     "text": "011",
+     "format": "#.000",
+     "bold": false
+    },
+    "B3": {
+     "formula": "=SUM(B1:B2)",
+     "local": "=SUMME(B1:B2)",
+     "value": 22,
+     "text": "22",
+     "format": "Standard",
+     "bold": false
+    },
+    "A4": {
+     "formula": "=Nord!$B$3",
+     "local": "=Nord!$B$3",
+     "value": 5,
+     "text": "5",
+     "format": "Standard",
+     "bold": false
+    },
+    "B4": {
+     "formula": "=Nord!$C$3",
+     "local": "=Nord!$C$3",
+     "value": 7,
+     "text": "7",
+     "format": "Standard",
+     "bold": false
+    },
+    "A5": {
+     "formula": "=Süd!$B$3",
+     "local": "=Süd!$B$3",
+     "value": 4,
+     "text": "4",
+     "format": "Standard",
+     "bold": false
+    },
+    "A6": {
+     "formula": "=SUM(A4:A5)",
+     "local": "=SUMME(A4:A5)",
+     "value": 9,
+     "text": "9",
+     "format": "Standard",
+     "bold": false
+    },
+    "B6": {
+     "formula": "=SUM(B4:B5)",
+     "local": "=SUMME(B4:B5)",
+     "value": 7,
+     "text": "7",
+     "format": "Standard",
+     "bold": false
+    },
+    "A7": {
+     "formula": "=Nord!$B$4",
+     "local": "=Nord!$B$4",
+     "value": 3,
+     "text": "3",
+     "format": "Standard",
+     "bold": false
+    },
+    "A8": {
+     "formula": "=Süd!$B$4",
+     "local": "=Süd!$B$4",
+     "value": 6,
+     "text": "6",
+     "format": "Standard",
+     "bold": false
+    },
+    "B8": {
+     "formula": "=Süd!$C$4",
+     "local": "=Süd!$C$4",
+     "value": 8,
+     "text": "8",
+     "format": "Standard",
+     "bold": false
+    },
+    "A9": {
+     "formula": "=SUM(A7:A8)",
+     "local": "=SUMME(A7:A8)",
+     "value": 9,
+     "text": "9",
+     "format": "Standard",
+     "bold": false
+    },
+    "B9": {
+     "formula": "=SUM(B7:B8)",
+     "local": "=SUMME(B7:B8)",
+     "value": 8,
+     "text": "8",
+     "format": "Standard",
+     "bold": false
+    },
+    "A10": {
+     "formula": "=Süd!$B$5",
+     "local": "=Süd!$B$5",
+     "value": 100,
+     "text": "100",
+     "format": "Standard",
+     "bold": false
+    },
+    "B10": {
+     "formula": "=Süd!$C$5",
+     "local": "=Süd!$C$5",
+     "value": 200,
+     "text": "200",
+     "format": "Standard",
+     "bold": false
+    },
+    "A11": {
+     "formula": "=SUM(A10)",
+     "local": "=SUMME(A10)",
+     "value": 100,
+     "text": "100",
+     "format": "Standard",
+     "bold": false
+    },
+    "B11": {
+     "formula": "=SUM(B10)",
+     "local": "=SUMME(B10)",
+     "value": 200,
+     "text": "200",
+     "format": "Standard",
+     "bold": false
+    }
+   },
+   "rows": {
+    "1": [
+     2,
+     true
+    ],
+    "2": [
+     2,
+     true
+    ],
+    "4": [
+     2,
+     true
+    ],
+    "5": [
+     2,
+     true
+    ],
+    "7": [
+     2,
+     true
+    ],
+    "8": [
+     2,
+     true
+    ],
+    "10": [
+     2,
+     true
+    ]
+   },
+   "cols": {
+    "1": [
+     1,
+     false,
+     10.27
+    ],
+    "2": [
+     1,
+     false,
+     10.27
+    ]
+   },
+   "summaryRow": 1,
+   "summaryColumn": -4152,
+   "name": "Verknüpfungen, Position",
+   "sources": [
+    "Nord!R2C2:R4C3",
+    "Süd!R2C2:R5C3"
+   ],
+   "function": -4157,
+   "top": false,
+   "left": false,
+   "links": true,
+   "dest": "A1",
+   "dataConsolidate": "<dataConsolidate link=\"1\"><dataRefs count=\"2\"><dataRef ref=\"B2:C4\" sheet=\"Nord\"/><dataRef ref=\"B2:C5\" sheet=\"Süd\"/></dataRefs></dataConsolidate>"
+  },
+  {
+   "used": "A1:D5",
+   "cells": {
+    "B1": {
+     "formula": "Jan",
+     "local": "Jan",
+     "value": "Jan",
+     "text": "Jan",
+     "format": "Standard",
+     "bold": false
+    },
+    "C1": {
+     "formula": "Feb",
+     "local": "Feb",
+     "value": "Feb",
+     "text": "Feb",
+     "format": "Standard",
+     "bold": false
+    },
+    "D1": {
+     "formula": "Mär",
+     "local": "Mär",
+     "value": "Mär",
+     "text": "Mär",
+     "format": "Standard",
+     "bold": false
+    },
+    "A2": {
+     "formula": "Pflaumen",
+     "local": "Pflaumen",
+     "value": "Pflaumen",
+     "text": "Pflaumen",
+     "format": "Standard",
+     "bold": false
+    },
+    "C2": {
+     "formula": "6",
+     "local": "6",
+     "value": 6,
+     "text": "6",
+     "format": "Standard",
+     "bold": false
+    },
+    "D2": {
+     "formula": "8",
+     "local": "8",
+     "value": 8,
+     "text": "8",
+     "format": "Standard",
+     "bold": false
+    },
+    "A3": {
+     "formula": "Äpfel",
+     "local": "Äpfel",
+     "value": "Äpfel",
+     "text": "Äpfel",
+     "format": "Standard",
+     "bold": false
+    },
+    "B3": {
+     "formula": "10",
+     "local": "10",
+     "value": 10,
+     "text": "010",
+     "format": "#.000",
+     "bold": false
+    },
+    "C3": {
+     "formula": "124",
+     "local": "124",
+     "value": 124,
+     "text": "124",
+     "format": "Standard",
+     "bold": false
+    },
+    "D3": {
+     "formula": "200",
+     "local": "200",
+     "value": 200,
+     "text": "200",
+     "format": "Standard",
+     "bold": false
+    },
+    "A4": {
+     "formula": "Birnen",
+     "local": "Birnen",
+     "value": "Birnen",
+     "text": "Birnen",
+     "format": "Standard",
+     "bold": false
+    },
+    "B4": {
+     "formula": "5",
+     "local": "5",
+     "value": 5,
+     "text": "5",
+     "format": "Standard",
+     "bold": false
+    },
+    "C4": {
+     "formula": "8",
+     "local": "8",
+     "value": 8,
+     "text": "8",
+     "format": "Standard",
+     "bold": false
+    },
+    "D4": {
+     "formula": "2",
+     "local": "2",
+     "value": 2,
+     "text": "2",
+     "format": "Standard",
+     "bold": false
+    },
+    "A5": {
+     "formula": "Kirschen",
+     "local": "Kirschen",
+     "value": "Kirschen",
+     "text": "Kirschen",
+     "format": "Standard",
+     "bold": false
+    },
+    "B5": {
+     "formula": "3",
+     "local": "3",
+     "value": 3,
+     "text": "3",
+     "format": "Standard",
+     "bold": false
+    }
+   },
+   "rows": {},
+   "cols": {
+    "1": [
+     1,
+     false,
+     10.27
+    ],
+    "2": [
+     1,
+     false,
+     10.27
+    ],
+    "3": [
+     1,
+     false,
+     10.27
+    ],
+    "4": [
+     1,
+     false,
+     10.27
+    ]
+   },
+   "summaryRow": 1,
+   "summaryColumn": -4152,
+   "name": "Quellen umgekehrt",
+   "sources": [
+    "Süd!R1C1:R5C3",
+    "Nord!R1C1:R4C3"
+   ],
+   "function": -4157,
+   "top": true,
+   "left": true,
+   "links": false,
+   "dest": "A1",
+   "dataConsolidate": "<dataConsolidate leftLabels=\"1\" topLabels=\"1\"><dataRefs count=\"2\"><dataRef ref=\"A1:C4\" sheet=\"Nord\"/><dataRef ref=\"A1:C5\" sheet=\"Süd\"/></dataRefs></dataConsolidate>"
+  },
+  {
+   "used": "A1:D5",
+   "cells": {
+    "B1": {
+     "formula": "Jan",
+     "local": "Jan",
+     "value": "Jan",
+     "text": "Jan",
+     "format": "Standard",
+     "bold": false
+    },
+    "C1": {
+     "formula": "Feb",
+     "local": "Feb",
+     "value": "Feb",
+     "text": "Feb",
+     "format": "Standard",
+     "bold": false
+    },
+    "D1": {
+     "formula": "Mär",
+     "local": "Mär",
+     "value": "Mär",
+     "text": "Mär",
+     "format": "Standard",
+     "bold": false
+    },
+    "A2": {
+     "formula": "Pflaumen",
+     "local": "Pflaumen",
+     "value": "Pflaumen",
+     "text": "Pflaumen",
+     "format": "Standard",
+     "bold": false
+    },
+    "C2": {
+     "formula": "6",
+     "local": "6",
+     "value": 6,
+     "text": "6",
+     "format": "Standard",
+     "bold": false
+    },
+    "D2": {
+     "formula": "8",
+     "local": "8",
+     "value": 8,
+     "text": "8",
+     "format": "Standard",
+     "bold": false
+    },
+    "A3": {
+     "formula": "Äpfel",
+     "local": "Äpfel",
+     "value": "Äpfel",
+     "text": "Äpfel",
+     "format": "Standard",
+     "bold": false
+    },
+    "B3": {
+     "formula": "10",
+     "local": "10",
+     "value": 10,
+     "text": "010",
+     "format": "#.000",
+     "bold": false
+    },
+    "C3": {
+     "formula": "124",
+     "local": "124",
+     "value": 124,
+     "text": "124",
+     "format": "Standard",
+     "bold": false
+    },
+    "D3": {
+     "formula": "200",
+     "local": "200",
+     "value": 200,
+     "text": "200",
+     "format": "Standard",
+     "bold": false
+    },
+    "A4": {
+     "formula": "Birnen",
+     "local": "Birnen",
+     "value": "Birnen",
+     "text": "Birnen",
+     "format": "Standard",
+     "bold": false
+    },
+    "B4": {
+     "formula": "5",
+     "local": "5",
+     "value": 5,
+     "text": "5",
+     "format": "Standard",
+     "bold": false
+    },
+    "C4": {
+     "formula": "8",
+     "local": "8",
+     "value": 8,
+     "text": "8",
+     "format": "Standard",
+     "bold": false
+    },
+    "D4": {
+     "formula": "2",
+     "local": "2",
+     "value": 2,
+     "text": "2",
+     "format": "Standard",
+     "bold": false
+    },
+    "A5": {
+     "formula": "Kirschen",
+     "local": "Kirschen",
+     "value": "Kirschen",
+     "text": "Kirschen",
+     "format": "Standard",
+     "bold": false
+    },
+    "B5": {
+     "formula": "3",
+     "local": "3",
+     "value": 3,
+     "text": "3",
+     "format": "Standard",
+     "bold": false
+    }
+   },
+   "rows": {},
+   "cols": {
+    "1": [
+     1,
+     false,
+     10.27
+    ],
+    "2": [
+     1,
+     false,
+     10.27
+    ],
+    "3": [
+     1,
+     false,
+     10.27
+    ],
+    "4": [
+     1,
+     false,
+     10.27
+    ]
+   },
+   "summaryRow": 1,
+   "summaryColumn": -4152,
+   "name": "Fixture",
+   "sources": [
+    "Nord!R1C1:R4C3",
+    "Süd!R1C1:R5C3"
+   ],
+   "function": -4157,
+   "top": true,
+   "left": true,
+   "links": false,
+   "dest": "A1",
+   "dataConsolidate": "<dataConsolidate leftLabels=\"1\" topLabels=\"1\"><dataRefs count=\"2\"><dataRef ref=\"A1:C4\" sheet=\"Nord\"/><dataRef ref=\"A1:C5\" sheet=\"Süd\"/></dataRefs></dataConsolidate>"
+  }
+ ],
+ "formats": {
+  "Nord!B2": "0.00",
+  "Süd!B3": "0%"
+ },
+ "order": [
+  {
+   "sources": [
+    [
+     "a",
+     "b",
+     "c"
+    ],
+    [
+     "d"
+    ]
+   ],
+   "rows": [
+    "a",
+    "b",
+    "c",
+    "d"
+   ]
+  },
+  {
+   "sources": [
+    [
+     "a",
+     "b",
+     "c"
+    ],
+    [
+     "c",
+     "d"
+    ]
+   ],
+   "rows": [
+    "a",
+    "b",
+    "c",
+    "d"
+   ]
+  },
+  {
+   "sources": [
+    [
+     "a",
+     "b",
+     "c"
+    ],
+    [
+     "d",
+     "a"
+    ]
+   ],
+   "rows": [
+    "d",
+    "a",
+    "b",
+    "c"
+   ]
+  },
+  {
+   "sources": [
+    [
+     "a",
+     "b",
+     "c"
+    ],
+    [
+     "b",
+     "a",
+     "d"
+    ]
+   ],
+   "rows": [
+    "a",
+    "b",
+    "c",
+    "d"
+   ]
+  },
+  {
+   "sources": [
+    [
+     "a",
+     "b",
+     "c"
+    ],
+    [
+     "b",
+     "a",
+     "d",
+     "a"
+    ]
+   ],
+   "rows": [
+    "d",
+    "a",
+    "b",
+    "c"
+   ]
+  },
+  {
+   "sources": [
+    [
+     "a",
+     "b"
+    ],
+    [
+     "c"
+    ],
+    [
+     "d"
+    ]
+   ],
+   "rows": [
+    "a",
+    "b",
+    "c",
+    "d"
+   ]
+  },
+  {
+   "sources": [
+    [
+     "a",
+     "a",
+     "b"
+    ]
+   ],
+   "rows": [
+    "a",
+    "b"
+   ]
+  },
+  {
+   "sources": [
+    [
+     "a",
+     "b",
+     "c"
+    ],
+    [
+     "b",
+     "d",
+     "a"
+    ]
+   ],
+   "rows": [
+    "d",
+    "a",
+    "b",
+    "c"
+   ]
+  },
+  {
+   "sources": [
+    [
+     "a",
+     "b",
+     "c"
+    ],
+    [
+     "d",
+     "e",
+     "a"
+    ]
+   ],
+   "rows": [
+    "d",
+    "e",
+    "a",
+    "b",
+    "c"
+   ]
+  },
+  {
+   "sources": [
+    [
+     "a",
+     "b",
+     "c"
+    ],
+    [
+     "c",
+     "d",
+     "b"
+    ]
+   ],
+   "rows": [
+    "a",
+    "d",
+    "b",
+    "c"
+   ]
+  },
+  {
+   "sources": [
+    [
+     "a",
+     "b",
+     "c"
+    ],
+    [
+     "a",
+     "d",
+     "c"
+    ]
+   ],
+   "rows": [
+    "a",
+    "b",
+    "d",
+    "c"
+   ]
+  },
+  {
+   "sources": [
+    [
+     "a",
+     "b",
+     "c"
+    ],
+    [
+     "d"
+    ],
+    [
+     "e",
+     "d"
+    ]
+   ],
+   "rows": [
+    "a",
+    "b",
+    "c",
+    "e",
+    "d"
+   ]
+  },
+  {
+   "sources": [
+    [
+     "a",
+     "b",
+     "c"
+    ],
+    [
+     "d",
+     "x",
+     "c"
+    ]
+   ],
+   "rows": [
+    "a",
+    "b",
+    "d",
+    "x",
+    "c"
+   ]
+  },
+  {
+   "sources": [
+    [
+     "A",
+     "b"
+    ],
+    [
+     "a",
+     "B"
+    ]
+   ],
+   "rows": [
+    "A",
+    "b"
+   ]
+  }
+ ]
+}

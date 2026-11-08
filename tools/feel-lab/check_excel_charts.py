@@ -1,7 +1,8 @@
 """Check: charts as RaabeCalc writes them open in Excel without repair (Step 7 package E, D-061).
 
-Runs packages/charts/test/excel-open.test.ts, which writes two workbooks with every chart kind
-(plain, and with titles, axis titles, legend on the right, data labels and trendlines) into
+Runs packages/charts/test/excel-open.test.ts, which writes two workbooks with the first chart kinds
+(plain, and with titles, axis titles, legend on the right, data labels and trendlines) and one with
+every other type of Excel 365 and two Verbund charts (D-086) into
 TEMP/raabe-charts-check, then opens each in an invisible Excel of our own. A workbook Excel would
 have to repair does not open through COM with alerts off, so opening is the test; then the chart
 types and series formulas are compared with what was written and every chart is exported as PNG
@@ -58,13 +59,14 @@ def main() -> int:
                     got_type = ch.ChartType
                     series = []
                     if want["series"]:
-                        sc = ch.SeriesCollection()
+                        sc = ch.FullSeriesCollection()
                         series = [sc.Item(k).Formula for k in range(1, sc.Count + 1)]
-                    good = got_type == XL_TYPES[want["kind"]] and series == want["series"]
+                    want_type = want.get("xl", XL_TYPES.get(want["kind"]))
+                    good = got_type == want_type and series == want["series"]
                     ch.Export(str(OUT / f"{path.stem}-{i:02d}-{want['kind']}.png"))
                     if not good:
                         ok = False
-                        print(f"  {want['kind']}: type {got_type} (want {XL_TYPES[want['kind']]}), series {series} (want {want['series']})")
+                        print(f"  {want['kind']}: type {got_type} (want {want_type}), series {series} (want {want['series']})")
                 if not ok:
                     failures += 1
             finally:

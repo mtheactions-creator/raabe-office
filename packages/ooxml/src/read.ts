@@ -13,8 +13,7 @@ import {
   type RowDef, type Run, type Section, type StyleDef, type StyleType, type TableDef, type TableStyleDef, type TableStylePart,
 } from "@raabe/text-engine";
 import { mathParaJc, ommlToSeq, readMathPr } from "./math";
-import { chartFromXml } from "./xlsx/chart";
-import { LOOK, chartScene, sceneMarkup } from "@raabe/charts";
+import { chartImage } from "./chart-preview";
 import { readSources, type Bibliography } from "@raabe/text-engine";
 import { readNumbering } from "./numbering";
 import { REL, Rels, mimeOf, relsPath, resolveTarget } from "./package";
@@ -688,22 +687,23 @@ class PartReader {
     return { pic, shape: Object.fromEntries(Object.entries(shape).filter(([, v]) => v !== undefined)) as unknown as ShapeInfo };
   }
 
-  /** A chart part drawn as an SVG picture of the drawing's size (null where no canvas measures text: tests). */
-  private chartPreview(id: string | null, holder: Element | undefined): ImageData | undefined {
-    if (!id || !holder || typeof document === "undefined") return undefined;
+  /** The chart part a drawing's c:chart refers to. */
+  private chartPart(id: string | null): string | undefined {
+    if (!id) return undefined;
     const rel = this.rels.get(id);
     if (!rel || rel.external) return undefined;
-    const xml = this.r.text(resolveTarget(this.part, rel.target));
-    if (!xml) return undefined;
+    return this.r.text(resolveTarget(this.part, rel.target)) ?? undefined;
+  }
+
+  /** A chart part drawn as an SVG picture of the drawing's size (undefined where no canvas measures text: tests). */
+  private chartPreview(xml: string, holder: Element | undefined): ImageData | undefined {
+    if (!holder || typeof document === "undefined") return undefined;
     const e = Array.from(holder.children).find((x) => x.localName === "extent");
     const w = Number(e?.getAttribute("cx") ?? 0) / 12700, h = Number(e?.getAttribute("cy") ?? 0) / 12700;
     if (!(w > 0 && h > 0)) return undefined;
     try {
       const t = this.r.themeColors;
-      const accents = ["accent1", "accent2", "accent3", "accent4", "accent5", "accent6"].map((k) => "#" + (t[k] ?? "000000"));
-      const scene = chartScene(chartFromXml(xml), w, h, { accents });
-      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${(w * 96) / 72}" height="${(h * 96) / 72}" viewBox="0 0 ${scene.width} ${scene.height}" font-family="${LOOK.font}">${sceneMarkup(scene)}</svg>`;
-      return { bytes: new TextEncoder().encode(svg), type: "image/svg+xml" };
+      return chartImage(xml, w, h, ["accent1", "accent2", "accent3", "accent4", "accent5", "accent6"].map((k) => "#" + (t[k] ?? "000000")));
     } catch {
       return undefined;
     }
@@ -728,7 +728,8 @@ class PartReader {
     // A chart (Step 7b, D-088) is drawn by the chart engine from the values Word keeps in the chart part;
     // the drawing and its parts are written back as they were.
     const chartEl = blip ? undefined : c.getElementsByTagNameNS("http://schemas.openxmlformats.org/drawingml/2006/chart", "chart")[0];
-    const chartImage = chartEl ? this.chartPreview(chartEl.getAttributeNS(RNS, "id"), inline ?? anchor) : undefined;
+    const chartXml = chartEl ? this.chartPart(chartEl.getAttributeNS(RNS, "id")) : undefined;
+    const chartImage = chartXml ? this.chartPreview(chartXml, inline ?? anchor) : undefined;
     const image = blip ? this.r.image(this.part, this.rels, blip.getAttributeNS(RNS, "embed")) : chartImage;
     // Bildformat settings and Alternativtext; the XML is only rewritten when they change.
     const picEl = c.getElementsByTagNameNS("http://schemas.openxmlformats.org/drawingml/2006/picture", "pic")[0];
@@ -751,7 +752,7 @@ class PartReader {
     }
     if (inline || !anchor) {
       const size = inline ? ext(inline) : { width: 0, height: 0 };
-      b.addObject({ kind: "image", data, display: "", width: size.width, height: size.height, image, pic, alt }, props);
+      b.addObject({ kind: "image", data, display: "", width: size.width, height: size.height, image, pic, alt, ...(chartXml && chartImage ? { chart: { xml: chartXml } } : {}) }, props);
       return;
     }
     const size = ext(anchor);

@@ -319,7 +319,7 @@ async fn print_to_pdf_windows(window: WebviewWindow, path: String, width: f64, h
 /// The commands of this crate (for the app's combined handler).
 pub const COMMANDS: &[&str] = &[
     "read_file", "write_file", "file_info", "list_dir", "documents_dir", "open_external", "save_recovery", "list_recovery",
-    "read_recovery", "delete_recovery", "startup_files", "print_to_pdf", "list_fonts", "font_metrics", "font_chars",
+    "read_recovery", "delete_recovery", "startup_files", "print_to_pdf", "list_fonts", "font_metrics", "font_chars", "cloud_fonts", "cloud_font",
     "clipboard_read_html", "clipboard_write_html", "clipboard_read_image",
 ];
 
@@ -330,7 +330,7 @@ pub fn handles(command: &str) -> bool {
 pub fn handler() -> impl Fn(Invoke<Wry>) -> bool + Send + Sync + 'static {
     tauri::generate_handler![
         read_file, write_file, file_info, list_dir, documents_dir, open_external, save_recovery, list_recovery, read_recovery, delete_recovery,
-        startup_files, print_to_pdf, fonts::list_fonts, fonts::font_metrics, fonts::font_chars,
+        startup_files, print_to_pdf, fonts::list_fonts, fonts::font_metrics, fonts::font_chars, fonts::cloud_fonts, fonts::cloud_font,
         clipboard::clipboard_read_html, clipboard::clipboard_write_html, clipboard::clipboard_read_image
     ]
 }

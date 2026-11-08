@@ -9,7 +9,7 @@
 // Bestimmtheitsmaß). Every change is one undo step (History.charts).
 
 import {
-  QUICK_LAYOUTS, isBar, isPie, newChart, parseRef, refText, renderChart, seriesFromBlock, seriesName, sourceOf, titleText,
+  QUICK_LAYOUTS, isBar, isPie, newChart, parseRef, refText, refreshCaches, renderChart, seriesFromBlock, seriesName, sourceOf, titleText,
   type CellAnchor, type CellValue, type ChartKind as Kind, type ChartModel, type LegendPos,
 } from "@raabe/charts";
 import { CellError, formatValue, type Rect, type Sheet, type Workbook } from "@raabe/sheet-engine";
@@ -128,42 +128,29 @@ export function chartsFeature(app: CalcApp) {
 
   /** Re-reads names, categories and values from the workbook (Excel's caches). */
   function readCaches(wb: Workbook, m: ChartModel): void {
-    const read = (ref: string | undefined) => {
+    const read = (ref0: string | undefined) => {
+      // Excel 2016's chart types refer to hidden names (_xlchart.v1.0 …) that hold the range.
+      const ref = ref0 && !parseRef(ref0) ? wb.names.find((n) => n.name === ref0)?.ref ?? ref0 : ref0;
       const r = ref ? parseRef(ref) : null;
       const sheet = r ? wb.sheetByName(r.sheet) : undefined;
       if (!r || !sheet) return null;
       const vals: CellValue[] = [];
-      let format: string | undefined;
+      let format: string | undefined, cols = 0;
       for (let row = r.r0; row <= r.r1; row++) {
         // Data in hidden rows and columns (also those a filter hides) is left out, as Excel does by default.
         if (sheet.rows.get(row)?.hidden && r.r1 > r.r0) continue;
+        cols = 0;
         for (let col = r.c0; col <= r.c1; col++) {
           if (sheet.cols.get(col)?.hidden && r.c1 > r.c0) continue;
           const cell = sheet.get(row, col);
           if (format === undefined && cell) format = wb.styles.get(cell.s).numFmt;
           vals.push(cellValue(cell?.v ?? null));
+          cols++;
         }
       }
-      return { vals, format };
+      return { vals, format, cols: Math.max(1, cols) };
     };
-    for (const s of m.series) {
-      if (s.name?.ref) {
-        const n = read(s.name.ref);
-        if (n) s.name.text = n.vals[0] === null || n.vals[0] === undefined ? "" : typeof n.vals[0] === "number" ? formatValue(n.vals[0], n.format ?? "General").text : String(n.vals[0]);
-      }
-      if (s.cat?.ref) {
-        const c = read(s.cat.ref);
-        if (c) {
-          s.cat.cache = c.vals.map((v) => (typeof v === "boolean" ? (v ? "WAHR" : "FALSCH") : v));
-          s.cat.format = c.format;
-        }
-      }
-      const v = read(s.val.ref);
-      if (v) {
-        s.val.cache = v.vals.map((x) => (typeof x === "number" ? x : null));
-        s.val.format = v.format;
-      }
-    }
+    refreshCaches(m, read, (v, fmt) => (typeof v === "number" ? formatValue(v, fmt ?? "General").text : String(v)));
   }
 
   function getAxes(): { rows: Axis; cols: Axis } {
@@ -625,7 +612,7 @@ export function chartsFeature(app: CalcApp) {
 
   // ----- inserting ----------------------------------------------------------------------------------------
 
-  function insert(kind: ChartKind): void {
+  function insert(kind: ChartKind, tweak?: (m: ChartModel) => void): void {
     if (app.grid.isEditing) app.grid.commitEdit("none");
     ensureLayer();
     const sheet = app.sheet;
@@ -639,6 +626,7 @@ export function chartsFeature(app: CalcApp) {
     const x = vis.x + Math.max(0, (vis.w - NEW_W) / 2), y = vis.y + Math.max(0, (vis.h - NEW_H) / 2);
     const m = newChart(kind, series, anchorAt(x, y), anchorAt(x + NEW_W, y + NEW_H));
     m.name = `Diagramm ${nextNumber(app.wb)}`;
+    tweak?.(m);
     readCaches(app.wb, m);
     app.change("Diagramm einfügen", () => {
       app.history.charts(sheet);
@@ -802,7 +790,17 @@ export function chartsFeature(app: CalcApp) {
     /** Diagrammentwurf > Diagrammelement hinzufügen: the elements list of the selected chart. */
     elements: (): void => { if (selected) openFlyout(selected); },
     /** Diagrammentwurf > Diagrammtyp ändern. */
-    changeKind: (kind: ChartKind): void => { if (selected) edit(selected, (m) => { m.kind = kind; }); },
+    changeKind: (kind: ChartKind): void => { if (selected) edit(selected, (m) => { m.kind = kind; for (const x of m.series) { delete x.kind; delete x.secondary; } }); },
+    /** Diagrammtyp ändern (dialog): any change of the selected chart as one undo step. */
+    changeSelected: (fn: (m: ChartModel) => void): void => { if (selected) edit(selected, fn); },
+    /** The series a chart of `kind` would get from the selection (the dialog's preview). */
+    previewSeries: (kind: ChartKind): ChartModel["series"] => {
+      const rect = sourceRect(), sheet = app.sheet;
+      const series = rect ? seriesFromBlock({ sheet: sheet.name, ...rect, get: (r, c) => cellValue(sheet.value(r, c)) }, kind) : [];
+      const m = newChart(kind, series, { col: 0, row: 0, x: 0, y: 0 }, { col: 1, row: 1, x: 0, y: 0 });
+      readCaches(app.wb, m);
+      return m.series;
+    },
     switchRowCol,
     quickLayout,
     /** Diagrammentwurf > Farben ändern: a colour scheme (Excel's 10-26; series with their own colour keep it). */

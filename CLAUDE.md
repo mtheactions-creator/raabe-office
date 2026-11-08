@@ -92,6 +92,9 @@ Display: 4K at 150 % scaling, currently 30 Hz.
   close only the workbooks you created. Excel keeps many application options for the user
   (e.g. where Enter moves the selection, the reduced ribbon): a probe that changes one puts it
   back before quitting.
+- Never change Office's user name (`UserName`) in a probe: it is one registry value shared by all Office
+  apps and every probe, and two probes doing it at once left the owner's name changed. Anonymize the saved
+  files instead (`anonymize_office.py`).
 - PowerPoint runs as one process per user (D-070), so its probes follow stricter rules:
   - Before every PowerPoint probe, check whether POWERPNT.EXE is running. If it is, it belongs to
     the owner: do not attach, read or close it; skip the PowerPoint work, note it, check again later.

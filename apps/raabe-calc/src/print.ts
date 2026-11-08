@@ -5,6 +5,8 @@
 
 import { MAX_COLS, cellName, colName, parseRange, type PageSetup, type Rect, type Sheet } from "@raabe/sheet-engine";
 import { h, icon, showDialog, type MenuEntry } from "@raabe/shell";
+import { pictureElement, type PictureFormat } from "@raabe/text-engine";
+import { pictureBakedKey } from "@raabe/ooxml";
 import type { CalcApp } from "./app";
 import { shown } from "./engine";
 import { DEFAULT_COL_CHARS, charsToPx96, ptToPx96 } from "./grid/metrics";
@@ -211,6 +213,7 @@ export function printFeature(app: CalcApp) {
     const el = h("div", { class: "print-page", style: `position:relative;width:${sz.w}in;height:${sz.h}in;padding:${m.top + PRINT_OFFSET}in ${m.right}in ${m.bottom}in ${m.left + PRINT_OFFSET}in` }, table);
     // Pictures whose top-left cell is on this page, at their place among the printed rows and columns.
     for (const pic of sheet.pictures ?? []) {
+      if (pic.hidden) continue;
       const ci = cols.indexOf(pic.from.col), ri = rows.indexOf(pic.from.row);
       if (ci < 0 || ri < 0) continue;
       const rowH = (r: number) => (sheet.rows.get(r)?.hidden ? 0 : ptToPx96(sheet.rows.get(r)?.height ?? sheet.defaultRowHeight));
@@ -223,7 +226,17 @@ export function printFeature(app: CalcApp) {
         for (let c = pic.from.col; c < pic.to.col; c++) w += colPx96(sheet, c);
         for (let r = pic.from.row; r < pic.to.row; r++) hgt += rowH(r);
       }
-      el.append(h("img", { src: pic.src, style: `position:absolute;left:calc(${m.left + PRINT_OFFSET}in + ${x * scale}px);top:calc(${m.top + PRINT_OFFSET}in + ${y * scale}px);width:${w * scale}px;height:${hgt * scale}px` }));
+      // With its Bildformat (D-087), drawn at 100 % and scaled as on the screen.
+      let bx = x, by = y, bw = w, bh = hgt;
+      if (pic.group) { bx += pic.group.x * w; by += pic.group.y * hgt; bw = pic.group.w * w; bh = pic.group.h * hgt; }
+      const f = (pic.format ?? {}) as PictureFormat;
+      const holder = h("div", { style: `position:absolute;left:calc(${m.left + PRINT_OFFSET}in + ${bx * scale}px);top:calc(${m.top + PRINT_OFFSET}in + ${by * scale}px);width:${bw * scale}px;height:${bh * scale}px;${f.rotation ? `transform:rotate(${f.rotation}deg);` : ""}` });
+      const look = h("div", { style: `position:absolute;left:0;top:0;transform:scale(${scale});transform-origin:0 0` });
+      const baked = pic.baked !== undefined && pictureBakedKey(f) === pic.baked;
+      look.append(pictureElement(baked ? pic.bakedSrc ?? pic.src : pic.src, Math.max(1, bw), Math.max(1, bh),
+        { ...f, rotation: undefined, ...(baked ? { brightness: undefined, contrast: undefined, saturation: undefined, temperature: undefined, sharpen: undefined } : {}) }));
+      holder.append(look);
+      el.append(holder);
     }
     // Kopf- und Fußzeile at Excel's header and footer distances, between the side margins (the
     // footer's text sits 1,5 pt higher in Excel's PDF than the box's bottom).
