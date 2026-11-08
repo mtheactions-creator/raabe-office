@@ -3174,10 +3174,13 @@ app, and pinned by apps/raabe-calc/test/audit.test.ts or a compare case:
   when there is nothing to delete.
 - **Bedingte Formatierung, formulas:** rule formulas were evaluated for every cell as written for the top-left one
   (=$B2>10 on A2:D9 tested row 2 everywhere); now relative references follow the cell as in Excel.
-Left as they are, with the reason: inserting a PivotTable and Daten > Aus Tabelle/Bereich are two undo steps (a new
-sheet, then the table; Excel's own behaviour there was not recorded tonight); the Zeichnen tab's pens have no
-accessible names; Zellen formatieren still lacks Excel's border colours and diagonals, pattern fills, the
-orientation dial and the font list.
+- **PivotTable** on a new sheet: the sheet and the table were two undo steps; now one. The ribbon's tile galleries
+  (the Zeichnen tab's pens) had no accessible names; they carry their tooltip's title now (shell).
+- AutoSumme on a range selects the results with it (B2:G5 becomes B2:G6), as Excel (checked through COM).
+Left as they are, with the reason: Daten > Aus Tabelle/Bereich is two undo steps (the table, then the loaded copy;
+Excel's Power Query loads were not recorded tonight); Zellen formatieren still lacks Excel's border colours and
+diagonals, pattern fills, the orientation dial and the font list; sorting a range whose own sum row is sorted with
+it gives #BEZUG! where Excel keeps a shortened reference (an edge case, found by the comparison).
 
 ## D-143 RaabeCalc: Bedingte Formatierung with Excel's rule dialogs (2026-11-09)
 
