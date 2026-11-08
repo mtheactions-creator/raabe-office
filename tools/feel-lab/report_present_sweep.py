@@ -36,7 +36,8 @@ def names_defined(defined: list) -> set[str]:
 def commands() -> list[dict]:
     """RaabePresent's command list, read from the dev page (npm run dev:present on port 5186, as the sweep's --dev)."""
     from sweep_present import start
-    page = start(True, "http://localhost:5186/", 9509)
+    import random
+    page = start(True, "http://localhost:5186/", random.randint(9520, 9590))
     try:
         return page.js("window.__present.app.commands.all().map((c) => ({ id: c.id, label: c.label, shortcut: c.shortcut || null, hidden: !!c.hidden, built: !!c.run, deferred: !!c.deferred }))")
     finally:

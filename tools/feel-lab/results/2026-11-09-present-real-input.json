@@ -1,0 +1,95 @@
+{
+ "date": "2026-11-08",
+ "passed": 9,
+ "total": 10,
+ "cases": [
+  {
+   "name": "Schriftfarbe-Palette > Rot",
+   "ok": true,
+   "got": "FF0000 in the run",
+   "errs": []
+  },
+  {
+   "name": "Schriftgrad-Liste > 24",
+   "ok": true,
+   "got": "sz=2400",
+   "errs": []
+  },
+  {
+   "name": "Schriftart getippt: Arial",
+   "ok": true,
+   "got": "Arial",
+   "errs": []
+  },
+  {
+   "name": "Formenhöhe: Pfeil nach oben x3",
+   "ok": true,
+   "got": "2032000 -> 2140000 EMU",
+   "errs": []
+  },
+  {
+   "name": "Formatbereich: Transparenz-Schieberegler gezogen",
+   "ok": true,
+   "got": "alpha written",
+   "errs": []
+  },
+  {
+   "name": "Formatbereich: Strichtyp aus der Liste",
+   "ok": true,
+   "got": "prstDash written",
+   "errs": []
+  },
+  {
+   "name": "Absatz-Dialog: Tab bleibt im Dialog",
+   "ok": true,
+   "got": [
+    "in:SELECT:LinksZentriertRechts",
+    "in:INPUT:",
+    "in:SELECT:(ohne)Erste ZeileHän",
+    "in:INPUT:",
+    "in:INPUT:",
+    "in:INPUT:",
+    "in:SELECT:Einfach1,5 ZeilenDop",
+    "in:INPUT:",
+    "in:BUTTON:Tabstopps...",
+    "in:BUTTON:OK",
+    "in:BUTTON:Abbrechen",
+    "in:BUTTON:Schließen",
+    "in:BUTTON:Einzüge und Abstände",
+    "in:SELECT:LinksZentriertRechts"
+   ],
+   "errs": []
+  },
+  {
+   "name": "Formen > Ellipse gezogen",
+   "ok": true,
+   "got": [
+    [
+     "sp",
+     2533650,
+     1905000
+    ]
+   ],
+   "errs": []
+  },
+  {
+   "name": "Übergänge-Katalog > Verblassen",
+   "ok": true,
+   "got": "fade",
+   "errs": []
+  },
+  {
+   "name": "F5, Klick weiter, Esc",
+   "ok": false,
+   "got": {
+    "in": true,
+    "s1": 1,
+    "fg_click": true,
+    "s2": 2,
+    "fg_esc": true,
+    "out": false
+   },
+   "errs": []
+  }
+ ]
+}
