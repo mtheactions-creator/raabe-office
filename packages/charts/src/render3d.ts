@@ -525,7 +525,8 @@ export function drawSurface(c: Ctx, area: Area): Pick<Scene, "plot" | "valueScal
   const serW = Math.max(0, ...serLabels.map((t) => c.measure(t, LOOK.labelSize)));
   const vLabels = ticks(scale).map((t) => c.fmt(t, m.series[0]?.val.format));
   const leftW = info.d3 ? Math.max(0, ...vLabels.map((t) => c.measure(t, LOOK.labelSize))) : 0;
-  const left = area.left + PAD + leftW + (info.d3 ? LABEL_GAP : 0), right = area.right - 10.5 - serW - 6, bottom = area.bottom - 22.6;
+  // 3-D surfaces stand further in than the plot's labels (measured against Excel's picture, D-125).
+  const left = area.left + PAD + leftW + (info.d3 ? LABEL_GAP + 25 : 0), right = area.right - 10.5 - serW - 6 - (info.d3 ? 20 : 0), bottom = area.bottom - 22.6;
   let plot: Box = { x: left, y: area.top, w: Math.max(10, right - left), h: Math.max(10, bottom - area.top) };
   const sub = 6;
   // Bilinear value inside cell (i, j) at (u, w) in 0-1.
@@ -562,8 +563,8 @@ export function drawSurface(c: Ctx, area: Area): Pick<Scene, "plot" | "valueScal
     serLabels.forEach((t, j) => c.prims.push({ t: "text", x: plot.x + plot.w + 6, y: Y(j) + 3.2, text: t, size: LOOK.labelSize, fill: LOOK.text, anchor: "start", part: "axis:ser" }));
     return { plot, valueScale: scale };
   }
-  // Depth as Excel draws a surface of this fixture (about 0.55 of the width for as many rows as columns; D-125).
-  const hy = 0.55, dz = 0.55 * Math.min(2, nz / nx);
+  // Depth as Excel draws a surface of this fixture (0.8 of the width for as many rows as columns scored best; D-125).
+  const hy = 0.55, dz = 0.8 * Math.min(2, nz / nx);
   const pr = projection(m, plot, hy, dz);
   const span = scale.max - scale.min || 1;
   const yv = (t: number) => ((t - scale.min) / span) * hy;
