@@ -2255,3 +2255,45 @@ Package 5 of Step 8b (D-073).
 - **Not yet:** UserForms, class modules' own objects (New), events (PowerPoint has few), Debug in the editor
   (breakpoints, single steps: Schrittweise is greyed), RaabeCalc's Excel object model (the interpreter is ready for
   it), and recognising handwriting on the iPad.
+
+## D-080 After Step 8b: the open items, macro tests, a drag test and a look corpus (2026-11-08)
+
+Agreed with the owner, who leaves the PC (mouse and keyboard) to the run until the whole plan is done.
+- **What "like Office" means first:** documents made in Office look the same when opened in RaabeX, and the
+  operation and menus are built the same way. For the drag test the first rule is: no sudden, unwanted jumps.
+- **A. Open items.** RaabeCalc (this checkout): structured references, calculated columns and growing tables;
+  LET, LAMBDA, MAP, REDUCE, SCAN, NACHSPALTE, NACHZEILE, MATRIXERSTELLEN, INFO, ZELLE, BLATT, BLÄTTER, HYPERLINK;
+  Seitenlayout > Designs, Sparklines, Bildformat, Zeichnen; chart styles and more chart types; Szenario-Manager,
+  Konsolidieren, Datenschnitt; then Step 7b (Diagramm in RaabeWrite); then macros in RaabeCalc (Excel's object
+  model on @raabe/vba). RaabePresent (its own session and branch): the GIF timing, the catalogue's remaining
+  differences, the inventory gaps, SmartArt's Schnellformatvorlagen and Von rechts nach links, placeholder
+  prompts and cell bevels checked against PowerPoint; the shared interpreter's UserForms and file access. The
+  Freihandgleichung for RaabeWrite is left out for now (owner).
+- **Power Query and Power Pivot (decided on the owner's behalf):** Daten abrufen und transformieren is in the
+  ribbon as in Excel; Aus Text/CSV, Aus Arbeitsmappe and Aus Tabelle/Bereich import without the Power Query
+  editor; files with queries or a data model open, look the same and keep those parts. The full editor and
+  Power Pivot (M and DAX engines) are a later step if there is a need: schools hardly use them.
+- **Macros reach outside the app only after asking:** opening and saving files (e.g. every sheet as PDF) asks
+  the user first; Shell, network, registry and Declare stay blocked. UserForms are built.
+- **B. Macro tests:** our own versions of popular Office macros (the forum versions are not ours to copy),
+  school macros (Notenrechner, random pupil, groups, vocabulary trainer, quiz with score) and openly licensed
+  VBA as a stress test; each runs in Excel or PowerPoint (our own instance; the .xlsm/.pptm is written by our
+  VBA writer, so no Office security setting is changed) and in RaabeX, and the results are compared.
+- **C. Drag test** in all three apps with real input: every anchor (handles, borders, rulers, fill handle,
+  selection frames, splitters, thumbnails, paths), many pointer paths (slow, fast, around the drag threshold,
+  back and forth, out of the window and back, over snap points, modifiers pressed mid-drag, zoom levels).
+  Checked automatically: the object follows the pointer without a jump, no step is larger than the pointer's
+  (snapping only within its distance), never against the motion, no jump on release, Esc and undo restore
+  exactly. Outliers are fixed in the same run and measured again.
+- **D. Look corpus:** school-like documents (worksheets, tests with equations, mark lists with charts,
+  timetables, talks) built by Word, Excel and PowerPoint through our own scripts, opened in RaabeX and
+  compared with Office's PDF/PNG export; differences fixed.
+- **History to be cleaned (decided on the owner's behalf):** the inventory results file of commit 36c7d49
+  holds the owner's recent file names and Office's descriptions. That one file in that one commit is replaced
+  by its sanitized version (`git filter-branch --index-filter`, all trees afterwards identical) and pushed with
+  force. The rewrite was done and checked on 2026-11-08, but the session's safety check refused the force
+  push, so it waits for the owner's permission; it is repeated at the end of the run. GitHub may serve the
+  old commit by its id for a while; only GitHub's support can purge it.
+- **Two sessions:** real input only under the lock file; decisions D-080 to D-099 in this checkout, D-100
+  upward in the RaabePresent session; the shared interpreter (packages/vba) belongs to the RaabePresent
+  session, RaabeCalc adds its object model beside it.
