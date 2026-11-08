@@ -313,7 +313,7 @@ export function draw3D(c: Ctx, area: Area): Pick<Scene, "plot" | "valueScale"> {
   let vLabels: string[] = [];
   for (let pass = 0; pass < 2; pass++) {
     const len = bar ? plot.w : plot.h;
-    scale = percent ? fixedScale(0, 1, { ...(va ?? {}), min: va?.min ?? 0, max: va?.max ?? 1 }, maxIntervals(len, bar)) : tightScale(lo, hi, va, maxIntervals(len * (depthRows ? 0.6 : 1), bar));
+    scale = percent ? fixedScale(0, 1, { ...(va ?? {}), min: va?.min ?? 0, max: va?.max ?? 1 }, maxIntervals(len, bar)) : tightScale(lo, hi, va, maxIntervals(len * (depthRows ? 0.6 : 0.5), bar));
     vLabels = ticks(scale).map((t) => c.fmt(t, va?.numFmt ?? valFormat));
     const leftW = Math.max(0, ...(bar ? catLabels : vLabels).map((t) => c.measure(t, LOOK.labelSize)));
     const serW = Math.max(0, ...serLabels.map((t) => c.measure(t, LOOK.labelSize)));

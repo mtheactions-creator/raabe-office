@@ -3159,8 +3159,8 @@ Three open items of the Step 10 report, each recorded in our own invisible Excel
     front, as in Excel's picture; the rim lit from the left.
   - Mean grey difference to Excel's picture, 0-255 (`compare_calc_charttypes.py dev`, the engine through headless Edge;
     before -> after): 3D-Säulen 18.4 -> 4.4, gruppiert 17.9 -> 4.7, gestapelt 18.7 -> 5.0, 100 % 23.4 -> 5.2; 3D-Balken
-    gruppiert 11.3 -> 3.3, gestapelt 11.3 -> 3.6, 100 % 14.5 -> 4.5; 3D-Linie 11.3 -> 4.6; 3D-Fläche 21.5 -> 7.9,
-    gestapelt 19.9 -> 8.8, 100 % 20.2 -> 8.8; 3D-Oberfläche 19.3 -> 7.8, Drahtmodell 6.4 -> 5.1; 3D-Kreis 9.2 -> 7.9.
+    gruppiert 11.3 -> 3.3, gestapelt 11.3 -> 3.6, 100 % 14.5 -> 4.5; 3D-Linie 11.3 -> 4.6; 3D-Fläche 21.5 -> 7.2,
+    gestapelt 19.9 -> 6.9, 100 % 20.2 -> 7.9 (stacked areas take fewer value intervals, as Excel); 3D-Oberfläche 19.3 -> 7.8, Drahtmodell 6.4 -> 5.1; 3D-Kreis 9.2 -> 7.9.
     `render3d-geometry.test.ts` holds the recorded proportions (square columns, pitch, rows, bar thickness within 5-8 %).
   - Not matched: Excel's exact camera for every chart (the line and area charts' boxes stand at different margins;
     measured offsets), its smooth gradient light on surfaces and pie rims, Abstand in der Tiefe other than 150 % (not in
@@ -3194,4 +3194,4 @@ element's name and settings (e.g. `artisticPencilSketch`), and `imgEffectsXml` w
 Office lists it. The effect is still not drawn by us (Office works it into the stored picture; D-087), so a new picture
 shows plainly in RaabeCalc while Excel lists the effect. Shared with RaabeWrite (same reader and writer; it keeps the
 effect too). Measured: `xlsx-picture-format.test.ts` reads the recorded effect and finds it in a new picture's XML;
-`check_calc_pictures.py` (the release exe against Excel, it uses the clipboard and the foreground window) was not run again this night; the unit test checks the XML.
+`check_calc_pictures.py` (the release exe against Excel, run under the real-input lock: it uses the clipboard): RaabeCalc -> Excel readback 29/30 -> 30/30, Excel -> RaabeCalc 31/31 as before.

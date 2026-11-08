@@ -60,9 +60,9 @@
  },
  "dev": {
   "area": 2.32,
-  "area3D": 7.9,
-  "area3DStacked": 8.81,
-  "area3DStacked100": 8.83,
+  "area3D": 7.16,
+  "area3DStacked": 6.93,
+  "area3DStacked100": 7.87,
   "areaStacked": 2.48,
   "areaStacked100": 2.79,
   "bar": 2.88,
