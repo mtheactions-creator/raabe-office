@@ -149,7 +149,7 @@ class Cdp:
         elif kind == "ribbon":
             self.side.js("document.querySelector('.ribbon [role=tab][data-keytip=R]')?.click()")
             time.sleep(0.2)
-            sel = {"font.fill": "[...document.querySelectorAll('.ribbon .rsplit button')].find(b => (b.dataset.tip || b.getAttribute('aria-label') || '').startsWith('Füllfarbe'))"}[st[1]]
+            sel = {"font.fill": "[...document.querySelectorAll('.ribbon button.color-main')].find(b => (b.getAttribute('aria-label') || '').startsWith('Füllfarbe'))"}[st[1]]
             self.click_el(sel, 0.3, 0.5)
         elif kind == "wait":
             time.sleep(st[1])
