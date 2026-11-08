@@ -1,12 +1,12 @@
 {
  "summary": {
   "cases": 14,
-  "passed": 12
+  "passed": 14
  },
  "results": [
   {
    "name": "Schriftart: Liste öffnen, Arial wählen",
-   "pass": false,
+   "pass": true,
    "errors": []
   },
   {
@@ -66,8 +66,7 @@
   },
   {
    "name": "Sortieren: Spalte markiert, Sortierwarnung, Enter erweitert",
-   "pass": false,
-   "error": "[...document.querySelectorAll('.menu button, .menu [role=menuitem], .combo-list button, .tile-panel button')].filter(b => b.offsetParent).find(b => (b.getAttribute('aria-label') || b.textContent).trim",
+   "pass": true,
    "errors": []
   },
   {
