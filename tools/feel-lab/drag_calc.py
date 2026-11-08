@@ -40,9 +40,11 @@ def js(body: str) -> str:
 # D-127: the view's scroll position (auto-scroll), the zoom, and scrolling a start point into the window.
 SCROLL = "(__calc.grid.hscroll.scrollLeft + __calc.grid.vScrollEl.scrollTop)"
 ZOOM = lambda z: f"__calc.app.setZoom({z})"
-# The cell under the start point scrolled into view with some room around it (the scroll bars reach only the used range).
-REVEAL = ("(() => { const g = __calc.grid, c = g.canvas.getBoundingClientRect(), hit = g.hitCell({x} - c.left, {y} - c.top);"
-          " g.reveal(hit.row + 3, hit.col + 2); g.updateScrollbars(); g.invalidate(); __calc.app.grid.contentChanged(); })()")
+# The cell under the start point scrolled to the middle of the window (the scroll bars reach only the used range).
+REVEAL = ("(() => { const g = __calc.grid, v = __calc.app.sheet.view, z = v.zoom / 100, c = g.canvas.getBoundingClientRect();"
+          " const hit = g.hitCell({x} - c.left, {y} - c.top);"
+          " v.top = Math.max(0, hit.row - Math.floor(c.height / 2 / (20 * z))); v.left = Math.max(0, hit.col - Math.floor(c.width / 2 / (64 * z)));"
+          " g.updateScrollbars(); g.invalidate(); __calc.app.grid.contentChanged(); })()")
 WINDOW = (0, 0, 2000, 1700)  # room below and right of the window for the out-of-window paths
 
 
