@@ -1,0 +1,161 @@
+{
+ "counts": {
+  "keytips": "10/10",
+  "formulabar": "6/10"
+ },
+ "report": {
+  "keytips": [
+   {
+    "check": "Alt, F, M opens Makros' menu with K, R, V",
+    "ok": true,
+    "detail": [
+     [
+      "Makros anzeigen",
+      "K"
+     ],
+     [
+      "Makro aufzeichnen...",
+      "R"
+     ],
+     [
+      "Relative Verweise verwenden",
+      "V"
+     ]
+    ]
+   },
+   {
+    "check": "the menu shows its keytips",
+    "ok": true,
+    "detail": [
+     "K",
+     "R",
+     "V"
+    ]
+   },
+   {
+    "check": "K: Makros anzeigen (the Makro dialog)",
+    "ok": true,
+    "detail": null
+   },
+   {
+    "check": "V: Relative Verweise verwenden on",
+    "ok": true,
+    "detail": null
+   },
+   {
+    "check": "the menu shows Relative Verweise verwenden checked",
+    "ok": true,
+    "detail": null
+   },
+   {
+    "check": "V again: off",
+    "ok": true,
+    "detail": null
+   },
+   {
+    "check": "R: Makro aufzeichnen starts a recording",
+    "ok": true,
+    "detail": null
+   },
+   {
+    "check": "the status bar says it is recording",
+    "ok": true,
+    "detail": null
+   },
+   {
+    "check": "while recording: Aufzeichnung beenden with A",
+    "ok": true,
+    "detail": [
+     [
+      "Makros anzeigen",
+      "K"
+     ],
+     [
+      "Aufzeichnung beenden",
+      "A"
+     ],
+     [
+      "Relative Verweise verwenden",
+      "V"
+     ]
+    ]
+   },
+   {
+    "check": "A ends the recording",
+    "ok": true,
+    "detail": null
+   }
+  ],
+  "formulabar": [
+   {
+    "check": "Namenfeld starts as wide as Excel's",
+    "ok": false,
+    "detail": [
+     112,
+     100.0
+    ]
+   },
+   {
+    "check": "the handle has the left-right pointer",
+    "ok": true,
+    "detail": null
+   },
+   {
+    "check": "dragged far left: Excel's smallest Namenfeld",
+    "ok": false,
+    "detail": [
+     40,
+     100.0
+    ]
+   },
+   {
+    "check": "dragged 160 px right: 160 px wider",
+    "ok": true,
+    "detail": [
+     40,
+     200
+    ]
+   },
+   {
+    "check": "dragged far right: the room Excel leaves the buttons and the bar",
+    "ok": false,
+    "detail": [
+     1318,
+     560,
+     166.66666666666666
+    ]
+   },
+   {
+    "check": "the chevron expands to Excel's height",
+    "ok": true,
+    "detail": [
+     3,
+     3
+    ]
+   },
+   {
+    "check": "the chevron again collapses",
+    "ok": true,
+    "detail": 1
+   },
+   {
+    "check": "Strg+Umschalt+U as in German Excel",
+    "ok": false,
+    "detail": [
+     1,
+     {}
+    ]
+   },
+   {
+    "check": "the lower edge dragged four lines down: four lines more",
+    "ok": true,
+    "detail": 7
+   },
+   {
+    "check": "dragged up: back to one line",
+    "ok": true,
+    "detail": 1
+   }
+  ]
+ }
+}

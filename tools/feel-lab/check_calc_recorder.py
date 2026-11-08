@@ -81,6 +81,7 @@ def compare_state(ex: dict, ca: dict) -> list[str]:
 
 
 def record_by_hand(c: CalcSide, inp: Cdp, case: dict) -> dict:
+    c.js("__calc.app.newDoc()")
     c.js(f"__calc.reset({json.dumps(case['setup'])}, {json.dumps(case['start'])}, 1)")
     time.sleep(0.2)
     c.js("__calc.grid.focus()")
@@ -119,6 +120,7 @@ def record_by_hand(c: CalcSide, inp: Cdp, case: dict) -> dict:
 
 
 def run_in_calc(c: CalcSide, case: dict, code: str) -> dict:
+    c.js("__calc.app.newDoc()")
     c.js(f"__calc.reset({json.dumps(case['setup'])}, {json.dumps(case['start'])}, 1)")
     c.js(f"__calc.setMacros({json.dumps(code)})")
     run = c.js(f"__calc.runMacro('Makro_{case['name']}', [])")
@@ -132,6 +134,7 @@ def shortcut_runs(c: CalcSide, inp: Cdp, case: dict, code: str) -> bool | None:
     if not case.get("shortcut"):
         return None
     want = run_in_calc(c, case, code)
+    c.js("__calc.app.newDoc()")
     c.js(f"__calc.reset({json.dumps(case['setup'])}, {json.dumps(case['start'])}, 1)")
     c.js(f"__calc.setMacros({json.dumps(code)})")
     c.js("__calc.grid.focus()")
@@ -142,6 +145,7 @@ def shortcut_runs(c: CalcSide, inp: Cdp, case: dict, code: str) -> bool | None:
 
 
 def save_for_excel(c: CalcSide, case: dict, code: str, path: Path) -> None:
+    c.js("__calc.app.newDoc()")
     c.js(f"__calc.reset({json.dumps(case['setup'])}, {json.dumps(case['start'])}, 1)")
     c.js(f"__calc.setMacros({json.dumps(code)})")
     if path.exists():
@@ -159,10 +163,37 @@ def run_in_excel(x: ExcelTarget, case: dict, path: Path) -> dict:
         ws.Activate()
         ws.Range(case["start"]).Select()
         err = None
+        # A runtime error shows VBA's box even in the hidden Excel: its message is read and Beenden pressed.
+        import threading
+        from feellab import uia
+        caught: list[str] = []
+        stop = threading.Event()
+
+        def watch() -> None:
+            import comtypes
+            comtypes.CoInitialize()
+            while not stop.wait(1.0):
+                for h in winapi.find_windows(lambda h: winapi.window_pid(h) == x.pid and winapi.window_title(h) == "Microsoft Visual Basic"):
+                    try:
+                        root = uia.element_for(h)
+                        f = root.FindAll(uia.U.TreeScope_Descendants, uia._uia.CreateTrueCondition())
+                        els = [f.GetElement(i) for i in range(f.Length)]
+                        caught.append(" ".join(uia.describe(e)["name"] for e in els if "fehler" in uia.describe(e)["name"].lower())[:200])
+                        end = next((e for e in els if uia.describe(e)["name"] == "Beenden"), None)
+                        if end is not None:
+                            uia.invoke(end)
+                    except Exception:  # noqa: BLE001
+                        pass
+        th = threading.Thread(target=watch, daemon=True)
+        th.start()
         try:
             run_us(app, f"'{wb.Name}'!Makro_{case['name']}")
         except Exception as e:  # noqa: BLE001
             err = str(e)[:200]
+        finally:
+            stop.set()
+        if caught:
+            err = caught[0]
         ws = app.ActiveSheet
         cells, extra = {}, {}
         for cell in ws.UsedRange.Cells:

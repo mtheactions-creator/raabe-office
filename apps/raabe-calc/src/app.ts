@@ -839,8 +839,18 @@ export class CalcApp {
         this.change("Verschieben", () => { dst = A.moveInsert(this.ctx, this.sheet, source, at, rows); });
         return dst;
       },
-      resizeCols: (cols, px, before) => { if (this.protection.enabled("cells.colWidth")) this.setColWidths(cols, px, before); },
-      resizeRows: (rows, px, before) => { if (this.protection.enabled("cells.rowHeight")) this.setRowHeights(rows, px, before); },
+      resizeCols: (cols, px, before) => {
+        if (!this.protection.enabled("cells.colWidth")) return;
+        this.setColWidths(cols, px, before);
+        const w = this.sheet.cols.get(cols[0])?.width;
+        if (w !== undefined) this.recorder.columnWidth(cols, shownChars(w));
+      },
+      resizeRows: (rows, px, before) => {
+        if (!this.protection.enabled("cells.rowHeight")) return;
+        this.setRowHeights(rows, px, before);
+        const ht = this.sheet.rows.get(rows[0])?.height;
+        if (ht !== undefined) this.recorder.rowHeight(rows, ht);
+      },
       autofitCols: (cols) => { if (this.protection.enabled("cells.autofitCols")) { this.recorder.autofitColumns(cols); this.autofitCols(cols); } },
       autofitRows: (rows) => !this.protection.enabled("cells.autofitRows") ? undefined : this.change("Zeilenhöhe", () => this.autoRowHeights({ r0: Math.min(...rows), c0: 0, r1: Math.max(...rows), c1: MAX_COLS - 1 }, true)),
       selectionChanged: () => {
@@ -1774,13 +1784,17 @@ export class CalcApp {
   /** A command run while a macro is recorded: the selection it works on first, then Excel's lines for it. */
   private recorded(id: string, fn: () => void | Promise<void>): void | Promise<void> {
     const rec = this.recorder;
-    if (!rec.recording) return fn();
+    // Only the command the user chose is written (Strg++ runs Zeilen einfügen inside itself).
+    if (!rec.recording || this.recordDepth > 0) return fn();
     rec.before(id);
     const shape = rec.shape();
-    const r = fn();
+    this.recordDepth++;
+    let r: void | Promise<void>;
+    try { r = fn(); } finally { this.recordDepth--; }
     if (r instanceof Promise) return r.then(() => rec.after(id, shape));
     rec.after(id, shape);
   }
+  private recordDepth = 0;
 
   /** Makro aufzeichnen started or stopped: menu entry, status bar button. */
   recordingChanged(): void {

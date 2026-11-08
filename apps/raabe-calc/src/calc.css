@@ -6,7 +6,7 @@
 /* Namenfeld | ⋮ | ✕ ✓ fx | Bearbeitungsleiste */
 .fbar { flex: none; display: flex; align-items: stretch; height: 33px; padding: 4px 4px 6px 6px; gap: 0; background: var(--chrome); border-bottom: 1px solid #d4d4d4; }
 .no-fbar .fbar { display: none; }
-.namebox-wrap { position: relative; width: 112px; display: flex; background: #fff; border: 1px solid #c6c6c6; }
+.namebox-wrap { position: relative; width: 100px; display: flex; background: #fff; border: 1px solid #c6c6c6; }
 .namebox { flex: 1; min-width: 0; border: 0; padding: 0 4px; font: 12px var(--font); outline: none; }
 .namebox-dd { width: 16px; border: 0; background: none; color: var(--text-2); font-size: 11px; }
 .fbar-sep { width: 14px; display: flex; align-items: center; justify-content: center; color: #9a9a9a; cursor: col-resize; }

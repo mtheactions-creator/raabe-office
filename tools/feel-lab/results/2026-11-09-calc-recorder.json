@@ -1,0 +1,1138 @@
+{
+ "counts": {
+  "cases": 9,
+  "codeSame": 4,
+  "byHandSameWorkbook": 7,
+  "excelMacroInCalc": 8,
+  "oursInExcel": 4,
+  "shortcut": "1/1"
+ },
+ "results": {
+  "Eingabe": {
+   "byHand": {
+    "code": "Sub Makro_Eingabe()\nAttribute Makro_Eingabe.VB_ProcData.VB_Invoke_Func = \" \\n14\"\n'\n' Makro_Eingabe Makro\n'\n'\n    ActiveCell.FormulaR1C1 = \"Note\"\n    Range(\"A2\").Select\n    ActiveCell.FormulaR1C1 = \"2\"\n    Range(\"A3\").Select\n    ActiveCell.FormulaR1C1 = \"3.5\"\n    Range(\"A4\").Select\n    ActiveCell.FormulaR1C1 = \"=SUM(R[-2]C:R[-1]C)\"\n    Range(\"A5\").Select\n    ActiveCell.FormulaR1C1 = \"Text \"\"zitiert\"\"\"\n    Range(\"A6\").Select\n    ActiveCell.FormulaR1C1 = \"2/1/2026\"\n    Range(\"A7\").Select\n    ActiveCell.FormulaR1C1 = \"50%\"\n    Range(\"B7\").Select\n    ActiveCell.FormulaR1C1 = \"=R[-5]C[-1]*2\"\n    Range(\"A8\").Select\nEnd Sub",
+    "state": {
+     "mode": "Bereit",
+     "editing": null,
+     "cells": {
+      "A1": {
+       "formula": "Note",
+       "text": "Note",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "A2": {
+       "formula": "2",
+       "text": "2",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "A3": {
+       "formula": "3,5",
+       "text": "3,5",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "A4": {
+       "formula": "=SUMME(A2:A3)",
+       "text": "5,5",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "A5": {
+       "formula": "Text \"zitiert\"",
+       "text": "Text \"zitiert\"",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "A6": {
+       "formula": "46054",
+       "text": "01.02.2026",
+       "format": "TT.MM.JJJJ",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "A7": {
+       "formula": "0,5",
+       "text": "50%",
+       "format": "0%",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "B7": {
+       "formula": "=A2*2",
+       "text": "4",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      }
+     },
+     "selection": "A8",
+     "active": "A8",
+     "sheet": "Tabelle1",
+     "sheets": [
+      "Tabelle1"
+     ],
+     "hiddenRows": [],
+     "hiddenCols": [],
+     "widths": {},
+     "filter": false,
+     "extra": {
+      "A1": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "A2": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "A3": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "A4": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "A5": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "A6": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "A7": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "B7": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      }
+     },
+     "rowHidden": []
+    },
+    "relative": false,
+    "defaultName": "Makro1",
+    "recording": false
+   },
+   "codeSame": true,
+   "stateDiff": [],
+   "excelMacroInCalc": [],
+   "shortcut": null,
+   "oursInExcel": []
+  },
+  "Format": {
+   "byHand": {
+    "code": "Sub Makro_Format()\nAttribute Makro_Format.VB_Description = \"Kopfzeile formatieren\"\nAttribute Makro_Format.VB_ProcData.VB_Invoke_Func = \"q\\n14\"\n'\n' Makro_Format Makro\n' Kopfzeile formatieren\n'\n' Tastenkombination: Strg+q\n'\n    Range(\"A1:C1\").Select\n    Selection.Font.Bold = True\n    Selection.Font.Italic = True\n    With Selection\n        .HorizontalAlignment = xlCenter\n        .VerticalAlignment = xlBottom\n        .WrapText = False\n        .Orientation = 0\n        .AddIndent = False\n        .IndentLevel = 0\n        .ShrinkToFit = False\n        .ReadingOrder = xlContext\n        .MergeCells = False\n    End With\n    Range(\"B2:B3\").Select\n    Selection.NumberFormat = \"0%\"\n    Range(\"A1\").Select\n    ActiveCell.FormulaR1C1 = \"14\"\n    Range(\"A2\").Select\nEnd Sub",
+    "state": {
+     "mode": "Bereit",
+     "editing": null,
+     "cells": {
+      "A1": {
+       "formula": "14",
+       "text": "14",
+       "format": "Standard",
+       "bold": true,
+       "italic": true,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "A2": {
+       "formula": "Anna",
+       "text": "Anna",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "A3": {
+       "formula": "Ben",
+       "text": "Ben",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "B1": {
+       "formula": "Note",
+       "text": "Note",
+       "format": "Standard",
+       "bold": true,
+       "italic": true,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "B2": {
+       "formula": "0,25",
+       "text": "25%",
+       "format": "0%",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "B3": {
+       "formula": "0,5",
+       "text": "50%",
+       "format": "0%",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "C1": {
+       "formula": "Fach",
+       "text": "Fach",
+       "format": "Standard",
+       "bold": true,
+       "italic": true,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      }
+     },
+     "selection": "A2",
+     "active": "A2",
+     "sheet": "Tabelle1",
+     "sheets": [
+      "Tabelle1"
+     ],
+     "hiddenRows": [],
+     "hiddenCols": [],
+     "widths": {},
+     "filter": false,
+     "extra": {
+      "A1": {
+       "fill": null,
+       "size": 11,
+       "h": -4108
+      },
+      "A2": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "A3": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "B1": {
+       "fill": null,
+       "size": 11,
+       "h": -4108
+      },
+      "B2": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "B3": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "C1": {
+       "fill": null,
+       "size": 11,
+       "h": -4108
+      }
+     },
+     "rowHidden": []
+    },
+    "relative": false,
+    "defaultName": "Makro1",
+    "recording": false
+   },
+   "codeSame": false,
+   "codeDiff": [
+    "@@ -27,13 +27,2 @@",
+    "-    With Selection.Font",
+    "-        .Name = \"Calibri\"",
+    "-        .Size = 14",
+    "-        .Strikethrough = False",
+    "-        .Superscript = False",
+    "-        .Subscript = False",
+    "-        .OutlineFont = False",
+    "-        .Shadow = False",
+    "-        .Underline = xlUnderlineStyleNone",
+    "-        .ThemeColor = xlThemeColorLight1",
+    "-        .TintAndShade = 0",
+    "-        .ThemeFont = xlThemeFontNone",
+    "-    End With",
+    "+    ActiveCell.FormulaR1C1 = \"14\"",
+    "+    Range(\"A2\").Select"
+   ],
+   "stateDiff": [
+    "selection: Excel A1 RaabeCalc A2",
+    "active: Excel A1 RaabeCalc A2",
+    "A1 formula: Excel 'Name' RaabeCalc '14'",
+    "A1 text: Excel 'Name' RaabeCalc '14'",
+    "A1 size: Excel 14.0 RaabeCalc 11"
+   ],
+   "excelMacroInCalc": [],
+   "shortcut": true,
+   "oursInExcel": [
+    "selection: Excel A1 RaabeCalc A2",
+    "active: Excel A1 RaabeCalc A2",
+    "A1 formula: Excel 'Name' RaabeCalc '14'",
+    "A1 text: Excel 'Name' RaabeCalc '14'",
+    "A1 size: Excel 14.0 RaabeCalc 11.0"
+   ]
+  },
+  "Ausfuellen": {
+   "byHand": {
+    "code": "Sub Makro_Ausfuellen()\nAttribute Makro_Ausfuellen.VB_ProcData.VB_Invoke_Func = \" \\n14\"\n'\n' Makro_Ausfuellen Makro\n'\n'\n    Range(\"A1:A5\").Select\n    Selection.FillDown\n    Range(\"B1:B2\").Select\n    Selection.AutoFill Destination:=Range(\"B1:B6\"), Type:=xlFillDefault\n    Range(\"B1:B6\").Select\nEnd Sub",
+    "state": {
+     "mode": "Bereit",
+     "editing": null,
+     "cells": {
+      "A1": {
+       "formula": "Mo",
+       "text": "Mo",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "A2": {
+       "formula": "Mo",
+       "text": "Mo",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "A3": {
+       "formula": "Mo",
+       "text": "Mo",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "A4": {
+       "formula": "Mo",
+       "text": "Mo",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "A5": {
+       "formula": "Mo",
+       "text": "Mo",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "B1": {
+       "formula": "1",
+       "text": "1",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "B2": {
+       "formula": "2",
+       "text": "2",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "B3": {
+       "formula": "3",
+       "text": "3",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "B4": {
+       "formula": "4",
+       "text": "4",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "B5": {
+       "formula": "5",
+       "text": "5",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "B6": {
+       "formula": "6",
+       "text": "6",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      }
+     },
+     "selection": "B1:B6",
+     "active": "B1",
+     "sheet": "Tabelle1",
+     "sheets": [
+      "Tabelle1"
+     ],
+     "hiddenRows": [],
+     "hiddenCols": [],
+     "widths": {},
+     "filter": false,
+     "extra": {
+      "A1": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "A2": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "A3": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "A4": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "A5": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "B1": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "B2": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "B3": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "B4": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "B5": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "B6": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      }
+     },
+     "rowHidden": []
+    },
+    "relative": false,
+    "defaultName": "Makro1",
+    "recording": false
+   },
+   "codeSame": false,
+   "codeDiff": [
+    "@@ -9 +9,3 @@",
+    "-    Range(\"B3:B6\").Select",
+    "+    Range(\"B1:B2\").Select",
+    "+    Selection.AutoFill Destination:=Range(\"B1:B6\"), Type:=xlFillDefault",
+    "+    Range(\"B1:B6\").Select"
+   ],
+   "stateDiff": [
+    "selection: Excel B3:B6 RaabeCalc B1:B6",
+    "active: Excel B3 RaabeCalc B1",
+    "B3 formula: Excel None RaabeCalc '3'",
+    "B3 text: Excel None RaabeCalc '3'",
+    "B4 formula: Excel None RaabeCalc '4'",
+    "B4 text: Excel None RaabeCalc '4'",
+    "B5 formula: Excel None RaabeCalc '5'",
+    "B5 text: Excel None RaabeCalc '5'",
+    "B6 formula: Excel None RaabeCalc '6'",
+    "B6 text: Excel None RaabeCalc '6'"
+   ],
+   "excelMacroInCalc": [],
+   "shortcut": null,
+   "oursInExcel": [
+    "selection: Excel B3:B6 RaabeCalc B1:B6",
+    "active: Excel B3 RaabeCalc B1",
+    "B3 formula: Excel None RaabeCalc '3'",
+    "B3 text: Excel None RaabeCalc '3'",
+    "B4 formula: Excel None RaabeCalc '4'",
+    "B4 text: Excel None RaabeCalc '4'",
+    "B5 formula: Excel None RaabeCalc '5'",
+    "B5 text: Excel None RaabeCalc '5'",
+    "B6 formula: Excel None RaabeCalc '6'",
+    "B6 text: Excel None RaabeCalc '6'"
+   ]
+  },
+  "Sortieren": {
+   "byHand": {
+    "code": "Sub Makro_Sortieren()\nAttribute Makro_Sortieren.VB_ProcData.VB_Invoke_Func = \" \\n14\"\n'\n' Makro_Sortieren Makro\n'\n'\n    ActiveWorkbook.Worksheets(\"Tabelle1\").Sort.SortFields.Clear\n    ActiveWorkbook.Worksheets(\"Tabelle1\").Sort.SortFields.Add2 Key:=Range(\"A2:A4\" _\n        ), SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:=xlSortNormal\n    With ActiveWorkbook.Worksheets(\"Tabelle1\").Sort\n        .SetRange Range(\"A2:B4\")\n        .Header = xlNo\n        .MatchCase = False\n        .Orientation = xlTopToBottom\n        .SortMethod = xlPinYin\n        .Apply\n    End With\n    Range(\"B2\").Select\n    ActiveWorkbook.Worksheets(\"Tabelle1\").Sort.SortFields.Clear\n    ActiveWorkbook.Worksheets(\"Tabelle1\").Sort.SortFields.Add2 Key:=Range(\"B2:B4\" _\n        ), SortOn:=xlSortOnValues, Order:=xlDescending, DataOption:=xlSortNormal\n    With ActiveWorkbook.Worksheets(\"Tabelle1\").Sort\n        .SetRange Range(\"A2:B4\")\n        .Header = xlNo\n        .MatchCase = False\n        .Orientation = xlTopToBottom\n        .SortMethod = xlPinYin\n        .Apply\n    End With\nEnd Sub",
+    "state": {
+     "mode": "Bereit",
+     "editing": null,
+     "cells": {
+      "A1": {
+       "formula": "Name",
+       "text": "Name",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "A2": {
+       "formula": "Ben",
+       "text": "Ben",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "A3": {
+       "formula": "Cem",
+       "text": "Cem",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "A4": {
+       "formula": "Anna",
+       "text": "Anna",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "B1": {
+       "formula": "Note",
+       "text": "Note",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "B2": {
+       "formula": "3",
+       "text": "3",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "B3": {
+       "formula": "2",
+       "text": "2",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "B4": {
+       "formula": "1",
+       "text": "1",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      }
+     },
+     "selection": "B2",
+     "active": "B2",
+     "sheet": "Tabelle1",
+     "sheets": [
+      "Tabelle1"
+     ],
+     "hiddenRows": [],
+     "hiddenCols": [],
+     "widths": {},
+     "filter": false,
+     "extra": {
+      "A1": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "A2": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "A3": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "A4": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "B1": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "B2": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "B3": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "B4": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      }
+     },
+     "rowHidden": []
+    },
+    "relative": false,
+    "defaultName": "Makro1",
+    "recording": false
+   },
+   "codeSame": true,
+   "stateDiff": [],
+   "excelMacroInCalc": [],
+   "shortcut": null,
+   "oursInExcel": []
+  },
+  "Zeilen": {
+   "byHand": {
+    "code": "Sub Makro_Zeilen()\nAttribute Makro_Zeilen.VB_ProcData.VB_Invoke_Func = \" \\n14\"\n'\n' Makro_Zeilen Makro\n'\n'\n    Rows(\"2:2\").Select\n    Selection.EntireRow.Insert\n    Selection.Insert Shift:=xlDown\n    Rows(\"4:4\").Select\n    Selection.EntireRow.Delete\n    Selection.Delete Shift:=xlUp\n    Columns(\"B:B\").Select\n    Range(\"B4\").Activate\n    Selection.EntireColumn.Insert\n    Selection.Insert Shift:=xlToRight\nEnd Sub",
+    "state": {
+     "mode": "Bereit",
+     "editing": null,
+     "cells": {
+      "A1": {
+       "formula": "1",
+       "text": "1",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "A3": {
+       "formula": "2",
+       "text": "2",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "A4": {
+       "formula": "4",
+       "text": "4",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "C1": {
+       "formula": "b",
+       "text": "b",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      }
+     },
+     "selection": "B:B",
+     "active": "B4",
+     "sheet": "Tabelle1",
+     "sheets": [
+      "Tabelle1"
+     ],
+     "hiddenRows": [],
+     "hiddenCols": [],
+     "widths": {},
+     "filter": false,
+     "extra": {
+      "A1": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "A3": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "A4": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "C1": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      }
+     },
+     "rowHidden": []
+    },
+    "relative": false,
+    "defaultName": "Makro1",
+    "recording": false
+   },
+   "codeSame": false,
+   "codeDiff": [
+    "@@ -7,0 +8 @@",
+    "+    Selection.EntireRow.Insert",
+    "@@ -9,0 +11 @@",
+    "+    Selection.EntireRow.Delete",
+    "@@ -12,0 +15 @@",
+    "+    Selection.EntireColumn.Insert"
+   ],
+   "stateDiff": [],
+   "excelMacroInCalc": [],
+   "shortcut": null,
+   "oursInExcel": [
+    "A3 formula: Excel '2' RaabeCalc None",
+    "A3 text: Excel '2' RaabeCalc None",
+    "A3 size: Excel 11.0 RaabeCalc None",
+    "A3 h: Excel 1 RaabeCalc None",
+    "C1 formula: Excel 'b' RaabeCalc None",
+    "C1 text: Excel 'b' RaabeCalc None",
+    "C1 size: Excel 11.0 RaabeCalc None",
+    "C1 h: Excel 1 RaabeCalc None",
+    "D1 formula: Excel None RaabeCalc 'b'",
+    "D1 text: Excel None RaabeCalc 'b'"
+   ]
+  },
+  "Blaetter": {
+   "byHand": {
+    "code": "Sub Makro_Blaetter()\nAttribute Makro_Blaetter.VB_ProcData.VB_Invoke_Func = \" \\n14\"\n'\n' Makro_Blaetter Makro\n'\n'\n    Sheets(\"Tabelle2\").Select\n    Sheets.Add\n    ActiveCell.FormulaR1C1 = \"neu\"\n    Range(\"A2\").Select\n    ActiveSheet.Next.Select\n    Sheets(\"Tabelle1\").Select\n    Sheets(\"Tabelle1\").Name = \"Noten\"\nEnd Sub",
+    "state": {
+     "mode": "Bereit",
+     "editing": null,
+     "cells": {
+      "A1": {
+       "formula": "eins",
+       "text": "eins",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      }
+     },
+     "selection": "A1",
+     "active": "A1",
+     "sheet": "Noten",
+     "sheets": [
+      "Tabelle2",
+      "Noten"
+     ],
+     "hiddenRows": [],
+     "hiddenCols": [],
+     "widths": {},
+     "filter": false,
+     "extra": {
+      "A1": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      }
+     },
+     "rowHidden": []
+    },
+    "relative": false,
+    "defaultName": "Makro1",
+    "recording": false
+   },
+   "codeSame": false,
+   "codeDiff": [
+    "@@ -6,0 +7 @@",
+    "+    Sheets(\"Tabelle2\").Select"
+   ],
+   "stateDiff": [],
+   "excelMacroInCalc": [
+    "sheets: Excel ['Tabelle2', 'Noten'] RaabeCalc ['Tabelle3', 'Noten']"
+   ],
+   "shortcut": null,
+   "oursInExcel": [
+    "sheets: Excel ['Tabelle2', 'Noten'] RaabeCalc ['Tabelle1']",
+    "sheet: Excel Noten RaabeCalc Tabelle1",
+    "error (-2147352567, 'Ausnahmefehler aufgetreten.', (0, None, None, None, 0, -2146788248), None)"
+   ]
+  },
+  "Kopieren": {
+   "byHand": {
+    "code": "Sub Makro_Kopieren()\nAttribute Makro_Kopieren.VB_ProcData.VB_Invoke_Func = \" \\n14\"\n'\n' Makro_Kopieren Makro\n'\n'\n    Range(\"A1:A3\").Select\n    Selection.Copy\n    Range(\"C1\").Select\n    ActiveSheet.Paste\n    Application.CutCopyMode = False\n    Range(\"A2\").Select\n    Selection.ClearContents\nEnd Sub",
+    "state": {
+     "mode": "Bereit",
+     "editing": null,
+     "cells": {
+      "A1": {
+       "formula": "a",
+       "text": "a",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "A3": {
+       "formula": "=A1&A2",
+       "text": "a",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "C1": {
+       "formula": "a",
+       "text": "a",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "C2": {
+       "formula": "b",
+       "text": "b",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "C3": {
+       "formula": "=C1&C2",
+       "text": "ab",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      }
+     },
+     "selection": "A2",
+     "active": "A2",
+     "sheet": "Tabelle1",
+     "sheets": [
+      "Tabelle1"
+     ],
+     "hiddenRows": [],
+     "hiddenCols": [],
+     "widths": {},
+     "filter": false,
+     "extra": {
+      "A1": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "A3": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "C1": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "C2": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "C3": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      }
+     },
+     "rowHidden": []
+    },
+    "relative": false,
+    "defaultName": "Makro1",
+    "recording": false
+   },
+   "codeSame": true,
+   "stateDiff": [],
+   "excelMacroInCalc": [],
+   "shortcut": null,
+   "oursInExcel": []
+  },
+  "Relativ": {
+   "byHand": {
+    "code": "Sub Makro_Relativ()\nAttribute Makro_Relativ.VB_ProcData.VB_Invoke_Func = \" \\n14\"\n'\n' Makro_Relativ Makro\n'\n'\n    ActiveCell.FormulaR1C1 = \"x\"\n    ActiveCell.Offset(1, 0).Range(\"A1\").Select\n    ActiveCell.FormulaR1C1 = \"y\"\n    ActiveCell.Offset(0, 1).Range(\"A1:B1\").Select\n    Selection.Font.Bold = True\n    ActiveCell.Offset(-1, 0).Rows(\"1:1\").EntireRow.Select\n    Selection.EntireRow.Insert\n    Selection.Insert Shift:=xlDown\nEnd Sub",
+    "state": {
+     "mode": "Bereit",
+     "editing": null,
+     "cells": {
+      "B3": {
+       "formula": "x",
+       "text": "x",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "B4": {
+       "formula": "y",
+       "text": "y",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      }
+     },
+     "selection": "2:2",
+     "active": "C2",
+     "sheet": "Tabelle1",
+     "sheets": [
+      "Tabelle1"
+     ],
+     "hiddenRows": [],
+     "hiddenCols": [],
+     "widths": {},
+     "filter": false,
+     "extra": {
+      "B3": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "B4": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      }
+     },
+     "rowHidden": []
+    },
+    "relative": true,
+    "defaultName": "Makro1",
+    "recording": false
+   },
+   "codeSame": false,
+   "codeDiff": [
+    "@@ -8 +8 @@",
+    "-    Range(\"B3\").Select",
+    "+    ActiveCell.Offset(1, 0).Range(\"A1\").Select",
+    "@@ -10 +10 @@",
+    "-    Range(\"C3:D3\").Select",
+    "+    ActiveCell.Offset(0, 1).Range(\"A1:B1\").Select",
+    "@@ -12,2 +12,2 @@",
+    "-    Rows(\"2:2\").Select",
+    "-    Range(\"C2\").Activate",
+    "+    ActiveCell.Offset(-1, 0).Rows(\"1:1\").EntireRow.Select",
+    "+    Selection.EntireRow.Insert"
+   ],
+   "stateDiff": [],
+   "excelMacroInCalc": [],
+   "shortcut": null,
+   "oursInExcel": [
+    "active: Excel C2 RaabeCalc A2",
+    "B3 formula: Excel 'x' RaabeCalc None",
+    "B3 text: Excel 'x' RaabeCalc None",
+    "B3 size: Excel 11.0 RaabeCalc None",
+    "B3 h: Excel 1 RaabeCalc None",
+    "B4 formula: Excel 'y' RaabeCalc 'x'",
+    "B4 text: Excel 'y' RaabeCalc 'x'",
+    "B5 formula: Excel None RaabeCalc 'y'",
+    "B5 text: Excel None RaabeCalc 'y'"
+   ]
+  },
+  "Spalte": {
+   "byHand": {
+    "code": "Sub Makro_Spalte()\nAttribute Makro_Spalte.VB_ProcData.VB_Invoke_Func = \" \\n14\"\n'\n' Makro_Spalte Makro\n'\n'\n    Columns(\"A:A\").EntireColumn.AutoFit\n    Range(\"B3\").Select\n    Selection.EntireRow.Hidden = True\nEnd Sub",
+    "state": {
+     "mode": "Bereit",
+     "editing": null,
+     "cells": {
+      "A1": {
+       "formula": "ein langer Text",
+       "text": "ein langer Text",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      },
+      "B1": {
+       "formula": "kurz",
+       "text": "kurz",
+       "format": "Standard",
+       "bold": false,
+       "italic": false,
+       "underline": false,
+       "strike": false,
+       "wrap": false
+      }
+     },
+     "selection": "B3",
+     "active": "B3",
+     "sheet": "Tabelle1",
+     "sheets": [
+      "Tabelle1"
+     ],
+     "hiddenRows": [
+      3
+     ],
+     "hiddenCols": [],
+     "widths": {
+      "1": 12.18
+     },
+     "filter": false,
+     "extra": {
+      "A1": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      },
+      "B1": {
+       "fill": null,
+       "size": 11,
+       "h": 1
+      }
+     },
+     "rowHidden": [
+      3
+     ]
+    },
+    "relative": false,
+    "defaultName": "Makro1",
+    "recording": false
+   },
+   "codeSame": true,
+   "stateDiff": [],
+   "excelMacroInCalc": [],
+   "shortcut": null,
+   "oursInExcel": []
+  }
+ }
+}

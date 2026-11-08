@@ -351,7 +351,8 @@ export class MacroRecorder {
   /** Umschalt+F11 / Einfügen > Blatt einfügen (before the active sheet), the "+" beside the tabs (after it). */
   sheetAdded(after: boolean): void {
     if (!this.rec) return;
-    this.flush();
+    // The command flushed before the sheet was added (the "+" button: here, from the old place).
+    if (this.place && this.place.sheet === this.app.sheet) this.flush();
     this.rec.lines.push(after ? `${I}Sheets.Add After:=ActiveSheet` : `${I}Sheets.Add`);
     this.sync();
   }

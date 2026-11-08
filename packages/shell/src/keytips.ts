@@ -86,11 +86,11 @@ export class Keytips {
     this.show();
   }
 
-  exit(): void {
+  exit(keepFocus = false): void {
     if (!this.active) return;
     this.active = false;
     this.clear();
-    this.onExit();
+    if (!keepFocus) this.onExit();
   }
 
   private targets(): HTMLElement[] {
@@ -109,12 +109,14 @@ export class Keytips {
       // Ask after the click: activating a ribbon tab changes which scope comes next.
       // A menu opened by its keytip shows its entries' keytips next (Ansicht > Makros: Alt, F, M, then R).
       const nextScope = this.scopeAfter(exact) ?? (document.querySelector('[data-keytip-scope="menu"]') ? "menu" : null);
-      if (exact instanceof HTMLInputElement || exact.querySelector("input")) (exact.querySelector("input") ?? exact).focus();
+      const typing = exact instanceof HTMLInputElement || !!exact.querySelector("input");
+      if (typing) (exact.querySelector("input") ?? exact).focus();
       if (nextScope) {
         this.scope = nextScope;
         requestAnimationFrame(() => this.show());
       } else {
-        this.exit();
+        // A box chosen by its keytip (Schriftgrad: Alt, R, H C) keeps the focus for typing, as in Office.
+        this.exit(typing);
       }
       return;
     }

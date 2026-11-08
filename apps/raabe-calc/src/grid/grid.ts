@@ -100,10 +100,12 @@ interface FrameDrag { start: number; end: number; text: string; rect: Rect; anch
 const REF_COLORS = ["#0070c0", "#c00000", "#7030a0", "#00b050", "#c55a11", "#2e75b6", "#bf8f00"];
 const PT = 96 / 72;
 // Namenfeld and Bearbeitungsleiste (D-120, recorded in Excel at 150 %: results/2026-11-09-excel-formulabar.json), CSS px.
-const NAMEBOX_MIN = 40;
-const NAMEBOX_MAX = 560;
-/** Room the buttons and a little of the formula bar keep when the Namenfeld grows. */
-const NAMEBOX_KEEP = 200;
+// Excel's Namenfeld cannot get narrower than it starts (100 px with its arrow), and grows until
+// 157 px are left right of it for the handle, the buttons and the formula bar.
+const NAMEBOX_MIN = 100;
+const NAMEBOX_MAX = 10000;
+/** The bar's left padding plus the room Excel leaves right of the Namenfeld. */
+const NAMEBOX_KEEP = 6 + 157;
 const FBAR_HEIGHT = 33;
 const FX_LINE = 18;
 const FX_EXPANDED_LINES = 3;
