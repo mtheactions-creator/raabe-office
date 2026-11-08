@@ -69,7 +69,9 @@ export function chartsFeature(app: CalcApp) {
   let viewSig = "";
   let shownSheet: Sheet | null = null;
   let shownList: ChartModel[] | undefined;
-  let drag: { m: ChartModel; handle: Handle | null; x: number; y: number; box: Box; draft: Box; moved: boolean } | null = null;
+  /** What a drag needs of a pointer event (a modifier key mid-drag replays the last one, D-128). */
+  type DragPoint = { clientX: number; clientY: number; shiftKey: boolean; ctrlKey: boolean; altKey: boolean };
+  let drag: { m: ChartModel; handle: Handle | null; x: number; y: number; box: Box; draft: Box; moved: boolean; last?: DragPoint } | null = null;
   /** The selected element of the selected chart (Excel: Diagrammelemente on the Format tab). */
   let element: ChartElement = { kind: "chart" };
 
@@ -199,6 +201,7 @@ export function chartsFeature(app: CalcApp) {
     el.addEventListener("pointerdown", (e) => onDown(e, m));
     el.addEventListener("pointermove", (e) => onMove(e));
     el.addEventListener("pointerup", (e) => onUp(e));
+    el.addEventListener("pointercancel", () => dropDrag());
     el.addEventListener("dblclick", (e) => {
       e.preventDefault();
       e.stopPropagation();
@@ -210,6 +213,8 @@ export function chartsFeature(app: CalcApp) {
     });
     el.addEventListener("contextmenu", (e) => { e.preventDefault(); e.stopPropagation(); select(m); openFlyout(m); });
     el.addEventListener("keydown", (e) => onKey(e, m));
+    // A modifier key pressed or let go mid-drag applies at once (D-128).
+    el.addEventListener("keyup", (e) => { if (drag && (e.key === "Shift" || e.key === "Control" || e.key === "Alt")) { e.preventDefault(); replay(e); } });
     el.addEventListener("wheel", () => closeFlyout(), { passive: true });
     v = { el, key: "", zoomKey: "" };
     views.set(m, v);
@@ -336,24 +341,56 @@ export function chartsFeature(app: CalcApp) {
     try { view.el.setPointerCapture(e.pointerId); } catch { /* synthetic events */ }
   }
 
-  function onMove(e: PointerEvent): void {
+  /** The nearest cell edge to a place in sheet px at 100 % (Alt, Excel). */
+  function gridEdge(v: number, axis: "x" | "y"): number {
+    const { rows, cols } = getAxes();
+    const a = axis === "x" ? cols : rows;
+    const i = a.at(Math.max(0, v)), lo = a.pos(i), hi = a.pos(i + 1);
+    return v - lo < (hi - lo) / 2 ? lo : hi;
+  }
+
+  function replay(e: KeyboardEvent): void {
+    if (!drag?.last) return;
+    onMove({ ...drag.last, shiftKey: e.shiftKey, ctrlKey: e.ctrlKey, altKey: e.altKey });
+  }
+
+  /** The drag ends without effect: the pointer was taken away, or a move came without the button (D-127). */
+  function dropDrag(): void {
     if (!drag) return;
+    views.get(drag.m)?.el.classList.remove("dragging");
+    drag = null;
+    place();
+  }
+
+  function onMove(e: DragPoint): void {
+    if (!drag) return;
+    if (e instanceof PointerEvent && !e.buttons && e.pointerType === "mouse") { dropDrag(); return; }
+    drag.last = { clientX: e.clientX, clientY: e.clientY, shiftKey: e.shiftKey, ctrlKey: e.ctrlKey, altKey: e.altKey };
     const z = zoom();
-    const dx = (e.clientX - drag.x) / z, dy = (e.clientY - drag.y) / z;
+    let dx = (e.clientX - drag.x) / z, dy = (e.clientY - drag.y) / z;
     if (!drag.moved && Math.abs(e.clientX - drag.x) + Math.abs(e.clientY - drag.y) < 3) return;
     drag.moved = true;
     const b = drag.box;
     let { x, y, w, h: hh } = b;
     const k = drag.handle;
     if (!k) {
+      // Umschalt: along one axis; Alt: the corner to the cell grid (Excel; D-128).
+      if (e.shiftKey) { if (Math.abs(dx) >= Math.abs(dy)) dy = 0; else dx = 0; }
       x = Math.max(0, b.x + dx);
       y = Math.max(0, b.y + dy);
+      if (e.altKey) { x = gridEdge(x, "x"); y = gridEdge(y, "y"); }
       views.get(drag.m)?.el.classList.add("dragging");
     } else {
       if (k.includes("e")) w = b.w + dx;
       if (k.includes("s")) hh = b.h + dy;
       if (k.includes("w")) { w = b.w - dx; x = b.x + dx; }
       if (k.includes("n")) { hh = b.h - dy; y = b.y + dy; }
+      if (e.altKey) {
+        if (k.includes("e")) w = gridEdge(x + w, "x") - x;
+        if (k.includes("s")) hh = gridEdge(y + hh, "y") - y;
+        if (k.includes("w")) { const nx = gridEdge(x, "x"); w += x - nx; x = nx; }
+        if (k.includes("n")) { const ny = gridEdge(y, "y"); hh += y - ny; y = ny; }
+      }
       // Umschalt on a corner keeps the proportions (Excel).
       if (e.shiftKey && k.length === 2) {
         const s = Math.max(w / b.w, hh / b.h);
@@ -361,6 +398,11 @@ export function chartsFeature(app: CalcApp) {
         hh = b.h * s;
         if (k.includes("w")) x = b.x + b.w - w;
         if (k.includes("n")) y = b.y + b.h - hh;
+      }
+      if (e.ctrlKey) {
+        // Strg: the size changes around the middle (Excel; D-128).
+        const gw = w - b.w, gh = hh - b.h;
+        w = b.w + 2 * gw; hh = b.h + 2 * gh; x = b.x - gw; y = b.y - gh;
       }
       if (w < MIN_SIZE) { if (k.includes("w")) x -= MIN_SIZE - w; w = MIN_SIZE; }
       if (hh < MIN_SIZE) { if (k.includes("n")) y -= MIN_SIZE - hh; hh = MIN_SIZE; }
@@ -380,6 +422,20 @@ export function chartsFeature(app: CalcApp) {
     try { if (view?.el.hasPointerCapture(e.pointerId)) view.el.releasePointerCapture(e.pointerId); } catch { /* synthetic events */ }
     if (!d.moved) { place(); return; }
     const sheet = app.sheet;
+    if (e.ctrlKey && !d.handle) {
+      // Strg held when the button goes up: a copy goes there, the chart stays (Excel; D-128).
+      const copy = structuredClone(d.m);
+      copy.from = anchorAt(d.draft.x, d.draft.y);
+      copy.to = anchorAt(d.draft.x + d.draft.w, d.draft.y + d.draft.h);
+      copy.name = `Diagramm ${nextNumber(app.wb)}`;
+      app.change("Kopieren", () => {
+        app.history.charts(sheet);
+        sheet.charts = [...(sheet.charts ?? []), copy];
+      });
+      refresh();
+      select(copy);
+      return;
+    }
     app.change(d.handle ? "Größe ändern" : "Verschieben", () => {
       app.history.charts(sheet);
       d.m.from = anchorAt(d.draft.x, d.draft.y);
@@ -411,6 +467,9 @@ export function chartsFeature(app: CalcApp) {
       e.preventDefault();
       e.stopPropagation();
       remove(m);
+    } else if (drag && (e.key === "Shift" || e.key === "Control" || e.key === "Alt")) {
+      e.preventDefault();
+      replay(e);
     } else if (e.key === "Escape") {
       e.preventDefault();
       e.stopPropagation();

@@ -1,0 +1,3647 @@
+{
+ "app": "raabe-write",
+ "families": [
+  "mods",
+  "zoom"
+ ],
+ "anchors": [
+  {
+   "anchor": "ruler: Erstzeileneinzug",
+   "ok": 17,
+   "of": 18,
+   "flaky": 1,
+   "note": "value: the guide line (client px); snaps to 0.25 cm (9.45 px at 100 %); Esc not checked (Word's not recorded)",
+   "drags": [
+    {
+     "path": "out-back",
+     "ok": true,
+     "frames": 106,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 480.3206679382324,
+     "after": 518.1156679382325,
+     "outside_frames": 29
+    },
+    {
+     "path": "out-release",
+     "ok": true,
+     "frames": 64,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 480.3206679382324,
+     "after": 1387.4066679382324,
+     "outside_frames": 27,
+     "stuck": 0.0,
+     "post_frames": 52
+    },
+    {
+     "path": "shift-mid",
+     "ok": false,
+     "error": "RuntimeError: {'exceptionId': 2, 'text': 'Uncaught', 'lineNumber': 0, 'columnNumber': 77, 'scriptId': '26', 'exception': {'type': 'object', 'subtype': 'error', 'className': 'TypeError', 'description':",
+     "first_try": {
+      "path": "shift-mid",
+      "ok": false,
+      "error": "RuntimeError: {'exceptionId': 1, 'text': 'Uncaught', 'lineNumber': 0, 'columnNumber': 77, 'scriptId': '26', 'exception': {'type': 'object', 'subtype': 'error', 'className': 'TypeError', 'description':"
+     }
+    },
+    {
+     "path": "shift-held",
+     "ok": true,
+     "frames": 81,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 473.9866679382324,
+     "after": 559.0256679382325,
+     "first_try": {
+      "path": "shift-held",
+      "ok": false,
+      "error": "RuntimeError: {'exceptionId': 3, 'text': 'Uncaught', 'lineNumber': 0, 'columnNumber': 77, 'scriptId': '26', 'exception': {'type': 'object', 'subtype': 'error', 'className': 'TypeError', 'description':"
+     },
+     "flaky": true
+    },
+    {
+     "path": "ctrl-mid",
+     "ok": true,
+     "frames": 93,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 473.9866679382324,
+     "after": 559.0256679382325
+    },
+    {
+     "path": "ctrl-held",
+     "ok": true,
+     "frames": 92,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 473.9866679382324,
+     "after": 559.0256679382325
+    },
+    {
+     "path": "alt-mid",
+     "ok": true,
+     "frames": 81,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 473.9866679382324,
+     "after": 559.0256679382325
+    },
+    {
+     "path": "alt-held",
+     "ok": true,
+     "frames": 86,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 473.9866679382324,
+     "after": 563.0006679382324
+    },
+    {
+     "path": "zoom 50: fast-right",
+     "ok": true,
+     "frames": 13,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 163.62366793823242,
+     "after": 281.73366793823243
+    },
+    {
+     "path": "zoom 50: diagonal",
+     "ok": true,
+     "frames": 60,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 163.62366793823242,
+     "after": 239.21366793823242
+    },
+    {
+     "path": "zoom 75: fast-right",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 217.5866679382324,
+     "after": 338.0586679382324
+    },
+    {
+     "path": "zoom 75: diagonal",
+     "ok": true,
+     "frames": 60,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 217.5866679382324,
+     "after": 295.53866793823244
+    },
+    {
+     "path": "zoom 150: fast-right",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 379.47566793823245,
+     "after": 492.86066793823244
+    },
+    {
+     "path": "zoom 150: diagonal",
+     "ok": true,
+     "frames": 56,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 379.47566793823245,
+     "after": 450.3406679382324
+    },
+    {
+     "path": "zoom 200: fast-right",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 470.3696679382324,
+     "after": 583.7556679382325
+    },
+    {
+     "path": "zoom 200: diagonal",
+     "ok": true,
+     "frames": 56,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 470.3696679382324,
+     "after": 545.9596679382324
+    },
+    {
+     "path": "zoom 400: fast-right",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 918.0726679382324,
+     "after": 1031.4566679382324
+    },
+    {
+     "path": "zoom 400: diagonal",
+     "ok": true,
+     "frames": 57,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 918.0726679382324,
+     "after": 993.6636679382324
+    }
+   ]
+  },
+  {
+   "anchor": "ruler: Hängender Einzug",
+   "ok": 18,
+   "of": 18,
+   "note": "value: the guide line (client px); snaps to 0.25 cm (9.45 px at 100 %); Esc not checked (Word's not recorded)",
+   "drags": [
+    {
+     "path": "out-back",
+     "ok": true,
+     "frames": 110,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 442.5256679382324,
+     "after": 480.3206679382324,
+     "outside_frames": 30
+    },
+    {
+     "path": "out-release",
+     "ok": true,
+     "frames": 66,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 442.5256679382324,
+     "after": 1387.4066679382324,
+     "outside_frames": 27,
+     "stuck": 0.0,
+     "post_frames": 54
+    },
+    {
+     "path": "shift-mid",
+     "ok": true,
+     "frames": 69,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 436.1916679382324,
+     "after": 530.6796679382323
+    },
+    {
+     "path": "shift-held",
+     "ok": true,
+     "frames": 65,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 436.1916679382324,
+     "after": 530.6796679382323
+    },
+    {
+     "path": "ctrl-mid",
+     "ok": true,
+     "frames": 72,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 436.1916679382324,
+     "after": 530.6796679382323
+    },
+    {
+     "path": "ctrl-held",
+     "ok": true,
+     "frames": 94,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 436.1916679382324,
+     "after": 530.6796679382323
+    },
+    {
+     "path": "alt-mid",
+     "ok": true,
+     "frames": 71,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 436.1916679382324,
+     "after": 530.6796679382323
+    },
+    {
+     "path": "alt-held",
+     "ok": true,
+     "frames": 82,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 436.1916679382324,
+     "after": 525.9336679382325
+    },
+    {
+     "path": "zoom 50: fast-right",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 144.72566793823242,
+     "after": 262.8356679382324
+    },
+    {
+     "path": "zoom 50: diagonal",
+     "ok": true,
+     "frames": 61,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 144.72566793823242,
+     "after": 220.31666793823243
+    },
+    {
+     "path": "zoom 75: fast-right",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 189.24066793823243,
+     "after": 309.7126679382324
+    },
+    {
+     "path": "zoom 75: diagonal",
+     "ok": true,
+     "frames": 56,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 189.24066793823243,
+     "after": 267.19266793823243
+    },
+    {
+     "path": "zoom 150: fast-right",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 322.7826679382324,
+     "after": 436.1676679382324
+    },
+    {
+     "path": "zoom 150: diagonal",
+     "ok": true,
+     "frames": 56,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 322.7826679382324,
+     "after": 393.64866793823245
+    },
+    {
+     "path": "zoom 200: fast-right",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 394.7796679382324,
+     "after": 508.1646679382324
+    },
+    {
+     "path": "zoom 200: diagonal",
+     "ok": true,
+     "frames": 57,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 394.7796679382324,
+     "after": 470.3696679382324
+    },
+    {
+     "path": "zoom 400: fast-right",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 766.8926679382324,
+     "after": 880.2776679382324
+    },
+    {
+     "path": "zoom 400: diagonal",
+     "ok": true,
+     "frames": 68,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 766.8926679382324,
+     "after": 842.4826679382325
+    }
+   ]
+  },
+  {
+   "anchor": "ruler: Linker Einzug",
+   "ok": 18,
+   "of": 18,
+   "note": "value: the guide line (client px); snaps to 0.25 cm (9.45 px at 100 %); Esc not checked (Word's not recorded)",
+   "drags": [
+    {
+     "path": "out-back",
+     "ok": true,
+     "frames": 111,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 442.5256679382324,
+     "after": 480.3206679382324,
+     "outside_frames": 29
+    },
+    {
+     "path": "out-release",
+     "ok": true,
+     "frames": 65,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 442.5256679382324,
+     "after": 1387.4066679382324,
+     "outside_frames": 27,
+     "stuck": 0.0,
+     "post_frames": 55
+    },
+    {
+     "path": "shift-mid",
+     "ok": true,
+     "frames": 66,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 436.1916679382324,
+     "after": 530.6796679382323
+    },
+    {
+     "path": "shift-held",
+     "ok": true,
+     "frames": 67,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 436.1916679382324,
+     "after": 530.6796679382323
+    },
+    {
+     "path": "ctrl-mid",
+     "ok": true,
+     "frames": 68,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 436.1916679382324,
+     "after": 530.6796679382323
+    },
+    {
+     "path": "ctrl-held",
+     "ok": true,
+     "frames": 67,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 436.1916679382324,
+     "after": 530.6796679382323
+    },
+    {
+     "path": "alt-mid",
+     "ok": true,
+     "frames": 67,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 436.1916679382324,
+     "after": 530.6796679382323
+    },
+    {
+     "path": "alt-held",
+     "ok": true,
+     "frames": 65,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 436.1916679382324,
+     "after": 525.9336679382325
+    },
+    {
+     "path": "zoom 50: fast-right",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 144.72566793823242,
+     "after": 262.8356679382324
+    },
+    {
+     "path": "zoom 50: diagonal",
+     "ok": true,
+     "frames": 55,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 144.72566793823242,
+     "after": 220.31666793823243
+    },
+    {
+     "path": "zoom 75: fast-right",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 189.24066793823243,
+     "after": 309.7126679382324
+    },
+    {
+     "path": "zoom 75: diagonal",
+     "ok": true,
+     "frames": 56,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 189.24066793823243,
+     "after": 267.19266793823243
+    },
+    {
+     "path": "zoom 150: fast-right",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 322.7826679382324,
+     "after": 436.1676679382324
+    },
+    {
+     "path": "zoom 150: diagonal",
+     "ok": true,
+     "frames": 57,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 322.7826679382324,
+     "after": 393.64866793823245
+    },
+    {
+     "path": "zoom 200: fast-right",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 394.7796679382324,
+     "after": 508.1646679382324
+    },
+    {
+     "path": "zoom 200: diagonal",
+     "ok": true,
+     "frames": 56,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 394.7796679382324,
+     "after": 470.3696679382324
+    },
+    {
+     "path": "zoom 400: fast-right",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 766.8926679382324,
+     "after": 880.2776679382324
+    },
+    {
+     "path": "zoom 400: diagonal",
+     "ok": true,
+     "frames": 56,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 766.8926679382324,
+     "after": 842.4826679382325
+    }
+   ]
+  },
+  {
+   "anchor": "ruler: Rechter Einzug",
+   "ok": 18,
+   "of": 18,
+   "note": "value: the guide line (client px); snaps to 0.25 cm (9.45 px at 100 %); Esc not checked (Word's not recorded)",
+   "drags": [
+    {
+     "path": "out-back",
+     "ok": true,
+     "frames": 69,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 933.9366679382324,
+     "after": 971.7316679382325,
+     "outside_frames": 29
+    },
+    {
+     "path": "out-release",
+     "ok": true,
+     "frames": 45,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 933.9366679382324,
+     "after": 1066.1966679382324,
+     "outside_frames": 27,
+     "stuck": 0.0,
+     "post_frames": 34
+    },
+    {
+     "path": "shift-mid",
+     "ok": true,
+     "frames": 66,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 927.6036679382324,
+     "after": 1012.6426679382324
+    },
+    {
+     "path": "shift-held",
+     "ok": true,
+     "frames": 67,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 927.6036679382324,
+     "after": 1012.6426679382324
+    },
+    {
+     "path": "ctrl-mid",
+     "ok": true,
+     "frames": 72,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 927.6036679382324,
+     "after": 1012.6426679382324
+    },
+    {
+     "path": "ctrl-held",
+     "ok": true,
+     "frames": 66,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 927.6036679382324,
+     "after": 1012.6426679382324
+    },
+    {
+     "path": "alt-mid",
+     "ok": true,
+     "frames": 65,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 927.6036679382324,
+     "after": 1012.6426679382324
+    },
+    {
+     "path": "alt-held",
+     "ok": true,
+     "frames": 66,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 927.6036679382324,
+     "after": 1016.9986679382324
+    },
+    {
+     "path": "zoom 50: fast-right",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 390.4316679382324,
+     "after": 456.56266793823244
+    },
+    {
+     "path": "zoom 50: diagonal",
+     "ok": true,
+     "frames": 55,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 390.4316679382324,
+     "after": 456.56266793823244
+    },
+    {
+     "path": "zoom 75: fast-right",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 557.7986679382324,
+     "after": 656.9946679382324
+    },
+    {
+     "path": "zoom 75: diagonal",
+     "ok": true,
+     "frames": 56,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 557.7986679382324,
+     "after": 628.6646679382325
+    },
+    {
+     "path": "zoom 150: fast-right",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1059.8966679382324,
+     "after": 1173.2866679382323
+    },
+    {
+     "path": "zoom 150: diagonal",
+     "ok": true,
+     "frames": 55,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1059.8966679382324,
+     "after": 1130.7666679382323
+    },
+    {
+     "path": "zoom 200: fast-right",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1006.9356679382324,
+     "after": 1120.3166679382325
+    },
+    {
+     "path": "zoom 200: diagonal",
+     "ok": true,
+     "frames": 55,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1006.9356679382324,
+     "after": 1082.5266679382323
+    },
+    {
+     "path": "zoom 400: fast-right",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 710.5376679382324,
+     "after": 823.9236679382324
+    },
+    {
+     "path": "zoom 400: diagonal",
+     "ok": true,
+     "frames": 59,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 710.5376679382324,
+     "after": 786.1286679382324
+    }
+   ]
+  },
+  {
+   "anchor": "ruler: Tabstopp",
+   "ok": 18,
+   "of": 18,
+   "note": "value: the guide line (client px); snaps to 0.25 cm (9.45 px at 100 %); Esc not checked (Word's not recorded)",
+   "drags": [
+    {
+     "path": "out-back",
+     "ok": true,
+     "frames": 91,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 669.2956679382324,
+     "after": 707.0906679382324,
+     "outside_frames": 30
+    },
+    {
+     "path": "out-release",
+     "ok": true,
+     "frames": 56,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 669.2956679382324,
+     "after": 1387.4066679382324,
+     "outside_frames": 27,
+     "stuck": 0.0,
+     "post_frames": 45
+    },
+    {
+     "path": "shift-mid",
+     "ok": true,
+     "frames": 65,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": null,
+     "v0": 662.9626679382325,
+     "after": null
+    },
+    {
+     "path": "shift-held",
+     "ok": true,
+     "frames": 65,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": null,
+     "v0": 662.9626679382325,
+     "after": null
+    },
+    {
+     "path": "ctrl-mid",
+     "ok": true,
+     "frames": 65,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": null,
+     "v0": 662.9626679382325,
+     "after": null
+    },
+    {
+     "path": "ctrl-held",
+     "ok": true,
+     "frames": 65,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": null,
+     "v0": 662.9626679382325,
+     "after": null
+    },
+    {
+     "path": "alt-mid",
+     "ok": true,
+     "frames": 66,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": null,
+     "v0": 662.9626679382325,
+     "after": null
+    },
+    {
+     "path": "alt-held",
+     "ok": true,
+     "frames": 66,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": null,
+     "v0": 662.9626679382325,
+     "after": null
+    },
+    {
+     "path": "zoom 50: fast-right",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 258.1116679382324,
+     "after": 380.9456679382324
+    },
+    {
+     "path": "zoom 50: diagonal",
+     "ok": true,
+     "frames": 55,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": null,
+     "v0": 258.1116679382324,
+     "after": null
+    },
+    {
+     "path": "zoom 75: fast-right",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 359.3186679382324,
+     "after": 479.79066793823245
+    },
+    {
+     "path": "zoom 75: diagonal",
+     "ok": true,
+     "frames": 56,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": null,
+     "v0": 359.3186679382324,
+     "after": null
+    },
+    {
+     "path": "zoom 150: fast-right",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 662.9386679382325,
+     "after": 790.4976679382324
+    },
+    {
+     "path": "zoom 150: diagonal",
+     "ok": true,
+     "frames": 55,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": null,
+     "v0": 662.9386679382325,
+     "after": null
+    },
+    {
+     "path": "zoom 200: fast-right",
+     "ok": true,
+     "frames": 10,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 848.3216679382324,
+     "after": 961.7066679382324
+    },
+    {
+     "path": "zoom 200: diagonal",
+     "ok": true,
+     "frames": 56,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": null,
+     "v0": 848.3216679382324,
+     "after": null
+    },
+    {
+     "path": "zoom 400: fast-right",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 657.9756679382324,
+     "after": 771.3606679382324
+    },
+    {
+     "path": "zoom 400: diagonal",
+     "ok": true,
+     "frames": 56,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": null,
+     "v0": 657.9756679382324,
+     "after": null
+    }
+   ]
+  },
+  {
+   "anchor": "ruler: Linker Rand",
+   "ok": 17,
+   "of": 18,
+   "note": "value: the guide line (client px); snaps to 0.25 cm (9.45 px at 100 %); Esc not checked (Word's not recorded)",
+   "drags": [
+    {
+     "path": "out-back",
+     "ok": true,
+     "frames": 116,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 366.9346679382324,
+     "after": 404.7516679382324,
+     "outside_frames": 30
+    },
+    {
+     "path": "out-release",
+     "ok": false,
+     "frames": 69,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 366.9346679382324,
+     "after": 923.7316679382325,
+     "outside_frames": 27,
+     "stuck": 556.8,
+     "post_frames": 59,
+     "error": "the value moved after the button went up outside (stuck drag)",
+     "first_try": {
+      "path": "out-release",
+      "ok": false,
+      "frames": 70,
+      "follow": 0.0,
+      "jump": 0.0,
+      "against": 0,
+      "release": 0.0,
+      "outside_frames": 27,
+      "stuck": 556.8,
+      "post_frames": 58,
+      "error": "the value moved after the button went up outside (stuck drag)"
+     }
+    },
+    {
+     "path": "shift-mid",
+     "ok": true,
+     "frames": 65,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 360.6016679382324,
+     "after": 445.6626679382324
+    },
+    {
+     "path": "shift-held",
+     "ok": true,
+     "frames": 66,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 360.6016679382324,
+     "after": 445.6626679382324
+    },
+    {
+     "path": "ctrl-mid",
+     "ok": true,
+     "frames": 65,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 360.6016679382324,
+     "after": 445.6626679382324
+    },
+    {
+     "path": "ctrl-held",
+     "ok": true,
+     "frames": 66,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 360.6016679382324,
+     "after": 445.6626679382324
+    },
+    {
+     "path": "alt-mid",
+     "ok": true,
+     "frames": 65,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 360.6016679382324,
+     "after": 445.6626679382324
+    },
+    {
+     "path": "alt-held",
+     "ok": true,
+     "frames": 65,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 360.6016679382324,
+     "after": 450.0006679382324
+    },
+    {
+     "path": "zoom 50: fast-right",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 106.93096793823243,
+     "after": 225.0516679382324
+    },
+    {
+     "path": "zoom 50: diagonal",
+     "ok": true,
+     "frames": 56,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 106.93096793823243,
+     "after": 182.53166793823243
+    },
+    {
+     "path": "zoom 75: fast-right",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 132.54766793823242,
+     "after": 253.03566793823242
+    },
+    {
+     "path": "zoom 75: diagonal",
+     "ok": true,
+     "frames": 55,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 132.54766793823242,
+     "after": 210.51666793823242
+    },
+    {
+     "path": "zoom 150: fast-right",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 209.39766793823242,
+     "after": 322.81466793823245
+    },
+    {
+     "path": "zoom 150: diagonal",
+     "ok": true,
+     "frames": 55,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 209.39766793823242,
+     "after": 280.29566793823244
+    },
+    {
+     "path": "zoom 200: fast-right",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 243.5986679382324,
+     "after": 357.0276679382324
+    },
+    {
+     "path": "zoom 200: diagonal",
+     "ok": true,
+     "frames": 56,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 243.5986679382324,
+     "after": 319.2326679382324
+    },
+    {
+     "path": "zoom 400: fast-right",
+     "ok": true,
+     "frames": 10,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 464.53166793823243,
+     "after": 578.0036679382324
+    },
+    {
+     "path": "zoom 400: diagonal",
+     "ok": true,
+     "frames": 55,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 464.53166793823243,
+     "after": 540.2086679382325
+    }
+   ]
+  },
+  {
+   "anchor": "ruler: Oberer Rand",
+   "ok": 18,
+   "of": 18,
+   "note": "value: the guide line (client px); snaps to 0.25 cm (9.45 px at 100 %); Esc not checked (Word's not recorded)",
+   "drags": [
+    {
+     "path": "out-back",
+     "ok": true,
+     "frames": 102,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 317.1326717529297,
+     "after": 354.9496717529297,
+     "outside_frames": 29
+    },
+    {
+     "path": "out-release",
+     "ok": true,
+     "frames": 63,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 317.1326717529297,
+     "after": 783.9306717529297,
+     "outside_frames": 28,
+     "stuck": 0.0,
+     "post_frames": 51
+    },
+    {
+     "path": "shift-mid",
+     "ok": true,
+     "frames": 65,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 317.1326717529297,
+     "after": 354.9496717529297
+    },
+    {
+     "path": "shift-held",
+     "ok": true,
+     "frames": 66,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 317.1326717529297,
+     "after": 354.9496717529297
+    },
+    {
+     "path": "ctrl-mid",
+     "ok": true,
+     "frames": 65,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 317.1326717529297,
+     "after": 354.9496717529297
+    },
+    {
+     "path": "ctrl-held",
+     "ok": true,
+     "frames": 66,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 317.1326717529297,
+     "after": 354.9496717529297
+    },
+    {
+     "path": "alt-mid",
+     "ok": true,
+     "frames": 65,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 317.1326717529297,
+     "after": 354.9496717529297
+    },
+    {
+     "path": "alt-held",
+     "ok": true,
+     "frames": 65,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 317.1326717529297,
+     "after": 353.0656717529297
+    },
+    {
+     "path": "zoom 50: fast-right",
+     "ok": true,
+     "frames": 10,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 261.89977175292967,
+     "after": 261.9105717529297
+    },
+    {
+     "path": "zoom 50: diagonal",
+     "ok": true,
+     "frames": 55,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 261.89977175292967,
+     "after": 309.1546717529297
+    },
+    {
+     "path": "zoom 75: fast-right",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 289.5162717529297,
+     "after": 289.5325717529297
+    },
+    {
+     "path": "zoom 75: diagonal",
+     "ok": true,
+     "frames": 55,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 289.5162717529297,
+     "after": 339.13867175292967
+    },
+    {
+     "path": "zoom 150: fast-right",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 372.3656717529297,
+     "after": 372.39867175292966
+    },
+    {
+     "path": "zoom 150: diagonal",
+     "ok": true,
+     "frames": 56,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 372.3656717529297,
+     "after": 414.91767175292966
+    },
+    {
+     "path": "zoom 200: fast-right",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 427.5986717529297,
+     "after": 427.6426717529297
+    },
+    {
+     "path": "zoom 200: diagonal",
+     "ok": true,
+     "frames": 56,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 427.5986717529297,
+     "after": 484.3346717529297
+    },
+    {
+     "path": "zoom 400: fast-right",
+     "ok": true,
+     "frames": 10,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 562.5316717529297,
+     "after": 562.6176717529297
+    },
+    {
+     "path": "zoom 400: diagonal",
+     "ok": true,
+     "frames": 56,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 562.5316717529297,
+     "after": 600.4126717529297
+    }
+   ]
+  },
+  {
+   "anchor": "picture corner handle (inline)",
+   "ok": 18,
+   "of": 18,
+   "note": "word-images.docx, the inline picture (3:2); value: its size, proportional, so the width may grow 1.5 px per px down; Umschalt not checked (RaabeWrite frees the proportions, Word's not recorded)",
+   "drags": [
+    {
+     "path": "out-back",
+     "ok": true,
+     "frames": 96,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "w": 120,
+      "h": 80
+     },
+     "after": {
+      "w": 160,
+      "h": 106.66666666666666
+     },
+     "outside_frames": 29
+    },
+    {
+     "path": "out-release",
+     "ok": true,
+     "frames": 60,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "w": 120,
+      "h": 80
+     },
+     "after": {
+      "w": 905,
+      "h": 603.3333333333333
+     },
+     "outside_frames": 28,
+     "stuck": 0.0,
+     "post_frames": 48
+    },
+    {
+     "path": "shift-mid",
+     "ok": true,
+     "frames": 66,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "w": 120,
+      "h": 80
+     },
+     "after": {
+      "w": 210,
+      "h": 140
+     }
+    },
+    {
+     "path": "shift-held",
+     "ok": true,
+     "frames": 65,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": null,
+     "v0": {
+      "w": 120,
+      "h": 80
+     },
+     "after": {
+      "w": 210,
+      "h": 116
+     }
+    },
+    {
+     "path": "ctrl-mid",
+     "ok": true,
+     "frames": 66,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "w": 120,
+      "h": 80
+     },
+     "after": {
+      "w": 210,
+      "h": 140
+     }
+    },
+    {
+     "path": "ctrl-held",
+     "ok": true,
+     "frames": 65,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "w": 120,
+      "h": 80
+     },
+     "after": {
+      "w": 210,
+      "h": 140
+     }
+    },
+    {
+     "path": "alt-mid",
+     "ok": true,
+     "frames": 65,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "w": 120,
+      "h": 80
+     },
+     "after": {
+      "w": 210,
+      "h": 140
+     }
+    },
+    {
+     "path": "alt-held",
+     "ok": true,
+     "frames": 67,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "w": 120,
+      "h": 80
+     },
+     "after": {
+      "w": 210,
+      "h": 140
+     }
+    },
+    {
+     "path": "zoom 50: fast-right",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "w": 60,
+      "h": 40
+     },
+     "after": {
+      "w": 180,
+      "h": 120
+     }
+    },
+    {
+     "path": "zoom 50: diagonal",
+     "ok": true,
+     "frames": 56,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "w": 60,
+      "h": 40
+     },
+     "after": {
+      "w": 135,
+      "h": 90
+     }
+    },
+    {
+     "path": "zoom 75: fast-right",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "w": 90,
+      "h": 60
+     },
+     "after": {
+      "w": 210,
+      "h": 140
+     }
+    },
+    {
+     "path": "zoom 75: diagonal",
+     "ok": true,
+     "frames": 56,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "w": 90,
+      "h": 60
+     },
+     "after": {
+      "w": 165,
+      "h": 110
+     }
+    },
+    {
+     "path": "zoom 150: fast-right",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "w": 180,
+      "h": 120
+     },
+     "after": {
+      "w": 300,
+      "h": 199.99999999999997
+     }
+    },
+    {
+     "path": "zoom 150: diagonal",
+     "ok": true,
+     "frames": 55,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "w": 180,
+      "h": 120
+     },
+     "after": {
+      "w": 255,
+      "h": 170
+     }
+    },
+    {
+     "path": "zoom 200: fast-right",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "w": 240,
+      "h": 160
+     },
+     "after": {
+      "w": 360,
+      "h": 240
+     }
+    },
+    {
+     "path": "zoom 200: diagonal",
+     "ok": true,
+     "frames": 55,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "w": 240,
+      "h": 160
+     },
+     "after": {
+      "w": 315,
+      "h": 210
+     }
+    },
+    {
+     "path": "zoom 400: fast-right",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "w": 480,
+      "h": 320
+     },
+     "after": {
+      "w": 600,
+      "h": 400
+     }
+    },
+    {
+     "path": "zoom 400: diagonal",
+     "ok": true,
+     "frames": 56,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "w": 480,
+      "h": 320
+     },
+     "after": {
+      "w": 555,
+      "h": 370
+     }
+    }
+   ]
+  },
+  {
+   "anchor": "picture side handle (floating)",
+   "ok": 18,
+   "of": 18,
+   "note": "word-images.docx, the square-wrapped picture; snaps to the margins within 6 px",
+   "drags": [
+    {
+     "path": "out-back",
+     "ok": true,
+     "frames": 65,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 200,
+     "after": 240,
+     "outside_frames": 30
+    },
+    {
+     "path": "out-release",
+     "ok": true,
+     "frames": 44,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 200,
+     "after": 621,
+     "outside_frames": 27,
+     "stuck": 0.0,
+     "post_frames": 32
+    },
+    {
+     "path": "shift-mid",
+     "ok": true,
+     "frames": 66,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 200,
+     "after": 290
+    },
+    {
+     "path": "shift-held",
+     "ok": true,
+     "frames": 66,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 200,
+     "after": 290
+    },
+    {
+     "path": "ctrl-mid",
+     "ok": true,
+     "frames": 66,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 200,
+     "after": 290
+    },
+    {
+     "path": "ctrl-held",
+     "ok": true,
+     "frames": 66,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 200,
+     "after": 380
+    },
+    {
+     "path": "alt-mid",
+     "ok": true,
+     "frames": 65,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 200,
+     "after": 290
+    },
+    {
+     "path": "alt-held",
+     "ok": true,
+     "frames": 66,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 200,
+     "after": 290
+    },
+    {
+     "path": "zoom 50: fast-right",
+     "ok": true,
+     "frames": 13,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 100,
+     "after": 220
+    },
+    {
+     "path": "zoom 50: diagonal",
+     "ok": true,
+     "frames": 59,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 100,
+     "after": 175
+    },
+    {
+     "path": "zoom 75: fast-right",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 150,
+     "after": 270
+    },
+    {
+     "path": "zoom 75: diagonal",
+     "ok": true,
+     "frames": 61,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 150,
+     "after": 225
+    },
+    {
+     "path": "zoom 150: fast-right",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 300,
+     "after": 420
+    },
+    {
+     "path": "zoom 150: diagonal",
+     "ok": true,
+     "frames": 62,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 300,
+     "after": 375
+    },
+    {
+     "path": "zoom 200: fast-right",
+     "ok": true,
+     "frames": 13,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 400,
+     "after": 520
+    },
+    {
+     "path": "zoom 200: diagonal",
+     "ok": true,
+     "frames": 58,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 400,
+     "after": 475
+    },
+    {
+     "path": "zoom 400: fast-right",
+     "ok": true,
+     "frames": 13,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 800,
+     "after": 920
+    },
+    {
+     "path": "zoom 400: diagonal",
+     "ok": true,
+     "frames": 58,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 800,
+     "after": 875
+    }
+   ]
+  },
+  {
+   "anchor": "picture move (floating)",
+   "ok": 16,
+   "of": 18,
+   "note": "word-images.docx; Word: Strg pressed during the drag moves (no copy), let go outside the window the picture stays (D-128)",
+   "drags": [
+    {
+     "path": "out-back",
+     "ok": true,
+     "frames": 74,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 771.7354166666665,
+      "y": 496.939653523763
+     },
+     "after": {
+      "x": 811.7354166666667,
+      "y": 496.93965352376557
+     },
+     "outside_frames": 30,
+     "autoscrolled": 0.0,
+     "copies": 0
+    },
+    {
+     "path": "out-release",
+     "ok": true,
+     "frames": 48,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 771.7354166666665,
+      "y": 496.939653523763
+     },
+     "after": {
+      "x": 771.7354166666665,
+      "y": 496.939653523763
+     },
+     "outside_frames": 27,
+     "autoscrolled": 0.0,
+     "stuck": 0.0,
+     "post_frames": 36,
+     "copies": 0
+    },
+    {
+     "path": "shift-mid",
+     "ok": true,
+     "frames": 71,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 765.4020884195962,
+      "y": 496.939653523763
+     },
+     "after": {
+      "x": 855.4020884195963,
+      "y": 532.9396535237665
+     },
+     "copies": 0
+    },
+    {
+     "path": "shift-held",
+     "ok": true,
+     "frames": 73,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 765.4020884195962,
+      "y": 496.939653523763
+     },
+     "after": {
+      "x": 855.4020884195963,
+      "y": 496.9396535237665
+     },
+     "copies": 0
+    },
+    {
+     "path": "ctrl-mid",
+     "ok": true,
+     "frames": 67,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 765.4020884195962,
+      "y": 496.939653523763
+     },
+     "after": {
+      "x": 855.4020884195963,
+      "y": 532.9396535237665
+     },
+     "copies": 0
+    },
+    {
+     "path": "ctrl-held",
+     "ok": true,
+     "frames": 71,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 765.4020884195962,
+      "y": 496.939653523763
+     },
+     "after": {
+      "x": 855.4020884195963,
+      "y": 532.9396535237665
+     },
+     "copies": 0
+    },
+    {
+     "path": "alt-mid",
+     "ok": true,
+     "frames": 69,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 765.4020884195962,
+      "y": 496.939653523763
+     },
+     "after": {
+      "x": 855.4020884195963,
+      "y": 532.9396535237665
+     },
+     "copies": 0
+    },
+    {
+     "path": "alt-held",
+     "ok": true,
+     "frames": 73,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 765.4020884195962,
+      "y": 496.939653523763
+     },
+     "after": {
+      "x": 855.4020884195963,
+      "y": 532.9396535237665
+     },
+     "copies": 0
+    },
+    {
+     "path": "zoom 50: fast-right",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 721.862520345052,
+      "y": 351.80316263834635
+     },
+     "after": {
+      "x": 841.8625203450521,
+      "y": 351.8031626383465
+     },
+     "copies": 0
+    },
+    {
+     "path": "zoom 50: diagonal",
+     "ok": true,
+     "frames": 63,
+     "follow": 0.5,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 721.862520345052,
+      "y": 351.80316263834635
+     },
+     "after": {
+      "x": 796.8625203450521,
+      "y": 401.80316263834777
+     },
+     "copies": 0
+    },
+    {
+     "path": "zoom 75: fast-right",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 747.4708435058593,
+      "y": 424.3714080810547
+     },
+     "after": {
+      "x": 867.4708435058594,
+      "y": 424.37140808105494
+     },
+     "copies": 0
+    },
+    {
+     "path": "zoom 75: diagonal",
+     "ok": true,
+     "frames": 62,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 747.4708435058593,
+      "y": 424.3714080810547
+     },
+     "after": {
+      "x": 822.470843505861,
+      "y": 474.3714080810561
+     },
+     "copies": 0
+    },
+    {
+     "path": "zoom 150: fast-right",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 816.5979179382323,
+      "y": 642.0761444091797
+     },
+     "after": {
+      "x": 936.5979179382325,
+      "y": 642.0761444091802
+     },
+     "copies": 0
+    },
+    {
+     "path": "zoom 150: diagonal",
+     "ok": true,
+     "frames": 58,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 816.5979179382323,
+      "y": 642.0761444091797
+     },
+     "after": {
+      "x": 891.5979179382355,
+      "y": 692.0761444091854
+     },
+     "copies": 0
+    },
+    {
+     "path": "zoom 200: fast-right",
+     "ok": false,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 120.0,
+     "v0": {
+      "x": 1053.2000012715655,
+      "y": 787.2126352945963
+     },
+     "after": {
+      "x": 1053.2000012715655,
+      "y": 787.2126352945963
+     },
+     "copies": 0,
+     "first_try": {
+      "path": "fast-right",
+      "ok": false,
+      "frames": 12,
+      "follow": 0.0,
+      "jump": 0.0,
+      "against": 0,
+      "release": 120.0,
+      "copies": 0
+     }
+    },
+    {
+     "path": "zoom 200: diagonal",
+     "ok": false,
+     "frames": 57,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 75.0,
+     "v0": {
+      "x": 1053.2000012715655,
+      "y": 787.2126352945963
+     },
+     "after": {
+      "x": 1053.2000012715655,
+      "y": 787.2126352945963
+     },
+     "copies": 0,
+     "first_try": {
+      "path": "diagonal",
+      "ok": false,
+      "frames": 58,
+      "follow": 0.0,
+      "jump": 0.0,
+      "against": 0,
+      "release": 75.0,
+      "copies": 0
+     }
+    },
+    {
+     "path": "zoom 400: fast-right",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 259.73329264322865,
+      "y": 296.42524007161455
+     },
+     "after": {
+      "x": 379.7332926432291,
+      "y": 296.4252400716159
+     },
+     "copies": 0
+    },
+    {
+     "path": "zoom 400: diagonal",
+     "ok": true,
+     "frames": 58,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 259.73329264322865,
+      "y": 296.42524007161455
+     },
+     "after": {
+      "x": 334.7332926432291,
+      "y": 346.4252400716259
+     },
+     "copies": 0
+    }
+   ]
+  },
+  {
+   "anchor": "picture rotation handle",
+   "ok": 18,
+   "of": 18,
+   "note": "value: degrees; expected: the angle of the pointer around the middle",
+   "drags": [
+    {
+     "path": "out-back",
+     "ok": true,
+     "frames": 73,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": 25,
+     "outside_frames": 30
+    },
+    {
+     "path": "out-release",
+     "ok": true,
+     "frames": 48,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": 81,
+     "outside_frames": 27,
+     "stuck": 0.0,
+     "post_frames": 36
+    },
+    {
+     "path": "shift-mid",
+     "ok": true,
+     "frames": 72,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": 62
+    },
+    {
+     "path": "shift-held",
+     "ok": true,
+     "frames": 72,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": 60
+    },
+    {
+     "path": "ctrl-mid",
+     "ok": true,
+     "frames": 85,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": 62
+    },
+    {
+     "path": "ctrl-held",
+     "ok": true,
+     "frames": 69,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": 62
+    },
+    {
+     "path": "alt-mid",
+     "ok": true,
+     "frames": 73,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": 62
+    },
+    {
+     "path": "alt-held",
+     "ok": true,
+     "frames": 69,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": 62
+    },
+    {
+     "path": "zoom 50: fast-right",
+     "ok": true,
+     "frames": 14,
+     "follow": 0.55,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": 71
+    },
+    {
+     "path": "zoom 50: diagonal",
+     "ok": true,
+     "frames": 65,
+     "follow": 0.56,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": 96
+    },
+    {
+     "path": "zoom 75: fast-right",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": 62
+    },
+    {
+     "path": "zoom 75: diagonal",
+     "ok": true,
+     "frames": 61,
+     "follow": 0.9,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": 80
+    },
+    {
+     "path": "zoom 150: fast-right",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": 43
+    },
+    {
+     "path": "zoom 150: diagonal",
+     "ok": true,
+     "frames": 70,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": 44
+    },
+    {
+     "path": "zoom 200: fast-right",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": 36
+    },
+    {
+     "path": "zoom 200: diagonal",
+     "ok": true,
+     "frames": 57,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": 32
+    },
+    {
+     "path": "zoom 400: fast-right",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": 20
+    },
+    {
+     "path": "zoom 400: diagonal",
+     "ok": true,
+     "frames": 65,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 0,
+     "after": 15
+    }
+   ]
+  },
+  {
+   "anchor": "table column border",
+   "ok": 17,
+   "of": 18,
+   "note": "word-rich.docx, the border right of the first cell; the next column keeps at least 12 pt",
+   "drags": [
+    {
+     "path": "out-back",
+     "ok": false,
+     "frames": 105,
+     "follow": 428.4,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 499.3354166666666,
+     "after": 212.93541666666664,
+     "worst_follow": {
+      "key": "v",
+      "dx": 142.0,
+      "dy": 0.0,
+      "v": 212.94,
+      "want": 641.34,
+      "mods": 0
+     },
+     "outside_frames": 29,
+     "first_try": {
+      "path": "out-back",
+      "ok": false,
+      "frames": 105,
+      "follow": 428.4,
+      "jump": 0.0,
+      "against": 0,
+      "release": 0.0,
+      "worst_follow": {
+       "key": "v",
+       "dx": 142.0,
+       "dy": 0.0,
+       "v": 212.94,
+       "want": 641.34,
+       "mods": 0
+      },
+      "outside_frames": 29
+     }
+    },
+    {
+     "path": "out-release",
+     "ok": true,
+     "frames": 63,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 499.3354166666666,
+     "after": 785.7354166666667,
+     "outside_frames": 27,
+     "stuck": 0.0,
+     "post_frames": 52
+    },
+    {
+     "path": "shift-mid",
+     "ok": true,
+     "frames": 66,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 493.0020884195963,
+     "after": 583.0020884195962
+    },
+    {
+     "path": "shift-held",
+     "ok": true,
+     "frames": 65,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 493.0020884195963,
+     "after": 583.0020884195962
+    },
+    {
+     "path": "ctrl-mid",
+     "ok": true,
+     "frames": 66,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 493.0020884195963,
+     "after": 583.0020884195962
+    },
+    {
+     "path": "ctrl-held",
+     "ok": true,
+     "frames": 66,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 493.0020884195963,
+     "after": 583.0020884195962
+    },
+    {
+     "path": "alt-mid",
+     "ok": true,
+     "frames": 66,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 493.0020884195963,
+     "after": 583.0020884195962
+    },
+    {
+     "path": "alt-held",
+     "ok": true,
+     "frames": 65,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 493.0020884195963,
+     "after": 583.0020884195962
+    },
+    {
+     "path": "zoom 50: fast-right",
+     "ok": true,
+     "frames": 10,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 585.662520345052,
+     "after": 705.6625203450521
+    },
+    {
+     "path": "zoom 50: diagonal",
+     "ok": true,
+     "frames": 55,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 585.662520345052,
+     "after": 660.6625203450521
+    },
+    {
+     "path": "zoom 75: fast-right",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 543.1708435058594,
+     "after": 663.1708435058594
+    },
+    {
+     "path": "zoom 75: diagonal",
+     "ok": true,
+     "frames": 55,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 543.1708435058594,
+     "after": 618.1708435058592
+    },
+    {
+     "path": "zoom 150: fast-right",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 641.9666679382324,
+     "after": 761.9666679382324
+    },
+    {
+     "path": "zoom 150: diagonal",
+     "ok": true,
+     "frames": 56,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 641.9666679382324,
+     "after": 716.9666679382324
+    },
+    {
+     "path": "zoom 200: fast-right",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 848.4000012715657,
+     "after": 968.4000012715657
+    },
+    {
+     "path": "zoom 200: diagonal",
+     "ok": true,
+     "frames": 56,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 848.4000012715657,
+     "after": 923.4000012715657
+    },
+    {
+     "path": "zoom 400: fast-right",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 658.7999796549477,
+     "after": 778.7999796549477
+    },
+    {
+     "path": "zoom 400: diagonal",
+     "ok": true,
+     "frames": 55,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 658.7999796549477,
+     "after": 733.7999796549477
+    }
+   ]
+  },
+  {
+   "anchor": "table row border",
+   "ok": 18,
+   "of": 18,
+   "note": "word-rich.docx, the first row's bottom border; the row never gets lower than its text",
+   "drags": [
+    {
+     "path": "out-back",
+     "ok": true,
+     "frames": 83,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 550.0089894612629,
+     "after": 590.0213049994575,
+     "outside_frames": 30
+    },
+    {
+     "path": "out-release",
+     "ok": true,
+     "frames": 53,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 550.0089894612629,
+     "after": 1193.0213049994575,
+     "outside_frames": 27,
+     "stuck": 0.0,
+     "post_frames": 41
+    },
+    {
+     "path": "shift-mid",
+     "ok": true,
+     "frames": 67,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 550.0089894612629,
+     "after": 586.0213049994575
+    },
+    {
+     "path": "shift-held",
+     "ok": true,
+     "frames": 65,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 550.0089894612629,
+     "after": 586.0213049994575
+    },
+    {
+     "path": "ctrl-mid",
+     "ok": true,
+     "frames": 65,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 550.0089894612629,
+     "after": 586.0213049994575
+    },
+    {
+     "path": "ctrl-held",
+     "ok": true,
+     "frames": 65,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 550.0089894612629,
+     "after": 586.0213049994575
+    },
+    {
+     "path": "alt-mid",
+     "ok": true,
+     "frames": 67,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 550.0089894612629,
+     "after": 586.0213049994575
+    },
+    {
+     "path": "alt-held",
+     "ok": true,
+     "frames": 65,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 550.0089894612629,
+     "after": 586.0213049994575
+    },
+    {
+     "path": "zoom 50: fast-right",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 378.3378306070963,
+     "after": 378.3439883761936
+    },
+    {
+     "path": "zoom 50: diagonal",
+     "ok": true,
+     "frames": 56,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 378.3378306070963,
+     "after": 428.3439883761936
+    },
+    {
+     "path": "zoom 75: fast-right",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 464.17341003417965,
+     "after": 464.18264668782547
+    },
+    {
+     "path": "zoom 75: diagonal",
+     "ok": true,
+     "frames": 57,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 464.17341003417965,
+     "after": 514.1826466878255
+    },
+    {
+     "path": "zoom 150: fast-right",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 721.6801483154296,
+     "after": 721.6986216227212
+    },
+    {
+     "path": "zoom 150: diagonal",
+     "ok": true,
+     "frames": 55,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 721.6801483154296,
+     "after": 771.6986216227212
+    },
+    {
+     "path": "zoom 200: fast-right",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 893.3513071695962,
+     "after": 893.3759382459851
+    },
+    {
+     "path": "zoom 200: diagonal",
+     "ok": true,
+     "frames": 56,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 893.3513071695962,
+     "after": 943.3759382459851
+    },
+    {
+     "path": "zoom 400: fast-right",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 562.7025838216143,
+     "after": 562.7518459743922
+    },
+    {
+     "path": "zoom 400: diagonal",
+     "ok": true,
+     "frames": 56,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 562.7025838216143,
+     "after": 612.6185126410587
+    }
+   ]
+  },
+  {
+   "anchor": "select text",
+   "ok": 16,
+   "of": 18,
+   "note": "value: the caret (selection's head); Word's whole-word selection lets it run ahead by a word, a line; not the long path: it reaches the paragraph's short last line, where the caret rightly stops at the line's end",
+   "drags": [
+    {
+     "path": "out-back",
+     "ok": false,
+     "frames": 99,
+     "follow": 0.0,
+     "jump": 122.18,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 495.7400364583333,
+      "y": 370.210161336263
+     },
+     "after": {
+      "x": 527.6170572916667,
+      "y": 411.4153238932292
+     },
+     "worst_jump": {
+      "key": "y",
+      "dx": 0.0,
+      "dy": 823.3,
+      "from": 1075.1,
+      "to": 1270.62,
+      "moved": 0.0,
+      "mods": 0
+     },
+     "outside_frames": 30,
+     "autoscrolled": 1122.0,
+     "first_try": {
+      "path": "out-back",
+      "ok": false,
+      "frames": 99,
+      "follow": 0.0,
+      "jump": 122.18,
+      "against": 0,
+      "release": 0.0,
+      "worst_jump": {
+       "key": "y",
+       "dx": 0.0,
+       "dy": 823.3,
+       "from": 1093.1,
+       "to": 1288.62,
+       "moved": 0.0,
+       "mods": 0
+      },
+      "outside_frames": 29,
+      "autoscrolled": 1115.3
+     }
+    },
+    {
+     "path": "out-release",
+     "ok": false,
+     "frames": 61,
+     "follow": 0.0,
+     "jump": 122.18,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 495.7400364583333,
+      "y": 370.210161336263
+     },
+     "after": {
+      "x": 545.4920572916667,
+      "y": 1186.2825113932292
+     },
+     "worst_jump": {
+      "key": "y",
+      "dx": 0.0,
+      "dy": 823.3,
+      "from": 1075.1,
+      "to": 1270.62,
+      "moved": 0.0,
+      "mods": 0
+     },
+     "outside_frames": 27,
+     "autoscrolled": 1020.7,
+     "stuck": 0.0,
+     "post_frames": 49,
+     "first_try": {
+      "path": "out-release",
+      "ok": false,
+      "frames": 61,
+      "follow": 0.0,
+      "jump": 122.18,
+      "against": 0,
+      "release": 0.0,
+      "worst_jump": {
+       "key": "y",
+       "dx": 0.0,
+       "dy": 823.3,
+       "from": 1075.1,
+       "to": 1270.62,
+       "moved": 0.0,
+       "mods": 0
+      },
+      "outside_frames": 28,
+      "autoscrolled": 1062.0,
+      "stuck": 0.0,
+      "post_frames": 50
+     }
+    },
+    {
+     "path": "shift-mid",
+     "ok": true,
+     "frames": 65,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 489.406708211263,
+      "y": 370.210161336263
+     },
+     "after": {
+      "x": 601.923223836263,
+      "y": 408.882036336263
+     }
+    },
+    {
+     "path": "shift-held",
+     "ok": true,
+     "frames": 66,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 489.406708211263,
+      "y": 370.210161336263
+     },
+     "after": {
+      "x": 601.923223836263,
+      "y": 408.882036336263
+     }
+    },
+    {
+     "path": "ctrl-mid",
+     "ok": true,
+     "frames": 65,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 489.406708211263,
+      "y": 370.210161336263
+     },
+     "after": {
+      "x": 601.923223836263,
+      "y": 408.882036336263
+     }
+    },
+    {
+     "path": "ctrl-held",
+     "ok": true,
+     "frames": 65,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 489.406708211263,
+      "y": 370.210161336263
+     },
+     "after": {
+      "x": 601.923223836263,
+      "y": 408.882036336263
+     }
+    },
+    {
+     "path": "alt-mid",
+     "ok": true,
+     "frames": 66,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 489.406708211263,
+      "y": 370.210161336263
+     },
+     "after": {
+      "x": 601.923223836263,
+      "y": 408.882036336263
+     }
+    },
+    {
+     "path": "alt-held",
+     "ok": true,
+     "frames": 66,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 489.406708211263,
+      "y": 370.210161336263
+     },
+     "after": {
+      "x": 601.923223836263,
+      "y": 408.882036336263
+     }
+    },
+    {
+     "path": "zoom 50: fast-right",
+     "ok": true,
+     "frames": 10,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 171.33356116739907,
+      "y": 288.43841654459635
+     },
+     "after": {
+      "x": 295.4129882507324,
+      "y": 288.43841654459635
+     }
+    },
+    {
+     "path": "zoom 50: diagonal",
+     "ok": true,
+     "frames": 57,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 171.33356116739907,
+      "y": 288.43841654459635
+     },
+     "after": {
+      "x": 249.01100387573243,
+      "y": 342.11159362792966
+     }
+    },
+    {
+     "path": "zoom 75: fast-right",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 229.15138278198242,
+      "y": 329.32428894042965
+     },
+     "after": {
+      "x": 383.6079257507324,
+      "y": 329.32428894042965
+     }
+    },
+    {
+     "path": "zoom 75: diagonal",
+     "ok": true,
+     "frames": 55,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 229.15138278198242,
+      "y": 329.32428894042965
+     },
+     "after": {
+      "x": 312.50214840698237,
+      "y": 372.83014831542965
+     }
+    },
+    {
+     "path": "zoom 150: fast-right",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 402.6048476257324,
+      "y": 451.9819061279296
+     },
+     "after": {
+      "x": 561.6214491882324,
+      "y": 451.9819061279296
+     }
+    },
+    {
+     "path": "zoom 150: diagonal",
+     "ok": true,
+     "frames": 55,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 402.6048476257324,
+      "y": 451.9819061279296
+     },
+     "after": {
+      "x": 571.3796210632324,
+      "y": 509.9897186279296
+     }
+    },
+    {
+     "path": "zoom 200: fast-right",
+     "ok": true,
+     "frames": 12,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 501.20924085489906,
+      "y": 533.7536509195963
+     },
+     "after": {
+      "x": 660.3654908548991,
+      "y": 533.7536509195963
+     }
+    },
+    {
+     "path": "zoom 200: diagonal",
+     "ok": true,
+     "frames": 56,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 501.20924085489906,
+      "y": 533.7536509195963
+     },
+     "after": {
+      "x": 624.191490854899,
+      "y": 572.4255259195963
+     }
+    },
+    {
+     "path": "zoom 400: fast-right",
+     "ok": true,
+     "frames": 11,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 979.7518137715657,
+      "y": 860.8406300862629
+     },
+     "after": {
+      "x": 1091.0408762715656,
+      "y": 860.8406300862629
+     }
+    },
+    {
+     "path": "zoom 400: diagonal",
+     "ok": true,
+     "frames": 55,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": {
+      "x": 979.7518137715657,
+      "y": 860.8406300862629
+     },
+     "after": {
+      "x": 1225.7163137715656,
+      "y": 938.1843800862629
+     }
+    }
+   ]
+  },
+  {
+   "anchor": "zoom slider",
+   "ok": 8,
+   "of": 8,
+   "note": "value: the thumb's middle (client px); Word cannot undo zooming",
+   "drags": [
+    {
+     "path": "out-back",
+     "ok": true,
+     "frames": 46,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1195.3333740234375,
+     "after": 1235.2333740234376,
+     "outside_frames": 30
+    },
+    {
+     "path": "out-release",
+     "ok": true,
+     "frames": 34,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1195.3333740234375,
+     "after": 1237.3333740234375,
+     "outside_frames": 27,
+     "stuck": 0.0,
+     "post_frames": 22
+    },
+    {
+     "path": "shift-mid",
+     "ok": true,
+     "frames": 65,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1182.666748046875,
+     "after": 1224.666748046875
+    },
+    {
+     "path": "shift-held",
+     "ok": true,
+     "frames": 68,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1182.666748046875,
+     "after": 1224.666748046875
+    },
+    {
+     "path": "ctrl-mid",
+     "ok": true,
+     "frames": 66,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1182.666748046875,
+     "after": 1224.666748046875
+    },
+    {
+     "path": "ctrl-held",
+     "ok": true,
+     "frames": 66,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1182.666748046875,
+     "after": 1224.666748046875
+    },
+    {
+     "path": "alt-mid",
+     "ok": true,
+     "frames": 66,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1182.666748046875,
+     "after": 1224.666748046875
+    },
+    {
+     "path": "alt-held",
+     "ok": true,
+     "frames": 65,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 1182.666748046875,
+     "after": 1224.666748046875
+    }
+   ]
+  },
+  {
+   "anchor": "vertical scroll bar thumb",
+   "ok": 7,
+   "of": 8,
+   "note": "value: the thumb's top (from scrollTop and the scroll bar's geometry); not the long path: Windows' scroll bars put the thumb back when the pointer goes far to the side",
+   "drags": [
+    {
+     "path": "out-back",
+     "ok": false,
+     "frames": 107,
+     "follow": 11.3,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 223.6666717529297,
+     "after": 275.10595678012595,
+     "worst_follow": {
+      "key": "v",
+      "dx": 0.0,
+      "dy": 40.0,
+      "v": 275.11,
+      "want": 263.67,
+      "mods": 0
+     },
+     "outside_frames": 29,
+     "first_try": {
+      "path": "out-back",
+      "ok": false,
+      "frames": 106,
+      "follow": 11.3,
+      "jump": 0.0,
+      "against": 0,
+      "release": 0.0,
+      "worst_follow": {
+       "key": "v",
+       "dx": 0.0,
+       "dy": 40.0,
+       "v": 275.11,
+       "want": 263.67,
+       "mods": 0
+      },
+      "outside_frames": 29
+     }
+    },
+    {
+     "path": "out-release",
+     "ok": true,
+     "frames": 63,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 223.6666717529297,
+     "after": 1076.6716251897356,
+     "outside_frames": 26,
+     "stuck": 0.0,
+     "post_frames": 56
+    },
+    {
+     "path": "shift-mid",
+     "ok": true,
+     "frames": 64,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 223.6666717529297,
+     "after": 259.5873488654087
+    },
+    {
+     "path": "shift-held",
+     "ok": true,
+     "frames": 64,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 223.6666717529297,
+     "after": 259.5873488654087
+    },
+    {
+     "path": "ctrl-mid",
+     "ok": true,
+     "frames": 64,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 223.6666717529297,
+     "after": 259.5873488654087
+    },
+    {
+     "path": "ctrl-held",
+     "ok": true,
+     "frames": 64,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 223.6666717529297,
+     "after": 259.5873488654087
+    },
+    {
+     "path": "alt-mid",
+     "ok": true,
+     "frames": 64,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 223.6666717529297,
+     "after": 259.5873488654087
+    },
+    {
+     "path": "alt-held",
+     "ok": true,
+     "frames": 64,
+     "follow": 0.0,
+     "jump": 0.0,
+     "against": 0,
+     "release": 0.0,
+     "v0": 223.6666717529297,
+     "after": 259.5873488654087
+    }
+   ]
+  }
+ ]
+}

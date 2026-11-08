@@ -3101,3 +3101,132 @@ Built or fixed on the way:
   pushed the slider about 6 px under the pointer.
 - The test's own errors found on the way (a flipped shape's size, the browser slider's mapping, a probe's braces, the
   thumbnail's place after the drop) were fixed in the test, not in the app.
+
+## D-127 Drag test: out of the window, modifier keys mid-drag, other zoom levels (2026-11-09)
+
+The drag test's first rule (D-096, D-110): no sudden, unwanted jumps. Three path families that D-080 named and the
+runs of D-096/D-110 left out are now part of `feellab/dragtest.py` and the three drag scripts
+(`drag_write.py`, `drag_calc.py`, `drag_present.py`, `--paths out,mods,zoom`), for every anchor already in the tests:
+
+- **out**: from the anchor out of the window (60 px past its right or bottom edge, by the anchor's main direction),
+  0.8 s there, back to 40 px from the start, released inside (`out-back`); and the same with the button let go outside
+  and the way back moved without a button (`out-release`). Checked: the value is under the pointer again near the start,
+  no frame jumps more than the pointer moved (plus what the view scrolled), the value is the one shown when the button
+  went up, nothing moves any more once the button is up (no stuck drag), and where Office's behaviour is known, whether
+  the view scrolls while the pointer is outside. The scripts' window is placed at 2000 x 1700 screen px so that there
+  is room right of and below it; `feellab/catcher.py` puts plain windows of our own there, which take nothing dropped on
+  them, so a release outside never reaches another program or the desktop (Excel hands cells dragged out of its window
+  to the system's drag and drop).
+- **mods**: a diagonal path with Umschalt, Strg or Alt pressed at a third and let go at two thirds (`shift-mid` ...),
+  or pressed at half and still held when the button goes up (`shift-held` ...). The expectation switches with the keys
+  the app's own pointer events report: per anchor "same", a rule (along one axis, keeping the proportions, around the
+  middle, 15-degree steps, the cell grid) or "skip" (Umschalt's insertion line when moving cells). A jump is allowed in
+  the frame where the keys change, if it lands where the rule says. Strg held at the release must make one copy where
+  Office makes one (counted).
+- **zoom**: the diagonal and fast-right paths at 50, 75, 150, 200 and 400 % for every anchor in the document (not the
+  app's own chrome: zoom slider, scroll bar, splitters, sheet tabs, thumbnails); snapping distances and cell steps grow
+  with the zoom; a start point outside the window is scrolled into view first.
+
+How it runs:
+- Real input under the lock as before, and a new **DevTools mode** (`--cdp`): the app starts off screen without the
+  focus and gets trusted mouse and key events through `Input.dispatchMouseEvent`/`dispatchKeyEvent`; no real-input lock,
+  nothing on the screen moves. The mods and zoom families ran this way; the out family and the scroll bar need the
+  real mouse (capture, the window's edge, the browser's own scroll bar) and ran under the lock.
+- Each script uses DevTools ports of its own (9472 and 9473, 9481 or RAABE_DRAG_PORT, 9491 and 9492), so a parallel run of the behaviour catalogue cannot
+  connect to the wrong app.
+- The PC is shared: other sessions' Office windows came to the front every second or two during this night's runs,
+  and Windows takes the mouse capture from the app then. A drag during which another window was in front is done
+  again (up to four times); keys are pressed only while our window is in front; a drag that fails once and passes the
+  second time is reported as flaky (both results kept), one that fails twice as failed.
+- Office's side: `probe_excel_drag_mods.py`, `probe_word_drag_mods.py`, `probe_powerpoint_drag_mods.py` drag the same
+  anchors along the same variants in our own Office instance (`feellab/officedrag.py`) and read the result through COM.
+
+## D-128 Modifier keys mid-drag and leaving the window: what the apps now do (2026-11-09)
+
+What Office does (our own instances, real input, `results/2026-11-09-*-drag-mods.json`; partly incomplete, see below):
+- **Excel:** a column's or row's border ignores Umschalt, Strg and Alt; dragged out of the window and back it follows
+  the pointer again; **let go outside the window it keeps its size** (the drag is dropped). Excel does not scroll while
+  a border is dragged. The fill handle with Strg held at the release copies instead of continuing the series
+  (`x1` instead of `x2`); with Umschalt held it inserts (nothing filled). A chart moved with Umschalt held goes along
+  one axis; with Strg held at the release a copy is made and the chart stays. Pressing Alt during a fill or chart drag
+  ended the drag without effect in these runs (Excel's menu mode); the column border went on.
+- **Word** (floating picture): moved with Umschalt held it goes along one axis; **Strg pressed only during the drag
+  moves it, no copy**; with Alt it lands a little off the snapped place (no snapping); out of the window and back it
+  follows; **let go outside the window it stays where it was** (the picture became a system drag and drop that our
+  catcher window refused). Its side handle with Strg sizes around the middle; let go outside, the size is applied.
+  The table borders, the inline picture's corner, the rotation and text selection did not get through (see below).
+- **PowerPoint:** not recorded (see below). Where nothing was recorded the rules follow Office's documented behaviour:
+  Umschalt moves along one axis and keeps a corner's proportions, Strg copies a moved object and sizes it around its
+  middle, Alt turns snapping off, Umschalt turns in 15-degree steps. RaabePresent already did all of this (its drags
+  passed every modifier path before any change).
+
+Built (each with lasting cases in the drag scripts):
+- **Modifier keys apply at once.** RaabeCalc's shapes and charts and RaabeWrite's pictures and shapes take Umschalt,
+  Strg and Alt pressed or let go mid-drag without waiting for the next mouse move (the last pointer place is applied
+  again with the new keys), as Office does.
+- **RaabeCalc shapes and charts:** Umschalt while moving keeps to one axis; Strg held at the release leaves the object
+  and drops a copy ("Kopieren", one undo step); Strg at a handle sizes around the middle; Alt snaps the moved corner or
+  the dragged sides to the cell grid (Excel's Alt; Excel's own cancel on a mid-drag Alt press is not copied: a drag that
+  ends by itself is the jump the owner's first rule forbids).
+- **RaabeWrite floating pictures and shapes:** Umschalt while moving keeps to one axis; Strg held from the press to the
+  release leaves the object where it was and puts a copy where the drag ended (one undo step; Strg pressed only during
+  the drag moves, as recorded in Word); let go outside the window, a moved object goes back (Word); Strg at a handle
+  sizes around the middle.
+- **Keytips:** Alt let go while a mouse button is down no longer shows the keytips (all three apps, `keytips.ts`): Alt
+  during a drag belongs to the drag.
+- **RaabeCalc grid:** a column or row border dragged out of the window no longer scrolls the sheet (the column under the
+  border scrolled away and its width followed the wrong edge: 1191 px off) and let go outside keeps the old size, as in
+  Excel; cells moved by their border and let go outside the window stay where they were (Excel hands them to the
+  system's drag and drop there, which takes nothing); while the pointer is outside, the selection, the fill range and the
+  moved range grow with the cells that scroll in (they stood still and jumped by up to 340 px when the pointer came
+  back); the auto-scroll follows the pointer's side; a drag whose pointer was taken away (another window came to the
+  front: pointercancel, lost capture, a move without the button) ends without effect instead of scrolling on forever.
+- **RaabeCalc shapes and pictures at other zoom levels:** an object whose left or top part was scrolled out of view
+  jumped to the first column or row shown when it was let go (200 px at 400 %): its new anchor is now counted back
+  through the sheet's columns and rows.
+- **Lost mouse release (RaabeWrite, RaabePresent):** drags that follow window mouse events ended only with a mouseup;
+  when another window takes the mouse that never comes. A move without the button now stands in for it
+  (`packages/shell/src/drag.ts`).
+- **RaabeCalc's vertical scroll bar thumb (the flaky path of D-096):** the browser drags its own scroll bar's thumb
+  outside the page (the page gets no pointer events meanwhile), on its compositor thread, which takes at most one
+  pointer move per display frame (Chromium's scroll bar controller; the PC's display runs at 30 Hz): with fast moves
+  the thumb went against the pointer for a frame or stayed short of it at the end (3 of 10 zigzag drags with the real
+  mouse failed; D-096 saw the 8 px short end). Turning the compositor's scroll bar handling off
+  (`--disable-features=CompositorThreadedScrollbarScrolling`, tried through `RAABE_FEEL_BROWSER_ARGS`) made it worse
+  (8 of 10 failed). The thumb's mouse handling is now our own: a transparent layer over the bar takes the mouse and sets the
+  scroll position from the pointer at every move (the bar under it still draws the thumb); the arrows scroll a row and
+  repeat while held, the track pages towards the pointer, and the thumb goes back to where it was while the pointer is
+  more than eight bar widths beside the bar (Windows' rule). After: 10 of 10 zigzag drags with the real mouse.
+
+Numbers (passed / drags; anchors as in D-096/D-110: RaabeCalc 14, RaabeWrite 16, RaabePresent 15; mods and zoom
+through DevTools, out with the real mouse under the lock; "before" is the build before these fixes, mods and zoom
+measured with the final test, out with its first version; results in `results/2026-11-09-drag-*-paths.json`):
+
+| | mods before | mods after | zoom before | zoom after | out before | out after |
+|---|---|---|---|---|---|---|
+| RaabeCalc | 73/84 | 83/84 | 100/100 | 100/100 | 9/28 | 24/28 |
+| RaabeWrite | 92/96 | 95/96 | 140/140 | 138/140 | 18/32 | 27/32 |
+| RaabePresent | 90/90 | 90/90 | 110/110 | 110/110 | 28/29 | 29/30 |
+
+RaabeCalc's scroll bar thumb, zigzag ten times with the real mouse: 7/10 before, 10/10 after. The zoom paths found
+the shapes' jump at 400 % with the first way of scrolling a start point into view (part of the shape scrolled away);
+the final test scrolls the start point to the middle, so both columns show 100/100 there.
+
+Left open (the failures above, and why):
+- RaabeCalc: Strg on a sheet tab copies the sheet (as Excel) but the DevTools mode cannot hold Strg through the
+  system's drag and drop (1 mods drag); the sheet tabs' drag and drop gives no pointer places outside the window, so the
+  out paths cannot be checked there (2); the scroll bar thumb going back to its start far below the bar (Windows' rule,
+  which Excel's bar follows too) counts as a jump in the out paths (2).
+- RaabeWrite: at 200 % a fast move that ends past the window's edge puts the picture back (Word's rule for a release
+  outside the window; the test's start point was near the edge, 2 zoom drags); out of the window: text selection runs
+  ahead by a page's gap while the view scrolls (the pointer's place below the window is on the next page), the table's
+  column border reads a stale frame after the long way out, the left margin's marker moves once after a release
+  outside, the native scroll bar's thumb trails after its snap back (5 drags, not analysed further); one ruler drag
+  failed with a script error in the app (Erstzeileneinzug, Umschalt, once).
+- RaabePresent: the slide thumbnail let go outside the window drops 8 px from where it was shown (1).
+- Office: the PC was shared with other sessions whose Excel windows came to the front every second or two; many probe
+  drags were cut off (Windows takes the mouse capture then). Recorded: Excel's borders, fill handle, range selection
+  and chart move; Word's floating picture (move, side handle). Not recorded: Excel's shapes and chart corner, Word's
+  table borders, inline picture corner, rotation, text selection and ruler, all of PowerPoint (its run got no drag
+  through; its result file was left out). RaabeWrite's inline picture corner frees the proportions with Umschalt, which
+  Word probably does not; not changed without a recording (the test skips that key there).

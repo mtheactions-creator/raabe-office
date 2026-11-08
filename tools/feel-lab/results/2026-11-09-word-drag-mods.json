@@ -1,0 +1,381 @@
+{
+ "word": [
+  {
+   "case": "table column border",
+   "out": "right",
+   "error": "our Office window is not in front"
+  },
+  {
+   "case": "table row border",
+   "out": "down",
+   "error": "the plain drag changed nothing"
+  },
+  {
+   "case": "picture rotation handle",
+   "out": "right",
+   "error": "our Office window is not in front"
+  },
+  {
+   "case": "select text",
+   "out": "down",
+   "error": "(-2147352567, 'Ausnahmefehler aufgetreten.', (0, 'Microsoft Word', 'Das angeforderte Element ist nicht in der Sammlung vorhanden.', 'wdmain11.chm', 25421, -2146822347), None)"
+  },
+  {
+   "case": "picture corner handle (inline)",
+   "out": "right",
+   "error": "the plain drag changed nothing"
+  },
+  {
+   "case": "picture move (floating)",
+   "out": "right",
+   "point": 0,
+   "plain": {
+    "before": [
+     299.9,
+     20.0,
+     120.0,
+     80.0,
+     0.0
+    ],
+    "after": [
+     367.4,
+     47.0,
+     120.0,
+     80.0,
+     0.0
+    ],
+    "copies": 0,
+    "scrolled": 0,
+    "table_width": 453.1
+   },
+   "shift-held": {
+    "before": [
+     299.9,
+     20.0,
+     120.0,
+     80.0,
+     0.0
+    ],
+    "after": [
+     367.4,
+     20.0,
+     120.0,
+     80.0,
+     0.0
+    ],
+    "copies": 0,
+    "scrolled": 0,
+    "table_width": 453.1
+   },
+   "ctrl-held": {
+    "before": [
+     299.9,
+     20.0,
+     120.0,
+     80.0,
+     0.0
+    ],
+    "after": [
+     367.4,
+     47.0,
+     120.0,
+     80.0,
+     0.0
+    ],
+    "copies": 0,
+    "scrolled": 0,
+    "table_width": 453.1
+   },
+   "alt-held": {
+    "before": [
+     299.9,
+     20.0,
+     120.0,
+     80.0,
+     0.0
+    ],
+    "after": [
+     368.8,
+     44.8,
+     120.0,
+     80.0,
+     0.0
+    ],
+    "copies": 0,
+    "scrolled": 0,
+    "table_width": 453.1
+   },
+   "shift-mid": {
+    "before": [
+     299.9,
+     20.0,
+     120.0,
+     80.0,
+     0.0
+    ],
+    "after": [
+     366.4,
+     46.5,
+     120.0,
+     80.0,
+     0.0
+    ],
+    "copies": 0,
+    "scrolled": 0,
+    "table_width": 453.1
+   },
+   "ctrl-mid": {
+    "before": [
+     299.9,
+     20.0,
+     120.0,
+     80.0,
+     0.0
+    ],
+    "after": [
+     366.4,
+     46.5,
+     120.0,
+     80.0,
+     0.0
+    ],
+    "copies": 0,
+    "scrolled": 0,
+    "table_width": 453.1
+   },
+   "alt-mid": {
+    "before": [
+     299.9,
+     20.0,
+     120.0,
+     80.0,
+     0.0
+    ],
+    "after": [
+     364.9,
+     46.0,
+     120.0,
+     80.0,
+     0.0
+    ],
+    "copies": 0,
+    "scrolled": 0,
+    "table_width": 453.1
+   },
+   "out-back": {
+    "before": [
+     299.9,
+     20.0,
+     120.0,
+     80.0,
+     0.0
+    ],
+    "after": [
+     329.9,
+     20.0,
+     120.0,
+     80.0,
+     0.0
+    ],
+    "copies": 0,
+    "scrolled": 0,
+    "table_width": 453.1
+   },
+   "out-release": {
+    "before": [
+     299.9,
+     20.0,
+     120.0,
+     80.0,
+     0.0
+    ],
+    "after": [
+     299.9,
+     20.0,
+     120.0,
+     80.0,
+     0.0
+    ],
+    "copies": 0,
+    "scrolled": 0,
+    "table_width": 453.1
+   }
+  },
+  {
+   "case": "picture side handle (floating)",
+   "out": "right",
+   "point": 0,
+   "plain": {
+    "before": [
+     299.9,
+     20.0,
+     120.0,
+     80.0,
+     0.0
+    ],
+    "after": [
+     300.1,
+     20.1,
+     187.5,
+     80.0,
+     0.0
+    ],
+    "copies": 0,
+    "scrolled": 0,
+    "table_width": 453.1
+   },
+   "shift-held": {
+    "before": [
+     299.9,
+     20.0,
+     120.0,
+     80.0,
+     0.0
+    ],
+    "after": [
+     300.1,
+     20.1,
+     185.0,
+     80.0,
+     0.0
+    ],
+    "copies": 0,
+    "scrolled": 0,
+    "table_width": 453.1
+   },
+   "ctrl-held": {
+    "before": [
+     299.9,
+     20.0,
+     120.0,
+     80.0,
+     0.0
+    ],
+    "after": [
+     232.6,
+     20.1,
+     255.0,
+     80.0,
+     0.0
+    ],
+    "copies": 0,
+    "scrolled": 0,
+    "table_width": 453.1
+   },
+   "alt-held": {
+    "before": [
+     299.9,
+     20.0,
+     120.0,
+     80.0,
+     0.0
+    ],
+    "after": [
+     300.1,
+     20.1,
+     185.9,
+     80.0,
+     0.0
+    ],
+    "copies": 0,
+    "scrolled": 0,
+    "table_width": 453.1
+   },
+   "shift-mid": {
+    "before": [
+     299.9,
+     20.0,
+     120.0,
+     80.0,
+     0.0
+    ],
+    "after": [
+     299.9,
+     20.0,
+     120.0,
+     80.0,
+     0.0
+    ],
+    "copies": 0,
+    "scrolled": 0,
+    "table_width": 453.1
+   },
+   "ctrl-mid": {
+    "before": [
+     299.9,
+     20.0,
+     120.0,
+     80.0,
+     0.0
+    ],
+    "after": [
+     300.1,
+     20.1,
+     185.0,
+     80.0,
+     0.0
+    ],
+    "copies": 0,
+    "scrolled": 0,
+    "table_width": 453.1
+   },
+   "alt-mid": {
+    "before": [
+     299.9,
+     20.0,
+     120.0,
+     80.0,
+     0.0
+    ],
+    "after": [
+     300.1,
+     20.1,
+     185.0,
+     80.0,
+     0.0
+    ],
+    "copies": 0,
+    "scrolled": 0,
+    "table_width": 453.1
+   },
+   "out-back": {
+    "before": [
+     299.9,
+     20.0,
+     120.0,
+     80.0,
+     0.0
+    ],
+    "after": [
+     300.1,
+     20.1,
+     150.0,
+     80.0,
+     0.0
+    ],
+    "copies": 0,
+    "scrolled": 0,
+    "table_width": 453.1
+   },
+   "out-release": {
+    "before": [
+     299.9,
+     20.0,
+     120.0,
+     80.0,
+     0.0
+    ],
+    "after": [
+     46.0,
+     20.1,
+     478.0,
+     80.0,
+     0.0
+    ],
+    "copies": 0,
+    "scrolled": 0,
+    "table_width": 453.1
+   }
+  }
+ ]
+}
