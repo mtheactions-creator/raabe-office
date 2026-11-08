@@ -2653,8 +2653,8 @@ export class PresentApp implements EditorHost, PanelHost {
     impl("smartart.addAfter", items("add"), hasDg);
     impl("smartart.addBefore", items("addBefore"), hasDg);
     impl("smartart.addAbove", items("promote"), hasDg);
-    impl("smartart.addBelow", () => { const id = dg(); if (id !== null) void import("./smartart-create").then((m) => { m.editItems(this, id, "add"); const id2 = dg(); if (id2 !== null) m.editItems(this, id2, "demote"); }); }, hasDg);
-    impl("smartart.addBullet", () => { const id = dg(); if (id !== null) void import("./smartart-create").then((m) => { m.editItems(this, id, "add"); const id2 = dg(); if (id2 !== null) m.editItems(this, id2, "demote"); }); }, hasDg);
+    impl("smartart.addBelow", () => { const id = dg(); if (id !== null) void import("./smartart-create").then((m) => { this.deck.group("Form hinzufügen", () => { m.editItems(this, id, "add"); const id2 = dg(); if (id2 !== null) m.editItems(this, id2, "demote"); }); }); }, hasDg);
+    impl("smartart.addBullet", () => { const id = dg(); if (id !== null) void import("./smartart-create").then((m) => { this.deck.group("Form hinzufügen", () => { m.editItems(this, id, "add"); const id2 = dg(); if (id2 !== null) m.editItems(this, id2, "demote"); }); }); }, hasDg);
     impl("smartart.promote", items("promote"), hasDg);
     impl("smartart.demote", items("demote"), hasDg);
     impl("smartart.moveUp", items("up"), hasDg);

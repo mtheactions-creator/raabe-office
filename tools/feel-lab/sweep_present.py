@@ -840,6 +840,10 @@ def walk_shortcuts(sw: Sweeper, args, results: list, inventory: list) -> None:
             if args.only and args.only.lower() not in c["label"].lower():
                 continue
             sw.reset(ctx, None)
+            if sc == "Strg+W":
+                # A second presentation first (Strg+N): closing the only one ends the app window.
+                p.key("Strg+N")
+                time.sleep(0.4)
             if sc in ("Strg+V", "Strg+Alt+V"):
                 # Something to paste: the selection copied first (Strg+C).
                 p.key("Strg+C")
@@ -927,6 +931,9 @@ def walk_backstage_status(sw: Sweeper, args, results: list, inventory: list) -> 
 
         def go(pg=pg):
             sw.reset("slides", None)
+            if pg["name"] == "Schließen":
+                # A second presentation: closing the only one ends the app window (the exe).
+                p.js("window.__present.newDoc()")
             r = p.js("(() => { const t = document.querySelector('.tabrow .tab'); return window.__sw.rect(t); })()")
             p.mouse(r["x"], r["y"])
             time.sleep(0.4)
