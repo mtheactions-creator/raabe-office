@@ -50,7 +50,15 @@ export interface Font {
   vertAlign?: "superscript" | "subscript";
   /** Theme font scheme reference ("minor", "major") as in the file. */
   scheme?: string;
+  /** A design colour (the file's theme index, tint): `color` follows it when the design changes. */
+  theme?: ThemeRef;
 }
+
+/** A design colour as the .xlsx file refers to it: 0 Hintergrund 1, 1 Text 1, 2 Hintergrund 2, 3 Text 2, 4-9 Akzent 1-6, 10 Link, 11 besuchter Link. */
+export interface ThemeRef { t: number; tint?: number }
+
+/** The theme's colour keys by the file's theme index. */
+export const THEME_KEYS = ["lt1", "dk1", "lt2", "dk2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6", "hlink", "folHlink"] as const;
 
 export interface BorderSide {
   /** Excel's styles: thin, medium, thick, dashed, dotted, double, hair, mediumDashed, dashDot … */
@@ -71,6 +79,8 @@ export interface CellStyle {
   font: Font;
   /** Solid fill colour "#RRGGBB"; undefined: no fill. */
   fill?: string;
+  /** The fill's design colour, when it is one (`fill` follows it when the design changes). */
+  fillTheme?: ThemeRef;
   /** Fills we do not draw (patterns, gradients) as the file's XML, written back unchanged. */
   fillXml?: string;
   borders: Borders;
@@ -132,6 +142,13 @@ export class StyleTable {
     const s = structuredClone(this.get(id));
     change(s);
     return this.id(s);
+  }
+
+  /** Changes every style in place (a new design's colours and fonts); ids stay as they are. */
+  remap(change: (s: CellStyle) => void): void {
+    this.list.forEach((s) => change(s));
+    this.ids.clear();
+    this.list.forEach((s, i) => { const k = styleKey(s); if (!this.ids.has(k)) this.ids.set(k, i); });
   }
 }
 
@@ -488,8 +505,16 @@ export class Workbook {
   theme: Record<string, string> = {};
   /** The widths of the theme's line styles in pt (shapes' outlines refer to them). */
   themeLines: number[] = [0.5, 1, 1.5];
+  /** The theme's fonts (Überschriften, Textkörper): cells with font.scheme use them. */
+  themeFonts: { major: string; minor: string } = { major: "Calibri Light", minor: "Calibri" };
+  /** The names of the design and its colour and font sets as the theme part has them. */
+  themeNames: { theme: string; colors: string; fonts: string } = { theme: "Office", colors: "Office", fonts: "Office" };
   /** The number of the last sheet Excel would have named "TabelleN" (new sheets count on from it). */
   sheetSeq?: number;
+  /** The document's name without extension as the title bar shows it (ZELLE("Adresse") on another sheet). */
+  docName?: string;
+  /** The file's full path once saved or opened (ZELLE("Dateiname"), INFO("Verzeichnis")); never written to the file. */
+  docPath?: string;
   /** The .xlsx layer's package and parts it does not model. */
   raw?: unknown;
 

@@ -2298,6 +2298,75 @@ Agreed with the owner, who leaves the PC (mouse and keyboard) to the run until t
   upward in the RaabePresent session; the shared interpreter (packages/vba) belongs to the RaabePresent
   session, RaabeCalc adds its object model beside it.
 
+## D-081 RaabeCalc: structured references, berechnete Spalten, growing tables, LET and LAMBDA (2026-11-08)
+
+Package A of D-080, measured against our own invisible Excel.
+- **Structured references** (`formula/structref.ts`): Tabelle1[Note], [@Note], [[#Kopfzeilen];[Note]],
+  [[Name]:[Note]], [#Alle] / [#Daten] / [#Ergebnisse] / [#Diese Zeile] in both dialects, a table's name alone
+  for its data, escapes ('[ '] '# ''). Recorded (`probe_excel_structref.py`): Excel shows [#Diese Zeile] as "@"
+  and leaves out the own table's name inside the table (TEILERGEBNIS(109;[Punkte])), but its file always
+  names the table, writes [@Note] as Noten[[#This Row],[Note]] and a table's name alone as Noten[]; the model
+  keeps what Excel shows and the .xlsx layer converts both ways (cells and calculatedColumnFormula). [@...]
+  outside the data rows is #WERT!, a missing table or column is refused on Enter as Excel refuses it.
+  Renaming a table or typing over a header renames the references in every formula and defined name.
+- **Berechnete Spalten and growing tables** (AutoKorrektur während der Eingabe): a formula typed into an
+  empty table column (or over a berechnete Spalte) fills its data rows; a value typed right below a table
+  without Ergebniszeile or right next to it makes the table grow (the new row takes the berechnete Spalten,
+  the new column the header typed or "SpalteN"). The Ergebniszeile writes TEILERGEBNIS(109;[Spalte]) as Excel.
+  Not yet: the AutoKorrektur-Optionen button that undoes the growing, and pointing into a table while typing
+  a formula (Excel then writes structured references): both need real-input recordings.
+- **LET, LAMBDA and the helpers** (`formula/fn-lambda.ts`): LET, LAMBDA with calls (LAMBDA(x;x+1)(2), a LET
+  name holding a LAMBDA, defined names holding one, recursion), MAP, REDUCE, SCAN, NACHZEILE, NACHSPALTE,
+  MATRIXERSTELLEN, WURDEAUSGELASSEN. A LAMBDA is a value only while a formula is worked out: a cell showing one
+  gets #CALC!, any function that is not a LAMBDA helper gets #WERT! for one (recorded); every parameter
+  needs its argument (f(1;) leaves one out). The file writes the bound names with _xlpm. (recorded); a name
+  bound twice is refused on Enter. `probe_excel_lambda.py`: 31 cases.
+- **Measured:** structref-excel.test 23 cases + structref.test, lambda-excel.test 32 cases (values, spills,
+  German form, file text both ways); `check_calc_structref.py` RaabeCalc -> Excel 23/23 (the table grown,
+  the berechnete Spalte, formulas and values as Excel shows them), Excel -> RaabeCalc 25/25.
+
+## D-082 RaabeCalc: ZELLE, INFO, BLATT, BLÄTTER, HYPERLINK (2026-11-08)
+
+Recorded in German Excel (`probe_excel_info.py`, 98 cases with 29 number formats) and built the same way
+(`formula/fn-info.ts`): the German and English info types where Excel takes them (INFO takes "Dateienzahl",
+"System", "Ursprung", "Version" and every English one, not "Rechenmodus" or "Systemversion"); German Excel's
+own ZELLE("Format") codes (S, F2, .2 for #.##0,00, P0, E2, W2 for currency, D1 to D3, U1 to U4, "-" after the
+code for coloured negatives); "w" for values in ZELLE("Typ"); ZELLE("Breite") as Excel 365's two values.
+Deliberate differences: ZELLE without a reference reads the formula's own cell (Excel: the cell changed
+last, which depends on what the user did); ZELLE("Breite") counts RaabeCalc's Calibri columns (D-011);
+INFO("Version") and INFO("osversion") give Excel's values so that workbooks testing them keep working.
+INFO("Verzeichnis") and ZELLE("Dateiname") give the document's folder and path once it is saved (never part
+of the results files). =HYPERLINK(...) takes the Link look on entry (blue, underlined, as Excel's "Link"
+style) and a click on its text follows the first argument, as for links made with Strg+K.
+
+## D-083 RaabeCalc: Seitenlayout > Designs, Farben, Schriftarten (2026-11-08)
+
+- **Design colours are kept as references:** a cell's font colour and fill keep the file's theme index and tint
+  besides the RGB value (`Font.theme`, `CellStyle.fillTheme`), read from and written to styles.xml as Excel does
+  (`<color theme="4" tint="0.39997558519241921"/>`). Picks from the palette's Designfarben set them with Excel's
+  tints (a share of 32767: heller 80 % is 26213/32767, recorded in Excel's files); standard and own colours stay
+  RGB. A reference counts only while the style still shows its colour: a colour set some other way drops it.
+- **Designs, Farben, Schriftarten:** the galleries hold Office's 31 designs (as RaabeWrite recorded them from
+  Word's Entwurf tab), its 24 colour sets and 24 font sets (as RaabePresent recorded them), shared in
+  `packages/shell/src/office-designs.gen.ts` (`gen_office_designs.py`); tiles and rows are drawn by us. Applying
+  one changes the workbook's theme colours or fonts, every style with design colours or theme fonts (the
+  Standard style too: cells, columns and rows follow) and the table styles, in one undo step; the theme part is
+  rewritten only when the design changed (colours, fonts, names), everything else in it stays.
+- **Not yet:** Effekte (the theme's effect styles: shapes would need them drawn), Farben/Schriftarten anpassen,
+  Aktuelles Design speichern and Nach Designs suchen (.thmx files).
+
+## D-088 Diagramm in RaabeWrite, part 1: Word's charts drawn (Step 7b, 2026-11-08)
+
+Charts in Word documents were shown as nothing and reported as "Diagramme und eingebettete Objekte" not
+supported. RaabeWrite now draws each chart with the chart engine shared with RaabeCalc and RaabePresent, from
+the values Word keeps in the chart part (`chartFromXml`, the document theme's accents, the drawing's size), as
+an SVG picture in the text; the drawing, the chart part, its style/colour parts and the embedded workbook are
+written back as they were. Measured (`check_write_charts.py`, Word's own document with seven chart types from
+`make_fixtures.py --charts`): no chart reported unsupported, Word finds the same seven charts in RaabeWrite's
+file, same page count, mean page difference against Word's PDF 2.06 / 1.83 / 0.37 of 255. Not yet (part 2):
+Einfügen > Diagramm, Daten bearbeiten (the embedded workbook) and the chart tabs in RaabeWrite; charts of the
+newer chartEx types follow the chart engine (D-086).
+
 ## D-100 RaabePresent (D-080): the shared VBA interpreter grows: classes, events, debugger, files after asking, UserForms (2026-11-08)
 
 Part A and B of D-080 for the interpreter @raabe/vba (this session owns it; RaabeCalc builds Excel's object model

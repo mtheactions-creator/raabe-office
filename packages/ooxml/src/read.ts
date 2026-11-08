@@ -13,6 +13,8 @@ import {
   type RowDef, type Run, type Section, type StyleDef, type StyleType, type TableDef, type TableStyleDef, type TableStylePart,
 } from "@raabe/text-engine";
 import { mathParaJc, ommlToSeq, readMathPr } from "./math";
+import { chartFromXml } from "./xlsx/chart";
+import { LOOK, chartScene, sceneMarkup } from "@raabe/charts";
 import { readSources, type Bibliography } from "@raabe/text-engine";
 import { readNumbering } from "./numbering";
 import { REL, Rels, mimeOf, relsPath, resolveTarget } from "./package";
@@ -686,6 +688,27 @@ class PartReader {
     return { pic, shape: Object.fromEntries(Object.entries(shape).filter(([, v]) => v !== undefined)) as unknown as ShapeInfo };
   }
 
+  /** A chart part drawn as an SVG picture of the drawing's size (null where no canvas measures text: tests). */
+  private chartPreview(id: string | null, holder: Element | undefined): ImageData | undefined {
+    if (!id || !holder || typeof document === "undefined") return undefined;
+    const rel = this.rels.get(id);
+    if (!rel || rel.external) return undefined;
+    const xml = this.r.text(resolveTarget(this.part, rel.target));
+    if (!xml) return undefined;
+    const e = Array.from(holder.children).find((x) => x.localName === "extent");
+    const w = Number(e?.getAttribute("cx") ?? 0) / 12700, h = Number(e?.getAttribute("cy") ?? 0) / 12700;
+    if (!(w > 0 && h > 0)) return undefined;
+    try {
+      const t = this.r.themeColors;
+      const accents = ["accent1", "accent2", "accent3", "accent4", "accent5", "accent6"].map((k) => "#" + (t[k] ?? "000000"));
+      const scene = chartScene(chartFromXml(xml), w, h, { accents });
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${(w * 96) / 72}" height="${(h * 96) / 72}" viewBox="0 0 ${scene.width} ${scene.height}" font-family="${LOOK.font}">${sceneMarkup(scene)}</svg>`;
+      return { bytes: new TextEncoder().encode(svg), type: "image/svg+xml" };
+    } catch {
+      return undefined;
+    }
+  }
+
   /** A picture or shape: inline (an object in the text) or anchored (positioned on the page). */
   private drawing(c: Element, b: ParaBuilder, props: CharProps): void {
     const inline = c.getElementsByTagNameNS(WP, "inline")[0];
@@ -702,7 +725,11 @@ class PartReader {
       return;
     }
     const blip = c.getElementsByTagNameNS(A, "blip")[0];
-    const image = blip ? this.r.image(this.part, this.rels, blip.getAttributeNS(RNS, "embed")) : undefined;
+    // A chart (Step 7b, D-088) is drawn by the chart engine from the values Word keeps in the chart part;
+    // the drawing and its parts are written back as they were.
+    const chartEl = blip ? undefined : c.getElementsByTagNameNS("http://schemas.openxmlformats.org/drawingml/2006/chart", "chart")[0];
+    const chartImage = chartEl ? this.chartPreview(chartEl.getAttributeNS(RNS, "id"), inline ?? anchor) : undefined;
+    const image = blip ? this.r.image(this.part, this.rels, blip.getAttributeNS(RNS, "embed")) : chartImage;
     // Bildformat settings and Alternativtext; the XML is only rewritten when they change.
     const picEl = c.getElementsByTagNameNS("http://schemas.openxmlformats.org/drawingml/2006/picture", "pic")[0];
     const holder = inline ?? anchor;
@@ -719,7 +746,7 @@ class PartReader {
       const e = Array.from(el.children).find((x) => x.localName === "extent");
       return { width: Number(e?.getAttribute("cx") ?? 0) / EMU, height: Number(e?.getAttribute("cy") ?? 0) / EMU };
     };
-    if (!image && !c.getElementsByTagNameNS("http://schemas.openxmlformats.org/drawingml/2006/picture", "pic")[0]) {
+    if (!image && !chartImage && !c.getElementsByTagNameNS("http://schemas.openxmlformats.org/drawingml/2006/picture", "pic")[0]) {
       this.r.partial.add(c.getElementsByTagNameNS(A, "graphicData")[0]?.getAttribute("uri")?.includes("chart") ? LABEL.charts : LABEL.shapes);
     }
     if (inline || !anchor) {

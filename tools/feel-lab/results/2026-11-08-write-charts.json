@@ -1,0 +1,42 @@
+{
+ "unsupported": [],
+ "word_charts": [
+  51,
+  57,
+  4,
+  5,
+  -4169,
+  1,
+  -4120
+ ],
+ "roundtrip_charts": [
+  51,
+  57,
+  4,
+  5,
+  -4169,
+  1,
+  -4120
+ ],
+ "pages_word": 3,
+ "pages_raabe": 3,
+ "page_diff": [
+  2.06,
+  1.83,
+  0.37
+ ],
+ "checks": [
+  {
+   "check": "no chart reported unsupported",
+   "ok": true
+  },
+  {
+   "check": "Word finds the 7 charts in RaabeWrite's file",
+   "ok": true
+  },
+  {
+   "check": "same page count",
+   "ok": true
+  }
+ ]
+}

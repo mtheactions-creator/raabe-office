@@ -6,7 +6,7 @@
 
 import { h, messageBox, showDialog } from "@raabe/shell";
 import {
-  nextTableName, parseRange, rangeName, tableData, validTableName,
+  escapeColumn, keyCell, mapStructs, nextTableName, parseRange, parseStruct, rangeName, renameColumn, shiftFormula, tableData, validTableName,
   type BorderSide, type Borders, type CellStyle, type Rect, type Sheet, type SheetTable,
 } from "@raabe/sheet-engine";
 import type { CalcApp } from "./app";
@@ -45,7 +45,8 @@ function tinted(hex: string, tint: number): string {
   if (!tint) return "#" + v.toUpperCase();
   const [r, g, b] = [0, 2, 4].map((i) => parseInt(v.slice(i, i + 2), 16));
   const [hh, l0, s] = rgbToHls(r, g, b);
-  const l = Math.round(tint < 0 ? l0 * (1 + tint) : l0 * (1 - tint) + HLS * tint);
+  // Each term cut to whole HLS steps, as Excel does (the .xlsx reader's tinted, probe_excel_tints.py).
+  const l = tint < 0 ? Math.floor(l0 * (1 + tint)) : Math.floor(l0 * (1 - tint)) + (HLS - Math.floor(HLS * (1 - tint)));
   return "#" + hlsToRgb(hh, Math.max(0, Math.min(HLS, l)), s).map((x) => Math.max(0, Math.min(255, x)).toString(16).padStart(2, "0")).join("").toUpperCase();
 }
 
@@ -267,11 +268,32 @@ export function tablesFeature(app: CalcApp) {
     const data = tableData(t);
     t.columns.forEach((c, i) => {
       const col = t.ref.c0 + i;
-      const range = rangeName({ r0: data.r0, c0: col, r1: data.r1, c1: col });
-      if (c.totalsFunction && code[c.totalsFunction]) sheet.set(t.ref.r1, col, { v: null, f: `SUBTOTAL(${code[c.totalsFunction]},${range})` });
+      void data;
+      // Excel writes the column as a structured reference (TEILERGEBNIS(109;[Punkte]), recorded).
+      if (c.totalsFunction && code[c.totalsFunction]) sheet.set(t.ref.r1, col, { v: null, f: `SUBTOTAL(${code[c.totalsFunction]},[${escapeColumn(c.name)}])` });
       else if (c.totalsLabel !== undefined) sheet.set(t.ref.r1, col, { v: c.totalsLabel });
       else sheet.set(t.ref.r1, col, undefined);
     });
+  }
+
+  /** Every formula of the workbook rewritten (renamed tables and columns, as Excel does). */
+  function rewriteFormulas(fn: (f: string, sheet: Sheet, row: number, col: number) => string): void {
+    for (const sh of app.wb.sheets) {
+      for (const [key, c] of sh.cells) {
+        if (c.f === undefined) continue;
+        const { row, col } = keyCell(key);
+        const f = fn(c.f, sh, row, col);
+        if (f !== c.f) {
+          app.history.whole(sh);
+          sh.set(row, col, { ...c, f });
+        }
+      }
+    }
+    for (const n of app.wb.names) {
+      const body = n.ref.startsWith("=") ? n.ref.slice(1) : n.ref;
+      const f = fn(body, app.sheet, -1, -1);
+      if (f !== body) n.ref = f;
+    }
   }
 
   function rename(name: string): boolean {
@@ -279,8 +301,106 @@ export function tablesFeature(app: CalcApp) {
     if (!t) return false;
     if (!validTableName(name)) { void messageBox("RaabeCalc", "Der Tabellenname ist ungültig. Er muss mit einem Buchstaben oder Unterstrich beginnen und darf keine Leerzeichen enthalten."); return false; }
     if (allNames().some((n) => n.toLowerCase() === name.toLowerCase() && n !== t.name)) { void messageBox("RaabeCalc", "Dieser Name wird bereits verwendet."); return false; }
-    edit("Tabellenname", (x) => { x.name = name; });
+    const old = t.name.toLowerCase();
+    edit("Tabellenname", (x) => {
+      x.name = name;
+      rewriteFormulas((f) => mapStructs(f, (s) => {
+        const spec = parseStruct(s);
+        return spec?.table?.toLowerCase() === old ? name + s.slice(s.indexOf("[")) : s;
+      }, (n) => (n.toLowerCase() === old ? name : n)));
+    });
     return true;
+  }
+
+  /** A header cell typed over: the column takes the new name and formulas follow (Excel). */
+  function renameColumnTo(sheet: Sheet, t: SheetTable, index: number, typed: string): void {
+    const old = t.columns[index].name;
+    let n = typed.trim() || `Spalte${index + 1}`;
+    const base = n;
+    let k = 2;
+    while (t.columns.some((c, i) => i !== index && c.name.toLowerCase() === n.toLowerCase())) n = `${base}${k++}`;
+    if (n === old) return;
+    t.columns[index] = { ...t.columns[index], name: n };
+    if (sheet.value(t.ref.r0, t.ref.c0 + index) !== n) sheet.set(t.ref.r0, t.ref.c0 + index, { ...(sheet.get(t.ref.r0, t.ref.c0 + index) ?? {}), v: n, f: undefined });
+    const lt = t.name.toLowerCase();
+    rewriteFormulas((f, sh, row, col) => mapStructs(f, (s) => {
+      const spec = parseStruct(s);
+      if (!spec) return s;
+      const own = spec.table === null && sh === sheet && row >= t.ref.r0 && row <= t.ref.r1 && col >= t.ref.c0 && col <= t.ref.c1;
+      return spec.table?.toLowerCase() === lt || own ? renameColumn(s, old, n) : s;
+    }));
+  }
+
+  /**
+   * After typing into one cell (Excel's AutoKorrektur > AutoFormat während der Eingabe, recorded):
+   * a value right below a table or right next to it makes the table grow by that row or column; a
+   * header typed over renames its column; a formula typed into an empty column of a table (or over a
+   * berechnete Spalte) fills the column's data rows and makes it a berechnete Spalte.
+   */
+  function afterEntry(sheet: Sheet, target: Rect, text: string): void {
+    if (target.r0 !== target.r1 || target.c0 !== target.c1 || !sheet.tables?.length) return;
+    const row = target.r0, col = target.c0;
+    let t = tableAt(sheet, row, col);
+    if (!t && text !== "") {
+      // Growing: the row right below (no Ergebniszeile) or the column right next to the table.
+      const below = sheet.tables.find((x) => !x.totals && row === x.ref.r1 + 1 && col >= x.ref.c0 && col <= x.ref.c1);
+      const right = below ? undefined : sheet.tables.find((x) => col === x.ref.c1 + 1 && row >= x.ref.r0 && row <= x.ref.r1);
+      const grow = below ?? right;
+      if (grow && !sheet.tables.some((x) => x !== grow && x.ref.r0 <= (below ? row : grow.ref.r1) && x.ref.r1 >= (below ? row : grow.ref.r0) && x.ref.c0 <= (right ? col : grow.ref.c1) && x.ref.c1 >= (right ? col : grow.ref.c0))) {
+        app.history.whole(sheet);
+        const i = sheet.tables.indexOf(grow);
+        const next: SheetTable = structuredClone(grow);
+        if (below) {
+          next.ref = { ...next.ref, r1: row };
+          next.columns.forEach((c, k) => {
+            if (c.formula === undefined || next.ref.c0 + k === col) return;
+            const src = sheet.get(row - 1, next.ref.c0 + k);
+            if (src?.f !== undefined) sheet.set(row, next.ref.c0 + k, { v: null, f: shiftFormula(src.f, 1, 0), s: src.s });
+          });
+        } else {
+          next.ref = { ...next.ref, c1: col };
+          const header = next.header && row === next.ref.r0 ? String(sheet.value(row, col) ?? "") : "";
+          let name = header.trim() || `Spalte${next.columns.length + 1}`;
+          const base = name;
+          let k = 2;
+          while (next.columns.some((c) => c.name.toLowerCase() === name.toLowerCase())) name = `${base}${k++}`;
+          next.columns.push({ name });
+          if (next.header && sheet.value(next.ref.r0, col) !== name) sheet.set(next.ref.r0, col, { v: name });
+        }
+        sheet.tables = sheet.tables.map((x, k) => (k === i ? next : x));
+        t = next;
+      }
+    }
+    if (!t) return;
+    const index = col - t.ref.c0;
+    if (t.header && row === t.ref.r0) {
+      app.history.whole(sheet);
+      const next: SheetTable = structuredClone(t);
+      renameColumnTo(sheet, next, index, text.startsWith("=") ? String(sheet.value(row, col) ?? "") : text);
+      sheet.tables = sheet.tables!.map((x) => (x === t ? next : x));
+      return;
+    }
+    const data = tableData(t);
+    if (row < data.r0 || row > data.r1) return;
+    const cell = sheet.get(row, col);
+    if (!text.startsWith("=") || cell?.f === undefined) return;
+    const column = t.columns[index];
+    let others = true;
+    for (let r = data.r0; r <= data.r1 && others; r++) {
+      if (r === row) continue;
+      const c = sheet.get(r, col);
+      if (c && (c.v !== null && c.v !== "" || c.f !== undefined) && column.formula === undefined) others = false;
+    }
+    if (!others) return;
+    app.history.whole(sheet);
+    for (let r = data.r0; r <= data.r1; r++) {
+      if (r === row) continue;
+      const old = sheet.get(r, col);
+      sheet.set(r, col, { v: null, f: shiftFormula(cell.f, r - row, 0), s: old?.s ?? cell.s });
+    }
+    const next: SheetTable = structuredClone(t);
+    next.columns[index] = { ...column, formula: cell.f };
+    sheet.tables = sheet.tables!.map((x) => (x === t ? next : x));
   }
 
   async function resizeDialog(): Promise<void> {
@@ -346,5 +466,5 @@ export function tablesFeature(app: CalcApp) {
     return h("div", { class: "tile-panel ts-panel" }, ...group("TableStyleLight", "Hell"), ...group("TableStyleMedium", "Mittel"), ...group("TableStyleDark", "Dunkel"));
   }
 
-  return { styleFor, tableAt: (row: number, col: number) => tableAt(app.sheet, row, col), current, create, setOption, setTotals, rename, resizeDialog, convert, setStyle, stylesPanel, look };
+  return { styleFor, tableAt: (row: number, col: number) => tableAt(app.sheet, row, col), current, create, setOption, setTotals, rename, resizeDialog, convert, setStyle, stylesPanel, look, afterEntry };
 }

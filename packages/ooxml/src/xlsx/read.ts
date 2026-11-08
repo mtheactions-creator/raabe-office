@@ -5,11 +5,11 @@
 
 import { strFromU8, unzipSync } from "fflate";
 import {
-  Sheet, Workbook, cellKey, err, fromXlsxFormula, parseCell, parseRange, toXlsxFormula,
+  Sheet, Workbook, cellKey, err, fromXlsxFormula, keyCell, mapStructs, parseCell, parseRange, structToShown, toXlsxFormula,
   type Cell, type ColInfo, type DefinedName, type ErrorCode, type Rect, type RowInfo, type View,
 } from "@raabe/sheet-engine";
 import { Rels, relsPath, resolveTarget } from "../package";
-import { readTheme, resolveColor, type ColorContext } from "./colors";
+import { readTheme, resolveColor, themeNames, type ColorContext } from "./colors";
 import { shiftFormula } from "./shift";
 import { readStyles, canon, type StylesRaw } from "./styles";
 import { MDW, widthFromBase, widthFromFile } from "./units";
@@ -119,6 +119,8 @@ export function readPackage(files: Record<string, Uint8Array>): Workbook {
   const theme = readTheme(str(partOf(RT.theme)));
   wb.theme = Object.fromEntries(Object.entries(theme.colors).map(([k, v]) => [k, "#" + v]));
   wb.themeLines = theme.lines;
+  wb.themeFonts = { major: theme.major, minor: theme.minor };
+  wb.themeNames = themeNames(str(partOf(RT.theme)));
   const { table, raw: stylesRaw } = readStyles(str(partOf(RT.styles)) || NO_STYLES, theme.colors);
   wb.styles = table;
   const ctx = stylesRaw.ctx;
@@ -402,6 +404,19 @@ function readSheet(xml: string, name: string, c: SheetContext): Sheet {
   raw.pics = readPictures(c.files, sheet, c.part, rels);
   readPivots(c.files, sheet, c.part, rels);
   readTables(c.files, sheet, c.part, rels);
+  // Excel writes [@Note] as Tabelle1[[#This Row],[Note]]; the model keeps what Excel shows.
+  if (sheet.tables?.length) {
+    for (const [key, cell] of sheet.cells) {
+      if (cell.f === undefined || !cell.f.includes("[")) continue;
+      const { row, col } = keyCell(key);
+      const own = sheet.tables.find((t) => row >= t.ref.r0 && row <= t.ref.r1 && col >= t.ref.c0 && col <= t.ref.c1)?.name ?? null;
+      const f = mapStructs(cell.f, (x) => structToShown(x, own));
+      if (f !== cell.f) {
+        cell.raw = { ...cell.raw, file: cell.raw?.file ?? toXlsxFormula(cell.f) };
+        cell.f = f;
+      }
+    }
+  }
   if (charts) raw.drawing = charts;
 
   // View.

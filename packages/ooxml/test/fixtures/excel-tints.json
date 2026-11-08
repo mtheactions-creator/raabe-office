@@ -1,0 +1,5252 @@
+[
+{
+"design": "Office Theme",
+"theme": 1,
+"base": "FFFFFF",
+"tint": 0.7999816888943144,
+"rgb": "FFFFFF"
+},
+{
+"design": "Office Theme",
+"theme": 1,
+"base": "FFFFFF",
+"tint": 0.5999938962981048,
+"rgb": "FFFFFF"
+},
+{
+"design": "Office Theme",
+"theme": 1,
+"base": "FFFFFF",
+"tint": 0.3999755851924192,
+"rgb": "FFFFFF"
+},
+{
+"design": "Office Theme",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.249977111117893,
+"rgb": "BFBFBF"
+},
+{
+"design": "Office Theme",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.499984740745262,
+"rgb": "808080"
+},
+{
+"design": "Office Theme",
+"theme": 1,
+"base": "FFFFFF",
+"tint": 0.499984740745262,
+"rgb": "FFFFFF"
+},
+{
+"design": "Office Theme",
+"theme": 1,
+"base": "FFFFFF",
+"tint": 0.3499862666707358,
+"rgb": "FFFFFF"
+},
+{
+"design": "Office Theme",
+"theme": 1,
+"base": "FFFFFF",
+"tint": 0.249977111117893,
+"rgb": "FFFFFF"
+},
+{
+"design": "Office Theme",
+"theme": 1,
+"base": "FFFFFF",
+"tint": 0.1499984740745262,
+"rgb": "FFFFFF"
+},
+{
+"design": "Office Theme",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.0499893185216834,
+"rgb": "F2F2F2"
+},
+{
+"design": "Office Theme",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.1499984740745262,
+"rgb": "D9D9D9"
+},
+{
+"design": "Office Theme",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.3499862666707358,
+"rgb": "A6A6A6"
+},
+{
+"design": "Office Theme",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.0999786370433668,
+"rgb": "E6E6E6"
+},
+{
+"design": "Office Theme",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.749992370372631,
+"rgb": "404040"
+},
+{
+"design": "Office Theme",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.8999908444471572,
+"rgb": "1A1A1A"
+},
+{
+"design": "Office Theme",
+"theme": 2,
+"base": "000000",
+"tint": 0.7999816888943144,
+"rgb": "CCCCCC"
+},
+{
+"design": "Office Theme",
+"theme": 2,
+"base": "000000",
+"tint": 0.5999938962981048,
+"rgb": "999999"
+},
+{
+"design": "Office Theme",
+"theme": 2,
+"base": "000000",
+"tint": 0.3999755851924192,
+"rgb": "666666"
+},
+{
+"design": "Office Theme",
+"theme": 2,
+"base": "000000",
+"tint": -0.249977111117893,
+"rgb": "000000"
+},
+{
+"design": "Office Theme",
+"theme": 2,
+"base": "000000",
+"tint": -0.499984740745262,
+"rgb": "000000"
+},
+{
+"design": "Office Theme",
+"theme": 2,
+"base": "000000",
+"tint": 0.499984740745262,
+"rgb": "808080"
+},
+{
+"design": "Office Theme",
+"theme": 2,
+"base": "000000",
+"tint": 0.3499862666707358,
+"rgb": "595959"
+},
+{
+"design": "Office Theme",
+"theme": 2,
+"base": "000000",
+"tint": 0.249977111117893,
+"rgb": "404040"
+},
+{
+"design": "Office Theme",
+"theme": 2,
+"base": "000000",
+"tint": 0.1499984740745262,
+"rgb": "262626"
+},
+{
+"design": "Office Theme",
+"theme": 2,
+"base": "000000",
+"tint": -0.0499893185216834,
+"rgb": "000000"
+},
+{
+"design": "Office Theme",
+"theme": 2,
+"base": "000000",
+"tint": -0.1499984740745262,
+"rgb": "000000"
+},
+{
+"design": "Office Theme",
+"theme": 2,
+"base": "000000",
+"tint": -0.3499862666707358,
+"rgb": "000000"
+},
+{
+"design": "Office Theme",
+"theme": 2,
+"base": "000000",
+"tint": -0.0999786370433668,
+"rgb": "000000"
+},
+{
+"design": "Office Theme",
+"theme": 2,
+"base": "000000",
+"tint": -0.749992370372631,
+"rgb": "000000"
+},
+{
+"design": "Office Theme",
+"theme": 2,
+"base": "000000",
+"tint": -0.8999908444471572,
+"rgb": "000000"
+},
+{
+"design": "Office Theme",
+"theme": 3,
+"base": "E8E8E8",
+"tint": 0.7999816888943144,
+"rgb": "FAFAFA"
+},
+{
+"design": "Office Theme",
+"theme": 3,
+"base": "E8E8E8",
+"tint": 0.5999938962981048,
+"rgb": "F5F5F5"
+},
+{
+"design": "Office Theme",
+"theme": 3,
+"base": "E8E8E8",
+"tint": 0.3999755851924192,
+"rgb": "F0F0F0"
+},
+{
+"design": "Office Theme",
+"theme": 3,
+"base": "E8E8E8",
+"tint": -0.249977111117893,
+"rgb": "ADADAD"
+},
+{
+"design": "Office Theme",
+"theme": 3,
+"base": "E8E8E8",
+"tint": -0.499984740745262,
+"rgb": "747474"
+},
+{
+"design": "Office Theme",
+"theme": 3,
+"base": "E8E8E8",
+"tint": 0.499984740745262,
+"rgb": "F3F3F3"
+},
+{
+"design": "Office Theme",
+"theme": 3,
+"base": "E8E8E8",
+"tint": 0.3499862666707358,
+"rgb": "EFEFEF"
+},
+{
+"design": "Office Theme",
+"theme": 3,
+"base": "E8E8E8",
+"tint": 0.249977111117893,
+"rgb": "EDEDED"
+},
+{
+"design": "Office Theme",
+"theme": 3,
+"base": "E8E8E8",
+"tint": 0.1499984740745262,
+"rgb": "EBEBEB"
+},
+{
+"design": "Office Theme",
+"theme": 3,
+"base": "E8E8E8",
+"tint": -0.0499893185216834,
+"rgb": "DCDCDC"
+},
+{
+"design": "Office Theme",
+"theme": 3,
+"base": "E8E8E8",
+"tint": -0.1499984740745262,
+"rgb": "C5C5C5"
+},
+{
+"design": "Office Theme",
+"theme": 3,
+"base": "E8E8E8",
+"tint": -0.3499862666707358,
+"rgb": "969696"
+},
+{
+"design": "Office Theme",
+"theme": 3,
+"base": "E8E8E8",
+"tint": -0.0999786370433668,
+"rgb": "D0D0D0"
+},
+{
+"design": "Office Theme",
+"theme": 3,
+"base": "E8E8E8",
+"tint": -0.749992370372631,
+"rgb": "393939"
+},
+{
+"design": "Office Theme",
+"theme": 3,
+"base": "E8E8E8",
+"tint": -0.8999908444471572,
+"rgb": "161616"
+},
+{
+"design": "Office Theme",
+"theme": 4,
+"base": "0E2841",
+"tint": 0.7999816888943144,
+"rgb": "B8D3EF"
+},
+{
+"design": "Office Theme",
+"theme": 4,
+"base": "0E2841",
+"tint": 0.5999938962981048,
+"rgb": "70A8E0"
+},
+{
+"design": "Office Theme",
+"theme": 4,
+"base": "0E2841",
+"tint": 0.3999755851924192,
+"rgb": "2D7DCE"
+},
+{
+"design": "Office Theme",
+"theme": 4,
+"base": "0E2841",
+"tint": -0.249977111117893,
+"rgb": "0B1D2F"
+},
+{
+"design": "Office Theme",
+"theme": 4,
+"base": "0E2841",
+"tint": -0.499984740745262,
+"rgb": "061320"
+},
+{
+"design": "Office Theme",
+"theme": 4,
+"base": "0E2841",
+"tint": 0.499984740745262,
+"rgb": "4D93D9"
+},
+{
+"design": "Office Theme",
+"theme": 4,
+"base": "0E2841",
+"tint": 0.3499862666707358,
+"rgb": "2873BD"
+},
+{
+"design": "Office Theme",
+"theme": 4,
+"base": "0E2841",
+"tint": 0.249977111117893,
+"rgb": "215C98"
+},
+{
+"design": "Office Theme",
+"theme": 4,
+"base": "0E2841",
+"tint": 0.1499984740745262,
+"rgb": "1A4775"
+},
+{
+"design": "Office Theme",
+"theme": 4,
+"base": "0E2841",
+"tint": -0.0499893185216834,
+"rgb": "0D253E"
+},
+{
+"design": "Office Theme",
+"theme": 4,
+"base": "0E2841",
+"tint": -0.1499984740745262,
+"rgb": "0C2136"
+},
+{
+"design": "Office Theme",
+"theme": 4,
+"base": "0E2841",
+"tint": -0.3499862666707358,
+"rgb": "091A2B"
+},
+{
+"design": "Office Theme",
+"theme": 4,
+"base": "0E2841",
+"tint": -0.0999786370433668,
+"rgb": "0D2339"
+},
+{
+"design": "Office Theme",
+"theme": 4,
+"base": "0E2841",
+"tint": -0.749992370372631,
+"rgb": "030A10"
+},
+{
+"design": "Office Theme",
+"theme": 4,
+"base": "0E2841",
+"tint": -0.8999908444471572,
+"rgb": "010305"
+},
+{
+"design": "Office Theme",
+"theme": 5,
+"base": "156082",
+"tint": 0.7999816888943144,
+"rgb": "C0E6F5"
+},
+{
+"design": "Office Theme",
+"theme": 5,
+"base": "156082",
+"tint": 0.5999938962981048,
+"rgb": "83CCEB"
+},
+{
+"design": "Office Theme",
+"theme": 5,
+"base": "156082",
+"tint": 0.3999755851924192,
+"rgb": "44B3E1"
+},
+{
+"design": "Office Theme",
+"theme": 5,
+"base": "156082",
+"tint": -0.249977111117893,
+"rgb": "104861"
+},
+{
+"design": "Office Theme",
+"theme": 5,
+"base": "156082",
+"tint": -0.499984740745262,
+"rgb": "0B3040"
+},
+{
+"design": "Office Theme",
+"theme": 5,
+"base": "156082",
+"tint": 0.499984740745262,
+"rgb": "64BEE6"
+},
+{
+"design": "Office Theme",
+"theme": 5,
+"base": "156082",
+"tint": 0.3499862666707358,
+"rgb": "36ACDE"
+},
+{
+"design": "Office Theme",
+"theme": 5,
+"base": "156082",
+"tint": 0.249977111117893,
+"rgb": "229ACE"
+},
+{
+"design": "Office Theme",
+"theme": 5,
+"base": "156082",
+"tint": 0.1499984740745262,
+"rgb": "1D84AF"
+},
+{
+"design": "Office Theme",
+"theme": 5,
+"base": "156082",
+"tint": -0.0499893185216834,
+"rgb": "145B7A"
+},
+{
+"design": "Office Theme",
+"theme": 5,
+"base": "156082",
+"tint": -0.1499984740745262,
+"rgb": "12526D"
+},
+{
+"design": "Office Theme",
+"theme": 5,
+"base": "156082",
+"tint": -0.3499862666707358,
+"rgb": "0E3F54"
+},
+{
+"design": "Office Theme",
+"theme": 5,
+"base": "156082",
+"tint": -0.0999786370433668,
+"rgb": "135673"
+},
+{
+"design": "Office Theme",
+"theme": 5,
+"base": "156082",
+"tint": -0.749992370372631,
+"rgb": "05171F"
+},
+{
+"design": "Office Theme",
+"theme": 5,
+"base": "156082",
+"tint": -0.8999908444471572,
+"rgb": "020A0D"
+},
+{
+"design": "Office Theme",
+"theme": 6,
+"base": "E97132",
+"tint": 0.7999816888943144,
+"rgb": "FBE2D5"
+},
+{
+"design": "Office Theme",
+"theme": 6,
+"base": "E97132",
+"tint": 0.5999938962981048,
+"rgb": "F7C7AC"
+},
+{
+"design": "Office Theme",
+"theme": 6,
+"base": "E97132",
+"tint": 0.3999755851924192,
+"rgb": "F1A983"
+},
+{
+"design": "Office Theme",
+"theme": 6,
+"base": "E97132",
+"tint": -0.249977111117893,
+"rgb": "BE5014"
+},
+{
+"design": "Office Theme",
+"theme": 6,
+"base": "E97132",
+"tint": -0.499984740745262,
+"rgb": "7E350E"
+},
+{
+"design": "Office Theme",
+"theme": 6,
+"base": "E97132",
+"tint": 0.499984740745262,
+"rgb": "F3B898"
+},
+{
+"design": "Office Theme",
+"theme": 6,
+"base": "E97132",
+"tint": 0.3499862666707358,
+"rgb": "F0A379"
+},
+{
+"design": "Office Theme",
+"theme": 6,
+"base": "E97132",
+"tint": 0.249977111117893,
+"rgb": "EE9564"
+},
+{
+"design": "Office Theme",
+"theme": 6,
+"base": "E97132",
+"tint": 0.1499984740745262,
+"rgb": "EC8751"
+},
+{
+"design": "Office Theme",
+"theme": 6,
+"base": "E97132",
+"tint": -0.0499893185216834,
+"rgb": "E86824"
+},
+{
+"design": "Office Theme",
+"theme": 6,
+"base": "E97132",
+"tint": -0.1499984740745262,
+"rgb": "D95B17"
+},
+{
+"design": "Office Theme",
+"theme": 6,
+"base": "E97132",
+"tint": -0.3499862666707358,
+"rgb": "A54512"
+},
+{
+"design": "Office Theme",
+"theme": 6,
+"base": "E97132",
+"tint": -0.0999786370433668,
+"rgb": "E46018"
+},
+{
+"design": "Office Theme",
+"theme": 6,
+"base": "E97132",
+"tint": -0.749992370372631,
+"rgb": "401B06"
+},
+{
+"design": "Office Theme",
+"theme": 6,
+"base": "E97132",
+"tint": -0.8999908444471572,
+"rgb": "180B03"
+},
+{
+"design": "Office Theme",
+"theme": 7,
+"base": "196B24",
+"tint": 0.7999816888943144,
+"rgb": "C1F0C8"
+},
+{
+"design": "Office Theme",
+"theme": 7,
+"base": "196B24",
+"tint": 0.5999938962981048,
+"rgb": "83E28E"
+},
+{
+"design": "Office Theme",
+"theme": 7,
+"base": "196B24",
+"tint": 0.3999755851924192,
+"rgb": "47D359"
+},
+{
+"design": "Office Theme",
+"theme": 7,
+"base": "196B24",
+"tint": -0.249977111117893,
+"rgb": "12501A"
+},
+{
+"design": "Office Theme",
+"theme": 7,
+"base": "196B24",
+"tint": -0.499984740745262,
+"rgb": "0D3512"
+},
+{
+"design": "Office Theme",
+"theme": 7,
+"base": "196B24",
+"tint": 0.499984740745262,
+"rgb": "66DB75"
+},
+{
+"design": "Office Theme",
+"theme": 7,
+"base": "196B24",
+"tint": 0.3499862666707358,
+"rgb": "37D04A"
+},
+{
+"design": "Office Theme",
+"theme": 7,
+"base": "196B24",
+"tint": 0.249977111117893,
+"rgb": "2BB73D"
+},
+{
+"design": "Office Theme",
+"theme": 7,
+"base": "196B24",
+"tint": 0.1499984740745262,
+"rgb": "239832"
+},
+{
+"design": "Office Theme",
+"theme": 7,
+"base": "196B24",
+"tint": -0.0499893185216834,
+"rgb": "176421"
+},
+{
+"design": "Office Theme",
+"theme": 7,
+"base": "196B24",
+"tint": -0.1499984740745262,
+"rgb": "15591E"
+},
+{
+"design": "Office Theme",
+"theme": 7,
+"base": "196B24",
+"tint": -0.3499862666707358,
+"rgb": "104516"
+},
+{
+"design": "Office Theme",
+"theme": 7,
+"base": "196B24",
+"tint": -0.0999786370433668,
+"rgb": "165F20"
+},
+{
+"design": "Office Theme",
+"theme": 7,
+"base": "196B24",
+"tint": -0.749992370372631,
+"rgb": "061A09"
+},
+{
+"design": "Office Theme",
+"theme": 7,
+"base": "196B24",
+"tint": -0.8999908444471572,
+"rgb": "020B03"
+},
+{
+"design": "Office Theme",
+"theme": 8,
+"base": "0F9ED5",
+"tint": 0.7999816888943144,
+"rgb": "CAEDFB"
+},
+{
+"design": "Office Theme",
+"theme": 8,
+"base": "0F9ED5",
+"tint": 0.5999938962981048,
+"rgb": "94DCF8"
+},
+{
+"design": "Office Theme",
+"theme": 8,
+"base": "0F9ED5",
+"tint": 0.3999755851924192,
+"rgb": "61CBF3"
+},
+{
+"design": "Office Theme",
+"theme": 8,
+"base": "0F9ED5",
+"tint": -0.249977111117893,
+"rgb": "0C769E"
+},
+{
+"design": "Office Theme",
+"theme": 8,
+"base": "0F9ED5",
+"tint": -0.499984740745262,
+"rgb": "074F69"
+},
+{
+"design": "Office Theme",
+"theme": 8,
+"base": "0F9ED5",
+"tint": 0.499984740745262,
+"rgb": "7AD3F5"
+},
+{
+"design": "Office Theme",
+"theme": 8,
+"base": "0F9ED5",
+"tint": 0.3499862666707358,
+"rgb": "53C7F2"
+},
+{
+"design": "Office Theme",
+"theme": 8,
+"base": "0F9ED5",
+"tint": 0.249977111117893,
+"rgb": "38BEF1"
+},
+{
+"design": "Office Theme",
+"theme": 8,
+"base": "0F9ED5",
+"tint": 0.1499984740745262,
+"rgb": "1DB6EF"
+},
+{
+"design": "Office Theme",
+"theme": 8,
+"base": "0F9ED5",
+"tint": -0.0499893185216834,
+"rgb": "0E96C9"
+},
+{
+"design": "Office Theme",
+"theme": 8,
+"base": "0F9ED5",
+"tint": -0.1499984740745262,
+"rgb": "0D85B3"
+},
+{
+"design": "Office Theme",
+"theme": 8,
+"base": "0F9ED5",
+"tint": -0.3499862666707358,
+"rgb": "0A6689"
+},
+{
+"design": "Office Theme",
+"theme": 8,
+"base": "0F9ED5",
+"tint": -0.0999786370433668,
+"rgb": "0E8DBE"
+},
+{
+"design": "Office Theme",
+"theme": 8,
+"base": "0F9ED5",
+"tint": -0.749992370372631,
+"rgb": "032634"
+},
+{
+"design": "Office Theme",
+"theme": 8,
+"base": "0F9ED5",
+"tint": -0.8999908444471572,
+"rgb": "010F14"
+},
+{
+"design": "Office Theme",
+"theme": 9,
+"base": "A02B93",
+"tint": 0.7999816888943144,
+"rgb": "F2CEEF"
+},
+{
+"design": "Office Theme",
+"theme": 9,
+"base": "A02B93",
+"tint": 0.5999938962981048,
+"rgb": "E49EDD"
+},
+{
+"design": "Office Theme",
+"theme": 9,
+"base": "A02B93",
+"tint": 0.3999755851924192,
+"rgb": "D86DCD"
+},
+{
+"design": "Office Theme",
+"theme": 9,
+"base": "A02B93",
+"tint": -0.249977111117893,
+"rgb": "782170"
+},
+{
+"design": "Office Theme",
+"theme": 9,
+"base": "A02B93",
+"tint": -0.499984740745262,
+"rgb": "51154A"
+},
+{
+"design": "Office Theme",
+"theme": 9,
+"base": "A02B93",
+"tint": 0.499984740745262,
+"rgb": "DE87D6"
+},
+{
+"design": "Office Theme",
+"theme": 9,
+"base": "A02B93",
+"tint": 0.3499862666707358,
+"rgb": "D562C9"
+},
+{
+"design": "Office Theme",
+"theme": 9,
+"base": "A02B93",
+"tint": 0.249977111117893,
+"rgb": "CE4AC1"
+},
+{
+"design": "Office Theme",
+"theme": 9,
+"base": "A02B93",
+"tint": 0.1499984740745262,
+"rgb": "C435B6"
+},
+{
+"design": "Office Theme",
+"theme": 9,
+"base": "A02B93",
+"tint": -0.0499893185216834,
+"rgb": "98298D"
+},
+{
+"design": "Office Theme",
+"theme": 9,
+"base": "A02B93",
+"tint": -0.1499984740745262,
+"rgb": "88247E"
+},
+{
+"design": "Office Theme",
+"theme": 9,
+"base": "A02B93",
+"tint": -0.3499862666707358,
+"rgb": "681C61"
+},
+{
+"design": "Office Theme",
+"theme": 9,
+"base": "A02B93",
+"tint": -0.0999786370433668,
+"rgb": "8F2785"
+},
+{
+"design": "Office Theme",
+"theme": 9,
+"base": "A02B93",
+"tint": -0.749992370372631,
+"rgb": "280B25"
+},
+{
+"design": "Office Theme",
+"theme": 9,
+"base": "A02B93",
+"tint": -0.8999908444471572,
+"rgb": "0F040E"
+},
+{
+"design": "Office Theme",
+"theme": 10,
+"base": "4EA72E",
+"tint": 0.7999816888943144,
+"rgb": "DAF2D0"
+},
+{
+"design": "Office Theme",
+"theme": 10,
+"base": "4EA72E",
+"tint": 0.5999938962981048,
+"rgb": "B5E6A2"
+},
+{
+"design": "Office Theme",
+"theme": 10,
+"base": "4EA72E",
+"tint": 0.3999755851924192,
+"rgb": "8ED973"
+},
+{
+"design": "Office Theme",
+"theme": 10,
+"base": "4EA72E",
+"tint": -0.249977111117893,
+"rgb": "3C7D22"
+},
+{
+"design": "Office Theme",
+"theme": 10,
+"base": "4EA72E",
+"tint": -0.499984740745262,
+"rgb": "275317"
+},
+{
+"design": "Office Theme",
+"theme": 10,
+"base": "4EA72E",
+"tint": 0.499984740745262,
+"rgb": "A2DF8A"
+},
+{
+"design": "Office Theme",
+"theme": 10,
+"base": "4EA72E",
+"tint": 0.3499862666707358,
+"rgb": "86D667"
+},
+{
+"design": "Office Theme",
+"theme": 10,
+"base": "4EA72E",
+"tint": 0.249977111117893,
+"rgb": "73CE51"
+},
+{
+"design": "Office Theme",
+"theme": 10,
+"base": "4EA72E",
+"tint": 0.1499984740745262,
+"rgb": "61C839"
+},
+{
+"design": "Office Theme",
+"theme": 10,
+"base": "4EA72E",
+"tint": -0.0499893185216834,
+"rgb": "4B9E2C"
+},
+{
+"design": "Office Theme",
+"theme": 10,
+"base": "4EA72E",
+"tint": -0.1499984740745262,
+"rgb": "438D27"
+},
+{
+"design": "Office Theme",
+"theme": 10,
+"base": "4EA72E",
+"tint": -0.3499862666707358,
+"rgb": "336C1E"
+},
+{
+"design": "Office Theme",
+"theme": 10,
+"base": "4EA72E",
+"tint": -0.0999786370433668,
+"rgb": "479629"
+},
+{
+"design": "Office Theme",
+"theme": 10,
+"base": "4EA72E",
+"tint": -0.749992370372631,
+"rgb": "14290C"
+},
+{
+"design": "Office Theme",
+"theme": 10,
+"base": "4EA72E",
+"tint": -0.8999908444471572,
+"rgb": "071104"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 1,
+"base": "FFFFFF",
+"tint": 0.7999816888943144,
+"rgb": "FFFFFF"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 1,
+"base": "FFFFFF",
+"tint": 0.5999938962981048,
+"rgb": "FFFFFF"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 1,
+"base": "FFFFFF",
+"tint": 0.3999755851924192,
+"rgb": "FFFFFF"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.249977111117893,
+"rgb": "BFBFBF"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.499984740745262,
+"rgb": "808080"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 1,
+"base": "FFFFFF",
+"tint": 0.499984740745262,
+"rgb": "FFFFFF"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 1,
+"base": "FFFFFF",
+"tint": 0.3499862666707358,
+"rgb": "FFFFFF"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 1,
+"base": "FFFFFF",
+"tint": 0.249977111117893,
+"rgb": "FFFFFF"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 1,
+"base": "FFFFFF",
+"tint": 0.1499984740745262,
+"rgb": "FFFFFF"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.0499893185216834,
+"rgb": "F2F2F2"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.1499984740745262,
+"rgb": "D9D9D9"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.3499862666707358,
+"rgb": "A6A6A6"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.0999786370433668,
+"rgb": "E6E6E6"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.749992370372631,
+"rgb": "404040"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.8999908444471572,
+"rgb": "1A1A1A"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 2,
+"base": "000000",
+"tint": 0.7999816888943144,
+"rgb": "CCCCCC"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 2,
+"base": "000000",
+"tint": 0.5999938962981048,
+"rgb": "999999"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 2,
+"base": "000000",
+"tint": 0.3999755851924192,
+"rgb": "666666"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 2,
+"base": "000000",
+"tint": -0.249977111117893,
+"rgb": "000000"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 2,
+"base": "000000",
+"tint": -0.499984740745262,
+"rgb": "000000"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 2,
+"base": "000000",
+"tint": 0.499984740745262,
+"rgb": "808080"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 2,
+"base": "000000",
+"tint": 0.3499862666707358,
+"rgb": "595959"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 2,
+"base": "000000",
+"tint": 0.249977111117893,
+"rgb": "404040"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 2,
+"base": "000000",
+"tint": 0.1499984740745262,
+"rgb": "262626"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 2,
+"base": "000000",
+"tint": -0.0499893185216834,
+"rgb": "000000"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 2,
+"base": "000000",
+"tint": -0.1499984740745262,
+"rgb": "000000"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 2,
+"base": "000000",
+"tint": -0.3499862666707358,
+"rgb": "000000"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 2,
+"base": "000000",
+"tint": -0.0999786370433668,
+"rgb": "000000"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 2,
+"base": "000000",
+"tint": -0.749992370372631,
+"rgb": "000000"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 2,
+"base": "000000",
+"tint": -0.8999908444471572,
+"rgb": "000000"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 3,
+"base": "E7E6E6",
+"tint": 0.7999816888943144,
+"rgb": "FAFAFA"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 3,
+"base": "E7E6E6",
+"tint": 0.5999938962981048,
+"rgb": "F4F4F4"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 3,
+"base": "E7E6E6",
+"tint": 0.3999755851924192,
+"rgb": "F0F0F0"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 3,
+"base": "E7E6E6",
+"tint": -0.249977111117893,
+"rgb": "AEAAAA"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 3,
+"base": "E7E6E6",
+"tint": -0.499984740745262,
+"rgb": "757171"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 3,
+"base": "E7E6E6",
+"tint": 0.499984740745262,
+"rgb": "F2F2F2"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 3,
+"base": "E7E6E6",
+"tint": 0.3499862666707358,
+"rgb": "EFEFEF"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 3,
+"base": "E7E6E6",
+"tint": 0.249977111117893,
+"rgb": "ECECEC"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 3,
+"base": "E7E6E6",
+"tint": 0.1499984740745262,
+"rgb": "EAEAEA"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 3,
+"base": "E7E6E6",
+"tint": -0.0499893185216834,
+"rgb": "DCDADA"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 3,
+"base": "E7E6E6",
+"tint": -0.1499984740745262,
+"rgb": "C5C2C2"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 3,
+"base": "E7E6E6",
+"tint": -0.3499862666707358,
+"rgb": "989494"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 3,
+"base": "E7E6E6",
+"tint": -0.0999786370433668,
+"rgb": "D0CECE"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 3,
+"base": "E7E6E6",
+"tint": -0.749992370372631,
+"rgb": "3A3838"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 3,
+"base": "E7E6E6",
+"tint": -0.8999908444471572,
+"rgb": "161616"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 4,
+"base": "44546A",
+"tint": 0.7999816888943144,
+"rgb": "D6DCE4"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 4,
+"base": "44546A",
+"tint": 0.5999938962981048,
+"rgb": "ACB9CA"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 4,
+"base": "44546A",
+"tint": 0.3999755851924192,
+"rgb": "8497B0"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 4,
+"base": "44546A",
+"tint": -0.249977111117893,
+"rgb": "333F4F"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 4,
+"base": "44546A",
+"tint": -0.499984740745262,
+"rgb": "222B35"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 4,
+"base": "44546A",
+"tint": 0.499984740745262,
+"rgb": "99A8BD"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 4,
+"base": "44546A",
+"tint": 0.3499862666707358,
+"rgb": "7A8EA9"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 4,
+"base": "44546A",
+"tint": 0.249977111117893,
+"rgb": "657C9C"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 4,
+"base": "44546A",
+"tint": 0.1499984740745262,
+"rgb": "576C88"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 4,
+"base": "44546A",
+"tint": -0.0499893185216834,
+"rgb": "404F64"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 4,
+"base": "44546A",
+"tint": -0.1499984740745262,
+"rgb": "394759"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 4,
+"base": "44546A",
+"tint": -0.3499862666707358,
+"rgb": "2D3644"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 4,
+"base": "44546A",
+"tint": -0.0999786370433668,
+"rgb": "3D4B5F"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 4,
+"base": "44546A",
+"tint": -0.749992370372631,
+"rgb": "11141A"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 4,
+"base": "44546A",
+"tint": -0.8999908444471572,
+"rgb": "06090B"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 5,
+"base": "4472C4",
+"tint": 0.7999816888943144,
+"rgb": "D9E1F2"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 5,
+"base": "4472C4",
+"tint": 0.5999938962981048,
+"rgb": "B4C6E7"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 5,
+"base": "4472C4",
+"tint": 0.3999755851924192,
+"rgb": "8EA9DB"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 5,
+"base": "4472C4",
+"tint": -0.249977111117893,
+"rgb": "305496"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 5,
+"base": "4472C4",
+"tint": -0.499984740745262,
+"rgb": "203764"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 5,
+"base": "4472C4",
+"tint": 0.499984740745262,
+"rgb": "A2B8E1"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 5,
+"base": "4472C4",
+"tint": 0.3499862666707358,
+"rgb": "84A2D9"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 5,
+"base": "4472C4",
+"tint": 0.249977111117893,
+"rgb": "7395D2"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 5,
+"base": "4472C4",
+"tint": 0.1499984740745262,
+"rgb": "5F85CD"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 5,
+"base": "4472C4",
+"tint": -0.0499893185216834,
+"rgb": "3C69BD"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 5,
+"base": "4472C4",
+"tint": -0.1499984740745262,
+"rgb": "355FAA"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 5,
+"base": "4472C4",
+"tint": -0.3499862666707358,
+"rgb": "284782"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 5,
+"base": "4472C4",
+"tint": -0.0999786370433668,
+"rgb": "3864B4"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 5,
+"base": "4472C4",
+"tint": -0.749992370372631,
+"rgb": "101C32"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 5,
+"base": "4472C4",
+"tint": -0.8999908444471572,
+"rgb": "060B13"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 6,
+"base": "ED7D31",
+"tint": 0.7999816888943144,
+"rgb": "FCE4D6"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 6,
+"base": "ED7D31",
+"tint": 0.5999938962981048,
+"rgb": "F8CBAD"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 6,
+"base": "ED7D31",
+"tint": 0.3999755851924192,
+"rgb": "F4B084"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 6,
+"base": "ED7D31",
+"tint": -0.249977111117893,
+"rgb": "C65911"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 6,
+"base": "ED7D31",
+"tint": -0.499984740745262,
+"rgb": "833C0C"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 6,
+"base": "ED7D31",
+"tint": 0.499984740745262,
+"rgb": "F5BD98"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 6,
+"base": "ED7D31",
+"tint": 0.3499862666707358,
+"rgb": "F3A978"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 6,
+"base": "ED7D31",
+"tint": 0.249977111117893,
+"rgb": "F19D65"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 6,
+"base": "ED7D31",
+"tint": 0.1499984740745262,
+"rgb": "EF8F50"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 6,
+"base": "ED7D31",
+"tint": -0.0499893185216834,
+"rgb": "EC7424"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 6,
+"base": "ED7D31",
+"tint": -0.1499984740745262,
+"rgb": "DE6514"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 6,
+"base": "ED7D31",
+"tint": -0.3499862666707358,
+"rgb": "AA4D0F"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 6,
+"base": "ED7D31",
+"tint": -0.0999786370433668,
+"rgb": "EB6B16"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 6,
+"base": "ED7D31",
+"tint": -0.749992370372631,
+"rgb": "411D05"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 6,
+"base": "ED7D31",
+"tint": -0.8999908444471572,
+"rgb": "1A0C02"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 7,
+"base": "A5A5A5",
+"tint": 0.7999816888943144,
+"rgb": "EDEDED"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 7,
+"base": "A5A5A5",
+"tint": 0.5999938962981048,
+"rgb": "DBDBDB"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 7,
+"base": "A5A5A5",
+"tint": 0.3999755851924192,
+"rgb": "C9C9C9"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 7,
+"base": "A5A5A5",
+"tint": -0.249977111117893,
+"rgb": "7B7B7B"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 7,
+"base": "A5A5A5",
+"tint": -0.499984740745262,
+"rgb": "525252"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 7,
+"base": "A5A5A5",
+"tint": 0.499984740745262,
+"rgb": "D1D1D1"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 7,
+"base": "A5A5A5",
+"tint": 0.3499862666707358,
+"rgb": "C4C4C4"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 7,
+"base": "A5A5A5",
+"tint": 0.249977111117893,
+"rgb": "BBBBBB"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 7,
+"base": "A5A5A5",
+"tint": 0.1499984740745262,
+"rgb": "B1B1B1"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 7,
+"base": "A5A5A5",
+"tint": -0.0499893185216834,
+"rgb": "9C9C9C"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 7,
+"base": "A5A5A5",
+"tint": -0.1499984740745262,
+"rgb": "8B8B8B"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 7,
+"base": "A5A5A5",
+"tint": -0.3499862666707358,
+"rgb": "6A6A6A"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 7,
+"base": "A5A5A5",
+"tint": -0.0999786370433668,
+"rgb": "949494"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 7,
+"base": "A5A5A5",
+"tint": -0.749992370372631,
+"rgb": "282828"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 7,
+"base": "A5A5A5",
+"tint": -0.8999908444471572,
+"rgb": "101010"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 8,
+"base": "FFC000",
+"tint": 0.7999816888943144,
+"rgb": "FFF2CC"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 8,
+"base": "FFC000",
+"tint": 0.5999938962981048,
+"rgb": "FFE699"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 8,
+"base": "FFC000",
+"tint": 0.3999755851924192,
+"rgb": "FFD966"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 8,
+"base": "FFC000",
+"tint": -0.249977111117893,
+"rgb": "BF8F00"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 8,
+"base": "FFC000",
+"tint": -0.499984740745262,
+"rgb": "806000"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 8,
+"base": "FFC000",
+"tint": 0.499984740745262,
+"rgb": "FFDF80"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 8,
+"base": "FFC000",
+"tint": 0.3499862666707358,
+"rgb": "FFD659"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 8,
+"base": "FFC000",
+"tint": 0.249977111117893,
+"rgb": "FFCF40"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 8,
+"base": "FFC000",
+"tint": 0.1499984740745262,
+"rgb": "FFC926"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 8,
+"base": "FFC000",
+"tint": -0.0499893185216834,
+"rgb": "F2B600"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 8,
+"base": "FFC000",
+"tint": -0.1499984740745262,
+"rgb": "D9A300"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 8,
+"base": "FFC000",
+"tint": -0.3499862666707358,
+"rgb": "A67C00"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 8,
+"base": "FFC000",
+"tint": -0.0999786370433668,
+"rgb": "E6AC00"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 8,
+"base": "FFC000",
+"tint": -0.749992370372631,
+"rgb": "403000"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 8,
+"base": "FFC000",
+"tint": -0.8999908444471572,
+"rgb": "1A1300"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 9,
+"base": "5B9BD5",
+"tint": 0.7999816888943144,
+"rgb": "DDEBF7"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 9,
+"base": "5B9BD5",
+"tint": 0.5999938962981048,
+"rgb": "BDD7EE"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 9,
+"base": "5B9BD5",
+"tint": 0.3999755851924192,
+"rgb": "9BC2E6"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 9,
+"base": "5B9BD5",
+"tint": -0.249977111117893,
+"rgb": "2F75B5"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 9,
+"base": "5B9BD5",
+"tint": -0.499984740745262,
+"rgb": "1F4E78"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 9,
+"base": "5B9BD5",
+"tint": 0.499984740745262,
+"rgb": "ACCCEA"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 9,
+"base": "5B9BD5",
+"tint": 0.3499862666707358,
+"rgb": "93BDE3"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 9,
+"base": "5B9BD5",
+"tint": 0.249977111117893,
+"rgb": "84B4DF"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 9,
+"base": "5B9BD5",
+"tint": 0.1499984740745262,
+"rgb": "73A9DB"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 9,
+"base": "5B9BD5",
+"tint": -0.0499893185216834,
+"rgb": "4E93D1"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 9,
+"base": "5B9BD5",
+"tint": -0.1499984740745262,
+"rgb": "3685CB"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 9,
+"base": "5B9BD5",
+"tint": -0.3499862666707358,
+"rgb": "28659B"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 9,
+"base": "5B9BD5",
+"tint": -0.0999786370433668,
+"rgb": "428BCE"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 9,
+"base": "5B9BD5",
+"tint": -0.749992370372631,
+"rgb": "0F263C"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 9,
+"base": "5B9BD5",
+"tint": -0.8999908444471572,
+"rgb": "060F17"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 10,
+"base": "70AD47",
+"tint": 0.7999816888943144,
+"rgb": "E2EFDA"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 10,
+"base": "70AD47",
+"tint": 0.5999938962981048,
+"rgb": "C6E0B4"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 10,
+"base": "70AD47",
+"tint": 0.3999755851924192,
+"rgb": "A9D08E"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 10,
+"base": "70AD47",
+"tint": -0.249977111117893,
+"rgb": "548235"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 10,
+"base": "70AD47",
+"tint": -0.499984740745262,
+"rgb": "375623"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 10,
+"base": "70AD47",
+"tint": 0.499984740745262,
+"rgb": "B7D8A0"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 10,
+"base": "70AD47",
+"tint": 0.3499862666707358,
+"rgb": "A0CC84"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 10,
+"base": "70AD47",
+"tint": 0.249977111117893,
+"rgb": "93C572"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 10,
+"base": "70AD47",
+"tint": 0.1499984740745262,
+"rgb": "84BD5E"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 10,
+"base": "70AD47",
+"tint": -0.0499893185216834,
+"rgb": "6AA444"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 10,
+"base": "70AD47",
+"tint": -0.1499984740745262,
+"rgb": "5F923D"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 10,
+"base": "70AD47",
+"tint": -0.3499862666707358,
+"rgb": "48702E"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 10,
+"base": "70AD47",
+"tint": -0.0999786370433668,
+"rgb": "649B40"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 10,
+"base": "70AD47",
+"tint": -0.749992370372631,
+"rgb": "1C2B11"
+},
+{
+"design": "Office 2013 - 2022 Theme",
+"theme": 10,
+"base": "70AD47",
+"tint": -0.8999908444471572,
+"rgb": "0B1106"
+},
+{
+"design": "Ion",
+"theme": 1,
+"base": "FFFFFF",
+"tint": 0.7999816888943144,
+"rgb": "FFFFFF"
+},
+{
+"design": "Ion",
+"theme": 1,
+"base": "FFFFFF",
+"tint": 0.5999938962981048,
+"rgb": "FFFFFF"
+},
+{
+"design": "Ion",
+"theme": 1,
+"base": "FFFFFF",
+"tint": 0.3999755851924192,
+"rgb": "FFFFFF"
+},
+{
+"design": "Ion",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.249977111117893,
+"rgb": "BFBFBF"
+},
+{
+"design": "Ion",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.499984740745262,
+"rgb": "808080"
+},
+{
+"design": "Ion",
+"theme": 1,
+"base": "FFFFFF",
+"tint": 0.499984740745262,
+"rgb": "FFFFFF"
+},
+{
+"design": "Ion",
+"theme": 1,
+"base": "FFFFFF",
+"tint": 0.3499862666707358,
+"rgb": "FFFFFF"
+},
+{
+"design": "Ion",
+"theme": 1,
+"base": "FFFFFF",
+"tint": 0.249977111117893,
+"rgb": "FFFFFF"
+},
+{
+"design": "Ion",
+"theme": 1,
+"base": "FFFFFF",
+"tint": 0.1499984740745262,
+"rgb": "FFFFFF"
+},
+{
+"design": "Ion",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.0499893185216834,
+"rgb": "F2F2F2"
+},
+{
+"design": "Ion",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.1499984740745262,
+"rgb": "D9D9D9"
+},
+{
+"design": "Ion",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.3499862666707358,
+"rgb": "A6A6A6"
+},
+{
+"design": "Ion",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.0999786370433668,
+"rgb": "E6E6E6"
+},
+{
+"design": "Ion",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.749992370372631,
+"rgb": "404040"
+},
+{
+"design": "Ion",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.8999908444471572,
+"rgb": "1A1A1A"
+},
+{
+"design": "Ion",
+"theme": 2,
+"base": "000000",
+"tint": 0.7999816888943144,
+"rgb": "CCCCCC"
+},
+{
+"design": "Ion",
+"theme": 2,
+"base": "000000",
+"tint": 0.5999938962981048,
+"rgb": "999999"
+},
+{
+"design": "Ion",
+"theme": 2,
+"base": "000000",
+"tint": 0.3999755851924192,
+"rgb": "666666"
+},
+{
+"design": "Ion",
+"theme": 2,
+"base": "000000",
+"tint": -0.249977111117893,
+"rgb": "000000"
+},
+{
+"design": "Ion",
+"theme": 2,
+"base": "000000",
+"tint": -0.499984740745262,
+"rgb": "000000"
+},
+{
+"design": "Ion",
+"theme": 2,
+"base": "000000",
+"tint": 0.499984740745262,
+"rgb": "808080"
+},
+{
+"design": "Ion",
+"theme": 2,
+"base": "000000",
+"tint": 0.3499862666707358,
+"rgb": "595959"
+},
+{
+"design": "Ion",
+"theme": 2,
+"base": "000000",
+"tint": 0.249977111117893,
+"rgb": "404040"
+},
+{
+"design": "Ion",
+"theme": 2,
+"base": "000000",
+"tint": 0.1499984740745262,
+"rgb": "262626"
+},
+{
+"design": "Ion",
+"theme": 2,
+"base": "000000",
+"tint": -0.0499893185216834,
+"rgb": "000000"
+},
+{
+"design": "Ion",
+"theme": 2,
+"base": "000000",
+"tint": -0.1499984740745262,
+"rgb": "000000"
+},
+{
+"design": "Ion",
+"theme": 2,
+"base": "000000",
+"tint": -0.3499862666707358,
+"rgb": "000000"
+},
+{
+"design": "Ion",
+"theme": 2,
+"base": "000000",
+"tint": -0.0999786370433668,
+"rgb": "000000"
+},
+{
+"design": "Ion",
+"theme": 2,
+"base": "000000",
+"tint": -0.749992370372631,
+"rgb": "000000"
+},
+{
+"design": "Ion",
+"theme": 2,
+"base": "000000",
+"tint": -0.8999908444471572,
+"rgb": "000000"
+},
+{
+"design": "Ion",
+"theme": 3,
+"base": "EBEBEB",
+"tint": 0.7999816888943144,
+"rgb": "FBFBFB"
+},
+{
+"design": "Ion",
+"theme": 3,
+"base": "EBEBEB",
+"tint": 0.5999938962981048,
+"rgb": "F7F7F7"
+},
+{
+"design": "Ion",
+"theme": 3,
+"base": "EBEBEB",
+"tint": 0.3999755851924192,
+"rgb": "F2F2F2"
+},
+{
+"design": "Ion",
+"theme": 3,
+"base": "EBEBEB",
+"tint": -0.249977111117893,
+"rgb": "AFAFAF"
+},
+{
+"design": "Ion",
+"theme": 3,
+"base": "EBEBEB",
+"tint": -0.499984740745262,
+"rgb": "757575"
+},
+{
+"design": "Ion",
+"theme": 3,
+"base": "EBEBEB",
+"tint": 0.499984740745262,
+"rgb": "F4F4F4"
+},
+{
+"design": "Ion",
+"theme": 3,
+"base": "EBEBEB",
+"tint": 0.3499862666707358,
+"rgb": "F1F1F1"
+},
+{
+"design": "Ion",
+"theme": 3,
+"base": "EBEBEB",
+"tint": 0.249977111117893,
+"rgb": "EFEFEF"
+},
+{
+"design": "Ion",
+"theme": 3,
+"base": "EBEBEB",
+"tint": 0.1499984740745262,
+"rgb": "EDEDED"
+},
+{
+"design": "Ion",
+"theme": 3,
+"base": "EBEBEB",
+"tint": -0.0499893185216834,
+"rgb": "DEDEDE"
+},
+{
+"design": "Ion",
+"theme": 3,
+"base": "EBEBEB",
+"tint": -0.1499984740745262,
+"rgb": "C7C7C7"
+},
+{
+"design": "Ion",
+"theme": 3,
+"base": "EBEBEB",
+"tint": -0.3499862666707358,
+"rgb": "989898"
+},
+{
+"design": "Ion",
+"theme": 3,
+"base": "EBEBEB",
+"tint": -0.0999786370433668,
+"rgb": "D2D2D2"
+},
+{
+"design": "Ion",
+"theme": 3,
+"base": "EBEBEB",
+"tint": -0.749992370372631,
+"rgb": "3A3A3A"
+},
+{
+"design": "Ion",
+"theme": 3,
+"base": "EBEBEB",
+"tint": -0.8999908444471572,
+"rgb": "171717"
+},
+{
+"design": "Ion",
+"theme": 4,
+"base": "1E5155",
+"tint": 0.7999816888943144,
+"rgb": "C4E7EA"
+},
+{
+"design": "Ion",
+"theme": 4,
+"base": "1E5155",
+"tint": 0.5999938962981048,
+"rgb": "89D0D6"
+},
+{
+"design": "Ion",
+"theme": 4,
+"base": "1E5155",
+"tint": 0.3999755851924192,
+"rgb": "4FB9C1"
+},
+{
+"design": "Ion",
+"theme": 4,
+"base": "1E5155",
+"tint": -0.249977111117893,
+"rgb": "163C3F"
+},
+{
+"design": "Ion",
+"theme": 4,
+"base": "1E5155",
+"tint": -0.499984740745262,
+"rgb": "0F282B"
+},
+{
+"design": "Ion",
+"theme": 4,
+"base": "1E5155",
+"tint": 0.499984740745262,
+"rgb": "6CC5CC"
+},
+{
+"design": "Ion",
+"theme": 4,
+"base": "1E5155",
+"tint": 0.3499862666707358,
+"rgb": "42B1BB"
+},
+{
+"design": "Ion",
+"theme": 4,
+"base": "1E5155",
+"tint": 0.249977111117893,
+"rgb": "37969D"
+},
+{
+"design": "Ion",
+"theme": 4,
+"base": "1E5155",
+"tint": 0.1499984740745262,
+"rgb": "2D7980"
+},
+{
+"design": "Ion",
+"theme": 4,
+"base": "1E5155",
+"tint": -0.0499893185216834,
+"rgb": "1D4B50"
+},
+{
+"design": "Ion",
+"theme": 4,
+"base": "1E5155",
+"tint": -0.1499984740745262,
+"rgb": "184447"
+},
+{
+"design": "Ion",
+"theme": 4,
+"base": "1E5155",
+"tint": -0.3499862666707358,
+"rgb": "133437"
+},
+{
+"design": "Ion",
+"theme": 4,
+"base": "1E5155",
+"tint": -0.0999786370433668,
+"rgb": "1B484B"
+},
+{
+"design": "Ion",
+"theme": 4,
+"base": "1E5155",
+"tint": -0.749992370372631,
+"rgb": "071314"
+},
+{
+"design": "Ion",
+"theme": 4,
+"base": "1E5155",
+"tint": -0.8999908444471572,
+"rgb": "030707"
+},
+{
+"design": "Ion",
+"theme": 5,
+"base": "B01513",
+"tint": 0.7999816888943144,
+"rgb": "F9C7C6"
+},
+{
+"design": "Ion",
+"theme": 5,
+"base": "B01513",
+"tint": 0.5999938962981048,
+"rgb": "F28E8C"
+},
+{
+"design": "Ion",
+"theme": 5,
+"base": "B01513",
+"tint": 0.3999755851924192,
+"rgb": "ED5854"
+},
+{
+"design": "Ion",
+"theme": 5,
+"base": "B01513",
+"tint": -0.249977111117893,
+"rgb": "84120F"
+},
+{
+"design": "Ion",
+"theme": 5,
+"base": "B01513",
+"tint": -0.499984740745262,
+"rgb": "580C0A"
+},
+{
+"design": "Ion",
+"theme": 5,
+"base": "B01513",
+"tint": 0.499984740745262,
+"rgb": "F07471"
+},
+{
+"design": "Ion",
+"theme": 5,
+"base": "B01513",
+"tint": 0.3499862666707358,
+"rgb": "EB4945"
+},
+{
+"design": "Ion",
+"theme": 5,
+"base": "B01513",
+"tint": 0.249977111117893,
+"rgb": "E82F2B"
+},
+{
+"design": "Ion",
+"theme": 5,
+"base": "B01513",
+"tint": 0.1499984740745262,
+"rgb": "DB1D17"
+},
+{
+"design": "Ion",
+"theme": 5,
+"base": "B01513",
+"tint": -0.0499893185216834,
+"rgb": "A71612"
+},
+{
+"design": "Ion",
+"theme": 5,
+"base": "B01513",
+"tint": -0.1499984740745262,
+"rgb": "961310"
+},
+{
+"design": "Ion",
+"theme": 5,
+"base": "B01513",
+"tint": -0.3499862666707358,
+"rgb": "710F0D"
+},
+{
+"design": "Ion",
+"theme": 5,
+"base": "B01513",
+"tint": -0.0999786370433668,
+"rgb": "9D1411"
+},
+{
+"design": "Ion",
+"theme": 5,
+"base": "B01513",
+"tint": -0.749992370372631,
+"rgb": "2C0605"
+},
+{
+"design": "Ion",
+"theme": 5,
+"base": "B01513",
+"tint": -0.8999908444471572,
+"rgb": "110202"
+},
+{
+"design": "Ion",
+"theme": 6,
+"base": "EA6312",
+"tint": 0.7999816888943144,
+"rgb": "FBDFCE"
+},
+{
+"design": "Ion",
+"theme": 6,
+"base": "EA6312",
+"tint": 0.5999938962981048,
+"rgb": "F8C09E"
+},
+{
+"design": "Ion",
+"theme": 6,
+"base": "EA6312",
+"tint": 0.3999755851924192,
+"rgb": "F4A06F"
+},
+{
+"design": "Ion",
+"theme": 6,
+"base": "EA6312",
+"tint": -0.249977111117893,
+"rgb": "AF4A0E"
+},
+{
+"design": "Ion",
+"theme": 6,
+"base": "EA6312",
+"tint": -0.499984740745262,
+"rgb": "753109"
+},
+{
+"design": "Ion",
+"theme": 6,
+"base": "EA6312",
+"tint": 0.499984740745262,
+"rgb": "F5B087"
+},
+{
+"design": "Ion",
+"theme": 6,
+"base": "EA6312",
+"tint": 0.3499862666707358,
+"rgb": "F39963"
+},
+{
+"design": "Ion",
+"theme": 6,
+"base": "EA6312",
+"tint": 0.249977111117893,
+"rgb": "F18A4B"
+},
+{
+"design": "Ion",
+"theme": 6,
+"base": "EA6312",
+"tint": 0.1499984740745262,
+"rgb": "EF7A34"
+},
+{
+"design": "Ion",
+"theme": 6,
+"base": "EA6312",
+"tint": -0.0499893185216834,
+"rgb": "DF5F11"
+},
+{
+"design": "Ion",
+"theme": 6,
+"base": "EA6312",
+"tint": -0.1499984740745262,
+"rgb": "C8540F"
+},
+{
+"design": "Ion",
+"theme": 6,
+"base": "EA6312",
+"tint": -0.3499862666707358,
+"rgb": "98410C"
+},
+{
+"design": "Ion",
+"theme": 6,
+"base": "EA6312",
+"tint": -0.0999786370433668,
+"rgb": "D35910"
+},
+{
+"design": "Ion",
+"theme": 6,
+"base": "EA6312",
+"tint": -0.749992370372631,
+"rgb": "391804"
+},
+{
+"design": "Ion",
+"theme": 6,
+"base": "EA6312",
+"tint": -0.8999908444471572,
+"rgb": "150A02"
+},
+{
+"design": "Ion",
+"theme": 7,
+"base": "E6B729",
+"tint": 0.7999816888943144,
+"rgb": "FAF0D3"
+},
+{
+"design": "Ion",
+"theme": 7,
+"base": "E6B729",
+"tint": 0.5999938962981048,
+"rgb": "F5E2A9"
+},
+{
+"design": "Ion",
+"theme": 7,
+"base": "E6B729",
+"tint": 0.3999755851924192,
+"rgb": "F0D37D"
+},
+{
+"design": "Ion",
+"theme": 7,
+"base": "E6B729",
+"tint": -0.249977111117893,
+"rgb": "B78E15"
+},
+{
+"design": "Ion",
+"theme": 7,
+"base": "E6B729",
+"tint": -0.499984740745262,
+"rgb": "7A600E"
+},
+{
+"design": "Ion",
+"theme": 7,
+"base": "E6B729",
+"tint": 0.499984740745262,
+"rgb": "F2DB95"
+},
+{
+"design": "Ion",
+"theme": 7,
+"base": "E6B729",
+"tint": 0.3499862666707358,
+"rgb": "EFD074"
+},
+{
+"design": "Ion",
+"theme": 7,
+"base": "E6B729",
+"tint": 0.249977111117893,
+"rgb": "ECC960"
+},
+{
+"design": "Ion",
+"theme": 7,
+"base": "E6B729",
+"tint": 0.1499984740745262,
+"rgb": "EAC148"
+},
+{
+"design": "Ion",
+"theme": 7,
+"base": "E6B729",
+"tint": -0.0499893185216834,
+"rgb": "E4B31D"
+},
+{
+"design": "Ion",
+"theme": 7,
+"base": "E6B729",
+"tint": -0.1499984740745262,
+"rgb": "CEA017"
+},
+{
+"design": "Ion",
+"theme": 7,
+"base": "E6B729",
+"tint": -0.3499862666707358,
+"rgb": "9E7B12"
+},
+{
+"design": "Ion",
+"theme": 7,
+"base": "E6B729",
+"tint": -0.0999786370433668,
+"rgb": "DBAB1A"
+},
+{
+"design": "Ion",
+"theme": 7,
+"base": "E6B729",
+"tint": -0.749992370372631,
+"rgb": "3D3007"
+},
+{
+"design": "Ion",
+"theme": 7,
+"base": "E6B729",
+"tint": -0.8999908444471572,
+"rgb": "171202"
+},
+{
+"design": "Ion",
+"theme": 8,
+"base": "6AAC90",
+"tint": 0.7999816888943144,
+"rgb": "E1EEE9"
+},
+{
+"design": "Ion",
+"theme": 8,
+"base": "6AAC90",
+"tint": 0.5999938962981048,
+"rgb": "C4DDD2"
+},
+{
+"design": "Ion",
+"theme": 8,
+"base": "6AAC90",
+"tint": 0.3999755851924192,
+"rgb": "A5CDBC"
+},
+{
+"design": "Ion",
+"theme": 8,
+"base": "6AAC90",
+"tint": -0.249977111117893,
+"rgb": "4A866C"
+},
+{
+"design": "Ion",
+"theme": 8,
+"base": "6AAC90",
+"tint": -0.499984740745262,
+"rgb": "325848"
+},
+{
+"design": "Ion",
+"theme": 8,
+"base": "6AAC90",
+"tint": 0.499984740745262,
+"rgb": "B4D6C7"
+},
+{
+"design": "Ion",
+"theme": 8,
+"base": "6AAC90",
+"tint": 0.3499862666707358,
+"rgb": "9EC9B7"
+},
+{
+"design": "Ion",
+"theme": 8,
+"base": "6AAC90",
+"tint": 0.249977111117893,
+"rgb": "8FC0AB"
+},
+{
+"design": "Ion",
+"theme": 8,
+"base": "6AAC90",
+"tint": 0.1499984740745262,
+"rgb": "81B8A0"
+},
+{
+"design": "Ion",
+"theme": 8,
+"base": "6AAC90",
+"tint": -0.0499893185216834,
+"rgb": "61A789"
+},
+{
+"design": "Ion",
+"theme": 8,
+"base": "6AAC90",
+"tint": -0.1499984740745262,
+"rgb": "55977B"
+},
+{
+"design": "Ion",
+"theme": 8,
+"base": "6AAC90",
+"tint": -0.3499862666707358,
+"rgb": "41745F"
+},
+{
+"design": "Ion",
+"theme": 8,
+"base": "6AAC90",
+"tint": -0.0999786370433668,
+"rgb": "599F82"
+},
+{
+"design": "Ion",
+"theme": 8,
+"base": "6AAC90",
+"tint": -0.749992370372631,
+"rgb": "182C23"
+},
+{
+"design": "Ion",
+"theme": 8,
+"base": "6AAC90",
+"tint": -0.8999908444471572,
+"rgb": "0A120F"
+},
+{
+"design": "Ion",
+"theme": 9,
+"base": "54849A",
+"tint": 0.7999816888943144,
+"rgb": "DBE7EC"
+},
+{
+"design": "Ion",
+"theme": 9,
+"base": "54849A",
+"tint": 0.5999938962981048,
+"rgb": "B8CDD8"
+},
+{
+"design": "Ion",
+"theme": 9,
+"base": "54849A",
+"tint": 0.3999755851924192,
+"rgb": "95B6C6"
+},
+{
+"design": "Ion",
+"theme": 9,
+"base": "54849A",
+"tint": -0.249977111117893,
+"rgb": "3F6374"
+},
+{
+"design": "Ion",
+"theme": 9,
+"base": "54849A",
+"tint": -0.499984740745262,
+"rgb": "29424E"
+},
+{
+"design": "Ion",
+"theme": 9,
+"base": "54849A",
+"tint": 0.499984740745262,
+"rgb": "A7C2CF"
+},
+{
+"design": "Ion",
+"theme": 9,
+"base": "54849A",
+"tint": 0.3499862666707358,
+"rgb": "8BAFC0"
+},
+{
+"design": "Ion",
+"theme": 9,
+"base": "54849A",
+"tint": 0.249977111117893,
+"rgb": "7BA4B7"
+},
+{
+"design": "Ion",
+"theme": 9,
+"base": "54849A",
+"tint": 0.1499984740745262,
+"rgb": "6997AD"
+},
+{
+"design": "Ion",
+"theme": 9,
+"base": "54849A",
+"tint": -0.0499893185216834,
+"rgb": "507C92"
+},
+{
+"design": "Ion",
+"theme": 9,
+"base": "54849A",
+"tint": -0.1499984740745262,
+"rgb": "477083"
+},
+{
+"design": "Ion",
+"theme": 9,
+"base": "54849A",
+"tint": -0.3499862666707358,
+"rgb": "365463"
+},
+{
+"design": "Ion",
+"theme": 9,
+"base": "54849A",
+"tint": -0.0999786370433668,
+"rgb": "4A768A"
+},
+{
+"design": "Ion",
+"theme": 9,
+"base": "54849A",
+"tint": -0.749992370372631,
+"rgb": "152126"
+},
+{
+"design": "Ion",
+"theme": 9,
+"base": "54849A",
+"tint": -0.8999908444471572,
+"rgb": "090D0F"
+},
+{
+"design": "Ion",
+"theme": 10,
+"base": "9E5E9B",
+"tint": 0.7999816888943144,
+"rgb": "EBDEEA"
+},
+{
+"design": "Ion",
+"theme": 10,
+"base": "9E5E9B",
+"tint": 0.5999938962981048,
+"rgb": "D8BED7"
+},
+{
+"design": "Ion",
+"theme": 10,
+"base": "9E5E9B",
+"tint": 0.3999755851924192,
+"rgb": "C69DC4"
+},
+{
+"design": "Ion",
+"theme": 10,
+"base": "9E5E9B",
+"tint": -0.249977111117893,
+"rgb": "774675"
+},
+{
+"design": "Ion",
+"theme": 10,
+"base": "9E5E9B",
+"tint": -0.499984740745262,
+"rgb": "4F2F4E"
+},
+{
+"design": "Ion",
+"theme": 10,
+"base": "9E5E9B",
+"tint": 0.499984740745262,
+"rgb": "CFADCD"
+},
+{
+"design": "Ion",
+"theme": 10,
+"base": "9E5E9B",
+"tint": 0.3499862666707358,
+"rgb": "C096BE"
+},
+{
+"design": "Ion",
+"theme": 10,
+"base": "9E5E9B",
+"tint": 0.249977111117893,
+"rgb": "B786B5"
+},
+{
+"design": "Ion",
+"theme": 10,
+"base": "9E5E9B",
+"tint": 0.1499984740745262,
+"rgb": "AD76AA"
+},
+{
+"design": "Ion",
+"theme": 10,
+"base": "9E5E9B",
+"tint": -0.0499893185216834,
+"rgb": "975994"
+},
+{
+"design": "Ion",
+"theme": 10,
+"base": "9E5E9B",
+"tint": -0.1499984740745262,
+"rgb": "875084"
+},
+{
+"design": "Ion",
+"theme": 10,
+"base": "9E5E9B",
+"tint": -0.3499862666707358,
+"rgb": "673D65"
+},
+{
+"design": "Ion",
+"theme": 10,
+"base": "9E5E9B",
+"tint": -0.0999786370433668,
+"rgb": "8E558B"
+},
+{
+"design": "Ion",
+"theme": 10,
+"base": "9E5E9B",
+"tint": -0.749992370372631,
+"rgb": "261725"
+},
+{
+"design": "Ion",
+"theme": 10,
+"base": "9E5E9B",
+"tint": -0.8999908444471572,
+"rgb": "0F090F"
+},
+{
+"design": "Facet",
+"theme": 1,
+"base": "FFFFFF",
+"tint": 0.7999816888943144,
+"rgb": "FFFFFF"
+},
+{
+"design": "Facet",
+"theme": 1,
+"base": "FFFFFF",
+"tint": 0.5999938962981048,
+"rgb": "FFFFFF"
+},
+{
+"design": "Facet",
+"theme": 1,
+"base": "FFFFFF",
+"tint": 0.3999755851924192,
+"rgb": "FFFFFF"
+},
+{
+"design": "Facet",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.249977111117893,
+"rgb": "BFBFBF"
+},
+{
+"design": "Facet",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.499984740745262,
+"rgb": "808080"
+},
+{
+"design": "Facet",
+"theme": 1,
+"base": "FFFFFF",
+"tint": 0.499984740745262,
+"rgb": "FFFFFF"
+},
+{
+"design": "Facet",
+"theme": 1,
+"base": "FFFFFF",
+"tint": 0.3499862666707358,
+"rgb": "FFFFFF"
+},
+{
+"design": "Facet",
+"theme": 1,
+"base": "FFFFFF",
+"tint": 0.249977111117893,
+"rgb": "FFFFFF"
+},
+{
+"design": "Facet",
+"theme": 1,
+"base": "FFFFFF",
+"tint": 0.1499984740745262,
+"rgb": "FFFFFF"
+},
+{
+"design": "Facet",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.0499893185216834,
+"rgb": "F2F2F2"
+},
+{
+"design": "Facet",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.1499984740745262,
+"rgb": "D9D9D9"
+},
+{
+"design": "Facet",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.3499862666707358,
+"rgb": "A6A6A6"
+},
+{
+"design": "Facet",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.0999786370433668,
+"rgb": "E6E6E6"
+},
+{
+"design": "Facet",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.749992370372631,
+"rgb": "404040"
+},
+{
+"design": "Facet",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.8999908444471572,
+"rgb": "1A1A1A"
+},
+{
+"design": "Facet",
+"theme": 2,
+"base": "000000",
+"tint": 0.7999816888943144,
+"rgb": "CCCCCC"
+},
+{
+"design": "Facet",
+"theme": 2,
+"base": "000000",
+"tint": 0.5999938962981048,
+"rgb": "999999"
+},
+{
+"design": "Facet",
+"theme": 2,
+"base": "000000",
+"tint": 0.3999755851924192,
+"rgb": "666666"
+},
+{
+"design": "Facet",
+"theme": 2,
+"base": "000000",
+"tint": -0.249977111117893,
+"rgb": "000000"
+},
+{
+"design": "Facet",
+"theme": 2,
+"base": "000000",
+"tint": -0.499984740745262,
+"rgb": "000000"
+},
+{
+"design": "Facet",
+"theme": 2,
+"base": "000000",
+"tint": 0.499984740745262,
+"rgb": "808080"
+},
+{
+"design": "Facet",
+"theme": 2,
+"base": "000000",
+"tint": 0.3499862666707358,
+"rgb": "595959"
+},
+{
+"design": "Facet",
+"theme": 2,
+"base": "000000",
+"tint": 0.249977111117893,
+"rgb": "404040"
+},
+{
+"design": "Facet",
+"theme": 2,
+"base": "000000",
+"tint": 0.1499984740745262,
+"rgb": "262626"
+},
+{
+"design": "Facet",
+"theme": 2,
+"base": "000000",
+"tint": -0.0499893185216834,
+"rgb": "000000"
+},
+{
+"design": "Facet",
+"theme": 2,
+"base": "000000",
+"tint": -0.1499984740745262,
+"rgb": "000000"
+},
+{
+"design": "Facet",
+"theme": 2,
+"base": "000000",
+"tint": -0.3499862666707358,
+"rgb": "000000"
+},
+{
+"design": "Facet",
+"theme": 2,
+"base": "000000",
+"tint": -0.0999786370433668,
+"rgb": "000000"
+},
+{
+"design": "Facet",
+"theme": 2,
+"base": "000000",
+"tint": -0.749992370372631,
+"rgb": "000000"
+},
+{
+"design": "Facet",
+"theme": 2,
+"base": "000000",
+"tint": -0.8999908444471572,
+"rgb": "000000"
+},
+{
+"design": "Facet",
+"theme": 3,
+"base": "EBEBEB",
+"tint": 0.7999816888943144,
+"rgb": "FBFBFB"
+},
+{
+"design": "Facet",
+"theme": 3,
+"base": "EBEBEB",
+"tint": 0.5999938962981048,
+"rgb": "F7F7F7"
+},
+{
+"design": "Facet",
+"theme": 3,
+"base": "EBEBEB",
+"tint": 0.3999755851924192,
+"rgb": "F2F2F2"
+},
+{
+"design": "Facet",
+"theme": 3,
+"base": "EBEBEB",
+"tint": -0.249977111117893,
+"rgb": "AFAFAF"
+},
+{
+"design": "Facet",
+"theme": 3,
+"base": "EBEBEB",
+"tint": -0.499984740745262,
+"rgb": "757575"
+},
+{
+"design": "Facet",
+"theme": 3,
+"base": "EBEBEB",
+"tint": 0.499984740745262,
+"rgb": "F4F4F4"
+},
+{
+"design": "Facet",
+"theme": 3,
+"base": "EBEBEB",
+"tint": 0.3499862666707358,
+"rgb": "F1F1F1"
+},
+{
+"design": "Facet",
+"theme": 3,
+"base": "EBEBEB",
+"tint": 0.249977111117893,
+"rgb": "EFEFEF"
+},
+{
+"design": "Facet",
+"theme": 3,
+"base": "EBEBEB",
+"tint": 0.1499984740745262,
+"rgb": "EDEDED"
+},
+{
+"design": "Facet",
+"theme": 3,
+"base": "EBEBEB",
+"tint": -0.0499893185216834,
+"rgb": "DEDEDE"
+},
+{
+"design": "Facet",
+"theme": 3,
+"base": "EBEBEB",
+"tint": -0.1499984740745262,
+"rgb": "C7C7C7"
+},
+{
+"design": "Facet",
+"theme": 3,
+"base": "EBEBEB",
+"tint": -0.3499862666707358,
+"rgb": "989898"
+},
+{
+"design": "Facet",
+"theme": 3,
+"base": "EBEBEB",
+"tint": -0.0999786370433668,
+"rgb": "D2D2D2"
+},
+{
+"design": "Facet",
+"theme": 3,
+"base": "EBEBEB",
+"tint": -0.749992370372631,
+"rgb": "3A3A3A"
+},
+{
+"design": "Facet",
+"theme": 3,
+"base": "EBEBEB",
+"tint": -0.8999908444471572,
+"rgb": "171717"
+},
+{
+"design": "Facet",
+"theme": 4,
+"base": "2C3C43",
+"tint": 0.7999816888943144,
+"rgb": "CEDADF"
+},
+{
+"design": "Facet",
+"theme": 4,
+"base": "2C3C43",
+"tint": 0.5999938962981048,
+"rgb": "9DB5BF"
+},
+{
+"design": "Facet",
+"theme": 4,
+"base": "2C3C43",
+"tint": 0.3999755851924192,
+"rgb": "6D92A0"
+},
+{
+"design": "Facet",
+"theme": 4,
+"base": "2C3C43",
+"tint": -0.249977111117893,
+"rgb": "212D32"
+},
+{
+"design": "Facet",
+"theme": 4,
+"base": "2C3C43",
+"tint": -0.499984740745262,
+"rgb": "161E21"
+},
+{
+"design": "Facet",
+"theme": 4,
+"base": "2C3C43",
+"tint": 0.499984740745262,
+"rgb": "86A4B0"
+},
+{
+"design": "Facet",
+"theme": 4,
+"base": "2C3C43",
+"tint": 0.3499862666707358,
+"rgb": "638796"
+},
+{
+"design": "Facet",
+"theme": 4,
+"base": "2C3C43",
+"tint": 0.249977111117893,
+"rgb": "537280"
+},
+{
+"design": "Facet",
+"theme": 4,
+"base": "2C3C43",
+"tint": 0.1499984740745262,
+"rgb": "435C67"
+},
+{
+"design": "Facet",
+"theme": 4,
+"base": "2C3C43",
+"tint": -0.0499893185216834,
+"rgb": "29383F"
+},
+{
+"design": "Facet",
+"theme": 4,
+"base": "2C3C43",
+"tint": -0.1499984740745262,
+"rgb": "253338"
+},
+{
+"design": "Facet",
+"theme": 4,
+"base": "2C3C43",
+"tint": -0.3499862666707358,
+"rgb": "1C262B"
+},
+{
+"design": "Facet",
+"theme": 4,
+"base": "2C3C43",
+"tint": -0.0999786370433668,
+"rgb": "26353C"
+},
+{
+"design": "Facet",
+"theme": 4,
+"base": "2C3C43",
+"tint": -0.749992370372631,
+"rgb": "0B0F11"
+},
+{
+"design": "Facet",
+"theme": 4,
+"base": "2C3C43",
+"tint": -0.8999908444471572,
+"rgb": "040506"
+},
+{
+"design": "Facet",
+"theme": 5,
+"base": "90C226",
+"tint": 0.7999816888943144,
+"rgb": "E9F5CF"
+},
+{
+"design": "Facet",
+"theme": 5,
+"base": "90C226",
+"tint": 0.5999938962981048,
+"rgb": "D5EDA0"
+},
+{
+"design": "Facet",
+"theme": 5,
+"base": "90C226",
+"tint": 0.3999755851924192,
+"rgb": "BFE373"
+},
+{
+"design": "Facet",
+"theme": 5,
+"base": "90C226",
+"tint": -0.249977111117893,
+"rgb": "6A8F1D"
+},
+{
+"design": "Facet",
+"theme": 5,
+"base": "90C226",
+"tint": -0.499984740745262,
+"rgb": "476013"
+},
+{
+"design": "Facet",
+"theme": 5,
+"base": "90C226",
+"tint": 0.499984740745262,
+"rgb": "C9E88A"
+},
+{
+"design": "Facet",
+"theme": 5,
+"base": "90C226",
+"tint": 0.3499862666707358,
+"rgb": "B9E166"
+},
+{
+"design": "Facet",
+"theme": 5,
+"base": "90C226",
+"tint": 0.249977111117893,
+"rgb": "AEDC50"
+},
+{
+"design": "Facet",
+"theme": 5,
+"base": "90C226",
+"tint": 0.1499984740745262,
+"rgb": "A4D838"
+},
+{
+"design": "Facet",
+"theme": 5,
+"base": "90C226",
+"tint": -0.0499893185216834,
+"rgb": "87B724"
+},
+{
+"design": "Facet",
+"theme": 5,
+"base": "90C226",
+"tint": -0.1499984740745262,
+"rgb": "79A420"
+},
+{
+"design": "Facet",
+"theme": 5,
+"base": "90C226",
+"tint": -0.3499862666707358,
+"rgb": "5B7C18"
+},
+{
+"design": "Facet",
+"theme": 5,
+"base": "90C226",
+"tint": -0.0999786370433668,
+"rgb": "81AE22"
+},
+{
+"design": "Facet",
+"theme": 5,
+"base": "90C226",
+"tint": -0.749992370372631,
+"rgb": "23300A"
+},
+{
+"design": "Facet",
+"theme": 5,
+"base": "90C226",
+"tint": -0.8999908444471572,
+"rgb": "0D1203"
+},
+{
+"design": "Facet",
+"theme": 6,
+"base": "54A021",
+"tint": 0.7999816888943144,
+"rgb": "DBF4CA"
+},
+{
+"design": "Facet",
+"theme": 6,
+"base": "54A021",
+"tint": 0.5999938962981048,
+"rgb": "B7E996"
+},
+{
+"design": "Facet",
+"theme": 6,
+"base": "54A021",
+"tint": 0.3999755851924192,
+"rgb": "93DE61"
+},
+{
+"design": "Facet",
+"theme": 6,
+"base": "54A021",
+"tint": -0.249977111117893,
+"rgb": "3F7818"
+},
+{
+"design": "Facet",
+"theme": 6,
+"base": "54A021",
+"tint": -0.499984740745262,
+"rgb": "295010"
+},
+{
+"design": "Facet",
+"theme": 6,
+"base": "54A021",
+"tint": 0.499984740745262,
+"rgb": "A5E37B"
+},
+{
+"design": "Facet",
+"theme": 6,
+"base": "54A021",
+"tint": 0.3499862666707358,
+"rgb": "8ADC54"
+},
+{
+"design": "Facet",
+"theme": 6,
+"base": "54A021",
+"tint": 0.249977111117893,
+"rgb": "78D739"
+},
+{
+"design": "Facet",
+"theme": 6,
+"base": "54A021",
+"tint": 0.1499984740745262,
+"rgb": "68C729"
+},
+{
+"design": "Facet",
+"theme": 6,
+"base": "54A021",
+"tint": -0.0499893185216834,
+"rgb": "50981F"
+},
+{
+"design": "Facet",
+"theme": 6,
+"base": "54A021",
+"tint": -0.1499984740745262,
+"rgb": "47881C"
+},
+{
+"design": "Facet",
+"theme": 6,
+"base": "54A021",
+"tint": -0.3499862666707358,
+"rgb": "366815"
+},
+{
+"design": "Facet",
+"theme": 6,
+"base": "54A021",
+"tint": -0.0999786370433668,
+"rgb": "4A8E1E"
+},
+{
+"design": "Facet",
+"theme": 6,
+"base": "54A021",
+"tint": -0.749992370372631,
+"rgb": "142609"
+},
+{
+"design": "Facet",
+"theme": 6,
+"base": "54A021",
+"tint": -0.8999908444471572,
+"rgb": "091003"
+},
+{
+"design": "Facet",
+"theme": 7,
+"base": "E6B91E",
+"tint": 0.7999816888943144,
+"rgb": "FAF0D1"
+},
+{
+"design": "Facet",
+"theme": 7,
+"base": "E6B91E",
+"tint": 0.5999938962981048,
+"rgb": "F4E2A4"
+},
+{
+"design": "Facet",
+"theme": 7,
+"base": "E6B91E",
+"tint": 0.3999755851924192,
+"rgb": "F0D577"
+},
+{
+"design": "Facet",
+"theme": 7,
+"base": "E6B91E",
+"tint": -0.249977111117893,
+"rgb": "AE8B13"
+},
+{
+"design": "Facet",
+"theme": 7,
+"base": "E6B91E",
+"tint": -0.499984740745262,
+"rgb": "755E0D"
+},
+{
+"design": "Facet",
+"theme": 7,
+"base": "E6B91E",
+"tint": 0.499984740745262,
+"rgb": "F2DC8E"
+},
+{
+"design": "Facet",
+"theme": 7,
+"base": "E6B91E",
+"tint": 0.3499862666707358,
+"rgb": "EFD16B"
+},
+{
+"design": "Facet",
+"theme": 7,
+"base": "E6B91E",
+"tint": 0.249977111117893,
+"rgb": "ECCA55"
+},
+{
+"design": "Facet",
+"theme": 7,
+"base": "E6B91E",
+"tint": 0.1499984740745262,
+"rgb": "EAC43E"
+},
+{
+"design": "Facet",
+"theme": 7,
+"base": "E6B91E",
+"tint": -0.0499893185216834,
+"rgb": "DCB018"
+},
+{
+"design": "Facet",
+"theme": 7,
+"base": "E6B91E",
+"tint": -0.1499984740745262,
+"rgb": "C59D16"
+},
+{
+"design": "Facet",
+"theme": 7,
+"base": "E6B91E",
+"tint": -0.3499862666707358,
+"rgb": "977911"
+},
+{
+"design": "Facet",
+"theme": 7,
+"base": "E6B91E",
+"tint": -0.0999786370433668,
+"rgb": "D0A717"
+},
+{
+"design": "Facet",
+"theme": 7,
+"base": "E6B91E",
+"tint": -0.749992370372631,
+"rgb": "392E06"
+},
+{
+"design": "Facet",
+"theme": 7,
+"base": "E6B91E",
+"tint": -0.8999908444471572,
+"rgb": "171302"
+},
+{
+"design": "Facet",
+"theme": 8,
+"base": "E76618",
+"tint": 0.7999816888943144,
+"rgb": "FAE0D1"
+},
+{
+"design": "Facet",
+"theme": 8,
+"base": "E76618",
+"tint": 0.5999938962981048,
+"rgb": "F5C1A3"
+},
+{
+"design": "Facet",
+"theme": 8,
+"base": "E76618",
+"tint": 0.3999755851924192,
+"rgb": "F0A475"
+},
+{
+"design": "Facet",
+"theme": 8,
+"base": "E76618",
+"tint": -0.249977111117893,
+"rgb": "AD4D12"
+},
+{
+"design": "Facet",
+"theme": 8,
+"base": "E76618",
+"tint": -0.499984740745262,
+"rgb": "74330C"
+},
+{
+"design": "Facet",
+"theme": 8,
+"base": "E76618",
+"tint": 0.499984740745262,
+"rgb": "F3B38B"
+},
+{
+"design": "Facet",
+"theme": 8,
+"base": "E76618",
+"tint": 0.3499862666707358,
+"rgb": "EF9B69"
+},
+{
+"design": "Facet",
+"theme": 8,
+"base": "E76618",
+"tint": 0.249977111117893,
+"rgb": "ED8C52"
+},
+{
+"design": "Facet",
+"theme": 8,
+"base": "E76618",
+"tint": 0.1499984740745262,
+"rgb": "EB7C3A"
+},
+{
+"design": "Facet",
+"theme": 8,
+"base": "E76618",
+"tint": -0.0499893185216834,
+"rgb": "DC6116"
+},
+{
+"design": "Facet",
+"theme": 8,
+"base": "E76618",
+"tint": -0.1499984740745262,
+"rgb": "C55614"
+},
+{
+"design": "Facet",
+"theme": 8,
+"base": "E76618",
+"tint": -0.3499862666707358,
+"rgb": "964210"
+},
+{
+"design": "Facet",
+"theme": 8,
+"base": "E76618",
+"tint": -0.0999786370433668,
+"rgb": "D05B15"
+},
+{
+"design": "Facet",
+"theme": 8,
+"base": "E76618",
+"tint": -0.749992370372631,
+"rgb": "391A06"
+},
+{
+"design": "Facet",
+"theme": 8,
+"base": "E76618",
+"tint": -0.8999908444471572,
+"rgb": "170B02"
+},
+{
+"design": "Facet",
+"theme": 9,
+"base": "C42F1A",
+"tint": 0.7999816888943144,
+"rgb": "F8D0CB"
+},
+{
+"design": "Facet",
+"theme": 9,
+"base": "C42F1A",
+"tint": 0.5999938962981048,
+"rgb": "F1A498"
+},
+{
+"design": "Facet",
+"theme": 9,
+"base": "C42F1A",
+"tint": 0.3999755851924192,
+"rgb": "EB7665"
+},
+{
+"design": "Facet",
+"theme": 9,
+"base": "C42F1A",
+"tint": -0.249977111117893,
+"rgb": "932313"
+},
+{
+"design": "Facet",
+"theme": 9,
+"base": "C42F1A",
+"tint": -0.499984740745262,
+"rgb": "62170D"
+},
+{
+"design": "Facet",
+"theme": 9,
+"base": "C42F1A",
+"tint": 0.499984740745262,
+"rgb": "EE8D80"
+},
+{
+"design": "Facet",
+"theme": 9,
+"base": "C42F1A",
+"tint": 0.3499862666707358,
+"rgb": "E96A58"
+},
+{
+"design": "Facet",
+"theme": 9,
+"base": "C42F1A",
+"tint": 0.249977111117893,
+"rgb": "E65540"
+},
+{
+"design": "Facet",
+"theme": 9,
+"base": "C42F1A",
+"tint": 0.1499984740745262,
+"rgb": "E23D25"
+},
+{
+"design": "Facet",
+"theme": 9,
+"base": "C42F1A",
+"tint": -0.0499893185216834,
+"rgb": "B82D18"
+},
+{
+"design": "Facet",
+"theme": 9,
+"base": "C42F1A",
+"tint": -0.1499984740745262,
+"rgb": "A52816"
+},
+{
+"design": "Facet",
+"theme": 9,
+"base": "C42F1A",
+"tint": -0.3499862666707358,
+"rgb": "7D1F11"
+},
+{
+"design": "Facet",
+"theme": 9,
+"base": "C42F1A",
+"tint": -0.0999786370433668,
+"rgb": "AE2B17"
+},
+{
+"design": "Facet",
+"theme": 9,
+"base": "C42F1A",
+"tint": -0.749992370372631,
+"rgb": "310C06"
+},
+{
+"design": "Facet",
+"theme": 9,
+"base": "C42F1A",
+"tint": -0.8999908444471572,
+"rgb": "130402"
+},
+{
+"design": "Facet",
+"theme": 10,
+"base": "918655",
+"tint": 0.7999816888943144,
+"rgb": "EAE8DB"
+},
+{
+"design": "Facet",
+"theme": 10,
+"base": "918655",
+"tint": 0.5999938962981048,
+"rgb": "D6D0B8"
+},
+{
+"design": "Facet",
+"theme": 10,
+"base": "918655",
+"tint": 0.3999755851924192,
+"rgb": "C0B994"
+},
+{
+"design": "Facet",
+"theme": 10,
+"base": "918655",
+"tint": -0.249977111117893,
+"rgb": "6C6540"
+},
+{
+"design": "Facet",
+"theme": 10,
+"base": "918655",
+"tint": -0.499984740745262,
+"rgb": "48432B"
+},
+{
+"design": "Facet",
+"theme": 10,
+"base": "918655",
+"tint": 0.499984740745262,
+"rgb": "CBC5A7"
+},
+{
+"design": "Facet",
+"theme": 10,
+"base": "918655",
+"tint": 0.3499862666707358,
+"rgb": "BCB48B"
+},
+{
+"design": "Facet",
+"theme": 10,
+"base": "918655",
+"tint": 0.249977111117893,
+"rgb": "B1A87A"
+},
+{
+"design": "Facet",
+"theme": 10,
+"base": "918655",
+"tint": 0.1499984740745262,
+"rgb": "A79C67"
+},
+{
+"design": "Facet",
+"theme": 10,
+"base": "918655",
+"tint": -0.0499893185216834,
+"rgb": "898050"
+},
+{
+"design": "Facet",
+"theme": 10,
+"base": "918655",
+"tint": -0.1499984740745262,
+"rgb": "7A7247"
+},
+{
+"design": "Facet",
+"theme": 10,
+"base": "918655",
+"tint": -0.3499862666707358,
+"rgb": "5E5737"
+},
+{
+"design": "Facet",
+"theme": 10,
+"base": "918655",
+"tint": -0.0999786370433668,
+"rgb": "82784D"
+},
+{
+"design": "Facet",
+"theme": 10,
+"base": "918655",
+"tint": -0.749992370372631,
+"rgb": "242215"
+},
+{
+"design": "Facet",
+"theme": 10,
+"base": "918655",
+"tint": -0.8999908444471572,
+"rgb": "0E0D07"
+},
+{
+"design": "Retrospect",
+"theme": 1,
+"base": "FFFFFF",
+"tint": 0.7999816888943144,
+"rgb": "FFFFFF"
+},
+{
+"design": "Retrospect",
+"theme": 1,
+"base": "FFFFFF",
+"tint": 0.5999938962981048,
+"rgb": "FFFFFF"
+},
+{
+"design": "Retrospect",
+"theme": 1,
+"base": "FFFFFF",
+"tint": 0.3999755851924192,
+"rgb": "FFFFFF"
+},
+{
+"design": "Retrospect",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.249977111117893,
+"rgb": "BFBFBF"
+},
+{
+"design": "Retrospect",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.499984740745262,
+"rgb": "808080"
+},
+{
+"design": "Retrospect",
+"theme": 1,
+"base": "FFFFFF",
+"tint": 0.499984740745262,
+"rgb": "FFFFFF"
+},
+{
+"design": "Retrospect",
+"theme": 1,
+"base": "FFFFFF",
+"tint": 0.3499862666707358,
+"rgb": "FFFFFF"
+},
+{
+"design": "Retrospect",
+"theme": 1,
+"base": "FFFFFF",
+"tint": 0.249977111117893,
+"rgb": "FFFFFF"
+},
+{
+"design": "Retrospect",
+"theme": 1,
+"base": "FFFFFF",
+"tint": 0.1499984740745262,
+"rgb": "FFFFFF"
+},
+{
+"design": "Retrospect",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.0499893185216834,
+"rgb": "F2F2F2"
+},
+{
+"design": "Retrospect",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.1499984740745262,
+"rgb": "D9D9D9"
+},
+{
+"design": "Retrospect",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.3499862666707358,
+"rgb": "A6A6A6"
+},
+{
+"design": "Retrospect",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.0999786370433668,
+"rgb": "E6E6E6"
+},
+{
+"design": "Retrospect",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.749992370372631,
+"rgb": "404040"
+},
+{
+"design": "Retrospect",
+"theme": 1,
+"base": "FFFFFF",
+"tint": -0.8999908444471572,
+"rgb": "1A1A1A"
+},
+{
+"design": "Retrospect",
+"theme": 2,
+"base": "000000",
+"tint": 0.7999816888943144,
+"rgb": "CCCCCC"
+},
+{
+"design": "Retrospect",
+"theme": 2,
+"base": "000000",
+"tint": 0.5999938962981048,
+"rgb": "999999"
+},
+{
+"design": "Retrospect",
+"theme": 2,
+"base": "000000",
+"tint": 0.3999755851924192,
+"rgb": "666666"
+},
+{
+"design": "Retrospect",
+"theme": 2,
+"base": "000000",
+"tint": -0.249977111117893,
+"rgb": "000000"
+},
+{
+"design": "Retrospect",
+"theme": 2,
+"base": "000000",
+"tint": -0.499984740745262,
+"rgb": "000000"
+},
+{
+"design": "Retrospect",
+"theme": 2,
+"base": "000000",
+"tint": 0.499984740745262,
+"rgb": "808080"
+},
+{
+"design": "Retrospect",
+"theme": 2,
+"base": "000000",
+"tint": 0.3499862666707358,
+"rgb": "595959"
+},
+{
+"design": "Retrospect",
+"theme": 2,
+"base": "000000",
+"tint": 0.249977111117893,
+"rgb": "404040"
+},
+{
+"design": "Retrospect",
+"theme": 2,
+"base": "000000",
+"tint": 0.1499984740745262,
+"rgb": "262626"
+},
+{
+"design": "Retrospect",
+"theme": 2,
+"base": "000000",
+"tint": -0.0499893185216834,
+"rgb": "000000"
+},
+{
+"design": "Retrospect",
+"theme": 2,
+"base": "000000",
+"tint": -0.1499984740745262,
+"rgb": "000000"
+},
+{
+"design": "Retrospect",
+"theme": 2,
+"base": "000000",
+"tint": -0.3499862666707358,
+"rgb": "000000"
+},
+{
+"design": "Retrospect",
+"theme": 2,
+"base": "000000",
+"tint": -0.0999786370433668,
+"rgb": "000000"
+},
+{
+"design": "Retrospect",
+"theme": 2,
+"base": "000000",
+"tint": -0.749992370372631,
+"rgb": "000000"
+},
+{
+"design": "Retrospect",
+"theme": 2,
+"base": "000000",
+"tint": -0.8999908444471572,
+"rgb": "000000"
+},
+{
+"design": "Retrospect",
+"theme": 3,
+"base": "CCDDEA",
+"tint": 0.7999816888943144,
+"rgb": "F4F8FB"
+},
+{
+"design": "Retrospect",
+"theme": 3,
+"base": "CCDDEA",
+"tint": 0.5999938962981048,
+"rgb": "EAF1F7"
+},
+{
+"design": "Retrospect",
+"theme": 3,
+"base": "CCDDEA",
+"tint": 0.3999755851924192,
+"rgb": "DFEAF2"
+},
+{
+"design": "Retrospect",
+"theme": 3,
+"base": "CCDDEA",
+"tint": -0.249977111117893,
+"rgb": "7DA9CA"
+},
+{
+"design": "Retrospect",
+"theme": 3,
+"base": "CCDDEA",
+"tint": -0.499984740745262,
+"rgb": "40749B"
+},
+{
+"design": "Retrospect",
+"theme": 3,
+"base": "CCDDEA",
+"tint": 0.499984740745262,
+"rgb": "E6EEF4"
+},
+{
+"design": "Retrospect",
+"theme": 3,
+"base": "CCDDEA",
+"tint": 0.3499862666707358,
+"rgb": "DCE9F1"
+},
+{
+"design": "Retrospect",
+"theme": 3,
+"base": "CCDDEA",
+"tint": 0.249977111117893,
+"rgb": "D8E6EF"
+},
+{
+"design": "Retrospect",
+"theme": 3,
+"base": "CCDDEA",
+"tint": 0.1499984740745262,
+"rgb": "D3E2ED"
+},
+{
+"design": "Retrospect",
+"theme": 3,
+"base": "CCDDEA",
+"tint": -0.0499893185216834,
+"rgb": "BBD2E3"
+},
+{
+"design": "Retrospect",
+"theme": 3,
+"base": "CCDDEA",
+"tint": -0.1499984740745262,
+"rgb": "9DBED7"
+},
+{
+"design": "Retrospect",
+"theme": 3,
+"base": "CCDDEA",
+"tint": -0.3499862666707358,
+"rgb": "5E95BD"
+},
+{
+"design": "Retrospect",
+"theme": 3,
+"base": "CCDDEA",
+"tint": -0.0999786370433668,
+"rgb": "ACC8DD"
+},
+{
+"design": "Retrospect",
+"theme": 3,
+"base": "CCDDEA",
+"tint": -0.749992370372631,
+"rgb": "20394D"
+},
+{
+"design": "Retrospect",
+"theme": 3,
+"base": "CCDDEA",
+"tint": -0.8999908444471572,
+"rgb": "0D161E"
+},
+{
+"design": "Retrospect",
+"theme": 4,
+"base": "637052",
+"tint": 0.7999816888943144,
+"rgb": "E0E4DA"
+},
+{
+"design": "Retrospect",
+"theme": 4,
+"base": "637052",
+"tint": 0.5999938962981048,
+"rgb": "C0C9B6"
+},
+{
+"design": "Retrospect",
+"theme": 4,
+"base": "637052",
+"tint": 0.3999755851924192,
+"rgb": "A2AE91"
+},
+{
+"design": "Retrospect",
+"theme": 4,
+"base": "637052",
+"tint": -0.249977111117893,
+"rgb": "4A533E"
+},
+{
+"design": "Retrospect",
+"theme": 4,
+"base": "637052",
+"tint": -0.499984740745262,
+"rgb": "313728"
+},
+{
+"design": "Retrospect",
+"theme": 4,
+"base": "637052",
+"tint": 0.499984740745262,
+"rgb": "B1BCA3"
+},
+{
+"design": "Retrospect",
+"theme": 4,
+"base": "637052",
+"tint": 0.3499862666707358,
+"rgb": "9AA888"
+},
+{
+"design": "Retrospect",
+"theme": 4,
+"base": "637052",
+"tint": 0.249977111117893,
+"rgb": "8B9A76"
+},
+{
+"design": "Retrospect",
+"theme": 4,
+"base": "637052",
+"tint": 0.1499984740745262,
+"rgb": "7B8A66"
+},
+{
+"design": "Retrospect",
+"theme": 4,
+"base": "637052",
+"tint": -0.0499893185216834,
+"rgb": "5E694E"
+},
+{
+"design": "Retrospect",
+"theme": 4,
+"base": "637052",
+"tint": -0.1499984740745262,
+"rgb": "545F45"
+},
+{
+"design": "Retrospect",
+"theme": 4,
+"base": "637052",
+"tint": -0.3499862666707358,
+"rgb": "404835"
+},
+{
+"design": "Retrospect",
+"theme": 4,
+"base": "637052",
+"tint": -0.0999786370433668,
+"rgb": "586349"
+},
+{
+"design": "Retrospect",
+"theme": 4,
+"base": "637052",
+"tint": -0.749992370372631,
+"rgb": "171B14"
+},
+{
+"design": "Retrospect",
+"theme": 4,
+"base": "637052",
+"tint": -0.8999908444471572,
+"rgb": "0A0B09"
+},
+{
+"design": "Retrospect",
+"theme": 5,
+"base": "E48312",
+"tint": 0.7999816888943144,
+"rgb": "FBE7CE"
+},
+{
+"design": "Retrospect",
+"theme": 5,
+"base": "E48312",
+"tint": 0.5999938962981048,
+"rgb": "F8CE9C"
+},
+{
+"design": "Retrospect",
+"theme": 5,
+"base": "E48312",
+"tint": 0.3999755851924192,
+"rgb": "F3B66B"
+},
+{
+"design": "Retrospect",
+"theme": 5,
+"base": "E48312",
+"tint": -0.249977111117893,
+"rgb": "AB640E"
+},
+{
+"design": "Retrospect",
+"theme": 5,
+"base": "E48312",
+"tint": -0.499984740745262,
+"rgb": "734309"
+},
+{
+"design": "Retrospect",
+"theme": 5,
+"base": "E48312",
+"tint": 0.499984740745262,
+"rgb": "F5C285"
+},
+{
+"design": "Retrospect",
+"theme": 5,
+"base": "E48312",
+"tint": 0.3499862666707358,
+"rgb": "F2B060"
+},
+{
+"design": "Retrospect",
+"theme": 5,
+"base": "E48312",
+"tint": 0.249977111117893,
+"rgb": "F0A548"
+},
+{
+"design": "Retrospect",
+"theme": 5,
+"base": "E48312",
+"tint": 0.1499984740745262,
+"rgb": "EF982E"
+},
+{
+"design": "Retrospect",
+"theme": 5,
+"base": "E48312",
+"tint": -0.0499893185216834,
+"rgb": "D97E11"
+},
+{
+"design": "Retrospect",
+"theme": 5,
+"base": "E48312",
+"tint": -0.1499984740745262,
+"rgb": "C1710F"
+},
+{
+"design": "Retrospect",
+"theme": 5,
+"base": "E48312",
+"tint": -0.3499862666707358,
+"rgb": "94560C"
+},
+{
+"design": "Retrospect",
+"theme": 5,
+"base": "E48312",
+"tint": -0.0999786370433668,
+"rgb": "CD7810"
+},
+{
+"design": "Retrospect",
+"theme": 5,
+"base": "E48312",
+"tint": -0.749992370372631,
+"rgb": "392204"
+},
+{
+"design": "Retrospect",
+"theme": 5,
+"base": "E48312",
+"tint": -0.8999908444471572,
+"rgb": "150D02"
+},
+{
+"design": "Retrospect",
+"theme": 6,
+"base": "BD582C",
+"tint": 0.7999816888943144,
+"rgb": "F4DDD2"
+},
+{
+"design": "Retrospect",
+"theme": 6,
+"base": "BD582C",
+"tint": 0.5999938962981048,
+"rgb": "EABAA6"
+},
+{
+"design": "Retrospect",
+"theme": 6,
+"base": "BD582C",
+"tint": 0.3999755851924192,
+"rgb": "DF9879"
+},
+{
+"design": "Retrospect",
+"theme": 6,
+"base": "BD582C",
+"tint": -0.249977111117893,
+"rgb": "8D4221"
+},
+{
+"design": "Retrospect",
+"theme": 6,
+"base": "BD582C",
+"tint": -0.499984740745262,
+"rgb": "5F2C16"
+},
+{
+"design": "Retrospect",
+"theme": 6,
+"base": "BD582C",
+"tint": 0.499984740745262,
+"rgb": "E4A98F"
+},
+{
+"design": "Retrospect",
+"theme": 6,
+"base": "BD582C",
+"tint": 0.3499862666707358,
+"rgb": "DD8E6C"
+},
+{
+"design": "Retrospect",
+"theme": 6,
+"base": "BD582C",
+"tint": 0.249977111117893,
+"rgb": "D87D56"
+},
+{
+"design": "Retrospect",
+"theme": 6,
+"base": "BD582C",
+"tint": 0.1499984740745262,
+"rgb": "D26B40"
+},
+{
+"design": "Retrospect",
+"theme": 6,
+"base": "BD582C",
+"tint": -0.0499893185216834,
+"rgb": "B45329"
+},
+{
+"design": "Retrospect",
+"theme": 6,
+"base": "BD582C",
+"tint": -0.1499984740745262,
+"rgb": "A04A25"
+},
+{
+"design": "Retrospect",
+"theme": 6,
+"base": "BD582C",
+"tint": -0.3499862666707358,
+"rgb": "7A381D"
+},
+{
+"design": "Retrospect",
+"theme": 6,
+"base": "BD582C",
+"tint": -0.0999786370433668,
+"rgb": "AA5028"
+},
+{
+"design": "Retrospect",
+"theme": 6,
+"base": "BD582C",
+"tint": -0.749992370372631,
+"rgb": "2F150B"
+},
+{
+"design": "Retrospect",
+"theme": 6,
+"base": "BD582C",
+"tint": -0.8999908444471572,
+"rgb": "130904"
+},
+{
+"design": "Retrospect",
+"theme": 7,
+"base": "865640",
+"tint": 0.7999816888943144,
+"rgb": "EBDBD3"
+},
+{
+"design": "Retrospect",
+"theme": 7,
+"base": "865640",
+"tint": 0.5999938962981048,
+"rgb": "D7B9AA"
+},
+{
+"design": "Retrospect",
+"theme": 7,
+"base": "865640",
+"tint": 0.3999755851924192,
+"rgb": "C2957E"
+},
+{
+"design": "Retrospect",
+"theme": 7,
+"base": "865640",
+"tint": -0.249977111117893,
+"rgb": "634130"
+},
+{
+"design": "Retrospect",
+"theme": 7,
+"base": "865640",
+"tint": -0.499984740745262,
+"rgb": "422B20"
+},
+{
+"design": "Retrospect",
+"theme": 7,
+"base": "865640",
+"tint": 0.499984740745262,
+"rgb": "CCA795"
+},
+{
+"design": "Retrospect",
+"theme": 7,
+"base": "865640",
+"tint": 0.3499862666707358,
+"rgb": "BD8C75"
+},
+{
+"design": "Retrospect",
+"theme": 7,
+"base": "865640",
+"tint": 0.249977111117893,
+"rgb": "B37A60"
+},
+{
+"design": "Retrospect",
+"theme": 7,
+"base": "865640",
+"tint": 0.1499984740745262,
+"rgb": "A66B4F"
+},
+{
+"design": "Retrospect",
+"theme": 7,
+"base": "865640",
+"tint": -0.0499893185216834,
+"rgb": "7E523D"
+},
+{
+"design": "Retrospect",
+"theme": 7,
+"base": "865640",
+"tint": -0.1499984740745262,
+"rgb": "724936"
+},
+{
+"design": "Retrospect",
+"theme": 7,
+"base": "865640",
+"tint": -0.3499862666707358,
+"rgb": "563829"
+},
+{
+"design": "Retrospect",
+"theme": 7,
+"base": "865640",
+"tint": -0.0999786370433668,
+"rgb": "774E39"
+},
+{
+"design": "Retrospect",
+"theme": 7,
+"base": "865640",
+"tint": -0.749992370372631,
+"rgb": "211510"
+},
+{
+"design": "Retrospect",
+"theme": 7,
+"base": "865640",
+"tint": -0.8999908444471572,
+"rgb": "0D0906"
+},
+{
+"design": "Retrospect",
+"theme": 8,
+"base": "9B8357",
+"tint": 0.7999816888943144,
+"rgb": "EBE6DC"
+},
+{
+"design": "Retrospect",
+"theme": 8,
+"base": "9B8357",
+"tint": 0.5999938962981048,
+"rgb": "D8CDBA"
+},
+{
+"design": "Retrospect",
+"theme": 8,
+"base": "9B8357",
+"tint": 0.3999755851924192,
+"rgb": "C5B598"
+},
+{
+"design": "Retrospect",
+"theme": 8,
+"base": "9B8357",
+"tint": -0.249977111117893,
+"rgb": "746241"
+},
+{
+"design": "Retrospect",
+"theme": 8,
+"base": "9B8357",
+"tint": -0.499984740745262,
+"rgb": "4E422C"
+},
+{
+"design": "Retrospect",
+"theme": 8,
+"base": "9B8357",
+"tint": 0.499984740745262,
+"rgb": "CFC1A9"
+},
+{
+"design": "Retrospect",
+"theme": 8,
+"base": "9B8357",
+"tint": 0.3499862666707358,
+"rgb": "C0AF8F"
+},
+{
+"design": "Retrospect",
+"theme": 8,
+"base": "9B8357",
+"tint": 0.249977111117893,
+"rgb": "B7A37D"
+},
+{
+"design": "Retrospect",
+"theme": 8,
+"base": "9B8357",
+"tint": 0.1499984740745262,
+"rgb": "AC966C"
+},
+{
+"design": "Retrospect",
+"theme": 8,
+"base": "9B8357",
+"tint": -0.0499893185216834,
+"rgb": "937C53"
+},
+{
+"design": "Retrospect",
+"theme": 8,
+"base": "9B8357",
+"tint": -0.1499984740745262,
+"rgb": "836F49"
+},
+{
+"design": "Retrospect",
+"theme": 8,
+"base": "9B8357",
+"tint": -0.3499862666707358,
+"rgb": "655538"
+},
+{
+"design": "Retrospect",
+"theme": 8,
+"base": "9B8357",
+"tint": -0.0999786370433668,
+"rgb": "8A754F"
+},
+{
+"design": "Retrospect",
+"theme": 8,
+"base": "9B8357",
+"tint": -0.749992370372631,
+"rgb": "262015"
+},
+{
+"design": "Retrospect",
+"theme": 8,
+"base": "9B8357",
+"tint": -0.8999908444471572,
+"rgb": "0F0D09"
+},
+{
+"design": "Retrospect",
+"theme": 9,
+"base": "C2BC80",
+"tint": 0.7999816888943144,
+"rgb": "F2F1E6"
+},
+{
+"design": "Retrospect",
+"theme": 9,
+"base": "C2BC80",
+"tint": 0.5999938962981048,
+"rgb": "E7E3CB"
+},
+{
+"design": "Retrospect",
+"theme": 9,
+"base": "C2BC80",
+"tint": 0.3999755851924192,
+"rgb": "DBD7B3"
+},
+{
+"design": "Retrospect",
+"theme": 9,
+"base": "C2BC80",
+"tint": -0.249977111117893,
+"rgb": "A49B4F"
+},
+{
+"design": "Retrospect",
+"theme": 9,
+"base": "C2BC80",
+"tint": -0.499984740745262,
+"rgb": "6D6834"
+},
+{
+"design": "Retrospect",
+"theme": 9,
+"base": "C2BC80",
+"tint": 0.499984740745262,
+"rgb": "E0DDC0"
+},
+{
+"design": "Retrospect",
+"theme": 9,
+"base": "C2BC80",
+"tint": 0.3499862666707358,
+"rgb": "D7D2AC"
+},
+{
+"design": "Retrospect",
+"theme": 9,
+"base": "C2BC80",
+"tint": 0.249977111117893,
+"rgb": "D1CCA0"
+},
+{
+"design": "Retrospect",
+"theme": 9,
+"base": "C2BC80",
+"tint": 0.1499984740745262,
+"rgb": "CBC694"
+},
+{
+"design": "Retrospect",
+"theme": 9,
+"base": "C2BC80",
+"tint": -0.0499893185216834,
+"rgb": "BDB675"
+},
+{
+"design": "Retrospect",
+"theme": 9,
+"base": "C2BC80",
+"tint": -0.1499984740745262,
+"rgb": "B3AA60"
+},
+{
+"design": "Retrospect",
+"theme": 9,
+"base": "C2BC80",
+"tint": -0.3499862666707358,
+"rgb": "8C8544"
+},
+{
+"design": "Retrospect",
+"theme": 9,
+"base": "C2BC80",
+"tint": -0.0999786370433668,
+"rgb": "B7AF6A"
+},
+{
+"design": "Retrospect",
+"theme": 9,
+"base": "C2BC80",
+"tint": -0.749992370372631,
+"rgb": "36331B"
+},
+{
+"design": "Retrospect",
+"theme": 9,
+"base": "C2BC80",
+"tint": -0.8999908444471572,
+"rgb": "15140B"
+},
+{
+"design": "Retrospect",
+"theme": 10,
+"base": "94A088",
+"tint": 0.7999816888943144,
+"rgb": "E9EBE7"
+},
+{
+"design": "Retrospect",
+"theme": 10,
+"base": "94A088",
+"tint": 0.5999938962981048,
+"rgb": "D3D9CE"
+},
+{
+"design": "Retrospect",
+"theme": 10,
+"base": "94A088",
+"tint": 0.3999755851924192,
+"rgb": "BEC6B7"
+},
+{
+"design": "Retrospect",
+"theme": 10,
+"base": "94A088",
+"tint": -0.249977111117893,
+"rgb": "6F7B62"
+},
+{
+"design": "Retrospect",
+"theme": 10,
+"base": "94A088",
+"tint": -0.499984740745262,
+"rgb": "495241"
+},
+{
+"design": "Retrospect",
+"theme": 10,
+"base": "94A088",
+"tint": 0.499984740745262,
+"rgb": "C9CFC2"
+},
+{
+"design": "Retrospect",
+"theme": 10,
+"base": "94A088",
+"tint": 0.3499862666707358,
+"rgb": "B9C0B1"
+},
+{
+"design": "Retrospect",
+"theme": 10,
+"base": "94A088",
+"tint": 0.249977111117893,
+"rgb": "AEB8A5"
+},
+{
+"design": "Retrospect",
+"theme": 10,
+"base": "94A088",
+"tint": 0.1499984740745262,
+"rgb": "A4AE99"
+},
+{
+"design": "Retrospect",
+"theme": 10,
+"base": "94A088",
+"tint": -0.0499893185216834,
+"rgb": "8C9980"
+},
+{
+"design": "Retrospect",
+"theme": 10,
+"base": "94A088",
+"tint": -0.1499984740745262,
+"rgb": "7D8B70"
+},
+{
+"design": "Retrospect",
+"theme": 10,
+"base": "94A088",
+"tint": -0.3499862666707358,
+"rgb": "606A55"
+},
+{
+"design": "Retrospect",
+"theme": 10,
+"base": "94A088",
+"tint": -0.0999786370433668,
+"rgb": "859377"
+},
+{
+"design": "Retrospect",
+"theme": 10,
+"base": "94A088",
+"tint": -0.749992370372631,
+"rgb": "242820"
+},
+{
+"design": "Retrospect",
+"theme": 10,
+"base": "94A088",
+"tint": -0.8999908444471572,
+"rgb": "0E0F0D"
+}
+]

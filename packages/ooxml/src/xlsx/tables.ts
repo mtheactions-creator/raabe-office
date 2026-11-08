@@ -2,7 +2,7 @@
 // written as Excel writes them; an unchanged table keeps its part as it was.
 
 import { strFromU8 } from "fflate";
-import { parseRange, rangeName, tableKey, type Sheet, type SheetTable } from "@raabe/sheet-engine";
+import { fromXlsxFormula, mapStructs, parseRange, rangeName, structToFile, structToShown, tableKey, toXlsxFormula, type Sheet, type SheetTable } from "@raabe/sheet-engine";
 import { Rels, resolveTarget, type PackageWriter } from "../package";
 
 export const RT_TABLE = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/table";
@@ -41,6 +41,8 @@ export function tableFromXml(xml: string, part?: string): SheetTable | null {
     filterButton: /<autoFilter\b/.test(xml) && !/<filterColumn\b[^>]*hiddenButton="1"/.test(xml),
     id: Number(attr(top, "id") ?? 0) || undefined,
   };
+  // The column formula as Excel shows it ([@Note]*2; the file has Noten[[#This Row],[Note]]*2).
+  for (const c of t.columns) if (c.formula !== undefined) c.formula = mapStructs(fromXlsxFormula(c.formula), (x) => structToShown(x, t.name));
   if (part) { t.raw = part; t.rawKey = tableKey(t); }
   return t;
 }
@@ -53,7 +55,7 @@ export function tableToXml(t: SheetTable, id: number): string {
     ? `<autoFilter ref="${rangeName(body)}">${t.columns.map((_, i) => `<filterColumn colId="${i}" hiddenButton="1"/>`).join("")}</autoFilter>` : "";
   const cols = t.columns.map((c, i) => {
     const a = `id="${i + 1}" name="${esc(c.name)}"${c.totalsLabel !== undefined ? ` totalsRowLabel="${esc(c.totalsLabel)}"` : ""}${c.totalsFunction ? ` totalsRowFunction="${c.totalsFunction}"` : ""}`;
-    return c.formula !== undefined ? `<tableColumn ${a}><calculatedColumnFormula>${esc(c.formula)}</calculatedColumnFormula></tableColumn>` : `<tableColumn ${a}/>`;
+    return c.formula !== undefined ? `<tableColumn ${a}><calculatedColumnFormula>${esc(toXlsxFormula(mapStructs(c.formula, (x) => structToFile(x, t.name))))}</calculatedColumnFormula></tableColumn>` : `<tableColumn ${a}/>`;
   }).join("");
   const style = t.style ? `<tableStyleInfo name="${esc(t.style)}" showFirstColumn="${t.firstColumn ? 1 : 0}" showLastColumn="${t.lastColumn ? 1 : 0}" showRowStripes="${t.rowStripes ? 1 : 0}" showColumnStripes="${t.columnStripes ? 1 : 0}"/>`
     : `<tableStyleInfo showFirstColumn="${t.firstColumn ? 1 : 0}" showLastColumn="${t.lastColumn ? 1 : 0}" showRowStripes="${t.rowStripes ? 1 : 0}" showColumnStripes="${t.columnStripes ? 1 : 0}"/>`;

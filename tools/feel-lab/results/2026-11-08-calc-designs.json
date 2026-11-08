@@ -1,0 +1,211 @@
+{
+ "data": [
+  {
+   "file": "Office Theme",
+   "ok": true,
+   "ours": "Office"
+  },
+  {
+   "file": "Office 2013 - 2022 Theme",
+   "ok": true,
+   "ours": "Office 2013 – 2022"
+  },
+  {
+   "file": "Facet",
+   "ok": true,
+   "ours": "Facette"
+  },
+  {
+   "file": "Integral",
+   "ok": true,
+   "ours": "Integral"
+  },
+  {
+   "file": "Ion",
+   "ok": true,
+   "ours": "Ion"
+  },
+  {
+   "file": "Ion Boardroom",
+   "ok": true,
+   "ours": "Ion-Sitzungssaal"
+  },
+  {
+   "file": "Organic",
+   "ok": true,
+   "ours": "Organisch"
+  },
+  {
+   "file": "Retrospect",
+   "ok": true,
+   "ours": "Rückblick"
+  },
+  {
+   "file": "Slice",
+   "ok": true,
+   "ours": "Segment"
+  },
+  {
+   "file": "Wisp",
+   "ok": true,
+   "ours": "Fetzen"
+  },
+  {
+   "file": "Gallery",
+   "ok": true,
+   "ours": "Katalog"
+  }
+ ],
+ "raabe->excel": [
+  {
+   "check": "theme colours are Ion's",
+   "ok": true
+  },
+  {
+   "check": "fonts are the set Arial",
+   "ok": true
+  },
+  {
+   "check": "A1 fill is Akzent 1",
+   "ok": true
+  },
+  {
+   "check": "A1 tint heller 40 %",
+   "ok": true
+  },
+  {
+   "check": "A1 RGB the same",
+   "ok": true
+  },
+  {
+   "check": "B1 font is Akzent 2",
+   "ok": true
+  },
+  {
+   "check": "B1 tint dunkler 25 %",
+   "ok": true
+  },
+  {
+   "check": "B1 RGB the same",
+   "ok": true
+  },
+  {
+   "check": "C1 stays red",
+   "ok": true
+  },
+  {
+   "check": "D1 body font follows (Arial)",
+   "ok": true
+  }
+ ],
+ "excel->raabe": [
+  {
+   "check": "A1 as Excel under Ion",
+   "ok": true
+  },
+  {
+   "check": "B1 as Excel under Ion",
+   "ok": true
+  },
+  {
+   "check": "A1 as Excel after Office",
+   "ok": true
+  },
+  {
+   "check": "B1 as Excel after Office",
+   "ok": true
+  }
+ ],
+ "detail": {
+  "raabe": {
+   "theme": {
+    "lt1": "#FFFFFF",
+    "dk1": "#000000",
+    "lt2": "#EBEBEB",
+    "dk2": "#1E5155",
+    "accent1": "#B01513",
+    "accent2": "#EA6312",
+    "accent3": "#E6B729",
+    "accent4": "#6AAC90",
+    "accent5": "#54849A",
+    "accent6": "#9E5E9B",
+    "hlink": "#58C1BA",
+    "folHlink": "#9DFFCB"
+   },
+   "fonts": {
+    "major": "Arial",
+    "minor": "Arial"
+   },
+   "A1": "#ED5854",
+   "B1": "#AF4A0E",
+   "C1": "#FF0000",
+   "D1font": "Arial"
+  },
+  "excel_reads": {
+   "theme": {
+    "colors": {
+     "dk1": "000000",
+     "lt1": "FFFFFF",
+     "dk2": "1E5155",
+     "lt2": "EBEBEB",
+     "accent1": "B01513",
+     "accent2": "EA6312",
+     "accent3": "E6B729",
+     "accent4": "6AAC90",
+     "accent5": "54849A",
+     "accent6": "9E5E9B",
+     "hlink": "58C1BA",
+     "folHlink": "9DFFCB"
+    },
+    "major": "Arial",
+    "minor": "Arial"
+   },
+   "A1": {
+    "color": "ED5854",
+    "theme": 5,
+    "tint": 0.4
+   },
+   "B1": {
+    "color": "AF4A0E",
+    "theme": 6,
+    "tint": -0.25
+   },
+   "C1": {
+    "color": "FF0000"
+   },
+   "D1font": "Arial"
+  },
+  "opened": {
+   "before": {
+    "A1": "#ED5854",
+    "B1": "#AF4A0E",
+    "theme": {
+     "dk1": "#000000",
+     "lt1": "#FFFFFF",
+     "dk2": "#1E5155",
+     "lt2": "#EBEBEB",
+     "accent1": "#B01513",
+     "accent2": "#EA6312",
+     "accent3": "#E6B729",
+     "accent4": "#6AAC90",
+     "accent5": "#54849A",
+     "accent6": "#9E5E9B",
+     "hlink": "#58C1BA",
+     "folHlink": "#9DFFCB"
+    }
+   },
+   "after": {
+    "A1": "#44B3E1",
+    "B1": "#BE5014"
+   }
+  },
+  "excel_ion": {
+   "A1": "ED5854",
+   "B1": "AF4A0E"
+  },
+  "excel_office": {
+   "A1": "44B3E1",
+   "B1": "BE5014"
+  }
+ }
+}

@@ -1,0 +1,303 @@
+{
+ "data": [
+  [
+   "Name",
+   "Note",
+   "Punkte"
+  ],
+  [
+   "Ada",
+   2,
+   12
+  ],
+  [
+   "Ben",
+   3,
+   9
+  ],
+  [
+   "Cem",
+   1,
+   14
+  ],
+  [
+   "Dora",
+   4,
+   7
+  ]
+ ],
+ "outside": [
+  {
+   "cell": "G2",
+   "typed": "=SUMME(Noten[Note])",
+   "local": "=SUMME(Noten[Note])",
+   "formula": "=SUM(Noten[Note])",
+   "value": 10.0,
+   "after_cell": "H2",
+   "value_after": 10.0
+  },
+  {
+   "cell": "G3",
+   "typed": "=ZEILEN(Noten[#Alle])",
+   "local": "=ZEILEN(Noten[#Alle])",
+   "formula": "=ROWS(Noten[#All])",
+   "value": 6.0,
+   "after_cell": "H3",
+   "value_after": 6.0
+  },
+  {
+   "cell": "G4",
+   "typed": "=ANZAHL2(Noten[[#Kopfzeilen];[Name]])",
+   "local": "=ANZAHL2(Noten[[#Kopfzeilen];[Name]])",
+   "formula": "=COUNTA(Noten[[#Headers],[Name]])",
+   "value": 1.0,
+   "after_cell": "H4",
+   "value_after": 1.0
+  },
+  {
+   "cell": "G5",
+   "typed": "=SUMME(Noten[[Note]:[Punkte]])",
+   "local": "=SUMME(Noten[[Note]:[Punkte]])",
+   "formula": "=SUM(Noten[[Note]:[Punkte]])",
+   "value": 52.0,
+   "after_cell": "H5",
+   "value_after": 52.0
+  },
+  {
+   "cell": "G6",
+   "typed": "=SUMME(Noten)",
+   "local": "=SUMME(Noten)",
+   "formula": "=SUM(Noten)",
+   "value": 52.0,
+   "after_cell": "H6",
+   "value_after": 136.0
+  },
+  {
+   "cell": "G7",
+   "typed": "=ZEILEN(Noten[#Daten])",
+   "local": "=ZEILEN(Noten[#Daten])",
+   "formula": "=ROWS(Noten[#Data])",
+   "value": 4.0,
+   "after_cell": "G7",
+   "value_after": 4.0
+  },
+  {
+   "cell": "G8",
+   "typed": "=SUMME(Noten[[#Daten];[#Ergebnisse];[Punkte]])",
+   "local": "=SUMME(Noten[[#Daten];[#Ergebnisse];[Punkte]])",
+   "formula": "=SUM(Noten[[#Data],[#Totals],[Punkte]])",
+   "value": 84.0,
+   "after_cell": "G8",
+   "value_after": 84.0
+  },
+  {
+   "cell": "G9",
+   "typed": "=MITTELWERT(Noten[Punkte])",
+   "local": "=MITTELWERT(Noten[Punkte])",
+   "formula": "=AVERAGE(Noten[Punkte])",
+   "value": 10.5,
+   "after_cell": "G9",
+   "value_after": 10.5
+  },
+  {
+   "cell": "G10",
+   "typed": "=SVERWEIS(\"Ben\";Noten;3;FALSCH)",
+   "local": "=SVERWEIS(\"Ben\";Noten;3;FALSCH)",
+   "formula": "=VLOOKUP(\"Ben\",Noten,3,FALSE)",
+   "value": 9.0,
+   "after_cell": "G10",
+   "value_after": 9.0
+  },
+  {
+   "cell": "G11",
+   "typed": "=INDEX(Noten[Name];2)",
+   "local": "=INDEX(Noten[Name];2)",
+   "formula": "=INDEX(Noten[Name],2)",
+   "value": "Ben",
+   "after_cell": "G11",
+   "value_after": "Ben"
+  },
+  {
+   "cell": "G12",
+   "typed": "=ANZAHL(Noten[[#Alle];[Note]])",
+   "local": "=ANZAHL(Noten[[#Alle];[Note]])",
+   "formula": "=COUNT(Noten[[#All],[Note]])",
+   "value": 4.0,
+   "after_cell": "G12",
+   "value_after": 4.0
+  },
+  {
+   "cell": "G13",
+   "typed": "=SPALTEN(Noten[#Kopfzeilen])",
+   "local": "=SPALTEN(Noten[#Kopfzeilen])",
+   "formula": "=COLUMNS(Noten[#Headers])",
+   "value": 3.0,
+   "after_cell": "G13",
+   "value_after": 4.0
+  },
+  {
+   "cell": "G14",
+   "typed": "=Noten[[#Kopfzeilen];[Punkte]]",
+   "local": "=Noten[[#Kopfzeilen];[Punkte]]",
+   "formula": "=Noten[[#Headers],[Punkte]]",
+   "value": "Punkte",
+   "after_cell": "G14",
+   "value_after": "Punkte"
+  },
+  {
+   "cell": "G15",
+   "typed": "=Noten[@Punkte]*2",
+   "local": "=Noten[@Punkte]*2",
+   "formula": "=Noten[@Punkte]*2",
+   "value": {
+    "error": "#VALUE!"
+   },
+   "after_cell": "G15",
+   "value_after": {
+    "error": "#VALUE!"
+   }
+  },
+  {
+   "cell": "G16",
+   "typed": "=Noten[@Name]",
+   "local": "=Noten[@Name]",
+   "formula": "=Noten[@Name]",
+   "value": {
+    "error": "#VALUE!"
+   },
+   "after_cell": "G16",
+   "value_after": {
+    "error": "#VALUE!"
+   }
+  },
+  {
+   "cell": "G17",
+   "typed": "=SUMME(Noten[[#Diese Zeile];[Note]:[Punkte]])",
+   "local": "=SUMME(Noten[@[Note]:[Punkte]])",
+   "formula": "=SUM(Noten[@[Note]:[Punkte]])",
+   "value": {
+    "error": "#VALUE!"
+   },
+   "after_cell": "G17",
+   "value_after": {
+    "error": "#VALUE!"
+   }
+  },
+  {
+   "cell": "G18",
+   "typed": "=ZÄHLENWENN(Noten[Note];\"<3\")",
+   "local": "=ZÄHLENWENN(Noten[Note];\"<3\")",
+   "formula": "=COUNTIF(Noten[Note],\"<3\")",
+   "value": 2.0,
+   "after_cell": "G18",
+   "value_after": 2.0
+  },
+  {
+   "cell": "G19",
+   "typed": "=SUMMEWENN(Noten[Name];\"Ben\";Noten[Punkte])",
+   "local": "=SUMMEWENN(Noten[Name];\"Ben\";Noten[Punkte])",
+   "formula": "=SUMIF(Noten[Name],\"Ben\",Noten[Punkte])",
+   "value": 9.0,
+   "after_cell": "G19",
+   "value_after": 9.0
+  },
+  {
+   "cell": "G20",
+   "typed": "=Noten[Fehlt]",
+   "rejected": true
+  },
+  {
+   "cell": "G21",
+   "typed": "=ZEILEN(Noten[[#Kopfzeilen];[#Daten]])",
+   "local": "=ZEILEN(Noten[[#Kopfzeilen];[#Daten]])",
+   "formula": "=ROWS(Noten[[#Headers],[#Data]])",
+   "value": 5.0,
+   "after_cell": "G21",
+   "value_after": 5.0
+  },
+  {
+   "cell": "G22",
+   "typed": "=Noten[#Ergebnisse]",
+   "local": "=Noten[#Ergebnisse]",
+   "formula": "=Noten[#Totals]",
+   "value": "Ergebnis",
+   "after_cell": "G22",
+   "value_after": "Ergebnis"
+  }
+ ],
+ "inside": [
+  {
+   "cell": "D2",
+   "local": "=[@Punkte]*2",
+   "formula": "=[@Punkte]*2",
+   "value": 24.0
+  },
+  {
+   "cell": "D3",
+   "local": "=[@Punkte]*2",
+   "formula": "=[@Punkte]*2",
+   "value": 18.0
+  },
+  {
+   "cell": "D4",
+   "local": "=[@Punkte]*2",
+   "formula": "=[@Punkte]*2",
+   "value": 28.0
+  },
+  {
+   "cell": "D5",
+   "local": "=[@Punkte]*2",
+   "formula": "=[@Punkte]*2",
+   "value": 14.0
+  }
+ ],
+ "file": {
+  "cells": {
+   "D2": "Noten[[#This Row],[Punkte]]*2",
+   "H2": "SUM(Noten[Note])",
+   "D3": "Noten[[#This Row],[Punkte]]*2",
+   "H3": "ROWS(Noten[#All])",
+   "D4": "Noten[[#This Row],[Punkte]]*2",
+   "H4": "COUNTA(Noten[[#Headers],[Name]])",
+   "D5": "Noten[[#This Row],[Punkte]]*2",
+   "H5": "SUM(Noten[[Note]:[Punkte]])",
+   "C6": "SUBTOTAL(109,Noten[Punkte])",
+   "H6": "SUM(Noten[])",
+   "G7": "ROWS(Noten[#Data])",
+   "G8": "SUM(Noten[[#Data],[#Totals],[Punkte]])",
+   "G9": "AVERAGE(Noten[Punkte])",
+   "G10": "VLOOKUP(\"Ben\",Noten[],3,FALSE)",
+   "G11": "INDEX(Noten[Name],2)",
+   "G12": "COUNT(Noten[[#All],[Note]])",
+   "G13": "COLUMNS(Noten[#Headers])",
+   "G14": "Noten[[#Headers],[Punkte]]",
+   "G15": "Noten[[#This Row],[Punkte]]*2",
+   "G16": "Noten[[#This Row],[Name]]",
+   "G17": "SUM(Noten[[#This Row],[Note]:[Punkte]])",
+   "G18": "COUNTIF(Noten[Note],\"<3\")",
+   "G19": "SUMIF(Noten[Name],\"Ben\",Noten[Punkte])",
+   "G21": "ROWS(Noten[[#Headers],[#Data]])",
+   "G22": "Noten[#Totals]"
+  },
+  "calculatedColumnFormula": [
+   "Noten[[#This Row],[Punkte]]*2"
+  ],
+  "totalsRowFunction": [
+   "sum"
+  ]
+ },
+ "totals_formula": {
+  "local": "=TEILERGEBNIS(109;[Punkte])",
+  "formula": "=SUBTOTAL(109,[Punkte])",
+  "value": 42.0
+ },
+ "table_after": {
+  "ref": "A1:D6",
+  "columns": [
+   "Name",
+   "Note",
+   "Punkte",
+   "Doppelt"
+  ]
+ }
+}

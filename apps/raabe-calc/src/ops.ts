@@ -19,12 +19,15 @@ interface SheetState {
   defaults?: { col?: number; row: number };
 }
 
+/** The workbook's design (Seitenlayout > Designs, Farben, Schriftarten). */
+interface Design { theme: Record<string, string>; fonts: { major: string; minor: string }; names: { theme: string; colors: string; fonts: string } }
+
 interface Step {
   label: string;
   before: SheetState[];
   after: SheetState[];
-  sheetsBefore?: { list: Sheet[]; active: number; protection?: Record<string, string> };
-  sheetsAfter?: { list: Sheet[]; active: number; protection?: Record<string, string> };
+  sheetsBefore?: { list: Sheet[]; active: number; protection?: Record<string, string>; design?: Design };
+  sheetsAfter?: { list: Sheet[]; active: number; protection?: Record<string, string>; design?: Design };
   /** Selection to restore with undo/redo. */
   selBefore?: { sheet: number; sel: Rect[]; active: { row: number; col: number } };
   selAfter?: { sheet: number; sel: Rect[]; active: { row: number; col: number } };
@@ -76,7 +79,7 @@ export class History {
         this.open = null;
         st.selAfter = this.selection();
         st.after = st.before.map((b) => this.capture(b));
-        if (st.sheetsBefore) st.sheetsAfter = { list: [...this.wb.sheets], active: this.wb.active, protection: this.wb.protection };
+        if (st.sheetsBefore) st.sheetsAfter = { list: [...this.wb.sheets], active: this.wb.active, protection: this.wb.protection, design: st.sheetsBefore.design ? this.designNow() : undefined };
         if (st.before.length || st.sheetsBefore) {
           this.undoStack.push(st);
           if (this.undoStack.length > 100) this.undoStack.shift();
@@ -161,6 +164,23 @@ export class History {
     if (!st.whole) st.whole = snapshot(sheet);
   }
 
+  private designNow(): Design {
+    return { theme: { ...this.wb.theme }, fonts: { ...this.wb.themeFonts }, names: { ...this.wb.themeNames } };
+  }
+
+  /** Records the workbook's design before it changes (with the sheet list, so the step recalculates all). */
+  design(): void {
+    this.sheets();
+    if (!this.open!.sheetsBefore!.design) this.open!.sheetsBefore!.design = this.designNow();
+  }
+
+  private setDesign(d: Design | undefined): void {
+    if (!d) return;
+    this.wb.theme = { ...d.theme };
+    this.wb.themeFonts = { ...d.fonts };
+    this.wb.themeNames = { ...d.names };
+  }
+
   /** Records the list of sheets (insert, delete, move, rename …). */
   sheets(): void {
     if (!this.open) throw new Error("change outside an undo step");
@@ -226,7 +246,7 @@ export class History {
     const st = this.undoStack.pop();
     if (!st) return false;
     this.apply(st.before);
-    if (st.sheetsBefore) { this.wb.sheets = [...st.sheetsBefore.list]; this.wb.active = st.sheetsBefore.active; this.wb.protection = st.sheetsBefore.protection; }
+    if (st.sheetsBefore) { this.wb.sheets = [...st.sheetsBefore.list]; this.wb.active = st.sheetsBefore.active; this.wb.protection = st.sheetsBefore.protection; this.setDesign(st.sheetsBefore.design); }
     this.restoreSel(st.selBefore);
     this.redoStack.push(st);
     this.onChange(changeOf(st.before, !!st.sheetsBefore));
@@ -237,7 +257,7 @@ export class History {
     const st = this.redoStack.pop();
     if (!st) return false;
     this.apply(st.after);
-    if (st.sheetsAfter) { this.wb.sheets = [...st.sheetsAfter.list]; this.wb.active = st.sheetsAfter.active; this.wb.protection = st.sheetsAfter.protection; }
+    if (st.sheetsAfter) { this.wb.sheets = [...st.sheetsAfter.list]; this.wb.active = st.sheetsAfter.active; this.wb.protection = st.sheetsAfter.protection; this.setDesign(st.sheetsAfter.design); }
     this.restoreSel(st.selAfter);
     this.undoStack.push(st);
     this.onChange(changeOf(st.after, !!st.sheetsAfter));

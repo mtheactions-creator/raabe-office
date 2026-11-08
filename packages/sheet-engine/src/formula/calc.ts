@@ -13,6 +13,8 @@ import { Ctx, FUNCS, evalFormula, type Host } from "./eval";
 import "./functions";
 import { arrayRows } from "./functions";
 import { FormulaError, parseFormula, type Node } from "./parse";
+import { findTable, parseStruct, resolveStruct } from "./structref";
+import { tableData } from "../table";
 import { Arr, E, type V } from "./values";
 
 const CLEAN = 0, DIRTY = 1, BUSY = 2;
@@ -369,12 +371,22 @@ export class Calc implements Host {
         seen.add(l);
         const home = node.sheet !== undefined ? this.sheetIndex(node.sheet) : n.sheet;
         const dn = this.wb.names.find((d) => d.name.toLowerCase() === l && d.sheet === home) ?? this.wb.names.find((d) => d.name.toLowerCase() === l && d.sheet === undefined);
-        if (!dn) return;
+        if (!dn) {
+          const t = node.sheet === undefined ? findTable(this.wb, node.name, n.sheet, n.row, n.col) : null;
+          if (t) n.deps.push({ sheet: t.sheet, rect: tableData(t.table) });
+          return;
+        }
         try {
           this.collect(parseFormula(dn.ref.startsWith("=") ? dn.ref.slice(1) : dn.ref), n, seen);
         } catch {
           // An unreadable name gives #NAME? and depends on nothing.
         }
+        return;
+      }
+      case "struct": {
+        const spec = parseStruct(node.text);
+        const r = spec ? resolveStruct(this.wb, spec, n.sheet, n.row, n.col) : "ref";
+        if (typeof r === "object") n.deps.push({ sheet: r.sheet, rect: r.rect });
         return;
       }
       case "fn":
@@ -392,6 +404,10 @@ export class Calc implements Host {
         return;
       case "paren":
         this.collect(node.a, n, seen);
+        return;
+      case "call":
+        this.collect(node.fn, n, seen);
+        for (const a of node.args) this.collect(a, n, seen);
         return;
       default:
         return;

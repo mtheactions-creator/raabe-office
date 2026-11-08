@@ -7,6 +7,7 @@ export { readXlsx } from "./xlsx/read";
 export { writeXlsx, type XlsxWriteOptions } from "./xlsx/write";
 export { newWorkbook } from "./xlsx/new";
 export { widthFromFile, widthToFile } from "./xlsx/units";
+export { resolveColor as resolveXlsxColor } from "./xlsx/colors";
 export { Pptx, RT as PPTX_RT, CT_PPTX, relTarget, type SlideRef } from "./pptx/package";
 export * as PptxDom from "./pptx/dom";
 export { newPptx, newPptxFiles, OFFICE_DESIGN, LAYOUT_NAMES, masterXml, designTheme, type DesignSpec } from "./pptx/template";

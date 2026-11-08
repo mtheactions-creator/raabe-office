@@ -8,14 +8,14 @@ import { writePivots, type PivotCacheRef } from "./pivots";
 import { writeTables } from "./tables";
 import { strFromU8, strToU8, zipSync } from "fflate";
 import {
-  CellError, cellName, fromXlsxFormula, keyCell, rangeName, toXlsxFormula,
+  CellError, cellName, fromXlsxFormula, keyCell, mapStructs, rangeName, structToFile, structToShown, toXlsxFormula,
   type Cell, type ColInfo, type DefinedName, type RowInfo, type Sheet, type View, type Workbook,
 } from "@raabe/sheet-engine";
 import { PackageWriter, Rels, relsPath, resolveTarget } from "../package";
 import { RT, isRel, nameKey, readPackage, sheetNamesSnap, sheetSnap, type BookRaw, type SheetRaw } from "./read";
 import { canon, StylesWriter } from "./styles";
 import { commentsXml, vmlBlocks, vmlXml, type NoteIn } from "./notes";
-import { colorXml } from "./colors";
+import { colorXml, patchTheme, readTheme, themeNames } from "./colors";
 import { writeCharts } from "./drawing";
 import { newPackage } from "./new";
 import { numText, widthFromBase, widthToFile } from "./units";
@@ -65,9 +65,22 @@ export function writePackage(wb: Workbook, options: XlsxWriteOptions = {}): Reco
   const raw = (wb.raw as BookRaw | undefined) ?? (readPackage(newPackage(false)).raw as BookRaw);
   const pw = new PackageWriter(raw.files);
   const before = reachable(raw.files);
-  const sw = new StylesWriter(raw.styles, wb.styles, raw.theme);
+  const sw = new StylesWriter(raw.styles, wb.styles, wb.themeFonts ?? raw.theme);
   const sst = new SharedStrings();
   const wbRels = pw.relsOf(raw.wbPath);
+  // Seitenlayout > Designs / Farben / Schriftarten: the theme part follows the workbook's design.
+  const themeRel = wbRels.list.find((r) => isRel(r.type, RT.theme));
+  if (themeRel) {
+    const path = resolveTarget(raw.wbPath, themeRel.target);
+    const xml = raw.files[path] ? strFromU8(raw.files[path]) : "";
+    if (xml) {
+      const cur = readTheme(xml), names = themeNames(xml);
+      const colors = Object.fromEntries(Object.entries(wb.theme).map(([k, v]) => [k, v.replace("#", "").toUpperCase()]));
+      const changed = Object.entries(colors).some(([k, v]) => cur.colors[k] !== v) || cur.major !== wb.themeFonts.major || cur.minor !== wb.themeFonts.minor
+        || names.theme !== wb.themeNames.theme || names.colors !== wb.themeNames.colors || names.fonts !== wb.themeNames.fonts;
+      if (changed) pw.setPart(path, patchTheme(xml, colors, wb.themeFonts, wb.themeNames), "application/vnd.openxmlformats-officedocument.theme+xml");
+    }
+  }
   const used = new Set<string>();
   const entries: { name: string; sheetId: number; state?: string; rid: string; attrs: Record<string, string> }[] = [];
   let maxId = Math.max(0, ...wb.sheets.map((s) => (s.raw as SheetRaw | undefined)?.sheetId ?? 0), ...raw.others.map((o) => Number(/sheetId="(\d+)"/.exec(o.xml)?.[1] ?? 0)));
@@ -113,6 +126,7 @@ export function writePackage(wb: Workbook, options: XlsxWriteOptions = {}): Reco
     const w = new SheetWriter(sheet, i === wb.active, own ? sr : undefined, sr, part, pw, sw, sst, raw, options.author ?? "", vmlIds);
     w.personOf = personOf;
     w.nextTableId = () => tableId++;
+    w.tableNames = new Set(wb.sheets.flatMap((s) => (s.tables ?? []).map((t) => t.name.toLowerCase())));
     pw.setPart(part, w.xml(), CT.worksheet);
     if (w.formulaWithoutValue) needsCalc = true;
     caches.push(...writePivots(pw, sheet, part, raw.wbPath, pivotData, () => cacheId++));
@@ -226,6 +240,8 @@ class SheetWriter {
   /** Kommentare: the person id for an author's name (set by the package writer). */
   personOf: (name: string) => string = () => guid();
   nextTableId: () => number = () => 1;
+  /** The workbook's table names (lower case): a name alone is written as Noten[] (Excel). */
+  tableNames = new Set<string>();
   private sp: Split;
   private readonly rels: Rels;
 
@@ -405,7 +421,10 @@ class SheetWriter {
     const v = c.v;
     if (c.raw?.f) body += c.raw.f;
     else if (c.f !== undefined) {
-      const file = c.raw?.file !== undefined && fromXlsxFormula(c.raw.file) === c.f ? c.raw.file : toXlsxFormula(c.f);
+      // Structured references as Excel writes them ([@Note] is Tabelle1[[#This Row],[Note]] in the file).
+      const own = c.f.includes("[") || this.tableNames.size ? this.s.tables?.find((t) => row >= t.ref.r0 && row <= t.ref.r1 && col >= t.ref.c0 && col <= t.ref.c1)?.name ?? null : null;
+      const shown = (f: string): string => (f.includes("[") ? mapStructs(f, (x) => structToShown(x, own)) : f);
+      const file = c.raw?.file !== undefined && shown(fromXlsxFormula(c.raw.file)) === c.f ? c.raw.file : toXlsxFormula(this.tableNames.size || c.f.includes("[") ? mapStructs(c.f, (x) => structToFile(x, own), (n) => (this.tableNames.has(n.toLowerCase()) ? n + "[]" : n)) : c.f);
       body += c.array ? `<f t="array" ref="${rangeName(c.array)}">${escText(file)}</f>` : `<f>${escText(file)}</f>`;
       if (v === null) this.formulaWithoutValue = true;
     }

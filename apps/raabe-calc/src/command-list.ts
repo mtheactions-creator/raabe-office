@@ -249,9 +249,9 @@ export const COMMANDS: Command[] = [
   cmd("insert.symbol", "Symbol", "symbol"),
 
   // ----- Seitenlayout -----------------------------------------------------------------------
-  later("layout.themes", "Designs", "themes"),
-  later("layout.colors", "Farben", "colors"),
-  later("layout.fonts", "Schriftarten", "fonts"),
+  cmd("layout.themes", "Designs", "themes"),
+  cmd("layout.colors", "Farben", "colors"),
+  cmd("layout.fonts", "Schriftarten", "fonts"),
   later("layout.effects", "Effekte", "effects"),
   cmd("layout.margins", "Seitenränder", "margins"),
   cmd("layout.orientation", "Ausrichtung", "orientation"),

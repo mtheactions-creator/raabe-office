@@ -24,6 +24,8 @@ export interface GridHost {
   tableStyle?(row: number, col: number, st: import("@raabe/sheet-engine").CellStyle): import("@raabe/sheet-engine").CellStyle;
   /** Typed input committed into `targets` (Strg+Eingabe: every selected cell). */
   commit(targets: Rect, text: string, opts: { array?: boolean }): void;
+  /** Whether a formula names a table or column that is not there (refused on Enter). */
+  formulaProblem?(row: number, col: number, text: string): boolean;
   clearContents(): void;
   /** The fill handle dragged back into its selection: these cells are emptied. */
   clearRange(r: Rect): void;
@@ -87,6 +89,8 @@ export interface GridHost {
   namesMenu(anchor: DOMRect): void;
   /** A link was clicked: a web address, a file or "#Sheet!A1" inside the workbook. */
   followLink(target: string): void;
+  /** The address a =HYPERLINK(...) formula in the cell points to. */
+  formulaLink?(row: number, col: number): string | null;
 }
 
 /** A reference's frame being dragged: where its text is, what it was, the corner that stays (null: moved). */
@@ -770,8 +774,10 @@ export class Grid {
     this.leavePointSheet();
     let text = (this.editing.viaBar ? this.fx : this.editor).value;
     // Excel's checks on Enter (recorded, D-066): mended without asking, mended after asking, or refused.
-    const check = checkEntry(text);
+    let check = checkEntry(text);
     const input = this.editing.viaBar ? this.fx : this.editor;
+    // A table or column that is not there: Excel refuses the formula as well.
+    if (check.kind !== "error" && this.host.formulaProblem?.(this.editing.row, this.editing.col, check.text)) check = { kind: "error" };
     if (check.kind === "error" && this.host.formulaError) {
       this.setMode("edit");
       this.pointRef = null;
@@ -1701,6 +1707,11 @@ export class Grid {
     if (d.kind === "cells" && !this.downAt.moved && !e.shiftKey && !e.ctrlKey) {
       const c = this.sheet.get(this.active.row, this.active.col);
       if (c?.link && this.overText(e, this.active.row, this.active.col)) this.host.followLink(c.link);
+      // =HYPERLINK(...) follows its first argument the same way.
+      else if (c?.f !== undefined && /^HYPERLINK\(/i.test(c.f) && this.overText(e, this.active.row, this.active.col)) {
+        const target = this.host.formulaLink?.(this.active.row, this.active.col);
+        if (target) this.host.followLink(target);
+      }
     }
     this.syncBar();
   }
