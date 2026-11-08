@@ -16,13 +16,19 @@ export class Keytips {
   private typed = "";
   private badges: HTMLElement[] = [];
   private altAlone = false;
+  /** A mouse button is down (a drag): Alt then belongs to the drag, not to the keytips. */
+  private buttons = false;
 
   /** `scopeAfter(el)` tells which scope to continue in after activating `el` (a ribbon tab). */
   constructor(private scopeAfter: (el: HTMLElement) => string | null, private onExit: () => void) {
     addEventListener("keydown", (e) => this.onKeyDown(e), true);
     addEventListener("keyup", (e) => this.onKeyUp(e), true);
     addEventListener("mousedown", () => this.exit(), true);
-    addEventListener("blur", () => this.exit());
+    // Alt pressed or let go while a mouse button is down (Alt mid-drag: no snapping) is not a keytip press (D-128).
+    addEventListener("pointerdown", () => { this.buttons = true; this.altAlone = false; }, true);
+    addEventListener("pointerup", () => { this.buttons = false; }, true);
+    addEventListener("pointercancel", () => { this.buttons = false; }, true);
+    addEventListener("blur", () => { this.buttons = false; this.exit(); });
     addEventListener("resize", () => this.exit());
   }
 
@@ -32,7 +38,7 @@ export class Keytips {
 
   private onKeyDown(e: KeyboardEvent): void {
     if (e.key === "Alt") {
-      this.altAlone = !e.ctrlKey && !e.repeat;
+      this.altAlone = !e.ctrlKey && !e.repeat && !this.buttons;
       if (this.active) { e.preventDefault(); }
       return;
     }
@@ -70,7 +76,7 @@ export class Keytips {
 
   private onKeyUp(e: KeyboardEvent): void {
     if (e.key !== "Alt") return;
-    if (this.altAlone) {
+    if (this.altAlone && !this.buttons) {
       e.preventDefault();
       this.active ? this.exit() : this.enter();
     }

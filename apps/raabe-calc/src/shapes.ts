@@ -12,6 +12,8 @@ import { presetAdjust, presetGeometry, shadeLinear, SHAPE_GALLERY, SHAPE_NAMES, 
 import type { CalcApp } from "./app";
 
 type Box = { x: number; y: number; w: number; h: number };
+/** What a drag needs of a pointer event; a modifier key pressed mid-drag replays the last one with the new keys (D-128). */
+type DragPoint = { clientX: number; clientY: number; shiftKey: boolean; ctrlKey: boolean; altKey: boolean };
 type Handle = "nw" | "n" | "ne" | "e" | "se" | "s" | "sw" | "w" | "rot" | "p0" | "p1" | `adj${number}`;
 
 /** Lines and connectors (no fill, two end handles). */
@@ -311,11 +313,18 @@ export function shapesFeature(app: CalcApp) {
     if (handle?.startsWith("adj")) { dragAdjust(e, s, el, b, Number(handle.slice(3))); return; }
     const sx = e.clientX, sy = e.clientY;
     el.setPointerCapture(e.pointerId);
-    const move = (ev: PointerEvent) => {
+    // The last pointer event: a modifier key pressed or let go mid-drag applies at once (Excel; D-128).
+    let last: DragPoint = { clientX: sx, clientY: sy, shiftKey: e.shiftKey, ctrlKey: e.ctrlKey, altKey: e.altKey };
+    const move = (ev: DragPoint) => {
+      last = { clientX: ev.clientX, clientY: ev.clientY, shiftKey: ev.shiftKey, ctrlKey: ev.ctrlKey, altKey: ev.altKey };
       let dx = ev.clientX - sx, dy = ev.clientY - sy;
       if (!handle) {
+        // Umschalt: only along the axis the pointer moved further on; Alt: the corner to the cell grid (Excel; D-128).
+        if (ev.shiftKey) { if (Math.abs(dx) >= Math.abs(dy)) dy = 0; else dx = 0; }
         if (others.length) { moving = { dx, dy }; place(); return; }
-        live = { s, box: { ...b, x: b.x + dx, y: b.y + dy } }; place(); return;
+        let nb = { ...b, x: b.x + dx, y: b.y + dy };
+        if (ev.altKey) nb = snapToCells(nb);
+        live = { s, box: nb }; place(); return;
       }
       if (handle === "rot") {
         const cx = b.x + b.w / 2, cy = b.y + b.h / 2;
@@ -343,6 +352,7 @@ export function shapesFeature(app: CalcApp) {
       if (handle.includes("s")) hh += dy;
       if (handle.includes("w")) { x += dx; w -= dx; }
       if (handle.includes("n")) { y += dy; hh -= dy; }
+      if (ev.altKey) ({ x, y, w, h: hh } = snapEdges({ x, y, w, h: hh }, handle));
       if (ev.shiftKey && handle.length === 2) {
         // Umschalt keeps the proportions at the corners.
         const k = Math.max(w / b.w, hh / b.h);
@@ -351,19 +361,31 @@ export function shapesFeature(app: CalcApp) {
         if (handle.includes("n")) y = b.y + b.h - nh;
         w = nw; hh = nh;
       }
+      if (ev.ctrlKey) {
+        // Strg: the size changes around the middle, the opposite side moves as far the other way (Excel; D-128).
+        const gw = w - b.w, gh = hh - b.h;
+        w = b.w + 2 * gw; hh = b.h + 2 * gh;
+        x = b.x - gw; y = b.y - gh;
+      }
       dx = 0; dy = 0;
       live = { s, box: { x: w < 0 ? x + w : x, y: hh < 0 ? y + hh : y, w: Math.abs(w), h: Math.abs(hh) } };
       place();
     };
     const stop = () => {
-      el.removeEventListener("pointermove", move);
+      el.removeEventListener("pointermove", onMove);
       el.removeEventListener("pointerup", up);
-      el.removeEventListener("pointercancel", up);
+      el.removeEventListener("pointercancel", cancel);
       removeEventListener("keydown", key, true);
+      removeEventListener("keyup", key, true);
     };
     // Esc while moving, sizing or turning: the shape stays as it was (Excel; D-096).
     const key = (ev: KeyboardEvent) => {
-      if (ev.key !== "Escape") return;
+      if (ev.key === "Shift" || ev.key === "Control" || ev.key === "Alt") {
+        if (ev.key === "Alt") ev.preventDefault();
+        move({ ...last, shiftKey: ev.shiftKey, ctrlKey: ev.ctrlKey, altKey: ev.altKey });
+        return;
+      }
+      if (ev.key !== "Escape" || ev.type !== "keydown") return;
       ev.preventDefault();
       ev.stopPropagation();
       stop();
@@ -371,10 +393,21 @@ export function shapesFeature(app: CalcApp) {
       moving = null;
       place();
     };
-    const up = () => {
+    const cancel = () => { stop(); live = null; moving = null; place(); };
+    // A move without the button: its release never came (another window took the mouse; D-127).
+    const onMove = (ev: PointerEvent) => { if (!ev.buttons && ev.pointerType === "mouse") cancel(); else move(ev); };
+    const up = (ev: PointerEvent) => {
       stop();
       const l = live as (typeof live & { flip?: [boolean, boolean] }) | null;
       live = null;
+      // Strg held when the button goes up: a copy goes there, the shape stays (Excel; D-128).
+      if (ev.ctrlKey && !handle && l && !moving && l.rot === undefined && (Math.abs(l.box.x - b.x) >= 1 || Math.abs(l.box.y - b.y) >= 1)) {
+        const n = (app.sheet.shapes?.length ?? 0) + (app.sheet.pictures?.length ?? 0) + (app.sheet.charts?.length ?? 0) + 1;
+        const copy = placeAt({ ...structuredClone(s), name: s.name ? s.name.replace(/\d+$/, String(n)) : undefined }, l.box);
+        change("Kopieren", (list) => [...list, copy]);
+        select(copy);
+        return;
+      }
       if (moving) {
         const m = moving;
         moving = null;
@@ -392,10 +425,36 @@ export function shapesFeature(app: CalcApp) {
         return moved;
       });
     };
-    el.addEventListener("pointermove", move);
+    el.addEventListener("pointermove", onMove);
     el.addEventListener("pointerup", up);
-    el.addEventListener("pointercancel", up);
+    el.addEventListener("pointercancel", cancel);
     addEventListener("keydown", key, true);
+    addEventListener("keyup", key, true);
+  }
+
+  /** Alt while moving: the top left corner to the nearest cell edges (Excel). */
+  function snapToCells(b: Box): Box {
+    const hit = app.grid.hitCell(Math.max(0, b.x), Math.max(0, b.y));
+    const c = app.grid.rectOnCanvas({ r0: hit.row, c0: hit.col, r1: hit.row, c1: hit.col });
+    if (!c) return b;
+    return { ...b, x: b.x - c.x < c.w / 2 ? c.x : c.x + c.w, y: b.y - c.y < c.h / 2 ? c.y : c.y + c.h };
+  }
+
+  /** Alt while sizing: the dragged sides to the nearest cell edges (Excel). */
+  function snapEdges(b: Box, handle: string): Box {
+    const edge = (v: number, axis: "x" | "y"): number => {
+      const hit = app.grid.hitCell(axis === "x" ? Math.max(0, v) : Math.max(0, b.x), axis === "y" ? Math.max(0, v) : Math.max(0, b.y));
+      const c = app.grid.rectOnCanvas({ r0: hit.row, c0: hit.col, r1: hit.row, c1: hit.col });
+      if (!c) return v;
+      const lo = axis === "x" ? c.x : c.y, size = axis === "x" ? c.w : c.h;
+      return v - lo < size / 2 ? lo : lo + size;
+    };
+    let { x, y, w, h: hh } = b;
+    if (handle.includes("e")) w = edge(x + w, "x") - x;
+    if (handle.includes("s")) hh = edge(y + hh, "y") - y;
+    if (handle.includes("w")) { const nx = edge(x, "x"); w += x - nx; x = nx; }
+    if (handle.includes("n")) { const ny = edge(y, "y"); hh += y - ny; y = ny; }
+    return { x, y, w, h: hh };
   }
 
   /**

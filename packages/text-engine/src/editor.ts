@@ -230,6 +230,9 @@ function freeformPath(pts: readonly [number, number][], smooth: boolean): string
   return d;
 }
 
+/** What a drag needs of a mouse event; a modifier key mid-drag replays the last one with the new keys (D-128). */
+type DragPoint = { clientX: number; clientY: number; shiftKey: boolean; ctrlKey: boolean; altKey: boolean };
+
 export class Editor {
   doc: Doc;
   layout!: Layout;
@@ -6940,7 +6943,10 @@ cropFill(fit: boolean): void {
     const box0 = this.imageBox();
     if (!box0) return;
     const start = { x: e.clientX, y: e.clientY };
+    const depth = this.undoStack.length;
     let first = true, lastDx = 0, lastDy = 0;
+    // The last pointer place: a modifier key pressed or let go mid-drag applies at once (Word; D-128).
+    let last: DragPoint = { clientX: e.clientX, clientY: e.clientY, shiftKey: e.shiftKey, ctrlKey: e.ctrlKey, altKey: e.altKey };
     const w0 = box0.w / PT, h0 = box0.h / PT;
     const sel0 = this.selectedImage();
     const isShape = !!sel0?.obj.shape, floating = sel0?.kind === "float";
@@ -6948,9 +6954,10 @@ cropFill(fit: boolean): void {
     const turn = ((sel0?.obj.pic?.rotation ?? 0) * Math.PI) / 180;
     const cos = Math.cos(turn), sin = Math.sin(turn);
     let movedX = 0, movedY = 0;
-    const move = (ev: MouseEvent) => {
+    const move = (ev: DragPoint) => {
+      last = { clientX: ev.clientX, clientY: ev.clientY, shiftKey: ev.shiftKey, ctrlKey: ev.ctrlKey, altKey: ev.altKey };
       const z = this.view.zoom;
-      const dx = (ev.clientX - start.x) / z / PT, dy = (ev.clientY - start.y) / z / PT;
+      let dx = (ev.clientX - start.x) / z / PT, dy = (ev.clientY - start.y) / z / PT;
       if (Math.abs(dx) + Math.abs(dy) < 0.5 && first) return;
       if (handle) {
         const lx = dx * cos + dy * sin, ly = -dx * sin + dy * cos;
@@ -6959,6 +6966,9 @@ cropFill(fit: boolean): void {
         if (handle.includes("w")) w -= lx;
         if (handle.startsWith("s")) hh += ly;
         if (handle.startsWith("n")) hh -= ly;
+        // Strg on a floating object: the size changes around the middle (Word; D-128).
+        const centre = floating && ev.ctrlKey;
+        if (centre) { w = w0 + 2 * (w - w0); hh = h0 + 2 * (hh - h0); }
         // Corner handles keep a picture's proportions; a shape's only with Umschalt (Word).
         if (handle.length === 2 && isShape === ev.shiftKey) { const k = Math.max(w / w0, hh / h0); w = w0 * k; hh = h0 * k; }
         else if (floating && !ev.altKey && !turn) {
@@ -6976,12 +6986,14 @@ cropFill(fit: boolean): void {
         // growth along the dragged sides (turned like the object); the box is placed by its
         // unturned top left corner.
         if (floating) {
-          const gx = handle.includes("e") ? (w - w0) / 2 : handle.includes("w") ? -(w - w0) / 2 : 0;
-          const gy = handle.startsWith("s") ? (hh - h0) / 2 : handle.startsWith("n") ? -(hh - h0) / 2 : 0;
+          const gx = centre ? 0 : handle.includes("e") ? (w - w0) / 2 : handle.includes("w") ? -(w - w0) / 2 : 0;
+          const gy = centre ? 0 : handle.startsWith("s") ? (hh - h0) / 2 : handle.startsWith("n") ? -(hh - h0) / 2 : 0;
           const mx = gx * cos - gy * sin - (w - w0) / 2, my = gx * sin + gy * cos - (hh - h0) / 2;
           if (mx !== movedX || my !== movedY) { this.moveFloat(mx - movedX, my - movedY, false); movedX = mx; movedY = my; }
         }
       } else {
+        // Umschalt: only along the axis the pointer moved further on (Word; D-128).
+        if (ev.shiftKey && floating) { if (Math.abs(dx) >= Math.abs(dy)) dy = 0; else dx = 0; }
         // Floating objects snap to the margins and the text area's middle (Alt: no snapping).
         let sx = dx, sy = dy;
         if (floating && !ev.altKey) {
@@ -6993,15 +7005,62 @@ cropFill(fit: boolean): void {
       }
       first = false;
     };
-    const up = () => {
-      off();
+    const keys = (ev: KeyboardEvent) => {
+      if (ev.key !== "Shift" && ev.key !== "Control" && ev.key !== "Alt") return;
+      if (ev.key === "Alt") ev.preventDefault();
+      move({ ...last, shiftKey: ev.shiftKey, ctrlKey: ev.ctrlKey, altKey: ev.altKey });
+    };
+    const end = () => {
       removeEventListener("mousemove", move, true); removeEventListener("mouseup", up, true);
+      removeEventListener("keydown", keys, true); removeEventListener("keyup", keys, true);
+    };
+    const up = (ev: MouseEvent) => {
+      off();
+      end();
       if (this.guides.length) { this.guides = []; this.update(); }
+      // Strg held when the button goes up: a copy goes there, the object stays where it was (Word; D-128).
+      if (!handle && floating && ev.ctrlKey && !first) this.copyMovedFloat(depth);
       this.emit(true);
     };
-    const off = this.escapable(() => { removeEventListener("mousemove", move, true); removeEventListener("mouseup", up, true); });
+    const off = this.escapable(end);
     addEventListener("mousemove", move, true);
     addEventListener("mouseup", up, true);
+    addEventListener("keydown", keys, true);
+    addEventListener("keyup", keys, true);
+    this.update();
+  }
+
+  /**
+   * After a floating object was moved with Strg held: the object goes back to where it was (the drag's
+   * undo step is taken back) and a copy of it stands where the drag ended, as one undo step (D-128).
+   */
+  private copyMovedFloat(depth: number): void {
+    const img = this.selectedImage();
+    if (!img || img.kind !== "float" || this.undoStack.length <= depth) return;
+    const moved = img.obj, p = img.p;
+    const story = moved.shape?.story;
+    const text = story && this.doc.stories.has(story) ? this.doc.stories.get(story)! : null;
+    const s = this.undoStack.splice(depth)[0];
+    this.restoreSnapshot(s);
+    this.snapshot();
+    let obj: FloatObject = { ...moved, data: moved.image ? undefined : moved.data };
+    if (obj.shape) {
+      obj = { ...obj, data: undefined };
+      if (story) {
+        const id = this.newShapeStory();
+        this.doc.setStory(id, text ?? [{ ...makePara(""), mark: EMPTY }]);
+        obj = { ...obj, shape: { ...obj.shape!, story: id } };
+      }
+    }
+    let z = 251659264;
+    for (const q of this.doc.main) for (const f of q.floats ?? []) z = Math.max(z, (f.z ?? 0) + 1024);
+    obj = { ...obj, z };
+    const para = this.doc.main[p];
+    const floats = [...(para.floats ?? []), obj];
+    const next = [...this.doc.main];
+    next[p] = { ...para, floats };
+    this.doc.setStory(MAIN, next);
+    this.floatSel = { p, index: floats.length - 1 };
     this.update();
   }
 

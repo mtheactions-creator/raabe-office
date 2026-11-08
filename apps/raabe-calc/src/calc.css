@@ -22,6 +22,8 @@
 .grid-canvas { position: absolute; left: 0; top: 0; display: block; touch-action: none; cursor: cell; }
 .vscroll { position: absolute; right: 0; top: 0; bottom: 0; width: 17px; overflow-y: scroll; overflow-x: hidden; }
 .vscroll > div { width: 1px; }
+/* Takes the mouse over the vertical scroll bar (D-127); the bar under it draws the thumb. */
+.vscroll-hit { position: absolute; right: 0; top: 0; bottom: 0; width: 17px; z-index: 2; }
 .cell-editor {
   position: absolute; left: -10000px; top: 0; width: 1px; height: 1px; opacity: 0; resize: none; overflow: hidden; border: 0; outline: none;
   margin: 0; padding: 0 2px 0 3px; box-sizing: border-box; white-space: pre; z-index: 5; background: #fff; caret-color: #000;
