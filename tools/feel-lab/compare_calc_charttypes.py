@@ -32,8 +32,10 @@ HERE = Path(__file__).parent
 ROOT = HERE.parents[1]
 TMP = Path(tempfile.gettempdir())
 EXCEL = TMP / "raabe-charttypes"
-OURS = TMP / "raabe-charttypes-ours"
-OUT = TMP / "raabe-charttypes-compare"
+# RAABE_CHARTTYPES_TAG keeps parallel runs (several sessions on one PC) in folders of their own.
+_TAG = os.environ.get("RAABE_CHARTTYPES_TAG", "")
+OURS = TMP / f"raabe-charttypes-ours{_TAG}"
+OUT = TMP / f"raabe-charttypes-compare{_TAG}"
 RESULT = HERE / "results" / "2026-11-08-calc-charttypes.json"
 FIXTURE = ROOT / "packages" / "ooxml" / "test" / "fixtures" / "excel-charttypes.xlsx"
 EDGE = [r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe", r"C:\Program Files\Microsoft\Edge\Application\msedge.exe"]
@@ -60,7 +62,7 @@ def dev_pictures(names: list[str]) -> dict[str, Image.Image]:
         print(r.stdout[-3000:])
         raise SystemExit("the chart engine's test failed")
     edge = next(p for p in EDGE if Path(p).exists())
-    profile = TMP / "raabe-edge-headless"
+    profile = TMP / f"raabe-edge-headless{_TAG}"
     out = {}
     for n in names:
         png = OURS / f"{n}.png"

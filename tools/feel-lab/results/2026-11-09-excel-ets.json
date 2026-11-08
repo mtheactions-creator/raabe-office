@@ -1,0 +1,30 @@
+{
+ "about": "PROGNOSE.ETS and companions against German Excel 365 (D-124). Broad set: probe_excel_ets_broad.py, 48 series, 99 fits (with the season found, Saisonalitaet 0, Datenvervollstaendigung 0, Aggregation 2-7), each with STAT 1-8, the values at every time point and forecasts / confidence intervals 1-24 steps ahead; measured by packages/sheet-engine/test/ets-broad.test.ts. Old set: probe_excel_ets.py, 8 series, h = 1, 2, 3, 6, 12 (ets-excel.test.ts). Relative error against Excel's value (on the broad set at least 5 % of the series' largest value as the base).",
+ "recorded_exactly": [
+  "error-correction form: l += b + alpha e, b += beta e, s += gamma e (Excel's own alpha, beta, gamma give Excel's end states to 1e-9)",
+  "start without a season: trend = slope of the least-squares line through all points, level so that the first one-step value is the first point (n >= 7)",
+  "the first one-step error is 0 with a season too",
+  "STAT 4-7 over a holdout of the last k points: k = n for n <= 10, else max(min(floor(0.4 n), 10), ceil(0.2 n)); SMAPE = mean 2|e|/(|y|+|f|); MASE = MAE / mean |y_i - y_(i-1)| over the points before the holdout",
+  "KONFINT = z * RMSE(all one-step errors) * sqrt(1 + sum_(j<h) (alpha + j beta + gamma [m divides j])^2)",
+  "values inside the timeline = level + h trend + season with h <= 0 (not the one-step values)",
+  "alpha without a season is one of 0.002 0.1 0.126 0.25 0.5 0.75 0.9 0.998; with one alpha in 0.002 0.126 0.251 0.501 0.751 0.998, gamma in 0.001 0.125 0.25 0.5; beta 0.001 in 96 of 99 fits",
+  "STAT 8 for calendar months: 31"
+ ],
+ "not_found": [
+  "Excel's start of the season (centred moving average, per-cycle means and least squares of the start states all come within a few tenths of a unit, none exactly)",
+  "Excel's choice among the values: SSE of the one-step errors before the holdout plus the SSE of the forecasts over the holdout picks Excel's alpha in 34 of 41 fits without a season, but only 15 of 41 (alpha and gamma) with one",
+  "the start for series of 4 to 6 points",
+  "beta other than 0.001 (quad_n20: 0.249, two seasonal fits)"
+ ],
+ "broad": {
+  "before": {"season": "84/99", "ets_mean_pct": 7.90, "ets_max_pct": 485.5, "konfint_mean_pct": 60.6, "konfint_max_pct": 1334.2, "inside_mean_pct": 8.18, "mae_mean_pct": 21.6, "rmse_mean_pct": 24.2},
+  "after": {"season": "93/99", "ets_mean_pct": 1.65, "ets_max_pct": 51.6, "konfint_mean_pct": 11.7, "konfint_max_pct": 278.2, "inside_mean_pct": 4.38, "mae_mean_pct": 10.3, "rmse_mean_pct": 9.9,
+            "worst": "gaps_m4 with Datenvervollstaendigung 0 (we find a season 8 where Excel finds none), quad_n20 (Excel's beta 0.249), dups_m6 with Aggregation 7 (season 5 against 2)"},
+  "with_excels_own_parameters": {"ets_mean_pct_without_season": 0.31, "ets_mean_pct_with_season": 0.58, "note": "the floor left by the start of the season and of series of 4-6 points"}
+ },
+ "old_set": {
+  "before": {"ets_mean_pct": 0.38, "ets_max_pct": 2.17, "konfint_mean_pct": 19.5, "konfint_max_pct": 42.4, "season": "8/8"},
+  "after": {"ets_mean_pct": 0.78, "ets_max_pct": 7.01, "konfint_mean_pct": 28.4, "konfint_max_pct": 223.1, "season": "8/8",
+            "note": "worse on 'short' (8 points with a season 3): Excel takes alpha 0.002, gamma 0.25, we take a larger alpha, so the interval grows faster"}
+ }
+}
