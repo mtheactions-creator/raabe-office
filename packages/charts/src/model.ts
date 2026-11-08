@@ -119,8 +119,11 @@ export interface ErrorBars {
   /** Endformat: Ohne Abschluss (true) / Abschluss. */
   noEndCap?: boolean;
   /** Fehlerbetrag: Fester Wert, Prozentsatz, Standardabweichung(en), Standardfehler. */
-  type: "fixedVal" | "percentage" | "stdDev" | "stdErr";
+  type: "fixedVal" | "percentage" | "stdDev" | "stdErr" | "cust";
   value?: number;
+  /** Benutzerdefiniert ("cust"): the amounts above and below each point, from cells (D-125). */
+  plus?: ChartData<number | null>;
+  minus?: ChartData<number | null>;
   line?: Line;
 }
 

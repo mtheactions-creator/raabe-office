@@ -56,7 +56,7 @@ def main() -> None:
               const made = app.forecast.build({{ sheet: src, timeline: P("A1:A{n + 1}"), values: P("B1:B{n + 1}"), header: true, chart: {json.dumps(o["chart"])},
                 end: 46358, confidence: 0.95, season: {o["season"]}, stats: {json.dumps(o["stats"])}, fill: 1, agg: 1 }});
               const s = app.sheet; const out = {{ sheet: made, index: app.wb.sheets.indexOf(s) + 1, cells: {{}}, tables: (s.tables ?? []).map((t) => ({{ name: t.name, ref: t.ref, style: t.style, columns: t.columns.map((x) => x.name) }})),
-                charts: (s.charts ?? []).map((m) => ({{ kind: m.kind, series: m.series.map((x) => ({{ name: x.name?.ref ?? null, cat: x.cat?.ref ?? null, val: x.val.ref ?? null }})), from: m.from, to: m.to, legend: m.legend }})) }};
+                charts: (s.charts ?? []).map((m) => ({{ kind: m.kind, series: m.series.map((x) => ({{ name: x.name?.ref ?? null, cat: x.cat?.ref ?? null, val: x.val.ref ?? null, err: x.errorBars ? {{ type: x.errorBars.type, plus: x.errorBars.plus?.ref ?? null, minus: x.errorBars.minus?.ref ?? null }} : null }})), from: m.from, to: m.to, legend: m.legend }})) }};
               for (const [k, cell] of s.cells) {{ const row = Math.floor(k / 16384), col = k % 16384; if (row > 40 || col > 9) continue;
                 app.grid.selectCell(row, col); const a = String.fromCharCode(65 + col) + (row + 1);
                 const v = cell.v; out.cells[a] = {{ bar: document.querySelector('.fx-input')?.value ?? null, v: v && typeof v === "object" ? String(v) : v ?? null, fmt: app.wb.styles.get(cell.s).numFmt }}; }}
@@ -110,6 +110,10 @@ def main() -> None:
         ch_ex, ch_us = ex["charts"][0], us["charts"][0] if us["charts"] else None
         add(f"{name}: chart type", ch_us and ch_us["kind"] == ("line" if ex["charts"][0]["type"] == 4 else "column"), ch_us)
         add(f"{name}: chart series", ch_us and len(ch_us["series"]) == len(ch_ex["series"]), [ch_us, ch_ex])
+        if ch_us and ch_ex["type"] == 51:
+            # D-125: the column chart's interval as custom error bars on the forecast, plus and minus from the interval column.
+            err = ch_us["series"][1].get("err") if len(ch_us["series"]) > 1 else None
+            add(f"{name}: forecast error bars from the Konfidenzintervall column (D-125)", bool(err) and err["type"] == "cust" and err["plus"] == err["minus"] and err["plus"].endswith("$D$2:$D$37"), err)
     # Excel opens RaabeCalc's file.
     x = ExcelTarget(visible=False)
     try:
@@ -125,6 +129,14 @@ def main() -> None:
             if ws.ChartObjects().Count:
                 ch = ws.ChartObjects(1).Chart
                 add(f"{name}: Excel's chart type and series count", (ch.ChartType, ch.SeriesCollection().Count) == (ex["charts"][0]["type"], len(ex["charts"][0]["series"])), [ch.ChartType, ch.SeriesCollection().Count])
+                if ex["charts"][0]["type"] == 51 and ch.SeriesCollection().Count > 1:
+                    # D-125: Excel reads the custom error bars on the forecast (as in its own Prognoseblatt).
+                    s2 = ch.SeriesCollection(2)
+                    eb = None
+                    if s2.HasErrorBars:
+                        e = s2.ErrorBars
+                        eb = {"end": e.EndStyle, "weight": round(e.Format.Line.Weight, 2), "transp": round(e.Format.Line.Transparency, 2)}
+                    add(f"{name}: Excel finds the forecast's error bars (D-125)", eb is not None and eb["end"] == 2, eb)
             worst = 0.0
             for a, e in ex["cells"].items():
                 if not e["f"].startswith("="):

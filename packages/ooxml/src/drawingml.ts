@@ -165,6 +165,11 @@ export function readPicture(pic: Element, theme: Record<string, string>): Pictur
               } else if (x.localName === "saturation") out.saturation = pctOf(num(x, "sat")) ?? 1;
               else if (x.localName === "colorTemperature") out.temperature = num(x, "colorTemp") ?? 6500;
               else if (x.localName === "sharpenSoften") out.sharpen = pctOf(num(x, "amount")) ?? 0;
+              else if (x.localName.startsWith("artistic")) {
+                const attrs: Record<string, string> = {};
+                for (const a of Array.from(x.attributes)) attrs[a.name] = a.value;
+                out.artistic = Object.keys(attrs).length ? { name: x.localName, attrs } : { name: x.localName };
+              }
             }
           }
           break;
@@ -339,6 +344,11 @@ export function blipEffectsXml(f: PictureFormat): string {
 /** a14 picture effects (Office 2010+): sharpen, brightness/contrast, saturation, temperature. */
 export function imgEffectsXml(f: PictureFormat, layerRid?: string): string {
   const fx: string[] = [];
+  // Künstlerische Effekte first, as Office lists them before the corrections (D-126).
+  if (f.artistic && /^artistic[A-Za-z]+$/.test(f.artistic.name)) {
+    const attrs = Object.entries(f.artistic.attrs ?? {}).filter(([k]) => /^[A-Za-z]+$/.test(k)).map(([k, v]) => ` ${k}="${String(v).replace(/[&<>"]/g, (ch) => `&#${ch.charCodeAt(0)};`)}"`).join("");
+    fx.push(`<a14:imgEffect><a14:${f.artistic.name}${attrs}/></a14:imgEffect>`);
+  }
   if (f.sharpen) fx.push(`<a14:imgEffect><a14:sharpenSoften amount="${p(f.sharpen)}"/></a14:imgEffect>`);
   if (f.saturation !== undefined && f.saturation !== 1) fx.push(`<a14:imgEffect><a14:saturation sat="${p(f.saturation)}"/></a14:imgEffect>`);
   if (f.temperature !== undefined && f.temperature !== 6500) fx.push(`<a14:imgEffect><a14:colorTemperature colorTemp="${Math.round(f.temperature)}"/></a14:imgEffect>`);

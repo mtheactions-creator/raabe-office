@@ -659,7 +659,7 @@ function drawAxes(c: Ctx, area: { left: number; right: number; top: number; bott
     clipStart(c, plot);
     if (kindInfo(m.kind).family === "bubble") drawBubbles(c, plot, xPos, vPos);
     else m.series.forEach((s, si) => drawScatterSeries(c, s, si, xPos, vPos));
-    m.series.forEach((s, si) => { if (s.errorBars) s.val.cache.forEach((v, i) => { const x = xOf(s, i); if (v !== null && x !== null) drawErrorBar(c, s, si, xPos(x), v, vPos, false); }); });
+    m.series.forEach((s, si) => { if (s.errorBars) s.val.cache.forEach((v, i) => { const x = xOf(s, i); if (v !== null && x !== null) drawErrorBar(c, s, si, xPos(x), v, vPos, false, i); }); });
     m.series.forEach((s, si) => { if (s.trendline) drawTrendline(c, s, si, plot, (v) => xPos(v), vPos, (i) => xOf(s, i)); });
     clipEnd(c);
     return { plot, valueScale: vScale, xScale: xs };
@@ -715,7 +715,7 @@ function drawAxes(c: Ctx, area: { left: number; right: number; top: number; bott
     s.val.cache.forEach((v, i) => {
       if (v === null || !isFinite(v)) return;
       const x = m.kind === "column" ? catCenter(i) - step / 2 + (bw * gap) / 2 + si * bw * (1 - ov) + bw / 2 : catCenter(i);
-      drawErrorBar(c, s, si, x, v, vPos, false);
+      drawErrorBar(c, s, si, x, v, vPos, false, i);
     });
   });
   m.series.forEach((s, si) => {
@@ -726,8 +726,24 @@ function drawAxes(c: Ctx, area: { left: number; right: number; top: number; bott
 }
 
 /** A vertical Fehlerindikator at a point: the amount as the pane sets it, with or without caps. */
-function drawErrorBar(c: Ctx, s: ChartSeries, si: number, x: number, v: number, vPos: (v: number) => number, _bar: boolean): void {
+function drawErrorBar(c: Ctx, s: ChartSeries, si: number, x: number, v: number, vPos: (v: number) => number, _bar: boolean, i = 0): void {
   const e = s.errorBars!;
+  if (e.type === "cust") {
+    // Benutzerdefiniert (D-125): the amounts from cells; a point without either amount gets no bar.
+    const up = e.plus?.cache[i], down = e.minus?.cache[i];
+    if ((up === null || up === undefined) && (down === null || down === undefined)) return;
+    const ln = linePaint(e.line, { color: "#595959", width: 0.75 });
+    if (!ln) return;
+    const hi = e.dir === "minus" ? v : v + (up ?? 0), lo = e.dir === "plus" ? v : v - (down ?? 0);
+    const y1 = vPos(hi), y0 = vPos(lo), cap = 3;
+    let d = `M${f(x)} ${f(y0)}V${f(y1)}`;
+    if (!e.noEndCap) {
+      if (e.dir !== "minus") d += `M${f(x - cap)} ${f(y1)}H${f(x + cap)}`;
+      if (e.dir !== "plus") d += `M${f(x - cap)} ${f(y0)}H${f(x + cap)}`;
+    }
+    c.prims.push({ t: "path", d, ...ln, part: `errbars:${si}` });
+    return;
+  }
   const vals = s.val.cache.filter((y): y is number => y !== null && isFinite(y));
   const n = vals.length, mean = vals.reduce((a, b) => a + b, 0) / Math.max(1, n);
   const sd = n > 1 ? Math.sqrt(vals.reduce((a, y) => a + (y - mean) ** 2, 0) / (n - 1)) : 0;
