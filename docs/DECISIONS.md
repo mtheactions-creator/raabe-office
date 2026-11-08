@@ -3181,7 +3181,9 @@ Three open items of the Step 10 report, each recorded in our own invisible Excel
   height / tan(angle) (right for upward, left for downward text), the top border moves with them, the bottom one stays;
   without side borders, at 0 and +-90 degrees and for vertical text the cell stays a rectangle. Built in the grid's
   renderer (`slantOf`, fill, borders and the text's clip), which the printout shares (D-094). Measured:
-  `slant.test.ts` compares slantOf with the shift of every recorded angle (9/9) and the rectangle cases.
+  `slant.test.ts` compares slantOf with the shift of every recorded angle (9/9) and the rectangle cases;
+  `check_calc_slant.py` (release exe, DevTools capture, no input) finds the slanted borders at +45 and -45 degrees and
+  the unbordered cell still a rectangle, 5/5.
   Not built: merged cells keep the rectangle; the turned text's own place in a slanted cell is unchanged.
 
 ## D-126 Pictures keep Künstlerische Effekte through the format (2026-11-09)
