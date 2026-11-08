@@ -172,7 +172,7 @@ export function writeProject(modules: VbaModule[], projectName = "VBAProject"): 
   const utf16 = (s: string) => { const b = new Uint8Array(s.length * 2); const v = new DataView(b.buffer); for (let k = 0; k < s.length; k++) v.setUint16(k * 2, s.charCodeAt(k), true); return b; };
   const parts: Uint8Array[] = [];
   const add = (...p: Uint8Array[]) => parts.push(...p);
-  add(...rec(0x0001, u32(1)), ...rec(0x0002, u32(0x0407)), ...rec(0x0014, u32(0x0407)), ...rec(0x0003, u16(1252)));
+  add(...rec(0x0001, u32(1)), ...rec(0x0002, u32(0x0409)), ...rec(0x0014, u32(0x0409)), ...rec(0x0003, u16(1252)));
   add(...rec(0x0004, cp1252(projectName)), ...rec(0x0005, new Uint8Array()), ...rec(0x0040, new Uint8Array()));
   add(...rec(0x0006, new Uint8Array()), ...rec(0x003d, new Uint8Array()), ...rec(0x0007, u32(0)), ...rec(0x0008, u32(0)));
   { const h = new Uint8Array(6); const v = new DataView(h.buffer); v.setUint16(0, 0x0009, true); v.setUint32(2, 4, true); add(h, u32(1), u16(0)); }
