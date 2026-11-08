@@ -131,6 +131,7 @@ export function readConditional(xml: string, els: El[], ctx: ColorContext, dxfs:
       if (yes(a.percent)) rule.percent = true;
       if (yes(a.bottom)) rule.bottom = true;
       if (a.aboveAverage !== undefined) rule.above = yes(a.aboveAverage);
+      if (a.timePeriod !== undefined) rule.timePeriod = a.timePeriod;
       if (yes(a.stopIfTrue)) rule.stopIfTrue = true;
       const kids = children(xml, r.open, r.close);
       const formulas = kids.filter((k) => k.name === "formula").map((k) => fromXlsxFormula(unesc(text(xml, k))));
@@ -197,6 +198,7 @@ function ruleXml(r: CondRule, sw: StylesWriter): string {
   if (r.rank !== undefined) a += ` rank="${r.rank}"`;
   if (r.operator) a += ` operator="${esc(r.operator)}"`;
   if (r.text !== undefined) a += ` text="${esc(r.text)}"`;
+  if (r.timePeriod !== undefined) a += ` timePeriod="${esc(r.timePeriod)}"`;
   let body = (r.formulas ?? []).map((f) => `<formula>${escText(toXlsxFormula(f))}</formula>`).join("");
   const colors = r.colors ?? [];
   const rgb = (c: string) => `<color rgb="FF${c.replace("#", "").toUpperCase()}"/>`;

@@ -2,7 +2,7 @@
 // matching format wins per property ("Anhalten" stops further rules); data bars and colour
 // scales are scaled to the minimum and maximum of their range.
 
-import { cellKey, evaluate, type CondFormat, type CondRule, type Rect, type Sheet, type Value, type Workbook } from "@raabe/sheet-engine";
+import { cellKey, evaluate, shiftFormula, type CondFormat, type CondRule, type Rect, type Sheet, type Value, type Workbook } from "@raabe/sheet-engine";
 
 export interface CondLook {
   fill?: string;
@@ -49,11 +49,16 @@ export class CondEval {
     return s;
   }
 
-  private value(rule: CondRule, i: number, row: number, col: number): Value {
-    const f = rule.formulas?.[i];
-    if (f === undefined) return null;
-    if (/^-?\d+(\.\d+)?(E[+-]?\d+)?$/i.test(f)) return Number(f);
-    if (/^"(.*)"$/.test(f)) return f.slice(1, -1).replace(/""/g, '"');
+  /**
+   * A rule's formula for one cell. The file writes it for the format's top-left cell; relative
+   * references follow the cell as in a copied formula (=$B2>10 on A2:D9 tests B5 in row 5, Excel).
+   */
+  private value(rule: CondRule, i: number, row: number, col: number, anchor?: Rect): Value {
+    const raw = rule.formulas?.[i];
+    if (raw === undefined) return null;
+    if (/^-?\d+(\.\d+)?(E[+-]?\d+)?$/i.test(raw)) return Number(raw);
+    if (/^"(.*)"$/.test(raw)) return raw.slice(1, -1).replace(/""/g, '"');
+    const f = anchor && (row !== anchor.r0 || col !== anchor.c0) ? shiftFormula(raw, row - anchor.r0, col - anchor.c0) : raw;
     try {
       const v = evaluate(this.wb, this.sheetIndex, row, col, f);
       return Array.isArray(v) ? (v[0]?.[0] ?? null) : v;
@@ -114,7 +119,7 @@ export class CondEval {
         const k = ((s.nums.length - 1) * val) / 100, lo = Math.floor(k);
         t = s.nums.length ? s.nums[lo] + ((s.nums[Math.ceil(k)] ?? s.nums[lo]) - s.nums[lo]) * (k - lo) : 0;
       } else if (c.type === "formula") {
-        const x = this.value({ ...r, formulas: [c.val] }, 0, row, col);
+        const x = this.value({ ...r, formulas: [c.val] }, 0, row, col, f.ref[0]);
         t = typeof x === "number" ? x : Infinity;
       } else t = val;
       if (c.gte === false ? v > t : v >= t) index++;
@@ -129,7 +134,7 @@ export class CondEval {
     switch (r.type) {
       case "cellIs": {
         if (v === null) return false;
-        const a = this.value(r, 0, row, col), b = this.value(r, 1, row, col);
+        const a = this.value(r, 0, row, col, f.ref[0]), b = this.value(r, 1, row, col, f.ref[0]);
         const cmp = (x: Value, y: Value) => (typeof x === "number" && typeof y === "number" ? x - y : String(x).toLowerCase().localeCompare(String(y).toLowerCase(), "de"));
         switch (r.operator) {
           case "greaterThan": return cmp(v, a) > 0;
@@ -166,8 +171,11 @@ export class CondEval {
       case "dataBar":
       case "iconSet":
       case "colorScale": return num !== null;
+      // Datum...: the formula Excel writes with the rule tests the period (an empty cell is no date).
+      case "timePeriod": if (num === null) return false;
+      // falls through
       case "expression": {
-        const x = this.value(r, 0, row, col);
+        const x = this.value(r, 0, row, col, f.ref[0]);
         return x === true || (typeof x === "number" && x !== 0);
       }
     }

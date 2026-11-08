@@ -293,6 +293,8 @@ export interface CondRule {
   bottom?: boolean;
   /** aboveAverage: false = below. */
   above?: boolean;
+  /** timePeriod (Datum...): today, yesterday, last7Days …; the rule's formula does the test, as Excel writes it. */
+  timePeriod?: string;
   stopIfTrue?: boolean;
   /** The format applied (from the file's dxf): font colour, bold/italic, fill. */
   format?: { color?: string; fill?: string; bold?: boolean; italic?: boolean; underline?: boolean; strike?: boolean; border?: string };

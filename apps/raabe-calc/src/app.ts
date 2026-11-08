@@ -1016,7 +1016,7 @@ export class CalcApp {
   }
 
   /** Rows without their own height grow with larger fonts and wrapped text (Excel). */
-  private autoRowHeights(r: Rect, force = false): void {
+  autoRowHeights(r: Rect, force = false): void {
     const sheet = this.sheet;
     const rows = new Set<number>();
     for (let row = r.r0; row <= Math.min(r.r1, r.r0 + 5000); row++) {
@@ -1094,11 +1094,22 @@ export class CalcApp {
 
   private lastRepeat: { label: string; run: () => void } | null = null;
 
+  /**
+   * A format that changes how tall the text is (Schriftgrad, Textumbruch, Drehen): the rows without a
+   * height of their own fit in the same undo step, so one Strg+Z takes back both (Excel, D-142).
+   */
+  formatSelFit(label: string, change: (s: CellStyle) => void): void {
+    this.change(label, () => {
+      A.format(this.ctx, this.sheet, this.grid.selection, change);
+      for (const r of this.grid.selection) this.autoRowHeights(r);
+    });
+    this.lastRepeat = { label, run: () => this.formatSelFit(label, change) };
+  }
+
   /** Ausrichtung > Text drehen: the angle, and the rows grow for it (Excel). */
   private rotateText(deg: number): void {
     const cur = this.activeStyle().rotation;
-    this.formatSel("Ausrichtung", (s) => { s.rotation = cur === deg ? undefined : deg; });
-    this.change("Zeilenhöhe", () => this.autoRowHeights(this.grid.selection.at(-1)!));
+    this.formatSelFit("Ausrichtung", (s) => { s.rotation = cur === deg ? undefined : deg; });
   }
 
   private toggleFont(key: "bold" | "italic" | "strike"): void {
@@ -1148,8 +1159,24 @@ export class CalcApp {
   }
   private lastBorder = "bottom";
 
-  private merge(kind: "center" | "across" | "merge" | "unmerge"): void {
-    const sel = this.grid.selection;
+  private async merge(kind: "center" | "across" | "merge" | "unmerge"): Promise<void> {
+    const sel = this.grid.selection.map((r) => ({ ...r }));
+    if (kind !== "unmerge") {
+      // Excel asks before values other than the top-left one (of each row for Verbinden über) are lost.
+      const lost = sel.some((r) => {
+        for (const [k, c] of this.sheet.cells) {
+          const row = Math.floor(k / MAX_COLS), col = k % MAX_COLS;
+          if (row < r.r0 || row > r.r1 || col < r.c0 || col > r.c1 || (c.v === null && !c.f) || col === r.c0 && (row === r.r0 || kind === "across")) continue;
+          return true;
+        }
+        return false;
+      });
+      if (lost) {
+        const ok = await showDialog({ title: "RaabeCalc", body: "Beim Verbinden bleibt nur der Wert der Zelle oben links erhalten; die Werte der anderen Zellen gehen verloren.",
+          buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
+        if (!ok) return;
+      }
+    }
     this.change("Verbinden", () => {
       this.history.merges(this.sheet);
       for (const r of sel) {
@@ -1158,12 +1185,13 @@ export class CalcApp {
         const parts = kind === "across" ? Array.from({ length: r.r1 - r.r0 + 1 }, (_, i) => ({ r0: r.r0 + i, r1: r.r0 + i, c0: r.c0, c1: r.c1 })) : [r];
         for (const p of parts) {
           if (p.r0 === p.r1 && p.c0 === p.c1) continue;
-          // Excel keeps only the top-left value.
+          // Excel keeps only the top-left value, and the whole area takes the top-left cell's format.
           this.history.cells(this.sheet, p);
+          const s = this.sheet.get(p.r0, p.c0)?.s;
           for (let row = p.r0; row <= p.r1; row++) for (let col = p.c0; col <= p.c1; col++) {
             if (row === p.r0 && col === p.c0) continue;
             const c = this.sheet.get(row, col);
-            if (c) this.sheet.set(row, col, { v: null, s: c.s });
+            if (c || s !== undefined) this.sheet.set(row, col, s === undefined ? undefined : { v: null, s });
           }
           this.sheet.merges.push(p);
         }
@@ -1838,7 +1866,7 @@ export class CalcApp {
     }, undefined, () => st()[key] === value || (key === "v" && value === "bottom" && !st().v));
     align("v", "top", "align.top"); align("v", "center", "align.middle"); align("v", "bottom", "align.bottom");
     align("h", "left", "align.left"); align("h", "center", "align.center"); align("h", "right", "align.right");
-    run("align.wrap", () => { const on = !st().wrap; this.formatSel("Textumbruch", (s) => { s.wrap = on || undefined; }); this.change("Zeilenhöhe", () => this.autoRowHeights(this.grid.selection.at(-1)!)); }, undefined, () => !!st().wrap);
+    run("align.wrap", () => { const on = !st().wrap; this.formatSelFit("Textumbruch", (s) => { s.wrap = on || undefined; }); }, undefined, () => !!st().wrap);
     run("align.indentMore", () => this.formatSel("Einzug", (s) => { s.indent = Math.min(250, (s.indent ?? 0) + 1); if (!s.h || s.h === "general" || s.h === "center") s.h = "left"; }));
     run("align.indentLess", () => this.formatSel("Einzug", (s) => { s.indent = Math.max(0, (s.indent ?? 0) - 1) || undefined; }));
     run("align.mergeCenter", () => this.merge(this.hasMergeInSelection() ? "unmerge" : "center"), undefined, () => this.hasMergeInSelection());
@@ -1923,6 +1951,11 @@ export class CalcApp {
     run("cells.lock", () => { const on = st().locked === false; this.formatSel("Zelle sperren", (s) => { s.locked = on ? undefined : false; }); }, undefined, () => st().locked !== false);
     run("cells.insertMenu", () => void this.commands.run("cells.insert"));
     run("cells.deleteMenu", () => void this.commands.run("cells.delete"));
+    run("cells.insertButton", () => void this.commands.run("cells.insert"), () => this.commands.isEnabled("cells.insert"));
+    run("cells.deleteButton", () => void this.commands.run("cells.delete"), () => this.commands.isEnabled("cells.delete"));
+    run("edit.autosumButton", () => void this.commands.run("edit.autosum"), () => this.commands.isEnabled("edit.autosum"));
+    // Menus: open only (a dropdown is enabled when one of its entries is).
+    for (const id of ["edit.fillMenu", "edit.clearMenu", "data.sortMenu", "edit.findMenu"]) run(id, () => {});
 
     run("edit.autosum", () => this.autoSum("SUMME"));
     run("edit.autoAverage", () => this.autoSum("MITTELWERT"));
@@ -2418,8 +2451,7 @@ export class CalcApp {
     const sizes = [8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72];
     const cur = this.activeStyle().font.size;
     const next = d > 0 ? sizes.find((s) => s > cur) ?? Math.min(409, cur + 10) : [...sizes].reverse().find((s) => s < cur) ?? Math.max(1, cur - 1);
-    this.formatSel("Schriftgrad", (s) => { s.font.size = next; });
-    this.change("Zeilenhöhe", () => this.autoRowHeights(this.grid.selection.at(-1)!));
+    this.formatSelFit("Schriftgrad", (s) => { s.font.size = next; });
   }
 
   private toggleView(key: "showGrid" | "showHeaders"): void {
@@ -2647,8 +2679,7 @@ export class CalcApp {
       setSize: (v) => {
         const n = Number(v.replace(",", "."));
         if (!(n >= 1 && n <= 409)) { void messageBox("RaabeCalc", "Die Zahl muss zwischen 1 und 409 liegen."); return; }
-        this.formatSel("Schriftgrad", (s) => { s.font.size = n; });
-        this.change("Zeilenhöhe", () => this.autoRowHeights(this.grid.selection.at(-1)!));
+        this.formatSelFit("Schriftgrad", (s) => { s.font.size = n; });
       },
       fontColor: () => this.designs.pick(this.lastFontColor)?.hex ?? this.lastFontColor,
       setFontColor: (hex) => this.setFontColor(hex),

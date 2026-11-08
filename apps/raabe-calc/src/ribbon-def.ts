@@ -71,7 +71,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
   const fontColor: Control = { type: "color", cmd: "font.color", key: "AC", palette: "font", current: ctx.fontColor, pick: ctx.setFontColor, preview: ctx.preview.color, theme: ctx.paletteTheme };
   const fill: Control = { type: "color", cmd: "font.fill", key: "H1", palette: "font", current: ctx.fillColor, pick: ctx.setFillColor, preview: ctx.preview.fill, theme: ctx.paletteTheme };
   const paste = split("edit.paste", "V", "large", m.paste);
-  const autosum = split("edit.autosum", "KA", "small", m.autosum, "AutoSumme");
+  const autosum = split("edit.autosumButton", "KA", "small", m.autosum, "AutoSumme");
 
   // The shrink orders follow Excel's own at window widths from 2000 to 800 px (capture_excel_ui.py).
   return [
@@ -121,17 +121,17 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
         },
         {
           id: "cells", label: "Zellen", key: "ZC", icon: "cells-insert",
-          controls: [stack(split("cells.insert", "IE", "medium", m.insertCells, "Einfügen"), split("cells.delete", "EL", "medium", m.deleteCells, "Löschen"), dd("cells.format", "FF", "medium", m.format))],
+          controls: [stack(split("cells.insertButton", "IE", "medium", m.insertCells, "Einfügen"), split("cells.deleteButton", "EL", "medium", m.deleteCells, "Löschen"), dd("cells.format", "FF", "medium", m.format))],
         },
         {
           id: "editing", label: "Bearbeiten", key: "ZE", icon: "autosum",
           controls: [{
             type: "rows", rows: [
               [autosum],
-              [dd("edit.fillDown", "Ü", "small", m.fill, "Ausfüllen")],
-              [dd("edit.clearAll", "LÖ", "small", m.clear, "Löschen")],
+              [dd("edit.fillMenu", "Ü", "small", m.fill, "Ausfüllen")],
+              [dd("edit.clearMenu", "LÖ", "small", m.clear, "Löschen")],
             ],
-          }, stack(dd("data.sort", "OS", "large", m.sortFilter, "Sortieren und Filtern")), stack(dd("edit.find", "UU", "large", m.find, "Suchen und Auswählen"))],
+          }, stack(dd("data.sortMenu", "OS", "large", m.sortFilter, "Sortieren und Filtern")), stack(dd("edit.findMenu", "UU", "large", m.find, "Suchen und Auswählen"))],
         },
       ],
     },
