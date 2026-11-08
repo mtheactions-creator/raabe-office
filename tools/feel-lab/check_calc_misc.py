@@ -103,7 +103,7 @@ def formulabar(c: CalcSide, inp: Cdp, ex: dict) -> list[dict]:
     check("dragged 160 px right: 160 px wider", abs(w_mid - (w_min + 160)) <= 2, [w_min, w_mid])
     r = inp.rect("document.querySelector('.fbar-sep')")
     cx = r[0] + r[2] / 2
-    inp.drag(cx, cy, cx + 3000, cy)
+    inp.drag(cx, cy, c.js("document.querySelector('.fbar').getBoundingClientRect().right") - 2, cy)
     w_max = c.js("document.querySelector('.namebox-wrap').getBoundingClientRect().width")
     room = c.js("document.querySelector('.fbar').getBoundingClientRect().right - document.querySelector('.namebox-wrap').getBoundingClientRect().right")
     want_room = (2000 - ex["namebox"][0] - ex["nameboxWidth"]["max"]) / scale  # what Excel leaves right of it in its 2000 px window
@@ -151,9 +151,12 @@ def slicers(c: CalcSide, inp: Cdp, ex: dict) -> list[dict]:
     def btn(i: int) -> str:
         return f"[...document.querySelectorAll('.slicer-layer .sl-btn')].find(b => b.title === {json.dumps(items[i])})"
 
+    # One slicer for all cases, its filter cleared between them, as the Excel probe did (Umschalt+click's start, the item
+    # clicked last, carries over from one case to the next there too).
+    c.js(f"__calc.reset({json.dumps(data)}, 'D2', 1)")
+    shown = c.js(SLICER_SETUP)
     for name, case in ex.get("cases", {}).items():
-        c.js(f"__calc.reset({json.dumps(data)}, 'D2', 1)")
-        shown = c.js(SLICER_SETUP)
+        c.js("(() => { const sl = __calc.app.slicers; sl.select(sl.cacheOf(sl.byName('Fach')), null); __calc.grid.selectCell(1, 3); })()")
         time.sleep(0.3)
         trail = []
         for st in case["steps"]:
