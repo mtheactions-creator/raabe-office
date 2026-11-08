@@ -15,7 +15,7 @@ import { PackageWriter, Rels, relsPath, resolveTarget } from "../package";
 import { RT, isRel, nameKey, readPackage, sheetNamesSnap, sheetSnap, type BookRaw, type SheetRaw } from "./read";
 import { canon, StylesWriter } from "./styles";
 import { commentsXml, vmlBlocks, vmlXml, type NoteIn } from "./notes";
-import { colorXml } from "./colors";
+import { colorXml, patchTheme, readTheme, themeNames } from "./colors";
 import { writeCharts } from "./drawing";
 import { newPackage } from "./new";
 import { numText, widthFromBase, widthToFile } from "./units";
@@ -65,9 +65,22 @@ export function writePackage(wb: Workbook, options: XlsxWriteOptions = {}): Reco
   const raw = (wb.raw as BookRaw | undefined) ?? (readPackage(newPackage(false)).raw as BookRaw);
   const pw = new PackageWriter(raw.files);
   const before = reachable(raw.files);
-  const sw = new StylesWriter(raw.styles, wb.styles, raw.theme);
+  const sw = new StylesWriter(raw.styles, wb.styles, wb.themeFonts ?? raw.theme);
   const sst = new SharedStrings();
   const wbRels = pw.relsOf(raw.wbPath);
+  // Seitenlayout > Designs / Farben / Schriftarten: the theme part follows the workbook's design.
+  const themeRel = wbRels.list.find((r) => isRel(r.type, RT.theme));
+  if (themeRel) {
+    const path = resolveTarget(raw.wbPath, themeRel.target);
+    const xml = raw.files[path] ? strFromU8(raw.files[path]) : "";
+    if (xml) {
+      const cur = readTheme(xml), names = themeNames(xml);
+      const colors = Object.fromEntries(Object.entries(wb.theme).map(([k, v]) => [k, v.replace("#", "").toUpperCase()]));
+      const changed = Object.entries(colors).some(([k, v]) => cur.colors[k] !== v) || cur.major !== wb.themeFonts.major || cur.minor !== wb.themeFonts.minor
+        || names.theme !== wb.themeNames.theme || names.colors !== wb.themeNames.colors || names.fonts !== wb.themeNames.fonts;
+      if (changed) pw.setPart(path, patchTheme(xml, colors, wb.themeFonts, wb.themeNames), "application/vnd.openxmlformats-officedocument.theme+xml");
+    }
+  }
   const used = new Set<string>();
   const entries: { name: string; sheetId: number; state?: string; rid: string; attrs: Record<string, string> }[] = [];
   let maxId = Math.max(0, ...wb.sheets.map((s) => (s.raw as SheetRaw | undefined)?.sheetId ?? 0), ...raw.others.map((o) => Number(/sheetId="(\d+)"/.exec(o.xml)?.[1] ?? 0)));

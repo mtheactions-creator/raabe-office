@@ -34,6 +34,33 @@ export interface Theme {
   lines: number[];
 }
 
+/** The names of a theme part's design, colour set and font set. */
+export function themeNames(xml: string | null): { theme: string; colors: string; fonts: string } {
+  const name = (re: RegExp) => (xml ? re.exec(xml)?.[1] : undefined) ?? "Office";
+  return { theme: name(/<a:theme\b[^>]*\bname="([^"]*)"/), colors: name(/<a:clrScheme\b[^>]*\bname="([^"]*)"/), fonts: name(/<a:fontScheme\b[^>]*\bname="([^"]*)"/) };
+}
+
+/**
+ * The theme part with other colours, fonts and names (Seitenlayout > Designs, Farben, Schriftarten);
+ * everything else (effects, the minor scripts' fonts) stays as it was.
+ */
+export function patchTheme(xml: string, colors: Record<string, string>, fonts: { major: string; minor: string }, names: { theme: string; colors: string; fonts: string }): string {
+  let out = xml.replace(/(<a:clrScheme\b[^>]*\bname=")[^"]*/, `$1${escAttr(names.colors)}`)
+    .replace(/(<a:fontScheme\b[^>]*\bname=")[^"]*/, `$1${escAttr(names.fonts)}`)
+    .replace(/(<a:theme\b[^>]*\bname=")[^"]*/, `$1${escAttr(names.theme)}`);
+  for (const [k, v] of Object.entries(colors)) {
+    const hex = v.replace("#", "").toUpperCase();
+    out = out.replace(new RegExp(`<a:${k}>[\\s\\S]*?</a:${k}>`), `<a:${k}><a:srgbClr val="${hex}"/></a:${k}>`);
+  }
+  for (const kind of ["majorFont", "minorFont"] as const) {
+    const face = kind === "majorFont" ? fonts.major : fonts.minor;
+    out = out.replace(new RegExp(`(<a:${kind}>\\s*<a:latin\\b[^>]*\\btypeface=")[^"]*`), `$1${escAttr(face)}`);
+  }
+  return out;
+}
+
+const escAttr = (s: string) => s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+
 /** Colours and fonts of a theme part (xl/theme/theme1.xml). */
 export function readTheme(xml: string | null): Theme {
   const out: Theme = { colors: { ...OFFICE_2013_THEME }, major: "Calibri Light", minor: "Calibri", lines: [0.5, 1, 1.5] };
@@ -99,7 +126,8 @@ export function tinted(hex: string, tint: number): string {
   if (!tint) return hex.toUpperCase();
   const [r, g, b] = [0, 2, 4].map((i) => parseInt(hex.slice(i, i + 2), 16));
   const [h, l0, s] = rgbToHls(r, g, b);
-  const l = Math.round(tint < 0 ? l0 * (1 + tint) : l0 * (1 - tint) + HLS * tint);
+  // Each term is cut to whole HLS steps (recorded: this matches all 750 cells of probe_excel_tints.py).
+  const l = tint < 0 ? Math.floor(l0 * (1 + tint)) : Math.floor(l0 * (1 - tint)) + (HLS - Math.floor(HLS * (1 - tint)));
   return hlsToRgb(h, Math.max(0, Math.min(HLS, l)), s).map((x) => Math.max(0, Math.min(255, x)).toString(16).padStart(2, "0")).join("").toUpperCase();
 }
 

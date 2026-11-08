@@ -45,6 +45,7 @@ import { shapesFeature } from "./shapes";
 import { borderDrawFeature } from "./borderdraw";
 import { whatIfFeature } from "./whatif";
 import { tablesFeature } from "./tables";
+import { designsFeature } from "./designs";
 import { pivotsFeature } from "./pivots";
 import { commentsFeature } from "./comments";
 import { iconRule } from "./dialogs";
@@ -106,6 +107,7 @@ export class CalcApp {
   readonly borderDraw = borderDrawFeature(this);
   readonly whatIf = whatIfFeature(this);
   readonly tables = tablesFeature(this);
+  readonly designs = designsFeature(this);
   readonly pivots = pivotsFeature(this);
   private comments = commentsFeature(this, () => this.settings.userName);
   private errorCheck = errorCheckFeature(this, () => void this.evaluator.open());
@@ -600,6 +602,19 @@ export class CalcApp {
   /** Changes to the active workbook so far (features cache what they read from the cells by it). */
   get version(): number { return this.active.version; }
 
+  /** Schriftfarbe from the palette: a design colour keeps its reference (it follows Seitenlayout > Designs). */
+  private setFontColor(value: string): void {
+    this.lastFontColor = value;
+    const p = this.designs.pick(value);
+    this.formatSel("Schriftfarbe", (s) => { s.font.color = p?.hex; if (p?.theme) s.font.theme = p.theme; else delete s.font.theme; });
+  }
+
+  private setFillColor(value: string): void {
+    this.lastFill = value;
+    const p = this.designs.pick(value);
+    this.formatSel("Füllfarbe", (s) => { s.fill = p?.hex; s.fillXml = undefined; if (p?.theme) s.fillTheme = p.theme; else delete s.fillTheme; });
+  }
+
   /** Zahl als Text gespeichert > In eine Zahl umwandeln for one cell. */
   toNumber(row: number, col: number): void {
     const c = this.sheet.get(row, col);
@@ -628,7 +643,7 @@ export class CalcApp {
     // Only what depends on the changed cells is calculated again; structural changes (rows,
     // columns, sheets, names) recalculate the whole workbook.
     const loopsBefore = this.loopKeys(doc);
-    if (!change || change.structural) doc.calc.recalc();
+    if (!change || change.structural) { this.designs?.syncDefault(); doc.calc.recalc(); }
     else for (const [sheet, cells] of change.cells) {
       const i = doc.wb.sheets.indexOf(sheet);
       if (i >= 0) doc.calc.changed(i, cells);
@@ -1754,8 +1769,8 @@ export class CalcApp {
     run("font.underlineDouble", () => { const on = st().font.underline !== "double"; this.formatSel("Unterstreichen", (s) => { s.font.underline = on ? "double" : undefined; }); }, undefined, () => st().font.underline === "double");
     run("font.grow", () => this.stepFont(1));
     run("font.shrink", () => this.stepFont(-1));
-    run("font.color", () => this.formatSel("Schriftfarbe", (s) => { s.font.color = this.lastFontColor || undefined; }));
-    run("font.fill", () => this.formatSel("Füllfarbe", (s) => { s.fill = this.lastFill || undefined; s.fillXml = undefined; }));
+    run("font.color", () => this.setFontColor(this.lastFontColor));
+    run("font.fill", () => this.setFillColor(this.lastFill));
     run("font.dialog", () => void this.dlg.formatCells("Schrift"));
     run("border.menu", () => this.setBorders(this.lastBorder));
     const bd = this.borderDraw;
@@ -2500,10 +2515,11 @@ export class CalcApp {
         this.formatSel("Schriftgrad", (s) => { s.font.size = n; });
         this.change("Zeilenhöhe", () => this.autoRowHeights(this.grid.selection.at(-1)!));
       },
-      fontColor: () => this.lastFontColor,
-      setFontColor: (hex) => { this.lastFontColor = hex; this.formatSel("Schriftfarbe", (s) => { s.font.color = hex || undefined; }); },
-      fillColor: () => this.lastFill,
-      setFillColor: (hex) => { this.lastFill = hex; this.formatSel("Füllfarbe", (s) => { s.fill = hex || undefined; s.fillXml = undefined; }); },
+      fontColor: () => this.designs.pick(this.lastFontColor)?.hex ?? this.lastFontColor,
+      setFontColor: (hex) => this.setFontColor(hex),
+      fillColor: () => this.designs.pick(this.lastFill)?.hex ?? this.lastFill,
+      setFillColor: (hex) => this.setFillColor(hex),
+      paletteTheme: () => this.designs.paletteTheme(),
       numberFormat: () => {
         const code = this.activeStyle().numFmt;
         return RIBBON_FORMATS.find((f) => f.code === code)?.label ?? (code === "General" ? "Standard" : code === "0%" ? "Prozent" : /[dmy]/i.test(code) && !/h/.test(code) ? "Datum" : /0\.0*E/.test(code) ? "Wissenschaft" : "Benutzerdefiniert");
@@ -2618,7 +2634,8 @@ export class CalcApp {
         rotate: this.shapes.rotateMenu,
         group: this.shapes.grouping.menu,
       },
-      panels: { cellStyles: (close) => this.dlg.cellStylesPanel(close), tableStyles: (close) => this.dlg.tableStylesPanel(close), shapes: (close) => this.shapes.gallery(close) },
+      panels: { cellStyles: (close) => this.dlg.cellStylesPanel(close), tableStyles: (close) => this.dlg.tableStylesPanel(close), shapes: (close) => this.shapes.gallery(close),
+        designs: (close) => this.designs.designsPanel(close), designColors: (close) => this.designs.colorsPanel(close), designFonts: (close) => this.designs.fontsPanel(close) },
       scale: { value: () => `${this.print.scale()} %`, commit: (v) => this.print.setScale(Number(v.replace(/[^\d]/g, "")) || 100), step: (d) => this.print.setScale(this.print.scale() + d * 5) },
     };
   }

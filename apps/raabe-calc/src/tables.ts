@@ -45,7 +45,8 @@ function tinted(hex: string, tint: number): string {
   if (!tint) return "#" + v.toUpperCase();
   const [r, g, b] = [0, 2, 4].map((i) => parseInt(v.slice(i, i + 2), 16));
   const [hh, l0, s] = rgbToHls(r, g, b);
-  const l = Math.round(tint < 0 ? l0 * (1 + tint) : l0 * (1 - tint) + HLS * tint);
+  // Each term cut to whole HLS steps, as Excel does (the .xlsx reader's tinted, probe_excel_tints.py).
+  const l = tint < 0 ? Math.floor(l0 * (1 + tint)) : Math.floor(l0 * (1 - tint)) + (HLS - Math.floor(HLS * (1 - tint)));
   return "#" + hlsToRgb(hh, Math.max(0, Math.min(HLS, l)), s).map((x) => Math.max(0, Math.min(255, x)).toString(16).padStart(2, "0")).join("").toUpperCase();
 }
 

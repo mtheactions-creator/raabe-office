@@ -3,7 +3,7 @@
 // back as the same xf, and a changed one reuses the file's font, fill, border and colour
 // elements wherever they still match (theme colours stay theme colours).
 
-import { BUILTIN_FORMATS, StyleTable, builtinId, type CondRule, type BorderSide, type Borders, type CellStyle, type Font, type HAlign, type VAlign } from "@raabe/sheet-engine";
+import { BUILTIN_FORMATS, StyleTable, builtinId, type CondRule, type BorderSide, type Borders, type CellStyle, type Font, type HAlign, type ThemeRef, type VAlign } from "@raabe/sheet-engine";
 import { colorXml, readIndexed, resolveColor, type ColorContext } from "./colors";
 export type { ColorContext };
 import { attrs, child, children, esc, outer, parseAttrs, place, setAttrs, split, joinSplit, type El, type Split, XML_HEAD } from "./xml";
@@ -17,7 +17,18 @@ const WITH_CODE = new Set([5, 6, 7, 8, 41, 42, 43, 44]);
 /** CT_Stylesheet's order of children. */
 const STYLESHEET_ORDER = ["numFmts", "fonts", "fills", "borders", "cellStyleXfs", "cellXfs", "cellStyles", "dxfs", "tableStyles", "colors", "extLst"];
 
-interface Fill { fill?: string; fillXml?: string }
+interface Fill { fill?: string; fillXml?: string; fillTheme?: ThemeRef }
+
+/** A colour element's theme and tint as the model keeps them. */
+function themeRef(a: Record<string, string>): ThemeRef {
+  return a.tint !== undefined && Number(a.tint) !== 0 ? { t: Number(a.theme), tint: Number(a.tint) } : { t: Number(a.theme) };
+}
+
+/** A colour element: the design colour when the style has one, else the RGB value. */
+function themedXml(tag: string, hex: string | undefined, ref: ThemeRef | undefined): string {
+  if (hex && ref) return `<${tag} theme="${ref.t}"${ref.tint ? ` tint="${ref.tint}"` : ""}/>`;
+  return colorXml(tag, hex);
+}
 
 /** What the writer needs of the file's styles.xml. */
 export interface StylesRaw {
@@ -49,7 +60,7 @@ function readFont(xml: string, el: El, ctx: ColorContext): Font {
       case "strike": if (on(a)) f.strike = true; break;
       case "u": if ((a.val ?? "single") !== "none") f.underline = (a.val ?? "single") as Font["underline"]; break;
       case "vertAlign": if (a.val === "superscript" || a.val === "subscript") f.vertAlign = a.val; break;
-      case "color": { const hex = resolveColor(a, ctx); if (hex) f.color = hex; break; }
+      case "color": { const hex = resolveColor(a, ctx); if (hex) f.color = hex; if (hex && a.theme !== undefined) f.theme = themeRef(a); break; }
       case "scheme": if (a.val && a.val !== "none") f.scheme = a.val; break;
     }
   }
@@ -63,7 +74,10 @@ function readFill(xml: string, el: El, ctx: ColorContext): Fill {
     if (type === "none") return {};
     if (type === "solid") {
       const fg = child(xml, pf, "fgColor");
-      return { fill: (fg && resolveColor(attrs(xml, fg), ctx)) ?? "#000000" };
+      const a = fg ? attrs(xml, fg) : {};
+      const out: Fill = { fill: (fg && resolveColor(a, ctx)) ?? "#000000" };
+      if (fg && a.theme !== undefined) out.fillTheme = themeRef(a);
+      return out;
     }
   }
   return { fillXml: outer(xml, el) };
@@ -197,6 +211,7 @@ function xfStyle(xml: string, x: El | undefined, index: number, p: Parts): CellS
   };
   const fill = p.fills[n("fillId")] ?? {};
   if (fill.fill) s.fill = fill.fill;
+  if (fill.fillTheme) s.fillTheme = fill.fillTheme;
   if (fill.fillXml) s.fillXml = fill.fillXml;
   if (x) {
     const al = child(xml, x, "alignment");
@@ -341,7 +356,7 @@ export class StylesWriter {
     let color = "";
     if (f.color) {
       const old = /<color\b[^>]*\/>/.exec(baseXml)?.[0];
-      color = old && base?.color === f.color ? old : colorXml("color", f.color);
+      color = old && base?.color === f.color && JSON.stringify(base?.theme ?? null) === JSON.stringify(f.theme ?? null) ? old : themedXml("color", f.color, f.theme);
     }
     const sameName = base && base.name === f.name;
     const family = sameName ? /<family\b[^>]*\/>/.exec(baseXml)?.[0] ?? "" : FAMILY[f.name.toLowerCase()] ? `<family val="${FAMILY[f.name.toLowerCase()]}"/>` : "";
@@ -355,12 +370,12 @@ export class StylesWriter {
   }
 
   private fill(s: CellStyle, baseId: number): number {
-    const want: Fill = s.fillXml ? { fillXml: s.fillXml } : s.fill ? { fill: s.fill } : {};
+    const want: Fill = s.fillXml ? { fillXml: s.fillXml } : s.fill ? (s.fillTheme ? { fill: s.fill, fillTheme: s.fillTheme } : { fill: s.fill }) : {};
     if (canon(this.fillModels[baseId] ?? {}) === canon(want)) return baseId;
     if (!want.fill && !want.fillXml) return 0;
     const same = this.fillModels.findIndex((m) => canon(m) === canon(want));
     if (same >= 0) return same;
-    const xml = want.fillXml ?? `<fill><patternFill patternType="solid">${colorXml("fgColor", want.fill)}<bgColor indexed="64"/></patternFill></fill>`;
+    const xml = want.fillXml ?? `<fill><patternFill patternType="solid">${themedXml("fgColor", want.fill, want.fillTheme)}<bgColor indexed="64"/></patternFill></fill>`;
     return this.add(this.fills, this.fillModels, xml, want);
   }
 

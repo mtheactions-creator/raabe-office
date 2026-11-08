@@ -33,7 +33,9 @@ export interface RibbonContext {
     /** Anordnen: built when opened (what is enabled depends on the selected objects). */
     align(): MenuEntry[]; rotate: MenuEntry[]; group: MenuEntry[];
   };
-  panels: { cellStyles: Popup; tableStyles: Popup; shapes: Popup };
+  panels: { cellStyles: Popup; tableStyles: Popup; shapes: Popup; designs: Popup; designColors: Popup; designFonts: Popup };
+  /** The workbook's design colours for the colour buttons' palettes. */
+  paletteTheme(): { colors: Record<string, string> };
   scale: { value(): string; commit(v: string): void; step(d: 1 | -1): void };
 }
 
@@ -60,8 +62,8 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
     commit: ctx.setSize, preview: ctx.preview.size,
   };
   const numberFormat: Control = { type: "combo", cmd: "number.format", width: 91, key: "AZ", value: ctx.numberFormat, options: ctx.numberFormats, commit: ctx.setNumberFormat };
-  const fontColor: Control = { type: "color", cmd: "font.color", key: "AC", palette: "font", current: ctx.fontColor, pick: ctx.setFontColor, preview: ctx.preview.color };
-  const fill: Control = { type: "color", cmd: "font.fill", key: "H1", palette: "font", current: ctx.fillColor, pick: ctx.setFillColor, preview: ctx.preview.fill };
+  const fontColor: Control = { type: "color", cmd: "font.color", key: "AC", palette: "font", current: ctx.fontColor, pick: ctx.setFontColor, preview: ctx.preview.color, theme: ctx.paletteTheme };
+  const fill: Control = { type: "color", cmd: "font.fill", key: "H1", palette: "font", current: ctx.fillColor, pick: ctx.setFillColor, preview: ctx.preview.fill, theme: ctx.paletteTheme };
   const paste = split("edit.paste", "V", "large", m.paste);
   const autosum = split("edit.autosum", "KA", "small", m.autosum, "AutoSumme");
 
@@ -173,7 +175,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
       groups: [
         {
           id: "themes", label: "Designs", key: "ZT", icon: "themes",
-          controls: [b("layout.themes", "N", "large"), stack(b("layout.colors", "F"), b("layout.fonts", "6"), b("layout.effects", "E"))],
+          controls: [panel("layout.themes", "N", "large", ctx.panels.designs), stack(panel("layout.colors", "F", "small", ctx.panels.designColors), panel("layout.fonts", "6", "small", ctx.panels.designFonts), b("layout.effects", "E"))],
         },
         {
           id: "pageSetup", label: "Seite einrichten", key: "ZS", icon: "margins",

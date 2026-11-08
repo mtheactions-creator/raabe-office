@@ -2339,3 +2339,19 @@ INFO("Verzeichnis") and ZELLE("Dateiname") give the document's folder and path o
 of the results files). =HYPERLINK(...) takes the Link look on entry (blue, underlined, as Excel's "Link"
 style) and a click on its text follows the first argument, as for links made with Strg+K.
 
+## D-083 RaabeCalc: Seitenlayout > Designs, Farben, Schriftarten (2026-11-08)
+
+- **Design colours are kept as references:** a cell's font colour and fill keep the file's theme index and tint
+  besides the RGB value (`Font.theme`, `CellStyle.fillTheme`), read from and written to styles.xml as Excel does
+  (`<color theme="4" tint="0.39997558519241921"/>`). Picks from the palette's Designfarben set them with Excel's
+  tints (a share of 32767: heller 80 % is 26213/32767, recorded in Excel's files); standard and own colours stay
+  RGB. A reference counts only while the style still shows its colour: a colour set some other way drops it.
+- **Designs, Farben, Schriftarten:** the galleries hold Office's 31 designs (as RaabeWrite recorded them from
+  Word's Entwurf tab), its 24 colour sets and 24 font sets (as RaabePresent recorded them), shared in
+  `packages/shell/src/office-designs.gen.ts` (`gen_office_designs.py`); tiles and rows are drawn by us. Applying
+  one changes the workbook's theme colours or fonts, every style with design colours or theme fonts (the
+  Standard style too: cells, columns and rows follow) and the table styles, in one undo step; the theme part is
+  rewritten only when the design changed (colours, fonts, names), everything else in it stays.
+- **Not yet:** Effekte (the theme's effect styles: shapes would need them drawn), Farben/Schriftarten anpassen,
+  Aktuelles Design speichern and Nach Designs suchen (.thmx files).
+

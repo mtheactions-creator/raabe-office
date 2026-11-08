@@ -9,7 +9,7 @@ import {
   type Cell, type ColInfo, type DefinedName, type ErrorCode, type Rect, type RowInfo, type View,
 } from "@raabe/sheet-engine";
 import { Rels, relsPath, resolveTarget } from "../package";
-import { readTheme, resolveColor, type ColorContext } from "./colors";
+import { readTheme, resolveColor, themeNames, type ColorContext } from "./colors";
 import { shiftFormula } from "./shift";
 import { readStyles, canon, type StylesRaw } from "./styles";
 import { MDW, widthFromBase, widthFromFile } from "./units";
@@ -119,6 +119,8 @@ export function readPackage(files: Record<string, Uint8Array>): Workbook {
   const theme = readTheme(str(partOf(RT.theme)));
   wb.theme = Object.fromEntries(Object.entries(theme.colors).map(([k, v]) => [k, "#" + v]));
   wb.themeLines = theme.lines;
+  wb.themeFonts = { major: theme.major, minor: theme.minor };
+  wb.themeNames = themeNames(str(partOf(RT.theme)));
   const { table, raw: stylesRaw } = readStyles(str(partOf(RT.styles)) || NO_STYLES, theme.colors);
   wb.styles = table;
   const ctx = stylesRaw.ctx;
