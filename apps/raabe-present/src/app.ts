@@ -1126,6 +1126,9 @@ export class PresentApp implements EditorHost, PanelHost {
   private lastTextOutline = "none";
   textOutlineColor(): string { return this.lastTextOutline === "none" ? "none" : `#${this.lastTextOutline}`; }
   setTextOutline(o: { color?: string | null; width?: number; dash?: string }): void {
+    // The button's colour bar says "none" while no colour was picked yet: Keine Kontur, never a colour named none
+    // (by hand, D-140: PowerPoint refused the file).
+    if (typeof o.color === "string" && o.color.replace("#", "").toLowerCase() === "none") o = { ...o, color: null };
     if (o.color) this.lastTextOutline = o.color.replace("#", "").toUpperCase();
     if (o.color === null) this.lastTextOutline = "none";
     const color = o.color ? o.color.replace("#", "").toUpperCase() : o.color;
