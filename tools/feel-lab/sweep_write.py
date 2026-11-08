@@ -921,6 +921,11 @@ def classify(rows: list[dict]) -> dict:
     for r in rows:
         st = r["status"]
         key = f"{r['tab']} > {r['path']}"
+        # An entry whose only effect is that its menu closed did nothing a student sees.
+        eff = set(r.get("effects") or [])
+        if st == "ok" and "popups" in eff and eff <= {"popups", "popSig"} and r.get("kind") not in ("popup", "submenu") and " > " in r["path"] \
+                and not r["path"].endswith(" > Esc"):
+            st = "noeffect"
         if st == "noeffect" and not (r.get("setup") in ("notes", "revisions") and re.search(r"Fußnote|Endnote|Kommentar|Änderung", key)) \
                 and any(re.search(p, key) for p in ALREADY):
             st = "ok"
