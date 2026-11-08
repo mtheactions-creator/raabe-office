@@ -482,11 +482,18 @@ export function draw3DPie(c: Ctx, area: Area): Pick<Scene, "plot"> {
     for (const off of [0, Math.PI * 2]) {
       const b0 = Math.max(sl.a0, Math.PI / 2 + off), b1 = Math.min(sl.a1, (Math.PI * 3) / 2 + off);
       if (b1 <= b0) continue;
-      const mid = (b0 + b1) / 2 - off;
-      // Recorded: about x 0.75 at the left end of the front, x 0.45 at the right end.
-      const light = 0.6 + 0.15 * Math.sin(mid - Math.PI);
-      const d = `M${pt(b0)}${arc(b0, b1, 0)}L${pt(b1, -thick)}${arc(b1, b0, -thick)}Z`;
-      c.prims.push({ t: "path", d, fill: lum(colorOf(sl.i), light, 0), stroke: "#FFFFFF", sw: 0.4, part: `series:0:${sl.i}` });
+      // Recorded: about x 0.78 at the left end of the front, x 0.42 at the right end, in between gradually: the rim is
+      // drawn in narrow pieces, each with its own light; the white edge only around the slice's whole rim.
+      const steps = Math.max(1, Math.ceil((b1 - b0) / 0.06));
+      for (let k = 0; k < steps; k++) {
+        const e0 = b0 + ((b1 - b0) * k) / steps, e1 = b0 + ((b1 - b0) * (k + 1)) / steps;
+        const light = 0.6 + 0.18 * Math.sin((e0 + e1) / 2 - off - Math.PI);
+        const col = lum(colorOf(sl.i), light, 0);
+        const d = `M${pt(e0)}${arc(e0, e1, 0)}L${pt(e1, -thick)}${arc(e1, e0, -thick)}Z`;
+        c.prims.push({ t: "path", d, fill: col, stroke: col, sw: 0.3, part: `series:0:${sl.i}` });
+      }
+      const edge = `M${pt(b0)}L${pt(b0, -thick)}M${pt(b1)}L${pt(b1, -thick)}${`M${pt(b0, -thick)}`}${arc(b0, b1, -thick)}`;
+      c.prims.push({ t: "path", d: edge, stroke: "#FFFFFF", sw: 0.4, part: `series:0:${sl.i}` });
     }
   }
   for (const sl of slices) {
