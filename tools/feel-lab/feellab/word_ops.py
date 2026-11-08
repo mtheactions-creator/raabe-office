@@ -34,7 +34,7 @@ def _case(v):
 
 def _style(v):
     def f(app, d, s):
-        s.Style = d.Styles(v)
+        s.Range.Style = v  # a built-in constant or the localized name
     return f
 
 
@@ -150,7 +150,7 @@ OPS = {
     S + "Schriftart / Texteffekte und Typografie [dropdown] > Ligaturen > Alle Ligaturen": _font("Ligatures", 15),
     S + "Schriftart / Texteffekte und Typografie [dropdown] > Zahlenformatvorlagen > Proportionale Lineatur": lambda app, d, s: (setattr(s.Font, "NumberForm", 1), setattr(s.Font, "NumberSpacing", 1)),
     S + "Schriftart / Texteffekte und Typografie [dropdown] > Stil-Sets > Stil-Set 1": _font("StylisticSet", 1),
-    S + "Schriftart / Texteffekte und Typografie [dropdown] > Stil-Sets > Stil-Set 20": _font("StylisticSet", 20),
+    S + "Schriftart / Texteffekte und Typografie [dropdown] > Stil-Sets > Stil-Set 20": _font("StylisticSet", 1 << 19),
     S + "Schriftart / Weitere Optionen [color-arrow] > Gelb": lambda app, d, s: setattr(s.Range, "HighlightColorIndex", 7),
     S + "Schriftart / Weitere Optionen [color-arrow] > Hellgrün": lambda app, d, s: setattr(s.Range, "HighlightColorIndex", 4),
     S + "Schriftart / Weitere Optionen [color-arrow] > Türkis": lambda app, d, s: setattr(s.Range, "HighlightColorIndex", 3),
@@ -158,8 +158,8 @@ OPS = {
     # Start: Absatz
     S + "Absatz / Aufzählungszeichen [split-main]": _call("Range.ListFormat.ApplyBulletDefault"),
     S + "Absatz / Nummerierung [split-main]": _call("Range.ListFormat.ApplyNumberDefault"),
-    S + "Absatz / Einzug vergrößern [button]": _call("Paragraphs.Indent"),
-    S + "Absatz / Einzug verkleinern [button]": _call("Paragraphs.Outdent"),
+    S + "Absatz / Einzug vergrößern [button]": _mso("IndentIncrease"),
+    S + "Absatz / Einzug verkleinern [button]": _mso("IndentDecrease"),
     S + "Absatz / Zentriert [button]": _para("Alignment", 1),
     S + "Absatz / Rechtsbündig [button]": _para("Alignment", 2),
     S + "Absatz / Blocksatz [button]": _para("Alignment", 3),

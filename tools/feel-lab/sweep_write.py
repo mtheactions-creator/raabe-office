@@ -146,6 +146,11 @@ class App:
                     for k in range(1, 11):
                         p.cdp("Input.dispatchMouseEvent", {"type": "mouseMoved", "x": pg["x"] + 12 * k, "y": pg["y"] + 8 * k, "button": "left", "buttons": 1})
                     p.cdp("Input.dispatchMouseEvent", {"type": "mouseReleased", "x": pg["x"] + 120, "y": pg["y"] + 80, "button": "left", "clickCount": 1, "buttons": 0})
+                    p.pump(0.2)
+                    p.type("Formtext")
+                    p.pump(0.1)
+                    # Select the shape itself again (its frame), as after drawing.
+                    p.key("Escape")
         elif setup in ("notes", "revisions"):
             # Something to go to, accept or reject: two footnotes and an endnote, or a comment and tracked changes.
             if setup == "notes":
@@ -337,11 +342,26 @@ class Sweep:
             self.record(self.judge(tab, path, setup, before, after, errors, {"kind": "dialog", "dialog": info}, undo=False))
             self.dialog_buttons(tab, setup, path, [("control", c)], info)
         else:
+            if c["groupId"] in ("insertShapes", "shapes") or c["group"] == "Formen einfügen":
+                if "doc" not in effects(before, after) and not ui["dialogs"]:
+                    self.draw_on_page()
+                    after = a.state()
+                    errors += p.take_errors()
             row = self.judge(tab, path, setup, before, after, errors)
             if row["status"] == "noeffect" and c["label"] == "Kopieren":
                 info = p.js("__app.clipboardInfo()")
                 row["status"], row["note"] = ("ok", f"clipboard {info}") if info and info.get("text") else ("noeffect", f"clipboard {info}")
             self.record(row)
+
+    def draw_on_page(self) -> None:
+        """A drag on the page (drawing the shape or text box picked before)."""
+        p = self.a.p
+        pg = p.js("(() => { const b = document.querySelector('.page').getBoundingClientRect(); return {x: b.left + 300, y: b.top + 520}; })()")
+        p.cdp("Input.dispatchMouseEvent", {"type": "mousePressed", "x": pg["x"], "y": pg["y"], "button": "left", "clickCount": 1, "buttons": 1})
+        for k in range(1, 9):
+            p.cdp("Input.dispatchMouseEvent", {"type": "mouseMoved", "x": pg["x"] + 15 * k, "y": pg["y"] + 10 * k, "button": "left", "buttons": 1})
+        p.cdp("Input.dispatchMouseEvent", {"type": "mouseReleased", "x": pg["x"] + 120, "y": pg["y"] + 80, "button": "left", "clickCount": 1, "buttons": 0})
+        p.pump(0.4)
 
     def prime_clipboard(self) -> None:
         """Einfügen needs something on the clipboard: the target text is copied first (Kopieren), the caret put after it."""
@@ -861,7 +881,11 @@ ALREADY = [
     r"Bild ändern \[dropdown\] > Aus Zwischenablage$", r"Tabellenraster( \[gallery-item\])?$", r"Zur Kopfzeile wechseln \[button\]$",
     r"Kopfzeile \[dropdown\] > Kopfzeile bearbeiten$",
     # View gridlines of a table that has borders all round: nothing to see (Word neither).
-    r"> Gitternetzlinien anzeigen$", r"Ansichten / Drucklayout \[button\]$", r"Zoom / 100% \[button\]$",
+    r"> Gitternetzlinien anzeigen$",
+    # In a new, empty equation: nothing to convert; Unicode is the linear format already. Katalogfilter opens its
+    # list inside the open panel (which the sweep does not count as a new popup).
+    r"Konvertierungen / Unicode \[button\]$", r"Konvertierungen / Konvertieren \[split-main\]$", r"Konvertierungen / Weitere Optionen \[split-arrow\] > ",
+    r"> Katalogfilter$", r"Ansichten / Drucklayout \[button\]$", r"Zoom / 100% \[button\]$",
 ]
 # Options Word does not take back with Strg+Z either (a setting, not an edit).
 NO_UNDO_IN_WORD = [r"Änderungen nachverfolgen \[split-main\]$", r"Änderungen nachverfolgen$",
@@ -908,7 +932,8 @@ def run_report(args) -> None:
 
 def word_select(app, d, setup: str):
     """The same selection as the sweep's set-up, in Word."""
-    r = d.Content
+    # In the table the cell "Sonnenblume" (the list above has "Sonnenblumen").
+    r = d.Tables(1).Range if setup == "table" else d.Content
     needle = {"table": "Sonnenblume", "picture": None}.get(setup, ws.TARGET)
     if needle is None:
         d.InlineShapes(1).Range.Select()
@@ -964,8 +989,14 @@ def run_word(args) -> None:
                     s = word_select(app, d, r.get("setup", "text"))
                     op(app, d, s)
                     d.Save()
+                except Exception as e:  # noqa: BLE001
+                    item["word_error"] = str(e)[:300]
                 finally:
                     d.Close(0)
+                if "word_error" in item:
+                    log("WORDERR", key, item["word_error"][:200])
+                    results.append(item)
+                    continue
                 after_w = ws.summarize(app, wf)
                 dW = ws.delta(base_w, after_w)
                 item["word"] = dW
