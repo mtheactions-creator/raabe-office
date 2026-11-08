@@ -1888,6 +1888,11 @@ export class CalcApp {
     run("styles.conditional", () => {});
     run("styles.table", () => {});
     run("styles.cell", () => {});
+    // Seitenlayout > Designs, Farben, Schriftarten open their galleries; without a command behind them
+    // the buttons stayed grey and the galleries could not be reached by hand (D-142).
+    run("layout.themes", () => {});
+    run("layout.colors", () => {});
+    run("layout.fonts", () => {});
 
     const selRect = () => this.grid.selection.at(-1)!;
     const rowsOf = (r: Rect) => ({ at: r.r0, count: r.r1 - r.r0 + 1 });
@@ -2156,8 +2161,8 @@ export class CalcApp {
     for (const id of ["formulas.recent", "formulas.financial", "formulas.logical", "formulas.text", "formulas.dateTime", "formulas.lookup", "formulas.math", "formulas.more"]) run(id, () => {});
     run("formulas.nameManager", () => void this.dlg.nameManager());
     run("formulas.defineName", () => void this.dlg.defineName());
-    run("formulas.createFromSelection", () => void this.dlg.defineName());
-    run("formulas.showFormulas", () => { this.showFormulas = !this.showFormulas; document.body.classList.toggle("show-formulas", this.showFormulas); this.grid.contentChanged(); }, undefined, () => this.showFormulas);
+    run("formulas.createFromSelection", () => void this.dlg.createFromSelection());
+    run("formulas.showFormulas", () => { this.showFormulas = !this.showFormulas; this.grid.contentChanged(); this.commands.refresh?.(); }, undefined, () => this.showFormulas);
     run("formulas.calcOptions", () => {});
     // Berechnungsoptionen: Manuell leaves formulas until F9 (the status bar says "Berechnen").
     const setMode = (m: "autoNoTable" | "manual" | undefined) => () => {
@@ -2439,7 +2444,9 @@ export class CalcApp {
   /** Excel's task pane at the right (Format panes). */
   readonly taskPane = new TaskPane();
 
-  showFormulas = false;
+  /** Formeln anzeigen: a setting of each sheet's window, saved with the file (Excel's showFormulas, D-142). */
+  get showFormulas(): boolean { return !!this.sheet?.view.showFormulas; }
+  set showFormulas(on: boolean) { if (this.sheet) this.sheet.view.showFormulas = on || undefined; }
   showNotes = false;
 
   private activeCellNote(): string | undefined {
@@ -2793,7 +2800,9 @@ export class CalcApp {
         fitWidth: ["Automatisch", "1 Seite", "2 Seiten", "3 Seiten"].map((l, i) => ({ label: l, run: () => this.print.setFit("width", i) })),
         fitHeight: ["Automatisch", "1 Seite", "2 Seiten", "3 Seiten"].map((l, i) => ({ label: l, run: () => this.print.setFit("height", i) })),
         align: () => this.shapes.arrange.alignMenu(),
-        rotate: this.shapes.rotateMenu,
+        // Drehen acts on selected objects only: with cells selected Excel greys it (D-142).
+        rotate: this.shapes.rotateMenu.map((e) => (typeof e === "object" && "run" in e
+          ? Object.defineProperty({ ...e }, "disabled", { get: () => this.shapes.count() === 0, enumerable: true }) : e)),
         group: this.shapes.grouping.menu,
       },
       panels: { cellStyles: (close) => this.dlg.cellStylesPanel(close), tableStyles: (close) => this.dlg.tableStylesPanel(close), shapes: (close) => this.shapes.gallery(close),

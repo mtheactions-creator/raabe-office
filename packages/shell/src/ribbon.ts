@@ -48,6 +48,8 @@ export type Control =
       extra?: () => MenuEntry[];
       /** The label of the custom colour entry ("Weitere Farben..." by default; PowerPoint: "Weitere Füllfarben..." …). */
       more?: string;
+      /** A "no colour" entry below the standard colours in place of Automatisch on top (Excel's Füllfarbe: Keine Füllung). */
+      noColor?: string;
       /** Livevorschau of a colour under the mouse (without remembering it as the button's colour). */
       preview?: (c: string) => void;
       /** The document's design: the palette shows its colours and hands theme picks over as references (RaabePresent). */
@@ -578,7 +580,7 @@ export class Ribbon {
           onclick: () => {
             const pick = (v: string) => { c2.pick(v); this.opts.onDone?.(); };
             const hover = c2.preview ? { commands: this.commands, apply: c2.preview } : undefined;
-            if (c2.palette === "font") showFontColors(arrow.getBoundingClientRect(), pick, hover, c2.extra ? this.paletteExtra(c2.extra()) : undefined, c2.theme?.(), c2.more);
+            if (c2.palette === "font") showFontColors(arrow.getBoundingClientRect(), pick, hover, c2.extra ? this.paletteExtra(c2.extra()) : undefined, c2.theme?.(), c2.more, c2.noColor);
             else showHighlights(arrow.getBoundingClientRect(), pick, hover, c2.names);
           },
         }, chev());

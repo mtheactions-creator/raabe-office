@@ -594,7 +594,7 @@ function viewsXml(v: View, old: string | undefined, raw: SheetRaw | undefined): 
   let tag = oldTag ? oldTag.replace(/\/>$/, ">") : '<sheetView workbookViewId="0">';
   const tl = v.freeze ? raw?.frozenTopLeft ?? { row: 0, col: 0 } : v.split ? { row: v.split.top, col: v.split.left } : { row: v.top, col: v.left };
   tag = setAttrs(tag, {
-    showGridLines: v.showGrid ? null : "0", showRowColHeaders: v.showHeaders ? null : "0",
+    showFormulas: v.showFormulas ? "1" : null, showGridLines: v.showGrid ? null : "0", showRowColHeaders: v.showHeaders ? null : "0",
     topLeftCell: tl.row || tl.col ? cellName(tl.row, tl.col) : null,
     zoomScale: v.zoom !== 100 ? String(v.zoom) : null, zoomScaleNormal: v.zoom !== 100 ? String(v.zoom) : null,
     ...layoutAttrs(v, tag),

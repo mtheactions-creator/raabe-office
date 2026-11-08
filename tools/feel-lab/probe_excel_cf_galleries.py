@@ -46,14 +46,25 @@ class Probe:
         time.sleep(0.6)
 
     def roots(self) -> list:
-        pops = winapi.find_windows(lambda h: winapi.window_pid(h) == self.pid and winapi.window_class(h) == POPUP)
+        # Menus open in windows of their own; galleries also show below the ribbon control in the main window.
+        pops = winapi.find_windows(lambda h: winapi.window_pid(h) == self.pid and h != self.x.hwnd)
         return [uia.element_for(h) for h in pops] + [self.root]
 
     def find(self, kind: tuple[str, ...], name: str):
         for r in self.roots():
-            el = uia.find(r, lambda d: d["type"] in kind and d["name"] == name, max_depth=14)
-            if el is not None:
-                return el
+            try:
+                f = r.FindAll(uia.U.TreeScope_Descendants, uia._uia.CreateTrueCondition())
+            except Exception:  # noqa: BLE001
+                continue
+            for i in range(f.Length):
+                e = f.GetElement(i)
+                try:
+                    d = uia.describe(e)
+                except Exception:  # noqa: BLE001
+                    continue
+                if d["type"] in kind and d["name"] == name and d["rect"][2] > 0:
+                    return e
+        print("not found:", kind, name, flush=True)
         return None
 
     def items(self) -> list[str]:
@@ -70,14 +81,22 @@ class Probe:
         return out
 
     def open(self, sub: str) -> None:
-        winapi.activate(self.x.hwnd)
-        winapi.press("esc")
-        time.sleep(0.2)
+        # A menu of our Excel may still be in front: Esc closes it (only when the window in front is ours).
+        for _ in range(3):
+            if not self.ours():
+                try:
+                    winapi.activate(self.x.hwnd)
+                except RuntimeError:
+                    time.sleep(0.5)
+                    continue
+            if self.ours():
+                winapi.press("esc")
+            time.sleep(0.3)
         tab = self.find(("TabItem",), "Start")
         self.click(tab)
         cf = self.find(("MenuItem", "Button", "SplitButton"), "Bedingte Formatierung")
         self.click(cf)
-        s = self.find(("MenuItem",), sub)
+        s = self.find(("MenuItem", "Button", "SplitButton", "ListItem"), sub)
         self.click(s)
 
     def run(self) -> dict:
@@ -87,7 +106,9 @@ class Probe:
         out: dict = {}
         for sub in ("Farbskalen", "Datenbalken"):
             self.open(sub)
-            names = self.items()
+            key = "Farbskala" if sub == "Farbskalen" else "Datenbalken"
+            names = [n for n in self.items() if key in n]
+            print(sub, names, flush=True)
             out[sub] = []
             winapi.press("esc")
             for n, name in enumerate(names):
@@ -105,15 +126,18 @@ class Probe:
                             d = uia.describe(e)
                         except Exception:  # noqa: BLE001
                             continue
-                        if d["type"] == "ListItem" and d["name"] == name:
-                            hits.append(e)
+                        if d["type"] == "ListItem" and d["name"] == name and d["rect"][2] > 0:
+                            hits.append(d["rect"])
                     if hits:
                         el = hits[min(same.index(n), len(hits) - 1)]
                         break
                 if el is None:
                     out[sub].append({"name": name, "error": "not found"})
                     continue
-                self.click(el)
+                if not self.ours():
+                    raise RuntimeError("our Excel is not in front")
+                winapi.click(el[0] + el[2] / 2, el[1] + el[3] / 2)
+                time.sleep(0.6)
                 fcs = ws.Range("B2:B6").FormatConditions
                 rec: dict = {"name": name, "count": fcs.Count}
                 if fcs.Count:

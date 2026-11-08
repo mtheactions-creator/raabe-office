@@ -69,7 +69,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
   };
   const numberFormat: Control = { type: "combo", cmd: "number.format", width: 91, key: "AZ", value: ctx.numberFormat, options: ctx.numberFormats, commit: ctx.setNumberFormat };
   const fontColor: Control = { type: "color", cmd: "font.color", key: "AC", palette: "font", current: ctx.fontColor, pick: ctx.setFontColor, preview: ctx.preview.color, theme: ctx.paletteTheme };
-  const fill: Control = { type: "color", cmd: "font.fill", key: "H1", palette: "font", current: ctx.fillColor, pick: ctx.setFillColor, preview: ctx.preview.fill, theme: ctx.paletteTheme };
+  const fill: Control = { type: "color", cmd: "font.fill", key: "H1", palette: "font", current: ctx.fillColor, pick: ctx.setFillColor, preview: ctx.preview.fill, theme: ctx.paletteTheme, noColor: "Keine Füllung" };
   const paste = split("edit.paste", "V", "large", m.paste);
   const autosum = split("edit.autosumButton", "KA", "small", m.autosum, "AutoSumme");
 

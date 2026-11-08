@@ -302,6 +302,88 @@ class Sweep:
                 continue
             self.walk([("tab", tab), ("ctrl", c["id"])], 2, c["id"], c["kind"])
 
+    # ----- Datei (backstage) -----------------------------------------------------------------------
+    BACKSTAGE_SKIP = ("Speichern", "Speichern unter", "Schließen", "Zurück")
+
+    def backstage_controls(self) -> list[dict]:
+        return self.p.js("""[...document.querySelectorAll('.backstage .page-body button, .backstage .page-body select, .backstage .page-body input')]
+          .filter(e => e.offsetParent).map((e, i) => { const r = e.getBoundingClientRect();
+            return {i, tag: e.tagName.toLowerCase(), type: e.type || '', label: (e.getAttribute('aria-label') || e.textContent || e.value || '').trim().slice(0, 60),
+              options: e.tagName === 'SELECT' ? [...e.options].map(o => o.textContent) : null, x: r.left + r.width / 2, y: r.top + r.height / 2}; })""")
+
+    def sweep_backstage(self) -> None:
+        """Every page of Datei and every control on it; Drucken's lists tried entry by entry (never the Drucken button)."""
+        self.reset()
+        self.step("tab", "Datei")
+        nav = self.p.js("[...document.querySelectorAll('.backstage nav button')].filter(b => b.offsetParent).map(b => (b.getAttribute('aria-label') || b.textContent).trim())")
+        self.inventory["Datei"] = nav
+        for page in nav:
+            if page in self.BACKSTAGE_SKIP:
+                self.results.append({"path": ["Datei", page], "outcome": "skipped (native window or closes the workbook)"})
+                continue
+            res = self.backstage_leaf(page, None)
+            self.results.append(res)
+            self.log(res)
+            if res.get("outcome"):
+                continue
+            for c in res.get("controls", []):
+                if c["label"] in ("Drucken", "Durchsuchen", "PDF-Dokument erstellen", "Als CSV speichern") or c["type"] == "file":
+                    self.results.append({"path": ["Datei", page, c["label"]], "outcome": "skipped (prints or opens a native window)"})
+                    continue
+                if c["tag"] == "select":
+                    for k in range(len(c["options"] or [])):
+                        r = self.backstage_leaf(page, c, option=k)
+                        self.results.append(r)
+                        self.log(r)
+                elif c["tag"] == "button":
+                    r = self.backstage_leaf(page, c)
+                    self.results.append(r)
+                    self.log(r)
+
+    def backstage_leaf(self, page: str, ctrl: dict | None, option: int | None = None) -> dict:
+        self.reset()
+        before = self.snap()
+        res: dict = {"path": ["Datei", page] + ([ctrl["label"] + (f" = {ctrl['options'][option]}" if option is not None else "")] if ctrl else []), "kind": "backstage"}
+        try:
+            self.step("tab", "Datei")
+            b = self.p.js(f"""(() => {{ const b = [...document.querySelectorAll('.backstage nav button')].find(b => (b.getAttribute('aria-label') || b.textContent).trim() === {json.dumps(page)});
+              if (!b) return null; const r = b.getBoundingClientRect(); return {{x: r.left + r.width / 2, y: r.top + r.height / 2}}; }})()""")
+            if not b:
+                res["outcome"] = "not found"
+                return res
+            self.p.click(b["x"], b["y"])
+            self.p.pump(0.4)
+            if ctrl is None:
+                res["controls"] = self.backstage_controls()
+                res["dialog"] = self.p.js("__sweep.dialogTitle()")
+                if res["dialog"]:
+                    res["dialogs"] = self.dialog_close("esc")
+            else:
+                cur = next((c for c in self.backstage_controls() if c["i"] == ctrl["i"] and c["label"] == ctrl["label"]), None)
+                if not cur:
+                    res["outcome"] = "not found"
+                    return res
+                if option is None:
+                    self.p.click(cur["x"], cur["y"])
+                else:
+                    # A <select>: focused by a click, the entry picked with the keyboard (its list is native).
+                    # Typing an entry's name picks it in one change, as a user can on a focused list.
+                    self.p.js(f"(() => {{ const e = [...document.querySelectorAll('.backstage .page-body select')].filter(e => e.offsetParent).find(e => (e.getAttribute('aria-label') || e.textContent || '').trim().slice(0, 60) === {json.dumps(ctrl['label'])}); e.focus(); return true; }})()")
+                    self.p.type(ctrl["options"][option])
+                self.p.pump(0.5)
+                res["dialog"] = self.p.js("__sweep.dialogTitle()")
+                if res["dialog"]:
+                    res["dialogs"] = self.dialog_close("esc")
+            after = self.snap()
+            res["model"] = after["model"] != before["model"]
+            res["ui"] = after["ui"] != before["ui"]
+            res["preview"] = self.p.js("(() => { const p = document.querySelector('.print-preview'); return p ? p.querySelectorAll('svg, .sheet-holder').length : null; })()")
+        except Exception as e:  # noqa: BLE001
+            res["outcome"] = "harness error"
+            res["why"] = str(e)[:300]
+        res["errors"] = list(self.p.errors)
+        return res
+
     def close(self) -> None:
         self.exe.close()
 
@@ -324,6 +406,8 @@ def main() -> None:
         if a.context or not a.tabs:
             for where in ("cell", "row", "col", "sheettab", "statusbar"):
                 s.walk([("ctx", where)], 2, where, "context")
+        if not a.context and (not a.tabs or "Datei" in a.tabs.split(",")):
+            s.sweep_backstage()
     finally:
         s.close()
     out = HERE / "results" / f"2026-11-09-{a.out}.json"

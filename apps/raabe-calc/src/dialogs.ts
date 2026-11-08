@@ -112,6 +112,26 @@ export function dialogs(app: CalcApp) {
     const showSample = () => {
       try { preview.textContent = shown(sample, { ...st, numFmt: fileFormat(codeBox.value) }).text || " "; } catch { preview.textContent = "Ungültiges Format"; }
     };
+    // Dezimalstellen and 1.000er-Trennzeichen of the number categories (Excel's Zahlen tab, D-142): they
+    // rewrite the code picked in the list.
+    const DEC_CATS = ["Zahl", "Währung", "Buchhaltung", "Prozent", "Wissenschaft"];
+    const decimals = h("input", { type: "number", min: "0", max: "30", value: "2", style: "width:60px", "aria-label": "Dezimalstellen:" }) as HTMLInputElement;
+    const thousands = checkbox("1.000er-Trennzeichen verwenden (.)");
+    const decRow = h("div", null, field("Dezimalstellen:", decimals));
+    const applyDigits = (code: string) => {
+      const n = Math.max(0, Math.min(30, Math.round(num(decimals.value) || 0)));
+      // The first number of each section only (not the exponent of 0,00E+00).
+      let out = code.split(";").map((sec) => sec.replace(/((?:#,##)?0)(\.0+)?/, (_m, i: string) => i + (n ? "." + "0".repeat(n) : ""))).join(";").replace(/"-"\?+/g, `"-"${"?".repeat(n)}`);
+      if (catList.value === "Zahl") out = thousands.input.checked ? out.replace(/(^|[^#,0.])0(?=[.;_ \\]|$)/g, "$1#,##0") : out.replace(/#,##0/g, "0");
+      return out;
+    };
+    const showDigits = () => {
+      decRow.hidden = !DEC_CATS.includes(catList.value);
+      thousands.el.hidden = catList.value !== "Zahl";
+    };
+    const digitsChanged = () => { if (codeList.value) { codeBox.value = localFormat(applyDigits(codeList.value)); showSample(); } };
+    decimals.oninput = digitsChanged;
+    thousands.input.onchange = digitsChanged;
     const fillCodes = () => {
       const c = cats.find((x) => x.name === catList.value);
       codeList.replaceChildren(...(c?.codes ?? []).map((f) => h("option", { value: f }, localFormat(f))));
@@ -119,20 +139,46 @@ export function dialogs(app: CalcApp) {
         const cur = c.codes.find((f) => f === st.numFmt) ?? c.codes[0];
         codeList.value = cur;
         codeBox.value = localFormat(cur);
+        const m = /0\.(0+)/.exec(cur.split(";")[0]);
+        decimals.value = String(m ? m[1].length : 0);
+        thousands.input.checked = cur.includes("#,##0");
       }
       if (c?.name === "Standard") codeBox.value = "Standard";
       if (c?.name === "Text") codeBox.value = "@";
+      showDigits();
       showSample();
     };
-    const curCat = cats.find((c) => c.codes.includes(st.numFmt))?.name ?? (st.numFmt === "General" ? "Standard" : "Benutzerdefiniert");
+    // A code that is a category's code with other decimals (0,000) belongs to that category.
+    let curCat = cats.find((c) => c.codes.includes(st.numFmt))?.name ?? (st.numFmt === "General" ? "Standard" : "Benutzerdefiniert");
+    let curBase: string | null = null;
+    if (curCat === "Benutzerdefiniert") {
+      const m = /0\.(0+)/.exec(st.numFmt.split(";")[0]);
+      decimals.value = String(m ? m[1].length : 0);
+      for (const c of cats.filter((x) => DEC_CATS.includes(x.name))) {
+        catList.value = c.name;
+        for (const th of [false, true]) {
+          thousands.input.checked = th;
+          const hit = c.codes.find((f) => applyDigits(f) === st.numFmt);
+          if (hit && !curBase) { curCat = c.name; curBase = hit; }
+        }
+      }
+    }
     catList.value = curCat;
     catList.onchange = fillCodes;
-    codeList.onchange = () => { codeBox.value = localFormat(codeList.value); showSample(); };
+    codeList.onchange = () => { codeBox.value = localFormat(DEC_CATS.includes(catList.value) ? applyDigits(codeList.value) : codeList.value); showSample(); };
     codeBox.oninput = showSample;
-    if (curCat !== "Benutzerdefiniert") fillCodes();
-    else { codeList.replaceChildren(...(cats.find((c) => c.name === "Benutzerdefiniert")?.codes ?? []).map((f) => h("option", { value: f }, localFormat(f)))); showSample(); }
+    if (curBase) {
+      const keep = decimals.value, th = st.numFmt.includes("#,##0");
+      fillCodes();
+      codeList.value = curBase;
+      decimals.value = keep;
+      thousands.input.checked = th;
+      codeBox.value = localFormat(st.numFmt);
+      showSample();
+    } else if (curCat !== "Benutzerdefiniert") fillCodes();
+    else { codeList.replaceChildren(...(cats.find((c) => c.name === "Benutzerdefiniert")?.codes ?? []).map((f) => h("option", { value: f }, localFormat(f)))); showDigits(); showSample(); }
     panels.Zahlen = h("div", { class: "fc-num" }, h("div", null, h("div", { class: "fc-label" }, "Kategorie:"), catList),
-      h("div", { class: "fc-right" }, h("div", { class: "fc-label" }, "Beispiel"), preview, h("div", { class: "fc-label" }, "Typ:"), codeBox, codeList));
+      h("div", { class: "fc-right" }, h("div", { class: "fc-label" }, "Beispiel"), preview, decRow, thousands.el, h("div", { class: "fc-label" }, "Typ:"), codeBox, codeList));
 
     // Ausrichtung.
     const hSel = h("select", null, ...[["general", "Standard"], ["left", "Links (Einzug)"], ["center", "Zentriert"], ["right", "Rechts (Einzug)"], ["fill", "Ausfüllen"], ["justify", "Blocksatz"], ["centerContinuous", "Über Auswahl zentrieren"], ["distributed", "Verteilt (Einzug)"]]
@@ -955,17 +1001,22 @@ export function dialogs(app: CalcApp) {
   }
 
   function conditionalBarMenu(): MenuEntry[] {
-    const bars: [string, string][] = [["Blaue Datenleiste", "#638EC6"], ["Grüne Datenleiste", "#63BE7B"], ["Rote Datenleiste", "#FF555A"], ["Orangefarbene Datenleiste", "#FFB628"], ["Hellblaue Datenleiste", "#008AEF"], ["Lila Datenleiste", "#D6007B"]];
-    return bars.map(([l, c]) => ({ label: l, run: () => void addRule({ type: "dataBar", colors: [c] }) }));
+    // Excel's names (recorded in the inventory, D-143); the gradient bars (Farbverlauf). Einfarbige Füllung needs
+    // Excel 2010's extension of the rule and is left for later.
+    const bars: [string, string][] = [["Blauer Datenbalken", "#638EC6"], ["Grüner Datenbalken", "#63BE7B"], ["Roter Datenbalken", "#FF555A"], ["Orangefarbener Datenbalken", "#FFB628"], ["Hellblauer Datenbalken", "#008AEF"], ["Lilafarbener Datenbalken", "#D6007B"]];
+    return [{ heading: "Farbverlauf" }, ...bars.map(([l, c]): MenuEntry => ({ label: l, run: () => void addRule({ type: "dataBar", colors: [c] }) }))];
   }
 
   function conditionalScaleMenu(): MenuEntry[] {
+    // Excel's twelve scales by its names. A name lists the colours from the highest value down; the rule keeps
+    // them from the lowest up (Grün-Gelb-Rot: lowest red, highest green, D-143).
+    const R = "#F8696B", Y = "#FFEB84", G = "#63BE7B", W = "#FCFCFF", B = "#5A8AC6", Y2 = "#FFEF9C";
     const scales: [string, string[]][] = [
-      ["Grün - Gelb - Rot", ["#F8696B", "#FFEB84", "#63BE7B"].reverse()], ["Rot - Gelb - Grün", ["#F8696B", "#FFEB84", "#63BE7B"]],
-      ["Grün - Weiß - Rot", ["#63BE7B", "#FCFCFF", "#F8696B"]], ["Rot - Weiß - Grün", ["#F8696B", "#FCFCFF", "#63BE7B"]],
-      ["Weiß - Rot", ["#FCFCFF", "#F8696B"]], ["Grün - Weiß", ["#63BE7B", "#FCFCFF"]],
+      ["Grün-Gelb-Rot", [R, Y, G]], ["Rot-Gelb-Grün", [G, Y, R]], ["Grün-Weiß-Rot", [R, W, G]], ["Rot-Weiß-Grün", [G, W, R]],
+      ["Blau-Weiß-Rot", [R, W, B]], ["Rot-Weiß-Blau", [B, W, R]], ["Weiß-Rot", [R, W]], ["Rot-Weiß", [W, R]],
+      ["Grün-Weiß", [W, G]], ["Weiß-Grün", [G, W]], ["Grün-Gelb", [Y2, G]], ["Gelb-Grün", [G, Y2]],
     ];
-    return scales.map(([l, c]) => ({ label: `Farbskala ${l}`, run: () => void addRule({ type: "colorScale", colors: c }) }));
+    return scales.map(([l, c]) => ({ label: `${l}-Farbskala`, run: () => void addRule({ type: "colorScale", colors: c }) }));
   }
 
   /** Symbolsätze, in the gallery's groups (Richtungen, Formen, Indikatoren, Bewertungen). */
@@ -979,11 +1030,37 @@ export function dialogs(app: CalcApp) {
   }
 
   function clearConditional(selection: boolean): void {
+    // Nothing to delete: no undo step (Excel).
+    const list = sheet().conditional ?? [];
+    if (!list.some((f) => !selection || f.ref.some((r) => app.grid.selection.some((s) => A.overlaps(r, s))))) return;
     app.change("Regeln löschen", () => {
       app.history.whole(sheet());
       if (!selection) { sheet().conditional = undefined; return; }
-      sheet().conditional = (sheet().conditional ?? []).filter((f) => !f.ref.some((r) => app.grid.selection.some((s) => A.overlaps(r, s))));
+      // Excel takes the selected cells out of each rule's range; a rule left without cells goes.
+      const out = [];
+      for (const f of sheet().conditional ?? []) {
+        let ref = f.ref;
+        for (const s of app.grid.selection) ref = ref.flatMap((r) => subtract(r, s));
+        if (!ref.length) continue;
+        // The formulas are written for the range's top-left cell: when that moves, they move with it.
+        const dr = ref[0].r0 - f.ref[0].r0, dc = ref[0].c0 - f.ref[0].c0;
+        const rules = dr || dc ? f.rules.map((r) => (r.formulas ? { ...r, formulas: r.formulas.map((x) => shiftFormula(x, dr, dc)) } : r)) : f.rules;
+        out.push({ ...f, ref, rules });
+      }
+      sheet().conditional = out.length ? out : undefined;
     });
+  }
+
+  /** A rectangle without the cells of another: up to four rectangles (above, below, left, right). */
+  function subtract(r: Rect, s: Rect): Rect[] {
+    if (!A.overlaps(r, s)) return [r];
+    const out: Rect[] = [];
+    if (s.r0 > r.r0) out.push({ ...r, r1: s.r0 - 1 });
+    if (s.r1 < r.r1) out.push({ ...r, r0: s.r1 + 1 });
+    const r0 = Math.max(r.r0, s.r0), r1 = Math.min(r.r1, s.r1);
+    if (s.c0 > r.c0) out.push({ r0, r1, c0: r.c0, c1: s.c0 - 1 });
+    if (s.c1 < r.c1) out.push({ r0, r1, c0: s.c1 + 1, c1: r.c1 });
+    return out;
   }
 
   // ----- names, notes, links, symbols, functions ----------------------------------------------------------
@@ -1000,6 +1077,48 @@ export function dialogs(app: CalcApp) {
     app.change("Namen definieren", () => {
       app.history.sheets();
       app.wb.names = [...app.wb.names.filter((x) => x.name.toLowerCase() !== n.toLowerCase()), { name: n, ref: ref.value.replace(/^=/, "") }];
+    });
+  }
+
+  /**
+   * Aus Auswahl erstellen (Strg+Umschalt+F3): names from the labels in the selection's top row, left
+   * column, bottom row or right column, each naming the cells beside it (Excel's dialog, D-142).
+   */
+  async function createFromSelection(): Promise<void> {
+    const r = sel();
+    const isText = (row: number, col: number) => typeof sheet().get(row, col)?.v === "string";
+    const multiRow = r.r1 > r.r0, multiCol = r.c1 > r.c0;
+    const topGuess = multiRow && range(r.c0 + (multiCol ? 1 : 0), r.c1).some((c) => isText(r.r0, c));
+    const leftGuess = multiCol && range(r.r0 + (multiRow ? 1 : 0), r.r1).some((row) => isText(row, r.c0));
+    const top = checkbox("Oberster Zeile", topGuess), left = checkbox("Linker Spalte", leftGuess), bottom = checkbox("Unterster Zeile"), right = checkbox("Rechter Spalte");
+    const body = h("div", null, h("div", { class: "fc-label" }, "Namen erstellen aus den Werten in:"), top.el, left.el, bottom.el, right.el);
+    const ok = await showDialog({ title: "Namen aus Auswahl erstellen", body, buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
+    if (!ok) return;
+    const t = top.input.checked, l = left.input.checked, b = bottom.input.checked, rt = right.input.checked;
+    if (!(t || l || b || rt)) return;
+    const body0 = { r0: r.r0 + (t ? 1 : 0), r1: r.r1 - (b ? 1 : 0), c0: r.c0 + (l ? 1 : 0), c1: r.c1 - (rt ? 1 : 0) };
+    if (body0.r0 > body0.r1 || body0.c0 > body0.c1) return void messageBox("RaabeCalc", "Aus dieser Auswahl lassen sich keine Namen bilden.");
+    const clean = (v: unknown) => {
+      let n = String(v ?? "").trim().replace(/\s+/g, "_").replace(/[^A-Za-z0-9ÄÖÜäöüß_.\\]/g, "");
+      if (!n) return "";
+      if (/^\d/.test(n) || /^[A-Za-z]{1,3}\d+$/.test(n) || /^[rcRC]$/.test(n)) n = "_" + n;
+      return n;
+    };
+    const abs = (x: Rect) => `${quoteSheet(sheet().name)}!${rangeName(x).replace(/([A-Z]+)(\d+)/g, "$$$1$$$2")}`;
+    const made: { name: string; ref: string }[] = [];
+    const add = (label: unknown, x: Rect) => { const n = clean(label); if (n && !made.some((m) => m.name.toLowerCase() === n.toLowerCase())) made.push({ name: n, ref: abs(x) }); };
+    for (let c = body0.c0; c <= body0.c1; c++) {
+      if (t) add(sheet().get(r.r0, c)?.v, { r0: body0.r0, r1: body0.r1, c0: c, c1: c });
+      if (b) add(sheet().get(r.r1, c)?.v, { r0: body0.r0, r1: body0.r1, c0: c, c1: c });
+    }
+    for (let row = body0.r0; row <= body0.r1; row++) {
+      if (l) add(sheet().get(row, r.c0)?.v, { r0: row, r1: row, c0: body0.c0, c1: body0.c1 });
+      if (rt) add(sheet().get(row, r.c1)?.v, { r0: row, r1: row, c0: body0.c0, c1: body0.c1 });
+    }
+    if (!made.length) return;
+    app.change("Namen erstellen", () => {
+      app.history.sheets();
+      app.wb.names = [...app.wb.names.filter((x) => !made.some((m) => m.name.toLowerCase() === x.name.toLowerCase())), ...made];
     });
   }
 
@@ -1142,7 +1261,7 @@ export function dialogs(app: CalcApp) {
   return {
     colWidth, defaultWidth, rowHeight, insertCells, deleteCells, formatCells, find, goto, sortQuick, sort, hasFilter, toggleFilter, clearFilter,
     reapplyFilter, filterByActive, filterMenu, textToColumns, removeDuplicates, series, tableStylesPanel, formatAsTable, cellStylesPanel,
-    addRule, conditionalIconMenu, conditionalHighlightMenu, conditionalTopMenu, conditionalBarMenu, conditionalScaleMenu, clearConditional, defineName, nameManager, note, link,
+    addRule, conditionalIconMenu, conditionalHighlightMenu, conditionalTopMenu, conditionalBarMenu, conditionalScaleMenu, clearConditional, defineName, createFromSelection, nameManager, note, link,
     symbol, insertFunction, moveSheet, unhideSheet, zoom, statistics, options, pasteSpecial,
   };
 }

@@ -26,8 +26,8 @@ interface Step {
   label: string;
   before: SheetState[];
   after: SheetState[];
-  sheetsBefore?: { list: Sheet[]; active: number; protection?: Record<string, string>; design?: Design };
-  sheetsAfter?: { list: Sheet[]; active: number; protection?: Record<string, string>; design?: Design };
+  sheetsBefore?: { list: Sheet[]; props?: SheetProps[]; active: number; protection?: Record<string, string>; design?: Design };
+  sheetsAfter?: { list: Sheet[]; props?: SheetProps[]; active: number; protection?: Record<string, string>; design?: Design };
   /** Selection to restore with undo/redo. */
   selBefore?: { sheet: number; sel: Rect[]; active: { row: number; col: number } };
   selAfter?: { sheet: number; sel: Rect[]; active: { row: number; col: number } };
@@ -79,7 +79,7 @@ export class History {
         this.open = null;
         st.selAfter = this.selection();
         st.after = st.before.map((b) => this.capture(b));
-        if (st.sheetsBefore) st.sheetsAfter = { list: [...this.wb.sheets], active: this.wb.active, protection: this.wb.protection, design: st.sheetsBefore.design ? this.designNow() : undefined };
+        if (st.sheetsBefore) st.sheetsAfter = { list: [...this.wb.sheets], props: sheetProps(this.wb.sheets), active: this.wb.active, protection: this.wb.protection, design: st.sheetsBefore.design ? this.designNow() : undefined };
         if (st.before.length || st.sheetsBefore) {
           this.undoStack.push(st);
           if (this.undoStack.length > 100) this.undoStack.shift();
@@ -109,7 +109,7 @@ export class History {
       this.open = null;
       st.selAfter = this.selection();
       st.after = st.before.map((b) => this.capture(b));
-      if (st.sheetsBefore) st.sheetsAfter = { list: [...this.wb.sheets], active: this.wb.active, protection: this.wb.protection, design: st.sheetsBefore.design ? this.designNow() : undefined };
+      if (st.sheetsBefore) st.sheetsAfter = { list: [...this.wb.sheets], props: sheetProps(this.wb.sheets), active: this.wb.active, protection: this.wb.protection, design: st.sheetsBefore.design ? this.designNow() : undefined };
       if (st.before.length || st.sheetsBefore) {
         this.undoStack.push(st);
         if (this.undoStack.length > 100) this.undoStack.shift();
@@ -215,7 +215,7 @@ export class History {
   /** Records the list of sheets (insert, delete, move, rename …). */
   sheets(): void {
     if (!this.open) throw new Error("change outside an undo step");
-    if (!this.open.sheetsBefore) this.open.sheetsBefore = { list: [...this.wb.sheets], active: this.wb.active, protection: this.wb.protection };
+    if (!this.open.sheetsBefore) this.open.sheetsBefore = { list: [...this.wb.sheets], props: sheetProps(this.wb.sheets), active: this.wb.active, protection: this.wb.protection };
   }
 
   private capture(b: SheetState): SheetState {
@@ -277,7 +277,7 @@ export class History {
     const st = this.undoStack.pop();
     if (!st) return false;
     this.apply(st.before);
-    if (st.sheetsBefore) { this.wb.sheets = [...st.sheetsBefore.list]; this.wb.active = st.sheetsBefore.active; this.wb.protection = st.sheetsBefore.protection; this.setDesign(st.sheetsBefore.design); }
+    if (st.sheetsBefore) { this.wb.sheets = [...st.sheetsBefore.list]; restoreProps(st.sheetsBefore); this.wb.active = st.sheetsBefore.active; this.wb.protection = st.sheetsBefore.protection; this.setDesign(st.sheetsBefore.design); }
     this.restoreSel(st.selBefore);
     this.redoStack.push(st);
     this.onChange(changeOf(st.before, !!st.sheetsBefore));
@@ -288,7 +288,7 @@ export class History {
     const st = this.redoStack.pop();
     if (!st) return false;
     this.apply(st.after);
-    if (st.sheetsAfter) { this.wb.sheets = [...st.sheetsAfter.list]; this.wb.active = st.sheetsAfter.active; this.wb.protection = st.sheetsAfter.protection; this.setDesign(st.sheetsAfter.design); }
+    if (st.sheetsAfter) { this.wb.sheets = [...st.sheetsAfter.list]; restoreProps(st.sheetsAfter); this.wb.active = st.sheetsAfter.active; this.wb.protection = st.sheetsAfter.protection; this.setDesign(st.sheetsAfter.design); }
     this.restoreSel(st.selAfter);
     this.undoStack.push(st);
     this.onChange(changeOf(st.after, !!st.sheetsAfter));
@@ -315,6 +315,17 @@ function clone<T>(v: T): T {
   const c = { ...(v as object) } as T & { array?: Rect };
   if (c.array) c.array = { ...c.array };
   return c;
+}
+
+/** What a step on the sheet list keeps of each sheet: renaming, hiding and the tab colour undo with it (D-142). */
+type SheetProps = { name: string; hidden: Sheet["hidden"]; tabColor: Sheet["tabColor"] };
+
+function sheetProps(list: Sheet[]): SheetProps[] {
+  return list.map((s) => ({ name: s.name, hidden: s.hidden, tabColor: s.tabColor }));
+}
+
+function restoreProps(at: { list: Sheet[]; props?: SheetProps[] }): void {
+  at.props?.forEach((p, i) => { const s = at.list[i]; s.name = p.name; s.hidden = p.hidden; s.tabColor = p.tabColor; });
 }
 
 /** Sheet settings a whole-sheet step restores besides the cells (page setup, filter, rules …). */

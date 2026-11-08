@@ -207,6 +207,8 @@ export interface View {
   zoom: number;
   showGrid: boolean;
   showHeaders: boolean;
+  /** Formeln anzeigen (the file's showFormulas). */
+  showFormulas?: boolean;
   /** Fenster fixieren: rows above `row` and columns left of `col` stay put (0 = none). */
   freeze?: { row: number; col: number };
   /**
