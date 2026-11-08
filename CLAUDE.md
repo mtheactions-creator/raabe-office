@@ -25,6 +25,11 @@ Windows first, iPad close behind (new students all use iPads). Open source, GPL-
 - Results (`tools/feel-lab/results/`) must not contain private paths (`C:\Users\...`),
   user names or the owner's files; check every new results file before committing. Test
   files are built by the harness in TEMP, never taken from the owner's folders.
+- Office writes the user's real name into every file it saves (docProps/core.xml, people, and the
+  workbooks embedded in charts), hidden inside the zip where a text search does not see it. Run
+  `python tools/feel-lab/anonymize_office.py <new files>` on every Office-made fixture and make sure
+  `python tools/feel-lab/anonymize_office.py --check packages apps tools/feel-lab/results` exits 0 before
+  committing.
 - Never copy Microsoft's prose (tooltips, help texts, dialog explanations): labels and
   shortcuts as in Office, descriptions in our own words. Full recordings of Office's texts
   stay in `tools/feel-lab/captures/`, which is not committed (D-058).
