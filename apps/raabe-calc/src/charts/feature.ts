@@ -282,6 +282,7 @@ export function chartsFeature(app: CalcApp) {
     const l = ensureLayer();
     const sheet = app.sheet;
     const list = sheet.charts ?? [];
+    const oldList = shownSheet === sheet ? shownList : undefined;
     axes = null;
     shownSheet = sheet;
     shownList = sheet.charts;
@@ -295,10 +296,14 @@ export function chartsFeature(app: CalcApp) {
     for (const [m, v] of views) if (!next.has(m)) v.el.remove();
     views = next;
     if (selected && !next.has(selected)) {
-      // Undo/redo replaces the models: keep the selection on the same chart by position.
-      selected = null;
+      // Undo/redo replaces the models: keep the selection on the same chart by position, and its
+      // Format pane open on the same element (Excel; D-111).
+      const k = oldList?.indexOf(selected) ?? -1;
+      const again = k >= 0 ? list[k] : undefined;
       closeFlyout();
-      if (paneChart) { paneChart = null; app.taskPane.close(); }
+      selected = again ?? null;
+      if (!again) { if (paneChart) { paneChart = null; app.taskPane.close(); } }
+      else if (paneChart) openPane(again);
     }
     for (const [m, v] of views) v.el.classList.toggle("sel", m === selected);
     // Drawing order: later charts on top.

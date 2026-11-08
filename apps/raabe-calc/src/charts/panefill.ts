@@ -4,7 +4,7 @@
 // Strichtyp, Abschlusstyp, Anschlusstyp, Pfeile), Schatten, Leuchten, Weiche Kanten and 3D-Format.
 // Every control changes the element at once as one undo step.
 
-import { PATTERNS, lum, patternPath, type Arrow, type Dash, type Effects, type Fill, type Format3D, type Gradient, type Line } from "@raabe/charts";
+import { OFFICE_ACCENTS, PATTERNS, lum, patternPath, type Arrow, type Dash, type Effects, type Fill, type Format3D, type Gradient, type Line } from "@raabe/charts";
 import type { PaneControl, PaneSection } from "@raabe/shell";
 
 /** What a section edits: an element's fill, line and effects (series, axes, the chart area …). */
@@ -17,23 +17,23 @@ export interface FmtTarget {
 }
 
 export const DASHES: { label: string; value: Dash }[] = [
-  { label: "Durchgehend", value: "solid" }, { label: "Rundpunkt", value: "sysDot" }, { label: "Quadratpunkt", value: "sysDash" },
-  { label: "Strich", value: "dash" }, { label: "Strich-Punkt", value: "dashDot" }, { label: "Langer Strich", value: "lgDash" },
-  { label: "Langer Strich-Punkt", value: "lgDashDot" }, { label: "Langer Strich-Punkt-Punkt", value: "lgDashDotDot" },
+  { label: "Uni", value: "solid" }, { label: "Runder Punkt", value: "sysDot" }, { label: "Viereckiger Punkt", value: "sysDash" },
+  { label: "Strich", value: "dash" }, { label: "Strichpunkt", value: "dashDot" }, { label: "Langer Strich", value: "lgDash" },
+  { label: "Langer Strichpunkt", value: "lgDashDot" }, { label: "Langer Strichpunkt-Punkt", value: "lgDashDotDot" },
 ];
 
 const COMPOUND = [
-  { label: "Einfach", value: "sng" }, { label: "Doppelt", value: "dbl" }, { label: "Dick-Dünn", value: "thickThin" }, { label: "Dünn-Dick", value: "thinThick" }, { label: "Dreifach", value: "tri" },
+  { label: "Einfach", value: "sng" }, { label: "Doppelt", value: "dbl" }, { label: "Dick Dünn", value: "thickThin" }, { label: "Dünn Dick", value: "thinThick" }, { label: "Dreifach", value: "tri" },
 ];
-const CAPS = [{ label: "Quadrat", value: "sq" }, { label: "Rund", value: "rnd" }, { label: "Flach", value: "flat" }];
-const JOINS = [{ label: "Rund", value: "round" }, { label: "Abgeschrägt", value: "bevel" }, { label: "Gehrung", value: "miter" }];
+const CAPS = [{ label: "Rechteckig", value: "sq" }, { label: "Rund", value: "rnd" }, { label: "Flach", value: "flat" }];
+const JOINS = [{ label: "Rund", value: "round" }, { label: "Abschrägung", value: "bevel" }, { label: "Winkel", value: "miter" }];
 const ARROWS = [
-  { label: "Kein Pfeil", value: "none" }, { label: "Pfeil", value: "triangle" }, { label: "Offener Pfeil", value: "arrow" }, { label: "Spitzer Pfeil", value: "stealth" },
-  { label: "Rautenförmiger Pfeil", value: "diamond" }, { label: "Ovaler Pfeil", value: "oval" },
+  { label: "Kein Pfeil", value: "none" }, { label: "Pfeil", value: "triangle" }, { label: "Offener Pfeil", value: "arrow" }, { label: "Rahmenpfeil", value: "stealth" },
+  { label: "Pfeil mit Raute", value: "diamond" }, { label: "Ovaler Pfeil", value: "oval" },
 ];
 const SIZES = ["sm", "med", "lg"] as const;
-const SIZE_NAME = { sm: "klein", med: "mittel", lg: "groß" };
-const ARROW_SIZES = SIZES.flatMap((w) => SIZES.map((len) => ({ label: `Breite ${SIZE_NAME[w]}, Länge ${SIZE_NAME[len]}`, value: `${w},${len}` })));
+/** Pfeilgröße 1-9: width small to large, each with length short to long (Excel's order). */
+const arrowSizes = (side: "L" | "R") => SIZES.flatMap((w, i) => SIZES.map((len, j) => ({ label: `Pfeil ${side} Größe ${i * 3 + j + 1}`, value: `${w},${len}` })));
 
 /** Excel's gradient directions of a linear Farbverlauf (Richtung) as angles. */
 const DIRECTIONS = [
@@ -151,12 +151,13 @@ function pictureControls(f: Fill, set: (f: Fill) => void): PaneControl[] {
 }
 
 /** The Füllung section. `extra` follows the type choice (Invertieren falls negativ, Punkte nach Farbe unterscheiden). */
-export function fillSection(t: FmtTarget, autoColor: string, extra: PaneControl[] = [], open = true): PaneSection {
+/** `withAuto` false: no Automatisch (Textfüllung), Einfarbige Füllung in the automatic colour is the default. */
+export function fillSection(t: FmtTarget, autoColor: string, extra: PaneControl[] = [], open = true, withAuto = true): PaneSection {
   return {
     title: "Füllung", open, controls: () => {
       const f = t.get()?.fill;
       const set = (fill: Fill | undefined) => t.change((x) => { if (fill) x.fill = fill; else delete x.fill; });
-      const type = f?.type ?? "auto";
+      const type = f?.type ?? (withAuto ? "auto" : "solid");
       const radio = (label: string, v: Fill["type"], make: () => Fill | undefined): PaneControl => ({ type: "radio", label, checked: () => type === v, pick: () => set(make()) });
       const color = f?.color ?? autoColor;
       const c: PaneControl[] = [
@@ -165,12 +166,13 @@ export function fillSection(t: FmtTarget, autoColor: string, extra: PaneControl[
         radio("Farbverlauf", "gradient", () => ({ type: "gradient", gradient: f?.gradient ?? defaultGradient(color) })),
         radio("Bild- oder Texturfüllung", "picture", () => ({ type: "picture", picture: f?.picture })),
         radio("Musterfüllung", "pattern", () => ({ type: "pattern", pattern: f?.pattern ?? { preset: "pct5", fg: color, bg: "#FFFFFF" } })),
-        radio("Automatisch", "auto", () => undefined),
+        ...(withAuto ? [radio("Automatisch", "auto", () => undefined)] : []),
         ...extra,
       ];
-      if (f?.type === "solid") {
-        c.push({ type: "color", label: "Farbe", value: () => f.color ?? null, set: (hex) => set({ ...f, color: hex ?? autoColor }) });
-        c.push({ type: "number", label: "Transparenz", unit: " %", min: 0, max: 100, slider: true, value: () => f.transparency ?? 0, set: (v) => set({ ...f, transparency: Math.round(v) || undefined }) });
+      if (type === "solid") {
+        const sf: Fill = f?.type === "solid" ? f : { type: "solid", color: autoColor };
+        c.push({ type: "color", label: "Farbe", value: () => sf.color ?? null, set: (hex) => set({ ...sf, color: hex ?? autoColor }) });
+        c.push({ type: "number", label: "Transparenz", unit: " %", min: 0, max: 100, slider: true, value: () => sf.transparency ?? 0, set: (v) => set({ ...sf, transparency: Math.round(v) || undefined }) });
       } else if (f?.type === "gradient" && f.gradient) {
         c.push(...gradientControls(`${t.key}/fill`, f.gradient, (g) => set({ type: "gradient", gradient: g })));
       } else if (f?.type === "picture") {
@@ -196,6 +198,8 @@ export interface LineOptions {
   /** Controls after the type choice or at the end (Abgerundete Ecken, Linie glätten). */
   extra?: PaneControl[];
   open?: boolean;
+  /** false: no Automatisch (Textkontur); no line is the default. */
+  withAuto?: boolean;
 }
 
 /** The Rahmen / Linie section. */
@@ -209,13 +213,13 @@ export function lineSection(t: FmtTarget, o: LineOptions): PaneSection {
         for (const k of Object.keys(next) as (keyof Line)[]) if (next[k] === undefined) delete next[k];
         set(next);
       };
-      const type = l?.type ?? "auto";
+      const type = l?.type ?? (o.withAuto === false ? "none" : "auto");
       const color = l?.color ?? o.autoColor;
       const c: PaneControl[] = [
-        { type: "radio", label: "Keine Linie", checked: () => type === "none", pick: () => set({ type: "none" }) },
+        { type: "radio", label: "Keine Linie", checked: () => type === "none", pick: () => set(o.withAuto === false ? undefined : { type: "none" }) },
         { type: "radio", label: "Einfarbige Linie", checked: () => type === "solid", pick: () => set({ ...l, type: "solid", color, width: l?.width ?? o.autoWidth }) },
         { type: "radio", label: "Farbverlaufslinie", checked: () => type === "gradient", pick: () => set({ ...l, type: "gradient", gradient: l?.gradient ?? defaultGradient(color), width: l?.width ?? o.autoWidth }) },
-        { type: "radio", label: "Automatisch", checked: () => type === "auto", pick: () => set(undefined) },
+        ...(o.withAuto === false ? [] : [{ type: "radio", label: "Automatisch", checked: () => type === "auto", pick: () => set(undefined) } as PaneControl]),
       ];
       if (type === "solid") {
         c.push({ type: "color", label: "Farbe", value: () => l?.color ?? null, set: (hex) => patch({ color: hex ?? o.autoColor }) });
@@ -223,7 +227,7 @@ export function lineSection(t: FmtTarget, o: LineOptions): PaneSection {
       }
       if (type === "gradient" && l?.gradient) c.push(...gradientControls(`${t.key}/line`, l.gradient, (g) => patch({ gradient: g })));
       if (type !== "none") {
-        c.push({ type: "number", label: "Breite", unit: " Pt.", min: 0, max: 1584, step: 0.25, decimals: 2, value: () => l?.width ?? o.autoWidth, set: (v) => patch({ width: v }) });
+        c.push({ type: "number", label: "Stärke", unit: " Pt.", min: 0, max: 1584, step: 0.25, decimals: 2, value: () => l?.width ?? o.autoWidth, set: (v) => patch({ width: v }) });
         c.push({ type: "select", label: "Verbundtyp", options: COMPOUND, value: () => l?.compound ?? "sng", set: (v) => patch({ compound: v === "sng" ? undefined : (v as Line["compound"]) }) });
         c.push({ type: "select", label: "Strichtyp", options: DASHES, value: () => l?.dash ?? "solid", set: (v) => patch({ dash: v === "solid" ? undefined : (v as Dash) }) });
         c.push({ type: "select", label: "Abschlusstyp", options: CAPS, value: () => l?.cap ?? "flat", set: (v) => patch({ cap: v === "flat" ? undefined : (v as Line["cap"]) }) });
@@ -233,11 +237,11 @@ export function lineSection(t: FmtTarget, o: LineOptions): PaneSection {
             const a = l?.[which];
             return [
               { type: "select", label, options: ARROWS, value: () => a?.type ?? "none", set: (v) => patch({ [which]: v === "none" ? undefined : { ...a, type: v as Arrow["type"] } }) },
-              { type: "select", label: sizeLabel, options: ARROW_SIZES, value: () => `${a?.w ?? "med"},${a?.len ?? "med"}`, disabled: () => !a,
+              { type: "select", label: sizeLabel, options: arrowSizes(which === "head" ? "L" : "R"), value: () => `${a?.w ?? "med"},${a?.len ?? "med"}`, disabled: () => !a,
                 set: (v) => { const [w, len] = v.split(",") as [Arrow["w"], Arrow["len"]]; if (a) patch({ [which]: { ...a, w, len } }); } },
             ];
           };
-          c.push(...arrow("head", "Anfangspfeiltyp", "Anfangspfeilgröße"), ...arrow("tail", "Endpfeiltyp", "Endpfeilgröße"));
+          c.push(...arrow("head", "Startpfeiltyp", "Startpfeilgröße"), ...arrow("tail", "Endpfeiltyp", "Endpfeilgröße"));
         }
       }
       c.push(...(o.extra ?? []));
@@ -247,39 +251,32 @@ export function lineSection(t: FmtTarget, o: LineOptions): PaneSection {
 }
 
 const SHADOWS: { label: string; value: string; s?: Effects["shadow"] }[] = [
-  { label: "Kein Schatten", value: "none" },
-  { label: "Außen: Versatz: unten rechts", value: "o-br", s: { color: "#000000", transparency: 60, size: 100, blur: 4, angle: 45, distance: 3 } },
-  { label: "Außen: Versatz: unten", value: "o-b", s: { color: "#000000", transparency: 60, size: 100, blur: 4, angle: 90, distance: 3 } },
-  { label: "Außen: Versatz: unten links", value: "o-bl", s: { color: "#000000", transparency: 60, size: 100, blur: 4, angle: 135, distance: 3 } },
-  { label: "Außen: Versatz: rechts", value: "o-r", s: { color: "#000000", transparency: 60, size: 100, blur: 4, angle: 0, distance: 3 } },
-  { label: "Außen: Versatz: Mitte", value: "o-c", s: { color: "#000000", transparency: 60, size: 102, blur: 5, angle: 0, distance: 0 } },
-  { label: "Außen: Versatz: oben rechts", value: "o-tr", s: { color: "#000000", transparency: 60, size: 100, blur: 4, angle: 315, distance: 3 } },
-  { label: "Innen: oben links", value: "i-tl", s: { inner: true, color: "#000000", transparency: 50, blur: 5, angle: 225, distance: 4 } },
-  { label: "Innen: Mitte", value: "i-c", s: { inner: true, color: "#000000", transparency: 0, blur: 9, angle: 0, distance: 0 } },
-  { label: "Innen: unten rechts", value: "i-br", s: { inner: true, color: "#000000", transparency: 50, blur: 5, angle: 45, distance: 4 } },
+  { label: "Ohne", value: "none" },
+  ...([["unten rechts", 45], ["unten", 90], ["unten links", 135], ["rechts", 0], ["Mitte", -1], ["links", 180], ["oben rechts", 315], ["oben", 270], ["oben links", 225]] as const).map(([n, a]) =>
+    ({ label: `Offset: ${n}`, value: `o-${n}`, s: a < 0 ? { color: "#000000", transparency: 60, size: 102, blur: 5, angle: 0, distance: 0 } : { color: "#000000", transparency: 60, size: 100, blur: 4, angle: a, distance: 3 } })),
+  ...([["oben links", 225], ["oben", 270], ["oben rechts", 315], ["links", 180], ["Mitte", -1], ["rechts", 0], ["unten links", 135], ["unten", 90], ["unten rechts", 45]] as const).map(([n, a]) =>
+    ({ label: `Innen: ${n}`, value: `i-${n}`, s: a < 0 ? { inner: true, color: "#000000", transparency: 0, blur: 9, angle: 0, distance: 0 } : { inner: true, color: "#000000", transparency: 50, blur: 5, angle: a, distance: 4 } })),
 ];
 
 const BEVELS = [
-  { label: "Ohne", value: "none" }, { label: "Kreis", value: "circle" }, { label: "Relief", value: "relaxedInset" }, { label: "Kreuz", value: "cross" },
-  { label: "Kühles Schräglicht", value: "coolSlant" }, { label: "Winkel", value: "angle" }, { label: "Weiche Rundung", value: "softRound" },
-  { label: "Konvex", value: "convex" }, { label: "Schräg", value: "slope" }, { label: "Absenken", value: "divot" }, { label: "Riblet", value: "riblet" },
-  { label: "Harte Kante", value: "hardEdge" }, { label: "Art Deco", value: "artDeco" },
+  { label: "Keine", value: "none" }, { label: "Rund", value: "circle" }, { label: "Leichte Absenkung", value: "relaxedInset" }, { label: "Säule", value: "cross" },
+  { label: "Schräge", value: "coolSlant" }, { label: "Starke Abschrägung", value: "angle" }, { label: "Weiche Abrundung", value: "softRound" },
+  { label: "Konvex", value: "convex" }, { label: "Silhouette", value: "slope" }, { label: "Ringförmige Absenkung", value: "divot" }, { label: "Säule auf abgerundetem Sockel", value: "riblet" },
+  { label: "Gewölbter Rand", value: "hardEdge" }, { label: "Rund konvex", value: "artDeco" },
 ];
 const MATERIALS = [
-  { label: "Standard: Matt", value: "matte" }, { label: "Standard: Warm matt", value: "warmMatte" }, { label: "Standard: Plastik", value: "plastic" },
-  { label: "Standard: Metall", value: "metal" }, { label: "Spezialeffekt: Dunkle Kante", value: "dkEdge" }, { label: "Spezialeffekt: Weiche Kante", value: "softEdge" },
-  { label: "Spezialeffekt: Flach", value: "flat" }, { label: "Spezialeffekt: Drahtmodell", value: "legacyWireframe" }, { label: "Durchsichtig: Puder", value: "powder" },
-  { label: "Durchsichtig: Durchsichtiges Pulver", value: "translucentPowder" }, { label: "Durchsichtig: Klar", value: "clear" },
+  { label: "Matt", value: "matte" }, { label: "Warm matt", value: "warmMatte" }, { label: "Plastik", value: "plastic" }, { label: "Metall", value: "metal" },
+  { label: "Dunkle Kante", value: "dkEdge" }, { label: "Helle Kante", value: "softEdge" }, { label: "Flach", value: "flat" }, { label: "Drahtmodell", value: "legacyWireframe" },
+  { label: "Pulver", value: "powder" }, { label: "Durchsichtiges Pulver", value: "translucentPowder" }, { label: "Transparent", value: "clear" },
 ];
 const LIGHTS = [
-  { label: "Neutral: Dreipunkt", value: "threePt" }, { label: "Neutral: Ausgewogen", value: "balanced" }, { label: "Neutral: Weich", value: "soft" },
-  { label: "Neutral: Hart", value: "harsh" }, { label: "Neutral: Flutlicht", value: "flood" }, { label: "Neutral: Kontrastreich", value: "contrasting" },
-  { label: "Warm: Morgen", value: "morning" }, { label: "Warm: Sonnenaufgang", value: "sunrise" }, { label: "Warm: Sonnenuntergang", value: "sunset" },
-  { label: "Kalt: Kühl", value: "chilly" }, { label: "Kalt: Frost", value: "freezing" }, { label: "Speziell: Flach", value: "flat" }, { label: "Speziell: Zwei Punkte", value: "twoPt" },
-  { label: "Speziell: Leuchten", value: "glow" }, { label: "Speziell: Hell", value: "brightRoom" },
+  { label: "Drei Lichtpunkte", value: "threePt" }, { label: "Gleichmäßig", value: "balanced" }, { label: "Weich", value: "soft" }, { label: "Hart", value: "harsh" },
+  { label: "Flutlicht", value: "flood" }, { label: "Kontrast", value: "contrasting" }, { label: "Früher Morgen", value: "morning" }, { label: "Sonnenaufgang", value: "sunrise" },
+  { label: "Sonnenuntergang", value: "sunset" }, { label: "Kühl", value: "chilly" }, { label: "Kalt", value: "freezing" }, { label: "Flach", value: "flat" },
+  { label: "Zwei Lichtpunkte", value: "twoPt" }, { label: "Leuchteffekt", value: "glow" }, { label: "Heller Raum", value: "brightRoom" },
 ];
 
-export interface EffectOptions { shadow?: boolean; glow?: boolean; soft?: boolean; format3d?: boolean; autoColor: string }
+export interface EffectOptions { shadow?: boolean; glow?: boolean; soft?: boolean; format3d?: boolean; reflection?: boolean; autoColor: string }
 
 /** The Effekte tab's sections. */
 export function effectSections(t: FmtTarget, o: EffectOptions): PaneSection[] {
@@ -306,12 +303,31 @@ export function effectSections(t: FmtTarget, o: EffectOptions): PaneSection[] {
     ];
     return c;
   } });
+  if (o.reflection) out.push({ title: "Spiegelung", controls: () => {
+    const r = fx()?.reflection;
+    // Enge, Halbe and Volle Spiegelung (size 35, 55, 90 %), touching or 4 / 8 Pt. away (Excel's gallery).
+    const kinds: [string, number][] = [["Enge Spiegelung", 35], ["Halbe Spiegelung", 55], ["Volle Spiegelung", 90]];
+    const gaps: [string, number][] = [["mit Berührung", 0], ["4 Pt. Offset", 4], ["8 Pt. Offset", 8]];
+    const presets = gaps.flatMap(([g, d]) => kinds.map(([k, size]) => ({ label: `${k}: ${g}`, value: `${size},${d}` })));
+    const current = r ? `${r.size},${r.distance}` : "none";
+    const patch = (p: Partial<NonNullable<Effects["reflection"]>>) => set({ reflection: { transparency: 50, size: 55, blur: 0.5, distance: 0, ...r, ...p } });
+    return [
+      { type: "select", label: "Voreinstellungen", options: [{ label: "Ohne", value: "none" }, ...presets, ...(r && !presets.some((p) => p.value === current) ? [{ label: "Benutzerdefiniert", value: current }] : [])],
+        value: () => current, set: (v) => { if (v === "none") set({ reflection: undefined }); else { const [size, distance] = v.split(",").map(Number); set({ reflection: { transparency: 50, size, blur: 0.5, distance } }); } } },
+      { type: "number", label: "Transparenz", unit: " %", min: 0, max: 100, slider: true, value: () => r?.transparency ?? 50, set: (v) => patch({ transparency: Math.round(v) }) },
+      { type: "number", label: "Größe", unit: " %", min: 0, max: 100, slider: true, value: () => r?.size ?? 0, set: (v) => patch({ size: Math.round(v) }) },
+      { type: "number", label: "Weichzeichnen", unit: " Pt.", min: 0, max: 100, slider: true, value: () => r?.blur ?? 0, set: (v) => patch({ blur: v }) },
+      { type: "number", label: "Abstand", unit: " Pt.", min: 0, max: 100, slider: true, value: () => r?.distance ?? 0, set: (v) => patch({ distance: v }) },
+    ];
+  } });
   if (o.glow !== false) out.push({ title: "Leuchten", controls: () => {
     const g = fx()?.glow;
-    const presets = [0, 5, 8, 11, 18];
+    // Leuchteffekt in 5, 8, 11 and 18 Pt. in each accent (60 % transparent), as Excel's gallery.
+    const presets = [5, 8, 11, 18].flatMap((size) => OFFICE_ACCENTS.map((color, k) => ({ label: `Leuchteffekt: ${size} Pt.; Akzentfarbe ${k + 1}`, value: `${size},${color}` })));
+    const current = g ? `${g.size},${g.color}` : "none";
     return [
-      { type: "select", label: "Voreinstellungen", options: presets.map((p) => ({ label: p ? `Leuchten: ${p} Pt.` : "Kein Leuchten", value: String(p) })),
-        value: () => String(g?.size ?? 0), set: (v) => set({ glow: Number(v) ? { color: g?.color ?? o.autoColor, size: Number(v), transparency: g?.transparency ?? 60 } : undefined }) },
+      { type: "select", label: "Voreinstellungen", options: [{ label: "Ohne", value: "none" }, ...presets, ...(g && !presets.some((p) => p.value === current) ? [{ label: "Benutzerdefiniert", value: current }] : [])],
+        value: () => current, set: (v) => { if (v === "none") set({ glow: undefined }); else { const [size, color] = v.split(","); set({ glow: { color, size: Number(size), transparency: 60 } }); } } },
       { type: "color", label: "Farbe", value: () => g?.color ?? o.autoColor, set: (hex) => set({ glow: { size: g?.size ?? 5, transparency: g?.transparency ?? 60, color: hex ?? o.autoColor } }) },
       { type: "number", label: "Größe", unit: " Pt.", min: 0, max: 150, slider: true, value: () => g?.size ?? 0, set: (v) => set({ glow: v ? { color: g?.color ?? o.autoColor, transparency: g?.transparency ?? 60, size: v } : undefined }) },
       { type: "number", label: "Transparenz", unit: " %", min: 0, max: 100, slider: true, value: () => g?.transparency ?? 60, set: (v) => set({ glow: { color: g?.color ?? o.autoColor, size: g?.size ?? 5, transparency: Math.round(v) } }) },
@@ -321,7 +337,7 @@ export function effectSections(t: FmtTarget, o: EffectOptions): PaneSection[] {
     const v = fx()?.softEdges ?? 0;
     const presets = [0, 1, 2.5, 5, 10, 25, 50];
     return [
-      { type: "select", label: "Voreinstellungen", options: presets.map((p) => ({ label: p ? `${String(p).replace(".", ",")} Pt.` : "Keine weichen Kanten", value: String(p) })),
+      { type: "select", label: "Voreinstellungen", options: presets.map((p) => ({ label: p ? `${String(p).replace(".", ",")} Punkt` : "Keine", value: String(p) })),
         value: () => String(presets.includes(v) ? v : 0), set: (x) => set({ softEdges: Number(x) || undefined }) },
       { type: "number", label: "Größe", unit: " Pt.", min: 0, max: 100, slider: true, value: () => v, set: (x) => set({ softEdges: x || undefined }) },
     ];
@@ -343,10 +359,10 @@ export function effectSections(t: FmtTarget, o: EffectOptions): PaneSection[] {
     };
     return [
       ...bevel("top", "Abschrägung oben"), ...bevel("bottom", "Abschrägung unten"),
-      { type: "color", label: "Farbe der Tiefe", value: () => f?.depth?.color ?? null, set: (hex) => set3({ depth: { size: f?.depth?.size ?? 0, ...(hex ? { color: hex } : {}) } }) },
-      { type: "number", label: "Tiefe", unit: " Pt.", min: 0, max: 1584, value: () => f?.depth?.size ?? 0, set: (v) => set3({ depth: v ? { ...f?.depth, size: v } : undefined }) },
-      { type: "color", label: "Konturfarbe", value: () => f?.contour?.color ?? null, set: (hex) => set3({ contour: { size: f?.contour?.size ?? 0, ...(hex ? { color: hex } : {}) } }) },
-      { type: "number", label: "Kontur", unit: " Pt.", min: 0, max: 1584, value: () => f?.contour?.size ?? 0, set: (v) => set3({ contour: v ? { ...f?.contour, size: v } : undefined }) },
+      { type: "color", label: "Tiefe", value: () => f?.depth?.color ?? null, set: (hex) => set3({ depth: { size: f?.depth?.size ?? 0, ...(hex ? { color: hex } : {}) } }) },
+      { type: "number", label: "Größe", unit: " Pt.", min: 0, max: 1584, value: () => f?.depth?.size ?? 0, set: (v) => set3({ depth: v ? { ...f?.depth, size: v } : undefined }) },
+      { type: "color", label: "Kontur", value: () => f?.contour?.color ?? null, set: (hex) => set3({ contour: { size: f?.contour?.size ?? 0, ...(hex ? { color: hex } : {}) } }) },
+      { type: "number", label: "Größe", unit: " Pt.", min: 0, max: 1584, value: () => f?.contour?.size ?? 0, set: (v) => set3({ contour: v ? { ...f?.contour, size: v } : undefined }) },
       { type: "select", label: "Material", options: MATERIALS, value: () => f?.material ?? "warmMatte", set: (v) => set3({ material: v === "warmMatte" ? undefined : v }) },
       { type: "select", label: "Beleuchtung", options: LIGHTS, value: () => f?.lighting ?? "threePt", set: (v) => set3({ lighting: v === "threePt" ? undefined : v }) },
       { type: "button", label: "Zurücksetzen", run: () => set({ format3d: undefined }) },

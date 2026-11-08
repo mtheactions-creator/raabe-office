@@ -41,6 +41,8 @@ export type Prim =
   | {
       t: "text"; x: number; y: number; text: string; size: number; fill: string; anchor: "start" | "middle" | "end"; rotate?: number; part?: string; bold?: boolean; italic?: boolean;
       underline?: boolean; strike?: boolean; font?: string; outline?: Stroke; filter?: string;
+      /** Spiegelung: a mirrored copy below the baseline. */
+      reflection?: { opacity: number; dist: number; blur: number };
     };
 
 export interface Box { x: number; y: number; w: number; h: number }
@@ -214,6 +216,22 @@ function buildScene(m: ChartModel, W: number, H: number, opts: RenderOptions): S
   else if (info.d3 && info.family !== "bubble") scene = draw3D(c, area);
   else scene = drawAxes(c, area);
   c.parts.push({ name: "plot", box: scene.plot });
+  // An axis' own Füllung (and Effekte): a box under its labels, as Excel fills the axis' label area.
+  for (const [key, part] of [["valAxis", "axis:val"], ["catAxis", "axis:cat"], ["valAxis2", "axis:val2"]] as const) {
+    const o = m.format?.[key];
+    const fl = fillPaint(o?.fill, undefined);
+    if (!fl || fl === "none") continue;
+    const at = c.prims.findIndex((p) => p.part === part && p.t === "text");
+    if (at < 0) continue;
+    let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+    for (const p of c.prims) {
+      if (p.part !== part || p.t !== "text") continue;
+      const w = c.measure(p.text, p.size);
+      const l = p.anchor === "start" ? p.x : p.anchor === "end" ? p.x - w : p.x - w / 2;
+      x0 = Math.min(x0, l - 1); x1 = Math.max(x1, l + w + 1); y0 = Math.min(y0, p.y - p.size * 0.8); y1 = Math.max(y1, p.y + p.size * 0.25);
+    }
+    c.prims.splice(at, 0, { t: "rect", x: x0, y: y0, w: x1 - x0, h: y1 - y0, fill: fl, part });
+  }
   return { width: W, height: H, prims: c.prims, parts: c.parts, ...scene };
 }
 
@@ -595,8 +613,8 @@ function axisScale(lo: number, hi: number, o: AxisOptions | undefined, limit: nu
 
 const Z_ORDER: Record<string, number> = { area: 0, bar: 1, stock: 2, line: 3 };
 
-/** Teilstriche: the length of a major and a minor tick mark in pt (Excel). */
-export const TICK_MAJOR = 3.75, TICK_MINOR = 2.25;
+/** Teilstriche: the length of a major and a minor tick mark in pt beyond the axis line (Excel's PDF export, results/2026-11-09-excel-chart-pane.json). */
+export const TICK_MAJOR = 2.75, TICK_MINOR = 2.05;
 
 /** Excel's serial date to a JS date (UTC) and back (1900 system). */
 const serialToDate = (v: number) => new Date(Date.UTC(1899, 11, 30) + Math.round(v) * 86400000);
@@ -750,7 +768,7 @@ function drawAxes(c: Ctx, area: { left: number; right: number; top: number; bott
     // Below the plot: its labels (22.6 pt to the legend or the chart's edge) and an axis title.
     const bottomTitle = (hasCatTitle && !bar) || (hasValTitle && bar);
     const hSize = bar ? vt0.size : ct0.size;
-    const hRoom = (hTexts.some((t) => t) ? 22.6 + (hSize - LOOK.labelSize) + (bar ? 0 : (offset - 1) * 7.25) : 10.5)
+    const hRoom = (hTexts.some((t) => t) ? 22.6 + (hSize - LOOK.labelSize) + (bar ? 0 : (offset - 1) * 2.92) : 10.5)
       + (catRot && !bar ? Math.max(0, ...hTexts.map((t) => c.measure(t, hSize))) * Math.abs(Math.sin((catRot * Math.PI) / 180)) : 0)
       + (unitLabel && bar ? 12 : 0);
     const bottom = area.bottom - (hEnd ? 10.5 : hRoom) - (bottomTitle ? titleRoom + 2 : 0);
@@ -921,12 +939,14 @@ function drawAxes(c: Ctx, area: { left: number; right: number; top: number; bott
   const spacing = step * lblSkip;
   const rotate = catRot !== undefined ? catRot !== 0 : !bar && maxCatW > spacing - 2 && catLabels.filter(Boolean).length > 1;
   const rot = catRot ?? -45;
-  const gap = 7.25 * offset;
+  // Abstand zur Achse: 2.92 pt per 100 (Excel's PDF export: baselines 10.83 / 13.75 / 25.45 pt below the axis at 0 / 100 / 500).
+  const gap = 4.33 + 2.92 * offset;
   catLabels.forEach((t, i) => {
     if (!t) return;
     const p = catAt(i);
     if (bar) {
-      const x = catOutward > 0 ? catLabelAt + LABEL_GAP * offset : catLabelAt - LABEL_GAP * offset;
+      const lg = LABEL_GAP - 3 + 3 * offset;
+      const x = catOutward > 0 ? catLabelAt + lg : catLabelAt - lg;
       c.prims.push({ t: "text", x, y: p + 3.2, text: t, ...textAttrs(ct), anchor: catOutward > 0 ? "start" : "end", ...(catRot ? { rotate: catRot } : {}), part: "axis:cat" });
     } else if (rotate) {
       const y = catOutward > 0 ? catLabelAt - gap : catLabelAt + gap;
@@ -1421,6 +1441,12 @@ export function sceneMarkup(scene: Scene): string {
       const wt = `${p.bold ? ' font-weight="bold"' : ""}${p.italic ? ' font-style="italic"' : ""}${deco ? ` text-decoration="${deco}"` : ""}${p.font ? ` font-family="${esc(p.font)}"` : ""}`;
       const ol = p.outline?.stroke ? ` stroke="${p.outline.stroke}" stroke-width="${f(p.outline.sw ?? 0.75)}" paint-order="stroke"${p.outline.dash ? ` stroke-dasharray="${p.outline.dash}"` : ""}` : "";
       out.push(`<text x="${f(p.x)}" y="${f(p.y)}" font-size="${p.size}" fill="${p.fill}" text-anchor="${p.anchor}"${wt}${ol}${p.filter ? ` filter="${p.filter}"` : ""}${tr}${part(p)}>${esc(p.text)}</text>`);
+      if (p.reflection) {
+        // Mirrored at the line just below the text's descent, fading with its transparency.
+        const axis = p.y + p.size * 0.22 + p.reflection.dist;
+        const mirror = `matrix(1 0 0 -1 0 ${f(2 * axis)})${p.rotate ? ` rotate(${p.rotate} ${f(p.x)} ${f(p.y)})` : ""}`;
+        out.push(`<text x="${f(p.x)}" y="${f(p.y)}" font-size="${p.size}" fill="${p.fill}" text-anchor="${p.anchor}"${wt} opacity="${p.reflection.opacity * 0.5}" transform="${mirror}"${part(p)}>${esc(p.text)}</text>`);
+      }
       continue;
     }
     const filter = p.filter ? ` filter="${p.filter}"` : "";

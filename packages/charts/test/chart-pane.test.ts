@@ -50,7 +50,7 @@ describe("the value axis and its tick marks", () => {
     expect(Math.max(...out[0])).toBeCloseTo(ax, 1);
     expect(Math.min(...inn[0])).toBeCloseTo(ax, 1);
     expect(Math.max(...inn[0])).toBeGreaterThan(ax);
-    expect(Math.abs(cross[0][1] - cross[0][0])).toBeCloseTo(7.5, 1);
+    expect(Math.abs(cross[0][1] - cross[0][0])).toBeCloseTo(5.5, 1);
     // No line: no tick marks either (Excel draws them with the axis' line).
     expect(paths(chart("column", { format: { valAxis: { majorTick: "out" } } }), "axis:val")).toHaveLength(0);
   });

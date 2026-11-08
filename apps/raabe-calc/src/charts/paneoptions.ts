@@ -6,7 +6,7 @@ import { isPie, isScatter, kindInfo, barDefaults, type AxisOptions, type ChartMo
 import type { PaneControl, PaneSection } from "@raabe/shell";
 import type { PaneHost } from "./formatpane";
 
-const TICKS = [{ label: "Keine", value: "none" }, { label: "Innen", value: "in" }, { label: "Außen", value: "out" }, { label: "Kreuz", value: "cross" }];
+const TICKS = [{ label: "Ohne", value: "none" }, { label: "Innen", value: "in" }, { label: "Außen", value: "out" }, { label: "Kreuz", value: "cross" }];
 
 const DISPLAY_UNITS = [
   { label: "Ohne", value: "" }, { label: "Hunderte", value: "hundreds" }, { label: "Tausende", value: "thousands" }, { label: "10000", value: "tenThousands" },
@@ -21,11 +21,12 @@ const NUMBER_CATEGORIES: { label: string; value: string; code: (d: number) => st
   { label: "Währung", value: "currency", code: (d) => `#,##0${d ? "." + "0".repeat(d) : ""} "€"`, decimals: true },
   { label: "Buchhaltung", value: "accounting", code: (d) => `_-* #,##0${d ? "." + "0".repeat(d) : ""} "€"_-;-* #,##0${d ? "." + "0".repeat(d) : ""} "€"_-;_-* "-"?? "€"_-;_-@_-`, decimals: true },
   { label: "Datum", value: "date", code: () => "dd.mm.yyyy" },
-  { label: "Uhrzeit", value: "time", code: () => "hh:mm:ss" },
-  { label: "Prozent", value: "percent", code: (d) => `0${d ? "." + "0".repeat(d) : ""}%`, decimals: true },
+  { label: "Zeit", value: "time", code: () => "hh:mm:ss" },
+  { label: "Prozentsatz", value: "percent", code: (d) => `0${d ? "." + "0".repeat(d) : ""}%`, decimals: true },
   { label: "Bruch", value: "fraction", code: () => "# ?/?" },
   { label: "Wissenschaftlich", value: "scientific", code: (d) => `0${d ? "." + "0".repeat(d) : ""}E+00`, decimals: true },
   { label: "Text", value: "text", code: () => "@" },
+  { label: "Sonderformat", value: "special", code: () => "00000" },
   { label: "Benutzerdefiniert", value: "custom", code: () => "" },
 ];
 
@@ -44,12 +45,12 @@ export function numberSection(get: () => string | undefined, set: (code: string 
     const { cat, decimals } = categoryOf(code);
     const info = NUMBER_CATEGORIES.find((c) => c.value === cat)!;
     const c: PaneControl[] = [
-      { type: "select", label: "Kategorie", options: NUMBER_CATEGORIES.map(({ label, value }) => ({ label, value })), value: () => cat,
+      { type: "select", label: "Rubrik", options: NUMBER_CATEGORIES.map(({ label, value }) => ({ label, value })), value: () => cat,
         set: (v) => { const k = NUMBER_CATEGORIES.find((x) => x.value === v)!; if (v === "custom") return; set(k.code(k.decimals ? 2 : 0)); } },
     ];
     if (info.decimals) c.push({ type: "number", label: "Dezimalstellen", min: 0, max: 30, value: () => decimals, set: (v) => set(info.code(Math.round(v))) });
     c.push({ type: "text", label: "Formatcode", value: () => code ?? "Standard", set: (v) => set(v && v !== "Standard" ? v : undefined) });
-    c.push({ type: "check", label: "Mit Quelle verknüpfen", value: () => code === undefined, set: (on) => set(on ? undefined : "General") });
+    c.push({ type: "check", label: "Mit Quelle verknüpft", value: () => code === undefined, set: (on) => set(on ? undefined : "General") });
     return c;
   } };
 }
@@ -76,8 +77,8 @@ export function axisSections(m: ChartModel, which: "valAxis" | "catAxis" | "valA
     const bar = kindInfo(m.kind).dir === "bar";
     const otherName = which === "valAxis2" ? "Horizontale Achse schneidet" : scatter && which === "catAxis" ? "Vertikale Achse schneidet" : bar ? "Vertikale Achse schneidet" : "Horizontale Achse schneidet";
     out.push({ title: "Achsenoptionen", open: true, controls: () => [
-      { type: "heading", label: "Begrenzungen" }, bound("Minimum", "min"), bound("Maximum", "max"),
-      { type: "heading", label: "Einheiten" }, bound("Haupt", "majorUnit"), bound("Hilfs", "minorUnit"),
+      { type: "heading", label: "Grenzen" }, bound("Minimum", "min"), bound("Maximum", "max"),
+      { type: "heading", label: "Einheiten" }, bound("Hauptstriche", "majorUnit"), bound("Teilstriche", "minorUnit"),
       { type: "heading", label: otherName },
       { type: "radio", label: "Automatisch", checked: () => crosses() === undefined || crosses() === "auto", pick: () => setCross(undefined) },
       { type: "radio", label: "Achsenwert", checked: () => typeof crosses() === "number", pick: () => setCross(0) },
@@ -85,7 +86,7 @@ export function axisSections(m: ChartModel, which: "valAxis" | "catAxis" | "valA
       { type: "radio", label: "Maximaler Achsenwert", checked: () => crosses() === "max", pick: () => setCross("max") },
       { type: "select", label: "Anzeigeeinheiten", options: DISPLAY_UNITS, value: () => (typeof o()?.dispUnits === "string" ? (o()!.dispUnits as string) : ""),
         set: (v) => set({ dispUnits: (v || undefined) as AxisOptions["dispUnits"], dispUnitsLabel: undefined }) },
-      { type: "check", label: "Anzeigeeinheitenbeschriftung im Diagramm anzeigen", value: () => o()?.dispUnits !== undefined && o()?.dispUnitsLabel !== false,
+      { type: "check", label: "Beschriftung der Anzeigeeinheiten im Diagramm anzeigen", value: () => o()?.dispUnits !== undefined && o()?.dispUnitsLabel !== false,
         set: (on) => set({ dispUnitsLabel: on ? undefined : false }), disabled: () => o()?.dispUnits === undefined },
       { type: "check", label: "Logarithmische Skalierung", value: () => !!o()?.logBase, set: (on) => set({ logBase: on ? 10 : undefined }) },
       { type: "number", label: "Basis", min: 2, max: 1000, value: () => o()?.logBase ?? 10, set: (v: number) => set({ logBase: v }), disabled: () => !o()?.logBase },
@@ -95,21 +96,21 @@ export function axisSections(m: ChartModel, which: "valAxis" | "catAxis" | "valA
     out.push({ title: "Achsenoptionen", open: true, controls: () => {
       const c: PaneControl[] = [
         { type: "heading", label: "Achsentyp" },
-        { type: "radio", label: "Automatisch aus Daten auswählen", checked: () => !o()?.axisType || o()?.axisType === "auto", pick: () => set({ axisType: undefined }) },
+        { type: "radio", label: "Automatische Auswahl basierend auf Daten", checked: () => !o()?.axisType || o()?.axisType === "auto", pick: () => set({ axisType: undefined }) },
         { type: "radio", label: "Textachse", checked: () => o()?.axisType === "text", pick: () => set({ axisType: "text" }) },
         { type: "radio", label: "Datumsachse", checked: () => o()?.axisType === "date", pick: () => set({ axisType: "date" }) },
       ];
       if (dateAxis) {
         const unit = (label: string, key: "baseTimeUnit" | "majorTimeUnit") => ({ type: "select", label, options: [{ label: "Tage", value: "days" }, { label: "Monate", value: "months" }, { label: "Jahre", value: "years" }],
           value: () => o()?.[key] ?? "days", set: (v: string) => set({ [key]: v as AxisOptions["baseTimeUnit"] }) } as PaneControl);
-        c.push({ type: "heading", label: "Begrenzungen" }, bound("Minimum", "min"), bound("Maximum", "max"), { type: "heading", label: "Einheiten" }, bound("Haupt", "majorUnit"), unit("Haupteinheit", "majorTimeUnit"), unit("Basis", "baseTimeUnit"));
+        c.push({ type: "heading", label: "Grenzen" }, bound("Minimum", "min"), bound("Maximum", "max"), { type: "heading", label: "Einheiten" }, bound("Hauptstriche", "majorUnit"), unit("Haupteinheit", "majorTimeUnit"), unit("Basis", "baseTimeUnit"));
       }
       c.push(
-        { type: "heading", label: "Vertikale Achse schneidet" },
+        { type: "heading", label: kindInfo(m.kind).dir === "bar" ? "Horizontale Achse schneidet" : "Vertikale Achse schneidet" },
         { type: "radio", label: "Automatisch", checked: () => crosses() === undefined, pick: () => setCross(undefined) },
-        { type: "radio", label: dateAxis ? "Bei Datum" : "Bei Kategorienummer", checked: () => typeof crosses() === "number", pick: () => setCross(1) },
-        { type: "number", label: dateAxis ? "Datum" : "Kategorienummer", min: 1, value: () => (typeof crosses() === "number" ? (crosses() as number) : 1), set: (v: number) => setCross(Math.max(1, Math.round(v))), disabled: () => typeof crosses() !== "number" },
-        { type: "radio", label: dateAxis ? "Bei maximalem Datum" : "Bei größter Kategorie", checked: () => crosses() === "max", pick: () => setCross("max") },
+        { type: "radio", label: dateAxis ? "Bei Datum" : "Bei Rubriknummer", checked: () => typeof crosses() === "number", pick: () => setCross(1) },
+        { type: "number", label: dateAxis ? "Datum" : "Bei Rubriknummer", min: 1, value: () => (typeof crosses() === "number" ? (crosses() as number) : 1), set: (v: number) => setCross(Math.max(1, Math.round(v))), disabled: () => typeof crosses() !== "number" },
+        { type: "radio", label: dateAxis ? "Bei maximalem Datum" : "Bei größter Rubrik", checked: () => crosses() === "max", pick: () => setCross("max") },
       );
       if (!dateAxis) c.push(
         { type: "heading", label: "Achsenposition" },
@@ -132,11 +133,11 @@ export function axisSections(m: ChartModel, which: "valAxis" | "catAxis" | "valA
         { type: "heading", label: "Intervall zwischen Beschriftungen" },
         { type: "radio", label: "Automatisch", checked: () => o()?.tickLblSkip === undefined, pick: () => set({ tickLblSkip: undefined }) },
         { type: "radio", label: "Intervalleinheit angeben", checked: () => o()?.tickLblSkip !== undefined, pick: () => set({ tickLblSkip: 1 }) },
-        { type: "number", label: "Intervalleinheit", min: 1, max: 31999, value: () => o()?.tickLblSkip ?? 1, set: (v) => set({ tickLblSkip: Math.max(1, Math.round(v)) }), disabled: () => o()?.tickLblSkip === undefined },
+        { type: "number", label: "Intervalleinheit angeben", min: 1, max: 31999, value: () => o()?.tickLblSkip ?? 1, set: (v) => set({ tickLblSkip: Math.max(1, Math.round(v)) }), disabled: () => o()?.tickLblSkip === undefined },
       );
     }
-    if (which === "catAxis" && !scatter) c.push({ type: "number", label: "Abstand von Achse", min: 0, max: 1000, value: () => o()?.lblOffset ?? 100, set: (v) => set({ lblOffset: Math.round(v) === 100 ? undefined : Math.round(v) }) });
-    c.push({ type: "select", label: "Beschriftungsposition", options: [{ label: "Achsennah", value: "nextTo" }, { label: "Hoch", value: "high" }, { label: "Niedrig", value: "low" }, { label: "Keine", value: "none" }],
+    if (which === "catAxis" && !scatter) c.push({ type: "number", label: "Abstand zur Achse", min: 0, max: 1000, value: () => o()?.lblOffset ?? 100, set: (v) => set({ lblOffset: Math.round(v) === 100 ? undefined : Math.round(v) }) });
+    c.push({ type: "select", label: "Beschriftungsposition", options: [{ label: "Achsennah", value: "nextTo" }, { label: "Hoch", value: "high" }, { label: "Niedrig", value: "low" }, { label: "Ohne", value: "none" }],
       value: () => o()?.labelPos ?? "nextTo", set: (v) => set({ labelPos: v === "nextTo" ? undefined : (v as AxisOptions["labelPos"]) }) });
     return c;
   } });
@@ -166,15 +167,16 @@ function axisChoice(m: ChartModel, i: number, host: PaneHost): PaneControl[] {
 export function seriesSections(m: ChartModel, i: number, host: PaneHost): PaneSection[] {
   const fam = kindInfo(m.series[i]?.kind ?? m.kind).family;
   if (isPie(m.kind)) {
-    return [{ title: "Datenreihenoptionen", open: true, controls: () => [
-      { type: "number", label: "Winkel des ersten Kreissegments", unit: "°", min: 0, max: 360, slider: true, value: () => m.firstSliceAngle ?? 0, set: (v) => host.edit((c) => { c.firstSliceAngle = Math.round(v) || undefined; }) },
-      { type: "number", label: m.kind === "doughnut" ? "Ringexplosion" : "Punktexplosion", unit: " %", min: 0, max: 400, slider: true, value: () => m.series[i]?.explosion ?? 0, set: (v) => host.edit((c) => { c.series[i].explosion = Math.round(v) || undefined; }) },
+    return [{ title: "Reihenoptionen", open: true, controls: () => [
+      ...axisChoice(m, i, host),
+      { type: "number", label: "Winkel des ersten Segments", unit: "°", min: 0, max: 360, slider: true, value: () => m.firstSliceAngle ?? 0, set: (v) => host.edit((c) => { c.firstSliceAngle = Math.round(v) || undefined; }) },
+      { type: "number", label: m.kind === "doughnut" ? "Ringexplosion" : "Kreisexplosion", unit: " %", min: 0, max: 400, slider: true, value: () => m.series[i]?.explosion ?? 0, set: (v) => host.edit((c) => { c.series[i].explosion = Math.round(v) || undefined; }) },
       ...(m.kind === "doughnut" ? [{ type: "number", label: "Innenringgröße", unit: " %", min: 10, max: 90, slider: true, value: () => m.holeSize ?? 75, set: (v: number) => host.edit((c) => { c.holeSize = Math.round(v) === 75 ? undefined : Math.round(v); }) } as PaneControl] : []),
     ] }];
   }
   const d = barDefaults(m.kind);
   const bars = fam === "bar";
-  return [{ title: "Datenreihenoptionen", open: true, controls: () => [
+  return [{ title: "Reihenoptionen", open: true, controls: () => [
     ...axisChoice(m, i, host),
     ...(bars ? [
       { type: "number", label: "Reihenachsenüberlappung", unit: " %", min: -100, max: 100, slider: true, value: () => m.overlap ?? d.overlap ?? 0, set: (v: number) => host.edit((c) => { c.overlap = Math.round(v); }) } as PaneControl,
@@ -186,8 +188,9 @@ export function seriesSections(m: ChartModel, i: number, host: PaneHost): PaneSe
 export function pointSections(m: ChartModel, i: number, k: number, host: PaneHost): PaneSection[] {
   if (isPie(m.kind)) {
     const p = () => m.series[i]?.points?.find((x) => x.idx === k);
-    return [{ title: "Datenpunktoptionen", open: true, controls: () => [
-      { type: "number", label: "Winkel des ersten Kreissegments", unit: "°", min: 0, max: 360, slider: true, value: () => m.firstSliceAngle ?? 0, set: (v) => host.edit((c) => { c.firstSliceAngle = Math.round(v) || undefined; }) },
+    return [{ title: "Reihenoptionen", open: true, controls: () => [
+      ...axisChoice(m, i, host),
+      { type: "number", label: "Winkel des ersten Segments", unit: "°", min: 0, max: 360, slider: true, value: () => m.firstSliceAngle ?? 0, set: (v) => host.edit((c) => { c.firstSliceAngle = Math.round(v) || undefined; }) },
       { type: "number", label: "Punktexplosion", unit: " %", min: 0, max: 400, slider: true, value: () => p()?.explosion ?? m.series[i]?.explosion ?? 0,
         set: (v) => host.edit((c) => {
           const s = c.series[i];
@@ -199,7 +202,7 @@ export function pointSections(m: ChartModel, i: number, k: number, host: PaneHos
         }) },
     ] }];
   }
-  return seriesSections(m, i, host).map((s) => ({ ...s, title: "Datenpunktoptionen" }));
+  return seriesSections(m, i, host);
 }
 
 export function labelSections(m: ChartModel, host: PaneHost): PaneSection[] {
@@ -211,9 +214,9 @@ export function labelSections(m: ChartModel, host: PaneHost): PaneSection[] {
   });
   const fam = kindInfo(m.kind).family;
   const pie = isPie(m.kind), bars = fam === "bar", stacked = kindInfo(m.kind).grouping === "stacked" || kindInfo(m.kind).grouping === "percentStacked";
-  const positions: [DataLabelOptions["pos"], string][] = pie ? [["ctr", "Zentriert"], ["inEnd", "Am inneren Ende"], ["outEnd", "Am äußeren Ende"], ["bestFit", "Optimale Anpassung"]]
-    : bars ? [["ctr", "Zentriert"], ["inEnd", "Am inneren Ende"], ["inBase", "Innerhalb der Basis"], ...(stacked ? [] : [["outEnd", "Am äußeren Ende"]] as [DataLabelOptions["pos"], string][])]
-      : fam === "area" ? [] : [["ctr", "Zentriert"], ["l", "Links"], ["r", "Rechts"], ["t", "Oben"], ["b", "Unten"]];
+  const positions: [DataLabelOptions["pos"], string][] = pie ? [["ctr", "Zentriert"], ["inEnd", "Am Ende innerhalb"], ["outEnd", "Am Ende außerhalb"], ["bestFit", "Größe anpassen"]]
+    : bars ? [["ctr", "Zentriert"], ["inEnd", "Am Ende innerhalb"], ["inBase", "Am Anfang innerhalb"], ...(stacked ? [] : [["outEnd", "Am Ende außerhalb"]] as [DataLabelOptions["pos"], string][])]
+      : fam === "area" ? [] : [["ctr", "Zentriert"], ["l", "Links"], ["r", "Rechts"], ["t", "Über"], ["b", "Unter"]];
   const defPos = pie ? "bestFit" : bars ? (stacked ? "ctr" : "outEnd") : "r";
   const rangeText = () => o()?.fromCells?.ref ?? "";
   return [
@@ -221,14 +224,14 @@ export function labelSections(m: ChartModel, host: PaneHost): PaneSection[] {
       { type: "heading", label: "Beschriftung enthält" },
       { type: "check", label: "Wert aus Zellen", value: () => !!o()?.fromCells, set: (on) => set({ fromCells: on ? { ref: m.series[0]?.cat?.ref ?? "", cache: (m.series[0]?.cat?.cache ?? []).map((v) => (v === null ? null : String(v))) } : undefined }) },
       { type: "text", label: "Bereich der Datenbeschriftung", value: rangeText, set: (v) => set({ fromCells: v ? { ref: v, cache: o()?.fromCells?.cache ?? [] } : undefined }), disabled: () => !o()?.fromCells },
-      { type: "check", label: "Reihenname", value: () => !!o()?.showSer, set: (on) => set({ showSer: on || undefined }) },
-      { type: "check", label: "Rubrikenname", value: () => !!o()?.showCat, set: (on) => set({ showCat: on || undefined }) },
-      { type: "check", label: "Wert", value: () => o()?.showVal !== false, set: (on) => set({ showVal: on ? undefined : false }) },
+      { type: "check", label: "Datenreihenname", value: () => !!o()?.showSer, set: (on) => set({ showSer: on || undefined }) },
+      { type: "check", label: isScatter(m.kind) ? "X-Wert" : "Rubrikenname", value: () => !!o()?.showCat, set: (on) => set({ showCat: on || undefined }) },
+      { type: "check", label: isScatter(m.kind) ? "Y-Wert" : "Wert", value: () => o()?.showVal !== false, set: (on) => set({ showVal: on ? undefined : false }) },
       ...(pie ? [{ type: "check", label: "Prozentsatz", value: () => !!o()?.showPercent, set: (on: boolean) => set({ showPercent: on || undefined }) } as PaneControl] : []),
       ...(fam === "bubble" ? [{ type: "check", label: "Blasengröße", value: () => !!o()?.showBubble, set: (on: boolean) => set({ showBubble: on || undefined }) } as PaneControl] : []),
       { type: "check", label: "Führungslinien anzeigen", value: () => (pie ? o()?.leaderLines !== false : !!o()?.leaderLines), set: (on) => set({ leaderLines: pie ? (on ? undefined : false) : on || undefined }) },
       { type: "check", label: "Legendensymbol", value: () => !!o()?.showLegendKey, set: (on) => set({ showLegendKey: on || undefined }) },
-      { type: "select", label: "Trennzeichen", options: [{ label: ";", value: "; " }, { label: ",", value: ", " }, { label: ".", value: ". " }, { label: "(Neue Zeile)", value: "\n" }, { label: "(Leerzeichen)", value: " " }],
+      { type: "select", label: "Trennzeichen", options: [{ label: ", (Komma)", value: ", " }, { label: "; (Semikolon)", value: "; " }, { label: ". (Punkt)", value: ". " }, { label: "(Neue Zeile)", value: "\n" }, { label: "(Leerzeichen)", value: " " }],
         value: () => o()?.separator ?? "; ", set: (v) => set({ separator: v === "; " ? undefined : v }) },
       { type: "button", label: "Beschriftungstext zurücksetzen", run: () => host.edit((c) => { if (c.format?.dataLabels) { const { fill, line, effects, text } = c.format.dataLabels; c.format.dataLabels = { ...(fill ? { fill } : {}), ...(line ? { line } : {}), ...(effects ? { effects } : {}), ...(text ? { text } : {}) }; } }) },
       ...(positions.length ? [{ type: "heading", label: "Beschriftungsposition" } as PaneControl] : []),
@@ -251,16 +254,16 @@ export function trendSections(m: ChartModel, i: number, host: PaneHost): PaneSec
     type("exp", "Exponentiell"), type("linear", "Linear"), type("log", "Logarithmisch"), type("poly", "Polynomisch"),
     { type: "number", label: "Grad", min: 2, max: 6, value: () => t()?.order ?? 2, set: (v: number) => set({ order: Math.round(v) }), disabled: () => t()?.type !== "poly" },
     type("power", "Potenz"), type("movingAvg", "Gleitender Durchschnitt"),
-    { type: "number", label: "Zeitraum", min: 2, max: 255, value: () => t()?.period ?? 2, set: (v: number) => set({ period: Math.round(v) }), disabled: () => t()?.type !== "movingAvg" },
+    { type: "number", label: "Periode", min: 2, max: 255, value: () => t()?.period ?? 2, set: (v: number) => set({ period: Math.round(v) }), disabled: () => t()?.type !== "movingAvg" },
     { type: "heading", label: "Name der Trendlinie" },
     { type: "radio", label: "Automatisch", checked: () => !t()?.name, pick: () => set({ name: undefined }) },
     { type: "radio", label: "Benutzerdefiniert", checked: () => !!t()?.name, pick: () => set({ name: t()?.name ?? "Trendlinie" }) },
-    { type: "text", label: "Name", value: () => t()?.name ?? "", set: (v: string) => set({ name: v || undefined }), disabled: () => !t()?.name },
+    { type: "text", label: "Benutzerdefiniert", value: () => t()?.name ?? "", set: (v: string) => set({ name: v || undefined }), disabled: () => !t()?.name },
     { type: "heading", label: "Prognose" },
     { type: "number", label: "Vorwärts", unit: " Perioden", min: 0, value: () => t()?.forward ?? 0, set: (v) => set({ forward: v || undefined }) },
     { type: "number", label: "Rückwärts", unit: " Perioden", min: 0, value: () => t()?.backward ?? 0, set: (v) => set({ backward: v || undefined }) },
-    { type: "check", label: "Schnittpunkt festlegen", value: () => t()?.intercept !== undefined, set: (on) => set({ intercept: on ? 0 : undefined }), disabled: () => t()?.type === "movingAvg" || t()?.type === "log" || t()?.type === "power" },
-    { type: "number", label: "Schnittpunkt", value: () => t()?.intercept ?? 0, set: (v) => set({ intercept: v }), disabled: () => t()?.intercept === undefined },
+    { type: "check", label: "Schnittpunkt =", value: () => t()?.intercept !== undefined, set: (on) => set({ intercept: on ? 0 : undefined }), disabled: () => t()?.type === "movingAvg" || t()?.type === "log" || t()?.type === "power" },
+    { type: "number", label: "Schnittpunkt =", value: () => t()?.intercept ?? 0, set: (v) => set({ intercept: v }), disabled: () => t()?.intercept === undefined },
     { type: "check", label: "Formel im Diagramm anzeigen", value: () => !!t()?.showEq, set: (on) => set({ showEq: on }) },
     { type: "check", label: "Bestimmtheitsmaß im Diagramm darstellen", value: () => !!t()?.showR2, set: (on) => set({ showR2: on }) },
   ] }];
@@ -271,14 +274,14 @@ export function errorSections(m: ChartModel, i: number, host: PaneHost): PaneSec
   const set = (patch: Partial<ErrorBars>) => host.edit((c) => { const s = c.series[i]; if (s.errorBars) Object.assign(s.errorBars, patch); });
   const amount = (v: ErrorBars["type"], label: string, unit?: string, def?: number): PaneControl[] => [
     { type: "radio", label, checked: () => b()?.type === v, pick: () => set({ type: v, value: def }) },
-    ...(def !== undefined ? [{ type: "number", label: "Wert", unit, min: 0, value: () => (b()?.type === v ? b()?.value ?? def : def), set: (x: number) => set({ value: x }), disabled: () => b()?.type !== v } as PaneControl] : []),
+    ...(def !== undefined ? [{ type: "number", label, unit, min: 0, value: () => (b()?.type === v ? b()?.value ?? def : def), set: (x: number) => set({ value: x }), disabled: () => b()?.type !== v } as PaneControl] : []),
   ];
-  return [{ title: "Vertikaler Fehlerindikator", open: true, controls: () => [
+  return [{ title: kindInfo(m.kind).dir === "bar" ? "Horizontaler Fehlerindikator" : "Vertikaler Fehlerindikator", open: true, controls: () => [
     { type: "heading", label: "Richtung" },
     ...([["both", "Beide"], ["minus", "Minus"], ["plus", "Plus"]] as const).map(([v, label]) => ({ type: "radio", label, checked: () => b()?.dir === v, pick: () => set({ dir: v }) }) as PaneControl),
-    { type: "heading", label: "Endformat" },
+    { type: "heading", label: "Linienende" },
     { type: "radio", label: "Ohne Abschluss", checked: () => !!b()?.noEndCap, pick: () => set({ noEndCap: true }) },
-    { type: "radio", label: "Abschluss", checked: () => !b()?.noEndCap, pick: () => set({ noEndCap: undefined }) },
+    { type: "radio", label: "Mit Abschluss", checked: () => !b()?.noEndCap, pick: () => set({ noEndCap: undefined }) },
     { type: "heading", label: "Fehlerbetrag" },
     ...amount("fixedVal", "Fester Wert", undefined, 1), ...amount("percentage", "Prozentsatz", " %", 5), ...amount("stdDev", "Standardabweichung(en)", undefined, 1),
     ...amount("stdErr", "Standardfehler"),

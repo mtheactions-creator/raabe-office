@@ -81,7 +81,7 @@ export function lineXml(l: Line | undefined, auto = ""): string {
 
 /** a:effectLst (Schatten, Leuchten, Weiche Kanten) in the schema's order. */
 export function effectLstXml(e: Effects | undefined): string {
-  if (!e || (!e.shadow && !e.glow && !e.softEdges)) return "<a:effectLst/>";
+  if (!e || (!e.shadow && !e.glow && !e.softEdges && !e.reflection)) return "<a:effectLst/>";
   let out = "";
   if (e.glow) out += `<a:glow rad="${emu(e.glow.size)}">${srgb(e.glow.color, e.glow.transparency ?? 60)}</a:glow>`;
   const s = e.shadow;
@@ -92,6 +92,8 @@ export function effectLstXml(e: Effects | undefined): string {
     const sc = Math.round((s.size ?? 100) * 1000);
     out += `<a:outerShdw blurRad="${emu(s.blur ?? 4)}" dist="${emu(s.distance ?? 3)}" dir="${dir}"${sc !== 100000 ? ` sx="${sc}" sy="${sc}"` : ""} algn="tl" rotWithShape="0">${shadowColor}</a:outerShdw>`;
   }
+  const rf = e.reflection;
+  if (rf) out += `<a:reflection blurRad="${emu(rf.blur)}" stA="${Math.round((100 - rf.transparency) * 1000)}" endPos="${Math.round(rf.size * 1000)}" dist="${emu(rf.distance)}" dir="5400000" sy="-100000" algn="bl" rotWithShape="0"/>`;
   if (e.softEdges) out += `<a:softEdge rad="${emu(e.softEdges)}"/>`;
   return `<a:effectLst>${out}</a:effectLst>`;
 }
@@ -117,7 +119,7 @@ export function defRPrAttrs(t: TextFormat | undefined, size: number): { attrs: s
   let fill: string | null = t?.color ? `<a:solidFill>${srgb(t.color)}</a:solidFill>` : null;
   if (t?.fill && t.fill.type !== "auto") fill = fillXml(t.fill.type === "solid" ? { ...t.fill, color: t.fill.color ?? t.color } : t.fill, "") || null;
   const ln = t?.outline && t.outline.type !== "auto" ? lineXml(t.outline, "") : "";
-  const fx = t?.effects && (t.effects.shadow || t.effects.glow || t.effects.softEdges) ? effectLstXml(t.effects) : "";
+  const fx = t?.effects && (t.effects.shadow || t.effects.glow || t.effects.softEdges || t.effects.reflection) ? effectLstXml(t.effects) : "";
   return {
     attrs: ` sz="${sz}" b="${t?.bold ? 1 : 0}" i="${t?.italic ? 1 : 0}"`,
     fill: ln + (fill ?? "") || null,
@@ -130,7 +132,7 @@ export function defRPrAttrs(t: TextFormat | undefined, size: number): { attrs: s
 export function bodyPrAttrs(b: TextBox | undefined, rot: string): string {
   const r = b?.rotation !== undefined ? String(Math.round(b.rotation * 60000)) : rot;
   const ins = b?.margins ? ` lIns="${emu(b.margins.l)}" tIns="${emu(b.margins.t)}" rIns="${emu(b.margins.r)}" bIns="${emu(b.margins.b)}"` : "";
-  return ` rot="${r}" spcFirstLastPara="1" vertOverflow="ellipsis" vert="${b?.dir ?? "horz"}" wrap="${b?.wrap === false ? "none" : "square"}"${ins} anchor="${b?.vAlign ?? "ctr"}" anchorCtr="1"`;
+  return ` rot="${r}" spcFirstLastPara="1" vertOverflow="ellipsis" vert="${b?.dir ?? "horz"}" wrap="${b?.wrap === false ? "none" : "square"}"${ins} anchor="${b?.vAlign ?? "ctr"}" anchorCtr="${b?.anchorCtr === false ? 0 : 1}"`;
 }
 
 export function tickXml(tag: "majorTickMark" | "minorTickMark", v: AxisOptions["majorTick"]): string {
@@ -316,6 +318,11 @@ export function readEffects(r: Reader, holder: El | undefined): Effects | undefi
       if (sh.name === "a:innerShdw") out.shadow.inner = true;
       if (a.sx && Number(a.sx) !== 100000) out.shadow.size = Number(a.sx) / 1000;
     }
+    const rf = r.find(lst, "a:reflection");
+    if (rf) {
+      const a = attrs(r.xml, rf);
+      out.reflection = { transparency: Math.round(100 - Number(a.stA ?? 100000) / 1000), size: Math.round(Number(a.endPos ?? 100000) / 1000), blur: pt(a.blurRad) ?? 0, distance: pt(a.dist) ?? 0 };
+    }
     const se = r.find(lst, "a:softEdge");
     if (se) out.softEdges = pt(attrs(r.xml, se).rad);
   }
@@ -363,6 +370,7 @@ function readBox(r: Reader, bodyPr: El | undefined, autoRot: string): TextBox | 
   if (a.vert && a.vert !== "horz") out.dir = a.vert as TextBox["dir"];
   if (a.anchor && a.anchor !== "ctr") out.vAlign = a.anchor as TextBox["vAlign"];
   if (a.wrap === "none") out.wrap = false;
+  if (a.anchorCtr === "0") out.anchorCtr = false;
   if (a.lIns !== undefined && a.tIns !== undefined && a.rIns !== undefined && a.bIns !== undefined && !(a.lIns === "36576" && a.tIns === "18288" && a.rIns === "36576" && a.bIns === "18288")) {
     out.margins = { l: pt(a.lIns)!, t: pt(a.tIns)!, r: pt(a.rIns)!, b: pt(a.bIns)! };
   }

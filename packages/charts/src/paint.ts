@@ -249,7 +249,7 @@ export function effectFilter(e: Effects | undefined): string | undefined {
 
 /** Text paint: own size, colour, weight, fill, outline and effects, else the automatic ones. */
 export function textLook(t: TextFormat | undefined, auto: { size: number; color: string }): {
-  size: number; fill: string; bold?: boolean; italic?: boolean; underline?: boolean; strike?: boolean; font?: string; outline?: Stroke | null; filter?: string; rotate?: number;
+  size: number; fill: string; bold?: boolean; italic?: boolean; underline?: boolean; strike?: boolean; font?: string; outline?: Stroke | null; filter?: string; rotate?: number; reflection?: { opacity: number; dist: number; blur: number };
 } {
   let fill = t?.color ?? auto.color;
   if (t?.fill && t.fill.type !== "auto") fill = t.fill.type === "solid" ? withAlpha(t.fill.color ?? fill, t.fill.transparency) : fillPaint(t.fill, fill) ?? fill;
@@ -260,11 +260,13 @@ export function textLook(t: TextFormat | undefined, auto: { size: number; color:
   if (t?.outline && t.outline.type !== "auto") out.outline = linePaint(t.outline, { color: "#000000", width: 0.75 });
   const fx = effectFilter(t?.effects);
   if (fx) out.filter = fx;
+  const rf = t?.effects?.reflection;
+  if (rf) out.reflection = { opacity: Math.round((1 - rf.transparency / 100) * 100) / 100, dist: rf.distance, blur: rf.blur };
   return out;
 }
 
 /** The text look's attributes for a text primitive (spread into it). */
-export function textAttrs(l: ReturnType<typeof textLook>): { size: number; fill: string; bold?: boolean; italic?: boolean; underline?: boolean; strike?: boolean; font?: string; outline?: Stroke; filter?: string } {
+export function textAttrs(l: ReturnType<typeof textLook>): { size: number; fill: string; bold?: boolean; italic?: boolean; underline?: boolean; strike?: boolean; font?: string; outline?: Stroke; filter?: string; reflection?: { opacity: number; dist: number; blur: number } } {
   const o: ReturnType<typeof textAttrs> = { size: l.size, fill: l.fill };
   if (l.bold) o.bold = true;
   if (l.italic) o.italic = true;
@@ -273,6 +275,7 @@ export function textAttrs(l: ReturnType<typeof textLook>): { size: number; fill:
   if (l.font) o.font = l.font;
   if (l.outline) o.outline = l.outline;
   if (l.filter) o.filter = l.filter;
+  if (l.reflection) o.reflection = l.reflection;
   return o;
 }
 

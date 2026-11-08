@@ -101,8 +101,10 @@ export interface Format3D {
   material?: string;
   lighting?: string;
 }
-/** Effekte: Schatten, Leuchten, Weiche Kanten (pt), 3D-Format. */
-export interface Effects { shadow?: Shadow; glow?: Glow; softEdges?: number; format3d?: Format3D }
+/** Spiegelung of text: Transparenz %, Größe % of the text's height, Weichzeichnen pt, Abstand pt. */
+export interface Reflection { transparency: number; size: number; blur: number; distance: number }
+/** Effekte: Schatten, Leuchten, Weiche Kanten (pt), 3D-Format; Spiegelung (text). */
+export interface Effects { shadow?: Shadow; glow?: Glow; softEdges?: number; format3d?: Format3D; reflection?: Reflection }
 
 /** Textfeld of an element: Vertikale Ausrichtung, Textrichtung, Benutzerdefinierter Winkel, Ränder (pt), Textumbruch. */
 export interface TextBox {
@@ -113,6 +115,8 @@ export interface TextBox {
   margins?: { l: number; t: number; r: number; b: number };
   wrap?: boolean;
   autofit?: boolean;
+  /** The text block centred horizontally in its box (the "zentriert" Vertikale Ausrichtung, the default). */
+  anchorCtr?: boolean;
 }
 
 /** Text of an element (Start > Schriftart while a chart element is selected; Textoptionen). */

@@ -8,7 +8,7 @@ import { isBar, isPie, isScatter, kindInfo, seriesColor, seriesName, type ChartM
 import type { PaneSection, PaneSpec, PaneTab } from "@raabe/shell";
 import { effectSections, fillSection, lineSection, type FmtTarget } from "./panefill";
 import { axisSections, errorSections, labelSections, pointSections, seriesSections, trendSections } from "./paneoptions";
-import { sizeSections, textSections } from "./panetext";
+import { boxControls, sizeSections, textSections } from "./panetext";
 
 /** A chart element as Excel's Diagrammelemente list names them. */
 export type ChartElement =
@@ -46,15 +46,15 @@ export function elementName(m: ChartModel, e: ChartElement): string {
 
 const PANE_TITLE: Record<ChartElement["kind"], string> = {
   chart: "Diagrammbereich formatieren", plot: "Zeichnungsfläche formatieren", title: "Diagrammtitel formatieren", legend: "Legende formatieren",
-  valAxis: "Achse formatieren", catAxis: "Achse formatieren", valAxis2: "Achse formatieren", majorGrid: "Hauptgitternetzlinien formatieren", minorGrid: "Hilfsgitternetzlinien formatieren",
-  catGrid: "Hauptgitternetzlinien formatieren", axisTitle: "Achsentitel formatieren", series: "Datenreihen formatieren", point: "Datenpunkt formatieren",
+  valAxis: "Achse formatieren", catAxis: "Achse formatieren", valAxis2: "Achse formatieren", majorGrid: "Hauptgitternetz formatieren", minorGrid: "Hilfsgitternetz formatieren",
+  catGrid: "Hauptgitternetz formatieren", axisTitle: "Achsentitel formatieren", series: "Datenreihen formatieren", point: "Datenpunkt formatieren",
   labels: "Datenbeschriftungen formatieren", trend: "Trendlinie formatieren", errorBars: "Fehlerindikatoren formatieren",
 };
 
 const OPTIONS: Record<ChartElement["kind"], string> = {
   chart: "Diagrammoptionen", plot: "Zeichnungsflächenoptionen", title: "Titeloptionen", legend: "Legendenoptionen", valAxis: "Achsenoptionen",
-  catAxis: "Achsenoptionen", valAxis2: "Achsenoptionen", majorGrid: "Hauptgitternetzlinienoptionen", minorGrid: "Hilfsgitternetzlinienoptionen", catGrid: "Hauptgitternetzlinienoptionen",
-  axisTitle: "Titeloptionen", series: "Datenreihenoptionen", point: "Datenpunktoptionen", labels: "Beschriftungsoptionen", trend: "Trendlinienoptionen", errorBars: "Fehlerindikatoroptionen",
+  catAxis: "Achsenoptionen", valAxis2: "Achsenoptionen", majorGrid: "Hauptgitternetz-Optionen", minorGrid: "Hilfsgitternetz-Optionen", catGrid: "Hauptgitternetz-Optionen",
+  axisTitle: "Titeloptionen", series: "Datenreihenoptionen", point: "Datenreihenoptionen", labels: "Beschriftungsoptionen", trend: "Trendlinienoptionen", errorBars: "Fehlerindikatoroptionen",
 };
 
 /** Every element a chart has, in the order of Excel's Diagrammelemente list. */
@@ -215,10 +215,14 @@ export function formatPane(m: ChartModel, e: ChartElement, host: PaneHost): Pane
   const isLine = ["valAxis", "catAxis", "valAxis2", "majorGrid", "minorGrid", "catGrid", "trend", "errorBars"].includes(e.kind) || ((e.kind === "series" || e.kind === "point") && lineKind);
   const auto = autoColor(m, e);
   const tabs: PaneTab[] = [{ id: "fill", label: "Füllung und Linie", icon: "pane-fill-line", sections: () => fillAndLine(m, e, host, target, isLine, lineKind, auto) }];
-  // Effekte: every element but the gridlines' Leuchten-less lines has Schatten, Leuchten, Weiche Kanten; shapes have 3D-Format.
-  const shape = !isLine && e.kind !== "labels" && e.kind !== "title" && e.kind !== "legend" && e.kind !== "axisTitle";
-  tabs.push({ id: "effects", label: "Effekte", icon: "pane-effects", sections: () => effectSections(target, { autoColor: auto, soft: !isLine || e.kind === "series" || e.kind === "point", format3d: shape || e.kind === "chart" || e.kind === "plot" }) });
+  // Effekte: Schatten, Leuchten and Weiche Kanten everywhere; 3D-Format on areas (not the legend, gridlines, axes, trendlines, error bars).
+  const format3d = !isLine && e.kind !== "legend";
+  tabs.push({ id: "effects", label: "Effekte", icon: "pane-effects", sections: () => effectSections(target, { autoColor: auto, format3d }) });
   if (e.kind === "chart") tabs.push({ id: "size", label: "Größe und Eigenschaften", icon: "size-position", sections: () => sizeSections(m, host) });
+  // Titles, axes and labels: Größe und Eigenschaften holds the text's Ausrichtung.
+  if (["title", "axisTitle", "valAxis", "catAxis", "valAxis2", "labels"].includes(e.kind)) {
+    tabs.push({ id: "size", label: "Größe und Eigenschaften", icon: "size-position", sections: () => [{ title: "Ausrichtung", open: true, controls: boxControls(target) }] });
+  }
   const own = ownTab(m, e, host);
   if (own) tabs.push(own);
   const sets = [{ label: OPTIONS[e.kind], tabs }];
@@ -236,16 +240,16 @@ function fillAndLine(m: ChartModel, e: ChartElement, host: PaneHost, t: FmtTarge
   const out: PaneSection[] = [];
   const s = e.kind === "series" || e.kind === "point" ? m.series[e.index] : undefined;
   const fam = kindInfo(s?.kind ?? m.kind).family;
-  if (!isLine) {
+  if (!isLine || e.kind === "valAxis" || e.kind === "catAxis" || e.kind === "valAxis2") {
     const extra = [];
     if (e.kind === "series" && fam === "bar") {
-      extra.push({ type: "check" as const, label: "Invertieren falls negativ", value: () => !!m.series[e.index]?.invertIfNegative, set: (on: boolean) => host.edit((cm) => { cm.series[e.index].invertIfNegative = on || undefined; }) });
+      extra.push({ type: "check" as const, label: "Invertieren, falls negativ", value: () => !!m.series[e.index]?.invertIfNegative, set: (on: boolean) => host.edit((cm) => { cm.series[e.index].invertIfNegative = on || undefined; }) });
     }
     if (e.kind === "series" && !isPie(m.kind) && m.series.length === 1 && (fam === "bar" || fam === "area")) {
       extra.push({ type: "check" as const, label: "Punkte nach Farbe unterscheiden", value: () => !!m.varyColors, set: (on: boolean) => host.edit((cm) => { cm.varyColors = on || undefined; }) });
     }
     if (e.kind === "series" && isPie(m.kind)) {
-      extra.push({ type: "check" as const, label: "Punkte nach Farbe unterscheiden", value: () => !s?.fill || s.fill.type === "auto", set: (on: boolean) => host.edit((cm) => { if (on) delete cm.series[e.index].fill; else cm.series[e.index].fill = { type: "solid", color: auto }; }) });
+      extra.push({ type: "check" as const, label: "Segmentfarbunterscheidung", value: () => !s?.fill || s.fill.type === "auto", set: (on: boolean) => host.edit((cm) => { if (on) delete cm.series[e.index].fill; else cm.series[e.index].fill = { type: "solid", color: auto }; }) });
     }
     out.push(fillSection(t, auto, extra));
   }
