@@ -131,6 +131,28 @@ export class Deck {
     }
   }
 
+  /**
+   * Several changes made by `fn` as one undo step (Folien aus Gliederung: every slide it makes, as PowerPoint takes them
+   * back with one Strg+Z, D-137): the first state of each part before, the last one after.
+   */
+  group(label: string, fn: () => void): void {
+    const start = this.undoStack.length;
+    fn();
+    const steps = this.undoStack.splice(start);
+    if (!steps.length) return;
+    const join = (snaps: Snapshot[], slides: SlideRef[]): Snapshot => {
+      const parts = new Map<string, string | null>(), rels = new Map<string, string | null>();
+      for (const s of snaps) {
+        for (const [k, v] of s.parts) if (!parts.has(k)) parts.set(k, v);
+        for (const [k, v] of s.rels) if (!rels.has(k)) rels.set(k, v);
+      }
+      return { slides, parts, rels, sections: snaps[0].sections };
+    };
+    const before = join(steps.map((s) => s.before), steps[0].before.slides);
+    const after = join(steps.map((s) => s.after).reverse(), steps[steps.length - 1].after.slides);
+    this.undoStack.push({ label, before, after, time: Date.now() });
+  }
+
   /** Ends typing's merging (a click, a command). */
   breakMerge(): void {
     const last = this.undoStack[this.undoStack.length - 1];

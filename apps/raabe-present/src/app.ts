@@ -2237,7 +2237,8 @@ export class PresentApp implements EditorHost, PanelHost {
     this.editor.focus();
   }
 
-  private layoutGallery(close: () => void, pick: (path: string) => void, title: string): HTMLElement {
+  /** The layouts as a gallery; Neue Folie's also has PowerPoint's three entries below it (`extras`), Layout's not. */
+  private layoutGallery(close: () => void, pick: (path: string) => void, title: string, extras = false): HTMLElement {
     const wrap = h("div", { class: "layout-gallery" }, h("div", { class: "gal-head" }, title));
     const grid = h("div", { class: "layout-grid" });
     const size = this.deck.pptx.slideSize;
@@ -2250,7 +2251,9 @@ export class PresentApp implements EditorHost, PanelHost {
       grid.append(h("button", { class: "layout-item", "aria-label": l.name, onclick: () => { close(); pick(l.path); } }, thumb, h("span", null, l.name)));
     }
     wrap.append(grid);
-    if (title === "Office-Design" || title.endsWith("Design")) {
+    // By hand (D-137): the entries stood under every gallery whose design's name ended in "Design" (Layout's too) and
+    // under no other design's Neue Folie.
+    if (extras) {
       wrap.append(h("div", { class: "menu-sep" }), h("button", { class: "menu-item", onclick: () => { close(); this.duplicateSlides([...this.panel.selected]); } }, "Ausgewählte Folien duplizieren"),
         h("button", { class: "menu-item", onclick: () => { close(); void import("./slideimport").then((m) => m.outlineDialog(this)); } }, "Folien aus Gliederung..."),
         h("button", { class: "menu-item", onclick: () => { close(); void import("./slideimport").then((m) => m.reuseSlidesDialog(this)); } }, "Folien wiederverwenden..."));
@@ -3291,7 +3294,7 @@ export class PresentApp implements EditorHost, PanelHost {
         monitors: () => [{ label: "Bildschirm", submenu: () => monitorMenu(() => this.updateChrome()) }, { cmd: "show.presenterView" }],
       },
       panels: {
-        newSlide: (close) => this.layoutGallery(close, (p) => this.newSlide(p), this.designName()),
+        newSlide: (close) => this.layoutGallery(close, (p) => this.newSlide(p), this.designName(), true),
         layout: (close) => this.layoutGallery(close, (p) => this.deck.setLayout([...this.panel.selected], p), this.designName()),
         shapes: (close) => this.shapeGallery(close),
         themes: (close) => this.themesGallery(close),
@@ -3970,6 +3973,8 @@ export class PresentApp implements EditorHost, PanelHost {
       slideRect: () => { const r = (app.editor.el.querySelector(".slide") as HTMLElement | null)?.getBoundingClientRect(); return r ? { x: r.left, y: r.top, w: r.width, h: r.height } : null; },
       thumbRect: (i: number) => { const r = (app.panel.el.querySelector(`.thumb-item[data-i="${i - 1}"]`) as HTMLElement | null)?.getBoundingClientRect(); return r ? { x: r.left, y: r.top, w: r.width, h: r.height } : null; },
       run: (id: string) => app.commands.run(id),
+      /** The by-hand sweep's starting points (sweep.ts, D-137). */
+      sweepContext: async (kind: string) => (await import("./sweep")).context(app, (window as unknown as { __present: { setupCase: (x: unknown) => number } }).__present as never, kind),
       setZoom: (z: number) => app.setZoom(z),
       fit: () => app.fitWindow(),
       focus: () => app.editor.focus(),

@@ -3,7 +3,7 @@
 // layout of the same name in this presentation (PowerPoint's "Zieldesign verwenden"), else Titel und Inhalt.
 // Jumps to slides of the other presentation, its notes and comments stay behind.
 
-import { h, showDialog } from "@raabe/shell";
+import { h, messageBox, showDialog } from "@raabe/shell";
 import { PptxDom, slideView, type Pptx } from "@raabe/ooxml";
 import type { PresentApp } from "./app";
 import type { Deck } from "./deck";
@@ -71,7 +71,7 @@ export async function reuseSlidesDialog(app: PresentApp): Promise<void> {
     : await app.platform.openFileDialog("pptx");
   if (!file) return;
   let src: Pptx;
-  try { src = (await import("@raabe/ooxml")).Pptx.read(await app.platform.readFile(file)); } catch { return; }
+  try { src = (await import("@raabe/ooxml")).Pptx.read(await app.platform.readFile(file)); } catch { await unreadable(file); return; }
   const urls: string[] = [];
   const image = (p: string): string | undefined => {
     const bytes = src.files[p];
@@ -103,7 +103,8 @@ export async function reuseSlidesDialog(app: PresentApp): Promise<void> {
   if (!ok) return;
   const list = all.checked ? src.slides.map((_, i) => i) : [...picked].sort((a, b) => a - b);
   let at = app.slideNumber() - 1;
-  for (const i of list) { importSlide(app.deck, src, src.slides[i].path, at); at++; }
+  // One undo step for all the slides inserted (D-137).
+  app.deck.group("Folien wiederverwenden", () => { for (const i of list) { importSlide(app.deck, src, src.slides[i].path, at); at++; } });
   if (list.length) app.setCurrent(at);
 }
 
@@ -118,7 +119,8 @@ export async function outlineDialog(app: PresentApp): Promise<void> {
     ? await app.platform.openAnyDialog("Gliederung einfügen", [{ name: "Alle Gliederungen", extensions: ["docx", "txt"] }])
     : null;
   if (!file) return;
-  const bytes = await app.platform.readFile(file);
+  let bytes: Uint8Array;
+  try { bytes = await app.platform.readFile(file); } catch { await unreadable(file); return; }
   const items: { level: number; text: string }[] = [];
   if (/\.docx$/i.test(file)) {
     const { readDocx } = await import("@raabe/ooxml");
@@ -145,7 +147,8 @@ export async function outlineDialog(app: PresentApp): Promise<void> {
   }
   const T = await import("./textops");
   const S = await import("./shapeops");
-  for (const s of slides) {
+  // One undo step for all the slides made (D-137).
+  deck.group("Folien aus Gliederung", () => { for (const s of slides) {
     const path = deck.addSlide(at, layout);
     at++;
     deck.change("Folien aus Gliederung", [path], () => {
@@ -162,6 +165,11 @@ export async function outlineDialog(app: PresentApp): Promise<void> {
         s.body.forEach((b, i) => { if (i) pos = T.splitPara(bb, pos); pos = T.insertText(bb, pos, b.text); if (b.level) T.paraProps(bb, pos.p, pos.p, (pr) => pr.setAttribute("lvl", String(b.level))); });
       }
     });
-  }
+  } });
   app.setCurrent(at);
+}
+
+/** A file that cannot be read (gone, locked, not a presentation): said in a message, not left as a silent failure (D-137). */
+function unreadable(file: string): Promise<void> {
+  return messageBox("RaabePresent", `Die Datei „${file.split(/[/\\]/).pop() ?? file}“ kann nicht gelesen werden.`);
 }
