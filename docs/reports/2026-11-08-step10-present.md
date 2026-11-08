@@ -21,7 +21,7 @@ changed; real input only under the lock file, in short runs.
 | Macro editor in use (check_present_vbaide.py) | 11/11 |
 | Macro safety in use (check_present_macro_security.py) | 7/7 |
 | Inventory coverage | 4104 of 4511 (4004 before) |
-| Look corpus, 12 PowerPoint-built presentations, 18 slides (check_present_corpus.py, D-108) | mean 1.94 (3.78 at first); Ion 13.8 to 1.1, Facette 4.2 to 0.3; the rest is Aptos (open) |
+| Look corpus, 12 PowerPoint-built presentations, 18 slides (check_present_corpus.py, D-108) | mean 1.16 (3.78 at first): Ion 13.8 to 1.1, Facette 4.2 to 0.3, Aptos through the cloud fonts (D-109) |
 | Unit tests | 683 passed before the merge of main (vba 40) |
 
 ## What was built

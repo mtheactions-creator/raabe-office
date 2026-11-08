@@ -2769,3 +2769,14 @@ ship: that scheme is applied with plain fills in its place.
   Windows fonts but files in Office's per-user cloud-font cache (FontCache\4\CloudFonts), which a browser cannot
   find by name (local() aliases fail too). Loading those files for all three apps is shared work, agreed with
   RaabeCalc's session before it is built.
+
+## D-109 RaabePresent: Office's cloud fonts (Aptos) through @raabe/text-engine (2026-11-08)
+
+RaabePresent calls setCloudFonts in its app (the platform's cloud_fonts / cloud_font, D-089), ensureFontFamily for
+every font its text renderer names (runs, paragraphs, bullets, symbol fonts) and draws the slides again on
+onFontAlias. Look corpus (check_present_corpus.py; the headless page gets the user's cloud fonts through a harness
+stand-in for the native command): mean 1.94 before, 1.16 now (18 slides). Found on the way: Aptos Display's files call
+themselves family "Aptos" (style "Display"); listed also as "Aptos" they replace Aptos Regular and body text gets
+about 10 % narrower. The stand-in names each face by its cache folder only; the native list was reported to
+RaabeCalc's session, which owns it. Left: Calibri Light titles (Rückblick 3.5), probably text smoothing in the
+headless page.

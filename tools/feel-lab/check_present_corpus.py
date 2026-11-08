@@ -13,6 +13,7 @@ from __future__ import annotations
 import datetime
 import io
 import json
+import os
 import shutil
 import sys
 import tempfile
@@ -29,6 +30,30 @@ CORPUS = HERE / "captures" / "corpus-ppt"
 CAP = HERE / "captures" / "corpus-ppt-compare"
 
 
+CLOUD = Path(os.path.expandvars(r"%LOCALAPPDATA%\Microsoft\FontCache\4\CloudFonts"))
+FONTS = HERE / "captures" / "cloudfonts"
+
+
+def cloud_faces() -> list[dict]:
+    """Office's cloud fonts of this user (Aptos …), as the native command lists them (D-089): copied into captures
+    (not committed) for the dev server, with families, weight and style read from each file's names. The headless
+    page has the browser platform, which has no such command; this stands in for it."""
+    from PIL import ImageFont
+    out = []
+    FONTS.mkdir(parents=True, exist_ok=True)
+    for f in sorted(CLOUD.glob("Aptos*/*.ttf")) if CLOUD.exists() else []:
+        fam, style = ImageFont.truetype(str(f), 10).getname()
+        name = f"{fam} {style}"
+        weight = 300 if "Light" in name else 600 if "SemiBold" in name else 800 if "ExtraBold" in name else 900 if "Black" in name else 700 if "Bold" in name else 400
+        dst = FONTS / f.name
+        if not dst.exists():
+            shutil.copy(f, dst)
+        # The family is the cache folder's: Aptos Display's files call themselves "Aptos" (style "Display …"), and
+        # counted as Aptos they would replace Aptos Regular (narrower text, measured).
+        out.append({"families": [f.parent.name], "weight": weight, "italic": "Italic" in name, "id": f.name})
+    return out
+
+
 def main(names: list[str]) -> None:
     CORPUS.mkdir(parents=True, exist_ok=True)
     CAP.mkdir(parents=True, exist_ok=True)
@@ -38,7 +63,13 @@ def main(names: list[str]) -> None:
     files = sorted(p.stem for p in CORPUS.glob("*.pptx") if not names or p.stem in names)
     out: dict = {"date": datetime.date.today().isoformat(), "slides": []}
     page = PresentPage(1600, 1000, 1.0)
+    faces = cloud_faces()
+    out["cloud_faces"] = len(faces)
+    base = "/@fs/" + FONTS.resolve().as_posix() + "/"
     try:
+        page.js(f"""(async () => {{ const t = await import('/@fs/{(HERE.parents[1] / 'packages/text-engine/src/index.ts').resolve().as_posix()}');
+            const faces = {json.dumps(faces)};
+            t.setCloudFonts({{ list: async () => faces, bytes: async (id) => (await fetch({json.dumps(base)} + id)).arrayBuffer() }}); }})()""")
         for name in files:
             n = page.open_file(CORPUS / f"{name}.pptx")
             for i in range(1, n + 1):
@@ -46,6 +77,9 @@ def main(names: list[str]) -> None:
                 if not ref.exists():
                     continue
                 theirs = Image.open(ref).convert("RGB")
+                # Drawn once so the fonts are asked for, then again after they loaded (as the app does on onFontAlias).
+                page.js(f"window.__present.renderAlone({i}, {theirs.width})")
+                page.js("(async () => { await document.fonts.ready; await new Promise(r => setTimeout(r, 600)); await document.fonts.ready; })()")
                 r = page.js(f"window.__present.renderAlone({i}, {theirs.width})")
                 page.js("new Promise(r => setTimeout(r, 400))")
                 ours = Image.open(io.BytesIO(page.shot(0, 0, r["w"], r["h"]))).convert("RGB")

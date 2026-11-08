@@ -2,6 +2,7 @@
 // presentation is a document tab (D-010) shown in Normalansicht: the slide panel at the left, the
 // slide in the middle, the notes below. Files are .pptx; everything not edited is kept (D-024).
 
+import { onFontAlias, setCloudFonts } from "@raabe/text-engine";
 import { colorXml, specHex } from "./colors";
 import { colorWord } from "./quickstyles";
 import { Pptx, newPptx, PptxDom, phOf, type ShapeView, type DesignSpec } from "@raabe/ooxml";
@@ -164,6 +165,10 @@ export class PresentApp implements EditorHost, PanelHost {
   private bgPane!: BackgroundPane;
 
   constructor(readonly platform: Platform) {
+    // Office's cloud fonts (Aptos, Aptos Display …) from the native side; slides drawn before they loaded are drawn
+    // again once they are there (D-109).
+    if (platform.cloudFonts && platform.cloudFont) setCloudFonts({ list: platform.cloudFonts.bind(platform), bytes: platform.cloudFont.bind(platform) });
+    onFontAlias(() => { for (const s of this.deck?.slides ?? []) this.deck.invalidate(s.path); this.renderAll(); });
     void platform.listFonts().then((f) => { this.fontList = f; }).catch(() => {});
     this.commands.register(...COMMANDS, ...CT.CONTEXT_COMMANDS);
     this.untitled = 1;
