@@ -96,6 +96,9 @@ export interface PictureFormat {
   /** Bildformatvorlage applied last (index in Word's gallery), for the gallery's frame. */
   readonly preset?: number;
   readonly shadow?: PictureShadow;
+  /** The shape has an effect list of its own (a:effectLst, also an empty one): the style's effects do not apply
+   *  (DrawingML; PowerPoint's Facette design, D-108). */
+  readonly ownEffects?: boolean;
   /** Spiegelung: size share of the picture shown, distance in points, start transparency. */
   readonly reflection?: { readonly size: number; readonly dist: number; readonly transparency: number; readonly blur: number; readonly endA?: number };
   /** Leuchten: radius in points. */

@@ -21,6 +21,7 @@ changed; real input only under the lock file, in short runs.
 | Macro editor in use (check_present_vbaide.py) | 11/11 |
 | Macro safety in use (check_present_macro_security.py) | 7/7 |
 | Inventory coverage | 4104 of 4511 (4004 before) |
+| Look corpus, 12 PowerPoint-built presentations, 18 slides (check_present_corpus.py, D-108) | mean 1.94 (3.78 at first); Ion 13.8 to 1.1, Facette 4.2 to 0.3; the rest is Aptos (open) |
 | Unit tests | 683 passed before the merge of main (vba 40) |
 
 ## What was built
@@ -60,6 +61,9 @@ changed; real input only under the lock file, in short runs.
 6. The editor is written so that RaabeCalc can open it (it takes the app's modules, saving and object model).
 
 ## Not done (open)
+
+- **Aptos** (Office's default font) is only in Office's per-user cloud-font cache, which our apps cannot see by name;
+  loading those files is shared work for all three apps, agreed with RaabeCalc's session before it is built (D-108).
 
 - **Openly licensed VBA as a stress test:** VBA-JSON (MIT) is in tools/feel-lab/macros/thirdparty with its licence,
   but the session's safety check refused running downloaded code, so it was not run, neither in PowerPoint nor in

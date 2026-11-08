@@ -41,6 +41,24 @@ function fillCss(f: SlideView["background"]["fill"]): string {
   return "#FFFFFF";
 }
 
+let duoIds = 0;
+/**
+ * A background picture recoloured as Office's a:duotone (D-108): its brightness mapped linearly from the dark
+ * colour to the light one (an SVG filter: luminance, then a table per channel), stretched over the slide.
+ */
+function duotoneLayer(url: string, d: { dark: string; light: string }, w: number, h: number): Element[] {
+  const id = `raabe-duotone-${++duoIds}`;
+  const ch = (hex: string, i: number) => (parseInt(hex.slice(i, i + 2), 16) / 255).toFixed(4);
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("width", "0"); svg.setAttribute("height", "0");
+  svg.style.position = "absolute";
+  svg.innerHTML = `<filter id="${id}" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0.2126 0.7152 0.0722 0 0 0.2126 0.7152 0.0722 0 0 0.2126 0.7152 0.0722 0 0 0 0 0 1 0"/>` +
+    `<feComponentTransfer><feFuncR type="table" tableValues="${ch(d.dark, 0)} ${ch(d.light, 0)}"/><feFuncG type="table" tableValues="${ch(d.dark, 2)} ${ch(d.light, 2)}"/><feFuncB type="table" tableValues="${ch(d.dark, 4)} ${ch(d.light, 4)}"/></feComponentTransfer></filter>`;
+  const layer = document.createElement("div");
+  layer.style.cssText = `position:absolute;left:0;top:0;width:${w}px;height:${h}px;background:url("${url}") 0 0 / 100% 100% no-repeat;filter:url(#${id})`;
+  return [svg, layer];
+}
+
 export function renderSlide(v: SlideView, size: { cx: number; cy: number }, o: RenderOptions): Rendered {
   const w = size.cx / EMU_PX, h = size.cy / EMU_PX;
   const el = document.createElement("div");
@@ -48,7 +66,8 @@ export function renderSlide(v: SlideView, size: { cx: number; cy: number }, o: R
   el.style.cssText = `position:relative;width:${w}px;height:${h}px;overflow:hidden;background:${fillCss(v.background.fill)}`;
   if (v.background.image) {
     const url = o.image(v.background.image);
-    if (url) el.style.background = `url("${url}") center / cover no-repeat`;
+    if (url && v.background.duotone) el.append(...duotoneLayer(url, v.background.duotone, w, h));
+    else if (url) el.style.background = `url("${url}") center / cover no-repeat`;
   }
   const shapes = new Map<number, HTMLElement>();
   o = { ...o, themeColors: v.theme.colors };

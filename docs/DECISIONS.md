@@ -2516,3 +2516,25 @@ ship: that scheme is applied with plain fills in its place.
   left, about 150 are Microsoft's own designs (we ship ours, D-078), about 50 the galleries' scroll buttons, the
   rest picture SmartArt layouts, chart styles, Aktuelles Design speichern / Nach Designs suchen (the .thmx format),
   high-contrast colour options and single entries.
+
+## D-108 RaabePresent: the look corpus (D-080 D), theme background pictures, a shape's own empty effect list (2026-11-08)
+
+- **Corpus:** twelve school-like presentations PowerPoint built (make_corpus_ppt.py, 18 slides), each slide drawn
+  by RaabePresent at PowerPoint's picture width and compared pixel by pixel (check_present_corpus.py): mean
+  difference 3.78 at first, 1.94 after the two fixes below.
+- **Theme background pictures** (Ion, 13.8 to 1.1): a background reference to the theme's third background style
+  is a picture of the theme's own (its file in the theme part's relationships) recoloured by a:duotone. The pptx
+  reader (add only: `background.duotone`) resolves the picture and the duotone's two colours with the background
+  colour as placeholder; our slide draws the picture through an SVG filter that maps its brightness from the dark
+  colour to the light one.
+- **A shape's own effect list replaces its style's** (Facette, 4.2 to 0.3): Facette's translucent shapes carry
+  `<a:effectLst/>` in spPr against their style's shadow; we drew the style's shadow, which showed through the
+  translucent fills (darker by 10-20 per channel). DrawingML: an effect list of the shape's own, also an empty one,
+  replaces the style's effects. Shared code changed accordingly (text-engine `shapeLook`, `PictureFormat.ownEffects`
+  set by the ooxml reader), so RaabeWrite follows the same rule; all tests pass, RaabePresent's earlier render
+  fixtures unchanged (2.75).
+- **Left: Aptos.** The remaining larger differences (2.4-7.3: referat, notizen, abschnitt, tabelle, zwei_inhalte)
+  are text in Aptos, Office's default font since 2023. On this PC Aptos, Aptos Display and Aptos Narrow are not
+  Windows fonts but files in Office's per-user cloud-font cache (FontCache\4\CloudFonts), which a browser cannot
+  find by name (local() aliases fail too). Loading those files for all three apps is shared work, agreed with
+  RaabeCalc's session before it is built.

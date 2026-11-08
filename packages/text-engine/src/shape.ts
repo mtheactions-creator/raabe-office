@@ -33,7 +33,8 @@ export function shapeLook(f: PictureFormat | undefined, s: ShapeInfo): { fill: F
   const line = own === null ? null : own
     ? { ...own, color: own.color || s.styleLine?.color || "000000", width: own.width >= 0 ? own.width : s.styleLine?.width ?? 0.75 }
     : s.styleLine ? { color: s.styleLine.color, width: s.styleLine.width } : null;
-  return { fill: s.kind === "connector" ? { kind: "none" } : fill, line, shadow: f?.shadow ?? s.styleShadow };
+  // A shape's own effect list, also an empty one, replaces its style's effects.
+  return { fill: s.kind === "connector" ? { kind: "none" } : fill, line, shadow: f?.ownEffects ? f.shadow : f?.shadow ?? s.styleShadow };
 }
 
 /** The geometry of a shape for its size in px (null for unknown or custom geometry). */

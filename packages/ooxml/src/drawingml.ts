@@ -291,7 +291,7 @@ export function readShapeProps(sp: Element, theme: Record<string, string>, style
     if (line !== undefined) out.line = line;
   }
   const fx = kid(sp, "effectLst");
-  if (fx) Object.assign(out, readEffects(fx, theme));
+  if (fx) Object.assign(out, readEffects(fx, theme), { ownEffects: true });
   const bevel = kid(kid(sp, "sp3d"), "bevelT");
   if (bevel) out.bevel = { kind: bevel.getAttribute("prst") ?? "circle", w: (num(bevel, "w") ?? 76200) / EMU, h: (num(bevel, "h") ?? 76200) / EMU };
   return out as PictureFormat;
