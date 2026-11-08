@@ -4,6 +4,7 @@
 import { describe, expect, it } from "vitest";
 import { Pptx } from "@raabe/ooxml";
 import { Deck } from "../src/deck";
+import { colorEl, colorXml } from "../src/colors";
 
 describe("by-hand sweep findings (D-137)", () => {
   it("takes back several slides made at once with one Strg+Z (Folien aus Gliederung, Folien wiederverwenden)", () => {
@@ -24,6 +25,14 @@ describe("by-hand sweep findings (D-137)", () => {
     expect(d.redo()).toBe(true);
     expect(d.slides.length).toBe(n + 3);
     expect(new Deck(Pptx.read(d.write())).slides.length).toBe(n + 3);
+  });
+
+  it("never writes a palette's Automatisch as a colour named auto (PowerPoint refuses such a file)", () => {
+    const doc = new DOMParser().parseFromString(`<a:r xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"/>`, "application/xml");
+    expect(colorEl(doc, "auto").getAttribute("val")).toBe("tx1");
+    expect(colorEl(doc, "AUTO").getAttribute("val")).toBe("tx1");
+    expect(colorXml("auto")).toBe(`<a:schemeClr val="tx1"/>`);
+    expect(colorEl(doc, "ff0000").getAttribute("val")).toBe("FF0000");
   });
 
   it("leaves the undo list alone when nothing changed inside a group", () => {

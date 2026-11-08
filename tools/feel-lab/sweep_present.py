@@ -28,6 +28,7 @@ import argparse
 import datetime
 import io
 import json
+import re
 import os
 import subprocess
 import sys
@@ -527,7 +528,13 @@ class Sweeper:
             z = zipfile.ZipFile(io.BytesIO(data))
             for n in z.namelist():
                 if n.endswith(".xml") or n.endswith(".rels"):
+                    text = z.read(n).decode("utf-8", "replace")
                     minidom.parseString(z.read(n))
+                    # Values PowerPoint refuses although the XML is well formed (found by opening the sweep's files in
+                    # PowerPoint, D-137): colours that are no hex value and no scheme colour.
+                    bad = BAD_COLOR.search(text) or BAD_SCHEME.search(text)
+                    if bad:
+                        return {"ok": False, "why": f"invalid colour in {n}: {bad.group(0)[:80]}", "file": f.name}
         except Exception as e:  # noqa: BLE001
             return {"ok": False, "why": f"{type(e).__name__}: {str(e)[:200]}", "file": f.name}
         return {"ok": True, "file": f.name}
@@ -673,6 +680,9 @@ def walk_ribbon(sw: Sweeper, ctx: str, tab: str, args, results: list, inventory:
 
 
 SAMPLE = 12
+BAD_COLOR = re.compile(r'<a:srgbClr val="(?![0-9A-Fa-f]{6}")[^"]*"')
+SCHEME = "bg1|tx1|bg2|tx2|accent1|accent2|accent3|accent4|accent5|accent6|hlink|folHlink|phClr|dk1|lt1|dk2|lt2"
+BAD_SCHEME = re.compile(r'<a:schemeClr val="(?!(?:' + SCHEME + r')")[^"]*"')
 NONDET = {"smartart", "chart", "picture", "freistellen", "equation"}
 
 
@@ -1083,7 +1093,7 @@ def main() -> None:
     if args.what == "inventory":
         doc = {"summary": summary, "reachable": inventory, "defined": defined}
     else:
-        doc = {"summary": summary, "results": [{k: v for k, v in r.items() if k != "fp"} for r in results]}
+        doc = {"summary": summary, "results": [{k: v for k, v in r.items() if k != "fp"} for r in results], "defined": defined}
     res_path.write_text(json.dumps(doc, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
     print(json.dumps(summary, ensure_ascii=False), "->", res_path.name)
 

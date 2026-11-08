@@ -70,6 +70,8 @@ class Real:
         return self.js(f"window.__sw.itemRect({json.dumps(it['path'])})")
 
     def setup(self, ctx: str, tab: str | None) -> None:
+        # Other sessions' windows may have come to the front meanwhile: ours again, checked, before any key.
+        self.front()
         for _ in range(2):
             winapi.press("esc")
             time.sleep(0.1)
@@ -211,9 +213,15 @@ def cases(r: Real) -> list[dict]:
         st["in"] = r.js("window.__present.inShow()")
         st["s1"] = (r.js("window.__present.showState()") or {}).get("slide")
         x, y = r.screen({"x": 600, "y": 500})
+        st["fg_click"] = r.ours()
+        if not r.ours():
+            raise RuntimeError("the show is not ours in front: no click sent")
         winapi.click(x, y)
         time.sleep(0.8)
         st["s2"] = (r.js("window.__present.showState()") or {}).get("slide")
+        st["fg_esc"] = r.ours()
+        if not r.ours():
+            raise RuntimeError("the show is not ours in front: no key sent")
         winapi.press("esc")
         time.sleep(0.6)
         st["out"] = not r.js("window.__present.inShow()")

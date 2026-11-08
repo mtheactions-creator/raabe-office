@@ -399,6 +399,7 @@ export function implementContext(app: PresentApp): void {
   impl("shape.quickStyles", () => {}, shapes);
   impl("wordart.quickStyles", () => {}, () => shapes() || !!app.editor.text);
   impl("wordart.fill", () => void app.commands.run("font.color"), shapes);
+  impl("wordart.dialog", () => app.openTextOptions(), () => shapes() || !!app.editor.text);
   impl("wordart.outline", () => app.setTextOutline({ color: app.textOutlineColor() === "none" ? "000000" : app.textOutlineColor() }), shapes);
   impl("pic.corrections", () => {}, pic);
   impl("pic.color", () => {}, pic);

@@ -13,8 +13,18 @@ import { effectsTab } from "./effectpane";
 const { kid, kids, make, fragment } = PptxDom;
 const FILLS = ["noFill", "solidFill", "gradFill", "blipFill", "pattFill", "grpFill"];
 
+/** The runs' look for the pane's Textoptionen (the app formats the selected text, or all of a selected shape's text). */
+export interface TextLook {
+  fill(): { kind: "auto" | "none" | "solid"; color?: string };
+  setFill(hex: string | null | "none"): void;
+  outline(): { color: string | null; width: number } | null;
+  setOutline(o: { color?: string | null; width?: number }): void;
+}
+
 export class FormatPane {
   readonly pane: TaskPane;
+  /** Set by the app: Textoptionen (Textfüllung, Textkontur) work on the runs through it. */
+  text: TextLook | null = null;
   constructor(private ed: SlideEditor, host: HTMLElement) {
     this.pane = new TaskPane(host);
   }
@@ -120,7 +130,37 @@ export class FormatPane {
       effectsTab(() => { const x = v(); const el = x && this.ed.shapeEl(x.id); return el ? kid(el, x.kind === "grpSp" ? "grpSpPr" : "spPr") ?? undefined : undefined; }, (fn, label) => this.spPrs((sp) => fn(sp), label)),
       { id: "size", label: "Größe und Eigenschaften", icon: "pane-layout", sections: () => (v()?.text ? [sizeSec, posSec, textSec] : [sizeSec, posSec]) },
     ];
-    return { title: pic ? "Grafik formatieren" : "Form formatieren", sets: [{ label: pic ? "Grafik" : "Formoptionen", tabs }] };
+    // Textoptionen (by hand, D-137: Texteffekte formatieren... and the WordArt-Formate launcher had nothing to open):
+    // Textfüllung and Textkontur of the text, and the Textfeld settings.
+    const t = this.text;
+    const textSets = !pic && v()?.text && t ? [{ label: "Textoptionen", tabs: [
+      { id: "textFill", label: "Textfüllung und -kontur", icon: "pane-fill-line", sections: () => [
+        { title: "Textfüllung", open: true, controls: (): PaneControl[] => {
+          const f = t.fill();
+          const c: PaneControl[] = [
+            { type: "radio", label: "Keine Füllung", checked: () => f.kind === "none", pick: () => { t.setFill("none"); this.pane.refresh(); } },
+            { type: "radio", label: "Einfarbige Füllung", checked: () => f.kind === "solid", pick: () => { t.setFill(f.color ?? "000000"); this.pane.refresh(); } },
+            { type: "radio", label: "Automatisch", checked: () => f.kind === "auto", pick: () => { t.setFill(null); this.pane.refresh(); } },
+          ];
+          if (f.kind === "solid") c.push({ type: "color", label: "Farbe", value: () => `#${f.color ?? "000000"}`, set: (hex) => { t.setFill((hex ?? "#000000").replace("#", "").toUpperCase()); this.pane.refresh(); } });
+          return c;
+        } },
+        { title: "Textkontur", open: true, controls: (): PaneControl[] => {
+          const o = t.outline();
+          const c: PaneControl[] = [
+            { type: "radio", label: "Keine Linie", checked: () => !o || o.color === null, pick: () => { t.setOutline({ color: null }); this.pane.refresh(); } },
+            { type: "radio", label: "Einfarbige Linie", checked: () => !!o && o.color !== null, pick: () => { t.setOutline({ color: o?.color ?? "000000", width: o?.width || 9525 }); this.pane.refresh(); } },
+          ];
+          if (o && o.color !== null) {
+            c.push({ type: "color", label: "Farbe", value: () => `#${o.color}`, set: (hex) => { t.setOutline({ color: (hex ?? "#000000").replace("#", "").toUpperCase() }); this.pane.refresh(); } });
+            c.push({ type: "number", label: "Breite", unit: " Pt.", min: 0, max: 1584, step: 0.25, decimals: 2, value: () => o.width / 12700, set: (w) => { t.setOutline({ width: Math.round(w * 12700) }); this.pane.refresh(); } });
+          }
+          return c;
+        } },
+      ] },
+      { id: "textBox", label: "Textfeld", icon: "pane-layout", sections: () => [textSec] },
+    ] }] : [];
+    return { title: pic ? "Grafik formatieren" : "Form formatieren", sets: [{ label: pic ? "Grafik" : "Formoptionen", tabs }, ...textSets] };
   }
 
   private place(p: Partial<S.Xfrm>): void {
@@ -143,6 +183,13 @@ export class FormatPane {
   openEffects(section: string): void {
     if (!this.views().length) return;
     this.pane.showAt(this.spec(), "effects", section);
+  }
+
+  /** Texteffekte formatieren...: the pane at Textoptionen. */
+  openText(): void {
+    if (!this.views().length) return;
+    const spec = this.spec();
+    if (spec.sets.length > 1) this.pane.showAt(spec, "textFill"); else this.pane.show(spec);
   }
 
   /** The selection changed: the open pane shows the new shape (or closes when nothing is selected). */

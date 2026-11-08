@@ -17,6 +17,9 @@ const HEX = /^[0-9A-F]{6}$/i;
 /** The colour element for a hex colour or a design reference. */
 export function colorEl(doc: Document, spec: string): Element {
   if (HEX.test(spec)) return make(doc, "a:srgbClr", { val: spec.toUpperCase() });
+  // A palette's Automatisch reaching here: the design's text colour, never an "auto" scheme colour (no such value;
+  // PowerPoint refuses the file, D-137).
+  if (spec.toLowerCase() === "auto") return make(doc, "a:schemeClr", { val: "tx1" });
   const [val, mod, off] = spec.toLowerCase().split(",");
   const el = make(doc, "a:schemeClr", { val });
   if (mod) el.append(make(doc, "a:lumMod", { val: mod }));
@@ -27,6 +30,7 @@ export function colorEl(doc: Document, spec: string): Element {
 /** The same as XML text (for the places that build their XML as text). */
 export function colorXml(spec: string): string {
   if (HEX.test(spec)) return `<a:srgbClr val="${spec.toUpperCase()}"/>`;
+  if (spec.toLowerCase() === "auto") return `<a:schemeClr val="tx1"/>`;
   const [val, mod, off] = spec.toLowerCase().split(",");
   return `<a:schemeClr val="${val}">${mod ? `<a:lumMod val="${mod}"/>` : ""}${off ? `<a:lumOff val="${off}"/>` : ""}</a:schemeClr>`;
 }

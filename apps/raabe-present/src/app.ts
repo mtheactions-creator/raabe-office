@@ -7,7 +7,7 @@ import { colorXml, specHex } from "./colors";
 import { colorWord } from "./quickstyles";
 import { Pptx, newPptx, PptxDom, phOf, type ShapeView, type DesignSpec } from "@raabe/ooxml";
 import {
-  Backstage, Commands, Keytips, Ribbon, TitleBar, baseName, colorGrid, HIGHLIGHTS, h, icon, installTooltips, messageBox, showDialog, showMenu, showPopup, closePopup,
+  Backstage, Commands, Keytips, Ribbon, TitleBar, baseName, colorGrid, HIGHLIGHTS, highlightHex, h, icon, installTooltips, messageBox, showDialog, showMenu, showPopup, closePopup,
   type BackstageEntry, type Control, type Group, type MenuEntry, type Platform, type Tab,
 } from "@raabe/shell";
 import { SHAPE_GALLERY, shapeIcon, type GalleryEntry } from "@raabe/text-engine";
@@ -208,6 +208,7 @@ export class PresentApp implements EditorHost, PanelHost {
     this.notesPage = new NotesPageView(this);
     this.main = h("div", { class: "present-main" }, this.panel.el, this.outline.el, h("div", { class: "splitter" }), this.center, this.sorter.el, this.notesPage.el);
     this.formatPane = new FormatPane(this.editor, this.main);
+    this.formatPane.text = this.textLook();
     setEffectOptionsHook((section) => this.formatPane.openEffects(section));
     this.animPane = new AnimationPane(this, this.main);
     this.comments = new Comments(this, this.main, () => this.settings.userName, () => this.settings.initials);
@@ -617,6 +618,37 @@ export class PresentApp implements EditorHost, PanelHost {
   /** formatRuns for the feature modules (Sprache). */
   formatText(label: string, fn: (rPr: Element) => void): void { this.formatRuns(label, fn); }
 
+  /** Textoptionen of the Format pane (D-137): the first run's fill and outline, set on the text as the ribbon sets them. */
+  private textLook(): import("./formatpane").TextLook {
+    const rPr = (): Element | null => {
+      const id = this.editor.text?.id ?? this.editor.sel[0];
+      const el = id !== undefined ? this.editor.shapeEl(id) : null;
+      return el?.getElementsByTagNameNS(PptxDom.NS_A, "rPr")[0] ?? null;
+    };
+    const hexOf = (fill: Element | null | undefined): string | undefined => fill?.getElementsByTagNameNS(PptxDom.NS_A, "srgbClr")[0]?.getAttribute("val") ?? undefined;
+    return {
+      fill: () => {
+        const r = rPr();
+        const f = r ? kids(r).find((c) => ["solidFill", "noFill", "gradFill", "pattFill"].includes(c.localName)) : undefined;
+        return !f ? { kind: "auto" } : f.localName === "noFill" ? { kind: "none" } : { kind: "solid", color: hexOf(f) ?? "000000" };
+      },
+      setFill: (hex) => this.formatRuns("Textfüllung", (r) => {
+        T.setRunColor(r, hex === "none" ? null : hex);
+        if (hex === "none") r.insertBefore(make(r.ownerDocument, "a:noFill"), kids(r).find((c) => c.localName !== "ln") ?? null);
+      }),
+      outline: () => {
+        const ln = rPr() && kid(rPr()!, "ln");
+        if (!ln) return null;
+        const fill = kids(ln).find((c) => c.localName.endsWith("Fill"));
+        return { color: !fill || fill.localName === "noFill" ? null : hexOf(fill) ?? "000000", width: Number(ln.getAttribute("w") ?? 9525) };
+      },
+      setOutline: (o) => this.setTextOutline(o),
+    };
+  }
+
+  /** WordArt-Formate' launcher and Texteffekte formatieren...: the Format pane at Textoptionen. */
+  openTextOptions(): void { this.formatPane.openText(); }
+
   private formatRuns(label: string, fn: (rPr: Element) => void): void {
     const ed = this.editor, t = ed.text;
     if (t) {
@@ -827,13 +859,15 @@ export class PresentApp implements EditorHost, PanelHost {
     if (this.chartArea("fill", hex)) return;
     const views = this.editor.selectedViews.filter((v) => v.kind === "sp" || v.kind === "pic" || v.kind === "grpSp");
     if (!views.length) return;
-    if (hex) this.lastFill = hex;
+    if (hex && hex !== "AUTO") this.lastFill = hex;
     this.editor.edit("Fülleffekt", () => {
       for (const v of views) {
         const el = this.editor.shapeEl(v.id);
         const sp = el && kid(el, v.kind === "grpSp" ? "grpSpPr" : "spPr");
         if (!sp) continue;
         for (const c of kids(sp)) if (["noFill", "solidFill", "gradFill", "blipFill", "pattFill", "grpFill"].includes(c.localName)) c.remove();
+        // Automatisch: no fill of its own, the shape style's shows (by hand, D-137: "auto" was written as a colour).
+        if (hex === "AUTO") continue;
         const f = hex ? fragment(el!.ownerDocument, `<a:solidFill>${colorXml(hex)}</a:solidFill>`)[0] : make(el!.ownerDocument, "a:noFill");
         const after = kids(sp).find((c) => c.localName === "prstGeom" || c.localName === "custGeom") ?? kid(sp, "xfrm");
         sp.insertBefore(f, after ? after.nextSibling : sp.firstChild);
@@ -1107,7 +1141,7 @@ export class PresentApp implements EditorHost, PanelHost {
     if (hex !== undefined && this.chartArea("line", hex)) return;
     const views = this.editor.selectedViews.filter((v) => v.kind === "sp" || v.kind === "pic" || v.kind === "cxnSp");
     if (!views.length) return;
-    if (hex) this.lastLine = hex;
+    if (hex && hex !== "AUTO") this.lastLine = hex;
     this.editor.edit("Formkontur", () => {
       for (const v of views) {
         const el = this.editor.shapeEl(v.id);
@@ -1121,7 +1155,8 @@ export class PresentApp implements EditorHost, PanelHost {
         }
         if (hex !== undefined) {
           for (const c of kids(ln)) if (["noFill", "solidFill", "gradFill", "pattFill"].includes(c.localName)) c.remove();
-          ln.insertBefore(hex ? fragment(el!.ownerDocument, `<a:solidFill>${colorXml(hex)}</a:solidFill>`)[0] : make(el!.ownerDocument, "a:noFill"), ln.firstChild);
+          // Automatisch: the shape style's line colour shows (D-137).
+          if (hex !== "AUTO") ln.insertBefore(hex ? fragment(el!.ownerDocument, `<a:solidFill>${colorXml(hex)}</a:solidFill>`)[0] : make(el!.ownerDocument, "a:noFill"), ln.firstChild);
         }
         if (width !== undefined) ln.setAttribute("w", String(Math.round(width * 12700)));
         if (dash) { kid(ln, "prstDash")?.remove(); const after = kids(ln).find((c) => ["noFill", "solidFill", "gradFill", "pattFill"].includes(c.localName)); ln.insertBefore(make(el!.ownerDocument, "a:prstDash", { val: dash }), after ? after.nextSibling : ln.firstChild); }
@@ -2720,6 +2755,7 @@ export class PresentApp implements EditorHost, PanelHost {
     impl("shape.editText", () => { const v = ed().selectedViews[0]; if (v) ed().enterText(v.id); }, shapes);
     impl("shape.sizePosition", () => this.formatPane.open(), shapes);
     impl("draw.format", () => this.formatPane.open(), shapes);
+    impl("text.effectsDialog", () => this.formatPane.openText(), () => !!this.editor.text || shapes());
     impl("pic.format", () => this.formatPane.open(), shapes);
     const dlgHost = () => ({ runStyle: () => this.runStyle(), paraStyle: () => this.paraStyle(), fonts: () => this.fontList, formatRuns: (l: string, f: (r: Element) => void) => this.formatRuns(l, f), formatParas: (l: string, f: (p: Element) => void) => this.formatParas(l, f) });
     const finder = new FindDialog(this);
@@ -3239,10 +3275,23 @@ export class PresentApp implements EditorHost, PanelHost {
       run: (cmd: string) => void this.commands.run(cmd),
       markup: () => this.showMarkup, toggleMarkup: () => { this.showMarkup = !this.showMarkup; this.editor.render(); this.updateChrome(); },
       fontColor: () => `#${this.colorHex(this.lastFontColor)}`,
-      setFontColor: (hex) => { this.lastFontColor = hex.replace("#", "").toUpperCase(); this.formatRuns("Schriftfarbe", (r) => T.setRunColor(r, this.lastFontColor)); },
+      // Automatisch: the run's own colour goes (the design's text colour shows). By hand (D-137): "auto" was written
+      // as a scheme colour PowerPoint refuses to open.
+      setFontColor: (hex) => {
+        const v = hex.replace("#", "").toUpperCase();
+        if (v === "AUTO") { this.formatRuns("Schriftfarbe", (r) => T.setRunColor(r, null)); return; }
+        this.lastFontColor = v; this.formatRuns("Schriftfarbe", (r) => T.setRunColor(r, v));
+      },
       fontColorExtra: () => this.fontColorExtra(),
       highlight: () => `#${this.lastHighlight}`,
-      setHighlight: (hex) => { const v = hex.replace("#", "").toUpperCase(); this.lastHighlight = v; this.formatRuns("Texthervorhebungsfarbe", (r) => T.setHighlight(r, v === "" ? null : v)); },
+      // The palette names its colours (green, darkBlue ... as Word does): written as their hex values (by hand, D-137:
+      // the name itself went into the file, which PowerPoint refuses to open).
+      setHighlight: (name) => {
+        const v = name.replace("#", "");
+        const hex = v === "" || v === "none" ? null : /^[0-9a-f]{6}$/i.test(v) ? v.toUpperCase() : highlightHex(v);
+        if (hex) this.lastHighlight = hex;
+        this.formatRuns("Texthervorhebungsfarbe", (r) => T.setHighlight(r, hex));
+      },
       fillColor: () => `#${this.colorHex(this.lastFill)}`,
       setFill: (hex) => this.setFill(hex.replace("#", "").toUpperCase()),
       lineColor: () => `#${this.colorHex(this.lastLine)}`,
