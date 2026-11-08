@@ -12,6 +12,7 @@ import "./fn-eng";
 import "./fn-array2";
 import "./fn-text2";
 import "./fn-finance";
+import "./fn-lambda";
 import { type Rect } from "../address";
 import type { Value, Workbook } from "../model";
 import { serialOfDate } from "./dates";

@@ -5,7 +5,7 @@
 
 import { strFromU8, unzipSync } from "fflate";
 import {
-  Sheet, Workbook, cellKey, err, fromXlsxFormula, parseCell, parseRange, toXlsxFormula,
+  Sheet, Workbook, cellKey, err, fromXlsxFormula, keyCell, mapStructs, parseCell, parseRange, structToShown, toXlsxFormula,
   type Cell, type ColInfo, type DefinedName, type ErrorCode, type Rect, type RowInfo, type View,
 } from "@raabe/sheet-engine";
 import { Rels, relsPath, resolveTarget } from "../package";
@@ -402,6 +402,19 @@ function readSheet(xml: string, name: string, c: SheetContext): Sheet {
   raw.pics = readPictures(c.files, sheet, c.part, rels);
   readPivots(c.files, sheet, c.part, rels);
   readTables(c.files, sheet, c.part, rels);
+  // Excel writes [@Note] as Tabelle1[[#This Row],[Note]]; the model keeps what Excel shows.
+  if (sheet.tables?.length) {
+    for (const [key, cell] of sheet.cells) {
+      if (cell.f === undefined || !cell.f.includes("[")) continue;
+      const { row, col } = keyCell(key);
+      const own = sheet.tables.find((t) => row >= t.ref.r0 && row <= t.ref.r1 && col >= t.ref.c0 && col <= t.ref.c1)?.name ?? null;
+      const f = mapStructs(cell.f, (x) => structToShown(x, own));
+      if (f !== cell.f) {
+        cell.raw = { ...cell.raw, file: cell.raw?.file ?? toXlsxFormula(cell.f) };
+        cell.f = f;
+      }
+    }
+  }
   if (charts) raw.drawing = charts;
 
   // View.

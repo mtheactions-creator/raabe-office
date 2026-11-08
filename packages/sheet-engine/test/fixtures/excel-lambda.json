@@ -1,0 +1,416 @@
+{
+ "data": {
+  "A1": 1,
+  "A2": 2,
+  "A3": 3,
+  "B1": 10,
+  "B2": 20,
+  "B3": 30
+ },
+ "names": [
+  [
+   "Verdoppeln",
+   "=LAMBDA(x,x*2)"
+  ],
+  [
+   "Fakul",
+   "=LAMBDA(n,IF(n<=1,1,n*Fakul(n-1)))"
+  ],
+  [
+   "Plus",
+   "=LAMBDA(a,b,IF(ISOMITTED(b),a,a+b))"
+  ]
+ ],
+ "cases": [
+  {
+   "cell": "D1",
+   "typed": "=LET(x;2;x*3)",
+   "local": "=LET(x;2;x*3)",
+   "formula": "=LET(x,2,x*3)",
+   "value": 6.0,
+   "spill": null
+  },
+  {
+   "cell": "D4",
+   "typed": "=LET(x;2;y;x+1;x*y)",
+   "local": "=LET(x;2;y;x+1;x*y)",
+   "formula": "=LET(x,2,y,x+1,x*y)",
+   "value": 6.0,
+   "spill": null
+  },
+  {
+   "cell": "D7",
+   "typed": "=LET(a;A1:A3;SUMME(a))",
+   "local": "=LET(a;A1:A3;SUMME(a))",
+   "formula": "=LET(a,A1:A3,SUM(a))",
+   "value": 6.0,
+   "spill": null
+  },
+  {
+   "cell": "D10",
+   "typed": "=LET(a;A1:A3;a*2)",
+   "local": "=LET(a;A1:A3;a*2)",
+   "formula": "=LET(a,A1:A3,a*2)",
+   "value": [
+    [
+     2.0
+    ],
+    [
+     4.0
+    ],
+    [
+     6.0
+    ]
+   ],
+   "spill": "D10:D12"
+  },
+  {
+   "cell": "D13",
+   "typed": "=LAMBDA(x;x+1)(2)",
+   "local": "=LAMBDA(x;x+1)(2)",
+   "formula": "=LAMBDA(x,x+1)(2)",
+   "value": 3.0,
+   "spill": null
+  },
+  {
+   "cell": "D16",
+   "typed": "=LAMBDA(x;y;x*y)(3;4)",
+   "local": "=LAMBDA(x;y;x*y)(3;4)",
+   "formula": "=LAMBDA(x,y,x*y)(3,4)",
+   "value": 12.0,
+   "spill": null
+  },
+  {
+   "cell": "D19",
+   "typed": "=LAMBDA(x;x)",
+   "local": "=LAMBDA(x;x)",
+   "formula": "=LAMBDA(x,x)",
+   "value": {
+    "error": "#CALC!"
+   },
+   "spill": null
+  },
+  {
+   "cell": "D22",
+   "typed": "=LET(f;LAMBDA(x;x*2);f(5))",
+   "local": "=LET(f;LAMBDA(x;x*2);f(5))",
+   "formula": "=LET(f,LAMBDA(x,x*2),f(5))",
+   "value": 10.0,
+   "spill": null
+  },
+  {
+   "cell": "D25",
+   "typed": "=MAP(A1:A3;LAMBDA(x;x*2))",
+   "local": "=MAP(A1:A3;LAMBDA(x;x*2))",
+   "formula": "=MAP(A1:A3,LAMBDA(x,x*2))",
+   "value": [
+    [
+     2.0
+    ],
+    [
+     4.0
+    ],
+    [
+     6.0
+    ]
+   ],
+   "spill": "D25:D27"
+  },
+  {
+   "cell": "D28",
+   "typed": "=MAP(A1:A3;B1:B3;LAMBDA(a;b;a+b))",
+   "local": "=MAP(A1:A3;B1:B3;LAMBDA(a;b;a+b))",
+   "formula": "=MAP(A1:A3,B1:B3,LAMBDA(a,b,a+b))",
+   "value": [
+    [
+     11.0
+    ],
+    [
+     22.0
+    ],
+    [
+     33.0
+    ]
+   ],
+   "spill": "D28:D30"
+  },
+  {
+   "cell": "D31",
+   "typed": "=REDUCE(0;A1:A3;LAMBDA(a;b;a+b))",
+   "local": "=REDUCE(0;A1:A3;LAMBDA(a;b;a+b))",
+   "formula": "=REDUCE(0,A1:A3,LAMBDA(a,b,a+b))",
+   "value": 6.0,
+   "spill": null
+  },
+  {
+   "cell": "D34",
+   "typed": "=REDUCE(1;A1:B3;LAMBDA(a;b;a*b))",
+   "local": "=REDUCE(1;A1:B3;LAMBDA(a;b;a*b))",
+   "formula": "=REDUCE(1,A1:B3,LAMBDA(a,b,a*b))",
+   "value": 36000.0,
+   "spill": null
+  },
+  {
+   "cell": "D37",
+   "typed": "=SCAN(0;A1:A3;LAMBDA(a;b;a+b))",
+   "local": "=SCAN(0;A1:A3;LAMBDA(a;b;a+b))",
+   "formula": "=SCAN(0,A1:A3,LAMBDA(a,b,a+b))",
+   "value": [
+    [
+     1.0
+    ],
+    [
+     3.0
+    ],
+    [
+     6.0
+    ]
+   ],
+   "spill": "D37:D39"
+  },
+  {
+   "cell": "D40",
+   "typed": "=SCAN(\"\";A1:A3;LAMBDA(a;b;a&b))",
+   "local": "=SCAN(\"\";A1:A3;LAMBDA(a;b;a&b))",
+   "formula": "=SCAN(\"\",A1:A3,LAMBDA(a,b,a&b))",
+   "value": [
+    [
+     "1"
+    ],
+    [
+     "12"
+    ],
+    [
+     "123"
+    ]
+   ],
+   "spill": "D40:D42"
+  },
+  {
+   "cell": "D43",
+   "typed": "=NACHZEILE(A1:B3;LAMBDA(r;SUMME(r)))",
+   "local": "=NACHZEILE(A1:B3;LAMBDA(r;SUMME(r)))",
+   "formula": "=BYROW(A1:B3,LAMBDA(r,SUM(r)))",
+   "value": [
+    [
+     11.0
+    ],
+    [
+     22.0
+    ],
+    [
+     33.0
+    ]
+   ],
+   "spill": "D43:D45"
+  },
+  {
+   "cell": "D46",
+   "typed": "=NACHSPALTE(A1:B3;LAMBDA(c;MAX(c)))",
+   "local": "=NACHSPALTE(A1:B3;LAMBDA(c;MAX(c)))",
+   "formula": "=BYCOL(A1:B3,LAMBDA(c,MAX(c)))",
+   "value": [
+    [
+     3.0,
+     30.0
+    ]
+   ],
+   "spill": "D46:E46"
+  },
+  {
+   "cell": "D49",
+   "typed": "=MATRIXERSTELLEN(2;3;LAMBDA(r;c;r*c))",
+   "local": "=MATRIXERSTELLEN(2;3;LAMBDA(r;c;r*c))",
+   "formula": "=MAKEARRAY(2,3,LAMBDA(r,c,r*c))",
+   "value": [
+    [
+     1.0,
+     2.0,
+     3.0
+    ],
+    [
+     2.0,
+     4.0,
+     6.0
+    ]
+   ],
+   "spill": "D49:F50"
+  },
+  {
+   "cell": "D52",
+   "typed": "=LAMBDA(x;y;WENN(WURDEAUSGELASSEN(y);x;x+y))(1;)",
+   "local": "=LAMBDA(x;y;WENN(WURDEAUSGELASSEN(y);x;x+y))(1;)",
+   "formula": "=LAMBDA(x,y,IF(ISOMITTED(y),x,x+y))(1,)",
+   "value": 1.0,
+   "spill": null
+  },
+  {
+   "cell": "D55",
+   "typed": "=LAMBDA(x;y;WENN(WURDEAUSGELASSEN(y);x;x+y))(1;2)",
+   "local": "=LAMBDA(x;y;WENN(WURDEAUSGELASSEN(y);x;x+y))(1;2)",
+   "formula": "=LAMBDA(x,y,IF(ISOMITTED(y),x,x+y))(1,2)",
+   "value": 3.0,
+   "spill": null
+  },
+  {
+   "cell": "D58",
+   "typed": "=LAMBDA(x;x+1)(1;2)",
+   "local": "=LAMBDA(x;x+1)(1;2)",
+   "formula": "=LAMBDA(x,x+1)(1,2)",
+   "value": {
+    "error": "#VALUE!"
+   },
+   "spill": null
+  },
+  {
+   "cell": "D61",
+   "typed": "=SUMME(LAMBDA(x;x))",
+   "local": "=SUMME(LAMBDA(x;x))",
+   "formula": "=SUM(LAMBDA(x,x))",
+   "value": {
+    "error": "#VALUE!"
+   },
+   "spill": null
+  },
+  {
+   "cell": "D64",
+   "typed": "=MAP(A1:A3;LAMBDA(x;{1.2}))",
+   "local": "=MAP(A1:A3;LAMBDA(x;{1.2}))",
+   "formula": "=MAP(A1:A3,LAMBDA(x,{1,2}))",
+   "value": {
+    "error": "#CALC!"
+   },
+   "spill": null
+  },
+  {
+   "cell": "D67",
+   "typed": "=NACHZEILE(A1:B3;LAMBDA(r;r))",
+   "local": "=NACHZEILE(A1:B3;LAMBDA(r;r))",
+   "formula": "=BYROW(A1:B3,LAMBDA(r,r))",
+   "value": {
+    "error": "#CALC!"
+   },
+   "spill": null
+  },
+  {
+   "cell": "D70",
+   "typed": "=Verdoppeln(4)",
+   "local": "=Verdoppeln(4)",
+   "formula": "=Verdoppeln(4)",
+   "value": 8.0,
+   "spill": null
+  },
+  {
+   "cell": "D73",
+   "typed": "=Fakul(5)",
+   "local": "=Fakul(5)",
+   "formula": "=Fakul(5)",
+   "value": 120.0,
+   "spill": null
+  },
+  {
+   "cell": "D76",
+   "typed": "=Plus(3)",
+   "local": "=Plus(3)",
+   "formula": "=Plus(3)",
+   "value": {
+    "error": "#VALUE!"
+   },
+   "spill": null
+  },
+  {
+   "cell": "D79",
+   "typed": "=Plus(3;4)",
+   "local": "=Plus(3;4)",
+   "formula": "=Plus(3,4)",
+   "value": 7.0,
+   "spill": null
+  },
+  {
+   "cell": "D82",
+   "typed": "=MAP(A1:A3;Verdoppeln)",
+   "local": "=MAP(A1:A3;Verdoppeln)",
+   "formula": "=MAP(A1:A3,Verdoppeln)",
+   "value": [
+    [
+     2.0
+    ],
+    [
+     4.0
+    ],
+    [
+     6.0
+    ]
+   ],
+   "spill": "D82:D84"
+  },
+  {
+   "cell": "D85",
+   "typed": "=LET(x;5;LAMBDA(y;x+y))(1)",
+   "local": "=LET(x;5;LAMBDA(y;x+y))(1)",
+   "formula": "=LET(x,5,LAMBDA(y,x+y))(1)",
+   "value": 6.0,
+   "spill": null
+  },
+  {
+   "cell": "D88",
+   "typed": "=LET(x;1;x;2;x)",
+   "rejected": true
+  },
+  {
+   "cell": "D91",
+   "typed": "=MATRIXERSTELLEN(0;2;LAMBDA(r;c;r))",
+   "local": "=MATRIXERSTELLEN(0;2;LAMBDA(r;c;r))",
+   "formula": "=MAKEARRAY(0,2,LAMBDA(r,c,r))",
+   "value": {
+    "error": "#VALUE!"
+   },
+   "spill": null
+  }
+ ],
+ "file": {
+  "cells": {
+   "D1": "_xlfn.LET(_xlpm.x,2,_xlpm.x*3)",
+   "D4": "_xlfn.LET(_xlpm.x,2,_xlpm.y,_xlpm.x+1,_xlpm.x*_xlpm.y)",
+   "D7": "_xlfn.LET(_xlpm.a,A1:A3,SUM(_xlpm.a))",
+   "D10": "_xlfn.LET(_xlpm.a,A1:A3,_xlpm.a*2)",
+   "D13": "_xlfn.LAMBDA(_xlpm.x,_xlpm.x+1)(2)",
+   "D16": "_xlfn.LAMBDA(_xlpm.x,_xlpm.y,_xlpm.x*_xlpm.y)(3,4)",
+   "D19": "_xlfn.LAMBDA(_xlpm.x,_xlpm.x)",
+   "D22": "_xlfn.LET(_xlpm.f,_xlfn.LAMBDA(_xlpm.x,_xlpm.x*2),_xlpm.f(5))",
+   "D25": "_xlfn.MAP(A1:A3,_xlfn.LAMBDA(_xlpm.x,_xlpm.x*2))",
+   "D28": "_xlfn.MAP(A1:A3,B1:B3,_xlfn.LAMBDA(_xlpm.a,_xlpm.b,_xlpm.a+_xlpm.b))",
+   "D31": "_xlfn.REDUCE(0,A1:A3,_xlfn.LAMBDA(_xlpm.a,_xlpm.b,_xlpm.a+_xlpm.b))",
+   "D34": "_xlfn.REDUCE(1,A1:B3,_xlfn.LAMBDA(_xlpm.a,_xlpm.b,_xlpm.a*_xlpm.b))",
+   "D37": "_xlfn.SCAN(0,A1:A3,_xlfn.LAMBDA(_xlpm.a,_xlpm.b,_xlpm.a+_xlpm.b))",
+   "D40": "_xlfn.SCAN(\"\",A1:A3,_xlfn.LAMBDA(_xlpm.a,_xlpm.b,_xlpm.a&_xlpm.b))",
+   "D43": "_xlfn.BYROW(A1:B3,_xlfn.LAMBDA(_xlpm.r,SUM(_xlpm.r)))",
+   "D46": "_xlfn.BYCOL(A1:B3,_xlfn.LAMBDA(_xlpm.c,MAX(_xlpm.c)))",
+   "D49": "_xlfn.MAKEARRAY(2,3,_xlfn.LAMBDA(_xlpm.r,_xlpm.c,_xlpm.r*_xlpm.c))",
+   "D52": "_xlfn.LAMBDA(_xlpm.x,_xlpm.y,IF(_xlfn.ISOMITTED(_xlpm.y),_xlpm.x,_xlpm.x+_xlpm.y))(1,)",
+   "D55": "_xlfn.LAMBDA(_xlpm.x,_xlpm.y,IF(_xlfn.ISOMITTED(_xlpm.y),_xlpm.x,_xlpm.x+_xlpm.y))(1,2)",
+   "D58": "_xlfn.LAMBDA(_xlpm.x,_xlpm.x+1)(1,2)",
+   "D61": "SUM(_xlfn.LAMBDA(_xlpm.x,_xlpm.x))",
+   "D64": "_xlfn.MAP(A1:A3,_xlfn.LAMBDA(_xlpm.x,{1,2}))",
+   "D67": "_xlfn.BYROW(A1:B3,_xlfn.LAMBDA(_xlpm.r,_xlpm.r))",
+   "D70": "Verdoppeln(4)",
+   "D73": "Fakul(5)",
+   "D76": "Plus(3)",
+   "D79": "Plus(3,4)",
+   "D82": "_xlfn.MAP(A1:A3,Verdoppeln)",
+   "D85": "_xlfn.LET(_xlpm.x,5,_xlfn.LAMBDA(_xlpm.y,_xlpm.x+_xlpm.y))(1)",
+   "D91": "_xlfn.MAKEARRAY(0,2,_xlfn.LAMBDA(_xlpm.r,_xlpm.c,_xlpm.r))"
+  },
+  "names": {
+   "Fakul": "_xlfn.LAMBDA(_xlpm.n,IF(_xlpm.n<=1,1,_xlpm.n*Fakul(_xlpm.n-1)))",
+   "Plus": "_xlfn.LAMBDA(_xlpm.a,_xlpm.b,IF(_xlfn.ISOMITTED(_xlpm.b),_xlpm.a,_xlpm.a+_xlpm.b))",
+   "Verdoppeln": "_xlfn.LAMBDA(_xlpm.x,_xlpm.x*2)"
+  }
+ },
+ "names_rejected": [],
+ "names_local": {
+  "Verdoppeln": "=LAMBDA(x;x*2)",
+  "Fakul": "=LAMBDA(n;WENN(n<=1;1;n*Fakul(n-1)))",
+  "Plus": "=LAMBDA(a;b;WENN(WURDEAUSGELASSEN(b);a;a+b))"
+ }
+}

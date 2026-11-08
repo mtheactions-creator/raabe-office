@@ -8,6 +8,7 @@ import { colName } from "../address";
 import { ERROR_TEXT_DE, type Workbook } from "../model";
 import { lex, type Dialect, type RefEnd, type RefTok, type Token } from "./lexer";
 import { XLFN, germanName } from "./names";
+import { parseFormula, type Node } from "./parse";
 
 const STRUCT_DE: [string, string][] = [["#Alle", "#All"], ["#Daten", "#Data"], ["#Kopfzeilen", "#Headers"], ["#Ergebnisse", "#Totals"], ["#Diese Zeile", "#This Row"]];
 
@@ -124,13 +125,93 @@ function spelled(r: RefTok): RefTok {
   return { ...r, sheet, sheet2 };
 }
 
-/** A formula of the model as the .xlsx file stores it: newer functions get their _xlfn. prefix. */
-export function toXlsxFormula(f: string): string {
+/** The formula with each structured reference replaced (file form), and names too when asked (renamed tables). */
+export function mapStructs(f: string, fn: (text: string) => string, nameFn?: (name: string) => string): string {
+  if (!f.includes("[") && !nameFn) return f;
   let out = "";
   let pos = 0;
   for (const t of lex(f, "file")) {
-    if (t.k !== "func" || !t.known) continue;
-    const p = XLFN[t.name!];
+    if (t.k === "struct") out += f.slice(pos, t.s) + fn(t.text);
+    else if (t.k === "name" && nameFn && t.sheet === undefined) out += f.slice(pos, t.s) + nameFn(t.name!);
+    else continue;
+    pos = t.e;
+  }
+  return out + f.slice(pos);
+}
+
+/** The names LET and LAMBDA bind in a formula (lower case); the file writes them with _xlpm. */
+function boundNames(f: string): Set<string> {
+  const out = new Set<string>();
+  if (!/(?:^|[^A-Za-z0-9_.])(LET|LAMBDA)\(/i.test(f)) return out;
+  let node: Node;
+  try {
+    node = parseFormula(f);
+  } catch {
+    return out;
+  }
+  const walk = (n: Node): void => {
+    switch (n.t) {
+      case "fn": {
+        const up = n.name.toUpperCase();
+        if (up === "LET") n.args.forEach((a, i) => { if (i % 2 === 0 && i < n.args.length - 1 && a.t === "name") out.add(a.name.toLowerCase()); });
+        if (up === "LAMBDA") n.args.slice(0, -1).forEach((a) => { if (a.t === "name") out.add(a.name.toLowerCase()); });
+        n.args.forEach(walk);
+        return;
+      }
+      case "call": walk(n.fn); n.args.forEach(walk); return;
+      case "bin": walk(n.a); walk(n.b); return;
+      case "un": case "paren": walk(n.a); return;
+      default: return;
+    }
+  };
+  walk(node);
+  return out;
+}
+
+/** Whether LET or LAMBDA bind something that is not a name, or one name twice (Excel refuses it on entry). */
+export function bindingProblem(f: string): boolean {
+  if (!/(?:^|[^A-Za-z0-9_.])(LET|LAMBDA)\(/i.test(f)) return false;
+  let node: Node;
+  try {
+    node = parseFormula(f);
+  } catch {
+    return false;
+  }
+  let bad = false;
+  const walk = (n: Node): void => {
+    switch (n.t) {
+      case "fn": {
+        const up = n.name.toUpperCase();
+        const names = up === "LET" ? n.args.filter((_, i) => i % 2 === 0 && i < n.args.length - 1) : up === "LAMBDA" ? n.args.slice(0, -1) : [];
+        if (up === "LET" && n.args.length % 2 === 0) bad = true;
+        const seen = new Set<string>();
+        for (const a of names) {
+          if (a.t !== "name" || a.sheet !== undefined || seen.has(a.name.toLowerCase())) bad = true;
+          else seen.add(a.name.toLowerCase());
+        }
+        n.args.forEach(walk);
+        return;
+      }
+      case "call": walk(n.fn); n.args.forEach(walk); return;
+      case "bin": walk(n.a); walk(n.b); return;
+      case "un": case "paren": walk(n.a); return;
+      default: return;
+    }
+  };
+  walk(node);
+  return bad;
+}
+
+/** A formula of the model as the .xlsx file stores it: newer functions get their _xlfn. prefix, the
+ *  names of LET and LAMBDA _xlpm. (recorded from Excel's files). */
+export function toXlsxFormula(f: string): string {
+  const bound = boundNames(f);
+  let out = "";
+  let pos = 0;
+  for (const t of lex(f, "file")) {
+    let p: string | undefined;
+    if (t.k === "func" && t.known) p = XLFN[t.name!];
+    else if (bound.size && (t.k === "name" || t.k === "func") && t.sheet === undefined && bound.has(t.name!.toLowerCase())) p = "_xlpm." + t.name!;
     if (!p) continue;
     out += f.slice(pos, t.s) + p;
     pos = t.e;
@@ -143,6 +224,11 @@ export function fromXlsxFormula(f: string): string {
   let out = "";
   let pos = 0;
   for (const t of lex(f, "file")) {
+    if ((t.k === "name" || t.k === "func") && /^_xlpm\./i.test(t.name ?? "")) {
+      out += f.slice(pos, t.s) + t.name!.slice(6);
+      pos = t.e;
+      continue;
+    }
     if (t.k !== "func" || !/^_xl/i.test(t.text)) continue;
     out += f.slice(pos, t.s) + t.name!;
     pos = t.e;

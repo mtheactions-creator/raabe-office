@@ -8,7 +8,7 @@ import { writePivots, type PivotCacheRef } from "./pivots";
 import { writeTables } from "./tables";
 import { strFromU8, strToU8, zipSync } from "fflate";
 import {
-  CellError, cellName, fromXlsxFormula, keyCell, rangeName, toXlsxFormula,
+  CellError, cellName, fromXlsxFormula, keyCell, mapStructs, rangeName, structToFile, structToShown, toXlsxFormula,
   type Cell, type ColInfo, type DefinedName, type RowInfo, type Sheet, type View, type Workbook,
 } from "@raabe/sheet-engine";
 import { PackageWriter, Rels, relsPath, resolveTarget } from "../package";
@@ -113,6 +113,7 @@ export function writePackage(wb: Workbook, options: XlsxWriteOptions = {}): Reco
     const w = new SheetWriter(sheet, i === wb.active, own ? sr : undefined, sr, part, pw, sw, sst, raw, options.author ?? "", vmlIds);
     w.personOf = personOf;
     w.nextTableId = () => tableId++;
+    w.tableNames = new Set(wb.sheets.flatMap((s) => (s.tables ?? []).map((t) => t.name.toLowerCase())));
     pw.setPart(part, w.xml(), CT.worksheet);
     if (w.formulaWithoutValue) needsCalc = true;
     caches.push(...writePivots(pw, sheet, part, raw.wbPath, pivotData, () => cacheId++));
@@ -226,6 +227,8 @@ class SheetWriter {
   /** Kommentare: the person id for an author's name (set by the package writer). */
   personOf: (name: string) => string = () => guid();
   nextTableId: () => number = () => 1;
+  /** The workbook's table names (lower case): a name alone is written as Noten[] (Excel). */
+  tableNames = new Set<string>();
   private sp: Split;
   private readonly rels: Rels;
 
@@ -405,7 +408,10 @@ class SheetWriter {
     const v = c.v;
     if (c.raw?.f) body += c.raw.f;
     else if (c.f !== undefined) {
-      const file = c.raw?.file !== undefined && fromXlsxFormula(c.raw.file) === c.f ? c.raw.file : toXlsxFormula(c.f);
+      // Structured references as Excel writes them ([@Note] is Tabelle1[[#This Row],[Note]] in the file).
+      const own = c.f.includes("[") || this.tableNames.size ? this.s.tables?.find((t) => row >= t.ref.r0 && row <= t.ref.r1 && col >= t.ref.c0 && col <= t.ref.c1)?.name ?? null : null;
+      const shown = (f: string): string => (f.includes("[") ? mapStructs(f, (x) => structToShown(x, own)) : f);
+      const file = c.raw?.file !== undefined && shown(fromXlsxFormula(c.raw.file)) === c.f ? c.raw.file : toXlsxFormula(this.tableNames.size || c.f.includes("[") ? mapStructs(c.f, (x) => structToFile(x, own), (n) => (this.tableNames.has(n.toLowerCase()) ? n + "[]" : n)) : c.f);
       body += c.array ? `<f t="array" ref="${rangeName(c.array)}">${escText(file)}</f>` : `<f>${escText(file)}</f>`;
       if (v === null) this.formulaWithoutValue = true;
     }

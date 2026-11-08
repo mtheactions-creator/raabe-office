@@ -4,7 +4,7 @@
 // opens and saves as German Excel does.
 
 import {
-  CellError, MAX_COLS, MAX_ROWS, Workbook, Sheet, cellName, colName, isDateFormat, FUNCTIONS_DE, RIBBON_FORMATS, localFormat, parseRange, rangeName,
+  CellError, MAX_COLS, MAX_ROWS, Workbook, Sheet, cellName, colName, isDateFormat, FUNCTIONS_DE, RIBBON_FORMATS, bindingProblem, localFormat, mapStructs, parseRange, rangeName, structProblem, toFileFormula,
   type CellStyle, type Rect,
 } from "@raabe/sheet-engine";
 import { readXlsx, writeXlsx, newWorkbook } from "@raabe/ooxml";
@@ -705,6 +705,7 @@ export class CalcApp {
         if (!this.whatIf.guard(targets)) return;
         this.change("Eingabe", () => {
           A.enter(this.ctx, this.sheet, targets, text);
+          this.tables.afterEntry(this.sheet, targets, text);
           // Formulas are worked out first, so the column can widen for their result (an error too).
           if (text.startsWith("=") && (targets.r1 - targets.r0 + 1) * (targets.c1 - targets.c0 + 1) <= 400) {
             const cells: { row: number; col: number }[] = [];
@@ -725,6 +726,16 @@ export class CalcApp {
         if (this.protection.guard("edit.clearContents")) this.change("Löschen", () => A.clearContents(this.ctx, this.sheet, this.grid.selection));
       },
       clearRange: (r) => { if (this.protection.guard("edit.clearContents")) this.change("Löschen", () => A.clearContents(this.ctx, this.sheet, [r])); },
+      formulaProblem: (row, col, text) => {
+        if (!text.startsWith("=")) return false;
+        let file: string;
+        try { file = toFileFormula(text, this.wb); } catch { return false; }
+        if (bindingProblem(file)) return true;
+        if (!file.includes("[")) return false;
+        const list: string[] = [];
+        mapStructs(file, (t) => { list.push(t); return t; });
+        return list.length > 0 && structProblem(this.wb, list, this.wb.sheets.indexOf(this.sheet), row, col);
+      },
       formulaError: () => messageBox("RaabeCalc", "Diese Formel ist fehlerhaft und kann so nicht übernommen werden. Bitte korrigieren Sie sie oder entfernen Sie das Gleichheitszeichen am Anfang, wenn es Text sein soll."),
       proposeFormula: async (text) => !!(await showDialog({
         title: "RaabeCalc",

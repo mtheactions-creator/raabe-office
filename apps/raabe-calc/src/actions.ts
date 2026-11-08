@@ -3,7 +3,7 @@
 // Every function runs inside the caller's undo step (History.step).
 
 import {
-  MAX_COLS, MAX_ROWS, colName, adjustFormula, affectedByShift, shiftValidations, cellKey, formulaRefs, shiftFormula, toLocalFormula, type Cell, type CellStyle, type Rect, type Sheet, type Validation, type Workbook,
+  MAX_COLS, MAX_ROWS, colName, adjustFormula, affectedByShift, shiftValidations, cellKey, formulaRefs, mapStructs, shiftFormula, structToShown, toLocalFormula, type Cell, type CellStyle, type Rect, type Sheet, type Validation, type Workbook,
 } from "@raabe/sheet-engine";
 import { readInput } from "./engine";
 import type { History } from "./ops";
@@ -33,6 +33,11 @@ export function enter(ctx: Ctx, sheet: Sheet, targets: Rect, text: string, origi
     // A line break typed with Alt+Eingabe turns on Textumbruch (Excel).
     if (typeof r.v === "string" && r.v.includes(String.fromCharCode(10)) && !style.wrap) cell.s = ctx.wb.styles.derive(cell.s, (s) => { s.wrap = true; });
     if (r.f !== undefined) cell.f = row === origin.row && col === origin.col ? r.f : shiftFormula(r.f, row - origin.row, col - origin.col);
+    // Structured references as Excel shows them: [#Diese Zeile] as "@", the own table's name left out.
+    if (cell.f?.includes("[")) {
+      const own = sheet.tables?.find((t) => row >= t.ref.r0 && row <= t.ref.r1 && col >= t.ref.c0 && col <= t.ref.c1)?.name ?? null;
+      cell.f = mapStructs(cell.f, (x) => structToShown(x, own));
+    }
     // A formula in a Standard cell shows its result in the format of a referenced cell (the first
     // one that has one), or as a date for HEUTE/JETZT/DATUM, as Excel does.
     if (cell.f !== undefined && style.numFmt === "General") {

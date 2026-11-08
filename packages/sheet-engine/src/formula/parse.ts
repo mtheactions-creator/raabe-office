@@ -21,7 +21,9 @@ export type Node =
   | { t: "arr"; rows: number; cols: number; v: Scalar[] }
   | { t: "paren"; a: Node }
   | { t: "miss" }
-  | { t: "struct"; text: string };
+  | { t: "struct"; text: string }
+  /** A call of what an expression gives (LAMBDA(x;x+1)(2), a LET name holding a LAMBDA). */
+  | { t: "call"; fn: Node; args: Node[] };
 
 export class FormulaError extends Error {}
 
@@ -243,7 +245,30 @@ class Parser {
       this.i++;
       return { t: "un", op: "#", a: n };
     }
+    // A call straight after a function or parentheses: LAMBDA(x;x+1)(2).
+    if (raw && raw.k === "(" && (n.t === "fn" || n.t === "paren" || n.t === "call")) {
+      this.i++;
+      return this.postfix({ t: "call", fn: n, args: this.args() });
+    }
     return n;
+  }
+
+  /** Arguments up to the closing parenthesis (the opening one read already). */
+  private args(): Node[] {
+    const args: Node[] = [];
+    if (this.peek()?.k === ")") {
+      this.next();
+      return args;
+    }
+    for (;;) {
+      const p = this.peek();
+      if (p && (p.k === "sep" || p.k === ")")) args.push({ t: "miss" });
+      else args.push(this.expr(false));
+      const q = this.next();
+      if (!q) throw new FormulaError("missing )");
+      if (q.k === ")") return args;
+      if (q.k !== "sep") throw new FormulaError(`unexpected ${q.text}`);
+    }
   }
 
   array(): Node {
@@ -278,7 +303,7 @@ class Parser {
 }
 
 function isRefish(n: Node): boolean {
-  return n.t === "ref" || n.t === "name" || n.t === "fn" || n.t === "paren" || (n.t === "bin" && (n.op === ":" || n.op === " " || n.op === ",")) || (n.t === "un" && (n.op === "@" || n.op === "#"));
+  return n.t === "ref" || n.t === "name" || n.t === "fn" || n.t === "call" || n.t === "paren" || (n.t === "bin" && (n.op === ":" || n.op === " " || n.op === ",")) || (n.t === "un" && (n.op === "@" || n.op === "#"));
 }
 
 const CACHE = new Map<string, Node | FormulaError>();

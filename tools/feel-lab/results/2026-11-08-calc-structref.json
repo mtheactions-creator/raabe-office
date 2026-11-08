@@ -1,0 +1,318 @@
+{
+ "raabe->excel": [
+  {
+   "check": "table name",
+   "ok": true
+  },
+  {
+   "check": "range grew to A1:D6",
+   "ok": true
+  },
+  {
+   "check": "columns",
+   "ok": true
+  },
+  {
+   "check": "D2 formula as Excel shows it",
+   "ok": true
+  },
+  {
+   "check": "D2 value the same",
+   "ok": true
+  },
+  {
+   "check": "D3 formula as Excel shows it",
+   "ok": true
+  },
+  {
+   "check": "D3 value the same",
+   "ok": true
+  },
+  {
+   "check": "D4 formula as Excel shows it",
+   "ok": true
+  },
+  {
+   "check": "D4 value the same",
+   "ok": true
+  },
+  {
+   "check": "D5 formula as Excel shows it",
+   "ok": true
+  },
+  {
+   "check": "D5 value the same",
+   "ok": true
+  },
+  {
+   "check": "D6 formula as Excel shows it",
+   "ok": true
+  },
+  {
+   "check": "D6 value the same",
+   "ok": true
+  },
+  {
+   "check": "G1 formula as Excel shows it",
+   "ok": true
+  },
+  {
+   "check": "G1 value the same",
+   "ok": true
+  },
+  {
+   "check": "G2 formula as Excel shows it",
+   "ok": true
+  },
+  {
+   "check": "G2 value the same",
+   "ok": true
+  },
+  {
+   "check": "G3 formula as Excel shows it",
+   "ok": true
+  },
+  {
+   "check": "G3 value the same",
+   "ok": true
+  },
+  {
+   "check": "G4 formula as Excel shows it",
+   "ok": true
+  },
+  {
+   "check": "G4 value the same",
+   "ok": true
+  },
+  {
+   "check": "G5 formula as Excel shows it",
+   "ok": true
+  },
+  {
+   "check": "G5 value the same",
+   "ok": true
+  }
+ ],
+ "excel->raabe": [
+  {
+   "cell": "D2",
+   "ok": true
+  },
+  {
+   "cell": "D3",
+   "ok": true
+  },
+  {
+   "cell": "D4",
+   "ok": true
+  },
+  {
+   "cell": "D5",
+   "ok": true
+  },
+  {
+   "cell": "C6",
+   "ok": true
+  },
+  {
+   "cell": "H2",
+   "ok": true
+  },
+  {
+   "cell": "H3",
+   "ok": true
+  },
+  {
+   "cell": "H4",
+   "ok": true
+  },
+  {
+   "cell": "H5",
+   "ok": true
+  },
+  {
+   "cell": "H6",
+   "ok": true
+  },
+  {
+   "cell": "G7",
+   "ok": true
+  },
+  {
+   "cell": "G8",
+   "ok": true
+  },
+  {
+   "cell": "G9",
+   "ok": true
+  },
+  {
+   "cell": "G10",
+   "ok": true
+  },
+  {
+   "cell": "G11",
+   "ok": true
+  },
+  {
+   "cell": "G12",
+   "ok": true
+  },
+  {
+   "cell": "G13",
+   "ok": true
+  },
+  {
+   "cell": "G14",
+   "ok": true
+  },
+  {
+   "cell": "G15",
+   "ok": true
+  },
+  {
+   "cell": "G16",
+   "ok": true
+  },
+  {
+   "cell": "G17",
+   "ok": true
+  },
+  {
+   "cell": "G18",
+   "ok": true
+  },
+  {
+   "cell": "G19",
+   "ok": true
+  },
+  {
+   "cell": "G21",
+   "ok": true
+  },
+  {
+   "cell": "G22",
+   "ok": true
+  }
+ ],
+ "ours": {
+  "ref": {
+   "r0": 0,
+   "c0": 0,
+   "r1": 5,
+   "c1": 3
+  },
+  "columns": [
+   [
+    "Name",
+    null
+   ],
+   [
+    "Fach",
+    null
+   ],
+   [
+    "Note",
+    null
+   ],
+   [
+    "Doppelt",
+    "[@Note]*2"
+   ]
+  ],
+  "cells": {
+   "D2": {
+    "f": "[@Note]*2",
+    "v": 4
+   },
+   "D3": {
+    "f": "[@Note]*2",
+    "v": 6
+   },
+   "D4": {
+    "f": "[@Note]*2",
+    "v": 2
+   },
+   "D5": {
+    "f": "[@Note]*2",
+    "v": 4
+   },
+   "D6": {
+    "f": "[@Note]*2",
+    "v": 8
+   },
+   "G1": {
+    "f": "SUM(Noten[Doppelt])",
+    "v": 24
+   },
+   "G2": {
+    "f": "ROWS(Noten)",
+    "v": 5
+   },
+   "G3": {
+    "f": "VLOOKUP(\"Cem\",Noten,4,FALSE)",
+    "v": 2
+   },
+   "G4": {
+    "f": "COUNTA(Noten[[#All],[Name]])",
+    "v": 6
+   },
+   "G5": {
+    "f": "Noten[@Note]",
+    "v": 2
+   }
+  }
+ },
+ "excel": {
+  "name": "Noten",
+  "range": "A1:D6",
+  "columns": [
+   "Name",
+   "Fach",
+   "Note",
+   "Doppelt"
+  ],
+  "cells": {
+   "D2": {
+    "local": "=[@Note]*2",
+    "value": 4
+   },
+   "D3": {
+    "local": "=[@Note]*2",
+    "value": 6
+   },
+   "D4": {
+    "local": "=[@Note]*2",
+    "value": 2
+   },
+   "D5": {
+    "local": "=[@Note]*2",
+    "value": 4
+   },
+   "D6": {
+    "local": "=[@Note]*2",
+    "value": 8
+   },
+   "G1": {
+    "local": "=SUMME(Noten[Doppelt])",
+    "value": 24
+   },
+   "G2": {
+    "local": "=ZEILEN(Noten)",
+    "value": 5
+   },
+   "G3": {
+    "local": "=SVERWEIS(\"Cem\";Noten;4;FALSCH)",
+    "value": 2
+   },
+   "G4": {
+    "local": "=ANZAHL2(Noten[[#Alle];[Name]])",
+    "value": 6
+   },
+   "G5": {
+    "local": "=Noten[@Note]",
+    "value": 2
+   }
+  }
+ }
+}

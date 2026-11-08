@@ -6,6 +6,8 @@ import { MAX_COLS, MAX_ROWS, type Rect } from "../address";
 import { CellError, type Workbook } from "../model";
 import { englishName, isEnglishName } from "./names";
 import { parseFormula, type Node } from "./parse";
+import { findTable, parseStruct, resolveStruct } from "./structref";
+import { tableData } from "../table";
 import { Arr, E, Ref, compare, isErr, num, toNum, toStr, type Any, type V } from "./values";
 
 /** What the evaluator needs from its surroundings (a Calc, or the workbook's stored values). */
@@ -44,7 +46,13 @@ export function def(name: string, min: number, max: number, fn: Fn, opts: { lazy
 
 /** Where a formula is evaluated. */
 export class Ctx {
-  constructor(readonly host: Host, readonly sheet: number, readonly row: number, readonly col: number) {}
+  /** Names bound by LET and by a LAMBDA's parameters (lower case), innermost last; null outside. */
+  constructor(readonly host: Host, readonly sheet: number, readonly row: number, readonly col: number, readonly scope: Map<string, Any> | null = null) {}
+
+  /** The same place with more names bound (LET, a LAMBDA's call). */
+  withScope(scope: Map<string, Any>): Ctx {
+    return new Ctx(this.host, this.sheet, this.row, this.col, scope);
+  }
 
   eval(n: Node): Any {
     return evalNode(n, this);
@@ -292,8 +300,14 @@ export function intersect(a: Any, ctx: Ctx): Any {
 function evalName(name: string, sheetName: string | undefined, ctx: Ctx): Any {
   const wb = ctx.host.wb;
   const lname = name.toLowerCase();
+  if (sheetName === undefined && ctx.scope?.has(lname)) return ctx.scope.get(lname)!;
   const home = sheetName !== undefined ? ctx.sheetIndex(sheetName) : ctx.sheet;
   const dn = wb.names.find((n) => n.name.toLowerCase() === lname && n.sheet === home) ?? (sheetName === undefined ? wb.names.find((n) => n.name.toLowerCase() === lname && n.sheet === undefined) : undefined);
+  // A table's name alone stands for its data rows.
+  if (!dn && sheetName === undefined) {
+    const t = findTable(wb, name, ctx.sheet, ctx.row, ctx.col);
+    if (t) return new Ref(t.sheet, [tableData(t.table)]);
+  }
   // A function's name without brackets is the function itself, which a cell cannot show (Excel: #CALC!).
   if (!dn) return isEnglishName(name.toUpperCase()) || englishName(name.toUpperCase()) !== undefined ? E.calc : E.name;
   let node: Node;
@@ -305,6 +319,15 @@ function evalName(name: string, sheetName: string | undefined, ctx: Ctx): Any {
   return evalNode(node, ctx);
 }
 
+function evalStruct(text: string, ctx: Ctx): Any {
+  const spec = parseStruct(text);
+  if (!spec) return E.ref;
+  const r = resolveStruct(ctx.host.wb, spec, ctx.sheet, ctx.row, ctx.col);
+  if (r === "ref") return E.ref;
+  if (r === "value") return E.value;
+  return new Ref(r.sheet, [r.rect]);
+}
+
 // ----- The tree walk -----------------------------------------------------------------------
 
 export function evalNode(n: Node, ctx: Ctx, top = false): Any {
@@ -314,7 +337,7 @@ export function evalNode(n: Node, ctx: Ctx, top = false): Any {
     case "bool": return n.v;
     case "err": return E[codeKey(n.v)] ?? new CellError(n.v);
     case "miss": return null;
-    case "struct": return E.ref;
+    case "struct": return evalStruct(n.text, ctx);
     case "arr": return new Arr(n.rows, n.cols, n.v);
     case "paren": return evalNode(n.a, ctx);
     case "ref": {
@@ -330,6 +353,7 @@ export function evalNode(n: Node, ctx: Ctx, top = false): Any {
     }
     case "name": return evalName(n.name, n.sheet, ctx);
     case "fn": return callFn(n.name, n.args, ctx);
+    case "call": return callValue(evalNode(n.fn, ctx), n.args, ctx);
     case "un": {
       if (n.op === "@") return intersect(evalNode(n.a, ctx), ctx);
       if (n.op === "#") {
@@ -349,6 +373,7 @@ export function evalNode(n: Node, ctx: Ctx, top = false): Any {
       if (n.op === ":" || n.op === " " || n.op === ",") return refOp(n.op, evalNode(n.a, ctx), evalNode(n.b, ctx));
       const a = deref(evalNode(n.a, ctx), ctx);
       const b = deref(evalNode(n.b, ctx), ctx);
+      if (isLambda(a) || isLambda(b)) return E.value;
       switch (n.op) {
         case "+": case "-": case "*": case "/": case "^":
           return map2(a, b, (x, y) => arith(n.op, x, y, top));
@@ -377,12 +402,32 @@ function codeKey(code: string): keyof typeof E {
   return CODE_KEYS[code];
 }
 
+/** Whether a value is a LAMBDA (fn-lambda.ts: an error value carrying its body). */
+export const isLambda = (v: unknown): boolean => v instanceof CellError && "body" in v;
+const LAMBDA_TAKERS = new Set(["MAP", "REDUCE", "SCAN", "BYROW", "BYCOL", "MAKEARRAY", "IF", "IFS", "IFERROR", "IFNA", "CHOOSE", "SWITCH"]);
+
+/** Calls a LAMBDA (the value of a LET name, a defined name or an expression); anything else gives #VALUE!. */
+export let callValue: (f: Any, argNodes: Node[], ctx: Ctx) => Any = (f) => (f instanceof CellError ? f : E.value);
+
+/** Set by the LAMBDA library (fn-lambda.ts). */
+export function setCallValue(fn: typeof callValue): void {
+  callValue = fn;
+}
+
 function callFn(name: string, argNodes: Node[], ctx: Ctx): Any {
   const d = FUNCS.get(name.toUpperCase());
-  if (!d) return E.name;
+  if (!d) {
+    // Not built in: a LET name or a defined name holding a LAMBDA.
+    const l = name.toLowerCase();
+    if (ctx.scope?.has(l)) return callValue(ctx.scope.get(l)!, argNodes, ctx);
+    if (ctx.host.wb.names.some((n) => n.name.toLowerCase() === l)) return callValue(evalName(name, undefined, ctx), argNodes, ctx);
+    return E.name;
+  }
   if (argNodes.length < d.min || argNodes.length > d.max) return E.value;
   if (d.lazy) return d.fn([], ctx, argNodes);
   const args = argNodes.map((a) => evalNode(a, ctx));
+  // A LAMBDA where a value belongs: #VALUE! (Excel; a cell showing one gets #CALC!).
+  if (!LAMBDA_TAKERS.has(name.toUpperCase()) && args.some(isLambda)) return E.value;
   return d.fn(args, ctx, argNodes);
 }
 

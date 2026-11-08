@@ -2297,3 +2297,31 @@ Agreed with the owner, who leaves the PC (mouse and keyboard) to the run until t
 - **Two sessions:** real input only under the lock file; decisions D-080 to D-099 in this checkout, D-100
   upward in the RaabePresent session; the shared interpreter (packages/vba) belongs to the RaabePresent
   session, RaabeCalc adds its object model beside it.
+
+## D-081 RaabeCalc: structured references, berechnete Spalten, growing tables, LET and LAMBDA (2026-11-08)
+
+Package A of D-080, measured against our own invisible Excel.
+- **Structured references** (`formula/structref.ts`): Tabelle1[Note], [@Note], [[#Kopfzeilen];[Note]],
+  [[Name]:[Note]], [#Alle] / [#Daten] / [#Ergebnisse] / [#Diese Zeile] in both dialects, a table's name alone
+  for its data, escapes ('[ '] '# ''). Recorded (`probe_excel_structref.py`): Excel shows [#Diese Zeile] as "@"
+  and leaves out the own table's name inside the table (TEILERGEBNIS(109;[Punkte])), but its file always
+  names the table, writes [@Note] as Noten[[#This Row],[Note]] and a table's name alone as Noten[]; the model
+  keeps what Excel shows and the .xlsx layer converts both ways (cells and calculatedColumnFormula). [@...]
+  outside the data rows is #WERT!, a missing table or column is refused on Enter as Excel refuses it.
+  Renaming a table or typing over a header renames the references in every formula and defined name.
+- **Berechnete Spalten and growing tables** (AutoKorrektur während der Eingabe): a formula typed into an
+  empty table column (or over a berechnete Spalte) fills its data rows; a value typed right below a table
+  without Ergebniszeile or right next to it makes the table grow (the new row takes the berechnete Spalten,
+  the new column the header typed or "SpalteN"). The Ergebniszeile writes TEILERGEBNIS(109;[Spalte]) as Excel.
+  Not yet: the AutoKorrektur-Optionen button that undoes the growing, and pointing into a table while typing
+  a formula (Excel then writes structured references): both need real-input recordings.
+- **LET, LAMBDA and the helpers** (`formula/fn-lambda.ts`): LET, LAMBDA with calls (LAMBDA(x;x+1)(2), a LET
+  name holding a LAMBDA, defined names holding one, recursion), MAP, REDUCE, SCAN, NACHZEILE, NACHSPALTE,
+  MATRIXERSTELLEN, WURDEAUSGELASSEN. A LAMBDA is a value only while a formula is worked out: a cell showing one
+  gets #BERECHNEN!, any function that is not a LAMBDA helper gets #WERT! for one (recorded); every parameter
+  needs its argument (f(1;) leaves one out). The file writes the bound names with _xlpm. (recorded); a name
+  bound twice is refused on Enter. `probe_excel_lambda.py`: 31 cases.
+- **Measured:** structref-excel.test 23 cases + structref.test, lambda-excel.test 32 cases (values, spills,
+  German form, file text both ways); `check_calc_structref.py` RaabeCalc -> Excel 23/23 (the table grown,
+  the berechnete Spalte, formulas and values as Excel shows them), Excel -> RaabeCalc 25/25.
+
