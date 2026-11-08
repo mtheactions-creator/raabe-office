@@ -89,6 +89,8 @@ export interface GridHost {
   namesMenu(anchor: DOMRect): void;
   /** A link was clicked: a web address, a file or "#Sheet!A1" inside the workbook. */
   followLink(target: string): void;
+  /** The address a =HYPERLINK(...) formula in the cell points to. */
+  formulaLink?(row: number, col: number): string | null;
 }
 
 /** A reference's frame being dragged: where its text is, what it was, the corner that stays (null: moved). */
@@ -1705,6 +1707,11 @@ export class Grid {
     if (d.kind === "cells" && !this.downAt.moved && !e.shiftKey && !e.ctrlKey) {
       const c = this.sheet.get(this.active.row, this.active.col);
       if (c?.link && this.overText(e, this.active.row, this.active.col)) this.host.followLink(c.link);
+      // =HYPERLINK(...) follows its first argument the same way.
+      else if (c?.f !== undefined && /^HYPERLINK\(/i.test(c.f) && this.overText(e, this.active.row, this.active.col)) {
+        const target = this.host.formulaLink?.(this.active.row, this.active.col);
+        if (target) this.host.followLink(target);
+      }
     }
     this.syncBar();
   }

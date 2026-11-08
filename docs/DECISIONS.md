@@ -2318,10 +2318,24 @@ Package A of D-080, measured against our own invisible Excel.
 - **LET, LAMBDA and the helpers** (`formula/fn-lambda.ts`): LET, LAMBDA with calls (LAMBDA(x;x+1)(2), a LET
   name holding a LAMBDA, defined names holding one, recursion), MAP, REDUCE, SCAN, NACHZEILE, NACHSPALTE,
   MATRIXERSTELLEN, WURDEAUSGELASSEN. A LAMBDA is a value only while a formula is worked out: a cell showing one
-  gets #BERECHNEN!, any function that is not a LAMBDA helper gets #WERT! for one (recorded); every parameter
+  gets #CALC!, any function that is not a LAMBDA helper gets #WERT! for one (recorded); every parameter
   needs its argument (f(1;) leaves one out). The file writes the bound names with _xlpm. (recorded); a name
   bound twice is refused on Enter. `probe_excel_lambda.py`: 31 cases.
 - **Measured:** structref-excel.test 23 cases + structref.test, lambda-excel.test 32 cases (values, spills,
   German form, file text both ways); `check_calc_structref.py` RaabeCalc -> Excel 23/23 (the table grown,
   the berechnete Spalte, formulas and values as Excel shows them), Excel -> RaabeCalc 25/25.
+
+## D-082 RaabeCalc: ZELLE, INFO, BLATT, BLÄTTER, HYPERLINK (2026-11-08)
+
+Recorded in German Excel (`probe_excel_info.py`, 98 cases with 29 number formats) and built the same way
+(`formula/fn-info.ts`): the German and English info types where Excel takes them (INFO takes "Dateienzahl",
+"System", "Ursprung", "Version" and every English one, not "Rechenmodus" or "Systemversion"); German Excel's
+own ZELLE("Format") codes (S, F2, .2 for #.##0,00, P0, E2, W2 for currency, D1 to D3, U1 to U4, "-" after the
+code for coloured negatives); "w" for values in ZELLE("Typ"); ZELLE("Breite") as Excel 365's two values.
+Deliberate differences: ZELLE without a reference reads the formula's own cell (Excel: the cell changed
+last, which depends on what the user did); ZELLE("Breite") counts RaabeCalc's Calibri columns (D-011);
+INFO("Version") and INFO("osversion") give Excel's values so that workbooks testing them keep working.
+INFO("Verzeichnis") and ZELLE("Dateiname") give the document's folder and path once it is saved (never part
+of the results files). =HYPERLINK(...) takes the Link look on entry (blue, underlined, as Excel's "Link"
+style) and a click on its text follows the first argument, as for links made with Strg+K.
 

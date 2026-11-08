@@ -40,6 +40,10 @@ export function enter(ctx: Ctx, sheet: Sheet, targets: Rect, text: string, origi
     }
     // A formula in a Standard cell shows its result in the format of a referenced cell (the first
     // one that has one), or as a date for HEUTE/JETZT/DATUM, as Excel does.
+    // =HYPERLINK(...) takes the Link style's look (blue, underlined; recorded: the cell's style is "Link").
+    if (cell.f !== undefined && /^HYPERLINK\(/i.test(cell.f) && !old?.link && ctx.wb.styles.get(cell.s).font.underline === undefined) {
+      cell.s = ctx.wb.styles.derive(cell.s, (s) => { s.font = { ...s.font, color: "#0563C1", underline: "single" }; });
+    }
     if (cell.f !== undefined && style.numFmt === "General") {
       const fmt = formulaFormat(ctx.wb, sheet, cell.f);
       if (fmt) cell.s = ctx.wb.styles.derive(cell.s, (s) => { s.numFmt = fmt; });

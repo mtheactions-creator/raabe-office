@@ -372,6 +372,8 @@ SEC|SEC|Zahl
 SECH|SECHYP|Zahl
 SECOND|SEKUNDE|Zahl
 SEQUENCE|SEQUENZ|Zeilen; [Spalten]; [Anfang]; [Schritt]
+SHEET|BLATT|[Wert]
+SHEETS|BLÄTTER|[Bezug]
 SERIESSUM|POTENZREIHE|x; n; m; Koeffizienten
 SIGN|VORZEICHEN|Zahl
 SIN|SIN|Zahl

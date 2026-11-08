@@ -192,6 +192,9 @@ export class CalcApp {
 
   private makeDoc(wb: Workbook, name: string, path: string | null): Doc {
     const history = new History(wb);
+    // ZELLE("Adresse"/"Dateiname") and INFO("Verzeichnis") read these.
+    wb.docName = name;
+    wb.docPath = path ?? undefined;
     const doc: Doc = { id: crypto.randomUUID(), name, path, wb, history, calc: makeCalc(wb), version: 0, savedVersion: 0, recoveryVersion: 0, lastSaved: null };
     history.onChange = (change) => this.afterChange(doc, change);
     doc.calc.recalc();
@@ -796,6 +799,23 @@ export class CalcApp {
         showMenu(this.commands, names.length ? names.map((n) => ({ label: n.name, run: () => { this.grid.goTo(n.name); this.grid.focus(); } }))
           : [{ label: "(keine Namen)", run: () => {}, disabled: true }], anchor);
       },
+      formulaLink: (row, col) => {
+        const f = this.sheet.get(row, col)?.f;
+        if (!f) return null;
+        // The first argument of HYPERLINK, up to its own comma (strings and brackets skipped).
+        let depth = 0, q = false, i = f.indexOf("(") + 1;
+        const start = i;
+        for (; i < f.length; i++) {
+          const ch = f[i];
+          if (ch === '"') q = !q;
+          if (q) continue;
+          if ("([{".includes(ch)) depth++;
+          else if (")]}".includes(ch)) { if (depth === 0) break; depth--; }
+          else if (ch === "," && depth === 0) break;
+        }
+        const v = this.active.calc.evaluate(this.wb.sheets.indexOf(this.sheet), row, col, f.slice(start, i));
+        return Array.isArray(v) ? null : v === null || v === undefined ? null : String(v);
+      },
       followLink: (target) => {
         if (target.startsWith("#")) {
           const m = /^#(?:'?([^'!]+)'?!)?(.+)$/.exec(target);
@@ -1280,6 +1300,8 @@ export class CalcApp {
     }
     doc.path = path;
     doc.name = stripExt(baseName(path));
+    doc.wb.docPath = path;
+    doc.wb.docName = doc.name;
     doc.savedVersion = doc.version;
     doc.lastSaved = Date.now();
     addRecent(path, baseName(path));

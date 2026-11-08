@@ -490,6 +490,10 @@ export class Workbook {
   themeLines: number[] = [0.5, 1, 1.5];
   /** The number of the last sheet Excel would have named "TabelleN" (new sheets count on from it). */
   sheetSeq?: number;
+  /** The document's name without extension as the title bar shows it (ZELLE("Adresse") on another sheet). */
+  docName?: string;
+  /** The file's full path once saved or opened (ZELLE("Dateiname"), INFO("Verzeichnis")); never written to the file. */
+  docPath?: string;
   /** The .xlsx layer's package and parts it does not model. */
   raw?: unknown;
 

@@ -1,0 +1,1469 @@
+{
+ "setup": [
+  [
+   "A1",
+   12.5,
+   "Standard"
+  ],
+  [
+   "A2",
+   "Text",
+   "Standard"
+  ],
+  [
+   "A3",
+   0.25,
+   "0%"
+  ],
+  [
+   "A4",
+   1234.5,
+   "#.##0,00"
+  ],
+  [
+   "A5",
+   45000,
+   "TT.MM.JJJJ"
+  ],
+  [
+   "A6",
+   -3,
+   "0;(0)"
+  ],
+  [
+   "A7",
+   3.14159,
+   "0,00"
+  ],
+  [
+   "A8",
+   5,
+   "0,00E+00"
+  ],
+  [
+   "A9",
+   7,
+   "#.##0 €"
+  ],
+  [
+   "A10",
+   0.5,
+   "hh:mm"
+  ]
+ ],
+ "cases": [
+  {
+   "cell": "E1",
+   "typed": "=ZELLE(\"Adresse\";A1)",
+   "local": "=ZELLE(\"Adresse\";A1)",
+   "formula": "=CELL(\"Adresse\",A1)",
+   "value": "$A$1",
+   "text": "$A$1",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E2",
+   "typed": "=ZELLE(\"Adresse\";A2)",
+   "local": "=ZELLE(\"Adresse\";A2)",
+   "formula": "=CELL(\"Adresse\",A2)",
+   "value": "$A$2",
+   "text": "$A$2",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E3",
+   "typed": "=ZELLE(\"Adresse\";A11)",
+   "local": "=ZELLE(\"Adresse\";A11)",
+   "formula": "=CELL(\"Adresse\",A11)",
+   "value": "$A$11",
+   "text": "$A$11",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E4",
+   "typed": "=ZELLE(\"Spalte\";A1)",
+   "local": "=ZELLE(\"Spalte\";A1)",
+   "formula": "=CELL(\"Spalte\",A1)",
+   "value": 1.0,
+   "text": "1",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E5",
+   "typed": "=ZELLE(\"Spalte\";A2)",
+   "local": "=ZELLE(\"Spalte\";A2)",
+   "formula": "=CELL(\"Spalte\",A2)",
+   "value": 1.0,
+   "text": "1",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E6",
+   "typed": "=ZELLE(\"Spalte\";A11)",
+   "local": "=ZELLE(\"Spalte\";A11)",
+   "formula": "=CELL(\"Spalte\",A11)",
+   "value": 1.0,
+   "text": "1",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E7",
+   "typed": "=ZELLE(\"Farbe\";A1)",
+   "local": "=ZELLE(\"Farbe\";A1)",
+   "formula": "=CELL(\"Farbe\",A1)",
+   "value": 0.0,
+   "text": "0",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E8",
+   "typed": "=ZELLE(\"Farbe\";A2)",
+   "local": "=ZELLE(\"Farbe\";A2)",
+   "formula": "=CELL(\"Farbe\",A2)",
+   "value": 0.0,
+   "text": "0",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E9",
+   "typed": "=ZELLE(\"Farbe\";A11)",
+   "local": "=ZELLE(\"Farbe\";A11)",
+   "formula": "=CELL(\"Farbe\",A11)",
+   "value": 0.0,
+   "text": "0",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E10",
+   "typed": "=ZELLE(\"Inhalt\";A1)",
+   "local": "=ZELLE(\"Inhalt\";A1)",
+   "formula": "=CELL(\"Inhalt\",A1)",
+   "value": 12.5,
+   "text": "12,5",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E11",
+   "typed": "=ZELLE(\"Inhalt\";A2)",
+   "local": "=ZELLE(\"Inhalt\";A2)",
+   "formula": "=CELL(\"Inhalt\",A2)",
+   "value": "Text",
+   "text": "Text",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E12",
+   "typed": "=ZELLE(\"Inhalt\";A11)",
+   "local": "=ZELLE(\"Inhalt\";A11)",
+   "formula": "=CELL(\"Inhalt\",A11)",
+   "value": 0.0,
+   "text": "0",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E13",
+   "typed": "=ZELLE(\"Format\";A1)",
+   "local": "=ZELLE(\"Format\";A1)",
+   "formula": "=CELL(\"Format\",A1)",
+   "value": "S",
+   "text": "S",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E14",
+   "typed": "=ZELLE(\"Format\";A2)",
+   "local": "=ZELLE(\"Format\";A2)",
+   "formula": "=CELL(\"Format\",A2)",
+   "value": "S",
+   "text": "S",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E15",
+   "typed": "=ZELLE(\"Format\";A11)",
+   "local": "=ZELLE(\"Format\";A11)",
+   "formula": "=CELL(\"Format\",A11)",
+   "value": "S",
+   "text": "S",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E16",
+   "typed": "=ZELLE(\"Klammern\";A1)",
+   "local": "=ZELLE(\"Klammern\";A1)",
+   "formula": "=CELL(\"Klammern\",A1)",
+   "value": 0.0,
+   "text": "0",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E17",
+   "typed": "=ZELLE(\"Klammern\";A2)",
+   "local": "=ZELLE(\"Klammern\";A2)",
+   "formula": "=CELL(\"Klammern\",A2)",
+   "value": 0.0,
+   "text": "0",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E18",
+   "typed": "=ZELLE(\"Klammern\";A11)",
+   "local": "=ZELLE(\"Klammern\";A11)",
+   "formula": "=CELL(\"Klammern\",A11)",
+   "value": 0.0,
+   "text": "0",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E19",
+   "typed": "=ZELLE(\"Präfix\";A1)",
+   "local": "=ZELLE(\"Präfix\";A1)",
+   "formula": "=CELL(\"Präfix\",A1)",
+   "value": "",
+   "text": "",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E20",
+   "typed": "=ZELLE(\"Präfix\";A2)",
+   "local": "=ZELLE(\"Präfix\";A2)",
+   "formula": "=CELL(\"Präfix\",A2)",
+   "value": "'",
+   "text": "'",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E21",
+   "typed": "=ZELLE(\"Präfix\";A11)",
+   "local": "=ZELLE(\"Präfix\";A11)",
+   "formula": "=CELL(\"Präfix\",A11)",
+   "value": "",
+   "text": "",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E22",
+   "typed": "=ZELLE(\"Schutz\";A1)",
+   "local": "=ZELLE(\"Schutz\";A1)",
+   "formula": "=CELL(\"Schutz\",A1)",
+   "value": 1.0,
+   "text": "1",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E23",
+   "typed": "=ZELLE(\"Schutz\";A2)",
+   "local": "=ZELLE(\"Schutz\";A2)",
+   "formula": "=CELL(\"Schutz\",A2)",
+   "value": 1.0,
+   "text": "1",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E24",
+   "typed": "=ZELLE(\"Schutz\";A11)",
+   "local": "=ZELLE(\"Schutz\";A11)",
+   "formula": "=CELL(\"Schutz\",A11)",
+   "value": 1.0,
+   "text": "1",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E25",
+   "typed": "=ZELLE(\"Zeile\";A1)",
+   "local": "=ZELLE(\"Zeile\";A1)",
+   "formula": "=CELL(\"Zeile\",A1)",
+   "value": 1.0,
+   "text": "1",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E26",
+   "typed": "=ZELLE(\"Zeile\";A2)",
+   "local": "=ZELLE(\"Zeile\";A2)",
+   "formula": "=CELL(\"Zeile\",A2)",
+   "value": 2.0,
+   "text": "2",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E27",
+   "typed": "=ZELLE(\"Zeile\";A11)",
+   "local": "=ZELLE(\"Zeile\";A11)",
+   "formula": "=CELL(\"Zeile\",A11)",
+   "value": 11.0,
+   "text": "11",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E28",
+   "typed": "=ZELLE(\"Typ\";A1)",
+   "local": "=ZELLE(\"Typ\";A1)",
+   "formula": "=CELL(\"Typ\",A1)",
+   "value": "w",
+   "text": "w",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E29",
+   "typed": "=ZELLE(\"Typ\";A2)",
+   "local": "=ZELLE(\"Typ\";A2)",
+   "formula": "=CELL(\"Typ\",A2)",
+   "value": "l",
+   "text": "l",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E30",
+   "typed": "=ZELLE(\"Typ\";A11)",
+   "local": "=ZELLE(\"Typ\";A11)",
+   "formula": "=CELL(\"Typ\",A11)",
+   "value": "b",
+   "text": "b",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E31",
+   "typed": "=ZELLE(\"Breite\";A1)",
+   "local": "=ZELLE(\"Breite\";A1)",
+   "formula": "=CELL(\"Breite\",A1)",
+   "value": [
+    [
+     10.0,
+     true
+    ]
+   ],
+   "text": "10",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E32",
+   "typed": "=ZELLE(\"Breite\";A2)",
+   "local": "=ZELLE(\"Breite\";A2)",
+   "formula": "=CELL(\"Breite\",A2)",
+   "value": [
+    [
+     10.0,
+     true
+    ]
+   ],
+   "text": "10",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E33",
+   "typed": "=ZELLE(\"Breite\";A11)",
+   "local": "=ZELLE(\"Breite\";A11)",
+   "formula": "=CELL(\"Breite\",A11)",
+   "value": [
+    [
+     10.0,
+     true
+    ]
+   ],
+   "text": "10",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E34",
+   "typed": "=ZELLE(\"address\";A1)",
+   "local": "=ZELLE(\"address\";A1)",
+   "formula": "=CELL(\"address\",A1)",
+   "value": "$A$1",
+   "text": "$A$1",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E35",
+   "typed": "=ZELLE(\"address\";A2)",
+   "local": "=ZELLE(\"address\";A2)",
+   "formula": "=CELL(\"address\",A2)",
+   "value": "$A$2",
+   "text": "$A$2",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E36",
+   "typed": "=ZELLE(\"address\";A11)",
+   "local": "=ZELLE(\"address\";A11)",
+   "formula": "=CELL(\"address\",A11)",
+   "value": "$A$11",
+   "text": "$A$11",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E37",
+   "typed": "=ZELLE(\"col\";A1)",
+   "local": "=ZELLE(\"col\";A1)",
+   "formula": "=CELL(\"col\",A1)",
+   "value": 1.0,
+   "text": "1",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E38",
+   "typed": "=ZELLE(\"col\";A2)",
+   "local": "=ZELLE(\"col\";A2)",
+   "formula": "=CELL(\"col\",A2)",
+   "value": 1.0,
+   "text": "1",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E39",
+   "typed": "=ZELLE(\"col\";A11)",
+   "local": "=ZELLE(\"col\";A11)",
+   "formula": "=CELL(\"col\",A11)",
+   "value": 1.0,
+   "text": "1",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E40",
+   "typed": "=ZELLE(\"contents\";A1)",
+   "local": "=ZELLE(\"contents\";A1)",
+   "formula": "=CELL(\"contents\",A1)",
+   "value": 12.5,
+   "text": "12,5",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E41",
+   "typed": "=ZELLE(\"contents\";A2)",
+   "local": "=ZELLE(\"contents\";A2)",
+   "formula": "=CELL(\"contents\",A2)",
+   "value": "Text",
+   "text": "Text",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E42",
+   "typed": "=ZELLE(\"contents\";A11)",
+   "local": "=ZELLE(\"contents\";A11)",
+   "formula": "=CELL(\"contents\",A11)",
+   "value": 0.0,
+   "text": "0",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E43",
+   "typed": "=ZELLE(\"format\";A1)",
+   "local": "=ZELLE(\"format\";A1)",
+   "formula": "=CELL(\"format\",A1)",
+   "value": "S",
+   "text": "S",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E44",
+   "typed": "=ZELLE(\"format\";A2)",
+   "local": "=ZELLE(\"format\";A2)",
+   "formula": "=CELL(\"format\",A2)",
+   "value": "S",
+   "text": "S",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E45",
+   "typed": "=ZELLE(\"format\";A11)",
+   "local": "=ZELLE(\"format\";A11)",
+   "formula": "=CELL(\"format\",A11)",
+   "value": "S",
+   "text": "S",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E46",
+   "typed": "=ZELLE(\"row\";A1)",
+   "local": "=ZELLE(\"row\";A1)",
+   "formula": "=CELL(\"row\",A1)",
+   "value": 1.0,
+   "text": "1",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E47",
+   "typed": "=ZELLE(\"row\";A2)",
+   "local": "=ZELLE(\"row\";A2)",
+   "formula": "=CELL(\"row\",A2)",
+   "value": 2.0,
+   "text": "2",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E48",
+   "typed": "=ZELLE(\"row\";A11)",
+   "local": "=ZELLE(\"row\";A11)",
+   "formula": "=CELL(\"row\",A11)",
+   "value": 11.0,
+   "text": "11",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E49",
+   "typed": "=ZELLE(\"type\";A1)",
+   "local": "=ZELLE(\"type\";A1)",
+   "formula": "=CELL(\"type\",A1)",
+   "value": "w",
+   "text": "w",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E50",
+   "typed": "=ZELLE(\"type\";A2)",
+   "local": "=ZELLE(\"type\";A2)",
+   "formula": "=CELL(\"type\",A2)",
+   "value": "l",
+   "text": "l",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E51",
+   "typed": "=ZELLE(\"type\";A11)",
+   "local": "=ZELLE(\"type\";A11)",
+   "formula": "=CELL(\"type\",A11)",
+   "value": "b",
+   "text": "b",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E52",
+   "typed": "=ZELLE(\"width\";A1)",
+   "local": "=ZELLE(\"width\";A1)",
+   "formula": "=CELL(\"width\",A1)",
+   "value": [
+    [
+     10.0,
+     true
+    ]
+   ],
+   "text": "10",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E53",
+   "typed": "=ZELLE(\"width\";A2)",
+   "local": "=ZELLE(\"width\";A2)",
+   "formula": "=CELL(\"width\",A2)",
+   "value": [
+    [
+     10.0,
+     true
+    ]
+   ],
+   "text": "10",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E54",
+   "typed": "=ZELLE(\"width\";A11)",
+   "local": "=ZELLE(\"width\";A11)",
+   "formula": "=CELL(\"width\",A11)",
+   "value": [
+    [
+     10.0,
+     true
+    ]
+   ],
+   "text": "10",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E55",
+   "typed": "=ZELLE(\"Dateiname\";A1)",
+   "local": "=ZELLE(\"Dateiname\";A1)",
+   "formula": "=CELL(\"Dateiname\",A1)",
+   "value": "",
+   "text": "",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E56",
+   "typed": "=ZELLE(\"Dateiname\";A2)",
+   "local": "=ZELLE(\"Dateiname\";A2)",
+   "formula": "=CELL(\"Dateiname\",A2)",
+   "value": "",
+   "text": "",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E57",
+   "typed": "=ZELLE(\"Dateiname\";A11)",
+   "local": "=ZELLE(\"Dateiname\";A11)",
+   "formula": "=CELL(\"Dateiname\",A11)",
+   "value": "",
+   "text": "",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E58",
+   "typed": "=ZELLE(\"filename\";A1)",
+   "local": "=ZELLE(\"filename\";A1)",
+   "formula": "=CELL(\"filename\",A1)",
+   "value": "",
+   "text": "",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E59",
+   "typed": "=ZELLE(\"filename\";A2)",
+   "local": "=ZELLE(\"filename\";A2)",
+   "formula": "=CELL(\"filename\",A2)",
+   "value": "",
+   "text": "",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E60",
+   "typed": "=ZELLE(\"filename\";A11)",
+   "local": "=ZELLE(\"filename\";A11)",
+   "formula": "=CELL(\"filename\",A11)",
+   "value": "",
+   "text": "",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E61",
+   "typed": "=ZELLE(\"Format\";A3)",
+   "local": "=ZELLE(\"Format\";A3)",
+   "formula": "=CELL(\"Format\",A3)",
+   "value": "P0",
+   "text": "P0",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E62",
+   "typed": "=ZELLE(\"Format\";A4)",
+   "local": "=ZELLE(\"Format\";A4)",
+   "formula": "=CELL(\"Format\",A4)",
+   "value": ".2",
+   "text": ".2",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E63",
+   "typed": "=ZELLE(\"Format\";A5)",
+   "local": "=ZELLE(\"Format\";A5)",
+   "formula": "=CELL(\"Format\",A5)",
+   "value": "D1",
+   "text": "D1",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E64",
+   "typed": "=ZELLE(\"Format\";A6)",
+   "local": "=ZELLE(\"Format\";A6)",
+   "formula": "=CELL(\"Format\",A6)",
+   "value": "F0",
+   "text": "F0",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E65",
+   "typed": "=ZELLE(\"Format\";A7)",
+   "local": "=ZELLE(\"Format\";A7)",
+   "formula": "=CELL(\"Format\",A7)",
+   "value": "F2",
+   "text": "F2",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E66",
+   "typed": "=ZELLE(\"Format\";A8)",
+   "local": "=ZELLE(\"Format\";A8)",
+   "formula": "=CELL(\"Format\",A8)",
+   "value": "E2",
+   "text": "E2",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E67",
+   "typed": "=ZELLE(\"Format\";A9)",
+   "local": "=ZELLE(\"Format\";A9)",
+   "formula": "=CELL(\"Format\",A9)",
+   "value": "W0",
+   "text": "W0",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E68",
+   "typed": "=ZELLE(\"Format\";A10)",
+   "local": "=ZELLE(\"Format\";A10)",
+   "formula": "=CELL(\"Format\",A10)",
+   "value": "U4",
+   "text": "U4",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E69",
+   "typed": "=ZELLE(\"Klammern\";A6)",
+   "local": "=ZELLE(\"Klammern\";A6)",
+   "formula": "=CELL(\"Klammern\",A6)",
+   "value": 0.0,
+   "text": "0",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E70",
+   "typed": "=ZELLE(\"Klammern\";A9)",
+   "local": "=ZELLE(\"Klammern\";A9)",
+   "formula": "=CELL(\"Klammern\",A9)",
+   "value": 0.0,
+   "text": "0",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E71",
+   "typed": "=ZELLE(\"Farbe\";A6)",
+   "local": "=ZELLE(\"Farbe\";A6)",
+   "formula": "=CELL(\"Farbe\",A6)",
+   "value": 0.0,
+   "text": "0",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E72",
+   "typed": "=ZELLE(\"Adresse\";Tabelle2!B3)",
+   "local": "=ZELLE(\"Adresse\";Tabelle2!B3)",
+   "formula": "=CELL(\"Adresse\",Tabelle2!B3)",
+   "value": "[Mappe1]Tabelle2!$B$3",
+   "text": "[Mappe1]Tabelle2!$B$3",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E73",
+   "typed": "=ZELLE(\"Adresse\";A1:B2)",
+   "local": "=ZELLE(\"Adresse\";A1:B2)",
+   "formula": "=CELL(\"Adresse\",A1:B2)",
+   "value": "$A$1",
+   "text": "$A$1",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E74",
+   "typed": "=ZELLE(\"Zeile\")",
+   "local": "=ZELLE(\"Zeile\")",
+   "formula": "=CELL(\"Zeile\")",
+   "value": 1.0,
+   "text": "1",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E75",
+   "typed": "=ZELLE(\"unbekannt\";A1)",
+   "local": "=ZELLE(\"unbekannt\";A1)",
+   "formula": "=CELL(\"unbekannt\",A1)",
+   "value": {
+    "error": "#VALUE!"
+   },
+   "text": "#WERT!",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E76",
+   "typed": "=ZELLE(\"Breite\";C1)",
+   "local": "=ZELLE(\"Breite\";C1)",
+   "formula": "=CELL(\"Breite\",C1)",
+   "value": [
+    [
+     10.0,
+     true
+    ]
+   ],
+   "text": "10",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E77",
+   "typed": "=ZELLE(\"Präfix\";A2)",
+   "local": "=ZELLE(\"Präfix\";A2)",
+   "formula": "=CELL(\"Präfix\",A2)",
+   "value": "'",
+   "text": "'",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E78",
+   "typed": "=ZELLE(\"Typ\";A1:A2)",
+   "local": "=ZELLE(\"Typ\";A1:A2)",
+   "formula": "=CELL(\"Typ\",A1:A2)",
+   "value": "w",
+   "text": "w",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E79",
+   "typed": "=INFO(\"Rechenmodus\")",
+   "local": "=INFO(\"Rechenmodus\")",
+   "formula": "=INFO(\"Rechenmodus\")",
+   "value": {
+    "error": "#VALUE!"
+   },
+   "text": "#WERT!",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E80",
+   "typed": "=INFO(\"recalc\")",
+   "local": "=INFO(\"recalc\")",
+   "formula": "=INFO(\"recalc\")",
+   "value": "Automatisch",
+   "text": "Automatisch",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E81",
+   "typed": "=INFO(\"Dateienzahl\")",
+   "local": "=INFO(\"Dateienzahl\")",
+   "formula": "=INFO(\"Dateienzahl\")",
+   "value": 3.0,
+   "text": "3",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E82",
+   "typed": "=INFO(\"numfile\")",
+   "local": "=INFO(\"numfile\")",
+   "formula": "=INFO(\"numfile\")",
+   "value": 3.0,
+   "text": "3",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E83",
+   "typed": "=INFO(\"System\")",
+   "local": "=INFO(\"System\")",
+   "formula": "=INFO(\"System\")",
+   "value": "pcdos",
+   "text": "pcdos",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E84",
+   "typed": "=INFO(\"system\")",
+   "local": "=INFO(\"system\")",
+   "formula": "=INFO(\"system\")",
+   "value": "pcdos",
+   "text": "pcdos",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E85",
+   "typed": "=INFO(\"Ursprung\")",
+   "local": "=INFO(\"Ursprung\")",
+   "formula": "=INFO(\"Ursprung\")",
+   "value": "$A:$A$1",
+   "text": "$A:$A$1",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E86",
+   "typed": "=INFO(\"origin\")",
+   "local": "=INFO(\"origin\")",
+   "formula": "=INFO(\"origin\")",
+   "value": "$A:$A$1",
+   "text": "$A:$A$1",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E87",
+   "typed": "=INFO(\"Version\")",
+   "local": "=INFO(\"Version\")",
+   "formula": "=INFO(\"Version\")",
+   "value": "16.0",
+   "text": "16.0",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E88",
+   "typed": "=INFO(\"release\")",
+   "local": "=INFO(\"release\")",
+   "formula": "=INFO(\"release\")",
+   "value": "16.0",
+   "text": "16.0",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E89",
+   "typed": "=INFO(\"osversion\")",
+   "local": "=INFO(\"osversion\")",
+   "formula": "=INFO(\"osversion\")",
+   "value": "Windows (64-bit) NT 10.00",
+   "text": "Windows (64-bit) NT 10.00",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E90",
+   "typed": "=INFO(\"Systemversion\")",
+   "local": "=INFO(\"Systemversion\")",
+   "formula": "=INFO(\"Systemversion\")",
+   "value": {
+    "error": "#VALUE!"
+   },
+   "text": "#WERT!",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E91",
+   "typed": "=INFO(\"unbekannt\")",
+   "local": "=INFO(\"unbekannt\")",
+   "formula": "=INFO(\"unbekannt\")",
+   "value": {
+    "error": "#VALUE!"
+   },
+   "text": "#WERT!",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E92",
+   "typed": "=BLATT()",
+   "local": "=BLATT()",
+   "formula": "=SHEET()",
+   "value": 1.0,
+   "text": "1",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E93",
+   "typed": "=BLATT(Tabelle3!A1)",
+   "local": "=BLATT(Tabelle3!A1)",
+   "formula": "=SHEET(Tabelle3!A1)",
+   "value": 3.0,
+   "text": "3",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E94",
+   "typed": "=BLATT(\"Tabelle2\")",
+   "local": "=BLATT(\"Tabelle2\")",
+   "formula": "=SHEET(\"Tabelle2\")",
+   "value": 2.0,
+   "text": "2",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E95",
+   "typed": "=BLATT(\"Fehlt\")",
+   "local": "=BLATT(\"Fehlt\")",
+   "formula": "=SHEET(\"Fehlt\")",
+   "value": {
+    "error": "#N/A"
+   },
+   "text": "#NV",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E96",
+   "typed": "=BLATT(Tabelle1:Tabelle3!A1)",
+   "local": "=BLATT(Tabelle1:Tabelle3!A1)",
+   "formula": "=SHEET(Tabelle1:Tabelle3!A1)",
+   "value": 1.0,
+   "text": "1",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E97",
+   "typed": "=BLÄTTER()",
+   "local": "=BLÄTTER()",
+   "formula": "=SHEETS()",
+   "value": 3.0,
+   "text": "3",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E98",
+   "typed": "=BLÄTTER(Tabelle1:Tabelle3!A1)",
+   "local": "=BLÄTTER(Tabelle1:Tabelle3!A1)",
+   "formula": "=SHEETS(Tabelle1:Tabelle3!A1)",
+   "value": 3.0,
+   "text": "3",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E99",
+   "typed": "=BLÄTTER(A1)",
+   "local": "=BLÄTTER(A1)",
+   "formula": "=SHEETS(A1)",
+   "value": 1.0,
+   "text": "1",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E100",
+   "typed": "=BLATT(1)",
+   "local": "=BLATT(1)",
+   "formula": "=SHEET(1)",
+   "value": {
+    "error": "#N/A"
+   },
+   "text": "#NV",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E101",
+   "typed": "=BLÄTTER(Tabelle2!A1:B2)",
+   "local": "=BLÄTTER(Tabelle2!A1:B2)",
+   "formula": "=SHEETS(Tabelle2!A1:B2)",
+   "value": 1.0,
+   "text": "1",
+   "font_color": 0.0,
+   "underline": -4142,
+   "style": "Standard"
+  },
+  {
+   "cell": "E102",
+   "typed": "=HYPERLINK(\"https://example.org\")",
+   "local": "=HYPERLINK(\"https://example.org\")",
+   "formula": "=HYPERLINK(\"https://example.org\")",
+   "value": "https://example.org",
+   "text": "https://example.org",
+   "font_color": 8812614.0,
+   "underline": 2,
+   "style": "Link"
+  },
+  {
+   "cell": "E103",
+   "typed": "=HYPERLINK(\"https://example.org\";\"Beispiel\")",
+   "local": "=HYPERLINK(\"https://example.org\";\"Beispiel\")",
+   "formula": "=HYPERLINK(\"https://example.org\",\"Beispiel\")",
+   "value": "Beispiel",
+   "text": "Beispiel",
+   "font_color": 8812614.0,
+   "underline": 2,
+   "style": "Link"
+  },
+  {
+   "cell": "E104",
+   "typed": "=HYPERLINK(\"#Tabelle2!A1\";42)",
+   "local": "=HYPERLINK(\"#Tabelle2!A1\";42)",
+   "formula": "=HYPERLINK(\"#Tabelle2!A1\",42)",
+   "value": 42.0,
+   "text": "42",
+   "font_color": 8812614.0,
+   "underline": 2,
+   "style": "Link"
+  },
+  {
+   "cell": "E105",
+   "typed": "=HYPERLINK(A2)",
+   "local": "=HYPERLINK(A2)",
+   "formula": "=HYPERLINK(A2)",
+   "value": "Text",
+   "text": "Text",
+   "font_color": 8812614.0,
+   "underline": 2,
+   "style": "Link"
+  }
+ ],
+ "sheets": [
+  "Tabelle1",
+  "Tabelle2",
+  "Tabelle3"
+ ],
+ "col_width_A": 10.27,
+ "formats": [
+  {
+   "format": "Standard",
+   "english": "Standard",
+   "Format": "S",
+   "Klammern": 0.0,
+   "Farbe": 0.0
+  },
+  {
+   "format": "0",
+   "english": "0",
+   "Format": "F0",
+   "Klammern": 0.0,
+   "Farbe": 0.0
+  },
+  {
+   "format": "0,00",
+   "english": "0,00",
+   "Format": "F2",
+   "Klammern": 0.0,
+   "Farbe": 0.0
+  },
+  {
+   "format": "#.##0",
+   "english": "#.##0",
+   "Format": ".0",
+   "Klammern": 0.0,
+   "Farbe": 0.0
+  },
+  {
+   "format": "#.##0,00",
+   "english": "#.##0,00",
+   "Format": ".2",
+   "Klammern": 0.0,
+   "Farbe": 0.0
+  },
+  {
+   "format": "0%",
+   "english": "0%",
+   "Format": "P0",
+   "Klammern": 0.0,
+   "Farbe": 0.0
+  },
+  {
+   "format": "0,00%",
+   "english": "0,00%",
+   "Format": "P2",
+   "Klammern": 0.0,
+   "Farbe": 0.0
+  },
+  {
+   "format": "0,00E+00",
+   "english": "0,00E+00",
+   "Format": "E2",
+   "Klammern": 0.0,
+   "Farbe": 0.0
+  },
+  {
+   "format": "# ?/?",
+   "english": "# ?/?",
+   "Format": "S",
+   "Klammern": 0.0,
+   "Farbe": 0.0
+  },
+  {
+   "format": "#.##0 €",
+   "english": "#.##0 €",
+   "Format": "W0",
+   "Klammern": 0.0,
+   "Farbe": 0.0
+  },
+  {
+   "format": "#.##0,00 €",
+   "english": "#.##0,00 €",
+   "Format": "W2",
+   "Klammern": 0.0,
+   "Farbe": 0.0
+  },
+  {
+   "format": "#.##0;-#.##0",
+   "english": "#.##0;-#.##0",
+   "Format": ".0",
+   "Klammern": 0.0,
+   "Farbe": 0.0
+  },
+  {
+   "format": "#.##0;[Rot]-#.##0",
+   "english": "#.##0;[Rot]-#.##0",
+   "Format": ".0-",
+   "Klammern": 0.0,
+   "Farbe": 1.0
+  },
+  {
+   "format": "0;(0)",
+   "english": "0;(0)",
+   "Format": "F0",
+   "Klammern": 0.0,
+   "Farbe": 0.0
+  },
+  {
+   "format": "0,00;(0,00)",
+   "english": "0,00;(0,00)",
+   "Format": "F2",
+   "Klammern": 0.0,
+   "Farbe": 0.0
+  },
+  {
+   "format": "TT.MM.JJJJ",
+   "english": "TT.MM.JJJJ",
+   "Format": "D1",
+   "Klammern": 0.0,
+   "Farbe": 0.0
+  },
+  {
+   "format": "T.M.JJJJ",
+   "english": "T.M.JJJJ",
+   "Format": "D1",
+   "Klammern": 0.0,
+   "Farbe": 0.0
+  },
+  {
+   "format": "TT. MMM JJ",
+   "english": "TT. MMM JJ",
+   "Format": "D1",
+   "Klammern": 0.0,
+   "Farbe": 0.0
+  },
+  {
+   "format": "T. MMM",
+   "english": "T. MMM",
+   "Format": "D2",
+   "Klammern": 0.0,
+   "Farbe": 0.0
+  },
+  {
+   "format": "MMM JJ",
+   "english": "MMM JJ",
+   "Format": "D3",
+   "Klammern": 0.0,
+   "Farbe": 0.0
+  },
+  {
+   "format": "TT.MM.JJJJ hh:mm",
+   "english": "TT.MM.JJJJ hh:mm",
+   "Format": "D1",
+   "Klammern": 0.0,
+   "Farbe": 0.0
+  },
+  {
+   "format": "hh:mm",
+   "english": "hh:mm",
+   "Format": "U4",
+   "Klammern": 0.0,
+   "Farbe": 0.0
+  },
+  {
+   "format": "hh:mm:ss",
+   "english": "hh:mm:ss",
+   "Format": "U3",
+   "Klammern": 0.0,
+   "Farbe": 0.0
+  },
+  {
+   "format": "h:mm AM/PM",
+   "english": "h:mm AM/PM",
+   "Format": "U2",
+   "Klammern": 0.0,
+   "Farbe": 0.0
+  },
+  {
+   "format": "h:mm:ss AM/PM",
+   "english": "h:mm:ss AM/PM",
+   "Format": "U1",
+   "Klammern": 0.0,
+   "Farbe": 0.0
+  },
+  {
+   "format": "@",
+   "english": "@",
+   "Format": "S",
+   "Klammern": 0.0,
+   "Farbe": 0.0
+  },
+  {
+   "format": "0;[Rot]0",
+   "english": "0;[Rot]0",
+   "Format": "F0-",
+   "Klammern": 0.0,
+   "Farbe": 1.0
+  },
+  {
+   "format": "TTTT, T. MMMM JJJJ",
+   "english": "TTTT, T. MMMM JJJJ",
+   "Format": "S",
+   "Klammern": 0.0,
+   "Farbe": 0.0
+  },
+  {
+   "format": "[hh]:mm",
+   "english": "[hh]:mm",
+   "Format": "S",
+   "Klammern": 0.0,
+   "Farbe": 0.0
+  }
+ ]
+}
