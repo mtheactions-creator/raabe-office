@@ -35,6 +35,18 @@ describe("by-hand sweep findings (D-137)", () => {
     expect(colorEl(doc, "ff0000").getAttribute("val")).toBe("FF0000");
   });
 
+  it("makes no undo step for a change that changed nothing (a value written again when its field is left)", () => {
+    const d = new Deck();
+    const p = d.slides[0].path;
+    d.change("Höhe", [p], () => {});
+    expect(d.canUndo).toBe(false);
+    d.change("Höhe", [p], () => { d.pptx.doc(p).documentElement.setAttribute("show", "0"); });
+    d.change("Höhe", [p], () => { d.pptx.doc(p).documentElement.setAttribute("show", "0"); });
+    expect(d.undoLabel).toBe("Höhe");
+    d.undo();
+    expect(d.pptx.doc(p).documentElement.getAttribute("show")).toBe(null);
+  });
+
   it("leaves the undo list alone when nothing changed inside a group", () => {
     const d = new Deck();
     d.group("nichts", () => {});

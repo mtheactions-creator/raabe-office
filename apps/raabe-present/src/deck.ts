@@ -14,6 +14,13 @@ interface Snapshot {
   sections: string | null;
 }
 
+function sameSnapshot(a: Snapshot, b: Snapshot): boolean {
+  if (a.sections !== b.sections || a.slides.length !== b.slides.length || a.slides.some((s, i) => s.path !== b.slides[i].path || s.id !== b.slides[i].id)) return false;
+  for (const [k, v] of a.parts) if (b.parts.get(k) !== v) return false;
+  for (const [k, v] of a.rels) if (b.rels.get(k) !== v) return false;
+  return a.parts.size === b.parts.size && a.rels.size === b.rels.size;
+}
+
 interface Step {
   label: string;
   before: Snapshot;
@@ -105,6 +112,10 @@ export class Deck {
     for (const p of paths) this.pptx.touch(p);
     this.pptx.touch(this.pptx.presPath);
     const after = this.snap(paths);
+    // A change that changed nothing is no undo step (by hand, D-137: a number typed into the Format pane and confirmed
+    // with Enter was written again when the field was left, so the first Strg+Z seemed to do nothing).
+    // (Drawn again all the same: work may have touched a part outside `paths`.)
+    if (sameSnapshot(before, after)) { this.changed(paths); return; }
     const last = this.undoStack[this.undoStack.length - 1];
     const now = Date.now();
     if (merge && last?.merge === merge && now - last.time < 4000 && [...after.parts.keys()].every((k) => last.after.parts.has(k))) {
