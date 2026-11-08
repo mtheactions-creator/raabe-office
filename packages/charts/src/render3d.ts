@@ -27,6 +27,7 @@ function projection(m: ChartModel, plot: Box, hy: number, dz: number): Proj {
   const v = view3DOf(m) ?? { rotX: 15, rotY: 20, rAngAx: true };
   const rx = (v.rotX * Math.PI) / 180, ry = (v.rotY * Math.PI) / 180;
   let raw: (p: V3) => [number, number, number];
+  if (!v.rAngAx) return perspectiveProjection(plot, hy, dz, rx, ry, v.perspective ?? 30);
   if (v.rAngAx) {
     // Oblique: the front plane as it is, depth up and to the right.
     raw = ([x, y, z]) => [x + z * Math.sin(ry), -y - z * Math.sin(rx), z];
@@ -47,6 +48,43 @@ function projection(m: ChartModel, plot: Box, hy: number, dz: number): Proj {
     y: (p) => plot.y + (raw(p)[1] - y0) * sy,
     depth: (p) => raw(p)[2],
   };
+}
+
+/**
+ * Excel's 3-D view without Rechtwinklige Achsen (lines, areas, surfaces; D-125): the world box, centred, turned by
+ * rotY about the vertical and tilted by rotX, seen by a camera with a field of view of `perspective` degrees (fitted to
+ * Excel's pictures: the camera stands 0.55 / tan(perspective / 2) box widths from the centre). The box's height is
+ * stretched until the picture fills the plot's height at the scale that fills its width, as Excel's AutoScaling does.
+ */
+function perspectiveProjection(plot: Box, hy: number, dz: number, rx: number, ry: number, perspective: number): Proj {
+  const d = 0.55 / Math.tan((Math.max(1, Math.min(120, perspective || 1)) * Math.PI) / 360);
+  const cy = Math.cos(ry), sy = Math.sin(ry), cx = Math.cos(rx), sx = Math.sin(rx);
+  let k = 1;
+  const make = (kk: number) => (p: V3): [number, number, number] => {
+    const X = p[0] - 0.5, Y = p[1] * kk - (hy * kk) / 2, Z = p[2] - dz / 2;
+    const X1 = X * cy + Z * sy, Z1 = -X * sy + Z * cy;
+    const Y2 = Y * cx + Z1 * sx, Z2 = -Y * sx + Z1 * cx;
+    const fz = d / (d + Z2);
+    return [X1 * fz, -Y2 * fz, Z2];
+  };
+  const bounds = (f: (p: V3) => [number, number, number]) => {
+    const pr: [number, number, number][] = [];
+    for (const x of [0, 1]) for (const y of [0, hy]) for (const z of [0, dz]) pr.push(f([x, y, z]));
+    return { x0: Math.min(...pr.map((p) => p[0])), x1: Math.max(...pr.map((p) => p[0])), y0: Math.min(...pr.map((p) => p[1])), y1: Math.max(...pr.map((p) => p[1])) };
+  };
+  for (let it = 0; it < 30; it++) {
+    const b = bounds(make(k));
+    const s = plot.w / (b.x1 - b.x0 || 1);
+    const want = plot.h / s;
+    const ratio = want / (b.y1 - b.y0 || 1);
+    if (Math.abs(ratio - 1) < 1e-4) break;
+    k = Math.max(0.05, Math.min(20, k * (1 + (ratio - 1) * 0.8)));
+  }
+  const raw = make(k);
+  const b = bounds(raw);
+  const s = Math.min(plot.w / (b.x1 - b.x0 || 1), plot.h / (b.y1 - b.y0 || 1));
+  const ox = plot.x + (plot.w - (b.x1 - b.x0) * s) / 2, oy = plot.y + (plot.h - (b.y1 - b.y0) * s) / 2;
+  return { x: (p) => ox + (raw(p)[0] - b.x0) * s, y: (p) => oy + (raw(p)[1] - b.y0) * s, depth: (p) => raw(p)[2] };
 }
 
 interface Face { pts: V3[]; fill: string; stroke?: string; sw?: number; part?: string; order?: number }
@@ -124,10 +162,141 @@ function stacks(m: ChartModel): { from: number; to: number; v: number | null }[]
   }));
 }
 
+/**
+ * Rechtwinklige Achsen (3-D columns and bars) as Excel lays them out (D-125, recorded with probe_excel_3d_geometry.py:
+ * every point's projected box, the axes' boxes): the front plane is flat, depth goes back by sin(rotY) across and
+ * sin(rotX) up; each column's base is square (its depth = its width at Tiefe 100 %), a row of depth is the column
+ * plus the Abstand in der Tiefe (150 % of the column), the columns stand in the middle of their row; series in depth
+ * (3D-Säulen) take one row each. The front plane and the depth fill the plot: width + depth x sin(rotY) across,
+ * height + depth x sin(rotX) up.
+ */
+function obliqueProjection(plot: Box, v: { rotX: number; rotY: number }, depth: number, bar: boolean): Proj & { front: Box; depthPt: number } {
+  const sy = Math.sin((v.rotY * Math.PI) / 180), sx = Math.sin((v.rotX * Math.PI) / 180);
+  // `depth` is in units of the category axis' length.
+  let W: number, H: number, D: number;
+  if (!bar) { W = plot.w / (1 + depth * sy); D = depth * W; H = Math.max(10, plot.h - D * sx); }
+  else { H = plot.h / (1 + depth * sx); D = depth * H; W = Math.max(10, plot.w - D * sy); }
+  const left = plot.x, bottom = plot.y + plot.h;
+  return {
+    x: ([a, , z]) => left + a * W + z * D * sy,
+    y: ([, b, z]) => bottom - b * H - z * D * sx,
+    depth: ([, , z]) => z,
+    front: { x: left, y: bottom - H, w: W, h: H },
+    depthPt: D,
+  };
+}
+
+/** Excel's light on the faces of 3-D columns and bars (recorded from its pictures): top x 0.76, side x 0.635. */
+const TOP = 0.76, SIDE = 0.635;
+
+/** 3-D columns and bars with Rechtwinklige Achsen (Excel's default for them). */
+function drawRightAngled(c: Ctx, area: Area): Pick<Scene, "plot" | "valueScale"> {
+  const { m } = c;
+  const info = kindInfo(m.kind);
+  const bar = info.dir === "bar";
+  const n = Math.max(1, ...m.series.map((s) => s.val.cache.length));
+  const ns = Math.max(1, m.series.length);
+  const depthRows = info.grouping === "standard";
+  const v = view3DOf(m)!;
+  const percent = info.grouping === "percentStacked";
+  const [lo, hi] = range(m);
+  const valFormat = percent ? "0%" : m.series[0]?.val.format;
+  const va = m.format?.valAxis;
+  const catLabels = Array.from({ length: n }, (_, i) => catText(c, m.series[0], i));
+  const serLabels = depthRows ? m.series.map((s, i) => s.name?.text || `Datenreihe${i + 1}`) : [];
+  // Depth in units of the category axis: rows x (column + gap in depth).
+  const gap = (m.gapWidth ?? 150) / 100, gapDepth = 1.5, dp = (v.depthPercent ?? 100) / 100;
+  const k = info.grouping === "clustered" ? ns : 1;
+  const catW = 1 / n, bw = catW / (k + gap);
+  const rows = depthRows ? ns : 1;
+  const pitch = bw * dp * (1 + gapDepth);
+  const depth = rows * pitch;
+  let plot: Box = { x: area.left, y: area.top, w: area.right - area.left, h: area.bottom - area.top };
+  let scale: AxisScale = autoScale(lo, hi);
+  let vLabels: string[] = [];
+  let pr = obliqueProjection(plot, v, depth, bar);
+  for (let pass = 0; pass < 2; pass++) {
+    // Excel allows a few more intervals on the front plane than on a 2-D axis of the same length (0.5 at 120 pt).
+    const len = (bar ? pr.front.w : pr.front.h) + 2;
+    scale = percent ? fixedScale(0, 1, { ...(va ?? {}), min: va?.min ?? 0, max: va?.max ?? 1 }, maxIntervals(len, bar)) : tightScale(lo, hi, va, maxIntervals(len, bar));
+    vLabels = ticks(scale).map((t) => c.fmt(t, va?.numFmt ?? valFormat));
+    const leftW = Math.max(0, ...(bar ? catLabels : vLabels).map((t) => c.measure(t, LOOK.labelSize)));
+    const serW = Math.max(0, ...serLabels.map((t) => c.measure(t, LOOK.labelSize)));
+    // Margins measured against Excel's pictures (D-125).
+    const left = area.left + PAD + leftW + LABEL_GAP + (depthRows ? 1 : 9.5);
+    // Series in depth: their names sit along the floor's right edge, partly beside the back wall.
+    const right = area.right - 10.5 - (bar ? 8 : 12) - serW * 0.7;
+    const bottom = area.bottom - 24.5, top = area.top + 3;
+    plot = { x: left, y: top, w: Math.max(10, right - left), h: Math.max(10, bottom - top) };
+    pr = obliqueProjection(plot, v, depth, bar);
+  }
+  const span = scale.max - scale.min || 1;
+  const val = (t: number) => (Math.max(scale.min, Math.min(scale.max, t)) - scale.min) / span;
+  const base = val(Math.min(Math.max(0, scale.min), scale.max));
+  // World point of (category position, value, depth fraction).
+  const W = (cat: number, value: number, z: number): V3 => (bar ? [value, cat, z] : [cat, value, z]);
+  const line = (a: V3, b: V3, part = "grid", stroke: string = LOOK.gridline) => c.prims.push({ t: "path", d: `M${f(pr.x(a))} ${f(pr.y(a))}L${f(pr.x(b))} ${f(pr.y(b))}`, stroke, sw: 0.75, part });
+  ticks(scale).forEach((t, kk) => {
+    const y = val(t);
+    if (m.gridlines) {
+      // On the side wall (floor for bars) from front to back, then across the back wall.
+      if (bar) { line([y, 0, 0], [y, 0, 1]); line([y, 0, 1], [y, 1, 1]); }
+      else { line([0, y, 0], [0, y, 1]); line([0, y, 1], [1, y, 1]); }
+    }
+    const at = W(0, y, 0);
+    if (bar) c.prims.push({ t: "text", x: pr.x(at), y: pr.y(at) + 14, text: vLabels[kk], size: LOOK.labelSize, fill: LOOK.text, anchor: "middle", part: "axis:val" });
+    else c.prims.push({ t: "text", x: pr.x(at) - LABEL_GAP, y: pr.y(at) + 2.5, text: vLabels[kk], size: LOOK.labelSize, fill: LOOK.text, anchor: "end", part: "axis:val" });
+  });
+  catLabels.forEach((t, i) => {
+    const p = W((i + 0.5) * catW, 0, 0);
+    if (bar) c.prims.push({ t: "text", x: pr.x(p) - LABEL_GAP, y: pr.y(p) + 3.2, text: t, size: LOOK.labelSize, fill: LOOK.text, anchor: "end", part: "axis:cat" });
+    else c.prims.push({ t: "text", x: pr.x(p), y: pr.y(p) + 14, text: t, size: LOOK.labelSize, fill: LOOK.text, anchor: "middle", part: "axis:cat" });
+  });
+  if (depthRows) serLabels.forEach((t, j) => {
+    const p: V3 = [1, 0, (j + 0.5) / rows];
+    c.prims.push({ t: "text", x: pr.x(p) + 4, y: pr.y(p) + 6, text: t, size: LOOK.labelSize, fill: LOOK.text, anchor: "start", part: "axis:ser" });
+  });
+  const st = stacks(m);
+  const color = (si: number) => fillPaint(m.series[si].fill, c.color(si)) ?? c.color(si);
+  const faces: Face[] = [];
+  m.series.forEach((s, si) => st[si].forEach((p, i) => {
+    if (p.v === null) return;
+    const a0 = i * catW + (bw * gap) / 2 + (info.grouping === "clustered" ? si * bw : 0), a1 = a0 + bw;
+    const row = depthRows ? si : 0;
+    const z0 = (row * pitch + (pitch - bw * dp) / 2) / depth, z1 = z0 + (bw * dp) / depth;
+    const from = info.grouping === "stacked" || info.grouping === "percentStacked" ? val(p.from) : base;
+    const to = val(p.to);
+    const col = color(si);
+    const lo2 = Math.min(from, to), hi2 = Math.max(from, to);
+    const part = `series:${si}:${i}`;
+    // The faces Excel shows: front, the far end (top of a column, right end of a bar) and the right side (top of a bar).
+    const P = (cat: number, value: number, z: number) => W(cat, value, z);
+    const front = { pts: [P(a0, lo2, z0), P(a1, lo2, z0), P(a1, hi2, z0), P(a0, hi2, z0)], fill: col, part };
+    const end = { pts: [P(a0, hi2, z0), P(a1, hi2, z0), P(a1, hi2, z1), P(a0, hi2, z1)], fill: lum(col, bar ? SIDE : TOP, 0), part };
+    const side = bar
+      ? { pts: [P(a1, lo2, z0), P(a1, hi2, z0), P(a1, hi2, z1), P(a1, lo2, z1)], fill: lum(col, TOP, 0), part }
+      : { pts: [P(a1, lo2, z0), P(a1, lo2, z1), P(a1, hi2, z1), P(a1, hi2, z0)], fill: lum(col, SIDE, 0), part };
+    // Back rows first; within a row the categories from the back-left (columns: left to right, bars: top to bottom).
+    const order = row * 1e6 + (n - i) * 1e3 + (k - (info.grouping === "clustered" ? si : 0)) + (info.grouping === "stacked" || info.grouping === "percentStacked" ? -lo2 : 0);
+    for (const fc of [side, end, front]) faces.push({ ...fc, order });
+    if (m.dataLabels) {
+      const q = W(a0 + bw / 2, to, z0);
+      label(c, s, si, i, p.v, pr.x(q) + (bar ? 4 : 0), pr.y(q) + (bar ? 3.2 : -3.4), bar ? "start" : "middle");
+    }
+  }));
+  // Stable sort: by order, faces of one box in the order side, end, front.
+  faces.map((fc, idx) => ({ fc, idx })).sort((a, b) => (b.fc.order ?? 0) - (a.fc.order ?? 0) || a.idx - b.idx).forEach(({ fc }) => {
+    const d = fc.pts.map((p, i) => `${i ? "L" : "M"}${f(pr.x(p))} ${f(pr.y(p))}`).join("") + "Z";
+    c.prims.push({ t: "path", d, fill: fc.fill, part: fc.part });
+  });
+  return { plot: pr.front, valueScale: scale };
+}
+
 /** 3-D columns, bars, lines and areas. */
 export function draw3D(c: Ctx, area: Area): Pick<Scene, "plot" | "valueScale"> {
   const { m } = c;
   const info = kindInfo(m.kind);
+  if (info.family === "bar" && view3DOf(m)?.rAngAx) return drawRightAngled(c, area);
   const bar = info.dir === "bar";
   const n = Math.max(1, ...m.series.map((s) => s.val.cache.length));
   const ns = Math.max(1, m.series.length);
@@ -148,14 +317,15 @@ export function draw3D(c: Ctx, area: Area): Pick<Scene, "plot" | "valueScale"> {
     vLabels = ticks(scale).map((t) => c.fmt(t, va?.numFmt ?? valFormat));
     const leftW = Math.max(0, ...(bar ? catLabels : vLabels).map((t) => c.measure(t, LOOK.labelSize)));
     const serW = Math.max(0, ...serLabels.map((t) => c.measure(t, LOOK.labelSize)));
-    const left = area.left + PAD + leftW + LABEL_GAP;
-    const right = area.right - 10.5 - (serW ? serW + 6 : 0);
+    // Margins measured against Excel's pictures (D-125): a line chart's box stands further in than an area chart's.
+    const left = area.left + PAD + leftW + LABEL_GAP + (info.family === "line" ? 19 : 5);
+    const right = area.right - 10.5 - (serW ? serW + 6 : 0) - (info.family === "line" ? 13 : 0);
     const bottom = area.bottom - 22.6;
     plot = { x: left, y: area.top, w: Math.max(10, right - left), h: Math.max(10, bottom - area.top) };
   }
   // The world: x across the categories (0-1), y the value axis (0-hy), z the depth.
   const catW = 1 / n;
-  const dz = ((v.depthPercent ?? 100) / 100) * (depthRows ? ns * catW : catW) * (info.family === "bar" ? 0.67 : info.family === "line" ? 1 : 1.6);
+  const dz = ((v.depthPercent ?? 100) / 100) * (depthRows ? ns * catW : catW) * (info.family === "bar" ? 0.67 : info.family === "line" ? 0.95 : 0.91);
   const hy = bar ? 1 : 0.55;
   const pr = projection(m, plot, hy, dz);
   const span = scale.max - scale.min || 1;
@@ -184,6 +354,18 @@ export function draw3D(c: Ctx, area: Area): Pick<Scene, "plot" | "valueScale"> {
     const p: V3 = bar ? [1, 0, (j + 0.5) * (dz / ns)] : [1, 0, (j + 0.5) * (dz / ns)];
     c.prims.push({ t: "text", x: pr.x(p) + 4, y: pr.y(p) + 6, text: t, size: LOOK.labelSize, fill: LOOK.text, anchor: "start", part: "axis:ser" });
   });
+  // The floor's front and right edges as axis lines with their tick marks, as Excel draws them (D-125).
+  if (!bar) {
+    const axis = (a: V3, b: V3, part: string) => c.prims.push({ t: "path", d: `M${f(pr.x(a))} ${f(pr.y(a))}L${f(pr.x(b))} ${f(pr.y(b))}`, stroke: LOOK.gridline, sw: 0.75, part });
+    axis([0, 0, 0], [1, 0, 0], "axis:cat");
+    const tick = (x: number, z: number, part: string) => { const p = pr.x([x, 0, z]), q = pr.y([x, 0, z]); c.prims.push({ t: "path", d: `M${f(p)} ${f(q)}L${f(p)} ${f(q + 3.5)}`, stroke: LOOK.gridline, sw: 0.75, part }); };
+    const cats = info.family === "area" ? n : n + 1;
+    for (let i = 0; i < cats; i++) tick(info.family === "area" ? (n > 1 ? i / (n - 1) : 0.5) : i * catW, 0, "axis:cat");
+    if (depthRows) {
+      axis([1, 0, 0], [1, 0, dz], "axis:ser");
+      for (let j = 0; j <= ns; j++) tick(1, (j * dz) / ns, "axis:ser");
+    }
+  }
   const faces: Face[] = [];
   const st = stacks(m);
   const color = (si: number) => fillPaint(m.series[si].fill, c.color(si)) ?? c.color(si);
@@ -227,7 +409,7 @@ export function draw3D(c: Ctx, area: Area): Pick<Scene, "plot" | "valueScale"> {
     const order = depthRows ? [...m.series.keys()].reverse() : [...m.series.keys()];
     for (const si of order) {
       const row = depthRows ? si : 0;
-      const z0 = row * rowW + rowW * (info.family === "line" ? 0.25 : 0.15), z1 = row * rowW + rowW * (info.family === "line" ? 0.75 : 0.85);
+      const z0 = row * rowW + rowW * (info.family === "line" ? 0.32 : 0.34), z1 = row * rowW + rowW * (info.family === "line" ? 0.68 : 0.66);
       const pts = st[si];
       const col = color(si);
       const local: Face[] = [];
@@ -236,7 +418,7 @@ export function draw3D(c: Ctx, area: Area): Pick<Scene, "plot" | "valueScale"> {
         if (a.v === null || b.v === null) continue;
         const ya = val(a.to), yb = val(b.to), x0 = xs(i), x1 = xs(i + 1);
         if (info.family === "line") {
-          local.push({ pts: [[x0, ya, z0], [x1, yb, z0], [x1, yb, z1], [x0, ya, z1]], fill: yb >= ya ? lum(col, 0.85, 0) : col, part: `series:${si}` });
+          local.push({ pts: [[x0, ya, z0], [x1, yb, z0], [x1, yb, z1], [x0, ya, z1]], fill: lum(col, yb > ya ? 0.655 : 0.825, 0), part: `series:${si}` });
         } else {
           const fa = val(a.from), fb = val(b.from);
           local.push({ pts: [[x0, ya, z0], [x1, yb, z0], [x1, yb, z1], [x0, ya, z1]], fill: lum(col, 0.8, 0), part: `series:${si}` });
@@ -263,42 +445,60 @@ export function draw3D(c: Ctx, area: Area): Pick<Scene, "plot" | "valueScale"> {
 export function draw3DPie(c: Ctx, area: Area): Pick<Scene, "plot"> {
   const { m } = c;
   const v = view3DOf(m) ?? { rotX: 30, rotY: 0, rAngAx: false };
-  const k = Math.sin((Math.max(10, v.rotX) * Math.PI) / 180);
-  const thick = 0.244;
+  // In perspective (D-125, fitted to Excel's picture): the disc tilted by 0.9 x rotX, the camera 5.2 radii from its
+  // centre, the rim 0.227 radii high; the back half comes out shorter than the front.
+  const phi = (Math.max(10, v.rotX) * 0.9 * Math.PI) / 180, cphi = Math.cos(phi), sphi = Math.sin(phi);
+  const dist = 5.2, thick = 0.227;
+  // Unit disc: screen offsets for angle a (0 at the back, clockwise) at height h (0 top face, -thick rim bottom).
+  const P = (a: number, h: number): [number, number] => {
+    const X = Math.sin(a), Z = Math.cos(a);
+    const Y2 = h * cphi + Z * sphi, Z2 = -h * sphi + Z * cphi;
+    const k = dist / (dist + Z2);
+    return [X * k, -Y2 * k];
+  };
   const top = (m.title.show ? 37.6 : area.top) + 2, bottom = area.bottom - 10.5;
-  const left = area.left + 10.5, right = area.right - 10.5;
-  const rx = Math.max(10, Math.min((right - left) / 2, (bottom - top) / (2 * k + thick)));
-  const ry = rx * k, t = rx * thick;
-  const cx = (left + right) / 2, cy = top + ry + Math.max(0, (bottom - top - 2 * ry - t) / 2);
+  const left = area.left + 14.5, right = area.right - 14.5;
+  const yTop = P(0, 0)[1], yBot = P(Math.PI, -thick)[1];
+  const R = Math.max(10, Math.min((right - left) / 2, (bottom - top) / (yBot - yTop)));
+  const cx = (left + right) / 2, cy = top - yTop * R + Math.max(0, (bottom - top - (yBot - yTop) * R) / 2);
   const s = m.series[0];
-  const plot = { x: cx - rx, y: cy - ry, w: 2 * rx, h: 2 * ry + t };
+  const plot = { x: cx - R, y: cy + yTop * R, w: 2 * R, h: (yBot - yTop) * R };
   if (!s) return { plot };
   const vals = s.val.cache.map((x) => (x !== null && x > 0 ? x : 0));
   const sum = vals.reduce((a, b) => a + b, 0);
   if (sum <= 0) return { plot };
-  const pt = (a: number, dy = 0) => `${f(cx + rx * Math.sin(a))} ${f(cy - ry * Math.cos(a) + dy)}`;
+  const pt = (a: number, h = 0) => { const [x, y] = P(a, h); return `${f(cx + x * R)} ${f(cy + y * R)}`; };
+  const arc = (a0: number, a1: number, h: number) => {
+    const steps = Math.max(2, Math.ceil(Math.abs(a1 - a0) / 0.05));
+    let d = "";
+    for (let i = 1; i <= steps; i++) d += `L${pt(a0 + ((a1 - a0) * i) / steps, h)}`;
+    return d;
+  };
   let a0 = ((m.firstSliceAngle ?? 0) * Math.PI) / 180;
   const slices = vals.map((x, i) => { const a1 = a0 + (x / sum) * Math.PI * 2; const r = { a0, a1, i }; a0 = a1; return r; });
   const colorOf = (i: number) => fillPaint(s.fill, paletteColor(m, i, vals.length, c.accents)) ?? "#808080";
-  // The rim: the part of each slice between 90° and 270° (the front half), darker.
+  // The rim: the part of each slice between 90° and 270° (the front half), lit from the left as Excel's.
   for (const sl of slices) {
     for (const off of [0, Math.PI * 2]) {
       const b0 = Math.max(sl.a0, Math.PI / 2 + off), b1 = Math.min(sl.a1, (Math.PI * 3) / 2 + off);
       if (b1 <= b0) continue;
-      const d = `M${pt(b0)}A${f(rx)} ${f(ry)} 0 0 1 ${pt(b1)}L${pt(b1, t)}A${f(rx)} ${f(ry)} 0 0 0 ${pt(b0, t)}Z`;
-      c.prims.push({ t: "path", d, fill: lum(colorOf(sl.i), 0.6, 0), stroke: "#FFFFFF", sw: 0.4, part: `series:0:${sl.i}` });
+      const mid = (b0 + b1) / 2 - off;
+      // Recorded: about x 0.75 at the left end of the front, x 0.45 at the right end.
+      const light = 0.6 + 0.15 * Math.sin(mid - Math.PI);
+      const d = `M${pt(b0)}${arc(b0, b1, 0)}L${pt(b1, -thick)}${arc(b1, b0, -thick)}Z`;
+      c.prims.push({ t: "path", d, fill: lum(colorOf(sl.i), light, 0), stroke: "#FFFFFF", sw: 0.4, part: `series:0:${sl.i}` });
     }
   }
   for (const sl of slices) {
     if (sl.a1 - sl.a0 <= 0) continue;
-    const large = sl.a1 - sl.a0 > Math.PI ? 1 : 0;
     const d = sl.a1 - sl.a0 >= Math.PI * 2 - 1e-9
-      ? `M${pt(0)}A${f(rx)} ${f(ry)} 0 1 1 ${pt(Math.PI)}A${f(rx)} ${f(ry)} 0 1 1 ${pt(0)}Z`
-      : `M${f(cx)} ${f(cy)}L${pt(sl.a0)}A${f(rx)} ${f(ry)} 0 ${large} 1 ${pt(sl.a1)}Z`;
-    c.prims.push({ t: "path", d, fill: colorOf(sl.i), stroke: "#FFFFFF", sw: 1.5, part: `series:0:${sl.i}` });
+      ? `M${pt(0)}${arc(0, Math.PI * 2, 0)}Z`
+      : `M${f(cx)} ${f(cy)}L${pt(sl.a0)}${arc(sl.a0, sl.a1, 0)}Z`;
+    c.prims.push({ t: "path", d, fill: colorOf(sl.i), stroke: "#FFFFFF", sw: 0.75, part: `series:0:${sl.i}` });
     if (m.dataLabels) {
       const mid = (sl.a0 + sl.a1) / 2;
-      label(c, s, 0, sl.i, s.val.cache[sl.i]!, cx + rx * 0.7 * Math.sin(mid), cy - ry * 0.7 * Math.cos(mid) + 3.2, "middle", vals[sl.i] / sum);
+      const [lx, ly] = P(mid, 0);
+      label(c, s, 0, sl.i, s.val.cache[sl.i]!, cx + lx * R * 0.7, cy + ly * R * 0.7 + 3.2, "middle", vals[sl.i] / sum);
     }
   }
   return { plot };
@@ -362,7 +562,8 @@ export function drawSurface(c: Ctx, area: Area): Pick<Scene, "plot" | "valueScal
     serLabels.forEach((t, j) => c.prims.push({ t: "text", x: plot.x + plot.w + 6, y: Y(j) + 3.2, text: t, size: LOOK.labelSize, fill: LOOK.text, anchor: "start", part: "axis:ser" }));
     return { plot, valueScale: scale };
   }
-  const hy = 0.55, dz = nz / nx;
+  // Depth as Excel draws a surface of this fixture (about 0.55 of the width for as many rows as columns; D-125).
+  const hy = 0.55, dz = 0.55 * Math.min(2, nz / nx);
   const pr = projection(m, plot, hy, dz);
   const span = scale.max - scale.min || 1;
   const yv = (t: number) => ((t - scale.min) / span) * hy;
@@ -376,8 +577,39 @@ export function drawSurface(c: Ctx, area: Area): Pick<Scene, "plot" | "valueScal
   catLabels.forEach((t, i) => c.prims.push({ t: "text", x: pr.x([X(i), 0, 0]), y: pr.y([X(i), 0, 0]) + 14, text: t, size: LOOK.labelSize, fill: LOOK.text, anchor: "middle", part: "axis:cat" }));
   serLabels.forEach((t, j) => c.prims.push({ t: "text", x: pr.x([1, 0, Z(j)]) + 5, y: pr.y([1, 0, Z(j)]) + 6, text: t, size: LOOK.labelSize, fill: LOOK.text, anchor: "start", part: "axis:ser" }));
   const faces: Face[] = [];
-  const subs = wire ? 1 : 3;
-  for (let j = 0; j + 1 < nz; j++) for (let i = 0; i + 1 < nx; i++) {
+  if (!wire) {
+    // Filled: each cell as two triangles, each cut where it crosses a band's edge (Excel's bands follow the values,
+    // D-125), the pieces lit by their slope.
+    type Q = [number, number, number]; // x, value, z
+    const cut = (poly: Q[], level: number, keepAbove: boolean): Q[] => {
+      const out: Q[] = [];
+      for (let k = 0; k < poly.length; k++) {
+        const p = poly[k], q = poly[(k + 1) % poly.length];
+        const pin = keepAbove ? p[1] >= level : p[1] <= level, qin = keepAbove ? q[1] >= level : q[1] <= level;
+        if (pin) out.push(p);
+        if (pin !== qin) { const t = (level - p[1]) / (q[1] - p[1]); out.push([p[0] + (q[0] - p[0]) * t, level, p[2] + (q[2] - p[2]) * t]); }
+      }
+      return out;
+    };
+    for (let j = 0; j + 1 < nz; j++) for (let i = 0; i + 1 < nx; i++) {
+      const v = [z(j, i), z(j, i + 1), z(j + 1, i + 1), z(j + 1, i)];
+      if (v.some((x) => x === null)) continue;
+      const corner = (k: number): Q => [X(i + (k === 1 || k === 2 ? 1 : 0)), v[k] as number, Z(j + (k >= 2 ? 1 : 0))];
+      for (const tri of [[0, 1, 2], [0, 2, 3]]) {
+        const poly0 = tri.map(corner);
+        for (let bi = 0; bi + 1 < bands.length; bi++) {
+          let poly = cut(poly0, bands[bi], true);
+          if (bi + 2 < bands.length) poly = cut(poly, bands[bi + 1], false);
+          if (poly.length < 3) continue;
+          const pts: V3[] = poly.map(([x, val, zz]) => [x, yv(val), zz]);
+          const col = lum(colorOf(bi), shade([pts[0], pts[1], pts[1], pts[pts.length - 1]]), 0);
+          faces.push({ pts, fill: col, stroke: col, sw: 0.3, part: "series:0" });
+        }
+      }
+    }
+  }
+  const subs = 1;
+  if (wire) for (let j = 0; j + 1 < nz; j++) for (let i = 0; i + 1 < nx; i++) {
     for (let a = 0; a < subs; a++) for (let b = 0; b < subs; b++) {
       const u0 = a / subs, u1 = (a + 1) / subs, w0 = b / subs, w1 = (b + 1) / subs;
       const q = [[u0, w0], [u1, w0], [u1, w1], [u0, w1]].map(([u, w]) => [u, w, at(i, j, u, w)] as const);

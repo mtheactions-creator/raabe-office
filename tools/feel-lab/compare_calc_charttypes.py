@@ -69,7 +69,7 @@ def dev_pictures(names: list[str]) -> dict[str, Image.Image]:
         if png.exists():
             png.unlink()
         subprocess.run([edge, "--headless=new", "--disable-gpu", "--hide-scrollbars", f"--user-data-dir={profile}", "--force-device-scale-factor=1",
-                        "--window-size=722,434", f"--screenshot={png}", (OURS / f"{n}.html").as_uri()], capture_output=True, timeout=60)
+                        "--window-size=722,434", f"--screenshot={png}", (OURS / f"{n}.html").as_uri()], capture_output=True, timeout=180)
         if png.exists():
             out[n] = flat(Image.open(png))
     return out

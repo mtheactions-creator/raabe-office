@@ -136,7 +136,7 @@ def main() -> None:
                     if s2.HasErrorBars:
                         e = s2.ErrorBars
                         eb = {"end": e.EndStyle, "weight": round(e.Format.Line.Weight, 2), "transp": round(e.Format.Line.Transparency, 2)}
-                    add(f"{name}: Excel finds the forecast's error bars (D-125)", eb is not None and eb["end"] == 2, eb)
+                    add(f"{name}: Excel finds the forecast's error bars with caps, 0.75 pt, 60 % transparent (D-125)", eb is not None and eb["end"] == 1 and eb["weight"] == 0.75 and abs(eb["transp"] - 0.6) < 0.01, eb)
             worst = 0.0
             for a, e in ex["cells"].items():
                 if not e["f"].startswith("="):
