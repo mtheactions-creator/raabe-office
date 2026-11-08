@@ -236,6 +236,8 @@ export function slicersFeature(app: CalcApp) {
 
   /** The item Umschalt+click starts from: the one clicked last (D-122). */
   let anchorItem: { s: Slicer; i: number } | null = null;
+  /** The last click on the slicer was on an item (Alt+S does nothing then). */
+  let itemClicked = false;
 
   /** The items from i to j (in the order shown), with `keep` (Strg: the items chosen before). */
   function rangeSelect(c: SlicerCache, list: SlicerItem[], i: number, j: number, keep: string[]): void {
@@ -255,7 +257,8 @@ export function slicersFeature(app: CalcApp) {
       // Unfiltered, the first click with Mehrfachauswahl takes the item away (Excel).
       const sel = list.filter((i) => i.selected).map((i) => i.text);
       chosen = sel.includes(it.text) ? sel.filter((x) => x !== it.text) : [...sel, it.text];
-      if (!chosen.length) return;
+      // Strg+click on the only chosen item: Excel clears the filter (all items chosen again, recorded D-122).
+      if (!chosen.length) { select(c, null); return; }
     } else {
       if (isFiltered && list.filter((i) => i.selected).length === 1 && it.selected) return;
       chosen = [it.text];
@@ -624,6 +627,7 @@ export function slicersFeature(app: CalcApp) {
     const handle = t.closest<HTMLElement>(".sl-h")?.dataset.h as Handle | undefined;
     choose(s);
     e.focus({ preventScroll: true });
+    itemClicked = !!btn;
     const c = cacheOf(s);
     if (act === "multi") { multi = !multi; refresh(); return; }
     if (act === "clear") { if (c) select(c, null, "Filter löschen"); return; }
@@ -647,6 +651,7 @@ export function slicersFeature(app: CalcApp) {
       const upb = () => {
         removeEventListener("pointermove", mv);
         removeEventListener("pointerup", upb);
+        e.querySelectorAll(".sl-dragging").forEach((x) => x.classList.remove("sl-dragging"));
         if (dragged) rangeSelect(c, list, i0, i1, ev.ctrlKey && filtered ? before : []);
         else if (ev.shiftKey && anchorItem && anchorItem.s === s) rangeSelect(c, list, anchorItem.i, i0, (ev.ctrlKey || multi) && filtered ? before : []);
         else { const it = list[i0]; if (it) clickItem(s, it, ev.ctrlKey); }
@@ -693,7 +698,8 @@ export function slicersFeature(app: CalcApp) {
     const c = cacheOf(s);
     if (ev.key === "Delete") { ev.preventDefault(); remove(s); return; }
     if (ev.altKey && (ev.key === "c" || ev.key === "C") && c) { ev.preventDefault(); select(c, null, "Filter löschen"); return; }
-    if (ev.altKey && (ev.key === "s" || ev.key === "S")) { ev.preventDefault(); multi = !multi; refresh(); return; }
+    // Alt+S: only while the slicer itself is chosen; after a click on an item Excel ignores it (recorded, D-122).
+    if (ev.altKey && (ev.key === "s" || ev.key === "S") && !itemClicked) { ev.preventDefault(); multi = !multi; refresh(); return; }
     if (ev.key === "Escape") { ev.preventDefault(); choose(null); app.grid.focus(); return; }
     const d: Record<string, [number, number]> = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] };
     if (d[ev.key]) {

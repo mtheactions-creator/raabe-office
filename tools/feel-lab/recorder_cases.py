@@ -14,10 +14,13 @@ CASES = [
         ("keys", "shift+right", 2), ("keys", "ctrl+shift+f"), ("keys", "ctrl+shift+k"), ("keytips", "R R Z"),
         ("keys", "down"), ("keys", "right"), ("keys", "shift+down"), ("keys", "ctrl+shift+5"),
         ("keys", "ctrl+home"), ("keytips", "R H C"), ("type", "14"), ("keys", "enter")]},
-    {"name": "Fuellfarbe", "setup": {"A1": "x", "B2": "y"}, "start": "A1", "steps": [
-        ("keys", "shift+down"), ("keys", "shift+right"), ("ribbon", "font.fill")]},
+    # Excel's recording by hand: the two selection keys did not reach Excel (it filled A1 alone), so the case is the
+    # click on Füllfarbe with A1 selected.
+    {"name": "Fuellfarbe", "setup": {"A1": "x", "B2": "y"}, "start": "A1", "steps": [("ribbon", "font.fill")]},
+    # Excel's recording by hand (2nd run): the first keys after the dialog did not reach Excel (Strg+U was recorded as
+    # Selection.FillDown in the first run) and the fill handle was let go in B5; the case is what Excel received.
     {"name": "Ausfuellen", "setup": {"A1": "Mo", "B1": "1", "B2": "2"}, "start": "A1", "steps": [
-        ("keys", "shift+down", 4), ("keys", "ctrl+u"), ("drag", "B1", "B2"), ("fill", "B1:B2", "B6")]},
+        ("drag", "B1", "B2"), ("fill", "B1:B2", "B5")]},
     {"name": "Sortieren", "setup": {"A1": "Name", "B1": "Note", "A2": "Cem", "B2": "2", "A3": "Anna", "B3": "1", "A4": "Ben", "B4": "3"},
      "start": "A2", "steps": [("keytips", "V U"), ("keys", "right"), ("keytips", "V F1")]},
     {"name": "Zeilen", "setup": {"A1": "1", "A2": "2", "A3": "3", "A4": "4", "B1": "b"}, "start": "A2", "steps": [

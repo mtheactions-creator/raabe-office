@@ -232,7 +232,7 @@ def main() -> None:
         relative0 = None
         try:
             rec.front()
-            relative0 = rec.relative()
+            relative0 = False
             menu = rec.macros_menu()
             out["menu"] = [{k: v for k, v in i.items() if k != "el"} for i in menu]
             rec.close_menu()
@@ -245,7 +245,9 @@ def main() -> None:
                     side.reset(case)
                     side.prepare(case)
                     rec.front()
-                    rec.set_relative(bool(c.get("relative")))
+                    if c.get("relative"):
+                        rec.keytips("f", "m", "v")
+                        winapi.press("esc")
                     rec.front()
                     name = f"Makro_{c['name']}"
                     # Ansicht > Makros > Makro aufzeichnen... by its keytips (Alt, F, M, R as recorded above).
@@ -321,7 +323,14 @@ def main() -> None:
                             time.sleep(0.6)
                             rec.front()
                         else:
-                            run_step(side, st)
+                            if st[0] == "fill":
+                                # The fill handle: 3 px inside the corner (1 px landed in the cell below at 150 %).
+                                last = st[1].split(":")[-1]
+                                x1, y1 = side.point(last, "br")
+                                x2, y2 = side.point(st[2])
+                                winapi.drag(x1 - 3, y1 - 3, x2, y2)
+                            else:
+                                run_step(side, st)
                     time.sleep(0.6)
                     # Aufzeichnung beenden through the status bar's button (Excel shows it while recording).
                     bar = uia.find(rec.root, lambda d: d["type"] == "StatusBar", max_depth=6)
@@ -340,6 +349,9 @@ def main() -> None:
                     st["extra"] = extra
                     st["rowHidden"] = [k for k in range(1, 12) if ws.Rows(k).Hidden]
                     out["cases"][c["name"]] = {"macro": name, "state": st}
+                    if c.get("relative"):
+                        rec.keytips("f", "m", "v")
+                        winapi.press("esc")
                     print(c["name"], "recorded", flush=True)
                     settle()
                 except Exception as e:  # noqa: BLE001
@@ -357,9 +369,7 @@ def main() -> None:
             # Put Relative Verweise verwenden back.
             rec.front()
             try:
-                if relative0 is not None:
-                    rec.set_relative(relative0)
-                    relative0 = None
+                relative0 = None
             except Exception as e:  # noqa: BLE001
                 print("Relative Verweise not put back", e, flush=True)
             path = TMP / "excel-recorder.xlsm"
@@ -370,8 +380,7 @@ def main() -> None:
         finally:
             rec.cleanup()
             try:
-                if relative0 is not None:
-                    rec.set_relative(relative0)
+                pass
             except Exception:  # noqa: BLE001
                 pass
             try:

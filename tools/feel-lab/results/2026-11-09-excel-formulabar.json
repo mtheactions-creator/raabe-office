@@ -357,5 +357,15 @@
     57
    ]
   }
+ },
+ "secondRun": {
+  "note": "the same steps once more by hand (screenshots of our own window kept out of the repository): in the first run the second chevron click, Strg+Umschalt+U and the edge drags did not land (the chevron sits at the bar's right end; the pointer scan did not find the lower edge)",
+  "heightAfterChevron": 3,
+  "heightAfterSecondChevron": 1,
+  "ctrlShiftU": {
+   "height": 1,
+   "underline": 2
+  },
+  "nameboxAfterDragLeft": 150
  }
 }

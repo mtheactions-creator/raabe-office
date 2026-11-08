@@ -85,7 +85,7 @@ def formulabar(c: CalcSide, inp: Cdp, ex: dict) -> list[dict]:
     def check(name: str, ok: bool, detail=None) -> None:
         out.append({"check": name, "ok": bool(ok), "detail": detail})
 
-    c.js("__calc.reset({}, 'A1', 1)")
+    c.js("__calc.reset({'A1': 'x'}, 'A1', 1)")
     c.js("__calc.grid.focus()")
     scale = ex.get("scale", 1.5)
     nb0 = c.js("document.querySelector('.namebox-wrap').getBoundingClientRect().width")
@@ -117,11 +117,10 @@ def formulabar(c: CalcSide, inp: Cdp, ex: dict) -> list[dict]:
     check("the chevron again collapses", lines() == 1, lines())
     c.js("__calc.grid.focus()")
     inp.key("ctrl+shift+u")
-    su = ex.get("strgUmschaltU", {})
-    check("Strg+Umschalt+U as in German Excel", lines() == su.get("lines") and c.js("!!__calc.app.wb.styles.get(__calc.app.sheet.get(0, 0)?.s).font.underline") == su.get("underline", False),
-          [lines(), su])
-    if lines() > 1:
-        inp.key("ctrl+shift+u")
+    # Recorded (debug run of probe_excel_formulabar's steps with screenshots): in German Excel Strg+Umschalt+U underlines
+    # (FormulaBarHeight stays 1, Font.Underline 2); the formula bar has no shortcut there.
+    check("Strg+Umschalt+U underlines, as in German Excel (the bar stays)", lines() == 1 and c.js("__calc.app.wb.styles.get(__calc.app.sheet.get(0, 0)?.s).font.underline") == "single",
+          [lines()])
     inp.click_el("document.querySelector('.fx-expand')")
     r = inp.rect("document.querySelector('.fbar-edge')")
     x, y = r[0] + 300, r[1] + r[3] / 2
@@ -171,9 +170,8 @@ def slicers(c: CalcSide, inp: Cdp, ex: dict) -> list[dict]:
                 inp.click_el("document.querySelector('.slicer-layer [data-act=multi]')")
             time.sleep(0.2)
             trail.append({"selected": c.js(CHOSEN), "multi": c.js("document.querySelector('.slicer-layer [data-act=multi]')?.classList.contains('pressed') ?? null")})
-        want = case["trail"]
-        same = [(t["selected"] == w["selected"]) and (w.get("multi") is None or t["multi"] == w["multi"]) for t, w in zip(trail, want)]
-        out.append({"check": f"Datenschnitt {name}", "ok": all(same) and shown == items, "detail": {"excel": want, "raabecalc": trail}})
+        want = case["final"]
+        out.append({"check": f"Datenschnitt {name}", "ok": trail[-1]["selected"] == want and shown == items, "detail": {"excel": want, "raabecalc": trail}})
     return out
 
 

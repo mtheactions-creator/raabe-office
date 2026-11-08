@@ -1,0 +1,205 @@
+{
+ "items": [
+  "Bio",
+  "Deutsch",
+  "Englisch",
+  "Kunst",
+  "Mathe"
+ ],
+ "note": "final state per case only (the probe printed it; it ended before writing its file at multi_from_all)",
+ "cases": {
+  "click": {
+   "steps": [
+    [
+     "click",
+     1,
+     ""
+    ]
+   ],
+   "final": [
+    "Deutsch"
+   ]
+  },
+  "click_twice_same": {
+   "steps": [
+    [
+     "click",
+     1,
+     ""
+    ],
+    [
+     "click",
+     1,
+     ""
+    ]
+   ],
+   "final": [
+    "Deutsch"
+   ]
+  },
+  "ctrl_from_all": {
+   "steps": [
+    [
+     "click",
+     2,
+     "ctrl"
+    ]
+   ],
+   "final": [
+    "Bio",
+    "Deutsch",
+    "Kunst",
+    "Mathe"
+   ]
+  },
+  "click_then_ctrl": {
+   "steps": [
+    [
+     "click",
+     0,
+     ""
+    ],
+    [
+     "click",
+     3,
+     "ctrl"
+    ]
+   ],
+   "final": [
+    "Bio",
+    "Kunst"
+   ]
+  },
+  "ctrl_off_last": {
+   "steps": [
+    [
+     "click",
+     0,
+     ""
+    ],
+    [
+     "click",
+     0,
+     "ctrl"
+    ]
+   ],
+   "final": [
+    "Bio",
+    "Deutsch",
+    "Englisch",
+    "Kunst",
+    "Mathe"
+   ]
+  },
+  "shift_range": {
+   "steps": [
+    [
+     "click",
+     1,
+     ""
+    ],
+    [
+     "click",
+     3,
+     "shift"
+    ]
+   ],
+   "final": [
+    "Deutsch",
+    "Englisch",
+    "Kunst"
+   ]
+  },
+  "shift_from_all": {
+   "steps": [
+    [
+     "click",
+     3,
+     "shift"
+    ]
+   ],
+   "final": [
+    "Deutsch",
+    "Englisch",
+    "Kunst"
+   ]
+  },
+  "drag_range": {
+   "steps": [
+    [
+     "drag",
+     0,
+     2,
+     ""
+    ]
+   ],
+   "final": [
+    "Bio",
+    "Deutsch",
+    "Englisch"
+   ]
+  },
+  "drag_up": {
+   "steps": [
+    [
+     "drag",
+     4,
+     2,
+     ""
+    ]
+   ],
+   "final": [
+    "Englisch",
+    "Kunst",
+    "Mathe"
+   ]
+  },
+  "ctrl_drag_add": {
+   "steps": [
+    [
+     "click",
+     0,
+     ""
+    ],
+    [
+     "drag",
+     2,
+     3,
+     "ctrl"
+    ]
+   ],
+   "final": [
+    "Bio",
+    "Englisch",
+    "Kunst"
+   ]
+  },
+  "alt_s_click": {
+   "steps": [
+    [
+     "click",
+     0,
+     ""
+    ],
+    [
+     "keys",
+     "alt+s"
+    ],
+    [
+     "click",
+     2,
+     ""
+    ]
+   ],
+   "final": [
+    "Englisch"
+   ]
+  }
+ },
+ "notRecorded": [
+  "multi_from_all",
+  "multi_two",
+  "multi_all_off",
+  "multi_shift"
+ ]
+}

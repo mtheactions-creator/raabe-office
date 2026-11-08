@@ -164,8 +164,9 @@ export class Grid {
       sep.addEventListener("pointerup", up);
       sep.addEventListener("lostpointercapture", up);
     });
-    // Bearbeitungsleiste erweitern (Strg+Umschalt+U): the chevron at its right end; the lower edge can be dragged.
-    this.fxExpand = h("button", { class: "fx-expand", "aria-label": "Bearbeitungsleiste erweitern", "data-tip": "Bearbeitungsleiste erweitern (Strg+Umschalt+U)", tabindex: "-1",
+    // Bearbeitungsleiste erweitern: the chevron at its right end (3 lines, recorded; in German Excel Strg+Umschalt+U underlines);
+    // the lower edge can be dragged (our own: Excel's edge drag was not caught by the probe).
+    this.fxExpand = h("button", { class: "fx-expand", "aria-label": "Bearbeitungsleiste erweitern", "data-tip": "Bearbeitungsleiste erweitern", tabindex: "-1",
       onmousedown: (e: MouseEvent) => { e.preventDefault(); this.toggleFormulaBar(); } }, "⌄");
     const edge = h("div", { class: "fbar-edge", "aria-hidden": "true" });
     edge.addEventListener("pointerdown", (e) => {
@@ -195,7 +196,7 @@ export class Grid {
   private fxExpand!: HTMLButtonElement;
   /** Lines the Bearbeitungsleiste shows (Excel's FormulaBarHeight); 1 is the collapsed bar. */
   fbarLines = 1;
-  /** The height the chevron and Strg+Umschalt+U expand to: the last one dragged, Excel's default at first. */
+  /** The height the chevron expands to: the last one dragged, Excel's 3 lines at first. */
   private fbarExpanded = FX_EXPANDED_LINES;
 
   setNameBoxWidth(px: number): void {
@@ -211,7 +212,7 @@ export class Grid {
     this.formulaBar.style.height = n > 1 ? `${FBAR_HEIGHT + (n - 1) * FX_LINE}px` : "";
     this.fxExpand.textContent = n > 1 ? "⌃" : "⌄";
     this.fxExpand.setAttribute("aria-label", n > 1 ? "Bearbeitungsleiste reduzieren" : "Bearbeitungsleiste erweitern");
-    this.fxExpand.dataset.tip = `${n > 1 ? "Bearbeitungsleiste reduzieren" : "Bearbeitungsleiste erweitern"} (Strg+Umschalt+U)`;
+    this.fxExpand.dataset.tip = `${n > 1 ? "Bearbeitungsleiste reduzieren" : "Bearbeitungsleiste erweitern"}`;
   }
 
   toggleFormulaBar(): void {

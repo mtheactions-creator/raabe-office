@@ -286,13 +286,74 @@
    "code": "Sub Makro_Format()\nAttribute Makro_Format.VB_Description = \"Kopfzeile formatieren\"\nAttribute Makro_Format.VB_ProcData.VB_Invoke_Func = \"q\\n14\"\n'\n' Makro_Format Makro\n' Kopfzeile formatieren\n'\n' Tastenkombination: Strg+q\n'\n    Range(\"A1:C1\").Select\n    Selection.Font.Bold = True\n    Selection.Font.Italic = True\n    With Selection\n        .HorizontalAlignment = xlCenter\n        .VerticalAlignment = xlBottom\n        .WrapText = False\n        .Orientation = 0\n        .AddIndent = False\n        .IndentLevel = 0\n        .ShrinkToFit = False\n        .ReadingOrder = xlContext\n        .MergeCells = False\n    End With\n    Range(\"B2:B3\").Select\n    Selection.NumberFormat = \"0%\"\n    Range(\"A1\").Select\n    With Selection.Font\n        .Name = \"Calibri\"\n        .Size = 14\n        .Strikethrough = False\n        .Superscript = False\n        .Subscript = False\n        .OutlineFont = False\n        .Shadow = False\n        .Underline = xlUnderlineStyleNone\n        .ThemeColor = xlThemeColorLight1\n        .TintAndShade = 0\n        .ThemeFont = xlThemeFontNone\n    End With\nEnd Sub"
   },
   "Fuellfarbe": {
-   "failed": ""
+   "macro": "Makro_Fuellfarbe",
+   "state": {
+    "flags": [],
+    "status": [],
+    "scroll": [
+     1.0,
+     1.0
+    ],
+    "zoom": 100.0,
+    "mode": "Bereit",
+    "editing": null,
+    "cells": {
+     "A1": {
+      "formula": "x",
+      "text": "x",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     },
+     "B2": {
+      "formula": "y",
+      "text": "y",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     }
+    },
+    "selection": "A1",
+    "active": "A1",
+    "sheet": "Tabelle1",
+    "sheets": [
+     "Tabelle1"
+    ],
+    "hiddenRows": [],
+    "hiddenCols": [],
+    "widths": {},
+    "filter": false,
+    "extra": {
+     "A1": {
+      "fill": 65535,
+      "size": 11.0,
+      "h": 1
+     },
+     "B2": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     }
+    },
+    "rowHidden": []
+   },
+   "code": "Sub Makro_Fuellfarbe()\nAttribute Makro_Fuellfarbe.VB_ProcData.VB_Invoke_Func = \" \\n14\"\n'\n' Makro_Fuellfarbe Makro\n'\n\n'\n    With Selection.Interior\n        .Pattern = xlSolid\n        .PatternColorIndex = xlAutomatic\n        .Color = 65535\n        .TintAndShade = 0\n        .PatternTintAndShade = 0\n    End With\nEnd Sub"
   },
   "Ausfuellen": {
    "macro": "Makro_Ausfuellen",
    "state": {
     "flags": [],
-    "status": [],
+    "status": [
+     "Mittelwert3",
+     "Anzahl5",
+     "Summe15"
+    ],
     "scroll": [
      1.0,
      1.0
@@ -321,16 +382,6 @@
       "strike": false,
       "wrap": false
      },
-     "A2": {
-      "formula": "Mo",
-      "text": "Mo",
-      "format": "Standard",
-      "bold": false,
-      "italic": false,
-      "underline": false,
-      "strike": false,
-      "wrap": false
-     },
      "B2": {
       "formula": "2",
       "text": "2",
@@ -341,9 +392,9 @@
       "strike": false,
       "wrap": false
      },
-     "A3": {
-      "formula": "Mo",
-      "text": "Mo",
+     "B3": {
+      "formula": "3",
+      "text": "3",
       "format": "Standard",
       "bold": false,
       "italic": false,
@@ -351,9 +402,9 @@
       "strike": false,
       "wrap": false
      },
-     "A4": {
-      "formula": "Mo",
-      "text": "Mo",
+     "B4": {
+      "formula": "4",
+      "text": "4",
       "format": "Standard",
       "bold": false,
       "italic": false,
@@ -361,9 +412,9 @@
       "strike": false,
       "wrap": false
      },
-     "A5": {
-      "formula": "Mo",
-      "text": "Mo",
+     "B5": {
+      "formula": "5",
+      "text": "5",
       "format": "Standard",
       "bold": false,
       "italic": false,
@@ -372,8 +423,8 @@
       "wrap": false
      }
     },
-    "selection": "B3:B6",
-    "active": "B3",
+    "selection": "B1:B5",
+    "active": "B1",
     "sheet": "Tabelle1",
     "sheets": [
      "Tabelle1"
@@ -393,27 +444,22 @@
       "size": 11.0,
       "h": 1
      },
-     "A2": {
-      "fill": null,
-      "size": 11.0,
-      "h": 1
-     },
      "B2": {
       "fill": null,
       "size": 11.0,
       "h": 1
      },
-     "A3": {
+     "B3": {
       "fill": null,
       "size": 11.0,
       "h": 1
      },
-     "A4": {
+     "B4": {
       "fill": null,
       "size": 11.0,
       "h": 1
      },
-     "A5": {
+     "B5": {
       "fill": null,
       "size": 11.0,
       "h": 1
@@ -421,7 +467,7 @@
     },
     "rowHidden": []
    },
-   "code": "Sub Makro_Ausfuellen()\nAttribute Makro_Ausfuellen.VB_ProcData.VB_Invoke_Func = \" \\n14\"\n'\n' Makro_Ausfuellen Makro\n'\n\n'\n    Range(\"A1:A5\").Select\n    Selection.FillDown\n    Range(\"B3:B6\").Select\nEnd Sub"
+   "code": "Sub Makro_Ausfuellen()\nAttribute Makro_Ausfuellen.VB_ProcData.VB_Invoke_Func = \" \\n14\"\n'\n' Makro_Ausfuellen Makro\n'\n\n'\n    Range(\"B1:B2\").Select\n    Selection.AutoFill Destination:=Range(\"B1:B5\"), Type:=xlFillDefault\n    Range(\"B1:B5\").Select\nEnd Sub"
   },
   "Sortieren": {
    "macro": "Makro_Sortieren",
@@ -815,64 +861,7 @@
    "code": "Sub Makro_Kopieren()\nAttribute Makro_Kopieren.VB_ProcData.VB_Invoke_Func = \" \\n14\"\n'\n' Makro_Kopieren Makro\n'\n\n'\n    Range(\"A1:A3\").Select\n    Selection.Copy\n    Range(\"C1\").Select\n    ActiveSheet.Paste\n    Application.CutCopyMode = False\n    Range(\"A2\").Select\n    Selection.ClearContents\nEnd Sub"
   },
   "Relativ": {
-   "macro": "Makro_Relativ",
-   "state": {
-    "flags": [],
-    "status": [],
-    "scroll": [
-     1.0,
-     1.0
-    ],
-    "zoom": 100.0,
-    "mode": "Bereit",
-    "editing": null,
-    "cells": {
-     "B3": {
-      "formula": "x",
-      "text": "x",
-      "format": "Standard",
-      "bold": false,
-      "italic": false,
-      "underline": false,
-      "strike": false,
-      "wrap": false
-     },
-     "B4": {
-      "formula": "y",
-      "text": "y",
-      "format": "Standard",
-      "bold": false,
-      "italic": false,
-      "underline": false,
-      "strike": false,
-      "wrap": false
-     }
-    },
-    "selection": "2:2",
-    "active": "C2",
-    "sheet": "Tabelle1",
-    "sheets": [
-     "Tabelle1"
-    ],
-    "hiddenRows": [],
-    "hiddenCols": [],
-    "widths": {},
-    "filter": false,
-    "extra": {
-     "B3": {
-      "fill": null,
-      "size": 11.0,
-      "h": 1
-     },
-     "B4": {
-      "fill": null,
-      "size": 11.0,
-      "h": 1
-     }
-    },
-    "rowHidden": []
-   },
-   "code": "Sub Makro_Relativ()\nAttribute Makro_Relativ.VB_ProcData.VB_Invoke_Func = \" \\n14\"\n'\n' Makro_Relativ Makro\n'\n\n'\n    ActiveCell.FormulaR1C1 = \"x\"\n    Range(\"B3\").Select\n    ActiveCell.FormulaR1C1 = \"y\"\n    Range(\"C3:D3\").Select\n    Selection.Font.Bold = True\n    Rows(\"2:2\").Select\n    Range(\"C2\").Activate\n    Selection.Insert Shift:=xlDown\nEnd Sub"
+   "failed": "RuntimeError('no Makro aufzeichnen dialog')"
   },
   "Spalte": {
    "macro": "Makro_Spalte",
