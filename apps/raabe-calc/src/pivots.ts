@@ -141,17 +141,18 @@ export function pivotsFeature(app: CalcApp) {
     }
     const n = app.wb.sheets.reduce((k, s) => k + (s.pivots?.length ?? 0), 0) + 1;
     const p: PivotTable = { name: `PivotTable${n}`, source: { sheet: sheetName, ...src }, at: { row: 2, col: 0 }, rows: [], cols: [], values: [], filters: [] };
-    let target: Sheet;
+    let target: Sheet = app.sheet;
     if (here.checked) {
       const t = parseRange(place.value.replace(/^=|\$/g, "").replace(/^.*!/, ""));
       if (!t) { await messageBox("RaabeCalc", "Der Zielbereich ist ungültig."); return; }
       p.at = { row: t.r0, col: t.c0 };
-      target = app.sheet;
-    } else {
-      app.addSheet(false);
-      target = app.sheet;
     }
+    // The new sheet and the PivotTable on it are one undo step: one Strg+Z takes back both (D-142).
     app.change("PivotTable einfügen", () => {
+      if (!here.checked) {
+        app.addSheet(false);
+        target = app.sheet;
+      }
       app.history.whole(target);
       target.pivots = [...(target.pivots ?? []), p];
       write(target, p);
