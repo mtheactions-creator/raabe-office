@@ -3101,3 +3101,96 @@ Built or fixed on the way:
   pushed the slider about 6 px under the pointer.
 - The test's own errors found on the way (a flipped shape's size, the browser slider's mapping, a probe's braces, the
   thumbnail's place after the drop) were fixed in the test, not in the app.
+
+## D-137 RaabePresent: every option triggered by hand, and what it found (2026-11-09)
+
+The owner found RaabeCalc's chart formatting broken in many places although the automated checks passed: they drove
+the model through test APIs, not the controls. RaabePresent got the same audit.
+- **sweep_present.py** starts the release exe (our own instance, its DevTools port) and walks every ribbon tab in a
+  starting point that suits it (sweep.ts in the app makes it: text selected in a shape, a shape, three slides, a
+  picture, a table, a chart, an equation, a SmartArt, the three master views, Freistellen), every control of the tab,
+  every entry of the menus, galleries and palettes the controls open (one level of submenus; lists longer than 40
+  entries, such as the shapes or the colours, by about a dozen entries spread over the list), the dialogs they open
+  (OK with the dialog's values), the context menus of thirteen kinds of object, every keyboard shortcut of the command
+  list, the Datei pages and their buttons, the status bar, and every control of the task panes (Form formatieren with
+  Formoptionen and Textoptionen, Grafik formatieren, Hintergrund formatieren, the chart's pane), each from a fresh
+  start. The option itself is triggered as a student does: a trusted CDP mouse click at the control's place, typing
+  into the field, Enter, key events; nothing of the option goes through a test API. Checked per option: no exception,
+  rejected promise or console error; an effect (the document's parts change, or the UI: a menu, a dialog, a pane, the
+  view, the selection); Strg+Z brings every part back; the presentation is written and every XML part parses, and no
+  colour is written that is neither hex nor a scheme colour. The native file dialogs, the clipboard and camera,
+  microphone and screen are replaced in the page by stand-ins (a prepared file, a file in TEMP, an in-memory
+  clipboard, streams drawn in the page), so no OS window opens and no other session's clipboard is touched.
+- **report_present_sweep.py** merges the runs into results/2026-11-09-present-options.json (every option reached,
+  how it fared, the ribbon's defined entries no walk reached, the commands no walk reached by their label) and opens
+  the saved presentations in a PowerPoint of our own (windowless, only when no POWERPNT.EXE runs).
+- **compare_present_office.py** checks that the effect is the right one for the options a student uses most: the same
+  option in PowerPoint on the same starting file (the ribbon command by its idMso through ExecuteMso, else the COM call
+  it makes), both files saved, and what changed in each compared (geometry, fill, outline, text body, paragraph and run
+  properties, layout, transition, animations, table grid, slide size).
+- **real_present.py** does the controls where the OS input matters with SendInput under the real-input lock: a
+  palette, a combo box's list, typing into the font box, a spinner's arrow, the pane's slider and its native list,
+  Tab through a dialog, drawing a shape by dragging, a transition from the gallery, F5/click/Esc.
+
+Found and fixed (each with a lasting case in apps/raabe-present/test/byhand.test.ts or in the sweep itself):
+- Strg+Z after any Diagrammentwurf or chart Format command, and after any SmartArt-Design command (Layout ändern,
+  Farben ändern, Formatvorlagen, Form hinzufügen, Höher/Tiefer stufen ...), left the chart or diagram changed: the
+  undo step held only the slide, not the chart's or the diagram's own parts: 168 options of the first sweep.
+- Files PowerPoint refuses to open: Texthervorhebungsfarbe wrote the colour's name (GREEN) as its value, and the
+  palettes' Automatisch wrote a scheme colour "auto" (Schriftfarbe, Fülleffekt, Formkontur, Textkontur). D-140.
+- Layout's gallery showed Neue Folie's three entries (Ausgewählte Folien duplizieren, Folien aus Gliederung,
+  Folien wiederverwenden), and Neue Folie lost them under every design whose name did not end in "Design".
+- Folien aus Gliederung and Folien wiederverwenden were one undo step per slide made; now one for all (Deck.group). A
+  file that cannot be read is said in a message instead of an unhandled error.
+- Umschalt+F9 (Gitternetzlinien), Alt+F9 (Führungslinien) and Strg+Alt+V (Inhalte einfügen) did nothing although the
+  tooltips name them; Gruppieren and Gruppierung aufheben named Strg+G and Strg+Umschalt+G, German PowerPoint's keys
+  (and ours) are Strg+Umschalt+G and Strg+Umschalt+H.
+- Strg+Z while editing an equation did nothing; it now ends the editing and undoes (a new empty equation goes).
+- Pasting or cutting through the notes pane's menu could not be undone (setRangeText bypassed the text box's undo).
+- Tabelle einfügen left the table style it added after Strg+Z.
+- A number typed into the Format pane and confirmed with Enter was written a second time when the field was left, so
+  the first Strg+Z seemed to do nothing: a change that changes nothing is no undo step now.
+- Übergänge > Nach: the spinner had no accessible name (now its command's, "Automatisch nach").
+- Form darunter hinzufügen and Aufzählungszeichen hinzufügen (SmartArt) were two undo steps (add, demote).
+- A structure from Formel > Formel or Einfügen > Formel while an equation was being edited made a new equation; it
+  goes in at the caret now, as in PowerPoint.
+- Textkontur's button wrote a scheme colour "none" while no colour had been picked (D-140).
+- Spalte einfügen made the table wider; PowerPoint keeps the width (D-138).
+- Texteffekte formatieren... and the WordArt-Formate launcher were "Noch nicht verfügbar"; they open the Format pane's
+  new Textoptionen (D-139).
+Measured against PowerPoint and left as it is: the caret right after a word (no selection) leaves Fett, Kursiv and
+Schriftgrad without effect in both programs; Keine Füllung/Keine Kontur write only what changes where PowerPoint also
+writes the style's other values (the same look); bullets' indents could not be compared (COM's Bullet.Visible gives
+PowerPoint a numbered list, not what the button does). Real input: F5, a click to the next slide, then Esc did not end
+the show in the exe (with CDP keys it does); not found tonight.
+Open (not fixed tonight): RaabePresent has no SmartArt Format tab (PowerPoint has one); Seitenverhältnis sperren (table),
+Folienmaster einfügen, Masterlayout..., Platzhalter einfügen stay "Noch nicht verfügbar"; Übergänge > Dauer does
+nothing while the slide has no transition (PowerPoint's COM writes the duration alone; the ribbon's own behaviour there
+was not recorded). The chart Format tab's WordArt-Formate, Schnellformatvorlagen and Daten
+aktualisieren, and Format > Gruppieren for a chart, belong to the charts work (packages/charts) and were reported there.
+
+## D-138 RaabePresent: a new table column keeps the table's width (2026-11-09)
+
+Measured with PowerPoint's own commands (ExecuteMso TableInsertColumnsRight/Left) on 2-column tables of 300 pt and 600
+pt: the table keeps its width and the columns, the new one as wide as its neighbour, shrink alike (2 x 150 pt became
+3 x 100 pt). RaabePresent added the column's width to the table (it grew past the slide). Now as PowerPoint; rows still
+add their height (PowerPoint's Zeile oberhalb/unterhalb einfügen do, compared the same way).
+
+## D-139 RaabePresent: Textoptionen in the Format pane (2026-11-09)
+
+Form formatieren had only Formoptionen; Texteffekte formatieren... (context menu) and the WordArt-Formate launcher
+(Formformat, Tabellenentwurf, the chart's Format) were greyed. The pane now has PowerPoint's second set, Textoptionen,
+for a shape with text: Textfüllung und -kontur (Keine Füllung, Einfarbige Füllung, Automatisch, Farbe; Keine Linie,
+Einfarbige Linie, Farbe, Breite) and Textfeld (the Textfeld settings that also stand under Größe und Eigenschaften).
+They work on the selected text, or on all of a selected shape's text, through the same code as the ribbon's
+Schriftfarbe and Textkontur, each change one undo step. Texteffekte (shadow, glow ... on text) are not in it yet.
+
+## D-140 RaabePresent: colours PowerPoint refuses (2026-11-09)
+
+Opening the sweep's saved files in PowerPoint found two kinds it refuses although the XML is well formed: a highlight
+written by its name (`<a:srgbClr val="GREEN"/>`; the palette names its colours as Word does) and a palette's
+Automatisch written as `<a:schemeClr val="auto"/>`. Now: highlights are written as their hex value; Automatisch takes
+the run's own colour away (Schriftfarbe: the design's text colour shows), the shape's own fill or line colour away
+(Fülleffekt, Formkontur: the shape style's shows), and colorEl/colorXml never write "auto" (tx1 instead). The sweep's
+save check now refuses any srgbClr that is not six hex digits and any schemeClr outside the scheme's names, so this
+kind of fault shows without PowerPoint.
