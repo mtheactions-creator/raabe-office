@@ -1523,7 +1523,9 @@ export class PresentApp implements EditorHost, PanelHost {
     if (!slide) return;
     const size = this.deck.pptx.slideSize;
     let id = 0;
-    this.editor.edit("Tabelle einfügen", () => {
+    // The table style's part belongs to the undo step too (by hand, D-137: Strg+Z left the style added).
+    const styles = this.deck.pptx.related(this.deck.pptx.presPath, "http://schemas.openxmlformats.org/officeDocument/2006/relationships/tableStyles");
+    this.deck.change("Tabelle einfügen", styles ? [slide, styles] : [slide], () => {
       this.ensureTableStyle();
       const doc = this.deck.pptx.doc(slide);
       const tree = S.treeOf(doc);
@@ -2442,7 +2444,13 @@ export class PresentApp implements EditorHost, PanelHost {
   notesMenu(e: MouseEvent): void {
     const ta = this.notes;
     const sel = () => ta.value.slice(ta.selectionStart, ta.selectionEnd);
-    const put = (t: string) => { ta.setRangeText(t, ta.selectionStart, ta.selectionEnd, "end"); ta.dispatchEvent(new Event("input")); ta.focus(); };
+    // Through the text box's own editing, so Strg+Z takes a paste or a cut back (by hand, D-137: setRangeText left
+    // nothing to undo).
+    const put = (t: string) => {
+      ta.focus();
+      const done = t ? document.execCommand("insertText", false, t) : document.execCommand("delete");
+      if (!done) { ta.setRangeText(t, ta.selectionStart, ta.selectionEnd, "end"); ta.dispatchEvent(new Event("input")); }
+    };
     const has = !!sel();
     this.menu([
       { label: "Ausschneiden", disabled: !has, run: () => { void this.platform.clipboardWrite(sel()); put(""); } },
@@ -3099,6 +3107,10 @@ export class PresentApp implements EditorHost, PanelHost {
     if (k === "F12") return run("file.saveAs");
     if (k === "F7" && !shift) return run("review.spelling");
     if (k === "F7" && shift && !ctrl) return run("review.thesaurus");
+    // By hand (D-137): three shortcuts the tooltips name did nothing.
+    if (k === "F9" && shift && !e.ctrlKey && !e.altKey) return run("view.gridlines");
+    if (k === "F9" && e.altKey && !shift && !e.ctrlKey) return run("view.guides");
+    if (e.ctrlKey && e.altKey && !shift && k.toLowerCase() === "v") return run("edit.pasteSpecial");
     if (this.painter && k === "Escape") { this.painter = null; document.body.classList.remove("painting"); this.updateChrome(); return true; }
     if (!ctrl) return false;
     const key = k.length === 1 ? k.toLowerCase() : k;

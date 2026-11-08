@@ -169,14 +169,15 @@ HELPERS = r"""
   sw.tabs = () => Array.from(document.querySelectorAll('.tabrow .tab')).filter(vis).map((t) => ({ name: t.textContent.trim(), contextual: t.classList.contains('contextual'), on: t.getAttribute('aria-selected') === 'true' || t.classList.contains('active') }));
   sw.tabRect = (name) => { const t = Array.from(document.querySelectorAll('.tabrow .tab')).filter(vis).find((x) => x.textContent.trim() === name); return t ? sw.rect(t) : null; };
   // What lies above the app: popups, menus, dialogs, the backstage, panes.
-  sw.overlays = () => Array.from(document.body.children).filter((c) => !c.hasAttribute('data-sw-base') && !c.classList.contains('tooltip') && vis(c)).map((c) => c);
+  // The equation editor's own chrome (box, caret) is not a popup.
+  sw.overlays = () => Array.from(document.body.children).filter((c) => !c.hasAttribute('data-sw-base') && !c.classList.contains('tooltip') && !String(c.className).startsWith('math-edit') && vis(c)).map((c) => c);
   sw.dialogs = () => Array.from(document.querySelectorAll('[role=dialog]')).filter(vis);
   sw.items = () => {
     // Entries of the open popup(s) (the topmost menu last): menu entries, palette swatches, gallery tiles, buttons.
     const ov = sw.overlays().filter((c) => !c.querySelector('[role=dialog]') && c.getAttribute('role') !== 'dialog');
     const out = [];
     ov.forEach((root, ri) => {
-      const els = Array.from(root.querySelectorAll('button, [role=menuitem], [role=option], input, select, .item, .tile')).filter((e) => vis(e) && !(e.tagName !== 'BUTTON' && e.querySelector('button')));
+      const els = Array.from(root.querySelectorAll('button, [role=menuitem], [role=option], [role=button], input, select, .item, .tile')).filter((e) => vis(e) && !(e.tagName !== 'BUTTON' && e.querySelector('button')));
       const uniq = els.filter((e, i) => els.indexOf(e) === i && !els.some((o) => o !== e && o.contains(e) && o.tagName === 'BUTTON'));
       uniq.forEach((e, i) => out.push({ path: ri + ':' + i, name: label(e), sub: e.classList.contains('has-sub') || e.getAttribute('aria-haspopup') === 'true', disabled: !!e.disabled || e.getAttribute('aria-disabled') === 'true',
         tag: e.tagName.toLowerCase(), type: e.type || '' }));
@@ -187,7 +188,7 @@ HELPERS = r"""
     const [ri, i] = path.split(':').map(Number);
     const root = sw.overlays().filter((c) => !c.querySelector('[role=dialog]') && c.getAttribute('role') !== 'dialog')[ri];
     if (!root) return null;
-    const els = Array.from(root.querySelectorAll('button, [role=menuitem], [role=option], input, select, .item, .tile')).filter((e) => vis(e) && !(e.tagName !== 'BUTTON' && e.querySelector('button')));
+    const els = Array.from(root.querySelectorAll('button, [role=menuitem], [role=option], [role=button], input, select, .item, .tile')).filter((e) => vis(e) && !(e.tagName !== 'BUTTON' && e.querySelector('button')));
     const uniq = els.filter((e, k) => els.indexOf(e) === k && !els.some((o) => o !== e && o.contains(e) && o.tagName === 'BUTTON'));
     return uniq[i] || null;
   };
@@ -802,7 +803,7 @@ def walk_shortcuts(sw: Sweeper, args, results: list, inventory: list) -> None:
             if sc in ("Strg+W", "Strg+N", "Strg+O") or sc.startswith("Tab") or sc.startswith("Umschalt+Tab"):
                 ctx = "slides"
             else:
-                ctx = "shape-text" if c["id"].startswith(("font.", "para.", "edit.")) else "shape"
+                ctx = "shape-text" if c["id"].startswith(("font.", "para.", "edit.")) else "two-shapes" if c["id"].startswith("arrange.") else "shape"
             oid = f"Tastenkombination {sc} ({c['label']})"
             entry = {"id": oid, "ctx": ctx, "tab": "Tastatur", "group": "Tastenkombinationen", "name": c["label"], "kind": "shortcut", "shortcut": sc}
             inventory.append({"ctx": ctx, "tab": "Tastatur", "group": "Tastenkombinationen", "name": f"{c['label']} ({sc})", "kind": "shortcut", "disabled": not c["on"]})
