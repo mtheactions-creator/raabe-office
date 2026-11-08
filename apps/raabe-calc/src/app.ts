@@ -56,6 +56,7 @@ import { designsFeature } from "./designs";
 import { advancedFilterFeature } from "./advfilter";
 import { pivotsFeature } from "./pivots";
 import { slicersFeature } from "./slicers";
+import { timelinesFeature } from "./timelines";
 import { getDataFeature } from "./getdata";
 import { forecastFeature } from "./forecast";
 import { commentsFeature } from "./comments";
@@ -141,6 +142,8 @@ export class CalcApp {
   readonly pivots = pivotsFeature(this);
   /** Datenschnitte (D-092). */
   readonly slicers = slicersFeature(this);
+  /** Zeitachsen (D-121). */
+  readonly timelines = timelinesFeature(this);
   /** Daten abrufen (local) and Prognoseblatt (D-092). */
   readonly getData = getDataFeature(this);
   readonly forecast = forecastFeature(this);
@@ -930,7 +933,7 @@ export class CalcApp {
       circles: () => this.circles.get(this.sheet) ?? [],
       canEdit: (row, col) => this.protection.canEdit(row, col),
       validate: (row, col, text) => (this.validation.quickCheck(row, col, text) ? "ok" : this.validation.check(row, col, text)),
-      painted: () => { this.pageLayout.paint(); this.pictures.place(); this.slicers.place(); this.shapes.place(); this.ink.place(); this.splitUi?.place(); this.validation.place(); this.quick.place(); this.windows.painted(); },
+      painted: () => { this.pageLayout.paint(); this.pictures.place(); this.slicers.place(); this.timelines.place(); this.shapes.place(); this.ink.place(); this.splitUi?.place(); this.validation.place(); this.quick.place(); this.windows.painted(); },
       nextUnlocked: (row, col, back) => this.protection.nextUnlocked(row, col, back),
     };
   }
@@ -2093,6 +2096,7 @@ export class CalcApp {
     run("insert.sparkWinLoss", () => void this.sparklineDialog("stacked"), notEditing);
     this.sparklines.implement(run);
     this.slicers.implement(run);
+    this.timelines.implement(run);
     this.getData.implement(run);
     this.forecast.implement(run);
     run("insert.comment", () => this.comments.newComment(), notEditing);
@@ -2210,7 +2214,7 @@ export class CalcApp {
   private sparkWas = false;
   private sparkTabs(): void {
     const on = !!this.sparklines.current();
-    if (on === this.sparkWas || this.charts.selected() || this.shapes.selected() || this.slicers.selected()) return;
+    if (on === this.sparkWas || this.charts.selected() || this.shapes.selected() || this.slicers.selected() || this.timelines.selected()) return;
     this.sparkWas = on;
     this.ribbon.setContextual(on ? [this.sparklines.tab()] : []);
   }
@@ -2218,7 +2222,7 @@ export class CalcApp {
   private tableWas = false;
   private tableTabs(): void {
     const on = !!this.tables.current();
-    if (on === this.tableWas || this.charts.selected() || this.shapes.selected() || this.pictures.selected() || this.slicers.selected() || this.pivots.current()) return;
+    if (on === this.tableWas || this.charts.selected() || this.shapes.selected() || this.pictures.selected() || this.slicers.selected() || this.timelines.selected() || this.pivots.current()) return;
     this.tableWas = on;
     this.ribbon.setContextual(on ? [this.tableDesignTab()] : []);
   }
@@ -2251,7 +2255,7 @@ export class CalcApp {
   private pivotWas = false;
   private pivotTabs(): void {
     const on = !!this.pivots.current();
-    if (on === this.pivotWas || this.charts.selected() || this.shapes.selected() || this.pictures.selected() || this.slicers.selected()) return;
+    if (on === this.pivotWas || this.charts.selected() || this.shapes.selected() || this.pictures.selected() || this.slicers.selected() || this.timelines.selected()) return;
     this.pivotWas = on;
     this.ribbon.setContextual(on ? [this.pivotAnalyzeTab(), this.pivotDesignTab()] : []);
   }
@@ -2263,9 +2267,10 @@ export class CalcApp {
       id: "pivotAnalyze", label: "PivotTable-Analyse", key: "JT", contextual: true, shrink: [],
       groups: [
         // Group keytips as recorded (probe_excel_slicer_ui.py): Filtern Z S, Daten Z D, Aktionen Z C, Einblenden Z W.
-        { id: "filter", label: "Filtern", key: "ZS", icon: "filter", controls: [b("pivot.slicer", "9")] },
-        { id: "data", label: "Daten", key: "ZD", icon: "reapply", controls: [b("pivot.refresh", "F")] },
-        { id: "actions", label: "Aktionen", key: "ZC", icon: "delete", controls: [b("pivot.delete", "C")] },
+        // Zeitachse einfügen C, Aktualisieren A, Löschen ß as recorded (probe_excel_slicer_ui.py, D-121).
+        { id: "filter", label: "Filtern", key: "ZS", icon: "filter", controls: [b("pivot.slicer", "9"), b("pivot.timeline", "C")] },
+        { id: "data", label: "Daten", key: "ZD", icon: "reapply", controls: [b("pivot.refresh", "A")] },
+        { id: "actions", label: "Aktionen", key: "ZC", icon: "delete", controls: [b("pivot.delete", "ß")] },
         { id: "show", label: "Einblenden", key: "ZW", icon: "table", controls: [b("pivot.fieldList", "L")] },
       ],
     };
@@ -2299,10 +2304,21 @@ export class CalcApp {
   /** Datenschnitt appears while a slicer is selected (Excel's contextual tab, D-092). */
   slicerSelectionChanged(): void {
     const on = !!this.slicers.selected();
-    if (on) { this.shapes.deselect(); this.pictures.deselect(); }
+    if (on) { this.shapes.deselect(); this.pictures.deselect(); this.timelines.deselect(); }
+    if (!on && this.timelines.selected()) return;
     this.ribbon.setContextual(on ? [this.slicers.tab()] : []);
     if (on) this.ribbon.select("slicer");
     else { this.tableWas = false; this.pivotWas = false; this.sparkWas = false; this.tableTabs(); this.pivotTabs(); }
+    this.updateChrome();
+  }
+
+  /** Zeitachse appears while a timeline is selected (Excel's contextual tab, D-121). */
+  timelineSelectionChanged(): void {
+    const on = !!this.timelines.selected();
+    if (on) { this.shapes.deselect(); this.pictures.deselect(); this.slicers.deselect(); }
+    this.ribbon.setContextual(on ? [this.timelines.tab()] : this.slicers.selected() ? [this.slicers.tab()] : []);
+    if (on) this.ribbon.select("timeline");
+    else if (!this.slicers.selected()) { this.tableWas = false; this.pivotWas = false; this.sparkWas = false; this.tableTabs(); this.pivotTabs(); }
     this.updateChrome();
   }
 
@@ -2947,7 +2963,7 @@ export class CalcApp {
           const own = "popup" in c && c.popup ? { panel: true } : c.type === "color" ? { panel: true } : {};
           return [{ ...base, type: (c as { type: string }).type, ...menu, ...own }];
         };
-        const tabs = [...ribbonTabs(this.ribbonContext()), this.chartTab(), this.chartFormatTab(), this.shapeTab(), this.pictureUi.tab, this.pivotAnalyzeTab(), this.pivotDesignTab(), this.sparklines.tab(), this.slicers.tab()];
+        const tabs = [...ribbonTabs(this.ribbonContext()), this.chartTab(), this.chartFormatTab(), this.shapeTab(), this.pictureUi.tab, this.pivotAnalyzeTab(), this.pivotDesignTab(), this.sparklines.tab(), this.slicers.tab(), this.timelines.tab()];
         return tabs.map((t) => ({
           name: t.label, contextual: !!t.contextual,
           groups: t.groups.map((g) => ({ name: g.label, launcher: g.launcher ? cmdItem(g.launcher.cmd) : undefined, controls: g.controls.flatMap(ctl) })),
