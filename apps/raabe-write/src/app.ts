@@ -6,7 +6,7 @@ import { Doc as TextDoc, Editor, Fonts, PT, setCloudFonts, seqToLatex, seqToLine
 import { ommlToSeq, ommlToWordHtml, readDocx, seqToOmml, wordHtmlMath, writeDocx, type DocxPackage } from "@raabe/ooxml";
 import {
   Backstage, Commands, Keytips, Ribbon, StatusBar, TitleBar, baseName, dirName, h, icon, installTooltips, messageBox,
-  showDialog, showFontColors, type BackstageEntry, type Platform,
+  showDialog, showFontColors, type BackstageEntry, type MenuEntry, type Platform,
 } from "@raabe/shell";
 import { COMMANDS } from "./command-list";
 import type { AppApi, FontTarget, ParaTarget } from "./features/api";
@@ -1562,6 +1562,59 @@ export class WriteApp {
           walk(tab, false);
         }
         return out;
+      },
+      /**
+       * RaabeWrite's ribbon (contextual tabs too) and command list as data, for the by-hand audit
+       * (sweep_write.py, D-133), as RaabeCalc's inventory (D-066).
+       */
+      inventory: () => {
+        type Item = { name: string; cmd?: string; key?: string; type?: string; deferred?: boolean; enabled?: boolean; implemented?: boolean; items?: Item[]; submenu?: Item[]; panel?: boolean };
+        const has = (id: string) => this.commands.has(id);
+        const cmdItem = (id: string, label?: string): Item => has(id)
+          ? { name: label ?? this.commands.get(id).label, cmd: id, deferred: !!this.commands.get(id).deferred, enabled: this.commands.isEnabled(id), implemented: this.commands.isImplemented(id) }
+          : { name: label ?? id, cmd: id, implemented: false };
+        const entries = (menu: MenuEntry[]): Item[] => menu.flatMap((m): Item[] => {
+          if (m === "-" || "heading" in m || "block" in m) return [];
+          if ("cmd" in m) return [cmdItem(m.cmd, m.label)];
+          if ("icons" in m) return [{ name: m.label, items: m.icons.map((i) => ({ name: i.tip })) }];
+          let sub: MenuEntry[] | undefined;
+          try { sub = "submenu" in m ? (typeof m.submenu === "function" ? m.submenu() : m.submenu) : undefined; } catch { sub = undefined; }
+          return [{ name: m.label, enabled: !("disabled" in m && m.disabled), ...(sub ? { submenu: entries(sub) } : {}), ...("flyout" in m ? { type: "flyout" } : {}) }];
+        });
+        const ctl = (c: import("@raabe/shell").Control | "gap"): Item[] => {
+          if (c === "gap") return [];
+          if (c.type === "stack") return c.items.flatMap(ctl);
+          if (c.type === "rows") return c.rows.flat().flatMap(ctl);
+          if (c.type === "gallery") return c.items.map((i) => ({ ...cmdItem(i.cmd), type: "gallery", key: c.key }));
+          const base: Item = "cmd" in c ? cmdItem(c.cmd, "label" in c && typeof c.label === "string" ? c.label : undefined) : { name: "?" };
+          let menu: { items?: Item[] } = {};
+          try { menu = "menu" in c && c.menu.length ? { items: entries(c.menu) } : {}; } catch { /* getters needing a document */ }
+          const own = ("popup" in c && c.popup) || c.type === "color" ? { panel: true } : {};
+          return [{ ...base, type: c.type, key: "key" in c ? c.key : undefined, ...menu, ...own }];
+        };
+        const f = this.features;
+        const tabs = [...ribbonTabs(this.ribbonContext()), f.hf.tab, f.tables.designTab, f.tables.layoutTab, f.shapes.tab, f.pictures.tab, f.math.tab];
+        return {
+          tabs: tabs.map((t) => ({
+            id: t.id, name: t.label, key: t.key, contextual: !!t.contextual,
+            groups: t.groups.map((g) => ({ id: g.id, name: g.label, key: g.key, launcher: g.launcher ? { ...cmdItem(g.launcher.cmd), key: g.launcher.key } : undefined, controls: g.controls.flatMap(ctl) })),
+          })),
+          commands: this.commands.all().map((c) => ({ id: c.id, label: c.label, shortcut: c.shortcut, deferred: !!c.deferred, hidden: !!c.hidden, implemented: this.commands.isImplemented(c.id) })),
+        };
+      },
+      /**
+       * The by-hand audit (D-133) runs off screen: the system's file dialogs, printing and the web browser answer
+       * "cancelled" and are listed instead of opening a window on the screen.
+       */
+      stubNative: () => {
+        const calls: string[] = [];
+        (window as unknown as { __nativeCalls: string[] }).__nativeCalls = calls;
+        const p = this.platform as unknown as Record<string, unknown>;
+        for (const k of ["openAnyDialog", "openFileDialog", "openImagesDialog", "openImageDialog", "saveAnyDialog", "saveFileDialog", "openExternal"]) {
+          if (typeof p[k] === "function") p[k] = async () => { calls.push(k); return k === "openImagesDialog" ? [] : null; };
+        }
+        window.print = () => { calls.push("print"); };
+        return true;
       },
       infobar: () => this.infobarSlot.textContent,
       /** The active editor, for tests that call its commands directly. */

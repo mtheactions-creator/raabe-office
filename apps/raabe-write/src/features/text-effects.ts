@@ -15,7 +15,8 @@ const DASHES: [string, string][] = [["solid", "Durchgezogen"], ["sysDot", "Runde
   ["dashDot", "Strich-Punkt"], ["lgDash", "Langer Strich"], ["lgDashDot", "Langer Strich-Punkt"], ["lgDashDotDot", "Langer Strich-Punkt-Punkt"]];
 const NUMBER_FORMS: [string, string | null, string | null][] = [["Standard", null, null], ["Proportionale Lineatur", "lining", "proportional"],
   ["Tabularische Lineatur", "lining", "tabular"], ["Proportional Old-Formatvorlage", "oldStyle", "proportional"], ["Tabellarisch Old-Formatvorlage", "oldStyle", "tabular"]];
-const LIGATURES: [string, string | null][] = [["Keine", null], ["Nur Standard", "standard"], ["Standard und kontextbezogen", "standardContextual"],
+// "Keine" is written as w14:val="none" (Word), so it also switches off ligatures the style turns on (D-134).
+const LIGATURES: [string, string][] = [["Keine", "none"], ["Nur Standard", "standard"], ["Standard und kontextbezogen", "standardContextual"],
   ["Historisch und frei", "historicalDiscretional"], ["Alle Ligaturen", "all"]];
 
 /** Word's WordArt menus for the Formformat tab (filled in by the feature). */
@@ -147,8 +148,8 @@ export function textEffectsFeature(api: AppApi, docArea: HTMLElement, dock: Dock
     run: () => { const e = ed(); if (!e) return; e.setTextFx((fx) => fxSet(fxSet(fx, "numForm", form ? `<w14:numForm w14:val="${form}"/>` : null), "numSpacing", spacing ? `<w14:numSpacing w14:val="${spacing}"/>` : null)); api.refresh(); },
   }));
   const ligatureMenu = (): MenuEntry[] => LIGATURES.map(([label, v]): MenuEntry => ({
-    label, get checked() { return (current("ligatures") ? /w14:val="([^"]*)"/.exec(current("ligatures")!)?.[1] ?? null : null) === v; },
-    run: () => change("ligatures", v ? `<w14:ligatures w14:val="${v}"/>` : null),
+    label, get checked() { return ((current("ligatures") ? /w14:val="([^"]*)"/.exec(current("ligatures")!)?.[1] : null) ?? "none") === v; },
+    run: () => change("ligatures", `<w14:ligatures w14:val="${v}"/>`),
   }));
   const styleSetMenu = (): MenuEntry[] => [
     { label: "Standard", get checked() { return !current("stylisticSets"); }, run: () => change("stylisticSets", null) },
