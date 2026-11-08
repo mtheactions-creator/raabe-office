@@ -1494,6 +1494,8 @@ export class WriteApp {
     return {
       docs: () => this.docs.map((d) => ({ name: d.name, path: d.path, dirty: this.isDirty(d), unsupported: d.partial, active: d === this.active })),
       openPath: (path: string) => this.openPath(path),
+      /** Als PDF exportieren into a given file (the look corpus, D-080). */
+      exportPdf: (path: string) => this.exportPdf(path),
       /** Opens a document from bytes (development platform, which has no file system). */
       openBytes: (name: string, bytes: Uint8Array) => {
         const result = readDocx(bytes);

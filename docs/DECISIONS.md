@@ -2355,3 +2355,15 @@ style) and a click on its text follows the first argument, as for links made wit
 - **Not yet:** Effekte (the theme's effect styles: shapes would need them drawn), Farben/Schriftarten anpassen,
   Aktuelles Design speichern and Nach Designs suchen (.thmx files).
 
+## D-088 Diagramm in RaabeWrite, part 1: Word's charts drawn (Step 7b, 2026-11-08)
+
+Charts in Word documents were shown as nothing and reported as "Diagramme und eingebettete Objekte" not
+supported. RaabeWrite now draws each chart with the chart engine shared with RaabeCalc and RaabePresent, from
+the values Word keeps in the chart part (`chartFromXml`, the document theme's accents, the drawing's size), as
+an SVG picture in the text; the drawing, the chart part, its style/colour parts and the embedded workbook are
+written back as they were. Measured (`check_write_charts.py`, Word's own document with seven chart types from
+`make_fixtures.py --charts`): no chart reported unsupported, Word finds the same seven charts in RaabeWrite's
+file, same page count, mean page difference against Word's PDF 2.06 / 1.83 / 0.37 of 255. Not yet (part 2):
+Einfügen > Diagramm, Daten bearbeiten (the embedded workbook) and the chart tabs in RaabeWrite; charts of the
+newer chartEx types follow the chart engine (D-086).
+

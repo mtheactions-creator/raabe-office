@@ -833,6 +833,26 @@ def images(app) -> None:
     d.Close(0)
 
 
+def charts(app) -> None:
+    """Diagramm in Word (Step 7b, D-088): one inline chart of each common type with Word's default data."""
+    d = base_doc(app)
+    b = Builder(d)
+    b.para("Diagramme im Test", -2)
+    # xlColumnClustered 51, xlBarClustered 57, xlLine 4, xlPie 5, xlXYScatter -4169, xlArea 1, xlDoughnut -4120
+    for kind, label in ((51, "Säulen"), (57, "Balken"), (4, "Linie"), (5, "Kreis"), (-4169, "Punkt"), (1, "Fläche"), (-4120, "Ring")):
+        p = b.para(f"{label}:")
+        r = d.Range(p.Range.End - 1, p.Range.End - 1)
+        sh = d.InlineShapes.AddChart2(-1, kind, r)
+        try:
+            sh.Chart.ChartData.Workbook.Close()
+        except Exception:  # noqa: BLE001 - the data sheet may not be open
+            pass
+        sh.Width, sh.Height = 300, 180
+    b.para("Letzter Absatz.")
+    d.SaveAs2(str(OUT / "word-charts.docx"), 16)
+    d.Close(0)
+
+
 def wrap(app) -> None:
     """Textumbruch around floating objects (Step 4c): square text on both sides when the picture
     stands in the middle or off-centre, tight around a rotated picture, a cut-out picture with a
@@ -1119,7 +1139,7 @@ def main() -> None:
         if only:
             for name in only:
                 {"layout": layout, "fonts": fonts, "breaks": breaks, "top": top, "formatting": formatting, "rich": rich,
-                 "lists": lists, "tables": tables, "sections": sections, "notes": notes, "borders": borders, "images": images, "wrap": wrap, "tablefloat": tablefloat, "step4": step4, "shapes": shapes, "math": math, "hyphenation": hyphenation}[name](app)
+                 "lists": lists, "tables": tables, "sections": sections, "notes": notes, "borders": borders, "images": images, "wrap": wrap, "tablefloat": tablefloat, "step4": step4, "shapes": shapes, "math": math, "hyphenation": hyphenation, "charts": charts}[name](app)
         else:
             formatting(app)
             rich(app)
