@@ -3101,3 +3101,52 @@ Built or fixed on the way:
   pushed the slider about 6 px under the pointer.
 - The test's own errors found on the way (a flipped shape's size, the browser slider's mapping, a probe's braces, the
   thumbnail's place after the drop) were fixed in the test, not in the app.
+
+## D-121 RaabeCalc: Zeitachse (timelines for PivotTables) as Excel 365 makes, saves and filters them (2026-11-09)
+
+Open item of D-092, recorded in our own invisible Excel and built the same way.
+- **Recorded:** `probe_excel_timeline.py` (COM): a table of 24 dated marks, PivotTables over it and timelines
+  (`SlicerCaches.Add2(..., SlicerCacheType:=xlTimeline)`): Excel's defaults (262.5 x 108 pt, level Monate, style
+  TimeSlicerStyleLight1, cache "NativeZeitachse_Datum", then "...Datum1"), filters at all four levels, the Anzeigen options
+  off, a style and caption, one timeline on two PivotTables, ClearDateFilter; every timeline's and cache's properties, the
+  PivotTables' reports, Excel's rendering (CopyPicture) and the 12 built-in styles' elements (`gen_timeline_styles.py`
+  writes `timeline-styles.gen.ts`). Fixture `excel-timeline.xlsx` (anonymized, save path removed). `probe_excel_timeline_ui.py`
+  (UI Automation, holding the real-input lock for its short run because invoking makes Excel the foreground window): the
+  contextual tab Zeitachse (J L) with its groups and keytips (Zeitachse Z 1: Zeitachsenbeschriftung T, Berichtsverbindungen
+  E; Zeitachsen-Formatvorlagen Z Q: S; Anordnen Z A: G E, G H, Q, D A, G R, D R; Größe Z Z: Höhe H, Breite R R, launcher ß;
+  Anzeigen Z 2: Kopfzeile K, Auswahlbeschriftung A, Scrollleiste O, Zeitebene I) and the Berichtsverbindungen dialog.
+  The Zeitachsen einfügen dialog itself did not open through UI Automation; ours lists the date fields like Datenschnitt
+  auswählen.
+- **File** (`ooxml/xlsx/timelines.ts`): timelineCache parts (PivotTables, state with the x14 pivotCacheId, filterType
+  dateBetween/unknown, selection, bounds from 1 January of the first year to 1 January after the last), timeline parts per
+  sheet (level, selectionLevel, scrollPosition, options that are off, style), the x15 extLst entries of workbook and sheet,
+  the drawing's tsle:timeslicer anchor, the NativeZeitachse_ names. Kept byte for byte while unchanged, written anew after a
+  change. The filter itself is the PivotTable's `<filter type="dateBetween">` in whole days (useWholeDay), read into the new
+  `PivotTable.dateFilters` and applied by `computePivot`; a rewritten PivotTable lists a timeline's field as dates (`<d>`)
+  and writes the filter as Excel does. PivotTables whose source is a table's name (Excel's default for a PivotTable from a
+  table) were skipped by the reader before; they are now read (`sourceTable`, resolved to the table's range).
+- **The timeline** (`timelines.ts`): Einfügen > Zeitachse (I Ö) and PivotTable-Analyse > Zeitachse einfügen (C) open
+  Zeitachsen einfügen; the control as measured on Excel's rendering (header 28 px, label row 26 px, period area 66 px with
+  the blocks 17 px high, scroll bar 24 px; periods 54 / 34.67 / 42.67 / 30.67 px wide for Jahre / Quartale / Monate / Tage;
+  selected blocks as one gradient band). Click takes a period, Umschalt+click extends, dragging across periods selects
+  them, the selection's edges widen or narrow it, dragging inside it moves it, Filter löschen in the header (and Alt+C)
+  takes all, the Zeitebene menu, the scroll bar's arrows, track and thumb, the mouse wheel. The selection label as Excel
+  writes it ("Okt 2025 - Jan 2026", "Q1 - Q2 2026", "4 - 21 Sep 2025", "2026", "Alle Zeiträume"). Hiding a part shrinks
+  the frame by that part's height, as Excel's does (108 pt to 52.5 pt with all four off). Connected PivotTables filter
+  together; a newly connected one takes the timeline's filter. The tab Zeitachse with Excel's groups, labels and keytips;
+  moving, sizing, Entf, arrows. Timelines are part of the sheet's undo state. Corrected on the way: PivotTable-Analyse's
+  keytips Aktualisieren A and Löschen ß (recorded; they were guesses).
+- **Measured:** xlsx-timelines.test 7 (every cache and timeline as COM reports it, each PivotTable's date filter and its
+  report with Excel's values, parts kept byte for byte, a changed filter and a new timeline in Excel's form and read back),
+  timeline.test 6 (periods, bounds, labels, the filter). `check_calc_timeline.py` (the real exe off screen, trusted DevTools
+  input, no OS mouse): Excel -> RaabeCalc 49/49 (8 recorded states: selection, level, caption, style, options and every
+  PivotTable report with Excel's values); RaabeCalc by hand -> Excel 42/42 (Alt, I, Ö and the dialog; a click on Okt 2025
+  after scrolling back with the arrows; Umschalt+click on Jan 2026; the right edge dragged to Mrz 2026; Zeitebene Quartale
+  through its menu and a drag over Q1-Q2 2026; Filter löschen; Kopfzeile off through Alt, J, L, K: after each step Excel
+  opens RaabeCalc's file with the same filter, level and header and computes the same report).
+- **Not built / differences:** the hover looks of the blocks; the periods' labels in the upper row are drawn in the
+  period-label colour (Excel tints the year of the selection); the drag of a selection beyond the visible strip does not
+  scroll it; several timelines selected at once (Ausrichten, Gruppieren greyed); timelines on Excel tables do not exist in
+  Excel either (only PivotTables, and data-model sources are out, D-080); Filterverbindungen is not offered. The scroll
+  position Excel saves is kept, but a new timeline starts at the latest periods with data (Excel's own choice was not
+  recorded through input). The inventory (EXCEL-INVENTORY.md) was not regenerated.

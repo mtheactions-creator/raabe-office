@@ -12,4 +12,5 @@ export * from "./pivot";
 export * from "./table";
 export * from "./advfilter";
 export * from "./slicer";
+export * from "./timeline";
 export * from "./ets";

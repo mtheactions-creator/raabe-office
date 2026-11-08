@@ -578,6 +578,8 @@ export class Sheet {
   pivots?: import("./pivot").PivotTable[];
   /** Datenschnitte on the sheet (D-092). */
   slicers?: import("./slicer").Slicer[];
+  /** Zeitachsen on the sheet (D-121). */
+  timelines?: import("./timeline").Timeline[];
   /** Shapes and text boxes of the drawing. */
   shapes?: SheetShape[];
   /** Ink drawn with the Zeichnen tab (D-093). */
@@ -686,6 +688,8 @@ export class Workbook {
   docPath?: string;
   /** The workbook's slicer caches (Datenschnitte, D-092). */
   slicerCaches?: import("./slicer").SlicerCache[];
+  /** The workbook's timeline caches (Zeitachsen, D-121). */
+  timelineCaches?: import("./timeline").TimelineCache[];
   /** The .xlsx layer's package and parts it does not model. */
   raw?: unknown;
 

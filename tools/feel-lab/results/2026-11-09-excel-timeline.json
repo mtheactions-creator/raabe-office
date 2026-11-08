@@ -1,0 +1,1072 @@
+{
+ "cases": {
+  "default": {
+   "sheet": "Standard",
+   "timelines": [
+    {
+     "name": "Datum",
+     "caption": "Datum",
+     "cache": "NativeZeitachse_Datum",
+     "sourceName": "Datum",
+     "cacheType": 2,
+     "top": 420.5,
+     "left": 360.0,
+     "width": 262.5,
+     "height": 108.0,
+     "style": "TimeSlicerStyleLight1",
+     "displayHeader": null,
+     "state": {
+      "startDate": null,
+      "endDate": null,
+      "filterType": null,
+      "singleRange": true,
+      "value1": null,
+      "value2": null
+     },
+     "view": {
+      "level": 2,
+      "showHeader": true,
+      "showSelectionLabel": true,
+      "showTimeLevel": true,
+      "showScrollbar": true
+     },
+     "shape": {
+      "name": "Datum",
+      "top": 420.5,
+      "left": 360.0,
+      "width": 262.5,
+      "height": 108.0,
+      "tl": "E30",
+      "br": "J37",
+      "placement": 2
+     }
+    }
+   ],
+   "reports": [
+    {
+     "at": "A3:B8",
+     "values": [
+      [
+       "Zeilenbeschriftungen",
+       "Anzahl von Note"
+      ],
+      [
+       "Biologie",
+       6.0
+      ],
+      [
+       "Deutsch",
+       6.0
+      ],
+      [
+       "Englisch",
+       6.0
+      ],
+      [
+       "Mathe",
+       6.0
+      ],
+      [
+       "Gesamtergebnis",
+       24.0
+      ]
+     ]
+    }
+   ]
+  },
+  "months": {
+   "sheet": "Filter",
+   "timelines": [
+    {
+     "name": "Datum 1",
+     "caption": "Datum",
+     "cache": "NativeZeitachse_Datum1",
+     "sourceName": "Datum",
+     "cacheType": 2,
+     "top": 10.0,
+     "left": 300.0,
+     "width": 262.5,
+     "height": 108.0,
+     "style": "TimeSlicerStyleLight1",
+     "displayHeader": null,
+     "state": {
+      "startDate": "2025-10-01 00:00:00",
+      "endDate": "2026-01-31 00:00:00",
+      "filterType": 35,
+      "singleRange": true,
+      "value1": "2025-10-01 00:00:00",
+      "value2": "2026-01-31 00:00:00"
+     },
+     "view": {
+      "level": 2,
+      "showHeader": true,
+      "showSelectionLabel": true,
+      "showTimeLevel": true,
+      "showScrollbar": true
+     },
+     "shape": {
+      "name": "Datum 1",
+      "top": 10.0,
+      "left": 300.0,
+      "width": 262.5,
+      "height": 108.0,
+      "tl": "D1",
+      "br": "I9",
+      "placement": 2
+     }
+    }
+   ],
+   "reports": [
+    {
+     "at": "A3:B8",
+     "values": [
+      [
+       "Zeilenbeschriftungen",
+       "Anzahl von Note"
+      ],
+      [
+       "Biologie",
+       2.0
+      ],
+      [
+       "Deutsch",
+       2.0
+      ],
+      [
+       "Englisch",
+       1.0
+      ],
+      [
+       "Mathe",
+       2.0
+      ],
+      [
+       "Gesamtergebnis",
+       7.0
+      ]
+     ]
+    }
+   ],
+   "pivotHidden": {
+    "Biologie": true,
+    "Deutsch": true,
+    "Englisch": true,
+    "Mathe": true
+   }
+  },
+  "Jahre": {
+   "sheet": "Jahre",
+   "timelines": [
+    {
+     "name": "Datum 2",
+     "caption": "Datum",
+     "cache": "NativeZeitachse_Datum2",
+     "sourceName": "Datum",
+     "cacheType": 2,
+     "top": 10.0,
+     "left": 300.0,
+     "width": 400.0,
+     "height": 120.0,
+     "style": "TimeSlicerStyleLight1",
+     "displayHeader": null,
+     "state": {
+      "startDate": "2026-01-01 00:00:00",
+      "endDate": "2026-12-31 00:00:00",
+      "filterType": 35,
+      "singleRange": true,
+      "value1": "2026-01-01 00:00:00",
+      "value2": "2026-12-31 00:00:00"
+     },
+     "view": {
+      "level": 0,
+      "showHeader": true,
+      "showSelectionLabel": true,
+      "showTimeLevel": true,
+      "showScrollbar": true
+     },
+     "shape": {
+      "name": "Datum 2",
+      "top": 10.0,
+      "left": 300.0,
+      "width": 400.0,
+      "height": 120.0,
+      "tl": "D1",
+      "br": "K9",
+      "placement": 2
+     }
+    }
+   ],
+   "reports": [
+    {
+     "at": "A3:B8",
+     "values": [
+      [
+       "Zeilenbeschriftungen",
+       "Anzahl von Note"
+      ],
+      [
+       "Biologie",
+       4.0
+      ],
+      [
+       "Deutsch",
+       4.0
+      ],
+      [
+       "Englisch",
+       4.0
+      ],
+      [
+       "Mathe",
+       4.0
+      ],
+      [
+       "Gesamtergebnis",
+       16.0
+      ]
+     ]
+    }
+   ]
+  },
+  "Quartale": {
+   "sheet": "Quartale",
+   "timelines": [
+    {
+     "name": "Datum 3",
+     "caption": "Datum",
+     "cache": "NativeZeitachse_Datum3",
+     "sourceName": "Datum",
+     "cacheType": 2,
+     "top": 10.0,
+     "left": 300.0,
+     "width": 400.0,
+     "height": 120.0,
+     "style": "TimeSlicerStyleLight1",
+     "displayHeader": null,
+     "state": {
+      "startDate": "2026-01-01 00:00:00",
+      "endDate": "2026-06-30 00:00:00",
+      "filterType": 35,
+      "singleRange": true,
+      "value1": "2026-01-01 00:00:00",
+      "value2": "2026-06-30 00:00:00"
+     },
+     "view": {
+      "level": 1,
+      "showHeader": true,
+      "showSelectionLabel": true,
+      "showTimeLevel": true,
+      "showScrollbar": true
+     },
+     "shape": {
+      "name": "Datum 3",
+      "top": 10.0,
+      "left": 300.0,
+      "width": 400.0,
+      "height": 120.0,
+      "tl": "D1",
+      "br": "K9",
+      "placement": 2
+     }
+    }
+   ],
+   "reports": [
+    {
+     "at": "A3:B8",
+     "values": [
+      [
+       "Zeilenbeschriftungen",
+       "Anzahl von Note"
+      ],
+      [
+       "Biologie",
+       2.0
+      ],
+      [
+       "Deutsch",
+       3.0
+      ],
+      [
+       "Englisch",
+       3.0
+      ],
+      [
+       "Mathe",
+       3.0
+      ],
+      [
+       "Gesamtergebnis",
+       11.0
+      ]
+     ]
+    }
+   ]
+  },
+  "Tage": {
+   "sheet": "Tage",
+   "timelines": [
+    {
+     "name": "Datum 4",
+     "caption": "Datum",
+     "cache": "NativeZeitachse_Datum4",
+     "sourceName": "Datum",
+     "cacheType": 2,
+     "top": 10.0,
+     "left": 300.0,
+     "width": 400.0,
+     "height": 120.0,
+     "style": "TimeSlicerStyleLight1",
+     "displayHeader": null,
+     "state": {
+      "startDate": "2025-09-04 00:00:00",
+      "endDate": "2025-09-21 00:00:00",
+      "filterType": 35,
+      "singleRange": true,
+      "value1": "2025-09-04 00:00:00",
+      "value2": "2025-09-21 00:00:00"
+     },
+     "view": {
+      "level": 3,
+      "showHeader": true,
+      "showSelectionLabel": true,
+      "showTimeLevel": true,
+      "showScrollbar": true
+     },
+     "shape": {
+      "name": "Datum 4",
+      "top": 10.0,
+      "left": 300.0,
+      "width": 400.0,
+      "height": 120.0,
+      "tl": "D1",
+      "br": "K9",
+      "placement": 2
+     }
+    }
+   ],
+   "reports": [
+    {
+     "at": "A3:B6",
+     "values": [
+      [
+       "Zeilenbeschriftungen",
+       "Anzahl von Note"
+      ],
+      [
+       "Deutsch",
+       1.0
+      ],
+      [
+       "Englisch",
+       1.0
+      ],
+      [
+       "Gesamtergebnis",
+       2.0
+      ]
+     ]
+    }
+   ]
+  },
+  "options": {
+   "sheet": "Optionen",
+   "timelines": [
+    {
+     "name": "Zeit",
+     "caption": "Zeitraum der Noten",
+     "cache": "NativeZeitachse_Datum5",
+     "sourceName": "Datum",
+     "cacheType": 2,
+     "top": 10.0,
+     "left": 300.0,
+     "width": 330.0,
+     "height": 52.5,
+     "style": "TimeSlicerStyleDark2",
+     "displayHeader": null,
+     "state": {
+      "startDate": null,
+      "endDate": null,
+      "filterType": null,
+      "singleRange": true,
+      "value1": null,
+      "value2": null
+     },
+     "view": {
+      "level": 2,
+      "showHeader": false,
+      "showSelectionLabel": false,
+      "showTimeLevel": false,
+      "showScrollbar": false
+     },
+     "shape": {
+      "name": "Zeit",
+      "top": 10.0,
+      "left": 300.0,
+      "width": 330.0,
+      "height": 52.5,
+      "tl": "D1",
+      "br": "J5",
+      "placement": 2
+     }
+    }
+   ],
+   "reports": [
+    {
+     "at": "A3:B8",
+     "values": [
+      [
+       "Zeilenbeschriftungen",
+       "Anzahl von Note"
+      ],
+      [
+       "Biologie",
+       6.0
+      ],
+      [
+       "Deutsch",
+       6.0
+      ],
+      [
+       "Englisch",
+       6.0
+      ],
+      [
+       "Mathe",
+       6.0
+      ],
+      [
+       "Gesamtergebnis",
+       24.0
+      ]
+     ]
+    }
+   ]
+  },
+  "connected": {
+   "sheet": "Verbunden",
+   "timelines": [
+    {
+     "name": "Datum 5",
+     "caption": "Datum",
+     "cache": "NativeZeitachse_Datum6",
+     "sourceName": "Datum",
+     "cacheType": 2,
+     "top": 200.0,
+     "left": 10.0,
+     "width": 262.5,
+     "height": 108.0,
+     "style": "TimeSlicerStyleLight1",
+     "displayHeader": null,
+     "state": {
+      "startDate": "2026-02-01 00:00:00",
+      "endDate": "2026-05-31 00:00:00",
+      "filterType": 35,
+      "singleRange": true,
+      "value1": "2026-02-01 00:00:00",
+      "value2": "2026-05-31 00:00:00"
+     },
+     "view": {
+      "level": 2,
+      "showHeader": true,
+      "showSelectionLabel": true,
+      "showTimeLevel": true,
+      "showScrollbar": true
+     },
+     "shape": {
+      "name": "Datum 5",
+      "top": 200.0,
+      "left": 10.0,
+      "width": 262.5,
+      "height": 108.0,
+      "tl": "A14",
+      "br": "D22",
+      "placement": 2
+     }
+    }
+   ],
+   "reports": [
+    {
+     "at": "A3:B8",
+     "values": [
+      [
+       "Zeilenbeschriftungen",
+       "Anzahl von Note"
+      ],
+      [
+       "Biologie",
+       2.0
+      ],
+      [
+       "Deutsch",
+       1.0
+      ],
+      [
+       "Englisch",
+       2.0
+      ],
+      [
+       "Mathe",
+       2.0
+      ],
+      [
+       "Gesamtergebnis",
+       7.0
+      ]
+     ]
+    },
+    {
+     "at": "E3:F10",
+     "values": [
+      [
+       "Zeilenbeschriftungen",
+       "Anzahl von Fach"
+      ],
+      [
+       1.0,
+       1.0
+      ],
+      [
+       2.0,
+       1.0
+      ],
+      [
+       3.0,
+       1.0
+      ],
+      [
+       4.0,
+       1.0
+      ],
+      [
+       5.0,
+       2.0
+      ],
+      [
+       6.0,
+       1.0
+      ],
+      [
+       "Gesamtergebnis",
+       7.0
+      ]
+     ]
+    }
+   ]
+  },
+  "beforeClear": {
+   "sheet": "Geloescht",
+   "timelines": [
+    {
+     "name": "Datum 6",
+     "caption": "Datum",
+     "cache": "NativeZeitachse_Datum7",
+     "sourceName": "Datum",
+     "cacheType": 2,
+     "top": 10.0,
+     "left": 300.0,
+     "width": 262.5,
+     "height": 108.0,
+     "style": "TimeSlicerStyleLight1",
+     "displayHeader": null,
+     "state": {
+      "startDate": "2026-03-01 00:00:00",
+      "endDate": "2026-03-31 00:00:00",
+      "filterType": 35,
+      "singleRange": true,
+      "value1": "2026-03-01 00:00:00",
+      "value2": "2026-03-31 00:00:00"
+     },
+     "view": {
+      "level": 2,
+      "showHeader": true,
+      "showSelectionLabel": true,
+      "showTimeLevel": true,
+      "showScrollbar": true
+     },
+     "shape": {
+      "name": "Datum 6",
+      "top": 10.0,
+      "left": 300.0,
+      "width": 262.5,
+      "height": 108.0,
+      "tl": "D1",
+      "br": "I9",
+      "placement": 2
+     }
+    }
+   ],
+   "reports": [
+    {
+     "at": "A3:B6",
+     "values": [
+      [
+       "Zeilenbeschriftungen",
+       "Anzahl von Note"
+      ],
+      [
+       "Deutsch",
+       1.0
+      ],
+      [
+       "Mathe",
+       1.0
+      ],
+      [
+       "Gesamtergebnis",
+       2.0
+      ]
+     ]
+    }
+   ]
+  },
+  "cleared": {
+   "sheet": "Geloescht",
+   "timelines": [
+    {
+     "name": "Datum 6",
+     "caption": "Datum",
+     "cache": "NativeZeitachse_Datum7",
+     "sourceName": "Datum",
+     "cacheType": 2,
+     "top": 10.0,
+     "left": 300.0,
+     "width": 262.5,
+     "height": 108.0,
+     "style": "TimeSlicerStyleLight1",
+     "displayHeader": null,
+     "state": {
+      "startDate": null,
+      "endDate": null,
+      "filterType": null,
+      "singleRange": true,
+      "value1": null,
+      "value2": null
+     },
+     "view": {
+      "level": 2,
+      "showHeader": true,
+      "showSelectionLabel": true,
+      "showTimeLevel": true,
+      "showScrollbar": true
+     },
+     "shape": {
+      "name": "Datum 6",
+      "top": 10.0,
+      "left": 300.0,
+      "width": 262.5,
+      "height": 108.0,
+      "tl": "D1",
+      "br": "I9",
+      "placement": 2
+     }
+    }
+   ],
+   "reports": [
+    {
+     "at": "A3:B8",
+     "values": [
+      [
+       "Zeilenbeschriftungen",
+       "Anzahl von Note"
+      ],
+      [
+       "Biologie",
+       6.0
+      ],
+      [
+       "Deutsch",
+       6.0
+      ],
+      [
+       "Englisch",
+       6.0
+      ],
+      [
+       "Mathe",
+       6.0
+      ],
+      [
+       "Gesamtergebnis",
+       24.0
+      ]
+     ]
+    }
+   ]
+  }
+ },
+ "defaultTimelineStyle": "TimeSlicerStyleLight1",
+ "parts": [
+  "[Content_Types].xml",
+  "_rels/.rels",
+  "docProps/app.xml",
+  "docProps/core.xml",
+  "xl/_rels/workbook.xml.rels",
+  "xl/drawings/drawing1.xml",
+  "xl/drawings/drawing2.xml",
+  "xl/drawings/drawing3.xml",
+  "xl/drawings/drawing4.xml",
+  "xl/drawings/drawing5.xml",
+  "xl/drawings/drawing6.xml",
+  "xl/drawings/drawing7.xml",
+  "xl/drawings/drawing8.xml",
+  "xl/pivotCache/_rels/pivotCacheDefinition1.xml.rels",
+  "xl/pivotCache/_rels/pivotCacheDefinition2.xml.rels",
+  "xl/pivotCache/_rels/pivotCacheDefinition3.xml.rels",
+  "xl/pivotCache/_rels/pivotCacheDefinition4.xml.rels",
+  "xl/pivotCache/_rels/pivotCacheDefinition5.xml.rels",
+  "xl/pivotCache/_rels/pivotCacheDefinition6.xml.rels",
+  "xl/pivotCache/_rels/pivotCacheDefinition7.xml.rels",
+  "xl/pivotCache/_rels/pivotCacheDefinition8.xml.rels",
+  "xl/pivotCache/pivotCacheDefinition1.xml",
+  "xl/pivotCache/pivotCacheDefinition2.xml",
+  "xl/pivotCache/pivotCacheDefinition3.xml",
+  "xl/pivotCache/pivotCacheDefinition4.xml",
+  "xl/pivotCache/pivotCacheDefinition5.xml",
+  "xl/pivotCache/pivotCacheDefinition6.xml",
+  "xl/pivotCache/pivotCacheDefinition7.xml",
+  "xl/pivotCache/pivotCacheDefinition8.xml",
+  "xl/pivotCache/pivotCacheRecords1.xml",
+  "xl/pivotCache/pivotCacheRecords2.xml",
+  "xl/pivotCache/pivotCacheRecords3.xml",
+  "xl/pivotCache/pivotCacheRecords4.xml",
+  "xl/pivotCache/pivotCacheRecords5.xml",
+  "xl/pivotCache/pivotCacheRecords6.xml",
+  "xl/pivotCache/pivotCacheRecords7.xml",
+  "xl/pivotCache/pivotCacheRecords8.xml",
+  "xl/pivotTables/_rels/pivotTable1.xml.rels",
+  "xl/pivotTables/_rels/pivotTable2.xml.rels",
+  "xl/pivotTables/_rels/pivotTable3.xml.rels",
+  "xl/pivotTables/_rels/pivotTable4.xml.rels",
+  "xl/pivotTables/_rels/pivotTable5.xml.rels",
+  "xl/pivotTables/_rels/pivotTable6.xml.rels",
+  "xl/pivotTables/_rels/pivotTable7.xml.rels",
+  "xl/pivotTables/_rels/pivotTable8.xml.rels",
+  "xl/pivotTables/_rels/pivotTable9.xml.rels",
+  "xl/pivotTables/pivotTable1.xml",
+  "xl/pivotTables/pivotTable2.xml",
+  "xl/pivotTables/pivotTable3.xml",
+  "xl/pivotTables/pivotTable4.xml",
+  "xl/pivotTables/pivotTable5.xml",
+  "xl/pivotTables/pivotTable6.xml",
+  "xl/pivotTables/pivotTable7.xml",
+  "xl/pivotTables/pivotTable8.xml",
+  "xl/pivotTables/pivotTable9.xml",
+  "xl/sharedStrings.xml",
+  "xl/styles.xml",
+  "xl/tables/table1.xml",
+  "xl/theme/theme1.xml",
+  "xl/timelineCaches/timelineCache1.xml",
+  "xl/timelineCaches/timelineCache2.xml",
+  "xl/timelineCaches/timelineCache3.xml",
+  "xl/timelineCaches/timelineCache4.xml",
+  "xl/timelineCaches/timelineCache5.xml",
+  "xl/timelineCaches/timelineCache6.xml",
+  "xl/timelineCaches/timelineCache7.xml",
+  "xl/timelineCaches/timelineCache8.xml",
+  "xl/timelines/timeline1.xml",
+  "xl/timelines/timeline2.xml",
+  "xl/timelines/timeline3.xml",
+  "xl/timelines/timeline4.xml",
+  "xl/timelines/timeline5.xml",
+  "xl/timelines/timeline6.xml",
+  "xl/timelines/timeline7.xml",
+  "xl/timelines/timeline8.xml",
+  "xl/workbook.xml",
+  "xl/worksheets/_rels/sheet1.xml.rels",
+  "xl/worksheets/_rels/sheet2.xml.rels",
+  "xl/worksheets/_rels/sheet3.xml.rels",
+  "xl/worksheets/_rels/sheet4.xml.rels",
+  "xl/worksheets/_rels/sheet5.xml.rels",
+  "xl/worksheets/_rels/sheet6.xml.rels",
+  "xl/worksheets/_rels/sheet7.xml.rels",
+  "xl/worksheets/_rels/sheet8.xml.rels",
+  "xl/worksheets/_rels/sheet9.xml.rels",
+  "xl/worksheets/sheet1.xml",
+  "xl/worksheets/sheet2.xml",
+  "xl/worksheets/sheet3.xml",
+  "xl/worksheets/sheet4.xml",
+  "xl/worksheets/sheet5.xml",
+  "xl/worksheets/sheet6.xml",
+  "xl/worksheets/sheet7.xml",
+  "xl/worksheets/sheet8.xml",
+  "xl/worksheets/sheet9.xml"
+ ],
+ "ui": {
+  "pivotInsert": null,
+  "insertButton": null,
+  "timelineTab": {
+   "tab": "Alt, J L",
+   "controls": [
+    {
+     "type": "Button",
+     "name": "Kommentare",
+     "key": "Alt, Z C",
+     "enabled": true
+    },
+    {
+     "type": "Group",
+     "name": "Zeitachse",
+     "key": "Alt, J L",
+     "enabled": true
+    },
+    {
+     "type": "Group",
+     "name": "Zeitachse",
+     "key": "Alt, J L, Z 1",
+     "enabled": true
+    },
+    {
+     "type": "Edit",
+     "name": "Zeitachsenbeschriftung",
+     "key": "Alt, J L, T",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Berichtsverbindungen...",
+     "key": "Alt, J L, E",
+     "enabled": true
+    },
+    {
+     "type": "Group",
+     "name": "Zeitachsen-Formatvorlagen",
+     "key": "Alt, J L, Z Q",
+     "enabled": true
+    },
+    {
+     "type": "Group",
+     "name": "Schnellformatvorlagen",
+     "key": "Alt, J L, S",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Schnellformatvorlagen",
+     "key": "Alt, J L, S",
+     "enabled": true
+    },
+    {
+     "type": "Group",
+     "name": "Anordnen",
+     "key": "Alt, J L, Z A",
+     "enabled": true
+    },
+    {
+     "type": "SplitButton",
+     "name": "Ebene nach vorne",
+     "key": "Alt, J L, G E",
+     "enabled": false
+    },
+    {
+     "type": "Button",
+     "name": "Ebene nach vorne",
+     "key": "",
+     "enabled": false
+    },
+    {
+     "type": "MenuItem",
+     "name": "Weitere Optionen",
+     "key": "Alt, J L, G E",
+     "enabled": false
+    },
+    {
+     "type": "SplitButton",
+     "name": "Ebene nach hinten",
+     "key": "Alt, J L, G H",
+     "enabled": false
+    },
+    {
+     "type": "Button",
+     "name": "Ebene nach hinten",
+     "key": "",
+     "enabled": false
+    },
+    {
+     "type": "MenuItem",
+     "name": "Weitere Optionen",
+     "key": "Alt, J L, G H",
+     "enabled": false
+    },
+    {
+     "type": "Button",
+     "name": "Auswahlbereich...",
+     "key": "Alt, J L, Q",
+     "enabled": true
+    },
+    {
+     "type": "MenuItem",
+     "name": "Ausrichten",
+     "key": "Alt, J L, D A",
+     "enabled": true
+    },
+    {
+     "type": "MenuItem",
+     "name": "Gruppieren",
+     "key": "Alt, J L, G R",
+     "enabled": false
+    },
+    {
+     "type": "MenuItem",
+     "name": "Drehen",
+     "key": "Alt, J L, D R",
+     "enabled": false
+    },
+    {
+     "type": "Group",
+     "name": "Größe",
+     "key": "Alt, J L, Z Z",
+     "enabled": true
+    },
+    {
+     "type": "Spinner",
+     "name": "Formenhöhe",
+     "key": "Alt, J L, H",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Mehr",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Weniger",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Spinner",
+     "name": "Formenbreite",
+     "key": "Alt, J L, R R",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Größe und Eigenschaften...",
+     "key": "Alt, J L, ß",
+     "enabled": true
+    },
+    {
+     "type": "Group",
+     "name": "Anzeigen",
+     "key": "Alt, J L, Z 2",
+     "enabled": true
+    },
+    {
+     "type": "CheckBox",
+     "name": "Kopfzeile",
+     "key": "Alt, J L, K",
+     "enabled": true
+    },
+    {
+     "type": "CheckBox",
+     "name": "Auswahlbeschriftung",
+     "key": "Alt, J L, A",
+     "enabled": true
+    },
+    {
+     "type": "CheckBox",
+     "name": "Scrollleiste",
+     "key": "Alt, J L, O",
+     "enabled": true
+    },
+    {
+     "type": "CheckBox",
+     "name": "Zeitebene",
+     "key": "Alt, J L, I",
+     "enabled": true
+    },
+    {
+     "type": "MenuItem",
+     "name": "Menüband-Anzeigeoptionen",
+     "key": "Alt, Z R",
+     "enabled": true
+    }
+   ]
+  },
+  "timelineGroups": [
+   {
+    "name": "Zeitachse",
+    "key": "Alt, J L"
+   },
+   {
+    "name": "Zeitachse",
+    "key": "Alt, J L, Z 1"
+   },
+   {
+    "name": "Zeitachsen-Formatvorlagen",
+    "key": "Alt, J L, Z Q"
+   },
+   {
+    "name": "Schnellformatvorlagen",
+    "key": "Alt, J L, S"
+   },
+   {
+    "name": "Anordnen",
+    "key": "Alt, J L, Z A"
+   },
+   {
+    "name": "Größe",
+    "key": "Alt, J L, Z Z"
+   },
+   {
+    "name": "Anzeigen",
+    "key": "Alt, J L, Z 2"
+   }
+  ],
+  "connections": {
+   "title": "Berichtsverbindungen (Datum)",
+   "controls": [
+    {
+     "type": "Text",
+     "name": "Mit diesem Filter zu verbindende PivotTable- und PivotChart-Berichte auswählen",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "PivotNoten (Aktiviert)",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Text",
+     "name": "PivotNoten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Text",
+     "name": "Pivot",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "OK",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Abbrechen",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Direkthilfe",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Schließen",
+     "key": "",
+     "enabled": true
+    }
+   ]
+  }
+ }
+}

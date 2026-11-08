@@ -3,7 +3,7 @@
 // records stored) and a table definition (xl/pivotTables/pivotTableN.xml) linked from the sheet, so
 // Excel opens it as a PivotTable. A PivotTable read from Excel's file keeps its parts as they are.
 
-import { valueCaption, type PivotTable, type PivotValue, type Sheet } from "@raabe/sheet-engine";
+import { serialToDate, valueCaption, type PivotTable, type PivotValue, type Sheet } from "@raabe/sheet-engine";
 import { strFromU8 } from "fflate";
 import { Rels, relsPath, resolveTarget, type PackageWriter } from "../package";
 
@@ -24,7 +24,7 @@ export interface PivotCacheRef { id: number; rid: string }
 
 /** Writes the sheet's new PivotTables; returns their caches for workbook.xml. */
 export function writePivots(pw: PackageWriter, sheet: Sheet, sheetPart: string, wbPath: string, data: (p: PivotTable) => PivotValue[][], nextId: () => number,
-  slicers?: { fields(p: PivotTable): string[]; cacheId(p: PivotTable): number | undefined }): PivotCacheRef[] {
+  slicers?: { fields(p: PivotTable): string[]; cacheId(p: PivotTable): number | undefined; dates?(p: PivotTable): string[] }): PivotCacheRef[] {
   const out: PivotCacheRef[] = [];
   for (const p of sheet.pivots ?? []) {
     const kept = p as PivotTable & { raw?: string; rawKey?: string };
@@ -43,6 +43,9 @@ export function writePivots(pw: PackageWriter, sheet: Sheet, sheetPart: string, 
     // Fields a Datenschnitt filters (D-092): their items are listed in the cache and the table, as Excel lists them.
     const sliced = new Set((slicers?.fields(p) ?? []).map((n) => names.indexOf(n)).filter((f) => f >= 0));
     for (const f of sliced) axis.add(f);
+    // Date fields a Zeitachse filters (D-121): listed as dates (<d>), as Excel lists them, so the timeline finds them.
+    const dated = new Set([...(slicers?.dates?.(p) ?? []).map((n) => names.indexOf(n)), ...(p.dateFilters ?? []).map((d) => d.field)].filter((f) => f >= 0));
+    for (const f of dated) { axis.add(f); sliced.add(f); }
     // Shared items of the fields on an axis (their items are referred to by index).
     const items = names.map((_, f) => (axis.has(f) ? [...new Map(records.map((r) => [itemText(r[f] ?? null), r[f] ?? null])).values()] : []));
     // The field lists its items sorted as Excel sorts a new PivotTable's items (numbers, text, empty last).
@@ -60,6 +63,10 @@ export function writePivots(pw: PackageWriter, sheet: Sheet, sheetPart: string, 
           ? `<cacheField name="${esc(n)}" numFmtId="0"><sharedItems containsSemiMixedTypes="0" containsString="0" containsNumber="1"${nums.every(Number.isInteger) ? ' containsInteger="1"' : ""} minValue="${Math.min(...nums)}" maxValue="${Math.max(...nums)}"/></cacheField>`
           : `<cacheField name="${esc(n)}" numFmtId="0"><sharedItems/></cacheField>`;
       }
+      if (dated.has(f) && allNum) {
+        const ds = items[f].filter((v): v is number => typeof v === "number");
+        return `<cacheField name="${esc(n)}" numFmtId="14"><sharedItems containsSemiMixedTypes="0" containsNonDate="0" containsDate="1" containsString="0" minDate="${isoDate(Math.min(...ds))}" maxDate="${isoDate(Math.max(...ds) + 1)}" count="${items[f].length}">${items[f].map((v) => (typeof v === "number" ? `<d v="${isoDate(v)}"/>` : "<m/>")).join("")}</sharedItems></cacheField>`;
+      }
       const it = items[f].map((v) => (v === null || v === "" ? "<m/>" : typeof v === "number" ? `<n v="${v}"/>` : typeof v === "boolean" ? `<b v="${v ? 1 : 0}"/>` : `<s v="${esc(String(v))}"/>`)).join("");
       const attrs = allNum ? ` containsSemiMixedTypes="0" containsString="0" containsNumber="1"${nums.every(Number.isInteger) ? ' containsInteger="1"' : ""} minValue="${Math.min(...nums)}" maxValue="${Math.max(...nums)}"` : "";
       return `<cacheField name="${esc(n)}" numFmtId="0"><sharedItems${attrs} count="${items[f].length}">${it}</sharedItems></cacheField>`;
@@ -67,7 +74,7 @@ export function writePivots(pw: PackageWriter, sheet: Sheet, sheetPart: string, 
     const cachePart = pw.freeName("xl/pivotCache/pivotCacheDefinition");
     const s = p.source;
     pw.setPart(cachePart, HEAD + `<pivotCacheDefinition ${NS} refreshOnLoad="1" refreshedBy="RaabeCalc" createdVersion="8" refreshedVersion="8" minRefreshableVersion="3" recordCount="${records.length}" saveData="0">`
-      + `<cacheSource type="worksheet"><worksheetSource ref="${ref(s.r0, s.c0, s.r1, s.c1)}" sheet="${esc(s.sheet)}"/></cacheSource><cacheFields count="${names.length}">${cacheFields}</cacheFields>`
+      + `<cacheSource type="worksheet">${p.sourceTable ? `<worksheetSource name="${esc(p.sourceTable)}"/>` : `<worksheetSource ref="${ref(s.r0, s.c0, s.r1, s.c1)}" sheet="${esc(s.sheet)}"/>`}</cacheSource><cacheFields count="${names.length}">${cacheFields}</cacheFields>`
       + (slicers?.cacheId(p) ? `<extLst><ext uri="{725AE2AE-9491-48be-B2B4-4EB974FC3084}" xmlns:x14="http://schemas.microsoft.com/office/spreadsheetml/2009/9/main"><x14:pivotCacheDefinition pivotCacheId="${slicers.cacheId(p)}"/></ext></extLst>` : "")
       + `</pivotCacheDefinition>`, CT_CACHE);
     const rid = pw.link(wbPath, RT_PIVOT_CACHE, cachePart);
@@ -85,7 +92,7 @@ export function writePivots(pw: PackageWriter, sheet: Sheet, sheetPart: string, 
       const hidden = new Set((p.hidden?.[f] ?? []));
       const filt = p.filters.find((x) => x.field === f);
       const its = order[f].map((k) => { const v = items[f][k]; return `<item${hidden.has(itemText(v)) || (filt?.items && !filt.items.includes(itemText(v) || "(Leer)")) ? ' h="1"' : ""} x="${k}"/>`; }).join("");
-      return `<pivotField${ax ? ` axis="${ax}"` : ""}${data}${fieldAttrs}${ax && ax !== "axisPage" ? sub : ""} showAll="0"><items count="${items[f].length + 1}">${its}<item t="default"/></items></pivotField>`;
+      return `<pivotField${ax ? ` axis="${ax}"` : ""}${data}${dated.has(f) ? ' numFmtId="14"' : ""}${fieldAttrs}${ax && ax !== "axisPage" ? sub : ""} showAll="0"><items count="${items[f].length + 1}">${its}<item t="default"/></items></pivotField>`;
     }).join("");
     const area = p.area ?? { r0: p.at.row, c0: p.at.col, r1: p.at.row + 1, c1: p.at.col + 1 };
     const top = p.at.row;
@@ -108,6 +115,7 @@ export function writePivots(pw: PackageWriter, sheet: Sheet, sheetPart: string, 
     const table = HEAD + `<pivotTableDefinition ${NS} name="${esc(p.name)}" cacheId="${id}" applyNumberFormats="0" applyBorderFormats="0" applyFontFormats="0" applyPatternFormats="0" applyAlignmentFormats="0" applyWidthHeightFormats="1" dataCaption="Werte" updatedVersion="8" minRefreshableVersion="3" useAutoFormatting="1" itemPrintTitles="1" createdVersion="8" indent="0"${tableAttrs} multipleFieldFilters="0">`
       + loc + `<pivotFields count="${names.length}">${pivotFields}</pivotFields>` + fields("rowFields", p.rows) + fields("colFields", colList) + valueCols + pageFields + dataFields
       + `<pivotTableStyleInfo name="${esc(p.style ?? "PivotStyleLight16")}" showRowHeaders="1" showColHeaders="1" showRowStripes="0" showColStripes="0" showLastColumn="1"/>`
+      + dateFiltersXml(p, names)
       // Excel 2010+ hides the "Werte" row of the value fields; without this it shows one (recorded).
       + `<extLst><ext uri="{962EF5D1-5CA2-4c93-8EF4-DBF5C05439D2}" xmlns:x14="http://schemas.microsoft.com/office/spreadsheetml/2009/9/main"><x14:pivotTableDefinition hideValuesRow="1" xmlns:xm="http://schemas.microsoft.com/office/excel/2006/main"/></ext></extLst></pivotTableDefinition>`;
     const tablePart = pw.freeName("xl/pivotTables/pivotTable");
@@ -134,6 +142,20 @@ export function pivotKey(p: PivotTable): string {
   return JSON.stringify(rest);
 }
 
+/** PivotTables whose source is a table's name get the table's range (once every sheet's tables are read). */
+export function resolvePivotSources(sheets: Sheet[]): void {
+  for (const s of sheets) for (const p of s.pivots ?? []) {
+    if (!p.sourceTable) continue;
+    for (const ts of sheets) {
+      const t = ts.tables?.find((x) => x.name.toLowerCase() === p.sourceTable!.toLowerCase());
+      if (!t) continue;
+      p.source = { sheet: ts.name, r0: t.ref.r0, c0: t.ref.c0, r1: t.ref.r1 - (t.totals ? 1 : 0), c1: t.ref.c1 };
+      const k = p as PivotTable & { raw?: string; rawKey?: string };
+      if (k.raw) k.rawKey = pivotKey(p);
+    }
+  }
+}
+
 /** The sheet's PivotTables as models (their parts stay in the file while unchanged). */
 export function readPivots(files: Record<string, Uint8Array>, sheet: Sheet, sheetPart: string, sheetRels: Rels): void {
   const out: PivotTable[] = [];
@@ -146,8 +168,11 @@ export function readPivots(files: Record<string, Uint8Array>, sheet: Sheet, shee
     const cpart = crel ? resolveTarget(part, crel.target) : undefined;
     const cache = cpart && files[cpart] ? strFromU8(files[cpart]) : "";
     const ws = /<worksheetSource\b[^>]*>/.exec(cache)?.[0] ?? "";
-    const srcRef = attr(ws, "ref"), srcSheet = attr(ws, "sheet");
+    const srcRef = attr(ws, "ref") ?? (attr(ws, "name") ? "A1" : undefined), srcSheet = attr(ws, "sheet");
     if (!srcRef) continue;
+    // A source given by a table's name (Excel's default for a PivotTable made from a table): resolved once all
+    // sheets and their tables are read (resolvePivotSources).
+    const srcTable = attr(ws, "ref") ? undefined : unesc(attr(ws, "name") ?? "");
     const [a, b] = srcRef.split(":");
     const s0 = cellRef(a), s1 = cellRef(b ?? a);
     // Shared items of each cache field (for filters and hidden items).
@@ -186,6 +211,17 @@ export function readPivots(files: Record<string, Uint8Array>, sheet: Sheet, shee
       area: { r0: lt.row - (/<pageFields\b/.test(xml) ? fields("pageFields").length + 1 : 0), c0: lt.col, r1: lb.row, c1: lb.col },
     };
     if (Object.keys(hidden).length) p.hidden = hidden;
+    // Date filters (a Zeitachse, D-121): <filter type="dateBetween"> with two custom filters in whole days.
+    const dates: NonNullable<PivotTable["dateFilters"]> = [];
+    for (const m of xml.matchAll(/<filter\b([^>]*)>([\s\S]*?)<\/filter>/g)) {
+      if (attr(m[1], "type") !== "dateBetween") continue;
+      const lo = /<customFilter\b[^>]*operator="greaterThanOrEqual"[^>]*val="([^"]*)"/.exec(m[2])?.[1];
+      const hi = /<customFilter\b[^>]*operator="lessThanOrEqual"[^>]*val="([^"]*)"/.exec(m[2])?.[1];
+      if (lo === undefined || hi === undefined) continue;
+      dates.push({ field: Number(attr(m[1], "fld") ?? 0), from: Math.floor(Number(lo)), to: Math.floor(Number(hi)) });
+    }
+    if (dates.length) p.dateFilters = dates;
+    if (srcTable) p.sourceTable = srcTable;
     // The layout from the first row field (Excel keeps it on the fields).
     const rowField = pivotFields[p.rows[0] ?? -1]?.[1] ?? pivotFields[0]?.[1] ?? "";
     if (attr(rowField, "compact") === "0") p.layout = attr(rowField, "outline") === "0" ? "tabular" : "outline";
@@ -204,4 +240,19 @@ export function readPivots(files: Record<string, Uint8Array>, sheet: Sheet, shee
     out.push(p);
   }
   if (out.length) sheet.pivots = out;
+}
+
+/** A serial as Excel's date-time text in the pivot cache ("2025-10-01T00:00:00"). */
+export function isoDate(serial: number): string {
+  const d = serialToDate(Math.floor(serial));
+  return `${String(d.y).padStart(4, "0")}-${String(d.m).padStart(2, "0")}-${String(d.d).padStart(2, "0")}T00:00:00`;
+}
+
+/** The PivotTable's date filters (a Zeitachse's selection) as Excel writes them: dateBetween in whole days. */
+function dateFiltersXml(p: PivotTable, names: string[]): string {
+  const list = p.dateFilters ?? [];
+  if (!list.length) return "";
+  return `<filters count="${list.length}">${list.map((d, i) => `<filter fld="${d.field}" type="dateBetween" evalOrder="-1" id="${i + 2}" name="${esc(names[d.field] ?? "")}"><autoFilter ref="A1"><filterColumn colId="0"><customFilters and="1">`
+    + `<customFilter operator="greaterThanOrEqual" val="${d.from}"/><customFilter operator="lessThanOrEqual" val="${d.to}"/></customFilters></filterColumn></autoFilter>`
+    + `<extLst><ext uri="{0605FD5F-26C8-4aeb-8148-2DB25E43C511}" xmlns:x15="http://schemas.microsoft.com/office/spreadsheetml/2010/11/main"><x15:pivotFilter useWholeDay="1"/></ext></extLst></filter>`).join("")}</filters>`;
 }
