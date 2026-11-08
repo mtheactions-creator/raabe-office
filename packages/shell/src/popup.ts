@@ -78,8 +78,9 @@ export function isPopupOpen(): boolean {
 }
 
 export type MenuEntry =
-  | { cmd: string; label?: string }
-  | { label: string; icon?: string; run: () => void; disabled?: boolean; checked?: boolean; preview?: HTMLElement; bold?: boolean;
+  /** `key`: the entry's keytip once the menu was opened by keytips (Alt, F, M, R). */
+  | { cmd: string; label?: string; key?: string }
+  | { label: string; icon?: string; run: () => void; disabled?: boolean; checked?: boolean; preview?: HTMLElement; bold?: boolean; key?: string;
       /** Livevorschau while the mouse is over the entry (the change `run` makes, shown without an undo step). */
       hover?: () => void }
   | { heading: string }
@@ -142,17 +143,21 @@ function buildMenu(commands: Commands, entries: MenuEntry[], root: HTMLElement, 
     }
     if ("cmd" in e) {
       const c = commands.get(e.cmd);
+      // A command without an icon of its own that is on shows the check (Relative Verweise verwenden).
+      const checked = !c.icon && !!c.checked && commands.isChecked(e.cmd);
       const b = h("button", {
-        role: "menuitem", disabled: !commands.isEnabled(e.cmd), title: commands.tooltip(e.cmd),
+        role: "menuitem", disabled: !commands.isEnabled(e.cmd), title: commands.tooltip(e.cmd), class: checked ? "checked" : "",
+        "aria-checked": c.checked ? String(checked) : undefined,
+        "data-keytip": e.key, "data-keytip-scope": e.key ? "menu" : undefined,
         onclick: () => { commands.hover(null); closePopup(); void commands.run(e.cmd); },
-      }, icon(c.icon), e.label ?? c.label);
+      }, icon(checked ? "check" : c.icon), e.label ?? c.label);
       b.addEventListener("mouseenter", closeSub);
       if (c.preview) hoverPreview(commands, b, e.cmd);
       menu.append(b);
     } else {
       const b = h("button", {
         role: "menuitem", disabled: !!e.disabled, class: e.preview ? "with-preview" : e.checked ? "checked" : "",
-        style: e.bold ? "font-weight:600" : undefined,
+        style: e.bold ? "font-weight:600" : undefined, "data-keytip": e.key, "data-keytip-scope": e.key ? "menu" : undefined,
         onclick: () => { commands.hover(null); closePopup(); e.run(); },
       }, e.preview ?? icon(e.checked ? "check" : e.icon), e.preview ? h("span", null, e.label) : e.label);
       b.addEventListener("mouseenter", closeSub);

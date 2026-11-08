@@ -406,8 +406,8 @@ export const COMMANDS: Command[] = [
   cmd("ink.toMath", "Freihand in Gleichung", "equation"),
   cmd("ink.replay", "Wiedergabe in Freihand", "play", { keywords: ["Freihandwiedergabe"] }),
   cmd("view.macros", "Makros", "settings", { shortcut: "Alt+F8", keywords: ["Makro", "VBA", "Ausführen"] }),
-  later("view.recordMacro", "Makro aufzeichnen...", "slide-record"),
-  later("view.relativeRefs", "Relative Verweise verwenden", undefined),
+  cmd("view.recordMacro", "Makro aufzeichnen...", "slide-record", { keywords: ["Makrorekorder", "Aufzeichnung beenden", "VBA"] }),
+  cmd("view.relativeRefs", "Relative Verweise verwenden", undefined, { keywords: ["Makro", "relativ"] }),
 
   // ----- Diagrammentwurf (a selected chart) ----------------------------------------------------
   cmd("chart.addElement", "Diagrammelement hinzufügen", "chart-recommended"),

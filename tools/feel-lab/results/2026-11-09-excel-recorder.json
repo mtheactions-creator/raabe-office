@@ -1,0 +1,1213 @@
+{
+ "cases": {
+  "Eingabe": {
+   "macro": "Makro_Eingabe",
+   "state": {
+    "flags": [],
+    "status": [],
+    "scroll": [
+     1.0,
+     1.0
+    ],
+    "zoom": 100.0,
+    "mode": "Bereit",
+    "editing": null,
+    "cells": {
+     "A1": {
+      "formula": "Note",
+      "text": "Note",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     },
+     "A2": {
+      "formula": "2",
+      "text": "2",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     },
+     "A3": {
+      "formula": "3,5",
+      "text": "3,5",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     },
+     "A4": {
+      "formula": "=SUMME(A2:A3)",
+      "text": "5,5",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     },
+     "A5": {
+      "formula": "Text \"zitiert\"",
+      "text": "Text \"zitiert\"",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     },
+     "A6": {
+      "formula": "46054",
+      "text": "01.02.2026",
+      "format": "TT.MM.JJJJ",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     },
+     "A7": {
+      "formula": "0,5",
+      "text": "50%",
+      "format": "0%",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     },
+     "B7": {
+      "formula": "=A2*2",
+      "text": "4",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     }
+    },
+    "selection": "A8",
+    "active": "A8",
+    "sheet": "Tabelle1",
+    "sheets": [
+     "Tabelle1"
+    ],
+    "hiddenRows": [],
+    "hiddenCols": [],
+    "widths": {},
+    "filter": false,
+    "extra": {
+     "A1": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     },
+     "A2": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     },
+     "A3": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     },
+     "A4": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     },
+     "A5": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     },
+     "A6": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     },
+     "A7": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     },
+     "B7": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     }
+    },
+    "rowHidden": []
+   },
+   "code": "Sub Makro_Eingabe()\nAttribute Makro_Eingabe.VB_ProcData.VB_Invoke_Func = \" \\n14\"\n'\n' Makro_Eingabe Makro\n'\n\n'\n    ActiveCell.FormulaR1C1 = \"Note\"\n    Range(\"A2\").Select\n    ActiveCell.FormulaR1C1 = \"2\"\n    Range(\"A3\").Select\n    ActiveCell.FormulaR1C1 = \"3.5\"\n    Range(\"A4\").Select\n    ActiveCell.FormulaR1C1 = \"=SUM(R[-2]C:R[-1]C)\"\n    Range(\"A5\").Select\n    ActiveCell.FormulaR1C1 = \"Text \"\"zitiert\"\"\"\n    Range(\"A6\").Select\n    ActiveCell.FormulaR1C1 = \"2/1/2026\"\n    Range(\"A7\").Select\n    ActiveCell.FormulaR1C1 = \"50%\"\n    Range(\"B7\").Select\n    ActiveCell.FormulaR1C1 = \"=R[-5]C[-1]*2\"\n    Range(\"A8\").Select\nEnd Sub"
+  },
+  "Format": {
+   "macro": "Makro_Format",
+   "state": {
+    "flags": [],
+    "status": [],
+    "scroll": [
+     1.0,
+     1.0
+    ],
+    "zoom": 100.0,
+    "mode": "Bereit",
+    "editing": null,
+    "cells": {
+     "A1": {
+      "formula": "Name",
+      "text": "Name",
+      "format": "Standard",
+      "bold": true,
+      "italic": true,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     },
+     "B1": {
+      "formula": "Note",
+      "text": "Note",
+      "format": "Standard",
+      "bold": true,
+      "italic": true,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     },
+     "C1": {
+      "formula": "Fach",
+      "text": "Fach",
+      "format": "Standard",
+      "bold": true,
+      "italic": true,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     },
+     "A2": {
+      "formula": "Anna",
+      "text": "Anna",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     },
+     "B2": {
+      "formula": "0,25",
+      "text": "25%",
+      "format": "0%",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     },
+     "A3": {
+      "formula": "Ben",
+      "text": "Ben",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     },
+     "B3": {
+      "formula": "0,5",
+      "text": "50%",
+      "format": "0%",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     }
+    },
+    "selection": "A1",
+    "active": "A1",
+    "sheet": "Tabelle1",
+    "sheets": [
+     "Tabelle1"
+    ],
+    "hiddenRows": [],
+    "hiddenCols": [],
+    "widths": {},
+    "filter": false,
+    "extra": {
+     "A1": {
+      "fill": null,
+      "size": 14.0,
+      "h": -4108
+     },
+     "B1": {
+      "fill": null,
+      "size": 11.0,
+      "h": -4108
+     },
+     "C1": {
+      "fill": null,
+      "size": 11.0,
+      "h": -4108
+     },
+     "A2": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     },
+     "B2": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     },
+     "A3": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     },
+     "B3": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     }
+    },
+    "rowHidden": []
+   },
+   "code": "Sub Makro_Format()\nAttribute Makro_Format.VB_Description = \"Kopfzeile formatieren\"\nAttribute Makro_Format.VB_ProcData.VB_Invoke_Func = \"q\\n14\"\n'\n' Makro_Format Makro\n' Kopfzeile formatieren\n'\n' Tastenkombination: Strg+q\n'\n    Range(\"A1:C1\").Select\n    Selection.Font.Bold = True\n    Selection.Font.Italic = True\n    With Selection\n        .HorizontalAlignment = xlCenter\n        .VerticalAlignment = xlBottom\n        .WrapText = False\n        .Orientation = 0\n        .AddIndent = False\n        .IndentLevel = 0\n        .ShrinkToFit = False\n        .ReadingOrder = xlContext\n        .MergeCells = False\n    End With\n    Range(\"B2:B3\").Select\n    Selection.NumberFormat = \"0%\"\n    Range(\"A1\").Select\n    With Selection.Font\n        .Name = \"Calibri\"\n        .Size = 14\n        .Strikethrough = False\n        .Superscript = False\n        .Subscript = False\n        .OutlineFont = False\n        .Shadow = False\n        .Underline = xlUnderlineStyleNone\n        .ThemeColor = xlThemeColorLight1\n        .TintAndShade = 0\n        .ThemeFont = xlThemeFontNone\n    End With\nEnd Sub"
+  },
+  "Fuellfarbe": {
+   "failed": ""
+  },
+  "Ausfuellen": {
+   "macro": "Makro_Ausfuellen",
+   "state": {
+    "flags": [],
+    "status": [],
+    "scroll": [
+     1.0,
+     1.0
+    ],
+    "zoom": 100.0,
+    "mode": "Bereit",
+    "editing": null,
+    "cells": {
+     "A1": {
+      "formula": "Mo",
+      "text": "Mo",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     },
+     "B1": {
+      "formula": "1",
+      "text": "1",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     },
+     "A2": {
+      "formula": "Mo",
+      "text": "Mo",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     },
+     "B2": {
+      "formula": "2",
+      "text": "2",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     },
+     "A3": {
+      "formula": "Mo",
+      "text": "Mo",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     },
+     "A4": {
+      "formula": "Mo",
+      "text": "Mo",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     },
+     "A5": {
+      "formula": "Mo",
+      "text": "Mo",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     }
+    },
+    "selection": "B3:B6",
+    "active": "B3",
+    "sheet": "Tabelle1",
+    "sheets": [
+     "Tabelle1"
+    ],
+    "hiddenRows": [],
+    "hiddenCols": [],
+    "widths": {},
+    "filter": false,
+    "extra": {
+     "A1": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     },
+     "B1": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     },
+     "A2": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     },
+     "B2": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     },
+     "A3": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     },
+     "A4": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     },
+     "A5": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     }
+    },
+    "rowHidden": []
+   },
+   "code": "Sub Makro_Ausfuellen()\nAttribute Makro_Ausfuellen.VB_ProcData.VB_Invoke_Func = \" \\n14\"\n'\n' Makro_Ausfuellen Makro\n'\n\n'\n    Range(\"A1:A5\").Select\n    Selection.FillDown\n    Range(\"B3:B6\").Select\nEnd Sub"
+  },
+  "Sortieren": {
+   "macro": "Makro_Sortieren",
+   "state": {
+    "flags": [],
+    "status": [],
+    "scroll": [
+     1.0,
+     1.0
+    ],
+    "zoom": 100.0,
+    "mode": "Bereit",
+    "editing": null,
+    "cells": {
+     "A1": {
+      "formula": "Name",
+      "text": "Name",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     },
+     "B1": {
+      "formula": "Note",
+      "text": "Note",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     },
+     "A2": {
+      "formula": "Ben",
+      "text": "Ben",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     },
+     "B2": {
+      "formula": "3",
+      "text": "3",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     },
+     "A3": {
+      "formula": "Cem",
+      "text": "Cem",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     },
+     "B3": {
+      "formula": "2",
+      "text": "2",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     },
+     "A4": {
+      "formula": "Anna",
+      "text": "Anna",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     },
+     "B4": {
+      "formula": "1",
+      "text": "1",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     }
+    },
+    "selection": "B2",
+    "active": "B2",
+    "sheet": "Tabelle1",
+    "sheets": [
+     "Tabelle1"
+    ],
+    "hiddenRows": [],
+    "hiddenCols": [],
+    "widths": {},
+    "filter": false,
+    "extra": {
+     "A1": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     },
+     "B1": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     },
+     "A2": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     },
+     "B2": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     },
+     "A3": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     },
+     "B3": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     },
+     "A4": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     },
+     "B4": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     }
+    },
+    "rowHidden": []
+   },
+   "code": "Sub Makro_Sortieren()\nAttribute Makro_Sortieren.VB_ProcData.VB_Invoke_Func = \" \\n14\"\n'\n' Makro_Sortieren Makro\n'\n\n'\n    ActiveWorkbook.Worksheets(\"Tabelle1\").Sort.SortFields.Clear\n    ActiveWorkbook.Worksheets(\"Tabelle1\").Sort.SortFields.Add2 Key:=Range(\"A2:A4\" _\n        ), SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:=xlSortNormal\n    With ActiveWorkbook.Worksheets(\"Tabelle1\").Sort\n        .SetRange Range(\"A2:B4\")\n        .Header = xlNo\n        .MatchCase = False\n        .Orientation = xlTopToBottom\n        .SortMethod = xlPinYin\n        .Apply\n    End With\n    Range(\"B2\").Select\n    ActiveWorkbook.Worksheets(\"Tabelle1\").Sort.SortFields.Clear\n    ActiveWorkbook.Worksheets(\"Tabelle1\").Sort.SortFields.Add2 Key:=Range(\"B2:B4\" _\n        ), SortOn:=xlSortOnValues, Order:=xlDescending, DataOption:=xlSortNormal\n    With ActiveWorkbook.Worksheets(\"Tabelle1\").Sort\n        .SetRange Range(\"A2:B4\")\n        .Header = xlNo\n        .MatchCase = False\n        .Orientation = xlTopToBottom\n        .SortMethod = xlPinYin\n        .Apply\n    End With\nEnd Sub"
+  },
+  "Zeilen": {
+   "macro": "Makro_Zeilen",
+   "state": {
+    "flags": [],
+    "status": [],
+    "scroll": [
+     1.0,
+     1.0
+    ],
+    "zoom": 100.0,
+    "mode": "Bereit",
+    "editing": null,
+    "cells": {
+     "A1": {
+      "formula": "1",
+      "text": "1",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     },
+     "C1": {
+      "formula": "b",
+      "text": "b",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     },
+     "A3": {
+      "formula": "2",
+      "text": "2",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     },
+     "A4": {
+      "formula": "4",
+      "text": "4",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     }
+    },
+    "selection": "B:B",
+    "active": "B4",
+    "sheet": "Tabelle1",
+    "sheets": [
+     "Tabelle1"
+    ],
+    "hiddenRows": [],
+    "hiddenCols": [],
+    "widths": {},
+    "filter": false,
+    "extra": {
+     "A1": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     },
+     "C1": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     },
+     "A3": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     },
+     "A4": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     }
+    },
+    "rowHidden": []
+   },
+   "code": "Sub Makro_Zeilen()\nAttribute Makro_Zeilen.VB_ProcData.VB_Invoke_Func = \" \\n14\"\n'\n' Makro_Zeilen Makro\n'\n\n'\n    Rows(\"2:2\").Select\n    Selection.Insert Shift:=xlDown\n    Rows(\"4:4\").Select\n    Selection.Delete Shift:=xlUp\n    Columns(\"B:B\").Select\n    Range(\"B4\").Activate\n    Selection.Insert Shift:=xlToRight\nEnd Sub"
+  },
+  "Blaetter": {
+   "macro": "Makro_Blaetter",
+   "state": {
+    "flags": [],
+    "status": [],
+    "scroll": [
+     1.0,
+     1.0
+    ],
+    "zoom": 100.0,
+    "mode": "Bereit",
+    "editing": null,
+    "cells": {
+     "A1": {
+      "formula": "eins",
+      "text": "eins",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     }
+    },
+    "selection": "A1",
+    "active": "A1",
+    "sheet": "Noten",
+    "sheets": [
+     "Tabelle2",
+     "Noten"
+    ],
+    "hiddenRows": [],
+    "hiddenCols": [],
+    "widths": {},
+    "filter": false,
+    "extra": {
+     "A1": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     }
+    },
+    "rowHidden": []
+   },
+   "code": "Sub Makro_Blaetter()\nAttribute Makro_Blaetter.VB_ProcData.VB_Invoke_Func = \" \\n14\"\n'\n' Makro_Blaetter Makro\n'\n\n'\n    Sheets.Add\n    ActiveCell.FormulaR1C1 = \"neu\"\n    Range(\"A2\").Select\n    ActiveSheet.Next.Select\n    Sheets(\"Tabelle1\").Select\n    Sheets(\"Tabelle1\").Name = \"Noten\"\nEnd Sub"
+  },
+  "Kopieren": {
+   "macro": "Makro_Kopieren",
+   "state": {
+    "flags": [],
+    "status": [],
+    "scroll": [
+     1.0,
+     1.0
+    ],
+    "zoom": 100.0,
+    "mode": "Bereit",
+    "editing": null,
+    "cells": {
+     "A1": {
+      "formula": "a",
+      "text": "a",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     },
+     "C1": {
+      "formula": "a",
+      "text": "a",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     },
+     "C2": {
+      "formula": "b",
+      "text": "b",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     },
+     "A3": {
+      "formula": "=A1&A2",
+      "text": "a",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     },
+     "C3": {
+      "formula": "=C1&C2",
+      "text": "ab",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     }
+    },
+    "selection": "A2",
+    "active": "A2",
+    "sheet": "Tabelle1",
+    "sheets": [
+     "Tabelle1"
+    ],
+    "hiddenRows": [],
+    "hiddenCols": [],
+    "widths": {},
+    "filter": false,
+    "extra": {
+     "A1": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     },
+     "C1": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     },
+     "C2": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     },
+     "A3": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     },
+     "C3": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     }
+    },
+    "rowHidden": []
+   },
+   "code": "Sub Makro_Kopieren()\nAttribute Makro_Kopieren.VB_ProcData.VB_Invoke_Func = \" \\n14\"\n'\n' Makro_Kopieren Makro\n'\n\n'\n    Range(\"A1:A3\").Select\n    Selection.Copy\n    Range(\"C1\").Select\n    ActiveSheet.Paste\n    Application.CutCopyMode = False\n    Range(\"A2\").Select\n    Selection.ClearContents\nEnd Sub"
+  },
+  "Relativ": {
+   "macro": "Makro_Relativ",
+   "state": {
+    "flags": [],
+    "status": [],
+    "scroll": [
+     1.0,
+     1.0
+    ],
+    "zoom": 100.0,
+    "mode": "Bereit",
+    "editing": null,
+    "cells": {
+     "B3": {
+      "formula": "x",
+      "text": "x",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     },
+     "B4": {
+      "formula": "y",
+      "text": "y",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     }
+    },
+    "selection": "2:2",
+    "active": "C2",
+    "sheet": "Tabelle1",
+    "sheets": [
+     "Tabelle1"
+    ],
+    "hiddenRows": [],
+    "hiddenCols": [],
+    "widths": {},
+    "filter": false,
+    "extra": {
+     "B3": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     },
+     "B4": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     }
+    },
+    "rowHidden": []
+   },
+   "code": "Sub Makro_Relativ()\nAttribute Makro_Relativ.VB_ProcData.VB_Invoke_Func = \" \\n14\"\n'\n' Makro_Relativ Makro\n'\n\n'\n    ActiveCell.FormulaR1C1 = \"x\"\n    Range(\"B3\").Select\n    ActiveCell.FormulaR1C1 = \"y\"\n    Range(\"C3:D3\").Select\n    Selection.Font.Bold = True\n    Rows(\"2:2\").Select\n    Range(\"C2\").Activate\n    Selection.Insert Shift:=xlDown\nEnd Sub"
+  },
+  "Spalte": {
+   "macro": "Makro_Spalte",
+   "state": {
+    "flags": [],
+    "status": [],
+    "scroll": [
+     1.0,
+     1.0
+    ],
+    "zoom": 100.0,
+    "mode": "Bereit",
+    "editing": null,
+    "cells": {
+     "A1": {
+      "formula": "ein langer Text",
+      "text": "ein langer Text",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     },
+     "B1": {
+      "formula": "kurz",
+      "text": "kurz",
+      "format": "Standard",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "strike": false,
+      "wrap": false
+     }
+    },
+    "selection": "B3",
+    "active": "B3",
+    "sheet": "Tabelle1",
+    "sheets": [
+     "Tabelle1"
+    ],
+    "hiddenRows": [
+     3
+    ],
+    "hiddenCols": [],
+    "widths": {
+     "1": 12.36
+    },
+    "filter": false,
+    "extra": {
+     "A1": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     },
+     "B1": {
+      "fill": null,
+      "size": 11.0,
+      "h": 1
+     }
+    },
+    "rowHidden": [
+     3
+    ]
+   },
+   "code": "Sub Makro_Spalte()\nAttribute Makro_Spalte.VB_ProcData.VB_Invoke_Func = \" \\n14\"\n'\n' Makro_Spalte Makro\n'\n\n'\n    Columns(\"A:A\").EntireColumn.AutoFit\n    Range(\"B3\").Select\n    Selection.EntireRow.Hidden = True\nEnd Sub"
+  }
+ },
+ "menu": [
+  {
+   "name": "Makroaufzeichnung Wird nicht aufgezeichnet",
+   "type": "Button",
+   "key": "",
+   "enabled": true,
+   "toggled": null
+  },
+  {
+   "name": "Makros anzeigen",
+   "type": "Button",
+   "key": "Alt+F8",
+   "enabled": true,
+   "toggled": null
+  }
+ ],
+ "statusBar": [
+  {
+   "type": "Button",
+   "name": "Makroaufzeichnung Wird nicht aufgezeichnet"
+  },
+  {
+   "type": "Button",
+   "name": "Barrierefreiheitsprüfung Barrierefreiheit: Keine Probleme"
+  },
+  {
+   "type": "Button",
+   "name": "Normal"
+  },
+  {
+   "type": "Button",
+   "name": "Seitenlayout"
+  },
+  {
+   "type": "Button",
+   "name": "Umbruchvorschau"
+  },
+  {
+   "type": "Button",
+   "name": "Verkleinern"
+  },
+  {
+   "type": "Button",
+   "name": "Verkleinern"
+  },
+  {
+   "type": "Button",
+   "name": "Vergrößern"
+  },
+  {
+   "type": "Button",
+   "name": "Vergrößern"
+  }
+ ],
+ "dialog": {
+  "title": "Makro aufzeichnen",
+  "class": "bosa_sdm_XL9",
+  "controls": [
+   {
+    "type": "Edit",
+    "name": "RichEdit Control",
+    "key": "",
+    "value": "Makro1"
+   },
+   {
+    "type": "Edit",
+    "name": "RichEdit Control",
+    "key": "",
+    "value": ""
+   },
+   {
+    "type": "Document",
+    "name": "RichEdit Control",
+    "key": "",
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Direkthilfe",
+    "key": "",
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Schließen",
+    "key": "",
+    "value": ""
+   },
+   {
+    "type": "Text",
+    "name": "Makroname:",
+    "key": "Alt+M",
+    "value": ""
+   },
+   {
+    "type": "Edit",
+    "name": "Makroname:",
+    "key": "Alt+M",
+    "value": "Makro1"
+   },
+   {
+    "type": "Text",
+    "name": "Strg+",
+    "key": "",
+    "value": ""
+   },
+   {
+    "type": "Text",
+    "name": "Tastenkombination:",
+    "key": "Alt+T",
+    "value": ""
+   },
+   {
+    "type": "Edit",
+    "name": "Tastenkombination:",
+    "key": "Alt+T",
+    "value": ""
+   },
+   {
+    "type": "Text",
+    "name": "Makro speichern in:",
+    "key": "Alt+i",
+    "value": ""
+   },
+   {
+    "type": "ComboBox",
+    "name": "Makro speichern in:",
+    "key": "Alt+i",
+    "value": "Diese Arbeitsmappe"
+   },
+   {
+    "type": "Text",
+    "name": "Beschreibung:",
+    "key": "Alt+B",
+    "value": ""
+   },
+   {
+    "type": "Edit",
+    "name": "Beschreibung:",
+    "key": "Alt+B",
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "OK",
+    "key": "",
+    "value": ""
+   },
+   {
+    "type": "Button",
+    "name": "Abbrechen",
+    "key": "",
+    "value": ""
+   }
+  ]
+ },
+ "dialogRect": [
+  1639,
+  809,
+  2229,
+  1275
+ ],
+ "dialogFilled": [
+  {
+   "type": "Edit",
+   "name": "RichEdit Control",
+   "value": "Makro_Eingabe"
+  },
+  {
+   "type": "Edit",
+   "name": "RichEdit Control",
+   "value": ""
+  },
+  {
+   "type": "Edit",
+   "name": "Makroname:",
+   "value": "Makro_Eingabe"
+  },
+  {
+   "type": "Edit",
+   "name": "Tastenkombination:",
+   "value": ""
+  },
+  {
+   "type": "ComboBox",
+   "name": "Makro speichern in:",
+   "value": "Diese Arbeitsmappe"
+  },
+  {
+   "type": "Edit",
+   "name": "Beschreibung:",
+   "value": ""
+  }
+ ],
+ "statusBarRecording": [
+  {
+   "type": "Button",
+   "name": "Makroaufzeichnung Wird aufgezeichnet"
+  },
+  {
+   "type": "Button",
+   "name": "Barrierefreiheitsprüfung Barrierefreiheit: Keine Probleme"
+  },
+  {
+   "type": "Button",
+   "name": "Normal"
+  },
+  {
+   "type": "Button",
+   "name": "Seitenlayout"
+  },
+  {
+   "type": "Button",
+   "name": "Umbruchvorschau"
+  },
+  {
+   "type": "Button",
+   "name": "Verkleinern"
+  },
+  {
+   "type": "Button",
+   "name": "Verkleinern"
+  },
+  {
+   "type": "Button",
+   "name": "Vergrößern"
+  },
+  {
+   "type": "Button",
+   "name": "Vergrößern"
+  }
+ ],
+ "menuRecording": [
+  {
+   "name": "Makroaufzeichnung Wird aufgezeichnet",
+   "type": "Button",
+   "key": "",
+   "enabled": true,
+   "toggled": null
+  },
+  {
+   "name": "Makros anzeigen",
+   "type": "Button",
+   "key": "Alt+F8",
+   "enabled": true,
+   "toggled": null
+  },
+  {
+   "name": "Makros anzeigen",
+   "type": "MenuItem",
+   "key": "Alt, F, M, K",
+   "enabled": true,
+   "toggled": null
+  },
+  {
+   "name": "Aufzeichnung beenden",
+   "type": "MenuItem",
+   "key": "Alt, F, M, A",
+   "enabled": true,
+   "toggled": null
+  },
+  {
+   "name": "Relative Verweise verwenden",
+   "type": "MenuItem",
+   "key": "Alt, F, M, V",
+   "enabled": true,
+   "toggled": null
+  }
+ ]
+}

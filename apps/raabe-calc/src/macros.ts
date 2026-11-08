@@ -5,7 +5,7 @@
 // only after asking (D-080). One run is one undo step; formulas a macro writes are worked out at once.
 
 import { h, showDialog } from "@raabe/shell";
-import { CellError, colName, isDateFormat, parseRange, toFileFormula, toLocalFormula, type Cell, type CellStyle, type Rect, type Sheet, type Value } from "@raabe/sheet-engine";
+import { CellError, colName, fromR1C1, isDateFormat, parseRange, toFileFormula, toLocalFormula, toR1C1, type Cell, type CellStyle, type Rect, type Sheet, type Value } from "@raabe/sheet-engine";
 import { NOT_A_METHOD, VbaError, VbaRuntime, readProject, vbaDateToSerial as serialOfDate, vbaSerialToDate as dateOfSerial, vbaToNumber, vbaToString, writeProject, type VbaArray, type VbaHost, type VbaModule, type VbaObject, type VbaValue } from "@raabe/vba";
 import * as A from "./actions";
 import type { CalcApp } from "./app";
@@ -22,6 +22,12 @@ export const XL: Record<string, number> = {
   xlcalculationautomatic: -4105, xlpastevalues: -4163, xlpasteformats: -4122, xlpasteall: -4104, xlpasteformulas: -4123,
   xlopenxmlworkbook: 51, xlopenxmlworkbookmacroenabled: 52, xlbyrows: 1, xlbycolumns: 2, xlnext: 1, xlprevious: 2, xlcolorindexnone: -4142,
   xlsolid: 1, xlunderlinestylesingle: 2, xlunderlinestylenone: -4142, xlautomatic: -4105, xlfillcopy: 1, xlfillseries: 2, xlfilldefault: 0,
+  // What the macro recorder writes (D-119).
+  xlunderlinestyledouble: -4119, xlthemecolordark1: 1, xlthemecolorlight1: 2, xlthemecolordark2: 3, xlthemecolorlight2: 4,
+  xlthemecoloraccent1: 5, xlthemecoloraccent2: 6, xlthemecoloraccent3: 7, xlthemecoloraccent4: 8, xlthemecoloraccent5: 9, xlthemecoloraccent6: 10,
+  xlthemefontnone: 0, xlthemefontmajor: 1, xlthemefontminor: 2, xlcontext: -5002, xltoptobottom: 1, xllefttoright: 2, xlpinyin: 1, xlstroke: 2,
+  xlsortonvalues: 0, xlsortnormal: 0, xlsorttextasnumbers: 1, xlformatfromleftorabove: 0, xlformatfromrightorbelow: 1, xlfill: 5, xldistributed: -4117,
+  xlcenteracrossselection: 7, xlfillvalues: 4, xlfillformats: 3, xlpasteallexceptborders: 7, xlhorizontal: -4128, xlvertical: -4166, xlupward: -4171, xldownward: -4170,
 };
 
 /** Excel's 56-colour palette for ColorIndex (1-based). */
@@ -76,6 +82,22 @@ function obj(props: Record<string, Get>, setters: Record<string, (v: VbaValue, a
     argNames: (name) => names[name.toLowerCase()] ?? ARGS[name.toLowerCase()],
     ...extra,
   };
+}
+
+/** A value as Excel reads it in US form (FormulaR1C1 = "3.5", "2/1/2026", "50%", "TRUE"); null: text. */
+export function usValue(t: string): { v: number | boolean; fmt?: string } | null {
+  const s = t.trim();
+  if (/^[+-]?(\d+\.?\d*|\.\d+)(E[+-]?\d+)?$/i.test(s)) return { v: Number(s) };
+  let m = /^([+-]?(?:\d+\.?\d*|\.\d+))%$/.exec(s);
+  if (m) return { v: Number(m[1]) / 100, fmt: Number.isInteger(Number(m[1])) ? "0%" : "0.00%" };
+  m = /^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/.exec(s);
+  if (m) {
+    const y = Number(m[3]) < 100 ? (Number(m[3]) < 30 ? 2000 : 1900) + Number(m[3]) : Number(m[3]);
+    const d = Date.UTC(y, Number(m[1]) - 1, Number(m[2]));
+    if (new Date(d).getUTCMonth() === Number(m[1]) - 1) return { v: Math.round((d - Date.UTC(1899, 11, 30)) / 86400000), fmt: "date" };
+  }
+  if (/^(TRUE|FALSE)$/i.test(s)) return { v: /^TRUE$/i.test(s) };
+  return null;
 }
 
 const isObj = (v: VbaValue): v is VbaObject => !!v && typeof v === "object" && (v as VbaObject).kind === "object";
@@ -133,7 +155,21 @@ export function model(app: MacroApp, runtime: () => VbaRuntime | null): VbaHost[
     const each = (fn: (r: number, c: number) => void) => { for (const a of areas) for (let r = a.r0; r <= a.r1; r++) for (let c = a.c0; c <= a.c1; c++) fn(r, c); };
     const sub = (r0: number, c0: number, r1: number, c1: number) => rangeObj(sheet, { r0, c0, r1, c1 });
     const fmt = (change: (s: CellStyle) => void) => A.format(ctx(), sheet, areas, change);
-    const write = (r: number, c: number, v: VbaValue, kind: "value" | "formula" | "local") => {
+    const write = (r: number, c: number, v: VbaValue, kind: "value" | "formula" | "local" | "r1c1") => {
+      // FormulaR1C1 (the recorder's form, D-119): a formula relative to the cell, a value read as Excel reads it in US form.
+      if (kind === "r1c1" && typeof v === "string") {
+        if (v.startsWith("=") && v.length > 1) { write(r, c, fromR1C1(v, r, c), "formula"); return; }
+        const us = usValue(v);
+        if (us) {
+          if (sheet.protection && styleOf(r, c).locked !== false) throw new VbaError("Die Zelle befindet sich auf einem geschützten Blatt und kann nicht geändert werden.", 1004);
+          app.history.cell(sheet, r, c);
+          const old = sheet.get(r, c);
+          const keep = us.fmt === undefined || (us.fmt === "date" ? isDateFormat(styleOf(r, c).numFmt) : styleOf(r, c).numFmt !== "General");
+          sheet.set(r, c, { v: us.v, s: keep ? old?.s : wb().styles.derive(old?.s, (s) => { s.numFmt = us.fmt === "date" ? "m/d/yyyy" : us.fmt!; }), note: old?.note });
+          return;
+        }
+        kind = "value";
+      }
       // A locked cell of a protected sheet is not written (Excel: Laufzeitfehler 1004).
       if (sheet.protection && styleOf(r, c).locked !== false) throw new VbaError("Die Zelle befindet sich auf einem geschützten Blatt und kann nicht geändert werden.", 1004);
       app.history.cell(sheet, r, c);
@@ -145,7 +181,7 @@ export function model(app: MacroApp, runtime: () => VbaRuntime | null): VbaHost[
       if (typeof v === "string" && /^-?\d+(\.\d+)?(E[+-]?\d+)?$/i.test(v.trim())) { sheet.set(r, c, { v: Number(v.trim()), s: old?.s, note: old?.note }); return; }
       sheet.set(r, c, { v: (typeof v === "object" ? vbaToString(v) : v) as Value, s: old?.s, note: old?.note });
     };
-    const setAll = (v: VbaValue, kind: "value" | "formula" | "local") => {
+    const setAll = (v: VbaValue, kind: "value" | "formula" | "local" | "r1c1") => {
       if (v && typeof v === "object" && (v as VbaArray).kind === "array") {
         const outer = (v as VbaArray).items;
         const nested = outer.length > 0 && !!outer[0] && typeof outer[0] === "object" && (outer[0] as VbaArray).kind === "array";
@@ -211,6 +247,12 @@ export function model(app: MacroApp, runtime: () => VbaRuntime | null): VbaHost[
       Color: (v) => fmt((s) => { s.font = { ...s.font, color: hexOf(v), theme: undefined }; }),
       ColorIndex: (v) => fmt((s) => { const i = num(v); s.font = { ...s.font, color: i > 0 && i <= 56 ? "#" + PALETTE[i - 1] : undefined, theme: undefined }; }),
       Strikethrough: (v) => fmt((s) => { s.font = { ...s.font, strike: !!v || undefined }; }),
+      // The recorder's whole font block (D-119): Hoch- und Tiefgestellt, the design colour and font.
+      Superscript: (v) => fmt((s) => { s.font = { ...s.font, vertAlign: v ? "superscript" : s.font.vertAlign === "superscript" ? undefined : s.font.vertAlign }; }),
+      Subscript: (v) => fmt((s) => { s.font = { ...s.font, vertAlign: v ? "subscript" : s.font.vertAlign === "subscript" ? undefined : s.font.vertAlign }; }),
+      OutlineFont: () => undefined, Shadow: () => undefined, TintAndShade: () => undefined,
+      ThemeColor: (v) => fmt((s) => { const t = num(v); s.font = { ...s.font, color: t === XL.xlthemecolorlight1 || t === XL.xlthemecolordark1 ? undefined : s.font.color }; delete s.font.theme; }),
+      ThemeFont: (v) => fmt((s) => { const t = num(v); s.font = { ...s.font, scheme: t === XL.xlthemefontminor ? "minor" : t === XL.xlthemefontmajor ? "major" : undefined }; }),
     });
     const interior = () => obj({
       Color: () => bgrOf(s0().fill ?? "#FFFFFF"),
@@ -220,6 +262,7 @@ export function model(app: MacroApp, runtime: () => VbaRuntime | null): VbaHost[
       Color: (v) => fmt((s) => { s.fill = hexOf(v); s.fillTheme = undefined; s.fillXml = undefined; }),
       ColorIndex: (v) => fmt((s) => { const i = num(v); s.fill = i > 0 && i <= 56 ? "#" + PALETTE[i - 1] : undefined; s.fillTheme = undefined; s.fillXml = undefined; }),
       Pattern: (v) => { if (num(v) === XL.xlnone) fmt((s) => { s.fill = undefined; s.fillTheme = undefined; }); },
+      PatternColorIndex: () => undefined, TintAndShade: () => undefined, PatternTintAndShade: () => undefined,
     });
     const lineStyle = (ls: number, w: number): import("@raabe/sheet-engine").BorderSide["style"] | undefined =>
       ls === XL.xlnone ? undefined : ls === XL.xldouble ? "double" : ls === XL.xldash ? (w === XL.xlmedium ? "mediumDashed" : "dashed") : ls === XL.xldot ? "dotted"
@@ -284,6 +327,8 @@ export function model(app: MacroApp, runtime: () => VbaRuntime | null): VbaHost[
       Formula: () => { const c = sheet.get(rect.r0, rect.c0); return c?.f !== undefined ? "=" + c.f : vbaValueOf(c, "General", true) ?? ""; },
       FormulaLocal: () => { const c = sheet.get(rect.r0, rect.c0); return c?.f !== undefined ? "=" + toLocalFormula(c.f, wb()) : vbaValueOf(c, "General", true) ?? ""; },
       HasFormula: () => sheet.get(rect.r0, rect.c0)?.f !== undefined,
+      FormulaR1C1: () => { const c = sheet.get(rect.r0, rect.c0); return c?.f !== undefined ? "=" + toR1C1(c.f, rect.r0, rect.c0) : vbaValueOf(c, "General", true) ?? ""; },
+      Formula2: () => self.get("Formula", []), Formula2R1C1: () => self.get("FormulaR1C1", []),
       Address: (a) => {
         const ra = a[0] === undefined ? true : !!a[0], ca = a[1] === undefined ? true : !!a[1];
         const one = (r: number, c: number) => `${ca ? "$" : ""}${colName(c)}${ra ? "$" : ""}${r + 1}`;
@@ -291,9 +336,11 @@ export function model(app: MacroApp, runtime: () => VbaRuntime | null): VbaHost[
       },
       Row: () => rect.r0 + 1, Column: () => rect.c0 + 1, Count: () => areas.reduce((n, a) => n + (a.r1 - a.r0 + 1) * (a.c1 - a.c0 + 1), 0),
       Areas: () => obj({ Count: () => areas.length, Item: (a) => rangeObj(sheet, areas[num(a[0]) - 1]) }),
-      Rows: (a) => (a.length ? sub(rect.r0 + num(a[0]) - 1, rect.c0, rect.r0 + num(a[0]) - 1, rect.c1)
+      Rows: (a) => (a.length && typeof a[0] === "string" && /^\d+:\d+$/.test(a[0]) ? sub(rect.r0 + Number(a[0].split(":")[0]) - 1, rect.c0, rect.r0 + Number(a[0].split(":")[1]) - 1, rect.c1)
+        : a.length ? sub(rect.r0 + num(a[0]) - 1, rect.c0, rect.r0 + num(a[0]) - 1, rect.c1)
         : obj({ Count: () => rows, Item: (b) => sub(rect.r0 + num(b[0]) - 1, rect.c0, rect.r0 + num(b[0]) - 1, rect.c1) }, {}, {}, { items: () => Array.from({ length: rows }, (_, i) => sub(rect.r0 + i, rect.c0, rect.r0 + i, rect.c1)) })),
-      Columns: (a) => (a.length ? sub(rect.r0, rect.c0 + colArg(a[0]) - 1, rect.r1, rect.c0 + colArg(a[0]) - 1)
+      Columns: (a) => (a.length && typeof a[0] === "string" && /^[A-Za-z]+:[A-Za-z]+$/.test(a[0]) ? sub(rect.r0, rect.c0 + colArg(a[0].split(":")[0]) - 1, rect.r1, rect.c0 + colArg(a[0].split(":")[1]) - 1)
+        : a.length ? sub(rect.r0, rect.c0 + colArg(a[0]) - 1, rect.r1, rect.c0 + colArg(a[0]) - 1)
         : obj({ Count: () => cols, Item: (b) => sub(rect.r0, rect.c0 + num(b[0]) - 1, rect.r1, rect.c0 + num(b[0]) - 1) }, {}, {}, { items: () => Array.from({ length: cols }, (_, i) => sub(rect.r0, rect.c0 + i, rect.r1, rect.c0 + i)) })),
       Cells: (a) => {
         if (!a.length) return self;
@@ -317,8 +364,15 @@ export function model(app: MacroApp, runtime: () => VbaRuntime | null): VbaHost[
       Comment: () => { const n = sheet.get(rect.r0, rect.c0)?.note; return n === undefined ? null : obj({ Text: () => n }, {}, { Delete: () => { app.setNote(sheet, rect.r0, rect.c0, null); return undefined; } }); },
     }, {
       Value: (v) => setAll(v, "value"), Value2: (v) => setAll(v, "value"), Formula: (v) => setAll(v, "formula"), FormulaLocal: (v) => setAll(v, "local"),
+      FormulaR1C1: (v) => setAll(v, "r1c1"), Formula2R1C1: (v) => setAll(v, "r1c1"), Formula2: (v) => setAll(v, "formula"),
+      // The recorder's alignment block (D-119).
+      Orientation: (v) => fmt((s) => { const n = num(v); s.rotation = n === 0 || n === XL.xlhorizontal ? undefined : n === XL.xlvertical ? 255 : n === XL.xlupward ? 90 : n === XL.xldownward ? 180 : n < 0 ? 90 - n : n; }),
+      AddIndent: () => undefined, ReadingOrder: () => undefined,
+      IndentLevel: (v) => fmt((s) => { s.indent = num(v) || undefined; }),
+      ShrinkToFit: (v) => fmt((s) => { s.shrink = !!v || undefined; }),
+      Style: (v) => fmt((s) => { const n = vbaToString(v).toLowerCase(); s.numFmt = n === "percent" ? "0%" : n === "comma" ? '_-* #,##0.00\\ _€_-;\\-* #,##0.00\\ _€_-;_-* "-"??\\ _€_-;_-@_-' : n === "currency" ? '_-* #,##0.00\\ "€"_-;\\-* #,##0.00\\ "€"_-;_-* "-"??\\ "€"_-;_-@_-' : "General"; }),
       NumberFormat: (v) => fmt((s) => { s.numFmt = vbaToString(v); }), NumberFormatLocal: (v) => fmt((s) => { s.numFmt = app.fileFormat(vbaToString(v)); }),
-      HorizontalAlignment: (v) => fmt((s) => { const n = num(v); s.h = n === XL.xlleft ? "left" : n === XL.xlcenter ? "center" : n === XL.xlright ? "right" : n === XL.xljustify ? "justify" : undefined; }),
+      HorizontalAlignment: (v) => fmt((s) => { const n = num(v); s.h = n === XL.xlleft ? "left" : n === XL.xlcenter ? "center" : n === XL.xlright ? "right" : n === XL.xljustify ? "justify" : n === XL.xlfill ? "fill" : n === XL.xldistributed ? "distributed" : n === XL.xlcenteracrossselection ? "centerContinuous" : undefined; }),
       VerticalAlignment: (v) => fmt((s) => { const n = num(v); s.v = n === XL.xltop ? "top" : n === XL.xlcenter ? "center" : undefined; }),
       WrapText: (v) => fmt((s) => { s.wrap = !!v || undefined; }),
       ColumnWidth: (v) => { for (let c = rect.c0; c <= Math.min(rect.c1, rect.c0 + 500); c++) app.setColumnWidth(sheet, c, num(v)); },
@@ -330,7 +384,14 @@ export function model(app: MacroApp, runtime: () => VbaRuntime | null): VbaHost[
       MergeCells: (v) => app.merge(sheet, rect, !!v),
       Locked: (v) => fmt((s) => { s.locked = v ? undefined : false; }),
     }, {
-      Select: () => { app.selectRange(sheet, rect); return undefined; }, Activate: () => { app.selectRange(sheet, rect); return undefined; },
+      Select: () => { app.selectRange(sheet, rect); return undefined; },
+      // Range("B4").Activate inside the selection keeps it and moves the active cell (the recorder writes it after Columns("B:B").Select).
+      Activate: () => {
+        const sel = app.grid.selection;
+        if (sheet === app.sheet && sel.length === 1 && rows === 1 && cols === 1 && rect.r0 >= sel[0].r0 && rect.r0 <= sel[0].r1 && rect.c0 >= sel[0].c0 && rect.c0 <= sel[0].c1) app.grid.select(sel[0], { row: rect.r0, col: rect.c0 });
+        else app.selectRange(sheet, rect);
+        return undefined;
+      },
       ClearContents: () => { A.clearContents(ctx(), sheet, areas); recalc(sheet, rect); return undefined; },
       Clear: () => { A.clearAll(ctx(), sheet, areas, "all"); recalc(sheet, rect); return undefined; },
       ClearFormats: () => { A.clearAll(ctx(), sheet, areas, "formats"); return undefined; },
@@ -339,11 +400,11 @@ export function model(app: MacroApp, runtime: () => VbaRuntime | null): VbaHost[
       Delete: (a) => { app.deleteCells(sheet, rect, a[0] === undefined ? null : num(a[0]) === XL.xltoleft ? "left" : "up"); app.recalc(); return undefined; },
       Insert: (a) => { app.insertCells(sheet, rect, a[0] === undefined ? null : num(a[0]) === XL.xltoright ? "right" : "down"); app.recalc(); return undefined; },
       Copy: (a) => {
-        if (!isObj(a[0])) throw new VbaError("Kopieren in die Zwischenablage aus Makros ist nicht möglich; geben Sie Destination an.", 1004);
+        if (!isObj(a[0])) { clip.at = { sheet, rect, cut: false }; return undefined; }
         const d = refOf(a[0]); A.copyCells(ctx(), { sheet, rect }, d.sheet, { row: d.rect.r0, col: d.rect.c0 }); app.recalc(); return undefined;
       },
       Cut: (a) => {
-        if (!isObj(a[0])) throw new VbaError("Ausschneiden in die Zwischenablage aus Makros ist nicht möglich; geben Sie Destination an.", 1004);
+        if (!isObj(a[0])) { clip.at = { sheet, rect, cut: true }; return undefined; }
         const d = refOf(a[0]); A.copyCells(ctx(), { sheet, rect }, d.sheet, { row: d.rect.r0, col: d.rect.c0 }); A.clearAll(ctx(), sheet, [rect], "all"); app.recalc(); return undefined;
       },
       AutoFit: () => { if (rect.r0 === 0 && rect.r1 >= 1048575) app.autoFitColumns(sheet, rect.c0, rect.c1); return undefined; },
@@ -372,6 +433,9 @@ export function model(app: MacroApp, runtime: () => VbaRuntime | null): VbaHost[
       BorderAround: (a) => { const b = border(null); if (a[0] !== undefined) b.set!("LineStyle", a[0], []); if (a[1] !== undefined) b.set!("Weight", a[1], []); if (a[3] !== undefined) b.set!("Color", a[3], []); return true; },
       AddComment: (a) => { app.setNote(sheet, rect.r0, rect.c0, vbaToString(a[0] ?? "")); return obj({ Text: () => vbaToString(a[0] ?? "") }); },
       Calculate: () => { recalc(sheet, rect); return undefined; },
+      PasteSpecial: () => { pasteTo(sheet, rect); return true; },
+      FillUp: () => { A.autoFill(ctx(), sheet, { ...rect, r0: rect.r1 }, rect, { copy: true }); app.recalc(); return undefined; },
+      FillLeft: () => { A.autoFill(ctx(), sheet, { ...rect, c0: rect.c1 }, rect, { copy: true }); app.recalc(); return undefined; },
       FillDown: () => { A.autoFill(ctx(), sheet, { ...rect, r1: rect.r0 }, rect, { copy: true }); app.recalc(); return undefined; },
       FillRight: () => { A.autoFill(ctx(), sheet, { ...rect, c1: rect.c0 }, rect, { copy: true }); app.recalc(); return undefined; },
       AutoFill: (a) => { if (isObj(a[0])) A.autoFill(ctx(), sheet, rect, refOf(a[0]).rect, { series: num(a[1]) === XL.xlfillseries }); app.recalc(); return true; },
@@ -395,6 +459,40 @@ export function model(app: MacroApp, runtime: () => VbaRuntime | null): VbaHost[
     return self;
   }
 
+  /** Selection.Copy / Cut without Destination, then ActiveSheet.Paste (the recorder's form, D-119). */
+  const clip: { at: { sheet: Sheet; rect: Rect; cut: boolean } | null } = { at: null };
+  const pasteTo = (sheet: Sheet, at: Rect) => {
+    const c = clip.at;
+    if (!c) throw new VbaError("Die Paste-Methode des Worksheet-Objekts konnte nicht ausgeführt werden.", 1004);
+    A.copyCells(ctx(), { sheet: c.sheet, rect: c.rect }, sheet, { row: at.r0, col: at.c0 });
+    if (c.cut) { A.clearAll(ctx(), c.sheet, [c.rect], "all"); clip.at = null; }
+    app.selectRange(sheet, { r0: at.r0, c0: at.c0, r1: at.r0 + c.rect.r1 - c.rect.r0, c1: at.c0 + c.rect.c1 - c.rect.c0 });
+    app.recalc();
+  };
+
+  /** Worksheet.Sort as the recorder writes it: SortFields.Clear/Add2, SetRange, Header, Apply. */
+  const sortOf = (sheet: Sheet): VbaObject => {
+    const st = sorts.get(sheet) ?? { keys: [] as { col: number; desc: boolean }[], range: null as Rect | null, header: XL.xlno };
+    sorts.set(sheet, st);
+    const fields = obj({ Count: () => st.keys.length }, {}, {
+      Clear: () => { st.keys = []; return undefined; },
+      Add: (a) => { if (isObj(a[0])) st.keys.push({ col: refOf(a[0]).rect.c0, desc: num(a[2], XL.xlascending) === XL.xldescending }); return undefined; },
+      Add2: (a) => { if (isObj(a[0])) st.keys.push({ col: refOf(a[0]).rect.c0, desc: num(a[2], XL.xlascending) === XL.xldescending }); return undefined; },
+    }, {}, { add: ["Key", "SortOn", "Order", "CustomOrder", "DataOption"], add2: ["Key", "SortOn", "Order", "CustomOrder", "DataOption"] });
+    return obj({ SortFields: () => fields, Header: () => st.header, MatchCase: () => false, Orientation: () => XL.xltoptobottom, SortMethod: () => XL.xlpinyin },
+      { Header: (v) => { st.header = num(v); }, MatchCase: () => undefined, Orientation: () => undefined, SortMethod: () => undefined }, {
+        SetRange: (a) => { st.range = refOf(a[0]).rect; return undefined; },
+        Apply: () => {
+          if (!st.range) throw new VbaError("Der Sortierbezug ist ungültig.", 1004);
+          const r = st.header === XL.xlyes ? { ...st.range, r0: st.range.r0 + 1 } : st.range;
+          app.sortRows(sheet, r, st.keys.length ? st.keys : [{ col: r.c0, desc: false }]);
+          app.recalc();
+          return undefined;
+        },
+      }, {}, { setrange: ["Rng"] });
+  };
+  const sorts = new WeakMap<Sheet, { keys: { col: number; desc: boolean }[]; range: Rect | null; header: number }>();
+
   const span = (a: RangeRef, b: RangeRef) => rangeObj(a.sheet, { r0: Math.min(a.rect.r0, b.rect.r0), c0: Math.min(a.rect.c0, b.rect.c0), r1: Math.max(a.rect.r1, b.rect.r1), c1: Math.max(a.rect.c1, b.rect.c1) });
 
   function sheetObj(sheet: Sheet): VbaObject {
@@ -409,6 +507,9 @@ export function model(app: MacroApp, runtime: () => VbaRuntime | null): VbaHost[
       ProtectContents: () => !!sheet.protection, Parent: () => workbookObj(),
       Tab: () => obj({ Color: () => (sheet.tabColor ? bgrOf(sheet.tabColor) : false) }, { Color: (v) => app.setTabColor(sheet, v === false ? null : hexOf(v)) }),
       AutoFilterMode: () => !!sheet.autoFilter, FilterMode: () => !!sheet.filterMode,
+      Next: () => { const s = wb().sheets[si(sheet) + 1]; if (!s) throw new VbaError("Objektvariable oder With-Blockvariable nicht festgelegt", 91); return sheetObj(s); },
+      Previous: () => { const s = wb().sheets[si(sheet) - 1]; if (!s) throw new VbaError("Objektvariable oder With-Blockvariable nicht festgelegt", 91); return sheetObj(s); },
+      Sort: () => sortOf(sheet),
     }, {
       Name: (v) => { const err = app.renameSheet(si(sheet), vbaToString(v)); if (err) throw new VbaError(err, 1004); },
       Visible: (v) => app.setSheetVisible(sheet, num(v) === XL.xlsheetveryhidden ? "veryHidden" : v === false || num(v) === XL.xlsheethidden ? "hidden" : "visible"),
@@ -420,7 +521,9 @@ export function model(app: MacroApp, runtime: () => VbaRuntime | null): VbaHost[
       Protect: (a) => { app.protectSheet(sheet, a[0] === undefined ? "" : vbaToString(a[0])); return undefined; },
       Unprotect: (a) => { if (!app.unprotectSheet(sheet, a[0] === undefined ? "" : vbaToString(a[0]))) throw new VbaError("Das angegebene Kennwort ist falsch.", 1004); return undefined; },
       Calculate: () => { app.recalc(); return undefined; },
-    }, { typeName: () => "Worksheet" }, SHEET_ARGS);
+      // ActiveSheet.Paste [Destination]: what Selection.Copy took, at the destination or the selection.
+      Paste: (a) => { const d = isObj(a[0]) ? refOf(a[0]) : null; pasteTo(d?.sheet ?? app.sheet, d?.rect ?? app.grid.selection[0]); return undefined; },
+    }, { typeName: () => "Worksheet" }, { ...SHEET_ARGS, paste: ["Destination", "Link"] });
     (self as unknown as Record<symbol, Sheet>)[S] = sheet;
     return self;
   }
@@ -481,9 +584,10 @@ export function model(app: MacroApp, runtime: () => VbaRuntime | null): VbaHost[
     Rows: (a) => sheetObj(app.sheet).get("Rows", a), Columns: (a) => sheetObj(app.sheet).get("Columns", a),
     WorksheetFunction: () => wsf, ScreenUpdating: () => true, DisplayAlerts: () => app.alerts, EnableEvents: () => true,
     Calculation: () => (wb().calcMode === "manual" ? XL.xlcalculationmanual : XL.xlcalculationautomatic),
+    ActiveWindow: () => obj({ SelectedSheets: () => obj({ Count: () => 1 }, {}, { Delete: () => { app.deleteSheetAt(app.wb.active); return undefined; }, Select: () => undefined }) }),
     StatusBar: () => false, UserName: () => app.userName, Version: () => "16.0", Name: () => "Microsoft Excel", CutCopyMode: () => false,
   }, {
-    ScreenUpdating: () => undefined, DisplayAlerts: (v) => { app.alerts = !!v; }, EnableEvents: () => undefined, CutCopyMode: () => undefined,
+    ScreenUpdating: () => undefined, DisplayAlerts: (v) => { app.alerts = !!v; }, EnableEvents: () => undefined, CutCopyMode: (v) => { if (!v) clip.at = null; },
     Calculation: (v) => { wb().calcMode = num(v) === XL.xlcalculationmanual ? "manual" : undefined; },
     StatusBar: (v) => app.statusText(v === false ? null : vbaToString(v)),
   }, {
@@ -521,7 +625,7 @@ export function model(app: MacroApp, runtime: () => VbaRuntime | null): VbaHost[
     switch (k) {
       case "application": return application;
       case "activesheet": case "activeworkbook": case "thisworkbook": case "activecell": case "selection": case "worksheets": case "sheets":
-      case "worksheetfunction":
+      case "worksheetfunction": case "activewindow":
         return application.get(name, []);
       // Range("A1"), Cells(3, 2), Rows(5), Worksheets("x"): the interpreter takes the global first and indexes it
       // then; these stand for Excel's method, with the index or without (Rows.Count, Worksheets.Add).

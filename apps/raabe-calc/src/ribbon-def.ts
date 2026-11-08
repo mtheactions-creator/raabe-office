@@ -40,6 +40,8 @@ export interface RibbonContext {
   drawTab?: () => Tab;
   /** Fenster wechseln: the open windows, built when opened (D-093). */
   windowsMenu?: () => MenuEntry[];
+  /** A macro is being recorded (Makro aufzeichnen... becomes Aufzeichnung beenden, D-119). */
+  recording?: () => boolean;
   /** The workbook's design colours for the colour buttons' palettes. */
   paletteTheme(): { colors: Record<string, string> };
   scale: { value(): string; commit(v: string): void; step(d: 1 | -1): void };
@@ -296,8 +298,13 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
             stack(b("view.split", "T1"), b("view.hide", "L"), b("view.unhide", "E2")), stack(b("view.sideBySide", "G"), b("view.syncScroll", "S"), b("view.resetPosition", "R")),
             { type: "dropdown", cmd: "view.switchWindows", key: "K2", size: "large", get menu() { return ctx.windowsMenu?.() ?? []; } }],
         },
-        // Makros (D-095): Makros anzeigen (Alt+F8); there is no recorder.
-        { id: "macros", label: "Makros", key: "ZM", icon: "settings", controls: [split("view.macros", "MA", "large", [{ cmd: "view.macros", label: "Makros anzeigen" }, { cmd: "view.recordMacro" }, { cmd: "view.relativeRefs" }])] },
+        // Makros (D-095, D-119): keytips recorded in Excel (Alt, F, M, then K, R / A while recording, V).
+        {
+          id: "macros", label: "Makros", key: "ZM", icon: "settings",
+          controls: [{ type: "split", cmd: "view.macros", key: "M", size: "large", get menu(): MenuEntry[] {
+            return [{ cmd: "view.macros", label: "Makros anzeigen", key: "K" }, { cmd: "view.recordMacro", key: ctx.recording?.() ? "A" : "R" }, { cmd: "view.relativeRefs", key: "V" }];
+          } }],
+        },
       ],
     },
   ];

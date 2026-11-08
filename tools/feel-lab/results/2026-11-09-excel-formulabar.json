@@ -1,0 +1,361 @@
+{
+ "scale": 1.5,
+ "namebox": [
+  15,
+  282,
+  150,
+  34
+ ],
+ "formulabar": [
+  330,
+  269,
+  1668,
+  57
+ ],
+ "handleScan": [
+  [
+   -4,
+   "arrow"
+  ],
+  [
+   -3,
+   "arrow"
+  ],
+  [
+   -2,
+   "arrow"
+  ],
+  [
+   -1,
+   "arrow"
+  ],
+  [
+   0,
+   "arrow"
+  ],
+  [
+   1,
+   "sizewe"
+  ],
+  [
+   2,
+   "sizewe"
+  ],
+  [
+   3,
+   "sizewe"
+  ],
+  [
+   4,
+   "sizewe"
+  ],
+  [
+   5,
+   "sizewe"
+  ],
+  [
+   6,
+   "sizewe"
+  ],
+  [
+   7,
+   "sizewe"
+  ],
+  [
+   8,
+   "sizewe"
+  ],
+  [
+   9,
+   "sizewe"
+  ],
+  [
+   10,
+   "sizewe"
+  ],
+  [
+   11,
+   "sizewe"
+  ],
+  [
+   12,
+   "sizewe"
+  ],
+  [
+   13,
+   "sizewe"
+  ],
+  [
+   14,
+   "sizewe"
+  ],
+  [
+   15,
+   "sizewe"
+  ],
+  [
+   16,
+   "sizewe"
+  ],
+  [
+   17,
+   "sizewe"
+  ],
+  [
+   18,
+   "sizewe"
+  ],
+  [
+   19,
+   "sizewe"
+  ],
+  [
+   20,
+   "sizewe"
+  ],
+  [
+   21,
+   "sizewe"
+  ],
+  [
+   22,
+   "sizewe"
+  ],
+  [
+   23,
+   "sizewe"
+  ],
+  [
+   24,
+   "sizewe"
+  ],
+  [
+   25,
+   "sizewe"
+  ],
+  [
+   26,
+   "sizewe"
+  ],
+  [
+   27,
+   "sizewe"
+  ],
+  [
+   28,
+   "sizewe"
+  ],
+  [
+   29,
+   "sizewe"
+  ]
+ ],
+ "handleCursor": "sizewe",
+ "handleX": 15,
+ "nameboxWidth": {
+  "start": 150,
+  "min": 150,
+  "max": 1750
+ },
+ "nameboxBack": 150,
+ "nameboxAfterDoubleClick": 150,
+ "expandScan": [
+  [
+   2,
+   "arrow"
+  ],
+  [
+   4,
+   "arrow"
+  ],
+  [
+   6,
+   "arrow"
+  ],
+  [
+   8,
+   "arrow"
+  ],
+  [
+   10,
+   "arrow"
+  ],
+  [
+   12,
+   "arrow"
+  ],
+  [
+   14,
+   "arrow"
+  ],
+  [
+   16,
+   "arrow"
+  ],
+  [
+   18,
+   "arrow"
+  ],
+  [
+   20,
+   "arrow"
+  ],
+  [
+   22,
+   "arrow"
+  ],
+  [
+   24,
+   "arrow"
+  ],
+  [
+   26,
+   "arrow"
+  ],
+  [
+   28,
+   "arrow"
+  ],
+  [
+   30,
+   "arrow"
+  ],
+  [
+   32,
+   "arrow"
+  ],
+  [
+   34,
+   "arrow"
+  ],
+  [
+   36,
+   "arrow"
+  ],
+  [
+   38,
+   "arrow"
+  ]
+ ],
+ "heightStart": 1,
+ "heightAfterExpandClick": 3,
+ "formulabarExpanded": [
+  330,
+  269,
+  1668,
+  57
+ ],
+ "heightAfterSecondClick": 3,
+ "ctrlShiftU": {
+  "height": 3,
+  "underline": -4142
+ },
+ "ctrlShiftU2": {
+  "height": 3,
+  "underline": 2
+ },
+ "edgeScan": [
+  [
+   -6,
+   "ibeam"
+  ],
+  [
+   -5,
+   "ibeam"
+  ],
+  [
+   -4,
+   "ibeam"
+  ],
+  [
+   -3,
+   "ibeam"
+  ],
+  [
+   -2,
+   "ibeam"
+  ],
+  [
+   -1,
+   "ibeam"
+  ],
+  [
+   0,
+   "ibeam"
+  ],
+  [
+   1,
+   "ibeam"
+  ],
+  [
+   2,
+   "ibeam"
+  ],
+  [
+   3,
+   "ibeam"
+  ],
+  [
+   4,
+   "ibeam"
+  ],
+  [
+   5,
+   "ibeam"
+  ],
+  [
+   6,
+   "ibeam"
+  ],
+  [
+   7,
+   "ibeam"
+  ],
+  [
+   8,
+   "ibeam"
+  ],
+  [
+   9,
+   "ibeam"
+  ]
+ ],
+ "edgeDrags": {
+  "one": {
+   "height": 3,
+   "rect": [
+    330,
+    269,
+    1668,
+    57
+   ]
+  },
+  "twoAndHalf": {
+   "height": 3,
+   "rect": [
+    330,
+    269,
+    1668,
+    57
+   ]
+  },
+  "six": {
+   "height": 3,
+   "rect": [
+    330,
+    269,
+    1668,
+    57
+   ]
+  },
+  "back": {
+   "height": 3,
+   "rect": [
+    330,
+    269,
+    1668,
+    57
+   ]
+  }
+ }
+}

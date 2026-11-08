@@ -16,6 +16,14 @@
 .fx-fn i { font-family: "Times New Roman", serif; font-size: 14px; }
 .fx-wrap { flex: 1; display: flex; background: #fff; border: 1px solid #c6c6c6; }
 .fx-input { flex: 1; resize: none; border: 0; outline: none; padding: 2px 4px; font: 14.667px "Calibri", Carlito, sans-serif; line-height: 18px; white-space: pre; overflow: hidden; user-select: text; -webkit-user-select: text; }
+/* D-120: the Namenfeld's handle, the expand chevron and the lower edge; expanded, the bar shows several lines. */
+.fbar { position: relative; }
+.fbar-sep { cursor: ew-resize; user-select: none; }
+.fx-expand { flex: none; width: 20px; align-self: flex-start; height: 21px; border: 0; background: none; color: #555; font-size: 12px; line-height: 21px; padding: 0; }
+.fx-expand:hover { background: var(--hover); }
+.fbar-edge { position: absolute; left: 0; right: 0; bottom: 0; height: 5px; cursor: ns-resize; }
+.fbar.expanded .namebox-wrap, .fbar.expanded .fbar-sep, .fbar.expanded .fx-btns { align-self: flex-start; height: 23px; }
+.fbar.expanded .fx-input { white-space: pre-wrap; overflow-y: auto; }
 
 /* The grid: canvas, the vertical scroll bar on the right, the cell editor over the canvas. */
 .gridwrap { flex: 1; position: relative; min-height: 0; overflow: hidden; outline: none; }
