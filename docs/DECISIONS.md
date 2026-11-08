@@ -2780,3 +2780,28 @@ themselves family "Aptos" (style "Display"); listed also as "Aptos" they replace
 about 10 % narrower. The stand-in names each face by its cache folder only; the native list was reported to
 RaabeCalc's session, which owns it. Left: Calibri Light titles (Rückblick 3.5), probably text smoothing in the
 headless page.
+
+## D-110 RaabePresent: the drag test (D-080 C), and what it changed (2026-11-08)
+
+The owner's first rule: no sudden, unwanted jumps. drag_present.py drags 15 anchors along feellab/dragtest.py's ten
+pointer paths with real input (moving a shape, a text box and a picture; the eight-way handles se, e, s, nw, n, w; the
+rotation handle; a table's column border; a slide thumbnail; the zoom slider; the thumbnail pane's and the notes'
+borders), checks follow, jump, direction and release per drag, and then Esc during a drag and Strg+Z after one.
+Result: 150 of 150 drags, Esc 15 of 15, Strg+Z 12 of 12 (zoom and the two borders are layout, not the document).
+Built or fixed on the way:
+- **Esc** puts back a moved, sized or turned shape, a table column, a thumbnail's drop, the panes' borders and the
+  zoom (it did nothing before).
+- **Fast first movements:** moving and turning left out the whole first movement (the catalogue's measured start),
+  so a fast first movement left the shape up to 26 px (the angle up to 13 degrees) behind the pointer for the whole
+  drag. Now at most the drag threshold (4 screen px) is left out; the catalogue cases keep their start. The angle may
+  stay behind by those 4 px (about 2.7 degrees at the test shape's handle), counted as the threshold, not a jump.
+- **Table column borders** can be dragged (they could not): an inner border takes the width from the column on its
+  right, so the table keeps its width; the last one changes the table's width; one undo step.
+- **The border between slide and notes** can be dragged (PowerPoint's; it was missing).
+- **Zoom slider:** our own (a track and a thumb, as Office draws its own) instead of the browser's range control,
+  whose value did not follow the pointer to its end in the app at 150 % display scaling; the thumb keeps the point
+  it was grabbed by, the zoom follows once per display frame (drawing the slide for every input event made the
+  slider catch up in jumps). The zoom percentage beside it keeps one width: its text growing from "66 %" to "400 %"
+  pushed the slider about 6 px under the pointer.
+- The test's own errors found on the way (a flipped shape's size, the browser slider's mapping, a probe's braces, the
+  thumbnail's place after the drop) were fixed in the test, not in the app.

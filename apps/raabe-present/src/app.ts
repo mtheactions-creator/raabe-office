@@ -139,7 +139,10 @@ export class PresentApp implements EditorHost, PanelHost {
   private status: HTMLElement;
   private statusSlide: HTMLElement;
   private zoomPct: HTMLElement;
-  private zoomSlider: HTMLInputElement;
+  private zoomSlider: HTMLElement;
+  private zoomThumb!: HTMLElement;
+  private zoomValue = 50;
+  private zoomDragging = false;
   private main: HTMLElement;
   /** Alle anordnen / Überlappend (D-074). */
   private windows!: Windows;
@@ -199,7 +202,7 @@ export class PresentApp implements EditorHost, PanelHost {
       if (p) this.deck.setNotes(p, this.notes.value);
     });
     this.notes.addEventListener("contextmenu", (e) => { e.preventDefault(); this.notesMenu(e); });
-    this.notesWrap = h("div", { class: "notes-wrap" }, this.notes);
+    this.notesWrap = h("div", { class: "notes-wrap" }, h("div", { class: "notes-grip", "aria-label": "Notizen-Trennlinie" }), this.notes);
     this.center = h("div", { class: "center" }, this.editor.el, this.notesWrap);
     this.outline = new OutlineView(this);
     this.notesPage = new NotesPageView(this);
@@ -211,8 +214,48 @@ export class PresentApp implements EditorHost, PanelHost {
     this.bgPane = new BackgroundPane(this, this.main);
     this.statusSlide = h("span", { class: "cell" });
     this.zoomPct = h("button", { class: "cell pct", "data-tip": "Zoom", onclick: () => void this.commands.run("view.zoom") });
-    this.zoomSlider = h("input", { type: "range", min: "0", max: "100", step: "0.5", "aria-label": "Zoom" }) as HTMLInputElement;
-    this.zoomSlider.oninput = () => this.setZoom(sliderToZoom(Number(this.zoomSlider.value)));
+    // Our own zoom slider, as Office draws its own (D-110): the thumb keeps the point it was grabbed by (no jump on
+    // pressing), a press on the track brings the thumb there, the zoom follows once per display frame, Esc while
+    // dragging puts the zoom back, the arrow keys step.
+    this.zoomThumb = h("div", { class: "zoom-thumb" });
+    this.zoomSlider = h("div", { class: "zoom-track", role: "slider", tabindex: "0", "aria-label": "Zoom", "aria-valuemin": "10", "aria-valuemax": "400" }, this.zoomThumb);
+    let zoomFrame = 0, zoomStart: number | null = null, grab = 0;
+    const TRACK = 100, THUMB = 8;
+    const toValue = (x: number) => { const r = this.zoomSlider.getBoundingClientRect(); return Math.max(0, Math.min(100, ((x - grab - r.left - THUMB / 2) / (TRACK - THUMB)) * 100)); };
+    const follow = (v: number) => {
+      this.setSliderValue(v);
+      if (zoomFrame) return;
+      zoomFrame = requestAnimationFrame(() => { zoomFrame = 0; this.setZoom(sliderToZoom(this.zoomValue)); });
+    };
+    this.zoomSlider.addEventListener("pointerdown", (e) => {
+      if (e.button !== 0) return;
+      e.preventDefault();
+      this.zoomSlider.focus();
+      const t = this.zoomThumb.getBoundingClientRect();
+      // On the thumb: it keeps the grab point; on the track: the thumb comes to the pointer.
+      grab = e.clientX >= t.left - 1 && e.clientX <= t.right + 1 ? e.clientX - (t.left + t.width / 2) : 0;
+      zoomStart = this.editor.zoom;
+      this.zoomDragging = true;
+      this.zoomSlider.setPointerCapture(e.pointerId);
+      if (!grab && (e.clientX < t.left - 1 || e.clientX > t.right + 1)) follow(toValue(e.clientX));
+    });
+    this.zoomSlider.addEventListener("pointermove", (e) => { if (zoomStart !== null) follow(toValue(e.clientX)); });
+    const release = () => { zoomStart = null; this.zoomDragging = false; };
+    this.zoomSlider.addEventListener("pointerup", release);
+    this.zoomSlider.addEventListener("lostpointercapture", release);
+    this.zoomSlider.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && zoomStart !== null) {
+        e.preventDefault(); e.stopPropagation();
+        cancelAnimationFrame(zoomFrame); zoomFrame = 0;
+        const z = zoomStart;
+        zoomStart = null;
+        this.zoomDragging = false;
+        this.setZoom(z);
+        this.setSliderValue(zoomToSlider(z));
+        return;
+      }
+      if (e.key === "ArrowLeft" || e.key === "ArrowRight") { e.preventDefault(); this.setZoom(this.editor.zoom + (e.key === "ArrowLeft" ? -10 : 10)); }
+    });
     const viewBtn = (cmd: string) => { const c = this.commands.get(cmd); const btn = h("button", { class: "cell viewbtn", "aria-label": c.label, "data-tip": this.commands.tooltip(cmd), onclick: () => void this.commands.run(cmd) }, icon(c.icon)); this.commands.onRefresh(() => btn.classList.toggle("checked", this.commands.isChecked(cmd))); return btn; };
     this.status = h("div", { class: "statusbar", role: "status" }, this.statusSlide, h("button", { class: "cell", "data-tip": "Sprache: Deutsch (Deutschland)" }, "Deutsch (Deutschland)"),
       h("div", { class: "right" },
@@ -316,7 +359,7 @@ export class PresentApp implements EditorHost, PanelHost {
     const n = this.deck.slides.length;
     this.statusSlide.textContent = n ? `Folie ${this.active.current + 1} von ${n}` : "";
     this.zoomPct.textContent = `${this.editor.zoom} %`;
-    if (document.activeElement !== this.zoomSlider) this.zoomSlider.value = String(zoomToSlider(this.editor.zoom));
+    if (!this.zoomDragging) this.setSliderValue(zoomToSlider(this.editor.zoom));
     this.updateContextual();
     this.commands.refresh();
   }
@@ -1806,6 +1849,13 @@ export class PresentApp implements EditorHost, PanelHost {
     this.focusMain();
   }
 
+  /** The zoom slider's thumb at a value 0..100 (the slider's scale, sliderToZoom). */
+  private setSliderValue(v: number): void {
+    this.zoomValue = v;
+    this.zoomThumb.style.left = `${(v / 100) * (100 - 8)}px`;
+    this.zoomSlider.setAttribute("aria-valuenow", String(Math.round(sliderToZoom(v))));
+  }
+
   private setZoom(z: number): void {
     if (this.view === "sorter") { this.sorter.setZoom(z); return; }
     this.editor.setZoom(z);
@@ -3117,14 +3167,32 @@ export class PresentApp implements EditorHost, PanelHost {
   }
 
   private installSplitter(): void {
+    // The border between slide and notes: dragged, the notes pane grows or shrinks (PowerPoint's); Esc puts it back (D-110).
+    const grip = this.notesWrap.querySelector(".notes-grip") as HTMLElement;
+    grip.addEventListener("mousedown", (e) => {
+      e.preventDefault();
+      const start = e.clientY, h0 = this.notesWrap.getBoundingClientRect().height;
+      const max = () => this.center.getBoundingClientRect().height * 0.8;
+      const move = (m: MouseEvent) => { this.notesWrap.style.height = `${Math.max(24, Math.min(max(), h0 - (m.clientY - start)))}px`; };
+      const end = () => { window.removeEventListener("mousemove", move); window.removeEventListener("mouseup", up); window.removeEventListener("keydown", esc, true); if (this.editor.fit) this.editor.fitZoom(); };
+      const up = () => end();
+      const esc = (k: KeyboardEvent) => { if (k.key !== "Escape") return; k.preventDefault(); k.stopPropagation(); this.notesWrap.style.height = `${h0}px`; end(); };
+      window.addEventListener("mousemove", move);
+      window.addEventListener("mouseup", up);
+      window.addEventListener("keydown", esc, true);
+    });
     const sp = this.main.querySelector(".splitter") as HTMLElement;
     sp.addEventListener("mousedown", (e) => {
       e.preventDefault();
       const start = e.clientX, w0 = this.panel.el.getBoundingClientRect().width;
       const move = (m: MouseEvent) => { this.panel.el.style.width = `${Math.max(90, Math.min(420, w0 + m.clientX - start))}px`; };
-      const up = () => { window.removeEventListener("mousemove", move); window.removeEventListener("mouseup", up); this.panel.render(); if (this.editor.fit) this.editor.fitZoom(); };
+      const end = () => { window.removeEventListener("mousemove", move); window.removeEventListener("mouseup", up); window.removeEventListener("keydown", esc, true); this.panel.render(); if (this.editor.fit) this.editor.fitZoom(); };
+      const up = () => end();
+      // Esc during the drag puts the pane back (D-110).
+      const esc = (k: KeyboardEvent) => { if (k.key !== "Escape") return; k.preventDefault(); k.stopPropagation(); this.panel.el.style.width = `${w0}px`; end(); };
       window.addEventListener("mousemove", move);
       window.addEventListener("mouseup", up);
+      window.addEventListener("keydown", esc, true);
     });
     // Format übertragen: the next click on a shape or text applies the picked formatting.
     this.editor.el.addEventListener("mouseup", () => { if (this.painter) setTimeout(() => this.applyPainter(), 0); });

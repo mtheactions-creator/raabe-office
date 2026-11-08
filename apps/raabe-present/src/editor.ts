@@ -668,6 +668,66 @@ export class SlideEditor {
     return { v, text: t.closest(".shp") === shp };
   }
 
+  /** A table's column border under the pointer (within 4 screen pixels of a cell's side): the table and the column
+   *  left of it. PowerPoint's: the pointer becomes a column arrow there and a drag sizes the column (D-110). */
+  private colBorderAt(e: MouseEvent): { id: number; col: number } | null {
+    const td = (document.elementFromPoint(e.clientX, e.clientY) as HTMLElement | null)?.closest("td[data-c]") as HTMLElement | null;
+    const shp = td?.closest(".shp") as HTMLElement | null;
+    if (!td || !shp || !this.stage.contains(shp)) return null;
+    const r = td.getBoundingClientRect();
+    const c0 = Number(td.dataset.c), c1 = c0 + ((td as HTMLTableCellElement).colSpan || 1) - 1;
+    if (Math.abs(e.clientX - r.right) <= 4) return { id: Number(shp.dataset.id), col: c1 };
+    if (Math.abs(e.clientX - r.left) <= 4 && c0 > 0) return { id: Number(shp.dataset.id), col: c0 - 1 };
+    return null;
+  }
+
+  /**
+   * Dragging a column border: the column follows the pointer; an inner border takes the width from the column on its
+   * right (the table keeps its width), the last one changes the table's width. Drawn live, one undo step at the end,
+   * Esc puts it back (D-110).
+   */
+  private dragColumn(e: MouseEvent, id: number, col: number): void {
+    const el = this.shapeEl(id);
+    const tbl = el?.getElementsByTagNameNS(PptxDom.NS_A, "tbl")[0];
+    const grid = tbl ? PptxDom.kids(PptxDom.kid(tbl, "tblGrid")!, "gridCol") : [];
+    if (!el || !grid.length) return;
+    const ext = PptxDom.at(el, "xfrm/ext");
+    const w0 = grid.map((c) => Number(c.getAttribute("w") ?? 0));
+    const cx0 = Number(ext?.getAttribute("cx") ?? 0);
+    const MIN = 54864; // 0.06 inch, PowerPoint's narrowest column (about 4.3 pt)
+    const per = EMU_PX / this.scale;
+    const startX = e.clientX;
+    let cur = w0;
+    const apply = (ws: number[]) => {
+      grid.forEach((c, i) => c.setAttribute("w", String(Math.round(ws[i]))));
+      ext?.setAttribute("cx", String(Math.round(cx0 + ws.reduce((a, b) => a + b, 0) - w0.reduce((a, b) => a + b, 0))));
+      this.deck.invalidate(this.path!);
+      this.render();
+    };
+    const at = (x: number) => {
+      const d = (x - startX) * per;
+      const ws = [...w0];
+      if (col < ws.length - 1) {
+        const dd = Math.max(MIN - w0[col], Math.min(w0[col + 1] - MIN, d));
+        ws[col] += dd; ws[col + 1] -= dd;
+      } else ws[col] = Math.max(MIN, w0[col] + d);
+      return ws;
+    };
+    document.body.style.cursor = "col-resize";
+    const move = (m: MouseEvent) => { cur = at(m.clientX); apply(cur); };
+    const end = () => { window.removeEventListener("mousemove", move); window.removeEventListener("mouseup", up); window.removeEventListener("keydown", esc, true); document.body.style.cursor = ""; };
+    const up = () => {
+      end();
+      const final = cur;
+      apply(w0);
+      if (final.some((w, i) => Math.abs(w - w0[i]) > 1)) this.edit("Spaltenbreite", () => apply(final));
+    };
+    const esc = (k: KeyboardEvent) => { if (k.key !== "Escape") return; k.preventDefault(); k.stopPropagation(); end(); apply(w0); };
+    window.addEventListener("mousemove", move);
+    window.addEventListener("mouseup", up);
+    window.addEventListener("keydown", esc, true);
+  }
+
   private onDown(e: MouseEvent): void {
     if (e.button === 2) return;
     if (e.button !== 0) return;
@@ -679,6 +739,8 @@ export class SlideEditor {
     if (handle?.dataset.handle?.startsWith("crop-")) { this.dragCrop(Number(handle.dataset.id), handle.dataset.handle.slice(5) as Exclude<Handle, "rot">); return; }
     if (handle?.dataset.handle?.startsWith("adj")) { this.dragAdjust(Number(handle.dataset.id), Number(handle.dataset.handle.slice(3))); return; }
     if (handle) { this.dragHandle(e, handle.dataset.handle as Handle, Number(handle.dataset.id)); return; }
+    const border = this.colBorderAt(e);
+    if (border) { this.dragColumn(e, border.id, border.col); return; }
     const edge = target.closest(".edge") as HTMLElement | null;
     if (edge) {
       const id = Number((edge.parentElement as HTMLElement).dataset.id);
@@ -1046,7 +1108,16 @@ export class SlideEditor {
     // A shape that the button selects moves from the pointer's first movement, not from where the button went
     // down (measured: those catalogue drags of 20 steps land one step short in PowerPoint); a frame that was
     // selected already (dragged by its edge) moves by the whole way (measured too).
-    let start: { x: number; y: number } | null = started && first ? this.toSlide(first.clientX, first.clientY) : this.toSlide(_e.clientX, _e.clientY);
+    // The part of that first movement left out is at most the drag threshold (4 screen pixels): a fast first
+    // movement must not leave the shape behind the pointer for the whole drag (drag test, D-110).
+    const down = this.toSlide(_e.clientX, _e.clientY);
+    let start: { x: number; y: number } | null = down;
+    if (started && first) {
+      const f = this.toSlide(first.clientX, first.clientY);
+      const d = Math.hypot(f.x - down.x, f.y - down.y), cap = (4 / this.scale) * EMU_PX;
+      const k = d > cap ? cap / d : 1;
+      start = { x: down.x + (f.x - down.x) * k, y: down.y + (f.y - down.y) * k };
+    }
     const box = union(views);
     const skip = new Set(views.map((v) => v.id));
     let dx = 0, dy = 0, copy = false;
@@ -1074,14 +1145,23 @@ export class SlideEditor {
     const up = () => {
       window.removeEventListener("mousemove", move);
       window.removeEventListener("mouseup", up);
+      window.removeEventListener("keydown", esc, true);
       this.drawGuides([]);
       this.el.style.cursor = "";
       if (!dx && !dy) { this.render(); return; }
       if (copy) this.copyMoved(views, dx, dy);
       else this.edit("Verschieben", () => { for (const v of views) this.moveShape(v, dx, dy); });
     };
+    // Esc during the drag: the shapes stay where they were (PowerPoint's; drag test, D-110).
+    const esc = (k: KeyboardEvent) => {
+      if (k.key !== "Escape") return;
+      k.preventDefault(); k.stopPropagation();
+      window.removeEventListener("mousemove", move); window.removeEventListener("mouseup", up); window.removeEventListener("keydown", esc, true);
+      this.drawGuides([]); this.el.style.cursor = ""; this.render();
+    };
     window.addEventListener("mousemove", move);
     window.addEventListener("mouseup", up);
+    window.addEventListener("keydown", esc, true);
     if (started && now && now !== first) move(now);
   }
 
@@ -1170,7 +1250,13 @@ export class SlideEditor {
     }
     const move = (m: MouseEvent) => {
       const p0 = this.toSlide(m.clientX, m.clientY);
-      if (!off) { grab = p0; off = offOf(); return; }
+      // The rotation handle leaves out at most the drag threshold (4 screen pixels) of the first movement, so a
+      // fast first movement does not leave the angle behind the pointer (drag test, D-110).
+      if (!off) {
+        const d = Math.hypot(p0.x - grab.x, p0.y - grab.y), cap = (4 / this.scale) * EMU_PX, k = d > cap ? cap / d : 1;
+        grab = { x: grab.x + (p0.x - grab.x) * k, y: grab.y + (p0.y - grab.y) * k };
+        off = offOf();
+      }
       const p = { x: p0.x + off.x, y: p0.y + off.y };
       if (k === "rot") {
         let ang = (Math.atan2(p.y - cy, p.x - cx) * 180) / Math.PI + 90;
@@ -1190,9 +1276,18 @@ export class SlideEditor {
       if (el) { el.style.left = `${r.x / EMU_PX}px`; el.style.top = `${r.y / EMU_PX}px`; el.style.width = `${r.w / EMU_PX}px`; el.style.height = `${r.h / EMU_PX}px`; el.style.transform = `rotate(${r.rot}deg)${r.flipH ? " scaleX(-1)" : ""}${r.flipV ? " scaleY(-1)" : ""}`; el.style.opacity = "0.75"; }
       if (frame) frame.style.cssText = `left:${(r.x / EMU_PX) * s}px;top:${(r.y / EMU_PX) * s}px;width:${(r.w / EMU_PX) * s}px;height:${(r.h / EMU_PX) * s}px;transform:rotate(${r.rot}deg)`;
     };
+    // Esc during the drag: the shape keeps its size and angle (PowerPoint's; drag test, D-110).
+    const esc = (k: KeyboardEvent) => {
+      if (k.key !== "Escape") return;
+      k.preventDefault(); k.stopPropagation();
+      window.removeEventListener("mousemove", move); window.removeEventListener("mouseup", up); window.removeEventListener("keydown", esc, true);
+      result = null; this.render();
+    };
+    window.addEventListener("keydown", esc, true);
     const up = () => {
       window.removeEventListener("mousemove", move);
       window.removeEventListener("mouseup", up);
+      window.removeEventListener("keydown", esc, true);
       if (!result) { this.render(); return; }
       const r: S.Xfrm = result;
       this.edit(k === "rot" ? "Drehen" : "Größe ändern", () => {

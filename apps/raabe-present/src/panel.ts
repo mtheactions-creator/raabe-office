@@ -185,9 +185,11 @@ export class SlidePanel {
       line.style.top = `${y}px`;
       if (!line.parentElement) this.list.append(line);
     };
+    const esc = (k: KeyboardEvent) => { if (k.key !== "Escape") return; k.preventDefault(); k.stopPropagation(); window.removeEventListener("mousemove", move); window.removeEventListener("mouseup", up); window.removeEventListener("keydown", esc, true); line.remove(); };
     const up = () => {
       window.removeEventListener("mousemove", move);
       window.removeEventListener("mouseup", up);
+      window.removeEventListener("keydown", esc, true);
       line.remove();
       if (!dragging) {
         if (already && !e.shiftKey && !e.ctrlKey) { this.selected = new Set([i]); this.anchor = i; this.render(); }
@@ -206,6 +208,7 @@ export class SlidePanel {
     };
     window.addEventListener("mousemove", move);
     window.addEventListener("mouseup", up);
+    window.addEventListener("keydown", esc, true);
   }
 
   private key(e: KeyboardEvent): boolean {

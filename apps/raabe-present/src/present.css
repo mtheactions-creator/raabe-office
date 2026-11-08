@@ -61,7 +61,8 @@
 .overlay .guide { position: absolute; border-left: 1px dashed #d24726; border-top: 1px dashed #d24726; }
 body.painting .editor { cursor: copy; }
 
-.notes-wrap { flex: none; height: 74px; border-top: 1px solid #d0d0d0; background: #fff; display: flex; }
+.notes-wrap { flex: none; height: 74px; border-top: 1px solid #d0d0d0; background: #fff; display: flex; position: relative; }
+.notes-grip { position: absolute; left: 0; right: 0; top: -4px; height: 7px; cursor: ns-resize; z-index: 2; }
 .notes-wrap[hidden] { display: none; }
 .notes { flex: 1; resize: none; border: 0; outline: none; padding: 8px 12px; font: 16px "Calibri", Carlito, sans-serif; color: #000; }
 .notes::placeholder { color: #707070; }
@@ -356,3 +357,11 @@ body.view-bw .slide { filter: grayscale(1) contrast(4) brightness(1.2); }
 .vba-tools { display: flex; gap: 8px; align-items: center; }
 .vba-status { flex: 1; text-align: right; }
 .vba-code { width: 100%; box-sizing: border-box; font: 13px Consolas, "Cascadia Mono", monospace; white-space: pre; tab-size: 4; }
+/* The zoom slider (D-110): a track with a thumb, as Office's. */
+.zoom-track { position: relative; width: 100px; height: 18px; flex: none; outline: none; touch-action: none; }
+.zoom-track::before { content: ""; position: absolute; left: 0; right: 0; top: 8px; height: 1px; background: #7a7a7a; }
+.zoom-track::after { content: ""; position: absolute; left: 49.5px; top: 5px; width: 1px; height: 7px; background: #7a7a7a; }
+.zoom-thumb { position: absolute; top: 3px; width: 8px; height: 12px; background: #5b5b5b; border-radius: 2px; pointer-events: none; }
+.zoom-track:focus-visible .zoom-thumb { outline: 1px solid #000; outline-offset: 1px; }
+/* The zoom percentage keeps one width (up to "400 %"), so the slider beside it does not move while it is dragged (D-110). */
+.statusbar .cell.pct, .cell.pct { min-width: 5.2em; text-align: right; justify-content: flex-end; }
