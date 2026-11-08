@@ -92,6 +92,11 @@ class Sweep:
             while not p.js("typeof window.__calc === 'object'"):
                 time.sleep(0.2)
             p.js(JS)
+        # A box being typed in (a comment, a note, the Namenfeld): Esc leaves it, as a user would.
+        if p.js("(() => { const a = document.activeElement; return !!a && /^(TEXTAREA|INPUT)$/.test(a.tagName) && !a.classList.contains('cell-editor'); })()"):
+            p.key("Escape")
+            p.pump(0.1)
+            p.js("document.activeElement?.blur?.(); true")
         for _ in range(4):
             # Popups, dialogs, the backstage: Esc as a user would; what stays is closed by its button.
             st = p.js("({dlg: !!document.querySelector('.dialog-layer'), pop: [...document.body.children].some(e => e.matches('.menu-root, .menu, .rpanel, .popup, .combo-list') ), bs: !document.querySelector('.backstage')?.hidden})")

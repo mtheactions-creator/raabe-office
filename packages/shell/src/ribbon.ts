@@ -518,7 +518,8 @@ export class Ribbon {
         for (let i = 0; i < c.count; i++) {
           const b = h("button", {
             class: `item tile-item${i >= c.visible ? " extra" : ""}`, style: `width:${c.size[0] + 8}px;height:${c.size[1] + 8}px${i >= c.visible && c.fill ? ";display:none" : ""}`,
-            "data-tip": c.tip(i), onclick: () => { c.hover?.(null); c.pick(i); },
+            // The tooltip's title is the tile's name (screen readers, UI Automation).
+            "data-tip": c.tip(i), "aria-label": c.tip(i).split(String.fromCharCode(10))[0], onclick: () => { c.hover?.(null); c.pick(i); },
           }) as HTMLButtonElement;
           b.addEventListener("mouseenter", () => c.hover?.(i));
           b.addEventListener("mouseleave", () => c.hover?.(null));

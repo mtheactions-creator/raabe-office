@@ -1776,6 +1776,8 @@ export class CalcApp {
       this.change("AutoSumme", () => {
         for (const t of targets) A.enter(this.ctx, this.sheet, { r0: t.row, c0: t.col, r1: t.row, c1: t.col }, `=${fn}(${rangeName(t.ref)})`);
       });
+      // The selection takes in the results below it (Excel: B2:G5 becomes B2:G6).
+      if (!lastRowEmpty) this.grid.select({ ...sel, r1: sel.r1 + 1 }, { ...this.sheet.view.active });
       return;
     }
     const { r0: row, c0: col } = sel;

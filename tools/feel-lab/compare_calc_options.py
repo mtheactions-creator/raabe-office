@@ -125,7 +125,7 @@ CASES: list[tuple] = [
     ("Ausfüllen unten", "A2:B5", [T, ("ctrl", "Bearbeiten|Ausfüllen"), ("item", "Unten")], ("mso", "FillDown")),
     ("Ausfüllen rechts", "B2:D3", [T, ("ctrl", "Bearbeiten|Ausfüllen"), ("item", "Rechts")], ("mso", "FillRight")),
     ("Ausfüllen oben", "A2:B5", [T, ("ctrl", "Bearbeiten|Ausfüllen"), ("item", "Oben")], ("mso", "FillUp")),
-    ("AutoSumme unter Spalte", "D6", [T, ("ctrl", "Bearbeiten|AutoSumme")], ("mso", "AutoSum")),
+    ("AutoSumme unter Spalte", "D6", [T, ("ctrl", "Bearbeiten|AutoSumme"), ("key", "Enter")], ("mso", "AutoSum")),
     ("AutoSumme Auswahl", "B2:B5", [T, ("ctrl", "Bearbeiten|AutoSumme")], ("mso", "AutoSum")),
     ("AutoSumme Mittelwert", "D2:D5", [T, ("ctrl", "Bearbeiten|AutoSumme ▾"), ("item", "Mittelwert")], lambda app, ws: setattr(ws.Range("D6"), "FormulaLocal", "=MITTELWERT(D2:D5)")),
     ("Von A bis Z sortieren", "B3", [T, ("ctrl", "Bearbeiten|Sortieren und Filtern"), ("item", "Von A bis Z sortieren")], ("mso", "SortAscendingExcel")),
