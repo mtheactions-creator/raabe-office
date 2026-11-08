@@ -19,6 +19,7 @@ import { quickStylesPanel } from "./quickstyles";
 import { wordArtInsertPanel } from "./wordart";
 import { setShowFlag, showFlag } from "./showsetup";
 import { editEquation, equationTab, hasEquation, implementEquationCommands, insertEquation, selectedEquation } from "./equations";
+import { activeMath } from "./mathedit";
 import { BUILT_IN } from "./equations-builtin";
 import { SlideEditor, flat, union, type EditorHost } from "./editor";
 import { SlidePanel, type PanelHost } from "./panel";
@@ -3331,7 +3332,8 @@ export class PresentApp implements EditorHost, PanelHost {
         fonts: () => [...FONT_SETS.map((f) => ({ label: f.label, run: () => this.applyFontSet(f.name, f.major, f.minor) })), "-", { label: "Schriftarten anpassen...", run: () => void this.customFontsDialog() }],
         themeEffects: () => THEME_EFFECTS.map((e) => ({ label: e.name, checked: this.themeEffectName() === e.name, run: () => this.applyThemeEffects(e.name, e.xml) })),
         underline: [], outlineWeight: [], outlineDash: [], effects: this.effectsMenu(), quickStyles: () => [], zoomFit: [],
-        equations: () => BUILT_IN.map((e) => ({ label: e.name, run: () => void insertEquation(this, e.seq) })),
+        // While an equation is edited, a built-in one goes in at its caret (as from the Formel tab, D-137).
+        equations: () => BUILT_IN.map((e) => ({ label: e.name, run: () => { const s = activeMath(); if (s) s.insert(e.seq); else void insertEquation(this, e.seq); } })),
         sounds: () => this.transMod?.soundMenu(this) ?? [],
         zooms: () => zoomMenu(this),
         bgStyles: () => bgStylesMenu(this),

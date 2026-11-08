@@ -33,6 +33,16 @@ def names_defined(defined: list) -> set[str]:
     return out
 
 
+def commands() -> list[dict]:
+    """RaabePresent's command list, read from the dev page (npm run dev:present on port 5186, as the sweep's --dev)."""
+    from sweep_present import start
+    page = start(True, "http://localhost:5186/", 9509)
+    try:
+        return page.js("window.__present.app.commands.all().map((c) => ({ id: c.id, label: c.label, shortcut: c.shortcut || null, hidden: !!c.hidden, built: !!c.run, deferred: !!c.deferred }))")
+    finally:
+        page.close()
+
+
 def merge(out_name: str, files: list[str]) -> None:
     results, defined = [], None
     for f in files:
@@ -51,8 +61,12 @@ def merge(out_name: str, files: list[str]) -> None:
     reached |= {(r.get("name") or "").replace(" (Pfeil)", "").strip() for r in opts}
     unreached = sorted(n for n in names_defined(defined) if n not in reached and not n.endswith("...") or (n.endswith("...") and n not in reached and n[:-3] not in reached))
     unreached = [n for n in unreached if n not in reached]
+    # The command list: commands no walk reached by their label (shortcut-only, menu-only under another name, or none).
+    cmds = commands()
+    cmd_unreached = sorted({f"{c['id']} ({c['label']})" for c in cmds if not c.get("hidden") and c["label"].strip() not in reached
+                            and c["label"].replace("...", "").strip() not in reached and f"{c['label']} ({c.get('shortcut')})" not in reached})
     out = {"date": datetime.date.today().isoformat(), "options": len(opts), "counts": counts,
-           "by_tab": {}, "defined_not_reached": unreached,
+           "by_tab": {}, "defined_not_reached": unreached, "commands": len(cmds), "commands_not_reached_by_label": cmd_unreached,
            "options_list": [{k: r.get(k) for k in ("id", "tab", "group", "name", "kind", "ctx", "status", "why")} for r in opts]}
     for r in opts:
         t = out["by_tab"].setdefault(r.get("tab") or "?", {})

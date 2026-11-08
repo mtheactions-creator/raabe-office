@@ -172,7 +172,7 @@ HELPERS = r"""
   // What lies above the app: popups, menus, dialogs, the backstage, panes.
   // The equation editor's own chrome (box, caret) is not a popup.
   sw.overlays = () => Array.from(document.body.children).filter((c) => !c.hasAttribute('data-sw-base') && !c.classList.contains('tooltip') && !String(c.className).startsWith('math-edit') && vis(c)).map((c) => c);
-  sw.dialogs = () => Array.from(document.querySelectorAll('[role=dialog]')).filter(vis);
+  sw.dialogs = () => Array.from(document.querySelectorAll('[role=dialog]')).filter((d) => vis(d) && !d.classList.contains('backstage'));
   sw.items = () => {
     // Entries of the open popup(s) (the topmost menu last): menu entries, palette swatches, gallery tiles, buttons.
     const ov = sw.overlays().filter((c) => !c.querySelector('[role=dialog]') && c.getAttribute('role') !== 'dialog');
@@ -869,7 +869,7 @@ def walk_backstage_status(sw: Sweeper, args, results: list, inventory: list) -> 
                 p.mouse(b["x"], b["y"])
                 time.sleep(0.3)
         go()
-        btns = p.js("Array.from(document.querySelectorAll('.backstage main button, .backstage .bs-page button, .backstage .page button')).filter((b) => b.getBoundingClientRect().width > 0 && !b.disabled).map((b, i) => ({ i, name: window.__sw.label(b) }))")
+        btns = p.js("Array.from(document.querySelectorAll('.backstage .page-body button')).filter((b) => b.getBoundingClientRect().width > 0 && !b.disabled).map((b, i) => ({ i, name: window.__sw.label(b) }))")
         res = {"status": "pass", "buttons": [b["name"] for b in btns], "errs": p.js("window.__sw.take()")}
         if res["errs"]:
             res["status"] = "fail"
@@ -884,7 +884,7 @@ def walk_backstage_status(sw: Sweeper, args, results: list, inventory: list) -> 
             go()
 
             def trig(b=b):
-                r = p.js(f"(() => {{ const e = Array.from(document.querySelectorAll('.backstage main button, .backstage .bs-page button, .backstage .page button')).filter((b) => b.getBoundingClientRect().width > 0 && !b.disabled)[{b['i']}]; return e ? window.__sw.rect(e) : null; }})()")
+                r = p.js(f"(() => {{ const e = Array.from(document.querySelectorAll('.backstage .page-body button')).filter((b) => b.getBoundingClientRect().width > 0 && !b.disabled)[{b['i']}]; return e ? window.__sw.rect(e) : null; }})()")
                 if r:
                     p.mouse(r["x"], r["y"])
             res = sw.act(e2, trig)
@@ -913,7 +913,8 @@ PANES = [
     ("Form formatieren", "shape", "Formformat", "Objekt formatieren..."),
     ("Form formatieren (Text)", "shape-text", "Formformat", "Objekt formatieren..."),
     ("Bild formatieren", "picture", "Bildformat", None),
-    ("Hintergrund formatieren", "slides", "Entwurf", "Hintergrund formatieren"),
+    # PowerPoint 365 keeps it in Entwurf > Hintergrundformate's menu (recorded inventory).
+    ("Hintergrund formatieren", "slides", "Entwurf", "Hintergrundformate>Hintergrund formatieren..."),
     ("Diagramm formatieren", "chart", "Format", None),
 ]
 
@@ -922,12 +923,20 @@ def open_pane(sw: "Sweeper", ctx: str, tab: str, control: str | None, si: int = 
     p = sw.page
     sw.reset(ctx, tab)
     cs = p.js("window.__sw.controls()")
+    control, _, entry = (control or "").partition(">")
     c = next((x for x in cs if (control and x["name"] == control) or (not control and x["kind"] == "launcher" and not x["disabled"])), None)
     if not c:
         return False
     r = p.js(f"window.__sw.findControl({json.dumps(c['key'])})")
     p.mouse(r["x"], r["y"])
     time.sleep(0.35)
+    if entry:
+        m = next((x for x in p.js("window.__sw.items()") if x["name"] == entry), None)
+        if not m:
+            return False
+        ir = p.js(f"window.__sw.itemRect({json.dumps(m['path'])})")
+        p.mouse(ir["x"], ir["y"])
+        time.sleep(0.35)
     if not p.js("!!window.__sw.pane()"):
         return False
     for sel, i in ((".tp-set", si), (".tp-tab", ti)):
