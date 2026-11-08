@@ -325,6 +325,26 @@ class Page:
             self.cdp("Input.dispatchKeyEvent", {"type": "char", "text": key, "key": key, "code": code, "modifiers": mods})
         self.cdp("Input.dispatchKeyEvent", {"type": "keyUp", "key": key, "code": code, "windowsVirtualKeyCode": vk, "modifiers": mods})
 
+    def alt(self) -> None:
+        """Alt pressed and released alone: the keytips appear."""
+        self.cdp("Input.dispatchKeyEvent", {"type": "rawKeyDown", "key": "Alt", "code": "AltLeft", "windowsVirtualKeyCode": 18, "modifiers": 1})
+        self.cdp("Input.dispatchKeyEvent", {"type": "keyUp", "key": "Alt", "code": "AltLeft", "windowsVirtualKeyCode": 18, "modifiers": 0})
+
+    def char(self, ch: str) -> None:
+        """One key of a keytip (letters, digits, Ä Ö Ü ß as a German keyboard sends them)."""
+        codes = {"Ä": ("Quote", 222), "Ö": ("Semicolon", 192), "Ü": ("BracketLeft", 186), "ß": ("Minus", 219)}
+        up = ch.upper()
+        if up in codes or ch == "ß":
+            code, vk = codes.get(up) or codes["ß"]
+        elif ch.isdigit():
+            code, vk = f"Digit{ch}", ord(ch)
+        else:
+            code, vk = f"Key{up}", ord(up)
+        key = ch.lower() if ch != "ß" else "ß"
+        self.cdp("Input.dispatchKeyEvent", {"type": "rawKeyDown", "key": key, "code": code, "windowsVirtualKeyCode": vk})
+        self.cdp("Input.dispatchKeyEvent", {"type": "char", "text": key, "key": key, "code": code})
+        self.cdp("Input.dispatchKeyEvent", {"type": "keyUp", "key": key, "code": code, "windowsVirtualKeyCode": vk})
+
     def type(self, text: str) -> None:
         self.cdp("Input.insertText", {"text": text})
 
@@ -846,6 +866,52 @@ def walk_shortcuts(sw: Sweeper, args, results: list, inventory: list) -> None:
             sw.recover()
 
 
+def walk_keytips(sw: Sweeper, args, results: list, inventory: list) -> None:
+    """Every keytip of every tab: Alt, the tab's letters, the control's letters, as a student types them (no mouse)."""
+    p = sw.page
+    done: set = set()
+    for ctx, tabs in CONTEXTS:
+        if args.ctx and ctx not in args.ctx:
+            continue
+        for tab in tabs:
+            if args.tab and tab not in args.tab:
+                continue
+            if not sw.reset(ctx, tab):
+                continue
+            tk = p.js(f"(() => {{ const t = Array.from(document.querySelectorAll('.tabrow .tab')).find((x) => x.textContent.trim() === {json.dumps(tab)} && x.getBoundingClientRect().width > 0); return t ? t.dataset.keytip : null; }})()")
+            keys = p.js("Array.from(document.querySelectorAll('.ribbon-card [data-keytip]')).filter((e) => e.getBoundingClientRect().width > 0 && e.dataset.keytip)"
+                        ".map((e) => ({ key: e.dataset.keytip.replace(/\\s/g, ''), name: window.__sw.label(e) || (e.querySelector('input') && window.__sw.label(e.querySelector('input'))) || '?' }))")
+            for k in keys:
+                oid = f"Zugriffstaste {tab} ({tk}) > {k['key']} {k['name']}"
+                if oid in done or not tk:
+                    continue
+                done.add(oid)
+                entry = {"id": oid, "ctx": ctx, "tab": "Zugriffstasten", "group": tab, "name": k["name"], "kind": "keytip", "keytip": f"{tk} {k['key']}"}
+                inventory.append({"ctx": ctx, "tab": "Zugriffstasten", "group": tab, "name": f"{k['name']} ({tk} {k['key']})", "kind": "keytip", "disabled": False})
+                if args.only and args.only.lower() not in k["name"].lower():
+                    continue
+                try:
+                    sw.reset(ctx, None)
+
+                    def trig(k=k, tk=tk):
+                        p.alt()
+                        time.sleep(0.1)
+                        for ch in tk + k["key"]:
+                            p.char(ch)
+                            time.sleep(0.06)
+                    res = sw.act(entry, trig)
+                    # A keytip that only reaches a field (Schriftart, a spinner) puts the focus there: that is its effect.
+                    if res["status"] == "no-effect" and p.js("!!document.activeElement && !!document.activeElement.closest('.ribbon-card')"):
+                        res["status"] = "pass"
+                        res["focus"] = True
+                    results.append(entry | res)
+                    print(f"{res['status']:9} {oid}  {res.get('why', '')}", flush=True)
+                except Exception as e:  # noqa: BLE001
+                    results.append(entry | {"status": "harness-error", "why": str(e)[:300]})
+                    print("harness-error", oid, str(e)[:200], flush=True)
+                    sw.recover()
+
+
 def walk_backstage_status(sw: Sweeper, args, results: list, inventory: list) -> None:
     """Datei (each page and its buttons) and the status bar's controls."""
     p = sw.page
@@ -1082,6 +1148,8 @@ def main() -> None:
             walk_shortcuts(sw, args, results, inventory)
         if "backstage" in parts and not args.tab:
             walk_backstage_status(sw, args, results, inventory)
+        if "keytips" in parts:
+            walk_keytips(sw, args, results, inventory)
         if "panes" in parts and not args.tab:
             walk_panes(sw, args, results, inventory)
         defined = page.js("window.__present.inventory()")
