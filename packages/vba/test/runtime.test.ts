@@ -573,3 +573,12 @@ describe("named arguments to the app's objects", () => {
     expect(seen[1]).toEqual(["Sort", ["A1", undefined, 1], { header: 1, key1: "A1" }]);
   });
 });
+
+describe("what RaabeCalc's session asked for", () => {
+  it("Optional with defaults, IsMissing, ParamArray, Enum, Type, On Error GoTo, Resume Next, Err.Raise", async () => {
+    const out: string[] = [];
+    const rt = new VbaRuntime({ global: () => undefined, msgBox: async (p) => { out.push(p); return 1; }, inputBox: async () => "" }, ["Enum Farbe\r\n  Rot = 1\r\n  Blau = 4\r\nEnd Enum\r\nType Punkt\r\n  x As Long\r\n  y As Long\r\nEnd Type\r\nFunction F(a As Long, Optional ByVal b As Variant = 10, Optional c As Variant) As String\r\n  F = a + b & \"/\" & IsMissing(c)\r\nEnd Function\r\nFunction Summe(ParamArray w() As Variant) As Long\r\n  Dim v As Variant\r\n  For Each v In w: Summe = Summe + v: Next\r\nEnd Function\r\nSub T()\r\n  Dim p As Punkt, r As String\r\n  p.x = 3: p.y = Blau\r\n  r = F(1) & \"|\" & F(1, 2, 3) & \"|\" & Summe(1, 2, 3) & \"|\" & (p.x + p.y)\r\n  On Error GoTo Fehler\r\n  Err.Raise 1234, , \"eigener Fehler\"\r\n  r = r & \"|danach\"\r\n  MsgBox r\r\n  Exit Sub\r\nFehler:\r\n  r = r & \"|\" & Err.Number & \" \" & Err.Description\r\n  Resume Next\r\nEnd Sub"]);
+    await rt.run("T");
+    expect(out).toEqual(["11/Wahr|3/Falsch|6|7|1234 eigener Fehler|danach"]);
+  });
+});

@@ -2497,3 +2497,22 @@ ship: that scheme is applied with plain fills in its place.
 - **Measured** (check_present_vbaide.py, headless, 11/11): a form drawn in the designer, its Click written, a
   breakpoint hit with the Lokal-Fenster showing n = 41, a single step to the next line, Debug.Print's output, the
   form shown and its button running its code, the project saved with the form.
+
+## D-107 RaabePresent: the GIF's timing, the behaviour catalogue's last cases, the inventory (2026-11-08)
+
+- **Animierte GIF-Datei as PowerPoint's** (measured frame by frame, check_present_video.py): PowerPoint's GIF draws
+  no transition (the slide before stays until the transition's middle, then the cut), and a slide lasts one frame
+  (1/16 s) longer, one more per animation step, the last slide one more. Ours does the same: 8 of 8 states within
+  0.25 s (before 6/8), 8.61 s against PowerPoint's 8.58 s; the video stays 9/9 + 9/9.
+- **Behaviour catalogue:** the six Strg+Z cases undid the harness's own COM set-up in PowerPoint; they now undo a
+  nudge or typing made by real input (catalogue_present.py). Recorded again, two behaviours of PowerPoint's
+  showed and are ours now: Strg+Z while editing a text keeps editing, the caret where the undone change began; a
+  click inside a group's frame between its members selects the group, a second click there starts a new text box
+  at that point. 363 of 377 (before 356). Left: the twelve handle and rotation cases with Umschalt or Strg pressed
+  during the drag end 1-2 pt off with real input only (with CDP input the movement and the rules are PowerPoint's:
+  Umschalt keeps the proportions by the height, Strg sizes from the centre), not found yet; a text box pasted twice
+  is in text editing in PowerPoint; Umschalt+Ende at a line's end selects one character more in PowerPoint.
+- **Inventory** 4104 of 4511 (4004 before): SmartArt colour sets and quick styles, theme effects, labels. Of the 399
+  left, about 150 are Microsoft's own designs (we ship ours, D-078), about 50 the galleries' scroll buttons, the
+  rest picture SmartArt layouts, chart styles, Aktuelles Design speichern / Nach Designs suchen (the .thmx format),
+  high-contrast colour options and single entries.

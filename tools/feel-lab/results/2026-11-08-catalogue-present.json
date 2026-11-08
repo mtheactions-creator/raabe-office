@@ -1,6 +1,6 @@
 {
  "date": "2026-11-08",
- "same": 359,
+ "same": 363,
  "of": 377,
  "cases": {
   "click rect centre": {
@@ -1401,17 +1401,13 @@
   },
   "text ctrl+z": {
    "area": "textkeys",
-   "result": "different",
-   "diff": [
-    "selection: {'type': 'Text', 'ids': [0], 'start': 30, 'length': 0} vs {'type': 'Shapes', 'ids': [0]}"
-   ]
+   "result": "same",
+   "diff": []
   },
   "text sel ctrl+z": {
    "area": "textkeys",
-   "result": "different",
-   "diff": [
-    "selection: {'type': 'Text', 'ids': [0], 'start': 30, 'length': 0} vs {'type': 'Shapes', 'ids': [0]}"
-   ]
+   "result": "same",
+   "diff": []
   },
   "text alt+shift+right": {
    "area": "textkeys",
@@ -1607,10 +1603,8 @@
   },
   "caret ctrl+z": {
    "area": "caretkeys",
-   "result": "different",
-   "diff": [
-    "selection: {'type': 'Text', 'ids': [0], 'start': 5, 'length': 0} vs {'type': 'Shapes', 'ids': [0]}"
-   ]
+   "result": "same",
+   "diff": []
   },
   "caret alt+shift+right": {
    "area": "caretkeys",
@@ -1859,11 +1853,8 @@
   },
   "group click member": {
    "area": "group",
-   "result": "different",
-   "diff": [
-    "selection: {'type': 'Text', 'ids': [1], 'start': 1, 'length': 0} vs {'type': 'None'}",
-    "shapes: 2 vs 1"
-   ]
+   "result": "same",
+   "diff": []
   },
   "marquee": {
    "area": "marquee",
